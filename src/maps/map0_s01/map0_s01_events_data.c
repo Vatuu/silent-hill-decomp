@@ -1,13 +1,13 @@
 #include "bodyprog/bodyprog.h"
 
-s_EventParam D_800DDFB8[23] = {
+s_EventData D_800DDFB8[23] = {
     {
         .disabledEventFlag_2  = EventFlag_M0S01_HealthDrink0,
         .triggerType_4_0      = TriggerType_TouchFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 13,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 2, // `MapEvent_CommonItemTake`
+        .eventParam_8_5       = 2, // `MapEvent_CommonItemTake`
     },
     {
         .disabledEventFlag_2  = EventFlag_M0S01_HealthDrink1,
@@ -15,13 +15,13 @@ s_EventParam D_800DDFB8[23] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 14,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 2, // `MapEvent_CommonItemTake`
+        .eventParam_8_5       = 2, // `MapEvent_CommonItemTake`
     },
     {
         .disabledEventFlag_2 = EventFlag_M0S01_FmvStarted,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_Fmv,
-        .eventData_8_5       = 15,
+        .eventParam_8_5      = 15,
         .flags_8_13          = 2,
     },
     {
@@ -29,7 +29,7 @@ s_EventParam D_800DDFB8[23] = {
         .disabledEventFlag_2 = EventFlag_M0S01_CafeCutsceneStarted,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
-        .eventData_8_5       = 3, // `MapEvent_CafeCutscene`
+        .eventParam_8_5      = 3, // `MapEvent_CafeCutscene`
         .flags_8_13          = 1,
     },
     {
@@ -39,14 +39,14 @@ s_EventParam D_800DDFB8[23] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 6,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 5, // `MapEvent_AirScreamerIntroCutscene`
+        .eventParam_8_5       = 5, // `MapEvent_AirScreamerIntroCutscene`
     },
     {
         .requiredEventFlag_0 = EventFlag_M0S01_AirScreamerDied,
         .disabledEventFlag_2 = EventFlag_M0S01_AirScreamerDeathPlayed,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
-        .eventData_8_5       = 11, // `MapEvent_AirScreamerDeath`
+        .eventParam_8_5      = 11, // `MapEvent_AirScreamerDeath`
     },
     {
         .requiredEventFlag_0  = EventFlag_M0S01_PickupPocketRadio,
@@ -54,7 +54,7 @@ s_EventParam D_800DDFB8[23] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 6,
         .sysState_8_0         = SysState_LoadOverlay,
-        .eventData_8_5        = 7,
+        .eventParam_8_5       = 7,
         .field_8_19           = 1,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP2_S00,
     },
@@ -64,7 +64,7 @@ s_EventParam D_800DDFB8[23] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 6,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 71,
+        .eventParam_8_5       = 71,
         .flags_8_13           = 1,
     },
     {
@@ -73,14 +73,14 @@ s_EventParam D_800DDFB8[23] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 6,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 70,
+        .eventParam_8_5       = 70,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 6,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 67,
+        .eventParam_8_5       = 67,
         .flags_8_13           = 1,
     },
     {
@@ -89,7 +89,7 @@ s_EventParam D_800DDFB8[23] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 1,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 6, // `MapEvent_KitchenKnifeItemTake`
+        .eventParam_8_5       = 6, // `MapEvent_KitchenKnifeItemTake`
     },
     {
         .disabledEventFlag_2  = EventFlag_M0S01_PickupFlashlight,
@@ -97,7 +97,7 @@ s_EventParam D_800DDFB8[23] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 2,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 7, // `MapEvent_FlashlightItemTake`
+        .eventParam_8_5       = 7, // `MapEvent_FlashlightItemTake`
     },
     {
         .disabledEventFlag_2  = EventFlag_M0S01_PickupMap,
@@ -105,7 +105,7 @@ s_EventParam D_800DDFB8[23] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 3,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 8, // `MapEvent_MapItemTake`
+        .eventParam_8_5       = 8, // `MapEvent_MapItemTake`
     },
     {
         .requiredEventFlag_0  = EventFlag_M0S01_AirScreamerDied,
@@ -114,7 +114,7 @@ s_EventParam D_800DDFB8[23] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 4,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 9, // `MapEvent_PocketRadioItemTake`
+        .eventParam_8_5       = 9, // `MapEvent_PocketRadioItemTake`
     },
     {
         .requiredEventFlag_0  = EventFlag_50,
@@ -122,7 +122,7 @@ s_EventParam D_800DDFB8[23] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 4,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 69,
+        .eventParam_8_5       = 69,
     },
     {
         .requiredEventFlag_0  = EventFlag_49,
@@ -130,7 +130,7 @@ s_EventParam D_800DDFB8[23] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 4,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 65,
+        .eventParam_8_5       = 65,
         .flags_8_13           = 1,
     },
     {
@@ -139,42 +139,42 @@ s_EventParam D_800DDFB8[23] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 10,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 75,
+        .eventParam_8_5       = 75,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 10,
         .sysState_8_0         = SysState_SaveMenu0,
-        .eventData_8_5        = 1,
+        .eventParam_8_5       = 1,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 8,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 73,
+        .eventParam_8_5       = 73,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 11,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 73,
+        .eventParam_8_5       = 73,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 12,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 73,
+        .eventParam_8_5       = 73,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 9,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 74,
+        .eventParam_8_5       = 74,
     },
     {
         .triggerType_4_0 = TriggerType_EndOfArray,

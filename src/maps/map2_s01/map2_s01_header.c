@@ -25,7 +25,7 @@ void (*g_LoadScreenFuncs[])() =
     func_800CEB94
 };
 
-// TODO: Re-decode each point once type is found from `s_EventParam`s.
+// TODO: Re-decode each point once type is found from `s_EventData`s.
 s_MapPoint2d MAP_POINTS[] = {
   {
     .positionX_0 = Q12(20.0f),

@@ -1,13 +1,13 @@
 #include "bodyprog/bodyprog.h"
 
-s_EventParam D_800D3AB0[12] = {
+s_EventData D_800D3AB0[12] = {
     {
         .requiredEventFlag_0  = EventFlag_416,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 5,
         .sysState_8_0         = SysState_SaveMenu1,
-        .eventData_8_5        = 20,
+        .eventParam_8_5       = 20,
     },
     {
         .requiredEventFlag_0  = EventFlag_416,
@@ -15,7 +15,7 @@ s_EventParam D_800D3AB0[12] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 6,
         .sysState_8_0         = SysState_SaveMenu1,
-        .eventData_8_5        = 20,
+        .eventParam_8_5       = 20,
     },
     {
         .requiredEventFlag_0  = EventFlag_416,
@@ -23,7 +23,7 @@ s_EventParam D_800D3AB0[12] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 7,
         .sysState_8_0         = SysState_SaveMenu1,
-        .eventData_8_5        = 20,
+        .eventParam_8_5       = 20,
     },
     {
         .requiredEventFlag_0  = EventFlag_416,
@@ -31,7 +31,7 @@ s_EventParam D_800D3AB0[12] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 2,
         .sysState_8_0         = SysState_LoadOverlay,
-        .eventData_8_5        = 1,
+        .eventParam_8_5       = 1,
         .field_8_19           = 15,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP6_S00,
     },
@@ -40,7 +40,7 @@ s_EventParam D_800D3AB0[12] = {
         .disabledEventFlag_2 = EventFlag_409,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_LoadRoom,
-        .eventData_8_5       = 3,
+        .eventParam_8_5      = 3,
         .flags_8_13          = 1,
     },
     {
@@ -48,7 +48,7 @@ s_EventParam D_800D3AB0[12] = {
         .disabledEventFlag_2 = EventFlag_406,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_LoadRoom,
-        .eventData_8_5       = 3,
+        .eventParam_8_5      = 3,
         .flags_8_13          = 1,
     },
     {
@@ -56,20 +56,20 @@ s_EventParam D_800D3AB0[12] = {
         .disabledEventFlag_2 = EventFlag_408,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_LoadRoom,
-        .eventData_8_5       = 4,
+        .eventParam_8_5      = 4,
     },
     {
         .requiredEventFlag_0 = EventFlag_409,
         .disabledEventFlag_2 = EventFlag_410,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
-        .eventData_8_5       = 3, // `func_800CF0B8`
+        .eventParam_8_5      = 3, // `func_800CF0B8`
     },
     {
         .requiredEventFlag_0 = EventFlag_588,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
-        .eventData_8_5       = 6, // `func_800D32D0`
+        .eventParam_8_5      = 6, // `func_800D32D0`
     },
     {
         .disabledEventFlag_2  = EventFlag_460,
@@ -78,13 +78,13 @@ s_EventParam D_800D3AB0[12] = {
         .pointOfInterestIdx_5 = 8,
         .requiredItemId_6     = InventoryItemId_ChannelingStone,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 4, // `func_800CFC34`
+        .eventParam_8_5       = 4, // `func_800CFC34`
     },
     {
         .requiredEventFlag_0 = EventFlag_469,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
-        .eventData_8_5       = 5, // `func_800D0500`
+        .eventParam_8_5      = 5, // `func_800D0500`
     },
     {
         .triggerType_4_0 = TriggerType_EndOfArray,

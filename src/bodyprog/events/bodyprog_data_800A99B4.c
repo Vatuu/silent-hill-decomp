@@ -25,7 +25,7 @@ s32 D_800A9A0C = 0;
 
 s32 g_MapEventSysState = SysState_Gameplay;
 
-u32 g_MapEventIdx = 0;
+u32 g_MapEventParam = 0;
 
 s32 g_MapEventLastUsedItem = 0;
 

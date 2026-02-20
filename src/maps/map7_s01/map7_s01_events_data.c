@@ -1,13 +1,13 @@
 #include "bodyprog/bodyprog.h"
 
-s_EventParam D_800E0B64[203] = {
+s_EventData D_800E0B64[203] = {
     {
         .disabledEventFlag_2  = EventFlag_M7S01_RifleShells,
         .triggerType_4_0      = TriggerType_TouchFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 170,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 3, // `MapEvent_CommonItemTake`
+        .eventParam_8_5       = 3, // `MapEvent_CommonItemTake`
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_HandgunBullets0,
@@ -15,7 +15,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 171,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 3, // `MapEvent_CommonItemTake`
+        .eventParam_8_5       = 3, // `MapEvent_CommonItemTake`
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_HealthDrink0,
@@ -23,7 +23,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 172,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 3, // `MapEvent_CommonItemTake`
+        .eventParam_8_5       = 3, // `MapEvent_CommonItemTake`
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_HandgunBullets1,
@@ -31,7 +31,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 173,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 3, // `MapEvent_CommonItemTake`
+        .eventParam_8_5       = 3, // `MapEvent_CommonItemTake`
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_ShotgunShells,
@@ -39,7 +39,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 174,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 3, // `MapEvent_CommonItemTake`
+        .eventParam_8_5       = 3, // `MapEvent_CommonItemTake`
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_FirstAidKit,
@@ -47,7 +47,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 175,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 3, // `MapEvent_CommonItemTake`
+        .eventParam_8_5       = 3, // `MapEvent_CommonItemTake`
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_HandgunBullets2,
@@ -55,7 +55,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 176,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 3, // `MapEvent_CommonItemTake`
+        .eventParam_8_5       = 3, // `MapEvent_CommonItemTake`
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_HealthDrink1,
@@ -63,35 +63,35 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 177,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 3, // `MapEvent_CommonItemTake`
+        .eventParam_8_5       = 3, // `MapEvent_CommonItemTake`
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 140,
         .sysState_8_0         = SysState_SaveMenu1,
-        .eventData_8_5        = 22,
+        .eventParam_8_5       = 22,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 141,
         .sysState_8_0         = SysState_SaveMenu1,
-        .eventData_8_5        = 22,
+        .eventParam_8_5       = 22,
     },
     {
         .requiredEventFlag_0 = EventFlag_473,
         .disabledEventFlag_2 = EventFlag_479,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
-        .eventData_8_5       = 45, // `func_800DCE20`
+        .eventParam_8_5      = 45, // `func_800DCE20`
     },
     {
         .requiredEventFlag_0 = EventFlag_479,
         .disabledEventFlag_2 = EventFlag_480,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_LoadRoom,
-        .eventData_8_5       = 4,
+        .eventParam_8_5      = 4,
         .field_8_24          = 1,
         .mapOverlayIdx_8_25  = MapOverlayId_MAP2_S04,
     },
@@ -100,7 +100,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 3,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 88,
+        .eventParam_8_5       = 88,
         .flags_8_13           = 1,
     },
     {
@@ -108,7 +108,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 4,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 88,
+        .eventParam_8_5       = 88,
         .flags_8_13           = 1,
     },
     {
@@ -117,7 +117,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 118,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 46, // `func_800D8A04`
+        .eventParam_8_5       = 46, // `func_800D8A04`
         .flags_8_13           = 1,
     },
     {
@@ -126,7 +126,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 119,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 46, // `func_800D8A04`
+        .eventParam_8_5       = 46, // `func_800D8A04`
         .flags_8_13           = 1,
     },
     {
@@ -135,7 +135,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 120,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 46, // `func_800D8A04`
+        .eventParam_8_5       = 46, // `func_800D8A04`
         .flags_8_13           = 1,
     },
     {
@@ -144,7 +144,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 121,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 46, // `func_800D8A04`
+        .eventParam_8_5       = 46, // `func_800D8A04`
         .flags_8_13           = 1,
     },
     {
@@ -154,7 +154,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 118,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 13, // `func_800D89D8`
+        .eventParam_8_5       = 13, // `func_800D89D8`
     },
     {
         .requiredEventFlag_0  = EventFlag_491,
@@ -163,7 +163,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 119,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 13, // `func_800D89D8`
+        .eventParam_8_5       = 13, // `func_800D89D8`
     },
     {
         .requiredEventFlag_0  = EventFlag_491,
@@ -172,7 +172,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 120,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 13, // `func_800D89D8`
+        .eventParam_8_5       = 13, // `func_800D89D8`
     },
     {
         .requiredEventFlag_0  = EventFlag_491,
@@ -181,7 +181,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 121,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 13, // `func_800D89D8`
+        .eventParam_8_5       = 13, // `func_800D89D8`
     },
     {
         .requiredEventFlag_0  = EventFlag_M7S01_PickupBirdCageKey,
@@ -191,7 +191,7 @@ s_EventParam D_800E0B64[203] = {
         .pointOfInterestIdx_5 = 118,
         .requiredItemId_6     = InventoryItemId_BirdCageKey,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 12, // `MapEvent_BirdCageKeyUse`
+        .eventParam_8_5       = 12, // `MapEvent_BirdCageKeyUse`
     },
     {
         .requiredEventFlag_0  = EventFlag_M7S01_PickupBirdCageKey,
@@ -200,7 +200,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 118,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 12, // `MapEvent_BirdCageKeyUse`
+        .eventParam_8_5       = 12, // `MapEvent_BirdCageKeyUse`
     },
     {
         .requiredEventFlag_0  = EventFlag_M7S01_PickupBirdCageKey,
@@ -210,7 +210,7 @@ s_EventParam D_800E0B64[203] = {
         .pointOfInterestIdx_5 = 119,
         .requiredItemId_6     = InventoryItemId_BirdCageKey,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 12, // `MapEvent_BirdCageKeyUse`
+        .eventParam_8_5       = 12, // `MapEvent_BirdCageKeyUse`
     },
     {
         .requiredEventFlag_0  = EventFlag_M7S01_PickupBirdCageKey,
@@ -219,7 +219,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 119,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 12, // `MapEvent_BirdCageKeyUse`
+        .eventParam_8_5       = 12, // `MapEvent_BirdCageKeyUse`
     },
     {
         .requiredEventFlag_0  = EventFlag_M7S01_PickupBirdCageKey,
@@ -229,7 +229,7 @@ s_EventParam D_800E0B64[203] = {
         .pointOfInterestIdx_5 = 120,
         .requiredItemId_6     = InventoryItemId_BirdCageKey,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 12, // `MapEvent_BirdCageKeyUse`
+        .eventParam_8_5       = 12, // `MapEvent_BirdCageKeyUse`
     },
     {
         .requiredEventFlag_0  = EventFlag_M7S01_PickupBirdCageKey,
@@ -238,7 +238,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 120,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 12, // `MapEvent_BirdCageKeyUse`
+        .eventParam_8_5       = 12, // `MapEvent_BirdCageKeyUse`
     },
     {
         .requiredEventFlag_0  = EventFlag_M7S01_PickupBirdCageKey,
@@ -248,7 +248,7 @@ s_EventParam D_800E0B64[203] = {
         .pointOfInterestIdx_5 = 121,
         .requiredItemId_6     = InventoryItemId_BirdCageKey,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 12, // `MapEvent_BirdCageKeyUse`
+        .eventParam_8_5       = 12, // `MapEvent_BirdCageKeyUse`
     },
     {
         .requiredEventFlag_0  = EventFlag_M7S01_PickupBirdCageKey,
@@ -257,7 +257,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 121,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 12, // `MapEvent_BirdCageKeyUse`
+        .eventParam_8_5       = 12, // `MapEvent_BirdCageKeyUse`
     },
     {
         .disabledEventFlag_2  = EventFlag_491,
@@ -265,7 +265,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 118,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 11, // `func_800D8958`
+        .eventParam_8_5       = 11, // `func_800D8958`
     },
     {
         .disabledEventFlag_2  = EventFlag_491,
@@ -273,7 +273,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 119,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 11, // `func_800D8958`
+        .eventParam_8_5       = 11, // `func_800D8958`
     },
     {
         .disabledEventFlag_2  = EventFlag_491,
@@ -281,7 +281,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 120,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 11, // `func_800D8958`
+        .eventParam_8_5       = 11, // `func_800D8958`
     },
     {
         .disabledEventFlag_2  = EventFlag_491,
@@ -289,7 +289,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 121,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 11, // `func_800D8958`
+        .eventParam_8_5       = 11, // `func_800D8958`
     },
     {
         .disabledEventFlag_2  = EventFlag_490,
@@ -298,7 +298,7 @@ s_EventParam D_800E0B64[203] = {
         .pointOfInterestIdx_5 = 117,
         .requiredItemId_6     = InventoryItemId_Pliers,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 15, // `func_800D8A5C`
+        .eventParam_8_5       = 15, // `func_800D8A5C`
     },
     {
         .disabledEventFlag_2  = EventFlag_490,
@@ -306,7 +306,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 117,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 14, // `func_800D8A30`
+        .eventParam_8_5       = 14, // `func_800D8A30`
     },
     {
         .requiredEventFlag_0  = EventFlag_490,
@@ -315,7 +315,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 103,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 16, // `func_800D8DB4`
+        .eventParam_8_5       = 16, // `func_800D8DB4`
     },
     {
         .requiredEventFlag_0  = EventFlag_M7S01_PickupKeyOfHagith,
@@ -323,7 +323,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 116,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 89,
+        .eventParam_8_5       = 89,
     },
     {
         .requiredEventFlag_0  = EventFlag_489,
@@ -332,7 +332,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 116,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 19, // `func_800D93BC`
+        .eventParam_8_5       = 19, // `func_800D93BC`
     },
     {
         .disabledEventFlag_2  = EventFlag_489,
@@ -341,7 +341,7 @@ s_EventParam D_800E0B64[203] = {
         .pointOfInterestIdx_5 = 116,
         .requiredItemId_6     = InventoryItemId_StoneOfTime,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 18, // `func_800D8FF8`
+        .eventParam_8_5       = 18, // `func_800D8FF8`
     },
     {
         .disabledEventFlag_2  = EventFlag_489,
@@ -349,28 +349,28 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 116,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 17, // `func_800D8FCC`
+        .eventParam_8_5       = 17, // `func_800D8FCC`
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 122,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 20, // `func_800D93E8`
+        .eventParam_8_5       = 20, // `func_800D93E8`
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 123,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 20, // `func_800D93E8`
+        .eventParam_8_5       = 20, // `func_800D93E8`
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 124,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 20, // `func_800D93E8`
+        .eventParam_8_5       = 20, // `func_800D93E8`
     },
     {
         .requiredEventFlag_0  = EventFlag_M7S01_PickupScrewdriver,
@@ -379,7 +379,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 105,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 21, // `func_800D9414`
+        .eventParam_8_5       = 21, // `func_800D9414`
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_PickupPliers,
@@ -387,7 +387,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 104,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 21, // `func_800D9414`
+        .eventParam_8_5       = 21, // `func_800D9414`
     },
     {
         .requiredEventFlag_0  = EventFlag_M7S01_PickupPliers,
@@ -396,7 +396,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 107,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 22, // `func_800D9440`
+        .eventParam_8_5       = 22, // `func_800D9440`
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_PickupScrewdriver,
@@ -404,21 +404,21 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 106,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 22, // `func_800D9440`
+        .eventParam_8_5       = 22, // `func_800D9440`
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 115,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 23, // `func_800D946C`
+        .eventParam_8_5       = 23, // `func_800D946C`
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 114,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 24, // `func_800D94A4`
+        .eventParam_8_5       = 24, // `func_800D94A4`
     },
     {
         .disabledEventFlag_2  = EventFlag_488,
@@ -426,7 +426,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 108,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 25, // `func_800D94DC`
+        .eventParam_8_5       = 25, // `func_800D94DC`
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_PickupAmuletOfSolomon,
@@ -434,21 +434,21 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 113,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 26, // `func_800D99DC`
+        .eventParam_8_5       = 26, // `func_800D99DC`
     },
     {
         .requiredEventFlag_0 = EventFlag_481,
         .disabledEventFlag_2 = EventFlag_482,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
-        .eventData_8_5       = 27, // `func_800D725C`
+        .eventParam_8_5      = 27, // `func_800D725C`
     },
     {
         .requiredEventFlag_0 = EventFlag_482,
         .disabledEventFlag_2 = EventFlag_483,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_Fmv,
-        .eventData_8_5       = 5,
+        .eventParam_8_5      = 5,
         .flags_8_13          = 2,
     },
     {
@@ -456,14 +456,14 @@ s_EventParam D_800E0B64[203] = {
         .disabledEventFlag_2 = EventFlag_484,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
-        .eventData_8_5       = 28, // `func_800D7A60`
+        .eventParam_8_5      = 28, // `func_800D7A60`
     },
     {
         .requiredEventFlag_0 = EventFlag_484,
         .disabledEventFlag_2 = EventFlag_569,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_LoadRoom,
-        .eventData_8_5       = 169,
+        .eventParam_8_5      = 169,
     },
     {
         .requiredEventFlag_0  = EventFlag_569,
@@ -471,7 +471,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 112,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 29, // `func_800D9A08`
+        .eventParam_8_5       = 29, // `func_800D9A08`
     },
     {
         .disabledEventFlag_2  = EventFlag_500,
@@ -479,7 +479,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 127,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 30, // `func_800D9C9C`
+        .eventParam_8_5       = 30, // `func_800D9C9C`
         .flags_8_13           = 1,
     },
     {
@@ -488,7 +488,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 128,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 30, // `func_800D9C9C`
+        .eventParam_8_5       = 30, // `func_800D9C9C`
         .flags_8_13           = 1,
     },
     {
@@ -497,7 +497,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 129,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 30, // `func_800D9C9C`
+        .eventParam_8_5       = 30, // `func_800D9C9C`
         .flags_8_13           = 1,
     },
     {
@@ -506,7 +506,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 130,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 30, // `func_800D9C9C`
+        .eventParam_8_5       = 30, // `func_800D9C9C`
         .flags_8_13           = 1,
     },
     {
@@ -515,7 +515,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 131,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 30, // `func_800D9C9C`
+        .eventParam_8_5       = 30, // `func_800D9C9C`
         .flags_8_13           = 1,
     },
     {
@@ -524,7 +524,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 132,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 30, // `func_800D9C9C`
+        .eventParam_8_5       = 30, // `func_800D9C9C`
         .flags_8_13           = 1,
     },
     {
@@ -533,7 +533,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 133,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 30, // `func_800D9C9C`
+        .eventParam_8_5       = 30, // `func_800D9C9C`
         .flags_8_13           = 1,
     },
     {
@@ -543,7 +543,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 98,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 31, // `func_800DAB64`
+        .eventParam_8_5       = 31, // `func_800DAB64`
     },
     {
         .requiredEventFlag_0  = EventFlag_487,
@@ -552,7 +552,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 99,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 31, // `func_800DAB64`
+        .eventParam_8_5       = 31, // `func_800DAB64`
     },
     {
         .requiredEventFlag_0  = EventFlag_487,
@@ -561,7 +561,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 100,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 31, // `func_800DAB64`
+        .eventParam_8_5       = 31, // `func_800DAB64`
     },
     {
         .requiredEventFlag_0  = EventFlag_487,
@@ -570,7 +570,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 101,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 31, // `func_800DAB64`
+        .eventParam_8_5       = 31, // `func_800DAB64`
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_PickupCrestOfMercury,
@@ -578,7 +578,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 134,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 32, // `func_800DAD7C`
+        .eventParam_8_5       = 32, // `func_800DAD7C`
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_PickupCrestOfMercury,
@@ -586,7 +586,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 135,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 32, // `func_800DAD7C`
+        .eventParam_8_5       = 32, // `func_800DAD7C`
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_PickupCrestOfMercury,
@@ -594,7 +594,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 136,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 32, // `func_800DAD7C`
+        .eventParam_8_5       = 32, // `func_800DAD7C`
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_PickupRingOfContract,
@@ -602,7 +602,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 137,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 33, // `func_800DADA8`
+        .eventParam_8_5       = 33, // `func_800DADA8`
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_PickupRingOfContract,
@@ -610,7 +610,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 138,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 33, // `func_800DADA8`
+        .eventParam_8_5       = 33, // `func_800DADA8`
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_PickupRingOfContract,
@@ -618,7 +618,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 139,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 33, // `func_800DADA8`
+        .eventParam_8_5       = 33, // `func_800DADA8`
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_PickupCamera,
@@ -626,7 +626,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 97,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 34, // `func_800DADD4`
+        .eventParam_8_5       = 34, // `func_800DADD4`
     },
     {
         .disabledEventFlag_2  = EventFlag_486,
@@ -635,7 +635,7 @@ s_EventParam D_800E0B64[203] = {
         .pointOfInterestIdx_5 = 111,
         .requiredItemId_6     = InventoryItemId_Screwdriver,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 35, // `func_800DAE00`
+        .eventParam_8_5       = 35, // `func_800DAE00`
     },
     {
         .requiredEventFlag_0  = EventFlag_486,
@@ -643,14 +643,14 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 111,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 36, // `func_800DB13C`
+        .eventParam_8_5       = 36, // `func_800DB13C`
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 111,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 87,
+        .eventParam_8_5       = 87,
         .flags_8_13           = 1,
     },
     {
@@ -658,7 +658,7 @@ s_EventParam D_800E0B64[203] = {
         .disabledEventFlag_2 = EventFlag_562,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
-        .eventData_8_5       = 37, // `func_800DB1F0`
+        .eventParam_8_5      = 37, // `func_800DB1F0`
     },
     {
         .disabledEventFlag_2  = EventFlag_496,
@@ -667,7 +667,7 @@ s_EventParam D_800E0B64[203] = {
         .pointOfInterestIdx_5 = 125,
         .requiredItemId_6     = InventoryItemId_Camera,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 39, // `func_800DB3D0`
+        .eventParam_8_5       = 39, // `func_800DB3D0`
         .flags_8_13           = 1,
     },
     {
@@ -677,7 +677,7 @@ s_EventParam D_800E0B64[203] = {
         .pointOfInterestIdx_5 = 126,
         .requiredItemId_6     = InventoryItemId_Camera,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 39, // `func_800DB3D0`
+        .eventParam_8_5       = 39, // `func_800DB3D0`
         .flags_8_13           = 1,
     },
     {
@@ -686,7 +686,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 125,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 38, // `func_800DB31C`
+        .eventParam_8_5       = 38, // `func_800DB31C`
         .flags_8_13           = 1,
     },
     {
@@ -695,7 +695,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 126,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 38, // `func_800DB31C`
+        .eventParam_8_5       = 38, // `func_800DB31C`
         .flags_8_13           = 1,
     },
     {
@@ -704,7 +704,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 110,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 41, // `func_800DBDE0`
+        .eventParam_8_5       = 41, // `func_800DBDE0`
     },
     {
         .requiredEventFlag_0  = EventFlag_477,
@@ -712,14 +712,14 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 109,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 42, // `func_800DC028`
+        .eventParam_8_5       = 42, // `func_800DC028`
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 109,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 96,
+        .eventParam_8_5       = 96,
     },
     {
         .disabledEventFlag_2  = EventFlag_M7S01_PickupBirdCageKey,
@@ -727,7 +727,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 96,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 43, // `func_800DC080`
+        .eventParam_8_5       = 43, // `func_800DC080`
     },
     {
         .requiredEventFlag_0  = EventFlag_M7S01_PickupKeyOfHagith,
@@ -736,7 +736,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 5,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 8, // `MapEvent_KeyOfHagithUse`
+        .eventParam_8_5       = 8, // `MapEvent_KeyOfHagithUse`
     },
     {
         .requiredEventFlag_0  = EventFlag_M7S01_PickupKeyOfHagith,
@@ -746,7 +746,7 @@ s_EventParam D_800E0B64[203] = {
         .pointOfInterestIdx_5 = 5,
         .requiredItemId_6     = InventoryItemId_KeyOfHagith,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 8, // `MapEvent_KeyOfHagithUse`
+        .eventParam_8_5       = 8, // `MapEvent_KeyOfHagithUse`
     },
     {
         .requiredEventFlag_0  = EventFlag_531,
@@ -754,7 +754,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 5,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 13,
+        .eventParam_8_5       = 13,
         .field_8_19           = 13,
         .field_8_24           = 1,
     },
@@ -764,7 +764,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 13,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 5,
+        .eventParam_8_5       = 5,
         .field_8_19           = 13,
         .field_8_24           = 1,
     },
@@ -773,14 +773,14 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 5,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 5, // `func_800D8540`
+        .eventParam_8_5       = 5, // `func_800D8540`
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 5,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 1, // `func_800D82C4`
+        .eventParam_8_5       = 1, // `func_800D82C4`
         .flags_8_13           = 1,
     },
     {
@@ -788,7 +788,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 6,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 16,
+        .eventParam_8_5       = 16,
         .field_8_19           = 12,
     },
     {
@@ -796,7 +796,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 16,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 6,
+        .eventParam_8_5       = 6,
         .field_8_19           = 12,
         .field_8_24           = 1,
     },
@@ -805,7 +805,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 7,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 17,
+        .eventParam_8_5       = 17,
         .field_8_19           = 12,
     },
     {
@@ -813,7 +813,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 17,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 7,
+        .eventParam_8_5       = 7,
         .field_8_19           = 12,
         .field_8_24           = 1,
     },
@@ -822,7 +822,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 8,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 18,
+        .eventParam_8_5       = 18,
         .field_8_19           = 12,
     },
     {
@@ -830,7 +830,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 18,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 8,
+        .eventParam_8_5       = 8,
         .field_8_19           = 12,
         .field_8_24           = 1,
     },
@@ -839,7 +839,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 9,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 19,
+        .eventParam_8_5       = 19,
         .field_8_19           = 14,
     },
     {
@@ -847,7 +847,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 19,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 9,
+        .eventParam_8_5       = 9,
         .field_8_19           = 14,
         .field_8_24           = 1,
     },
@@ -857,7 +857,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 10,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 30,
+        .eventParam_8_5       = 30,
         .field_8_19           = 13,
         .field_8_24           = 1,
     },
@@ -867,7 +867,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 30,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 10,
+        .eventParam_8_5       = 10,
         .field_8_19           = 13,
         .field_8_24           = 1,
     },
@@ -877,7 +877,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 30,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 2, // `func_800D8358`
+        .eventParam_8_5       = 2, // `func_800D8358`
         .flags_8_13           = 1,
     },
     {
@@ -885,7 +885,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 10,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 1, // `func_800D82C4`
+        .eventParam_8_5       = 1, // `func_800D82C4`
         .flags_8_13           = 1,
     },
     {
@@ -895,7 +895,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 11,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 7, // `MapEvent_KeyOfOphielUse`
+        .eventParam_8_5       = 7, // `MapEvent_KeyOfOphielUse`
     },
     {
         .requiredEventFlag_0  = EventFlag_525,
@@ -905,7 +905,7 @@ s_EventParam D_800E0B64[203] = {
         .pointOfInterestIdx_5 = 11,
         .requiredItemId_6     = InventoryItemId_KeyOfOphiel,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 7, // `MapEvent_KeyOfOphielUse`
+        .eventParam_8_5       = 7, // `MapEvent_KeyOfOphielUse`
     },
     {
         .requiredEventFlag_0  = EventFlag_530,
@@ -913,7 +913,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 11,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 53,
+        .eventParam_8_5       = 53,
         .field_8_19           = 12,
         .field_8_24           = 1,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S01,
@@ -924,7 +924,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 53,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 11,
+        .eventParam_8_5       = 11,
         .field_8_19           = 12,
         .field_8_24           = 1,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S01,
@@ -934,14 +934,14 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 11,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 4, // `func_800D84AC`
+        .eventParam_8_5       = 4, // `func_800D84AC`
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 11,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 1, // `func_800D82C4`
+        .eventParam_8_5       = 1, // `func_800D82C4`
         .flags_8_13           = 1,
     },
     {
@@ -951,7 +951,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 12,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 9, // `MapEvent_KeyOfPhalegUse`
+        .eventParam_8_5       = 9, // `MapEvent_KeyOfPhalegUse`
     },
     {
         .requiredEventFlag_0  = EventFlag_M7S01_PickupKeyOfPhaleg,
@@ -961,7 +961,7 @@ s_EventParam D_800E0B64[203] = {
         .pointOfInterestIdx_5 = 12,
         .requiredItemId_6     = InventoryItemId_KeyOfPhaleg,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 9, // `MapEvent_KeyOfPhalegUse`
+        .eventParam_8_5       = 9, // `MapEvent_KeyOfPhalegUse`
     },
     {
         .requiredEventFlag_0  = EventFlag_532,
@@ -969,7 +969,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 12,
         .sysState_8_0         = SysState_LoadOverlay,
-        .eventData_8_5        = 71,
+        .eventParam_8_5       = 71,
         .field_8_19           = 12,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP7_S02,
     },
@@ -978,34 +978,34 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 12,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 6, // `func_800D85D4`
+        .eventParam_8_5       = 6, // `func_800D85D4`
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 12,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 1, // `func_800D82C4`
+        .eventParam_8_5       = 1, // `func_800D82C4`
         .flags_8_13           = 1,
     },
     {
         .triggerType_4_0      = TriggerType_TouchAabb,
         .pointOfInterestIdx_5 = 20,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 26,
+        .eventParam_8_5       = 26,
     },
     {
         .triggerType_4_0      = TriggerType_TouchAabb,
         .pointOfInterestIdx_5 = 24,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 21,
+        .eventParam_8_5       = 21,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 23,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 44, // `sharedFunc_800D15F0_3_s01`
+        .eventParam_8_5       = 44, // `sharedFunc_800D15F0_3_s01`
     },
     {
         .disabledEventFlag_2  = EventFlag_213,
@@ -1013,7 +1013,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 14,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 22,
+        .eventParam_8_5       = 22,
         .field_8_19           = 7,
     },
     {
@@ -1022,7 +1022,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 93,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 22,
+        .eventParam_8_5       = 22,
         .field_8_19           = 7,
     },
     {
@@ -1031,7 +1031,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 46,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 22,
+        .eventParam_8_5       = 22,
         .field_8_19           = 7,
     },
     {
@@ -1040,7 +1040,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 94,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 22,
+        .eventParam_8_5       = 22,
         .field_8_19           = 7,
     },
     {
@@ -1049,7 +1049,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 66,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 22,
+        .eventParam_8_5       = 22,
         .field_8_19           = 7,
     },
     {
@@ -1058,7 +1058,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 95,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 22,
+        .eventParam_8_5       = 22,
         .field_8_19           = 7,
     },
     {
@@ -1066,21 +1066,21 @@ s_EventParam D_800E0B64[203] = {
         .disabledEventFlag_2 = EventFlag_221,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_LoadRoom,
-        .eventData_8_5       = 93,
+        .eventParam_8_5      = 93,
     },
     {
         .requiredEventFlag_0 = EventFlag_218,
         .disabledEventFlag_2 = EventFlag_222,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_LoadRoom,
-        .eventData_8_5       = 94,
+        .eventParam_8_5      = 94,
     },
     {
         .requiredEventFlag_0 = EventFlag_219,
         .disabledEventFlag_2 = EventFlag_561,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_LoadRoom,
-        .eventData_8_5       = 95,
+        .eventParam_8_5      = 95,
         .flags_8_13          = 2,
         .field_8_24          = 1,
     },
@@ -1089,14 +1089,14 @@ s_EventParam D_800E0B64[203] = {
         .disabledEventFlag_2 = EventFlag_223,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_LoadRoom,
-        .eventData_8_5       = 95,
+        .eventParam_8_5      = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 25,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 27,
+        .eventParam_8_5       = 27,
         .field_8_19           = 12,
     },
     {
@@ -1104,7 +1104,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 27,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 25,
+        .eventParam_8_5       = 25,
         .field_8_19           = 12,
     },
     {
@@ -1112,7 +1112,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 28,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 29,
+        .eventParam_8_5       = 29,
         .field_8_19           = 12,
     },
     {
@@ -1120,7 +1120,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 29,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 28,
+        .eventParam_8_5       = 28,
         .field_8_19           = 12,
     },
     {
@@ -1128,7 +1128,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 31,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 39,
+        .eventParam_8_5       = 39,
         .field_8_19           = 13,
         .field_8_24           = 1,
     },
@@ -1137,7 +1137,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 39,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 31,
+        .eventParam_8_5       = 31,
         .field_8_19           = 13,
         .field_8_24           = 1,
     },
@@ -1146,7 +1146,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 32,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 51,
+        .eventParam_8_5       = 51,
         .field_8_19           = 12,
     },
     {
@@ -1154,7 +1154,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 51,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 32,
+        .eventParam_8_5       = 32,
         .field_8_19           = 12,
         .field_8_24           = 1,
     },
@@ -1163,7 +1163,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 33,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 52,
+        .eventParam_8_5       = 52,
         .field_8_19           = 12,
     },
     {
@@ -1171,7 +1171,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 52,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 33,
+        .eventParam_8_5       = 33,
         .field_8_19           = 12,
         .field_8_24           = 1,
     },
@@ -1180,7 +1180,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 40,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 48,
+        .eventParam_8_5       = 48,
         .field_8_19           = 13,
         .field_8_24           = 1,
     },
@@ -1189,7 +1189,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 48,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 40,
+        .eventParam_8_5       = 40,
         .field_8_19           = 13,
         .field_8_24           = 1,
     },
@@ -1198,7 +1198,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 41,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 49,
+        .eventParam_8_5       = 49,
         .field_8_19           = 12,
     },
     {
@@ -1206,7 +1206,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 49,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 41,
+        .eventParam_8_5       = 41,
         .field_8_19           = 12,
         .field_8_24           = 1,
     },
@@ -1215,7 +1215,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 54,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 62,
+        .eventParam_8_5       = 62,
         .field_8_19           = 12,
         .field_8_24           = 1,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S01,
@@ -1225,7 +1225,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 62,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 54,
+        .eventParam_8_5       = 54,
         .field_8_19           = 12,
         .field_8_24           = 1,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S01,
@@ -1236,7 +1236,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 55,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 63,
+        .eventParam_8_5       = 63,
         .field_8_19           = 12,
     },
     {
@@ -1245,7 +1245,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 63,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 55,
+        .eventParam_8_5       = 55,
         .field_8_19           = 12,
         .field_8_24           = 1,
     },
@@ -1254,7 +1254,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 55,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 1, // `func_800D82C4`
+        .eventParam_8_5       = 1, // `func_800D82C4`
         .flags_8_13           = 1,
     },
     {
@@ -1264,7 +1264,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 65,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 92,
+        .eventParam_8_5       = 92,
         .field_8_19           = 13,
     },
     {
@@ -1272,7 +1272,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 64,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 65,
+        .eventParam_8_5       = 65,
         .field_8_19           = 13,
     },
     {
@@ -1280,7 +1280,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 65,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 64,
+        .eventParam_8_5       = 64,
         .field_8_19           = 13,
     },
     {
@@ -1289,7 +1289,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 67,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 69,
+        .eventParam_8_5       = 69,
         .field_8_19           = 12,
     },
     {
@@ -1298,7 +1298,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 69,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 67,
+        .eventParam_8_5       = 67,
         .field_8_19           = 12,
     },
     {
@@ -1307,7 +1307,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 67,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 40, // `sharedFunc_800DB60C_7_s01`
+        .eventParam_8_5       = 40, // `sharedFunc_800DB60C_7_s01`
         .flags_8_13           = 1,
     },
     {
@@ -1316,7 +1316,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 68,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 70,
+        .eventParam_8_5       = 70,
         .field_8_19           = 12,
     },
     {
@@ -1325,7 +1325,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 70,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 68,
+        .eventParam_8_5       = 68,
         .field_8_19           = 12,
     },
     {
@@ -1334,7 +1334,7 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 68,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 40, // `sharedFunc_800DB60C_7_s01`
+        .eventParam_8_5       = 40, // `sharedFunc_800DB60C_7_s01`
         .flags_8_13           = 1,
     },
     {
@@ -1468,189 +1468,189 @@ s_EventParam D_800E0B64[203] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 142,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 90,
+        .eventParam_8_5       = 90,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 143,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 91,
+        .eventParam_8_5       = 91,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 144,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 93,
+        .eventParam_8_5       = 93,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 145,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 93,
+        .eventParam_8_5       = 93,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 146,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 93,
+        .eventParam_8_5       = 93,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 147,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 93,
+        .eventParam_8_5       = 93,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 148,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 94,
+        .eventParam_8_5       = 94,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 149,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 94,
+        .eventParam_8_5       = 94,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 150,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 94,
+        .eventParam_8_5       = 94,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 151,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 152,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 153,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 154,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 155,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 156,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 157,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 158,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 159,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 160,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 161,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 162,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 163,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 164,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 165,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 166,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 167,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 168,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 95,
+        .eventParam_8_5       = 95,
     },
     {
         .triggerType_4_0 = TriggerType_EndOfArray,

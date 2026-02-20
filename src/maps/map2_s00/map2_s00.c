@@ -121,7 +121,7 @@ void func_800E7B74(void) // 0x800E7B74
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventParam->pointOfInterestIdx_5)
+    switch (g_MapEventData->pointOfInterestIdx_5)
     {
         case 139:
             pickupType   = CommonPickupItemId_FirstAidKit;
@@ -1132,7 +1132,7 @@ void func_800E9CB4(void) // 0x800E9CB4
 
 void MapEvent_HouseKeyUse(void) // 0x800E9D1C
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_HouseKey, 1);
     Map_MessageWithSfx(31, Sfx_UseKey, &sfxPos); // "Used the House Key."
@@ -1455,7 +1455,7 @@ void func_800EA6E0(void) // 0x800EA6E0
 
 void MapEvent_KGordonKeyUse(void) // 0x800EA894
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_KGordonKey, 1);
     Map_MessageWithSfx(39, Sfx_UseKey, &sfxPos); // "Used the K. Gordon key."
@@ -1717,9 +1717,9 @@ void func_800EB174(void) // 0x800EB174
     {
         case 0:
             Player_ControlFreeze();
-            sfxPos.vx = MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionX_0;
+            sfxPos.vx = MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0;
             sfxPos.vy = Q12(-1.2f);
-            sfxPos.vz = MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionZ_8;
+            sfxPos.vz = MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8;
 
             func_8005DC1C(Sfx_Unk1349, &sfxPos, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);

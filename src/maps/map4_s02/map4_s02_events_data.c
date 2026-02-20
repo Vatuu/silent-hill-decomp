@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 
-s_EventParam D_800ED70C[35] = {
+s_EventData D_800ED70C[35] = {
     {
         .disabledEventFlag_2  = EventFlag_346,
         .triggerType_4_0      = TriggerType_TouchAabb,
@@ -12,32 +12,32 @@ s_EventParam D_800ED70C[35] = {
         .triggerType_4_0      = TriggerType_TouchAabb,
         .pointOfInterestIdx_5 = 26,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 27,
+        .eventParam_8_5       = 27,
     },
     {
         .triggerType_4_0      = TriggerType_TouchAabb,
         .pointOfInterestIdx_5 = 28,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 29,
+        .eventParam_8_5       = 29,
     },
     {
         .triggerType_4_0      = TriggerType_TouchAabb,
         .pointOfInterestIdx_5 = 2,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 3,
+        .eventParam_8_5       = 3,
     },
     {
         .triggerType_4_0      = TriggerType_TouchAabb,
         .pointOfInterestIdx_5 = 4,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 5,
+        .eventParam_8_5       = 5,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 6,
         .sysState_8_0         = SysState_LoadOverlay,
-        .eventData_8_5        = 7,
+        .eventParam_8_5       = 7,
         .field_8_19           = 12,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP4_S01,
     },
@@ -46,7 +46,7 @@ s_EventParam D_800ED70C[35] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 19,
         .sysState_8_0         = SysState_LoadOverlay,
-        .eventData_8_5        = 34,
+        .eventParam_8_5       = 34,
         .field_8_19           = 13,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP2_S04,
     },
@@ -55,7 +55,7 @@ s_EventParam D_800ED70C[35] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 20,
         .sysState_8_0         = SysState_LoadOverlay,
-        .eventData_8_5        = 34,
+        .eventParam_8_5       = 34,
         .field_8_19           = 13,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP2_S04,
     },
@@ -64,7 +64,7 @@ s_EventParam D_800ED70C[35] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 21,
         .sysState_8_0         = SysState_LoadOverlay,
-        .eventData_8_5        = 34,
+        .eventParam_8_5       = 34,
         .field_8_19           = 13,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP2_S04,
     },
@@ -73,7 +73,7 @@ s_EventParam D_800ED70C[35] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 9,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 12,
+        .eventParam_8_5       = 12,
         .field_8_19           = 16,
     },
     {
@@ -81,7 +81,7 @@ s_EventParam D_800ED70C[35] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 10,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 12,
+        .eventParam_8_5       = 12,
         .field_8_19           = 16,
     },
     {
@@ -89,7 +89,7 @@ s_EventParam D_800ED70C[35] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 11,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 12,
+        .eventParam_8_5       = 12,
         .field_8_19           = 16,
     },
     {
@@ -97,7 +97,7 @@ s_EventParam D_800ED70C[35] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 13,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 8,
+        .eventParam_8_5       = 8,
         .field_8_19           = 16,
     },
     {
@@ -105,7 +105,7 @@ s_EventParam D_800ED70C[35] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 14,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 8,
+        .eventParam_8_5       = 8,
         .field_8_19           = 16,
     },
     {
@@ -113,7 +113,7 @@ s_EventParam D_800ED70C[35] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 15,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 8,
+        .eventParam_8_5       = 8,
         .field_8_19           = 16,
     },
     {
@@ -121,7 +121,7 @@ s_EventParam D_800ED70C[35] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 16,
         .sysState_8_0         = SysState_LoadOverlay,
-        .eventData_8_5        = 18,
+        .eventParam_8_5       = 18,
         .field_8_19           = 13,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP4_S04,
     },
@@ -137,21 +137,21 @@ s_EventParam D_800ED70C[35] = {
         .triggerType_4_0      = TriggerType_TouchAabb,
         .pointOfInterestIdx_5 = 30,
         .sysState_8_0         = SysState_LoadOverlay,
-        .eventData_8_5        = 31,
+        .eventParam_8_5       = 31,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP4_S03,
     },
     {
         .triggerType_4_0      = TriggerType_TouchAabb,
         .pointOfInterestIdx_5 = 30,
         .sysState_8_0         = SysState_LoadOverlay,
-        .eventData_8_5        = 31,
+        .eventParam_8_5       = 31,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP4_S03,
     },
     {
         .triggerType_4_0      = TriggerType_TouchAabb,
         .pointOfInterestIdx_5 = 32,
         .sysState_8_0         = SysState_LoadOverlay,
-        .eventData_8_5        = 33,
+        .eventParam_8_5       = 33,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP4_S03,
     },
     {
@@ -159,7 +159,7 @@ s_EventParam D_800ED70C[35] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 46,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 15,
+        .eventParam_8_5       = 15,
     },
     {
         .disabledEventFlag_2  = EventFlag_982,
@@ -250,7 +250,7 @@ s_EventParam D_800ED70C[35] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 48,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 16,
+        .eventParam_8_5       = 16,
     },
     {
         .triggerType_4_0 = TriggerType_EndOfArray,

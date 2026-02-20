@@ -1,13 +1,13 @@
 #include "bodyprog/bodyprog.h"
 
-s_EventParam D_800DBE24[16] = {
+s_EventData D_800DBE24[16] = {
     {
         .disabledEventFlag_2  = EventFlag_M6S03_HealthDrink0,
         .triggerType_4_0      = TriggerType_TouchFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 10,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 2, // `MapEvent_CommonItemTake`
+        .eventParam_8_5       = 2, // `MapEvent_CommonItemTake`
     },
     {
         .disabledEventFlag_2  = EventFlag_M6S03_HandgunBullets,
@@ -15,7 +15,7 @@ s_EventParam D_800DBE24[16] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 11,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 2, // `MapEvent_CommonItemTake`
+        .eventParam_8_5       = 2, // `MapEvent_CommonItemTake`
     },
     {
         .disabledEventFlag_2  = EventFlag_M6S03_HealthDrink1,
@@ -23,21 +23,21 @@ s_EventParam D_800DBE24[16] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 12,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 2, // `MapEvent_CommonItemTake`
+        .eventParam_8_5       = 2, // `MapEvent_CommonItemTake`
     },
     {
         .requiredEventFlag_0 = EventFlag_426,
         .disabledEventFlag_2 = EventFlag_438,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_Fmv,
-        .eventData_8_5       = 9,
+        .eventParam_8_5      = 9,
         .flags_8_13          = 2,
     },
     {
         .disabledEventFlag_2 = EventFlag_431,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
-        .eventData_8_5       = 3, // `func_800D822C`
+        .eventParam_8_5      = 3, // `func_800D822C`
     },
     {
         .requiredEventFlag_0 = EventFlag_431,
@@ -51,7 +51,7 @@ s_EventParam D_800DBE24[16] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 2,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 4, // `func_800D84EC`
+        .eventParam_8_5       = 4, // `func_800D84EC`
     },
     {
         .disabledEventFlag_2  = EventFlag_433,
@@ -59,7 +59,7 @@ s_EventParam D_800DBE24[16] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 3,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 4, // `func_800D84EC`
+        .eventParam_8_5       = 4, // `func_800D84EC`
     },
     {
         .disabledEventFlag_2  = EventFlag_433,
@@ -67,13 +67,13 @@ s_EventParam D_800DBE24[16] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 4,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 4, // `func_800D84EC`
+        .eventParam_8_5       = 4, // `func_800D84EC`
     },
     {
         .requiredEventFlag_0 = EventFlag_433,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_LoadOverlay,
-        .eventData_8_5       = 7,
+        .eventParam_8_5      = 7,
         .mapOverlayIdx_8_25  = MapOverlayId_MAP6_S04,
     },
     {
@@ -96,13 +96,13 @@ s_EventParam D_800DBE24[16] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 8,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 5, // `MapEvent_MapTake`
+        .eventParam_8_5       = 5, // `MapEvent_MapTake`
     },
     {
         .triggerType_4_0    = TriggerType_TouchObbFacing,
         .activationType_4_4 = TriggerActivationType_Button,
         .sysState_8_0       = SysState_ReadMessage,
-        .eventData_8_5      = 16,
+        .eventParam_8_5     = 16,
     },
     {
         .requiredEventFlag_0  = EventFlag_435,

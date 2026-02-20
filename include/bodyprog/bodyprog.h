@@ -1447,8 +1447,8 @@ typedef struct
 } s_800AFE24; // Size: 85
 
 /** @brief Contains X/Z coordinates and optional 4 bytes of any kind of data.
- * Type of data usually depends on its usage, e.g. character spawns use `data.spawnInfo` while `s_EventParam` includes an enum that specifies the kind of data it expects.
- * Map headers include an array of these, which `s_EventParam` includes an index into. */
+ * Type of data usually depends on its usage, e.g. character spawns use `data.spawnInfo` while `s_EventData` includes an enum that specifies the kind of data it expects.
+ * Map headers include an array of these, which `s_EventData` includes an index into. */
 typedef struct _MapPoint2d
 {
     q19_12 positionX_0;
@@ -1598,7 +1598,7 @@ typedef struct _MapOverlayHeader
     void                   (**loadingScreenFuncs_18)();
     s_MapPoint2d*          mapPointsOfInterest_1C;
     void                   (**mapEventFuncs_20)(); /** Points to array of event functions. */
-    s_EventParam*          mapEvents_24;
+    s_EventData*           mapEvents_24;
     GsCOORDINATE2*         field_28;
     u8*                    loadableItems_2C;
     const char**           mapMessages_30; // Array of strings.
@@ -2389,7 +2389,7 @@ extern s32 g_DeltaTimeCpy;
 
 extern s32 pad_bss_800BCD88[2];
 
-extern s_EventParam* g_ItemTriggerEvents[];
+extern s_EventData* g_ItemTriggerEvents[];
 
 extern s32 pad_bss_800BCD94[5];
 
@@ -2406,7 +2406,7 @@ extern u8 D_800BCDD4;
 
 extern s8 pad_bss_800BCDD5[3];
 
-extern s_EventParam* g_MapEventParam;
+extern s_EventData* g_MapEventData;
 
 /** `e_InventoryItemId` | related to displaying items. */
 extern u8 D_800AE187;
@@ -2685,7 +2685,7 @@ void Chara_PositionSet(s_MapPoint2d* mapPoint);
 void func_8003943C(void);
 
 /** `SysState_Fmv` update function.
- * Movie to play is decided by `2072 - g_MapEventIdx`
+ * Movie to play is decided by `2072 - g_MapEventParam`
  * After playback, savegame gets `D_800BCDD8->eventFlagNum_2` event flag set. */
 void SysState_Fmv_Update(void);
 

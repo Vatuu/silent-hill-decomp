@@ -73,7 +73,7 @@ void Game_PlayerHeightUpdate(void) // 0x80037334
 void Event_Update(bool disableButtonEvents) // 0x800373CC
 {
     s_MapPoint2d* mapPoint;
-    s_EventParam* mapEvent;
+    s_EventData*  mapEvent;
     q19_12        pointPosX;
     q19_12        pointPosZ;
     q19_12        pointRadiusX;
@@ -92,17 +92,17 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
     }
 
     // `lastUsedItem_28` is set by `Inventory_ItemUse` when player uses an item that matches one of the item trigger events.
-    // If it's set, find its index in `g_ItemTriggerItemIds` and use that to get the corresponding `s_EventParam` from `g_ItemTriggerEvents`.
+    // If it's set, find its index in `g_ItemTriggerItemIds` and use that to get the corresponding `s_EventData` from `g_ItemTriggerEvents`.
     // After processing, the field is cleared and item trigger IDs are reset.
     // (Multi-item events likely repopulate the trigger IDs below based on whichever events are still active?)
     if (g_SysWork.playerWork_4C.extra_128.lastUsedItem_28 != InventoryItemId_Unequipped)
     {
         for (i = 0; g_SysWork.playerWork_4C.extra_128.lastUsedItem_28 != g_ItemTriggerItemIds[i]; i++);
 
-        g_MapEventParam        = g_ItemTriggerEvents[i];
+        g_MapEventData         = g_ItemTriggerEvents[i];
         g_MapEventLastUsedItem = g_SysWork.playerWork_4C.extra_128.lastUsedItem_28;
-        g_MapEventSysState     = g_MapEventParam->sysState_8_0;
-        g_MapEventIdx          = g_MapEventParam->eventData_8_5;
+        g_MapEventSysState     = g_MapEventData->sysState_8_0;
+        g_MapEventParam        = g_MapEventData->eventParam_8_5;
 
         g_SysWork.playerWork_4C.extra_128.lastUsedItem_28 = InventoryItemId_Unequipped;
         Event_ItemTriggersClear();
@@ -151,9 +151,9 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         // Returns before processing other events until flag checks above disable it.
         if (mapEvent->triggerType_4_0 == TriggerType_None)
         {
-            g_MapEventParam    = mapEvent;
+            g_MapEventData     = mapEvent;
             g_MapEventSysState = mapEvent->sysState_8_0;
-            g_MapEventIdx      = mapEvent->eventData_8_5;
+            g_MapEventParam    = mapEvent->eventParam_8_5;
             return;
         }
 
@@ -164,7 +164,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
             continue;
         }
 
-        // TODO: This uses `field_5` as the map point index, but there is also a separate `eventData_8_5` field.
+        // TODO: This uses `field_5` as the map point index, but there is also a separate `eventParam_8_5` field.
         mapPoint = &g_MapOverlayHeader.mapPointsOfInterest_1C[mapEvent->pointOfInterestIdx_5];
 
         switch (mapEvent->triggerType_4_0)
@@ -211,7 +211,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         // Trigger checks have passed. Check activation type.
 
         // `TriggerActivationType_Exclusive`: Skip processing any other events if this event is active.
-        if (mapEvent->activationType_4_4 == TriggerActivationType_Exclusive && mapEvent == g_MapEventParam)
+        if (mapEvent->activationType_4_4 == TriggerActivationType_Exclusive && mapEvent == g_MapEventData)
         {
             g_MapEventSysState = SysState_Invalid;
             return;
@@ -221,7 +221,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         // Required item ID for event is stored into `g_ItemTriggerItemIds` and event pointer at `g_ItemTriggerEvents`
         // Once player uses an item in the inventory screen, it compares the ID against the ones stored at `g_ItemTriggerItemIds`.
         // If used item ID matches one that event has requested, `extra_128.lastUsedItem_28` gets set to the item ID.
-        // At the start of this function, if `extra_128.lastUsedItem_28` is set, it will locate the `s_EventParam` for it from `g_ItemTriggerEvents` and run the event.
+        // At the start of this function, if `extra_128.lastUsedItem_28` is set, it will locate the `s_EventData` for it from `g_ItemTriggerEvents` and run the event.
         if (mapEvent->activationType_4_4 == TriggerActivationType_Item)
         {
             for (i = 0; g_ItemTriggerItemIds[i] != NO_VALUE; i++);
@@ -238,7 +238,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
                 ((g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & 1) || (g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & 1)))
             {
                 if (mapEvent->sysState_8_0 != SysState_LoadOverlay &&
-                    (mapEvent->sysState_8_0 != SysState_LoadRoom && mapEvent->eventData_8_5 > 1))
+                    (mapEvent->sysState_8_0 != SysState_LoadRoom && mapEvent->eventParam_8_5 > 1))
                 {
                     continue;
                 }
@@ -256,15 +256,15 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         }
 
         // Set `g_MapEventSysState` to the SysState needed for the event to be ran on next tick (`SysState_ReadMessage`/`SaveMenu`/`EventCallFunc`/etc.).
-        g_MapEventParam    = mapEvent;
+        g_MapEventData     = mapEvent;
         g_MapEventSysState = mapEvent->sysState_8_0;
-        g_MapEventIdx      = mapEvent->eventData_8_5;
+        g_MapEventParam    = mapEvent->eventParam_8_5;
         return;
     }
 
-    g_MapEventParam    = NULL;
+    g_MapEventData     = NULL;
     g_MapEventSysState = SysState_Invalid;
-    g_MapEventIdx      = 0;
+    g_MapEventParam    = 0;
 }
 
 bool Event_CollideFacingCheck(s_MapPoint2d* mapPoint) // 0x800378D4

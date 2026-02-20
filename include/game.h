@@ -876,13 +876,13 @@ typedef enum _TriggerActivationType
 } e_TriggerActivationType;
 
 /** Some events indicate specific cutscenes behavior via flags. */
-typedef enum _EventParamUnkState
+typedef enum _EventDataUnkState
 {
     EventParamUnkState_None = 0,
     EventParamUnkState_0    = 1 << 0, /** Possible name: `EventParamUnkState_UnfreezeWorld`. Used to freeze/unfreeze the game world. */
     EventParamUnkState_1    = 1 << 1, /** Triggers cutscenes that go to the in-game mode. */
     EventParamUnkState_2    = 1 << 2
-} e_EventParamUnkState;
+} e_EventDataUnkState;
 
 typedef union
 {
@@ -1034,7 +1034,7 @@ typedef struct _Savegame
 STATIC_ASSERT_SIZEOF(s_Savegame, 636);
 
 /** TODO: Known as `Trigger` in SilentHillMapExaminer: https://github.com/ItEndsWithTens/SilentHillMapExaminer/blob/master/src/SHME.ExternalTool.Guts/Trigger.cs */
-typedef struct _EventParam
+typedef struct _EventData
 {
     s16 requiredEventFlag_0;
     s16 disabledEventFlag_2;
@@ -1044,14 +1044,14 @@ typedef struct _EventParam
     u8  requiredItemId_6;       /** `e_InventoryItemId` that player must use from item screen. */
     u8  unk_7[1];
     u32 sysState_8_0       : 5; /** `e_SysState` used by the event. */
-    u32 eventData_8_5      : 8; /** Can be an ID of a `MapMsg`, sound effect, index into `mapEventFuncs_20`, or index into `mapPointsOfInterest_1C` for `areaLoad` events. */
-    u32 flags_8_13         : 6; /** `e_EventParamUnkCutsceneState` */
+    u32 eventParam_8_5     : 8; /** Can be an ID of a `MapMsg`, sound effect, index into `mapEventFuncs_20`, or index into `mapPointsOfInterest_1C` for `areaLoad` events. */
+    u32 flags_8_13         : 6; /** `e_EventDataUnkCutsceneState` */
     u32 field_8_19         : 5;
     u32 field_8_24         : 1;
     u32 mapOverlayIdx_8_25 : 6;
     u32 field_8_31         : 1;
-} s_EventParam;
-STATIC_ASSERT_SIZEOF(s_EventParam, 12);
+} s_EventData;
+STATIC_ASSERT_SIZEOF(s_EventData, 12);
 
 typedef struct _SaveUserConfig
 {
@@ -1842,7 +1842,7 @@ typedef struct _SysWork
     GsCOORDINATE2   npcCoords_FC0[NPC_BONE_COUNT_MAX]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
     s8              npcId_2280;                        // NPC ID for `npcFlags_2290`. Not an index, starts at 1.
     s8              loadingScreenIdx_2281;
-    s8              field_2282;    /** `e_EventParamUnkCutsceneState` */
+    s8              field_2282;                        /** `e_EventDataUnkCutsceneState` */
     s8              field_2283;    // Index into `SfxPairs`.
     u16             field_2284[4]; // Flags for character types?
                                    // Enabling a flag for Larval Stalkers causes them to die.
@@ -1910,7 +1910,7 @@ extern GsOT g_OrderingTable1[2];
 extern GsOT g_OrderingTable2[2];
 
 extern q19_12        g_DeltaTime1;
-extern u32           g_MapEventIdx;
+extern u32           g_MapEventParam;
 
 extern s32 g_IntervalVBlanks;
 extern s32 g_PrevVBlanks;

@@ -90,7 +90,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapOverlayId mapOverlayId, s32 arg3)
     u16 temp_v1_3;
 
 #if defined(MAP5_S01)
-    if (g_MapEventIdx == 7 && g_SysWork.sysStateStep_C[0] == 8)
+    if (g_MapEventParam == 7 && g_SysWork.sysStateStep_C[0] == 8)
     {
         return;
     }

@@ -152,7 +152,7 @@ void MapEvent_CommonItemTake(void) // 0x800D12B4
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventParam->pointOfInterestIdx_5)
+    switch (g_MapEventData->pointOfInterestIdx_5)
     {
         case 13:
             pickupType   = CommonPickupItemId_RifleShells;

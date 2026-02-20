@@ -321,7 +321,7 @@ void SysState_GamePaused_Update(void) // 0x800391E8
     {
         D_800A9A68 = 0;
         SD_Call(4);
-        g_MapEventIdx = 0;
+        g_MapEventParam = 0;
         SysWork_StateSetNext(SysState_SaveMenu1);
         return;
     }
@@ -603,9 +603,9 @@ void SysState_Fmv_Update(void) // 0x80039A58
     func_800892A4(0);
     func_80089128();
 
-    // Start playing movie. File to play is based on file ID `BASE_AUDIO_FILE_IDX - g_MapEventIdx`.
+    // Start playing movie. File to play is based on file ID `BASE_AUDIO_FILE_IDX - g_MapEventParam`.
     // Blocks until movie has finished playback or user has skipped it.
-    open_main(BASE_AUDIO_FILE_IDX - g_MapEventIdx, g_FileTable[BASE_AUDIO_FILE_IDX - g_MapEventIdx].blockCount_0_19);
+    open_main(BASE_AUDIO_FILE_IDX - g_MapEventParam, g_FileTable[BASE_AUDIO_FILE_IDX - g_MapEventParam].blockCount_0_19);
 
     func_800892A4(1);
 
@@ -614,14 +614,14 @@ void SysState_Fmv_Update(void) // 0x80039A58
     LoadImage(&D_800A9A6C, (u32*)IMAGE_BUFFER_0);
     DrawSync(SyncMode_Wait);
 
-    // Set savegame flag based on `g_MapEventParam->disabledEventFlag_2` flag ID.
-    Savegame_EventFlagSetAlt(g_MapEventParam->disabledEventFlag_2);
+    // Set savegame flag based on `g_MapEventData->disabledEventFlag_2` flag ID.
+    Savegame_EventFlagSetAlt(g_MapEventData->disabledEventFlag_2);
 
     // Return to game.
     Game_StateSetNext(GameState_InGame);
 
     // If flag is set, returns to `GameState_InGame` with `gameStateStep[0]` = 1.
-    if (g_MapEventParam->flags_8_13 & EventParamUnkState_1)
+    if (g_MapEventData->flags_8_13 & EventParamUnkState_1)
     {
         g_GameWork.gameStateStep_598[0] = 1;
     }
@@ -634,8 +634,8 @@ void SysState_LoadArea_Update(void) // 0x80039C40
 
     g_SysWork.field_229C            = 0;
     g_SysWork.loadingScreenIdx_2281 = D_800BCDB0.data.areaLoad.loadingScreenId_4_9;
-    g_SysWork.field_2283            = g_MapEventParam->field_8_19;
-    g_SysWork.field_2282            = g_MapEventParam->flags_8_13;
+    g_SysWork.field_2283            = g_MapEventData->field_8_19;
+    g_SysWork.field_2282            = g_MapEventData->flags_8_13;
 
     SD_Call(SfxPairs[g_SysWork.field_2283].sfx_0);
 
@@ -645,11 +645,11 @@ void SysState_LoadArea_Update(void) // 0x80039C40
         g_SysWork.flags_22A4 |= SysFlag2_10;
     }
 
-    D_800BCDB0 = g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->eventData_8_5];
+    D_800BCDB0 = g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventData->eventParam_8_5];
 
     if (D_800BCDB0.data.areaLoad.field_4_24 == 1)
     {
-        mapPoint                = &g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->pointOfInterestIdx_5];
+        mapPoint                = &g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventData->pointOfInterestIdx_5];
         var1                    = g_SysWork.playerWork_4C.player_0.position_18.vz - mapPoint->positionZ_8;
         D_800BCDB0.positionX_0 += g_SysWork.playerWork_4C.player_0.position_18.vx - mapPoint->positionX_0;
         D_800BCDB0.positionZ_8 += var1;
@@ -658,23 +658,23 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     if (g_SysWork.sysState_8 == SysState_LoadOverlay)
     {
         g_SysWork.processFlags_2298    = SysWorkProcessFlag_OverlayTransition;
-        g_SavegamePtr->mapOverlayId_A4 = g_MapEventParam->mapOverlayIdx_8_25;
+        g_SavegamePtr->mapOverlayId_A4 = g_MapEventData->mapOverlayIdx_8_25;
         GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
     }
     else
     {
         g_SysWork.processFlags_2298 = SysWorkProcessFlag_RoomTransition;
-        Bgm_TrackChange(g_MapEventParam->mapOverlayIdx_8_25);
+        Bgm_TrackChange(g_MapEventData->mapOverlayIdx_8_25);
 
-        if (g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->eventData_8_5].data.areaLoad.field_4_5 != 0)
+        if (g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventData->eventParam_8_5].data.areaLoad.field_4_5 != 0)
         {
-            g_SysWork.field_2349 = g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->eventData_8_5].data.areaLoad.field_4_5 - 1;
+            g_SysWork.field_2349 = g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventData->eventParam_8_5].data.areaLoad.field_4_5 - 1;
         }
     }
 
-    Savegame_EventFlagSetAlt(g_MapEventParam->disabledEventFlag_2);
+    Savegame_EventFlagSetAlt(g_MapEventData->disabledEventFlag_2);
 
-    if (g_MapEventParam->field_8_24)
+    if (g_MapEventData->field_8_24)
     {
         g_SysWork.flags_22A4 |= SysFlag2_6;
     }

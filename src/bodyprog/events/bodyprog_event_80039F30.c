@@ -31,7 +31,7 @@ s32 g_DeltaTimeCpy;
 
 s32 pad_bss_800BCD88[2];
 
-s_EventParam* g_ItemTriggerEvents[];
+s_EventData* g_ItemTriggerEvents[];
 
 s32 pad_bss_800BCD94[5];
 
@@ -47,7 +47,7 @@ u8 D_800BCDD4;
 
 s8 pad_bss_800BCDD5[3];
 
-s_EventParam* g_MapEventParam;
+s_EventData* g_MapEventData;
 
 void AreaLoad_UpdatePlayerPosition(void) // 0x80039F30
 {
@@ -79,7 +79,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
     // - A specific event related flag is disenabled.
     // - A specific camera related flag is disenabled.
     // - There is no alive enemy.
-    if (!(g_MapEventParam->flags_8_13 & EventParamUnkState_0) && !(g_SysWork.flags_22A4 & SysFlag2_5))
+    if (!(g_MapEventData->flags_8_13 & EventParamUnkState_0) && !(g_SysWork.flags_22A4 & SysFlag2_5))
     {
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
@@ -105,7 +105,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
         g_MapOverlayHeader.playerControlFreeze_C8();
     }
 
-    switch (Gfx_MapMsg_Draw(g_MapEventIdx))
+    switch (Gfx_MapMsg_Draw(g_MapEventParam))
     {
         case MapMsgState_Finish:
             break;
@@ -114,7 +114,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
             break;
 
         case MapMsgState_SelectEntry0:
-            Savegame_EventFlagSetAlt(g_MapEventParam->disabledEventFlag_2);
+            Savegame_EventFlagSetAlt(g_MapEventData->disabledEventFlag_2);
 
             unfreezePlayerFunc = &g_MapOverlayHeader.playerControlUnfreeze_CC;
 
@@ -131,7 +131,7 @@ void SysWork_SavegameUpdatePlayer(void) // 0x8003A120
 
     save = g_SavegamePtr;
 
-    save->locationId_A8       = g_MapEventIdx;
+    save->locationId_A8       = g_MapEventParam;
     save->playerPositionX_244 = g_SysWork.playerWork_4C.player_0.position_18.vx;
     save->playerPositionZ_24C = g_SysWork.playerWork_4C.player_0.position_18.vz;
     save->playerRotationY_248 = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
@@ -168,7 +168,7 @@ void SysState_SaveMenu_Update(void) // 0x8003A230
         case 0:
             SysWork_SavegameUpdatePlayer();
 
-            if (Savegame_EventFlagGet(EventFlag_SeenSaveScreen) || g_SavegamePtr->locationId_A8 == SaveLocationId_NextFear || g_MapEventIdx == 0)
+            if (Savegame_EventFlagGet(EventFlag_SeenSaveScreen) || g_SavegamePtr->locationId_A8 == SaveLocationId_NextFear || g_MapEventParam == 0)
             {
                 GameFs_SaveLoadBinLoad();
 
@@ -215,19 +215,19 @@ void SysState_SaveMenu_Update(void) // 0x8003A230
 
 void SysState_EventCallFunc_Update(void) // 0x8003A3C8
 {
-    if (g_MapEventParam->flags_8_13 != EventParamUnkState_None)
+    if (g_MapEventData->flags_8_13 != EventParamUnkState_None)
     {
-        Savegame_EventFlagSetAlt(g_MapEventParam->disabledEventFlag_2);
+        Savegame_EventFlagSetAlt(g_MapEventData->disabledEventFlag_2);
     }
 
     g_DeltaTime0 = g_DeltaTimeCpy;
-    g_MapOverlayHeader.mapEventFuncs_20[g_MapEventIdx]();
+    g_MapOverlayHeader.mapEventFuncs_20[g_MapEventParam]();
 }
 
 void SysState_EventSetFlag_Update(void) // 0x8003A460
 {
     g_DeltaTime0 = g_DeltaTimeCpy;
-    Savegame_EventFlagSetAlt(g_MapEventParam->disabledEventFlag_2);
+    Savegame_EventFlagSetAlt(g_MapEventData->disabledEventFlag_2);
     g_SysWork.sysState_8 = SysState_Gameplay;
 }
 
@@ -235,9 +235,9 @@ void SysState_EventPlaySound_Update(void) // 0x8003A4B4
 {
     g_DeltaTime0 = g_DeltaTimeCpy;
 
-    SD_Call(((u16)g_MapEventIdx + Sfx_Base) & 0xFFFF);
+    SD_Call(((u16)g_MapEventParam + Sfx_Base) & 0xFFFF);
 
-    Savegame_EventFlagSetAlt(g_MapEventParam->disabledEventFlag_2);
+    Savegame_EventFlagSetAlt(g_MapEventData->disabledEventFlag_2);
     g_SysWork.sysState_8 = SysState_Gameplay;
 }
 
@@ -419,9 +419,9 @@ void GameState_MapEvent_Update(void) // 0x8003AA4C
 
     D_800A9A0C = ScreenFade_IsFinished() && Fs_QueueDoThingWhenEmpty();
 
-    Savegame_EventFlagSetAlt(g_MapEventParam->disabledEventFlag_2);
+    Savegame_EventFlagSetAlt(g_MapEventData->disabledEventFlag_2);
 
-    g_MapOverlayHeader.mapEventFuncs_20[g_MapEventIdx]();
+    g_MapOverlayHeader.mapEventFuncs_20[g_MapEventParam]();
 
     Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
 }

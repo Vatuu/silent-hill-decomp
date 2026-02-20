@@ -73,7 +73,7 @@ void func_800D14BC(void) // 0x800D14BC
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventParam->pointOfInterestIdx_5)
+    switch (g_MapEventData->pointOfInterestIdx_5)
     {
         case 101:
             pickupType   = CommonPickupItemId_HealthDrink;
@@ -91,7 +91,7 @@ void func_800D1500(void) // 0x800D1500
 
 void func_800D1524(void) // 0x800D1524
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_BasementKey, 1);
     Map_MessageWithSfx(28, Sfx_UseKey, &sfxPos); // "Used basement key."

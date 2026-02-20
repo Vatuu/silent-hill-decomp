@@ -1,18 +1,18 @@
 #include "bodyprog/bodyprog.h"
 
-s_EventParam D_800D1EC0[21] = {
+s_EventData D_800D1EC0[21] = {
     {
         .disabledEventFlag_2 = EventFlag_237,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
-        .eventData_8_5       = 5, // `func_800D0608`
+        .eventParam_8_5      = 5, // `func_800D0608`
     },
     {
         .requiredEventFlag_0 = EventFlag_237,
         .disabledEventFlag_2 = EventFlag_238,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_LoadRoom,
-        .eventData_8_5       = 1,
+        .eventParam_8_5      = 1,
         .mapOverlayIdx_8_25  = MapOverlayId_MAP0_S02,
     },
     {
@@ -70,7 +70,7 @@ s_EventParam D_800D1EC0[21] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 4,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 1, // `MapEvent_DoorLocked`
+        .eventParam_8_5       = 1, // `MapEvent_DoorLocked`
         .flags_8_13           = 1,
     },
     {
@@ -78,7 +78,7 @@ s_EventParam D_800D1EC0[21] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 3,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 4,
+        .eventParam_8_5       = 4,
         .field_8_19           = 13,
         .field_8_24           = 1,
     },
@@ -87,7 +87,7 @@ s_EventParam D_800D1EC0[21] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 4,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 3,
+        .eventParam_8_5       = 3,
         .field_8_19           = 13,
         .field_8_24           = 1,
     },
@@ -97,7 +97,7 @@ s_EventParam D_800D1EC0[21] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 11,
         .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 1, // `MapEvent_DoorLocked`
+        .eventParam_8_5       = 1, // `MapEvent_DoorLocked`
         .flags_8_13           = 1,
     },
     {
@@ -106,7 +106,7 @@ s_EventParam D_800D1EC0[21] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 5,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 11,
+        .eventParam_8_5       = 11,
         .field_8_19           = 13,
         .field_8_24           = 1,
     },
@@ -116,7 +116,7 @@ s_EventParam D_800D1EC0[21] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 11,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 5,
+        .eventParam_8_5       = 5,
         .field_8_19           = 13,
         .field_8_24           = 1,
     },
@@ -126,7 +126,7 @@ s_EventParam D_800D1EC0[21] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 5,
         .sysState_8_0         = SysState_LoadRoom,
-        .eventData_8_5        = 11,
+        .eventParam_8_5       = 11,
         .flags_8_13           = 2,
         .field_8_19           = 13,
         .field_8_24           = 1,
@@ -136,13 +136,13 @@ s_EventParam D_800D1EC0[21] = {
         .disabledEventFlag_2 = EventFlag_236,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
-        .eventData_8_5       = 4, // `func_800D03FC`
+        .eventParam_8_5      = 4, // `func_800D03FC`
     },
     {
         .triggerType_4_0      = TriggerType_TouchAabb,
         .pointOfInterestIdx_5 = 14,
         .sysState_8_0         = SysState_LoadOverlay,
-        .eventData_8_5        = 15,
+        .eventParam_8_5       = 15,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP3_S03,
     },
     {
@@ -150,14 +150,14 @@ s_EventParam D_800D1EC0[21] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 1,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 15,
+        .eventParam_8_5       = 15,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 2,
         .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 15,
+        .eventParam_8_5       = 15,
     },
     {
         .triggerType_4_0 = TriggerType_EndOfArray,

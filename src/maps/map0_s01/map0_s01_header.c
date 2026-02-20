@@ -10,7 +10,7 @@
 
 #define BLOOD_SPLAT_COUNT_MAX 150
 
-extern s_EventParam    D_800DDFB8[];
+extern s_EventData     D_800DDFB8[];
 extern s_AnimInfo      HARRY_M0S01_ANIM_INFOS[];
 extern s_BloodSplat    g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 extern s_UnkStruct3_Mo g_MapHeaders_38[21];
