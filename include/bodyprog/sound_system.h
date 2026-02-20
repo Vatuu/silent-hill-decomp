@@ -363,13 +363,13 @@ void sd_work_init(void);
 /** @unused Stop main audio system. */
 void Sd_AudioStop(void);
 
-u8 Sd_PlaySfx(u16 sfxId, q0_8 balance, u8 vol);
+u8 Sd_PlaySfx(u16 sfxId, q0_7 balance, u8 vol);
 
 /** Updates attributes from currently playing specified audio. */
-void Sd_SfxAttributesUpdate(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
+void Sd_SfxAttributesUpdate(u16 sfxId, q0_7 balance, u8 vol, s8 pitch);
 
 /** SFX func. */
-void func_80046620(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
+void func_80046620(u16 sfxId, q0_7 balance, u8 vol, s8 pitch);
 
 /** @brief Stops the last VAB audio data playback. */
 void Sd_LastSfxStop(void);

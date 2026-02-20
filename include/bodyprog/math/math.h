@@ -166,24 +166,6 @@
     *(s32*)&((vec)->vx) = (s32)((x) & 0xFFFF) + (s32)((y) << 16); \
     ((vec)->vz) = (z)
 
-/** @brief Normalizes Q19.12 fixed-point degrees, unsigned integer range `[0, 4096]` to the signed integer range `[-2048, 2047]`.
- * Thin wrapper for `FP_ANGLE_NORM_S`.
- *
- * @param angle Unsigned fixed-point degrees, integer range `[0, 4096]`.
- * @return Signed fixed-point degrees wrapped to the integer range `[-2048, 2047]` (`s16`).
- */
-static inline q3_12 Math_AngleNormalize(q19_12 angle)
-{
-    return FP_ANGLE_NORM_S(angle);
-}
-
-// @hack Checks if `val >= -range && val < range`.
-// Needed to allow `li XX, (range * 2), sltu` to be emitted instead of just `sltiu`.
-inline static bool Math_CheckSignedRange(s32 val, s32 range)
-{
-    return (u32)(val + range) > (range * 2);
-}
-
 /** @brief Clears an `SVECTOR`'s components.
  *
  * @param vec Output vector.
@@ -232,6 +214,24 @@ inline static bool Math_CheckSignedRange(s32 val, s32 range)
     (vec)->vx = (x);                  \
     (vec)->vy = (y);                  \
     (vec)->vz = (z);                  \
+}
+
+/** @brief Normalizes Q19.12 fixed-point degrees, unsigned integer range `[0, 4096]` to the signed integer range `[-2048, 2047]`.
+ * Thin wrapper for `FP_ANGLE_NORM_S`.
+ *
+ * @param angle Unsigned fixed-point degrees, integer range `[0, 4096]`.
+ * @return Signed fixed-point degrees wrapped to the integer range `[-2048, 2047]` (`s16`).
+ */
+static inline q3_12 Math_AngleNormalize(q19_12 angle)
+{
+    return FP_ANGLE_NORM_S(angle);
+}
+
+// @hack Checks if `val >= -range && val < range`.
+// Needed to allow `li XX, (range * 2), sltu` to be emitted instead of just `sltiu`.
+inline static bool Math_CheckSignedRange(s32 val, s32 range)
+{
+    return (u32)(val + range) > (range * 2);
 }
 
 void Math_RotMatrixZxyNeg(SVECTOR* rot, MATRIX* mat); // Previous name: `Math_MatrixRotate0`

@@ -64,8 +64,8 @@ typedef struct _VC_ROAD_DATA
     q27_4             ofs_watch_hy_14   : 8;
     u32               field_15          : 4;
     s16               cam_mv_type_14    : 4; /** `VC_CAM_MV_TYPE` */
-    q0_8              fix_ang_x_16;          /** NOTE: Part of union in SH2 `VC_ROAD_DATA`. */
-    q0_8              fix_ang_y_17;
+    q0_7              fix_ang_x_16;          /** NOTE: Part of union in SH2 `VC_ROAD_DATA`. */
+    q0_7              fix_ang_y_17;
 } VC_ROAD_DATA;
 STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 24);
 

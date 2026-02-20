@@ -341,7 +341,7 @@ static inline void WriteVolume(s16* left, s16* right, s16 vol)
     *right = vol;
 }
 
-u8 Sd_PlaySfx(u16 sfxId, q0_8 balance, u8 vol) // 0x80046048
+u8 Sd_PlaySfx(u16 sfxId, q0_7 balance, u8 vol) // 0x80046048
 {
     static s16   audioIdx;
     SpuVoiceAttr attr;
@@ -432,7 +432,7 @@ u8 Sd_PlaySfx(u16 sfxId, q0_8 balance, u8 vol) // 0x80046048
     return NO_VALUE;
 }
 
-void Sd_SfxAttributesUpdate(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x800463C0
+void Sd_SfxAttributesUpdate(u16 sfxId, q0_7 balance, u8 vol, s8 pitch) // 0x800463C0
 {
     static s16   audioIdx;
     static u16   audioPitch;
@@ -525,7 +525,7 @@ void Sd_SfxAttributesUpdate(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x8004
 }
 
 // Plays audio, but it's only used on player's movement sounds and features pitch option unlike `Sd_PlaySfx`.
-void func_80046620(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x80046620
+void func_80046620(u16 sfxId, q0_7 balance, u8 vol, s8 pitch) // 0x80046620
 {
     static s16 audioIdx;
     s16        temp;
