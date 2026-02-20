@@ -1044,7 +1044,7 @@ typedef struct _EventParam
     u8  requiredItemId_6;       /** `e_InventoryItemId` that player must use from item screen. */
     u8  unk_7[1];
     u32 sysState_8_0       : 5; /** `e_SysState` used by the event. */
-    u32 eventData_8_5      : 8; /** Can be an ID of a MapMsg, sound effect, index into `mapEventFuncs_20`, or index into `mapPointsOfInterest_1C` for areaLoad events. */
+    u32 eventData_8_5      : 8; /** Can be an ID of a `MapMsg`, sound effect, index into `mapEventFuncs_20`, or index into `mapPointsOfInterest_1C` for `areaLoad` events. */
     u32 flags_8_13         : 6; /** `e_EventParamUnkCutsceneState` */
     u32 field_8_19         : 5;
     u32 field_8_24         : 1;

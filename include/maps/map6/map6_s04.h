@@ -29,6 +29,8 @@
 #define HAS_Chara_Alessa
 #define MAP_CHARA_COUNT 3
 
+#define UNK_FS_BUFFER_6 ((s_func_800DE274*)FS_BUFFER_6)
+
 // Used with `FS_BUFFER_6`
 typedef struct
 {
@@ -37,8 +39,6 @@ typedef struct
     u8  unk_4315[3];
     s32 field_4318;
 } s_func_800DE274;
-
-#define UNK_FS_BUFFER_6 ((s_func_800DE274*)FS_BUFFER_6)
 
 typedef struct
 {
@@ -320,7 +320,7 @@ void func_800DBE5C(s_SubCharacter* chara);
 
 s32 func_800DE350(s32 arg0);
 
-// Returns PACKET* but that causes mismatches?
+// TODO: Returns `PACKET*` but that causes mismatches?
 void* func_800DE380(GsOT_TAG* arg0, PACKET* arg1);
 
 void func_800DE5CC(void);
@@ -377,7 +377,7 @@ void func_800DFC94(s32* arg0);
 
 void func_800DFD08(void);
 
-// Returns PACKET* but that causes mismatches?
+// TODO: Returns `PACKET*` but that causes mismatches?
 void* func_800DFD3C(GsOT_TAG* ot, PACKET* packet, MATRIX* mat, s32 arg3, s32 arg4);
 
 void func_800E00F4(void);

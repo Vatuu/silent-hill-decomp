@@ -46,9 +46,9 @@ void Map_RoomBgmInit_CondTrue(void) // 0x800DA7AC
 {
     s32 var;
 
-    if (!Savegame_EventFlagGet(EventFlag_M0S01_AirScreamerDied)) // If Air Screamer isn't dead.
+    if (!Savegame_EventFlagGet(EventFlag_M0S01_AirScreamerDied))
     {
-        if (!Savegame_EventFlagGet(EventFlag_49)) // If Cybil and Harry cutscene haven't finished.
+        if (!Savegame_EventFlagGet(EventFlag_49)) // If Cybil and Harry cutscene hasn't finished.
         {
             var = 9;
         }

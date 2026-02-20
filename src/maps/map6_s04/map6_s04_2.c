@@ -745,14 +745,13 @@ void func_800DFA38(MATRIX* mat) // 0x800DFA38
 
 void func_800DFB44(void) // 0x800DFB44
 {
-    MATRIX           sp10;
+    MATRIX           mat;
     s_func_800DE274* base;
 
     base = UNK_FS_BUFFER_6;
 
-    func_800DFA38(&sp10);
-
-    GsOUT_PACKET_P = func_800DF6C4(&g_OrderingTable0[g_ActiveBufferIdx].org[base->field_4318], GsOUT_PACKET_P, &sp10);
+    func_800DFA38(&mat);
+    GsOUT_PACKET_P = func_800DF6C4(&g_OrderingTable0[g_ActiveBufferIdx].org[base->field_4318], GsOUT_PACKET_P, &mat);
 }
 
 bool func_800DFBB0(s_800ED848* arg0) // 0x800DFBB0
@@ -916,9 +915,9 @@ void* func_800DFD3C(GsOT_TAG* ot, PACKET* packet, MATRIX* mat, s32 arg3, s32 arg
 
 void func_800E00F4(void) // 0x800E00F4
 {
-    MATRIX sp18;
+    MATRIX mat;
 
-    GsOUT_PACKET_P = func_800DFD3C(&g_OrderingTable0[g_ActiveBufferIdx].org[UNK_FS_BUFFER_6->field_4318], GsOUT_PACKET_P, &sp18, 0x100, 7);
+    GsOUT_PACKET_P = func_800DFD3C(&g_OrderingTable0[g_ActiveBufferIdx].org[UNK_FS_BUFFER_6->field_4318], GsOUT_PACKET_P, &mat, 0x100, 7);
 }
 
 void func_800E0164(void) // 0x800E0164
