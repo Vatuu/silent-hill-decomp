@@ -1474,7 +1474,86 @@ s32 func_800D8438(s32 idx) // 0x800D8438
     return D_800EBC18[idx];
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D8454);
+void func_800D8454(s32* arg0, s32 x, s32 y, s32 s) // 0x800D8454
+{
+    s32      i;
+    s32      j;
+    s32      col0, col1;
+    s32      ang;
+    s32      x0, y0, w0, h0;
+    s32      x1, y1, w1, h1;
+    s32      sp34;
+    u32      var_s1;
+    s32      temp;
+    POLY_G4* poly;
+
+    sp34 = 0x19000;
+    ang  = 0;
+
+    x = Q12(x);
+    y = Q12(y);
+    s = Q12_MULT_PRECISE(s, 0x1800);
+
+    poly = (POLY_G4*)func_800D7F10();
+    temp = 8;
+
+    for (i = 0; i < 32; i++)
+    {
+        w0  = Math_Sin(ang);
+        h0  = Math_Cos(ang);
+        ang = ang + 0x80;
+        w1  = Math_Sin(ang);
+        h1  = Math_Cos(ang);
+
+        w0 = (w0 * s) / temp;
+        h0 = (h0 * s) / temp;
+        w1 = (w1 * s) / temp;
+        h1 = (h1 * s) / temp;
+
+        var_s1 = 0xC8000;
+
+        x0 = x;
+        y0 = y;
+        x1 = x;
+        y1 = y;
+
+        for (j = 0; j < temp; j++)
+        {
+            poly->x0 = x0 >> 12;
+            poly->x1 = (x0 + w0) >> 12;
+            poly->x2 = x1 >> 12;
+            poly->x3 = (x1 + w1) >> 12;
+
+            poly->y0 = y0 >> 12;
+            poly->y1 = (y0 + h0) >> 12;
+            poly->y2 = y1 >> 12;
+            poly->y3 = (y1 + h1) >> 12;
+
+            col0 = func_800D8438(var_s1 >> 12);
+            col1 = func_800D8438((var_s1 - sp34) >> 12);
+
+            *(s32*)&poly->r0 = col0;
+
+            SetPolyG4(poly);
+            *(s32*)&poly->r1 = col1;
+            *(s32*)&poly->r2 = col0;
+            *(s32*)&poly->r3 = col1;
+
+            setSemiTrans(poly, 1);
+
+            addPrim(arg0, poly);
+
+            x0     += w0;
+            x1     += w1;
+            y0     += h0;
+            y1     += h1;
+            var_s1 -= sp34;
+            poly++;
+        }
+    }
+
+    func_800D7F20((u8*)poly);
+}
 
 void func_800D8738(void* ot, s32 abr) // 0x800D8738
 {
