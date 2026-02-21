@@ -6,10 +6,6 @@
 #include "maps/characters/player.h"
 #include "maps/map4/map4_s06.h"
 
-INCLUDE_RODATA("maps/map4_s06/nonmatchings/map4_s06", D_800C9578);
-
-INCLUDE_RODATA("maps/map4_s06/nonmatchings/map4_s06", g_MapOverlayHeader);
-
 #include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"

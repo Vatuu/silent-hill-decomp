@@ -54,11 +54,14 @@ segments:
     subalign: 4
     subsegments:
       # .rodata section
-      - [0x0, .rodata, map3_s00]
+      - [0x0, rodata]
+      - [0x4, .rodata, map3_s00_header]
+      - [0x1050, .rodata, map3_s00]
       - [0x12C8, .rodata, Chara_Kaufmann]
       - [0x1394, rodata]
       - [0x1398, .rodata, map3_s00_2]
 
+      - [0x1E90, c, map3_s00_header]
       - [0x1E90, c, map3_s00_events_data]
 
       # .text section

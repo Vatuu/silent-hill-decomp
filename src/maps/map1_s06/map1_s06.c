@@ -8,10 +8,6 @@
 #include "maps/characters/split_head.h"
 #include "maps/map1/map1_s06.h"
 
-INCLUDE_RODATA("maps/map1_s06/nonmatchings/map1_s06", D_800C9578);
-
-INCLUDE_RODATA("maps/map1_s06/nonmatchings/map1_s06", g_MapOverlayHeader);
-
 #include "maps/shared/sharedFunc_800CBE7C_1_s05.h" // 0x800CAFC4
 
 #include "maps/shared/sharedFunc_800CBF74_1_s05.h" // 0x800CB0BC

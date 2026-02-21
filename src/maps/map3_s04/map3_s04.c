@@ -8,10 +8,6 @@
 #include "maps/characters/puppet_nurse.h"
 #include "maps/map3/map3_s04.h"
 
-INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04", D_800C9578);
-
-INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04", g_MapOverlayHeader);
-
 #include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"

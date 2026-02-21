@@ -8,10 +8,6 @@
 #include "maps/characters/stalker.h"
 #include "maps/map5/map5_s02.h"
 
-INCLUDE_RODATA("maps/map5_s02/nonmatchings/map5_s02", D_800C9578);
-
-INCLUDE_RODATA("maps/map5_s02/nonmatchings/map5_s02", g_MapOverlayHeader);
-
 #include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"

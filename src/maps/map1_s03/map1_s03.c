@@ -12,10 +12,6 @@
 #include "maps/characters/stalker.h"
 #include "maps/map1/map1_s03.h"
 
-INCLUDE_RODATA("maps/map1_s03/nonmatchings/map1_s03", D_800C9578);
-
-INCLUDE_RODATA("maps/map1_s03/nonmatchings/map1_s03", g_MapOverlayHeader);
-
 #include "maps/shared/sharedFunc_800CBA4C_1_s02.h" // 0x800CBCE0
 
 #include "maps/shared/sharedFunc_800CBC98_1_s02.h" // 0x800CBF2C

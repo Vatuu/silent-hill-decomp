@@ -10,10 +10,6 @@
 #include "maps/characters/puppet_nurse.h"
 #include "maps/map3/map3_s05.h"
 
-INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", D_800C9578);
-
-INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", g_MapOverlayHeader);
-
 #include "maps/shared/sharedFunc_800CAAD0_1_s05.h" // 0x800CB5F4
 
 #include "maps/shared/sharedFunc_800CABF8_1_s05.h" // 0x800CB71C

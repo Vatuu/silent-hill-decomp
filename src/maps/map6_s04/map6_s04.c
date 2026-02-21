@@ -9,10 +9,6 @@
 #include "maps/characters/stalker.h"
 #include "maps/map6/map6_s04.h"
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800C9578);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", g_MapOverlayHeader);
-
 #include "maps/shared/sharedFunc_800CB7F4_1_s01.h" // 0x800CC7E0
 
 #include "maps/shared/sharedFunc_800CB8A0_1_s01.h" // 0x800CC88C

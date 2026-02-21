@@ -93,7 +93,7 @@ typedef enum _MapType
     MapType_SPU = 4,
     MapType_RSR = 5,
     MapType_RSU = 6,
-    MapType_APR = 7,
+    MapType_APR = 7, /** @unused */
     MapType_APU = 8,
     MapType_ER  = 9,
     MapType_ER2 = 10,

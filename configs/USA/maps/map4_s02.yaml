@@ -54,8 +54,11 @@ segments:
     subalign: 4
     subsegments:
       # .rodata section
-      - [0x0, .rodata, map4_s02]
+      - [0x0, rodata]
+      - [0x4, .rodata, map4_s02_header]
+      - [0x1050, .rodata, map4_s02]
 
+      - [0x3290, c, map4_s02_header]
       - [0x3290, c, map4_s02_events_data]
 
       # .text section

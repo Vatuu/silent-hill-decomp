@@ -14,10 +14,6 @@
 #include "maps/characters/hanged_scratcher.h"
 #include "maps/map5/map5_s00.h"
 
-INCLUDE_RODATA("maps/map5_s00/nonmatchings/map5_s00", D_800C9578);
-
-INCLUDE_RODATA("maps/map5_s00/nonmatchings/map5_s00", g_MapOverlayHeader);
-
 void func_800CB0D8(void) // 0x800CB0D8
 {
     s32 idx;

@@ -11,10 +11,6 @@
 #include "maps/characters/romper.h"
 #include "maps/map5/map5_s01.h"
 
-INCLUDE_RODATA("maps/map5_s01/nonmatchings/map5_s01", D_800C9578);
-
-INCLUDE_RODATA("maps/map5_s01/nonmatchings/map5_s01", g_MapOverlayHeader);
-
 #include "maps/shared/sharedFunc_800CE5D4_1_s03.h" // 0x800CCA90
 
 #include "maps/shared/sharedFunc_800CE688_1_s03.h" // 0x800CCB44

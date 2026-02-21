@@ -11,10 +11,6 @@
 
 #define floatstingerProps floatstinger->properties_E4.floatstinger
 
-INCLUDE_RODATA("maps/map4_s05/nonmatchings/map4_s05", D_800C9578);
-
-INCLUDE_RODATA("maps/map4_s05/nonmatchings/map4_s05", g_MapOverlayHeader);
-
 #include "maps/shared/sharedFunc_800CB0A4_4_s03.h" // 0x800CACA4
 
 #include "maps/shared/sharedFunc_800CB1B0_4_s03.h" // 0x800CADB0

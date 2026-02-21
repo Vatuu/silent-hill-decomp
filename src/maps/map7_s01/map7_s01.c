@@ -9,10 +9,6 @@
 #include "maps/characters/puppet_nurse.h"
 #include "maps/map7/map7_s01.h"
 
-INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01", D_800C9578);
-
-INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01", g_MapOverlayHeader);
-
 const VECTOR D_800CA5C8 = {};
 
 #include "maps/shared/sharedFunc_800CCB8C_0_s01.h" // 0x800CC9A4

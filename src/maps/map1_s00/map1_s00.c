@@ -10,10 +10,6 @@
 #include "maps/characters/stalker.h"
 #include "maps/map1/map1_s00.h"
 
-INCLUDE_RODATA("maps/map1_s00/nonmatchings/map1_s00", D_800C9578);
-
-INCLUDE_RODATA("maps/map1_s00/nonmatchings/map1_s00", g_MapOverlayHeader);
-
 #include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"

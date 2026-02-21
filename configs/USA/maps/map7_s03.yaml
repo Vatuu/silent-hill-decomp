@@ -54,7 +54,9 @@ segments:
     subalign: 4
     subsegments:
       # .rodata section
-      - [0x0, .rodata, map7_s03]
+      - [0x0, rodata]
+      - [0x4, .rodata, map7_s03_header]
+      - [0x1050, .rodata, map7_s03]
       - [0x1528, .rodata, Chara_Cybil]
       - [0x1618, .rodata, Chara_Dahlia]
       - [0x16EC, rodata]
@@ -66,6 +68,7 @@ segments:
       - [0x1820, .rodata, map7_s03_2]
 
       # Data only C files
+      - [0x3BF8, c, map7_s03_header]
       - [0x3BF8, c, map7_s03_events_data]
 
       # .text section

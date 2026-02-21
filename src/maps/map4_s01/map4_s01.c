@@ -13,10 +13,6 @@
 
 // TODO: Func declarations in header.
 
-INCLUDE_RODATA("maps/map4_s01/nonmatchings/map4_s01", D_800C9578);
-
-INCLUDE_RODATA("maps/map4_s01/nonmatchings/map4_s01", g_MapOverlayHeader);
-
 #include "maps/shared/sharedFunc_800CAAD0_1_s05.h" // 0x800CC19C
 
 #include "maps/shared/sharedFunc_800CABF8_1_s05.h" // 0x800CC2C4
