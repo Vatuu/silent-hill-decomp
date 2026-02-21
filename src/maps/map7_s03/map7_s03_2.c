@@ -3132,7 +3132,30 @@ void func_800DB6D0(MATRIX* arg0, const VECTOR* rot0, const VECTOR* rot1, const M
     MulMatrix0(&sp30, &sp10, arg0);
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DBA08);
+s32 func_800DBA08(SVECTOR* arg0, s32* arg1, s32* arg2) // 0x800DBA08
+{
+    s32 sp10;
+    s32 sp14;
+    s32 temp_s4;
+    s32 temp_s0;
+
+    temp_s4 = RotTransPers(arg0, arg1, &sp10, &sp14);
+
+    if (sp14 & 0x20000)
+    {
+        return 0;
+    }
+
+    arg0++;
+    temp_s0 = RotTransPers(arg0, arg2, &sp10, &sp14);
+
+    if (sp14 & 0x20000)
+    {
+        return 0;
+    }
+
+    return (temp_s4 + temp_s0) / 2;
+}
 
 void func_800DBABC(void) // 0x800DBABC
 {

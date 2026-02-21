@@ -1032,4 +1032,6 @@ void func_800DF348(void);
 
 void func_800D8454(s32* arg0, s32 x, s32 y, s32 s);
 
+s32 func_800DBA08(SVECTOR* arg0, s32* arg1, s32* arg2);
+
 #endif
