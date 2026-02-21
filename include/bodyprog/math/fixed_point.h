@@ -374,7 +374,7 @@
  * @return Unsigned Q3.12 fixed-point angle, full rotation integer range `[0, 4096]` (`q3_12`).
  */
 #define FP_ANGLE(deg) \
-    (q3_12)((deg) * ((float)Q12(1.0f) / 360.0f))
+    (q3_12)Q12((float)(deg) / 360.0f)
 
 /** @brief Converts floating-point degrees to unsigned Q0.8 fixed-point, clamped full rotation integer range `[0, 255]`.
  *

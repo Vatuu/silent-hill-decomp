@@ -3178,16 +3178,16 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
     s32           sp3C;
     s32           sp40;
     s32*          sp44;
-    s32           sp48;
+    q19_12        dist;
     u16           sp4C;
     GsOT_TAG*     temp_a0_3;
     MATRIX*       var_s7;
-    s16           temp_v0_6;
-    s32           temp_s0;
+    q3_12         angle1;
+    q19_12        angle0;
     s32           temp_v1;
     s32           var_a2;
     s32           i;
-    s32           var_s4;
+    q19_12        angle2;
     s32           var_s5;
     s32           var_s6;
     s32*          var_s3;
@@ -3196,10 +3196,10 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
     PACKET*       packet;
     s_D_800F48A8* ptr;
 
-    sp4C = 0x43;
-    sp48 = Q12_MULT_PRECISE(arg0->rotZ_4D8, 0xE66);
+    sp4C = 67;
+    dist = Q12_MULT_PRECISE(arg0->rotZ_4D8, Q12(0.9f));
 
-    if (g_SysWork.npcs_1A0[2].model_0.charaId_0 == 0x16)
+    if (g_SysWork.npcs_1A0[2].model_0.charaId_0 == Chara_Incubus)
     {
         sp4C = 3;
     }
@@ -3211,23 +3211,22 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
     sp38 = 0x80808;
     sp40 = arg0->field_20;
 
-    for (i = 0; i < arg0->field_1C; i++, var_s7++, var_s3++, sp44++)
-        ;
+    for (i = 0; i < arg0->field_1C; i++, var_s7++, var_s3++, sp44++);
 
-    var_s4 = *sp44;
+    angle2 = *sp44;
 
-    sp10.vx = (Q12_MULT_PRECISE(Math_Sin(var_s4), sp48) >> 4);
-    sp10.vy = (Q12_MULT_PRECISE(Math_Cos(var_s4), sp48) >> 4);
-    temp_s0 = var_s4 + 0x400;
-    sp18.vx = (Q12_MULT_PRECISE(Math_Sin(temp_s0), sp48) >> 4);
+    sp10.vx = Q12_TO_Q8(Q12_MULT_PRECISE(Math_Sin(angle2), dist));
+    sp10.vy = Q12_TO_Q8(Q12_MULT_PRECISE(Math_Cos(angle2), dist));
+    angle0 = angle2 + FP_ANGLE(90.0f);
+    sp18.vx = Q12_TO_Q8(Q12_MULT_PRECISE(Math_Sin(angle0), dist));
 
     var_s3++;
     i++;
     sp44++;
 
-    sp18.vy = (Q12_MULT_PRECISE(Math_Cos(temp_s0), sp48) >> 4);
-    sp18.vz = 0;
-    sp10.vz = 0;
+    sp18.vy = Q12_TO_Q8(Q12_MULT_PRECISE(Math_Cos(angle0), dist));
+    sp18.vz = Q8(0.0f);
+    sp10.vz = Q8(0.0f);
 
     func_800DBBD8(var_s7++);
 
@@ -3243,18 +3242,19 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
          var_s3++,
          sp44++)
     {
-        var_a0 = var_s4;
-        var_s4 = *sp44;
+        var_a0 = angle2;
+        angle2 = *sp44;
         sp3C   = var_a2;
 
         do
         {
-            temp_v0_6 = func_8005BF38(var_s4 - var_a0);
-        } while (0); // @hack
+            angle1 = func_8005BF38(angle2 - var_a0);
+        }
+        while (false); // @hack
 
-        temp_s0 = temp_v0_6;
+        angle0 = angle1;
 
-        if (ABS(temp_v0_6) < 0x400)
+        if (ABS(angle1) < FP_ANGLE(90.0f))
         {
             var_s6 = sp30;
             var_s5 = sp34;
@@ -3265,29 +3265,31 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
             var_s5 = sp30;
         }
 
-        sp10.vx = (Q12_MULT_PRECISE(Math_Sin(var_s4), sp48) >> 4);
-        sp10.vy = (Q12_MULT_PRECISE(Math_Cos(var_s4), sp48) >> 4);
-        temp_s0 = var_s4 + 0x400;
-        sp18.vx = (Q12_MULT_PRECISE(Math_Sin(temp_s0), sp48) >> 4);
-        sp18.vy = (Q12_MULT_PRECISE(Math_Cos(temp_s0), sp48) >> 4);
-        sp18.vz = 0;
-        sp10.vz = 0;
+        sp10.vx = Q12_TO_Q8(Q12_MULT_PRECISE(Math_Sin(angle2), dist));
+        sp10.vy = Q12_TO_Q8(Q12_MULT_PRECISE(Math_Cos(angle2), dist));
+        angle0 = angle2 + FP_ANGLE(90.0f);
+        sp18.vx = Q12_TO_Q8(Q12_MULT_PRECISE(Math_Sin(angle0), dist));
+        sp18.vy = Q12_TO_Q8(Q12_MULT_PRECISE(Math_Cos(angle0), dist));
+        sp18.vz = Q8(0.0f);
+        sp10.vz = Q8(0.0f);
 
-        if (arg0->field_4E8 == 0 && func_800DBCA4(var_s7, &sp20) && g_DeltaTime0 != 0 && ptr->field_44 == 0)
+        if (arg0->field_4E8 == 0 && func_800DBCA4(var_s7, &sp20) &&
+            g_DeltaTime0 != Q12(0.0f) && ptr->field_44 == 0)
         {
             if (ptr->field_48 != 2)
             {
                 if (ptr->field_48 == 0)
                 {
-                    func_800DBC18(0x1E000);
+                    func_800DBC18(Q12(30.0f));
                     func_800DACFC(&sp20, 0, 0);
                     func_800DBAE8(&g_SysWork.playerWork_4C.player_0.position_18, 1);
                 }
                 else
                 {
-                    func_800DBC18(0x14000);
+                    func_800DBC18(Q12(20.0f));
                     func_800DACFC(&sp20, 0, 1);
                 }
+
                 func_800DBAE8(&g_SysWork.playerWork_4C.player_0.position_18, 3);
             }
 
@@ -3302,6 +3304,7 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
                 arg0->field_18 = sp40;
                 arg0->field_20 = sp40;
             }
+
             arg0->field_4E8 = 1;
         }
 
@@ -3314,7 +3317,8 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
             continue;
         }
 
-        if ((u16)var_s6 > 0x140 && (u32)(var_s6 >> 16) > 0xE0 && (u16)var_s5 > 0x140 && (u32)(var_s5 >> 16) > 0xE0)
+        if ((u16)var_s6 > 320 && (u32)(var_s6 >> 16) > 224 &&
+            (u16)var_s5 > 320 && (u32)(var_s5 >> 16) > 224)
         {
             // @hack Some optimized out code?
             temp_v1 = sp30;
@@ -3336,12 +3340,12 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
         var_a0  = (i & 1) ? 0 : 0x7F;
         temp_v1 = 0x40;
 
-        setUV4(poly, 0, var_a0, temp_v1, var_a0, 0, var_a0 + 0x7F, temp_v1, var_a0 + 0x7F);
+        setUV4(poly, 0, var_a0, temp_v1, var_a0, 0, var_a0 + 127, temp_v1, var_a0 + 127);
 
-        poly->tpage = 0x35;
+        poly->tpage = 53;
         poly->clut  = sp4C;
 
-        if (g_DeltaTime0 != 0)
+        if (g_DeltaTime0 != Q12(0.0f))
         {
             *var_s3 -= sp38;
         }
@@ -3362,18 +3366,18 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
 
 void func_800DC3EC(s_800F3DAC* arg0) // 0x800DC3EC
 {
-    s32 maxVal;
+    s32 valMax;
     s32 field20Val;
     s32 field1CVal;
 
     // TODO: Might be using some kind of `CLAMP` in this func, couldn't get match with our macros though.
-    maxVal = arg0->field_18;
+    valMax = arg0->field_18;
 
     field20Val = ((arg0->timer_C - arg0->timer_8) * 30) / (arg0->timer_C / 2);
     // TODO: `field20Val = MIN(maxVal, field20Val)`?
-    if (field20Val >= maxVal)
+    if (field20Val >= valMax)
     {
-        field20Val = maxVal;
+        field20Val = valMax;
     }
     arg0->field_20 = field20Val;
 
@@ -3381,9 +3385,9 @@ void func_800DC3EC(s_800F3DAC* arg0) // 0x800DC3EC
     {
         field1CVal = (((arg0->timer_C / 2) - arg0->timer_8) * 30) / (arg0->timer_C / 2);
         // TODO: `field1CVal = MIN(maxVal, field1CVal)`?
-        if (field1CVal >= maxVal)
+        if (field1CVal >= valMax)
         {
-            field1CVal = maxVal;
+            field1CVal = valMax;
         }
 
         field1CVal     = MAX(0, field1CVal);
@@ -3394,8 +3398,8 @@ void func_800DC3EC(s_800F3DAC* arg0) // 0x800DC3EC
 void func_800DC49C(s_800F3DAC* arg0) // 0x800DC49C
 {
     VECTOR3 pos;
-    MATRIX* mat;
     bool    cond;
+    MATRIX* mat;
 
     cond = D_800F48A8.field_48 != 0;
 

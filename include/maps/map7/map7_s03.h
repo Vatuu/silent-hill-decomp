@@ -1022,12 +1022,12 @@ void func_800DB288(void);
 
 void func_800DB6D0(MATRIX* arg0, const VECTOR* rot0, const VECTOR* rot1, const MATRIX* mat, s32 arg4);
 
+void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot);
+
 void func_800DF288(s32 x, s32 y, s32 val);
 
 void func_800DF458(void);
 
 void func_800DF348(void);
-
-void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot);
 
 #endif

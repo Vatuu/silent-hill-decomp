@@ -106,36 +106,35 @@ void func_800DE26C(void) {}
 
 void func_800DE274(void) // 0x800DE274
 {
-    s_func_800DE274* ptr;
     s32              diff;
     s32              j;
     s32              i;
-    u8*              var_s1;
     s32              range;
     s32              square;
     s32              temp;
+    u8*              curPtr;
+    s_func_800DE274* ptr;
 
     ptr = UNK_FS_BUFFER_6;
 
     range  = 64;
-    var_s1 = UNK_FS_BUFFER_6->field_0;
-
+    curPtr = UNK_FS_BUFFER_6->field_0;
     for (i = -range; i <= range; i++)
     {
         square = SQUARE(i);
 
-        for (j = -range; j <= range; j++, var_s1++)
+        for (j = -range; j <= range; j++, curPtr++)
         {
             diff = range - SquareRoot0(square + SQUARE(j));
             if (diff > 0)
             {
                 temp    = (diff << 8) / range;
                 temp    = MIN(255, temp);
-                *var_s1 = temp;
+                *curPtr = temp;
             }
             else
             {
-                *var_s1 = 0;
+                *curPtr = 0;
             }
         }
     }
