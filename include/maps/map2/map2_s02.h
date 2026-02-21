@@ -16,6 +16,8 @@ extern s_WorldObjectModel   g_CommonWorldObjects[6];
 
 void func_800E3FB0(s_SubCharacter* chara);
 
+void func_800E9C24(void);
+
 void func_800E9D54(void);
 
 void func_800E9EAC(void);

@@ -10,9 +10,17 @@
 
 extern s_AnimInfo HARRY_M2S02_ANIM_INFOS[];
 
+void (*g_LoadScreenFuncs[])() =
+{
+    NULL,
+    Gfx_LoadingScreen_PlayerRun,
+    Gfx_LoadingScreen_BackgroundTexture,
+    func_800E9C24
+};
+
 const s_MapOverlayHeader g_MapOverlayHeader =
 {
-    .mapInfo_0                        = 0x8002503C,
+    .mapInfo_0                        = &MAP_INFOS[MapType_SPR],
     .getMapRoomIdxFunc_4              = Map_RoomIdxGet,
     .field_8                          = 15,
     .unk_9                            = { 0, 0, 0 },
@@ -22,7 +30,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .ambientAudioIdx_15               = 13,
     .field_16                         = 1,
     .field_17                         = 2,
-    .loadingScreenFuncs_18            = 0x800ED444,
+    .loadingScreenFuncs_18            = g_LoadScreenFuncs,
     .mapPointsOfInterest_1C           = MAP_POINTS,
     .mapEventFuncs_20                 = 0x800ED67C,
     .mapEvents_24                     = 0x800ED6DC,

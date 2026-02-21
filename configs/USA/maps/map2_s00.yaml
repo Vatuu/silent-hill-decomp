@@ -66,6 +66,8 @@ segments:
 
       # .data section
       - [0x25134, data]
+      - [0x27164, .data, map2_s00_header]
+      - [0x27174, data] # MAP_POINTS
       - [0x279F0, .data, map2_s00]
       - [0x27B2C, .data, map2_s00_events_data]
       - [0x28498, data]
