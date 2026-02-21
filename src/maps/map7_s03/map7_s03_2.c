@@ -1478,39 +1478,46 @@ void func_800D8454(s32* arg0, s32 x, s32 y, s32 s) // 0x800D8454
 {
     s32      i;
     s32      j;
-    s32      col0, col1;
-    s32      ang;
-    s32      x0, y0, w0, h0;
-    s32      x1, y1, w1, h1;
-    s32      sp34;
-    u32      var_s1;
+    s32      col0;
+    s32      col1;
+    q19_12   angle;
+    q19_12   x0;
+    q19_12   y0;
+    q19_12   w0;
+    q19_12   h0;
+    q19_12   x1;
+    q19_12   y1;
+    q19_12   w1;
+    q19_12   h1;
+    q19_12   sp34;
+    q20_12   var_s1;
     s32      temp;
     POLY_G4* poly;
 
-    sp34 = 0x19000;
-    ang  = 0;
+    sp34 = Q12(25.0f);
+    angle = Q12_ANGLE(0.0f);
 
     x = Q12(x);
     y = Q12(y);
-    s = Q12_MULT_PRECISE(s, 0x1800);
+    s = Q12_MULT_PRECISE(s, Q12(1.5f));
 
     poly = (POLY_G4*)func_800D7F10();
     temp = 8;
 
     for (i = 0; i < 32; i++)
     {
-        w0  = Math_Sin(ang);
-        h0  = Math_Cos(ang);
-        ang = ang + 0x80;
-        w1  = Math_Sin(ang);
-        h1  = Math_Cos(ang);
+        w0  = Math_Sin(angle);
+        h0  = Math_Cos(angle);
+        angle = angle + Q12_ANGLE(11.25f);
+        w1  = Math_Sin(angle);
+        h1  = Math_Cos(angle);
 
         w0 = (w0 * s) / temp;
         h0 = (h0 * s) / temp;
         w1 = (w1 * s) / temp;
         h1 = (h1 * s) / temp;
 
-        var_s1 = 0xC8000;
+        var_s1 = Q12(200.0f);
 
         x0 = x;
         y0 = y;
@@ -1519,18 +1526,18 @@ void func_800D8454(s32* arg0, s32 x, s32 y, s32 s) // 0x800D8454
 
         for (j = 0; j < temp; j++)
         {
-            poly->x0 = x0 >> 12;
-            poly->x1 = (x0 + w0) >> 12;
-            poly->x2 = x1 >> 12;
-            poly->x3 = (x1 + w1) >> 12;
+            poly->x0 = FP_FROM(x0, Q12_SHIFT);
+            poly->x1 = FP_FROM(x0 + w0, Q12_SHIFT);
+            poly->x2 = FP_FROM(x1, Q12_SHIFT);
+            poly->x3 = FP_FROM(x1 + w1, Q12_SHIFT);
 
-            poly->y0 = y0 >> 12;
-            poly->y1 = (y0 + h0) >> 12;
-            poly->y2 = y1 >> 12;
-            poly->y3 = (y1 + h1) >> 12;
+            poly->y0 = FP_FROM(y0, Q12_SHIFT);
+            poly->y1 = FP_FROM(y0 + h0, Q12_SHIFT);
+            poly->y2 = FP_FROM(y1, Q12_SHIFT);
+            poly->y3 = FP_FROM(y1 + h1, Q12_SHIFT);
 
-            col0 = func_800D8438(var_s1 >> 12);
-            col1 = func_800D8438((var_s1 - sp34) >> 12);
+            col0 = func_800D8438(FP_FROM(var_s1, Q12_SHIFT));
+            col1 = func_800D8438(FP_FROM(var_s1 - sp34, Q12_SHIFT));
 
             *(s32*)&poly->r0 = col0;
 
@@ -3141,7 +3148,7 @@ s32 func_800DBA08(SVECTOR* arg0, s32* arg1, s32* arg2) // 0x800DBA08
 
     temp_s4 = RotTransPers(arg0, arg1, &sp10, &sp14);
 
-    if (sp14 & 0x20000)
+    if (sp14 & (1 << 17))
     {
         return 0;
     }
@@ -3149,7 +3156,7 @@ s32 func_800DBA08(SVECTOR* arg0, s32* arg1, s32* arg2) // 0x800DBA08
     arg0++;
     temp_s0 = RotTransPers(arg0, arg2, &sp10, &sp14);
 
-    if (sp14 & 0x20000)
+    if (sp14 & (1 << 17))
     {
         return 0;
     }
@@ -3163,7 +3170,6 @@ void func_800DBABC(void) // 0x800DBABC
     s32    i;
 
     val = Q12(1.0f);
-
     for (i = 4; i >= 0; i--)
     {
         D_800F3D98[i] = val;
@@ -3339,10 +3345,7 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
     ptr    = &D_800F48A8;
 
     for (; i < sp40;
-         i++,
-         var_s7++,
-         var_s3++,
-         sp44++)
+         i++, var_s7++, var_s3++, sp44++)
     {
         var_a0 = angle2;
         angle2 = *sp44;

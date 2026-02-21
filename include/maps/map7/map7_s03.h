@@ -966,6 +966,8 @@ void func_800D7D74(s32 arg0);
 
 void func_800D7E50(VECTOR3* arg0);
 
+void func_800D8454(s32* arg0, s32 x, s32 y, s32 s);
+
 void func_800D947C(void);
 
 void func_800D952C(void);
@@ -1022,6 +1024,8 @@ void func_800DB288(void);
 
 void func_800DB6D0(MATRIX* arg0, const VECTOR* rot0, const VECTOR* rot1, const MATRIX* mat, s32 arg4);
 
+s32 func_800DBA08(SVECTOR* arg0, s32* arg1, s32* arg2);
+
 void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot);
 
 void func_800DF288(s32 x, s32 y, s32 val);
@@ -1029,9 +1033,5 @@ void func_800DF288(s32 x, s32 y, s32 val);
 void func_800DF458(void);
 
 void func_800DF348(void);
-
-void func_800D8454(s32* arg0, s32 x, s32 y, s32 s);
-
-s32 func_800DBA08(SVECTOR* arg0, s32* arg1, s32* arg2);
 
 #endif
