@@ -2872,7 +2872,7 @@ void func_800E1398(void) // 0x800E1398
             }
 
             ScreenFade_Reset();
-            g_SysWork.sysFlags_22A0 |= 1 << 0;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
 
             SD_Call(0x679U);
             SysWork_StateStepIncrement(0);
@@ -2880,7 +2880,7 @@ void func_800E1398(void) // 0x800E1398
 
         case 1:
             SysWork_StateStepIncrementAfterFade(2, true, 1, Q12(2.5f), false);
-            g_SysWork.sysFlags_22A0 |= 1 << 0;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
             break;
 
         case 2:

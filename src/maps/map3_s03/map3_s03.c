@@ -360,7 +360,7 @@ void func_800D1A58(void) // 0x800D1A58
             break;
 
         case 5:
-            g_SysWork.sysFlags_22A0 |= 1;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
 
             Fs_QueueStartReadTim(FILE_TIM_COLORS_TIM, (void*)0x801D2600, &g_ItemInspectionImg);
 

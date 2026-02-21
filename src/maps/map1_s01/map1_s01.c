@@ -402,7 +402,7 @@ void func_800D7864(void) // 0x800D7864
     #define MEDALLION_CUTSCENE_END   19
     #define DONT_CHECK_PIANO_STATE   21
 
-    g_SysWork.sysFlags_22A0 |= 1 << 1;
+    g_SysWork.sysFlags_22A0 |= SysFlag_1;
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= MEDALLION_CUTSCENE_START && g_SysWork.sysStateStep_C[0] < MEDALLION_CUTSCENE_END)

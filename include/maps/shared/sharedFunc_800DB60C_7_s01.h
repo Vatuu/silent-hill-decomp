@@ -4,11 +4,11 @@ void sharedFunc_800DB60C_7_s01(void)
     s32       i;
     s32       k;
     s32       j;
-    SPRT*     sprt;
-    DR_TPAGE* tPage;
     s32       x;
     s32       y;
     s16       cursorX;
+    SPRT*     sprt;
+    DR_TPAGE* tPage;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -25,17 +25,17 @@ void sharedFunc_800DB60C_7_s01(void)
                 {
                     for (k = 0; k < 3; k++)
                     {
-                        if (sharedData_800E1694_7_s01 & (1 << ((i * 9 + k * 3) + j)))
+                        if (sharedData_800E1694_7_s01 & (1 << (((i * 9) + (k * 3)) + j)))
                         {
                             setRGBC0(sprt, 0x80, 0x80, 0x80, 0x64);
 
                             x = sharedData_800E1578_7_s01[i][j][k][0];
                             y = sharedData_800E1578_7_s01[i][j][k][1];
 
-                            setUV0(sprt, 0x40, 0x10);
+                            setUV0(sprt, 64, 16);
                             setWH(sprt, 9, 9);
-                            setXY0Fast(sprt, x - 0xA4, y - 0x7C);
-                            sprt->clut = 0x38E;
+                            setXY0Fast(sprt, x - 164, y - 124);
+                            sprt->clut = 910;
                             addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[1], sprt, 4);
                             sprt++;
                         }
@@ -63,12 +63,15 @@ void sharedFunc_800DB60C_7_s01(void)
             break;
 
         case 2:
-            g_SysWork.sysFlags_22A0 |= 1;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
+
             Fs_QueueStartReadTim(FILE_TIM_3X3DOR_TIM, IMAGE_BUFFER_5, &g_ItemInspectionImg);
             Fs_QueueWaitForEmpty();
+
             sharedData_800E2CA8_7_s01 = 0;
             sharedData_800E2CAC_7_s01 = 0;
             sharedData_800E1694_7_s01 = 0;
+
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -79,11 +82,11 @@ void sharedFunc_800DB60C_7_s01(void)
         case 4:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
 
-            sharedData_800E2CA8_7_s01 += (g_Controller0->sticks_24.sticks_0.leftX << 0xD) / 75;
-            sharedData_800E2CA8_7_s01  = CLAMP_RANGE(sharedData_800E2CA8_7_s01, -0x73000, 0x73000);
+            sharedData_800E2CA8_7_s01 += (g_Controller0->sticks_24.sticks_0.leftX << 13) / 75;
+            sharedData_800E2CA8_7_s01  = CLAMP_RANGE(sharedData_800E2CA8_7_s01, Q12(-115.0f), Q12(115.0f));
 
-            sharedData_800E2CAC_7_s01 += (g_Controller0->sticks_24.sticks_0.leftY << 0xD) / 75;
-            sharedData_800E2CAC_7_s01  = CLAMP_RANGE(sharedData_800E2CAC_7_s01, -0x69000, 0x69000);
+            sharedData_800E2CAC_7_s01 += (g_Controller0->sticks_24.sticks_0.leftY << 13) / 75;
+            sharedData_800E2CAC_7_s01  = CLAMP_RANGE(sharedData_800E2CAC_7_s01, Q12(-105.0f), Q12(105.0f));
 
             Game_TimerUpdate();
 
@@ -119,26 +122,25 @@ void sharedFunc_800DB60C_7_s01(void)
                     {
                         for (k = 0; k < 3; k++)
                         {
-                            if ((sharedData_800E1578_7_s01[i][j][k][0] - 0xA9) > FP_FROM(sharedData_800E2CA8_7_s01, Q12_SHIFT) ||
-                                (sharedData_800E1578_7_s01[i][j][k][0] - 0x97) < FP_FROM(sharedData_800E2CA8_7_s01, Q12_SHIFT))
+                            if ((sharedData_800E1578_7_s01[i][j][k][0] - 169) > FP_FROM(sharedData_800E2CA8_7_s01, Q12_SHIFT) ||
+                                (sharedData_800E1578_7_s01[i][j][k][0] - 151) < FP_FROM(sharedData_800E2CA8_7_s01, Q12_SHIFT))
                             {
                                 continue;
                             }
 
-                            if ((sharedData_800E1578_7_s01[i][j][k][1] - 0x81) > FP_FROM(sharedData_800E2CAC_7_s01, Q12_SHIFT) ||
-                                (sharedData_800E1578_7_s01[i][j][k][1] - 0x6F) < FP_FROM(sharedData_800E2CAC_7_s01, Q12_SHIFT))
+                            if ((sharedData_800E1578_7_s01[i][j][k][1] - 129) > FP_FROM(sharedData_800E2CAC_7_s01, Q12_SHIFT) ||
+                                (sharedData_800E1578_7_s01[i][j][k][1] - 111) < FP_FROM(sharedData_800E2CAC_7_s01, Q12_SHIFT))
                             {
                                 continue;
                             }
 
-                            if ((SQUARE(sharedData_800E1578_7_s01[i][j][k][0] - 0xA0 - FP_FROM(sharedData_800E2CA8_7_s01, Q12_SHIFT)) +
-                                 SQUARE(sharedData_800E1578_7_s01[i][j][k][1] - 0x78 - FP_FROM(sharedData_800E2CAC_7_s01, Q12_SHIFT))) > 0x51)
+                            if ((SQUARE(sharedData_800E1578_7_s01[i][j][k][0] - 160 - FP_FROM(sharedData_800E2CA8_7_s01, Q12_SHIFT)) +
+                                 SQUARE(sharedData_800E1578_7_s01[i][j][k][1] - 120 - FP_FROM(sharedData_800E2CAC_7_s01, Q12_SHIFT))) > 81)
                             {
                                 continue;
                             }
 
-                            temp_v1_4 = 1 << ((i * 9 + k * 3) + j);
-
+                            temp_v1_4 = 1 << (((i * 9) + (k * 3)) + j);
                             if (!(sharedData_800E1694_7_s01 & temp_v1_4))
                             {
                                 sharedData_800E1694_7_s01 += temp_v1_4;
@@ -162,7 +164,7 @@ void sharedFunc_800DB60C_7_s01(void)
             break;
 
         case 5:
-            SysWork_StateStepIncrementDelayed(0x999, false);
+            SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             break;
 
@@ -194,6 +196,7 @@ void sharedFunc_800DB60C_7_s01(void)
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+
             Savegame_EventFlagClear(EventFlag_493);
             Savegame_EventFlagClear(EventFlag_495);
             break;

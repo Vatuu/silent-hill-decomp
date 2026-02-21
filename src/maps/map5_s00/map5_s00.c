@@ -758,7 +758,7 @@ void func_800D6B00(void) // 0x800D6B00
             break;
 
         case 5:
-            g_SysWork.sysFlags_22A0 |= 1 << 0;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
             func_800862F8(7, FILE_TIM_DRAINKEY_TIM, false);
             break;
 
