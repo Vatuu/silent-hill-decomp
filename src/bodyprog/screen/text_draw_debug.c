@@ -62,7 +62,7 @@ void Gfx_DebugStringDraw(char* str) // 0x80031F40
             default:
                 glyphSprt = (SPRT_8*)packet;
                 addPrimFast(ot, glyphSprt, 3);
-                setRGBC0(glyphSprt, FP_COLOR(0.5f), FP_COLOR(0.5f), FP_COLOR(0.5f), 0x74);
+                setRGBC0(glyphSprt, Q8_COLOR(0.5f), Q8_COLOR(0.5f), Q8_COLOR(0.5f), 0x74);
                 setXY0Fast(glyphSprt, posX, posY);
 
                 charIdx = (char)toupper(charCode) - '*';

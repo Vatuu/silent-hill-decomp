@@ -618,7 +618,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                     temp_v0_10 = Rng_RandQ12();
                     temp_s2_2  = Q12_MULT_PRECISE(sp48, temp_v0_10);
 
-                    temp_v0_10 = Rng_RandQ12() - FP_ANGLE(180.0f);
+                    temp_v0_10 = Rng_RandQ12() - Q12_ANGLE(180.0f);
                     angle  = var_s6 + Q12_MULT_PRECISE(sp50, temp_v0_10);
 
                     temp3     = sp20 + Q12_MULT(temp_s2_2, Math_Sin(angle));

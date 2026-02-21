@@ -2453,7 +2453,7 @@ typedef struct
 STATIC_ASSERT_SIZEOF(s_WorldObjectDescNoRot, 40);
 
 #define WorldObjectPoseInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
-    WorldObjectPoseSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
+    WorldObjectPoseSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), Q12_ANGLE(rotX), Q12_ANGLE(rotY), Q12_ANGLE(rotZ))
 
 #define WorldObjectPoseSet(eventPose, posX, posY, posZ, rotX, rotY, rotZ) \
 {                                                                         \
@@ -2462,7 +2462,7 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectDescNoRot, 40);
 }
 
 #define WorldObjectInit(eventPos, name, posX, posY, posZ, rotX, rotY, rotZ) \
-    WorldObjectSet(eventPos, name, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
+    WorldObjectSet(eventPos, name, Q12(posX), Q12(posY), Q12(posZ), Q12_ANGLE(rotX), Q12_ANGLE(rotY), Q12_ANGLE(rotZ))
 
 #define WorldObjectSet(eventPose, name, posX, posY, posZ, rotX, rotY, rotZ) \
 {                                                                           \

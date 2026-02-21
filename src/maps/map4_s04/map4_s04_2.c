@@ -274,8 +274,8 @@ void func_800D1910(void) // 0x800D1910
             g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
             Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(57.0f), Q12(-3.0f), Q12(141.8f));
 
-            // TODO: `Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, FP_ANGLE(-90.0f), 0, 0);` doesn't match.
-            *(s32*)&g_SysWork.pointLightRot_2370.vx = 0xFC00; // `FP_ANGLE(-90.0f)`
+            // TODO: `Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, Q12_ANGLE(-90.0f), 0, 0);` doesn't match.
+            *(s32*)&g_SysWork.pointLightRot_2370.vx = 0xFC00; // `Q12_ANGLE(-90.0f)`
             (&g_SysWork.pointLightRot_2370)->vz     = 0;
 
             func_8008D438();
@@ -421,7 +421,7 @@ void func_800D23E4(void) // 0x800D23E4
             // Load Lisa character.
             Chara_Load(0, Chara_Lisa, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
-            Chara_Spawn(Chara_Lisa, 0, Q12(60.0f), Q12(140.0f), FP_ANGLE(0.0f), 3);
+            Chara_Spawn(Chara_Lisa, 0, Q12(60.0f), Q12(140.0f), Q12_ANGLE(0.0f), 3);
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -623,7 +623,7 @@ void func_800D23E4(void) // 0x800D23E4
         // Set light rotation.
         g_SysWork.pointLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz));
         g_SysWork.pointLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz);
-        g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
+        g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
     }
 }
 

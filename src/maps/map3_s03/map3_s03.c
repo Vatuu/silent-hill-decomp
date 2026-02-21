@@ -702,7 +702,7 @@ void func_800D27F4(void) // 0x800D27F4
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-62.38f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-59.66f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(320.9f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(320.9f);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(-61.03f), Q12(-2.14f), Q12(-62.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);

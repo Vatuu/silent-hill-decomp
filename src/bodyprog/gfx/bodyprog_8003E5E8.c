@@ -225,7 +225,7 @@ void Game_SpotlightLoadScreenAttribsFix(void) // 0x8003EB54
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
 
     Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(0.0f), Q12(-0.2f), Q12(-2.0f));
-    Math_SVectorSet(&g_SysWork.pointLightRot_2370, FP_ANGLE(10.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
+    Math_SVectorSet(&g_SysWork.pointLightRot_2370, Q12_ANGLE(10.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
 }
 
 void Game_FlashlightAttributesFix(void) // 0x8003EBA0
@@ -236,7 +236,7 @@ void Game_FlashlightAttributesFix(void) // 0x8003EBA0
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
 
     Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(-0.08f), Q12(-0.28f), Q12(0.12f));
-    Math_SVectorSet(&g_SysWork.pointLightRot_2370, FP_ANGLE(-15.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
+    Math_SVectorSet(&g_SysWork.pointLightRot_2370, Q12_ANGLE(-15.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
 }
 
 void Gfx_MapEffectsAssign(s_MapOverlayHeader* mapHdr) // 0x8003EBF4
@@ -546,33 +546,33 @@ q19_12 func_8003F4DC(GsCOORDINATE2** coords, SVECTOR* rot, q19_12 alpha, s32 arg
             break;
 
         case 0:
-            rot0.vx = FP_ANGLE(0.0f);
-            rot0.vy = FP_ANGLE(-90.0f);
-            rot0.vz = FP_ANGLE(0.0f);
+            rot0.vx = Q12_ANGLE(0.0f);
+            rot0.vy = Q12_ANGLE(-90.0f);
+            rot0.vz = Q12_ANGLE(0.0f);
             break;
 
         case 2:
-            rot0.vx = FP_ANGLE(-20.0f);
-            rot0.vy = FP_ANGLE(195.0f);
-            rot0.vz = FP_ANGLE(0.0f);
+            rot0.vx = Q12_ANGLE(-20.0f);
+            rot0.vy = Q12_ANGLE(195.0f);
+            rot0.vz = Q12_ANGLE(0.0f);
             break;
 
         case 3:
-            rot0.vx = FP_ANGLE(-20.0f);
-            rot0.vy = FP_ANGLE(-75.0f);
-            rot0.vz = FP_ANGLE(0.0f);
+            rot0.vx = Q12_ANGLE(-20.0f);
+            rot0.vy = Q12_ANGLE(-75.0f);
+            rot0.vz = Q12_ANGLE(0.0f);
             break;
 
         case 4:
-            rot0.vx = FP_ANGLE(-20.0f);
-            rot0.vy = FP_ANGLE(15.0f);
-            rot0.vz = FP_ANGLE(0.0f);
+            rot0.vx = Q12_ANGLE(-20.0f);
+            rot0.vy = Q12_ANGLE(15.0f);
+            rot0.vz = Q12_ANGLE(0.0f);
             break;
 
         case 5:
-            rot0.vx = FP_ANGLE(-20.0f);
-            rot0.vy = FP_ANGLE(105.0f);
-            rot0.vz = FP_ANGLE(0.0f);
+            rot0.vx = Q12_ANGLE(-20.0f);
+            rot0.vy = Q12_ANGLE(105.0f);
+            rot0.vz = Q12_ANGLE(0.0f);
             break;
     }
 

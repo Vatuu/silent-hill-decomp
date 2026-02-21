@@ -466,9 +466,9 @@ void func_800D6690(VECTOR* arg0, q19_12 rotY) // 0x800D6690
     TransMatrix(&mat, &sp30);
     SetTransMatrix(&mat);
 
-    rot.vx = FP_ANGLE(0.0f);
+    rot.vx = Q12_ANGLE(0.0f);
     rot.vy = rotY;
-    rot.vz = FP_ANGLE(0.0f);
+    rot.vz = Q12_ANGLE(0.0f);
 
     Math_RotMatrixZxyNeg(&rot, &mat);
     SetMulRotMatrix(&mat);
@@ -841,9 +841,9 @@ void func_800D6FF4(VECTOR* arg0, q19_12 rotY) // 0x800D6FF4
     TransMatrix(&mat, &sp30);
     SetTransMatrix(&mat);
 
-    rot.vx = FP_ANGLE(0.0f);
+    rot.vx = Q12_ANGLE(0.0f);
     rot.vy = rotY;
-    rot.vz = FP_ANGLE(0.0f);
+    rot.vz = Q12_ANGLE(0.0f);
 
     Math_RotMatrixZxyNeg(&rot, &mat);
     SetMulRotMatrix(&mat);
@@ -1259,9 +1259,9 @@ void func_800D7BF4(VECTOR* arg0, q19_12 rotY) // 0x800D7BF4
     TransMatrix(&mat, &sp30);
     SetTransMatrix(&mat);
 
-    rot.vx = FP_ANGLE(0.0f);
+    rot.vx = Q12_ANGLE(0.0f);
     rot.vy = rotY;
-    rot.vz = FP_ANGLE(0.0f);
+    rot.vz = Q12_ANGLE(0.0f);
 
     Math_RotMatrixZxyNeg(&rot, &mat);
     SetMulRotMatrix(&mat);
@@ -1686,7 +1686,7 @@ void func_800D8CD4(q19_12 rotZ, SVECTOR* rot) // 0x800D8CD4
     SetTransMatrix(&transformMat);
     vwGetViewAngle(&rot0);
 
-    rot1.vx = FP_ANGLE(0.0f);
+    rot1.vx = Q12_ANGLE(0.0f);
     rot1.vz = -rotZ;
     rotY    = rot0.vy;
     rot1.vy = rotY;
@@ -2404,13 +2404,13 @@ q19_12 func_800DA420(VECTOR3* result) // 0x800DA420
     q19_12 posX;
     q19_12 posY;
 
-    posX = Q12_MULT_PRECISE(Math_Sin(FP_ANGLE(15.0f)), Q12(5.0f));
-    posY = Q12_MULT_PRECISE(Math_Cos(FP_ANGLE(15.0f)), Q12(5.0f));
+    posX = Q12_MULT_PRECISE(Math_Sin(Q12_ANGLE(15.0f)), Q12(5.0f));
+    posY = Q12_MULT_PRECISE(Math_Cos(Q12_ANGLE(15.0f)), Q12(5.0f));
 
     result->vx = posX;
     result->vy = posY;
     result->vz = Q12(0.0f);
-    return FP_ANGLE(15.0f);
+    return Q12_ANGLE(15.0f);
 }
 
 void func_800DA4B4(s32* arg0, s32* arg1) // 0x800DA4B4
@@ -2953,12 +2953,12 @@ void func_800DB6D0(MATRIX* arg0, const VECTOR* rot0, const VECTOR* rot1, const M
     {
         angle0 = ratan2(var_s4, var_s5);
         angle2 = ratan2(sp64, var_fp) - angle0;
-        angle2 = FP_ANGLE_NORM_S(angle2);
+        angle2 = Q12_ANGLE_NORM_S(angle2);
         absAngle2  = ABS(angle2);
 
         if (angle1 < absAngle2)
         {
-            if (angle2 <= FP_ANGLE(0.0f))
+            if (angle2 <= Q12_ANGLE(0.0f))
             {
                 angle0 = angle0 - angle1;
             }
@@ -2990,7 +2990,7 @@ void func_800DB6D0(MATRIX* arg0, const VECTOR* rot0, const VECTOR* rot1, const M
     {
         angle0  = ratan2(sp68, sp6C);
         angle2 = ratan2(var_s4, var_s1) - angle0;
-        angle2 = FP_ANGLE_NORM_S(angle2);
+        angle2 = Q12_ANGLE_NORM_S(angle2);
         absAngle2   = ABS(angle2);
 
         if (angle1 < absAngle2)
@@ -3217,7 +3217,7 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
 
     sp10.vx = Q12_TO_Q8(Q12_MULT_PRECISE(Math_Sin(angle2), dist));
     sp10.vy = Q12_TO_Q8(Q12_MULT_PRECISE(Math_Cos(angle2), dist));
-    angle0 = angle2 + FP_ANGLE(90.0f);
+    angle0 = angle2 + Q12_ANGLE(90.0f);
     sp18.vx = Q12_TO_Q8(Q12_MULT_PRECISE(Math_Sin(angle0), dist));
 
     var_s3++;
@@ -3254,7 +3254,7 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
 
         angle0 = angle1;
 
-        if (ABS(angle1) < FP_ANGLE(90.0f))
+        if (ABS(angle1) < Q12_ANGLE(90.0f))
         {
             var_s6 = sp30;
             var_s5 = sp34;
@@ -3267,7 +3267,7 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
 
         sp10.vx = Q12_TO_Q8(Q12_MULT_PRECISE(Math_Sin(angle2), dist));
         sp10.vy = Q12_TO_Q8(Q12_MULT_PRECISE(Math_Cos(angle2), dist));
-        angle0 = angle2 + FP_ANGLE(90.0f);
+        angle0 = angle2 + Q12_ANGLE(90.0f);
         sp18.vx = Q12_TO_Q8(Q12_MULT_PRECISE(Math_Sin(angle0), dist));
         sp18.vy = Q12_TO_Q8(Q12_MULT_PRECISE(Math_Cos(angle0), dist));
         sp18.vz = Q8(0.0f);
@@ -3650,7 +3650,7 @@ void func_800DD0EC(const VECTOR3* pos, s32 coordIdx) // 0x800DD0EC
         // Compute rotation matrix.
         rot.vx = Rng_Rand16();
         rot.vy = Rng_Rand16();
-        rot.vz = FP_ANGLE(0.0f);
+        rot.vz = Q12_ANGLE(0.0f);
         Math_RotMatrixXyz(&rot, &rotMat);
 
         // Rotate offset.
@@ -3663,11 +3663,11 @@ void func_800DD0EC(const VECTOR3* pos, s32 coordIdx) // 0x800DD0EC
         newPos.vz = pos->vz + offset.vz;
 
         ptr0->field_4E4    = 3;
-        ptr0->rotZ_4D8     = FP_ANGLE(108.0f);
+        ptr0->rotZ_4D8     = Q12_ANGLE(108.0f);
         ptr0->timer_C      = Q12(1.0f);
         ptr0->timer_8      = Q12(1.0f);
         ptr0->coordIdx_4EC = coordIdx;
-        ptr0->field_14     = FP_ANGLE(15.0f);
+        ptr0->field_14     = Q12_ANGLE(15.0f);
         func_800DCDDC(ptr0, &newPos, pos);
 
         if (ptr->field_48 == 0)
@@ -3693,11 +3693,11 @@ void func_800DD260(const VECTOR3* arg0, const VECTOR3* pos) // 0x800DD260
     ptr = func_800DD090();
     if (ptr != NULL)
     {
-        ptr->rotZ_4D8  = FP_ANGLE(43.2f);
+        ptr->rotZ_4D8  = Q12_ANGLE(43.2f);
         ptr->field_4E4 = 4;
         ptr->timer_C   = Q12(0.5f);
         ptr->timer_8   = Q12(0.5f);
-        ptr->field_14  = FP_ANGLE(45.0f);
+        ptr->field_14  = Q12_ANGLE(45.0f);
 
         func_800DCDDC(ptr, arg0, pos);
     }
@@ -3710,11 +3710,11 @@ void func_800DD2C8(const VECTOR3* arg0, const VECTOR3* arg1) // 0x800DD2C8
     ptr = func_800DD090();
     if (ptr != NULL)
     {
-        ptr->rotZ_4D8  = FP_ANGLE(180.0f);
+        ptr->rotZ_4D8  = Q12_ANGLE(180.0f);
         ptr->field_4E4 = 4;
         ptr->timer_C   = Q12(0.5f);
         ptr->timer_8   = Q12(0.5f);
-        ptr->field_14  = FP_ANGLE(45.0f);
+        ptr->field_14  = Q12_ANGLE(45.0f);
 
         func_800DCDDC(ptr, arg0, arg1);
     }
@@ -3730,11 +3730,11 @@ void func_800DD32C(const VECTOR3* arg0, const VECTOR3* arg1) // 0x800DD32C
     if (retPtr != NULL)
     {
         retPtr->field_4F0 = func_800DC49C;
-        retPtr->rotZ_4D8  = FP_ANGLE(216.0f);
+        retPtr->rotZ_4D8  = Q12_ANGLE(216.0f);
         retPtr->field_4E4 = 6;
         retPtr->timer_C   = Q12(2.0f);
         retPtr->timer_8   = Q12(2.0f);
-        retPtr->field_14  = FP_ANGLE(45.0f);
+        retPtr->field_14  = Q12_ANGLE(45.0f);
 
         func_800DCDDC(retPtr, arg0, arg1);
 
@@ -3769,11 +3769,11 @@ void func_800DD464(const VECTOR3* arg0) // 0x800DD464
     if (ptr != NULL)
     {
         ptr->field_4F0 = func_800DC49C;
-        ptr->rotZ_4D8  = FP_ANGLE(90.0f);
+        ptr->rotZ_4D8  = Q12_ANGLE(90.0f);
         ptr->field_4E4 = 2;
         ptr->timer_C   = Q12(1.5f);
         ptr->timer_8   = Q12(1.5f);
-        ptr->field_14  = FP_ANGLE(20.0f);
+        ptr->field_14  = Q12_ANGLE(20.0f);
 
         func_800DCDDC(ptr, arg0, arg0);
     }
@@ -3874,11 +3874,11 @@ void func_800DD738(const VECTOR3* pos0, const VECTOR3* pos1, q19_12 rotZ, q19_12
         ptr->rotZ_4D8  = rotZ;
         ptr->timer_C   = timer;
         ptr->timer_8   = timer;
-        ptr->field_14  = FP_ANGLE(45.0f);
+        ptr->field_14  = Q12_ANGLE(45.0f);
 
         func_800DCDDC(ptr, pos0, pos1);
 
-        if (rotZ > FP_ANGLE(108.0f))
+        if (rotZ > Q12_ANGLE(108.0f))
         {
             func_800DBAE8(pos0, 0);
         }
@@ -4132,9 +4132,9 @@ void func_800DDCC4(s_SubCharacter* incubus) // 0x800DDCC4
                             incubus->rotation_24.vy);
     var_v0  = ABS(temp_v0);
 
-    if (var_v0 > FP_ANGLE(10.0f))
+    if (var_v0 > Q12_ANGLE(10.0f))
     {
-        var_v0_2 = FP_ANGLE(120.0f);
+        var_v0_2 = Q12_ANGLE(120.0f);
         tmp      = Q12_MULT_PRECISE(g_DeltaTime0, var_v0_2);
         if (temp_v0 > 0)
         {
@@ -4300,7 +4300,7 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDF3C
                 angleDeltaToPlayer = abs(func_8005BF38(Math_AngleBetweenPositionsGet(incubus->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                                        incubus->rotation_24.vy));
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < FP_ANGLE(12.0f))
+                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
                 {
                     localIncubus->properties_E4.incubus.timer_E8 = Q12(0.3f);
                     incubus->model_0.stateStep_3++;
@@ -4456,7 +4456,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
                 angleDeltaToPlayer = abs(func_8005BF38(Math_AngleBetweenPositionsGet(incubus->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                                        incubus->rotation_24.vy));
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < FP_ANGLE(12.0f))
+                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
                 {
                     localIncubus->properties_E4.incubus.timer_E8 = Q12(0.3f);
                     incubus->model_0.stateStep_3++;
@@ -4612,7 +4612,7 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
                 angleDeltaToPlayer = abs(func_8005BF38(Math_AngleBetweenPositionsGet(incubus->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                                        incubus->rotation_24.vy));
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < FP_ANGLE(12.0f))
+                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
                 {
                     localIncubus->properties_E4.incubus.timer_E8 = Q12(0.3f);
                     incubus->model_0.stateStep_3++;
@@ -5521,9 +5521,9 @@ void func_800DFE10(s_SubCharacter* chara) // 0x800DFE10
                             chara->rotation_24.vy);
     var_v0  = ABS(temp_v0);
 
-    if (var_v0 > FP_ANGLE(10.0f))
+    if (var_v0 > Q12_ANGLE(10.0f))
     {
-        var_v0_2 = FP_ANGLE(90.0f);
+        var_v0_2 = Q12_ANGLE(90.0f);
         tmp      = Q12_MULT_PRECISE(g_DeltaTime0, var_v0_2);
         if (temp_v0 > 0)
         {
@@ -5675,7 +5675,7 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
                 angleDeltaToPlayer = abs(func_8005BF38(Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                                        chara->rotation_24.vy));
 
-                if (localChara->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < FP_ANGLE(12.0f))
+                if (localChara->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
                 {
                     localChara->properties_E4.incubus.timer_E8 = Q12(0.3f);
                     chara->model_0.stateStep_3++;
@@ -6657,12 +6657,12 @@ void func_800E2664(s32 arg0, s16 arg1) // 0x800E2664
     VECTOR3 pos0;
     q19_12  angle;
 
-    if (arg1 > FP_ANGLE_NORM_U(func_800E28F4()))
+    if (arg1 > Q12_ANGLE_NORM_U(func_800E28F4()))
     {
         VECTOR3* srcPos;
         srcPos = &g_SysWork.npcs_1A0[4].position_18;
 
-        angle   = FP_ANGLE_NORM_U(func_800E28F4());
+        angle   = Q12_ANGLE_NORM_U(func_800E28F4());
         pos0.vx = srcPos->vx + Q12_MULT(Math_Sin(angle), arg0);
         pos0.vz = srcPos->vz + Q12_MULT(Math_Cos(angle), arg0);
         pos0.vy = ((func_800E28F4() % (arg0 * 2)) - arg0) - Q12(1.0f);
@@ -6672,7 +6672,7 @@ void func_800E2664(s32 arg0, s16 arg1) // 0x800E2664
         pos1.vx += Q12_MULT_FLOAT(Math_Sin(angle), 0.4f);
         pos1.vz += Q12_MULT_FLOAT(Math_Cos(angle), 0.4f);
 
-        func_800DD738(&pos0, &pos1, FP_ANGLE(54.0f), Q12(1.0f));
+        func_800DD738(&pos0, &pos1, Q12_ANGLE(54.0f), Q12(1.0f));
     }
 }
 
@@ -6682,9 +6682,9 @@ void func_800E27D0(s32 arg0, s16 arg1, s32 arg2, VECTOR3* pos) // 0x800E27D0
     VECTOR3  pos0;
     q19_12   angle;
 
-    if (arg2 != 0 || arg1 > FP_ANGLE_NORM_U(func_800E28F4()))
+    if (arg2 != 0 || arg1 > Q12_ANGLE_NORM_U(func_800E28F4()))
     {
-        angle = FP_ANGLE_NORM_U(func_800E28F4());
+        angle = Q12_ANGLE_NORM_U(func_800E28F4());
         if (arg2 != 0)
         {
             srcPos  = &g_SysWork.npcs_1A0[1].position_18;
@@ -6700,7 +6700,7 @@ void func_800E27D0(s32 arg0, s16 arg1, s32 arg2, VECTOR3* pos) // 0x800E27D0
             pos0.vy = (func_800E28F4() % (arg0 >> 1)) - (arg0 >> 2);
         }
 
-        func_800DD738(pos, &pos0, FP_ANGLE(180.0f), Q12(0.5f));
+        func_800DD738(pos, &pos0, Q12_ANGLE(180.0f), Q12(0.5f));
     }
 }
 
@@ -6895,7 +6895,7 @@ void func_800E2E90(void) // 0x800E2E90
                                                                       D_800F47D8.vz - g_SysWork.pointLightPosition_2360.vz));
         g_SysWork.pointLightRot_2370.vy = ratan2(D_800F47D8.vx - g_SysWork.pointLightPosition_2360.vx,
                                                  D_800F47D8.vz - g_SysWork.pointLightPosition_2360.vz);
-        g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
+        g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
     }
 }
 
@@ -7172,7 +7172,7 @@ void func_800E3390(void) // 0x800E3390
 
     if (D_800F480C && D_800F4805 == 3 && Savegame_EventFlagGet(EventFlag_391))
     {
-        g_SysWork.npcs_1A0[4].rotation_24.vy += FP_ANGLE(180.0f);
+        g_SysWork.npcs_1A0[4].rotation_24.vy += Q12_ANGLE(180.0f);
     }
 }
 
@@ -9716,9 +9716,9 @@ void Map_WorldObjectsInit(void) // 0x800E9528
     g_SysWork.field_236C = NULL;
 
     // Set light rotation.
-    g_SysWork.pointLightRot_2370.vx = FP_ANGLE(-90.0f);
-    g_SysWork.pointLightRot_2370.vy = FP_ANGLE(0.0f);
-    g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
+    g_SysWork.pointLightRot_2370.vx = Q12_ANGLE(-90.0f);
+    g_SysWork.pointLightRot_2370.vy = Q12_ANGLE(0.0f);
+    g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
 
     g_SysWork.pointLightIntensity_2378 = Q12(2.0f);
 

@@ -400,13 +400,13 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                         case 0x655:
                             mapCoordIdxX = 36;
                             mapCoordIdxZ = -76;
-                            angle       += FP_ANGLE(90.0f);
+                            angle       += Q12_ANGLE(90.0f);
                             break;
 
                         case 0x5F1:
                             mapCoordIdxX = 62;
                             mapCoordIdxZ = 50;
-                            angle       += FP_ANGLE(180.0f);
+                            angle       += Q12_ANGLE(180.0f);
                             break;
                     }
                     break;
@@ -414,7 +414,7 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                 case 11:
                     mapCoordIdxX = 38;
                     mapCoordIdxZ = 50;
-                    angle       += FP_ANGLE(180.0f);
+                    angle       += Q12_ANGLE(180.0f);
                     break;
 
                 case 1:
@@ -425,7 +425,7 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                 case 9:
                     mapCoordIdxX = -123;
                     mapCoordIdxZ = 81;
-                    angle       -= FP_ANGLE(90.0f);
+                    angle       -= Q12_ANGLE(90.0f);
                     break;
             }
             break;
@@ -440,7 +440,7 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
         case 12:
             if (cellX == -2 && cellZ == 0)
             {
-                angle       += FP_ANGLE(180.0f);
+                angle       += Q12_ANGLE(180.0f);
                 mapCoordIdxX = D_800AE774[2][2][0] + (((g_SysWork.playerWork_4C.player_0.position_18.vx - (cellX * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(-0.2f));
                 mapCoordIdxZ = D_800AE774[2][2][1] + (((g_SysWork.playerWork_4C.player_0.position_18.vz - (cellZ * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(0.2f));
             }
@@ -500,13 +500,13 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                     {
                         mapCoordIdxX = 87;
                         mapCoordIdxZ = -56;
-                        angle       += FP_ANGLE(90.0f);
+                        angle       += Q12_ANGLE(90.0f);
                     }
                     else if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 1, -1, 1))
                     {
                         mapCoordIdxX = 54;
                         mapCoordIdxZ = -53;
-                        angle       += FP_ANGLE(90.0f);
+                        angle       += Q12_ANGLE(90.0f);
                     }
                     break;
 
@@ -521,7 +521,7 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                         case 0x911:
                             mapCoordIdxX = 74;
                             mapCoordIdxZ = -12;
-                            angle       -= FP_ANGLE(90.0f);
+                            angle       -= Q12_ANGLE(90.0f);
                             break;
 
                         case 0x8AD:
@@ -559,11 +559,11 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
 
                     if (!PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2))
                     {
-                        angle += FP_ANGLE(90.0f);
+                        angle += Q12_ANGLE(90.0f);
                     }
                     else if (PLAYER_NOT_IN_MAP_CHUNK(vz, 1, -1, -1, -1))
                     {
-                        angle += FP_ANGLE(90.0f);
+                        angle += Q12_ANGLE(90.0f);
                     }
                     break;
             }
@@ -587,7 +587,7 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                         case 0x657:
                             mapCoordIdxX = -12;
                             mapCoordIdxZ = 63;
-                            angle       += FP_ANGLE(180.0f);
+                            angle       += Q12_ANGLE(180.0f);
                             break;
 
                         case 0x973:
@@ -631,7 +631,7 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                         case 0xA3B:
                             mapCoordIdxX  = 115;
                             mapCoordIdxZ  = -63;
-                            angle += FP_ANGLE(90.0f);
+                            angle += Q12_ANGLE(90.0f);
                             break;
 
                         case 0x914:
@@ -684,19 +684,19 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
         case 13:
             mapCoordIdxX  = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vz, 0x7FF, 11, 0);
             mapCoordIdxZ  = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vx, 0x7FF, 11, 40);
-            angle -= FP_ANGLE(90.0f);
+            angle -= Q12_ANGLE(90.0f);
             break;
 
         case 14:
             mapCoordIdxX  = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vz, 0x7FF, 11, -80);
             mapCoordIdxZ  = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vx, 0x7FF, 11, -140);
-            angle -= FP_ANGLE(90.0f);
+            angle -= Q12_ANGLE(90.0f);
             break;
 
         case 15:
             mapCoordIdxX  = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vx, 0x7FF, 11, 55);
             mapCoordIdxZ  = MapCoordIdxGet(g_SysWork.playerWork_4C.player_0.position_18.vz, 0x7FF, 11, -80);
-            angle += FP_ANGLE(180.0f);
+            angle += Q12_ANGLE(180.0f);
             break;
 
         default:

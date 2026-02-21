@@ -333,7 +333,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
 
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-255.78f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-107.46f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-45.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-45.0f);
 
             ScreenFade_ResetTimestep();
             func_800867B4(0, 1);
@@ -1742,7 +1742,7 @@ void func_800EB174(void) // 0x800EB174
 
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-262.39f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-104.33f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(45.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(45.0f);
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -1976,12 +1976,12 @@ void func_800EB908(void) // 0x800EB908
 
     if (!Savegame_EventFlagGet(EventFlag_166))
     {
-        D_800F5344.vz = FP_ANGLE(-49.94f);
+        D_800F5344.vz = Q12_ANGLE(-49.94f);
     }
 
     if (Savegame_EventFlagGet(EventFlag_168))
     {
-        D_800F538C.vy = FP_ANGLE(8.0f);
+        D_800F538C.vy = Q12_ANGLE(8.0f);
     }
 
     func_800EE5D0();

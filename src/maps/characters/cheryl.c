@@ -125,7 +125,7 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
             Model_AnimStatusSet(&chara->model_0, CherylAnim_1, false);
             Character_AnimStateReset(chara);
 
-            dahliaProps.field_124 = FP_ANGLE(0.0f);
+            dahliaProps.field_124 = Q12_ANGLE(0.0f);
             break;
 
         case 1:
@@ -157,8 +157,8 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
             Model_AnimStatusSet(&chara->model_0, CherylAnim_2, false);
             Character_AnimStateReset(chara);
 
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
-            dahliaProps.field_124                                        = FP_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            dahliaProps.field_124                                        = Q12_ANGLE(0.0f);
             break;
 
         case 4:
@@ -176,8 +176,8 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
             Model_AnimStatusSet(&chara->model_0, CherylAnim_2, false);
             Character_AnimStateReset(chara);
 
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
-            dahliaProps.field_124                                        = FP_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            dahliaProps.field_124                                        = Q12_ANGLE(0.0f);
             break;
     }
 
@@ -214,7 +214,7 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
         }
     }
 
-    chara->rotation_24.vy  = FP_ANGLE_ABS(chara->rotation_24.vy + Q8_TO_Q4(D_800E3A30));
+    chara->rotation_24.vy  = Q12_ANGLE_ABS(chara->rotation_24.vy + Q8_TO_Q4(D_800E3A30));
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->moveSpeed_38    = dahliaProps.field_124;
     chara->field_34       += g_DeltaTime2;

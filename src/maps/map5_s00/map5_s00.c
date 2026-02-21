@@ -555,9 +555,9 @@ void func_800D631C(VECTOR* arg0, q19_12 rotY) // 0x800D631C
     TransMatrix(&mat, &sp30);
     SetTransMatrix(&mat);
 
-    rot.vx = FP_ANGLE(0.0f);
+    rot.vx = Q12_ANGLE(0.0f);
     rot.vy = rotY;
-    rot.vz = FP_ANGLE(0.0f);
+    rot.vz = Q12_ANGLE(0.0f);
 
     Math_RotMatrixZxyNeg(&rot, &mat);
     SetMulRotMatrix(&mat);
@@ -788,16 +788,16 @@ void func_800D6B00(void) // 0x800D6B00
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-92.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(7.7f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(0.0f);
 
             for (i = 0; i < ARRAY_SIZE(D_800DAB7C); i++)
             {
-                D_800DAB7C[i] = Chara_Spawn(Chara_HangedScratcher, i, Q12(-93.3f), Q12(7.1f), FP_ANGLE(180.0f), 18 + i);
+                D_800DAB7C[i] = Chara_Spawn(Chara_HangedScratcher, i, Q12(-93.3f), Q12(7.1f), Q12_ANGLE(180.0f), 18 + i);
             }
 
             if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
             {
-                Chara_Spawn(Chara_HangedScratcher, 14, Q12(-94.3f), Q12(-5.5f), FP_ANGLE(0.0f), 7U);
+                Chara_Spawn(Chara_HangedScratcher, 14, Q12(-94.3f), Q12(-5.5f), Q12_ANGLE(0.0f), 7U);
             }
 
             g_SysWork.field_30 = 20;
@@ -862,19 +862,19 @@ void func_800D6B00(void) // 0x800D6B00
             g_SysWork.npcs_1A0[D_800DAB7C[0]].model_0.stateStep_3 = 17;
             g_SysWork.npcs_1A0[D_800DAB7C[0]].position_18.vx     += Q12(-0.1878f);
             g_SysWork.npcs_1A0[D_800DAB7C[0]].position_18.vz     += Q12(0.245f);
-            g_SysWork.npcs_1A0[D_800DAB7C[0]].rotation_24.vy      = FP_ANGLE(112.5f);
+            g_SysWork.npcs_1A0[D_800DAB7C[0]].rotation_24.vy      = Q12_ANGLE(112.5f);
 
             g_SysWork.npcs_1A0[D_800DAB7C[1]].model_0.controlState_2     = ModelState_Uninitialized;
             g_SysWork.npcs_1A0[D_800DAB7C[1]].model_0.stateStep_3 = 17;
             g_SysWork.npcs_1A0[D_800DAB7C[1]].position_18.vx     += Q12(1.8128f);
             g_SysWork.npcs_1A0[D_800DAB7C[1]].position_18.vz     += Q12(0.799f);
-            g_SysWork.npcs_1A0[D_800DAB7C[1]].rotation_24.vy      = FP_ANGLE(180.0f);
+            g_SysWork.npcs_1A0[D_800DAB7C[1]].rotation_24.vy      = Q12_ANGLE(180.0f);
 
             g_SysWork.npcs_1A0[D_800DAB7C[2]].model_0.controlState_2     = ModelState_Uninitialized;
             g_SysWork.npcs_1A0[D_800DAB7C[2]].model_0.stateStep_3 = 17;
             g_SysWork.npcs_1A0[D_800DAB7C[2]].position_18.vx     += Q12(0.6531f);
             g_SysWork.npcs_1A0[D_800DAB7C[2]].position_18.vz     += Q12(-1.2493f);
-            g_SysWork.npcs_1A0[D_800DAB7C[2]].rotation_24.vy      = FP_ANGLE(0.0f);
+            g_SysWork.npcs_1A0[D_800DAB7C[2]].rotation_24.vy      = Q12_ANGLE(0.0f);
 
             g_SysWork.playerWork_4C.player_0.position_18.vz += Q12(-1.2f);
 
@@ -913,7 +913,7 @@ void func_800D732C(void) // 0x800D732C
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(56.789f);
             g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(-2.02f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(60.02f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-90.0f);
             Game_TurnFlashlightOn();
 
             // Warp camera.
@@ -948,7 +948,7 @@ void func_800D732C(void) // 0x800D732C
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(16.7f);
             g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(0.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(52.0f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
 
             vcReturnPreAutoCamWork(true);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
@@ -996,7 +996,7 @@ void func_800D75FC(void) // 0x800D75FC
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(56.773f);
             g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(-1.444f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(60.036f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-90.0f);
             Game_TurnFlashlightOn();
 
             // Warp camera.
@@ -1068,7 +1068,7 @@ void func_800D7940(void) // 0x800D7940
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(56.769f);
             g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(-2.07f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(60.012f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-90.0f);
             Game_TurnFlashlightOn();
 
             // Warp camera.
@@ -1131,7 +1131,7 @@ void func_800D7C84(void) // 0x800D7C84
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-22.234f);
             g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(-1.734f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(60.508f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-90.0f);
             Game_TurnFlashlightOn();
 
             // Warp camera.
@@ -1194,7 +1194,7 @@ void func_800D7F88(void) // 0x800D7F88
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-22.245f);
             g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(-2.439f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(60.488f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-90.0f);
             Game_TurnFlashlightOn();
 
             // Warp camera.

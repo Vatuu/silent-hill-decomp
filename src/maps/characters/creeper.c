@@ -209,7 +209,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
             creeper->flags_3E       |= CharaFlag_Unk2;
 
             if (ABS(func_8005BF38(Math_AngleBetweenPositionsGet(creeper->position_18, playerChara.position_18) -
-                                  creeper->rotation_24.vy)) < FP_ANGLE(60.0f))
+                                  creeper->rotation_24.vy)) < Q12_ANGLE(60.0f))
             {
                 creeper->model_0.anim_4.status_0 = ANIM_STATUS(CreeperAnim_7, false);
             }
@@ -412,7 +412,7 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
             }
         }
         else if (!(g_SysWork.field_2284[3] & (1 << 1)) && !Chara_HasFlag(&playerChara, CharaFlag_Unk4) &&
-                 distToPlayer < Q12(0.5f) && ABS(angleDeltaToPlayer) < FP_ANGLE(10.0f) &&
+                 distToPlayer < Q12(0.5f) && ABS(angleDeltaToPlayer) < Q12_ANGLE(10.0f) &&
                  playerChara.health_B0 > Q12(0.0f))
         {
             creeper->model_0.controlState_2  = CreeperControl_3;
@@ -422,24 +422,24 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
         }
         else
         {
-            if (ABS(angleDeltaToPlayer) >= FP_ANGLE(90.0f))
+            if (ABS(angleDeltaToPlayer) >= Q12_ANGLE(90.0f))
             {
                 Chara_MoveSpeedUpdate(creeper, Q12(4.0f));
             }
             else
             {
-                Chara_MoveSpeedUpdate3(creeper, Q12(1.5f), (creeperProps.moveSpeed_10C * (FP_ANGLE(90.0f) - ABS(angleDeltaToPlayer))) >> 10);
+                Chara_MoveSpeedUpdate3(creeper, Q12(1.5f), (creeperProps.moveSpeed_10C * (Q12_ANGLE(90.0f) - ABS(angleDeltaToPlayer))) >> 10);
             }
 
             if (TIMESTEP_ANGLE(1, 2) < ABS(angleDeltaToPlayer) && Rng_GenerateInt(0, 7)) // 1 in 8 chance.
             {
-                if (angleDeltaToPlayer > FP_ANGLE(0.0f))
+                if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
                 {
-                    creeper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(180.0f));
+                    creeper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(180.0f));
                 }
                 else
                 {
-                    creeper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(180.0f));
+                    creeper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(180.0f));
                 }
             }
         }
@@ -450,7 +450,7 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
 
         creeperProps.timer_F0 += g_DeltaTime0;
 
-        if ((ABS(angleDeltaToPlayer) > FP_ANGLE(10.0f) && func_80070184(creeper, Q12(1.0f), creeperProps.rotationY_108)) ||
+        if ((ABS(angleDeltaToPlayer) > Q12_ANGLE(10.0f) && func_80070184(creeper, Q12(1.0f), creeperProps.rotationY_108)) ||
             (!Rng_GenerateInt(0, 7) && // 1 in 8 chance.
              ((!(creeperProps.flags_E8 & CreeperFlag_0) && creeperProps.timer_F0 > Q12(0.5f)) ||
               ( (creeperProps.flags_E8 & CreeperFlag_0) && creeperProps.timer_F0 > Q12(2.0f)))))
@@ -466,7 +466,7 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
                                                                creeperProps.targetPositionZ_F8,
                                                                Q12(1.0f),
                                                                true);
-            if (creeperProps.rotationY_108 == FP_ANGLE(360.0f))
+            if (creeperProps.rotationY_108 == Q12_ANGLE(360.0f))
             {
                 creeperProps.rotationY_108 = creeper->rotation_24.vy;
             }
@@ -479,13 +479,13 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
         unkAngleDelta = func_8005BF38(creeperProps.rotationY_108 - creeper->rotation_24.vy);
         if (TIMESTEP_ANGLE(1, 2) < ABS(unkAngleDelta))
         {
-            if (unkAngleDelta > FP_ANGLE(0.0f))
+            if (unkAngleDelta > Q12_ANGLE(0.0f))
             {
-                creeper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(180.0f));
+                creeper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(180.0f));
             }
             else
             {
-                creeper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(180.0f));
+                creeper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(180.0f));
             }
         }
     }
@@ -606,7 +606,7 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
         creeperProps.timer_F0      = Q12(0.0f);
         creeperProps.rotationY_108 = Chara_HeadingAngleGet(creeper, Q12(4.8f),
                                                            playerChara.position_18.vx, playerChara.position_18.vz,
-                                                           FP_ANGLE(360.0f), false);
+                                                           Q12_ANGLE(360.0f), false);
         creeper->field_44.field_0   = 0;
     }
 
@@ -619,15 +619,15 @@ void Ai_Creeper_Control_4(s_SubCharacter* creeper)
 
     if (creeper->model_0.anim_4.status_0 == ANIM_STATUS(CreeperAnim_7, true))
     {
-        if (creeper->rotation_24.vy != func_8005BF38(creeper->headingAngle_3C + FP_ANGLE(180.0f)))
+        if (creeper->rotation_24.vy != func_8005BF38(creeper->headingAngle_3C + Q12_ANGLE(180.0f)))
         {
-            if (func_8005BF38((creeper->headingAngle_3C + FP_ANGLE(180.0f)) - creeper->rotation_24.vy) > FP_ANGLE(0.0f))
+            if (func_8005BF38((creeper->headingAngle_3C + Q12_ANGLE(180.0f)) - creeper->rotation_24.vy) > Q12_ANGLE(0.0f))
             {
-                creeper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f));
+                creeper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
             }
             else
             {
-                creeper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f));
+                creeper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
             }
         }
 
@@ -641,8 +641,8 @@ void Ai_Creeper_Control_4(s_SubCharacter* creeper)
             dist            = baseDist / Q12(4.0f);
         }
 
-        creeperProps.offsetX_EC = Q12_MULT(dist, Math_Sin(creeper->rotation_24.vy + FP_ANGLE(180.0f)));
-        creeperProps.offsetZ_EE = Q12_MULT(dist, Math_Cos(creeper->rotation_24.vy + FP_ANGLE(180.0f)));
+        creeperProps.offsetX_EC = Q12_MULT(dist, Math_Sin(creeper->rotation_24.vy + Q12_ANGLE(180.0f)));
+        creeperProps.offsetZ_EE = Q12_MULT(dist, Math_Cos(creeper->rotation_24.vy + Q12_ANGLE(180.0f)));
     }
 
     if (ANIM_STATUS_IDX_GET(creeper->model_0.anim_4.status_0) == CreeperAnim_3  ||

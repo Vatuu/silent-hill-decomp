@@ -421,7 +421,7 @@ void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* coords)
             break;
     }
 
-    dahlia->rotation_24.vy  = FP_ANGLE_ABS(dahlia->rotation_24.vy + Q8_TO_Q4(sharedData_800D16E0_2_s01));
+    dahlia->rotation_24.vy  = Q12_ANGLE_ABS(dahlia->rotation_24.vy + Q8_TO_Q4(sharedData_800D16E0_2_s01));
     dahlia->headingAngle_3C = dahlia->rotation_24.vy;
     dahlia->moveSpeed_38    = dahliaProps.moveDistance_126;
     dahlia->field_34       += g_DeltaTime2;

@@ -295,7 +295,7 @@ void func_800D9D98(void) // 0x800D9D98
             break;
 
         case 3:
-            func_800865FC(false, 0, 0, FP_ANGLE(180.0f), Q12(0.0f), Q12(0.0f));
+            func_800865FC(false, 0, 0, Q12_ANGLE(180.0f), Q12(0.0f), Q12(0.0f));
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -307,12 +307,12 @@ void func_800D9D98(void) // 0x800D9D98
             break;
 
         case 6:
-            func_800865FC(true, 0, 0, FP_ANGLE(180.0f),  Q12(-11.0f), Q12(141.0f));
-            func_800865FC(true, 0, 1, FP_ANGLE(180.0f),  Q12(-11.5f), Q12(137.0f));
-            func_800865FC(true, 0, 2, FP_ANGLE(180.0f),  Q12(-9.0f),  Q12(133.0f));
-            func_800865FC(true, 0, 3, FP_ANGLE(-135.0f), Q12(-10.5f), Q12(130.0f));
-            func_800865FC(true, 0, 4, FP_ANGLE(-90.0f),  Q12(-14.0f), Q12(129.0f));
-            func_800865FC(true, 0, 5, FP_ANGLE(-90.0f),  Q12(-18.0f), Q12(129.5f));
+            func_800865FC(true, 0, 0, Q12_ANGLE(180.0f),  Q12(-11.0f), Q12(141.0f));
+            func_800865FC(true, 0, 1, Q12_ANGLE(180.0f),  Q12(-11.5f), Q12(137.0f));
+            func_800865FC(true, 0, 2, Q12_ANGLE(180.0f),  Q12(-9.0f),  Q12(133.0f));
+            func_800865FC(true, 0, 3, Q12_ANGLE(-135.0f), Q12(-10.5f), Q12(130.0f));
+            func_800865FC(true, 0, 4, Q12_ANGLE(-90.0f),  Q12(-14.0f), Q12(129.0f));
+            func_800865FC(true, 0, 5, Q12_ANGLE(-90.0f),  Q12(-18.0f), Q12(129.5f));
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -345,7 +345,7 @@ void func_800DA028(void) // 0x800DA028
             break;
 
         case 3:
-            func_800865FC(false, 0, 0, FP_ANGLE(-135.0f), Q12(0.0f), Q12(0.0f));
+            func_800865FC(false, 0, 0, Q12_ANGLE(-135.0f), Q12(0.0f), Q12(0.0f));
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -357,10 +357,10 @@ void func_800DA028(void) // 0x800DA028
             break;
 
         case 6:
-            func_800865FC(true, 0, 0, FP_ANGLE(180.0f), Q12(-6.0f),  Q12(135.0f));
-            func_800865FC(true, 0, 1, FP_ANGLE(-90.0f), Q12(-7.0f),  Q12(131.0f));
-            func_800865FC(true, 0, 2, FP_ANGLE(-90.0f), Q12(-11.0f), Q12(128.0f));
-            func_800865FC(true, 0, 3, FP_ANGLE(-90.0f), Q12(-17.5f), Q12(129.5f));
+            func_800865FC(true, 0, 0, Q12_ANGLE(180.0f), Q12(-6.0f),  Q12(135.0f));
+            func_800865FC(true, 0, 1, Q12_ANGLE(-90.0f), Q12(-7.0f),  Q12(131.0f));
+            func_800865FC(true, 0, 2, Q12_ANGLE(-90.0f), Q12(-11.0f), Q12(128.0f));
+            func_800865FC(true, 0, 3, Q12_ANGLE(-90.0f), Q12(-17.5f), Q12(129.5f));
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -392,7 +392,7 @@ void func_800DA254(void) // 0x800DA254
             break;
 
         case 3:
-            func_800865FC(false, 0, 0, FP_ANGLE(-112.5f), Q12(0.0f), Q12(0.0f));
+            func_800865FC(false, 0, 0, Q12_ANGLE(-112.5f), Q12(0.0f), Q12(0.0f));
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -404,9 +404,9 @@ void func_800DA254(void) // 0x800DA254
             break;
 
         case 6:
-            func_800865FC(true, 0, 0, FP_ANGLE(-135.0f), Q12(5.0f), 0x81000);
-            func_800865FC(true, 0, 1, FP_ANGLE(-90.0f), -0x6000, 0x80000);
-            func_800865FC(true, 0, 2, FP_ANGLE(-90.0f), -0x11800, 0x81800);
+            func_800865FC(true, 0, 0, Q12_ANGLE(-135.0f), Q12(5.0f), 0x81000);
+            func_800865FC(true, 0, 1, Q12_ANGLE(-90.0f), -0x6000, 0x80000);
+            func_800865FC(true, 0, 2, Q12_ANGLE(-90.0f), -0x11800, 0x81800);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -501,7 +501,7 @@ void func_800DA5A0(void) // 0x800DA5A0
         case 0:
             Player_ControlFreeze();
             sharedFunc_800D88AC_0_s00(&g_SysWork.npcs_1A0[0]);
-            func_800865FC(true, 1, 0, FP_ANGLE(-135.0f), Q12(-35.0f), Q12(120.0f));
+            func_800865FC(true, 1, 0, Q12_ANGLE(-135.0f), Q12(-35.0f), Q12(120.0f));
 
             temp_s1_2 = g_SysWork.playerWork_4C.player_0.position_18.vx;
             temp_s2 = g_SysWork.playerWork_4C.player_0.position_18.vz;
@@ -541,9 +541,9 @@ void func_800DA5A0(void) // 0x800DA5A0
         case 5:
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-26.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(127.0f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-135.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-135.0f);
 
-            func_800865FC(true, 0, 0, FP_ANGLE(-135.0f), Q12(-29.0f), Q12(125.0f));
+            func_800865FC(true, 0, 0, Q12_ANGLE(-135.0f), Q12(-29.0f), Q12(125.0f));
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -562,7 +562,7 @@ void func_800DA5A0(void) // 0x800DA5A0
             break;
 
         case 9:
-            func_800865FC(true, 1, 0, FP_ANGLE(-112.5f), Q12(-36.0f), Q12(119.5f));
+            func_800865FC(true, 1, 0, Q12_ANGLE(-112.5f), Q12(-36.0f), Q12(119.5f));
             SysWork_StateStepIncrement(0);
 
         case 10:
@@ -590,7 +590,7 @@ void func_800DAA68(void) // 0x800DAA68
     {
         case 0:
             Player_ControlFreeze();
-            func_800865FC(false, 0, 0, FP_ANGLE(180.0f), Q12(0.0f), Q12(-1.0f));
+            func_800865FC(false, 0, 0, Q12_ANGLE(180.0f), Q12(0.0f), Q12(-1.0f));
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -621,7 +621,7 @@ void func_800DAB8C(void) // 0x800DAB8C
     {
         case 0:
             Player_ControlFreeze();
-            func_800865FC(false, 0, 0, FP_ANGLE(90.0f), Q12(1.0f), Q12(0.0f));
+            func_800865FC(false, 0, 0, Q12_ANGLE(90.0f), Q12(1.0f), Q12(0.0f));
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -652,7 +652,7 @@ void func_800DACB0(void) // 0x800DACB0
     {
         case 0:
             Player_ControlFreeze();
-            func_800865FC(false, 0, 0, FP_ANGLE(-90.0f), Q12(-1.0f), Q12(0.0f));
+            func_800865FC(false, 0, 0, Q12_ANGLE(-90.0f), Q12(-1.0f), Q12(0.0f));
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -722,7 +722,7 @@ void func_800DAEFC(void) // 0x800DAEFC
             Player_ControlFreeze();
 
             g_SysWork.npcs_1A0[0].position_18.vx = Q12(-62.0f);
-            g_SysWork.npcs_1A0[0].rotation_24.vy = FP_ANGLE(180.0f);
+            g_SysWork.npcs_1A0[0].rotation_24.vy = Q12_ANGLE(180.0f);
             g_SysWork.npcs_1A0[0].position_18.vz = g_SysWork.playerWork_4C.player_0.position_18.vz - Q12(19.0f);
 
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
@@ -733,7 +733,7 @@ void func_800DAEFC(void) // 0x800DAEFC
             break;
 
         case 2:
-            func_800865FC(false, 0, 0, FP_ANGLE(180.0f), Q12(0.0f), Q12(0.0f));
+            func_800865FC(false, 0, 0, Q12_ANGLE(180.0f), Q12(0.0f), Q12(0.0f));
             Camera_PositionSet(&g_SysWork.playerWork_4C.player_0.position_18, Q12(0.24f), Q12(-4.06f), Q12(-5.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(&g_SysWork.playerWork_4C.player_0.position_18, Q12(-0.72f), Q12(-2.11f), Q12(-1.63f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             SysWork_StateStepIncrement(0);
@@ -743,7 +743,7 @@ void func_800DAEFC(void) // 0x800DAEFC
             break;
 
         case 4:
-            func_800865FC(true, 0, 0, FP_ANGLE(180.0f), Q12(-62.0f), g_SysWork.playerWork_4C.player_0.position_18.vz - Q12(10.0f));
+            func_800865FC(true, 0, 0, Q12_ANGLE(180.0f), Q12(-62.0f), g_SysWork.playerWork_4C.player_0.position_18.vz - Q12(10.0f));
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
@@ -788,7 +788,7 @@ void func_800DAEFC(void) // 0x800DAEFC
             Savegame_EventFlagSet(EventFlag_7);
             Savegame_EventFlagSet(EventFlag_8);
 
-            func_800865FC(true, 1, 0, FP_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
+            func_800865FC(true, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
     }
 }
 
@@ -806,10 +806,10 @@ void func_800DB26C(void) // 0x800DB26C
         case 0:
             Player_ControlFreeze();
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
-            func_800865FC(1, 0, 0, FP_ANGLE(-90.0f), Q12(-60.5f), g_SysWork.playerWork_4C.player_0.position_18.vz);
+            func_800865FC(1, 0, 0, Q12_ANGLE(-90.0f), Q12(-60.5f), g_SysWork.playerWork_4C.player_0.position_18.vz);
 
             g_SysWork.npcs_1A0[0].position_18.vx = Q12(-62.0f);
-            g_SysWork.npcs_1A0[0].rotation_24.vy = FP_ANGLE(180.0f);
+            g_SysWork.npcs_1A0[0].rotation_24.vy = Q12_ANGLE(180.0f);
             g_SysWork.npcs_1A0[0].position_18.vz = g_SysWork.playerWork_4C.player_0.position_18.vz - Q12(9.0f);
 
             SysWork_StateStepIncrement(0);
@@ -825,7 +825,7 @@ void func_800DB26C(void) // 0x800DB26C
         case 3:
             g_DeltaTime0 >>= 1; // `/ 2`.
 
-            func_800865FC(0, 0, 0, FP_ANGLE(-135.0f), Q12(0.0f), Q12(0.0f));
+            func_800865FC(0, 0, 0, Q12_ANGLE(-135.0f), Q12(0.0f), Q12(0.0f));
             SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
@@ -844,7 +844,7 @@ void func_800DB26C(void) // 0x800DB26C
         default:
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_7);
-            func_800865FC(1, 1, 0, FP_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
+            func_800865FC(1, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -928,9 +928,9 @@ void func_800DB514(void) // 0x800DB514
             SysWork_StateSetNext(SysState_Gameplay);
 
             Chara_ProcessLoads();
-            Chara_Spawn(Chara_GreyChild, 0, Q12(-252.0f), Q12(223.0f), FP_ANGLE(180.0f), 5);
-            Chara_Spawn(Chara_GreyChild, 1, Q12(-254.0f), Q12(221.0f), FP_ANGLE(135.0f), 5);
-            Chara_Spawn(Chara_GreyChild, 2, Q12(-259.0f), Q12(232.0f), FP_ANGLE(0.0f),   5);
+            Chara_Spawn(Chara_GreyChild, 0, Q12(-252.0f), Q12(223.0f), Q12_ANGLE(180.0f), 5);
+            Chara_Spawn(Chara_GreyChild, 1, Q12(-254.0f), Q12(221.0f), Q12_ANGLE(135.0f), 5);
+            Chara_Spawn(Chara_GreyChild, 2, Q12(-259.0f), Q12(232.0f), Q12_ANGLE(0.0f),   5);
             break;
     }
 
@@ -1045,8 +1045,8 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             Map_PlaceIpdAtCell(FILE_BG_THRF908_IPD, -7, 6);
             Sd_SfxStop(Sfx_Unk1358);
             Sd_PlaySfx(Sfx_Unk1359, 0, 208);
-            func_800865FC(true, 0, 0, FP_ANGLE(180.0f), Q12(-252.0f), Q12(219.0f));
-            func_800865FC(true, 0, 1, FP_ANGLE(112.5f), Q12(-251.0f), Q12(218.5f));
+            func_800865FC(true, 0, 0, Q12_ANGLE(180.0f), Q12(-252.0f), Q12(219.0f));
+            func_800865FC(true, 0, 1, Q12_ANGLE(112.5f), Q12(-251.0f), Q12(218.5f));
 
             D_800DFB61 = 0;
 
@@ -1189,9 +1189,9 @@ void MapEvent_GreyChildrenSpawn(void) // 0x800DC1E8
     {
         if (PLAYER_IN_MAP_CHUNK(vx, 1, -7, -1, -7) && PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7))
         {
-            Chara_Spawn(Chara_GreyChild, 0, Q12(-252.0f), Q12(223.0f), FP_ANGLE(180.0f), 5);
-            Chara_Spawn(Chara_GreyChild, 1, Q12(-254.0f), Q12(221.0f), FP_ANGLE(135.0f), 5);
-            Chara_Spawn(Chara_GreyChild, 2, Q12(-259.0f), Q12(232.0f), FP_ANGLE(0.0f),   5);
+            Chara_Spawn(Chara_GreyChild, 0, Q12(-252.0f), Q12(223.0f), Q12_ANGLE(180.0f), 5);
+            Chara_Spawn(Chara_GreyChild, 1, Q12(-254.0f), Q12(221.0f), Q12_ANGLE(135.0f), 5);
+            Chara_Spawn(Chara_GreyChild, 2, Q12(-259.0f), Q12(232.0f), Q12_ANGLE(0.0f),   5);
         }
     }
 }
@@ -1209,7 +1209,7 @@ void func_800DC33C(void) // 0x800DC33C
 
     if (!Savegame_EventFlagGet(EventFlag_5))
     {
-        func_800865FC(true, 1, 0, FP_ANGLE(180.0f), Q12(-62.0f), Q12(108.0f));
+        func_800865FC(true, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(108.0f));
         sharedFunc_800D88AC_0_s00(&g_SysWork.npcs_1A0[0]);
 
         Savegame_EventFlagSet(EventFlag_5);
@@ -1232,7 +1232,7 @@ void func_800DC33C(void) // 0x800DC33C
 block7:
                 g_SysWork.npcs_1A0[0].position_18.vz = 1;
                 g_SysWork.npcs_1A0[0].position_18.vx = 1;
-                g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
+                g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = Q12_ANGLE(0.0f);
 
                 sharedFunc_800D88C0_0_s00(&g_SysWork.npcs_1A0[0], false);
 
@@ -1329,7 +1329,7 @@ block7:
             }
         }
 
-        temp_a0_2 = Q12_MULT(g_SysWork.playerWork_4C.player_0.moveSpeed_38, Math_Cos(g_SysWork.playerWork_4C.player_0.headingAngle_3C + FP_ANGLE(180.0f)));
+        temp_a0_2 = Q12_MULT(g_SysWork.playerWork_4C.player_0.moveSpeed_38, Math_Cos(g_SysWork.playerWork_4C.player_0.headingAngle_3C + Q12_ANGLE(180.0f)));
         if (temp_a0_2 > Q12(1.8f))
         {
             D_800DFAD4 = temp_a0_2 + Q12(0.6f);
@@ -1376,7 +1376,7 @@ void func_800DC8D8(void) // 0x800DC8D8
     {
         g_SysWork.npcs_1A0[0].position_18.vx = Q12(-61.0f);
         g_SysWork.npcs_1A0[0].position_18.vz = Q12(48.0f);
-        g_SysWork.npcs_1A0[0].rotation_24.vy = FP_ANGLE(90.0f);
+        g_SysWork.npcs_1A0[0].rotation_24.vy = Q12_ANGLE(90.0f);
 
         if (mag < Q12(14.8f))
         {
@@ -1384,7 +1384,7 @@ void func_800DC8D8(void) // 0x800DC8D8
 
             Savegame_EventFlagSet(EventFlag_10);
 
-            func_800865FC(true, 1, 0, FP_ANGLE(90.0f), Q12(-57.0f), Q12(47.0f));
+            func_800865FC(true, 1, 0, Q12_ANGLE(90.0f), Q12(-57.0f), Q12(47.0f));
         }
     }
     else

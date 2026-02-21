@@ -267,7 +267,7 @@ void func_800D2668(void) // 0x800D2668
             Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(58.34f), Q12(-1.93f), Q12(141.8f));
 
             // @hack
-            // Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, FP_ANGLE(-15.0f), FP_ANGLE(-177.0f), FP_ANGLE(0.0f));
+            // Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, Q12_ANGLE(-15.0f), Q12_ANGLE(-177.0f), Q12_ANGLE(0.0f));
             *((s32*) (&(&g_SysWork.pointLightRot_2370)->vx)) = ((s32) (0xff56 & 0xFFFF)) | ((s32) (0xf823 << 16));
             tmpSvec = &g_SysWork.pointLightRot_2370;
             *((s16*) (&tmpSvec->vz)) = 0;

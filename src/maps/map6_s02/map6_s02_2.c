@@ -180,10 +180,10 @@ void func_800CF0B8(void) // 0x800CF0B8
             Savegame_EventFlagSet(EventFlag_412);
 
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12_MULT_FLOAT(Math_Sin(FP_ANGLE(135.0f)), 0.9f) + Q12(60.0f);
+            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12_MULT_FLOAT(Math_Sin(Q12_ANGLE(135.0f)), 0.9f) + Q12(60.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(1.64f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12_MULT_FLOAT(Math_Cos(FP_ANGLE(135.0f)), 0.9f) - Q12(20.0f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(45.0f);
+            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12_MULT_FLOAT(Math_Cos(Q12_ANGLE(135.0f)), 0.9f) - Q12(20.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(45.0f);
 
             D_800D4E09 = 1;
             break;
@@ -198,11 +198,11 @@ void func_800CF0B8(void) // 0x800CF0B8
             g_SysWork.field_28 += g_DeltaTime0;
 
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12_MULT_FLOAT(Math_Sin(FP_ANGLE(135.0f) - (g_SysWork.field_28 >> 2)), 0.9f) + Q12(60.0f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12_MULT_FLOAT(Math_Cos(FP_ANGLE(135.0f) - (g_SysWork.field_28 >> 2)), 0.9f) - Q12(20.0f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(45.0f) - (g_SysWork.field_28 >> 2);
+            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12_MULT_FLOAT(Math_Sin(Q12_ANGLE(135.0f) - (g_SysWork.field_28 >> 2)), 0.9f) + Q12(60.0f);
+            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12_MULT_FLOAT(Math_Cos(Q12_ANGLE(135.0f) - (g_SysWork.field_28 >> 2)), 0.9f) - Q12(20.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(45.0f) - (g_SysWork.field_28 >> 2);
 
-            if ((g_SysWork.field_28 >> 2) > FP_ANGLE(140.7f))
+            if ((g_SysWork.field_28 >> 2) > Q12_ANGLE(140.7f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -238,7 +238,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(59.6f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-19.0f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(180.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(180.0f);
 
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 1, false);
@@ -345,7 +345,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(59.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-19.5f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(164.1f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(164.1f);
 
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             Player_ControlUnfreeze(true);
@@ -638,14 +638,14 @@ void func_800D0500(void) // 0x800D0500
             SysWork_StateStepIncrementDelayed(Q12(5.0f), false);
             D_800D3C98 += g_DeltaTime0;
 
-            // TODO: Some kind of `FP_ANGLE_ABS`?
+            // TODO: Some kind of `Q12_ANGLE_ABS`?
             var_v0 = D_800D3C98;
             if (D_800D3C98 < 0)
             {
                 var_v0 = D_800D3C98 + 0xFFF;
             }
 
-            if (D_800D3C98 - FP_TO(FP_FROM(var_v0, Q12_SHIFT), Q12_SHIFT) > FP_ANGLE(180.0f))
+            if (D_800D3C98 - FP_TO(FP_FROM(var_v0, Q12_SHIFT), Q12_SHIFT) > Q12_ANGLE(180.0f))
             {
                 Gfx_BackgroundSpriteDraw_2(&D_800D3B44[1]);
             }
@@ -675,7 +675,7 @@ void func_800D0500(void) // 0x800D0500
                 var_v0_2 = D_800D3C98 + 0xFFF;
             }
 
-            if (D_800D3C98 - FP_TO(FP_FROM(var_v0_2, Q12_SHIFT), Q12_SHIFT) > FP_ANGLE(180.0f))
+            if (D_800D3C98 - FP_TO(FP_FROM(var_v0_2, Q12_SHIFT), Q12_SHIFT) > Q12_ANGLE(180.0f))
             {
                 Gfx_BackgroundSpriteDraw_2(&D_800D3B44[1]);
             }
@@ -1090,7 +1090,7 @@ void func_800D1718(void) // 0x800D1718
         if (mag < Q12(1.4f))
         {
             if (ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - Q12(60.0f),
-                       g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(20.0f)) > FP_ANGLE(67.5f))
+                       g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(20.0f)) > Q12_ANGLE(67.5f))
             {
                 Savegame_EventFlagSet(EventFlag_407);
                 D_800D4E6C = 6;
@@ -1101,7 +1101,7 @@ void func_800D1718(void) // 0x800D1718
         {
             g_SysWork.pointLightIntensity_2378 = Q12(2.8f);
             Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(60.0f), Q12(-2.5f), Q12(-20.0f));
-            Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, FP_ANGLE(-90.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
+            Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, Q12_ANGLE(-90.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
 
             func_800D2170(false);
             SD_Call(Sfx_Unk1611);
@@ -1162,7 +1162,7 @@ void func_800D1AE4(void) // 0x800D1AE4
 
         if (g_SysWork.playerWork_4C.player_0.position_18.vy > Q12(2.84f))
         {
-            angle                             = FP_ANGLE(0.0f);
+            angle                             = Q12_ANGLE(0.0f);
             g_SysWork.pointLightIntensity_2378 = (((g_SysWork.playerWork_4C.player_0.position_18.vy - Q12(2.84f)) * Q12(0.4f)) / (Q12(1.16f) + 1)) + Q12(0.7f);
         }
         else
@@ -1173,7 +1173,7 @@ void func_800D1AE4(void) // 0x800D1AE4
 
         func_800CED74(&g_SysWork.playerWork_4C.player_0, false);
 
-        temp_s2 = angle + FP_ANGLE(70.0f);
+        temp_s2 = angle + Q12_ANGLE(70.0f);
 
         vec = &g_SysWork.pointLightPosition_2360;
 
@@ -1183,7 +1183,7 @@ void func_800D1AE4(void) // 0x800D1AE4
 
         svec = &g_SysWork.pointLightRot_2370;
 
-        Math_SetSVectorFast(svec, 0xFE39, angle - FP_ANGLE(150.0f), 0); // TODO: De-hex.
+        Math_SetSVectorFast(svec, 0xFE39, angle - Q12_ANGLE(150.0f), 0); // TODO: De-hex.
     }
     else
     {
@@ -1202,7 +1202,7 @@ s32 func_800D1D40(void) // 0x800D1D40
     {
         Savegame_EventFlagSet(EventFlag_416);
 
-        if (angle > FP_ANGLE(0.0f) && angle < FP_ANGLE(90.0f))
+        if (angle > Q12_ANGLE(0.0f) && angle < Q12_ANGLE(90.0f))
         {
             D_800D4E6C = 1;
         }
@@ -1212,13 +1212,13 @@ s32 func_800D1D40(void) // 0x800D1D40
 
     if (D_800D4E6C & (1 << 0))
     {
-        if (angle < FP_ANGLE(-78.8f))
+        if (angle < Q12_ANGLE(-78.8f))
         {
             D_800D4E6C++;
         }
         else
         {
-            if ((D_800D4E6C == 1 && angle > FP_ANGLE(90.0f)) || angle > FP_ANGLE(78.8f))
+            if ((D_800D4E6C == 1 && angle > Q12_ANGLE(90.0f)) || angle > Q12_ANGLE(78.8f))
             {
                 D_800D4E6C--;
             }
@@ -1226,16 +1226,16 @@ s32 func_800D1D40(void) // 0x800D1D40
     }
     else
     {
-        if (angle < FP_ANGLE(0.0f) && angle > FP_ANGLE(-78.8f))
+        if (angle < Q12_ANGLE(0.0f) && angle > Q12_ANGLE(-78.8f))
         {
             D_800D4E6C--;
         }
-        else if (angle > FP_ANGLE(0.0f) && angle < FP_ANGLE(78.8f))
+        else if (angle > Q12_ANGLE(0.0f) && angle < Q12_ANGLE(78.8f))
         {
             D_800D4E6C++;
         }
 
-        if (D_800D4E6C == 6 && angle < FP_ANGLE(-157.5f))
+        if (D_800D4E6C == 6 && angle < Q12_ANGLE(-157.5f))
         {
             Savegame_EventFlagSet(EventFlag_405);
         }

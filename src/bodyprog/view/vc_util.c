@@ -19,7 +19,7 @@ void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, const VECTOR3* chr_
     vcInitVCSystem(map_overlay_ptr->roadDataList_3CC);
     vcStartCameraSystem();
 
-    g_SysWork.cameraAngleZ_237C   = FP_ANGLE(0.0f);
+    g_SysWork.cameraAngleZ_237C   = Q12_ANGLE(0.0f);
     g_SysWork.cameraRadiusXz_2380 = Q12(3.0f);
     g_SysWork.cameraY_2384        = Q12(0.0f);
 }
@@ -33,9 +33,9 @@ void vcSetCameraUseWarp(const VECTOR3* chr_pos, q3_12 chr_ang_y) // 0x800400D4
     SVECTOR cam_ang; // Q3.12
 
     // Set rotation.
-    cam_ang.vx = FP_ANGLE(0.0f);
+    cam_ang.vx = Q12_ANGLE(0.0f);
     cam_ang.vy = chr_ang_y;
-    cam_ang.vz = FP_ANGLE(0.0f);
+    cam_ang.vz = Q12_ANGLE(0.0f);
 
     // Set position.
     cam_pos.vx = chr_pos->vx - Q12_MULT(Math_Sin(chr_ang_y), RADIUS);
@@ -134,7 +134,7 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
 
             vcSetSubjChara(&hr_p->position_18, hero_bottom_y, hero_top_y, grnd_y,
                            &hr_head_pos, hr_p->moveSpeed_38, hr_p->headingAngle_3C, hr_p->rotationSpeed_2C.vy, hr_p->rotation_24.vy,
-                           FP_ANGLE(120.0f), Q12(11.0f));
+                           Q12_ANGLE(120.0f), Q12(11.0f));
 
             g_WorldGfx.vcCameraInternalInfo_1BDC.mv_smooth = vcExecCamera();
             break;
@@ -154,7 +154,7 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
             vcSetRefPosAndSysRef2CamParam(&vcRefPosSt, &g_SysWork, for_f, back_f, right_f, left_f, up_f, down_f);
             vwSetCoordRefAndEntou(&g_SysWork.playerBoneCoords_890[HarryBone_Head],
                                   Q12(0.0f), Q12(-0.15f), Q12(1.0f),
-                                  FP_ANGLE(165.0f), FP_ANGLE(0.0f), Q12(-0.2f), Q12(1.0f));
+                                  Q12_ANGLE(165.0f), Q12_ANGLE(0.0f), Q12(-0.2f), Q12(1.0f));
             break;
     }
 
@@ -323,7 +323,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
                 var0 = -0x1A;
             }
 
-            var1 = var0 * Math_Sin(cam_ang.vy + FP_ANGLE(90.0f));
+            var1 = var0 * Math_Sin(cam_ang.vy + Q12_ANGLE(90.0f));
             if (var1 < 0)
             {
                 var1 += 0xFFF;
@@ -331,7 +331,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
 
             vec0.vx += FP_FROM(var1, Q12_SHIFT);
 
-            var2 = var0 * Math_Cos(cam_ang.vy + FP_ANGLE(90.0f));
+            var2 = var0 * Math_Cos(cam_ang.vy + Q12_ANGLE(90.0f));
             if (var2 < 0)
             {
                 var2 += 0xFFF;
@@ -363,7 +363,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
         ref_pos->vy = Q8_TO_Q12(vec0.vy + vec1.vy);
         ref_pos->vz = Q8_TO_Q12(vec0.vz + vec1.vz);
 
-        sys_p->cameraAngleY_237A   = Math_AngleNormalize(cam_ang.vy + FP_ANGLE(180.0f));
+        sys_p->cameraAngleY_237A   = Math_AngleNormalize(cam_ang.vy + Q12_ANGLE(180.0f));
         sys_p->cameraY_2384        = Q8_TO_Q12(-vec1.vy);
         sys_p->cameraRadiusXz_2380 = Q8_TO_Q12(SquareRoot0(SQUARE(vec1.vx) + SQUARE(vec1.vz)));
     }

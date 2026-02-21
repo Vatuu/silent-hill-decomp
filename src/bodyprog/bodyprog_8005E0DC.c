@@ -412,10 +412,10 @@ void func_8005E89C(void) // 0x8005E89C
             }
             else
             {
-                ptr->u_field_EC.field_0[i].vx = Q12_MULT(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Sin(ptr->field_30.vy - FP_ANGLE(90.0f)));
-                ptr->u_field_EC.field_0[i].vy = Q12_MULT(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Sin(ptr->field_30.vy + FP_ANGLE(90.0f)));
-                ptr->u_field_FC.field_0[i].vx = Q12_MULT(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Cos(ptr->field_30.vy - FP_ANGLE(90.0f)));
-                ptr->u_field_FC.field_0[i].vy = Q12_MULT(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Cos(ptr->field_30.vy + FP_ANGLE(90.0f)));
+                ptr->u_field_EC.field_0[i].vx = Q12_MULT(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Sin(ptr->field_30.vy - Q12_ANGLE(90.0f)));
+                ptr->u_field_EC.field_0[i].vy = Q12_MULT(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Sin(ptr->field_30.vy + Q12_ANGLE(90.0f)));
+                ptr->u_field_FC.field_0[i].vx = Q12_MULT(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Cos(ptr->field_30.vy - Q12_ANGLE(90.0f)));
+                ptr->u_field_FC.field_0[i].vy = Q12_MULT(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Cos(ptr->field_30.vy + Q12_ANGLE(90.0f)));
             }
         }
 
@@ -2111,8 +2111,8 @@ void func_8006342C(s32 weaponAttack, q3_12 angle0, q3_12 angle1, GsCOORDINATE2* 
             // TODO: Demagic this.
             if (weaponAttack == 70)
             {
-                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.s_0.field_0 = FP_ANGLE(-90.0f);
-                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.s_0.field_2 = FP_ANGLE(90.0f);
+                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.s_0.field_0 = Q12_ANGLE(-90.0f);
+                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.s_0.field_2 = Q12_ANGLE(90.0f);
             }
             else
             {
@@ -2244,7 +2244,7 @@ bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
     {
         ptr->field_1D0 = g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 + (FP_TO(ptr->field_1D4, Q12_SHIFT) / 6);
 
-        *(s32*)&ptr->field_14C[0].vx = ((((u16)g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_0 + Q12_MULT(ptr->field_1E8, Math_Cos(ptr->field_1D0))) - FP_ANGLE(90.0f)) & 0xFFFF) +
+        *(s32*)&ptr->field_14C[0].vx = ((((u16)g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_0 + Q12_MULT(ptr->field_1E8, Math_Cos(ptr->field_1D0))) - Q12_ANGLE(90.0f)) & 0xFFFF) +
                                        ((g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2 + Q12_MULT(ptr->field_1E8, Math_Sin(ptr->field_1D0))) << 16);
 
         ptr->field_14C[0].vz = ptr->field_1D0;

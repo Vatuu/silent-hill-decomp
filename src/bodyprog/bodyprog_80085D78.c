@@ -618,7 +618,7 @@ void Camera_LookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtO
     }
 
     // Set angular acceleration on X axis.
-    if (angularAccelX == FP_ANGLE(0.0f))
+    if (angularAccelX == Q12_ANGLE(0.0f))
     {
         camLookAtMoveParams.ang_accel_x = deflt_watch_mv_prm.ang_accel_x;
     }
@@ -628,7 +628,7 @@ void Camera_LookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtO
     }
 
     // Set angular acceleration on Y axis.
-    if (angularAccelY == FP_ANGLE(0.0f))
+    if (angularAccelY == Q12_ANGLE(0.0f))
     {
         camLookAtMoveParams.ang_accel_y = deflt_watch_mv_prm.ang_accel_y;
     }
@@ -638,7 +638,7 @@ void Camera_LookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtO
     }
 
     // Set max angular speed on X axis.
-    if (angularSpeedXMax == FP_ANGLE(0.0f))
+    if (angularSpeedXMax == Q12_ANGLE(0.0f))
     {
         camLookAtMoveParams.max_ang_spd_x = deflt_watch_mv_prm.max_ang_spd_x;
     }
@@ -648,7 +648,7 @@ void Camera_LookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtO
     }
 
     // Set max angular speed on Y axis.
-    if (angularSpeedYMax == FP_ANGLE(0.0f))
+    if (angularSpeedYMax == Q12_ANGLE(0.0f))
     {
         camLookAtMoveParams.max_ang_spd_y = deflt_watch_mv_prm.max_ang_spd_y;
     }

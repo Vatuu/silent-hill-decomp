@@ -235,7 +235,7 @@ void func_800DA384(void) // 0x800DA384
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-13.3f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-68.1f);
 
-            func_800865FC(true, 0, 0, FP_ANGLE(-45.0f), Q12(-18.18f), Q12(-62.24f));
+            func_800865FC(true, 0, 0, Q12_ANGLE(-45.0f), Q12(-18.18f), Q12(-62.24f));
             Savegame_EventFlagClear(EventFlag_92);
 
             D_800E1EE2 = 0;
@@ -289,7 +289,7 @@ void func_800DA384(void) // 0x800DA384
                 g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-18.18f);
                 g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(0.0f);
                 g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-62.24f);
-                g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-45.0f);
+                g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-45.0f);
 
                 Player_ControlUnfreeze(true);
                 SysWork_StateSetNext(SysState_Gameplay);
@@ -630,7 +630,7 @@ void func_800DB368(void) // 0x800DB368
             Player_ControlFreeze();
             Savegame_EventFlagSet(EventFlag_122);
             SD_Call(Sfx_XaAudio53);
-            func_800865FC(true, 0, 0, FP_ANGLE(-90.0f), Q12(20.3f), Q12(143.5f));
+            func_800865FC(true, 0, 0, Q12_ANGLE(-90.0f), Q12(20.3f), Q12(143.5f));
 
             func_800868DC(0);
             func_800868DC(3);
@@ -798,7 +798,7 @@ void func_800DB368(void) // 0x800DB368
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(20.3f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(143.5f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-90.0f);
 
             Fs_QueueWaitForEmpty();
             g_SysWork.field_30 = 0;
@@ -861,37 +861,37 @@ void func_800DBB7C(void) // 0x800DBB7C
             D_800E1EE8 += g_DeltaTime0;
             if (D_800E1EE8 < Q12(0.3f))
             {
-                angleAdd = FP_ANGLE(0.0f);
+                angleAdd = Q12_ANGLE(0.0f);
             }
             else if (D_800E1EE8 < Q12(0.5f))
             {
-                angleAdd = FP_ANGLE(-45.0f);
+                angleAdd = Q12_ANGLE(-45.0f);
             }
             else if (D_800E1EE8 < Q12(1.0f))
             {
-                angleAdd = FP_ANGLE(5.0f);
+                angleAdd = Q12_ANGLE(5.0f);
             }
             else if (D_800E1EE8 < Q12(8.5f))
             {
                 if (D_800E1EE8 - Q12(1.0f) <= Q12(6.0f))
                 {
-                    angleAdd = Q12_MULT_PRECISE(D_800E1EE8 - Q12(1.0f), FP_ANGLE(5.0f)) - FP_ANGLE(35.0f);
+                    angleAdd = Q12_MULT_PRECISE(D_800E1EE8 - Q12(1.0f), Q12_ANGLE(5.0f)) - Q12_ANGLE(35.0f);
                 }
                 else
                 {
-                    angleAdd = FP_ANGLE(-5.5f);
+                    angleAdd = Q12_ANGLE(-5.5f);
                 }
             }
             else
             {
-                angleAdd = FP_ANGLE(0.0f);
+                angleAdd = Q12_ANGLE(0.0f);
                 SysWork_StateStepIncrement(0);
             }
 
             g_WorldObject1.rotation_28.vy += Q12_MULT_PRECISE(g_DeltaTime0, angleAdd);
-            if (g_WorldObject1.rotation_28.vy < FP_ANGLE(-112.5f))
+            if (g_WorldObject1.rotation_28.vy < Q12_ANGLE(-112.5f))
             {
-                g_WorldObject1.rotation_28.vy = FP_ANGLE(-112.5f);
+                g_WorldObject1.rotation_28.vy = Q12_ANGLE(-112.5f);
             }
 
             break;
@@ -1073,22 +1073,22 @@ void func_800DC1E0(void) // 0x800DC1E0
             {
                 if (Savegame_EventFlagGet(EventFlag_118))
                 {
-                    rotY0 = -Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)));
-                    if ((D_800E1FDC.vx - rotY0) > FP_ANGLE(180.0f))
+                    rotY0 = -Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, Q12_ANGLE(60.0f)));
+                    if ((D_800E1FDC.vx - rotY0) > Q12_ANGLE(180.0f))
                     {
-                        rotY0 = D_800E1FDC.vx - FP_ANGLE(180.0f);
-                        D_800E1FDC.vx = FP_ANGLE(180.0f);
+                        rotY0 = D_800E1FDC.vx - Q12_ANGLE(180.0f);
+                        D_800E1FDC.vx = Q12_ANGLE(180.0f);
                     }
                     else
                     {
                         D_800E1FDC.vx -= rotY0;
                     }
 
-                    rotY1 = -Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f))) >> 1;
-                    if ((D_800E1FDC.vy - rotY1) > FP_ANGLE(90.0f))
+                    rotY1 = -Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, Q12_ANGLE(60.0f))) >> 1;
+                    if ((D_800E1FDC.vy - rotY1) > Q12_ANGLE(90.0f))
                     {
-                        rotY1 = D_800E1FDC.vy - FP_ANGLE(90.0f);
-                        D_800E1FDC.vy = FP_ANGLE(90.0f);
+                        rotY1 = D_800E1FDC.vy - Q12_ANGLE(90.0f);
+                        D_800E1FDC.vy = Q12_ANGLE(90.0f);
                     }
                     else
                     {
@@ -1097,22 +1097,22 @@ void func_800DC1E0(void) // 0x800DC1E0
                 }
                 else
                 {
-                    rotY1 = -Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)));
-                    if ((D_800E1FDC.vx - rotY1) > FP_ANGLE(180.0f))
+                    rotY1 = -Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, Q12_ANGLE(60.0f)));
+                    if ((D_800E1FDC.vx - rotY1) > Q12_ANGLE(180.0f))
                     {
-                        rotY1 = D_800E1FDC.vx - FP_ANGLE(180.0f);
-                        D_800E1FDC.vx = FP_ANGLE(180.0f);
+                        rotY1 = D_800E1FDC.vx - Q12_ANGLE(180.0f);
+                        D_800E1FDC.vx = Q12_ANGLE(180.0f);
                     }
                     else
                     {
                         D_800E1FDC.vx -= rotY1;
                     }
 
-                    rotY0 = -Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f))) >> 1;
-                    if ((D_800E1FDC.vy - rotY0) > FP_ANGLE(90.0f))
+                    rotY0 = -Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, Q12_ANGLE(60.0f))) >> 1;
+                    if ((D_800E1FDC.vy - rotY0) > Q12_ANGLE(90.0f))
                     {
-                        rotY0 = D_800E1FDC.vy - FP_ANGLE(90.0f);
-                        D_800E1FDC.vy = FP_ANGLE(90.0f);
+                        rotY0 = D_800E1FDC.vy - Q12_ANGLE(90.0f);
+                        D_800E1FDC.vy = Q12_ANGLE(90.0f);
                     }
                     else
                     {
@@ -1122,22 +1122,22 @@ void func_800DC1E0(void) // 0x800DC1E0
             }
             else if (Savegame_EventFlagGet(EventFlag_118))
             {
-                rotY0 = Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)));
-                if ((D_800E1FDC.vx + rotY0) > FP_ANGLE(180.0f))
+                rotY0 = Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, Q12_ANGLE(60.0f)));
+                if ((D_800E1FDC.vx + rotY0) > Q12_ANGLE(180.0f))
                 {
-                    rotY0 = FP_ANGLE(180.0f) - D_800E1FDC.vx;
-                    D_800E1FDC.vx = FP_ANGLE(180.0f);
+                    rotY0 = Q12_ANGLE(180.0f) - D_800E1FDC.vx;
+                    D_800E1FDC.vx = Q12_ANGLE(180.0f);
                 }
                 else
                 {
                     D_800E1FDC.vx += rotY0;
                 }
 
-                rotY1 = Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f))) >> 1;
-                if ((D_800E1FDC.vy + rotY1) > FP_ANGLE(90.0f))
+                rotY1 = Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, Q12_ANGLE(60.0f))) >> 1;
+                if ((D_800E1FDC.vy + rotY1) > Q12_ANGLE(90.0f))
                 {
-                    rotY1 = FP_ANGLE(90.0f) - D_800E1FDC.vy;
-                    D_800E1FDC.vy = FP_ANGLE(90.0f);
+                    rotY1 = Q12_ANGLE(90.0f) - D_800E1FDC.vy;
+                    D_800E1FDC.vy = Q12_ANGLE(90.0f);
                 }
                 else
                 {
@@ -1146,22 +1146,22 @@ void func_800DC1E0(void) // 0x800DC1E0
             }
             else
             {
-                rotY1 = Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)));
-                if ((D_800E1FDC.vx + rotY1) > FP_ANGLE(180.0f))
+                rotY1 = Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, Q12_ANGLE(60.0f)));
+                if ((D_800E1FDC.vx + rotY1) > Q12_ANGLE(180.0f))
                 {
-                    rotY1 = FP_ANGLE(180.0f) - D_800E1FDC.vx;
-                    D_800E1FDC.vx = FP_ANGLE(180.0f);
+                    rotY1 = Q12_ANGLE(180.0f) - D_800E1FDC.vx;
+                    D_800E1FDC.vx = Q12_ANGLE(180.0f);
                 }
                 else
                 {
                     D_800E1FDC.vx += rotY1;
                 }
 
-                rotY0 = Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f))) >> 1;
-                if ((D_800E1FDC.vy + rotY0) > FP_ANGLE(90.0f))
+                rotY0 = Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, Q12_ANGLE(60.0f))) >> 1;
+                if ((D_800E1FDC.vy + rotY0) > Q12_ANGLE(90.0f))
                 {
-                    rotY0 = FP_ANGLE(90.0f) - D_800E1FDC.vy;
-                    D_800E1FDC.vy = FP_ANGLE(90.0f);
+                    rotY0 = Q12_ANGLE(90.0f) - D_800E1FDC.vy;
+                    D_800E1FDC.vy = Q12_ANGLE(90.0f);
                 }
                 else
                 {
@@ -1174,7 +1174,7 @@ void func_800DC1E0(void) // 0x800DC1E0
 
             func_8005DE0C(Sfx_Unk1453, &D_800CB94C, D_800E1FE0 >> 3, Q12(18.0f), 0);
 
-            if (D_800E1FDC.vx == FP_ANGLE(180.0f) && D_800E1FDC.vy == FP_ANGLE(90.0f))
+            if (D_800E1FDC.vx == Q12_ANGLE(180.0f) && D_800E1FDC.vy == Q12_ANGLE(90.0f))
             {
                 // TODO: What are these angles?
                 g_WorldObject6.rotation_28.vy = (g_WorldObject6.rotation_28.vy + 0x1040) & 0xC00;
@@ -1514,7 +1514,7 @@ void func_800DDA84(void) // 0x800DDA84
 
         if (Savegame_EventFlagGet(EventFlag_96))
         {
-            g_WorldObject1.rotation_28.vy = FP_ANGLE(-112.5f);
+            g_WorldObject1.rotation_28.vy = Q12_ANGLE(-112.5f);
         }
         else
         {
@@ -1532,7 +1532,7 @@ void func_800DDA84(void) // 0x800DDA84
         WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C, &g_WorldObject7.rotation_28);
         WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &(SVECTOR3){ 0, 0, 0 });
 
-        if (g_WorldObject6.rotation_28.vy != FP_ANGLE(180.0f) ||
+        if (g_WorldObject6.rotation_28.vy != Q12_ANGLE(180.0f) ||
             g_WorldObject7.rotation_28.vy != g_WorldObject6.rotation_28.vy)
         {
             flags |= 1 << 2;
@@ -1549,14 +1549,14 @@ void func_800DDA84(void) // 0x800DDA84
     {
         if (Savegame_EventFlagGet(EventFlag_362))
         {
-            g_WorldObject7.rotation_28.vy = FP_ANGLE(180.0f);
+            g_WorldObject7.rotation_28.vy = Q12_ANGLE(180.0f);
         }
         else
         {
-            g_WorldObject7.rotation_28.vy = FP_ANGLE(90.0f);
+            g_WorldObject7.rotation_28.vy = Q12_ANGLE(90.0f);
         }
 
-        g_WorldObject6.rotation_28.vy = FP_ANGLE(180.0f);
+        g_WorldObject6.rotation_28.vy = Q12_ANGLE(180.0f);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))

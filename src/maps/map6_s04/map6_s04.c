@@ -123,7 +123,7 @@ void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D8
     extraModel->stateStep_3    = 0;
 
     chara->field_E1_0 = 3;
-    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[12].val16[1] = FP_ANGLE(90.0f);
+    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[12].val16[1] = Q12_ANGLE(90.0f);
     chara->model_0.anim_4.flags_2 |= AnimFlag_Visible | AnimFlag_Unlocked;
     chara->flags_3E |= CharaFlag_Unk9 | CharaFlag_Unk3;
 
@@ -221,7 +221,7 @@ void func_800D8B14(s_SubCharacter* chara, s_Model* model) // 0x800D8B14
             chara->health_B0         -= chara->damage_B4.amount_C;
             chara->damage_B4.amount_C = Q12(0.0f);
 
-            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_122 = FP_ANGLE_NORM_U(
+            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_122 = Q12_ANGLE_NORM_U(
                 ratan2(Q12_TO_Q8(chara->position_18.vx - g_SysWork.playerWork_4C.player_0.position_18.vx),
                        Q12_TO_Q8(chara->position_18.vz - g_SysWork.playerWork_4C.player_0.position_18.vz)) +
                 Q12(1.0f));
@@ -510,7 +510,7 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
         case 11:
             if (chara->model_0.anim_4.keyframeIdx_8 == 38)
             {
-                func_8006342C(63, FP_ANGLE(90.0f), chara->rotation_24.vy, g_SysWork.npcCoords_FC0);
+                func_8006342C(63, Q12_ANGLE(90.0f), chara->rotation_24.vy, g_SysWork.npcCoords_FC0);
             }
 
             sharedFunc_800D9188_0_s00(39, chara, 38, Sfx_Unk1622);
@@ -570,7 +570,7 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
     moveSpeed              = g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_126;
     angle0                 = g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_122;
-    chara->headingAngle_3C = FP_ANGLE_ABS(angle0 + chara->rotation_24.vy);
+    chara->headingAngle_3C = Q12_ANGLE_ABS(angle0 + chara->rotation_24.vy);
 
     chara->moveSpeed_38 = moveSpeed;
     chara->field_34    += g_DeltaTime2;
@@ -855,7 +855,7 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                 chara->position_18.vy = Q12(0.0f);
             }
 
-            chara->rotation_24.vy = (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_FE < 6) ? (D_800CB2A0[g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_FE] - FP_ANGLE(180.0f)) :
+            chara->rotation_24.vy = (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_FE < 6) ? (D_800CB2A0[g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_FE] - Q12_ANGLE(180.0f)) :
                                                                                                       D_800CB2A0[g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_FE];
 
             temp_v0 = 1;
@@ -872,7 +872,7 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
             chara->position_18.vy = g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_100 - Q12(0.45f);
             chara->position_18.vz = D_800CB2DC[g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_FE] + Q12(100.0f);
 
-            chara->rotation_24.vy = (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_FE < 6) ? (D_800CB2A0[g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_FE] - FP_ANGLE(180.0f)) :
+            chara->rotation_24.vy = (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_FE < 6) ? (D_800CB2A0[g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_FE] - Q12_ANGLE(180.0f)) :
                                                                                                       D_800CB2A0[g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_FE];
 
             if (chara->model_0.anim_4.keyframeIdx_8 >= MONSTER_CYBIL_ANIM_INFOS[25].startKeyframeIdx_C &&
@@ -1372,8 +1372,8 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
             {
                 g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_EC = 1;
                 chara->model_0.stateStep_3                                 = 0;
-                chara->position_18.vx                                     += Q12_MULT(Math_Sin(chara->rotation_24.vy + FP_ANGLE(33.75f)), Q12(0.1f));
-                chara->position_18.vz                                     += Q12_MULT(Math_Cos(chara->rotation_24.vy + FP_ANGLE(33.75f)), Q12(0.1f));
+                chara->position_18.vx                                     += Q12_MULT(Math_Sin(chara->rotation_24.vy + Q12_ANGLE(33.75f)), Q12(0.1f));
+                chara->position_18.vz                                     += Q12_MULT(Math_Cos(chara->rotation_24.vy + Q12_ANGLE(33.75f)), Q12(0.1f));
             }
             break;
 
@@ -1469,7 +1469,7 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                                       &D_800ED570,
                                       &g_SysWork.playerWork_4C.player_0,
                                       chara->rotation_24.vy,
-                                      FP_ANGLE(90.0f));
+                                      Q12_ANGLE(90.0f));
 
             if (temp_v0_2 != NO_VALUE)
             {
@@ -1582,7 +1582,7 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                               &D_800ED570,
                               &g_SysWork.playerWork_4C.player_0,
                               chara->rotation_24.vy,
-                              FP_ANGLE(90.0f)) != NO_VALUE)
+                              Q12_ANGLE(90.0f)) != NO_VALUE)
             {
                 g_SysWork.playerWork_4C.player_0.damage_B4.position_0.vz = Q12(1.0f);
 
@@ -1649,11 +1649,11 @@ void func_800DB4CC(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coord) 
 
         case 10:
             range = delta >> 1;
-            if (range >= (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_11A - FP_ANGLE(90.0f)))
+            if (range >= (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_11A - Q12_ANGLE(90.0f)))
             {
-                if ((g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_11A - FP_ANGLE(90.0f)) >= -range)
+                if ((g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_11A - Q12_ANGLE(90.0f)) >= -range)
                 {
-                    g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_11A = FP_ANGLE(90.0f);
+                    g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_11A = Q12_ANGLE(90.0f);
                 }
                 else
                 {
@@ -1665,7 +1665,7 @@ void func_800DB4CC(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coord) 
                 g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_11A -= delta;
             }
 
-            Math_RotMatrixZ(g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_11A - FP_ANGLE(90.0f), &coord[8].coord);
+            Math_RotMatrixZ(g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_11A - Q12_ANGLE(90.0f), &coord[8].coord);
             break;
 
         case 2:
@@ -1686,7 +1686,7 @@ void func_800DB4CC(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coord) 
                 g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_11A = angle;
             }
 
-            Math_RotMatrixZ(g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_11A - FP_ANGLE(90.0f), &coord[8].coord);
+            Math_RotMatrixZ(g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_11A - Q12_ANGLE(90.0f), &coord[8].coord);
             break;
 
         case 6:
@@ -1708,22 +1708,22 @@ void func_800DB748(s_SubCharacter* chara) // 0x800DB748
     q3_12 shortestAngle;
 
     // TODO: Not sure if `Q12_TO_Q8` makes sense here, maybe this was just a divide by 16 for some reason.
-    angleToPlayer = FP_ANGLE_ABS(ratan2(Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx),
+    angleToPlayer = Q12_ANGLE_ABS(ratan2(Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx),
                                         Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz)));
 
     Math_ShortestAngleGet(chara->rotation_24.vy, angleToPlayer, &shortestAngle);
 
-    if (ABS(shortestAngle) < FP_ANGLE(11.3f))
+    if (ABS(shortestAngle) < Q12_ANGLE(11.3f))
     {
         chara->rotation_24.vy = angleToPlayer;
     }
-    else if (shortestAngle > FP_ANGLE(0.0f))
+    else if (shortestAngle > Q12_ANGLE(0.0f))
     {
-        chara->rotation_24.vy += FP_ANGLE(11.3f);
+        chara->rotation_24.vy += Q12_ANGLE(11.3f);
     }
     else
     {
-        chara->rotation_24.vy -= FP_ANGLE(11.3f);
+        chara->rotation_24.vy -= Q12_ANGLE(11.3f);
     }
 }
 
@@ -1925,15 +1925,15 @@ void func_800DBE5C(s_SubCharacter* chara)
 
     if (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_E8 == 1)
     {
-        unkAngle1 = ((Rng_Rand16() & 0x1) * FP_ANGLE(180.0f)) - FP_ANGLE(90.0f);
+        unkAngle1 = ((Rng_Rand16() & 0x1) * Q12_ANGLE(180.0f)) - Q12_ANGLE(90.0f);
     }
     else
     {
-        unkAngle1 = ((Rng_Rand16() & 0x1) * FP_ANGLE(180.0f)) - FP_ANGLE(45.0f);
+        unkAngle1 = ((Rng_Rand16() & 0x1) * Q12_ANGLE(180.0f)) - Q12_ANGLE(45.0f);
     }
 
     // TODO: Use macro.
-    unkAngle0 = FP_ANGLE_NORM_U(unkAngle1 + ratan2((chara->position_18.vx - Q12(20.0f)) >> 4, (chara->position_18.vz - Q12(100.0f)) >> 4) + Q12(1.0f));
+    unkAngle0 = Q12_ANGLE_NORM_U(unkAngle1 + ratan2((chara->position_18.vx - Q12(20.0f)) >> 4, (chara->position_18.vz - Q12(100.0f)) >> 4) + Q12(1.0f));
 
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(1, true))
     {
@@ -1945,20 +1945,20 @@ void func_800DBE5C(s_SubCharacter* chara)
     }
 
     Math_ShortestAngleGet(chara->rotation_24.vy, unkAngle0, &angle);
-    if (ABS(angle) < FP_ANGLE(5.625f))
+    if (ABS(angle) < Q12_ANGLE(5.625f))
     {
         chara->rotation_24.vy = unkAngle0;
     }
-    else if (angle > FP_ANGLE(0.0f))
+    else if (angle > Q12_ANGLE(0.0f))
     {
-        chara->rotation_24.vy += FP_ANGLE(5.625f);
+        chara->rotation_24.vy += Q12_ANGLE(5.625f);
     }
     else
     {
-        chara->rotation_24.vy -= FP_ANGLE(5.625f);
+        chara->rotation_24.vy -= Q12_ANGLE(5.625f);
     }
 
-    chara->rotation_24.vy += (Rng_Rand16() % FP_ANGLE(11.25f)) - FP_ANGLE(5.625f);
+    chara->rotation_24.vy += (Rng_Rand16() % Q12_ANGLE(11.25f)) - Q12_ANGLE(5.625f);
 
     g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_10C += g_DeltaTime0;
     if (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_10C > Q12(5.0f))
@@ -1978,41 +1978,41 @@ void func_800DC018(s_SubCharacter* chara) // 0x800DC018
     switch (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_116)
     {
         case 2:
-            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 += TIMESTEP_SCALE_30_FPS(g_DeltaTime0, FP_ANGLE(11.25f / 4.0f));
+            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 += TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12_ANGLE(11.25f / 4.0f));
             g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 = CLAMP(g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106,
-                                                                               FP_ANGLE(0.0f),
-                                                                               FP_ANGLE(135.0f));
+                                                                               Q12_ANGLE(0.0f),
+                                                                               Q12_ANGLE(135.0f));
 
             newRotY = chara->rotation_24.vy;
-            if (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 < FP_ANGLE(90.0f))
+            if (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 < Q12_ANGLE(90.0f))
             {
-                newRotY += TIMESTEP_SCALE_30_FPS(g_DeltaTime0, FP_ANGLE(11.25f / 4.0f));
+                newRotY += TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12_ANGLE(11.25f / 4.0f));
             }
             chara->rotation_24.vy = newRotY;
 
-            if (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 == FP_ANGLE(135.0f))
+            if (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 == Q12_ANGLE(135.0f))
             {
-                g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 = FP_ANGLE(0.0f);
+                g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 = Q12_ANGLE(0.0f);
                 g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_116 = 0;
             }
             break;
 
         case 3:
-            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime0, FP_ANGLE(11.25f / 4.0f));
+            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12_ANGLE(11.25f / 4.0f));
             g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 = CLAMP(g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106,
-                                                                               FP_ANGLE(-135.0f),
-                                                                               FP_ANGLE(0.0f));
+                                                                               Q12_ANGLE(-135.0f),
+                                                                               Q12_ANGLE(0.0f));
 
             newRotY = chara->rotation_24.vy;
-            if (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 > FP_ANGLE(-90.0f))
+            if (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 > Q12_ANGLE(-90.0f))
             {
-                newRotY -= TIMESTEP_SCALE_30_FPS(g_DeltaTime0, FP_ANGLE(11.25f / 4.0f));
+                newRotY -= TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12_ANGLE(11.25f / 4.0f));
             }
             chara->rotation_24.vy = newRotY;
 
-            if (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 == FP_ANGLE(-135.0f))
+            if (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 == Q12_ANGLE(-135.0f))
             {
-                g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 = FP_ANGLE(0.0f);
+                g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 = Q12_ANGLE(0.0f);
                 g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_116 = 0;
             }
             break;
@@ -2029,7 +2029,7 @@ void func_800DC018(s_SubCharacter* chara) // 0x800DC018
             if (Ray_LineCheck(&ray, &from, &to))
             {
                 g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_116 = (Rng_Rand16() & 0x1) + 2;
-                g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 = FP_ANGLE(0.0f);
+                g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 = Q12_ANGLE(0.0f);
             }
             break;
     }

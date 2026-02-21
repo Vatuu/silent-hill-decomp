@@ -299,19 +299,19 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* chara, s32 weaponAttack
 
     angleTo = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vx + g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetX_0) - g_SysWork.playerCombat_38.field_0.vx,
                                (g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vz + g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetZ_2) - g_SysWork.playerCombat_38.field_0.vz) +
-                          FP_ANGLE(360.0f));
+                          Q12_ANGLE(360.0f));
     chara->field_2A = angleTo;
     Math_ShortestAngleGet(chara->rotation_24.vy, angleTo, &shortestAngle);
 
-    if (ABS(shortestAngle) >= FP_ANGLE(8.5f))
+    if (ABS(shortestAngle) >= Q12_ANGLE(8.5f))
     {
         if (shortestAngle < 0)
         {
-            chara->rotation_24.vy -= FP_ANGLE(8.5f);
+            chara->rotation_24.vy -= Q12_ANGLE(8.5f);
         }
         else
         {
-            chara->rotation_24.vy += FP_ANGLE(8.5f);
+            chara->rotation_24.vy += Q12_ANGLE(8.5f);
         }
     }
 
@@ -1200,14 +1200,14 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                     animStatus        = ANIM_STATUS(HarryAnim_Unk127, true);
                     romperAttackState = PlayerState_EnemyGrabPinnedFront;
                     npcIdx            = g_SysWork.npcIdxs_2354[0];
-                    Math_ShortestAngleGet(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(180.0f)), &headingAngle0);
+                    Math_ShortestAngleGet(chara->rotation_24.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + Q12_ANGLE(180.0f)), &headingAngle0);
                     break;
 
                 case PlayerState_EnemyGrabPinnedBackStart:
                     animStatus        = ANIM_STATUS(HarryAnim_Unk128, true);
                     romperAttackState = PlayerState_EnemyGrabPinnedBack;
                     npcIdx            = g_SysWork.npcIdxs_2354[1];
-                    Math_ShortestAngleGet(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(360.0f)), &headingAngle0);
+                    Math_ShortestAngleGet(chara->rotation_24.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + Q12_ANGLE(360.0f)), &headingAngle0);
                     break;
             }
 
@@ -1225,11 +1225,11 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                 g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12_MULT(temp_s0, Math_Cos(chara->rotation_24.vy));
             }
 
-            if (ABS(headingAngle0) < FP_ANGLE(11.25f))
+            if (ABS(headingAngle0) < Q12_ANGLE(11.25f))
             {
                 if (g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_EnemyGrabPinnedFrontStart)
                 {
-                    chara->rotation_24.vy = g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(180.0f);
+                    chara->rotation_24.vy = g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + Q12_ANGLE(180.0f);
                 }
                 else
                 {
@@ -1238,17 +1238,17 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             }
             else
             {
-                if (headingAngle0 > FP_ANGLE(0.0f))
+                if (headingAngle0 > Q12_ANGLE(0.0f))
                 {
-                    chara->rotation_24.vy += FP_ANGLE(11.25f);
+                    chara->rotation_24.vy += Q12_ANGLE(11.25f);
                 }
                 else
                 {
-                    chara->rotation_24.vy -= FP_ANGLE(11.25f);
+                    chara->rotation_24.vy -= Q12_ANGLE(11.25f);
                 }
             }
 
-            Math_ShortestAngleGet(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(360.0f)), &headingAngle0);
+            Math_ShortestAngleGet(chara->rotation_24.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + Q12_ANGLE(360.0f)), &headingAngle0);
 
             model = &g_SysWork.npcs_1A0[npcIdx].model_0;
 
@@ -1259,7 +1259,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
             if ((*models) != NULL) // @hack Required for match.
             {
-                g_Player_HeadingAngle += FP_ANGLE(0.0f);
+                g_Player_HeadingAngle += Q12_ANGLE(0.0f);
             }
 
             if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
@@ -1607,21 +1607,21 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                     deltaPosX = chara->position_18.vx - g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[0]].position_18.vx;
                     deltaPosZ = chara->position_18.vz - g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[0]].position_18.vz;
                     npcDist   = SquareRoot0(SQUARE(deltaPosX) + SQUARE(deltaPosZ));
-                    Math_ShortestAngleGet(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[0]].rotation_24.vy + FP_ANGLE(180.0f)), &headingAngle1);
+                    Math_ShortestAngleGet(chara->rotation_24.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[0]].rotation_24.vy + Q12_ANGLE(180.0f)), &headingAngle1);
 
-                    if (ABS(headingAngle1) < FP_ANGLE(11.25f))
+                    if (ABS(headingAngle1) < Q12_ANGLE(11.25f))
                     {
-                        chara->rotation_24.vy = g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[0]].rotation_24.vy + FP_ANGLE(180.0f);
+                        chara->rotation_24.vy = g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[0]].rotation_24.vy + Q12_ANGLE(180.0f);
                     }
                     else
                     {
-                        if (headingAngle1 > FP_ANGLE(0.0f))
+                        if (headingAngle1 > Q12_ANGLE(0.0f))
                         {
-                            chara->rotation_24.vy += FP_ANGLE(11.25f);
+                            chara->rotation_24.vy += Q12_ANGLE(11.25f);
                         }
                         else
                         {
-                            chara->rotation_24.vy -= FP_ANGLE(11.25f);
+                            chara->rotation_24.vy -= Q12_ANGLE(11.25f);
                         }
                     }
                     break;
@@ -1633,21 +1633,21 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                     temp_v1_12 = chara->position_18.vx - g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[1]].position_18.vx;
                     temp_v1_13 = chara->position_18.vz - g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[1]].position_18.vz;
                     npcDist     = SquareRoot0(SQUARE(temp_v1_12) + SQUARE(temp_v1_13));
-                    Math_ShortestAngleGet(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[1]].rotation_24.vy + FP_ANGLE(360.0f)), &headingAngle1);
+                    Math_ShortestAngleGet(chara->rotation_24.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[1]].rotation_24.vy + Q12_ANGLE(360.0f)), &headingAngle1);
 
-                    if (ABS(headingAngle1) < FP_ANGLE(11.25f))
+                    if (ABS(headingAngle1) < Q12_ANGLE(11.25f))
                     {
                         chara->rotation_24.vy = g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[1]].rotation_24.vy;
                     }
                     else
                     {
-                        if (headingAngle1 > FP_ANGLE(0.0f))
+                        if (headingAngle1 > Q12_ANGLE(0.0f))
                         {
-                            chara->rotation_24.vy += FP_ANGLE(11.25f);
+                            chara->rotation_24.vy += Q12_ANGLE(11.25f);
                         }
                         else
                         {
-                            chara->rotation_24.vy -= FP_ANGLE(11.25f);
+                            chara->rotation_24.vy -= Q12_ANGLE(11.25f);
                         }
                     }
                     break;
@@ -1656,10 +1656,10 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             switch (g_SysWork.playerWork_4C.extra_128.state_1C)
             {
                 case PlayerState_EnemyGrabPinnedFront:
-                    Math_ShortestAngleGet(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[0]].rotation_24.vy + FP_ANGLE(360.0f)), &headingAngle1);
+                    Math_ShortestAngleGet(chara->rotation_24.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[0]].rotation_24.vy + Q12_ANGLE(360.0f)), &headingAngle1);
 
                 case PlayerState_EnemyGrabPinnedBack:
-                    Math_ShortestAngleGet(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[1]].rotation_24.vy + FP_ANGLE(360.0f)), &headingAngle1);
+                    Math_ShortestAngleGet(chara->rotation_24.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[1]].rotation_24.vy + Q12_ANGLE(360.0f)), &headingAngle1);
                     break;
             }
 
@@ -2168,12 +2168,12 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                 case PlayerState_DamagePushBack:
                     Math_ShortestAngleGet(chara->rotation_24.vy, g_SysWork.playerWork_4C.player_0.properties_E4.player.field_118, &sp1C);
 
-                    if (ABS(sp1C) >= FP_ANGLE(90.0f))
+                    if (ABS(sp1C) >= Q12_ANGLE(90.0f))
                     {
                         break;
                     }
 
-                    if (ABS(sp1C) < FP_ANGLE(5.7f))
+                    if (ABS(sp1C) < Q12_ANGLE(5.7f))
                     {
                         chara->rotation_24.vy = g_SysWork.playerWork_4C.player_0.properties_E4.player.field_118;
                     }
@@ -2186,14 +2186,14 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                 case PlayerState_DamagePushFront:
                     Math_ShortestAngleGet(chara->rotation_24.vy, g_SysWork.playerWork_4C.player_0.properties_E4.player.field_118, &sp1E);
 
-                    if (ABS(sp1E) < FP_ANGLE(90.0f))
+                    if (ABS(sp1E) < Q12_ANGLE(90.0f))
                     {
                         break;
                     }
 
-                    if (ABS(sp1E) >= FP_ANGLE(174.4f))
+                    if (ABS(sp1E) >= Q12_ANGLE(174.4f))
                     {
-                        chara->rotation_24.vy = FP_ANGLE_NORM_U(g_SysWork.playerWork_4C.player_0.properties_E4.player.field_118 + FP_ANGLE(180.0f));
+                        chara->rotation_24.vy = Q12_ANGLE_NORM_U(g_SysWork.playerWork_4C.player_0.properties_E4.player.field_118 + Q12_ANGLE(180.0f));
                     }
                     else
                     {
@@ -2242,9 +2242,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             break;
     }
 
-    temp_v0                    = FP_ANGLE_NORM_U(chara->rotation_24.vy + (D_800C454C >> 4) + FP_ANGLE(360.0f));
+    temp_v0                    = Q12_ANGLE_NORM_U(chara->rotation_24.vy + (D_800C454C >> 4) + Q12_ANGLE(360.0f));
     chara->rotation_24.vy      = temp_v0;
-    chara->headingAngle_3C     = FP_ANGLE_NORM_U((temp_v0 + g_Player_HeadingAngle) + FP_ANGLE(360.0f));
+    chara->headingAngle_3C     = Q12_ANGLE_NORM_U((temp_v0 + g_Player_HeadingAngle) + Q12_ANGLE(360.0f));
     chara->moveSpeed_38        = D_800C4550;
     chara->field_34           += g_DeltaTime2;
     chara->rotationSpeed_2C.vy = (D_800C454C << 8) / g_DeltaTime0;
@@ -2612,12 +2612,12 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 1))
                 {
                     func_8005CD38(&enemyAttackedIdx, &g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122, &g_SysWork.playerCombat_38, 0x238, Q12(10.0f), 0);
-                    func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &g_SysWork.playerCombat_38, enemyAttackedIdx, FP_ANGLE(20.0f));
+                    func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &g_SysWork.playerCombat_38, enemyAttackedIdx, Q12_ANGLE(20.0f));
                 }
                 else
                 {
                     func_8005CD38(&enemyAttackedIdx, &g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122, &g_SysWork.playerCombat_38, 0x238, Q12(3.0f), 0);
-                    func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &g_SysWork.playerCombat_38, enemyAttackedIdx, FP_ANGLE(20.0f));
+                    func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &g_SysWork.playerCombat_38, enemyAttackedIdx, Q12_ANGLE(20.0f));
                 }
             }
             else
@@ -2635,7 +2635,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
             {
                 chara->field_2A = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.playerWork_4C.player_0.position_18.vx,
                                                    (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.playerWork_4C.player_0.position_18.vz) +
-                                            FP_ANGLE(360.0f));
+                                            Q12_ANGLE(360.0f));
             }
             else
             {
@@ -2686,7 +2686,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
             else
             {
                 enemyAttackedIdx                                           = NO_VALUE;
-                g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122 = FP_ANGLE(90.0f);
+                g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122 = Q12_ANGLE(90.0f);
                 chara->field_2A                                            = chara->rotation_24.vy;
             }
 
@@ -3416,7 +3416,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 {
                     g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk12;
                     chara->model_0.stateStep_3                                  = 0;
-                    g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122  = FP_ANGLE(90.0f);
+                    g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122  = Q12_ANGLE(90.0f);
                     g_SysWork.playerWork_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_Aim;
                     g_Player_IsShooting                                         = false;
                     g_SysWork.playerWork_4C.extra_128.state_1C                      = PlayerState_None;
@@ -3475,13 +3475,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 {
                     chara->field_2A = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.playerWork_4C.player_0.position_18.vx,
                                                        (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.playerWork_4C.player_0.position_18.vz) +
-                                                FP_ANGLE(360.0f));
+                                                Q12_ANGLE(360.0f));
                 }
                 else
                 {
                     g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk12;
                     chara->model_0.stateStep_3                                  = 0;
-                    g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122  = FP_ANGLE(90.0f);
+                    g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122  = Q12_ANGLE(90.0f);
                     g_SysWork.targetNpcIdx_2353                                 = NO_VALUE;
                     g_SysWork.playerWork_4C.extra_128.state_1C                      = PlayerState_None;
                     g_SysWork.playerWork_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_Aim;
@@ -3648,7 +3648,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
 
             if (g_SysWork.targetNpcIdx_2353 == NO_VALUE)
             {
-                g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122  = FP_ANGLE(90.0f);
+                g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122  = Q12_ANGLE(90.0f);
                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_Aim;
                 g_SysWork.playerWork_4C.extra_128.state_1C                      = PlayerState_None;
                 g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk12;
@@ -3661,7 +3661,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 temp_v0_3 = ratan2((g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vx + g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetX_0) - g_SysWork.playerWork_4C.player_0.position_18.vx,
                                    (g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vz + g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetZ_2) - g_SysWork.playerWork_4C.player_0.position_18.vz);
 
-                temp_s1_2 = FP_ANGLE_NORM_U(temp_v0_3 + FP_ANGLE(360.0f));
+                temp_s1_2 = Q12_ANGLE_NORM_U(temp_v0_3 + Q12_ANGLE(360.0f));
 
                 switch (extra->model_0.anim_4.status_0)
                 {
@@ -3679,9 +3679,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 D_800C454C = ((extra->model_0.controlState_2 * 3) + 12) * g_DeltaTime0;
                 D_800C454C = CLAMP(D_800C454C, 0, 0xFFF);
 
-                if (ABS(sp20) >= FP_ANGLE(11.25f))
+                if (ABS(sp20) >= Q12_ANGLE(11.25f))
                 {
-                    if (sp20 < FP_ANGLE(0.0f))
+                    if (sp20 < Q12_ANGLE(0.0f))
                     {
                         D_800C454C = -D_800C454C;
                     }
@@ -3738,7 +3738,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                                  g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetZ_2) -
                                 g_SysWork.playerWork_4C.player_0.position_18.vz);
 
-            temp_s1_2 = FP_ANGLE_NORM_U(temp_v0_3 + FP_ANGLE(360.0f));
+            temp_s1_2 = Q12_ANGLE_NORM_U(temp_v0_3 + Q12_ANGLE(360.0f));
 
             Math_ShortestAngleGet(chara->rotation_24.vy, temp_s1_2, &sp20);
 
@@ -3750,14 +3750,14 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
 
             Math_ShortestAngleGet(chara->field_2A, temp_s1_2, &sp22);
 
-            if (ABS(sp22) > FP_ANGLE(11.25f))
+            if (ABS(sp22) > Q12_ANGLE(11.25f))
             {
-                if (sp22 < FP_ANGLE(0.0f))
+                if (sp22 < Q12_ANGLE(0.0f))
                 {
                     var_s0 = -var_s0;
                 }
 
-                chara->field_2A = FP_ANGLE_NORM_U((chara->field_2A + (var_s0 >> 4)) + FP_ANGLE(360.0f));
+                chara->field_2A = Q12_ANGLE_NORM_U((chara->field_2A + (var_s0 >> 4)) + Q12_ANGLE(360.0f));
             }
             else
             {
@@ -3963,7 +3963,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                     if (g_SysWork.targetNpcIdx_2353 == NO_VALUE)
                     {
                         g_SysWork.playerWork_4C.extra_128.upperBodyState_20            = PlayerUpperBodyState_AimStart;
-                        g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122 = FP_ANGLE(90.0f);
+                        g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122 = Q12_ANGLE(90.0f);
                     }
                     else
                     {
@@ -4212,7 +4212,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                         }
 
                     case NO_VALUE:
-                        g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122  = FP_ANGLE(90.0f);
+                        g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122  = Q12_ANGLE(90.0f);
                         g_SysWork.playerWork_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_Attack;
                         g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
 
@@ -4302,8 +4302,8 @@ void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 animStatus0, 
 
     if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_None)
     {
-        g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
-        g_Player_HeadingAngle                                             = FP_ANGLE(0.0f);
+        g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(0.0f);
+        g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
     }
     else
     {
@@ -4553,7 +4553,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         }
                         else if (g_Player_IsSteppingRightHold)
                         {
-                            chara->headingAngle_3C = chara->headingAngle_3C + FP_ANGLE(90.0f);
+                            chara->headingAngle_3C = chara->headingAngle_3C + Q12_ANGLE(90.0f);
                             temp_s3                = func_8007D6F0(chara, &D_800C45C8);
 
                             if (g_Player_IsRunning && aimState == 0 && temp_s3 == PlayerLowerBodyState_None)
@@ -4567,7 +4567,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         }
                         else if (g_Player_IsSteppingLeftHold)
                         {
-                            chara->headingAngle_3C -= FP_ANGLE(90.0f);
+                            chara->headingAngle_3C -= Q12_ANGLE(90.0f);
                             temp_s3                 = func_8007D6F0(chara, &D_800C45C8);
 
                             if (g_Player_IsRunning && aimState == 0 && temp_s3 == PlayerLowerBodyState_None)
@@ -4691,8 +4691,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             if (g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 == Q12(0.0f) ||
                  g_Player_IsTurningLeft || g_Player_IsTurningRight)
             {
-                g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
-                g_Player_HeadingAngle                                             = FP_ANGLE(0.0f);
+                g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(0.0f);
+                g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
             }
             break;
 
@@ -4856,8 +4856,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 Player_CharaRotate(5);
             }
 
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
-            g_Player_HeadingAngle                                             = FP_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
 
             if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_RunForward)
             {
@@ -5063,8 +5063,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
 
             Player_CharaRotate(4);
 
-            g_Player_HeadingAngle                                             = FP_ANGLE(0.0f);
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
+            g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(0.0f);
 
             if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_WalkForward)
             {
@@ -5266,8 +5266,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 Player_CharaRotate(4);
             }
 
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(180.0f);
-            g_Player_HeadingAngle                                             = FP_ANGLE(180.0f);
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(180.0f);
+            g_Player_HeadingAngle                                             = Q12_ANGLE(180.0f);
             break;
 
         case PlayerLowerBodyState_SidestepRight:
@@ -5348,8 +5348,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             Player_MovementStateReset(chara, aimState + PlayerLowerBodyState_SidestepRight);
             Player_CharaRotate(3);
 
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(90.0f);
-            g_Player_HeadingAngle                                             = FP_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(90.0f);
+            g_Player_HeadingAngle                                             = Q12_ANGLE(90.0f);
             break;
 
         case PlayerLowerBodyState_SidestepLeft:
@@ -5429,8 +5429,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             Player_MovementStateReset(chara, aimState + PlayerLowerBodyState_SidestepLeft);
             Player_CharaRotate(3);
 
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(-90.0f);
-            g_Player_HeadingAngle                                             = FP_ANGLE(-90.0f);
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(-90.0f);
+            g_Player_HeadingAngle                                             = Q12_ANGLE(-90.0f);
             break;
 
         case PlayerLowerBodyState_RunRight:
@@ -5520,8 +5520,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             Player_MovementStateReset(chara, PlayerLowerBodyState_RunRight);
             Player_CharaRotate(4);
 
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(90.0f);
-            g_Player_HeadingAngle                                             = FP_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(90.0f);
+            g_Player_HeadingAngle                                             = Q12_ANGLE(90.0f);
             break;
 
         case PlayerLowerBodyState_RunLeft:
@@ -5609,13 +5609,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             Player_MovementStateReset(chara, PlayerLowerBodyState_RunLeft);
             Player_CharaRotate(4);
 
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(-90.0f);
-            g_Player_HeadingAngle                                             = FP_ANGLE(-90.0f);
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(-90.0f);
+            g_Player_HeadingAngle                                             = Q12_ANGLE(-90.0f);
             break;
 
         case PlayerLowerBodyState_QuickTurnRight:
         case PlayerLowerBodyState_AimQuickTurnRight:
-            g_Player_HeadingAngle = FP_ANGLE(0.0f);
+            g_Player_HeadingAngle = Q12_ANGLE(0.0f);
 
             if (g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 != Q12(0.0f))
             {
@@ -5651,11 +5651,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 D_800C454C = Q12(0.0f);
             }
 
-            if (ABS_DIFF(g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120, chara->rotation_24.vy) > (FP_ANGLE(180.0f) - ((s32)(g_DeltaTime0 * 24) >> 4)))
+            if (ABS_DIFF(g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120, chara->rotation_24.vy) > (Q12_ANGLE(180.0f) - ((s32)(g_DeltaTime0 * 24) >> 4)))
             {
-                if (ABS_DIFF(g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120, chara->rotation_24.vy) < (((g_DeltaTime0 * 24) >> 4) + FP_ANGLE(180.0f)))
+                if (ABS_DIFF(g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120, chara->rotation_24.vy) < (((g_DeltaTime0 * 24) >> 4) + Q12_ANGLE(180.0f)))
                 {
-                    chara->rotation_24.vy                                                   = g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120 + FP_ANGLE(180.0f);
+                    chara->rotation_24.vy                                                   = g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120 + Q12_ANGLE(180.0f);
                     g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(1.4f);
                     D_800C454C                                                              = Q12(0.0f);
 
@@ -5692,7 +5692,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         }
                         else if (g_Player_IsSteppingRightHold)
                         {
-                            chara->headingAngle_3C += FP_ANGLE(90.0f);
+                            chara->headingAngle_3C += Q12_ANGLE(90.0f);
 
                             if (g_Player_IsRunning && aimState == 0)
                             {
@@ -5708,7 +5708,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         }
                         else if (g_Player_IsSteppingLeftHold)
                         {
-                            chara->headingAngle_3C -= FP_ANGLE(90.0f);
+                            chara->headingAngle_3C -= Q12_ANGLE(90.0f);
 
                             if (g_Player_IsRunning && aimState == 0)
                             {
@@ -5732,13 +5732,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 }
             }
 
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
-            g_Player_HeadingAngle                                             = FP_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
             break;
 
         case PlayerLowerBodyState_QuickTurnLeft:
         case PlayerLowerBodyState_AimQuickTurnLeft:
-            g_Player_HeadingAngle = FP_ANGLE(0.0f);
+            g_Player_HeadingAngle = Q12_ANGLE(0.0f);
 
             if (g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 != Q12(0.0f))
             {
@@ -5774,11 +5774,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 D_800C454C = Q12(0.0f);
             }
 
-            if (ABS_DIFF(g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120, chara->rotation_24.vy) > (FP_ANGLE(180.0f) - ((g_DeltaTime0 * 24) >> 4)))
+            if (ABS_DIFF(g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120, chara->rotation_24.vy) > (Q12_ANGLE(180.0f) - ((g_DeltaTime0 * 24) >> 4)))
             {
-                if (ABS_DIFF(g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120, chara->rotation_24.vy) < (((g_DeltaTime0 * 24) >> 4) + FP_ANGLE(180.0f)))
+                if (ABS_DIFF(g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120, chara->rotation_24.vy) < (((g_DeltaTime0 * 24) >> 4) + Q12_ANGLE(180.0f)))
                 {
-                    chara->rotation_24.vy                                                   = g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120 + FP_ANGLE(180.0f);
+                    chara->rotation_24.vy                                                   = g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120 + Q12_ANGLE(180.0f);
                     g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(1.4f);
                     D_800C454C                                                              = Q12(0.0f);
 
@@ -5815,7 +5815,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         }
                         else if (g_Player_IsSteppingRightHold)
                         {
-                            chara->headingAngle_3C += FP_ANGLE(90.0f);
+                            chara->headingAngle_3C += Q12_ANGLE(90.0f);
 
                             if (g_Player_IsRunning && aimState == 0)
                             {
@@ -5831,7 +5831,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         }
                         else if (g_Player_IsSteppingLeftHold)
                         {
-                            chara->headingAngle_3C -= FP_ANGLE(90.0f);
+                            chara->headingAngle_3C -= Q12_ANGLE(90.0f);
 
                             if (g_Player_IsRunning && aimState == 0)
                             {
@@ -5855,8 +5855,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 }
             }
 
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
-            g_Player_HeadingAngle                                             = FP_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
             break;
 
         case PlayerLowerBodyState_JumpBackward:
@@ -5911,8 +5911,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 }
             }
 
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(180.0f);
-            g_Player_HeadingAngle                                             = FP_ANGLE(180.0f);
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(180.0f);
+            g_Player_HeadingAngle                                             = Q12_ANGLE(180.0f);
             break;
 
         case PlayerLowerBodyState_Stumble:
@@ -5949,11 +5949,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             break;
 
         case PlayerLowerBodyState_RunLeftWallStop:
-            Player_StepWallStop_MovementCancel(chara, 36, 37, 335, PlayerLowerBodyState_RunLeftWallStop, FP_ANGLE(-90.0f), aimState);
+            Player_StepWallStop_MovementCancel(chara, 36, 37, 335, PlayerLowerBodyState_RunLeftWallStop, Q12_ANGLE(-90.0f), aimState);
             break;
 
         case PlayerLowerBodyState_RunRightWallStop:
-            Player_StepWallStop_MovementCancel(chara, 40, 41, 364, PlayerLowerBodyState_RunRightWallStop, FP_ANGLE(90.0f), aimState);
+            Player_StepWallStop_MovementCancel(chara, 40, 41, 364, PlayerLowerBodyState_RunRightWallStop, Q12_ANGLE(90.0f), aimState);
             break;
 
         case PlayerLowerBodyState_RunLeftStumble:
@@ -5985,13 +5985,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
 
             if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_None)
             {
-                g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(-90.0f);
-                g_Player_HeadingAngle                                             = FP_ANGLE(-90.0f);
+                g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(-90.0f);
+                g_Player_HeadingAngle                                             = Q12_ANGLE(-90.0f);
                 break;
             }
 
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
-            g_Player_HeadingAngle                                             = FP_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
             break;
 
         case PlayerLowerBodyState_RunRightStumble:
@@ -6023,13 +6023,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
 
             if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_None)
             {
-                g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
-                g_Player_HeadingAngle                                             = FP_ANGLE(0.0f);
+                g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(0.0f);
+                g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
                 break;
             }
 
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(90.0f);
-            g_Player_HeadingAngle                                             = FP_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(90.0f);
+            g_Player_HeadingAngle                                             = Q12_ANGLE(90.0f);
             break;
 
         case PlayerLowerBodyState_Attack:
@@ -6043,13 +6043,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         (extra->model_0.anim_4.keyframeIdx_8 >= D_800C44F0[D_800AF220].field_4 + 7))
                     {
                         g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(5.0f);
-                        g_Player_HeadingAngle                                                   = FP_ANGLE(0.0f);
+                        g_Player_HeadingAngle                                                   = Q12_ANGLE(0.0f);
                     }
                 }
                 else if (chara->model_0.stateStep_3 == 0 && !g_Player_IsAttacking)
                 {
                     g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(5.0f);
-                    g_Player_HeadingAngle                                                   = FP_ANGLE(0.0f);
+                    g_Player_HeadingAngle                                                   = Q12_ANGLE(0.0f);
                 }
             }
 
@@ -6670,7 +6670,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
         chara->field_34       = 0;
     }
 
-    someAngle = FP_ANGLE_NORM_U(ratan2(chara->position_18.vx - g_Player_PrevPosition.vx, chara->position_18.vz - g_Player_PrevPosition.vz) + FP_ANGLE(360.0f));
+    someAngle = Q12_ANGLE_NORM_U(ratan2(chara->position_18.vx - g_Player_PrevPosition.vx, chara->position_18.vz - g_Player_PrevPosition.vz) + Q12_ANGLE(360.0f));
 
     if (!(g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_FallForward && g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_KickEnemy))
     {
@@ -6679,8 +6679,8 @@ void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
             posY = chara->position_18.vy;
             if ((D_800C4590.field_C - posY) >= Q12(0.65f))
             {
-                if (ABS_DIFF(chara->rotation_24.vy, someAngle) >= FP_ANGLE(90.0f) &&
-                    ABS_DIFF(chara->rotation_24.vy, someAngle) <  FP_ANGLE(270.0f))
+                if (ABS_DIFF(chara->rotation_24.vy, someAngle) >= Q12_ANGLE(90.0f) &&
+                    ABS_DIFF(chara->rotation_24.vy, someAngle) <  Q12_ANGLE(270.0f))
                 {
                     if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_JumpBackward)
                     {
@@ -6859,18 +6859,18 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
             enemyRotY = g_SysWork.npcs_1A0[chara->field_40].rotation_24.vy;
             if (chara->attackReceived_41 >= 64 && chara->attackReceived_41 < 66)
             {
-                enemyRotY -= FP_ANGLE(90.0f);
+                enemyRotY -= Q12_ANGLE(90.0f);
             }
             else if (chara->attackReceived_41 == 69)
             {
-                enemyRotY = FP_ANGLE(90.0f);
+                enemyRotY = Q12_ANGLE(90.0f);
             }
             else if (chara->attackReceived_41 == 68)
             {
                 enemyRotY = chara->damage_B4.position_0.vy;
             }
 
-            enemyRotY = FP_ANGLE_NORM_U((enemyRotY - chara->rotation_24.vy) + FP_ANGLE(360.0f));
+            enemyRotY = Q12_ANGLE_NORM_U((enemyRotY - chara->rotation_24.vy) + Q12_ANGLE(360.0f));
 
             switch (chara->attackReceived_41)
             {
@@ -6883,7 +6883,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                     Math_ShortestAngleGet(chara->rotation_24.vy, g_SysWork.npcs_1A0[0].rotation_24.vy, &headingAngle);
                     g_Player_HeadingAngle = headingAngle;
 
-                    if (enemyRotY >= FP_ANGLE(90.0f) && enemyRotY < FP_ANGLE(270.0f))
+                    if (enemyRotY >= Q12_ANGLE(90.0f) && enemyRotY < Q12_ANGLE(270.0f))
                     {
                         Player_ExtraStateSet(chara, extra, PlayerState_DamageThrownFront);
                     }
@@ -6908,8 +6908,8 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                 case 54: // Romper grab.
                 case 56: // Torso grab.
                 case 66:
-                    if (enemyRotY >= FP_ANGLE(90.0f) &&
-                        enemyRotY <  FP_ANGLE(270.0f))
+                    if (enemyRotY >= Q12_ANGLE(90.0f) &&
+                        enemyRotY <  Q12_ANGLE(270.0f))
                     {
                         g_SysWork.npcIdxs_2354[0] = chara->field_40;
 
@@ -6968,7 +6968,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
 
                 case 69:
                     g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(1.6f);
-                    Math_ShortestAngleGet(chara->rotation_24.vy, FP_ANGLE(90.0f), &headingAngle);
+                    Math_ShortestAngleGet(chara->rotation_24.vy, Q12_ANGLE(90.0f), &headingAngle);
                     g_Player_HeadingAngle = headingAngle;
 
                 case 68:
@@ -6994,17 +6994,17 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                 case 64:
                 case 65:
                     // Left harm animation.
-                    if (enemyRotY >= FP_ANGLE(45.0f) && enemyRotY < FP_ANGLE(135.0f))
+                    if (enemyRotY >= Q12_ANGLE(45.0f) && enemyRotY < Q12_ANGLE(135.0f))
                     {
                         angleState = PlayerState_DamageTorsoLeft;
                     }
                     // Front harm animation.
-                    else if (enemyRotY >= FP_ANGLE(135.0f) && enemyRotY < FP_ANGLE(225.0f))
+                    else if (enemyRotY >= Q12_ANGLE(135.0f) && enemyRotY < Q12_ANGLE(225.0f))
                     {
                         angleState = PlayerState_DamageTorsoFront;
                     }
                     // Right harm animation.
-                    else if (enemyRotY >= FP_ANGLE(225.0f) && enemyRotY < FP_ANGLE(315.0f))
+                    else if (enemyRotY >= Q12_ANGLE(225.0f) && enemyRotY < Q12_ANGLE(315.0f))
                     {
                         angleState = PlayerState_DamageTorsoRight;
                     }
@@ -7018,7 +7018,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                     break;
 
                 case 53:
-                    if (enemyRotY < FP_ANGLE(179.95f))
+                    if (enemyRotY < Q12_ANGLE(179.95f))
                     {
                         angleState = PlayerState_DamageFeetFront;
                     }
@@ -7115,8 +7115,8 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
 
 void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords) // 0x8007D090
 {
-    #define FLEX_ROT_X_RANGE FP_ANGLE(56.25f)
-    #define FLEX_ROT_Y_RANGE FP_ANGLE(33.75f)
+    #define FLEX_ROT_X_RANGE Q12_ANGLE(56.25f)
+    #define FLEX_ROT_Y_RANGE Q12_ANGLE(33.75f)
 
     q19_12 flexRotStep;
     s32    temp_v0;
@@ -7159,22 +7159,22 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
             if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_Reload ||
                 g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                g_Player_FlexRotationX = FP_ANGLE(0.0f);
-                g_Player_FlexRotationY = FP_ANGLE(0.0f);
+                g_Player_FlexRotationX = Q12_ANGLE(0.0f);
+                g_Player_FlexRotationY = Q12_ANGLE(0.0f);
             }
             else
             {
-                g_Player_FlexRotationX = g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122 - FP_ANGLE(90.0f);
+                g_Player_FlexRotationX = g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122 - Q12_ANGLE(90.0f);
 
-                if (ABS(chara->field_2A - chara->rotation_24.vy) > FP_ANGLE(180.0f))
+                if (ABS(chara->field_2A - chara->rotation_24.vy) > Q12_ANGLE(180.0f))
                 {
                     if (chara->field_2A > chara->rotation_24.vy)
                     {
-                        g_Player_FlexRotationY = -FP_ANGLE_NORM_U((chara->rotation_24.vy + FP_ANGLE(360.0f)) - chara->field_2A);
+                        g_Player_FlexRotationY = -Q12_ANGLE_NORM_U((chara->rotation_24.vy + Q12_ANGLE(360.0f)) - chara->field_2A);
                     }
                     else
                     {
-                        g_Player_FlexRotationY = FP_ANGLE_NORM_U((chara->field_2A + FP_ANGLE(360.0f)) - chara->rotation_24.vy);
+                        g_Player_FlexRotationY = Q12_ANGLE_NORM_U((chara->field_2A + Q12_ANGLE(360.0f)) - chara->rotation_24.vy);
                     }
                 }
                 else
@@ -7187,7 +7187,7 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
                 {
                     if (g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C & PlayerFlag_Unk8)
                     {
-                        var_v1 = FP_ANGLE(0.0f);
+                        var_v1 = Q12_ANGLE(0.0f);
                     }
                     else
                     {
@@ -7218,25 +7218,25 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
                     {
                         if (chara->properties_E4.player.field_100 < var_v1)
                         {
-                            g_Player_FlexRotationY = FP_ANGLE(0.0f);
-                            g_Player_FlexRotationX = FP_ANGLE(0.0f);
+                            g_Player_FlexRotationY = Q12_ANGLE(0.0f);
+                            g_Player_FlexRotationX = Q12_ANGLE(0.0f);
                         }
                         else
                         {
                             temp_v0     = chara->properties_E4.player.field_100 + 1;
                             flexRotStep = temp_v0 - var_v1;
-                            flexRotMax  = FP_ANGLE(0.4f);
+                            flexRotMax  = Q12_ANGLE(0.4f);
                             flexRotMax  = flexRotStep * TIMESTEP_SCALE_30_FPS(g_DeltaTime0, var_a2 + ((flexRotStep * 2) + flexRotMax));
 
                             // Clamp X-axis flex angle.
-                            if (g_Player_FlexRotationX > FP_ANGLE(0.0f))
+                            if (g_Player_FlexRotationX > Q12_ANGLE(0.0f))
                             {
                                 if (flexRotMax < g_Player_FlexRotationX)
                                 {
                                     g_Player_FlexRotationX = flexRotMax;
                                 }
                             }
-                            else if (g_Player_FlexRotationX < FP_ANGLE(0.0f))
+                            else if (g_Player_FlexRotationX < Q12_ANGLE(0.0f))
                             {
                                 if (g_Player_FlexRotationX < -flexRotMax)
                                 {
@@ -7245,14 +7245,14 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
                             }
 
                             // Clamp Y-axis flex angle.
-                            if (g_Player_FlexRotationY > FP_ANGLE(0.0f))
+                            if (g_Player_FlexRotationY > Q12_ANGLE(0.0f))
                             {
                                 if (flexRotMax < g_Player_FlexRotationY)
                                 {
                                     g_Player_FlexRotationY = flexRotMax;
                                 }
                             }
-                            else if (g_Player_FlexRotationY < FP_ANGLE(0.0f))
+                            else if (g_Player_FlexRotationY < Q12_ANGLE(0.0f))
                             {
                                 if (g_Player_FlexRotationY < -flexRotMax)
                                 {
@@ -7267,7 +7267,7 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
                 g_Player_FlexRotationY = CLAMP(g_Player_FlexRotationY, -FLEX_ROT_Y_RANGE, FLEX_ROT_Y_RANGE);
 
                 // Apply flex rotation to torso and arms.
-                func_80044F14(&coords[HarryBone_Torso], FP_ANGLE(0.0f), g_Player_FlexRotationX >> 1, g_Player_FlexRotationY);
+                func_80044F14(&coords[HarryBone_Torso], Q12_ANGLE(0.0f), g_Player_FlexRotationX >> 1, g_Player_FlexRotationY);
                 Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_LeftUpperArm].coord);
                 Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_RightUpperArm].coord);
             }
@@ -7275,64 +7275,64 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
 
         case PlayerState_None:
             // Pre-modulate X-axis flex angle.
-            if (g_Player_FlexRotationX > FP_ANGLE(0.0f))
+            if (g_Player_FlexRotationX > Q12_ANGLE(0.0f))
             {
-                g_Player_FlexRotationX -= FP_ANGLE(2.9f);
+                g_Player_FlexRotationX -= Q12_ANGLE(2.9f);
             }
-            else if (g_Player_FlexRotationX < FP_ANGLE(0.0f))
+            else if (g_Player_FlexRotationX < Q12_ANGLE(0.0f))
             {
-                g_Player_FlexRotationX += FP_ANGLE(2.9f);
+                g_Player_FlexRotationX += Q12_ANGLE(2.9f);
             }
 
-            flexRotStep = TIMESTEP_SCALE_30_FPS(g_DeltaTime0, FP_ANGLE(2.15f));
+            flexRotStep = TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12_ANGLE(2.15f));
 
             // Modulate X-axis flex angle.
-            if (g_Player_FlexRotationX > FP_ANGLE(0.0f))
+            if (g_Player_FlexRotationX > Q12_ANGLE(0.0f))
             {
                 g_Player_FlexRotationX -= flexRotStep;
-                if (g_Player_FlexRotationX < FP_ANGLE(0.0f))
+                if (g_Player_FlexRotationX < Q12_ANGLE(0.0f))
                 {
-                    g_Player_FlexRotationX = FP_ANGLE(0.0f);
+                    g_Player_FlexRotationX = Q12_ANGLE(0.0f);
                 }
             }
-            else if (g_Player_FlexRotationX < FP_ANGLE(0.0f))
+            else if (g_Player_FlexRotationX < Q12_ANGLE(0.0f))
             {
                 g_Player_FlexRotationX += flexRotStep;
-                if (g_Player_FlexRotationX > FP_ANGLE(0.0f))
+                if (g_Player_FlexRotationX > Q12_ANGLE(0.0f))
                 {
-                    g_Player_FlexRotationX = FP_ANGLE(0.0f);
+                    g_Player_FlexRotationX = Q12_ANGLE(0.0f);
                 }
             }
 
             // Modulate Y-axis flex angle.
-            if (g_Player_FlexRotationY > FP_ANGLE(0.0f))
+            if (g_Player_FlexRotationY > Q12_ANGLE(0.0f))
             {
                 g_Player_FlexRotationY -= flexRotStep;
-                if (g_Player_FlexRotationY < FP_ANGLE(0.0f))
+                if (g_Player_FlexRotationY < Q12_ANGLE(0.0f))
                 {
-                    g_Player_FlexRotationY = FP_ANGLE(0.0f);
+                    g_Player_FlexRotationY = Q12_ANGLE(0.0f);
                 }
             }
-            else if (g_Player_FlexRotationY < FP_ANGLE(0.0f))
+            else if (g_Player_FlexRotationY < Q12_ANGLE(0.0f))
             {
                 g_Player_FlexRotationY += flexRotStep;
-                if (g_Player_FlexRotationY > FP_ANGLE(0.0f))
+                if (g_Player_FlexRotationY > Q12_ANGLE(0.0f))
                 {
-                    g_Player_FlexRotationY = FP_ANGLE(0.0f);
+                    g_Player_FlexRotationY = Q12_ANGLE(0.0f);
                 }
             }
 
             // Apply flex rotation to torso and arms.
-            func_80044F14(&coords[HarryBone_Torso], FP_ANGLE(0.0f), g_Player_FlexRotationX >> 1, g_Player_FlexRotationY);
+            func_80044F14(&coords[HarryBone_Torso], Q12_ANGLE(0.0f), g_Player_FlexRotationX >> 1, g_Player_FlexRotationY);
             Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_LeftUpperArm].coord);
             Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_RightUpperArm].coord);
             break;
 
         case PlayerState_Unk180:
-            if (g_Player_FlexRotationY != FP_ANGLE(0.0f))
+            if (g_Player_FlexRotationY != Q12_ANGLE(0.0f))
             {
-                func_80044F14(&coords[HarryBone_Torso], FP_ANGLE(0.0f), FP_ANGLE(0.0f),  FP_ANGLE(16.9f));
-                func_80044F14(&coords[HarryBone_Head],  FP_ANGLE(0.0f), FP_ANGLE(28.2f), FP_ANGLE(19.7f));
+                func_80044F14(&coords[HarryBone_Torso], Q12_ANGLE(0.0f), Q12_ANGLE(0.0f),  Q12_ANGLE(16.9f));
+                func_80044F14(&coords[HarryBone_Head],  Q12_ANGLE(0.0f), Q12_ANGLE(28.2f), Q12_ANGLE(19.7f));
             }
             break;
 
@@ -7340,27 +7340,27 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
             if (g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_Unk52 &&
                 g_SysWork.playerWork_4C.extra_128.state_1C <  PlayerState_Unk59)
             {
-                func_80044F14(&coords[HarryBone_Head], FP_ANGLE(0.0f), FP_ANGLE(0.0f), g_Player_FlexRotationY);
+                func_80044F14(&coords[HarryBone_Head], Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), g_Player_FlexRotationY);
             }
             else
             {
-                g_Player_FlexRotationY = FP_ANGLE(0.0f);
-                g_Player_FlexRotationX = FP_ANGLE(0.0f);
+                g_Player_FlexRotationY = Q12_ANGLE(0.0f);
+                g_Player_FlexRotationX = Q12_ANGLE(0.0f);
             }
             break;
     }
 
     if (g_SysWork.enablePlayerMatchAnim_2358 && g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_Unk58)
     {
-        func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightUpperArm], FP_ANGLE(0.0f),   FP_ANGLE(63.3f), FP_ANGLE(-8.8f));
-        func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightForearm],  FP_ANGLE(-14.1f), FP_ANGLE(22.5f), FP_ANGLE(-30.8f));
-        func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightHand],     FP_ANGLE(13.2f),  FP_ANGLE(0.0f),  FP_ANGLE(0.0f));
+        func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightUpperArm], Q12_ANGLE(0.0f),   Q12_ANGLE(63.3f), Q12_ANGLE(-8.8f));
+        func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightForearm],  Q12_ANGLE(-14.1f), Q12_ANGLE(22.5f), Q12_ANGLE(-30.8f));
+        func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightHand],     Q12_ANGLE(13.2f),  Q12_ANGLE(0.0f),  Q12_ANGLE(0.0f));
     }
 }
 
 void Player_FlexRotationYReset(void) // 0x8007D6E0
 {
-    g_Player_FlexRotationY = FP_ANGLE(0.1f);
+    g_Player_FlexRotationY = Q12_ANGLE(0.1f);
 }
 
 s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1) // 0x8007D6F0
@@ -7415,10 +7415,10 @@ s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1) // 0x8007D6F0
             arg1->field_14 = (rays[0].field_14 + rays[1].field_14) >> 1;
             arg1->field_1  = rays[0].field_1;
 
-            angle      = FP_ANGLE_NORM_U(((rays[0].field_1C + rays[1].field_1C) >> 1) + FP_ANGLE(360.0f));
+            angle      = Q12_ANGLE_NORM_U(((rays[0].field_1C + rays[1].field_1C) >> 1) + Q12_ANGLE(360.0f));
             angleDelta = ABS_DIFF(angle, chara->headingAngle_3C);
 
-            if (angleDelta > FP_ANGLE(160.0f) && angleDelta < FP_ANGLE(200.0f))
+            if (angleDelta > Q12_ANGLE(160.0f) && angleDelta < Q12_ANGLE(200.0f))
             {
                 if ((chara->position_18.vy - Q12(1.3f)) < rays[0].field_18 || rays[0].field_1 == 0 || rays[0].field_1 == 12)
                 {
@@ -7524,16 +7524,16 @@ void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D
 
             sp98.vy  = g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122;
             unkAngle = sp98.vy;
-            if (unkAngle >= FP_ANGLE(33.75f))
+            if (unkAngle >= Q12_ANGLE(33.75f))
             {
-                if (unkAngle > FP_ANGLE(146.25f))
+                if (unkAngle > Q12_ANGLE(146.25f))
                 {
-                    unkAngle = FP_ANGLE(146.25f);
+                    unkAngle = Q12_ANGLE(146.25f);
                 }
             }
             else
             {
-                unkAngle = FP_ANGLE(33.75f);
+                unkAngle = Q12_ANGLE(33.75f);
             }
 
             if (chara->field_44.field_0 > 0)
@@ -7902,14 +7902,14 @@ void func_8007E9C4(void) // 0x8007E9C4
     chara->model_0.stateStep_3            = 0;
     chara->model_0.controlState_2         = ModelState_Uninitialized;
     g_SysWork.playerStopFlags_235A        = PlayerStopFlag_None;
-    g_Player_FlexRotationY                = FP_ANGLE(0.0f);
-    g_Player_FlexRotationX                = FP_ANGLE(0.0f);
+    g_Player_FlexRotationY                = Q12_ANGLE(0.0f);
+    g_Player_FlexRotationX                = Q12_ANGLE(0.0f);
     D_800C4560                            = NO_VALUE;
     g_SysWork.playerCombat_38.isAiming_13 = false;
 
     func_8004C564(0, NO_VALUE);
 
-    chara->field_2A         = FP_ANGLE(90.0f);
+    chara->field_2A         = Q12_ANGLE(90.0f);
     g_Player_IsDead         = false;
     g_Player_DisableDamage  = false;
     g_Player_HasActionInput = false;
@@ -8422,11 +8422,11 @@ bool func_8007F95C(void) // 0x8007F95C
                     curNpc0->health_B0 > Q12(0.0f) && (curNpc0->flags_3E & CharaFlag_Unk2))
                 {
                     Math_ShortestAngleGet(g_SysWork.playerWork_4C.player_0.rotation_24.vy,
-                                          FP_ANGLE_NORM_U(ratan2(pos1.vx - pos0.vx, pos1.vz - pos0.vz) + FP_ANGLE(360.0f)),
+                                          Q12_ANGLE_NORM_U(ratan2(pos1.vx - pos0.vx, pos1.vz - pos0.vz) + Q12_ANGLE(360.0f)),
                                           &sp30);
 
-                    temp = sp30 + FP_ANGLE(89.98f);
-                    if (temp < FP_ANGLE(202.49f))
+                    temp = sp30 + Q12_ANGLE(89.98f);
+                    if (temp < Q12_ANGLE(202.49f))
                     {
                         g_SysWork.targetNpcIdx_2353 = i;
                         return true;
@@ -8446,25 +8446,25 @@ void Math_ShortestAngleGet(q3_12 angleFrom, q3_12 angleTo, q3_12* shortestAngle)
 
     if (angleTo > angleFrom)
     {
-        if ((angleTo - angleFrom) < FP_ANGLE(180.0f))
+        if ((angleTo - angleFrom) < Q12_ANGLE(180.0f))
         {
             *shortestAngle = angleTo - angleFrom;
         }
         else
         {
-            adjAngle       = angleTo  - FP_ANGLE(360.0f);
+            adjAngle       = angleTo  - Q12_ANGLE(360.0f);
             *shortestAngle = adjAngle - angleFrom;
         }
     }
     else
     {
-        if ((angleFrom - angleTo) < FP_ANGLE(180.0f))
+        if ((angleFrom - angleTo) < Q12_ANGLE(180.0f))
         {
             *shortestAngle = angleTo - angleFrom;
         }
         else
         {
-            adjAngle       = angleFrom - FP_ANGLE(360.0f);
+            adjAngle       = angleFrom - Q12_ANGLE(360.0f);
             *shortestAngle = angleTo   - adjAngle;
         }
     }
@@ -8813,7 +8813,7 @@ q19_12 Rng_RandQ12(void) // 0x80080514
     s32 rand16;
 
     rand16 = Rng_Rand16();
-    return FP_ANGLE_NORM_U(((rand16 * 2) ^ rand16) >> 3);
+    return Q12_ANGLE_NORM_U(((rand16 * 2) ^ rand16) >> 3);
 }
 
 s32 func_80080540(s32 arg0, s32 arg1, s32 arg2) // 0x80080540

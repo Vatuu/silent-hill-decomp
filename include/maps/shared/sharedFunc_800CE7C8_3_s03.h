@@ -21,7 +21,7 @@ bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse)
     angle2 = func_8005BF38(g_SysWork.playerWork_4C.player_0.rotation_24.vy - nurse->rotation_24.vy);
     angle2 = ABS(angle2);
 
-    if (angle2 > FP_ANGLE(90.0f))
+    if (angle2 > Q12_ANGLE(90.0f))
     {
         distSubtract = Q12(0.85f);
     }
@@ -61,12 +61,12 @@ bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse)
 
     Chara_MoveSpeedUpdate2(nurse, Q12(2.0f), limit);
 
-    if (absAngle > FP_ANGLE(4.0f))
+    if (absAngle > Q12_ANGLE(4.0f))
     {
         tmpAngle= 2;
-        tmpAngle= (absAngle* tmpAngle) + FP_ANGLE(45.0f);
+        tmpAngle= (absAngle* tmpAngle) + Q12_ANGLE(45.0f);
         addAngle= Q12_MULT_PRECISE(g_DeltaTime0, tmpAngle);
-        if (angle > FP_ANGLE(0.0f))
+        if (angle > Q12_ANGLE(0.0f))
         {
             nurse->rotation_24.vy += addAngle;
         }

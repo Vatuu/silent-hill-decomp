@@ -442,9 +442,9 @@ void func_800D2E54(void) // 0x800D2E54
             g_SysWork.pointLightPosition_2360.vy = Q12(-3.0f);
             g_SysWork.pointLightPosition_2360.vz = Q12(19.1f);
             g_SysWork.field_236C = NULL;
-            g_SysWork.pointLightRot_2370.vx = FP_ANGLE(-90.0f);
-            g_SysWork.pointLightRot_2370.vy = FP_ANGLE(0.0f);
-            g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
+            g_SysWork.pointLightRot_2370.vx = Q12_ANGLE(-90.0f);
+            g_SysWork.pointLightRot_2370.vy = Q12_ANGLE(0.0f);
+            g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
             g_SysWork.pointLightIntensity_2378 = Q12(0.7f);
 
             func_8008D438();

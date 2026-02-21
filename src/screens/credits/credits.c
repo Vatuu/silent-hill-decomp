@@ -165,15 +165,15 @@ bool func_801E3124(void) // 0x801E3124
             switch (g_Screen_FadeStatus)
             {
                 case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
-                    g_GameWork.background2dColor_58C.r = FP_COLOR(1.0f);
-                    g_GameWork.background2dColor_58C.g = FP_COLOR(1.0f);
-                    g_GameWork.background2dColor_58C.b = FP_COLOR(1.0f);
+                    g_GameWork.background2dColor_58C.r = Q8_COLOR(1.0f);
+                    g_GameWork.background2dColor_58C.g = Q8_COLOR(1.0f);
+                    g_GameWork.background2dColor_58C.b = Q8_COLOR(1.0f);
                     break;
 
                 case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
-                    g_GameWork.background2dColor_58C.r = FP_COLOR(0.0f);
-                    g_GameWork.background2dColor_58C.g = FP_COLOR(0.0f);
-                    g_GameWork.background2dColor_58C.b = FP_COLOR(0.0f);
+                    g_GameWork.background2dColor_58C.r = Q8_COLOR(0.0f);
+                    g_GameWork.background2dColor_58C.g = Q8_COLOR(0.0f);
+                    g_GameWork.background2dColor_58C.b = Q8_COLOR(0.0f);
                     break;
             }
 
@@ -190,11 +190,11 @@ bool func_801E3124(void) // 0x801E3124
             switch (g_Screen_FadeStatus)
             {
                 case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
-                    Screen_RectInterlacedClear(0, 32, 512, 448, FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(1.0f));
+                    Screen_RectInterlacedClear(0, 32, 512, 448, Q8_COLOR(1.0f), Q8_COLOR(1.0f), Q8_COLOR(1.0f));
                     break;
 
                 case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
-                    Screen_RectInterlacedClear(0, 32, 512, 448, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
+                    Screen_RectInterlacedClear(0, 32, 512, 448, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
                     break;
             }
 
@@ -243,7 +243,7 @@ s32 func_801E3304(void) // 0x801E3304
         }
         else
         {
-            Screen_RectInterlacedClear(0, 32, 320, 448, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
+            Screen_RectInterlacedClear(0, 32, 320, 448, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
             LoadImage(&D_801E557C[0], IMAGE_BUFFER_0);
             LoadImage(&D_801E557C[1], IMAGE_BUFFER_1);
             DrawSync(SyncMode_Wait);
@@ -467,7 +467,7 @@ bool func_801E3684(void) // 0x801E3684
     }
 
     func_801E434C(1, 1);
-    func_801E4310(FP_COLOR(0.19f), FP_COLOR(0.19f), FP_COLOR(0.19f));
+    func_801E4310(Q8_COLOR(0.19f), Q8_COLOR(0.19f), Q8_COLOR(0.19f));
 
     for (var_s5 = 2; var_s5 >= 0; var_s5--, var_s4 += 2)
     {
@@ -475,7 +475,7 @@ bool func_801E3684(void) // 0x801E3684
         {
             var_s4 = 0;
             func_801E434C(0, 0);
-            func_801E4310(FP_COLOR(0.2525f), FP_COLOR(0.2525f), FP_COLOR(0.2525f));
+            func_801E4310(Q8_COLOR(0.2525f), Q8_COLOR(0.2525f), Q8_COLOR(0.2525f));
         }
 
         var_s3 = sp14 + var_s4;
@@ -603,7 +603,7 @@ bool func_801E3970(void) // 0x801E3970
         animateKcet = false;
     }
 
-    func_801E4310(FP_COLOR(0.6275f), FP_COLOR(0.6275f), FP_COLOR(0.6275f));
+    func_801E4310(Q8_COLOR(0.6275f), Q8_COLOR(0.6275f), Q8_COLOR(0.6275f));
     func_801E434C(0, 0);
 
     lineY          = currentLinePosY;

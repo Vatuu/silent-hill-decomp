@@ -572,9 +572,9 @@ void func_800DF2F0(MATRIX* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x800DF2F0
     TransMatrix(arg0, &sp18);
     func_800DF160(arg0, arg1, arg2);
 
-    rot.vx = FP_ANGLE(0.0f);
-    rot.vy = FP_ANGLE(0.0f);
-    rot.vz = FP_ANGLE(75.0f);
+    rot.vx = Q12_ANGLE(0.0f);
+    rot.vy = Q12_ANGLE(0.0f);
+    rot.vz = Q12_ANGLE(75.0f);
 
     Math_RotMatrixXyz(&rot, &sp28);
     MulMatrix(arg0, &sp28);
@@ -1563,21 +1563,21 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
 
     Vc_VectorMagnitudeCalc(player->position_18.vx - npc->position_18.vx, Q12(0.0f), player->position_18.vz - npc->position_18.vz);
     angle2 = ratan2(player->position_18.vx - Q12(20.0f), player->position_18.vz - Q12(100.0f));
-    angle1 = angle2 + FP_ANGLE(90.0f);
+    angle1 = angle2 + Q12_ANGLE(90.0f);
 
     if (temp_s5 != 0)
     {
-        angle0 = angle2 + Q12_MULT(Math_Cos(player->rotation_24.vy - angle1), FP_ANGLE(-10.0f));
+        angle0 = angle2 + Q12_MULT(Math_Cos(player->rotation_24.vy - angle1), Q12_ANGLE(-10.0f));
     }
     else
     {
         if (arg2 || ((D_800EBB5A - angle2) << 20) > 0)
         {
-            angle3 = Q12_MULT(Math_Cos(player->rotation_24.vy - angle1), FP_ANGLE(22.5f)) + FP_ANGLE(37.5f);
+            angle3 = Q12_MULT(Math_Cos(player->rotation_24.vy - angle1), Q12_ANGLE(22.5f)) + Q12_ANGLE(37.5f);
         }
         else
         {
-            angle3 = Q12_MULT(Math_Cos(player->rotation_24.vy - angle1), FP_ANGLE(22.5f)) - FP_ANGLE(37.5f);
+            angle3 = Q12_MULT(Math_Cos(player->rotation_24.vy - angle1), Q12_ANGLE(22.5f)) - Q12_ANGLE(37.5f);
         }
 
         angle0 = angle2 + angle3;
@@ -1585,7 +1585,7 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
 
     if (arg2)
     {
-        D_800EBB58.field_0 = FP_ANGLE(0.0f);
+        D_800EBB58.field_0 = Q12_ANGLE(0.0f);
         D_800EBB58.field_2 = angle0;
     }
     else
@@ -1621,7 +1621,7 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
         temp_s1_2 = FP_FROM(FP_TO(Math_Cos(player->rotation_24.vy - angle2), Q12_SHIFT), Q12_SHIFT) +
                     (Vc_VectorMagnitudeCalc(player->position_18.vx - Q12(20.0f), Q12(0.0f), player->position_18.vz - Q12(100.0f)) - temp_s1_2);
 
-        temp_s0_2 = angle2 + Q12_MULT(Math_Cos(player->rotation_24.vy - angle1), FP_ANGLE(25.0f));
+        temp_s0_2 = angle2 + Q12_MULT(Math_Cos(player->rotation_24.vy - angle1), Q12_ANGLE(25.0f));
 
         temp_s0_3 = Q12_MULT(temp_s1_2, Math_Sin(temp_s0_2)) + Q12(20.0f);
 
@@ -1631,25 +1631,25 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
         angle4 = ratan2(temp_s0_3, temp2 - sp38.vz);
 
         angle5 = ratan2(sp38.vx - Q12(20.0f), sp38.vz - Q12(100.0f));
-        angle6   = angle5 + FP_ANGLE(90.0f);
-        angle7 = FP_ANGLE_NORM_S(angle4 - angle6);
+        angle6   = angle5 + Q12_ANGLE(90.0f);
+        angle7 = Q12_ANGLE_NORM_S(angle4 - angle6);
 
         if (((D_800EBB5A - angle2) << 20) > 0)
         {
-            if (((angle7 - FP_ANGLE(135.0f)) << 20) < 0)
+            if (((angle7 - Q12_ANGLE(135.0f)) << 20) < 0)
             {
-                angle4 = angle5 + FP_ANGLE(225.0f);
+                angle4 = angle5 + Q12_ANGLE(225.0f);
             }
         }
-        else if (((angle7 - FP_ANGLE(45.0f)) << 20) > 0)
+        else if (((angle7 - Q12_ANGLE(45.0f)) << 20) > 0)
         {
-            angle4 = angle5 + FP_ANGLE(135.0f);
+            angle4 = angle5 + Q12_ANGLE(135.0f);
         }
     }
 
     if (arg2)
     {
-        D_800EBB58.field_6 = FP_ANGLE(0.0f);
+        D_800EBB58.field_6 = Q12_ANGLE(0.0f);
         D_800EBB58.field_4 = angle4;
     }
     else
@@ -1663,7 +1663,7 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
     sp18.vx = sp28.vx + Q12_MULT(Math_Sin(D_800EBB58.field_4), Q12(3.0f));
     sp18.vz = sp28.vz + Q12_MULT(Math_Cos(D_800EBB58.field_4), Q12(3.0f));
 
-    sp18.vy = -Math_Sin(FP_ANGLE(-20.0f)) * Q12(3.0f) / Math_Cos(FP_ANGLE(-20.0f)) - Q12(2.4f);
+    sp18.vy = -Math_Sin(Q12_ANGLE(-20.0f)) * Q12(3.0f) / Math_Cos(Q12_ANGLE(-20.0f)) - Q12(2.4f);
 
     if (temp_s5 != 0 && g_GameWorkConst->config_0.optExtraViewMode_29)
     {
@@ -1808,7 +1808,7 @@ void func_800E1D50(void) // 0x800E1D50
 
         g_SysWork.pointLightRot_2370.vx = -ratan2(lintPos.vy - g_SysWork.pointLightPosition_2360.vy, Q6_TO_Q12(SquareRoot0(SQUARE(rotX) + SQUARE(rotZ))));
         g_SysWork.pointLightRot_2370.vy = ratan2(lintPos.vx - g_SysWork.pointLightPosition_2360.vx, lintPos.vz - g_SysWork.pointLightPosition_2360.vz);
-        g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
+        g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
     }
 }
 
@@ -1958,12 +1958,12 @@ void func_800E219C(void) // 0x800E219C
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(25.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(100.0f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(337.5f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(337.5f);
 
             // Warp NPC.
             g_SysWork.npcs_1A0[0].position_18.vx = Q12(24.0f);
             g_SysWork.npcs_1A0[0].position_18.vz = Q12(102.0f);
-            g_SysWork.npcs_1A0[0].rotation_24.vy = FP_ANGLE(157.5f);
+            g_SysWork.npcs_1A0[0].rotation_24.vy = Q12_ANGLE(157.5f);
 
             // TODO: Wrong properties union field.
             g_SysWork.npcs_1A0[0].properties_E4.player.afkTimer_E8                      = Q12(0.0f);
@@ -2014,7 +2014,7 @@ void func_800E219C(void) // 0x800E219C
         // Set light rotation.
         g_SysWork.pointLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz));
         g_SysWork.pointLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz);
-        g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
+        g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
     }
 }
 
@@ -2040,7 +2040,7 @@ void func_800E2724(void) // 0x800E2724
             // Load Monster Cybil character.
             Chara_Load(0, Chara_MonsterCybil, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
-            Chara_Spawn(Chara_MonsterCybil, 0, Q12(26.5f), Q12(108.5f), FP_ANGLE(11.3f), 3);
+            Chara_Spawn(Chara_MonsterCybil, 0, Q12(26.5f), Q12(108.5f), Q12_ANGLE(11.3f), 3);
 
             // Warp camera to start position.
             Camera_PositionSet(NULL, Q12(25.27f), Q12(-2.4f), Q12(98.43f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -2049,12 +2049,12 @@ void func_800E2724(void) // 0x800E2724
             // Warp player to start position.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(25.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(100.0f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(337.5f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(337.5f);
 
             // Warp Monster Cybil character to start position.
             g_SysWork.npcs_1A0[0].position_18.vx = Q12(24.0f);
             g_SysWork.npcs_1A0[0].position_18.vz = Q12(102.0f);
-            g_SysWork.npcs_1A0[0].rotation_24.vy = FP_ANGLE(157.5f);
+            g_SysWork.npcs_1A0[0].rotation_24.vy = Q12_ANGLE(157.5f);
 
             SysWork_StateStepIncrement(0);
             break;
@@ -2101,12 +2101,12 @@ void func_800E2950(void) // 0x800E2950
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(23.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(103.0f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(135.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(135.0f);
 
             // Warp NPC.
             g_SysWork.npcs_1A0[0].position_18.vx = Q12(18.0f);
             g_SysWork.npcs_1A0[0].position_18.vz = Q12(96.0f);
-            g_SysWork.npcs_1A0[0].rotation_24.vy = FP_ANGLE(135.0f);
+            g_SysWork.npcs_1A0[0].rotation_24.vy = Q12_ANGLE(135.0f);
 
             // Warp camera.
             Math_Vector3Set(&camPos, Q12(18.0f), Q12(-1.5f), Q12(94.5f));
@@ -2119,7 +2119,7 @@ void func_800E2950(void) // 0x800E2950
 
             g_SysWork.pointLightRot_2370.vx = -ratan2(camLookAt.vy - camPos.vy, Math_Vector2MagCalc(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz));
             g_SysWork.pointLightRot_2370.vy = ratan2(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz);
-            g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
+            g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
 
             g_SysWork.field_235C = NULL;
 
@@ -2292,7 +2292,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
         // Set light rotation.
         g_SysWork.pointLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz));
         g_SysWork.pointLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz);
-        g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
+        g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
     }
 }
 
@@ -2567,7 +2567,7 @@ void func_800E3244(void) // 0x800E3244
         Math_Vector3Set(&g_SysWork.pointLightPosition_2360, FP_FROM(Math_Sin(D_800ED5B6 - Q12(0.2188f)) * Q12(4.8f), Q12_SHIFT) + Q12(20.0f),
                         Q12(-1.0f),
                         FP_FROM(Math_Cos(D_800ED5B6 - Q12(0.2188f)) * Q12(4.8f), Q12_SHIFT) + Q12(100.0f));
-        Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, FP_ANGLE(-39.4f), (D_800ED5B6 + FP_ANGLE(182.9f)), FP_ANGLE(0.0f));
+        Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, Q12_ANGLE(-39.4f), (D_800ED5B6 + Q12_ANGLE(182.9f)), Q12_ANGLE(0.0f));
         func_800E74C4();
     }
 
@@ -2589,7 +2589,7 @@ void func_800E3244(void) // 0x800E3244
 
         g_SysWork.pointLightRot_2370.vx = -ratan2(lintPos.vy - g_SysWork.pointLightPosition_2360.vy, Q6_TO_Q12(SquareRoot0(SQUARE(rotX) + SQUARE(rotZ))));
         g_SysWork.pointLightRot_2370.vy = ratan2(lintPos.vx - g_SysWork.pointLightPosition_2360.vx, lintPos.vz - g_SysWork.pointLightPosition_2360.vz);
-        g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
+        g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
     }
 }
 
@@ -2910,7 +2910,7 @@ void func_800E3EF4(void) // 0x800E3EF4
         case 45:
             DmsHeader_FixOffsets(FS_BUFFER_14);
             Chara_ProcessLoads();
-            Chara_Spawn(Chara_Dahlia, 0, Q12(-40.0f), Q12(-40.0f), FP_ANGLE(0.0f), 3);
+            Chara_Spawn(Chara_Dahlia, 0, Q12(-40.0f), Q12(-40.0f), Q12_ANGLE(0.0f), 3);
             Savegame_EventFlagClear(EventFlag_452);
             Savegame_EventFlagSet(EventFlag_465);
 
@@ -3090,7 +3090,7 @@ void func_800E3EF4(void) // 0x800E3EF4
         // Set light rotation.
         g_SysWork.pointLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz));
         g_SysWork.pointLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz);
-        g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
+        g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
 
         Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "ARSIA", D_800ED5B0, FS_BUFFER_14);
 
@@ -3193,7 +3193,7 @@ void func_800E558C(void) // 0x800E558C
 
         case 3:
             Chara_ProcessLoads();
-            Chara_Spawn(Chara_Alessa, 0, g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(1.0f), g_SysWork.playerWork_4C.player_0.position_18.vz, FP_ANGLE(11.3f), 3);
+            Chara_Spawn(Chara_Alessa, 0, g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(1.0f), g_SysWork.playerWork_4C.player_0.position_18.vz, Q12_ANGLE(11.3f), 3);
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 70, false);
 
             g_SysWork.pointLightIntensity_2378 = Q12(2.5f);
@@ -3216,7 +3216,7 @@ void func_800E558C(void) // 0x800E558C
             if (g_SysWork.npcs_1A0[0].model_0.charaId_0 != Chara_Alessa)
             {
                 Chara_ProcessLoads();
-                Chara_Spawn(Chara_Alessa, 0, g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(1.0f), g_SysWork.playerWork_4C.player_0.position_18.vz, FP_ANGLE(11.3f), 3);
+                Chara_Spawn(Chara_Alessa, 0, g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(1.0f), g_SysWork.playerWork_4C.player_0.position_18.vz, Q12_ANGLE(11.3f), 3);
             }
 
             SysWork_StateStepIncrement(0);
@@ -3274,7 +3274,7 @@ void func_800E558C(void) // 0x800E558C
         {
             Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "ARSIA", D_800ED5B0, FS_BUFFER_14);
             Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, D_800CC4C4, D_800ED5B0, FS_BUFFER_14);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy += FP_ANGLE(22.5f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy += Q12_ANGLE(22.5f);
         }
         else
         {
@@ -3532,7 +3532,7 @@ void func_800E636C(void) // 0x800E636C
                     pos.vy   = (Q12(-1.0f) - temp_v0_4) / 5;
                 }
 
-                Math_SetSVectorFastSum(&rot, FP_ANGLE(0.0f), D_800EBAFC[i], FP_ANGLE(0.0f));
+                Math_SetSVectorFastSum(&rot, Q12_ANGLE(0.0f), D_800EBAFC[i], Q12_ANGLE(0.0f));
                 WorldGfx_ObjectAdd(&g_WorldObject0[var_a0_2], &pos, &rot);
 
                 if (i == g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[5].val16[1])
@@ -3546,28 +3546,28 @@ void func_800E636C(void) // 0x800E636C
         pos.vx = D_800ED740.vx;
         pos.vz = D_800ED740.vz;
 
-        temp_s0   = Q12_MULT(Math_Sin(D_800ED5B6 + FP_ANGLE(180.0f)), Q12(8.0f)) + pos.vx;
-        temp_v0_6 = Q12_MULT(Math_Cos(D_800ED5B6 + FP_ANGLE(180.0f)), Q12(8.0f)) + pos.vz;
+        temp_s0   = Q12_MULT(Math_Sin(D_800ED5B6 + Q12_ANGLE(180.0f)), Q12(8.0f)) + pos.vx;
+        temp_v0_6 = Q12_MULT(Math_Cos(D_800ED5B6 + Q12_ANGLE(180.0f)), Q12(8.0f)) + pos.vz;
 
         if (Vw_AabbVisibleInScreenCheck(temp_s0 - Q12(4.5f), temp_s0 + Q12(4.5f), Q12(-2.0f), 0, temp_v0_6 - Q12(4.5f), temp_v0_6 + Q12(4.5f)))
         {
-            Math_SetSVectorFastSum(&rot, FP_ANGLE(0.0f), D_800ED5B6, FP_ANGLE(0.0f));
+            Math_SetSVectorFastSum(&rot, Q12_ANGLE(0.0f), D_800ED5B6, Q12_ANGLE(0.0f));
             WorldGfx_ObjectAdd(g_WorldObject1, &pos, &rot);
 
-            rot.vy += FP_ANGLE(11.25f);
+            rot.vy += Q12_ANGLE(11.25f);
 
             WorldGfx_ObjectAdd(&g_WorldObject1[1], &pos, &rot);
         }
 
-        Math_SetSVectorFastSum(&rot, 0, D_800ED5B6 + FP_ANGLE(90.0f), 0);
+        Math_SetSVectorFastSum(&rot, 0, D_800ED5B6 + Q12_ANGLE(90.0f), 0);
         pos.vy = Q12(-0.3f);
 
-        for (i = 0, curAngle = FP_ANGLE(90.0f); i < 8; i++)
+        for (i = 0, curAngle = Q12_ANGLE(90.0f); i < 8; i++)
         {
             sp30[i] = Q12_MULT(Math_Sin(rot.vy + curAngle), Q12(7.5f)) + pos.vx;
             sp50[i] = Q12_MULT(Math_Cos(rot.vy + curAngle), Q12(7.5f)) + pos.vz;
 
-            curAngle += FP_ANGLE(45.0f);
+            curAngle += Q12_ANGLE(45.0f);
         }
 
         for (i = 0; i < 8; i++)
@@ -3588,16 +3588,16 @@ void func_800E636C(void) // 0x800E636C
             }
 
             pos.vy  = Q12(0.0f);
-            rot.vy += FP_ANGLE(45.0f);
+            rot.vy += Q12_ANGLE(45.0f);
         }
 
-        Math_SetSVectorFastSum(&rot, FP_ANGLE(0.0f), D_800ED5B6, FP_ANGLE(0.0f));
+        Math_SetSVectorFastSum(&rot, Q12_ANGLE(0.0f), D_800ED5B6, Q12_ANGLE(0.0f));
 
-        for (i = 0, curAngle = FP_ANGLE(90.0f); i < 4; i++)
+        for (i = 0, curAngle = Q12_ANGLE(90.0f); i < 4; i++)
         {
             sp30[i]   = Q12_MULT(Math_Sin(rot.vy + curAngle), Q12(0.8f)) + pos.vx;
             sp50[i]   = Q12_MULT(Math_Cos(rot.vy + curAngle), Q12(0.8f)) + pos.vz;
-            curAngle += FP_ANGLE(90.0f);
+            curAngle += Q12_ANGLE(90.0f);
         }
 
         for (i = 0; i < 4; i++)
@@ -3611,7 +3611,7 @@ void func_800E636C(void) // 0x800E636C
                 WorldGfx_ObjectAdd(&g_WorldObject4[1], &D_800ED740, &rot);
             }
 
-            rot.vy += FP_ANGLE(90.0f);
+            rot.vy += Q12_ANGLE(90.0f);
         }
 
         pos.vx = Q12(22.8f);
@@ -3706,8 +3706,8 @@ void func_800E6CB8(void) // 0x800E6CB8
         }
     }
 
-    Math_SetSVectorFastSum(&sp28, FP_ANGLE(0.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
-    Math_SetSVectorFastSum(&sp40, FP_ANGLE(0.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
+    Math_SetSVectorFastSum(&sp28, Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
+    Math_SetSVectorFastSum(&sp40, Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
 
     for (i = 0, var_s3 = Q12(-65.0f); i < 5; i++)
     {
@@ -3763,7 +3763,7 @@ void func_800E7204(void) // 0x800E7204
         pos.vx = Q12_MULT(temp_s0, Math_Sin(rot.vy)) - Q12(16.0f);
         pos.vz = Q12_MULT(temp_s0, Math_Cos(rot.vy)) - Q12(64.0f);
         rot.vx = -angle;
-        rot.vz = FP_ANGLE(0.0f);
+        rot.vz = Q12_ANGLE(0.0f);
 
         WorldGfx_ObjectAdd(&g_WorldObject8, &pos, &rot);
     }

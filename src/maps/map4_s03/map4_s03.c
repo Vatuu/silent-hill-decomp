@@ -230,9 +230,9 @@ void func_800D0CA0(q19_12 rotY, SVECTOR* pos) // 0x800D0CA0
     TransMatrix(&mat, &trans);
     SetTransMatrix(&mat);
 
-    rot.vx = FP_ANGLE(0.0f);
+    rot.vx = Q12_ANGLE(0.0f);
     rot.vy = rotY;
-    rot.vz = FP_ANGLE(0.0f);
+    rot.vz = Q12_ANGLE(0.0f);
     Math_RotMatrixZxyNeg(&rot, &mat);
     SetMulRotMatrix(&mat);
 }
@@ -244,9 +244,9 @@ void func_800D0D6C(MATRIX* out, SVECTOR* pos, s32 rotY) // 0x800D0D6C
 
     ptr = &D_800E0988;
 
-    rot.vx = FP_ANGLE(0.0f);
+    rot.vx = Q12_ANGLE(0.0f);
     rot.vy = rotY;
-    rot.vz = FP_ANGLE(0.0f);
+    rot.vz = Q12_ANGLE(0.0f);
     Math_RotMatrixXyz(&rot, out);
 
     out->t[0] = Q12_TO_Q8(ptr->x_0) + pos->vx;
@@ -484,7 +484,7 @@ void func_800D1478(SVECTOR* arg0, s32 arg1, q19_12 headingAgle, s32 mode, SVECTO
         case 0:
         case 1:
             dist = (arg1 > Q12(0.75f)) ? 128 : 76;
-            angleStep  = mode ? FP_ANGLE(-90.0f) : FP_ANGLE(90.0f);
+            angleStep  = mode ? Q12_ANGLE(-90.0f) : Q12_ANGLE(90.0f);
             headingAgle += angleStep;
 
             x = Q12_MULT_PRECISE(dist, Math_Sin(headingAgle));
@@ -584,7 +584,7 @@ void func_800D185C(s32 arg0, s32 arg1) // 0x800D185C
         ptr->field_CC = Q12(1.0f);
 
         memset(&ptr->field_40, 0, sizeof(ptr->field_40));
-        func_800D0DE4(&ptr->field_14, arg0, FP_ANGLE(0.0f), Q12(0.0f));
+        func_800D0DE4(&ptr->field_14, arg0, Q12_ANGLE(0.0f), Q12(0.0f));
     }
 }
 
@@ -605,7 +605,7 @@ s_800DF580* func_800D1900(VECTOR* arg0, s32 arg1) // 0x800D1900
             ptr->field_4  = arg1;
             ptr->field_3C = 1;
 
-            func_800D0DE4(&ptr->field_14, arg0, FP_ANGLE(0.0f), Q12(0.0f));
+            func_800D0DE4(&ptr->field_14, arg0, Q12_ANGLE(0.0f), Q12(0.0f));
             memset(&ptr->field_40, 0, sizeof(ptr->field_40));
             return ptr;
         }
@@ -906,7 +906,7 @@ void func_800D2150(VECTOR* arg0, s32 arg1) // 0x800D2150
     if (ptr->timer_0 <= Q12(0.0f))
     {
         ptr->timer_0 = Q12(3.0f);
-        func_800D0DE4(&ptr->field_8, arg0, FP_ANGLE(0.0f), Q12(0.0f));
+        func_800D0DE4(&ptr->field_8, arg0, Q12_ANGLE(0.0f), Q12(0.0f));
     }
 }
 
@@ -1072,7 +1072,7 @@ void func_800D2684(VECTOR* arg0, s32 arg1) // 0x800D2684
             ptr->field_C  = Q12(0.5f);
             ptr->field_10 = Q12(0.4f);
 
-            func_800D0DE4(&ptr->field_4, arg0, FP_ANGLE(0.0f), Q12(0.0f));
+            func_800D0DE4(&ptr->field_4, arg0, Q12_ANGLE(0.0f), Q12(0.0f));
             return;
         }
     }
@@ -1094,7 +1094,7 @@ void func_800D26FC(VECTOR* arg0, s32 arg1) // 0x800D26FC
             ptr->field_10 = Q12(0.0f);
             ptr->field_14 = arg1;
 
-            func_800D0DE4(&ptr->field_4, arg0, FP_ANGLE(0.0f), Q12(0.0f));
+            func_800D0DE4(&ptr->field_4, arg0, Q12_ANGLE(0.0f), Q12(0.0f));
             break;
         }
     }
@@ -2009,8 +2009,8 @@ void Twinfeeler_Control_12(s_SubCharacter* twinfeeler) // 0x800D4078
 
     if (twinfeeler->model_0.stateStep_3 == 0)
     {
-        twinfeeler->rotation_24.vy  = FP_ANGLE(0.0f);
-        twinfeeler->headingAngle_3C = FP_ANGLE(0.0f);
+        twinfeeler->rotation_24.vy  = Q12_ANGLE(0.0f);
+        twinfeeler->headingAngle_3C = Q12_ANGLE(0.0f);
         twinfeeler->position_18.vx  = Q12(118.5f);
         twinfeeler->position_18.vz  = Q12(137.9f);
 
@@ -2080,8 +2080,8 @@ void Twinfeeler_Control_13(s_SubCharacter* twinfeeler) // 0x800D4248
     {
         twinfeeler->position_18.vx  = Q12(131.0f);
         twinfeeler->position_18.vz  = Q12(140.0f);
-        twinfeeler->rotation_24.vy  = FP_ANGLE(90.0f);
-        twinfeeler->headingAngle_3C = FP_ANGLE(90.0f);
+        twinfeeler->rotation_24.vy  = Q12_ANGLE(90.0f);
+        twinfeeler->headingAngle_3C = Q12_ANGLE(90.0f);
 
         func_800D3504(twinfeeler);
         twinfeeler->properties_E4.twinfeeler.field_FC = Q12(0.7f);
@@ -2151,7 +2151,7 @@ void func_800D43AC(s_SubCharacter* twinfeeler, s32 arg1) // 0x800D43AC
     if ((u32)ABS(angleDeltaToPlayer) > 56) // TODO: Needs casting to `u32`.
     {
         temp_v0_2 = Q12_MULT_PRECISE(g_DeltaTime0, var_s1);
-        if (angleDeltaToPlayer > FP_ANGLE(0.0f))
+        if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
         {
             twinfeeler->rotation_24.vy += temp_v0_2;
         }
@@ -2662,7 +2662,7 @@ void Twinfeeler_Control_3(s_SubCharacter* chara) // 0x800D4FC0
 
         angleDeltaToPlayer = ABS(angleDeltaToPlayer);
 
-        if (angleDeltaToPlayer >= FP_ANGLE(45.0f))
+        if (angleDeltaToPlayer >= Q12_ANGLE(45.0f))
         {
             chara->model_0.controlState_2 = TwinfeelerControl_5;
         }
@@ -2891,7 +2891,7 @@ void func_800D54B4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D54B4
         pos.vy = posX;
         pos.vz = posZ;
 
-        if (func_8008A0E4(1, var_s0, chara, &pos, &g_SysWork.playerWork_4C.player_0, chara->rotation_24.vy, FP_ANGLE(90.0f)) != NO_VALUE)
+        if (func_8008A0E4(1, var_s0, chara, &pos, &g_SysWork.playerWork_4C.player_0, chara->rotation_24.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
         {
             localChara->properties_E4.twinfeeler.field_114 |= 1 << 0;
         }
@@ -3497,7 +3497,7 @@ void func_800D6774(void) // 0x800D6774
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 52, false);
 
             g_SysWork.playerWork_4C.player_0.position_18.vx += Q12(0.5f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy += FP_ANGLE(45.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy += Q12_ANGLE(45.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -3528,7 +3528,7 @@ void func_800D6774(void) // 0x800D6774
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(120.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(141.5f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-45.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-45.0f);
 
             Savegame_EventFlagSet(EventFlag_329);
 
@@ -3585,7 +3585,7 @@ void func_800D6F24(void) // 0x800D6F24
         case 3:
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(124.4f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(140.9f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
 
             Camera_PositionSet(NULL, Q12(122.1f), Q12(-4.34f), Q12(141.87f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(125.65f), Q12(-2.74f), Q12(140.95f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -3639,7 +3639,7 @@ void func_800D6F24(void) // 0x800D6F24
         case 10:
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(126.86f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(140.36f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
 
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
 
@@ -4753,7 +4753,7 @@ void func_800D8FC0(void) // 0x800D8FC0
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(162.77f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(55.43f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(180.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(180.0f);
 
             Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, 2);
             func_8008D438();
@@ -4797,7 +4797,7 @@ void func_800D8FC0(void) // 0x800D8FC0
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(162.77f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(55.43f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(180.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(180.0f);
             break;
     }
 }
@@ -4902,7 +4902,7 @@ void Map_WorldObjectsInit(void) // 0x800D991C
     WorldObject_ModelNameSet(&g_WorldObject_Mal6[1], "MAL6_28_");
 
     Math_Vector3Set(&g_WorldObject_UnkPos, Q12(132.0f), Q12(-0.75f), Q12(140.0f));
-    Math_SetSVectorFast(&g_WorldObject_UnkRot, FP_ANGLE(90.0f), FP_ANGLE(90.0f), FP_ANGLE(0.0f));
+    Math_SetSVectorFast(&g_WorldObject_UnkRot, Q12_ANGLE(90.0f), Q12_ANGLE(90.0f), Q12_ANGLE(0.0f));
 
     WorldObjectInit(&g_WorldObject_SavePad, D_800A99E4.savePadName_4, 217.15f, -1.25f, -22.9f, 0.0f, -173.0f, 0.0f);
 
@@ -4964,7 +4964,7 @@ void func_800D9BB0(void) // 0x800D9BB0
 
             if (D_800E05AC) {} // @hack
 
-            var = ratan2(FP_ANGLE(360.0f), FP_FROM(g_DeltaTime2 * Math_Cos(g_WorldObject_Fence.rotation_28.vx), Q12_SHIFT));
+            var = ratan2(Q12_ANGLE(360.0f), FP_FROM(g_DeltaTime2 * Math_Cos(g_WorldObject_Fence.rotation_28.vx), Q12_SHIFT));
             var_a0 = MAX(Q12(0.0f), Q12(1.0f) - (D_800E05A8 * 2));
             D_800E05AC = Q12_MULT_PRECISE(var_a0, D_800E05AC + var);
             g_WorldObject_Fence.rotation_28.vx += Q12_MULT_PRECISE(g_DeltaTime0, D_800E05AC);
@@ -4972,9 +4972,9 @@ void func_800D9BB0(void) // 0x800D9BB0
             D_800E05AE = MIN(Q12(15.0f), (D_800E05AE + g_DeltaTime2) + (g_DeltaTime2 >> 4));
 
             g_WorldObject_Fence.position_1C.vy += Q12_MULT_PRECISE(g_DeltaTime0, D_800E05AE);
-            if (g_WorldObject_Fence.rotation_28.vx > FP_ANGLE(90.0f))
+            if (g_WorldObject_Fence.rotation_28.vx > Q12_ANGLE(90.0f))
             {
-                g_WorldObject_Fence.rotation_28.vx = FP_ANGLE(90.0f);
+                g_WorldObject_Fence.rotation_28.vx = Q12_ANGLE(90.0f);
             }
 
             if (D_800E05A8 > Q12(1.0f))

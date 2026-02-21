@@ -16,19 +16,19 @@ void sharedFunc_800CF0B4_3_s03(s_SubCharacter* nurse)
                                                                     Q12(1.0f),
                                                                     g_SysWork.playerWork_4C.player_0.position_18.vx,
                                                                     g_SysWork.playerWork_4C.player_0.position_18.vz,
-                                                                    FP_ANGLE(360.0f),
+                                                                    Q12_ANGLE(360.0f),
                                                                     true);
 
     angle = func_8005BF38(localNurse->properties_E4.puppetNurse.field_11C - nurse->rotation_24.vy);
-    if (ABS(angle) > FP_ANGLE(5.0f))
+    if (ABS(angle) > Q12_ANGLE(5.0f))
     {
-        if (angle > FP_ANGLE(0.0f))
+        if (angle > Q12_ANGLE(0.0f))
         {
-            nurse->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f));
+            nurse->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(90.0f));
         }
         else
         {
-            nurse->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f));
+            nurse->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(90.0f));
         }
     }
 }

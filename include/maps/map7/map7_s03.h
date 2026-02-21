@@ -114,7 +114,7 @@ typedef struct _800F3DAC
     q19_12 timer_8;
     q19_12 timer_C;
     s32    field_10;
-    q19_12 field_14; // Values seem like `FP_ANGLE`, but haven't confirmed how it's used yet.
+    q19_12 field_14; // Values seem like `Q12_ANGLE`, but haven't confirmed how it's used yet.
     s32    field_18;
     s32    field_1C;
     s32    field_20;

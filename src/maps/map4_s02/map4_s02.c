@@ -124,7 +124,7 @@ void func_800EA3F0(void) // 0x800EA3F0
     }
 
     audioBalance = 0;
-    tmp0 = Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f));
+    tmp0 = Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(90.0f));
 
     for (i = 0; i < ARRAY_SIZE(D_800ED8B0); i++)
     {
@@ -147,7 +147,7 @@ void func_800EA3F0(void) // 0x800EA3F0
                 objPos.vx = Q12(65.45f);
                 objPos.vy = Q12(-2.875f);
                 objPos.vz = Q12(27.5f);
-                objRot.vy = FP_ANGLE(180.0f);
+                objRot.vy = Q12_ANGLE(180.0f);
                 break;
 
             case 11:

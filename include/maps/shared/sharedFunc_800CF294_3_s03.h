@@ -14,7 +14,7 @@ bool sharedFunc_800CF294_3_s03(s_SubCharacter* arg0, q19_12 dist)
 
     if (func_80070360(arg0, dist, somePtr->field_8))
     {
-        arg0->properties_E4.npc.field_11A = FP_ANGLE(360.0f);
+        arg0->properties_E4.npc.field_11A = Q12_ANGLE(360.0f);
     }
 
     temp_v1 = somePtr->field_0;

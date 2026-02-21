@@ -249,8 +249,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-1.0f),
             .field_15 = 3,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -274,8 +274,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-1.0f),
             .field_15 = 3,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -299,8 +299,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-1.0f),
             .field_15 = 5,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -324,8 +324,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-1.0f),
             .field_15 = 5,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -349,8 +349,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 3,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -374,8 +374,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 3,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -399,8 +399,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 3,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -424,8 +424,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 3,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -449,8 +449,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 4,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -474,8 +474,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 5,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -499,8 +499,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 5,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -524,8 +524,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 5,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -549,8 +549,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 2,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -574,8 +574,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-1.0f),
             .field_15 = 4,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -599,8 +599,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-1.0f),
             .field_15 = 4,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -624,8 +624,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-1.0f),
             .field_15 = 4,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -649,8 +649,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-1.0f),
             .field_15 = 4,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -674,8 +674,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 0,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -699,8 +699,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 3,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -724,8 +724,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 3,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -749,8 +749,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 3,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -774,8 +774,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 5,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -799,8 +799,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 5,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -824,8 +824,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 4,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -849,8 +849,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 2,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -874,8 +874,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 2,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -899,8 +899,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 2,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -924,8 +924,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 2,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -949,8 +949,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-1.5f),
             .field_15 = 2,
             .cam_mv_type_14 = VC_MV_FIX_ANG,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(344.531304f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(199.7f),
+            .fix_ang_x_16 = Q8_ANGLE(344.531304f),
+            .fix_ang_y_17 = Q8_ANGLE(199.7f),
         },
         {
             .lim_sw_0 = {
@@ -974,8 +974,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-1.5f),
             .field_15 = 2,
             .cam_mv_type_14 = VC_MV_FIX_ANG,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(327.7f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(344.531304f),
+            .fix_ang_x_16 = Q8_ANGLE(327.7f),
+            .fix_ang_y_17 = Q8_ANGLE(344.531304f),
         },
         {
             .lim_sw_0 = {
@@ -999,8 +999,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 2,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -1024,8 +1024,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 2,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -1049,8 +1049,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 2,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -1074,8 +1074,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 5,
             .cam_mv_type_14 = VC_MV_FIX_ANG,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(338.91f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(264.4f),
+            .fix_ang_x_16 = Q8_ANGLE(338.91f),
+            .fix_ang_y_17 = Q8_ANGLE(264.4f),
         },
         {
             .lim_sw_0 = {
@@ -1099,8 +1099,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 5,
             .cam_mv_type_14 = VC_MV_FIX_ANG,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(354.4f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(109.7f),
+            .fix_ang_x_16 = Q8_ANGLE(354.4f),
+            .fix_ang_y_17 = Q8_ANGLE(109.7f),
         },
         {
             .lim_sw_0 = {
@@ -1124,8 +1124,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 5,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -1149,8 +1149,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 5,
             .cam_mv_type_14 = VC_MV_FIX_ANG,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(285.5f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(296.72f),
+            .fix_ang_x_16 = Q8_ANGLE(285.5f),
+            .fix_ang_y_17 = Q8_ANGLE(296.72f),
         },
         {
             .lim_sw_0 = {
@@ -1174,8 +1174,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 5,
             .cam_mv_type_14 = VC_MV_FIX_ANG,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(338.91f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(264.4f),
+            .fix_ang_x_16 = Q8_ANGLE(338.91f),
+            .fix_ang_y_17 = Q8_ANGLE(264.4f),
         },
         {
             .lim_sw_0 = {
@@ -1199,8 +1199,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 5,
             .cam_mv_type_14 = VC_MV_FIX_ANG,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(354.4f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(101.3f),
+            .fix_ang_x_16 = Q8_ANGLE(354.4f),
+            .fix_ang_y_17 = Q8_ANGLE(101.3f),
         },
         {
             .lim_sw_0 = {
@@ -1224,8 +1224,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 5,
             .cam_mv_type_14 = VC_MV_FIX_ANG,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(338.91f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(264.4f),
+            .fix_ang_x_16 = Q8_ANGLE(338.91f),
+            .fix_ang_y_17 = Q8_ANGLE(264.4f),
         },
         {
             .lim_sw_0 = {
@@ -1249,8 +1249,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 5,
             .cam_mv_type_14 = VC_MV_FIX_ANG,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(354.4f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(101.3f),
+            .fix_ang_x_16 = Q8_ANGLE(354.4f),
+            .fix_ang_y_17 = Q8_ANGLE(101.3f),
         },
         {
             .lim_sw_0 = {
@@ -1274,8 +1274,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 4,
             .cam_mv_type_14 = VC_MV_FIX_ANG,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(22.500004f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(25.313f),
+            .fix_ang_x_16 = Q8_ANGLE(22.500004f),
+            .fix_ang_y_17 = Q8_ANGLE(25.313f),
         },
         {
             .lim_sw_0 = {
@@ -1299,8 +1299,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(0.5f),
             .field_15 = 4,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(39.4f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(39.4f),
+            .fix_ang_x_16 = Q8_ANGLE(39.4f),
+            .fix_ang_y_17 = Q8_ANGLE(39.4f),
         },
         {
             .lim_sw_0 = {
@@ -1324,8 +1324,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.5f),
             .field_15 = 4,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -1349,8 +1349,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-1.0f),
             .field_15 = 4,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -1374,8 +1374,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-1.5f),
             .field_15 = 4,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -1399,8 +1399,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 4,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
         {
             .lim_sw_0 = {
@@ -1424,8 +1424,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
             .ofs_watch_hy_14 = Q4(-0.7f),
             .field_15 = 4,
             .cam_mv_type_14 = VC_MV_CHASE,
-            .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-            .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f),
+            .fix_ang_x_16 = Q8_ANGLE(0.0f),
+            .fix_ang_y_17 = Q8_ANGLE(0.0f),
         },
     },
     .unk_84C = {

@@ -45,8 +45,8 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
 
     ptr->field_148 = Math_Sin(-sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_2);
     ptr->field_14A = Math_Cos(-sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_2);
-    ptr->field_14C = Math_Sin(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0 + FP_ANGLE(180.0f));
-    ptr->field_14E = Math_Cos(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0 + FP_ANGLE(180.0f));
+    ptr->field_14C = Math_Sin(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0 + Q12_ANGLE(180.0f));
+    ptr->field_14E = Math_Cos(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0 + Q12_ANGLE(180.0f));
 
     ptr->field_154 = ((D_800C4418.field_C - 1) *
                       CLAMP_HIGH(Q12_MULT_PRECISE(D_800C4418.field_0, D_800C4418.field_8 - sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_0),

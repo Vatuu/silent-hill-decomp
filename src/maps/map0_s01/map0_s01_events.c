@@ -107,7 +107,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             DmsHeader_FixOffsets(FS_BUFFER_11);
             Chara_Load(0, Chara_Cybil, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
-            Chara_Spawn(Chara_Cybil, 0, Q12(4.4f), Q12(269.9f), FP_ANGLE(0.0f), 2);
+            Chara_Spawn(Chara_Cybil, 0, Q12(4.4f), Q12(269.9f), Q12_ANGLE(0.0f), 2);
 
             g_Timer0 = Q12(0.0f);
             SysWork_StateStepIncrement(0);
@@ -552,7 +552,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(1.3f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(269.7f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(5.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(5.0f);
 
             g_Timer0 = Q12(26.0f);
 
@@ -808,7 +808,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
 
         case 10:
             // Set cutscene character.
-            Chara_Spawn(Chara_AirScreamer, 0, Q12(0.0f), Q12(0.0f), FP_ANGLE(0.0f), 12);
+            Chara_Spawn(Chara_AirScreamer, 0, Q12(0.0f), Q12(0.0f), Q12_ANGLE(0.0f), 12);
             DmsHeader_FixOffsets(FS_BUFFER_11);
             Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "BIRD", 0, FS_BUFFER_11);
 
@@ -820,7 +820,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(4.585938f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(267.285156f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
 
             // Set flags.
             SysWork_NpcFlagSet(0);
@@ -925,7 +925,7 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
         if (Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
         {
             Chara_ProcessLoads();
-            Chara_Spawn(Chara_AirScreamer, 0, Q12(1048566.0f), Q12(280.0f), FP_ANGLE(0.0f), 12);
+            Chara_Spawn(Chara_AirScreamer, 0, Q12(1048566.0f), Q12(280.0f), Q12_ANGLE(0.0f), 12);
             func_800D3A3C(&g_SysWork.npcs_1A0[0]);
 
             Fs_QueueStartRead(FILE_ANIM_CAFE2_DMS, FS_BUFFER_11);
@@ -1032,7 +1032,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
         }
         else if (g_SysWork.playerWork_4C.player_0.position_18.vx != Q12(4.586f) ||
                  g_SysWork.playerWork_4C.player_0.position_18.vz != Q12(267.2852f) ||
-                 g_SysWork.playerWork_4C.player_0.rotation_24.vy != FP_ANGLE(90.0f) ||
+                 g_SysWork.playerWork_4C.player_0.rotation_24.vy != Q12_ANGLE(90.0f) ||
                  D_800E2560 > Q12(7.5f))
         {
             Savegame_EventFlagSet(EventFlag_41);

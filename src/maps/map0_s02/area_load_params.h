@@ -8,7 +8,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+            .rotationY_4_16 = Q8_ANGLE(0.0f),
             .field_4_24 = 0,
          }
       },
@@ -24,7 +24,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+            .rotationY_4_16 = Q8_ANGLE(0.0f),
             .field_4_24 = 0,
          }
       },
@@ -40,7 +40,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+            .rotationY_4_16 = Q8_ANGLE(0.0f),
             .field_4_24 = 0,
          }
       },
@@ -56,7 +56,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(90.0f),
+            .rotationY_4_16 = Q8_ANGLE(90.0f),
             .field_4_24 = 6,
          }
       },
@@ -72,7 +72,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
+            .rotationY_4_16 = Q8_ANGLE(270.0f),
             .field_4_24 = 6,
          }
       },
@@ -88,7 +88,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(90.0f),
+            .rotationY_4_16 = Q8_ANGLE(90.0f),
             .field_4_24 = 3,
          }
       },
@@ -104,7 +104,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+            .rotationY_4_16 = Q8_ANGLE(0.0f),
             .field_4_24 = 16,
          }
       },
@@ -120,7 +120,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
+            .rotationY_4_16 = Q8_ANGLE(270.0f),
             .field_4_24 = 16,
          }
       },
@@ -136,7 +136,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(22.0f),
+            .rotationY_4_16 = Q8_ANGLE(22.0f),
             .field_4_24 = 4,
          }
       },
@@ -152,7 +152,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(112.0f),
+            .rotationY_4_16 = Q8_ANGLE(112.0f),
             .field_4_24 = 4,
          }
       },
@@ -168,7 +168,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(202.0f),
+            .rotationY_4_16 = Q8_ANGLE(202.0f),
             .field_4_24 = 4,
          }
       },
@@ -184,7 +184,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(292.0f),
+            .rotationY_4_16 = Q8_ANGLE(292.0f),
             .field_4_24 = 4,
          }
       },
@@ -200,7 +200,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
+            .rotationY_4_16 = Q8_ANGLE(270.0f),
             .field_4_24 = 5,
          }
       },
@@ -216,7 +216,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+            .rotationY_4_16 = Q8_ANGLE(0.0f),
             .field_4_24 = 8,
          }
       },
@@ -232,7 +232,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(45.0f),
+            .rotationY_4_16 = Q8_ANGLE(45.0f),
             .field_4_24 = 8,
          }
       },
@@ -248,7 +248,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
+            .rotationY_4_16 = Q8_ANGLE(270.0f),
             .field_4_24 = 20,
          }
       },
@@ -264,7 +264,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(58.0f),
+            .rotationY_4_16 = Q8_ANGLE(58.0f),
             .field_4_24 = 4,
          }
       },
@@ -280,7 +280,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(148.0f),
+            .rotationY_4_16 = Q8_ANGLE(148.0f),
             .field_4_24 = 4,
          }
       },
@@ -296,7 +296,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(238.0f),
+            .rotationY_4_16 = Q8_ANGLE(238.0f),
             .field_4_24 = 4,
          }
       },
@@ -312,7 +312,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(328.0f),
+            .rotationY_4_16 = Q8_ANGLE(328.0f),
             .field_4_24 = 4,
          }
       },
@@ -328,7 +328,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
+            .rotationY_4_16 = Q8_ANGLE(270.0f),
             .field_4_24 = 5,
          }
       },
@@ -344,7 +344,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(180.0f),
+            .rotationY_4_16 = Q8_ANGLE(180.0f),
             .field_4_24 = 7,
          }
       },
@@ -360,7 +360,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+            .rotationY_4_16 = Q8_ANGLE(0.0f),
             .field_4_24 = 7,
          }
       },
@@ -376,7 +376,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
+            .rotationY_4_16 = Q8_ANGLE(270.0f),
             .field_4_24 = 8,
          }
       },
@@ -392,7 +392,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+            .rotationY_4_16 = Q8_ANGLE(0.0f),
             .field_4_24 = 8,
          }
       },
@@ -408,7 +408,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(180.0f),
+            .rotationY_4_16 = Q8_ANGLE(180.0f),
             .field_4_24 = 12,
          }
       },
@@ -424,7 +424,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(180.0f),
+            .rotationY_4_16 = Q8_ANGLE(180.0f),
             .field_4_24 = 8,
          }
       },
@@ -440,7 +440,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
+            .rotationY_4_16 = Q8_ANGLE(270.0f),
             .field_4_24 = 8,
          }
       },
@@ -456,7 +456,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(90.0f),
+            .rotationY_4_16 = Q8_ANGLE(90.0f),
             .field_4_24 = 8,
          }
       },
@@ -472,7 +472,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+            .rotationY_4_16 = Q8_ANGLE(0.0f),
             .field_4_24 = 0,
          }
       },
@@ -488,7 +488,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+            .rotationY_4_16 = Q8_ANGLE(0.0f),
             .field_4_24 = 0,
          }
       },
@@ -504,7 +504,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+            .rotationY_4_16 = Q8_ANGLE(0.0f),
             .field_4_24 = 0,
          }
       },
@@ -520,7 +520,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+            .rotationY_4_16 = Q8_ANGLE(0.0f),
             .field_4_24 = 0,
          }
       },
@@ -536,7 +536,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+            .rotationY_4_16 = Q8_ANGLE(0.0f),
             .field_4_24 = 0,
          }
       },
@@ -552,7 +552,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+            .rotationY_4_16 = Q8_ANGLE(0.0f),
             .field_4_24 = 0,
          }
       },
@@ -568,7 +568,7 @@
             .field_4_5 = 0,
             .loadingScreenId_4_9 = LoadingScreenId_None,
             .field_4_12 = 0,
-            .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+            .rotationY_4_16 = Q8_ANGLE(0.0f),
             .field_4_24 = 0,
          }
       },

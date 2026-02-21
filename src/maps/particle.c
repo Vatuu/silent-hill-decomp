@@ -366,8 +366,8 @@ void Particle_SystemUpdate(s32 arg1, e_MapOverlayId mapOverlayId, s32 arg3)
                     sharedData_800DD598_0_s00++;
                 }
 
-                temp_s0_2 = Q12_MULT(Math_Sin(FP_ANGLE(270.0f) + (sharedData_800DD598_0_s00 * 2)), (PARTICLE_COUNT_MAX / 2)) + (PARTICLE_COUNT_MAX / 2);
-                temp_a2   = Q12_MULT(Math_Sin(FP_ANGLE(180.0f) + (sharedData_800DD598_0_s00 * 2)), (PARTICLE_COUNT_MAX / 2)) + (PARTICLE_COUNT_MAX / 2);
+                temp_s0_2 = Q12_MULT(Math_Sin(Q12_ANGLE(270.0f) + (sharedData_800DD598_0_s00 * 2)), (PARTICLE_COUNT_MAX / 2)) + (PARTICLE_COUNT_MAX / 2);
+                temp_a2   = Q12_MULT(Math_Sin(Q12_ANGLE(180.0f) + (sharedData_800DD598_0_s00 * 2)), (PARTICLE_COUNT_MAX / 2)) + (PARTICLE_COUNT_MAX / 2);
                 temp_t0 = sharedData_800E0CB6_0_s00 >> 14;
 
                 for (i = 0; i < 2; i++)
@@ -573,7 +573,7 @@ bool Particle_CameraMovedCheck(void)
     dist = SquareRoot0(SQUARE(ABS_DIFF(g_Particle_Position.vx, g_Particle_PrevPosition.vx)) +
                        SQUARE(ABS_DIFF(g_Particle_Position.vz, g_Particle_PrevPosition.vz)));
     rotY = ABS_DIFF(g_Particle_PrevRotationY, g_Particle_RotationY);
-    if (dist > 10000 || rotY > FP_ANGLE(45.0f))
+    if (dist > 10000 || rotY > Q12_ANGLE(45.0f))
     {
         return true;
     }

@@ -155,7 +155,7 @@ void func_800D1628(void) // 0x800D1628
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(103.64f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(59.49f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(51.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(51.0f);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(103.54f), Q12(-2.91f), Q12(59.2f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -391,7 +391,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
 
         case 13:
-            Chara_Spawn(Chara_Kaufmann, 0, Q12(140.5f), Q12(23.0f), FP_ANGLE(0.0f), 3);
+            Chara_Spawn(Chara_Kaufmann, 0, Q12(140.5f), Q12(23.0f), Q12_ANGLE(0.0f), 3);
 
             func_8005DC1C(Sfx_Unk1595, &QVECTOR3(103.0f, -1.2f, 17.6f), Q8_CLAMPED(0.5f), 0);
 
@@ -573,7 +573,7 @@ void func_800D1AF8(void) // 0x800D1AF8
         // Set light rotation.
         g_SysWork.pointLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz));
         g_SysWork.pointLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz);
-        g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
+        g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
     }
 }
 
@@ -616,7 +616,7 @@ void func_800D2674(void) // 0x800D2674
 
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(104.17f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(59.5f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(0.0f);
 
             Camera_PositionSet(NULL, Q12(102.07f), Q12(-1.42f), Q12(58.77f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(105.14f), Q12(0.37f), Q12(60.61f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);

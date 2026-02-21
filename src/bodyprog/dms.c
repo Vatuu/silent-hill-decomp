@@ -168,7 +168,7 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
 
 bool func_8008CF54(SVECTOR3* rot0, SVECTOR3* rot1) // 0x8008CF54
 {
-    #define ANGLE_EPSILON FP_ANGLE(360.0f / 16.0f) // 22.5 degrees
+    #define ANGLE_EPSILON Q12_ANGLE(360.0f / 16.0f) // 22.5 degrees
 
     if (ABS(rot0->vx - rot1->vx) > ANGLE_EPSILON ||
         ABS(rot0->vy - rot1->vy) > ANGLE_EPSILON ||
@@ -301,5 +301,5 @@ s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry) // 0x8008D330
 
 s32 Math_LerpFixed12(s16 from, s16 to, q19_12 alpha) // 0x8008D3D4
 {
-    return FP_ANGLE_NORM_S((s32)(Q12_MULT_PRECISE(FP_ANGLE_NORM_S(to - from), alpha)) + from);
+    return Q12_ANGLE_NORM_S((s32)(Q12_MULT_PRECISE(Q12_ANGLE_NORM_S(to - from), alpha)) + from);
 }

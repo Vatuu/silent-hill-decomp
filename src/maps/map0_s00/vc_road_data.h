@@ -10,8 +10,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(180.0f), Q4(194.0f), Q4(110.0f), Q4(122.0f) },
@@ -26,7 +26,7 @@
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
         .fix_ang_x_16 = -22,
-        .fix_ang_y_17 = FP_ANGLE_PACKED(114.0f)
+        .fix_ang_y_17 = Q8_ANGLE(114.0f)
     },
     {
         .lim_sw_0 = { Q4(-160.0f), Q4(120.0f), Q4(-11.5f), Q4(11.5f) },
@@ -40,8 +40,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-240.0f), Q4(-160.0f), Q4(-11.5f), Q4(11.5f) },
@@ -55,8 +55,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-156.0f), Q4(-148.0f), Q4(-6.0f), Q4(8.0f) },
@@ -70,8 +70,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-158.0f), Q4(-153.0f), Q4(0.5f), Q4(4.0f) },
@@ -100,8 +100,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(181.0f), Q4(200.0f), Q4(-91.5f), Q4(-68.5f) },
@@ -115,8 +115,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(145.0f), Q4(151.75f), Q4(-66.0625f), Q4(-64.0f) },
@@ -160,8 +160,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-251.0f), Q4(-229.0f), Q4(-201.5f), Q4(143.0f) },
@@ -175,8 +175,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-244.6875f), Q4(-229.0f), Q4(-215.0f), Q4(-201.5f) },
@@ -190,8 +190,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-251.0f), Q4(-229.0f), Q4(-230.0f), Q4(-208.0f) },
@@ -205,8 +205,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-249.375f), Q4(-245.0f), Q4(143.0f), Q4(150.0f) },
@@ -220,8 +220,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-240.0f), Q4(-228.0f), Q4(138.0f), Q4(146.0f) },
@@ -235,8 +235,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-233.6875f), Q4(-228.0f), Q4(144.0f), Q4(150.0f) },
@@ -250,8 +250,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-184.1875f), Q4(-179.8125f), Q4(-80.0f), Q4(120.0f) },
@@ -265,8 +265,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-184.1875f), Q4(-179.8125f), Q4(-200.0f), Q4(-128.0f) },
@@ -280,8 +280,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-184.1875f), Q4(-178.8125f), Q4(-150.0f), Q4(-140.0f) },
@@ -295,8 +295,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-185.0f), Q4(-176.0f), Q4(-146.5625f), Q4(-143.875f) },
@@ -310,7 +310,7 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_FIX_ANG,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
         .fix_ang_y_17 = -64
     },
     {
@@ -340,8 +340,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-64.1875f), Q4(-59.8125f), Q4(50.0f), Q4(120.0f) },
@@ -355,8 +355,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-64.1875f), Q4(-59.8125f), Q4(-30.0f), Q4(0.0f) },
@@ -370,8 +370,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-64.1875f), Q4(-59.8125f), Q4(-200.0f), Q4(-80.0f) },
@@ -385,8 +385,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-11.5f), Q4(19.5f), Q4(-18.0f), Q4(211.0f) },
@@ -400,8 +400,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-11.5f), Q4(2.625f), Q4(200.0f), Q4(216.0f) },
@@ -415,8 +415,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(5.5f), Q4(19.5f), Q4(200.0f), Q4(216.0f) },
@@ -430,8 +430,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(55.8125f), Q4(60.1875f), Q4(-32.0f), Q4(120.0f) },
@@ -445,8 +445,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(109.0f), Q4(131.0f), Q4(-27.5f), Q4(120.0f) },
@@ -460,8 +460,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-232.5f), Q4(-218.5f), Q4(-200.0f), Q4(120.0f) },
@@ -475,8 +475,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-141.5f), Q4(-127.5f), Q4(-200.0f), Q4(120.0f) },
@@ -490,8 +490,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-112.5f), Q4(-98.5f), Q4(-200.0f), Q4(120.0f) },
@@ -505,8 +505,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(98.5f), Q4(112.5f), Q4(-27.5f), Q4(120.0f) },
@@ -520,8 +520,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-263.5f), Q4(-247.5f), Q4(-240.0f), Q4(60.0f) },
@@ -535,8 +535,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-280.0f), Q4(-245.0f), Q4(-190.0f), Q4(-170.0f) },
@@ -550,8 +550,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(109.0f), Q4(131.0f), Q4(-132.0f), Q4(-53.5f) },
@@ -565,8 +565,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(98.5f), Q4(112.5f), Q4(-80.0f), Q4(-53.5f) },
@@ -580,8 +580,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(30.0f), Q4(103.0f), Q4(127.5f), Q4(143.5f) },
@@ -595,8 +595,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-11.5f), Q4(19.5f), Q4(-112.0f), Q4(-50.0f) },
@@ -610,8 +610,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-226.0f), Q4(-177.0f), Q4(-220.0f), Q4(-211.0f) },
@@ -625,8 +625,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-224.0f), Q4(-180.0f), Q4(131.0f), Q4(140.0f) },
@@ -640,8 +640,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-263.5f), Q4(-253.5f), Q4(69.0f), Q4(109.0f) },
@@ -655,8 +655,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(-270.0f), Q4(-232.0f), Q4(52.5f), Q4(67.5f) },
@@ -670,8 +670,8 @@
         .ofs_watch_hy_14 = Q4(0.5f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(21.5f), Q4(30.0f), Q4(140.0f), Q4(154.0f) },
@@ -685,8 +685,8 @@
         .ofs_watch_hy_14 = -25,
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(89.0f), Q4(104.0f), Q4(-102.0f), Q4(-95.5f) },
@@ -700,8 +700,8 @@
         .ofs_watch_hy_14 = Q4(-1.0f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0 = { Q4(80.0f), Q4(114.0f), Q4(-95.5f), Q4(-90.75f) },
@@ -715,6 +715,6 @@
         .ofs_watch_hy_14 = Q4(-1.0f),
         .field_15 = 0,
         .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16 = Q8_ANGLE(0.0f),
+        .fix_ang_y_17 = Q8_ANGLE(0.0f)
     }

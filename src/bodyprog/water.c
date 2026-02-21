@@ -683,10 +683,10 @@ void func_8008E794(VECTOR3* posXz, q3_12 angle, q19_12 posY) // 0x8008E794
         SetPolyFT4(poly);
         setSemiTrans(poly, true);
 
-        angle0 = angle - FP_ANGLE(40.0f);
-        if (angle0 > FP_ANGLE(90.0f))
+        angle0 = angle - Q12_ANGLE(40.0f);
+        if (angle0 > Q12_ANGLE(90.0f))
         {
-            angle0 = FP_ANGLE(90.0f);
+            angle0 = Q12_ANGLE(90.0f);
         }
 
         if (Math_Sin(angle0) >= Q12(0.0f))
@@ -789,10 +789,10 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
     sp28[3].vy = 0x33;
     sp28[2].vy = 0x33;
 
-    for (i = 0, angle = 0; i < 8; i++, angle += FP_ANGLE(45.0f))
+    for (i = 0, angle = 0; i < 8; i++, angle += Q12_ANGLE(45.0f))
     {
         temp_s1   = Math_Sin(angle);
-        angle0    = angle + FP_ANGLE(45.0f);
+        angle0    = angle + Q12_ANGLE(45.0f);
         temp_s2   = Math_Cos(angle);
         temp_s0_2 = Math_Sin(angle0);
         temp_v0_2 = Math_Cos(angle0);

@@ -231,7 +231,7 @@ void func_800D725C(void) // 0x800D725C
 
         case 3:
             Chara_ProcessLoads();
-            Chara_Spawn(Chara_Lisa, 0, Q12(130.0f), Q12(-70.0f), FP_ANGLE(0.0f), 3);
+            Chara_Spawn(Chara_Lisa, 0, Q12(130.0f), Q12(-70.0f), Q12_ANGLE(0.0f), 3);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -1987,7 +1987,7 @@ void func_800DCE20(void) // 0x800DCE20
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.6f), false);
             Camera_PositionSet(NULL, Q12(-19.47f), Q12(-2.18f), Q12(-23.16f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-22.32f), Q12(-0.95f), Q12(-20.64f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            func_800865FC(true, 0, 0, FP_ANGLE(-90.0f), Q12(-26.0f), Q12(-20.9f));
+            func_800865FC(true, 0, 0, Q12_ANGLE(-90.0f), Q12(-26.0f), Q12(-20.9f));
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -2081,7 +2081,7 @@ void Map_WorldObjectsInit(void) // 0x800DD368
     WorldObject_ModelNameSet(&g_WorldObject_KaigaL[1], "KAIGAL2_");
 
     Math_Vector3Set(&g_WorldObject_UnkPos1, Q12(56.0f), Q12(-1.9f), Q12(-21.45f));
-    Math_SetSVectorFast(&g_WorldObject_UnkRot0, FP_ANGLE(0.0f), FP_ANGLE(180.0f), FP_ANGLE(0.0f));
+    Math_SetSVectorFast(&g_WorldObject_UnkRot0, Q12_ANGLE(0.0f), Q12_ANGLE(180.0f), Q12_ANGLE(0.0f));
 
     WorldObjectInit(&g_WorldObject_Key0, "KEY_HIDE", -181.05f, 0.0f, -20.0f, 0.0f, 180.0f, 0.0f);
 
@@ -2130,13 +2130,13 @@ void Map_WorldObjectsInit(void) // 0x800DD368
 
     WorldObject_ModelNameSet(&g_WorldObject_KeyX1, "KEYX1_HI");
 
-    Math_SetSVectorFast(&g_WorldObject_UnkRot1, FP_ANGLE(25.6f), FP_ANGLE(90.0f), FP_ANGLE(0.0f));
-    Math_SetSVectorFast(&g_WorldObject_UnkRot2, FP_ANGLE(-113.0f), FP_ANGLE(90.0f), FP_ANGLE(0.0f));
+    Math_SetSVectorFast(&g_WorldObject_UnkRot1, Q12_ANGLE(25.6f), Q12_ANGLE(90.0f), Q12_ANGLE(0.0f));
+    Math_SetSVectorFast(&g_WorldObject_UnkRot2, Q12_ANGLE(-113.0f), Q12_ANGLE(90.0f), Q12_ANGLE(0.0f));
 
     WorldObject_ModelNameSet(&g_WorldObject_KeyX2, "KEYX2_HI");
 
-    Math_SetSVectorFast(&g_WorldObject_UnkRot3, FP_ANGLE(126.8f), FP_ANGLE(90.0f), FP_ANGLE(0.0f));
-    Math_SetSVectorFast(&g_WorldObject_UnkRot4, FP_ANGLE(90.9f), FP_ANGLE(90.0f), FP_ANGLE(0.0f));
+    Math_SetSVectorFast(&g_WorldObject_UnkRot3, Q12_ANGLE(126.8f), Q12_ANGLE(90.0f), Q12_ANGLE(0.0f));
+    Math_SetSVectorFast(&g_WorldObject_UnkRot4, Q12_ANGLE(90.9f), Q12_ANGLE(90.0f), Q12_ANGLE(0.0f));
 
     WorldObjectInit(&g_WorldObject_Ana, "ANA_HIDE", -16.6661f, -0.7271f, -61.6368f, 0.0f, 90.0f, 0.0f);
 
@@ -2241,14 +2241,14 @@ void func_800DDCD4(void) // 0x800DDCD4
             {
                 if (g_SysWork.npcs_1A0[0].model_0.charaId_0 != Chara_GhostChildAlessa)
                 {
-                    Chara_Spawn(Chara_GhostChildAlessa, 0, Q12(-60.0f), Q12(-20.0f), FP_ANGLE(180.0f), 3);
+                    Chara_Spawn(Chara_GhostChildAlessa, 0, Q12(-60.0f), Q12(-20.0f), Q12_ANGLE(180.0f), 3);
                     Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio569);
                 }
                 else if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-62.0f))
                 {
                     Savegame_EventFlagSet(EventFlag_485);
                     sharedFunc_800D88AC_0_s00(&g_SysWork.npcs_1A0[0]);
-                    func_800865FC(true, 1, 0, FP_ANGLE(90.0f), Q12(-60.0f), Q12(-35.0f));
+                    func_800865FC(true, 1, 0, Q12_ANGLE(90.0f), Q12(-60.0f), Q12(-35.0f));
                     SD_Call(Sfx_XaAudio569);
                 }
             }

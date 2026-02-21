@@ -22,10 +22,10 @@ q3_12 func_8005BF38(q3_12 angle) // 0x8005BF38
     q3_12 outAngle;
     q3_12 angleNorm;
 
-    angleNorm = FP_ANGLE_NORM_U(angle);
+    angleNorm = Q12_ANGLE_NORM_U(angle);
 
     outAngle = angleNorm;
-    if (angleNorm > FP_ANGLE(180.0f))
+    if (angleNorm > Q12_ANGLE(180.0f))
     {
         outAngle = angleNorm | 0xF000;
     }

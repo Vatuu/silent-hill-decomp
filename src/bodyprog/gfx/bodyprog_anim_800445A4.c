@@ -47,7 +47,7 @@ void Anim_BoneInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800445A4
             {
                 for (j = 0; j < 3; j++)
                 {
-                    curCoord->coord.m[i][j] = ((j == i) ? FP_ANGLE(360.0f) : FP_ANGLE(0.0f));
+                    curCoord->coord.m[i][j] = ((j == i) ? Q12_ANGLE(360.0f) : Q12_ANGLE(0.0f));
                 }
             }
         }

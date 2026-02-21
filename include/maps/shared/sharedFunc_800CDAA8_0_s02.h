@@ -195,7 +195,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
     u16         keyframeIdxMax;
     s32         keyframeIdx;
 
-    headingAngle = FP_ANGLE(0.0f);
+    headingAngle = Q12_ANGLE(0.0f);
     keyframeIdx  = 0;
 
     sharedData_800D32A0_0_s02 = 0;
@@ -249,7 +249,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 D_800C4606 = 0;
             }
 
-            headingAngle = g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
+            headingAngle = g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(0.0f);
             break;
 #endif
 
@@ -290,7 +290,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 D_800C4606 = 0;
             }
 
-            headingAngle = g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
+            headingAngle = g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(0.0f);
             break;
 #endif
 
@@ -333,7 +333,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 D_800C4606 = 0;
             }
 
-            headingAngle = g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
+            headingAngle = g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(0.0f);
             break;
 #endif
 
@@ -390,7 +390,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 D_800C4606 = 0;
             }
 
-            headingAngle = g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
+            headingAngle = g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(0.0f);
             break;
 #endif
 
@@ -464,7 +464,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 D_800C4606 = 0;
             }
 
-            headingAngle = g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = FP_ANGLE(180.0f);
+            headingAngle = g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = Q12_ANGLE(180.0f);
             break;
 #endif
 
@@ -513,7 +513,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
             headingAngle = g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = 0;
 
-            g_Player_FlexRotationY = FP_ANGLE(-28.2f);
+            g_Player_FlexRotationY = Q12_ANGLE(-28.2f);
             break;
 #endif
 
@@ -562,7 +562,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
             headingAngle = g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124 = 0;
 
-            g_Player_FlexRotationY = FP_ANGLE(28.2f);
+            g_Player_FlexRotationY = Q12_ANGLE(28.2f);
             break;
 #endif
 
@@ -917,7 +917,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
             sharedData_800D32A0_0_s02 = (s32)g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126;
             func_8007FC48(playerChara, extra, 0x168);
-            headingAngle = FP_ANGLE(180.0f);
+            headingAngle = Q12_ANGLE(180.0f);
 
             if (D_800C4606)
             {
@@ -2912,8 +2912,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
     newMoveSpeed = sharedData_800D32A0_0_s02;
 
-    playerChara->rotation_24.vy  = FP_ANGLE_NORM_U((playerChara->rotation_24.vy + (sharedData_800E39D8_0_s00 >> 4)) + FP_ANGLE(360.0f));
-    playerChara->headingAngle_3C = FP_ANGLE_NORM_U(playerChara->rotation_24.vy + headingAngle);
+    playerChara->rotation_24.vy  = Q12_ANGLE_NORM_U((playerChara->rotation_24.vy + (sharedData_800E39D8_0_s00 >> 4)) + Q12_ANGLE(360.0f));
+    playerChara->headingAngle_3C = Q12_ANGLE_NORM_U(playerChara->rotation_24.vy + headingAngle);
     playerChara->moveSpeed_38    = newMoveSpeed;
     playerChara->field_34       += g_DeltaTime2;
 

@@ -162,7 +162,7 @@ void func_800D0C14(void) // 0x800D0C14
 
         case 3:
             Chara_ProcessLoads();
-            Chara_Spawn(Chara_Dahlia, 0, Q12(98.0f), Q12(100.0f), FP_ANGLE(0.0f), 3);
+            Chara_Spawn(Chara_Dahlia, 0, Q12(98.0f), Q12(100.0f), Q12_ANGLE(0.0f), 3);
             sharedFunc_800D88AC_0_s00(&g_SysWork.npcs_1A0[0]);
 
             D_800D2737 = true;

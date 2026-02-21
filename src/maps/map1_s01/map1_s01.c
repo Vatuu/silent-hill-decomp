@@ -274,7 +274,7 @@ void func_800D7308(void)
         case 3:
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-59.2f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(98.9f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(0.0f);
 
             Camera_PositionSet(NULL, Q12(-59.61f), Q12(-0.41f), Q12(97.48f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-58.6f), Q12(-2.29f), Q12(100.87f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -410,11 +410,11 @@ void func_800D7864(void) // 0x800D7864
         ScreenFade_ResetTimestep();
         SysWork_StateStepSet(0, SKIP_CUTSCENE_STATE);
 
-        g_WorldObject0.rotation_28.vx = FP_ANGLE(-90.0f);
+        g_WorldObject0.rotation_28.vx = Q12_ANGLE(-90.0f);
         g_WorldObject0.position_1C.vx = Q12(-98.8f);
         g_WorldObject0.position_1C.vy = Q12(0.0f);
         g_WorldObject0.position_1C.vz = Q12(22.8f);
-        g_WorldObject0.rotation_28.vy = FP_ANGLE(28.5f);
+        g_WorldObject0.rotation_28.vy = Q12_ANGLE(28.5f);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -472,7 +472,7 @@ void func_800D7864(void) // 0x800D7864
         case 11:
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-100.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(20.1f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-22.5f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-22.5f);
 
             SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
             Camera_PositionSet(NULL, Q12(-97.3f), Q12(-2.3699f), Q12(21.97f), 0, 0, 0, 0, true);
@@ -483,8 +483,8 @@ void func_800D7864(void) // 0x800D7864
             SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
 
             g_WorldObject0.rotation_28.vx += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.0555f));
-            g_WorldObject0.position_1C.vy = FP_FROM((Math_Cos(g_WorldObject0.rotation_28.vx) * FP_ANGLE(-43.2f)), Q12_SHIFT) - Q12(2.5601f);
-            g_WorldObject0.position_1C.vz = FP_FROM((Math_Sin(g_WorldObject0.rotation_28.vx) * FP_ANGLE(-43.2f)), Q12_SHIFT) + Q12(23.73f);
+            g_WorldObject0.position_1C.vy = FP_FROM((Math_Cos(g_WorldObject0.rotation_28.vx) * Q12_ANGLE(-43.2f)), Q12_SHIFT) - Q12(2.5601f);
+            g_WorldObject0.position_1C.vz = FP_FROM((Math_Sin(g_WorldObject0.rotation_28.vx) * Q12_ANGLE(-43.2f)), Q12_SHIFT) + Q12(23.73f);
             break;
 
         case 13:
@@ -508,10 +508,10 @@ void func_800D7864(void) // 0x800D7864
             SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
 
             g_WorldObject0.position_1C.vx = Q12(-98.8f);
-            g_WorldObject0.rotation_28.vx = FP_ANGLE(-90.0f);
+            g_WorldObject0.rotation_28.vx = Q12_ANGLE(-90.0f);
             g_WorldObject0.position_1C.vy = Q12(0.0f);
             g_WorldObject0.position_1C.vz = Q12(22.8f);
-            g_WorldObject0.rotation_28.vy = FP_ANGLE(28.5f);
+            g_WorldObject0.rotation_28.vy = Q12_ANGLE(28.5f);
 
             Camera_PositionSet(NULL, Q12(-101.39f), Q12(-2.6099f), Q12(22.13f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-98.4f), Q12(-0.14f), Q12(23.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -1000,8 +1000,8 @@ void func_800D87C0(void) // 0x800D87C0
 
         default:
             g_Timer0 = NO_VALUE;
-            g_SysWork.playerWork_4C.player_0.position_18.vx += FP_FROM((Math_Sin(g_SysWork.playerWork_4C.player_0.rotation_24.vy + FP_ANGLE(180.0f)) * Q12(1.1f)), Q12_SHIFT);
-            g_SysWork.playerWork_4C.player_0.position_18.vz += FP_FROM((Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy + FP_ANGLE(180.0f)) * Q12(1.1f)), Q12_SHIFT);
+            g_SysWork.playerWork_4C.player_0.position_18.vx += FP_FROM((Math_Sin(g_SysWork.playerWork_4C.player_0.rotation_24.vy + Q12_ANGLE(180.0f)) * Q12(1.1f)), Q12_SHIFT);
+            g_SysWork.playerWork_4C.player_0.position_18.vz += FP_FROM((Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy + Q12_ANGLE(180.0f)) * Q12(1.1f)), Q12_SHIFT);
 
             vcReturnPreAutoCamWork(true);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
@@ -1042,7 +1042,7 @@ void func_800D87C0(void) // 0x800D87C0
         obj = &g_WorldObject1;
         tmp0 = MIN((g_Timer0 - Q12(16.0f)), Q12(2.0f));
 
-        obj->rotation_28.vy = Q12_MULT_PRECISE(tmp0, FP_ANGLE(-4.1f)) - FP_ANGLE(42.05f);
+        obj->rotation_28.vy = Q12_MULT_PRECISE(tmp0, Q12_ANGLE(-4.1f)) - Q12_ANGLE(42.05f);
     }
 }
 
@@ -1270,7 +1270,7 @@ void func_800D9EC4(void) // 0x800D9EC4
                     D_800DD57C = MIN(D_800DD57C, 0);
                 }
             }
-            else if (g_WorldObject1.rotation_28.vy < FP_ANGLE(-1.8f))
+            else if (g_WorldObject1.rotation_28.vy < Q12_ANGLE(-1.8f))
             {
                 func_8005DC1C(Sfx_Unk1435, &soundPos, Q8_CLAMPED(0.5f), 0);
 
@@ -1285,7 +1285,7 @@ void func_800D9EC4(void) // 0x800D9EC4
     }
     else
     {
-        g_WorldObject1.rotation_28.vy = FP_ANGLE(-2.9f);
+        g_WorldObject1.rotation_28.vy = Q12_ANGLE(-2.9f);
     }
 
     WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);

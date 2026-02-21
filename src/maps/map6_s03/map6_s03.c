@@ -229,7 +229,7 @@ void func_800D822C(void) // 0x800D822C
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-20.0486f);
             g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(-4.07f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(24.7134f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(180.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(180.0f);
 
             // Turn on flashlight.
             Game_TurnFlashlightOn();
@@ -291,7 +291,7 @@ void func_800D84EC(void) // 0x800D84EC
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(89.9092f);
             g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(-0.0733f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(18.8875f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
             Game_TurnFlashlightOn();
             Camera_PositionSet(NULL, Q12(88.92f), Q12(-1.64f), Q12(20.16f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(90.98f), Q12(-4.45f), Q12(18.2f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -501,9 +501,9 @@ void func_800D89A0(void) // 0x800D89A0
                 }
             }
 
-            Chara_Spawn(Chara_HangedScratcher, 9, Q12(42.2f), Q12(20.9), FP_ANGLE(90.0f), 6u);
+            Chara_Spawn(Chara_HangedScratcher, 9, Q12(42.2f), Q12(20.9), Q12_ANGLE(90.0f), 6u);
             func_80088FF4(Chara_HangedScratcher, 9, 6);
-            Chara_Spawn(Chara_HangedScratcher, 10, Q12(41.1f), Q12(19.0f), FP_ANGLE(90.0f), 6u);
+            Chara_Spawn(Chara_HangedScratcher, 10, Q12(41.1f), Q12(19.0f), Q12_ANGLE(90.0f), 6u);
             func_80088FF4(Chara_HangedScratcher, 10, 6);
             func_8005DC1C(Sfx_Unk1585, &D_800CB260, Q8_CLAMPED(1.0f), 2);
         }

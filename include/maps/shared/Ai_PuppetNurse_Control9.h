@@ -23,7 +23,7 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
     if (!nurse->model_0.stateStep_3)
     {
         nurse->properties_E4.player.field_104 = 0;
-        nurse->properties_E4.puppetNurse.field_11C = func_8006F99C(nurse, FP_ANGLE(360.0f), nurse->rotation_24.vy);
+        nurse->properties_E4.puppetNurse.field_11C = func_8006F99C(nurse, Q12_ANGLE(360.0f), nurse->rotation_24.vy);
         nurse->model_0.stateStep_3++;
     }
 
@@ -54,7 +54,7 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
 
                 somePtr = localNurse->properties_E4.npc.field_124;
                 if (dist < Q12_MULT_PRECISE(somePtr->field_8, Q12(3.0f)) &&
-                    angleAbs < FP_ANGLE(60.0f) && g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
+                    angleAbs < Q12_ANGLE(60.0f) && g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
                 {
                     nurse->model_0.controlState_2 = PuppetNurseControl_12;
                     nurse->model_0.stateStep_3 = 0;

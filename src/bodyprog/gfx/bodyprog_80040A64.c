@@ -267,7 +267,7 @@ void Math_RelativeRotationGet(q19_12* azimuthAngle, q19_12* altitudeAngle, const
     VectorNormal(&planeNormal, &planeNormal);
 
     // Compute Y rotation (azimuth).
-    *azimuthAngle = FP_ANGLE_NORM_U(ratan2(planeNormal.vy, planeNormal.vx) - FP_ANGLE(90.0f));
+    *azimuthAngle = Q12_ANGLE_NORM_U(ratan2(planeNormal.vy, planeNormal.vx) - Q12_ANGLE(90.0f));
 
     // Compute vector from ??? TODO.
     cosTheta.vx = Q12_MULT(dir0.vx, dir1.vx) +
@@ -282,7 +282,7 @@ void Math_RelativeRotationGet(q19_12* azimuthAngle, q19_12* altitudeAngle, const
                           (dir1.vz * sideStep.vz), Q12_SHIFT);
 
     // Compute X rotation (altitude).
-    *altitudeAngle = FP_ANGLE_NORM_U(ratan2(sinTheta.vx, cosTheta.vx));
+    *altitudeAngle = Q12_ANGLE_NORM_U(ratan2(sinTheta.vx, cosTheta.vx));
 }
 
 void func_8004137C(VECTOR3* result, const VECTOR* offset0, const VECTOR* offset1, s32 screenDist)

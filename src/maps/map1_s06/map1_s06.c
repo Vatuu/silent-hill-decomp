@@ -90,7 +90,7 @@ void func_800D5614(void) // 0x800D5614
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(21.55f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-14.6f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(180.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(180.0f);
             Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, 2);
 
             // Warp camera.
@@ -137,7 +137,7 @@ void func_800D5614(void) // 0x800D5614
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(21.45f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-15.26f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(180.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(180.0f);
             Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
 
             // Warp camera.
@@ -181,7 +181,7 @@ void func_800D5614(void) // 0x800D5614
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(21.45f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-15.26f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(180.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(180.0f);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(22.11f), Q12(-5.18f), Q12(-20.45f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);

@@ -344,7 +344,7 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
     }
 
-    chara->rotation_24.vy  = FP_ANGLE_ABS(chara->rotation_24.vy + Q8_TO_Q4(sharedData_800D6BB8_3_s04));
+    chara->rotation_24.vy  = Q12_ANGLE_ABS(chara->rotation_24.vy + Q8_TO_Q4(sharedData_800D6BB8_3_s04));
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->moveSpeed_38    = dahliaProps.moveDistance_126;
     chara->field_34       += g_DeltaTime2;

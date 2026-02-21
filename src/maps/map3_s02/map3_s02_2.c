@@ -284,7 +284,7 @@ void func_800D0608(void) // 0x800D0608
             Fs_QueueWaitForEmpty();
             DmsHeader_FixOffsets(FS_BUFFER_24);
 
-            Chara_Spawn(Chara_Alessa, 0, Q12(80.0f), Q12(100.0f), FP_ANGLE(0.0f), 3);
+            Chara_Spawn(Chara_Alessa, 0, Q12(80.0f), Q12(100.0f), Q12_ANGLE(0.0f), 3);
 
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
@@ -350,7 +350,7 @@ void func_800D0608(void) // 0x800D0608
 
         g_SysWork.pointLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz));
         g_SysWork.pointLightRot_2370.vy = ratan2(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz);
-        g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
+        g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
     }
 }
 

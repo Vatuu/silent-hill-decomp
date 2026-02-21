@@ -3,7 +3,7 @@
 // Very similar to `sharedFunc_800D23EC_0_s00`, but that func is for the player.
 bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, s32 angleIn, s32 arg4)
 {
-    #define ANGLE_THRESHOLD (FP_ANGLE(360.0) >> 6) // 360 / 64 = 5.625 degrees.
+    #define ANGLE_THRESHOLD (Q12_ANGLE(360.0) >> 6) // 360 / 64 = 5.625 degrees.
 
     q7_8     shortestAngle;
     q19_12   angleStep;
@@ -18,7 +18,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
     #define charaStateF4 chara->properties_E4.dummy.properties_E8[3].val32
     #define charaStateFC chara->properties_E4.dummy.properties_E8[5].val32
 
-    angleIn = FP_ANGLE_ABS(angleIn);
+    angleIn = Q12_ANGLE_ABS(angleIn);
     arg2 = arg2In;
 
     switch (charaStateEC)
@@ -35,7 +35,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             }
             else
             {
-                sharedData_800DF1FA_0_s00 = FP_ANGLE_ABS(ratan2(arg2[0].vx - chara->position_18.vx, arg2[0].vz - chara->position_18.vz));
+                sharedData_800DF1FA_0_s00 = Q12_ANGLE_ABS(ratan2(arg2[0].vx - chara->position_18.vx, arg2[0].vz - chara->position_18.vz));
                 Math_ShortestAngleGet(chara->rotation_24.vy, sharedData_800DF1FA_0_s00, &shortestAngle);
 
                 if (ABS(shortestAngle) < ANGLE_THRESHOLD)
@@ -45,7 +45,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
                 }
                 else
                 {
-                    if (shortestAngle < FP_ANGLE(0.0f))
+                    if (shortestAngle < Q12_ANGLE(0.0f))
                     {
                         charaStateFC = 4;
                         charaStateE8 = 4;
@@ -91,7 +91,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             break;
 
         case 4:
-            sharedData_800DF1FA_0_s00 = FP_ANGLE_ABS(ratan2(arg2[sharedData_800DF1F8_0_s00].vx - chara->position_18.vx, arg2[sharedData_800DF1F8_0_s00].vz - chara->position_18.vz));
+            sharedData_800DF1FA_0_s00 = Q12_ANGLE_ABS(ratan2(arg2[sharedData_800DF1F8_0_s00].vx - chara->position_18.vx, arg2[sharedData_800DF1F8_0_s00].vz - chara->position_18.vz));
             sharedData_800DF1F4_0_s00 = SquareRoot0(Q12_2D_DISTANCE_SQR(arg2[sharedData_800DF1F8_0_s00], chara->position_18));
 
             charaStateEC = 5;
@@ -110,18 +110,18 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
                                                    arg2[sharedData_800DF1F8_0_s00].vz - chara->position_18.vz);
             }
 
-            sharedData_800DF1FA_0_s00 = FP_ANGLE_ABS(sharedData_800DF1FA_0_s00);
+            sharedData_800DF1FA_0_s00 = Q12_ANGLE_ABS(sharedData_800DF1FA_0_s00);
 
             Math_ShortestAngleGet(chara->rotation_24.vy, sharedData_800DF1FA_0_s00, &shortestAngle);
 
             // Turn toward.
-            angleStep = TIMESTEP_SCALE_30_FPS(g_DeltaTime0, (shortestAngle < FP_ANGLE(45.0f)) ? FP_ANGLE(2.9f) : FP_ANGLE(22.5f));
+            angleStep = TIMESTEP_SCALE_30_FPS(g_DeltaTime0, (shortestAngle < Q12_ANGLE(45.0f)) ? Q12_ANGLE(2.9f) : Q12_ANGLE(22.5f));
 
             if (ABS(shortestAngle) < ANGLE_THRESHOLD)
             {
                 chara->rotation_24.vy = sharedData_800DF1FA_0_s00;
             }
-            else if (shortestAngle < FP_ANGLE(0.0f))
+            else if (shortestAngle < Q12_ANGLE(0.0f))
             {
                 chara->rotation_24.vy -= angleStep;
             }
@@ -130,7 +130,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
                 chara->rotation_24.vy += angleStep;
             }
 
-            chara->rotation_24.vy = FP_ANGLE_ABS(chara->rotation_24.vy);
+            chara->rotation_24.vy = Q12_ANGLE_ABS(chara->rotation_24.vy);
 
             dist = SquareRoot0(Q12_2D_DISTANCE_SQR(arg2[sharedData_800DF1F8_0_s00], chara->position_18));
 
@@ -163,7 +163,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             }
             else
             {
-                if (shortestAngle < FP_ANGLE(0.0f))
+                if (shortestAngle < Q12_ANGLE(0.0f))
                 {
                     charaStateFC = 4;
                     charaStateE8 = 4;

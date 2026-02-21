@@ -76,8 +76,8 @@ s16 func_800CD20C(void) // 0x800CD20C
 
     for (itemModel = g_Items_ItemsModelData, i = 0; i < 6; i++, itemModel++)
     {
-        g_Items_Transforms[i].rotate.vx = FP_ANGLE(90.0f);
-        g_Items_Transforms[i].rotate.vz = FP_ANGLE(0.0f);
+        g_Items_Transforms[i].rotate.vx = Q12_ANGLE(90.0f);
+        g_Items_Transforms[i].rotate.vz = Q12_ANGLE(0.0f);
 
         ItemScreen_ItemRotate(&g_Items_Coords[i].param->rotate, &g_Items_Coords[i]);
 
@@ -204,8 +204,8 @@ void func_800CD51C(s32 arg0, s32 arg1) // 0x800CD51C
 
     var_v0_2 = var_t1 * (D_800F159D << 9);
 
-    g_Items_Transforms[0].rotate.vy = FP_ANGLE(292.5f);
-    g_Items_Transforms[5].rotate.vy = FP_ANGLE(292.5f);
+    g_Items_Transforms[0].rotate.vy = Q12_ANGLE(292.5f);
+    g_Items_Transforms[5].rotate.vy = Q12_ANGLE(292.5f);
 
     for (i = 1; i < 5; i++)
     {
@@ -219,7 +219,7 @@ void func_800CD51C(s32 arg0, s32 arg1) // 0x800CD51C
             var_v0_3 = (temp_v1_2 << 9) + (var_v0_2 / 16);
         }
 
-        g_Items_Transforms[i].rotate.vy = var_v0_3 + FP_ANGLE(247.5f);
+        g_Items_Transforms[i].rotate.vy = var_v0_3 + Q12_ANGLE(247.5f);
     }
 }
 
@@ -787,7 +787,7 @@ void func_800EBF70(void) // 0x800EBF70
 
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(52.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-57.8f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(107.6f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(107.6f);
 
             camPos.vx = Q12(49.8f);
             camPos.vy = Q12(-1.5f);

@@ -298,7 +298,7 @@ void func_800D5C98(void) // 0x800D5C98
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(20.4f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-20.0f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
             g_SysWork.playerWork_4C.player_0.field_E1_0     = 5;
 
             // Warp camera.
@@ -354,7 +354,7 @@ void func_800D5C98(void) // 0x800D5C98
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(20.6f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-20.0f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
 
             func_80086470(3U, InventoryItemId_Lighter, 1, false);
             g_SysWork.playerWork_4C.player_0.field_E1_0 = 3;
@@ -385,7 +385,7 @@ void func_800D5FC4(void) // 0x800D5FC4
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(20.3f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-20.0f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(19.5f), Q12(-1.09f), Q12(-20.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -766,9 +766,9 @@ void func_800D6D1C(void) // 0x800D6D1C
             break;
 
         case 4:
-            func_800865FC(true, 0, 0, FP_ANGLE(0.0f), Q12(21.7f), Q12(-100.9f));
-            func_800865FC(true, 0, 1, FP_ANGLE(0.0f), Q12(21.9f), Q12(-100.3f));
-            func_800865FC(true, 0, 2, FP_ANGLE(0.0f), Q12(21.0f), Q12(-99.4f));
+            func_800865FC(true, 0, 0, Q12_ANGLE(0.0f), Q12(21.7f), Q12(-100.9f));
+            func_800865FC(true, 0, 1, Q12_ANGLE(0.0f), Q12(21.9f), Q12(-100.3f));
+            func_800865FC(true, 0, 2, Q12_ANGLE(0.0f), Q12(21.0f), Q12(-99.4f));
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -821,7 +821,7 @@ void func_800D6D1C(void) // 0x800D6D1C
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(21.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-99.4f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(0.0f);
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
@@ -915,7 +915,7 @@ void func_800D72AC(void) // 0x800D72AC
 
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(57.15f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-22.8f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
 
             SD_Call(Sfx_Unk1535);
             SysWork_StateStepIncrement(0);
@@ -1013,8 +1013,8 @@ void func_800D8424(void) // 0x800D8424
 
     Math_Vector3Set(&D_800DD420, Q12(20.0f), Q12(0.0f), Q12(-20.0f));
     Math_Vector3Set(&D_800DD430, Q12(19.9998f), Q12(-0.682f), Q12(-21.05005f));
-    Math_SetSVectorFast(&D_800DD440, FP_ANGLE(0.0f), FP_ANGLE(180.0f), FP_ANGLE(0.0f));
-    Math_SetSVectorFast(&D_800DD448, FP_ANGLE(58.05f), FP_ANGLE(180.0f), FP_ANGLE(0.0f));
+    Math_SetSVectorFast(&D_800DD440, Q12_ANGLE(0.0f), Q12_ANGLE(180.0f), Q12_ANGLE(0.0f));
+    Math_SetSVectorFast(&D_800DD448, Q12_ANGLE(58.05f), Q12_ANGLE(180.0f), Q12_ANGLE(0.0f));
 
     WorldObjectNoRotInit(&g_WorldObject_Dr[0], "DR1L_HID", 19.1f, 0.0f, 59.1f);
 

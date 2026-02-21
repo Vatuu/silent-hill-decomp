@@ -35,7 +35,7 @@
  * @return `SVECTOR` containing Euler angles in a fixed-point Q3.12 format.
  */
 #define SVECTOR(x, y, z) \
-    { FP_ANGLE(x), FP_ANGLE(y), FP_ANGLE(z) }
+    { Q12_ANGLE(x), Q12_ANGLE(y), Q12_ANGLE(z) }
 
 /** @brief Constructs a `DVECTOR` containing a screen position in 320x240 screen space.
  *
@@ -217,14 +217,14 @@
 }
 
 /** @brief Normalizes Q19.12 fixed-point degrees, unsigned integer range `[0, 4096]` to the signed integer range `[-2048, 2047]`.
- * Thin wrapper for `FP_ANGLE_NORM_S`.
+ * Thin wrapper for `Q12_ANGLE_NORM_S`.
  *
  * @param angle Unsigned fixed-point degrees, integer range `[0, 4096]`.
  * @return Signed fixed-point degrees wrapped to the integer range `[-2048, 2047]` (`s16`).
  */
 static inline q3_12 Math_AngleNormalize(q19_12 angle)
 {
-    return FP_ANGLE_NORM_S(angle);
+    return Q12_ANGLE_NORM_S(angle);
 }
 
 // @hack Checks if `val >= -range && val < range`.

@@ -20,7 +20,7 @@
                 .data = {
                     .spawnInfo = {
                         .charaId_4   = Chara_None,
-                        .rotationY_5 = FP_ANGLE_PACKED(180.0f),
+                        .rotationY_5 = Q8_ANGLE(180.0f),
                         .flags_6     = MapFlag_OneActiveChunk | MapFlag_Interior,
                         .field_7_0   = 0xF,
                     }
@@ -32,7 +32,7 @@
                 .data = {
                     .spawnInfo = {
                         .charaId_4   = Chara_None,
-                        .rotationY_5 = FP_ANGLE_PACKED(135.0f),
+                        .rotationY_5 = Q8_ANGLE(135.0f),
                         .flags_6     = MapFlag_OneActiveChunk | MapFlag_Interior,
                         .field_7_0   = 0xF,
                     }
@@ -44,7 +44,7 @@
                 .data = {
                     .spawnInfo = {
                         .charaId_4   = Chara_None,
-                        .rotationY_5 = FP_ANGLE_PACKED(0.0f),
+                        .rotationY_5 = Q8_ANGLE(0.0f),
                         .flags_6     = MapFlag_OneActiveChunk | MapFlag_Interior,
                         .field_7_0   = 0xF,
                     }

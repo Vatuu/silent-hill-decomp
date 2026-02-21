@@ -302,9 +302,9 @@ void func_800D525C(void) // 0x800D525C
     g_SysWork.pointLightPosition_2360.vz = Q12(-19.1f);
 
     g_SysWork.field_236C = NULL;
-    g_SysWork.pointLightRot_2370.vx = FP_ANGLE(-90.0f);
-    g_SysWork.pointLightRot_2370.vy = FP_ANGLE(0.0f);
-    g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
+    g_SysWork.pointLightRot_2370.vx = Q12_ANGLE(-90.0f);
+    g_SysWork.pointLightRot_2370.vy = Q12_ANGLE(0.0f);
+    g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
 
     SD_Call(Sfx_Unk1478);
 }
@@ -341,10 +341,10 @@ void func_800D5400(void) // 0x800D5400
         g_SysWork.pointLightIntensity_2378 = Q12(1.35f) + (((Q12(0.9f) + Q12_MULT_PRECISE(sp18[0], Q12(0.6f))) * Math_Sin(sp18[1])) >> 15);
     }
 
-    g_WorldObject0.rotation_28.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(-90.0f));
+    g_WorldObject0.rotation_28.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(-90.0f));
     WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &g_WorldObject0.rotation_28);
 
-    g_WorldObject1.rotation_28.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f));
+    g_WorldObject1.rotation_28.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(15.0f));
     WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
 
     i = 0;

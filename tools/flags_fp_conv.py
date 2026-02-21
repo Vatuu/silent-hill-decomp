@@ -70,7 +70,7 @@ def convert_pose(line):
         if not m:
             return None
 
-    def convert_value(value_str, is_fp_angle):
+    def convert_value(value_str, is_q12_angle):
         if value_str.startswith(("0x", "-0x", "+0x")):
             val = int(value_str, 16)
             if value_str.startswith("-0x"):
@@ -82,7 +82,7 @@ def convert_pose(line):
         else:
             val = int(value_str, 10)
 
-        if is_fp_angle:
+        if is_q12_angle:
             if val >= 0x8000:
                 val = val - 0x10000
             return f"{round_fp(val, 11.377778)}"
@@ -266,11 +266,11 @@ def process_fp_raw(val, qval = 12):
 def process_fp(val, qval = 12):
     return f"Q{qval}({process_fp_raw(val, qval)})"
 
-def process_fp_angle_packed(val):
-    return f"FP_ANGLE_PACKED({round_fp(val, 0.711111)})"
+def process_q8_angle(val):
+    return f"Q8_ANGLE({round_fp(val, 0.711111)})"
 
-def process_fp_angle(val):
-    return f"FP_ANGLE({round_fp(val, 11.377778)})"
+def process_q12_angle(val):
+    return f"Q12_ANGLE({round_fp(val, 11.377778)})"
 
 def process_fp_text(text):
     qval = 12  # default Q-format is Q12
@@ -281,14 +281,14 @@ def process_fp_text(text):
         qval = int(match.group(1))
         text = re.sub(r'\bQ\d+\b', '', text, count=1)
 
-    is_fp_angle_packed = False
-    is_fp_angle = False
-    if "FP_ANGLE_PACKED" in text:
-        is_fp_angle_packed = True
-        text = text.replace("FP_ANGLE_PACKED", "")
-    elif "FP_ANGLE" in text:
-        is_fp_angle = True
-        text = text.replace("FP_ANGLE", "")
+    is_q8_angle = False
+    is_q12_angle = False
+    if "Q8_ANGLE" in text:
+        is_q8_angle = True
+        text = text.replace("Q8_ANGLE", "")
+    elif "Q12_ANGLE" in text:
+        is_q12_angle = True
+        text = text.replace("Q12_ANGLE", "")
 
     def convert_value(match):
         prefix = match.group(1) or ""   # may be None if start-of-string
@@ -305,10 +305,10 @@ def process_fp_text(text):
         else:
             val = int(value_str, 10)
 
-        if is_fp_angle:
-            return f"{prefix}{process_fp_angle(val)}"
-        if is_fp_angle_packed:
-            return f"{prefix}{process_fp_angle_packed(val)}"
+        if is_q12_angle:
+            return f"{prefix}{process_q12_angle(val)}"
+        if is_q8_angle:
+            return f"{prefix}{process_q8_angle(val)}"
         return f"{prefix}{process_fp(val, qval)}"
 
     # prefix can be: start-of-string, space, or a punctuation

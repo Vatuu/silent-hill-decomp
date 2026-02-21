@@ -857,8 +857,8 @@ s16 D_800AF1FC[] = {
 };
 
 q19_12 g_Player_GrabReleaseInputTimer     = Q12(0.0f);
-q3_12  g_Player_FlexRotationY             = FP_ANGLE(0.0f);
-q3_12  g_Player_FlexRotationX             = FP_ANGLE(0.0f);
+q3_12  g_Player_FlexRotationY             = Q12_ANGLE(0.0f);
+q3_12  g_Player_FlexRotationX             = Q12_ANGLE(0.0f);
 u8     g_Player_IsInWalkToRunTransition   = false;
 u8     g_Player_DisableControl            = false;
 u8     D_800AF216                         = 0; // Left Y analog stick value.
@@ -1105,7 +1105,7 @@ void func_8004FB0C(void) // 0x8004FB0C
     poly = (POLY_F4*)GsOUT_PACKET_P;
 
     setPolyF4(poly);
-    setRGB0(poly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
+    setRGB0(poly, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
     setXY4(poly,
            -160, -224,
            -160, -222,
@@ -2134,12 +2134,12 @@ void Gfx_Results_ItemsPosition() // 0x8005227C
             g_Items_Coords[i].coord.t[0]     = OFFSETS[i].vx;
             g_Items_Coords[i].coord.t[1]     = OFFSETS[i].vy;
             g_Items_Coords[i].coord.t[2]     = OFFSETS[i].vz;
-            g_Items_Transforms[i].rotate.vx  = FP_ANGLE(45.0f);
-            g_Items_Transforms[i].rotate.vz  = FP_ANGLE(45.0f);
+            g_Items_Transforms[i].rotate.vx  = Q12_ANGLE(45.0f);
+            g_Items_Transforms[i].rotate.vz  = Q12_ANGLE(45.0f);
             g_Items_Transforms[i].scale.vz   = Q12(1.0f);
             g_Items_Transforms[i].scale.vy   = Q12(1.0f);
             g_Items_Transforms[i].scale.vx   = Q12(1.0f);
-            g_Items_Transforms[i].rotate.vy += FP_ANGLE(0.75f);
+            g_Items_Transforms[i].rotate.vy += Q12_ANGLE(0.75f);
         }
     }
 }
@@ -3451,9 +3451,9 @@ void Gfx_Items_Draw(void) // 0x80054200
         g_Items_Transforms[i].scale.vz  = Q12(1.0f);
         g_Items_Transforms[i].scale.vy  = Q12(1.0f);
         g_Items_Transforms[i].scale.vx  = Q12(1.0f);
-        g_Items_Transforms[i].rotate.vz = FP_ANGLE(0.0f);
-        g_Items_Transforms[i].rotate.vy = FP_ANGLE(0.0f);
-        g_Items_Transforms[i].rotate.vx = FP_ANGLE(0.0f);
+        g_Items_Transforms[i].rotate.vz = Q12_ANGLE(0.0f);
+        g_Items_Transforms[i].rotate.vy = Q12_ANGLE(0.0f);
+        g_Items_Transforms[i].rotate.vx = Q12_ANGLE(0.0f);
         g_Items_Transforms[i].trans.vz  = 0;
         g_Items_Transforms[i].trans.vy  = 0;
         g_Items_Transforms[i].trans.vx  = 0;
@@ -3744,9 +3744,9 @@ void func_80054A04(u8 itemId) // 0x80054A04
     g_Items_PickupScale     = Q12(0.0f);
 
     D_800C3E18[9]                   = NO_VALUE;
-    g_Items_Transforms[9].rotate.vz = FP_ANGLE(0.0f);
-    g_Items_Transforms[9].rotate.vy = FP_ANGLE(0.0f);
-    g_Items_Transforms[9].rotate.vx = FP_ANGLE(0.0f);
+    g_Items_Transforms[9].rotate.vz = Q12_ANGLE(0.0f);
+    g_Items_Transforms[9].rotate.vy = Q12_ANGLE(0.0f);
+    g_Items_Transforms[9].rotate.vx = Q12_ANGLE(0.0f);
     g_Items_Transforms[9].trans.vz  = 0;
     g_Items_Transforms[9].trans.vy  = 0;
     g_Items_Transforms[9].trans.vx  = 0;
@@ -3798,7 +3798,7 @@ bool Gfx_PickupItemAnimate(u8 itemId) // 0x80054AD8
             transform[9].scale.vx = scale >> 11;
 
             transform[9].rotate.vx = rotX;
-            transform[9].rotate.vy = FP_ANGLE(0.0f);
+            transform[9].rotate.vy = Q12_ANGLE(0.0f);
             transform[9].rotate.vz = rotZ;
             break;
 

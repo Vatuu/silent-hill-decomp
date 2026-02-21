@@ -907,7 +907,7 @@ void SaveScreen_SlotBorder(void) // 0x801E4010
             borderLine = (LINE_F2*)GsOUT_PACKET_P;
             setLineF2(borderLine);
 
-            setRGB0(borderLine, FP_COLOR(0.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
+            setRGB0(borderLine, Q8_COLOR(0.0f), Q8_COLOR(1.0f), Q8_COLOR(0.0f));
 
             setXY2(borderLine,
                    BORDER_LINES[j][i].vertex0_0.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_LINES[j][i].vertex0_0.vy,
@@ -927,10 +927,10 @@ void SaveScreen_SlotBorder(void) // 0x801E4010
             setPolyG4(glowPoly);
             setSemiTrans(glowPoly, true);
 
-            setRGB0(glowPoly, FP_COLOR(0.0f), FP_COLOR(0.5f), FP_COLOR(0.0f));
-            setRGB1(glowPoly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
-            setRGB2(glowPoly, FP_COLOR(0.0f), FP_COLOR(0.5f), FP_COLOR(0.0f));
-            setRGB3(glowPoly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
+            setRGB0(glowPoly, Q8_COLOR(0.0f), Q8_COLOR(0.5f), Q8_COLOR(0.0f));
+            setRGB1(glowPoly, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
+            setRGB2(glowPoly, Q8_COLOR(0.0f), Q8_COLOR(0.5f), Q8_COLOR(0.0f));
+            setRGB3(glowPoly, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
 
             setXY4(glowPoly,
                    BORDER_GLOW_QUADS[j][i].vertex0_0.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_GLOW_QUADS[j][i].vertex0_0.vy,
@@ -967,15 +967,15 @@ void SaveScreen_SlotStatusMsgShineDraw(s32 slotIdx) // 0x801E43C8
         setPolyF4(poly);
         setSemiTrans(poly, true);
 
-        if ((u16)colorTimer < FP_COLOR(0.125f))
+        if ((u16)colorTimer < Q8_COLOR(0.125f))
         {
-            color = (colorTimer * 2) + FP_COLOR(0.125f);
-            setRGB0(poly, color, color, FP_COLOR(0.125f));
+            color = (colorTimer * 2) + Q8_COLOR(0.125f);
+            setRGB0(poly, color, color, Q8_COLOR(0.125f));
         }
         else
         {
-            color = FP_COLOR(0.375f) - ((colorTimer - FP_COLOR(0.125f)) * 2);
-            setRGB0(poly, color, color, FP_COLOR(0.125f));
+            color = Q8_COLOR(0.375f) - ((colorTimer - Q8_COLOR(0.125f)) * 2);
+            setRGB0(poly, color, color, Q8_COLOR(0.125f));
         }
 
         setXY4(poly,
@@ -1139,9 +1139,9 @@ void SaveScreen_NavigationDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, 
             arrowPoly = (POLY_G3*)GsOUT_PACKET_P;
             setPolyG3(arrowPoly);
 
-            setRGB0(arrowPoly, FP_COLOR(0.625f), FP_COLOR(0.625f), FP_COLOR(0.625f));
-            setRGB1(arrowPoly, FP_COLOR(0.625f), FP_COLOR(0.625f), FP_COLOR(0.625f));
-            setRGB2(arrowPoly, FP_COLOR(0.625f), FP_COLOR(0.625f), FP_COLOR(0.625f));
+            setRGB0(arrowPoly, Q8_COLOR(0.625f), Q8_COLOR(0.625f), Q8_COLOR(0.625f));
+            setRGB1(arrowPoly, Q8_COLOR(0.625f), Q8_COLOR(0.625f), Q8_COLOR(0.625f));
+            setRGB2(arrowPoly, Q8_COLOR(0.625f), Q8_COLOR(0.625f), Q8_COLOR(0.625f));
 
             arrowOffsetX = (slotIdx * SLOT_COLUMN_OFFSET) - 139;
             setXY3(arrowPoly,
@@ -1160,10 +1160,10 @@ void SaveScreen_NavigationDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, 
         trackPoly = (POLY_G4*)GsOUT_PACKET_P;
         setPolyG4(trackPoly);
 
-        setRGB0(trackPoly, FP_COLOR(0.125f), FP_COLOR(0.125f), FP_COLOR(0.125f));
-        setRGB1(trackPoly, FP_COLOR(0.125f), FP_COLOR(0.125f), FP_COLOR(0.125f));
-        setRGB2(trackPoly, FP_COLOR(0.5f),   FP_COLOR(0.5f),   FP_COLOR(0.5f));
-        setRGB3(trackPoly, FP_COLOR(0.5f),   FP_COLOR(0.5f),   FP_COLOR(0.5f));
+        setRGB0(trackPoly, Q8_COLOR(0.125f), Q8_COLOR(0.125f), Q8_COLOR(0.125f));
+        setRGB1(trackPoly, Q8_COLOR(0.125f), Q8_COLOR(0.125f), Q8_COLOR(0.125f));
+        setRGB2(trackPoly, Q8_COLOR(0.5f),   Q8_COLOR(0.5f),   Q8_COLOR(0.5f));
+        setRGB3(trackPoly, Q8_COLOR(0.5f),   Q8_COLOR(0.5f),   Q8_COLOR(0.5f));
 
         trackOffsetX = (slotIdx * SLOT_COLUMN_OFFSET) - 139;
         setXY4(trackPoly,
@@ -1181,7 +1181,7 @@ void SaveScreen_NavigationDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, 
     setPolyF4(unkPoly);
     setSemiTrans(unkPoly, true);
 
-    setRGB0(unkPoly, FP_COLOR(0.1875f), FP_COLOR(0.1875f), FP_COLOR(0.1875f));
+    setRGB0(unkPoly, Q8_COLOR(0.1875f), Q8_COLOR(0.1875f), Q8_COLOR(0.1875f));
 
     setXY4(unkPoly,
            (slotIdx * SLOT_COLUMN_OFFSET) - 139, -81,
@@ -1419,7 +1419,7 @@ void SaveScreen_SlotStatusMsgStepDraw(s_LineBorder* borderLines, s_QuadBorder* b
     setPolyF4(unkPoly);
     setSemiTrans(unkPoly, true);
 
-    setRGB0(unkPoly, FP_COLOR(0.1875f), FP_COLOR(0.1875f), FP_COLOR(0.1875f));
+    setRGB0(unkPoly, Q8_COLOR(0.1875f), Q8_COLOR(0.1875f), Q8_COLOR(0.1875f));
 
     setXY4(unkPoly,
            coloredLine->line_0.vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET),                                    coloredLine->line_0.vertex0_0.vy,
@@ -1472,10 +1472,10 @@ void SaveScreen_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
         poly_f3 = (POLY_F3*)GsOUT_PACKET_P;
         setPolyF3(poly_f3);
 
-        color = FP_COLOR(0.1875f); // @hack
+        color = Q8_COLOR(0.1875f); // @hack
 
         setSemiTrans(poly_f3, true);
-        setRGB0(poly_f3, color, FP_COLOR(0.1875f), FP_COLOR(0.1875f));
+        setRGB0(poly_f3, color, Q8_COLOR(0.1875f), Q8_COLOR(0.1875f));
 
         setXY3(poly_f3,
                tris[i].vertex0_0.vx, tris[i].vertex0_0.vy,
@@ -1493,7 +1493,7 @@ void SaveScreen_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
     setPolyF4(poly_f4);
     setSemiTrans(poly_f4, true);
 
-    setRGB0(poly_f4, FP_COLOR(0.1875f), FP_COLOR(0.1875f), FP_COLOR(0.1875f));
+    setRGB0(poly_f4, Q8_COLOR(0.1875f), Q8_COLOR(0.1875f), Q8_COLOR(0.1875f));
 
     setXY4(poly_f4,
            line->vertex0_0.vx,                      line->vertex0_0.vy,
@@ -1513,13 +1513,13 @@ void SaveScreen_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
 
         if (i & 0x1)
         {
-            setRGB0(line_g2, FP_COLOR(0.625f),  FP_COLOR(0.5f),    FP_COLOR(0.25f));
-            setRGB1(line_g2, FP_COLOR(0.6875f), FP_COLOR(0.6875f), FP_COLOR(0.6875f));
+            setRGB0(line_g2, Q8_COLOR(0.625f),  Q8_COLOR(0.5f),    Q8_COLOR(0.25f));
+            setRGB1(line_g2, Q8_COLOR(0.6875f), Q8_COLOR(0.6875f), Q8_COLOR(0.6875f));
         }
         else
         {
-            setRGB0(line_g2, FP_COLOR(0.6875f), FP_COLOR(0.6875f), FP_COLOR(0.6875f));
-            setRGB1(line_g2, FP_COLOR(0.625f),  FP_COLOR(0.5f),    FP_COLOR(0.25f));
+            setRGB0(line_g2, Q8_COLOR(0.6875f), Q8_COLOR(0.6875f), Q8_COLOR(0.6875f));
+            setRGB1(line_g2, Q8_COLOR(0.625f),  Q8_COLOR(0.5f),    Q8_COLOR(0.25f));
         }
 
         setXY2(line_g2,
@@ -1654,18 +1654,18 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
 
             if (i != 0)
             {
-                setRGB0(poly, (beamColorFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
-                setRGB2(poly, (beamColorFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
-                setRGB1(poly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
-                setRGB3(poly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
+                setRGB0(poly, (beamColorFlag > 0) ? Q8_COLOR(0.0f) : Q8_COLOR(1.0f), Q8_COLOR(1.0f), Q8_COLOR(0.0f));
+                setRGB2(poly, (beamColorFlag > 0) ? Q8_COLOR(0.0f) : Q8_COLOR(1.0f), Q8_COLOR(1.0f), Q8_COLOR(0.0f));
+                setRGB1(poly, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
+                setRGB3(poly, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
                 setXY4(poly, -30, 89, -30, 93, 120, 89, 120, 93);
             }
             else
             {
-                setRGB0(poly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
-                setRGB2(poly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
-                setRGB1(poly, (beamColorFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
-                setRGB3(poly, (beamColorFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
+                setRGB0(poly, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
+                setRGB2(poly, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
+                setRGB1(poly, (beamColorFlag > 0) ? Q8_COLOR(0.0f) : Q8_COLOR(1.0f), Q8_COLOR(1.0f), Q8_COLOR(0.0f));
+                setRGB3(poly, (beamColorFlag > 0) ? Q8_COLOR(0.0f) : Q8_COLOR(1.0f), Q8_COLOR(1.0f), Q8_COLOR(0.0f));
                 setXY4(poly, -30, 85, -30, 89, 120, 85, 120, 89);
             }
 

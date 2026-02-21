@@ -213,15 +213,15 @@ void sharedFunc_800D15F0_3_s01(void)
             sharedData_800D4D0C_3_s01.vx = 0;
 
 #ifdef MAP3_S01
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-112.5f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-112.5f);
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(58.6f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(19.4f);
 #elif defined(MAP7_S01) || defined(MAP7_S02)
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-90.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-101.9f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-60.3f);
 #else
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-135.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-135.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(18.2f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(59.7f);
 #endif

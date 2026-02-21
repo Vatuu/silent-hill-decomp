@@ -9,7 +9,7 @@ bool Ai_PuppetNurse_SomeAngleCheck(s_SubCharacter* nurse)
 
     damageAngle = ratan2(nurse->damage_B4.position_0.vx, nurse->damage_B4.position_0.vz);
     damageAngle = ABS(func_8005BF38(damageAngle - nurse->rotation_24.vy));
-    if (sumSqr > FP_ANGLE(360.0f) && damageAngle > FP_ANGLE(10.0f))
+    if (sumSqr > Q12_ANGLE(360.0f) && damageAngle > Q12_ANGLE(10.0f))
     {
         return true;
     }

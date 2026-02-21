@@ -200,7 +200,7 @@ void func_800D1FF0(void) // 0x800D1FF0
 
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(178.3f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(61.9f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(0.0f);
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -768,7 +768,7 @@ void func_800D3420(void) // 0x800D3420
             g_SysWork.field_235C = NULL;
             Math_Vector3Set(&g_SysWork.pointLightPosition_2360, sharedData_800D8568_1_s05.field_20, Q12(-2.0f), sharedData_800D8568_1_s05.field_24 + 0x1800);
             g_SysWork.field_236C = NULL;
-            Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, FP_ANGLE(-90.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
+            Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, Q12_ANGLE(-90.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
 
             Gfx_MapEffectsUpdate(11, 11, PrimitiveType_S32, &D_800D5B00, 0, Q12(100.0f));
             D_800D5B00 = 0;
@@ -866,13 +866,13 @@ void func_800D3420(void) // 0x800D3420
             g_SysWork.field_236C = NULL;
             g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
             Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(178.8f), Q12(0.0f), Q12(62.8f));
-            Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, FP_ANGLE(30.0f), FP_ANGLE(-90.0f), FP_ANGLE(0.0f));
+            Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, Q12_ANGLE(30.0f), Q12_ANGLE(-90.0f), Q12_ANGLE(0.0f));
 
             SysWork_StateStepIncrement(0);
             break;
 
         case 10:
-            Chara_Spawn(Chara_Cybil, 0, Q12(183.0f), Q12(61.0f), FP_ANGLE(0.0f), 3);
+            Chara_Spawn(Chara_Cybil, 0, Q12(183.0f), Q12(61.0f), Q12_ANGLE(0.0f), 3);
             Model_AnimFlagsClear(&(playerChara)->model_0, 2);
             SysWork_StateStepIncrement(0);
             break;
@@ -926,7 +926,7 @@ void func_800D3420(void) // 0x800D3420
         case 21:
             func_80085EB8(0, cybilChara, 20, false);
             Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(175.9f), Q12(-1.0f), Q12(22.8f));
-            Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, FP_ANGLE(0.0f), FP_ANGLE(60.0f), FP_ANGLE(0.0f));
+            Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, Q12_ANGLE(0.0f), Q12_ANGLE(60.0f), Q12_ANGLE(0.0f));
 
             g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
             D_800D5AFC           = Q12(217.0f);
@@ -1100,9 +1100,9 @@ void func_800D4410(void) // 0x800D4410
             g_SysWork.pointLightPosition_2360.vy = Q12(2.0f);
             g_SysWork.pointLightPosition_2360.vz = Q12(62.0f);
             g_SysWork.field_236C = NULL;
-            g_SysWork.pointLightRot_2370.vx = FP_ANGLE(90.0f);
-            g_SysWork.pointLightRot_2370.vy = FP_ANGLE(0.0f);
-            g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
+            g_SysWork.pointLightRot_2370.vx = Q12_ANGLE(90.0f);
+            g_SysWork.pointLightRot_2370.vy = Q12_ANGLE(0.0f);
+            g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
             g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
 
             Gfx_MapInitMapEffectsUpdate(14, 14);

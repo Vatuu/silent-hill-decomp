@@ -296,7 +296,7 @@ void func_800DA248(void) // 0x800DA248
 
         case 3:
             Chara_ProcessLoads();
-            Chara_Spawn(Chara_Lisa, 0, Q12(130.0f), Q12(-70.0f), FP_ANGLE(0.0f), 3);
+            Chara_Spawn(Chara_Lisa, 0, Q12(130.0f), Q12(-70.0f), Q12_ANGLE(0.0f), 3);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -483,7 +483,7 @@ void func_800DAA4C(void) // 0x800DAA4C
 
             g_SysWork.pointLightRot_2370.vx = -ratan2(pos.vy - g_SysWork.pointLightPosition_2360.vy, Math_Vector2MagCalc(pos.vx - g_SysWork.pointLightPosition_2360.vx, pos.vz - g_SysWork.pointLightPosition_2360.vz));
             g_SysWork.pointLightRot_2370.vy = ratan2(pos.vx - g_SysWork.pointLightPosition_2360.vx, pos.vz - g_SysWork.pointLightPosition_2360.vz);
-            g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
+            g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
             break;
 
         case 6:
@@ -840,7 +840,7 @@ void func_800DBB34(void) // 0x800DBB34
             func_800868DC(4);
             func_800868DC(5);
             Chara_ProcessLoads();
-            Chara_Spawn(Chara_GhostChildAlessa, 0, Q12(21.2f), Q12(-100.5f), FP_ANGLE(180.0f), 3);
+            Chara_Spawn(Chara_GhostChildAlessa, 0, Q12(21.2f), Q12(-100.5f), Q12_ANGLE(180.0f), 3);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -980,7 +980,7 @@ void func_800DC14C(void) // 0x800DC14C
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(61.9627f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-60.9957f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -1420,14 +1420,14 @@ void func_800DD2D4(void) // 0x800DD2D4
 
         case 5:
             Chara_ProcessLoads();
-            Chara_Spawn(Chara_Bloodsucker, 64, Q12(21.5f), Q12(-60.8f), FP_ANGLE(-90.0f), 17);
+            Chara_Spawn(Chara_Bloodsucker, 64, Q12(21.5f), Q12(-60.8f), Q12_ANGLE(-90.0f), 17);
             SD_Call(Sfx_Unk1668);
             Savegame_EventFlagSet(EventFlag_573);
 
-            g_WorldObject_Dor[0].rotation_28.vy = FP_ANGLE(25.0f);
-            g_WorldObject_Dor[1].rotation_28.vy = FP_ANGLE(58.0f);
-            g_WorldObject_Dor[2].rotation_28.vy = FP_ANGLE(-50.0f);
-            g_WorldObject_Dor[3].rotation_28.vy = FP_ANGLE(-15.0f);
+            g_WorldObject_Dor[0].rotation_28.vy = Q12_ANGLE(25.0f);
+            g_WorldObject_Dor[1].rotation_28.vy = Q12_ANGLE(58.0f);
+            g_WorldObject_Dor[2].rotation_28.vy = Q12_ANGLE(-50.0f);
+            g_WorldObject_Dor[3].rotation_28.vy = Q12_ANGLE(-15.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -1551,7 +1551,7 @@ void func_800DD9E8(void) // 0x800DD9E8
             Camera_LookAtSet(NULL, Q12(18.56f), Q12(-1.07f), Q12(-60.94f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(19.2f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-61.0f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-90.0f);
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -1560,7 +1560,7 @@ void func_800DD9E8(void) // 0x800DD9E8
 
         case 4:
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
             Camera_PositionSet(NULL, Q12(16.37f), Q12(-2.56f), Q12(-60.41f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(20.18f), Q12(-1.4f), Q12(-60.76f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             func_800868DC(0);
@@ -2168,7 +2168,7 @@ void func_800DF21C(void) // 0x800DF21C
         vcUserCamTarget(&D_800EB694, NULL, true);
         vcUserWatchTarget(&D_800EB6A4, NULL, true);
 
-        g_SysWork.playerWork_4C.player_0.rotation_24.vy += FP_ANGLE(16.88f);
+        g_SysWork.playerWork_4C.player_0.rotation_24.vy += Q12_ANGLE(16.88f);
     }
 }
 
@@ -3326,7 +3326,7 @@ void Map_WorldObjectsInit(void) // 0x800E3804
 
     Math_Vector3Set(&g_WorldObject_UnkPos1, Q12(56.0f), Q12(-1.9f), Q12(-21.45f));
 
-    Math_SetSVectorFast(&g_WorldObject_UnkRot0, FP_ANGLE(0.0f), FP_ANGLE(180.0f), FP_ANGLE(0.0f));
+    Math_SetSVectorFast(&g_WorldObject_UnkRot0, Q12_ANGLE(0.0f), Q12_ANGLE(180.0f), Q12_ANGLE(0.0f));
 
     WorldObjectInit(&g_WorldObject_Bed3, "BED3_HID", 139.6f, 0.0f, -59.6f, 0.0f, 90.0f, 0.0f);
 

@@ -28,11 +28,11 @@ void Ai_PuppetNurse_Control12(s_SubCharacter* nurse)
     switch (nurse->model_0.stateStep_3)
     {
         case 0:
-            if (angleDeltaAbs >= FP_ANGLE(10.1f))
+            if (angleDeltaAbs >= Q12_ANGLE(10.1f))
             {
-                s32 rotAmt = FP_ANGLE(45.0f); // @hack? Should probably be part of the `FP_MULTIPLY_PRECISE`.
+                s32 rotAmt = Q12_ANGLE(45.0f); // @hack? Should probably be part of the `FP_MULTIPLY_PRECISE`.
                 rotAmt     = Q12_MULT_PRECISE(g_DeltaTime0, rotAmt);
-                if (angleDeltaToPlayer > FP_ANGLE(0.0f))
+                if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
                 {
                     nurse->rotation_24.vy += rotAmt;
                 }

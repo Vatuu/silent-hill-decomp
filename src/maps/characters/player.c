@@ -198,7 +198,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 
     if (g_DeltaTime0 == Q12(0.0f))
     {
-        chara->rotationSpeed_2C.vy = FP_ANGLE(0.0f);
+        chara->rotationSpeed_2C.vy = Q12_ANGLE(0.0f);
     }
     else
     {
@@ -352,8 +352,8 @@ void Player_ControlUnfreeze(bool setIdle)
     g_Player_PrevPosition.vz = player->position_18.vz;
 
 #if !defined(MAP0_S00)
-    g_Player_FlexRotationY = FP_ANGLE(0.0f);
-    g_Player_FlexRotationX = FP_ANGLE(0.0f);
+    g_Player_FlexRotationY = Q12_ANGLE(0.0f);
+    g_Player_FlexRotationX = Q12_ANGLE(0.0f);
 #endif
 }
 
@@ -363,7 +363,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
 #if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP3_S05) || defined(MAP4_S05) || \
     defined(MAP7_S00) || defined(MAP7_S01)
 
-    #define ANGLE_THRESHOLD (FP_ANGLE(360.0) >> 6) // 360 / 64 = 5.625 degrees.
+    #define ANGLE_THRESHOLD (Q12_ANGLE(360.0) >> 6) // 360 / 64 = 5.625 degrees.
 
     VECTOR3*        localVec;
     s32             playerVecDist;
@@ -372,12 +372,12 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
     s_SubCharacter* playerChara;
     s_PlayerExtra*  playerExtra;
 
-    angle       = FP_ANGLE_ABS(angle);
+    angle       = Q12_ANGLE_ABS(angle);
     playerExtra = &g_SysWork.playerWork_4C.extra_128;
     playerChara = &g_SysWork.playerWork_4C.player_0;
     localVec    = vec;
 
-    g_Player_FlexRotationY = FP_ANGLE(0.0f);
+    g_Player_FlexRotationY = Q12_ANGLE(0.0f);
 
     switch (D_800C4588)
     {
@@ -393,7 +393,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
                 break;
             }
 
-            sharedData_800E39E0_0_s00 = FP_ANGLE_ABS(ratan2(localVec->vx - playerChara->position_18.vx, localVec->vz - playerChara->position_18.vz));
+            sharedData_800E39E0_0_s00 = Q12_ANGLE_ABS(ratan2(localVec->vx - playerChara->position_18.vx, localVec->vz - playerChara->position_18.vz));
             Math_ShortestAngleGet(playerChara->rotation_24.vy, sharedData_800E39E0_0_s00, &playerRotDelta);
 
             if (ABS(playerRotDelta) < ANGLE_THRESHOLD)
@@ -403,7 +403,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
                 break;
             }
 
-            if (playerRotDelta < FP_ANGLE(0.0f))
+            if (playerRotDelta < Q12_ANGLE(0.0f))
             {
                 D_800C457C = 4;
                 Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Unk57);
@@ -452,12 +452,12 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             break;
 
         case 4:
-            sharedData_800E39E0_0_s00 = FP_ANGLE_ABS(ratan2(localVec[sharedData_800DD5A4_0_s00].vx -
+            sharedData_800E39E0_0_s00 = Q12_ANGLE_ABS(ratan2(localVec[sharedData_800DD5A4_0_s00].vx -
                                                             playerChara->position_18.vx, localVec[sharedData_800DD5A4_0_s00].vz -
                                                             playerChara->position_18.vz));
             if (sharedData_800DD5A4_0_s00 + 1 < vecCount)
             {
-                sharedData_800E39E2_0_s00 = FP_ANGLE_ABS(ratan2(localVec[sharedData_800DD5A4_0_s00 + 1].vx -
+                sharedData_800E39E2_0_s00 = Q12_ANGLE_ABS(ratan2(localVec[sharedData_800DD5A4_0_s00 + 1].vx -
                                                                 playerChara->position_18.vx, localVec[sharedData_800DD5A4_0_s00 + 1].vz -
                                                                 playerChara->position_18.vz));
             }
@@ -471,7 +471,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
 
             Math_ShortestAngleGet(playerChara->rotation_24.vy, sharedData_800E39E2_0_s00, &g_Player_FlexRotationY);
 
-            g_Player_FlexRotationY = CLAMP(g_Player_FlexRotationY, FP_ANGLE(-45.0f), FP_ANGLE(45.0f));
+            g_Player_FlexRotationY = CLAMP(g_Player_FlexRotationY, Q12_ANGLE(-45.0f), Q12_ANGLE(45.0f));
 
             break;
 
@@ -489,18 +489,18 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
                                                    playerChara->position_18.vz);
             }
 
-            sharedData_800E39E2_0_s00 = FP_ANGLE_ABS(sharedData_800E39E2_0_s00);
+            sharedData_800E39E2_0_s00 = Q12_ANGLE_ABS(sharedData_800E39E2_0_s00);
 
             Math_ShortestAngleGet(playerChara->rotation_24.vy, sharedData_800E39E2_0_s00, &playerRotDelta);
 
             // Turn toward.
-            angleStep = TIMESTEP_SCALE_30_FPS(g_DeltaTime0, (playerRotDelta < FP_ANGLE(45.0f)) ? FP_ANGLE(2.9f) : FP_ANGLE(22.5f));
+            angleStep = TIMESTEP_SCALE_30_FPS(g_DeltaTime0, (playerRotDelta < Q12_ANGLE(45.0f)) ? Q12_ANGLE(2.9f) : Q12_ANGLE(22.5f));
 
             if (ABS(playerRotDelta) < ANGLE_THRESHOLD)
             {
                 playerChara->rotation_24.vy = sharedData_800E39E2_0_s00;
             }
-            else if (playerRotDelta < FP_ANGLE(0.0f))
+            else if (playerRotDelta < Q12_ANGLE(0.0f))
             {
                 playerChara->rotation_24.vy -= angleStep;
             }
@@ -509,7 +509,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
                 playerChara->rotation_24.vy += angleStep;
             }
 
-            playerChara->rotation_24.vy = FP_ANGLE_ABS(playerChara->rotation_24.vy);
+            playerChara->rotation_24.vy = Q12_ANGLE_ABS(playerChara->rotation_24.vy);
 
             playerVecDist = SquareRoot0(Q12_2D_DISTANCE_SQR(localVec[sharedData_800DD5A4_0_s00], playerChara->position_18));
 
@@ -534,7 +534,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             sharedData_800DD5A0_0_s00 = playerVecDist;
 
             Math_ShortestAngleGet(playerChara->rotation_24.vy, sharedData_800E39E2_0_s00, &g_Player_FlexRotationY);
-            g_Player_FlexRotationY = CLAMP(g_Player_FlexRotationY, FP_ANGLE(-45.0f), FP_ANGLE(45.0f));
+            g_Player_FlexRotationY = CLAMP(g_Player_FlexRotationY, Q12_ANGLE(-45.0f), Q12_ANGLE(45.0f));
             break;
 
         case 6:
@@ -546,7 +546,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
                 break;
             }
 
-            if (playerRotDelta < FP_ANGLE(0.0f))
+            if (playerRotDelta < Q12_ANGLE(0.0f))
             {
                 D_800C457C = 4;
                 Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Unk57);
@@ -700,8 +700,8 @@ void Player_FallBackward(void)
     playerExtra = &g_SysWork.playerWork_4C.extra_128;
 
     g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(2.3f);
-    g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124       = FP_ANGLE(180.0f);
-    g_Player_HeadingAngle                                                   = FP_ANGLE(180.0f);
+    g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124       = Q12_ANGLE(180.0f);
+    g_Player_HeadingAngle                                                   = Q12_ANGLE(180.0f);
 
     Player_ExtraStateSet(playerChara, playerExtra, PlayerState_FallBackward);
 #endif
@@ -747,7 +747,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
     }
     else
     {
-        g_SysWork.playerWork_4C.player_0.properties_E4.player.field_118 = FP_ANGLE_ABS(ratan2(vec->vx, vec->vz));
+        g_SysWork.playerWork_4C.player_0.properties_E4.player.field_118 = Q12_ANGLE_ABS(ratan2(vec->vx, vec->vz));
     }
 
     if (posX == Q12(0.0f) && posZ == Q12(0.0f))
@@ -770,7 +770,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
     {
         if (g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_DamagePushBack || g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_Unk31)
         {
-            angle = FP_ANGLE_ABS(FP_ANGLE_ABS(ratan2(vec->vx, vec->vz)) - (u16)playerChara->rotation_24.vy);
+            angle = Q12_ANGLE_ABS(Q12_ANGLE_ABS(ratan2(vec->vx, vec->vz)) - (u16)playerChara->rotation_24.vy);
 
             if (D_800D587C > Q12(1.75f))
             {
@@ -782,7 +782,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
                     playerExtra->model_0.controlState_2     = ModelState_Uninitialized;
                 }
 
-                if (angle >= FP_ANGLE(90.0f) && angle < FP_ANGLE(270.0f))
+                if (angle >= Q12_ANGLE(90.0f) && angle < Q12_ANGLE(270.0f))
                 {
                     playerExtraState = PlayerState_DamagePushFront;
                 }
@@ -798,15 +798,15 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
                      g_SysWork.playerWork_4C.extra_128.state_1C != PlayerState_DamagePushBack &&
                      g_SysWork.playerWork_4C.extra_128.state_1C != PlayerState_DamagePushFront)
             {
-                if (angle >= FP_ANGLE(45.0f) && angle < FP_ANGLE(135.0f))
+                if (angle >= Q12_ANGLE(45.0f) && angle < Q12_ANGLE(135.0f))
                 {
                     playerExtraState = PlayerState_DamageTorsoLeft;
                 }
-                else if (angle >= FP_ANGLE(135.0f) && angle < FP_ANGLE(225.0f))
+                else if (angle >= Q12_ANGLE(135.0f) && angle < Q12_ANGLE(225.0f))
                 {
                     playerExtraState = PlayerState_DamageTorsoFront;
                 }
-                else if (angle >= FP_ANGLE(225.0f) && angle < FP_ANGLE(315.0f))
+                else if (angle >= Q12_ANGLE(225.0f) && angle < Q12_ANGLE(315.0f))
                 {
                     playerExtraState = PlayerState_DamageTorsoRight;
                 }
@@ -971,8 +971,8 @@ bool sharedFunc_800D2E94_0_s00(void)
  */
 static inline bool Math_AngleFrontCheck(q4_12 angle0, q4_12 angle1)
 {
-    q19_12 angleDelta = FP_ANGLE_ABS(angle0 - angle1);
-    return angleDelta < FP_ANGLE(90.0f) || angleDelta >= FP_ANGLE(270.0f);
+    q19_12 angleDelta = Q12_ANGLE_ABS(angle0 - angle1);
+    return angleDelta < Q12_ANGLE(90.0f) || angleDelta >= Q12_ANGLE(270.0f);
 }
 
 void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
@@ -984,7 +984,7 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
     bool    isInFont;
 
     g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
-    g_SysWork.playerWork_4C.player_0.headingAngle_3C                             = FP_ANGLE(0.0f);
+    g_SysWork.playerWork_4C.player_0.headingAngle_3C                             = Q12_ANGLE(0.0f);
     isInFont                                                                = Math_AngleFrontCheck(*angle, g_SysWork.playerWork_4C.player_0.rotation_24.vy);
 
     angle--; // @hack Permuter find, needed for match.
@@ -1019,7 +1019,7 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
     // TODO: Convert hex to float or fraction.
     if (!isInFont)
     {
-        angle0   = *angle + FP_ANGLE(180.0f);
+        angle0   = *angle + Q12_ANGLE(180.0f);
         *offsetX = D_800C4610.vx + FP_FROM(( Math_Cos(angle0) * 0x16C) + (Math_Sin(angle0) * 0x6B0), Q12_SHIFT);
         *offsetZ = D_800C4610.vz + FP_FROM((-Math_Sin(angle0) * 0x16C) + (Math_Cos(angle0) * 0x6B0), Q12_SHIFT);
     }

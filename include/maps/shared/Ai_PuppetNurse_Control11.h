@@ -65,20 +65,20 @@ void Ai_PuppetNurse_Control11(s_SubCharacter* nurse)
                                                            Q12(1.0f),
                                                            temp_s0,
                                                            localNurseProps.field_10C + ((Rng_Rand16() % Q12(3.0f)) - tmp),
-                                                           FP_ANGLE(360.0f),
+                                                           Q12_ANGLE(360.0f),
                                                            true);
     }
 
     angle = func_8005BF38(localNurseProps.field_11C - nurse->rotation_24.vy);
-    if (ABS(angle) > FP_ANGLE(5.0f))
+    if (ABS(angle) > Q12_ANGLE(5.0f))
     {
-        if (angle > FP_ANGLE(0.0f))
+        if (angle > Q12_ANGLE(0.0f))
         {
-            nurse->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f));
+            nurse->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(90.0f));
         }
         else
         {
-            nurse->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f));
+            nurse->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(90.0f));
         }
     }
 

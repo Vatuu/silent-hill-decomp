@@ -36,8 +36,8 @@ VC_ROAD_DATA vcNullRoadArray[] = {
         .ofs_watch_hy_14   = Q4(0.5f),
         .field_15          = 1,
         .cam_mv_type_14    = VC_MV_CHASE,
-        .fix_ang_x_16      = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17      = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16      = Q8_ANGLE(0.0f),
+        .fix_ang_y_17      = Q8_ANGLE(0.0f)
     },
     {
         .lim_sw_0          = { Q8(0.0f), Q8(0.0f), Q8(0.0f), Q8(0.0f) },
@@ -51,8 +51,8 @@ VC_ROAD_DATA vcNullRoadArray[] = {
         .ofs_watch_hy_14   = Q4(0.0f),
         .field_15          = 0,
         .cam_mv_type_14    = VC_MV_CHASE,
-        .fix_ang_x_16      = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17      = FP_ANGLE_PACKED(0.0f)
+        .fix_ang_x_16      = Q8_ANGLE(0.0f),
+        .fix_ang_y_17      = Q8_ANGLE(0.0f)
     },
 };
 

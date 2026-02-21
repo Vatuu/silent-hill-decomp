@@ -34,7 +34,7 @@ void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords)
             weaponAttack = 56;
         }
 
-        if (func_8008A0E4(1, weaponAttack, nurse, &pos, &g_SysWork.playerWork_4C.player_0, nurse->rotation_24.vy, FP_ANGLE(90.0f)) != NO_VALUE)
+        if (func_8008A0E4(1, weaponAttack, nurse, &pos, &g_SysWork.playerWork_4C.player_0, nurse->rotation_24.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
         {
             localNurse->properties_E4.puppetNurse.flags_122 |= PuppetNurseFlag_0;
         }

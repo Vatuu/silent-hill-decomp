@@ -98,8 +98,8 @@ void vwDecreaseSideOfVector(q19_12* vec_x, q19_12* vec_z, q19_12 dec_val, q19_12
     q19_12 temp_s1;
     q19_12 var_s1;
 
-    var_s1 = Math_MulFixed(*vec_x, Math_Sin(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT) +
-             Math_MulFixed(*vec_z, Math_Cos(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT);
+    var_s1 = Math_MulFixed(*vec_x, Math_Sin(dir_ang_y + Q12_ANGLE(90.0f)), Q12_SHIFT) +
+             Math_MulFixed(*vec_z, Math_Cos(dir_ang_y + Q12_ANGLE(90.0f)), Q12_SHIFT);
 
     temp_s1 = var_s1;
     var_s1  = CLAMP(var_s1, -max_side_vec_len, max_side_vec_len);
@@ -120,8 +120,8 @@ void vwDecreaseSideOfVector(q19_12* vec_x, q19_12* vec_z, q19_12 dec_val, q19_12
         }
     }
 
-    *vec_x += Math_MulFixed(var_s1 - temp_s1, Math_Sin(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT);
-    *vec_z += Math_MulFixed(var_s1 - temp_s1, Math_Cos(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT);
+    *vec_x += Math_MulFixed(var_s1 - temp_s1, Math_Sin(dir_ang_y + Q12_ANGLE(90.0f)), Q12_SHIFT);
+    *vec_z += Math_MulFixed(var_s1 - temp_s1, Math_Cos(dir_ang_y + Q12_ANGLE(90.0f)), Q12_SHIFT);
 }
 
 q19_12 vwRetNewVelocityToTargetVal(q19_12 now_spd, q19_12 mv_pos, q19_12 tgt_pos, q19_12 accel, q19_12 total_max_spd, q19_12 dec_val_lim_spd)
@@ -171,7 +171,7 @@ q19_12 vwRetNewVelocityToTargetVal(q19_12 now_spd, q19_12 mv_pos, q19_12 tgt_pos
 
 q19_12 vwRetNewAngSpdToTargetAng(q19_12 now_ang_spd, q3_12 now_ang, q3_12 tgt_ang, q19_12 accel_spd, q19_12 total_max_ang_spd, q19_12 dec_val_lim_spd) // 0x80049464
 {
-    return vwRetNewVelocityToTargetVal(now_ang_spd, Q12(0.0f), FP_ANGLE_NORM_S(tgt_ang - now_ang), accel_spd, total_max_ang_spd, dec_val_lim_spd);
+    return vwRetNewVelocityToTargetVal(now_ang_spd, Q12(0.0f), Q12_ANGLE_NORM_S(tgt_ang - now_ang), accel_spd, total_max_ang_spd, dec_val_lim_spd);
 }
 
 s32 func_800494B0(s32 arg0, s32 arg1, s32 arg2) // 0x800494B0
@@ -241,14 +241,14 @@ void vwMatrixToAngleYXZ(SVECTOR* ang, const MATRIX* mat) // 0x800495D4
     r_xz    = SquareRoot0((mat->m[0][2] * mat->m[0][2]) + (mat->m[2][2] * mat->m[2][2]));
     ang->vx = ratan2(-mat->m[1][2], r_xz);
 
-    if (ang->vx == FP_ANGLE(90.0f))
+    if (ang->vx == Q12_ANGLE(90.0f))
     {
-        ang->vz = FP_ANGLE(0.0f);
+        ang->vz = Q12_ANGLE(0.0f);
         ang->vy = ratan2(mat->m[0][1], mat->m[2][1]);
     }
-    else if (ang->vx == FP_ANGLE(-90.0f))
+    else if (ang->vx == Q12_ANGLE(-90.0f))
     {
-        ang->vz = FP_ANGLE(0.0f);
+        ang->vz = Q12_ANGLE(0.0f);
         ang->vy = ratan2(-mat->m[0][1], -mat->m[2][1]);
     }
     else
@@ -857,7 +857,7 @@ q19_12 vwVectorToAngle(SVECTOR* ang, const SVECTOR* vec) // 0x8004A714
 
     ang->vx = ratan2(-vec->vy, SquareRoot0(localVec.vx + localVec.vz));
     ang->vy = ratan2(vec->vx, vec->vz);
-    ang->vz = FP_ANGLE(0.0f);
+    ang->vz = Q12_ANGLE(0.0f);
     return ret_r;
 }
 

@@ -64,11 +64,11 @@ def process_fp(val, qval = 12):
 
     return f"Q{qval}({float_val})"
 
-def process_fp_angle_packed(val):
-    return f"FP_ANGLE_PACKED({round_fp(val, 0.711111)})"
+def process_q8_angle(val):
+    return f"Q8_ANGLE({round_fp(val, 0.711111)})"
 
-def process_fp_angle(val):
-    return f"FP_ANGLE({round_fp(val, 11.377778)})"
+def process_q12_angle(val):
+    return f"Q12_ANGLE({round_fp(val, 11.377778)})"
 
 class StructParser:
     def __init__(self, alignment=4, verbose=False, union_choices=None, enum_choices=None):
@@ -1078,7 +1078,7 @@ class StructParser:
                 elif value == -1 and (field_key == "s_AnimInfo.startKeyframeIdx_C" or field_key == "s_AnimInfo.endKeyframeIdx_E"):
                     return "NO_VALUE"
                 elif field_key == "VC_ROAD_DATA.fix_ang_x_16" or field_key == "VC_ROAD_DATA.fix_ang_y_17":
-                    return process_fp_angle_packed(value & 0xFF)
+                    return process_q8_angle(value & 0xFF)
                 else:
                     enum_type = self.enum_choices.get(field_key)
                     if enum_type:

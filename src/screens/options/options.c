@@ -1913,9 +1913,9 @@ void Options_Selection_HighlightDraw(const s_Line2d* line, bool hasShadow, bool 
         setPolyG4(poly);
         setSemiTrans(poly, true);
         setRGB0(poly, 0, 0, 0);
-        setRGB1(poly, FP_COLOR(0.375f), FP_COLOR(0.375f), FP_COLOR(0.375f));
+        setRGB1(poly, Q8_COLOR(0.375f), Q8_COLOR(0.375f), Q8_COLOR(0.375f));
         setRGB2(poly, 0, 0, 0);
-        setRGB3(poly, FP_COLOR(0.375f), FP_COLOR(0.375f), FP_COLOR(0.375f));
+        setRGB3(poly, Q8_COLOR(0.375f), Q8_COLOR(0.375f), Q8_COLOR(0.375f));
         setXY4(poly,
                localLine->vertex0_0.vx, localLine->vertex0_0.vy - STR_OFFSET_Y, localLine->vertex0_0.vx, localLine->vertex0_0.vy,
                localLine->vertex1_4.vx, localLine->vertex1_4.vy - STR_OFFSET_Y, localLine->vertex1_4.vx, localLine->vertex1_4.vy);

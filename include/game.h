@@ -1668,7 +1668,7 @@ typedef struct _SubCharacter
     VECTOR3  position_18;      /** `Q19.12` */
     SVECTOR3 rotation_24;
     q3_12    field_2A;         // Angle related to `rotation_24`, unknown purpose.
-    SVECTOR3 rotationSpeed_2C; /** Q3.12 | Range: `[FP_ANGLE(-157.5f), FP_ANGLE(157.5f)]`. */
+    SVECTOR3 rotationSpeed_2C; /** Q3.12 | Range: `[Q12_ANGLE(-157.5f), Q12_ANGLE(157.5f)]`. */
     q3_12    field_32;         // Related to `rotationSpeed_2C`, unknown purpose.
     q19_12   field_34;         // Character Y position?
     q19_12   moveSpeed_38;

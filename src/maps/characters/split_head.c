@@ -78,9 +78,9 @@ void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead)
     {
         if (splitHeadProps.field_108[0] == 0)
         {
-            sfxPos.vx = splitHead->position_18.vx + FP_FROM(Math_Sin(splitHead->rotation_24.vy + FP_ANGLE(45.0f)) * Q12(1.2f), Q12_SHIFT);
+            sfxPos.vx = splitHead->position_18.vx + FP_FROM(Math_Sin(splitHead->rotation_24.vy + Q12_ANGLE(45.0f)) * Q12(1.2f), Q12_SHIFT);
             sfxPos.vy = splitHead->position_18.vy;
-            sfxPos.vz = splitHead->position_18.vz + FP_FROM(Math_Cos(splitHead->rotation_24.vy + FP_ANGLE(45.0f)) * Q12(1.2f), Q12_SHIFT);
+            sfxPos.vz = splitHead->position_18.vz + FP_FROM(Math_Cos(splitHead->rotation_24.vy + Q12_ANGLE(45.0f)) * Q12(1.2f), Q12_SHIFT);
 
             func_8005DD44(Sfx_Unk1472, &sfxPos, sfxVol, sfxPitch);
             splitHeadProps.field_108[0]++;
@@ -98,9 +98,9 @@ void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead)
     {
         if (splitHeadProps.field_108[1] == 0)
         {
-            sfxPos.vx = splitHead->position_18.vx + FP_FROM(Math_Sin(splitHead->rotation_24.vy + FP_ANGLE(135.0f)) * Q12(1.2f), Q12_SHIFT);
+            sfxPos.vx = splitHead->position_18.vx + FP_FROM(Math_Sin(splitHead->rotation_24.vy + Q12_ANGLE(135.0f)) * Q12(1.2f), Q12_SHIFT);
             sfxPos.vy = splitHead->position_18.vy;
-            sfxPos.vz = splitHead->position_18.vz + FP_FROM(Math_Cos(splitHead->rotation_24.vy + FP_ANGLE(135.0f)) * Q12(1.2f), Q12_SHIFT);
+            sfxPos.vz = splitHead->position_18.vz + FP_FROM(Math_Cos(splitHead->rotation_24.vy + Q12_ANGLE(135.0f)) * Q12(1.2f), Q12_SHIFT);
             splitHeadProps.field_108[1]++;
         }
     }
@@ -116,9 +116,9 @@ void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead)
     {
         if (splitHeadProps.field_108[2] == 0)
         {
-            sfxPos.vx = splitHead->position_18.vx + FP_FROM(Math_Sin(splitHead->rotation_24.vy - FP_ANGLE(45.0f)) * Q12(1.2f), Q12_SHIFT);
+            sfxPos.vx = splitHead->position_18.vx + FP_FROM(Math_Sin(splitHead->rotation_24.vy - Q12_ANGLE(45.0f)) * Q12(1.2f), Q12_SHIFT);
             sfxPos.vy = splitHead->position_18.vy;
-            sfxPos.vz = splitHead->position_18.vz + FP_FROM(Math_Cos(splitHead->rotation_24.vy - FP_ANGLE(45.0f)) * Q12(1.2f), Q12_SHIFT);
+            sfxPos.vz = splitHead->position_18.vz + FP_FROM(Math_Cos(splitHead->rotation_24.vy - Q12_ANGLE(45.0f)) * Q12(1.2f), Q12_SHIFT);
 
             func_8005DD44(Sfx_Unk1472, &sfxPos, sfxVol, sfxPitch);
             splitHeadProps.field_108[2]++;
@@ -134,9 +134,9 @@ void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead)
     {
         if ((u8)splitHeadProps.field_108[3] == 0)
         {
-            sfxPos.vx = splitHead->position_18.vx + FP_FROM(Math_Sin(splitHead->rotation_24.vy - FP_ANGLE(135.0f)) * Q12(1.2f), Q12_SHIFT);
+            sfxPos.vx = splitHead->position_18.vx + FP_FROM(Math_Sin(splitHead->rotation_24.vy - Q12_ANGLE(135.0f)) * Q12(1.2f), Q12_SHIFT);
             sfxPos.vy = splitHead->position_18.vy;
-            sfxPos.vz = splitHead->position_18.vz + FP_FROM(Math_Cos(splitHead->rotation_24.vy - FP_ANGLE(135.0f)) * Q12(1.2f), Q12_SHIFT);
+            sfxPos.vz = splitHead->position_18.vz + FP_FROM(Math_Cos(splitHead->rotation_24.vy - Q12_ANGLE(135.0f)) * Q12(1.2f), Q12_SHIFT);
             splitHeadProps.field_108[3]++;
         }
     }
@@ -297,7 +297,7 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
         }
         else
         {
-            if (ABS(angleDeltaToPlayer) > FP_ANGLE(90.0f) || distToPlayer > Q12(5.0f))
+            if (ABS(angleDeltaToPlayer) > Q12_ANGLE(90.0f) || distToPlayer > Q12(5.0f))
             {
                 splitHead->model_0.controlState_2 = SplitHeadControl_5;
             }
@@ -316,13 +316,13 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
 
         if (TIMESTEP_ANGLE(1, 4) < ABS(angleDeltaToPlayer))
         {
-            if (angleDeltaToPlayer > FP_ANGLE(0.0f))
+            if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
             {
-                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
+                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(45.0f));
             }
             else
             {
-                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
+                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(45.0f));
             }
         }
         else
@@ -369,13 +369,13 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
 
         if (TIMESTEP_ANGLE(3, 4) < ABS(angleDeltaToPlayer))
         {
-            if (angleDeltaToPlayer > FP_ANGLE(0.0f))
+            if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
             {
-                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f));
+                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(15.0f));
             }
             else
             {
-                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f));
+                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(15.0f));
             }
         }
         else
@@ -404,13 +404,13 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
 
         if (TIMESTEP_ANGLE(3, 4) < ABS(angleDeltaToPlayer))
         {
-            if (angleDeltaToPlayer > FP_ANGLE(0.0f))
+            if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
             {
-                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f));
+                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(15.0f));
             }
             else
             {
-                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f));
+                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(15.0f));
             }
         }
         else
@@ -440,7 +440,7 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
 
     if (splitHeadProps.timer_F2 > Q12(0.6f))
     {
-        angle = FP_ANGLE(0.0f);
+        angle = Q12_ANGLE(0.0f);
         angleToPlayer = Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18);
 
         if (splitHeadProps.flags_E8 & SplitHeadFlag_2)
@@ -458,7 +458,7 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
         {
             if (i != 0 && i != 15)
             {
-                angleToPlayer2 = Rng_GenerateUInt(FP_ANGLE(-5.7f), FP_ANGLE(5.7f) - 1);
+                angleToPlayer2 = Rng_GenerateUInt(Q12_ANGLE(-5.7f), Q12_ANGLE(5.7f) - 1);
                 if (i & 0x1)
                 {
                     angle1 = angleToPlayer2 * angleMult;
@@ -470,10 +470,10 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
             }
             else
             {
-                angle1 = FP_ANGLE(0.0f);
+                angle1 = Q12_ANGLE(0.0f);
             }
 
-            if (angle < FP_ANGLE(90.0f))
+            if (angle < Q12_ANGLE(90.0f))
             {
                 distMax = Q12(1.8f);
             }
@@ -506,7 +506,7 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
 
             if (!(i & 1))
             {
-                angle += FP_ANGLE(22.5f);
+                angle += Q12_ANGLE(22.5f);
             }
         }
 
@@ -521,13 +521,13 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
     angleToPlayer = func_8005BF38((splitHeadProps.angle_F0 - splitHead->rotation_24.vy));
     if (TIMESTEP_ANGLE(3, 3) < ABS(angleToPlayer))
     {
-        if (angleToPlayer > FP_ANGLE(0.0f))
+        if (angleToPlayer > Q12_ANGLE(0.0f))
         {
-            splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f));
+            splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
         }
         else
         {
-            splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f));
+            splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
         }
     }
     else
@@ -539,14 +539,14 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
     angleDeltaToPlayer = ABS(func_8005BF38(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                            splitHead->rotation_24.vy));
 
-    if (ABS(angleToPlayer - angleDeltaToPlayer) < FP_ANGLE(15.0f))
+    if (ABS(angleToPlayer - angleDeltaToPlayer) < Q12_ANGLE(15.0f))
     {
-        if (distToPlayer <= Q12(5.75f) && angleToPlayer < FP_ANGLE(60.0f))
+        if (distToPlayer <= Q12(5.75f) && angleToPlayer < Q12_ANGLE(60.0f))
         {
             Chara_MoveSpeedUpdate3(splitHead, Q12(0.8f), Q12(-1.2f));
         }
-        else if ((distToPlayer <= Q12(5.75f) && angleToPlayer > FP_ANGLE(60.0f)) ||
-                 (distToPlayer >  Q12(5.75f) && angleToPlayer > FP_ANGLE(90.0f)))
+        else if ((distToPlayer <= Q12(5.75f) && angleToPlayer > Q12_ANGLE(60.0f)) ||
+                 (distToPlayer >  Q12(5.75f) && angleToPlayer > Q12_ANGLE(90.0f)))
         {
             Chara_MoveSpeedUpdate(splitHead, Q12(0.8f));
         }
@@ -557,7 +557,7 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
     }
     else
     {
-        if (angleToPlayer < FP_ANGLE(30.0f))
+        if (angleToPlayer < Q12_ANGLE(30.0f))
         {
             Chara_MoveSpeedUpdate3(splitHead, Q12(0.8f), Q12(1.2f));
         }
@@ -575,7 +575,7 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
     func_8006DB3C(&ray, &splitHead->position_18, &sp30, splitHead);
 
     if (distToPlayer < Q12(6.4f) &&
-        (angleDeltaToPlayer < FP_ANGLE(7.5f) || distToPlayer > Q12(3.2f) && angleDeltaToPlayer < FP_ANGLE(15.0f)) &&
+        (angleDeltaToPlayer < Q12_ANGLE(7.5f) || distToPlayer > Q12(3.2f) && angleDeltaToPlayer < Q12_ANGLE(15.0f)) &&
         (!ray.hasHit_0 || ray.chara_10 != NULL))
     {
         splitHead->model_0.controlState_2 = SplitHeadControl_3;
@@ -610,9 +610,9 @@ void Ai_SplitHead_Control_3(s_SubCharacter* splitHead)
         }
         else
         {
-            if (ABS(angleDeltaToPlayer) > FP_ANGLE(90.0f) ||
+            if (ABS(angleDeltaToPlayer) > Q12_ANGLE(90.0f) ||
                 distToPlayer > Q12(8.0f) ||
-                (distToPlayer < Q12(3.2f) && ABS(angleDeltaToPlayer) > FP_ANGLE(22.5f)))
+                (distToPlayer < Q12(3.2f) && ABS(angleDeltaToPlayer) > Q12_ANGLE(22.5f)))
             {
                 splitHead->model_0.controlState_2 = SplitHeadControl_2;
             }
@@ -631,13 +631,13 @@ void Ai_SplitHead_Control_3(s_SubCharacter* splitHead)
 
         if (TIMESTEP_ANGLE(3, 3) < ABS(angleDeltaToPlayer))
         {
-            if (angleDeltaToPlayer > FP_ANGLE(0.0f))
+            if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
             {
-                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f));
+                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
             }
             else
             {
-                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f));
+                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
             }
         }
         else
@@ -672,13 +672,13 @@ void Ai_SplitHead_Control_3(s_SubCharacter* splitHead)
 
         if (TIMESTEP_ANGLE(3, 4) < ABS(angleDeltaToPlayer))
         {
-            if (angleDeltaToPlayer > FP_ANGLE(0.0f))
+            if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
             {
-                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f));
+                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(15.0f));
             }
             else
             {
-                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f));
+                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(15.0f));
             }
         }
         else
@@ -769,7 +769,7 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
 
     if (splitHeadProps.timer_F2 > Q12(0.4f))
     {
-        angle = FP_ANGLE(0.0f);
+        angle = Q12_ANGLE(0.0f);
         angleToPlayer = Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18);
 
         if (splitHeadProps.flags_E8 & SplitHeadFlag_2)
@@ -787,7 +787,7 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
         {
             if (i != 0 && i != 15)
             {
-                angle1 = Rng_GenerateUInt(FP_ANGLE(-5.7f), FP_ANGLE(5.7f) - 1);
+                angle1 = Rng_GenerateUInt(Q12_ANGLE(-5.7f), Q12_ANGLE(5.7f) - 1);
                 if (i & 0x1)
                 {
                     angle3 = angle1 * angleMult;
@@ -799,10 +799,10 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
             }
             else
             {
-                angle3 = FP_ANGLE(0.0f);
+                angle3 = Q12_ANGLE(0.0f);
             }
 
-            if (angle < FP_ANGLE(90.0f))
+            if (angle < Q12_ANGLE(90.0f))
             {
                 distMax = Q12(2.0f);
             }
@@ -835,7 +835,7 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
 
             if (!(i & 0x1))
             {
-                angle += FP_ANGLE(22.5f);
+                angle += Q12_ANGLE(22.5f);
             }
         }
 
@@ -851,13 +851,13 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
 
     if (TIMESTEP_ANGLE(1, 4) < ABS(angleToPlayer))
     {
-        if (angleToPlayer > FP_ANGLE(0.0f))
+        if (angleToPlayer > Q12_ANGLE(0.0f))
         {
-            splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
+            splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(45.0f));
         }
         else
         {
-            splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
+            splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(45.0f));
         }
     }
     else
@@ -868,14 +868,14 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
     angleToPlayer   = ABS(func_8005BF38(splitHeadProps.angle_F0 - splitHead->rotation_24.vy));
     angle2 = ABS(func_8005BF38(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) - splitHead->rotation_24.vy));
 
-    if (ABS(angleToPlayer - angle2) < FP_ANGLE(15.0f))
+    if (ABS(angleToPlayer - angle2) < Q12_ANGLE(15.0f))
     {
-        if (distToPlayer <= Q12(4.8f) && angle2 > FP_ANGLE(3.75f) && angleToPlayer < FP_ANGLE(60.0f))
+        if (distToPlayer <= Q12(4.8f) && angle2 > Q12_ANGLE(3.75f) && angleToPlayer < Q12_ANGLE(60.0f))
         {
             Chara_MoveSpeedUpdate3(splitHead, Q12(2.4f), Q12(-2.4f));
         }
-        else if ((distToPlayer <= Q12(4.8f) && angleToPlayer > FP_ANGLE(60.0f)) ||
-                 (distToPlayer >  Q12(4.8f) && angleToPlayer > FP_ANGLE(90.0f)))
+        else if ((distToPlayer <= Q12(4.8f) && angleToPlayer > Q12_ANGLE(60.0f)) ||
+                 (distToPlayer >  Q12(4.8f) && angleToPlayer > Q12_ANGLE(90.0f)))
         {
             Chara_MoveSpeedUpdate(splitHead, Q12(2.4f));
         }
@@ -886,7 +886,7 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
     }
     else
     {
-        if (angleToPlayer < FP_ANGLE(30.0f))
+        if (angleToPlayer < Q12_ANGLE(30.0f))
         {
             Chara_MoveSpeedUpdate3(splitHead, Q12(2.4f), Q12(2.4f));
         }
@@ -905,7 +905,7 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
     func_8006DB3C(&ray, &splitHead->position_18, &sp30, splitHead);
 
     if (distToPlayer > Q12(2.85f) && distToPlayer < Q12(4.0f) &&
-        angle2 < FP_ANGLE(15.0f) &&
+        angle2 < Q12_ANGLE(15.0f) &&
         (!ray.hasHit_0 || ray.chara_10 != NULL))
     {
         splitHead->model_0.controlState_2 = SplitHeadControl_1;
@@ -982,13 +982,13 @@ void Ai_SplitHead_Control_7(s_SubCharacter* splitHead)
                                            splitHead->rotation_24.vy);
         if (TIMESTEP_ANGLE(3, 3) < ABS(angleDeltaToPlayer)) // @hack `(g_DeltaTime0 / 3) >> 3` should be same as `g_DeltaTime / 24`, but that doesn't match?
         {
-            if (angleDeltaToPlayer > FP_ANGLE(0.0f))
+            if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
             {
-                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f));
+                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
             }
             else
             {
-                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f));
+                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
             }
         }
         else
@@ -1744,11 +1744,11 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
                     moveSpeedDiv2 = new_var;
                     if (sharedData_800D5AB0_1_s05[i].idx < 20)
                     {
-                        headingAngle = splitHead->rotation_24.vy + FP_ANGLE(90.0f);
+                        headingAngle = splitHead->rotation_24.vy + Q12_ANGLE(90.0f);
                     }
                     else
                     {
-                        headingAngle = splitHead->rotation_24.vy - FP_ANGLE(90.0f);
+                        headingAngle = splitHead->rotation_24.vy - Q12_ANGLE(90.0f);
                     }
                 }
                 else
@@ -1764,7 +1764,7 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
                     {
                         moveSpeed = -moveSpeed;
                         moveSpeedDiv2  = moveSpeed >> 1;
-                        headingAngle  = splitHead->rotation_24.vy + FP_ANGLE(180.0f);
+                        headingAngle  = splitHead->rotation_24.vy + Q12_ANGLE(180.0f);
                     }
                 }
 
@@ -1858,7 +1858,7 @@ void sharedFunc_800D4594_1_s05(s_sharedFunc_800D4594_1_s05* arg0, q19_12 posX, q
     s32   temp_s2;
     s32   temp_v0;
 
-    angle       = ratan2(vec1->vx - vec0->vx, vec1->vz - vec0->vz) + FP_ANGLE(90.0f);
+    angle       = ratan2(vec1->vx - vec0->vx, vec1->vz - vec0->vz) + Q12_ANGLE(90.0f);
     temp_s0_2     = posX + Math_Sin(angle);
     temp_v0       = Math_Cos(angle);
     angle1     = (((posX - vec0->vx) >> 2) * ((vec1->vz - vec0->vz) >> 2)) - (((posZ - vec0->vz) >> 2) * ((vec1->vx - vec0->vx) >> 2)) < 1;

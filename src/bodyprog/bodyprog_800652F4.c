@@ -193,10 +193,10 @@ void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
         temp_s0 = Q12_MULT_PRECISE(temp_fp, D_800C4438[i]);
 
         ptr->field_44.vx = Q12_MULT(temp_s0, Math_Sin(D_800C4428[i]));
-        ptr->field_44.vy = Q12_MULT(temp_s0, Math_Sin(D_800C4428[i] + FP_ANGLE(90.0f)));
+        ptr->field_44.vy = Q12_MULT(temp_s0, Math_Sin(D_800C4428[i] + Q12_ANGLE(90.0f)));
 
         ptr->field_48.vx = Q12_MULT(-temp_s0, Math_Cos(D_800C4428[i]));
-        ptr->field_48.vy = Q12_MULT(-temp_s0, Math_Cos(D_800C4428[i] + FP_ANGLE(90.0f)));
+        ptr->field_48.vy = Q12_MULT(-temp_s0, Math_Cos(D_800C4428[i] + Q12_ANGLE(90.0f)));
 
         setXY0Fast(ptr->field_0, (u16)ptr->field_3C.vx, ptr->field_3C.vy);
         setXY1Fast(ptr->field_0, (u16)ptr->field_3C.vx + (u16)ptr->field_44.vx, ptr->field_3C.vy + ptr->field_48.vx);

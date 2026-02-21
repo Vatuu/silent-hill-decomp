@@ -199,7 +199,7 @@ void func_800D13D8(void) // 0x800D13D8
             Chara_Load(0, Chara_Cybil, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Fs_QueueStartRead(FILE_ANIM_SIP_DMS, FS_BUFFER_15);
             Chara_ProcessLoads();
-            Chara_Spawn(Chara_Cybil, 0, Q12(-19.0f), Q12(58.0f), FP_ANGLE(0.0f), 3);
+            Chara_Spawn(Chara_Cybil, 0, Q12(-19.0f), Q12(58.0f), Q12_ANGLE(0.0f), 3);
 
             DmsHeader_FixOffsets(FS_BUFFER_15);
 
@@ -304,7 +304,7 @@ void func_800D13D8(void) // 0x800D13D8
             break;
 
         case 19:
-            Chara_Spawn(Chara_Dahlia, 0, Q12(-19.0f), Q12(58.0f), FP_ANGLE(0.0f), 3);
+            Chara_Spawn(Chara_Dahlia, 0, Q12(-19.0f), Q12(58.0f), Q12_ANGLE(0.0f), 3);
 
             D_800D416D = 1;
 
@@ -568,7 +568,7 @@ void func_800D236C(void) // 0x800D236C
 
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-20.98);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(58.67f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
 
             Camera_PositionSet(NULL, Q12(-18.7f), Q12(-5.59f), Q12(57.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-19.46f), Q12(-1.92f), Q12(58.62f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);

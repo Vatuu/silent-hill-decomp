@@ -75,8 +75,8 @@ void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0
 
         vcUserWatchTarget(&camLookAt, NULL, true);
 
-        camLookAt.vx -= Math_Sin(g_SysWork.playerWork_4C.player_0.rotation_24.vy - FP_ANGLE(22.5f)) * 2;
-        temp          = Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy - FP_ANGLE(22.5f));
+        camLookAt.vx -= Math_Sin(g_SysWork.playerWork_4C.player_0.rotation_24.vy - Q12_ANGLE(22.5f)) * 2;
+        temp          = Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy - Q12_ANGLE(22.5f));
         camLookAt.vy  = Q12(-1.0f);
         camLookAt.vz -= temp * 2;
 

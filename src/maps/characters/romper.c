@@ -372,7 +372,7 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
     }
 
     romperProps.field_10E    = 0;
-    romperProps.rotationY_F2 = FP_ANGLE(360.0f);
+    romperProps.rotationY_F2 = Q12_ANGLE(360.0f);
 
     Chara_DamageClear(romper);
 
@@ -451,13 +451,13 @@ void Ai_Romper_Control_2(s_SubCharacter* romper)
     angleDeltaToTarget = func_8005BF38(romperProps.rotationY_F2 - romper->rotation_24.vy);
     if (TIMESTEP_ANGLE(3, 3) < ABS(angleDeltaToTarget))
     {
-        if (angleDeltaToTarget > FP_ANGLE(0.0f))
+        if (angleDeltaToTarget > Q12_ANGLE(0.0f))
         {
-            romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f));
+            romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
         }
         else
         {
-            romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f));
+            romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
         }
     }
     else
@@ -469,12 +469,12 @@ void Ai_Romper_Control_2(s_SubCharacter* romper)
     {
         angleDeltaToTarget = func_8005BF38(romper->rotation_24.vy - ratan2(romperProps.targetPositionX_FC  - romper->position_18.vx,
                                                                            romperProps.targetPositionZ_100 - romper->position_18.vz));
-        if (ABS(angleDeltaToTarget) > FP_ANGLE(15.0f))
+        if (ABS(angleDeltaToTarget) > Q12_ANGLE(15.0f))
         {
             if (!Rng_GenerateInt(0, 15)) // 1 in 16 chance.
             {
                 romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, Q12(1.0f), romperProps.targetPositionX_FC,
-                                                                                  romperProps.targetPositionZ_100, FP_ANGLE(360.0f), true);
+                                                                                  romperProps.targetPositionZ_100, Q12_ANGLE(360.0f), true);
             }
         }
     }
@@ -483,7 +483,7 @@ void Ai_Romper_Control_2(s_SubCharacter* romper)
                             romper->position_18.vz - romperProps.targetPositionZ_100) < Q12(1.0f))
     {
         moveDist                        = Rng_GenerateInt(Q12(0.0f), Q12(5.0f) - 1);
-        headingAngle                    = Rng_GenerateUInt(0, FP_ANGLE(360.0f) - 1);
+        headingAngle                    = Rng_GenerateUInt(0, Q12_ANGLE(360.0f) - 1);
         romperProps.targetPositionX_FC  = romperProps.positionZ_110 + Q12_MULT(moveDist, Math_Sin(headingAngle));
         romperProps.targetPositionZ_100 = romperProps.positionX_108 + Q12_MULT(moveDist, Math_Cos(headingAngle));
     }
@@ -608,7 +608,7 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
 
         if (!(romperProps.flags_E8 & RomperFlag_4) && unkDist < distToTarget)
         {
-            if (angleDeltaToTarget < FP_ANGLE(60.0f) && distToTarget < Q12(6.0f) && !cond)
+            if (angleDeltaToTarget < Q12_ANGLE(60.0f) && distToTarget < Q12(6.0f) && !cond)
             {
                 romperProps.rotationY_F2 = angleToTarget;
             }
@@ -616,13 +616,13 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
             {
                 unkDist1 = Q12_MULT_PRECISE(Rng_GenerateUInt(0xF00, 0x1100 - 1), CLAMP_MIN_THEN_LOW(distToTarget - Q12(0.2f), Q12(0.2f), Q12(2.5f)));
 
-                romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, unkDist1, romperProps.targetPositionX_FC, romperProps.targetPositionZ_100, FP_ANGLE(360.0f), true);
+                romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, unkDist1, romperProps.targetPositionX_FC, romperProps.targetPositionZ_100, Q12_ANGLE(360.0f), true);
             }
         }
         else
         {
             unkDist1 = Q12_MULT_PRECISE(Rng_GenerateUInt(0xF00, 0x1100 - 1), Q12(2.5f));
-            romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, unkDist1, romperProps.targetPositionX_FC, romperProps.targetPositionZ_100, FP_ANGLE(360.0f), false);
+            romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, unkDist1, romperProps.targetPositionX_FC, romperProps.targetPositionZ_100, Q12_ANGLE(360.0f), false);
         }
 
         if (romperProps.rotationY_F2 == angleToTarget)
@@ -640,12 +640,12 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
             romper->model_0.anim_4.status_0           = ANIM_STATUS(RomperAnim_12, false);
             romperProps.rotationY_F2 = romper->rotation_24.vy;
         }
-        else if (temp_s0 != 0 || romperProps.rotationY_F2 == FP_ANGLE(360.0f) ||
+        else if (temp_s0 != 0 || romperProps.rotationY_F2 == Q12_ANGLE(360.0f) ||
                  distToTarget < Q12_MULT_PRECISE(Q12(1.0f) - Math_Cos(angleDeltaToTarget >> 1), Q12(2.5f)))
         {
-            if (romperProps.rotationY_F2 == FP_ANGLE(360.0f))
+            if (romperProps.rotationY_F2 == Q12_ANGLE(360.0f))
             {
-                romperProps.rotationY_F2 = romper->rotation_24.vy + FP_ANGLE(180.0f);
+                romperProps.rotationY_F2 = romper->rotation_24.vy + Q12_ANGLE(180.0f);
             }
 
             // TODO: `ANIM_TIME_RANGE_CHECK` doesn't match?
@@ -667,13 +667,13 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
 
         if (TIMESTEP_ANGLE(1, 3) < ABS(angleToTarget))
         {
-            if (angleToTarget > FP_ANGLE(0.0f))
+            if (angleToTarget > Q12_ANGLE(0.0f))
             {
-                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f));
+                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(90.0f));
             }
             else
             {
-                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f));
+                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(90.0f));
             }
         }
         else
@@ -786,10 +786,10 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
     if (romperProps.distance_120 == Q12(0.0f) ||
         (temp_s0 != 0 && romperProps.distance_120 >= Q12(0.0f)))
     {
-        romperProps.rotationY_F2 = FP_ANGLE(0.0f);
+        romperProps.rotationY_F2 = Q12_ANGLE(0.0f);
 
         if (Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - romper->position_18.vx,
-                                g_SysWork.playerWork_4C.player_0.position_18.vz - romper->position_18.vz) >= FP_ANGLE(180.0f))
+                                g_SysWork.playerWork_4C.player_0.position_18.vz - romper->position_18.vz) >= Q12_ANGLE(180.0f))
         {
             romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, Q12(2.5f), romperProps.targetPositionX_FC,
                                                                               romperProps.targetPositionZ_100, Q12(1.0f), true);
@@ -800,7 +800,7 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
                                                                               romperProps.targetPositionZ_100, Q12(1.0f), false);
         }
 
-        if (romperProps.rotationY_F2 == FP_ANGLE(360.0f))
+        if (romperProps.rotationY_F2 == Q12_ANGLE(360.0f))
         {
             romperProps.rotationY_F2 = func_8006F99C(romper, Q12(2.5f), romper->rotation_24.vy);
         }
@@ -839,11 +839,11 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
         {
             if (angle0 > 0)
             {
-                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
+                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(45.0f));
             }
             else
             {
-                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
+                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(45.0f));
             }
         }
         else
@@ -860,13 +860,13 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
     }
 
     angle0 = func_8005BF38(romperProps.rotationY_F2 - romper->rotation_24.vy);
-    if (angle0 >= FP_ANGLE(0.0f))
+    if (angle0 >= Q12_ANGLE(0.0f))
     {
-        angle1 = FP_ANGLE(180.0f) - angle0;
+        angle1 = Q12_ANGLE(180.0f) - angle0;
     }
     else
     {
-        angle1 = angle0 + FP_ANGLE(180.0f);
+        angle1 = angle0 + Q12_ANGLE(180.0f);
     }
 
     Chara_MoveSpeedUpdate4(romper, Q12(1.2f), Q12_MULT_PRECISE(angle1 * 2, Q12(2.4f)));
@@ -925,11 +925,11 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
             {
                 if (temp_v0_4 > 0)
                 {
-                    romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f)) >> 1;
+                    romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(90.0f)) >> 1;
                 }
                 else
                 {
-                    romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f)) >> 1;
+                    romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(90.0f)) >> 1;
                 }
             }
             else
@@ -943,13 +943,13 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
         unkAngle1 = func_8005BF38(temp_v0_3 - romper->rotation_24.vy);
         if (TIMESTEP_ANGLE(1, 4) < ABS(unkAngle1))
         {
-            if (unkAngle1 > FP_ANGLE(0.0f))
+            if (unkAngle1 > Q12_ANGLE(0.0f))
             {
-                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
+                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(45.0f));
             }
             else
             {
-                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
+                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(45.0f));
             }
         }
 
@@ -978,7 +978,7 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
             pos.vy = romper->position_18.vy;
             pos.vz = romper->position_18.vz;
 
-            if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Multitap), romper, &pos, &g_SysWork.playerWork_4C.player_0, romper->rotation_24.vy, FP_ANGLE(90.0f)) != NO_VALUE)
+            if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Multitap), romper, &pos, &g_SysWork.playerWork_4C.player_0, romper->rotation_24.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
             {
                 romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_3, false);
                 romper->model_0.controlState_2  = RomperControl_10;
@@ -1357,16 +1357,16 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCO
     }
 
     angleDeltaToTarget = func_8005BF38(romperProps.angle_EC - romper->rotation_24.vy);
-    if (angleDeltaToTarget == FP_ANGLE(0.0f))
+    if (angleDeltaToTarget == Q12_ANGLE(0.0f))
     {
-        unkAngle = FP_ANGLE(0.0f);
+        unkAngle = Q12_ANGLE(0.0f);
     }
     else
     {
-        unkAngle = FP_ANGLE(17.25f);
+        unkAngle = Q12_ANGLE(17.25f);
     }
 
-    if (angleDeltaToTarget < FP_ANGLE(0.0f))
+    if (angleDeltaToTarget < Q12_ANGLE(0.0f))
     {
         unkAngle = -unkAngle;
     }

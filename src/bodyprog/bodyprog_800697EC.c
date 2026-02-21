@@ -137,9 +137,9 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
     sp10.position_0.vx = posX;
     sp10.position_0.vy = Q12(0.0f);
     sp10.position_0.vz = posZ;
-    sp10.rotation_C.vx = FP_ANGLE(0.0f);
-    sp10.rotation_C.vy = FP_ANGLE(0.0f);
-    sp10.rotation_C.vz = FP_ANGLE(0.0f);
+    sp10.rotation_C.vx = Q12_ANGLE(0.0f);
+    sp10.rotation_C.vy = Q12_ANGLE(0.0f);
+    sp10.rotation_C.vz = Q12_ANGLE(0.0f);
     func_8006AB50(&sp38, &pos, &sp10, 0);
 
     sp38.field_0_8  = 0;
@@ -176,7 +176,7 @@ s32 func_80069B24(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara) // 0
 s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 arg4) // 0x80069BA8
 {
     #define POINT_COUNT          9
-    #define ANGLE_STEP           FP_ANGLE(370.0f / POINT_COUNT) // @bug? Maybe `360.0f` was intended.
+    #define ANGLE_STEP           Q12_ANGLE(370.0f / POINT_COUNT) // @bug? Maybe `360.0f` was intended.
     #define WALL_COUNT_THRESHOLD 3                              // Unknown purpose.
     #define WALL_HEIGHT          Q12(0.5f)
 
@@ -282,7 +282,7 @@ static const u8 unk_rdata[] = { 0, 66, 5, 128, 0, 0, 0, 0 };
 void func_80069DF0(s_800C4590* arg0, VECTOR3* pos, s32 arg2, s32 arg3) // 0x80069DF0
 {
     #define POINT_COUNT 16
-    #define ANGLE_STEP  FP_ANGLE(360.0f / POINT_COUNT)
+    #define ANGLE_STEP  Q12_ANGLE(360.0f / POINT_COUNT)
 
     s32         groundHeights[POINT_COUNT];
     s_Collision coll;
@@ -674,7 +674,7 @@ void func_8006A940(VECTOR3* offset, s_func_8006AB50* arg1, s_SubCharacter** char
         posZ = (curChara->position_18.vz + curChara->field_D8.offsetZ_6) - arg1->position_0.vz;
 
         temp2 = Vc_VectorMagnitudeCalc(posX, Q12(0.0f), posZ);
-        if (((curChara->field_D4.radius_0 + arg1->rotation_C.vz) + FP_ANGLE(36.0f)) < temp2)
+        if (((curChara->field_D4.radius_0 + arg1->rotation_C.vz) + Q12_ANGLE(36.0f)) < temp2)
         {
             continue;
         }
@@ -1318,8 +1318,8 @@ void func_8006BCC4(s_func_8006CC44_44* arg0, s8* arg1, u32 arg2, q3_12 deltaX, q
     q7_8 rotX;
     q7_8 rotY;
 
-    rotX = Q12_FRACT(ratan2(deltaZ, deltaX) - FP_ANGLE(89.0f));
-    rotY = Q12_FRACT(rotX + FP_ANGLE(178.0f));
+    rotX = Q12_FRACT(ratan2(deltaZ, deltaX) - Q12_ANGLE(89.0f));
+    rotY = Q12_FRACT(rotX + Q12_ANGLE(178.0f));
 
     switch (arg2)
     {
@@ -2251,15 +2251,15 @@ void func_8006D600(VECTOR3* pos, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80
 
     if (angle < temp_s3)
     {
-        angle += FP_ANGLE(360.0f);
+        angle += Q12_ANGLE(360.0f);
     }
 
     if (var_s0 < temp_s3)
     {
-        var_s0 += FP_ANGLE(360.0f);
+        var_s0 += Q12_ANGLE(360.0f);
     }
 
-    temp_a2 = temp_s3 + FP_ANGLE(360.0f);
+    temp_a2 = temp_s3 + Q12_ANGLE(360.0f);
     if (var_s0 < angle)
     {
         if (((var_s0 + temp_a2) >> 1) < angle)
@@ -2406,7 +2406,7 @@ void Ray_MissSet(s_RayData* ray, VECTOR3* from, VECTOR3* dir, q23_8 arg3) // 0x8
     ray->chara_10   = NULL;
     ray->field_14   = Q8_TO_Q12(arg3);
     ray->field_18   = Q12(1.875f);
-    ray->field_1C   = FP_ANGLE(0.0f);
+    ray->field_1C   = Q12_ANGLE(0.0f);
 }
 
 static inline void func_8006DB3C_Inline(s_RayData* ray, VECTOR3* dir, VECTOR3* offset, u16* ptr)
@@ -3492,7 +3492,7 @@ q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 
         return func_8005BF38(angleOffset + headingAngle);
     }
 
-    return FP_ANGLE(360.0f);
+    return Q12_ANGLE(360.0f);
 }
 
 q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 targetPosX, q19_12 targetPosZ, q3_12 spanAngle, bool isClockwise) // 0x8006FAFC
@@ -3517,11 +3517,11 @@ q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 targetPo
     }
 
     spanAngleDiv3 = spanAngle / 3;
-    unkAngle = FP_ANGLE(-360.0f);
+    unkAngle = Q12_ANGLE(-360.0f);
 
     // Define step count.
     stepCount = 7;
-    if (spanAngle == FP_ANGLE(360.0f))
+    if (spanAngle == Q12_ANGLE(360.0f))
     {
         stepCount = 12;
     }
@@ -3529,7 +3529,7 @@ q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 targetPo
     // Run through steps in span.
     for (i = 0; i < stepCount; i++)
     {
-        if (spanAngle == FP_ANGLE(360.0f))
+        if (spanAngle == Q12_ANGLE(360.0f))
         {
             curAngle = Q12(((i * 30) + (Rng_Rand16() % 30))) / 360;
         }
@@ -3555,12 +3555,12 @@ q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 targetPo
         }
     }
 
-    if (unkAngle != FP_ANGLE(-360.0f))
+    if (unkAngle != Q12_ANGLE(-360.0f))
     {
         return func_8005BF38(unkAngle);
     }
 
-    return FP_ANGLE(360.0f);
+    return Q12_ANGLE(360.0f);
 }
 
 bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 distStep) // 0x8006FD90
@@ -3580,11 +3580,11 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
     {
         distMult = (func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
                                         g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
-                                 chara->rotation_24.vy) * 2) + FP_ANGLE(360.0f);
+                                 chara->rotation_24.vy) * 2) + Q12_ANGLE(360.0f);
     }
     else
     {
-        distMult = (FP_ANGLE(180.0f) - func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+        distMult = (Q12_ANGLE(180.0f) - func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
                                                              g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                                                       chara->rotation_24.vy))) * 2;
     }

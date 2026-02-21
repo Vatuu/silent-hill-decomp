@@ -19,7 +19,7 @@ void sharedFunc_800CABF8_1_s05(s32 idx, bool arg1)
     }
 
     rand      = Rng_GenerateInt(0, (s16)sharedData_800D8568_1_s05.field_1C - 1);
-    randAngle = Rng_GenerateUInt(0, FP_ANGLE(360.0f) - 1);
+    randAngle = Rng_GenerateUInt(0, Q12_ANGLE(360.0f) - 1);
 
     if ((sharedData_800D8568_1_s05.flags_0 & (1 << 2)) &&
         Rng_GenerateUInt(0, 63) == 0) // 1 in 64 chance.

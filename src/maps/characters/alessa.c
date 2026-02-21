@@ -235,7 +235,7 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
             break;
     }
 
-    alessa->rotation_24.vy  = FP_ANGLE_ABS(alessa->rotation_24.vy + (sharedData_800D3150_3_s02 >> 4));
+    alessa->rotation_24.vy  = Q12_ANGLE_ABS(alessa->rotation_24.vy + (sharedData_800D3150_3_s02 >> 4));
     alessa->headingAngle_3C = alessa->rotation_24.vy;
     alessa->moveSpeed_38    = alessaProps.moveSpeed_126;
     alessa->field_34       += g_DeltaTime2;

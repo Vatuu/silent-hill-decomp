@@ -155,7 +155,7 @@ void func_800D4B58(void) // 0x800D4B58
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(134.9f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(62.45f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-90.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-90.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -217,7 +217,7 @@ void func_800D4E64(void) // 0x800D4E64
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(135.05f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(59.75f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(180.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(180.0f);
 
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
@@ -250,7 +250,7 @@ void func_800D4E64(void) // 0x800D4E64
             Camera_PositionSet(NULL, Q12(135.26f), Q12(-1.61f), Q12(60.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(133.36f), Q12(1.12f), Q12(58.01f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            g_WorldObject_BDoor1.rotation_28.vy = FP_ANGLE(-142.21f);
+            g_WorldObject_BDoor1.rotation_28.vy = Q12_ANGLE(-142.21f);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -271,7 +271,7 @@ void func_800D4E64(void) // 0x800D4E64
 
         case 11:
             vcReturnPreAutoCamWork(true);
-            g_WorldObject_BDoor1.rotation_28.vy = FP_ANGLE(-7.5f);
+            g_WorldObject_BDoor1.rotation_28.vy = Q12_ANGLE(-7.5f);
             SysWork_StateStepIncrement(0);
 
         case 12:
@@ -323,11 +323,11 @@ void func_800D519C(void) // 0x800D519C
             Camera_PositionSet(NULL, Q12(135.26f), Q12(-1.61f), Q12(60.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(133.36f), Q12(1.12f), Q12(58.01f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            g_WorldObject_BDoor1.rotation_28.vy = FP_ANGLE(-142.21f);
+            g_WorldObject_BDoor1.rotation_28.vy = Q12_ANGLE(-142.21f);
 
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(135.05f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(59.75f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(180.f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(180.f);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -348,7 +348,7 @@ void func_800D519C(void) // 0x800D519C
 
         case 9:
             vcReturnPreAutoCamWork(true);
-            g_WorldObject_BDoor1.rotation_28.vy = FP_ANGLE(-7.5f);
+            g_WorldObject_BDoor1.rotation_28.vy = Q12_ANGLE(-7.5f);
             SysWork_StateStepIncrement(0);
 
         case 10:
@@ -530,12 +530,12 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
         case 6:
             Chara_ProcessLoads();
-            Chara_Spawn(Chara_Kaufmann, 0, Q12(140.5f), Q12(23.0f), FP_ANGLE(0.0f), 3);
+            Chara_Spawn(Chara_Kaufmann, 0, Q12(140.5f), Q12(23.0f), Q12_ANGLE(0.0f), 3);
             SysWork_StateStepIncrement(0);
             break;
 
         case 7:
-            Chara_Spawn(Chara_Mumbler, 0, Q12(140.5f), Q12(23.0f), FP_ANGLE(0.0f), 17);
+            Chara_Spawn(Chara_Mumbler, 0, Q12(140.5f), Q12(23.0f), Q12_ANGLE(0.0f), 17);
             D_800D94F4 = 1;
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 12, false);
             SysWork_StateStepIncrement(0);
@@ -715,7 +715,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             {
                 Chara_ProcessLoads();
                 g_SysWork.npcs_1A0[0].model_0.charaId_0 = Chara_Kaufmann;
-                Chara_Spawn(Chara_Mumbler, 0, Q12(140.5f), Q12(23.0f), FP_ANGLE(0.0f), 17);
+                Chara_Spawn(Chara_Mumbler, 0, Q12(140.5f), Q12(23.0f), Q12_ANGLE(0.0f), 17);
                 D_800D94F4 = 1;
             }
 
@@ -796,7 +796,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
         // Set light rotation.
         g_SysWork.pointLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz));
         g_SysWork.pointLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz);
-        g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
+        g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
     }
 }
 
@@ -834,7 +834,7 @@ void Map_WorldObjectsInit(void) // 0x800D6598
 
     if (Savegame_EventFlagGet(EventFlag_M5S02_UsedSafeKey))
     {
-        g_WorldObject_BDoor1.rotation_28.vy = FP_ANGLE(-7.5f);
+        g_WorldObject_BDoor1.rotation_28.vy = Q12_ANGLE(-7.5f);
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);

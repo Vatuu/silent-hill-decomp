@@ -51,7 +51,7 @@ void Vw_SetLookAtMatrix(const VECTOR3* pos, const VECTOR3* lookAt) // 0x80048AF4
     deltaZ = Q12_TO_Q8(lookAt->vz - pos->vz);
 
     // Compute camera rotation.
-    rot.vz = FP_ANGLE(0.0f);
+    rot.vz = Q12_ANGLE(0.0f);
     rot.vy = ratan2(deltaX, deltaZ);
     rot.vx = ratan2(-deltaY, SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
 
@@ -76,7 +76,7 @@ void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, q19_12 ref_x, q19_12 ref_y, 
     view_ang.vy = cam_ang_y;
     view_ang.vz = cam_ang_z;
     view_ang.vx = -ratan2(-cam_y, cam_xz_r);
-    view_ang.vy = FP_ANGLE_NORM_U(view_ang.vy + FP_ANGLE(180.0f));
+    view_ang.vy = Q12_ANGLE_NORM_U(view_ang.vy + Q12_ANGLE(180.0f));
 
     Math_RotMatrixZxyNegGte(&view_ang, view_mtx);
 
@@ -125,12 +125,12 @@ void Vw_ClampAngleRange(q3_12* angleMin, q3_12* angleMax, q3_12 angleConstraintM
     prevAngleMin = *angleMin;
 
     rotToAngleMax = prevAngleMax;
-    rotToAngleMax = FP_ANGLE_NORM_U(prevAngleMax - prevAngleMin);
+    rotToAngleMax = Q12_ANGLE_NORM_U(prevAngleMax - prevAngleMin);
 
-    rotToAngleConstraintMin = FP_ANGLE_NORM_U(angleConstraintMin - prevAngleMin);
-    rotToAngleConstraintMax = FP_ANGLE_NORM_U(angleConstraintMax - prevAngleMin);
+    rotToAngleConstraintMin = Q12_ANGLE_NORM_U(angleConstraintMin - prevAngleMin);
+    rotToAngleConstraintMax = Q12_ANGLE_NORM_U(angleConstraintMax - prevAngleMin);
 
-    prevAngleMax = FP_ANGLE(0.0f);
+    prevAngleMax = Q12_ANGLE(0.0f);
     if (rotToAngleConstraintMin <= rotToAngleConstraintMax)
     {
         if (rotToAngleConstraintMin > prevAngleMax)
@@ -156,8 +156,8 @@ void Vw_ClampAngleRange(q3_12* angleMin, q3_12* angleMax, q3_12 angleConstraintM
         }
     }
 
-    *angleMin = FP_ANGLE_NORM_U(prevAngleMax + prevAngleMin);
-    *angleMax = FP_ANGLE_NORM_U(rotToAngleMax + prevAngleMin);
+    *angleMin = Q12_ANGLE_NORM_U(prevAngleMax + prevAngleMin);
+    *angleMax = Q12_ANGLE_NORM_U(rotToAngleMax + prevAngleMin);
 }
 
 s16 func_80048E3C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) // 0x80048E3C
