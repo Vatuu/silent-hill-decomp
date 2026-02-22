@@ -633,7 +633,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     s_MapPoint2d* mapPoint;
 
     g_SysWork.field_229C            = 0;
-    g_SysWork.loadingScreenIdx_2281 = D_800BCDB0.data.areaLoad.loadingScreenId_4_9;
+    g_SysWork.loadingScreenIdx_2281 = D_800BCDB0.loadingScreenId_4_9;
     g_SysWork.field_2283            = g_MapEventData->field_8_19;
     g_SysWork.field_2282            = g_MapEventData->flags_8_13;
 
@@ -647,7 +647,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
 
     D_800BCDB0 = g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventData->eventParam_8_5];
 
-    if (D_800BCDB0.data.areaLoad.field_4_24 == 1)
+    if (D_800BCDB0.triggerParam1_4_24 == 1)
     {
         mapPoint                = &g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventData->pointOfInterestIdx_5];
         var1                    = g_SysWork.playerWork_4C.player_0.position_18.vz - mapPoint->positionZ_8;
@@ -666,9 +666,9 @@ void SysState_LoadArea_Update(void) // 0x80039C40
         g_SysWork.processFlags_2298 = SysWorkProcessFlag_RoomTransition;
         Bgm_TrackChange(g_MapEventData->mapOverlayIdx_8_25);
 
-        if (g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventData->eventParam_8_5].data.areaLoad.field_4_5 != 0)
+        if (g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventData->eventParam_8_5].field_4_5 != 0)
         {
-            g_SysWork.field_2349 = g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventData->eventParam_8_5].data.areaLoad.field_4_5 - 1;
+            g_SysWork.field_2349 = g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventData->eventParam_8_5].field_4_5 - 1;
         }
     }
 

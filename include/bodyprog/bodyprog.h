@@ -1446,10 +1446,26 @@ typedef struct
     s32        field_54;
 } s_800AFE24; // Size: 85
 
-/** @brief Contains X/Z coordinates and optional 4 bytes of any kind of data.
- * Type of data usually depends on its usage, e.g. character spawns use `data.spawnInfo` while `s_EventData` includes an enum that specifies the kind of data it expects.
+/** @brief Contains X/Z coordinates and optional 4 bytes of data.
  * Map headers include an array of these, which `s_EventData` includes an index into. */
 typedef struct _MapPoint2d
+{
+    q19_12 positionX_0;
+
+    // Optional data
+    u32   mapIdx_4_0          : 5; /** `e_PaperMapIdx`? */
+    u32   field_4_5           : 4;
+    u32   loadingScreenId_4_9 : 3; /** `e_LoadingScreenId` */
+    u32   field_4_12          : 4;
+    q24_8 triggerParam0_4_16  : 8; // Usually a `Q8_ANGLE`
+    u32   triggerParam1_4_24  : 8;
+
+    q19_12 positionZ_8;
+} s_MapPoint2d;
+STATIC_ASSERT_SIZEOF(s_MapPoint2d, 12);
+
+// TODO: Moves fields outside of union, should help fix `map7_s01::func_800DD348` but needs updating all map headers.
+typedef struct _SpawnInfo
 {
     q19_12 positionX_0;
     union
@@ -1457,42 +1473,14 @@ typedef struct _MapPoint2d
         u32 raw_4;
         struct
         {
-            u32   mapIdx_4_0          : 5; /** `e_PaperMapIdx`? */
-            u32   field_4_5           : 4;
-            u32   loadingScreenId_4_9 : 3; /** `e_LoadingScreenId` */
-            u32   field_4_12          : 4;
-            q24_8 rotationY_4_16      : 8;
-            u32   field_4_24          : 8;
-        } areaLoad;
-        struct
-        {
             s8  charaId_4;   /** `e_CharacterId` */
             u8  rotationY_5; /** Degrees in Q7.8, range [0, 256]. */
             s8  flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `controlState_2 = ModelState_Uninitialized`. */
             s32 field_7_0 : 4;
         } spawnInfo;
-        struct
-        {
-            u32 unk_4_0        : 16;
-            u32 faceAngle_4_16 : 8; // Facing angle of the interactable surface. (`Q12_ANGLE_FROM_Q8` to decode)
-            u32 faceWidth_4_24 : 8; // Width of the interactable surface/edge.
-        } touchFacing;
-        struct
-        {
-            u32 unk_4_0      : 16;
-            u32 radiusX_4_16 : 8;
-            u32 radiusZ_4_24 : 8;
-        } touchAabb;
-        struct
-        {
-            u32 unk_4_0   : 16;
-            u32 geoA_4_16 : 8;
-            u32 geoB_4_24 : 8;
-        } touchObb;
     } data;
     q19_12 positionZ_8;
-} s_MapPoint2d;
-STATIC_ASSERT_SIZEOF(s_MapPoint2d, 12);
+} s_SpawnInfo;
 
 /** Special map-specific Harry anim data. */
 typedef struct
@@ -1691,7 +1679,7 @@ typedef struct _MapOverlayHeader
     s32*                   data_190;
     void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `Game_NpcUpdate`. */
     s8                     charaGroupIds_248[GROUP_CHARA_COUNT];                              /** `e_CharacterId` values where if `s_MapPoint2d::data.spawnInfo.charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
-    s_MapPoint2d           charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
+    s_SpawnInfo            charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
     VC_ROAD_DATA           roadDataList_3CC[48];
     u32                    unk_84C[0x138];
     s_func_8006F8FC        field_D2C[200];

@@ -70,7 +70,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
     s32             npcIdx;
     s32             i;
     s32*            ovlEnemiesStatePtr;
-    s_MapPoint2d*   curCharaSpawn;
+    s_SpawnInfo*    curCharaSpawn;
     s_SubCharacter* chara;
     VECTOR3*        pos;
 

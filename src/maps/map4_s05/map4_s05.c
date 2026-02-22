@@ -1576,7 +1576,7 @@ void func_800D6800(void) // 0x800D6800
             MAP_POINTS[14].positionX_0 = g_SysWork.playerWork_4C.player_0.position_18.vx;
             MAP_POINTS[14].positionZ_8 = g_SysWork.playerWork_4C.player_0.position_18.vz;
             // TODO: Likely wrong union field.
-            MAP_POINTS[14].data.spawnInfo.flags_6 = ((u32)func_8005BF38(g_SysWork.playerWork_4C.player_0.rotation_24.vy) + Q12(1.0f)) >> 4;
+            MAP_POINTS[14].triggerParam0_4_16 = ((u32)func_8005BF38(g_SysWork.playerWork_4C.player_0.rotation_24.vy) + Q12(1.0f)) >> 4;
 
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 52, false);
 

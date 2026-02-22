@@ -24,7 +24,7 @@ void (*g_LoadScreenFuncs[])() = {
 };
 
 s_MapPoint2d MAP_POINTS[] = {
-    #include "area_load_params.h"
+    #include "map_points.h"
 };
 
 void (*g_MapEventFuncs[])() =

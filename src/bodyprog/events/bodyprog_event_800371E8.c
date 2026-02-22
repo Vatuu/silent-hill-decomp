@@ -27,28 +27,28 @@ void Chara_PositionSet(s_MapPoint2d* mapPoint) // 0x800371E8
 {
     s32 rotY;
 
-    rotY = Q12_ANGLE_FROM_Q8(mapPoint->data.areaLoad.rotationY_4_16);
+    rotY = Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0_4_16);
     Math_SVectorSet(&g_SysWork.playerWork_4C.player_0.rotation_24, Q12_ANGLE(0.0f), rotY, Q12_ANGLE(0.0f));
 
     g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(0.0f);
     g_SysWork.playerWork_4C.player_0.position_18.vx = mapPoint->positionX_0;
     g_SysWork.playerWork_4C.player_0.position_18.vz = mapPoint->positionZ_8;
 
-    if (mapPoint->data.areaLoad.field_4_24 >= 2)
+    if (mapPoint->triggerParam1_4_24 >= 2)
     {
         g_SysWork.playerWork_4C.player_0.position_18.vx += Q12_MULT_FLOAT_PRECISE(Math_Sin(rotY), 0.4f);
         g_SysWork.playerWork_4C.player_0.position_18.vz += Q12_MULT_FLOAT_PRECISE(Math_Cos(rotY), 0.4f);
     }
 
-    g_SysWork.loadingScreenIdx_2281 = mapPoint->data.areaLoad.loadingScreenId_4_9;
+    g_SysWork.loadingScreenIdx_2281 = mapPoint->loadingScreenId_4_9;
 
-    if (mapPoint->data.areaLoad.mapIdx_4_0 == 24) // TODO: Demagic 24.
+    if (mapPoint->mapIdx_4_0 == 24) // TODO: Demagic 24.
     {
         g_SavegamePtr->paperMapIdx_A9 = PaperMapIdx_OtherPlaces;
     }
-    else if (mapPoint->data.areaLoad.mapIdx_4_0 != PaperMapIdx_OtherPlaces)
+    else if (mapPoint->mapIdx_4_0 != PaperMapIdx_OtherPlaces)
     {
-        g_SavegamePtr->paperMapIdx_A9 = mapPoint->data.areaLoad.mapIdx_4_0;
+        g_SavegamePtr->paperMapIdx_A9 = mapPoint->mapIdx_4_0;
     }
 
     g_SysWork.cameraAngleY_237A = rotY;
@@ -172,8 +172,8 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
             case TriggerType_TouchAabb:
                 pointPosX    = mapPoint->positionX_0;
                 pointPosZ    = mapPoint->positionZ_8;
-                pointRadiusX = mapPoint->data.touchAabb.radiusX_4_16 * Q12(0.25f);
-                pointRadiusZ = mapPoint->data.touchAabb.radiusZ_4_24 * Q12(0.25f);
+                pointRadiusX = mapPoint->triggerParam0_4_16 * Q12(0.25f);
+                pointRadiusZ = mapPoint->triggerParam1_4_24 * Q12(0.25f);
 
                 if (ABS(g_SysWork.playerWork_4C.player_0.position_18.vx - pointPosX) > pointRadiusX)
                 {
@@ -335,7 +335,7 @@ bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint) // 0x80037A4C
     s32    scaledCosRotY;
 
     halfSinRotY   = Math_Sin(g_SysWork.playerWork_4C.player_0.rotation_24.vy) >> 1; // `/ 2`.
-    scaledCosRotY = -Math_Cos(Q12_ANGLE_FROM_Q8(mapPoint->data.touchFacing.faceAngle_4_16)) * mapPoint->data.touchFacing.faceWidth_4_24;
+    scaledCosRotY = -Math_Cos(Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0_4_16)) * mapPoint->triggerParam1_4_24;
 
     clampedHalfCosPlayerRotY = halfSinRotY;
 
@@ -360,8 +360,8 @@ bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint) // 0x80037A4C
         if (MIN(halfSinRotY, 0) <= MAX(temp_s2, temp_s4))
         {
             halfCosPlayerRotY   = Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy) >> 1; // `/ 2`.
-            scaledSinPlayerRotY = Math_Sin(Q12_ANGLE_FROM_Q8(mapPoint->data.touchFacing.faceAngle_4_16)) *
-                                  mapPoint->data.touchFacing.faceWidth_4_24;
+            scaledSinPlayerRotY = Math_Sin(Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0_4_16)) *
+                                  mapPoint->triggerParam1_4_24;
 
             clampedHalfCosPlayerRotY = halfCosPlayerRotY;
 
@@ -409,10 +409,10 @@ bool Event_CollideObbCheck(s_MapPoint2d* mapPoint) // 0x80037C5C
     s32    scale;
     u32    temp;
 
-    shift8Field_7 = mapPoint->data.touchObb.geoB_4_24 << 8;
+    shift8Field_7 = mapPoint->triggerParam1_4_24 << 8;
 
     deltaX = g_SysWork.playerWork_4C.player_0.position_18.vx - mapPoint->positionX_0;
-    if (mapPoint->data.touchObb.geoB_4_24 << 9 < ABS(deltaX))
+    if (mapPoint->triggerParam1_4_24 << 9 < ABS(deltaX))
     {
         return false;
     }
@@ -425,7 +425,7 @@ bool Event_CollideObbCheck(s_MapPoint2d* mapPoint) // 0x80037C5C
     }
 
     // TODO: Odd packed angle conversion method. `Q12_ANGLE_FROM_Q8` doesn't match here.
-    angle    = -(mapPoint->data.touchObb.geoA_4_16 << 20) >> 16;
+    angle    = -(mapPoint->triggerParam0_4_16 << 20) >> 16;
     sinAngle = Math_Sin(angle);
 
     temp = FP_FROM((-deltaX * sinAngle) + (deltaZ * Math_Cos(angle)), Q12_SHIFT);
