@@ -21,6 +21,7 @@ import sys
 import argparse
 import re
 import math
+from fractions import Fraction
 from io import StringIO
 from pycparser import c_parser, c_ast, parse_file
 from construct import *
@@ -33,34 +34,11 @@ def trim_float(x, digits=7):
     return res
 
 def round_fp(val, scale):
-    float_val = val / scale;
-
-    # Find shortest decimal that round-trips correctly
-    found = False
-
-    for digits in range(1, 12):
-        rounded = round(float_val, digits)
-        increment = 10 ** (-digits)
-
-        # Test the rounded value and its nearest neighbor
-        candidates = [rounded, rounded + (increment if float_val >= 0 else -increment)]
-
-        for candidate in candidates:
-            scaled = candidate * scale
-            reconverted = int(math.floor(scaled)) if candidate >= 0 else int(math.ceil(scaled))
-            if reconverted == val:
-                float_val = trim_float(candidate)
-                found = True
-                break
-
-        if found:
-            break
-
-    return f"{float_val}f"
-
-def round_fp_q8angle(val):
-    """Find shortest decimal representation where floor(candidate * 256 / 360) == val"""
-    float_val = val * 360 / 256
+    # Accept scale as Fraction for exactness, or convert from float
+    if not isinstance(scale, Fraction):
+        scale = Fraction(scale).limit_denominator(1000000)
+    p, q = scale.numerator, scale.denominator
+    float_val = float(val * q / p)
 
     found = False
     for digits in range(0, 12):
@@ -68,12 +46,9 @@ def round_fp_q8angle(val):
         increment = 10 ** (-digits)
         candidates = [rounded, rounded + (increment if float_val >= 0 else -increment)]
         for candidate in candidates:
-            # Integer arithmetic: floor(candidate * 256 / 360)
-            # Multiply candidate to remove decimals first
-            # candidate has `digits` decimal places, so multiply by 10**digits
             int_candidate = round(candidate * 10**digits)
-            numerator = int_candidate * 256
-            denominator = 360 * 10**digits
+            numerator = int_candidate * p
+            denominator = q * 10**digits
             if candidate >= 0:
                 reconverted = numerator // denominator
             else:
@@ -86,17 +61,16 @@ def round_fp_q8angle(val):
             break
     return f"{float_val}f"
 
-def process_fp(val, qval = 12):
-    scale = (1 << qval)
+def process_fp(val, qval=12):
+    scale = Fraction(1 << qval)
     float_val = round_fp(val, scale)
-
     return f"Q{qval}({float_val})"
 
 def process_q8_angle(val):
-    return f"Q8_ANGLE({round_fp_q8angle(val)})"
+    return f"Q8_ANGLE({round_fp(val, Fraction(256, 360))})"
 
 def process_q12_angle(val):
-    return f"Q12_ANGLE({round_fp(val, 11.377778)})"
+    return f"Q12_ANGLE({round_fp(val, Fraction(4096, 360))})"
 
 class StructParser:
     def __init__(self, alignment=4, verbose=False, union_choices=None, enum_choices=None):
