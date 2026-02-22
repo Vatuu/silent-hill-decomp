@@ -9,6 +9,7 @@
 import re
 import readline
 import math
+from fractions import Fraction
 import os
 import sys
 import pyperclip
@@ -232,45 +233,46 @@ def trim_float(x, digits=7):
     return res
 
 def round_fp(val, scale):
-    float_val = val / scale;
+    # Accept scale as Fraction for exactness, or convert from float
+    if not isinstance(scale, Fraction):
+        scale = Fraction(scale).limit_denominator(1000000)
+    p, q = scale.numerator, scale.denominator
+    float_val = float(val * q / p)
 
-    # Find shortest decimal that round-trips correctly
     found = False
-
-    for digits in range(1, 12):
+    for digits in range(0, 12):
         rounded = round(float_val, digits)
         increment = 10 ** (-digits)
-
-        # Test the rounded value and its nearest neighbor
         candidates = [rounded, rounded + (increment if float_val >= 0 else -increment)]
-
         for candidate in candidates:
-            scaled = candidate * scale
-            reconverted = int(math.floor(scaled)) if candidate >= 0 else int(math.ceil(scaled))
+            int_candidate = round(candidate * 10**digits)
+            numerator = int_candidate * p
+            denominator = q * 10**digits
+            if candidate >= 0:
+                reconverted = numerator // denominator
+            else:
+                reconverted = -(-numerator // denominator)
             if reconverted == val:
                 float_val = trim_float(candidate)
                 found = True
                 break
-
         if found:
             break
-
     return f"{float_val}f"
 
-def process_fp_raw(val, qval = 12):
-    scale = (1 << qval)
+def process_fp_raw(val, qval=12):
+    scale = Fraction(1 << qval)
     float_val = round_fp(val, scale)
-
     return f"{float_val}"
 
 def process_fp(val, qval = 12):
     return f"Q{qval}({process_fp_raw(val, qval)})"
 
 def process_q8_angle(val):
-    return f"Q8_ANGLE({round_fp(val, 0.711111)})"
+    return f"Q8_ANGLE({round_fp(val, Fraction(256, 360))})"
 
 def process_q12_angle(val):
-    return f"Q12_ANGLE({round_fp(val, 11.377778)})"
+    return f"Q12_ANGLE({round_fp(val, Fraction(4096, 360))})"
 
 def process_fp_text(text):
     qval = 12  # default Q-format is Q12
