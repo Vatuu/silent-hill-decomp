@@ -879,7 +879,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q
             {
                 var_v0_2  = temp_s1_4 + 0x3E7;
                 var_v0_2 -= temp_a0;
-                var_v0_2  = FP_TO(var_v0_2, Q12_SHIFT);
+                var_v0_2  = Q12(var_v0_2);
 
                 if (var_v0_2 < 0)
                 {

@@ -121,7 +121,7 @@ void func_8004BD74(s32 displayItemIdx, GsDOBJ2* arg1, s32 arg2)  // 0x8004BD74
     {
         for (j = 0; j < 3; j++)
         {
-            sp10.m[i][j] = FP_TO(sp10.m[i][j], Q12_SHIFT) / g_Items_Transforms[displayItemIdx].scale.vx;
+            sp10.m[i][j] = Q12(sp10.m[i][j]) / g_Items_Transforms[displayItemIdx].scale.vx;
         }
     }
 

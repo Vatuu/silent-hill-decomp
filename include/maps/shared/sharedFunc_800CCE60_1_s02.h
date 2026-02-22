@@ -103,7 +103,7 @@ void sharedFunc_800CCE60_1_s02(void)
 
                 if (ptr->field_26E < var_s4)
                 {
-                    var_s2 = FP_TO(var_s4 - ptr->field_26E, Q12_SHIFT) / sharedData_800E30C8_1_s02.field_28[sharedData_800E30C8_1_s02.field_78];
+                    var_s2 = Q12(var_s4 - ptr->field_26E) / sharedData_800E30C8_1_s02.field_28[sharedData_800E30C8_1_s02.field_78];
 
                     temp_s0 = Q12_MULT_PRECISE(0x1000 - var_s2, sharedData_800E30C8_1_s02.field_3C[sp20] >> 1) +
                               Q12_MULT_PRECISE(var_s2, sharedData_800E30C8_1_s02.field_3C[sp20 + 1] >> 1);
@@ -150,7 +150,7 @@ void sharedFunc_800CCE60_1_s02(void)
 
                         if (temp_v1_3 < var_s2)
                         {
-                            ptr->field_23C[var_t5][var_s3] = Q12_MULT_PRECISE(temp_v1_3 >= 0 ? FP_TO(temp_v1_3, Q12_SHIFT) / var_s2 : temp_s0 / var_s2, ptr->field_23C[var_t5][var_s3]);
+                            ptr->field_23C[var_t5][var_s3] = Q12_MULT_PRECISE(temp_v1_3 >= 0 ? Q12(temp_v1_3) / var_s2 : temp_s0 / var_s2, ptr->field_23C[var_t5][var_s3]);
                         }
                     }
                 }
@@ -169,7 +169,7 @@ void sharedFunc_800CCE60_1_s02(void)
 
                         if (var_s4 < var_s2)
                         {
-                            ptr->field_23C[var_t5][var_s3] = Q12_MULT_PRECISE(FP_TO(var_s4, Q12_SHIFT) / var_s2, ptr->field_23C[var_t5][var_s3]);
+                            ptr->field_23C[var_t5][var_s3] = Q12_MULT_PRECISE(Q12(var_s4) / var_s2, ptr->field_23C[var_t5][var_s3]);
                         }
                     }
                 }

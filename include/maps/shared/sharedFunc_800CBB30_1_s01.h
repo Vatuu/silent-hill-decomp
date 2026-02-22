@@ -64,7 +64,7 @@ bool sharedFunc_800CBB30_1_s01(POLY_FT4** poly, s32 idx)
 
     ptr->field_12C.vz = ((sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + sharedData_800DEE50_1_s01.field_18) >> 4) - ptr->field_0.field_0.vz;
 
-    sharedData_800DFB7C_0_s00[idx].field_C.field_0 += CLAMP_LOW(FP_TO(Q12_MULT_PRECISE(g_DeltaTime0, sharedData_800DEE50_1_s01.field_C), Q12_SHIFT) /
+    sharedData_800DFB7C_0_s00[idx].field_C.field_0 += CLAMP_LOW(TO_FIXED(Q12_MULT_PRECISE(g_DeltaTime0, sharedData_800DEE50_1_s01.field_C), Q12_SHIFT) /
                                                                 (Q12_MULT(Math_Cos(sharedData_800DEE50_1_s01.field_10), sharedData_800DEE50_1_s01.field_6) -
                                                                  sharedData_800DEE50_1_s01.field_8),
                                                                 0);

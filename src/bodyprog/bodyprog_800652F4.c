@@ -38,7 +38,7 @@ void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3) // 0x800652F4
     ptr->field_40.vy = Q8(posY);
     ptr->field_40.vz = Q8(posZ);
 
-    func_80049C2C(&ptr->field_20, FP_TO(posX, Q12_SHIFT), FP_TO(posY, Q12_SHIFT), FP_TO(posZ, Q12_SHIFT));
+    func_80049C2C(&ptr->field_20, Q12(posX), Q12(posY), Q12(posZ));
 
     gte_SetRotMatrix(&ptr->field_20);
     gte_SetTransMatrix(&ptr->field_20);

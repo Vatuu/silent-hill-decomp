@@ -47,7 +47,10 @@ bool sharedFunc_800CC004_4_s03(POLY_FT4** poly, s32 arg1)
 
     setPolyFT4(*poly);
 
-    ptr->field_13C = (ptr->field_0.field_2C * Q12_MULT_PRECISE(sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_2, FP_TO(sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_0 >> 1, Q12_SHIFT) / 5734 + 0x800) / ptr->field_138) >> 4;
+    ptr->field_13C = (ptr->field_0.field_2C * Q12_MULT_PRECISE(sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_2,
+                                                               Q12(sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_0 >> 1) /
+                                                               5734 + 0x800) /
+                                              ptr->field_138) >> 4;
 
     setXY0Fast(*poly, (u16)ptr->field_134.vx - (u16)ptr->field_13C, ptr->field_134.vy + ptr->field_13C);
     setXY1Fast(*poly, (u16)ptr->field_134.vx + (u16)ptr->field_13C, ptr->field_134.vy + ptr->field_13C);

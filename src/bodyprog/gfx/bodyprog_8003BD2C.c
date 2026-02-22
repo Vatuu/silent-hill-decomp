@@ -288,10 +288,10 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
                           //
                           // Similarly to `pos0`, when fog is disabled, it uses the player position.
                           // Otherwise it's based the camera position, using its rotation to then make some extra calculations.
-    SVECTOR         ang;
+    SVECTOR         rot;
     s32             temp_a1;
     s32             temp_a2;
-    s32             moveAmt;
+    q19_12          moveAmt;
     s32             temp_s0_2;
     s32             temp_v1_4;
     s32             var_a0;
@@ -327,39 +327,39 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
     if (g_WorldEnvWork.isFogEnabled_1)
     {
         vwGetViewPosition(&pos1);
-        vwGetViewAngle(&ang);
+        vwGetViewAngle(&rot);
 
         flagsCpy = g_WorldGfx.mapInfo_0->flags_6;
         if (!(flagsCpy & MapFlag_Interior) || !(flagsCpy & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
         {
-            var_s1 = Q12_MULT(Math_Cos(ang.vx), Q12(9.0f));
+            var_s1 = Q12_MULT(Math_Cos(rot.vx), Q12(9.0f));
         }
         else
         {
             var_s1 = Q12(0.0f);
         }
 
-        temp_s0_2 = Q12_MULT(var_s1, Math_Sin(ang.vy));
+        temp_s0_2 = Q12_MULT(var_s1, Math_Sin(rot.vy));
         temp_s0_2 = CLAMP(temp_s0_2, Q12(-6.0f), Q12(6.0f));
 
-        temp_v1_4 = Q12_MULT(var_s1, Math_Cos(ang.vy));
+        temp_v1_4 = Q12_MULT(var_s1, Math_Cos(rot.vy));
         temp_v1_4 = CLAMP(temp_v1_4, Q12(-6.0f), Q12(6.0f));
 
         pos1.vx += temp_s0_2;
         pos1.vz += temp_v1_4;
 
-        if (Vc_VectorMagnitudeCalc(pos1.vx - chara->position_18.vx, 0, pos1.vz - chara->position_18.vz) > 0x10000)
+        if (Vc_VectorMagnitudeCalc(pos1.vx - chara->position_18.vx, Q12(0.0f), pos1.vz - chara->position_18.vz) > Q12(16.0f))
         {
             var_s1  = Q12(14.0f);
-            pos1.vx = chara->position_18.vx + Q12_MULT(Math_Sin(ang.vy), var_s1);
-            pos1.vz = chara->position_18.vz + Q12_MULT(Math_Cos(ang.vy), var_s1);
+            pos1.vx = chara->position_18.vx + Q12_MULT(Math_Sin(rot.vy), var_s1);
+            pos1.vz = chara->position_18.vz + Q12_MULT(Math_Cos(rot.vy), var_s1);
         }
     }
     else
     {
         pos1     = chara->position_18;
-        pos1.vx += FP_FROM(FP_TO(Math_Sin(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
-        pos1.vz += FP_FROM(FP_TO(Math_Cos(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
+        pos1.vx += FP_FROM(Q12(Math_Sin(chara->rotation_24.vy)), Q12_SHIFT);
+        pos1.vz += FP_FROM(Q12(Math_Cos(chara->rotation_24.vy)), Q12_SHIFT);
     }
 
     flagsCpy = g_WorldGfx.mapInfo_0->flags_6;

@@ -531,7 +531,7 @@ bool func_801E3970(void) // 0x801E3970
     bool   isFinished;
     char*  lineStrPtr;
     char** currentLinePtr;
-    s32    temp_a1;
+    q19_12 angle0;
     s32    temp_a2;
     s32    currentLinePosY;
     s32    lineHeight;
@@ -543,9 +543,9 @@ bool func_801E3970(void) // 0x801E3970
     s32    lineIdx;
     s32    i;
     s32    lineY;
-    s32    var_s5;
-    s32    sin;
-    s32    cos;
+    s32    angleInt;
+    q19_12 sin;
+    q19_12 cos;
     s32    linesToDraw;
     s32    var_t3;
     s32    skipTo;
@@ -578,7 +578,7 @@ bool func_801E3970(void) // 0x801E3970
     var_fp  = temp_a2 + 0x78;
 
     temp_a2 = var_fp;
-    var_s5  = 0;
+    angleInt  = 0;
 
     showKcet = var_fp < 0x78;
 
@@ -595,7 +595,7 @@ bool func_801E3970(void) // 0x801E3970
         if (animateKcet)
         {
             var_fp = -0x30;
-            var_s5 = -0x30 - temp_a2;
+            angleInt = -0x30 - temp_a2;
         }
     }
     else
@@ -618,34 +618,34 @@ bool func_801E3970(void) // 0x801E3970
 
     if (animateKcet)
     {
-        temp_a1 = var_s5;
+        angle0 = angleInt;
 
         // Rotate.
-        if (var_s5 < 120)
+        if (angleInt < 120)
         {
-            temp_a1 = (var_s5 * 0x1000) / 120;
-            temp_a1 = Q12_MULT_PRECISE((0x1000 - temp_a1), 0x36F);
-            sin     = -Math_Sin(temp_a1);
-            cos     = Math_Cos(temp_a1);
-            func_8009185C(0, 0, 0xF0, 0x1000, 0, 0x22000, 0xF0000, 0xB33, cos, sin);
+            angle0 = (angleInt * Q12(1.0f)) / 120;
+            angle0 = Q12_MULT_PRECISE((Q12_ANGLE(360.0f) - angle0), Q12_ANGLE(77.3f));
+            sin     = -Math_Sin(angle0);
+            cos     = Math_Cos(angle0);
+            func_8009185C(0, 0, 240, Q12(1.0f), 0, Q12(34.0f), Q12(240.0f), Q12(0.7f), cos, sin);
         }
         // Zoom in.
-        else if (var_s5 < 0xB4)
+        else if (angleInt < 180)
         {
-            temp_a1   = var_s5 - 120;
-            temp_a1   = (temp_a1 * 0x1000) / 0x3C;
-            temp_v0_4 = Q12_MULT_PRECISE((0x1000 - temp_a1), 0x1E000) + 0xD2000;
-            func_8009185C(0, 0, 0xF0, 0x1000, 0, 0x22000, temp_v0_4, 0xB33, 0x1000, 0);
+            angle0   = angleInt - 120;
+            angle0   = (angle0 * Q12(1.0f)) / 60;
+            temp_v0_4 = Q12_MULT_PRECISE((Q12(1.0f) - angle0), Q12(30.0f)) + Q12(210.0f);
+            func_8009185C(0, 0, 240, Q12(1.0f), 0, Q12(34.0f), temp_v0_4, Q12(0.7f), Q12(1.0f), 0);
         }
-        else if (var_s5 >= 0x168)
+        else if (angleInt >= 360)
         {
             // Zoom out.
-            if (var_s5 < 0x1E0)
+            if (angleInt < 480)
             {
-                temp_a1   = var_s5 - 0x168;
-                temp_a1   = (temp_a1 * 0x1000) / 0x78;
-                temp_v0_4 = Q12_MULT_PRECISE((0x1000 - temp_a1), -0xE2E000) + 0xF00000;
-                func_8009185C(0, 0, 0xF0, 0x1000, 0, 0x22000, temp_v0_4, 0xB33, 0x1000, 0);
+                angle0   = angleInt - 360;
+                angle0   = (angle0 * Q12(1.0f)) / 120;
+                temp_v0_4 = Q12_MULT_PRECISE((Q12(1.0f) - angle0), Q12(-3630.0f)) + Q12(3840.0f);
+                func_8009185C(0, 0, 240, Q12(1.0f), 0, Q12(34.0f), temp_v0_4, Q12(0.7f), Q12(1.0f), 0);
             }
             // Hide and finish.
             else
@@ -700,38 +700,38 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
     u8*      bufB;
     POLY_G4* poly;
     u32      x0;
-    u16      x1, x2, x3;
-
-    u32 color0;
-    u32 color1;
-    u32 color2;
-    u32 color3;
-    u8* ptr;
-    u8* ptr2;
-
-    s32  temp_t6;
-    s32  temp_t1;
-    u32  sp1C;
-    u32  sp20;
-    u32  sp24;
-    u32  sp28;
-    u32  sp2C;
-    u32  temp_v1_2;
-    s32  var_s4;
-    s32* var_a0;
-    s32* var_a1_2;
-    u32  temp_a2;
-    u32  temp_v1;
-    u32  var_v1;
-    u8   temp_a0;
-    u32  var_a1;
-    u32  var_a2;
-    u32  var_a3;
-    s32* var_a0_2;
-    u8*  var_s1_2;
-    u8*  var_s2_2;
-    u8*  var_t0;
-    s32* temp_t2;
+    u16      x1;
+    u16      x2;
+    u16      x3;
+    u32      color0;
+    u32      color1;
+    u32      color2;
+    u32      color3;
+    u8*      ptr;
+    u8*      ptr2;
+    s32      temp_t6;
+    s32      temp_t1;
+    u32      sp1C;
+    u32      sp20;
+    u32      sp24;
+    u32      sp28;
+    u32      sp2C;
+    u32      temp_v1_2;
+    s32      var_s4;
+    s32*     var_a0;
+    s32*     var_a1_2;
+    u32      temp_a2;
+    u32      temp_v1;
+    u32      var_v1;
+    u8       temp_a0;
+    u32      var_a1;
+    u32      var_a2;
+    u32      var_a3;
+    s32*     var_a0_2;
+    u8*      var_s1_2;
+    u8*      var_s2_2;
+    u8*      var_t0;
+    s32*     temp_t2;
 
     packet  = GsOUT_PACKET_P;
     temp_t2 = &g_OtTags0[g_ActiveBufferIdx][6];
@@ -1017,14 +1017,14 @@ void func_801E4394(u8* str) // 0x801E4394
         charWidth = widthTable[charCode];
 
         // Normal font.
-        if (charCode >= 0x21 && charCode < 0x85)
+        if (charCode >= '!' && charCode < 133)
         {
             sprite = (SPRT*)packet;
             addPrimFast(ot, sprite, 4);
             *(u32*)(&sprite->r0) = colorCode;
             setXY0Fast(sprite, textX, textY);
 
-            idx                   = charCode - 0x21;
+            idx                   = charCode - '!';
             temp                  = idx / 10;
             idx                   = idx % 10;
             idx                   = idx * 24;
@@ -1039,26 +1039,26 @@ void func_801E4394(u8* str) // 0x801E4394
             sprite16 = (SPRT_16*)packet;
 
             // KCET font.
-            if (charCode >= 0xA0 && charCode < 0xB0)
+            if (charCode >= 160 && charCode < 176)
             {
                 addPrimFast(ot, sprite16, 3);
-                *(u32*)(&sprite16->r0) = colorCode ^ (0x18 << 24); // GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending.
+                *(u32*)(&sprite16->r0) = colorCode ^ (24 << 24); // GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending.
                 setXY0Fast(sprite16, textX, textY + 4);
 
-                idx                     = charCode - 0xA0;
+                idx                     = charCode - 160;
                 *(u32*)(&sprite16->u0)  = ((idx * 256 )* 16) + (16 * (16 - 1));
                 *(u32*)(&sprite16->u0) += clut << 16;
 
                 packet += sizeof(SPRT_16);
             }
             // KCET font, .YVUTSR.
-            else if (charCode >= 0xB8 && charCode < 0xBF)
+            else if (charCode >= 184 && charCode < 191)
             {
                 addPrimFast(ot, sprite16, 3);
                 *(u32*)(&sprite16->r0) = colorCode ^ (0x18 << 24); // GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending.
                 setXY0Fast(sprite16, textX, textY + 4);
 
-                idx                     = charCode - 0xB8;
+                idx                     = charCode - 184;
                 *(u32*)(&sprite16->u0)  = (idx * 16) + (((256 * 16) * (16 - 1)) + (16 * 8));
                 *(u32*)(&sprite16->u0) += clut << 16;
 
@@ -1070,7 +1070,7 @@ void func_801E4394(u8* str) // 0x801E4394
                 colorCode = colorTable[charCode - 1] | ((u8)D_800AFE08.field_7 << 25);
             }
             // Change font width table?
-            else if (charCode >= 0xD0 && charCode < 0xD8)
+            else if (charCode >= 208 && charCode < 216)
             {
                 scanPtr  = strPtr + 1;
                 widthSum = 0;
@@ -1078,12 +1078,18 @@ void func_801E4394(u8* str) // 0x801E4394
                 {
                     s32 var  = 8;
                     nextChar = *scanPtr++;
-                    if (nextChar == (charCode + 8) || (nextChar == charCode || nextChar == 10) || nextChar == 0xD || nextChar == 0xc)
+                    if (nextChar == (charCode + 8) ||
+                        (nextChar == charCode || nextChar == 10) ||
+                        nextChar == 13 ||
+                        nextChar == 12)
                     {
                         break;
                     }
 
-                    if (((nextChar - 0xF0) >= var) && ((nextChar - 0xF8) > 7) && ((nextChar - 0xE0) > 7) && ((nextChar - 0xE8) > 7))
+                    if ((nextChar - 240) >= var &&
+                        (nextChar - 248) > 7 &&
+                        (nextChar - 224) > 7 &&
+                        (nextChar - 232) > 7)
                     {
                         widthSum += widthTable[nextChar];
                     }
@@ -1100,23 +1106,23 @@ void func_801E4394(u8* str) // 0x801E4394
         switch ((s32)charCode)
         {
             // Newline.
-            case 10:
+            case '\n':
                 textX = marginX;
                 textY += fontH;
                 break;
 
             // Vertical tab.
-            case 11:
+            case '\v':
                 textY += fontH;
                 break;
 
             // Carriage return.
-            case 13:
+            case '\r':
                 textX = marginX;
                 break;
 
             // Form feed.
-            case 12:
+            case '\f':
                 textX = D_800AFE08.field_0;
                 textY = D_800AFE08.field_2;
                 break;

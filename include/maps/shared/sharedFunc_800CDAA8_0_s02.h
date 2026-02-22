@@ -1389,8 +1389,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             if (playerChara->model_0.anim_4.status_0 & 1 << 0)
             {
                 s_SubCharacter* new_var; // @hack Permuter find, maybe an inline here?
-                extra->model_0.anim_4.time_4       = FP_TO(g_MapOverlayHeader.animInfos_34[playerChara->model_0.anim_4.status_0 - 76].startKeyframeIdx_C, Q12_SHIFT) + (new_var = g_SysWork.npcs_1A0)[0].model_0.anim_4.time_4 - Q12(261.0f);
-                playerChara->model_0.anim_4.time_4 = FP_TO(g_MapOverlayHeader.animInfos_34[playerChara->model_0.anim_4.status_0 - 76].startKeyframeIdx_C, Q12_SHIFT) + new_var[0].model_0.anim_4.time_4 - Q12(261.0f);
+                extra->model_0.anim_4.time_4       = Q12(g_MapOverlayHeader.animInfos_34[playerChara->model_0.anim_4.status_0 - 76].startKeyframeIdx_C) + (new_var = g_SysWork.npcs_1A0)[0].model_0.anim_4.time_4 - Q12(261.0f);
+                playerChara->model_0.anim_4.time_4 = Q12(g_MapOverlayHeader.animInfos_34[playerChara->model_0.anim_4.status_0 - 76].startKeyframeIdx_C) + new_var[0].model_0.anim_4.time_4 - Q12(261.0f);
 
                 if (D_800C4606)
                 {

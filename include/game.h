@@ -2249,13 +2249,13 @@ static inline void ModelAnim_StatusDecrement(s_ModelAnim* anim)
  * @param animInfos Reference anim infos.
  * @param animInfosOffset Anim infos offset.
  */
-#define Model_AnimStatusKeyframeSet(model, animIdx, isActive, animInfos, animInfosOffset)                                                    \
-    if ((model).stateStep_3 == 0)                                                                                                            \
-    {                                                                                                                                        \
-        (model).anim_4.status_0 = ANIM_STATUS(animIdx, isActive);                                                                            \
-        (model).stateStep_3++;                                                                                                               \
-        (model).anim_4.time_4        = FP_TO((animInfos)[ANIM_STATUS(animIdx, isActive) + (animInfosOffset)].startKeyframeIdx_C, Q12_SHIFT); \
-        (model).anim_4.keyframeIdx_8 = (animInfos)[ANIM_STATUS(animIdx, (isActive) + (animInfosOffset))].startKeyframeIdx_C;                 \
+#define Model_AnimStatusKeyframeSet(model, animIdx, isActive, animInfos, animInfosOffset)                                       \
+    if ((model).stateStep_3 == 0)                                                                                               \
+    {                                                                                                                           \
+        (model).anim_4.status_0 = ANIM_STATUS(animIdx, isActive);                                                               \
+        (model).stateStep_3++;                                                                                                  \
+        (model).anim_4.time_4        = Q12((animInfos)[ANIM_STATUS(animIdx, isActive) + (animInfosOffset)].startKeyframeIdx_C); \
+        (model).anim_4.keyframeIdx_8 = (animInfos)[ANIM_STATUS(animIdx, (isActive) + (animInfosOffset))].startKeyframeIdx_C;    \
     }
 
 /** @brief Attempts to reset a humanoid NPC's anim state index to 0.

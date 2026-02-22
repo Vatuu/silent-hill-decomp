@@ -191,7 +191,7 @@ s32 func_800706E4(s_Model* model) // 0x800706E4
                     }
                     else
                     {
-                        result = FP_TO(FP_FROM(g_SysWork.playerWork_4C.player_0.properties_E4.player.exhaustionTimer_FC, Q12_SHIFT), Q12_SHIFT);
+                        result = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.properties_E4.player.exhaustionTimer_FC, Q12_SHIFT));
                     }
                     break;
             }
@@ -1274,8 +1274,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                     g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_EnemyGrabPinnedFront)
                 {
                     temp = -0x8000;
-                    extra->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfos_34[chara->model_0.anim_4.status_0 - 76].startKeyframeIdx_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
-                    chara->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfos_34[chara->model_0.anim_4.status_0 - 76].startKeyframeIdx_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
+                    extra->model_0.anim_4.time_4 = (Q12(g_MapOverlayHeader.animInfos_34[chara->model_0.anim_4.status_0 - 76].startKeyframeIdx_C) + model->anim_4.time_4) + temp;
+                    chara->model_0.anim_4.time_4 = (Q12(g_MapOverlayHeader.animInfos_34[chara->model_0.anim_4.status_0 - 76].startKeyframeIdx_C) + model->anim_4.time_4) + temp;
                     chara->model_0.anim_4.keyframeIdx_8 = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
                     extra->model_0.anim_4.keyframeIdx_8 = FP_FROM(extra->model_0.anim_4.time_4, Q12_SHIFT);
                 }
@@ -2818,12 +2818,12 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
 
                     chara->properties_E4.player.field_10C = 32;
                     extra->model_0.anim_4.keyframeIdx_8  = D_800C44F0[D_800AF220].field_6 - 3;
-                    extra->model_0.anim_4.time_4          = FP_TO(D_800C44F0[D_800AF220].field_6 - 3, Q12_SHIFT);
+                    extra->model_0.anim_4.time_4          = Q12(D_800C44F0[D_800AF220].field_6 - 3);
 
                     if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Aim)
                     {
                         chara->model_0.anim_4.keyframeIdx_8 = D_800C44F0[D_800AF220].field_6 - 3;
-                        chara->model_0.anim_4.time_4         = FP_TO(D_800C44F0[D_800AF220].field_6 - 3, Q12_SHIFT);
+                        chara->model_0.anim_4.time_4         = Q12(D_800C44F0[D_800AF220].field_6 - 3);
                     }
                 }
             }
@@ -2849,7 +2849,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 {
                     extra->model_0.anim_4.status_0      = ANIM_STATUS(HarryAnim_HandgunAim, true);
                     extra->model_0.anim_4.keyframeIdx_8 = D_800C44F0[0].field_6;
-                    extra->model_0.anim_4.time_4         = FP_TO(extra->model_0.anim_4.keyframeIdx_8, Q12_SHIFT);
+                    extra->model_0.anim_4.time_4         = Q12(extra->model_0.anim_4.keyframeIdx_8);
 
                     if (g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C & PlayerFlag_Unk0)
                     {

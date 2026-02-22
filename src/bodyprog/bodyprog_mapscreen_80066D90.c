@@ -889,14 +889,14 @@ bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u
 
             sp4   = SCREEN_WIDTH / 2;
             temp6 = (ptr->field_8.field_0 << 1) - (arg4 - sp4);
-            x0    = (FP_TO(temp6, Q12_SHIFT) / arg6) - (SCREEN_WIDTH / 2);
+            x0    = (Q12(temp6) / arg6) - (SCREEN_WIDTH / 2);
 
             sp4   = SCREEN_HEIGHT;
-            temp4 = FP_TO((ptr->field_8.field_1 << 1) - ((arg5 * 2) - sp4), Q12_SHIFT);
+            temp4 = Q12((ptr->field_8.field_1 << 1) - ((arg5 * 2) - sp4));
             y0    = (temp4 / arg6) - SCREEN_HEIGHT;
 
-            x1    = x0 + (FP_TO(ptr->field_4.field_2, Q12_SHIFT) / arg6);
-            temp3 = FP_TO(ptr->field_4.field_3, Q12_SHIFT) / arg6;
+            x1    = x0 + (Q12(ptr->field_4.field_2) / arg6);
+            temp3 = Q12(ptr->field_4.field_3) / arg6;
             y1    = y0 + temp3;
 
             // Set polygon vertices.

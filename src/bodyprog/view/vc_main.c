@@ -394,7 +394,7 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
     s32 rot_x;
     s32 rot_y;
 
-    intrpt = FP_TO(g_DeltaTime0, Q12_SHIFT) / Q12(1.0f / TICKS_PER_SECOND);
+    intrpt = Q12(g_DeltaTime0) / Q12(1.0f / TICKS_PER_SECOND);
     intrpt = CLAMP(intrpt, INTRPT_TIME_MIN, INTRPT_TIME_MAX);
 
     mv_vec = Vc_VectorMagnitudeCalc(Q12_TO_Q8(now_pos->vx - old_pos->vx),
@@ -407,17 +407,17 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
         return VC_MV_CHASE;
     }
 
-    rot_x = FP_TO(((now_ang->vx - old_ang->vx) >= Q12_ANGLE(0.0f)) ? (now_ang->vx - old_ang->vx) : (old_ang->vx - now_ang->vx), Q12_SHIFT) / intrpt;
+    rot_x = Q12(((now_ang->vx - old_ang->vx) >= Q12_ANGLE(0.0f)) ? (now_ang->vx - old_ang->vx) : (old_ang->vx - now_ang->vx)) / intrpt;
     if (rot_x > ROT_X_ANGLE_MAX)
     {
         return VC_MV_CHASE;
     }
 
-    rot_y = FP_TO(abs(Math_AngleNormalize(now_ang->vy - old_ang->vy)), Q12_SHIFT) / intrpt;
+    rot_y = Q12(abs(Math_AngleNormalize(now_ang->vy - old_ang->vy))) / intrpt;
 
     // This (guessed) line is needed for regalloc match, but compiler just optimizes out since `rot_x` isn't used afterward.
     // @bug Maybe the `Math_Cos` call below was meant to use the result of this, but was somehow left using `now_ang->vx`?
-    rot_x = ((now_ang->vx - old_ang->vx) >= 0) ? now_ang->vx : old_ang->vx;
+    rot_x = ((now_ang->vx - old_ang->vx) >= Q12_ANGLE(0.0f)) ? now_ang->vx : old_ang->vx;
 
     rot_y = Q12_MULT(rot_y, Math_Cos(now_ang->vx));
     return (rot_y <= ROT_Y_ANGLE_MAX) ? VC_MV_SETTLE : VC_MV_CHASE;
@@ -555,7 +555,7 @@ q19_12 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_t
         {
             case VC_MV_CHASE:
             case VC_MV_SETTLE:
-                far_watch_rate = FP_TO(far_watch_button_prs_f != 0, Q12_SHIFT);
+                far_watch_rate = Q12(far_watch_button_prs_f != 0);
                 break;
 
             case VC_MV_THROUGH_DOOR:
@@ -1795,7 +1795,7 @@ void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, s1
     if (cam_ang_x > max_cam_ang_x)
     {
         // TODO: What Q format?
-        s32 ofs_y     = FP_TO(((FP_FROM(dist, Q4_SHIFT)) * Math_Sin(max_cam_ang_x)) / Math_Cos(max_cam_ang_x), Q4_SHIFT);
+        s32 ofs_y     = Q4(((FP_FROM(dist, Q4_SHIFT)) * Math_Sin(max_cam_ang_x)) / Math_Cos(max_cam_ang_x));
         watch_pos->vy = cam_pos->vy - ofs_y;
     }
 }
@@ -1969,7 +1969,7 @@ void vcMakeIdealCamPosForFixAngCam(VECTOR3* ideal_pos, VC_WORK* w_p) // 0x80083A
     }
     else if (chara_to_cam_dist > Q12(1.5f))
     {
-        cam_offset_forward = Q12_MULT(FP_TO((chara_to_cam_dist - Q12(7.0f)), Q12_SHIFT) / Q12(-5.5f), Q12(0.7f));
+        cam_offset_forward = Q12_MULT(Q12((chara_to_cam_dist - Q12(7.0f))) / Q12(-5.5f), Q12(0.7f));
     }
     else
     {

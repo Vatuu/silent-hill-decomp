@@ -402,14 +402,14 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
     anim  = func_80044918(var_s0);
     sp28  = var_s0->time_4;
-    sp28 -= FP_TO(anim->startKeyframeIdx_C, Q12_SHIFT);
+    sp28 -= Q12(anim->startKeyframeIdx_C);
 
     var_s0_2 = func_8008A270(sp14);
     var_a0   = func_8008A2E0(sp14);
 
     i   = chara->field_44.field_14;
-    sp2C     = FP_TO(var_s0_2 + var_a0, Q12_SHIFT);
-    var_s0_2 = FP_TO(var_s0_2, Q12_SHIFT);
+    sp2C     = Q12(var_s0_2 + var_a0);
+    var_s0_2 = Q12(var_s0_2);
 
     if (sp28 < i)
     {
@@ -501,15 +501,15 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                     var_a0_2 = Q12(2.0f);
                 }
 
-                temp_v1 = FP_TO(var_a0_2 - Q12(0.5f), Q12_SHIFT) / 6144;
+                temp_v1 = Q12(var_a0_2 - Q12(0.5f)) / Q12(1.5f);
                 var_s2  = Q12_MULT_PRECISE(temp_v1, Q12(-1.5f)) + Q12(1.75f);
                 var_s2  = Q12_MULT_PRECISE(var_s2, sp48);
 
-                if (var_s2 < 0xAA)
+                if (var_s2 < 170)
                 {
                     if (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 1)
                     {
-                        var_s2 = (var_s2 + 0xAA) / 2;
+                        var_s2 = (var_s2 + 170) / 2;
                     }
 
                     // @hack
@@ -527,7 +527,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                 }
                 else
                 {
-                    var_s2 = 0xAA;
+                    var_s2 = 170;
                 }
 
             j_3d8:
@@ -562,12 +562,12 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                                     }
                                     else if (temp_s0 <= 0xFFFF)
                                     {
-                                        temp_v0_10 = FP_TO(temp_s0, Q12_SHIFT);
+                                        temp_v0_10 = Q12(temp_s0);
                                         if (temp_v0_10 < 0)
                                         {
                                             temp_v0_10 += 0xFFFF;
                                         }
-                                        var_s2 = Q12_MULT_PRECISE(var_s2, temp_v0_10 >> 0x10);
+                                        var_s2 = Q12_MULT_PRECISE(var_s2, temp_v0_10 >> 16);
                                     }
                                 }
 
@@ -1080,7 +1080,7 @@ bool func_8008B474(s32 arg0, s32 vol, s32 soundType) // 0x8008B474
             }
             else
             {
-                unkVol = FP_TO(vol, Q12_SHIFT) + Q12(256.0f);
+                unkVol = Q12(vol) + Q12(256.0f);
             }
         }
         else
@@ -1272,7 +1272,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
 
             if (target->model_0.charaId_0 == Chara_Padlock)
             {
-                func_8005DC1C(Sfx_Unk1392, arg2, 0x80, 0);
+                func_8005DC1C(Sfx_Unk1392, arg2, Q8(0.5f), 0);
             }
             else
             {
@@ -1281,7 +1281,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
         }
     }
 
-    var_s0 = FP_TO(temp_fp->field_4, Q12_SHIFT);
+    var_s0 = Q12(temp_fp->field_4);
 
     switch (weaponAttack)
     {
@@ -1934,7 +1934,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
         {
             if (temp_s3 < var_t1)
             {
-                temp_lo_5 = FP_TO(temp_s3, Q12_SHIFT) / var_t1;
+                temp_lo_5 = Q12(temp_s3) / var_t1;
                 var_t1    = temp_s3;
                 temp_s2   = Q12_MULT_PRECISE(temp_lo_5, temp_s2);
                 temp_s0   = Q12_MULT_PRECISE(temp_lo_5, temp_s0);
@@ -1942,7 +1942,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
             }
             else if (var_t2 < temp_s0)
             {
-                temp_lo_5 = FP_TO(var_t2, Q12_SHIFT) / temp_s0;
+                temp_lo_5 = Q12(var_t2) / temp_s0;
                 temp_s0   = var_t2;
                 var_t1    = Q12_MULT_PRECISE(temp_lo_5, var_t1);
                 temp_s2   = Q12_MULT_PRECISE(temp_lo_5, temp_s2);
@@ -1950,7 +1950,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
             }
             else if (temp_s0 < -var_t2)
             {
-                temp_lo_5 = FP_TO(-var_t2, Q12_SHIFT) / temp_s0;
+                temp_lo_5 = Q12(-var_t2) / temp_s0;
                 temp_s0   = -var_t2;
                 var_t1    = Q12_MULT_PRECISE(temp_lo_5, var_t1);
                 temp_s2   = Q12_MULT_PRECISE(temp_lo_5, temp_s2);

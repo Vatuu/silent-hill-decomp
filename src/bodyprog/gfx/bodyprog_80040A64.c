@@ -377,7 +377,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 an
 
     for (i = 0; i < 4; i++)
     {
-        temp_lo = FP_TO(var_s0 - (sp10[i] >> 1), Q12_SHIFT) / var_s0;
+        temp_lo = Q12(var_s0 - (sp10[i] >> 1)) / var_s0;
         var_v0  = sp10[i] * temp_lo;
         if (var_v0 < 0)
         {

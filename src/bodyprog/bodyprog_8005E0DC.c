@@ -313,7 +313,7 @@ void func_8005E89C(void) // 0x8005E89C
     ptr->field_0.vy = Q8(posY);
     ptr->field_0.vz = Q8(posZ);
 
-    func_80049C2C(&ptr->field_C, FP_TO(posX, Q12_SHIFT), FP_TO(posY, Q12_SHIFT), FP_TO(posZ, Q12_SHIFT));
+    func_80049C2C(&ptr->field_C, Q12(posX), Q12(posY), Q12(posZ));
 
     gte_SetRotMatrix(&ptr->field_C);
     gte_SetTransMatrix(&ptr->field_C);
@@ -2242,7 +2242,7 @@ bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
 
     for (ptr->field_1D4 = 0; ptr->field_1D4 < 6; ptr->field_1D4++)
     {
-        ptr->field_1D0 = g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 + (FP_TO(ptr->field_1D4, Q12_SHIFT) / 6);
+        ptr->field_1D0 = g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 + (Q12(ptr->field_1D4) / 6);
 
         *(s32*)&ptr->field_14C[0].vx = ((((u16)g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_0 + Q12_MULT(ptr->field_1E8, Math_Cos(ptr->field_1D0))) - Q12_ANGLE(90.0f)) & 0xFFFF) +
                                        ((g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2 + Q12_MULT(ptr->field_1E8, Math_Sin(ptr->field_1D0))) << 16);

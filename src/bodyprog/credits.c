@@ -809,9 +809,9 @@ void func_80091388(s32 arg0, s32 arg1, s32 arg2) // 0x80091388
         do
         {
             var_v0 = (arg2 < 0) ? (arg2 + 0xFFF) : arg2;
-            arg2  -= FP_TO(FP_FROM(var_v0, Q12_SHIFT), Q12_SHIFT);
+            arg2  -= Q12_FLOOR(var_v0);
             arg2  *= 10;
-            var_a0 = arg2 % 40960;
+            var_a0 = arg2 % Q12(10.0f);
             Gfx_DebugStringDraw(Math_IntegerToString(1, FP_FROM(var_a0, Q12_SHIFT)));
         }
         while (--arg1 > 0);

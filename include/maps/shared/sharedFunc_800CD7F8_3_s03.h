@@ -19,7 +19,7 @@ void sharedFunc_800CD7F8_3_s03(s_SubCharacter* chara, q19_12 offsetX, q19_12 off
     {
         // Compute scale.
         rootAdjOffsetSqr = SquareRoot12(extraDistSqr);
-        scale            = FP_TO(rootAdjOffsetSqr - 128, Q12_SHIFT) / rootAdjOffsetSqr;
+        scale            = Q12(rootAdjOffsetSqr - 128) / rootAdjOffsetSqr;
 
         // Adjust extra X offset.
         scaledExtraOffsetX = scale * extraOffsetX;

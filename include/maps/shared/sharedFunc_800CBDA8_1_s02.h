@@ -78,7 +78,7 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
 
         if (temp_s4 < sharedData_800E30C8_1_s02.field_64[idx0])
         {
-            var_s3         = FP_TO(temp_s4, Q12_SHIFT) / sharedData_800E30C8_1_s02.field_64[idx0];
+            var_s3         = TO_FIXED(temp_s4, Q12_SHIFT) / sharedData_800E30C8_1_s02.field_64[idx0];
             ptr->field_17C = Q6(0.0f);
             ptr->field_17D = Q12_TO_Q6(var_s3);
             ptr->field_174 = sharedData_800E30C8_1_s02.field_10[idx0];
@@ -87,7 +87,7 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
         {
             if (sharedData_800E30C8_1_s02.field_28[idx0] < temp_s4)
             {
-                var_s3 = FP_TO(sharedData_800E30C8_1_s02.field_28[idx0] + sharedData_800E30C8_1_s02.field_64[idx0] - temp_s4, Q12_SHIFT) / sharedData_800E30C8_1_s02.field_64[idx0];
+                var_s3 = TO_FIXED(sharedData_800E30C8_1_s02.field_28[idx0] + sharedData_800E30C8_1_s02.field_64[idx0] - temp_s4, Q12_SHIFT) / sharedData_800E30C8_1_s02.field_64[idx0];
 
                 ptr->field_17C = (Q6(1.0f) - 1) - Q12_TO_Q6(var_s3);
                 ptr->field_17D = Q12_TO_Q6(var_s3);
@@ -122,7 +122,7 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
         {
             temp_v1_5 = sharedData_800E30C8_1_s02.field_28[idx0] - sharedData_800E30C8_1_s02.field_28[sharedData_800E30C8_1_s02.field_78];
 
-            var_s1 = FP_TO(CLAMP_MAX(sharedData_800E30C8_1_s02.field_28[idx0], temp_s4) - temp_v1_5, Q12_SHIFT) / sharedData_800E30C8_1_s02.field_28[sharedData_800E30C8_1_s02.field_78];
+            var_s1 = Q12(CLAMP_MAX(sharedData_800E30C8_1_s02.field_28[idx0], temp_s4) - temp_v1_5) / sharedData_800E30C8_1_s02.field_28[sharedData_800E30C8_1_s02.field_78];
 
             ptr->field_180 = Q12_MULT_PRECISE(var_s3 >> 5, Math_Cos(var_s1 >> 2));
 
@@ -161,7 +161,7 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
                 {
                     if (var_v1 >= 0)
                     {
-                        var_v1 = FP_TO(var_v1, Q12_SHIFT) / var_s1;
+                        var_v1 = Q12(var_v1) / var_s1;
                     }
                     else
                     {
@@ -192,7 +192,7 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
 
                 if (temp_s4 < var_s1)
                 {
-                    ptr->field_180 = Q12_MULT_PRECISE(FP_TO(temp_s4, Q12_SHIFT) / var_s1, ptr->field_180);
+                    ptr->field_180 = Q12_MULT_PRECISE(Q12(temp_s4) / var_s1, ptr->field_180);
                 }
             }
         }
@@ -235,7 +235,7 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
 
         if (temp_s4 < sharedData_800E30C8_1_s02.field_64[idx0])
         {
-            var_s3 = FP_TO(temp_s4, Q12_SHIFT) / sharedData_800E30C8_1_s02.field_64[idx0];
+            var_s3 = Q12(temp_s4) / sharedData_800E30C8_1_s02.field_64[idx0];
 
             ptr->field_17C = Q6(0.0f);
             ptr->field_17D = Q12_TO_Q6(var_s3);
@@ -244,7 +244,7 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
         {
             if (sharedData_800E30C8_1_s02.field_28[idx0] < temp_s4)
             {
-                var_s3 = FP_TO((sharedData_800E30C8_1_s02.field_28[idx0] + sharedData_800E30C8_1_s02.field_64[idx0]) - temp_s4, Q12_SHIFT) / sharedData_800E30C8_1_s02.field_64[idx0];
+                var_s3 = Q12((sharedData_800E30C8_1_s02.field_28[idx0] + sharedData_800E30C8_1_s02.field_64[idx0]) - temp_s4) / sharedData_800E30C8_1_s02.field_64[idx0];
 
                 ptr->field_17C = (Q6(1.0f) - 1) - Q12_TO_Q6(var_s3);
                 ptr->field_17D = Q12_TO_Q6(var_s3);

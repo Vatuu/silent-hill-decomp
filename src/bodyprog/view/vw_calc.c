@@ -188,7 +188,7 @@ s32 func_800494B0(s32 arg0, s32 arg1, s32 arg2) // 0x800494B0
         return Q12(0.0f);
     }
 
-    return FP_TO(arange, Q12_SHIFT) / g_DeltaTime0;
+    return Q12(arange) / g_DeltaTime0;
 }
 
 s32 func_80049530(VECTOR* arg0, DVECTOR* arg1) // 0x80049530
@@ -201,9 +201,9 @@ s32 func_80049530(VECTOR* arg0, DVECTOR* arg1) // 0x80049530
     // TODO: Make macros for these?
 
     __asm__ volatile(
-        "cfc2        $12, $5;"
+        "cfc2       $12, $5;"
         "lw         $t5, 0x0(%0);"
-        "mtc2        $12, $2;"
+        "mtc2       $12, $2;"
         "addu       $t5, $t5, $t4;"
         "ctc2       $t5, $5;"
         "cfc2       $t4, $6;"
@@ -231,7 +231,7 @@ s32 func_80049530(VECTOR* arg0, DVECTOR* arg1) // 0x80049530
         "ctc2    $14, $7;"
         "mfc2    $v0, $19;"
         "nop;"
-        "sra    $v0, $v0, 2;" ::: "$12", "$13", "$14");
+        "sra     $v0, $v0, 2;" ::: "$12", "$13", "$14");
 }
 
 void vwMatrixToAngleYXZ(SVECTOR* ang, const MATRIX* mat) // 0x800495D4
@@ -705,7 +705,7 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ
 
                 if (cond == true)
                 {
-                    interpAlpha = FP_TO(farPlane - distToFarPlane, Q8_SHIFT) / (distToNearPlane - distToFarPlane);
+                    interpAlpha = Q8(farPlane - distToFarPlane) / (distToNearPlane - distToFarPlane);
 
                     temp_a3   = &cullData->field_20[*var_t1_2];
                     temp_a1_3 = &cullData->field_20[*(var_t1_2 + 1)];

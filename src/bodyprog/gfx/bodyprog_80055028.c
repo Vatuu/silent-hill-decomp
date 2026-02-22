@@ -271,10 +271,10 @@ void func_80055648(s32 arg0, SVECTOR* arg1) // 0x80055648
                 break;
         }
 
-        temp_t1 = FP_TO(var_a2 + 0x14CC, Q12_SHIFT) / 9420;
-        temp_v1 = FP_TO(0x14CC - var_a2, Q12_SHIFT) / 9420;
-        temp_v0 = 0x400000 / temp_t1;
-        temp_lo = 0x400000 / temp_v1;
+        temp_t1 = Q12(var_a2 + Q12(1.3f)) / Q12(2.3f);
+        temp_v1 = Q12(Q12(1.3f) - var_a2) / Q12(2.3f);
+        temp_v0 = Q12(1024.0f) / temp_t1;
+        temp_lo = Q12(1024.0f) / temp_v1;
 
         for (j = 0; j < ARRAY_SIZE(D_800AE1B4); j++)
         {
@@ -319,7 +319,7 @@ void WorldEnv_FogDistanceSet(q19_12 nearDist, q19_12 farDist) // 0x80055840
     g_WorldEnvWork.fogDepthShift_14  = 0x20 - Lzc(nearDist - 1);
 
     temp = (0x10 << (g_WorldEnvWork.fogDepthShift_14 + 1)) / nearDist;
-    for (var_t0 = 0, var_a3 = 0; var_t0 < 0x1000 && var_a3 < 0x80; var_t0 += temp, var_a3++)
+    for (var_t0 = 0, var_a3 = 0; var_t0 < Q12(1.0f) && var_a3 < 0x80; var_t0 += temp, var_a3++)
     {
         temp_v1_2 = var_t0 >> 8;
 
@@ -385,19 +385,19 @@ s32 func_800559A8(s32 arg0) // 0x800559A8
 
     if (temp_lo >= 0x80)
     {
-        return 0x1000;
+        return Q12(1.0f);
     }
 
-    temp_a2 = g_WorldEnvWork.fogRamp_CC[temp_lo] * 0x10;
+    temp_a2 = g_WorldEnvWork.fogRamp_CC[temp_lo] * 16;
     var_v0  = temp_v0 % var_a1;
 
     if (temp_lo == 0x7F)
     {
-        temp_v0 = 0x1000;
+        temp_v0 = Q12(1.0f);
     }
     else
     {
-        temp_v0 = g_WorldEnvWork.fogRamp_CC[temp_lo + 1] * 0x10;
+        temp_v0 = g_WorldEnvWork.fogRamp_CC[temp_lo + 1] * 16;
     }
 
     return temp_a2 + ((temp_v0 - temp_a2) * var_v0) / var_a1;
