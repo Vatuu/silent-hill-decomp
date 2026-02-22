@@ -101,7 +101,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
         pos = (VECTOR3*)curCharaSpawn;
 
         if (!(g_SysWork.flags_22A4 & SysFlag2_4) && HAS_FLAG(ovlEnemiesStatePtr, i) && !HAS_FLAG(g_SysWork.field_228C, i) &&
-            curCharaSpawn->data.spawnInfo.flags_6 != 0 && g_SavegamePtr->gameDifficulty_260 >= curCharaSpawn->data.spawnInfo.field_7_0 &&
+            curCharaSpawn->flags_6 != 0 && g_SavegamePtr->gameDifficulty_260 >= curCharaSpawn->minGameDifficulty_7_0 &&
             func_8008F914(curCharaSpawn->positionX_0, curCharaSpawn->positionZ_8) &&
             !Math_Distance2dCheck(&g_SysWork.playerWork_4C.player_0.position_18, pos, Q12(22.0f)) &&
             (!cond || Math_Distance2dCheck(&g_SysWork.playerWork_4C.player_0.position_18, pos, Q12(20.0f))))
@@ -113,9 +113,9 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
 
             bzero(&g_SysWork.npcs_1A0[npcIdx], sizeof(s_SubCharacter));
 
-            if (curCharaSpawn->data.spawnInfo.charaId_4 > Chara_None)
+            if (curCharaSpawn->charaId_4 > Chara_None)
             {
-                g_SysWork.npcs_1A0[npcIdx].model_0.charaId_0 = curCharaSpawn->data.spawnInfo.charaId_4;
+                g_SysWork.npcs_1A0[npcIdx].model_0.charaId_0 = curCharaSpawn->charaId_4;
             }
             else
             {
@@ -124,14 +124,14 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
 
             g_SysWork.npcs_1A0[npcIdx].field_40               = i;
             g_SysWork.npcs_1A0[npcIdx].model_0.controlState_2 = ModelState_Uninitialized;
-            g_SysWork.npcs_1A0[npcIdx].model_0.stateStep_3    = curCharaSpawn->data.spawnInfo.flags_6;
+            g_SysWork.npcs_1A0[npcIdx].model_0.stateStep_3    = curCharaSpawn->flags_6;
             g_SysWork.npcs_1A0[npcIdx].position_18.vx         = curCharaSpawn->positionX_0;
             g_SysWork.npcs_1A0[npcIdx].position_18.vz         = curCharaSpawn->positionZ_8;
 
             Collision_Get(&coll, curCharaSpawn->positionX_0, curCharaSpawn->positionZ_8);
 
             g_SysWork.npcs_1A0[npcIdx].position_18.vy = coll.groundHeight_0;
-            g_SysWork.npcs_1A0[npcIdx].rotation_24.vy = curCharaSpawn->data.spawnInfo.rotationY_5 * 16;
+            g_SysWork.npcs_1A0[npcIdx].rotation_24.vy = curCharaSpawn->rotationY_5 * 16;
 
             SET_FLAG(&g_SysWork.npcFlags_2290, npcIdx);
             SET_FLAG(g_SysWork.field_228C, i);

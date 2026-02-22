@@ -140,7 +140,9 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .data_190                 = (void*)&sharedData_800DFB70_0_s00,
     .charaUpdateFuncs_194     = {},
     .charaGroupIds_248        = {},
-    .charaSpawns_24C          = {},
+    .charaSpawns_24C          = {
+#include "chara_spawns.h"
+    },
     .roadDataList_3CC         = {
 #include "vc_road_data.h"
     },

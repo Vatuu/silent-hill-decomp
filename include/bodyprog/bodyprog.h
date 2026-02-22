@@ -1466,23 +1466,16 @@ typedef struct _MapPoint2d
 } s_MapPoint2d;
 STATIC_ASSERT_SIZEOF(s_MapPoint2d, 12);
 
-// TODO: Moves fields outside of union. Should help fix `map7_s01::func_800DD348`, but needs updates for all map headers.
 typedef struct _SpawnInfo
 {
     q19_12 positionX_0;
-    union
-    {
-        u32 raw_4;
-        struct
-        {
-            s8  charaId_4;   /** `e_CharacterId` */
-            u8  rotationY_5; /** Degrees in Q7.8, range [0, 256]. */
-            s8  flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `controlState_2 = ModelState_Uninitialized`. */
-            s32 field_7_0 : 4;
-        } spawnInfo;
-    } data;
+    s8  charaId_4;   /** `e_CharacterId` */
+    u8  rotationY_5; /** Degrees in Q7.8, range [0, 256]. */
+    s8  flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `controlState_2 = ModelState_Uninitialized`. */
+    s32 minGameDifficulty_7_0 : 4;
     q19_12 positionZ_8;
 } s_SpawnInfo;
+STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
 
 /** Special map-specific Harry anim data. */
 typedef struct
@@ -1683,7 +1676,7 @@ typedef struct _MapOverlayHeader
     s32*                   data_18C;
     s32*                   data_190;
     void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `Game_NpcUpdate`. */
-    s8                     charaGroupIds_248[GROUP_CHARA_COUNT];                              /** `e_CharacterId` values where if `s_MapPoint2d::data.spawnInfo.charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
+    s8                     charaGroupIds_248[GROUP_CHARA_COUNT];                              /** `e_CharacterId` values where if `s_SpawnInfo::charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_SpawnInfo            charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
     VC_ROAD_DATA           roadDataList_3CC[48];
     u32                    unk_84C[0x138];

@@ -140,10 +140,10 @@ void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unused2) // 0x80088F9
 
 void func_80088FF4(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags) // 0x80088FF4
 {
-    s_SpawnInfo* mapPoint;
+    s_SpawnInfo* spawnInfo;
 
-    mapPoint                         = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
-    mapPoint->data.spawnInfo.flags_6 = spawnFlags;
+    spawnInfo          = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
+    spawnInfo->flags_6 = spawnFlags;
 }
 
 void func_80089034(e_CharacterId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ) // 0x80089034

@@ -195,7 +195,9 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
         NULL,
         NULL },
     .charaGroupIds_248 = { Chara_None, Chara_None, Chara_None, Chara_None },
-    .charaSpawns_24C   = {},
+    .charaSpawns_24C   = {
+#include "chara_spawns.h"
+    },
     .roadDataList_3CC  = {
 #include "vc_road_data.h"
     },
