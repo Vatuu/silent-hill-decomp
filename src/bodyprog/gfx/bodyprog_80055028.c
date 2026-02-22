@@ -3317,7 +3317,7 @@ INCLUDE_ASM("bodyprog/nonmatchings/gfx/bodyprog_80055028", func_8005B62C); // 0x
 // ========================================
 // Split from something related to debug feature that got cut?
 
-void func_8005BF0C(s16 unused, s16 x, s16 y) // 0x8005BF0C
+void Gfx_DebugStringPositionSet(s16 unused, s16 posX, s16 posY) // 0x8005BF0C
 {
-    Gfx_DebugStringPosition(x, y);
+    Gfx_DebugStringPosition(posX, posY);
 }

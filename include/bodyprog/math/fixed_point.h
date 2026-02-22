@@ -58,6 +58,15 @@
 #define FP_ROUND_TO_ZERO(x, shift) \
     ((s32)(FP_FROM(x, shift) + ((u32)(x) >> 31)) >> 1)
 
+/** @brief Floors a fixed-point value.
+ *
+ * @param x Fixed-point value to floor.
+ * @param shift Fixed-point shift.
+ * @return Fixed-point result of `x` floored to the closest integer.
+ */
+#define FP_FLOOR(x, shift) \
+    TO_FIXED(FP_FROM(x, shift), shift)
+
 /** @brief Multiplies two integers in a fixed-point Q format.
  *
  * @param a First fixed-point factor.
@@ -125,6 +134,14 @@
  */
 #define FP_SQUARE_PRECISE(x, shift) \
     FP_MULTIPLY_PRECISE(x, x, shift)
+
+/** @brief Floors a Q*.12 fixed-point value.
+ *
+ * @param x Q*.12 fixed-point value to floor.
+ * @return Q*.12 result of `x` floored to the closest integer.
+ */
+#define Q12_FLOOR(x) \
+    FP_FLOOR(x, Q12_SHIFT)
 
 /** @brief Multiplies two integers in Q*.12 fixed-point.
  *

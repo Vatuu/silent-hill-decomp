@@ -101,7 +101,9 @@ typedef enum _MapType
     MapType_DRU = 12,
     MapType_HP  = 13,
     MapType_HU  = 14,
-    MapType_XXX = 15 /** @unused */
+    MapType_XXX = 15, /** @unused */
+
+    MapType_Count
 } e_MapType;
 
 typedef enum _BoneHierarchy
@@ -2096,7 +2098,7 @@ typedef struct
 
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to `main/` headers?
 
-extern const s_MapInfo MAP_INFOS[16];
+extern const s_MapInfo MAP_INFOS[MapType_Count];
 
 extern char D_80028544[16];
 
@@ -3681,14 +3683,13 @@ void Textures_ActiveTex_PutTextures(s_ActiveTextures* activeTexs, s_Texture* tex
 
 s_Texture* Textures_ActiveTex_FindTexture(char* texName, s_ActiveTextures* activeTexs);
 
-// TODO: Rename to `Gfx_DebugStringPositionSet`.
 /** @brief Sets the debug string position.
  *
  * @param unused @unused
- * @param x X screen position.
- * @param y Y screen position.
+ * @param posX X screen position.
+ * @param posY Y screen position.
  */
-void func_8005BF0C(s16 unused, s16 x, s16 y);
+void Gfx_DebugStringPositionSet(s16 unused, s16 posX, s16 posY);
 
 /** Angle func. */
 q3_12 func_8005BF38(q3_12 angle);

@@ -875,6 +875,7 @@ Material_TimFileNameGet                      = 0x8005B3BC; // type:func
 Textures_ActiveTex_CountReset                = 0x8005B46C; // type:func
 Textures_ActiveTex_PutTextures               = 0x8005B474; // type:func
 Textures_ActiveTex_FindTexture               = 0x8005B4BC; // type:func
+Gfx_DebugStringPositionSet                   = 0x8005BF0C; // type:func
 
 //-------------------------------------------------------------------------
 //--- PA: 0x0373D8   VA: 0x8005BF38   subsegment: c, bodyprog_math_8005BF38

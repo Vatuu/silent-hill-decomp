@@ -47,13 +47,15 @@ void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3) // 0x800652F4
     for (i = 0; i < 3; i++)
     {
         var_s1           = ((arg2 >> 4) + 0x80) * i;
-        temp             = 0x1000;
-        ptr->field_54[i] = -FP_MULTIPLY_PRECISE(CLAMP_LOW((temp - Q12_MULT(var_s1, Math_Sin(arg2 >> 2))) - Math_Cos(arg2 >> 2), 0),
-                                                0x2800,
+        temp             = Q12(1.0f);
+        ptr->field_54[i] = -FP_MULTIPLY_PRECISE(CLAMP_LOW((temp - Q12_MULT(var_s1, Math_Sin(arg2 >> 2))) - Math_Cos(arg2 >> 2),
+                                                          0),
+                                                Q12(2.5f),
                                                 Q12_SHIFT);
         temp             = 0x80;
-        ptr->field_60[i] = FP_MULTIPLY_PRECISE(CLAMP_LOW(arg2 - (Q12_MULT(var_s1, Math_Cos(arg2 >> 2)) - temp), 0),
-                                               0x2800,
+        ptr->field_60[i] = FP_MULTIPLY_PRECISE(CLAMP_LOW(arg2 - (Q12_MULT(var_s1, Math_Cos(arg2 >> 2)) - temp),
+                                                         0),
+                                               Q12(2.5f),
                                                Q12_SHIFT);
     }
 
@@ -187,7 +189,7 @@ void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
         if (arg1 == 0)
         {
             D_800C4428[i] = (i << 9) + Rng_GenerateInt(0, 255) - 128;
-            D_800C4438[i] = (Math_Cos(Rng_GenerateUInt(0, 2047)) >> 1) + 0x1000;
+            D_800C4438[i] = (Math_Cos(Rng_GenerateUInt(Q12_ANGLE(0.0f), Q12_ANGLE(180.0f) - 1)) >> 1) + Q12(1.0f);
         }
 
         temp_s0 = Q12_MULT_PRECISE(temp_fp, D_800C4438[i]);
@@ -225,19 +227,19 @@ void func_80066184(void) // 0x80066184
 
     if (g_Controller0->btnsClicked_10 & ControllerFlag_R3)
     {
-        D_800AE73C = 0x2000;
+        D_800AE73C = Q12(2.0f);
     }
 
     if (g_Controller0->btnsHeld_C & ControllerFlag_Cross)
     {
-        D_800AE73C = ((D_800AE73C - g_DeltaTime0) < 0) ? 0 : (D_800AE73C - g_DeltaTime0);
+        D_800AE73C = ((D_800AE73C - g_DeltaTime0) < Q12(0.0f)) ? 0 : (D_800AE73C - g_DeltaTime0);
     }
 
     ptr = PSX_SCRATCH;
 
-    ptr->field_3C.vx = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vx, Q12_SHIFT));
-    ptr->field_3C.vy = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vy, Q12_SHIFT));
-    ptr->field_3C.vz = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vz, Q12_SHIFT));
+    ptr->field_3C.vx = Q12_FLOOR(g_SysWork.playerWork_4C.player_0.position_18.vx);
+    ptr->field_3C.vy = Q12_FLOOR(g_SysWork.playerWork_4C.player_0.position_18.vy);
+    ptr->field_3C.vz = Q12_FLOOR(g_SysWork.playerWork_4C.player_0.position_18.vz);
 
     func_80049C2C(&ptr->field_4, ptr->field_3C.vx, ptr->field_3C.vy, ptr->field_3C.vz);
 
@@ -313,20 +315,20 @@ void func_80066184(void) // 0x80066184
     *(u16*)&ptr->field_0->u2 = 0x3F00;
     *(u16*)&ptr->field_0->u3 = 0x3F3F;
 
-    ptr->field_6C = MIN(FP_MULTIPLY(CLAMP_LOW_THEN_MIN(D_800AE73C - 0x1000, 0, 0x1000),
-                                    func_80055D78(0x16B33, 0, -0x16199), Q12_SHIFT - 1),
+    ptr->field_6C = MIN(FP_MULTIPLY(CLAMP_LOW_THEN_MIN(D_800AE73C - Q12(1.0f), Q12(0.0f), Q12(1.0f)),
+                                    func_80055D78(Q12(22.7f), Q12(0.0), Q12(-22.1f)), Q12_SHIFT - 1),
                         0xFF);
 
-    ptr->field_70 = MIN(FP_MULTIPLY(CLAMP_LOW_THEN_MIN(D_800AE73C - 0x1000, 0, 0x1000),
-                                    func_80055D78(0x16B33, 0, -0x16199), Q12_SHIFT - 1),
+    ptr->field_70 = MIN(FP_MULTIPLY(CLAMP_LOW_THEN_MIN(D_800AE73C - Q12(1.0f), Q12(0.0f), Q12(1.0f)),
+                                    func_80055D78(Q12(22.7f), Q12(0.0), Q12(-22.1f)), Q12_SHIFT - 1),
                         0xFF);
 
-    ptr->field_74 = MIN(FP_MULTIPLY(CLAMP_LOW_THEN_MIN(D_800AE73C - 0x1000, 0, 0x1000),
-                                    func_80055D78(0x16B33, 0, -0x16199), Q12_SHIFT - 1),
+    ptr->field_74 = MIN(FP_MULTIPLY(CLAMP_LOW_THEN_MIN(D_800AE73C - Q12(1.0f), Q12(0.0f), Q12(1.0f)),
+                                    func_80055D78(Q12(22.7f), Q12(0.0), Q12(-22.1f)), Q12_SHIFT - 1),
                         0xFF);
 
-    ptr->field_78 = MIN(FP_MULTIPLY(CLAMP_LOW_THEN_MIN(D_800AE73C - 0x1000, 0, 0x1000),
-                                    func_80055D78(0x16B33, 0, -0x16199), Q12_SHIFT - 1),
+    ptr->field_78 = MIN(FP_MULTIPLY(CLAMP_LOW_THEN_MIN(D_800AE73C - Q12(1.0f), Q12(0.0f), Q12(1.0f)),
+                                    func_80055D78(Q12(22.7f), Q12(0.0), Q12(-22.1f)), Q12_SHIFT - 1),
                         0xFF);
 
     *(u16*)&ptr->field_0->r0 = ptr->field_6C + (ptr->field_6C << 8);

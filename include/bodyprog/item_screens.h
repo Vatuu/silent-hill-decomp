@@ -149,7 +149,7 @@ extern s_800AEDBC D_800AEDBC[];
 
 extern s32 D_800AE71C[][2];
 
-extern q3_12 D_800AE73C;
+extern q3_12 D_800AE73C; // Timer.
 
 extern s_800AE710 D_800AE710[4];
 

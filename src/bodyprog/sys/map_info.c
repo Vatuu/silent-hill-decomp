@@ -528,7 +528,7 @@ const static s_SpeedZone SPEED_ZONES_XXX[] = {
     { NO_VALUE,           Q4(0.0f),    Q4(0.0f),   Q4(0.0f),    Q4(0.0f)   }
 };
 
-const s_MapInfo MAP_INFOS[16] = {
+const s_MapInfo MAP_INFOS[MapType_Count] = {
     { FILE_BG_THR_GLB_PLM, "THR", MapFlag_FourActiveChunks,                   NULL,                SPEED_ZONES_THR },
     { NO_VALUE,            "SC",  MapFlag_TwoActiveChunks | MapFlag_Interior, NULL,                SPEED_ZONES_SC  },
     { NO_VALUE,            "SU",  MapFlag_TwoActiveChunks | MapFlag_Interior, NULL,                SPEED_ZONES_SU  },
