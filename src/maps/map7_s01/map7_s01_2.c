@@ -2051,12 +2051,10 @@ void func_800DCE20(void) // 0x800DCE20
 
 void func_800DD348(void* unused, s32 idx, u8 val) // 0x800DD348
 {
-    s32 offset;
+    u8* spawnFlags;
 
-    // @hack This sets `g_MapOverlayHeader.charaSpawns_24C[0][arg1].flags_6` but that doesn't work with our union struct.
-    // Might need to change `charaSpawns_24C` back to a separate struct instead.
-    offset = idx * 12;
-    ((u8*)((u8*)&g_MapOverlayHeader + 0x252))[offset] = val;
+    spawnFlags  = &g_MapOverlayHeader.charaSpawns_24C[0][idx].flags_6;
+    *spawnFlags = val;
 }
 
 void Map_WorldObjectsInit(void) // 0x800DD368
