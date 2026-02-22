@@ -162,7 +162,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
                         .charaId_4 = Chara_None,
                         .rotationY_5 = 192,
                         .flags_6 = 6,
-                        .field_7_0 = -1,
+                        .field_7_0 = NO_VALUE
                     }
                 },
                 .positionZ_8 = Q12(3.0f),
@@ -186,7 +186,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
                         .charaId_4 = Chara_None,
                         .rotationY_5 = 0,
                         .flags_6 = 7,
-                        .field_7_0 = -1,
+                        .field_7_0 = NO_VALUE
                     }
                 },
                 .positionZ_8 = Q12(-13.0f),
@@ -198,7 +198,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
                         .charaId_4 = Chara_None,
                         .rotationY_5 = 0,
                         .flags_6 = 7,
-                        .field_7_0 = -1,
+                        .field_7_0 = NO_VALUE
                     }
                 },
                 .positionZ_8 = Q12(-105.0f),
@@ -210,7 +210,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
                         .charaId_4 = Chara_None,
                         .rotationY_5 = 0,
                         .flags_6 = 6,
-                        .field_7_0 = -1,
+                        .field_7_0 = NO_VALUE
                     }
                 },
                 .positionZ_8 = Q12(-36.0f),
@@ -222,7 +222,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
                         .charaId_4 = Chara_None,
                         .rotationY_5 = 128,
                         .flags_6 = 6,
-                        .field_7_0 = -1,
+                        .field_7_0 = NO_VALUE
                     }
                 },
                 .positionZ_8 = Q12(-110.0f),
@@ -234,7 +234,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
                         .charaId_4 = Chara_None,
                         .rotationY_5 = 128,
                         .flags_6 = 6,
-                        .field_7_0 = -1,
+                        .field_7_0 = NO_VALUE
                     }
                 },
                 .positionZ_8 = Q12(-110.9f),
@@ -248,7 +248,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
                         .charaId_4 = Chara_Romper,
                         .rotationY_5 = 128,
                         .flags_6 = 3,
-                        .field_7_0 = -1,
+                        .field_7_0 = NO_VALUE
                     }
                 },
                 .positionZ_8 = Q12(9.0f),
@@ -260,7 +260,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
                         .charaId_4 = Chara_Romper,
                         .rotationY_5 = 0,
                         .flags_6 = 3,
-                        .field_7_0 = -1,
+                        .field_7_0 = NO_VALUE
                     }
                 },
                 .positionZ_8 = Q12(8.0f),
@@ -284,7 +284,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
                         .charaId_4 = Chara_Romper,
                         .rotationY_5 = 128,
                         .flags_6 = 3,
-                        .field_7_0 = -1,
+                        .field_7_0 = NO_VALUE
                     }
                 },
                 .positionZ_8 = Q12(-71.0f),
@@ -296,7 +296,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
                         .charaId_4 = Chara_Romper,
                         .rotationY_5 = 96,
                         .flags_6 = 3,
-                        .field_7_0 = -1,
+                        .field_7_0 = NO_VALUE
                     }
                 },
                 .positionZ_8 = Q12(-66.0f),
@@ -308,7 +308,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
                         .charaId_4 = Chara_Groaner,
                         .rotationY_5 = 0,
                         .flags_6 = 3,
-                        .field_7_0 = -1,
+                        .field_7_0 = NO_VALUE
                     }
                 },
                 .positionZ_8 = Q12(-10.0f),
@@ -320,7 +320,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
                         .charaId_4 = Chara_Groaner,
                         .rotationY_5 = 128,
                         .flags_6 = 3,
-                        .field_7_0 = -1,
+                        .field_7_0 = NO_VALUE
                     }
                 },
                 .positionZ_8 = Q12(-70.0f),
@@ -332,7 +332,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
                         .charaId_4 = Chara_Groaner,
                         .rotationY_5 = 224,
                         .flags_6 = 3,
-                        .field_7_0 = -1,
+                        .field_7_0 = NO_VALUE
                     }
                 },
                 .positionZ_8 = Q12(-20.0f),
@@ -344,7 +344,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
                         .charaId_4 = Chara_Groaner,
                         .rotationY_5 = 32,
                         .flags_6 = 3,
-                        .field_7_0 = -1,
+                        .field_7_0 = NO_VALUE
                     }
                 },
                 .positionZ_8 = Q12(-19.0f),

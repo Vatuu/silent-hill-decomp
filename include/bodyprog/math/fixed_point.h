@@ -233,7 +233,7 @@
  * @return `x` converted to clamped Q*.8 fixed-point.
  */
 #define Q8_CLAMPED(x) \
-    CLAMP(Q8(x), 0, Q8(1.0f) - 1)
+    CLAMP(Q8(x), Q8(0.0f), Q8(1.0f) - 1)
 
 /** @brief Converts a floating-point value to Q*.12 fixed-point.
  *
@@ -249,7 +249,7 @@
  * @return `x` converted to clamped Q*.12 fixed-point.
  */
 #define Q12_CLAMPED(x) \
-    CLAMP(Q12(x), 0, Q12(1.0f) - 1)
+    CLAMP(Q12(x), Q12(0.0f), Q12(1.0f) - 1)
 
 /** @brief Converts a fixed-point value from Q*.4 to Q*.8.
  *

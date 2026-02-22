@@ -1447,12 +1447,12 @@ typedef struct
 } s_800AFE24; // Size: 85
 
 /** @brief Contains X/Z coordinates and optional 4 bytes of data.
- * Map headers include an array of these, which `s_EventData` includes an index into. */
+ * Map headers include an array of these, into which `s_EventData` includes an index. */
 typedef struct _MapPoint2d
 {
     q19_12 positionX_0;
 
-    // Optional data
+    // Optional data.
     u32   mapIdx_4_0          : 5; /** `e_PaperMapIdx`? */
     u32   field_4_5           : 4;
     u32   loadingScreenId_4_9 : 3; /** `e_LoadingScreenId` */
@@ -1464,7 +1464,7 @@ typedef struct _MapPoint2d
 } s_MapPoint2d;
 STATIC_ASSERT_SIZEOF(s_MapPoint2d, 12);
 
-// TODO: Moves fields outside of union, should help fix `map7_s01::func_800DD348` but needs updating all map headers.
+// TODO: Moves fields outside of union. Should help fix `map7_s01::func_800DD348`, but needs updates for all map headers.
 typedef struct _SpawnInfo
 {
     q19_12 positionX_0;
@@ -1572,6 +1572,7 @@ typedef struct _MapOverlayHeader
     u8                     (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxUpdate`.
     s8                     field_8;
     s32                    (*func_C)();
+    // 3 bytes of padding.
     void                   (*bgmEvent_10)(bool);
     s8                     bgmIdx_14;           // Flags? Music related.
     u8                     ambientAudioIdx_15; // Ambient file index from `g_AmbientVabTaskLoadCmds`.
@@ -1597,8 +1598,10 @@ typedef struct _MapOverlayHeader
     void                   (*npcSpawnEvent_48)(); // func(?).
     s_MapHdr_field_4C*     unkTable1_4C; // Related to collision?
     s16                    unkTable1Count_50;
+    // 2 bytes of padding.
     s_BloodSplat*          bloodSplats_54;
     s16                    bloodSplatCount_58;
+    // 2 bytes of padding.
     s_MapOverlayHeader_5C* field_5C;
     void                   (*func_60)(s32, s32);
     s32                    (*func_64)(POLY_FT4** poly, s32);

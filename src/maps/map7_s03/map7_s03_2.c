@@ -2747,7 +2747,7 @@ void func_800DAD54(void) // 0x800DAD54
     vec = &D_800F3D58.field_0;
 
     curPtr = (s_func_800DAD54*)FS_BUFFER_28;
-    for (i = 399; i >= 0; i--, curPtr++)
+    for (i = 0; i < 400; i++, curPtr++)
     {
         curPtr->field_28 = 0;
     }
@@ -3081,7 +3081,7 @@ void func_800DB6D0(MATRIX* arg0, const VECTOR* rot0, const VECTOR* rot1, const M
 
         if (angle1 < absAngle2)
         {
-            if (angle2 <= 0)
+            if (angle2 <= Q12_ANGLE(0.0f))
             {
                 angle0 = angle0 - angle1;
             }
@@ -3194,14 +3194,13 @@ void func_800DBAE8(const VECTOR3* pos, s32 idx) // 0x800DBAE8
 
 void func_800DBBA0(void) // 0x800DBBA0
 {
-    q19_12 time;
+    q19_12 deltaTime;
     s32    i;
 
-    time = g_DeltaTime0;
-
+    deltaTime = g_DeltaTime0;
     for (i = 0; i < ARRAY_SIZE(D_800F3D98); i++)
     {
-        D_800F3D98[i] += time;
+        D_800F3D98[i] += deltaTime;
     }
 }
 
