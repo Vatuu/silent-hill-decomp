@@ -1583,7 +1583,6 @@ typedef struct _MapOverlayHeader
     s_MapInfo*             mapInfo_0;
     u8                     (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxUpdate`.
     s8                     field_8;
-    s8                     unk_9[3];
     s32                    (*func_C)();
     void                   (*bgmEvent_10)(bool);
     s8                     bgmIdx_14;           // Flags? Music related.
@@ -1610,10 +1609,8 @@ typedef struct _MapOverlayHeader
     void                   (*npcSpawnEvent_48)(); // func(?).
     s_MapHdr_field_4C*     unkTable1_4C; // Related to collision?
     s16                    unkTable1Count_50;
-    s8                     unk_52[2];
     s_BloodSplat*          bloodSplats_54;
     s16                    bloodSplatCount_58;
-    s8                     unk_5A[2];
     s_MapOverlayHeader_5C* field_5C;
     void                   (*func_60)(s32, s32);
     s32                    (*func_64)(POLY_FT4** poly, s32);

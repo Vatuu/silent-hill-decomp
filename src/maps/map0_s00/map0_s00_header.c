@@ -54,7 +54,6 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .mapInfo_0                    = &MAP_INFOS[MapType_THR],
     .getMapRoomIdxFunc_4          = Map_RoomIdxGet,
     .field_8                      = 34,
-    .unk_9                        = { 0, 0, 0 },
     .func_C                       = sharedFunc_800D929C_0_s00,
     .bgmEvent_10                  = Map_RoomBgmInit,
     .bgmIdx_14                    = 3,
