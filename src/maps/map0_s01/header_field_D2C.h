@@ -1,5 +1,4 @@
-{
-      .endOfArray_0_0 = 0,
+    {
       .positionX_0_1 = -204,
       .positionZ_0_11 = 141,
       .sizeX_0_21 = 2,
@@ -7,7 +6,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -198,
       .positionZ_0_11 = 140,
       .sizeX_0_21 = 2,
@@ -15,7 +13,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -188,
       .positionZ_0_11 = 141,
       .sizeX_0_21 = 2,
@@ -23,7 +20,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -182,
       .positionZ_0_11 = 141,
       .sizeX_0_21 = 2,
@@ -31,7 +27,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -60,
       .positionZ_0_11 = 131,
       .sizeX_0_21 = 1,
@@ -39,7 +34,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -51,
       .positionZ_0_11 = 130,
       .sizeX_0_21 = 11,
@@ -47,7 +41,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -30,
       .positionZ_0_11 = 131,
       .sizeX_0_21 = 3,
@@ -55,7 +48,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -15,
       .positionZ_0_11 = 131,
       .sizeX_0_21 = 3,
@@ -63,7 +55,6 @@
       .field_0_29 = 5,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 41,
       .positionZ_0_11 = 139,
       .sizeX_0_21 = 4,
@@ -71,7 +62,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 50,
       .positionZ_0_11 = 141,
       .sizeX_0_21 = 2,
@@ -79,7 +69,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 60,
       .positionZ_0_11 = 141,
       .sizeX_0_21 = 2,
@@ -87,7 +76,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 66,
       .positionZ_0_11 = 141,
       .sizeX_0_21 = 2,
@@ -95,7 +83,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 76,
       .positionZ_0_11 = 141,
       .sizeX_0_21 = 2,
@@ -103,7 +90,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 82,
       .positionZ_0_11 = 140,
       .sizeX_0_21 = 2,
@@ -111,7 +97,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 92,
       .positionZ_0_11 = 141,
       .sizeX_0_21 = 2,
@@ -119,7 +104,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 98,
       .positionZ_0_11 = 141,
       .sizeX_0_21 = 2,
@@ -127,7 +111,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -204,
       .positionZ_0_11 = 108,
       .sizeX_0_21 = 1,
@@ -135,7 +118,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -198,
       .positionZ_0_11 = 107,
       .sizeX_0_21 = 5,
@@ -143,7 +125,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -92,
       .positionZ_0_11 = 108,
       .sizeX_0_21 = 2,
@@ -151,7 +132,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -87,
       .positionZ_0_11 = 108,
       .sizeX_0_21 = 5,
@@ -159,7 +139,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -80,
       .positionZ_0_11 = 107,
       .sizeX_0_21 = 15,
@@ -167,7 +146,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -27,
       .positionZ_0_11 = 107,
       .sizeX_0_21 = 3,
@@ -175,7 +153,6 @@
       .field_0_29 = 5,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 20,
       .positionZ_0_11 = 108,
       .sizeX_0_21 = 1,
@@ -183,7 +160,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 38,
       .positionZ_0_11 = 107,
       .sizeX_0_21 = 1,
@@ -191,7 +167,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 42,
       .positionZ_0_11 = 108,
       .sizeX_0_21 = 5,
@@ -199,7 +174,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 60,
       .positionZ_0_11 = 108,
       .sizeX_0_21 = 2,
@@ -207,7 +181,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 75,
       .positionZ_0_11 = 107,
       .sizeX_0_21 = 3,
@@ -215,7 +188,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 82,
       .positionZ_0_11 = 108,
       .sizeX_0_21 = 4,
@@ -223,7 +195,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 88,
       .positionZ_0_11 = 109,
       .sizeX_0_21 = 3,
@@ -231,7 +202,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 93,
       .positionZ_0_11 = 109,
       .sizeX_0_21 = 3,
@@ -239,7 +209,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -42,
       .positionZ_0_11 = 11,
       .sizeX_0_21 = 1,
@@ -247,7 +216,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 20,
       .positionZ_0_11 = 11,
       .sizeX_0_21 = 2,
@@ -255,7 +223,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 42,
       .positionZ_0_11 = 11,
       .sizeX_0_21 = 3,
@@ -263,7 +230,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -196,
       .positionZ_0_11 = -12,
       .sizeX_0_21 = 1,
@@ -271,7 +237,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -86,
       .positionZ_0_11 = -12,
       .sizeX_0_21 = 4,
@@ -279,7 +244,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -79,
       .positionZ_0_11 = -13,
       .sizeX_0_21 = 13,
@@ -287,7 +251,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -52,
       .positionZ_0_11 = -12,
       .sizeX_0_21 = 1,
@@ -295,7 +258,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -45,
       .positionZ_0_11 = -13,
       .sizeX_0_21 = 2,
@@ -303,7 +265,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -31,
       .positionZ_0_11 = -12,
       .sizeX_0_21 = 6,
@@ -311,7 +272,6 @@
       .field_0_29 = 5,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -15,
       .positionZ_0_11 = -15,
       .sizeX_0_21 = 3,
@@ -319,7 +279,6 @@
       .field_0_29 = 5,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 19,
       .positionZ_0_11 = -20,
       .sizeX_0_21 = 10,
@@ -327,7 +286,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 29,
       .positionZ_0_11 = -20,
       .sizeX_0_21 = 11,
@@ -335,7 +293,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 19,
       .positionZ_0_11 = -29,
       .sizeX_0_21 = 10,
@@ -343,7 +300,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 68,
       .positionZ_0_11 = -12,
       .sizeX_0_21 = 1,
@@ -351,7 +307,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 73,
       .positionZ_0_11 = -12,
       .sizeX_0_21 = 6,
@@ -359,7 +314,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 82,
       .positionZ_0_11 = -12,
       .sizeX_0_21 = 4,
@@ -367,7 +321,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -174,
       .positionZ_0_11 = -69,
       .sizeX_0_21 = 1,
@@ -375,7 +328,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -22,
       .positionZ_0_11 = -69,
       .sizeX_0_21 = 2,
@@ -383,7 +335,6 @@
       .field_0_29 = 5,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 25,
       .positionZ_0_11 = -69,
       .sizeX_0_21 = 6,
@@ -391,7 +342,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 67,
       .positionZ_0_11 = -70,
       .sizeX_0_21 = 1,
@@ -399,7 +349,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 97,
       .positionZ_0_11 = -69,
       .sizeX_0_21 = 1,
@@ -407,7 +356,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = -92,
       .sizeX_0_21 = 9,
@@ -415,7 +363,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -210,
       .positionZ_0_11 = -92,
       .sizeX_0_21 = 8,
@@ -423,7 +370,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -199,
       .positionZ_0_11 = -93,
       .sizeX_0_21 = 6,
@@ -431,7 +377,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -191,
       .positionZ_0_11 = -94,
       .sizeX_0_21 = 2,
@@ -439,7 +384,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -188,
       .positionZ_0_11 = -93,
       .sizeX_0_21 = 3,
@@ -447,7 +391,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -183,
       .positionZ_0_11 = -92,
       .sizeX_0_21 = 6,
@@ -455,7 +398,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -175,
       .positionZ_0_11 = -92,
       .sizeX_0_21 = 3,
@@ -463,7 +405,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -78,
       .positionZ_0_11 = -92,
       .sizeX_0_21 = 5,
@@ -471,7 +412,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -70,
       .positionZ_0_11 = -92,
       .sizeX_0_21 = 2,
@@ -479,7 +419,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -52,
       .positionZ_0_11 = -92,
       .sizeX_0_21 = 2,
@@ -487,7 +426,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -27,
       .positionZ_0_11 = -93,
       .sizeX_0_21 = 3,
@@ -495,7 +433,6 @@
       .field_0_29 = 5,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 63,
       .positionZ_0_11 = -93,
       .sizeX_0_21 = 6,
@@ -503,7 +440,6 @@
       .field_0_29 = 5,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 82,
       .positionZ_0_11 = -98,
       .sizeX_0_21 = 5,
@@ -511,7 +447,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 90,
       .positionZ_0_11 = -105,
       .sizeX_0_21 = 6,
@@ -519,7 +454,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 193,
       .positionZ_0_11 = -96,
       .sizeX_0_21 = 7,
@@ -527,7 +461,6 @@
       .field_0_29 = 7,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -40,
       .positionZ_0_11 = -190,
       .sizeX_0_21 = 8,
@@ -535,7 +468,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -257,
       .positionZ_0_11 = 139,
       .sizeX_0_21 = 10,
@@ -543,7 +475,6 @@
       .field_0_29 = 5,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -258,
       .positionZ_0_11 = 77,
       .sizeX_0_21 = 1,
@@ -551,7 +482,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -258,
       .positionZ_0_11 = 29,
       .sizeX_0_21 = 1,
@@ -559,7 +489,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -288,
       .positionZ_0_11 = -183,
       .sizeX_0_21 = 3,
@@ -567,7 +496,6 @@
       .field_0_29 = 6,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -234,
       .positionZ_0_11 = 148,
       .sizeX_0_21 = 10,
@@ -575,7 +503,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = 100,
       .sizeX_0_21 = 1,
@@ -583,7 +510,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = 90,
       .sizeX_0_21 = 2,
@@ -591,7 +517,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = 82,
       .sizeX_0_21 = 2,
@@ -599,7 +524,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = 76,
       .sizeX_0_21 = 2,
@@ -607,7 +531,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -220,
       .positionZ_0_11 = 66,
       .sizeX_0_21 = 3,
@@ -615,7 +538,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = 60,
       .sizeX_0_21 = 2,
@@ -623,7 +545,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = 50,
       .sizeX_0_21 = 2,
@@ -631,7 +552,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = 44,
       .sizeX_0_21 = 2,
@@ -639,7 +559,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = 36,
       .sizeX_0_21 = 2,
@@ -647,7 +566,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = 28,
       .sizeX_0_21 = 2,
@@ -655,7 +573,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = 18,
       .sizeX_0_21 = 1,
@@ -663,7 +580,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = -22,
       .sizeX_0_21 = 2,
@@ -671,7 +587,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -220,
       .positionZ_0_11 = -28,
       .sizeX_0_21 = 3,
@@ -679,7 +594,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = -38,
       .sizeX_0_21 = 2,
@@ -687,7 +601,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = -44,
       .sizeX_0_21 = 2,
@@ -695,7 +608,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = -52,
       .sizeX_0_21 = 2,
@@ -703,7 +615,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = -62,
       .sizeX_0_21 = 1,
@@ -711,7 +622,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = -100,
       .sizeX_0_21 = 1,
@@ -719,7 +629,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = -110,
       .sizeX_0_21 = 2,
@@ -727,7 +636,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = -118,
       .sizeX_0_21 = 2,
@@ -735,7 +643,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = -124,
       .sizeX_0_21 = 2,
@@ -743,7 +650,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -220,
       .positionZ_0_11 = -134,
       .sizeX_0_21 = 3,
@@ -751,7 +657,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = -140,
       .sizeX_0_21 = 2,
@@ -759,7 +664,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = -150,
       .sizeX_0_21 = 2,
@@ -767,7 +671,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = -156,
       .sizeX_0_21 = 2,
@@ -775,7 +678,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = -164,
       .sizeX_0_21 = 2,
@@ -783,7 +685,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = -172,
       .sizeX_0_21 = 2,
@@ -791,7 +692,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -219,
       .positionZ_0_11 = -182,
       .sizeX_0_21 = 1,
@@ -799,7 +699,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -142,
       .positionZ_0_11 = 100,
       .sizeX_0_21 = 1,
@@ -807,7 +706,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = 90,
       .sizeX_0_21 = 2,
@@ -815,7 +713,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = 82,
       .sizeX_0_21 = 2,
@@ -823,7 +720,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = 76,
       .sizeX_0_21 = 2,
@@ -831,7 +727,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = 66,
       .sizeX_0_21 = 3,
@@ -839,7 +734,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = 60,
       .sizeX_0_21 = 2,
@@ -847,7 +741,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = 50,
       .sizeX_0_21 = 2,
@@ -855,7 +748,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = 44,
       .sizeX_0_21 = 2,
@@ -863,7 +755,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = 36,
       .sizeX_0_21 = 2,
@@ -871,7 +762,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = 28,
       .sizeX_0_21 = 2,
@@ -879,7 +769,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = 20,
       .sizeX_0_21 = 3,
@@ -887,7 +776,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = -22,
       .sizeX_0_21 = 3,
@@ -895,7 +783,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = -30,
       .sizeX_0_21 = 2,
@@ -903,7 +790,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = -38,
       .sizeX_0_21 = 2,
@@ -911,7 +797,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = -44,
       .sizeX_0_21 = 2,
@@ -919,7 +804,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = -54,
       .sizeX_0_21 = 3,
@@ -927,7 +811,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = -134,
       .sizeX_0_21 = 3,
@@ -935,7 +818,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = -140,
       .sizeX_0_21 = 2,
@@ -943,7 +825,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = -150,
       .sizeX_0_21 = 2,
@@ -951,7 +832,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = -156,
       .sizeX_0_21 = 2,
@@ -959,7 +839,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = -164,
       .sizeX_0_21 = 2,
@@ -967,7 +846,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -143,
       .positionZ_0_11 = -172,
       .sizeX_0_21 = 2,
@@ -975,7 +853,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -142,
       .positionZ_0_11 = -182,
       .sizeX_0_21 = 1,
@@ -983,7 +860,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = 100,
       .sizeX_0_21 = 1,
@@ -991,7 +867,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = 90,
       .sizeX_0_21 = 2,
@@ -999,7 +874,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = 82,
       .sizeX_0_21 = 2,
@@ -1007,7 +881,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = 76,
       .sizeX_0_21 = 2,
@@ -1015,7 +888,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -100,
       .positionZ_0_11 = 66,
       .sizeX_0_21 = 3,
@@ -1023,7 +895,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = 60,
       .sizeX_0_21 = 2,
@@ -1031,7 +902,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = 50,
       .sizeX_0_21 = 2,
@@ -1039,7 +909,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = 44,
       .sizeX_0_21 = 2,
@@ -1047,7 +916,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = 36,
       .sizeX_0_21 = 2,
@@ -1055,7 +923,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = 28,
       .sizeX_0_21 = 2,
@@ -1063,7 +930,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = 18,
       .sizeX_0_21 = 1,
@@ -1071,7 +937,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = -20,
       .sizeX_0_21 = 1,
@@ -1079,7 +944,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = -30,
       .sizeX_0_21 = 2,
@@ -1087,7 +951,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -100,
       .positionZ_0_11 = -38,
       .sizeX_0_21 = 3,
@@ -1095,7 +958,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = -44,
       .sizeX_0_21 = 2,
@@ -1103,7 +965,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = -52,
       .sizeX_0_21 = 2,
@@ -1111,7 +972,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = -132,
       .sizeX_0_21 = 2,
@@ -1119,7 +979,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -100,
       .positionZ_0_11 = -142,
       .sizeX_0_21 = 3,
@@ -1127,7 +986,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = -148,
       .sizeX_0_21 = 2,
@@ -1135,7 +993,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = -156,
       .sizeX_0_21 = 2,
@@ -1143,7 +1000,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = -164,
       .sizeX_0_21 = 2,
@@ -1151,7 +1007,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = -172,
       .sizeX_0_21 = 2,
@@ -1159,7 +1014,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -99,
       .positionZ_0_11 = -182,
       .sizeX_0_21 = 1,
@@ -1167,7 +1021,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -10,
       .positionZ_0_11 = 211,
       .sizeX_0_21 = 13,
@@ -1175,7 +1028,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 5,
       .positionZ_0_11 = 211,
       .sizeX_0_21 = 13,
@@ -1183,7 +1035,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -14,
       .positionZ_0_11 = 148,
       .sizeX_0_21 = 4,
@@ -1191,7 +1042,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -14,
       .positionZ_0_11 = 147,
       .sizeX_0_21 = 2,
@@ -1199,7 +1049,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -14,
       .positionZ_0_11 = 77,
       .sizeX_0_21 = 2,
@@ -1207,7 +1056,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -15,
       .positionZ_0_11 = 68,
       .sizeX_0_21 = 2,
@@ -1215,7 +1063,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -14,
       .positionZ_0_11 = 60,
       .sizeX_0_21 = 1,
@@ -1223,7 +1070,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -14,
       .positionZ_0_11 = 48,
       .sizeX_0_21 = 2,
@@ -1231,7 +1077,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = -14,
       .positionZ_0_11 = 40,
       .sizeX_0_21 = 2,
@@ -1239,7 +1084,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 20,
       .positionZ_0_11 = 174,
       .sizeX_0_21 = 2,
@@ -1247,7 +1091,6 @@
       .field_0_29 = 2,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 29,
       .positionZ_0_11 = 144,
       .sizeX_0_21 = 2,
@@ -1255,7 +1098,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 20,
       .positionZ_0_11 = 99,
       .sizeX_0_21 = 2,
@@ -1263,7 +1105,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 21,
       .positionZ_0_11 = 52,
       .sizeX_0_21 = 2,
@@ -1271,7 +1112,6 @@
       .field_0_29 = 1,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 21,
       .positionZ_0_11 = 18,
       .sizeX_0_21 = 1,
@@ -1279,7 +1119,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 98,
       .positionZ_0_11 = 100,
       .sizeX_0_21 = 1,
@@ -1287,7 +1126,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 97,
       .positionZ_0_11 = 90,
       .sizeX_0_21 = 2,
@@ -1295,7 +1133,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 97,
       .positionZ_0_11 = 82,
       .sizeX_0_21 = 2,
@@ -1303,7 +1140,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 97,
       .positionZ_0_11 = 76,
       .sizeX_0_21 = 2,
@@ -1311,7 +1147,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 97,
       .positionZ_0_11 = 66,
       .sizeX_0_21 = 3,
@@ -1319,7 +1154,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 97,
       .positionZ_0_11 = 60,
       .sizeX_0_21 = 2,
@@ -1327,7 +1161,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 97,
       .positionZ_0_11 = 50,
       .sizeX_0_21 = 2,
@@ -1335,7 +1168,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 97,
       .positionZ_0_11 = 44,
       .sizeX_0_21 = 2,
@@ -1343,7 +1175,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 97,
       .positionZ_0_11 = 36,
       .sizeX_0_21 = 2,
@@ -1351,7 +1182,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 97,
       .positionZ_0_11 = 28,
       .sizeX_0_21 = 2,
@@ -1359,7 +1189,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 98,
       .positionZ_0_11 = 18,
       .sizeX_0_21 = 1,
@@ -1367,7 +1196,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 99,
       .positionZ_0_11 = -27,
       .sizeX_0_21 = 1,
@@ -1375,7 +1203,6 @@
       .field_0_29 = 3,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 98,
       .positionZ_0_11 = -36,
       .sizeX_0_21 = 1,
@@ -1383,7 +1210,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 97,
       .positionZ_0_11 = -54,
       .sizeX_0_21 = 2,
@@ -1391,7 +1217,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 97,
       .positionZ_0_11 = -60,
       .sizeX_0_21 = 2,
@@ -1399,7 +1224,6 @@
       .field_0_29 = 4,
     },
     {
-      .endOfArray_0_0 = 0,
       .positionX_0_1 = 107,
       .positionZ_0_11 = -115,
       .sizeX_0_21 = 3,
@@ -1408,9 +1232,4 @@
     },
     {
       .endOfArray_0_0 = true,
-      .positionX_0_1 = 0,
-      .positionZ_0_11 = 0,
-      .sizeX_0_21 = 0,
-      .sizeZ_0_25 = 0,
-      .field_0_29 = 0,
-    }
+    },

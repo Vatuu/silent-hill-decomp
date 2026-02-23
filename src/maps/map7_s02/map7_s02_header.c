@@ -136,8 +136,6 @@ const s_MapOverlayHeader g_MapOverlayHeader =
 #include "vc_road_data.h"
     },
     .field_D2C = {
-        {
-            .endOfArray_0_0 = 1,
-        },
+#include "header_field_D2C.h"
     },
 };

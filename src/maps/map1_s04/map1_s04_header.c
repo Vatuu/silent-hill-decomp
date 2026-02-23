@@ -147,5 +147,5 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     },
     .field_D2C = {
 #include "header_field_D2C.h"
-    }
+    },
 };
