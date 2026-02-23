@@ -1678,8 +1678,7 @@ typedef struct _MapOverlayHeader
     void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `Game_NpcUpdate`. */
     s8                     charaGroupIds_248[GROUP_CHARA_COUNT];                              /** `e_CharacterId` values where if `s_SpawnInfo::charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_SpawnInfo            charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
-    VC_ROAD_DATA           roadDataList_3CC[48];
-    u32                    unk_84C[0x138];
+    VC_ROAD_DATA           roadDataList_3CC[100];
     s_func_8006F8FC        field_D2C[200];
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 0x104C);

@@ -135,7 +135,6 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .roadDataList_3CC = {
 #include "vc_road_data.h"
     },
-    .unk_84C = {},
     .field_D2C = {
         {
             .endOfArray_0_0 = 0,

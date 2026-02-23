@@ -158,9 +158,6 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .roadDataList_3CC = {
 #include "vc_road_data.h"
     },
-    .unk_84C = {
-#include "header_last_unknown_chunk.h"
-    },
     .field_D2C = {
 #include "header_field_D2C.h"
     },
