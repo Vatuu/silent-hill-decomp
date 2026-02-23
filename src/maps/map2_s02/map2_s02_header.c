@@ -10,16 +10,14 @@
 
 extern s_AnimInfo HARRY_M2S02_ANIM_INFOS[];
 
-void (*g_LoadScreenFuncs[])() =
-{
+void (*g_LoadScreenFuncs[])() = {
     NULL,
     Gfx_LoadingScreen_PlayerRun,
     Gfx_LoadingScreen_BackgroundTexture,
     func_800E9C24
 };
 
-const s_MapOverlayHeader g_MapOverlayHeader =
-{
+const s_MapOverlayHeader g_MapOverlayHeader = {
     .mapInfo_0                        = &MAP_INFOS[MapType_SPR],
     .getMapRoomIdxFunc_4              = Map_RoomIdxGet,
     .field_8                          = 15,
@@ -124,12 +122,11 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .windSpeedZ_188                   = &g_Particle_SpeedZ,
     .data_18C                         = &sharedData_800DFB6C_0_s00,
     .data_190                         = &sharedData_800DFB70_0_s00,
-    .charaUpdateFuncs_194 = {
+    .charaUpdateFuncs_194             = {
         NULL, NULL, Ai_AirScreamer_Update, Ai_AirScreamer_Update, Ai_Groaner_Update, Ai_Groaner_Update, NULL, NULL,
-        NULL, NULL, NULL, NULL, Ai_Romper_Update
-    },
+        NULL, NULL, NULL, NULL, Ai_Romper_Update },
     .charaGroupIds_248 = { Chara_AirScreamer, Chara_Groaner, Chara_Romper },
-    .charaSpawns_24C = {
+    .charaSpawns_24C   = {
 #include "chara_spawns.h"
     },
     .roadDataList_3CC = {

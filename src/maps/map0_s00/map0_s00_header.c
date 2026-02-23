@@ -12,25 +12,22 @@
 extern s_EventData  D_800DF754[72];
 extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 
-extern s_AnimInfo HARRY_M0S00_ANIM_INFOS[];
+extern s_AnimInfo      HARRY_M0S00_ANIM_INFOS[];
 extern s_UnkStruct3_Mo g_MapHeaderTable_38[18];
-extern u8 LOADABLE_INVENTORY_ITEMS[8];
+extern u8              LOADABLE_INVENTORY_ITEMS[8];
 
-void (*g_LoadScreenFuncs[])() =
-{
+void (*g_LoadScreenFuncs[])() = {
     NULL,
     Gfx_LoadingScreen_PlayerRun,
     Gfx_LoadingScreen_BackgroundTexture,
     Gfx_LoadingScreen_StageString
 };
 
-s_MapPoint2d MAP_POINTS[] =
-{
-    #include "map_points.h"
+s_MapPoint2d MAP_POINTS[] = {
+#include "map_points.h"
 };
 
-void (*g_MapEventFuncs[])() =
-{
+void (*g_MapEventFuncs[])() = {
     func_800D9610,
     NULL,
     MapEvent_OpeningCutscene,
@@ -160,8 +157,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, Ai_Stalker_Update,
         Ai_Stalker_Update, Ai_Stalker_Update, NULL, NULL, NULL, NULL, NULL, NULL,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, Ai_Cheryl_Update
-    },
+        NULL, NULL, NULL, NULL, Ai_Cheryl_Update },
     .charaGroupIds_248 = {},
     .charaSpawns_24C   = {
 #include "chara_spawns.h"

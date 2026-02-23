@@ -8,8 +8,7 @@
 
 extern s_AnimInfo HARRY_M2S00_ANIM_INFOS[];
 
-void (*g_LoadScreenFuncs[])() =
-{
+void (*g_LoadScreenFuncs[])() = {
     NULL,
     Gfx_LoadingScreen_PlayerRun,
     Gfx_LoadingScreen_BackgroundTexture,
@@ -122,13 +121,18 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .data_18C                         = &sharedData_800DFB6C_0_s00,
     .data_190                         = &sharedData_800DFB70_0_s00,
     .charaUpdateFuncs_194             = {
-      NULL, NULL, Ai_AirScreamer_Update, Ai_AirScreamer_Update, Ai_Groaner_Update, Ai_Groaner_Update,
+        NULL,
+        NULL,
+        Ai_AirScreamer_Update,
+        Ai_AirScreamer_Update,
+        Ai_Groaner_Update,
+        Ai_Groaner_Update,
     },
     .charaGroupIds_248 = { Chara_AirScreamer, Chara_Groaner },
     .charaSpawns_24C   = {
 #include "chara_spawns.h"
     },
-    .roadDataList_3CC  = {
+    .roadDataList_3CC = {
 #include "vc_road_data.h"
     },
     .field_D2C = {

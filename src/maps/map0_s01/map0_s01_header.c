@@ -14,7 +14,7 @@ extern s_EventData     D_800DDFB8[];
 extern s_AnimInfo      HARRY_M0S01_ANIM_INFOS[];
 extern s_BloodSplat    g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 extern s_UnkStruct3_Mo g_MapHeaders_38[21];
-extern u8 LOADABLE_INVENTORY_ITEMS[34];
+extern u8              LOADABLE_INVENTORY_ITEMS[34];
 
 void (*g_LoadScreenFuncs[])() = {
     NULL,
@@ -24,11 +24,10 @@ void (*g_LoadScreenFuncs[])() = {
 };
 
 s_MapPoint2d MAP_POINTS[] = {
-    #include "map_points.h"
+#include "map_points.h"
 };
 
-void (*g_MapEventFuncs[])() =
-{
+void (*g_MapEventFuncs[])() = {
     NULL,
     NULL,
     MapEvent_CommonItemTake,
@@ -152,13 +151,12 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
         NULL, NULL, Ai_AirScreamer_Update, Ai_AirScreamer_Update, NULL, NULL, NULL, NULL,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, Ai_Cybil_Update, Ai_Cybil_Update
-    },
+        NULL, NULL, Ai_Cybil_Update, Ai_Cybil_Update },
     .charaGroupIds_248 = {},
     .charaSpawns_24C   = {
 #include "chara_spawns.h"
     },
-    .roadDataList_3CC  = {
+    .roadDataList_3CC = {
 #include "vc_road_data.h"
     },
     .field_D2C = {
