@@ -140,6 +140,8 @@ sharedFunc_800D15F0_3_s01     = 0x800D76D8; // type:func
 //--- PA: 0x00FA68   VA: 0x800D8FE0   subsegment: data
 //----------------------------------------------------
 HARRY_M3S05_ANIM_INFOS        = 0x800D8FE0;
+g_MapHeaderTable_38           = 0x800D9250;
+LOADABLE_INVENTORY_ITEMS      = 0x800D92F0;
 sharedData_800DD584_0_s00     = 0x800D9315; // type:u8
 sharedData_800DD598_0_s00     = 0x800D9318;
 sharedData_800DD59C_0_s00     = 0x800D931C; // type:u8
@@ -172,7 +174,9 @@ g_PuppetNurse_AnimStatus4     = 0x800DA128; // type:u8 size:0x4
 MAP_ROOM_IDXS                 = 0x800DA12C; // type:u8
 sharedData_800D1D14_3_s02     = 0x800DA16C; // type:u8 size:8
 sharedData_800D1D1C_3_s02     = 0x800DA174; // type:u16 size:0x78
+g_LoadScreenFuncs             = 0x800DA1EC;
 MAP_POINTS                    = 0x800DA1FC; // type:MapPoint2d
+g_MapEventFuncs               = 0x800DA6AC;
 
 //---------------------------------------------------------------
 //--- PA: 0x011178   VA: 0x800DA6F0   subsegment: .data, map3_s05

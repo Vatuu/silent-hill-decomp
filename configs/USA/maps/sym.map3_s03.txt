@@ -134,6 +134,8 @@ Map_WorldObjectsInit          = 0x800D3EAC; // type:func
 //--- PA: 0x00B910   VA: 0x800D4E88   subsegment: data
 //----------------------------------------------------
 HARRY_M3S03_ANIM_INFOS        = 0x800D4E88;
+g_MapHeaderTable_38           = 0x800D5098;
+LOADABLE_INVENTORY_ITEMS      = 0x800D5120;
 sharedData_800DD584_0_s00     = 0x800D5145; // type:u8
 sharedData_800DD598_0_s00     = 0x800D5148;
 sharedData_800DD59C_0_s00     = 0x800D514C; // type:u8
@@ -151,7 +153,9 @@ BLOODSUCKER_ANIM_INFOS        = 0x800D5ABC; // type:AnimInfo
 MAP_ROOM_IDXS                 = 0x800D5C9C; // type:u8
 sharedData_800D1D14_3_s02     = 0x800D5CDC; // type:u8 size:8
 sharedData_800D1D1C_3_s02     = 0x800D5CE4; // type:u16 size:0x78
+g_LoadScreenFuncs             = 0x800D5D5C;
 MAP_POINTS                    = 0x800D5D6C; // type:MapPoint2d
+g_MapEventFuncs               = 0x800D6390;
 
 //---------------------------------------------------------------
 //--- PA: 0x00CE6C   VA: 0x800D63E4   subsegment: .data, map3_s03

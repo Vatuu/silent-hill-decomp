@@ -12,8 +12,6 @@
 extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 
 extern s_AnimInfo      HARRY_M5S03_ANIM_INFOS[];
-extern s_UnkStruct3_Mo g_MapHeaderTable_38[];
-extern u8              LOADABLE_INVENTORY_ITEMS[];
 
 void (*g_LoadScreenFuncs[])() = {
     NULL,
@@ -50,15 +48,15 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .ambientAudioIdx_15               = 30,
     .field_16                         = 2,
     .field_17                         = 1,
-    .loadingScreenFuncs_18            = g_LoadScreenFuncs, // 0x800D3688,
+    .loadingScreenFuncs_18            = g_LoadScreenFuncs,
     .mapPointsOfInterest_1C           = MAP_POINTS,
-    .mapEventFuncs_20                 = g_MapEventFuncs,   // 0x800D3878,
+    .mapEventFuncs_20                 = g_MapEventFuncs,
     .mapEvents_24                     = MAP_EVENTS,
     .field_28                         = &g_SysWork.npcCoords_FC0[0],
-    .loadableItems_2C                 = LOADABLE_INVENTORY_ITEMS, // 0x800D3300,
+    .loadableItems_2C                 = LOADABLE_INVENTORY_ITEMS,
     .mapMessages_30                   = MAP_MESSAGES,
     .animInfos_34                     = HARRY_M5S03_ANIM_INFOS,
-    .field_38                         = g_MapHeaderTable_38, // 0x800D3280,
+    .field_38                         = g_MapHeaderTable_38,
     .worldObjectsInit_3C              = Map_WorldObjectsInit,
     .worldObjectsUpdate_40            = Map_WorldObjectsUpdate,
     .func_44                          = NULL,

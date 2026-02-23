@@ -14,8 +14,6 @@
 extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 
 extern s_AnimInfo      HARRY_M2S01_ANIM_INFOS[];
-extern s_UnkStruct3_Mo g_MapHeaderTable_38[];
-extern u8              LOADABLE_INVENTORY_ITEMS[];
 
 void (*g_LoadScreenFuncs[])() = {
     NULL,

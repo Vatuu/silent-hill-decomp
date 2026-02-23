@@ -108,6 +108,8 @@ HARRY_M0S02_ANIM_INFOS           = 0x800CF98C;
 //----------------------------------------------------
 //--- PA: 0x006500   VA: 0x800CFA78   subsegment: data
 //----------------------------------------------------
+g_MapHeaderTable_38              = 0x800CFA7C;
+LOADABLE_INVENTORY_ITEMS         = 0x800CFABC;
 sharedData_800DD584_0_s00        = 0x800CFADF; // type:u8
 g_ParticlesAddedCount            = 0x800CFAE0; // type:s32
 g_ParticleCameraMoved            = 0x800CFAE8; // type:u8

@@ -45,7 +45,7 @@ s_AnimInfo HARRY_M0S01_ANIM_INFOS[] = {
     {}
 };
 
-s_UnkStruct3_Mo g_MapHeaders_38[21] = {
+s_UnkStruct3_Mo g_MapHeaderTable_38[21] = {
     { 0x4D4C, 0x0,   0x2A4, 0x2A5 },
     { 0x4F4E, 0xCA,  0x2A6, 0x2C9 },
     { 0x5150, 0xD2,  0x2CA, 0x2DC },

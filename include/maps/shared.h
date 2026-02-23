@@ -1515,6 +1515,10 @@ extern void (*g_Ai_AirScreamer_ControlFuncs[52])(s_SubCharacter* airScreamer); /
 
 extern s_MapPoint2d MAP_POINTS[];
 extern s_EventData  MAP_EVENTS[];
+extern void (*g_LoadScreenFuncs[])();
+extern void (*g_MapEventFuncs[])();
+extern u8 LOADABLE_INVENTORY_ITEMS[];
+extern s_UnkStruct3_Mo g_MapHeaderTable_38[];
 
 /** Scale. */
 extern VECTOR sharedData_800DD870_0_s01;

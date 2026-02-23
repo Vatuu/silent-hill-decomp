@@ -135,6 +135,8 @@ MapEvent_MapTake                 = 0x800D87F0; // type:func
 //--- PA: 0x00FDFC   VA: 0x800D9374   subsegment: data
 //----------------------------------------------------
 HARRY_M6S03_ANIM_INFOS           = 0x800D9374;
+g_MapHeaderTable_38              = 0x800D9544;
+LOADABLE_INVENTORY_ITEMS         = 0x800D95BC;
 sharedData_800DD584_0_s00        = 0x800D95DD; // type:u8
 g_ParticlesAddedCount            = 0x800D95E0; // type:s32
 sharedData_800DD58C_0_s00        = 0x800D95E4; // type:s32
@@ -187,6 +189,8 @@ sharedData_800D9AF0_5_s00        = 0x800DBB10;
 sharedData_800D9B04_5_s00        = 0x800DBB24;
 sharedData_800D9B18_5_s00        = 0x800DBB38;
 sharedData_800D9B2C_5_s00        = 0x800DBB4C;
+g_LoadScreenFuncs                = 0x800DBD1C;
+g_MapEventFuncs                  = 0x800DBDC8;
 
 //---------------------------------------------------------------
 //--- PA: 0x012868   VA: 0x800DBDE0   subsegment: .data, map6_s03

@@ -10,8 +10,6 @@
 extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 
 extern s_AnimInfo      HARRY_M2S04_ANIM_INFOS[];
-extern s_UnkStruct3_Mo g_MapHeaderTable_38[];
-extern u8              LOADABLE_INVENTORY_ITEMS[];
 
 void (*g_LoadScreenFuncs[])() = {
     NULL,
@@ -44,22 +42,22 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .ambientAudioIdx_15               = 14,
     .field_16                         = 1,
     .field_17                         = 0,
-    .loadingScreenFuncs_18            = g_LoadScreenFuncs, // 0x800CDCC8,
+    .loadingScreenFuncs_18            = g_LoadScreenFuncs,
     .mapPointsOfInterest_1C           = MAP_POINTS,
-    .mapEventFuncs_20                 = g_MapEventFuncs,   // 0x800CDE4C,
+    .mapEventFuncs_20                 = g_MapEventFuncs,
     .mapEvents_24                     = MAP_EVENTS,
     .field_28                         = &g_SysWork.npcCoords_FC0[0],
-    .loadableItems_2C                 = LOADABLE_INVENTORY_ITEMS, // 0x800CDC34,
+    .loadableItems_2C                 = LOADABLE_INVENTORY_ITEMS,
     .mapMessages_30                   = MAP_MESSAGES,
     .animInfos_34                     = HARRY_M2S04_ANIM_INFOS,
-    .field_38                         = g_MapHeaderTable_38, // 0x800CDBEC,
+    .field_38                         = g_MapHeaderTable_38,
     .worldObjectsInit_3C              = Map_WorldObjectsInit,
     .worldObjectsUpdate_40            = Map_WorldObjectsUpdate,
     .func_44                          = NULL,
     .npcSpawnEvent_48                 = NULL,
     .unkTable1_4C                     = sharedData_800DFB7C_0_s00,
     .unkTable1Count_50                = ARRAY_SIZE(sharedData_800DFB7C_0_s00),
-    .bloodSplats_54                   = g_Effect_BloodSplats, // 0x800CF070,
+    .bloodSplats_54                   = g_Effect_BloodSplats,
     .bloodSplatCount_58               = ARRAY_SIZE(g_Effect_BloodSplats),
     .field_5C                         = NULL,
     .func_60                          = NULL,

@@ -230,6 +230,8 @@ Map_WorldObjectsInit                = 0x800E3804; // type:func
 //--- PA: 0x01C1B8   VA: 0x800E5730   subsegment: data
 //----------------------------------------------------
 HARRY_M7S02_ANIM_INFOS              = 0x800E5730;
+g_MapHeaderTable_38                 = 0x800E5A40;
+LOADABLE_INVENTORY_ITEMS            = 0x800E5B08;
 sharedData_800DD584_0_s00           = 0x800E5B30; // type:u8
 sharedData_800DD598_0_s00           = 0x800E5B34;
 sharedData_800DD59C_0_s00           = 0x800E5B38; // type:u8
@@ -277,7 +279,9 @@ sharedData_800D2F28_7_s00           = 0x800E8328;
 sharedData_800D2F74_7_s00           = 0x800E8374;
 sharedData_800D2F7C_7_s00           = 0x800E837C;
 sharedData_800D2F84_7_s00           = 0x800E8384;
+g_LoadScreenFuncs                   = 0x800E838C;
 MAP_POINTS                          = 0x800E839C; // type:MapPoint2d
+g_MapEventFuncs                     = 0x800E8DEC;
 
 //-----------------------------------------------------------------
 //--- PA: 0x01F92C   VA: 0x800E8EA4   subsegment: .data, map7_s02_2

@@ -118,6 +118,8 @@ SysWork_StateStepIncrementAfterTime = 0x800D0ACC; // type:func
 //--- PA: 0x00959C   VA: 0x800D2B14   subsegment: data
 //----------------------------------------------------
 HARRY_M7S00_ANIM_INFOS              = 0x800D2B14;
+g_MapHeaderTable_38                 = 0x800D2C24;
+LOADABLE_INVENTORY_ITEMS            = 0x800D2C6C;
 sharedData_800DD584_0_s00           = 0x800D2C95; // type:u8
 sharedData_800DD598_0_s00           = 0x800D2C98;
 sharedData_800DD59C_0_s00           = 0x800D2C9C; // type:u8
@@ -134,7 +136,9 @@ sharedData_800D2F28_7_s00           = 0x800D2F28;
 sharedData_800D2F74_7_s00           = 0x800D2F74;
 sharedData_800D2F7C_7_s00           = 0x800D2F7C;
 sharedData_800D2F84_7_s00           = 0x800D2F84;
+g_LoadScreenFuncs                   = 0x800D2F8C;
 MAP_POINTS                          = 0x800D2F9C; // type:MapPoint2d
+g_MapEventFuncs                     = 0x800D3020;
 
 //-----------------------------------------------------------------
 //--- PA: 0x009ABC   VA: 0x800D3034   subsegment: .data, map7_s00_2

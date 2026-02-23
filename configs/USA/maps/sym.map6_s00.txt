@@ -296,6 +296,8 @@ Map_WorldObjectsInit                = 0x800EBCE8; // type:func
 //--- PA: 0x023D54   VA: 0x800ED2CC   subsegment: data
 //----------------------------------------------------
 HARRY_M6S00_ANIM_INFOS              = 0x800ED2CC;
+g_MapHeaderTable_38                 = 0x800ED57C;
+LOADABLE_INVENTORY_ITEMS            = 0x800ED62C;
 sharedData_800DD584_0_s00           = 0x800ED64D; // type:u8
 g_ParticlesAddedCount               = 0x800ED650; // type:s32
 sharedData_800DD58C_0_s00           = 0x800ED654; // type:s32
@@ -357,6 +359,8 @@ sharedData_800EFCFC_6_s00           = 0x800EFCFC; // type:u8 size:8
 sharedData_800EFD04_6_s00           = 0x800EFD04; // type:s32
 sharedData_800EFD08_6_s00           = 0x800EFD08;
 sharedData_800EFD34_6_s00           = 0x800EFD34;
+g_LoadScreenFuncs                   = 0x800EFD60;
+g_MapEventFuncs                     = 0x800EFE9C;
 
 //---------------------------------------------------------------
 //--- PA: 0x026934   VA: 0x800EFEAC   subsegment: .data, map6_s00

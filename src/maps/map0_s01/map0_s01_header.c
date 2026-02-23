@@ -12,8 +12,6 @@
 
 extern s_AnimInfo      HARRY_M0S01_ANIM_INFOS[];
 extern s_BloodSplat    g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
-extern s_UnkStruct3_Mo g_MapHeaders_38[21];
-extern u8              LOADABLE_INVENTORY_ITEMS[34];
 
 void (*g_LoadScreenFuncs[])() = {
     NULL,
@@ -59,7 +57,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .loadableItems_2C                 = LOADABLE_INVENTORY_ITEMS,
     .mapMessages_30                   = MAP_MESSAGES,
     .animInfos_34                     = HARRY_M0S01_ANIM_INFOS,
-    .field_38                         = g_MapHeaders_38,
+    .field_38                         = g_MapHeaderTable_38,
     .worldObjectsInit_3C              = Map_WorldObjectsInit,
     .worldObjectsUpdate_40            = Map_WorldObjectsUpdate,
     .func_44                          = NULL,

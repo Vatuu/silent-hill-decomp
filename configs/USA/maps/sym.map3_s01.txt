@@ -112,6 +112,8 @@ MapEvent_Generator0            = 0x800D27C8; // type:func
 //--- PA: 0x00A494   VA: 0x800D3A0C   subsegment: data
 //----------------------------------------------------
 HARRY_M3S01_ANIM_INFOS         = 0x800D3A0C;
+g_MapHeaderTable_38            = 0x800D3BFC;
+LOADABLE_INVENTORY_ITEMS       = 0x800D3C7C;
 sharedData_800DD584_0_s00      = 0x800D3CA1; // type:u8
 g_ParticlesAddedCount          = 0x800D3CA4; // type:s32
 g_ParticleCameraMoved          = 0x800D3CAC; // type:u8
@@ -135,7 +137,9 @@ sharedData_800E11A8_1_s02      = 0x800D4128;
 sharedData_800E11BC_1_s02      = 0x800D413C;
 MAP_ROOM_IDXS                  = 0x800D4150; // type:u8
 sharedData_800D21E8_3_s00      = 0x800D4170; // type:u16
+g_LoadScreenFuncs              = 0x800D41E8;
 MAP_POINTS                     = 0x800D41F8; // type:MapPoint2d
+g_MapEventFuncs                = 0x800D46C0;
 
 //---------------------------------------------------------------
 //--- PA: 0x00B184   VA: 0x800D46FC   subsegment: .data, map3_s01
