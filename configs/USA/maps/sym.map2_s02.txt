@@ -282,6 +282,8 @@ Map_RoomIdxGet                = 0x800E993C; // type:func
 Map_RoomBgmInit               = 0x800E9B38; // type:func
 MapEvent_DoorJammed           = 0x800E9C2C; // type:func
 MapEvent_DoorLocked           = 0x800E9CC0; // type:func
+Map_WorldObjectsInit          = 0x800EA0E0; // type:func
+Map_WorldObjectsUpdate        = 0x800EA1C4; // type:func
 
 
 

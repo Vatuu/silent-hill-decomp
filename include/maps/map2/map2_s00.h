@@ -155,9 +155,9 @@ void func_800EB7E0(void);
 
 void func_800EB824(s32);
 
-void func_800EB908(void);
+void Map_WorldObjectsInit(void);
 
-void func_800EC080(void);
+void Map_WorldObjectsUpdate(void);
 
 /** Index getter. */
 s32 func_800EE518(void);

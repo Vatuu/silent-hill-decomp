@@ -160,7 +160,7 @@ void func_800E9FDC(void) // 0xfunc_800E9FDC
     }
 }
 
-void func_800EA0E0(void) // 0x800EA0E0
+void Map_WorldObjectsInit(void) // 0x800EA0E0
 {
     if (Savegame_MapMarkingGet(MapMarkFlag_FogCentralTown_AntiqueWholeSign))
     {
@@ -190,7 +190,7 @@ void func_800EA0E0(void) // 0x800EA0E0
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800EA1C4(void) // 0x800EA1C4
+void Map_WorldObjectsUpdate(void) // 0x800EA1C4
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 

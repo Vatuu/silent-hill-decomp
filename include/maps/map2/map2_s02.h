@@ -24,9 +24,9 @@ void func_800E9EAC(void);
 
 void func_800E9FDC(void);
 
-void func_800EA0E0(void);
+void Map_WorldObjectsInit(void);
 
-void func_800EA1C4(void);
+void Map_WorldObjectsUpdate(void);
 
 void func_800EAA50(void);
 

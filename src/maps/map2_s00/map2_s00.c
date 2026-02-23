@@ -1901,7 +1901,7 @@ void func_800EB824(s32 arg0) // 0x800EB824
     func_800EE5D0();
 }
 
-void func_800EB908(void) // 0x800EB908
+void Map_WorldObjectsInit(void) // 0x800EB908
 {
     D_800F534C = 0;
     WorldObjectInit(&g_WorldObject9, "DRILL_NE", 236.7151f, -0.281f, 345.046f, 2.8f, 7.5f, -180.5f);
@@ -2015,7 +2015,7 @@ void func_800EB908(void) // 0x800EB908
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800EC080(void) // 0x800EC080
+void Map_WorldObjectsUpdate(void) // 0x800EC080
 {
     s32 cellX0;
     s32 cellX1;

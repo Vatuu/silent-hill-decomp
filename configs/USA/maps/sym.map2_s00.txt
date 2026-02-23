@@ -269,6 +269,8 @@ MapEvent_DoghouseKeyTake      = 0x800E97E4; // type:func
 MapEvent_HouseKeyUse          = 0x800E9D1C; // type:func
 MapEvent_DoorOfEclipseEnter   = 0x800EA444; // type:func
 MapEvent_KGordonKeyUse        = 0x800EA894; // type:func
+Map_WorldObjectsInit          = 0x800EB908; // type:func
+Map_WorldObjectsUpdate        = 0x800EC080; // type:func
 
 
 
