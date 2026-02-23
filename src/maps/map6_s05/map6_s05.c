@@ -13,11 +13,11 @@
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800CC7B4
 
-#include "maps/shared/sharedFunc_800E1258_6_s04.h" // 0x800CC8F8
+#include "maps/shared/Map_RoomBgmInit_6_s04.h" // 0x800CC8F8
 
-#include "maps/shared/sharedFunc_800E1290_6_s04.h" // 0x800CC930
+#include "maps/shared/Map_RoomBgmInit_6_s04_CondTrue.h" // 0x800CC930
 
-#include "maps/shared/sharedFunc_800E12D0_6_s04.h" // 0x800CC970
+#include "maps/shared/Map_RoomBgmInit_6_s04_CondFalse.h" // 0x800CC970
 
 // TODO: Might be part of shared block above with `map6_s04::func_800E155C`
 void func_800CCBFC(void) {}

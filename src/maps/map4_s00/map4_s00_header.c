@@ -4,7 +4,6 @@
 #include "maps/particle.h"
 #include "maps/characters/player.h"
 
-// TODO: 0x800CCAA0
 extern s_AnimInfo HARRY_M4S00_ANIM_INFOS[];
 
 const s_MapOverlayHeader g_MapOverlayHeader = {
@@ -23,8 +22,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .mapEvents_24                     = MAP_EVENTS,
     .field_28                         = &g_SysWork.npcCoords_FC0[0],
     .loadableItems_2C                 = LOADABLE_INVENTORY_ITEMS,
-    .mapMessages_30                   = 0x800CCBD4,
-    .animInfos_34                     = 0x800CCAA0,
+    .mapMessages_30                   = MAP_MESSAGES,
+    .animInfos_34                     = HARRY_M4S00_ANIM_INFOS,
     .field_38                         = g_MapHeaderTable_38,
     .worldObjectsInit_3C              = Map_WorldObjectsInit,
     .worldObjectsUpdate_40            = Map_WorldObjectsUpdate,

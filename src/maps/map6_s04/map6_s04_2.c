@@ -1520,11 +1520,11 @@ void func_800E10F8(void) // 0x800E10F8
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800E1114
 
-#include "maps/shared/sharedFunc_800E1258_6_s04.h" // 0x800E1258
+#include "maps/shared/Map_RoomBgmInit_6_s04.h" // 0x800E1258
 
-#include "maps/shared/sharedFunc_800E1290_6_s04.h" // 0x800E1290
+#include "maps/shared/Map_RoomBgmInit_6_s04_CondTrue.h" // 0x800E1290
 
-#include "maps/shared/sharedFunc_800E12D0_6_s04.h" // 0x800E12D0
+#include "maps/shared/Map_RoomBgmInit_6_s04_CondFalse.h" // 0x800E12D0
 
 // TODO: Might be part of shared block above with `map6_s05::func_800CCBFC`
 void func_800E155C(void) {}

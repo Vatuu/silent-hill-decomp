@@ -2812,8 +2812,7 @@ void Ai_AirScreamer_Control_10(s_SubCharacter* airScreamer)
                     break;
 
                 case 1:
-                    // TODO: Likely some kind of `CharaHasFlag` inline?
-                    if (!((&g_SysWork.playerWork_4C.player_0)->flags_3E & CharaFlag_Unk4) &&
+                    if (!Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
                         g_SysWork.npcIdxs_2354[0] == NO_VALUE &&
                         g_SysWork.npcIdxs_2354[1] == NO_VALUE)
                     {
@@ -4944,8 +4943,7 @@ void Ai_AirScreamer_Control_23(s_SubCharacter* airScreamer)
                     break;
 
                 case 1:
-                    // TODO: Likely some kind of `CharaHasFlag` inline?
-                    if (!((&g_SysWork.playerWork_4C.player_0)->flags_3E & CharaFlag_Unk4) &&
+                    if (!Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
                         g_SysWork.npcIdxs_2354[0] == NO_VALUE &&
                         g_SysWork.npcIdxs_2354[1] == NO_VALUE)
                     {

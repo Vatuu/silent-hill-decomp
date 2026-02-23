@@ -1,4 +1,4 @@
-void sharedFunc_800E1290_6_s04(void)
+void Map_RoomBgmInit_CondTrue(void)
 {
     Bgm_TrackChange(Savegame_EventFlagGet(EventFlag_440) ? 39 : 37);
 }

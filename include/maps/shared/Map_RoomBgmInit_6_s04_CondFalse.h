@@ -1,4 +1,4 @@
-void sharedFunc_800E12D0_6_s04(void)
+void Map_RoomBgmInit_CondFalse(void)
 {
     q19_12 dist0;
     s32    flags;

@@ -76,6 +76,7 @@ Map_WorldObjectsUpdate        = 0x800CCA98; // type:func
 //--------------------------------------------------------------
 //--- PA: 0x003528   VA: 0x800CCAA0   subsegment: data, map4_s00
 //--------------------------------------------------------------
+HARRY_M4S00_ANIM_INFOS        = 0x800CCAA0;
 g_MapHeaderTable_38           = 0x800CCAF0;
 LOADABLE_INVENTORY_ITEMS      = 0x800CCB08;
 sharedData_800DD584_0_s00     = 0x800CCB2B; // type:u8
@@ -87,6 +88,7 @@ sharedData_800ED43C_2_s02     = 0x800CCBAC; // type:u8 size:8
 g_LoadScreenFuncs             = 0x800CCBB4;
 MAP_POINTS                    = 0x800CCBC4;
 g_MapEventFuncs               = 0x800CCBD0;
+MAP_MESSAGES                  = 0x800CCBD4;
 
 //---------------------------------------------------------------------------
 //--- PA: 0x00369C   VA: 0x800CCC14   subsegment: .data, map4_s00_events_data

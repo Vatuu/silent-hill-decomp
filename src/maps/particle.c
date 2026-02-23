@@ -3119,7 +3119,7 @@ void Particle_SpawnMovementApply(s32 arg0, s_Particle* part, u16* rand, s32* del
 }
 
 // @hack Needed for match. Same as version in `rng.h` but without parenthesess around it.
-// TODO: Changing `rng.h version` still doesn't let it match though?
+// TODO: Changing `rng.h` version still doesn't let it match though?
 #define Rng_GenerateIntFromInput(rand, low, high) \
     (s32)((rand) % (((high) - (low)) + 1)) + (low)
 

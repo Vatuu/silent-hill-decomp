@@ -62,9 +62,9 @@ sharedFunc_800D2EB4_0_s00     = 0x800CC750; // type:func
 sharedFunc_800D2EF4_0_s00     = 0x800CC790; // type:func
 sharedFunc_800D929C_0_s00     = 0x800CC7A4; // type:func
 Map_RoomIdxGet                = 0x800CC7B4; // type:func
-sharedFunc_800E1258_6_s04     = 0x800CC8F8; // type:func
-sharedFunc_800E1290_6_s04     = 0x800CC930; // type:func
-sharedFunc_800E12D0_6_s04     = 0x800CC970; // type:func
+Map_RoomBgmInit               = 0x800CC8F8; // type:func
+Map_RoomBgmInit_CondTrue      = 0x800CC930; // type:func
+Map_RoomBgmInit_CondFalse     = 0x800CC970; // type:func
 
 
 
@@ -76,6 +76,7 @@ sharedFunc_800E12D0_6_s04     = 0x800CC970; // type:func
 //--------------------------------------------------------------
 //--- PA: 0x00368C   VA: 0x800CCC04   subsegment: data, map6_s05
 //--------------------------------------------------------------
+HARRY_M6S05_ANIM_INFOS        = 0x800CCC04;
 g_MapHeaderTable_38           = 0x800CCC54;
 LOADABLE_INVENTORY_ITEMS      = 0x800CCC6C;
 sharedData_800DD584_0_s00     = 0x800CCC6D; // type:u8
@@ -89,6 +90,7 @@ sharedData_800EB750_6_s04     = 0x800CCC90; // type:VECTOR3 size:0xC
 g_LoadScreenFuncs             = 0x800CCC9C;
 MAP_POINTS                    = 0x800CCCAC;
 g_MapEventFuncs               = 0x800CCCB8;
+MAP_MESSAGES                  = 0x800CCCBC;
 
 //---------------------------------------------------------------------------
 //--- PA: 0x003784   VA: 0x800CCCFC   subsegment: .data, map6_s05_events_data

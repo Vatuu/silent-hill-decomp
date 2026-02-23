@@ -1967,7 +1967,6 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)
             }
 
         case 4:
-            // TODO: These 10E/10F checks load word from 0x10C and ANDs the upper 16 bits, not even a bitfield, weird.
             if (groanerProps.field_10E == 0 && groanerProps.field_10F == 0 &&
                 (groaner->health_B0 > Q12(0.0f)))
             {
