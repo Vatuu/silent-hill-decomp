@@ -120,9 +120,9 @@ void func_800DCB54(void);
 
 void func_800DCDDC(void);
 
-void func_800DD3AC(void);
+void Map_WorldObjectsInit(void);
 
-void func_800DD688(void);
+void Map_WorldObjectsUpdate(void);
 
 void func_800DE624(void);
 

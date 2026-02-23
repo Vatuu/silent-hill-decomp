@@ -77,6 +77,6 @@ void MapEvent_KaufmannBarFightCutscene(void);
 
 void Map_WorldObjectsInit(void);
 
-void func_800D68FC(void);
+void Map_WorldObjectsUpdate(void);
 
 #endif

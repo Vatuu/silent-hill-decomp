@@ -393,7 +393,7 @@ void func_800D0B64(void) // 0x800D0B64
 
 INCLUDE_ASM("maps/map7_s00/nonmatchings/map7_s00_2", func_800D1604);
 
-void func_800D2700(void) // 0x800D2700
+void Map_WorldObjectsInit(void) // 0x800D2700
 {
     s32    i;
     q19_12 z;
@@ -428,7 +428,7 @@ void func_800D2700(void) // 0x800D2700
     }
 }
 
-void func_800D286C(void) // 0x800D286C
+void Map_WorldObjectsUpdate(void) // 0x800D286C
 {
     VECTOR3 pos;
     s32     i;

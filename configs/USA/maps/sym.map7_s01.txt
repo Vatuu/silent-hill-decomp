@@ -180,6 +180,7 @@ MapEvent_BirdCageKeyUse             = 0x800D8984; // type:func
 sharedFunc_800DB60C_7_s01           = 0x800DB60C; // type:func
 sharedFunc_800D15F0_3_s01           = 0x800DC0AC; // type:func
 Map_WorldObjectsInit                = 0x800DD368; // type:func
+Map_WorldObjectsUpdate              = 0x800DDCD4; // type:func
 
 
 

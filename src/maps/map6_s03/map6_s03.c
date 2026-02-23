@@ -318,7 +318,7 @@ void MapEvent_MapTake(void) // 0x800D87F0
     Event_MapTake(15, EventFlag_M6S03_PickupMap, 15);
 }
 
-void func_800D8818(void) // 0x800D8818
+void Map_WorldObjectsInit(void) // 0x800D8818
 {
     D_800DFEF5 = 0;
     D_800DFEF4 = 0;
@@ -349,7 +349,7 @@ void func_800D8818(void) // 0x800D8818
 static const SVECTOR3 D_800CB258 = { 0, 0, 0 };
 static const VECTOR3  D_800CB260 = { Q12(-41.6f), Q12(0.0f), Q12(20.0f) };
 
-void func_800D89A0(void) // 0x800D89A0
+void Map_WorldObjectsUpdate(void) // 0x800D89A0
 {
     s32  temp_s0_2;
     s32  var_v0_2;

@@ -93,9 +93,9 @@ void func_800D8794(void);
 
 void func_800D87C0(void);
 
-void func_800D91EC(void);
+void Map_WorldObjectsInit(void);
 
-void func_800D9514(void);
+void Map_WorldObjectsUpdate(void);
 
 void func_800D9DDC(void);
 

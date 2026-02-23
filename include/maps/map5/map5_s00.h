@@ -134,6 +134,8 @@ void MapEvent_MapTake(void);
 
 void Map_WorldObjectsInit(void);
 
+void Map_WorldObjectsUpdate(void);
+
 void func_800D8DFC(void);
 
 #endif

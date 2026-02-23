@@ -627,14 +627,14 @@ void func_800D23E4(void) // 0x800D23E4
     }
 }
 
-void func_800D2D6C(void) // 0x800D2D6C
+void Map_WorldObjectsInit(void) // 0x800D2D6C
 {
     WorldObjectInit(&g_WorldObjectSavepad, D_800A99E4.savePadName_4, 106.687f, -1.02f, 144.601f, 0.0f, 163.0f, 0.0f);
 
     WorldObjectNoRotInit(&g_WorldObject0, "ISU_HIDE", 57.8f, 0.0f, 0.0f);
 }
 
-void func_800D2DF4(void) // 0x800D2DF4
+void Map_WorldObjectsUpdate(void) // 0x800D2DF4
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 

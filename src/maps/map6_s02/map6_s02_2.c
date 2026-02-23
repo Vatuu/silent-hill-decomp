@@ -1064,7 +1064,7 @@ void Map_WorldObjectsInit(void) // 0x800D1658
     Savegame_EventFlagSet(EventFlag_428);
 }
 
-void func_800D1718(void) // 0x800D1718
+void Map_WorldObjectsUpdate(void) // 0x800D1718
 {
     s32    flags;
     q19_12 mag;

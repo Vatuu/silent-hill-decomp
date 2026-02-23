@@ -446,7 +446,7 @@ void func_800D0CF8(void) // 0x800D0CF8
     }
 }
 
-void func_800D18DC(void) // 0x800D18DC
+void Map_WorldObjectsInit(void) // 0x800D18DC
 {
     WorldObjectNoRotInit(&g_WorldObject0, "TRUNK_HI", 97.2496f, 0.0f, 100.3428f);
 
@@ -463,7 +463,7 @@ void func_800D18DC(void) // 0x800D18DC
     WorldObjectInit(&g_WorldObject5, D_800A99E4.firstAidKitName_8, 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
 }
 
-void func_800D1A98(void) // 0x800D1A98
+void Map_WorldObjectsUpdate(void) // 0x800D1A98
 {
     static const SVECTOR3 EMPTY_ROT = {};
     static const VECTOR3  SOUND_POS = VECTOR3(22.5f, -1.5f, 137.0f);

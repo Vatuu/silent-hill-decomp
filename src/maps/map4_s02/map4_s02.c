@@ -79,7 +79,7 @@ void Map_WorldObjectsInit(void) // 0x800EA340
     }
 }
 
-void func_800EA3F0(void) // 0x800EA3F0
+void Map_WorldObjectsUpdate(void) // 0x800EA3F0
 {
     VECTOR3  objPos;
     SVECTOR3 objRot;

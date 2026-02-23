@@ -218,6 +218,7 @@ MapEvent_CameraTake                 = 0x800E0C88; // type:func
 sharedFunc_800DB60C_7_s01           = 0x800E15D4; // type:func
 sharedFunc_800D15F0_3_s01           = 0x800E204C; // type:func
 Map_WorldObjectsInit                = 0x800E3804; // type:func
+Map_WorldObjectsUpdate              = 0x800E4528; // type:func
 
 
 

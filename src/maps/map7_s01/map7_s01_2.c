@@ -2187,7 +2187,7 @@ extern VECTOR3 D_800CC984;
 extern SVECTOR3 D_800CC990;
 extern VECTOR3 D_800CC998;
 
-void func_800DDCD4(void) // 0x800DDCD4
+void Map_WorldObjectsUpdate(void) // 0x800DDCD4
 {
     s16              audioStream;
     s32              npcTimer;

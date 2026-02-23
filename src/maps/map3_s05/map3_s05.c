@@ -984,7 +984,7 @@ INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", sharedData_800CB094_3_s01)
 
 #include "maps/shared/sharedFunc_800D15F0_3_s01.h" // 0x800D76D8
 
-void func_800D8424(void) // 0x800D8424
+void Map_WorldObjectsInit(void) // 0x800D8424
 {
     D_800DD528 = 0;
     D_800DD52A = 0;
@@ -1031,7 +1031,8 @@ void func_800D8424(void) // 0x800D8424
     WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
-void func_800D87AC(void) // 0x800D87AC
+
+void Map_WorldObjectsUpdate(void) // 0x800D87AC
 {
     VECTOR3 soundPos;
     s32     cellX;

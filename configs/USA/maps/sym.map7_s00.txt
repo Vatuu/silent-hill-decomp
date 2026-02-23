@@ -106,6 +106,8 @@ sharedFunc_800D0110_7_s00           = 0x800D0110; // type:func
 MapEvent_DoorJammed                 = 0x800D099C; // type:func
 MapEvent_DoorLocked                 = 0x800D0A30; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800D0ACC; // type:func
+Map_WorldObjectsInit                = 0x800D2700; // type:func
+Map_WorldObjectsUpdate              = 0x800D286C; // type:func
 
 
 

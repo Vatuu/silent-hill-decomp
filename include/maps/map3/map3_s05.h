@@ -88,9 +88,9 @@ void func_800D719C(void);
 
 void func_800D7280(void);
 
-void func_800D8424(void);
+void Map_WorldObjectsInit(void);
 
-void func_800D87AC(void);
+void Map_WorldObjectsUpdate(void);
 
 void func_800D72AC(void);
 

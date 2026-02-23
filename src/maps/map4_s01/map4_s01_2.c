@@ -1216,7 +1216,7 @@ void func_800D4998(void) // 0x800D4998
     MapMsg_DisplayWithTexture(FILE_TIM_CLOCKATQ_TIM, Q12(0.0f), Q12(0.0f), 114);
 }
 
-void func_800D49C4(void) // 0x800D49C4
+void Map_WorldObjectsInit(void) // 0x800D49C4
 {
     WorldObjectNoRotInit(&WorldObject_D_800D7FF0, "MOV1_HID", 178.2681f, -0.387f, 63.6814f);
 
@@ -1240,7 +1240,7 @@ void func_800D49C4(void) // 0x800D49C4
     D_800D8018 = 0;
 }
 
-void func_800D4BA4(void) // 0x800D4BA4
+void Map_WorldObjectsUpdate(void) // 0x800D4BA4
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 

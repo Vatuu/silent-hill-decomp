@@ -66,9 +66,9 @@ void func_800EC2D8(void);
 
 void func_800EC42C(void);
 
-void func_800ECB58(void);
+void Map_WorldObjectsInit(void);
 
-void func_800ECC8C(void);
+void Map_WorldObjectsUpdate(void);
 
 void func_800CD51C(s32, s32);
 

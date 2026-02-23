@@ -284,6 +284,7 @@ Map_RoomBgmInit                     = 0x800EAD0C; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800EAFF8; // type:func
 MapEvent_CommonItemTake             = 0x800EB090; // type:func
 Map_WorldObjectsInit                = 0x800EBCE8; // type:func
+Map_WorldObjectsUpdate              = 0x800EBEE0; // type:func
 
 
 

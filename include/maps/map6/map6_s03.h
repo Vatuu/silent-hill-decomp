@@ -34,7 +34,9 @@ void func_800D84EC(void);
 /** @brief Handles the ? map pickup event. */
 void MapEvent_MapTake(void);
 
-void func_800D8818(void);
+void Map_WorldObjectsInit(void);
+
+void Map_WorldObjectsUpdate(void);
 
 void func_800D936C(void);
 

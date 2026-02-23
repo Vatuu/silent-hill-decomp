@@ -3442,7 +3442,7 @@ void Map_WorldObjectsInit(void) // 0x800E3804
 static const VECTOR3 D_800CDC4C = { Q12(-63.3f), Q12(-1.6f), Q12(-139.2f) };
 static const VECTOR3 D_800CDC58 = { Q12(140.0f), Q12(-1.2f), Q12(-23.5f) };
 
-void func_800E4528(void) // 0x800E4528
+void Map_WorldObjectsUpdate(void) // 0x800E4528
 {
     s32 cellZ0;
     s32 cellX0;

@@ -290,6 +290,8 @@ MapEvent_DoorLocked                 = 0x800EB910; // type:func
 MapEvent_CommonItemTake             = 0x800EB9A4; // type:func
 MapEvent_MapTake                    = 0x800EBF48; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800EC394; // type:func
+Map_WorldObjectsInit                = 0x800ECB58; // type:func
+Map_WorldObjectsUpdate              = 0x800ECC8C; // type:func
 
 
 

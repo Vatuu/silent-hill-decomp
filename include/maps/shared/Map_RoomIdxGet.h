@@ -85,6 +85,32 @@ static inline s32 GetYIdx(q19_12 posX, q19_12 posY)
 
 u8 Map_RoomIdxGet(s32 x, s32 z)
 {
+#if defined(MAP6_S04) || defined(MAP6_S05)
+    s32 result;
+
+    if (z > Q12(80.0f))
+    {
+        result = 5;
+    }
+    else if (Q12_SQUARE_PRECISE(x + Q12(16.0f)) + Q12_SQUARE_PRECISE(z + Q12(64.0f)) < Q12(SQUARE(18)))
+    {
+        result = 3;
+    }
+    else if (Q12_SQUARE_PRECISE(x + Q12(-14.0f)) + Q12_SQUARE_PRECISE(z + Q12(28.0f)) < Q12(SQUARE(18)))
+    {
+        result = 2;
+    }
+    else if (Q12_SQUARE_PRECISE(x + Q12(14.0f)) + Q12_SQUARE_PRECISE(z + Q12(28.0f)) < Q12(SQUARE(5)))
+    {
+        result = 4;
+    }
+    else
+    {
+        result = 1;
+    }
+
+    return result;
+#else
     extern u8 MAP_ROOM_IDXS[];
 
     s32 xIdx;
@@ -202,5 +228,6 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
     }
 
     return res;
+#endif
 }
 #endif

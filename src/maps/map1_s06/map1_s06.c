@@ -461,7 +461,7 @@ void Map_WorldObjectsInit(void) // 0x800D63D8
     }
 }
 
-void func_800D6578(void) // 0x800D6578
+void Map_WorldObjectsUpdate(void) // 0x800D6578
 {
     VECTOR3 soundPos;
     s32     vol;

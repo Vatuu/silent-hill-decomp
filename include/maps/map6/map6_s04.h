@@ -435,9 +435,9 @@ void func_800E3EF4(void);
 
 void func_800E558C(void);
 
-void func_800E5D44(void);
+void Map_WorldObjectsInit(void);
 
-void func_800E5F54(void);
+void Map_WorldObjectsUpdate(void);
 
 void func_800E636C(void); // Assumed types.
 

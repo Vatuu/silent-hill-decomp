@@ -61,7 +61,7 @@ void func_800EB11C(void);
 
 void Map_WorldObjectsInit(void);
 
-void func_800EBEE0(void);
+void Map_WorldObjectsUpdate(void);
 
 void func_800EC4B4(s32 arg0);
 

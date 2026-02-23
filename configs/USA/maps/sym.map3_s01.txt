@@ -100,6 +100,8 @@ MapEvent_PlasticBottleTake     = 0x800D2720; // type:func
 MapEvent_MapTake0              = 0x800D274C; // type:func
 MapEvent_MapTake1              = 0x800D2774; // type:func
 MapEvent_Generator0            = 0x800D27C8; // type:func
+Map_WorldObjectsInit           = 0x800D2AF4; // type:func
+Map_WorldObjectsUpdate         = 0x800D2E54; // type:func
 
 
 

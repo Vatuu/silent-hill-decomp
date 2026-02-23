@@ -10,7 +10,7 @@ extern s_AnimInfo HARRY_M6S05_ANIM_INFOS[];
 
 const s_MapOverlayHeader g_MapOverlayHeader = {
     .mapInfo_0                        = &MAP_INFOS[MapType_APU],
-    .getMapRoomIdxFunc_4              = sharedFunc_800E1114_6_s04,
+    .getMapRoomIdxFunc_4              = Map_RoomIdxGet,
     .field_8                          = 4,
     .func_C                           = sharedFunc_800D929C_0_s00,
     .bgmEvent_10                      = sharedFunc_800E1258_6_s04,

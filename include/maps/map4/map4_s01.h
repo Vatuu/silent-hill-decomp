@@ -90,9 +90,9 @@ void func_800D496C(void);
 
 void func_800D4998(void);
 
-void func_800D49C4(void);
+void Map_WorldObjectsInit(void);
 
-void func_800D4BA4(void);
+void Map_WorldObjectsUpdate(void);
 
 void func_800D2408(void);
 

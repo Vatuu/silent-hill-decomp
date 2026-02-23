@@ -12,7 +12,7 @@
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CC7A4
 
-#include "maps/shared/sharedFunc_800E1114_6_s04.h" // 0x800CC7B4
+#include "maps/shared/Map_RoomIdxGet.h" // 0x800CC7B4
 
 #include "maps/shared/sharedFunc_800E1258_6_s04.h" // 0x800CC8F8
 

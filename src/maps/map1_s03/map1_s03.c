@@ -1546,7 +1546,7 @@ void func_800DCDDC(void) // 0x800DCDDC
     }
 }
 
-void func_800DD3AC(void) // 0x800DD3AC
+void Map_WorldObjectsInit(void) // 0x800DD3AC
 {
     D_800E62D0 = 0;
     D_800E638C = 0;
@@ -1585,7 +1585,7 @@ void func_800DD3AC(void) // 0x800DD3AC
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800DD688(void) // 0x800DD688
+void Map_WorldObjectsUpdate(void) // 0x800DD688
 {
     s32 x;
     MAP_CHUNK_CHECK_VARIABLE_DECL();

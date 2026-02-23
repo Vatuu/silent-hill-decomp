@@ -9849,7 +9849,7 @@ void Map_WorldObjectsInit(void) // 0x800E9528
     }
 }
 
-void func_800E972C(void) // 0x800E972C
+void Map_WorldObjectsUpdate(void) // 0x800E972C
 {
     if (D_800F4810)
     {

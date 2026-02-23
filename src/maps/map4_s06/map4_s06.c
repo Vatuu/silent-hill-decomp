@@ -18,8 +18,8 @@
 
 void func_800CCA88(void) {}
 
-void func_800CCA90(void) {}
+void Map_WorldObjectsInit(void) {}
 
-void func_800CCA98(void) {}
+void Map_WorldObjectsUpdate(void) {}
 
 INCLUDE_RODATA("maps/map4_s06/nonmatchings/map4_s06", D_800CA618);

@@ -322,7 +322,7 @@ void func_800D2A88(void) // 0x800D2A88
     Savegame_EventFlagSet(EventFlag_203);
 }
 
-void func_800D2AF4(void) // 0x800D2AF4
+void Map_WorldObjectsInit(void) // 0x800D2AF4
 {
     D_800D8734 = 0;
     g_GeneratorMakeNoise = false;
@@ -365,7 +365,7 @@ void func_800D2AF4(void) // 0x800D2AF4
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800D2E54(void) // 0x800D2E54
+void Map_WorldObjectsUpdate(void) // 0x800D2E54
 {
     s32    i;
     q19_12 posZ;

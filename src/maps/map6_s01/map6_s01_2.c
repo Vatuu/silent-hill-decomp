@@ -807,7 +807,7 @@ void func_800D2658(void) // 0x800D2658
     }
 }
 
-void func_800D2E6C(void) // 0x800D2E6C
+void Map_WorldObjectsInit(void) // 0x800D2E6C
 {
     D_800D5345 = 0;
 
@@ -827,7 +827,6 @@ void func_800D2E6C(void) // 0x800D2E6C
 
     WorldObjectInit(&D_800D53A4[6], "RIGHT_HI", -19.599853515625f, -0.824951171875f, 59.39990234375f, 0.0, 180.0f, 0.0f);
 
-
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
@@ -838,7 +837,7 @@ void func_800D2E6C(void) // 0x800D2E6C
 
 const s16 D_800CBB5C = 0x1440;
 
-void func_800D30DC(void) // 0x800D30DC
+void Map_WorldObjectsUpdate(void) // 0x800D30DC
 {
     s32 i;
     MAP_CHUNK_CHECK_VARIABLE_DECL();

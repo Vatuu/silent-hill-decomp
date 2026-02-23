@@ -408,7 +408,7 @@ void Map_WorldObjectsInit(void) // 0x800D1804
     WorldObjectInit(&g_WorldObject_FirstAidKit, D_800A99E4.firstAidKitName_8, 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
 }
 
-void func_800D197C(void) // 0x800D197C
+void Map_WorldObjectsUpdate(void) // 0x800D197C
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 

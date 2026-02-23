@@ -111,9 +111,9 @@ void func_800DD208(void);
 
 void func_800DD420(void);
 
-void func_800DD494(void);
+void Map_WorldObjectsInit(void);
 
-void func_800DDA84(void);
+void Map_WorldObjectsUpdate(void);
 
 void func_800DEC88(void);
 

@@ -108,6 +108,7 @@ MapEvent_DoorJammed                 = 0x800CEF88; // type:func
 MapEvent_DoorLocked                 = 0x800CF01C; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800CFB9C; // type:func
 Map_WorldObjectsInit                = 0x800D1658; // type:func
+Map_WorldObjectsUpdate              = 0x800D1718; // type:func
 
 
 

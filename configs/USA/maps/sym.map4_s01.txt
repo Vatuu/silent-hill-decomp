@@ -107,6 +107,8 @@ Map_RoomBgmInit_CondTrue            = 0x800D1BAC; // type:func
 Map_RoomBgmInit_CondFalse           = 0x800D1C28; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800D1EBC; // type:func
 MapEvent_DoorJammed                 = 0x800D1F54; // type:func
+Map_WorldObjectsInit                = 0x800D49C4; // type:func
+Map_WorldObjectsUpdate              = 0x800D4BA4; // type:func
 
 
 

@@ -247,7 +247,7 @@ void func_800DD348(void* unused, s32 idx, u8 val);
 
 void Map_WorldObjectsInit(void);
 
-void func_800DDCD4(void);
+void Map_WorldObjectsUpdate(void);
 
 void func_800DEDA4(void);
 

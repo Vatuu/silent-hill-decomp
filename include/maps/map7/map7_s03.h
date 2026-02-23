@@ -891,7 +891,7 @@ void func_800E94F4(void);
 
 void Map_WorldObjectsInit(void);
 
-void func_800E972C(void);
+void Map_WorldObjectsUpdate(void);
 
 void func_800E9874(void);
 

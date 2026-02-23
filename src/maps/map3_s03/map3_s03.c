@@ -965,7 +965,7 @@ void Map_WorldObjectsInit(void) // 0x800D3EAC
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800D429C(void) // 0x800D429C
+void Map_WorldObjectsUpdate(void) // 0x800D429C
 {
     VECTOR3 colorsPos;
     s32     cellZ0;

@@ -120,6 +120,8 @@ MapEvent_DoorJammed           = 0x800D0B7C; // type:func
 MapEvent_DoorLocked           = 0x800D0C10; // type:func
 MapEvent_FirstAidKitTake      = 0x800D0CAC; // type:func
 MapEvent_MapTake              = 0x800D0CD0; // type:func
+Map_WorldObjectsInit          = 0x800D18DC; // type:func
+Map_WorldObjectsUpdate        = 0x800D1A98; // type:func
 
 
 

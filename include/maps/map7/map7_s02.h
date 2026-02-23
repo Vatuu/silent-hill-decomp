@@ -267,4 +267,6 @@ void func_800E2DEC(void);
 
 void Map_WorldObjectsInit(void);
 
+void Map_WorldObjectsUpdate(void);
+
 #endif

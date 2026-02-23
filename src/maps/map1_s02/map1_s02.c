@@ -1329,7 +1329,7 @@ void func_800DD420(void) // 0x800DD420
     SysWork_StateSetNext(SysState_Gameplay);
 }
 
-void func_800DD494(void) // 0x800DD494
+void Map_WorldObjectsInit(void) // 0x800DD494
 {
     s32 idx;
 
@@ -1433,7 +1433,7 @@ void func_800DD494(void) // 0x800DD494
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800DDA84(void) // 0x800DDA84
+void Map_WorldObjectsUpdate(void) // 0x800DDA84
 {
     s32 rng0;
     s32 rng1;

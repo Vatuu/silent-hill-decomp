@@ -354,12 +354,12 @@ void func_800D0608(void) // 0x800D0608
     }
 }
 
-void func_800D0F8C(void) // 0x800D0F8C
+void Map_WorldObjectsInit(void) // 0x800D0F8C
 {
     D_800D3154 = 1;
 }
 
-void func_800D0F9C(void) // 0x800D0F9C
+void Map_WorldObjectsUpdate(void) // 0x800D0F9C
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 

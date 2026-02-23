@@ -1270,7 +1270,7 @@ void Map_WorldObjectsInit(void) // 0x800D82A8
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800D84D8(void) // 0x800D84D8
+void Map_WorldObjectsUpdate(void) // 0x800D84D8
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 

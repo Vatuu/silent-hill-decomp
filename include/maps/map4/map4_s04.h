@@ -50,8 +50,8 @@ void func_800D1910(void);
 
 void func_800D23E4(void);
 
-void func_800D2D6C(void);
+void Map_WorldObjectsInit(void);
 
-void func_800D2DF4(void);
+void Map_WorldObjectsUpdate(void);
 
 #endif

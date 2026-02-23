@@ -2313,8 +2313,6 @@ void sharedFunc_800D8804_0_s01(void);
 
 s32 sharedFunc_800D929C_0_s00(void);
 
-s32 sharedFunc_800E1114_6_s04(s32 arg0, s32 arg1);
-
 void sharedFunc_800E1258_6_s04(s32 arg0);
 
 void sharedFunc_800E1290_6_s04(void);

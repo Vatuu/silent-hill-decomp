@@ -91,6 +91,6 @@ void func_800D3128(void);
 
 void Map_WorldObjectsInit(void);
 
-void func_800D429C(void);
+void Map_WorldObjectsUpdate(void);
 
 #endif

@@ -4932,7 +4932,7 @@ void Map_WorldObjectsInit(void) // 0x800D991C
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800D9BB0(void) // 0x800D9BB0
+void Map_WorldObjectsUpdate(void) // 0x800D9BB0
 {
     q19_12 var_a0; // Angle?
     q19_12 var;    // Angle?

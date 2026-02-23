@@ -495,7 +495,7 @@ extern SVECTOR3 D_800CB35C;
 extern VECTOR3 D_800CB364;
 extern VECTOR3 D_800CB370;
 
-void func_800D3DA4(void) // 0x800D3DA4
+void Map_WorldObjectsUpdate(void) // 0x800D3DA4
 {
     s32    cellZ0;
     s32    cellX0;

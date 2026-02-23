@@ -22,9 +22,9 @@ void func_800D03FC(void);
 
 void func_800D0608(void);
 
-void func_800D0F8C(void);
+void Map_WorldObjectsInit(void);
 
-void func_800D0F9C(void);
+void Map_WorldObjectsUpdate(void);
 
 s16 func_800D1354(void);
 

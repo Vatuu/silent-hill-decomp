@@ -1042,7 +1042,7 @@ void func_800D87C0(void) // 0x800D87C0
     }
 }
 
-void func_800D91EC(void) // 0x800D91EC
+void Map_WorldObjectsInit(void) // 0x800D91EC
 {
     WorldObjectInit(&g_WorldObject1, "TOBIRA00", -58.81f, -1.3f, 18.0198f, 0.0f, 0.0f, 0.0f);
 
@@ -1089,7 +1089,7 @@ void func_800D91EC(void) // 0x800D91EC
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800D9514(void) // 0x800D9514
+void Map_WorldObjectsUpdate(void) // 0x800D9514
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))

@@ -101,6 +101,8 @@ MapEvent_DoorJammed            = 0x800D7058; // type:func
 MapEvent_DoorLocked            = 0x800D70EC; // type:func
 MapEvent_DoorUnlocked          = 0x800D7180; // type:func
 MapEvent_PianoPuzzle           = 0x800D7F18; // type:func
+Map_WorldObjectsInit           = 0x800D91EC; // type:func
+Map_WorldObjectsUpdate         = 0x800D9514; // type:func
 
 
 

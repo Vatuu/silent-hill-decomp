@@ -13,7 +13,7 @@ extern s_AnimInfo HARRY_M6S04_ANIM_INFOS[];
 
 const s_MapOverlayHeader g_MapOverlayHeader = {
     .mapInfo_0                        = &MAP_INFOS[MapType_APU],
-    .getMapRoomIdxFunc_4              = sharedFunc_800E1114_6_s04,
+    .getMapRoomIdxFunc_4              = Map_RoomIdxGet,
     .field_8                          = 4,
     .func_C                           = sharedFunc_800D929C_0_s00,
     .bgmEvent_10                      = sharedFunc_800E1258_6_s04,
@@ -30,8 +30,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .mapMessages_30                   = MAP_MESSAGES,
     .animInfos_34                     = HARRY_M6S04_ANIM_INFOS,
     .field_38                         = g_MapHeaderTable_38,
-    .worldObjectsInit_3C              = 0x800E5D44,
-    .worldObjectsUpdate_40            = 0x800E5F54,
+    .worldObjectsInit_3C              = Map_WorldObjectsInit,
+    .worldObjectsUpdate_40            = Map_WorldObjectsUpdate,
     .func_44                          = NULL,
     .npcSpawnEvent_48                 = NULL,
     .unkTable1_4C                     = sharedData_800DFB7C_0_s00,

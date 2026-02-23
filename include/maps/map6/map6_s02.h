@@ -85,7 +85,7 @@ void func_800D1330(s16);
 
 void Map_WorldObjectsInit(void);
 
-void func_800D1718(void);
+void Map_WorldObjectsUpdate(void);
 
 s32 func_800D1D40(void);
 

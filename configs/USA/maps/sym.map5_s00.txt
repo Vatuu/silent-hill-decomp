@@ -114,6 +114,7 @@ MapEvent_CommonItemTake          = 0x800D691C; // type:func
 MapEvent_SewerKeyTake            = 0x800D6AD4; // type:func
 MapEvent_MapTake                 = 0x800D8280; // type:func
 Map_WorldObjectsInit             = 0x800D82A8; // type:func
+Map_WorldObjectsUpdate           = 0x800D84D8; // type:func
 
 
 

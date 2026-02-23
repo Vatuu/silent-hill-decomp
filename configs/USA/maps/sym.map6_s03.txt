@@ -123,6 +123,8 @@ sharedFunc_800D929C_0_s00        = 0x800D7F14; // type:func
 Map_RoomIdxGet                   = 0x800D7F24; // type:func
 MapEvent_CommonItemTake          = 0x800D81AC; // type:func
 MapEvent_MapTake                 = 0x800D87F0; // type:func
+Map_WorldObjectsInit             = 0x800D8818; // type:func
+Map_WorldObjectsUpdate           = 0x800D89A0; // type:func
 
 
 

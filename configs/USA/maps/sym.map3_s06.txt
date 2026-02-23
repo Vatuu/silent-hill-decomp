@@ -126,6 +126,7 @@ MapEvent_CommonItemTake             = 0x800D0AEC; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800D0B7C; // type:func
 MapEvent_MapTake                    = 0x800D17B0; // type:func
 Map_WorldObjectsInit                = 0x800D1804; // type:func
+Map_WorldObjectsUpdate              = 0x800D197C; // type:func
 
 
 

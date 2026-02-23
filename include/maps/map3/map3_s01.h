@@ -57,9 +57,9 @@ void func_800D29A4(void);
 
 void func_800D2A88(void);
 
-void func_800D2AF4(void);
+void Map_WorldObjectsInit(void);
 
-void func_800D2E54(void);
+void Map_WorldObjectsUpdate(void);
 
 void MapEvent_UseBottleOnLiquid(void);
 

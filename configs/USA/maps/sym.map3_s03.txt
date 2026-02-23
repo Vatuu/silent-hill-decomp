@@ -122,6 +122,7 @@ MapEvent_DoorLocked           = 0x800D164C; // type:func
 MapEvent_DoorUnlocked         = 0x800D16E0; // type:func
 sharedFunc_800D15F0_3_s01     = 0x800D3160; // type:func
 Map_WorldObjectsInit          = 0x800D3EAC; // type:func
+Map_WorldObjectsUpdate        = 0x800D429C; // type:func
 
 
 

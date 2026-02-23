@@ -6,4 +6,8 @@
 #define MAP_ROOM_MIN_Z Q12(-120.0f)
 #define MAP_ROOM_MAX_Z Q12(240.0f)
 
+void Map_WorldObjectsInit(void);
+
+void Map_WorldObjectsUpdate(void);
+
 #endif

@@ -257,7 +257,7 @@ void func_800D4D1C(void) // 0x800D4D1C
     }
 }
 
-void func_800D525C(void) // 0x800D525C
+void Map_WorldObjectsInit(void) // 0x800D525C
 {
     D_800D86F8[0] = 0;
     D_800D86F8[1] = 0;
@@ -305,7 +305,7 @@ void func_800D525C(void) // 0x800D525C
     SD_Call(Sfx_Unk1478);
 }
 
-void func_800D5400(void) // 0x800D5400
+void Map_WorldObjectsUpdate(void) // 0x800D5400
 {
     s32 sp18[2];
     s32 i;

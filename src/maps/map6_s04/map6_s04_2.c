@@ -1519,7 +1519,7 @@ void func_800E10F8(void) // 0x800E10F8
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800E1104
 
-#include "maps/shared/sharedFunc_800E1114_6_s04.h" // 0x800E1114
+#include "maps/shared/Map_RoomIdxGet.h" // 0x800E1114
 
 #include "maps/shared/sharedFunc_800E1258_6_s04.h" // 0x800E1258
 
@@ -3283,7 +3283,7 @@ void func_800E558C(void) // 0x800E558C
     }
 }
 
-void func_800E5D44(void) // 0x800E5D44
+void Map_WorldObjectsInit(void) // 0x800E5D44
 {
     D_800ED841 = 0;
     D_800ED5F0 = 0;
@@ -3324,7 +3324,7 @@ void func_800E5D44(void) // 0x800E5D44
 extern VECTOR3 D_800CC7C0;
 extern VECTOR3 D_800CC7CC;
 
-void func_800E5F54(void) // 0x800E5F54
+void Map_WorldObjectsUpdate(void) // 0x800E5F54
 {
     s32 cellZ0;
     s32 cellX0;

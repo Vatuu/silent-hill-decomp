@@ -1138,7 +1138,7 @@ void func_800EC42C(void) // 0x800EC42C
     }
 }
 
-void func_800ECB58(void) // 0x800ECB58
+void Map_WorldObjectsInit(void) // 0x800ECB58
 {
     WorldObjectNoRotInit(&g_WorldObject0, "RSRMAP_H", -46.5f, 0.0f, 2.5f);
 
@@ -1165,7 +1165,7 @@ void func_800ECB58(void) // 0x800ECB58
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800ECC8C(void) // 0x800ECC8C
+void Map_WorldObjectsUpdate(void) // 0x800ECC8C
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 

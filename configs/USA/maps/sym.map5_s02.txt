@@ -133,6 +133,7 @@ MapEvent_DoorLocked                 = 0x800D4A24; // type:func
 MapEvent_CommonItemTake             = 0x800D4AB8; // type:func
 MapEvent_KaufmannBarFightCutscene   = 0x800D5744; // type:func
 Map_WorldObjectsInit                = 0x800D6598; // type:func
+Map_WorldObjectsUpdate              = 0x800D68FC; // type:func
 
 
 
