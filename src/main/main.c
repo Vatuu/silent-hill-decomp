@@ -16,9 +16,9 @@
 // `main` accesses them individually and not with a common base.
 
 #ifdef VER_JAP0
-void* SECTION(".rodata") g_OvlDynamic = (void*)0x800CBAA8;
+    void* SECTION(".rodata") g_OvlDynamic = (void*)0x800CBAA8;
 #else
-void* SECTION(".rodata") g_OvlDynamic = (void*)0x800C9578;
+    void* SECTION(".rodata") g_OvlDynamic = (void*)0x800C9578;
 #endif
 
 void* SECTION(".rodata") g_OvlBodyprog = (void*)0x80024B60;

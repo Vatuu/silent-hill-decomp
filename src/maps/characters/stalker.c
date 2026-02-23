@@ -75,9 +75,9 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
 #endif
 
     stalker->moveSpeed_38   = Q12(0.0f);
-    stalker->fallSpeed_34   = 0;
-    stalker->rotation_24.vz = 0;
-    stalker->rotation_24.vx = 0;
+    stalker->fallSpeed_34   = Q12(0.0f);
+    stalker->rotation_24.vz = Q12_ANGLE(0.0f);
+    stalker->rotation_24.vx = Q12_ANGLE(0.0f);
     //Character_AnimSet(stalker, ANIM_STATUS(StalkerAnim_30, true), 447); // TODO: Doesn't match?
     stalker->model_0.anim_4.status_0      = ANIM_STATUS(StalkerAnim_30, true);
     stalker->model_0.anim_4.time_4        = Q12(477.0f);

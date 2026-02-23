@@ -90,7 +90,7 @@ void Ai_Cheryl_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x
     if (chara->position_18.vy > sharedData_800E39BC_0_s00.field_C)
     {
         chara->position_18.vy = sharedData_800E39BC_0_s00.field_C;
-        chara->fallSpeed_34   = 0;
+        chara->fallSpeed_34   = Q12(0.0f);
     }
 
     coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);

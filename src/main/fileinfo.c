@@ -192,7 +192,7 @@ void Fs_EncodeFileName(s32* outName0123, s32* outName4567, const char* srcName)
 
 s32 Fs_GetFileSectorAlignedSize(s32 fileIdx)
 {
-  return ALIGN(g_FileTable[fileIdx].blockCount_0_19 * FS_BLOCK_SIZE, FS_SECTOR_SIZE);
+    return ALIGN(g_FileTable[fileIdx].blockCount_0_19 * FS_BLOCK_SIZE, FS_SECTOR_SIZE);
 }
 
 s32 Fs_FindNextFileOfType(s32 fileType, s32 startIdx, s32 dir)
@@ -227,12 +227,10 @@ s32 Fs_FindNextFileOfType(s32 fileType, s32 startIdx, s32 dir)
 s32 Fs_FindNextFile(const char* name, s32 fileType, s32 startIdx)
 {
     s_FileInfo* fileEntry;
-
-    s32 name0123;
-    s32 name4567;
-
-    s32 i        = startIdx;
-    s32 foundIdx = NO_VALUE;
+    s32         name0123;
+    s32         name4567;
+    s32         i        = startIdx;
+    s32         foundIdx = NO_VALUE;
 
     Fs_EncodeFileName(&name0123, &name4567, name);
 

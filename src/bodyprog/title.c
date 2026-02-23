@@ -37,7 +37,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 {
     #define MAIN_MENU_GAME_STATE_COUNT 5
 
-    s32 NEXT_GAME_STATES[MAIN_MENU_GAME_STATE_COUNT] = // 0x80025480
+    s32 NEXT_GAME_STATES[MAIN_MENU_GAME_STATE_COUNT] =
     {
         GameState_LoadSavegameScreen,
         GameState_AutoLoadSavegame,
@@ -50,16 +50,14 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
     s32         prevGameDifficultyIdx;
     s32         nextGameDifficultyIdx;
     e_GameState prevState;
-    static s32  g_MainMenu_NewGameSelectedDifficultyIdx = 1;
-    static s32  g_MemCard_PrevSavegameCount             = 0;
+    static s32  newGameSelectedDifficultyIdx = 1;
+    static s32  prevSavegameCount            = 0;
 
     func_80033548();
 
-    /** After staying idle in the title screen for some time, checks if the intro FMV or a
-     * demo gameplay segment should be played. If the next value from `g_Demo_ReproducedCount`
-     * is a value divisible by 3, the intro FMV will play. Otherwise, it defaults to a gameplay
-     * demo.
-     */
+    // After staying idle in the title screen for some time, this checks if the intro FMV or a
+    // demo gameplay segment should be played. If the next value from `g_Demo_ReproducedCount`
+    // is a value divisible by 3, the intro FMV will play. Otherwise, it defaults to a gameplay demo.
     playInGameDemo = ((g_Demo_ReproducedCount + 1) % 3) != 0;
 
     if (g_GameWork.gameStateStep_598[0] == 0)
@@ -119,13 +117,13 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             {
                 g_MainMenu_VisibleEntryFlags |= (1 << MainMenuEntry_Load) | (1 << MainMenuEntry_Continue);
 
-                if (g_MemCard_PrevSavegameCount < g_MemCard_SavegameCount && g_MainMenu_SelectedEntry != MainMenuEntry_Load)
+                if (prevSavegameCount < g_MemCard_SavegameCount && g_MainMenu_SelectedEntry != MainMenuEntry_Load)
                 {
                     g_MainMenu_SelectedEntry = MainMenuEntry_Continue;
                 }
             }
             // No savegames exist, but did previously (e.g. memory card removed before player death).
-            else if (g_MemCard_PrevSavegameCount > 0)
+            else if (prevSavegameCount > 0)
             {
                 while(!(g_MainMenu_VisibleEntryFlags & (1 << g_MainMenu_SelectedEntry)))
                 {
@@ -218,7 +216,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 }
             }
 
-            g_MemCard_PrevSavegameCount = g_MemCard_SavegameCount;
+            prevSavegameCount = g_MemCard_SavegameCount;
 
         default:
             break;
@@ -256,20 +254,20 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
             {
                 prevGameDifficultyIdx = 2;
-                if (g_MainMenu_NewGameSelectedDifficultyIdx > 0)
+                if (newGameSelectedDifficultyIdx > 0)
                 {
-                    prevGameDifficultyIdx = g_MainMenu_NewGameSelectedDifficultyIdx - 1;
+                    prevGameDifficultyIdx = newGameSelectedDifficultyIdx - 1;
                 }
-                g_MainMenu_NewGameSelectedDifficultyIdx = prevGameDifficultyIdx;
+                newGameSelectedDifficultyIdx = prevGameDifficultyIdx;
             }
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
             {
                 nextGameDifficultyIdx = 0;
-                if (g_MainMenu_NewGameSelectedDifficultyIdx < 2)
+                if (newGameSelectedDifficultyIdx < 2)
                 {
-                    nextGameDifficultyIdx = g_MainMenu_NewGameSelectedDifficultyIdx + 1;
+                    nextGameDifficultyIdx = newGameSelectedDifficultyIdx + 1;
                 }
-                g_MainMenu_NewGameSelectedDifficultyIdx = nextGameDifficultyIdx;
+                newGameSelectedDifficultyIdx = nextGameDifficultyIdx;
             }
 
             // Play scroll sound.
@@ -281,7 +279,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             // Select game difficulty.
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                Game_SavegameInitialize(0, g_MainMenu_NewGameSelectedDifficultyIdx - 1);
+                Game_SavegameInitialize(0, newGameSelectedDifficultyIdx - 1);
                 Game_PlayerInit();
 
                 g_SysWork.processFlags_2298 = SysWorkProcessFlag_NewGame;
@@ -378,7 +376,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             return;
         }
 
-        Gfx_MainMenu_DifficultyTextDraw(g_MainMenu_NewGameSelectedDifficultyIdx);
+        Gfx_MainMenu_DifficultyTextDraw(newGameSelectedDifficultyIdx);
         return;
     }
     else

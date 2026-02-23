@@ -210,7 +210,7 @@ void Fs_QueueUpdate(void)
     if (g_FsQueue.postLoad.idx < g_FsQueue.read.idx)
     {
         temp = Fs_QueueUpdatePostLoad(tick);
-        if (temp == 1)
+        if (temp == true)
         {
             g_FsQueue.postLoadState = FsQueuePostLoadState_Init;
             temp                    = ++g_FsQueue.postLoad.idx;
@@ -235,11 +235,11 @@ bool Fs_QueueUpdateSeek(s_FsQueueEntry* entry)
             switch (Fs_QueueTickSetLoc(entry))
             {
                 // CdlSetloc failed, reset and retry.
-                case 0:
+                case false:
                     g_FsQueue.state = FsQueueSeekState_Reset;
                     break;
 
-                case 1:
+                case true:
                     g_FsQueue.state = FsQueueSeekState_SeekL;
                     break;
             }

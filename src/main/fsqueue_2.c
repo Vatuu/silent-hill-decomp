@@ -41,11 +41,11 @@ bool Fs_QueueUpdateRead(s_FsQueueEntry* entry)
             switch (Fs_QueueTickSetLoc(entry))
             {
                 // `CdlSetloc` failed, reset CD.
-                case 0:
+                case false:
                     g_FsQueue.state = FsQueueReadState_Reset;
                     break;
 
-                case 1:
+                case true:
                     g_FsQueue.state = FsQueueReadState_Read;
                     break;
             }

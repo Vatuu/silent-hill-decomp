@@ -61,7 +61,7 @@ void Map_BoxOutlineDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 ar
     {
         if (arg0 > 0)
         {
-            iVar4 = CLAMP_LOW_THEN_MIN(FP_TO(arg0 - (i * 0x800) / 5, 12) / 0x800, 0, 0x1000);
+            iVar4 = CLAMP_LOW_THEN_MIN(FP_TO(arg0 - (i * Q12(0.5f)) / 5, Q12_SHIFT) /  Q12(0.5f), 0,  Q12(1.0f));
         }
         else
         {
@@ -69,7 +69,7 @@ void Map_BoxOutlineDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 ar
         }
 
         iVar1   = iVar4;
-        temp_v0 = 0x1000 - iVar1;
+        temp_v0 = Q12(1.0f) - iVar1;
 
         uVar6[0] = Q12_MULT_PRECISE(arg1, temp_v0) + Q12_MULT_PRECISE(arg5, iVar1);
         sVar5[0] = Q12_MULT_PRECISE(arg2, temp_v0) + Q12_MULT_PRECISE(arg6, iVar1);

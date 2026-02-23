@@ -179,7 +179,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
         if (chara->position_18.vy > UnkStruct.field_C)
         {
             chara->position_18.vy = UnkStruct.field_C;
-            chara->fallSpeed_34   = 0;
+            chara->fallSpeed_34   = Q12(0.0f);
         }
     }
     else
@@ -193,7 +193,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
             chara->position_18.vy = Q12(0.0f);
         }
 
-        chara->fallSpeed_34 = 0;
+        chara->fallSpeed_34 = Q12(0.0f);
     }
 
     if (g_DeltaTime0 == Q12(0.0f))

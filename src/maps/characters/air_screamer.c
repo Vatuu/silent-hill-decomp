@@ -11864,7 +11864,7 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
         return false;
     }
 
-    if (airScreamer->fallSpeed_34 < 0)
+    if (airScreamer->fallSpeed_34 < Q12(0.0f))
     {
         return false;
     }

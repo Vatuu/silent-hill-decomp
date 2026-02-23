@@ -20,7 +20,7 @@ typedef struct s_FsMemBlock
 /** @brief State of the FS memory heap.
  * This heap seems to only be used by the FS code.
  */
-typedef struct
+typedef struct _FsMemState
 {
     u8*          start;                      /** Heap base. */
     u32          size;                       /** Total heap size in bytes. */

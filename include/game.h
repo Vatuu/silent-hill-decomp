@@ -1665,8 +1665,8 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter_D4, 4);
 typedef struct _SubCharacter
 {
     s_Model  model_0;          // In player: Manage the half lower part of Harry's body animations (legs and feet).
-    VECTOR3  position_18;      /** `Q19.12` */
-    SVECTOR3 rotation_24;
+    VECTOR3  position_18;      /** Q19.12 */
+    SVECTOR3 rotation_24;      /** Q3.12 */
     q3_12    field_2A;         // Angle related to `rotation_24`, unknown purpose.
     SVECTOR3 rotationSpeed_2C; /** Q3.12 | Range: `[Q12_ANGLE(-157.5f), Q12_ANGLE(157.5f)]`. */
     q3_12    field_32;         // Related to `rotationSpeed_2C`, unknown purpose.

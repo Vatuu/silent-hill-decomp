@@ -6665,7 +6665,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
     if (chara->position_18.vy > D_800C4590.field_C)
     {
         chara->position_18.vy = D_800C4590.field_C;
-        chara->fallSpeed_34   = 0;
+        chara->fallSpeed_34   = Q12(0.0f);
     }
 
     someAngle = Q12_ANGLE_NORM_U(ratan2(chara->position_18.vx - g_Player_PrevPosition.vx, chara->position_18.vz - g_Player_PrevPosition.vz) + Q12_ANGLE(360.0f));

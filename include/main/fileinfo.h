@@ -37,7 +37,7 @@ typedef enum _FileType
     FileType_Dat = 9,
     FileType_Kdt = 10,
     FileType_Cmp = 11
-} s_FileType;
+} e_FileType;
 
 /** @brief Entry in the file table.
  *
@@ -59,7 +59,7 @@ typedef struct _FileInfo
     u32 pathIdx_4_0     : 4;  /** Index of path to file in `g_FilePaths`. */
     u32 name0123_4_4    : 24; /** First four 6-bit characters of file name. */
     u32 name4567_8_0    : 24; /** Second four 6-bit characters of file name. */
-    u32 type_8_24       : 4;  /** `s_FileType` | File type (and index of extension in `g_FileExts`). */
+    u32 type_8_24       : 4;  /** `e_FileType` | File type (and index of extension in `g_FileExts`). */
 } s_FileInfo;
 STATIC_ASSERT_SIZEOF(s_FileInfo, 12);
 

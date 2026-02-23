@@ -101,7 +101,7 @@ s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
     if (chara->position_18.vy > sp10.field_C)
     {
         chara->position_18.vy = sp10.field_C;
-        chara->fallSpeed_34   = 0;
+        chara->fallSpeed_34   = Q12(0.0f);
     }
 
     if (arg1 != NULL)
@@ -153,7 +153,7 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, q3_12 offsetX, q3_12 
     if (chara->position_18.vy > sp10.field_C)
     {
         chara->position_18.vy = sp10.field_C;
-        chara->fallSpeed_34   = 0;
+        chara->fallSpeed_34   = Q12(0.0f);
     }
 
     if (arg1 != NULL)

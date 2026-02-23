@@ -66,7 +66,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
     }
 
     floatstinger->moveSpeed_38 = Q12(0.0f);
-    floatstinger->fallSpeed_34 = 0;
+    floatstinger->fallSpeed_34 = Q12(0.0f);
     floatstinger->field_E1_0   = 4;
     Chara_PropertiesClear(floatstinger);
 
