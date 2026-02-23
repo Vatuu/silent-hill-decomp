@@ -12,18 +12,10 @@
 #define KEYFRAME_PlayerState_Unk87 857
 #define KEYFRAME_PlayerState_Unk88 894
 
-typedef struct
-{
-    s32 field_0;
-    s32 field_4;
-    s16 field_8;
-    s8  unk_A;
-    u8  field_B;
-    u16 field_C;
-    u8  field_E;
-    s8  unk_F;
-    s8  unk_10[4];
-} s_800DAB90;
+#define MAP_FIELD_4C_COUNT 200
+#define MAP_BLOOD_SPLAT_COUNT_MAX 150
+
+#include "maps/shared.h"
 
 typedef struct
 {
@@ -59,8 +51,6 @@ extern s_WorldObjectDesc  g_WorldObject_Map;
 extern s_WorldObjectDesc  g_WorldObject_SavePad0;
 extern s_WorldObjectDesc  g_WorldObject_SavePad1;
 extern s_WorldObjectModel g_CommonWorldObjects[6];
-
-extern s_800DAB90 D_800DAB90[];
 
 extern s32 D_800DA154[];
 

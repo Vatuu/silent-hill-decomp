@@ -15,6 +15,11 @@
 #define MAP_ROOM_MIN_Z Q12(-160.0f)
 #define MAP_ROOM_MAX_Z Q12(160.0f)
 
+#define MAP_FIELD_4C_COUNT 250
+#define MAP_BLOOD_SPLAT_COUNT_MAX 150
+
+#include "maps/shared.h"
+
 extern u8 D_800D6B40[][2];
 
 extern u8 D_800D6B50[];

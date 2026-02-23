@@ -1,15 +1,10 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "maps/shared.h"
+#include "maps/map5/map5_s03.h"
 #include "maps/particle.h"
 #include "maps/characters/kaufmann.h"
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
-#include "maps/map5/map5_s03.h"
-
-#define BLOOD_SPLAT_COUNT_MAX 50
-
-extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 
 extern s_AnimInfo      HARRY_M5S03_ANIM_INFOS[];
 

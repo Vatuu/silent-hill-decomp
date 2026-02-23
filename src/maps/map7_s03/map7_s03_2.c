@@ -8,7 +8,6 @@
 #include "bodyprog/ranking.h"
 #include "bodyprog/sound_system.h"
 #include "main/rng.h"
-#include "maps/shared.h"
 #include "maps/map7/map7_s03.h"
 #include "maps/characters/alessa.h"
 #include "maps/characters/bloody_lisa.h"

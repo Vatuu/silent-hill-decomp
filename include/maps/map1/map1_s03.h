@@ -1,7 +1,6 @@
 #ifndef _MAPS_MAP1_S03_H
 #define _MAPS_MAP1_S03_H
 
-#include "maps/shared.h"
 #define HAS_PlayerState_Unk52
 #define HAS_PlayerState_Unk59
 #define HAS_PlayerState_Unk60
@@ -20,6 +19,11 @@
 #define MAP_ROOM_MAX_X Q12(160.0f)
 #define MAP_ROOM_MIN_Z Q12(-80.0f)
 #define MAP_ROOM_MAX_Z Q12(200.0f)
+
+#define MAP_FIELD_4C_COUNT 300
+#define MAP_BLOOD_SPLAT_COUNT_MAX 150
+
+#include "maps/shared.h"
 
 extern s_AnimInfo LOCKER_DEAD_BODY_ANIM_INFOS[8]; // 0x800E1410
 

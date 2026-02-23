@@ -23,6 +23,11 @@
 #define MAP_ROOM_MIN_Z Q12(0.0f)
 #define MAP_ROOM_MAX_Z Q12(120.0f)
 
+#define MAP_FIELD_4C_COUNT 150
+#define MAP_BLOOD_SPLAT_COUNT_MAX 50
+
+#include "maps/shared.h"
+
 extern s_WorldObjectPose      g_WorldObjectPose_HealthDrink0;
 extern s_WorldObjectPose      g_WorldObjectPose_ShotgunShells;
 extern s_WorldObjectPose      g_WorldObjectPose_HealthDrink1;

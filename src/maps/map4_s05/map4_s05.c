@@ -3,11 +3,10 @@
 #include "bodyprog/player_logic.h"
 #include "bodyprog/sound_system.h"
 #include "main/rng.h"
-#include "maps/shared.h"
+#include "maps/map4/map4_s05.h"
 #include "maps/particle.h"
 #include "maps/characters/floatstinger.h"
 #include "maps/characters/player.h"
-#include "maps/map4/map4_s05.h"
 
 #define floatstingerProps floatstinger->properties_E4.floatstinger
 

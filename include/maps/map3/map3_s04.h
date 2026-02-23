@@ -18,6 +18,11 @@
 #define MAP_ROOM_MIN_Z Q12(-160.0f)
 #define MAP_ROOM_MAX_Z Q12(160.0f)
 
+#define MAP_FIELD_4C_COUNT 200
+#define MAP_BLOOD_SPLAT_COUNT_MAX 150
+
+#include "maps/shared.h"
+
 extern s_WorldObjectDescNoRot g_WorldObject_Dr[6];
 extern s_WorldObjectDescNoRot g_WorldObject_Plate;
 extern s_WorldObjectDesc      g_WorldObject_SavePad;

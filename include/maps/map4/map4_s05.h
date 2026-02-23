@@ -14,6 +14,11 @@
 #define MAP_ROOM_MIN_Z Q12(-120.0f)
 #define MAP_ROOM_MAX_Z Q12(240.0f)
 
+#define MAP_FIELD_4C_COUNT 250
+#define MAP_BLOOD_SPLAT_COUNT_MAX 150
+
+#include "maps/shared.h"
+
 typedef struct
 {
     s32 field_0[2];

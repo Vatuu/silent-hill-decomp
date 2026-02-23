@@ -1,9 +1,8 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "maps/shared.h"
+#include "maps/map7/map7_s01.h"
 #include "maps/particle.h"
 #include "maps/characters/player.h"
-#include "maps/map7/map7_s01.h"
 #include "maps/characters/bloody_lisa.h"
 #include "maps/characters/ghost_child_alessa.h"
 #include "maps/characters/lisa.h"
@@ -35,9 +34,9 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .func_44                          = NULL,
     .npcSpawnEvent_48                 = 0x800DEDA4,
     .unkTable1_4C                     = sharedData_800DFB7C_0_s00,
-    .unkTable1Count_50                = 250,
-    .bloodSplats_54                   = 0x800E2A58,
-    .bloodSplatCount_58               = 150,
+    .unkTable1Count_50                = ARRAY_SIZE(sharedData_800DFB7C_0_s00),
+    .bloodSplats_54                   = g_Effect_BloodSplats,
+    .bloodSplatCount_58               = ARRAY_SIZE(g_Effect_BloodSplats),
     .field_5C                         = NULL,
     .func_60                          = NULL,
     .func_64                          = NULL,

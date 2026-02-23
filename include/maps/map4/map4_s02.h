@@ -6,6 +6,11 @@
 #define MAP_ROOM_MIN_Z Q12(-120.0f)
 #define MAP_ROOM_MAX_Z Q12(240.0f)
 
+#define MAP_FIELD_4C_COUNT 200
+#define MAP_BLOOD_SPLAT_COUNT_MAX 150
+
+#include "maps/shared.h"
+
 extern s_WorldObjectDescNoRot g_WorldObject_Kidn04;
 
 extern s_WorldObjectModel g_WorldObject_Fan0;

@@ -1,11 +1,6 @@
 #ifndef _MAPS_MAP0_S01_H
 #define _MAPS_MAP0_S01_H
 
-#include "bodyprog/bodyprog.h"
-#include "maps/shared.h"
-#include "game.h"
-#include "types.h"
-
 #define HAS_PlayerState_Unk51
 #define HAS_PlayerState_Unk131
 #define HAS_PlayerState_Unk52
@@ -31,6 +26,11 @@
 #define MAP_ROOM_MIN_Z Q12(-240.0f)
 #define MAP_ROOM_MAX_Z Q12(400.0f)
 #define MAP_HAS_SECONDARY_GRID
+
+#define MAP_FIELD_4C_COUNT 300
+#define MAP_BLOOD_SPLAT_COUNT_MAX 150
+
+#include "maps/shared.h"
 
 extern u16 g_MapMsgSounds[]; // 0x800DE0CC
 

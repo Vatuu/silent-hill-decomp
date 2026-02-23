@@ -30,6 +30,11 @@
 #define MAP_ROOM_MIN_Z Q12(0.0f)
 #define MAP_ROOM_MAX_Z Q12(120.0f)
 
+#define MAP_FIELD_4C_COUNT 450
+#define MAP_BLOOD_SPLAT_COUNT_MAX 100
+
+#include "maps/shared.h"
+
 extern u16 g_MapMsgSounds[84];
 extern u16 g_MapMsgSounds1[4];
 extern u16 g_MapMsgSounds2[2];

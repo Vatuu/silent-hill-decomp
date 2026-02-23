@@ -2,7 +2,6 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
-#include "maps/shared.h"
 #include "maps/map3/map3_s02.h"
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800CF404

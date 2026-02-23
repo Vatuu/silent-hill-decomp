@@ -9,6 +9,11 @@
 #define HAS_PARTICLE_CASE_10
 #define PARTICLE_CASE_COUNT 1
 
+#define MAP_FIELD_4C_COUNT 200
+#define MAP_BLOOD_SPLAT_COUNT_MAX 150
+
+#include "maps/shared.h"
+
 extern s_800F0158 D_800F0158[12];
 
 extern u8 D_800F0170[4];

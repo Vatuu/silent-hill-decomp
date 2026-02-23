@@ -1,9 +1,8 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "maps/shared.h"
+#include "maps/map3/map3_s05.h"
 #include "maps/particle.h"
 #include "maps/characters/player.h"
-#include "maps/map3/map3_s05.h"
 #include "maps/characters/creeper.h"
 #include "maps/characters/puppet_nurse.h"
 
@@ -33,9 +32,9 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .func_44                          = NULL,
     .npcSpawnEvent_48                 = NULL,
     .unkTable1_4C                     = sharedData_800DFB7C_0_s00,
-    .unkTable1Count_50                = 450,
-    .bloodSplats_54                   = 0x800DD050,
-    .bloodSplatCount_58               = 150,
+    .unkTable1Count_50                = ARRAY_SIZE(sharedData_800DFB7C_0_s00),
+    .bloodSplats_54                   = g_Effect_BloodSplats,
+    .bloodSplatCount_58               = ARRAY_SIZE(g_Effect_BloodSplats),
     .field_5C                         = &sharedData_800D8568_1_s05,
     .func_60                          = sharedFunc_800CABF8_1_s05,
     .func_64                          = sharedFunc_800CB040_1_s05,

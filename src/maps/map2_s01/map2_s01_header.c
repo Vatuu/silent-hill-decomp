@@ -1,17 +1,10 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "maps/shared.h"
+#include "maps/map2/map2_s01.h"
 #include "maps/particle.h"
 #include "maps/characters/dahlia.h"
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
-#include "maps/map2/map2_s01.h"
-
-// TODO: Fix tabulation. Use 4 spaces not 2.
-
-#define BLOOD_SPLAT_COUNT_MAX 150
-
-extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 
 extern s_AnimInfo      HARRY_M2S01_ANIM_INFOS[];
 

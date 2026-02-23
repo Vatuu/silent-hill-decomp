@@ -2,11 +2,10 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
-#include "maps/shared.h"
+#include "maps/map0/map0_s01.h"
 #include "maps/particle.h"
 #include "maps/characters/air_screamer.h"
 #include "maps/characters/player.h"
-#include "maps/map0/map0_s01.h"
 
 const VECTOR D_800CA5C8 = {};
 

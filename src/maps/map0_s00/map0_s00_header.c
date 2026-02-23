@@ -1,15 +1,10 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "maps/shared.h"
+#include "maps/map0/map0_s00.h"
 #include "maps/particle.h"
 #include "maps/characters/cheryl.h"
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
-#include "maps/map0/map0_s00.h"
-
-#define BLOOD_SPLAT_COUNT_MAX 150
-
-extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 
 extern s_AnimInfo HARRY_M0S00_ANIM_INFOS[];
 

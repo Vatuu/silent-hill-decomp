@@ -11,6 +11,11 @@
 #define HAS_PlayerState_Unk175
 #define KEYFRAME_PlayerState_Unk111 915
 
+#define MAP_FIELD_4C_COUNT 200
+#define MAP_BLOOD_SPLAT_COUNT_MAX 150
+
+#include "maps/shared.h"
+
 extern u16 D_800D3B40;
 
 extern s_FsImageDesc D_800D3B44[5];

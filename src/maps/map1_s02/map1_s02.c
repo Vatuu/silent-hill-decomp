@@ -2,12 +2,11 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
-#include "maps/shared.h"
+#include "maps/map1/map1_s02.h"
 #include "maps/particle.h"
 #include "maps/characters/creeper.h"
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
-#include "maps/map1/map1_s02.h"
 
 #include "maps/shared/sharedFunc_800CBA4C_1_s02.h" // 0x800CBA4C
 

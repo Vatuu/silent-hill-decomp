@@ -7,6 +7,11 @@
 #define MAP_ROOM_MAX_Z Q12(400.0f)
 #define MAP_HAS_SECONDARY_GRID
 
+#define MAP_FIELD_4C_COUNT 200
+#define MAP_BLOOD_SPLAT_COUNT_MAX 150
+
+#include "maps/shared.h"
+
 void Gfx_LoadingScreen_StageString(void);
 
 void Map_WorldObjectsInit(void);

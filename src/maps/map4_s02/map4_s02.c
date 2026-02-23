@@ -2,13 +2,12 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound_system.h"
 #include "main/rng.h"
-#include "maps/shared.h"
+#include "maps/map4/map4_s02.h"
 #include "maps/particle.h"
 #include "maps/characters/air_screamer.h"
 #include "maps/characters/groaner.h"
 #include "maps/characters/player.h"
 #include "maps/characters/romper.h"
-#include "maps/map4/map4_s02.h"
 
 #include "../src/maps/particle.c"
 

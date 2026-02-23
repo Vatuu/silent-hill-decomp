@@ -4,7 +4,6 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
-#include "maps/shared.h"
 #include "maps/map2/map2_s01.h"
 #include "maps/characters/dahlia.h"
 

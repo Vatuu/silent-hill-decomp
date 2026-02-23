@@ -1,10 +1,9 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
-#include "maps/shared.h"
+#include "maps/map2/map2_s04.h"
 #include "maps/particle.h"
 #include "maps/characters/player.h"
-#include "maps/map2/map2_s04.h"
 
 #include "../src/maps/particle.c"
 

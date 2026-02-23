@@ -12,6 +12,11 @@
 #define MAP_ROOM_MIN_Z Q12(-120.0f)
 #define MAP_ROOM_MAX_Z Q12(240.0f)
 
+#define MAP_FIELD_4C_COUNT 250
+#define MAP_BLOOD_SPLAT_COUNT_MAX 150
+
+#include "maps/shared.h"
+
 #define COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, n) \
 {                                                     \
     u16* ptr4 = &(ptr0)[(idx)];                       \

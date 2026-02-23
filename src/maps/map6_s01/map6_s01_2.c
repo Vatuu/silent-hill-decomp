@@ -3,7 +3,6 @@
 #include "bodyprog/player_logic.h"
 #include "bodyprog/sound_system.h"
 #include "main/rng.h"
-#include "maps/shared.h"
 #include "maps/map6/map6_s01.h"
 #include "maps/characters/cybil.h"
 #include "maps/characters/dahlia.h"

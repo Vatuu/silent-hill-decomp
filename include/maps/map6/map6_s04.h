@@ -29,6 +29,11 @@
 #define HAS_Chara_Alessa
 #define MAP_CHARA_COUNT 3
 
+#define MAP_FIELD_4C_COUNT 300
+#define MAP_BLOOD_SPLAT_COUNT_MAX 150
+
+#include "maps/shared.h"
+
 #define UNK_FS_BUFFER_6 ((s_func_800DE274*)FS_BUFFER_6)
 
 // Used with `FS_BUFFER_6`

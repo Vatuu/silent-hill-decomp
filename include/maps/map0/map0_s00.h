@@ -24,6 +24,11 @@
 #define MAP_ROOM_MAX_Z Q12(400.0f)
 #define MAP_HAS_SECONDARY_GRID
 
+#define MAP_FIELD_4C_COUNT 200
+#define MAP_BLOOD_SPLAT_COUNT_MAX 150
+
+#include "maps/shared.h"
+
 typedef struct
 {
     s16 field_0;
@@ -110,10 +115,6 @@ extern VECTOR3 D_800E3A9C;
 extern SVECTOR3 D_800E3AAC;
 
 void func_800D0124(void);
-
-void func_800CF7AC(s32 arg0, s_Particle* part, u16* arg2, s32* deltaTime);
-
-void func_800D0274(s32 arg0, s_Particle* part, u16* arg2);
 
 /** Debug function? */
 void Gfx_LoadingScreen_StageString(void);

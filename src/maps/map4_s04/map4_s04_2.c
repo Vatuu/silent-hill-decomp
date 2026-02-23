@@ -4,7 +4,6 @@
 #include "bodyprog/sound_system.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
-#include "maps/shared.h"
 #include "maps/map4/map4_s04.h"
 #include "maps/characters/lisa.h"
 

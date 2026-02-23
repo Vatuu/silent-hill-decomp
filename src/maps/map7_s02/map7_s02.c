@@ -2,11 +2,10 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
-#include "maps/shared.h"
+#include "maps/map7/map7_s02.h"
 #include "maps/particle.h"
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
-#include "maps/map7/map7_s02.h"
 
 #include "../src/maps/particle.c"
 

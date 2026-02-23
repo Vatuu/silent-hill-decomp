@@ -2,12 +2,11 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
-#include "maps/shared.h"
+#include "maps/map3/map3_s03.h"
 #include "maps/particle.h"
 #include "maps/characters/bloodsucker.h"
 #include "maps/characters/player.h"
 #include "maps/characters/puppet_nurse.h"
-#include "maps/map3/map3_s03.h"
 
 #include "../src/maps/particle.c"
 

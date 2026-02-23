@@ -1473,41 +1473,16 @@ typedef struct
 
 extern s_MapOverlayHeader_94 sharedData_800E30C8_1_s02;
 
-// TODO: Ideally this should use some kind of `MAP_FIELD_4C_COUNT` define from each map .h file.
-// Right now, `shared.h` gets included before map headers, since this file has decls that map headers may need.
-// Not sure of a good fix yet. Might just have to move the decls for these into each map header, or move map config into a file included before shared.h?
-#if defined(MAP0_S00)
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[200];
-#elif defined(MAP0_S01)
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[300];
-#elif defined(MAP0_S02)
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[100];
-#elif defined(MAP1_S01)
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[300];
-#elif defined(MAP1_S03)
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[300];
-#elif defined(MAP1_S04)
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[100];
-#elif defined(MAP1_S05)
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[500];
-#elif defined(MAP2_S01)
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[200];
-#elif defined(MAP2_S03)
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[200];
-#elif defined(MAP2_S04)
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[200];
-#elif defined(MAP3_S05)
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[450];
-#elif defined(MAP4_S01)
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[450];
-#elif defined(MAP5_S03)
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[150];
-#elif defined(MAP6_S04)
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[300];
-#elif defined(MAP7_S01)
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[250];
+#if defined(MAP_FIELD_4C_COUNT)
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[MAP_FIELD_4C_COUNT];
 #else
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[200];
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[];
+#endif
+
+#if defined(MAP_BLOOD_SPLAT_COUNT_MAX)
+    extern s_BloodSplat g_Effect_BloodSplats[MAP_BLOOD_SPLAT_COUNT_MAX];
+#else
+    extern s_BloodSplat g_Effect_BloodSplats[];
 #endif
 
 /** Air Screamer or Night Flutter control functions. Indexed using `e_AirScreamerControl`. */

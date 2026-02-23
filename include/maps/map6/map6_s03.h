@@ -5,6 +5,11 @@
 #define HAS_PlayerState_Unk87
 #define HAS_PlayerState_Unk88
 
+#define MAP_FIELD_4C_COUNT 300
+#define MAP_BLOOD_SPLAT_COUNT_MAX 150
+
+#include "maps/shared.h"
+
 extern s_WorldObjectPose      g_CommonWorldObjectPoses[3]; // D_800DBEE4
 extern s_WorldObjectModel        g_WorldObject0[2];           // D_800DFE70
 extern VECTOR3                g_WorldObjectPos0;           // D_800DFEB0

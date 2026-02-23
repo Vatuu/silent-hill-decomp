@@ -147,6 +147,7 @@ g_Particle_SpeedZ                   = 0x800D7D9C; // type:s32
 sharedData_800DFB6C_0_s00           = 0x800D7DA0; // type:s32
 sharedData_800DFB70_0_s00           = 0x800D7DA4; // type:s32
 sharedData_800DFB7C_0_s00           = 0x800D7DA8; // size:0x14
+g_Effect_BloodSplats                = 0x800D9138;
 g_ParticleVectors0                  = 0x800D9268; // type:ParticleVectors
 g_Particle_RotationY                = 0x800D928A; // type:s16
 g_ParticleVectors1                  = 0x800D9298; // type:ParticleVectors

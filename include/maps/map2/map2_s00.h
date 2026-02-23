@@ -19,6 +19,11 @@
 #define MAP_ROOM_MAX_Z Q12(400.0f)
 #define MAP_HAS_SECONDARY_GRID
 
+#define MAP_FIELD_4C_COUNT 100
+#define MAP_BLOOD_SPLAT_COUNT_MAX 50
+
+#include "maps/shared.h"
+
 extern u16 g_MapMsgSounds[2]; // 0x800F1A10
 
 extern s16 g_Gfx_LockTimFileIdxs[8]; // 0x800F1A14

@@ -3,12 +3,11 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
-#include "maps/shared.h"
+#include "maps/map1/map1_s00.h"
 #include "maps/particle.h"
 #include "maps/characters/larval_stalker.h"
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
-#include "maps/map1/map1_s00.h"
 
 #include "../src/maps/particle.c"
 

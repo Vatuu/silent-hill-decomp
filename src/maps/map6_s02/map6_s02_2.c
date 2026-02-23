@@ -5,7 +5,6 @@
 #include "bodyprog/ranking.h"
 #include "bodyprog/sound_system.h"
 #include "main/rng.h"
-#include "maps/shared.h"
 #include "maps/map6/map6_s02.h"
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800CDEB0

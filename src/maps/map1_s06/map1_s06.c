@@ -2,11 +2,10 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
-#include "maps/shared.h"
+#include "maps/map1/map1_s06.h"
 #include "maps/particle.h"
 #include "maps/characters/player.h"
 #include "maps/characters/split_head.h"
-#include "maps/map1/map1_s06.h"
 
 #include "maps/shared/sharedFunc_800CBE7C_1_s05.h" // 0x800CAFC4
 

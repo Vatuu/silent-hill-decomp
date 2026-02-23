@@ -1,9 +1,8 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "maps/shared.h"
+#include "maps/map4/map4_s00.h"
 #include "maps/particle.h"
 #include "maps/characters/player.h"
-#include "maps/map4/map4_s00.h"
 
 // TODO: 0x800CCAA0
 extern s_AnimInfo HARRY_M4S00_ANIM_INFOS[];
@@ -31,10 +30,10 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .worldObjectsUpdate_40            = Map_WorldObjectsUpdate,
     .func_44                          = NULL,
     .npcSpawnEvent_48                 = NULL,
-    .unkTable1_4C                     = 0x800CCC4C,
-    .unkTable1Count_50                = 100,
-    .bloodSplats_54                   = 0x800CD41C,
-    .bloodSplatCount_58               = 50,
+    .unkTable1_4C                     = sharedData_800DFB7C_0_s00,
+    .unkTable1Count_50                = ARRAY_SIZE(sharedData_800DFB7C_0_s00),
+    .bloodSplats_54                   = g_Effect_BloodSplats,
+    .bloodSplatCount_58               = ARRAY_SIZE(g_Effect_BloodSplats),
     .field_5C                         = NULL,
     .func_60                          = NULL,
     .func_64                          = NULL,

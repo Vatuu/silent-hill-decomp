@@ -7,12 +7,11 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
-#include "maps/shared.h"
+#include "maps/map1/map1_s01.h"
 #include "maps/particle.h"
 #include "maps/characters/larval_stalker.h"
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
-#include "maps/map1/map1_s01.h"
 
 #include "maps/shared/sharedFunc_800CB7F4_1_s01.h" // 0x800CB7F4
 
