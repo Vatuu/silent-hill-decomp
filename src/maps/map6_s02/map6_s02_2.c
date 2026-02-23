@@ -1182,7 +1182,7 @@ void func_800D1AE4(void) // 0x800D1AE4
 
         svec = &g_SysWork.pointLightRot_2370;
 
-        Math_SetSVectorFast(svec, 0xFE39, angle - Q12_ANGLE(150.0f), 0); // TODO: De-hex.
+        Math_SetSVectorFast(svec, Q12_ANGLE(-40.0f), angle - Q12_ANGLE(150.0f), 0);
     }
     else
     {

@@ -275,7 +275,7 @@ CutsceneObjects_Add                 = 0x800DD2EC; // type:func
 //-------------------------------------------------------------------------
 HARRY_M0S01_ANIM_INFOS              = 0x800DD430;
 g_MapHeaderTable_38                 = 0x800DD6C0; // type:UnkStruct3_Mo size:0xA8
-g_LoadableInventoryItemIds          = 0x800DD768; // type:u8 size:0x23
+LOADABLE_INVENTORY_ITEMS            = 0x800DD768; // type:u8 size:0x23
 sharedData_800DD584_0_s00           = 0x800DD78B; // type:u8 size:0x01
 g_ParticlesAddedCount               = 0x800DD78C; // type:s32
 g_ParticleCameraMoved               = 0x800DD794; // type:u8
