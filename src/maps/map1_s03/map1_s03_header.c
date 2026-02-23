@@ -120,11 +120,9 @@ const s_MapOverlayHeader g_MapOverlayHeader =
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, Ai_Stalker_Update,
         Ai_Stalker_Update, Ai_Stalker_Update, NULL, Ai_Creeper_Update, NULL, NULL, NULL, NULL,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, Ai_LockerDeadBody_Update, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL,
+        NULL, Ai_LockerDeadBody_Update
     },
-    .charaGroupIds_248 = { 8, 11, 25, 0 },
+    .charaGroupIds_248 = { Chara_GreyChild, Chara_Creeper, Chara_LockerDeadBody },
     .charaSpawns_24C = {
 #include "chara_spawns.h"
     },

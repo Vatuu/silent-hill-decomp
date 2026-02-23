@@ -125,9 +125,9 @@ const s_MapOverlayHeader g_MapOverlayHeader =
         NULL, NULL, NULL, NULL, NULL, NULL, Ai_Incubus_Update, Ai_Unknown23_Update,
         NULL, NULL, Ai_Cybil_Update, Ai_Cybil_Update, NULL, NULL, Ai_Dahlia_Update, Ai_Dahlia_Update,
         NULL, Ai_BloodyLisa_Update, Ai_Alessa_Update, NULL, Ai_Incubator_Update, Ai_BloodyIncubator_Update, Ai_Kaufmann_Update, Ai_Kaufmann_Update,
-        NULL, Ai_LittleIncubus_Update, NULL, NULL, NULL,
+        NULL, Ai_LittleIncubus_Update
     },
-    .charaGroupIds_248 = { 0, 0, 0, 0 },
+    .charaGroupIds_248 = {},
     .charaSpawns_24C = {
 #include "chara_spawns.h"
     },

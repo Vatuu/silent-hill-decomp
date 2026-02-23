@@ -116,13 +116,9 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .data_190 = &sharedData_800DFB70_0_s00,
     .charaUpdateFuncs_194 = {
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, Ai_Floatstinger_Update,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, Ai_Floatstinger_Update
     },
-    .charaGroupIds_248 = { 15, 0, 0, 0 },
+    .charaGroupIds_248 = { Chara_Floatstinger },
     .charaSpawns_24C = {
 #include "chara_spawns.h"
     },

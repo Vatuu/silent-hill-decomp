@@ -114,15 +114,8 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .windSpeedZ_188 = 0x800CCC0C,
     .data_18C = &sharedData_800DFB6C_0_s00,
     .data_190 = &sharedData_800DFB70_0_s00,
-    .charaUpdateFuncs_194 = {
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL,
-    },
-    .charaGroupIds_248 = { 0, 0, 0, 0 },
+    .charaUpdateFuncs_194 = {},
+    .charaGroupIds_248 = {},
     .charaSpawns_24C = {
 #include "chara_spawns.h"
     },

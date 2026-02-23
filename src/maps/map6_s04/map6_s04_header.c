@@ -125,7 +125,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
         NULL, NULL, Ai_Alessa_Update, NULL, NULL, NULL, NULL, NULL,
         Ai_Flauros_Update, NULL, NULL, Ai_Parasite_Update, NULL,
     },
-    .charaGroupIds_248 = { 6, 8, 0, 0 },
+    .charaGroupIds_248 = { Chara_LarvalStalker, Chara_GreyChild },
     .charaSpawns_24C = {
 #include "chara_spawns.h"
     },

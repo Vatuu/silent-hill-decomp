@@ -116,13 +116,9 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .data_190 = &sharedData_800DFB70_0_s00,
     .charaUpdateFuncs_194 = {
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, Ai_Creeper_Update, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, Ai_Creeper_Update
     },
-    .charaGroupIds_248 = { 11, 0, 0, 0 },
+    .charaGroupIds_248 = { Chara_Creeper },
     .charaSpawns_24C = {
 #include "chara_spawns.h"
     },

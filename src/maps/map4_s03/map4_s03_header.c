@@ -116,12 +116,9 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .charaUpdateFuncs_194 = {
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, Twinfeeler_Update, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL, Twinfeeler_Update
     },
-    .charaGroupIds_248 = { 20, 0, 0, 0 },
+    .charaGroupIds_248 = { Chara_Twinfeeler },
     .charaSpawns_24C = {
 #include "chara_spawns.h"
     },
