@@ -131,7 +131,8 @@ typedef struct _800F3DAC
     MATRIX mat_118[29];
     u8     unk_4B8[32];
     q19_12 rotZ_4D8; // Passed as `z` to `ApplyRotMatrix`.
-    u8     unk_4DC[8];
+    u8     unk_4DC[4];
+    s32    field_4E0;
     s32    field_4E4;
     s32    field_4E8;
     s32    coordIdx_4EC;
@@ -549,6 +550,8 @@ extern VECTOR3 D_800F47C8;
 extern VECTOR3 D_800F47D8;
 extern SVECTOR3 D_800F47E8;
 
+extern VECTOR D_800EC798[];
+
 void Ai_BloodyIncubator_Update(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_BloodyIncubator_AnimUpdate(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void func_800D3740(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* coords);
@@ -689,7 +692,7 @@ void func_800DC544(GsOT_TAG* ot);
 bool Math_DistanceCheck(const VECTOR3* from, const VECTOR3* to, q19_12 distMax);
 
 // Returns `bool`?
-s32 func_800DC6DC(s32*, s32*, VECTOR3*, s_800F3DAC*);
+s32 func_800DC6DC(VECTOR* arg0, VECTOR* arg1, VECTOR3* arg2, s_800F3DAC* arg3);
 
 void func_800DCD94(MATRIX* mat, VECTOR3* pos);
 

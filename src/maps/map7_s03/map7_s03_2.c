@@ -3581,9 +3581,283 @@ bool Math_DistanceCheck(const VECTOR3* from, const VECTOR3* to, q19_12 distMax) 
 
 INCLUDE_RODATA("maps/map7_s03/nonmatchings/map7_s03_2", D_800CAE30);
 
-INCLUDE_RODATA("maps/map7_s03/nonmatchings/map7_s03_2", D_800CAE3C);
+static const SVECTOR D_800CAE3C = { 0, 0, 0x4000 };
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DC6DC);
+s32 func_800DC6DC(VECTOR* arg0, VECTOR* arg1, VECTOR3* arg2, s_800F3DAC* arg3) // 0x800DC6DC
+{
+    VECTOR  sp10;
+    SVECTOR sp20;
+    SVECTOR sp28;
+    MATRIX  sp30;
+    s32     dx, dy, dz;
+    s32     dy_2;
+    s32     temp_v0;
+    s32     temp_v1;
+    s32     dist;
+
+    if (arg3->field_10 == 0)
+    {
+        arg3->field_4E0 = 0;
+
+        switch (arg3->field_4E4)
+        {
+            case 3:
+                arg3->field_10 = 18;
+                break;
+            case 4:
+                arg3->field_10 = 19;
+                break;
+            case 6:
+                arg3->field_10 = 8;
+                break;
+            case 2:
+                arg3->field_10 = 2;
+                break;
+            case 7:
+                arg3->field_10 = 18;
+                break;
+            default:
+                arg3->field_14 = 170;
+                arg3->field_10++;
+                break;
+        }
+    }
+
+loop:
+    switch (arg3->field_10)
+    {
+        case 1:
+            if (!(Rng_Rand16() & 0xF0))
+            {
+                arg3->rotZ_4D8  = 0x333;
+                arg3->field_10  = 2;
+                arg3->field_4E0 = 0;
+            }
+            else if (!(Rng_Rand16() & 0xF0))
+            {
+                arg3->field_10  = 0xE;
+                arg3->field_4E0 = 0;
+            }
+            else if (arg0->vy < 0x801)
+            {
+                arg3->field_10  = 8;
+                arg3->field_4E0 = 0;
+            }
+            else if (!(Rng_Rand16() & 0x80))
+            {
+                arg3->field_10  = 6;
+                arg3->field_4E0 = 0;
+            }
+            break;
+
+        case 2:
+            *arg1          = D_800EC798[(Rng_Rand16() >> 4) % 6];
+            arg3->field_10 = 3;
+
+        case 3:
+            if (Math_DistanceCheck(arg0, arg1, 0x4CC) != 0)
+            {
+                arg3->field_4E0++;
+            }
+            else
+            {
+                arg3->field_4E0 = 0;
+                arg3->field_10  = 4;
+            }
+            break;
+
+        case 4:
+            arg1->vy = 0;
+            arg3->field_10++;
+
+        case 5:
+            if (arg0->vy < 0)
+            {
+                arg3->field_4E0++;
+                break;
+            }
+            arg3->field_4E0 = 0;
+            arg3->field_4E4 = 5;
+            return 0;
+
+        case 6:
+            temp_v0  = Rng_Rand16();
+            arg1->vx = Math_Sin(temp_v0);
+            arg1->vy = 0;
+            arg1->vz = Math_Cos(temp_v0);
+            arg3->field_10++;
+
+        case 7:
+            if (arg3->field_4E0 >= 4)
+            {
+                arg3->field_4E0 = 0;
+                arg3->field_4E4 = 0;
+                return 0;
+            }
+            arg3->field_4E0++;
+            break;
+
+        case 8:
+            dx = arg2->vx - arg0->vx;
+            dx = FP_SQUARE(dx, Q12_SHIFT);
+
+            dy = arg2->vy - arg0->vy;
+            dy = FP_SQUARE(dy, Q12_SHIFT);
+
+            dz = arg2->vz - arg0->vz;
+            dz = FP_SQUARE(dz, Q12_SHIFT);
+
+            dist = SquareRoot12(dx + dz + dy);
+
+            dx = arg2->vx - arg0->vx;
+            dy = -0x3CCC - (dist / 4);
+            dz = arg2->vz - arg0->vz;
+
+            temp_v0   = Rng_Rand16();
+            arg1->vx  = arg0->vx + (dx / 2) - 0xFFF;
+            arg1->vx += temp_v0 >> 2;
+
+            temp_v0   = Rng_Rand16();
+            arg1->vy  = dy - 0xFFF;
+            arg1->vy += temp_v0 >> 2;
+
+            temp_v0   = Rng_Rand16();
+            arg1->vz  = arg0->vz + (dz / 2) - 0xFFF;
+            arg1->vz += temp_v0 >> 2;
+
+            arg3->field_10++;
+
+        case 9:
+            if (Math_DistanceCheck(arg0, arg1, arg3->rotZ_4D8) != 0)
+            {
+                arg3->field_4E0++;
+                break;
+            }
+            arg3->field_10  = 0xA;
+            arg3->field_4E0 = 0;
+            break;
+
+        case 10:
+            dx   = arg2->vx - arg0->vx;
+            dy_2 = arg2->vz - arg0->vz;
+
+            temp_v0  = Rng_Rand16();
+            temp_v1  = arg2->vx - 0x7FF;
+            temp_v1 += temp_v0 >> 3;
+            arg1->vx = temp_v1 - (dx / 8);
+
+            temp_v0        = Rng_Rand16();
+            arg1->vy       = (temp_v0 >> 3) - 0x44CB;
+            temp_v0        = Rng_Rand16();
+            temp_v1        = arg2->vz - 0x7FF;
+            temp_v1       += temp_v0 >> 3;
+            arg1->vz       = temp_v1 - (dy_2 / 8);
+            arg3->field_10 = 0xB;
+
+        case 11:
+            if (Math_DistanceCheck(arg0, arg1, Q12_MULT_PRECISE(arg3->rotZ_4D8, 0x1800)) != 0)
+            {
+                arg3->field_4E0++;
+                break;
+            }
+            arg3->field_10  = 0xC;
+            arg3->field_4E0 = 0;
+            break;
+
+        case 12:
+            temp_v0        = Rng_Rand16();
+            temp_v1        = arg2->vx;
+            temp_v1       += -0x7FF;
+            temp_v1       += temp_v0 >> 3;
+            arg1->vx       = temp_v1;
+            arg1->vy       = 0;
+            temp_v0        = Rng_Rand16();
+            temp_v1        = arg2->vz;
+            temp_v1       += -0x7FF;
+            temp_v1       += temp_v0 >> 3;
+            arg1->vz       = temp_v1;
+            arg3->field_10 = 0xB;
+
+        case 13:
+            if (Math_DistanceCheck(arg0, arg1, arg3->rotZ_4D8) == 0)
+            {
+                arg3->field_4E0 = 0;
+                return 0;
+            }
+            arg3->field_4E0++;
+            break;
+
+        case 14:
+            sp28    = D_800CAE3C;
+            sp20.vx = Rng_Rand16();
+            sp20.vy = Rng_Rand16();
+            sp20.vz = 0;
+            Math_RotMatrixXyz(&sp20, &sp30);
+            SetRotMatrix(&sp30);
+            ApplyRotMatrix(&sp28, &sp10);
+            arg1->vx = arg0->vx + sp10.vx;
+            arg1->vy = arg0->vy + sp10.vy;
+            arg1->vz = arg0->vz + sp10.vz;
+
+        case 15:
+            if (arg3->field_4E0 == 0)
+            {
+                arg3->field_4E0 = 1;
+                break;
+            }
+
+            if (Rng_Rand16() & 0xF0)
+            {
+                break;
+            }
+            arg3->field_4E0 = 0;
+            arg3->field_10  = 0x10;
+            break;
+
+        case 16:
+            *arg1 = D_800EC798[6];
+            arg3->field_10++;
+
+        case 17:
+            if (Math_DistanceCheck(arg0, arg1, arg3->rotZ_4D8) != 0)
+            {
+                arg3->field_4E0++;
+                break;
+            }
+            arg3->field_4E0 = 0;
+            arg3->field_4E4 = 0;
+            return 0;
+
+        default:
+            arg3->field_4E0++;
+            break;
+
+        case 18:
+            if (Math_DistanceCheck(arg0, arg1, arg3->rotZ_4D8 / 2) == 0)
+            {
+                arg3->field_4E0 = 0;
+                return 0;
+            }
+            arg3->field_4E0++;
+            break;
+
+        case 19:
+            if (arg3->field_4E0 >= 25)
+            {
+                arg3->field_4E0 = 0;
+                return 0;
+            }
+            arg3->field_4E0++;
+            break;
+    }
+
+    if (arg3->field_4E0 == 0)
+    {
+        goto loop;
+    }
+
+    return 1;
+}
 
 void func_800DCD94(MATRIX* mat, VECTOR3* pos) // 0x800DCD94
 {
