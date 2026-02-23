@@ -68,8 +68,6 @@ extern s_Bgm_Update D_800DA570;
 
 extern u16 D_800DA578[];
 
-extern VECTOR3 D_800DA5B4[];
-
 extern VECTOR3 D_800CB0CC;
 
 extern s_WorldObjectPose D_800DAAD0;

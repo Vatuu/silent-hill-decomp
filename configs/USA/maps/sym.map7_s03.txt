@@ -240,6 +240,7 @@ sharedData_800D2F74_7_s00           = 0x800ECF94;
 sharedData_800D2F7C_7_s00           = 0x800ECF9C;
 sharedData_800D2F84_7_s00           = 0x800ECFA4;
 g_LoadScreenFuncs                   = 0x800ECFAC;
+MAP_POINTS                          = 0x800ECFBC;
 g_MapEventFuncs                     = 0x800ECFC8;
 
 //-----------------------------------------------------------------

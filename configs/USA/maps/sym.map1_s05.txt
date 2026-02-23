@@ -126,6 +126,7 @@ sharedData_800D5AB0_1_s05     = 0x800D5AB0;
 sharedData_800D5BE0_1_s05     = 0x800D5BE0;
 MAP_ROOM_IDXS                 = 0x800D5C04; // type:u8
 g_LoadScreenFuncs             = 0x800D5C44;
+MAP_POINTS                    = 0x800D5C54;
 g_MapEventFuncs               = 0x800D5C6C;
 
 //---------------------------------------------------------------------------
@@ -145,6 +146,8 @@ g_ParticleMapOverlayId0       = 0x800D5CE8;
 g_ParticleMapOverlayId1       = 0x800D5CEC; // type:s32
 sharedData_800D5CF8_1_s05     = 0x800D5CF8;
 sharedData_800D5D08_1_s05     = 0x800D5D08;
+g_Particle_SpeedX             = 0x800D5D14;
+g_Particle_SpeedZ             = 0x800D5D18;
 sharedData_800DFB6C_0_s00     = 0x800D5D1C; // type:s32
 sharedData_800DFB70_0_s00     = 0x800D5D20; // type:s32
 sharedData_800DFB7C_0_s00     = 0x800D5D28; // type:MapHdr_field_4C size:0x2710

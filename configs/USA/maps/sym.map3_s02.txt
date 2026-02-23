@@ -177,6 +177,8 @@ MAP_EVENTS                          = 0x800D1EC0;
 //----------------------------------------------------
 g_ParticleMapOverlayId0             = 0x800D1FE4;
 g_ParticleMapOverlayId1             = 0x800D1FE8; // type:s32
+g_Particle_SpeedX                   = 0x800D1FF0;
+g_Particle_SpeedZ                   = 0x800D1FF4;
 sharedData_800DFB6C_0_s00           = 0x800D1FF8; // type:s32
 sharedData_800DFB70_0_s00           = 0x800D1FFC; // type:s32
 g_ParticleVectors0                  = 0x800D30D4; // type:ParticleVectors

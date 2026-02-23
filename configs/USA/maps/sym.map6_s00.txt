@@ -360,6 +360,7 @@ sharedData_800EFD04_6_s00           = 0x800EFD04; // type:s32
 sharedData_800EFD08_6_s00           = 0x800EFD08;
 sharedData_800EFD34_6_s00           = 0x800EFD34;
 g_LoadScreenFuncs                   = 0x800EFD60;
+MAP_POINTS                          = 0x800EFD70;
 g_MapEventFuncs                     = 0x800EFE9C;
 
 //---------------------------------------------------------------

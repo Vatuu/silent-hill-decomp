@@ -220,6 +220,7 @@ sharedData_800EB748_6_s04           = 0x800EB748; // type:u8
 sharedData_800EB74A_6_s04           = 0x800EB74A; // type:u8
 sharedData_800EB750_6_s04           = 0x800EB750; // type:VECTOR3 size:0xC
 g_LoadScreenFuncs                   = 0x800EB75C;
+MAP_POINTS                          = 0x800EB76C;
 g_MapEventFuncs                     = 0x800EB7F0;
 
 //-----------------------------------------------------------------
@@ -239,6 +240,8 @@ D_800EBB36                          = 0x800EBB36;
 g_ParticleMapOverlayId0             = 0x800EBB40;
 g_ParticleMapOverlayId1             = 0x800EBB44; // type:s32
 D_800EBB60                          = 0x800EBB60; // type:u8 size:1
+g_Particle_SpeedX                   = 0x800EBB80;
+g_Particle_SpeedZ                   = 0x800EBB84;
 sharedData_800DFB6C_0_s00           = 0x800EBB88; // type:s32
 sharedData_800DFB70_0_s00           = 0x800EBB8C; // type:s32
 sharedData_800DFB7C_0_s00           = 0x800EBB90; // type:MapHdr_field_4C

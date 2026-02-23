@@ -223,6 +223,7 @@ sharedData_800D2F74_7_s00           = 0x800E00A4;
 sharedData_800D2F7C_7_s00           = 0x800E00AC;
 sharedData_800D2F84_7_s00           = 0x800E00B4;
 g_LoadScreenFuncs                   = 0x800E00BC;
+MAP_POINTS                          = 0x800E00CC;
 g_MapEventFuncs                     = 0x800E0924;
 
 //-----------------------------------------------------------------
@@ -251,6 +252,8 @@ sharedData_800D4D0C_3_s01           = 0x800E1698;
 sharedData_800D4D10_3_s01           = 0x800E169C;
 sharedData_800D4D14_3_s01           = 0x800E16A0;
 sharedData_800D4D18_3_s01           = 0x800E16A4;
+g_Particle_SpeedX                   = 0x800E16AC;
+g_Particle_SpeedZ                   = 0x800E16B0;
 sharedData_800DFB6C_0_s00           = 0x800E16B4; // type:s32
 sharedData_800DFB70_0_s00           = 0x800E16B8; // type:s32
 sharedData_800DFB7C_0_s00           = 0x800E16C8;
