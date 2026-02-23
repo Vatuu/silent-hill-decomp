@@ -1,3 +1,4 @@
+    // TODO: no associated `charaGroupIds_248`? Does it get set in code?
     {
       { Q12(-60.6f), Chara_None, Q8_ANGLE(45.0f), 0, GameDifficulty_Easy, Q12(-23.5f) },
       { Q12(-64.5f), Chara_None, Q8_ANGLE(90.0f), 0, GameDifficulty_Easy, Q12(-27.9f) },

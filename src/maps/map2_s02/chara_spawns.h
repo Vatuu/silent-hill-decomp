@@ -1,3 +1,4 @@
+    // Chara_AirScreamer
     {
       { Q12(4.0f), Chara_None, Q8_ANGLE(180.0f), 9, GameDifficulty_Hard, Q12(96.0f) },
       { Q12(-256.0f), Chara_None, Q8_ANGLE(180.0f), 10, GameDifficulty_Hard, Q12(-256.0f) },
@@ -9,6 +10,7 @@
       { Q12(-11.5f), Chara_None, Q8_ANGLE(180.0f), 6, GameDifficulty_Easy, Q12(-110.0f) },
       { Q12(-12.5f), Chara_None, Q8_ANGLE(180.0f), 6, GameDifficulty_Easy, Q12(-110.9f) },
     },
+    // Chara_Groaner
     {
       { Q12(-104.0f), Chara_Romper, Q8_ANGLE(180.0f), 3, GameDifficulty_Easy, Q12(9.0f) },
       { Q12(-95.0f), Chara_Romper, Q8_ANGLE(0.0f), 3, GameDifficulty_Easy, Q12(8.0f) },

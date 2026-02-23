@@ -1,3 +1,4 @@
+    // Chara_GreyChild
     {
       { Q12(-61.55f), Chara_LockerDeadBody, Q8_ANGLE(90.0f), 3, GameDifficulty_Easy, Q12(20.75f) },
       { Q12(-138.2f), Chara_None, Q8_ANGLE(135.0f), 3, GameDifficulty_Easy, Q12(139.3f) },
@@ -16,6 +17,7 @@
       { Q12(-142.2f), Chara_None, Q8_ANGLE(180.0f), 0, GameDifficulty_Easy, Q12(104.1f) },
       { Q12(-140.82f), Chara_None, Q8_ANGLE(90.0f), 0, GameDifficulty_Easy, Q12(96.2f) },
     },
+    // Chara_Creeper
     {
       { Q12(-49.1f), Chara_None, Q8_ANGLE(0.0f), 0, GameDifficulty_Easy, Q12(45.6f) },
       { Q12(-51.1f), Chara_None, Q8_ANGLE(45.0f), 0, GameDifficulty_Easy, Q12(42.6f) },

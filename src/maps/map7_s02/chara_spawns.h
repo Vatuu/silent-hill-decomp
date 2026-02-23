@@ -1,3 +1,4 @@
+    // Chara_Stalker
     {
       { Q12(178.3f), Chara_None, Q8_ANGLE(270.0f), 3, GameDifficulty_Easy, Q12(-20.0f) },
       { Q12(-60.8f), Chara_None, Q8_ANGLE(180.0f), 3, GameDifficulty_Easy, Q12(-97.8f) },

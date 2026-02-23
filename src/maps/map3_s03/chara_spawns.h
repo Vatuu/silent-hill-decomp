@@ -1,3 +1,4 @@
+    // Chara_PuppetNurse
     {
       { Q12(-61.8f), Chara_None, Q8_ANGLE(135.0f), 1, GameDifficulty_Easy, Q12(109.1f) },
       { Q12(-57.9f), Chara_None, Q8_ANGLE(270.0f), 14, GameDifficulty_Easy, Q12(93.1f) },
@@ -15,6 +16,7 @@
       { Q12(-58.5f), Chara_None, Q8_ANGLE(0.0f), 1, GameDifficulty_Easy, Q12(-91.5f) },
       { Q12(-98.5f), Chara_None, Q8_ANGLE(0.0f), 9, GameDifficulty_Easy, Q12(-57.5f) },
     },
+    // Chara_DummyNurse
     {
       { Q12(-143.25f), Chara_Bloodsucker, Q8_ANGLE(90.0f), 18, GameDifficulty_Easy, Q12(61.2f) },
       { Q12(-143.25f), Chara_Bloodsucker, Q8_ANGLE(90.0f), 19, GameDifficulty_Easy, Q12(61.2f) },

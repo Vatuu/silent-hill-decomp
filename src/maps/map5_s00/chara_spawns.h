@@ -1,3 +1,4 @@
+    // Chara_HangedScratcher
     {
       { Q12(-95.6f), Chara_None, Q8_ANGLE(90.0f), 0, GameDifficulty_Easy, Q12(-5.9f) },
       { Q12(-94.8f), Chara_None, Q8_ANGLE(180.0f), 0, GameDifficulty_Easy, Q12(-11.6f) },
@@ -16,6 +17,7 @@
       { Q12(-91.1f), Chara_None, Q8_ANGLE(0.0f), 0, GameDifficulty_Easy, Q12(-87.0f) },
       { Q12(-88.4f), Chara_None, Q8_ANGLE(0.0f), 6, GameDifficulty_Easy, Q12(-93.6f) },
     },
+    // Chara_Creeper
     {
       { Q12(18.4f), Chara_None, Q8_ANGLE(90.0f), 3, GameDifficulty_Easy, Q12(15.2f) },
       { Q12(21.8f), Chara_None, Q8_ANGLE(270.0f), 3, GameDifficulty_Easy, Q12(15.2f) },

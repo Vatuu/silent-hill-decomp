@@ -1,3 +1,4 @@
+    // Chara_NightFlutter
     {
       { Q12(-108.7f), Chara_None, Q8_ANGLE(0.0f), 3, GameDifficulty_Normal, Q12(-79.3f) },
       { Q12(-110.0f), Chara_None, Q8_ANGLE(270.0f), 3, GameDifficulty_Easy, Q12(-71.0f) },
@@ -16,6 +17,7 @@
       { Q12(-50.6f), Chara_Wormhead, Q8_ANGLE(90.0f), 3, GameDifficulty_Easy, Q12(-6.3f) },
       { Q12(-55.7f), Chara_Wormhead, Q8_ANGLE(270.0f), 3, GameDifficulty_Easy, Q12(-13.2f) },
     },
+    // Chara_Romper
     {
       { Q12(3.0f), Chara_None, Q8_ANGLE(90.0f), 3, GameDifficulty_Hard, Q12(108.0f) },
       { Q12(8.0f), Chara_None, Q8_ANGLE(0.0f), 3, GameDifficulty_Easy, Q12(95.0f) },

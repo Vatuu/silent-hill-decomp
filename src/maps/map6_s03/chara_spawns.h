@@ -1,3 +1,4 @@
+    // Chara_HangedScratcher
     {
       { Q12(-17.5f), Chara_None, Q8_ANGLE(180.0f), 9, GameDifficulty_Easy, Q12(48.5f) },
       { Q12(-19.0f), Chara_None, Q8_ANGLE(180.0f), 6, GameDifficulty_Easy, Q12(52.5f) },
@@ -13,6 +14,7 @@
       { Q12(64.8f), Chara_None, Q8_ANGLE(270.0f), 6, GameDifficulty_Easy, Q12(20.6f) },
       { Q12(79.6f), Chara_None, Q8_ANGLE(270.0f), 6, GameDifficulty_Easy, Q12(19.9f) },
     },
+    // Chara_Mumbler
     {
       { Q12(13.8f), Chara_None, Q8_ANGLE(180.0f), 3, GameDifficulty_Easy, Q12(61.0f) },
       { Q12(15.5f), Chara_None, Q8_ANGLE(0.0f), 11, GameDifficulty_Easy, Q12(59.0f) },

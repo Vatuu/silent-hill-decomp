@@ -1,3 +1,4 @@
+    // Chara_GreyChild
     {
       { Q12(-20.6f), Chara_None, Q8_ANGLE(270.0f), 0, GameDifficulty_Easy, Q12(191.8f) },
       { Q12(-30.8f), Chara_None, Q8_ANGLE(45.0f), 0, GameDifficulty_Easy, Q12(190.3f) },
@@ -16,6 +17,7 @@
       { Q12(-17.6f), Chara_None, Q8_ANGLE(23.0f), 3, GameDifficulty_Easy, Q12(56.8f) },
       { Q12(-20.8f), Chara_None, Q8_ANGLE(315.0f), 3, GameDifficulty_Easy, Q12(56.4f) },
     },
+    // Chara_LarvalStalker
     {
       { Q12(-49.8f), Chara_None, Q8_ANGLE(180.0f), 3, GameDifficulty_Easy, Q12(58.7f) },
       { Q12(-57.0f), Chara_None, Q8_ANGLE(0.0f), 3, GameDifficulty_Easy, Q12(139.4f) },
