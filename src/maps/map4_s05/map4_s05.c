@@ -66,7 +66,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
     }
 
     floatstinger->moveSpeed_38 = Q12(0.0f);
-    floatstinger->field_34     = 0;
+    floatstinger->fallSpeed_34 = 0;
     floatstinger->field_E1_0   = 4;
     Chara_PropertiesClear(floatstinger);
 
@@ -580,13 +580,13 @@ void func_800D2B90(s_SubCharacter* floatstinger) // 0x800D2B90
 
         floatstinger->moveSpeed_38 = CLAMP_LOW(floatstinger->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, (floatstingerProps.flags_E8 & FloatstingerFlag_0) ? Q12(2.5f) : Q12(1.5f)), Q12(0.0f));
 
-        if (floatstinger->field_34 > Q12(0.0f))
+        if (floatstinger->fallSpeed_34 > Q12(0.0f))
         {
-            floatstinger->field_34 = CLAMP_LOW(floatstinger->field_34 - Q12_MULT_PRECISE(g_DeltaTime0, (floatstingerProps.flags_E8 & FloatstingerFlag_0) ? Q12(4.5f) : Q12(1.8f)), Q12(0.0f));
+            floatstinger->fallSpeed_34 = CLAMP_LOW(floatstinger->fallSpeed_34 - Q12_MULT_PRECISE(g_DeltaTime0, (floatstingerProps.flags_E8 & FloatstingerFlag_0) ? Q12(4.5f) : Q12(1.8f)), Q12(0.0f));
         }
         else
         {
-            floatstinger->field_34 = MIN(floatstinger->field_34 - Q12_MULT_PRECISE(g_DeltaTime0, (floatstingerProps.flags_E8 & FloatstingerFlag_0) ? Q12(-3.0f) : Q12(-0.8f)), Q12(0.0f));
+            floatstinger->fallSpeed_34 = MIN(floatstinger->fallSpeed_34 - Q12_MULT_PRECISE(g_DeltaTime0, (floatstingerProps.flags_E8 & FloatstingerFlag_0) ? Q12(-3.0f) : Q12(-0.8f)), Q12(0.0f));
         }
 
         temp_v0 = D_800D7858;
@@ -703,7 +703,7 @@ void func_800D35F0(s_SubCharacter* floatstinger) // 0x800D35F0
 
     sp30.vx = Q12_MULT_PRECISE(temp_s0 >> temp_s3, Math_Sin(headingAngle) >> temp_s3) << temp_s2;
     sp30.vz = Q12_MULT_PRECISE(temp_s0 >> temp_s3, Math_Cos(headingAngle) >> temp_s3) << temp_s2;
-    sp30.vy = Q12_MULT_PRECISE(g_DeltaTime0, floatstinger->field_34);
+    sp30.vy = Q12_MULT_PRECISE(g_DeltaTime0, floatstinger->fallSpeed_34);
 
     func_80069B24(&sp10, &sp30, floatstinger);
 
@@ -993,7 +993,7 @@ void func_800D41F0(s_SubCharacter* floatstinger) // 0x800D41F0
     s16 temp_s1;
 
     temp_s0 = Q12_MULT(floatstinger->moveSpeed_38, Math_Sin(floatstinger->headingAngle_3C));
-    temp_s1 = floatstinger->field_34;
+    temp_s1 = floatstinger->fallSpeed_34;
     temp_v0 = Q12_MULT(floatstinger->moveSpeed_38, Math_Cos(floatstinger->headingAngle_3C));
     temp_v1 = Math_Vector3MagCalc(temp_s0, temp_s1, temp_v0);
     temp_t0 = (Q12_MULT_PRECISE(temp_v1, Q12(15.0f) - temp_v1) >> 1) + Q12(13.0f);
@@ -1368,17 +1368,17 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 newRotY) //
     {
         if (ABS(temp_t2) > 81)
         {
-            floatstinger->field_34 = MAX((floatstingerProps.flags_E8 & FloatstingerFlag_0) ? Q12(-5.0f) : Q12(-1.0f),
-                                 floatstinger->field_34 + Q12_MULT_PRECISE(g_DeltaTime0, floatstingerProps.flags_E8 & 1 ? Q12(-3.0f) : Q12(-0.8f)));
+            floatstinger->fallSpeed_34 = MAX((floatstingerProps.flags_E8 & FloatstingerFlag_0) ? Q12(-5.0f) : Q12(-1.0f),
+                                             floatstinger->fallSpeed_34 + Q12_MULT_PRECISE(g_DeltaTime0, floatstingerProps.flags_E8 & 1 ? Q12(-3.0f) : Q12(-0.8f)));
 
             if (ABS(temp_t2) < Q12(1.0f))
             {
-                floatstinger->field_34 = floatstinger->field_34 + ((floatstinger->field_34 * ABS(temp_t2)) / Q12(1.0f)) >> 1;
+                floatstinger->fallSpeed_34 = floatstinger->fallSpeed_34 + ((floatstinger->fallSpeed_34 * ABS(temp_t2)) / Q12(1.0f)) >> 1;
             }
         }
         else
         {
-            floatstinger->field_34       = Q12(0.0f);
+            floatstinger->fallSpeed_34   = Q12(0.0f);
             floatstinger->position_18.vy = pos->vy;
         }
     }
@@ -1386,17 +1386,17 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 newRotY) //
     {
         if (ABS(temp_t2) > 81)
         {
-            floatstinger->field_34 = CLAMP_HIGH((floatstingerProps.flags_E8 & FloatstingerFlag_0) ? Q12(9.0f) : Q12(3.0f),
-                                        floatstinger->field_34 + Q12_MULT_PRECISE(g_DeltaTime0, floatstingerProps.flags_E8 & 1 ? 0x4800 : 0x1CCC));
+            floatstinger->fallSpeed_34 = CLAMP_HIGH((floatstingerProps.flags_E8 & FloatstingerFlag_0) ? Q12(9.0f) : Q12(3.0f),
+                                                    floatstinger->fallSpeed_34 + Q12_MULT_PRECISE(g_DeltaTime0, floatstingerProps.flags_E8 & 1 ? 0x4800 : 0x1CCC));
 
             if (ABS(temp_t2) < Q12(1.0f))
             {
-                floatstinger->field_34 = floatstinger->field_34 + (floatstinger->field_34 * ABS(temp_t2) / Q12(1.0f)) >> 1;
+                floatstinger->fallSpeed_34 = floatstinger->fallSpeed_34 + (floatstinger->fallSpeed_34 * ABS(temp_t2) / Q12(1.0f)) >> 1;
             }
         }
         else
         {
-            floatstinger->field_34       = Q12(0.0f);
+            floatstinger->fallSpeed_34   = Q12(0.0f);
             floatstinger->position_18.vy = pos->vy;
         }
     }

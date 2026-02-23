@@ -134,7 +134,7 @@ void MainLoop(void) // 0x80032EE0
 
     #define H_BLANKS_PER_FRAME_MIN   (H_BLANKS_PER_SECOND / TICKS_PER_SECOND_MIN)                // 1052
     #define H_BLANKS_FP_TO_SEC_SCALE (s32)(H_BLANKS_TO_SEC_CONVERSION_FACTOR * (float)Q12(1.0f)) // 1063
-    #define H_BLANKS_UNKNOWN_SCALE   10419                                                       // TODO: Somehow derive this value.
+    #define H_BLANKS_GRAVITY_SCALE   Q12(9.8f * H_BLANKS_TO_SEC_CONVERSION_FACTOR)               // 10419
     #define V_BLANKS_MAX             4
 
     s32 vBlanks;
@@ -285,7 +285,7 @@ void MainLoop(void) // 0x80032EE0
         // Update delta time.
         g_DeltaTime0 = Q12_MULT(vCount, H_BLANKS_FP_TO_SEC_SCALE);
         g_DeltaTime1 = Q12_MULT(vCountCopy, H_BLANKS_FP_TO_SEC_SCALE);
-        g_DeltaTime2 = Q12_MULT(vCount, H_BLANKS_UNKNOWN_SCALE); // TODO: Unknown time scale.
+        g_DeltaTime2 = Q12_MULT(vCount, H_BLANKS_GRAVITY_SCALE);
         GsClearVcount();
 
         // Draw objects?

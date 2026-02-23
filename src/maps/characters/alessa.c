@@ -76,7 +76,7 @@ void Ai_Alessa_MovementUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
 
     offset.vx = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(alessa->field_34, g_DeltaTime0);
+    offset.vy = Q12_MULT_PRECISE(alessa->fallSpeed_34, g_DeltaTime0);
 
     alessa->position_18.vx += offset.vx;
     alessa->position_18.vy = Q12(0.0f);
@@ -238,7 +238,7 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
     alessa->rotation_24.vy  = Q12_ANGLE_ABS(alessa->rotation_24.vy + (sharedData_800D3150_3_s02 >> 4));
     alessa->headingAngle_3C = alessa->rotation_24.vy;
     alessa->moveSpeed_38    = alessaProps.moveSpeed_126;
-    alessa->field_34       += g_DeltaTime2;
+    alessa->fallSpeed_34   += g_DeltaTime2;
 
     coords->flg = false;
     Math_RotMatrixZxyNegGte(&alessa->rotation_24, &coords->coord);

@@ -568,7 +568,7 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
     chara->headingAngle_3C = Q12_ANGLE_ABS(angle0 + chara->rotation_24.vy);
 
     chara->moveSpeed_38 = moveSpeed;
-    chara->field_34    += g_DeltaTime2;
+    chara->fallSpeed_34 += g_DeltaTime2;
 
     coords->flg = false;
     Math_RotMatrixZxyNegGte(&chara->rotation_24, &coords->coord);
@@ -594,7 +594,7 @@ void func_800D9790(s_SubCharacter* chara, s_Model* model) // 0x800D9790
 
     sp40.vx = Q12_MULT_PRECISE(temp_s0 >> temp_s3, Math_Sin(temp_s4) >> temp_s3) << temp_s2;
     sp40.vz = Q12_MULT_PRECISE(temp_s0 >> temp_s3, Math_Cos(temp_s4) >> temp_s3) << temp_s2;
-    sp40.vy = Q12_MULT_PRECISE(chara->field_34, g_DeltaTime0);
+    sp40.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime0);
 
     switch (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_EC)
     {
@@ -608,14 +608,14 @@ void func_800D9790(s_SubCharacter* chara, s_Model* model) // 0x800D9790
 
             chara->position_18.vx += sp10.offset_0.vx;
             chara->position_18.vz += sp10.offset_0.vz;
-            chara->field_34        = Q12(0.0f);
+            chara->fallSpeed_34    = Q12(0.0f);
             break;
 
         case 12:
             chara->field_D4.radius_0 = Q12(0.0f);
             chara->position_18.vx   += sp40.vx;
             chara->position_18.vz   += sp40.vz;
-            chara->field_34          = Q12(0.0f);
+            chara->fallSpeed_34      = Q12(0.0f);
             break;
 
         default:
@@ -629,7 +629,7 @@ void func_800D9790(s_SubCharacter* chara, s_Model* model) // 0x800D9790
 
             chara->position_18.vx += sp10.offset_0.vx;
             chara->position_18.vy  = Q12(0.0f);
-            chara->field_34        = Q12(0.0f);
+            chara->fallSpeed_34    = Q12(0.0f);
             chara->position_18.vz += sp10.offset_0.vz;
             break;
     }

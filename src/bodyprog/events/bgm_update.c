@@ -198,7 +198,7 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
             }
             else
             {
-                var_a0 = (g_SysWork.sysFlags_22A0 << 8) & 0x800; // TODO: Weird `SysFlag_3` check.
+                var_a0 = (g_SysWork.sysFlags_22A0 & SysFlag_3) ? Q12(0.5f) : 0;
             }
         }
         else
@@ -404,7 +404,7 @@ u32 func_800364BC(void) // 0x800364BC
 
     D_800BCD58 += g_DeltaTime1 * (Q12(64.0f) + 1);
 
-    var0  = 0x40000;
+    var0  = Q12(64.0f);
     var0 += Math_Sin(D_800BCD58 >> 18) * 8;
     var1  = Math_Sin((D_800BCD58 & 0xFFFF) / 16) * 32;
     return FP_FROM(var0 + var1, Q12_SHIFT);

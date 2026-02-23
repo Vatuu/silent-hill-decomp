@@ -1008,7 +1008,6 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
     s16           sp1E;
     s32           temp_a2;
     s32           temp_s0;
-    s16           temp_v0;
     s32           var_v1_5;
     s32           temp_s0_3;
     q19_12        deltaPosX;
@@ -2242,11 +2241,10 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             break;
     }
 
-    temp_v0                    = Q12_ANGLE_NORM_U(chara->rotation_24.vy + (D_800C454C >> 4) + Q12_ANGLE(360.0f));
-    chara->rotation_24.vy      = temp_v0;
-    chara->headingAngle_3C     = Q12_ANGLE_NORM_U((temp_v0 + g_Player_HeadingAngle) + Q12_ANGLE(360.0f));
+    chara->rotation_24.vy       = Q12_ANGLE_NORM_U(chara->rotation_24.vy + (D_800C454C >> 4) + Q12_ANGLE(360.0f));
+    chara->headingAngle_3C      = Q12_ANGLE_NORM_U((chara->rotation_24.vy + g_Player_HeadingAngle) + Q12_ANGLE(360.0f));
     chara->moveSpeed_38        = D_800C4550;
-    chara->field_34           += g_DeltaTime2;
+    chara->fallSpeed_34        += g_DeltaTime2;
     chara->rotationSpeed_2C.vy = (D_800C454C << 8) / g_DeltaTime0;
     coords->flg                 = false;
 
@@ -4941,7 +4939,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             if ((chara->model_0.anim_4.keyframeIdx_8 == 43 || chara->model_0.anim_4.keyframeIdx_8 == 33) &&
                 chara->position_18.vy == chara->properties_E4.player.positionY_EC)
             {
-                chara->field_34 = Q12(-1.25f);
+                chara->fallSpeed_34 = Q12(-1.25f);
             }
 
             // Running.
@@ -5461,7 +5459,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                  chara->model_0.anim_4.keyframeIdx_8 == 145) &&
                 chara->position_18.vy == chara->properties_E4.player.positionY_EC)
             {
-                chara->field_34 = Q12(-1.0f);
+                chara->fallSpeed_34 = Q12(-1.0f);
             }
 
             if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStartTargetLock)
@@ -5551,7 +5549,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             if ((chara->model_0.anim_4.keyframeIdx_8 == 125 || chara->model_0.anim_4.keyframeIdx_8 == 132) &&
                 chara->position_18.vy == chara->properties_E4.player.positionY_EC)
             {
-                chara->field_34 = Q12(-1.0f);
+                chara->fallSpeed_34 = Q12(-1.0f);
             }
 
             if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStartTargetLock)
@@ -5873,7 +5871,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             {
                 if (chara->model_0.controlState_2 == ModelState_Uninitialized)
                 {
-                    chara->field_34 = Q12(-2.0f);
+                    chara->fallSpeed_34 = Q12(-2.0f);
                 }
 
                 chara->model_0.controlState_2++;
@@ -5907,7 +5905,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState;
                     chara->model_0.stateStep_3                      = 0;
                     chara->model_0.controlState_2                   = ModelState_Uninitialized;
-                    chara->field_34                                 = Q12(0.0f);
+                    chara->fallSpeed_34                                 = Q12(0.0f);
                 }
             }
 
@@ -6602,7 +6600,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
     offset.vz = Q12_MULT_PRECISE((temp_s0_2 >> temp_s3_2), Math_Cos(temp_v0_3) >> temp_s3_2);
     offset.vz <<= temp_s2_2;
 
-    offset.vy = Q12_MULT_PRECISE(chara->field_34, g_DeltaTime0);
+    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime0);
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S05)
     {
@@ -6667,7 +6665,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
     if (chara->position_18.vy > D_800C4590.field_C)
     {
         chara->position_18.vy = D_800C4590.field_C;
-        chara->field_34       = 0;
+        chara->fallSpeed_34   = 0;
     }
 
     someAngle = Q12_ANGLE_NORM_U(ratan2(chara->position_18.vx - g_Player_PrevPosition.vx, chara->position_18.vz - g_Player_PrevPosition.vz) + Q12_ANGLE(360.0f));

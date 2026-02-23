@@ -164,7 +164,6 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
             continue;
         }
 
-        // TODO: This uses `field_5` as the map point index, but there is also a separate `eventParam_8_5` field.
         mapPoint = &g_MapOverlayHeader.mapPointsOfInterest_1C[mapEvent->pointOfInterestIdx_5];
 
         switch (mapEvent->triggerType_4_0)

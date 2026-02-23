@@ -50,7 +50,7 @@ void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* coords)
 
     offset.vx = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(incubator->field_34, g_DeltaTime0);
+    offset.vy = Q12_MULT_PRECISE(incubator->fallSpeed_34, g_DeltaTime0);
 
     incubator->position_18.vx += offset.vx;
     incubator->position_18.vy  = Q12(0.0f);
@@ -104,7 +104,7 @@ void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* coords) // 0x800D3E
 
     incubator->headingAngle_3C = incubator->rotation_24.vy;
     incubator->moveSpeed_38 = incubator->properties_E4.splitHead.moveDistance_126;
-    incubator->field_34 += g_DeltaTime2;
+    incubator->fallSpeed_34   += g_DeltaTime2;
 
     coords->flg = false;
     Math_RotMatrixZxyNegGte(&incubator->rotation_24, &coords->coord);

@@ -744,7 +744,7 @@ void sharedFunc_800D140C_1_s00(s_SubCharacter* larvalStalker, GsCOORDINATE2* coo
 {
     s_800C4590 sp18;
 
-    larvalStalker->field_34 += g_DeltaTime2 >> 1;
+    larvalStalker->fallSpeed_34 += g_DeltaTime2 >> 1;
 
     if (!(larvalStalkerProps.flags_E8 & LarvalStalkerFlag_1))
     {
@@ -759,7 +759,7 @@ void sharedFunc_800D140C_1_s00(s_SubCharacter* larvalStalker, GsCOORDINATE2* coo
     larvalStalkerProps.angle_102 = Q12_ANGLE(0.0f);
     larvalStalkerProps.angle_100 = Q12_ANGLE(0.0f);
 
-    if (larvalStalker->field_34 != Q12(0.0f))
+    if (larvalStalker->fallSpeed_34 != Q12(0.0f))
     {
         larvalStalkerProps.flags_E8 |= LarvalStalkerFlag_5;
     }
@@ -851,7 +851,7 @@ void Ai_LarvalStalker_Init(s_SubCharacter* larvalStalker)
     ModelAnim_AnimInfoSet(&larvalStalker->model_0.anim_4, LARVAL_STALKER_ANIM_INFOS);
 
     larvalStalker->health_B0    = Q12(300.0f);
-    larvalStalker->field_34     = Q12(0.0f);
+    larvalStalker->fallSpeed_34 = Q12(0.0f);
     larvalStalker->moveSpeed_38 = Q12(0.0f);
 
     Chara_DamageClear(larvalStalker);
@@ -883,7 +883,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
     larvalStalker->damage_B4.position_0.vx += FP_FROM(larvalStalker->moveSpeed_38 * Math_Sin(larvalStalker->headingAngle_3C), Q12_SHIFT);
     larvalStalker->damage_B4.position_0.vz += FP_FROM(larvalStalker->moveSpeed_38 * Math_Cos(larvalStalker->headingAngle_3C), Q12_SHIFT);
     larvalStalker->moveSpeed_38             = FP_TO(Math_Vector2MagCalc(larvalStalker->damage_B4.position_0.vx, larvalStalker->damage_B4.position_0.vz), Q12_SHIFT) / Q12(2.4f);
-    larvalStalker->field_34                 = FP_TO(larvalStalker->damage_B4.position_0.vy, Q12_SHIFT) / Q12(2.4f);
+    larvalStalker->fallSpeed_34             = FP_TO(larvalStalker->damage_B4.position_0.vy, Q12_SHIFT) / Q12(2.4f);
     larvalStalker->headingAngle_3C          = ratan2(larvalStalker->damage_B4.position_0.vx, larvalStalker->damage_B4.position_0.vz);
 
     larvalStalkerProps.flags_E8       |= LarvalStalkerFlag_1;

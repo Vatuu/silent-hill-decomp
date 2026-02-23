@@ -436,7 +436,7 @@ void sharedFunc_800D2B10_0_s01(s_SubCharacter* airScreamer)
 void sharedFunc_800D2B28_0_s01(s_SubCharacter* airScreamer)
 {
     airScreamer->moveSpeed_38        = Q12(0.0f);
-    airScreamer->field_34            = Q12(0.0f);
+    airScreamer->fallSpeed_34        = Q12(0.0f);
     airScreamer->rotationSpeed_2C.vx = Q12_ANGLE(0.0f);
     airScreamer->rotationSpeed_2C.vy = Q12_ANGLE(0.0f);
     airScreamer->rotationSpeed_2C.vz = Q12_ANGLE(0.0f);
@@ -8942,7 +8942,7 @@ bool sharedFunc_800DC50C_2_s00(s_SubCharacter* airScreamer)
 {
     return (airScreamer->model_0.anim_4.status_0 == ANIM_STATUS(19, true) || airScreamer->model_0.anim_4.status_0 == ANIM_STATUS(27, true)) &&
            sharedFunc_800DC3BC_2_s00(airScreamer) &&
-           ((airScreamer->field_34 >= 0 && sharedFunc_800DC0A8_2_s00(airScreamer)) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(1.0f)));
+           ((airScreamer->fallSpeed_34 >= 0 && sharedFunc_800DC0A8_2_s00(airScreamer)) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(1.0f)));
 }
 
 s32 sharedFunc_800DC598_2_s00(s_SubCharacter* airScreamer)
@@ -11866,7 +11866,7 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
         return false;
     }
 
-    if (airScreamer->field_34 < 0)
+    if (airScreamer->fallSpeed_34 < 0)
     {
         return false;
     }
@@ -12023,7 +12023,7 @@ void sharedFunc_800D63A4_0_s01(s_SubCharacter* airScreamer)
 
     headingAngle                 = airScreamer->rotation_24.vy;
     moveSpeed                    = airScreamer->moveSpeed_38;
-    posY                         = airScreamer->field_34;
+    posY                         = airScreamer->fallSpeed_34;
     airScreamer->headingAngle_3C = headingAngle;
 
     sharedData_800DE1F0_0_s01.vx = Q12_MULT_PRECISE(moveSpeed, Math_Sin(headingAngle));
@@ -12058,7 +12058,7 @@ void sharedFunc_800D63A4_0_s01(s_SubCharacter* airScreamer)
         }
     }
 
-    airScreamer->field_34 = sharedData_800E21D0_0_s01.field_B4[6][3];
+    airScreamer->fallSpeed_34 = sharedData_800E21D0_0_s01.field_B4[6][3];
     sharedFunc_800D6C7C_0_s01(&sharedData_800DE1E0_0_s01, airScreamer, temp_s0, &sharedData_800E21D0_0_s01.field_134);
 }
 
@@ -12346,7 +12346,7 @@ void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer)
     }
     airScreamer->moveSpeed_38 = moveSpeed;
 
-    moveSpeed = airScreamer->field_34;
+    moveSpeed = airScreamer->fallSpeed_34;
     element1  = sharedData_800E21D0_0_s01.field_B4[1][1];
     element2  = sharedData_800E21D0_0_s01.field_B4[1][2];
     if (sharedData_800E21D0_0_s01.field_B4[1][0])
@@ -12358,7 +12358,7 @@ void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer)
     {
         moveSpeed = sharedFunc_800D7120_0_s01(moveSpeed, element1, element2);
     }
-    airScreamer->field_34 = moveSpeed;
+    airScreamer->fallSpeed_34 = moveSpeed;
 
     moveSpeed = airScreamer->rotationSpeed_2C.vy;
     element1  = sharedData_800E21D0_0_s01.field_B4[3][1];
@@ -12377,7 +12377,7 @@ void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer)
     airScreamer->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, moveSpeed);
     if (sharedFunc_800D4A80_0_s01(airScreamer) == 3)
     {
-        sharedFunc_800D72E8_0_s01(airScreamer, airScreamer->field_34, airScreamer->rotationSpeed_2C.vy);
+        sharedFunc_800D72E8_0_s01(airScreamer, airScreamer->fallSpeed_34, airScreamer->rotationSpeed_2C.vy);
     }
     else
     {
@@ -12842,7 +12842,7 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
             {
                 return Q12(24.0f);
             }
-            return Q12_MULT_PRECISE(airScreamer->field_34, Q12(-2.0f)) + Q12(20.0f);
+            return Q12_MULT_PRECISE(airScreamer->fallSpeed_34, Q12(-2.0f)) + Q12(20.0f);
 
         case ANIM_STATUS(AirScreamerAnim_17, true):
             if (isNotControlState1)
@@ -12850,7 +12850,7 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
                 return Q12(40.0f);
             }
 
-            temp_a0 = airScreamer->field_34;
+            temp_a0 = airScreamer->fallSpeed_34;
             var_v1  = airScreamer->moveSpeed_38 - Q12(4.0f);
 
             ret  = Q12(20.0f);
@@ -12867,7 +12867,7 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
 
             if (distToGround > Q12(0.0f))
             {
-                speed_2  = airScreamer->field_34;
+                speed_2  = airScreamer->fallSpeed_34;
                 animTime = airScreamer->model_0.anim_4.time_4;
 
                 switch (animStatus)

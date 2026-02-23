@@ -719,7 +719,7 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
         return;
     }
 
-    if (romper->field_34 != Q12(0.0f) || distToTarget <= Q12(0.3f) || distToTarget >= Q12(3.2f) ||
+    if (romper->fallSpeed_34 != Q12(0.0f) || distToTarget <= Q12(0.3f) || distToTarget >= Q12(3.2f) ||
         (romper->position_18.vy - g_SysWork.playerWork_4C.player_0.position_18.vy) >= Q12(1.0f) ||
         (romper->position_18.vy - g_SysWork.playerWork_4C.player_0.position_18.vy) <= Q12(-1.2f))
     {
@@ -962,7 +962,7 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
             romper->moveSpeed_38 = var_a0_2 << 1;
             Collision_Get(&coll, g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz);
             temp                                   = coll.groundHeight_0 - Q12(0.8f);
-            romper->field_34                       = (temp << 1) - Q12(2.45f);
+            romper->fallSpeed_34                   = (temp << 1) - Q12(2.45f);
             romperProps.flags_E8 &= ~RomperFlag_9;
         }
         else if (FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) == 5 ||
@@ -1155,7 +1155,7 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
     s32        temp_s3;
     s32        temp_v0;
 
-    romper->field_34 += g_DeltaTime2;
+    romper->fallSpeed_34 += g_DeltaTime2;
 
     if (ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) == RomperAnim_3 ||
         ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) == RomperAnim_5)
@@ -1178,7 +1178,7 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
 
         pos.vx = Q12_MULT_PRECISE(temp_s0, temp_v0 >> temp_s3) << temp_s2;
         pos.vz = Q12_MULT_PRECISE(temp_s0, Math_Cos(temp_s4) >> temp_s3) << temp_s2;
-        pos.vy = Q12_MULT_PRECISE(g_DeltaTime0, romper->field_34);
+        pos.vy = Q12_MULT_PRECISE(g_DeltaTime0, romper->fallSpeed_34);
 
         pos.vx += romperProps.offsetX_F8;
         pos.vz += romperProps.offsetZ_FA;
@@ -1203,13 +1203,13 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
                     if (g_SysWork.playerWork_4C.player_0.position_18.vy < romper->position_18.vy)
                     {
                         romper->position_18.vy = g_SysWork.playerWork_4C.player_0.position_18.vy;
-                        romper->field_34       = Q12(0.0f);
+                        romper->fallSpeed_34   = Q12(0.0f);
                     }
                 }
                 else
                 {
                     romper->position_18.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.15f));
-                    romper->field_34        = Q12(0.0f);
+                    romper->fallSpeed_34    = Q12(0.0f);
                     if (sp10.field_C >= romper->position_18.vy)
                     {
                         romper->position_18.vy = sp10.field_C;
@@ -1222,7 +1222,7 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
                 if (sp10.field_C < romper->position_18.vy)
                 {
                     romper->position_18.vy = sp10.field_C;
-                    romper->field_34       = Q12(0.0f);
+                    romper->fallSpeed_34   = Q12(0.0f);
                 }
             }
         }
@@ -1232,7 +1232,7 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
             if (sp10.field_C < romper->position_18.vy)
             {
                 romper->position_18.vy = sp10.field_C;
-                romper->field_34       = Q12(0.0f);
+                romper->fallSpeed_34   = Q12(0.0f);
             }
         }
 
@@ -1242,7 +1242,7 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
 
     romper->rotation_24.vy = func_8005BF38(romper->rotation_24.vy);
 
-    if (romper->field_34 != Q12(0.0f))
+    if (romper->fallSpeed_34 != Q12(0.0f))
     {
         romperProps.flags_E8 |= RomperFlag_0;
     }
@@ -1645,16 +1645,16 @@ s32 sharedFunc_800E94B4_2_s02(s_SubCharacter* romper)
             switch (i + 1)
             {
                 case 1:
-                    if (romper->field_34 == 0)
+                    if (romper->fallSpeed_34 == 0)
                     {
-                        romper->field_34 = -0x2A77;
+                        romper->fallSpeed_34 = -0x2A77;
                     }
                     break;
 
                 case 11:
-                    if (romper->field_34 == 0)
+                    if (romper->fallSpeed_34 == 0)
                     {
-                        romper->field_34 = -0x30FF;
+                        romper->fallSpeed_34 = -0x30FF;
                     }
                     break;
 

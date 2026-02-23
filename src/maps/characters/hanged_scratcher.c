@@ -39,7 +39,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
     }
 
     scratcher->moveSpeed_38    = Q12(0.0f);
-    scratcher->field_34        = Q12(0.0f);
+    scratcher->fallSpeed_34    = Q12(0.0f);
     scratcher->headingAngle_3C = scratcher->rotation_24.vy;
     scratcher->rotation_24.vx  = Q12_ANGLE(0.0f);
 
@@ -220,7 +220,7 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
                 }
 
             case HangedScratcherControl_8:
-                scratcher->field_34 += FP_TO(scratcher->damage_B4.position_0.vy, Q12_SHIFT) / Q12(4.0f);
+                scratcher->fallSpeed_34 += FP_TO(scratcher->damage_B4.position_0.vy, Q12_SHIFT) / Q12(4.0f);
                 break;
 
             case HangedScratcherControl_12:
@@ -741,7 +741,7 @@ void Ai_HangedScratcher_Control_8(s_SubCharacter* scratcher)
 {
     if (scratcherProps.flags_E8 & HangedScratcherFlag_0)
     {
-        scratcher->field_34 += g_DeltaTime2 >> 1;
+        scratcher->fallSpeed_34 += g_DeltaTime2 >> 1;
 
         if (FP_FROM(scratcher->model_0.anim_4.time_4, Q12_SHIFT) == 259)
         {
@@ -828,7 +828,7 @@ void Ai_HangedScratcher_Control_11(s_SubCharacter* scratcher)
 {
     if (scratcherProps.flags_E8 & HangedScratcherFlag_0)
     {
-        scratcher->field_34 += g_DeltaTime2 >> 1;
+        scratcher->fallSpeed_34 += g_DeltaTime2 >> 1;
 
         if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 176, 184))
         {
@@ -1117,7 +1117,7 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
         case HangedScratcherControl_10:
         case HangedScratcherControl_12:
         case HangedScratcherControl_13:
-            scratcher->field_34 += g_DeltaTime2;
+            scratcher->fallSpeed_34 += g_DeltaTime2;
             break;
     }
 

@@ -90,7 +90,7 @@ s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
 
     offset.vx = Q12_MULT_PRECISE(temp_s0_2, temp_v0) << temp_s2;
     offset.vz = Q12_MULT_PRECISE(temp_s0_2, Math_Cos(headingAngle) >> temp_s3) << temp_s2;
-    offset.vy = Q12_MULT_PRECISE(g_DeltaTime0, chara->field_34);
+    offset.vy = Q12_MULT_PRECISE(g_DeltaTime0, chara->fallSpeed_34);
 
     ret = func_80069B24(&sp10, &offset, chara);
 
@@ -101,7 +101,7 @@ s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
     if (chara->position_18.vy > sp10.field_C)
     {
         chara->position_18.vy = sp10.field_C;
-        chara->field_34       = 0;
+        chara->fallSpeed_34   = 0;
     }
 
     if (arg1 != NULL)
@@ -139,7 +139,7 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, q3_12 offsetX, q3_12 
     temp_v0_4 = Math_Cos(headingAngle) >> temp_s3;
     offset.vz = (s32)Q12_MULT_PRECISE(temp_s0_2, temp_v0_4) << temp_s2;
 
-    sinHeadingAngle = chara->field_34;
+    sinHeadingAngle = chara->fallSpeed_34;
     offset.vx += offsetX;
     offset.vy  = Q12_MULT_PRECISE(g_DeltaTime0, sinHeadingAngle);
     offset.vz += offsetZ;
@@ -153,7 +153,7 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, q3_12 offsetX, q3_12 
     if (chara->position_18.vy > sp10.field_C)
     {
         chara->position_18.vy = sp10.field_C;
-        chara->field_34       = 0;
+        chara->fallSpeed_34   = 0;
     }
 
     if (arg1 != NULL)

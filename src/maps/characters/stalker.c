@@ -75,7 +75,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
 #endif
 
     stalker->moveSpeed_38   = Q12(0.0f);
-    stalker->field_34       = 0;
+    stalker->fallSpeed_34   = 0;
     stalker->rotation_24.vz = 0;
     stalker->rotation_24.vx = 0;
     //Character_AnimSet(stalker, ANIM_STATUS(StalkerAnim_30, true), 447); // TODO: Doesn't match?
@@ -2017,7 +2017,7 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker)
     q19_12      prevMoveSpeed;
     u16         newFlags;
 
-    stalker->field_34       = stalker->field_34 + g_DeltaTime2;
+    stalker->fallSpeed_34   = stalker->fallSpeed_34 + g_DeltaTime2;
     newHeadingAngle         = func_8005BF38(stalker->rotation_24.vy);
     stalker->rotation_24.vy = newHeadingAngle;
 
@@ -2056,7 +2056,7 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker)
     stalkerProps.offset_EC = Q12(0.0f);
     stalker->moveSpeed_38  = prevMoveSpeed;
 
-    if (stalker->field_34 != Q12(0.0f))
+    if (stalker->fallSpeed_34 != Q12(0.0f))
     {
         newFlags = stalkerProps.flags_E8 | StalkerFlag_8;
     }

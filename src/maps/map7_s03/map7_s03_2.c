@@ -4980,7 +4980,7 @@ void func_800DEE44(s_SubCharacter* incubus) // 0x800DEE44
 {
     s_800C4590 sp10;
 
-    incubus->field_34 += g_DeltaTime2;
+    incubus->fallSpeed_34 += g_DeltaTime2;
 
     func_8005C944(incubus, &sp10);
 
@@ -5989,7 +5989,7 @@ void func_800E0728(s_SubCharacter* chara) // 0x800E0728
 {
     s_800C4590 sp10;
 
-    chara->field_34 += g_DeltaTime2;
+    chara->fallSpeed_34 += g_DeltaTime2;
     func_8005C944(chara, &sp10);
     chara->rotation_24.vy = func_8005BF38(chara->rotation_24.vy);
 }

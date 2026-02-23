@@ -154,7 +154,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 
     offset.vx = Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(chara->field_34, g_DeltaTime0);
+    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime0);
 
     if (cond)
     {
@@ -179,7 +179,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
         if (chara->position_18.vy > UnkStruct.field_C)
         {
             chara->position_18.vy = UnkStruct.field_C;
-            chara->field_34       = 0;
+            chara->fallSpeed_34   = 0;
         }
     }
     else
@@ -193,7 +193,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
             chara->position_18.vy = Q12(0.0f);
         }
 
-        chara->field_34 = 0;
+        chara->fallSpeed_34 = 0;
     }
 
     if (g_DeltaTime0 == Q12(0.0f))
@@ -981,16 +981,16 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
     VECTOR3 vec; // Q19.12
     q3_12   headingAngle;
     q3_12   angle0;
-    bool    isInFont;
+    bool    isInFront;
 
     g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
-    g_SysWork.playerWork_4C.player_0.headingAngle_3C                             = Q12_ANGLE(0.0f);
-    isInFont                                                                = Math_AngleFrontCheck(*angle, g_SysWork.playerWork_4C.player_0.rotation_24.vy);
+    g_SysWork.playerWork_4C.player_0.headingAngle_3C                       = Q12_ANGLE(0.0f);
+    isInFront                                                              = Math_AngleFrontCheck(*angle, g_SysWork.playerWork_4C.player_0.rotation_24.vy);
 
     angle--; // @hack Permuter find, needed for match.
     angle++;
 
-    if (!isInFont)
+    if (!isInFront)
     {
         D_800C4610.vx = *offsetX + FP_FROM(( Math_Cos(*angle) * -0x16C) + (Math_Sin(*angle) * -0x6B0), Q12_SHIFT);
         D_800C4610.vz = *offsetZ + FP_FROM((-Math_Sin(*angle) * -0x16C) + (Math_Cos(*angle) * -0x6B0), Q12_SHIFT);
@@ -1009,7 +1009,7 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
 
     vec.vx = D_800C4610.vx - g_SysWork.playerWork_4C.player_0.position_18.vx;
     vec.vz = D_800C4610.vz - g_SysWork.playerWork_4C.player_0.position_18.vz;
-    vec.vy = Q12_MULT_PRECISE(g_SysWork.playerWork_4C.player_0.field_34, g_DeltaTime0);
+    vec.vy = Q12_MULT_PRECISE(g_SysWork.playerWork_4C.player_0.fallSpeed_34, g_DeltaTime0);
 
     func_80069B24(&D_800C4590, &vec, &g_SysWork.playerWork_4C.player_0);
 
@@ -1017,7 +1017,7 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
     D_800C4610.vz = g_SysWork.playerWork_4C.player_0.position_18.vz + D_800C4590.offset_0.vz;
 
     // TODO: Convert hex to float or fraction.
-    if (!isInFont)
+    if (!isInFront)
     {
         angle0   = *angle + Q12_ANGLE(180.0f);
         *offsetX = D_800C4610.vx + FP_FROM(( Math_Cos(angle0) * 0x16C) + (Math_Sin(angle0) * 0x6B0), Q12_SHIFT);

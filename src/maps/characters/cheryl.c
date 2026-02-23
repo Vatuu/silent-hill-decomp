@@ -79,7 +79,7 @@ void Ai_Cheryl_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x
 
     offset.vx = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(chara->field_34, g_DeltaTime0);
+    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime0);
 
     func_80069B24(&sharedData_800E39BC_0_s00, &offset, chara);
 
@@ -90,7 +90,7 @@ void Ai_Cheryl_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x
     if (chara->position_18.vy > sharedData_800E39BC_0_s00.field_C)
     {
         chara->position_18.vy = sharedData_800E39BC_0_s00.field_C;
-        chara->field_34       = 0;
+        chara->fallSpeed_34   = 0;
     }
 
     coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
@@ -217,7 +217,7 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
     chara->rotation_24.vy  = Q12_ANGLE_ABS(chara->rotation_24.vy + Q8_TO_Q4(D_800E3A30));
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->moveSpeed_38    = dahliaProps.field_124;
-    chara->field_34       += g_DeltaTime2;
+    chara->fallSpeed_34   += g_DeltaTime2;
 
     coords->flg = false;
     Math_RotMatrixZxyNegGte(&chara->rotation_24, &coords->coord);

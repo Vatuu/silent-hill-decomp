@@ -2926,7 +2926,7 @@ void func_800D55C8(s_SubCharacter* chara) // 0x800D55C8
 
     chara->moveSpeed_38    = SquareRoot12(Q12_MULT_PRECISE(temp_s2, temp_s2) + Q12_MULT_PRECISE(temp_s0_2, temp_s0_2));
     chara->headingAngle_3C = ratan2(temp_s2, temp_s0_2);
-    chara->field_34       += g_DeltaTime2;
+    chara->fallSpeed_34   += g_DeltaTime2;
 
     if (!(chara->properties_E4.twinfeeler.field_114 & (1 << 2)))
     {
@@ -4950,7 +4950,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
             {
                 func_8005DC1C(Sfx_Unk1555, &QVECTOR3(130.5f, 0.0f, -93.0f), Q8(0.5f), 0);
 
-                g_SysWork.playerWork_4C.player_0.field_34 += Q12(1.0f);
+                g_SysWork.playerWork_4C.player_0.fallSpeed_34 += Q12(1.0f);
                 D_800E05AE += Q12(1.0f);
             }
 

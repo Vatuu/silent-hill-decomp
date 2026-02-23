@@ -2915,7 +2915,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
     playerChara->rotation_24.vy  = Q12_ANGLE_NORM_U((playerChara->rotation_24.vy + (sharedData_800E39D8_0_s00 >> 4)) + Q12_ANGLE(360.0f));
     playerChara->headingAngle_3C = Q12_ANGLE_NORM_U(playerChara->rotation_24.vy + headingAngle);
     playerChara->moveSpeed_38    = newMoveSpeed;
-    playerChara->field_34       += g_DeltaTime2;
+    playerChara->fallSpeed_34   += g_DeltaTime2;
 
     coord->flg = false;
     Math_RotMatrixZxyNegGte(&playerChara->rotation_24, &coord->coord);

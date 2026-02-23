@@ -185,7 +185,7 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
 
     groanerProps.flags_E8.val16[0] |= GroanerFlag_1;
     groaner->moveSpeed_38           = FP_TO(unkDist, Q12_SHIFT) / Q12(1.2f);
-    groaner->field_34              += temp_v0 / Q12(1.2f);
+    groaner->fallSpeed_34          += temp_v0 / Q12(1.2f);
 
     if (groanerProps.flags_E8.val16[0] & GroanerFlag_3)
     {
@@ -706,7 +706,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
             deltaY                                           = g_SysWork.playerWork_4C.player_0.position_18.vy - groaner->position_18.vy;
             groaner->field_44.field_0                             = 1;
             groanerProps.field_10F                                = 2;
-            groaner->field_34                                     = Q12_MULT_PRECISE(deltaY - Q12(1.4f), Q12(2.35f));
+            groaner->fallSpeed_34                                 = Q12_MULT_PRECISE(deltaY - Q12(1.4f), Q12(2.35f));
         }
     }
 
@@ -720,7 +720,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
 
     if ((ANIM_TIME_REL_KEYFRAME_IDX_GET(groaner->model_0.anim_4.time_4, 222)) < 14u)
     {
-        groaner->field_34 += g_DeltaTime2;
+        groaner->fallSpeed_34 += g_DeltaTime2;
 
         Chara_MoveSpeedUpdate3(groaner, Q12(0.3f), Q12(0.0f));
     }
@@ -1046,11 +1046,11 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
 
     if (groaner->model_0.anim_4.status_0 != ANIM_STATUS(GroanerAnim_10, true))
     {
-        groaner->field_34 += g_DeltaTime2;
+        groaner->fallSpeed_34 += g_DeltaTime2;
     }
     else
     {
-        groaner->field_34 += g_DeltaTime2 >> 1;
+        groaner->fallSpeed_34 += g_DeltaTime2 >> 1;
     }
 
     if (groanerProps.flags_E8.val16[0] & GroanerFlag_1)

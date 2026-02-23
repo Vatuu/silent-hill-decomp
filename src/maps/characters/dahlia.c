@@ -83,7 +83,7 @@ void Ai_Dahlia_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
     offset.vx = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(chara->field_34, g_DeltaTime0);
+    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime0);
 
     func_80069B24(&sharedData_800E39BC_0_s00, &offset, chara);
 
@@ -94,7 +94,7 @@ void Ai_Dahlia_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
     if (chara->position_18.vy > sharedData_800E39BC_0_s00.field_C)
     {
         chara->position_18.vy = sharedData_800E39BC_0_s00.field_C;
-        chara->field_34       = 0;
+        chara->fallSpeed_34   = 0;
     }
 
     coords->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
@@ -424,7 +424,7 @@ void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* coords)
     dahlia->rotation_24.vy  = Q12_ANGLE_ABS(dahlia->rotation_24.vy + Q8_TO_Q4(sharedData_800D16E0_2_s01));
     dahlia->headingAngle_3C = dahlia->rotation_24.vy;
     dahlia->moveSpeed_38    = dahliaProps.moveDistance_126;
-    dahlia->field_34       += g_DeltaTime2;
+    dahlia->fallSpeed_34   += g_DeltaTime2;
 
     coords->flg = false;
     Math_RotMatrixZxyNegGte(&dahlia->rotation_24, &coords->coord);

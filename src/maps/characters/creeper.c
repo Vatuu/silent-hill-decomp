@@ -152,7 +152,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
                                              SQUARE(Q12_TO_Q6(creeper->damage_B4.position_0.vz))) << 18) /
                                 Q12(0.8f);
 
-        creeper->field_34        = FP_TO(creeper->damage_B4.position_0.vy, Q12_SHIFT) / Q12(0.8f);
+        creeper->fallSpeed_34    = FP_TO(creeper->damage_B4.position_0.vy, Q12_SHIFT) / Q12(0.8f);
         creeper->headingAngle_3C = Rng_AddGeneratedUInt(ratan2(creeper->damage_B4.position_0.vx, creeper->damage_B4.position_0.vz), -128, 127);
 
         creeperProps.flags_E8 |= CreeperFlag_1;
@@ -685,7 +685,7 @@ void sharedFunc_800D983C_1_s02(s_SubCharacter* creeper)
 {
     s_800C4590 unused;
 
-    creeper->field_34 += g_DeltaTime2 >> 2;
+    creeper->fallSpeed_34 += g_DeltaTime2 >> 2;
 
     if (creeperProps.flags_E8 & CreeperFlag_1)
     {
@@ -700,7 +700,7 @@ void sharedFunc_800D983C_1_s02(s_SubCharacter* creeper)
     creeperProps.offsetZ_EE = Q12(0.0f);
     creeperProps.offsetX_EC = Q12(0.0f);
 
-    if (creeper->field_34 != Q12(0.0f))
+    if (creeper->fallSpeed_34 != Q12(0.0f))
     {
         creeperProps.flags_E8 |= CreeperFlag_2;
     }
