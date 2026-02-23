@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 
-s_EventData D_800D3AB0[12] = {
+s_EventData MAP_EVENTS[12] = {
     {
         .requiredEventFlag_0  = EventFlag_416,
         .triggerType_4_0      = TriggerType_TouchObbFacing,

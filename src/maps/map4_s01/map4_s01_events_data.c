@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 
-s_EventData D_800D58F0[25] = {
+s_EventData MAP_EVENTS[25] = {
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,

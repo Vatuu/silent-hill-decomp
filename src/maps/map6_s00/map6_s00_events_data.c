@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 
-s_EventData D_800EFF18[24] = {
+s_EventData MAP_EVENTS[24] = {
     {
         .disabledEventFlag_2  = EventFlag_M6S00_HealthDrink,
         .triggerType_4_0      = TriggerType_TouchFacing,

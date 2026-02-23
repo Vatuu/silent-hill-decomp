@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 
-s_EventData D_800CCD14[2] = {
+s_EventData MAP_EVENTS[2] = {
     {
         .triggerType_4_0 = TriggerType_None,
         .sysState_8_0    = SysState_ReadMessage,

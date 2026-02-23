@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 
-s_EventData D_800CFD90[29] = {
+s_EventData MAP_EVENTS[29] = {
     {
         .disabledEventFlag_2  = EventFlag_M0S02_FirstAidKit,
         .triggerType_4_0      = TriggerType_TouchFacing,

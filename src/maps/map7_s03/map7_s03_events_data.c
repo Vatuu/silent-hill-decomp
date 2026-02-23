@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 
-s_EventData D_800ED17C[13] = {
+s_EventData MAP_EVENTS[13] = {
     {
         .requiredEventFlag_0 = EventFlag_587,
         .disabledEventFlag_2 = EventFlag_588,

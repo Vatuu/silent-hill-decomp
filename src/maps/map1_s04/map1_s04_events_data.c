@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 
-s_EventData D_800CD014[3] = {
+s_EventData MAP_EVENTS[3] = {
     {
         .disabledEventFlag_2 = EventFlag_59,
         .triggerType_4_0     = TriggerType_None,

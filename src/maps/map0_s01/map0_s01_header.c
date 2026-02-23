@@ -10,7 +10,6 @@
 
 #define BLOOD_SPLAT_COUNT_MAX 150
 
-extern s_EventData     D_800DDFB8[];
 extern s_AnimInfo      HARRY_M0S01_ANIM_INFOS[];
 extern s_BloodSplat    g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 extern s_UnkStruct3_Mo g_MapHeaders_38[21];
@@ -55,7 +54,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .loadingScreenFuncs_18            = g_LoadScreenFuncs,
     .mapPointsOfInterest_1C           = MAP_POINTS,
     .mapEventFuncs_20                 = g_MapEventFuncs,
-    .mapEvents_24                     = D_800DDFB8,
+    .mapEvents_24                     = MAP_EVENTS,
     .field_28                         = &g_SysWork.npcCoords_FC0[0],
     .loadableItems_2C                 = LOADABLE_INVENTORY_ITEMS,
     .mapMessages_30                   = MAP_MESSAGES,

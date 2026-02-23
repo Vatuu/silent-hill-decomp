@@ -1514,6 +1514,7 @@ extern s_MapOverlayHeader_94 sharedData_800E30C8_1_s02;
 extern void (*g_Ai_AirScreamer_ControlFuncs[52])(s_SubCharacter* airScreamer); // TODO: Use `AirScreamerControl_Count`.
 
 extern s_MapPoint2d MAP_POINTS[];
+extern s_EventData  MAP_EVENTS[];
 
 /** Scale. */
 extern VECTOR sharedData_800DD870_0_s01;

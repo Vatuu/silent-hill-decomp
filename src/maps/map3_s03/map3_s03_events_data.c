@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 
-s_EventData D_800D64E0[136] = {
+s_EventData MAP_EVENTS[136] = {
     {
         .disabledEventFlag_2  = EventFlag_M3S03_FirstAidKit0,
         .triggerType_4_0      = TriggerType_TouchFacing,
