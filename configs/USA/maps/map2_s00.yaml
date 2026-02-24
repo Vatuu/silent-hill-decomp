@@ -60,12 +60,14 @@ segments:
 
       - [0x4048, c, map2_s00_header]
       - [0x4048, c, map2_s00_events_data]
+      - [0x4048, c, map2_s00_anim_info]
 
       # .text section
       - [0x4048, c, map2_s00]
 
       # .data section
-      - [0x25134, data]
+      - [0x25134, .data, map2_s00_anim_info]
+      - [0x253A4, data]
       - [0x27164, .data, map2_s00_header]
       - [0x27174, data] # MAP_POINTS
       - [0x279F0, .data, map2_s00]

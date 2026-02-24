@@ -60,12 +60,14 @@ segments:
 
       - [0x2768, c, map1_s03_header]
       - [0x2768, c, map1_s03_events_data]
+      - [0x2768, c, map1_s03_anim_info]
       
       # .text section
       - [0x2768, c, map1_s03]
 
       # .data section
-      - [0x15A00, data]
+      - [0x15A00, .data, map1_s03_anim_info]
+      - [0x15D30, data]
       - [0x18468, .data, map1_s03]
       - [0x18528, .data, map1_s03_events_data]
       - [0x189FC, data]

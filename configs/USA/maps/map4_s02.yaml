@@ -60,12 +60,14 @@ segments:
 
       - [0x3290, c, map4_s02_header]
       - [0x3290, c, map4_s02_events_data]
+      - [0x3290, c, map4_s02_anim_info]
 
       # .text section
       - [0x3290, c, map4_s02]
 
       # .data section
-      - [0x214D8, data]
+      - [0x214D8, .data, map4_s02_anim_info]
+      - [0x21708, data]
       - [0x24150, .data, map4_s02]
       - [0x24194, .data, map4_s02_events_data]
       - [0x24338, data]

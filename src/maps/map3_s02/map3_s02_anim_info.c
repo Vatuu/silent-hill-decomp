@@ -1,0 +1,32 @@
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/math/math.h"
+
+s_AnimInfo HARRY_M3S02_ANIM_INFOS[27] = {
+    { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
+    { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
+    { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
+    { Anim_Update0, ANIM_STATUS(39, true), false, ANIM_STATUS(39, true), { Q12(10) }, 678, 713 },
+    { Anim_Update2, ANIM_STATUS(40, false), false, ANIM_STATUS(40, true), { Q12(10) }, NO_VALUE, 718 },
+    { Anim_Update0, ANIM_STATUS(40, true), false, ANIM_STATUS(40, true), { Q12(15) }, 718, 732 },
+    { Anim_Update2, ANIM_STATUS(41, false), false, ANIM_STATUS(41, true), { Q12(10) }, NO_VALUE, 737 },
+    { Anim_Update0, ANIM_STATUS(41, true), false, ANIM_STATUS(41, true), { Q12(15) }, 737, 751 },
+    { Anim_Update2, ANIM_STATUS(42, false), false, ANIM_STATUS(42, true), { Q12(10) }, NO_VALUE, 758 },
+    { Anim_Update0, ANIM_STATUS(42, true), false, ANIM_STATUS(42, true), { Q12(10) }, 758, 770 },
+    { Anim_Update2, ANIM_STATUS(43, false), false, ANIM_STATUS(43, true), { Q12(10) }, NO_VALUE, 777 },
+    { Anim_Update0, ANIM_STATUS(43, true), false, ANIM_STATUS(43, true), { Q12(10) }, 777, 789 },
+    { Anim_Update2, ANIM_STATUS(44, false), false, ANIM_STATUS(44, true), { Q12(10) }, NO_VALUE, 790 },
+    { Anim_Update0, ANIM_STATUS(44, true), false, ANIM_STATUS(44, true), { Q12(18) }, 790, 804 },
+    { Anim_Update2, ANIM_STATUS(45, false), false, ANIM_STATUS(45, true), { Q12(10) }, NO_VALUE, 805 },
+    { Anim_Update0, ANIM_STATUS(45, true), false, ANIM_STATUS(45, true), { Q12(18) }, 805, 819 },
+    { Anim_Update2, ANIM_STATUS(46, false), false, ANIM_STATUS(46, true), { Q12(8) }, NO_VALUE, 820 },
+    { Anim_Update1, ANIM_STATUS(46, true), false, NO_VALUE, { Q12(18) }, 820, 854 },
+    { Anim_Update2, ANIM_STATUS(47, false), false, ANIM_STATUS(47, true), { Q12(8) }, NO_VALUE, 855 },
+    { Anim_Update1, ANIM_STATUS(47, true), false, NO_VALUE, { Q12(18) }, 855, 888 },
+    { Anim_Update2, ANIM_STATUS(48, false), false, ANIM_STATUS(48, true), { Q12(30) }, NO_VALUE, 889 },
+    { Anim_Update0, ANIM_STATUS(48, true), false, ANIM_STATUS(48, true), { Q12(24) }, 889, 922 },
+    { Anim_Update2, ANIM_STATUS(49, false), false, ANIM_STATUS(49, true), { Q12(30) }, NO_VALUE, 923 },
+    { Anim_Update0, ANIM_STATUS(49, true), false, ANIM_STATUS(49, true), { Q12(24) }, 923, 956 },
+    { Anim_Update2, ANIM_STATUS(50, false), false, ANIM_STATUS(50, true), { Q12(10) }, NO_VALUE, 485 },
+    { Anim_Update0, ANIM_STATUS(50, true), false, ANIM_STATUS(50, true), { Q12(20) }, 485, 502 },
+    {}
+};

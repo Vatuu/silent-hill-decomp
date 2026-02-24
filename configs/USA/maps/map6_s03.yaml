@@ -60,12 +60,14 @@ segments:
 
       - [0x1CF4, c, map6_s03_header]
       - [0x1CF4, c, map6_s03_events_data]
+      - [0x1CF4, c, map6_s03_anim_info]
 
       # .text section
       - [0x1CF4, c, map6_s03]
 
       # .data section
-      - [0xFDFC, data]
+      - [0xFDFC, .data, map6_s03_anim_info]
+      - [0xFFCC, data]
       - [0x12868, .data, map6_s03]
       - [0x128AC, .data, map6_s03_events_data]
       - [0x1296C, data]

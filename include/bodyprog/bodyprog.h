@@ -1625,9 +1625,9 @@ typedef struct _MapOverlayHeader
     void                   (*func_C0)(); // func(?).
     void                   (*playerMatchArmAnimDisable_C4)(); // func(?).
     void                   (*playerControlFreeze_C8)();
-    void                   (*playerControlUnfreeze_CC)(bool);
-    s32                    (*func_D0)(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount); // 0x800C964C
-    s32                    (*func_D4)(s32);                  // Assumed return type.
+    void                   (*playerControlUnfreeze_CC)(bool setIdle);
+    bool                   (*func_D0)(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount); // 0x800C964C
+    s32                    (*func_D4)(s32 playerExtraState); // Points to `sharedFunc_800D2C7C_0_s00` which has `void` return type, but changing this funcptr causes mismatch in `func_80085EB8`
     void                   (*func_D8)();                     // Assumed return type.
     void                   (*playerAnimLock_DC)(void);
     void                   (*playerAnimIsLocked_E0)(); // func(?).

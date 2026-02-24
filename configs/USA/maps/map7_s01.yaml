@@ -64,6 +64,7 @@ segments:
 
       - [0x342C, c, map7_s01_header]
       - [0x342C, c, map7_s01_events_data]
+      - [0x342C, c, map7_s01_anim_info]
       
       # .text section
       - [0x342C, c, map7_s01]
@@ -73,7 +74,8 @@ segments:
       - [0xC760, c, map7_s01_2]
 
       # .data section
-      - [0x159D0, data]
+      - [0x159D0, .data, map7_s01_anim_info]
+      - [0x15CA0, data]
       - [0x17468, .data, map7_s01_2]
       - [0x175EC, .data, map7_s01_events_data]
       - [0x17F70, data]

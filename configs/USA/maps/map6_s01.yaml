@@ -64,6 +64,7 @@ segments:
       
       - [0x25E8, c, map6_s01_header]
       - [0x25E8, c, map6_s01_events_data]
+      - [0x25E8, c, map6_s01_anim_info]
 
       # .text section
       - [0x25E8, c, map6_s01]
@@ -72,7 +73,8 @@ segments:
       - [0x6DE0, c, map6_s01_2]
 
       # .data section
-      - [0x9EF4, data]
+      - [0x9EF4, .data, map6_s01_anim_info]
+      - [0x9FC4, data]
       - [0xA8C0, .data, map6_s01_2]
       - [0xAA2C, .data, map6_s01_events_data]
       - [0xAAF8, data]

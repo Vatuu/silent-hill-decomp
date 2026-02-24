@@ -61,12 +61,14 @@ segments:
 
       - [0x3518, c, map5_s01_header]
       - [0x3518, c, map5_s01_events_data]
+      - [0x3518, c, map5_s01_anim_info]
 
       # .text section
       - [0x3518, c, map5_s01]
 
       # .data section
-      - [0x23D6C, data]
+      - [0x23D6C, .data, map5_s01_anim_info]
+      - [0x23F9C, data]
       - [0x26980, .data, map5_s01]
       - [0x269D0, .data, map5_s01_events_data]
       - [0x26BE0, data]

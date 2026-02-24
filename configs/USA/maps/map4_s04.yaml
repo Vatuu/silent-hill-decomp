@@ -62,6 +62,7 @@ segments:
 
       - [0x26E8, c, map4_s04_header]
       - [0x26E8, c, map4_s04_events_data]
+      - [0x26E8, c, map4_s04_anim_info]
 
       # .text section
       - [0x26E8, c, map4_s04]
@@ -69,7 +70,8 @@ segments:
       - [0x7414, c, map4_s04_2]
 
       # .data section
-      - [0x9A18, data]
+      - [0x9A18, .data, map4_s04_anim_info]
+      - [0x9AE8, data]
       - [0x9F54, .data, map4_s04_2]
       - [0xA09C, .data, map4_s04_events_data]
       - [0xA198, data]

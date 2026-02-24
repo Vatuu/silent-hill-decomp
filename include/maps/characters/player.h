@@ -17,7 +17,7 @@ void Player_ControlUnfreeze(bool setIdle);
 
 bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount);
 
-void sharedFunc_800D2C7C_0_s00(s32 arg0);
+void sharedFunc_800D2C7C_0_s00(s32 playerExtraState);
 
 void sharedFunc_800D2D2C_0_s00(void);
 

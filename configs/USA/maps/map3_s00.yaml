@@ -63,6 +63,7 @@ segments:
 
       - [0x1E90, c, map3_s00_header]
       - [0x1E90, c, map3_s00_events_data]
+      - [0x1E90, c, map3_s00_anim_info]
 
       # .text section
       - [0x1E90, c, map3_s00]
@@ -70,7 +71,8 @@ segments:
       - [0x690C, c, map3_s00_2]
 
       # .data section
-      - [0x884C, data]
+      - [0x884C, .data, map3_s00_anim_info]
+      - [0x88FC, data]
       - [0x8DDC, .data, map3_s00_2]
       - [0x8EAC, .data, map3_s00_events_data]
       - [0x8F78, data]

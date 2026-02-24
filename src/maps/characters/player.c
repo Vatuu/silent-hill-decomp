@@ -14,7 +14,7 @@
 // NOTE: Huge PlayerState anim function, kept as separate file for now.
 #include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800CBAE4
 
-void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coord)
+void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords)
 {
     s_Collision coll;
     VECTOR3     offset;
@@ -205,9 +205,9 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
         chara->rotationSpeed_2C.vy = FP_TO(sharedData_800E39D8_0_s00, 8) / g_DeltaTime;
     }
 
-    coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
-    coord->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
-    coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
+    coords->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
+    coords->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
+    coords->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
 }
 
 void sharedFunc_800D209C_0_s00(void)
@@ -582,7 +582,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
     return false;
 }
 
-void sharedFunc_800D2C7C_0_s00(s32 playerState)
+void sharedFunc_800D2C7C_0_s00(s32 playerExtraState)
 {
     s_SubCharacter* player;
     s_PlayerExtra*  extra;
@@ -594,7 +594,7 @@ void sharedFunc_800D2C7C_0_s00(s32 playerState)
 
     D_800C4606 = 0;
 
-    switch (playerState)
+    switch (playerExtraState)
     {
         case PlayerState_Unk54:
             D_800C457C = 0;
@@ -613,7 +613,7 @@ void sharedFunc_800D2C7C_0_s00(s32 playerState)
             break;
     }
 
-    Player_ExtraStateSet(player, extra, playerState);
+    Player_ExtraStateSet(player, extra, playerExtraState);
 }
 
 void sharedFunc_800D2D2C_0_s00(void)

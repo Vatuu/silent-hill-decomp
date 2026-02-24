@@ -64,6 +64,7 @@ segments:
 
       - [0x1D68, c, map3_s06_header]
       - [0x1D68, c, map3_s06_events_data]
+      - [0x1D68, c, map3_s06_anim_info]
 
       # .text section
       - [0x1D68, c, map3_s06]
@@ -71,7 +72,8 @@ segments:
       - [0x6760, c, map3_s06_2]
 
       # .data section
-      - [0x8648, data]
+      - [0x8648, .data, map3_s06_anim_info]
+      - [0x86F8, data]
       - [0x8E44, .data, map3_s06_2]
       - [0x8F00, .data, map3_s06_events_data]
       - [0x9158, data]
