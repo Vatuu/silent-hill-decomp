@@ -59,7 +59,7 @@ void func_80085DC0(bool arg0, s32 sysStateStep) // 0x80085DC0
 void func_80085DF0(void) // 0x80085DF0
 {
     g_SysWork.timer_2C += g_DeltaTimeRaw;
-    if (g_MapOverlayHeader.playerMoveDistClear() != NULL || g_SysWork.timer_2C > Q12(1.0f))
+    if (g_MapOverlayHeader.playerMoveDistIsZero_EC() != NULL || g_SysWork.timer_2C > Q12(1.0f))
     {
         SysWork_StateStepIncrement(0);
     }

@@ -532,7 +532,7 @@ void func_800DB058(void) // 0x800DB058
         case 0:
             // Freeze player.
             Player_ControlFreeze();
-            sharedFunc_800D2E60_0_s00();
+            Player_MoveDistanceClear();
 
             g_SysWork.field_30 = 20;
 

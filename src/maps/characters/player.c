@@ -626,7 +626,7 @@ void Player_AnimLock(void)
     Player_AnimFlagsClear(AnimFlag_Unlocked);
 }
 
-s32 sharedFunc_800D2D6C_0_s00(void)
+s32 Player_AnimIsLocked(void)
 {
     return ~(g_SysWork.playerWork_4C.player_0.model_0.anim_4.flags_2 & AnimFlag_Unlocked);
 }
@@ -668,12 +668,12 @@ s32 sharedFunc_800D2DAC_0_s00(void)
     }
 }
 
-s32 Player_MoveDistanceClear(void)
+bool Player_MoveDistanceIsZero(void)
 {
     return g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 == Q12(0.0f);
 }
 
-void sharedFunc_800D2E60_0_s00(void)
+void Player_MoveDistanceClear(void)
 {
     g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
 }

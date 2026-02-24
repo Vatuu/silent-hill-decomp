@@ -1630,11 +1630,11 @@ typedef struct _MapOverlayHeader
     s32                    (*func_D4)(s32);                  // Assumed return type.
     void                   (*func_D8)();                     // Assumed return type.
     void                   (*playerAnimLock_DC)(void);
-    void                   (*func_E0)(); // func(?).
+    void                   (*playerAnimIsLocked_E0)(); // func(?).
     s32                    (*playerAnimUnlock_E4)(s_SubCharacter*, s32); // Assumed return type.
     s64                    (*func_E8)(s_SubCharacter*);      // Is it really `s64`???
-    s32                    (*playerMoveDistClear)();
-    void                   (*func_F0)(); // func(?).
+    bool                   (*playerMoveDistIsZero_EC)();
+    void                   (*playerMoveDistClear_F0)(); // func(?).
     void                   (*playerFallBackward_F4)();
     void                   (*func_F8)(); // func(?).
     void                   (*playerDamageFeetFront_FC)(); // func(?).

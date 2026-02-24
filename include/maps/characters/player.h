@@ -23,7 +23,7 @@ void sharedFunc_800D2D2C_0_s00(void);
 
 void Player_AnimLock(void);
 
-s32 sharedFunc_800D2D6C_0_s00(void);
+s32 Player_AnimIsLocked(void);
 
 void Player_AnimUnlock(void);
 
@@ -31,9 +31,9 @@ void Player_AnimUnlock(void);
 s32 sharedFunc_800D2DAC_0_s00(void);
 
 /** Triggers at specific points after the start of a cutscene or dialogue. */
-s32 Player_MoveDistanceClear(void);
+bool Player_MoveDistanceIsZero(void);
 
-void sharedFunc_800D2E60_0_s00(void);
+void Player_MoveDistanceClear(void);
 
 void sharedFunc_800D2E6C_0_s00(void);
 
