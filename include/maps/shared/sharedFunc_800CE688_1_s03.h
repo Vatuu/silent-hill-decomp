@@ -53,7 +53,7 @@ bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
 
             scratchData->sprt_12C++;
             scratchData->tpage_130 = (DR_TPAGE*)scratchData->sprt_12C;
-            setDrawTPage(scratchData->tpage_130, 0, 0, getTPageFromBuffer(2, 0, scratchData->field_148.u8[1], i));
+            setDrawTPage(scratchData->tpage_130, 0, 0, getTPage(2, 0, ((scratchData->field_148.u8[1] << 4) + (i << 2)) << 6, (((scratchData->field_148.u8[1] << 4) >> 4) & 1) << 8));
 
             AddPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->tpage_130);
             scratchData->tpage_130++;

@@ -1439,7 +1439,7 @@ void func_800DD2D4(void) // 0x800DD2D4
 
                 scratchData->sprt_0++;
                 scratchData->tpage_4 = (DR_TPAGE*)scratchData->sprt_0;
-                setDrawTPage(scratchData->tpage_4, 0, 0, getTPageFromBuffer(2, 0, scratchData->activeBufferIdx_14, i));
+                setDrawTPage(scratchData->tpage_4, 0, 0, getTPage(2, 0, ((scratchData->activeBufferIdx_14 << 4) + (i << 2)) << 6, (((scratchData->activeBufferIdx_14 << 4) >> 4) & 1) << 8));
 
                 AddPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->tpage_4);
                 scratchData->tpage_4++;
