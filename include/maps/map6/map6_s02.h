@@ -18,26 +18,10 @@
 
 typedef struct
 {
-    union
-    {
-        u16 u16;
-        u8  u8[2];
-    } x;
-    union
-    {
-        s16 u16;
-        u8  u8[2];
-    } y;
-    union
-    {
-        s16 u16;
-        u8  u8[2];
-    } w;
-    union
-    {
-        s16 u16;
-        u8  u8[2];
-    } h;
+    s16 x;
+    s16 y;
+    u8  w[2];
+    u8  h[2];
 } s_800D3C4C;
 
 extern u16 D_800D3B40;
