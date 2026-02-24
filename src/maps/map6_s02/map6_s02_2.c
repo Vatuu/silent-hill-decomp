@@ -976,7 +976,51 @@ void func_800D0500(void) // 0x800D0500
     }
 }
 
-INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800D1040);
+void func_800D1040(s32 arg0) // 0x800D1040
+{
+    s32       var_t4;
+    POLY_FT4* poly;
+
+    var_t4 = D_800D3B44->tPage[33];
+
+    if (arg0 == 4)
+    {
+        var_t4++;
+    }
+
+    poly = GsOUT_PACKET_P;
+
+    setPolyFT4(poly);
+
+    if (arg0 == 4)
+    {
+        // @hack `s16` cast needed to match, can't add to macro as it causes mismatches elsewhere.
+        setXY0Fast(poly, (s16)(D_800D3C4C[arg0].x.u16 + D_800D4E2C), D_800D3C4C[arg0].y.u16 + D_800D4E2D);
+        setXY1Fast(poly, (s16)(D_800D3C4C[arg0].x.u16 + D_800D4E2C + D_800D3C4C[arg0].w.u8[0]), D_800D3C4C[arg0].y.u16 + D_800D4E2D);
+        setXY2Fast(poly, (s16)(D_800D3C4C[arg0].x.u16 + D_800D4E2C), (D_800D3C4C[arg0].y.u16 + D_800D4E2D) + D_800D3C4C[arg0].w.u8[1]);
+        setXY3Fast(poly, (s16)(D_800D3C4C[arg0].x.u16 + D_800D4E2C + D_800D3C4C[arg0].w.u8[0]), (D_800D3C4C[arg0].y.u16 + D_800D4E2D) + D_800D3C4C[arg0].w.u8[1]);
+    }
+    else
+    {
+        setXY0Fast(poly, (s16)(D_800D3C4C[arg0].x.u16), D_800D3C4C[arg0].y.u16);
+        setXY1Fast(poly, (s16)(D_800D3C4C[arg0].x.u16 + D_800D3C4C[arg0].w.u8[0]), D_800D3C4C[arg0].y.u16);
+        setXY2Fast(poly, (s16)(D_800D3C4C[arg0].x.u16), (D_800D3C4C[arg0].y.u16 + D_800D3C4C[arg0].w.u8[1]));
+        setXY3Fast(poly, (s16)(D_800D3C4C[arg0].x.u16 + D_800D3C4C[arg0].w.u8[0]), (D_800D3C4C[arg0].y.u16) + D_800D3C4C[arg0].w.u8[1]);
+    }
+
+    setUV0AndClutSum(poly, D_800D3C4C[arg0].h.u8[0], D_800D3C4C[arg0].h.u8[1], getClut(D_800D3B44[4].clutX, D_800D3B44[4].clutY));
+    setUV1AndTPageSum(poly, D_800D3C4C[arg0].h.u8[0] + D_800D3C4C[arg0].w.u8[0], D_800D3C4C[arg0].h.u8[1], getTPage(1, 0, var_t4 << 6, ((var_t4 >> 4) & 1) << 8));
+    setUV2Sum(poly, D_800D3C4C[arg0].h.u8[0], D_800D3C4C[arg0].h.u8[1] + D_800D3C4C[arg0].w.u8[1]);
+    setUV3Sum(poly, D_800D3C4C[arg0].h.u8[0] + D_800D3C4C[arg0].w.u8[0], D_800D3C4C[arg0].h.u8[1] + D_800D3C4C[arg0].w.u8[1]);
+
+    setSemiTrans(poly, false);
+    setRGB0Fast(poly, 0x80, 0x80, 0x80);
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[0], poly);
+
+    poly++;
+    GsOUT_PACKET_P = poly;
+}
 
 void func_800D1330(s16 arg0) // 0x800D1330
 {

@@ -16,6 +16,30 @@
 
 #include "maps/shared.h"
 
+typedef struct
+{
+    union
+    {
+        u16 u16;
+        u8  u8[2];
+    } x;
+    union
+    {
+        s16 u16;
+        u8  u8[2];
+    } y;
+    union
+    {
+        s16 u16;
+        u8  u8[2];
+    } w;
+    union
+    {
+        s16 u16;
+        u8  u8[2];
+    } h;
+} s_800D3C4C;
+
 extern u16 D_800D3B40;
 
 extern s_FsImageDesc D_800D3B44[5];
@@ -27,6 +51,8 @@ extern s_FsImageDesc D_800D3B70;
 extern VECTOR3 D_800D3B78[];
 
 extern u16 D_800D3C2C[];
+
+extern s_800D3C4C D_800D3C4C[8];
 
 extern s32 D_800D3C84;
 
@@ -85,6 +111,8 @@ void func_800CF0B8(void);
 void func_800CFC34(void);
 
 void func_800D0500(void);
+
+void func_800D1040(s32 arg0);
 
 void func_800D1330(s16);
 
