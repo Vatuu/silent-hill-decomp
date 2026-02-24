@@ -51,7 +51,7 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
 
     if (sharedData_800E30C8_1_s02.field_30[idx0] == 0)
     {
-        temp_s4 = Q12_MULT_PRECISE(g_DeltaTime0, sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2);
+        temp_s4 = Q12_MULT_PRECISE(g_DeltaTime, sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2);
 
         if ((sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0 + temp_s4) < sharedData_800E30C8_1_s02.field_28[idx0])
         {
@@ -217,10 +217,10 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
     }
     else
     {
-        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 = MIN(sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_2 + ((g_DeltaTime2 * sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2) >> 7),
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 = MIN(sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_2 + ((g_GravitySpeed * sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2) >> 7),
                                                                  Q12(6.0f));
 
-        temp_s4 = Q12_MULT_PRECISE(g_DeltaTime0, sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_2);
+        temp_s4 = Q12_MULT_PRECISE(g_DeltaTime, sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_2);
 
         if (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0 + temp_s4 >= (sharedData_800E30C8_1_s02.field_28[idx0] + sharedData_800E30C8_1_s02.field_64[idx0]))
         {

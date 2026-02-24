@@ -9,7 +9,7 @@ bool sharedFunc_800CF294_3_s03(s_SubCharacter* arg0, q19_12 dist)
 
     if (arg0->properties_E4.npc.field_11A > 0)
     {
-        arg0->properties_E4.npc.field_11A -= g_DeltaTime0;
+        arg0->properties_E4.npc.field_11A -= g_DeltaTime;
     }
 
     if (func_80070360(arg0, dist, somePtr->field_8))

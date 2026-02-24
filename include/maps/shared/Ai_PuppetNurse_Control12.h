@@ -31,7 +31,7 @@ void Ai_PuppetNurse_Control12(s_SubCharacter* nurse)
             if (angleDeltaAbs >= Q12_ANGLE(10.1f))
             {
                 s32 rotAmt = Q12_ANGLE(45.0f); // @hack? Should probably be part of the `FP_MULTIPLY_PRECISE`.
-                rotAmt     = Q12_MULT_PRECISE(g_DeltaTime0, rotAmt);
+                rotAmt     = Q12_MULT_PRECISE(g_DeltaTime, rotAmt);
                 if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
                 {
                     nurse->rotation_24.vy += rotAmt;

@@ -91,7 +91,7 @@
  * full rotation being the same as 1 fixed-point second (4096)?
  */
 #define TIMESTEP_ANGLE(denom, shift) \
-    (((g_DeltaTime0 / (denom)) >> (shift)) + 1)
+    (((g_DeltaTime / (denom)) >> (shift)) + 1)
 
 /** @brief Multiplies an integer in fixed-point Q format by a float converted to fixed-point Q format,
  * using a 64-bit intermediate via `Math_MulFixed` for higher precision.

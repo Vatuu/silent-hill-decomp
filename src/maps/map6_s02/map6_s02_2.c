@@ -194,7 +194,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             SysWork_StateStepIncrement(0);
 
         case 2:
-            g_SysWork.field_28 += g_DeltaTime0;
+            g_SysWork.field_28 += g_DeltaTime;
 
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12_MULT_FLOAT(Math_Sin(Q12_ANGLE(135.0f) - (g_SysWork.field_28 >> 2)), 0.9f) + Q12(60.0f);
@@ -270,7 +270,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             break;
 
         case 12:
-            g_SysWork.npcs_1A0[0].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.25f);
+            g_SysWork.npcs_1A0[0].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
             SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
             Map_MessageWithAudio(16, &D_800D4E08, &D_800D3B40);
             break;
@@ -282,7 +282,7 @@ void func_800CF0B8(void) // 0x800CF0B8
         case 14:
             Map_MessageWithAudio(16, &D_800D4E08, &D_800D3B40);
 
-            g_SysWork.npcs_1A0[0].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.25f);
+            g_SysWork.npcs_1A0[0].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
             if (g_SysWork.npcs_1A0[0].timer_C6 > Q12(1.0f))
             {
                 g_SysWork.npcs_1A0[0].timer_C6 = Q12(1.0f);
@@ -290,7 +290,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             break;
 
         case 15:
-            g_SysWork.npcs_1A0[0].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.25f);
+            g_SysWork.npcs_1A0[0].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
             if (g_SysWork.npcs_1A0[0].timer_C6 > Q12(1.0f))
             {
                 g_SysWork.npcs_1A0[0].timer_C6 = Q12(1.0f);
@@ -380,14 +380,14 @@ void func_800CFC34(void) // 0x800CFC34
     curTimerVal = D_800D3C90;
     pitch       = (Math_Sin(curTimerVal >> 3) * 2) + Math_Cos(curTimerVal >> 4) + Math_Sin(Math_Cos(curTimerVal >> 4));
 
-    D_800D3C90 += g_DeltaTime0;
-    D_800D3C90 += g_DeltaTime0;
+    D_800D3C90 += g_DeltaTime;
+    D_800D3C90 += g_DeltaTime;
 
     pitchDiv512 = pitch >> 9; // `/ 512`
 
     if (g_SysWork.sysStateStep_C[0] == 11 || g_SysWork.sysStateStep_C[0] == 13)
     {
-        D_800D3C94 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.5f);
+        D_800D3C94 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.5f);
         if (D_800D3C94 < 0)
         {
             D_800D3C94 = 0;
@@ -396,7 +396,7 @@ void func_800CFC34(void) // 0x800CFC34
     }
     else if (g_SysWork.sysStateStep_C[0] > 0)
     {
-        D_800D3C94 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.25f);
+        D_800D3C94 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
         if (D_800D3C94 > 4080)
         {
             D_800D3C94 = 4080;
@@ -566,7 +566,7 @@ void func_800CFC34(void) // 0x800CFC34
 
     if (g_SysWork.sysStateStep_C[0] == 10 || g_SysWork.sysStateStep_C[0] == 12 || g_SysWork.sysStateStep_C[0] == 13)
     {
-        D_800D3C8C += g_DeltaTime0;
+        D_800D3C8C += g_DeltaTime;
 
         for (i = 0; i < 15; i++)
         {
@@ -576,9 +576,9 @@ void func_800CFC34(void) // 0x800CFC34
 
                 if (D_800D3C8C > Q12(1.5f))
                 {
-                    D_800D3B78[i].vx += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 3.5f, 12);
-                    D_800D3B78[i].vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.2f, 12);
-                    D_800D3B78[i].vz += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, -0.2f, 12);
+                    D_800D3B78[i].vx += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 3.5f, 12);
+                    D_800D3B78[i].vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 1.2f, 12);
+                    D_800D3B78[i].vz += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.2f, 12);
                 }
             }
         }
@@ -635,7 +635,7 @@ void func_800D0500(void) // 0x800D0500
 
         case 2:
             SysWork_StateStepIncrementDelayed(Q12(5.0f), false);
-            D_800D3C98 += g_DeltaTime0;
+            D_800D3C98 += g_DeltaTime;
 
             // TODO: Some kind of `Q12_ANGLE_ABS`?
             var_v0 = D_800D3C98;
@@ -667,7 +667,7 @@ void func_800D0500(void) // 0x800D0500
         case 3:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.5f), false);
 
-            D_800D3C98 += g_DeltaTime0;
+            D_800D3C98 += g_DeltaTime;
             var_v0_2    = D_800D3C98;
             if (D_800D3C98 < 0)
             {
@@ -762,7 +762,7 @@ void func_800D0500(void) // 0x800D0500
 
             Gfx_BackgroundSpriteDraw_2(&D_800D3B44[3]);
 
-            D_800D3C98 += g_DeltaTime0;
+            D_800D3C98 += g_DeltaTime;
             if (D_800D3C98 % Q12(0.2f) > Q12(0.1f))
             {
                 func_800D1040(0);
@@ -861,7 +861,7 @@ void func_800D0500(void) // 0x800D0500
                     break;
             }
 
-            D_800D3C98 += g_DeltaTime0;
+            D_800D3C98 += g_DeltaTime;
             if (D_800D4E2C == 0 && D_800D4E2D == 0)
             {
                 if (Rng_Rand16() % 0x100 == 0)
@@ -885,7 +885,7 @@ void func_800D0500(void) // 0x800D0500
 
             if (D_800D3C9E >= 0)
             {
-                D_800D3C9E -= g_DeltaTime0;
+                D_800D3C9E -= g_DeltaTime;
                 if (D_800D3C9E < 0)
                 {
                     D_800D3C9E = -Rng_Rand16() % Q12(0.4f);
@@ -897,7 +897,7 @@ void func_800D0500(void) // 0x800D0500
             }
             else
             {
-                D_800D3C9E += g_DeltaTime0;
+                D_800D3C9E += g_DeltaTime;
                 if (D_800D3C9E >= 0)
                 {
                     D_800D3C9E = Rng_GenerateInt(Q12(1.0f), Q12(3.4f) - 1);
@@ -961,7 +961,7 @@ void func_800D0500(void) // 0x800D0500
         {
             case ScreenFadeState_Reset:
             case ScreenFadeState_None:
-                D_800D3C98 += g_DeltaTime0;
+                D_800D3C98 += g_DeltaTime;
                 if (D_800D3C98 >= Q12(4.0f))
                 {
                     ScreenFade_Start(true, false, false);
@@ -1118,7 +1118,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D1718
             D_800C4414 |= 1 << 5;
         }
 
-        D_800D4E70 += Q12_MULT_PRECISE(Rng_GenerateUInt(0, 4095), g_DeltaTime0);
+        D_800D4E70 += Q12_MULT_PRECISE(Rng_GenerateUInt(0, 4095), g_DeltaTime);
 
         Sd_SfxAttributesUpdate(Sfx_Unk1611, 0, ((Math_Sin(D_800D4E70) >> 10) - 32), -64);
     }

@@ -121,7 +121,7 @@ void Map_RoomBgmInit(bool arg0)
         }
     }
 
-    sharedData_800EFD04_6_s00   += g_DeltaTime0;
+    sharedData_800EFD04_6_s00   += g_DeltaTime;
     sharedData_800EFCFC_6_s00[2] = Q12_MULT_PRECISE(var_s2, (Math_Sin(sharedData_800EFD04_6_s00 / 12) + Q12(3.0f)) / 4);
 
     Bgm_Update(flags, var_s1, var_s3);

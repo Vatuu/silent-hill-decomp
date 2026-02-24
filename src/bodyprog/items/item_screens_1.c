@@ -321,7 +321,7 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
         case 2:
             if (D_800C3961 != 0)
             {
-                D_800C3961 -= ((g_DeltaTime0 / 68) == 0) ? 1 : (g_DeltaTime0 / 68);
+                D_800C3961 -= ((g_DeltaTime / 68) == 0) ? 1 : (g_DeltaTime / 68);
                 D_800C3962  = D_800C3961 - 32;
                 D_800C3961  = CLAMP(D_800C3961, 0, 32);
 

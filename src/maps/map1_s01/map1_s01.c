@@ -477,16 +477,16 @@ void func_800D7864(void) // 0x800D7864
         case 12:
             SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
 
-            g_WorldObject0.rotation_28.vx += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.0555f));
+            g_WorldObject0.rotation_28.vx += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.0555f));
             g_WorldObject0.position_1C.vy = FP_FROM((Math_Cos(g_WorldObject0.rotation_28.vx) * Q12_ANGLE(-43.2f)), Q12_SHIFT) - Q12(2.5601f);
             g_WorldObject0.position_1C.vz = FP_FROM((Math_Sin(g_WorldObject0.rotation_28.vx) * Q12_ANGLE(-43.2f)), Q12_SHIFT) + Q12(23.73f);
             break;
 
         case 13:
-            D_800DD4FC += g_DeltaTime2;
-            g_WorldObject0.rotation_28.vx += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.75f));
-            g_WorldObject0.position_1C.vy += Q12_MULT_PRECISE(g_DeltaTime0, D_800DD4FC);
-            g_WorldObject0.position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-0.5f));
+            D_800DD4FC                    += g_GravitySpeed;
+            g_WorldObject0.rotation_28.vx += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.75f));
+            g_WorldObject0.position_1C.vy += Q12_MULT_PRECISE(g_DeltaTime, D_800DD4FC);
+            g_WorldObject0.position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.5f));
 
             if (g_WorldObject0.position_1C.vy >= Q12(0.0f))
             {
@@ -892,7 +892,7 @@ void func_800D87C0(void) // 0x800D87C0
             SysWork_StateStepIncrement(0);
 
         case 5:
-            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(12.0f))), Q12(8.0f));
+            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(12.0f))), Q12(8.0f));
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -901,7 +901,7 @@ void func_800D87C0(void) // 0x800D87C0
             SysWork_StateStepIncrement(0);
 
         case 7:
-            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(12.0f))), Q12(8.0f));
+            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(12.0f))), Q12(8.0f));
             if (g_Timer0 >= Q12(8.0f))
             {
                 SysWork_StateStepIncrement(0);
@@ -921,7 +921,7 @@ void func_800D87C0(void) // 0x800D87C0
             SysWork_StateStepIncrement(0);
 
         case 9:
-            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(18.0f))), Q12(33.0f));
+            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f))), Q12(33.0f));
             if (g_Timer0 >= Q12(33.0f))
             {
                 SysWork_StateStepIncrement(0);
@@ -937,7 +937,7 @@ void func_800D87C0(void) // 0x800D87C0
             SysWork_StateStepIncrement(0);
 
         case 11:
-            g_Timer0 = MIN((Q12_MULT_PRECISE(g_DeltaTime0, Q12(21.0f)) + g_Timer0), Q12(48.0f));
+            g_Timer0 = MIN((Q12_MULT_PRECISE(g_DeltaTime, Q12(21.0f)) + g_Timer0), Q12(48.0f));
             if (g_Timer0 >= Q12(48.0f))
             {
                 SysWork_StateStepIncrement(0);
@@ -949,12 +949,12 @@ void func_800D87C0(void) // 0x800D87C0
         case 12:
             MapMsg_DisplayAndHandleSelection(false, 33, 0, 0, 0, false); // "Just a cat..."
 
-            g_Timer0 = MIN((Q12_MULT_PRECISE(g_DeltaTime0, Q12(20.0f)) + g_Timer0), Q12(121.0f));
+            g_Timer0 = MIN((Q12_MULT_PRECISE(g_DeltaTime, Q12(20.0f)) + g_Timer0), Q12(121.0f));
             g_Timer0 = MAX(g_Timer0, Q12(49.0f));
             break;
 
         case 13:
-            g_Timer0 = MIN((Q12_MULT_PRECISE(g_DeltaTime0, Q12(20.0f)) + g_Timer0), Q12(121.0f));
+            g_Timer0 = MIN((Q12_MULT_PRECISE(g_DeltaTime, Q12(20.0f)) + g_Timer0), Q12(121.0f));
             if (g_Timer0 >= Q12(121.0f))
             {
                 SysWork_StateStepIncrement(0);

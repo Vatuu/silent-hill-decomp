@@ -252,7 +252,7 @@ void sharedFunc_800D15F0_3_s01(void)
 
             if (sharedData_800D4D10_3_s01 != 0)
             {
-                g_SysWork.field_28 += g_DeltaTime0;
+                g_SysWork.field_28 += g_DeltaTime;
                 if (g_SysWork.field_28 > Q12(1.0f))
                 {
                     g_SysWork.field_28 = Q12(1.0f);
@@ -292,14 +292,14 @@ void sharedFunc_800D15F0_3_s01(void)
             }
             else
             {
-                g_SysWork.field_28 += g_DeltaTime0;
+                g_SysWork.field_28 += g_DeltaTime;
             }
             break;
 
         case 12:
             func_8005DE0C(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.5f) - (g_SysWork.field_28 >> 5), Q12(16.0f), 0);
 
-            g_SysWork.field_28 += g_DeltaTime0;
+            g_SysWork.field_28 += g_DeltaTime;
             if (g_SysWork.field_28 > Q12(0.5f))
             {
 #if defined(MAP7_S01) || defined(MAP7_S02)
@@ -314,7 +314,7 @@ void sharedFunc_800D15F0_3_s01(void)
         case 13:
             func_8005DE0C(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.25f) - (g_SysWork.field_28 >> 5), Q12(16.0f), 0);
 
-            g_SysWork.field_28 += g_DeltaTime0;
+            g_SysWork.field_28 += g_DeltaTime;
             if (g_SysWork.field_28 > Q12(0.5f))
             {
                 SD_Call(Sfx_Unk1502);
@@ -329,11 +329,11 @@ void sharedFunc_800D15F0_3_s01(void)
             break;
 
         case 14:
-            sharedData_800D4D0C_3_s01.vx = MIN(Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.8f)) + sharedData_800D4D0C_3_s01.vx, Q12(0.35f));
+            sharedData_800D4D0C_3_s01.vx = MIN(Q12_MULT_PRECISE(g_DeltaTime, Q12(0.8f)) + sharedData_800D4D0C_3_s01.vx, Q12(0.35f));
 
             for (i = 0; i < 4; i++)
             {
-                g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime0, (i & 1) ? sharedData_800D4D0C_3_s01.vx : -sharedData_800D4D0C_3_s01.vx);
+                g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime, (i & 1) ? sharedData_800D4D0C_3_s01.vx : -sharedData_800D4D0C_3_s01.vx);
             }
 
             SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
@@ -341,17 +341,17 @@ void sharedFunc_800D15F0_3_s01(void)
 
         case 15:
         case 16:
-            sharedData_800D4D0C_3_s01.vx = MIN(Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.8f)) + sharedData_800D4D0C_3_s01.vx, Q12(0.35f));
-            sharedData_800D4D0C_3_s01.vy = MIN(Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.8f)) + sharedData_800D4D0C_3_s01.vy, Q12(0.35f));
+            sharedData_800D4D0C_3_s01.vx = MIN(Q12_MULT_PRECISE(g_DeltaTime, Q12(0.8f)) + sharedData_800D4D0C_3_s01.vx, Q12(0.35f));
+            sharedData_800D4D0C_3_s01.vy = MIN(Q12_MULT_PRECISE(g_DeltaTime, Q12(0.8f)) + sharedData_800D4D0C_3_s01.vy, Q12(0.35f));
 
             for (i = 0; i < 4; i++)
             {
-                g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime0, (i & 1) ? sharedData_800D4D0C_3_s01.vx : -sharedData_800D4D0C_3_s01.vx);
+                g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime, (i & 1) ? sharedData_800D4D0C_3_s01.vx : -sharedData_800D4D0C_3_s01.vx);
             }
 
             for (i = 4; i < 6; i++)
             {
-                g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime0, (i & 1) ? sharedData_800D4D0C_3_s01.vy : -sharedData_800D4D0C_3_s01.vy);
+                g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime, (i & 1) ? sharedData_800D4D0C_3_s01.vy : -sharedData_800D4D0C_3_s01.vy);
             }
 
             if (g_SysWork.sysStateStep_C[0] == 15)

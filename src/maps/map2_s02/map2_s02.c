@@ -133,7 +133,7 @@ void func_800E9EAC(void) // 0x800E9EAC
 
 void func_800E9FDC(void) // 0xfunc_800E9FDC
 {
-    g_DeltaTime0 = Q12(0.0f);
+    g_DeltaTime = Q12(0.0f);
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -224,7 +224,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
                     {
                         if (g_ScreenFadeTimestep > Q12(0.0f))
                         {
-                            g_ScreenFadeTimestep = MIN(g_ScreenFadeTimestep + g_DeltaTime0, Q12(3.0f));
+                            g_ScreenFadeTimestep = MIN(g_ScreenFadeTimestep + g_DeltaTime, Q12(3.0f));
                         }
                     }
                 }
@@ -253,7 +253,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
 
         if (D_800F0B2C > Q12(0.0f))
         {
-            D_800F0B2C -= g_DeltaTime0;
+            D_800F0B2C -= g_DeltaTime;
             if (D_800F0B2C < Q12(0.0f))
             {
                 Savegame_EventFlagSet(EventFlag_192);

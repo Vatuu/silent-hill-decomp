@@ -114,7 +114,7 @@ void func_800D21C4(void) // 0x800D21C4
 
         if (i != ARRAY_SIZE(g_SysWork.npcs_1A0))
         {
-            g_DeltaTime0 = Q12(0.0f);
+            g_DeltaTime = Q12(0.0f);
         }
 
         switch (g_SysWork.sysStateStep_C[0])
@@ -419,7 +419,7 @@ void func_800D2668(void) // 0x800D2668
 
     if (D_800D5A4E != Q12(0.0f))
     {
-        D_800D5A4E += g_DeltaTime0 >> 1;
+        D_800D5A4E += g_DeltaTime >> 1;
         if (D_800D5A4E > Q12(1.0f))
         {
             D_800D5A4E = Q12(1.0f);
@@ -432,7 +432,7 @@ void func_800D2668(void) // 0x800D2668
         {
             if (D_800D5A48[i] != 0)
             {
-                D_800D5A48[i] -= g_DeltaTime0;
+                D_800D5A48[i] -= g_DeltaTime;
 
                 if ((D_800D5A48[i] << 16) <= 0)
                 {

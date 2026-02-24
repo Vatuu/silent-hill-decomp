@@ -626,7 +626,7 @@ void func_800D2674(void) // 0x800D2674
 
         case 5:
         case 6:
-            moveAmt                                     = Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.14f);
+            moveAmt                                          = Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.14f);
             g_SysWork.playerWork_4C.player_0.position_18.vz += moveAmt;
             g_WorldObject_Movaches.position_1C.vz      += moveAmt;
 
@@ -637,7 +637,7 @@ void func_800D2674(void) // 0x800D2674
                     SysWork_StateStepSet(0, 6);
                 }
 
-                D_800D3C44 = MIN(D_800D3C44 + (g_DeltaTime0 * 2), Q12(1.0f));
+                D_800D3C44 = MIN(D_800D3C44 + (g_DeltaTime * 2), Q12(1.0f));
             }
             else
             {
@@ -649,8 +649,8 @@ void func_800D2674(void) // 0x800D2674
                     g_WorldObject_Movaches.position_1C.vz      -= moveAmt;
                 }
 
-                // `D_800D3C44 = MAX(D_800D3C44 - (g_DeltaTime0 * 2), 0);`?
-                D_800D3C44 = (D_800D3C44 - (g_DeltaTime0 * 2)) >= 0 ? (D_800D3C44 - ((u16)g_DeltaTime0 * 2)) : 0;
+                // `D_800D3C44 = MAX(D_800D3C44 - (g_DeltaTime * 2), 0);`?
+                D_800D3C44 = (D_800D3C44 - (g_DeltaTime * 2)) >= 0 ? (D_800D3C44 - ((u16)g_DeltaTime * 2)) : 0;
 
                 SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             }

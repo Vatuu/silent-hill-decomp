@@ -549,7 +549,7 @@ void func_800EB6B0(void) // 0x800EB6B0
         }
     }
 
-    D_800EFC7C += g_DeltaTime0;
+    D_800EFC7C += g_DeltaTime;
     if (newPosComp < Q12(0.0f))
     {
         newPosComp = Q12(0.0f);
@@ -884,11 +884,11 @@ void func_800EC42C(void) // 0x800EC42C
     sin1 = Math_Sin(tmp0 >> 3);
     tmp1 = ((sin0 * 2) + sin1) + Math_Sin(Math_Cos(tmp0 >> 4));
     pitch = tmp1 >> 8;
-    D_800F0360 += g_DeltaTime0;
+    D_800F0360 += g_DeltaTime;
 
     if (g_SysWork.sysStateStep_C[0] >= 10)
     {
-        D_800F035E -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.5f));
+        D_800F035E -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.5f));
         if (D_800F035E < 0)
         {
             D_800F035E = 0;
@@ -898,7 +898,7 @@ void func_800EC42C(void) // 0x800EC42C
     }
     else if (g_SysWork.sysStateStep_C[0] > 0)
     {
-        D_800F035E += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f));
+        D_800F035E += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.25f));
         if (D_800F035E > Q12(0.9961f))
         {
             D_800F035E = Q12(0.9961f);
@@ -976,7 +976,7 @@ void func_800EC42C(void) // 0x800EC42C
             break;
 
         case 9:
-            g_SysWork.field_28 += g_DeltaTime0;
+            g_SysWork.field_28 += g_DeltaTime;
 
             switch (g_SysWork.field_28 / Q12(0.1f))
             {
@@ -1093,8 +1093,8 @@ void func_800EC42C(void) // 0x800EC42C
                     break;
             }
 
-            D_800F0180.vy += Q12_MULT_PRECISE(g_DeltaTime0, mulX * 4);
-            D_800F0180.vz += Q12_MULT_PRECISE(g_DeltaTime0, mulZ * 4);
+            D_800F0180.vy += Q12_MULT_PRECISE(g_DeltaTime, mulX * 4);
+            D_800F0180.vz += Q12_MULT_PRECISE(g_DeltaTime, mulZ * 4);
 
             sharedFunc_800CE5D4_1_s03(&D_800F0180, Q12(0.5f), Q12(0.05f), 0);
             break;

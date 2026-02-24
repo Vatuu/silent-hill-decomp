@@ -136,11 +136,11 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
 
     if (sharedData_800DFB7C_0_s00[arg1].field_B != 0)
     {
-        temp_v0_9 = Q12_MULT_PRECISE(g_DeltaTime0, D_800C4418.field_0 >> 2);
+        temp_v0_9 = Q12_MULT_PRECISE(g_DeltaTime, D_800C4418.field_0 >> 2);
     }
     else
     {
-        temp_v0_9 = Q12_MULT_PRECISE(g_DeltaTime0, D_800C4418.field_0);
+        temp_v0_9 = Q12_MULT_PRECISE(g_DeltaTime, D_800C4418.field_0);
     }
 
     dir.vy = Q12_MULT(temp_v0_9, Math_Sin(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_2));
@@ -168,11 +168,11 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
     gte_SetRotMatrix(&ptr->field_0.field_C);
     gte_SetTransMatrix(&ptr->field_0.field_C);
 
-    sharedData_800DFB7C_0_s00[arg1].field_10.s_0.field_0 = CLAMP_LOW(sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_0 - g_DeltaTime0, 0);
+    sharedData_800DFB7C_0_s00[arg1].field_10.s_0.field_0 = CLAMP_LOW(sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_0 - g_DeltaTime, 0);
 
     if (sharedData_800DFB7C_0_s00[arg1].field_B != 0)
     {
-        sharedData_800DFB7C_0_s00[arg1].field_10.s_0.field_2 = CLAMP_LOW(sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_2 - (g_DeltaTime0 << 2), 0);
+        sharedData_800DFB7C_0_s00[arg1].field_10.s_0.field_2 = CLAMP_LOW(sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_2 - (g_DeltaTime << 2), 0);
     }
     else if (ray.hasHit_0 || coll.groundHeight_0 < sharedData_800DFB7C_0_s00[arg1].vy_8)
     {

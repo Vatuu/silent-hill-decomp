@@ -25,14 +25,14 @@ bool sharedFunc_800CBF74_1_s05(POLY_FT4** poly, s32 idx)
 
     temp_v0 = Q12_MULT(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2, Math_Sin(sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0));
 
-    sharedData_800DFB7C_0_s00[idx].vy_8         += Q12_MULT_PRECISE(g_DeltaTime0, sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0);
-    sharedData_800DFB7C_0_s00[idx].field_0.vx_0 += Q12_MULT_PRECISE(g_DeltaTime0, temp_v0);
+    sharedData_800DFB7C_0_s00[idx].vy_8         += Q12_MULT_PRECISE(g_DeltaTime, sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0);
+    sharedData_800DFB7C_0_s00[idx].field_0.vx_0 += Q12_MULT_PRECISE(g_DeltaTime, temp_v0);
 
     temp_v0_2 = Q12_MULT(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2, Math_Cos(sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0));
 
-    sharedData_800DFB7C_0_s00[idx].field_4.vz_4        += Q12_MULT_PRECISE(g_DeltaTime0, temp_v0_2);
-    sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 += g_DeltaTime2 >> 1;
-    sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2  = CLAMP_LOW(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 - Q12_MULT_PRECISE(g_DeltaTime0, 0x800), 0);
+    sharedData_800DFB7C_0_s00[idx].field_4.vz_4        += Q12_MULT_PRECISE(g_DeltaTime, temp_v0_2);
+    sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 += g_GravitySpeed >> 1;
+    sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2  = CLAMP_LOW(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 - Q12_MULT_PRECISE(g_DeltaTime, 0x800), 0);
 
     Collision_Get(&ptr->field_12C, sharedData_800DFB7C_0_s00[idx].field_0.vx_0, sharedData_800DFB7C_0_s00[idx].field_4.vz_4);
 

@@ -65,7 +65,7 @@ void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOO
         D_800EDA00 = 0;
     }
 
-    D_800EDA00 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 10.0f);
+    D_800EDA00 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 10.0f);
     var_a2 = FP_TO(D_800EDA00, Q12_SHIFT) / Q12(80.0f);
 
     temp_s0 = var_a2;
@@ -152,7 +152,7 @@ void func_800D5E78(void) // 0x800D5E78
     {
         if (*ptr > 0)
         {
-            *ptr -= g_DeltaTime0;
+            *ptr -= g_DeltaTime;
         }
     }
 }
@@ -260,7 +260,7 @@ void func_800D60E4(void) // 0x800D60E4
         }
         else
         {
-            ptr->field_34 -= g_DeltaTime0;
+            ptr->field_34 -= g_DeltaTime;
         }
     }
 }
@@ -490,7 +490,7 @@ void func_800D6788(void) // 0x800D6788
 
     if (buf->field_A5C > 0)
     {
-        buf->field_A5C -= g_DeltaTime0;
+        buf->field_A5C -= g_DeltaTime;
         return;
     }
 
@@ -1017,14 +1017,14 @@ void func_800D75D0(void) // 0x800D75D0
                 RotTransPers(&sp10, &sp18[0], &sp18[1], &sp20);
                 func_800D74F4(sp18[0].vx, sp18[0].vy, ptr->field_28);
 
-                ptr->field_0.vx += Q12_MULT_PRECISE(ptr->field_10.vx, g_DeltaTime0);
-                ptr->field_0.vy += Q12_MULT_PRECISE(ptr->field_10.vy, g_DeltaTime0);
-                ptr->field_0.vz += Q12_MULT_PRECISE(ptr->field_10.vz, g_DeltaTime0);
+                ptr->field_0.vx += Q12_MULT_PRECISE(ptr->field_10.vx, g_DeltaTime);
+                ptr->field_0.vy += Q12_MULT_PRECISE(ptr->field_10.vy, g_DeltaTime);
+                ptr->field_0.vz += Q12_MULT_PRECISE(ptr->field_10.vz, g_DeltaTime);
 
-                ptr->field_28 -= Q12_MULT_PRECISE(g_DeltaTime0, 0x1000);
+                ptr->field_28 -= Q12_MULT_PRECISE(g_DeltaTime, 0x1000);
                 ptr->field_28  = MAX(ptr->field_28, 0);
 
-                ptr->field_30 -= g_DeltaTime0;
+                ptr->field_30 -= g_DeltaTime;
 
                 if (ptr->field_30 < 0)
                 {
@@ -1033,7 +1033,7 @@ void func_800D75D0(void) // 0x800D75D0
             }
             else
             {
-                ptr->field_34 -= g_DeltaTime0;
+                ptr->field_34 -= g_DeltaTime;
             }
         }
     }
@@ -1641,7 +1641,7 @@ s_800F3D48_0* func_800D88E8(s_800F3D48* arg0) // 0x800D88E8
 
     if (arg0->field_4.field_0 <= 0)
     {
-        if (field8Value != 2 && g_DeltaTime0 != Q12(0.0f))
+        if (field8Value != 2 && g_DeltaTime != Q12(0.0f))
         {
             arg0->ptr_0           = &curPtr[1];
             arg0->field_4.field_0 = curPtr[1].field_0;
@@ -1911,9 +1911,9 @@ void func_800D90C8(void) // 0x800D90C8
 
 void func_800D9114(s_800F3D48* arg0) // 0x800D9114
 {
-    arg0->field_4.field_18.vz += Q12_MULT_PRECISE(arg0->field_4.field_8, g_DeltaTime0);
+    arg0->field_4.field_18.vz += Q12_MULT_PRECISE(arg0->field_4.field_8, g_DeltaTime);
 
-    if (g_DeltaTime0 != Q12(0.0f))
+    if (g_DeltaTime != Q12(0.0f))
     {
         arg0->field_4.field_3C -= arg0->field_4.field_40;
         arg0->field_4.field_3C  = MAX(0, arg0->field_4.field_3C);
@@ -2084,9 +2084,9 @@ s_800F3D48_0* func_800D95D4(s_800F3D48* arg0) // 0x800D95D4
 {
     s_800F3D48_0* result;
 
-    arg0->field_4.field_18.vx += Q12_MULT_PRECISE(arg0->field_4.field_28.vx, g_DeltaTime0);
-    arg0->field_4.field_18.vy += Q12_MULT_PRECISE(arg0->field_4.field_28.vy, g_DeltaTime0);
-    arg0->field_4.field_18.vz += Q12_MULT_PRECISE(arg0->field_4.field_28.vz, g_DeltaTime0);
+    arg0->field_4.field_18.vx += Q12_MULT_PRECISE(arg0->field_4.field_28.vx, g_DeltaTime);
+    arg0->field_4.field_18.vy += Q12_MULT_PRECISE(arg0->field_4.field_28.vy, g_DeltaTime);
+    arg0->field_4.field_18.vz += Q12_MULT_PRECISE(arg0->field_4.field_28.vz, g_DeltaTime);
 
     result = func_800D88E8(arg0);
 
@@ -2107,9 +2107,9 @@ s_800F3D48_0* func_800D9740(s_800F3D48* arg0) // 0x800D9740
 {
     s_800F3D48_0* ptr;
 
-    arg0->field_4.field_18.vx += Q12_MULT_PRECISE(arg0->field_4.field_28.vx, g_DeltaTime0);
-    arg0->field_4.field_18.vy += Q12_MULT_PRECISE(arg0->field_4.field_28.vy, g_DeltaTime0);
-    arg0->field_4.field_18.vz += Q12_MULT_PRECISE(arg0->field_4.field_28.vz, g_DeltaTime0);
+    arg0->field_4.field_18.vx += Q12_MULT_PRECISE(arg0->field_4.field_28.vx, g_DeltaTime);
+    arg0->field_4.field_18.vy += Q12_MULT_PRECISE(arg0->field_4.field_28.vy, g_DeltaTime);
+    arg0->field_4.field_18.vz += Q12_MULT_PRECISE(arg0->field_4.field_28.vz, g_DeltaTime);
 
     ptr = func_800D88E8(arg0);
 
@@ -2290,7 +2290,7 @@ s_800F3D48_0* func_800D9C20(s_800F3D48* arg0) // 0x800D9C20
             break;
     }
 
-    arg0->field_4.field_10 -= g_DeltaTime0;
+    arg0->field_4.field_10 -= g_DeltaTime;
     return ret;
 }
 
@@ -2314,9 +2314,9 @@ s_800F3D48_0* func_800D9DF8(s_800F3D48* arg0) // 0x800D9DF8
             sp20.vy = Q12_TO_Q8(arg0->field_4.field_18.vy);
             sp20.vz = Q12_TO_Q8(arg0->field_4.field_18.vz);
 
-            arg0->field_4.field_18.vx += Q12_MULT_PRECISE(arg0->field_4.field_28.vx, g_DeltaTime0);
-            arg0->field_4.field_18.vy += Q12_MULT_PRECISE(arg0->field_4.field_28.vy, g_DeltaTime0);
-            arg0->field_4.field_18.vz += Q12_MULT_PRECISE(arg0->field_4.field_28.vz, g_DeltaTime0);
+            arg0->field_4.field_18.vx += Q12_MULT_PRECISE(arg0->field_4.field_28.vx, g_DeltaTime);
+            arg0->field_4.field_18.vy += Q12_MULT_PRECISE(arg0->field_4.field_28.vy, g_DeltaTime);
+            arg0->field_4.field_18.vz += Q12_MULT_PRECISE(arg0->field_4.field_28.vz, g_DeltaTime);
 
             if (arg0->field_4.field_18.vy > Q12(5.0f))
             {
@@ -2363,7 +2363,7 @@ s_800F3D48_0* func_800D9DF8(s_800F3D48* arg0) // 0x800D9DF8
             break;
     }
 
-    arg0->field_4.field_10 -= g_DeltaTime0;
+    arg0->field_4.field_10 -= g_DeltaTime;
     return ret;
 }
 
@@ -2431,7 +2431,7 @@ q19_12 func_800DA178(q19_12 arg0, q19_12 arg1, q19_12 arg2, q19_12 arg3, q19_12 
     }
     else
     {
-        arg0 = Q12_MULT_PRECISE(arg0, g_DeltaTime0);
+        arg0 = Q12_MULT_PRECISE(arg0, g_DeltaTime);
     }
     return arg0;
 }
@@ -2621,7 +2621,7 @@ s_800F3D48_0* func_800DA884(s_800F3D48* arg0) // 0x800DA884
             }
             else
             {
-                arg0->field_4.field_10 -= g_DeltaTime0;
+                arg0->field_4.field_10 -= g_DeltaTime;
             }
             break;
 
@@ -2633,9 +2633,9 @@ s_800F3D48_0* func_800DA884(s_800F3D48* arg0) // 0x800DA884
 
             arg0->field_4.field_10--;
 
-            arg0->field_4.field_18.vx += Q12_MULT_PRECISE(arg0->field_4.field_28.vx, g_DeltaTime0);
-            arg0->field_4.field_18.vy += Q12_MULT_PRECISE(arg0->field_4.field_28.vy, g_DeltaTime0);
-            arg0->field_4.field_18.vz += Q12_MULT_PRECISE(arg0->field_4.field_28.vz, g_DeltaTime0);
+            arg0->field_4.field_18.vx += Q12_MULT_PRECISE(arg0->field_4.field_28.vx, g_DeltaTime);
+            arg0->field_4.field_18.vy += Q12_MULT_PRECISE(arg0->field_4.field_28.vy, g_DeltaTime);
+            arg0->field_4.field_18.vz += Q12_MULT_PRECISE(arg0->field_4.field_28.vz, g_DeltaTime);
 
             result = func_800D88E8(arg0);
             if (arg0->ptr_0->field_8 == 2)
@@ -2956,13 +2956,13 @@ void func_800DB608(void) // 0x800DB608
 
     ptr = &D_800F48A8;
 
-    if (g_DeltaTime0 != Q12(0.0f))
+    if (g_DeltaTime != Q12(0.0f))
     {
         speed = (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy) ? Q12(0.2f) : Q12(0.7f);
 
         // Velocity value based on previously saved player position?
-        ptr->velocityX_3C      = ((g_SysWork.playerWork_4C.player_0.position_18.vx - ptr->playerPosition_30.vx) * speed) / g_DeltaTime0;
-        ptr->velocityZ_40      = ((g_SysWork.playerWork_4C.player_0.position_18.vz - ptr->playerPosition_30.vz) * speed) / g_DeltaTime0;
+        ptr->velocityX_3C      = ((g_SysWork.playerWork_4C.player_0.position_18.vx - ptr->playerPosition_30.vx) * speed) / g_DeltaTime;
+        ptr->velocityZ_40      = ((g_SysWork.playerWork_4C.player_0.position_18.vz - ptr->playerPosition_30.vz) * speed) / g_DeltaTime;
         ptr->playerPosition_30 = g_SysWork.playerWork_4C.player_0.position_18;
     }
     else
@@ -3196,7 +3196,7 @@ void func_800DBBA0(void) // 0x800DBBA0
     q19_12 deltaTime;
     s32    i;
 
-    deltaTime = g_DeltaTime0;
+    deltaTime = g_DeltaTime;
     for (i = 0; i < ARRAY_SIZE(D_800F3D98); i++)
     {
         D_800F3D98[i] += deltaTime;
@@ -3377,7 +3377,7 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
         sp10.vz = Q8(0.0f);
 
         if (arg0->field_4E8 == 0 && func_800DBCA4(var_s7, &sp20) &&
-            g_DeltaTime0 != Q12(0.0f) && ptr->field_44 == 0)
+            g_DeltaTime != Q12(0.0f) && ptr->field_44 == 0)
         {
             if (ptr->field_48 != 2)
             {
@@ -3448,7 +3448,7 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
         poly->tpage = 53;
         poly->clut  = sp4C;
 
-        if (g_DeltaTime0 != Q12(0.0f))
+        if (g_DeltaTime != Q12(0.0f))
         {
             *var_s3 -= sp38;
         }
@@ -3545,7 +3545,7 @@ void func_800DC544(GsOT_TAG* ot) // 0x800DC544
             }
 
             func_800DBD94(ptr, ot);
-            ptr->timer_8 -= g_DeltaTime0;
+            ptr->timer_8 -= g_DeltaTime;
         }
         else
         {
@@ -3554,7 +3554,7 @@ void func_800DC544(GsOT_TAG* ot) // 0x800DC544
         }
     }
 
-    D_800F3DB4 += g_DeltaTime0;
+    D_800F3DB4 += g_DeltaTime;
 
     func_800DBBA0();
 }
@@ -4466,7 +4466,7 @@ void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
 
         if (!func_8004C328(false))
         {
-            incubusProps.bossFightTimer_F4 -= g_DeltaTime0;
+            incubusProps.bossFightTimer_F4 -= g_DeltaTime;
         }
 
         if (!(incubus->flags_3E & CharaFlag_Unk3))
@@ -4512,7 +4512,7 @@ void func_800DDCC4(s_SubCharacter* incubus) // 0x800DDCC4
     if (var_v0 > Q12_ANGLE(10.0f))
     {
         var_v0_2 = Q12_ANGLE(120.0f);
-        tmp      = Q12_MULT_PRECISE(g_DeltaTime0, var_v0_2);
+        tmp      = Q12_MULT_PRECISE(g_DeltaTime, var_v0_2);
         if (temp_v0 > 0)
         {
             incubus->rotation_24.vy += tmp;
@@ -4584,7 +4584,7 @@ void func_800DDDD8(s_SubCharacter* incubus) // 0x800DDDD8
         incubus->model_0.stateStep_3    = 0;
     }
 
-    localIncubus->properties_E4.incubus.timer_E8 += g_DeltaTime0;
+    localIncubus->properties_E4.incubus.timer_E8 += g_DeltaTime;
 }
 
 void func_800DDEEC(s_SubCharacter* incubus) // 0x800DDEEC
@@ -4647,7 +4647,7 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDF3C
                     incubus->model_0.stateStep_3++;
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -4684,7 +4684,7 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDF3C
                     break;
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -4713,7 +4713,7 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDF3C
                     localIncubus->properties_E4.incubus.timer_E8 = Q12(2.0f);
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -4740,7 +4740,7 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDF3C
                     incubus->model_0.stateStep_3++;
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -4802,7 +4802,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
                     incubus->model_0.stateStep_3++;
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -4840,7 +4840,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
                     break;
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -4877,7 +4877,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
                     }
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -4904,7 +4904,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
                     incubus->model_0.stateStep_3++;
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -4959,7 +4959,7 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
                     incubus->model_0.stateStep_3++;
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -4995,7 +4995,7 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
                     incubus->model_0.stateStep_3++;
                     break;
                 }
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -5030,7 +5030,7 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
                     localIncubus->properties_E4.incubus.timer_E8 = Q12(2.0f);
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -5063,7 +5063,7 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
                     incubus->model_0.stateStep_3++;
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -5126,7 +5126,7 @@ void func_800DEAF4(s_SubCharacter* incubus) // 0x800DEAF4
             break;
     }
 
-    incubusProps.timer_E8 -= g_DeltaTime0;
+    incubusProps.timer_E8 -= g_DeltaTime;
 }
 
 void func_800DEBA8(s_SubCharacter* incubus) // 0x800DEBA8
@@ -5152,7 +5152,7 @@ void func_800DEBA8(s_SubCharacter* incubus) // 0x800DEBA8
             incubus->model_0.stateStep_3    = IncubusStateStep_0;
         }
 
-        localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+        localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
     }
 }
 
@@ -5254,7 +5254,7 @@ void func_800DEE44(s_SubCharacter* incubus) // 0x800DEE44
 {
     s_800C4590 sp10;
 
-    incubus->fallSpeed_34 += g_DeltaTime2;
+    incubus->fallSpeed_34 += g_GravitySpeed;
 
     func_8005C944(incubus, &sp10);
 
@@ -5357,7 +5357,7 @@ void Ai_Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINAT
     if ((incubus->model_0.controlState_2 != IncubusControl_0 || Ai_Incubus_Init(incubus, coords)) &&
         incubus->model_0.controlState_2 != IncubusControl_1)
     {
-        if (g_DeltaTime0 != Q12(0.0f))
+        if (g_DeltaTime != Q12(0.0f))
         {
             func_800DDBBC(incubus);
             func_800DEC74(incubus, coords);
@@ -5699,7 +5699,7 @@ void func_800DF944(void) // 0x800DF944
             func_800DF84C(&ptr->field_4, ptr->field_588);
             ptr->field_584 = func_800DF90C();
 
-            if (g_DeltaTime0 != Q12(0.0f))
+            if (g_DeltaTime != Q12(0.0f))
             {
                 func_800DF348();
                 func_800DF750();
@@ -5707,7 +5707,7 @@ void func_800DF944(void) // 0x800DF944
 
             func_800DF458();
 
-            D_800F3DB8 += g_DeltaTime0;
+            D_800F3DB8 += g_DeltaTime;
             if (D_800F3DB8 > Q12(1.5f))
             {
                 D_800F3DB8 = 0;
@@ -5859,7 +5859,7 @@ void func_800DFCE4(s_SubCharacter* chara) // 0x800DFCE4
 
         if (!func_8004C328(false))
         {
-            chara->properties_E4.dummy.properties_E8[3].val32 -= g_DeltaTime0;
+            chara->properties_E4.dummy.properties_E8[3].val32 -= g_DeltaTime;
         }
 
         if (!(chara->flags_3E & CharaFlag_Unk3))
@@ -5901,7 +5901,7 @@ void func_800DFE10(s_SubCharacter* chara) // 0x800DFE10
     if (var_v0 > Q12_ANGLE(10.0f))
     {
         var_v0_2 = Q12_ANGLE(90.0f);
-        tmp      = Q12_MULT_PRECISE(g_DeltaTime0, var_v0_2);
+        tmp      = Q12_MULT_PRECISE(g_DeltaTime, var_v0_2);
         if (temp_v0 > 0)
         {
             chara->rotation_24.vy += tmp;
@@ -6007,7 +6007,7 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
                     chara->model_0.stateStep_3++;
                 }
 
-                localChara->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+                localChara->properties_E4.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -6059,7 +6059,7 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
                     break;
                 }
 
-                localChara->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+                localChara->properties_E4.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -6115,7 +6115,7 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
                     }
                 }
 
-                localChara->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+                localChara->properties_E4.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -6152,7 +6152,7 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
                     chara->model_0.stateStep_3++;
                 }
 
-                localChara->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+                localChara->properties_E4.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -6208,7 +6208,7 @@ void func_800E0528(s_SubCharacter* chara) // 0x800E0528
             break;
     }
 
-    chara->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+    chara->properties_E4.incubus.timer_E8 -= g_DeltaTime;
 }
 
 void func_800E05DC(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E05DC
@@ -6263,7 +6263,7 @@ void func_800E0728(s_SubCharacter* chara) // 0x800E0728
 {
     s_800C4590 sp10;
 
-    chara->fallSpeed_34 += g_DeltaTime2;
+    chara->fallSpeed_34 += g_GravitySpeed;
     func_8005C944(chara, &sp10);
     chara->rotation_24.vy = func_8005BF38(chara->rotation_24.vy);
 }
@@ -6346,7 +6346,7 @@ void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINAT
 
     if (chara->model_0.controlState_2 != 1)
     {
-        if (g_DeltaTime0 != Q12(0.0f))
+        if (g_DeltaTime != Q12(0.0f))
         {
             func_800DFCE4(chara);
             func_800E05DC(chara, coords);
@@ -6900,8 +6900,8 @@ void func_800E1854(void) // 0x800E1854
     func_800E24A0(&D_800F4B40.field_1C[0]);
     func_800E24A0(&D_800F4B40.field_1C[1]);
 
-    D_800F4B40.timer_8  += g_DeltaTime0;
-    D_800F4B40.timer_10 += g_DeltaTime0;
+    D_800F4B40.timer_8  += g_DeltaTime;
+    D_800F4B40.timer_10 += g_DeltaTime;
 }
 
 void func_800E1FE0(s_func_800E1FE0* arg0) // 0x800E1FE0
@@ -6948,7 +6948,7 @@ void func_800E20A4(s_800F4B40_1C* arg0, s_800F4B40_A4* arg1, s_800F4B40_1C* arg2
     }
 
     arg1->now_spd_0 = vwRetNewVelocityToTargetVal(arg1->now_spd_0, arg0->pos_10, arg2->pos_10, Q12(0.586f), arg2->total_max_spd_18, Q12(1.9532f));
-    arg0->pos_10   += Q12_MULT_PRECISE(arg1->now_spd_0, g_DeltaTime0);
+    arg0->pos_10   += Q12_MULT_PRECISE(arg1->now_spd_0, g_DeltaTime);
 
     // TODO: Rename the struct fields `field_8` etc passed here to match `func_800E22AC` param names.
     func_800E22AC(arg0->vec_0, &arg0->field_4, &arg1->field_8, &arg1->field_6, arg2->vec_0, arg2->field_4, arg3->vec_0, arg3->field_4, arg2->field_1C);
@@ -6958,7 +6958,7 @@ void func_800E20A4(s_800F4B40_1C* arg0, s_800F4B40_A4* arg1, s_800F4B40_1C* arg2
 void func_800E22AC(VECTOR3* arg0, s32* arg1, s16* mv_pos, s16* now_spd, VECTOR3* arg4, s32 arg5, VECTOR3* arg6, s32 arg7, s16 total_max_spd) // 0x800E22AC
 {
     *now_spd = vwRetNewVelocityToTargetVal(*now_spd, *mv_pos, Q12(1.0f), Q12(2.0f), total_max_spd, Q12(10.0f));
-    *mv_pos += Q12_MULT_PRECISE(*now_spd, g_DeltaTime0);
+    *mv_pos += Q12_MULT_PRECISE(*now_spd, g_DeltaTime);
     *arg1    = arg7 + Q12_MULT(*mv_pos, (arg5 - arg7));
 
     arg0->vx = arg6->vx + Q12_MULT(*mv_pos, (arg4->vx - arg6->vx));
@@ -6973,7 +6973,7 @@ q19_12 func_800E2444(q19_12 dampingRate, q19_12 current, q19_12 target) // 0x800
     q19_12 result;
 
     delta = current - target;
-    step  = Q12_MULT_PRECISE(dampingRate, g_DeltaTime0);
+    step  = Q12_MULT_PRECISE(dampingRate, g_DeltaTime);
     if (step < delta)
     {
         result = current - step;
@@ -7083,7 +7083,7 @@ void func_800E27D0(s32 arg0, s16 arg1, s32 arg2, VECTOR3* pos) // 0x800E27D0
 
 q3_12 func_800E28F4(void) // 0x800E28F4
 {
-    if (g_DeltaTime0 != Q12(0.0f))
+    if (g_DeltaTime != Q12(0.0f))
     {
         D_800ED73C = ((s32)(D_800ED740 * 0x7169AC35) >> 3) ^ 0xA547B39E;
         D_800ED740 = ((u32)(D_800ED73C * 0x892D719C) >> 3) ^ 0xC65A4B97;
@@ -8474,8 +8474,8 @@ void func_800E514C(void) // 0x800E514C
         case 49:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(418.0f), Q12(498.0f), true, true);
 
-            g_SysWork.field_28             += g_DeltaTime0;
-            g_SysWork.npcs_1A0[5].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.0625f, 12);
+            g_SysWork.field_28             += g_DeltaTime;
+            g_SysWork.npcs_1A0[5].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.0625f, 12);
 
             if (g_SysWork.field_28 > Q12(0.3f))
             {
@@ -8684,7 +8684,7 @@ void func_800E62CC(void) // 0x800E62CC
         case 8:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(176.0f), Q12(253.0f), true, true);
 
-            g_SysWork.npcs_1A0[2].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.15f, 12);
+            g_SysWork.npcs_1A0[2].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.15f, 12);
             if (g_SysWork.npcs_1A0[2].timer_C6 > Q12(1.0f))
             {
                 g_SysWork.npcs_1A0[2].timer_C6 = Q12(1.0f);
@@ -8714,7 +8714,7 @@ void func_800E62CC(void) // 0x800E62CC
         case 10:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(254.0f), Q12(314.0f), true, true);
 
-            g_SysWork.npcs_1A0[5].timer_C6 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.25f);
+            g_SysWork.npcs_1A0[5].timer_C6 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
             if (g_SysWork.npcs_1A0[5].timer_C6 < 0)
             {
                 g_SysWork.npcs_1A0[5].timer_C6 = 0;
@@ -9143,7 +9143,7 @@ void func_800E7380(void) // 0x800E7380
         case 6:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(12.0f), Q12(145.0f), Q12(201.0f), true, true);
 
-            g_SysWork.npcs_1A0[4].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.25f);
+            g_SysWork.npcs_1A0[4].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
             if (g_SysWork.npcs_1A0[4].timer_C6 > Q12(1.0f))
             {
                 g_SysWork.npcs_1A0[4].timer_C6 = Q12(1.0f);
@@ -9426,12 +9426,12 @@ void func_800E787C(void) // 0x800E787C
 
         case 21:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(155.0f), Q12(224.0f), true, true);
-            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 3.0f);
+            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 3.0f);
             break;
 
         case 22:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
-            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 3.0f);
+            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 3.0f);
             break;
 
         case 23:
@@ -9520,7 +9520,7 @@ void func_800E787C(void) // 0x800E787C
 
         case 32:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(225.0f), Q12(259.0f), true, true);
-            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 10.0f);
+            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 10.0f);
             if (D_800F483C > Q12(100.0f))
             {
                 D_800F483C = Q12(100.0f);
@@ -9530,7 +9530,7 @@ void func_800E787C(void) // 0x800E787C
         case 33:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(260.0f), Q12(325.0f), false, true);
 
-            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 10.0f);
+            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 10.0f);
             if (D_800F483C > Q12(100.0f))
             {
                 D_800F483C = Q12(100.0f);
@@ -9728,7 +9728,7 @@ void func_800E86BC(void) // 0x800E86BC
 
         case 9:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(161.0f), Q12(291.0f), true, true);
-            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 10.0f);
+            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 10.0f);
             if (D_800F483C > Q12(100.0f))
             {
                 D_800F483C = Q12(100.0f);
@@ -10130,7 +10130,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E972C
         *(s16*)&(g_WorldObject_Bin.rotation_28.vz) = 0;
 
         WorldGfx_ObjectAdd(&g_WorldObject_Bin.object_0, &g_WorldObject_Bin.position_1C, &g_WorldObject_Bin.rotation_28);
-        D_800F482C -= (FP_TO(g_DeltaTime0, Q12_SHIFT) / Q12(3.6f));
+        D_800F482C -= (FP_TO(g_DeltaTime, Q12_SHIFT) / Q12(3.6f));
     }
 
     if (D_800F4811)
@@ -10191,7 +10191,7 @@ void func_800E98EC(void) // 0x800E98EC
 
     if (D_800F4819 != 2)
     {
-        D_800F48A4 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(2.67f));
+        D_800F48A4 += Q12_MULT_PRECISE(g_DeltaTime, Q12(2.67f));
     }
 
     if (D_800F48A4 > Q12(20.0f))

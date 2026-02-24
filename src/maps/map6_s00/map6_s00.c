@@ -238,7 +238,7 @@ void func_800EB11C(void) // 0x800EB11C
 
         case 12:
             SysWork_StateStepIncrementAfterTime(&D_800F0040, Q12(4.0f), Q12(48.0f), Q12(57.0f), true, true);
-            D_800F0044 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 1.0f);
+            D_800F0044 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.0f);
             break;
 
         case 13:
@@ -250,12 +250,12 @@ void func_800EB11C(void) // 0x800EB11C
 
         case 15:
             SysWork_StateStepIncrementAfterTime(&D_800F0040, Q12(4.0f), Q12(58.0f), Q12(67.0f), true, true);
-            D_800F0044 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.7f);
+            D_800F0044 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.7f);
             break;
 
         case 16:
             SysWork_StateStepIncrementDelayed(Q12(2.2f), false);
-            D_800F0044 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.7f);
+            D_800F0044 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.7f);
             break;
 
         case 17:
@@ -267,7 +267,7 @@ void func_800EB11C(void) // 0x800EB11C
             MapMsg_DisplayAndHandleSelection(false, 19, 0, 0, 0, false);
             SysWork_StateStepIncrementAfterTime(&D_800F0040, Q12(2.5f), Q12(68.0f), Q12(143.0f), true, false);
 
-            D_800F0044 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.4f);
+            D_800F0044 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
             if (D_800F0044 > Q12(16.0f))
             {
                 D_800F0044 = Q12(16.0f);
@@ -305,7 +305,7 @@ void func_800EB11C(void) // 0x800EB11C
     {
         if (g_SysWork.sysStateStep_C[0] >= 2)
         {
-            D_800F0686 += g_DeltaTime0 >> 3;
+            D_800F0686 += g_DeltaTime >> 3;
         }
 
         if (D_800F0686 > Q12(1.0f))
@@ -329,7 +329,7 @@ void func_800EB11C(void) // 0x800EB11C
     }
     else if (g_SysWork.sysStateStep_C[0] >= 17 && g_SysWork.sysStateStep_C[0] < 20)
     {
-        D_800F0686 -= g_DeltaTime0 >> 3;
+        D_800F0686 -= g_DeltaTime >> 3;
         if (D_800F0686 < 0)
         {
             D_800F0686 = 0;

@@ -34,7 +34,7 @@ void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse)
 
     nurse->moveSpeed_38    = SquareRoot12(Q12_MULT_PRECISE(unkPosX, unkPosX) + Q12_MULT_PRECISE(unkPosZ, unkPosZ));
     nurse->headingAngle_3C = ratan2(unkPosX, unkPosZ);
-    nurse->fallSpeed_34   += g_DeltaTime2;
+    nurse->fallSpeed_34   += g_GravitySpeed;
 
     func_8005C944(nurse, &sp10);
 

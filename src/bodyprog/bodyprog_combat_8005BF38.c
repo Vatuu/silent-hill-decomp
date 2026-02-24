@@ -80,7 +80,7 @@ s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
     s32        ret;
 
     headingAngle = chara->headingAngle_3C;
-    temp_s0 = Q12_MULT_PRECISE(g_DeltaTime0, chara->moveSpeed_38);
+    temp_s0 = Q12_MULT_PRECISE(g_DeltaTime, chara->moveSpeed_38);
     temp_s2 = OVERFLOW_GUARD(temp_s0);
     temp_s3 = temp_s2 >> 1;
 
@@ -90,7 +90,7 @@ s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
 
     offset.vx = Q12_MULT_PRECISE(temp_s0_2, temp_v0) << temp_s2;
     offset.vz = Q12_MULT_PRECISE(temp_s0_2, Math_Cos(headingAngle) >> temp_s3) << temp_s2;
-    offset.vy = Q12_MULT_PRECISE(g_DeltaTime0, chara->fallSpeed_34);
+    offset.vy = Q12_MULT_PRECISE(g_DeltaTime, chara->fallSpeed_34);
 
     ret = func_80069B24(&sp10, &offset, chara);
 
@@ -127,7 +127,7 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, q3_12 offsetX, q3_12 
     s32        ret;
 
     headingAngle = chara->headingAngle_3C;
-    temp_s0 = Q12_MULT_PRECISE(g_DeltaTime0, chara->moveSpeed_38);
+    temp_s0 = Q12_MULT_PRECISE(g_DeltaTime, chara->moveSpeed_38);
     temp_s2 = OVERFLOW_GUARD(temp_s0);
     temp_s3 = temp_s2 >> 1;
 
@@ -141,7 +141,7 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, q3_12 offsetX, q3_12 
 
     sinHeadingAngle = chara->fallSpeed_34;
     offset.vx += offsetX;
-    offset.vy  = Q12_MULT_PRECISE(g_DeltaTime0, sinHeadingAngle);
+    offset.vy  = Q12_MULT_PRECISE(g_DeltaTime, sinHeadingAngle);
     offset.vz += offsetZ;
 
     ret = func_80069B24(&sp10, &offset, chara);

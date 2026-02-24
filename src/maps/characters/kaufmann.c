@@ -70,14 +70,14 @@ void Ai_Kaufmann_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
     unused       = chara->position_18;
     moveSpeed    = chara->moveSpeed_38;
     headingAngle = chara->headingAngle_3C;
-    moveAmt      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime0);
+    moveAmt      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
     offset.vx = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime0);
+    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime);
 
     chara->position_18.vx += offset.vx;
     chara->position_18.vy  = Q12(0.0f);
@@ -109,7 +109,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 0:
             if (dahliaProps.moveDistance_126)
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12(0.4f)) * 2;
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
                 if (dahliaProps.moveDistance_126 < Q12(0.0f))
                 {
                     dahliaProps.moveDistance_126 = Q12(0.0f);
@@ -123,7 +123,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 1:
             if (dahliaProps.moveDistance_126 > Q12(1.25f))
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12(0.5f));
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
                 if (dahliaProps.moveDistance_126 < Q12(1.25f))
                 {
                     dahliaProps.moveDistance_126 = Q12(1.25f);
@@ -131,7 +131,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             }
             else if (dahliaProps.moveDistance_126 < Q12(1.25f))
             {
-                dahliaProps.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12(0.4f));
+                dahliaProps.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                 dahliaProps.moveDistance_126  = CLAMP(dahliaProps.moveDistance_126, 0, Q12(1.25f));
             }
 
@@ -413,7 +413,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
     chara->rotation_24.vy  = Q12_ANGLE_ABS(chara->rotation_24.vy + (sharedData_800D5CF4_3_s00 >> 4));
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->moveSpeed_38    = dahliaProps.moveDistance_126;
-    chara->fallSpeed_34   += g_DeltaTime2;
+    chara->fallSpeed_34   += g_GravitySpeed;
 
     coords->flg = false;
     Math_RotMatrixZxyNegGte(&chara->rotation_24, &coords->coord);

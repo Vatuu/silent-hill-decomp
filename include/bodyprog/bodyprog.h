@@ -2365,7 +2365,7 @@ extern s8 pad_bss_800BCD81[3];
 
 /** Copy of delta timers.
  * Appears to be used as save of the delta timer currently used as some instances where 2D backgrounds
- * are drawn uses `g_DeltaTime1` while `g_DeltaTime0` is being stopped.
+ * are drawn uses `g_DeltaTimeRaw` while `g_DeltaTime` is being stopped.
  */
 extern s32 g_DeltaTimeCpy;
 

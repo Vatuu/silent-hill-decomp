@@ -112,7 +112,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
     var_t1    = chara->field_44.field_0;
     modelAnim = &chara->model_0.anim_4;
 
-    if (g_DeltaTime0 == Q12(0.0f) || g_SysWork.sysState_8 != SysState_Gameplay)
+    if (g_DeltaTime == Q12(0.0f) || g_SysWork.sysState_8 != SysState_Gameplay)
     {
         return NO_VALUE;
     }
@@ -439,7 +439,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
         return 0;
     }
 
-    if (g_DeltaTime0 != Q12(0.0f))
+    if (g_DeltaTime != Q12(0.0f))
     {
         if (sp28 >= sp2C)
         {
@@ -1065,7 +1065,7 @@ bool func_8008B474(s32 arg0, s32 vol, s32 soundType) // 0x8008B474
 
     cond = unkVol == Q12(0.0f);
 
-    if (g_DeltaTime0 == Q12(0.0f))
+    if (g_DeltaTime == Q12(0.0f))
     {
         vol = 0;
     }
@@ -1090,7 +1090,7 @@ bool func_8008B474(s32 arg0, s32 vol, s32 soundType) // 0x8008B474
     }
     else
     {
-        unkVol -= g_DeltaTime0 << 9;
+        unkVol -= g_DeltaTime << 9;
         if (unkVol < 0)
         {
             unkVol = 0;

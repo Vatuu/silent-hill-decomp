@@ -343,7 +343,7 @@ void func_800D5D90(void) // 0x800D5D90
         }
         else
         {
-            ptr->field_34 -= g_DeltaTime0;
+            ptr->field_34 -= g_DeltaTime;
         }
     }
 }
@@ -575,7 +575,7 @@ void func_800D6414(void) // 0x800D6414
 
     if (buf->field_D90 > 0)
     {
-        buf->field_D90 -= g_DeltaTime0;
+        buf->field_D90 -= g_DeltaTime;
         return;
     }
 
@@ -821,12 +821,12 @@ void func_800D6B00(void) // 0x800D6B00
             func_800D6490(&vec);
 
         case 14:
-            if (D_800DAB78 < Q12(1.5f) && (D_800DAB78 + g_DeltaTime0) > Q12(1.5f))
+            if (D_800DAB78 < Q12(1.5f) && (D_800DAB78 + g_DeltaTime) > Q12(1.5f))
             {
                 func_80085EB8(0u, &g_SysWork.playerWork_4C.player_0, 114, false);
             }
 
-            D_800DAB78 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.6f, 12);
+            D_800DAB78 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.6f, 12);
 
             if (D_800DAB78 > Q12(3.55f))
             {
@@ -922,7 +922,7 @@ void func_800D732C(void) // 0x800D732C
 
         case 1:
             // Move player.
-            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.4f);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
 
             SysWork_StateStepIncrementDelayed(Q12(3.8f), false);
             break;
@@ -931,7 +931,7 @@ void func_800D732C(void) // 0x800D732C
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
 
             // Move player.
-            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.4f);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
             break;
 
         default:
@@ -978,7 +978,7 @@ void func_800D75FC(void) // 0x800D75FC
             SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
             if (g_SysWork.sysStateStep_C[0] == 2)
             {
-                g_SysWork.field_28 += g_DeltaTime1;
+                g_SysWork.field_28 += g_DeltaTimeRaw;
                 if (g_SysWork.field_28 > Q12(1.0f))
                 {
                     SysWork_StateStepSet(0, 3);
@@ -1004,13 +1004,13 @@ void func_800D75FC(void) // 0x800D75FC
             SysWork_StateStepIncrement(0);
 
         case 4:
-            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, -0.4f, 12);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.4f, 12);
             SysWork_StateStepIncrementDelayed(Q12(3.8f), false);
             break;
 
         case 5:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
-            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, -0.4f, 12);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.4f, 12);
             break;
 
         default:
@@ -1050,7 +1050,7 @@ void func_800D7940(void) // 0x800D7940
 
             if (g_SysWork.sysStateStep_C[0] == 2)
             {
-                g_SysWork.field_28 += g_DeltaTime1;
+                g_SysWork.field_28 += g_DeltaTimeRaw;
                 if (g_SysWork.field_28 > Q12(1.0f))
                 {
                     SysWork_StateStepSet(0, 3);
@@ -1076,13 +1076,13 @@ void func_800D7940(void) // 0x800D7940
             SysWork_StateStepIncrement(0);
 
         case 4:
-            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.4f, 12);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.4f, 12);
             SysWork_StateStepIncrementDelayed(Q12(3.8f), false);
             break;
 
         case 5:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
-            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.4f, 12);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.4f, 12);
             break;
 
         default:
@@ -1139,13 +1139,13 @@ void func_800D7C84(void) // 0x800D7C84
             SysWork_StateStepIncrement(0);
 
         case 4:
-            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, -0.4f, 12);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.4f, 12);
             SysWork_StateStepIncrementDelayed(Q12(3.8f), false);
             break;
 
         case 5:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
-            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, -0.4f, 12);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.4f, 12);
             break;
 
         default:
@@ -1202,13 +1202,13 @@ void func_800D7F88(void) // 0x800D7F88
             SysWork_StateStepIncrement(0);
 
         case 4:
-            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.37f, 12);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.37f, 12);
             SysWork_StateStepIncrementDelayed(Q12(3.8f), false);
             break;
 
         case 5:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
-            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.4f, 12);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.4f, 12);
             break;
 
         default:

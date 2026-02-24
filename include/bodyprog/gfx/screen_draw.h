@@ -28,11 +28,18 @@ extern s32      g_VBlanks;
 extern s32      g_UncappedVBlanks;
 extern s32      pad_bss_800B5C3C;
 extern GsOT_TAG g_OtTags0[2][16];
-extern q19_12   g_DeltaTime0;
+
+/** Main gameplay timer. Code may pause gameplay by setting this to 0. Demos override this with the time from demo file to ensure demos are in sync. */
+extern q19_12   g_DeltaTime;
+
 extern GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
 extern s32      pad_bss_800B9CC4;
-extern q19_12   g_DeltaTime2;
-extern s32      g_MainLoop_FrameCount; // 0x800B9CCC
+
+/** Gravity speed for this tick. */
+extern q19_12   g_GravitySpeed;
+
+/** Number of ticks since game start. */
+extern s32      g_TickCount;
 
 // ==========
 // FUNCTIONS

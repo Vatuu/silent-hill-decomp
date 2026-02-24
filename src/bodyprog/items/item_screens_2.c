@@ -78,7 +78,7 @@ void Game_TimerUpdate(void) // 0x8004C8DC
     #define TIME_130_HOURS        Q12(130.0f * 60.0f * 60.0f)
     #define TIME_290_OVERFLOW_MAX 3 // `add290Hours_25C_1` has max value of 3.
 
-    g_SavegamePtr->gameplayTimer_250 += g_DeltaTime1;
+    g_SavegamePtr->gameplayTimer_250 += g_DeltaTimeRaw;
 
     if (g_SavegamePtr->gameplayTimer_250 >= TIME_290_HOURS)
     {

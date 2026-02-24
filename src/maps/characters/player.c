@@ -147,14 +147,14 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 
     moveSpeed    = chara->moveSpeed_38;
     headingAngle = chara->headingAngle_3C;
-    moveAmt      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime0);
+    moveAmt      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
     offset.vx = Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime0);
+    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime);
 
     if (cond)
     {
@@ -196,13 +196,13 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
         chara->fallSpeed_34 = Q12(0.0f);
     }
 
-    if (g_DeltaTime0 == Q12(0.0f))
+    if (g_DeltaTime == Q12(0.0f))
     {
         chara->rotationSpeed_2C.vy = Q12_ANGLE(0.0f);
     }
     else
     {
-        chara->rotationSpeed_2C.vy = FP_TO(sharedData_800E39D8_0_s00, 8) / g_DeltaTime0;
+        chara->rotationSpeed_2C.vy = FP_TO(sharedData_800E39D8_0_s00, 8) / g_DeltaTime;
     }
 
     coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
@@ -494,7 +494,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             Math_ShortestAngleGet(playerChara->rotation_24.vy, sharedData_800E39E2_0_s00, &playerRotDelta);
 
             // Turn toward.
-            angleStep = TIMESTEP_SCALE_30_FPS(g_DeltaTime0, (playerRotDelta < Q12_ANGLE(45.0f)) ? Q12_ANGLE(2.9f) : Q12_ANGLE(22.5f));
+            angleStep = TIMESTEP_SCALE_30_FPS(g_DeltaTime, (playerRotDelta < Q12_ANGLE(45.0f)) ? Q12_ANGLE(2.9f) : Q12_ANGLE(22.5f));
 
             if (ABS(playerRotDelta) < ANGLE_THRESHOLD)
             {
@@ -1009,7 +1009,7 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
 
     vec.vx = D_800C4610.vx - g_SysWork.playerWork_4C.player_0.position_18.vx;
     vec.vz = D_800C4610.vz - g_SysWork.playerWork_4C.player_0.position_18.vz;
-    vec.vy = Q12_MULT_PRECISE(g_SysWork.playerWork_4C.player_0.fallSpeed_34, g_DeltaTime0);
+    vec.vy = Q12_MULT_PRECISE(g_SysWork.playerWork_4C.player_0.fallSpeed_34, g_DeltaTime);
 
     func_80069B24(&D_800C4590, &vec, &g_SysWork.playerWork_4C.player_0);
 

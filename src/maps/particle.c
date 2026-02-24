@@ -60,7 +60,7 @@ void Particle_SystemUpdate(s32 unused, e_MapOverlayId mapOverlayId, s32 arg3)
             break;
 
         default:
-            sharedData_800DD584_0_s00 = g_DeltaTime0 == Q12(0.0f);
+            sharedData_800DD584_0_s00 = g_DeltaTime == Q12(0.0f);
 
             g_ParticleMapOverlayId1 = mapOverlayId;
 
@@ -352,9 +352,9 @@ void Particle_SystemUpdate(s32 arg1, e_MapOverlayId mapOverlayId, s32 arg3)
         default:
 #if defined(MAP7_S03)
             sharedData_800DD584_0_s00 = 0;
-            D_800F23D4               += g_DeltaTime0;
+            D_800F23D4               += g_DeltaTime;
 #else
-            sharedData_800DD584_0_s00 = g_DeltaTime0 == Q12(0.0f);
+            sharedData_800DD584_0_s00 = g_DeltaTime == Q12(0.0f);
 #endif
 
             func_8003EDB8(&sharedData_800E3258_0_s00, &sharedData_800E325C_0_s00);
@@ -1293,13 +1293,13 @@ bool Particle_Update(s_Particle* partHead)
             }
 
         #if defined(MAP7_S03)
-            D_800F23D0 = (g_DeltaTime0 * 10936) / Q12(1.0f);
+            D_800F23D0 = (g_DeltaTime * 10936) / Q12(1.0f);
         #endif
 
             if (sharedData_800DD584_0_s00 != 0)
             {
                 // NOTE: This function only has a body in `MAP07_S03` and everything else calls an empty function.
-                sharedFunc_800CE954_7_s03(pass, curPart, &rand, &g_DeltaTime0);
+                sharedFunc_800CE954_7_s03(pass, curPart, &rand, &g_DeltaTime);
             }
             else
             {
@@ -1314,7 +1314,7 @@ bool Particle_Update(s_Particle* partHead)
                         break;
 
                     case ParticleState_Active:
-                        Particle_MovementUpdate(pass, curPart, &rand, &g_DeltaTime0);
+                        Particle_MovementUpdate(pass, curPart, &rand, &g_DeltaTime);
                         break;
 
                     default: // `ParticleState_Rest`
@@ -1326,7 +1326,7 @@ bool Particle_Update(s_Particle* partHead)
                     #if MAP_PARTICLE_HAS_800D0690
                         else
                         {
-                            sharedFunc_800D0690_1_s03(pass, curPart, &rand, &g_DeltaTime0);
+                            sharedFunc_800D0690_1_s03(pass, curPart, &rand, &g_DeltaTime);
                         }
                     #endif
                         break;
@@ -1655,9 +1655,9 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
         return;
     }
 
-    arg2->field_0.vx += TIMESTEP_SCALE_30_FPS(g_DeltaTime0, arg2->field_C.vx);
-    arg2->field_0.vy += TIMESTEP_SCALE_30_FPS(g_DeltaTime0, arg2->field_C.vy);
-    arg2->field_0.vz += TIMESTEP_SCALE_30_FPS(g_DeltaTime0, arg2->field_C.vz);
+    arg2->field_0.vx += TIMESTEP_SCALE_30_FPS(g_DeltaTime, arg2->field_C.vx);
+    arg2->field_0.vy += TIMESTEP_SCALE_30_FPS(g_DeltaTime, arg2->field_C.vy);
+    arg2->field_0.vz += TIMESTEP_SCALE_30_FPS(g_DeltaTime, arg2->field_C.vz);
 
     limitRange(arg2->field_C.vx, -0x100, 0xFF);
     limitRange(arg2->field_C.vy, -0xFF, 0xFF);
@@ -2217,8 +2217,8 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
 
     if (sharedData_800DD584_0_s00 == 0)
     {
-        arg2->field_0.vx += TIMESTEP_SCALE_30_FPS(g_DeltaTime0, arg2->field_C);
-        arg2->field_0.vz += TIMESTEP_SCALE_30_FPS(g_DeltaTime0, arg2->field_E);
+        arg2->field_0.vx += TIMESTEP_SCALE_30_FPS(g_DeltaTime, arg2->field_C);
+        arg2->field_0.vz += TIMESTEP_SCALE_30_FPS(g_DeltaTime, arg2->field_E);
 
         switch (arg2->field_11)
         {

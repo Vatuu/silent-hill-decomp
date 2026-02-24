@@ -133,7 +133,7 @@ void Screen_FadeUpdate(void) // 0x8003260C
                 timestep = Q12(3.0f) / (queueLength + 1);
             }
 
-            g_ScreenFadeProgress += Q12_MULT_PRECISE(timestep, g_DeltaTime1);
+            g_ScreenFadeProgress += Q12_MULT_PRECISE(timestep, g_DeltaTimeRaw);
             if (g_ScreenFadeProgress >= (Q12(1.0f) - 1))
             {
                 g_ScreenFadeProgress = Q12(1.0f) - 1;
@@ -175,7 +175,7 @@ void Screen_FadeUpdate(void) // 0x8003260C
                 timestep = Q12(3.0f);
             }
 
-            g_ScreenFadeProgress -= Q12_MULT_PRECISE(timestep, g_DeltaTime1);
+            g_ScreenFadeProgress -= Q12_MULT_PRECISE(timestep, g_DeltaTimeRaw);
 
             if (g_ScreenFadeProgress <= Q12(0.0f))
             {
@@ -257,7 +257,7 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
             g_SysWork.field_30++;
 
         case 19:
-            D_800A8F40 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 1.0f);
+            D_800A8F40 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.0f);
 
             if (D_800A8F40 >= 0xFFF)
             {
@@ -278,7 +278,7 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
             break;
 
         case 23:
-            D_800A8F40 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 1.0f);
+            D_800A8F40 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.0f);
 
             if (D_800A8F40 <= 0)
             {

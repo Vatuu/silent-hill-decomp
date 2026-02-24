@@ -394,7 +394,7 @@ void func_800D5FC4(void) // 0x800D5FC4
             break;
 
         case 4:
-            g_SysWork.field_28 += g_DeltaTime0;
+            g_SysWork.field_28 += g_DeltaTime;
             if (g_SysWork.field_28 > Q12(3.8f))
             {
                 SysWork_StateStepIncrement(0);
@@ -405,7 +405,7 @@ void func_800D5FC4(void) // 0x800D5FC4
             {
                 if (D_800DACE8 > 0)
                 {
-                    D_800DACE8 -= g_DeltaTime0;
+                    D_800DACE8 -= g_DeltaTime;
                     if (D_800DACE8 < 0)
                     {
                         D_800DACE8 = ((u16)D_800DACE8 - Q12(0.3f)) - (Rng_Rand16() % Q12(0.1f));
@@ -415,7 +415,7 @@ void func_800D5FC4(void) // 0x800D5FC4
                 }
                 else
                 {
-                    D_800DACE8 += g_DeltaTime0;
+                    D_800DACE8 += g_DeltaTime;
                     if (D_800DACE8 >= 0)
                     {
                         D_800DACE8 += Q12(0.05f) + (Rng_Rand16() % Q12(0.05f));
@@ -509,18 +509,18 @@ void func_800D64E0(void) // 0x800D64E0
         case 5:
         case 7:
         case 9:
-            D_800DACEC += Q12_MULT_PRECISE(g_DeltaTime0, Q12(5.0f));
+            D_800DACEC += Q12_MULT_PRECISE(g_DeltaTime, Q12(5.0f));
             break;
 
         case 11:
         case 12:
         case 13:
-            D_800DACEC += Q12_MULT_PRECISE(g_DeltaTime0, Q12(10.0f));
+            D_800DACEC += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
             break;
 
         case 14:
         case 15:
-            D_800DACEC -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(20.0f));
+            D_800DACEC -= Q12_MULT_PRECISE(g_DeltaTime, Q12(20.0f));
             break;
     }
 
@@ -916,7 +916,7 @@ void func_800D72AC(void) // 0x800D72AC
             SysWork_StateStepIncrement(0);
 
         case 6:
-            tmp0 = Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.23f));
+            tmp0 = Q12_MULT_PRECISE(g_DeltaTime, Q12(0.23f));
             distAdd = tmp0;
             g_SysWork.playerWork_4C.player_0.position_18.vx += distAdd;
             g_WorldObject0.position_1C.vx += distAdd;
@@ -927,7 +927,7 @@ void func_800D72AC(void) // 0x800D72AC
 
             }
 
-            D_800DACF0 += ((u16) g_DeltaTime0 * 2);
+            D_800DACF0 += ((u16) g_DeltaTime * 2);
             if (D_800DACF0 > Q12(1.0f))
             {
                 D_800DACF0 = Q12(1.0f);
@@ -937,7 +937,7 @@ void func_800D72AC(void) // 0x800D72AC
             break;
 
         case 7:
-            tmp0 = Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.23f));
+            tmp0 = Q12_MULT_PRECISE(g_DeltaTime, Q12(0.23f));
             distAdd = tmp0;
             g_SysWork.playerWork_4C.player_0.position_18.vx += distAdd;
             g_WorldObject0.position_1C.vx += distAdd;
@@ -949,7 +949,7 @@ void func_800D72AC(void) // 0x800D72AC
                 g_WorldObject0.position_1C.vx -= tmp0;
             }
 
-            D_800DACF0 -= ((u16) g_DeltaTime0 * 2);
+            D_800DACF0 -= ((u16) g_DeltaTime * 2);
             if (D_800DACF0 < 0)
             {
                 D_800DACF0 = 0;
@@ -1123,7 +1123,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
     {
         if (D_800DD52A > Q12(0.0f))
         {
-            D_800DD52A = CLAMP_LOW(D_800DD52A - g_DeltaTime0, Q12(0.0f));
+            D_800DD52A = CLAMP_LOW(D_800DD52A - g_DeltaTime, Q12(0.0f));
         }
 
         if (D_800DD52A == Q12(0.0f) && Rng_GenerateUInt(0, 63) == 0) // 1 in 64 chance.

@@ -13,7 +13,7 @@ void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2
     {
         Ai_Romper_Init(romper);
     }
-    else if (g_DeltaTime0 != Q12(0.0f))
+    else if (g_DeltaTime != Q12(0.0f))
     {
         sharedFunc_800E6420_2_s02(romper);
         Ai_Romper_ControlUpdate(romper);
@@ -176,7 +176,7 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
 
     if (romperProps.field_116 != Q12(0.0f))
     {
-        romperProps.field_116 -= g_DeltaTime0;
+        romperProps.field_116 -= g_DeltaTime;
         if (romperProps.field_116 < Q12(0.0f))
         {
             romperProps.field_116 = Q12(0.0f);
@@ -199,7 +199,7 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
         }
         else
         {
-            romperProps.timer_118 -= g_DeltaTime0;
+            romperProps.timer_118 -= g_DeltaTime;
             if (romperProps.timer_118 < Q12(0.0f))
             {
                 romperProps.timer_118 = Q12(0.0f);
@@ -224,7 +224,7 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
     {
         if (romperProps.timer_11C != Q12(0.0f))
         {
-            romperProps.timer_11C -= g_DeltaTime0;
+            romperProps.timer_11C -= g_DeltaTime;
             if (romperProps.timer_11C < Q12(0.0f))
             {
                 romperProps.timer_11C = Q12(0.0f);
@@ -429,7 +429,7 @@ void Ai_Romper_Control_1(s_SubCharacter* romper)
         var += func_80070360(romper, Q12(0.0f), Q12(0.4f));
     }
 
-    newMoveSpeed         = romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f));
+    newMoveSpeed         = romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
     romper->moveSpeed_38 = MAX(newMoveSpeed, Q12(0.0f));
 
     if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_12, true) &&
@@ -453,11 +453,11 @@ void Ai_Romper_Control_2(s_SubCharacter* romper)
     {
         if (angleDeltaToTarget > Q12_ANGLE(0.0f))
         {
-            romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
+            romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(30.0f));
         }
         else
         {
-            romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
+            romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(30.0f));
         }
     }
     else
@@ -575,7 +575,7 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
     }
     else
     {
-        romperProps.field_10E += g_DeltaTime0;
+        romperProps.field_10E += g_DeltaTime;
     }
 
     if (ANIM_TIME_RANGE_CHECK(romper->model_0.anim_4.time_4, 112, 114) ||
@@ -669,11 +669,11 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
         {
             if (angleToTarget > Q12_ANGLE(0.0f))
             {
-                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(90.0f));
+                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
             }
             else
             {
-                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(90.0f));
+                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
             }
         }
         else
@@ -685,7 +685,7 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
 
     if (romperProps.flags_E8 & RomperFlag_4)
     {
-        romperProps.distance_120 += g_DeltaTime0;
+        romperProps.distance_120 += g_DeltaTime;
         if (distToTarget > Q12(1.8f) || romperProps.distance_120 > Q12(1.8f))
         {
             romperProps.distance_120 = 0;
@@ -779,7 +779,7 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
     }
     else
     {
-        romperProps.field_10E += g_DeltaTime0;
+        romperProps.field_10E += g_DeltaTime;
     }
 
     temp_s0 = func_8007029C(romper, Q12(2.5f), romper->rotation_24.vy);
@@ -817,7 +817,7 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
 
     if (romperProps.distance_120 > Q12(0.0f))
     {
-        romperProps.distance_120 -= g_DeltaTime0;
+        romperProps.distance_120 -= g_DeltaTime;
         if (romperProps.distance_120 < Q12(0.0f))
         {
             romperProps.distance_120 = Q12(0.0f);
@@ -825,7 +825,7 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
     }
     else
     {
-        romperProps.distance_120 += g_DeltaTime0;
+        romperProps.distance_120 += g_DeltaTime;
         if (romperProps.distance_120 > Q12(0.0f))
         {
             romperProps.distance_120 = Q12(0.0f);
@@ -839,11 +839,11 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
         {
             if (angle0 > 0)
             {
-                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(45.0f));
+                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(45.0f));
             }
             else
             {
-                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(45.0f));
+                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(45.0f));
             }
         }
         else
@@ -915,21 +915,21 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
 
     if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_2, false))
     {
-        romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f)), Q12(0.0f));
+        romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f)), Q12(0.0f));
 
         for (i = 0; i < 4; i++)
         {
             temp_v0_4 = func_8005BF38(unkAngle - romper->rotation_24.vy);
 
-            if ((((g_DeltaTime0 >> 3) + 1) >> 1) < ABS(temp_v0_4))
+            if ((((g_DeltaTime >> 3) + 1) >> 1) < ABS(temp_v0_4))
             {
                 if (temp_v0_4 > 0)
                 {
-                    romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(90.0f)) >> 1;
+                    romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f)) >> 1;
                 }
                 else
                 {
-                    romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(90.0f)) >> 1;
+                    romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f)) >> 1;
                 }
             }
             else
@@ -945,11 +945,11 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
         {
             if (unkAngle1 > Q12_ANGLE(0.0f))
             {
-                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(45.0f));
+                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(45.0f));
             }
             else
             {
-                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(45.0f));
+                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(45.0f));
             }
         }
 
@@ -996,7 +996,7 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
         }
         else
         {
-            romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f)), Q12(0.0f));
+            romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f)), Q12(0.0f));
         }
     }
 }
@@ -1005,12 +1005,12 @@ void Ai_Romper_Control_6(s_SubCharacter* romper)
 {
     q3_12 moveDist;
 
-    romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f)), Q12(0.0f));
+    romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f)), Q12(0.0f));
 
     if (ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) == RomperAnim_7 ||
         ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) == RomperAnim_8)
     {
-        moveDist                               = (Q12_MULT_PRECISE(sharedData_800ECA4C_2_s02, g_DeltaTime0) * Q12(0.6f)) / Q12(10.0f);
+        moveDist               = (Q12_MULT_PRECISE(sharedData_800ECA4C_2_s02, g_DeltaTime) * Q12(0.6f)) / Q12(10.0f);
         romperProps.offsetX_F8 = Q12_MULT(moveDist, Math_Sin(romper->rotation_24.vy));
         romperProps.offsetZ_FA = Q12_MULT(moveDist, Math_Cos(romper->rotation_24.vy));
     }
@@ -1026,13 +1026,13 @@ void Ai_Romper_Control_7(s_SubCharacter* romper)
     }
     else
     {
-        romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f)), Q12(0.0f));
+        romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f)), Q12(0.0f));
     }
 
     if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_11, false) ||
         ANIM_TIME_RANGE_CHECK(romper->model_0.anim_4.time_4, 93, 96))
     {
-        moveDist = (Q12_MULT_PRECISE(sharedData_800ECACC_2_s02, g_DeltaTime0) * Q12(1.4f)) / Q12(7.0f);
+        moveDist               = (Q12_MULT_PRECISE(sharedData_800ECACC_2_s02, g_DeltaTime) * Q12(1.4f)) / Q12(7.0f);
         romperProps.offsetX_F8 = Q12_MULT(moveDist, Math_Sin(romper->rotation_24.vy));
         romperProps.offsetZ_FA = Q12_MULT(moveDist, Math_Cos(romper->rotation_24.vy));
     }
@@ -1087,11 +1087,11 @@ void Ai_Romper_Control_10(s_SubCharacter* romper)
 
     if (romper->model_0.anim_4.status_0 == 11)
     {
-        romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, romperProps.field_124 * 4), Q12(0.0f));
+        romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime, romperProps.field_124 * 4), Q12(0.0f));
     }
     else
     {
-        romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, romperProps.field_124), Q12(0.0f));
+        romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime, romperProps.field_124), Q12(0.0f));
     }
 
     romper->field_E1_0 = 0;
@@ -1155,7 +1155,7 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
     s32        temp_s3;
     s32        temp_v0;
 
-    romper->fallSpeed_34 += g_DeltaTime2;
+    romper->fallSpeed_34 += g_GravitySpeed;
 
     if (ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) == RomperAnim_3 ||
         ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) == RomperAnim_5)
@@ -1167,10 +1167,10 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
         romper->headingAngle_3C = romper->rotation_24.vy;
     }
 
-    if (g_DeltaTime0 != Q12(0.0f))
+    if (g_DeltaTime != Q12(0.0f))
     {
         temp_s4 = romper->headingAngle_3C;
-        temp_s0 = Q12_MULT_PRECISE(g_DeltaTime0, romper->moveSpeed_38);
+        temp_s0 = Q12_MULT_PRECISE(g_DeltaTime, romper->moveSpeed_38);
         temp_s2 = (temp_s0 < -0x7FFF || temp_s0 > 0x7FFF) * 4;
         temp_v0 = Math_Sin(temp_s4);
         temp_s3 = temp_s2 >> 1;
@@ -1178,7 +1178,7 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
 
         pos.vx = Q12_MULT_PRECISE(temp_s0, temp_v0 >> temp_s3) << temp_s2;
         pos.vz = Q12_MULT_PRECISE(temp_s0, Math_Cos(temp_s4) >> temp_s3) << temp_s2;
-        pos.vy = Q12_MULT_PRECISE(g_DeltaTime0, romper->fallSpeed_34);
+        pos.vy = Q12_MULT_PRECISE(g_DeltaTime, romper->fallSpeed_34);
 
         pos.vx += romperProps.offsetX_F8;
         pos.vz += romperProps.offsetZ_FA;
@@ -1208,7 +1208,7 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
                 }
                 else
                 {
-                    romper->position_18.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.15f));
+                    romper->position_18.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.15f));
                     romper->fallSpeed_34    = Q12(0.0f);
                     if (sp10.field_C >= romper->position_18.vy)
                     {
@@ -1371,7 +1371,7 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCO
         unkAngle = -unkAngle;
     }
 
-    temp_v0_4 = Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.0625f);
+    temp_v0_4 = Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.0625f);
     if (unkAngle < romperProps.field_EE)
     {
         romperProps.field_EE = MAX(unkAngle, romperProps.field_EE - temp_v0_4);

@@ -122,7 +122,7 @@ void func_800D0CF8(void) // 0x800D0CF8
 
     if (g_SysWork.sysStateStep_C[0] >= 24 && g_SysWork.sysStateStep_C[0] < 28)
     {
-        g_DeltaTime0 = Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.5f));
+        g_DeltaTime = Q12_MULT_PRECISE(g_DeltaTime, Q12(1.5f));
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -166,7 +166,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             SysWork_StateStepIncrement(0);
 
         case EventState_CutsceneStart:
-            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime0, Q12(12.0f));
+            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(12.0f));
             if (D_800D253C > Q12(10.0f))
             {
                 D_800D253C = Q12(10.0f);
@@ -183,7 +183,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             }
             else
             {
-                D_800D253C += Q12_MULT_PRECISE(g_DeltaTime0, Q12(10.0f));
+                D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
                 if (D_800D253C > Q12(25.0f))
                 {
                     D_800D253C = Q12(25.0f);
@@ -201,7 +201,7 @@ void func_800D0CF8(void) // 0x800D0CF8
         case 7:
             Map_MessageWithAudio(15, &D_800D256C, &D_800D24F0);
 
-            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime0, Q12(10.0f));
+            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
             if (D_800D253C > Q12(25.0f))
             {
                 D_800D253C = Q12(25.0f);
@@ -215,7 +215,7 @@ void func_800D0CF8(void) // 0x800D0CF8
         case 9:
             Map_MessageWithAudio(15, &D_800D256C, &D_800D24F0);
 
-            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime0, Q12(10.0f));
+            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
             if (D_800D253C > Q12(109.0f))
             {
                 D_800D253C = Q12(109.0f);
@@ -225,7 +225,7 @@ void func_800D0CF8(void) // 0x800D0CF8
         case 10:
             Map_MessageWithAudio(16, &D_800D256C, &D_800D24F0);
 
-            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime0, Q12(10.0f));
+            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
             if (D_800D253C > Q12(109.0f))
             {
                 D_800D253C = Q12(109.0f);
@@ -236,7 +236,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             Map_MessageWithAudio(17, &D_800D256C, &D_800D24F0);
             SysWork_StateStepIncrementDelayed(0x7000, false);
 
-            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime0, Q12(10.0f));
+            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
             if (D_800D253C > Q12(109.0f))
             {
                 D_800D253C = Q12(109.0f);
@@ -250,7 +250,7 @@ void func_800D0CF8(void) // 0x800D0CF8
         case 13:
             Map_MessageWithAudio(17, &D_800D256C, &D_800D24F0);
 
-            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime0, Q12(10.0f));
+            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
             if (D_800D253C > Q12(109.0f))
             {
                 D_800D253C = Q12(109.0f);
@@ -300,7 +300,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             }
             else
             {
-                D_800D253C += Q12_MULT_PRECISE(g_DeltaTime0, Q12(10.0f));
+                D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
                 if (D_800D253C > Q12(174.0f))
                 {
                     D_800D253C = Q12(174.0f);
@@ -313,7 +313,7 @@ void func_800D0CF8(void) // 0x800D0CF8
         case 23:
             Map_MessageWithAudio(41, &D_800D256C, &D_800D24F0);
 
-            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime0, Q12(10.0f));
+            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
             if (D_800D253C > Q12(174.0f))
             {
                 D_800D253C = Q12(174.0f);
@@ -327,7 +327,7 @@ void func_800D0CF8(void) // 0x800D0CF8
         case 25:
             if (D_800D253C >= Q12(175.0f))
             {
-                D_800D253C += Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f));
+                D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
                 if (D_800D253C > Q12(182.0f))
                 {
                     D_800D253C = Q12(182.0f);
@@ -351,7 +351,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             }
             else
             {
-                D_800D253C += Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f));
+                D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
                 if (D_800D253C > Q12(220.0f))
                 {
                     D_800D253C = Q12(220.0f);
@@ -372,7 +372,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             }
             else
             {
-                D_800D253C += Q12_MULT_PRECISE(g_DeltaTime0, Q12(10.0f));
+                D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
                 if (D_800D253C > Q12(242.0f))
                 {
                     D_800D253C = Q12(242.0f);

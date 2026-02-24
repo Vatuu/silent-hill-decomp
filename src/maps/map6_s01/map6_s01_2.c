@@ -641,11 +641,11 @@ void func_800D2658(void) // 0x800D2658
     Math_Sin(temp_s0 >> 4);
     Math_Sin(Math_Sin(temp_s1 * 2));
 
-    D_800D41B4 += g_DeltaTime0;
+    D_800D41B4 += g_DeltaTime;
 
     if (g_SysWork.sysStateStep_C[0] >= 10)
     {
-        D_800D41B0 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.5f);
+        D_800D41B0 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.5f);
         if (D_800D41B0 < Q12(0.0f))
         {
             D_800D41B0 = Q12(0.0f);
@@ -654,7 +654,7 @@ void func_800D2658(void) // 0x800D2658
     }
     else if (g_SysWork.sysStateStep_C[0] > 0)
     {
-        D_800D41B0 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.25f);
+        D_800D41B0 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
         if (D_800D41B0 > Q12(0.9961f))
         {
             D_800D41B0 = Q12(0.9961f);
@@ -760,8 +760,8 @@ void func_800D2658(void) // 0x800D2658
                 {
                     temp_a0_4         = Q12_MULT_PRECISE(var_s4, D_800D4114[i].vy) + D_800D4114[i].vy;
                     temp_a0_4         = Q12_MULT_FLOAT_PRECISE(temp_a0_4, 1.2f);
-                    D_800D4174[i].vx += Q12_MULT_PRECISE(g_DeltaTime0, Q12_MULT(temp_a0_4, Math_Sin(FP_TO(i, Q12_SHIFT) / 5)));
-                    D_800D4174[i].vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_MULT(temp_a0_4, Math_Cos(FP_TO(i, Q12_SHIFT) / 5)));
+                    D_800D4174[i].vx += Q12_MULT_PRECISE(g_DeltaTime, Q12_MULT(temp_a0_4, Math_Sin(FP_TO(i, Q12_SHIFT) / 5)));
+                    D_800D4174[i].vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_MULT(temp_a0_4, Math_Cos(FP_TO(i, Q12_SHIFT) / 5)));
                 }
             }
 
@@ -770,7 +770,7 @@ void func_800D2658(void) // 0x800D2658
                 sharedFunc_800CE5D4_1_s03(&D_800D4174[i], Q12(0.5f), Q12(0.05f), 0);
             }
 
-            g_SysWork.field_28 += g_DeltaTime0;
+            g_SysWork.field_28 += g_DeltaTime;
             if (g_SysWork.field_28 > Q12(1.8f))
             {
                 SysWork_StateStepIncrement(0);

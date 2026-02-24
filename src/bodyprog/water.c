@@ -596,7 +596,7 @@ void func_8008E5B4(void) // 0x8008E5B4
     SetDrawOffset(&packet->offset_10, (u16*)&D_800AFDA4);
     SetDrawEnv(&packet->env_6C, &drawEnv);
 
-    if (g_DeltaTime0 != Q12(0.0f))
+    if (g_DeltaTime != Q12(0.0f))
     {
         D_800AFDAC++;
     }

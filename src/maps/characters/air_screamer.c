@@ -450,14 +450,14 @@ void sharedFunc_800D2B4C_0_s01(s_SubCharacter* airScreamer)
     s_AnmHeader*   anmHdr;
     GsCOORDINATE2* coords;
 
-    deltaTime = g_DeltaTime0;
+    deltaTime = g_DeltaTime;
 
     anmHdr = sharedData_800E21D0_0_s01.anmHdr_4;
     coords = sharedData_800E21D0_0_s01.coords_8;
 
-    g_DeltaTime0 = Q12(0.0f);
+    g_DeltaTime = Q12(0.0f);
     func_80044950(airScreamer, anmHdr, coords);
-    g_DeltaTime0 = deltaTime;
+    g_DeltaTime = deltaTime;
 
     sharedFunc_800D7560_0_s01(airScreamer);
     sharedFunc_800D82B8_0_s01(airScreamer);
@@ -518,7 +518,7 @@ s32 Ai_AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
     {
         if (animStatus == ANIM_STATUS(AirScreamerAnim_21, true))
         {
-            damage1 = Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 10.0f);
+            damage1 = Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 10.0f);
             if (damage1 < airScreamer->health_B0)
             {
                 airScreamer->health_B0 -= damage1;
@@ -952,7 +952,7 @@ bool Ai_AirScreamer_Control(s_SubCharacter* airScreamer)
     q19_12 deltaTime;
     void (*controlFunc)(s_SubCharacter*);
 
-    deltaTime = g_DeltaTime0;
+    deltaTime = g_DeltaTime;
     if (deltaTime < Q12(0.0f))
     {
         deltaTime = Q12(0.0f);
@@ -1403,7 +1403,7 @@ void Ai_AirScreamer_Control_2(s_SubCharacter* airScreamer)
                     break;
                 }
 #ifdef MAP0_S01
-                damage = g_DeltaTime0 * 10;
+                damage = g_DeltaTime * 10;
                 if (damage < airScreamer->health_B0)
                 {
                     airScreamer->health_B0 -= damage;
@@ -2567,7 +2567,7 @@ void Ai_AirScreamer_Control_9(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_8:
-            airScreamerProps.timer_120 += g_DeltaTime0;
+            airScreamerProps.timer_120 += g_DeltaTime;
 
             if (animStatus == ANIM_STATUS(14, true))
             {
@@ -10438,10 +10438,10 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
     playerOffsetZ = Q12_MULT_PRECISE(playerMoveSpeed, Math_Cos(playerheadingAngle));
 
     sharedData_800F21FC_2_s00.vy = Q12(0.0f);
-    sharedData_800F21FC_2_s00.vx = Q12_MULT_PRECISE(g_DeltaTime0, playerOffsetX);
-    sharedData_800F21FC_2_s00.vz = Q12_MULT_PRECISE(g_DeltaTime0, playerOffsetZ);
+    sharedData_800F21FC_2_s00.vx = Q12_MULT_PRECISE(g_DeltaTime, playerOffsetX);
+    sharedData_800F21FC_2_s00.vz = Q12_MULT_PRECISE(g_DeltaTime, playerOffsetZ);
 
-    if (g_DeltaTime0 != Q12(0.0f) &&
+    if (g_DeltaTime != Q12(0.0f) &&
         func_80069B24(&sharedData_800E2350_0_s01, &sharedData_800F21FC_2_s00, &g_SysWork.playerWork_4C.player_0))
     {
         playerOffsetX = sharedData_800E2350_0_s01.offset_0.vx;
@@ -10449,7 +10449,7 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
 
         playerMoveSpeed    = SquareRoot12(Q12_SQUARE_PRECISE(playerOffsetX) +
                                           Q12_SQUARE_PRECISE(playerOffsetZ));
-        playerMoveSpeed    = FP_TO(playerMoveSpeed, Q12_SHIFT) / g_DeltaTime0;
+        playerMoveSpeed    = FP_TO(playerMoveSpeed, Q12_SHIFT) / g_DeltaTime;
         playerheadingAngle = ratan2(playerOffsetX, playerOffsetZ);
     }
 
@@ -11951,7 +11951,7 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
     }
 
     sharedData_800E21D0_0_s01.flags_0 |= 0x20000000;
-    var_s4                             = Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.5f));
+    var_s4                             = Q12_MULT_PRECISE(g_DeltaTime, Q12(0.5f));
 
     sharedData_800DE1D0_0_s01.vx = Q12_MULT_PRECISE(var_s4, Math_Sin(var_s3));
     sharedData_800DE1D0_0_s01.vy = var_s4;
@@ -12028,9 +12028,9 @@ void sharedFunc_800D63A4_0_s01(s_SubCharacter* airScreamer)
     sharedData_800DE1F0_0_s01.vy = posY;
     sharedData_800DE1F0_0_s01.vz = Q12_MULT_PRECISE(moveSpeed, Math_Cos(headingAngle));
 
-    sharedData_800DE1E0_0_s01.vx = Q12_MULT_PRECISE(g_DeltaTime0, sharedData_800DE1F0_0_s01.vx);
-    sharedData_800DE1E0_0_s01.vy = Q12_MULT_PRECISE(g_DeltaTime0, sharedData_800DE1F0_0_s01.vy);
-    sharedData_800DE1E0_0_s01.vz = Q12_MULT_PRECISE(g_DeltaTime0, sharedData_800DE1F0_0_s01.vz);
+    sharedData_800DE1E0_0_s01.vx = Q12_MULT_PRECISE(g_DeltaTime, sharedData_800DE1F0_0_s01.vx);
+    sharedData_800DE1E0_0_s01.vy = Q12_MULT_PRECISE(g_DeltaTime, sharedData_800DE1F0_0_s01.vy);
+    sharedData_800DE1E0_0_s01.vz = Q12_MULT_PRECISE(g_DeltaTime, sharedData_800DE1F0_0_s01.vz);
 
     temp_s0 = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01.offset_0,
                                         &sharedData_800DE1F0_0_s01,
@@ -12131,9 +12131,9 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer)
     sharedData_800DE210_0_s01.vy = posY;
     sharedData_800DE210_0_s01.vz = posZ;
 
-    sharedData_800DE200_0_s01.vx = Q12_MULT_PRECISE(g_DeltaTime0, posX);
-    sharedData_800DE200_0_s01.vy = Q12_MULT_PRECISE(g_DeltaTime0, posY);
-    sharedData_800DE200_0_s01.vz = Q12_MULT_PRECISE(g_DeltaTime0, posZ);
+    sharedData_800DE200_0_s01.vx = Q12_MULT_PRECISE(g_DeltaTime, posX);
+    sharedData_800DE200_0_s01.vy = Q12_MULT_PRECISE(g_DeltaTime, posY);
+    sharedData_800DE200_0_s01.vz = Q12_MULT_PRECISE(g_DeltaTime, posZ);
 
     temp = sharedFunc_800D7440_0_s01(&sharedData_800E2350_0_s01, &sharedData_800DE200_0_s01, airScreamer);
     temp = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01.offset_0, &sharedData_800DE210_0_s01, airScreamer, temp, &sharedData_800E21D0_0_s01.field_128);
@@ -12147,7 +12147,7 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer)
     angle0 = SquareRoot12(angle0);
     angle2 = SquareRoot12(angle2);
     angle0 = ratan2(posY, angle0);
-    angle3 = Q12_MULT_PRECISE(g_DeltaTime0, Q12(6.0f));
+    angle3 = Q12_MULT_PRECISE(g_DeltaTime, Q12(6.0f));
 
     if (angle2 < angle3)
     {
@@ -12205,7 +12205,7 @@ s32 sharedFunc_800D6A60_0_s01(VECTOR3* offset, VECTOR3* vec1, s_SubCharacter* ai
     else
     {
         flags |= PlayerFlag_Unk31;
-        time   = Q12(4096.0f) / g_DeltaTime0;
+        time   = Q12(4096.0f) / g_DeltaTime;
 
         if (!(offsetX | offsetZ))
         {
@@ -12372,7 +12372,7 @@ void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer)
     }
     airScreamer->rotationSpeed_2C.vy = moveSpeed;
 
-    airScreamer->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, moveSpeed);
+    airScreamer->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, moveSpeed);
     if (sharedFunc_800D4A80_0_s01(airScreamer) == 3)
     {
         sharedFunc_800D72E8_0_s01(airScreamer, airScreamer->fallSpeed_34, airScreamer->rotationSpeed_2C.vy);
@@ -12385,16 +12385,16 @@ void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer)
     tmp0                             = sharedFunc_800D71F0_0_s01(airScreamer->rotationSpeed_2C.vx, sharedData_800E21D0_0_s01.field_B4[2][1], sharedData_800E21D0_0_s01.field_B4[2][2], sharedData_800E21D0_0_s01.field_B4[2][3]);
     moveSpeed                        = tmp0;
     airScreamer->rotationSpeed_2C.vx = tmp0;
-    airScreamer->rotation_24.vx     += Q12_MULT_PRECISE(g_DeltaTime0, moveSpeed);
+    airScreamer->rotation_24.vx     += Q12_MULT_PRECISE(g_DeltaTime, moveSpeed);
     element1                         = sharedFunc_800D71F0_0_s01(airScreamer->rotationSpeed_2C.vz, sharedData_800E21D0_0_s01.field_B4[4][1], sharedData_800E21D0_0_s01.field_B4[4][2], sharedData_800E21D0_0_s01.field_B4[4][3]);
     moveSpeed                        = element1;
     airScreamer->rotationSpeed_2C.vz = moveSpeed;
 
-    airScreamer->rotation_24.vz += Q12_MULT_PRECISE(g_DeltaTime0, moveSpeed);
+    airScreamer->rotation_24.vz += Q12_MULT_PRECISE(g_DeltaTime, moveSpeed);
     moveSpeed                    = sharedFunc_800D71F0_0_s01(airScreamer->field_32, sharedData_800E21D0_0_s01.field_B4[5][1], sharedData_800E21D0_0_s01.field_B4[5][2], sharedData_800E21D0_0_s01.field_B4[5][3]);
     tmp1                         = moveSpeed;
     airScreamer->field_32        = tmp1;
-    airScreamer->field_2A       += Q12_MULT_PRECISE(g_DeltaTime0, tmp1);
+    airScreamer->field_2A       += Q12_MULT_PRECISE(g_DeltaTime, tmp1);
 }
 
 q19_12 sharedFunc_800D7120_0_s01(q19_12 moveSpeed, s32 arg1, s32 arg2)
@@ -12428,7 +12428,7 @@ q19_12 sharedFunc_800D7120_0_s01(q19_12 moveSpeed, s32 arg1, s32 arg2)
         {
             if (temp_v1 > 0)
             {
-                adjMoveSpeed += Q12_MULT_PRECISE(g_DeltaTime0, var_a1);
+                adjMoveSpeed += Q12_MULT_PRECISE(g_DeltaTime, var_a1);
                 if (new_var2 < adjMoveSpeed)
                 {
                     adjMoveSpeed = new_var2;
@@ -12437,7 +12437,7 @@ q19_12 sharedFunc_800D7120_0_s01(q19_12 moveSpeed, s32 arg1, s32 arg2)
         }
         else if (temp_v1 < 0)
         {
-            adjMoveSpeed += Q12_MULT_PRECISE(g_DeltaTime0, var_a1);
+            adjMoveSpeed += Q12_MULT_PRECISE(g_DeltaTime, var_a1);
             if (adjMoveSpeed < new_var2)
             {
                 adjMoveSpeed = new_var2;

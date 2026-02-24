@@ -15,7 +15,7 @@ void Ai_Creeper_Update(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINAT
         Ai_Creeper_Init(creeper);
     }
 
-    if (g_DeltaTime0 != Q12(0.0f))
+    if (g_DeltaTime != Q12(0.0f))
     {
         sharedFunc_800D7EE8_1_s02(creeper);
         Ai_Creeper_ControlUpdate(creeper);
@@ -263,7 +263,7 @@ void Ai_Creeper_Control_1(s_SubCharacter* creeper)
     bool cond;
 
     Chara_MoveSpeedUpdate3(creeper, Q12(4.0f), Q12(0.0f));
-    creeperProps.timer_104 += g_DeltaTime0;
+    creeperProps.timer_104 += g_DeltaTime;
 
     if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
     {
@@ -435,11 +435,11 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
             {
                 if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
                 {
-                    creeper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(180.0f));
+                    creeper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(180.0f));
                 }
                 else
                 {
-                    creeper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(180.0f));
+                    creeper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(180.0f));
                 }
             }
         }
@@ -448,7 +448,7 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
     {
         Chara_MoveSpeedUpdate4(creeper, Q12(1.5f), creeperProps.moveSpeed_10C);
 
-        creeperProps.timer_F0 += g_DeltaTime0;
+        creeperProps.timer_F0 += g_DeltaTime;
 
         if ((ABS(angleDeltaToPlayer) > Q12_ANGLE(10.0f) && func_80070184(creeper, Q12(1.0f), creeperProps.rotationY_108)) ||
             (!Rng_GenerateInt(0, 7) && // 1 in 8 chance.
@@ -481,11 +481,11 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
         {
             if (unkAngleDelta > Q12_ANGLE(0.0f))
             {
-                creeper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(180.0f));
+                creeper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(180.0f));
             }
             else
             {
-                creeper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(180.0f));
+                creeper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(180.0f));
             }
         }
     }
@@ -527,13 +527,13 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
             moveSpeed0 = creeperProps.moveSpeed_10C / 2;
 
             // TODO: Why don't either of these fit?
-            // creeper->moveSpeed_38 = APPROACH(creeper->moveSpeed_38, moveSpeed0, Q12_MULT_PRECISE(g_DeltaTime0, Q12(6.0f)));
+            // creeper->moveSpeed_38 = APPROACH(creeper->moveSpeed_38, moveSpeed0, Q12_MULT_PRECISE(g_DeltaTime, Q12(6.0f)));
             // Chara_MoveSpeedUpdate3(creeper, Q12(6.0f), moveSpeed0);
 
             if (moveSpeed0 < creeper->moveSpeed_38)
             {
                 moveSpeed   = moveSpeed0;
-                moveSpeedTmp0 = creeper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, Q12(6.0f));
+                moveSpeedTmp0 = creeper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime, Q12(6.0f));
                 if (moveSpeed < moveSpeedTmp0)
                 {
                     moveSpeed = moveSpeedTmp0;
@@ -542,7 +542,7 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
             else
             {
                 moveSpeed   = moveSpeed0;
-                moveSpeedTmp0 = creeper->moveSpeed_38 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(6.0f));
+                moveSpeedTmp0 = creeper->moveSpeed_38 + Q12_MULT_PRECISE(g_DeltaTime, Q12(6.0f));
                 if (moveSpeed >= moveSpeedTmp0)
                 {
                     moveSpeed = moveSpeedTmp0;
@@ -555,11 +555,11 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
         {
             if ((func_8005BF38((Math_AngleBetweenPositionsGet(creeper->position_18, playerChara.position_18) - creeper->rotation_24.vy)) << 16) > 0)
             {
-                creeper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.5f));
+                creeper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.5f));
             }
             else
             {
-                creeper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.5f));
+                creeper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.5f));
             }
         }
         else
@@ -623,21 +623,21 @@ void Ai_Creeper_Control_4(s_SubCharacter* creeper)
         {
             if (func_8005BF38((creeper->headingAngle_3C + Q12_ANGLE(180.0f)) - creeper->rotation_24.vy) > Q12_ANGLE(0.0f))
             {
-                creeper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
+                creeper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(30.0f));
             }
             else
             {
-                creeper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
+                creeper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(30.0f));
             }
         }
 
         if (ANIM_TIME_RANGE_CHECK(creeper->model_0.anim_4.time_4, 50, 59))
         {
-            dist = Q12_MULT_PRECISE(CREEPER_ANIM_INFOS[creeper->model_0.anim_4.status_0].duration_8.constant, g_DeltaTime0) / 9;
+            dist = Q12_MULT_PRECISE(CREEPER_ANIM_INFOS[creeper->model_0.anim_4.status_0].duration_8.constant, g_DeltaTime) / 9;
         }
         else
         {
-            q19_12 baseDist = Q12_MULT_PRECISE(CREEPER_ANIM_INFOS[creeper->model_0.anim_4.status_0].duration_8.constant, g_DeltaTime0) * Q12(0.1f);
+            q19_12 baseDist = Q12_MULT_PRECISE(CREEPER_ANIM_INFOS[creeper->model_0.anim_4.status_0].duration_8.constant, g_DeltaTime) * Q12(0.1f);
             dist            = baseDist / Q12(4.0f);
         }
 
@@ -685,7 +685,7 @@ void sharedFunc_800D983C_1_s02(s_SubCharacter* creeper)
 {
     s_800C4590 unused;
 
-    creeper->fallSpeed_34 += g_DeltaTime2 >> 2;
+    creeper->fallSpeed_34 += g_GravitySpeed >> 2;
 
     if (creeperProps.flags_E8 & CreeperFlag_1)
     {

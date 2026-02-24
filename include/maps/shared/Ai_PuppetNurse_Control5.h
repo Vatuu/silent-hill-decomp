@@ -55,5 +55,5 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
         }
     }
 
-    nurse->properties_E4.puppetNurse.field_104 += g_DeltaTime0;
+    nurse->properties_E4.puppetNurse.field_104 += g_DeltaTime;
 }

@@ -92,12 +92,12 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
 
         if (i == ARRAY_SIZE(g_SysWork.npcs_1A0))
         {
-            g_DeltaTime0 = g_DeltaTimeCpy;
+            g_DeltaTime = g_DeltaTimeCpy;
         }
     }
     else
     {
-        g_DeltaTime0 = g_DeltaTimeCpy;
+        g_DeltaTime = g_DeltaTimeCpy;
     }
 
     if (g_SysWork.isMgsStringSet_18 == 0)
@@ -220,20 +220,20 @@ void SysState_EventCallFunc_Update(void) // 0x8003A3C8
         Savegame_EventFlagSetAlt(g_MapEventData->disabledEventFlag_2);
     }
 
-    g_DeltaTime0 = g_DeltaTimeCpy;
+    g_DeltaTime = g_DeltaTimeCpy;
     g_MapOverlayHeader.mapEventFuncs_20[g_MapEventParam]();
 }
 
 void SysState_EventSetFlag_Update(void) // 0x8003A460
 {
-    g_DeltaTime0 = g_DeltaTimeCpy;
+    g_DeltaTime = g_DeltaTimeCpy;
     Savegame_EventFlagSetAlt(g_MapEventData->disabledEventFlag_2);
     g_SysWork.sysState_8 = SysState_Gameplay;
 }
 
 void SysState_EventPlaySound_Update(void) // 0x8003A4B4
 {
-    g_DeltaTime0 = g_DeltaTimeCpy;
+    g_DeltaTime = g_DeltaTimeCpy;
 
     SD_Call(((u16)g_MapEventParam + Sfx_Base) & 0xFFFF);
 

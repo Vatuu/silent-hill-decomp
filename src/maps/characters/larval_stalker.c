@@ -28,7 +28,7 @@ void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr,
         return;
     }
 
-    larvalStalker->timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.25f);
+    larvalStalker->timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
     if (larvalStalker->timer_C6 <= Q12(1.0f))
     {
         return;
@@ -46,38 +46,38 @@ void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr,
     }
 }
 
-#define Chara_TurnModulate(angle, limit, mult)                                                   \
-    angleDeltaToPlayer = angle;                                                                  \
-                                                                                                 \
-    if (limit <= ABS(angleDeltaToPlayer))                                                        \
-    {                                                                                            \
-        if ((angleDeltaToPlayer) > Q12_ANGLE(0.0f))                                               \
-        {                                                                                        \
-            larvalStalker->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, mult); \
-        }                                                                                        \
-        else                                                                                     \
-        {                                                                                        \
-            larvalStalker->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, mult); \
-        }                                                                                        \
+#define Chara_TurnModulate(angle, limit, mult)                                    \
+    angleDeltaToPlayer = angle;                                                   \
+                                                                                  \
+    if (limit <= ABS(angleDeltaToPlayer))                                         \
+    {                                                                             \
+        if ((angleDeltaToPlayer) > Q12_ANGLE(0.0f))                               \
+        {                                                                         \
+            larvalStalker->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, mult); \
+        }                                                                         \
+        else                                                                      \
+        {                                                                         \
+            larvalStalker->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, mult); \
+        }                                                                         \
     }
 
-#define Chara_TurnModulate_REV(angle, limit, mult)                                               \
-    if (limit <= ABS(angle))                                                                     \
-    {                                                                                            \
-        if ((angle) < Q12_ANGLE(0.0f))                                                            \
-        {                                                                                        \
-            larvalStalker->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, mult); \
-        }                                                                                        \
-        else                                                                                     \
-        {                                                                                        \
-            larvalStalker->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, mult); \
-        }                                                                                        \
+#define Chara_TurnModulate_REV(angle, limit, mult)                                \
+    if (limit <= ABS(angle))                                                      \
+    {                                                                             \
+        if ((angle) < Q12_ANGLE(0.0f))                                            \
+        {                                                                         \
+            larvalStalker->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, mult); \
+        }                                                                         \
+        else                                                                      \
+        {                                                                         \
+            larvalStalker->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, mult); \
+        }                                                                         \
     }
 
-#define ANIM_STUFF(mult, div)                                                                                                                    \
-    temp = Q12_MULT_PRECISE(LARVAL_STALKER_ANIM_INFOS[larvalStalker->model_0.anim_4.status_0].duration_8.constant, g_DeltaTime0) * \
-           mult / div;                                                                                                                           \
-    larvalStalkerProps.angle_100 = FP_FROM(temp * Math_Sin(larvalStalker->rotation_24.vy), Q12_SHIFT);                                           \
+#define ANIM_STUFF(mult, div)                                                                                                     \
+    temp = Q12_MULT_PRECISE(LARVAL_STALKER_ANIM_INFOS[larvalStalker->model_0.anim_4.status_0].duration_8.constant, g_DeltaTime) * \
+           mult / div;                                                                                                            \
+    larvalStalkerProps.angle_100 = FP_FROM(temp * Math_Sin(larvalStalker->rotation_24.vy), Q12_SHIFT);                            \
     larvalStalkerProps.angle_102 = FP_FROM(temp * Math_Cos(larvalStalker->rotation_24.vy), Q12_SHIFT);
 
 void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
@@ -167,8 +167,8 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             {
                 if (larvalStalkerProps.angle_108 > Q12_ANGLE(0.0f))
                 {
-                    larvalStalker->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
-                    larvalStalkerProps.angle_108 -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
+                    larvalStalker->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(30.0f));
+                    larvalStalkerProps.angle_108  -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(30.0f));
 
                     if ((larvalStalkerProps.angle_108) <= Q12_ANGLE(0.0f))
                     {
@@ -178,8 +178,8 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 }
                 else if (larvalStalkerProps.angle_108 < Q12_ANGLE(0.0f))
                 {
-                    larvalStalker->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
-                    larvalStalkerProps.angle_108 += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
+                    larvalStalker->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(30.0f));
+                    larvalStalkerProps.angle_108  += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(30.0f));
 
                     if (!(larvalStalkerProps.angle_108 < Q12_ANGLE(0.0f)))
                     {
@@ -305,7 +305,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             {
                 larvalStalkerProps.animTime_104 = larvalStalker->model_0.anim_4.time_4;
                 larvalStalker->moveSpeed_38 = Q12(0.0f);
-                larvalStalkerProps.timer_EC += g_DeltaTime0;
+                larvalStalkerProps.timer_EC    += g_DeltaTime;
 
                 if (larvalStalkerProps.timer_EC > Q12(1.8f))
                 {
@@ -420,7 +420,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 }
             }
 
-            larvalStalkerProps.timer_EC += g_DeltaTime0;
+            larvalStalkerProps.timer_EC += g_DeltaTime;
             if (larvalStalkerProps.timer_EC > Q12(0.8f))
             {
                 larvalStalkerProps.timer_EC = Q12(0.0f);
@@ -474,11 +474,11 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
                     if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
                     {
-                        larvalStalker->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
+                        larvalStalker->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(30.0f));
                     }
                     else
                     {
-                        larvalStalker->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(30.0f));
+                        larvalStalker->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(30.0f));
                     }
                 }
                 else
@@ -491,7 +491,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                     }
                 }
 
-                larvalStalkerProps.timer_EC += g_DeltaTime0;
+                larvalStalkerProps.timer_EC += g_DeltaTime;
 
                 if (!(g_SysWork.field_2284[3] & 0x1) && (Q12(5.0f) - FP_TO(larvalStalkerProps.field_EA, Q12_SHIFT)) < larvalStalkerProps.timer_EC)
                 {
@@ -523,7 +523,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             break;
 
         case LarvalStalkerControl_8:
-            larvalStalkerProps.timer_10A += Q12_MULT_PRECISE(g_DeltaTime0, Rng_Rand16() & 0xFFF);
+            larvalStalkerProps.timer_10A += Q12_MULT_PRECISE(g_DeltaTime, Rng_Rand16() & 0xFFF);
             if (larvalStalkerProps.timer_10A > Q12(3.5f))
             {
                 larvalStalkerProps.timer_10A = Q12(3.5f);
@@ -540,7 +540,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 }
             }
 
-            larvalStalkerProps.timer_EC += g_DeltaTime0;
+            larvalStalkerProps.timer_EC += g_DeltaTime;
             if (larvalStalkerProps.timer_EC > Q12(0.8f))
             {
                 larvalStalkerProps.timer_EC = Q12(0.0f);
@@ -560,7 +560,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
             if (!(larvalStalkerProps.flags_E8 & LarvalStalkerFlag_7))
             {
-                larvalStalkerProps.timer_F0 += g_DeltaTime0;
+                larvalStalkerProps.timer_F0 += g_DeltaTime;
                 if (larvalStalkerProps.timer_F0 > Q12(5.0f) && !Rng_GenerateInt(0, 63)) // 1 in 64 chance.
                 {
                     larvalStalkerProps.timer_F0 = Q12(0.0f);
@@ -572,7 +572,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             break;
 
         case LarvalStalkerControl_9:
-            larvalStalkerProps.timer_10A += Q12_MULT_PRECISE(g_DeltaTime0, (Rng_Rand16() & 0x7FF) + Q12(0.5f));
+            larvalStalkerProps.timer_10A += Q12_MULT_PRECISE(g_DeltaTime, (Rng_Rand16() & 0x7FF) + Q12(0.5f));
             if (larvalStalkerProps.timer_10A > Q12(3.5f))
             {
                 larvalStalkerProps.timer_10A = Q12(3.5f);
@@ -608,7 +608,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             if (ANIM_TIME_RANGE_CHECK(larvalStalker->model_0.anim_4.time_4, 41, 49))
             {
                 temp = FP_MULTIPLY_PRECISE(LARVAL_STALKER_ANIM_INFOS[larvalStalker->model_0.anim_4.status_0].duration_8.constant,
-                                        g_DeltaTime0, Q12_SHIFT) * Q12(0.3f) / Q12(9.0f);
+                                           g_DeltaTime, Q12_SHIFT) * Q12(0.3f) / Q12(9.0f);
                 larvalStalkerProps.angle_100 = FP_FROM(temp * Math_Sin(larvalStalker->rotation_24.vy + Q12_ANGLE(180.0f)), Q12_SHIFT);
                 larvalStalkerProps.angle_102 = FP_FROM(temp * Math_Cos(larvalStalker->rotation_24.vy + Q12_ANGLE(180.0f)), Q12_SHIFT);
             }
@@ -675,7 +675,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(larvalStalker, Q12_ANGLE(180.0f), larvalStalkerProps.targetPositionX, larvalStalkerProps.targetPositionZ, Q12(1.0f), false);
             }
 
-            larvalStalkerProps.timer_EC += g_DeltaTime0;
+            larvalStalkerProps.timer_EC += g_DeltaTime;
             if (larvalStalkerProps.timer_EC > Q12(1.0f))
             {
                 larvalStalkerProps.timer_EC = Q12(0.0f);
@@ -688,9 +688,8 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             if (ANIM_TIME_RANGE_CHECK(larvalStalker->model_0.anim_4.time_4, 121, 127))
             {
                 temp = (FP_MULTIPLY_PRECISE(LARVAL_STALKER_ANIM_INFOS[larvalStalker->model_0.anim_4.status_0].duration_8.constant,
-                                           g_DeltaTime0,
-                                           Q12_SHIFT) * Q12(0.15f)) /
-                       Q12(6.0f);
+                                            g_DeltaTime,
+                                            Q12_SHIFT) * Q12(0.15f)) / Q12(6.0f);
                 larvalStalkerProps.angle_100 = FP_FROM(temp * Math_Sin(larvalStalker->rotation_24.vy + Q12_ANGLE(180.0f)), Q12_SHIFT);
                 larvalStalkerProps.angle_102 = FP_FROM(temp * Math_Cos(larvalStalker->rotation_24.vy + Q12_ANGLE(180.0f)), Q12_SHIFT);
             }
@@ -744,14 +743,14 @@ void sharedFunc_800D140C_1_s00(s_SubCharacter* larvalStalker, GsCOORDINATE2* coo
 {
     s_800C4590 sp18;
 
-    larvalStalker->fallSpeed_34 += g_DeltaTime2 >> 1;
+    larvalStalker->fallSpeed_34 += g_GravitySpeed >> 1;
 
     if (!(larvalStalkerProps.flags_E8 & LarvalStalkerFlag_1))
     {
         larvalStalker->headingAngle_3C = larvalStalker->rotation_24.vy;
     }
 
-    if (g_DeltaTime0 != Q12(0.0f))
+    if (g_DeltaTime != Q12(0.0f))
     {
         func_8005CB20(larvalStalker, &sp18, larvalStalkerProps.angle_100, larvalStalkerProps.angle_102);
     }

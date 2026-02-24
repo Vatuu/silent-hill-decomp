@@ -114,7 +114,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
             if (g_MapMsg_AudioLoadBlock != 0 && g_SysWork.mapMsgTimer_234C > 0)
             {
-                g_SysWork.mapMsgTimer_234C -= g_DeltaTime1;
+                g_SysWork.mapMsgTimer_234C -= g_DeltaTimeRaw;
                 g_SysWork.mapMsgTimer_234C  = CLAMP(g_SysWork.mapMsgTimer_234C, Q12(0.0f), MSG_TIMER_MAX);
             }
 
@@ -256,7 +256,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
 
     mapMsgCode = Gfx_MapMsg_StringDraw(g_MapOverlayHeader.mapMessages_30[mapMsgIdx], *arg1);
 
-    g_MapMsg_SelectFlashTimer += g_DeltaTime1;
+    g_MapMsg_SelectFlashTimer += g_DeltaTimeRaw;
     if (g_MapMsg_SelectFlashTimer >= Q12(0.5f))
     {
         g_MapMsg_SelectFlashTimer -= Q12(0.5f);

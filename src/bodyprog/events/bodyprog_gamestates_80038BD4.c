@@ -116,13 +116,13 @@ void GameState_InGame_Update(void) // 0x80038BD4
         SysWork_StateSetNext(SysState_Gameplay);
     }
 
-    if (g_DeltaTime0 != Q12(0.0f))
+    if (g_DeltaTime != Q12(0.0f))
     {
-        g_DeltaTimeCpy = g_DeltaTime0;
+        g_DeltaTimeCpy = g_DeltaTime;
     }
     else
     {
-        g_DeltaTimeCpy = g_DeltaTime1;
+        g_DeltaTimeCpy = g_DeltaTimeRaw;
     }
 
     if (g_SysWork.sysState_8 == SysState_Gameplay)
@@ -132,7 +132,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
     }
     else
     {
-        g_DeltaTime0 = 0;
+        g_DeltaTime = 0;
         g_SysStateFuncs[g_SysWork.sysState_8]();
 
         if (g_SysWork.sysState_8 == SysState_Gameplay)
@@ -292,7 +292,7 @@ void SysState_GamePaused_Update(void) // 0x800391E8
 {
     static s32 D_800A9A68 = 0;
 
-    D_800A9A68 += g_DeltaTime1;
+    D_800A9A68 += g_DeltaTimeRaw;
     if (!((D_800A9A68 >> 11) & (1 << 0)))
     {
         Gfx_StringSetPosition(SCREEN_POSITION_X(39.25f), SCREEN_POSITION_Y(43.5f));

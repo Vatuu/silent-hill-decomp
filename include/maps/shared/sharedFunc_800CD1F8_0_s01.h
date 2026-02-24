@@ -25,7 +25,7 @@ bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx)
 
     if (sharedData_800DFB7C_0_s00[idx].field_B & 0x80)
     {
-        sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 = CLAMP_LOW(sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 - g_DeltaTime0, 0);
+        sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 = CLAMP_LOW(sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 - g_DeltaTime, 0);
 
         ptr->field_1C0 = SQUARE((sharedData_800DFB7C_0_s00[idx].field_B - 0x80) >> 4);
 
@@ -62,45 +62,45 @@ bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx)
 
         if (sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 > 0)
         {
-            sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = CLAMP_LOW(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 - FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_MULTIPLY(temp_s2_2, Math_Sin(temp_v0_6), 0xC), 0xC), 0);
+            sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = CLAMP_LOW(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 - FP_MULTIPLY_PRECISE(g_DeltaTime, FP_MULTIPLY(temp_s2_2, Math_Sin(temp_v0_6), 0xC), 0xC), 0);
         }
         else if (sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 < 0)
         {
-            sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = MIN(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 - FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_MULTIPLY(temp_s2_2, Math_Sin(temp_v0_6), 0xC), 0xC), 0);
+            sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = MIN(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 - FP_MULTIPLY_PRECISE(g_DeltaTime, FP_MULTIPLY(temp_s2_2, Math_Sin(temp_v0_6), 0xC), 0xC), 0);
         }
 
         if (sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 > 0)
         {
-            sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 = CLAMP_LOW(sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 - FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_MULTIPLY(temp_s2_2, Math_Cos(temp_v0_6), 0xC), 0xC), 0);
+            sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 = CLAMP_LOW(sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 - FP_MULTIPLY_PRECISE(g_DeltaTime, FP_MULTIPLY(temp_s2_2, Math_Cos(temp_v0_6), 0xC), 0xC), 0);
         }
         else if (sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 < 0)
         {
-            sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 = MIN(sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 - FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_MULTIPLY(temp_s2_2, Math_Cos(temp_v0_6), 0xC), 0xC), 0);
+            sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 = MIN(sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 - FP_MULTIPLY_PRECISE(g_DeltaTime, FP_MULTIPLY(temp_s2_2, Math_Cos(temp_v0_6), 0xC), 0xC), 0);
         }
 
-        temp_s2_2 = (g_DeltaTime2 * ((sharedData_800DFB7C_0_s00[idx].field_B >> 4) + 9)) >> 4;
+        temp_s2_2 = (g_GravitySpeed * ((sharedData_800DFB7C_0_s00[idx].field_B >> 4) + 9)) >> 4;
 
         sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2  = CLAMP_HIGH(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 + temp_s2_2, 0x7FFF);
-        sharedData_800DFB7C_0_s00[idx].field_0.s_0.field_0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0, 0xC);
-        sharedData_800DFB7C_0_s00[idx].vy_8                += FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2, 0xC);
-        sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0, 0xC);
+        sharedData_800DFB7C_0_s00[idx].field_0.s_0.field_0 += FP_MULTIPLY_PRECISE(g_DeltaTime, sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0, 0xC);
+        sharedData_800DFB7C_0_s00[idx].vy_8                += FP_MULTIPLY_PRECISE(g_DeltaTime, sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2, 0xC);
+        sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_0 += FP_MULTIPLY_PRECISE(g_DeltaTime, sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0, 0xC);
 
         if (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 & 0x80)
         {
-            sharedData_800DFB7C_0_s00[idx].field_0.s_0.field_2 += FP_MULTIPLY_PRECISE(g_DeltaTime0, (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 & 0x7F) << 7, 0xC);
+            sharedData_800DFB7C_0_s00[idx].field_0.s_0.field_2 += FP_MULTIPLY_PRECISE(g_DeltaTime, (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 & 0x7F) << 7, 0xC);
         }
         else
         {
-            sharedData_800DFB7C_0_s00[idx].field_0.s_0.field_2 -= FP_MULTIPLY_PRECISE(g_DeltaTime0, (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 & 0x7F) << 7, 0xC);
+            sharedData_800DFB7C_0_s00[idx].field_0.s_0.field_2 -= FP_MULTIPLY_PRECISE(g_DeltaTime, (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 & 0x7F) << 7, 0xC);
         }
 
         if (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 & 0x8000)
         {
-            sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_2 += FP_MULTIPLY_PRECISE(g_DeltaTime0, (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 >> 1) & 0x3F80, 0xC);
+            sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_2 += FP_MULTIPLY_PRECISE(g_DeltaTime, (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 >> 1) & 0x3F80, 0xC);
         }
         else
         {
-            sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_2 -= FP_MULTIPLY_PRECISE(g_DeltaTime0, (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 >> 1) & 0x3F80, 0xC);
+            sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_2 -= FP_MULTIPLY_PRECISE(g_DeltaTime, (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 >> 1) & 0x3F80, 0xC);
         }
 
         Collision_Get(&ptr->field_12C, sharedData_800DFB7C_0_s00[idx].field_0.s_0.field_0, sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_0);

@@ -43,7 +43,7 @@ bool sharedFunc_800CC618_1_s05(POLY_FT4** poly, s32 idx)
 
     ptr->field_160 = MAX(0xFF - (sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 * 0x10 / 1228), 0);
 
-    sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 += g_DeltaTime0;
+    sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 += g_DeltaTime;
 
     if (sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 > 0x4CC0)
     {

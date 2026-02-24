@@ -72,14 +72,14 @@ void Ai_Cheryl_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x
     pos          = chara->position_18;
     moveSpeed    = chara->moveSpeed_38;
     headingAngle = chara->headingAngle_3C;
-    moveAmt      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime0);
+    moveAmt      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
     offset.vx = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime0);
+    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime);
 
     func_80069B24(&sharedData_800E39BC_0_s00, &offset, chara);
 
@@ -115,7 +115,7 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
         case 0:
             if (dahliaProps.moveDistance_126 != Q12(0.0f))
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12(0.4f)) * 2;
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
                 if (dahliaProps.moveDistance_126 < Q12(0.0f))
                 {
                     dahliaProps.moveDistance_126 = Q12(0.0f);
@@ -145,14 +145,14 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
         case 3:
             if (dahliaProps.moveDistance_126 != Q12(0.0f))
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12(0.4f)) * 2;
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
                 if (dahliaProps.moveDistance_126 < Q12(0.0f))
                 {
                     dahliaProps.moveDistance_126 = Q12(0.0f);
                 }
             }
 
-            D_800E3A30 = g_DeltaTime0 * 7;
+            D_800E3A30 = g_DeltaTime * 7;
 
             Model_AnimStatusSet(&chara->model_0, CherylAnim_2, false);
             Character_AnimStateReset(chara);
@@ -164,14 +164,14 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
         case 4:
             if (dahliaProps.moveDistance_126 != Q12(0.0f))
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12(0.4f)) * 2;
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
                 if (dahliaProps.moveDistance_126 < Q12(0.0f))
                 {
                     dahliaProps.moveDistance_126 = Q12(0.0f);
                 }
             }
 
-            D_800E3A30 = g_DeltaTime0 * -7;
+            D_800E3A30 = g_DeltaTime * -7;
 
             Model_AnimStatusSet(&chara->model_0, CherylAnim_2, false);
             Character_AnimStateReset(chara);
@@ -217,7 +217,7 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
     chara->rotation_24.vy  = Q12_ANGLE_ABS(chara->rotation_24.vy + Q8_TO_Q4(D_800E3A30));
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->moveSpeed_38    = dahliaProps.field_124;
-    chara->fallSpeed_34   += g_DeltaTime2;
+    chara->fallSpeed_34   += g_GravitySpeed;
 
     coords->flg = false;
     Math_RotMatrixZxyNegGte(&chara->rotation_24, &coords->coord);

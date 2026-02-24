@@ -147,7 +147,7 @@ void func_800CCA2C(void) // 0x800CCA2C
 
             if (D_800CD774 == 2 && Sd_AudioStreamingCheck() == 1)
             {
-                D_800CD770 += g_DeltaTime0;
+                D_800CD770 += g_DeltaTime;
 
                 if (g_Controller0->btnsClicked_10 & ControllerFlag_Cross)
                 {

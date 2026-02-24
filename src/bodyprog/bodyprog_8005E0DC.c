@@ -325,11 +325,11 @@ void func_8005E89C(void) // 0x8005E89C
 
     if (D_800C4414 & 0x1)
     {
-        ptr->field_C4 = Q12_MULT_PRECISE(g_DeltaTime0, g_MapOverlayHeader.field_5C->field_E);
+        ptr->field_C4 = Q12_MULT_PRECISE(g_DeltaTime, g_MapOverlayHeader.field_5C->field_E);
         ptr->field_C8 = g_MapOverlayHeader.field_5C->field_4 * 16;
         ptr->field_CA = g_MapOverlayHeader.field_5C->field_5 * 16;
         ptr->field_CC = (0x100 - g_MapOverlayHeader.field_5C->field_5) * 16;
-        ptr->field_CE = (g_DeltaTime0 * g_MapOverlayHeader.field_5C->field_E) / g_MapOverlayHeader.field_5C->field_16;
+        ptr->field_CE = (g_DeltaTime * g_MapOverlayHeader.field_5C->field_E) / g_MapOverlayHeader.field_5C->field_16;
         ptr->field_C6 = (u16)g_MapOverlayHeader.field_5C->field_A >> 2;
         ptr->field_D0 = g_MapOverlayHeader.field_5C->field_20;
         ptr->field_D4 = g_MapOverlayHeader.field_5C->field_24;
@@ -348,7 +348,7 @@ void func_8005E89C(void) // 0x8005E89C
                 break;
 
             case 1:
-                g_MapOverlayHeader.field_5C->field_10 = MIN(g_MapOverlayHeader.field_5C->field_10 + ((g_DeltaTime0 * g_MapOverlayHeader.field_5C->field_2) >> 5),
+                g_MapOverlayHeader.field_5C->field_10 = MIN(g_MapOverlayHeader.field_5C->field_10 + ((g_DeltaTime * g_MapOverlayHeader.field_5C->field_2) >> 5),
                                                             Q12(1.0f));
                 break;
 
@@ -368,7 +368,7 @@ void func_8005E89C(void) // 0x8005E89C
                 break;
 
             case 3:
-                g_MapOverlayHeader.field_5C->field_10 = CLAMP_LOW(g_MapOverlayHeader.field_5C->field_10 - ((g_DeltaTime0 * g_MapOverlayHeader.field_5C->field_2) >> 5),
+                g_MapOverlayHeader.field_5C->field_10 = CLAMP_LOW(g_MapOverlayHeader.field_5C->field_10 - ((g_DeltaTime * g_MapOverlayHeader.field_5C->field_2) >> 5),
                                                                   Q12(0.0f));
 
                 for (i = 0; i < g_MapOverlayHeader.unkTable1Count_50; i++)
@@ -387,12 +387,12 @@ void func_8005E89C(void) // 0x8005E89C
     {
         if (g_MapOverlayHeader.field_7C->field_1C > 0)
         {
-            g_MapOverlayHeader.field_7C->field_1C -= g_DeltaTime0;
+            g_MapOverlayHeader.field_7C->field_1C -= g_DeltaTime;
             g_MapOverlayHeader.field_7C->field_1C  = MAX(g_MapOverlayHeader.field_7C->field_1C, 0);
         }
         else
         {
-            g_MapOverlayHeader.field_7C->field_10 = Q12_MULT_PRECISE(g_DeltaTime0, g_MapOverlayHeader.field_7C->field_E) +
+            g_MapOverlayHeader.field_7C->field_10 = Q12_MULT_PRECISE(g_DeltaTime, g_MapOverlayHeader.field_7C->field_E) +
                                                     g_MapOverlayHeader.field_7C->field_10;
             g_MapOverlayHeader.field_7C->field_10 = MIN(g_MapOverlayHeader.field_7C->field_10, Q12(0.25f));
         }
@@ -439,18 +439,18 @@ void func_8005E89C(void) // 0x8005E89C
 
             ptr->field_34[i] = CLAMP_CUSTOM((chara->position_18.vx + chara->field_D8.offsetX_0) - D_800C42E8[i].field_4,
                                             (chara->position_18.vx + chara->field_D8.offsetX_0) - curPtr->field_4,
-                                            -Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)),
-                                             Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)));
+                                            -Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)),
+                                             Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)));
 
             ptr->field_64[i] = CLAMP_CUSTOM((chara->position_18.vy + chara->field_C8.field_6) - D_800C42E8[i].field_2,
                                             (chara->position_18.vy + chara->field_C8.field_6) - curPtr->field_2,
-                                            -Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)) >> 4,
-                                            Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)));
+                                            -Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)) >> 4,
+                                            Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)));
 
             ptr->field_94[i] = CLAMP_CUSTOM((chara->position_18.vz + chara->field_D8.offsetZ_2) - D_800C42E8[i].field_8,
                                             (chara->position_18.vz + chara->field_D8.offsetZ_2) - curPtr->field_8,
-                                            -Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)),
-                                             Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)));
+                                            -Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)),
+                                             Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)));
 
             D_800C42E8[i].field_4 += ptr->field_34[i];
             D_800C42E8[i].field_2 += ptr->field_64[i];
@@ -1017,15 +1017,15 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
 
     if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
     {
-        g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 += (u16)g_DeltaTime0 * 4;
+        g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 += (u16)g_DeltaTime * 4;
     }
     else if (g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3 == 33)
     {
-        g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 += (u16)g_DeltaTime0 * 2;
+        g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 += (u16)g_DeltaTime * 2;
     }
     else
     {
-        g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 += g_DeltaTime0;
+        g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 += g_DeltaTime;
     }
 
     temp_a1 = g_MapOverlayHeader.unkTable1_4C[idx].field_B >> 2;
@@ -1323,7 +1323,7 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
             g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += ptr->field_0.field_94[idx0];
         }
 
-        g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 = MIN(g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 + (g_DeltaTime2 >> 2), 0x2000);
+        g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 = MIN(g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 + (g_GravitySpeed >> 2), 0x2000);
 
         g_MapOverlayHeader.unkTable1_4C[idx].vy_8 += g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0;
 
@@ -1377,7 +1377,7 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
     {
         if (*g_MapOverlayHeader.data_190 != 0)
         {
-            g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime0;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime;
             if (g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 > Q12(50.0f))
             {
                 g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 = Q12(50.0f);
@@ -1388,7 +1388,7 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
     }
     else
     {
-        g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime0;
+        g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime;
 
         if (g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 > 0xCC0)
         {
@@ -1781,7 +1781,7 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
 
     if (g_MapOverlayHeader.unkTable1_4C[idx].field_B & (1 << 2))
     {
-        g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime0;
+        g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime;
 
         if (g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 > Q12(2.5f))
         {
@@ -1795,7 +1795,7 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
 
     if (*g_MapOverlayHeader.data_190 != 0)
     {
-        g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime0;
+        g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime;
 
         if (g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 > Q12(45.0f))
         {
@@ -1806,7 +1806,7 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
     {
         if (g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 < Q12(5.0f))
         {
-            g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime0;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime;
         }
     }
 
@@ -2228,7 +2228,7 @@ bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
         return false;
     }
 
-    g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_2 += g_DeltaTime0;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_2 += g_DeltaTime;
 
     gte_SetRotMatrix(&ptr->field_12C);
     gte_SetTransMatrix(&ptr->field_12C);
@@ -2344,7 +2344,7 @@ bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
 
     ptr = PSX_SCRATCH;
 
-    temp_s4 = Q12_MULT_PRECISE(g_DeltaTime0, Rng_GenerateInt(Q12(0.8f), Q12(1.2f) - 2));
+    temp_s4 = Q12_MULT_PRECISE(g_DeltaTime, Rng_GenerateInt(Q12(0.8f), Q12(1.2f) - 2));
 
     if (g_MapOverlayHeader.unkTable1_4C[idx].field_A == 20)
     {

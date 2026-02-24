@@ -301,7 +301,7 @@ s32 func_800D0F40(s32 arg0, s32 arg1, s32 arg2) // 0x800D0F40
     s32 index;
 
     index = (arg0 * arg1) >> 8;
-    if (index != 0 && g_DeltaTime0 != 0)
+    if (index != 0 && g_DeltaTime != 0)
     {
         index += Rng_GenerateUInt(-2, 1);
         // TODO: `CLAMP` doesn't match?
@@ -497,9 +497,9 @@ void func_800D1478(SVECTOR* arg0, s32 arg1, q19_12 headingAgle, s32 mode, SVECTO
             break;
     }
 
-    arg0->vx += Q12_MULT_PRECISE(x, g_DeltaTime0);
-    arg0->vy += Q12_MULT_PRECISE(y, g_DeltaTime0);
-    arg0->vz += Q12_MULT_PRECISE(z, g_DeltaTime0);
+    arg0->vx += Q12_MULT_PRECISE(x, g_DeltaTime);
+    arg0->vy += Q12_MULT_PRECISE(y, g_DeltaTime);
+    arg0->vz += Q12_MULT_PRECISE(z, g_DeltaTime);
 }
 
 void func_800D1604(GsOT_TAG* ot, int arg1) // 0x800D1604
@@ -535,14 +535,14 @@ void func_800D1604(GsOT_TAG* ot, int arg1) // 0x800D1604
 
             func_800D0CA0(0, &iter->field_14);
 
-            if (g_DeltaTime0 != 0)
+            if (g_DeltaTime != 0)
             {
                 func_800D13B4(&iter->field_40[1], 12, 11, iter->field_8);
                 func_800D0EC0(&iter->field_40[1], 12, 11);
             }
 
             func_800D0FD4(ot, &iter->field_14, &iter->field_40[1], &iter->field_1C, FP_MULTIPLY_PRECISE(temp_s4, iter->field_CC, 12), 11, 9, 12, iter->field_3C);
-            iter->field_8 -= g_DeltaTime0;
+            iter->field_8 -= g_DeltaTime;
         }
     }
 }
@@ -631,7 +631,7 @@ bool func_800D19F0(s_800DF580* arg0) // 0x800D19F0
                 arg0->field_D0 = 1;
             }
 
-            arg0->field_D4 -= g_DeltaTime0;
+            arg0->field_D4 -= g_DeltaTime;
             return false;
 
         case 1:
@@ -639,7 +639,7 @@ bool func_800D19F0(s_800DF580* arg0) // 0x800D19F0
             {
                 if (arg0->field_CC < Q12(0.65f))
                 {
-                    arg0->field_CC += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.34f));
+                    arg0->field_CC += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.34f));
                 }
                 else
                 {
@@ -650,7 +650,7 @@ bool func_800D19F0(s_800DF580* arg0) // 0x800D19F0
             {
                 if (arg0->field_CC > Q12(0.0f))
                 {
-                    arg0->field_CC -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f));
+                    arg0->field_CC -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.25f));
                 }
                 else
                 {
@@ -869,12 +869,12 @@ void func_800D1FF4(GsOT_TAG* arg0) // 0x800D1FF4
             }
             else
             {
-                ptr1->field_4 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.3f);
+                ptr1->field_4 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.3f);
                 ptr1->field_4  = MAX(ptr1->field_4, Q12(0.0f));
             }
 
             func_800D1D3C(arg0, &ptr1->field_8, &sp18, ptr1->field_4);
-            ptr1->timer_0 -= g_DeltaTime0;
+            ptr1->timer_0 -= g_DeltaTime;
         }
     }
 }
@@ -1318,12 +1318,12 @@ void func_800D2D28(GsOT_TAG* arg0)
     {
         if (ptr->field_0 > 0)
         {
-            ptr->field_10 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.7f));
+            ptr->field_10 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.7f));
             ptr->field_10  = MIN(0x1000, ptr->field_10);
 
             if (ptr->field_0 > 0x2B33)
             {
-                var_a0 = ptr->field_C + Q12_MULT_PRECISE(g_DeltaTime0, 0x800);
+                var_a0 = ptr->field_C + Q12_MULT_PRECISE(g_DeltaTime, 0x800);
                 if (var_a0 > 0x1000)
                 {
                     ptr->field_C = 0x1000;
@@ -1335,14 +1335,14 @@ void func_800D2D28(GsOT_TAG* arg0)
             }
             else
             {
-                ptr->field_C -= Q12_MULT_PRECISE(g_DeltaTime0, 0x666);
+                ptr->field_C -= Q12_MULT_PRECISE(g_DeltaTime, 0x666);
                 ptr->field_C  = MAX(ptr->field_C, 0);
             }
 
             func_800D0D6C(&sp10, &ptr->field_4, temp_s4);
             func_800D0CA0(temp_s4, &ptr->field_4);
             func_800D2790(arg0, &sp10, ptr->field_C, ptr->field_10);
-            ptr->field_0 -= g_DeltaTime0;
+            ptr->field_0 -= g_DeltaTime;
         }
     }
 }
@@ -1359,7 +1359,7 @@ void func_800D2ED0(GsOT_TAG* arg0) // 0x800D2ED0
     {
         if (ptr->field_0 > 0)
         {
-            ptr->field_10 += Q12_MULT_PRECISE(g_DeltaTime0, 0x800);
+            ptr->field_10 += Q12_MULT_PRECISE(g_DeltaTime, 0x800);
             ptr->field_10  = MIN(0x1000, ptr->field_10);
 
             if (ptr->field_0 > 0x2B33)
@@ -1368,14 +1368,14 @@ void func_800D2ED0(GsOT_TAG* arg0) // 0x800D2ED0
             }
             else
             {
-                ptr->field_C -= Q12_MULT_PRECISE(g_DeltaTime0, 0x666);
+                ptr->field_C -= Q12_MULT_PRECISE(g_DeltaTime, 0x666);
                 ptr->field_C  = MAX(ptr->field_C, 0);
             }
             func_800D0D6C(&sp10, &ptr->field_4, 0);
             func_800D0CA0(0, &ptr->field_4);
             func_800D21AC(arg0, &sp10, ptr->field_C, ptr->field_10);
 
-            ptr->field_0 -= g_DeltaTime0;
+            ptr->field_0 -= g_DeltaTime;
         }
     }
 
@@ -1443,7 +1443,7 @@ void func_800D3114(void) // 0x800D3114
             }
             break;
     }
-    ptr->field_4 += g_DeltaTime0;
+    ptr->field_4 += g_DeltaTime;
 }
 
 INCLUDE_RODATA("maps/map4_s03/nonmatchings/map4_s03", D_800CA788);
@@ -1497,7 +1497,7 @@ void func_800D326C(void) // 0x800D326C
             }
             break;
     }
-    ptr->field_4 += g_DeltaTime0;
+    ptr->field_4 += g_DeltaTime;
 }
 
 void func_800D33D0(void) // 0x800D33D0
@@ -1608,7 +1608,7 @@ void func_800D35DC(SVECTOR* rot) // 0x800D35DC
 
     ptr = D_800E0988;
 
-    if (g_DeltaTime0 != Q12(0.0f))
+    if (g_DeltaTime != Q12(0.0f))
     {
         func_800D33D0();
     }
@@ -1694,7 +1694,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
     }
     else
     {
-        twinfeeler->properties_E4.twinfeeler.field_E8.val32 -= g_DeltaTime0;
+        twinfeeler->properties_E4.twinfeeler.field_E8.val32 -= g_DeltaTime;
         if (twinfeeler->properties_E4.twinfeeler.field_E8.val32 < 0)
         {
             twinfeeler->properties_E4.twinfeeler.field_E8.val32 = 0;
@@ -2066,7 +2066,7 @@ void Twinfeeler_Control_12(s_SubCharacter* twinfeeler) // 0x800D4078
             break;
     }
 
-    twinfeeler->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
+    twinfeeler->properties_E4.twinfeeler.field_FC -= g_DeltaTime;
 }
 
 void Twinfeeler_Control_13(s_SubCharacter* twinfeeler) // 0x800D4248
@@ -2121,7 +2121,7 @@ void Twinfeeler_Control_13(s_SubCharacter* twinfeeler) // 0x800D4248
             break;
     }
 
-    twinfeeler->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
+    twinfeeler->properties_E4.twinfeeler.field_FC -= g_DeltaTime;
 }
 
 void func_800D43AC(s_SubCharacter* twinfeeler, s32 arg1) // 0x800D43AC
@@ -2145,7 +2145,7 @@ void func_800D43AC(s_SubCharacter* twinfeeler, s32 arg1) // 0x800D43AC
 
     if ((u32)ABS(angleDeltaToPlayer) > 56) // TODO: Needs casting to `u32`.
     {
-        temp_v0_2 = Q12_MULT_PRECISE(g_DeltaTime0, var_s1);
+        temp_v0_2 = Q12_MULT_PRECISE(g_DeltaTime, var_s1);
         if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
         {
             twinfeeler->rotation_24.vy += temp_v0_2;
@@ -2255,7 +2255,7 @@ void Twinfeeler_Control_5(s_SubCharacter* twinfeeler)
             break;
     }
 
-    localTwinfeeler->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
+    localTwinfeeler->properties_E4.twinfeeler.field_FC -= g_DeltaTime;
 
     if (twinfeeler->model_0.anim_4.status_0 == ANIM_STATUS(TwinfeelerAnim_18, false))
     {
@@ -2336,7 +2336,7 @@ void Twinfeeler_Control_6(s_SubCharacter* twinfeeler, GsCOORDINATE2* arg1) // 0x
         twinfeeler->model_0.stateStep_3    = 0;
     }
 
-    localChara->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
+    localChara->properties_E4.twinfeeler.field_FC -= g_DeltaTime;
 }
 
 bool func_800D48CC(s32 arg0, s32 arg1) // 0x800D48CC
@@ -2461,7 +2461,7 @@ void Twinfeeler_Control_4(s_SubCharacter* twinfeeler)
         twinfeeler->model_0.stateStep_3    = 0;
     }
 
-    localTwinfeeler->properties_E4.twinfeeler.field_FC += g_DeltaTime0;
+    localTwinfeeler->properties_E4.twinfeeler.field_FC += g_DeltaTime;
 }
 
 bool func_800D4C0C(u32 row, s32 col) // 0x800D4C0C
@@ -2669,7 +2669,7 @@ void Twinfeeler_Control_3(s_SubCharacter* chara) // 0x800D4FC0
         chara->model_0.stateStep_3 = 0;
     }
 
-    chara->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
+    chara->properties_E4.twinfeeler.field_FC -= g_DeltaTime;
 }
 
 void Twinfeeler_Control_2(s_SubCharacter* twinfeeler) // 0x800D50D8
@@ -2779,7 +2779,7 @@ void Twinfeeler_Control_9(s_SubCharacter* twinfeeler) // 0x800D511C
         Chara_MoveSpeedUpdate(twinfeeler, Q12(1.0f));
     }
 
-    localTwinfeeler->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
+    localTwinfeeler->properties_E4.twinfeeler.field_FC -= g_DeltaTime;
 }
 
 void Twinfeeler_ControlUpdate(s_SubCharacter* twinfeeler, GsCOORDINATE2* coords) // 0x800D53B0
@@ -2926,7 +2926,7 @@ void func_800D55C8(s_SubCharacter* chara) // 0x800D55C8
 
     chara->moveSpeed_38    = SquareRoot12(Q12_MULT_PRECISE(temp_s2, temp_s2) + Q12_MULT_PRECISE(temp_s0_2, temp_s0_2));
     chara->headingAngle_3C = ratan2(temp_s2, temp_s0_2);
-    chara->fallSpeed_34   += g_DeltaTime2;
+    chara->fallSpeed_34   += g_GravitySpeed;
 
     if (!(chara->properties_E4.twinfeeler.field_114 & (1 << 2)))
     {
@@ -3209,7 +3209,7 @@ void func_800D5C3C(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5C3C
 
 void func_800D5DF4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5DF4
 {
-    if (g_DeltaTime0 != Q12(0.0f))
+    if (g_DeltaTime != Q12(0.0f))
     {
         func_800D5C3C(chara, coords);
     }
@@ -3262,7 +3262,7 @@ void Twinfeeler_Update(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDI
 
     if (twinfeeler->model_0.controlState_2 != TwinfeelerControl_1 || Twinfeeler_Init(twinfeeler))
     {
-        if (g_DeltaTime0 != Q12(0.0f))
+        if (g_DeltaTime != Q12(0.0f))
         {
             func_800D3E58(twinfeeler);
             Twinfeeler_ControlUpdate(twinfeeler, coords);
@@ -3356,7 +3356,7 @@ void func_800D6704(void) // 0x800D6704
 
     if (i != 6)
     {
-        g_DeltaTime0 = Q12(0.0f);
+        g_DeltaTime = Q12(0.0f);
     }
 
     Event_ItemTake(InventoryItemId_HuntingRifle, RIFLE_AMMO_PICKUP_ITEM_COUNT, EventFlag_M4S03_PickupHuntingRifle, 17);
@@ -3389,7 +3389,7 @@ void func_800D6774(void) // 0x800D6774
         case 1:
         case 2:
             Camera_PositionSet(NULL, Q12(120.5f), Q12(-5.5f), Q12(138.0f), Q12(0.0f), Q12(0.0f), cam_mv_prm_user.max_spd_xz >> 3, cam_mv_prm_user.max_spd_y >> 1, false);
-            D_800DB9E0 += g_DeltaTime0;
+            D_800DB9E0 += g_DeltaTime;
 
             if (D_800DB9E0 >= Q12(1.8f))
             {
@@ -3659,7 +3659,7 @@ void func_800D6F24(void) // 0x800D6F24
 
 s16 func_800D7394(void) // 0x800D7394
 {
-    if (g_DeltaTime0 != Q12(0.0f))
+    if (g_DeltaTime != Q12(0.0f))
     {
         D_800DB914 = ((s32)(D_800DB918 * 0x7169AC35) >> 3) ^ 0xA547B39E;
         D_800DB918 = ((u32)(D_800DB914 * 0x892D719C) >> 3) ^ 0xC65A4B97;
@@ -3794,7 +3794,7 @@ void func_800D7718(void) // 0x800D7718
     var_s2 = 188;
     if (D_800E0698.field_0 != 0)
     {
-        if (g_DeltaTime0 != Q12(0.0f))
+        if (g_DeltaTime != Q12(0.0f))
         {
             D_800DB924.pad++;
             if (!(D_800DB924.pad & 0xB))
@@ -3817,7 +3817,7 @@ void func_800D7808(s_800E06A0* arg0, s32 arg1) // 0x800D7808
 {
     s32 temp;
 
-    if (g_DeltaTime0 == 0)
+    if (g_DeltaTime == 0)
     {
         return;
     }
@@ -3937,7 +3937,7 @@ s32 func_800D78F4(s_800E06A0* arg0, s32 arg1) // 0x800D78F4
             break;
     }
 
-    arg0->field_24 += g_DeltaTime0;
+    arg0->field_24 += g_DeltaTime;
 
     if (var_s0 != 0)
     {
@@ -4072,7 +4072,7 @@ s32 func_800D7AE0(s_800E06A0* arg0) // 0x800D7AE0
             break;
     }
 
-    arg0->field_24 += g_DeltaTime0;
+    arg0->field_24 += g_DeltaTime;
 
     if (var_s0)
     {
@@ -4200,7 +4200,7 @@ void func_800D7F1C(s_800E06A0* arg0) // 0x800D7F1C
             break;
     }
 
-    arg0->field_24 += g_DeltaTime0;
+    arg0->field_24 += g_DeltaTime;
 
     if (var_s2 != 0)
     {
@@ -4955,18 +4955,18 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
             }
 
             func_80069844(2);
-            D_800E05A8 += g_DeltaTime0;
+            D_800E05A8 += g_DeltaTime;
 
             if (D_800E05AC) {} // @hack
 
-            var = ratan2(Q12_ANGLE(360.0f), FP_FROM(g_DeltaTime2 * Math_Cos(g_WorldObject_Fence.rotation_28.vx), Q12_SHIFT));
+            var = ratan2(Q12_ANGLE(360.0f), FP_FROM(g_GravitySpeed * Math_Cos(g_WorldObject_Fence.rotation_28.vx), Q12_SHIFT));
             var_a0 = MAX(Q12(0.0f), Q12(1.0f) - (D_800E05A8 * 2));
             D_800E05AC = Q12_MULT_PRECISE(var_a0, D_800E05AC + var);
-            g_WorldObject_Fence.rotation_28.vx += Q12_MULT_PRECISE(g_DeltaTime0, D_800E05AC);
+            g_WorldObject_Fence.rotation_28.vx += Q12_MULT_PRECISE(g_DeltaTime, D_800E05AC);
 
-            D_800E05AE = MIN(Q12(15.0f), (D_800E05AE + g_DeltaTime2) + (g_DeltaTime2 >> 4));
+            D_800E05AE = MIN(Q12(15.0f), (D_800E05AE + g_GravitySpeed) + (g_GravitySpeed >> 4));
 
-            g_WorldObject_Fence.position_1C.vy += Q12_MULT_PRECISE(g_DeltaTime0, D_800E05AE);
+            g_WorldObject_Fence.position_1C.vy += Q12_MULT_PRECISE(g_DeltaTime, D_800E05AE);
             if (g_WorldObject_Fence.rotation_28.vx > Q12_ANGLE(90.0f))
             {
                 g_WorldObject_Fence.rotation_28.vx = Q12_ANGLE(90.0f);

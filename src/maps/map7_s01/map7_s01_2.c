@@ -746,7 +746,7 @@ void func_800D8A5C(void) // 0x800D8A5C
             {
                 if (D_800E1678[i] > 0)
                 {
-                    D_800E1678[i] -= g_DeltaTime0;
+                    D_800E1678[i] -= g_DeltaTime;
 
                     if (D_800E1678[i] > 0)
                     {
@@ -910,7 +910,7 @@ void func_800D8FF8(void) // 0x800D8FF8
                 break;
             }
 
-            g_SysWork.field_28 += g_DeltaTime0;
+            g_SysWork.field_28 += g_DeltaTime;
             if (g_SysWork.field_28 > Q12(1.4f))
             {
                 g_SysWork.field_28 = Q12(0.0f);
@@ -1453,7 +1453,7 @@ void func_800D9C9C(void) // 0x800D9C9C
                     SysWork_StateStepIncrement(1);
 
                 case 1:
-                    g_SysWork.field_28 += g_DeltaTime0;
+                    g_SysWork.field_28 += g_DeltaTime;
                     if (g_SysWork.field_28 > Q12(2.0f))
                     {
                         g_SysWork.field_28 = Q12(2.0f);
@@ -1469,11 +1469,11 @@ void func_800D9C9C(void) // 0x800D9C9C
                     break;
 
                 case 2:
-                    D_800E168E += g_DeltaTime2 >> 1;
+                    D_800E168E += g_GravitySpeed >> 1;
 
                     if (g_WorldObject_Stone0.position_1C.vy < Q12(-1.05f))
                     {
-                        g_WorldObject_Stone0.position_1C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E168E, 12);
+                        g_WorldObject_Stone0.position_1C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime, D_800E168E, 12);
                         if (g_WorldObject_Stone0.position_1C.vy > Q12(-1.05f))
                         {
                             g_WorldObject_Stone0.position_1C.vy = Q12(-1.05f);
@@ -1488,11 +1488,11 @@ void func_800D9C9C(void) // 0x800D9C9C
                     break;
 
                 case 3:
-                    g_WorldObject_Stone0.rotation_28.vz += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-0.0694f));
+                    g_WorldObject_Stone0.rotation_28.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.0694f));
                     g_WorldObject_Stone0.position_1C.vy  = Q12_MULT(Math_Cos(g_WorldObject_Stone0.rotation_28.vz), Q12(0.15f)) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
                     g_WorldObject_Stone0.position_1C.vz  = Q12_MULT(Math_Sin(g_WorldObject_Stone0.rotation_28.vz), Q12(-0.15f)) - Q12(140.5f);
 
-                    g_SysWork.field_28                   += g_DeltaTime0;
+                    g_SysWork.field_28                   += g_DeltaTime;
                     if (g_SysWork.field_28 > Q12(0.5f))
                     {
                         SysWork_StateStepIncrement(1);
@@ -1501,10 +1501,10 @@ void func_800D9C9C(void) // 0x800D9C9C
                     break;
 
                 case 4:
-                    D_800E168E                          += g_DeltaTime2;
-                    g_WorldObject_Stone0.rotation_28.vz += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-0.3333f));
-                    g_WorldObject_Stone0.position_1C.vy += Q12_MULT_PRECISE(D_800E168E, g_DeltaTime0);
-                    g_WorldObject_Stone0.position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.3f));
+                    D_800E168E                          += g_GravitySpeed;
+                    g_WorldObject_Stone0.rotation_28.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3333f));
+                    g_WorldObject_Stone0.position_1C.vy += Q12_MULT_PRECISE(D_800E168E, g_DeltaTime);
+                    g_WorldObject_Stone0.position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
 
                     if (g_WorldObject_Stone0.position_1C.vy > 0)
                     {
@@ -1661,7 +1661,7 @@ void func_800DAE00(void) // 0x800DAE00
             }
             else
             {
-                *var_s0 -= g_DeltaTime0;
+                *var_s0 -= g_DeltaTime;
                 if (*var_s0 < 0)
                 {
                     *var_s0 = 0;
@@ -1682,7 +1682,7 @@ void func_800DAE00(void) // 0x800DAE00
             }
             else
             {
-                *var_s0 -= g_DeltaTime0;
+                *var_s0 -= g_DeltaTime;
                 if (*var_s0 < Q12(0.0f))
                 {
                     *var_s0 = Q12(0.0f);
@@ -1728,7 +1728,7 @@ void func_800DB13C(void) // 0x800DB13C
     {
         if (D_800E2CE8 != Q12(0.0f))
         {
-            D_800E2CE8 -= g_DeltaTime0;
+            D_800E2CE8 -= g_DeltaTime;
             if (D_800E2CE8 < Q12(0.0f))
             {
                 D_800E2CE8 = Q12(0.0f);
@@ -1990,11 +1990,11 @@ void func_800DCE20(void) // 0x800DCE20
             SysWork_StateStepIncrement(0);
 
         case 2:
-            D_800E16A8[0] = MIN(D_800E16A8[0] + Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f)), Q12(0.1f));
+            D_800E16A8[0] = MIN(D_800E16A8[0] + Q12_MULT_PRECISE(g_DeltaTime, Q12(0.25f)), Q12(0.1f));
 
             for (i = 0; i < 4; i++)
             {
-                g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime0, (i & 1) ? D_800E16A8[0] : -D_800E16A8[0]);
+                g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime, (i & 1) ? D_800E16A8[0] : -D_800E16A8[0]);
             }
 
             SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
@@ -2007,12 +2007,12 @@ void func_800DCE20(void) // 0x800DCE20
             func_800866D4(53, 1, false);
 
         case 3:
-            D_800E16A8[0] = MIN(D_800E16A8[0] + Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f)), Q12(0.1f));
-            D_800E16A8[1] = MIN(D_800E16A8[1] + Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f)), Q12(0.1f));
+            D_800E16A8[0] = MIN(D_800E16A8[0] + Q12_MULT_PRECISE(g_DeltaTime, Q12(0.25f)), Q12(0.1f));
+            D_800E16A8[1] = MIN(D_800E16A8[1] + Q12_MULT_PRECISE(g_DeltaTime, Q12(0.25f)), Q12(0.1f));
 
             for (i = 0; i < ARRAY_SIZE(g_WorldObject_Dr); i++)
             {
-                g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime0, (i & 1) ? D_800E16A8[i >= 4 ? 1 : 0] : -D_800E16A8[i >= 4 ? 1 : 0]);
+                g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime, (i & 1) ? D_800E16A8[i >= 4 ? 1 : 0] : -D_800E16A8[i >= 4 ? 1 : 0]);
             }
 
             if (g_SysWork.sysStateStep_C[0] == 3)
@@ -2025,12 +2025,12 @@ void func_800DCE20(void) // 0x800DCE20
                 SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
             }
 
-            g_DeltaTime0 = g_DeltaTime0 >> 1;
+            g_DeltaTime = g_DeltaTime >> 1;
             break;
 
         case 6:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
-            g_DeltaTime0 = g_DeltaTime0 >> 1;
+            g_DeltaTime = g_DeltaTime >> 1;
             break;
 
         default:
@@ -2271,7 +2271,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
                 }
                 else if (D_800E33A4 > 0)
                 {
-                    D_800E33A4 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.6f));
+                    D_800E33A4 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.6f));
                     npcTimer = D_800E33A4;
                 }
 
@@ -2308,7 +2308,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
 
                 if (D_800E33A0)
                 {
-                    tmp3 = D_800E33A0 - g_DeltaTime0;
+                    tmp3 = D_800E33A0 - g_DeltaTime;
                     D_800E33A0 = tmp3;
                     if (tmp3 < 0)
                     {
@@ -2326,7 +2326,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
         case PACKED_CELL_XZ(18, 15):
             if (g_SysWork.npcs_1A0[0].model_0.charaId_0 == Chara_GhostChildAlessa)
             {
-                g_SysWork.npcs_1A0[0].timer_C6 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.2f));
+                g_SysWork.npcs_1A0[0].timer_C6 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.2f));
 
                 if (g_SysWork.npcs_1A0[0].timer_C6 > Q12(1.0f))
                 {
@@ -2414,7 +2414,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
             {
                 if (D_800E2CE8)
                 {
-                    D_800E2CE8 -= g_DeltaTime0;
+                    D_800E2CE8 -= g_DeltaTime;
                     if (D_800E2CE8 < 0)
                     {
                         D_800E2CE8 = 0;

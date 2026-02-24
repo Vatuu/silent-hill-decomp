@@ -573,7 +573,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 4:
-            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f));
+            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
             g_Timer0 = MIN(time, Q12(37.0f));
             if (g_Timer0 >= Q12(37.0f))
             {
@@ -598,7 +598,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 9:
-            time = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f));
+            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
             g_Timer0 = MIN(time, Q12(52.0f));
             if (g_Timer0 >= Q12(52.0f))
             {
@@ -619,7 +619,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 12:
-            time = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f));
+            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
             g_Timer0 = MIN(time, Q12(75.0f));
 
             if (g_Timer0 >= Q12(75.0f))
@@ -638,7 +638,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 14:
-            time   = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(18.0f));
+            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f));
             g_Timer0 = MIN(time, Q12(115.0f));
             if (g_Timer0 >= Q12(115.0f))
             {
@@ -652,7 +652,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 16:
-            time = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(18.0f));
+            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f));
             g_Timer0 = MIN(time, Q12(146.0f));
             if (g_Timer0 >= Q12(146.0f))
             {
@@ -667,7 +667,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 18:
-            time = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(18.0f));
+            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f));
             g_Timer0 = MIN(time, Q12(147.0f));
             if (g_Timer0 >= Q12(147.0f))
             {
@@ -680,7 +680,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 20:
-            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(18.0f));
+            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f));
             g_Timer0 = MIN(time, Q12(154.0f));
             if (g_Timer0 >= Q12(154.0f))
             {
@@ -1002,12 +1002,12 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
     {
         if (Savegame_EventFlagGet(EventFlag_41))
         {
-            temp_a1 = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Model_AnimDurationGet(&g_SysWork.npcs_1A0[0].model_0));
+            temp_a1 = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Model_AnimDurationGet(&g_SysWork.npcs_1A0[0].model_0));
 
             ptr = &g_Timer0;
             if (temp_a1 < Q12(25.0f))
             {
-                var_a2 = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Model_AnimDurationGet(&g_SysWork.npcs_1A0[0].model_0));
+                var_a2 = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Model_AnimDurationGet(&g_SysWork.npcs_1A0[0].model_0));
             }
             else
             {
@@ -1039,7 +1039,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
         }
         else
         {
-            D_800E2560 += g_DeltaTime0;
+            D_800E2560 += g_DeltaTime;
         }
     }
 

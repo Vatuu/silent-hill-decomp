@@ -219,7 +219,7 @@ static inline q19_12 Anim_TimestepGet(s_Model* model, s_AnimInfo* animInfo)
     if (model->anim_4.flags_2 & AnimFlag_Unlocked)
     {
         duration = Anim_DurationGet(model, animInfo);
-        return Q12_MULT_PRECISE(duration, g_DeltaTime0);
+        return Q12_MULT_PRECISE(duration, g_DeltaTime);
     }
 
     return Q12(0.0f);
@@ -422,7 +422,7 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     if (model->anim_4.flags_2 & AnimFlag_Unlocked)
     {
         timeDelta = Anim_DurationGet(model, animInfo);
-        timestep  = Q12_MULT_PRECISE(timeDelta, g_DeltaTime0);
+        timestep  = Q12_MULT_PRECISE(timeDelta, g_DeltaTime);
     }
     else
     {

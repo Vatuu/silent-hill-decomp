@@ -150,9 +150,9 @@ void func_800D0608(void) // 0x800D0608
     VECTOR3  lightIntPos;
     SVECTOR3 unused;
 
-    // Weird code that changes g_DeltaTime0, some kind of 50Hz/60Hz conversion trick?
+    // Weird code that changes g_DeltaTime, some kind of 50Hz/60Hz conversion trick?
     // Maybe cutscene was timed at wrong rate?
-    g_DeltaTime0 = (g_DeltaTime0 * 4) / 5;
+    g_DeltaTime = (g_DeltaTime * 4) / 5;
     ClearImage(&D_800D1FD0, 0, 0, 0);
 
     // GPU packet setup.

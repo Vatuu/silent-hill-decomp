@@ -69,14 +69,14 @@ void Ai_Alessa_MovementUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
     unused       = alessa->position_18;
     moveSpeed    = alessa->moveSpeed_38;
     headingAngle = alessa->headingAngle_3C;
-    moveDist     = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime0);
+    moveDist     = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveDist);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
     offset.vx = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(alessa->fallSpeed_34, g_DeltaTime0);
+    offset.vy = Q12_MULT_PRECISE(alessa->fallSpeed_34, g_DeltaTime);
 
     alessa->position_18.vx += offset.vx;
     alessa->position_18.vy = Q12(0.0f);
@@ -108,7 +108,7 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
         case 2:
             if (alessaProps.moveSpeed_126 > Q12(1.25f))
             {
-                alessaProps.moveSpeed_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12(0.5f));
+                alessaProps.moveSpeed_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
                 if (alessaProps.moveSpeed_126 < Q12(1.25f))
                 {
                     alessaProps.moveSpeed_126 = Q12(1.25f);
@@ -116,7 +116,7 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
             }
             else if (alessaProps.moveSpeed_126 < Q12(1.25f))
             {
-                alessaProps.moveSpeed_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12(0.4f));
+                alessaProps.moveSpeed_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                 alessaProps.moveSpeed_126  = CLAMP(alessaProps.moveSpeed_126, Q12(0.0f), Q12(1.25f));
             }
 
@@ -127,7 +127,7 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
         case 1:
             if (alessaProps.moveSpeed_126 != Q12(0.0f))
             {
-                alessaProps.moveSpeed_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12(0.4f)) * 2;
+                alessaProps.moveSpeed_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
                 if (alessaProps.moveSpeed_126 < Q12(0.0f))
                 {
                     alessaProps.moveSpeed_126 = Q12(0.0f);
@@ -238,7 +238,7 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
     alessa->rotation_24.vy  = Q12_ANGLE_ABS(alessa->rotation_24.vy + (sharedData_800D3150_3_s02 >> 4));
     alessa->headingAngle_3C = alessa->rotation_24.vy;
     alessa->moveSpeed_38    = alessaProps.moveSpeed_126;
-    alessa->fallSpeed_34   += g_DeltaTime2;
+    alessa->fallSpeed_34   += g_GravitySpeed;
 
     coords->flg = false;
     Math_RotMatrixZxyNegGte(&alessa->rotation_24, &coords->coord);

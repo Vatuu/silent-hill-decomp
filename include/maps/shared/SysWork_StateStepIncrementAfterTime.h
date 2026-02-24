@@ -20,7 +20,7 @@ void SysWork_StateStepIncrementAfterTime(q19_12* timer, q19_12 timeInc, q19_12 t
     }
 
     // Increment timer.
-    *timer += Q12_MULT_PRECISE(g_DeltaTime0, timeInc);
+    *timer += Q12_MULT_PRECISE(g_DeltaTime, timeInc);
 
     // End timer and increment state step.
     if (*timer > timeMax)

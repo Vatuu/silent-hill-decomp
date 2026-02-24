@@ -370,7 +370,7 @@ void func_800D0B64(void) // 0x800D0B64
 
         if (g_SysWork.sysStateStep_C[0] == 1 || g_SysWork.sysStateStep_C[0] == 2)
         {
-            D_800D4362 += g_DeltaTime0 >> 1;
+            D_800D4362 += g_DeltaTime >> 1;
             if (D_800D4362 > Q12(0.25f))
             {
                 D_800D4362 = Q12(0.25f);
@@ -379,7 +379,7 @@ void func_800D0B64(void) // 0x800D0B64
 
         if (g_SysWork.sysStateStep_C[0] >= 10)
         {
-            D_800D4362 += Q12_MULT_PRECISE(Rng_GenerateUInt(Q12(0.5f), Q12(1.0f) - 1), g_DeltaTime0) >> 3;
+            D_800D4362 += Q12_MULT_PRECISE(Rng_GenerateUInt(Q12(0.5f), Q12(1.0f) - 1), g_DeltaTime) >> 3;
             if (D_800D4362 > Q12(1.0f))
             {
                 D_800D4362 = Q12(1.0f);

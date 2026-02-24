@@ -1186,13 +1186,13 @@ void func_800E068C(void) // 0x800E068C
             RotTransPers(&sp10, &sp18[0], &sp18[1], &sp20);
             func_800E05C8(sp18[0].vx, sp18[0].vy, ptr->field_28);
 
-            ptr->vec_4.vx += Q12_MULT_PRECISE(ptr->vec_14.vx, g_DeltaTime0);
-            ptr->vec_4.vy += Q12_MULT_PRECISE(ptr->vec_14.vy, g_DeltaTime0);
-            ptr->vec_4.vz += Q12_MULT_PRECISE(ptr->vec_14.vz, g_DeltaTime0);
-            ptr->field_28 += Q12_MULT_PRECISE(ptr->field_2C, g_DeltaTime0);
+            ptr->vec_4.vx += Q12_MULT_PRECISE(ptr->vec_14.vx, g_DeltaTime);
+            ptr->vec_4.vy += Q12_MULT_PRECISE(ptr->vec_14.vy, g_DeltaTime);
+            ptr->vec_4.vz += Q12_MULT_PRECISE(ptr->vec_14.vz, g_DeltaTime);
+            ptr->field_28 += Q12_MULT_PRECISE(ptr->field_2C, g_DeltaTime);
             ptr->field_28  = MAX(ptr->field_28, 0);
             ptr->field_28  = MIN(ptr->field_28, 0xFF000);
-            ptr->field_0  -= g_DeltaTime0;
+            ptr->field_0  -= g_DeltaTime;
         }
     }
 }
@@ -1489,8 +1489,8 @@ void func_800E0FAC(s32 arg0) // 0x800E0FAC
             return;
 
         case 1:
-            D_800EBB54 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(30.0f));
-            temp_v0     = func_800E0F28(D_800EBB54, g_DeltaTime0);
+            D_800EBB54 += Q12_MULT_PRECISE(g_DeltaTime, Q12(30.0f));
+            temp_v0     = func_800E0F28(D_800EBB54, g_DeltaTime);
 
             for (i = 0; i < temp_v0; i++)
             {
@@ -1590,7 +1590,7 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
     else
     {
         D_800EBB58.field_0  = vwRetNewAngSpdToTargetAng(D_800EBB58.field_0, D_800EBB58.field_2, angle0, Q12(0.5f), Q12(0.7f), Q12(5.0f));
-        D_800EBB58.field_2 += Q12_MULT_PRECISE(D_800EBB58.field_0, g_DeltaTime0);
+        D_800EBB58.field_2 += Q12_MULT_PRECISE(D_800EBB58.field_0, g_DeltaTime);
     }
 
     sp28.vx = Q12_MULT(Math_Sin(D_800EBB58.field_2), Q12(5.5f)) + Q12(20.0f);
@@ -1654,7 +1654,7 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
     else
     {
         D_800EBB58.field_6  = vwRetNewAngSpdToTargetAng(D_800EBB58.field_6, D_800EBB58.field_4, angle4, Q12(2.0f), Q12(2.0f), Q12(8.0f));
-        D_800EBB58.field_4 += Q12_MULT_PRECISE(D_800EBB58.field_6, g_DeltaTime0);
+        D_800EBB58.field_4 += Q12_MULT_PRECISE(D_800EBB58.field_6, g_DeltaTime);
     }
 
     ratan2(player->position_18.vy + Q12(0.9f), Vc_VectorMagnitudeCalc(player->position_18.vx - sp28.vx, Q12(0.0f), player->position_18.vz - sp28.vz));
@@ -3147,7 +3147,7 @@ void func_800E558C(void) // 0x800E558C
         SysWork_StateStepSet(0, 6);
     }
 
-    D_800ED5F0 += Q12_MULT_PRECISE(g_DeltaTime0, 64);
+    D_800ED5F0 += Q12_MULT_PRECISE(g_DeltaTime, 64);
     if (D_800ED5F0 >= 128)
     {
         D_800ED5F0 = 128;
@@ -3186,7 +3186,7 @@ void func_800E558C(void) // 0x800E558C
             SysWork_StateStepIncrement(0);
 
         case 2:
-            g_DeltaTime0 = Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.65f);
+            g_DeltaTime = Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.65f);
             SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(0.0f), Q12(22.0f), true, true);
             break;
 
@@ -3444,8 +3444,8 @@ void func_800E636C(void) // 0x800E636C
     {
         temp_t1 = D_800EBA30;
 
-        D_800ED5B6 += Q12_MULT_PRECISE(g_DeltaTime0, D_800EBA30);
-        D_800ED5B6  = (Q12_MULT_PRECISE(g_DeltaTime0, D_800ED5B4) + D_800ED5B6) & 0xFFF;
+        D_800ED5B6 += Q12_MULT_PRECISE(g_DeltaTime, D_800EBA30);
+        D_800ED5B6  = (Q12_MULT_PRECISE(g_DeltaTime, D_800ED5B4) + D_800ED5B6) & 0xFFF;
 
         if (g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[0].val32 == 1)
         {
@@ -3637,7 +3637,7 @@ void func_800E6CB8(void) // 0x800E6CB8
     s32      i;
     s32      var_s3;
 
-    time     = Q12_MULT_PRECISE(g_DeltaTime0, Q12(45.511f));
+    time        = Q12_MULT_PRECISE(g_DeltaTime, Q12(45.511f));
     D_800EBB30 += time;
 
     if (D_800EBB30 > Q12(307.2f))
@@ -3667,9 +3667,9 @@ void func_800E6CB8(void) // 0x800E6CB8
         }
         else if (D_800EBB10[i] > 0)
         {
-            D_800EBB20[i] += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-68.2667f));
+            D_800EBB20[i] += Q12_MULT_PRECISE(g_DeltaTime, Q12(-68.2667f));
             D_800EBB20[i]  = MAX(D_800EBB20[i], Q12(-34.1334f));
-            D_800EBB10[i] += Q12_MULT_PRECISE(g_DeltaTime0, D_800EBB20[i]);
+            D_800EBB10[i] += Q12_MULT_PRECISE(g_DeltaTime, D_800EBB20[i]);
 
             if (D_800EBB10[i] < 0)
             {
@@ -3686,9 +3686,9 @@ void func_800E6CB8(void) // 0x800E6CB8
         }
         else
         {
-            D_800EBB20[i] += Q12_MULT_PRECISE(g_DeltaTime0, Q12(68.2667f));
+            D_800EBB20[i] += Q12_MULT_PRECISE(g_DeltaTime, Q12(68.2667f));
             D_800EBB20[i]  = CLAMP_HIGH(D_800EBB20[i], Q12(34.1334f));
-            D_800EBB10[i] += Q12_MULT_PRECISE(g_DeltaTime0, D_800EBB20[i]);
+            D_800EBB10[i] += Q12_MULT_PRECISE(g_DeltaTime, D_800EBB20[i]);
 
             if (D_800EBB10[i] > 0)
             {
@@ -3747,8 +3747,8 @@ void func_800E7204(void) // 0x800E7204
     q19_12   temp_s0;
     s32      i;
 
-    D_800EBB36 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.197f) + 1);
-    D_800EBB38 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.275f));
+    D_800EBB36 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.197f) + 1);
+    D_800EBB38 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.275f));
 
     for (i = 0; i < 12; i++)
     {
@@ -3839,12 +3839,12 @@ void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8
 
         if (D_800ED841 < var_s0)
         {
-            D_800ED841 = CLAMP_HIGH(var_s0, Q12_MULT_PRECISE(g_DeltaTime0, 0xC0) + D_800ED841);
+            D_800ED841 = CLAMP_HIGH(var_s0, Q12_MULT_PRECISE(g_DeltaTime, 0xC0) + D_800ED841);
         }
 
         if (var_s0 < D_800ED841)
         {
-            D_800ED841 = MAX(var_s0, D_800ED841 - Q12_MULT_PRECISE(g_DeltaTime0, 0xC0));
+            D_800ED841 = MAX(var_s0, D_800ED841 - Q12_MULT_PRECISE(g_DeltaTime, 0xC0));
         }
         var_s0 = D_800ED841;
     }

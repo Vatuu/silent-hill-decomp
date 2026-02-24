@@ -109,7 +109,7 @@ void func_8003E740(void) // 0x8003E740
 
     static u32 D_800A9FB0 = 0;
 
-    if (g_DeltaTime0 != Q12(0.0f))
+    if (g_DeltaTime != Q12(0.0f))
     {
         D_800A9FB0 += 8;
         for (i = 0; i < 8; i++)
@@ -436,11 +436,11 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
 
     if (g_SysWork.field_2388.isFlashlightOn_15)
     {
-        g_SysWork.field_2388.flashlightIntensity_18 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 4.0f);
+        g_SysWork.field_2388.flashlightIntensity_18 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 4.0f);
     }
     else
     {
-        g_SysWork.field_2388.flashlightIntensity_18 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 4.0f);
+        g_SysWork.field_2388.flashlightIntensity_18 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 4.0f);
     }
 
     g_SysWork.field_2388.flashlightIntensity_18 = CLAMP(g_SysWork.field_2388.flashlightIntensity_18, Q12(0.0f), Q12(1.0f));

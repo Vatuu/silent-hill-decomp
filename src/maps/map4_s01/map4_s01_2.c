@@ -209,12 +209,12 @@ void func_800D1FF0(void) // 0x800D1FF0
             SysWork_StateStepIncrement(0);
 
         case 6:
-            tmp = Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.22f));
+            tmp = Q12_MULT_PRECISE(g_DeltaTime, Q12(0.22f));
 
             g_SysWork.playerWork_4C.player_0.position_18.vz += tmp;
             WorldObject_D_800D7FF0.position_1C.vz += tmp;
 
-            D_800D5AE8 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(2.0f));
+            D_800D5AE8 += Q12_MULT_PRECISE(g_DeltaTime, Q12(2.0f));
             if (D_800D5AE8 > Q12(1.0f))
             {
                 D_800D5AE8 = Q12(1.0f);
@@ -233,7 +233,7 @@ void func_800D1FF0(void) // 0x800D1FF0
             break;
 
         case 7:
-            D_800D5AE8 -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(2.0f));
+            D_800D5AE8 -= Q12_MULT_PRECISE(g_DeltaTime, Q12(2.0f));
             if (D_800D5AE8 < Q12(0.0f))
             {
                 D_800D5AE8 = Q12(0.0f);
@@ -795,12 +795,12 @@ void func_800D3420(void) // 0x800D3420
             SysWork_StateStepIncrement(0);
 
         case 2:
-            D_800D5B00 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 12.0f);
+            D_800D5B00 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 12.0f);
 
             Map_MessageWithAudio(95, &D_800D5AF8, &D_800D5ACC);
             SysWork_StateStepIncrementAfterTime(&D_800D5AFC, Q12(5.0f), Q12(96.0f), Q12(115.0f), true, false);
 
-            D_800D5B04 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 1.5f);
+            D_800D5B04 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.5f);
             if (D_800D5B04 > Q12(1.0f))
             {
                 D_800D5B04 = Q12(1.0f);
@@ -809,9 +809,9 @@ void func_800D3420(void) // 0x800D3420
 
         case 3:
             SysWork_StateStepIncrementAfterTime(&D_800D5AFC, Q12(5.0f), Q12(96.0f), Q12(115.0f), true, true);
-            D_800D5B00 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 12.0f);
+            D_800D5B00 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 12.0f);
 
-            D_800D5B04 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 1.5f);
+            D_800D5B04 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.5f);
             if (D_800D5B04 > Q12(1.0f))
             {
                 D_800D5B04 = Q12(1.0f);
@@ -831,7 +831,7 @@ void func_800D3420(void) // 0x800D3420
         case 7:
             D_800D5AFC  = Q12(139.0f);
 
-            D_800D5B00 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 12.0f);
+            D_800D5B00 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 12.0f);
             if (D_800D5B00 >= Q12(100.0f))
             {
                 SysWork_StateStepIncrement(0);
@@ -839,7 +839,7 @@ void func_800D3420(void) // 0x800D3420
             break;
 
         case 8:
-            D_800D5B04 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.8f);
+            D_800D5B04 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.8f);
             if (D_800D5B04 < 0)
             {
                 D_800D5B04 = 0;

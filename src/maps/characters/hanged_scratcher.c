@@ -399,7 +399,7 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
             Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
         }
 
-        scratcherProps.timer_EA += g_DeltaTime0;
+        scratcherProps.timer_EA += g_DeltaTime;
         if (distToPlayer > Q12(7.5f) && scratcherProps.timer_EA > Q12(1.8f))
         {
             scratcherProps.targetHeadingAngle_EC = Chara_HeadingAngleGet(scratcher,
@@ -441,11 +441,11 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
         {
             if (targetRotDelta > Q12_ANGLE(0.0f))
             {
-                scratcher->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.5f));
+                scratcher->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.5f));
             }
             else
             {
-                scratcher->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.5f));
+                scratcher->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.5f));
             }
         }
     }
@@ -507,11 +507,11 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
         {
             if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
             {
-                scratcher->rotation_24.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.5f);
+                scratcher->rotation_24.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.5f);
             }
             else
             {
-                scratcher->rotation_24.vy -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.5f);
+                scratcher->rotation_24.vy -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.5f);
             }
         }
 
@@ -552,7 +552,7 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
             }
             else
             {
-                scratcherProps.timer_EA += g_DeltaTime0;
+                scratcherProps.timer_EA += g_DeltaTime;
 
                 if (scratcherProps.timer_EA > Q12(3.0f) && !Rng_GenerateInt(0, 7))
                 {
@@ -624,7 +624,7 @@ void Ai_HangedScratcher_Control_6(s_SubCharacter* scratcher)
     }
 
     temp_v1                 = scratcherProps.timer_EA;
-    scratcherProps.timer_EA = MAX(Q12(0.0f), temp_v1 - g_DeltaTime0);
+    scratcherProps.timer_EA = MAX(Q12(0.0f), temp_v1 - g_DeltaTime);
 }
 
 void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
@@ -681,7 +681,7 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
             Chara_MoveSpeedUpdate4(scratcher, Q12(2.0f), scratcherProps.radiusMin_10E);
         }
 
-        scratcherProps.timer_EA += g_DeltaTime0;
+        scratcherProps.timer_EA += g_DeltaTime;
 
         if (distToPlayer < Q12(2.0f) && !cond)
         {
@@ -706,11 +706,11 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
         {
             if (targetRotDelta > Q12_ANGLE(0.0f))
             {
-                scratcher->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(90.0f));
+                scratcher->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
             }
             else
             {
-                scratcher->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(90.0f));
+                scratcher->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
             }
         }
         else
@@ -741,7 +741,7 @@ void Ai_HangedScratcher_Control_8(s_SubCharacter* scratcher)
 {
     if (scratcherProps.flags_E8 & HangedScratcherFlag_0)
     {
-        scratcher->fallSpeed_34 += g_DeltaTime2 >> 1;
+        scratcher->fallSpeed_34 += g_GravitySpeed >> 1;
 
         if (FP_FROM(scratcher->model_0.anim_4.time_4, Q12_SHIFT) == 259)
         {
@@ -759,7 +759,7 @@ void Ai_HangedScratcher_Control_8(s_SubCharacter* scratcher)
 
     if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 245, 256))
     {
-        scratcher->rotation_24.vz = MAX(Q12(0.0f), scratcher->rotation_24.vz - TIMESTEP_SCALE_60_FPS(g_DeltaTime0, 45));
+        scratcher->rotation_24.vz = MAX(Q12(0.0f), scratcher->rotation_24.vz - TIMESTEP_SCALE_60_FPS(g_DeltaTime, 45));
     }
 
     if (ANIM_STATUS_IDX_GET(scratcher->model_0.anim_4.status_0) == HangedScratcherAnim_15)
@@ -828,7 +828,7 @@ void Ai_HangedScratcher_Control_11(s_SubCharacter* scratcher)
 {
     if (scratcherProps.flags_E8 & HangedScratcherFlag_0)
     {
-        scratcher->fallSpeed_34 += g_DeltaTime2 >> 1;
+        scratcher->fallSpeed_34 += g_GravitySpeed >> 1;
 
         if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 176, 184))
         {
@@ -884,7 +884,7 @@ void Ai_HangedScratcher_Control_12(s_SubCharacter* scratcher)
     if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 192, 199))
     {
         animDur       = HANGED_SCRATCHER_ANIM_INFOS[scratcher->model_0.anim_4.status_0].duration_8.constant;
-        animDurScaled = (Q12_MULT_PRECISE(animDur, g_DeltaTime0) * Q12(0.7f)) / Q12(7.0f);
+        animDurScaled = (Q12_MULT_PRECISE(animDur, g_DeltaTime) * Q12(0.7f)) / Q12(7.0f);
 
         scratcherProps.offsetX_F0 += FP_FROM(animDurScaled * Math_Sin(scratcher->rotation_24.vy), Q12_SHIFT);
         scratcherProps.offsetZ_F2 += FP_FROM(animDurScaled * Math_Cos(scratcher->rotation_24.vy), Q12_SHIFT);
@@ -1046,11 +1046,11 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
         {
             if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
             {
-                scratcher->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.125f));
+                scratcher->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.125f));
             }
             else
             {
-                scratcher->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.125f));
+                scratcher->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.125f));
             }
         }
         else
@@ -1084,7 +1084,7 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
             g_SysWork.field_2284[3] &= ~(1 << 1);
         }
 
-        scratcherProps.timer_EA += g_DeltaTime0;
+        scratcherProps.timer_EA += g_DeltaTime;
 
         if (scratcherProps.timer_EA > Q12(2.5f) ||
             (scratcherProps.timer_EA > Q12(0.8f) &&
@@ -1117,7 +1117,7 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
         case HangedScratcherControl_10:
         case HangedScratcherControl_12:
         case HangedScratcherControl_13:
-            scratcher->fallSpeed_34 += g_DeltaTime2;
+            scratcher->fallSpeed_34 += g_GravitySpeed;
             break;
     }
 
@@ -1725,7 +1725,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
     {
         if (scratcherProps.timer_100 > Q12(0.0f))
         {
-            scratcherProps.timer_100 -= g_DeltaTime0;
+            scratcherProps.timer_100 -= g_DeltaTime;
             if (scratcherProps.timer_100 <= Q12(0.0f))
             {
                 scratcherProps.timer_100 = Q12(0.0f);
@@ -1733,7 +1733,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
         }
         else
         {
-            scratcherProps.timer_100 += g_DeltaTime0;
+            scratcherProps.timer_100 += g_DeltaTime;
             if (scratcherProps.timer_100 >= Q12(0.0f))
             {
                 scratcherProps.timer_100 = Q12(0.75f);
@@ -1782,7 +1782,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
                 }
                 else
                 {
-                    scratcherProps.timer_108 -= g_DeltaTime0;
+                    scratcherProps.timer_108 -= g_DeltaTime;
                     if (scratcherProps.timer_108 < Q12(0.0f))
                     {
                         scratcherProps.timer_108 = Q12(0.0f);
@@ -1809,7 +1809,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
                 }
                 else
                 {
-                    scratcherProps.timer_108 -= g_DeltaTime0;
+                    scratcherProps.timer_108 -= g_DeltaTime;
                     if (scratcherProps.timer_108 < Q12(0.0f))
                     {
                         scratcherProps.timer_108 = Q12(0.0f);

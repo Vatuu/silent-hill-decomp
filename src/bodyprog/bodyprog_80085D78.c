@@ -58,7 +58,7 @@ void func_80085DC0(bool arg0, s32 sysStateStep) // 0x80085DC0
 
 void func_80085DF0(void) // 0x80085DF0
 {
-    g_SysWork.timer_2C += g_DeltaTime1;
+    g_SysWork.timer_2C += g_DeltaTimeRaw;
     if (g_MapOverlayHeader.playerMoveDistClear() != NULL || g_SysWork.timer_2C > Q12(1.0f))
     {
         SysWork_StateStepIncrement(0);
@@ -67,7 +67,7 @@ void func_80085DF0(void) // 0x80085DF0
 
 void SysWork_StateStepIncrementDelayed(q19_12 delay, bool reset) // 0x80085E6C
 {
-    g_SysWork.timer_2C += g_DeltaTime1;
+    g_SysWork.timer_2C += g_DeltaTimeRaw;
     if (delay < g_SysWork.timer_2C)
     {
         func_80085D78(reset);
@@ -502,7 +502,7 @@ void func_800868DC(s32 idx)
 
 s32 func_800868F4(s32 arg0, s32 arg1, s32 idx)
 {
-    D_800C4710[idx] += g_DeltaTime0;
+    D_800C4710[idx] += g_DeltaTime;
     D_800C4710[idx]  = (arg1 < D_800C4710[idx]) ? arg1 : D_800C4710[idx];
 
     return (arg0 * D_800C4710[idx]) / arg1;
@@ -510,7 +510,7 @@ s32 func_800868F4(s32 arg0, s32 arg1, s32 idx)
 
 s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
 {
-    D_800C4710[idx] += g_DeltaTime0;
+    D_800C4710[idx] += g_DeltaTime;
     D_800C4710[idx] = (arg3 < D_800C4710[idx]) ? arg3 : D_800C4710[idx];
     return Q12_MULT(arg0, Math_Sin(arg1 + ((arg2 * D_800C4710[idx]) / arg3)));
 }
@@ -772,7 +772,7 @@ void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) // 0x8008
 
         if (i != ARRAY_SIZE(g_SysWork.npcs_1A0))
         {
-            g_DeltaTime0 = Q12(0.0f);
+            g_DeltaTime = Q12(0.0f);
         }
     }
 
@@ -961,7 +961,7 @@ void Event_ItemTake(e_InventoryItemId itemId, s32 itemCount, e_EventFlag eventFl
 
         if (i != ARRAY_SIZE(g_SysWork.npcs_1A0))
         {
-            g_DeltaTime0 = Q12(0.0f);
+            g_DeltaTime = Q12(0.0f);
         }
     }
 
@@ -1056,7 +1056,7 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
 
     s32 mapFlagIdxCpy;
 
-    g_DeltaTime0  = Q12(0.0f);
+    g_DeltaTime   = Q12(0.0f);
     mapFlagIdxCpy = mapFlagIdx;
 
     switch (g_SysWork.sysStateStep_C[1])

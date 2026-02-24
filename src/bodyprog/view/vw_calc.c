@@ -49,7 +49,7 @@ void vwRenewalXZVelocityToTargetPos(q19_12* velo_x, q19_12* velo_z, const VECTOR
 
     ratan2(*velo_x, *velo_z);
 
-    add_spd = Math_MulFixed(accel, g_DeltaTime0, Q12_SHIFT);
+    add_spd  = Math_MulFixed(accel, g_DeltaTime, Q12_SHIFT);
     *velo_x += Q12_MULT(add_spd, Math_Sin(cam2tgt_ang_y));
     *velo_z += Q12_MULT(add_spd, Math_Cos(cam2tgt_ang_y));
 
@@ -73,7 +73,7 @@ void vwRenewalXZVelocityToTargetPos(q19_12* velo_x, q19_12* velo_z, const VECTOR
     }
 
     vwLimitOverLimVector(velo_x, velo_z, to_tgt_dist, to_tgt_ang_y);
-    vwDecreaseSideOfVector(velo_x, velo_z, Math_MulFixed(dec_accel_side, g_DeltaTime0, Q12_SHIFT), to_tgt_dist >> 1, to_tgt_ang_y);
+    vwDecreaseSideOfVector(velo_x, velo_z, Math_MulFixed(dec_accel_side, g_DeltaTime, Q12_SHIFT), to_tgt_dist >> 1, to_tgt_ang_y);
 }
 
 void vwLimitOverLimVector(q19_12* vec_x, q19_12* vec_z, q19_12 lim_vec_len, q3_12 lim_vec_ang_y) // 0x8004914C
@@ -136,11 +136,11 @@ q19_12 vwRetNewVelocityToTargetVal(q19_12 now_spd, q19_12 mv_pos, q19_12 tgt_pos
 
     if (pos_diff >= Q12(0.0f))
     {
-        new_spd = Math_MulFixed(accel, g_DeltaTime0, Q12_SHIFT) + now_spd;
+        new_spd = Math_MulFixed(accel, g_DeltaTime, Q12_SHIFT) + now_spd;
     }
     else
     {
-        new_spd = now_spd - Math_MulFixed(accel, g_DeltaTime0, Q12_SHIFT);
+        new_spd = now_spd - Math_MulFixed(accel, g_DeltaTime, Q12_SHIFT);
     }
 
     new_spd      = CLAMP(new_spd, -total_max_spd, total_max_spd);
@@ -179,16 +179,16 @@ s32 func_800494B0(s32 arg0, s32 arg1, s32 arg2) // 0x800494B0
     s32 range;
     s32 arange;
 
-    range  = Q12_MULT_PRECISE(arg2, g_DeltaTime0);
+    range  = Q12_MULT_PRECISE(arg2, g_DeltaTime);
     arange = arg1 - arg0;
     arange = CLAMP(arange, -range, range);
 
-    if (g_DeltaTime0 == Q12(0.0f))
+    if (g_DeltaTime == Q12(0.0f))
     {
         return Q12(0.0f);
     }
 
-    return Q12(arange) / g_DeltaTime0;
+    return Q12(arange) / g_DeltaTime;
 }
 
 s32 func_80049530(VECTOR* arg0, DVECTOR* arg1) // 0x80049530

@@ -182,7 +182,7 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             SysWork_StateStepIncrement(0);
 
         case 4:
-            time = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(10.0f));
+            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
             g_Timer0 = MIN(time, Q12(22.0f));
             if (g_Timer0 >= Q12(22.0f))
             {
@@ -195,7 +195,7 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             SysWork_StateStepIncrement(0);
 
         case 6:
-            time = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(8.0f));
+            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(8.0f));
             g_Timer0 = MIN(time, Q12(26.0f));
             if (g_Timer0 >= Q12(26.0f))
             {
@@ -204,22 +204,22 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             break;
 
         case 7:
-            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(4.0f))), Q12(72.0f));
+            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
             MapMsg_DisplayAndHandleSelection(false, 15, false, false, 0, false);
             break;
 
         case 8:
-            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(4.0f))), Q12(72.0f));
+            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
             SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
         case 9:
-            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(4.0f))), Q12(72.0f));
+            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
             MapMsg_DisplayAndHandleSelection(false, 16, false, false, 0, false);
             break;
 
         case 10:
-            time = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(4.0f));
+            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f));
             g_Timer0 = MIN(time, Q12(72.0f));
             if (g_Timer0 >= Q12(72.0f))
             {
@@ -430,7 +430,7 @@ void func_800DA454(void) // 0x800DA454
     if (Math_Vector2MagCalc(Q12(-29.5f) - g_SysWork.playerWork_4C.player_0.position_18.vx,
                             Q12(128.7f) - g_SysWork.playerWork_4C.player_0.position_18.vz) >= Q12(16.0f))
     {
-        D_800DFAB8 += g_DeltaTime0;
+        D_800DFAB8 += g_DeltaTime;
         if (D_800DFAB8 > Q12(0.8f))
         {
             angle = ratan2(Q12(-29.5f) - g_SysWork.playerWork_4C.player_0.position_18.vx,
@@ -822,21 +822,21 @@ void func_800DB26C(void) // 0x800DB26C
             break;
 
         case 3:
-            g_DeltaTime0 >>= 1; // `/ 2`.
+            g_DeltaTime >>= 1; // `/ 2`.
 
             func_800865FC(0, 0, 0, Q12_ANGLE(-135.0f), Q12(0.0f), Q12(0.0f));
             SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
         case 4:
-            g_DeltaTime0 >>= 1; // `/ 2`.
+            g_DeltaTime >>= 1; // `/ 2`.
 
             Savegame_EventFlagSet(EventFlag_8);
             func_800866D4(54, 1, false);
             break;
 
         case 5:
-            g_DeltaTime0 >>= 1;
+            g_DeltaTime >>= 1;
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
@@ -908,7 +908,7 @@ void func_800DB514(void) // 0x800DB514
             SysWork_StateStepIncrement(0);
 
         case 10:
-            D_800DFB5C += g_DeltaTime0;
+            D_800DFB5C += g_DeltaTime;
 
             if (D_800DFB5C > Q12(0.5f))
             {
@@ -1156,7 +1156,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DBF08
         if (PLAYER_IN_MAP_CHUNK(vx, 1, -7, -1, -7) &&
             (PLAYER_IN_MAP_CHUNK(vz, 1, 6, -1, 6) || PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7)))
         {
-            D_800E3AAC.vz += Q12_MULT_PRECISE(g_DeltaTime0, (-0x400 - (Rng_Rand16() & 0x1FF)));
+            D_800E3AAC.vz += Q12_MULT_PRECISE(g_DeltaTime, (-0x400 - (Rng_Rand16() & 0x1FF)));
             WorldGfx_ObjectAdd(&D_800E3A5C[0], &D_800E3A9C, &D_800E3AAC);
             WorldGfx_ObjectAdd(&D_800E3A5C[1], &D_800E3A9C, &D_800E3AAC);
 
@@ -1263,7 +1263,7 @@ block7:
         else if (D_800DFAD0 > Q12(1.8f))
         {
             var_a2 = Q12(1.8f);
-            temp_v1 = D_800DFAD0 - Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.5f);
+            temp_v1 = D_800DFAD0 - Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.5f);
             if (temp_v1 >= Q12(1.8f))
             {
                 var_a2 = temp_v1;
@@ -1272,7 +1272,7 @@ block7:
         }
         else
         {
-            var_v1_2 = D_800DFAD0 + Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.5f);
+            var_v1_2 = D_800DFAD0 + Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.5f);
             if (var_v1_2 > Q12(1.8f))
             {
                 var_v1_2 = Q12(1.8f);
@@ -1336,7 +1336,7 @@ block7:
         else if (D_800DFAD4 > Q12(1.8f))
         {
             var_a2 = Q12(1.8f);
-            temp_v1 = D_800DFAD4 - Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.5f);
+            temp_v1 = D_800DFAD4 - Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.5f);
             if (temp_v1 >= Q12(1.8f))
             {
                 var_a2 = temp_v1;
@@ -1345,7 +1345,7 @@ block7:
         }
         else
         {
-            var_v1 = D_800DFAD4 + Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.5f);
+            var_v1 = D_800DFAD4 + Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.5f);
             if (var_v1 > Q12(1.8f))
             {
                 var_v1 = Q12(1.8f);
@@ -1557,7 +1557,7 @@ s32 func_800DCF38(s32 arg0) // 0x800DCF38
         }
     }
 
-    return Q12_MULT_PRECISE(g_DeltaTime0, Q12(9.0f)) + arg0;
+    return Q12_MULT_PRECISE(g_DeltaTime, Q12(9.0f)) + arg0;
 }
 
 void func_800DD0CC(void) // 0x800DD0CC
@@ -1570,7 +1570,7 @@ void func_800DD0CC(void) // 0x800DD0CC
         D_800DFB40 = 0;
     }
 
-    D_800DFB44.field_0 += g_DeltaTime0;
+    D_800DFB44.field_0 += g_DeltaTime;
 
     vecs[0] = FP_MULTIPLY(D_800DFB44.field_0, D_800DFB48.field_0, 6);
     if (vecs[0] >= Q12(1.0f))
@@ -1582,7 +1582,7 @@ void func_800DD0CC(void) // 0x800DD0CC
     }
 
     vecs[0] = Q12_MULT(D_800DFB48.field_1, Math_Sin(D_800DFB44.field_2));
-    D_800DFB44.field_2 += g_DeltaTime0;
+    D_800DFB44.field_2 += g_DeltaTime;
 
     vecs[1] = FP_MULTIPLY(D_800DFB44.field_2, D_800DFB48.field_2, 6);
     if (vecs[1] >= Q12(1.0f))

@@ -10,15 +10,15 @@ s32      pad_bss_800B5C3C;
 
 GsOT_TAG g_OtTags0[2][16];
 
-q19_12   g_DeltaTime0;
+q19_12   g_DeltaTime;
 
 GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
 
 s32      pad_bss_800B9CC4;
 
-q19_12   g_DeltaTime2;
+q19_12   g_GravitySpeed;
 
-s32      g_MainLoop_FrameCount;
+s32      g_TickCount;
 
 // SH2 symbols indicate this should be in `vc_main.c`, but the file already has its data segment assigned.
 // It's possible this is part of another split as there is also some inbetween data in
@@ -71,7 +71,7 @@ GsOT g_OrderingTable2[2] = {
     { 4, &g_OtTags0[1][0], 0, 0, 0 }
 };
 
-q19_12 g_DeltaTime1      = TIMESTEP_60_FPS;
+q19_12 g_DeltaTimeRaw      = TIMESTEP_60_FPS;
 s32    g_IntervalVBlanks = 1;
 
 s_FsImageDesc g_Font16AtlasImg             = { { 0,   16  }, 0,    240, 304, 511 };

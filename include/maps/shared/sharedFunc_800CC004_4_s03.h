@@ -19,7 +19,7 @@ bool sharedFunc_800CC004_4_s03(POLY_FT4** poly, s32 arg1)
 
     ptr = PSX_SCRATCH;
 
-    sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0 += g_DeltaTime0;
+    sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0 += g_DeltaTime;
 
     if (sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_0 > Q12(1.4f))
     {

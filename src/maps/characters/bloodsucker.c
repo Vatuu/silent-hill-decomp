@@ -64,7 +64,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
 
     if (bloodsucker->properties_E4.bloodsucker.timer_EC < bloodsucker->properties_E4.bloodsucker.timer_F0)
     {
-        bloodsucker->properties_E4.bloodsucker.timer_EC += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.5f);
+        bloodsucker->properties_E4.bloodsucker.timer_EC += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.5f);
         if (bloodsucker->properties_E4.bloodsucker.timer_EC > bloodsucker->properties_E4.bloodsucker.timer_F0)
         {
             bloodsucker->properties_E4.bloodsucker.timer_EC = bloodsucker->properties_E4.bloodsucker.timer_F0;
@@ -72,7 +72,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
     }
     else if (bloodsucker->properties_E4.bloodsucker.timer_EC > bloodsucker->properties_E4.bloodsucker.timer_F0)
     {
-        bloodsucker->properties_E4.bloodsucker.timer_EC -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.5f);
+        bloodsucker->properties_E4.bloodsucker.timer_EC -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.5f);
         if (bloodsucker->properties_E4.bloodsucker.timer_EC < bloodsucker->properties_E4.bloodsucker.timer_F0)
         {
             bloodsucker->properties_E4.bloodsucker.timer_EC = bloodsucker->properties_E4.bloodsucker.timer_F0;
@@ -91,7 +91,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
             SD_Call(Sfx_Unk1527);
         }
 
-        bloodsucker->properties_E4.bloodsucker.timer_F4 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 2.0f);
+        bloodsucker->properties_E4.bloodsucker.timer_F4 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 2.0f);
         if (bloodsucker->properties_E4.bloodsucker.timer_F4 > Q12(1.0f))
         {
             bloodsucker->properties_E4.bloodsucker.timer_F4 = Q12(1.0f);
@@ -101,7 +101,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
     }
     else if (bloodsucker->properties_E4.bloodsucker.flags_118 & BloodsuckerFlag_1)
     {
-        bloodsucker->properties_E4.bloodsucker.timer_F4 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 2.0f);
+        bloodsucker->properties_E4.bloodsucker.timer_F4 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 2.0f);
         if (bloodsucker->properties_E4.bloodsucker.timer_F4 < Q12(0.0f))
         {
             bloodsucker->properties_E4.bloodsucker.timer_F4 = Q12(0.0f);

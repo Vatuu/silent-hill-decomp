@@ -3811,7 +3811,7 @@ bool Gfx_PickupItemAnimate(u8 itemId) // 0x80054AD8
     }
 
     // Scale.
-    g_Items_PickupScale += g_DeltaTime1 * 2;
+    g_Items_PickupScale += g_DeltaTimeRaw * 2;
     g_Items_PickupScale  = CLAMP(g_Items_PickupScale, Q12(0.0f), Q12(0.5f));
 
     PushMatrix();
@@ -3822,7 +3822,7 @@ bool Gfx_PickupItemAnimate(u8 itemId) // 0x80054AD8
     ItemScreen_ItemRotate(&g_Items_Coords[9].param->rotate, &g_Items_Coords[9]);
 
     // Rotate 180 degrees per second.
-    g_Items_Transforms[9].rotate.vy += g_DeltaTime1 >> 1;
+    g_Items_Transforms[9].rotate.vy += g_DeltaTimeRaw >> 1;
 
     func_800548D8(9);
     GsSetFlatLight(0, &D_800C3AC8[0]);

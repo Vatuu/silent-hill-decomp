@@ -276,12 +276,12 @@ bool Event_CollideFacingCheck(s_MapPoint2d* mapPoint) // 0x800378D4
     static s32 D_800A9A24 = 0;
     static s32 D_800A9A28 = 0;
 
-    if (g_MainLoop_FrameCount > D_800A9A20)
+    if (g_TickCount > D_800A9A20)
     {
         rotY       = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
         D_800A9A24 = g_SysWork.playerWork_4C.player_0.position_18.vx - (Math_Sin(rotY) >> 3); // `/ 8`.
         D_800A9A28 = g_SysWork.playerWork_4C.player_0.position_18.vz - (Math_Cos(rotY) >> 3); // `/ 8`.
-        D_800A9A20 = g_MainLoop_FrameCount;
+        D_800A9A20 = g_TickCount;
     }
 
     deltaX = mapPoint->positionX_0 - D_800A9A24;

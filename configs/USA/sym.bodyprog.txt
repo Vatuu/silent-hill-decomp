@@ -2432,7 +2432,7 @@ g_ScreenFadeProgress                         = 0x800A8E94; // type:s32
 vcNullRoadArray                              = 0x800A8F44; // _VC_ROAD_DATA[2]
 g_OrderingTable0                             = 0x800A8F74; // type:s8
 g_OrderingTable2                             = 0x800A8FC4; // type:s8
-g_DeltaTime1                                 = 0x800A8FEC; // type:s32
+g_DeltaTimeRaw                               = 0x800A8FEC; // type:s32
 g_IntervalVBlanks                            = 0x800A8FF0; // type:s32
 
 //--------------------------------------------------------------------------
@@ -2937,10 +2937,10 @@ g_ScreenFadeTimestep                         = 0x800B5C30; // type:s32
 g_VBlanks                                    = 0x800B5C34; // type:s32
 g_UncappedVBlanks                            = 0x800B5C38; // type:s32
 g_OtTags0                                    = 0x800B5C40; // type:u32 size:0x80
-g_DeltaTime0                                 = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
+g_DeltaTime                                  = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
 g_OtTags1                                    = 0x800B5CC4; // type:u32 size:0x4000
-g_DeltaTime2                                 = 0x800B9CC8; // type:s32
-g_MainLoop_FrameCount                        = 0x800B9CCC;
+g_GravitySpeed                               = 0x800B9CC8; // type:s32
+g_TickCount                                  = 0x800B9CCC;
 
 //---------------------------------------------------
 //--- PA: 0x095170   VA: 0x800B9CD0   subsegment: bss

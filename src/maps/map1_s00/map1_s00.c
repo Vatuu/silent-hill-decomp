@@ -121,19 +121,19 @@ void func_800D7A28(void) // 0x800D7A28
 
 void func_800D7AC4(void) // 0x800D7AC4
 {
-    g_DeltaTime0 = 0;
+    g_DeltaTime = 0;
     MapMsg_DisplayWithTexture(FILE_TIM_GOLD1_TIM, Q12(2.5f), Q12(2.0f), 19);
 }
 
 void func_800D7AF8(void) // 0x800D7AF8
 {
-    g_DeltaTime0 = 0;
+    g_DeltaTime = 0;
     MapMsg_DisplayWithTexture(FILE_TIM_GOLD2_TIM, Q12(2.5f), Q12(2.0f), 19);
 }
 
 void func_800D7B2C(void)
 {
-    g_DeltaTime0 = Q12(0.0f);
+    g_DeltaTime = Q12(0.0f);
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -219,19 +219,19 @@ void func_800D7B2C(void)
 
 void func_800D7E48(void) // 0x800D7E48
 {
-    g_DeltaTime0 = Q12(0.0f);
+    g_DeltaTime = Q12(0.0f);
     MapMsg_DisplayWithTexture(FILE_TIM_SILVER1_TIM, Q12(2.5f), Q12(2.0f), 20);
 }
 
 void func_800D7E7C(void) // 0x800D7E7C
 {
-    g_DeltaTime0 = Q12(0.0f);
+    g_DeltaTime = Q12(0.0f);
     MapMsg_DisplayWithTexture(FILE_TIM_SILVER2_TIM, Q12(2.5f), Q12(2.0f), 20);
 }
 
 void func_800D7EB0(void)
 {
-    g_DeltaTime0 = Q12(0.0f);
+    g_DeltaTime = Q12(0.0f);
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -316,7 +316,7 @@ void func_800D7EB0(void)
 
 void func_800D81CC(void) // 0x800D81CC
 {
-    g_DeltaTime0 = Q12(0.0f);
+    g_DeltaTime = Q12(0.0f);
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -385,7 +385,7 @@ void func_800D8354(void) // 0x800D8354
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
 
-    g_DeltaTime0 = Q12(0.0f);
+    g_DeltaTime = Q12(0.0f);
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -475,11 +475,11 @@ void func_800D85D8(void) // 0x800D85D8
 
         case 3:
             SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
-            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.3f));
+            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
             break;
 
         case 4:
-            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.3f));
+            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
             break;
 
@@ -568,11 +568,11 @@ void func_800D8948(void) // 0x800D8948
             SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
 
             g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(0.0f);
-            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-0.3f));
+            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3f));
             break;
 
         case 5:
-            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-0.3f));
+            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3f));
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
             break;
         default:
@@ -616,7 +616,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
             break;
 
         case 5:
-            D_800DD718 += g_DeltaTime0;
+            D_800DD718 += g_DeltaTime;
             if ((D_800DD718 % Q12(0.8499f)) < Q12(0.45f))
             {
                 WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &(SVECTOR3){ 0, 0, 0 });
@@ -883,7 +883,7 @@ void Map_WorldObjectsUpdate(void)
             {
                 if (Savegame_EventFlagGet(EventFlag_83))
                 {
-                    D_800E1182 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.15f));
+                    D_800E1182 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.15f));
                     if (D_800E1182 > Q12(1.0f))
                     {
                         D_800E1182 = Q12(1.0f);

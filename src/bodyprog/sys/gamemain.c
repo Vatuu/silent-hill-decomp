@@ -157,7 +157,7 @@ void MainLoop(void) // 0x80032EE0
     // Run game.
     while (true)
     {
-        g_MainLoop_FrameCount++;
+        g_TickCount++;
 
         // Update input.
         Joy_ReadP1();
@@ -283,9 +283,9 @@ void MainLoop(void) // 0x80032EE0
         }
 
         // Update delta time.
-        g_DeltaTime0 = Q12_MULT(vCount, H_BLANKS_Q12_TO_SEC_SCALE);
-        g_DeltaTime1 = Q12_MULT(vCountCopy, H_BLANKS_Q12_TO_SEC_SCALE);
-        g_DeltaTime2 = Q12_MULT(vCount, H_BLANKS_GRAVITY_SCALE);
+        g_DeltaTime    = Q12_MULT(vCount, H_BLANKS_Q12_TO_SEC_SCALE);
+        g_DeltaTimeRaw = Q12_MULT(vCountCopy, H_BLANKS_Q12_TO_SEC_SCALE);
+        g_GravitySpeed = Q12_MULT(vCount, H_BLANKS_GRAVITY_SCALE);
         GsClearVcount();
 
         // Draw objects?

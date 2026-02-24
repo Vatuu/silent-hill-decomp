@@ -232,7 +232,7 @@ void func_80066184(void) // 0x80066184
 
     if (g_Controller0->btnsHeld_C & ControllerFlag_Cross)
     {
-        D_800AE73C = ((D_800AE73C - g_DeltaTime0) < Q12(0.0f)) ? 0 : (D_800AE73C - g_DeltaTime0);
+        D_800AE73C = ((D_800AE73C - g_DeltaTime) < Q12(0.0f)) ? 0 : (D_800AE73C - g_DeltaTime);
     }
 
     ptr = PSX_SCRATCH;

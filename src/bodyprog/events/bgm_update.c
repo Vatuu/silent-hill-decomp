@@ -187,7 +187,7 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
 
         if (i == endLayerIdx)
         {
-            var_t0 = Q12_MULT_FLOAT_PRECISE(g_DeltaTime1, 0.25f);
+            var_t0 = Q12_MULT_FLOAT_PRECISE(g_DeltaTimeRaw, 0.25f);
             if (g_SysWork.sysFlags_22A0 & SysFlag_1)
             {
                 var_a0 = Q12(1.0f);
@@ -205,12 +205,12 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
         {
             if ((flagsCpy >> i) & BgmFlag_Unk0)
             {
-                var_t0 = FP_MULTIPLY(g_DeltaTime1, arg1, Q12_SHIFT - 1); // @hack Should be multiplied by 2 but doesn't match.
+                var_t0 = FP_MULTIPLY(g_DeltaTimeRaw, arg1, Q12_SHIFT - 1); // @hack Should be multiplied by 2 but doesn't match.
                 var_a0 = Q12(1.0f);
             }
             else
             {
-                var_t0 = Q12_MULT(g_DeltaTime1, arg1);
+                var_t0 = Q12_MULT(g_DeltaTimeRaw, arg1);
                 var_a0 = Q12(0.0f);
             }
         }
@@ -402,7 +402,7 @@ u32 func_800364BC(void) // 0x800364BC
     u32        var1;
     static u32 D_800BCD58;
 
-    D_800BCD58 += g_DeltaTime1 * (Q12(64.0f) + 1);
+    D_800BCD58 += g_DeltaTimeRaw * (Q12(64.0f) + 1);
 
     var0  = Q12(64.0f);
     var0 += Math_Sin(D_800BCD58 >> 18) * 8;

@@ -99,7 +99,7 @@ void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDI
         Ai_MonsterCybil_Init(chara, extraModel);
     }
 
-    if (g_DeltaTime0 != Q12(0.0f))
+    if (g_DeltaTime != Q12(0.0f))
     {
         func_800D8B14(chara, extraModel);
         func_800D8D7C(chara, extraModel, coords);
@@ -177,7 +177,7 @@ void func_800D8B14(s_SubCharacter* chara, s_Model* model) // 0x800D8B14
 
     if (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_F8 != Q12(0.0f))
     {
-        g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_F8 -= g_DeltaTime0 * 15;
+        g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_F8 -= g_DeltaTime * 15;
     }
 
     g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_F8 = CLAMP(g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_F8, Q12(0.0f), INT_MAX);
@@ -298,7 +298,7 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
     if (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_120)
     {
-        g_SysWork.npcs_1A0[0].properties_E4.player.runTimer_108 += g_DeltaTime0;
+        g_SysWork.npcs_1A0[0].properties_E4.player.runTimer_108 += g_DeltaTime;
     }
     else
     {
@@ -568,7 +568,7 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
     chara->headingAngle_3C = Q12_ANGLE_ABS(angle0 + chara->rotation_24.vy);
 
     chara->moveSpeed_38 = moveSpeed;
-    chara->fallSpeed_34 += g_DeltaTime2;
+    chara->fallSpeed_34 += g_GravitySpeed;
 
     coords->flg = false;
     Math_RotMatrixZxyNegGte(&chara->rotation_24, &coords->coord);
@@ -587,14 +587,14 @@ void func_800D9790(s_SubCharacter* chara, s_Model* model) // 0x800D9790
     sp30 = chara->position_18;
 
     temp_s4 = chara->headingAngle_3C;
-    temp_s0 = Q12_MULT_PRECISE(chara->moveSpeed_38, g_DeltaTime0);
+    temp_s0 = Q12_MULT_PRECISE(chara->moveSpeed_38, g_DeltaTime);
 
     temp_s2 = (temp_s0 < -0x7FFF || temp_s0 > 0x7FFF) * 4;
     temp_s3 = temp_s2 >> 1;
 
     sp40.vx = Q12_MULT_PRECISE(temp_s0 >> temp_s3, Math_Sin(temp_s4) >> temp_s3) << temp_s2;
     sp40.vz = Q12_MULT_PRECISE(temp_s0 >> temp_s3, Math_Cos(temp_s4) >> temp_s3) << temp_s2;
-    sp40.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime0);
+    sp40.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime);
 
     switch (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_EC)
     {
@@ -834,11 +834,11 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             if (chara->model_0.anim_4.keyframeIdx_8 <= (D_800EA896 - 7))
             {
-                chara->position_18.vy += g_DeltaTime2 >> 2;
+                chara->position_18.vy += g_GravitySpeed >> 2;
             }
             else if ((D_800EA896 - 4) >= chara->model_0.anim_4.keyframeIdx_8)
             {
-                chara->position_18.vy += g_DeltaTime2 >> 4;
+                chara->position_18.vy += g_GravitySpeed >> 4;
             }
             else
             {
@@ -949,7 +949,7 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             func_800DB748(chara);
 
-            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_F0 += g_DeltaTime0;
+            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_F0 += g_DeltaTime;
 
             D_800ED570.vx = Q8_TO_Q12(coords[10].workm.t[0]);
             D_800ED570.vy = Q8_TO_Q12(coords[10].workm.t[1]);
@@ -1036,7 +1036,7 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                 func_800DB748(chara);
             }
 
-            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_F0 += g_DeltaTime0;
+            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_F0 += g_DeltaTime;
 
             if (model->stateStep_3 == 0)
             {
@@ -1173,7 +1173,7 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
             break;
 
         case 12:
-            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_F0 += g_DeltaTime0;
+            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_F0 += g_DeltaTime;
 
             if (chara->model_0.stateStep_3 == 0)
             {
@@ -1253,7 +1253,7 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
                 if (func_800DBD64(chara) != 0)
                 {
-                    g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_10C += g_DeltaTime0;
+                    g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_10C += g_DeltaTime;
                 }
                 else
                 {
@@ -1504,7 +1504,7 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                 model->anim_4.keyframeIdx_8 = g_SysWork.playerWork_4C.player_0.model_0.anim_4.keyframeIdx_8 - 832;
             }
 
-            g_SysWork.playerWork_4C.player_0.damage_B4.amount_C = g_DeltaTime0 * 4;
+            g_SysWork.playerWork_4C.player_0.damage_B4.amount_C = g_DeltaTime * 4;
 
             if (g_SysWork.playerWork_4C.player_0.field_40 == NO_VALUE ||
                 g_SysWork.playerWork_4C.player_0.health_B0 <= Q12(0.0f) ||
@@ -1620,7 +1620,7 @@ void func_800DB4CC(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coord) 
     q19_12 range;
     q19_12 delta;
 
-    delta = (g_DeltaTime0 << 5) / 136;
+    delta = (g_DeltaTime << 5) / 136;
 
     switch (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_EE)
     {
@@ -1955,7 +1955,7 @@ void func_800DBE5C(s_SubCharacter* chara)
 
     chara->rotation_24.vy += (Rng_Rand16() % Q12_ANGLE(11.25f)) - Q12_ANGLE(5.625f);
 
-    g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_10C += g_DeltaTime0;
+    g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_10C += g_DeltaTime;
     if (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_10C > Q12(5.0f))
     {
         g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_116 = 0;
@@ -1973,7 +1973,7 @@ void func_800DC018(s_SubCharacter* chara) // 0x800DC018
     switch (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_116)
     {
         case 2:
-            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 += TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12_ANGLE(11.25f / 4.0f));
+            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12_ANGLE(11.25f / 4.0f));
             g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 = CLAMP(g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106,
                                                                                Q12_ANGLE(0.0f),
                                                                                Q12_ANGLE(135.0f));
@@ -1981,7 +1981,7 @@ void func_800DC018(s_SubCharacter* chara) // 0x800DC018
             newRotY = chara->rotation_24.vy;
             if (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 < Q12_ANGLE(90.0f))
             {
-                newRotY += TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12_ANGLE(11.25f / 4.0f));
+                newRotY += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12_ANGLE(11.25f / 4.0f));
             }
             chara->rotation_24.vy = newRotY;
 
@@ -1993,7 +1993,7 @@ void func_800DC018(s_SubCharacter* chara) // 0x800DC018
             break;
 
         case 3:
-            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12_ANGLE(11.25f / 4.0f));
+            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12_ANGLE(11.25f / 4.0f));
             g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 = CLAMP(g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106,
                                                                                Q12_ANGLE(-135.0f),
                                                                                Q12_ANGLE(0.0f));
@@ -2001,7 +2001,7 @@ void func_800DC018(s_SubCharacter* chara) // 0x800DC018
             newRotY = chara->rotation_24.vy;
             if (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 > Q12_ANGLE(-90.0f))
             {
-                newRotY -= TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12_ANGLE(11.25f / 4.0f));
+                newRotY -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12_ANGLE(11.25f / 4.0f));
             }
             chara->rotation_24.vy = newRotY;
 

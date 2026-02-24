@@ -117,7 +117,7 @@ void func_800D49AC(void) // 0x800D49AC
             break;
 
         case 4:
-            g_SysWork.pointLightIntensity_2378 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.225f);
+            g_SysWork.pointLightIntensity_2378 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.225f);
             if (g_SysWork.pointLightIntensity_2378 > Q12(2.25f))
             {
                 g_SysWork.pointLightIntensity_2378 = Q12(2.25f);
@@ -126,7 +126,7 @@ void func_800D49AC(void) // 0x800D49AC
             break;
 
         case 5:
-            g_SysWork.pointLightIntensity_2378 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.45f);
+            g_SysWork.pointLightIntensity_2378 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.45f);
             if (g_SysWork.pointLightIntensity_2378 < Q12(1.3843f))
             {
                 Savegame_EventFlagSet(EventFlag_129);
@@ -210,7 +210,7 @@ void func_800D4D1C(void) // 0x800D4D1C
         case 1:
             SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
 
-            g_SysWork.pointLightIntensity_2378 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.2f);
+            g_SysWork.pointLightIntensity_2378 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.2f);
             if (g_SysWork.pointLightIntensity_2378 > Q12(3.0f))
             {
                 g_SysWork.pointLightIntensity_2378 = Q12(3.0f);
@@ -231,7 +231,7 @@ void func_800D4D1C(void) // 0x800D4D1C
 
             Sd_SfxAttributesUpdate(Sfx_Unk1359, 0, MAX(0, (Q12_FRACT(g_SysWork.pointLightIntensity_2378) >> 4) - (D_800D5D11 * 8)), 0);
 
-            g_SysWork.pointLightIntensity_2378 -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.15f, 12);
+            g_SysWork.pointLightIntensity_2378 -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.15f, 12);
             if (g_SysWork.pointLightIntensity_2378 < (6 - D_800D5D11) * Q12(0.5f))
             {
                 D_800D5D11++;
@@ -311,7 +311,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D5400
 
     if (Savegame_EventFlagGet(EventFlag_129))
     {
-        D_800D86F8[0] += g_DeltaTime0;
+        D_800D86F8[0] += g_DeltaTime;
         if ((D_800D86F8[0] * D_800D86FC[0]) >= Q12(SQUARE(8.0f)))
         {
             D_800D86F8[0] = 0;
@@ -321,7 +321,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D5400
 
         sp18[0] = Q12_MULT(D_800D86FE, Math_Sin(D_800D86F8[1]));
 
-        D_800D86F8[1] += g_DeltaTime0;
+        D_800D86F8[1] += g_DeltaTime;
 
         sp18[1] = (D_800D86F8[1] * D_800D86FC[1]) >> 6;
 
@@ -336,10 +336,10 @@ void Map_WorldObjectsUpdate(void) // 0x800D5400
         g_SysWork.pointLightIntensity_2378 = Q12(1.35f) + (((Q12(0.9f) + Q12_MULT_PRECISE(sp18[0], Q12(0.6f))) * Math_Sin(sp18[1])) >> 15);
     }
 
-    g_WorldObject0.rotation_28.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(-90.0f));
+    g_WorldObject0.rotation_28.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(-90.0f));
     WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &g_WorldObject0.rotation_28);
 
-    g_WorldObject1.rotation_28.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(15.0f));
+    g_WorldObject1.rotation_28.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(15.0f));
     WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
 
     i = 0;

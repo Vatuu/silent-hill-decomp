@@ -183,7 +183,7 @@ void func_800D0C14(void) // 0x800D0C14
 
             if (D_800D2738 != 2)
             {
-                g_SysWork.field_28 += g_DeltaTime0;
+                g_SysWork.field_28 += g_DeltaTime;
 
                 if (D_800D2738 == 0 && !(g_SysWork.field_28 <= Q12(0.3f)))
                 {
@@ -205,7 +205,7 @@ void func_800D0C14(void) // 0x800D0C14
             }
 
         case 8:
-            D_800D2734 += g_DeltaTime0;
+            D_800D2734 += g_DeltaTime;
             if (D_800D2734 > Q12(2.0f) && g_SysWork.sysStateStep_C[0] == 8)
             {
                 SysWork_StateStepSet(0, 9);
@@ -312,7 +312,7 @@ void func_800D0C14(void) // 0x800D0C14
 
             if (D_800D2738 != 1)
             {
-                g_SysWork.field_28 += g_DeltaTime0;
+                g_SysWork.field_28 += g_DeltaTime;
                 if (D_800D2738 == 0 && g_SysWork.field_28 > Q12(0.6f))
                 {
                     func_8005DC1C(Sfx_DoorClose0, &D_800D26F8, Q8_CLAMPED(0.5f), 0);

@@ -253,7 +253,7 @@ void sharedFunc_800CCE60_1_s02(void)
             poly++;
         }
 
-        sharedData_800E30C8_1_s02.field_54[sp20] += Q12_MULT_PRECISE(g_DeltaTime0, sharedData_800E30C8_1_s02.field_4C[sp20]);
+        sharedData_800E30C8_1_s02.field_54[sp20] += Q12_MULT_PRECISE(g_DeltaTime, sharedData_800E30C8_1_s02.field_4C[sp20]);
 
         while (sharedData_800E30C8_1_s02.field_54[sp20] >= sharedData_800E30C8_1_s02.field_44[sp20])
         {

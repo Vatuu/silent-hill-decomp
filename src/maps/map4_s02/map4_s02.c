@@ -119,7 +119,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA3F0
     }
 
     audioBalance = 0;
-    tmp0 = Q12_MULT_PRECISE(g_DeltaTime0, Q12_ANGLE(90.0f));
+    tmp0         = Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
 
     for (i = 0; i < ARRAY_SIZE(D_800ED8B0); i++)
     {

@@ -130,7 +130,7 @@ bool func_800CE164(POLY_FT4** poly, s32 idx) // 0x800CE164
     s32            var_a1;
     s32            rgbColor;
 
-    sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 += g_DeltaTime0;
+    sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 += g_DeltaTime;
 
     idx2 = sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0;
     if ((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 > D_800E3A40[idx2].field_10)
@@ -757,7 +757,7 @@ void func_800DAF18(void) // 0x800DAF18
             g_SysWork.sysStateStep_C[0]++;
 
         case 9:
-            D_800E20FA += g_DeltaTime0;
+            D_800E20FA += g_DeltaTime;
 
             for (i = 1; i < 6; i++)
             {
@@ -1415,7 +1415,7 @@ void func_800DCDDC(void) // 0x800DCDDC
 
     if (g_SysWork.sysStateStep_C[0] >= 10)
     {
-        D_800E2018 -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.5f));
+        D_800E2018 -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.5f));
         if (D_800E2018 < 0)
         {
             D_800E2018 = 0;
@@ -1425,7 +1425,7 @@ void func_800DCDDC(void) // 0x800DCDDC
     }
     else if (g_SysWork.sysStateStep_C[0] > 0)
     {
-        D_800E2018 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f));
+        D_800E2018 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.25f));
         if (D_800E2018 > Q12(0.9961f))
         {
             D_800E2018 = Q12(0.9961f);
@@ -1501,11 +1501,11 @@ void func_800DCDDC(void) // 0x800DCDDC
         case 9:
             sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
 
-            g_SysWork.field_28 += g_DeltaTime0;
+            g_SysWork.field_28 += g_DeltaTime;
             if (g_SysWork.field_28 > Q12(4.0f))
             {
-                D_800E200C.vx += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-1.2f));
-                D_800E200C.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-0.4f));
+                D_800E200C.vx += Q12_MULT_PRECISE(g_DeltaTime, Q12(-1.2f));
+                D_800E200C.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.4f));
             }
 
             if (g_SysWork.field_28 > Q12(6.0f))
@@ -1535,7 +1535,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             break;
     }
 
-    D_800E201C += g_DeltaTime0;
+    D_800E201C += g_DeltaTime;
     if (D_800E617C >= Q12(0.0f))
     {
         Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", D_800E617C, (s_DmsHeader*)FS_BUFFER_13);
@@ -1692,11 +1692,11 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
         x = g_SysWork.playerWork_4C.player_0.position_18.vx;
         if (x < Q12(-100.0f))
         {
-            D_800E638C += g_DeltaTime0;
+            D_800E638C += g_DeltaTime;
         }
         else if (x < Q12(-99.0f))
         {
-            D_800E638C += Q12_MULT_PRECISE(g_DeltaTime0, (x + Q12(100.0f)));
+            D_800E638C += Q12_MULT_PRECISE(g_DeltaTime, (x + Q12(100.0f)));
         }
 
         if ((D_800E6388 == 0 && D_800E638C > Q12(2.5f)) ||
@@ -1873,7 +1873,7 @@ void func_800DE828(void) // 0x800DE828
 
     const static VECTOR3 sfxPos = VECTOR3(-58.81f, -1.4f, 18.02f);
 
-    if (g_DeltaTime0 == Q12(0.0f))
+    if (g_DeltaTime == Q12(0.0f))
     {
         if (Savegame_EventFlagGet(EventFlag_105))
         {
@@ -2024,7 +2024,7 @@ void func_800DE828(void) // 0x800DE828
                     break;
 
                 case 3:
-                    D_800E20EC += g_DeltaTime0;
+                    D_800E20EC += g_DeltaTime;
                     if (D_800E20EC > Q12(3.0f))
                     {
                         D_800E20EE = 4;
@@ -2033,7 +2033,7 @@ void func_800DE828(void) // 0x800DE828
 
                 case 4:
                 case 5:
-                    D_800E20E8 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(4.0f));
+                    D_800E20E8 += Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f));
                     if (D_800E20E8 <= Q12(-2.0f))
                     {
                         tmp0 = D_800E20E8;

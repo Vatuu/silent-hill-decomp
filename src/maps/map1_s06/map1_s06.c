@@ -121,7 +121,7 @@ void func_800D5614(void) // 0x800D5614
 
         case 5:
             SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
-            D_800DAF78 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.1f, 12);
+            D_800DAF78 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.1f, 12);
             break;
 
         case 6:
@@ -527,7 +527,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
 
         if (Savegame_EventFlagGet(EventFlag_142))
         {
-            D_800DAF78 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.2f);
+            D_800DAF78 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.2f);
             if (D_800DAF78 < Q12(0.0f))
             {
                 D_800DAF78 = Q12(0.0f);
@@ -567,13 +567,13 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
     D_800DB055 = Sound_StereoBalanceGet(&soundPos);
     if (D_800DB054 < D_800DB055)
     {
-        D_800DB054 = MIN((D_800DB054 + (g_DeltaTime0 >> 6)), 127);
+        D_800DB054 = MIN((D_800DB054 + (g_DeltaTime >> 6)), 127);
     }
 
     if (D_800DB055 < D_800DB054)
     {
         // TODO: `MAX` macro doesnt match.
-        D_800DB054 = ((D_800DB054 - (g_DeltaTime0 >> 6)) < -127) ? -127 : D_800DB054 - (g_DeltaTime0 >> 6);
+        D_800DB054 = ((D_800DB054 - (g_DeltaTime >> 6)) < -127) ? -127 : D_800DB054 - (g_DeltaTime >> 6);
     }
 
     vol = MAX(255 - (D_800DAF78 >> 4), 0);

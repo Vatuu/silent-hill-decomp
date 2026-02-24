@@ -63,9 +63,9 @@ bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse)
 
     if (absAngle > Q12_ANGLE(4.0f))
     {
-        tmpAngle= 2;
-        tmpAngle= (absAngle* tmpAngle) + Q12_ANGLE(45.0f);
-        addAngle= Q12_MULT_PRECISE(g_DeltaTime0, tmpAngle);
+        tmpAngle = 2;
+        tmpAngle = (absAngle* tmpAngle) + Q12_ANGLE(45.0f);
+        addAngle = Q12_MULT_PRECISE(g_DeltaTime, tmpAngle);
         if (angle > Q12_ANGLE(0.0f))
         {
             nurse->rotation_24.vy += addAngle;
