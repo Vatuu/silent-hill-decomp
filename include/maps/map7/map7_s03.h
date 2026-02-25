@@ -130,7 +130,7 @@ typedef struct _800F3DAC
     u8     unk_114[4];
     MATRIX mat_118[29];
     u8     unk_4B8[32];
-    q19_12 rotZ_4D8; // Passed as `z` to `ApplyRotMatrix`.
+    q19_12 rotationZ_4D8; // Passed as `z` to `ApplyRotMatrix`.
     u8     unk_4DC[4];
     s32    field_4E0;
     s32    field_4E4;
@@ -691,8 +691,7 @@ void func_800DC544(GsOT_TAG* ot);
  */
 bool Math_DistanceCheck(const VECTOR3* from, const VECTOR3* to, q19_12 distMax);
 
-// Returns `bool`?
-s32 func_800DC6DC(VECTOR* arg0, VECTOR* arg1, VECTOR3* arg2, s_800F3DAC* arg3);
+bool func_800DC6DC(VECTOR* arg0, VECTOR* arg1, VECTOR3* arg2, s_800F3DAC* arg3);
 
 void func_800DCD94(MATRIX* mat, VECTOR3* pos);
 

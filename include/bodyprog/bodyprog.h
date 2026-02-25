@@ -2148,7 +2148,7 @@ extern s_FsImageDesc D_800A9094;
 extern s_FsImageDesc g_Font24AtlasImg; // 0x800A909C
 
 /** Array containg file IDs used for each `e_CharacterId`, used in `Fs_QueueStartReadAnm`. */
-extern s_CharaFileInfo CHARA_FILE_INFOS[45]; // 0x800A90FC
+extern s_CharaFileInfo CHARA_FILE_INFOS[Chara_Count]; // 0x800A90FC
 
 extern s_MapEffectsInfo g_MapEffectsPresets[21];
 

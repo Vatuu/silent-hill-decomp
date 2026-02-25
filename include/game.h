@@ -25,7 +25,7 @@ struct _Model;
 
 #define NPC_COUNT_MAX            6
 #define NPC_BONE_COUNT_MAX       10 * NPC_COUNT_MAX
-#define GROUP_CHARA_COUNT        4                  /** While up to 6 NPCs and a player can exist in the game world, only 4 different character types (including the player) can be loaded at a time. */
+#define GROUP_CHARA_COUNT        4 /** While up to 6 NPCs and a player can exist in the game world, only 4 different character types (including the player) can be loaded at a time. */
 #define INVENTORY_ITEM_COUNT_MAX 40
 #define INPUT_ACTION_COUNT       14
 #define CONTROLLER_COUNT_MAX     2
@@ -702,7 +702,6 @@ typedef enum _InventoryItemId
     InventoryItemId_PocketRadio           = 225,
     InventoryItemId_GasolineTank          = 226
 } e_InventoryItemId;
-
 
 /** @brief Common pickup item IDs. */
 typedef enum _CommonPickupItemId

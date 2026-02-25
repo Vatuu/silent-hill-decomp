@@ -267,7 +267,7 @@ void func_800D0C50(SVECTOR* rot, MATRIX* mat);
 void func_800D0CA0(q19_12 rotY, SVECTOR* pos);
 
 // TODO: Could be `SVECTOR3`, need to check callers.
-void func_800D0D6C(MATRIX* out, SVECTOR* pos, s32 rotY);
+void func_800D0D6C(MATRIX* out, SVECTOR* pos, q19_12 rotY);
 
 // TODO: Could be `SVECTOR3`/VECTOR3`, need to check callers.
 void func_800D0DE4(SVECTOR* out, VECTOR* in, q19_12 headingAngle, q19_12 dist);

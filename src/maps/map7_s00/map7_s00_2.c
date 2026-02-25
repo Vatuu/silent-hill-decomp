@@ -411,8 +411,8 @@ void func_800D1604(void) // 0x800D1604
     s32              j;
     s32              i;
     s32              var_t5;
-    s_func_800D1604* ptr;
     s32              temp;
+    s_func_800D1604* ptr;
 
     ptr = PSX_SCRATCH;
 
@@ -427,18 +427,18 @@ void func_800D1604(void) // 0x800D1604
 
         for (i = 0; i < 4; i++)
         {
-            j    = i & 1;
+            j    = i & 0x1;
             temp = Q12_MULT_PRECISE(temp_v1, temp_v0);
 
             setRGBC0(ptr->field_14, temp, temp, temp, 0x62);
-            setXY0Fast(ptr->field_14, (j << 8) - 0xA0, 0xFF90);
+            setXY0Fast(ptr->field_14, (j << 8) - 160, -112);
 
-            setWH(ptr->field_14, j ? 0x40 : 0x100, 0xE0);
+            setWH(ptr->field_14, (j != 0) ? 64 : 256, 224);
 
             addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[3], ptr->field_14, 3);
             ptr->field_14++;
             ptr->field_4 = ptr->field_14;
-            setDrawTPage(ptr->field_4, 0, 0, getTPage(2, i >= 2 ? 2 : 1, ((ptr->field_18 << 4) + (j << 2)) << 6, (((ptr->field_18 << 4) >> 4) & 1) << 8));
+            setDrawTPage(ptr->field_4, 0, 0, getTPage(2, (i >= 2) ? 2 : 1, ((ptr->field_18 << 4) + (j << 2)) << 6, (((ptr->field_18 << 4) >> 4) & 0x1) << 8));
             AddPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[3], ptr->field_4);
             ptr->field_4++;
 
@@ -453,9 +453,9 @@ void func_800D1604(void) // 0x800D1604
     for (j = 0; j < 2; j++)
     {
         setRGBC0(ptr->field_0, 0x80, 0x80, 0x80, 0x66);
-        setXY0Fast(ptr->field_0, ((j) << 8) - 0xA0, 0xFF90);
+        setXY0Fast(ptr->field_0, ((j) << 8) - 160, -112);
         setUV0(ptr->field_0, 0, (ptr->field_18 == 0) << 5);
-        setWH(ptr->field_0, j ? 0x40 : 0x100, 0xE0);
+        setWH(ptr->field_0, (j != 0) ? 64 : 256, 224);
         addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], ptr->field_0, 4);
         ptr->field_0++;
 
@@ -484,9 +484,9 @@ void func_800D1604(void) // 0x800D1604
     {
         if (g_SysWork.sysStateStep_C[0] >= 3)
         {
-            if (g_SysWork.sysStateStep_C[0] < 0xC)
+            if (g_SysWork.sysStateStep_C[0] < 12)
             {
-                SysWork_StateStepSet(0, 0xC);
+                SysWork_StateStepSet(0, 12);
             }
         }
     }
@@ -496,22 +496,26 @@ void func_800D1604(void) // 0x800D1604
         case 0:
             Player_ControlFreeze();
             SysWork_StateStepIncrementAfterFade(false, true, 2, 0, false);
+
             g_MapMsgSoundIdx = 0;
             D_800D31DC[1]    = 0;
             D_800D31DC[0]    = 0;
+
             func_800868DC(0);
             func_800868DC(1);
             func_800868DC(2);
             func_800868DC(3);
             func_800868DC(4);
             func_800868DC(5);
-            Camera_PositionSet(NULL, 0x3A35C, -0x73AE, -0x909EB, 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, 0x38EB8, -0x4800, -0x8DFD7, 0, 0, 0, 0, true);
 
+            // Warp camera.
+            Camera_PositionSet(NULL, Q12(58.21f), Q12(-7.23f), Q12(-144.62f), 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, Q12(56.92f), Q12(-4.5f), Q12(-141.99f), 0, 0, 0, 0, true);
+
+            // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(57.45f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-139.05f);
             g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12(-0.25f);
-
             Game_TurnFlashlightOn();
 
             Savegame_EventFlagSet(EventFlag_475);
@@ -526,43 +530,44 @@ void func_800D1604(void) // 0x800D1604
             break;
 
         case 6:
-            Map_MessageWithAudio(0x2A, &g_MapMsgSoundIdx, &D_800D31C4);
+            Map_MessageWithAudio(42, &g_MapMsgSoundIdx, &D_800D31C4);
 
         case 5:
             if (g_SysWork.sysStateStep_C[0] == 5)
             {
-                SysWork_StateStepIncrementDelayed(0x2800, false);
+                SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
             }
-            D_800D31DC[1] = MIN(D_800D31DC[1] + Q12_MULT_PRECISE(g_DeltaTime, 0x51E), 0x23D);
+
+            D_800D31DC[1] = MIN(D_800D31DC[1] + Q12_MULT_PRECISE(g_DeltaTime, Q12(0.32f)), Q12(0.14f));
 
         case 4:
             if (g_SysWork.sysStateStep_C[0] == 4)
             {
-                SysWork_StateStepIncrementDelayed(0xE66, false);
+                SysWork_StateStepIncrementDelayed(Q12(0.9f), false);
                 var_t5 = 2;
             }
             else
             {
                 var_t5 = 4;
             }
-            D_800D31DC[0] = MIN(D_800D31DC[0] + Q12_MULT_PRECISE(g_DeltaTime, 0x51E), 0x23D);
+            D_800D31DC[0] = MIN(D_800D31DC[0] + Q12_MULT_PRECISE(g_DeltaTime, Q12(0.32f)), Q12(0.14f));
 
             for (j = 0; j < var_t5; j++)
             {
-                if (j & 1)
+                if (j & 0x1)
                 {
                     D_800D4370[j] -= Q12_MULT_PRECISE(g_DeltaTime, D_800D31DC[j >> 1]);
-                    if (D_800D4370[j] < -0x91733)
+                    if (D_800D4370[j] < Q12(-145.45f))
                     {
-                        D_800D4370[j] = -0x91733;
+                        D_800D4370[j] = Q12(-145.45f);
                     }
                 }
                 else
                 {
                     D_800D4370[j] += Q12_MULT_PRECISE(g_DeltaTime, D_800D31DC[j >> 1]);
-                    if (D_800D4370[j] > -0x81733)
+                    if (D_800D4370[j] > Q12(-129.45f))
                     {
-                        D_800D4370[j] = -0x81733;
+                        D_800D4370[j] = Q12(-129.45f);
                     }
                 }
             }
@@ -573,50 +578,55 @@ void func_800D1604(void) // 0x800D1604
                 SysWork_StateStepIncrementDelayed(0x1333, false);
             }
 
-            temp_s1   = func_800868F4(-0x5EC, 0x6000, 0) + 0x3A35C;
-            temp_s0_2 = func_800868F4(0x4571, 0x6000, 1) - 0x73AE;
+            temp_s1   = func_800868F4(Q12(-0.37f) - 1, Q12(6.0f), 0) + Q12(58.21f);
+            temp_s0_2 = func_800868F4(Q12(4.34f) + 1, Q12(6.0f), 1) - Q12(7.23f);
 
-            Camera_PositionSet(NULL, temp_s1, temp_s0_2, func_800868F4(0x3148, 0x6000, 2) - 0x909EB, 0, 0, 0, 0, false);
+            Camera_PositionSet(NULL, temp_s1, temp_s0_2, func_800868F4(Q12(3.08f) + 1, Q12(6.0f), 2) - Q12(144.62f), 0, 0, 0, 0, false);
 
-            temp_s1_2 = func_800868F4(-0x2400, 0x6000, 3) + 0x38EB8;
-            temp_s0_3 = func_800868F4(0x2F5D, 0x6000, 4) - 0x4800;
+            temp_s1_2 = func_800868F4(Q12(-2.25f), Q12(6.0f), 3) + Q12(56.92f);
+            temp_s0_3 = func_800868F4(Q12(2.96f) + 1, Q12(6.0f), 4) - Q12(4.5f);
 
-            Camera_LookAtSet(NULL, temp_s1_2, temp_s0_3, func_800868F4(0x2800, 0x6000, 5) - 0x8DFD7, 0, 0, 0, 0, false);
+            Camera_LookAtSet(NULL, temp_s1_2, temp_s0_3, func_800868F4(Q12(2.5f), Q12(6.0f), 5) - Q12(141.99f), 0, 0, 0, 0, false);
             break;
 
         case 7:
+            // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(57.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-139.05f);
 
-            Camera_PositionSet(NULL, 0x3A800, -0x2E66, g_SysWork.playerWork_4C.player_0.position_18.vz, 0, 0, 0, 0, true);
+            // Warp camera.
+            Camera_PositionSet(NULL, Q12(58.5f), Q12(-2.9f), g_SysWork.playerWork_4C.player_0.position_18.vz, 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, g_SysWork.playerWork_4C.player_0.position_18.vx - Q12(1.6f), Q12(-0.3f), g_SysWork.playerWork_4C.player_0.position_18.vz, 0, 0, 0, 0, true);
 
-            Camera_LookAtSet(NULL, g_SysWork.playerWork_4C.player_0.position_18.vx - 0x1999, -0x4CC, g_SysWork.playerWork_4C.player_0.position_18.vz, 0, 0, 0, 0, true);
+            func_800865FC(true, 0, 0, Q12_ANGLE(-90.0f), Q12(51.8f), Q12(-139.05f));
 
-            func_800865FC(true, 0, 0, -0x400, 0x33CCC, -0x8B0CC);
             g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12(-0.25f);
             D_800D31DC[1]                                   = 0;
             D_800D31DC[0]                                   = 0;
+
             SysWork_StateStepIncrement(0);
 
         case 8:
-            func_800866D4(0x35, 1, false);
-            Map_MessageWithAudio(0x2B, &g_MapMsgSoundIdx, &D_800D31C4);
-            Camera_LookAtSet(&g_SysWork.playerWork_4C.player_0.position_18, -0x1999, -0x4CC, 0, 0, 0, 0, 0, false);
+            func_800866D4(53, 1, false);
+            Map_MessageWithAudio(43, &g_MapMsgSoundIdx, &D_800D31C4);
+            Camera_LookAtSet(&g_SysWork.playerWork_4C.player_0.position_18, Q12(-1.6f), Q12(-0.3f), 0, 0, 0, 0, 0, false);
+
             g_DeltaTime >>= 2;
-            SysWork_StateStepIncrementDelayed(0x6000, false);
+
+            SysWork_StateStepIncrementDelayed(Q12(6.0f), false);
             break;
 
         case 9:
-            func_800866D4(0x35, 1, false);
-            Map_MessageWithAudio(0x2B, &g_MapMsgSoundIdx, &D_800D31C4);
-            Camera_LookAtSet(&g_SysWork.playerWork_4C.player_0.position_18, -0x1999, -0x4CC, 0, 0, 0, 0, 0, false);
+            func_800866D4(53, 1, false);
+            Map_MessageWithAudio(43, &g_MapMsgSoundIdx, &D_800D31C4);
+            Camera_LookAtSet(&g_SysWork.playerWork_4C.player_0.position_18, Q12(-1.6f), Q12(-0.3f), 0, 0, 0, 0, 0, false);
 
             g_DeltaTime >>= 2;
-            D_800D31DC[0] = MIN(D_800D31DC[0] + Q12_MULT_PRECISE(g_DeltaTime, 0x8CC), 0x4CC);
+            D_800D31DC[0] = MIN(D_800D31DC[0] + Q12_MULT_PRECISE(g_DeltaTime, Q12(0.55f)), Q12(0.3f));
 
             for (j = 0; j < 4; j++)
             {
-                if (j & 1)
+                if (j & 0x1)
                 {
                     D_800D4370[j] = D_800D4370[j] + Q12_MULT_PRECISE(g_DeltaTime, D_800D31DC[j >> 1]);
                 }
@@ -628,15 +638,15 @@ void func_800D1604(void) // 0x800D1604
             break;
 
         case 10:
-            func_800866D4(0x35, 1, false);
-            Camera_LookAtSet(&g_SysWork.playerWork_4C.player_0.position_18, -0x1999, -0x4CC, 0, 0, 0, 0, 0, false);
+            func_800866D4(53, 1, false);
+            Camera_LookAtSet(&g_SysWork.playerWork_4C.player_0.position_18, Q12(-1.6f), Q12(-0.3f), 0, 0, 0, 0, 0, false);
 
             g_DeltaTime >>= 2;
-            D_800D31DC[0] = MIN(D_800D31DC[0] + Q12_MULT_PRECISE(g_DeltaTime, 0x8CC), 0x4CC);
+            D_800D31DC[0] = MIN(D_800D31DC[0] + Q12_MULT_PRECISE(g_DeltaTime, Q12(0.55f)), Q12(0.3f));
 
             for (j = 0; j < 4; j++)
             {
-                if (j & 1)
+                if (j & 0x1)
                 {
                     D_800D4370[j] = D_800D4370[j] + Q12_MULT_PRECISE(g_DeltaTime, D_800D31DC[j >> 1]);
                 }
@@ -645,13 +655,14 @@ void func_800D1604(void) // 0x800D1604
                     D_800D4370[j] = D_800D4370[j] - Q12_MULT_PRECISE(g_DeltaTime, D_800D31DC[j >> 1]);
                 }
             }
-            SysWork_StateStepIncrementDelayed(0x3000, false);
+
+            SysWork_StateStepIncrementDelayed(Q12(3.0f), false);
             break;
 
         case 11:
-            func_800866D4(0x35, 1, false);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0x999, false);
-            Map_MessageWithAudio(0x2E, &g_MapMsgSoundIdx, &D_800D31C4);
+            func_800866D4(53, 1, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.6f), false);
+            Map_MessageWithAudio(46, &g_MapMsgSoundIdx, &D_800D31C4);
 
             g_DeltaTime >>= 2;
             D_800D31DC[0] = MIN(D_800D31DC[0] + Q12_MULT_PRECISE(g_DeltaTime, 0x428), 0x1EB);
@@ -679,6 +690,7 @@ void func_800D1604(void) // 0x800D1604
             vcReturnPreAutoCamWork(true);
             Savegame_EventFlagSet(EventFlag_472);
             SysWork_StateStepIncrementAfterFade(false, false, 2, 0, false);
+
             D_800D4362 = 0;
             break;
     }

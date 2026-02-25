@@ -127,15 +127,14 @@ void GameState_Boot_Update(void) // 0x80032D1C
 void MainLoop(void) // 0x80032EE0
 {
     #define TICKS_PER_SECOND_MIN (TICKS_PER_SECOND / 4)
-    #define H_BLANKS_PER_TICK    263
+    #define H_BLANKS_PER_SECOND  15780
+    #define H_BLANKS_PER_TICK    (H_BLANKS_PER_SECOND / TICKS_PER_SECOND) // 263
 
-    #define H_BLANKS_PER_SECOND               (H_BLANKS_PER_TICK * TICKS_PER_SECOND)          // 15780
-    #define H_BLANKS_TO_SEC_CONVERSION_FACTOR ((float)Q12(1.0f) / (float)H_BLANKS_PER_SECOND) // 0.25956907477f
-
-    #define H_BLANKS_PER_FRAME_MIN    (H_BLANKS_PER_SECOND / TICKS_PER_SECOND_MIN)                // 1052
-    #define H_BLANKS_Q12_TO_SEC_SCALE (s32)(H_BLANKS_TO_SEC_CONVERSION_FACTOR * (float)Q12(1.0f)) // 1063
-    #define H_BLANKS_GRAVITY_SCALE    Q12(9.8f * H_BLANKS_TO_SEC_CONVERSION_FACTOR)               // 10419
-    #define V_BLANKS_MAX              4
+    #define H_BLANKS_TO_SEC_CONVERSION_FACTOR ((float)Q12(1.0f) / (float)H_BLANKS_PER_SECOND)             // 0.25956907477f
+    #define H_BLANKS_PER_FRAME_MIN            (H_BLANKS_PER_SECOND / TICKS_PER_SECOND_MIN)                // 1052
+    #define H_BLANKS_Q12_TO_SEC_SCALE         (s32)(H_BLANKS_TO_SEC_CONVERSION_FACTOR * (float)Q12(1.0f)) // 1063
+    #define H_BLANKS_GRAVITY_SCALE            Q12(9.8f * H_BLANKS_TO_SEC_CONVERSION_FACTOR)               // 10419
+    #define V_BLANKS_MAX                      4
 
     s32 vBlanks;
     s32 vCount;

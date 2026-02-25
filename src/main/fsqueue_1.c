@@ -27,7 +27,6 @@ bool Fs_QueueDoThingWhenEmpty(void)
     D_800C489C = true;
 
     result = false;
-
     if (Fs_QueueGetLength() == 0)
     {
         result = Ipd_ChunkInitCheck() != 0;
@@ -162,8 +161,8 @@ void Fs_QueueReset(void)
     }
 
     g_FsQueue.postLoad           = g_FsQueue.read;
-    g_FsQueue.postLoadState      = 0;
-    g_FsQueue.read.ptr->postLoad = 0;
+    g_FsQueue.postLoadState      = FsQueuePostLoadState_Init;
+    g_FsQueue.read.ptr->postLoad = FsQueuePostLoadType_None;
 }
 
 void Fs_QueueUpdate(void)

@@ -3303,7 +3303,7 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
     s_D_800F48A8* ptr;
 
     sp4C = 67;
-    dist = Q12_MULT_PRECISE(arg0->rotZ_4D8, Q12(0.9f));
+    dist = Q12_MULT_PRECISE(arg0->rotationZ_4D8, Q12(0.9f));
 
     if (g_SysWork.npcs_1A0[2].model_0.charaId_0 == Chara_Incubus)
     {
@@ -3583,17 +3583,19 @@ INCLUDE_RODATA("maps/map7_s03/nonmatchings/map7_s03_2", D_800CAE30);
 
 static const SVECTOR D_800CAE3C = { 0, 0, 0x4000 };
 
-s32 func_800DC6DC(VECTOR* arg0, VECTOR* arg1, VECTOR3* arg2, s_800F3DAC* arg3) // 0x800DC6DC
+bool func_800DC6DC(VECTOR* arg0, VECTOR* arg1, VECTOR3* arg2, s_800F3DAC* arg3) // 0x800DC6DC
 {
     VECTOR  sp10;
     SVECTOR sp20;
     SVECTOR sp28;
     MATRIX  sp30;
-    s32     dx, dy, dz;
+    q19_12  dx;
+    q19_12  dy;
+    q19_12  dz;
     s32     dy_2;
-    s32     temp_v0;
+    q19_12  randAngle;
     s32     temp_v1;
-    s32     dist;
+    q19_12  dist;
 
     if (arg3->field_10 == 0)
     {
@@ -3604,18 +3606,23 @@ s32 func_800DC6DC(VECTOR* arg0, VECTOR* arg1, VECTOR3* arg2, s_800F3DAC* arg3) /
             case 3:
                 arg3->field_10 = 18;
                 break;
+
             case 4:
                 arg3->field_10 = 19;
                 break;
+
             case 6:
                 arg3->field_10 = 8;
                 break;
+
             case 2:
                 arg3->field_10 = 2;
                 break;
+
             case 7:
                 arg3->field_10 = 18;
                 break;
+
             default:
                 arg3->field_14 = 170;
                 arg3->field_10++;
@@ -3629,16 +3636,16 @@ loop:
         case 1:
             if (!(Rng_Rand16() & 0xF0))
             {
-                arg3->rotZ_4D8  = 0x333;
+                arg3->rotationZ_4D8  = Q12(0.2f);
                 arg3->field_10  = 2;
                 arg3->field_4E0 = 0;
             }
             else if (!(Rng_Rand16() & 0xF0))
             {
-                arg3->field_10  = 0xE;
+                arg3->field_10  = 14;
                 arg3->field_4E0 = 0;
             }
-            else if (arg0->vy < 0x801)
+            else if (arg0->vy <= Q12(0.5f))
             {
                 arg3->field_10  = 8;
                 arg3->field_4E0 = 0;
@@ -3655,7 +3662,7 @@ loop:
             arg3->field_10 = 3;
 
         case 3:
-            if (Math_DistanceCheck(arg0, arg1, 0x4CC) != 0)
+            if (Math_DistanceCheck(arg0, arg1, Q12(0.3f)))
             {
                 arg3->field_4E0++;
             }
@@ -3676,15 +3683,16 @@ loop:
                 arg3->field_4E0++;
                 break;
             }
+
             arg3->field_4E0 = 0;
             arg3->field_4E4 = 5;
-            return 0;
+            return false;
 
         case 6:
-            temp_v0  = Rng_Rand16();
-            arg1->vx = Math_Sin(temp_v0);
-            arg1->vy = 0;
-            arg1->vz = Math_Cos(temp_v0);
+            randAngle = Rng_Rand16();
+            arg1->vx  = Math_Sin(randAngle);
+            arg1->vy  = Q12(0.0f);
+            arg1->vz  = Math_Cos(randAngle);
             arg3->field_10++;
 
         case 7:
@@ -3692,8 +3700,9 @@ loop:
             {
                 arg3->field_4E0 = 0;
                 arg3->field_4E4 = 0;
-                return 0;
+                return false;
             }
+
             arg3->field_4E0++;
             break;
 
@@ -3710,30 +3719,31 @@ loop:
             dist = SquareRoot12(dx + dz + dy);
 
             dx = arg2->vx - arg0->vx;
-            dy = -0x3CCC - (dist / 4);
+            dy = Q12(-3.8f) - (dist / 4);
             dz = arg2->vz - arg0->vz;
 
-            temp_v0   = Rng_Rand16();
+            randAngle   = Rng_Rand16();
             arg1->vx  = arg0->vx + (dx / 2) - 0xFFF;
-            arg1->vx += temp_v0 >> 2;
+            arg1->vx += randAngle >> 2;
 
-            temp_v0   = Rng_Rand16();
+            randAngle   = Rng_Rand16();
             arg1->vy  = dy - 0xFFF;
-            arg1->vy += temp_v0 >> 2;
+            arg1->vy += randAngle >> 2;
 
-            temp_v0   = Rng_Rand16();
+            randAngle   = Rng_Rand16();
             arg1->vz  = arg0->vz + (dz / 2) - 0xFFF;
-            arg1->vz += temp_v0 >> 2;
+            arg1->vz += randAngle >> 2;
 
             arg3->field_10++;
 
         case 9:
-            if (Math_DistanceCheck(arg0, arg1, arg3->rotZ_4D8) != 0)
+            if (Math_DistanceCheck(arg0, arg1, arg3->rotationZ_4D8))
             {
                 arg3->field_4E0++;
                 break;
             }
-            arg3->field_10  = 0xA;
+
+            arg3->field_10  = 10;
             arg3->field_4E0 = 0;
             break;
 
@@ -3741,49 +3751,52 @@ loop:
             dx   = arg2->vx - arg0->vx;
             dy_2 = arg2->vz - arg0->vz;
 
-            temp_v0  = Rng_Rand16();
+            randAngle  = Rng_Rand16();
             temp_v1  = arg2->vx - 0x7FF;
-            temp_v1 += temp_v0 >> 3;
+            temp_v1 += randAngle >> 3;
             arg1->vx = temp_v1 - (dx / 8);
 
-            temp_v0        = Rng_Rand16();
-            arg1->vy       = (temp_v0 >> 3) - 0x44CB;
-            temp_v0        = Rng_Rand16();
+            randAngle        = Rng_Rand16();
+            arg1->vy       = (randAngle >> 3) - (Q12(4.3f) - 1);
+            randAngle        = Rng_Rand16();
             temp_v1        = arg2->vz - 0x7FF;
-            temp_v1       += temp_v0 >> 3;
+            temp_v1       += randAngle >> 3;
             arg1->vz       = temp_v1 - (dy_2 / 8);
-            arg3->field_10 = 0xB;
+            arg3->field_10 = 11;
 
         case 11:
-            if (Math_DistanceCheck(arg0, arg1, Q12_MULT_PRECISE(arg3->rotZ_4D8, 0x1800)) != 0)
+            if (Math_DistanceCheck(arg0, arg1, Q12_MULT_PRECISE(arg3->rotationZ_4D8, Q12(1.5f))))
             {
                 arg3->field_4E0++;
                 break;
             }
-            arg3->field_10  = 0xC;
+
+            arg3->field_10  = 12;
             arg3->field_4E0 = 0;
             break;
 
         case 12:
-            temp_v0        = Rng_Rand16();
+            randAngle      = Rng_Rand16();
             temp_v1        = arg2->vx;
             temp_v1       += -0x7FF;
-            temp_v1       += temp_v0 >> 3;
+            temp_v1       += randAngle >> 3;
             arg1->vx       = temp_v1;
             arg1->vy       = 0;
-            temp_v0        = Rng_Rand16();
+
+            randAngle      = Rng_Rand16();
             temp_v1        = arg2->vz;
             temp_v1       += -0x7FF;
-            temp_v1       += temp_v0 >> 3;
+            temp_v1       += randAngle >> 3;
             arg1->vz       = temp_v1;
-            arg3->field_10 = 0xB;
+            arg3->field_10 = 11;
 
         case 13:
-            if (Math_DistanceCheck(arg0, arg1, arg3->rotZ_4D8) == 0)
+            if (!Math_DistanceCheck(arg0, arg1, arg3->rotationZ_4D8))
             {
                 arg3->field_4E0 = 0;
-                return 0;
+                return false;
             }
+
             arg3->field_4E0++;
             break;
 
@@ -3791,10 +3804,12 @@ loop:
             sp28    = D_800CAE3C;
             sp20.vx = Rng_Rand16();
             sp20.vy = Rng_Rand16();
-            sp20.vz = 0;
+            sp20.vz = Q12(0.0f);
+
             Math_RotMatrixXyz(&sp20, &sp30);
             SetRotMatrix(&sp30);
             ApplyRotMatrix(&sp28, &sp10);
+
             arg1->vx = arg0->vx + sp10.vx;
             arg1->vy = arg0->vy + sp10.vy;
             arg1->vz = arg0->vz + sp10.vz;
@@ -3810,8 +3825,9 @@ loop:
             {
                 break;
             }
+
             arg3->field_4E0 = 0;
-            arg3->field_10  = 0x10;
+            arg3->field_10  = 16;
             break;
 
         case 16:
@@ -3819,11 +3835,12 @@ loop:
             arg3->field_10++;
 
         case 17:
-            if (Math_DistanceCheck(arg0, arg1, arg3->rotZ_4D8) != 0)
+            if (Math_DistanceCheck(arg0, arg1, arg3->rotationZ_4D8))
             {
                 arg3->field_4E0++;
                 break;
             }
+
             arg3->field_4E0 = 0;
             arg3->field_4E4 = 0;
             return 0;
@@ -3833,11 +3850,12 @@ loop:
             break;
 
         case 18:
-            if (Math_DistanceCheck(arg0, arg1, arg3->rotZ_4D8 / 2) == 0)
+            if (!Math_DistanceCheck(arg0, arg1, arg3->rotationZ_4D8 / 2))
             {
                 arg3->field_4E0 = 0;
-                return 0;
+                return false;
             }
+
             arg3->field_4E0++;
             break;
 
@@ -3845,8 +3863,9 @@ loop:
             if (arg3->field_4E0 >= 25)
             {
                 arg3->field_4E0 = 0;
-                return 0;
+                return false;
             }
+
             arg3->field_4E0++;
             break;
     }
@@ -3856,7 +3875,7 @@ loop:
         goto loop;
     }
 
-    return 1;
+    return true;
 }
 
 void func_800DCD94(MATRIX* mat, VECTOR3* pos) // 0x800DCD94
@@ -3911,7 +3930,7 @@ void func_800DCDDC(s_800F3DAC* arg0, const VECTOR3* arg1, const VECTOR3* arg2) /
 
         sp38.vx = 0;
         sp38.vy = 0;
-        sp38.vz = arg0->rotZ_4D8;
+        sp38.vz = arg0->rotationZ_4D8;
         ApplyRotMatrix(&sp38, &sp40);
 
         sp18.vx += sp40.vx;
@@ -4040,7 +4059,7 @@ void func_800DD0EC(const VECTOR3* pos, s32 coordIdx) // 0x800DD0EC
         newPos.vz = pos->vz + offset.vz;
 
         ptr0->field_4E4    = 3;
-        ptr0->rotZ_4D8     = Q12_ANGLE(108.0f);
+        ptr0->rotationZ_4D8     = Q12_ANGLE(108.0f);
         ptr0->timer_C      = Q12(1.0f);
         ptr0->timer_8      = Q12(1.0f);
         ptr0->coordIdx_4EC = coordIdx;
@@ -4070,7 +4089,7 @@ void func_800DD260(const VECTOR3* arg0, const VECTOR3* pos) // 0x800DD260
     ptr = func_800DD090();
     if (ptr != NULL)
     {
-        ptr->rotZ_4D8  = Q12_ANGLE(43.2f);
+        ptr->rotationZ_4D8  = Q12_ANGLE(43.2f);
         ptr->field_4E4 = 4;
         ptr->timer_C   = Q12(0.5f);
         ptr->timer_8   = Q12(0.5f);
@@ -4087,7 +4106,7 @@ void func_800DD2C8(const VECTOR3* arg0, const VECTOR3* arg1) // 0x800DD2C8
     ptr = func_800DD090();
     if (ptr != NULL)
     {
-        ptr->rotZ_4D8  = Q12_ANGLE(180.0f);
+        ptr->rotationZ_4D8  = Q12_ANGLE(180.0f);
         ptr->field_4E4 = 4;
         ptr->timer_C   = Q12(0.5f);
         ptr->timer_8   = Q12(0.5f);
@@ -4107,7 +4126,7 @@ void func_800DD32C(const VECTOR3* arg0, const VECTOR3* arg1) // 0x800DD32C
     if (retPtr != NULL)
     {
         retPtr->field_4F0 = func_800DC49C;
-        retPtr->rotZ_4D8  = Q12_ANGLE(216.0f);
+        retPtr->rotationZ_4D8  = Q12_ANGLE(216.0f);
         retPtr->field_4E4 = 6;
         retPtr->timer_C   = Q12(2.0f);
         retPtr->timer_8   = Q12(2.0f);
@@ -4146,7 +4165,7 @@ void func_800DD464(const VECTOR3* arg0) // 0x800DD464
     if (ptr != NULL)
     {
         ptr->field_4F0 = func_800DC49C;
-        ptr->rotZ_4D8  = Q12_ANGLE(90.0f);
+        ptr->rotationZ_4D8  = Q12_ANGLE(90.0f);
         ptr->field_4E4 = 2;
         ptr->timer_C   = Q12(1.5f);
         ptr->timer_8   = Q12(1.5f);
@@ -4248,7 +4267,7 @@ void func_800DD738(const VECTOR3* pos0, const VECTOR3* pos1, q19_12 rotZ, q19_12
     if (ptr != NULL)
     {
         ptr->field_4E4 = 7;
-        ptr->rotZ_4D8  = rotZ;
+        ptr->rotationZ_4D8  = rotZ;
         ptr->timer_C   = timer;
         ptr->timer_8   = timer;
         ptr->field_14  = Q12_ANGLE(45.0f);

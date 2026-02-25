@@ -232,7 +232,7 @@ void func_800D0CA0(q19_12 rotY, SVECTOR* pos) // 0x800D0CA0
     SetMulRotMatrix(&mat);
 }
 
-void func_800D0D6C(MATRIX* out, SVECTOR* pos, s32 rotY) // 0x800D0D6C
+void func_800D0D6C(MATRIX* out, SVECTOR* pos, q19_12 rotY) // 0x800D0D6C
 {
     SVECTOR     rot; // Q3.12
     s_800E0988* ptr;
@@ -529,19 +529,20 @@ void func_800D1604(GsOT_TAG* ot, int arg1) // 0x800D1604
         if (tick)
         {
             func_800D1478(&iter->field_14, iter->field_8, arg1, iter->field_4, &iter->field_C);
-            func_800D0D6C(&iter->field_1C, &iter->field_14, 0);
+            func_800D0D6C(&iter->field_1C, &iter->field_14, Q12_ANGLE(0.0f));
 
             temp_s4 = func_80055F08(&sp30, &sp28, &iter->field_1C);
 
             func_800D0CA0(0, &iter->field_14);
 
-            if (g_DeltaTime != 0)
+            if (g_DeltaTime != Q12(0.0f))
             {
                 func_800D13B4(&iter->field_40[1], 12, 11, iter->field_8);
                 func_800D0EC0(&iter->field_40[1], 12, 11);
             }
 
-            func_800D0FD4(ot, &iter->field_14, &iter->field_40[1], &iter->field_1C, FP_MULTIPLY_PRECISE(temp_s4, iter->field_CC, 12), 11, 9, 12, iter->field_3C);
+            func_800D0FD4(ot, &iter->field_14, &iter->field_40[1], &iter->field_1C,
+                          FP_MULTIPLY_PRECISE(temp_s4, iter->field_CC, 12), 11, 9, 12, iter->field_3C);
             iter->field_8 -= g_DeltaTime;
         }
     }
