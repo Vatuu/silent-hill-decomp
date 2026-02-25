@@ -45,7 +45,7 @@
 
 #include "maps/shared/Map_RoomBgmInit_3_s00_CondFalse.h" // 0x800D0814
 
-void func_800D09B4(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800D09BC
 

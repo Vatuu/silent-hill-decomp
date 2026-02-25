@@ -12,7 +12,7 @@ void (*g_LoadScreenFuncs[])() = {
     NULL,
     Gfx_LoadingScreen_PlayerRun,
     Gfx_LoadingScreen_BackgroundTexture,
-    func_800CEB94
+    Gfx_LoadingScreen_StageString
 };
 
 // TODO: Re-decode each point once type is found from `s_EventData`s.

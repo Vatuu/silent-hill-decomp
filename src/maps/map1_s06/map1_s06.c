@@ -35,7 +35,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800D5400
     Bgm_Update(Savegame_EventFlagGet(EventFlag_133) ? 0xFE : 1, Q12(0.1f), D_800D71E8);
 }
 
-void func_800D5448(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800D5450
 

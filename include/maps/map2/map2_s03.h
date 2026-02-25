@@ -12,8 +12,6 @@
 
 #include "maps/shared.h"
 
-void Gfx_LoadingScreen_StageString(void);
-
 void Map_WorldObjectsInit(void);
 
 void Map_WorldObjectsUpdate(void);

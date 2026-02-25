@@ -116,9 +116,6 @@ extern SVECTOR3 D_800E3AAC;
 
 void func_800D0124(void);
 
-/** Debug function? */
-void Gfx_LoadingScreen_StageString(void);
-
 void MapEvent_CutsceneAlleyNightmare(void);
 
 void func_800DBE00(void);

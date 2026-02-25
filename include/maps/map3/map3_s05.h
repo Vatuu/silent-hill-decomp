@@ -65,8 +65,6 @@ extern s_WorldObjectModel   g_CommonWorldObjects[6];
 extern s_WorldObjectPose g_CommonWorldObjectPoses[4];
 extern VECTOR3 D_800DACD4;
 
-void func_800D57E0(void);
-
 void func_800D57E8(void);
 
 void func_800D5934(void);

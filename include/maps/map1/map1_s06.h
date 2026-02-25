@@ -54,8 +54,6 @@ extern s8 D_800DB055;
 
 extern s_WorldObjectDesc D_800DB064;
 
-void func_800D5448(void);
-
 void func_800D560C(void);
 
 void func_800D5614(void);

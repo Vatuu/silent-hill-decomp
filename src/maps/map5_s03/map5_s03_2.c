@@ -46,7 +46,7 @@
 
 #include "maps/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800D10B4
 
-void func_800D1340(void) {} // 0x800D1340
+void Gfx_LoadingScreen_StageString(void) {} // 0x800D1340
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D1348
 

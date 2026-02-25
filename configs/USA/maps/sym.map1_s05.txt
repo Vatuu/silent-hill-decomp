@@ -97,6 +97,7 @@ sharedFunc_800D4594_1_s05     = 0x800D4594; // type:func
 sharedFunc_800D929C_0_s00     = 0x800D489C; // type:func
 Map_RoomIdxGet                = 0x800D48AC; // type:func
 Map_RoomBgmInit               = 0x800D494C; // type:func
+Gfx_LoadingScreen_StageString = 0x800D49A4; // type:func
 Map_WorldObjectsInit          = 0x800D525C; // type:func
 Map_WorldObjectsUpdate        = 0x800D5400; // type:func
 

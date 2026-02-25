@@ -14,8 +14,6 @@
 
 void func_800CCB30(s32 arg0);
 
-void func_800CCE6C(void);
-
 void MapEvent_DoorJammed(void);
 
 void MapEvent_DoorLocked(void);

@@ -566,7 +566,7 @@ void func_800EB6B0(void) // 0x800EB6B0
     Bgm_Update(temp_s1, Q12(0.2f), &D_800EFC74);
 }
 
-void func_800EB874(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800EB87C
 

@@ -617,7 +617,7 @@ void func_800D6790(void) // 0x800D6790
     Bgm_Update(flags, Q12(0.25f), &D_800DA570);
 }
 
-void func_800D67EC(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 void func_800D67F4(void) // 0x800D67F4
 {

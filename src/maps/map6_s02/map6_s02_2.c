@@ -47,7 +47,7 @@ INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800CE88C);
 
 #include "maps/shared/Map_RoomBgmInit_6_s00.h" // 0x800CEA88
 
-void func_800CED6C(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 void func_800CED74(s_SubCharacter* chara, bool arg1) // 0x800CED74
 {

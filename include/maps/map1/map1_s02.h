@@ -74,8 +74,6 @@ extern u8 D_800E5A99;
 
 extern s_WorldObjectModel              g_CommonWorldObjects[6]; // 0x800E5AA8
 
-void func_800DA018(void);
-
 void func_800DA200(void);
 
 /** @brief Lobby key use event. */

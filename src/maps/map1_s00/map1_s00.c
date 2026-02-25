@@ -43,7 +43,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800D77F8
     Bgm_Update(flags, Q12(0.1f), &D_800DCC4C);
 }
 
-void func_800D7864(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800D786C
 

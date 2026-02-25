@@ -100,6 +100,7 @@ Twinfeeler_Update             = 0x800D5F28; // type:func
 sharedFunc_800D929C_0_s00     = 0x800D606C; // type:func
 Map_RoomIdxGet                = 0x800D607C; // type:func
 Map_RoomBgmInit               = 0x800D6278; // type:func
+Gfx_LoadingScreen_StageString = 0x800D654C; // type:func
 MapEvent_DoorJammed           = 0x800D6554; // type:func
 MapEvent_DoorLocked           = 0x800D65E8; // type:func
 MapEvent_CommonItemTake       = 0x800D667C; // type:func

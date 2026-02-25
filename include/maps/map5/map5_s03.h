@@ -56,8 +56,6 @@ extern s32 D_800D6F58;
 
 void func_800D1004(s32 arg0);
 
-void func_800D1340(void);
-
 /** @brief Handles a Health Drink or Shotgun Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
 

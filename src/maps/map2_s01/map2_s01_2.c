@@ -47,7 +47,7 @@
 
 #include "maps/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800CE908
 
-void func_800CEB94(void) {} // 0x800CEB94
+void Gfx_LoadingScreen_StageString(void) {} // 0x800CEB94
 
 void func_800CEB9C(void) // 0x800CEB9C
 {

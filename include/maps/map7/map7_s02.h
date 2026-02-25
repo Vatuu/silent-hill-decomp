@@ -178,8 +178,6 @@ void func_800D9864(void);
 
 void func_800D98E4(void);
 
-void func_800DA1A8(void);
-
 void func_800DA248(void);
 
 /** Cutscene. */

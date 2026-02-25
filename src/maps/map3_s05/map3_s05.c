@@ -120,7 +120,7 @@ INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", g_PuppetNurse_ModelStates0
 
 #include "maps/shared/Map_RoomBgmInit_3_s02_CondFalse.h" // 0x800D5550
 
-void func_800D57E0(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 void func_800D57E8(void) // 0x800D57E8
 {

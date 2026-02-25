@@ -6448,7 +6448,7 @@ void func_800E0C10(void) // 0x800E0C10
 
 #include "maps/shared/sharedFunc_800D0110_7_s00.h" // 0x800E0C50
 
-void func_800E14D4(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warpCamera) // 0x800E14DC
 {

@@ -13,7 +13,7 @@ void (*g_LoadScreenFuncs[])() = {
     NULL,
     Gfx_LoadingScreen_PlayerRun,
     Gfx_LoadingScreen_BackgroundTexture,
-    func_800EAFF0
+    Gfx_LoadingScreen_StageString
 };
 
 s_MapPoint2d MAP_POINTS[] = {

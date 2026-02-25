@@ -88,6 +88,7 @@ Ai_Floatstinger_ControlUpdate       = 0x800D1B98; // type:func
 sharedFunc_800D929C_0_s00           = 0x800D5AFC; // type:func
 Map_RoomIdxGet                      = 0x800D5B0C; // type:func
 Map_RoomBgmInit                     = 0x800D5D08; // type:func
+Gfx_LoadingScreen_StageString       = 0x800D5FDC; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800D5FE4; // type:func
 MapEvent_DoorJammed                 = 0x800D607C; // type:func
 MapEvent_DoorLocked                 = 0x800D6110; // type:func

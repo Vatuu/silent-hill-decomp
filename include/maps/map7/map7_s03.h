@@ -813,8 +813,6 @@ void func_800E0B5C(s32 arg0);
 void func_800E0B90(void);
 void func_800E0C10(void);
 
-void func_800E14D4(void);
-
 /** Camera function. */
 void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warpCamera);
 

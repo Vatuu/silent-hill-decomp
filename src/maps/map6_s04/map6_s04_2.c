@@ -1527,7 +1527,7 @@ void func_800E10F8(void) // 0x800E10F8
 #include "maps/shared/Map_RoomBgmInit_6_s04_CondFalse.h" // 0x800E12D0
 
 // TODO: Might be part of shared block above with `map6_s05::func_800CCBFC`
-void func_800E155C(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800E1564
 

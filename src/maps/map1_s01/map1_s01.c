@@ -124,7 +124,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800D6FE4
     Bgm_Update(flags, Q12(0.1f), &D_800DC9FC);
 }
 
-void func_800D7050(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 void MapEvent_DoorJammed(void) // 0x800D7058
 {

@@ -110,6 +110,7 @@ sharedFunc_800D983C_1_s02        = 0x800D5530; // type:func
 sharedFunc_800D9960_1_s02        = 0x800D5654; // type:func
 sharedFunc_800D99D0_1_s02        = 0x800D56C4; // type:func
 sharedFunc_800D929C_0_s00        = 0x800D64F8; // type:func
+Gfx_LoadingScreen_StageString    = 0x800D67EC; // type:func
 MapEvent_CommonItemTake          = 0x800D691C; // type:func
 MapEvent_SewerKeyTake            = 0x800D6AD4; // type:func
 MapEvent_MapTake                 = 0x800D8280; // type:func

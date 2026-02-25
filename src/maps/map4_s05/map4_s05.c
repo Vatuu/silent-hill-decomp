@@ -1410,7 +1410,7 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 newRotY) //
 
 #include "maps/shared/Map_RoomBgmInit_4_s02.h" // 0x800D5D08
 
-void func_800D5FDC(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D5FE4
 

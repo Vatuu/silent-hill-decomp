@@ -34,8 +34,6 @@ void func_800CE858(s32 arg0);
 
 void func_800CE88C(void);
 
-void func_800CEB94(void);
-
 void func_800CEB9C(void);
 
 void func_800CEC30(void);

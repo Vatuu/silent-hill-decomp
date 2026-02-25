@@ -55,7 +55,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800D494C
     Bgm_Update(var_a0, Q12(0.1f), &D_800D5C3C);
 }
 
-void func_800D49A4(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"

@@ -90,7 +90,7 @@ void func_800D98E4(void) // 0x800D98E4
 
 #include "maps/shared/sharedFunc_800D0110_7_s00.h" // 0x800D9924
 
-void func_800DA1A8(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800DA1B0
 

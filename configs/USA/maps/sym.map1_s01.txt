@@ -97,6 +97,7 @@ Ai_Cat_Update                  = 0x800D6D40; // type:func
 sharedFunc_800D929C_0_s00      = 0x800D6F34; // type:func
 Map_RoomIdxGet                 = 0x800D6F44; // type:func
 Map_RoomBgmInit                = 0x800D6FE4; // type:func
+Gfx_LoadingScreen_StageString  = 0x800D7050; // type:func
 MapEvent_DoorJammed            = 0x800D7058; // type:func
 MapEvent_DoorLocked            = 0x800D70EC; // type:func
 MapEvent_DoorUnlocked          = 0x800D7180; // type:func

@@ -93,8 +93,6 @@ bool func_800CE164(POLY_FT4** poly, s32 idx);
 
 void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void func_800DA630(void);
-
 void func_800DA7F4(void);
 
 void func_800DA8B0(void);

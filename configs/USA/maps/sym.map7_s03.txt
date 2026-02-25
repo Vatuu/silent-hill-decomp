@@ -197,6 +197,7 @@ Ai_Unknown23_Update                 = 0x800E093C; // type:func
 sharedFunc_800D929C_0_s00           = 0x800E0A80; // type:func
 Map_RoomIdxGet                      = 0x800E0A90; // type:func
 sharedFunc_800D0110_7_s00           = 0x800E0C50; // type:func
+Gfx_LoadingScreen_StageString       = 0x800E14D4; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800E2DF8; // type:func
 Map_WorldObjectsInit                = 0x800E9528; // type:func
 Map_WorldObjectsUpdate              = 0x800E972C; // type:func

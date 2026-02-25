@@ -15,7 +15,7 @@
 
 #include "maps/shared/Map_RoomBgmInit_2_s02.h" // 0x800CC99C
 
-void func_800CCA88(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 void Map_WorldObjectsInit(void) {}
 

@@ -104,6 +104,7 @@ sharedFunc_800D4594_1_s05     = 0x800D5048; // type:func
 sharedFunc_800D929C_0_s00     = 0x800D5350; // type:func
 Map_RoomIdxGet                = 0x800D5360; // type:func
 Map_RoomBgmInit               = 0x800D5400; // type:func
+Gfx_LoadingScreen_StageString = 0x800D5448; // type:func
 MapEvent_DoorJammed           = 0x800D5450; // type:func
 MapEvent_DoorLocked           = 0x800D54E4; // type:func
 MapEvent_DoorUnlocked         = 0x800D5578; // type:func

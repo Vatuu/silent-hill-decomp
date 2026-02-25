@@ -51,8 +51,6 @@ extern u8 D_800D6EF8;
 extern s_WorldObjectDesc      g_WorldObjectSavepad; // 0x800D6F38
 extern s_WorldObjectDescNoRot g_WorldObject0;       // 0x800D6F08
 
-void func_800D1740(void);
-
 void func_800D1870(void);
 
 void func_800D1910(void);

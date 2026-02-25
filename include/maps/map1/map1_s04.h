@@ -28,8 +28,6 @@ extern s32 D_800CD76C;
 extern s32 D_800CD770;
 extern s32 D_800CD774;
 
-void Gfx_LoadingScreen_StageString(void);
-
 // Some kind of debug menu? Controller buttons increment a counter which wraps around, has a `Gfx_DebugStringPosition` call but no strings drawn.
 void func_800CCA2C(void);
 

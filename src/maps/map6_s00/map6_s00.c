@@ -43,7 +43,7 @@ INCLUDE_ASM("maps/map6_s00/nonmatchings/map6_s00", func_800EAB10);
 
 #include "maps/shared/Map_RoomBgmInit_6_s00.h" // 0x800EAD0C
 
-void func_800EAFF0(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800EAFF8
 

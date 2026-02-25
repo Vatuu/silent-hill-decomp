@@ -102,8 +102,6 @@ void func_800DD588(s_SubCharacter* chara);
 
 void func_800DD834(s_SubCharacter* chara);
 
-void func_800E7A1C(void);
-
 void func_800E7B74(void);
 
 void func_800E7D54(void);

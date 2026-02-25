@@ -111,7 +111,7 @@ INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", g_PuppetNurse_ModelStates0
 
 #include "maps/shared/Map_RoomBgmInit_3_s02_CondFalse.h" // 0x800D1284
 
-void func_800D1514(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"

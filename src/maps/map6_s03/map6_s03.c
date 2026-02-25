@@ -161,7 +161,7 @@ void func_800D7F98(void) // 0x800D7F98
     Bgm_Update(flags, fArg1, &D_800DBCDC);
 }
 
-void func_800D81A4(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"

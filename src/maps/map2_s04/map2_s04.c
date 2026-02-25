@@ -19,7 +19,7 @@
 
 #include "maps/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800CCBE0
 
-void func_800CCE6C(void) {} // 0x800CCE6C
+void Gfx_LoadingScreen_StageString(void) {} // 0x800CCE6C
 
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800CCE74
 

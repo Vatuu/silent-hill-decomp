@@ -15,9 +15,6 @@
 
 #include "maps/shared.h"
 
-// TODO: Make shared function?
-void Gfx_LoadingScreen_StageString(void);
-
 /** @brief Handles a First Aid Kit, Health Drink, or Handgun Bullets item pickup event. */
 void MapEvent_CommonItemTake(void);
 

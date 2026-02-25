@@ -20,6 +20,6 @@
 #include "maps/shared/Map_RoomBgmInit_6_s04_CondFalse.h" // 0x800CC970
 
 // TODO: Might be part of shared block above with `map6_s04::func_800E155C`
-void func_800CCBFC(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 INCLUDE_RODATA("maps/map6_s05/nonmatchings/map6_s05", D_800CA62C);

@@ -62,8 +62,6 @@ extern s_WorldObjectModel   g_CommonWorldObjects[6]; // 0x800DF120
 
 void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void func_800D7050(void);
-
 void MapEvent_DoorJammed(void);
 
 void MapEvent_DoorLocked(void);

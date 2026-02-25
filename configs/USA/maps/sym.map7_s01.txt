@@ -171,6 +171,7 @@ sharedFunc_800D923C_0_s00           = 0x800D6708; // type:func
 sharedFunc_800D929C_0_s00           = 0x800D6768; // type:func
 Map_RoomIdxGet                      = 0x800D6778; // type:func
 sharedFunc_800D0110_7_s00           = 0x800D6938; // type:func
+Gfx_LoadingScreen_StageString       = 0x800D71BC; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800D71C4; // type:func
 MapEvent_CommonItemTake             = 0x800D83EC; // type:func
 MapEvent_KeyOfOphielUse             = 0x800D8668; // type:func

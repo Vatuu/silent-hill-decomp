@@ -271,8 +271,6 @@ void func_800E0DC4(s32 arg0, s32 arg1);
 
 void func_800E0FAC(s32 arg0);
 
-void func_800E155C(void);
-
 void func_800D87B0(s_SubCharacter* chara);
 
 void func_800D8848(s_Model* model);

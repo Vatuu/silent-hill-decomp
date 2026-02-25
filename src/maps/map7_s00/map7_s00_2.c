@@ -86,7 +86,7 @@ void func_800D00D0(void) // 0x800D00D0
 
 #include "maps/shared/sharedFunc_800D0110_7_s00.h" // 0x800D0110
 
-void func_800D0994(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800D099C
 

@@ -11,8 +11,6 @@
 
 #include "maps/shared.h"
 
-void func_800CCA88(void);
-
 void Map_WorldObjectsInit(void);
 
 void Map_WorldObjectsUpdate(void);

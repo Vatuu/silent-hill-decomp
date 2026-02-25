@@ -150,6 +150,7 @@ Map_RoomIdxGet                      = 0x800D1D8C; // type:func
 Map_RoomBgmInit                     = 0x800D1E24; // type:func
 Map_RoomBgmInit_CondTrue            = 0x800D1E58; // type:func
 Map_RoomBgmInit_CondFalse           = 0x800D1E98; // type:func
+Gfx_LoadingScreen_StageString       = 0x800D2128; // type:func
 MapEvent_DoorJammed                 = 0x800D2130; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800D25D0; // type:func
 sharedFunc_800D15F0_3_s01           = 0x800D2E84; // type:func

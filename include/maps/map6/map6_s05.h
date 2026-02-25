@@ -6,6 +6,4 @@
 
 #include "maps/shared.h"
 
-void func_800CCBFC(void);
-
 #endif

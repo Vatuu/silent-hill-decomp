@@ -281,6 +281,7 @@ sharedFunc_800E94B4_2_s02           = 0x800EA688; // type:func
 sharedFunc_800E9714_2_s02           = 0x800EA8E8; // type:func
 sharedFunc_800D929C_0_s00           = 0x800EAB00; // type:func
 Map_RoomBgmInit                     = 0x800EAD0C; // type:func
+Gfx_LoadingScreen_StageString       = 0x800EAFF0; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800EAFF8; // type:func
 MapEvent_CommonItemTake             = 0x800EB090; // type:func
 Map_WorldObjectsInit                = 0x800EBCE8; // type:func

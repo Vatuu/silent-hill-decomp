@@ -47,8 +47,6 @@ void func_800D0994();
 
 void func_800D09D4();
 
-void func_800D0B74();
-
 void func_800D0CA4();
 
 /** @brief First Aid Kit item pickup event. */

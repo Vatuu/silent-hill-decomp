@@ -87,8 +87,6 @@ extern s16 D_800D5AE8;
 
 void func_800D1B78(s32 arg0);
 
-void func_800D1EB4(void);
-
 void func_800D1FE8(void);
 
 void func_800D1FF0(void);
