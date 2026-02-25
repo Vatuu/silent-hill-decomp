@@ -1,4 +1,4 @@
-/** @brief Flag indices for map markings flags stored in savegame.
+/** @brief Flag indices for map markings flags stored in a savegame.
  * Accessed via `Savegame_MapMarkingGet`/`Savegame_MapMarkingSet`.
  */
 typedef enum _MapMarkingFlag
@@ -87,8 +87,8 @@ typedef enum _MapMarkingFlag
     MapMarkFlag_FogSchool1F_ReceptionBroken             = 208,
     MapMarkFlag_FogSchool1F_ReceptionArrows             = 209,
     MapMarkFlag_FogSchool1F_InfirmaryArrows             = 211,
-    MapMarkFlag_FogSchool1F_CortyardBotBroken           = 212,
-    MapMarkFlag_FogSchool1F_CortyardBotArrows           = 213,
+    MapMarkFlag_FogSchool1F_CourtyardBotBroken          = 212,
+    MapMarkFlag_FogSchool1F_CourtyardBotArrows          = 213,
     MapMarkFlag_FogSchool1F_BotRightCorridorLocked      = 214,
     MapMarkFlag_FogSchool1F_BotRightCorridorArrows      = 215,
     MapMarkFlag_FogSchool1F_TopRightCorridorLocked      = 216,
@@ -103,7 +103,7 @@ typedef enum _MapMarkingFlag
     MapMarkFlag_FogSchool1F_BotClassRoomBotBroken       = 226,
     MapMarkFlag_FogSchool1F_BotClassRoomBotArrows       = 227,
     MapMarkFlag_FogSchool1F_ClassRoomMidArrows          = 229,
-    MapMarkFlag_FogSchool1F_CortyardTopArrows           = 231,
+    MapMarkFlag_FogSchool1F_CourtyardTopArrows          = 231,
     MapMarkFlag_FogSchool1F_HallLeftBroken              = 232,
     MapMarkFlag_FogSchool1F_UntitledLobbyBotArrows      = 235,
     MapMarkFlag_FogSchool1F_StorageBroken               = 236,
@@ -125,8 +125,8 @@ typedef enum _MapMarkingFlag
     MapMarkFlag_AltSchool1F_BotLeftCorridorArrows       = 285,
     MapMarkFlag_AltSchool1F_ReceptionArrows             = 287,
     MapMarkFlag_AltSchool1F_InfirmaryArrows             = 289,
-    MapMarkFlag_AltSchool1F_CortyardBotLocked           = 290,
-    MapMarkFlag_AltSchool1F_CortyardBotArrows           = 291,
+    MapMarkFlag_AltSchool1F_CourtyardBotLocked          = 290,
+    MapMarkFlag_AltSchool1F_CourtyardBotArrows          = 291,
     MapMarkFlag_AltSchool1F_BotRightCorridorArrows      = 293,
     MapMarkFlag_AltSchool1F_TopRightCorridorLocked      = 294,
     MapMarkFlag_AltSchool1F_TopRightCorridorArrows      = 295,
@@ -138,7 +138,7 @@ typedef enum _MapMarkingFlag
     MapMarkFlag_AltSchool1F_BotClassRoomBotArrows       = 305,
     MapMarkFlag_AltSchool1F_ClassRoomMidArrows          = 307,
     MapMarkFlag_308                                     = 308,
-    MapMarkFlag_AltSchool1F_CortyardTopArrows           = 309,
+    MapMarkFlag_AltSchool1F_CourtyardTopArrows          = 309,
     MapMarkFlag_AltSchool1F_HallLeftArrows              = 311,
     MapMarkFlag_AltSchool1F_UntitledLobbyBotArrows      = 313,
     MapMarkFlag_AltSchool1F_StorageArrows               = 315,

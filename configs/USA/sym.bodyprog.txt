@@ -2424,6 +2424,7 @@ g_BackgroundColor                            = 0x800A8E58;
 //--- PA: 0x0842FC   VA: 0x800A8E5C   subsegment: .data, screen/screen_fade
 //-------------------------------------------------------------------------
 g_ScreenFadeProgress                         = 0x800A8E94; // type:s32
+g_BlackBorderShade                           = 0x800A8F40;
 
 //-------------------------------------------------------------------------
 //--- PA: 0x0843E4   VA: 0x800A8F44   subsegment: .data, screen/screen_data

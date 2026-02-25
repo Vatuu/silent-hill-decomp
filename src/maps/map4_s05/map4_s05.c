@@ -508,7 +508,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                     }
                 }
 
-                floatstingerProps.field_FC  = Q12_MULT_PRECISE(D_800D785C, Rng_GenerateUInt(Q12(0.75f), Q12(1.0f) - 1));
+                floatstingerProps.field_FC  = Q12_MULT_PRECISE(D_800D785C, Rng_GenerateUInt(Q12(0.75f), Q12_CLAMPED(1.0f)));
                 floatstingerProps.flags_E8 |= FloatstingerFlag_3;
 
                 if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Hard && floatstingerProps.field_100 == 0)

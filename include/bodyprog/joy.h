@@ -34,6 +34,4 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1);
 /** @brief @unused */
 bool func_8003483C(u16* arg0);
 
-void func_800348C0(void);
-
 #endif

@@ -116,7 +116,7 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
             if (sharedData_800D8568_1_s05.flags_0 & (1 << 3) &&
                 Rng_GenerateUInt(0, 15) == 0) // 1 in 16 chance.
             {
-                s32 randVal                                        = Rng_GenerateUInt(Q12(0.5f), Q12(1.0f) - 1);
+                s32 randVal                                        = Rng_GenerateUInt(Q12(0.5f), Q12_CLAMPED(1.0f));
                 sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = randVal + (sharedData_800D8568_1_s05.field_10 >> 1);
                 sharedData_800DFB7C_0_s00[idx].field_A             = 11;
             }

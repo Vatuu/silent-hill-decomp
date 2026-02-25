@@ -81,7 +81,7 @@ POLY_G4 D_800A8EB0[] = {
     }
 };
 
-s32 D_800A8F40 = 0;
+q19_12 g_BlackBorderShade = Q12(0.0f);
 
 void Screen_FadeDrawModeSet(DR_MODE* drMode) // 0x800325A4
 {
@@ -134,9 +134,9 @@ void Screen_FadeUpdate(void) // 0x8003260C
             }
 
             g_ScreenFadeProgress += Q12_MULT_PRECISE(timestep, g_DeltaTimeRaw);
-            if (g_ScreenFadeProgress >= (Q12(1.0f) - 1))
+            if (g_ScreenFadeProgress >= Q12_CLAMPED(1.0f))
             {
-                g_ScreenFadeProgress = Q12(1.0f) - 1;
+                g_ScreenFadeProgress = Q12_CLAMPED(1.0f);
                 g_Screen_FadeStatus++;
             }
 
@@ -151,7 +151,7 @@ void Screen_FadeUpdate(void) // 0x8003260C
 
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, true):
-            g_ScreenFadeProgress = Q12(1.0f) - 1;
+            g_ScreenFadeProgress = Q12_CLAMPED(1.0f);
             g_Screen_FadeStatus++;
 
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
@@ -244,7 +244,7 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
     drMode = &D_800A8E98[g_ActiveBufferIdx];
     poly   = &D_800A8EB0[g_ActiveBufferIdx];
 
-    vcSetEvCamRate(D_800A8F40);
+    vcSetEvCamRate(g_BlackBorderShade);
 
     if (g_SysWork.sysFlags_22A0 & SysFlag_Freeze)
     {
@@ -257,41 +257,39 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
             g_SysWork.field_30++;
 
         case 19:
-            D_800A8F40 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.0f);
-
-            if (D_800A8F40 >= 0xFFF)
+            g_BlackBorderShade += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.0f);
+            if (g_BlackBorderShade >= Q12_CLAMPED(1.0f))
             {
-                D_800A8F40 = 0xFFF;
+                g_BlackBorderShade = Q12_CLAMPED(1.0f);
                 g_SysWork.field_30++;
             }
 
-            Screen_BlackBorderDraw(poly, D_800A8F40);
+            Screen_BlackBorderDraw(poly, g_BlackBorderShade);
             break;
 
         case 20:
         case 22:
-            D_800A8F40 = 0xFFF;
+            g_BlackBorderShade = Q12_CLAMPED(1.0f);
             g_SysWork.field_30++;
 
         case 21:
-            Screen_BlackBorderDraw(poly, D_800A8F40);
+            Screen_BlackBorderDraw(poly, g_BlackBorderShade);
             break;
 
         case 23:
-            D_800A8F40 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.0f);
-
-            if (D_800A8F40 <= 0)
+            g_BlackBorderShade -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.0f);
+            if (g_BlackBorderShade <= Q12(0.0f))
             {
-                D_800A8F40         = 0;
+                g_BlackBorderShade = Q12(0.0f);
                 g_SysWork.field_30 = 0;
                 return;
             }
 
-            Screen_BlackBorderDraw(poly, D_800A8F40);
+            Screen_BlackBorderDraw(poly, g_BlackBorderShade);
             break;
 
         case 0:
-            D_800A8F40            = 0;
+            g_BlackBorderShade    = Q12(0.0f);
             g_SysWork.field_30    = 1;
             g_SysWork.flags_22A4 &= ~SysFlag2_3;
             return;
@@ -307,7 +305,7 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
 
     if (!(g_SysWork.flags_22A4 & SysFlag2_3))
     {
-        vcChangeProjectionValue(g_GameWork.gsScreenHeight_58A + Q12_MULT(377 - g_GameWork.gsScreenHeight_58A, D_800A8F40));
+        vcChangeProjectionValue(g_GameWork.gsScreenHeight_58A + Q12_MULT(377 - g_GameWork.gsScreenHeight_58A, g_BlackBorderShade));
     }
 }
 

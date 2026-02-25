@@ -1723,7 +1723,7 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
 
             if (arg2->field_16 == 0)
             {
-                angle0 = Rng_GenerateInt(0, Q12(1.0f) - 1);
+                angle0 = Rng_GenerateInt(0, Q12_CLAMPED(1.0f));
 
                 arg2->field_C.vx = (u32)(Math_Sin(angle0) * 5) >> 7;
                 arg2->field_C.vz = (u32)(Math_Sin(angle0) * 5) >> 7;

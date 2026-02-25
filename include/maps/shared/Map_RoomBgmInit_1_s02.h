@@ -15,7 +15,7 @@ void Map_RoomBgmInit(bool arg0)
             if (Savegame_MapMarkingGet(MapMarkFlag_AltSchool1F_CourtyardQuestion))
             {
                 flags = (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7) | (1 << 8);
-                if (Savegame_MapMarkingGet(MapMarkFlag_308) || Savegame_MapMarkingGet(MapMarkFlag_AltSchool1F_CortyardTopArrows))
+                if (Savegame_MapMarkingGet(MapMarkFlag_308) || Savegame_MapMarkingGet(MapMarkFlag_AltSchool1F_CourtyardTopArrows))
                 {
                     flags = 1 << 4;
                 }

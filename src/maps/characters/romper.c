@@ -1333,7 +1333,7 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCO
             if (romper->model_0.anim_4.time_4 == Q12(49.0f))
             {
                 romper->model_0.anim_4.status_0       = ANIM_STATUS(RomperAnim_13, true);
-                romperProps.field_F4 = Q12(1.0f) - 1;
+                romperProps.field_F4 = Q12_CLAMPED(1.0f);
                 romper->model_0.anim_4.time_4         = Q12(110.0f);
                 romperProps.field_F0 = 1143;
                 romper->moveSpeed_38                  = 0;

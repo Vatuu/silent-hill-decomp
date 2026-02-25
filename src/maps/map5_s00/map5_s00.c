@@ -39,7 +39,7 @@ void func_800CB0D8(void) // 0x800CB0D8
         sharedData_800DFB7C_0_s00[idx].field_0.vx_0 = Rng_GenerateInt(Q12(-92.75f), Q12(-91.25f) - 1);
         sharedData_800DFB7C_0_s00[idx].vy_8 = Q12(0.5f);
         sharedData_800DFB7C_0_s00[idx].field_4.vz_4 = Rng_GenerateInt(Q12(7.35f), Q12(8.85f) - 1);
-        sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 = Rng_GenerateUInt(0, Q12(1.0f) - 1);
+        sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 = Rng_GenerateUInt(0, Q12_CLAMPED(1.0f));
         sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 = Rng_GenerateInt(0, 2);
     }
 }

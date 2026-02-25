@@ -2116,7 +2116,7 @@ extern DR_MODE D_800A8E98[];
 
 extern POLY_G4 D_800A8EB0[];
 
-extern s32 D_800A8F40;
+extern q19_12 g_BlackBorderShade;
 
 extern s_FsImageDesc g_Font16AtlasImg;
 extern s_FsImageDesc g_KonamiLogoImg;

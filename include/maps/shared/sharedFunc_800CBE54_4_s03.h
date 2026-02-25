@@ -18,7 +18,7 @@ void sharedFunc_800CBE54_4_s03(VECTOR3* arg0, s32 arg1)
         sharedData_800DFB7C_0_s00[idx].field_B             = arg1;
         sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = Rng_GenerateInt(0, Q12(0.35f) - 1);
 
-        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2  = Q12_MULT_PRECISE(D_800C4418.field_6, Rng_GenerateUInt(Q12(0.5f), Q12(1.0f) - 1));
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2  = Q12_MULT_PRECISE(D_800C4418.field_6, Rng_GenerateUInt(Q12(0.5f), Q12_CLAMPED(1.0f)));
         sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0 = Rng_GenerateUInt(0x40, 0x80 - 1);
     }
 }

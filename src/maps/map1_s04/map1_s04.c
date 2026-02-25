@@ -32,7 +32,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800CC8C8
             if (Savegame_MapMarkingGet(MapMarkFlag_AltSchool1F_CourtyardQuestion))
             {
                 var_a3 = 0x1FE;
-                if (Savegame_MapMarkingGet(MapMarkFlag_308) || Savegame_MapMarkingGet(MapMarkFlag_AltSchool1F_CortyardTopArrows))
+                if (Savegame_MapMarkingGet(MapMarkFlag_308) || Savegame_MapMarkingGet(MapMarkFlag_AltSchool1F_CourtyardTopArrows))
                 {
                     var_a3 = 0x10;
                 }
