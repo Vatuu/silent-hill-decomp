@@ -3,7 +3,6 @@
 
 #include "game.h"
 #include "bodyprog/sound_effects.h"
-#include "bodyprog/map_marking_flags.h"
 #include "bodyprog/view/vw_system.h"
 #include "main/fsqueue.h"
 #include "types.h"

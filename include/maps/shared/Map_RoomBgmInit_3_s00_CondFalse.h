@@ -39,15 +39,15 @@ void Map_RoomBgmInit_CondFalse(void)
                     break;
             }
 
-            if (Savegame_MapMarkingGet(MapMarkFlag_AltHospital2F_OperatingPrepRoomArrow) &&
-                Savegame_MapMarkingGet(MapMarkFlag_AltHospital2F_CorridorMidArrows))
+            if (Savegame_EventFlagGet(EventFlag_MapMark_AltHospital2F_OperatingPrepRoomArrow) &&
+                Savegame_EventFlagGet(EventFlag_MapMark_AltHospital2F_CorridorMidArrows))
             {
                 flags |= 0x11E;
             }
             break;
 
         case 34:
-            if (!Savegame_MapMarkingGet(MapMarkFlag_FogHospital1F_StairsLocked))
+            if (!Savegame_EventFlagGet(EventFlag_MapMark_FogHospital1F_StairsLocked))
             {
                 var   = Q12(240.0f);
                 flags = 0x201;

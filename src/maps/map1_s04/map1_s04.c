@@ -29,10 +29,10 @@ void Map_RoomBgmInit(bool arg0) // 0x800CC8C8
     {
         case 23:
             var_a3 = 1;
-            if (Savegame_MapMarkingGet(MapMarkFlag_AltSchool1F_CourtyardQuestion))
+            if (Savegame_EventFlagGet(EventFlag_MapMark_AltSchool1F_CourtyardQuestion))
             {
                 var_a3 = 0x1FE;
-                if (Savegame_MapMarkingGet(MapMarkFlag_308) || Savegame_MapMarkingGet(MapMarkFlag_AltSchool1F_CourtyardTopArrows))
+                if (Savegame_EventFlagGet(EventFlag_MapMark_308) || Savegame_EventFlagGet(EventFlag_MapMark_AltSchool1F_CourtyardTopArrows))
                 {
                     var_a3 = 0x10;
                 }

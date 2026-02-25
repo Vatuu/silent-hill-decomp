@@ -416,7 +416,7 @@ void func_800D5DD8(void) // 0x800D5DD8
             SysWork_StateSetNext(SysState_Gameplay);
 
             Savegame_EventFlagSet(EventFlag_M1S06_ChurchMarkedOnMap);
-            Savegame_MapMarkingSet(MapMarkFlag_OldTown_BalkanChurchCircle);
+            Savegame_EventFlagSet(EventFlag_MapMark_OldTown_BalkanChurchCircle);
             break;
     }
 }
@@ -428,7 +428,7 @@ void func_800D6338(void) // 0x800D6338
     if (Savegame_EventFlagGet(EventFlag_M1S06_PickupKGordonKey))
     {
         MapMsg_DisplayWithTexture(FILE_TIM_RSCBOOK_TIM, Q12(0.0f), Q12(0.0f), 25);
-        Savegame_MapMarkingSet(MapMarkFlag_OldTown_KGordonDotAndSignOnly);
+        Savegame_EventFlagSet(EventFlag_MapMark_OldTown_KGordonDotAndSignOnly);
     }
     else
     {
@@ -517,9 +517,9 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
     {
         if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
         {
-            if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_SchoolCircle))
+            if (Savegame_EventFlagGet(EventFlag_MapMark_OldTown_SchoolCircle))
             {
-                Savegame_MapMarkingSet(MapMarkFlag_OldTown_SchoolCheck);
+                Savegame_EventFlagSet(EventFlag_MapMark_OldTown_SchoolCheck);
             }
 
             Savegame_EventFlagSet(EventFlag_142);

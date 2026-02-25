@@ -106,7 +106,7 @@ s_EventData MAP_EVENTS[16] = {
     },
     {
         .requiredEventFlag_0  = EventFlag_435,
-        .disabledEventFlag_2  = EventFlag_1414,
+        .disabledEventFlag_2  = EventFlag_MapMark_FogHospital1F_MedicineRoomBotArrows,
         .triggerType_4_0      = TriggerType_TouchAabb,
         .activationType_4_4   = TriggerActivationType_Exclusive,
         .pointOfInterestIdx_5 = 9,

@@ -65,8 +65,8 @@ void sharedFunc_800D15F0_3_s01(void)
 
         case 1:
 #ifdef MAP3_S01
-            if (Savegame_MapMarkingGet(MapMarkFlag_AltHospital2F_OperatingPrepRoomArrow) &&
-                Savegame_MapMarkingGet(MapMarkFlag_AltHospital2F_CorridorMidArrows))
+            if (Savegame_EventFlagGet(EventFlag_MapMark_AltHospital2F_OperatingPrepRoomArrow) &&
+                Savegame_EventFlagGet(EventFlag_MapMark_AltHospital2F_CorridorMidArrows))
             {
                 func_800862F8(7, Sfx_Unk1841, false);
             }
@@ -151,8 +151,8 @@ void sharedFunc_800D15F0_3_s01(void)
                 if (i == CHECK_IDX)
                 {
 #ifdef MAP3_S01
-                    if (Savegame_MapMarkingGet(MapMarkFlag_AltHospital2F_OperatingPrepRoomArrow) &&
-                        Savegame_MapMarkingGet(MapMarkFlag_AltHospital2F_CorridorMidArrows))
+                    if (Savegame_EventFlagGet(EventFlag_MapMark_AltHospital2F_OperatingPrepRoomArrow) &&
+                        Savegame_EventFlagGet(EventFlag_MapMark_AltHospital2F_CorridorMidArrows))
                     {
                         Savegame_EventFlagSet(EventFlag_224);
                         SysWork_StateStepSet(0, 5);

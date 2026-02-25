@@ -161,9 +161,9 @@ void func_800E9FDC(void) // 0xfunc_800E9FDC
 
 void Map_WorldObjectsInit(void) // 0x800EA0E0
 {
-    if (Savegame_MapMarkingGet(MapMarkFlag_FogCentralTown_AntiqueWholeSign))
+    if (Savegame_EventFlagGet(EventFlag_MapMark_FogCentralTown_AntiqueWholeSign))
     {
-        Savegame_MapMarkingSet(MapMarkFlag_AltCentralTown_AntiqueWholeSign);
+        Savegame_EventFlagSet(EventFlag_MapMark_AltCentralTown_AntiqueWholeSign);
     }
 
     D_800F0B2C = Q12(0.0f);

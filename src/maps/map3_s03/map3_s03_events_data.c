@@ -277,7 +277,7 @@ s_EventData MAP_EVENTS[136] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1610,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltHospital3F_StairsArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 3,
@@ -286,7 +286,7 @@ s_EventData MAP_EVENTS[136] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1612,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltHospital3F_Room301Arrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 5,
@@ -294,7 +294,7 @@ s_EventData MAP_EVENTS[136] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1615,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltHospital3F_Room303Broken,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 6,
@@ -303,7 +303,7 @@ s_EventData MAP_EVENTS[136] = {
         .field_8_19           = 12,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1615,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltHospital3F_Room303Broken,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 32,
@@ -340,7 +340,7 @@ s_EventData MAP_EVENTS[136] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1620,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltHospital3F_LinenRoomLeftArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 31,
@@ -564,7 +564,7 @@ s_EventData MAP_EVENTS[136] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1564,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltHospital2F_StairsArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 40,
@@ -573,7 +573,7 @@ s_EventData MAP_EVENTS[136] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1567,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltHospital2F_Room202Broken,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 42,
@@ -582,7 +582,7 @@ s_EventData MAP_EVENTS[136] = {
         .field_8_19           = 12,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1567,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltHospital2F_Room202Broken,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 70,
@@ -656,7 +656,7 @@ s_EventData MAP_EVENTS[136] = {
         .field_8_19           = 13,
     },
     {
-        .requiredEventFlag_0  = EventFlag_1577,
+        .requiredEventFlag_0  = EventFlag_MapMark_713,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 46,
@@ -665,7 +665,7 @@ s_EventData MAP_EVENTS[136] = {
         .field_8_19           = 12,
     },
     {
-        .requiredEventFlag_0  = EventFlag_1577,
+        .requiredEventFlag_0  = EventFlag_MapMark_713,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 71,
@@ -819,7 +819,7 @@ s_EventData MAP_EVENTS[136] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1590,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltHospital3F_NearElevatorArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 54,
@@ -846,7 +846,7 @@ s_EventData MAP_EVENTS[136] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1595,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltHospital3F_Room305Broken,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 56,
@@ -855,7 +855,7 @@ s_EventData MAP_EVENTS[136] = {
         .field_8_19           = 12,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1595,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltHospital3F_Room305Broken,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 72,

@@ -38,7 +38,7 @@ s_EventData MAP_EVENTS[21] = {
         .eventParam_8_5       = 10,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1475,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltHospital1F_WomensBathroomBroken,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 4,
@@ -47,7 +47,7 @@ s_EventData MAP_EVENTS[21] = {
         .field_8_19           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1475,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltHospital1F_WomensBathroomBroken,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 8,
@@ -108,7 +108,7 @@ s_EventData MAP_EVENTS[21] = {
         .mapOverlayIdx_8_25   = MapOverlayId_MAP4_S02,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1468,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltHospital1F_StairsArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 3,

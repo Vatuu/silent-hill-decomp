@@ -557,7 +557,7 @@ s_EventData MAP_EVENTS[72] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_868,
+        .disabledEventFlag_2  = EventFlag_MapMark_OldTown_BachmanRdTopCross,
         .triggerType_4_0      = TriggerType_TouchAabb,
         .activationType_4_4   = TriggerActivationType_Exclusive,
         .pointOfInterestIdx_5 = 68,

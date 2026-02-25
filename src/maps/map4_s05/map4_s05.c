@@ -1898,8 +1898,8 @@ void Map_WorldObjectsUpdate(void) // 0x800D7360
     {
         if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 5, -1, 5))
         {
-            Savegame_MapMarkingSet(MapMarkFlag_AltCentralTown_KoontzStBigCross);
-            Savegame_MapMarkingSet(MapMarkFlag_AltCentralTown_CrichtonKoontzBigCross);
+            Savegame_EventFlagSet(EventFlag_MapMark_AltCentralTown_KoontzStBigCross);
+            Savegame_EventFlagSet(EventFlag_MapMark_AltCentralTown_CrichtonKoontzBigCross);
         }
 
         func_80069844(0xFFFF);

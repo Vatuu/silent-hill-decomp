@@ -992,7 +992,7 @@ void Inventory_Logic(void) // 0x8004D518
                                     case InventoryItemId_AntiqueShopKey:
                                         if (Savegame_EventFlagGet(EventFlag_M2S00_PickupMap))
                                         {
-                                            Savegame_MapMarkingSet(MapMarkFlag_FogCentralTown_AntiqueWholeSign);
+                                            Savegame_EventFlagSet(EventFlag_MapMark_FogCentralTown_AntiqueWholeSign);
                                         }
 
                                         Fs_QueueStartReadTim(FILE_TIM_ANTIQUE_TIM, FS_BUFFER_1, &g_ItemInspectionImg);

@@ -130,7 +130,7 @@ void func_800D0CF8(void) // 0x800D0CF8
         case 0:
             Player_ControlFreeze();
             func_8005DC1C(Sfx_DoorClose0, &QVECTOR3(94.6f, -1.2f, 101.5f), Q8_CLAMPED(0.5f), 0);
-            Savegame_MapMarkingSet(MapMarkFlag_FogHospital1F_StairsLocked);
+            Savegame_EventFlagSet(EventFlag_MapMark_FogHospital1F_StairsLocked);
 
             Fs_QueueStartRead(FILE_ANIM_HP1F03_DMS, FS_BUFFER_15);
             Fs_QueueWaitForEmpty();

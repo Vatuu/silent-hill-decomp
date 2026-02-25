@@ -39,7 +39,7 @@ s_EventData MAP_EVENTS[17] = {
         .eventParam_8_5       = 47,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1424,
+        .disabledEventFlag_2  = EventFlag_MapMark_FogHospital1F_KitchenArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 5,
@@ -57,7 +57,7 @@ s_EventData MAP_EVENTS[17] = {
         .mapOverlayIdx_8_25   = MapOverlayId_MAP6_S01,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1427,
+        .disabledEventFlag_2  = EventFlag_MapMark_FogHospital1F_StairsLocked,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 2,
@@ -67,7 +67,7 @@ s_EventData MAP_EVENTS[17] = {
         .mapOverlayIdx_8_25   = MapOverlayId_MAP3_S01,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1431,
+        .disabledEventFlag_2  = EventFlag_MapMark_FogHospital1F_CorridorMidBroken,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 1,
@@ -77,7 +77,7 @@ s_EventData MAP_EVENTS[17] = {
         .mapOverlayIdx_8_25   = MapOverlayId_MAP3_S01,
     },
     {
-        .disabledEventFlag_2 = EventFlag_1433,
+        .disabledEventFlag_2 = EventFlag_MapMark_FogHospital1F_RightEntranceBroken,
         .triggerType_4_0     = TriggerType_TouchObbFacing,
         .activationType_4_4  = TriggerActivationType_Button,
         .sysState_8_0        = SysState_LoadOverlay,

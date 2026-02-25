@@ -979,8 +979,8 @@ typedef struct _Savegame
                                                * they are set to 0 based on a currently unknown index value.
                                                */
     s32             hasMapsFlags_164;         // See Sparagas' `HasMapsFlags` struct for details of every bit.
-    u32             eventFlags_168[27];       // Can be accessed through `Savegame_EventFlagGet` / `Savegame_EventFlagSet`, only tested a few, but seems all are related to events and pick-up flags, grouped by location and not item types.
-    s32             mapMarkingFlags_1D4[25];  // See Sparagas' `MapMarkingsFlags` struct for details of every bit.
+    u32             eventFlags_168[52];       // Can be accessed through `Savegame_EventFlagGet` / `Savegame_EventFlagSet`, only tested a few, but seems all are related to events and pick-up flags, grouped by location and not item types.
+                                              // Also includes map marking flags - see Sparagas' `MapMarkingsFlags` struct for details of every bit.
     q19_12          healthSaturation_238;     /** Range: [0, 300]. Ampoules give extra stored health. If the player loses health, it will be slowly restored. */
     s16             pickedUpItemCount_23C;
     s8              field_23E;
@@ -2123,28 +2123,6 @@ static inline void Game_StateSetPrevious()
  */
 #define Savegame_EventFlagSet(flagIdx) \
     (g_SavegamePtr->eventFlags_168[(flagIdx) >> 5] |= 1 << ((flagIdx) & 0x1F))
-
-/** @brief Gets a map marking state from the savegame map marking array.
- *
- * @param flagIdx Map marking index.
- * @return Map marking state (`bool`).
- */
-#define Savegame_MapMarkingGet(flagIdx) \
-    (g_SavegamePtr->mapMarkingFlags_1D4[(flagIdx) >> 5] & (1 << ((flagIdx) & 0x1F)))
-
-/** @brief Clears a map marking state in the savegame map marking array.
- *
- * @param flagIdx Map marking index.
- */
-#define Savegame_MapMarkingClear(flagIdx) \
-    (g_SavegamePtr->mapMarkingFlags_1D4[(flagIdx) >> 5] &= ~(1 << ((flagIdx) & 0x1F)))
-
-/** @brief Sets a map marking in the savegame map marking array.
- *
- * @param flagIdx Map marking index.
- */
-#define Savegame_MapMarkingSet(flagIdx) \
-    (g_SavegamePtr->mapMarkingFlags_1D4[(flagIdx) >> 5] |= 1 << ((flagIdx) & 0x1F))
 
 /** @brief Sets an event flag state in the savegame event flags array.
  *

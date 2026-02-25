@@ -277,7 +277,7 @@ void func_800DA7F4(void) // 0x800DA7F4
 
     Player_ItemRemove(InventoryItemId_LibraryReserveKey, 1);
     Map_MessageWithSfx(37, Sfx_UseKey, &sfxPos); // "Used the Library reverse key."
-    Savegame_MapMarkingSet(MapMarkFlag_AltSchool2F_LibraryReserveArrows);
+    Savegame_EventFlagSet(EventFlag_MapMark_AltSchool2F_LibraryReserveArrows);
 }
 
 void func_800DA8B0(void) // 0x800DA8B0
@@ -589,7 +589,7 @@ void func_800DAF18(void) // 0x800DAF18
             D_800E20FC = 0;
             D_800E2100 = 0;
 
-            Savegame_MapMarkingSet(MapMarkFlag_AltSchoolRF_ValveSign);
+            Savegame_EventFlagSet(EventFlag_MapMark_AltSchoolRF_ValveSign);
 
             D_800E2101                  = 0;
             g_SysWork.field_28          = 0;

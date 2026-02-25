@@ -285,7 +285,7 @@ s_EventData MAP_EVENTS[104] = {
         .eventParam_8_5       = 3, // `func_800D59D4`
     },
     {
-        .requiredEventFlag_0  = EventFlag_1537,
+        .requiredEventFlag_0  = EventFlag_MapMark_FogHospital3F_NearElevatorBroken,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 11,
@@ -294,7 +294,7 @@ s_EventData MAP_EVENTS[104] = {
         .field_8_19           = 12,
     },
     {
-        .requiredEventFlag_0  = EventFlag_1537,
+        .requiredEventFlag_0  = EventFlag_MapMark_FogHospital3F_NearElevatorBroken,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 15,

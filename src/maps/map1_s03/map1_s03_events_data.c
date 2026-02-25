@@ -210,7 +210,7 @@ s_EventData MAP_EVENTS[103] = {
         .eventParam_8_5       = 8, // `func_800DAF18`
     },
     {
-        .disabledEventFlag_2  = EventFlag_1364,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchoolRF_ValveSign,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 21,
@@ -218,7 +218,7 @@ s_EventData MAP_EVENTS[103] = {
         .eventParam_8_5       = 31,
     },
     {
-        .requiredEventFlag_0  = EventFlag_1295,
+        .requiredEventFlag_0  = EventFlag_MapMark_AltSchool2F_BotRightCorridorArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 26,
@@ -228,7 +228,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .requiredEventFlag_0  = EventFlag_1295,
+        .requiredEventFlag_0  = EventFlag_MapMark_AltSchool2F_BotRightCorridorArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 41,
@@ -238,7 +238,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1295,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_BotRightCorridorArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 41,
@@ -247,7 +247,7 @@ s_EventData MAP_EVENTS[103] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1294,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_BotRightCorridorLocked,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 26,
@@ -256,7 +256,7 @@ s_EventData MAP_EVENTS[103] = {
         .flags_8_13           = 1,
     },
     {
-        .requiredEventFlag_0  = EventFlag_1297,
+        .requiredEventFlag_0  = EventFlag_MapMark_AltSchool2F_TopRightCorridorArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 42,
@@ -266,7 +266,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .requiredEventFlag_0  = EventFlag_1297,
+        .requiredEventFlag_0  = EventFlag_MapMark_AltSchool2F_TopRightCorridorArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 32,
@@ -276,7 +276,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1297,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_TopRightCorridorArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 42,
@@ -285,7 +285,7 @@ s_EventData MAP_EVENTS[103] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1296,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_TopRightCorridorLocked,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 32,
@@ -294,7 +294,7 @@ s_EventData MAP_EVENTS[103] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1307,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_BotRightClassRoomBotArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 43,
@@ -303,7 +303,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1307,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_BotRightClassRoomBotArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 48,
@@ -313,7 +313,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1305,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_BotRightClassRoomTopArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 44,
@@ -322,7 +322,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1305,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_BotRightClassRoomTopArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 49,
@@ -332,7 +332,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .requiredEventFlag_0  = EventFlag_1303,
+        .requiredEventFlag_0  = EventFlag_MapMark_AltSchool2F_TopRightClassRoomBotArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 45,
@@ -341,7 +341,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .requiredEventFlag_0  = EventFlag_1303,
+        .requiredEventFlag_0  = EventFlag_MapMark_AltSchool2F_TopRightClassRoomBotArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 51,
@@ -351,7 +351,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1303,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_TopRightClassRoomBotArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 51,
@@ -360,7 +360,7 @@ s_EventData MAP_EVENTS[103] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1302,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_TopRightClassRoomBotLocked,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 45,
@@ -369,7 +369,7 @@ s_EventData MAP_EVENTS[103] = {
         .flags_8_13           = 1,
     },
     {
-        .requiredEventFlag_0  = EventFlag_1301,
+        .requiredEventFlag_0  = EventFlag_MapMark_AltSchool2F_TopRightClassRoomTopArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 46,
@@ -378,7 +378,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .requiredEventFlag_0  = EventFlag_1301,
+        .requiredEventFlag_0  = EventFlag_MapMark_AltSchool2F_TopRightClassRoomTopArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 52,
@@ -389,7 +389,7 @@ s_EventData MAP_EVENTS[103] = {
     },
     {
         .requiredEventFlag_0  = EventFlag_M1S02_PickupClassroomKey,
-        .disabledEventFlag_2  = EventFlag_1301,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_TopRightClassRoomTopArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 46,
@@ -399,7 +399,7 @@ s_EventData MAP_EVENTS[103] = {
     },
     {
         .requiredEventFlag_0  = EventFlag_M1S02_PickupClassroomKey,
-        .disabledEventFlag_2  = EventFlag_1301,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_TopRightClassRoomTopArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Item,
         .pointOfInterestIdx_5 = 46,
@@ -409,7 +409,7 @@ s_EventData MAP_EVENTS[103] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1300,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_TopRightClassRoomTopLocked,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 46,
@@ -418,7 +418,7 @@ s_EventData MAP_EVENTS[103] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1299,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_LibraryArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 47,
@@ -427,7 +427,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1299,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_LibraryArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 54,
@@ -437,7 +437,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1309,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_RightClassRoomMidArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 50,
@@ -446,7 +446,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1309,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_RightClassRoomMidArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 53,
@@ -455,7 +455,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1293,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_LockerRoomArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 28,
@@ -464,7 +464,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1293,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_LockerRoomArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 30,
@@ -474,7 +474,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1290,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_MusicRoomBroken,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 29,
@@ -482,7 +482,7 @@ s_EventData MAP_EVENTS[103] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1289,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_BotLeftCorridorArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 56,
@@ -492,7 +492,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1289,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_BotLeftCorridorArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 27,
@@ -502,7 +502,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1317,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_TopLeftCorridorArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 57,
@@ -512,7 +512,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1317,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_TopLeftCorridorArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 33,
@@ -522,7 +522,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1331,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_WomensBathroomArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 58,
@@ -532,7 +532,7 @@ s_EventData MAP_EVENTS[103] = {
         .mapOverlayIdx_8_25   = MapOverlayId_MAP1_S02,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1331,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_WomensBathroomArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 9,
@@ -542,7 +542,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1329,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_MensBathroomArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 59,
@@ -551,7 +551,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1329,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_MensBathroomArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 10,
@@ -561,7 +561,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1325,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_BotLeftClassRoomBotArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 60,
@@ -570,7 +570,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1325,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_BotLeftClassRoomBotArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 64,
@@ -580,7 +580,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1323,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_BotLeftClassRoomTopArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 61,
@@ -589,7 +589,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1323,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_BotLeftClassRoomTopArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 65,
@@ -599,7 +599,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1321,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_TopLeftClassRoomBotArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 62,
@@ -608,7 +608,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1321,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_TopLeftClassRoomBotArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 67,
@@ -618,7 +618,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1319,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_TopLeftClassRoomTopArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 63,
@@ -627,7 +627,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1319,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_TopLeftClassRoomTopArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 68,
@@ -637,7 +637,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1327,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_LeftClassRoomMidArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 66,
@@ -646,7 +646,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1327,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_LeftClassRoomMidArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 69,
@@ -655,7 +655,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1339,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_ReserveLibraryMidArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 55,
@@ -664,7 +664,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1339,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_ReserveLibraryMidArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 38,
@@ -673,7 +673,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .requiredEventFlag_0  = EventFlag_1311,
+        .requiredEventFlag_0  = EventFlag_MapMark_AltSchool2F_LibraryReserveArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 34,
@@ -682,7 +682,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 12,
     },
     {
-        .requiredEventFlag_0  = EventFlag_1311,
+        .requiredEventFlag_0  = EventFlag_MapMark_AltSchool2F_LibraryReserveArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 37,
@@ -693,7 +693,7 @@ s_EventData MAP_EVENTS[103] = {
     },
     {
         .requiredEventFlag_0  = EventFlag_M1S03_PickupLibraryReserveKey,
-        .disabledEventFlag_2  = EventFlag_1311,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_LibraryReserveArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 34,
@@ -702,7 +702,7 @@ s_EventData MAP_EVENTS[103] = {
     },
     {
         .requiredEventFlag_0  = EventFlag_M1S03_PickupLibraryReserveKey,
-        .disabledEventFlag_2  = EventFlag_1311,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_LibraryReserveArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Item,
         .pointOfInterestIdx_5 = 34,
@@ -711,7 +711,7 @@ s_EventData MAP_EVENTS[103] = {
         .eventParam_8_5       = 3, // `func_800DA7F4`
     },
     {
-        .disabledEventFlag_2  = EventFlag_1310,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_LibraryReserveLocked,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 34,
@@ -720,7 +720,7 @@ s_EventData MAP_EVENTS[103] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1312,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_ChemistryLabBroken,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 35,
@@ -728,7 +728,7 @@ s_EventData MAP_EVENTS[103] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1314,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_LabEquipmentRoomBroken,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 36,
@@ -748,7 +748,7 @@ s_EventData MAP_EVENTS[103] = {
         .eventParam_8_5       = 4,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1363,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchoolRF_RoofArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 5,
@@ -757,7 +757,7 @@ s_EventData MAP_EVENTS[103] = {
         .field_8_19           = 14,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1363,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchoolRF_RoofArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 6,
@@ -780,21 +780,21 @@ s_EventData MAP_EVENTS[103] = {
         .mapOverlayIdx_8_25   = MapOverlayId_MAP1_S02,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1332,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_LeftCorridorMidBroken,
         .triggerType_4_0      = TriggerType_TouchAabb,
         .activationType_4_4   = TriggerActivationType_Exclusive,
         .pointOfInterestIdx_5 = 11,
         .sysState_8_0         = SysState_EventSetFlag,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1334,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_LeftCorridorMidArrows,
         .triggerType_4_0      = TriggerType_TouchAabb,
         .activationType_4_4   = TriggerActivationType_Exclusive,
         .pointOfInterestIdx_5 = 12,
         .sysState_8_0         = SysState_EventSetFlag,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1336,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltSchool2F_RightCorridorMidBroken,
         .triggerType_4_0      = TriggerType_TouchAabb,
         .activationType_4_4   = TriggerActivationType_Exclusive,
         .pointOfInterestIdx_5 = 13,

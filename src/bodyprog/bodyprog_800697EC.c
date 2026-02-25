@@ -155,7 +155,7 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
     else
     {
         coll->field_8        = sp38.field_94;
-        coll->groundHeight_0 = func_8006CC44(sp38.field_4.positionX_18, sp38.field_4.positionZ_1C, &sp38) * 16; // TODO: Converting from Q8 to Q12?
+        coll->groundHeight_0 = Q8_TO_Q12(func_8006CC44(sp38.field_4.positionX_18, sp38.field_4.positionZ_1C, &sp38));
     }
 
     coll->field_4 = sp38.field_88;

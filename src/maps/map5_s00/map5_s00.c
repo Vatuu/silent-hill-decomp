@@ -1384,7 +1384,7 @@ void func_800D8DFC(void) // 0x800D8DFC
             func_80088FF4(Chara_HangedScratcher, 11, 6);
         }
 
-        if (Savegame_MapMarkingGet(MapMarkFlag_527))
+        if (Savegame_EventFlagGet(EventFlag_MapMark_527))
         {
             func_80089034(Chara_HangedScratcher, 12, Q12(-90.3f), Q12(-92.9f));
         }

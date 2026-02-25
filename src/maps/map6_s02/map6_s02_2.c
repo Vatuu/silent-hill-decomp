@@ -363,7 +363,7 @@ void func_800CF0B8(void) // 0x800CF0B8
 
             Savegame_EventFlagSet(EventFlag_410);
             Savegame_EventFlagClear(EventFlag_407);
-            Savegame_MapMarkingSet(MapMarkFlag_ResortTown_LighthouseCheck);
+            Savegame_EventFlagSet(EventFlag_MapMark_ResortTown_LighthouseCheck);
 
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(false);

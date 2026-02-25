@@ -787,480 +787,407 @@ typedef enum _EventFlag
     EventFlag_M6S03_HandgunBullets = 726,
     EventFlag_M6S03_HealthDrink1   = 727,
 
-    EventFlag_868 = 868,
-
-    EventFlag_876 = 876,
-
-    EventFlag_878 = 878,
-
-    EventFlag_880 = 880,
-
-    EventFlag_882 = 882,
-
-    EventFlag_884 = 884,
-
-    EventFlag_886 = 886,
-
-    EventFlag_888 = 888,
-
-    EventFlag_890 = 890,
-
-    EventFlag_894 = 894,
-
-    EventFlag_896 = 896,
-
-    EventFlag_898 = 898,
-
-    EventFlag_900 = 900,
-
-    EventFlag_902 = 902,
-
-    EventFlag_904 = 904,
-
-    EventFlag_906 = 906,
-
-    EventFlag_910 = 910,
-
-    EventFlag_914 = 914,
-
-    EventFlag_922 = 922,
-
-    EventFlag_925 = 925,
-
-    EventFlag_927 = 927,
-
-    EventFlag_944 = 944,
-
-    EventFlag_948 = 948,
-
-    EventFlag_950 = 950,
-
-    EventFlag_952 = 952,
-
-    EventFlag_954 = 954,
-
-    EventFlag_956 = 956,
-
-    EventFlag_982 = 982,
-
-    EventFlag_984 = 984,
-
-    EventFlag_986 = 986,
-
-    EventFlag_988 = 988,
-
-    EventFlag_990 = 990,
-
-    EventFlag_992 = 992,
-
-    EventFlag_994 = 994,
-
-    EventFlag_996 = 996,
-
-    EventFlag_998 = 998,
-
-    EventFlag_1000 = 1000,
-
-    EventFlag_1002 = 1002,
-
-    EventFlag_1012 = 1012,
-
-    EventFlag_1014 = 1014,
-
-    EventFlag_1016 = 1016,
-
-    EventFlag_1018 = 1018,
-
-    EventFlag_1020 = 1020,
-
-    EventFlag_1022 = 1022,
-
-    EventFlag_1046 = 1046,
-
-    EventFlag_1049 = 1049,
-
-    EventFlag_1057 = 1057,
-
-    EventFlag_1059 = 1059,
-
-    EventFlag_1069 = 1069,
-    EventFlag_1070 = 1070,
-    EventFlag_1071 = 1071,
-    EventFlag_1072 = 1072,
-    EventFlag_1073 = 1073,
-
-    EventFlag_1075 = 1075,
-    EventFlag_1076 = 1076,
-    EventFlag_1077 = 1077,
-    EventFlag_1078 = 1078,
-    EventFlag_1079 = 1079,
-    EventFlag_1080 = 1080,
-    EventFlag_1081 = 1081,
-    EventFlag_1082 = 1082,
-
-    EventFlag_1084 = 1084,
-    EventFlag_1085 = 1085,
-    EventFlag_1086 = 1086,
-    EventFlag_1087 = 1087,
-    EventFlag_1088 = 1088,
-    EventFlag_1089 = 1089,
-    EventFlag_1090 = 1090,
-    EventFlag_1091 = 1091,
-
-    EventFlag_1093 = 1093,
-
-    EventFlag_1095 = 1095,
-    EventFlag_1096 = 1096,
-
-    EventFlag_1099 = 1099,
-    EventFlag_1100 = 1100,
-
-    EventFlag_1103 = 1103,
-    EventFlag_1104 = 1104,
-
-    EventFlag_1106 = 1106,
-
-    EventFlag_1108 = 1108,
-
-    EventFlag_1110 = 1110,
-
-    EventFlag_1112 = 1112,
-
-    EventFlag_1115 = 1115,
-
-    EventFlag_1117 = 1117,
-    EventFlag_1118 = 1118,
-
-    EventFlag_1120 = 1120,
-
-    EventFlag_1122 = 1122,
-
-    EventFlag_1124 = 1124,
-
-    EventFlag_1144 = 1144,
-
-    EventFlag_1147 = 1147,
-
-    EventFlag_1148 = 1148,
-    EventFlag_1149 = 1149,
-
-    EventFlag_1151 = 1151,
-
-    EventFlag_1153 = 1153,
-    EventFlag_1154 = 1154,
-    EventFlag_1155 = 1155,
-
-    EventFlag_1157 = 1157,
-    EventFlag_1158 = 1158,
-    EventFlag_1159 = 1159,
-
-    EventFlag_1161 = 1161,
-
-    EventFlag_1163 = 1163,
-
-    EventFlag_1165 = 1165,
-    EventFlag_1166 = 1166,
-
-    EventFlag_1169 = 1169,
-
-    EventFlag_1171 = 1171,
-
-    EventFlag_1173 = 1173,
-
-    EventFlag_1175 = 1175,
-
-    EventFlag_1177 = 1177,
-
-    EventFlag_1179 = 1179,
-    EventFlag_1180 = 1180,
-    EventFlag_1181 = 1181,
-
-    EventFlag_1183 = 1183,
-    EventFlag_1184 = 1184,
-
-    EventFlag_1187 = 1187,
-
-    EventFlag_1189 = 1189,
-
-    EventFlag_1191 = 1191,
-
-    EventFlag_1193 = 1193,
-
-    EventFlag_1195 = 1195,
-    EventFlag_1196 = 1196,
-
-    EventFlag_1198 = 1198,
-
-    EventFlag_1200 = 1200,
-    EventFlag_1201 = 1201,
-
-    EventFlag_1204 = 1204,
-
-    EventFlag_1206 = 1206,
-    EventFlag_1207 = 1207,
-
-    EventFlag_1208 = 1208,
-
-    EventFlag_1222 = 1222,
-    EventFlag_1223 = 1223,
-
-    EventFlag_1225 = 1225,
-
-    EventFlag_1227 = 1227,
-    EventFlag_1228 = 1228,
-    EventFlag_1229 = 1229,
-    EventFlag_1230 = 1230,
-    EventFlag_1231 = 1231,
-    EventFlag_1232 = 1232,
-    EventFlag_1233 = 1233,
-    EventFlag_1234 = 1234,
-    EventFlag_1235 = 1235,
-    EventFlag_1236 = 1236,
-    EventFlag_1237 = 1237,
-    EventFlag_1238 = 1238,
-    EventFlag_1239 = 1239,
-    EventFlag_1240 = 1240,
-    EventFlag_1241 = 1241,
-
-    EventFlag_1243 = 1243,
-    EventFlag_1244 = 1244,
-    EventFlag_1245 = 1245,
-    EventFlag_1247 = 1247,
-
-    EventFlag_1249 = 1249,
-
-    EventFlag_1251 = 1251,
-
-    EventFlag_1253 = 1253,
-
-    EventFlag_1255 = 1255,
-
-    EventFlag_1257 = 1257,
-
-    EventFlag_1259 = 1259,
-
-    EventFlag_1261 = 1261,
-
-    EventFlag_1263 = 1263,
-
-    EventFlag_1265 = 1265,
-
-    EventFlag_1267 = 1267,
-    EventFlag_1268 = 1268,
-
-    EventFlag_1270 = 1270,
-
-    EventFlag_1289 = 1289,
-    EventFlag_1290 = 1290,
-
-    EventFlag_1293 = 1293,
-    EventFlag_1294 = 1294,
-    EventFlag_1295 = 1295,
-    EventFlag_1296 = 1296,
-    EventFlag_1297 = 1297,
-
-    EventFlag_1299 = 1299,
-    EventFlag_1300 = 1300,
-    EventFlag_1301 = 1301,
-    EventFlag_1302 = 1302,
-    EventFlag_1303 = 1303,
-
-    EventFlag_1305 = 1305,
-
-    EventFlag_1307 = 1307,
-
-    EventFlag_1309 = 1309,
-    EventFlag_1310 = 1310,
-    EventFlag_1311 = 1311,
-    EventFlag_1312 = 1312,
-
-    EventFlag_1314 = 1314,
-
-    EventFlag_1317 = 1317,
-
-    EventFlag_1319 = 1319,
-
-    EventFlag_1321 = 1321,
-
-    EventFlag_1323 = 1323,
-
-    EventFlag_1325 = 1325,
-
-    EventFlag_1327 = 1327,
-
-    EventFlag_1329 = 1329,
-
-    EventFlag_1331 = 1331,
-    EventFlag_1332 = 1332,
-
-    EventFlag_1334 = 1334,
-
-    EventFlag_1336 = 1336,
-
-    EventFlag_1339 = 1339,
-
-    EventFlag_1354 = 1354,
-
-    EventFlag_1363 = 1363,
-    EventFlag_1364 = 1364,
-
-    EventFlag_1370 = 1370,
-
-    EventFlag_1371 = 1371,
-    EventFlag_1372 = 1372,
-    EventFlag_1373 = 1373,
-
-    EventFlag_1375 = 1375,
-    EventFlag_1377 = 1377,
-
+    // Formerly `MapMarkFlag_` values, seems a lot of events make use of these as `requiredEventFlags` / `disableEventFlags`
+    // Maybe these are actually tied to progression instead of strictly being map marker related?
+
+    EventFlag_MapMark_OldTown_BachmanRdTopCross = 868,
+    EventFlag_MapMark_OldTown_CofeArrowOnly = 870,
+    EventFlag_MapMark_OldTown_CofeSignOnly = 872,
+    EventFlag_MapMark_OldTown_CherylArrowAndSign = 874,
+    EventFlag_MapMark_11 = 875,
+    EventFlag_MapMark_OldTown_FinneyStLeftCross = 876,
+    EventFlag_MapMark_OldTown_MidwitchStTopCross = 878,
+    EventFlag_MapMark_OldTown_UntitledStLeftCross = 880,
+    EventFlag_MapMark_OldTown_MidwitchStBotCross = 882,
+    EventFlag_MapMark_OldTown_BradburyStMidCross = 884,
+    EventFlag_MapMark_OldTown_BradburyStLeftCross = 886,
+    EventFlag_MapMark_OldTown_BachmanRdBotCross = 888,
+    EventFlag_MapMark_OldTown_ElroyStBotCross = 890,
+    EventFlag_MapMark_OldTown_BotRightHugeComboCross = 892,
+    EventFlag_MapMark_OldTown_ElroyStMidCross = 894,
+    EventFlag_MapMark_OldTown_BachmanRdMidCross = 896,
+    EventFlag_MapMark_OldTown_FinneyStRightCross = 898,
+    EventFlag_MapMark_OldTown_BlochStLeftCross = 900,
+    EventFlag_MapMark_OldTown_LevinStTopCross = 902,
+    EventFlag_MapMark_OldTown_BlochStRightCross = 904,
+    EventFlag_MapMark_OldTown_LevinStBotCross = 906,
+    EventFlag_MapMark_OldTown_LevinBlochBigCombo = 908,
+    EventFlag_MapMark_OldTown_MathesonStCross = 910,
+    EventFlag_MapMark_OldTown_DoghouseArrowsOnly = 912,
+    EventFlag_MapMark_OldTown_KGordonArrowsOnly = 914,
+    EventFlag_MapMark_OldTown_FineyStRightKeyArrow = 916,
+    EventFlag_MapMark_53 = 917,
+    EventFlag_MapMark_OldTown_DogYardKeyLine = 918,
+    EventFlag_MapMark_55 = 919,
+    EventFlag_MapMark_OldTown_EllroyStKeyCircle = 920,
+    EventFlag_MapMark_57 = 921,
+    EventFlag_MapMark_OldTown_BotBridgeCross = 922,
+    EventFlag_MapMark_OldTown_BotBridgeCorrection = 923,
+    EventFlag_MapMark_OldTown_BotBridgeArrow = 924,
+    EventFlag_MapMark_61 = 925,
+    EventFlag_MapMark_OldTown_BalkanChurchCircle = 926,
+    EventFlag_MapMark_OldTown_BalkanChurchCheck = 927,
+    EventFlag_MapMark_OldTown_SchoolCircle = 930,
+    EventFlag_MapMark_OldTown_SchoolCheck = 931,
+    EventFlag_MapMark_OldTown_KGordonDotAndSignOnly = 932,
+    EventFlag_MapMark_OldTown_DoghouseDotOnly = 934,
+    EventFlag_MapMark_FogCentralTown_AntiqueWholeSign = 944,
+    EventFlag_MapMark_FogCentralTown_HospitalCircle = 946,
+    EventFlag_MapMark_FogCentralTown_CrichtonStTotBigCross = 948,
+    EventFlag_MapMark_FogCentralTown_CrichtonStBotBigCross = 950,
+    EventFlag_MapMark_FogCentralTown_SaganStBigCross = 952,
+    EventFlag_MapMark_FogCentralTown_KoontzStBigCross = 954,
+    EventFlag_MapMark_FogCentralTown_SimmonsStBigCross = 956,
+    EventFlag_MapMark_AltCentralTown_AntiqueWholeSign = 978,
+    EventFlag_MapMark_AltCentralTown_HospitalCircle = 980,
+    EventFlag_MapMark_AltCentralTown_CrichtonStTopBigCross = 982,
+    EventFlag_MapMark_AltCentralTown_CrichtonStBotBigCross = 984,
+    EventFlag_MapMark_AltCentralTown_SimmonsStTopBigCross = 986,
+    EventFlag_MapMark_AltCentralTown_SimmonsStMidCross = 988,
+    EventFlag_MapMark_AltCentralTown_SimmonsStBotCross = 990,
+    EventFlag_MapMark_AltCentralTown_WilsonStCross = 992,
+    EventFlag_MapMark_AltCentralTown_KoontzStBigCross = 994,
+    EventFlag_MapMark_AltCentralTown_SaganStRightBigCross = 996,
+    EventFlag_MapMark_AltCentralTown_SaganStLeftBigCross = 998,
+    EventFlag_MapMark_AltCentralTown_ParkingLotBigCross = 1000,
+    EventFlag_MapMark_AltCentralTown_UntatiledStBotCross = 1002,
+    EventFlag_MapMark_AltCentralTown_CrichtonKoontzBigCross = 1006,
+    EventFlag_MapMark_ResortTown_BachmanRdCross = 1012,
+    EventFlag_MapMark_ResortTown_CraigStBigCross = 1014,
+    EventFlag_MapMark_ResortTown_EastGarageRightCross = 1016,
+    EventFlag_MapMark_ResortTown_EastGarageBotCross = 1018,
+    EventFlag_MapMark_ResortTown_SandfordStLeftBigCross = 1020,
+    EventFlag_MapMark_ResortTown_SandfordStRightCross = 1022,
+    EventFlag_MapMark_ResortTown_LighthouseCircle = 1024,
+    EventFlag_MapMark_ResortTown_LighthouseCheck = 1025,
+    EventFlag_MapMark_ResortTown_ThemeParkArrow = 1026,
+    EventFlag_MapMark_FogSchoolBF_StorageBroken = 1046,
+    EventFlag_MapMark_FogSchoolBF_StorageArrows = 1047,
+    EventFlag_MapMark_FogSchoolBF_BoilerRoomArrows = 1049,
+    EventFlag_MapMark_AltSchoolBF_StorageBroken = 1056,
+    EventFlag_MapMark_AltSchoolBF_StorageArrows = 1057,
+    EventFlag_MapMark_AltSchoolBF_BoilerRoomArrows = 1059,
+    EventFlag_MapMark_FogSchool1F_EntranceArrows = 1067,
+    EventFlag_MapMark_FogSchool1F_LobbyArrows = 1069,
+    EventFlag_MapMark_FogSchool1F_BotLeftCorridorLocked = 1070,
+    EventFlag_MapMark_FogSchool1F_BotLeftCorridorArrows = 1071,
+    EventFlag_MapMark_FogSchool1F_ReceptionBroken = 1072,
+    EventFlag_MapMark_FogSchool1F_ReceptionArrows = 1073,
+    EventFlag_MapMark_FogSchool1F_InfirmaryArrows = 1075,
+    EventFlag_MapMark_FogSchool1F_CourtyardBotBroken = 1076,
+    EventFlag_MapMark_FogSchool1F_CourtyardBotArrows = 1077,
+    EventFlag_MapMark_FogSchool1F_BotRightCorridorLocked = 1078,
+    EventFlag_MapMark_FogSchool1F_BotRightCorridorArrows = 1079,
+    EventFlag_MapMark_FogSchool1F_TopRightCorridorLocked = 1080,
+    EventFlag_MapMark_FogSchool1F_TopRightCorridorArrows = 1081,
+    EventFlag_MapMark_FogSchool1F_HallMidBroken = 1082,
+    EventFlag_MapMark_FogSchool1F_TopClassRoomTopBroken = 1084,
+    EventFlag_MapMark_FogSchool1F_TopClassRoomTopArrows = 1085,
+    EventFlag_MapMark_FogSchool1F_TopClassRoomBotBroken = 1086,
+    EventFlag_MapMark_FogSchool1F_TopClassRoomBotArrows = 1087,
+    EventFlag_MapMark_FogSchool1F_BotClassRoomTopBroken = 1088,
+    EventFlag_MapMark_FogSchool1F_BotClassRoomTopArrows = 1089,
+    EventFlag_MapMark_FogSchool1F_BotClassRoomBotBroken = 1090,
+    EventFlag_MapMark_FogSchool1F_BotClassRoomBotArrows = 1091,
+    EventFlag_MapMark_FogSchool1F_ClassRoomMidArrows = 1093,
+    EventFlag_MapMark_FogSchool1F_CourtyardTopArrows = 1095,
+    EventFlag_MapMark_FogSchool1F_HallLeftBroken = 1096,
+    EventFlag_MapMark_FogSchool1F_UntitledLobbyBotArrows = 1099,
+    EventFlag_MapMark_FogSchool1F_StorageBroken = 1100,
+    EventFlag_MapMark_FogSchool1F_TopLeftCorridorArrows = 1103,
+    EventFlag_MapMark_FogSchool1F_UntitledLobbyTopBroken = 1104,
+    EventFlag_MapMark_FogSchool1F_TopTeachersRoomTopBroken = 1106,
+    EventFlag_MapMark_FogSchool1F_TopTeachersRoomBotBroken = 1108,
+    EventFlag_MapMark_FogSchool1F_BotTeachersRoomTopBroken = 1110,
+    EventFlag_MapMark_FogSchool1F_BotTeachersRoomBotBroken = 1112,
+    EventFlag_MapMark_FogSchool1F_MensBathroomArrows = 1115,
+    EventFlag_MapMark_FogSchool1F_WomensBathroomArrow = 1117,
+    EventFlag_MapMark_FogSchool1F_ReceptionQuestion = 1118,
+    EventFlag_MapMark_FogSchool1F_ClockTowerCircle = 1120,
+    EventFlag_MapMark_FogSchool1F_BotLeftCorridorBroken = 1122,
+    EventFlag_MapMark_FogSchool1F_TopRightCorridorBroken = 1124,
+    EventFlag_MapMark_AltSchool1F_LobbyBotBroken = 1144,
+    EventFlag_MapMark_AltSchool1F_LobbyTopArrows = 1147,
+    EventFlag_MapMark_AltSchool1F_BotLeftCorridorLocked = 1148,
+    EventFlag_MapMark_AltSchool1F_BotLeftCorridorArrows = 1149,
+    EventFlag_MapMark_AltSchool1F_ReceptionArrows = 1151,
+    EventFlag_MapMark_AltSchool1F_InfirmaryArrows = 1153,
+    EventFlag_MapMark_AltSchool1F_CourtyardBotLocked = 1154,
+    EventFlag_MapMark_AltSchool1F_CourtyardBotArrows = 1155,
+    EventFlag_MapMark_AltSchool1F_BotRightCorridorArrows = 1157,
+    EventFlag_MapMark_AltSchool1F_TopRightCorridorLocked = 1158,
+    EventFlag_MapMark_AltSchool1F_TopRightCorridorArrows = 1159,
+    EventFlag_MapMark_AltSchool1F_HallMidArrows = 1161,
+    EventFlag_MapMark_AltSchool1F_TopClassRoomTopArrows = 1163,
+    EventFlag_MapMark_AltSchool1F_TopClassRoomBotArrows = 1165,
+    EventFlag_MapMark_AltSchool1F_BotClassRoomTopBroken = 1166,
+    EventFlag_MapMark_AltSchool1F_BotClassRoomTopArrows = 1167,
+    EventFlag_MapMark_AltSchool1F_BotClassRoomBotArrows = 1169,
+    EventFlag_MapMark_AltSchool1F_ClassRoomMidArrows = 1171,
+    EventFlag_MapMark_308 = 1172,
+    EventFlag_MapMark_AltSchool1F_CourtyardTopArrows = 1173,
+    EventFlag_MapMark_AltSchool1F_HallLeftArrows = 1175,
+    EventFlag_MapMark_AltSchool1F_UntitledLobbyBotArrows = 1177,
+    EventFlag_MapMark_AltSchool1F_StorageArrows = 1179,
+    EventFlag_MapMark_AltSchool1F_TopLeftCorridorLocked = 1180,
+    EventFlag_MapMark_AltSchool1F_TopLeftCorridorArrows = 1181,
+    EventFlag_MapMark_AltSchool1F_TopTeachersRoomTopArrows = 1183,
+    EventFlag_MapMark_AltSchool1F_TopTeachersRoomBotBroken = 1184,
+    EventFlag_MapMark_AltSchool1F_BotTeachersRoomTopArrows = 1187,
+    EventFlag_MapMark_AltSchool1F_BotTeachersRoomBotArrows = 1189,
+    EventFlag_MapMark_AltSchool1F_MensBathroomArrows = 1191,
+    EventFlag_MapMark_AltSchool1F_WomensBathroomArrows = 1193,
+    EventFlag_MapMark_AltSchool1F_TeacherMidArrows = 1195,
+    EventFlag_MapMark_AltSchool1F_LeftMidCorridorBroken = 1196,
+    EventFlag_MapMark_AltSchool1F_RightCorridorMidBroken = 1198,
+    EventFlag_MapMark_AltSchool1F_RightCorridorBotLocked = 1200,
+    EventFlag_MapMark_AltSchool1F_RightCorridorBotArrows = 1201,
+    EventFlag_MapMark_AltSchool1F_CourtyardQuestion = 1202,
+    EventFlag_MapMark_AltSchool1F_UntitledLobbyTopCross = 1204,
+    EventFlag_MapMark_AltSchool1F_SecretDoorLocked = 1206,
+    EventFlag_MapMark_AltSchool1F_SecretDoorArrows = 1207,
+    EventFlag_MapMark_AltSchool1F_RightCorridorBotDots = 1208,
+    EventFlag_MapMark_FogSchool2F_BotLeftCorridorLocked = 1222,
+    EventFlag_MapMark_FogSchool2F_BotLeftCorridorArrows = 1223,
+    EventFlag_MapMark_FogSchool2F_MusicRoomArrows = 1225,
+    EventFlag_MapMark_FogSchool2F_LockerRoomArrows = 1227,
+    EventFlag_MapMark_FogSchool2F_BotRightCorridorBroken = 1228,
+    EventFlag_MapMark_FogSchool2F_BotRightCorridorArrows = 1229,
+    EventFlag_MapMark_FogSchool2F_TopRightCorridorBroken = 1230,
+    EventFlag_MapMark_FogSchool2F_TopRightCorridorArrows = 1231,
+    EventFlag_MapMark_FogSchool2F_LibraryBroken = 1232,
+    EventFlag_MapMark_FogSchool2F_LibraryArrows = 1233,
+    EventFlag_MapMark_FogSchool2F_TopRightClassRoomTopBroken = 1234,
+    EventFlag_MapMark_FogSchool2F_TopRightClassRoomTopArrows = 1235,
+    EventFlag_MapMark_FogSchool2F_TopRightClassRoomBotBroken = 1236,
+    EventFlag_MapMark_FogSchool2F_TopRightClassRoomBotArrows = 1237,
+    EventFlag_MapMark_FogSchool2F_BotRightClassRoomTopBroken = 1238,
+    EventFlag_MapMark_FogSchool2F_BotRightClassRoomTopArrows = 1239,
+    EventFlag_MapMark_FogSchool2F_BotRightClassRoomBotBroken = 1240,
+    EventFlag_MapMark_FogSchool2F_BotRightClassRoomBotArrows = 1241,
+    EventFlag_MapMark_FogSchool2F_RightClassRoomMidArrows = 1243,
+    EventFlag_MapMark_FogSchool2F_LibraryReserveLocked = 1244,
+    EventFlag_MapMark_FogSchool2F_LibraryReserveArrows = 1245,
+    EventFlag_MapMark_FogSchool2F_ChemistryLabArrows = 1247,
+    EventFlag_MapMark_FogSchool2F_LabEquipmentRoomArrows = 1249,
+    EventFlag_MapMark_FogSchool2F_TopLeftArrows = 1251,
+    EventFlag_MapMark_FogSchool2F_TopLeftClassRoomTopArrows = 1253,
+    EventFlag_MapMark_FogSchool2F_TopLeftClassRoomBotArrows = 1255,
+    EventFlag_MapMark_FogSchool2F_BotLeftClassRoomTopArrows = 1257,
+    EventFlag_MapMark_FogSchool2F_BotLeftClassRoomBotArrows = 1259,
+    EventFlag_MapMark_FogSchool2F_LeftClassRoomMidArrows = 1261,
+    EventFlag_MapMark_FogSchool2F_MensBathroomArrows = 1263,
+    EventFlag_MapMark_FogSchool2F_WomensBathroomArrows = 1265,
+    EventFlag_MapMark_FogSchool2F_ReserveLibraryMidArrows = 1267,
+    EventFlag_MapMark_FogSchool2F_StatueOfHandSign = 1268,
+    EventFlag_MapMark_FogSchool2F_PianoSign = 1270,
+    EventFlag_MapMark_FogSchool2F_LockerRoomQuestion = 1272,
+    EventFlag_MapMark_AltSchool2F_BotLeftCorridorArrows = 1289,
+    EventFlag_MapMark_AltSchool2F_MusicRoomBroken = 1290,
+    EventFlag_MapMark_AltSchool2F_LockerRoomArrows = 1293,
+    EventFlag_MapMark_AltSchool2F_BotRightCorridorLocked = 1294,
+    EventFlag_MapMark_AltSchool2F_BotRightCorridorArrows = 1295,
+    EventFlag_MapMark_AltSchool2F_TopRightCorridorLocked = 1296,
+    EventFlag_MapMark_AltSchool2F_TopRightCorridorArrows = 1297,
+    EventFlag_MapMark_AltSchool2F_LibraryArrows = 1299,
+    EventFlag_MapMark_AltSchool2F_TopRightClassRoomTopLocked = 1300,
+    EventFlag_MapMark_AltSchool2F_TopRightClassRoomTopArrows = 1301,
+    EventFlag_MapMark_AltSchool2F_TopRightClassRoomBotLocked = 1302,
+    EventFlag_MapMark_AltSchool2F_TopRightClassRoomBotArrows = 1303,
+    EventFlag_MapMark_AltSchool2F_BotRightClassRoomTopArrows = 1305,
+    EventFlag_MapMark_AltSchool2F_BotRightClassRoomBotArrows = 1307,
+    EventFlag_MapMark_AltSchool2F_RightClassRoomMidArrows = 1309,
+    EventFlag_MapMark_AltSchool2F_LibraryReserveLocked = 1310,
+    EventFlag_MapMark_AltSchool2F_LibraryReserveArrows = 1311,
+    EventFlag_MapMark_AltSchool2F_ChemistryLabBroken = 1312,
+    EventFlag_MapMark_AltSchool2F_LabEquipmentRoomBroken = 1314,
+    EventFlag_MapMark_AltSchool2F_TopLeftCorridorArrows = 1317,
+    EventFlag_MapMark_AltSchool2F_TopLeftClassRoomTopArrows = 1319,
+    EventFlag_MapMark_AltSchool2F_TopLeftClassRoomBotArrows = 1321,
+    EventFlag_MapMark_AltSchool2F_BotLeftClassRoomTopArrows = 1323,
+    EventFlag_MapMark_AltSchool2F_BotLeftClassRoomBotArrows = 1325,
+    EventFlag_MapMark_AltSchool2F_LeftClassRoomMidArrows = 1327,
+    EventFlag_MapMark_AltSchool2F_MensBathroomArrows = 1329,
+    EventFlag_MapMark_AltSchool2F_WomensBathroomArrows = 1331,
+    EventFlag_MapMark_AltSchool2F_LeftCorridorMidBroken = 1332,
+    EventFlag_MapMark_AltSchool2F_LeftCorridorMidArrows = 1334,
+    EventFlag_MapMark_AltSchool2F_RightCorridorMidBroken = 1336,
+    EventFlag_MapMark_AltSchool2F_ReserveLibraryMidArrows = 1339,
+    EventFlag_MapMark_FogSchoolRF_RoofBroken = 1354,
+    EventFlag_MapMark_FogSchoolRF_RoofArrows = 1355,
+    EventFlag_MapMark_FogSchoolRF_ValveSign = 1356,
+    EventFlag_MapMark_AltSchoolRF_RoofBroken = 1362,
+    EventFlag_MapMark_AltSchoolRF_RoofArrows = 1363,
+    EventFlag_MapMark_AltSchoolRF_ValveSign = 1364,
+    EventFlag_MapMark_FogSewer1F_MidLocked = 1370,
+    EventFlag_MapMark_FogSewer1F_MidArrows = 1371,
+    EventFlag_MapMark_FogSewer1F_RightMidLocked = 1372,
+    EventFlag_MapMark_FogSewer1F_RightMidArrows = 1373,
+    EventFlag_MapMark_FogSewer1F_RightTopLocked = 1374,
+    EventFlag_MapMark_FogSewer1F_RightTopArrows = 1375,
+    EventFlag_MapMark_FogSewer1F_RightBotLocked = 1376,
+    EventFlag_MapMark_FogSewer1F_RightBotArrows = 1377,
+    EventFlag_MapMark_FogSewer2F_OuterRightLocked = 1378,
+    EventFlag_MapMark_FogSewer2F_OuterRightArrows = 1379,
+    EventFlag_MapMark_FogSewer2F_MidRightLocked = 1380,
+    EventFlag_MapMark_FogSewer2F_MidRightArrows = 1381,
+    EventFlag_MapMark_FogSewer2F_MidLeftLocked = 1382,
+    EventFlag_MapMark_FogSewer2F_MidLeftArrows = 1383,
+    EventFlag_MapMark_FogSewer2F_OuterLeftLocked = 1384,
+    EventFlag_MapMark_FogSewer2F_OuterLeftArrows = 1385,
+    EventFlag_MapMark_FogSewer2F_BigCross = 1386,
     EventFlag_1390 = 1390,
-    EventFlag_1391 = 1391,
-
-    EventFlag_1393 = 1393,
-
+    EventFlag_MapMark_527 = 1391,
+    EventFlag_MapMark_AltSewer_BigCross = 1393,
     EventFlag_1395 = 1395,
-
     EventFlag_1397 = 1397,
     EventFlag_1398 = 1398,
-
-    EventFlag_1414 = 1414,
-
-    EventFlag_1424 = 1424,
-
-    EventFlag_1427 = 1427,
-
-    EventFlag_1429 = 1429,
-
-    EventFlag_1431 = 1431,
-
-    EventFlag_1433 = 1433,
-
+    EventFlag_MapMark_FogHospital1F_CorridorLeftBroken = 1403,
+    EventFlag_MapMark_FogHospital1F_ExaminationRoomLeftArrows = 1406,
+    EventFlag_MapMark_FogHospital1F_ReceptionOfficeArrows = 1408,
+    EventFlag_MapMark_FogHospital1F_OfficeExaminationArrows = 1410,
+    EventFlag_MapMark_FogHospital1F_ExaminationMedicineArrows = 1412,
+    EventFlag_MapMark_FogHospital1F_MedicineRoomBotArrows = 1414,
+    EventFlag_MapMark_FogHospital1F_StorageRoomBroken = 1415,
+    EventFlag_MapMark_FogHospital1F_BotOfficeBroken = 1417,
+    EventFlag_MapMark_FogHospital1F_DoctorConferenceArrows = 1420,
+    EventFlag_MapMark_FogHospital1F_DoctorOfficeLeftBroken = 1421,
+    EventFlag_MapMark_FogHospital1F_DoctorOfficeLeftArrows = 1422,
+    EventFlag_MapMark_FogHospital1F_KitchenBroken = 1423,
+    EventFlag_MapMark_FogHospital1F_KitchenArrows = 1424,
+    EventFlag_MapMark_FogHospital1F_DirectorsOfficeBroken = 1425,
+    EventFlag_MapMark_FogHospital1F_DirectorsOfficeArrows = 1426,
+    EventFlag_MapMark_FogHospital1F_StairsLocked = 1427,
+    EventFlag_MapMark_FogHospital1F_StairsArrows = 1428,
+    EventFlag_MapMark_FogHospital1F_StairsBroken = 1429,
+    EventFlag_MapMark_FogHospital1F_CorridorMidBroken = 1431,
+    EventFlag_MapMark_FogHospital1F_RightEntranceBroken = 1433,
+    EventFlag_MapMark_FogHospital1F_RightEntranceArrows = 1434,
     EventFlag_1435 = 1435,
     EventFlag_1436 = 1436,
-
     EventFlag_1438 = 1438,
-
     EventFlag_1441 = 1441,
     EventFlag_1442 = 1442,
     EventFlag_1443 = 1443,
     EventFlag_1444 = 1444,
     EventFlag_1445 = 1445,
     EventFlag_1446 = 1446,
-    EventFlag_1447 = 1447,
+    EventFlag_MapMark_AltHospital1F_CorridorLeftBroken = 1447,
     EventFlag_1448 = 1448,
-    EventFlag_1449 = 1449,
-    EventFlag_1450 = 1450,
-
+    EventFlag_MapMark_585 = 1449,
+    EventFlag_MapMark_AltHospital1F_ExaminationRoomLeftArrows = 1450,
+    EventFlag_MapMark_AltHospital1F_OfficeExaminationBroken = 1451,
     EventFlag_1452 = 1452,
-
-    EventFlag_1454 = 1454,
-
-    EventFlag_1468 = 1468,
-
+    EventFlag_MapMark_AltHospital1F_ExaminationMedicineLocked = 1453,
+    EventFlag_MapMark_AltHospital1F_ExaminationMedicineArrows = 1454,
+    EventFlag_MapMark_AltHospital1F_MedicineRoomBotBroken = 1455,
+    EventFlag_MapMark_AltHospital1F_MedicineRoomBotArrows = 1456,
+    EventFlag_MapMark_AltHospital1F_StoreRoomArrows = 1458,
+    EventFlag_MapMark_AltHospital1F_BotOfficeArrows = 1460,
+    EventFlag_MapMark_AltHospital1F_DoctorOfficeBroken = 1461,
+    EventFlag_MapMark_AltHospital1F_KitchenArrows = 1464,
+    EventFlag_MapMark_AltHospital1F_DirectorsOfficeArrows = 1466,
+    EventFlag_MapMark_AltHospital1F_StairsArrows = 1468,
+    EventFlag_MapMark_AltHospital1F_CorridorMidArrows = 1470,
+    EventFlag_MapMark_AltHospital1F_RightEntranceBroken = 1471,
     EventFlag_1472 = 1472,
-
+    EventFlag_MapMark_AltHospital1F_MensBathroomBroken = 1473,
     EventFlag_1474 = 1474,
-    EventFlag_1475 = 1475,
+    EventFlag_MapMark_AltHospital1F_WomensBathroomBroken = 1475,
     EventFlag_1476 = 1476,
     EventFlag_1477 = 1477,
-
     EventFlag_1479 = 1479,
-
     EventFlag_1481 = 1481,
     EventFlag_1482 = 1482,
-
     EventFlag_1485 = 1485,
-
     EventFlag_1487 = 1487,
-
     EventFlag_1489 = 1489,
-
     EventFlag_1491 = 1491,
-    EventFlag_1492 = 1492,
-
+    EventFlag_MapMark_FogHospitalBF_StairsArrows = 1492,
+    EventFlag_MapMark_FogHospitalBF_MorgueBroken = 1493,
     EventFlag_1494 = 1494,
-
+    EventFlag_MapMark_FogHospitalBF_StoreroomBroken = 1495,
     EventFlag_1496 = 1496,
-
+    EventFlag_MapMark_FogHospitalBF_GeneratorRoomArrows = 1498,
+    EventFlag_MapMark_FogHospitalBF_BoilerBroken = 1499,
+    EventFlag_MapMark_AltHospitalBF_StairsArrows = 1512,
     EventFlag_1513 = 1513,
-    EventFlag_1514 = 1514,
-
-    EventFlag_1516 = 1516,
-
-    EventFlag_1519 = 1519,
+    EventFlag_MapMark_AltHospitalBF_MorgueArrows = 1514,
+    EventFlag_MapMark_AltHospitalBF_StoreroomLocked = 1515,
+    EventFlag_MapMark_AltHospitalBF_StoreroomArrows = 1516,
+    EventFlag_MapMark_AltHospitalBF_GeneratorRoomArrows = 1518,
+    EventFlag_MapMark_AltHospitalBF_BoilerRoomBroken = 1519,
     EventFlag_1520 = 1520,
-
+    EventFlag_MapMark_FogHospital2F_NearElevatorBroken = 1531,
     EventFlag_1533 = 1533,
-
     EventFlag_1535 = 1535,
     EventFlag_1536 = 1536,
-    EventFlag_1537 = 1537,
-
+    EventFlag_MapMark_FogHospital3F_NearElevatorBroken = 1537,
     EventFlag_1539 = 1539,
     EventFlag_1540 = 1540,
-
-    EventFlag_1552 = 1552,
-
-    EventFlag_1558 = 1558,
-
-    EventFlag_1564 = 1564,
+    EventFlag_MapMark_AltHospital2F_NearElevatorLocked = 1543,
+    EventFlag_MapMark_AltHospital2F_NearElevatorArrows = 1544,
+    EventFlag_MapMark_AltHospital2F_Room206Arrows = 1546,
+    EventFlag_MapMark_AltHospital2F_Room205Broken = 1547,
+    EventFlag_MapMark_AltHospital2F_IntensiveCareUnitArrow = 1550,
+    EventFlag_MapMark_AltHospital2F_OperatingPrepRoomArrow = 1552,
+    EventFlag_MapMark_AltHospital2F_OperatingRoomArrow = 1554,
+    EventFlag_MapMark_AltHospital2F_NurseCenterBotLocked = 1555,
+    EventFlag_MapMark_AltHospital2F_NurseCenterBotArrows = 1556,
+    EventFlag_MapMark_AltHospital2F_CorridorMidLocked = 1557,
+    EventFlag_MapMark_AltHospital2F_CorridorMidArrows = 1558,
+    EventFlag_MapMark_AltHospital2F_WomensBathroomBroken = 1559,
+    EventFlag_MapMark_AltHospital2F_MensBathroomBroken = 1561,
+    EventFlag_MapMark_AltHospital2F_StairsArrows = 1564,
     EventFlag_1565 = 1565,
-
-    EventFlag_1567 = 1567,
+    EventFlag_MapMark_AltHospital2F_Room201Arrows = 1566,
+    EventFlag_MapMark_AltHospital2F_Room202Broken = 1567,
     EventFlag_1568 = 1568,
-
+    EventFlag_MapMark_AltHospital2F_Room203Broken = 1569,
     EventFlag_1571 = 1571,
-
+    EventFlag_MapMark_AltHospital2F_Room204Arrows = 1572,
     EventFlag_1573 = 1573,
-
+    EventFlag_MapMark_AltHospital2F_NurseCenterLeftArrows = 1574,
     EventFlag_1575 = 1575,
-
-    EventFlag_1577 = 1577,
+    EventFlag_MapMark_713 = 1577,
     EventFlag_1578 = 1578,
     EventFlag_1579 = 1579,
-
     EventFlag_1580 = 1580,
-
     EventFlag_1582 = 1582,
-
     EventFlag_1585 = 1585,
-
     EventFlag_1587 = 1587,
     EventFlag_1588 = 1588,
-
-    EventFlag_1590 = 1590,
-
+    EventFlag_MapMark_AltHospital3F_NearElevatorLocked = 1589,
+    EventFlag_MapMark_AltHospital3F_NearElevatorArrows = 1590,
+    EventFlag_MapMark_AltHospital3F_Room307Broken = 1591,
     EventFlag_1593 = 1593,
-
-    EventFlag_1595 = 1595,
-
-    EventFlag_1610 = 1610,
-
+    EventFlag_MapMark_AltHospital3F_Room306Arrows = 1594,
+    EventFlag_MapMark_AltHospital3F_Room305Broken = 1595,
+    EventFlag_MapMark_AltHospital3F_StorageRoomArrows = 1598,
+    EventFlag_MapMark_AltHospital3F_StoreRoomBroken = 1599,
+    EventFlag_MapMark_AltHospital3F_LinenRoomBotArrows = 1602,
+    EventFlag_MapMark_AltHospital3F_CorridorMidArrows = 1604,
+    EventFlag_MapMark_AltHospital3F_MensBathroomArrows = 1606,
+    EventFlag_MapMark_AltHospital3F_WomensBathroomBroken = 1607,
+    EventFlag_MapMark_AltHospital3F_StairsArrows = 1610,
     EventFlag_1611 = 1611,
-    EventFlag_1612 = 1612,
-
-    EventFlag_1615 = 1615,
+    EventFlag_MapMark_AltHospital3F_Room301Arrows = 1612,
+    EventFlag_MapMark_AltHospital3F_Room302Arrows = 1614,
+    EventFlag_MapMark_AltHospital3F_Room303Broken = 1615,
     EventFlag_1616 = 1616,
-
+    EventFlag_MapMark_AltHospital3F_Room304Arrows = 1618,
     EventFlag_1619 = 1619,
-    EventFlag_1620 = 1620,
-
+    EventFlag_MapMark_AltHospital3F_LinenRoomLeftArrows = 1620,
+    EventFlag_MapMark_AltHospital3F_VideoSign = 1621,
     EventFlag_1623 = 1623,
-
     EventFlag_1625 = 1625,
-
     EventFlag_1627 = 1627,
     EventFlag_1628 = 1628,
-
     EventFlag_1631 = 1631,
-
     EventFlag_1633 = 1633,
-
     EventFlag_1635 = 1635,
     EventFlag_1636 = 1636,
-
     EventFlag_1639 = 1639,
-
     EventFlag_1641 = 1641,
     EventFlag_1642 = 1642,
 

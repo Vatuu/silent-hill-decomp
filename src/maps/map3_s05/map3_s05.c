@@ -208,7 +208,7 @@ void func_800D59D4(void) // 0x800D59D4
     Player_ItemRemove(InventoryItemId_BasementStoreroomKey, 1);
     Map_MessageWithSfx(27, Sfx_UseKey, &sfxPos);
 
-    Savegame_MapMarkingSet(MapMarkFlag_FogHospital3F_NearElevatorBroken);
+    Savegame_EventFlagSet(EventFlag_MapMark_FogHospital3F_NearElevatorBroken);
     Savegame_EventFlagSet(EventFlag_256);
 }
 

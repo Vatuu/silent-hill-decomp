@@ -215,7 +215,7 @@ void func_800D250C(void) // 0x800D250C
     Map_MessageWithSfx(48, Sfx_UseKey, &sfxPos);
 
     Savegame_EventFlagSet(EventFlag_258);
-    Savegame_MapMarkingSet(MapMarkFlag_AltHospital1F_WomensBathroomBroken);
+    Savegame_EventFlagSet(EventFlag_MapMark_AltHospital1F_WomensBathroomBroken);
 }
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D25D0
@@ -412,7 +412,7 @@ void func_800D2668(void) // 0x800D2668
             D_800D5A40 = NO_VALUE;
 
             Savegame_EventFlagSet(EventFlag_294);
-            Savegame_MapMarkingSet(MapMarkFlag_AltHospital1F_WomensBathroomBroken);
+            Savegame_EventFlagSet(EventFlag_MapMark_AltHospital1F_WomensBathroomBroken);
             func_8008D448();
             break;
     }

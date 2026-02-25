@@ -208,7 +208,7 @@ void func_800D7B2C(void)
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(2.5f), false);
 
             Savegame_EventFlagSet(EventFlag_71);
-            Savegame_MapMarkingSet(MapMarkFlag_FogSchool1F_ClockTowerCircle);
+            Savegame_EventFlagSet(EventFlag_MapMark_FogSchool1F_ClockTowerCircle);
 
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -306,7 +306,7 @@ void func_800D7EB0(void)
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(2.5f), false);
 
             Savegame_EventFlagSet(EventFlag_72);
-            Savegame_MapMarkingSet(MapMarkFlag_FogSchool1F_ClockTowerCircle);
+            Savegame_EventFlagSet(EventFlag_MapMark_FogSchool1F_ClockTowerCircle);
 
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);

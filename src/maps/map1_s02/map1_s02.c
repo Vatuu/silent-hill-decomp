@@ -215,7 +215,7 @@ void func_800DA384(void) // 0x800DA384
             break;
 
         default:
-            Savegame_MapMarkingSet(MapMarkFlag_AltSchool1F_CourtyardQuestion);
+            Savegame_EventFlagSet(EventFlag_MapMark_AltSchool1F_CourtyardQuestion);
             break;
     }
 
@@ -588,7 +588,7 @@ void func_800DB058(void) // 0x800DB058
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
 
-            Savegame_MapMarkingSet(MapMarkFlag_AltSchool1F_SecretDoorArrows);
+            Savegame_EventFlagSet(EventFlag_MapMark_AltSchool1F_SecretDoorArrows);
 
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
@@ -1674,7 +1674,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
 
 void func_800DEC88(void) // 0x800DEC88
 {
-    if (Savegame_MapMarkingGet(MapMarkFlag_AltSchool1F_ReceptionArrows))
+    if (Savegame_EventFlagGet(EventFlag_MapMark_AltSchool1F_ReceptionArrows))
     {
         if (g_SavegamePtr->gameDifficulty_260 == 1)
         {

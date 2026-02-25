@@ -476,7 +476,7 @@ void func_800D1A58(void) // 0x800D1A58
 
                     if (j == 4)
                     {
-                        Savegame_MapMarkingSet(MapMarkFlag_713);
+                        Savegame_EventFlagSet(EventFlag_MapMark_713);
                     }
 
                     break;
@@ -495,7 +495,7 @@ void func_800D1A58(void) // 0x800D1A58
             D_800D6BD8 += 0x40;
             if (D_800D6BD8 >= Q12(1.2f))
             {
-                if (Savegame_MapMarkingGet(MapMarkFlag_713))
+                if (Savegame_EventFlagGet(EventFlag_MapMark_713))
                 {
                     SD_Call(Sfx_Unk1343);
                 }

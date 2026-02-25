@@ -1988,32 +1988,27 @@ void func_8006342C(s32 weaponAttack, q3_12 angle0, q3_12 angle1, GsCOORDINATE2* 
     {
         case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
             D_800C440C               = coord;
-            *(s32*)&ptr->field_20.vx = -0xEFFFE;
-            ptr->field_20.vz         = 71;
+            Math_SetSVectorFast(&ptr->field_20, 2, -15, 71);
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
             D_800C440C               = coord;
-            *(s32*)&ptr->field_20.vx = -0x11FFFD;
-            ptr->field_20.vz         = 109;
+            Math_SetSVectorFast(&ptr->field_20, 3, -18, 109);
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
             D_800C440C               = coord;
-            *(s32*)&ptr->field_20.vx = -0x220002;
-            ptr->field_20.vz         = 221;
+            Math_SetSVectorFast(&ptr->field_20, -2, -35, 221);
             break;
 
-        case 70: // TODO
+        case 70: // TODO: `WEAPON_ATTACK`
             D_800C4410               = coord;
-            *(s32*)&ptr->field_20.vx = -0x17FFFD;
-            ptr->field_20.vz         = 91;
+            Math_SetSVectorFast(&ptr->field_20, 3, -24, 91);
             break;
 
-        case 63: // TODO
+        case 63: // TODO: `WEAPON_ATTACK`
             D_800C4410               = coord;
-            *(s32*)&ptr->field_20.vx = -0xCFFFE;
-            ptr->field_20.vz         = 67;
+            Math_SetSVectorFast(&ptr->field_20, 2, -13, 67);
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):

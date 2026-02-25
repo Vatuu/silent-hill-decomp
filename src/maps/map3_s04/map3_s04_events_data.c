@@ -317,7 +317,7 @@ s_EventData MAP_EVENTS[53] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1492,
+        .disabledEventFlag_2  = EventFlag_MapMark_FogHospitalBF_StairsArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 27,
@@ -341,7 +341,7 @@ s_EventData MAP_EVENTS[53] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1468,
+        .disabledEventFlag_2  = EventFlag_MapMark_AltHospital1F_StairsArrows,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 33,

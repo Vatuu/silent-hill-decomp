@@ -587,7 +587,7 @@ void func_800D23E4(void) // 0x800D23E4
             func_8003D01C();
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
 
-            Savegame_MapMarkingSet(MapMarkFlag_AltHospital1F_RightEntranceBroken);
+            Savegame_EventFlagSet(EventFlag_MapMark_AltHospital1F_RightEntranceBroken);
             Savegame_EventFlagSet(EventFlag_340);
 
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);

@@ -91,7 +91,7 @@ void func_800D1524(void) // 0x800D1524
     Player_ItemRemove(InventoryItemId_BasementKey, 1);
     Map_MessageWithSfx(28, Sfx_UseKey, &sfxPos); // "Used basement key."
 
-    Savegame_MapMarkingSet(MapMarkFlag_585);
+    Savegame_EventFlagSet(EventFlag_MapMark_585);
     Savegame_EventFlagSet(EventFlag_M3S01_BasementDoorOpen);
 }
 
@@ -456,7 +456,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2E54
             WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object_0, &g_WorldObject_Dr[i].position_1C, &(SVECTOR3){ 0, 0, 0 });
         }
 
-        if (Savegame_MapMarkingGet(MapMarkFlag_AltHospital2F_OperatingPrepRoomArrow) && Savegame_MapMarkingGet(MapMarkFlag_AltHospital2F_CorridorMidArrows))
+        if (Savegame_EventFlagGet(EventFlag_MapMark_AltHospital2F_OperatingPrepRoomArrow) && Savegame_EventFlagGet(EventFlag_MapMark_AltHospital2F_CorridorMidArrows))
         {
             WorldGfx_ObjectAdd(&g_WorldObject3[1].object_0, &g_WorldObject3[1].position_1C, &(SVECTOR3){ 0, 0, 0 });
         }

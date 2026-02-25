@@ -324,14 +324,14 @@ s_EventData MAP_EVENTS[44] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1012,
+        .disabledEventFlag_2  = EventFlag_MapMark_ResortTown_BachmanRdCross,
         .triggerType_4_0      = TriggerType_TouchAabb,
         .activationType_4_4   = TriggerActivationType_Exclusive,
         .pointOfInterestIdx_5 = 37,
         .sysState_8_0         = SysState_EventSetFlag,
     },
     {
-        .disabledEventFlag_2  = EventFlag_1014,
+        .disabledEventFlag_2  = EventFlag_MapMark_ResortTown_CraigStBigCross,
         .triggerType_4_0      = TriggerType_TouchAabb,
         .activationType_4_4   = TriggerActivationType_Exclusive,
         .pointOfInterestIdx_5 = 38,

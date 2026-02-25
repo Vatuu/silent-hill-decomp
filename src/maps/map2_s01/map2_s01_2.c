@@ -406,8 +406,8 @@ void func_800CED88(void) // 0x800CED88
 
             Savegame_EventFlagSet(EventFlag_179);
             Savegame_EventFlagSet(EventFlag_176);
-            Savegame_MapMarkingSet(MapMarkFlag_FogCentralTown_HospitalCircle);
-            Savegame_MapMarkingSet(MapMarkFlag_AltCentralTown_HospitalCircle);
+            Savegame_EventFlagSet(EventFlag_MapMark_FogCentralTown_HospitalCircle);
+            Savegame_EventFlagSet(EventFlag_MapMark_AltCentralTown_HospitalCircle);
 
             func_80088F94(dahliaChara, 0, 0);
 
@@ -508,11 +508,11 @@ void Map_WorldObjectsUpdate(void) // 0x800CF938
             if (!Savegame_EventFlagGet(EventFlag_M2S01_PickupDrawbridgeKey))
             {
                 WorldGfx_ObjectAdd(&g_WorldObject_Key.object_0, &g_WorldObject_Key.position_1C, &g_WorldObject_Key.rotation_28);
-                Savegame_MapMarkingClear(MapMarkFlag_OldTown_BalkanChurchCheck);
+                Savegame_EventFlagClear(EventFlag_MapMark_OldTown_BalkanChurchCheck);
             }
             else
             {
-                Savegame_MapMarkingSet(MapMarkFlag_OldTown_BalkanChurchCheck);
+                Savegame_EventFlagSet(EventFlag_MapMark_OldTown_BalkanChurchCheck);
             }
 
             WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position_1C, &g_WorldObject_SavePad.rotation_28);

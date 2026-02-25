@@ -509,8 +509,8 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             D_800F228C = 0;
             g_Gfx_PaperMapMarkingAlpha = 0;
 
-            Savegame_MapMarkingSet(MapMarkFlag_OldTown_CofeArrowOnly);
-            Savegame_MapMarkingSet(MapMarkFlag_OldTown_CofeSignOnly);
+            Savegame_EventFlagSet(EventFlag_MapMark_OldTown_CofeArrowOnly);
+            Savegame_EventFlagSet(EventFlag_MapMark_OldTown_CofeSignOnly);
 
             D_800F228E = 0;
 
@@ -636,7 +636,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            Savegame_MapMarkingSet(MapMarkFlag_OldTown_CherylArrowAndSign);
+            Savegame_EventFlagSet(EventFlag_MapMark_OldTown_CherylArrowAndSign);
             vcReturnPreAutoCamWork(false);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
@@ -689,7 +689,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
     {
         case 0:
             Player_ControlFreeze();
-            Savegame_MapMarkingSet(MapMarkFlag_11);
+            Savegame_EventFlagSet(EventFlag_MapMark_11);
             func_800862F8(0, FILE_TIM_TOSCHOOL_TIM, false);
 
             g_MapMsgSoundIdx = 0;
@@ -827,7 +827,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
 
         case 17:
             func_800867B4(2, 0);
-            Savegame_MapMarkingSet(MapMarkFlag_OldTown_SchoolCircle);
+            Savegame_EventFlagSet(EventFlag_MapMark_OldTown_SchoolCircle);
 
             D_800F2295 = 0;
 
@@ -846,7 +846,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
 
         case 21:
             Savegame_EventFlagSet(EventFlag_147);
-            Savegame_MapMarkingSet(MapMarkFlag_OldTown_SchoolCircle);
+            Savegame_EventFlagSet(EventFlag_MapMark_OldTown_SchoolCircle);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -1043,9 +1043,9 @@ void func_800E9A0C(void) // 0x800E9A0C
 
     if (Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfLion))
     {
-        if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_FineyStRightKeyArrow))
+        if (Savegame_EventFlagGet(EventFlag_MapMark_OldTown_FineyStRightKeyArrow))
         {
-            Savegame_MapMarkingSet(MapMarkFlag_53);
+            Savegame_EventFlagSet(EventFlag_MapMark_53);
         }
     }
 }
@@ -1093,9 +1093,9 @@ void func_800E9A74(void) // 0x800E9A74
         case EventState_TakeKey:
             func_80086470(3, InventoryItemId_KeyOfWoodman, 1, false);
 
-            if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_DogYardKeyLine))
+            if (Savegame_EventFlagGet(EventFlag_MapMark_OldTown_DogYardKeyLine))
             {
-                Savegame_MapMarkingSet(MapMarkFlag_55);
+                Savegame_EventFlagSet(EventFlag_MapMark_55);
             }
 
             SysWork_StateStepSet(0, 8);
@@ -1122,9 +1122,9 @@ void func_800E9CB4(void) // 0x800E9CB4
 
     if (Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfScarecrow))
     {
-        if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_EllroyStKeyCircle))
+        if (Savegame_EventFlagGet(EventFlag_MapMark_OldTown_EllroyStKeyCircle))
         {
-            Savegame_MapMarkingSet(MapMarkFlag_57);
+            Savegame_EventFlagSet(EventFlag_MapMark_57);
         }
     }
 }
@@ -1135,7 +1135,7 @@ void MapEvent_HouseKeyUse(void) // 0x800E9D1C
 
     Player_ItemRemove(InventoryItemId_HouseKey, 1);
     Map_MessageWithSfx(31, Sfx_UseKey, &sfxPos); // "Used the House Key."
-    Savegame_MapMarkingSet(MapMarkFlag_OldTown_DoghouseDotOnly);
+    Savegame_EventFlagSet(EventFlag_MapMark_OldTown_DoghouseDotOnly);
 }
 
 void func_800E9DD8(void) // 0x800E9DD8
@@ -1227,7 +1227,7 @@ void func_800E9DD8(void) // 0x800E9DD8
                     case 0:
                         g_DoorOfEclypse_MapMsgIdx = 13;
                         Savegame_EventFlagSet(EventFlag_M2S00_DoorOfEclypseOpen);
-                        Savegame_MapMarkingSet(MapMarkFlag_OldTown_DoghouseArrowsOnly);
+                        Savegame_EventFlagSet(EventFlag_MapMark_OldTown_DoghouseArrowsOnly);
                         break;
 
                     case 1:
@@ -1423,7 +1423,7 @@ void func_800EA6E0(void) // 0x800EA6E0
             break;
 
         case EventState_Msg:
-            if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_FineyStRightKeyArrow))
+            if (Savegame_EventFlagGet(EventFlag_MapMark_OldTown_FineyStRightKeyArrow))
             {
                 MapMsg_DisplayAndHandleSelection(false, 54, 0, 0, 0, false); // "Something is written on the map on the wall.{E}"
             }
@@ -1445,9 +1445,9 @@ void func_800EA6E0(void) // 0x800EA6E0
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
-            Savegame_MapMarkingSet(MapMarkFlag_OldTown_FineyStRightKeyArrow);
-            Savegame_MapMarkingSet(MapMarkFlag_OldTown_DogYardKeyLine);
-            Savegame_MapMarkingSet(MapMarkFlag_OldTown_EllroyStKeyCircle);
+            Savegame_EventFlagSet(EventFlag_MapMark_OldTown_FineyStRightKeyArrow);
+            Savegame_EventFlagSet(EventFlag_MapMark_OldTown_DogYardKeyLine);
+            Savegame_EventFlagSet(EventFlag_MapMark_OldTown_EllroyStKeyCircle);
             break;
         }
 }
@@ -1460,7 +1460,7 @@ void MapEvent_KGordonKeyUse(void) // 0x800EA894
     Map_MessageWithSfx(39, Sfx_UseKey, &sfxPos); // "Used the K. Gordon key."
 
     Savegame_EventFlagSet(EventFlag_M2S00_KGordonDoorOpen);
-    Savegame_MapMarkingSet(MapMarkFlag_OldTown_KGordonArrowsOnly);
+    Savegame_EventFlagSet(EventFlag_MapMark_OldTown_KGordonArrowsOnly);
 }
 
 void func_800EA960(void) // 0x800EA960
@@ -1552,10 +1552,10 @@ void func_800EA960(void) // 0x800EA960
             Savegame_EventFlagSet(EventFlag_165);
             Savegame_EventFlagSet(EventFlag_166);
 
-            if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_BotBridgeCross))
+            if (Savegame_EventFlagGet(EventFlag_MapMark_OldTown_BotBridgeCross))
             {
-                Savegame_MapMarkingSet(MapMarkFlag_OldTown_BotBridgeCorrection);
-                Savegame_MapMarkingSet(MapMarkFlag_OldTown_BotBridgeArrow);
+                Savegame_EventFlagSet(EventFlag_MapMark_OldTown_BotBridgeCorrection);
+                Savegame_EventFlagSet(EventFlag_MapMark_OldTown_BotBridgeArrow);
             }
 
             SysWork_StateStepIncrement(0);
@@ -1658,10 +1658,10 @@ void func_800EAD2C(void) // 0x800EAD2C
             Savegame_EventFlagSet(EventFlag_165);
             Savegame_EventFlagSet(EventFlag_166);
 
-            if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_BotBridgeCross))
+            if (Savegame_EventFlagGet(EventFlag_MapMark_OldTown_BotBridgeCross))
             {
-                Savegame_MapMarkingSet(MapMarkFlag_OldTown_BotBridgeCorrection);
-                Savegame_MapMarkingSet(MapMarkFlag_OldTown_BotBridgeArrow);
+                Savegame_EventFlagSet(EventFlag_MapMark_OldTown_BotBridgeCorrection);
+                Savegame_EventFlagSet(EventFlag_MapMark_OldTown_BotBridgeArrow);
             }
 
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
@@ -2114,13 +2114,13 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
                 flags |= 1 << 3;
             }
 
-            if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_BotBridgeCorrection))
+            if (Savegame_EventFlagGet(EventFlag_MapMark_OldTown_BotBridgeCorrection))
             {
-                Savegame_MapMarkingClear(MapMarkFlag_61);
+                Savegame_EventFlagClear(EventFlag_MapMark_61);
             }
             else
             {
-                Savegame_MapMarkingSet(MapMarkFlag_61);
+                Savegame_EventFlagSet(EventFlag_MapMark_61);
             }
             break;
 
@@ -2366,19 +2366,19 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
 
     }
 
-    if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_BradburyStLeftCross) &&
-        Savegame_MapMarkingGet(MapMarkFlag_OldTown_BachmanRdBotCross) &&
-        Savegame_MapMarkingGet(MapMarkFlag_OldTown_ElroyStBotCross))
+    if (Savegame_EventFlagGet(EventFlag_MapMark_OldTown_BradburyStLeftCross) &&
+        Savegame_EventFlagGet(EventFlag_MapMark_OldTown_BachmanRdBotCross) &&
+        Savegame_EventFlagGet(EventFlag_MapMark_OldTown_ElroyStBotCross))
     {
-        Savegame_MapMarkingSet(MapMarkFlag_OldTown_BotRightHugeComboCross);
+        Savegame_EventFlagSet(EventFlag_MapMark_OldTown_BotRightHugeComboCross);
     }
 
-    if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_BlochStLeftCross) &&
-        Savegame_MapMarkingGet(MapMarkFlag_OldTown_LevinStTopCross) &&
-        Savegame_MapMarkingGet(MapMarkFlag_OldTown_BlochStRightCross) &&
-        Savegame_MapMarkingGet(MapMarkFlag_OldTown_LevinStBotCross))
+    if (Savegame_EventFlagGet(EventFlag_MapMark_OldTown_BlochStLeftCross) &&
+        Savegame_EventFlagGet(EventFlag_MapMark_OldTown_LevinStTopCross) &&
+        Savegame_EventFlagGet(EventFlag_MapMark_OldTown_BlochStRightCross) &&
+        Savegame_EventFlagGet(EventFlag_MapMark_OldTown_LevinStBotCross))
     {
-        Savegame_MapMarkingSet(MapMarkFlag_OldTown_LevinBlochBigCombo);
+        Savegame_EventFlagSet(EventFlag_MapMark_OldTown_LevinBlochBigCombo);
     }
 
     func_800EE660();
