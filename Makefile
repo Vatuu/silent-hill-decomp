@@ -128,7 +128,6 @@ SILENT_ASSETS   := $(PYTHON) $(TOOLS_DIR)/silentassets/extract.py
 INSERT_OVLS     := $(PYTHON) $(TOOLS_DIR)/silentassets/insertovl.py
 GET_YAML_TARGET := $(PYTHON) $(TOOLS_DIR)/get_yaml_target.py
 GET_O_FILES     := $(PYTHON) $(TOOLS_DIR)/get_o_files.py
-PREBUILD        := $(TOOLS_DIR)/prebuild.sh
 POSTBUILD       := $(PYTHON) $(TOOLS_DIR)/postbuild.py
 COMPTEST        := $(TOOLS_DIR)/compilationTest.sh
 
@@ -158,9 +157,6 @@ DUMPSXISO_FLAGS     := -x "$(ROM_DIR)/$(GAME_VERSION)" -s "$(ROM_DIR)/$(GAME_VER
 MKPSXISO_FLAGS      := -y -q "$(ROM_DIR)/$(GAME_VERSION)/rebuild.xml"
 SILENT_ASSETS_FLAGS := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_SILENT)" -fh "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_HILL)" "$(ASSETS_DIR)/$(GAME_VERSION)"
 INSERT_OVLS_FLAGS   := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_SILENT)" -ftb "$(ASSETS_DIR)/$(GAME_VERSION)/filetable.c.inc" -b $(OUT_DIR) -xml "$(ROM_DIR)/$(GAME_VERSION)/layout.xml" -o $(ROM_DIR)
-
-# Targets that will run tools/prebuild.sh after splat has finished, before being built.
-TARGET_PREBUILD  := main bodyprog screens/stream
 
 ifeq ($(GAME_VERSION), USA)
 
@@ -752,7 +748,6 @@ $(BUILD_DIR)/%.bin.o: %.bin
 $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
 	@mkdir -p $(dir $@)
 	$(SPLAT) $(SPLAT_FLAGS) $<
-	$(if $(filter $*,$(TARGET_PREBUILD)),@-$(PREBUILD) $*,@true)
 
 ### Settings
 .SECONDARY:

@@ -64,16 +64,16 @@ segments:
       - [0x808, .rodata, fsqueue_3]
       - [0x814, pad]
       - [0x818, .rodata, fsqueue_2] # jtbl
-      - [0x830, lib, libspu, spu, .rdata]
-      - [0x880, lib, libetc, vsync, .rdata]
-      - [0x890, lib, libetc, intr, .rdata]
-      - [0x900, lib, libetc, intr_dma, .rdata]
-      - [0x930, lib, libcd, event, .rdata]
-      - [0x950, lib, libcd, sys, .rdata]
-      - [0x960, lib, libcd, bios, .rdata] # Has jtbl, bss pointers.
-      - [0xBC0, lib, libcd, cdread, .rdata]
-      - [0xC10, lib, libgpu, tmd, .rdata]
-      - [0xD50, lib, libgpu, sys, .rdata]
+      - [0x830, o, ../../lib/libspu/spu, .rdata]
+      - [0x880, o, ../../lib/libetc/vsync, .rdata]
+      - [0x890, o, ../../lib/libetc/intr, .rdata]
+      - [0x900, o, ../../lib/libetc/intr_dma, .rdata]
+      - [0x930, o, ../../lib/libcd/event, .rdata]
+      - [0x950, o, ../../lib/libcd/sys, .rdata]
+      - [0x960, o, ../../lib/libcd/bios, .rdata] # Has jtbl, bss pointers.
+      - [0xBC0, o, ../../lib/libcd/cdread, .rdata]
+      - [0xC10, o, ../../lib/libgpu/tmd, .rdata]
+      - [0xD50, o, ../../lib/libgpu/sys, .rdata]
 
       # .text section
       - [0xF70, c, main] # Main function.
@@ -85,64 +85,64 @@ segments:
       - [0x2778, c, memcpy] # Custom memcpy implementation.
       - [0x28B8, c, rng] # RNG functions.
       - [0x293C, c, memmove32] # memmove32
-      - [0x29BC, lib, libapi, a36] #EnterCriticalSection
-      - [0x29CC, lib, libapi, a37] #ExitCriticalSection
-      - [0x29DC, lib, libapi, a50] #open
-      - [0x29EC, lib, libapi, a52] #read
-      - [0x29FC, lib, libapi, a54] #close
-      - [0x2A0C, lib, libapi, a08] #OpenEvent
-      - [0x2A1C, lib, libapi, a12] #EnableEvent
-      - [0x2A2C, lib, libc, c21] #strcat
-      - [0x2A3C, lib, libc, c23] #strcmp
-      - [0x2A4C, lib, libc, c40] #bzero
-      - [0x2A5C, lib, libc, c43] #memset
-      - [0x2A6C, lib, libspu, s_i] # SpuInit
-      - [0x2A8C, lib, libspu, s_ini]
-      - [0x2BEC, lib, libspu, spu] # Has bss section: https://github.com/lab313ru/psx_psyq_signatures/blob/e9e46e7e133ef275a79bfce650924f98edb086bc/470/LIBSPU.LIB.json#L279
-      - [0x372C, lib, libapi, a07] #DeliverEvent
-      - [0x373C, lib, libc, c63] #printf
-      - [0x374C, lib, libspu, s_dcb]
+      - [0x29BC, o, ../../lib/libapi/a36] #EnterCriticalSection
+      - [0x29CC, o, ../../lib/libapi/a37] #ExitCriticalSection
+      - [0x29DC, o, ../../lib/libapi/a50] #open
+      - [0x29EC, o, ../../lib/libapi/a52] #read
+      - [0x29FC, o, ../../lib/libapi/a54] #close
+      - [0x2A0C, o, ../../lib/libapi/a08] #OpenEvent
+      - [0x2A1C, o, ../../lib/libapi/a12] #EnableEvent
+      - [0x2A2C, o, ../../lib/libc/c21] #strcat
+      - [0x2A3C, o, ../../lib/libc/c23] #strcmp
+      - [0x2A4C, o, ../../lib/libc/c40] #bzero
+      - [0x2A5C, o, ../../lib/libc/c43] #memset
+      - [0x2A6C, o, ../../lib/libspu/s_i] # SpuInit
+      - [0x2A8C, o, ../../lib/libspu/s_ini]
+      - [0x2BEC, o, ../../lib/libspu/spu] # Has bss section: https://github.com/lab313ru/psx_psyq_signatures/blob/e9e46e7e133ef275a79bfce650924f98edb086bc/470/LIBSPU.LIB.json#L279
+      - [0x372C, o, ../../lib/libapi/a07] #DeliverEvent
+      - [0x373C, o, ../../lib/libc/c63] #printf
+      - [0x374C, o, ../../lib/libspu/s_dcb]
       - [0x377C, asm, psyq/libsn/snmain] # entry point (psyq-obj-parser doesn't support it...)
-      - [0x38FC, lib, libapi, c57] #InitHeap
-      - [0x390C, lib, libetc, vsync] #VSync
-      - [0x3B1C, lib, libapi, a91] #ChangeClearPAD
-      - [0x3B2C, lib, libapi, l10] #ChangeClearRCnt
-      - [0x3B3C, lib, libc, a63] # puts from psyq 4.4?
-      - [0x3B5C, lib, libetc, intr] # Callback functions
-      - [0x421C, lib, libapi, c114] # _96_remove
-      - [0x423C, lib, libapi, a23] # ReturnFromException
-      - [0x424C, lib, libapi, a24] # ResetEntryInt
-      - [0x425C, lib, libapi, a25] # HookEntryInt
-      - [0x426C, lib, libc, c19] # setjmp
-      - [0x427C, lib, libetc, intr_vb] # startIntrVSync
-      - [0x439C, lib, libetc, intr_dma] # startIntrDMA
-      - [0x463C, lib, libetc, vmode] # Set/GetVideoMode
-      - [0x466C, lib, libcd, event] # CdInit
-      - [0x47BC, lib, libcd, sys] # CD related functions.
-      - [0x4F4C, lib, libcd, bios] # More CD functions, has bss StMode
-      - [0x66AC, lib, libcd, cdread] # Still CD.
-      - [0x707C, lib, libgpu, tmd]
-      - [0x88FC, lib, libgpu, sys]
-      - [0xB90C, lib, libapi, c73] # GPU_cw
+      - [0x38FC, o, ../../lib/libapi/c57] #InitHeap
+      - [0x390C, o, ../../lib/libetc/vsync] #VSync
+      - [0x3B1C, o, ../../lib/libapi/a91] #ChangeClearPAD
+      - [0x3B2C, o, ../../lib/libapi/l10] #ChangeClearRCnt
+      - [0x3B3C, o, ../../lib/libc/a63] # puts from psyq 4.4?
+      - [0x3B5C, o, ../../lib/libetc/intr] # Callback functions
+      - [0x421C, o, ../../lib/libapi/c114] # _96_remove
+      - [0x423C, o, ../../lib/libapi/a23] # ReturnFromException
+      - [0x424C, o, ../../lib/libapi/a24] # ResetEntryInt
+      - [0x425C, o, ../../lib/libapi/a25] # HookEntryInt
+      - [0x426C, o, ../../lib/libc/c19] # setjmp
+      - [0x427C, o, ../../lib/libetc/intr_vb] # startIntrVSync
+      - [0x439C, o, ../../lib/libetc/intr_dma] # startIntrDMA
+      - [0x463C, o, ../../lib/libetc/vmode] # Set/GetVideoMode
+      - [0x466C, o, ../../lib/libcd/event] # CdInit
+      - [0x47BC, o, ../../lib/libcd/sys] # CD related functions.
+      - [0x4F4C, o, ../../lib/libcd/bios] # More CD functions, has bss StMode
+      - [0x66AC, o, ../../lib/libcd/cdread] # Still CD.
+      - [0x707C, o, ../../lib/libgpu/tmd]
+      - [0x88FC, o, ../../lib/libgpu/sys]
+      - [0xB90C, o, ../../lib/libapi/c73] # GPU_cw
 
       # .data section
       - [0xB91C,  .data, fileinfo]
       - [0x11ADC, .data, main]
-      - [0x11B4C, lib, libspu, s_ini, .data]
-      - [0x11BCC, lib, libspu, spu, .data]
-      - [0x11C2C, lib, libspu, s_rmp0, .data]
-      - [0x11C2C, lib, libspu, s_m, .data]
+      - [0x11B4C, o, ../../lib/libspu/s_ini, .data]
+      - [0x11BCC, o, ../../lib/libspu/spu, .data]
+      - [0x11C2C, o, ../../lib/libspu/s_rmp0, .data]
+      - [0x11C2C, o, ../../lib/libspu/s_m, .data]
       - [0x11C6C, data, psyq/libsn/snmain]
-      - [0x11C90, lib, libetc, vsync, .data]
-      - [0x11CB0, lib, libetc, intr, .data]
-      - [0x11CB0, lib, libetc, intr_vb, .data]
-      - [0x12DE0, lib, libetc, intr_dma, .data]
-      - [0x12E10, lib, libetc, vmode, .data]
-      - [0x12E20, lib, libcd, event, .data]
-      - [0x12E30, lib, libcd, sys, .data]
-      - [0x12EB0, lib, libcd, bios, .data]
-      - [0x131D0, lib, libcd, cdread, .data]
-      - [0x131D0, lib, libgpu, sys, .data]
+      - [0x11C90, o, ../../lib/libetc/vsync, .data]
+      - [0x11CB0, o, ../../lib/libetc/intr, .data]
+      - [0x11CB0, o, ../../lib/libetc/intr_vb, .data]
+      - [0x12DE0, o, ../../lib/libetc/intr_dma, .data]
+      - [0x12E10, o, ../../lib/libetc/vmode, .data]
+      - [0x12E20, o, ../../lib/libcd/event, .data]
+      - [0x12E30, o, ../../lib/libcd/sys, .data]
+      - [0x12EB0, o, ../../lib/libcd/bios, .data]
+      - [0x131D0, o, ../../lib/libcd/cdread, .data]
+      - [0x131D0, o, ../../lib/libgpu/sys, .data]
 
       # .sdata section
       - [0x133B0, .sdata, fileinfo]
@@ -158,13 +158,13 @@ segments:
       # .bss section
       - [0x13498, .bss, fsqueue_1]
       - [0x138C0, .bss, fsmem]
-      - [0x139A0, lib, libspu, spu, .bss]
+      - [0x139A0, o, ../../lib/libspu/spu, .bss]
       - [0x139B4, pad]
-      - [0x139B8, lib, libcd, event, .bss]
-      - [0x139B8, lib, libcd, sys, .bss]
-      - [0x139B8, lib, libcd, bios, .bss]
-      - [0x139B8, lib, libcd, cdread, .bss]
+      - [0x139B8, o, ../../lib/libcd/event, .bss]
+      - [0x139B8, o, ../../lib/libcd/sys, .bss]
+      - [0x139B8, o, ../../lib/libcd/bios, .bss]
+      - [0x139B8, o, ../../lib/libcd/cdread, .bss]
       - [0x139EC, pad]
-      - [0x139F0, lib, libgpu, tmd, .bss]
-      - [0x13A10, lib, libgpu, sys, .bss] # Resized sys.o .bss section to 0x5F0.
+      - [0x139F0, o, ../../lib/libgpu/tmd, .bss]
+      - [0x13A10, o, ../../lib/libgpu/sys, .bss] # Resized sys.o .bss section to 0x5F0.
   - [0x14000]

@@ -157,7 +157,7 @@ def parse_yaml_for_comments(yaml_file):
             # Clean up segment parts for section detection
             clean_parts = [part.strip() for part in parts[1:]]
 
-            if clean_parts[0] == 'lib':
+            if clean_parts[0] == 'lib' or clean_parts[0] == 'o':
                 section_type = clean_parts[-1]
                 section_name = None
                 for name, types in SECTION_TYPES.items():

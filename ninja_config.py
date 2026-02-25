@@ -179,7 +179,6 @@ if sys.platform == "linux" or sys.platform == "linux2":
     CC272             = f"{TOOLS_DIR}/gcc-2.7.2-cdk/cc1"
     OBJDIFF           = f"{OBJDIFF_DIR}/objdiff"
     OBJDIFF_GENSCRIPT = f"{OBJDIFF_DIR}/objdiff_generate.py"
-    PREBUILD          = f"{TOOLS_DIR}/prebuild.sh"
     POSTBUILD         = f"{PYTHON} {TOOLS_DIR}/postbuild.py"
     DUMPSXISO         = f"{PSXISO_DIR}/dumpsxiso"
     ICONV             = f"iconv"
@@ -194,7 +193,6 @@ elif sys.platform == "win32":
     CC272             = f"{TOOLS_DIR}/win-build/gcc-2.7.2-win/cc1psx.exe"
     OBJDIFF           = f"{OBJDIFF_DIR}\\objdiff.exe"
     OBJDIFF_GENSCRIPT = f"{OBJDIFF_DIR}\\objdiff_generate.py"
-    PREBUILD          = f"cmd.exe /c {TOOLS_DIR}\\prebuild.bat"
     POSTBUILD         = f"{PYTHON} {TOOLS_DIR}\\postbuild.py"
     DUMPSXISO         = f"{PSXISO_DIR}\\dumpsxiso.exe"
     ICONV             = f"{TOOLS_DIR}\\win-build\\iconv\\iconv.bat"
@@ -470,16 +468,7 @@ def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_c
     objdiffConfigRequirements = []
     
     # Build all the objects
-    for split_config in split_entries:
-        if game_version_idx == 0:
-            match split_config.SPLIT_BASENAME:
-                case "main":
-                    os.system(f"{PREBUILD} main")
-                case "BODYPROG.BIN":
-                    os.system(f"{PREBUILD} bodyprog")
-                case "STREAM.BIN":
-                    os.system(f"{PREBUILD} stream")
-        
+    for split_config in split_entries:        
         for split_entry in split_config.SPLIT_ENTRIES:
             for entry in split_entry:
                 seg = entry.segment
@@ -649,25 +638,8 @@ def ninja_append(split_entries, skip_checksum: bool, non_matching: bool, game_ve
                     checksumBuildRequirements[i] = f"{fixedStr}.fix"
                 else:
                     checksumBuildRequirements[i] = fixedStr
-                
-                if game_version_idx == 0:
-                    if "SLUS" in fixedStr:
-                        os.system(f"{PREBUILD} main")
-                    elif "BODYPROG.BIN" in fixedStr:
-                        os.system(f"{PREBUILD} bodyprog")
-                    elif "STREAM.BIN" in fixedStr:
-                        os.system(f"{PREBUILD} stream")
     
-    for split_config in split_entries:
-        if objdiff_mode != True and game_version_idx == 0:
-            match split_config.SPLIT_BASENAME:
-                case "main":
-                    os.system(f"{PREBUILD} main")
-                case "BODYPROG.BIN":
-                    os.system(f"{PREBUILD} bodyprog")
-                case "STREAM.BIN":
-                    os.system(f"{PREBUILD} stream")
-                
+    for split_config in split_entries:                
         for split_entry in split_config.SPLIT_ENTRIES:
             for entry in split_entry:
                 seg = entry.segment

@@ -56,25 +56,25 @@ segments:
     subsegments:
       # .rodata section
       - [0x0, rodata]
-      - [0x4, lib, libpress, libpress, .rdata]
+      - [0x4, o, ../../lib/libpress/libpress, .rdata]
 
       # .text section
       - [0x54, c, stream]
-      - [0xECC, lib, libds, dscb]
-      - [0xF2C, lib, libpress, libpress]
-      - [0x15BC, lib, libpress, vlc]
+      - [0xECC, o, ../../lib/libds/dscb]
+      - [0xF2C, o, ../../lib/libpress/libpress]
+      - [0x15BC, o, ../../lib/libpress/vlc]
 
       # .data section
       - [0x193C, .data, stream]
-      - [0x195C, lib, libpress, libpress, .data]
-      - [0x1AAC, lib, libpress, vlc, .data]
-      - [0x1ADC, lib, libpress, table, .data]
+      - [0x195C, o, ../../lib/libpress/libpress, .data]
+      - [0x1AAC, o, ../../lib/libpress/vlc, .data]
+      - [0x1ADC, o, ../../lib/libpress/table, .data]
       - [0x12ADC, data, stream_801F50DC]
 
       # .bss section
       - [0x12AE0, .bss, stream]
       - [0x12AE4, pad, garbagebss/stream_801F50E4] # Contains random padding data.
-      - [0x12AE8, lib, libds, dscb, .bss]
+      - [0x12AE8, o, ../../lib/libds/dscb, .bss]
 
   # Random garbage data at end, overlaps into .bss causing issues, define as seperate segment
   - name: footer_data
