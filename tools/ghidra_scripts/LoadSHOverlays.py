@@ -1,3 +1,4 @@
+# @runtime jython
 #@author emoose
 #@category PSX
 #@keybinding
@@ -252,7 +253,10 @@ def loadSplatSymbolsFile(sym_path):
 
 
 def loadSymbolsFromConfigs(assets_path):
-    configs_path = os.path.normpath(os.path.join(assets_path, "..", "configs"))
+    region = askChoice("Select region to load symbols from", "Pick one:", ["USA", "EUR", "JAP0", "JAP1", "JAP2", "None"], "USA")
+    if region == "None":
+        return
+    configs_path = os.path.normpath(os.path.join(assets_path, "..", "configs", region))
 
     pattern = re.compile(r"^sym\..*\.txt$")  # regex for filenames like sym.X.txt
 
