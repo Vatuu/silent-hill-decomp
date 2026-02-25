@@ -4,7 +4,7 @@
 #include "maps/particle.h"
 #include "maps/characters/player.h"
 
-extern s_AnimInfo      HARRY_M2S03_ANIM_INFOS[];
+extern s_AnimInfo HARRY_M2S03_ANIM_INFOS[];
 
 void (*g_LoadScreenFuncs[])() = {
     NULL,
@@ -14,7 +14,7 @@ void (*g_LoadScreenFuncs[])() = {
 };
 
 s_MapPoint2d MAP_POINTS[] = {
-    {}
+#include "map_points.h"
 };
 
 void (*g_MapEventFuncs[])() = {

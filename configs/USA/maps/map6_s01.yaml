@@ -13,13 +13,13 @@ options:
 
   ld_script_path: linkers/USA/maps/map6_s01.ld
 
-  find_file_boundaries: False
+  find_file_boundaries: false
   gp_value: 0x80022BB0
   global_vram_start: 0x80010000
   global_vram_end: 0x80200000
 
-  o_as_suffix: False
-  use_legacy_include_asm: False
+  o_as_suffix: false
+  use_legacy_include_asm: false
 
   asm_function_macro: glabel
   asm_jtbl_label_macro: jlabel
@@ -61,7 +61,6 @@ segments:
       - [0x1190, .rodata, Chara_Dahlia]
       - [0x1264, rodata]
       - [0x1268, .rodata, map6_s01_2]
-      
       - [0x25E8, c, map6_s01_header]
       - [0x25E8, c, map6_s01_events_data]
       - [0x25E8, c, map6_s01_anim_info]
@@ -75,6 +74,7 @@ segments:
       # .data section
       - [0x9EF4, .data, map6_s01_anim_info]
       - [0x9FC4, data]
+      - [0xa7d8, .data, map6_s01_header]
       - [0xA8C0, .data, map6_s01_2]
       - [0xAA2C, .data, map6_s01_events_data]
       - [0xAAF8, data]

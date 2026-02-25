@@ -13,6 +13,66 @@
 
 extern s_AnimInfo HARRY_M7S02_ANIM_INFOS[];
 
+void (*g_LoadScreenFuncs[])() = {
+    NULL,
+    Gfx_LoadingScreen_PlayerRun,
+    Gfx_LoadingScreen_BackgroundTexture,
+    func_800DA1A8
+};
+
+s_MapPoint2d MAP_POINTS[] = {
+#include "map_points.h"
+};
+
+void (*g_MapEventFuncs[])() = {
+    MapEvent_DoorJammed,
+    MapEvent_DoorLocked,
+    MapEvent_DoorUnlocked,
+    MapEvent_CommonItemTake,
+    func_800DB498,
+    func_800DB52C,
+    MapEvent_KeyOfBethorUse,
+    MapEvent_KeyOfAratronUse,
+    func_800DB738,
+    func_800DBB34,
+    MapEvent_AnkhTake,
+    func_800DC14C,
+    func_800DC778,
+    func_800DC94C,
+    func_800DC954,
+    func_800DCD00,
+    func_800DD2D4,
+    func_800DD9E8,
+    func_800DDEC8,
+    func_800DF1E8,
+    func_800DE1FC,
+    MapEvent_DiskOfOuroborosTake,
+    func_800DF21C,
+    func_800DFA54,
+    MapEvent_ScrewdriverTake,
+    func_800DFAAC,
+    func_800DFAE4,
+    MapEvent_AmuletOfSolomonTake,
+    func_800DA248,
+    func_800DAA4C,
+    func_800DFB48,
+    func_800DFDDC,
+    MapEvent_CrestOfMercuryTake,
+    MapEvent_RingOfContractTake,
+    MapEvent_CameraTake,
+    func_800E0CB4,
+    func_800E0FF0,
+    func_800E12E4,
+    func_800E1398,
+    sharedFunc_800DB60C_7_s01,
+    func_800E1DAC,
+    func_800E1FF4,
+    sharedFunc_800D15F0_3_s01,
+    func_800E2DC0,
+    func_800E2DEC,
+    func_800E32E0
+};
+
 const s_MapOverlayHeader g_MapOverlayHeader = {
     .mapInfo_0                        = &MAP_INFOS[MapType_ER2],
     .getMapRoomIdxFunc_4              = Map_RoomIdxGet,

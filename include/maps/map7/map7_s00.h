@@ -61,6 +61,8 @@ void func_800D0AC4(void);
 
 void func_800D0B64(void);
 
+void func_800D1604(void);
+
 void Map_WorldObjectsInit(void);
 
 void Map_WorldObjectsUpdate(void);

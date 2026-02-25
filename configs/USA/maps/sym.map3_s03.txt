@@ -158,6 +158,10 @@ BLOODSUCKER_ANIM_INFOS        = 0x800D5ABC; // type:AnimInfo
 MAP_ROOM_IDXS                 = 0x800D5C9C; // type:u8
 sharedData_800D1D14_3_s02     = 0x800D5CDC; // type:u8 size:8
 sharedData_800D1D1C_3_s02     = 0x800D5CE4; // type:u16 size:0x78
+
+//----------------------------------------------------------------------
+//--- PA: 0x00C7E4   VA: 0x800D5D5C   subsegment: .data, map3_s03_header
+//----------------------------------------------------------------------
 g_LoadScreenFuncs             = 0x800D5D5C;
 MAP_POINTS                    = 0x800D5D6C; // type:MapPoint2d
 g_MapEventFuncs               = 0x800D6390;

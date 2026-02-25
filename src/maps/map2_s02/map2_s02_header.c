@@ -16,6 +16,19 @@ void (*g_LoadScreenFuncs[])() = {
     func_800E9C24
 };
 
+s_MapPoint2d MAP_POINTS[] = {
+#include "map_points.h"
+};
+
+void (*g_MapEventFuncs[])() = {
+    MapEvent_DoorJammed,
+    MapEvent_DoorLocked,
+    func_800E9D54,
+    func_800E9E10,
+    func_800E9EAC,
+    func_800E9FDC
+};
+
 const s_MapOverlayHeader g_MapOverlayHeader = {
     .mapInfo_0                        = &MAP_INFOS[MapType_SPR],
     .getMapRoomIdxFunc_4              = Map_RoomIdxGet,

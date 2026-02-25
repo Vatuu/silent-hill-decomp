@@ -221,6 +221,8 @@ void func_800DD9E8(void);
 
 void func_800DDEC8(void);
 
+void func_800DE1FC(void);
+
 void func_800DF1E8(void);
 
 /** @brief Handles the Disk of Ouroboros item pickup event. */
@@ -269,6 +271,8 @@ void func_800E1FF4(void);
 void func_800E2DC0(void);
 
 void func_800E2DEC(void);
+
+void func_800E32E0(void);
 
 void Map_WorldObjectsInit(void);
 

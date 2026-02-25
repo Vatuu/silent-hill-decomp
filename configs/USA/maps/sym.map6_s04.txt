@@ -225,6 +225,10 @@ sharedData_800EB740_6_s04           = 0x800EB740; // type:u8 size:2
 sharedData_800EB748_6_s04           = 0x800EB748; // type:u8
 sharedData_800EB74A_6_s04           = 0x800EB74A; // type:u8
 sharedData_800EB750_6_s04           = 0x800EB750; // type:VECTOR3 size:0xC
+
+//----------------------------------------------------------------------
+//--- PA: 0x0221E4   VA: 0x800EB75C   subsegment: .data, map6_s04_header
+//----------------------------------------------------------------------
 g_LoadScreenFuncs                   = 0x800EB75C;
 MAP_POINTS                          = 0x800EB76C;
 g_MapEventFuncs                     = 0x800EB7F0;

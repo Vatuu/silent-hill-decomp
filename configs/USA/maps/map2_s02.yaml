@@ -13,13 +13,13 @@ options:
 
   ld_script_path: linkers/USA/maps/map2_s02.ld
 
-  find_file_boundaries: False
+  find_file_boundaries: false
   gp_value: 0x80022BB0
   global_vram_start: 0x80010000
   global_vram_end: 0x80200000
 
-  o_as_suffix: False
-  use_legacy_include_asm: False
+  o_as_suffix: false
+  use_legacy_include_asm: false
 
   asm_function_macro: glabel
   asm_jtbl_label_macro: jlabel
@@ -68,8 +68,7 @@ segments:
       # .data section
       - [0x21524, .data, map2_s02_anim_info]
       - [0x21734, data]
-      - [0x23ECC, .data, map2_s02_header]
-      - [0x23EDC, data] # MAP_POINTS
+      - [0x23ecc, .data, map2_s02_header]
       - [0x2411C, .data, map2_s02]
       - [0x24164, .data, map2_s02_events_data]
       - [0x2435C, data]

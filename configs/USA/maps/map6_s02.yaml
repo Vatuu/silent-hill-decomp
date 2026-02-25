@@ -13,13 +13,13 @@ options:
 
   ld_script_path: linkers/USA/maps/map6_s02.ld
 
-  find_file_boundaries: False
+  find_file_boundaries: false
   gp_value: 0x80022BB0
   global_vram_start: 0x80010000
   global_vram_end: 0x80200000
 
-  o_as_suffix: False
-  use_legacy_include_asm: False
+  o_as_suffix: false
+  use_legacy_include_asm: false
 
   asm_function_macro: glabel
   asm_jtbl_label_macro: jlabel
@@ -73,6 +73,7 @@ segments:
       # .data section
       - [0x9EA4, .data, map6_s02_anim_info]
       - [0xA154, data]
+      - [0xa43c, .data, map6_s02_header]
       - [0xA4D4, .data, map6_s02_2]
       - [0xA538, .data, map6_s02_events_data]
       - [0xA5C8, data]

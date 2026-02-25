@@ -56,6 +56,8 @@ extern u16             D_800EFC80[];
 
 void func_800CD818(void);
 
+void func_800EB874(void);
+
 /** @brief Handles a First Aid Kit, Health Drink, Handgun Bullets, or Rifle Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
 

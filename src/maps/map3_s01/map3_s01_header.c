@@ -7,6 +7,35 @@
 
 extern s_AnimInfo HARRY_M3S01_ANIM_INFOS[];
 
+void (*g_LoadScreenFuncs[])() = {
+    NULL,
+    Gfx_LoadingScreen_PlayerRun,
+    Gfx_LoadingScreen_BackgroundTexture,
+    func_800D138C
+};
+
+s_MapPoint2d MAP_POINTS[] = {
+#include "map_points.h"
+};
+
+void (*g_MapEventFuncs[])() = {
+    MapEvent_DoorJammed,
+    MapEvent_DoorLocked,
+    func_800D14BC,
+    func_800D1500,
+    func_800D1524,
+    sharedFunc_800D15F0_3_s01,
+    MapEvent_UnknownLiquidInteract,
+    MapEvent_UseBottleOnLiquid,
+    MapEvent_PlasticBottleTake,
+    MapEvent_MapTake0,
+    MapEvent_MapTake1,
+    func_800D279C,
+    MapEvent_Generator0,
+    func_800D2A88,
+    func_800D29A4
+};
+
 const s_MapOverlayHeader g_MapOverlayHeader = {
     .mapInfo_0                        = &MAP_INFOS[MapType_HP],
     .getMapRoomIdxFunc_4              = Map_RoomIdxGet,

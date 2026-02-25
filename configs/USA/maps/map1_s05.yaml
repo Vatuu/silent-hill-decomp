@@ -13,13 +13,13 @@ options:
 
   ld_script_path: linkers/USA/maps/map1_s05.ld
 
-  find_file_boundaries: False
+  find_file_boundaries: false
   gp_value: 0x80022BB0
   global_vram_start: 0x80010000
   global_vram_end: 0x80200000
 
-  o_as_suffix: False
-  use_legacy_include_asm: False
+  o_as_suffix: false
+  use_legacy_include_asm: false
 
   asm_function_macro: glabel
   asm_jtbl_label_macro: jlabel
@@ -61,13 +61,14 @@ segments:
       - [0x1558, c, map1_s05_header]
       - [0x1558, c, map1_s05_events_data]
       - [0x1558, c, map1_s05_anim_info]
-      
       # .text section
       - [0x1558, c, map1_s05]
 
       # .data section
       - [0xC10C, .data, map1_s05_anim_info]
       - [0xC27C, data]
+      - [0xc6cc, .data, map1_s05_header]
+      - [0xC704, data]
       - [0xC704, .data, map1_s05_events_data]
       - [0xC734, .data, map1_s05]
       - [0xC770, data]

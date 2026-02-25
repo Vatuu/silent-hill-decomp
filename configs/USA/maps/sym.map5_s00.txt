@@ -172,6 +172,10 @@ sharedData_800E1180_1_s02        = 0x800DA104;
 sharedData_800E1194_1_s02        = 0x800DA118;
 sharedData_800E11A8_1_s02        = 0x800DA12C;
 sharedData_800E11BC_1_s02        = 0x800DA140;
+
+//----------------------------------------------------------------------
+//--- PA: 0x01102C   VA: 0x800DA5A4   subsegment: .data, map5_s00_header
+//----------------------------------------------------------------------
 g_LoadScreenFuncs                = 0x800DA5A4;
 MAP_POINTS                       = 0x800DA5B4;
 g_MapEventFuncs                  = 0x800DA7DC;

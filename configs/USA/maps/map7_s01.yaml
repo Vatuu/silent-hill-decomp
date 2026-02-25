@@ -13,13 +13,13 @@ options:
 
   ld_script_path: linkers/USA/maps/map7_s01.ld
 
-  find_file_boundaries: False
+  find_file_boundaries: false
   gp_value: 0x80022BB0
   global_vram_start: 0x80010000
   global_vram_end: 0x80200000
 
-  o_as_suffix: False
-  use_legacy_include_asm: False
+  o_as_suffix: false
+  use_legacy_include_asm: false
 
   asm_function_macro: glabel
   asm_jtbl_label_macro: jlabel
@@ -65,7 +65,6 @@ segments:
       - [0x342C, c, map7_s01_header]
       - [0x342C, c, map7_s01_events_data]
       - [0x342C, c, map7_s01_anim_info]
-      
       # .text section
       - [0x342C, c, map7_s01]
       - [0xB440, c, Chara_GhostChildAlessa]
@@ -76,6 +75,7 @@ segments:
       # .data section
       - [0x159D0, .data, map7_s01_anim_info]
       - [0x15CA0, data]
+      - [0x16b44, .data, map7_s01_header]
       - [0x17468, .data, map7_s01_2]
       - [0x175EC, .data, map7_s01_events_data]
       - [0x17F70, data]

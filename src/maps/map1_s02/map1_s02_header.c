@@ -8,6 +8,42 @@
 
 extern s_AnimInfo HARRY_M1S02_ANIM_INFOS[];
 
+void (*g_LoadScreenFuncs[])() = {
+    NULL,
+    Gfx_LoadingScreen_PlayerRun,
+    Gfx_LoadingScreen_BackgroundTexture,
+    func_800DA018
+};
+
+s_MapPoint2d MAP_POINTS[] = {
+#include "map_points.h"
+};
+
+void (*g_MapEventFuncs[])() = {
+    MapEvent_DoorJammed,
+    MapEvent_DoorLocked,
+    MapEvent_DoorUnlocked,
+    func_800DA200,
+    MapEvent_LobbyKeyUse,
+    func_800DA384,
+    func_800DA9D4,
+    func_800DAA00,
+    func_800DA8F8,
+    MapEvent_GameTrialOver,
+    func_800DAD2C,
+    func_800DB058,
+    func_800DB310,
+    func_800DB33C,
+    func_800DB368,
+    func_800DBB7C,
+    func_800DBF88,
+    func_800DBFC8,
+    func_800DC1E0,
+    func_800DCF00,
+    func_800DD208,
+    func_800DD420
+};
+
 const s_MapOverlayHeader g_MapOverlayHeader = {
     .mapInfo_0                        = &MAP_INFOS[MapType_SU],
     .getMapRoomIdxFunc_4              = Map_RoomIdxGet,

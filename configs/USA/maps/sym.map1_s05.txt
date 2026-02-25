@@ -131,6 +131,10 @@ sharedData_800D5AAF_1_s05     = 0x800D5AAF;
 sharedData_800D5AB0_1_s05     = 0x800D5AB0;
 sharedData_800D5BE0_1_s05     = 0x800D5BE0;
 MAP_ROOM_IDXS                 = 0x800D5C04; // type:u8
+
+//----------------------------------------------------------------------
+//--- PA: 0x00C6CC   VA: 0x800D5C44   subsegment: .data, map1_s05_header
+//----------------------------------------------------------------------
 g_LoadScreenFuncs             = 0x800D5C44;
 MAP_POINTS                    = 0x800D5C54;
 g_MapEventFuncs               = 0x800D5C6C;

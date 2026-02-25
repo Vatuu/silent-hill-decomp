@@ -86,8 +86,12 @@ extern u8 D_800D3C74[8];
 
 extern s_FsImageDesc D_800D3B44[5];
 
+void func_800CED6C(void);
+
 // TODO: Check callers, `chara` might always be player instead.
 void func_800CED74(s_SubCharacter* chara, bool arg1);
+
+void func_800CF0B0(void);
 
 void func_800CF0B8(void);
 

@@ -227,6 +227,10 @@ sharedData_800D2F28_7_s00           = 0x800E0058;
 sharedData_800D2F74_7_s00           = 0x800E00A4;
 sharedData_800D2F7C_7_s00           = 0x800E00AC;
 sharedData_800D2F84_7_s00           = 0x800E00B4;
+
+//----------------------------------------------------------------------
+//--- PA: 0x016B44   VA: 0x800E00BC   subsegment: .data, map7_s01_header
+//----------------------------------------------------------------------
 g_LoadScreenFuncs                   = 0x800E00BC;
 MAP_POINTS                          = 0x800E00CC;
 g_MapEventFuncs                     = 0x800E0924;

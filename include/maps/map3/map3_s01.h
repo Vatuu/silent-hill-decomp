@@ -37,6 +37,8 @@ extern VECTOR3 D_800D4CE4; // Used by `func_800D2E54` only. For some reason it's
 extern u8 g_GeneratorMakeNoise; /** `bool` */
 extern u8 D_800D8734;
 
+void func_800D138C(void);
+
 void func_800D14BC(void);
 
 void func_800D1500(void);

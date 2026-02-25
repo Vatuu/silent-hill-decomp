@@ -14,6 +14,43 @@ void (*g_LoadScreenFuncs[])() = {
     func_800E7A1C
 };
 
+s_MapPoint2d MAP_POINTS[] = {
+#include "map_points.h"
+};
+
+void (*g_MapEventFuncs[])() = {
+    MapEvent_DoorJammed,
+    MapEvent_DoorLocked,
+    func_800E7B74,
+    func_800E7D54,
+    MapEvent_AtWaterWorks,
+    func_800E816C,
+    func_800E8198,
+    MapEvent_SteelPipeTake,
+    MapEvent_CutsceneExitCafe,
+    MapEvent_CherylsSketchbook,
+    func_800E9470,
+    MapEvent_DoghouseNote,
+    MapEvent_DoghouseKeyTake,
+    func_800E9A0C,
+    func_800E9A74,
+    func_800E9CB4,
+    MapEvent_HouseKeyUse,
+    func_800E9DD8,
+    MapEvent_DoorOfEclipseEnter,
+    func_800EA6E0,
+    MapEvent_KGordonKeyUse,
+    func_800EA960,
+    func_800EAD2C,
+    func_800EB174,
+    func_800EB3F4,
+    MapEvent_MapTake,
+    func_800EB758,
+    func_800EB79C,
+    func_800EB7E0,
+    func_800EB090
+};
+
 const s_MapOverlayHeader g_MapOverlayHeader = {
     .mapInfo_0                        = &MAP_INFOS[MapType_THR],
     .getMapRoomIdxFunc_4              = Map_RoomIdxGet,

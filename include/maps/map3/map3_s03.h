@@ -58,6 +58,8 @@ extern s_WorldObjectDescNoRot g_WorldObject_Blood2;
 extern s_WorldObjectModel     g_CommonWorldObjects[6];
 extern s_WorldObjectPose      g_CommonWorldObjectPoses[5];
 
+void func_800D1514(void);
+
 void func_800D151C(void);
 
 void func_800D1774(void);

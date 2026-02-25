@@ -369,6 +369,10 @@ sharedData_800ED2D4_2_s02           = 0x800EFB4C;
 sharedData_800ED314_2_s02           = 0x800EFB8C;
 MAP_ROOM_IDXS                       = 0x800EFC3C; // type:u8
 sharedData_800ED430_2_s02           = 0x800EFC68;
+
+//----------------------------------------------------------------------
+//--- PA: 0x026734   VA: 0x800EFCAC   subsegment: .data, map5_s01_header
+//----------------------------------------------------------------------
 g_LoadScreenFuncs                   = 0x800EFCAC;
 MAP_POINTS                          = 0x800EFCBC; // type:MapPoint2d
 g_MapEventFuncs                     = 0x800EFED8;

@@ -13,13 +13,13 @@ options:
 
   ld_script_path: linkers/USA/maps/map5_s02.ld
 
-  find_file_boundaries: False
+  find_file_boundaries: false
   gp_value: 0x80022BB0
   global_vram_start: 0x80010000
   global_vram_end: 0x80200000
 
-  o_as_suffix: False
-  use_legacy_include_asm: False
+  o_as_suffix: false
+  use_legacy_include_asm: false
 
   asm_function_macro: glabel
   asm_jtbl_label_macro: jlabel
@@ -64,7 +64,6 @@ segments:
       - [0x2154, c, map5_s02_header]
       - [0x2154, c, map5_s02_events_data]
       - [0x2154, c, map5_s02_anim_info]
-      
       # .text section
       - [0x2154, c, map5_s02]
       - [0x9930, c, Chara_Kaufmann]
@@ -73,6 +72,7 @@ segments:
       # .data section
       - [0xD9C0, .data, map5_s02_anim_info]
       - [0xDC30, data]
+      - [0xfc18, .data, map5_s02_header]
       - [0xFD3C, .data, map5_s02_2]
       - [0xFE08, .data, map5_s02_events_data]
       - [0xFF04, data]

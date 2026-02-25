@@ -138,6 +138,10 @@ sharedData_800EFCFC_6_s00           = 0x800D3950; // type:u8 size:8
 sharedData_800EFD04_6_s00           = 0x800D3958; // type:s32
 sharedData_800EFD08_6_s00           = 0x800D395C;
 sharedData_800EFD34_6_s00           = 0x800D3988;
+
+//----------------------------------------------------------------------
+//--- PA: 0x00A43C   VA: 0x800D39B4   subsegment: .data, map6_s02_header
+//----------------------------------------------------------------------
 g_LoadScreenFuncs                   = 0x800D39B4;
 MAP_POINTS                          = 0x800D39C4; // type:MapPoint2d
 g_MapEventFuncs                     = 0x800D3A30;

@@ -19,6 +19,10 @@ extern u8 D_800F13AC;
 
 extern u16 D_800ED8B0[16];
 
+void func_800EA208(void);
+
+void func_800EA338(void);
+
 void Map_WorldObjectsInit(void);
 
 void Map_WorldObjectsUpdate(void);

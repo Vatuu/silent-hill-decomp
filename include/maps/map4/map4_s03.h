@@ -448,6 +448,8 @@ void func_800D5E30(s_SubCharacter* twinfeeler, GsCOORDINATE2* coords);
 
 void Twinfeeler_Update(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
+void func_800D654C(void);
+
 /** @brief Handles a First Aid Kit or Rifle Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
 

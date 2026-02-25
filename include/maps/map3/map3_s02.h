@@ -21,6 +21,10 @@ extern s32 D_800D1FEC;
 
 extern u8 D_800D3154;
 
+void func_800D017C(void);
+
+void func_800D02AC(void);
+
 void func_800D02B4(void);
 
 void func_800D03FC(void);

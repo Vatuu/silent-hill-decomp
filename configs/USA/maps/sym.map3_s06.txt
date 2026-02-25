@@ -158,6 +158,10 @@ sharedData_800DF1F8_0_s00           = 0x800D2020; // type:s16
 sharedData_800DF1FA_0_s00           = 0x800D2022; // type:s16
 MAP_ROOM_IDXS                       = 0x800D2024; // type:u8
 sharedData_800D21E8_3_s00           = 0x800D2044; // type:u16
+
+//----------------------------------------------------------------------
+//--- PA: 0x008B44   VA: 0x800D20BC   subsegment: .data, map3_s06_header
+//----------------------------------------------------------------------
 g_LoadScreenFuncs                   = 0x800D20BC;
 MAP_POINTS                          = 0x800D20CC; // type:MapPoint2d
 g_MapEventFuncs                     = 0x800D239C;

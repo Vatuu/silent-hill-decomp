@@ -59,6 +59,8 @@ extern s_WorldObjectPose  g_CommonWorldObjectPoses[4]; // 0x800D949C
 
 void func_800D45B4(s32 arg0);
 
+void func_800D48F0(void);
+
 /** @brief Handles a Health Drink or Rifle Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
 
