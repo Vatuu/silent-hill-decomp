@@ -44,8 +44,8 @@
 #define FS_BUFFER_21     (void*)0x801E5600
 #define FS_BUFFER_10     (void*)0x801EA600
 #define FS_BUFFER_9      (void*)0x801EC600
-#define FS_BUFFER_22     (u_int*)0x801A0200
-#define FS_BUFFER_23     (u_int*)0x801A2200
+#define FS_BUFFER_22     (void*)0x8019F8F8
+
 #define FS_BUFFER_24     (void*)0x801A0600
 #define FS_BUFFER_25     (void*)0x80167600
 #define FS_BUFFER_26     (void*)0x8018C600

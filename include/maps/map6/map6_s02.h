@@ -16,6 +16,8 @@
 
 #include "maps/shared.h"
 
+#define GET_PTR(p, i, j, k) (&(&((u32*)(p))[(k) << 8])[(i)])[(j) * 16]
+
 typedef struct
 {
     s16 x;
@@ -23,6 +25,24 @@ typedef struct
     u8  w[2];
     u8  h[2];
 } s_800D3C4C;
+
+typedef struct
+{
+    u32 field_0[8][16][16];
+    u32 field_2000[16][16];
+} s_8019F8F8_908;
+
+typedef struct
+{
+    DVECTOR field_0[17][17];
+    s32     field_484[17][17];
+} s_8019F8F8_0;
+
+typedef struct
+{
+    s_8019F8F8_0   field_0;
+    s_8019F8F8_908 field_908;
+} s_8019F8F8;
 
 extern u16 D_800D3B40;
 

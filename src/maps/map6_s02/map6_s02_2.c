@@ -1,3 +1,7 @@
+#include "inline_no_dmpsx.h"
+
+#include <psyq/gtemac.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
@@ -1431,14 +1435,18 @@ void func_800D2170(s32 arg0) // 0x800D2170
     s32       rng0;
     s32       i;
     s32       j;
-    s32       k;
-    u32*      rowPtr;
-    u_int*    s6 = FS_BUFFER_22;
-    u_int*    s3 = FS_BUFFER_23;
+    u32*            ptr2;
+    s_8019F8F8_908* ptr;
+    s_8019F8F8*     base;
+
+    base = FS_BUFFER_22;
+
+    ptr  = &base->field_908;
+    ptr2 = ptr->field_2000;
 
     if (!arg0)
     {
-        k = 0;
+        i = 0;
 
         func_8008D438();
         Fs_QueueStartReadTim(FILE_TIM_LHEFFECT_TIM, FS_BUFFER_1, &D_800CAB90);
@@ -1451,23 +1459,23 @@ void func_800D2170(s32 arg0) // 0x800D2170
     }
     else
     {
-        memset(s6, 0, 0x2400);
+        memset(ptr, 0, sizeof(s_8019F8F8_908));
         StoreImage(&D_800CAB98, FS_BUFFER_1);
         DrawSync(0);
 
         buffers[0] = FS_BUFFER_1;
         buffers[1] = FS_BUFFER_10;
-        k = 2;
+        i          = 2;
     }
 
-    for (; k < (ARRAY_SIZE(D_800D3C74) - 1); k++)
+    for (; i < (ARRAY_SIZE(D_800D3C74) - 1); i++)
     {
-        func_800D1EB8(D_800D3C74[k + 1], buffers[k & 1], buffers[(k & 0x1) == 0]);
+        func_800D1EB8(D_800D3C74[i + 1], buffers[i & 1], buffers[(i & 0x1) == 0]);
     }
 
-    for (k = 0, rowPtr = s3; k < 16; k++, rowPtr++)
+    for (i = 0; i < 16; i++)
     {
-        for (i = 0, j = 0; i < 16; j++, i++)
+        for (j = 0; j < 16; j++)
         {
             rng0 = Rng_Rand16();
             rng15 = rng0 & 0xF;
@@ -1475,20 +1483,312 @@ void func_800D2170(s32 arg0) // 0x800D2170
             if (rng15 < 8)
             {
                 temp_a0 = (rng0 >> 4) & 0x7FFFF;
-                (&(&s6[(rng15) << 8])[k])[j * 16] = temp_a0;
+
+                GET_PTR(ptr, i, j, rng15) = temp_a0;
 
                 if (rng15 > 0)
                 {
-                    (&(&s6[(rng15 - 1) << 8])[k])[j * 16] = temp_a0 + 0x80000;
+                    GET_PTR(ptr, i, j, rng15 - 1) = temp_a0 + 0x80000;
                 }
             }
 
-            rowPtr[j * 16] = 0x100000;
+            GET_PTR(ptr2, i, j, 0) = 0x100000;
         }
     }
 }
 
-INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800D2364);
+void func_800D2364(void) // 0x800D2364
+{
+    typedef struct
+    {
+        SPRT*     field_0;
+        TILE*     field_4;
+        DR_TPAGE* field_8;
+        DR_STP*   field_C;
+        s8        unk_10[8];
+        VECTOR3   field_18;
+        MATRIX    field_24;
+        SVECTOR   field_44[4];
+        s32       field_64;
+        s32       field_68;
+        u8        field_6C[17][17];
+        u8        field_18D[17][17];
+    } s_func_800D2364;
+
+    s_8019F8F8_908*  sp10;
+    u32*             sp14;
+    PACKET*          packet;
+    s32              k;
+    s32              temp_a2;
+    s32              temp_s0;
+    s32              temp_v0_4;
+    s32              j;
+    s32              i;
+    s_8019F8F8_0*    var_t2_2;
+    u8               temp_v1_17;
+    POLY_GT4*        poly;
+    s32              temp;
+    s_func_800D2364* ptr;
+    s32              otIdx;
+    s_8019F8F8*      base;
+
+    base = FS_BUFFER_22;
+
+    sp10     = &base->field_908;
+    sp14     = sp10->field_2000;
+    var_t2_2 = &base->field_0;
+
+    ptr = PSX_SCRATCH;
+
+    ptr->field_18.vx = Q12(3.75f);
+    ptr->field_18.vy = Q12(0.0f);
+    ptr->field_18.vz = Q12(-1.25f);
+
+    func_80049C2C(&ptr->field_24, 0x3C000, 0, -0x14000);
+
+    gte_SetRotMatrix(&ptr->field_24);
+    gte_SetTransMatrix(&ptr->field_24);
+    gte_ReadGeomScreen(&ptr->field_64);
+
+    ptr->field_68 = g_ActiveBufferIdx;
+    temp          = Q12_MULT_PRECISE((g_GameWork.config_0.optBrightness_22 * 8) + 4, Screen_FadeInProgressGet());
+
+    ptr->field_4 = GsOUT_PACKET_P;
+
+    otIdx = 3;
+
+    for (j = 0; j < 4; j++)
+    {
+        i = j & 1;
+
+        setRGBC0(ptr->field_4, temp, temp, temp, 0x62);
+        setXY0Fast(ptr->field_4, (i << 8) - 0xA0, 0xFF90);
+        setWH(ptr->field_4, i ? 0x40 : 0x100, 0xE0);
+
+        addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[otIdx], ptr->field_4, 3);
+        ptr->field_4++;
+
+        ptr->field_8 = ptr->field_4;
+
+        setDrawTPage(ptr->field_8, 0, 0, getTPage(2, j >= 2 ? 2 : 1, ((ptr->field_68 << 4) + (i << 2)) << 6, (((ptr->field_68 << 4) >> 4) & 1) << 8));
+        AddPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[otIdx], ptr->field_8);
+
+        ptr->field_8++;
+        ptr->field_4 = ptr->field_8;
+    }
+
+    ptr->field_0 = ptr->field_4;
+
+    if (Savegame_EventFlagGet(EventFlag_412))
+    {
+        ptr->field_68 ^= 1;
+    }
+
+    for (i = 0; i < 2; i++)
+    {
+        setRGBC0(ptr->field_0, 0x70, 0x70, 0x70, 0x66);
+        setXY0Fast(ptr->field_0, (i << 8) - 0xA0, 0xFF90);
+        setUV0(ptr->field_0, 0, (ptr->field_68 == 0) << 5);
+        setWH(ptr->field_0, i ? 0x40 : 0x100, 0xE0);
+
+        addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[otIdx], ptr->field_0, 4);
+        ptr->field_0++;
+
+        ptr->field_8 = ptr->field_0;
+
+        setDrawTPage(ptr->field_8, 0, 0, getTPage(2, 0, ((ptr->field_68 << 4) + (i << 2)) << 6, (((ptr->field_68 << 4) >> 4) & 1) << 8));
+
+        AddPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[otIdx], ptr->field_8);
+
+        ptr->field_8++;
+        ptr->field_0 = ptr->field_8;
+    }
+
+    ptr->field_C = ptr->field_0;
+
+    SetDrawStp(ptr->field_C, 1);
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ORDERING_TABLE_SIZE - 1], ptr->field_C);
+    ptr->field_C++;
+
+    SetDrawStp(ptr->field_C, 0);
+    addPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[0], ptr->field_C);
+
+    ptr->field_C++;
+    packet = ptr->field_C;
+
+    for (i = 0; i < 17; i++)
+    {
+        for (j = 0; j < 17; j++)
+        {
+            ptr->field_18D[j][i] = 0;
+        }
+    }
+
+    for (k = 0; k < 8; k++)
+    {
+        for (i = 1; i < 16; i++)
+        {
+            for (j = 1; j < 16; j++)
+            {
+                temp_s0 = GET_PTR(sp10, j, i, k);
+
+                if (temp_s0 > 0)
+                {
+                    temp_v0_4 = Q12_MULT_PRECISE(g_DeltaTime, GET_PTR(sp14, i, j, 0));
+                    ptr->field_18D[j][i]++;
+
+                    if (temp_s0 > 0x80000)
+                    {
+                        temp_s0 += temp_v0_4;
+                        if (temp_s0 > 0x100000)
+                        {
+                            GET_PTR(sp10, j, i, k) = 0;
+                            ptr->field_6C[j][i]    = 0;
+                        }
+                        else
+                        {
+                            GET_PTR(sp10, j, i, k) = temp_s0;
+                            ptr->field_6C[j][i]    = -(temp_s0 >> 0xC);
+                        }
+                    }
+                    else
+                    {
+                        temp_s0 += temp_v0_4;
+                        if (k < 7 && temp_s0 > 0x80000)
+                        {
+                            if (Rng_Rand16() & 0xF)
+                            {
+                                GET_PTR(sp10, j, i, k + 1)
+                                ++;
+                            }
+                            ptr->field_6C[j][i] = -(temp_s0 >> 0xC);
+                        }
+                        else
+                        {
+                            ptr->field_6C[j][i] = temp_s0 >> 0xC;
+                        }
+
+                        GET_PTR(sp10, j, i, k) = temp_s0;
+                    }
+                }
+                else
+                {
+                    ptr->field_6C[j][i] = 0;
+                }
+            }
+
+            ptr->field_6C[16][i] = 0;
+            ptr->field_6C[0][i]  = 0;
+        }
+
+        for (j = 0; j < 17; j++)
+        {
+            ptr->field_6C[j][16] = 0;
+            ptr->field_6C[j][0]  = 0;
+        }
+
+        for (i = 0; i < 287; i += 3)
+        {
+            for (j = 0; j < 3; j++)
+            {
+                Math_SetSVectorFastSum(&ptr->field_44[j], (((i + j) / 17) << 7) - 0x400, -8 * k,
+                                       0x400 - (((i + j) % 17) << 7));
+            }
+
+            gte_ldv3c(&ptr->field_44[0]);
+            gte_rtpt();
+            gte_stsxy3c(&var_t2_2->field_0[i / 17][i % 17]);
+            gte_stsz3c(&var_t2_2->field_484[i / 17][i % 17]);
+        }
+
+        for (i = 287; i < 289; i++)
+        {
+            Math_SetSVectorFastSum(&ptr->field_44[0], ((i / 17) << 7) - 0x400, -8 * k,
+                                   0x400 - ((i % 17) << 7));
+
+            gte_ldv0(&ptr->field_44[0]);
+            gte_rtps();
+            gte_stsxy(&var_t2_2->field_0[i / 17][i % 17]);
+            gte_stsz(&var_t2_2->field_484[i / 17][i % 17]);
+        }
+
+        for (i = 0; i < 16; i++)
+        {
+            for (j = 0; j < 16; j++)
+            {
+                temp_a2 = (var_t2_2->field_484[i][j] + var_t2_2->field_484[i + 1][j] +
+                           var_t2_2->field_484[i][j + 1] + var_t2_2->field_484[i + 1][j + 1]) >>
+                          2;
+
+                if (temp_a2 < 0x41 || (temp_a2 - 0x40) >> 3 >= ORDERING_TABLE_SIZE)
+                {
+                    continue;
+                }
+
+                if (ABS(var_t2_2->field_0[i][j].vx) > 200 && ABS(var_t2_2->field_0[i + 1][j].vx) > 200 &&
+                    ABS(var_t2_2->field_0[i][j + 1].vx) > 200 && ABS(var_t2_2->field_0[i + 1][j + 1].vx) > 200)
+                {
+                    continue;
+                }
+
+                if (ABS(var_t2_2->field_0[i][j].vy) > 160 && ABS(var_t2_2->field_0[i + 1][j].vy) > 160 &&
+                    ABS(var_t2_2->field_0[i][j + 1].vy) > 160 && ABS(var_t2_2->field_0[i + 1][j + 1].vy) > 160)
+                {
+                    continue;
+                }
+
+                if (ptr->field_6C[i][j] < 4 && ptr->field_6C[i + 1][j] < 4 &&
+                    ptr->field_6C[i][j + 1] < 4 && ptr->field_6C[i + 1][j + 1] < 4)
+                {
+                    continue;
+                }
+
+                poly = packet;
+
+                setPolyGT4(poly);
+                setSemiTrans(poly, 1);
+
+                setXY0Fast(poly, var_t2_2->field_0[i][j].vx, var_t2_2->field_0[i][j].vy);
+                setXY1Fast(poly, var_t2_2->field_0[i + 1][j].vx, var_t2_2->field_0[i + 1][j].vy);
+                setXY2Fast(poly, var_t2_2->field_0[i][j + 1].vx, var_t2_2->field_0[i][j + 1].vy);
+                setXY3Fast(poly, var_t2_2->field_0[i + 1][j + 1].vx, var_t2_2->field_0[i + 1][j + 1].vy);
+
+                setRGB0(poly, ptr->field_6C[i][j], ptr->field_6C[i][j], ptr->field_6C[i][j]);
+                setRGB1(poly, ptr->field_6C[i + 1][j], ptr->field_6C[i + 1][j], ptr->field_6C[i + 1][j]);
+                setRGB2(poly, ptr->field_6C[i][j + 1], ptr->field_6C[i][j + 1], ptr->field_6C[i][j + 1]);
+                setRGB3(poly, ptr->field_6C[i + 1][j + 1], ptr->field_6C[i + 1][j + 1], ptr->field_6C[i + 1][j + 1]);
+
+                setUV0AndClutSum(poly, i << 4, j << 4, 0x030E);
+                temp_v1_17 = D_800D3C74[k];
+                setUV1AndTPageSum(poly, 0xF + (i << 4), (j << 4), getTPage(0, 1, temp_v1_17 << 6, (((temp_v1_17 >> 4) & (1 << 0)) << 8)));
+                setUV2Sum(poly, i << 4, 0xF + 0x10 * j);
+                setUV3Sum(poly, 0xF + i * 16, 0xF + 0x10 * j);
+
+                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(temp_a2 - 0x40) >> 3], poly);
+                poly++;
+                packet = poly;
+            }
+        }
+    }
+
+    GsOUT_PACKET_P = packet;
+
+    for (i = 1; i < 16; i++)
+    {
+        for (j = 1; j < 16; j++)
+        {
+            if (ptr->field_18D[j][i] == 0)
+            {
+                if ((Rng_Rand16() & 0x7FFF) <= g_DeltaTime)
+                {
+                    GET_PTR(sp10, j, i, 0)
+                    ++;
+                    GET_PTR(sp14, j, i, 0) = (Rng_Rand16() & 0x7FFFF) + 0x100000;
+                }
+            }
+        }
+    }
+}
 
 void func_800D32D0(void) // 0x800D32D0
 {
