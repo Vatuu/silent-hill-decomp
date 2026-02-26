@@ -458,4 +458,6 @@ void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4); // As
 
 void func_800E7944(u32 arg0);
 
+void func_800DE658(s_func_800DE274* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+
 #endif

@@ -218,7 +218,120 @@ void func_800DE62C(void) // 0x800DE62C
     memset(UNK_FS_BUFFER_6->field_4101, 0, ARRAY_SIZE(UNK_FS_BUFFER_6->field_4101));
 }
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE658);
+void func_800DE658(s_func_800DE274* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800DE658
+{
+    s32 temp_a3;
+    s32 temp_t9;
+    s32 temp_v1;
+    s32 var_a0_2;
+    s32 j;
+    s32 var_t0;
+    s32 var_t2;
+    s32 i;
+    s32 var_t7;
+    s32 var_t8;
+    u8* ptr1;
+    s32 idx;
+    u8* ptr0;
+    s32 temp_s2;
+    s32 temp_s0;
+    s32 temp;
+
+    ptr0 = UNK_FS_BUFFER_6->field_4101;
+
+    arg1 = arg1 + 0xA6;
+    arg2 = arg2 + 0x70;
+
+    if (arg3 == 0)
+    {
+        return;
+    }
+
+    arg3   = Q12_MULT(arg3, arg4);
+    var_t0 = arg2 - arg3;
+
+    if (var_t0 > 0xE0)
+    {
+        return;
+    }
+
+    if (var_t0 < 0)
+    {
+        var_a0_2 = -var_t0;
+        var_t2   = (var_a0_2 * 0x40) / arg3;
+        var_t2   = FP_TO(var_t2, Q12_SHIFT);
+        var_t0   = 0;
+    }
+    else
+    {
+        var_t2 = ((-var_t0 % 12) << 6) / arg3;
+        var_t2 = FP_TO(var_t2, Q12_SHIFT);
+    }
+
+    temp   = var_t0 / 12;
+    var_t0 = arg2 + arg3;
+
+    if (var_t0 < 0)
+    {
+        return;
+    }
+
+    temp_t9 = MIN(var_t0, 0xE0) / 12;
+    var_t0  = arg1 - arg3;
+
+    if (var_t0 > 0x14C)
+    {
+        return;
+    }
+
+    if (var_t0 < 0)
+    {
+        var_a0_2 = -var_t0;
+        var_t7   = (var_a0_2 * 0x40) / arg3;
+        var_t7   = FP_TO(var_t7, Q12_SHIFT);
+        var_t0   = 0;
+    }
+    else
+    {
+        var_t7 = ((var_t0 / 12 * 0xC - var_t0) * 0x40) / arg3;
+        var_t7 = FP_TO(var_t7, Q12_SHIFT);
+    }
+
+    temp_s2 = var_t0 / 12;
+    var_t0  = arg1 + arg3;
+
+    if (var_t0 < 0)
+    {
+        return;
+    }
+
+    var_a0_2 = MIN(var_t0, 0x14C);
+    temp_a3  = 0x300000 / arg3;
+    var_t8   = var_t2;
+    temp_v1  = var_a0_2 / 12;
+    temp_s0  = temp_a3;
+
+    for (i = temp; i <= temp_t9; i++)
+    {
+        var_t0  = MAX(FP_FROM(var_t8, Q12_SHIFT), 0);
+        var_t8 += temp_s0;
+        ptr1    = &arg0->field_0[var_t0 * 0x81];
+        var_t2  = var_t7;
+
+        for (j = temp_s2; j <= temp_v1; j++)
+        {
+            idx       = j + i * 0x1C;
+            arg1      = ptr0[idx];
+            var_t0    = MAX(FP_FROM(var_t2, Q12_SHIFT), 0);
+            var_a0_2  = ptr1[var_t0];
+            var_a0_2  = Q12_MULT(var_a0_2, arg4);
+            var_t2   += temp_a3;
+            arg1     += var_a0_2;
+            var_a0_2  = MIN(arg1, 0xFF);
+            ptr0[idx] = var_a0_2;
+        }
+    }
+}
 
 void func_800DE8F0(MATRIX* mat, SVECTOR* arg1, SVECTOR3* result) // 0x800DE8F0
 {
