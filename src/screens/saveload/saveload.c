@@ -3,7 +3,8 @@
 #include <psyq/libetc.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
 #include "screens/saveload.h"
@@ -1639,10 +1640,10 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
             return;
         }
 
-        Gfx_DebugStringPosition(152, 194);
-        Gfx_DebugStringDraw("hyper blaster");
-        Gfx_DebugStringPosition(172, 202);
-        Gfx_DebugStringDraw("power up");
+        Text_Debug_PositionSet(152, 194);
+        Text_Debug_Draw("hyper blaster");
+        Text_Debug_PositionSet(172, 202);
+        Text_Debug_Draw("power up");
 
         for (i = 0; i < 2; i++)
         {
@@ -2161,7 +2162,7 @@ void SaveScreen_BackgroundAndInfoDraw(void) // 0x801E709C
     SaveScreen_SlotStrAndBottomRectDraw();
 
     // Draws background image.
-    Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
+    Screen_BackgroundImgDraw(&g_ItemInspectionImg);
 }
 
 void SaveScreen_ScreenDraw(void) // 0x801E70C8

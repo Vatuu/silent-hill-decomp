@@ -431,7 +431,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EBEE0
             flags |= 1 << 1;
         }
 
-        Gfx_DebugStringPosition(30, 30);
+        Text_Debug_PositionSet(30, 30);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))

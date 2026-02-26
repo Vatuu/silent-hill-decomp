@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_GFX_TEXT_DRAW_H
-#define _BODYPROG_GFX_TEXT_DRAW_H
+#ifndef _BODYPROG_TEXT_DRAW_H
+#define _BODYPROG_TEXT_DRAW_H
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `BODYPROG.BIN` identified to be related
@@ -31,15 +31,18 @@ typedef enum _StringColorId
 // GLOBALS
 // ========
 
-extern DVECTOR g_Gfx_DebugStringPosition0; // 0x800B5C20
-
-extern DVECTOR g_Gfx_DebugStringPosition1; // 0x800B5C24
-
 /** String position. */
 extern DVECTOR g_StringPosition; // 0x800C38A8
 
 /** String X position as `s32`. It's unclear why there are two. */
 extern s32 g_StringPositionX1; // 0x800C38AC
+
+// Used in string parsing.
+typedef struct
+{
+    s8 field_0;
+    s8 positionIdx_1;
+} s_800C38B0;
 
 extern s_800C38B0 D_800C38B0;
 
@@ -55,6 +58,12 @@ extern s32 g_MapMsg_WidthTable[12];
 extern GsSPRITE D_800C38F8;
 
 extern s16 D_800C391C;
+
+extern s16 pad_bss_800C391E;
+
+extern s32 D_800C3920;
+
+extern s32 pad_bss_800C3924;
 
 // ==========
 // FUNCTIONS
@@ -100,18 +109,5 @@ void func_8004B76C(char* str, bool useFixedWidth);
 void Gfx_StringDrawInt(s32 widthMin, s32 strLength);
 
 void func_8004BB10(void);
-
-void Gfx_DebugStringPosition(s16 x, s16 y);
-
-/** Draws debug strings using 8x8 glyphs from `FONT8.TIM`. Valid `char` range: `[42, 95]` (`*` to `_`). */
-void Gfx_DebugStringDraw(char* str);
-
-char* Math_IntegerToString(s32 widthMin, s32 val);
-
-#if VERSION_DATE <= VERSION_DATE_PROTO_981216
-void Gfx_DebugQ12Print(s32 offsetX, s32 fracDigits, q19_12 val);
-#endif
-
-void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 #endif

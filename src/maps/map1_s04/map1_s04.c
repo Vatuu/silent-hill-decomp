@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/text/text_draw.h"
 #include "bodyprog/sound_system.h"
 #include "main/rng.h"
 #include "maps/map1/map1_s04.h"
@@ -155,26 +155,26 @@ void func_800CCA2C(void) // 0x800CCA2C
                 }
             }
 
-            Gfx_DebugStringPosition(50, 50);
+            Text_Debug_PositionSet(50, 50);
 
 #if VERSION_DATE <= VERSION_DATE_PROTO_981216
             // Code seen in 98-12-16 build.
-            Gfx_DebugStringDraw("VS 0:");
-            Gfx_DebugStringDraw(Math_IntegerToString(3, D_800CD768));
-            Gfx_DebugStringDraw("\n");
-            Gfx_DebugStringDraw("VS 1:");
-            Gfx_DebugStringDraw(Math_IntegerToString(3, D_800CD76C));
-            Gfx_DebugStringDraw("\n");
-            Gfx_DebugStringDraw("SDST:");
-            Gfx_DebugStringDraw(Math_IntegerToString(3, Sd_AudioStreamingCheck()));
-            Gfx_DebugStringDraw("\n");
+            Text_Debug_Draw("VS 0:");
+            Text_Debug_Draw(Text_Debug_IntToStringConversion(3, D_800CD768));
+            Text_Debug_Draw("\n");
+            Text_Debug_Draw("VS 1:");
+            Text_Debug_Draw(Text_Debug_IntToStringConversion(3, D_800CD76C));
+            Text_Debug_Draw("\n");
+            Text_Debug_Draw("SDST:");
+            Text_Debug_Draw(Text_Debug_IntToStringConversion(3, Sd_AudioStreamingCheck()));
+            Text_Debug_Draw("\n");
 
             if (D_800CD774 != 2)
             {
-                Gfx_DebugStringDraw("TIME:");
+                Text_Debug_Draw("TIME:");
                 // 98-12-16 calls into a `8002BCAC` func which is missing in retail. That func then calls `func_800321EC`.
                 Gfx_DebugQ12Print(6, 2, D_800CD770);
-                Gfx_DebugStringDraw("\n");
+                Text_Debug_Draw("\n");
             }
 #endif
 

@@ -8,19 +8,26 @@
 #include "main/fsqueue.h"
 #include "bodyprog/memcard.h"
 
-s_MemCard_SaveHeader g_MemCard_BasicSaveInfo1[MEMCARD_FILE_COUNT_MAX];
+// ========================================
+// STATIC VARIABLES
+// ========================================
 
-s_MemCard_SaveHeader g_MemCard_BasicSaveInfo2[MEMCARD_FILE_COUNT_MAX];
+static s_MemCard_SaveHeader g_MemCard_BasicSaveInfo1[MEMCARD_FILE_COUNT_MAX];
+static s_MemCard_SaveHeader g_MemCard_BasicSaveInfo2[MEMCARD_FILE_COUNT_MAX];
+static s_MemCard_SaveHeader g_MemCard_BasicSaveInfo3[MEMCARD_FILE_COUNT_MAX];
 
-s_MemCard_SaveHeader g_MemCard_BasicSaveInfo3[MEMCARD_FILE_COUNT_MAX];
+// ========================================
+// GLOBAL VARIABLES
+// ========================================
 
-bool g_MemCard_AvailibityStatus;
-
-s32 pad_bss_800B5484;
-
-s_MemCard_Work g_MemCard_Work;
-
+bool               g_MemCard_AvailibityStatus;
+s32                pad_bss_800B5484;
+s_MemCard_Work     g_MemCard_Work;
 s_MemCard_SaveWork g_MemCard_SaveWork;
+
+// ========================================
+// INLINE FUNCTIONS
+// ========================================
 
 static inline void MemCard_DirectoryFileClear(s32 idx)
 {

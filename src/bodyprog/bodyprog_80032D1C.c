@@ -1,7 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/text/text_draw.h"
 
 void func_80032CE8(void) // 0x80032CE8
 {

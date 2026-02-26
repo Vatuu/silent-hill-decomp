@@ -4,8 +4,10 @@
 #include <psyq/libetc.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/screen_draw.h"
-#include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/text/text_draw.h"
+#include "bodyprog/text/text_debug_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound_system.h"
@@ -256,7 +258,7 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
     Options_ExtraOptionsMenu_ConfigDraw();
     Options_ExtraOptionsMenu_SelectionHighlightDraw();
     Options_Menu_VignetteDraw();
-    Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
+    Screen_BackgroundImgDraw(&g_ItemInspectionImg);
 
     if (g_GameWork.gameStateStep_598[0] != OptionsMenuState_ExtraOptions)
     {
@@ -464,7 +466,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
     Options_MainOptionsMenu_ConfigDraw();
     Options_MainOptionsMenu_SelectionHighlightDraw();
     Options_Menu_VignetteDraw();
-    Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
+    Screen_BackgroundImgDraw(&g_ItemInspectionImg);
     Options_MainOptionsMenu_BgmVolumeBarDraw();
     Options_MainOptionsMenu_SfxVolumeBarDraw();
 
@@ -1802,11 +1804,11 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
     // Draw graphics.
     if (g_GameWork.gameStatePrev_590 == GameState_MainMenu)
     {
-        Gfx_BackgroundSpriteDraw(&g_BrightnessScreenImg0);
+        Screen_BackgroundImgDraw(&g_BrightnessScreenImg0);
     }
     else
     {
-        Gfx_BackgroundSpriteDraw(&g_BrightnessScreenImg1);
+        Screen_BackgroundImgDraw(&g_BrightnessScreenImg1);
     }
 
     Options_BrightnessMenu_LinesDraw(g_GameWork.config_0.optBrightness_22);
@@ -2498,8 +2500,8 @@ void Options_ControllerMenu_EntriesDraw(bool isOnRightPane, s32 presetsEntryIdx,
     for (i = 0, contConfig = (u16*)&g_GameWorkPtr->config_0.controllerConfig_0; i < (u32)InputAction_Count; i++, contConfig++)
     {
         // Draw action string.
-        Gfx_DebugStringPosition(96, strYPos);
-        Gfx_DebugStringDraw(CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS[i]);
+        Text_Debug_PositionSet(96, strYPos);
+        Text_Debug_Draw(CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS[i]);
 
         // Draw button icon.
         if (i != boundActionIdx)

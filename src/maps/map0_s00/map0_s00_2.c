@@ -76,8 +76,8 @@ void Gfx_LoadingScreen_StageString(void) // 0x800D95D4
 {
     ScreenFade_Start(false, true, false);
 
-    Gfx_DebugStringPosition(100, 100);
-    Gfx_DebugStringDraw("STAGE 0-0");
+    Text_Debug_PositionSet(100, 100);
+    Text_Debug_Draw("STAGE 0-0");
 }
 
 const char* MAP_MESSAGES[] = {

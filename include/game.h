@@ -1829,7 +1829,7 @@ typedef struct _SysWork
     s32             timer_1C;
     s32             timer_20;
     s32             timer_24;
-    q19_12          field_28; // Multi-purpose? Used as alpha to fade between images in `Gfx_BackgroundSpritesTransition`.
+    q19_12          field_28; // Multi-purpose? Used as alpha to fade between images in `Screen_BackgroundImgTransition`.
     q19_12          timer_2C; // Cutscene message timer?
     s32             field_30;
     s8              unk_34[4]; // Padding?
@@ -1903,18 +1903,7 @@ extern s_Savegame* const       g_SavegamePtr;
 extern s_ControllerData* const g_Controller0;
 extern s_ControllerData* const g_Controller1;
 
-extern s32  g_ActiveBufferIdx;
-extern GsOT g_OrderingTable0[2];
-extern GsOT g_OrderingTable1[2];
-extern GsOT g_OrderingTable2[2];
-
-/** Actual delta time since the previous tick. Unlike `g_DeltaTime`, this value is never overridden by demos or game code. Mostly seems used by UI code. */
-extern q19_12 g_DeltaTimeRaw;
-
 extern u32 g_MapEventParam;
-
-extern s32 g_IntervalVBlanks;
-extern s32 g_PrevVBlanks;
 
 /** @brief Sets `sysState` in `g_SysWork` for the next tick.
  *

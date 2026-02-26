@@ -487,7 +487,7 @@ void func_800DAD2C(void) // 0x800DAD2C
             }
 
         case 8:
-            Gfx_BackgroundSpritesTransition(&g_ItemInspectionImg, &D_800A9A04, D_800E1FD0);
+            Screen_BackgroundImgTransition(&g_ItemInspectionImg, &D_800A9A04, D_800E1FD0);
 
             D_800E1FD0 += Q12(0.0313f);
             if (D_800E1FD0 > Q12(1.0f))

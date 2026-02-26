@@ -650,11 +650,11 @@ void func_800D0500(void) // 0x800D0500
 
             if (D_800D3C98 - FP_TO(FP_FROM(var_v0, Q12_SHIFT), Q12_SHIFT) > Q12_ANGLE(180.0f))
             {
-                Gfx_BackgroundSpriteDraw_2(&D_800D3B44[1]);
+                Screen_BackgroundImgDrawAlt(&D_800D3B44[1]);
             }
             else
             {
-                Gfx_BackgroundSpriteDraw_2(&D_800D3B44[0]);
+                Screen_BackgroundImgDrawAlt(&D_800D3B44[0]);
             }
 
             temp_v0 = D_800D3C9C - 3;
@@ -680,11 +680,11 @@ void func_800D0500(void) // 0x800D0500
 
             if (D_800D3C98 - FP_TO(FP_FROM(var_v0_2, Q12_SHIFT), Q12_SHIFT) > Q12_ANGLE(180.0f))
             {
-                Gfx_BackgroundSpriteDraw_2(&D_800D3B44[1]);
+                Screen_BackgroundImgDrawAlt(&D_800D3B44[1]);
             }
             else
             {
-                Gfx_BackgroundSpriteDraw_2(&D_800D3B44[0]);
+                Screen_BackgroundImgDrawAlt(&D_800D3B44[0]);
             }
 
             var_v1 = D_800D3C9C + 3;
@@ -741,7 +741,7 @@ void func_800D0500(void) // 0x800D0500
             }
 
             Gfx_MapMsg_Draw(18);
-            Gfx_BackgroundSpriteDraw_2(&D_800D3B44[2]);
+            Screen_BackgroundImgDrawAlt(&D_800D3B44[2]);
             break;
 
         case 12:
@@ -764,7 +764,7 @@ void func_800D0500(void) // 0x800D0500
                 SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);
             }
 
-            Gfx_BackgroundSpriteDraw_2(&D_800D3B44[3]);
+            Screen_BackgroundImgDrawAlt(&D_800D3B44[3]);
 
             D_800D3C98 += g_DeltaTime;
             if (D_800D3C98 % Q12(0.2f) > Q12(0.1f))
@@ -817,7 +817,7 @@ void func_800D0500(void) // 0x800D0500
             {
                 SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);
             }
-            Gfx_BackgroundSpriteDraw_2(D_800D3B44);
+            Screen_BackgroundImgDrawAlt(D_800D3B44);
             break;
 
         case 22:
@@ -830,7 +830,7 @@ void func_800D0500(void) // 0x800D0500
             SysWork_StateStepIncrement(0);
 
         case 24:
-            Gfx_BackgroundSpriteDraw_2(&D_800D3B44[1]);
+            Screen_BackgroundImgDrawAlt(&D_800D3B44[1]);
             switch (FP_FROM(D_800D3C98, Q12_SHIFT))
             {
                 case 0:
@@ -885,7 +885,7 @@ void func_800D0500(void) // 0x800D0500
             break;
 
         default:
-            Gfx_BackgroundSpriteDraw_2(&D_800D3B44[1]);
+            Screen_BackgroundImgDrawAlt(&D_800D3B44[1]);
 
             if (D_800D3C9E >= 0)
             {

@@ -1149,7 +1149,7 @@ void func_800DC954(void) // 0x800DC954
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Gfx_BackgroundSpritesTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.field_28);
+            Screen_BackgroundImgTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.field_28);
 
             g_SysWork.field_28 += Q12(0.0625f);
             if (g_SysWork.field_28 > Q12(1.0f))
@@ -2172,13 +2172,13 @@ void MapEvent_ScrewdriverTake(void) // 0x800DFA80
 
 void func_800DFAAC(void) // 0x800DFAAC
 {
-    g_BackgroundColor = 104;
+    g_Screen_BackgroundImgIntensity = 104;
     MapMsg_DisplayWithTexture(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 101);
 }
 
 void func_800DFAE4(void) // 0x800DFAE4
 {
-    g_BackgroundColor = 104;
+    g_Screen_BackgroundImgIntensity = 104;
     MapMsg_DisplayWithTexture(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 102);
 }
 
@@ -2189,7 +2189,7 @@ void MapEvent_AmuletOfSolomonTake(void) // 0x800DFB1C
 
 void func_800DFB48(void) // 0x800DFB48
 {
-    g_BackgroundColor = 0x48;
+    g_Screen_BackgroundImgIntensity = 0x48;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -2737,7 +2737,7 @@ void func_800E0FF0(void) // 0x800E0FF0
 {
     if (Savegame_EventFlagGet(EventFlag_486) && Savegame_EventFlagGet(EventFlag_549))
     {
-        g_BackgroundColor = 120;
+        g_Screen_BackgroundImgIntensity = 120;
 
         switch (g_SysWork.sysStateStep_C[0])
         {
@@ -2806,7 +2806,7 @@ void func_800E0FF0(void) // 0x800E0FF0
         }
         else
         {
-            g_BackgroundColor = 112;
+            g_Screen_BackgroundImgIntensity = 112;
             MapMsg_DisplayWithTexture(FILE_TIM_ELCWIRE0_TIM, 0, 0, 110);
         }
     }
@@ -2947,7 +2947,7 @@ void func_800E1DAC(void) // 0x800E1DAC
             break;
 
         case 5:
-            g_BackgroundColor = 48;
+            g_Screen_BackgroundImgIntensity = 48;
 
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 16, 0, 0, 0, false);
@@ -2958,21 +2958,21 @@ void func_800E1DAC(void) // 0x800E1DAC
             SysWork_StateStepIncrement(0);
 
         case 7:
-            g_BackgroundColor = 48;
+            g_Screen_BackgroundImgIntensity = 48;
 
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 17, 0, 0, 0, false);
             break;
 
         case 8:
-            g_BackgroundColor = 48;
+            g_Screen_BackgroundImgIntensity = 48;
 
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false);
             break;
 
         case 9:
-            g_BackgroundColor = 48;
+            g_Screen_BackgroundImgIntensity = 48;
 
             func_800862F8(2, 0, false);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
@@ -3012,7 +3012,7 @@ void func_800E2DEC(void) // 0x800E2DEC
     VECTOR3 playerPosBackup;
     s32     i;
 
-    g_BackgroundColor = 104;
+    g_Screen_BackgroundImgIntensity = 104;
 
     switch (g_SysWork.sysStateStep_C[0])
     {

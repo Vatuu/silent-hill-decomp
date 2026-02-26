@@ -423,7 +423,7 @@ void func_800D5DD8(void) // 0x800D5DD8
 
 void func_800D6338(void) // 0x800D6338
 {
-    g_BackgroundColor = 112;
+    g_Screen_BackgroundImgIntensity = 112;
 
     if (Savegame_EventFlagGet(EventFlag_M1S06_PickupKGordonKey))
     {

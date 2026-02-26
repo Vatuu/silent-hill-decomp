@@ -172,7 +172,7 @@ int main(void)
     }
 
     // Fade image back out?
-    Gfx_BackgroundSpriteDraw(&g_MainImg0);
+    Screen_BackgroundImgDraw(&g_MainImg0);
 
     // Run main loop.
     MainLoop();

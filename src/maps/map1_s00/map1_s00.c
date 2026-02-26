@@ -175,7 +175,7 @@ void func_800D7B2C(void)
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Gfx_BackgroundSpritesTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.field_28);
+            Screen_BackgroundImgTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.field_28);
 
             g_SysWork.field_28 += Q12(1.0f / 16.0f);
             if (g_SysWork.field_28 > Q12(1.0f))
@@ -273,7 +273,7 @@ void func_800D7EB0(void)
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Gfx_BackgroundSpritesTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.field_28);
+            Screen_BackgroundImgTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.field_28);
 
             g_SysWork.field_28 += Q12(0.0625f);
             if (g_SysWork.field_28 > Q12(1.0f))
@@ -726,7 +726,7 @@ void MapEvent_TownMapTake(void) // 0x800D922C
 
 void func_800D9254(void) // 0x800D9254
 {
-    g_BackgroundColor = 104;
+    g_Screen_BackgroundImgIntensity = 104;
     MapMsg_DisplayWithTexture(FILE_TIM_USCBOOK_TIM, Q12(0.0f), Q12(0.0f), 38);
 }
 

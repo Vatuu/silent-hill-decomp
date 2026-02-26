@@ -1,8 +1,9 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/screen_draw.h"
-#include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
 
 #define MAP_MSG_CODE_MARKER        '~' /** Message code start. */
@@ -43,6 +44,12 @@ s32 g_MapMsg_WidthTable[12];
 GsSPRITE D_800C38F8;
 
 s16 D_800C391C;
+
+s16 pad_bss_800C391E;
+
+s32 D_800C3920;
+
+s32 pad_bss_800C3924;
 
 /** @brief Glyph widths for the 12x16 font. Used for kerning. */
 static const u8 FONT_12_X_16_GLYPH_WIDTHS[FONT_12_X_16_GLYPH_COUNT] = {

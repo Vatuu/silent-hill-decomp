@@ -6,8 +6,9 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/memcard.h"
-#include "bodyprog/gfx/screen_draw.h"
-#include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound_system.h"
 #include "main/fsqueue.h"
@@ -497,7 +498,7 @@ void Gfx_MainMenu_BackgroundDraw(void) // 0x8003B758
         func_8003BCF4();
     }
 
-    Gfx_BackgroundSpriteDraw(&g_TitleImg);
+    Screen_BackgroundImgDraw(&g_TitleImg);
     Gfx_MainMenu_FogUpdate();
 }
 

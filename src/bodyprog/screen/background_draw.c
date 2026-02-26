@@ -1,15 +1,23 @@
 #include "game.h"
 
-#include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/screen_draw.h"
-#include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/screen/bg_draw.h"
+#include "bodyprog/math/math.h"
 
-q0_8 g_BackgroundColor = Q8(0.5f); // Or `g_BackgroundShade`, since it's applied to all components?
-u8   D_800A8E59        = 0; // Unused.
-s16  D_800A8E5A        = 3; // Unused.
+// ========================================
+// GLOBAL VARIABLES
+// ========================================
 
-void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
+q0_8 g_Screen_BackgroundImgIntensity = Q8(0.5f);
+s16  D_800A8E5A                      = 3; // @Unused.
+
+// ========================================
+// BACKGROUND (2D) DRAW
+// ========================================
+
+void Screen_BackgroundImgDraw(s_FsImageDesc* image) // 0x800314EC
 {
     s32       baseYOffset;
     s32       tileX;
@@ -38,7 +46,7 @@ void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
             sprt = (SPRT*)packet;
 
             addPrimFast(ot, sprt, 4);
-            setRGBC0(sprt, g_BackgroundColor, g_BackgroundColor, g_BackgroundColor, 100);
+            setRGBC0(sprt, g_Screen_BackgroundImgIntensity, g_Screen_BackgroundImgIntensity, g_Screen_BackgroundImgIntensity, 100);
 
             if (y == 0)
             {
@@ -70,10 +78,10 @@ void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
 
     GsOUT_PACKET_P           = packet;
     g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
-    g_BackgroundColor        = 128;
+    g_Screen_BackgroundImgIntensity        = 128;
 }
 
-void Gfx_BackgroundSpritesTransition(s_FsImageDesc* image0, s_FsImageDesc* image1, q3_12 alpha) // 0x800317CC
+void Screen_BackgroundImgTransition(s_FsImageDesc* image0, s_FsImageDesc* image1, q3_12 alpha) // 0x800317CC
 {
     volatile int   pad;
     s32            i;
@@ -127,7 +135,7 @@ void Gfx_BackgroundSpritesTransition(s_FsImageDesc* image0, s_FsImageDesc* image
     GsOUT_PACKET_P = (PACKET*)poly;
 }
 
-void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image) // 0x80031AAC
+void Screen_BackgroundImgDrawAlt(s_FsImageDesc* image) // 0x80031AAC
 {
     volatile s32 pad; // TODO: Is there a better solution?
     s32          i;
@@ -160,8 +168,8 @@ void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image) // 0x80031AAC
 
         setSemiTrans(poly, false);
 
-        *((u16*)&poly->r0) = g_BackgroundColor + (g_BackgroundColor << 8);
-        poly->b0           = g_BackgroundColor;
+        *((u16*)&poly->r0) = g_Screen_BackgroundImgIntensity + (g_Screen_BackgroundImgIntensity << 8);
+        poly->b0           = g_Screen_BackgroundImgIntensity;
 
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], poly);
         poly++;
@@ -169,12 +177,12 @@ void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image) // 0x80031AAC
 
     GsOUT_PACKET_P        = (PACKET*)poly;
     g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
-    g_BackgroundColor     = 0x80;
+    g_Screen_BackgroundImgIntensity     = 0x80;
 }
 
-bool Gfx_2dBackgroundMotionBlur(s32 vBlanks) // 0x80031CCC
+bool Screen_BackgroundMotionBlur(s32 vBlanks) // 0x80031CCC
 {
-    s32       sp10;
+    s32       interlacingEnabled;
     s32       i;
     s32       offsetY;
     s32       texOffsetY;
@@ -184,15 +192,15 @@ bool Gfx_2dBackgroundMotionBlur(s32 vBlanks) // 0x80031CCC
     SPRT*     sprt;
     DR_TPAGE* tPage;
 
-    ot   = (GsOT*)&g_OtTags1[g_ActiveBufferIdx + 1][0];
-    sprt = (SPRT*)GsOUT_PACKET_P;
-    sp10 = D_800C6E90;
+    ot                 = (GsOT*)&g_OtTags1[g_ActiveBufferIdx + 1][0];
+    sprt               = (SPRT*)GsOUT_PACKET_P;
+    interlacingEnabled = GsDISPENV.isinter;
 
-    for (i = 0; (i == 0 || (sp10 != 0 && i == 1)); i++)
+    for (i = 0; (i == 0 || (interlacingEnabled && i == 1)); i++)
     {
         for (j = 0; j < 3; j++)
         {
-            if (sp10 != 0)
+            if (interlacingEnabled)
             {
                 texOffsetY   = (-(i == 0)) & 0x20;
                 offsetY      = (i == 0) ? -224 : 0;

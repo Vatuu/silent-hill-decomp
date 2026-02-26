@@ -5,7 +5,6 @@
 #include "bodyprog/sound_effects.h"
 #include "bodyprog/view/vw_system.h"
 #include "main/fsqueue.h"
-#include "types.h"
 
 /** @brief This header is used to declare any variable, struct, or
  * function of `BODYPROG.BIN` that has not been identified to
@@ -174,13 +173,6 @@ typedef enum _StaticModelLoadState
     StaticModelLoadState_Corrupted = 2, // Maybe wrong name for this.
     StaticModelLoadState_Loaded    = 3
 } e_StaticModelLoadState;
-
-/** @brief Reset types used in `MainLoop_ShouldWarmReset`. */
-typedef enum _ResetType
-{
-    ResetType_None     = 0,
-    ResetType_WarmBoot = 2
-} e_ResetType;
 
 // ================
 // UNKNOWN STRUCTS
@@ -1262,13 +1254,6 @@ typedef struct _Map
 } s_Map;
 STATIC_ASSERT_SIZEOF(s_Map, 1420);
 
-// Used in string parsing.
-typedef struct
-{
-    s8 field_0;
-    s8 positionIdx_1;
-} s_800C38B0;
-
 typedef struct
 {
     VECTOR3 field_0[2][1];
@@ -2103,20 +2088,6 @@ extern const s_AnimInfo* D_800297B8;
 
 extern u_Filename D_8002B2CC;
 
-extern u8 g_BackgroundColor;
-
-extern DR_MODE D_800A8E5C[];
-
-extern TILE D_800A8E74[];
-
-extern q19_12 g_ScreenFadeProgress;
-
-extern DR_MODE D_800A8E98[];
-
-extern POLY_G4 D_800A8EB0[];
-
-extern q19_12 g_BlackBorderShade;
-
 extern s_FsImageDesc g_Font16AtlasImg;
 extern s_FsImageDesc g_KonamiLogoImg;
 extern s_FsImageDesc g_KcetLogoImg;
@@ -2153,8 +2124,6 @@ extern s_MapEffectsInfo g_MapEffectsPresets[21];
 
 extern s_StructUnk3 D_800A952C;
 
-extern u16 D_800A9774[];
-
 extern u16 g_BgmChannelSetTaskCmds[];
 
 extern s32 D_800A9A20;
@@ -2176,14 +2145,6 @@ extern s_FsImageDesc D_800A9EBC;
 
 extern s_FsImageDesc D_800A9EC4;
 
-/** `Demo_FrameCount` */
-extern s32 g_Demo_FrameCount;
-
-extern s32 g_UnknownFrameCounter;
-
-/** Function pointer array, maybe state funcs of some kind. */
-extern void (*g_GameStateUpdateFuncs[])(void);
-
 /** Related to sound commands. */
 extern u16 g_BgmTaskLoadCmds[];
 
@@ -2201,9 +2162,6 @@ extern s_AnimInfo D_800A998C;
 
 /** Current player anim index store? */
 extern u8 D_800A9990;
-
-/** Used in `func_800D929C` from `map0_s00.c`. */
-extern s32 D_800A999C;
 
 // Likely declared as static inside the function that uses it.
 extern s32 D_800A99A0;
@@ -2480,6 +2438,8 @@ extern u8 D_800BC74F;
 
 extern u16 D_800BCCB0;
 
+extern u32 D_800A999C;
+
 extern u16 D_800BCCB2;
 
 /** @brief Packed screen fade effect data. Uses `e_ScreenFadeState`.
@@ -2527,10 +2487,6 @@ extern s8* D_800C15B0;
 extern s8 D_800C15B4;
 
 extern s16 D_800C16A4;
-
-extern s32 D_800C3920;
-
-extern s32 pad_bss_800C3924;
 
 extern s16 D_800C391E;
 
@@ -2615,8 +2571,6 @@ extern s_800C4818 D_800C4818;
 
 extern s32 D_800C48F0;
 
-extern u8 D_800C6E90;
-
 extern u8 D_800AD480[24];
 
 /** Weapon attacks. */
@@ -2629,24 +2583,6 @@ extern s16 SQRT[100];
 // ==========
 // FUNCTIONS
 // ==========
-
-/** Draws a background image.
- * Only applies to menus and the preview of maps when grabbing them.
- */
-void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image);
-
-void Gfx_BackgroundSpritesTransition(s_FsImageDesc* image0, s_FsImageDesc* image1, q3_12 alpha);
-
-/** Draws a background image.
- * Only applies to background images of notes or puzzles images.
- */
-void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image);
-
-/** @brief Applies motion blur to the scene.
- *
- * Used only in the loading screen.
- */
-bool Gfx_2dBackgroundMotionBlur(s32 vBlanks);
 
 /** @unused Possibly a leftover from when the save menu was part of `BODYPROG.BIN`.
  * Draws some string in display space.
@@ -3962,12 +3898,6 @@ void SysWork_SavegameUpdatePlayer(void);
 
 /** @brief Updates SysWork with player info from the savegame buffer (position, rotation, health). */
 void SysWork_SavegameReadPlayer(void);
-
-/** @brief Checks for a specific combination of inputs to determine if a soft reboot should take place.
- *
- * @return `ResetType_WarmBoot` if a soft reboot should take place, `ResetType_None` otherwise.
- */
-s32 MainLoop_ShouldWarmReset(void);
 
 /** @brief Handles a warm game reboot. */
 void Game_WarmBoot(void);

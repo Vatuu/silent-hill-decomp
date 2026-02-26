@@ -4,27 +4,40 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
-#include "bodyprog/gfx/screen_draw.h"
-#include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/text/text_draw.h"
 #include "bodyprog/joy.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
 #include "bodyprog/sound_system.h"
 #include "screens/b_konami/b_konami.h"
+
+#include "bodyprog/gamemain.h"
+#include "bodyprog/memcard.h"
 #include "screens/saveload.h"
 
-s32 g_Demo_FrameCount = 0;
-s32 g_UnknownFrameCounter = 0;
-s32 g_PrevVBlanks = 0;
+// ========================================
+// GLOBAL VARIABLES
+// ========================================
 
-// Audio task for `SD_Call` meant to load some VAB audio.
-u16 D_800A9774[] = {
+s32 g_Demo_FrameCount = 0;
+s32 g_WarmBootTimer = 0;
+
+// ========================================
+// STATIC VARIABLES
+// ========================================
+
+static s32 g_PrevVBlanks = 0;
+
+// Audio task for `SD_Call` meant to load base VAB audios.
+static u16 g_baseVabAudiosTaskId[] = {
    160,
    162,
    0
 };
 
-void (*g_GameStateUpdateFuncs[])(void) = {
+static void (*g_GameStateUpdateFuncs[])(void) = {
     GameState_Boot_Update,
     GameState_KonamiLogo_Update,
     GameState_KcetLogo_Update,
@@ -49,10 +62,14 @@ void (*g_GameStateUpdateFuncs[])(void) = {
     GameState_Unk15_Update
 };
 
+// ========================================
+// MAINLOOP
+// ========================================
+
 void GameState_Boot_Update(void) // 0x80032D1C
 {
     s32 gameState;
-    s32 unkGameStateVar;
+    s32 VabAudioTaskId;
 
     switch (g_GameWork.gameStateStep_598[0])
     {
@@ -71,10 +88,10 @@ void GameState_Boot_Update(void) // 0x80032D1C
         case 1:
             if (!Sd_AudioStreamingCheck())
             {
-                unkGameStateVar = D_800A9774[g_GameWork.gameStateStep_598[1]];
-                if (unkGameStateVar != 0)
+                VabAudioTaskId = g_baseVabAudiosTaskId[g_GameWork.gameStateStep_598[1]];
+                if (VabAudioTaskId != 0)
                 {
-                    SD_Call(unkGameStateVar);
+                    SD_Call(VabAudioTaskId);
                     g_GameWork.gameStateStep_598[1]++;
                 }
                 else
@@ -119,7 +136,7 @@ void GameState_Boot_Update(void) // 0x80032D1C
     }
 
     func_80033548();
-    Gfx_BackgroundSpriteDraw(&g_MainImg0);
+    Screen_BackgroundImgDraw(&g_MainImg0);
     func_80089090(1);
 }
 

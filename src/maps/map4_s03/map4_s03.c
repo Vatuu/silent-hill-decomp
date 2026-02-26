@@ -92,7 +92,7 @@ void func_800D0840(void) // 0x800D0840
     ptr2 = &ptr0[16];
     ptr1 = &ptr0[32];
 
-    Gfx_DebugStringPosition(160, 92);
+    Text_Debug_PositionSet(160, 92);
 
     for (i = 0; i < var_s6; i++)
     {
@@ -3175,7 +3175,7 @@ void func_800D5C3C(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5C3C
     temp_s2 ^= 1;
     temp_s2 &= 1;
 
-    Gfx_DebugStringPosition(170, 20);
+    Text_Debug_PositionSet(170, 20);
 
     for (i = 0; i < 16; i++)
     {

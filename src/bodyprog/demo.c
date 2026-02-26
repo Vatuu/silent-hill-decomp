@@ -2,7 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
-#include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/text/text_draw.h"
 #include "main/fsqueue.h"
 #include "main/rng.h"
 
@@ -331,12 +331,12 @@ bool Demo_Update(void) // 0x8008F5D8
 
             if (g_Demo_CurFrameData->gameStateExpected_8 != gameWork->gameState_594)
             {
-                Gfx_DebugStringPosition(8, 80);
-                Gfx_DebugStringDraw("STEP ERROR:[H:");
-                Gfx_DebugStringDraw(Math_IntegerToString(2, g_Demo_CurFrameData->gameStateExpected_8));
-                Gfx_DebugStringDraw("]/[M:");
-                Gfx_DebugStringDraw(Math_IntegerToString(2, gameWork->gameState_594));
-                Gfx_DebugStringDraw("]");
+                Text_Debug_PositionSet(8, 80);
+                Text_Debug_Draw("STEP ERROR:[H:");
+                Text_Debug_Draw(Text_Debug_IntToStringConversion(2, g_Demo_CurFrameData->gameStateExpected_8));
+                Text_Debug_Draw("]/[M:");
+                Text_Debug_Draw(Text_Debug_IntToStringConversion(2, gameWork->gameState_594));
+                Text_Debug_Draw("]");
 
                 g_Demo_CurFrameData = NULL;
             }
