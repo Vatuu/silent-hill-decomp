@@ -34,7 +34,7 @@
  * functions belong to a same file.
  */
 
-extern const s32 D_80025234;
+extern const s8 D_80025234[];
 
 // ========================================
 // GLOBAL VARIABLES
@@ -421,7 +421,7 @@ u32 func_800364BC(void) // 0x800364BC
 }
 
 // `RECT`s?
-const s32 D_80025234 = 0xB13ACC; // Could this indicate file split nearby?
+const s8 D_80025234[] = { 0x00, 0xB1, 0x3A, 0xCC, 0x00 }; // Could this indicate file split nearby?
 
 void func_8003652C(void) // 0x8003652C
 {
