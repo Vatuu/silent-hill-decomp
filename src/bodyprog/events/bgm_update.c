@@ -34,7 +34,13 @@
  * functions belong to a same file.
  */
 
-extern const char D_80025234[];
+extern const s32 D_80025234;
+
+// ========================================
+// GLOBAL VARIABLES
+// ========================================
+
+u32 D_800A999C = &D_80025234;
 
 // ========================================
 // STATIC VARIABLES
@@ -42,7 +48,6 @@ extern const char D_80025234[];
 
 static s32 D_800BCD5C;
 
-static u32 D_800A999C = &D_80025234;
 static s32 D_800A99A0 = 0;
 static u8  g_Bgm_LayerLimits[8] = { 128, 128, 128, 128, 128, 128, 128, 128 };
 
@@ -416,7 +421,7 @@ u32 func_800364BC(void) // 0x800364BC
 }
 
 // `RECT`s?
-const char D_80025234[] = { 0, 177, 58, 204, 0 }; // Could this indicate file split nearby?
+const s32 D_80025234 = 0xB13ACC; // Could this indicate file split nearby?
 
 void func_8003652C(void) // 0x8003652C
 {

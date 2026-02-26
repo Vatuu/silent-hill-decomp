@@ -2438,6 +2438,8 @@ extern u8 D_800BC74F;
 
 extern u16 D_800BCCB0;
 
+extern u32 D_800A999C;
+
 extern u16 D_800BCCB2;
 
 /** @brief Packed screen fade effect data. Uses `e_ScreenFadeState`.
