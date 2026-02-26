@@ -11,6 +11,10 @@
 #include "bodyprog/view/vc_util.h"
 #include "bodyprog/math/math.h"
 
+// ========================================
+// STATIC VARIABLES
+// ========================================
+
 static DR_MODE D_800A8E98[] = {
     { 0x3000000, { 0xE1000240, 0x0 } },
     { 0x3000000, { 0xE1000240, 0x0 } }

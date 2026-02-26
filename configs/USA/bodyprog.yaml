@@ -146,13 +146,13 @@ segments:
                                                             # All this files could be part of a same folder. 
                                                             # Both SH2 and 4 symbols shows that developers usually place
                                                             # events update, message display and the radio effect functions
-                                                            # within a `event` sub-folder:
+                                                            # within a `events` folder:
                                                             # * src/events/*.c in SH2 case
                                                             # * sh4/game/event/*.c in SH4 case
                                                             # 
                                                             # Also, `title.c` is very likely to be part of this folder too
                                                             # considering is too close to this other functions and that
-                                                            # in SH2 the main menu code it is within the `events` sub-folder.
+                                                            # in SH2 the main menu code it is within the `events` folder.
       - [0x11254,   c, events/bgm_update]                   # }
       - [0x11A58,   c, events/mapmsg_display]               # }
       - [0x125F4,   c, events/radio]                        # }

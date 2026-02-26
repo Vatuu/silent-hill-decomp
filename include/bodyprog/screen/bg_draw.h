@@ -10,7 +10,7 @@
 // ========
 
 /** @brief Gamma intensity of background images. */
-extern u8 g_Screen_BackgroundImgIntensity;
+extern q0_8 g_Screen_BackgroundImgIntensity;
 
 // ==========
 // FUNCTIONS
