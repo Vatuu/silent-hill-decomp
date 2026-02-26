@@ -182,8 +182,8 @@ define FlagsSwitch
 		$(eval ASPSX_VERSION := 2.77))
 
 	$(if $(or $(findstring smf_mid,$(1)), $(findstring smf_io,$(1)),), \
-		$(eval MASPSX_FLAGS = --aspsx-version=$(ASPSX_VERSION) $(COMMON_FLAG) --run-assembler --expand-div $(AS_FLAGS)), \
-		$(eval MASPSX_FLAGS = --aspsx-version=$(ASPSX_VERSION) $(COMMON_FLAG) --run-assembler $(AS_FLAGS)))
+		$(eval MASPSX_FLAGS = --gnu-as-path mips-linux-gnu-as --aspsx-version=$(ASPSX_VERSION) $(COMMON_FLAG) --run-assembler --expand-div $(AS_FLAGS)), \
+		$(eval MASPSX_FLAGS = --gnu-as-path mips-linux-gnu-as --aspsx-version=$(ASPSX_VERSION) $(COMMON_FLAG) --run-assembler $(AS_FLAGS)))
 
 	$(eval _rel_path := $(patsubst $(BUILD_DIR)/src/maps/%,%,$(patsubst build/${asm}/maps/%,%,$(1))))
 	$(eval _map_name := $(shell echo $(word 1, $(subst /, ,$(_rel_path))) | tr a-z A-Z))

@@ -4,8 +4,9 @@
 #include <psyq/libetc.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gamemain.h"
 #include "bodyprog/demo.h"
-#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/joy.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound_system.h"
@@ -17,10 +18,10 @@ void SysWork_Clear(void) // 0x800340E0
 
 s32 MainLoop_ShouldWarmReset(void) // 0x80034108
 {
-    #define RESET_BTN_FLAGS       (ControllerFlag_Select | ControllerFlag_Start)
-    #define WARM_BOOT_BTN_FLAGS_0 (ControllerFlag_Select | ControllerFlag_Start | \
-                                   ControllerFlag_L2 | ControllerFlag_R2 | ControllerFlag_L1 | ControllerFlag_R1)
-    #define WARM_BOOT_BTN_FLAGS_1 (ControllerFlag_Start | ControllerFlag_Triangle | ControllerFlag_Square)
+    #define WARM_BOOT_COMBO_HOLD      (ControllerFlag_Select | ControllerFlag_Start)
+    #define WARM_BOOT_COMBO_PRESS     (ControllerFlag_Select | ControllerFlag_Start | \
+                                       ControllerFlag_L2 | ControllerFlag_R2 | ControllerFlag_L1 | ControllerFlag_R1)
+    #define WARM_BOOT_COMBO_PRESS_ALT (ControllerFlag_Start | ControllerFlag_Triangle | ControllerFlag_Square)
 
     if (g_GameWork.gameState_594 < GameState_MovieIntroAlternate)
     {
@@ -56,29 +57,29 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
     }
 
     // Reset frame counter if reset buttons not held.
-    if ((g_Controller0->btnsHeld_C & RESET_BTN_FLAGS) != RESET_BTN_FLAGS)
+    if ((g_Controller0->btnsHeld_C & WARM_BOOT_COMBO_HOLD) != WARM_BOOT_COMBO_HOLD)
     {
-        g_UnknownFrameCounter = 0;
+        g_WarmBootTimer = 0;
     }
 
-    if (g_UnknownFrameCounter > (TICKS_PER_SECOND * 2))
+    if (g_WarmBootTimer > (TICKS_PER_SECOND * 2))
     {
         return ResetType_WarmBoot;
     }
-    else if (g_Controller0->btnsHeld_C == WARM_BOOT_BTN_FLAGS_0 && (g_Controller0->btnsClicked_10 & WARM_BOOT_BTN_FLAGS_0))
+    else if (g_Controller0->btnsHeld_C == WARM_BOOT_COMBO_PRESS && (g_Controller0->btnsClicked_10 & WARM_BOOT_COMBO_PRESS))
     {
         return ResetType_WarmBoot;
     }
-    else if (g_Controller0->btnsHeld_C == WARM_BOOT_BTN_FLAGS_1 && (g_Controller0->btnsClicked_10 & ControllerFlag_Start))
+    else if (g_Controller0->btnsHeld_C == WARM_BOOT_COMBO_PRESS_ALT && (g_Controller0->btnsClicked_10 & ControllerFlag_Start))
     {
         return ResetType_WarmBoot;
     }
 
     return (g_SysWork.flags_22A4 & SysFlag2_8) ? ResetType_WarmBoot : ResetType_None;
 
-    #undef RESET_BTN_FLAGS
-    #undef WARM_BOOT_BTN_FLAGS_0
-    #undef WARM_BOOT_BTN_FLAGS_1
+    #undef WARM_BOOT_COMBO_HOLD
+    #undef WARM_BOOT_COMBO_PRESS
+    #undef WARM_BOOT_COMBO_PRESS_ALT
 }
 
 void Game_WarmBoot(void) // 0x80034264

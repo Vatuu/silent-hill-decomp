@@ -60,6 +60,9 @@ STATIC_ASSERT_SIZEOF(s_DemoFileInfo, 8);
 
 #define DEMO_WORK() ((s_DemoWork*)0x800FDE00)
 
+/** `Demo_FrameCount` */
+extern s32 g_Demo_FrameCount;
+
 // TODO: Make local. Used in `Demo_Update`.
 extern char D_8002B2D8[]; // "STEP ERROR:[H:"
 extern char D_8002B2E8[]; // "]/[M:"

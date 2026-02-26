@@ -3,8 +3,8 @@
 #include <psyq/libetc.h>
 #include <psyq/libgs.h>
 
-#include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 

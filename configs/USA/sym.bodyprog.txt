@@ -19,6 +19,10 @@ scratchpad                                   = 0x1F800000; // size:0x400 ignore:
 //--- PA: 0x000140   VA: 0x80024CA0   subsegment: .rodata, screen/screen_fade
 //---------------------------------------------------------------------------
 
+//---------------------------------------------------------------------------------------
+//--- PA: 0x000184   VA: 0x80024CE4   subsegment: .rodata, screen/screen_cutscenesborders
+//---------------------------------------------------------------------------------------
+
 //----------------------------------------------------------------------------
 //--- PA: 0x0001E4   VA: 0x80024D44   subsegment: .rodata, sys/syswork_globals
 //----------------------------------------------------------------------------
@@ -307,17 +311,17 @@ MemCard_DevicePathGenerate                   = 0x800314A4; // type:func
 //-------------------------------------------------------------------------
 //--- PA: 0x00C98C   VA: 0x800314EC   subsegment: c, screen/background_draw
 //-------------------------------------------------------------------------
-Gfx_BackgroundSpriteDraw                     = 0x800314EC; // type:func
-Gfx_BackgroundSpritesTransition              = 0x800317CC; // type:func
-Gfx_BackgroundSpriteDraw_2                   = 0x80031AAC; // type:func
-Gfx_2dBackgroundMotionBlur                   = 0x80031CCC; // type:func
+Screen_BackgroundImgDraw                     = 0x800314EC; // type:func
+Screen_BackgroundImgTransition               = 0x800317CC; // type:func
+Screen_BackgroundImgDrawAlt                  = 0x80031AAC; // type:func
+Screen_BackgroundMotionBlur                  = 0x80031CCC; // type:func
 
 //-------------------------------------------------------------------------
-//--- PA: 0x00D39C   VA: 0x80031EFC   subsegment: c, screen/text_draw_debug
+//--- PA: 0x00D39C   VA: 0x80031EFC   subsegment: c, screen/text_debug_draw
 //-------------------------------------------------------------------------
-Gfx_DebugStringPosition                      = 0x80031EFC; // type:func
-Gfx_DebugStringDraw                          = 0x80031F40; // type:func
-Math_IntegerToString                         = 0x80032154; // type:func
+Text_Debug_PositionSet                       = 0x80031EFC; // type:func
+Text_Debug_Draw                              = 0x80031F40; // type:func
+Text_Debug_IntToStringConversion             = 0x80032154; // type:func
 
 //---------------------------------------------------------------------
 //--- PA: 0x00D7F8   VA: 0x80032358   subsegment: c, screen/screen_draw
@@ -334,8 +338,16 @@ Screen_DisplayEnvXySet                       = 0x80032524; // type:func
 Screen_FadeDrawModeSet                       = 0x800325A4; // type:func
 Screen_FadeInProgressGet                     = 0x800325F8; // type:func
 Screen_FadeUpdate                            = 0x8003260C; // type:func
+
+//---------------------------------------------------------------------------------
+//--- PA: 0x00DD3C   VA: 0x8003289C   subsegment: c, screen/screen_cutscenesborders
+//---------------------------------------------------------------------------------
 Screen_BlackBorderDraw.0                     = 0x8003289C; // filename:Screen_BlackBorderDraw type:func Compiler adds suffix to end of nested func names.
 Screen_CutsceneCameraStateUpdate             = 0x80032904; // type:func
+
+//------------------------------------------------------------
+//--- PA: 0x00E020   VA: 0x80032B80   subsegment: c, sys/vsync
+//------------------------------------------------------------
 Screen_VSyncCallback                         = 0x80032B80; // type:func
 
 //-----------------------------------------------------------------
@@ -2418,13 +2430,17 @@ midi_smf_stat                                = 0x800A8D00; // type:func
 //-----------------------------------------------------------------------------
 //--- PA: 0x0842F8   VA: 0x800A8E58   subsegment: .data, screen/background_draw
 //-----------------------------------------------------------------------------
-g_BackgroundColor                            = 0x800A8E58;
+g_Screen_BackgroundImgIntensity              = 0x800A8E58;
 
 //-------------------------------------------------------------------------
 //--- PA: 0x0842FC   VA: 0x800A8E5C   subsegment: .data, screen/screen_fade
 //-------------------------------------------------------------------------
 g_ScreenFadeProgress                         = 0x800A8E94; // type:s32
 g_BlackBorderShade                           = 0x800A8F40;
+
+//-------------------------------------------------------------------------------------
+//--- PA: 0x084338   VA: 0x800A8E98   subsegment: .data, screen/screen_cutscenesborders
+//-------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------
 //--- PA: 0x0843E4   VA: 0x800A8F44   subsegment: .data, screen/screen_data
@@ -2450,7 +2466,7 @@ g_MapEffectsPresets                          = 0x800A93CC;
 //--- PA: 0x084C08   VA: 0x800A9768   subsegment: .data, sys/gamemain
 //-------------------------------------------------------------------
 g_Demo_FrameCount                            = 0x800A9768; // type:s32
-g_UnknownFrameCounter                        = 0x800A976C; // type:s32
+g_WarmBootTimer                        = 0x800A976C; // type:s32
 g_PrevVBlanks                                = 0x800A9770; // type:s32
 g_GameStateUpdateFuncs                       = 0x800A977C;
 
@@ -2921,24 +2937,23 @@ g_MemCard_Work                               = 0x800B5488; // size:0x80
 g_MemCard_SaveWork                           = 0x800B5508; // size:0x718
 
 //----------------------------------------------------------------------------
-//--- PA: 0x0910C0   VA: 0x800B5C20   subsegment: .bss, screen/text_draw_debug
+//--- PA: 0x0910C0   VA: 0x800B5C20   subsegment: .bss, screen/text_debug_draw
 //----------------------------------------------------------------------------
-g_Gfx_DebugStringPosition0                   = 0x800B5C20; // type:DVECTOR size:4
-g_Gfx_DebugStringPosition1                   = 0x800B5C24; // type:DVECTOR size:4
+g_Text_Debug_PositionSet0                    = 0x800B5C20; // type:DVECTOR size:4
+g_Text_Debug_PositionSet1                    = 0x800B5C24; // type:DVECTOR size:4
 
 //------------------------------------------------------------------------
 //--- PA: 0x0910C8   VA: 0x800B5C28   subsegment: .bss, screen/screen_fade
 //------------------------------------------------------------------------
-g_PrevScreenFadeProgress                     = 0x800B5C28; // type:s32
 g_ScreenFadeTimestep                         = 0x800B5C30; // type:s32
-
+g_baseVabAudiosTaskId = 0x800A9774;
 //------------------------------------------------------------------------
 //--- PA: 0x0910D4   VA: 0x800B5C34   subsegment: .bss, screen/screen_data
 //------------------------------------------------------------------------
 g_VBlanks                                    = 0x800B5C34; // type:s32
 g_UncappedVBlanks                            = 0x800B5C38; // type:s32
 g_OtTags0                                    = 0x800B5C40; // type:u32 size:0x80
-g_DeltaTime                                  = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
+g_DeltaTime                                  = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..). Possibly name `_shDeltaTimePerFrame`
 g_OtTags1                                    = 0x800B5CC4; // type:u32 size:0x4000
 g_GravitySpeed                               = 0x800B9CC8; // type:s32
 g_TickCount                                  = 0x800B9CCC;

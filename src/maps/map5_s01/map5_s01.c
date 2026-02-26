@@ -652,11 +652,11 @@ void func_800EBA40(void) // 0x800EBA40
 
         case 3:
             SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
-            Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
+            Screen_BackgroundImgDraw(&g_ItemInspectionImg);
             break;
 
         case 4:
-            Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
+            Screen_BackgroundImgDraw(&g_ItemInspectionImg);
 
             D_800F0354 += (g_Controller0->sticks_24.sticks_0.leftX * 16384) / 75;
             D_800F0354  = CLAMP_RANGE(D_800F0354, Q12(-160.0f), Q12(160.0f));
@@ -729,7 +729,7 @@ void func_800EBA40(void) // 0x800EBA40
 
         case 5:
             SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
-            Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
+            Screen_BackgroundImgDraw(&g_ItemInspectionImg);
             break;
 
         case 6:
@@ -737,7 +737,7 @@ void func_800EBA40(void) // 0x800EBA40
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
+            Screen_BackgroundImgDraw(&g_ItemInspectionImg);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 

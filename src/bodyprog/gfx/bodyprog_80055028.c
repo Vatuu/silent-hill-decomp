@@ -7,7 +7,8 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/player_logic.h"
 #include "bodyprog/sound_system.h"
@@ -3184,12 +3185,12 @@ s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBu
     {
         // Failed to find file, log filename to screen.
         debugStr[12] = 0;
-        Gfx_DebugStringPosition(100, 80);
+        Text_Debug_PositionSet(100, 80);
         strncpy(&debugStr, &filename, 12);
 
 #if VERSION_DATE <= VERSION_DATE_PROTO_981216
         // Code seen in 98-12-16 build.
-        Gfx_DebugStringDraw(debugStr);
+        Text_Debug_Draw(debugStr);
 #endif
     }
 
@@ -3319,5 +3320,5 @@ INCLUDE_ASM("bodyprog/nonmatchings/gfx/bodyprog_80055028", func_8005B62C); // 0x
 
 void Gfx_DebugStringPositionSet(s16 unused, s16 posX, s16 posY) // 0x8005BF0C
 {
-    Gfx_DebugStringPosition(posX, posY);
+    Text_Debug_PositionSet(posX, posY);
 }

@@ -214,7 +214,7 @@ void func_800D59D4(void) // 0x800D59D4
 
 void func_800D5A98(void) // 0x800D5A98
 {
-    g_BackgroundColor = 80;
+    g_Screen_BackgroundImgIntensity = 80;
 
     switch (g_SysWork.sysStateStep_C[0])
     {

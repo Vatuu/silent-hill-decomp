@@ -725,7 +725,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 7:
-            g_BackgroundColor = 48;
+            g_Screen_BackgroundImgIntensity = 48;
 
             func_800862F8(2, 0, false);
             Map_MessageWithAudio(19, &g_MapMsgSoundIdx, &g_MapMsgSounds); // "Isn't this Cheryl's sketchbook?"
@@ -736,7 +736,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             SysWork_StateStepIncrement(0);
 
         case 9:
-            g_BackgroundColor = 48;
+            g_Screen_BackgroundImgIntensity = 48;
 
             func_800862F8(2, 0, false);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
@@ -1177,11 +1177,11 @@ void func_800E9DD8(void) // 0x800E9DD8
 
         case 3:
             SysWork_StateStepIncrementAfterFade(2, false, false, false, false);
-            Gfx_BackgroundSpriteDraw_2(D_800F22A0);
+            Screen_BackgroundImgDrawAlt(D_800F22A0);
             break;
 
         case 4:
-            Gfx_BackgroundSpriteDraw_2(D_800F22A0);
+            Screen_BackgroundImgDrawAlt(D_800F22A0);
 
             if (Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfLion) && !Savegame_EventFlagGet(EventFlag_M2S00_LockOfLionOpen))
             {
@@ -1249,7 +1249,7 @@ void func_800E9DD8(void) // 0x800E9DD8
 
         case 5:
             MapMsg_DisplayAndHandleSelection(false, g_DoorOfEclypse_MapMsgIdx, 0, 0, 0, false);
-            Gfx_BackgroundSpriteDraw_2(D_800F22A0);
+            Screen_BackgroundImgDrawAlt(D_800F22A0);
             Sd_PlaySfx(Sfx_Unk1390, 0, 0x80);
             SysWork_StateStepIncrement(0);
             break;
@@ -1263,17 +1263,17 @@ void func_800E9DD8(void) // 0x800E9DD8
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Gfx_BackgroundSpriteDraw_2(D_800F22A0);
+            Screen_BackgroundImgDrawAlt(D_800F22A0);
             MapMsg_DisplayAndHandleSelection(false, g_DoorOfEclypse_MapMsgIdx, 0, 0, 0, false);
             break;
 
         case 8:
-            Gfx_BackgroundSpriteDraw_2(D_800F22A0);
+            Screen_BackgroundImgDrawAlt(D_800F22A0);
             func_800862F8(1, 0, false);
             break;
 
         case 9:
-            Gfx_BackgroundSpritesTransition(D_800F22A0, D_800F22A4, g_SysWork.field_28);
+            Screen_BackgroundImgTransition(D_800F22A0, D_800F22A4, g_SysWork.field_28);
 
             g_SysWork.field_28 += Q12(1.0f / 32.0f);
             if (g_SysWork.field_28 > Q12(1.0f))
@@ -1288,7 +1288,7 @@ void func_800E9DD8(void) // 0x800E9DD8
             break;
 
         case 10:
-            Gfx_BackgroundSpriteDraw_2(D_800F22A0);
+            Screen_BackgroundImgDrawAlt(D_800F22A0);
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
 
             if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
@@ -1304,12 +1304,12 @@ void func_800E9DD8(void) // 0x800E9DD8
             break;
 
         case 11:
-            Gfx_BackgroundSpriteDraw_2(D_800F22A0);
+            Screen_BackgroundImgDrawAlt(D_800F22A0);
             MapMsg_DisplayAndHandleSelection(false, g_DoorOfEclypse_MapMsgIdx, 0, 0, 0, false);
             break;
 
         case 12:
-            Gfx_BackgroundSpriteDraw_2(D_800F22A0);
+            Screen_BackgroundImgDrawAlt(D_800F22A0);
             SysWork_StateStepIncrementAfterFade(2, true, false, false, false);
             break;
 
@@ -1400,7 +1400,7 @@ void func_800EA6E0(void) // 0x800EA6E0
         EventState_Finish      = 6
     } e_EventState;
 
-    g_BackgroundColor = 72;
+    g_Screen_BackgroundImgIntensity = 72;
 
     switch (g_SysWork.sysStateStep_C[0])
     {

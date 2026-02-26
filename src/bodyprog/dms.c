@@ -5,7 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound_system.h"
@@ -62,12 +62,12 @@ void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, 
         Math_Vector3Zero(pos);
         Math_SVectorZero(rot);
 
-        Gfx_DebugStringPosition(SCREEN_POSITION_X(15.75f), SCREEN_POSITION_Y(37.5f));
+        Text_Debug_PositionSet(SCREEN_POSITION_X(15.75f), SCREEN_POSITION_Y(37.5f));
 
 #if VERSION_DATE <= VERSION_DATE_PROTO_981216
         // Code seen in 98-12-16 build.
-        Gfx_DebugStringDraw(charName);
-        Gfx_DebugStringDraw(" doesn't exist in dms.");
+        Text_Debug_Draw(charName);
+        Text_Debug_Draw(" doesn't exist in dms.");
 #endif
     }
     else

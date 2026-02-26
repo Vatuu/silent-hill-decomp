@@ -1,19 +1,15 @@
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/screen/screen_data.h"
 #include "bodyprog/math/math.h"
 
 s32      g_VBlanks;
-
 s32      g_UncappedVBlanks;
-
 s32      pad_bss_800B5C3C;
-
 GsOT_TAG g_OtTags0[2][16];
 
 q19_12   g_DeltaTime;
 
 GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
-
 s32      pad_bss_800B9CC4;
 
 q19_12   g_GravitySpeed;

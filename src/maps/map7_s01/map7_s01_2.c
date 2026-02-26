@@ -976,13 +976,13 @@ void func_800D9440(void) // 0x800D9440
 
 void func_800D946C(void) // 0x800D946C
 {
-    g_BackgroundColor = 104;
+    g_Screen_BackgroundImgIntensity = 104;
     MapMsg_DisplayWithTexture(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 70);
 }
 
 void func_800D94A4(void) // 0x800D94A4
 {
-    g_BackgroundColor = 104;
+    g_Screen_BackgroundImgIntensity = 104;
     MapMsg_DisplayWithTexture(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 71);
 }
 
@@ -1117,7 +1117,7 @@ void func_800D99DC(void) // 0x800D99DC
 
 void func_800D9A08(void) // 0x800D9A08
 {
-    g_BackgroundColor = 0x48;
+    g_Screen_BackgroundImgIntensity = 0x48;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -1902,7 +1902,7 @@ void func_800DBDE0(void) // 0x800DBDE0
             break;
 
         case 5:
-            g_BackgroundColor = 48;
+            g_Screen_BackgroundImgIntensity = 48;
 
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 31, 0, 0, 0, false);
@@ -1913,21 +1913,21 @@ void func_800DBDE0(void) // 0x800DBDE0
             SysWork_StateStepIncrement(0);
 
         case 7:
-            g_BackgroundColor = 48;
+            g_Screen_BackgroundImgIntensity = 48;
 
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 32, 0, 0, 0, false);
             break;
 
         case 8:
-            g_BackgroundColor = 48;
+            g_Screen_BackgroundImgIntensity = 48;
 
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 35, 0, 0, 0, false);
             break;
 
         case 9:
-            g_BackgroundColor = 48;
+            g_Screen_BackgroundImgIntensity = 48;
 
             func_800862F8(2, 0, false);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);

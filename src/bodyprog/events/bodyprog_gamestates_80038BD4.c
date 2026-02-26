@@ -6,8 +6,9 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
-#include "bodyprog/gfx/screen_draw.h"
-#include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/text/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
@@ -491,7 +492,7 @@ void GameState_LoadStatusScreen_Update(void) // 0x800395C0
         g_GameWork.gameStateStep_598[0]++;
     }
 
-    Gfx_2dBackgroundMotionBlur(SyncMode_Wait2);
+    Screen_BackgroundMotionBlur(SyncMode_Wait2);
 
     if (Fs_QueueDoThingWhenEmpty())
     {
@@ -561,7 +562,7 @@ void GameState_LoadMapScreen_Update(void) // 0x8003991C
         g_GameWork.gameStateStep_598[0]++;
     }
 
-    Gfx_2dBackgroundMotionBlur(SyncMode_Wait2);
+    Screen_BackgroundMotionBlur(SyncMode_Wait2);
 
     if (Fs_QueueDoThingWhenEmpty())
     {
@@ -685,5 +686,5 @@ void SysState_LoadArea_Update(void) // 0x80039C40
 
     g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
     Game_StateSetNext(GameState_MainLoadScreen);
-    Gfx_2dBackgroundMotionBlur(SyncMode_Immediate);
+    Screen_BackgroundMotionBlur(SyncMode_Immediate);
 }

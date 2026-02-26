@@ -118,8 +118,8 @@ void Gfx_LoadingScreen_StageString(void) // 0x800DA8A4
 {
     ScreenFade_Start(false, true, false);
 
-    Gfx_DebugStringPosition(100, 100);
-    Gfx_DebugStringDraw("STAGE 0-1");
+    Text_Debug_PositionSet(100, 100);
+    Text_Debug_Draw("STAGE 0-1");
     Gfx_LoadingScreen_BackgroundTexture();
 }
 

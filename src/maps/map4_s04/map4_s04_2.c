@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/text/text_draw.h"
 #include "bodyprog/sound_system.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
@@ -130,7 +130,7 @@ const char* MAP_MESSAGES[] = {
 
 void func_800D1910(void) // 0x800D1910
 {
-    Gfx_DebugStringPosition(30, 30);
+    Text_Debug_PositionSet(30, 30);
     ClearImage(&D_800D3720, 0, 0, 0);
 
     // GPU packet setup.

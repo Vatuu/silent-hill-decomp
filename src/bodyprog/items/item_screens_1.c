@@ -1,7 +1,8 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/player_logic.h"
 #include "bodyprog/math/math.h"

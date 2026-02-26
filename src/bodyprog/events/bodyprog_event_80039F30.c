@@ -6,8 +6,9 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
-#include "bodyprog/gfx/screen_draw.h"
-#include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/text/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
@@ -367,12 +368,12 @@ void SysState_GameOver_Update(void) // 0x8003A52C
         case 6:
             SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(2.0f), false);
             g_SysWork.field_28 = Q12(0.0f);
-            Gfx_BackgroundSpriteDraw(&g_DeathTipImg);
+            Screen_BackgroundImgDraw(&g_DeathTipImg);
             break;
 
         case 7:
             g_SysWork.field_28++;
-            Gfx_BackgroundSpriteDraw(&g_DeathTipImg);
+            Screen_BackgroundImgDraw(&g_DeathTipImg);
 
             if (!(g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
                                                    g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
@@ -391,7 +392,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             break;
 
         case 8:
-            Gfx_BackgroundSpriteDraw(&g_DeathTipImg);
+            Screen_BackgroundImgDraw(&g_DeathTipImg);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);
             break;
 
@@ -423,5 +424,5 @@ void GameState_MapEvent_Update(void) // 0x8003AA4C
 
     g_MapOverlayHeader.mapEventFuncs_20[g_MapEventParam]();
 
-    Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
+    Screen_BackgroundImgDraw(&g_ItemInspectionImg);
 }

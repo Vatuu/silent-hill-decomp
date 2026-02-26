@@ -238,7 +238,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
         case 23:
             SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(10.0f), Q12(160.0f), Q12(173.0f), true, false);
             MapMsg_DisplayAndHandleSelection(false, 43, 0, 0, 0, false);
-            Gfx_DebugStringPosition(30, 30);
+            Text_Debug_PositionSet(30, 30);
             break;
 
         case 24:
@@ -766,9 +766,9 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             SysWork_StateStepIncrement(0);
 
         case 3:
-            g_BackgroundColor = 88;
+            g_Screen_BackgroundImgIntensity = 88;
 
-            Gfx_BackgroundSpriteDraw(&g_PaperMapImg);
+            Screen_BackgroundImgDraw(&g_PaperMapImg);
             MapMsg_DisplayAndHandleSelection(true, 59, 6, 4, 0, false);
             break;
 
@@ -788,9 +788,9 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
 
         case 4:
         case 7:
-            g_BackgroundColor = 88;
+            g_Screen_BackgroundImgIntensity = 88;
 
-            Gfx_BackgroundSpriteDraw(&g_PaperMapImg);
+            Screen_BackgroundImgDraw(&g_PaperMapImg);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 

@@ -92,7 +92,7 @@ void func_800CCF9C(void) // 0x800CCF9C
 
 void func_800CD050(void) // 0x800CD050
 {
-    g_BackgroundColor = 80;
+    g_Screen_BackgroundImgIntensity = 80;
     MapMsg_DisplayWithTexture(FILE_TIM_PLCSMEMO_TIM, Q12(0.0f), Q12(0.0f), 15);
 }
 

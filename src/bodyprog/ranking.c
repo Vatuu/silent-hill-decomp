@@ -1,7 +1,8 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/text/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/ranking.h"
@@ -834,18 +835,18 @@ void func_80091388(s32 arg0, s32 arg1, s32 arg2) // 0x80091388
         arg0 = (arg0 - arg1) - 1;
     }
 
-    Gfx_DebugStringDraw(Math_IntegerToString(arg0, FP_FROM(arg2, Q12_SHIFT)));
+    Text_Debug_Draw(Text_Debug_IntToStringConversion(arg0, FP_FROM(arg2, Q12_SHIFT)));
 
     if (arg1 > 0)
     {
-        Gfx_DebugStringDraw(".");
+        Text_Debug_Draw(".");
         do
         {
             var_v0 = (arg2 < 0) ? (arg2 + 0xFFF) : arg2;
             arg2  -= Q12_FLOOR(var_v0);
             arg2  *= 10;
             var_a0 = arg2 % Q12(10.0f);
-            Gfx_DebugStringDraw(Math_IntegerToString(1, FP_FROM(var_a0, Q12_SHIFT)));
+            Text_Debug_Draw(Text_Debug_IntToStringConversion(1, FP_FROM(var_a0, Q12_SHIFT)));
         }
         while (--arg1 > 0);
     }

@@ -6,7 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "main/fsqueue.h"
-#include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/text/text_draw.h"
 
 void GameFs_TitleGfxSeek(void) // 0x80032bd0
 {

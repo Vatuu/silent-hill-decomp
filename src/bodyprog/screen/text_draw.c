@@ -1,8 +1,9 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/screen_draw.h"
-#include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
 
 #define MAP_MSG_CODE_MARKER        '~' /** Message code start. */

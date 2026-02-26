@@ -5,15 +5,17 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/screen/bg_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound_system.h"
 #include "main/fsqueue.h"
 
 VECTOR3 D_800C4640[2][8];
-q3_12 D_800C4700[8];
-q19_12 D_800C4710[6];
+q3_12   D_800C4700[8];
+q19_12  D_800C4710[6];
 
 // ========================================
 // EVENT AND INTERACTIONS RELATED
@@ -330,7 +332,7 @@ void func_800862F8(s32 stateStep, e_FsFile fileIdx, bool reset) // 0x800862F8
             break;
 
         case 2:
-            Gfx_BackgroundSpriteDraw_2(&g_ItemInspectionImg);
+            Screen_BackgroundImgDrawAlt(&g_ItemInspectionImg);
             break;
 
         case 3:
@@ -349,7 +351,7 @@ void func_800862F8(s32 stateStep, e_FsFile fileIdx, bool reset) // 0x800862F8
             break;
 
         case 5:
-            Gfx_BackgroundSpriteDraw_2(&D_800A9A04);
+            Screen_BackgroundImgDrawAlt(&D_800A9A04);
             break;
 
         case 6:
@@ -484,7 +486,7 @@ void func_800867B4(s32 state, s32 paperMapFileIdx) // 0x800867B4
             break;
 
         case 1:
-            Gfx_BackgroundSpriteDraw(&g_PaperMapImg);
+            Screen_BackgroundImgDraw(&g_PaperMapImg);
             break;
 
         case 2:
@@ -922,13 +924,13 @@ void MapMsg_DisplayWithTexture1(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_1
             break;
 
         case 5:
-            g_BackgroundColor = 48;
+            g_Screen_BackgroundImgIntensity = 48;
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             MapMsg_DisplayAndHandleSelection(false, mapMsgIdx1, 0, 0, 0, true);
             break;
 
         case 6:
-            g_BackgroundColor = 48;
+            g_Screen_BackgroundImgIntensity = 48;
 
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             SysWork_StateStepIncrementAfterFade(2, true, 0, fadeTimestep1, true);
@@ -1086,9 +1088,9 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
             SysWork_StateStepIncrement(1);
 
         case 3:
-            g_BackgroundColor = 88;
+            g_Screen_BackgroundImgIntensity = 88;
 
-            Gfx_BackgroundSpriteDraw(&g_PaperMapImg);
+            Screen_BackgroundImgDraw(&g_PaperMapImg);
             MapMsg_DisplayAndHandleSelection(true, mapMsgIdx, 4, 5, 0, true); // 4 is "No", 5 is "Yes".
             break;
 
@@ -1127,9 +1129,9 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
             SysWork_StateStepIncrement(1);
 
         case 5:
-            g_BackgroundColor = 88;
+            g_Screen_BackgroundImgIntensity = 88;
 
-            Gfx_BackgroundSpriteDraw(&g_PaperMapImg);
+            Screen_BackgroundImgDraw(&g_PaperMapImg);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), true);
             break;
 

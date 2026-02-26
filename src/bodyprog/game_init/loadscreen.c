@@ -6,8 +6,8 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
-#include "bodyprog/gfx/screen_draw.h"
-#include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/text/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
@@ -41,12 +41,12 @@ void Gfx_MapEffectsSet(s32 unused) // 0x80035B58
 
 void func_80035B98(void) // 0x80035B98
 {
-    Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
+    Screen_BackgroundImgDraw(&g_ItemInspectionImg);
 }
 
 void Gfx_LoadingScreen_BackgroundTexture(void) // 0x80035BBC
 {
-    Gfx_BackgroundSpriteDraw(&g_LoadingScreenImg);
+    Screen_BackgroundImgDraw(&g_LoadingScreenImg);
 }
 
 void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0

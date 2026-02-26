@@ -6,8 +6,9 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
-#include "bodyprog/gfx/screen_draw.h"
-#include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/text/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
@@ -19,6 +20,24 @@
 #include "main/mem.h"
 #include "main/rng.h"
 #include "screens/stream/stream.h"
+
+// ========================================
+// INLINE FUNCTIONS
+// ========================================
+
+static inline void Game_StateStepIncrement(void) // TODO: Move to header?
+{
+    s32 gameStateStep0 = g_GameWork.gameStateStep_598[0];
+
+    g_SysWork.timer_20              = 0;
+    g_GameWork.gameStateStep_598[1] = 0;
+    g_GameWork.gameStateStep_598[2] = 0;
+    g_GameWork.gameStateStep_598[0] = gameStateStep0 + 1;
+}
+
+// ========================================
+// FUNCTIONS
+// ========================================
 
 void Anim_CharaTypeAnimInfoClear(void) // 0x800348C0
 {
@@ -42,16 +61,6 @@ void GameState_LoadScreen_Update(void) // 0x800348E8
             SD_Call(Sfx_Unk1501);
         }
     }
-}
-
-static inline void Game_StateStepIncrement(void) // TODO: Move to header?
-{
-    s32 gameStateStep0 = g_GameWork.gameStateStep_598[0];
-
-    g_SysWork.timer_20              = 0;
-    g_GameWork.gameStateStep_598[1] = 0;
-    g_GameWork.gameStateStep_598[2] = 0;
-    g_GameWork.gameStateStep_598[0] = gameStateStep0 + 1;
 }
 
 void GameFs_MapStartup(void) // 0x80034964
@@ -257,8 +266,10 @@ void Gfx_LoadingScreenDraw(void) // 0x80034E58
         g_MapOverlayHeader.loadingScreenFuncs_18[g_SysWork.loadingScreenIdx_2281]();
     }
 
-    Gfx_2dBackgroundMotionBlur(SyncMode_Wait2);
+    Screen_BackgroundMotionBlur(SyncMode_Wait2);
 }
+
+/// SPLIT
 
 void Game_NpcClear(void) // 0x80034EC8
 {
@@ -322,6 +333,8 @@ void Game_InGameInit(void) // 0x80034FB8
     Fs_QueueWaitForEmpty();
     GameFs_MapItemsModelLoad(mapOvlId);
 }
+
+/// SPLIT
 
 void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 {

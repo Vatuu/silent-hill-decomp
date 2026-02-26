@@ -1,33 +1,42 @@
 #include "game.h"
 
-#include "bodyprog/bodyprog.h" // Only needed for `g_OtTags0`.
-#include "bodyprog/gfx/text_draw.h"
-#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/text/text_draw.h"
+#include "bodyprog/text/text_debug_draw.h"
+#include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/math/math.h"
 
 #include <ctype.h>
 
-DVECTOR g_Gfx_DebugStringPosition0;
-DVECTOR g_Gfx_DebugStringPosition1;
+// ========================================
+// STATIC VARIABLES
+// ========================================
 
-void Gfx_DebugStringPosition(s16 x, s16 y) // 0x80031EFC
+static DVECTOR g_Text_Debug_PositionSet0;
+static DVECTOR g_Text_Debug_PositionSet1;
+
+// ========================================
+// TEXT (DEBUG) DRAW
+// ========================================
+
+void Text_Debug_PositionSet(s16 x, s16 y) // 0x80031EFC
 {
     #define OFFSET_X SCREEN_POSITION_X(50.0f)
     #define OFFSET_Y SCREEN_POSITION_Y(47.0f)
 
     if (x != NO_VALUE)
     {
-        g_Gfx_DebugStringPosition0.vx =
-        g_Gfx_DebugStringPosition1.vx = x - OFFSET_X;
+        g_Text_Debug_PositionSet0.vx =
+        g_Text_Debug_PositionSet1.vx = x - OFFSET_X;
     }
 
     if (y != NO_VALUE)
     {
-        g_Gfx_DebugStringPosition1.vy = y - OFFSET_Y;
+        g_Text_Debug_PositionSet1.vy = y - OFFSET_Y;
     }
 }
 
-void Gfx_DebugStringDraw(char* str) // 0x80031F40
+void Text_Debug_Draw(char* str) // 0x80031F40
 {
     #define GLYPH_SIZE_X 8
     #define GLYPH_SIZE_Y 8
@@ -51,8 +60,8 @@ void Gfx_DebugStringDraw(char* str) // 0x80031F40
     ot     = (GsOT*)&g_OtTags0[g_ActiveBufferIdx][6];
     strCpy = str;
     packet = GsOUT_PACKET_P;
-    posX   = g_Gfx_DebugStringPosition1.vx;
-    posY   = g_Gfx_DebugStringPosition1.vy;
+    posX   = g_Text_Debug_PositionSet1.vx;
+    posY   = g_Text_Debug_PositionSet1.vy;
 
     while (*strCpy != 0)
     {
@@ -80,7 +89,7 @@ void Gfx_DebugStringDraw(char* str) // 0x80031F40
                 break;
 
             case 10:
-                posX  = g_Gfx_DebugStringPosition0.vx;
+                posX  = g_Text_Debug_PositionSet0.vx;
                 posY += GLYPH_SIZE_Y;
                 break;
         }
@@ -89,7 +98,7 @@ void Gfx_DebugStringDraw(char* str) // 0x80031F40
         packet += sizeof(SPRT_8);
     }
 
-    *((u32*)&g_Gfx_DebugStringPosition1) = (posX & 0xFFFF) + (posY << 16);
+    *((u32*)&g_Text_Debug_PositionSet1) = (posX & 0xFFFF) + (posY << 16);
     tPage                                = (DR_TPAGE*)packet;
 
     setDrawTPage(tPage, 0, 1, getTPageN(0, 0, 4, 1));
@@ -99,7 +108,7 @@ void Gfx_DebugStringDraw(char* str) // 0x80031F40
     GsOUT_PACKET_P = packet;
 }
 
-char* Math_IntegerToString(s32 widthMin, s32 val) // 0x80032154
+char* Text_Debug_IntToStringConversion(s32 widthMin, s32 val) // 0x80032154
 {
     bool  isNegative;
     char* str;
@@ -145,7 +154,7 @@ char* Math_IntegerToString(s32 widthMin, s32 val) // 0x80032154
 }
 
 #if VERSION_DATE <= VERSION_DATE_PROTO_981216
-void Gfx_DebugQ12Print(s32 offsetX, s32 fracDigits, q19_12 val) // 0x8002BCAC in 98-12-16, not included in retail.
+void Text_Debug_DecToStringConversion(s32 offsetX, s32 fracDigits, q19_12 val) // 0x8002BCAC in 98-12-16, not included in retail.
 {
     s32 i;
 
@@ -167,7 +176,7 @@ void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800321EC
 
     for (i = 0; i < (arg0 - 1); i++)
     {
-        g_Gfx_DebugStringPosition1.vx += 8;
+        g_Text_Debug_PositionSet1.vx += 8;
     }
 
     str  = PSX_SCRATCH_ADDR(0x2F);
@@ -207,7 +216,7 @@ void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800321EC
         quotient                      = arg2 / 10;
         *str                          = (arg2 - (quotient * 10)) + '0';
         arg2                          = quotient;
-        g_Gfx_DebugStringPosition1.vx -= 8;
+        g_Text_Debug_PositionSet1.vx -= 8;
     }
 
     str--;
@@ -217,6 +226,6 @@ void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800321EC
     {
         str--;
         *str                          = '-';
-        g_Gfx_DebugStringPosition1.vx -= 8;
+        g_Text_Debug_PositionSet1.vx -= 8;
     }
 }
