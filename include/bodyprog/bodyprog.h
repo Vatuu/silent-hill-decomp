@@ -2163,9 +2163,6 @@ extern s_AnimInfo D_800A998C;
 /** Current player anim index store? */
 extern u8 D_800A9990;
 
-/** Used in `func_800D929C` from `map0_s00.c`. */
-extern s32 D_800A999C;
-
 // Likely declared as static inside the function that uses it.
 extern s32 D_800A99A0;
 
@@ -2488,10 +2485,6 @@ extern s8* D_800C15B0;
 extern s8 D_800C15B4;
 
 extern s16 D_800C16A4;
-
-extern s32 D_800C3920;
-
-extern s32 pad_bss_800C3924;
 
 extern s16 D_800C391E;
 

@@ -5,18 +5,15 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "main/fsqueue.h"
 #include "bodyprog/demo.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/memcard.h"
-#include "bodyprog/player_logic.h"
-#include "bodyprog/ranking.h"
 #include "bodyprog/sound_background.h"
 #include "bodyprog/sound_system.h"
-#include "main/fsqueue.h"
 #include "main/mem.h"
 #include "main/rng.h"
 #include "screens/stream/stream.h"
@@ -32,15 +29,22 @@
  * `func_800364BC` meaning that `D_800BCD5C` is either declared in a
  * different file, or `func_800364BC` is actually part of the same split
  * which contain all "CURRENT ROOM INFO GET" and "UNKNOWN" functions
-*/
+ *
+ * @note OPM16 and the November 24, 98 preview builds further confirm that this
+ * functions belong to a same file.
+ */
 
-s32 D_800BCD5C;
+extern const char D_80025234[];
 
-u32 unknown_D_800A999C = 0x80025234;
+// ========================================
+// STATIC VARIABLES
+// ========================================
 
-s32 D_800A99A0 = 0;
+static s32 D_800BCD5C;
 
-u8 g_Sd_BgmLayerLimits[8] = { 128, 128, 128, 128, 128, 128, 128, 128 };
+static u32 D_800A999C = &D_80025234;
+static s32 D_800A99A0 = 0;
+static u8  g_Bgm_LayerLimits[8] = { 128, 128, 128, 128, 128, 128, 128, 128 };
 
 // ========================================
 // MUSIC UPDATE
@@ -147,7 +151,7 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
 
     if (bgmLayerLimitCpy == NULL)
     {
-        bgmLayerLimitCpy = g_Sd_BgmLayerLimits;
+        bgmLayerLimitCpy = g_Bgm_LayerLimits;
     }
 
     if (g_SysWork.playerWork_4C.player_0.health_B0 <= Q12(0.0f) || g_SysWork.sysState_8 == SysState_GameOver)
@@ -412,7 +416,7 @@ u32 func_800364BC(void) // 0x800364BC
 }
 
 // `RECT`s?
-const char rodataPad_80025234[] = { 0, 177, 58, 204, 0, 0, 0, 0 }; // Could this indicate file split nearby?
+const char D_80025234[] = { 0, 177, 58, 204, 0 }; // Could this indicate file split nearby?
 
 void func_8003652C(void) // 0x8003652C
 {

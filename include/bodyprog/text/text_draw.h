@@ -59,6 +59,12 @@ extern GsSPRITE D_800C38F8;
 
 extern s16 D_800C391C;
 
+extern s16 pad_bss_800C391E;
+
+extern s32 D_800C3920;
+
+extern s32 pad_bss_800C3924;
+
 // ==========
 // FUNCTIONS
 // ==========

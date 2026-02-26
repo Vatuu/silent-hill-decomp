@@ -207,8 +207,6 @@ extern u8 D_800AA604[][];
 
 extern s_XaItemData g_XaItemData[];
 
-extern u8 g_Sd_BgmLayerLimits[8];
-
 extern s_VabInfo g_Vab_InfoTable[420];
 
 extern u8* g_Sd_KdtBuffer[];

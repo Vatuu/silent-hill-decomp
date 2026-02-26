@@ -45,6 +45,12 @@ GsSPRITE D_800C38F8;
 
 s16 D_800C391C;
 
+s16 pad_bss_800C391E;
+
+s32 D_800C3920;
+
+s32 pad_bss_800C3924;
+
 /** @brief Glyph widths for the 12x16 font. Used for kerning. */
 static const u8 FONT_12_X_16_GLYPH_WIDTHS[FONT_12_X_16_GLYPH_COUNT] = {
     3,  7,  7,  11, 11, 4,  10, 4,  6,  10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4,  4,

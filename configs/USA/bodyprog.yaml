@@ -67,7 +67,7 @@ segments:
       - [0x5AC,  .rodata, sys/fs_screens]
       - [0x5BC,  .rodata, sys/settings_reset]
       - [0x618,  .rodata, sys/memcard_2]
-      - [0x6A0,  .rodata, game_init/ingame_init]
+      - [0x6A0,  .rodata, game_init/ingame_load]
       - [0x6D4,  .rodata, events/bgm_update]
       - [0x700,  .rodata, events/mapmsg_display]
       - [0x75C,  .rodata, events/bodyprog_gamestates_80038BD4]
@@ -137,7 +137,9 @@ segments:
       - [0xE978,    c, sys/memcard_2] # `memcard_update.c?`
       - [0xF580,    c, sys/warmboot]  # Possibly `sh1_init/sh_init` or some `init` derivative name considering SH2 and 4 symbols.
       - [0xF8BC,    c, sys/joy]
-      - [0xFD60,    c, game_init/ingame_init]
+      - [0xFD60,    c, game_init/ingame_load]
+      - [0x10368,   c, game_init/ingame_init]
+      - [0x1055C,   c, game_init/ingame_subinit]
       - [0x1072C,   c, game_init/fs_npc_anim]
       - [0x10C20,   c, game_init/background_sound_init]
       - [0x10FA4,   c, game_init/loadscreen]
@@ -153,7 +155,6 @@ segments:
                                                             # in SH2 the main menu code it is within the `events` sub-folder.
       - [0x11254,   c, events/bgm_update]                   # }
       - [0x11A58,   c, events/mapmsg_display]               # }
-      - [0x122E8,   c, events/bodyprog_80036E48]            # }
       - [0x125F4,   c, events/radio]                        # }
       - [0x12688,   c, events/bodyprog_event_800371E8]      # }
       - [0x13264,   c, events/bodyprog_npc_80037DC4]        # }
@@ -443,7 +444,7 @@ segments:
                          # In case of assigning the proper offset (0x981E1) it will cause missmatch as the linker
                          # will add another 4 bytes.
       - [0x981E4,  pad] # Garbage.
-      - [0x981E8, .bss, game_init/ingame_init]
+      - [0x981E8, .bss, game_init/ingame_load]
       - [0x981EC,  pad] # Garbage.
       - [0x981F0, .bss, events/bgm_update]
       - [0x98200, .bss, events/mapmsg_display]
@@ -465,7 +466,6 @@ segments:
       - [0x9EC80, .bss, view/vw_main]
       - [0x9ED08, .bss, view/vw_calc]
       - [0x9ED48, .bss, screen/text_draw]
-      - [0x9EDC0, .bss, events/bodyprog_80036E48]
       - [0x9EDC8, .bss, items/item_screens_cam]
       - [0x9EE00, .bss, items/item_screens_1]
       - [0x9EE08, .bss, items/item_screens_2]

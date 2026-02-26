@@ -51,7 +51,7 @@ DEFAULT_CONTROLLER_CONFIGS                   = 0x8002511C;
 //----------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-//--- PA: 0x0006A0   VA: 0x80025200   subsegment: .rodata, game_init/ingame_init
+//--- PA: 0x0006A0   VA: 0x80025200   subsegment: .rodata, game_init/ingame_load
 //------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -397,15 +397,23 @@ Joy_ControllerDataUpdate                     = 0x80034494; // type:func
 ControllerData_AnalogToDigital               = 0x80034670; // type:func
 
 //------------------------------------------------------------------------
-//--- PA: 0x00FD60   VA: 0x800348C0   subsegment: c, game_init/ingame_init
+//--- PA: 0x00FD60   VA: 0x800348C0   subsegment: c, game_init/ingame_load
 //------------------------------------------------------------------------
 Anim_CharaTypeAnimInfoClear                  = 0x800348C0; // type:func
 GameState_LoadScreen_Update                  = 0x800348E8; // type:func
 GameFs_MapStartup                            = 0x80034964; // type:func
 Gfx_LoadingScreenDraw                        = 0x80034E58; // type:func
+
+//------------------------------------------------------------------------
+//--- PA: 0x010368   VA: 0x80034EC8   subsegment: c, game_init/ingame_init
+//------------------------------------------------------------------------
 Game_NpcClear                                = 0x80034EC8; // type:func
 Game_NpcInit                                 = 0x80034F18; // type:func
 Game_InGameInit                              = 0x80034FB8; // type:func
+
+//---------------------------------------------------------------------------
+//--- PA: 0x01055C   VA: 0x800350BC   subsegment: c, game_init/ingame_subinit
+//---------------------------------------------------------------------------
 Game_SavegameInitialize                      = 0x800350BC; // type:func
 Game_PlayerInit                              = 0x80035178; // type:func
 GameFs_MapLoad                               = 0x8003521C; // type:func
@@ -457,10 +465,6 @@ func_8003652C                                = 0x8003652C; // type:func
 //------------------------------------------------------------------------
 Gfx_MapMsg_Draw                              = 0x800365B8; // type:func
 Gfx_MapMsg_SelectionUpdate                   = 0x80036B5C; // type:func
-
-//---------------------------------------------------------------------------
-//--- PA: 0x0122E8   VA: 0x80036E48   subsegment: c, events/bodyprog_80036E48
-//---------------------------------------------------------------------------
 
 //---------------------------------------------------------------
 //--- PA: 0x0125F4   VA: 0x80037154   subsegment: c, events/radio
@@ -2436,11 +2440,11 @@ g_Screen_BackgroundImgIntensity              = 0x800A8E58;
 //--- PA: 0x0842FC   VA: 0x800A8E5C   subsegment: .data, screen/screen_fade
 //-------------------------------------------------------------------------
 g_ScreenFadeProgress                         = 0x800A8E94; // type:s32
-g_BlackBorderShade                           = 0x800A8F40;
 
 //-------------------------------------------------------------------------------------
 //--- PA: 0x084338   VA: 0x800A8E98   subsegment: .data, screen/screen_cutscenesborders
 //-------------------------------------------------------------------------------------
+g_BlackBorderShade                           = 0x800A8F40;
 
 //-------------------------------------------------------------------------
 //--- PA: 0x0843E4   VA: 0x800A8F44   subsegment: .data, screen/screen_data
@@ -2466,8 +2470,9 @@ g_MapEffectsPresets                          = 0x800A93CC;
 //--- PA: 0x084C08   VA: 0x800A9768   subsegment: .data, sys/gamemain
 //-------------------------------------------------------------------
 g_Demo_FrameCount                            = 0x800A9768; // type:s32
-g_WarmBootTimer                        = 0x800A976C; // type:s32
+g_WarmBootTimer                              = 0x800A976C; // type:s32
 g_PrevVBlanks                                = 0x800A9770; // type:s32
+g_baseVabAudiosTaskId                        = 0x800A9774;
 g_GameStateUpdateFuncs                       = 0x800A977C;
 
 //--------------------------------------------------------------------
@@ -2491,7 +2496,7 @@ g_CharaAnimInfoIdxs                          = 0x800A98FC;
 g_CharaTypeAnimInfo                          = 0x800A992C;
 D_800A998C                                   = 0x800A998C; // type:AnimInfo size:0x10
 D_800A99A0                                   = 0x800A99A0;
-g_Sd_BgmLayerLimits                          = 0x800A99A4;
+g_Bgm_LayerLimits                            = 0x800A99A4;
 
 //----------------------------------------------------------------------------
 //--- PA: 0x084E4C   VA: 0x800A99AC   subsegment: .data, events/mapmsg_display
@@ -2946,7 +2951,7 @@ g_Text_Debug_PositionSet1                    = 0x800B5C24; // type:DVECTOR size:
 //--- PA: 0x0910C8   VA: 0x800B5C28   subsegment: .bss, screen/screen_fade
 //------------------------------------------------------------------------
 g_ScreenFadeTimestep                         = 0x800B5C30; // type:s32
-g_baseVabAudiosTaskId = 0x800A9774;
+
 //------------------------------------------------------------------------
 //--- PA: 0x0910D4   VA: 0x800B5C34   subsegment: .bss, screen/screen_data
 //------------------------------------------------------------------------
@@ -2990,7 +2995,7 @@ g_SelectedFileIdx                            = 0x800BCD3F;
 g_SelectedDeviceId                           = 0x800BCD40; // size:1
 
 //---------------------------------------------------------------------------
-//--- PA: 0x0981E8   VA: 0x800BCD48   subsegment: .bss, game_init/ingame_init
+//--- PA: 0x0981E8   VA: 0x800BCD48   subsegment: .bss, game_init/ingame_load
 //---------------------------------------------------------------------------
 demoLoadAttempCount                          = 0x800BCD48;
 
@@ -3085,10 +3090,6 @@ VbWvsMatrix                                  = 0x800C3888; // type:MATRIX size:0
 g_StringPosition                             = 0x800C38A8; // type:DVECTOR
 g_StringPositionX1                           = 0x800C38AC; // type:s32
 g_MapMsg_WidthTable                          = 0x800C38C8; // type:s32
-
-//------------------------------------------------------------------------------
-//--- PA: 0x09EDC0   VA: 0x800C3920   subsegment: .bss, events/bodyprog_80036E48
-//------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------
 //--- PA: 0x09EDC8   VA: 0x800C3928   subsegment: .bss, items/item_screens_cam
