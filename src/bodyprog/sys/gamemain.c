@@ -8,10 +8,9 @@
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/joy.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/memcard.h"
 #include "bodyprog/sound_system.h"
 #include "screens/b_konami/b_konami.h"
-
-#include "bodyprog/memcard.h"
 #include "screens/saveload.h"
 
 s32 g_Demo_FrameCount = 0;

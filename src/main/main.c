@@ -42,8 +42,8 @@ s_FsImageDesc g_MainImg1 = {
 s32 g_MainFbIdx = 0;
 
 DISPENV g_MainDispEnv = {
-    .disp   = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT  },
-    .screen = { 0, 8, 256,          224            }
+    .disp   = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT },
+    .screen = { 0, 8, 256,          224           }
 };
 
 DRAWENV g_MainDrawEnv = {

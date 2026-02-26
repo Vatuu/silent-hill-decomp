@@ -4,19 +4,19 @@
 #include "common.h"
 
 // Used by both `GameState_KcetLogo_MemCardCheck` and `GameState_KcetLogo_Update`.
-typedef enum
+typedef enum _KcetLogoStateStep
 {
     KcetLogoStateStep_Init,
     KcetLogoStateStep_CheckMemCards,
     KcetLogoStateStep_NoMemCard,
     KcetLogoStateStep_NoMemCardFreeSpace,
     KcetLogoStateStep_NoSaveGame,
-    KcetLogoStateStep_HasSaveGame,
+    KcetLogoStateStep_HasSavegame,
     KcetLogoStateStep_LogoDelay,
-    KcetLogoStateStep_FinishAfterFade,
+    KcetLogoStateStep_FinishAfterFade
 } e_KcetLogoStateStep;
 
-typedef enum
+typedef enum _KonamiLogoStateStep
 {
     KonamiLogoStateStep_Init,
     KonamiLogoStateStep_WaitForFade,

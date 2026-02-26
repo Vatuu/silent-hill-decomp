@@ -16,7 +16,6 @@
 
 void GameState_KonamiLogo_Update(void) // 0x800C95AC
 {
-
     while (g_GameWork.gameState_594 == GameState_KonamiLogo)
     {
         Joy_Update();
@@ -124,7 +123,7 @@ s32 GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
         g_SelectedFileIdx             = g_MemCard_ActiveSavegameEntry->fileIdx_6;
         g_Savegame_SelectedElementIdx = g_MemCard_ActiveSavegameEntry->elementIdx_7;
 
-        return KcetLogoStateStep_HasSaveGame;
+        return KcetLogoStateStep_HasSavegame;
     }
 
     return KcetLogoStateStep_NoSaveGame;
@@ -132,7 +131,7 @@ s32 GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
 
 void GameState_KcetLogo_Update(void) // 0x800C99A4
 {
-    static u8 nextGameState = 0; // 0x800CA4F0
+    static u8 nextGameState = GameState_Init; // 0x800CA4F0
 
     while (g_GameWork.gameState_594 == GameState_KcetLogo)
     {
@@ -237,7 +236,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
 
-            case KcetLogoStateStep_HasSaveGame:
+            case KcetLogoStateStep_HasSavegame:
                 while (g_GameWork.gameStateStep_598[1] < 3)
                 {
                     switch (g_GameWork.gameStateStep_598[1])

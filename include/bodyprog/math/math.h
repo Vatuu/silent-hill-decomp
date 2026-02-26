@@ -17,7 +17,7 @@
 #define VECTOR3(x, y, z) \
     { Q12(x), Q12(y), Q12(z) }
 
-/** @brief Constructs a `VECTOR3` in a fixed-point Q19.12 format for RODATA vectors used as inlined function parameters.
+/** @brief Constructs a `VECTOR3` in a fixed-point Q19.12 format.
  *
  * @param x X component (`float`).
  * @param y Y component (`float`).
@@ -27,24 +27,15 @@
 #define QVECTOR3(x, y, z) \
     (VECTOR3)VECTOR3(x, y, z)
 
-/** @brief Constructs an `SVECTOR` containing Euler angles in a fixed-point Q3.12 format.
+/** @brief Constructs a `SVECTOR` in a fixed-point Q3.12 format.
  *
- * @param x X degree component (`float`).
- * @param y Y degree component (`float`).
- * @param z Z degree component (`float`).
- * @return `SVECTOR` containing Euler angles in a fixed-point Q3.12 format.
+ * @param x X component (`float`).
+ * @param y Y component (`float`).
+ * @param z Z component (`float`).
+ * @return `SVECTOR` in a fixed-point Q3.12 format.
  */
 #define SVECTOR(x, y, z) \
     { Q12_ANGLE(x), Q12_ANGLE(y), Q12_ANGLE(z) }
-
-/** @brief Constructs a `DVECTOR` containing a screen position in 320x240 screen space.
- *
- * @param x X position in percent (`float`).
- * @param z Y position in percent (`float`).
- * @return `DVECTOR` containing a screen position in 320x240 screen space.
- */
-#define DVECTOR(x, y) \
-    { SCREEN_POSITION_X(x), SCREEN_POSITION_Y(y) }
 
 /** @brief Packs an RGB + code color.
  *

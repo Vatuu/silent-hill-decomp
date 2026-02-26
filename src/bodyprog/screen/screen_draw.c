@@ -1,7 +1,7 @@
 #include "game.h"
 
-#include <libetc.h>
-#include <libgs.h>
+#include <psyq/libetc.h>
+#include <psyq/libgs.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/gfx/screen_draw.h"

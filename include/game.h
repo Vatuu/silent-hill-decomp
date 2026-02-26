@@ -172,14 +172,14 @@ struct _Model;
 #define SCREEN_FADE_STATUS(state, isWhite) \
     ((state) | ((isWhite) ? (1 << 3) : 0))
 
-/** @brief Checks if the screen fade is is not in progress (finished step) by masking away the color bit.
+/** @brief Checks if the screen fade is not in progress (finished step) by masking away the color bit.
  *
  * @return `true` if finished, `false` if still in progress.
  */
 #define ScreenFade_IsFinished() \
     ((g_Screen_FadeStatus & 0x7) == ScreenFadeState_FadeOutComplete)
 
-/** @brief Checks if the screen fade is is not in progress (idle step) without masking away the color bit.
+/** @brief Checks if the screen fade is not in progress (idle step) without masking away the color bit.
  *
  * @return `true` if idle, `false` otherwise.
  */

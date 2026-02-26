@@ -408,7 +408,7 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
             }
             break;
 
-        case 1: // Checks if previous step has gone right.
+        case 1: // Checks if previous step was successful
             memCardResult = MemCard_StateResult();
             switch (memCardResult)
             {
@@ -453,7 +453,7 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
             }
             break;
 
-        case 3: // Checks if previous step has gone right.
+        case 3: // Checks if previous step was successful
             memCardResult = MemCard_StateResult();
             switch (memCardResult)
             {
@@ -517,7 +517,7 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
             }
             break;
 
-        case 7: // Checks if previous step has gone right.
+        case 7: // Checks if previous step was successful
             memCardResult = MemCard_StateResult();
             switch (memCardResult)
             {
@@ -685,7 +685,7 @@ void MemCard_Process_Load(s_MemCard_Process* statusPtr)
             }
             break;
 
-        case 2: // Checks if previous step has gone right.
+        case 2: // Checks if previous step was successful
             memCardResult = MemCard_StateResult();
             switch (memCardResult)
             {
@@ -839,7 +839,7 @@ void MemCard_Process_Save(s_MemCard_Process* statusPtr)
             }
             break;
 
-        case 2: // Checks if previous step has gone right.
+        case 2: // Checks if previous step was successful.
             memCardResult = MemCard_StateResult();
             switch (memCardResult)
             {
@@ -895,7 +895,7 @@ void MemCard_Process_Save(s_MemCard_Process* statusPtr)
             }
             break;
 
-        case 4: // Checks if previous step has gone right.
+        case 4: // Checks if previous step was successful.
             memCardResult = MemCard_StateResult();
             switch (memCardResult)
             {
@@ -932,7 +932,7 @@ void MemCard_Process_Save(s_MemCard_Process* statusPtr)
             }
             break;
 
-        case 6: // Checks if previous step has gone right.
+        case 6: // Checks if previous step was successful
             memCardResult = MemCard_StateResult();
             switch (memCardResult)
             {
@@ -969,7 +969,7 @@ void MemCard_Process_Save(s_MemCard_Process* statusPtr)
             }
             break;
 
-        case 9: // Checks if previous step has gone right.
+        case 9: // Checks if previous step was successful
             memCardResult = MemCard_StateResult();
             switch (memCardResult)
             {

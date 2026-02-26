@@ -689,14 +689,14 @@ void Gfx_MainMenu_FogScatter(void) // 0x8003BBF4
 
 void Gfx_MainMenu_FogUpdate(void) // 0x8003BC8C
 {
-    static s32 FOG_COUNT = 0;
+    static s32 fogCount = 0;
 
-    if (FOG_COUNT == ((FOG_COUNT / 5) * 5))
+    if (fogCount == ((fogCount / 5) * 5))
     {
         Gfx_MainMenu_FogScatter();
     }
 
-    FOG_COUNT++;
+    fogCount++;
     Gfx_MainMenu_FogDraw();
 }
 
