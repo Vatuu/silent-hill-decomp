@@ -5,14 +5,14 @@
 #include <psyq/libpress.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/text/text_draw.h"
+#include "bodyprog/gamemain.h"
 #include "bodyprog/joy.h"
 #include "bodyprog/libsd.h"
+#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
 #include "main/fileinfo.h"
 #include "screens/stream/stream.h"
-#include "bodyprog/gamemain.h"
 
 void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
 {
@@ -96,7 +96,7 @@ void GameState_DebugMoviePlayer_Update(void) // 0x801E2908
 #if VERSION_DATE <= VERSION_DATE_PROTO_981216
     // Code seen in 98-12-16 to display movie number selection (`Text_Debug_Draw` was nullsub in those builds).
     Text_Debug_Draw("MOVIE NO=");
-    Text_Debug_Draw(Text_Debug_IntToStringConversion(2, g_Debug_MoviePlayerIdx));
+    Text_Debug_Draw(Text_Debug_IntToString(2, g_Debug_MoviePlayerIdx));
 #endif
 
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)

@@ -29,8 +29,7 @@ s8 g_Demo_ReproducedCount = 0;
 
 s8* D_800BCDE0;
 
-#define MAIN_MENU_OPTION_COUNT 5
-#define MAIN_MENU_FOG_COUNT    21
+#define MAIN_MENU_FOG_COUNT 21
 
 static const s32 rodataPad_8002547C = 0;
 
@@ -132,7 +131,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 }
             }
 
-            g_MainMenu_VisibleEntryFlags |= g_MainMenu_VisibleEntryFlags << MAIN_MENU_OPTION_COUNT;
+            g_MainMenu_VisibleEntryFlags |= g_MainMenu_VisibleEntryFlags << MainMenuEntry_Count;
 
             if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
             {
@@ -148,7 +147,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
             {
-                g_MainMenu_SelectedEntry += MAIN_MENU_OPTION_COUNT;
+                g_MainMenu_SelectedEntry += MainMenuEntry_Count;
                 while(!(g_MainMenu_VisibleEntryFlags & (1 << --g_MainMenu_SelectedEntry)));
             }
 
@@ -158,7 +157,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             }
 
             // Wrap selection.
-            g_MainMenu_SelectedEntry %= MAIN_MENU_OPTION_COUNT;
+            g_MainMenu_SelectedEntry %= MainMenuEntry_Count;
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
@@ -417,7 +416,7 @@ void Gfx_MainMenu_MainTextDraw(void) // 0x8003B568
     s32 i;
 
     // Draw selection strings.
-    for (i = 0; i < MAIN_MENU_OPTION_COUNT; i++)
+    for (i = 0; i < MainMenuEntry_Count; i++)
     {
         // Check entry visibility flag.
         if (!(g_MainMenu_VisibleEntryFlags & (1 << i)))
@@ -628,12 +627,12 @@ void Gfx_MainMenu_FogRandomize(void) // 0x8003BAC4
     u8* ptr1;
     s8* ptr2;
 
-    static s32 RAND = 0;
+    static q19_12 randAngle = Q12_ANGLE(0.0f);
 
     ptr   = D_800BCDE0;
     ptr1  = ptr + 441;
-    RAND += Rng_GenerateInt(4, 11u);
-    val   = Q12_MULT(Math_Sin(RAND), 10) - 122;
+    randAngle += Rng_GenerateInt(4, 11u);
+    val   = Q12_MULT(Math_Sin(randAngle), 10) - 122;
     ptr2  = ptr + 461;
 
     for (i = 20; i >= 0; i--)
@@ -716,5 +715,4 @@ void func_8003BCF4(void) // 0x8003BCF4
 static const s8  pad_rodata_8002551F = 0x4C;
 static const s32 pad_rodata_80025520 = 0x90AB9500;
 
-#undef MAIN_MENU_OPTION_COUNT
 #undef MAIN_MENU_FOG_COUNT

@@ -27,6 +27,13 @@ typedef enum _StringColorId
     StringColorId_Count       = 8
 } e_StringColorId;
 
+/** Used in string parsing. */
+typedef struct
+{
+    s8 field_0;
+    s8 positionIdx_1;
+} s_800C38B0;
+
 // ========
 // GLOBALS
 // ========
@@ -36,13 +43,6 @@ extern DVECTOR g_StringPosition; // 0x800C38A8
 
 /** String X position as `s32`. It's unclear why there are two. */
 extern s32 g_StringPositionX1; // 0x800C38AC
-
-// Used in string parsing.
-typedef struct
-{
-    s8 field_0;
-    s8 positionIdx_1;
-} s_800C38B0;
 
 extern s_800C38B0 D_800C38B0;
 

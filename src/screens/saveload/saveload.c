@@ -3,10 +3,10 @@
 #include <psyq/libetc.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/screen/screen_data.h"
-#include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/text/text_draw.h"
 #include "screens/saveload.h"
 
 #define SAVE_FLASH_TIMER_MAX 40

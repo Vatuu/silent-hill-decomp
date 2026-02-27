@@ -160,13 +160,13 @@ void func_800CCA2C(void) // 0x800CCA2C
 #if VERSION_DATE <= VERSION_DATE_PROTO_981216
             // Code seen in 98-12-16 build.
             Text_Debug_Draw("VS 0:");
-            Text_Debug_Draw(Text_Debug_IntToStringConversion(3, D_800CD768));
+            Text_Debug_Draw(Text_Debug_IntToString(3, D_800CD768));
             Text_Debug_Draw("\n");
             Text_Debug_Draw("VS 1:");
-            Text_Debug_Draw(Text_Debug_IntToStringConversion(3, D_800CD76C));
+            Text_Debug_Draw(Text_Debug_IntToString(3, D_800CD76C));
             Text_Debug_Draw("\n");
             Text_Debug_Draw("SDST:");
-            Text_Debug_Draw(Text_Debug_IntToStringConversion(3, Sd_AudioStreamingCheck()));
+            Text_Debug_Draw(Text_Debug_IntToString(3, Sd_AudioStreamingCheck()));
             Text_Debug_Draw("\n");
 
             if (D_800CD774 != 2)

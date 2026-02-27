@@ -2,10 +2,11 @@
 #define _MAPS_SHARED_H
 
 #include "game.h"
-#include "bodyprog/sound_background.h"
-#include "bodyprog/screen/screen_data.h"
+
 #include "bodyprog/screen/bg_draw.h"
+#include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/sound_background.h"
 
 // BIG TODO: Move tables below to wherever they belong when data migration is performed. I've split these into alphabetised player and NPC sections
 // to make them easier to sort through. -- Sezz

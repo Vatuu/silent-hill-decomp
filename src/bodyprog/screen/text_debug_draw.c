@@ -108,7 +108,7 @@ void Text_Debug_Draw(char* str) // 0x80031F40
     GsOUT_PACKET_P = packet;
 }
 
-char* Text_Debug_IntToStringConversion(s32 widthMin, s32 val) // 0x80032154
+char* Text_Debug_IntToString(s32 widthMin, s32 val) // 0x80032154
 {
     bool  isNegative;
     char* str;

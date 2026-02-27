@@ -333,9 +333,9 @@ bool Demo_Update(void) // 0x8008F5D8
             {
                 Text_Debug_PositionSet(8, 80);
                 Text_Debug_Draw("STEP ERROR:[H:");
-                Text_Debug_Draw(Text_Debug_IntToStringConversion(2, g_Demo_CurFrameData->gameStateExpected_8));
+                Text_Debug_Draw(Text_Debug_IntToString(2, g_Demo_CurFrameData->gameStateExpected_8));
                 Text_Debug_Draw("]/[M:");
-                Text_Debug_Draw(Text_Debug_IntToStringConversion(2, gameWork->gameState_594));
+                Text_Debug_Draw(Text_Debug_IntToString(2, gameWork->gameState_594));
                 Text_Debug_Draw("]");
 
                 g_Demo_CurFrameData = NULL;

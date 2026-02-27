@@ -5,11 +5,11 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
-#include "bodyprog/screen/screen_data.h"
-#include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/joy.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
 #include "main/fsqueue.h"
 #include "screens/b_konami/b_konami.h"
 #include "screens/b_konami/lzss.h"

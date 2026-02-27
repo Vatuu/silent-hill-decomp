@@ -35,7 +35,7 @@ typedef struct
     u_long vlcbuf1[14336];   /* 0x1F240 */
 } MOVIE_STR;
 
-// Customised StHEADER?
+// Customized `StHEADER`?
 typedef struct
 {
     u16    id;

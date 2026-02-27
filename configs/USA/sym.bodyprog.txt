@@ -321,7 +321,7 @@ Screen_BackgroundMotionBlur                  = 0x80031CCC; // type:func
 //-------------------------------------------------------------------------
 Text_Debug_PositionSet                       = 0x80031EFC; // type:func
 Text_Debug_Draw                              = 0x80031F40; // type:func
-Text_Debug_IntToStringConversion             = 0x80032154; // type:func
+Text_Debug_IntToString                       = 0x80032154; // type:func
 
 //---------------------------------------------------------------------
 //--- PA: 0x00D7F8   VA: 0x80032358   subsegment: c, screen/screen_draw
@@ -2958,7 +2958,7 @@ g_ScreenFadeTimestep                         = 0x800B5C30; // type:s32
 g_VBlanks                                    = 0x800B5C34; // type:s32
 g_UncappedVBlanks                            = 0x800B5C38; // type:s32
 g_OtTags0                                    = 0x800B5C40; // type:u32 size:0x80
-g_DeltaTime                                  = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..). Possibly name `_shDeltaTimePerFrame`
+g_DeltaTime                                  = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
 g_OtTags1                                    = 0x800B5CC4; // type:u32 size:0x4000
 g_GravitySpeed                               = 0x800B9CC8; // type:s32
 g_TickCount                                  = 0x800B9CCC;

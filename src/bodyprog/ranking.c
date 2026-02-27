@@ -835,7 +835,7 @@ void func_80091388(s32 arg0, s32 arg1, s32 arg2) // 0x80091388
         arg0 = (arg0 - arg1) - 1;
     }
 
-    Text_Debug_Draw(Text_Debug_IntToStringConversion(arg0, FP_FROM(arg2, Q12_SHIFT)));
+    Text_Debug_Draw(Text_Debug_IntToString(arg0, FP_FROM(arg2, Q12_SHIFT)));
 
     if (arg1 > 0)
     {
@@ -846,7 +846,7 @@ void func_80091388(s32 arg0, s32 arg1, s32 arg2) // 0x80091388
             arg2  -= Q12_FLOOR(var_v0);
             arg2  *= 10;
             var_a0 = arg2 % Q12(10.0f);
-            Text_Debug_Draw(Text_Debug_IntToStringConversion(1, FP_FROM(var_a0, Q12_SHIFT)));
+            Text_Debug_Draw(Text_Debug_IntToString(1, FP_FROM(var_a0, Q12_SHIFT)));
         }
         while (--arg1 > 0);
     }

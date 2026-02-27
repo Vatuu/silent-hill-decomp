@@ -801,7 +801,7 @@ void func_80091388(s32 arg0, s32 arg1, s32 arg2) // 0x80091388
         arg0 = (arg0 - arg1) - 1;
     }
 
-    Text_Debug_Draw(Text_Debug_IntToStringConversion(arg0, FP_FROM(arg2, Q12_SHIFT)));
+    Text_Debug_Draw(Text_Debug_IntToString(arg0, FP_FROM(arg2, Q12_SHIFT)));
 
     if (arg1 > 0)
     {
