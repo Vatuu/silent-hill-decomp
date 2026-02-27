@@ -1424,33 +1424,10 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
             {
                 if (var_v1 > 0xFFFFFF)
                 {
-                    var_v0 = var_v1;
-                    if (var_v1 < 0)
-                    {
-                        var_v0 = var_v1 + 0xFFF;
-                    }
-                    var_v1 = FP_FROM(var_v0, Q12_SHIFT);
-
-                    var_v0 = var_s0_2;
-                    if (var_s0_2 < 0)
-                    {
-                        var_v0 = var_s0_2 + 0xFFF;
-                    }
-                    var_s0_2 = FP_FROM(var_v0, Q12_SHIFT);
-
-                    var_v0 = var_s1;
-                    if (var_s1 < 0)
-                    {
-                        var_v0 = var_s1 + 0xFFF;
-                    }
-                    var_s1 = FP_FROM(var_v0, Q12_SHIFT);
-
-                    var_v0 = var_s2;
-                    if (var_s2 < 0)
-                    {
-                        var_v0 = var_s2 + 0xFFF;
-                    }
-                    var_s2 = FP_FROM(var_v0, Q12_SHIFT);
+                    var_v1 /= 0x1000;
+                    var_s0_2 /= 0x1000;
+                    var_s1 /= 0x1000;
+                    var_s2 /= 0x1000;
                 }
 
                 var_v1   = 0x01000000 / var_v1;

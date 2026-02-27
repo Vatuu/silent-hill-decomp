@@ -642,13 +642,7 @@ void func_800D0500(void) // 0x800D0500
             D_800D3C98 += g_DeltaTime;
 
             // TODO: Some kind of `Q12_ANGLE_ABS`?
-            var_v0 = D_800D3C98;
-            if (D_800D3C98 < 0)
-            {
-                var_v0 = D_800D3C98 + 0xFFF;
-            }
-
-            if (D_800D3C98 - FP_TO(FP_FROM(var_v0, Q12_SHIFT), Q12_SHIFT) > Q12_ANGLE(180.0f))
+            if (D_800D3C98 - FP_TO(D_800D3C98 / 0x1000, Q12_SHIFT) > Q12_ANGLE(180.0f))
             {
                 Screen_BackgroundImgDrawAlt(&D_800D3B44[1]);
             }
@@ -657,14 +651,7 @@ void func_800D0500(void) // 0x800D0500
                 Screen_BackgroundImgDrawAlt(&D_800D3B44[0]);
             }
 
-            temp_v0 = D_800D3C9C - 3;
-            var_v1  = 0;
-            if (temp_v0 >= 0)
-            {
-                var_v1 = temp_v0;
-            }
-            D_800D3C9C = var_v1;
-
+            D_800D3C9C = MAX(0, D_800D3C9C - 3);
             Sd_SfxAttributesUpdate(Sfx_Unk1613, 0, D_800D3C9C, 0);
             break;
 
@@ -672,13 +659,7 @@ void func_800D0500(void) // 0x800D0500
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.5f), false);
 
             D_800D3C98 += g_DeltaTime;
-            var_v0_2    = D_800D3C98;
-            if (D_800D3C98 < 0)
-            {
-                var_v0_2 = D_800D3C98 + 0xFFF;
-            }
-
-            if (D_800D3C98 - FP_TO(FP_FROM(var_v0_2, Q12_SHIFT), Q12_SHIFT) > Q12_ANGLE(180.0f))
+            if (D_800D3C98 - FP_TO(D_800D3C98 / 0x1000, Q12_SHIFT) > Q12_ANGLE(180.0f))
             {
                 Screen_BackgroundImgDrawAlt(&D_800D3B44[1]);
             }
@@ -687,13 +668,7 @@ void func_800D0500(void) // 0x800D0500
                 Screen_BackgroundImgDrawAlt(&D_800D3B44[0]);
             }
 
-            var_v1 = D_800D3C9C + 3;
-            if (var_v1 > 255)
-            {
-                var_v1 = 255;
-            }
-            D_800D3C9C = var_v1;
-
+            D_800D3C9C = MIN(D_800D3C9C + 3, 0xFF);
             Sd_SfxAttributesUpdate(Sfx_Unk1613, 0, D_800D3C9C, 0);
             break;
 

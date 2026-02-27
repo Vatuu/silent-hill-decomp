@@ -284,20 +284,8 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
                 var0 = -0x1A;
             }
 
-            var1 = var0 * Math_Sin(cam_ang.vy);
-            if (var1 < 0)
-            {
-                var1 += 0xFFF;
-            }
-
-            vec0.vx += FP_FROM(var1, Q12_SHIFT);
-            var2 = var0 * Math_Cos(cam_ang.vy);
-            if (var2 < 0)
-            {
-                var2 += 0xFFF;
-            }
-
-            vec0.vz += FP_FROM(var2, Q12_SHIFT);
+            vec0.vx += var0 * Math_Sin(cam_ang.vy) / 0x1000;
+            vec0.vz += var0 * Math_Cos(cam_ang.vy) / 0x1000;
         }
     }
     else
@@ -323,20 +311,8 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
                 var0 = -0x1A;
             }
 
-            var1 = var0 * Math_Sin(cam_ang.vy + Q12_ANGLE(90.0f));
-            if (var1 < 0)
-            {
-                var1 += 0xFFF;
-            }
-
-            vec0.vx += FP_FROM(var1, Q12_SHIFT);
-
-            var2 = var0 * Math_Cos(cam_ang.vy + Q12_ANGLE(90.0f));
-            if (var2 < 0)
-            {
-                var2 += 0xFFF;
-            }
-            vec0.vz += FP_FROM(var2, Q12_SHIFT);
+            vec0.vx += var0 * Math_Sin(cam_ang.vy + Q12_ANGLE(90.0f)) / 0x1000;
+            vec0.vz += var0 * Math_Cos(cam_ang.vy + Q12_ANGLE(90.0f)) / 0x1000;
         }
     }
 

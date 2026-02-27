@@ -356,14 +356,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 an
         var_s1 = Q12(1024.0f) / arg1->vz;
     }
 
-    var_v0 = arg2 * 0x1F4;
-
-    if (var_v0 < 0)
-    {
-        var_v0 += 0xFFF;
-    }
-
-    var_s0 = ((var_v0 >> 12) << 10) / arg1->vz;
+    var_s0 = ((arg2 * 0x1F4 / 0x1000) << 10) / arg1->vz;
     var_v1 = var_s0 * (Q12(3.0f) - Q12_MULT(var_s1, Math_Cos(angle1)));
     var_s0 = var_v1 / ((SHRT_MAX / 2) + 1);
 
@@ -379,44 +372,8 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 an
     for (i = 0; i < 4; i++)
     {
         temp_lo = Q12(var_s0 - (sp10[i] >> 1)) / var_s0;
-        var_v0  = sp10[i] * temp_lo;
-        if (var_v0 < 0)
-        {
-            var_v0 += 0xFFF;
-        }
-
-        var_v0 = FP_FROM(var_v0, Q12_SHIFT) * temp_s2;
-        if (var_v0 < 0)
-        {
-            var_v0 += 0xFFF;
-        }
-
-        var_v1_2 = FP_FROM(var_v0, Q12_SHIFT) * temp_s1;
-        if (var_v1_2 < 0)
-        {
-            var_v1_2 += 0xFFF;
-        }
-
-        sp20[i].vx = arg1->vx + FP_FROM(var_v1_2, Q12_SHIFT);
-        var_v0     = sp10[i] * temp_lo;
-        if (var_v0 < 0)
-        {
-            var_v0 += 0xFFF;
-        }
-
-        var_v0 = FP_FROM(var_v0, Q12_SHIFT) * temp_a3;
-        if (var_v0 < 0)
-        {
-            var_v0 += 0xFFF;
-        }
-
-        var_v1_2 = FP_FROM(var_v0, Q12_SHIFT) * temp_s1;
-        if (var_v1_2 < 0)
-        {
-            var_v1_2 += 0xFFF;
-        }
-
-        sp20[i].vy = arg1->vy + FP_FROM(var_v1_2, Q12_SHIFT);
+        sp20[i].vx = arg1->vx + (sp10[i] * temp_lo / 0x1000 * temp_s2 / 0x1000 * temp_s1) / 0x1000;
+        sp20[i].vy = arg1->vy + (sp10[i] * temp_lo / 0x1000 * temp_a3 / 0x1000 * temp_s1) / 0x1000;
     }
 
     var_t4 = PSX_SCRATCH;
@@ -429,25 +386,10 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 an
             temp_s0_3 = Math_Cos(j << 8);
             temp_a1   = Math_Sin(j << 8);
 
-            var_a0 = sp10[i] * temp_s0_3;
-
-            if (var_a0 < 0)
-            {
-                var_a0 += 0xFFF;
-            }
-
-            var_s1_2->vx = sp20[i].vx + FP_FROM(var_a0, Q12_SHIFT);
-
+            var_s1_2->vx = sp10[i] * temp_s0_3 / 0x1000 + sp20[i].vx;
             var_s1_2->vx = CLAMP(var_s1_2->vx, -0x400, 0x3FF);
 
-            var_v0 = sp10[i] * temp_a1;
-
-            if (var_v0 < 0)
-            {
-                var_v0 += 0xFFF;
-            }
-
-            var_s1_2->vy = sp20[i].vy + FP_FROM(var_v0, Q12_SHIFT);
+            var_s1_2->vy = sp10[i] * temp_a1 / 0x1000 + sp20[i].vy;
             var_s1_2->vy = CLAMP(var_s1_2->vy, -0x400, 0x3FF);
         }
     }
