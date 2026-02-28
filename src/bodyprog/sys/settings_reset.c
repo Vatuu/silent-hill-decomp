@@ -27,7 +27,7 @@ void Settings_RestoreDefaults(void) // 0x8003342C
     g_GameWork.config_0.optExtraBloodColor_24 = 0;
 }
 
-void Settings_RestoreControlDefaults(s32 arg0) // 0x80033480
+void Settings_RestoreControlDefaults(s32 configIdx) // 0x80033480
 {
     u32  i;
     u16* ptr;
@@ -85,7 +85,7 @@ void Settings_RestoreControlDefaults(s32 arg0) // 0x80033480
 
     for (i = 0, ptr = &g_GameWorkPtr->config_0.controllerConfig_0; i < INPUT_ACTION_COUNT; i++, ptr++)
     {
-        *ptr = (&DEFAULT_CONTROLLER_CONFIGS[arg0].enter_0)[i];
+        *ptr = (&DEFAULT_CONTROLLER_CONFIGS[configIdx].enter_0)[i];
     }
 }
 
