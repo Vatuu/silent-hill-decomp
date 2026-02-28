@@ -13,6 +13,17 @@ D_8002ABA4_JPN = 0x8002ABA4;
 D_800C95B8_JPN = 0x800C95B8;
 D_800C9618_JPN = 0x800C9618;
 
+// PsyQ vars that haven't been renamed yet, collides with USA vars
+D_800C9644_JPN = 0x800C9644;
+D_800C9660_JPN = 0x800C9660;
+D_800C9684_JPN = 0x800C9684;
+D_800C9638_JPN = 0x800C9638;
+D_800C9658_JPN = 0x800C9658;
+D_800C96B0_JPN = 0x800C96B0;
+D_800C96B4_JPN = 0x800C96B4;
+D_800C96A4_JPN = 0x800C96A4;
+D_800C96A0_JPN = 0x800C96A0;
+
 // Symbols from USA, includes named symbols and mappings to let unnamed syms match with the unnamed USA names.
 D_80024C8C = 0x80024C84;
 D_80024C90 = 0x80024C88;
