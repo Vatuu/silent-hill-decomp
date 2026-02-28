@@ -37,11 +37,19 @@ bool Demo_SequenceAdvance(s32 incrementAmt) // 0x8008EF20
 
     static s_DemoFileInfo DEMO_FILE_INFOS[DEMO_FILE_COUNT_MAX] =
     {
+#if defined(VER_USA)
         { FILE_MISC_DEMO0009_DAT, FILE_MISC_PLAY0009_DAT, 0 },
         { FILE_MISC_DEMO000A_DAT, FILE_MISC_PLAY000A_DAT, 0 },
         { FILE_MISC_DEMO0003_DAT, FILE_MISC_PLAY0003_DAT, 0 },
         { FILE_MISC_DEMO000B_DAT, FILE_MISC_PLAY000B_DAT, 0 },
         { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, 0 },
+#elif defined(VER_JAP0)
+        { FILE_MISC_DEMO0006_DAT, FILE_MISC_PLAY0006_DAT, 0 },
+        { FILE_MISC_DEMO0007_DAT, FILE_MISC_PLAY0007_DAT, 0 },
+        { FILE_MISC_DEMO0008_DAT, FILE_MISC_PLAY0008_DAT, 0 },
+        { FILE_MISC_DEMO0004_DAT, FILE_MISC_PLAY0004_DAT, 0 },
+        { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, 0 },
+#endif
     };
 
     g_Demo_DemoId += incrementAmt;
@@ -364,7 +372,11 @@ bool Demo_Update(void) // 0x8008F5D8
     return true;
 }
 
+#if defined(VER_USA)
 const s16 unkRodata_8002B2F2 = 0x8008;
+#elif defined(VER_JAP0)
+const s16 unkRodata_8002B2F2 = 0x2009;
+#endif
 
 bool Demo_ControllerDataUpdate(void) // 0x8008F7CC
 {

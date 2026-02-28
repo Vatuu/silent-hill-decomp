@@ -35,7 +35,7 @@ options:
     - configs/JAP0/screens/sym.options.txt
     - configs/JAP0/screens/sym.credits.txt
     - configs/JAP0/sym.bodyprog.txt
-    - configs/JAP0/sym.main.txt
+    - configs/USA/sym.main.txt
   reloc_addrs_path:
     - configs/JAP0/rel.bodyprog.txt
 
@@ -58,6 +58,8 @@ segments:
     subsegments:
       # TODO: Need to recheck rodata against USA.
       - [0x0, rodata, bodyprog] # SDK libs, lib_unk
+      - [0x6438, .rodata, demo]
+      - [0x6454, rodata, bodyprog2]
 
       #- [0x97F0, asm, bodyprog] # Data
       #- [0x97F0, asm, globals] # Data
@@ -126,7 +128,7 @@ segments:
       - [0x66F34, asm, bodyprog_combat_8008A058]
       - [0x6985C, asm, dms]
       - [0x6A2D8, asm, water]
-      - [0x6BDDC, asm, demo]
+      - [0x6BDDC, c, demo]
       - [0x6C7D8, asm, ranking]
       - [0x6E604, asm, credits_init]
 
@@ -137,4 +139,25 @@ segments:
       # TODO - [0x6CF9C, asm, bodyprog_data_800A90FC] # Data
 
       - [0x865D4, data, bodyprog]
+      - [0x8D618, .data, demo]
+      - [0x8D654, data, bodyprog2]
+      - [0xA2210, .bss, demo]
+      - [0xA2270, bss]
+      - [0xA22B8, pad] # Garbage
+      - [0xA22C0, bss]
+      - [0xA22C4, pad] # Garbage
+      - [0xA22C8, bss]
+      - [0xA490C, pad] # Garbage
+      - [0xA4910, bss]
+      - [0xA49FC, pad] # Garbage
+      - [0xA4A00, bss]
+      - [0xA50BC, pad] # Garbage
+      - [0xA50C0, bss]
+      - [0xA64CC, pad] # Garbage
+      - [0xA64D0, bss]
+
+  # Random garbage data at end, define as bin file to make Splat ignore it.
+  - name: footer_data
+    type: bin
+    start: 0xA6F48
   - [0xA7000]

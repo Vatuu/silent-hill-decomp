@@ -158,13 +158,8 @@ MKPSXISO_FLAGS      := -y -q "$(ROM_DIR)/$(GAME_VERSION)/rebuild.xml"
 SILENT_ASSETS_FLAGS := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_SILENT)" -fh "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_HILL)" "$(ASSETS_DIR)/$(GAME_VERSION)"
 INSERT_OVLS_FLAGS   := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_SILENT)" -ftb "$(ASSETS_DIR)/$(GAME_VERSION)/filetable.c.inc" -b $(OUT_DIR) -xml "$(ROM_DIR)/$(GAME_VERSION)/layout.xml" -o $(ROM_DIR)
 
-ifeq ($(GAME_VERSION), USA)
-
 # Targets that will run tools/postbuild.py after being linked & extracted from ELF.
 TARGET_POSTBUILD := bodyprog screens/b_konami screens/stream maps/map3_s06 maps/map4_s05 maps/map5_s01 maps/map6_s01
-
-#endif GAME_VERSION
-endif
 
 # Adjusts compiler and assembler flags based on source file location.
 # - Files under main executable paths use -G8; overlay files use -G0.
@@ -270,6 +265,9 @@ else
 
 $2: $2.elf
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $$< $$@
+ifneq (,$(filter $1,$(TARGET_POSTBUILD)))
+	-$(POSTBUILD) $1
+endif
 
 $2.elf: $(call get_o_files, $1, $(GEN_COMP_TU))
 	@mkdir -p $(dir $2)
