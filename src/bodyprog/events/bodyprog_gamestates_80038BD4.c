@@ -455,8 +455,8 @@ void SysState_StatusMenu_Update(void) // 0x80039568
     gameState = g_GameWork.gameState_594;
 
     g_GameWork.gameState_594 = GameState_LoadStatusScreen;
-    g_SysWork.timer_1C = 0;
-    g_SysWork.timer_20 = 0;
+    g_SysWork.counters_1C[0] = 0;
+    g_SysWork.counters_1C[1] = 0;
 
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;

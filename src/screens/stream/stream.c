@@ -27,7 +27,7 @@ void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
             break;
 
         case 1:
-            if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C > 300)
+            if (g_Controller0->btnsHeld_C != 0 || g_SysWork.counters_1C[0] > 300)
             {
                 ScreenFade_Start(false, false, false);
                 g_GameWork.gameStateStep_598[0] = 2;

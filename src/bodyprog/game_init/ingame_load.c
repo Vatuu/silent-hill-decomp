@@ -29,7 +29,7 @@ static inline void Game_StateStepIncrement(void) // TODO: Move to header?
 {
     s32 gameStateStep0 = g_GameWork.gameStateStep_598[0];
 
-    g_SysWork.timer_20              = 0;
+    g_SysWork.counters_1C[1]              = 0;
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
     g_GameWork.gameStateStep_598[0] = gameStateStep0 + 1;
@@ -87,7 +87,7 @@ void GameFs_MapStartup(void) // 0x80034964
             {
                 demoLoadAttempCount             = 0;
                 g_GameWork.gameStateStep_598[0] = 1;
-                g_SysWork.timer_20              = 1;
+                g_SysWork.counters_1C[1]              = 1;
             }
             else
             {
@@ -98,7 +98,7 @@ void GameFs_MapStartup(void) // 0x80034964
             break;
 
         case 1:
-            if (g_SysWork.timer_20 > 1200 && Fs_QueueGetLength() == 0 && !Sd_AudioStreamingCheck())
+            if (g_SysWork.counters_1C[1] > 1200 && Fs_QueueGetLength() == 0 && !Sd_AudioStreamingCheck())
             {
                 Demo_DemoFileSavegameUpdate();
                 Game_PlayerInit();
@@ -108,7 +108,7 @@ void GameFs_MapStartup(void) // 0x80034964
                     GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
 
                     g_GameWork.gameStateStep_598[0] = 2;
-                    g_SysWork.timer_20              = 0;
+                    g_SysWork.counters_1C[1]              = 0;
                     g_GameWork.gameStateStep_598[1] = 0;
                     g_GameWork.gameStateStep_598[2] = 0;
                     break;
@@ -121,7 +121,7 @@ void GameFs_MapStartup(void) // 0x80034964
                 if (demoLoadAttempCount >= 5)
                 {
                     demoLoadAttempCount = 0;
-                    g_SysWork.timer_20  = 0;
+                    g_SysWork.counters_1C[1]  = 0;
                     break;
                 }
             }
@@ -133,7 +133,7 @@ void GameFs_MapStartup(void) // 0x80034964
                 Demo_PlayDataRead();
 
                 g_GameWork.gameStateStep_598[0] = 3;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.counters_1C[1]              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
             }
@@ -218,7 +218,7 @@ void GameFs_MapStartup(void) // 0x80034964
             break;
 
         case 11:
-            if (g_SysWork.timer_1C >= 60)
+            if (g_SysWork.counters_1C[0] >= 60)
             {
                 if (g_SysWork.processFlags_2298 == SysWorkProcessFlag_RoomTransition)
                 {

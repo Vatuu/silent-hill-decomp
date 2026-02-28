@@ -116,7 +116,7 @@ void GameState_Options_Update(void) // 0x801E2D44
 
             g_ExtraOptionsMenu_EntryCount   = (g_GameWork.config_0.optExtraOptionsEnabled_27) ? 8 : 6;
             g_GameWork.gameStateStep_598[0] = OptionsMenuState_MainOptions;
-            g_SysWork.timer_20              = 0;
+            g_SysWork.counters_1C[1]              = 0;
             g_GameWork.gameStateStep_598[1] = 0;
             g_GameWork.gameStateStep_598[2] = 0;
             break;
@@ -125,7 +125,7 @@ void GameState_Options_Update(void) // 0x801E2D44
         case OptionsMenuState_LeaveBrightness:
         case OptionsMenuState_LeaveController:
             g_GameWork.gameStateStep_598[0] = OptionsMenuState_MainOptions;
-            g_SysWork.timer_20              = 0;
+            g_SysWork.counters_1C[1]              = 0;
             g_GameWork.gameStateStep_598[1] = 0;
             g_GameWork.gameStateStep_598[2] = 0;
             break;
@@ -134,7 +134,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             if (ScreenFade_IsFinished())
             {
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_ScreenPos;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.counters_1C[1]              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
             }
@@ -151,7 +151,7 @@ void GameState_Options_Update(void) // 0x801E2D44
 
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_Brightness;
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_Brightness;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.counters_1C[1]              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
             }
@@ -167,7 +167,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             {
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_Controller;
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_Controller;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.counters_1C[1]              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
             }
@@ -180,7 +180,7 @@ void GameState_Options_Update(void) // 0x801E2D44
         case OptionsMenuState_Leave:
             ScreenFade_Start(true, false, false);
             g_GameWork.gameStateStep_598[0] = OptionsMenuState_LeaveMainOptions;
-            g_SysWork.timer_20              = 0;
+            g_SysWork.counters_1C[1]              = 0;
             g_GameWork.gameStateStep_598[1] = 0;
             g_GameWork.gameStateStep_598[2] = 0;
             break;
@@ -193,8 +193,8 @@ void GameState_Options_Update(void) // 0x801E2D44
                 e_GameState prevGameState = g_GameWork.gameStatePrev_590;
                 e_GameState gameState     = g_GameWork.gameState_594;
 
-                g_SysWork.timer_1C              = 0;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.counters_1C[0]              = 0;
+                g_SysWork.counters_1C[1]              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
 
@@ -212,7 +212,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             if (ScreenFade_IsFinished())
             {
                 g_GameWork.gameStateStep_598[0]   = OptionsMenuState_ExtraOptions;
-                g_SysWork.timer_20                = 0;
+                g_SysWork.counters_1C[1]                = 0;
                 ScreenFade_Start(false, true, false);
                 g_GameWork.gameStateStep_598[1]   = 0;
                 g_GameWork.gameStateStep_598[2]   = 0;
@@ -224,7 +224,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             if (ScreenFade_IsFinished())
             {
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_EnterMainOptions;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.counters_1C[1]              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 ScreenFade_Start(false, true, false);
@@ -287,7 +287,7 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
             Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
 
             g_GameWork.gameStateStep_598[0] = OptionsMenuState_Leave;
-            g_SysWork.timer_20              = 0;
+            g_SysWork.counters_1C[1]              = 0;
             g_GameWork.gameStateStep_598[1] = 0;
             g_GameWork.gameStateStep_598[2] = 0;
             return;
@@ -448,7 +448,7 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
 
         ScreenFade_Start(true, false, false);
         g_GameWork.gameStateStep_598[0] = OptionsMenuState_LeaveExtraOptions;
-        g_SysWork.timer_20              = 0;
+        g_SysWork.counters_1C[1]              = 0;
         g_GameWork.gameStateStep_598[1] = 0;
         g_GameWork.gameStateStep_598[2] = 0;
     }
@@ -500,7 +500,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
         Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
 
         g_GameWork.gameStateStep_598[0] = OptionsMenuState_Leave;
-        g_SysWork.timer_20              = 0;
+        g_SysWork.counters_1C[1]              = 0;
         g_GameWork.gameStateStep_598[1] = 0;
         g_GameWork.gameStateStep_598[2] = 0;
         return;
@@ -533,7 +533,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
                 Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
 
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_Leave;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.counters_1C[1]              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
             }
@@ -548,7 +548,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 
                 ScreenFade_Start(true, false, false);
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_EnterController;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.counters_1C[1]              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
             }
@@ -562,7 +562,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 
                 ScreenFade_Start(true, false, false);
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_EnterScreenPos;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.counters_1C[1]              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
             }
@@ -583,7 +583,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 
                 ScreenFade_Start(true, false, false);
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_EnterBrightness;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.counters_1C[1]              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
             }
@@ -697,7 +697,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 
         ScreenFade_Start(true, false, false);
         g_GameWork.gameStateStep_598[0] = OptionsMenuState_EnterExtraOptions;
-        g_SysWork.timer_20              = 0;
+        g_SysWork.counters_1C[1]              = 0;
         g_GameWork.gameStateStep_598[1] = 0;
         g_GameWork.gameStateStep_598[2] = 0;
     }
@@ -1504,7 +1504,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
             {
                 ScreenFade_Start(true, true, false);
                 g_GameWork.gameStateStep_598[0]    = OptionsMenuState_LeaveScreenPos;
-                g_SysWork.timer_20                 = 0;
+                g_SysWork.counters_1C[1]                 = 0;
                 g_GameWork.gameStateStep_598[1]    = 0;
                 g_GameWork.gameStateStep_598[2]    = 0;
                 g_GameWork.background2dColor_58C.r = 0;
@@ -1791,7 +1791,7 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
             {
                 ScreenFade_Start(true, true, false);
                 g_GameWork.gameStateStep_598[0]    = OptionsMenuState_LeaveBrightness;
-                g_SysWork.timer_20                 = 0;
+                g_SysWork.counters_1C[1]                 = 0;
                 g_GameWork.gameStateStep_598[1]    = 0;
                 g_GameWork.gameStateStep_598[2]    = 0;
                 g_GameWork.background2dColor_58C.r = 0;
@@ -1947,7 +1947,7 @@ void Options_Selection_ArrowDraw(const s_Triangle2d* arrow, bool isFlashing, boo
         colorStart = 0;
     }
 
-    colorFade = g_SysWork.timer_1C & 0x7F;
+    colorFade = g_SysWork.counters_1C[0] & 0x7F;
 
     // Fade start color.
     if (colorFade >= 32)
@@ -2239,7 +2239,7 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
             {
                 ScreenFade_Start(true, true, false);
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_LeaveController;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.counters_1C[1]              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
             }

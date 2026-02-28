@@ -61,7 +61,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
             ScreenFade_Start(true, true, false);
 
             g_GameWork.gameStateStep_598[0] = 2;
-            g_SysWork.timer_20              = 0;
+            g_SysWork.counters_1C[1]              = 0;
             g_GameWork.gameStateStep_598[1] = 0;
             g_GameWork.gameStateStep_598[2] = 0;
             break;
@@ -118,7 +118,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
                 }
 
                 g_GameWork.gameStateStep_598[0] = 4;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.counters_1C[1]              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
@@ -157,7 +157,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
 
                             D_800C444C                      = NO_VALUE;
                             g_GameWork.gameStateStep_598[0] = 3;
-                            g_SysWork.timer_20              = 0;
+                            g_SysWork.counters_1C[1]              = 0;
                             g_GameWork.gameStateStep_598[1] = 0;
                             g_GameWork.gameStateStep_598[2] = 0;
                             break;
@@ -175,7 +175,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
 
                             D_800C444C = NO_VALUE;
                             g_GameWork.gameStateStep_598[0] = 3;
-                            g_SysWork.timer_20              = 0;
+                            g_SysWork.counters_1C[1]              = 0;
                             g_GameWork.gameStateStep_598[1] = 0;
                             g_GameWork.gameStateStep_598[2] = 0;
                             break;
@@ -203,7 +203,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
                 SD_Call(Sfx_MenuMap);
 
                 g_GameWork.gameStateStep_598[0] = 1;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.counters_1C[1]              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
@@ -228,7 +228,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
             ScreenFade_Start(true, true, false);
 
             g_GameWork.gameStateStep_598[0] = 2;
-            g_SysWork.timer_20              = 0;
+            g_SysWork.counters_1C[1]              = 0;
             g_GameWork.gameStateStep_598[1] = 0;
             g_GameWork.gameStateStep_598[2] = 0;
             break;

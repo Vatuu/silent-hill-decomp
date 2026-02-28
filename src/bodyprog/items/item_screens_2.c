@@ -1387,7 +1387,7 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
     // Draw 2 flashing left/right double arrows.
     for (i = 0; i < ARROW_COUNT; i++)
     {
-        timestep = g_SysWork.timer_1C & 0x1F;
+        timestep = g_SysWork.counters_1C[0] & 0x1F;
 
         arrowPoly = (POLY_G3*)GsOUT_PACKET_P;
         setPolyG3(arrowPoly);

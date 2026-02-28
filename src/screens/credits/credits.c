@@ -151,7 +151,7 @@ void GameState_Unk15_Update(void) // 0x801E3094
     D_800C48F0 += g_VBlanks;
     if (routines[g_GameWork.gameStateStep_598[0]]())
     {
-        g_SysWork.timer_20              = 0;
+        g_SysWork.counters_1C[1]              = 0;
         g_GameWork.gameStateStep_598[1] = 0;
         g_GameWork.gameStateStep_598[2] = 0;
         g_GameWork.gameStateStep_598[0]++;

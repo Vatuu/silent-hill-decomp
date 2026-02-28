@@ -132,8 +132,8 @@ void Game_WarmBoot(void) // 0x80034264
     prevState                = g_GameWork.gameState_594;
     g_GameWork.gameState_594 = GameState_MainMenu;
 
-    g_SysWork.timer_1C = 0;
-    g_SysWork.timer_20 = 0;
+    g_SysWork.counters_1C[0] = 0;
+    g_SysWork.counters_1C[1] = 0;
 
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;

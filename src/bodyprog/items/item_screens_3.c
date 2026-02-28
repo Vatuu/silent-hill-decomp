@@ -1170,7 +1170,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
     ot1 = &g_OrderingTable2[g_ActiveBufferIdx];
     ot0 = &g_OrderingTable0[g_ActiveBufferIdx];
 
-    temp_v1 = g_SysWork.timer_1C & 0x7F;
+    temp_v1 = g_SysWork.counters_1C[0] & 0x7F;
 
     if (temp_v1 < 0x40)
     {

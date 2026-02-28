@@ -3496,6 +3496,7 @@ void func_800894DC(void);
 
 void func_80089500(void);
 
+/** Handles initial gamepad init. */
 bool func_80089524(s_SysWork_2514* arg0, s32 padInfoMode);
 
 s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2);

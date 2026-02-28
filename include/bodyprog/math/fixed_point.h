@@ -169,7 +169,7 @@
     FP_MULTIPLY(a, b, Q12_SHIFT)
 
 /** @brief Multiplies two integers in Q*.12 fixed-point.
- * Alternative to `Q12_MULT`.
+ * Alternative to `Q12_MULT` using division instead of a bitwise shift.
  *
  * @param a First Q*.12 fixed-point factor.
  * @param b Second Q*.12 fixed-point factor.

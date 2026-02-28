@@ -50,7 +50,7 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
                 break;
 
             case KonamiLogoStateStep_LogoDelay:
-                if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C > 180)
+                if (g_Controller0->btnsHeld_C != 0 || g_SysWork.counters_1C[0] > 180)
                 {
                     ScreenFade_Start(false, false, false);
                     g_ScreenFadeTimestep            = Q12(0.2f);
@@ -179,13 +179,13 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
 
                     // Decrypt `S__SAFE2` and run `SafetyCheck`
                     Fs_DecryptOverlay((void*)0x801E7600, (void*)0x801E6600, 4096);
-                    curTime = g_SysWork.timer_1C;
+                    curTime = g_SysWork.counters_1C[0];
 
                     // TODO: call 0x801E7EB4 here.
 
                     // Decrypt `HP_SAFE1` and run `SafetyCheck` if enough time has passed.
                     Fs_DecryptOverlay((void*)0x801E7600, FS_BUFFER_21, 4096);
-                    if (g_SysWork.timer_1C - curTime > 100)
+                    if ((g_SysWork.counters_1C[0] - curTime) > 100)
                     {
                         // TODO: call 0x801E7EB4 here.
                     }
@@ -210,7 +210,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 nextGameState = GameState_MovieIntroFadeIn;
 
                 g_GameWork.gameStateStep_598[0] = KcetLogoStateStep_LogoDelay;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.counters_1C[1]              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
@@ -221,7 +221,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 nextGameState = GameState_MovieIntroFadeIn;
 
                 g_GameWork.gameStateStep_598[0] = KcetLogoStateStep_LogoDelay;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.counters_1C[1]              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
@@ -232,7 +232,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 nextGameState = GameState_MovieIntro;
 
                 g_GameWork.gameStateStep_598[0] = KcetLogoStateStep_LogoDelay;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.counters_1C[1]              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
@@ -280,13 +280,13 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 }
 
                 g_GameWork.gameStateStep_598[0] = KcetLogoStateStep_LogoDelay;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.counters_1C[1]              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
 
             case KcetLogoStateStep_LogoDelay:
-                if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C > 180)
+                if (g_Controller0->btnsHeld_C != 0 || g_SysWork.counters_1C[0] > 180)
                 {
                     ScreenFade_Start(false, false, false);
                     g_ScreenFadeTimestep = Q12(0.2f);
@@ -319,8 +319,8 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     Demo_DemoDataRead();
                     Fs_QueueWaitForEmpty();
 
-                    g_SysWork.timer_1C = 0;
-                    g_SysWork.timer_20 = 0;
+                    g_SysWork.counters_1C[0] = 0;
+                    g_SysWork.counters_1C[1] = 0;
 
                     g_GameWork.gameStateStep_598[1] = 0;
                     g_GameWork.gameStateStep_598[2] = 0;

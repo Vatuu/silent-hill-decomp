@@ -79,7 +79,7 @@ void GameState_Boot_Update(void) // 0x80032D1C
             g_GameWork.background2dColor_58C.b = 0;
 
             Screen_Init(SCREEN_WIDTH, false);
-            g_SysWork.timer_20              = 0;
+            g_SysWork.counters_1C[1]              = 0;
             g_GameWork.gameStateStep_598[1] = 0;
             g_GameWork.gameStateStep_598[2] = 0;
             g_GameWork.gameStateStep_598[0]++;
@@ -96,7 +96,7 @@ void GameState_Boot_Update(void) // 0x80032D1C
                 }
                 else
                 {
-                    g_SysWork.timer_20              = 0;
+                    g_SysWork.counters_1C[1]              = 0;
                     g_GameWork.gameStateStep_598[1] = 0;
                     g_GameWork.gameStateStep_598[2] = 0;
                     g_GameWork.gameStateStep_598[0]++;
@@ -119,8 +119,8 @@ void GameState_Boot_Update(void) // 0x80032D1C
 
                 gameState = g_GameWork.gameState_594;
 
-                g_SysWork.timer_1C = 0;
-                g_SysWork.timer_20 = 0;
+                g_SysWork.counters_1C[0] = 0;
+                g_SysWork.counters_1C[1] = 0;
 
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
