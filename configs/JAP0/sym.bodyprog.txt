@@ -1,11 +1,17 @@
-Gfx_BackgroundSpriteDraw = 0x800311d4; // type:func
+Screen_BackgroundImgDraw = 0x800311d4; // type:func
 MainLoop = 0x80032bc8; // type:func
-func_80035560 = 0x80035230; // type:func
+Fs_CharaAnimInfoUpdate = 0x80035230; // type:func
 D_800C489C = 0x800c6dcc;
 Ipd_ChunkInitCheck = 0x8003c584; // type:func
 func_800892A4 = 0x8008ace0; // type:func
 func_80089128 = 0x8008ab64; // type:func
 CHARA_FILE_INFOS = 0x800ab498;
+
+// Default names that collide with names from USA, workaround by renaming.
+D_8002AC04_JPN = 0x8002AC04;
+D_8002ABA4_JPN = 0x8002ABA4;
+D_800C95B8_JPN = 0x800C95B8;
+D_800C9618_JPN = 0x800C9618;
 
 // Symbols from USA, includes named symbols and mappings to let unnamed syms match with the unnamed USA names.
 D_80024C8C = 0x80024C84;
@@ -188,7 +194,6 @@ Fs_CharaAnimDataInfoIdxGet = 0x80034FC8; // type:func
 Fs_CharaAnimDataAlloc = 0x80035008; // type:func
 Fs_CharaAnimBoneInfoUpdate = 0x8003536C; // type:func
 Bgm_Init = 0x80035450; // type:func
-Fs_CharaAnimInfoUpdate = 0x80035560; // type:func
 Bgm_IsCurrentBgmTargetCheck = 0x80035578; // type:func
 Bgm_TrackSet = 0x800355AC; // type:func
 Bgm_BgmChannelSet = 0x800355F4; // type:func
