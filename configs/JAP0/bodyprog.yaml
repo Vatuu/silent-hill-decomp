@@ -56,15 +56,19 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, rodata]
-      - [0x4,    .rodata, memcard/memcard_1]
+      # TODO: Need to recheck rodata against USA.
+      - [0x0,    .rodata, bodyprog]
+      - [0x4,    .rodata, memcard]
       - [0x13C,  .rodata, screen/screen_fade]
-      - [0x1DC,  .rodata, globals]
+      - [0x1DC,  .rodata, sys/syswork_globals] # TODO: USA adds extra split inside this.
       - [0x598,  .rodata, saveload/bodyprog_80032D1C]
-      - [0x5A8,  .rodata, settings_reset]
-      - [0x604,  .rodata, memcard/memcard_2]
+      - [0x5A8,  .rodata, sys/settings_reset]
+      - [0x604,  .rodata, sys/memcard_2]
+
+      # TODO: Extra USA splits.
       - [0x68C,  .rodata, bodyprog_800348C0]
       - [0x908,  .rodata, bodyprog_8003AB28]
+
       - [0x1080, .rodata, sound/sd_call]
       - [0x1188, .rodata, sound/sd_snd]
       - [0x11C8, .rodata, sound/bodyprog_800485D8]
@@ -72,38 +76,55 @@ segments:
       - [0x1454, .rodata, items/item_screens_1]
       - [0x1474, .rodata, items/item_screens_2]
       - [0x18CC, .rodata, items/item_screens_3]
-      - [0x36EC, .rodata, bodyprog_80055028]
+      - [0x36EC, .rodata, gfx/bodyprog_80055028]
       - [0x490C,  rodata]
       - [0x4910, .rodata, bodyprog_800706E4]
-      - [0x4978, .rodata, bodyprog_80070B84]
       - [0x5A10, .rodata, view/vc_main]
-      - [0x5CBC, .rodata, bodyprog_80085D78]
+      - [0x5CBC, .rodata, bodyprog_80085D78] # TODO: Extra USA splits.
       - [0x6438, .rodata, demo]
-      - [0x6458, .rodata, credits]
+      - [0x6458, .rodata, ranking]
       - [0x6734, rodata] # SDK libs, lib_unk
+
       #- [0x97F0, asm, bodyprog] # Data
       #- [0x97F0, asm, globals] # Data
       #- [0x97F0, asm, syswork_functable] # Data
-      - [0x97F0, asm, memcard/memcard_1]
+
+      - [0x97F0, asm, memcard]
       - [0xC674, asm, screen/background_draw]
       - [0xD084, asm, screen/text_draw_debug]
       - [0xD4E0, asm, screen/screen_draw]
       - [0xD72C, asm, screen/screen_fade]
-      - [0xDD58, asm, screen/fs_main_screen]
-      - [0xDE70, asm, saveload/bodyprog_80032D1C]
-      - [0xDEA4, asm, gamemain] # Name from SH2 symbols. This name also applies for SH4 instance too.
-      - [0xE53C, asm, settings_reset]
-      - [0xE648, asm, memcard/memcard_2]
-      - [0xF250, asm, warmboot]
-      - [0xF58C, asm, controls/joy_1]
-      - [0xFA30, asm, bodyprog_800348C0]
-      - [0x15CFC, asm, bodyprog_8003AB28]
+      - [0xDA24, asm, screen/screen_cutscenesborders]
+      - [0xDD08, asm, sys/vsync]
+      - [0xDD58, asm, sys/fs_screens]
+      - [0xDEA4, asm, sys/gamemain] # Name from SH2 symbols. This name also applies for SH4 instance too.
+      - [0xE53C, asm, sys/settings_reset]
+      - [0xE648, asm, sys/memcard_2]
+      - [0xF250, asm, sys/warmboot]
+      - [0xF58C, asm, sys/joy]
+      - [0xFA30, asm, game_init/ingame_load]
+      - [0x10038, asm, game_init/ingame_init]
+      - [0x1022C, asm, game_init/ingame_subinit]
+      - [0x103FC, asm, game_init/fs_npc_anim]
+      - [0x108F0, asm, game_init/background_sound_init]
+      - [0x10C74, asm, game_init/loadscreen]
+      - [0x10F24, asm, events/bgm_update]
+      - [0x11728, asm, events/mapmsg_display]
+      - [0x12328, asm, events/radio]
+      - [0x123BC, asm, events/bodyprog_event_800371E8]
+      - [0x12F98, asm, events/bodyprog_npc_80037DC4]
+      - [0x13DA8, asm, events/bodyprog_gamestates_80038BD4]
+      - [0x15104, asm, events/bodyprog_event_80039F30]
+      - [0x15CFC, asm, title]
+      - [0x16F00, asm, gfx/bodyprog_8003BD2C]
+      - [0x197BC, asm, gfx/bodyprog_8003E5E8]
+      - [0x1B1D8, asm, gfx/bodyprog_80040004]
       - [0x1B220, asm, view/vc_util]
-      - [0x1BC38, asm, bodyprog_80040A64]
+      - [0x1BC38, asm, gfx/bodyprog_80040A64]
+      - [0x1F778, asm, gfx/bodyprog_anim_800445A4]
       - [0x20C50, asm, sound/sd_call]
       - [0x22CF8, asm, sound/sd_snd]
       - [0x23784, asm, sound/bodyprog_nullsub_800485B0]
-      - [0x237AC, asm, sound/sd_data] # Data
       - [0x237AC, asm, sound/bodyprog_800485D8]
       - [0x23C0C, asm, view/vw_main]
       - [0x240FC, asm, view/vw_calc] # Contains part of SH2's `vb_main`?
@@ -112,13 +133,31 @@ segments:
       - [0x28580, asm, items/item_screens_1]
       - [0x28DD4, asm, items/item_screens_2]
       - [0x2BC80, asm, items/item_screens_3]
-      - [0x31F1C, asm, bodyprog_80055028]
+      - [0x31F1C, asm, gfx/bodyprog_80055028]
+      - [0x38E2C, asm, bodyprog_math_8005BF38]
+      - [0x396C4, asm, bodyprog_combat_8005BF38]
+      - [0x3A760, asm, 3d_audio]
+      - [0x3AFD0, asm, bodyprog_8005E0DC]
+      - [0x421E8, asm, bodyprog_800652F4]
+      - [0x43C84, asm, bodyprog_mapscreen_80066EB0]
+      - [0x43DA4, asm, bodyprog_mapscreen_80066D90]
+      - [0x466E0, asm, bodyprog_800697EC]
       - [0x4D5D8, asm, bodyprog_800706E4]
-      - [0x4DA78, asm, bodyprog_80070B84]
       - [0x5D81C, asm, view/vc_main]
       - [0x62C54, asm, bodyprog_80085D78]
+      - [0x64D84, asm, bodyprog_bgm_80087EA8]
+      - [0x65094, asm, bodyprog_800881B8]
+      - [0x65B58, asm, chara_spawn]
+      - [0x65F6C, asm, bodyprog_80089090]
+      - [0x66F34, asm, bodyprog_combat_8008A058]
+      - [0x6985C, asm, dms]
+      - [0x6A2D8, asm, water]
       - [0x6BDDC, asm, demo]
-      - [0x6C7D8, asm, credits]
+      - [0x6C7D8, asm, ranking]
+      - [0x6E604, asm, credits_init]
+
+      # TODO: SDK libs
+      - [0x6E988, asm, lib/libapi]
       # TODO - [0x6CF9C, asm, bodyprog_data_800A8D98] # Data
       # TODO - [0x6CF9C, asm, screen/screen_data]     # Data
       # TODO - [0x6CF9C, asm, bodyprog_data_800A90FC] # Data

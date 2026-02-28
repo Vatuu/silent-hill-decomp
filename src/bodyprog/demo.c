@@ -271,12 +271,18 @@ void Demo_DemoRandSeedRestore(void) // 0x8008F560
 
 void Demo_DemoRandSeedAdvance(void) // 0x8008F598
 {
+#if VERSION_DATE >= VERSION_DATE_NTSC_1_1
     #define SEED_OFFSET 0x3C6EF35F
 
     if (g_SysWork.flags_22A4 & SysFlag2_1)
     {
         Rng_SetSeed(g_Demo_RandSeedBackup + SEED_OFFSET);
     }
+#else
+    // JAP0 doesn't have code here, just 16 bytes of stack for some reason?
+    // TODO: find which other versions are also missing code for this func, `>= VERSION_DATE_NTSC_1_1` check above is just a guess.
+    u8 unused[16];
+#endif
 }
 
 bool Demo_Update(void) // 0x8008F5D8
