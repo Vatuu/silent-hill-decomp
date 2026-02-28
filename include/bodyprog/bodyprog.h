@@ -3547,12 +3547,14 @@ void func_8008B1DC(s_SubCharacter* chara, q19_12 angle0, q19_12 angle1);
 
 void func_8008B398(void);
 
-void func_8008B3E4(s32 vol);
+void func_8008B3E4(q23_8 vol);
 
-void func_8008B40C(s32 vol, s32 soundType);
+void func_8008B40C(q23_8 vol, s32 soundType);
 
 /** `arg0` is boolean. */
-void func_8008B438(s32 arg0, s32 arg1, s32 arg2);
+void func_8008B438(s32 arg0, q23_8 vol, s32 soundType);
+
+bool func_8008B474(s32 arg0, q23_8 vol, s32 soundType);
 
 void func_8008B664(VECTOR3* pos, u32 caseVar);
 
@@ -4445,8 +4447,6 @@ s32 Math_MagnitudeShiftGet(s32 mag);
 u32 func_8008A2E0(s32 arg0);
 
 void Anim_CharaTypeAnimInfoClear(void);
-
-bool func_8008B474(s32 arg0, s32 vol, s32 soundType);
 
 void GameState_Boot_Update(void);
 void GameState_MovieIntroFadeIn_Update(void);

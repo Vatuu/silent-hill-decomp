@@ -299,7 +299,7 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
             D_800C3961 = 32;
 
             func_8008B438(arg0 != (1 << 1), 32, 0);
-            func_8008B3E4(0);
+            func_8008B3E4(Q8(0.0f));
 
             if (arg0 != (1 << 1))
             {
@@ -351,7 +351,7 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
                 if (!(D_800C3963 & (1 << 2)))
                 {
                     func_8008B438(0, 0, 0);
-                    func_8008B3E4(0);
+                    func_8008B3E4(Q8(0.0f));
 
                     g_SysWork.playerWork_4C.player_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
                     D_800C3963                                                              -= 2;

@@ -67,6 +67,14 @@
 #define FP_FLOOR(x, shift) \
     TO_FIXED(FP_FROM(x, shift), shift)
 
+/** @brief Truncates a value in a fixed-point Q format toward zero.
+ *
+ * @param x Fixed-point value to truncate.
+ * @return Fixed-point result of `x` truncated toward zero.
+ */
+#define FP_TRUNCATE(x, shift) \
+    TO_FIXED((x) / TO_FIXED(1.0f, shift), shift)
+
 /** @brief Multiplies two integers in a fixed-point Q format.
  *
  * @param a First fixed-point factor.
@@ -143,6 +151,14 @@
 #define Q12_FLOOR(x) \
     FP_FLOOR(x, Q12_SHIFT)
 
+/** @brief Truncates a Q*.12 fixed-point value toward zero.
+ *
+ * @param x Q*.12 fixed-point value to truncate.
+ * @return Q*.12 result of `x` truncated toward zero.
+ */
+#define Q12_TRUNC(x) \
+    FP_TRUNCATE(x, Q12_SHIFT)
+
 /** @brief Multiplies two integers in Q*.12 fixed-point.
  *
  * @param a First Q*.12 fixed-point factor.
@@ -151,6 +167,16 @@
  */
 #define Q12_MULT(a, b) \
     FP_MULTIPLY(a, b, Q12_SHIFT)
+
+/** @brief Multiplies two integers in Q*.12 fixed-point.
+ * Alternative to `Q12_MULT`.
+ *
+ * @param a First Q*.12 fixed-point factor.
+ * @param b Second Q*.12 fixed-point factor.
+ * @return Q*.12 product of `a` and `b`.
+ */
+#define Q12_MULT_ALT(a, b) \
+    (((a) * (b)) / Q12(1.0f))
 
 /** @brief Multiplies two integers in Q*.12 fixed-point, using 64-bit intermediates for higher precision.
  *

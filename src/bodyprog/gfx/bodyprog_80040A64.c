@@ -356,7 +356,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 an
         var_s1 = Q12(1024.0f) / arg1->vz;
     }
 
-    var_s0 = ((arg2 * 0x1F4 / 0x1000) << 10) / arg1->vz;
+    var_s0 = (Q12_MULT_ALT(arg2, 500) << 10) / arg1->vz;
     var_v1 = var_s0 * (Q12(3.0f) - Q12_MULT(var_s1, Math_Cos(angle1)));
     var_s0 = var_v1 / ((SHRT_MAX / 2) + 1);
 
@@ -372,12 +372,11 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 an
     for (i = 0; i < 4; i++)
     {
         temp_lo = Q12(var_s0 - (sp10[i] >> 1)) / var_s0;
-        sp20[i].vx = arg1->vx + (sp10[i] * temp_lo / 0x1000 * temp_s2 / 0x1000 * temp_s1) / 0x1000;
-        sp20[i].vy = arg1->vy + (sp10[i] * temp_lo / 0x1000 * temp_a3 / 0x1000 * temp_s1) / 0x1000;
+        sp20[i].vx = arg1->vx + Q12_MULT_ALT(Q12_MULT_ALT(Q12_MULT_ALT(sp10[i], temp_lo), temp_s2), temp_s1);
+        sp20[i].vy = arg1->vy + Q12_MULT_ALT(Q12_MULT_ALT(Q12_MULT_ALT(sp10[i], temp_lo), temp_a3), temp_s1);
     }
 
     var_t4 = PSX_SCRATCH;
-
     for (i = 0; i < 4; i++)
     {
         var_s1_2 = var_t4 + (i * 17);
@@ -386,18 +385,20 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 an
             temp_s0_3 = Math_Cos(j << 8);
             temp_a1   = Math_Sin(j << 8);
 
-            var_s1_2->vx = sp10[i] * temp_s0_3 / 0x1000 + sp20[i].vx;
-            var_s1_2->vx = CLAMP(var_s1_2->vx, -0x400, 0x3FF);
+            var_s1_2->vx = Q12_MULT_ALT(sp10[i], temp_s0_3) + sp20[i].vx;
+            var_s1_2->vx = CLAMP(var_s1_2->vx, Q12(-0.25f), Q12(0.25f) - 1);
 
-            var_s1_2->vy = sp10[i] * temp_a1 / 0x1000 + sp20[i].vy;
-            var_s1_2->vy = CLAMP(var_s1_2->vy, -0x400, 0x3FF);
+            var_s1_2->vy = Q12_MULT_ALT(sp10[i], temp_a1) + sp20[i].vy;
+            var_s1_2->vy = CLAMP(var_s1_2->vy, Q12(-0.25f), Q12(0.25f) - 1);
         }
     }
 
     var_t0 = (u32*)PSX_SCRATCH;
 
     poly_g3 = &D_800BFBF0[g_ActiveBufferIdx][sizeof(DR_TPAGE) * 2];
-    poly_f4 = &D_800BFBF0[g_ActiveBufferIdx][(sizeof(DR_TPAGE) * 2) + ((sizeof(POLY_G4) * 16) * 3) + (sizeof(POLY_G3) * 16)];
+    poly_f4 = &D_800BFBF0[g_ActiveBufferIdx][(sizeof(DR_TPAGE) * 2) +
+                                             ((sizeof(POLY_G4) * 16) * 3) +
+                                             (sizeof(POLY_G3) * 16)];
 
     for (j = 0; j < 16; j++, poly_g3++, poly_f4++)
     {

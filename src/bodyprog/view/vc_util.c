@@ -277,15 +277,15 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
             var0 = 0;
             if (g_Controller1->btnsHeld_C & ControllerFlag_Triangle)
             {
-                var0 = 0x19;
+                var0 = 25;
             }
             if (g_Controller1->btnsHeld_C & ControllerFlag_Cross)
             {
-                var0 = -0x1A;
+                var0 = -26;
             }
 
-            vec0.vx += var0 * Math_Sin(cam_ang.vy) / 0x1000;
-            vec0.vz += var0 * Math_Cos(cam_ang.vy) / 0x1000;
+            vec0.vx += Q12_MULT_ALT(var0, Math_Sin(cam_ang.vy));
+            vec0.vz += Q12_MULT_ALT(var0, Math_Cos(cam_ang.vy));
         }
     }
     else
@@ -304,15 +304,16 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
             var0 = 0;
             if (g_Controller1->btnsHeld_C & ControllerFlag_LStickRight)
             {
-                var0 = 0x19;
+                var0 = 25;
             }
             if (g_Controller1->btnsHeld_C & ControllerFlag_LStickLeft)
             {
-                var0 = -0x1A;
+                var0 = -26;
             }
 
-            vec0.vx += var0 * Math_Sin(cam_ang.vy + Q12_ANGLE(90.0f)) / 0x1000;
-            vec0.vz += var0 * Math_Cos(cam_ang.vy + Q12_ANGLE(90.0f)) / 0x1000;
+            // TODO: Q12 multiplication on Q8 values? Why?
+            vec0.vx += Q12_MULT_ALT(var0, Math_Sin(cam_ang.vy + Q12_ANGLE(90.0f)));
+            vec0.vz += Q12_MULT_ALT(var0, Math_Cos(cam_ang.vy + Q12_ANGLE(90.0f)));
         }
     }
 

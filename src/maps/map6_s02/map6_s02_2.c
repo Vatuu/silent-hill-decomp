@@ -642,7 +642,7 @@ void func_800D0500(void) // 0x800D0500
             D_800D3C98 += g_DeltaTime;
 
             // TODO: Some kind of `Q12_ANGLE_ABS`?
-            if (D_800D3C98 - FP_TO(D_800D3C98 / 0x1000, Q12_SHIFT) > Q12_ANGLE(180.0f))
+            if ((D_800D3C98 - Q12_TRUNC(D_800D3C98)) > Q12_ANGLE(180.0f))
             {
                 Screen_BackgroundImgDrawAlt(&D_800D3B44[1]);
             }
@@ -659,7 +659,7 @@ void func_800D0500(void) // 0x800D0500
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.5f), false);
 
             D_800D3C98 += g_DeltaTime;
-            if (D_800D3C98 - FP_TO(D_800D3C98 / 0x1000, Q12_SHIFT) > Q12_ANGLE(180.0f))
+            if ((D_800D3C98 - Q12_TRUNC(D_800D3C98)) > Q12_ANGLE(180.0f))
             {
                 Screen_BackgroundImgDrawAlt(&D_800D3B44[1]);
             }
@@ -668,7 +668,7 @@ void func_800D0500(void) // 0x800D0500
                 Screen_BackgroundImgDrawAlt(&D_800D3B44[0]);
             }
 
-            D_800D3C9C = MIN(D_800D3C9C + 3, 0xFF);
+            D_800D3C9C = MIN(D_800D3C9C + 3, 255);
             Sd_SfxAttributesUpdate(Sfx_Unk1613, 0, D_800D3C9C, 0);
             break;
 

@@ -1005,23 +1005,23 @@ void func_8008B1DC(s_SubCharacter* chara, q19_12 angle0, q19_12 angle1) // 0x800
 
 void func_8008B398(void) // 0x8008B398
 {
-    func_8008B3E4(0);
+    func_8008B3E4(Q8(0.0f));
     func_8008B438(0, 0, 0);
     func_8008B438(1, 0, 0);
     func_8008B40C(0, 0);
 }
 
-void func_8008B3E4(s32 vol) // 0x8008B3E4
+void func_8008B3E4(q23_8 vol) // 0x8008B3E4
 {
     func_8008B474(0, vol, 0);
 }
 
-void func_8008B40C(s32 vol, s32 soundType) // 0x8008B40C
+void func_8008B40C(q23_8 vol, s32 soundType) // 0x8008B40C
 {
     func_8008B474(3, vol, soundType);
 }
 
-void func_8008B438(s32 arg0, s32 vol, s32 soundType) // 0x8008B438
+void func_8008B438(s32 arg0, q23_8 vol, s32 soundType) // 0x8008B438
 {
     bool cond;
 
@@ -1032,7 +1032,7 @@ void func_8008B438(s32 arg0, s32 vol, s32 soundType) // 0x8008B438
     }
 }
 
-bool func_8008B474(s32 arg0, s32 vol, s32 soundType) // 0x8008B474
+bool func_8008B474(s32 arg0, q23_8 vol, s32 soundType) // 0x8008B474
 {
     s32 unkVol;
     s32 cond;
@@ -1184,7 +1184,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
         case 25:
             if (g_SysWork.field_275C > Q12(256.0f))
             {
-                func_8008B3E4(128);
+                func_8008B3E4(Q8(0.5f));
                 break;
             }
 
@@ -1207,12 +1207,11 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
     s32         sp10;
     s32         sp14;
     s32         var_a3;
-    s_800AD4C8* temp_fp;
     u32         var_s0;
-    s32         var_s0_2;
-    s32         var_s1;
-    s32         var_s2;
-    u32         var_s4;
+    q19_12      offsetX;
+    q19_12      offsetY;
+    q19_12      offsetZ;
+    q20_12      damageAmt;
     s32         var_v1;
     u32         var_s7;
     s32         var_v0;
@@ -1221,15 +1220,22 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
     s32         temp;
     s64         new_var;
     s32         temp2;
-    s32         x0, y0, z0;
-    s32         x1, y1, z1;
-    s32         x2, y2, z2;
+    s32         x0;
+    s32         y0;
+    s32         z0;
+    s32         x1;
+    s32         y1;
+    s32         z1;
+    s32         x2;
+    s32         y2;
+    s32         z2;
+    s_800AD4C8* temp_fp;
 
     weaponAttack = (u8)attacker->field_44.field_2;
     temp_fp      = &D_800AD4C8[weaponAttack];
-    var_s1       = temp_fp->field_10;
+    offsetY       = temp_fp->field_10;
     sp14         = attacker->field_44.field_8;
-    var_s2       = arg3;
+    offsetZ       = arg3;
 
     if (target == &g_SysWork.playerWork_4C.player_0)
     {
@@ -1248,16 +1254,16 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
                 case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Hold):
                 case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Multitap):
                 case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
-                    if (g_SysWork.field_275C > 0x100000)
+                    if (g_SysWork.field_275C > Q12(256.0f))
                     {
-                        func_8008B3E4(0x80);
+                        func_8008B3E4(Q8(0.5f));
                     }
                     break;
             }
         }
         else
         {
-            switch (var_s1)
+            switch (offsetY)
             {
                 case 2:
                     func_800892A4(6);
@@ -1297,9 +1303,9 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
                 var_s0 = 0;
             }
 
-            if (g_SysWork.field_275C > 0x100000)
+            if (g_SysWork.field_275C > Q12(256.0f))
             {
-                var_s0 += 0xC8000;
+                var_s0 += Q12(200.0f);
             }
             break;
 
@@ -1314,7 +1320,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
                     break;
 
                 case 2:
-                    var_s0 += Rng_RandQ12() * 0x32;
+                    var_s0 += Rng_RandQ12() * 50;
                     var_s0 *= 5;
                     break;
             }
@@ -1324,7 +1330,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
         case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Tap):
             if (target->flags_3E & CharaFlag_Unk2)
             {
-                var_s0 = 0x3E8000;
+                var_s0 = Q12(1000.0f);
             }
             break;
     }
@@ -1332,7 +1338,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
     var_s7  = temp_fp->field_C;
     temp2   = Rng_RandQ12();
     new_var = var_s0;
-    var_v1  = 0x4800;
+    var_v1  = Q12(4.5f);
     var_v1  = var_v1 - temp2;
 
     if (var_v1 < 0)
@@ -1340,7 +1346,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
         var_v1 += 3;
     }
 
-    var_s4 = Q12_MULT_PRECISE(new_var, var_v1 >> 2);
+    damageAmt = Q12_MULT_PRECISE(new_var, var_v1 >> 2);
 
     switch (weaponAttack)
     {
@@ -1349,9 +1355,9 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
         case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
         case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
         case NO_VALUE:
-            var_s0_2 = attacker->field_44.field_48[1].vx;
-            var_s1   = attacker->field_44.field_48[1].vy;
-            var_s2   = attacker->field_44.field_48[1].vz;
+            offsetX = attacker->field_44.field_48[1].vx;
+            offsetY   = attacker->field_44.field_48[1].vy;
+            offsetZ   = attacker->field_44.field_48[1].vz;
 
             if (weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap))
             {
@@ -1360,22 +1366,22 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
                     var_s7 = 0;
                 }
 
-                var_s2   = 0;
-                var_s1   = 0;
-                var_s0_2 = 0;
+                offsetZ   = 0;
+                offsetY   = 0;
+                offsetX = 0;
             }
             break;
 
         default:
             if (target != &g_SysWork.playerWork_4C && !(target->flags_3E & CharaFlag_Unk3))
             {
-                var_s4 *= 4;
+                damageAmt *= 4;
             }
 
-            if (var_s1 == 1)
+            if (offsetY == 1)
             {
-                var_s4 = Q12_MULT_PRECISE(var_s4, var_s2);
-                var_s7 = Q12_MULT_PRECISE(var_s7, var_s2);
+                damageAmt = Q12_MULT_PRECISE(damageAmt, offsetZ);
+                var_s7 = Q12_MULT_PRECISE(var_s7, offsetZ);
             }
 
             // TODO: Doesn't match.
@@ -1384,9 +1390,9 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
             if (weaponAttack > 7 &&
                 weaponAttack < 10)
             {
-                var_s0_2 = attacker->field_44.field_48[0].vx;
-                var_s1   = 0;
-                var_s2   = attacker->field_44.field_48[0].vz;
+                offsetX = attacker->field_44.field_48[0].vx;
+                offsetY   = 0;
+                offsetZ   = attacker->field_44.field_48[0].vz;
             }
             else
             {
@@ -1414,42 +1420,42 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
                 y2 += y0;
                 z2 += z0;
 
-                var_s0_2 = x2 - x1;
-                var_s1   = y2 - y1;
-                var_s2   = z2 - z1;
+                offsetX = x2 - x1;
+                offsetY   = y2 - y1;
+                offsetZ   = z2 - z1;
             }
 
-            var_v1 = func_8008A058(func_80080540(var_s0_2, var_s1, var_s2));
-            if (var_v1 >= 0x40)
+            var_v1 = func_8008A058(func_80080540(offsetX, offsetY, offsetZ));
+            if (var_v1 >= 64)
             {
-                if (var_v1 > 0xFFFFFF)
+                if (var_v1 >= Q12(4096.0f))
                 {
-                    var_v1 /= 0x1000;
-                    var_s0_2 /= 0x1000;
-                    var_s1 /= 0x1000;
-                    var_s2 /= 0x1000;
+                    var_v1 /= Q12(1.0f);
+                    offsetX /= Q12(1.0f);
+                    offsetY /= Q12(1.0f);
+                    offsetZ /= Q12(1.0f);
                 }
 
-                var_v1   = 0x01000000 / var_v1;
-                var_s0_2 = Q12_MULT_PRECISE(var_s0_2, var_v1);
-                var_s1   = Q12_MULT_PRECISE(var_s1, var_v1);
-                var_s2   = Q12_MULT_PRECISE(var_s2, var_v1);
+                var_v1  = Q12(4096.0f) / var_v1;
+                offsetX = Q12_MULT_PRECISE(offsetX, var_v1);
+                offsetY = Q12_MULT_PRECISE(offsetY, var_v1);
+                offsetZ = Q12_MULT_PRECISE(offsetZ, var_v1);
             }
             break;
     }
 
-    if (var_s4 != 0)
+    if (damageAmt != Q12(0.0f))
     {
-        target->damage_B4.amount_C += var_s4;
+        target->damage_B4.amount_C += damageAmt;
     }
 
     if (var_s7 != 0)
     {
-        temp              = Q12_MULT_PRECISE(var_s7, var_s0_2);
+        temp              = Q12_MULT_PRECISE(var_s7, offsetX);
         target->damage_B4.position_0.vx += temp;
-        temp              = Q12_MULT_PRECISE(var_s7, var_s1);
+        temp              = Q12_MULT_PRECISE(var_s7, offsetY);
         target->damage_B4.position_0.vy += temp;
-        temp              = Q12_MULT_PRECISE(var_s7, var_s2);
+        temp              = Q12_MULT_PRECISE(var_s7, offsetZ);
         target->damage_B4.position_0.vz += temp;
     }
 
@@ -1457,7 +1463,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
     sp14                     |= sp10;
     attacker->field_44.field_8 = sp14;
 
-    if (var_s4 | var_s7)
+    if (damageAmt | var_s7)
     {
         var_a2 = temp_fp->field_12;
 

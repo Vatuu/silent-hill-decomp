@@ -659,8 +659,8 @@ bool func_801E3970(void) // 0x801E3970
     else if (((g_GameWork.config_0.optExtraOptionsEnabled_27 >> (D_801E5E8C - 1)) & (1 << 0)) &&
              (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
     {
-        skipTo = D_801E5E84 + 0xA8;
-        skipTo = FP_TO(skipTo, Q12_SHIFT) / 0x1000;
+        skipTo = D_801E5E84 + 168;
+        skipTo = FP_TO(skipTo, Q12_SHIFT) / Q12(1.0f); // TODO: What math macro matches?
         D_800C48F0 = skipTo;
         SD_Call(19);
     }

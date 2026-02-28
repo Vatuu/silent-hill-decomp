@@ -808,7 +808,7 @@ void func_80091388(s32 arg0, s32 arg1, s32 arg2) // 0x80091388
         Text_Debug_Draw(".");
         do
         {
-            arg2  -= FP_TO(arg2 / 0x1000, Q12_SHIFT);
+            arg2  -= Q12_FLOOR(arg2);
             arg2  *= 10;
             var_a0 = arg2 % Q12(10.0f);
             Text_Debug_Draw(Math_IntegerToString(1, FP_FROM(var_a0, Q12_SHIFT)));
