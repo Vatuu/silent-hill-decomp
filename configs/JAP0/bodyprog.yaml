@@ -91,7 +91,7 @@ segments:
 
       - [0x97F0, asm, memcard]
       - [0xC674, asm, screen/background_draw]
-      - [0xD084, asm, screen/text_draw_debug]
+      - [0xD084, asm, screen/text_debug_draw]
       - [0xD4E0, asm, screen/screen_draw]
       - [0xD72C, asm, screen/screen_fade]
       - [0xDA24, asm, screen/screen_cutscenesborders]
