@@ -8,14 +8,22 @@
 #include "main/fsqueue.h"
 #include "bodyprog/text/text_draw.h"
 
-void GameFs_TitleGfxSeek(void) // 0x80032bd0
+void GameFs_TitleGfxSeek(void) // 0x80032BD0
 {
+#if defined(VERSION_NTSC)
     Fs_QueueStartSeek(FILE_TIM_TITLE_E_TIM);
+#elif defined(VERSION_NTSCJ)
+    Fs_QueueStartSeek(FILE_TIM_TITLE_TIM);
+#endif
 }
 
-void GameFs_TitleGfxLoad(void) // 0x80032bf0
+void GameFs_TitleGfxLoad(void) // 0x80032BF0
 {
+#if defined(VERSION_NTSC)
     Fs_QueueStartReadTim(FILE_TIM_TITLE_E_TIM, FS_BUFFER_3, &g_TitleImg);
+#elif defined(VERSION_NTSCJ)
+    Fs_QueueStartReadTim(FILE_TIM_TITLE_TIM, FS_BUFFER_3, &g_TitleImg);
+#endif
 }
 
 void GameFs_StreamBinSeek(void) // 0x80032C20
