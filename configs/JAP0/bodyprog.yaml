@@ -58,6 +58,10 @@ segments:
     subsegments:
       # TODO: Need to recheck rodata against USA.
       - [0x0, rodata, bodyprog] # SDK libs, lib_unk
+      - [0x5A8, .rodata, sys/settings_reset]
+      - [0x604, rodata]
+      - [0x3BD8, .rodata, bodyprog_mapscreen_80066EB0]
+      - [0x3BEC, rodata]
       - [0x6438, .rodata, demo]
       - [0x6454, rodata, bodyprog2]
 
@@ -68,13 +72,13 @@ segments:
       - [0x97F0, asm, memcard]
       - [0xC674, asm, screen/background_draw]
       - [0xD084, asm, screen/text_debug_draw]
-      - [0xD4E0, asm, screen/screen_draw]
+      - [0xD4E0, c, screen/screen_draw]
       - [0xD72C, asm, screen/screen_fade]
       - [0xDA24, asm, screen/screen_cutscenesborders]
       - [0xDD08, c, sys/vsync]
       - [0xDD58, asm, sys/fs_screens]
       - [0xDEA4, asm, sys/gamemain] # Name from SH2 symbols. This name also applies for SH4 instance too.
-      - [0xE53C, asm, sys/settings_reset]
+      - [0xE53C, c, sys/settings_reset]
       - [0xE648, asm, sys/memcard_2]
       - [0xF250, c, sys/warmboot]
       - [0xF58C, c, sys/joy]
@@ -115,7 +119,7 @@ segments:
       - [0x3A760, c, 3d_audio]
       - [0x3AFD0, asm, bodyprog_8005E0DC]
       - [0x421E8, asm, bodyprog_800652F4]
-      - [0x43C84, asm, bodyprog_mapscreen_80066EB0]
+      - [0x43C84, c, bodyprog_mapscreen_80066EB0]
       - [0x43DA4, asm, bodyprog_mapscreen_80066D90]
       - [0x466E0, asm, bodyprog_800697EC]
       - [0x4D5D8, asm, bodyprog_800706E4]

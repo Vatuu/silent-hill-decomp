@@ -32,6 +32,7 @@ void Settings_RestoreControlDefaults(s32 configIdx) // 0x80033480
     u32  i;
     u16* ptr;
 
+#if defined(VER_USA)
     static const s_ControllerConfig DEFAULT_CONTROLLER_CONFIGS[3] = {
         {
             .enter_0      = ControllerFlag_Start | ControllerFlag_Cross,
@@ -82,6 +83,58 @@ void Settings_RestoreControlDefaults(s32 configIdx) // 0x80033480
             .option_1A    = ControllerFlag_None
         }
     };
+#elif defined(VER_JAP0)
+    static const s_ControllerConfig DEFAULT_CONTROLLER_CONFIGS[3] = {
+        {
+            .enter_0      = ControllerFlag_Start | ControllerFlag_Circle,
+            .cancel_2     = ControllerFlag_Cross,
+            .skip_4       = ControllerFlag_Start,
+            .action_6     = ControllerFlag_Circle,
+            .aim_8        = ControllerFlag_R2,
+            .light_A      = ControllerFlag_Square,
+            .run_C        = ControllerFlag_Cross,
+            .view_E       = ControllerFlag_L2,
+            .stepLeft_10  = ControllerFlag_L1,
+            .stepRight_12 = ControllerFlag_R1,
+            .pause_14     = ControllerFlag_Start,
+            .item_16      = ControllerFlag_Select,
+            .map_18       = ControllerFlag_Triangle,
+            .option_1A    = ControllerFlag_None
+        },
+        {
+            .enter_0      = ControllerFlag_Square | ControllerFlag_Circle | ControllerFlag_Start,
+            .cancel_2     = ControllerFlag_Cross,
+            .skip_4       = ControllerFlag_Start,
+            .action_6     = ControllerFlag_Square | ControllerFlag_Circle,
+            .aim_8        = ControllerFlag_R1,
+            .light_A      = ControllerFlag_Triangle,
+            .run_C        = ControllerFlag_Cross,
+            .view_E       = ControllerFlag_L1,
+            .stepLeft_10  = ControllerFlag_L2,
+            .stepRight_12 = ControllerFlag_R2,
+            .pause_14     = ControllerFlag_None,
+            .item_16      = ControllerFlag_Start,
+            .map_18       = ControllerFlag_Select,
+            .option_1A    = ControllerFlag_None
+        },
+        {
+            .enter_0      = ControllerFlag_Start | ControllerFlag_Circle,
+            .cancel_2     = ControllerFlag_Cross,
+            .skip_4       = ControllerFlag_Start,
+            .action_6     = ControllerFlag_Circle,
+            .aim_8        = ControllerFlag_R2,
+            .light_A      = ControllerFlag_Square,
+            .run_C        = ControllerFlag_Cross,
+            .view_E       = ControllerFlag_L2,
+            .stepLeft_10  = ControllerFlag_L1,
+            .stepRight_12 = ControllerFlag_R1,
+            .pause_14     = ControllerFlag_Start,
+            .item_16      = ControllerFlag_Triangle,
+            .map_18       = ControllerFlag_Select,
+            .option_1A    = ControllerFlag_None
+        }
+    };
+#endif
 
     for (i = 0, ptr = &g_GameWorkPtr->config_0.controllerConfig_0; i < INPUT_ACTION_COUNT; i++, ptr++)
     {

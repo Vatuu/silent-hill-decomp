@@ -8,9 +8,14 @@
 #include "bodyprog/bodyprog.h"
 #include "main/fsqueue.h"
 
+// TODO: Move these garbage bytes to separate split?
+#if defined(VER_USA)
 const s32 D_80028A18 = 0x80052F00;
-
 const s32 pad_rodata_80028A1C = 0;
+#elif defined(VER_JAP0)
+const s32 D_80028A18 = 0x93B7500;
+const s32 pad_rodata_80028A1C = 0;
+#endif
 
 const RECT D_80028A20 = { SCREEN_WIDTH, 256, 192, SCREEN_HEIGHT };
 

@@ -481,34 +481,34 @@ typedef enum _SysWorkProcessFlags
 typedef enum _ControllerFlags
 {
     ControllerFlag_None         = 0,
-    ControllerFlag_Select       = 1 << 0,
-    ControllerFlag_L3           = 1 << 1,
-    ControllerFlag_R3           = 1 << 2,
-    ControllerFlag_Start        = 1 << 3,
-    ControllerFlag_DpadUp       = 1 << 4,
-    ControllerFlag_DpadRight    = 1 << 5,
-    ControllerFlag_DpadDown     = 1 << 6,
-    ControllerFlag_DpadLeft     = 1 << 7,
-    ControllerFlag_L2           = 1 << 8,
-    ControllerFlag_R2           = 1 << 9,
-    ControllerFlag_L1           = 1 << 10,
-    ControllerFlag_R1           = 1 << 11,
-    ControllerFlag_Triangle     = 1 << 12,
-    ControllerFlag_Circle       = 1 << 13,
-    ControllerFlag_Cross        = 1 << 14,
-    ControllerFlag_Square       = 1 << 15,
-    ControllerFlag_LStickUp2    = 1 << 16,
-    ControllerFlag_LStickRight2 = 1 << 17,
-    ControllerFlag_LStickDown2  = 1 << 18,
-    ControllerFlag_LStickLeft2  = 1 << 19,
-    ControllerFlag_RStickUp     = 1 << 20,
-    ControllerFlag_RStickRight  = 1 << 21,
-    ControllerFlag_RStickDown   = 1 << 22,
-    ControllerFlag_RStickLeft   = 1 << 23,
-    ControllerFlag_LStickUp     = 1 << 24,
-    ControllerFlag_LStickRight  = 1 << 25,
-    ControllerFlag_LStickDown   = 1 << 26,
-    ControllerFlag_LStickLeft   = 1 << 27
+    ControllerFlag_Select       = 1 << 0,  // 0x1
+    ControllerFlag_L3           = 1 << 1,  // 0x2
+    ControllerFlag_R3           = 1 << 2,  // 0x4
+    ControllerFlag_Start        = 1 << 3,  // 0x8
+    ControllerFlag_DpadUp       = 1 << 4,  // 0x10
+    ControllerFlag_DpadRight    = 1 << 5,  // 0x20
+    ControllerFlag_DpadDown     = 1 << 6,  // 0x40
+    ControllerFlag_DpadLeft     = 1 << 7,  // 0x80
+    ControllerFlag_L2           = 1 << 8,  // 0x100
+    ControllerFlag_R2           = 1 << 9,  // 0x200
+    ControllerFlag_L1           = 1 << 10, // 0x400
+    ControllerFlag_R1           = 1 << 11, // 0x800
+    ControllerFlag_Triangle     = 1 << 12, // 0x1000
+    ControllerFlag_Circle       = 1 << 13, // 0x2000
+    ControllerFlag_Cross        = 1 << 14, // 0x4000
+    ControllerFlag_Square       = 1 << 15, // 0x8000
+    ControllerFlag_LStickUp2    = 1 << 16, // 0x10000
+    ControllerFlag_LStickRight2 = 1 << 17, // 0x20000
+    ControllerFlag_LStickDown2  = 1 << 18, // 0x40000
+    ControllerFlag_LStickLeft2  = 1 << 19, // 0x80000
+    ControllerFlag_RStickUp     = 1 << 20, // 0x100000
+    ControllerFlag_RStickRight  = 1 << 21, // 0x200000
+    ControllerFlag_RStickDown   = 1 << 22, // 0x400000
+    ControllerFlag_RStickLeft   = 1 << 23, // 0x800000
+    ControllerFlag_LStickUp     = 1 << 24, // 0x1000000
+    ControllerFlag_LStickRight  = 1 << 25, // 0x2000000
+    ControllerFlag_LStickDown   = 1 << 26, // 0x4000000
+    ControllerFlag_LStickLeft   = 1 << 27  // 0x8000000
 } e_ControllerFlags;
 
 /** @brief Character flags. Used by `s_SubCharacter::flags_3E`. */
