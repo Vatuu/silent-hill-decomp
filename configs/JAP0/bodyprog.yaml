@@ -58,8 +58,12 @@ segments:
     subsegments:
       # TODO: Need to recheck rodata against USA.
       - [0x0, rodata, bodyprog] # SDK libs, lib_unk
+      - [0x17C,  .rodata, screen/screen_cutscenesborders]
+      - [0x1DC,  rodata]
       - [0x5A8, .rodata, sys/settings_reset]
       - [0x604, rodata]
+      - [0x1070, .rodata, gfx/bodyprog_80040004] # TODO: Seems to be garbage data, might be able to remove from .c
+      - [0x1088, rodata]
       - [0x3BD8, .rodata, bodyprog_mapscreen_80066EB0]
       - [0x3BEC, rodata]
       - [0x6438, .rodata, demo]
@@ -74,7 +78,7 @@ segments:
       - [0xD084, asm, screen/text_debug_draw]
       - [0xD4E0, c, screen/screen_draw]
       - [0xD72C, asm, screen/screen_fade]
-      - [0xDA24, asm, screen/screen_cutscenesborders]
+      - [0xDA24, c, screen/screen_cutscenesborders]
       - [0xDD08, c, sys/vsync]
       - [0xDD58, asm, sys/fs_screens]
       - [0xDEA4, asm, sys/gamemain] # Name from SH2 symbols. This name also applies for SH4 instance too.
@@ -98,7 +102,7 @@ segments:
       - [0x15CFC, asm, title]
       - [0x16F00, asm, gfx/bodyprog_8003BD2C]
       - [0x197BC, asm, gfx/bodyprog_8003E5E8]
-      - [0x1B1D8, asm, gfx/bodyprog_80040004]
+      - [0x1B1D8, c, gfx/bodyprog_80040004]
       - [0x1B220, c, view/vc_util]
       - [0x1BC38, asm, gfx/bodyprog_80040A64]
       - [0x1F778, asm, gfx/bodyprog_anim_800445A4]
@@ -134,7 +138,7 @@ segments:
       - [0x6A2D8, asm, water]
       - [0x6BDDC, c, demo]
       - [0x6C7D8, asm, ranking]
-      - [0x6E604, asm, credits_init]
+      - [0x6E604, c, credits_init]
 
       # TODO: SDK libs
       - [0x6E988, asm, lib/libapi]
@@ -143,13 +147,14 @@ segments:
       # TODO - [0x6CF9C, asm, bodyprog_data_800A90FC] # Data
 
       - [0x865D4, data, bodyprog]
+      - [0x866D4, .data, screen/screen_cutscenesborders]
+      - [0x86780, data]
       - [0x8ACBC, .data, view/vw_calc]
       - [0x8ACD4, data, bodyprog_8ACD4]
       - [0x8D618, .data, demo]
       - [0x8D654, data, bodyprog2]
-      
-      #- [0x8D668, .data, credits_init] - Might be wrong
-      #- [0x8D6DC, data, bodyprog3]
+      - [0x8D668, .data, credits_init]
+      - [0x8D6DC, data, bodyprog3]
       - [0xA11B0, .bss, view/vw_main]
       - [0xA1238, .bss, view/vw_calc]
       - [0xA1278, bss]
@@ -158,7 +163,7 @@ segments:
       - [0xA2210, .bss, demo]
       - [0xA2270, bss]
       - [0xA22B8, pad] # Garbage
-      - [0xA22C0, bss]
+      - [0xA22C0, .bss, credits_init]
       - [0xA22C4, pad] # Garbage
       - [0xA22C8, bss]
       - [0xA490C, pad] # Garbage
