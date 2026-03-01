@@ -65,7 +65,8 @@ segments:
       - [0x5A8, .rodata, sys/settings_reset]
       - [0x604, .rodata, sys/memcard_2]
       - [0x68C, .rodata, game_init/ingame_load]
-      - [0x6C0, rodata]
+      - [0x6C0, .rodata, events/bgm_update]
+      - [0x6EC, rodata]
       - [0x1070, .rodata, gfx/bodyprog_80040004] # TODO: Seems to be garbage data, might be able to remove from .c
       - [0x1088, rodata]
       - [0x3BD8, .rodata, bodyprog_mapscreen_80066EB0]
@@ -78,8 +79,8 @@ segments:
       #- [0x97F0, asm, syswork_functable] # Data
 
       - [0x97F0, asm, memcard]
-      - [0xC674, asm, screen/background_draw]
-      - [0xD084, asm, screen/text_debug_draw]
+      - [0xC674, c, screen/background_draw]
+      - [0xD084, c, screen/text_debug_draw]
       - [0xD4E0, c, screen/screen_draw]
       - [0xD72C, c, screen/screen_fade]
       - [0xDA24, c, screen/screen_cutscenesborders]
@@ -96,7 +97,7 @@ segments:
       - [0x103FC, c, game_init/fs_npc_anim]
       - [0x108F0, c, game_init/background_sound_init]
       - [0x10C74, c, game_init/loadscreen]
-      - [0x10F24, asm, events/bgm_update]
+      - [0x10F24, c, events/bgm_update]
       - [0x11728, asm, events/mapmsg_display]
       - [0x12328, c, events/radio]
       - [0x123BC, asm, events/bodyprog_event_800371E8]
@@ -151,19 +152,22 @@ segments:
       # TODO - [0x6CF9C, asm, bodyprog_data_800A90FC] # Data
 
       - [0x865D4, data, bodyprog]
+      - [0x86694, .data, screen/background_draw]
       - [0x86698, .data, screen/screen_fade]
       - [0x866D4, .data, screen/screen_cutscenesborders]
       - [0x86780, data]
       - [0x87010, .data, sys/memcard_2]
       - [0x87040, .data, game_init/background_sound_init]
       - [0x87138, .data, game_init/fs_npc_anim]
-      - [0x871D8, data]
+      - [0x871D8, .data, events/bgm_update]
+      - [0x871E8, data]
       - [0x8ACBC, .data, view/vw_calc]
       - [0x8ACD4, data, bodyprog_8ACD4]
       - [0x8D618, .data, demo]
       - [0x8D654, data, bodyprog2]
       - [0x8D668, .data, credits_init]
       - [0x8D6DC, data, bodyprog3]
+      - [0x935F0, .bss, screen/text_debug_draw]
       - [0x935F8, .bss, screen/screen_fade]
       - [0x93604, bss]
       - [0x9A6E4, pad] # Garbage
@@ -171,7 +175,8 @@ segments:
       - [0x9A714, pad] # Garbage
       - [0x9A718, .bss, game_init/ingame_load]
       - [0x9A71C, pad] # Garbage
-      - [0x9A720, bss]
+      - [0x9A720, .bss, events/bgm_update]
+      - [0x9A730, bss]
       - [0x9A74C, pad] # Garbage
       - [0x9A750, bss]
       - [0x9D5BC, pad] # Garbage

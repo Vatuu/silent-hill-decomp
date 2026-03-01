@@ -2501,9 +2501,9 @@ allFileStatus                                = 0x800A97E4;
 //----------------------------------------------------------------------------
 //--- PA: 0x084CA4   VA: 0x800A9804   subsegment: .data, game_init/fs_npc_anim
 //----------------------------------------------------------------------------
-g_BgmTaskLoadCmds                            = 0x800A9804;
-g_BgmChannelSetTaskCmds                      = 0x800A9858; // type:u16
-g_AmbientVabTaskLoadCmds                     = 0x800A98AC;
+g_BgmTaskLoadCmds                            = 0x800A9804; // type:u16 size:0x54
+g_BgmChannelSetTaskCmds                      = 0x800A9858; // type:u16 size:0x54
+g_AmbientVabTaskLoadCmds                     = 0x800A98AC; // type:u16 size:0x50
 g_CharaAnimInfoIdxs                          = 0x800A98FC;
 
 //------------------------------------------------------------------------
@@ -3340,8 +3340,8 @@ PSDOFSY                                      = 0x800C6E0C;
 PSDBASEX                                     = 0x800C6E10;
 PSDBASEY                                     = 0x800C6E14;
 POSITION                                     = 0x800C6E18;
-GsDRAWENV                                    = 0x800C6E20;
-GsDISPENV                                    = 0x800C6E80;
+GsDRAWENV                                    = 0x800C6E20; // size:0x5C
+GsDISPENV                                    = 0x800C6E80; // size:0x14
 GsORGOFSX                                    = 0x800C6E94;
 GsORGOFSY                                    = 0x800C6E96;
 CLIP2                                        = 0x800C6E98;

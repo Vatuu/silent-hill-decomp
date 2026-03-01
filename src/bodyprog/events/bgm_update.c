@@ -420,8 +420,11 @@ u32 func_800364BC(void) // 0x800364BC
     return FP_FROM(var0 + var1, Q12_SHIFT);
 }
 
-// `RECT`s?
-const s8 D_80025234[] = { 0x00, 0xB1, 0x3A, 0xCC, 0x00 }; // Could this indicate file split nearby?
+#if defined(VER_USA)
+const s8 D_80025234[] = { 0x00, 0xB1, 0x3A, 0xCC, 0x00, 0x00, 0x00, 0x00 }; // Garbage data, could indicate file split nearby?
+#elif defined(VER_JAP0)
+const s8 D_80025234[] = { 0x00, 0x20, 0x32, 0x33, 0x00, 0x00, 0x00, 0x00 };
+#endif
 
 void func_8003652C(void) // 0x8003652C
 {
