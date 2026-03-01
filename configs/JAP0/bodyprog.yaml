@@ -58,11 +58,12 @@ segments:
     subsegments:
       # TODO: Need to recheck rodata against USA.
       - [0x0, rodata, bodyprog] # SDK libs, lib_unk
+      - [0x134, .rodata, screen/screen_fade]
       - [0x17C,  .rodata, screen/screen_cutscenesborders]
       - [0x1DC,  rodata]
       - [0x598, .rodata, sys/fs_screens]
       - [0x5A8, .rodata, sys/settings_reset]
-      - [0x604, rodata]
+      - [0x604, .rodata, sys/memcard_2]
       - [0x68C, .rodata, game_init/ingame_load]
       - [0x6C0, rodata]
       - [0x1070, .rodata, gfx/bodyprog_80040004] # TODO: Seems to be garbage data, might be able to remove from .c
@@ -80,19 +81,19 @@ segments:
       - [0xC674, asm, screen/background_draw]
       - [0xD084, asm, screen/text_debug_draw]
       - [0xD4E0, c, screen/screen_draw]
-      - [0xD72C, asm, screen/screen_fade]
+      - [0xD72C, c, screen/screen_fade]
       - [0xDA24, c, screen/screen_cutscenesborders]
       - [0xDD08, c, sys/vsync]
       - [0xDD58, c, sys/fs_screens]
       - [0xDEA4, asm, sys/gamemain] # Name from SH2 symbols. This name also applies for SH4 instance too.
       - [0xE53C, c, sys/settings_reset]
-      - [0xE648, asm, sys/memcard_2]
+      - [0xE648, c, sys/memcard_2]
       - [0xF250, c, sys/warmboot]
       - [0xF58C, c, sys/joy]
       - [0xFA30, c, game_init/ingame_load]
       - [0x10038, c, game_init/ingame_init]
       - [0x1022C, c, game_init/ingame_subinit]
-      - [0x103FC, asm, game_init/fs_npc_anim]
+      - [0x103FC, c, game_init/fs_npc_anim]
       - [0x108F0, c, game_init/background_sound_init]
       - [0x10C74, c, game_init/loadscreen]
       - [0x10F24, asm, events/bgm_update]
@@ -150,16 +151,24 @@ segments:
       # TODO - [0x6CF9C, asm, bodyprog_data_800A90FC] # Data
 
       - [0x865D4, data, bodyprog]
+      - [0x86698, .data, screen/screen_fade]
       - [0x866D4, .data, screen/screen_cutscenesborders]
       - [0x86780, data]
+      - [0x87010, .data, sys/memcard_2]
       - [0x87040, .data, game_init/background_sound_init]
-      - [0x87138, data]
+      - [0x87138, .data, game_init/fs_npc_anim]
+      - [0x871D8, data]
       - [0x8ACBC, .data, view/vw_calc]
       - [0x8ACD4, data, bodyprog_8ACD4]
       - [0x8D618, .data, demo]
       - [0x8D654, data, bodyprog2]
       - [0x8D668, .data, credits_init]
       - [0x8D6DC, data, bodyprog3]
+      - [0x935F8, .bss, screen/screen_fade]
+      - [0x93604, bss]
+      - [0x9A6E4, pad] # Garbage
+      - [0x9A6E8, .bss, sys/memcard_2]
+      - [0x9A714, pad] # Garbage
       - [0x9A718, .bss, game_init/ingame_load]
       - [0x9A71C, pad] # Garbage
       - [0x9A720, bss]
