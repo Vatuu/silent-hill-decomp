@@ -112,7 +112,7 @@ segments:
       - [0x31F1C, asm, gfx/bodyprog_80055028]
       - [0x38E2C, asm, bodyprog_math_8005BF38]
       - [0x396C4, asm, bodyprog_combat_8005BF38]
-      - [0x3A760, asm, 3d_audio]
+      - [0x3A760, c, 3d_audio]
       - [0x3AFD0, asm, bodyprog_8005E0DC]
       - [0x421E8, asm, bodyprog_800652F4]
       - [0x43C84, asm, bodyprog_mapscreen_80066EB0]
@@ -141,6 +141,8 @@ segments:
       - [0x865D4, data, bodyprog]
       - [0x8D618, .data, demo]
       - [0x8D654, data, bodyprog2]
+      - [0xA1C90, .bss, 3d_audio]
+      - [0xA1CA0, bss]
       - [0xA2210, .bss, demo]
       - [0xA2270, bss]
       - [0xA22B8, pad] # Garbage
