@@ -450,9 +450,9 @@ bool func_80033548(void) // 0x80033548
 }
 
 // TODO: Move garbage to separate split?
-#if defined(VER_USA)
+#if VERSION_IS(USA)
 const char pad_rodata_800251F4[] = { 0x00, 0x1C, 0x97, 0x50 };
-#elif defined(VER_JAP0)
+#elif VERSION_IS(JAP0)
 const char pad_rodata_800251F4[] = { 0x00, 0x65, 0x66, 0x69 };
 #endif
 const s32 pad_rodata_800251F8[2] = {};

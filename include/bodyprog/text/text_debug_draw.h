@@ -16,7 +16,7 @@ void Text_Debug_Draw(char* str);
 
 char* Text_Debug_IntToString(s32 widthMin, s32 val);
 
-#if VERSION_DATE <= VERSION_DATE_PROTO_981216
+#if VERSION_EQUAL_OR_OLDER(PROTO_981216)
 void Text_Debug_DecToStringConversion(s32 offsetX, s32 fracDigits, q19_12 val);
 #endif
 

@@ -713,10 +713,10 @@ void func_8003BCF4(void) // 0x8003BCF4
 }
 
 // TODO: Garbage data, move to separate split?
-#if defined(VER_USA)
+#if VERSION_IS(USA)
 static const s8  pad_rodata_8002551F = 0x4C;
 static const s32 pad_rodata_80025520 = 0x90AB9500;
-#elif defined(VER_JAP0)
+#elif VERSION_IS(JAP0)
 static const s8  pad_rodata_8002551F = 0x2C;
 static const s32 pad_rodata_80025520 = 0x202C3600;
 #endif

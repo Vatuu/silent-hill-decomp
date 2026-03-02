@@ -1010,8 +1010,8 @@ void func_8009151C(u32 arg0, s32 arg1, s32 arg2)
 }
 
 // TODO: Garbage data, move to separate split?
-#if defined(VER_USA)
+#if VERSION_IS(USA)
 static const u32 pad_rodata_8002B5CC[2] = {0x01000100, 0x00F00000};
-#elif defined(VER_JAP0)
+#elif VERSION_IS(JAP0)
 static const u8 pad_rodata_8002B5CC[] = {0x00, 0x20, 0x2B, 0x31, 0x00, 0x2B, 0x31, 0x20};
 #endif

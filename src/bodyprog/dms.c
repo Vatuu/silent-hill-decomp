@@ -64,7 +64,7 @@ void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, 
 
         Text_Debug_PositionSet(SCREEN_POSITION_X(15.75f), SCREEN_POSITION_Y(37.5f));
 
-#if VERSION_DATE <= VERSION_DATE_PROTO_981216
+#if VERSION_EQUAL_OR_OLDER(PROTO_981216)
         // Code seen in 98-12-16 build.
         Text_Debug_Draw(charName);
         Text_Debug_Draw(" doesn't exist in dms.");

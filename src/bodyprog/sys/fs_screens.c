@@ -10,18 +10,18 @@
 
 void GameFs_TitleGfxSeek(void) // 0x80032BD0
 {
-#if defined(VERSION_NTSC)
+#if VERSION_REGION_IS(NTSC)
     Fs_QueueStartSeek(FILE_TIM_TITLE_E_TIM);
-#elif defined(VERSION_NTSCJ)
+#elif VERSION_REGION_IS(NTSCJ)
     Fs_QueueStartSeek(FILE_TIM_TITLE_TIM);
 #endif
 }
 
 void GameFs_TitleGfxLoad(void) // 0x80032BF0
 {
-#if defined(VERSION_NTSC)
+#if VERSION_REGION_IS(NTSC)
     Fs_QueueStartReadTim(FILE_TIM_TITLE_E_TIM, FS_BUFFER_3, &g_TitleImg);
-#elif defined(VERSION_NTSCJ)
+#elif VERSION_REGION_IS(NTSCJ)
     Fs_QueueStartReadTim(FILE_TIM_TITLE_TIM, FS_BUFFER_3, &g_TitleImg);
 #endif
 }

@@ -279,9 +279,9 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 
 }
 
 // TODO: Garbage data.
-#if defined(VER_USA)
+#if VERSION_IS(USA)
 static const u8 unk_rdata[] = { 0x00, 0x42, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
-#elif defined(VER_JAP0)
+#elif VERSION_IS(JAP0)
 static const u8 unk_rdata[] = { 0x00, 0x20, 0x3D, 0x20, 0x00, 0x00, 0x00, 0x00 };
 #endif
 

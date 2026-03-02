@@ -32,7 +32,7 @@ void Settings_RestoreControlDefaults(s32 configIdx) // 0x80033480
     u32  i;
     u16* ptr;
 
-#if defined(VER_USA)
+#if VERSION_IS(USA)
     static const s_ControllerConfig DEFAULT_CONTROLLER_CONFIGS[3] = {
         {
             .enter_0      = ControllerFlag_Start | ControllerFlag_Cross,
@@ -83,7 +83,7 @@ void Settings_RestoreControlDefaults(s32 configIdx) // 0x80033480
             .option_1A    = ControllerFlag_None
         }
     };
-#elif defined(VER_JAP0)
+#elif VERSION_IS(JAP0)
     static const s_ControllerConfig DEFAULT_CONTROLLER_CONFIGS[3] = {
         {
             .enter_0      = ControllerFlag_Start | ControllerFlag_Circle,

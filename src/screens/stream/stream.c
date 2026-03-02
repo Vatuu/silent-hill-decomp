@@ -93,7 +93,7 @@ void GameState_DebugMoviePlayer_Update(void) // 0x801E2908
 
     Text_Debug_PositionSet(SCREEN_POSITION_X(12.5f), SCREEN_POSITION_Y(16.75f));
 
-#if VERSION_DATE <= VERSION_DATE_PROTO_981216
+#if VERSION_EQUAL_OR_OLDER(PROTO_981216)
     // Code seen in 98-12-16 to display movie number selection (`Text_Debug_Draw` was nullsub in those builds).
     Text_Debug_Draw("MOVIE NO=");
     Text_Debug_Draw(Text_Debug_IntToString(2, g_Debug_MoviePlayerIdx));

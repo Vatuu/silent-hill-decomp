@@ -249,9 +249,9 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
 }
 
 // TODO: Garbage data, move to separate split?
-#if defined(VER_USA)
+#if VERSION_IS(USA)
 const u8 hack_vcSetWatchTgtXzPos_fix[] = { 0x00, 0x35, 0x08, 0x80, 0x00, 0x00, 0x00, 0x00 };
-#elif defined(VER_JAP0)
+#elif VERSION_IS(JAP0)
 const u8 hack_vcSetWatchTgtXzPos_fix[] = { 0x00, 0x65, 0x5F, 0x61, 0x00, 0x00, 0x00, 0x00 };
 #endif
 

@@ -13,10 +13,10 @@ s_800AFE08 D_800AFE08 = {
     .field_6  = 0x18,
     .field_8  = 0x64FFFFFF,
 // TODO: Symbolise these pointers, likely point to something in STF_ROLL overlay.
-#if defined(VER_USA)
+#if VERSION_IS(USA)
     .field_C  = (s16*)0x801E5C24,
     .field_10 = (s32*)0x801E5E24
-#elif defined(VER_JAP0)
+#elif VERSION_IS(JAP0)
     .field_C  = (s16*)0x801E5C1C,
     .field_10 = (s32*)0x801E5E1C
 #endif
@@ -27,10 +27,10 @@ s_800AFE24 D_800AFE24 = {
         .field_6   = 24,
         .field_8   = 0x2CFFFFFF,
 // TODO: Symbolise these pointers.
-#if defined(VER_USA)
+#if VERSION_IS(USA)
         .field_C   = (s16*)0x801E5C24,
         .field_10  = (s32*)0x801E5E40
-#elif defined(VER_JAP0)
+#elif VERSION_IS(JAP0)
         .field_C  = (s16*)0x801E5C1C,
         .field_10 = (s32*)0x801E5E38
 #endif

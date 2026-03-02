@@ -11,9 +11,9 @@
 #define FN(c0, c1, c2, c3, c4, c5, c6, c7) FNP(c0, c1, c2, c3), FNP(c4, c5, c6, c7)
 
 s_FileInfo g_FileTable[FS_FILE_COUNT] = {
-#if defined(VER_USA)
+#if VERSION_IS(USA)
     #include "filetable.c.USA.inc"
-#elif defined(VER_JAP0)
+#elif VERSION_IS(JAP0)
     #include "filetable.c.JAP0.inc"
 #endif
 };
@@ -48,7 +48,7 @@ char* g_FileExts[] = {
 };
 
 u32 g_FileXaLoc[] = {
-#if defined(VER_USA)
+#if VERSION_IS(USA)
     0x00000,
     0x099BF,
     0x0A227,
@@ -60,7 +60,7 @@ u32 g_FileXaLoc[] = {
     0x16F07,
     0x19797,
     0x00000
-#elif defined(VER_JAP0)
+#elif VERSION_IS(JAP0)
     0x00000,
     0x099C3,
     0x0A22B,

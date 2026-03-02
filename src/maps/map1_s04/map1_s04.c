@@ -157,7 +157,7 @@ void func_800CCA2C(void) // 0x800CCA2C
 
             Text_Debug_PositionSet(50, 50);
 
-#if VERSION_DATE <= VERSION_DATE_PROTO_981216
+#if VERSION_EQUAL_OR_OLDER(PROTO_981216)
             // Code seen in 98-12-16 build.
             Text_Debug_Draw("VS 0:");
             Text_Debug_Draw(Text_Debug_IntToString(3, D_800CD768));

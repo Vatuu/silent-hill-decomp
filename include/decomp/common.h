@@ -3,6 +3,7 @@
 
 #include "include_asm.h"
 #include "types.h"
+#include "version.h"
 
 #define PSX_SCRATCH ((void*)0x1F800000)
 

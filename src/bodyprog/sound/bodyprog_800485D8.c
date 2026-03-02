@@ -205,8 +205,8 @@ u8 Sd_CdPrimitiveCmdTry(s32 com, u8* param, u8* res) // 0x80048954
 }
 
 // TODO: Garbage data, move to separate split?
-#if defined(VER_USA)
+#if VERSION_IS(USA)
 const s32 rodataPad_80025D60[2] = { 0x6A375A00, 0x892FBD00 }; // Unused. Likely linker generated garbage.
-#elif defined(VER_JAP0)
+#elif VERSION_IS(JAP0)
 const u8 rodataPad_80025D60[] = { 0x00, 0x23, 0x64, 0x65, 0x00, 0x69, 0x6E, 0x65 }; // "#de ine"
 #endif

@@ -3188,7 +3188,7 @@ s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBu
         Text_Debug_PositionSet(100, 80);
         strncpy(&debugStr, &filename, 12);
 
-#if VERSION_DATE <= VERSION_DATE_PROTO_981216
+#if VERSION_EQUAL_OR_OLDER(PROTO_981216)
         // Code seen in 98-12-16 build.
         Text_Debug_Draw(debugStr);
 #endif

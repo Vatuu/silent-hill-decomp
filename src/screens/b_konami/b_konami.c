@@ -159,7 +159,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
 
                     Fs_QueueWaitForEmpty();
 
-#if defined(VERSION_NTSCJ)
+#if VERSION_REGION_IS(NTSCJ)
                     // WIP: Anti-modchip code from NTSC-J releases, not checked if matching yet.
                     // TODO:
                     // - `CdDiskReady` and `CdGetDiskType` are part of `libcd/type.o`, not included in US release, need conversion from SDK libs.

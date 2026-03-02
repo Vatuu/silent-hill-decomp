@@ -9,10 +9,10 @@
 #include "main/fsqueue.h"
 
 // TODO: Move these garbage bytes to separate split?
-#if defined(VER_USA)
+#if VERSION_IS(USA)
 const s32 D_80028A18 = 0x80052F00;
 const s32 pad_rodata_80028A1C = 0;
-#elif defined(VER_JAP0)
+#elif VERSION_IS(JAP0)
 const s32 D_80028A18 = 0x93B7500;
 const s32 pad_rodata_80028A1C = 0;
 #endif
