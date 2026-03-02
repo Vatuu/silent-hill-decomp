@@ -6,6 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
+#include "bodyprog/game_boot.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/text/text_draw.h"
@@ -19,6 +20,17 @@
 #include "main/mem.h"
 #include "main/rng.h"
 #include "screens/stream/stream.h"
+
+#ifndef PAD_HACK_IGNORE
+// ========================================
+// PADDING (Ignore)
+// ========================================
+const s32 pad_rodata_800252B8 = 0;
+#endif
+
+// ========================================
+// STATIC VARIABLES
+// ========================================
 
 static void (*g_SysStateFuncs[])(void) = {
     SysState_Gameplay_Update,
@@ -39,10 +51,8 @@ static void (*g_SysStateFuncs[])(void) = {
 };
 
 // ========================================
-// GAME STATES UPDATERS
+// GLOBAL VARIABLES
 // ========================================
-
-const s32 pad_rodata_800252B8 = 0;
 
 /** @brief SFX pairs.
  *
@@ -77,15 +87,19 @@ s_AreaLoadSfx const SfxPairs[25] = {
 };
 
 
-// These are referenced by pointers at `0x800A99E8`, which are then used by `Map_WorldObjectsInit`.
+// These are referenced by pointers at `0x800A99E8`, which are then used by `Map_WorldObjectsInit` (Map function).
 // Maybe meant to be separate .c file with .h externs.
-const char g_80025320[] = "SHOT_NEA";
-const char g_8002532C[] = "SHELL_NE";
-const char g_80025338[] = "BULLET_N";
-const char g_80025344[] = "AMPULE_N";
-const char g_80025350[] = "DRINK_NE";
-const char g_8002535C[] = "AIDKIT_N";
-const char g_80025368[] = "PAD_NEAR";
+const char D_80025320[] = "SHOT_NEA";
+const char D_8002532C[] = "SHELL_NE";
+const char D_80025338[] = "BULLET_N";
+const char D_80025344[] = "AMPULE_N";
+const char D_80025350[] = "DRINK_NE";
+const char D_8002535C[] = "AIDKIT_N";
+const char D_80025368[] = "PAD_NEAR";
+
+// ========================================
+// GAME STATES UPDATERS
+// ========================================
 
 void GameState_InGame_Update(void) // 0x80038BD4
 {
@@ -665,7 +679,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     {
         g_SysWork.processFlags_2298    = SysWorkProcessFlag_OverlayTransition;
         g_SavegamePtr->mapOverlayId_A4 = g_MapEventData->mapOverlayIdx_8_25;
-        GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
+        GameBoot_MapLoad(g_SavegamePtr->mapOverlayId_A4);
     }
     else
     {

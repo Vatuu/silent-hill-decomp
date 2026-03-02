@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/game_boot.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/text/text_draw.h"
@@ -313,7 +314,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
                 g_SavegamePtr->gameDifficulty_260++;
             }
 
-            Game_SavegameInitialize(0, g_SavegamePtr->gameDifficulty_260);
+            GameBoot_SavegameInitialize(0, g_SavegamePtr->gameDifficulty_260);
             func_800904F4();
 
             g_GameWork.gameStateStep_598[1] = 22;

@@ -3,6 +3,7 @@
 
 #include "game.h"
 
+#include "bodyprog/game_boot.h"
 #include "bodyprog/screen/bg_draw.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
@@ -1095,7 +1096,7 @@ bool sharedFunc_800CF294_3_s03(s_SubCharacter* nurse, q19_12 dist);
  */
 u8 Map_RoomIdxGet(s32 x, s32 z);
 
-void Gfx_LoadingScreen_StageString(void);
+void GameBoot_LoadScreen_StageString(void);
 
 void sharedFunc_800CBE54_4_s03(VECTOR3* arg0, s32 arg1);
 

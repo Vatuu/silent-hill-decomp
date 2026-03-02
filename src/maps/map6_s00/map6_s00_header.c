@@ -11,9 +11,9 @@ extern s_AnimInfo HARRY_M6S00_ANIM_INFOS[];
 
 void (*g_LoadScreenFuncs[])() = {
     NULL,
-    Gfx_LoadingScreen_PlayerRun,
-    Gfx_LoadingScreen_BackgroundTexture,
-    Gfx_LoadingScreen_StageString
+    GameBoot_LoadScreen_PlayerRun,
+    GameBoot_LoadScreen_BackgroundImg,
+    GameBoot_LoadScreen_StageString
 };
 
 s_MapPoint2d MAP_POINTS[] = {

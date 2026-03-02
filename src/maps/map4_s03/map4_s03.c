@@ -3296,7 +3296,7 @@ void Twinfeeler_Update(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDI
 
 #include "maps/shared/Map_RoomBgmInit_4_s02.h" // 0x800D6278
 
-void Gfx_LoadingScreen_StageString(void) {}
+void GameBoot_LoadScreen_StageString(void) {}
 
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800D6554
 

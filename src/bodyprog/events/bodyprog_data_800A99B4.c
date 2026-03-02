@@ -1,21 +1,22 @@
 #include "bodyprog/bodyprog.h"
 
 /** @brief Relative paper map TIM file indices. */
-s8 g_PaperMapFileIdxs[24] = {
+s8 g_PaperMapFileIdxs[] = {
     0, 0, 1, 1, 9, 12, 10, 11,
     13, 12, 10, 11, 13, 2, 3, 4,
     8, 5, 6, 7, 8, 5, 6, 7
 };
 
 /** @brief Relative paper map marking TIM file indices. */
-s8 g_PaperMapMarkingFileIdxs[56] = {
+s8 g_PaperMapMarkingFileIdxs[] = {
     255, 0, 1, 1, 1, 4, 4, 4,
     4, 4, 4, 4, 4, 2, 2, 2,
-    3, 3, 3, 3, 3, 3, 3, 3,
-    0, 0, 0, 0, 104, 83, 2, 128,
-    92, 83, 2, 128, 80, 83, 2, 128,
-    68, 83, 2, 128, 56, 83, 2, 128,
-    44, 83, 2, 128, 32, 83, 2, 128
+    3, 3, 3, 3, 3, 3, 3, 3
+};
+
+s_800A99E4 D_800A99E4 = {
+    0,           &D_80025368, &D_8002535C, &D_80025350,
+    &D_80025344, &D_80025338, &D_8002532C, &D_80025320
 };
 
 /** @note Related to images display. */

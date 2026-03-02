@@ -15,7 +15,7 @@
 
 #include "maps/shared/Map_RoomBgmInit_2_s00.h" // 0x800CCA1C
 
-void Gfx_LoadingScreen_StageString(void) {} // 0x800CCB24
+void GameBoot_LoadScreen_StageString(void) {} // 0x800CCB24
 
 void Map_WorldObjectsInit(void) {} // 0x800CCB2C
 

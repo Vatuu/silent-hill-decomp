@@ -10,9 +10,9 @@ extern s_AnimInfo      HARRY_M2S01_ANIM_INFOS[];
 
 void (*g_LoadScreenFuncs[])() = {
     NULL,
-    Gfx_LoadingScreen_PlayerRun,
-    Gfx_LoadingScreen_BackgroundTexture,
-    Gfx_LoadingScreen_StageString
+    GameBoot_LoadScreen_PlayerRun,
+    GameBoot_LoadScreen_BackgroundImg,
+    GameBoot_LoadScreen_StageString
 };
 
 // TODO: Re-decode each point once type is found from `s_EventData`s.

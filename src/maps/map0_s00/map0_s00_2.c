@@ -72,7 +72,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800D94F8
     Bgm_Update(flags, var1, &D_800DF2F8);
 }
 
-void Gfx_LoadingScreen_StageString(void) // 0x800D95D4
+void GameBoot_LoadScreen_StageString(void) // 0x800D95D4
 {
     ScreenFade_Start(false, true, false);
 

@@ -4,20 +4,20 @@
 #include <psyq/libpad.h>
 #include <psyq/strings.h>
 
+#include "main/fsqueue.h"
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
+#include "bodyprog/game_boot.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/text/text_draw.h"
-#include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/memcard.h"
 #include "bodyprog/player_logic.h"
 #include "bodyprog/ranking.h"
 #include "bodyprog/sound_system.h"
-#include "main/fsqueue.h"
-#include "main/mem.h"
-#include "main/rng.h"
-#include "screens/stream/stream.h"
+
+// ========================================
+// GLOBAL VARIABLES
+// ========================================
 
 s8 g_CharaAnimInfoIdxs[Chara_Count] = {
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,

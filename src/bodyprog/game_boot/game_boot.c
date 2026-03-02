@@ -4,24 +4,17 @@
 #include <psyq/libpad.h>
 #include <psyq/strings.h>
 
-#include "bodyprog/bodyprog.h"
-#include "bodyprog/demo.h"
-#include "bodyprog/screen/screen_data.h"
-#include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/text/text_draw.h"
-#include "bodyprog/item_screens.h"
-#include "bodyprog/math/math.h"
-#include "bodyprog/memcard.h"
-#include "bodyprog/player_logic.h"
-#include "bodyprog/ranking.h"
-#include "bodyprog/sound_background.h"
-#include "bodyprog/sound_system.h"
 #include "main/fsqueue.h"
-#include "main/mem.h"
-#include "main/rng.h"
-#include "screens/stream/stream.h"
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/game_boot.h"
+#include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
 
-void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
+// ========================================
+// IN-GAME INITALIZATION
+// ========================================
+
+void GameBoot_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 {
     s32  i;
     s32* ovlEnemyStatesPtr;
@@ -48,7 +41,7 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
     Game_SavegameResetPlayer();
 }
 
-void Game_PlayerInit(void) // 0x80035178
+void GameBoot_PlayerInit(void) // 0x80035178
 {
     WorldGfx_MapInit();
     CharaModel_AllModelsFree();
@@ -72,7 +65,7 @@ void Game_PlayerInit(void) // 0x80035178
     Game_PlayerInfoInit();
 }
 
-void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
+void GameBoot_MapLoad(s32 mapIdx) // 0x8003521C
 {
     #define BASE_FILE_IDX FILE_VIN_MAP0_S00_BIN
 

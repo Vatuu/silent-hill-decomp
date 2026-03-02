@@ -78,7 +78,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800CC8C8
     Bgm_Update(var_a3, var_a1, &D_800CCF54);
 }
 
-void Gfx_LoadingScreen_StageString(void) {} // 0x800CCA24
+void GameBoot_LoadScreen_StageString(void) {} // 0x800CCA24
 
 void func_800CCA2C(void) // 0x800CCA2C
 {

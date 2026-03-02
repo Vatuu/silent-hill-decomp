@@ -34,7 +34,7 @@
 
 #include "maps/shared/Map_RoomBgmInit_1_s02.h" // 0x800D9EBC
 
-void Gfx_LoadingScreen_StageString(void) {}
+void GameBoot_LoadScreen_StageString(void) {}
 
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800DA020
 

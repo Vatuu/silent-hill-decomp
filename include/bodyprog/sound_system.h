@@ -197,54 +197,65 @@ typedef struct
 // GLOBALS
 // ========
 
+/** @brief Addresses where loaded VAB files are stored in memory.
+ * 0 = Generic game sound file (BASE.VAB).
+ * 1 = Weapon VAB.
+ * 2 = Ambient VAB and new game load sound (FIRST.VAB).
+ * 3 = Music sample VAB.
+ *
+ * @note These types are irregular as the first 3 files defined in `g_AudioData` don't correspond to their
+ * categories. Of the last two, maybe one is unused, and the other is the sound that plays when starting
+ * a save. However, the first file has a value of 0, suggesting it's a KDT file, but it's actually a VAB file
+ * containing generic sound effects.
+ * Deobfuscated symbols from other games may also share this system.
+ */
+extern u8* g_Sd_VabBuffers[];
+
+/** @brief Stores the currently loaded KDT file.
+ * Declared as an array because of the way the code handles VAB file loading, as it expect to have a position.
+ */
+extern u8* g_Sd_KdtBuffer[];
+
 extern s32 D_800A9FDC[];
 
+/** @brief Data used to access to VAB and KDT files. */
 extern s_AudioItemData g_AudioData[];
 
 extern u8 g_Sd_ReverbDepths[];
 
+// Odd access. See `Sd_BgmLayerVolumeSet` and `Sd_BgmLayerVolumeGet`.
 extern u8 D_800AA604[][];
 
 extern s_XaItemData g_XaItemData[];
 
 extern s_VabInfo g_Vab_InfoTable[420];
 
-extern u8* g_Sd_KdtBuffer[];
+#ifndef PAD_HACK_IGNORE
+#ifdef BSS_HACK_SD_CALL_C
+// ====================
+// GLOBALS (BSS; Hack; sd_call.c)
+// ====================
+// To match the order of the BSS segment, extern declarations
+// are required in a predetermined order.
+// This is done until a way to replicate `common`
+// segment behavior is found.
 
-extern s_AudioItemData g_AudioData[];
+extern CdlLOC D_800C15E8;
 
-extern s32 D_800A9FDC[];
-
-extern u8* g_Sd_KdtBuffer[];
-
-extern u8* g_Sd_VabBuffers[];
+extern s32 pad_bss_800C15EC;
 
 extern s_800C15F0 D_800C15F0[4];
 
-/** @brief `e_SfxId` | Stores the index of the currently playing SFX . */
 extern u16 g_AudioPlayingIdxList[24];
 
-/** @brief Stores the pitch of currently playing SFX.
- * Shares the same index where the SFX is stored in `g_AudioPlayingIdxList`.
- */
 extern s16 g_AudioPlayingPitchList[24];
 
 extern s_Sd_AudioWork g_Sd_AudioWork;
 
-/** @brief Hold states for different audio types streaming. */
 extern s_AudioStreamingStates g_Sd_AudioStreamingStates;
 
 extern s32 pad_bss_800C1674;
 
-/** @note Name from retrieved debug symbols.
- * Debug symbols from: `Konami International Rally Championship`
- *
- * Symbol don't indicate the struct name. The size may not
- * contradict this definition as it seems the variable is intended
- * to have a size of 48/0x30 bytes, while this has a size of 16/0x10
- * bytes. They serve the same purpose of adjusting the volume
- * channels.
- */
 extern s_ChannelsVolumeController gSDVolConfig;
 
 extern s_800C1688 D_800C1688;
@@ -253,25 +264,14 @@ extern s32 pad_bss_800C1694;
 
 extern s_VabPlayingInfo g_Sd_VabPlayingInfo;
 
-/** @brief Task pool related to audio and audio data streaming.
- * `Sd_TaskPoolExecute` is the main function responsible for executing tasks.
- *
- * @note Possible name retrieved from debug symbols.
- * `Tokimeki Memorial ~Forever With You~` symbols have a global variable named
- * `gSDEvt`. This function can't be restored, but the name would fit for
- * this purpose. This game also features a similar command pool system
- * to the one in SH1.
- */
 extern u8 g_Sd_TaskPool[32];
 
 extern s32 D_800C16C8[0x840];
 
-/** @brief The type of audio file being loaded. See `e_AudioType`. */
 extern u8 g_Sd_AudioType;
 
 extern char pad_bss_800C37C9[3];
 
-/** @brief Amount of data moved when loading KDT/VAB files. */
 extern u32 g_Sd_DataMoved;
 
 extern u8 g_Sd_VabLoadAttemps;
@@ -280,12 +280,13 @@ extern char pad_bss_800C37D1[3];
 
 extern s_AudioItemData* g_Sd_VabTargetLoad;
 
-// Pointer to the data of the VAB loading to be used for music.
-extern s_AudioItemData* g_Sd_KdTargetLoad;
+extern s_AudioItemData* g_Sd_KdtTargetLoad;
 
-extern u8 D_800C37DC; // Boolean.
+extern u8 D_800C37DC;
 
 extern u8 g_Sd_CurrentTask;
+#endif
+#endif
 
 // ==========
 // FUNCTIONS

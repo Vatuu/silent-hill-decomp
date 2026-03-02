@@ -2126,8 +2126,6 @@ extern s_MapEffectsInfo g_MapEffectsPresets[21];
 
 extern s_StructUnk3 D_800A952C;
 
-extern u16 g_BgmChannelSetTaskCmds[];
-
 extern s32 D_800A9A20;
 
 /** X. */
@@ -2146,11 +2144,6 @@ extern s_FsImageDesc D_800A9EB4;
 extern s_FsImageDesc D_800A9EBC;
 
 extern s_FsImageDesc D_800A9EC4;
-
-/** Related to sound commands. */
-extern u16 g_BgmTaskLoadCmds[];
-
-extern u16 g_AmbientVabTaskLoadCmds[];
 
 /** @brief Stores a loaded character's animation data information. */
 extern s_CharaAnimDataInfo g_CharaTypeAnimInfo[];
@@ -2177,9 +2170,9 @@ extern s32 g_MapMsg_CurrentIdx;
 
 extern s16 g_MapMsg_SelectFlashTimer;
 
-extern s8 g_PaperMapFileIdxs[24];
+extern s8 g_PaperMapFileIdxs[];
 
-extern s8 g_PaperMapMarkingFileIdxs[56];
+extern s8 g_PaperMapMarkingFileIdxs[];
 
 extern s_FsImageDesc D_800A9A04;
 
@@ -2449,6 +2442,19 @@ extern u16 D_800BCCB2;
 extern s32 g_Screen_FadeStatus;
 
 extern s32 D_800BCD5C;
+
+
+extern const char D_80025320[];
+extern const char D_8002532C[];
+extern const char D_80025338[];
+extern const char D_80025344[];
+extern const char D_80025350[];
+extern const char D_8002535C[];
+extern const char D_80025368[];
+
+
+
+
 
 extern s_MapMsgSelect g_MapMsg_Select;
 
@@ -3896,82 +3902,6 @@ void SysWork_SavegameReadPlayer(void);
 /** @brief Handles a warm game reboot. */
 void Game_WarmBoot(void);
 
-/** Handles `g_GameWork.gameStateStep_598[0]`.
- * Used to handle map loading and room changes.
- */
-void GameFs_MapStartup(void);
-
-/** @brief Draws the motion-blurred loading screen of Harry running away from the camera. */
-void Gfx_LoadingScreenDraw(void);
-
-/** @brief Clears all NPC fields for reuse. */
-void Game_NpcClear(void);
-
-void Game_NpcInit(void);
-
-/** Crucial for getting in-game.
- * Removing it breaks the camera, inventory's 3D elements, effects
- * (lighting, fog, lens flare, etc.), NPCs don't spawn, and
- * doing any action unrelated to aiming a weapon or interacting
- * with the environment crashes the game.
- */
-void Game_InGameInit(void);
-
-void Game_SavegameInitialize(s8 overlayId, s32 difficulty);
-
-/** @brief Initializes the player character model. */
-void Game_PlayerInit(void);
-
-/** Loads a map file into `g_OvlDynamic`. */
-void GameFs_MapLoad(s32 mapIdx);
-
-/** @brief Checks if the pointers of `g_CharaTypeAnimInfo` overlap each other.
- * Returns `false` if the compared pointers don't overlap.
- */
-bool Fs_CharaAnimDataSizeCheck(s32 idx0, s32 idx1);
-
-/** @brief Finds for the index of the character animation data in `g_CharaTypeAnimInfo`.
- *
- * @param charaId ID of the character for which to find the animation data.
- * @return Animation data index.
- */
-s32 Fs_CharaAnimDataInfoIdxGet(e_CharacterId charaId);
-
-/** Allocates and adjust where is animation data allocated. */
-void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coords);
-
-/** Called by `Fs_QueuePostLoadAnm`. Assigns information about animation data to `g_CharaTypeAnimInfo`
- * and initializes NPC bones.
- */
-void Fs_CharaAnimInfoUpdate(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord);
-
-/** @brief Updates character type bone initialization coordinates and reinitializes them. */
-void Fs_CharaAnimBoneInfoUpdate(void);
-
-/** @brief Updates the translation and rotation of a matrix in a coordinate.
- *
- * @param pos Translation to apply.
- * @param rot Rotation to apply.
- * @param coord Coordinate to update.
- */
-void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord);
-
-/** @brief Sets general environmental effects such as lighting, fog, and screen effects.
- *
- * @note Specific effect for enviroments like snow, rain, and the ending's fire rain
- * are set by code only found in map overlays.
- */
-void Gfx_MapEffectsSet(s32 unused);
-
-void func_80035B98(void);
-
-/** @unused and broken.
- * Intended to draw a background image when a loading screen with the string "STAGE X-X" appears.
- */
-void Gfx_LoadingScreen_BackgroundTexture(void);
-
-void Gfx_LoadingScreen_PlayerRun(void);
-
 void Savegame_MapRoomIdxUpdate(void);
 
 /** @Unused */
@@ -4446,8 +4376,6 @@ s32 func_800808AC(q19_12 posX, q19_12 posZ);
 s32 Math_MagnitudeShiftGet(s32 mag);
 
 u32 func_8008A2E0(s32 arg0);
-
-void Anim_CharaTypeAnimInfoClear(void);
 
 void GameState_Boot_Update(void);
 void GameState_MovieIntroFadeIn_Update(void);

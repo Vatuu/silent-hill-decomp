@@ -5,6 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/game_boot.h"
 #include "bodyprog/memcard.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
@@ -92,7 +93,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         case MenuState_Main:
             if (playInGameDemo)
             {
-                GameFs_MapStartup();
+                GameBoot_GameStartup();
 
                 if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.counters_1C[1] == 0)
                 {
@@ -193,9 +194,9 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                             GameFs_SaveLoadBinLoad();
                         }
 
-                        Game_PlayerInit();
+                        GameBoot_PlayerInit();
                         g_SysWork.processFlags_2298 = SysWorkProcessFlag_Continue;
-                        GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
+                        GameBoot_MapLoad(g_SavegamePtr->mapOverlayId_A4);
                         break;
 
                     case MainMenuEntry_Load:
@@ -224,7 +225,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         case MenuState_DifficultySelector:
             if (playInGameDemo)
             {
-                GameFs_MapStartup();
+                GameBoot_GameStartup();
 
                 if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.counters_1C[1] == 0)
                 {
@@ -279,12 +280,12 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             // Select game difficulty.
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                Game_SavegameInitialize(0, newGameSelectedDifficultyIdx - 1);
-                Game_PlayerInit();
+                GameBoot_SavegameInitialize(0, newGameSelectedDifficultyIdx - 1);
+                GameBoot_PlayerInit();
 
                 g_SysWork.processFlags_2298 = SysWorkProcessFlag_NewGame;
 
-                GameFs_MapLoad(MapOverlayId_MAP0_S00);
+                GameBoot_MapLoad(MapOverlayId_MAP0_S00);
                 GameFs_StreamBinLoad();
                 SD_Call(Sfx_MenuStartGame);
 

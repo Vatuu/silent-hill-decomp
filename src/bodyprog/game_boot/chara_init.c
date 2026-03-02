@@ -5,23 +5,15 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/demo.h"
-#include "bodyprog/screen/screen_data.h"
-#include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/text/text_draw.h"
-#include "bodyprog/item_screens.h"
-#include "bodyprog/math/math.h"
-#include "bodyprog/memcard.h"
-#include "bodyprog/player_logic.h"
-#include "bodyprog/ranking.h"
-#include "bodyprog/sound_background.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/game_boot.h"
+#include "bodyprog/view/vc_util.h"
 #include "main/fsqueue.h"
-#include "main/mem.h"
-#include "main/rng.h"
-#include "screens/stream/stream.h"
 
-void Game_NpcClear(void) // 0x80034EC8
+// ========================================
+// CHARACTER & GAME INIT
+// ========================================
+
+static void GameBoot_NpcClear(void) // 0x80034EC8
 {
     s32 i;
 
@@ -36,7 +28,7 @@ void Game_NpcClear(void) // 0x80034EC8
     }
 }
 
-void Game_NpcInit(void) // 0x80034F18
+void GameBoot_NpcInit(void) // 0x80034F18
 {
     vcSetCameraUseWarp(&g_SysWork.playerWork_4C.player_0.position_18, g_SysWork.cameraAngleY_237A);
     func_8005E70C();
@@ -47,12 +39,12 @@ void Game_NpcInit(void) // 0x80034F18
         g_MapOverlayHeader.particlesUpdate_168(0, g_SavegamePtr->mapOverlayId_A4, 0);
     }
 
-    Game_NpcClear();
+    GameBoot_NpcClear();
     Game_NpcRoomInitSpawn(false);
     Game_PlayerHeightUpdate();
 }
 
-void Game_InGameInit(void) // 0x80034FB8
+void GameBoot_InGameInit(void) // 0x80034FB8
 {
     s32 mapOvlId;
 
@@ -68,7 +60,7 @@ void Game_InGameInit(void) // 0x80034FB8
 
     g_MapOverlayHeader.particlesUpdate_168(0, mapOvlId, NO_VALUE);
 
-    Game_NpcClear();
+    GameBoot_NpcClear();
 
     g_SysWork.npcId_2280 = 5;
 

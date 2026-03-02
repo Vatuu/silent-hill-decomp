@@ -6,6 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
+#include "bodyprog/game_boot.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/text/text_draw.h"
@@ -29,14 +30,14 @@ static inline void Game_StateStepIncrement(void) // TODO: Move to header?
 {
     s32 gameStateStep0 = g_GameWork.gameStateStep_598[0];
 
-    g_SysWork.counters_1C[1]              = 0;
+    g_SysWork.counters_1C[1]        = 0;
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
     g_GameWork.gameStateStep_598[0] = gameStateStep0 + 1;
 }
 
 // ========================================
-// FUNCTIONS
+// IN-GAME LOAD INITALIZATION
 // ========================================
 
 void Anim_CharaTypeAnimInfoClear(void) // 0x800348C0
@@ -46,8 +47,8 @@ void Anim_CharaTypeAnimInfoClear(void) // 0x800348C0
 
 void GameState_LoadScreen_Update(void) // 0x800348E8
 {
-    Gfx_LoadingScreenDraw();
-    GameFs_MapStartup();
+    GameBoot_LoadingScreen();
+    GameBoot_GameStartup();
 
     if (g_SysWork.flags_22A4 & SysFlag2_10)
     {
@@ -63,7 +64,7 @@ void GameState_LoadScreen_Update(void) // 0x800348E8
     }
 }
 
-void GameFs_MapStartup(void) // 0x80034964
+void GameBoot_GameStartup(void) // 0x80034964
 {
     // It makes up to 5 attemps. If the load fails, it restarts
     // the entire process by restarting the timer used to check if a demo
@@ -87,7 +88,7 @@ void GameFs_MapStartup(void) // 0x80034964
             {
                 demoLoadAttempCount             = 0;
                 g_GameWork.gameStateStep_598[0] = 1;
-                g_SysWork.counters_1C[1]              = 1;
+                g_SysWork.counters_1C[1]        = 1;
             }
             else
             {
@@ -101,11 +102,11 @@ void GameFs_MapStartup(void) // 0x80034964
             if (g_SysWork.counters_1C[1] > 1200 && Fs_QueueGetLength() == 0 && !Sd_AudioStreamingCheck())
             {
                 Demo_DemoFileSavegameUpdate();
-                Game_PlayerInit();
+                GameBoot_PlayerInit();
 
                 if (Demo_PlayFileBufferSetup() != 0)
                 {
-                    GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
+                    GameBoot_MapLoad(g_SavegamePtr->mapOverlayId_A4);
 
                     g_GameWork.gameStateStep_598[0] = 2;
                     g_SysWork.counters_1C[1]              = 0;
@@ -222,11 +223,11 @@ void GameFs_MapStartup(void) // 0x80034964
             {
                 if (g_SysWork.processFlags_2298 == SysWorkProcessFlag_RoomTransition)
                 {
-                    Game_NpcInit();
+                    GameBoot_NpcInit();
                 }
                 else
                 {
-                    Game_InGameInit();
+                    GameBoot_InGameInit();
                 }
 
                 if (g_SysWork.processFlags_2298 <= (u32)SysWorkProcessFlag_OverlayTransition)
@@ -257,7 +258,8 @@ void GameFs_MapStartup(void) // 0x80034964
     }
 }
 
-void Gfx_LoadingScreenDraw(void) // 0x80034E58
+/** @brief Initalizes draw of loading screen. */
+static void GameBoot_LoadingScreen(void) // 0x80034E58
 {
     if (g_SysWork.loadingScreenIdx_2281 != LoadingScreenId_None && g_GameWork.gameStateStep_598[0] < 10)
     {

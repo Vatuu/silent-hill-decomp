@@ -24,7 +24,7 @@
 
 #include "maps/shared/Map_RoomBgmInit_3_s00_CondFalse.h" // 0x800D11EC
 
-void Gfx_LoadingScreen_StageString(void) {}
+void GameBoot_LoadScreen_StageString(void) {}
 
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800D1394
 

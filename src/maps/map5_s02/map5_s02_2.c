@@ -45,7 +45,7 @@
 
 #include "maps/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800D4664
 
-void Gfx_LoadingScreen_StageString(void) {}
+void GameBoot_LoadScreen_StageString(void) {}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D48F8
 

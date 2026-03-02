@@ -1,19 +1,6 @@
 #include "common.h"
-#include "types.h"
 #include "bodyprog/sound_system.h"
 
-/** @brief Addresses where loaded VAB files are stored in memory.
- * 0 = Generic game sound file (BASE.VAB).
- * 1 = Weapon VAB.
- * 2 = Ambient VAB and new game load sound (FIRST.VAB).
- * 3 = Music sample VAB.
- *
- * @note These types are irregular as the first 3 files defined in `g_AudioData` don't correspond to their
- * categories. Of the last two, maybe one is unused, and the other is the sound that plays when starting
- * a save. However, the first file has a value of 0, suggesting it's a KDT file, but it's actually a VAB file
- * containing generic sound effects.
- * Deobfuscated symbols from other games may also share this system.
- */
 u8* g_Sd_VabBuffers[4] = {
     (u8*)0x801FE460,
     (u8*)0x801FD840,
@@ -21,9 +8,6 @@ u8* g_Sd_VabBuffers[4] = {
     (u8*)0x801FA600
 };
 
-/** @brief Stores the currently loaded KDT file.
- * Declared as an array because of the way the code handles VAB file loading, as it expect to have a position.
- */
 u8* g_Sd_KdtBuffer[1] = {
     (u8*)0x801F5600
 };
@@ -32,7 +16,6 @@ s32 D_800A9FDC[4] = {
     0x00001010, 0x00021490, 0x00027630, 0x00058F50
 };
 
-/** @brief Data used to access to VAB and KDT files. */
 s_AudioItemData g_AudioData[127] = {
     { AudioType_BaseAudio,     0, 4128, 136208, 140   }, // `BASE.VAB`
     { AudioType_SpecialScreen, 0, 3104, 220032, 539   }, // @unused `COATION.VAB `
@@ -171,7 +154,6 @@ u8 g_Sd_ReverbDepths[36] = {
     40, 40, 20, 0
 };
 
-// Odd access. See `Sd_BgmLayerVolumeSet` and `Sd_BgmLayerVolumeGet`.
 u8 D_800AA604[41][16] = {
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     { 0, 1, 2, 3, 4, 5, 5, 6, 0, 0, 0, 1, 1, 1, 0, 0 },

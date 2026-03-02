@@ -5,25 +5,21 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/demo.h"
-#include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/text/text_draw.h"
-#include "bodyprog/item_screens.h"
+#include "bodyprog/game_boot.h"
+#include "bodyprog/view/vc_main.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/memcard.h"
-#include "bodyprog/player_logic.h"
-#include "bodyprog/ranking.h"
-#include "bodyprog/sound_system.h"
-#include "main/fsqueue.h"
-#include "main/mem.h"
-#include "main/rng.h"
-#include "screens/stream/stream.h"
 
 // ========================================
 // LOADING SCREEN RELATED
 // ========================================
 
-void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0x80035B04
+/** @brief Updates the translation and rotation of a matrix in a coordinate.
+ *
+ * @param pos Translation to apply.
+ * @param rot Rotation to apply.
+ * @param coord Coordinate to update.
+ */
+static void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0x80035B04
 {
     coord->flg        = false;
     coord->coord.t[0] = Q12_TO_Q8(pos->vx);
@@ -44,12 +40,12 @@ void func_80035B98(void) // 0x80035B98
     Screen_BackgroundImgDraw(&g_ItemInspectionImg);
 }
 
-void Gfx_LoadingScreen_BackgroundTexture(void) // 0x80035BBC
+void GameBoot_LoadScreen_BackgroundImg(void) // 0x80035BBC
 {
     Screen_BackgroundImgDraw(&g_LoadingScreenImg);
 }
 
-void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0
+void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
 {
     VECTOR3        camLookAt; // Q19.12
     s32            temp;

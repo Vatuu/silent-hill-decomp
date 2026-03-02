@@ -8,6 +8,13 @@
 #include "main/fsqueue.h"
 #include "bodyprog/memcard.h"
 
+#ifndef PAD_HACK_IGNORE
+// ========================================
+// PADDING (Ignore)
+// ========================================
+s32 pad_bss_800B5484;
+#endif
+
 // ========================================
 // STATIC VARIABLES
 // ========================================
@@ -21,7 +28,6 @@ static s_MemCard_SaveHeader g_MemCard_BasicSaveInfo3[MEMCARD_FILE_COUNT_MAX];
 // ========================================
 
 bool               g_MemCard_AvailibityStatus;
-s32                pad_bss_800B5484;
 s_MemCard_Work     g_MemCard_Work;
 s_MemCard_SaveWork g_MemCard_SaveWork;
 

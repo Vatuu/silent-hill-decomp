@@ -89,7 +89,7 @@ void func_800D68F8(void) // 0x800D68F8
 
 #include "maps/shared/sharedFunc_800D0110_7_s00.h" // 0x800D6938
 
-void Gfx_LoadingScreen_StageString(void) {}
+void GameBoot_LoadScreen_StageString(void) {}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D71C4
 

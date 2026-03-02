@@ -7,6 +7,7 @@
 #include "bodyprog/memcard.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/text/text_draw.h"
+#include "bodyprog/game_boot.h"
 #include "screens/saveload.h"
 
 #define SAVE_FLASH_TIMER_MAX 40
@@ -2131,11 +2132,11 @@ void SaveScreen_Continue(void) // 0x801E6F38
             D_800A97D7             = 1;
             g_GameWork.autosave_90 = g_GameWork.savegame_30C;
 
-            Game_PlayerInit();
+            GameBoot_PlayerInit();
 
             g_SysWork.processFlags_2298 = SysWorkProcessFlag_LoadSave;
 
-            GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
+            GameBoot_MapLoad(g_SavegamePtr->mapOverlayId_A4);
 
             ScreenFade_Start(true, false, false);
             g_GameWork.gameStateStep_598[1]++;

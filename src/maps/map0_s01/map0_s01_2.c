@@ -114,13 +114,13 @@ void Map_RoomBgmInit_CondFalse(void) // 0x800DA7FC
     Bgm_Update(flags, var1, NULL);
 }
 
-void Gfx_LoadingScreen_StageString(void) // 0x800DA8A4
+void GameBoot_LoadScreen_StageString(void) // 0x800DA8A4
 {
     ScreenFade_Start(false, true, false);
 
     Text_Debug_PositionSet(100, 100);
     Text_Debug_Draw("STAGE 0-1");
-    Gfx_LoadingScreen_BackgroundTexture();
+    GameBoot_LoadScreen_BackgroundImg();
 }
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800DA8E8

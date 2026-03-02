@@ -50,9 +50,9 @@ DEFAULT_CONTROLLER_CONFIGS                   = 0x8002511C;
 //--- PA: 0x000618   VA: 0x80025178   subsegment: .rodata, sys/memcard_2
 //----------------------------------------------------------------------
 
-//------------------------------------------------------------------------------
-//--- PA: 0x0006A0   VA: 0x80025200   subsegment: .rodata, game_init/ingame_load
-//------------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+//--- PA: 0x0006A0   VA: 0x80025200   subsegment: .rodata, game_boot/game_load
+//----------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
 //--- PA: 0x0006D4   VA: 0x80025234   subsegment: .rodata, events/bgm_update
@@ -90,14 +90,6 @@ SfxPairs                                     = 0x800252BC; // type:AreaLoadSfx s
 //----------------------------------------------------------------------
 //--- PA: 0x001094   VA: 0x80025BF4   subsegment: .rodata, sound/sd_call
 //----------------------------------------------------------------------
-
-//---------------------------------------------------------------------
-//--- PA: 0x00119C   VA: 0x80025CFC   subsegment: .rodata, sound/sd_snd
-//---------------------------------------------------------------------
-
-//--------------------------------------------------------------------------------
-//--- PA: 0x0011DC   VA: 0x80025D3C   subsegment: .rodata, sound/bodyprog_800485D8
-//--------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------
 //--- PA: 0x001208   VA: 0x80025D68   subsegment: .rodata, screen/text_draw
@@ -396,31 +388,31 @@ Joy_Update                                   = 0x8003446C; // type:func
 Joy_ControllerDataUpdate                     = 0x80034494; // type:func
 ControllerData_AnalogToDigital               = 0x80034670; // type:func
 
-//------------------------------------------------------------------------
-//--- PA: 0x00FD60   VA: 0x800348C0   subsegment: c, game_init/ingame_load
-//------------------------------------------------------------------------
+//----------------------------------------------------------------------
+//--- PA: 0x00FD60   VA: 0x800348C0   subsegment: c, game_boot/game_load
+//----------------------------------------------------------------------
 Anim_CharaTypeAnimInfoClear                  = 0x800348C0; // type:func
 GameState_LoadScreen_Update                  = 0x800348E8; // type:func
-GameFs_MapStartup                            = 0x80034964; // type:func
-Gfx_LoadingScreenDraw                        = 0x80034E58; // type:func
+GameBoot_GameStartup                         = 0x80034964; // type:func
+GameBoot_LoadingScreen                       = 0x80034E58; // type:func
 
-//------------------------------------------------------------------------
-//--- PA: 0x010368   VA: 0x80034EC8   subsegment: c, game_init/ingame_init
-//------------------------------------------------------------------------
-Game_NpcClear                                = 0x80034EC8; // type:func
-Game_NpcInit                                 = 0x80034F18; // type:func
-Game_InGameInit                              = 0x80034FB8; // type:func
+//-----------------------------------------------------------------------
+//--- PA: 0x010368   VA: 0x80034EC8   subsegment: c, game_boot/chara_init
+//-----------------------------------------------------------------------
+GameBoot_NpcClear                            = 0x80034EC8; // type:func
+GameBoot_NpcInit                             = 0x80034F18; // type:func
+GameBoot_InGameInit                          = 0x80034FB8; // type:func
 
-//---------------------------------------------------------------------------
-//--- PA: 0x01055C   VA: 0x800350BC   subsegment: c, game_init/ingame_subinit
-//---------------------------------------------------------------------------
-Game_SavegameInitialize                      = 0x800350BC; // type:func
-Game_PlayerInit                              = 0x80035178; // type:func
-GameFs_MapLoad                               = 0x8003521C; // type:func
+//----------------------------------------------------------------------
+//--- PA: 0x01055C   VA: 0x800350BC   subsegment: c, game_boot/game_boot
+//----------------------------------------------------------------------
+GameBoot_SavegameInitialize                  = 0x800350BC; // type:func
+GameBoot_PlayerInit                          = 0x80035178; // type:func
+GameBoot_MapLoad                             = 0x8003521C; // type:func
 
-//------------------------------------------------------------------------
-//--- PA: 0x01072C   VA: 0x8003528C   subsegment: c, game_init/fs_npc_anim
-//------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+//--- PA: 0x01072C   VA: 0x8003528C   subsegment: c, game_boot/fs_chara_anim
+//--------------------------------------------------------------------------
 Fs_CharaAnimDataSizeCheck                    = 0x8003528C; // type:func
 Fs_CharaAnimDataInfoIdxGet                   = 0x800352F8; // type:func
 Fs_CharaAnimDataAlloc                        = 0x80035338; // type:func
@@ -428,7 +420,7 @@ Fs_CharaAnimInfoUpdate                       = 0x80035560; // type:func
 Fs_CharaAnimBoneInfoUpdate                   = 0x8003569C; // type:func
 
 //----------------------------------------------------------------------------------
-//--- PA: 0x010C20   VA: 0x80035780   subsegment: c, game_init/background_sound_init
+//--- PA: 0x010C20   VA: 0x80035780   subsegment: c, game_boot/background_sound_init
 //----------------------------------------------------------------------------------
 Bgm_Init                                     = 0x80035780; // type:func
 Bgm_IsCurrentBgmTargetCheck                  = 0x800358A8; // type:func
@@ -440,12 +432,12 @@ Sd_IsCurrentAmbientTargetCheck               = 0x80035AB0; // type:func
 Sd_AmbientSfxSet                             = 0x80035AC8; // type:func
 
 //-----------------------------------------------------------------------
-//--- PA: 0x010FA4   VA: 0x80035B04   subsegment: c, game_init/loadscreen
+//--- PA: 0x010FA4   VA: 0x80035B04   subsegment: c, game_boot/loadscreen
 //-----------------------------------------------------------------------
 Math_MatrixTransform                         = 0x80035B04; // type:func
 Gfx_MapEffectsSet                            = 0x80035B58; // type:func
-Gfx_LoadingScreen_BackgroundTexture          = 0x80035BBC; // type:func
-Gfx_LoadingScreen_PlayerRun                  = 0x80035BE0; // type:func
+GameBoot_LoadScreen_BackgroundImg            = 0x80035BBC; // type:func
+GameBoot_LoadScreen_PlayerRun                = 0x80035BE0; // type:func
 
 //--------------------------------------------------------------------
 //--- PA: 0x011254   VA: 0x80035DB4   subsegment: c, events/bgm_update
@@ -727,10 +719,6 @@ Sd_TaskPoolAdd                               = 0x800478DC; // type:func
 Sd_TaskPoolUpdate                            = 0x80047A70; // type:func
 Sd_SetReverbDepth                            = 0x80047AD0; // type:func
 Sd_SetReverbEnable                           = 0x80047AFC; // type:func
-
-//---------------------------------------------------------------
-//--- PA: 0x022FC4   VA: 0x80047B24   subsegment: c, sound/sd_snd
-//---------------------------------------------------------------
 Sd_VabLoad_TaskAdd                           = 0x80047B24; // type:func
 Sd_VabLoad                                   = 0x80047B80; // type:func
 Sd_VabLoad_TypeClear                         = 0x80047D1C; // type:func
@@ -748,14 +736,6 @@ Sd_KdtLoad_StopSeq                           = 0x8004839C; // type:func
 Sd_KdtLoad_OffSet                            = 0x800483D4; // type:func
 Sd_KdtLoad_FileLoad                          = 0x80048424; // type:func
 Sd_KdtLoad_LoadCheck                         = 0x80048498; // type:func
-
-//----------------------------------------------------------------------------------
-//--- PA: 0x023A50   VA: 0x800485B0   subsegment: c, sound/bodyprog_nullsub_800485B0
-//----------------------------------------------------------------------------------
-
-//--------------------------------------------------------------------------
-//--- PA: 0x023A78   VA: 0x800485D8   subsegment: c, sound/bodyprog_800485D8
-//--------------------------------------------------------------------------
 Sd_TaskPoolExecute                           = 0x800485D8; // type:func
 Sd_CdPrimitiveCmdTry                         = 0x80048954; // type:func
 
@@ -2498,9 +2478,9 @@ g_SlotElementSelectedIdx                     = 0x800A97D4;
 g_SelectedSaveSlotIdx                        = 0x800A97D6;
 allFileStatus                                = 0x800A97E4;
 
-//----------------------------------------------------------------------------
-//--- PA: 0x084CA4   VA: 0x800A9804   subsegment: .data, game_init/fs_npc_anim
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//--- PA: 0x084CA4   VA: 0x800A9804   subsegment: .data, game_boot/fs_chara_anim
+//------------------------------------------------------------------------------
 g_BgmTaskLoadCmds                            = 0x800A9804; // type:u16 size:0x54
 g_BgmChannelSetTaskCmds                      = 0x800A9858; // type:u16 size:0x54
 g_AmbientVabTaskLoadCmds                     = 0x800A98AC; // type:u16 size:0x50
@@ -2524,7 +2504,7 @@ g_MapMsg_SelectFlashTimer                    = 0x800A99B0; // type:s16
 //--- PA: 0x084E54   VA: 0x800A99B4   subsegment: .data, events/bodyprog_data_800A99B4
 //------------------------------------------------------------------------------------
 g_PaperMapFileIdxs                           = 0x800A99B4;
-g_PaperMapMarkingFileIdxs                    = 0x800A99CC;
+g_PaperMapMarkingFileIdxs                    = 0x800A99CC; // size:0x18
 D_800A99E4                                   = 0x800A99E4; // size:0x20
 g_MapEventSysState                           = 0x800A9A10; // type:s32
 g_MapEventParam                              = 0x800A9A14; // type:u32
@@ -3010,9 +2990,9 @@ g_Savegame_SelectedElementIdx                = 0x800BCD3E;
 g_SelectedFileIdx                            = 0x800BCD3F;
 g_SelectedDeviceId                           = 0x800BCD40; // size:1
 
-//---------------------------------------------------------------------------
-//--- PA: 0x0981E8   VA: 0x800BCD48   subsegment: .bss, game_init/ingame_load
-//---------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+//--- PA: 0x0981E8   VA: 0x800BCD48   subsegment: .bss, game_boot/game_load
+//-------------------------------------------------------------------------
 demoLoadAttempCount                          = 0x800BCD48;
 
 //-----------------------------------------------------------------------
@@ -3076,19 +3056,11 @@ g_Sd_AudioStreamingStates                    = 0x800C1670; // size:0x4
 gSDVolConfig                                 = 0x800C1678; // size:0x10
 g_Sd_VabPlayingInfo                          = 0x800C1698; // size:0x10
 g_Sd_TaskPool                                = 0x800C16A8; // type:u8 size:0x20
-
-//------------------------------------------------------------------
-//--- PA: 0x09EC68   VA: 0x800C37C8   subsegment: .bss, sound/sd_snd
-//------------------------------------------------------------------
 g_Sd_AudioType                               = 0x800C37C8;
 g_Sd_DataMoved                               = 0x800C37CC;
 g_Sd_VabLoadAttemps                          = 0x800C37D0;
 g_Sd_VabTargetLoad                           = 0x800C37D4;
-g_Sd_KdTargetLoad                            = 0x800C37D8;
-
-//-----------------------------------------------------------------------------
-//--- PA: 0x09EC7C   VA: 0x800C37DC   subsegment: .bss, sound/bodyprog_800485D8
-//-----------------------------------------------------------------------------
+g_Sd_KdtTargetLoad                           = 0x800C37D8;
 g_Sd_CurrentTask                             = 0x800C37DD;
 
 //------------------------------------------------------------------

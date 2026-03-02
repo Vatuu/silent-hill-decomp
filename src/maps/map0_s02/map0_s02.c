@@ -19,4 +19,4 @@
 
 #include "maps/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800CE934
 
-void Gfx_LoadingScreen_StageString(void) {}
+void GameBoot_LoadScreen_StageString(void) {}

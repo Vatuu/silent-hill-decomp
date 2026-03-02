@@ -21,7 +21,7 @@
 #include "screens/stream/stream.h"
 
 // ========================================
-// MAP EVENTS RELATED
+// GLOBAL VARIABLES
 // ========================================
 
 u8 g_SysState_GameOver_TipIdx;
@@ -49,6 +49,10 @@ u8 D_800BCDD4;
 s8 pad_bss_800BCDD5[3];
 
 s_EventData* g_MapEventData;
+
+// ========================================
+// MAP EVENTS RELATED
+// ========================================
 
 void AreaLoad_UpdatePlayerPosition(void) // 0x80039F30
 {

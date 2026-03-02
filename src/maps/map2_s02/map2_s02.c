@@ -41,7 +41,7 @@ INCLUDE_RODATA("maps/map2_s02/nonmatchings/map2_s02", sharedData_800CAA98_0_s01)
 
 #include "maps/shared/Map_RoomBgmInit_2_s02.h" // 0x800E9B38
 
-void Gfx_LoadingScreen_StageString(void) {}
+void GameBoot_LoadScreen_StageString(void) {}
 
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800E9C2C
 

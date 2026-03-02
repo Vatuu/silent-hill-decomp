@@ -3,74 +3,57 @@ import os
 
 # Patch garbage bytes in .bss segment
 
+USA_STREAM = [
+    [0x12AE4, b'\xE4\x73\x40\xAC']
+]
+
+USA_BODYPROG = [
+    [0xA23DC, b'\x0A\x09\x2E\x62'],
+    [0xA24CC, b'\x38\x0D\x0A\x09'],
+    [0xA2B8C, b'\x0D\x0A\x09\x2E'],
+    [0xA3F9C, b'\x09\x30\x78\x61'],
+    [0x9827C, b'\x22\x00\xA2\x97'],
+    [0x98284, b'\x21\x10\x46\x00'],
+    [0x9B08C, b'\x02\x00\x01\x00'],
+    [0x9CA4C, b'\x04\xCF\x41\x76'],
+    [0x9CA54, b'\x00\x18\xE3\xB8'],
+    [0x9F75C, b'\x10\x00\xB0\x8F'],
+    [0x9FD88, b'\x00\x00\x42\x30'],
+    [0x9FD8C, b'\x07\x00\x40\x14'],
+    [0x9FD94, b'\x0F\x80\x02\x3C'],
+    [0x9F774, b'\x21\x80\x80\x00'],
+    [0x9F8F4, b'\x00\x00\x02\x00'],
+    [0x9F96C, b'\x10\x00\xB0\x8F'],
+    [0x9FABC, b'\x30\x00\xA4\x27'],
+    [0x9FACC, b'\x61\x26\x01\x0C'],
+    [0x910CC, b'\x3C\x38\x92\xD8'],
+    [0x910D0, b'\x00\x00\x00\x00'],
+    [0x981B4, b'\x80\x18\x13\x00'],
+    [0x981B8, b'\x00\x00\x00\x00'],
+    [0x981E0, b'\x00\x70\xE5\x8D'],
+    [0x981E4, b'\x05\x00\x02\x24'],
+    [0x981EC, b'\x28\x00\x02\x24'],
+    [0x981F0, b'\x00\x00\x00\x00'],
+    [0x9821C, b'\x21\x10\x49\x00'],
+    [0x98220, b'\x00\x00\x00\x00'],
+]
+
 if __name__ == "__main__":
     match sys.argv[1]:
         case "screens/stream" | "build/USA/out/VIN/STREAM.BIN":
             file = open("build/USA/out/VIN/STREAM.BIN", "r+b")
-            file.seek(0x12AE4)
-            file.write(b'\xE4\x73\x40\xAC')
+            for data in USA_STREAM:
+                file.seek(data[0])
+                file.write(data[1])
             file.close()
         case "bodyprog" | "build/USA/out/1ST/BODYPROG.BIN" | "build/JAP0/out/1ST/BODYPROG.BIN":
             usaPath = "build/USA/out/1ST/BODYPROG.BIN"
             jap0Path = "build/JAP0/out/1ST/BODYPROG.BIN"
             if os.path.isfile(usaPath):
                 file = open(usaPath, "r+b")
-                file.seek(0xA23DC)
-                file.write(b'\x0A\x09\x2E\x62')
-                file.seek(0xA24CC)
-                file.write(b'\x38\x0D\x0A\x09')
-                file.seek(0xA2B8C)
-                file.write(b'\x0D\x0A\x09\x2E')
-                file.seek(0xA3F9C)
-                file.write(b'\x09\x30\x78\x61')
-                file.seek(0x9827C)
-                file.write(b'\x22\x00\xA2\x97')
-                file.seek(0x98284)
-                file.write(b'\x21\x10\x46\x00')
-                file.seek(0x9B08C)
-                file.write(b'\x02\x00\x01\x00')
-                file.seek(0x9CA4C)
-                file.write(b'\x04\xCF\x41\x76')
-                file.seek(0x9CA54)
-                file.write(b'\x00\x18\xE3\xB8')
-                file.seek(0x9F75C)
-                file.write(b'\x10\x00\xB0\x8F')
-                file.seek(0x9FD88)
-                file.write(b'\x00\x00\x42\x30')
-                file.seek(0x9FD8C)
-                file.write(b'\x07\x00\x40\x14')
-                file.seek(0x9FD94)
-                file.write(b'\x0F\x80\x02\x3C')
-                file.seek(0x9F774)
-                file.write(b'\x21\x80\x80\x00')
-                file.seek(0x9F8F4)
-                file.write(b'\x00\x00\x02\x00')
-                file.seek(0x9F96C)
-                file.write(b'\x10\x00\xB0\x8F')
-                file.seek(0x9FABC)
-                file.write(b'\x30\x00\xA4\x27')
-                file.seek(0x9FACC)
-                file.write(b'\x61\x26\x01\x0C')
-                file.seek(0x910CC)
-                file.write(b'\x3C\x38\x92\xD8')
-                file.seek(0x910D0)
-                file.write(b'\x00\x00\x00\x00')
-                file.seek(0x981B4)
-                file.write(b'\x80\x18\x13\x00')
-                file.seek(0x981B8)
-                file.write(b'\x00\x00\x00\x00')
-                file.seek(0x981E0)
-                file.write(b'\x00\x70\xE5\x8D')
-                file.seek(0x981E4)
-                file.write(b'\x05\x00\x02\x24')
-                file.seek(0x981EC)
-                file.write(b'\x28\x00\x02\x24')
-                file.seek(0x981F0)
-                file.write(b'\x00\x00\x00\x00')
-                file.seek(0x9821C)
-                file.write(b'\x21\x10\x49\x00')
-                file.seek(0x98220)
-                file.write(b'\x00\x00\x00\x00')
+                for data in USA_BODYPROG:
+                    file.seek(data[0])
+                    file.write(data[1])
                 file.close()
             if os.path.isfile(jap0Path):
                 file = open(jap0Path, "r+b")
