@@ -13,7 +13,7 @@ void Bgm_BgmChannelSet(void);
 
 void func_8003596C(void);
 
-s32 Sd_AmbientSfxInit(void);
+bool Sd_AmbientSfxInit(void);
 
 bool Sd_IsCurrentAmbientTargetCheck(s32 ambIdx);
 

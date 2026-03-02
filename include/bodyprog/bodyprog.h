@@ -2122,7 +2122,7 @@ extern s_FsImageDesc g_Font24AtlasImg; // 0x800A909C
 /** Array containg file IDs used for each `e_CharacterId`, used in `Fs_QueueStartReadAnm`. */
 extern s_CharaFileInfo CHARA_FILE_INFOS[Chara_Count]; // 0x800A90FC
 
-extern s_MapEffectsInfo g_MapEffectsPresets[21];
+extern s_MapEffectsInfo MAP_EFFECTS_INFOS[21];
 
 extern s_StructUnk3 D_800A952C;
 
@@ -2691,13 +2691,13 @@ s32 func_800868F4(s32 arg0, s32 arg1, s32 idx);
  */
 q19_12 Math_WeightedAverageGet(s32 a, s32 b, q19_12 weight);
 
-void func_8003FCB0(s_MapEffectsInfo* arg0, s_MapEffectsInfo* arg1, s_MapEffectsInfo* arg2, q19_12 alphaTo);
+void func_8003FCB0(const s_MapEffectsInfo* arg0, const s_MapEffectsInfo* arg1, const s_MapEffectsInfo* arg2, q19_12 alphaTo);
 
 void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q19_12 weight0, q19_12 weight1, q19_12 alphaTo);
 
-void func_8003FE04(s_MapEffectsInfo* arg0, s_MapEffectsInfo* arg1, s_MapEffectsInfo* arg2, q19_12 alphaTo);
+void func_8003FE04(const s_MapEffectsInfo* arg0, const s_MapEffectsInfo* arg1, const s_MapEffectsInfo* arg2, q19_12 alphaTo);
 
-s32 func_8003FEC0(s_MapEffectsInfo* arg0);
+s32 func_8003FEC0(const s_MapEffectsInfo* arg0);
 
 void func_8003FF2C(s_StructUnk3* arg0);
 
@@ -4218,7 +4218,7 @@ void GameFs_FlameGfxLoad(void);
 
 void Game_SpotlightLoadScreenAttribsFix(void);
 
-/** @brief Determines what enviroment effects data from `g_MapEffectsPresets` will use
+/** @brief Determines what enviroment effects data from `MAP_EFFECTS_INFOS` will use
  * based on `s_MapOverlayHeader::field_16`.
  */
 void Gfx_MapEffectsAssign(s_MapOverlayHeader* mapHdr);
@@ -4239,9 +4239,9 @@ void func_8003EE30(s32 arg0, s32* arg1, s32 arg2, s32 arg3);
 
 void Gfx_LoadScreenMapEffectsUpdate(s32 arg0, s32 arg1);
 
-void Gfx_MapEffectsStepUpdate(s_MapEffectsInfo* preset0, s_MapEffectsInfo* preset1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
+void Gfx_MapEffectsStepUpdate(const s_MapEffectsInfo* preset0, const s_MapEffectsInfo* preset1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
 
-void Gfx_FogParametersSet(s_StructUnk3* arg0, s_MapEffectsInfo* preset);
+void Gfx_FogParametersSet(s_StructUnk3* arg0, const s_MapEffectsInfo* preset);
 
 void Gfx_FlashlightUpdate(void);
 

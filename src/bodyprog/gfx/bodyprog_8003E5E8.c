@@ -356,10 +356,10 @@ void Gfx_LoadScreenMapEffectsUpdate(s32 arg0, s32 arg1) // 0x8003EEDC
 
 void Gfx_MapEffectsUpdate(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF10
 {
-    Gfx_MapEffectsStepUpdate(&g_MapEffectsPresets[idx0], &g_MapEffectsPresets[idx1], primType, primData, arg4, arg5);
+    Gfx_MapEffectsStepUpdate(&MAP_EFFECTS_INFOS[idx0], &MAP_EFFECTS_INFOS[idx1], primType, primData, arg4, arg5);
 }
 
-void Gfx_MapEffectsStepUpdate(s_MapEffectsInfo* preset0, s_MapEffectsInfo* preset1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF74
+void Gfx_MapEffectsStepUpdate(const s_MapEffectsInfo* preset0, const s_MapEffectsInfo* preset1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF74
 {
     if (preset0 == preset1)
     {
@@ -382,7 +382,7 @@ void Gfx_MapEffectsStepUpdate(s_MapEffectsInfo* preset0, s_MapEffectsInfo* prese
     Gfx_FogParametersSet(&g_SysWork.field_2388.field_84[1], preset1);
 }
 
-void Gfx_FogParametersSet(s_StructUnk3* arg0, s_MapEffectsInfo* effectsInfo) // 0x8003F08C
+void Gfx_FogParametersSet(s_StructUnk3* arg0, const s_MapEffectsInfo* effectsInfo) // 0x8003F08C
 {
     arg0->effectsInfo_0 = *effectsInfo;
 
@@ -482,7 +482,7 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
 
         if (flags & (1 << 0))
         {
-            Gfx_FogParametersSet(ptr2, &g_MapEffectsPresets[8]);
+            Gfx_FogParametersSet(ptr2, &MAP_EFFECTS_INFOS[8]);
         }
         else if (flags & (1 << 1))
         {
@@ -806,7 +806,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
     }
 }
 
-void func_8003FCB0(s_MapEffectsInfo* arg0, s_MapEffectsInfo* arg1, s_MapEffectsInfo* arg2, q19_12 alphaTo) // 0x8003FCB0
+void func_8003FCB0(const s_MapEffectsInfo* arg0, const s_MapEffectsInfo* arg1, const s_MapEffectsInfo* arg2, q19_12 alphaTo) // 0x8003FCB0
 {
     q19_12 alphaFrom;
 
@@ -833,7 +833,7 @@ void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
     LoadAverageCol(&arg1->effectsInfo_0.fogColor_14.r, &arg2->effectsInfo_0.fogColor_14.r, Q12(1.0f) - alphaTo, alphaTo, &arg0->effectsInfo_0.fogColor_14.r);
 }
 
-void func_8003FE04(s_MapEffectsInfo* arg0, s_MapEffectsInfo* arg1, s_MapEffectsInfo* arg2, q19_12 alphaTo) // 0x8003FE04
+void func_8003FE04(const s_MapEffectsInfo* arg0, const s_MapEffectsInfo* arg1, const s_MapEffectsInfo* arg2, q19_12 alphaTo) // 0x8003FE04
 {
     q19_12 alphaFrom;
 
@@ -852,7 +852,7 @@ void func_8003FE04(s_MapEffectsInfo* arg0, s_MapEffectsInfo* arg1, s_MapEffectsI
     }
 }
 
-s32 func_8003FEC0(s_MapEffectsInfo* arg0) // 0x8003FEC0
+s32 func_8003FEC0(const s_MapEffectsInfo* arg0) // 0x8003FEC0
 {
     static q19_12 Y_ARRAY[5] = {
         Q12(1.75f),

@@ -2,7 +2,7 @@
 #include "bodyprog/math/math.h"
 #include "game.h"
 
-s_MapEffectsInfo g_MapEffectsPresets[21] = {
+s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
     {
         .field_0        = { .field_0 = 0xFF00 },
         .field_4        = Q12(0.0f),

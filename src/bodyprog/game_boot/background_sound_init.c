@@ -145,7 +145,7 @@ void func_8003596C(void) // 0x8003596C
 // AMBIENT SOUND INIT & SET
 // ========================================
 
-s32 Sd_AmbientSfxInit(void) // 0x8003599C
+bool Sd_AmbientSfxInit(void) // 0x8003599C
 {
     if (Sd_AudioStreamingCheck() || Fs_QueueGetLength() > 0)
     {
@@ -171,20 +171,20 @@ s32 Sd_AmbientSfxInit(void) // 0x8003599C
             {
                 SD_Call(17);
                 g_GameWork.gameStateStep_598[1]++;
-                return 1;
+                return true;
             }
             break;
 
         case 1:
             Sd_AmbientSfxSet((s8)g_MapOverlayHeader.ambientAudioIdx_15);
             g_GameWork.gameStateStep_598[1]++;
-            return 1;
+            return true;
 
         default:
            break;
     }
 
-    return 0;
+    return false;
 }
 
 bool Sd_IsCurrentAmbientTargetCheck(s32 ambIdx) // 0x80035AB0
