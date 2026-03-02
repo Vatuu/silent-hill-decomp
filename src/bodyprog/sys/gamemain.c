@@ -164,9 +164,13 @@ void MainLoop(void) // 0x80032EE0
     MemCard_InitStatus();
     Joy_Init();
     VSyncCallback(&Screen_VSyncCallback);
+
+#if VERSION_EQUAL_OR_NEWER(USA)
     InitGeom();
     func_8004BB10(); // Initializes something for graphics.
     func_800890B8();
+#endif
+
     SD_Init();
 
     // Run game.

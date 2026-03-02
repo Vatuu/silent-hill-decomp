@@ -202,6 +202,7 @@ const s32 g_rodataPad_8002AF9C[2] = { 0, 0 }; // TODO: Might indicate split near
 
 u32 func_8008A270(s32 idx) // 0x8008A270
 {
+#if VERSION_EQUAL_OR_NEWER(USA)
     switch (idx)
     {
         case 2:
@@ -219,6 +220,12 @@ u32 func_8008A270(s32 idx) // 0x8008A270
         default:
             break;
     }
+#else
+    if (!(idx >= 57 && idx <= 58) && g_SysWork.field_275C > Q12(256.0f))
+    {
+        return 0;
+    }
+#endif
 
     return D_800AD4C8[idx].field_E;
 }
