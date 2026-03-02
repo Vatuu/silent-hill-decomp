@@ -296,8 +296,13 @@ void SysState_GamePaused_Update(void) // 0x800391E8
     D_800A9A68 += g_DeltaTimeRaw;
     if (!((D_800A9A68 >> 11) & (1 << 0)))
     {
+#if defined(VER_JAP0) // TODO: Check this string in other versions.
+        Gfx_StringSetPosition(SCREEN_POSITION_X(41.0f), SCREEN_POSITION_Y(43.5f));
+        Gfx_StringDraw("\x07PAUSE", DEFAULT_MAP_MESSAGE_LENGTH);
+#else
         Gfx_StringSetPosition(SCREEN_POSITION_X(39.25f), SCREEN_POSITION_Y(43.5f));
         Gfx_StringDraw("\x07PAUSED", DEFAULT_MAP_MESSAGE_LENGTH);
+#endif
     }
 
     func_80091380();

@@ -248,8 +248,12 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
     return (res > Q8(24.0f)) ? Q8(24.0f) : res;
 }
 
-// TODO: Random data previously seen between sections. Likely should be a split here.
+// TODO: Garbage data, move to separate split?
+#if defined(VER_USA)
 const u8 hack_vcSetWatchTgtXzPos_fix[] = { 0x00, 0x35, 0x08, 0x80, 0x00, 0x00, 0x00, 0x00 };
+#elif defined(VER_JAP0)
+const u8 hack_vcSetWatchTgtXzPos_fix[] = { 0x00, 0x65, 0x5F, 0x61, 0x00, 0x00, 0x00, 0x00 };
+#endif
 
 // Used by `func_8008D990`.
 s16 D_800AFD7C[] = {

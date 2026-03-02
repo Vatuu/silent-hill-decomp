@@ -322,7 +322,11 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             // Store current shown `tipIdx`, later `sysStateStep_C == 7` will set it inside `seenGameOverTips_2E`.
             g_SysState_GameOver_TipIdx = tipIdx;
 
+#if defined(VERSION_NTSC)
             Fs_QueueStartReadTim(FILE_TIM_TIPS_E01_TIM + tipIdx, FS_BUFFER_1, &g_DeathTipImg);
+#elif defined(VERSION_NTSCJ)
+            Fs_QueueStartReadTim(FILE_TIM_TIPS_J01_TIM + tipIdx, FS_BUFFER_1, &g_DeathTipImg);
+#endif
             SysWork_StateStepIncrement(0);
 
         case 1:

@@ -72,7 +72,7 @@ segments:
       - [0x700,  .rodata, events/mapmsg_display]
       - [0x75C,  .rodata, events/bodyprog_gamestates_80038BD4]
       - [0x8E8,  .rodata, events/bodyprog_event_80039F30]
-      - [0x918,  .rodata, title]
+      - [0x920,  .rodata, title]
       - [0x9C8,  .rodata, gfx/bodyprog_8003BD2C]
       - [0x1054, .rodata, gfx/bodyprog_8003E5E8]
       - [0x1084, .rodata, gfx/bodyprog_80040004]
@@ -380,6 +380,7 @@ segments:
       - [0x8486C, .data, sys/map_info]
       - [0x84C08, .data, sys/gamemain]
       - [0x84C74, .data, sys/memcard_2]
+      # TODO: Addrs seem off for next 3 splits, need to recheck them.
       - [0x84CA4, .data, game_init/background_sound_init]
       - [0x84CA4, .data, game_init/fs_npc_anim]
       - [0x84DCC, .data, events/bgm_update]
