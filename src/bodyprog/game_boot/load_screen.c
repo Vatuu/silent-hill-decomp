@@ -5,13 +5,9 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/game_boot.h"
+#include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/view/vc_main.h"
 #include "bodyprog/math/math.h"
-
-// ========================================
-// LOADING SCREEN RELATED
-// ========================================
 
 /** @brief Updates the translation and rotation of a matrix in a coordinate.
  *

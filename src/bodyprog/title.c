@@ -5,7 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/game_boot.h"
+#include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/memcard.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
@@ -23,10 +23,6 @@ static s32 g_MainMenu_SelectedEntry = MainMenuEntry_Start;
 static u32 g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Start) | (1 << MainMenuEntry_Option);
 
 s8 g_Demo_ReproducedCount = 0;
-
-// ========================================
-// MAIN MENU
-// ========================================
 
 s8* D_800BCDE0;
 

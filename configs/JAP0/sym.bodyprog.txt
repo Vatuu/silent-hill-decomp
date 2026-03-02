@@ -24,7 +24,7 @@ D_800C96B4_JPN = 0x800C96B4;
 D_800C96A4_JPN = 0x800C96A4;
 D_800C96A0_JPN = 0x800C96A0;
 
-// Gamestates inside overlays, TODO: Move these to sym files for each overlay
+// Gamestates inside overlays. TODO: Move these to sym files for each overlay
 GameState_KonamiLogo_Update = 0x800cbadc; // type:func
 GameState_KcetLogo_Update = 0x800cbed4; // type:func
 GameState_MovieIntroFadeIn_Update = 0x801e2654; // type:func

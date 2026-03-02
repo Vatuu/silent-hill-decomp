@@ -4,10 +4,10 @@
 #include <psyq/libetc.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gamemain.h"
 #include "bodyprog/demo.h"
+#include "bodyprog/sys/joy.h"
 #include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/joy.h"
+#include "bodyprog/sys/game_main.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound_system.h"
 

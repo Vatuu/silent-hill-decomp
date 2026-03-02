@@ -5,7 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/game_boot.h"
+#include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/sound_system.h"
 
 // ========================================
@@ -39,10 +39,6 @@ static u16 g_AmbientVabTaskLoadCmds[] = {
     189, 184, 190, 191, 192, 193, 194, 195,
     196, 197, 198, 199, 200, 201, 202, 203
 };
-
-// ========================================
-// BACKGROUND MUSIC INIT & SET
-// ========================================
 
 s32 Bgm_Init(void) // 0x80035780
 {

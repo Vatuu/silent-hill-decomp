@@ -5,10 +5,10 @@
 #include <psyq/libpress.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gamemain.h"
-#include "bodyprog/joy.h"
 #include "bodyprog/libsd.h"
 #include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/sys/game_main.h"
+#include "bodyprog/sys/joy.h"
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
 #include "main/fileinfo.h"

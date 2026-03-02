@@ -9,9 +9,9 @@
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/item_screens.h"
-#include "bodyprog/joy.h"
 #include "bodyprog/player_logic.h"
 #include "bodyprog/sound_system.h"
+#include "bodyprog/sys/joy.h"
 #include "main/rng.h"
 
 s_800C44F0 D_800C44F0[10];
@@ -7964,6 +7964,8 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx) // 0x8007EB64
         g_GameWork.mapAnimIdx_5B1 = mapIdx;
         Fs_QueueStartRead(BASE_FILE_IDX + mapIdx, FS_BUFFER_4);
     }
+
+    #undef BASE_FILE_IDX
 }
 
 void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC

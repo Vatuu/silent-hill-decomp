@@ -6,25 +6,21 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
-#include "bodyprog/game_boot.h"
-#include "bodyprog/screen/screen_data.h"
-#include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/text/text_draw.h"
+#include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
 #include "bodyprog/player_logic.h"
 #include "bodyprog/ranking.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/sound_background.h"
 #include "bodyprog/sound_system.h"
+#include "bodyprog/text/text_draw.h"
 #include "main/fsqueue.h"
 #include "main/mem.h"
 #include "main/rng.h"
 #include "screens/stream/stream.h"
-
-// ========================================
-// INLINE FUNCTIONS
-// ========================================
 
 static inline void Game_StateStepIncrement(void) // TODO: Move to header?
 {
@@ -35,10 +31,6 @@ static inline void Game_StateStepIncrement(void) // TODO: Move to header?
     g_GameWork.gameStateStep_598[2] = 0;
     g_GameWork.gameStateStep_598[0] = gameStateStep0 + 1;
 }
-
-// ========================================
-// IN-GAME LOAD INITALIZATION
-// ========================================
 
 void Anim_CharaTypeAnimInfoClear(void) // 0x800348C0
 {

@@ -7,7 +7,7 @@
 #include "main/fsqueue.h"
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
-#include "bodyprog/game_boot.h"
+#include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
@@ -49,10 +49,6 @@ s_AnimInfo D_800A998C = {
     .startKeyframeIdx_C    = 26,
     .endKeyframeIdx_E      = 44
 };
-
-// ========================================
-// CHARACTER ANIMATIONS MEMORY ALLOC
-// ========================================
 
 bool Fs_CharaAnimDataSizeCheck(s32 charaDataAnimInfoIdx0, s32 charaDataAnimInfoIdx1) // 0x8003528C
 {

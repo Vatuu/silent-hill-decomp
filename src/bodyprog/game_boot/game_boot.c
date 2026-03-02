@@ -6,13 +6,9 @@
 
 #include "main/fsqueue.h"
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/game_boot.h"
+#include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
-
-// ========================================
-// IN-GAME INITALIZATION
-// ========================================
 
 void GameBoot_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 {
@@ -30,9 +26,9 @@ void GameBoot_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
     g_SavegamePtr->gameDifficulty_260 = difficulty;
     g_SavegamePtr->paperMapIdx_A9     = PaperMapIdx_OldTown;
 
-    // Defines all enemies from an overlay as alive.
+    // Define all enemies from an overlay as alive.
     // Odd code. Possibly a hack.
-    for (i = 0; i < 45; i++)
+    for (i = 0; i < Chara_Count; i++)
     {
         ovlEnemyStatesPtr[44] = NO_VALUE;
         ovlEnemyStatesPtr--;
@@ -67,9 +63,7 @@ void GameBoot_PlayerInit(void) // 0x80035178
 
 void GameBoot_MapLoad(s32 mapIdx) // 0x8003521C
 {
-    #define BASE_FILE_IDX FILE_VIN_MAP0_S00_BIN
-
-    Fs_QueueStartRead(BASE_FILE_IDX + mapIdx, g_OvlDynamic);
+    Fs_QueueStartRead(FILE_VIN_MAP0_S00_BIN + mapIdx, g_OvlDynamic);
     Map_EffectTexturesLoad(mapIdx);
     GameFs_PlayerMapAnimLoad(mapIdx);
 

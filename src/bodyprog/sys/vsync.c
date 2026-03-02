@@ -1,8 +1,8 @@
 #include "game.h"
 
 #include "bodyprog/demo.h"
-#include "bodyprog/gamemain.h"
 #include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/sys/game_main.h"
 
 void Screen_VSyncCallback(void) // 0x80032B80
 {
