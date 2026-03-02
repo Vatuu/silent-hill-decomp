@@ -2431,8 +2431,9 @@ g_BlackBorderShade                           = 0x800A8F40;
 //-------------------------------------------------------------------------
 // vw globals from SH2
 vcNullRoadArray                              = 0x800A8F44; // _VC_ROAD_DATA[2]
-g_OrderingTable0                             = 0x800A8F74; // type:s8
-g_OrderingTable2                             = 0x800A8FC4; // type:s8
+g_OrderingTable0                             = 0x800A8F74; // type:s8 size:0x28
+g_OrderingTable1                             = 0x800A8F9C; // type:s8 size:0x28
+g_OrderingTable2                             = 0x800A8FC4; // type:s8 size:0x28
 g_DeltaTimeRaw                               = 0x800A8FEC; // type:s32
 g_IntervalVBlanks                            = 0x800A8FF0; // type:s32
 g_Font16AtlasImg                             = 0x800A8FF4; // type:FsImageDesc size:8

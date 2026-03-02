@@ -16,13 +16,26 @@ s32 D_800C3954;
 s32 D_800C3958;
 s32 D_800C395C;
 
+#if VERSION_EQUAL_OR_NEWER(USA)
 void func_8004BB10(void) // 0x8004BB10
 {
+    // Based on `libgs.h` `jt_init4` function?
+
+    // Gouraud triangle.
     GsFCALL4.g3[GsDivMODE_NDIV][GsLMODE_FOG]  = GsTMDfastG3LFG;
+    // Textured gouraud triangle.
     GsFCALL4.tg3[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG3LFG;
+    // Gouraud quad.
     GsFCALL4.g4[GsDivMODE_NDIV][GsLMODE_FOG]  = GsTMDfastG4LFG;
+    // Textured gouraud quad.
     GsFCALL4.tg4[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG4LFG;
 }
+#else 
+// TODO: Need to add SDK syms to JPN0 to know what funcs these are setting up.
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_cam", func_8004CB50);
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_cam", func_8004CB6C);
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_cam", func_8004CB90);
+#endif
 
 void ItemScreen_CamSet(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3) // 0x8004BB4C
 {

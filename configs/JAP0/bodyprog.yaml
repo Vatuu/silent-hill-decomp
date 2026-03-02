@@ -134,7 +134,7 @@ segments:
       - [0x23C0C, c, view/vw_main]
       - [0x240FC, c, view/vw_calc] # Contains part of SH2's `vb_main`?
       - [0x25A50, asm, screen/text_draw]
-      - [0x28030, asm, items/item_screens_cam]
+      - [0x27FF0, c, items/item_screens_cam]
       - [0x28580, c, items/item_screens_1]
       - [0x28DD4, asm, items/item_screens_2]
       - [0x2BC80, asm, items/item_screens_3]
@@ -221,6 +221,7 @@ segments:
       - [0xA11B0, .bss, view/vw_main]
       - [0xA1238, .bss, view/vw_calc]
       - [0xA1278, bss]
+      - [0xA12F8, .bss, items/item_screens_cam]
       - [0xA1330, .bss, items/item_screens_1]
       - [0xA1338, bss]
       - [0xA1C90, .bss, 3d_audio]
