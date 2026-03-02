@@ -1176,7 +1176,11 @@ void MemCard_FilenameGenerate(char* dest, s32 fileIdx) // 0x80030000
 {
     char buf[3];
 
+#if defined(VERSION_NTSCJ)
+    strcpy(dest, "BI");
+#else
     strcpy(dest, "BA");
+#endif
     strcat(dest, VERSION_SERIAL);
     strcat(dest, "SILENT");
 
@@ -1192,7 +1196,9 @@ void MemCard_SaveBlockInit(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveIdx
     char      saveIdxStr[8];
     TIM_IMAGE iconTexture;
 
+#if VERSION_DATE >= VERSION_DATE_NTSC_1_1 // `bzero` call missing in JPNv1, assuming it was added in NTSC and later versions.
     bzero(saveBlock, sizeof(s_PsxSaveBlock));
+#endif
 
     saveBlock->magic_0[0]        = 'S';
     saveBlock->magic_0[1]        = 'C';
@@ -1991,4 +1997,10 @@ void MemCard_DevicePathGenerate(s32 deviceId, char* result) // 0x800314A4
     result[3] = '0' + (deviceId & ((1 << 0) | (1 << 1)));
 }
 
-const s32 pad_rodata_80024C98 = 0x8E080000;
+#if defined(VER_USA)
+    const s32 pad_rodata_80024C98 = 0x8E080000;
+#elif defined(VER_JAP0)
+    // JAP0 has 2 bytes of garbage right after buXX: string above, along with the 4 bytes below.
+    // Can't find way to add those 2 bytes here (or in splat yaml), postbuild will have to handle them.
+    const u8 pad_rodata_80024C98[] = { 0x00, 0x27, 0x10, 0x00 };
+#endif

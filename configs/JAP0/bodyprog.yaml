@@ -56,8 +56,8 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      # TODO: Need to recheck rodata against USA.
-      - [0x0, rodata, bodyprog] # SDK libs, lib_unk
+      - [0x0, rodata, bodyprog]
+      - [0x4, .rodata, memcard]
       - [0x134, .rodata, screen/screen_fade]
       - [0x17C, .rodata, screen/screen_cutscenesborders]
       - [0x1DC, rodata]
@@ -81,8 +81,7 @@ segments:
       - [0x1470, rodata]
       - [0x3734, .rodata, bodyprog_8005E0DC]
       - [0x3BD8, .rodata, bodyprog_mapscreen_80066EB0]
-      # TODO: - [0x3BEC, .rodata, bodyprog_mapscreen_80066D90]
-      - [0x3BEC, rodata]
+      - [0x3BEC, rodata] # TODO: - [0x3BEC, .rodata, bodyprog_mapscreen_80066D90]
       - [0x3D04, .rodata, bodyprog_800697EC]
       - [0x4910, rodata]
       - [0x5A10, .rodata, view/vc_main]
@@ -98,7 +97,7 @@ segments:
       #- [0x97F0, asm, globals] # Data
       #- [0x97F0, asm, syswork_functable] # Data
 
-      - [0x97F0, asm, memcard]
+      - [0x97F0, c, memcard]
       - [0xC674, c, screen/background_draw]
       - [0xD084, c, screen/text_debug_draw]
       - [0xD4E0, c, screen/screen_draw]
@@ -196,7 +195,8 @@ segments:
       - [0x8D618, .data, demo]
       - [0x8D654, .data, ranking]
       - [0x8D668, .data, credits_init]
-      - [0x8D6DC, data, bodyprog3]
+      - [0x8D6DC, data]
+      - [0x8FFE8, .bss, memcard]
       - [0x935F0, .bss, screen/text_debug_draw]
       - [0x935F8, .bss, screen/screen_fade]
       - [0x93604, bss]

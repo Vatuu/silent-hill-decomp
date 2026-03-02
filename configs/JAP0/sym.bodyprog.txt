@@ -1246,6 +1246,7 @@ SdUtKeyOffV = 0x800A3C90; // type:func
 SdUtKeyOffVWithRROff = 0x800A3DB4; // type:func
 SdGetMidiVol = 0x800A41EC; // type:func
 SdSetMidiVol = 0x800A422C; // type:func
+D_800A8D98 = 0x800AB134;
 g_Screen_BackgroundImgIntensity = 0x800AB1F4;
 D_800A8E5C = 0x800AB1F8;
 D_800A8E74 = 0x800AB210;

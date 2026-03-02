@@ -74,6 +74,8 @@ if __name__ == "__main__":
                 file.close()
             if os.path.isfile(jap0Path):
                 file = open(jap0Path, "r+b")
+                file.seek(0x12E)
+                file.write(b'\xE8\xFF')
                 file.seek(0x935FC)
                 file.write(b'\xAF\x28\xFF\xAD')
                 file.seek(0x9A6E4)
