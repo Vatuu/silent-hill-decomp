@@ -44,6 +44,9 @@ void vcSetCameraUseWarp(const VECTOR3* chr_pos, q3_12 chr_ang_y) // 0x800400D4
 
     vcSetFirstCamWork(&cam_pos, chr_ang_y, g_SysWork.flags_22A4 & SysFlag2_6);
     g_SysWork.flags_22A4 &= ~SysFlag2_6;
+
+    #undef RADIUS
+    #undef HEIGHT
 }
 
 s32 vcRetCamMvSmoothF(void) // 0x80040190
@@ -179,6 +182,8 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
     head_pos->vx = Q8_TO_Q12(vec.vx + neck_lwm.t[0]);
     head_pos->vy = Q8_TO_Q12(vec.vy + neck_lwm.t[1]) + Y_OFFSET;
     head_pos->vz = Q8_TO_Q12(vec.vz + neck_lwm.t[2]);
+
+    #undef Y_OFFSET
 }
 
 void vcAddOfsToPos(VECTOR3* out_pos, const VECTOR3* in_pos, q3_12 ofs_xz_r, q3_12 ang_y, q19_12 ofs_y) // 0x80040518
@@ -188,7 +193,8 @@ void vcAddOfsToPos(VECTOR3* out_pos, const VECTOR3* in_pos, q3_12 ofs_xz_r, q3_1
     out_pos->vy = in_pos->vy + ofs_y;
 }
 
-void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, bool for_f, bool back_f, bool right_f, bool left_f, bool up_f, bool down_f) // 0x800405C4
+void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p,
+                                   bool for_f, bool back_f, bool right_f, bool left_f, bool up_f, bool down_f) // 0x800405C4
 {
     #define POS_OFFSET Q12(0.1f)
     #define RADIUS_MIN Q12(1.0f)
@@ -197,132 +203,132 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, bool for_
     {
         sys_p->cameraRadiusXz_2380 -= POS_OFFSET;
     }
-
     if (back_f)
     {
         sys_p->cameraRadiusXz_2380 += POS_OFFSET;
     }
-
     if (right_f)
     {
         sys_p->cameraAngleY_237A -= (g_VBlanks * 11);
     }
-
     if (left_f)
     {
         sys_p->cameraAngleY_237A += (g_VBlanks * 11);
     }
-
     if (up_f)
     {
         sys_p->cameraY_2384 -= POS_OFFSET;
     }
-
     if (down_f)
     {
         sys_p->cameraY_2384 += POS_OFFSET;
     }
-
     if (sys_p->cameraRadiusXz_2380 < RADIUS_MIN)
     {
         sys_p->cameraRadiusXz_2380 = RADIUS_MIN;
     }
 
-    vcAddOfsToPos(ref_pos, &g_SysWork.playerWork_4C.player_0.position_18, Q12(0.5f), g_SysWork.playerWork_4C.player_0.rotation_24.vy, Q12(-1.0f));
+    vcAddOfsToPos(ref_pos, &g_SysWork.playerWork_4C.player_0.position_18,
+                  Q12(0.5f), g_SysWork.playerWork_4C.player_0.rotation_24.vy, Q12(-1.0f));
+
+    #undef POS_OFFSET
+    #undef RADIUS_MIN
 }
 
 void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x800406D4
 {
-    SVECTOR cam_ang; // Q3.12
-    VECTOR3 vec0;    // Q23.8
-    VECTOR3 cam_pos; // Q19.12
-    MATRIX  mat;
-    s32     var0;
-    s32     var1;
-    s32     var2;
+    #define V_BLANKS_MULT 11
+    #define MOVE_DIST     Q8(0.1f)
+
+    SVECTOR cam_ang;   // Q3.12
+    VECTOR3 newCamPos; // Q23.8
+    VECTOR3 cam_pos;   // Q19.12
+    MATRIX  lookAtMat;
+    q23_8   moveStep;
 
     vwGetViewPosition(&cam_pos);
 
-    vec0.vx = Q12_TO_Q8(cam_pos.vx);
-    vec0.vy = Q12_TO_Q8(cam_pos.vy);
-    vec0.vz = Q12_TO_Q8(cam_pos.vz);
+    newCamPos.vx = Q12_TO_Q8(cam_pos.vx);
+    newCamPos.vy = Q12_TO_Q8(cam_pos.vy);
+    newCamPos.vz = Q12_TO_Q8(cam_pos.vz);
 
     vwGetViewAngle(&cam_ang);
 
-    // TODO: Demagic hex values. What Q format is being used?
     if (!(g_Controller1->btnsHeld_C & ControllerFlag_Circle))
     {
         if (g_Controller1->btnsHeld_C & ControllerFlag_LStickDown)
         {
-            cam_ang.vx = cam_ang.vx - (g_VBlanks * 11);
+            cam_ang.vx = cam_ang.vx - (g_VBlanks * V_BLANKS_MULT);
         }
 
         if (g_Controller1->btnsHeld_C & ControllerFlag_LStickUp)
         {
-            cam_ang.vx = cam_ang.vx + (g_VBlanks * 11);
+            cam_ang.vx = cam_ang.vx + (g_VBlanks * V_BLANKS_MULT);
         }
 
         if (g_Controller1->btnsHeld_C & ControllerFlag_LStickRight)
         {
-            cam_ang.vy = cam_ang.vy + (g_VBlanks * 11);
+            cam_ang.vy = cam_ang.vy + (g_VBlanks * V_BLANKS_MULT);
         }
 
         if (g_Controller1->btnsHeld_C & ControllerFlag_LStickLeft)
         {
-            cam_ang.vy = cam_ang.vy - (g_VBlanks * 11);
+            cam_ang.vy = cam_ang.vy - (g_VBlanks * V_BLANKS_MULT);
         }
 
         if (g_Controller1->btnsHeld_C & (ControllerFlag_Triangle | ControllerFlag_Cross))
         {
-            var0 = 0;
+            moveStep = Q8(0.0f);
             if (g_Controller1->btnsHeld_C & ControllerFlag_Triangle)
             {
-                var0 = 25;
+                moveStep = MOVE_DIST;
             }
             if (g_Controller1->btnsHeld_C & ControllerFlag_Cross)
             {
-                var0 = -26;
+                moveStep = -MOVE_DIST - 1; // TODO: `- 1` enforces a rounded down result, but `Q8` truncates toward 0.
             }
 
-            vec0.vx += Q12_MULT_ALT(var0, Math_Sin(cam_ang.vy));
-            vec0.vz += Q12_MULT_ALT(var0, Math_Cos(cam_ang.vy));
+            // @bug? Misuse of Q12 multiplication on Q8 values.
+            newCamPos.vx += Q12_MULT_ALT(moveStep, Math_Sin(cam_ang.vy));
+            newCamPos.vz += Q12_MULT_ALT(moveStep, Math_Cos(cam_ang.vy));
         }
     }
     else
     {
         if (g_Controller1->btnsHeld_C & ControllerFlag_LStickUp)
         {
-            vec0.vy -= Q8(0.1f);
+            newCamPos.vy -= MOVE_DIST;
         }
         if (g_Controller1->btnsHeld_C & ControllerFlag_LStickDown)
         {
-            vec0.vy += Q8(0.1f);
+            newCamPos.vy += MOVE_DIST;
         }
 
         if (g_Controller1->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
         {
-            var0 = 0;
+            moveStep = Q8(0.0f);
             if (g_Controller1->btnsHeld_C & ControllerFlag_LStickRight)
             {
-                var0 = 25;
+                moveStep = MOVE_DIST;
             }
             if (g_Controller1->btnsHeld_C & ControllerFlag_LStickLeft)
             {
-                var0 = -26;
+                moveStep = -MOVE_DIST - 1; // TODO: `- 1` enforces a rounded down result, but `Q8` truncates toward 0.
             }
 
-            // TODO: Q12 multiplication on Q8 values? Why?
-            vec0.vx += Q12_MULT_ALT(var0, Math_Sin(cam_ang.vy + Q12_ANGLE(90.0f)));
-            vec0.vz += Q12_MULT_ALT(var0, Math_Cos(cam_ang.vy + Q12_ANGLE(90.0f)));
+            // @bug? Misuse of Q12 multiplication on Q8 values.
+            newCamPos.vx += Q12_MULT_ALT(moveStep, Math_Sin(cam_ang.vy + Q12_ANGLE(90.0f)));
+            newCamPos.vz += Q12_MULT_ALT(moveStep, Math_Cos(cam_ang.vy + Q12_ANGLE(90.0f)));
         }
     }
 
-    Math_RotMatrixZxyNegGte(&cam_ang, &mat);
+    Math_RotMatrixZxyNegGte(&cam_ang, &lookAtMat);
 
-    mat.t[0] = vec0.vx;
-    mat.t[1] = vec0.vy;
-    mat.t[2] = vec0.vz;
-    vwSetViewInfoDirectMatrix(NULL, &mat);
+    // Set look-at matrix.
+    lookAtMat.t[0] = newCamPos.vx;
+    lookAtMat.t[1] = newCamPos.vy;
+    lookAtMat.t[2] = newCamPos.vz;
+    vwSetViewInfoDirectMatrix(NULL, &lookAtMat);
 
     if (g_Controller1->btnsHeld_C & (ControllerFlag_LStickUp |
                                      ControllerFlag_LStickRight |
@@ -331,17 +337,19 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
                                      ControllerFlag_Cross |
                                      ControllerFlag_Triangle))
     {
-        SVECTOR vec1;
+        SVECTOR refOffset; // Q19.12?
 
-        // TODO: `Q8(5.0f)`? But `vwAngleToVector` expects `Q12`. Maybe an error by TS.
-        vwAngleToVector(&vec1, &cam_ang, Q12(0.3125f));
+        // @bug? `vwAngleToVector` expects `Q12`. Possible typo.
+        vwAngleToVector(&refOffset, &cam_ang, Q8(5.0f));
 
-        ref_pos->vx = Q8_TO_Q12(vec0.vx + vec1.vx);
-        ref_pos->vy = Q8_TO_Q12(vec0.vy + vec1.vy);
-        ref_pos->vz = Q8_TO_Q12(vec0.vz + vec1.vz);
+        ref_pos->vx = Q8_TO_Q12(newCamPos.vx + refOffset.vx);
+        ref_pos->vy = Q8_TO_Q12(newCamPos.vy + refOffset.vy);
+        ref_pos->vz = Q8_TO_Q12(newCamPos.vz + refOffset.vz);
 
         sys_p->cameraAngleY_237A   = Math_AngleNormalize(cam_ang.vy + Q12_ANGLE(180.0f));
-        sys_p->cameraY_2384        = Q8_TO_Q12(-vec1.vy);
-        sys_p->cameraRadiusXz_2380 = Q8_TO_Q12(SquareRoot0(SQUARE(vec1.vx) + SQUARE(vec1.vz)));
+        sys_p->cameraY_2384        = Q8_TO_Q12(-refOffset.vy);
+        sys_p->cameraRadiusXz_2380 = Q8_TO_Q12(SquareRoot0(SQUARE(refOffset.vx) + SQUARE(refOffset.vz)));
     }
+
+    #undef MOVE_DIST
 }

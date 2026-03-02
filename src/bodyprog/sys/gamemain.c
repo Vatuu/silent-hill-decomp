@@ -309,4 +309,13 @@ void MainLoop(void) // 0x80032EE0
         GsDrawOt(&g_OrderingTable0[g_ActiveBufferIdx]);
         GsDrawOt(&g_OrderingTable2[g_ActiveBufferIdx]);
     }
+
+    #undef TICKS_PER_SECOND_MIN
+    #undef H_BLANKS_PER_SECOND
+    #undef H_BLANKS_PER_TICK
+    #undef H_BLANKS_TO_SEC_CONVERSION_FACTOR
+    #undef H_BLANKS_PER_FRAME_MIN
+    #undef H_BLANKS_Q12_TO_SEC_SCALE
+    #undef H_BLANKS_GRAVITY_SCALE
+    #undef V_BLANKS_MAX
 }

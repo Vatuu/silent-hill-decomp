@@ -3881,7 +3881,7 @@ void Settings_ScreenAndVolUpdate(void);
 
 void Settings_RestoreDefaults(void);
 
-void Settings_RestoreControlDefaults(s32 arg0);
+void Settings_RestoreControlDefaults(s32 configIdx);
 
 void nullsub_800334C8(void);
 

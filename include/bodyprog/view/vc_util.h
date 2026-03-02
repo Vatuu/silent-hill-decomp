@@ -80,7 +80,8 @@ void vcAddOfsToPos(VECTOR3* out_pos, const VECTOR3* in_pos, q3_12 ofs_xz_r, q3_1
  * @param up_f Move up.
  * @param down_f Move down.
  */
-void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, bool for_f, bool back_f, bool right_f, bool left_f, bool up_f, bool down_f);
+void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p,
+                                   bool for_f, bool back_f, bool right_f, bool left_f, bool up_f, bool down_f);
 
 /** @brief Sets a reference position according to analog stick input.
  *
