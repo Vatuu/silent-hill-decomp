@@ -8948,16 +8948,26 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
             switch (g_SavegamePtr->mapOverlayId_A4)
             {
                 case MapOverlayId_MAP5_S01:
+#if VERSION_EQUAL_OR_NEWER(USA)
                     if (posZ <= Q12(0.0f))
+#endif
                     {
                         groundHeight = Q12(4.0f);
-                        count        = 7;
+#if VERSION_EQUAL_OR_NEWER(USA)
+                        count = 7;
+#else
+                        coll->field_8 = 7;
+#endif
                     }
                     break;
 
                 case MapOverlayId_MAP6_S00:
                     groundHeight = Q12(4.0f);
-                    count      = 7;
+#if VERSION_EQUAL_OR_NEWER(USA)
+                    count = 7;
+#else
+                    coll->field_8 = 7;
+#endif
                     break;
             }
             break;
@@ -8968,7 +8978,11 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
             {
                 case MapOverlayId_MAP6_S00:
                     groundHeight = Q12(4.0f);
-                    count      = 7;
+#if VERSION_EQUAL_OR_NEWER(USA)
+                    count = 7;
+#else
+                    coll->field_8 = 7;
+#endif
                     break;
             }
             break;
