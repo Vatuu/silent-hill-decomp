@@ -258,7 +258,7 @@ void GameBoot_GameStartup(void) // 0x80034964
     }
 }
 
-/** @brief Initalizes draw of loading screen. */
+/** @brief Initalizes drawing of a loading screen. */
 static void GameBoot_LoadingScreen(void) // 0x80034E58
 {
     if (g_SysWork.loadingScreenIdx_2281 != LoadingScreenId_None && g_GameWork.gameStateStep_598[0] < 10)

@@ -102,7 +102,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
         pos = (VECTOR3*)curCharaSpawn;
 
         if (!(g_SysWork.flags_22A4 & SysFlag2_4) && HAS_FLAG(ovlEnemiesStatePtr, i) && !HAS_FLAG(g_SysWork.field_228C, i) &&
-            curCharaSpawn->flags_6 != 0 && g_SavegamePtr->gameDifficulty_260 >= curCharaSpawn->minGameDifficulty_7_0 &&
+            curCharaSpawn->flags_6 != 0 && g_SavegamePtr->gameDifficulty_260 >= curCharaSpawn->gameDifficultyMin_7_0 &&
             func_8008F914(curCharaSpawn->positionX_0, curCharaSpawn->positionZ_8) &&
             !Math_Distance2dCheck(&g_SysWork.playerWork_4C.player_0.position_18, pos, Q12(22.0f)) &&
             (!cond || Math_Distance2dCheck(&g_SysWork.playerWork_4C.player_0.position_18, pos, Q12(20.0f))))

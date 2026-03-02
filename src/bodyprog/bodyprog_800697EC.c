@@ -1577,7 +1577,7 @@ s16 func_8006C248(s32 arg0, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4) // 0
 
     if (arg1 == 0)
     {
-        temp_lo = -1;
+        temp_lo = NO_VALUE;
         if (var_v1 >= arg4)
         {
             return temp_lo;
@@ -1590,7 +1590,7 @@ s16 func_8006C248(s32 arg0, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4) // 0
 
     if (var_v1 >= arg4)
     {
-        return -1;
+        return NO_VALUE;
     }
 
     temp_lo = FP_TO(sp10.vx - SquareRoot0(SQUARE(arg4) - SQUARE(sp10.vy)), Q12_SHIFT) / arg1;
@@ -2309,9 +2309,9 @@ void func_8006D774(s_func_8006CC44* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x800
 
 void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2) // 0x8006D7EC
 {
-    s16 angle;
-    s32 dist;
-    s16 z;
+    q3_12  angle;
+    q19_12 dist;
+    s16    z;
 
     arg0->field_C.vx = arg2->vx;
 
@@ -2321,7 +2321,7 @@ void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2) // 0x800
 
     arg0->field_8 = dist;
 
-    if (dist != 0)
+    if (dist != Q12(0.0f))
     {
         arg0->direction_14.vx = FP_TO(arg0->field_C.vx, Q12_SHIFT) / dist;
         arg0->direction_14.vz = FP_TO(arg0->field_C.vz, Q12_SHIFT) / arg0->field_8;

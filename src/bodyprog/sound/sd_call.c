@@ -36,25 +36,28 @@ char pad_bss_800C37D1[3];
 
 static CdlLOC                 D_800C15E8;
 static s_800C15F0             D_800C15F0[4];
+
  /** @brief `e_SfxId` | Stores the index of the currently playing SFX. */
 static u16                    g_AudioPlayingIdxList[24];
+
  /** @brief Stores the pitch of currently playing SFX.
- * Shares the same index where the SFX is stored in `g_AudioPlayingIdxList`.
+ * Shares the same index of where the SFX is stored in `g_AudioPlayingIdxList`.
  */
 static s16                    g_AudioPlayingPitchList[24];
 static s_Sd_AudioWork         g_Sd_AudioWork;
-/** @brief Hold states for different audio types streaming. */
+
+/** @brief Holds states for different audio types streaming. */
 static s_AudioStreamingStates g_Sd_AudioStreamingStates;
-/** @note Name from retrieved debug symbols.
- * Debug symbols from: `Konami International Rally Championship`
+
+/** @note Name from retrieved debug symbols in Konami International Rally Championship.
  *
- * Symbol don't indicate the struct name. The size may not
+ * Symbols don't suggest a struct name. The size may not
  * contradict this definition as it seems the variable is intended
- * to have a size of 48/0x30 bytes, while this has a size of 16/0x10
- * bytes. They serve the same purpose of adjusting the volume
- * channels.
+ * to be 48/0x30 bytes, while this is 16/0x10
+ * bytes. They are used to adjust the volume channels.
  */
 static s_ChannelsVolumeController gSDVolConfig;
+
 static s_800C1688                 D_800C1688;
 
 /** @brief Task pool related to audio and audio data streaming.

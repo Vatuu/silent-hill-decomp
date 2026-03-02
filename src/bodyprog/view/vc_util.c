@@ -5,6 +5,8 @@
 #include "bodyprog/view/vw_system.h"
 #include "bodyprog/math/math.h"
 
+#define V_BLANKS_MULT 11
+
 extern s32 g_VBlanks;
 
 void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, const VECTOR3* chr_pos) // 0x8004004C
@@ -209,11 +211,11 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p,
     }
     if (right_f)
     {
-        sys_p->cameraAngleY_237A -= (g_VBlanks * 11);
+        sys_p->cameraAngleY_237A -= g_VBlanks * V_BLANKS_MULT;
     }
     if (left_f)
     {
-        sys_p->cameraAngleY_237A += (g_VBlanks * 11);
+        sys_p->cameraAngleY_237A += g_VBlanks * V_BLANKS_MULT;
     }
     if (up_f)
     {
@@ -237,8 +239,7 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p,
 
 void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x800406D4
 {
-    #define V_BLANKS_MULT 11
-    #define MOVE_DIST     Q8(0.1f)
+    #define MOVE_DIST Q8(0.1f)
 
     SVECTOR cam_ang;   // Q3.12
     VECTOR3 newCamPos; // Q23.8
@@ -353,3 +354,5 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
 
     #undef MOVE_DIST
 }
+
+#undef V_BLANKS_MULT

@@ -1,5 +1,5 @@
-#ifndef _GAME_BOOT_H
-#define _GAME_BOOT_H
+#ifndef _BODYPROG_GAMEBOOT_H
+#define _BODYPROG_GAMEBOOT_H
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `game_boot/` files.

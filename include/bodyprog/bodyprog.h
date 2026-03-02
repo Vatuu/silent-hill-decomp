@@ -373,7 +373,7 @@ typedef struct
 {
     s32        field_0;
     s32        field_4; // `bool`?
-    s32        field_8; // 2D distance.
+    q19_12     field_8; // 2D distance.
     SVECTOR    field_C; // Q23.8 | Position.
     DVECTOR_XZ direction_14;
     q23_8      positionX_18;
@@ -1455,10 +1455,10 @@ STATIC_ASSERT_SIZEOF(s_MapPoint2d, 12);
 typedef struct _SpawnInfo
 {
     q19_12 positionX_0;
-    s8  charaId_4;   /** `e_CharacterId` */
-    u8  rotationY_5; /** Degrees in Q7.8, range [0, 256]. */
-    s8  flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `controlState_2 = ModelState_Uninitialized`. */
-    s32 minGameDifficulty_7_0 : 4;
+    s8     charaId_4;   /** `e_CharacterId` */
+    u8     rotationY_5; /** Degrees in Q7.8, range [0, 256]. */
+    s8     flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `controlState_2 = ModelState_Uninitialized`. */
+    s32    gameDifficultyMin_7_0 : 4;
     q19_12 positionZ_8;
 } s_SpawnInfo;
 STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
@@ -2443,7 +2443,6 @@ extern s32 g_Screen_FadeStatus;
 
 extern s32 D_800BCD5C;
 
-
 extern const char D_80025320[];
 extern const char D_8002532C[];
 extern const char D_80025338[];
@@ -2451,10 +2450,6 @@ extern const char D_80025344[];
 extern const char D_80025350[];
 extern const char D_8002535C[];
 extern const char D_80025368[];
-
-
-
-
 
 extern s_MapMsgSelect g_MapMsg_Select;
 
@@ -3461,6 +3456,10 @@ void func_800880F0(s32 arg0);
 
 void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB);
 
+// ========================
+// `bodyprog/chara_spawn.c`
+// ========================
+
 bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 forceFree, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 bool Chara_ProcessLoads(void);
@@ -3474,6 +3473,8 @@ void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unused2);
 void func_80088FF4(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags);
 
 bool func_8008F434(s32 arg0);
+
+// ========================
 
 /** Might retrun `bool`. */
 void func_80089090(s32 arg0);

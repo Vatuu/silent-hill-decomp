@@ -239,7 +239,8 @@ void vwMatrixToAngleYXZ(SVECTOR* ang, const MATRIX* mat) // 0x800495D4
 {
     s32 r_xz;
 
-    r_xz    = SquareRoot0((mat->m[0][2] * mat->m[0][2]) + (mat->m[2][2] * mat->m[2][2]));
+    r_xz    = SquareRoot0((mat->m[0][2] * mat->m[0][2]) +
+                          (mat->m[2][2] * mat->m[2][2]));
     ang->vx = ratan2(-mat->m[1][2], r_xz);
 
     if (ang->vx == Q12_ANGLE(90.0f))

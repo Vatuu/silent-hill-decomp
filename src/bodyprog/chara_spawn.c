@@ -11,10 +11,6 @@
 #include "bodyprog/sound_system.h"
 #include "main/fsqueue.h"
 
-// ========================================
-// CHARACTER SPAWN RELATED
-// ========================================
-
 bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 forceFree, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
 {
     Fs_CharaAnimDataAlloc(modelIdx + 1, charaId, NULL, coords);
@@ -42,7 +38,7 @@ s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12
     s32             i;
     s32             var_a0;
     s32             arg1_1;
-    s_SubCharacter* var_s6;
+    s_SubCharacter* chara;
 
     if (charaId <= Chara_MonsterCybil && arg1 < 0x40)
     {
@@ -114,8 +110,8 @@ s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12
         g_SysWork.npcs_1A0[i].position_18.vz = posZ;
         g_SysWork.npcs_1A0[i].rotation_24.vy = rotY;
 
-        var_s6                          = &g_SysWork.npcs_1A0[i];
-        var_s6->model_0.anim_4.flags_2 |= AnimFlag_Visible;
+        chara                          = &g_SysWork.npcs_1A0[i];
+        chara->model_0.anim_4.flags_2 |= AnimFlag_Visible;
 
         return i;
     }
