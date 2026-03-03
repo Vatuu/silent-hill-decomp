@@ -33,7 +33,7 @@ void func_8004BB10(void) // 0x8004BB10
 #else
 bool func_8004CB54(void) // JPN0 0x8004CB54
 {
-    GsFCALL4.tg3[GsDivMODE_NDIV][GsDivMODE_DIV] = GsTMDfastTG3LFG;
+    GsFCALL4.tg3[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG3LFG;
     return false;
 }
 
