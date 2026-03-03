@@ -1,9 +1,5 @@
-#ifndef _BODYPROG_TEXT_DEBUG_DRAW_H
-#define _BODYPROG_TEXT_DEBUG_DRAW_H
-
-/** @brief This header is used to declare variables and
- * functions from `text_debug_draw.c`
- */
+#ifndef _BODYPROG_TEXT_DEBUGDRAW_H
+#define _BODYPROG_TEXT_DEBUGDRAW_H
 
 // ==========
 // FUNCTIONS

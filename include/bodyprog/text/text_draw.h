@@ -1,11 +1,7 @@
-#ifndef _BODYPROG_TEXT_DRAW_H
-#define _BODYPROG_TEXT_DRAW_H
+#ifndef _BODYPROG_TEXT_TEXTDRAW_H
+#define _BODYPROG_TEXT_TEXTDRAW_H
 
-/** @brief This header is used to declare any variable, struct, or
- * function part of `BODYPROG.BIN` identified to be related
- * to the string display system (not from PSY-Q SDK).
- *
- * @note Likely the true name for this system is `font` as both
+/** @note Likely the true name for this system is `font` as both
  * SH2 and SH4 symbols indicate that the way TS referred to strings
  * or text was using `font`.
  */
