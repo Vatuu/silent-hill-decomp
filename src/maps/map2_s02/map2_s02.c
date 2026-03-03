@@ -181,12 +181,12 @@ void Map_WorldObjectsInit(void) // 0x800EA0E0
         g_SysWork.npcId_2280 = 4;
     }
 
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4[4]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4[5]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4[6]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4[7]);
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800EA1C4

@@ -1226,7 +1226,7 @@ void Map_WorldObjectsInit(void) // 0x800D49C4
         WorldObject_D_800D7FF0.position_1C.vz = Q12(62.7466f);
     }
 
-    WorldObject_ModelNameSet(&WorldObject_D_800D8050.object_0, D_800A99E4.savePadName_4);
+    WorldObject_ModelNameSet(&WorldObject_D_800D8050.object_0, D_800A99E4[1]);
 
     WorldObjectPoseInit(&WorldObject_D_800D8070, 183.3833f, -1.2673f, 60.951f, 0.0f, 66.01, 0.0f);
     WorldObjectPoseInit(&WorldObject_D_800D8090, 23.4f, -0.91f, 60.8f, 0.0f, 90.4f, 0.0f);

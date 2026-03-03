@@ -628,7 +628,7 @@ void func_800D23E4(void) // 0x800D23E4
 
 void Map_WorldObjectsInit(void) // 0x800D2D6C
 {
-    WorldObjectInit(&g_WorldObjectSavepad, D_800A99E4.savePadName_4, 106.687f, -1.02f, 144.601f, 0.0f, 163.0f, 0.0f);
+    WorldObjectInit(&g_WorldObjectSavepad, D_800A99E4[1], 106.687f, -1.02f, 144.601f, 0.0f, 163.0f, 0.0f);
 
     WorldObjectNoRotInit(&g_WorldObject0, "ISU_HIDE", 57.8f, 0.0f, 0.0f);
 }

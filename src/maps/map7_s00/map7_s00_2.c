@@ -724,7 +724,7 @@ void Map_WorldObjectsInit(void) // 0x800D2700
         D_800D4370[i] = z;
     }
 
-    WorldObjectInit(&g_WorldObject1, D_800A99E4.savePadName_4, 15.63f, -0.91f, -140.55f, 0.0f, -90.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject1, D_800A99E4[1], 15.63f, -0.91f, -140.55f, 0.0f, -90.0f, 0.0f);
 
     if (Savegame_EventFlagGet(EventFlag_471))
     {

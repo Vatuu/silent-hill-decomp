@@ -1675,20 +1675,6 @@ typedef struct
     u8 selectedEntryIdx_1;
 } s_MapMsgSelect;
 
-// TODO: Might just be an array of `char*`, array is in `.data` while strings inside are in `.rodata`?
-typedef struct
-{
-    char* field_0;               // `NULL`
-    char* savePadName_4;         // "PAD_NEAR"
-    char* firstAidKitName_8;     // "AIDKIT_N"
-    char* healthDrinkName_C;     // "DRINK_NE"
-    char* ampouleName_10;        // "AMPULE_N"
-    char* handgunBulletsName_14; // "BULLET_N"
-    char* shotgunShellsName_18;  // "SHELL_NE"
-    char* rifleShellsName_1C;    // "SHOT_NEA"
-} s_800A99E4;
-STATIC_ASSERT_SIZEOF(s_800A99E4, 32);
-
 typedef struct
 {
     u8 presetIdx1_0;
@@ -2164,7 +2150,7 @@ extern s32 D_800A99A0;
 /** Relative file offset for map texture? */
 extern s8 D_800A99B5;
 
-extern s_800A99E4 D_800A99E4;
+extern char* D_800A99E4[];
 
 extern s32 g_MapMsg_CurrentIdx;
 
@@ -2300,14 +2286,8 @@ extern u8 D_800AE185;
 
 extern u8 D_800AE186;
 
-extern u8 g_SysState_GameOver_TipIdx;
-
 extern s8 pad_bss_800BCD81[3];
 
-/** Copy of delta timers.
- * Appears to be used as save of the delta timer currently used as some instances where 2D backgrounds
- * are drawn uses `g_DeltaTimeRaw` while `g_DeltaTime` is being stopped.
- */
 extern s32 g_DeltaTimeCpy;
 
 extern s32 pad_bss_800BCD88[2];
@@ -2442,14 +2422,6 @@ extern u16 D_800BCCB2;
 extern s32 g_Screen_FadeStatus;
 
 extern s32 D_800BCD5C;
-
-extern const char D_80025320[];
-extern const char D_8002532C[];
-extern const char D_80025338[];
-extern const char D_80025344[];
-extern const char D_80025350[];
-extern const char D_8002535C[];
-extern const char D_80025368[];
 
 extern s_MapMsgSelect g_MapMsg_Select;
 
@@ -3985,13 +3957,6 @@ void Input_SelectClickSet(void);
  * @return `true` if the 2D distance exceeds the radius, `false` otherwise.
  */
 bool Math_Distance2dCheck(const VECTOR3* from, const VECTOR3* to, q19_12 radius);
-
-/** @brief Computes the squared 2D distance on the XZ plane from the reference position to the camera.
- *
- * @param pos Reference position (Q19.12).
- * @return 2D distance to the camera. TODO: Does it stay in Q25.6?
- */
-s32 Camera_Distance2dGet(const VECTOR3* pos);
 
 /** Responsible for loading NPCs on the map. */
 void Game_NpcRoomInitSpawn(bool cond);

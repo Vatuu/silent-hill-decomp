@@ -3425,7 +3425,7 @@ void Map_WorldObjectsInit(void) // 0x800E5D44
     WorldObject_ModelNameSet(&g_WorldObject7[1], "FWBOX2_B");
     WorldObject_ModelNameSet(&g_WorldObject8,    "WHEEL_BA");
 
-    WorldObjectInit(&g_WorldObject9, D_800A99E4.savePadName_4, -13.6f, -1.0f, -28.3f, 0.0f, -165.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject9, D_800A99E4[1], -13.6f, -1.0f, -28.3f, 0.0f, -165.0f, 0.0f);
     func_800E02E0();
     func_800E10F8();
 

@@ -4900,7 +4900,7 @@ void Map_WorldObjectsInit(void) // 0x800D991C
     Math_Vector3Set(&g_WorldObject_UnkPos, Q12(132.0f), Q12(-0.75f), Q12(140.0f));
     Math_SetSVectorFast(&g_WorldObject_UnkRot, Q12_ANGLE(90.0f), Q12_ANGLE(90.0f), Q12_ANGLE(0.0f));
 
-    WorldObjectInit(&g_WorldObject_SavePad, D_800A99E4.savePadName_4, 217.15f, -1.25f, -22.9f, 0.0f, -173.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject_SavePad, D_800A99E4[1], 217.15f, -1.25f, -22.9f, 0.0f, -173.0f, 0.0f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
@@ -4924,12 +4924,12 @@ void Map_WorldObjectsInit(void) // 0x800D991C
         Savegame_EventFlagClear(EventFlag_325);
     }
 
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4[4]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4[5]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4[6]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4[7]);
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800D9BB0

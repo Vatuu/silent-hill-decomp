@@ -1,5 +1,39 @@
 #include "bodyprog/bodyprog.h"
 
+const s32 pad_rodata_800252B8 = 0;
+
+/** @brief SFX pairs.
+ *
+ * @note Used when loading areas. Maybe facilitates things like the
+ * opening and closing door SFX when the player moves between rooms. */
+s_AreaLoadSfx const SfxPairs[25] = {
+    { Sfx_Base, Sfx_Base },
+    { Sfx_DoorOpen0, Sfx_DoorClose0 },
+    { Sfx_Unk1323, Sfx_Unk1324 },
+    { Sfx_Unk1418, Sfx_Base },
+    { Sfx_Unk1354, Sfx_Base },
+    { Sfx_Unk1387, Sfx_Base },
+    { Sfx_Unk1391, Sfx_Base },
+    { Sfx_Unk1521, Sfx_Base },
+    { Sfx_Unk1458, Sfx_Unk1459 },
+    { Sfx_Unk1604, Sfx_Unk1605 },
+    { Sfx_Unk1609, Sfx_Unk1610 },
+    { Sfx_Unk1396, Sfx_Unk1397 },
+    { Sfx_Unk1336, Sfx_Unk1337 },
+    { Sfx_Unk1338, Sfx_Unk1339 },
+    { Sfx_Unk1340, Sfx_Unk1341 },
+    { Sfx_Unk1601, Sfx_Unk1602 },
+    { Sfx_Unk1490, Sfx_Unk1491 },
+    { Sfx_Unk1431, Sfx_Unk1432 },
+    { Sfx_Unk1398, Sfx_Unk1399 },
+    { Sfx_Unk1504, Sfx_Unk1505 },
+    { Sfx_DoorOpen0, Sfx_Base },
+    { Sfx_Unk1323, Sfx_Base },
+    { Sfx_Base, Sfx_Unk1324 },
+    { Sfx_Unk1351, Sfx_Unk1352 },
+    { Sfx_Unk1487, Sfx_Base }
+};
+
 /** @brief Relative paper map TIM file indices. */
 s8 g_PaperMapFileIdxs[] = {
     0, 0, 1, 1, 9, 12, 10, 11,
@@ -14,21 +48,17 @@ s8 g_PaperMapMarkingFileIdxs[] = {
     3, 3, 3, 3, 3, 3, 3, 3
 };
 
-s_800A99E4 D_800A99E4 = {
-    0,           &D_80025368, &D_8002535C, &D_80025350,
-    &D_80025344, &D_80025338, &D_8002532C, &D_80025320
+char* D_800A99E4[] = {
+    0,          "PAD_NEAR", "AIDKIT_N", "DRINK_NE",
+    "AMPULE_N", "BULLET_N", "SHELL_NE", "SHOT_NEA"
 };
 
 /** @note Related to images display. */
-s_FsImageDesc D_800A9A04 = { .tPage = { 1, 21 }, .clutX = 224, .clutY = 13 };
-
-s32 D_800A9A0C = 0;
-
-s32 g_MapEventSysState = SysState_Gameplay;
-
-u32 g_MapEventParam = 0;
-
+s_FsImageDesc D_800A9A04   = { .tPage = { 1, 21 }, .clutX = 224, .clutY = 13 };
+s32 D_800A9A0C             = 0;
+s32 g_MapEventSysState     = SysState_Gameplay;
+u32 g_MapEventParam        = 0;
 s32 g_MapEventLastUsedItem = 0;
+s32 g_RadioPitchState      = 0;
 
-s32 g_RadioPitchState = 0;
-
+const s32 pad_rodata_80025374 = 0;

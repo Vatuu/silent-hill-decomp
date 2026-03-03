@@ -1952,7 +1952,7 @@ void Map_WorldObjectsInit(void) // 0x800EB908
     Math_Vector3Set(&D_800F537C, Q12(-263.0f), Q12(0.0f), Q12(-104.0f));
 
     Math_SetSVectorFast(&D_800F538C, 0, 0, 0);
-    WorldObject_ModelNameSet(&D_800F56EC, D_800A99E4.savePadName_4);
+    WorldObject_ModelNameSet(&D_800F56EC, D_800A99E4[1]);
 
     WorldObjectPoseInit(&D_800F570C, 117.681641f, -1.01f, 216.263f, 0.0f, 193.51f, 0.0f);
     WorldObjectPoseInit(&D_800F572C, 116.3013f, -0.905f, 299.1139f, 0.0f, 84.56f, 0.0f);
@@ -2006,12 +2006,12 @@ void Map_WorldObjectsInit(void) // 0x800EB908
     g_SysWork.npcId_2280++;
     SysWork_NpcFlagSet(g_SysWork.npcId_2280 - 1);
 
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4[4]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4[5]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4[6]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4[7]);
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800EC080

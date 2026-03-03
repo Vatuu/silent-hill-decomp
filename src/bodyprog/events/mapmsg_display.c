@@ -5,19 +5,23 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "main/fsqueue.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/text/text_draw.h"
-#include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound_system.h"
-#include "main/fsqueue.h"
-#include "main/mem.h"
-#include "main/rng.h"
-#include "screens/stream/stream.h"
+
+// ========================================
+// STATIC VARIABLES
+// ========================================
 
 static s32 g_MapMsg_CurrentIdx       = 0;
 static s16 g_MapMsg_SelectFlashTimer = 0;
+
+// ========================================
+// GLOBAL VARIABLES
+// ========================================
 
 s_MapMsgSelect g_MapMsg_Select;
 u8             g_MapMsg_AudioLoadBlock;

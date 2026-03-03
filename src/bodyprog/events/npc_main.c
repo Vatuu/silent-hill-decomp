@@ -5,20 +5,12 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "main/fsqueue.h"
 #include "bodyprog/demo.h"
 #include "bodyprog/screen/screen_data.h"
-#include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/text/text_draw.h"
-#include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/memcard.h"
 #include "bodyprog/player.h"
-#include "bodyprog/ranking.h"
 #include "bodyprog/sound_system.h"
-#include "main/fsqueue.h"
-#include "main/mem.h"
-#include "main/rng.h"
-#include "screens/stream/stream.h"
 
 // ========================================
 // NPC RELATED - UPDATES
@@ -472,7 +464,12 @@ bool Math_Distance2dCheck(const VECTOR3* from, const VECTOR3* to, q19_12 radius)
     return sum > radiusSqr;
 }
 
-s32 Camera_Distance2dGet(const VECTOR3* pos) // 0x80038B44
+/** @brief Computes the squared 2D distance on the XZ plane from the reference position to the camera.
+ *
+ * @param pos Reference position (Q19.12).
+ * @return 2D distance to the camera. TODO: Does it stay in Q25.6?
+ */
+static s32 Camera_Distance2dGet(const VECTOR3* pos) // 0x80038B44
 {
     VECTOR3 camPos; // Q19.12
     q25_6   deltaX;
