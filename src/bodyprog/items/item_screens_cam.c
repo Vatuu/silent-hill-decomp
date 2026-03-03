@@ -30,11 +30,23 @@ void func_8004BB10(void) // 0x8004BB10
     // Textured gouraud quad.
     GsFCALL4.tg4[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG4LFG;
 }
-#else 
-// TODO: Need to add SDK syms to JPN0 to know what funcs these are setting up.
-INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_cam", func_8004CB50);
-INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_cam", func_8004CB6C);
-INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_cam", func_8004CB90);
+#else
+bool func_8004CB54(void) // JPN0 0x8004CB54
+{
+    GsFCALL4.tg3[GsDivMODE_NDIV][GsDivMODE_DIV] = GsTMDfastTG3LFG;
+    return false;
+}
+
+void func_8004CB6C(void) // JPN0 0x8004CB6C
+{
+    GsFCALL4.g3[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastG3LFG;
+    GsFCALL4.g4[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastG4LFG;
+}
+
+void func_8004CB90(void) // JPN0 0x8004CB90
+{
+    GsFCALL4.tg4[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG4LFG;
+}
 #endif
 
 void ItemScreen_CamSet(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3) // 0x8004BB4C

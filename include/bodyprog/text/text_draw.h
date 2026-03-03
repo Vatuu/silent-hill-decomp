@@ -104,6 +104,13 @@ void func_8004B76C(char* str, bool useFixedWidth);
 /** Draws an integer string in screen space. */
 void Gfx_StringDrawInt(s32 widthMin, s32 strLength);
 
-void func_8004BB10(void);
+// TODO: Move following funcs to item_screens_cam header.
+#if VERSION_EQUAL_OR_NEWER(USA)
+    void func_8004BB10(void);
+#else
+    bool func_8004CB54(void);
+    void func_8004CB6C(void);
+    void func_8004CB90(void);
+#endif
 
 #endif

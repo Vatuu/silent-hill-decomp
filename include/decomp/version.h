@@ -4,19 +4,19 @@
 // Defines region and revision-specific version macros based on the `VER_XXX` Makefile target.
 //
 // Supports both region-gated code and date-based gating where changes are known to propagate
-// forward across releases (e.g. `#if VERSION_EQUAL_OR_NEWER(JAP1)`).
+// forward across releases.
 //
-// `VERSION_DATE` is set to the date of the game build being compiled.
-// Region-specific `VERSION_NTSCJ` / `VERSION_PAL` / `VERSION_NTSC` macros are also defined for code
-// that is tied to a particular regional build.
+// Three styles of version check macros are defined:
 //
-// This offers several ways to gate code behind version checks:
-// - Specific releases, for code that changes between every release (e.g. random pad bytes, raw pointer addresses).
-//   Use `#if VERSION_IS(USA)` / `VERSION_IS(JAP0)` / etc.
-// - Regions, for code specific to all releases in a particular region (e.g. JP text rendering).
-//   Use `#if VERSION_REGION_IS(NTSC)` / `VERSION_REGION_IS(NTSCJ)` / `VERSION_REGION_IS(PAL)`
-// - Build dates, for code introduced in a given release and carried forward to later ones (e.g. bugfixes)
-//   Use `#if VERSION_EQUAL_OR_NEWER(USA)` or `VERSION_EQUAL_OR_OLDER(JPN0)` with one of the version names.
+// - `VERSION_IS(USA)` — matches a single release exactly. Use for things that
+//   differ between every build (e.g. random padding bytes or raw addresses)
+//
+// - `VERSION_REGION_IS(NTSC)` — matches all releases in a region. Use for
+//   region-specific behavior (e.g. Japanese text rendering)
+//
+// - `VERSION_EQUAL_OR_NEWER(USA)` / `VERSION_EQUAL_OR_OLDER(JAP0)` — matches
+//   by build date. Use for changes introduced in one release and carried
+//   forward, such as bugfixes.
 
 /**
  * Checks if the build target is a specific release.
