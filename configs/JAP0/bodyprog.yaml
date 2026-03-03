@@ -99,7 +99,7 @@ segments:
 
       - [0x97F0, c, memcard]
       - [0xC674, c, screen/background_draw]
-      - [0xD084, c, screen/text_debug_draw]
+      - [0xD084, c, text/text_debug_draw]
       - [0xD4E0, c, screen/screen_draw]
       - [0xD72C, c, screen/screen_fade]
       - [0xDA24, c, screen/cutscene_border]
@@ -133,7 +133,7 @@ segments:
       - [0x20C50, c, sound/sd_call]
       - [0x23C0C, c, view/vw_main]
       - [0x240FC, c, view/vw_calc] # Contains part of SH2's `vb_main`?
-      - [0x25A50, asm, screen/text_draw]
+      - [0x25A50, asm, text/text_draw]
       - [0x27FF0, c, items/item_screens_cam]
       - [0x28580, c, items/item_screens_1]
       - [0x28DD4, asm, items/item_screens_2]
@@ -195,7 +195,7 @@ segments:
       - [0x8D668, .data, credits_init]
       - [0x8D6DC, data]
       - [0x8FFE8, .bss, memcard]
-      - [0x935F0, .bss, screen/text_debug_draw]
+      - [0x935F0, .bss, text/text_debug_draw]
       - [0x935F8, .bss, screen/screen_fade]
       - [0x93604, bss]
       - [0x9A6E4, pad] # Garbage

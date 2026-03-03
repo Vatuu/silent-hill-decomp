@@ -77,7 +77,7 @@ segments:
       - [0x1054, .rodata, gfx/bodyprog_8003E5E8]
       - [0x1084, .rodata, gfx/bodyprog_80040004]
       - [0x1094, .rodata, sound/sd_call]
-      - [0x1208, .rodata, screen/text_draw]
+      - [0x1208, .rodata, text/text_draw]
       - [0x1330, .rodata, items/item_screens_1]
       - [0x1350, .rodata, items/item_screens_2]
       - [0x179C, .rodata, items/item_screens_3]
@@ -124,7 +124,7 @@ segments:
       
       - [0x9AD0,    c, memcard]
       - [0xC98C,    c, screen/background_draw]
-      - [0xD39C,    c, screen/text_debug_draw]
+      - [0xD39C,    c, text/text_debug_draw]
       - [0xD7F8,    c, screen/screen_draw]
       - [0xDA44,    c, screen/screen_fade]
       - [0xDD3C,    c, screen/cutscene_border]
@@ -168,7 +168,7 @@ segments:
       - [0x20F1C,   c, sound/sd_call]
       - [0x23ED8,   c, view/vw_main]
       - [0x243C8,   c, view/vw_calc] # Contains part of SH2's `vb_main`?
-      - [0x25D1C,   c, screen/text_draw]
+      - [0x25D1C,   c, text/text_draw]
       - [0x26FB0,   c, items/item_screens_cam]
       - [0x27528,   c, items/item_screens_1]
       - [0x27D7C,   c, items/item_screens_2]
@@ -388,7 +388,7 @@ segments:
       - [0x85424, .data, gfx/bodyprog_8003E5E8]
       - [0x85468, .data, sound/sd_data]
       - [0x88920, .data, view/vw_calc]
-      - [0x88938, .data, screen/text_draw]
+      - [0x88938, .data, text/text_draw]
       - [0x88940, .data, items/item_screens_3]
       - [0x8B134, .data, view/vc_main]
       - [0x8B1A4, .data, bodyprog_80085D78]
@@ -428,7 +428,7 @@ segments:
       # .bss section
       - [0x8DAB0, data, bodyprog_800B2610] # Unknown data.
       - [0x8DAB8, .bss, memcard]
-      - [0x910C0, .bss, screen/text_debug_draw]
+      - [0x910C0, .bss, text/text_debug_draw]
       - [0x910C8, .bss, screen/screen_fade]
       - [0x910D4, .bss, screen/screen_data]
       - [0x95170,  bss]
@@ -459,7 +459,7 @@ segments:
       - [0x9CA58, .bss, sound/sd_call]
       - [0x9EC80, .bss, view/vw_main]
       - [0x9ED08, .bss, view/vw_calc]
-      - [0x9ED48, .bss, screen/text_draw]
+      - [0x9ED48, .bss, text/text_draw]
       - [0x9EDC8, .bss, items/item_screens_cam]
       - [0x9EE00, .bss, items/item_screens_1]
       - [0x9EE08, .bss, items/item_screens_2]

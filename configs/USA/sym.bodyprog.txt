@@ -92,7 +92,7 @@ SfxPairs                                     = 0x800252BC; // type:AreaLoadSfx s
 //----------------------------------------------------------------------
 
 //-------------------------------------------------------------------------
-//--- PA: 0x001208   VA: 0x80025D68   subsegment: .rodata, screen/text_draw
+//--- PA: 0x001208   VA: 0x80025D68   subsegment: .rodata, text/text_draw
 //-------------------------------------------------------------------------
 FONT_12_X_16_GLYPH_WIDTHS                    = 0x80025D6C;
 STRING_COLORS                                = 0x80025DC0;
@@ -309,7 +309,7 @@ Screen_BackgroundImgDrawAlt                  = 0x80031AAC; // type:func
 Screen_BackgroundMotionBlur                  = 0x80031CCC; // type:func
 
 //-------------------------------------------------------------------------
-//--- PA: 0x00D39C   VA: 0x80031EFC   subsegment: c, screen/text_debug_draw
+//--- PA: 0x00D39C   VA: 0x80031EFC   subsegment: c, text/text_debug_draw
 //-------------------------------------------------------------------------
 Text_Debug_PositionSet                       = 0x80031EFC; // type:func
 Text_Debug_Draw                              = 0x80031F40; // type:func
@@ -772,7 +772,7 @@ vwVectorToAngle                              = 0x8004A714; // type:func
 vwOresenHokan                                = 0x8004A7C8; // type:func
 
 //-------------------------------------------------------------------
-//--- PA: 0x025D1C   VA: 0x8004A87C   subsegment: c, screen/text_draw
+//--- PA: 0x025D1C   VA: 0x8004A87C   subsegment: c, text/text_draw
 //-------------------------------------------------------------------
 Gfx_StringSetPosition                        = 0x8004A87C; // type:func
 Gfx_Strings2dLayerIdxSet                     = 0x8004A8C0; // type:func
@@ -2563,7 +2563,7 @@ g_Vab_InfoTable                              = 0x800ACAA8;
 //-------------------------------------------------------------------
 
 //-----------------------------------------------------------------------
-//--- PA: 0x088938   VA: 0x800AD498   subsegment: .data, screen/text_draw
+//--- PA: 0x088938   VA: 0x800AD498   subsegment: .data, text/text_draw
 //-----------------------------------------------------------------------
 g_StringColorId                              = 0x800AD498; // type:s16
 g_Strings2dLayerIdx                          = 0x800AD49C;
@@ -2939,7 +2939,7 @@ g_MemCard_Work                               = 0x800B5488; // size:0x80
 g_MemCard_SaveWork                           = 0x800B5508; // size:0x718
 
 //----------------------------------------------------------------------------
-//--- PA: 0x0910C0   VA: 0x800B5C20   subsegment: .bss, screen/text_debug_draw
+//--- PA: 0x0910C0   VA: 0x800B5C20   subsegment: .bss, text/text_debug_draw
 //----------------------------------------------------------------------------
 g_Text_Debug_PositionSet0                    = 0x800B5C20; // type:DVECTOR size:4
 g_Text_Debug_PositionSet1                    = 0x800B5C24; // type:DVECTOR size:4
@@ -3075,7 +3075,7 @@ vwViewPointInfo                              = 0x800C37E0; // type:VW_VIEW_WORK 
 VbWvsMatrix                                  = 0x800C3888; // type:MATRIX size:0x20
 
 //----------------------------------------------------------------------
-//--- PA: 0x09ED48   VA: 0x800C38A8   subsegment: .bss, screen/text_draw
+//--- PA: 0x09ED48   VA: 0x800C38A8   subsegment: .bss, text/text_draw
 //----------------------------------------------------------------------
 g_StringPosition                             = 0x800C38A8; // type:DVECTOR
 g_StringPositionX1                           = 0x800C38AC; // type:s32
