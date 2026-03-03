@@ -8,7 +8,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/player_logic.h"
+#include "bodyprog/player.h"
 
 void GameBoot_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 {

@@ -8,7 +8,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/sys/joy.h"
 #include "bodyprog/ranking.h"
-#include "bodyprog/player_logic.h"
+#include "bodyprog/player.h"
 #include "main/rng.h"
 
 const s32 pad_rodata_800262F8 = 0;

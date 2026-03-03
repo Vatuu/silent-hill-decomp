@@ -1,10 +1,5 @@
-#ifndef _BODYPROG_PLAYERLOGIC_H
-#define _BODYPROG_PLAYERLOGIC_H
-
-/** @brief This header is used to declare any variable, struct, or
- * function part of `BODYPROG.BIN` identified to be related
- * to the player logic.
- */
+#ifndef _BODYPROG_PLAYER_H
+#define _BODYPROG_PLAYER_H
 
 /** @note The game handles the upper and lower part of the player's body independently.
  *

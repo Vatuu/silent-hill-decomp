@@ -10,7 +10,7 @@ bodyprog\item_screens.h
 bodyprog\joy.h
 bodyprog\libsd.h
 bodyprog\memcard.h
-bodyprog\player_logic.h
+bodyprog\player.h
 bodyprog\vw_system.h
 bodyprog\math\math.h
 bodyprog\gfx\screen_draw.h

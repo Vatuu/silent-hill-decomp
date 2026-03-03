@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/player_logic.h"
+#include "bodyprog/player.h"
 #include "main/rng.h"
 #include "maps/map0/map0_s00.h"
 #include "maps/particle.h"

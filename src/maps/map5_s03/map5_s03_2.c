@@ -1,7 +1,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/player_logic.h"
+#include "bodyprog/player.h"
 #include "main/rng.h"
 #include "maps/map5/map5_s03.h"
 #include "maps/characters/kaufmann.h"

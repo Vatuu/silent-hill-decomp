@@ -2,7 +2,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/sound_system.h"
-#include "bodyprog/player_logic.h"
+#include "bodyprog/player.h"
 #include "main/rng.h"
 #include "maps/map4/map4_s04.h"
 #include "maps/characters/lisa.h"

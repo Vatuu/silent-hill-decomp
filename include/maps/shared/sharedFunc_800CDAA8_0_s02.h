@@ -1,4 +1,4 @@
-#include "bodyprog/player_logic.h"
+#include "bodyprog/player.h"
 
 // TODO:
 // - Rename `sharedFunc_800CDAA8_0_s02` -> `sharedFunc_800D0E34_0_s00`, sharedData_800D32A0_0_s02` -> `sharedData_800E39DC_0_s00`
