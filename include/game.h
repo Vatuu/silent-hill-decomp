@@ -34,8 +34,13 @@ struct _Model;
 #define RIFLE_AMMO_PICKUP_ITEM_COUNT   6
 
 #define DEFAULT_MAP_MESSAGE_LENGTH     99
-#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  /** Long string length is used to display a whole message instantly without a rollout. */
 #define GLYPH_TABLE_ASCII_OFFSET       '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
+
+#if VERSION_EQUAL_OR_NEWER(USA)
+#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400 /** Long string length is used to display a whole message instantly without a rollout. */
+#else
+#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 200 /** Long string length is used to display a whole message instantly without a rollout. */
+#endif
 
 #define CHUNK_CELL_SIZE Q12(40.0f)
 

@@ -287,7 +287,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
     return result;
 }
 
-void Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
+s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
 {
     s32 i;
     s32 j;
@@ -388,6 +388,8 @@ void Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
                 break;
         }
     }
+
+    // TODO: JAP0 includes extra code + returns a value here.
 }
 
 s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18

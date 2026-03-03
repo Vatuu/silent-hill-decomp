@@ -17,6 +17,16 @@ D_800C96B4_JPN = 0x800C96B4;
 D_800C96A4_JPN = 0x800C96A4;
 D_800C96A0_JPN = 0x800C96A0;
 
+// map_msg_display
+g_MapMsg_AudioLoadBlock = 0x800BF2AA;
+Gfx_MapMsg_DefaultStringInfoSet = 0x8004AEA8; // type:func
+Gfx_MapMsg_CalculateWidths = 0x8004AF5C; // type:func
+Gfx_StringSetColor_JP = 0x8004AF50; // type:func
+g_MapMsg_SelectCancelIdx = 0x800BF2AB;
+Gfx_MapMsg_SelectionUpdate = 0x800368C0; // type:func
+Gfx_MapMsg_StringDraw = 0x8004B6F4; // type:func
+Gfx_StringDraw_JP = 0x8004BFC0; // type:func
+
 // Gamestates inside overlays. TODO: Move these to sym files for each overlay
 GameState_KonamiLogo_Update = 0x800cbadc; // type:func
 GameState_KcetLogo_Update = 0x800cbed4; // type:func
@@ -1669,7 +1679,7 @@ demoLoadAttempCount = 0x800BF278;
 bgmLayerVolumes = 0x800BF280;
 D_800BCD58 = 0x800BF288;
 D_800BCD5C = 0x800BF28C;
-g_MapMsg_Select = 0x800BF2A8;
+g_MapMsg_Select = 0x800BF2A8; // size:2
 g_DeltaTimeCpy = 0x800BF2B4;
 g_ItemTriggerEvents = 0x800BF2C0;
 D_800BCDA8 = 0x800BF2D8;

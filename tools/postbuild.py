@@ -59,6 +59,8 @@ if __name__ == "__main__":
                 file = open(jap0Path, "r+b")
                 file.seek(0x12E)
                 file.write(b'\xE8\xFF')
+                file.seek(0x871EE)
+                file.write(b'\x24\x33')
                 file.seek(0x935FC)
                 file.write(b'\xAF\x28\xFF\xAD')
                 file.seek(0x9A6E4)

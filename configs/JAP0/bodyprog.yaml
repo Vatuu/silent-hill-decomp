@@ -66,7 +66,7 @@ segments:
       - [0x604, .rodata, sys/memcard_2]
       - [0x68C, .rodata, game_boot/game_load]
       - [0x6C0, .rodata, events/bgm_update]
-      - [0x6EC, rodata]
+      - [0x6EC, .rodata, events/map_msg_display]
       - [0x744, .rodata, events/bodyprog_data_800A99B4]
       - [0x8D4, .rodata, events/game_sys_states]
       - [0x908, .rodata, title]
@@ -119,7 +119,7 @@ segments:
       - [0x108F0, c, game_boot/background_sound_init]
       - [0x10C74, c, game_boot/load_screen]
       - [0x10F24, c, events/bgm_update]
-      - [0x11728, asm, events/map_msg_display]
+      - [0x11728, c, events/map_msg_display]
       - [0x12328, c, events/radio]
       - [0x123BC, c, events/player_pos_update]
       - [0x125A0, c, events/events_main]
@@ -332,7 +332,8 @@ segments:
       - [0x87040, .data, game_boot/background_sound_init]
       - [0x87138, .data, game_boot/fs_chara_anim]
       - [0x871D8, .data, events/bgm_update]
-      - [0x871E8, data]
+      - [0x871E8, .data, events/map_msg_display]
+      - [0x871EE, pad] # Garbage padding
       - [0x871F0, .data, events/bodyprog_data_800A99B4]
       - [0x8725C, .data, events/events_main]
       - [0x87268, .data, events/game_sys_states]
@@ -360,7 +361,7 @@ segments:
       - [0x9A718, .bss, game_boot/game_load]
       - [0x9A71C, pad] # Garbage
       - [0x9A720, .bss, events/bgm_update]
-      - [0x9A730, bss]
+      - [0x9A730, .bss, events/map_msg_display]
       - [0x9A74C, pad] # Garbage
       - [0x9A750, .bss, events/game_sys_states]
       - [0x9A7AC, pad] # Garbage.

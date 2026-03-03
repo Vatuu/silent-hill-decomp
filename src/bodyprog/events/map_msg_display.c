@@ -27,6 +27,13 @@ s_MapMsgSelect g_MapMsg_Select;
 u8             g_MapMsg_AudioLoadBlock;
 s8             g_MapMsg_SelectCancelIdx;
 
+// @hack JP calls different `Gfx_StringSetColor` / `Gfx_StringDraw` funcs here.
+// The normal funcs we have are also used in JP, so can't be renamed.
+// For now override `Gfx_StringSetColor` calls in this file until those JP funcs get figured out.
+#if VERSION_IS(JAP0)
+#define Gfx_StringSetColor Gfx_StringSetColor_JP
+#endif
+
 s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 {
     #define MSG_TIMER_MAX   (Q12(524288.0f) - 1)
@@ -36,6 +43,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
     s32  temp_s1;
     bool hasInput;
     s32  temp;
+    s32  var_a1;
     static s32 stateMachineIdx1;
     static s32 stateMachineIdx2;
     static s32 msgDisplayLength;
@@ -75,7 +83,23 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             msgDisplayInc                = 2; // Advance 2 glyphs at a time.
 
             Gfx_MapMsg_DefaultStringInfoSet();
-            Gfx_MapMsg_CalculateWidths(g_MapMsg_CurrentIdx);
+            var_a1 = Gfx_MapMsg_CalculateWidths(g_MapMsg_CurrentIdx);
+
+#if VERSION_EQUAL_OR_OLDER(JAP0)
+            if (var_a1 != 0)
+            {
+                switch (var_a1)
+                {
+                    case 2:
+                    case 3:
+                        func_8004B45C(g_MapMsg_CurrentIdx + 1, var_a1);
+                        break;
+                    case 4:
+                        func_8004B45C(0, 2);
+                        break;
+                }
+            }
+#endif
 
             D_800BCD74 = 1;
             g_SysWork.isMgsStringSet_18++;
@@ -101,7 +125,9 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             }
 
             Gfx_StringSetColor(StringColorId_White);
+#if VERSION_EQUAL_OR_NEWER(USA)
             Gfx_StringSetPosition(40, 160);
+#endif
 
             msgDisplayLength += msgDisplayInc;
             msgDisplayLength  = CLAMP(msgDisplayLength, 0, MAP_MESSAGE_DISPLAY_ALL_LENGTH);
@@ -156,7 +182,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     {
                         g_MapMsg_Select.maxIdx_0 = temp;
 
-                        if ((u8)g_MapMsg_Select.selectedEntryIdx_1 == (s8)g_MapMsg_SelectCancelIdx)
+                        if (g_MapMsg_Select.selectedEntryIdx_1 == (s8)g_MapMsg_SelectCancelIdx)
                         {
                             Sd_PlaySfx(Sfx_MenuCancel, 0, Q8_CLAMPED(0.25f));
                         }
@@ -187,8 +213,23 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     g_MapMsg_CurrentIdx++;
                     g_SysWork.mapMsgTimer_234C = g_MapMsg_Select.maxIdx_0;
 
-                    Gfx_MapMsg_CalculateWidths(g_MapMsg_CurrentIdx);
+                    var_a1 = Gfx_MapMsg_CalculateWidths(g_MapMsg_CurrentIdx);
 
+#if VERSION_EQUAL_OR_OLDER(JAP0)
+                    if (var_a1 != 0)
+                    {
+                        switch (var_a1)
+                        {
+                            case 2:
+                            case 3:
+                                func_8004B45C(g_MapMsg_CurrentIdx + 1, var_a1);
+                                break;
+                            case 4:
+                                func_8004B45C(0, 2);
+                                break;
+                        }
+                    }
+#endif
                     msgDisplayLength    = 0;
                     stateMachineIdx1 = 0;
 
@@ -275,7 +316,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                 // All maps have "Yes" and "No" as messages 0 and 1, respectively.
                 for (i = 0; i < 2; i++)
                 {
-                    if ((u8)g_MapMsg_Select.selectedEntryIdx_1 == i)
+                    if (g_MapMsg_Select.selectedEntryIdx_1 == i)
                     {
                         Gfx_StringSetColor(((g_MapMsg_SelectFlashTimer >> 10) * 3) + 4);
                     }
@@ -284,8 +325,12 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                         Gfx_StringSetColor(StringColorId_White);
                     }
 
+#if VERSION_EQUAL_OR_NEWER(USA)
                     Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 98);
                     Gfx_StringDraw(g_MapOverlayHeader.mapMessages_30[i], MAP_MESSAGE_DISPLAY_ALL_LENGTH);
+#else
+                    Gfx_StringDraw_JP(g_MapOverlayHeader.mapMessages_30[i], i);
+#endif
                 }
 
                 mapMsgCode = 2;
@@ -300,7 +345,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                 // `[idx + 3]`: "Option 3"
                 for (i = 0; i < mapMsgCode; i++)
                 {
-                    if ((u8)g_MapMsg_Select.selectedEntryIdx_1 == i)
+                    if (g_MapMsg_Select.selectedEntryIdx_1 == i)
                     {
                         Gfx_StringSetColor(((g_MapMsg_SelectFlashTimer >> 10) * 3) + 4);
                     }
@@ -309,13 +354,17 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                         Gfx_StringSetColor(StringColorId_White);
                     }
 
+#if VERSION_EQUAL_OR_NEWER(USA)
                     Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 96);
                     Gfx_StringDraw(g_MapOverlayHeader.mapMessages_30[(mapMsgIdx + i) + 1], MAP_MESSAGE_DISPLAY_ALL_LENGTH);
+#else
+                    Gfx_StringDraw_JP(g_MapOverlayHeader.mapMessages_30[(mapMsgIdx + i) + 1], i);
+#endif
                 }
             }
 
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp &&
-                (u8)g_MapMsg_Select.selectedEntryIdx_1 != 0)
+                g_MapMsg_Select.selectedEntryIdx_1 != 0)
             {
                 g_MapMsg_SelectFlashTimer = Q12(0.0f);
                 g_MapMsg_Select.selectedEntryIdx_1--;
@@ -324,7 +373,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
             }
 
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown &&
-                (u8)g_MapMsg_Select.selectedEntryIdx_1 != (mapMsgCode - 1))
+                g_MapMsg_Select.selectedEntryIdx_1 != (mapMsgCode - 1))
             {
                 g_MapMsg_SelectFlashTimer = Q12(0.0f);
                 g_MapMsg_Select.selectedEntryIdx_1++;

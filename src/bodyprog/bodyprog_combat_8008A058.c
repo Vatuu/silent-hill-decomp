@@ -221,9 +221,12 @@ u32 func_8008A270(s32 idx) // 0x8008A270
             break;
     }
 #else
-    if (!(idx >= 57 && idx <= 58) && g_SysWork.field_275C > Q12(256.0f))
+    if (idx != 57 && idx != 58)
     {
-        return 0;
+        if (g_SysWork.field_275C > Q12(256.0f))
+        {
+            return 0;
+        }
     }
 #endif
 
