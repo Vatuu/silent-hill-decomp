@@ -20,7 +20,7 @@ scratchpad                                   = 0x1F800000; // size:0x400 ignore:
 //---------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------------------
-//--- PA: 0x000184   VA: 0x80024CE4   subsegment: .rodata, screen/screen_cutscenesborders
+//--- PA: 0x000184   VA: 0x80024CE4   subsegment: .rodata, screen/cutscene_border
 //---------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------
@@ -332,7 +332,7 @@ Screen_FadeInProgressGet                     = 0x800325F8; // type:func
 Screen_FadeUpdate                            = 0x8003260C; // type:func
 
 //---------------------------------------------------------------------------------
-//--- PA: 0x00DD3C   VA: 0x8003289C   subsegment: c, screen/screen_cutscenesborders
+//--- PA: 0x00DD3C   VA: 0x8003289C   subsegment: c, screen/cutscene_border
 //---------------------------------------------------------------------------------
 Screen_BlackBorderDraw.0                     = 0x8003289C; // filename:Screen_BlackBorderDraw type:func Compiler adds suffix to end of nested func names.
 Screen_CutsceneCameraStateUpdate             = 0x80032904; // type:func
@@ -2422,7 +2422,7 @@ g_Screen_BackgroundImgIntensity              = 0x800A8E58;
 g_ScreenFadeProgress                         = 0x800A8E94; // type:s32
 
 //-------------------------------------------------------------------------------------
-//--- PA: 0x084338   VA: 0x800A8E98   subsegment: .data, screen/screen_cutscenesborders
+//--- PA: 0x084338   VA: 0x800A8E98   subsegment: .data, screen/cutscene_border
 //-------------------------------------------------------------------------------------
 g_BlackBorderShade                           = 0x800A8F40;
 

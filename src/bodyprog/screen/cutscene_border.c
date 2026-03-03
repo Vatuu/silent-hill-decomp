@@ -70,10 +70,6 @@ static POLY_G4 D_800A8EB0[] = {
 
 static q19_12 g_BlackBorderShade = Q12(0.0f);
 
-// ========================================
-// CUTSCENE BORDER DRAWING
-// ========================================
-
 void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
 {
     void Screen_BlackBorderDraw(POLY_G4* poly, s32 color)

@@ -4,7 +4,7 @@
 #include "game.h"
 
 #include "bodyprog/game_boot/game_boot.h"
-#include "bodyprog/screen/bg_draw.h"
+#include "bodyprog/screen/background_draw.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/sound_background.h"

@@ -6,6 +6,7 @@
 #include "bodyprog/demo.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/screen/vsync.h"
 #include "bodyprog/sys/joy.h"
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"

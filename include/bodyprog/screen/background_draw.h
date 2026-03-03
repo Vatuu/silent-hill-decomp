@@ -1,9 +1,5 @@
-#ifndef _BODYPROG_SCREEN_BG_DRAW_H
-#define _BODYPROG_SCREEN_BG_DRAW_H
-
-/** @brief This header is used to declare variables and
- * functions from `background_draw.c`
- */
+#ifndef _BODYPROG_SCREEN_BACKGROUNDDRAW_H
+#define _BODYPROG_SCREEN_BACKGROUNDDRAW_H
 
 // ========
 // GLOBALS
