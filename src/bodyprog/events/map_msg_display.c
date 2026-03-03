@@ -5,12 +5,12 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "main/fsqueue.h"
+#include "bodyprog/math/math.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/text/text_draw.h"
-#include "bodyprog/math/math.h"
 #include "bodyprog/sound_system.h"
+#include "bodyprog/text/text_draw.h"
+#include "main/fsqueue.h"
 
 // ========================================
 // STATIC VARIABLES
@@ -26,10 +26,6 @@ static s16 g_MapMsg_SelectFlashTimer = 0;
 s_MapMsgSelect g_MapMsg_Select;
 u8             g_MapMsg_AudioLoadBlock;
 s8             g_MapMsg_SelectCancelIdx;
-
-// ========================================
-// MAP MESSAGE DISPLAY
-// ========================================
 
 s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 {

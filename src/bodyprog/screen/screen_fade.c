@@ -36,10 +36,6 @@ static TILE D_800A8E74[] = {
 
 static q19_12 g_ScreenFadeProgress = Q12(0.0f);
 
-// ========================================
-// SCREEN FADE DRAWING
-// ========================================
-
 void Screen_FadeDrawModeSet(DR_MODE* drMode) // 0x800325A4
 {
     if (IS_SCREEN_FADE_WHITE(g_Screen_FadeStatus))

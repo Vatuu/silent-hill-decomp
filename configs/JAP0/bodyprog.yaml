@@ -117,7 +117,7 @@ segments:
       - [0x108F0, c, game_boot/background_sound_init]
       - [0x10C74, c, game_boot/load_screen]
       - [0x10F24, c, events/bgm_update]
-      - [0x11728, asm, events/mapmsg_display]
+      - [0x11728, asm, events/map_msg_display]
       - [0x12328, c, events/radio]
       - [0x123BC, c, events/bodyprog_event_800371E8]
       - [0x12F98, c, events/bodyprog_npc_80037DC4]

@@ -7,22 +7,23 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 
-
 void Chara_PositionSet(s_MapPoint2d* mapPoint) // 0x800371E8
 {
-    s32 rotY;
+    q19_12 rotY;
+
+    #define playerChara g_SysWork.playerWork_4C.player_0
 
     rotY = Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0_4_16);
-    Math_SVectorSet(&g_SysWork.playerWork_4C.player_0.rotation_24, Q12_ANGLE(0.0f), rotY, Q12_ANGLE(0.0f));
+    Math_SVectorSet(&playerChara.rotation_24, Q12_ANGLE(0.0f), rotY, Q12_ANGLE(0.0f));
 
-    g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(0.0f);
-    g_SysWork.playerWork_4C.player_0.position_18.vx = mapPoint->positionX_0;
-    g_SysWork.playerWork_4C.player_0.position_18.vz = mapPoint->positionZ_8;
+    playerChara.position_18.vy = Q12(0.0f);
+    playerChara.position_18.vx = mapPoint->positionX_0;
+    playerChara.position_18.vz = mapPoint->positionZ_8;
 
     if (mapPoint->triggerParam1_4_24 >= 2)
     {
-        g_SysWork.playerWork_4C.player_0.position_18.vx += Q12_MULT_FLOAT_PRECISE(Math_Sin(rotY), 0.4f);
-        g_SysWork.playerWork_4C.player_0.position_18.vz += Q12_MULT_FLOAT_PRECISE(Math_Cos(rotY), 0.4f);
+        playerChara.position_18.vx += Q12_MULT_FLOAT_PRECISE(Math_Sin(rotY), 0.4f);
+        playerChara.position_18.vz += Q12_MULT_FLOAT_PRECISE(Math_Cos(rotY), 0.4f);
     }
 
     g_SysWork.loadingScreenIdx_2281 = mapPoint->loadingScreenId_4_9;
@@ -40,6 +41,8 @@ void Chara_PositionSet(s_MapPoint2d* mapPoint) // 0x800371E8
 
     func_8007E9C4();
     Savegame_MapRoomIdxUpdate();
+
+    #undef playerChara
 }
 
 void Game_PlayerHeightUpdate(void) // 0x80037334

@@ -7,10 +7,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/sound_system.h"
 
-// ========================================
-// RADIO SFX
-// ========================================
-
 void func_80037154(void) // 0x80037154
 {
     s32 i;

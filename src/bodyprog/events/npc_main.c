@@ -5,16 +5,12 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "main/fsqueue.h"
 #include "bodyprog/demo.h"
-#include "bodyprog/screen/screen_data.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player.h"
+#include "bodyprog/screen/screen_data.h"
 #include "bodyprog/sound_system.h"
-
-// ========================================
-// NPC RELATED - UPDATES
-// ========================================
+#include "main/fsqueue.h"
 
 void Savegame_EnemyStateUpdate(s_SubCharacter* chara) // 0x80037DC4
 {

@@ -4,29 +4,32 @@
 #include <psyq/libpad.h>
 #include <psyq/strings.h>
 
-#include "main/fsqueue.h"
-#include "main/rng.h"
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
-#include "bodyprog/screen/screen_data.h"
-#include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/text/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/text/text_draw.h"
 #include "bodyprog/player.h"
 #include "bodyprog/ranking.h"
 #include "bodyprog/sound_system.h"
+#include "main/fsqueue.h"
+#include "main/rng.h"
 
 #ifndef PAD_HACK_IGNORE
+
 // ========================================
 // PADDING (Ignore)
 // ========================================
-s8 pad_bss_800BCD81[3];
+
+s8  pad_bss_800BCD81[3];
 s32 pad_bss_800BCD88[2];
 s32 pad_bss_800BCD94[5];
 s32 pad_bss_800BCDD0;
-s8 pad_bss_800BCDD5[3];
+s8  pad_bss_800BCDD5[3];
+
 #endif
 
 // ========================================
@@ -51,9 +54,8 @@ static void (*g_SysStateFuncs[])(void) = {
     SysState_GamePaused_Update
 };
 
-/** Copy of delta timers.
- * Appears to be used as save of the delta timer currently used as some instances where 2D backgrounds
- * are drawn uses `g_DeltaTimeRaw` while `g_DeltaTime` is being stopped.
+/** Used to store the previous delta time state of the delta timer. There are some instances where 2D backgrounds
+ * are drawn uses `g_DeltaTimeRaw` while `g_DeltaTime` is  stopped.
  */
 static s32 g_DeltaTimeCpy;
 
@@ -67,10 +69,6 @@ s_MapPoint2d D_800BCDB0;
 s32          g_ItemTriggerItemIds[5];
 u8           D_800BCDD4;
 s_EventData* g_MapEventData;
-
-// ========================================
-// GAME STATES UPDATERS
-// ========================================
 
 void GameState_InGame_Update(void) // 0x80038BD4
 {
@@ -874,7 +872,8 @@ void SysState_EventPlaySound_Update(void) // 0x8003A4B4
 void SysState_GameOver_Update(void) // 0x8003A52C
 {
     #define TIP_COUNT 15
-    static u8 gameOver_TipIdx;
+
+    static u8 prevTipIdx;
     u16       seenTipIdxs[1];
     s32       tipIdx;
     s32       randTipVal;
@@ -949,7 +948,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             }
 
             // Store current shown `tipIdx`, later `sysStateStep_C == 7` will set it inside `seenGameOverTips_2E`.
-            gameOver_TipIdx = tipIdx;
+            prevTipIdx = tipIdx;
 
 #if VERSION_REGION_IS(NTSC)
             Fs_QueueStartReadTim(FILE_TIM_TIPS_E01_TIM + tipIdx, FS_BUFFER_1, &g_DeathTipImg);
@@ -1018,8 +1017,8 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             }
 
             // TODO: some inline FlagSet func? couldn't get matching ver, but pretty sure temp_a0 can be removed somehow
-            temp_a0 = &g_GameWork.config_0.seenGameOverTips_2E[(gameOver_TipIdx >> 5)];
-            *temp_a0 |= (1 << 0) << (gameOver_TipIdx & 0x1F);
+            temp_a0 = &g_GameWork.config_0.seenGameOverTips_2E[(prevTipIdx >> 5)];
+            *temp_a0 |= (1 << 0) << (prevTipIdx & 0x1F);
 
             SysWork_StateStepIncrement(0);
             break;
