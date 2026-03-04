@@ -394,7 +394,7 @@ There's still a lot of work ahead:
 </table>
 
 <div align="center">
-Progress bars powered by [decomp.dev](https://decomp.dev)
+Progress bars powered by <a href="https://decomp.dev">decomp.dev</a>
 </div>
 
 ## Contributing
