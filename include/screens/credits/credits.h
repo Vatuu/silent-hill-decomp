@@ -20,6 +20,12 @@ extern char D_801E5BD0[]; // KCET string.
 
 extern s32 D_801E5C20;
 
+extern s16 D_801E5C24[256];
+
+extern s32 D_801E5E24[7];
+
+extern s32 D_801E5E40[7];
+
 extern u8 D_801E5FF8[];
 
 extern u8 D_801E5E5C[];

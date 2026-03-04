@@ -2524,7 +2524,37 @@ INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027C9C);
 INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027CA8);
 
 INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027CB0);
-INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_3", func_80053898);
+
+void func_80053898(s32 arg0, s32 arg1) // JPN0 0x80053898
+{
+    GsOT* ot;
+    SPRT* sprt;
+
+    ot   = &g_OrderingTable2[g_ActiveBufferIdx];
+    sprt = GsOUT_PACKET_P;
+
+    setSprt(sprt);
+
+    setRGBC0(sprt, 0x80, 0x80, 0x80, 0x64);
+    *(u32*)&sprt->w = (arg0 * 12) + (16 << 16); // setWHFast(sprt, (arg0 * 12), 16);
+    setXY0Fast(sprt, -92, 88);
+
+    if (arg1 & 1)
+    {
+        setUV0AndClutSum(sprt, 0, 224, 0x7F93);
+    }
+    else
+    {
+        setUV0AndClutSum(sprt, 0, 16, 0x7F93);
+    }
+
+    addPrim(&ot->org[6], sprt);
+
+    GsOUT_PACKET_P = &sprt[1];
+
+    Gfx_Primitive2dTextureSet(0, (arg1 & 1) ? 256 : 0, 6, 1);
+}
+
 INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_3", func_800539A0);
 #endif
 

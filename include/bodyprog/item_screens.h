@@ -434,6 +434,10 @@ void Gfx_Results_ItemsDisplay(); // TODO: Might take s32 argument?
 
 void Gfx_Results_ItemsPosition(); // TODO: Might take s32 argument?
 
+#if VERSION_IS(JAP0)
+void func_80053898(s32 arg0, s32 arg1)
+#endif
+
 void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr);
 
 /** @brief Toggles the visibility of object while the inventory scrolls.
