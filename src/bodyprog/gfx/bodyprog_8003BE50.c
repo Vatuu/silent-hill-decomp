@@ -15,61 +15,16 @@
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
-static const s32 pad_rodata_80025524 = 0;
-
-// ========================================
-// UNKNOWN - IN-GAME RELATED
-// ========================================
-
-s32 Map_TypeGet(void) // 0x8003BD2C
-{
-    return g_WorldGfx.mapInfo_0 - MAP_INFOS;
-}
-
-void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
-{
-    u16 var_s0;
-
-    D_800BCE14 = func_80069810();
-    var_s0     = D_800BCE14;
-
-    switch (Map_TypeGet())
-    {
-        case 0:
-            if (chara->position_18.vx >= Q12(191.6f) && chara->position_18.vx <= Q12(198.8f) &&
-                chara->position_18.vz >= Q12(-96.0f) && chara->position_18.vz <= Q12(-90.3f))
-            {
-                var_s0 = (var_s0 & ~0x2) | 0x4;
-            }
-            break;
-
-        case 3:
-        case 4:
-            if (chara->position_18.vx >= Q12(-100.0f) && chara->position_18.vx <= Q12(-94.5f) &&
-                chara->position_18.vz >= Q12(-70.3f) && chara->position_18.vz <= Q12(-62.0f))
-            {
-                var_s0 = (var_s0 & ~0x2) | 0x4;
-            }
-    }
-
-    func_80069820(var_s0);
-}
-
-void func_8003BE28(void) // 0x8003BE28
-{
-    func_80069820(D_800BCE14);
-}
-
-s_LinkedBone* WorldGfx_CharaModelBonesGet(e_CharacterId charaId) // 0x8003BE50
-{
-    return g_WorldGfx.registeredCharaModels_18[charaId]->skeleton_14.bones_C;
-}
+const s32 pad_rodata_80025524 = 0;
 
 // ========================================
 // MAP GRAPHIC INITALIZATION
 // ========================================
 
-extern s_WorldEnvWork const g_WorldEnvWork;
+s_LinkedBone* WorldGfx_CharaModelBonesGet(e_CharacterId charaId) // 0x8003BE50
+{
+    return g_WorldGfx.registeredCharaModels_18[charaId]->skeleton_14.bones_C;
+}
 
 void GameFs_BgEtcGfxLoad(void) // 0x8003BE6C
 {
@@ -207,6 +162,12 @@ void CharaModel_Free(s_CharaModel* model) // 0x8003C1AC
     model->lmHdr_8    = MAP_CHARA_LM_BUFFER;
     model->texture_C  = image;
 }
+
+// ========================================
+// MAP GRAPHIC DRAW
+// ========================================
+
+extern s_WorldEnvWork const g_WorldEnvWork;
 
 void Ipd_PlayerChunkInit(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerPosZ) // 0x8003C220
 {
@@ -1372,7 +1333,7 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
     }
 }
 
-static const s32 pad_rodata_80025BB0 = 0;
+const s32 pad_rodata_80025BB0 = 0;
 
 void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
 {

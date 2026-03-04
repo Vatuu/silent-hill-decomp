@@ -73,7 +73,7 @@ segments:
       - [0x758,  .rodata, events/bodyprog_data_800A99B4]
       - [0x818,  .rodata, events/game_sys_states]
       - [0x920,  .rodata, title]
-      - [0x9C8,  .rodata, gfx/bodyprog_8003BD2C]
+      - [0x9C8,  .rodata, gfx/bodyprog_8003BE50]
       - [0x1054, .rodata, gfx/bodyprog_8003E5E8]
       - [0x1084, .rodata, gfx/bodyprog_80040004]
       - [0x1094, .rodata, sound/sd_call]
@@ -152,14 +152,15 @@ segments:
                                                  # considering is too close to this other functions and that
                                                  # in SH2 the main menu code it is within the `events` folder.
       - [0x11254,   c, events/bgm_update]        # }
-      - [0x11A58,   c, events/map_msg_display]    # }
+      - [0x11A58,   c, events/map_msg_display]   # }
       - [0x125F4,   c, events/radio]             # }
       - [0x12688,   c, events/player_pos_update] # }
       - [0x1286C,   c, events/events_main]       # }
       - [0x13264,   c, events/npc_main]          # }
       - [0x14074,   c, events/game_sys_states]   # }
       - [0x15FC8,   c, title] # Name convention from SH2/4.
-      - [0x171CC,   c, gfx/bodyprog_8003BD2C]
+      - [0x171CC,   c, bodyprog_8003BD2C]
+      - [0x172F0,   c, gfx/bodyprog_8003BE50]
       - [0x19A88,   c, gfx/bodyprog_8003E5E8]
       - [0x1B4A4,   c, gfx/bodyprog_80040004]
       - [0x1B4EC,   c, view/vc_util]
@@ -384,7 +385,7 @@ segments:
       - [0x84EC0, .data, events/events_main]
       - [0x84ECC, .data, events/game_sys_states]
       - [0x84F14, .data, title]
-      - [0x8534C, .data, gfx/bodyprog_8003BD2C]
+      - [0x8534C, .data, gfx/bodyprog_8003BE50]
       - [0x85424, .data, gfx/bodyprog_8003E5E8]
       - [0x85468, .data, sound/sd_data]
       - [0x88920, .data, view/vw_calc]

@@ -2180,8 +2180,6 @@ extern s8 g_Demo_ReproducedCount;
 
 extern RECT D_800A9A6C; // `RECT<320, 256, 160, 240>`, only used in `SysState_Fmv_Update`?
 
-extern u32 D_800A9AAC[];
-
 extern s32 D_800A9ECC;
 
 extern s32 D_800A9ED0;
@@ -4011,32 +4009,6 @@ void SysState_GameOver_Update(void);
 // ====================
 
 void MainMenu_SelectedOptionIdxReset(void);
-
-void Gfx_MainMenu_MainTextDraw(void);
-
-void Gfx_MainMenu_DifficultyTextDraw(s32 idx);
-
-void Gfx_MainMenu_BackgroundDraw(void);
-
-void func_8003B7BC(void);
-
-u32 func_8003B7FC(s32 idx);
-
-PACKET* Gfx_MainMenu_FogPacketGet(GsOT* ot, PACKET* packet);
-
-void Gfx_MainMenu_FogDraw(void);
-
-void Gfx_MainMenu_FogRandomize(void);
-
-void Gfx_MainMenu_FogScatter(void);
-
-void Gfx_MainMenu_FogUpdate(void);
-
-/** Related to main menu fog. */
-void func_8003BCF4(void);
-
-/** Related to main menu fog. */
-void func_8003BE28(void);
 
 // ====================
 

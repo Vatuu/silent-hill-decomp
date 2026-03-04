@@ -16,19 +16,33 @@
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
-static s32 g_MainMenuState = 0;
-
-static s32 g_MainMenu_SelectedEntry = MainMenuEntry_Start;
-
-static u32 g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Start) | (1 << MainMenuEntry_Option);
-
-s8 g_Demo_ReproducedCount = 0;
-
-s8* D_800BCDE0;
-
 #define MAIN_MENU_FOG_COUNT 21
 
-static const s32 rodataPad_8002547C = 0;
+#ifndef PAD_HACK_IGNORE
+// ========================================
+// PADDING (Ignore)
+// ========================================
+const s32 pad_rodata_8002547C = 0;
+#endif
+
+// ========================================
+// STATIC VARIABLES
+// ========================================
+
+static s32 g_MainMenuState              = 0;
+static s32 g_MainMenu_SelectedEntry     = MainMenuEntry_Start;
+static u32 g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Start) | (1 << MainMenuEntry_Option);
+
+// ========================================
+// GLOBAL VARIABLES
+// ========================================
+
+s8  g_Demo_ReproducedCount = 0;
+s8* D_800BCDE0;
+
+// ========================================
+// MAIN MENU - CORE
+// ========================================
 
 void GameState_MainMenu_Update(void) // 0x8003AB28
 {
@@ -42,7 +56,6 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         GameState_OptionScreen,
         GameState_MovieIntro
     };
-
     bool        playInGameDemo;
     s32         prevGameDifficultyIdx;
     s32         nextGameDifficultyIdx;
@@ -318,10 +331,10 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 prevState                       = g_GameWork.gameState_594;
                 g_GameWork.gameStateStep_598[0] = prevState;
                 g_GameWork.gameState_594        = NEXT_GAME_STATES[g_MainMenu_SelectedEntry];
-                g_SysWork.counters_1C[0]              = 0;
+                g_SysWork.counters_1C[0]        = 0;
                 g_GameWork.gameStatePrev_590    = prevState;
                 g_GameWork.gameStateStep_598[0] = 0;
-                g_SysWork.counters_1C[1]              = 0;
+                g_SysWork.counters_1C[1]        = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
 
@@ -364,16 +377,16 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
     if (g_GameWork.gameState_594 == GameState_MainMenu)
     {
-        Gfx_MainMenu_BackgroundDraw();
+        MainMenu_BackgroundDraw();
         func_8003B560();
 
         if (g_MainMenuState < 3)
         {
-            Gfx_MainMenu_MainTextDraw();
+            MainMenu_MainTextDraw();
             return;
         }
 
-        Gfx_MainMenu_DifficultyTextDraw(newGameSelectedDifficultyIdx);
+        MainMenu_DifficultyTextDraw(newGameSelectedDifficultyIdx);
         return;
     }
     else
@@ -395,7 +408,7 @@ void MainMenu_SelectedOptionIdxReset(void) // 0x8003B550
 
 void func_8003B560(void) {} // 0x8003B560
 
-void Gfx_MainMenu_MainTextDraw(void) // 0x8003B568
+static void MainMenu_MainTextDraw(void) // 0x8003B568
 {
     #define COLUMN_POS_X 158
     #define COLUMN_POS_Y 184
@@ -444,7 +457,7 @@ void Gfx_MainMenu_MainTextDraw(void) // 0x8003B568
     }
 }
 
-void Gfx_MainMenu_DifficultyTextDraw(s32 idx) // 0x8003B678
+static void MainMenu_DifficultyTextDraw(s32 idx) // 0x8003B678
 {
     #define DIFFICULTY_MENU_SELECTION_COUNT 3
     #define COLUMN_POS_X                    158
@@ -486,7 +499,7 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 idx) // 0x8003B678
     }
 }
 
-void Gfx_MainMenu_BackgroundDraw(void) // 0x8003B758
+static void MainMenu_BackgroundDraw(void) // 0x8003B758
 {
     if (g_SysWork.sysState_8 == SysState_Gameplay)
     {
@@ -495,19 +508,15 @@ void Gfx_MainMenu_BackgroundDraw(void) // 0x8003B758
     }
 
     Screen_BackgroundImgDraw(&g_TitleImg);
-    Gfx_MainMenu_FogUpdate();
+    MainMenu_Fog_Update();
 }
 
-void func_8003B7BC(void) // 0x8003B7BC
-{
-    // Can't be `s32*` since 462 doesn't divide by 4, so I'm guessing it's `s8`.
-    s8* s0 = 0x801E2432;
+// ========================================
+// MAIN MENU - FOG
+// ========================================
 
-    memset(s0, 0, 462);
-    D_800BCDE0 = s0;
-}
-
-u32 D_800A9AAC[256] = {
+// Could this be an image or an embed texture instead?
+static u32 D_800A9AAC[256] = {
     0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000,
     0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000,
     0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000,
@@ -542,7 +551,16 @@ u32 D_800A9AAC[256] = {
     0x3ABCAEA9, 0x3ABDAFAA, 0x3ABEB0AB, 0x3ABEB1AC, 0x3ABFB2AD, 0x3AC0B3AE, 0x3AC1B4AF, 0x3AC2B5B0
 };
 
-u32 func_8003B7FC(s32 idx) // 0x8003B7FC
+static void func_8003B7BC(void) // 0x8003B7BC
+{
+    // Can't be `s32*` since 462 doesn't divide by 4, so I'm guessing it's `s8`.
+    s8* s0 = 0x801E2432;
+
+    memset(s0, 0, 462);
+    D_800BCDE0 = s0;
+}
+
+static u32 func_8003B7FC(s32 idx) // 0x8003B7FC
 {
     u8  idx0 = D_800BCDE0[idx];
     u32 val  = D_800A9AAC[idx0];
@@ -555,7 +573,7 @@ u32 func_8003B7FC(s32 idx) // 0x8003B7FC
     return val;
 }
 
-PACKET* Gfx_MainMenu_FogPacketGet(GsOT* ot, PACKET* packet) // 0x8003B838
+static PACKET* MainMenu_Fog_PacketGet(GsOT* ot, PACKET* packet) // 0x8003B838
 {
     s32      yOffset;
     s32      i;
@@ -603,19 +621,19 @@ PACKET* Gfx_MainMenu_FogPacketGet(GsOT* ot, PACKET* packet) // 0x8003B838
     return packet;
 }
 
-void Gfx_MainMenu_FogDraw(void) // 0x8003BA08
+static void MainMenu_Fog_Draw(void) // 0x8003BA08
 {
     PACKET*   packet;
     GsOT_TAG* tag;
 
     tag    = g_OrderingTable2[g_ActiveBufferIdx].org;
-    packet = Gfx_MainMenu_FogPacketGet(&tag[6], GsOUT_PACKET_P);
+    packet = MainMenu_Fog_PacketGet(&tag[6], GsOUT_PACKET_P);
     SetDrawMode((DR_MODE*)packet, 0, 1, 42, NULL);
     addPrim(&tag[6], packet);
     GsOUT_PACKET_P = packet + sizeof(DR_MODE);
 }
 
-void Gfx_MainMenu_FogRandomize(void) // 0x8003BAC4
+static void MainMenu_Fog_Randomize(void) // 0x8003BAC4
 {
     s32 idx;
     s32 i;
@@ -650,14 +668,14 @@ void Gfx_MainMenu_FogRandomize(void) // 0x8003BAC4
     }
 }
 
-void Gfx_MainMenu_FogScatter(void) // 0x8003BBF4
+static void MainMenu_Fog_Scatter(void) // 0x8003BBF4
 {
     s32 i;
     s32 j;
     s32 val;
     u8* ptr;
 
-    Gfx_MainMenu_FogRandomize();
+    MainMenu_Fog_Randomize();
 
     for (i = 0; i < MAIN_MENU_FOG_COUNT; i++)
     {
@@ -684,20 +702,20 @@ void Gfx_MainMenu_FogScatter(void) // 0x8003BBF4
     }
 }
 
-void Gfx_MainMenu_FogUpdate(void) // 0x8003BC8C
+void MainMenu_Fog_Update(void) // 0x8003BC8C
 {
     static s32 fogCount = 0;
 
     if (fogCount == ((fogCount / 5) * 5))
     {
-        Gfx_MainMenu_FogScatter();
+        MainMenu_Fog_Scatter();
     }
 
     fogCount++;
-    Gfx_MainMenu_FogDraw();
+    MainMenu_Fog_Draw();
 }
 
-void func_8003BCF4(void) // 0x8003BCF4
+static void func_8003BCF4(void) // 0x8003BCF4
 {
     s32 i;
 
@@ -705,7 +723,7 @@ void func_8003BCF4(void) // 0x8003BCF4
 
     for (i = 0; i < 30; i++)
     {
-        Gfx_MainMenu_FogScatter();
+        MainMenu_Fog_Scatter();
     }
 }
 

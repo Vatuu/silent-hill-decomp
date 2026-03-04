@@ -76,7 +76,7 @@ SfxPairs                                     = 0x800252BC; // type:AreaLoadSfx s
 //--------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-//--- PA: 0x0009C8   VA: 0x80025528   subsegment: .rodata, gfx/bodyprog_8003BD2C
+//--- PA: 0x0009C8   VA: 0x80025528   subsegment: .rodata, gfx/bodyprog_8003BE50
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
@@ -521,19 +521,23 @@ GameState_MapEvent_Update                    = 0x8003AA4C; // type:func
 //--------------------------------------------------------
 GameState_MainMenu_Update                    = 0x8003AB28; // type:func
 MainMenu_SelectedOptionIdxReset              = 0x8003B550; // type:func
-Gfx_MainMenu_MainTextDraw                    = 0x8003B568; // type:func
-Gfx_MainMenu_DifficultyTextDraw              = 0x8003B678; // type:func
-Gfx_MainMenu_BackgroundDraw                  = 0x8003B758; // type:func
-Gfx_MainMenu_FogPacketGet                    = 0x8003B838; // type:func
-Gfx_MainMenu_FogDraw                         = 0x8003BA08; // type:func
-Gfx_MainMenu_FogRandomize                    = 0x8003BAC4; // type:func
-Gfx_MainMenu_FogScatter                      = 0x8003BBF4; // type:func
-Gfx_MainMenu_FogUpdate                       = 0x8003BC8C; // type:func
+MainMenu_MainTextDraw                        = 0x8003B568; // type:func
+MainMenu_DifficultyTextDraw                  = 0x8003B678; // type:func
+MainMenu_BackgroundDraw                      = 0x8003B758; // type:func
+MainMenu_Fog_PacketGet                       = 0x8003B838; // type:func
+MainMenu_Fog_Draw                            = 0x8003BA08; // type:func
+MainMenu_Fog_Randomize                       = 0x8003BAC4; // type:func
+MainMenu_Fog_Scatter                         = 0x8003BBF4; // type:func
+MainMenu_Fog_Update                          = 0x8003BC8C; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x0171CC   VA: 0x8003BD2C   subsegment: c, bodyprog_8003BD2C
+//--------------------------------------------------------------------
+Map_TypeGet                                  = 0x8003BD2C; // type:func
 
 //------------------------------------------------------------------------
-//--- PA: 0x0171CC   VA: 0x8003BD2C   subsegment: c, gfx/bodyprog_8003BD2C
+//--- PA: 0x0172F0   VA: 0x8003BE50   subsegment: c, gfx/bodyprog_8003BE50
 //------------------------------------------------------------------------
-Map_TypeGet                                  = 0x8003BD2C; // type:func
 WorldGfx_CharaModelBonesGet                  = 0x8003BE50; // type:func
 GameFs_BgEtcGfxLoad                          = 0x8003BE6C; // type:func
 GameFs_BgItemLoad                            = 0x8003BE9C; // type:func
@@ -2535,7 +2539,7 @@ MAIN_MENU_ENTRY_STRINGS                      = 0x800A9A8C;
 DIFFICULTY_MENU_ENTRY_STRINGS                = 0x800A9AA0;
 
 //----------------------------------------------------------------------------
-//--- PA: 0x08534C   VA: 0x800A9EAC   subsegment: .data, gfx/bodyprog_8003BD2C
+//--- PA: 0x08534C   VA: 0x800A9EAC   subsegment: .data, gfx/bodyprog_8003BE50
 //----------------------------------------------------------------------------
 RAND.67                                      = 0x800A9EAC;
 FOG_COUNT.68                                 = 0x800A9EB0;
