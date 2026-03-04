@@ -27,6 +27,41 @@ Gfx_MapMsg_SelectionUpdate = 0x800368C0; // type:func
 Gfx_MapMsg_StringDraw = 0x8004B6F4; // type:func
 Gfx_StringDraw_JP = 0x8004BFC0; // type:func
 
+// item_screens_2
+Gfx_Results_Save = 0x8004E20C; // type:func
+D_80025EB0 = 0x80025FD4;
+D_80026214 = 0x80026310;
+D_80026264 = 0x80026360;
+Inventory_Logic = 0x8004E670; // type:func
+Inventory_ItemUse = 0x8004F82C; // type:func
+Gfx_Inventory_CmdOptionsDraw = 0x8004F9BC; // type:func
+Gfx_Inventory_ScrollArrowsDraw = 0x8004FDD4; // type:func
+Player_ItemRemove = 0x8004FFEC; // type:func
+func_8004EF48 = 0x800500A0; // type:func
+func_8004F10C = 0x80050264; // type:func
+func_8004F190 = 0x800502E8; // type:func
+Gfx_Inventory_UnavailableMapText = 0x800506D4; // type:func
+Inventory_DirectionalInputSet = 0x800507E0; // type:func
+Gfx_Primitive2dTextureSet = 0x80053ADC; // type:func
+func_800539A4 = 0x800553F8; // type:func
+g_Inventory_CmdSelectedIdx = 0x800AFF18;
+g_Inventory_SelectionId = 0x800AFF1C;
+D_800AE178 = 0x800B0538;
+g_Inventory_IsUpClicked = 0x800C5E98;
+g_Inventory_IsDownClicked = 0x800C5E9C;
+g_Inventory_IsLeftClicked = 0x800C5EA0;
+g_Inventory_IsRightClicked = 0x800C5EA4;
+g_Inventory_IsUpPulsed = 0x800C5EA8;
+g_Inventory_IsDownPulsed = 0x800C5EAC;
+g_Inventory_IsLeftPulsed = 0x800C5EB0;
+g_Inventory_IsRightPulsed = 0x800C5EB4;
+g_Inventory_IsLeftHeld = 0x800C5EB8;
+g_Inventory_IsRightHeld = 0x800C5EBC;
+g_Inventory_IsScrolling = 0x800C5EC0;
+g_Gfx_Inventory_SelectionBordersDraw = 0x800C5EC8;
+g_Inventory_PrevSelectionId = 0x800C5ECC;
+D_800C3994 = 0x800C5EC4;
+
 // Gamestates inside overlays. TODO: Move these to sym files for each overlay
 GameState_KonamiLogo_Update = 0x800cbadc; // type:func
 GameState_KcetLogo_Update = 0x800cbed4; // type:func

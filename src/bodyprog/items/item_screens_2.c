@@ -101,6 +101,10 @@ void Game_TimerUpdate(void) // 0x8004C8DC
     }
 }
 
+#if VERSION_IS(JAP0)
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_2", GameState_ItemScreens_Update);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026120);
+#else
 void GameState_ItemScreens_Update(void) // 0x8004C9B0
 {
     Gfx_StringSetColor(StringColorId_White);
@@ -401,7 +405,11 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
         Gfx_Results_Save();
     }
 }
+#endif
 
+#if VERSION_IS(JAP0)
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_2", Gfx_Results_Save);
+#else
 void Gfx_Results_Save(void) // 0x8004D1A0
 {
     s32      i;
@@ -512,6 +520,7 @@ void Gfx_Results_Save(void) // 0x8004D1A0
             break;
     }
 }
+#endif
 
 void Inventory_Logic(void) // 0x8004D518
 {
@@ -1763,6 +1772,9 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
     return j;
 }
 
+#if VERSION_IS(JAP0)
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_2", Gfx_Inventory_UnavailableMapText);
+#else
 void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x0x8004F57C
 {
     char* strs[2] = // 0x800262AC
@@ -1775,5 +1787,8 @@ void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x0x8004F57C
     Gfx_StringSetColor(StringColorId_White);
     Gfx_StringDraw(strs[strIdx], DEFAULT_MAP_MESSAGE_LENGTH);
 }
+#endif
 
+#if VERSION_IS(USA)
 const u8 g_rodataData_800262F6 = 0x2A; // '*' as `char`.
+#endif
