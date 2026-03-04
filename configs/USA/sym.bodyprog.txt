@@ -94,7 +94,7 @@ SfxPairs                                     = 0x800252BC; // type:AreaLoadSfx s
 //-----------------------------------------------------------------------
 //--- PA: 0x001208   VA: 0x80025D68   subsegment: .rodata, text/text_draw
 //-----------------------------------------------------------------------
-FONT_12X16_GLYPH_WIDTHS                    = 0x80025D6C;
+FONT_12X16_GLYPH_WIDTHS                      = 0x80025D6C;
 STRING_COLORS                                = 0x80025DC0;
 
 //-----------------------------------------------------------------------------
@@ -109,6 +109,7 @@ STRING_COLORS                                = 0x80025DC0;
 //--- PA: 0x00179C   VA: 0x800262FC   subsegment: .rodata, items/item_screens_3
 //-----------------------------------------------------------------------------
 INVENTORY_ITEM_ROTATIONS                     = 0x800262FC; // type:DVECTOR size:0x380
+LABEL_STR_POS_TABLE                          = 0x80027DD8; // size:0x20
 
 //------------------------------------------------------------------------------
 //--- PA: 0x0039CC   VA: 0x8002852C   subsegment: .rodata, gfx/bodyprog_80055028

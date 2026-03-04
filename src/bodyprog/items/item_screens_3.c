@@ -148,6 +148,204 @@ s32 g_Inventory_CmdSelectedIdx = 0;
 u32 g_Inventory_SelectionId = 0;
 
 const char* INVENTORY_ITEM_NAMES[] = {
+#if VERSION_REGION_IS(NTSCJ)
+// TODO: Collapse null entries.
+    "栄養剤",
+    "携帯用救急キット",
+    "アンプル",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    "ロビーの鍵",
+    "民家の鍵",
+    "［ライオン］の鍵",
+    "［きこり］の鍵",
+    "［かかし］の鍵",
+    "書庫の鍵",
+    "教室の鍵",
+    "Ｋ・ゴードンの鍵",
+    "跳ね橋の鍵",
+    "病院地下の鍵",
+    "地下倉庫の鍵",
+    "診察室の鍵",
+    "骨董屋の鍵",
+    "下水道通路の鍵",
+    "［オフィエル］の鍵",
+    "［ハギト］の鍵",
+    "［ファレグ］の鍵",
+    "［ベトール］の鍵",
+    "［アラトロン］の鍵",
+    "「学校へ」と書かれた紙片",
+    "「犬小屋」と書かれた紙片",
+    "絵札",
+    "　",
+    "下水道出口の鍵",
+    "チャネリングストーン",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    "化学薬品",
+    "金のメダリオン",
+    "銀のメダリオン",
+    "ゴムボール",
+    "“フラウロス”",
+    "ペットボトル",
+    "液体（詳細不明）",
+    "［海亀］のプレート",
+    "［帽子屋］のプレート",
+    "［猫］のプレート",
+    "［女王］のプレート",
+    "輸血用血液パック",
+    "消毒用アルコール",
+    "ライター",
+    "ビデオテープ",
+    "　",
+    "カウフマンの鍵",
+    "領収証",
+    "金庫の鍵",
+    "磁石",
+    "バイクの鍵",
+    "鳥カゴの鍵",
+    "ペンチ",
+    "ドライバー",
+    "カメラ",
+    "契約の指輪",
+    "時の石",
+    "ソロモンの護符",
+    "メルクリウスの紋章",
+    "アンク",
+    "メルキオールの小剣",
+    "ウロボロスの円環",
+    "調理用ナイフ",
+    "鉄パイプ",
+    "小型削岩機",
+    "警棒",
+    "ハンマー",
+    "チェーンソー",
+    "日本刀",
+    "斧",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    "ハンドガン",
+    "狩猟用ライフル",
+    "ショットガン",
+    "ハイパーブラスター",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    "ハンドガンの弾",
+    "ライフルの弾",
+    "ショットガンの弾",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    "ライト",
+    "ポケットラジオ",
+    "ガソリン" 
+#else
     "Health_drink(s)",
     "First_aid_kit(s)",
     "Ampoule(s)",
@@ -231,9 +429,207 @@ const char* INVENTORY_ITEM_NAMES[] = {
     "Flashlight",
     "Pocket_radio",
     "Gasoline_tank"
+#endif
 };
 
 const char* g_ItemDescriptions[] = {
+#if VERSION_REGION_IS(NTSCJ)
+    "栄養を補給し体力を回復させる~N効果は低め",
+    "傷を治療し体力を回復させる~N効果は中程度",
+    "痛みを鎮静化し体力を回復させる~N効果は高めで一定時間持続する",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    "ロビーへの扉を開ける鍵。~Nロッカー室で見つけた。",
+    "ある民家の正面玄関の鍵~N犬小屋の中に隠されていた",
+    "民家の庭へ行く扉の鍵~Nパトカーのトランクの中にあった",
+    "民家の庭へ行く扉の鍵~Nバスケットボールのコートに落ちていた",
+    "民家の庭へ行く扉の鍵~N倒木を渡った先の郵便箱に置かれていた",
+    "学校２階の書庫の鍵~Nロッカー室で拾った",
+    "屋上の排水孔の奥にひっかかっていた~Nタグのついた学校の教室の鍵",
+    "タグにＫ．ゴードンと記されている~N学校のボイラー室で拾った",
+    "跳ね橋の開閉を制御する機械を~N作動させるための鍵　教会で手に入れた",
+    "病院の地下へ行くための扉を開ける~N１階会議室のテーブルの上にあった",
+    "手術室で手に入れた~N病院の地下にある倉庫の鍵",
+    "病院地下２階の病室で見つけた~N診察室の扉を開ける鍵",
+    "病院でダリアが置いていった鍵~Nタグに店の名前が書いてある",
+    "下水道内の通路の扉を開けるための鍵",
+    "［オフィエル］の文字が刻まれた鍵",
+    "［ハギト］の文字が刻まれた鍵",
+    "［ファレグ］の文字が刻まれた鍵",
+    "［ベトール］の文字が刻まれた鍵",
+    "［アラトロン］の文字が刻まれた鍵",
+    "シェリルの字で「学校へ」と~N書かれたスケッチブックの紙片",
+    "シェリルの字で「ＬＥＶＩＮ通り」~N\n	「犬小屋」と書かれたスケッチブックの紙片",
+    "鍵が描かれた長方形のカード~N教室の机の上に置かれていた",
+    "　",
+    "下水道でリゾート街への出口へ行くための~N扉を開ける鍵　水の中に落ちていた",
+    "不思議な力を持った神秘の石~Nどこかで使うと何かが起きる……？",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    "実験用具室で手に入れた　ラベルに~N［濃塩酸／取扱い注意］と書かれている",
+    "手の形をした彫像に握られていた~N表面に時計台の絵が彫られている",
+    "音楽室で拾った~N表面に時計台の絵が彫られている",
+    "子どもが遊びに使う柔らかい~N蛍光ピンクのゴムのボール",
+    "教会で手に入れた三角錐状のオブジェ~N使用方法・用途共に不明",
+    "病院の厨房で手に入れたミネラル~Nウォーターの空のプラスチックボトル",
+    "病院院長室の床で割れていた~Nガラス瓶から手に入れた赤い液体",
+    "表面に「にせ海亀」が描かれた~N青色の四角いプレート",
+    "表面に「帽子屋」が描かれた~N緑色の四角いプレート",
+    "表面に「チェシャ猫」が描かれた~N黄色の四角いプレート",
+    "表面に「ハートの女王」が描かれた~N赤色の四角いプレート",
+    "病院倉庫で手に入れた~N２００ｍｌ入り血液のパック",
+    "ボトル入りの消毒に使われるアルコール~N病院の集中治療室に置かれていた",
+    "金属製のオイルライター~N２０１号室に置いてあった",
+    "病院地下２階で見つけた~Nラベルには何も書いていない",
+    "このアイテムは存在しない",
+    "カウフマンが落としたと思われる~Nタグに「３」と書かれている",
+    "カウフマンが落としたと思われる~N雑貨屋のレシート",
+    "金庫を開けるための鍵~N雑貨屋インディアンランナーで見つけた",
+    "細長いヒモが結ばれている棒磁石~Nモーテルの事務室に置いてあった",
+    "古びているバイクの鍵~Nモーテルの客室の床下に落ちていた",
+    "柄の部分に鳥カゴが彫られている",
+    "金属部品・針金の加工に使われる道具~N錆びてはいるが使えないことはない",
+    "ネジを回すのに使われる道具~N錆びてはいるが使えないことはない",
+    "フラッシュ付きのカメラ",
+    "材質不明の無骨で頑丈そうな指輪",
+    "星座の絵がかけられた柱にはまっていた~N\n	時計の文字盤のような模様がある大きな石",
+    "古代の魔術師の名が冠された~N六つの頂点を持つ星型の護符",
+    "水銀を意味する蛇をかたどった~N錬金術のシンボル",
+    "楕円と十字からなる護符",
+    "賢者の名前が冠された古びた小剣",
+    "自らの尾をかむ蛇の円盤状の魔除け",
+    "料理に使うナイフ~N扱いにくく攻撃力も低いがないよりはまし",
+    "鉄製の長さ約１ｍのパイプ~N破壊力はいまいちだが攻撃範囲は広い",
+    "道路工事などに使われる杭を打ちだし~N岩石に穴を開けるための機械",
+    "シビルから受け取った警棒。",
+    "災害時用の鉄製の重いハンマー~N破壊力は大きいが扱いが難しい",
+    "樹木の伐採などに使われる動力付きのこぎり~N攻撃力は極めて高い",
+    "日本の伝統的な片刃の長剣",
+    "片手で扱える小型の斧~N攻撃力は中程度",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    "シビルに渡された小型の拳銃~N最大装填数１５発",
+    "狩猟用の大型の銃~N最大装填数６発",
+    "広い範囲を攻撃出来る銃~N最大装填数６発",
+    "赤外線照準装置付きの高性能拳銃~N弾数無制限",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    "ハンドガンに用いられる弾",
+    "ライフルに用いられる弾",
+    "ショットガンに用いられる弾",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    "ワンタッチでＯＮ／ＯＦＦの操作が可能~N胸ポケットに入れてある",
+    "携帯用の小型ラジオ~N怪物が近付くとノイズが鳴り出す",
+    "チェーンソーや削岩機を動かすために必要~Nガソリンスタンドのガレージに置いてあった"
+#else
     "Supplies_nutrition_to\n\t\t\t\t\trecover_a_small_amount_of\n\t\t\t\t\tstamina.",
     "Heals_injury_to_provide\n\t\t\t\t\tmoderate_stamina_recovery.",
     "Relieve_pain_to_recover\n\t\t\t\t\tstamina_to_high.\n\t\t\t\t\tEffect_lasts_for_a_while.",
@@ -317,6 +713,7 @@ const char* g_ItemDescriptions[] = {
     "One_touch_on/off_switch.\n\t\t\t\t\tIn_the_chest_pocket.",
     "Portable_radio_that\n\t\t\t\t\temits_static\n\t\t\t\t\twhen_monsters_are_near.",
     "Fuel_for_chainsaws_and\n\t\t\t\t\trock_drills."
+#endif
 };
 
 // TODO: `Items_` subsystem globals and funcs could be part of `Inventory_` instead, not sure yet.
@@ -434,7 +831,12 @@ s16 D_800AE564[] = {
     0xA5F, 0xA26, 0x9EF, 0x9B8,
     0x983, 0x94F, 0x91C, 0x8EA,
     0x8B9, 0x889, 0x85A, 0x82C,
-    0x800, 0x0
+    0x800, 
+#if VERSION_REGION_IS(NTSCJ)
+    0x5455,
+#else
+    0x0,
+#endif
 };
 
 RECT D_800AE5A8[4] = {
@@ -521,7 +923,12 @@ s32 D_800AE71C[][2] = {
 // Some timer used in `func_80066184`.
 q3_12 D_800AE73C = Q12(0.0f);
 
+// TODO: Possibly garbage data.
+#if VERSION_REGION_IS(NTSCJ)
+s16 D_800AE73E = 0x342C;
+#else
 s16 D_800AE73E = 0x8002;
+#endif
 
 // Used by `func_80068CC0` and `GameState_MapScreen_Update`.
 // I think this is save file flags related to
@@ -1016,6 +1423,16 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
     s32      i;
 
     DVECTOR LABEL_STR_POS_TABLE[LABEL_COUNT] = {
+#if VERSION_REGION_IS(NTSCJ)
+        { 118, -80 },
+        { 144, 288 },
+        { 36, 288 },
+        { 240, 288 },
+        { 218, -80 },
+        { 40, -80 },
+        { 16, 184 },
+        { 16, 200 }
+#elif VERSION_REGION_IS(NTSC)
         { 118, -80 },
         { 144, 304 },
         { 36, 304 },
@@ -1024,6 +1441,7 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
         { 40, -80 },
         { 16, 184 },
         { 16, 200 }
+#endif
     };
 
     char* LABEL_STRS[LABEL_COUNT] = {
@@ -1145,9 +1563,15 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
     {
         { { 0xFFE0, 0xFFCC }, { 0x0040, 0x0080 } },
         { { 0xFFD0, 0xFF38 }, { 0x0060, 0x0090 } },
+#if VERSION_REGION_IS(NTSCJ)
+        { { 0xFFD0, 0x00A9 }, { 0x0060, 0x0018 } },
+        { { 0xFF70, 0x00A9 }, { 0x0060, 0x0018 } },
+        { { 0x0030, 0x00A9 }, { 0x0060, 0x0018 } },
+#elif VERSION_REGION_IS(NTSC)
         { { 0xFFD0, 0x00B9 }, { 0x0060, 0x0018 } },
         { { 0xFF70, 0x00B9 }, { 0x0060, 0x0018 } },
         { { 0x0030, 0x00B9 }, { 0x0060, 0x0018 } },
+#endif
         { { 0x0030, 0xFF38 }, { 0x0060, 0x0080 } },
         { { 0x0030, 0xFF38 }, { 0x0060, 0x0080 } },
         { { 0xFF70, 0xFF38 }, { 0x0060, 0x009C } },
@@ -1158,9 +1582,15 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
     {
         { { 0xFFDE, 0xFFC8 }, { 0x0022, 0x0050 } },
         { { 0xFFCE, 0xFF34 }, { 0x0032, 0xFFCC } },
+#if VERSION_REGION_IS(NTSCJ)
+        { { 0xFFCE, 0x00A5 }, { 0x0032, 0x00C5 } },
+        { { 0xFF6E, 0x00A5 }, { 0xFFD2, 0x00C5 } },
+        { { 0x002E, 0x00A5 }, { 0x0092, 0x00C5 } },
+#elif VERSION_REGION_IS(NTSC)
         { { 0xFFCE, 0x00B5 }, { 0x0032, 0x00D5 } },
         { { 0xFF6E, 0x00B5 }, { 0xFFD2, 0x00D5 } },
         { { 0x002E, 0x00B5 }, { 0x0092, 0x00D5 } },
+#endif
         { { 0x002E, 0xFF34 }, { 0x0092, 0xFFBC } },
         { { 0x002D, 0xFF34 }, { 0x0092, 0xFFBC } },
         { { 0xFF6E, 0xFF34 }, { 0xFFD2, 0xFFD8 } },
@@ -1338,10 +1768,17 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                     if (i != 0)
                     {
                         setXY4(poly_g4,
+#if VERSION_REGION_IS(NTSCJ)
+                               -0x8C + (0x60 * j), 0xB0 + (6 * k),
+                               -0x8C + (0x60 * j), 0xB6 + (6 * k),
+                               -0x34 + (0x60 * j), 0xB0 + (6 * k),
+                               -0x34 + (0x60 * j), 0xB6 + (6 * k));
+#elif VERSION_REGION_IS(NTSC)
                                -0x8C + (0x60 * j), 0xC0 + (6 * k),
                                -0x8C + (0x60 * j), 0xC6 + (6 * k),
                                -0x34 + (0x60 * j), 0xC0 + (6 * k),
                                -0x34 + (0x60 * j), 0xC6 + (6 * k));
+#endif
                     }
                     else
                     {
@@ -1828,6 +2265,9 @@ void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
     }
 }
 
+#if VERSION_IS(JAP0)
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_3", Gfx_Inventory_ItemDescriptionDraw);
+#else
 void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
 {
     s32 temp;
@@ -2066,6 +2506,27 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
             break;
     }
 }
+#endif
+
+#if VERSION_IS(JAP0)
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027C6C);
+
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027C74);
+
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027C7C);
+
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027C84);
+
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027C90);
+
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027C9C);
+
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027CA8);
+
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027CB0);
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_3", func_80053898);
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_3", func_800539A0);
+#endif
 
 void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr) // 0x80052088
 {
@@ -3947,3 +4408,4 @@ void Items_AmmoReloadCalculation(s32* currentAmmo, s32* availableAmmo, u8 gunIdx
 // Likely the first pad is supposed to be generated in the file linking while the second being inserted at `bodyprog_80055028.c` directly.
 const s32 rodataPad_80028524 = 0;
 const s32 rodataPad_80028528 = 0;
+ 

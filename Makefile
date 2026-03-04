@@ -718,7 +718,7 @@ endif
 	$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) $(OVL_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.sjis.i: $(BUILD_DIR)/%.i
-	iconv -f UTF-8 -t SHIFT-JIS $< -o $@
+	$(PYTHON) $(TOOLS_DIR)/iconv_sjis_wrapper.py -f UTF-8 -t SHIFT-JIS $< -o $@
 
 # Switch compiler to 2.7.2-cdk / 2.7.2-970404 for `lib_unk` code.
 $(BUILD_DIR)/src/bodyprog/lib_unk/%.c.s: CC := $(CC272)
