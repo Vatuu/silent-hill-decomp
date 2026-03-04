@@ -64,7 +64,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 #include "maps/shared/MapEvent_DoorLocked.h" // 0x800D1220
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "~J0(1.0)\tCybil! ~E ",
     "~J1(1.1)\tHarry! ",
     "~J1(1.6)\tHow_did_you_get_back_here?  ",

@@ -57,7 +57,7 @@ void func_800E9D54(void) // 0x800E9D54
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "\tUsed_the_ ~C2 Antique_shop_key ~C7 . ~E ",
     "~C3\tAlchemilla_Hospital ~E ",
     "~C3\tgreen_lion ~E "

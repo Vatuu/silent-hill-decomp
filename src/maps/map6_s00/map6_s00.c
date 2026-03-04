@@ -48,7 +48,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800EAFF8
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "~J0(1.5)\tWhat's_this! ~E ",
     "~J0(0.1)\t~E ",
     "~J0(0.1)\t~E ",

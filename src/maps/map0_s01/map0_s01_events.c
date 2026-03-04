@@ -5,7 +5,7 @@
 #include "maps/map0/map0_s01.h"
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "~J0(2.0)\tWas_I_dreaming?  ~E ",
     "~J0(2.5)\tHow_do_you_feel? ~E ",
     "~J0(6.0)\tLike_I've_been ~N\n\t\t\trun_over_by_a_truck, ~N\n\t\t\tbut_I'm_all_right,_I_guess. ~E ",

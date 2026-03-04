@@ -1,4 +1,4 @@
-#if !defined(M2CTX) // Inlines cause issues with M2C context
+#if !defined(M2CTX) // Inlines cause issues with M2C context.
 
 #define CheckRange(axis, low, high)    \
 ({                                     \

@@ -83,7 +83,7 @@ void func_800CEC30(void) // 0x800CEC30
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "~J1(1.9)\tWere_you_ringing_that_bell? ",
     "~J1(5.3)\tI've_been_expecting_you. ~N\n\t\t\tIt_was_foretold_by_Gyromancy. ",
     "~J1(1.8)\tWhat_are_you_talking_about? ~E ",

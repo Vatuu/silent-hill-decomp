@@ -94,7 +94,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D71C4
 
 const char* MAP_MESSAGES[] = {
-#include "maps/shared/mapMsg_common.h"
+#include "maps/shared/map_msg_common.h"
     "~J0(5.5)\t",
     "~J0(2.8)\tDamn! ~N\n\t\t\tWhat's_that? ~E ",
     "~J0(1.2)\tHarry? ~E ",

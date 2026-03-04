@@ -51,7 +51,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 void func_800EA338(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "~C3\tgreen_lion ~E ",
     "~C3\tAlchemilla_Hospital ~E "
 };

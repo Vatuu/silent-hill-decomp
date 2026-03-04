@@ -81,7 +81,7 @@ void GameBoot_LoadScreen_StageString(void) // 0x800D95D4
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "~J0(2.5)\tCheryl.__Where_could_you_be? ~E ",
     "~J0(1.5)\tIt's_strange... ",
     "~J0(2.0)\tIt's_quiet.__Too_quiet. ",

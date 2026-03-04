@@ -57,7 +57,7 @@ void GameBoot_LoadScreen_StageString(void) {} // 0x800D1340
 #include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800D1508
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "\tI've_got_a_ ~C2 Motorcycle_key ~C7 . ~E ",
     "\tThere's_a_crack. ~E ",
     "\tThere's_a_crack. ~N\n\tSomething_glints_inside. ",

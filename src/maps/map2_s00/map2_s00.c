@@ -45,7 +45,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 #include "maps/shared/MapEvent_DoorLocked.h" // 0x800E7AB8
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "\tThere_is_a_ ~C2 Steel_pipe ~C7 . ~N\n\tTake_it? ~S4 ",
     "\tWhere_could_Cheryl_have_gone? ",
     "\tI_guess_I'll_check ~N\n\tthat_alley_again. ~E ",

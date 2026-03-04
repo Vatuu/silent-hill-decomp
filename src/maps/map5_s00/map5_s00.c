@@ -634,7 +634,7 @@ void func_800D6888(void) // 0x800D6888
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "\tUsed_the_ ~C2 Sewer_key ~C7 . ~E ",
     "\tUsed_the_ ~C2 Sewer_exit_key ~C7 . ~E ",
     "\tThere_is_a_ ~C2 Sewer_key ~C7 . ~N\n\tTake_it? ~S4 ",

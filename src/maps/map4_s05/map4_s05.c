@@ -1421,7 +1421,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 void func_800D61A4(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "~J0(1.0)\tWhat? ~E ",
     "~J0(2.5)\tThat_light!? ~E ",
     "\tThe_stairs_are_wrecked! ~E ",

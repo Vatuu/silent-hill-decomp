@@ -26,7 +26,7 @@ void GameBoot_LoadScreen_StageString(void) {} // 0x800CCE6C
 #include "maps/shared/MapEvent_DoorLocked.h" // 0x800CCF08
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "\tThere's_a_memo_on_the_desk. ",
     "~C3\tCoroner_Seals_called. ",
     "~C3\tOfficer_Gucci_is_unlikely_to ~N\n\t\tbe_murdered._He_apparently ~N\n\t\tdied_naturally. ",

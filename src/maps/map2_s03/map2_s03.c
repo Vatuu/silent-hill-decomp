@@ -22,7 +22,7 @@ void Map_WorldObjectsInit(void) {} // 0x800CCB2C
 void Map_WorldObjectsUpdate(void) {} // 0x800CCB34
 
 const char* MAP_MESSAGES[] = {
-#include "maps/shared/mapMsg_common.h"
+#include "maps/shared/map_msg_common.h"
     "\tNO_STAGE! ~E "
 };
 

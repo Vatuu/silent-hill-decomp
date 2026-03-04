@@ -97,7 +97,7 @@ void func_800D0AC4(void) {}
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D0ACC
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "~J0(1.2)\t~E ",
     "~J1(1.2)\tLisa? ",
     "~J1(3.8)\tWhat_happened? ~N\n\t\t\tWhere's_Alessa_and_Dahlia? ",

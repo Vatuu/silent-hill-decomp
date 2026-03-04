@@ -114,7 +114,7 @@ INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", g_PuppetNurse_ModelStates0
 void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "\tThere_is_a_ ~C2 Plate_of_[Hatter] ~C7 . ~N\n\tTake_it? ~S4 ",
     "\tThere_is_a_ ~C2 Plate_of_[Cat] ~C7 . ~N\n\tTake_it? ~S4 ",
     "\tThere_is_a_ ~C2 Plate_of_[Turtle] ~C7 . ~N\n\tTake_it? ~S4 ",

@@ -64,7 +64,7 @@ void MapEvent_MapTake(void) // 0x800D0CD0
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "~J0(1.0)\tHold_it... ~E ",
     "~J0(0.6)\t~E ",
     "~J0(1.7)\tStop! ~N\n\t\t\tDon't_shoot! ",

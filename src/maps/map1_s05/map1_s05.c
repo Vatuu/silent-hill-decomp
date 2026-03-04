@@ -58,7 +58,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800D494C
 void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
 };
 
 void func_800D49AC(void) // 0x800D49AC

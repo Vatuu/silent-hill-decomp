@@ -43,7 +43,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 #include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800DA16C
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "~J0(1.2)\tWhere_am_I? ~E ",
     "~J0(2.0)\tHave_I_been_here_before? ~E ",
     "~J0(3.8)\tI_don't_remember ~N\n\t\t\tthis_being_here_before... ~E ",

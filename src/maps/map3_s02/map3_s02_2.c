@@ -53,7 +53,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 void func_800D02AC(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "\tNothing_happens_when_the ~N\n\televator_button_is_pressed. ~E ",
     "\tIt's_locked! ~E "
 };

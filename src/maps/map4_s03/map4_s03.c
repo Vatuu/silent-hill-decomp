@@ -3303,7 +3303,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 #include "maps/shared/MapEvent_DoorLocked.h" // 0x800D65E8
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "\tDaddy...where_are_you...? ",
     "~J0(1.0)\tCheryl! ~E  ",
     "\tThere_is_a_ ~C2 Hunting_rifle ~C7 . ~N\n\tTake_it? ~S4 ",

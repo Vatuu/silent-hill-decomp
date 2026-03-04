@@ -148,7 +148,7 @@ void MapEvent_DoorUnlocked(void) // 0x800D7180
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "\tStatue_of_an_old_man's_hand.",
     "\tThe_fist_shut_tight, ~N\n\tas_if_never_to_let_go. ~E ",
     "\tThere_is_a_ ~C2 Gold_medallion ~C7 . ~N\n\tTake_it? ~S4 ",

@@ -95,7 +95,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800DA1B0
 
 const char* MAP_MESSAGES[] = {
-#include "maps/shared/mapMsg_common.h"
+#include "maps/shared/map_msg_common.h"
     "\t\tSame_thing... ~E ",
     "~L4 ~C3 Investigation_stalled. ~N\n\t[PTV]_dealers_still_at_large. ~N\n\t~N\n\tSuspicious_deaths_continue. ~N\n\tLike_anti-drug_Mayor, ~N\n\tnarcotics_officer_dies_of ~N\n\tsudden_heart_failure_of ~N\n\tunknown_origin. ~E ",
     "\t\tAre_there_others? ~N\n\t\tIt's_pretty_old... ",

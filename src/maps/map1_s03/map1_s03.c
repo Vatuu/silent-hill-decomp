@@ -289,7 +289,7 @@ void func_800DA8B0(void) // 0x800DA8B0
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "\tWhat's_this? ~E ",
     "\t[The_Monster_Lurks] ~N\n\tis_the_book's_title. ~E ",
     "~C3\tChapter_3: ~N\n\t\t__[Manifestation_of_Delusions] ",

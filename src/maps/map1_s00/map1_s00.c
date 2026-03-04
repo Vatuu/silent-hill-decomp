@@ -52,7 +52,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 #include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800D7994
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "\tThe_tower_door_is_locked. ~E ",
     "\tThe_hands_are_stopped_at_10:00. ~E ",
     "\tThe_hands_are_stopped_at_12:00. ~E ",

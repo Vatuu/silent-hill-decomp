@@ -18,18 +18,18 @@
 #define MAP_MSG_CODE_SELECT        'S' /** Display dialog prompt with selectable entries. */
 #define MAP_MSG_CODE_TAB           'T' /** Inset line. */
 
-#define FONT_12_X_16_GLYPH_COUNT        84
-#define FONT_12_X_16_GLYPH_SIZE_X       12
-#define FONT_12_X_16_GLYPH_SIZE_Y       16
-#define FONT_12_X_16_SPACE_SIZE         6
-#define FONT_12_X_16_LINE_COUNT_MAX     9
-#define FONT_12_X_16_ATLAS_COLUMN_COUNT (FONT_12_X_16_GLYPH_COUNT / 4)
+#define FONT_12X16_GLYPH_COUNT        84
+#define FONT_12X16_GLYPH_SIZE_X       12
+#define FONT_12X16_GLYPH_SIZE_Y       16
+#define FONT_12X16_SPACE_SIZE         6
+#define FONT_12X16_LINE_COUNT_MAX     9
+#define FONT_12X16_ATLAS_COLUMN_COUNT (FONT_12X16_GLYPH_COUNT / 4)
 
 static const s32 pad_rodata_80025D68 = 0;
 
-DVECTOR g_StringPosition; // 0x800C38A8
+DVECTOR g_StringPosition;
 
-s32 g_StringPositionX1; // 0x800C38AC
+s32 g_StringPositionX1;
 
 s_800C38B0 D_800C38B0;
 
@@ -52,7 +52,7 @@ s32 D_800C3920;
 s32 pad_bss_800C3924;
 
 /** @brief Glyph widths for the 12x16 font. Used for kerning. */
-static const u8 FONT_12_X_16_GLYPH_WIDTHS[FONT_12_X_16_GLYPH_COUNT] = {
+static const u8 FONT_12X16_GLYPH_WIDTHS[FONT_12X16_GLYPH_COUNT] = {
     3,  7,  7,  11, 11, 4,  10, 4,  6,  10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4,  4,
     10, 11, 10, 8,  13, 12, 12, 12, 13, 11, 11, 13, 12, 9,  9,  12, 12, 13, 12, 13, 11,
     13, 12, 10, 11, 13, 12, 12, 12, 11, 12, 6,  4,  6,  8,  0,  3,  9,  10,  9, 9,  9,
@@ -99,6 +99,9 @@ void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
     }
 
     g_Strings2dLayerIdx = 6;
+
+    #undef OFFSET_X
+    #undef OFFSET_Y
 }
 
 void Gfx_Strings2dLayerIdxSet(s32 idx) // 0x8004A8C0
@@ -123,7 +126,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
 
     // TODO: This only works for one case. There may originally have been some other generic macro.
     #define setSprtUvClut(glyphSprt, idx, clut)                                                                                                     \
-    *((u32*)&(glyphSprt)->u0) = (((idx) % FONT_12_X_16_ATLAS_COLUMN_COUNT) * FONT_12_X_16_GLYPH_SIZE_X) + /* `u0`:   Column in atlas. */            \
+    *((u32*)&(glyphSprt)->u0) = (((idx) % FONT_12X16_ATLAS_COLUMN_COUNT) * FONT_12X16_GLYPH_SIZE_X) + /* `u0`:   Column in atlas. */            \
                                 (ATLAS_BASE_Y << 8)                                                     + /* `v0`:   Row 0 in atlas with offset. */ \
                                 ((clut) << 16)                                                            /* `clut`: Packed magic value. */
 
@@ -183,7 +186,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
         // Space.
         if (charCode == '_')
         {
-            posX += FONT_12_X_16_SPACE_SIZE;
+            posX += FONT_12X16_SPACE_SIZE;
         }
         // Wide space.
         else if (charCode == '\v')
@@ -206,22 +209,22 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
                 glyphIdx   = charCode - GLYPH_TABLE_ASCII_OFFSET;
-                glyphWidth = FONT_12_X_16_GLYPH_WIDTHS[glyphIdx];
+                glyphWidth = FONT_12X16_GLYPH_WIDTHS[glyphIdx];
 
                 setPolyFT4(glyphPoly);
                 setRGB0(glyphPoly, glyphColor, glyphColor >> 8, glyphColor >> 16);
                 setXY4(glyphPoly,
                        posX,                             posY * 2,
                        posX,                             (posY * 2) + 30,
-                       posX + FONT_12_X_16_GLYPH_SIZE_X, posY * 2,
-                       posX + FONT_12_X_16_GLYPH_SIZE_X, (posY * 2) + 30);
+                       posX + FONT_12X16_GLYPH_SIZE_X, posY * 2,
+                       posX + FONT_12X16_GLYPH_SIZE_X, (posY * 2) + 30);
 
                 posX += glyphWidth;
 
-                u0 = (glyphIdx % FONT_12_X_16_ATLAS_COLUMN_COUNT) * FONT_12_X_16_GLYPH_SIZE_X;
+                u0 = (glyphIdx % FONT_12X16_ATLAS_COLUMN_COUNT) * FONT_12X16_GLYPH_SIZE_X;
 
                 *((u32*)&glyphPoly->u0) = u0 + (0xF000 + (0x7FD3 << 16));                                                      // `u0`, `v0`, `clut`.
-                *((u32*)&glyphPoly->u1) = u0 + (((((glyphIdx / FONT_12_X_16_ATLAS_COLUMN_COUNT) & 0xF) | 16) << 16) | 0xFF00); // `u1`, `v1`, `page`.
+                *((u32*)&glyphPoly->u1) = u0 + (((((glyphIdx / FONT_12X16_ATLAS_COLUMN_COUNT) & 0xF) | 16) << 16) | 0xFF00); // `u1`, `v1`, `page`.
                 *((u16*)&glyphPoly->u2) = u0 - 0xFF4;                                                                          // `u2`, `v2`.
                 *((u16*)&glyphPoly->u3) = u0 - 0xF4;                                                                           // `u3`, `v3`.
 
@@ -236,19 +239,19 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
                 *((u32*)&glyphSprt->w) = 0x10000C;
 
                 glyphIdx = charCode - GLYPH_TABLE_ASCII_OFFSET;
-                posX    += FONT_12_X_16_GLYPH_WIDTHS[glyphIdx];
+                posX    += FONT_12X16_GLYPH_WIDTHS[glyphIdx];
 
                 addPrimFast(ot, glyphSprt, 4);
                 *((u32*)&glyphSprt->r0)   = glyphColor;
                 *((u32*)(&glyphSprt->x0)) = posXCpy + (posY << 16);
 
                 setSprtUvClut(glyphSprt, glyphIdx, 0x7FD3); // TODO: Demagic CLUT arg.
-                //*((u32*)&glyphSprt->u0) = ((glyphIdx % FONT_12_X_16_ATLAS_COLUMN_COUNT) * FONT_12_X_16_GLYPH_SIZE_X) + 0xF000 + (0x7FD3 << 16); // `u0`, `v0`, `clut`.
+                //*((u32*)&glyphSprt->u0) = ((glyphIdx % FONT_12X16_ATLAS_COLUMN_COUNT) * FONT_12X16_GLYPH_SIZE_X) + 0xF000 + (0x7FD3 << 16); // `u0`, `v0`, `clut`.
 
                 packet += sizeof(SPRT);
 
                 tPage = (DR_TPAGE*)packet;
-                setDrawTPage(tPage, 0, 1, ((glyphIdx / FONT_12_X_16_ATLAS_COLUMN_COUNT) & 0xF) | 16);
+                setDrawTPage(tPage, 0, 1, ((glyphIdx / FONT_12X16_ATLAS_COLUMN_COUNT) & 0xF) | 16);
                 addPrim(ot, tPage);
 
                 packet += sizeof(DR_TPAGE);
@@ -258,7 +261,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
         else if (charCode == '\n')
         {
             posX  = g_StringPositionX1;
-            posY += FONT_12_X_16_GLYPH_SIZE_Y;
+            posY += FONT_12X16_GLYPH_SIZE_Y;
         }
         // New color.
         else if (charCode >= '\x01' && charCode < '\b')
@@ -285,6 +288,9 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
     *((u32*)&g_StringPosition) = (posX & 0xFFFF) + (posY << 16);
 
     return result;
+
+    #undef WIDE_SPACE_SIZE
+    #undef ATLAS_BASE_Y
 }
 
 s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
@@ -299,14 +305,14 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
     D_800C38B4  = 1;
     g_MapMsg_AudioLoadBlock = 0;
 
-    for (i = (FONT_12_X_16_LINE_COUNT_MAX - 1); i >= 0; i--)
+    for (i = (FONT_12X16_LINE_COUNT_MAX - 1); i >= 0; i--)
     {
         g_MapMsg_WidthTable[i] = 0;
     }
 
     mapMsg = g_MapOverlayHeader.mapMessages_30[mapMsgIdx];
 
-    for (j = 0; j < FONT_12_X_16_LINE_COUNT_MAX; )
+    for (j = 0; j < FONT_12X16_LINE_COUNT_MAX; )
     {
         charCode = *mapMsg;
 
@@ -320,7 +326,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
 
             case '_':
                 ++mapMsg;
-                g_MapMsg_WidthTable[D_800C38B4 - 1] += FONT_12_X_16_SPACE_SIZE;
+                g_MapMsg_WidthTable[D_800C38B4 - 1] += FONT_12X16_SPACE_SIZE;
                 break;
 
             case MAP_MSG_CODE_MARKER:
@@ -340,7 +346,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
                         break;
 
                     case MAP_MSG_CODE_END:
-                        j = FONT_12_X_16_LINE_COUNT_MAX;
+                        j = FONT_12X16_LINE_COUNT_MAX;
                         break;
 
                     case MAP_MSG_CODE_LINE_POSITION:
@@ -369,7 +375,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
                 break;
 
             case 0:
-                j = FONT_12_X_16_LINE_COUNT_MAX;
+                j = FONT_12X16_LINE_COUNT_MAX;
                 break;
 
             default:
@@ -383,13 +389,13 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
                     charCode = '^';
                 }
 
-                g_MapMsg_WidthTable[D_800C38B4 - 1] += FONT_12_X_16_GLYPH_WIDTHS[charCode - GLYPH_TABLE_ASCII_OFFSET];
+                g_MapMsg_WidthTable[D_800C38B4 - 1] += FONT_12X16_GLYPH_WIDTHS[charCode - GLYPH_TABLE_ASCII_OFFSET];
                 mapMsg++;
                 break;
         }
     }
 
-    // TODO: JAP0 includes extra code + returns a value here.
+    // TODO: JAP0 includes extra code and returns a value here.
 }
 
 s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
@@ -439,7 +445,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
             break;
 
         case 1:
-            g_StringPosition.vy = 76 - ((D_800C38B4 - 1) * FONT_12_X_16_GLYPH_SIZE_Y);
+            g_StringPosition.vy = 76 - ((D_800C38B4 - 1) * FONT_12X16_GLYPH_SIZE_Y);
             break;
 
         case 2:
@@ -447,11 +453,11 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
             break;
 
         case 3:
-            g_StringPosition.vy = 44 - ((D_800C38B4 - 1) * FONT_12_X_16_GLYPH_SIZE_Y);
+            g_StringPosition.vy = 44 - ((D_800C38B4 - 1) * FONT_12X16_GLYPH_SIZE_Y);
             break;
 
         case 4:
-            g_StringPosition.vy = ((FONT_12_X_16_LINE_COUNT_MAX - D_800C38B4) * 8) - 76;
+            g_StringPosition.vy = ((FONT_12X16_LINE_COUNT_MAX - D_800C38B4) * 8) - 76;
             break;
     }
 
@@ -470,7 +476,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
     glyphPosY           = g_StringPosition.vy;
 
     // Parse string.
-    for (lineIdx = 0; lineIdx < FONT_12_X_16_LINE_COUNT_MAX;)
+    for (lineIdx = 0; lineIdx < FONT_12X16_LINE_COUNT_MAX;)
     {
         // Convert literal `!` and `&` into `char`s mappable to representative atlas glyphs.
         charCode = *mapMsg;
@@ -488,7 +494,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
         {
             // Space.
             case '_':
-                glyphPosX += FONT_12_X_16_SPACE_SIZE;
+                glyphPosX += FONT_12X16_SPACE_SIZE;
                 mapMsg++;
                 break;
 
@@ -525,7 +531,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                                 break;
                         }
 
-                        glyphPosY += FONT_12_X_16_GLYPH_SIZE_Y;
+                        glyphPosY += FONT_12X16_GLYPH_SIZE_Y;
                         break;
 
                     case MAP_MSG_CODE_JUMP:
@@ -603,12 +609,12 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
 
                     case MAP_MSG_CODE_END:
                         result  = NO_VALUE;
-                        lineIdx = FONT_12_X_16_LINE_COUNT_MAX;
+                        lineIdx = FONT_12X16_LINE_COUNT_MAX;
                         break;
 
                     case MAP_MSG_CODE_SELECT:
                         result  = codeArg;
-                        lineIdx = FONT_12_X_16_LINE_COUNT_MAX;
+                        lineIdx = FONT_12X16_LINE_COUNT_MAX;
                         break;
 
                     case MAP_MSG_CODE_HIGH_RES:
@@ -622,7 +628,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
         // Terminator.
         case '\0':
             result  = 1;
-            lineIdx = FONT_12_X_16_LINE_COUNT_MAX;
+            lineIdx = FONT_12X16_LINE_COUNT_MAX;
             break;
 
         // Draw glyph sprite.
@@ -634,22 +640,22 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
                 idx       = charCode - CHARCODE_OFFSET;
-                charWidth = FONT_12_X_16_GLYPH_WIDTHS[charCode - CHARCODE_OFFSET];
+                charWidth = FONT_12X16_GLYPH_WIDTHS[charCode - CHARCODE_OFFSET];
 
                 setPolyFT4(glyphPoly);
                 setRGB0(glyphPoly, (s8)color, (s8)(color >> 8), (s8)(color >> 16));
                 setXY4(glyphPoly,
                        glyphPosX,                             glyphPosY * 2,
                        glyphPosX,                             (glyphPosY * 2) + 30,
-                       glyphPosX + FONT_12_X_16_GLYPH_SIZE_X, glyphPosY * 2,
-                       glyphPosX + FONT_12_X_16_GLYPH_SIZE_X, (glyphPosY * 2) + 30);
+                       glyphPosX + FONT_12X16_GLYPH_SIZE_X, glyphPosY * 2,
+                       glyphPosX + FONT_12X16_GLYPH_SIZE_X, (glyphPosY * 2) + 30);
 
                 glyphPosX += charWidth;
 
-                temp_a0 = (idx % FONT_12_X_16_ATLAS_COLUMN_COUNT) * FONT_12_X_16_GLYPH_SIZE_X;
+                temp_a0 = (idx % FONT_12X16_ATLAS_COLUMN_COUNT) * FONT_12X16_GLYPH_SIZE_X;
 
                 *((u32*)&glyphPoly->u0) = temp_a0 + 0xF000 + (0x7FD3 << 16);                                                     // `u0`, `v0`, `clut`.
-                *((u32*)&glyphPoly->u1) = temp_a0 + (((((idx / FONT_12_X_16_ATLAS_COLUMN_COUNT) & 0xF) | 0x10) << 16) | 0xFF00); // `u1`, `v1`, `page`.
+                *((u32*)&glyphPoly->u1) = temp_a0 + (((((idx / FONT_12X16_ATLAS_COLUMN_COUNT) & 0xF) | 0x10) << 16) | 0xFF00); // `u1`, `v1`, `page`.
                 *((u16*)&glyphPoly->u2) = temp_a0 - 0xFF4;
                 *((u16*)&glyphPoly->u3) = temp_a0 - 244;
 
@@ -664,17 +670,17 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                 *((u32*)&glyphSprt->w) = 0x10000C;
 
                 idx        = charCode - CHARCODE_OFFSET;
-                glyphPosX += FONT_12_X_16_GLYPH_WIDTHS[idx];
+                glyphPosX += FONT_12X16_GLYPH_WIDTHS[idx];
 
                 addPrimFast(ot, glyphSprt, 4);
                 *((u32*)&glyphSprt->r0)   = color;
                 *((u32*)(&glyphSprt->x0)) = temp_a0_2 + ((glyphPosY) << 16);
-                *((u32*)&glyphSprt->u0)   = (s32)(((idx % FONT_12_X_16_ATLAS_COLUMN_COUNT) * FONT_12_X_16_GLYPH_SIZE_X) + 0xF000 + (0x7FD3 << 16)); // `u0`, `v0`, `clut`.
+                *((u32*)&glyphSprt->u0)   = (s32)(((idx % FONT_12X16_ATLAS_COLUMN_COUNT) * FONT_12X16_GLYPH_SIZE_X) + 0xF000 + (0x7FD3 << 16)); // `u0`, `v0`, `clut`.
 
                 packet += sizeof(SPRT);
 
                 tPage = (DR_TPAGE*)packet;
-                setDrawTPage(tPage, 0, 1, ((idx / FONT_12_X_16_ATLAS_COLUMN_COUNT) & 0xF) | 0x10);
+                setDrawTPage(tPage, 0, 1, ((idx / FONT_12X16_ATLAS_COLUMN_COUNT) & 0xF) | 0x10);
                 addPrim(ot, tPage);
 
                 packet += sizeof(DR_TPAGE);
@@ -701,6 +707,9 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
 
     *((u32*)&g_StringPosition) = (glyphPosX & 0xFFFF) + (glyphPosY << 16);
     return result;
+
+    #undef LINE_SPACE_SIZE
+    #undef CHARCODE_OFFSET
 }
 
 void func_8004B658(void) // 0x8004B658
@@ -780,7 +789,7 @@ void func_8004B76C(char* str, bool useFixedWidth) // 0x8004B76C
                 }
                 else
                 {
-                    glyphSprt->w = FONT_12_X_16_GLYPH_WIDTHS[glyphIdx];
+                    glyphSprt->w = FONT_12X16_GLYPH_WIDTHS[glyphIdx];
                 }
 
                 glyphSprt->tpage = (tileRow & 0xF) | 0x10;
@@ -821,6 +830,12 @@ void func_8004B76C(char* str, bool useFixedWidth) // 0x8004B76C
     }
 
     D_800C38F8 = *glyphSprt;
+
+    #undef GLYPH_SIZE_X
+    #undef GLYPH_SIZE_Y
+    #undef SPACE_SIZE
+    #undef LINE_SPACE_SIZE
+    #undef ATLAS_COLUMN_COUNT
 }
 
 void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004B9F8
@@ -882,6 +897,9 @@ void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004B9F8
     // Draw numeric string.
     Gfx_StringDraw(str, 5);
     return;
+
+    #undef GLYPH_SIZE_X
+    #undef ATLAS_COLUMN_COUNT
 }
 
 const s32 unused_Rodata_80025E88 = 0xC9457F00; // @unused

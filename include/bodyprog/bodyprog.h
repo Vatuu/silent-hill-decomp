@@ -1262,9 +1262,9 @@ typedef struct
 } s_WorldEnvWork_84;
 
 /** @brief World environment workspace.
- *  Holds fog distances and ramps, lighting and color parameters,
- *  water zone references, and other per-map environmental data
- *  used during world rendering.
+ * Holds fog distances and ramps, lighting and color parameters,
+ * water zone references, and other per-map environmental data
+ * used for world drawing.
  */
 typedef struct _WorldEnvWork
 {
@@ -1557,7 +1557,7 @@ typedef struct _MapOverlayHeader
     void                   (*bgmEvent_10)(bool);
     s8                     bgmIdx_14;           // Flags? Music related.
     u8                     ambientAudioIdx_15; // Ambient file index from `g_AmbientVabTaskLoadCmds`.
-    s8                     field_16;           // Set ambient tint and render distance.
+    s8                     field_16;           // Set ambient tint and draw distance.
                                                // A value of 3 sets the map to night.
                                                // A value of 2 will sets the map to use a tint used during the hallaway
                                                // intro.

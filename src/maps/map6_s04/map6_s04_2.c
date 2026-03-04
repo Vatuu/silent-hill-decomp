@@ -1925,7 +1925,7 @@ void func_800E1D50(void) // 0x800E1D50
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "\tGotta'_go_find_Cybil! ~N\n\tNo_time_to_go_back. ~E ",
     "~J0(10)\t~E ",
     "~J0(10)\tCybil! ~E ",

@@ -31,7 +31,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 #include "maps/shared/MapEvent_DoorLocked.h" // 0x800D1428
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "\tThe_elevator_doesn't ~N\n\tappear_to_be_working. ~E ",
     "\tA_glass_vial_lies_shattered. ",
     "\tIt's_not_just_broken. ~N\n\tIt_looks_smashed_on_purpose. ~E ",

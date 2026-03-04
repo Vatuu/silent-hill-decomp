@@ -133,7 +133,7 @@ void func_800CED74(s_SubCharacter* chara, bool arg1) // 0x800CED74
 void func_800CF0B0(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "~J0(1.0)\t...! ~E ",
     "~J0(1.0)\tWait! ~E ",
     "~J0(1.7)\tDamn! ~N\n\t\t\tI_was_too_late? ~E ",

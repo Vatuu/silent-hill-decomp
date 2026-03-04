@@ -4,7 +4,7 @@
 #include "maps/map0/map0_s02.h"
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/mapMsg_common.h"
+    #include "maps/shared/map_msg_common.h"
     "\tThere_is_a_ ~C2 Chain_saw ~C7 . ~N\n\tTake_it? ~S4 ",
     "\tSome_oil_cans_are_on_the_shelf. ~E ",
     "\tA_car_engine. ~N\n\tNo_problem_there. ~E ",

@@ -28,7 +28,7 @@ u8             g_MapMsg_AudioLoadBlock;
 s8             g_MapMsg_SelectCancelIdx;
 
 // @hack JP calls different `Gfx_StringSetColor` / `Gfx_StringDraw` funcs here.
-// The normal funcs we have are also used in JP, so can't be renamed.
+// The normal funcs available are also used in JP, so can't be renamed.
 // For now override `Gfx_StringSetColor` calls in this file until those JP funcs get figured out.
 #if VERSION_IS(JAP0)
 #define Gfx_StringSetColor Gfx_StringSetColor_JP
@@ -94,6 +94,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     case 3:
                         func_8004B45C(g_MapMsg_CurrentIdx + 1, var_a1);
                         break;
+
                     case 4:
                         func_8004B45C(0, 2);
                         break;
@@ -224,13 +225,15 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                             case 3:
                                 func_8004B45C(g_MapMsg_CurrentIdx + 1, var_a1);
                                 break;
+
                             case 4:
                                 func_8004B45C(0, 2);
                                 break;
                         }
                     }
 #endif
-                    msgDisplayLength    = 0;
+
+                    msgDisplayLength = 0;
                     stateMachineIdx1 = 0;
 
                     if (g_MapMsg_AudioLoadBlock == MapMsgAudioLoadBlock_J2)
