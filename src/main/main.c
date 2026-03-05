@@ -17,6 +17,8 @@
 
 #if VERSION_IS(JAP0)
     void* SECTION(".rodata") g_OvlDynamic = (void*)0x800CBAA8;
+#elif VERSION_IS(JAP1) || VERSION_IS(JAP2)
+    void* SECTION(".rodata") g_OvlDynamic = (void*)0x800CBBD0;
 #else
     void* SECTION(".rodata") g_OvlDynamic = (void*)0x800C9578;
 #endif

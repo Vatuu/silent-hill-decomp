@@ -17,7 +17,7 @@ typedef enum _FsFile
 {
 #if VERSION_IS(USA)
     #include "fileenum.h.USA.inc"
-#elif VERSION_IS(JAP0)
+#elif VERSION_IS(JAP0) || VERSION_IS(JAP1)
     #include "fileenum.h.JAP0.inc"
 #endif
     FS_FILE_COUNT /** Number of files in `g_FileTable`. 2074 in USA/JAP0. */

@@ -15,6 +15,8 @@ s_FileInfo g_FileTable[FS_FILE_COUNT] = {
     #include "filetable.c.USA.inc"
 #elif VERSION_IS(JAP0)
     #include "filetable.c.JAP0.inc"
+#elif VERSION_IS(JAP1) || VERSION_IS(JAP2)
+    #include "filetable.c.JAP1.inc"
 #endif
 };
 
@@ -71,6 +73,18 @@ u32 g_FileXaLoc[] = {
     0x10973,
     0x16F0B,
     0x1979B,
+    0x00000
+#elif VERSION_IS(JAP1) || VERSION_IS(JAP2)
+    0x00000,
+    0x099C4,
+    0x0A22C,
+    0x0B37C,
+    0x0D0C4,
+    0x0EA5C,
+    0x0F99C,
+    0x10974,
+    0x16F0C,
+    0x1979C,
     0x00000
 #endif
 };

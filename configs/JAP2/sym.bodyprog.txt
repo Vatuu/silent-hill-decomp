@@ -1,0 +1,8 @@
+Screen_BackgroundImgDraw = 0x80031254; // type:func
+MainLoop = 0x80032c48; // type:func
+Fs_CharaAnimInfoUpdate = 0x800352d4; // type:func
+D_800C489C = 0x800c6ef4;
+Ipd_ChunkInitCheck = 0x8003c628; // type:func
+func_800892A4 = 0x8008adb4; // type:func
+func_80089128 = 0x8008ac38; // type:func
+CHARA_FILE_INFOS = 0x800ab5bc;
