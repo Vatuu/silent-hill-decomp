@@ -726,8 +726,8 @@ u8 D_800AE185 = 0;
 u8 D_800AE186 = 0;
 u8 D_800AE187 = InventoryItemId_Unequipped; // `e_InventoryItemId`
 u32 D_800AE188 = 0;
-s16 D_800AE18C = 0; // Only ever set to 0, nothing reads it.
-s16 D_800AE18E = 0; // Only ever set to 0, nothing reads it.
+u16 D_800AE18C = 0; // } Used by JAP0-only code.
+u16 D_800AE18E = 0; // }
 s32 D_800AE190 = 0;
 s16 g_Inventory_HealthStatusScanlineTimer = 0;
 s16 g_Inventory_HealthStatusColorGradientTimer = 0;
@@ -2555,7 +2555,44 @@ void func_80053898(s32 arg0, s32 arg1) // JPN0 0x80053898
     Gfx_Primitive2dTextureSet(0, (arg1 & 1) ? 256 : 0, 6, 1);
 }
 
-INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_3", func_800539A0);
+void func_800539A0(s32 arg0, s32 arg1) // JPN0 0x800539A0
+{
+    GsOT* ot;
+    SPRT* sprt;
+
+    ot   = &g_OrderingTable2[g_ActiveBufferIdx];
+    sprt = GsOUT_PACKET_P;
+
+    setSprt(sprt);
+
+    setRGBC0(sprt, 0x80, 0x80, 0x80, 0x64);
+
+    if (arg0 != 0)
+    {
+        *(u32*)&sprt->w = (D_800AE18E * 12) + (16 << 16); // setWHFast(sprt, (D_800AE18E * 12), 16);
+    }
+    else
+    {
+        *(u32*)&sprt->w = (D_800AE18C * 12) + (16 << 16); // setWHFast(sprt, (D_800AE18C * 12), 16);
+    }
+
+    setXY0Fast(sprt, -120, 116 + (arg0 * 20));
+
+    if (arg1 & 1)
+    {
+        setUV0AndClutSum(sprt, 0, 224, 0x7F93);
+    }
+    else
+    {
+        setUV0AndClutSum(sprt, 0, 16, 0x7F93);
+    }
+
+    addPrim(&ot->org[6], sprt);
+
+    GsOUT_PACKET_P = &sprt[1];
+
+    Gfx_Primitive2dTextureSet(64 + (arg0 << 6), (arg1 & 1) ? 256 : 0, 6, 1);
+}
 #endif
 
 void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr) // 0x80052088

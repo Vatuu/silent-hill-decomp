@@ -122,12 +122,6 @@ extern s32 g_Items_DisplayedCount; // 0x800AE180
 /** `e_InventoryItemId` */
 extern u8 g_Inventory_EquippedItem; // 0x800AE184
 
-/** @brief Dead code?
- * No clear purpose. There are two intances were they are set to 0.
- */
-extern s16 D_800AE18C; // Maybe `DVECTOR`.
-extern s16 D_800AE18E;
-
 extern s32 D_800AE190;
 
 /** Timer used for the black scanline gradient in the health status effect. */
@@ -435,7 +429,8 @@ void Gfx_Results_ItemsDisplay(); // TODO: Might take s32 argument?
 void Gfx_Results_ItemsPosition(); // TODO: Might take s32 argument?
 
 #if VERSION_IS(JAP0)
-void func_80053898(s32 arg0, s32 arg1)
+void func_80053898(s32 arg0, s32 arg1);
+void func_800539A0(s32 arg0, s32 arg1);
 #endif
 
 void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr);
