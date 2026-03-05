@@ -1772,11 +1772,44 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
     return j;
 }
 
-#if VERSION_IS(JAP0)
-INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_2", Gfx_Inventory_UnavailableMapText);
-#else
-void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x0x8004F57C
+void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x8004F57C
 {
+#if VERSION_REGION_IS(NTSCJ)
+    GsOT* ot;
+    SPRT* sprt;
+
+    ot   = &g_OrderingTable2[g_ActiveBufferIdx];
+    sprt = GsOUT_PACKET_P;
+
+    setSprt(sprt);
+
+    setRGBC0(sprt, 0x80, 0x80, 0x80, 0x64);
+    setXY0Fast(sprt, -120, 116);
+
+    if (strIdx)
+    {
+        *(u32*)&sprt->w = 156 + (16 << 16); // setWHFast(sprt, 156, 16);
+        setUV0AndClutSum(sprt, 0, 224, 0x7F93);
+    }
+    else
+    {
+        *(u32*)&sprt->w = 192 + (16 << 16); // setWHFast(sprt, 192, 16);
+        setUV0AndClutSum(sprt, 0, 16, 0x7F93);
+    }
+
+    addPrim(&ot->org[6], sprt);
+
+    GsOUT_PACKET_P = &sprt[1];
+
+    if (strIdx)
+    {
+        Gfx_Primitive2dTextureSet(256, 256, 6, 1);
+    }
+    else
+    {
+        Gfx_Primitive2dTextureSet(192, 0, 6, 1);
+    }
+#else
     char* strs[2] = // 0x800262AC
     {
         "Too_dark_to_look_at\n\t\tthe_map_here.",
@@ -1786,8 +1819,8 @@ void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x0x8004F57C
     Gfx_StringSetPosition(30, 232);
     Gfx_StringSetColor(StringColorId_White);
     Gfx_StringDraw(strs[strIdx], DEFAULT_MAP_MESSAGE_LENGTH);
-}
 #endif
+}
 
 #if VERSION_IS(USA)
 const u8 g_rodataData_800262F6 = 0x2A; // '*' as `char`.
