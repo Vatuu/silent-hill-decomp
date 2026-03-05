@@ -14,7 +14,7 @@
 
 #ifndef PAD_HACK_IGNORE
 // ========================================
-// PADDING (Ignore)
+// PADDING
 // ========================================
 const s32 pad_rodata_80025BF4 = 0;
 s32 pad_bss_800C15EC;

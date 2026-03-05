@@ -20,7 +20,7 @@
 
 #ifndef PAD_HACK_IGNORE
 // ========================================
-// PADDING (Ignore)
+// PADDING
 // ========================================
 const s32 pad_rodata_8002547C = 0;
 #endif
@@ -41,7 +41,7 @@ s8  g_Demo_ReproducedCount = 0;
 s8* D_800BCDE0;
 
 // ========================================
-// MAIN MENU - CORE
+// CORE
 // ========================================
 
 void GameState_MainMenu_Update(void) // 0x8003AB28
@@ -56,6 +56,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         GameState_OptionScreen,
         GameState_MovieIntro
     };
+
     bool        playInGameDemo;
     s32         prevGameDifficultyIdx;
     s32         nextGameDifficultyIdx;
@@ -508,11 +509,11 @@ static void MainMenu_BackgroundDraw(void) // 0x8003B758
     }
 
     Screen_BackgroundImgDraw(&g_TitleImg);
-    MainMenu_Fog_Update();
+    MainMenu_FogUpdate();
 }
 
 // ========================================
-// MAIN MENU - FOG
+// FOG
 // ========================================
 
 // Could this be an image or an embed texture instead?
@@ -553,7 +554,7 @@ static u32 D_800A9AAC[256] = {
 
 static void func_8003B7BC(void) // 0x8003B7BC
 {
-    // Can't be `s32*` since 462 doesn't divide by 4, so I'm guessing it's `s8`.
+    // Can't be `s32*` since 462 doesn't divide by 4, so guessing `s8`.
     s8* s0 = 0x801E2432;
 
     memset(s0, 0, 462);
@@ -573,7 +574,7 @@ static u32 func_8003B7FC(s32 idx) // 0x8003B7FC
     return val;
 }
 
-static PACKET* MainMenu_Fog_PacketGet(GsOT* ot, PACKET* packet) // 0x8003B838
+static PACKET* MainMenu_FogPacketGet(GsOT* ot, PACKET* packet) // 0x8003B838
 {
     s32      yOffset;
     s32      i;
@@ -621,19 +622,19 @@ static PACKET* MainMenu_Fog_PacketGet(GsOT* ot, PACKET* packet) // 0x8003B838
     return packet;
 }
 
-static void MainMenu_Fog_Draw(void) // 0x8003BA08
+static void MainMenu_FogDraw(void) // 0x8003BA08
 {
     PACKET*   packet;
     GsOT_TAG* tag;
 
     tag    = g_OrderingTable2[g_ActiveBufferIdx].org;
-    packet = MainMenu_Fog_PacketGet(&tag[6], GsOUT_PACKET_P);
+    packet = MainMenu_FogPacketGet(&tag[6], GsOUT_PACKET_P);
     SetDrawMode((DR_MODE*)packet, 0, 1, 42, NULL);
     addPrim(&tag[6], packet);
     GsOUT_PACKET_P = packet + sizeof(DR_MODE);
 }
 
-static void MainMenu_Fog_Randomize(void) // 0x8003BAC4
+static void MainMenu_FogRandomize(void) // 0x8003BAC4
 {
     s32 idx;
     s32 i;
@@ -668,14 +669,14 @@ static void MainMenu_Fog_Randomize(void) // 0x8003BAC4
     }
 }
 
-static void MainMenu_Fog_Scatter(void) // 0x8003BBF4
+static void MainMenu_FogScatter(void) // 0x8003BBF4
 {
     s32 i;
     s32 j;
     s32 val;
     u8* ptr;
 
-    MainMenu_Fog_Randomize();
+    MainMenu_FogRandomize();
 
     for (i = 0; i < MAIN_MENU_FOG_COUNT; i++)
     {
@@ -702,17 +703,17 @@ static void MainMenu_Fog_Scatter(void) // 0x8003BBF4
     }
 }
 
-void MainMenu_Fog_Update(void) // 0x8003BC8C
+void MainMenu_FogUpdate(void) // 0x8003BC8C
 {
     static s32 fogCount = 0;
 
     if (fogCount == ((fogCount / 5) * 5))
     {
-        MainMenu_Fog_Scatter();
+        MainMenu_FogScatter();
     }
 
     fogCount++;
-    MainMenu_Fog_Draw();
+    MainMenu_FogDraw();
 }
 
 static void func_8003BCF4(void) // 0x8003BCF4
@@ -723,7 +724,7 @@ static void func_8003BCF4(void) // 0x8003BCF4
 
     for (i = 0; i < 30; i++)
     {
-        MainMenu_Fog_Scatter();
+        MainMenu_FogScatter();
     }
 }
 

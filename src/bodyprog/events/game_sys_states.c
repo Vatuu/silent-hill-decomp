@@ -19,17 +19,14 @@
 #include "main/rng.h"
 
 #ifndef PAD_HACK_IGNORE
-
 // ========================================
-// PADDING (Ignore)
+// PADDING
 // ========================================
-
 s8  pad_bss_800BCD81[3];
 s32 pad_bss_800BCD88[2];
 s32 pad_bss_800BCD94[5];
 s32 pad_bss_800BCDD0;
 s8  pad_bss_800BCDD5[3];
-
 #endif
 
 // ========================================

@@ -1,18 +1,17 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/screen/screen_data.h"
-#include "bodyprog/screen/screen_data.h"
-#include "bodyprog/text/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/sys/joy.h"
-#include "bodyprog/ranking.h"
 #include "bodyprog/player.h"
+#include "bodyprog/ranking.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/sys/joy.h"
+#include "bodyprog/text/text_draw.h"
 #include "main/rng.h"
 
 const s32 pad_rodata_800262F8 = 0;
-
 
 GsF_LIGHT g_Items_Lights[7][2];
 
@@ -2552,7 +2551,7 @@ void func_80053898(s32 arg0, s32 arg1) // JPN0 0x80053898
 
     GsOUT_PACKET_P = &sprt[1];
 
-    Gfx_Primitive2dTextureSet(0, (arg1 & 1) ? 256 : 0, 6, 1);
+    Gfx_Primitive2dTextureSet(0, (arg1 & 0x1) ? 256 : 0, 6, 1);
 }
 
 void func_800539A0(s32 arg0, s32 arg1) // JPN0 0x800539A0
@@ -4472,7 +4471,8 @@ void Items_AmmoReloadCalculation(s32* currentAmmo, s32* availableAmmo, u8 gunIdx
     }
 }
 
-// Likely the first pad is supposed to be generated in the file linking while the second being inserted at `bodyprog_80055028.c` directly.
+// Likely the first pad is supposed to be generated in the file linking while the second being inserted at
+// `bodyprog_80055028.c` directly.
 const s32 rodataPad_80028524 = 0;
 const s32 rodataPad_80028528 = 0;
  

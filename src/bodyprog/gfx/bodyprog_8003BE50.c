@@ -5,12 +5,12 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/text/text_draw.h"
-#include "bodyprog/math/math.h"
 #include "bodyprog/sound_system.h"
+#include "bodyprog/text/text_draw.h"
 #include "main/fsqueue.h"
 #include "main/rng.h"
 #include "screens/stream/stream.h"
@@ -236,7 +236,7 @@ void WorldGfx_IpdSamplePointReset(void) // 0x8003C3A0
 void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
 {
     VECTOR3         pos0; // Draw distance?
-                          // Modifying `pos0.vz = Q12(200.0f);` makes the world to not draw. In the void, the player becomes immovable.
+                          // Setting as `pos0.vz = Q12(200.0f)` makes the world not draw. In the void, the player becomes immovable.
                           //
                           // Most of the time, X and Z share the same value as
                           // the player player position or a position slightly ahead computed from the heading angle.

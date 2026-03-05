@@ -14,7 +14,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
 <details>
 <summary>What does the decompilation percentage mean? <b><i>(click to expand)</i></b></summary>
 
-The percentage tracks how much of the game's compiled code has been matched, meaning we've written C code that compiles to identical output as the original assembly code.
+The percentage tracks how much of the game's compiled code has been matched, meaning we've written C code that compiles to an output identical to the original assembly code.
 
 Reaching 100% means every function in the game is accounted for, but that's only the end of the first phase, not the project as a whole.
 
@@ -22,8 +22,8 @@ There's still a lot of work ahead:
 
 - **Deobfuscation & naming**: many functions and variables still have generated names like `func_80241A30`. We'll need to figure out the actual purposes of these and name them meaningfully.
 - **Data migration**: raw binary data needs to be parsed into proper C structs so the data can be made understandable.
-- **Shiftability**: making the build not rely on hardcoded memory addresses, so that code and data can be modified without breaking everything.
-- **Documentation**: understanding and documenting how the game's systems work together, to aid in mods and future projects.
+- **Shiftability**: making the build not rely on hardcoded memory addresses so that code and data can be modified without breaking everything.
+- **Documentation**: understanding and documenting how the game's systems work together to aid in mods and future projects.
 
 100% will be a milestone worth celebrating, but there's still plenty left to do!
 
