@@ -121,13 +121,13 @@ void func_800D7A28(void) // 0x800D7A28
 
 void func_800D7AC4(void) // 0x800D7AC4
 {
-    g_DeltaTime = 0;
+    g_DeltaTime = Q12(0.0f);
     MapMsg_DisplayWithTexture(FILE_TIM_GOLD1_TIM, Q12(2.5f), Q12(2.0f), 19);
 }
 
 void func_800D7AF8(void) // 0x800D7AF8
 {
-    g_DeltaTime = 0;
+    g_DeltaTime = Q12(0.0f);
     MapMsg_DisplayWithTexture(FILE_TIM_GOLD2_TIM, Q12(2.5f), Q12(2.0f), 19);
 }
 

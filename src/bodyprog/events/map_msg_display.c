@@ -44,8 +44,8 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
     bool hasInput;
     s32  temp;
     s32  var_a1;
+    static s32 stateMachineIdx0;
     static s32 stateMachineIdx1;
-    static s32 stateMachineIdx2;
     static s32 msgDisplayLength;
     static s32 msgIdx;
     static s32 msgDisplayInc;
@@ -65,19 +65,19 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
     if (msgIdx != mapMsgIdx)
     {
-        g_SysWork.isMgsStringSet_18 = 0;
+        g_SysWork.isMgsStringSet_18 = false;
     }
 
     switch (g_SysWork.isMgsStringSet_18)
     {
-        case 0:
+        case false:
             g_SysWork.mapMsgTimer_234C         = NO_VALUE;
             g_MapMsg_Select.maxIdx_0           = NO_VALUE;
             g_MapMsg_Select.selectedEntryIdx_1 = 0;
             g_MapMsg_AudioLoadBlock            = 0;
             g_MapMsg_CurrentIdx                = mapMsgIdx;
+            stateMachineIdx0          = 0;
             stateMachineIdx1          = 0;
-            stateMachineIdx2          = 0;
             msgIdx                   = mapMsgIdx;
             msgDisplayLength             = 0;
             msgDisplayInc                = 2; // Advance 2 glyphs at a time.
@@ -106,7 +106,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             g_SysWork.isMgsStringSet_18++;
             return MapMsgState_Finish;
 
-        case 1:
+        case true:
             if (g_SysWork.sysFlags_22A0 & SysFlag_5)
             {
                 if (Sd_AudioStreamingCheck() == 4)
@@ -139,7 +139,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                 g_SysWork.mapMsgTimer_234C  = CLAMP(g_SysWork.mapMsgTimer_234C, Q12(0.0f), MSG_TIMER_MAX);
             }
 
-            temp_s1 = stateMachineIdx1;
+            temp_s1 = stateMachineIdx0;
             if (temp_s1 == NO_VALUE)
             {
                 if (g_MapMsg_AudioLoadBlock == 0)
@@ -147,7 +147,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     Game_TimerUpdate();
                 }
 
-                temp = stateMachineIdx2;
+                temp = stateMachineIdx1;
                 if (temp == temp_s1)
                 {
                     if (g_MapMsg_Select.maxIdx_0 == temp)
@@ -155,7 +155,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                         if (!((g_MapMsg_AudioLoadBlock & (1 << 0)) || !hasInput) ||
                             (g_MapMsg_AudioLoadBlock != 0 && g_SysWork.mapMsgTimer_234C == 0))
                         {
-                            stateMachineIdx2 = FINISH_MAP_MSG;
+                            stateMachineIdx1 = FINISH_MAP_MSG;
 
                             if (g_SysWork.sysFlags_22A0 & SysFlag_5)
                             {
@@ -176,7 +176,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                             g_SysWork.silentYesSelection_2350_4 = false;
                         }
 
-                        stateMachineIdx2 = FINISH_MAP_MSG;
+                        stateMachineIdx1 = FINISH_MAP_MSG;
                         break;
                     }
                     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
@@ -197,7 +197,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                             g_SysWork.silentYesSelection_2350_4 = false;
                         }
 
-                        stateMachineIdx2 = FINISH_MAP_MSG;
+                        stateMachineIdx1 = FINISH_MAP_MSG;
                         break;
                     }
                 }
@@ -207,7 +207,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     if (g_MapMsg_Select.maxIdx_0 != NO_VALUE)
                     {
                         g_MapMsg_Select.maxIdx_0  = NO_VALUE;
-                        stateMachineIdx2 = FINISH_MAP_MSG;
+                        stateMachineIdx1 = FINISH_MAP_MSG;
                         break;
                     }
 
@@ -234,7 +234,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 #endif
 
                     msgDisplayLength = 0;
-                    stateMachineIdx1 = 0;
+                    stateMachineIdx0 = 0;
 
                     if (g_MapMsg_AudioLoadBlock == MapMsgAudioLoadBlock_J2)
                     {
@@ -259,21 +259,21 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                 }
             }
 
-            stateMachineIdx1 = 0;
-            stateMachineIdx2 = Gfx_MapMsg_SelectionUpdate(g_MapMsg_CurrentIdx, &msgDisplayLength);
+            stateMachineIdx0 = 0;
+            stateMachineIdx1 = Gfx_MapMsg_SelectionUpdate(g_MapMsg_CurrentIdx, &msgDisplayLength);
 
-            if (stateMachineIdx2 != 0 && stateMachineIdx2 < MapMsgCode_Select4)
+            if (stateMachineIdx1 != 0 && stateMachineIdx1 < MapMsgCode_Select4)
             {
-                stateMachineIdx1 = NO_VALUE;
+                stateMachineIdx0 = NO_VALUE;
             }
     }
 
-    if (stateMachineIdx2 != FINISH_MAP_MSG)
+    if (stateMachineIdx1 != FINISH_MAP_MSG)
     {
         return MapMsgState_Idle;
     }
 
-    g_SysWork.isMgsStringSet_18            = 0;
+    g_SysWork.isMgsStringSet_18            = false;
     g_SysWork.enableHighResGlyphs_2350_0 = false;
     msgDisplayLength               = 0;
 
@@ -283,6 +283,10 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
     }
 
     return g_MapMsg_Select.selectedEntryIdx_1 + 1;
+
+    #undef MSG_TIMER_MAX
+    #undef FINISH_CUTSCENE
+    #undef FINISH_MAP_MSG
 }
 
 s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
@@ -393,23 +397,25 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
     }
 
     return mapMsgCode;
+
+    #undef STRING_LINE_OFFSET
 }
 
 void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
 {
-    u16        sp10[4];
-    u8         sp18[16];
-    u8         sp28[12];
-    s32        temp_a0;
-    s32        temp_v0_2;
-    s32        var_a2;
-    s32        i;
-    u8         var_t4;
-    s32        var_v0;
-    u16        temp_v0;
-    u16        var_a3;
-    s16*       var_t2;
-    u16*       var_t7;
+    u16  sp10[4];
+    u8   sp18[16];
+    u8   sp28[12];
+    s32  temp_a0;
+    s32  temp_v0_2;
+    s32  var_a2;
+    s32  i;
+    u8   var_t4;
+    s32  var_v0;
+    u16  temp_v0;
+    u16  var_a3;
+    s16* var_t2;
+    u16* var_t7;
 
     var_t2 = arg1;
     var_t4 = 0;
@@ -514,7 +520,7 @@ void func_8003708C(s16* ptr0, u16* ptr1) // 0x8003708C
 
     for (i = 0; i < 12; i++)
     {
-        shift = (i & 3) * 4;
+        shift = (i & 0x3) * 4;
         var3  = (*ptr1 >> shift) & 0xF;
         if (i != 0 && var3 == 11 && var0 != 0)
         {

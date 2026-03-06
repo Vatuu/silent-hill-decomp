@@ -363,7 +363,7 @@ void Bgm_TrackChange(s32 idx) // 0x8003640C
 }
 
 // ========================================
-// CURRENT ROOM INFO GET
+// CURRENT ROOM INFO GETTERS
 // ========================================
 
 void Savegame_MapRoomIdxUpdate(void) // 0x80036420
