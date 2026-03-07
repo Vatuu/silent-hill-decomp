@@ -64,7 +64,7 @@
     // Silent Hill (JP) v1.01
     #define VERSION_NTSCJ 1
     #define VERSION_DATE VERSION_DATE_JAP1
-    #define VERSION_SERIAL "SLPM-86498"
+    #define VERSION_SERIAL "SLPM-86192" // Actually SLPM-86498, but regions share same serial for save support.
 #elif defined(VER_EUR)
     // Silent Hill (EU) v1.0
     #define VERSION_PAL 1
@@ -74,7 +74,7 @@
     // Silent Hill (JP) v1.1
     #define VERSION_NTSCJ 1
     #define VERSION_DATE VERSION_DATE_JAP2
-    #define VERSION_SERIAL "SLPM-87029"
+    #define VERSION_SERIAL "SLPM-86192" // Actually SLPM-87029, but regions share same serial for save support.
 #endif
 
 #endif
