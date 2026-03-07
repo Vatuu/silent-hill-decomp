@@ -26,17 +26,15 @@ void vcSetCameraUseWarp(const VECTOR3* chr_pos, q3_12 chr_ang_y);
  */
 s32 vcRetCamMvSmoothF(void);
 
-/** @brief Sets the camera's elevation(?) rate to normal or locked. So far @unused.
- * TODO: Is it elevation or something else?
+/** @brief Sets the camera's elevation rate to normal or locked. So far @unused.
  *
- * @param isUnlocked `true` to set the elevation(?) rate to normal, `false` to lock.
+ * @param isUnlocked `true` to set the elevation rate to normal, `false` to lock.
  */
 void Vc_CameraElevationRateLockSet(bool isUnlocked);
 
-/** @brief Sets the camera's active elevation(?) rate.
- * TODO: Is it elevation or something else?
+/** @brief Sets the camera's active elevation rate.
  *
- * @param ev_cam_rate New elevation(?) rate.
+ * @param ev_cam_rate New elevation rate.
  */
 void vcSetEvCamRate(q3_12 ev_cam_rate);
 

@@ -170,7 +170,8 @@ q19_12 vwRetNewVelocityToTargetVal(q19_12 now_spd, q19_12 mv_pos, q19_12 tgt_pos
     return new_spd;
 }
 
-q19_12 vwRetNewAngSpdToTargetAng(q19_12 now_ang_spd, q3_12 now_ang, q3_12 tgt_ang, q19_12 accel_spd, q19_12 total_max_ang_spd, q19_12 dec_val_lim_spd) // 0x80049464
+q19_12 vwRetNewAngSpdToTargetAng(q19_12 now_ang_spd, q3_12 now_ang, q3_12 tgt_ang,
+                                 q19_12 accel_spd, q19_12 total_max_ang_spd, q19_12 dec_val_lim_spd) // 0x80049464
 {
     return vwRetNewVelocityToTargetVal(now_ang_spd, Q12(0.0f), Q12_ANGLE_NORM_S(tgt_ang - now_ang), accel_spd, total_max_ang_spd, dec_val_lim_spd);
 }

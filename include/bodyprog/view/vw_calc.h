@@ -22,7 +22,8 @@ q19_12 vwRetNewVelocityToTargetVal(q19_12 now_spd, q19_12 mv_pos, q19_12 tgt_pos
  * @param dec_val_lim_spd Deceleration speed.
  * @return New angular speed.
  */
-q19_12 vwRetNewAngSpdToTargetAng(q19_12 now_ang_spd, q3_12 now_ang, q3_12 tgt_ang, q19_12 accel_spd, q19_12 total_max_ang_spd, q19_12 dec_val_lim_spd);
+q19_12 vwRetNewAngSpdToTargetAng(q19_12 now_ang_spd, q3_12 now_ang, q3_12 tgt_ang,
+                                 q19_12 accel_spd, q19_12 total_max_ang_spd, q19_12 dec_val_lim_spd);
 
 s32 func_800494B0(s32 arg0, s32 arg1, s32 arg2);
 
@@ -34,6 +35,10 @@ void Vw_MultiplyAndTransformMatrix(MATRIX* transformMat, MATRIX* inMat, MATRIX* 
 
 void vbSetWorldScreenMatrix(GsCOORDINATE2* coord);
 
+/** @brief Sets the camera's reference view.
+ *
+ * @param rview Reference view to set.
+ */
 void vbSetRefView(VbRVIEW* rview);
 
 /** @brief Computes the transformation matrix of a given coord.

@@ -23,7 +23,7 @@ const s32 pad_rodata_80025524 = 0;
 
 s_LinkedBone* WorldGfx_CharaModelBonesGet(e_CharacterId charaId) // 0x8003BE50
 {
-    return g_WorldGfx.registeredCharaModels_18[charaId]->skeleton_14.bones_C;
+    return g_WorldGfxWork.registeredCharaModels_18[charaId]->skeleton_14.bones_C;
 }
 
 void GameFs_BgEtcGfxLoad(void) // 0x8003BE6C
@@ -35,7 +35,7 @@ void GameFs_BgEtcGfxLoad(void) // 0x8003BE6C
 
 void GameFs_BgItemLoad(void) // 0x8003BE9C
 {
-    g_WorldGfx.itemLmQueueIdx_2BE4 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &g_WorldGfx.itemLmHdr_1BE4);
+    g_WorldGfxWork.itemLmQueueIdx_2BE4 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &g_WorldGfxWork.itemLmHdr_1BE4);
 }
 
 void func_8003BED0(void) // 0x8003BED0
@@ -58,17 +58,17 @@ void func_8003BED0(void) // 0x8003BED0
 
     s_LmHeader* itemLmHdr;
 
-    itemLmHdr = &g_WorldGfx.itemLmHdr_1BE4;
+    itemLmHdr = &g_WorldGfxWork.itemLmHdr_1BE4;
 
-    if (!Fs_QueueIsEntryLoaded(g_WorldGfx.itemLmQueueIdx_2BE4) || itemLmHdr->isLoaded_2)
+    if (!Fs_QueueIsEntryLoaded(g_WorldGfxWork.itemLmQueueIdx_2BE4) || itemLmHdr->isLoaded_2)
     {
         return;
     }
 
-    LmHeader_FixOffsets(&g_WorldGfx.itemLmHdr_1BE4);
-    Lm_MaterialFsImageApply1(&g_WorldGfx.itemLmHdr_1BE4, "TIM00", &IMAGE_TIM, 1);
-    Lm_MaterialFsImageApply1(&g_WorldGfx.itemLmHdr_1BE4, "BG_ETC", &IMAGE_ETC, 1);
-    Lm_MaterialFlagsApply(&g_WorldGfx.itemLmHdr_1BE4);
+    LmHeader_FixOffsets(&g_WorldGfxWork.itemLmHdr_1BE4);
+    Lm_MaterialFsImageApply1(&g_WorldGfxWork.itemLmHdr_1BE4, "TIM00", &IMAGE_TIM, 1);
+    Lm_MaterialFsImageApply1(&g_WorldGfxWork.itemLmHdr_1BE4, "BG_ETC", &IMAGE_ETC, 1);
+    Lm_MaterialFlagsApply(&g_WorldGfxWork.itemLmHdr_1BE4);
 }
 
 s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ) // 0x8003BF60
@@ -83,9 +83,9 @@ s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ) // 0x8003BF60
         return SpeedZoneType_Normal;
     }
 
-    if (g_WorldGfx.mapInfo_0->speedZones_C != NULL)
+    if (g_WorldGfxWork.mapInfo_0->speedZones_C != NULL)
     {
-        curZone = g_WorldGfx.mapInfo_0->speedZones_C;
+        curZone = g_WorldGfxWork.mapInfo_0->speedZones_C;
         while (curZone->type_0 != NO_VALUE)
         {
             if (posX >= Q4_TO_Q12(curZone->minX_2) && Q4_TO_Q12(curZone->maxX_4) >= posX &&
@@ -106,7 +106,7 @@ void WorldGfx_MapInit(void) // 0x8003C048
 {
     WorldEnv_Init();
 
-    g_WorldGfx.useStoredPoint_4 = false;
+    g_WorldGfxWork.useStoredPoint_4 = false;
 
     Map_Init(GLOBAL_LM_BUFFER, IPD_BUFFER, 0x2C000);
     func_800697EC();
@@ -115,14 +115,14 @@ void WorldGfx_MapInit(void) // 0x8003C048
 
     Game_FlashlightAttributesFix();
     func_8005B55C(vwGetViewCoord());
-    Gfx_WorldObjectsClear(&g_WorldGfx);
+    Gfx_WorldObjectsClear(&g_WorldGfxWork);
 }
 
 void Item_HeldItemModelFree(void) // 0x8003C0C0
 {
     s_HeldItem* heldItem;
 
-    heldItem = &g_WorldGfx.heldItem_1BAC;
+    heldItem = &g_WorldGfxWork.heldItem_1BAC;
 
     heldItem->itemId_0                       = NO_VALUE;
     heldItem->lmHdr_14                       = HELD_ITEM_LM_BUFFER;
@@ -140,12 +140,12 @@ void CharaModel_AllModelsFree(void) // 0x8003C110
     {
         if (i != Chara_Harry)
         {
-            g_WorldGfx.registeredCharaModels_18[i] = NULL;
+            g_WorldGfxWork.registeredCharaModels_18[i] = NULL;
         }
     }
 
-    g_WorldGfx.charaLmBuffer_14 = MAP_CHARA_LM_BUFFER;
-    for (curModel = &g_WorldGfx.charaModels_CC[0]; curModel < &g_WorldGfx.charaModels_CC[4]; curModel++)
+    g_WorldGfxWork.charaLmBuffer_14 = MAP_CHARA_LM_BUFFER;
+    for (curModel = &g_WorldGfxWork.charaModels_CC[0]; curModel < &g_WorldGfxWork.charaModels_CC[4]; curModel++)
     {
         CharaModel_Free(curModel);
     }
@@ -175,7 +175,7 @@ void Ipd_PlayerChunkInit(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerP
     u8         flags;
     s_MapInfo* mapInfo;
 
-    g_WorldGfx.mapInfo_0 = mapHdr->mapInfo_0;
+    g_WorldGfxWork.mapInfo_0 = mapHdr->mapInfo_0;
 
     flags = mapHdr->mapInfo_0->flags_6;
     if (flags & MapFlag_OneActiveChunk)
@@ -211,7 +211,7 @@ void Map_WorldClear(void) // 0x8003C30C
 {
     u8 flags;
 
-    flags = g_WorldGfx.mapInfo_0->flags_6;
+    flags = g_WorldGfxWork.mapInfo_0->flags_6;
     if ((flags & MapFlag_Interior) && (flags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
     {
         Map_WorldClearReset();
@@ -224,13 +224,13 @@ void Map_WorldClear(void) // 0x8003C30C
 
 void WorldGfx_IpdSamplePointStore(void) // 0x8003C368
 {
-    g_WorldGfx.useStoredPoint_4 = true;
-    g_WorldGfx.ipdSamplePoint_8 = g_SysWork.playerWork_4C.player_0.position_18;
+    g_WorldGfxWork.useStoredPoint_4 = true;
+    g_WorldGfxWork.ipdSamplePoint_8 = g_SysWork.playerWork_4C.player_0.position_18;
 }
 
 void WorldGfx_IpdSamplePointReset(void) // 0x8003C3A0
 {
-    g_WorldGfx.useStoredPoint_4 = false;
+    g_WorldGfxWork.useStoredPoint_4 = false;
 }
 
 void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
@@ -264,9 +264,9 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
 
     chara = &g_SysWork.playerWork_4C.player_0;
 
-    if (g_WorldGfx.useStoredPoint_4)
+    if (g_WorldGfxWork.useStoredPoint_4)
     {
-        pos0 = g_WorldGfx.ipdSamplePoint_8;
+        pos0 = g_WorldGfxWork.ipdSamplePoint_8;
     }
     else
     {
@@ -279,7 +279,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
     pos0.vx += Q12_MULT_PRECISE(moveAmt, Math_Sin(chara->headingAngle_3C));
     pos0.vz += Q12_MULT_PRECISE(moveAmt, Math_Cos(chara->headingAngle_3C));
 
-    if (g_WorldGfx.mapInfo_0 == &MAP_INFOS[MapType_THR] &&
+    if (g_WorldGfxWork.mapInfo_0 == &MAP_INFOS[MapType_THR] &&
         chara->position_18.vx >= Q12(-40.0f) && chara->position_18.vx <= Q12(40.0f) &&
         chara->position_18.vz >= Q12(200.0f) && chara->position_18.vz <= Q12(240.0f))
     {
@@ -291,7 +291,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
         vwGetViewPosition(&pos1);
         vwGetViewAngle(&rot);
 
-        flagsCpy = g_WorldGfx.mapInfo_0->flags_6;
+        flagsCpy = g_WorldGfxWork.mapInfo_0->flags_6;
         if (!(flagsCpy & MapFlag_Interior) || !(flagsCpy & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
         {
             var_s1 = Q12_MULT(Math_Cos(rot.vx), Q12(9.0f));
@@ -324,7 +324,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
         pos1.vz += FP_FROM(Q12(Math_Cos(chara->rotation_24.vy)), Q12_SHIFT);
     }
 
-    flagsCpy = g_WorldGfx.mapInfo_0->flags_6;
+    flagsCpy = g_WorldGfxWork.mapInfo_0->flags_6;
     if ((flagsCpy & MapFlag_Interior) && (flagsCpy & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
     {
         var_a1 = chara->position_18.vx / Q12(2.5f);
@@ -360,7 +360,7 @@ s32 Ipd_ChunkInitCheck(void) // 0x8003C850
 
 void Gfx_InGameDraw(s32 arg0) // 0x8003C878
 {
-    Gfx_WorldObjectsDraw(&g_WorldGfx);
+    Gfx_WorldObjectsDraw(&g_WorldGfxWork);
 
     while (func_80043830())
     {
@@ -399,7 +399,7 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVEC
     s_WorldObject* obj;
 
     // Check if array of world objects to draw is full.
-    if (g_WorldGfx.objectCount_2BE8 < ARRAY_SIZE(g_WorldGfx.objects_2BEC))
+    if (g_WorldGfxWork.objectCount_2BE8 < ARRAY_SIZE(g_WorldGfxWork.objects_2BEC))
     {
         if (arg0->metadata_10.lmIdx_9 == 0)
         {
@@ -408,7 +408,7 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVEC
             lmIdx = func_8004287C(arg0, &arg0->metadata_10, g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz);
             if (lmIdx == 0)
             {
-                if (!Lm_ModelFind(arg0, &g_WorldGfx.itemLmHdr_1BE4, &arg0->metadata_10))
+                if (!Lm_ModelFind(arg0, &g_WorldGfxWork.itemLmHdr_1BE4, &arg0->metadata_10))
                 {
                     return;
                 }
@@ -430,9 +430,9 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVEC
         geomRotZ = rot->vy;
 
         // Check if world object to draw was already submitted?
-        for (i = 0; i < g_WorldGfx.objectCount_2BE8; i++)
+        for (i = 0; i < g_WorldGfxWork.objectCount_2BE8; i++)
         {
-            obj = &g_WorldGfx.objects_2BEC[i];
+            obj = &g_WorldGfxWork.objects_2BEC[i];
 
             if (arg0 == obj->model_0 &&
                 geomPosX == obj->positionX_4 &&
@@ -447,7 +447,7 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVEC
         }
 
         // Submit world object to draw.
-        obj = &g_WorldGfx.objects_2BEC[g_WorldGfx.objectCount_2BE8];
+        obj = &g_WorldGfxWork.objects_2BEC[g_WorldGfxWork.objectCount_2BE8];
         obj->rotationX_C = geomRotX;
         obj->rotationY_C = geomRotZ;
         if (obj->positionZ_8) {} // @hack Required for match.
@@ -457,7 +457,7 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVEC
         obj->positionY_4 = geomPosY;
         obj->positionZ_8 = geomPosZ;
 
-        g_WorldGfx.objectCount_2BE8++;
+        g_WorldGfxWork.objectCount_2BE8++;
     }
 }
 
@@ -541,7 +541,7 @@ void func_8003CC7C(s_WorldObjectModel* arg0, MATRIX* arg1, MATRIX* arg2) // 0x80
 
 s32 WorldGfx_HeldItemIdGet(void) // 0x8003CD5C
 {
-    return g_WorldGfx.heldItem_1BAC.itemId_0;
+    return g_WorldGfxWork.heldItem_1BAC.itemId_0;
 }
 
 s32 WorldGfx_PlayerPrevHeldItem(s_PlayerCombat* combat) // 0x8003CD6C
@@ -565,7 +565,7 @@ s32 WorldGfx_PlayerHeldItemSet(e_InventoryItemId itemId) // 0x8003CDA0
     s_HeldItem* heldItem;
 
     // Check if requested item is already being held.
-    heldItem = &g_WorldGfx.heldItem_1BAC;
+    heldItem = &g_WorldGfxWork.heldItem_1BAC;
     if (heldItem->itemId_0 == itemId)
     {
         return 0;
@@ -761,12 +761,12 @@ s32 WorldGfx_PlayerHeldItemSet(e_InventoryItemId itemId) // 0x8003CDA0
 
 void func_8003D01C(void) // 0x8003D01C
 {
-    g_WorldGfx.heldItem_1BAC.bone_18.modelInfo_0.field_0 &= ~(1 << 31);
+    g_WorldGfxWork.heldItem_1BAC.bone_18.modelInfo_0.field_0 &= ~(1 << 31);
 }
 
 void func_8003D03C(void) // 0x8003D03C
 {
-    g_WorldGfx.heldItem_1BAC.bone_18.modelInfo_0.field_0 |= 1 << 31;
+    g_WorldGfxWork.heldItem_1BAC.bone_18.modelInfo_0.field_0 |= 1 << 31;
 }
 
 void WorldGfx_HeldItemDraw(void) // 0x8003D058
@@ -778,7 +778,7 @@ void WorldGfx_HeldItemDraw(void) // 0x8003D058
     s_LmHeader*    lmHdr;
 
     // Check if held item is valid.
-    heldItem = &g_WorldGfx.heldItem_1BAC;
+    heldItem = &g_WorldGfxWork.heldItem_1BAC;
     if (heldItem->itemId_0 == NO_VALUE)
     {
         return;
@@ -826,18 +826,18 @@ void WorldGfx_HarryCharaLoad(void) // 0x8003D160
 
     Chara_FsImageCalc(&image, Chara_Harry, 0);
 
-    worldGfxWork                                     = &g_WorldGfx;
+    worldGfxWork                                     = &g_WorldGfxWork;
     harryModel                                       = &worldGfxWork->harryModel_164C;
-    g_WorldGfx.registeredCharaModels_18[Chara_Harry] = harryModel;
+    g_WorldGfxWork.registeredCharaModels_18[Chara_Harry] = harryModel;
 
     Fs_QueueStartRead(CHARA_FILE_INFOS[Chara_Harry].modelFileIdx, harryLmHdr);
     queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[Chara_Harry].textureFileIdx, FS_BUFFER_1, &image);
 
-    g_WorldGfx.harryModel_164C.charaId_0 = Chara_Harry;
+    g_WorldGfxWork.harryModel_164C.charaId_0 = Chara_Harry;
     harryModel->isLoaded_1               = false;
     harryModel->queueIdx_4               = queueIdx;
     harryModel->lmHdr_8                  = harryLmHdr;
-    g_WorldGfx.harryModel_164C.texture_C = image;
+    g_WorldGfxWork.harryModel_164C.texture_C = image;
 }
 
 s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHeader* mapHdr) // 0x8003D21C
@@ -850,12 +850,12 @@ s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHeader* mapHdr) // 0x8003D21C
     s32           curCharaId;
     s_CharaModel* curModel;
 
-    for (queueIdx = 0, i = 0, g_WorldGfx.charaLmBuffer_14 = MAP_CHARA_LM_BUFFER, cond = false;
+    for (queueIdx = 0, i = 0, g_WorldGfxWork.charaLmBuffer_14 = MAP_CHARA_LM_BUFFER, cond = false;
          i < GROUP_CHARA_COUNT;
          i++)
     {
         curCharaId = mapHdr->charaGroupIds_248[i];
-        curModel   = &g_WorldGfx.charaModels_CC[i];
+        curModel   = &g_WorldGfxWork.charaModels_CC[i];
 
         if (curCharaId != Chara_None)
         {
@@ -864,9 +864,9 @@ s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHeader* mapHdr) // 0x8003D21C
                 if (curCharaId != curModel->charaId_0)
                 {
                     cond = true;
-                    for (j = i; j < ARRAY_SIZE(g_WorldGfx.charaModels_CC); j++)
+                    for (j = i; j < ARRAY_SIZE(g_WorldGfxWork.charaModels_CC); j++)
                     {
-                        g_WorldGfx.charaModels_CC[j].charaId_0 = Chara_None;
+                        g_WorldGfxWork.charaModels_CC[j].charaId_0 = Chara_None;
                     }
                 }
             }
@@ -874,10 +874,10 @@ s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHeader* mapHdr) // 0x8003D21C
             if (cond)
             {
                 Chara_FsImageCalc(&image, curCharaId, i);
-                queueIdx = WorldGfx_CharaModelLoad(curCharaId, i, (s_LmHeader*)g_WorldGfx.charaLmBuffer_14, &image);
+                queueIdx = WorldGfx_CharaModelLoad(curCharaId, i, (s_LmHeader*)g_WorldGfxWork.charaLmBuffer_14, &image);
             }
 
-            WorldGfx_CharaLmBufferAdvance(&g_WorldGfx.charaLmBuffer_14, curCharaId);
+            WorldGfx_CharaLmBufferAdvance(&g_WorldGfxWork.charaLmBuffer_14, curCharaId);
         }
     }
 
@@ -950,7 +950,7 @@ void Chara_FsImageCalc(s_FsImageDesc* image, s32 charaId, s32 modelIdx) // 0x800
 
 bool WorldGfx_IsCharaModelPresent(e_CharacterId charaId) // 0x8003D444
 {
-    return g_WorldGfx.registeredCharaModels_18[charaId] != NULL;
+    return g_WorldGfxWork.registeredCharaModels_18[charaId] != NULL;
 }
 
 void func_8003D460(void) {} // 0x8003D460
@@ -964,7 +964,7 @@ void WorldGfx_CharaModelTransparentSet(e_CharacterId charaId, bool enableTranspa
     s32           y;
     s_CharaModel* model;
 
-    model = g_WorldGfx.registeredCharaModels_18[charaId];
+    model = g_WorldGfxWork.registeredCharaModels_18[charaId];
     Lm_TransparentPrimSet(model->lmHdr_8, enableTransparency);
 
     rect.x = model->texture_C.clutX;
@@ -997,7 +997,7 @@ void WorldGfx_CharaModelMaterialSet(s32 charaId, s32 blendMode) // 0x8003D550
 {
     s_CharaModel* model;
 
-    model = g_WorldGfx.registeredCharaModels_18[charaId];
+    model = g_WorldGfxWork.registeredCharaModels_18[charaId];
     Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[charaId].textureFileIdx, &model->texture_C, blendMode);
     Lm_MaterialFlagsApply(model->lmHdr_8);
 }
@@ -1009,9 +1009,9 @@ void WorldGfx_CharaLmBufferAssign(s8 forceFree) // 0x8003D5B4
     u32           lmData;
     s_CharaModel* curModel;
 
-    for (i = 0; i < ARRAY_SIZE(g_WorldGfx.charaModels_CC); i++)
+    for (i = 0; i < ARRAY_SIZE(g_WorldGfxWork.charaModels_CC); i++)
     {
-        curModel = &g_WorldGfx.charaModels_CC[i];
+        curModel = &g_WorldGfxWork.charaModels_CC[i];
         if ((forceFree >> i) & (1 << 0))
         {
             WorldGfx_CharaFree(curModel);
@@ -1019,18 +1019,18 @@ void WorldGfx_CharaLmBufferAssign(s8 forceFree) // 0x8003D5B4
     }
 
     i = 0;
-    g_WorldGfx.charaLmBuffer_14 = MAP_CHARA_LM_BUFFER;
-    for (; i < ARRAY_SIZE(g_WorldGfx.charaModels_CC); i++)
+    g_WorldGfxWork.charaLmBuffer_14 = MAP_CHARA_LM_BUFFER;
+    for (; i < ARRAY_SIZE(g_WorldGfxWork.charaModels_CC); i++)
     {
-        curModel = &g_WorldGfx.charaModels_CC[i];
+        curModel = &g_WorldGfxWork.charaModels_CC[i];
 
         charaId = curModel->charaId_0;
         if (charaId != Chara_None)
         {
             lmData = (s32)curModel->lmHdr_8 + Fs_GetFileSize(CHARA_FILE_INFOS[charaId].modelFileIdx);
-            if (g_WorldGfx.charaLmBuffer_14 < lmData)
+            if (g_WorldGfxWork.charaLmBuffer_14 < lmData)
             {
-                g_WorldGfx.charaLmBuffer_14 = lmData;
+                g_WorldGfxWork.charaLmBuffer_14 = lmData;
             }
         }
     }
@@ -1040,7 +1040,7 @@ void WorldGfx_CharaFree(s_CharaModel* model) // 0x8003D6A4
 {
     if (model->charaId_0 != Chara_None)
     {
-        g_WorldGfx.registeredCharaModels_18[model->charaId_0] = NULL;
+        g_WorldGfxWork.registeredCharaModels_18[model->charaId_0] = NULL;
         CharaModel_Free(model);
     }
 }
@@ -1055,14 +1055,14 @@ void WorldGfx_CharaLoad(e_CharacterId charaId, s32 modeIdx, s_LmHeader* lmHdr, s
     {
         lmHdrBuf = lmHdr;
     }
-    else if (g_WorldGfx.charaModels_CC[modeIdx].charaId_0 != Chara_None)
+    else if (g_WorldGfxWork.charaModels_CC[modeIdx].charaId_0 != Chara_None)
     {
-        lmHdrBuf = g_WorldGfx.charaModels_CC[modeIdx].lmHdr_8;
+        lmHdrBuf = g_WorldGfxWork.charaModels_CC[modeIdx].lmHdr_8;
     }
     else
     {
-        lmHdrBuf = (s_LmHeader*)g_WorldGfx.charaLmBuffer_14;
-        WorldGfx_CharaLmBufferAdvance(&g_WorldGfx.charaLmBuffer_14, charaId);
+        lmHdrBuf = (s_LmHeader*)g_WorldGfxWork.charaLmBuffer_14;
+        WorldGfx_CharaLmBufferAdvance(&g_WorldGfxWork.charaLmBuffer_14, charaId);
     }
 
     // Set texture UVs.
@@ -1085,14 +1085,14 @@ s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmH
     s_CharaModel*  model;
     s_FsImageDesc* modelTex;
 
-    model        = &g_WorldGfx.charaModels_CC[modelIdx];
+    model        = &g_WorldGfxWork.charaModels_CC[modelIdx];
     modelCharaId = model->charaId_0;
     modelTex     = &model->texture_C;
 
     // If character is invalid, set model as unused.
     if (charaId == Chara_None)
     {
-        g_WorldGfx.registeredCharaModels_18[modelCharaId] = NULL;
+        g_WorldGfxWork.registeredCharaModels_18[modelCharaId] = NULL;
         return 0;
     }
 
@@ -1107,9 +1107,9 @@ s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmH
             }
         }
 
-        g_WorldGfx.registeredCharaModels_18[modelCharaId] = NULL;
+        g_WorldGfxWork.registeredCharaModels_18[modelCharaId] = NULL;
     }
-    g_WorldGfx.registeredCharaModels_18[charaId] = model;
+    g_WorldGfxWork.registeredCharaModels_18[charaId] = model;
 
     // Load model and texture files.
     queueIdx = Fs_QueueStartRead(CHARA_FILE_INFOS[charaId].modelFileIdx, lmHdr);
@@ -1129,7 +1129,7 @@ s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmH
 
 void WorldGfx_PlayerModelProcessLoad(void) // 0x8003D938
 {
-    WorldGfx_CharaModelProcessLoad(&g_WorldGfx.harryModel_164C);
+    WorldGfx_CharaModelProcessLoad(&g_WorldGfxWork.harryModel_164C);
 }
 
 void WorldGfx_CharaModelProcessAllLoads(void) // 0x8003D95C
@@ -1141,7 +1141,7 @@ void WorldGfx_CharaModelProcessAllLoads(void) // 0x8003D95C
     {
         if (i != Chara_Harry)
         {
-            model = g_WorldGfx.registeredCharaModels_18[i];
+            model = g_WorldGfxWork.registeredCharaModels_18[i];
             if (model != NULL)
             {
                 WorldGfx_CharaModelProcessLoad(model);
@@ -1203,7 +1203,7 @@ void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, q3_12 
                       g_WorldEnvWork.screenBrightness_8);
     }
 
-    func_80045534(&g_WorldGfx.registeredCharaModels_18[charaId]->skeleton_14, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
+    func_80045534(&g_WorldGfxWork.registeredCharaModels_18[charaId]->skeleton_14, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
                   coord, Q8_TO_Q12(CHARA_FILE_INFOS[charaId].field_6), ret, CHARA_FILE_INFOS[charaId].field_8);
 
     if (timer != Q12(0.0f))
@@ -1225,7 +1225,7 @@ void WorldGfx_HeldItemAttach(e_CharacterId charaId, s32 arg1) // 0x8003DD80
 {
     s_CharaModel* model;
 
-    model = g_WorldGfx.registeredCharaModels_18[charaId];
+    model = g_WorldGfxWork.registeredCharaModels_18[charaId];
 
     switch (charaId)
     {

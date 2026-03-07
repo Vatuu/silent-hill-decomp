@@ -23,7 +23,7 @@
  * CIR:   Circle
  * DEFLT: Default
  * EFF:   Effective?
- * EV:    Elevation?
+ * EV:    Elevation
  * EXCL:  Exclusion
  * F:     Boolean or bit flag
  * FIX:   Fixed in place

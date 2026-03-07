@@ -60,9 +60,9 @@ bool func_80040B74(e_CharacterId charaId) // 0x80040B74
 {
     s32 i;
 
-    for (i = 0; i < ARRAY_SIZE(g_WorldGfx.charaModels_CC); i++)
+    for (i = 0; i < ARRAY_SIZE(g_WorldGfxWork.charaModels_CC); i++)
     {
-        if (g_WorldGfx.charaModels_CC[i].charaId_0 == charaId)
+        if (g_WorldGfxWork.charaModels_CC[i].charaId_0 == charaId)
         {
             return true;
         }

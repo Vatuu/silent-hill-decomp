@@ -3038,7 +3038,7 @@ g_MapEventData                               = 0x800BCDD8; // type:u32 - pointer
 //--- PA: 0x098298   VA: 0x800BCDF8   subsegment: bss
 //---------------------------------------------------
 vcRefPosSt                                   = 0x800BCDF8; // type:VECTOR3 size:0xC
-g_WorldGfx                                   = 0x800BCE18; // type:u8 size:0x2DBC
+g_WorldGfxWork                               = 0x800BCE18; // type:u8 size:0x2DBC
 
 //---------------------------------------------------------------------------
 //--- PA: 0x09B090   VA: 0x800BFBF0   subsegment: .bss, gfx/bodyprog_80040A64

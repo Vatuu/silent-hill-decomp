@@ -497,7 +497,7 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
 
     func_800554C4(temp, ptr2->flashlightLensFlareIntensity_2C, coord, g_SysWork.field_235C, &rot,
                   g_SysWork.pointLightPosition_2360.vx, g_SysWork.pointLightPosition_2360.vy, g_SysWork.pointLightPosition_2360.vz,
-                  g_WorldGfx.mapInfo_0->waterZones_8);
+                  g_WorldGfxWork.mapInfo_0->waterZones_8);
     func_80055814(ptr2->field_30);
 
     if (ptr->field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 3))

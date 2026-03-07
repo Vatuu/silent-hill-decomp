@@ -2433,8 +2433,7 @@ extern s16 D_800BCDE8[8];
 
 extern u16 D_800BCE14;
 
-// TODO: Rename to `g_WorldGfxWork`.
-extern s_WorldGfxWork g_WorldGfx;
+extern s_WorldGfxWork g_WorldGfxWork;
 
 extern s_IpdCollisionData* D_800C1010[4];
 

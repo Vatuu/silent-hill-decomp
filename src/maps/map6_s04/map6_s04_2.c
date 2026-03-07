@@ -1702,7 +1702,8 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
     }
     else
     {
-        D_800EBB58.field_0  = vwRetNewAngSpdToTargetAng(D_800EBB58.field_0, D_800EBB58.field_2, angle0, Q12(0.5f), Q12(0.7f), Q12(5.0f));
+        D_800EBB58.field_0  = vwRetNewAngSpdToTargetAng(D_800EBB58.field_0, D_800EBB58.field_2, angle0,
+                                                        Q12(0.5f), Q12(0.7f), Q12(5.0f));
         D_800EBB58.field_2 += Q12_MULT_PRECISE(D_800EBB58.field_0, g_DeltaTime);
     }
 
@@ -1766,7 +1767,8 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
     }
     else
     {
-        D_800EBB58.field_6  = vwRetNewAngSpdToTargetAng(D_800EBB58.field_6, D_800EBB58.field_4, angle4, Q12(2.0f), Q12(2.0f), Q12(8.0f));
+        D_800EBB58.field_6  = vwRetNewAngSpdToTargetAng(D_800EBB58.field_6, D_800EBB58.field_4, angle4,
+                                                        Q12(2.0f), Q12(2.0f), Q12(8.0f));
         D_800EBB58.field_4 += Q12_MULT_PRECISE(D_800EBB58.field_6, g_DeltaTime);
     }
 
