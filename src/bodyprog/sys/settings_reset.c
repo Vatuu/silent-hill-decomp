@@ -83,7 +83,7 @@ void Settings_RestoreControlDefaults(s32 configIdx) // 0x80033480
             .option_1A    = ControllerFlag_None
         }
     };
-#elif VERSION_IS(JAP0)
+#elif VERSION_REGION_IS(NTSCJ)
     static const s_ControllerConfig DEFAULT_CONTROLLER_CONFIGS[3] = {
         {
             .enter_0      = ControllerFlag_Start | ControllerFlag_Circle,

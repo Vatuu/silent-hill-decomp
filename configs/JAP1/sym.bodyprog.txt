@@ -22,6 +22,20 @@ D_800C9660_JPN = 0x800C9660;
 D_800C9664_JPN = 0x800C9664;
 D_800C97C8_JPN = 0x800C97C8;
 
+// Gamestates inside overlays. TODO: Move these to sym files for each overlay
+GameState_KonamiLogo_Update = 0x800cbc04; // type:func
+GameState_KcetLogo_Update = 0x800cbffc; // type:func
+GameState_MovieIntroFadeIn_Update = 0x801e2654; // type:func
+GameState_AutoLoadSavegame_Update = 0x801e8034; // type:func
+GameState_MovieIntroAlternate_Update = 0x801e2a70; // type:func
+GameState_MovieIntro_Update = 0x801e27b0; // type:func
+GameState_LoadSavegameScreen_Update = 0x801e7030; // type:func
+GameState_MovieOpening_Update = 0x801e2884; // type:func
+GameState_ExitMovie_Update = 0x801e28fc; // type:func
+GameState_DebugMoviePlayer_Update = 0x801e2954; // type:func
+GameState_Options_Update = 0x801e3164; // type:func
+GameState_Unk15_Update = 0x801e3094; // type:func
+
 D_80024C44 = 0x80024C3C;
 D_80024C8C = 0x80024C84;
 D_80024C90 = 0x80024C88;
@@ -1544,6 +1558,8 @@ D_800B5C28 = 0x800B8280;
 g_ScreenFadeTimestep = 0x800B8288;
 g_VBlanks = 0x800B828C;
 g_UncappedVBlanks = 0x800B8290;
+g_OtTags0 = 0x800B8298; // type:u32 size:0x80
+g_OtTags1 = 0x800B831C; // type:u32 size:0x4000
 g_DeltaTime = 0x800B8318;
 g_GravitySpeed = 0x800BC320;
 g_TickCount = 0x800BC324;
@@ -1776,6 +1792,7 @@ D_800C48D1 = 0x800C6F29;
 D_800C48E0 = 0x800C6F38;
 D_800C48E7 = 0x800C6F3F;
 D_800C48E8 = 0x800C6F40;
+GsDRAWENV = 0x800C9478; // size:0x5C
 GsDISPENV = 0x800C94D8; // size:0x14
 GsIDMATRIX = 0x800C95F8;
 GsWSMATRIX = 0x800C9618;

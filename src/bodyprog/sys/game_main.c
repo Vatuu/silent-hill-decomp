@@ -166,7 +166,7 @@ void MainLoop(void) // 0x80032EE0
     Joy_Init();
     VSyncCallback(&Screen_VSyncCallback);
 
-#if VERSION_EQUAL_OR_NEWER(USA)
+#if !VERSION_REGION_IS(NTSCJ)
     InitGeom();
     func_8004BB10(); // Initializes something for graphics.
     func_800890B8();
