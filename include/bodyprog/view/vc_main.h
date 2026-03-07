@@ -178,6 +178,12 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
 
 void vcRenewalBaseCamAngAndAdjustOfsCamAng(VC_WORK* w_p, SVECTOR* new_base_cam_ang);
 
+/** @brief Computes the camera's rotation.
+ *
+ * @param ofs_tgt_ang Output camera rotation.
+ * @param base_matT Base transformation matrix.
+ * @param w_p Camera workspace.
+ */
 void vcMakeOfsCamTgtAng(SVECTOR* ofs_tgt_ang, MATRIX* base_matT, VC_WORK* w_p);
 
 void vcMakeOfsCam2CharaBottomAndTopAngByBaseMatT(SVECTOR* ofs_cam2chara_btm_ang, SVECTOR* ofs_cam2chara_top_ang,
@@ -198,7 +204,7 @@ s32 vcCamMatNoise(s32 noise_w, s32 ang_spd1, s32 ang_spd2, q19_12 vcSelfViewTime
 
 q19_12 Vc_VectorMagnitudeCalc(q19_12 posX, q19_12 posY, q19_12 posZ);
 
-q19_12 vcGetXZSumDistFromLimArea(s32* out_vec_x_p, s32* out_vec_z_p, q19_12 chk_wld_x, q19_12 chk_wld_z,
+q19_12 vcGetXZSumDistFromLimArea(q19_12* out_vec_x_p, q19_12* out_vec_z_p, q19_12 chk_wld_x, q19_12 chk_wld_z,
                                  q19_12 lim_min_x, q19_12 lim_max_x, q19_12 lim_min_z, q19_12 lim_max_z, bool can_ret_minus_dist_f);
 
 #endif

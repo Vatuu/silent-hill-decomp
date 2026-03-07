@@ -1949,15 +1949,15 @@ void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_T
 void vcMakeIdealCamPosForFixAngCam(VECTOR3* ideal_pos, VC_WORK* w_p) // 0x80083ADC
 {
     SVECTOR3       cam_angle_vec;
-    s32            dist_x_to_lim_area;
-    s32            dist_z_to_lim_area;
+    q19_12         dist_x_to_lim_area;
+    q19_12         dist_z_to_lim_area;
+    q19_12         offset_dist;
+    q19_12         chara_to_cam_dist;
+    q19_12         max_dist_to_lim_area;
+    q19_12         cam_offset_forward;
+    q19_12         abs_dist_z_to_lim_area;
+    q19_12         abs_dist_x_to_lim_area;
     VC_LIMIT_AREA* limit_area;
-    s32            offset_dist;
-    s32            chara_to_cam_dist;
-    s32            max_dist_to_lim_area;
-    s32            cam_offset_forward;
-    s32            abs_dist_z_to_lim_area;
-    s32            abs_dist_x_to_lim_area;
 
     cam_angle_vec.vx = Q12_ANGLE_FROM_Q8(w_p->cur_near_road_2B8.road_p_0->fix_ang_x_16);
     cam_angle_vec.vy = Q12_ANGLE_FROM_Q8(w_p->cur_near_road_2B8.road_p_0->fix_ang_y_17);
@@ -2547,8 +2547,8 @@ void vcGetUseWatchAndCamMvParam(VC_WATCH_MV_PARAM** watch_mv_prm_pp, VC_CAM_MV_P
 
 void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x80084BD8
 {
-    s32 dec_spd_per_dist_xz;
-    s32 dec_spd_per_dist_y;
+    q19_12 dec_spd_per_dist_xz;
+    q19_12 dec_spd_per_dist_y;
 
     if (w_p->flags_8 & VC_WARP_CAM_F)
     {
@@ -2580,11 +2580,11 @@ void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x80084BD8
 void vcRenewalCamMatAng(VC_WORK* w_p, VC_WATCH_MV_PARAM* watch_mv_prm_p, VC_CAM_MV_TYPE cam_mv_type,
                         bool visible_chara_f) // 0x80084D54
 {
-    SVECTOR ofs_tgt_ang;
-    SVECTOR new_base_cam_ang;
+    SVECTOR ofs_tgt_ang;           // Q3.12
+    SVECTOR new_base_cam_ang;      // Q3.12
     MATRIX  new_base_matT;
-    SVECTOR ofs_cam2chara_btm_ang;
-    SVECTOR ofs_cam2chara_top_ang;
+    SVECTOR ofs_cam2chara_btm_ang; // Q3.12
+    SVECTOR ofs_cam2chara_top_ang; // Q3.12
 
     vcMakeNewBaseCamAng(&new_base_cam_ang, cam_mv_type, w_p);
     if (new_base_cam_ang.vx != w_p->base_cam_ang_C8.vx ||
@@ -2624,23 +2624,32 @@ void vcRenewalCamMatAng(VC_WORK* w_p, VC_WATCH_MV_PARAM* watch_mv_prm_p, VC_CAM_
 
 void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_WORK* w_p) // 0x80084EDC
 {
-    static const s32 D_8002AAE0[] = { 0, 170, 682, 1251, 1251, 0, 0 }; // Last 2 could be compiler-added padding, but are needed for match.
+    // Last 2 could be compiler-added padding, but are needed for match.
+    static const s32 D_8002AAE0[] = {
+        Q12_ANGLE(0.0f),
+        Q12_ANGLE(15.0f),
+        Q12_ANGLE(60.0f),
+        Q12_ANGLE(110.0f),
+        Q12_ANGLE(110.0f),
+        Q12_ANGLE(0.0f),
+        Q12_ANGLE(0.0f)
+    };
 
-    s32 sp18[5];
-    s16 temp_a0_3;
-    s16 temp_v0;
-    s16 new_base_ang_x;
-    s16 new_base_ang_y;
-    s16 var_v1_2;
-    s16 temp_a0_2;
-    s16 angle;
-    s16 temp_t0;
-    s16 temp_v0_2;
-    s16 temp_v1;
-    s16 temp_v1_2;
-    s32 deltaZ;
-    s32 deltaY;
-    s32 deltaX;
+    s32   sp18[5];
+    q3_12 temp_a0_3;
+    q3_12 temp_v0;
+    q3_12 new_base_ang_x;
+    q3_12 new_base_ang_y;
+    q3_12 var_v1_2;
+    q3_12 temp_a0_2;
+    q3_12 angle;
+    q3_12 temp_t0;
+    q3_12 temp_v0_2;
+    q3_12 temp_v1;
+    q3_12 temp_v1_2;
+    q23_8 deltaZ;
+    q23_8 deltaY;
+    q23_8 deltaX;
 
     deltaX = Q12_TO_Q8(w_p->watch_tgt_pos_7C.vx - w_p->cam_pos_50.vx);
     deltaY = Q12_TO_Q8(w_p->watch_tgt_pos_7C.vy - w_p->cam_pos_50.vy);
@@ -2742,14 +2751,14 @@ void vcRenewalBaseCamAngAndAdjustOfsCamAng(VC_WORK* w_p, SVECTOR* new_base_cam_a
 
 void vcMakeOfsCamTgtAng(SVECTOR* ofs_tgt_ang, MATRIX* base_matT, VC_WORK* w_p) // 0x800852C8
 {
-    SVECTOR vec;
+    SVECTOR offset;
 
-    vec.vx = Q12_TO_Q8(w_p->watch_tgt_pos_7C.vx - w_p->cam_pos_50.vx);
-    vec.vy = Q12_TO_Q8(w_p->watch_tgt_pos_7C.vy - w_p->cam_pos_50.vy);
-    vec.vz = Q12_TO_Q8(w_p->watch_tgt_pos_7C.vz - w_p->cam_pos_50.vz);
+    offset.vx = Q12_TO_Q8(w_p->watch_tgt_pos_7C.vx - w_p->cam_pos_50.vx);
+    offset.vy = Q12_TO_Q8(w_p->watch_tgt_pos_7C.vy - w_p->cam_pos_50.vy);
+    offset.vz = Q12_TO_Q8(w_p->watch_tgt_pos_7C.vz - w_p->cam_pos_50.vz);
 
-    ApplyMatrixSV(base_matT, &vec, &vec);
-    vwVectorToAngle(ofs_tgt_ang, &vec);
+    ApplyMatrixSV(base_matT, &offset, &offset);
+    vwVectorToAngle(ofs_tgt_ang, &offset);
     ofs_tgt_ang->vz = w_p->watch_tgt_ang_z_8C;
 }
 
@@ -2757,19 +2766,19 @@ void vcMakeOfsCam2CharaBottomAndTopAngByBaseMatT(SVECTOR* ofs_cam2chara_btm_ang,
                                                  MATRIX* base_matT, VECTOR3* cam_pos, VECTOR3* chara_pos,
                                                  s32 chara_bottom_y, s32 chara_top_y) // 0x80085358
 {
-    SVECTOR vec;
+    SVECTOR offset;
 
-    vec.vx = Q12_TO_Q8(chara_pos->vx  - cam_pos->vx);
-    vec.vy = Q12_TO_Q8(chara_bottom_y - cam_pos->vy);
-    vec.vz = Q12_TO_Q8(chara_pos->vz  - cam_pos->vz);
-    ApplyMatrixSV(base_matT, &vec, &vec);
-    vwVectorToAngle(ofs_cam2chara_btm_ang, &vec);
+    offset.vx = Q12_TO_Q8(chara_pos->vx  - cam_pos->vx);
+    offset.vy = Q12_TO_Q8(chara_bottom_y - cam_pos->vy);
+    offset.vz = Q12_TO_Q8(chara_pos->vz  - cam_pos->vz);
+    ApplyMatrixSV(base_matT, &offset, &offset);
+    vwVectorToAngle(ofs_cam2chara_btm_ang, &offset);
 
-    vec.vx = Q12_TO_Q8(chara_pos->vx - cam_pos->vx);
-    vec.vy = Q12_TO_Q8(chara_top_y   - cam_pos->vy);
-    vec.vz = Q12_TO_Q8(chara_pos->vz - cam_pos->vz);
-    ApplyMatrixSV(base_matT, &vec, &vec);
-    vwVectorToAngle(ofs_cam2chara_top_ang, &vec);
+    offset.vx = Q12_TO_Q8(chara_pos->vx - cam_pos->vx);
+    offset.vy = Q12_TO_Q8(chara_top_y   - cam_pos->vy);
+    offset.vz = Q12_TO_Q8(chara_pos->vz - cam_pos->vz);
+    ApplyMatrixSV(base_matT, &offset, &offset);
+    vwVectorToAngle(ofs_cam2chara_top_ang, &offset);
 }
 
 void vcAdjCamOfsAngByCharaInScreen(SVECTOR* cam_ang, SVECTOR* ofs_cam2chara_btm_ang, SVECTOR* ofs_cam2chara_top_ang, VC_WORK* w_p) // 0x80085460
@@ -2790,14 +2799,13 @@ void vcAdjCamOfsAngByCharaInScreen(SVECTOR* cam_ang, SVECTOR* ofs_cam2chara_btm_
                     (watch2chr_ofs_ang_y - w_p->scr_half_ang_wx_2E) :
                     ((-w_p->scr_half_ang_wx_2E > watch2chr_ofs_ang_y) ? (w_p->scr_half_ang_wx_2E + watch2chr_ofs_ang_y) : Q12_ANGLE(0.0f));
 
-    /*
-    var_a1 = watch2chr_bottom_ofs_ang_x + w_p->scr_half_ang_wy_2C;
+    /*var_a1 = watch2chr_bottom_ofs_ang_x + w_p->scr_half_ang_wy_2C;
     if (watch2chr_bottom_ofs_ang_x >= -w_p->scr_half_ang_wy_2C)
     {
         var_a1 = 0;
     }*/
 
-    // TODO: var_a1 should probably be merged into adj_cam_ang_x somehow.
+    // TODO: `var_a1` should probably be merged into `adj_cam_ang_x` somehow.
     var_a1 = (watch2chr_bottom_ofs_ang_x >= -w_p->scr_half_ang_wy_2C) ? Q12_ANGLE(0.0f) : (watch2chr_bottom_ofs_ang_x + w_p->scr_half_ang_wy_2C);
 
     if (w_p->scr_half_ang_wy_2C < (watch2chr_top_ofs_ang_x - var_a1))
@@ -2826,7 +2834,7 @@ void vcAdjCamOfsAngByOfsAngSpd(SVECTOR* ofs_ang, SVECTOR* ofs_ang_spd, SVECTOR* 
                                VC_WATCH_MV_PARAM* prm_p) // 0x8008555C
 {
     SVECTOR unused;
-    VECTOR3 max_spd_dec_per_dist;
+    VECTOR3 max_spd_dec_per_dist; // Q19.12
 
     unused.vx = Math_AngleNormalize(ofs_tgt_ang->vx - ofs_ang->vx);
     unused.vy = Math_AngleNormalize(ofs_tgt_ang->vy - ofs_ang->vy);
@@ -2933,7 +2941,7 @@ q19_12 Vc_VectorMagnitudeCalc(q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80085B
     return SquareRoot0(SQUARE(posX) + SQUARE(posY) + SQUARE(posZ)) << shift;
 }
 
-q19_12 vcGetXZSumDistFromLimArea(s32* out_vec_x_p, s32* out_vec_z_p, q19_12 chk_wld_x, q19_12 chk_wld_z,
+q19_12 vcGetXZSumDistFromLimArea(q19_12* out_vec_x_p, q19_12* out_vec_z_p, q19_12 chk_wld_x, q19_12 chk_wld_z,
                                  q19_12 lim_min_x, q19_12 lim_max_x, q19_12 lim_min_z, q19_12 lim_max_z, bool can_ret_minus_dist_f) // 0x80085C80
 {
     q19_12 cntr_x;
