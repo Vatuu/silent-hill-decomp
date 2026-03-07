@@ -2152,10 +2152,6 @@ extern s8 D_800A99B5;
 
 extern char* D_800A99E4[];
 
-extern s32 g_MapMsg_CurrentIdx;
-
-extern s16 g_MapMsg_SelectFlashTimer;
-
 extern s8 g_PaperMapFileIdxs[];
 
 extern s8 g_PaperMapMarkingFileIdxs[];
@@ -3906,15 +3902,19 @@ void Game_RadioSoundStop(void);
 /** Finds the ground hight and warps the player to it? */
 void Game_PlayerHeightUpdate(void);
 
+// ============ `bodyprog/events/events_main.c` =========================
+
+void Event_Update(bool disableButtonEvents);
+
 bool Event_CollideFacingCheck(s_MapPoint2d* mapPoint);
 
 bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint);
 
 bool Event_CollideObbCheck(s_MapPoint2d* mapPoint);
 
-void Savegame_EnemyStateUpdate(s_SubCharacter* chara);
+// =========================
 
-void Event_Update(bool disableButtonEvents);
+void Savegame_EnemyStateUpdate(s_SubCharacter* chara);
 
 /** @brief Updates character's damage flag to reflect if damage was taken.
  *

@@ -168,7 +168,7 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
 
 void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
 {
-    #define Y_OFFSET Q12(-0.3f)
+    #define OFFSET_Y Q12(-0.3f)
 
     MATRIX  neck_lwm; // Q23.8
     SVECTOR fpos;     // Q23.8
@@ -182,10 +182,10 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
     ApplyMatrix(&neck_lwm, &fpos, &vec);
 
     head_pos->vx = Q8_TO_Q12(vec.vx + neck_lwm.t[0]);
-    head_pos->vy = Q8_TO_Q12(vec.vy + neck_lwm.t[1]) + Y_OFFSET;
+    head_pos->vy = Q8_TO_Q12(vec.vy + neck_lwm.t[1]) + OFFSET_Y;
     head_pos->vz = Q8_TO_Q12(vec.vz + neck_lwm.t[2]);
 
-    #undef Y_OFFSET
+    #undef OFFSET_Y
 }
 
 void vcAddOfsToPos(VECTOR3* out_pos, const VECTOR3* in_pos, q3_12 ofs_xz_r, q3_12 ang_y, q19_12 ofs_y) // 0x80040518

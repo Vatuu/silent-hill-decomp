@@ -79,7 +79,8 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         }
 
         if (disabledEventFlag != EventFlag_None && Savegame_EventFlagGet(disabledEventFlag) &&
-            (disabledEventFlag < 867 || mapEvent->activationType_4_4 == TriggerActivationType_Exclusive || mapEvent->sysState_8_0 == SysState_EventSetFlag))
+            (disabledEventFlag < 867 || mapEvent->activationType_4_4 == TriggerActivationType_Exclusive ||
+             mapEvent->sysState_8_0 == SysState_EventSetFlag))
         {
             continue;
         }
@@ -95,9 +96,11 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
             return;
         }
 
-        // `TriggerActivationType_Button`: Only continue processing event when action button is pressed and `Player_IsBusy` returns false.
+        // `TriggerActivationType_Button`: Only continue processing event when action button is pressed and
+        // `Player_IsBusy` returns `false`.
         if (mapEvent->activationType_4_4 == TriggerActivationType_Button &&
-            (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.action_6) || disableButtonEvents || Player_IsBusy()))
+            (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.action_6) ||
+            disableButtonEvents || Player_IsBusy()))
         {
             continue;
         }
@@ -361,7 +364,7 @@ bool Event_CollideObbCheck(s_MapPoint2d* mapPoint) // 0x80037C5C
         return false;
     }
 
-    // TODO: Odd packed angle conversion method. `Q12_ANGLE_FROM_Q8` doesn't match here.
+    // TODO: Odd Q8 angle conversion method. `Q12_ANGLE_FROM_Q8` doesn't match here.
     angle    = -(mapPoint->triggerParam0_4_16 << 20) >> 16;
     sinAngle = Math_Sin(angle);
 

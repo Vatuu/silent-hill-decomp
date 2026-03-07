@@ -380,6 +380,8 @@ void vcSetAllNpcDeadTimer(void) // 0x8008123C
             curChara->deathTimer_C4 = DEATH_TIME_MAX;
         }
     }
+
+    #undef DEATH_TIME_MAX
 }
 
 s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVECTOR* now_ang) // 0x800812CC
@@ -422,6 +424,12 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
 
     rot_y = Q12_MULT(rot_y, Math_Cos(now_ang->vx));
     return (rot_y <= ROT_Y_ANGLE_MAX) ? VC_MV_SETTLE : VC_MV_CHASE;
+
+    #undef MOVE_DIST_MAX
+    #undef ROT_X_ANGLE_MAX
+    #undef ROT_Y_ANGLE_MAX
+    #undef INTRPT_TIME_MIN
+    #undef INTRPT_TIME_MAX
 }
 
 VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
@@ -933,6 +941,9 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
         w_p->nearest_enemy_2DC         = all_min_sc_p;
         w_p->nearest_enemy_xz_dist_2E0 = all_min_dist;
     }
+
+    #undef ENEMY_DEATH_TIME_MAX
+    #undef ENEMY_DIST_MAX
 }
 
 void vcSetNearRoadAryByCharaPos(VC_WORK* w_p, VC_ROAD_DATA* road_ary_list, s32 half_w, s32 unused, bool near_enemy_f) // 0x80081FBC
@@ -1356,6 +1367,8 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, V
 {
     VECTOR3 far_watch_pos;
 
+    #define playerChara g_SysWork.playerWork_4C.player_0
+
     vcMakeFarWatchTgtPos(&far_watch_pos, w_p, cur_rd_area_size);
     if (cam_mv_type != VC_MV_SELF_VIEW)
     {
@@ -1373,15 +1386,18 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, V
     }
 
     vcMixSelfViewEffectToWatchTgtPos(&w_p->watch_tgt_pos_7C, &w_p->watch_tgt_ang_z_8C, self_view_eff_rate,
-                                     w_p, &g_SysWork.playerBoneCoords_890[HarryBone_Head].workm, g_SysWork.playerWork_4C.player_0.model_0.anim_4.status_0);
+                                     w_p, &g_SysWork.playerBoneCoords_890[HarryBone_Head].workm, playerChara.model_0.anim_4.status_0);
 
     if (w_p->watch_tgt_pos_7C.vy > w_p->watch_tgt_max_y_88)
     {
         w_p->watch_tgt_pos_7C.vy = w_p->watch_tgt_max_y_88;
     }
+
+    #undef playerChara
 }
 
-void vcMakeNormalWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, VC_WORK* w_p, enum _VC_CAM_MV_TYPE cam_mv_type, enum _VC_AREA_SIZE_TYPE cur_rd_area_size) // 0x80082C58
+void vcMakeNormalWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, VC_WORK* w_p,
+                             enum _VC_CAM_MV_TYPE cam_mv_type, enum _VC_AREA_SIZE_TYPE cur_rd_area_size) // 0x80082C58
 {
     SVECTOR ang;                      // Guessed name.
     SVECTOR vec;                      // Guessed name.
@@ -1472,6 +1488,8 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
     s32        corrected_angle_y;
     s_SysWork* sys_work;
 
+    #define playerChara g_SysWork.playerWork_4C.player_0
+
     delta_x = watch_tgt_pos->vx - w_p->cam_pos_50.vx;
     delta_y = watch_tgt_pos->vy - w_p->cam_pos_50.vy;
     delta_z = watch_tgt_pos->vz - w_p->cam_pos_50.vz;
@@ -1518,14 +1536,14 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             break;
 
         default:
-            cam_ang.vy = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
+            cam_ang.vy = playerChara.rotation_24.vy;
             break;
 
         case ANIM_STATUS(HarryAnim_LookAround, false):
         case ANIM_STATUS(HarryAnim_LookAround, true):
             if (w_p->nearest_enemy_2DC != NULL)
             {
-                cam_ang.vy = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
+                cam_ang.vy = playerChara.rotation_24.vy;
             }
             else
             {
@@ -1554,7 +1572,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
                 corrected_angle_y = angle_delta_y;
             }
 
-            cam_ang.vy = g_SysWork.playerWork_4C.player_0.rotation_24.vy + corrected_angle_y;
+            cam_ang.vy = playerChara.rotation_24.vy + corrected_angle_y;
             break;
 
         case ANIM_STATUS(HarryAnim_WalkForward, false):
@@ -1579,7 +1597,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
                 corrected_angle_y = Q12_ANGLE(-10.0f);
             }
 
-            cam_ang.vy = g_SysWork.playerWork_4C.player_0.rotation_24.vy + corrected_angle_y;
+            cam_ang.vy = playerChara.rotation_24.vy + corrected_angle_y;
             break;
     }
 
@@ -1613,7 +1631,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
         case ANIM_STATUS(HarryAnim_TurnLeft, true):
         case ANIM_STATUS(HarryAnim_TurnRight, false):
         case ANIM_STATUS(HarryAnim_TurnRight, true):
-            temp_dir = (g_SysWork.playerWork_4C.player_0.rotation_24.vy >> 7) & 0xF;
+            temp_dir = (playerChara.rotation_24.vy >> 7) & 0xF;
             if (temp_dir == 0 || temp_dir == 5)
             {
                 cam_ang.vx -= Q12_ANGLE(1.0f);
@@ -1656,6 +1674,8 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
     watch_tgt_pos->vx += Math_MulFixed(new_x - watch_tgt_pos->vx, effect_rate, Q12_SHIFT);
     watch_tgt_pos->vy += Math_MulFixed(new_y - watch_tgt_pos->vy, effect_rate, Q12_SHIFT);
     watch_tgt_pos->vz += Math_MulFixed(new_z - watch_tgt_pos->vz, effect_rate, Q12_SHIFT);
+
+    #undef playerChara
 }
 
 void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYPE cur_rd_area_size) // 0x800832B4
@@ -1886,6 +1906,8 @@ s32 vcRetMaxTgtMvXzLen(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x8008395
     max_spd_xz = (cam_mv_prm_p->max_spd_xz > max_spd_xz) ? max_spd_xz : cam_mv_prm_p->max_spd_xz;
 
     return Math_MulFixed(max_spd_xz, g_DeltaTime, Q12_SHIFT);
+
+    #undef SPEED_XZ_MIN
 }
 
 void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_TYPE cur_rd_area_size) // 0x800839CC
@@ -2183,6 +2205,8 @@ void vcMakeIdealCamPosUseVC_ROAD_DATA(VECTOR3* ideal_pos, VC_WORK* w_p, enum _VC
     ideal_pos->vz = w_p->chara_pos_114.vz + Math_MulFixed(final_cam_dist, Math_Cos(w_p->cam_chara2ideal_ang_y_FE), Q12_SHIFT);
 
     vcAdjustXzInLimAreaUsingMIN_IN_ROAD_DIST(&ideal_pos->vx, &ideal_pos->vz, &near_road_data->rd_14);
+
+    #undef ANGLE_DELTA_RANGE
 }
 
 void vcAdjustXzInLimAreaUsingMIN_IN_ROAD_DIST(s32* x_p, s32* z_p, VC_LIMIT_AREA* lim_p) // 0x80084210
@@ -2966,3 +2990,5 @@ q19_12 vcGetXZSumDistFromLimArea(s32* out_vec_x_p, s32* out_vec_z_p, q19_12 chk_
 
     return ret_dist;
 }
+
+#undef MIN_IN_ROAD_DIST
