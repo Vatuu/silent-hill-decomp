@@ -28,7 +28,7 @@ options:
 
   section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
   symbol_addrs_path:
-    - configs/JAP2/sym.bodyprog.txt
+    - configs/JAP1/sym.bodyprog.txt
     - configs/USA/sym.main.txt
   reloc_addrs_path:
     - configs/JAP2/rel.main.txt
