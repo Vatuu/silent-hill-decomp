@@ -16,7 +16,7 @@ s32 D_800C3954;
 s32 D_800C3958;
 s32 D_800C395C;
 
-#if VERSION_EQUAL_OR_NEWER(USA)
+#if VERSION_IS(USA)
 void func_8004BB10(void) // 0x8004BB10
 {
     // Based on `libgs.h` `jt_init4` function?
@@ -30,7 +30,7 @@ void func_8004BB10(void) // 0x8004BB10
     // Textured gouraud quad.
     GsFCALL4.tg4[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG4LFG;
 }
-#else
+#elif VERSION_REGION_IS(NTSCJ)
 bool func_8004CB54(void) // JPN0 0x8004CB54
 {
     GsFCALL4.tg3[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG3LFG;
