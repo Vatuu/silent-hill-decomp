@@ -215,6 +215,20 @@ D_800B141C = 0x800B394C;
 D_800B142C = 0x800B395C;
 D_800B2610 = 0x800B4B40;
 
+// text_draw
+g_Strings2dLayerIdx = 0x800AF838;
+g_StringPosition = 0x800C5DD8;
+D_800C38AA = 0x800C5DDA;
+g_StringPositionX1 = 0x800C5DDC;
+g_StringColorId = 0x800AF834;
+Gfx_Strings2dLayerIdxSet = 0x8004A5F4; // type:func
+Gfx_StringsReset2dLayerIdx = 0x8004A600; // type:func
+D_800C38F8 = 0x800C5DE8;
+FONT_12X16_GLYPH_WIDTHS = 0x80025D58;
+STRING_COLORS = 0x80025DAC;
+D_800C38B0 = 0x800C5E18;
+D_800C5E10 = 0x800C5E10; // size:4
+
 
 // Gamestates inside overlays. TODO: Move these to sym files for each overlay
 GameState_KonamiLogo_Update = 0x800cbadc; // type:func

@@ -1,0 +1,455 @@
+
+#include "game.h"
+
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/text/text_draw.h"
+#include "bodyprog/math/math.h"
+
+// JPN releases seem to use much different text draw functions.
+// Some functions from USA are still included, but in a different order to USA.
+// Unsure if these can be merged into same .c, might need to be kept seperate.
+
+#define MAP_MSG_CODE_MARKER        '~' /** Message code start. */
+#define MAP_MSG_CODE_COLOR         'C' /** Set color. */
+#define MAP_MSG_CODE_DISPLAY_ALL   'D' /** Display message instantly without roll. */
+#define MAP_MSG_CODE_END           'E' /** End message. */
+#define MAP_MSG_CODE_HIGH_RES      'H' /** High-resolution glyph drawing. */
+#define MAP_MSG_CODE_JUMP          'J' /** Jump timer. */
+#define MAP_MSG_CODE_LINE_POSITION 'L' /** Set next line position. */
+#define MAP_MSG_CODE_MIDDLE        'M' /** Align center. */
+#define MAP_MSG_CODE_NEWLINE       'N' /** Newline. */
+#define MAP_MSG_CODE_SELECT        'S' /** Display dialog prompt with selectable entries. */
+#define MAP_MSG_CODE_TAB           'T' /** Inset line. */
+
+#define FONT_12X16_GLYPH_COUNT        84
+#define FONT_12X16_GLYPH_SIZE_X       12
+#define FONT_12X16_GLYPH_SIZE_Y       16
+#define FONT_12X16_SPACE_SIZE         6
+#define FONT_12X16_LINE_COUNT_MAX     9
+#define FONT_12X16_ATLAS_COLUMN_COUNT (FONT_12X16_GLYPH_COUNT / 4)
+
+extern s_800C38B0 D_800C38B0; // 0x800C5E18 in JPN
+
+DVECTOR g_StringPosition;
+
+s32 g_StringPositionX1;
+
+/** `e_ColorId` */
+static s16 g_StringColorId = StringColorId_White;
+
+// 2 bytes of padding.
+
+/** Text index 2D layer.
+ * If modifying `Gfx_StringSetPosition`, when setting it to
+ * a value lower than 6, text will not be affected by the fade effect.
+ */
+static s32 g_Strings2dLayerIdx = 6;
+
+// TODO: Unsure if these correspond to variables in USA.
+extern s16 D_800AF83C; // Set by `Gfx_StringSetColor_JP`
+extern s16 D_800C5DEC;
+extern s16 D_800C5DEE;
+extern s16 D_800C5E0C;
+extern s16 D_800C5E0E;
+extern DVECTOR D_800C5E10;
+extern s32 D_800C5E14;
+extern s32 D_800C5E1C;
+
+const u32 pad_rodata_80025D54 = 0;
+
+/** @brief Glyph widths for the 12x16 font. Used for kerning. */
+static const u8 FONT_12X16_GLYPH_WIDTHS[FONT_12X16_GLYPH_COUNT] = {
+    3,  7,  7,  11, 11, 4,  10, 4,  6,  10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4,  4,
+    10, 11, 10, 8,  13, 12, 12, 12, 13, 11, 11, 13, 12, 9,  9,  12, 12, 13, 12, 13, 11,
+    13, 12, 10, 11, 13, 12, 12, 12, 11, 12, 6,  4,  6,  8,  0,  3,  9,  10,  9, 9,  9,
+    7,  11, 11, 6,  6,  10, 6,  13, 11, 10, 11, 10, 8,  8,  7,  10, 10, 12, 10, 10, 9
+};
+
+static const u32 STRING_COLORS[StringColorId_Count] = {
+    PACKED_COLOR(160, 128, 64,  0x64),
+    PACKED_COLOR(32,  32,  32,  0x64),
+    PACKED_COLOR(24,  128, 40,  0x64),
+    PACKED_COLOR(8,   184, 96,  0x64),
+    PACKED_COLOR(128, 0,   0,   0x64),
+    PACKED_COLOR(24,  128, 40,  0x64),
+    PACKED_COLOR(100, 100, 100, 0x64),
+    PACKED_COLOR(128, 128, 128, 0x64)
+};
+
+const u32 pad_rodata_80025DCC[2] = { 0, 0 };
+
+void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A5B0
+{
+    #define OFFSET_X SCREEN_POSITION_X(50.0f)
+    #define OFFSET_Y SCREEN_POSITION_Y(47.0f)
+
+    if (x != NO_VALUE)
+    {
+        g_StringPosition.vx = x - OFFSET_X;
+        g_StringPositionX1  = (s16)(x - OFFSET_X);
+    }
+
+    if (y != NO_VALUE)
+    {
+        g_StringPosition.vy = y - OFFSET_Y;
+    }
+
+    g_Strings2dLayerIdx = 6;
+
+    #undef OFFSET_X
+    #undef OFFSET_Y
+}
+
+void Gfx_Strings2dLayerIdxSet(s32 idx) // 0x8004A5F4
+{
+    g_Strings2dLayerIdx = idx;
+}
+
+void Gfx_StringsReset2dLayerIdx(void) // 0x8004A600
+{
+    g_Strings2dLayerIdx = 6;
+}
+
+void Gfx_StringSetColor(s16 colorId) // 0x8004A610
+{
+    g_StringColorId = colorId;
+}
+
+bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A61C
+{
+    #define WIDE_SPACE_SIZE 10
+    #define ATLAS_BASE_Y    240
+
+    // TODO: This only works for one case. There may originally have been some other generic macro.
+    #define setSprtUvClut(glyphSprt, idx, clut)                                                                                                     \
+    *((u32*)&(glyphSprt)->u0) = (((idx) % FONT_12X16_ATLAS_COLUMN_COUNT) * FONT_12X16_GLYPH_SIZE_X) + /* `u0`:   Column in atlas. */            \
+                                (ATLAS_BASE_Y << 8)                                                     + /* `v0`:   Row 0 in atlas with offset. */ \
+                                ((clut) << 16)                                                            /* `clut`: Packed magic value. */
+
+    s32       posX;
+    s32       posY;
+    s32       u0;
+    s32       sizeCpy;
+    s32       glyphIdx;
+    u32       glyphColor;
+    u32       charCode;
+    u8*       strCpy;
+    bool      result;
+    s32       glyphWidth;
+    s32       posXCpy;
+    GsOT*     ot;
+    PACKET*   packet;
+    DR_TPAGE* tPage;
+    POLY_FT4* glyphPoly;
+    SPRT*     glyphSprt;
+
+    // Create local argument copies.
+    strCpy  = str;
+    sizeCpy = strLength;
+
+    packet = NULL;
+    result = false;
+
+    // Set base screen position.
+    posX = g_StringPosition.vx;
+    posY = g_StringPosition.vy;
+
+    glyphColor = STRING_COLORS[g_StringColorId];
+    ot         = &g_OtTags0[g_ActiveBufferIdx][g_Strings2dLayerIdx];
+
+    if (!g_SysWork.enableHighResGlyphs_2350_0)
+    {
+        packet = GsOUT_PACKET_P;
+    }
+
+    // Parse string.
+    while (sizeCpy > 0)
+    {
+        charCode = *strCpy;
+
+        // TODO: Try refactoring into switch.
+
+        // Convert literal `!` and `&` into `char`s mappable to representative atlas glyphs.
+        if (charCode == '!')
+        {
+            charCode = '\\';
+        }
+        else if (charCode == '&')
+        {
+            charCode = '^';
+        }
+
+        // Space.
+        if (charCode == '_')
+        {
+            posX += FONT_12X16_SPACE_SIZE;
+        }
+        // Wide space.
+        else if (charCode == '\v')
+        {
+            posX += WIDE_SPACE_SIZE;
+        }
+        // Start of header.
+        else if (charCode == '\x01')
+        {
+            posX--;
+        }
+        // Regular character.
+        else if (charCode >= GLYPH_TABLE_ASCII_OFFSET && charCode <= 'z')
+        {
+            sizeCpy--;
+
+            // Draw glyph sprite.
+            if (g_SysWork.enableHighResGlyphs_2350_0)
+            {
+                glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
+
+                glyphIdx   = charCode - GLYPH_TABLE_ASCII_OFFSET;
+                glyphWidth = FONT_12X16_GLYPH_WIDTHS[glyphIdx];
+
+                setPolyFT4(glyphPoly);
+                setRGB0(glyphPoly, glyphColor, glyphColor >> 8, glyphColor >> 16);
+                setXY4(glyphPoly,
+                       posX,                             posY * 2,
+                       posX,                             (posY * 2) + 30,
+                       posX + FONT_12X16_GLYPH_SIZE_X, posY * 2,
+                       posX + FONT_12X16_GLYPH_SIZE_X, (posY * 2) + 30);
+
+                posX += glyphWidth;
+
+                u0 = (glyphIdx % FONT_12X16_ATLAS_COLUMN_COUNT) * FONT_12X16_GLYPH_SIZE_X;
+
+                *((u32*)&glyphPoly->u0) = u0 + (0xF000 + (0x7FD3 << 16));                                                      // `u0`, `v0`, `clut`.
+                *((u32*)&glyphPoly->u1) = u0 + (((((glyphIdx / FONT_12X16_ATLAS_COLUMN_COUNT) & 0xF) | 16) << 16) | 0xFF00); // `u1`, `v1`, `page`.
+                *((u16*)&glyphPoly->u2) = u0 - 0xFF4;                                                                          // `u2`, `v2`.
+                *((u16*)&glyphPoly->u3) = u0 - 0xF4;                                                                           // `u3`, `v3`.
+
+                addPrim(ot, glyphPoly);
+                GsOUT_PACKET_P = (u8*)glyphPoly + sizeof(POLY_FT4);
+            }
+            else
+            {
+                posXCpy = (u16)posX;
+
+                glyphSprt              = (SPRT*)packet;
+                *((u32*)&glyphSprt->w) = 0x10000C;
+
+                glyphIdx = charCode - GLYPH_TABLE_ASCII_OFFSET;
+                posX    += FONT_12X16_GLYPH_WIDTHS[glyphIdx];
+
+                addPrimFast(ot, glyphSprt, 4);
+                *((u32*)&glyphSprt->r0)   = glyphColor;
+                *((u32*)(&glyphSprt->x0)) = posXCpy + (posY << 16);
+
+                setSprtUvClut(glyphSprt, glyphIdx, 0x7FD3); // TODO: Demagic CLUT arg.
+                //*((u32*)&glyphSprt->u0) = ((glyphIdx % FONT_12X16_ATLAS_COLUMN_COUNT) * FONT_12X16_GLYPH_SIZE_X) + 0xF000 + (0x7FD3 << 16); // `u0`, `v0`, `clut`.
+
+                packet += sizeof(SPRT);
+
+                tPage = (DR_TPAGE*)packet;
+                setDrawTPage(tPage, 0, 1, ((glyphIdx / FONT_12X16_ATLAS_COLUMN_COUNT) & 0xF) | 16);
+                addPrim(ot, tPage);
+
+                packet += sizeof(DR_TPAGE);
+            }
+        }
+        // Newline.
+        else if (charCode == '\n')
+        {
+            posX  = g_StringPositionX1;
+            posY += FONT_12X16_GLYPH_SIZE_Y;
+        }
+        // New color.
+        else if (charCode >= '\x01' && charCode < '\b')
+        {
+            glyphColor      = STRING_COLORS[charCode];
+            g_StringColorId = charCode;
+        }
+        // Terminator.
+        else if (charCode == '\0')
+        {
+            result = true;
+            break;
+        }
+
+        strCpy++;
+    }
+
+    if (!g_SysWork.enableHighResGlyphs_2350_0)
+    {
+        GsOUT_PACKET_P = packet;
+    }
+
+    // Reset base string position?
+    *((u32*)&g_StringPosition) = (posX & 0xFFFF) + (posY << 16);
+
+    return result;
+
+    #undef WIDE_SPACE_SIZE
+    #undef ATLAS_BASE_Y
+}
+
+// TODO: Might match USA `func_8004B658` with added func call?
+// USA func doesn't come after Gfx_StringDraw though.
+void func_8004AA28(void) // 0x8004AA28
+{
+    D_800C38F8.attribute = 64;
+    D_800C38F8.cx = 304;
+    D_800C38F8.v = 240;
+    D_800C38F8.h = 16;
+    func_8003652C();
+}
+
+void func_8004AA6C(s16 x, s16 y) // 0x8004AA6C
+{
+    if (x != NO_VALUE)
+    {
+        D_800C5DEC = x + (-g_GameWork.gsScreenWidth_588 / 2);
+        D_800C5E0C = D_800C5DEC;
+    }
+
+    if (y != NO_VALUE)
+    {
+        D_800C5DEE = y + (-g_GameWork.gsScreenHeight_58A / 2);
+    }
+}
+
+void func_8004AAE4(s16 arg0) // 0x8004AAE4
+{
+    if (arg0 < 0 || arg0 >= 5)
+    {
+        D_800C5E0E = 0;
+    }
+    else
+    {
+        D_800C5E0E = arg0;
+    }
+}
+
+INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004AB04);
+
+void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004AD90
+{
+    #define GLYPH_SIZE_X       11
+    #define ATLAS_COLUMN_COUNT 10
+
+    s32   quotient;
+    s32   isNegative;
+    s32   i;
+    char* str;
+
+    if (widthMin > 0)
+    {
+        for (i = 0; i < (widthMin - 1); i++)
+        {
+            D_800C38F8.x += GLYPH_SIZE_X;
+        }
+    }
+
+    str  = (char*)PSX_SCRATCH_ADDR(0x2F);
+    *str = 0;
+
+    if (val < 0)
+    {
+        isNegative = true;
+        val        = -val;
+    }
+    else
+    {
+        isNegative = false;
+    }
+
+    // Wrap atlas row?
+    while (val >= ATLAS_COLUMN_COUNT)
+    {
+        str--;
+        quotient = (val / ATLAS_COLUMN_COUNT) >> 32;
+        *str     = (val - (quotient * ATLAS_COLUMN_COUNT)) + '0';
+
+        if (widthMin > 0)
+        {
+            D_800C38F8.x -= GLYPH_SIZE_X;
+        }
+
+        val = quotient;
+    }
+
+    str--;
+    *str = val + '0';
+
+    if (isNegative)
+    {
+        str--;
+        *str          = '-';
+        D_800C38F8.x -= GLYPH_SIZE_X;
+    }
+
+    // Draw numeric string.
+    Gfx_StringDraw(str, 5);
+    return;
+
+    #undef GLYPH_SIZE_X
+    #undef ATLAS_COLUMN_COUNT
+}
+
+void Gfx_MapMsg_DefaultStringInfoSet(void) // 0x8004AEA8
+{
+    D_800C38B0.field_0 = 0;
+    D_800C38B0.positionIdx_1 = 1;
+    D_800C5E1C = 1;
+    D_800C5E10.vx = -0x78;
+    D_800C5E10.vy = 0x4C;
+    D_800C5E14 = -0x78;
+    D_800AF83C = StringColorId_White;
+    g_SysWork.enableHighResGlyphs_2350_0 = 0;
+}
+
+void func_8004AF14(s32 x, s32 y) // 0x8004AF14
+{
+    if (x != -1)
+    {
+        D_800C5E10.vx = x - (SCREEN_WIDTH / 2);
+        D_800C5E14 = D_800C5E10.vx;
+    }
+    if (y != -1)
+    {
+        D_800C5E10.vy = y - (FRAMEBUFFER_HEIGHT_PROGRESSIVE / 2);
+    }
+}
+
+void Gfx_StringSetColor_JP(s16 colorId) // 0x8004A8DC
+{
+    D_800AF83C = colorId;
+}
+
+INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", Gfx_MapMsg_CalculateWidths);
+
+INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004B45C);
+
+INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", Gfx_MapMsg_StringDraw);
+
+INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", Gfx_StringDraw_JP);
+
+INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C394);
+
+INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C7E4);
+
+INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C870);
+
+INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C8AC);
+
+INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C8D8);
+
+INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025EB4);
+
+INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025EE0);
+
+INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025F0C);
+
+INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025F38);
+
+INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025F44);
+
+INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C918);
