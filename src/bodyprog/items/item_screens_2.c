@@ -101,7 +101,7 @@ void Game_TimerUpdate(void) // 0x8004C8DC
     }
 }
 
-#if VERSION_IS(JAP0)
+#if VERSION_REGION_IS(NTSCJ)
 INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_2", GameState_ItemScreens_Update);
 INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026120);
 #else
@@ -407,7 +407,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
 }
 #endif
 
-#if VERSION_IS(JAP0)
+#if VERSION_REGION_IS(NTSCJ)
 INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_2", Gfx_Results_Save);
 #else
 void Gfx_Results_Save(void) // 0x8004D1A0
@@ -1177,7 +1177,15 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP6_S04)
     {
-        if (Math_Distance2dCheck(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.npcs_1A0[0].position_18, Q12(0.7f)) == 0 &&
+        // @bugfix pre-JAP1 versions don't check which NPC the Aglaophotis is being used on, allowing for a skip by using on non-intended NPC.
+        // JAP1 onwards added extra check here before allowing it to be used.
+        #if VERSION_EQUAL_OR_NEWER(JAP1)
+            #define CHARA_ID_CHECK (g_SysWork.npcs_1A0[0].model_0.charaId_0 == Chara_MonsterCybil)
+        #else
+            #define CHARA_ID_CHECK (true)
+        #endif
+
+        if ((CHARA_ID_CHECK && Math_Distance2dCheck(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.npcs_1A0[0].position_18, Q12(0.7f)) == 0) &&
             ABS(g_SysWork.playerWork_4C.player_0.position_18.vy - g_SysWork.npcs_1A0[0].position_18.vy) < Q12(0.3f) &&
             g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_None &&
             g_SavegamePtr->items_0[inventoryItemIdx].id_0 == InventoryItemId_UnknownLiquid)
@@ -1209,6 +1217,8 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
             }
         }
     }
+
+    #undef CHARA_ID_CHECK
 }
 
 void Gfx_Inventory_CmdOptionsDraw(void) // 0x8004E864

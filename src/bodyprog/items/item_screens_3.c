@@ -485,7 +485,11 @@ const char* g_ItemDescriptions[] = {
     "［ベトール］の文字が刻まれた鍵",
     "［アラトロン］の文字が刻まれた鍵",
     "シェリルの字で「学校へ」と~N書かれたスケッチブックの紙片",
+#if VERSION_EQUAL_OR_NEWER(JAP1)
+    "シェリルの字で「ＬＥＶＩＮ通り」~N「犬小屋」と書かれたスケッチブックの紙片",
+#else
     "シェリルの字で「ＬＥＶＩＮ通り」~N\n	「犬小屋」と書かれたスケッチブックの紙片",
+#endif
     "鍵が描かれた長方形のカード~N教室の机の上に置かれていた",
     "　",
     "下水道でリゾート街への出口へ行くための~N扉を開ける鍵　水の中に落ちていた",
@@ -523,7 +527,11 @@ const char* g_ItemDescriptions[] = {
     "ネジを回すのに使われる道具~N錆びてはいるが使えないことはない",
     "フラッシュ付きのカメラ",
     "材質不明の無骨で頑丈そうな指輪",
+#if VERSION_EQUAL_OR_NEWER(JAP1)
+    "星座の絵がかけられた柱にはまっていた~N時計の文字盤のような模様がある大きな石",
+#else
     "星座の絵がかけられた柱にはまっていた~N\n	時計の文字盤のような模様がある大きな石",
+#endif
     "古代の魔術師の名が冠された~N六つの頂点を持つ星型の護符",
     "水銀を意味する蛇をかたどった~N錬金術のシンボル",
     "楕円と十字からなる護符",
@@ -831,8 +839,12 @@ s16 D_800AE564[] = {
     0x983, 0x94F, 0x91C, 0x8EA,
     0x8B9, 0x889, 0x85A, 0x82C,
     0x800, 
-#if VERSION_REGION_IS(NTSCJ)
+#if VERSION_IS(JAP0)
     0x5455,
+#elif VERSION_IS(JAP1)
+    0x0,
+#elif VERSION_IS(JAP2)
+    0x8004,
 #else
     0x0,
 #endif
@@ -923,8 +935,12 @@ s32 D_800AE71C[][2] = {
 q3_12 D_800AE73C = Q12(0.0f);
 
 // TODO: Possibly garbage data.
-#if VERSION_REGION_IS(NTSCJ)
+#if VERSION_IS(JAP0)
 s16 D_800AE73E = 0x342C;
+#elif VERSION_IS(JAP1)
+s16 D_800AE73E = 0x8002;
+#elif VERSION_IS(JAP2)
+s16 D_800AE73E = 0x0000;
 #else
 s16 D_800AE73E = 0x8002;
 #endif
@@ -2264,7 +2280,7 @@ void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
     }
 }
 
-#if VERSION_IS(JAP0)
+#if VERSION_REGION_IS(NTSCJ)
 INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_3", Gfx_Inventory_ItemDescriptionDraw);
 #else
 void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
@@ -2507,7 +2523,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
 }
 #endif
 
-#if VERSION_IS(JAP0)
+#if VERSION_REGION_IS(NTSCJ)
 INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027C6C);
 
 INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027C74);

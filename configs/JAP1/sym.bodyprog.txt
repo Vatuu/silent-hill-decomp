@@ -22,6 +22,23 @@ D_800C9660_JPN = 0x800C9660;
 D_800C9664_JPN = 0x800C9664;
 D_800C97C8_JPN = 0x800C97C8;
 
+// item_screens_2
+D_80026120 = 0x8002612c; // match JAP0 name
+
+// item_screens_3, match JAP0 names
+D_80027C6C = 0x80027C78; 
+D_80027C74 = 0x80027C80;
+D_80027C7C = 0x80027C88;
+D_80027C84 = 0x80027C90;
+D_80027C90 = 0x80027C9C;
+D_80027C9C = 0x80027CA8;
+D_80027CA8 = 0x80027CB4;
+D_80027CB0 = 0x80027CBC;
+func_80053898 = 0x8005394C; // type:func
+func_800539A0 = 0x80053A54; // type:func
+INVENTORY_ITEM_NAMES = 0x800B0044;
+g_ItemDescriptions = 0x800B0350;
+
 // Gamestates inside overlays. TODO: Move these to sym files for each overlay
 GameState_KonamiLogo_Update = 0x800cbc04; // type:func
 GameState_KcetLogo_Update = 0x800cbffc; // type:func
@@ -1483,7 +1500,7 @@ D_800AE4DC = 0x800B09C0;
 D_800AE500 = 0x800B09E4;
 D_800AE520 = 0x800B0A04;
 D_800AE564 = 0x800B0A48;
-D_800AE5B8 = 0x800B0A9C;
+D_800AE5A8 = 0x800B0A8C; // size:0x20
 D_800AE5C8 = 0x800B0AAC;
 D_800AE5CC = 0x800B0AB0;
 D_800AE5F0 = 0x800B0AD4;
