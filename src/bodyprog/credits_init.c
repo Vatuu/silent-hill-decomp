@@ -20,6 +20,10 @@ s_800AFE08 D_800AFE08 = {
     // TODO: Symbolise these pointers, so version check can be removed.
     .field_C  = (s16*)0x801E5C1C,
     .field_10 = (s32*)0x801E5E1C
+#elif VERSION_IS(JAP1) || VERSION_IS(JAP2)
+    // TODO: Symbolise these pointers.
+    .field_C  = (s16*)0x801E5C24,
+    .field_10 = (s32*)0x801E5E24
 #endif
 };
 
@@ -34,6 +38,10 @@ s_800AFE24 D_800AFE24 = {
         // TODO: Symbolise these pointers.
         .field_C  = (s16*)0x801E5C1C,
         .field_10 = (s32*)0x801E5E38
+#elif VERSION_IS(JAP1) || VERSION_IS(JAP2)
+        // TODO: Symbolise these pointers.
+        .field_C  = (s16*)0x801E5C24,
+        .field_10 = (s32*)0x801E5E40
 #endif
     },
     .field_1C = 4096,

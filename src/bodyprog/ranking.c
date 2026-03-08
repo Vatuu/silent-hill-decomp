@@ -140,7 +140,15 @@ void func_8008F94C() // 0x8008F94C
     }
 
     temp_s1    = D_800C48AE + (D_800C48A2 * 60);
+
+    // @bugfix pre-JAP1 would accidentally include unlocked hyper-blaster colors into the picked-up-item count.
+    // JAP1 onwards fix this by ignoring the top-most bit.
+    // (see `pickedUpSpecialItemCount_25C_3` field comment for more info)
+#if VERSION_EQUAL_OR_NEWER(JAP1)
+    D_800C48B4 = g_SavegamePtr->pickedUpSpecialItemCount_25C_3 & 0x7;
+#else
     D_800C48B4 = g_SavegamePtr->pickedUpSpecialItemCount_25C_3 & 0xF;
+#endif
 
     D_800C48B3 = g_SavegamePtr->locationId_A8;
     D_800C3E40 = 7;
@@ -1014,4 +1022,8 @@ void func_8009151C(u32 arg0, s32 arg1, s32 arg2)
 static const u32 pad_rodata_8002B5CC[2] = {0x01000100, 0x00F00000};
 #elif VERSION_IS(JAP0)
 static const u8 pad_rodata_8002B5CC[] = {0x00, 0x20, 0x2B, 0x31, 0x00, 0x2B, 0x31, 0x20};
+#elif VERSION_IS(JAP1)
+static const u32 pad_rodata_8002B5CC[2] = {0x01000100, 0x00F00000};
+#elif VERSION_IS(JAP2)
+static const u8 pad_rodata_8002B5CC[] = {0x00, 0x60, 0x01, 0x0C, 0x00, 0x24, 0x04, 0x00};
 #endif
