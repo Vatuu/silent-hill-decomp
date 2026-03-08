@@ -228,13 +228,13 @@ static inline q19_12 Anim_TimestepGet(s_Model* model, s_AnimInfo* animInfo)
 
 void Anim_PlaybackOnce(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo) // 0x800449F0
 {
-    bool setNewAnimStatus;
-    s32  timestep;
-    s32  newTime;
-    s32  newKeyframeIdx;
-    s32  startTime;
-    s32  endTime;
-    s32  alpha;
+    bool   setNewAnimStatus;
+    q19_12 timestep;
+    q19_12 newTime;
+    s32    newKeyframeIdx;
+    q19_12 startTime;
+    q19_12 endTime;
+    q19_12 alpha;
 
     setNewAnimStatus = false;
 
@@ -289,18 +289,18 @@ void Anim_PlaybackOnce(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneC
 
 void Anim_PlaybackLoop(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo) // 0x80044B38
 {
-    s32 startKeyframeIdx;
-    s32 endKeyframeIdx;
-    s32 nextStartKeyframeIdx;
-    s32 keyframeCount;
-    s32 startTime;
-    s32 nextStartTime;
-    s32 duration;
-    s32 timestep;
-    s32 newTime;
-    s32 newKeyframeIdx0;
-    s32 newKeyframeIdx1;
-    s32 alpha;
+    s32    startKeyframeIdx;
+    s32    endKeyframeIdx;
+    s32    nextStartKeyframeIdx;
+    s32    keyframeCount;
+    q19_12 startTime;
+    q19_12 nextStartTime;
+    q19_12 duration;
+    q19_12 timestep;
+    q19_12 newTime;
+    s32    newKeyframeIdx0;
+    s32    newKeyframeIdx1;
+    q19_12 alpha;
 
     startKeyframeIdx     = animInfo->startKeyframeIdx_C;
     endKeyframeIdx       = animInfo->endKeyframeIdx_E;
@@ -348,11 +348,11 @@ void Anim_PlaybackLoop(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneC
 
 void Anim_BlendLinear(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo) // 0x80044CA4
 {
-    bool setNewAnimStatus;
-    s32  startKeyframeIdx;
-    s32  endKeyframeIdx;
-    s32  timestep;
-    s32  alpha;
+    bool   setNewAnimStatus;
+    s32    startKeyframeIdx;
+    s32    endKeyframeIdx;
+    q19_12 timestep;
+    q19_12 alpha;
 
     setNewAnimStatus = false;
     startKeyframeIdx = animInfo->startKeyframeIdx_C;
@@ -409,12 +409,12 @@ void Anim_BlendEaseOut(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneC
 {
     s32    startKeyframeIdx;
     s32    endKeyframeIdx;
-    s32    timeDelta;
-    s32    timestep;
-    s32    alpha;
+    q19_12 timeDelta;
+    q19_12 timestep;
+    q19_12 alpha;
     q19_12 sinVal;
-    s32    newTime;
-    s32    newAlpha;
+    q19_12 newTime;
+    q19_12 newAlpha;
 
     startKeyframeIdx = animInfo->startKeyframeIdx_C;
     endKeyframeIdx   = animInfo->endKeyframeIdx_E;
