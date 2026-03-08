@@ -3675,7 +3675,7 @@ s32 func_80069B24(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara);
 
 s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 arg4);
 
-void func_80069DF0(s_800C4590* arg0, VECTOR3* pos, s32 arg2, s32 arg3);
+void func_80069DF0(s_800C4590* arg0, const VECTOR3* pos, s32 arg2, s32 arg3);
 
 s32 func_80069FFC(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara);
 

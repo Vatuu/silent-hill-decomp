@@ -1627,7 +1627,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
     }
 
     Gfx_Inventory_HealthStatusDraw();
-    if (g_Gfx_Inventory_SelectionBordersDraw == 8)
+    if (g_Inventory_SelectionBordersDraw == 8)
     {
         switch (*arg0)
         {
@@ -1820,7 +1820,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         }
     }
 
-    temp_t3   = (Math_Cos(g_Gfx_Inventory_SelectionBordersDraw << 7) * Math_Cos(g_Gfx_Inventory_SelectionBordersDraw << 7) * 0x10) >> 0x10;
+    temp_t3   = (Math_Cos(g_Inventory_SelectionBordersDraw << 7) * Math_Cos(g_Inventory_SelectionBordersDraw << 7) * 0x10) >> 0x10;
 
     D_800C3B68[0][0].vx = SelectionOuline_InnerLine[*arg0].field_0.vx +
     FP_FROM((new_var = SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vx - SelectionOuline_InnerLine[*arg0].field_0.vx) * temp_t3, Q12_SHIFT);
@@ -1978,7 +1978,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         }
     }
 
-    if (g_Gfx_Inventory_SelectionBordersDraw != 8)
+    if (g_Inventory_SelectionBordersDraw != 8)
     {
         return;
     }
@@ -3358,7 +3358,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 if (D_800AE190 == 0x40)
                 {
                     g_Inventory_ScrollTransitionTimer    = 0;
-                    g_Gfx_Inventory_SelectionBordersDraw = 0;
+                    g_Inventory_SelectionBordersDraw = 0;
                     g_GameWork.gameStateStep_598[1]      = 15;
                     g_GameWork.gameStateStep_598[2]      = 0;
                     D_800AE190                           = 0;
@@ -3385,7 +3385,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 *selectedItemId                      = 0;
                 D_800AE188                           = 0;
                 D_800AE190                           = 0;
-                g_Gfx_Inventory_SelectionBordersDraw = 0;
+                g_Inventory_SelectionBordersDraw = 0;
             }
             break;
     }

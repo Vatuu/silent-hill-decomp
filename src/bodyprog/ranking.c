@@ -141,9 +141,9 @@ void func_8008F94C() // 0x8008F94C
 
     temp_s1    = D_800C48AE + (D_800C48A2 * 60);
 
-    // @bugfix pre-JAP1 would accidentally include unlocked hyper-blaster colors into the picked-up-item count.
+    // @bugfix Pre-JAP1 accidentally included unlocked Hyper Blaster colors in the picked up item count.
     // JAP1 onwards fix this by ignoring the top-most bit.
-    // (see `pickedUpSpecialItemCount_25C_3` field comment for more info)
+    // See `pickedUpSpecialItemCount_25C_3` field comment for more info.
 #if VERSION_EQUAL_OR_NEWER(JAP1)
     D_800C48B4 = g_SavegamePtr->pickedUpSpecialItemCount_25C_3 & 0x7;
 #else

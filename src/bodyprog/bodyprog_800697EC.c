@@ -276,20 +276,25 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 
     }
 
     return arg4;
+
+    #undef POINT_COUNT
+    #undef ANGLE_STEP
+    #undef WALL_COUNT_THRESHOLD
+    #undef WALL_HEIGHT
 }
 
-// TODO: Garbage data.
+// Padding with garbage data.
 #if VERSION_IS(USA)
-static const u8 unk_rdata[] = { 0x00, 0x42, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
+    static const u8 unk_rdata[] = { 0x00, 0x42, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
 #elif VERSION_IS(JAP0)
-static const u8 unk_rdata[] = { 0x00, 0x20, 0x3D, 0x20, 0x00, 0x00, 0x00, 0x00 };
+    static const u8 unk_rdata[] = { 0x00, 0x20, 0x3D, 0x20, 0x00, 0x00, 0x00, 0x00 };
 #elif VERSION_IS(JAP1)
-static const u8 unk_rdata[] = { 0x00, 0x5E, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
+    static const u8 unk_rdata[] = { 0x00, 0x5E, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
 #elif VERSION_IS(JAP2)
-static const u8 unk_rdata[] = { 0x00, 0x00, 0x42, 0x24, 0x00, 0x00, 0x00, 0x00 };
+    static const u8 unk_rdata[] = { 0x00, 0x00, 0x42, 0x24, 0x00, 0x00, 0x00, 0x00 };
 #endif
 
-void func_80069DF0(s_800C4590* arg0, VECTOR3* pos, s32 arg2, s32 arg3) // 0x80069DF0
+void func_80069DF0(s_800C4590* arg0, const VECTOR3* pos, s32 arg2, s32 arg3) // 0x80069DF0
 {
     #define POINT_COUNT 16
     #define ANGLE_STEP  Q12_ANGLE(360.0f / POINT_COUNT)
@@ -352,6 +357,9 @@ void func_80069DF0(s_800C4590* arg0, VECTOR3* pos, s32 arg2, s32 arg3) // 0x8006
     angle = ((var_s0 + var_a0) << 8) >> 1;
     arg0->offset_0.vx = Q12_MULT_PRECISE(Math_Sin(angle), Q12(1.0f / 16.0f));
     arg0->offset_0.vz = Q12_MULT_PRECISE(Math_Cos(angle), Q12(1.0f / 16.0f));
+
+    #undef POINT_COUNT
+    #undef ANGLE_STEP
 }
 
 s32 func_80069FFC(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara) // 0x80069FFC

@@ -1371,9 +1371,9 @@ s32 vcAdvantageDistOfOldCurRoad(VC_NEAR_ROAD_DATA* old_cur_p) // 0x80082AD0
 }
 
 void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_AREA_SIZE_TYPE cur_rd_area_size,
-                                     s32 far_watch_rate, s32 self_view_eff_rate) // 0x80082B10
+                                     q19_12 far_watch_rate, s32 self_view_eff_rate) // 0x80082B10
 {
-    VECTOR3 far_watch_pos;
+    VECTOR3 far_watch_pos; // Q19.12
 
     #define playerChara g_SysWork.playerWork_4C.player_0
 
@@ -1381,7 +1381,7 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, V
     if (cam_mv_type != VC_MV_SELF_VIEW)
     {
         vcMakeNormalWatchTgtPos(&w_p->watch_tgt_pos_7C, &w_p->watch_tgt_ang_z_8C, w_p, cam_mv_type, cur_rd_area_size);
-        if (far_watch_rate != 0)
+        if (far_watch_rate != Q12(0.0f))
         {
             w_p->watch_tgt_pos_7C.vx += Q12_MULT(far_watch_rate, far_watch_pos.vx - w_p->watch_tgt_pos_7C.vx);
             w_p->watch_tgt_pos_7C.vy += Q12_MULT(far_watch_rate, far_watch_pos.vy - w_p->watch_tgt_pos_7C.vy);
@@ -1409,11 +1409,11 @@ void vcMakeNormalWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, VC_
 {
     SVECTOR ang;                      // Guessed name.
     SVECTOR vec;                      // Guessed name.
-    s32     chara_to_cam_dist;        // Guessed name.
-    s32     watch_y;                  // Guessed name.
-    s32     tgt_chara2watch_cir_dist; // Guessed name.
-    s32     tgt_watch_cir_r;          // Guessed name.
-    s32     tgt_watch_cir_r_ext;      // Guessed name.
+    q19_12  chara_to_cam_dist;        // Guessed name.
+    q19_12  watch_y;                  // Guessed name.
+    q19_12  tgt_chara2watch_cir_dist; // Guessed name.
+    q19_12  tgt_watch_cir_r;          // Guessed name.
+    q19_12  tgt_watch_cir_r_ext;      // Guessed name.
 
     *watch_tgt_ang_z_p = 0;
 
@@ -1422,13 +1422,11 @@ void vcMakeNormalWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, VC_
         ang.vx = Math_AngleNormalize(Q12_ANGLE_FROM_Q8(w_p->cur_near_road_2B8.road_p_0->fix_ang_x_16));
         ang.vy = Math_AngleNormalize(Q12_ANGLE_FROM_Q8(w_p->cur_near_road_2B8.road_p_0->fix_ang_y_17));
         ang.vz = Q12_ANGLE(0.0f);
-
         vwAngleToVector(&vec, &ang, Q12(0.25f));
 
-        // TODO: `<< 4`?
-        watch_tgt_pos->vx = (vec.vx * 16) + w_p->cam_pos_50.vx;
-        watch_tgt_pos->vy = (vec.vy * 16) + w_p->cam_pos_50.vy;
-        watch_tgt_pos->vz = (vec.vz * 16) + w_p->cam_pos_50.vz;
+        watch_tgt_pos->vx = Q8_TO_Q12(vec.vx) + w_p->cam_pos_50.vx;
+        watch_tgt_pos->vy = Q8_TO_Q12(vec.vy) + w_p->cam_pos_50.vy;
+        watch_tgt_pos->vz = Q8_TO_Q12(vec.vz) + w_p->cam_pos_50.vz;
     }
     else
     {
@@ -1483,18 +1481,18 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
 {
     // TODO: Most aren't original names. Try substituting with ones found in symbols.
     SVECTOR    cam_ang;       // Original name.
-    s32        angle_delta_y;
-    s32        delta_y;
-    s32        new_y;
-    s32        delta_z;
-    s32        new_x;
-    s32        delta_x;
-    s32        new_z;
-    s32        dist_to_target;
+    q19_12     angle_delta_y;
+    q19_12     delta_y;
+    q19_12     new_y;
+    q19_12     delta_z;
+    q19_12     new_x;
+    q19_12     delta_x;
+    q19_12     new_z;
+    q19_12     dist_to_target;
     s32        temp_dir;
-    s32        vertical_angle;
-    s32        abs_angle_delta_y;
-    s32        corrected_angle_y;
+    q19_12     vertical_angle;
+    q19_12     abs_angle_delta_y;
+    q19_12     corrected_angle_y;
     s_SysWork* sys_work;
 
     #define playerChara g_SysWork.playerWork_4C.player_0
@@ -1718,7 +1716,6 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
         sc_p = w_p->nearest_enemy_2DC;
 
         dist = w_p->nearest_enemy_xz_dist_2E0;
-
         if (dist < Q12(1.7f))
         {
             adj_dist = (dist * Q12(-0.7f)) / Q12(1.7f);
@@ -1728,9 +1725,8 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
             adj_dist = Q12(-0.7f);
         }
 
-        dist += adj_dist;
-
         // TODO: `CLAMP` or `MIN`/`MAX`?
+        dist += adj_dist;
         if (dist < use_dist)
         {
             use_dist = dist;
@@ -1771,7 +1767,6 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
         }
 
         lim_y = (w_p->nearest_enemy_xz_dist_2E0 >> 1) - Q12(0.5f);
-
         if ((w_p->chara_pos_114.vy + lim_y) < watch_y)
         {
             watch_y = w_p->chara_pos_114.vy + lim_y;
@@ -1814,9 +1809,9 @@ void vcSetWatchTgtYParam(VECTOR3* watch_pos, VC_WORK* w_p, s32 cam_mv_type, q19_
 
 void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, s16 sy) // 0x800835E0
 {
-    s16 max_cam_ang_x;
-    s32 dist;
-    s16 cam_ang_x;
+    q3_12  max_cam_ang_x;
+    q19_12 dist;
+    q3_12  cam_ang_x;
 
     max_cam_ang_x = ratan2(cam_pos->vy + Q12(5.0f), Q12(13.0f)) - ratan2(g_GameWork.gsScreenHeight_58A / 2, sy);
     dist          = Vc_VectorMagnitudeCalc(watch_pos->vx - cam_pos->vx, 0, watch_pos->vz - cam_pos->vz);
@@ -1834,7 +1829,7 @@ void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_
 {
     VECTOR3 tgt_vec;
     VECTOR3 ideal_pos;
-    s32     max_tgt_mv_xz_len;
+    q19_12  max_tgt_mv_xz_len;
 
     switch (cam_mv_type)
     {
@@ -1904,11 +1899,11 @@ void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_
     w_p->cam_tgt_spd_110     = Q12(0.0f);
 }
 
-s32 vcRetMaxTgtMvXzLen(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x8008395C
+q19_12 vcRetMaxTgtMvXzLen(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x8008395C
 {
     #define SPEED_XZ_MIN Q12(2.2f)
 
-    s32 max_spd_xz;
+    q19_12 max_spd_xz;
 
     max_spd_xz = (w_p->chara_mv_spd_13C + Q12(1.0f)) + abs(w_p->chara_ang_spd_y_142 * 8);
     max_spd_xz = (max_spd_xz < SPEED_XZ_MIN) ? SPEED_XZ_MIN : max_spd_xz;
@@ -1921,7 +1916,7 @@ s32 vcRetMaxTgtMvXzLen(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x8008395
 
 void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_TYPE cur_rd_area_size) // 0x800839CC
 {
-    s32 chara2cam_ang_y;
+    q19_12 chara2cam_ang_y;
 
     if (w_p->flags_8 & VC_WARP_WATCH_F)
     {
@@ -2022,12 +2017,12 @@ void vcMakeIdealCamPosForFixAngCam(VECTOR3* ideal_pos, VC_WORK* w_p) // 0x80083A
 void vcMakeIdealCamPosForThroughDoorCam(VECTOR3* ideal_pos, VC_WORK* w_p) // 0x80083D2C
 {
     VC_THROUGH_DOOR_CAM_PARAM* through_door_param;
-    s16                        delta_angle_clamped;
-    s32                        angle_threshold;
-    s32                        offset_lateral;
-    s32                        offset_forward;
-    s32                        offset_scale;
-    s16                        angle_diff_abs;
+    q3_12                      delta_angle_clamped;
+    q19_12                     angle_threshold;
+    q19_12                     offset_lateral;
+    q19_12                     offset_forward;
+    q19_12                     offset_scale;
+    q3_12                      angle_diff_abs;
 
     through_door_param = &w_p->through_door_10;
 
@@ -2085,7 +2080,7 @@ void vcMakeIdealCamPosForThroughDoorCam(VECTOR3* ideal_pos, VC_WORK* w_p) // 0x8
                         Q12_MULT(offset_forward, Math_Sin(through_door_param->rail_ang_y_8)) +
                         Q12_MULT(offset_lateral, Math_Cos(through_door_param->rail_ang_y_8));
         ideal_pos->vz = through_door_param->rail_sta_pos_C.vz +
-                        Q12_MULT(offset_forward, Math_Cos(through_door_param->rail_ang_y_8)) +
+                        Q12_MULT(offset_forward,  Math_Cos(through_door_param->rail_ang_y_8)) +
                         Q12_MULT(offset_lateral, -Math_Sin(through_door_param->rail_ang_y_8));
         ideal_pos->vy = through_door_param->rail_sta_pos_C.vy;
     }
@@ -2512,7 +2507,7 @@ q19_12 vcFlipFromCamExclusionArea(q3_12* flip_ang_y_p, q19_12* old_cam_excl_area
 
 void vcGetUseWatchAndCamMvParam(VC_WATCH_MV_PARAM** watch_mv_prm_pp, VC_CAM_MV_PARAM** cam_mv_prm_pp, q19_12 self_view_eff_rate, VC_WORK* w_p) // 0x80084A34
 {
-    s32              add_ang_accel_y;
+    q19_12           add_ang_accel_y;
     VC_CAM_MV_PARAM* cam_mv_prm_stg_p;
 
     if (w_p->flags_8 & VC_USER_WATCH_F)
@@ -2625,7 +2620,7 @@ void vcRenewalCamMatAng(VC_WORK* w_p, VC_WATCH_MV_PARAM* watch_mv_prm_p, VC_CAM_
 void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_WORK* w_p) // 0x80084EDC
 {
     // Last 2 could be compiler-added padding, but are needed for match.
-    static const s32 D_8002AAE0[] = {
+    static const s32 ANGLES[] = {
         Q12_ANGLE(0.0f),
         Q12_ANGLE(15.0f),
         Q12_ANGLE(60.0f),
@@ -2715,7 +2710,7 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
             new_base_ang_x = -new_base_ang_x;
         }
 
-        memcpy(sp18, D_8002AAE0, ARRAY_SIZE(sp18) * sizeof(s32));
+        memcpy(sp18, ANGLES, ARRAY_SIZE(sp18) * sizeof(s32));
         new_base_ang_x = vwOresenHokan(sp18, ARRAY_SIZE(sp18), new_base_ang_x, 0, Q12(0.25f));
         new_base_ang_x = CLAMP(new_base_ang_x, Q12_ANGLE(0.0f), Q12_ANGLE(90.0f));
 

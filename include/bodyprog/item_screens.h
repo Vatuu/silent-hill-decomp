@@ -223,13 +223,13 @@ extern bool g_Inventory_IsRightHeld; // 0x800C398C
 extern bool g_Inventory_IsScrolling;
 
 /** Game difficulty. */
-extern s32 D_800C3994;
+extern s32 g_Inventory_GameDifficulty;
 
 /** @brief Timer used for the corner borders of the selection box in the inventory.
  *
  * If set to 8, borders will be drawn. If not, it increments until it reaches 8.
  */
-extern s32 g_Gfx_Inventory_SelectionBordersDraw;
+extern s32 g_Inventory_SelectionBordersDraw;
 
 /** @brief Used for drawing the transition of the corner borders' position when changing
  * the selected option in the inventory. Indicates where the box is moving to.

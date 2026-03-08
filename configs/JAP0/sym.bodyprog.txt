@@ -58,9 +58,9 @@ g_Inventory_IsRightPulsed = 0x800C5EB4;
 g_Inventory_IsLeftHeld = 0x800C5EB8;
 g_Inventory_IsRightHeld = 0x800C5EBC;
 g_Inventory_IsScrolling = 0x800C5EC0;
-g_Gfx_Inventory_SelectionBordersDraw = 0x800C5EC8;
+g_Inventory_SelectionBordersDraw = 0x800C5EC8;
 g_Inventory_PrevSelectionId = 0x800C5ECC;
-D_800C3994 = 0x800C5EC4;
+g_Inventory_GameDifficulty = 0x800C5EC4;
 
 // item_screens_3
 INVENTORY_ITEM_ROTATIONS = 0x800263AC;
@@ -189,7 +189,6 @@ D_80028B94 = 0x800288B4;
 D_800294F4 = 0x80029214;
 D_800297B8 = 0x800294D8;
 hack_D_8002A844_fix = 0x8002a564; // type:s32
-D_8002AAE0 = 0x8002A800;
 D_8002AB10 = 0x8002A830;
 D_8002ABA4 = 0x8002A8C4;
 D_8002AC04 = 0x8002A924;
