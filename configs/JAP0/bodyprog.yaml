@@ -93,6 +93,8 @@ segments:
       - [0x6438, .rodata, demo]
       - [0x6458, .rodata, ranking]
       - [0x6734, rodata]
+      - [0x9464, .rodata, libsd/smf_io]
+      - [0x96F8, .rodata, libsd/smf_mid]
 
       # data only files
       - [auto,      c, events/bodyprog_data_800A99B4]
@@ -318,6 +320,14 @@ segments:
       - [0x7c5e0, c, libsd/smf_snd]
       - [0x7fb98, asm, lib/libspu/s_q]
 
+      # TODO: Other libspu libs
+      - [0x811B8, c, libsd/smf_io]
+      - [0x844F4, asm, lib/bodyprog_844F4] # TODO: libspu
+      
+      # TODO: Other libspu libs
+      - [0x84554, c, libsd/smf_main]
+      - [0x847F4, c, libsd/smf_mid]
+
       # TODO: more libspu, rest of libsd
 
       # TODO - [0x6CF9C, asm, bodyprog_data_800A8D98] # Data
@@ -354,6 +364,9 @@ segments:
       - [0x8D654, .data, ranking]
       - [0x8D668, .data, credits_init]
       - [0x8D6DC, data]
+      - [0x8EE0C, .data, libsd/smf_main]
+      - [0x8FFE0, data] # Unknown data
+
       - [0x8FFE8, .bss, memcard]
       - [0x935F0, .bss, text/text_debug_draw]
       - [0x935F8, .bss, screen/screen_fade]
@@ -411,9 +424,9 @@ segments:
       - [0xA4A00, bss]
       - [0xA4DE8, .bss, libsd/smf_snd]
       - [0xA50B8, pad]
-      - [0xA50C0, bss]
+      - [0xA50C0, .bss, libsd/smf_io]
       - [0xA64CC, pad] # Garbage
-      - [0xA64D0, bss]
+      - [0xA64D0, .bss, libsd/smf_mid]
 
   # Random garbage data at end, define as bin file to make Splat ignore it.
   - name: footer_data

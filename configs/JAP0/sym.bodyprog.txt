@@ -130,6 +130,74 @@ INVENTORY_ITEM_NAMES = 0x800AFF20;
 g_ItemDescriptions = 0x800B022C;
 LABEL_STR_POS_TABLE = 0x80027B34; // size:0x20
 
+// smf_io
+set_note_on = 0x800A5D18; // type:func
+set_midi_info = 0x800A5D54; // type:func
+tre_calc = 0x800A5EBC; // type:func
+vib_calc = 0x800A60CC; // type:func
+random_calc = 0x800A620C; // type:func
+volume_calc = 0x800A62B0; // type:func
+smf_vol_set = 0x800A64EC; // type:func
+master_vol_set = 0x800A65FC; // type:func
+seq_master_vol_set = 0x800A66B0; // type:func
+toremoro_set = 0x800A6738; // type:func
+pitch_bend_calc = 0x800A67B8; // type:func
+pitch_calc = 0x800A6830; // type:func
+midi_mod = 0x800A69A4; // type:func
+midi_porta = 0x800A6A54; // type:func
+replay_reverb_set = 0x800A6AE4; // type:func
+midi_vsync = 0x800A6BD4; // type:func
+vol_calc = 0x800A722C; // type:func
+voice_check = 0x800A7300; // type:func
+key_on = 0x800A74F4; // type:func
+key_off = 0x800A8018; // type:func
+key_press = 0x800A8168; // type:func
+get_vab_tone = 0x800A8170; // type:func
+smf_data_entry = 0x800A8220; // type:func
+program_change = 0x800A8FC8; // type:func
+chan_press = 0x800A8FF4; // type:func
+pitch_bend = 0x800A8FFC; // type:func
+SpuGetReverbVoice = 0x800A9054; // type:func
+PitchTbl = 0x800B3C58;
+random_tbl = 0x800B4858;
+s_attr = 0x800C9C20;
+smf_midi_sound_off = 0x800CA7E8;
+
+// smf_main
+DisableEvent = 0x800A4778; // type:func
+smf_timer = 0x800A90B4; // type:func
+smf_timer_stop = 0x800A9264; // type:func
+midi_smf_main = 0x800AACEC; // type:func
+sd_int_flag2 = 0x800B4AC4;
+sd_timer_sync = 0x800B4ACC;
+sd_timer_flag = 0x800B4AE4;
+sd_timer_event = 0x800CB028;
+
+// smf_mid
+MemCmp = 0x800A9354; // type:func
+readMThd = 0x800A9398; // type:func
+readMTrk = 0x800A9458; // type:func
+readEOF = 0x800A9518; // type:func
+egetc = 0x800A95D8; // type:func
+readvarinum = 0x800A9650; // type:func
+to32bit = 0x800A96D8; // type:func
+to16bit = 0x800A9704; // type:func
+read32bit = 0x800A9718; // type:func
+read16bit = 0x800A9784; // type:func
+readheader = 0x800A97C4; // type:func
+len_add = 0x800A9BB0; // type:func
+metaevent = 0x800A9BC4; // type:func
+sysex = 0x800A9E88; // type:func
+chanmessage = 0x800A9EF0; // type:func
+readtrack = 0x800AA460; // type:func
+readtrack2 = 0x800AA590; // type:func
+track_head_read = 0x800AA7E4; // type:func
+delta_time_conv = 0x800AA84C; // type:func
+time_flag = 0x800B4AE8;
+smf_file_no = 0x800B4AEC;
+eof_char = 0x800B4AF4;
+chantype = 0x800B4AF8;
+
 // Gamestates inside overlays. TODO: Move these to sym files for each overlay
 GameState_KonamiLogo_Update = 0x800cbadc; // type:func
 GameState_KcetLogo_Update = 0x800cbed4; // type:func
@@ -1517,6 +1585,7 @@ sd_mono_st_flag = 0x800B3974;
 sd_reverb_mode = 0x800B3978;
 body_partly_size = 0x800B397C;
 sd_reverb_area_size = 0x800B3980;
+_spu_rev_param = 0x800B39A8;
 sd_reserved_voice = 0x800B4A58;
 spu_ch_tbl = 0x800B4A60;
 sd_int_flag = 0x800B4AC0;
