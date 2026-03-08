@@ -18,7 +18,7 @@ void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOO
 
     if (nurse->model_0.anim_4.status_0 != ANIM_STATUS(0, false))
     {
-        (&animInfoBase[nurse->model_0.anim_4.status_0])->updateFunc_0(&nurse->model_0, anmHdr, coord, &animInfoBase[nurse->model_0.anim_4.status_0]);
+        (&animInfoBase[nurse->model_0.anim_4.status_0])->playbackFunc_0(&nurse->model_0, anmHdr, coord, &animInfoBase[nurse->model_0.anim_4.status_0]);
     }
 
     angle = nurse->properties_E4.npc.field_124->field_18;

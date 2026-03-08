@@ -831,7 +831,7 @@ void sharedFunc_800D1524_1_s00(s_SubCharacter* larvalStalker, s_AnmHeader* anmHd
     }
 
     animInfo = &LARVAL_STALKER_ANIM_INFOS[larvalStalker->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&larvalStalker->model_0, anmHdr, coords, animInfo);
+    animInfo->playbackFunc_0(&larvalStalker->model_0, anmHdr, coords, animInfo);
 
     #undef activeAnimInfo
 }

@@ -646,12 +646,12 @@ void func_800D99E4(s_SubCharacter* chara, s_Model* modelUpper, s_AnmHeader* anmH
     anmHdr->activeBones_8 = HARRY_LOWER_BODY_BONE_MASK;
 
     animInfo = &MONSTER_CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+    animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 
     anmHdr->activeBones_8 = HARRY_UPPER_BODY_BONE_MASK;
 
     animInfo = &MONSTER_CYBIL_ANIM_INFOS[modelUpper->anim_4.status_0];
-    animInfo->updateFunc_0(modelUpper, anmHdr, coords, animInfo);
+    animInfo->playbackFunc_0(modelUpper, anmHdr, coords, animInfo);
 }
 
 void func_800D9AAC(s_SubCharacter* chara, s_Model* model) {} // 0x800D9AAC

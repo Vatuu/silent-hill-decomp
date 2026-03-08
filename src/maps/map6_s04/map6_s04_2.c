@@ -75,7 +75,7 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
     Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &FLAUROS_ANIM_INFOS[chara->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+    animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 
     for (i = 6; i < 11; i++)
     {
@@ -98,7 +98,7 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE
     Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &PARASITE_ANIM_INFOS[chara->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+    animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 }
 
 void func_800DE26C(void) {}

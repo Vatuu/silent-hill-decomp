@@ -1216,7 +1216,7 @@ void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsC
     Math_MatrixTransform(&groaner->position_18, (SVECTOR*)&groaner->rotation_24, coords);
 
     animInfo = &GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&groaner->model_0, anmHdr, coords, animInfo);
+    animInfo->playbackFunc_0(&groaner->model_0, anmHdr, coords, animInfo);
 
     ptr = PSX_SCRATCH;
 

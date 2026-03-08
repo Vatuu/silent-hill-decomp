@@ -257,7 +257,7 @@ void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr,
 
     Math_MatrixTransform(&bloodsucker->position_18, &bloodsucker->rotation_24, coords);
     animInfo = &BLOODSUCKER_ANIM_INFOS[bloodsucker->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&bloodsucker->model_0, anmHdr, coords, animInfo);
+    animInfo->playbackFunc_0(&bloodsucker->model_0, anmHdr, coords, animInfo);
     Vw_CoordHierarchyMatrixCompute(&coords[14], &scratchData->field_0);
 
     gte_SetRotMatrix(&scratchData->field_0);

@@ -26,7 +26,7 @@ void Ai_Incubator_AnimUpdate(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsC
     if (incubator->properties_E4.player.field_F0 == 0)
     {
         animInfo = &INCUBATOR_ANIM_INFOS[incubator->model_0.anim_4.status_0];
-        animInfo->updateFunc_0(&incubator->model_0, anmHdr, coords, animInfo);
+        animInfo->playbackFunc_0(&incubator->model_0, anmHdr, coords, animInfo);
     }
 }
 

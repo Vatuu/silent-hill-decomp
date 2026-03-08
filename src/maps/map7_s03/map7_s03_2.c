@@ -80,7 +80,7 @@ void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOO
     Math_MatrixTransform(&incubus->position_18, &incubus->rotation_24, coords);
 
     animInfo = &LITTLE_INCUBUS_ANIM_INFOS[incubus->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&incubus->model_0, anmHdr, coords, animInfo);
+    animInfo->playbackFunc_0(&incubus->model_0, anmHdr, coords, animInfo);
 
     func_800705E4(coords, 1, temp_s0, temp_s0, temp_s0);
     func_800705E4(coords, 7, temp_s0, temp_s0, temp_s0);
@@ -5285,7 +5285,7 @@ void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* 
     s32 prevSfxIdx;
     s32 sfxIdx;
 
-    #define animUpdateFunc INCUBUS_ANIM_INFOS[incubus->model_0.anim_4.status_0].updateFunc_0
+    #define animUpdateFunc INCUBUS_ANIM_INFOS[incubus->model_0.anim_4.status_0].playbackFunc_0
 
     Math_MatrixTransform(&incubus->position_18, &incubus->rotation_24, coords);
 
@@ -6296,7 +6296,7 @@ void func_800E0774(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     if (chara->model_0.anim_4.status_0 != ANIM_STATUS(0, false))
     {
         animInfo = &UNKKOWN_23_ANIM_INFOS[chara->model_0.anim_4.status_0];
-        animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+        animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
     }
 }
 

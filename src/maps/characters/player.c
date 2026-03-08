@@ -645,7 +645,7 @@ s32 sharedFunc_800D2DAC_0_s00(void)
     model    = &g_SysWork.playerWork_4C.player_0.model_0;
     animInfo = &g_MapOverlayHeader.animInfos_34[model->anim_4.status_0 - ANIM_STATUS(38, false)];
 
-    if (animInfo->updateFunc_0 == Anim_Update0)
+    if (animInfo->playbackFunc_0 == Anim_PlaybackOnce)
     {
         // Check if anim has started or finished.
         if (Anim_DurationGet(model, animInfo) > Q12(0.0f))
@@ -658,7 +658,7 @@ s32 sharedFunc_800D2DAC_0_s00(void)
         }
     }
 
-    if (animInfo->updateFunc_0 == Anim_Update2)
+    if (animInfo->playbackFunc_0 == Anim_BlendLinear)
     {
         return -2;
     }

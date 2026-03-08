@@ -241,7 +241,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
     Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &LOCKER_DEAD_BODY_ANIM_INFOS[chara->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+    animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 
     chara->field_C8.field_0   = Q12(-0.3f);
     chara->field_D8.offsetX_4 = Q12(0.06f);

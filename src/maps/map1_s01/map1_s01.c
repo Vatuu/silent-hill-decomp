@@ -69,7 +69,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &CAT_ANIM_INFOS[chara->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+    animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 
     cond = false;
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(1, true))

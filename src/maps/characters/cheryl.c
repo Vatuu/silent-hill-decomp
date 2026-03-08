@@ -55,7 +55,7 @@ void Ai_Cheryl_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINA
 
     if (dahliaProps.properties_F0.val32 == 0)
     {
-        CHERYL_ANIM_INFOS[chara->model_0.anim_4.status_0].updateFunc_0(&chara->model_0, anmHdr, coord, &CHERYL_ANIM_INFOS[chara->model_0.anim_4.status_0]);
+        CHERYL_ANIM_INFOS[chara->model_0.anim_4.status_0].playbackFunc_0(&chara->model_0, anmHdr, coord, &CHERYL_ANIM_INFOS[chara->model_0.anim_4.status_0]);
     }
 }
 

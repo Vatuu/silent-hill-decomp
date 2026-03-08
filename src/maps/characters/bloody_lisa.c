@@ -42,7 +42,7 @@ void Ai_BloodyLisa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
     if (chara->properties_E4.player.field_F0 == 0)
     {
         animInfo = &BLOODY_LISA_ANIM_INFOS[chara->model_0.anim_4.status_0];
-        animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+        animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
     }
 }
 

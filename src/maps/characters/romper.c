@@ -1298,7 +1298,7 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCO
     Math_MatrixTransform(&romper->position_18, (SVECTOR*)&romper->rotation_24, coords);
 
     animInfo = &ROPMER_ANIM_INFOS[romper->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&romper->model_0, anmHdr, coords, animInfo);
+    animInfo->playbackFunc_0(&romper->model_0, anmHdr, coords, animInfo);
 
     switch (romper->model_0.anim_4.status_0)
     {

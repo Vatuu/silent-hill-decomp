@@ -1295,7 +1295,7 @@ void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, G
     Math_MatrixTransform(&scratcher->position_18, &scratcher->rotation_24, coords);
 
     animInfo = &curAnimInfo;
-    animInfo->updateFunc_0(&scratcher->model_0, anmHdr, coords, animInfo);
+    animInfo->playbackFunc_0(&scratcher->model_0, anmHdr, coords, animInfo);
     scratcherProps.field_FC = scratcher->rotation_24.vy;
 
 #undef curAnimInfo

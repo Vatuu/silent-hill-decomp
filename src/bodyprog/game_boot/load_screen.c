@@ -88,7 +88,7 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
         g_SysWork.sysState_8++;
     }
 
-    Anim_Update1(model, (s_Skeleton*)FS_BUFFER_0, boneCoords, &D_800A998C);
+    Anim_PlaybackLoop(model, (s_Skeleton*)FS_BUFFER_0, boneCoords, &D_800A998C);
     vcMoveAndSetCamera(true, false, false, false, false, false, false, false);
     Gfx_FlashlightUpdate();
     func_8003DA9C(Chara_Harry, boneCoords, 1, g_SysWork.playerWork_4C.player_0.timer_C6, 0);

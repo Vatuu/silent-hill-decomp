@@ -2164,7 +2164,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
     Math_MatrixTransform(&stalker->position_18, &stalker->rotation_24, coord);
 
     animInfo = &STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&stalker->model_0, animHdr, coord, animInfo);
+    animInfo->playbackFunc_0(&stalker->model_0, animHdr, coord, animInfo);
 
     ptr = PSX_SCRATCH;
 

@@ -1718,7 +1718,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
     Math_MatrixTransform(&twinfeeler->position_18, (SVECTOR*)&twinfeeler->rotation_24, coords);
 
     anim = &TWINFEELER_ANIM_INFOS[twinfeeler->model_0.anim_4.status_0];
-    anim->updateFunc_0(&twinfeeler->model_0, anmHdr, coords, anim);
+    anim->playbackFunc_0(&twinfeeler->model_0, anmHdr, coords, anim);
 
     temp_s0 = D_800DB1D8[twinfeeler->model_0.stateStep_3];
     func_800705E4(coords, 0, temp_s0, temp_s0, temp_s0);
@@ -2971,7 +2971,7 @@ void func_800D5888(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     if (chara->model_0.anim_4.status_0 != ANIM_STATUS(0, false))
     {
         animInfo = &TWINFEELER_ANIM_INFOS[chara->model_0.anim_4.status_0];
-        animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+        animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
     }
 }
 

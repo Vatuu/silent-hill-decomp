@@ -2904,25 +2904,53 @@ void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
  */
 q19_12 Anim_DurationGet(s_Model* unused, s_AnimInfo* animInfo);
 
-/** Updates a character's animation, variant 0. First param might be `s_SubCharacter` instead.
- * Used for anim init?
+/** * @brief Plays an animation once and clamps to the end keyframe, triggering a status transition to the linked
+ * animation upon completion.
+ *
+ * @note Used for one-shot actions such as stopping and attacking.
+ *
+ * @param model Character model to animate.
+ * @param anmHdr Active animation header.
+ * @param boneCoords Character model bone coords.
+ * @param animInfo Active character animation info.
  */
-void Anim_Update0(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coords, s_AnimInfo* animInfo);
+void Anim_PlaybackOnce(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo);
 
-/** Updates a character's animation, variant 1.
- * Used for looped anims?
+/** * @brief Loops an animation continuously, wrapping the time around to the start and end keyframes without
+ * triggering a status transition.
+ *
+ * @note Used for looped actions such as running and walking.
+ *
+ * @param model Character model to animate.
+ * @param anmHdr Active animation header.
+ * @param boneCoords Character model bone coords.
+ * @param animInfo Character animation info.
  */
-void Anim_Update1(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
+void Anim_PlaybackLoop(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo);
 
-/** Updates a character's animation, variant 2.
- * The generic update func?
+/** * @brief Linearly interpolates between the current pose into a new target animation, triggering a status transition
+ * to the linked animation when complete.
+ *
+ * @note Used as the entry transition for almost every new animation status.
+ *
+ * @param model Character model to animate.
+ * @param anmHdr Active animation header.
+ * @param boneCoords Character model bone coords.
+ * @param animInfo Character animation info.
  */
-void Anim_Update2(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
+void Anim_BlendLinear(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo);
 
-/** Updates a character's animation, variant 3.
- * Same as `Anim_Update2` but sine-based?
+/** * @brief Smoothly blends between the current pose into a new target animation using a sine-based ease-out
+ * without triggering a status transition.
+ *
+ * @unused?
+ *
+ * @param model Character model to animate.
+ * @param anmHdr Active animation header.
+ * @param boneCoords Character model bone coords.
+ * @param animInfo Character animation info.
  */
-void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
+void Anim_BlendEaseOut(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo);
 
 /** Something related to player weapon position. Takes coords to arm bones. */
 void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q19_12 rotY);

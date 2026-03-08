@@ -19,24 +19,24 @@ typedef enum _GhostChildAlessaAnim
 extern s_AnimInfo GHOST_CHILD_ALESSA_ANIM_INFOS[];
 
 /*s_AnimInfo GHOST_CHILD_ALESSA_ANIM_INFOS[] = {
-    { Anim_Update2, ANIM_STATUS(GhostChildAlessaAnim_Still, false), false, ANIM_STATUS(GhostChildAlessaAnim_Still, false), { Q12(0.0f) }, NO_VALUE, 0 },
-    { Anim_Update1, ANIM_STATUS(GhostChildAlessaAnim_Still, true), false, NO_VALUE, { Q12(30.0f) }, NO_VALUE, 1 },
-    { Anim_Update2, ANIM_STATUS(GhostChildAlessaAnim_1, false), false, ANIM_STATUS(GhostChildAlessaAnim_1, true), { Q12(5.0f) }, NO_VALUE, 0 },
-    { Anim_Update1, ANIM_STATUS(GhostChildAlessaAnim_1, true), false, NO_VALUE, { Q12(15.0f) }, 0, 27 },
-    { Anim_Update2, ANIM_STATUS(GhostChildAlessaAnim_2, false), false, ANIM_STATUS(2, true), { Q12(5.0f) }, NO_VALUE, 28 },
-    { Anim_Update1, ANIM_STATUS(GhostChildAlessaAnim_2, true), false, NO_VALUE, { Q12(15.0f) }, 28, 49 },
-    { Anim_Update2, ANIM_STATUS(GhostChildAlessaAnim_3, false), false, ANIM_STATUS(GhostChildAlessaAnim_3, true), { Q12(10.0f) }, NO_VALUE, 50 },
-    { Anim_Update0, ANIM_STATUS(GhostChildAlessaAnim_3, true), false, ANIM_STATUS(GhostChildAlessaAnim_3, true), { Q12(10.0f) }, 50, 63 },
-    { Anim_Update2, ANIM_STATUS(GhostChildAlessaAnim_4, false), false, ANIM_STATUS(GhostChildAlessaAnim_4, true), { Q12(10.0f) }, NO_VALUE, 64 },
-    { Anim_Update1, ANIM_STATUS(GhostChildAlessaAnim_4, true), false, NO_VALUE, { Q12(10.0f) }, 64, 83 },
-    { Anim_Update2, ANIM_STATUS(GhostChildAlessaAnim_5, false), false, ANIM_STATUS(GhostChildAlessaAnim_5, true), { Q12(10.0f) }, NO_VALUE, 84 },
-    { Anim_Update0, ANIM_STATUS(GhostChildAlessaAnim_5, true), false, ANIM_STATUS(GhostChildAlessaAnim_5, true), { Q12(10.0f) }, 84, 109 },
-    { Anim_Update2, ANIM_STATUS(GhostChildAlessaAnim_6, false), false, ANIM_STATUS(GhostChildAlessaAnim_6, true), { Q12(5.0f) }, NO_VALUE, 110 },
-    { Anim_Update1, ANIM_STATUS(GhostChildAlessaAnim_6, true), false, NO_VALUE, { Q12(5.0f) }, 110, 111 },
-    { Anim_Update2, ANIM_STATUS(GhostChildAlessaAnim_7, false), false, ANIM_STATUS(GhostChildAlessaAnim_7, true), { Q12(5.0f) }, NO_VALUE, 112 },
-    { Anim_Update1, ANIM_STATUS(GhostChildAlessaAnim_7, true), false, NO_VALUE, { Q12(5.0f) }, 112, 127 },
-    { Anim_Update2, ANIM_STATUS(GhostChildAlessaAnim_8, false), false, ANIM_STATUS(GhostChildAlessaAnim_8, true), { Q12(5.0f) }, NO_VALUE, 128 },
-    { Anim_Update1, ANIM_STATUS(GhostChildAlessaAnim_8, true), false, NO_VALUE, { Q12(5.0f) }, 128, 137 }
+    { Anim_BlendLinear, ANIM_STATUS(GhostChildAlessaAnim_Still, false), false, ANIM_STATUS(GhostChildAlessaAnim_Still, false), { Q12(0.0f) }, NO_VALUE, 0 },
+    { Anim_PlaybackLoop, ANIM_STATUS(GhostChildAlessaAnim_Still, true), false, NO_VALUE, { Q12(30.0f) }, NO_VALUE, 1 },
+    { Anim_BlendLinear, ANIM_STATUS(GhostChildAlessaAnim_1, false), false, ANIM_STATUS(GhostChildAlessaAnim_1, true), { Q12(5.0f) }, NO_VALUE, 0 },
+    { Anim_PlaybackLoop, ANIM_STATUS(GhostChildAlessaAnim_1, true), false, NO_VALUE, { Q12(15.0f) }, 0, 27 },
+    { Anim_BlendLinear, ANIM_STATUS(GhostChildAlessaAnim_2, false), false, ANIM_STATUS(2, true), { Q12(5.0f) }, NO_VALUE, 28 },
+    { Anim_PlaybackLoop, ANIM_STATUS(GhostChildAlessaAnim_2, true), false, NO_VALUE, { Q12(15.0f) }, 28, 49 },
+    { Anim_BlendLinear, ANIM_STATUS(GhostChildAlessaAnim_3, false), false, ANIM_STATUS(GhostChildAlessaAnim_3, true), { Q12(10.0f) }, NO_VALUE, 50 },
+    { Anim_PlaybackOnce, ANIM_STATUS(GhostChildAlessaAnim_3, true), false, ANIM_STATUS(GhostChildAlessaAnim_3, true), { Q12(10.0f) }, 50, 63 },
+    { Anim_BlendLinear, ANIM_STATUS(GhostChildAlessaAnim_4, false), false, ANIM_STATUS(GhostChildAlessaAnim_4, true), { Q12(10.0f) }, NO_VALUE, 64 },
+    { Anim_PlaybackLoop, ANIM_STATUS(GhostChildAlessaAnim_4, true), false, NO_VALUE, { Q12(10.0f) }, 64, 83 },
+    { Anim_BlendLinear, ANIM_STATUS(GhostChildAlessaAnim_5, false), false, ANIM_STATUS(GhostChildAlessaAnim_5, true), { Q12(10.0f) }, NO_VALUE, 84 },
+    { Anim_PlaybackOnce, ANIM_STATUS(GhostChildAlessaAnim_5, true), false, ANIM_STATUS(GhostChildAlessaAnim_5, true), { Q12(10.0f) }, 84, 109 },
+    { Anim_BlendLinear, ANIM_STATUS(GhostChildAlessaAnim_6, false), false, ANIM_STATUS(GhostChildAlessaAnim_6, true), { Q12(5.0f) }, NO_VALUE, 110 },
+    { Anim_PlaybackLoop, ANIM_STATUS(GhostChildAlessaAnim_6, true), false, NO_VALUE, { Q12(5.0f) }, 110, 111 },
+    { Anim_BlendLinear, ANIM_STATUS(GhostChildAlessaAnim_7, false), false, ANIM_STATUS(GhostChildAlessaAnim_7, true), { Q12(5.0f) }, NO_VALUE, 112 },
+    { Anim_PlaybackLoop, ANIM_STATUS(GhostChildAlessaAnim_7, true), false, NO_VALUE, { Q12(5.0f) }, 112, 127 },
+    { Anim_BlendLinear, ANIM_STATUS(GhostChildAlessaAnim_8, false), false, ANIM_STATUS(GhostChildAlessaAnim_8, true), { Q12(5.0f) }, NO_VALUE, 128 },
+    { Anim_PlaybackLoop, ANIM_STATUS(GhostChildAlessaAnim_8, true), false, NO_VALUE, { Q12(5.0f) }, 128, 137 }
 };*/
 
 void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);

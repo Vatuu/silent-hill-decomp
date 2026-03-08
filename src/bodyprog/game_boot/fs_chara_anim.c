@@ -41,10 +41,10 @@ s_CharaAnimDataInfo g_CharaTypeAnimInfo[GROUP_CHARA_COUNT] = {
 };
 
 s_AnimInfo D_800A998C = {
-    .updateFunc_0           = Anim_Update1,
+    .playbackFunc_0           = Anim_PlaybackLoop,
     .status_4               = 0,
     .hasVariableDuration_5 = false,
-    .status_6              = ANIM_STATUS(0, false),
+    .linkStatus_6              = ANIM_STATUS(0, false),
     .duration_8            = { Q12(8.0f) },
     .startKeyframeIdx_C    = 26,
     .endKeyframeIdx_E      = 44

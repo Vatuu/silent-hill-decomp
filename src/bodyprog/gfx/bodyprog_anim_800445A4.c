@@ -193,7 +193,7 @@ void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     s_AnimInfo* animInfo;
 
     animInfo = func_80044918(&chara->model_0.anim_4);
-    animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+    animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 }
 
 q19_12 Anim_DurationGet(s_Model* unused, s_AnimInfo* animInfo) // 0x800449AC
@@ -226,7 +226,7 @@ static inline q19_12 Anim_TimestepGet(s_Model* model, s_AnimInfo* animInfo)
     return Q12(0.0f);
 }
 
-void Anim_Update0(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coords, s_AnimInfo* animInfo) // 0x800449F0
+void Anim_PlaybackOnce(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo) // 0x800449F0
 {
     bool setNewAnimStatus;
     s32  timestep;
@@ -272,7 +272,7 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coords, s_
     alpha = Q12_FRACT(newTime);
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHdr, coords, newKeyframeIdx, newKeyframeIdx + 1, alpha);
+        Anim_BoneUpdate(anmHdr, boneCoords, newKeyframeIdx, newKeyframeIdx + 1, alpha);
     }
 
     // Update frame data.
@@ -280,14 +280,14 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coords, s_
     model->anim_4.keyframeIdx_8 = newKeyframeIdx;
     model->anim_4.alpha_A       = Q12(0.0f);
 
-    // Update anim status if anim started or ended.
+    // Link to new anim status.
     if (setNewAnimStatus)
     {
-        model->anim_4.status_0 = animInfo->status_6;
+        model->anim_4.status_0 = animInfo->linkStatus_6;
     }
 }
 
-void Anim_Update1(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044B38
+void Anim_PlaybackLoop(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo) // 0x80044B38
 {
     s32 startKeyframeIdx;
     s32 endKeyframeIdx;
@@ -337,7 +337,7 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     alpha = Q12_FRACT(newTime);
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHdr, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);
+        Anim_BoneUpdate(anmHdr, boneCoords, newKeyframeIdx0, newKeyframeIdx1, alpha);
     }
 
     // Update frame data.
@@ -346,7 +346,7 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     model->anim_4.alpha_A       = Q12(0.0f);
 }
 
-void Anim_Update2(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044CA4
+void Anim_BlendLinear(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo) // 0x80044CA4
 {
     bool setNewAnimStatus;
     s32  startKeyframeIdx;
@@ -392,20 +392,20 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     // Update skeleton.
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHdr, coord, startKeyframeIdx, endKeyframeIdx, alpha);
+        Anim_BoneUpdate(anmHdr, boneCoords, startKeyframeIdx, endKeyframeIdx, alpha);
     }
 
     // Update alpha.
     model->anim_4.alpha_A = alpha;
 
-    // Update anim status if anim ended.
+    // Link to new anim status.
     if (setNewAnimStatus)
     {
-        model->anim_4.status_0 = animInfo->status_6;
+        model->anim_4.status_0 = animInfo->linkStatus_6;
     }
 }
 
-void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044DF0
+void Anim_BlendEaseOut(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo) // 0x80044DF0
 {
     s32    startKeyframeIdx;
     s32    endKeyframeIdx;
@@ -448,7 +448,6 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     {
         newTime = Q12(endKeyframeIdx);
     }
-
     alpha = newAlpha;
 
     // Update time.
@@ -457,7 +456,7 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     // Update skeleton.
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHdr, coord, startKeyframeIdx, endKeyframeIdx, alpha);
+        Anim_BoneUpdate(anmHdr, boneCoords, startKeyframeIdx, endKeyframeIdx, alpha);
     }
 
     // Update active keyframe.

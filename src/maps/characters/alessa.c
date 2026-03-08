@@ -46,7 +46,7 @@ void Ai_Alessa_AnimUpdate(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDIN
     if (alessaProps.field_F0 == 0)
     {
         animInfo = &ALESSA_ANIM_INFOS[alessa->model_0.anim_4.status_0];
-        animInfo->updateFunc_0(&alessa->model_0, anmHdr, coords, animInfo);
+        animInfo->playbackFunc_0(&alessa->model_0, anmHdr, coords, animInfo);
     }
 }
 

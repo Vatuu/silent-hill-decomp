@@ -811,7 +811,7 @@ void func_800D37E8(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr) // 0x800D3
     Math_MatrixTransform(&floatstinger->position_18, (SVECTOR*)&floatstinger->rotation_24, D_800DB928);
 
     anim = &FLOATSTINGER_ANIM_INFOS[floatstinger->model_0.anim_4.status_0];
-    anim->updateFunc_0(&floatstinger->model_0, anmHdr, D_800DB928, anim);
+    anim->playbackFunc_0(&floatstinger->model_0, anmHdr, D_800DB928, anim);
 
     ptr = PSX_SCRATCH;
 

@@ -1073,7 +1073,7 @@ class StructParser:
                         return enum_val
 
                 # silent-hill-decomp value customizations
-                if field_key == "s_AnimInfo.status_4" or field_key == "s_AnimInfo.status_6":
+                if field_key == "s_AnimInfo.status_4" or field_key == "s_AnimInfo.linkStatus_6":
                     return f"ANIM_STATUS({value // 2}, {'true' if value % 2 == 1 else 'false'})" if value != 255 else "NO_VALUE"
                 elif field_key == "s_AnimInfo.hasVariableDuration_5" and (value == 0 or value == 1):
                     return 'true' if value == 1 else 'false'

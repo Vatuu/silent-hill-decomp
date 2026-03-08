@@ -45,7 +45,7 @@ void Ai_Cybil_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINA
     if (chara->properties_E4.player.field_F0 == 0)
     {
         animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
-        animInfo->updateFunc_0(&chara->model_0, animHdr, coords, animInfo);
+        animInfo->playbackFunc_0(&chara->model_0, animHdr, coords, animInfo);
     }
 }
 

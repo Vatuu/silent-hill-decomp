@@ -106,9 +106,10 @@ struct _Model;
     ((weaponAttack) % 10)
 
 /** @brief Packs an animation status containing an animation index and active flag.
+ * `isActive` is `false` in the blend phase and `true` in the play phase.
  *
  * @param animIdx Animation index.
- * @param isActive Active status (`bool`).
+ * @param isActive Active status. (`bool`).
  * @return Packed animation status containing the animation index and active flag.
  */
 #define ANIM_STATUS(animIdx, isActive) \
@@ -1120,18 +1121,18 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
  */
 typedef struct _AnimInfo
 {
-    void (*updateFunc_0)(struct _Model* model, struct _AnmHeader* anmHdr, GsCOORDINATE2* coords, struct _AnimInfo* animInfo);
-    u8 status_4;                 /** Packed anim status. Init base? See `s_ModelAnimData::status_0`. */
-    s8 hasVariableDuration_5;    /** `bool` | Use `duration_8.variableFunc`: `true`, Use `duration_8.constant`: `false`. */
-    u8 status_6;                 /** Packed anim status. Link target? Sometimes `NO_VALUE`, unknown why. See `s_ModelAnim::status_0`. */
+    void (*playbackFunc_0)(struct _Model* model, struct _AnmHeader* anmHdr, GsCOORDINATE2* coords, struct _AnimInfo* animInfo);
+    u8 status_4;                      /** Packed anim status. Init base? See `s_ModelAnimData::status_0`. */
+    s8 hasVariableDuration_5;         /** `bool` | Use `duration_8.variableFunc`: `true`, Use `duration_8.constant`: `false`. */
+    u8 linkStatus_6;                  /** Packed anim status link target. See `s_ModelAnim::status_0`. */
     // 1 byte of padding.
     union
     {
         q19_12 constant;              /** Constant duration at 30 FPS. */
         q19_12 (*variableFunc)(void); /** Variable duration at 30 FPS via a function. Allows animations to be sped up or slowed down. */
     } duration_8;
-    s16 startKeyframeIdx_C;       /** Start keyframe index. Sometimes `NO_VALUE`, unknown why. */
-    s16 endKeyframeIdx_E;         /** End keyframe index. */
+    s16 startKeyframeIdx_C;           /** Start keyframe index. Sometimes `NO_VALUE`, unknown why. */
+    s16 endKeyframeIdx_E;             /** End keyframe index. */
 } s_AnimInfo;
 STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 

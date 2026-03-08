@@ -129,7 +129,7 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
 #endif
     }
 
-    if (animInfo->updateFunc_0 == Anim_Update0)
+    if (animInfo->playbackFunc_0 == Anim_PlaybackOnce)
     {
         if (Anim_DurationGet(chara, animInfo) > Q12(0.0f))
         {
@@ -141,7 +141,7 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
         }
     }
 
-    if (animInfo->updateFunc_0 == Anim_Update2)
+    if (animInfo->playbackFunc_0 == Anim_BlendLinear)
     {
         return -2;
     }
