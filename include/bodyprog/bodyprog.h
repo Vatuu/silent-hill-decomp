@@ -2358,7 +2358,7 @@ extern s16 D_800AF624;
 extern s16 D_800AF626;
 
 /** Generic collision global used by high-level getters. */
-extern s_CollisionPoint g_CollisionPoint;
+extern s_CollisionPoint g_CollisionPointCache;
 
 extern u8 D_800AFD04;
 
@@ -4291,7 +4291,7 @@ bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3); // arg3 type assumed
 /** Probably returns `bool`. */
 bool func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
-/** Fills `g_CollisionPoint` with collision data at a given 2D position.
+/** Fills `g_CollisionPointCache` with collision data at a given 2D position.
  *
  * @param posX X position.
  * @param posZ Z position.

@@ -8929,18 +8929,18 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
     q19_12       collZ;
     s_Collision* coll;
 
-    coll = &g_CollisionPoint.collision_C;
+    coll = &g_CollisionPointCache.collision_C;
 
-    collX = g_CollisionPoint.position_0.vx;
-    collZ = g_CollisionPoint.position_0.vz;
-    if (g_CollisionPoint.field_18 != NO_VALUE && collX == posX && collZ == posZ)
+    collX = g_CollisionPointCache.position_0.vx;
+    collZ = g_CollisionPointCache.position_0.vz;
+    if (g_CollisionPointCache.field_18 != NO_VALUE && collX == posX && collZ == posZ)
     {
         return;
     }
 
     Collision_Get(coll, posX, posZ);
-    g_CollisionPoint.position_0.vx = posX;
-    g_CollisionPoint.position_0.vz = posZ;
+    g_CollisionPointCache.position_0.vx = posX;
+    g_CollisionPointCache.position_0.vz = posZ;
 
     count = coll->field_8;
     switch (coll->field_8)
@@ -8994,20 +8994,20 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
             break;
     }
 
-    g_CollisionPoint.position_0.vy = groundHeight;
-    g_CollisionPoint.field_18      = count;
+    g_CollisionPointCache.position_0.vy = groundHeight;
+    g_CollisionPointCache.field_18      = count;
 }
 
 q19_12 Collision_GroundHeightGet(q19_12 posX, q19_12 posZ) // 0x80080884
 {
     Collision_Fill(posX, posZ);
-    return g_CollisionPoint.position_0.vy;
+    return g_CollisionPointCache.position_0.vy;
 }
 
 s32 func_800808AC(q19_12 posX, q19_12 posZ) // 0x800808AC
 {
     Collision_Fill(posX, posZ);
-    return g_CollisionPoint.field_18;
+    return g_CollisionPointCache.field_18;
 }
 
 s32 Math_MulFixed(s32 val0, s32 val1, s32 shift) // 0x800808D4

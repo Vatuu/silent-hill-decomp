@@ -137,17 +137,17 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             Screen_RectInterlacedClear(0, 0x20, 0x140, 0x1C0, 0u, 0u, 0u);
             Screen_Init(SCREEN_WIDTH, true);
 
-            g_IntervalVBlanks    = 1;
+            g_IntervalVBlanks = 1;
             ScreenFade_Start(true, true, false);
             g_ScreenFadeTimestep = Q12(3.0f);
 
             Game_RadioSoundStop();
 
-            g_Inventory_IsScrolling              = true;
+            g_Inventory_IsScrolling          = true;
             g_Inventory_SelectionBordersDraw = 0;
-            D_800AE178                           = 0;
-            g_Inventory_CmdSelectedIdx           = 0;
-            g_Inventory_SelectedItemIdx          = g_SysWork.inventoryItemSelectedIdx_2351;
+            D_800AE178                       = 0;
+            g_Inventory_CmdSelectedIdx       = 0;
+            g_Inventory_SelectedItemIdx      = g_SysWork.inventoryItemSelectedIdx_2351;
 
             switch (g_GameWork.gameStatePrev_590)
             {
@@ -560,7 +560,7 @@ void Inventory_Logic(void) // 0x8004D518
 
                 D_800AE178                           = 1;
                 g_Inventory_SelectionBordersDraw = 2;
-                g_Inventory_CmdSelectedIdx           = 0;
+                g_Inventory_CmdSelectedIdx       = 0;
                 Sd_PlaySfx(Sfx_MenuMove, -64, 64);
 
                 g_SysWork.inventoryItemSelectedIdx_2351 = ((g_SysWork.inventoryItemSelectedIdx_2351 + g_SavegamePtr->inventorySlotCount_AB) - 1) % g_SavegamePtr->inventorySlotCount_AB;
@@ -593,7 +593,8 @@ void Inventory_Logic(void) // 0x8004D518
                     Sd_PlaySfx(Sfx_MenuMove, 0, 64);
                 }
             }
-            else if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 || g_Inventory_IsDownClicked) &&
+            else if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 ||
+                      g_Inventory_IsDownClicked) &&
                      g_Inventory_SelectionBordersDraw == 8)
             {
                 g_Inventory_SelectionBordersDraw = 1;
@@ -613,7 +614,8 @@ void Inventory_Logic(void) // 0x8004D518
                      g_Inventory_SelectionBordersDraw >= 8)
             {
                 if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flauros ||
-                    (g_SysWork.field_2388.isFlashlightUnavailable_16 && g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flashlight))
+                    (g_SysWork.field_2388.isFlashlightUnavailable_16 &&
+                     g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flashlight))
                 {
                     Sd_PlaySfx(Sfx_MenuError, 64, 64);
                 }
@@ -733,11 +735,13 @@ void Inventory_Logic(void) // 0x8004D518
                 Sd_PlaySfx(Sfx_MenuMove, 0, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Item;
             }
-            else if (g_Inventory_IsRightClicked || (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            else if (g_Inventory_IsRightClicked ||
+                     (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 g_Inventory_SelectionBordersDraw = 1;
 
-                if (!g_Inventory_IsRightClicked || (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+                if (!g_Inventory_IsRightClicked ||
+                    (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
                 {
                     Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
                     g_Inventory_SelectionId = InventorySelectionId_Exit;
@@ -779,11 +783,13 @@ void Inventory_Logic(void) // 0x8004D518
                 Sd_PlaySfx(Sfx_MenuMove, 0, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Item;
             }
-            else if (g_Inventory_IsLeftClicked || g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            else if (g_Inventory_IsLeftClicked ||
+                     (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 g_Inventory_SelectionBordersDraw = 1;
 
-                if (!g_Inventory_IsLeftClicked || g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+                if (!g_Inventory_IsLeftClicked ||
+                    (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
                 {
                     Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
                 }
@@ -796,7 +802,8 @@ void Inventory_Logic(void) // 0x8004D518
             }
             else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                if ((!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) || g_SysWork.field_2388.isFlashlightOn_15 ||
+                if ((!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) ||
+                     g_SysWork.field_2388.isFlashlightOn_15 ||
                      (!(g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) &&
                       !(g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))) &&
                     HAS_MAP(g_SavegamePtr->paperMapIdx_A9))
@@ -835,7 +842,8 @@ void Inventory_Logic(void) // 0x8004D518
             {
                 Gfx_Inventory_UnavailableMapText(1);
             }
-            else if (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1) && !g_SysWork.field_2388.isFlashlightOn_15 &&
+            else if (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1) &&
+                     !g_SysWork.field_2388.isFlashlightOn_15 &&
                      (g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0) ||
                       g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))
             {
@@ -903,7 +911,7 @@ void Inventory_Logic(void) // 0x8004D518
                 {
                     case InventoryCmdId_OnOff:
                         g_Inventory_SelectionBordersDraw = 1;
-                        g_Inventory_SelectionId              = InventorySelectionId_Item;
+                        g_Inventory_SelectionId          = InventorySelectionId_Item;
 
                         if (g_Inventory_CmdSelectedIdx == 0)
                         {
@@ -939,7 +947,8 @@ void Inventory_Logic(void) // 0x8004D518
                     case InventoryCmdId_UseLook:
                         if (g_Inventory_CmdSelectedIdx != 0)
                         {
-                            if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) || g_SysWork.field_2388.isFlashlightOn_15 ||
+                            if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) ||
+                                g_SysWork.field_2388.isFlashlightOn_15 ||
                                 (!(g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) &&
                                  !(g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0))))
                             {
@@ -1017,7 +1026,8 @@ void Inventory_Logic(void) // 0x8004D518
                         break;
 
                     case InventoryCmdId_Look:
-                        if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) || g_SysWork.field_2388.isFlashlightOn_15 ||
+                        if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) ||
+                            g_SysWork.field_2388.isFlashlightOn_15 ||
                             (!(g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) &&
                              !(g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0))))
                         {
