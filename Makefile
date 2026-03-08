@@ -167,7 +167,10 @@ TARGET_POSTBUILD := bodyprog screens/b_konami screens/stream maps/map3_s06 maps/
 # - Adds overlay-specific compiler flags based on files directory (currently only per-map defines).
 # - Switches aspsx-version for lib_unk code.
 define FlagsSwitch
-	$(if $(findstring /main/,$(1)), $(eval DL_FLAGS = -G8), $(eval DL_FLAGS = -G0))
+    $(if $(or $(findstring /main/,$(1)),$(findstring lib_unk,$(1))), \
+    	$(eval DL_FLAGS = -G8), \
+    	$(eval DL_FLAGS = -G0))
+
 	$(eval LD_FLAGS = $(ENDIAN) $(DL_FLAGS) $(OPT_FLAGS) $(LD_FLAGS_GCSECTIONS) -nostdlib --no-check-sections)
 	$(eval AS_FLAGS = $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
 	$(eval CC_FLAGS = $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet)
