@@ -43,7 +43,11 @@ s_SysWork_2510 D_800B142C = {
     .next_0  = NULL,
     .key_4   = 1,
     .pad_5   = { 1, 2, 0 },
+#if VERSION_IS(USA)
     .field_8 = 0x800B2610, // TODO: Pointer to data? Pretty far from this files .data section.
+#elif VERSION_IS(JAP0)
+    .field_8 = 0x800B4B40,
+#endif
     .func_C  = func_8009E9D0,
 };
 

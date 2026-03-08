@@ -317,6 +317,7 @@ segments:
       - [0x7ade4, asm, lib/libspu/s_sva]
     #  - [0x79048,   o, ../../lib/libspu/s_n2p]
       - [0x7b5e4, asm, lib/libspu/s_gva]
+      - [0x7B9D4, c, lib_unk/lib_8009E198]
       - [0x7c5e0, c, libsd/smf_snd]
       - [0x7fb98, asm, lib/libspu/s_q]
 
@@ -364,8 +365,9 @@ segments:
       - [0x8D654, .data, ranking]
       - [0x8D668, .data, credits_init]
       - [0x8D6DC, data]
+      - [0x8EDBC, .data, lib_unk/lib_8009E198]
       - [0x8EE0C, .data, libsd/smf_main]
-      - [0x8FFE0, data] # Unknown data
+      - [0x8FFE0, data] # Data for `PadSetActAlign` used by `lib_8009E198`.
 
       - [0x8FFE8, .bss, memcard]
       - [0x935F0, .bss, text/text_debug_draw]

@@ -427,7 +427,7 @@ segments:
       - [0x8C8DC, .data, libsd/smf_main]
       
       # .bss section
-      - [0x8DAB0, data, bodyprog_800B2610] # Unknown data.
+      - [0x8DAB0, data, bodyprog_800B2610] # Data for `PadSetActAlign` used by `lib_8009E198`, not sure why this is separate (non-zero so isn't .bss, maybe .sdata?)
       - [0x8DAB8, .bss, memcard]
       - [0x910C0, .bss, text/text_debug_draw]
       - [0x910C8, .bss, screen/screen_fade]

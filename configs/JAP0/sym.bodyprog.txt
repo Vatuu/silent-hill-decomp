@@ -198,6 +198,23 @@ smf_file_no = 0x800B4AEC;
 eof_char = 0x800B4AF4;
 chantype = 0x800B4AF8;
 
+// lib_unk
+PadSetActAlign = 0x8009CD84; // type:func
+PadSetAct = 0x8009CE04; // type:func
+func_8009E3B0 = 0x800A074C; // type:func
+func_8009E438 = 0x800A07D4; // type:func
+func_8009E520 = 0x800A08BC; // type:func
+func_8009E82C = 0x800A0BC8; // type:func
+func_8009E9D0 = 0x800A0D6C; // type:func
+func_8009EC64 = 0x800A1000; // type:func
+func_8009ED90 = 0x800A112C; // type:func
+D_800B13EC = 0x800B391C;
+D_800B13FC = 0x800B392C;
+D_800B140C = 0x800B393C;
+D_800B141C = 0x800B394C;
+D_800B142C = 0x800B395C;
+
+
 // Gamestates inside overlays. TODO: Move these to sym files for each overlay
 GameState_KonamiLogo_Update = 0x800cbadc; // type:func
 GameState_KcetLogo_Update = 0x800cbed4; // type:func
