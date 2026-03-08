@@ -478,7 +478,7 @@ segments:
       - [0x9F774,  pad] # Garbage.
       - [0x9F778, .bss, bodyprog_8005E0DC]
       - [0x9F8C8, .bss, bodyprog_800652F4]
-      - [0x9F8E8, .bss, bodyprog_mapscreen_80066EB0]
+      - [0x9F8E8, .bss, bodyprog_mapscreen_80066D90]
       - [0x9F8F4,  pad] # Garbage.
       - [0x9F8F8, .bss, bodyprog_800697EC]
       - [0x9F96C,  pad] # Garbage.
