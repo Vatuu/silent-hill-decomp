@@ -26,7 +26,7 @@ options:
   asm_jtbl_label_macro: jlabel
   asm_data_macro: dlabel
 
-  section_order: [".rodata", ".text", ".data", ".bss"]
+  section_order: [".rodata", ".text", ".data", ".sdata", ".bss"]
 
   symbol_addrs_path:
    # - configs/JAP0/screens/sym.b_konami.txt - Can't currently be included as function addrs overlap with map overlay data addrs
@@ -367,8 +367,12 @@ segments:
       - [0x8D6DC, data]
       - [0x8EDBC, .data, lib_unk/lib_8009E198]
       - [0x8EE0C, .data, libsd/smf_main]
-      - [0x8FFE0, data] # Data for `PadSetActAlign` used by `lib_8009E198`.
+      
+      # .sdata section
+      - [0x8FFE0, .sdata, lib_unk/lib_8009E198]
+      - [0x8FFE6, sdata] # Garbage padding, some reason splat doesn't output data into the .s, so postbuild currently has to add it.
 
+      # .bss section
       - [0x8FFE8, .bss, memcard]
       - [0x935F0, .bss, text/text_debug_draw]
       - [0x935F8, .bss, screen/screen_fade]

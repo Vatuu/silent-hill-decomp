@@ -213,6 +213,7 @@ D_800B13FC = 0x800B392C;
 D_800B140C = 0x800B393C;
 D_800B141C = 0x800B394C;
 D_800B142C = 0x800B395C;
+D_800B2610 = 0x800B4B40;
 
 
 // Gamestates inside overlays. TODO: Move these to sym files for each overlay

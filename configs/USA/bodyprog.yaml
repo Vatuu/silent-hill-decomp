@@ -27,7 +27,7 @@ options:
   asm_jtbl_label_macro: jlabel
   asm_data_macro: dlabel
 
-  section_order: [".rodata", ".text", ".data", ".bss"]
+  section_order: [".rodata", ".text", ".data", ".sdata", ".bss"]
 
   symbol_addrs_path:
     - configs/USA/screens/sym.b_konami.txt
@@ -426,8 +426,11 @@ segments:
       - [0x8C88C, .data, lib_unk/lib_8009E198]
       - [0x8C8DC, .data, libsd/smf_main]
       
+      # .sdata section
+      - [0x8DAB0, .sdata, lib_unk/lib_8009E198]
+      - [0x8DAB6, sdata] # Garbage padding, some reason splat doesn't output data into the .s, so postbuild currently has to add it.
+
       # .bss section
-      - [0x8DAB0, data, bodyprog_800B2610] # Data for `PadSetActAlign` used by `lib_8009E198`, not sure why this is separate (non-zero so isn't .bss, maybe .sdata?)
       - [0x8DAB8, .bss, memcard]
       - [0x910C0, .bss, text/text_debug_draw]
       - [0x910C8, .bss, screen/screen_fade]

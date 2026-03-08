@@ -9,6 +9,7 @@ USA_STREAM = [
 
 USA_BODYPROG = [
     [0x9BF, b'\x4c\x00\x95\xab\x90'],
+    [0x8DAB7, b'\x18'],
     [0xA23DC, b'\x0A\x09\x2E\x62'],
     [0xA24CC, b'\x38\x0D\x0A\x09'],
     [0xA2B8C, b'\x0D\x0A\x09\x2E'],
@@ -38,6 +39,7 @@ USA_BODYPROG = [
 JAP0_BODYPROG = [
     [0x12E, b'\xE8\xFF'],
     [0x871EE, b'\x24\x33'],
+    [0x8FFE7, b'\x32'],
     [0x935FC, b'\xAF\x28\xFF\xAD'],
     [0x9A6E6, b'\x60'],
     [0x9A712, b'\x08\x00\x09\x00\x08\x00'],
