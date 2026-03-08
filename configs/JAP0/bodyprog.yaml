@@ -58,22 +58,27 @@ segments:
     subsegments:
       - [0x0, rodata, bodyprog]
       - [0x4, .rodata, memcard]
+      - [0x130, rodata] # Garbage padding
       - [0x134, .rodata, screen/screen_fade]
       - [0x17C, .rodata, screen/cutscene_border]
       - [0x1DC, rodata]
       - [0x598, .rodata, sys/fs_screens]
       - [0x5A8, .rodata, sys/settings_reset]
       - [0x604, .rodata, sys/memcard_2]
+      - [0x680, rodata] # Garbage padding
       - [0x68C, .rodata, game_boot/game_load]
       - [0x6C0, .rodata, events/bgm_update]
+      - [0x6E8, rodata] # Garbage padding
       - [0x6EC, .rodata, events/map_msg_display]
       - [0x744, .rodata, events/bodyprog_data_800A99B4]
       - [0x8D4, .rodata, events/game_sys_states]
       - [0x908, .rodata, title]
+      - [0x9AC, rodata] # Garbage padding (should start at 0x9AB but that causes mismatches?)
       - [0x9B0, .rodata, gfx/bodyprog_8003BE50]
       - [0x1040, .rodata, gfx/bodyprog_8003E5E8]
-      - [0x1070, .rodata, gfx/bodyprog_80040004] # TODO: Seems to just be garbage data, might be able to remove from .c
+      - [0x1070, rodata] # Garbage padding
       - [0x1080, .rodata, sound/sd_call]
+      - [0x11EC, rodata] # Garbage padding
       - [0x11F4, rodata]
       - [0x1450, .rodata, items/item_screens_1]
       - [0x1470, .rodata, items/item_screens_2]
@@ -81,7 +86,9 @@ segments:
       - [0x36EC, .rodata, gfx/bodyprog_80055028]
       - [0x3714, rodata]
       - [0x3734, .rodata, bodyprog_8005E0DC]
-      - [0x3BD8, .rodata, bodyprog_mapscreen_80066EB0]
+      - [0x3BD8, rodata] # Garbage padding
+      - [0x3BE0, .rodata, bodyprog_mapscreen_80066EB0]
+      - [0x3BE8, rodata] # Garbage padding
       - [0x3BEC, .rodata, bodyprog_mapscreen_80066D90]
       - [0x3D04, .rodata, bodyprog_800697EC]
       - [0x4910, .rodata, bodyprog_800706E4]
@@ -92,6 +99,7 @@ segments:
       - [0x6414, .rodata, water]
       - [0x6438, .rodata, demo]
       - [0x6458, .rodata, ranking]
+      - [0x672C, rodata] # Garbage padding
       - [0x6734, rodata]
       - [0x9464, .rodata, libsd/smf_io]
       - [0x96F8, .rodata, libsd/smf_mid]

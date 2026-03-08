@@ -60,6 +60,7 @@ segments:
       # .rodata section
       - [0x0,    .rodata, bodyprog]
       - [0x4,    .rodata, memcard]
+      - [0x13C, rodata] # Garbage padding (should start at 0x13A but causes mismatches)
       - [0x140,  .rodata, screen/screen_fade]
       - [0x184,  .rodata, screen/cutscene_border]
       - [0x1E4,  .rodata, sys/syswork_globals]
@@ -67,16 +68,20 @@ segments:
       - [0x5AC,  .rodata, sys/fs_screens]
       - [0x5BC,  .rodata, sys/settings_reset]
       - [0x618,  .rodata, sys/memcard_2]
+      - [0x694, rodata] # Garbage padding
       - [0x6A0,  .rodata, game_boot/game_load]
       - [0x6D4,  .rodata, events/bgm_update]
+      - [0x6FC, rodata] # Garbage padding
       - [0x700,  .rodata, events/map_msg_display]
       - [0x758,  .rodata, events/bodyprog_data_800A99B4]
       - [0x818,  .rodata, events/game_sys_states]
       - [0x920,  .rodata, title]
+      - [0x9C3, rodata] # Garbage padding
       - [0x9C8,  .rodata, gfx/bodyprog_8003BE50]
       - [0x1054, .rodata, gfx/bodyprog_8003E5E8]
-      - [0x1084, .rodata, gfx/bodyprog_80040004]
+      - [0x1084, rodata] # Garbage padding
       - [0x1094, .rodata, sound/sd_call]
+      - [0x1200, rodata] # Garbage padding
       - [0x1208, .rodata, text/text_draw]
       - [0x1330, .rodata, items/item_screens_1]
       - [0x1350, .rodata, items/item_screens_2]
@@ -84,7 +89,9 @@ segments:
       - [0x39CC, .rodata, gfx/bodyprog_80055028]
       - [0x39F4, .rodata, bodyprog_combat_8005BF38]
       - [0x3A14, .rodata, bodyprog_8005E0DC]
-      - [0x3EB8, .rodata, bodyprog_mapscreen_80066EB0]
+      - [0x3EB8, rodata] # Garbage padding
+      - [0x3EC0, .rodata, bodyprog_mapscreen_80066EB0]
+      - [0x3EC8, rodata] # Garbage padding
       - [0x3ECC, .rodata, bodyprog_mapscreen_80066D90]
       - [0x3FE4, .rodata, bodyprog_800697EC]
       - [0x4BF0, .rodata, bodyprog_800706E4]
@@ -95,6 +102,7 @@ segments:
       - [0x6754, .rodata, water]
       - [0x6778, .rodata, demo]
       - [0x6798, .rodata, ranking]
+      - [0x6A6C, rodata] # Garbage padding
       - [0x6A74,       o, ../../lib/libcd/iso9660, .rdata]
       - [0x6C64,       o, ../../lib/libcd/c_011, .rdata]
       - [0x6C84,       o, ../../lib/libgs/matrix, .rdata]

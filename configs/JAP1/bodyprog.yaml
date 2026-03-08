@@ -67,7 +67,7 @@ segments:
       - [0x610, rodata, sys/memcard_2]
       - [0x698, .rodata, game_boot/game_load]
       - [0x6CC, rodata]
-      - [0x107C, .rodata, gfx/bodyprog_80040004] # TODO: Seems to just be garbage data, might be able to remove from .c
+      - [0x107C, rodata] # Garbage padding
       - [0x108C, .rodata, sound/sd_call]
       - [0x11F8, rodata]
       - [0x145C, .rodata, items/item_screens_1]
@@ -76,13 +76,16 @@ segments:
       - [0x36F8, .rodata, gfx/bodyprog_80055028]
       - [0x3720, rodata]
       - [0x3740, .rodata, bodyprog_8005E0DC]
-      - [0x3BE4, .rodata, bodyprog_mapscreen_80066EB0]
+      - [0x3BE4, rodata] # Garbage padding
+      - [0x3BEC, .rodata, bodyprog_mapscreen_80066EB0]
+      - [0x3BF4, rodata] # Garbage padding
       - [0x3BF8, rodata]
       - [0x3D10, .rodata, bodyprog_800697EC]
       - [0x491C, rodata]
       - [0x5DD0, .rodata, bodyprog_80089090]
       - [0x6168, rodata]
       - [0x64C0, .rodata, ranking]
+      - [0x6798, rodata] # Garbage padding
       - [0x67A0, rodata]
 
       - [0x985C, c, memcard]

@@ -1851,11 +1851,5 @@ u8 Sd_CdPrimitiveCmdTry(s32 com, u8* param, u8* res) // 0x80048954
     return true;
 }
 
-#if VERSION_IS(USA)
-    const s32 pad_rodata_80025D60[2] = { 0x6A375A00, 0x892FBD00 }; // @unused Likely linker generated garbage.
-#elif VERSION_IS(JAP0)
-    const u8 pad_rodata_80025D60[] = { 0x00, 0x23, 0x64, 0x65, 0x00, 0x69, 0x6E, 0x65 }; // "#define"
-#endif
-
 #undef BSS_HACK_SD_CALL_C
 #undef VAB_BUFFER_LIMIT

@@ -1996,6 +1996,8 @@ s32 MemCard_State_FileReadWrite(void) // 0x80031260
 
 void MemCard_DevicePathGenerate(s32 deviceId, char* result) // 0x800314A4
 {
+    // @hack JAP0 has 2 bytes of garbage padding right after buXX: string below.
+    // Can't find way to add those 2 bytes here (or in splat yaml), postbuild will have to handle them.
     strcpy(result, "buXX:");
 
     // Convert sequential device ID to PSX channel number.
@@ -2003,10 +2005,3 @@ void MemCard_DevicePathGenerate(s32 deviceId, char* result) // 0x800314A4
     result[3] = '0' + (deviceId & ((1 << 0) | (1 << 1)));
 }
 
-#if VERSION_IS(USA)
-    const s32 pad_rodata_80024C98 = 0x8E080000;
-#elif VERSION_IS(JAP0)
-    // JAP0 has 2 bytes of garbage right after buXX: string above, along with the 4 bytes below.
-    // Can't find way to add those 2 bytes here (or in splat yaml), postbuild will have to handle them.
-    const u8 pad_rodata_80024C98[] = { 0x00, 0x27, 0x10, 0x00 };
-#endif

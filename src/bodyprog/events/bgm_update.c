@@ -437,5 +437,3 @@ void func_8003652C(void) // 0x8003652C
 
     LoadImage(&rect, VALS);
 }
-
-const s32 pad_rodata_8002525C = 0;

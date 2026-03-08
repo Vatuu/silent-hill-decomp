@@ -934,7 +934,7 @@ s32 D_800AE71C[][2] = {
 // Some timer used in `func_80066184`.
 q3_12 D_800AE73C = Q12(0.0f);
 
-// TODO: Possibly garbage data.
+// TODO: Garbage data.
 #if VERSION_IS(JAP0)
 s16 D_800AE73E = 0x342C;
 #elif VERSION_IS(JAP1)
