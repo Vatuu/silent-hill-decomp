@@ -14,9 +14,6 @@
 #include "main/fileinfo.h"
 #include "screens/stream/stream.h"
 
-#if !VERSION_IS(USA)
-INCLUDE_ASM("screens/stream/nonmatchings/stream", GameState_MovieIntroFadeIn_Update);
-#else
 void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
 {
     switch (g_GameWork.gameStateStep_598[0])
@@ -24,6 +21,11 @@ void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
         case 0:
             VSync(SyncMode_Wait8);
             ScreenFade_Start(true, true, false);
+
+#if VERSION_EQUAL_OR_OLDER(JAP0)
+            Fs_QueueStartRead(FILE_TIM_WATER_TIM, g_OvlDynamic);
+#endif
+
             GameFs_TitleGfxLoad();
 
             g_GameWork.gameStateStep_598[0]++;
@@ -48,26 +50,22 @@ void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
 
     Screen_BackgroundImgDraw(D_800A900C);
 }
-#endif
 
-#if !VERSION_IS(USA)
-INCLUDE_ASM("screens/stream/nonmatchings/stream", GameState_MovieIntro_Update);
-#else
 void GameState_MovieIntro_Update(void) // 0x801E279C
 {
-    s32 fileIdx = FILE_XA_C1_20670;
-
-    if (g_GameWorkConst->config_0.optExtraOptionsEnabled_27 & (1 << 0))
+#if VERSION_EQUAL_OR_OLDER(JAP0)
+    if (g_GameWork.gameStatePrev_590 == GameState_KcetLogo || g_GameWork.gameStatePrev_590 == GameState_AutoLoadSavegame)
     {
-        fileIdx = FILE_XA_C2_20670;
+        Fs_QueueStartRead(FILE_TIM_WATER_TIM, g_OvlDynamic);
+        Fs_QueueWaitForEmpty();
     }
+#endif
 
-    open_main(fileIdx, 0);
+    open_main((g_GameWorkConst->config_0.optExtraOptionsEnabled_27 & (1 << 0)) ? FILE_XA_C2_20670 : FILE_XA_C1_20670, 0);
     Game_StateSetNext(GameState_MainMenu);
 
     g_ScreenFadeTimestep = Q12(1.0f);
 }
-#endif
 
 void GameState_MovieOpening_Update(void) // 0x801E2838
 {
