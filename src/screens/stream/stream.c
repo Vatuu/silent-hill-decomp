@@ -14,6 +14,9 @@
 #include "main/fileinfo.h"
 #include "screens/stream/stream.h"
 
+#if !VERSION_IS(USA)
+INCLUDE_ASM("screens/stream/nonmatchings/stream", GameState_MovieIntroFadeIn_Update);
+#else
 void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
 {
     switch (g_GameWork.gameStateStep_598[0])
@@ -45,7 +48,11 @@ void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
 
     Screen_BackgroundImgDraw(D_800A900C);
 }
+#endif
 
+#if !VERSION_IS(USA)
+INCLUDE_ASM("screens/stream/nonmatchings/stream", GameState_MovieIntro_Update);
+#else
 void GameState_MovieIntro_Update(void) // 0x801E279C
 {
     s32 fileIdx = FILE_XA_C1_20670;
@@ -60,6 +67,7 @@ void GameState_MovieIntro_Update(void) // 0x801E279C
 
     g_ScreenFadeTimestep = Q12(1.0f);
 }
+#endif
 
 void GameState_MovieOpening_Update(void) // 0x801E2838
 {

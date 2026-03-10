@@ -37,6 +37,10 @@ USA_BODYPROG = [
     [0x9821C, b'\x21\x10\x49'],
 ]
 
+JAP0_STREAM = [
+    [0x12B2C, b'\x56\x49\x45\x57']
+]
+
 JAP0_BODYPROG = [
     [0x12E, b'\xE8\xFF'],
     [0x9AB, b'\x2C'],
@@ -120,12 +124,22 @@ JAP2_BODYPROG = [
 
 if __name__ == "__main__":
     match sys.argv[1]:
-        case "screens/stream" | "build/USA/out/VIN/STREAM.BIN":
-            file = open("build/USA/out/VIN/STREAM.BIN", "r+b")
-            for data in USA_STREAM:
-                file.seek(data[0])
-                file.write(data[1])
-            file.close()
+        case "screens/stream" | "build/USA/out/VIN/STREAM.BIN" | "build/JAP0/out/VIN/STREAM.BIN":
+            usaPath = "build/USA/out/VIN/STREAM.BIN"
+            jap0Path = "build/JAP0/out/VIN/STREAM.BIN"
+            if os.path.isfile(usaPath):
+                file = open(usaPath, "r+b")
+                for data in USA_STREAM:
+                    file.seek(data[0])
+                    file.write(data[1])
+                file.close()
+            if os.path.isfile(jap0Path):
+                file = open(jap0Path, "r+b")
+                for data in JAP0_STREAM:
+                    file.seek(data[0])
+                    file.write(data[1])
+                file.close()
+
         case "bodyprog" | "build/USA/out/1ST/BODYPROG.BIN" | "build/JAP0/out/1ST/BODYPROG.BIN" | "build/JAP1/out/1ST/BODYPROG.BIN" | "build/JAP2/out/1ST/BODYPROG.BIN":
             usaPath = "build/USA/out/1ST/BODYPROG.BIN"
             jap0Path = "build/JAP0/out/1ST/BODYPROG.BIN"

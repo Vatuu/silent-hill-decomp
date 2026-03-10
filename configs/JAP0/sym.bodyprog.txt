@@ -238,6 +238,18 @@ D_800A900C = 0x800AB3A8;
 CdDiskReady = 0x80094B88; // type:func
 CdGetDiskType = 0x80094CC4; // type:func
 
+// used by stream
+StSetRing = 0x80094138; // type:func
+CdSearchFile = 0x80094168; // type:func
+CdRead2 = 0x80094AD8; // type:func
+StUnSetRing = 0x80094E78; // type:func
+StGetBackloc = 0x80094F84; // type:func
+StSetStream = 0x80094FE8; // type:func
+StFreeRing = 0x80095078; // type:func
+StGetNext = 0x80095168; // type:func
+StCdInterrupt = 0x80095248; // type:func
+StCdIntrFlag = 0x800C6EB4;
+
 
 // Gamestates inside overlays. TODO: Move these to sym files for each overlay
 GameState_MovieIntroFadeIn_Update = 0x801e2654; // type:func
@@ -248,8 +260,6 @@ GameState_LoadSavegameScreen_Update = 0x801e7040; // type:func
 GameState_MovieOpening_Update = 0x801e2884; // type:func
 GameState_ExitMovie_Update = 0x801e28fc; // type:func
 GameState_DebugMoviePlayer_Update = 0x801e2954; // type:func
-GameState_Options_Update = 0x801e3164; // type:func
-GameState_Unk15_Update = 0x801e308c; // type:func
 
 // Symbols from USA, includes named symbols and mappings to let unnamed syms match with the unnamed USA names.
 D_80024C8C = 0x80024C84;
