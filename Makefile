@@ -279,6 +279,7 @@ $2.elf: $(call get_o_files, $1, $(GEN_COMP_TU))
 		-T $(LINKER_DIR)/$1.ld \
 		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_syms_auto.$(notdir $1).txt \
 		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt \
+		-T $(CONFIG_DIR)/lib_externs.ld \
 		-o $$@
 
 #endif GAME_VERSION
@@ -315,6 +316,11 @@ endif
 ifeq ($(BUILD_SCREENS), 1)
 
 TARGET_SCREENS := b_konami credits options saveload stream
+
+ifeq ($(GAME_VERSION), JAP0)
+TARGET_SCREENS := $(TARGET_SCREENS) hp_safe1 s__safe2
+endif
+
 TARGET_SCREENS := $(addprefix $(TARGET_SCREENS_SRC_DIR)/,$(TARGET_SCREENS))
 
 #endif BUILD_SCREENS

@@ -164,7 +164,6 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     // TODO:
                     // - `CdDiskReady` and `CdGetDiskType` are part of `libcd/type.o`, not included in US release, need conversion from SDK libs.
                     // - Add `FS_BUFFER_` constants for the addresses used here.
-                    // - Split `SAFEx.BIN` and move `SafetyCheck` symbol out of `sym.b_konami.txt`
 
                     while (CdDiskReady(false) != CdlComplete || CdGetDiskType() == CdlStatShellOpen)
                     {
@@ -177,17 +176,17 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     Lzss_Init(FS_BUFFER_6, (void*)0x801E6600, 3000);
                     Lzss_Decode(NO_VALUE);
 
-                    // Decrypt `S__SAFE2` and run `SafetyCheck`
+                    // Decrypt `S__SAFE2` and run `AntiModchip_Check`
                     Fs_DecryptOverlay((void*)0x801E7600, (void*)0x801E6600, 4096);
                     curTime = g_SysWork.counters_1C[0];
-                    SafetyCheck();
+                    AntiModchip_Check();
 
-                    // Decrypt `HP_SAFE1` and run `SafetyCheck` if enough time has passed.
+                    // Decrypt `HP_SAFE1` and run `AntiModchip_Check` if enough time has passed.
                     // NOTE: `HP_SAFE1` seems to call slightly different functions than `S__SAFE2`?
                     Fs_DecryptOverlay((void*)0x801E7600, FS_BUFFER_21, 4096);
                     if ((g_SysWork.counters_1C[0] - curTime) >= 100)
                     {
-                        SafetyCheck();
+                        AntiModchip_Check();
                     }
 
                     // Reset drive & sound driver

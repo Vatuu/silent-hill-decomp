@@ -30,6 +30,7 @@ options:
 
   symbol_addrs_path:
     - configs/JAP0/screens/sym.b_konami.txt
+    - configs/JAP0/screens/sym.hp_safe1.txt
     - configs/JAP0/screens/sym.stream.txt
     - configs/JAP0/sym.bodyprog.txt
     - configs/USA/sym.main.txt

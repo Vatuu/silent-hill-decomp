@@ -1,0 +1,2 @@
+SafetyCheck = 0x801E7654; // type:func - From safechk.obj
+AntiModchip_Check = 0x801E7EB4; // type:func
