@@ -22,7 +22,7 @@ void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
             VSync(SyncMode_Wait8);
             ScreenFade_Start(true, true, false);
 
-#if VERSION_EQUAL_OR_OLDER(JAP0)
+#if VERSION_REGION_IS(NTSCJ)
             Fs_QueueStartRead(FILE_TIM_WATER_TIM, g_OvlDynamic);
 #endif
 
@@ -53,7 +53,7 @@ void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
 
 void GameState_MovieIntro_Update(void) // 0x801E279C
 {
-#if VERSION_EQUAL_OR_OLDER(JAP0)
+#if VERSION_REGION_IS(NTSCJ)
     if (g_GameWork.gameStatePrev_590 == GameState_KcetLogo || g_GameWork.gameStatePrev_590 == GameState_AutoLoadSavegame)
     {
         Fs_QueueStartRead(FILE_TIM_WATER_TIM, g_OvlDynamic);

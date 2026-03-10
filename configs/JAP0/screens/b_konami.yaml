@@ -60,12 +60,10 @@ segments:
       - [0x2C, .rodata, lzss]
 
       # .text section
-      #- [0x34, c, b_konami]
       - [0x34, c, b_konami]
       - [0xDE8, c, lzss]
 
       # .data section
-      #- [0x10A8, .data, b_konami]
       - [0x10A4, .data, b_konami]
       - [0x10A8, .data, lzss]
       - [0x10AC, pad]

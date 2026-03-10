@@ -1,0 +1,22 @@
+GameState_KonamiLogo_Update = 0x800CBC04; // type:func
+GameState_KcetLogo_MemCardCheck = 0x800CBECC; // type:func
+GameState_KcetLogo_Update = 0x800CBFFC; // type:func
+BootScreen_ImageSegmentDraw = 0x800CC5A8; // type:func
+BootScreen_KonamiScreenDraw = 0x800CC6F4; // type:func
+BootScreen_KcetScreenDraw = 0x800CC8A4; // type:func
+Lzss_Reset = 0x800CC9B8; // type:func
+Lzss_DecompressedSizeGet = 0x800CC9C4; // type:func
+Lzss_Init = 0x800CC9D0; // type:func
+Lzss_IsActive = 0x800CCA3C; // type:func
+Lzss_Decode = 0x800CCA4C; // type:func
+
+// safechk.obj functions, TODO: move to SAFEx.BIN once that file has splat config added.
+SafetyCheck = 0x801E7EB4; // type:func
+
+g_Lzss_Window = 0x800CCC78;
+g_Lzss_IsActive = 0x800CCC80;
+g_Lzss_CurPosition = 0x800CCC84;
+g_Lzss_OutPosition = 0x800CCC88;
+g_Lzss_WindowOffset = 0x800CCC8C;
+g_Lzss_EndPosition = 0x800CCC90;
+g_Lzss_CurFlag = 0x800CCC94;

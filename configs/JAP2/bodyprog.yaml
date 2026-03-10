@@ -29,11 +29,11 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-   # - configs/JAP2/screens/sym.b_konami.txt - Can't currently be included as function addrs overlap with map overlay data addrs
-    - configs/JAP2/screens/sym.stream.txt
-    - configs/JAP2/screens/sym.saveload.txt
-    - configs/JAP2/screens/sym.options.txt
-    - configs/JAP2/screens/sym.credits.txt
+    - configs/JAP1/screens/sym.b_konami.txt
+    - configs/JAP1/screens/sym.stream.txt
+    - configs/JAP1/screens/sym.saveload.txt
+    - configs/JAP1/screens/sym.options.txt
+    - configs/JAP1/screens/sym.credits.txt
     - configs/JAP1/sym.bodyprog.txt
     - configs/USA/sym.main.txt
   reloc_addrs_path:

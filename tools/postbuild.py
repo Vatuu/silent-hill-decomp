@@ -62,6 +62,10 @@ JAP0_BODYPROG = [
     [0xA64CC, b'\x6F\x72\x67\x65']
 ]
 
+JAP1_STREAM = [
+    [0x12B2C, b'\x56\x49\x45\x57']
+]
+
 JAP1_BODYPROG = [
     [0x12F, b'\xFE'],
     [0x93724, b'\xFF\x0F\xFF\x03'],
@@ -90,6 +94,10 @@ JAP1_BODYPROG = [
     [0xA4B24, b'\x09\x2E\x62\x79'],
     [0xA51E4, b'\x2E\x62\x79\x74'],
     [0xA65F4, b'\x0A\x09\x2E\x62']
+]
+
+JAP2_STREAM = [
+    [0x12B2C, b'\x56\x49\x45\x57']
 ]
 
 JAP2_BODYPROG = [
@@ -124,9 +132,11 @@ JAP2_BODYPROG = [
 
 if __name__ == "__main__":
     match sys.argv[1]:
-        case "screens/stream" | "build/USA/out/VIN/STREAM.BIN" | "build/JAP0/out/VIN/STREAM.BIN":
+        case "screens/stream" | "build/USA/out/VIN/STREAM.BIN" | "build/JAP0/out/VIN/STREAM.BIN" | "build/JAP1/out/VIN/STREAM.BIN" | "build/JAP2/out/VIN/STREAM.BIN":
             usaPath = "build/USA/out/VIN/STREAM.BIN"
             jap0Path = "build/JAP0/out/VIN/STREAM.BIN"
+            jap1Path = "build/JAP1/out/VIN/STREAM.BIN"
+            jap2Path = "build/JAP2/out/VIN/STREAM.BIN"
             if os.path.isfile(usaPath):
                 file = open(usaPath, "r+b")
                 for data in USA_STREAM:
@@ -136,6 +146,18 @@ if __name__ == "__main__":
             if os.path.isfile(jap0Path):
                 file = open(jap0Path, "r+b")
                 for data in JAP0_STREAM:
+                    file.seek(data[0])
+                    file.write(data[1])
+                file.close()
+            if os.path.isfile(jap1Path):
+                file = open(jap1Path, "r+b")
+                for data in JAP1_STREAM:
+                    file.seek(data[0])
+                    file.write(data[1])
+                file.close()
+            if os.path.isfile(jap2Path):
+                file = open(jap2Path, "r+b")
+                for data in JAP2_STREAM:
                     file.seek(data[0])
                     file.write(data[1])
                 file.close()
@@ -169,10 +191,12 @@ if __name__ == "__main__":
                     file.seek(data[0])
                     file.write(data[1])
                 file.close()
-        case "screens/b_konami" | "build/USA/out/1ST/B_KONAMI.BIN" | "build/JAP0/out/1ST/B_KONAMI.BIN":
+        case "screens/b_konami" | "build/USA/out/1ST/B_KONAMI.BIN" | "build/JAP0/out/1ST/B_KONAMI.BIN" | "build/JAP1/out/1ST/B_KONAMI.BIN" | "build/JAP2/out/1ST/B_KONAMI.BIN":
             # Random pad bytes between b_konami.c .data and lzss.c .data.
             usaPath = "build/USA/out/1ST/B_KONAMI.BIN"
             jap0Path = "build/JAP0/out/1ST/B_KONAMI.BIN"
+            jap1Path = "build/JAP1/out/1ST/B_KONAMI.BIN"
+            jap2Path = "build/JAP2/out/1ST/B_KONAMI.BIN"
             if os.path.isfile(usaPath):
                 file = open(usaPath, "r+b")
                 file.seek(0xF79)
@@ -181,6 +205,14 @@ if __name__ == "__main__":
                 file = open(jap0Path, "r+b")
                 file.seek(0x10A5)
                 file.write(b'\x20\x20\x39')
+            if os.path.isfile(jap1Path):
+                file = open(jap1Path, "r+b")
+                file.seek(0x10A5)
+                file.write(b'\x0D\x0A\x09')
+            if os.path.isfile(jap2Path):
+                file = open(jap2Path, "r+b")
+                file.seek(0x10A5)
+                file.write(b'\x00\xAC\x8F')
         case "maps/map3_s06" | "build/USA/out/VIN/MAP3_S06.BIN":
             # Random bytes at end of rodata section, linker artifact?
             file = open("build/USA/out/VIN/MAP3_S06.BIN", "r+b")
