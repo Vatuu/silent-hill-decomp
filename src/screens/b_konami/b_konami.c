@@ -395,12 +395,10 @@ void BootScreen_ImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 v
     GsOUT_PACKET_P = (u8*)prim + 28;
 }
 
-#if VERSION_REGION_IS(NTSCJ)
-INCLUDE_ASM("screens/b_konami/nonmatchings/b_konami", BootScreen_KonamiScreenDraw);
-#else
 void BootScreen_KonamiScreenDraw(void) // 0x800C9FB8
 {
     s32* ptr;
+    TILE* tile;
 
     // Draw Konami logo.
     BootScreen_ImageSegmentDraw(&g_KonamiLogoImg, 0xF, 0, 0, 256, 256, -192, -192);
@@ -408,15 +406,27 @@ void BootScreen_KonamiScreenDraw(void) // 0x800C9FB8
     BootScreen_ImageSegmentDraw(&g_KonamiLogoImg, 0xF, 0, 256, 256, 128, -192, 64);
     BootScreen_ImageSegmentDraw(&g_KonamiLogoImg, 0xF, 256, 256, 128, 128, 64, 64);
 
-    // Draw fading overlay tile.
     ptr = &g_OtTags0[g_ActiveBufferIdx][15];
-    addPrimFast(ptr, (TILE*)GsOUT_PACKET_P, 3);
-    setCodeWord((TILE*)GsOUT_PACKET_P, PRIM_RECT, 0xFFFFFF);
-    setXY0Fast((TILE*)GsOUT_PACKET_P, -SCREEN_WIDTH, -SCREEN_HEIGHT);
-    setWH((TILE*)GsOUT_PACKET_P, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
-    GsOUT_PACKET_P = (PACKET*)((u8*)GsOUT_PACKET_P + sizeof(TILE));
-}
+    tile = (TILE*)GsOUT_PACKET_P;
+    
+    // Draw fading overlay tile.
+    addPrimFast(ptr, tile, 3);
+    setCodeWord(tile, PRIM_RECT, 0xFFFFFF);
+    setXY0Fast(tile, -SCREEN_WIDTH, -SCREEN_HEIGHT);
+    setWH(tile, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
+
+#if VERSION_REGION_IS(NTSCJ)
+    // Draw unknown JPN0 tile.
+    tile++;
+    ptr--;
+    addPrimFast(ptr, tile, 3);
+    setCodeWord(tile, PRIM_RECT, 0xFFFFFF);
+    setXY0Fast(tile, 136, 140);
+    setWH(tile, 13, 13);
 #endif
+
+    GsOUT_PACKET_P = (PACKET*)&tile[1];
+}
 
 void BootScreen_KcetScreenDraw(void) // 0x800CA120
 {
