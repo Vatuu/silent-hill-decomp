@@ -155,11 +155,18 @@ if __name__ == "__main__":
                     file.seek(data[0])
                     file.write(data[1])
                 file.close()
-        case "screens/b_konami" | "build/USA/out/1ST/B_KONAMI.BIN":
+        case "screens/b_konami" | "build/USA/out/1ST/B_KONAMI.BIN" | "build/JAP0/out/1ST/B_KONAMI.BIN":
             # Random pad bytes between b_konami.c .data and lzss.c .data.
-            file = open("build/USA/out/1ST/B_KONAMI.BIN", "r+b")
-            file.seek(0xF79)
-            file.write(b'\x1F\xCE\xF3')
+            usaPath = "build/USA/out/1ST/B_KONAMI.BIN"
+            jap0Path = "build/JAP0/out/1ST/B_KONAMI.BIN"
+            if os.path.isfile(usaPath):
+                file = open(usaPath, "r+b")
+                file.seek(0xF79)
+                file.write(b'\x1F\xCE\xF3')
+            if os.path.isfile(jap0Path):
+                file = open(jap0Path, "r+b")
+                file.seek(0x10A5)
+                file.write(b'\x20\x20\x39')
         case "maps/map3_s06" | "build/USA/out/VIN/MAP3_S06.BIN":
             # Random bytes at end of rodata section, linker artifact?
             file = open("build/USA/out/VIN/MAP3_S06.BIN", "r+b")

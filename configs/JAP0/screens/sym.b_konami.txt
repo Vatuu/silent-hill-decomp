@@ -10,6 +10,9 @@ Lzss_Init = 0x800CC8A8; // type:func
 Lzss_IsActive = 0x800CC914; // type:func
 Lzss_Decode = 0x800CC924; // type:func
 
+// safechk.obj functions, TODO: move to SAFEx.BIN once that file has splat config added.
+SafetyCheck = 0x801E7EB4; // type:func
+
 g_Lzss_Window = 0x800CCB50;
 g_Lzss_IsActive = 0x800CCB58;
 g_Lzss_CurPosition = 0x800CCB5C;

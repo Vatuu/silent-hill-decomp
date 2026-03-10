@@ -234,6 +234,9 @@ g_KcetLogoImg = 0x800AB3A0;
 g_Savegame_SelectedElementIdx = 0x800BF26E;
 g_SelectedFileIdx = 0x800BF26F;
 g_SelectedDeviceId = 0x800BF270;
+D_800A900C = 0x800AB3A8;
+CdDiskReady = 0x80094B88; // type:func
+CdGetDiskType = 0x80094CC4; // type:func
 
 
 // Gamestates inside overlays. TODO: Move these to sym files for each overlay

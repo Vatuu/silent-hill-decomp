@@ -66,11 +66,10 @@ segments:
 
       # .data section
       #- [0x10A8, .data, b_konami]
-      - [0x10A4, data] # Garbage
-      - [0x10A8, .data, b_konami]
-      - [0x10AC, .data, lzss]
-      - [0x10B0, pad]
-      - [0x10B4, .bss, lzss]
+      - [0x10A4, .data, b_konami]
+      - [0x10A8, .data, lzss]
+      - [0x10AC, pad]
+      - [0x10B0, .bss, lzss]
 
   # Random garbage data at end, define as bin file to make Splat ignore it.
   - name: footer_data

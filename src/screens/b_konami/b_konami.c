@@ -130,9 +130,6 @@ s32 GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
     return KcetLogoStateStep_NoSaveGame;
 }
 
-#if VERSION_REGION_IS(NTSCJ)
-INCLUDE_ASM("screens/b_konami/nonmatchings/b_konami", GameState_KcetLogo_Update);
-#else
 void GameState_KcetLogo_Update(void) // 0x800C99A4
 {
     static u8 nextGameState = GameState_Init; // 0x800CA4F0
@@ -167,7 +164,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     // TODO:
                     // - `CdDiskReady` and `CdGetDiskType` are part of `libcd/type.o`, not included in US release, need conversion from SDK libs.
                     // - Add `FS_BUFFER_` constants for the addresses used here.
-                    // - Split `SAFEx.BIN` and make function symbol for `0x801E7EB4`
+                    // - Split `SAFEx.BIN` and move `SafetyCheck` symbol out of `sym.b_konami.txt`
 
                     while (CdDiskReady(false) != CdlComplete || CdGetDiskType() == CdlStatShellOpen)
                     {
@@ -183,14 +180,14 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     // Decrypt `S__SAFE2` and run `SafetyCheck`
                     Fs_DecryptOverlay((void*)0x801E7600, (void*)0x801E6600, 4096);
                     curTime = g_SysWork.counters_1C[0];
-
-                    // TODO: call 0x801E7EB4 here.
+                    SafetyCheck();
 
                     // Decrypt `HP_SAFE1` and run `SafetyCheck` if enough time has passed.
+                    // NOTE: `HP_SAFE1` seems to call slightly different functions than `S__SAFE2`?
                     Fs_DecryptOverlay((void*)0x801E7600, FS_BUFFER_21, 4096);
-                    if ((g_SysWork.counters_1C[0] - curTime) > 100)
+                    if ((g_SysWork.counters_1C[0] - curTime) >= 100)
                     {
-                        // TODO: call 0x801E7EB4 here.
+                        SafetyCheck();
                     }
 
                     // Reset drive & sound driver
@@ -208,7 +205,11 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 break;
 
             case KcetLogoStateStep_NoMemCard:
+#if VERSION_REGION_IS(NTSCJ)
+                Fs_QueueStartReadTim(FILE_1ST_NO_MEMCD_TIM, FS_BUFFER_1, &D_800A900C);
+#else
                 Fs_QueueStartReadTim(FILE_1ST_NO_MCD_E_TIM, FS_BUFFER_1, &D_800A900C);
+#endif
                 GameFs_StreamBinLoad();
                 nextGameState = GameState_MovieIntroFadeIn;
 
@@ -219,7 +220,11 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 break;
 
             case KcetLogoStateStep_NoMemCardFreeSpace:
+#if VERSION_REGION_IS(NTSCJ)
+                Fs_QueueStartReadTim(FILE_1ST_NO_BLOCK_TIM, FS_BUFFER_1, &D_800A900C);
+#else
                 Fs_QueueStartReadTim(FILE_1ST_NO_BLK_E_TIM, FS_BUFFER_1, &D_800A900C);
+#endif
                 GameFs_StreamBinLoad();
                 nextGameState = GameState_MovieIntroFadeIn;
 
@@ -314,12 +319,20 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
 
                         case GameState_MovieIntroAlternate:
                         default:
+                            // USA moves `Demo_*` calls to after the switch.
+                            // TODO: Confirm whether the later JAP1 release also had them moved.
+#if VERSION_EQUAL_OR_OLDER(JAP0) 
+                            Demo_SequenceAdvance(0);
+                            Demo_DemoDataRead();
+#endif
                             GameFs_TitleGfxLoad();
                             break;
                     }
-
+                    
+#if VERSION_EQUAL_OR_NEWER(USA)
                     Demo_SequenceAdvance(0);
                     Demo_DemoDataRead();
+#endif
                     Fs_QueueWaitForEmpty();
 
                     g_SysWork.counters_1C[0] = 0;
@@ -355,7 +368,6 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
         GsClearOt(0, 0, &g_OrderingTable2[g_ActiveBufferIdx]);
     }
 }
-#endif
 
 void BootScreen_ImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s32 h, s32 x, s32 y) // 0x800C9E6C
 {
