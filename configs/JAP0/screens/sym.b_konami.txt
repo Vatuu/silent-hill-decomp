@@ -1,0 +1,19 @@
+GameState_KonamiLogo_Update = 0x800cbadc; // type:func
+GameState_KcetLogo_MemCardCheck = 0x800CBDA4; // type:func
+GameState_KcetLogo_Update = 0x800cbed4; // type:func
+BootScreen_ImageSegmentDraw = 0x800CC480; // type:func
+BootScreen_KonamiScreenDraw = 0x800CC5CC; // type:func
+BootScreen_KcetScreenDraw = 0x800CC77C; // type:func
+Lzss_Reset = 0x800CC890; // type:func
+Lzss_DecompressedSizeGet = 0x800CC89C; // type:func
+Lzss_Init = 0x800CC8A8; // type:func
+Lzss_IsActive = 0x800CC914; // type:func
+Lzss_Decode = 0x800CC924; // type:func
+
+g_Lzss_Window = 0x800CCB50;
+g_Lzss_IsActive = 0x800CCB58;
+g_Lzss_CurPosition = 0x800CCB5C;
+g_Lzss_OutPosition = 0x800CCB60;
+g_Lzss_WindowOffset = 0x800CCB64;
+g_Lzss_EndPosition = 0x800CCB68;
+g_Lzss_CurFlag = 0x800CCB6C;

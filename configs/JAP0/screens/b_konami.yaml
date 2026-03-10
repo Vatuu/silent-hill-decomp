@@ -32,7 +32,7 @@ options:
     - configs/JAP0/screens/sym.b_konami.txt
     - configs/JAP0/screens/sym.stream.txt
     - configs/JAP0/sym.bodyprog.txt
-    - configs/JAP0/sym.main.txt
+    - configs/USA/sym.main.txt
   reloc_addrs_path:
     - configs/JAP0/screens/rel.b_konami.txt
 
@@ -55,16 +55,22 @@ segments:
     subsegments:
       # .rodata section
       - [0x0, pad]
-      #- [0x8, .rodata, b_konami]
-      - [0x8, rodata]
+      - [0x8, .rodata, b_konami]
+      - [0x28, pad]
+      - [0x2C, .rodata, lzss]
 
       # .text section
       #- [0x34, c, b_konami]
-      - [0x34, asm, b_konami]
+      - [0x34, c, b_konami]
+      - [0xDE8, c, lzss]
 
       # .data section
       #- [0x10A8, .data, b_konami]
-      - [0x10A8, data]
+      - [0x10A4, data] # Garbage
+      - [0x10A8, .data, b_konami]
+      - [0x10AC, .data, lzss]
+      - [0x10B0, pad]
+      - [0x10B4, .bss, lzss]
 
   # Random garbage data at end, define as bin file to make Splat ignore it.
   - name: footer_data

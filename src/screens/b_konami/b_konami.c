@@ -130,6 +130,9 @@ s32 GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
     return KcetLogoStateStep_NoSaveGame;
 }
 
+#if VERSION_REGION_IS(NTSCJ)
+INCLUDE_ASM("screens/b_konami/nonmatchings/b_konami", GameState_KcetLogo_Update);
+#else
 void GameState_KcetLogo_Update(void) // 0x800C99A4
 {
     static u8 nextGameState = GameState_Init; // 0x800CA4F0
@@ -352,6 +355,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
         GsClearOt(0, 0, &g_OrderingTable2[g_ActiveBufferIdx]);
     }
 }
+#endif
 
 void BootScreen_ImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s32 h, s32 x, s32 y) // 0x800C9E6C
 {
@@ -379,6 +383,9 @@ void BootScreen_ImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 v
     GsOUT_PACKET_P = (u8*)prim + 28;
 }
 
+#if VERSION_REGION_IS(NTSCJ)
+INCLUDE_ASM("screens/b_konami/nonmatchings/b_konami", BootScreen_KonamiScreenDraw);
+#else
 void BootScreen_KonamiScreenDraw(void) // 0x800C9FB8
 {
     s32* ptr;
@@ -397,6 +404,7 @@ void BootScreen_KonamiScreenDraw(void) // 0x800C9FB8
     setWH((TILE*)GsOUT_PACKET_P, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
     GsOUT_PACKET_P = (PACKET*)((u8*)GsOUT_PACKET_P + sizeof(TILE));
 }
+#endif
 
 void BootScreen_KcetScreenDraw(void) // 0x800CA120
 {
