@@ -1961,7 +1961,7 @@ void func_800DE828(void) // 0x800DE828
                 {
                     if (g_WorldObject1.rotation_28.vy > 0)
                     {
-                        func_8005DC1C(Sfx_Unk1435, &sfxPos, Q8_CLAMPED(0.5f), 0);
+                        func_8005DC1C(Sfx_Unk1435, &sfxPos, Q8(0.5f), 0);
                         g_WorldObject1.rotation_28.vy = 0;
 
                         if (D_800E20E8 >= 8 && !Rng_GenerateUInt(0, 3)) // 1 in 4 chance.
@@ -1977,7 +1977,7 @@ void func_800DE828(void) // 0x800DE828
                 }
                 else if (g_WorldObject1.rotation_28.vy < Q12_ANGLE(-1.8f))
                 {
-                    func_8005DC1C(Sfx_Unk1435, &sfxPos, Q8_CLAMPED(0.5f), 0);
+                    func_8005DC1C(Sfx_Unk1435, &sfxPos, Q8(0.5f), 0);
 
                     D_800E20E8 = ~Rng_GenerateUInt(0, 3) - D_800E20E8;
                     D_800E20E8 = MAX(D_800E20E8, 1);

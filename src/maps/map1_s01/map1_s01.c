@@ -95,7 +95,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 
     if (cond)
     {
-        func_8005DD44(1447, &chara->position_18, Q8_CLAMPED(0.5f), Rng_GenerateUInt(-7, 8));
+        func_8005DD44(1447, &chara->position_18, Q8(0.5f), Rng_GenerateUInt(-7, 8));
         chara->properties_E4.dummy.properties_E8[0].val8[0] ^= 1;
     }
 }
@@ -284,7 +284,7 @@ void func_800D7308(void)
             break;
 
         case 6:
-            func_8005DC1C(Sfx_Unk1433, &QVECTOR3(-59.2f, -1.0f, 99.5f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1433, &QVECTOR3(-59.2f, -1.0f, 99.5f), Q8(0.5f), 0);
 
             sharedData_800DEE50_1_s01.field_0  = 0;
             sharedData_800DEE50_1_s01.field_4  = 0x96;
@@ -916,8 +916,8 @@ void func_800D87C0(void) // 0x800D87C0
 
             func_80085EB8(0u, &g_SysWork.playerWork_4C.player_0, 122, false);
             func_800892DC(18, 96);
-            func_8005DC1C(Sfx_Unk1437, &QVECTOR3(-59.0f, -0.5f, 18.6f), Q8_CLAMPED(0.5f), 0);
-            func_8005DC1C(Sfx_Unk1436, &QVECTOR3(-58.8f, -1.2f, 18.8f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1437, &QVECTOR3(-59.0f, -0.5f, 18.6f), Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1436, &QVECTOR3(-58.8f, -1.2f, 18.8f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -964,7 +964,7 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 14:
-            func_8005DC1C(Sfx_Unk1448, &QVECTOR3(-56.4f, -0.8f, 16.8f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1448, &QVECTOR3(-56.4f, -0.8f, 16.8f), Q8(0.5f), 0);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             SysWork_StateStepIncrement(0);
 
@@ -973,7 +973,7 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 16:
-            func_8005DC1C(Sfx_Unk1449, &QVECTOR3(-56.4f, -0.8f, 16.8f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1449, &QVECTOR3(-56.4f, -0.8f, 16.8f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 17:
@@ -981,8 +981,8 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 18:
-            func_8005DC1C(Sfx_Unk1446, &QVECTOR3(-57.6f, 0.0f, 16.0f), Q8_CLAMPED(0.5f), 0);
-            func_8005DC1C(Sfx_Unk1364, &QVECTOR3(-57.6f, 0.0f, 16.0f), Q8_CLAMPED(0.25f), 0);
+            func_8005DC1C(Sfx_Unk1446, &QVECTOR3(-57.6f, 0.0f, 16.0f), Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1364, &QVECTOR3(-57.6f, 0.0f, 16.0f), Q8(0.25f), 0);
             SysWork_StateStepIncrement(0);
 
         case 19:
@@ -1251,7 +1251,7 @@ void func_800D9EC4(void) // 0x800D9EC4
             {
                 if (g_WorldObject1.rotation_28.vy > 0)
                 {
-                    func_8005DC1C(Sfx_Unk1435, &soundPos, Q8_CLAMPED(0.5f), 0);
+                    func_8005DC1C(Sfx_Unk1435, &soundPos, Q8(0.5f), 0);
                     g_WorldObject1.rotation_28.vy = 0;
 
                     if (D_800DD57C >= 8 && Rng_GenerateUInt(0, 3) == 0) // 1 in 4 chance.
@@ -1267,7 +1267,7 @@ void func_800D9EC4(void) // 0x800D9EC4
             }
             else if (g_WorldObject1.rotation_28.vy < Q12_ANGLE(-1.8f))
             {
-                func_8005DC1C(Sfx_Unk1435, &soundPos, Q8_CLAMPED(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1435, &soundPos, Q8(0.5f), 0);
 
                 D_800DD57C = ~Rng_GenerateUInt(0, 3) - D_800DD57C;
                 D_800DD57C = MAX(D_800DD57C, 1);

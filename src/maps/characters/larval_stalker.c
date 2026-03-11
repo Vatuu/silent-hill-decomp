@@ -874,7 +874,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
         return;
     }
 
-    func_8005DC1C(0, &larvalStalker->position_18, Q8_CLAMPED(0.5f), 0);
+    func_8005DC1C(0, &larvalStalker->position_18, Q8(0.5f), 0);
 
     larvalStalkerProps.flags_E8 |= LarvalStalkerFlag_7;
 

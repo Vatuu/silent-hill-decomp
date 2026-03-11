@@ -782,7 +782,7 @@ void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) // 0x8008
     {
         case 0:
             g_MapOverlayHeader.playerControlFreeze_C8();
-            func_8005DC1C(sfxId, sfxPos, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(sfxId, sfxPos, Q8(0.5f), 0);
             SysWork_StateStepIncrement(1);
 
         case 1:
@@ -924,13 +924,13 @@ void MapMsg_DisplayWithTexture1(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_1
             break;
 
         case 5:
-            g_Screen_BackgroundImgIntensity = 48;
+            g_Screen_BackgroundImgGamma = 48;
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             MapMsg_DisplayAndHandleSelection(false, mapMsgIdx1, 0, 0, 0, true);
             break;
 
         case 6:
-            g_Screen_BackgroundImgIntensity = 48;
+            g_Screen_BackgroundImgGamma = 48;
 
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             SysWork_StateStepIncrementAfterFade(2, true, 0, fadeTimestep1, true);
@@ -1088,7 +1088,7 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
             SysWork_StateStepIncrement(1);
 
         case 3:
-            g_Screen_BackgroundImgIntensity = 88;
+            g_Screen_BackgroundImgGamma = 88;
 
             Screen_BackgroundImgDraw(&g_PaperMapImg);
             MapMsg_DisplayAndHandleSelection(true, mapMsgIdx, 4, 5, 0, true); // 4 is "No", 5 is "Yes".
@@ -1129,7 +1129,7 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
             SysWork_StateStepIncrement(1);
 
         case 5:
-            g_Screen_BackgroundImgIntensity = 88;
+            g_Screen_BackgroundImgGamma = 88;
 
             Screen_BackgroundImgDraw(&g_PaperMapImg);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), true);

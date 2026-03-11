@@ -391,7 +391,7 @@ void func_800D8354(void) // 0x800D8354
     {
         case 0:
             Player_ControlFreeze();
-            func_8005DC1C(Sfx_DoorLocked, &sfxPos, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_DoorLocked, &sfxPos, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -607,7 +607,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
             break;
 
         case 3:
-            func_8005DC1C(Sfx_Unk1420, &QVECTOR3(20.5f, -1.2f, -17.5f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1420, &QVECTOR3(20.5f, -1.2f, -17.5f), Q8(0.5f), 0);
             Savegame_EventFlagSet(EventFlag_83);
             SysWork_StateStepIncrement(0);
 
@@ -629,7 +629,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
             break;
 
         case 6:
-            func_8005DC1C(Sfx_Unk1422, &QVECTOR3(18.8f, 4.0f, -17.5f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1422, &QVECTOR3(18.8f, 4.0f, -17.5f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -676,7 +676,7 @@ void MapEvent_Boiler1(void)
             break;
 
         case 3:
-            func_8005DC1C(Sfx_Unk1420, &QVECTOR3(20.5f, -1.2f, -17.5f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1420, &QVECTOR3(20.5f, -1.2f, -17.5f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -726,7 +726,7 @@ void MapEvent_TownMapTake(void) // 0x800D922C
 
 void func_800D9254(void) // 0x800D9254
 {
-    g_Screen_BackgroundImgIntensity = 104;
+    g_Screen_BackgroundImgGamma = 104;
     MapMsg_DisplayWithTexture(FILE_TIM_USCBOOK_TIM, Q12(0.0f), Q12(0.0f), 38);
 }
 

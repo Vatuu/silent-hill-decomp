@@ -141,7 +141,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
 
     if (creeper->damage_B4.amount_C > Q12(0.0f) && creeper->health_B0 > Q12(0.0f))
     {
-        func_8005DC1C(Sfx_Unk1425, &creeper->position_18, Q8_CLAMPED(0.5f), 0);
+        func_8005DC1C(Sfx_Unk1425, &creeper->position_18, Q8(0.5f), 0);
         creeperProps.timer_104 = Q12(0.0f);
 
         // TODO: Weird position scaling?
@@ -313,7 +313,7 @@ void Ai_Creeper_Control_1(s_SubCharacter* creeper)
                 {
                     if (creeperProps.timer_104 < Q12(2.5f))
                     {
-                        func_8005DC1C(Sfx_Unk1427, &creeper->position_18, Q8_CLAMPED(0.5f), 0);
+                        func_8005DC1C(Sfx_Unk1427, &creeper->position_18, Q8(0.5f), 0);
 
                         creeperProps.timer_104 = Q12(0.0f);
                         sharedData_800E57CC_1_s02--;
@@ -328,7 +328,7 @@ void Ai_Creeper_Control_1(s_SubCharacter* creeper)
             {
                 s32 i;
 
-                func_8005DC1C(Sfx_Unk1427, &creeper->position_18, Q8_CLAMPED(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1427, &creeper->position_18, Q8(0.5f), 0);
                 creeperProps.timer_104 = Q12(0.0f);
 
                 // Update other Creepers.
@@ -357,7 +357,7 @@ void Ai_Creeper_Control_1(s_SubCharacter* creeper)
             }
             else if (!Rng_GenerateUInt(0, 63) && creeperProps.timer_104 > Q12(2.0f)) // 1 in 64 chance.
             {
-                func_8005DC1C(Sfx_Unk1426, &creeper->position_18, Q8_CLAMPED(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1426, &creeper->position_18, Q8(0.5f), 0);
                 creeperProps.timer_104 = Rng_GenerateInt(Q12(0.8f), Q12(1.8f) - 1);
             }
         }

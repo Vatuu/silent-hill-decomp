@@ -797,7 +797,7 @@ void func_800D6B00(void) // 0x800D6B00
 
             g_SysWork.field_30 = 20;
 
-            Sd_PlaySfx(Sfx_Unk1575, 0, Q8_CLAMPED(0.5f));
+            Sd_PlaySfx(Sfx_Unk1575, 0, Q8(0.5f));
             SysWork_StateStepIncrement(0);
 
         case 11:

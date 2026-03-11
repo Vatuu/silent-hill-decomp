@@ -643,19 +643,19 @@ void func_800D1A58(void) // 0x800D1A58
 
 void func_800D26D0(void) // 0x800D26D0
 {
-    g_Screen_BackgroundImgIntensity = 104;
+    g_Screen_BackgroundImgGamma = 104;
     MapMsg_DisplayWithTexture(FILE_TIM_PLATECLR_TIM, Q12(0.0f), Q12(0.0f), 18);
 }
 
 void func_800D2708(void) // 0x800D2708
 {
-    g_Screen_BackgroundImgIntensity = 104;
+    g_Screen_BackgroundImgGamma = 104;
     MapMsg_DisplayWithTexture(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 44);
 }
 
 void func_800D2740(void) // 0x800D2740
 {
-    g_Screen_BackgroundImgIntensity = 96;
+    g_Screen_BackgroundImgGamma = 96;
     MapMsg_DisplayWithTexture(FILE_TIM_LITHGR_2_TIM, Q12(0.0f), Q12(0.0f), 45);
 }
 
@@ -710,7 +710,7 @@ void func_800D27F4(void) // 0x800D27F4
             break;
 
         case 4:
-            func_8005DC1C(Sfx_Unk1526, &QVECTOR3(-62.6f, -0.5f, -59.0f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1526, &QVECTOR3(-62.6f, -0.5f, -59.0f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -761,7 +761,7 @@ void func_800D27F4(void) // 0x800D27F4
             break;
 
         case 14:
-            func_8005DC1C(Sfx_Unk1526, &QVECTOR3(-62.6f, -0.5f, -59.0f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1526, &QVECTOR3(-62.6f, -0.5f, -59.0f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 15:
@@ -910,7 +910,7 @@ void func_800D30FC(void) // 0x800D30FC
 
 void func_800D3128(void) // 0x800D3128
 {
-    g_Screen_BackgroundImgIntensity = 112;
+    g_Screen_BackgroundImgGamma = 112;
     MapMsg_DisplayWithTexture(FILE_TIM_ELCWIRE0_TIM, Q12(0.0f), Q12(0.0f), 55);
 }
 

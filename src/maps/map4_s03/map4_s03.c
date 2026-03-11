@@ -3448,7 +3448,7 @@ void func_800D6774(void) // 0x800D6774
 
             g_SysWork.playerWork_4C.player_0.position_18.vy = coll.groundHeight_0;
 
-            func_8005DC1C(Sfx_Unk1556, &QVECTOR3(119.5f, 0.0f, 141.5f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1556, &QVECTOR3(119.5f, 0.0f, 141.5f), Q8(0.5f), 0);
             func_80089470();
             SysWork_StateStepIncrement(0);
             break;
@@ -3605,7 +3605,7 @@ void func_800D6F24(void) // 0x800D6F24
             Camera_PositionSet(NULL, Q12(128.82f), Q12(-0.26f), Q12(139.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(125.24f), Q12(-0.8f), Q12(140.79f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            func_8005DC1C(Sfx_Unk1554, &QVECTOR3(132.0f, -0.75f, 140.0f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1554, &QVECTOR3(132.0f, -0.75f, 140.0f), Q8(0.5f), 0);
 
             SysWork_StateStepIncrement(0);
 

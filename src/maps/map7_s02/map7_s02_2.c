@@ -486,7 +486,7 @@ void func_800DAA4C(void) // 0x800DAA4C
 
             g_SysWork.pointLightIntensity_2378 = Q12(0.8f);
 
-            func_8005DC1C(Sfx_Unk1336, &g_WorldObject_Door.position_1C, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1336, &g_WorldObject_Door.position_1C, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -496,7 +496,7 @@ void func_800DAA4C(void) // 0x800DAA4C
         case 8:
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 158, false);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
-            func_8005DC1C(Sfx_Unk1337, &g_WorldObject_Door.position_1C, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1337, &g_WorldObject_Door.position_1C, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -716,7 +716,7 @@ void func_800DB738(void) // 0x800DB738
             break;
 
         case 4:
-            func_8005DC1C(Sfx_Unk1526, &SFX_POS, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1526, &SFX_POS, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -764,7 +764,7 @@ void func_800DB738(void) // 0x800DB738
             break;
 
         case 13:
-            func_8005DC1C(Sfx_Unk1526, &SFX_POS, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1526, &SFX_POS, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 14:
@@ -1000,7 +1000,7 @@ void func_800DC14C(void) // 0x800DC14C
         case 13:
             D_800E9ED4 = Q12(-1.294f);
             D_800E9ED0 = 0;
-            func_8005DC1C(Sfx_Unk1662, &QVECTOR3(62.3f, -1.45f, -61.07f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1662, &QVECTOR3(62.3f, -1.45f, -61.07f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 14:
@@ -1030,7 +1030,7 @@ void func_800DC14C(void) // 0x800DC14C
                 D_800E9ED4 += Q12_MULT_PRECISE(g_DeltaTime, D_800E9ED0);
                 if (D_800E9ED4 > 0)
                 {
-                    func_8005DC1C(Sfx_Unk1651, &QVECTOR3(62.3f, 0.0f, -61.07f), Q8_CLAMPED(0.5f), 0);
+                    func_8005DC1C(Sfx_Unk1651, &QVECTOR3(62.3f, 0.0f, -61.07f), Q8(0.5f), 0);
                 }
             }
 
@@ -1145,7 +1145,7 @@ void func_800DC954(void) // 0x800DC954
             break;
 
         case 7:
-            Sd_PlaySfx(Sfx_Unk1669, 0, Q8_CLAMPED(0.5f));
+            Sd_PlaySfx(Sfx_Unk1669, 0, Q8(0.5f));
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -1181,7 +1181,7 @@ void func_800DC954(void) // 0x800DC954
     {
         if (D_800E9ED6 == 0 && !Savegame_EventFlagGet(EventFlag_555))
         {
-            Sd_PlaySfx(Sfx_Unk1664, 0, Q8_CLAMPED(0.875f));
+            Sd_PlaySfx(Sfx_Unk1664, 0, Q8(7.0f / 8.0f));
             D_800E9ED6 = Rng_GenerateInt(Q12(1.2f), Q12(2.8f) - 1);
         }
         else
@@ -1366,7 +1366,7 @@ void func_800DD2D4(void) // 0x800DD2D4
     {
         case 0:
             Player_ControlFreeze();
-            func_8005DC1C(Sfx_Unk1667, &QVECTOR3(21.1f, -1.5f, -60.75f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1667, &QVECTOR3(21.1f, -1.5f, -60.75f), Q8(0.5f), 0);
             Fs_QueueStartRead(FILE_ANIM_KITCHEN1_DMS, FS_BUFFER_11);
             Savegame_EventFlagSet(EventFlag_557);
 
@@ -1507,7 +1507,7 @@ void func_800DD9E8(void) // 0x800DD9E8
     {
         if (D_800E9EDA == 0)
         {
-            func_8005DC1C(Sfx_Unk1666, &QVECTOR3(21.1f, -1.5f, -60.75f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1666, &QVECTOR3(21.1f, -1.5f, -60.75f), Q8(0.5f), 0);
 
             if (g_SysWork.sysStateStep_C[0] == 6)
             {
@@ -1622,7 +1622,7 @@ void func_800DDEC8(void) // 0x800DDEC8
             break;
 
         case 4:
-            func_8005DC1C(Sfx_Unk1494, &(VECTOR3){ Q12(180.5f), Q12(-0.5f), Q12(-60.6f) }, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1494, &(VECTOR3){ Q12(180.5f), Q12(-0.5f), Q12(-60.6f) }, Q8(0.5f), 0);
             SD_Call(Sfx_Unk1495);
             Savegame_EventFlagClear(EventFlag_549);
 
@@ -1640,7 +1640,7 @@ void func_800DDEC8(void) // 0x800DDEC8
             break;
 
         case 8:
-            func_8005DC1C(Sfx_Unk1494, &(VECTOR3){ Q12(180.5f), Q12(-0.5f), Q12(-60.6f) }, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1494, &(VECTOR3){ Q12(180.5f), Q12(-0.5f), Q12(-60.6f) }, Q8(0.5f), 0);
             Savegame_EventFlagSet(EventFlag_549);
 
             D_800EBAF4 = 0;
@@ -1661,7 +1661,7 @@ void func_800DDEC8(void) // 0x800DDEC8
         case 10:
             Sd_SfxStop(Sfx_Unk1495);
             Sd_SfxStop(Sfx_Unk1503);
-            func_8005DC1C(Sfx_Unk1497, &D_800E9D00, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1497, &D_800E9D00, Q8(0.5f), 0);
 
         case 6:
             SysWork_StateStepReset();
@@ -2172,13 +2172,13 @@ void MapEvent_ScrewdriverTake(void) // 0x800DFA80
 
 void func_800DFAAC(void) // 0x800DFAAC
 {
-    g_Screen_BackgroundImgIntensity = 104;
+    g_Screen_BackgroundImgGamma = 104;
     MapMsg_DisplayWithTexture(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 101);
 }
 
 void func_800DFAE4(void) // 0x800DFAE4
 {
-    g_Screen_BackgroundImgIntensity = 104;
+    g_Screen_BackgroundImgGamma = 104;
     MapMsg_DisplayWithTexture(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 102);
 }
 
@@ -2189,7 +2189,7 @@ void MapEvent_AmuletOfSolomonTake(void) // 0x800DFB1C
 
 void func_800DFB48(void) // 0x800DFB48
 {
-    g_Screen_BackgroundImgIntensity = 0x48;
+    g_Screen_BackgroundImgGamma = 0x48;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -2669,7 +2669,7 @@ void func_800E0CB4(void) // 0x800E0CB4
             var_s0 = &D_800EA494.field_2;
             if (*var_s0 == 0)
             {
-                func_8005DC1C(Sfx_Unk1656, &SFX_POS_0, Q8_CLAMPED(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1656, &SFX_POS_0, Q8(0.5f), 0);
                 *var_s0 = Q12(1.2f);
             }
             else
@@ -2690,7 +2690,7 @@ void func_800E0CB4(void) // 0x800E0CB4
             var_s0 = &D_800EA494.field_2;
             if (*var_s0 == 0)
             {
-                func_8005DC1C(Sfx_Unk1656, &SFX_POS_0, Q8_CLAMPED(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1656, &SFX_POS_0, Q8(0.5f), 0);
                 *var_s0 = Q12(1.2f);
             }
             else
@@ -2704,7 +2704,7 @@ void func_800E0CB4(void) // 0x800E0CB4
             break;
 
         case 3:
-            func_8005DC1C(Sfx_Unk1655, &SFX_POS_1, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1655, &SFX_POS_1, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -2737,7 +2737,7 @@ void func_800E0FF0(void) // 0x800E0FF0
 {
     if (Savegame_EventFlagGet(EventFlag_486) && Savegame_EventFlagGet(EventFlag_549))
     {
-        g_Screen_BackgroundImgIntensity = 120;
+        g_Screen_BackgroundImgGamma = 120;
 
         switch (g_SysWork.sysStateStep_C[0])
         {
@@ -2806,7 +2806,7 @@ void func_800E0FF0(void) // 0x800E0FF0
         }
         else
         {
-            g_Screen_BackgroundImgIntensity = 112;
+            g_Screen_BackgroundImgGamma = 112;
             MapMsg_DisplayWithTexture(FILE_TIM_ELCWIRE0_TIM, 0, 0, 110);
         }
     }
@@ -2925,7 +2925,7 @@ void func_800E1DAC(void) // 0x800E1DAC
             D_800EB6B0 = 0;
 
             func_800862F8(0, FILE_TIM_NEWSP3_TIM, false);
-            func_8005DC1C(Sfx_Unk1654, &SFX_POS, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1654, &SFX_POS, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -2947,7 +2947,7 @@ void func_800E1DAC(void) // 0x800E1DAC
             break;
 
         case 5:
-            g_Screen_BackgroundImgIntensity = 48;
+            g_Screen_BackgroundImgGamma = 48;
 
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 16, 0, 0, 0, false);
@@ -2958,21 +2958,21 @@ void func_800E1DAC(void) // 0x800E1DAC
             SysWork_StateStepIncrement(0);
 
         case 7:
-            g_Screen_BackgroundImgIntensity = 48;
+            g_Screen_BackgroundImgGamma = 48;
 
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 17, 0, 0, 0, false);
             break;
 
         case 8:
-            g_Screen_BackgroundImgIntensity = 48;
+            g_Screen_BackgroundImgGamma = 48;
 
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false);
             break;
 
         case 9:
-            g_Screen_BackgroundImgIntensity = 48;
+            g_Screen_BackgroundImgGamma = 48;
 
             func_800862F8(2, 0, false);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
@@ -2992,7 +2992,7 @@ void func_800E1FF4(void) // 0x800E1FF4
 
     if (g_SysWork.sysStateStep_C[1] == 0)
     {
-        func_8005DC1C(Sfx_Unk1464, &SFX_POS, Q8_CLAMPED(0.5f), 0);
+        func_8005DC1C(Sfx_Unk1464, &SFX_POS, Q8(0.5f), 0);
     }
 
     MapMsg_DisplayWithTexture1(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 22, 23);
@@ -3012,7 +3012,7 @@ void func_800E2DEC(void) // 0x800E2DEC
     VECTOR3 playerPosBackup;
     s32     i;
 
-    g_Screen_BackgroundImgIntensity = 104;
+    g_Screen_BackgroundImgGamma = 104;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -3070,7 +3070,7 @@ void func_800E2DEC(void) // 0x800E2DEC
             break;
 
         case 4:
-            func_8005DC1C(Sfx_Unk1663, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1663, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8(0.5f), 0);
 
             if (!Savegame_EventFlagGet(EventFlag_545))
             {
@@ -3089,13 +3089,13 @@ void func_800E2DEC(void) // 0x800E2DEC
             break;
 
         case 6:
-            func_8005DC1C(Sfx_Unk1343, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1343, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8(0.5f), 0);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
 
         case 7:
-            func_8005DC1C(Sfx_DoorLocked, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_DoorLocked, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 8:

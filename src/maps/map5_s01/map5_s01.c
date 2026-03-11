@@ -689,7 +689,7 @@ void func_800EBA40(void) // 0x800EBA40
                         continue;
                     }
 
-                    Sd_PlaySfx(Sfx_Unk1586, 0, Q8_CLAMPED(0.5f));
+                    Sd_PlaySfx(Sfx_Unk1586, 0, Q8(0.5f));
 
                     if (i < 11)
                     {
@@ -733,7 +733,7 @@ void func_800EBA40(void) // 0x800EBA40
             break;
 
         case 6:
-            Sd_PlaySfx(Sfx_Unk1587, 0, Q8_CLAMPED(0.5f));
+            Sd_PlaySfx(Sfx_Unk1587, 0, Q8(0.5f));
             SysWork_StateStepIncrement(0);
 
         case 7:

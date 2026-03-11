@@ -680,7 +680,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             if (sharedFunc_800D2DAC_0_s00() == 1 && g_SysWork.enablePlayerMatchAnim_2358 == false)
             {
                 g_SysWork.enablePlayerMatchAnim_2358 = true;
-                func_8005DC1C(Sfx_Unk1356, &playerChara->position_18, Q8_CLAMPED(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1356, &playerChara->position_18, Q8(0.5f), 0);
             }
 
             if (playerChara->model_0.anim_4.keyframeIdx_8 >= keyframeIdxMax)

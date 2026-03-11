@@ -167,7 +167,7 @@ void func_800D4B58(void) // 0x800D4B58
             break;
 
         case 6:
-            func_8005DC1C(Sfx_Unk1593, &QVECTOR3(134.6f, -1.5f, 62.45f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1593, &QVECTOR3(134.6f, -1.5f, 62.45f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -230,7 +230,7 @@ void func_800D4E64(void) // 0x800D4E64
             break;
 
         case 3:
-            func_8005DC1C(Sfx_Unk1592, &QVECTOR3(134.9f, -0.5f, 59.5f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1592, &QVECTOR3(134.9f, -0.5f, 59.5f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -243,7 +243,7 @@ void func_800D4E64(void) // 0x800D4E64
 
         case 6:
             Savegame_EventFlagSet(EventFlag_M5S02_UsedSafeKey);
-            func_8005DC1C(Sfx_Unk1591, &QVECTOR3(134.7f, -0.5f, 59.5f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1591, &QVECTOR3(134.7f, -0.5f, 59.5f), Q8(0.5f), 0);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(135.26f), Q12(-1.61f), Q12(60.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -318,7 +318,7 @@ void func_800D519C(void) // 0x800D519C
 
         case 4:
             Savegame_EventFlagSet(EventFlag_M5S02_UsedSafeKey);
-            func_8005DC1C(Sfx_Unk1591, &QVECTOR3(134.7f, -0.5f, 59.5f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1591, &QVECTOR3(134.7f, -0.5f, 59.5f), Q8(0.5f), 0);
             Camera_PositionSet(NULL, Q12(135.26f), Q12(-1.61f), Q12(60.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(133.36f), Q12(1.12f), Q12(58.01f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
@@ -679,7 +679,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 37:
-            func_8005DC1C(Sfx_DoorOpen0, &QVECTOR3(134.5f, -1.2f, 17.9f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_DoorOpen0, &QVECTOR3(134.5f, -1.2f, 17.9f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 38:
@@ -687,7 +687,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 39:
-            func_8005DC1C(Sfx_DoorClose0, &QVECTOR3(134.5f, -1.2f, 17.9f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_DoorClose0, &QVECTOR3(134.5f, -1.2f, 17.9f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 40:

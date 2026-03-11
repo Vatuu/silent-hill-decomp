@@ -562,7 +562,7 @@ void func_800DB058(void) // 0x800DB058
             break;
 
         case 4:
-            func_8005DC1C(Sfx_Unk1454, &QVECTOR3(55.85f, -1.1f, 19.3f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1454, &QVECTOR3(55.85f, -1.1f, 19.3f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -570,7 +570,7 @@ void func_800DB058(void) // 0x800DB058
             break;
 
         case 6:
-            func_8005DC1C(Sfx_Unk1343, &QVECTOR3(56.0f, -1.2f, 19.3f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1343, &QVECTOR3(56.0f, -1.2f, 19.3f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 7:

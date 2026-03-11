@@ -725,7 +725,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 7:
-            g_Screen_BackgroundImgIntensity = 48;
+            g_Screen_BackgroundImgGamma = 48;
 
             func_800862F8(2, 0, false);
             Map_MessageWithAudio(19, &g_MapMsgSoundIdx, &g_MapMsgSounds); // "Isn't this Cheryl's sketchbook?"
@@ -736,7 +736,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             SysWork_StateStepIncrement(0);
 
         case 9:
-            g_Screen_BackgroundImgIntensity = 48;
+            g_Screen_BackgroundImgGamma = 48;
 
             func_800862F8(2, 0, false);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
@@ -1400,7 +1400,7 @@ void func_800EA6E0(void) // 0x800EA6E0
         EventState_Finish      = 6
     } e_EventState;
 
-    g_Screen_BackgroundImgIntensity = 72;
+    g_Screen_BackgroundImgGamma = Q8(9.0f / 32.0f);
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -1454,7 +1454,11 @@ void func_800EA6E0(void) // 0x800EA6E0
 
 void MapEvent_KGordonKeyUse(void) // 0x800EA894
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 sfxPos = {
+        MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0,
+        Q12(-1.2f),
+        MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8
+    };
 
     Player_ItemRemove(InventoryItemId_KGordonKey, 1);
     Map_MessageWithSfx(39, Sfx_UseKey, &sfxPos); // "Used the K. Gordon key."
@@ -1487,7 +1491,7 @@ void func_800EA960(void) // 0x800EA960
             break;
 
         case 2:
-            func_8005DC1C(Sfx_Unk1481, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1481, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8(0.5f), 0);
             Savegame_EventFlagSet(EventFlag_164);
             SD_Call(Sfx_Unk1482);
 
@@ -1507,7 +1511,7 @@ void func_800EA960(void) // 0x800EA960
             break;
 
         case EventState_PressSwitch:
-            func_8005DC1C(Sfx_Unk1483, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1483, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -1526,7 +1530,7 @@ void func_800EA960(void) // 0x800EA960
             }
 
             balance = Sound_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f));
-            if ((Q8_CLAMPED(1.0f) - (D_800F534E >> 4)) >= 0)
+            if ((Q8_CLAMPED(1.0f) - (D_800F534E >> 4)) >= Q8(0.0f))
             {
                 vol = ~(D_800F534E >> 4) & Q8_CLAMPED(1.0f);
             }
@@ -1613,7 +1617,7 @@ void func_800EAD2C(void) // 0x800EAD2C
             SysWork_StateStepIncrement(0);
 
         case 4:
-            func_8005DC1C(Sfx_Unk1483, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1483, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -1633,7 +1637,7 @@ void func_800EAD2C(void) // 0x800EAD2C
             }
 
             balance = Sound_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f));
-            if ((Q8_CLAMPED(1.0f) - (D_800F534E >> 4)) >= 0)
+            if ((Q8_CLAMPED(1.0f) - (D_800F534E >> 4)) >= Q8(0.0f))
             {
                 vol = ~(D_800F534E >> 4) & Q8_CLAMPED(1.0f);
             }
@@ -1720,7 +1724,7 @@ void func_800EB174(void) // 0x800EB174
             sfxPos.vy = Q12(-1.2f);
             sfxPos.vz = MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8;
 
-            func_8005DC1C(Sfx_Unk1349, &sfxPos, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1349, &sfxPos, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1785,7 +1789,7 @@ void func_800EB3F4(void) // 0x800EB3F4
     {
         case 0:
             Player_ControlFreeze();
-            func_8005DC1C(Sfx_Unk1393, &D_800CD45C, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1393, &D_800CD45C, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1817,7 +1821,7 @@ void func_800EB3F4(void) // 0x800EB3F4
             break;
 
         case 6:
-            func_8005DC1C(Sfx_Unk1394, &D_800CD468, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1394, &D_800CD468, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 7:

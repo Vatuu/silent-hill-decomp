@@ -1208,7 +1208,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
 
     if (sfxId != 0)
     {
-        func_8005DC1C(sfxId, pos, Q8_CLAMPED(0.75f), 0);
+        func_8005DC1C(sfxId, pos, Q8(0.75f), 0);
     }
 }
 

@@ -1753,7 +1753,7 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
                 if (g_GameWork.config_0.optBrightness_22 != 0)
                 {
                     g_GameWork.config_0.optBrightness_22--;
-                    Sd_PlaySfx(Sfx_MenuMove, 0, Q8_CLAMPED(0.25f));
+                    Sd_PlaySfx(Sfx_MenuMove, 0, Q8(0.25f));
                 }
             }
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickRight)
@@ -1761,7 +1761,7 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
                 if (g_GameWork.config_0.optBrightness_22 < 7)
                 {
                     g_GameWork.config_0.optBrightness_22++;
-                    Sd_PlaySfx(Sfx_MenuMove, 0, Q8_CLAMPED(0.25f));
+                    Sd_PlaySfx(Sfx_MenuMove, 0, Q8(0.25f));
                 }
             }
 
@@ -1771,11 +1771,11 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
             {
                 if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
                 {
-                    Sd_PlaySfx(Sfx_MenuConfirm, 0, Q8_CLAMPED(0.25f));
+                    Sd_PlaySfx(Sfx_MenuConfirm, 0, Q8(0.25f));
                 }
                 else
                 {
-                    Sd_PlaySfx(Sfx_MenuCancel, 0, Q8_CLAMPED(0.25f));
+                    Sd_PlaySfx(Sfx_MenuCancel, 0, Q8(0.25f));
                 }
 
                 ScreenFade_Start(true, false, false);

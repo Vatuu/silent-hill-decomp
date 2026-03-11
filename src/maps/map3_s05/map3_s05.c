@@ -214,7 +214,7 @@ void func_800D59D4(void) // 0x800D59D4
 
 void func_800D5A98(void) // 0x800D5A98
 {
-    g_Screen_BackgroundImgIntensity = 80;
+    g_Screen_BackgroundImgGamma = 80;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -311,7 +311,7 @@ void func_800D5C98(void) // 0x800D5C98
             break;
 
         case 5:
-            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -319,7 +319,7 @@ void func_800D5C98(void) // 0x800D5C98
             break;
 
         case 7:
-            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -327,7 +327,7 @@ void func_800D5C98(void) // 0x800D5C98
             break;
 
         case 9:
-            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 10:
@@ -409,7 +409,7 @@ void func_800D5FC4(void) // 0x800D5FC4
                     if (D_800DACE8 < 0)
                     {
                         D_800DACE8 = ((u16)D_800DACE8 - Q12(0.3f)) - (Rng_Rand16() % Q12(0.1f));
-                        func_8005DC1C(Sfx_Unk1536, &QVECTOR3(21.6f, 0.0f, -20.0f), Q8_CLAMPED(0.5f), 0);
+                        func_8005DC1C(Sfx_Unk1536, &QVECTOR3(21.6f, 0.0f, -20.0f), Q8(0.5f), 0);
                         break;
                     }
                 }
@@ -419,7 +419,7 @@ void func_800D5FC4(void) // 0x800D5FC4
                     if (D_800DACE8 >= 0)
                     {
                         D_800DACE8 += Q12(0.05f) + (Rng_Rand16() % Q12(0.05f));
-                        func_8005DC1C(Sfx_Unk1531, &QVECTOR3(21.6f, 0.0f, -20.0f), Q8_CLAMPED(0.5f), 0);
+                        func_8005DC1C(Sfx_Unk1531, &QVECTOR3(21.6f, 0.0f, -20.0f), Q8(0.5f), 0);
                         break;
                     }
                 }
@@ -1109,7 +1109,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
             D_800DD528++;
         }
 
-        func_8005DE0C(Sfx_Unk1503, &D_800DACD4, Q8_CLAMPED(0.5f), Q12(16.0f), 0);
+        func_8005DE0C(Sfx_Unk1503, &D_800DACD4, Q8(0.5f), Q12(16.0f), 0);
     }
     else if (D_800DD528)
     {

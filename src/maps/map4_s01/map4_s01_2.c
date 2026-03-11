@@ -320,7 +320,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 4:
-            func_8005DC1C(Sfx_DoorOpen0, &soundPos, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_DoorOpen0, &soundPos, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -329,7 +329,7 @@ void func_800D2408(void) // 0x800D2408
 
         case 6:
             func_80085EB8(0, playerChara, 118, false);
-            func_8005DC1C(Sfx_DoorClose0, &soundPos, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_DoorClose0, &soundPos, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -997,7 +997,7 @@ void func_800D3420(void) // 0x800D3420
 
     if (D_800D5AF9 != 0)
     {
-        func_8005DE0C(Sfx_Unk1540, &QVECTOR3(176.3f, -1.5f, 19.18f), Q8_CLAMPED(0.5f) - FP_MULTIPLY_PRECISE(D_800D7F30, 128, 12), Q12(16.0f), 0);
+        func_8005DE0C(Sfx_Unk1540, &QVECTOR3(176.3f, -1.5f, 19.18f), Q8(0.5f) - FP_MULTIPLY_PRECISE(D_800D7F30, 128, 12), Q12(16.0f), 0);
     }
 
     if (D_800D5AFC >= 0)

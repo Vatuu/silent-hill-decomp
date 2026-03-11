@@ -348,7 +348,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
         case 47:
             D_800DE250 = 0;
 
-            func_8005DC1C(Sfx_Unk1357, &QVECTOR3(0.8f, -1.2f, 269.5f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1357, &QVECTOR3(0.8f, -1.2f, 269.5f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 48:
@@ -648,7 +648,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 
         case 15:
             sharedFunc_800CCB8C_0_s01(&D_800CCA1C, &D_800CCA28, Q12(2.5f), Q12(0.05f), Q12(0.6f), Q12(0.4f), Q12(0.1f), 0);
-            func_8005DC1C(Sfx_Unk1373, &D_800CCA34, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1373, &D_800CCA34, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 16:
@@ -662,8 +662,8 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 
         case 17:
             sharedFunc_800CCB8C_0_s01(&D_800CCA40, &D_800CCA4C, Q12(3.0f), Q12(0.08f), Q12(0.4f), Q12(0.4f), Q12(0.058f), 0);
-            func_8005DC1C(Sfx_Unk1374, &D_800CCA58, Q8_CLAMPED(0.5f), 0);
-            func_8005DC1C(Sfx_Unk1375, &D_800CCA58, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1374, &D_800CCA58, Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1375, &D_800CCA58, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 18:
@@ -766,7 +766,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             SysWork_StateStepIncrement(0);
 
         case 3:
-            g_Screen_BackgroundImgIntensity = 88;
+            g_Screen_BackgroundImgGamma = 88;
 
             Screen_BackgroundImgDraw(&g_PaperMapImg);
             MapMsg_DisplayAndHandleSelection(true, 59, 6, 4, 0, false);
@@ -788,7 +788,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
 
         case 4:
         case 7:
-            g_Screen_BackgroundImgIntensity = 88;
+            g_Screen_BackgroundImgGamma = 88;
 
             Screen_BackgroundImgDraw(&g_PaperMapImg);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);

@@ -351,5 +351,5 @@ void Map_WorldObjectsUpdate(void) // 0x800D5400
         }
     }
 
-    func_8005DE0C(Sfx_Unk1478, &QVECTOR3(19.7f, -1.5f, -19.1f), Q8_CLAMPED(0.5f) - Q12_MULT_PRECISE(D_800D8578, Q8_CLAMPED(0.5f)), Q12(16.0f), 0);
+    func_8005DE0C(Sfx_Unk1478, &QVECTOR3(19.7f, -1.5f, -19.1f), Q8(0.5f) - Q12_MULT_PRECISE(D_800D8578, Q8(0.5f)), Q12(16.0f), 0);
 }

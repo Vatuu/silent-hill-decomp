@@ -135,9 +135,9 @@ extern s32 D_800EBA30;
 
 extern u16 D_800EBA64;
 
-extern s32 D_800EBAA8;
+extern bool D_800EBAA8;
 
-extern u8 D_800EBB60;
+extern u8 D_800EBB60; // `bool`
 extern u8 D_800EBB61;
 
 extern VECTOR3 D_800EBB70;

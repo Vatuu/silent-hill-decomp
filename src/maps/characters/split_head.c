@@ -149,12 +149,12 @@ void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead)
     {
         if (splitHeadProps.flags_E8 & SplitHeadFlag_8)
         {
-            func_8005DC1C(Sfx_Unk1422, &splitHead->position_18, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1422, &splitHead->position_18, Q8(0.5f), 0);
             splitHeadProps.field_10C = Rng_GenerateInt(Q12(3.0f), Q12(5.0f) - 1);
         }
         else if (splitHeadProps.flags_E8 & SplitHeadFlag_7)
         {
-            func_8005DC1C(Sfx_Unk1474, &splitHead->position_18, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1474, &splitHead->position_18, Q8(0.5f), 0);
             splitHeadProps.field_10C = Rng_GenerateInt(Q12(1.5f), Q12(2.5f) - 1);
         }
     }
@@ -962,7 +962,7 @@ void Ai_SplitHead_Control_6(s_SubCharacter* splitHead)
 
             if (!Savegame_EventFlagGet(EventFlag_131))
             {
-                func_8005DC1C(Sfx_Unk1479, &splitHead->position_18, Q8_CLAMPED(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1479, &splitHead->position_18, Q8(0.5f), 0);
             }
 
             Savegame_EventFlagSet(EventFlag_131);

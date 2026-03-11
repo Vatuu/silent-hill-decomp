@@ -425,7 +425,7 @@ void func_800D7A60(void) // 0x800D7A60
 
             g_SysWork.pointLightIntensity_2378 = Q12(0.8f);
 
-            func_8005DC1C(Sfx_Unk1336, &g_WorldObject_Door.position_1C, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1336, &g_WorldObject_Door.position_1C, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -435,7 +435,7 @@ void func_800D7A60(void) // 0x800D7A60
         case 8:
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 158, false);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
-            func_8005DC1C(Sfx_Unk1337, &g_WorldObject_Door.position_1C, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1337, &g_WorldObject_Door.position_1C, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -761,14 +761,14 @@ void func_800D8A5C(void) // 0x800D8A5C
                         break;
                     }
 
-                    func_8005DC1C(Sfx_Unk1642, &D_800CC534, Q8_CLAMPED(0.5f), 0);
+                    func_8005DC1C(Sfx_Unk1642, &D_800CC534, Q8(0.5f), 0);
                     break;
                 }
             }
             break;
 
         case 5:
-            func_8005DC1C(Sfx_Unk1643, &D_800CC540, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1643, &D_800CC540, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -867,7 +867,7 @@ void func_800D8FF8(void) // 0x800D8FF8
 
             Fs_QueueStartReadTim(FILE_TIM_GLASS_TIM, FS_BUFFER_1, &D_800A908C);
             Savegame_EventFlagSet(EventFlag_563);
-            func_8005DC1C(Sfx_Unk1660, &D_800E1504, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1660, &D_800E1504, Q8(0.5f), 0);
 
             D_800E1680 = 0;
 
@@ -896,7 +896,7 @@ void func_800D8FF8(void) // 0x800D8FF8
         case 4:
             if (g_SysWork.field_28 == Q12(0.0f))
             {
-                func_8005DC1C(Sfx_Unk1661, &D_800E1504, Q8_CLAMPED(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1661, &D_800E1504, Q8(0.5f), 0);
 
                 D_800E1680++;
                 if (D_800E1680 == 5)
@@ -923,7 +923,7 @@ void func_800D8FF8(void) // 0x800D8FF8
 
         case 6:
             sharedFunc_800CCB8C_0_s01(&D_800CC594, &D_800CC5A0, Q12(2.4f), Q12(0.022f), Q12(0.18f), Q12(0.2f), Q12(0.05f), 0);
-            func_8005DC1C(Sfx_Unk1658, &D_800CC5AC, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1658, &D_800CC5AC, Q8(0.5f), 0);
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 167, false);
             SysWork_StateStepIncrement(0);
 
@@ -932,7 +932,7 @@ void func_800D8FF8(void) // 0x800D8FF8
             break;
 
         case 8:
-            func_8005DC1C(Sfx_Unk1327, &D_800CC5B8, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1327, &D_800CC5B8, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -976,13 +976,13 @@ void func_800D9440(void) // 0x800D9440
 
 void func_800D946C(void) // 0x800D946C
 {
-    g_Screen_BackgroundImgIntensity = 104;
+    g_Screen_BackgroundImgGamma = 104;
     MapMsg_DisplayWithTexture(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 70);
 }
 
 void func_800D94A4(void) // 0x800D94A4
 {
-    g_Screen_BackgroundImgIntensity = 104;
+    g_Screen_BackgroundImgGamma = 104;
     MapMsg_DisplayWithTexture(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 71);
 }
 
@@ -1117,7 +1117,7 @@ void func_800D99DC(void) // 0x800D99DC
 
 void func_800D9A08(void) // 0x800D9A08
 {
-    g_Screen_BackgroundImgIntensity = 0x48;
+    g_Screen_BackgroundImgGamma = 0x48;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -1449,7 +1449,7 @@ void func_800D9C9C(void) // 0x800D9C9C
             switch (g_SysWork.sysStateStep_C[1])
             {
                 case 0:
-                    func_8005DC1C(Sfx_Unk1647, &g_WorldObject_Stone0.position_1C, Q8_CLAMPED(0.5f), 0);
+                    func_8005DC1C(Sfx_Unk1647, &g_WorldObject_Stone0.position_1C, Q8(0.5f), 0);
                     SysWork_StateStepIncrement(1);
 
                 case 1:
@@ -1482,7 +1482,7 @@ void func_800D9C9C(void) // 0x800D9C9C
                             g_SysWork.field_28 = Q12(0.0f);
                             D_800E168E         = 0;
 
-                            func_8005DC1C(Sfx_Unk1648, &g_WorldObject_Stone0.position_1C, Q8_CLAMPED(0.5f), 0);
+                            func_8005DC1C(Sfx_Unk1648, &g_WorldObject_Stone0.position_1C, Q8(0.5f), 0);
                         }
                     }
                     break;
@@ -1518,7 +1518,7 @@ void func_800D9C9C(void) // 0x800D9C9C
                     g_WorldObject_Stone0.position_1C.vz = Q12(-140.0f);
                     g_WorldObject_Stone0.rotation_28.vz = Q12(-0.25f);
 
-                    func_8005DC1C(Sfx_Unk1649, &g_WorldObject_Stone0.position_1C, Q8_CLAMPED(0.5f), 0);
+                    func_8005DC1C(Sfx_Unk1649, &g_WorldObject_Stone0.position_1C, Q8(0.5f), 0);
                     SysWork_StateStepIncrement(0);
                     break;
             }
@@ -1656,7 +1656,7 @@ void func_800DAE00(void) // 0x800DAE00
             var_s0 = &D_800E1690.field_2;
             if (*var_s0 == 0)
             {
-                func_8005DC1C(Sfx_Unk1656, &SFX_POS_0, Q8_CLAMPED(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1656, &SFX_POS_0, Q8(0.5f), 0);
                 *var_s0 = Q12(1.2f);
             }
             else
@@ -1677,7 +1677,7 @@ void func_800DAE00(void) // 0x800DAE00
             var_s0 = &D_800E1690.field_2;
             if (*var_s0 == 0)
             {
-                func_8005DC1C(Sfx_Unk1656, &SFX_POS_0, Q8_CLAMPED(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1656, &SFX_POS_0, Q8(0.5f), 0);
                 *var_s0 = Q12(1.2f);
             }
             else
@@ -1691,7 +1691,7 @@ void func_800DAE00(void) // 0x800DAE00
             break;
 
         case 3:
-            func_8005DC1C(Sfx_Unk1655, &SFX_POS_1, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1655, &SFX_POS_1, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -1880,7 +1880,7 @@ void func_800DBDE0(void) // 0x800DBDE0
             D_800E2C64 = 0;
 
             func_800862F8(0, FILE_TIM_NEWSP3_TIM, false);
-            func_8005DC1C(Sfx_Unk1654, &SFX_POS, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1654, &SFX_POS, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1902,7 +1902,7 @@ void func_800DBDE0(void) // 0x800DBDE0
             break;
 
         case 5:
-            g_Screen_BackgroundImgIntensity = 48;
+            g_Screen_BackgroundImgGamma = 48;
 
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 31, 0, 0, 0, false);
@@ -1913,21 +1913,21 @@ void func_800DBDE0(void) // 0x800DBDE0
             SysWork_StateStepIncrement(0);
 
         case 7:
-            g_Screen_BackgroundImgIntensity = 48;
+            g_Screen_BackgroundImgGamma = 48;
 
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 32, 0, 0, 0, false);
             break;
 
         case 8:
-            g_Screen_BackgroundImgIntensity = 48;
+            g_Screen_BackgroundImgGamma = 48;
 
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 35, 0, 0, 0, false);
             break;
 
         case 9:
-            g_Screen_BackgroundImgIntensity = 48;
+            g_Screen_BackgroundImgGamma = 48;
 
             func_800862F8(2, 0, false);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
@@ -1947,7 +1947,7 @@ void func_800DC028(void) // 0x800DC028
 
     if (g_SysWork.sysStateStep_C[1] == 0)
     {
-        func_8005DC1C(Sfx_Unk1464, &SFX_POS, Q8_CLAMPED(0.5f), 0);
+        func_8005DC1C(Sfx_Unk1464, &SFX_POS, Q8(0.5f), 0);
     }
 
     MapMsg_DisplayWithTexture1(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 37, 38);

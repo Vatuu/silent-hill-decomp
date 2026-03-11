@@ -720,7 +720,7 @@ void Player_DamageFeetFront(void)
     playerChara = &g_SysWork.playerWork_4C.player_0;
     playerExtra = &g_SysWork.playerWork_4C.extra_128;
 
-    func_8005DC1C(Sfx_Unk1317, &playerChara->position_18, Q8_CLAMPED(0.125f), 0);
+    func_8005DC1C(Sfx_Unk1317, &playerChara->position_18, Q8(1.0f / 8.0f), 0);
 
     Player_ExtraStateSet(playerChara, playerExtra, PlayerState_DamageFeetFront);
 #endif
@@ -792,7 +792,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
                 }
 
                 Player_ExtraStateSet(playerChara, playerExtra, playerExtraState);
-                func_8005DC1C(Sfx_Unk1326, &playerChara->position_18, Q8_CLAMPED(0.125f), 0);
+                func_8005DC1C(Sfx_Unk1326, &playerChara->position_18, Q8(1.0f / 8.0f), 0);
             }
             else if ((g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_DamageTorsoBack || g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_DamageFeetFront) &&
                      g_SysWork.playerWork_4C.extra_128.state_1C != PlayerState_DamagePushBack &&
@@ -843,7 +843,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
     if (!(g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived) &&
         vecSqr > Q12(0.75f) && vecSqr <= Q12(1.75f))
     {
-        func_8005DC1C(Sfx_Unk1327, &playerChara->position_18, Q8_CLAMPED(0.125f), 0);
+        func_8005DC1C(Sfx_Unk1327, &playerChara->position_18, Q8(1.0f / 8.0f), 0);
 
         playerChara->properties_E4.player.field_10C = 64;
         g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_DamageReceived;
