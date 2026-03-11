@@ -200,6 +200,38 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
     }
 
     res = sharedData_800ED430_2_s02[(xIdx * 3) + yIdx];
+#elif defined(MAP6_S00) || defined(MAP6_S02)
+    res = 0;
+
+    // @hack Weird temp vars needed for match.
+    yIdx = Q12(-127.0f);
+    if (CheckRange(z + yIdx, Q12(-17.0f), Q12(17.0f)) &&
+        ((yIdx = x + Q12(192.0f), xIdx = Q12(8.0f) - 1, (u32)yIdx > xIdx) || z < Q12(130.0f)) &&
+        (x < Q12(-166.0f) || z > Q12(112.0f)))
+    {
+        res = 3;
+    }
+    else if (CheckRange(z + Q12(-8.5f), Q12(-31.5f), Q12(31.5f)) && x < Q12(-159.5f))
+    {
+        res = 16;
+    }
+    else if (z < Q12(0.0f) && x < Q12(-80.0f))
+    {
+        xIdx = Collision_GroundHeightGet(x, z);
+
+        if (x < Q12(-160.0f))
+        {
+            res = (xIdx > Q12(1.0f) ? 17 : 18);
+        }
+        else if (x >= Q12(-148.0f))
+        {
+            res = (xIdx > Q12(1.0f) ? 18 : 19);
+        }
+        else
+        {
+            res = 18;
+        }
+    }
 #endif
 
     // If no match in primary grid, try fallback grid.

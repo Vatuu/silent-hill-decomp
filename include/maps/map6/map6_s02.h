@@ -11,6 +11,11 @@
 #define HAS_PlayerState_Unk175
 #define KEYFRAME_PlayerState_Unk111 915
 
+#define MAP_ROOM_MIN_X Q12(-200.0f)
+#define MAP_ROOM_MAX_X Q12(80.0f)
+#define MAP_ROOM_MIN_Z Q12(-80.0f)
+#define MAP_ROOM_MAX_Z Q12(280.0f)
+
 #define MAP_FIELD_4C_COUNT 200
 #define MAP_BLOOD_SPLAT_COUNT_MAX 150
 

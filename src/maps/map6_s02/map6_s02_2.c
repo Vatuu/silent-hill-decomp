@@ -43,7 +43,7 @@
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CE87C
 
-INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800CE88C);
+#include "maps/shared/Map_RoomIdxGet.h" // 0x800CE88C
 
 #include "maps/shared/Map_RoomBgmInit_6_s00.h" // 0x800CEA88
 

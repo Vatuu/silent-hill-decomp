@@ -39,7 +39,7 @@ INCLUDE_RODATA("maps/map6_s00/nonmatchings/map6_s00", sharedData_800CAA98_0_s01)
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800EAB00
 
-INCLUDE_ASM("maps/map6_s00/nonmatchings/map6_s00", func_800EAB10);
+#include "maps/shared/Map_RoomIdxGet.h" // 0x800EAB10
 
 #include "maps/shared/Map_RoomBgmInit_6_s00.h" // 0x800EAD0C
 
