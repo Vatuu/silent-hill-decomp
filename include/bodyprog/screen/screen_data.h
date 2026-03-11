@@ -33,8 +33,8 @@ extern s32      g_UncappedVBlanks;
 extern s32      pad_bss_800B5C3C;
 extern GsOT_TAG g_OtTags0[2][16];
 
-/** Main gameplay timer. Code pauses gameplay by setting this to 0.
- * Demos override this with the time from a demo file to ensure demos remain in sync.
+/** Main gameplay timer. Code pauses gameplay by setting this to `Q12(0.0f)`.
+ * Demos override this with the time from a demo file to ensure deos remain in sync.
  * */
 extern q19_12 g_DeltaTime; /** Possible original name: `_shDeltaTimePerFrame` */
 

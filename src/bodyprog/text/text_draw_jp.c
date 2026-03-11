@@ -2,10 +2,10 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/math/math.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/text/text_draw.h"
-#include "bodyprog/math/math.h"
 
 // JPN releases seem to use much different text draw functions.
 // Some functions from USA are still included, but in a different order to USA.

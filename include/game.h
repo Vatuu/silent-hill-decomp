@@ -106,7 +106,7 @@ struct _Model;
     ((weaponAttack) % 10)
 
 /** @brief Packs an animation status containing an animation index and active flag.
- * `isActive` is `false` in the blend phase and `true` in the play phase.
+ * `isActive` is `false` in the blend phase and `true` in the playback phase.
  *
  * @param animIdx Animation index.
  * @param isActive Active status. (`bool`).

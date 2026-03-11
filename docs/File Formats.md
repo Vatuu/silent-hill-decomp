@@ -25,7 +25,7 @@ The table below summarizes each file format encountered so far, their known or s
 | .TIM | PsyQ SDK texture container. | SDK `filefrmt.pdf` |
 | .TMD | PsyQ SDK 3D models, used exclusively on the item screen. | SDK `filefrmt.pdf` |
 | .VAB | PsyQ SDK audio container. | SDK `filefrmt.pdf` |
-| XA/* | XA audio & FMV video. | SDK `filefrmt.pdf` |
+| XA/* | XA audio and FMV video. | SDK `filefrmt.pdf` |
 | Savegame | Tracks players current progress in the game. | [ps1_memory_card.bt](https://github.com/Sparagas/Silent-Hill/blob/main/010%20Editor%20-%20Binary%20Templates/ps1_memory_card.bt) by Sparagas |
 
 ### `SILENT.` & `HILL.` Containers

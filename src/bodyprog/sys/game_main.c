@@ -168,7 +168,7 @@ void MainLoop(void) // 0x80032EE0
 
 #if !VERSION_REGION_IS(NTSCJ)
     InitGeom();
-    func_8004BB10(); // Initializes something for graphics - JAP0 moves this to `HP_SAFE1` overlay.
+    func_8004BB10(); // Initializes something for graphics. JAP0 moves this to `HP_SAFE1` overlay.
     func_800890B8(); // JAP0 moves this init call to the `S__SAFE2` anti-modchip overlay.
 #endif
 

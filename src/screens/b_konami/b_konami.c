@@ -396,7 +396,7 @@ void BootScreen_ImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 v
 
 void BootScreen_KonamiScreenDraw(void) // 0x800C9FB8
 {
-    s32* ptr;
+    s32*  ptr;
     TILE* tile;
 
     // Draw Konami logo.
@@ -418,6 +418,7 @@ void BootScreen_KonamiScreenDraw(void) // 0x800C9FB8
     // Draw unknown JPN0 tile.
     tile++;
     ptr--;
+
     addPrimFast(ptr, tile, 3);
     setCodeWord(tile, PRIM_RECT, 0xFFFFFF);
     setXY0Fast(tile, 136, 140);
