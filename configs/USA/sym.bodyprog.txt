@@ -824,6 +824,7 @@ Gfx_StringDrawInt                            = 0x8004B9F8; // type:func
 //-------------------------------------------------------------------------
 //--- PA: 0x026FB0   VA: 0x8004BB10   subsegment: c, items/item_screens_cam
 //-------------------------------------------------------------------------
+ItemScreen_TmdGsFCallInit                    = 0x8004BB10; // type:func
 ItemScreen_CamSet                            = 0x8004BB4C; // type:func
 GameFs_TmdDataAlloc                          = 0x8004BCBC; // type:func
 ItemScreen_ItemRotate                        = 0x8004BCDC; // type:func

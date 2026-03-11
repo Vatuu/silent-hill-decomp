@@ -7,11 +7,11 @@
 
 void AntiModchip_Check(void) // JAP0 0x801E7EB4
 {
-    while (func_8004CB54(0, 2, 0) != 0)
+    while (ItemScreen_TmdGsFCallInitTG3(0, 2, 0) != 0)
     {
         VSync(0);
     }
     
-    func_8004CB6C();
-    func_8004CB90();
+    ItemScreen_TmdGsFCallInitG3G4();
+    ItemScreen_TmdGsFCallInitTG4();
 }

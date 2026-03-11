@@ -19,9 +19,10 @@ s32 D_800C395C;
 // In USA this function is called at the start of `MainLoop`.
 // NTSC-J splits this function into 3, and moves the calls into the `HP_SAFE1` overlay.
 #if VERSION_IS(USA)
-void func_8004BB10(void) // 0x8004BB10
+void ItemScreen_TmdGsFCallInit(void) // 0x8004BB10
 {
     // Based on `libgs.h` `jt_init4` function?
+    // Only seems to affect TMD rendering which is exclusive to item screen.
 
     // Gouraud triangle.
     GsFCALL4.g3[GsDivMODE_NDIV][GsLMODE_FOG]  = GsTMDfastG3LFG;
@@ -33,19 +34,19 @@ void func_8004BB10(void) // 0x8004BB10
     GsFCALL4.tg4[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG4LFG;
 }
 #elif VERSION_REGION_IS(NTSCJ)
-bool func_8004CB54(void) // JPN0 0x8004CB54
+bool ItemScreen_TmdGsFCallInitTG3(void) // JPN0 0x8004CB54
 {
     GsFCALL4.tg3[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG3LFG;
     return false;
 }
 
-void func_8004CB6C(void) // JPN0 0x8004CB6C
+void ItemScreen_TmdGsFCallInitG3G4(void) // JPN0 0x8004CB6C
 {
     GsFCALL4.g3[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastG3LFG;
     GsFCALL4.g4[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastG4LFG;
 }
 
-void func_8004CB90(void) // JPN0 0x8004CB90
+void ItemScreen_TmdGsFCallInitTG4(void) // JPN0 0x8004CB90
 {
     GsFCALL4.tg4[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG4LFG;
 }

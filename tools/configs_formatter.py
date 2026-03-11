@@ -19,9 +19,9 @@ def validate_input_path(input_path):
     return path
 
 
-def discover_and_validate_files():
+def discover_and_validate_files(region):
     # Get input path
-    default_path = Path(__file__).parent.parent / 'configs/USA'
+    default_path = Path(__file__).parent.parent / 'configs' / region
     input_path = validate_input_path(sys.argv[1] if len(sys.argv) > 1 else default_path)
 
     # Find files
@@ -33,10 +33,11 @@ def discover_and_validate_files():
         print(f"Error: No files found in {input_path}")
         sys.exit(1)
 
-    # txt file count is not equal to yaml file count
-    if len(txt_files) != len(yaml_files):
-        print(f"Error: Found {len(txt_files)} .txt and {len(yaml_files)} .yaml files")
-        sys.exit(1)
+    if region == "USA":
+        # txt file count is not equal to yaml file count
+        if len(txt_files) != len(yaml_files):
+            print(f"Error: Found {len(txt_files)} .txt and {len(yaml_files)} .yaml files")
+            sys.exit(1)
 
     return txt_files, yaml_files
 
@@ -320,45 +321,46 @@ def sort_and_format_with_yaml_comments(input_text, section_map, subsegment_map):
 
 def main():
     # Discover and validate files
-    txt_files, yaml_files = discover_and_validate_files()
+    for region in ["USA", "JAP0", "JAP1"]:
+        txt_files, yaml_files = discover_and_validate_files(region)
 
-    # Process pairs
-    pairs = discover_file_pairs(txt_files, yaml_files)
-    print(f"Processing {len(pairs)} file pairs")
+        # Process pairs
+        pairs = discover_file_pairs(txt_files, yaml_files)
+        print(f"Processing {len(pairs)} file pairs")
 
-    for txt_file, yaml_file in pairs:
-        print(f"\n\n=== {txt_file.name} + {yaml_file.name} ===\n")
+        for txt_file, yaml_file in pairs:
+            print(f"\n\n=== {txt_file.name} + {yaml_file.name} ===\n")
 
-        # Read files
-        with open(txt_file, 'r', encoding='utf-8') as f:
-            txt_content = f.read()
+            # Read files
+            with open(txt_file, 'r', encoding='utf-8') as f:
+                txt_content = f.read()
 
-        # Parse YAML
-        section_map, subsegment_map = parse_yaml_for_comments(yaml_file)
-        print(f"Found {len(subsegment_map)} subsegments")
+            # Parse YAML
+            section_map, subsegment_map = parse_yaml_for_comments(yaml_file)
+            print(f"Found {len(subsegment_map)} subsegments")
 
 
 
-        # Process pipeline:
-        # 1. Clean old YAML comments
-        txt_lines = txt_content.split('\n')
-        cleaned_lines = clean_yaml_comments_from_txt(txt_lines)
-        cleaned_content = '\n'.join(cleaned_lines)
+            # Process pipeline:
+            # 1. Clean old YAML comments
+            txt_lines = txt_content.split('\n')
+            cleaned_lines = clean_yaml_comments_from_txt(txt_lines)
+            cleaned_content = '\n'.join(cleaned_lines)
 
-        # 2. Convert hex to uppercase
-        uppercase_content = convert_hex_to_uppercase(cleaned_content)
+            # 2. Convert hex to uppercase
+            uppercase_content = convert_hex_to_uppercase(cleaned_content)
 
-        # 3. Sort and add YAML comments
-        final_content = sort_and_format_with_yaml_comments(
-            uppercase_content, section_map, subsegment_map
-        )
+            # 3. Sort and add YAML comments
+            final_content = sort_and_format_with_yaml_comments(
+                uppercase_content, section_map, subsegment_map
+            )
 
-        # Output (debug mode)
-        # print(final_content)
+            # Output (debug mode)
+            # print(final_content)
 
-        # to write to files
-        with open(txt_file, 'w', encoding='utf-8') as f:
-            f.write(final_content)
+            # to write to files
+            with open(txt_file, 'w', encoding='utf-8') as f:
+                f.write(final_content)
 
 
 if __name__ == "__main__":

@@ -1,20 +1,55 @@
-SafetyCheck = 0x801E7654; // type:func - From safechk.obj
+
+
+
+//================================================
+//=== .rodata section
+//================================================
+
+
+//---------------------------------------------------------------
+//--- PA: 0x000000   VA: 0x801E7600   subsegment: rodata, safechk
+//---------------------------------------------------------------
+safechk_message   = 0x801E7600; // size:0x3C
+safechk_offset    = 0x801E763C; // size:0x18
+
+
+
+//================================================
+//=== .text section
+//================================================
+
+
+//------------------------------------------------------------
+//--- PA: 0x000054   VA: 0x801E7654   subsegment: asm, safechk
+//------------------------------------------------------------
+SafetyCheck       = 0x801E7654; // type:func - From safechk.obj
+SafetyCheck2      = 0x801E7800; // type:func
+SafetyCheck3      = 0x801E7A2C; // type:func
+SafetyCheck4      = 0x801E7B74; // type:func
+SafetyCheck5      = 0x801E7CB4; // type:func
+SafetyCheck6      = 0x801E7D28; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x0008B4   VA: 0x801E7EB4   subsegment: c, hp_safe1
+//-----------------------------------------------------------
 AntiModchip_Check = 0x801E7EB4; // type:func
 
-// Names from mgs-reversing
-__ps_libinfo__ = 0x801e7f04; // size:8
-safechk_commands = 0x801e7f0c; // size:0x28
-safechk_cdregs = 0x801e7f34; // size:0x10
-safechk_params = 0x801e7f44; // size:8
-safechk_results = 0x801e7f4c; // size:8
-safechk_coords = 0x801e7f54; // size:0x30
-safechk_message = 0x801e7600; // size:0x3C
-safechk_offset = 0x801e763c; // size:0x18
 
+
+//================================================
+//=== .data section
+//================================================
+
+
+//-------------------------------------------------------------
+//--- PA: 0x000904   VA: 0x801E7F04   subsegment: data, safechk
+//-------------------------------------------------------------
+// Names from mgs-reversing
+__ps_libinfo__    = 0x801E7F04; // size:8
+safechk_commands  = 0x801E7F0C; // size:0x28
+safechk_cdregs    = 0x801E7F34; // size:0x10
+safechk_params    = 0x801E7F44; // size:8
+safechk_results   = 0x801E7F4C; // size:8
+safechk_coords    = 0x801E7F54; // size:0x30
 // Guessed names
-safechk_801e7f84 = 0x801e7f84;
-SafetyCheck2 = 0x801E7800; // type:func
-SafetyCheck3 = 0x801E7A2C; // type:func
-SafetyCheck4 = 0x801E7B74; // type:func
-SafetyCheck5 = 0x801E7CB4; // type:func
-SafetyCheck6 = 0x801E7D28; // type:func
+safechk_801e7f84  = 0x801E7F84;

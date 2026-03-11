@@ -105,12 +105,12 @@ void func_8004B76C(char* str, bool useFixedWidth);
 void Gfx_StringDrawInt(s32 widthMin, s32 strLength);
 
 // TODO: Move following funcs to item_screens_cam header.
-#if VERSION_EQUAL_OR_NEWER(USA)
-    void func_8004BB10(void);
+#if VERSION_REGION_IS(NTSCJ)
+    bool ItemScreen_TmdGsFCallInitTG3(void);
+    void ItemScreen_TmdGsFCallInitG3G4(void);
+    void ItemScreen_TmdGsFCallInitTG4(void);
 #else
-    bool func_8004CB54(void);
-    void func_8004CB6C(void);
-    void func_8004CB90(void);
+    void ItemScreen_TmdGsFCallInit(void);
 #endif
 
 #endif

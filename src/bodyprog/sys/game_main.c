@@ -170,7 +170,7 @@ void MainLoop(void) // 0x80032EE0
     // Likely to make sure those overlays aren't patched out by pirates.
 #if !VERSION_REGION_IS(NTSCJ)
     InitGeom();
-    func_8004BB10();
+    ItemScreen_TmdGsFCallInit();
     func_800890B8();
 #endif
 
