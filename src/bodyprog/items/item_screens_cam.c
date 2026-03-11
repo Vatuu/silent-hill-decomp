@@ -16,6 +16,8 @@ s32 D_800C3954;
 s32 D_800C3958;
 s32 D_800C395C;
 
+// In USA this function is called at the start of `MainLoop`.
+// NTSC-J splits this function into 3, and moves the calls into the `HP_SAFE1` overlay.
 #if VERSION_IS(USA)
 void func_8004BB10(void) // 0x8004BB10
 {

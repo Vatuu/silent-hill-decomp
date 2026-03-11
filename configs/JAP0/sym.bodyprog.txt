@@ -238,6 +238,11 @@ D_800A900C = 0x800AB3A8;
 CdDiskReady = 0x80094B88; // type:func
 CdGetDiskType = 0x80094CC4; // type:func
 
+// used by safechk.obj
+SetDefDrawEnv = 0x80095EE8; // type:func
+SetDefDispEnv = 0x80095F9C; // type:func
+InitGeom = 0x8009926C; // type:func
+
 // used by stream
 StSetRing = 0x80094138; // type:func
 CdSearchFile = 0x80094168; // type:func

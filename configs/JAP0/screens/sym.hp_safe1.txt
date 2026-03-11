@@ -1,2 +1,20 @@
 SafetyCheck = 0x801E7654; // type:func - From safechk.obj
 AntiModchip_Check = 0x801E7EB4; // type:func
+
+// Names from mgs-reversing
+__ps_libinfo__ = 0x801e7f04; // size:8
+safechk_commands = 0x801e7f0c; // size:0x28
+safechk_cdregs = 0x801e7f34; // size:0x10
+safechk_params = 0x801e7f44; // size:8
+safechk_results = 0x801e7f4c; // size:8
+safechk_coords = 0x801e7f54; // size:0x30
+safechk_message = 0x801e7600; // size:0x3C
+safechk_offset = 0x801e763c; // size:0x18
+
+// Guessed names
+safechk_801e7f84 = 0x801e7f84;
+SafetyCheck2 = 0x801E7800; // type:func
+SafetyCheck3 = 0x801E7A2C; // type:func
+SafetyCheck4 = 0x801E7B74; // type:func
+SafetyCheck5 = 0x801E7CB4; // type:func
+SafetyCheck6 = 0x801E7D28; // type:func

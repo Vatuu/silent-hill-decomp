@@ -160,7 +160,16 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     Fs_QueueWaitForEmpty();
 
 #if VERSION_REGION_IS(NTSCJ)
-                    // WIP: Anti-modchip code from NTSC-J releases, not checked if matching yet.
+                    // Anti-modchip code from NTSC-J releases, using Sony's `safechk.obj` code.
+                    // Decompresses/decrypts the `S__SAFE2` / `HP_SAFE1` overlays:
+                    // - `S__SAFE2`: runs `safechk.obj` to detect non-stealth modchips and halt game if found,
+                    //   then calls init code relocated from the start of `MainLoop`.
+                    // - `HP_SAFE1`: includes same `safechk.obj` and near-identical `AntiModchip_Check` code,
+                    //   only difference is branches jump to other `MainLoop` init code instead of actually invoking `safechk`.
+                    //
+                    // Init calls were likely moved here so skipping these overlays would break things.
+                    // `HP_SAFE1` being a near-copy of `S__SAFE2` may be just to slightly confuse pirates.
+                    //
                     // TODO:
                     // - `CdDiskReady` and `CdGetDiskType` are part of `libcd/type.o`, not included in US release, need conversion from SDK libs.
                     // - Add `FS_BUFFER_` constants for the addresses used here.
@@ -181,9 +190,10 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     curTime = g_SysWork.counters_1C[0];
                     AntiModchip_Check();
 
-                    // Decrypt `HP_SAFE1` and run `AntiModchip_Check` if enough time has passed.
-                    // NOTE: `HP_SAFE1` seems to call slightly different functions than `S__SAFE2`?
+                    // Decrypt `HP_SAFE1` and run `AntiModchip_Check`
                     Fs_DecryptOverlay((void*)0x801E7600, FS_BUFFER_21, 4096);
+                    
+                    // Only run `HP_SAFE1` if `S__SAFE2` took enough time to execute, cheap way of checking if the call above was skipped?
                     if ((g_SysWork.counters_1C[0] - curTime) >= 100)
                     {
                         AntiModchip_Check();

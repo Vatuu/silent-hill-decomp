@@ -13,6 +13,5 @@ void AntiModchip_Check(void) // JAP0 0x801E7EB4
     }
     
     func_8004CB6C();
-
     func_8004CB90();
 }
