@@ -152,7 +152,7 @@ There's still a lot of work ahead:
             <td colspan=2>Purpose</td>
           </tr>
           <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map"/></a><br/>40/43 matched.</td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map"/></a><br/>42/43 matched.</td>
             <td colspan=2>Map and character code.</td>
           </tr>
           <tr>
@@ -337,7 +337,7 @@ There's still a lot of work ahead:
           <th colspan=3>🏙🍹🔥 MAP6 🔥🍹🏙</th>
         </tr>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map6_s00"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map6_s00&label=MAP6_S00"/></a></td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map6_s00"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map6_s00&label=MAP6_S00&color=rgb(255,215,0)"/></a></td>
             <td colspan=2>Silent Hill Resort Area in Otherworld.</td>
         </tr>
         <tr>
@@ -345,7 +345,7 @@ There's still a lot of work ahead:
             <td colspan=2>Boat at Lakeside Pier.</td>
         </tr>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map6_s02"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map6_s02&label=MAP6_S02"/></a></td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map6_s02"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map6_s02&label=MAP6_S02&color=rgb(255,215,0)"/></a></td>
             <td colspan=2>Lakeside Pier and Lighthouse.</td>
         </tr>
         <tr>
