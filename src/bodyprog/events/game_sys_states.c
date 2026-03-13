@@ -276,7 +276,7 @@ void SysState_GamePaused_Update(void) // 0x800391E8
     D_800A9A68 += g_DeltaTimeRaw;
     if (!((D_800A9A68 >> 11) & (1 << 0)))
     {
-#if VERSION_IS(JAP0) // TODO: Check this string in other versions.
+#if VERSION_REGION_IS(NTSCJ)
         Gfx_StringSetPosition(SCREEN_POSITION_X(41.0f), SCREEN_POSITION_Y(43.5f));
         Gfx_StringDraw("\x07PAUSE", DEFAULT_MAP_MESSAGE_LENGTH);
 #else

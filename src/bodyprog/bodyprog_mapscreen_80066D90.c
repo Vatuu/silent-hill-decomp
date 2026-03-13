@@ -259,6 +259,9 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
     }
 }
 
+#if VERSION_IS(JAP1) || VERSION_IS(JAP2)
+INCLUDE_ASM("bodyprog/nonmatchings/bodyprog_mapscreen_80066D90/", func_80067914);
+#else
 static inline s32 MapCoordIdxGet(q19_12 coord, s32 bias, s32 shift, s32 offset)
 {
     if (coord < Q12(0.0f))
@@ -764,6 +767,7 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
     GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_G3);
     return temp_s4;
 }
+#endif
 
 bool func_80068CC0(s32 arg0) // 0x80068CC0
 {

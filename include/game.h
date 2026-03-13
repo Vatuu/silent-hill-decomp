@@ -36,9 +36,9 @@ struct _Model;
 #define DEFAULT_MAP_MESSAGE_LENGTH     99
 #define GLYPH_TABLE_ASCII_OFFSET       '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
 
-#if VERSION_EQUAL_OR_NEWER(USA)
+#if VERSION_REGION_IS(NTSC)
 #define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400 /** Long string length is used to display a whole message instantly without a rollout. */
-#else
+#elif VERSION_REGION_IS(NTSCJ)
 #define MAP_MESSAGE_DISPLAY_ALL_LENGTH 200 /** Long string length is used to display a whole message instantly without a rollout. */
 #endif
 

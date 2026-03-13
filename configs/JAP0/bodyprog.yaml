@@ -71,7 +71,7 @@ segments:
       - [0x6E8, rodata] # Garbage padding
       - [0x6EC, .rodata, events/map_msg_display]
       - [0x744, .rodata, events/bodyprog_data_800A99B4]
-      - [0x8D4, .rodata, events/game_sys_states]
+      - [0x804, .rodata, events/game_sys_states]
       - [0x908, .rodata, title]
       - [0x9AC, rodata] # Garbage padding (should start at 0x9AB but that causes mismatches?)
       - [0x9B0, .rodata, gfx/bodyprog_8003BE50]

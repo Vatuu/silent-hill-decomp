@@ -30,7 +30,7 @@ s8             g_MapMsg_SelectCancelIdx;
 // @hack JP calls different `Gfx_StringSetColor` / `Gfx_StringDraw` funcs here.
 // The normal funcs available are also used in JP, so can't be renamed.
 // For now override `Gfx_StringSetColor` calls in this file until those JP funcs get figured out.
-#if VERSION_IS(JAP0)
+#if VERSION_REGION_IS(NTSCJ)
 #define Gfx_StringSetColor Gfx_StringSetColor_JP
 #endif
 
@@ -85,7 +85,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             Gfx_MapMsg_DefaultStringInfoSet();
             var_a1 = Gfx_MapMsg_CalculateWidths(g_MapMsg_CurrentIdx);
 
-#if VERSION_EQUAL_OR_OLDER(JAP0)
+#if VERSION_REGION_IS(NTSCJ)
             if (var_a1 != 0)
             {
                 switch (var_a1)
@@ -126,7 +126,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             }
 
             Gfx_StringSetColor(StringColorId_White);
-#if VERSION_EQUAL_OR_NEWER(USA)
+#if VERSION_REGION_IS(NTSC)
             Gfx_StringSetPosition(40, 160);
 #endif
 
@@ -216,7 +216,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
                     var_a1 = Gfx_MapMsg_CalculateWidths(g_MapMsg_CurrentIdx);
 
-#if VERSION_EQUAL_OR_OLDER(JAP0)
+#if VERSION_REGION_IS(NTSCJ)
                     if (var_a1 != 0)
                     {
                         switch (var_a1)
@@ -332,7 +332,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                         Gfx_StringSetColor(StringColorId_White);
                     }
 
-#if VERSION_EQUAL_OR_NEWER(USA)
+#if VERSION_REGION_IS(NTSC)
                     Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 98);
                     Gfx_StringDraw(g_MapOverlayHeader.mapMessages_30[i], MAP_MESSAGE_DISPLAY_ALL_LENGTH);
 #else
@@ -361,7 +361,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                         Gfx_StringSetColor(StringColorId_White);
                     }
 
-#if VERSION_EQUAL_OR_NEWER(USA)
+#if VERSION_REGION_IS(NTSC)
                     Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 96);
                     Gfx_StringDraw(g_MapOverlayHeader.mapMessages_30[(mapMsgIdx + i) + 1], MAP_MESSAGE_DISPLAY_ALL_LENGTH);
 #else
