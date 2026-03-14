@@ -2762,19 +2762,19 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A478
     temp_s1_neg = -temp_s1;
     temp_s2_neg = -temp_s2;
 
-    *(u32*)&scratchData->field_3E4.m[0][0] = *(u32*)&g_WorldEnvWork.field_74;
-    scratchData->field_3E4.m[0][2]         = g_WorldEnvWork.field_74.vz;
+    *(u32*)&scratchData->rotMatrix_3E4[0][0] = *(u32*)&g_WorldEnvWork.field_74;
+    scratchData->rotMatrix_3E4[0][2]         = g_WorldEnvWork.field_74.vz;
 
-    scratchData->field_3E4.m[1][0] = Q12(temp_s0_neg) / var_t1;
-    scratchData->field_3E4.m[1][1] = Q12(temp_s1_neg) / var_t1;
-    scratchData->field_3E4.m[1][2] = Q12(temp_s2_neg) / var_t1;
+    scratchData->rotMatrix_3E4[1][0] = Q12(temp_s0_neg) / var_t1;
+    scratchData->rotMatrix_3E4[1][1] = Q12(temp_s1_neg) / var_t1;
+    scratchData->rotMatrix_3E4[1][2] = Q12(temp_s2_neg) / var_t1;
 
-    scratchData->field_3E4.m[2][0] = temp_s0_neg;
-    scratchData->field_3E4.m[2][1] = temp_s1_neg;
-    scratchData->field_3E4.m[2][2] = temp_s2_neg;
+    scratchData->rotMatrix_3E4[2][0] = temp_s0_neg;
+    scratchData->rotMatrix_3E4[2][1] = temp_s1_neg;
+    scratchData->rotMatrix_3E4[2][2] = temp_s2_neg;
 
-    gte_SetRotMatrix(&scratchData->field_3E4);
-    gte_SetVector0(&scratchData->field_3E4.m[2][0]);
+    gte_SetRotMatrix(scratchData->rotMatrix_3E4);
+    gte_SetVector0(&scratchData->rotMatrix_3E4[2][0]);
     gte_ldtr_0();
     gte_rtps();
     gte_stsxy(&scratchData->screenPos_3DC);
@@ -2820,15 +2820,15 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A478
         var_a2 = var_s0 - (var_s0 >> 2);
     }
 
-    temp_a0 = (scratchData->field_3E4.m[1][0] * var_a2) >> 7;
+    temp_a0 = (scratchData->rotMatrix_3E4[1][0] * var_a2) >> 7;
     temp_a0 = CLAMP(temp_a0, Q12(-1.4f), Q12(1.4f));
 
-    temp_v1 = (scratchData->field_3E4.m[1][1] * var_a2) >> 7;
+    temp_v1 = (scratchData->rotMatrix_3E4[1][1] * var_a2) >> 7;
     temp_v1 = CLAMP(temp_v1, Q12(-1.4f), Q12(1.4f));
 
     gte_SetLightSourceXY(temp_a0, temp_v1);
 
-    temp_a0 = (scratchData->field_3E4.m[1][2] * var_a2) >> 7;
+    temp_a0 = (scratchData->rotMatrix_3E4[1][2] * var_a2) >> 7;
     temp_a0 = CLAMP(temp_a0, Q12(-1.4f), Q12(1.4f));
 
     gte_SetLightSourceZ(temp_a0);

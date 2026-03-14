@@ -611,7 +611,7 @@ typedef struct _GteScratchData
     CVECTOR  field_3D8; // Written by `func_8005A42C`.
     DVECTOR  screenPos_3DC;
     s32      depthP_3E0;
-    MATRIX   field_3E4;
+    s16      rotMatrix_3E4[3][3]; // Truncated `MATRIX` without the `long t[3];` transfer vector?
 } s_GteScratchData;
 
 typedef struct _Primitive
