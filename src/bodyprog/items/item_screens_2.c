@@ -92,10 +92,6 @@ void Game_TimerUpdate(void) // 0x8004C8DC
     #undef TIME_290_OVERFLOW_MAX
 }
 
-#if VERSION_REGION_IS(NTSCJ)
-INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_2", GameState_ItemScreens_Update);
-INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026120);
-#else
 void GameState_ItemScreens_Update(void) // 0x8004C9B0
 {
     Gfx_StringSetColor(StringColorId_White);
@@ -134,6 +130,10 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
                 Inventory_AddSpecialItem(InventoryItemId_HyperBlaster, 1);
             }
 
+#if VERSION_REGION_IS(NTSCJ)
+            func_8004C7E4();
+#endif
+
             Screen_RectInterlacedClear(0, 0x20, 0x140, 0x1C0, 0u, 0u, 0u);
             Screen_Init(SCREEN_WIDTH, true);
 
@@ -159,11 +159,17 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
                 case 18:
                     g_Inventory_SelectionId     = InventorySelectionId_Settings;
                     g_Inventory_PrevSelectionId = InventorySelectionId_Settings;
+#if VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix?
+                    g_Inventory_IsScrolling = false;
+#endif
                     break;
 
                 case 15:
                     g_Inventory_SelectionId     = InventorySelectionId_Map;
                     g_Inventory_PrevSelectionId = InventorySelectionId_Map;
+#if VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix?
+                    g_Inventory_IsScrolling = false;
+#endif
                     break;
 
                 default:
@@ -286,6 +292,9 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
 
         // Results screen triggers here.
         case 21:
+#if VERSION_REGION_IS(NTSCJ)
+            func_8004C7E4();
+#endif
             Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
             Screen_Init(SCREEN_WIDTH, true);
 
@@ -310,6 +319,10 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
 
             GameBoot_SavegameInitialize(0, g_SavegamePtr->gameDifficulty_260);
             func_800904F4();
+
+#if VERSION_REGION_IS(NTSCJ)
+            func_8004C870();
+#endif
 
             g_GameWork.gameStateStep_598[1] = 22;
             g_GameWork.gameStateStep_598[2] = 0;
@@ -395,9 +408,9 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
         Gfx_Results_Save();
     }
 }
-#endif
 
 #if VERSION_REGION_IS(NTSCJ)
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026120);
 INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_2", Gfx_Results_Save);
 #else
 void Gfx_Results_Save(void) // 0x8004D1A0

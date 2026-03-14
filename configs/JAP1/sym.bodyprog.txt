@@ -900,6 +900,8 @@ Gfx_MapMsg_CalculateWidths                   = 0x8004B000; // type:func
 func_8004B45C                                = 0x8004B500; // type:func
 Gfx_MapMsg_StringDraw                        = 0x8004B798; // type:func
 Gfx_StringDraw_JP                            = 0x8004C064; // type:func
+func_8004C7E4                                = 0x8004C888; // type:func
+func_8004C870                                = 0x8004C914; // type:func
 
 //-------------------------------------------------------------------------
 //--- PA: 0x028098   VA: 0x8004CBF8   subsegment: c, items/item_screens_cam
