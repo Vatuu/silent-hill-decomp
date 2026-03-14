@@ -466,4 +466,28 @@ void SetPriority(PACKET*, s32, s32);
     "mfc2  %0, $31"                       \
     : "=r"(dst))
 
+#define gte_ldir_stbk() __asm__ volatile ( \
+    "cfc2    $12, $13;"                    \
+    "nop;"                                 \
+    "mtc2    $12, $9;"                     \
+    "cfc2    $12, $14;"                    \
+    "nop;"                                 \
+    "mtc2    $12, $10;"                    \
+    "cfc2    $12, $15;"                    \
+    "nop;"                                 \
+    "mtc2    $12, $11;"                    \
+    : : : "$12")
+
+#define gte_ldmac_stir() __asm__ volatile ( \
+    "mfc2    $12, $25;"                     \
+    "nop;"                                  \
+    "ctc2    $12, $13;"                     \
+    "mfc2    $12, $26;"                     \
+    "nop;"                                  \
+    "ctc2    $12, $14;"                     \
+    "mfc2    $12, $27;"                     \
+    "nop;"                                  \
+    "ctc2    $12, $15;"                     \
+    : : : "$12")
+
 #endif

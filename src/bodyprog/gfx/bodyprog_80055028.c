@@ -3311,7 +3311,257 @@ void func_8005B55C(GsCOORDINATE2* coord) // 0x8005B55C
     }
 }
 
-INCLUDE_ASM("bodyprog/nonmatchings/gfx/bodyprog_80055028", func_8005B62C); // 0x8005B62C
+void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x8005B62C
+{
+    MATRIX            matrix_sp18[2];
+    CVECTOR           sp58[5];
+    MATRIX            sp70;
+    s_GteScratchData2 sp90;
+    DVECTOR           field_1C;
+    s32               field_24;
+    s32               sp494;
+    s32               sp498;
+    u16               sp4A0;
+    u16               sp4A8;
+    s_WorldEnvWork*   new_var;
+    s_WorldEnvWork*   new_var2;
+    s32               temp_a0;
+    s32               temp_a0_2;
+    s32               temp_lo;
+    s32               temp_lo_2;
+    s32               temp_v0;
+    s32               temp_v0_2;
+    s32               temp_v1;
+    s32               temp_v1_2;
+    s32               temp_v1_4;
+    s32               var_s0;
+    s32               var_s1;
+    s32               var_s1_2;
+    s32               var_s2;
+    s32               var_v0;
+    s_800AE204*       var_s6;
+    s_800AE4DC*       temp_fp;
+    s32               temp;
+    s32               i;
+    PACKET*           packet;
+    PACKET*           packet2;
+    POLY_GT4*         poly_gt4;
+    POLY_G4*          poly_g4;
+
+    temp_fp = &D_800AE4DC[arg0];
+    sp4A0   = temp_fp->unk_A | (temp_fp->unk_9 << 8);
+    sp4A8   = temp_fp->unk_8 | (temp_fp->unk_B << 8);
+    sp498   = ReadGeomScreen();
+
+    temp_v1 = 0x79C << (arg5 + 2);
+    sp494   = g_WorldEnvWork.isFogEnabled_1 ? MIN(temp_v1, g_WorldEnvWork.fogFarDistance_10) : temp_v1;
+    func_80049C2C(&matrix_sp18[0], x, y, z);
+
+    // @hack Pointer needed for match, is there a way to remove this?
+    // `func_80056D8C` `func_8005801C` `func_8005AC50` all seem to do similar thing without needing pointer?
+    new_var = &g_WorldEnvWork;
+    if (!new_var->isFogEnabled_1)
+    {
+        var_s1 = Q12(1.0f);
+    }
+    else
+    {
+        var_s1 = Q12(1.0f) - Q8_TO_Q12(MIN(func_80055A50(Q8_TO_Q12(matrix_sp18[0].t[2])), Q12(1.0f)));
+    }
+
+    // @hack Make sure compiler doesn't optimize out new_var pointer.
+    if (new_var)
+    {
+        u8 x = -x;
+    }
+
+    if (g_WorldEnvWork.field_0 == 0)
+    {
+        sp58[4].r = Q12_MULT(g_WorldEnvWork.worldTintColor_28.r, g_WorldEnvWork.field_20);
+        sp58[4].g = Q12_MULT(g_WorldEnvWork.worldTintColor_28.g, g_WorldEnvWork.field_20);
+        sp58[4].b = Q12_MULT(g_WorldEnvWork.worldTintColor_28.b, g_WorldEnvWork.field_20);
+
+        if (g_WorldEnvWork.isFogEnabled_1)
+        {
+            sp58[4].r = Q12_MULT(sp58[4].r, var_s1);
+            sp58[4].g = Q12_MULT(sp58[4].g, var_s1);
+            sp58[4].b = Q12_MULT(sp58[4].b, var_s1);
+        }
+
+        *(s32*)&sp58[3] = *(s32*)&sp58[4];
+        *(s32*)&sp58[2] = *(s32*)&sp58[4];
+        *(s32*)&sp58[1] = *(s32*)&sp58[4];
+        *(s32*)&sp58[0] = *(s32*)&sp58[4];
+    }
+    else
+    {
+        Vw_CoordHierarchyMatrixCompute(D_800C42B8, &matrix_sp18[1]);
+
+        matrix_sp18[1].t[0] = Q12_TO_Q8(x);
+        matrix_sp18[1].t[1] = Q12_TO_Q8(y) + temp_fp->unk_6;
+        matrix_sp18[1].t[2] = Q12_TO_Q8(z);
+
+        func_80057228(&matrix_sp18[1], g_WorldEnvWork.field_54, &g_WorldEnvWork.field_58, &g_WorldEnvWork.field_60);
+
+        switch (g_WorldEnvWork.field_0)
+        {
+            case 0:
+            case 1:
+                func_8005A478(&sp90, var_s1);
+                SetColorMatrix(&g_WorldEnvWork.field_2C);
+                gte_lddqa(g_WorldEnvWork.field_4C);
+                gte_lddqb_0();
+                break;
+
+            case 2:
+                func_8005A838(&sp90, var_s1);
+                SetColorMatrix(&g_WorldEnvWork.field_2C);
+                break;
+        }
+
+        ReadLightMatrix(&sp70);
+
+        if (g_WorldEnvWork.isFogEnabled_1)
+        {
+            var_s2   = Q12_MULT(sp70.m[0][0], var_s1);
+            var_s1_2 = Q12_MULT(sp70.m[0][1], var_s1);
+            var_s0   = Q12_MULT(sp70.m[0][2], var_s1);
+        }
+        else
+        {
+            var_s2   = sp70.m[0][0];
+            var_s1_2 = sp70.m[0][1];
+            var_s0   = sp70.m[0][2];
+        }
+
+        temp_v0 = SquareRoot0(SQUARE(var_s2) + SQUARE(var_s1_2) + SQUARE(var_s0));
+
+        if (temp_v0 > Q12(0.25f))
+        {
+            temp_v1_2 = Q12_MULT(temp_v0 - Q12(0.25f), Q12(0.3f)) + Q12(0.25f);
+
+            var_v0 = Q12(MIN(temp_v1_2, Q12(1.0f)));
+
+            temp_lo = var_v0 / temp_v0;
+
+            var_s2   = Q12_MULT(var_s2, temp_lo);
+            var_s1_2 = Q12_MULT(var_s1_2, temp_lo);
+            var_s0   = Q12_MULT(var_s0, temp_lo);
+
+            if (g_WorldEnvWork.field_0 == 1)
+            {
+                gte_lddp(temp_lo);
+                gte_ldir_stbk();
+                gte_gpf12();
+                gte_ldmac_stir();
+            }
+        }
+
+        sp70.m[0][0] = var_s2;
+        sp70.m[0][1] = var_s1_2;
+        sp70.m[0][2] = var_s0;
+
+        sp70.m[1][0] = -var_s0 >> 4;
+        sp70.m[1][1] = var_s1_2 >> 4;
+        sp70.m[1][2] = var_s2 >> 4;
+
+        sp70.m[2][0] = var_s0 >> 4;
+        sp70.m[2][1] = var_s1_2 >> 4;
+        sp70.m[2][2] = -var_s2 >> 4;
+
+        SetLightMatrix(&sp70);
+        NormalColor3(&D_800AE500[0], &D_800AE500[1], &D_800AE500[2], &sp58[0], &sp58[1], &sp58[2]);
+        NormalColor(&D_800AE500[3], &sp58[3]);
+    }
+
+    // @hack Needed to get right reg order for `poly_gt4`
+    new_var2 = &g_WorldEnvWork;
+
+    SetRotMatrix(&matrix_sp18[0]);
+    SetTransMatrix(&matrix_sp18[0]);
+
+    for (var_s6 = temp_fp->ptr_0, poly_gt4 = GsOUT_PACKET_P;
+         var_s6 < &temp_fp->ptr_0[temp_fp->count_4]; var_s6++)
+    {
+        temp_v0_2 = RotTransPers((SVECTOR*)&var_s6->field_14, &field_1C, &field_24, &field_24);
+        temp_a0   = temp_v0_2 << 2;
+
+        if (temp_v0_2 > 32 && temp_a0 < sp494)
+        {
+            s32 tpage = 0x2C;
+            s32 clut  = 0x8C;
+            temp_lo_2 = Q12(sp498) / temp_a0;
+
+            *(s32*)&poly_gt4->r0 = *(s32*)&sp58[0];
+            *(s32*)&poly_gt4->r1 = *(s32*)&sp58[1];
+            *(s32*)&poly_gt4->r2 = *(s32*)&sp58[2];
+            temp_a0              = *(s32*)&sp58[3];
+
+            do {} while (0); // @hack
+
+            setPolyGT4(poly_gt4);
+
+            poly_gt4->tpage = tpage;
+
+            poly_gt4->clut       = clut;
+            *(s32*)&poly_gt4->r3 = temp_a0;
+            *(s16*)&poly_gt4->u0 = *(s16*)&temp_fp->unk_8;
+            *(s16*)&poly_gt4->u1 = sp4A0;
+            *(s16*)&poly_gt4->u2 = sp4A8;
+            *(s16*)&poly_gt4->u3 = *(s16*)&temp_fp->unk_A;
+
+            temp_a0_2 = Q12_MULT(var_s6->unk_8, temp_lo_2);
+            temp_v1_4 = Q12_MULT(var_s6->unk_6, temp_lo_2);
+
+            setXY4(poly_gt4,
+                   field_1C.vx, field_1C.vy - (temp_a0_2 * 2),
+                   field_1C.vx + temp_v1_4, field_1C.vy - temp_a0_2,
+                   field_1C.vx - temp_v1_4, field_1C.vy - temp_a0_2,
+                   field_1C.vx, field_1C.vy);
+
+            if (new_var2->isFogEnabled_1)
+            {
+                packet = poly_gt4 + 1;
+                SetPriority(packet, 0, 0);
+                packet2 = packet + 0xC; // TODO: sizeof()?
+                SetPriority(packet2, 1, 1);
+
+                poly_g4 = packet2 + 0xC;
+
+                temp = (func_80055A50(temp_v0_2 << 6) * 16) + new_var2->fogIntensity_18;
+
+                gte_lddp(0x1000 - MIN(temp, 0x1000));
+                gte_ldrgb(&g_WorldEnvWork.fogColor_1C);
+                gte_dpcs();
+                gte_strgb((CVECTOR*)&poly_g4->r0);
+
+                *(s32*)&poly_g4->r1 = *(s32*)&poly_g4->r2 = *(s32*)&poly_g4->r3 = *(s32*)&poly_g4->r0;
+
+                *(s32*)&poly_g4->x0 = *(s32*)&poly_gt4->x0;
+                *(s32*)&poly_g4->x1 = *(s32*)&poly_gt4->x1;
+                *(s32*)&poly_g4->x2 = *(s32*)&poly_gt4->x2;
+                *(s32*)&poly_g4->x3 = *(s32*)&poly_gt4->x3;
+
+                setPolyG4(poly_g4);
+                setSemiTrans(poly_g4, 1);
+
+                addPrim(&ot_arg4->org[temp_v0_2 >> arg5], packet);
+                addPrim(&ot_arg4->org[temp_v0_2 >> arg5], poly_g4);
+                addPrim(&ot_arg4->org[temp_v0_2 >> arg5], packet2);
+                addPrim(&ot_arg4->org[temp_v0_2 >> arg5], poly_gt4);
+                poly_g4++;
+                poly_gt4 = poly_g4;
+            }
+            else
+            {
+                addPrim(&ot_arg4->org[temp_v0_2 >> arg5], poly_gt4);
+                poly_gt4++;
+            }
+        }
+    }
+
+    GsOUT_PACKET_P = poly_gt4;
+}
 
 // ========================================
 // UNUSED

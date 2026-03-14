@@ -1729,7 +1729,7 @@ typedef struct
         {
             DVECTOR  screenPos_3DC;
             s32      depthP_3E0;
-            MATRIX   field_3E4;
+            s16      rotMatrix_3E4[3][3]; // Truncated `MATRIX` without the `long t[3];` transfer vector?
         } vertex;
 
         struct
@@ -1774,7 +1774,8 @@ typedef struct
 typedef struct
 {
     s_800AE204* ptr_0;
-    s16         count_4;
+    u8          count_4;
+    u8          unk_5;
     s16         unk_6;
     u8          unk_8;
     u8          unk_9;
@@ -2316,6 +2317,9 @@ extern s_800AE204 D_800AE204[26];
 extern s32 g_Items_PickupAnimState;
 
 extern q19_12 g_Items_PickupScale;
+
+extern s_800AE4DC D_800AE4DC[3];
+extern SVECTOR    D_800AE500[4];
 
 extern s16 D_800AE520[];
 
@@ -3178,6 +3182,8 @@ void func_8005801C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TA
 s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBuf9, e_FsFile fileIdx, s32 arg4);
 
 void func_8005B55C(GsCOORDINATE2* coord);
+
+void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5);
 
 u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2);
 
