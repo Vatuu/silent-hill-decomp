@@ -4012,10 +4012,12 @@ void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8
     max     = 0xFF;
     new_var = 1;
 
-    Sd_SfxAttributesUpdate(arg0, var_s0, CLAMP_CUSTOM(arg2 * Math_Vector3MagCalc(playerChara.position_18.vx - arg1->vx,
-                                                                                 playerChara.position_18.vy - arg1->vy,
-                                                                                 playerChara.position_18.vz - arg1->vz) /
-                                                             arg3, arg2, 0, max, new_var), 0);
+    Sd_SfxAttributesUpdate(arg0, var_s0, CLAMP_CUSTOM((arg2 * Math_Vector3MagCalc(playerChara.position_18.vx - arg1->vx,
+                                                                                  playerChara.position_18.vy - arg1->vy,
+                                                                                  playerChara.position_18.vz - arg1->vz)) /
+                                                       arg3, arg2, 0, max, new_var), 0);
+
+    #undef playerChara
 }
 
 void func_800E7944(u32 arg0) // 0x800E7944

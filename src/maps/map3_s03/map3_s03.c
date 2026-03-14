@@ -643,19 +643,19 @@ void func_800D1A58(void) // 0x800D1A58
 
 void func_800D26D0(void) // 0x800D26D0
 {
-    g_Screen_BackgroundImgGamma = 104;
+    g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
     MapMsg_DisplayWithTexture(FILE_TIM_PLATECLR_TIM, Q12(0.0f), Q12(0.0f), 18);
 }
 
 void func_800D2708(void) // 0x800D2708
 {
-    g_Screen_BackgroundImgGamma = 104;
+    g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
     MapMsg_DisplayWithTexture(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 44);
 }
 
 void func_800D2740(void) // 0x800D2740
 {
-    g_Screen_BackgroundImgGamma = 96;
+    g_Screen_BackgroundImgGamma = Q8(3.0f / 8.0f);
     MapMsg_DisplayWithTexture(FILE_TIM_LITHGR_2_TIM, Q12(0.0f), Q12(0.0f), 45);
 }
 
@@ -910,7 +910,7 @@ void func_800D30FC(void) // 0x800D30FC
 
 void func_800D3128(void) // 0x800D3128
 {
-    g_Screen_BackgroundImgGamma = 112;
+    g_Screen_BackgroundImgGamma = Q8(7.0f / 16.0f);
     MapMsg_DisplayWithTexture(FILE_TIM_ELCWIRE0_TIM, Q12(0.0f), Q12(0.0f), 55);
 }
 

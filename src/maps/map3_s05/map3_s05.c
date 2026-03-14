@@ -214,7 +214,7 @@ void func_800D59D4(void) // 0x800D59D4
 
 void func_800D5A98(void) // 0x800D5A98
 {
-    g_Screen_BackgroundImgGamma = 80;
+    g_Screen_BackgroundImgGamma = Q8(10.0f / 32.0f);
 
     switch (g_SysWork.sysStateStep_C[0])
     {

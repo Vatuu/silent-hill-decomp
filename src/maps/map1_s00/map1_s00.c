@@ -726,7 +726,7 @@ void MapEvent_TownMapTake(void) // 0x800D922C
 
 void func_800D9254(void) // 0x800D9254
 {
-    g_Screen_BackgroundImgGamma = 104;
+    g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
     MapMsg_DisplayWithTexture(FILE_TIM_USCBOOK_TIM, Q12(0.0f), Q12(0.0f), 38);
 }
 

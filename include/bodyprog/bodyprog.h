@@ -3941,6 +3941,8 @@ bool Event_CollideObbCheck(s_MapPoint2d* mapPoint);
 
 // =========================
 
+// ==================== `bodyprog/events/npc_main.c` ==============
+
 void Savegame_EnemyStateUpdate(s_SubCharacter* chara);
 
 /** @brief Updates character's damage flag to reflect if damage was taken.
@@ -3950,6 +3952,23 @@ void Savegame_EnemyStateUpdate(s_SubCharacter* chara);
 void Chara_DamagedFlagUpdate(s_SubCharacter* chara);
 
 void func_80037E78(s_SubCharacter* chara);
+
+/** Responsible for loading NPCs on the map. */
+void Game_NpcRoomInitSpawn(bool cond);
+
+/** @brief Main NPC update function. Runs through each NPC and calls `g_MapOverlayHeader.charaUpdateFuncs_194` for them. */
+void Game_NpcUpdate(void);
+
+/** @brief Performs a 2D distance check on the XZ plane between two positions.
+ *
+ * @param from First position (Q19.12).
+ * @param to Second position (Q19.12).
+ * @param radius Intersection radius.
+ * @return `true` if the 2D distance exceeds the radius, `false` otherwise.
+ */
+bool Math_Distance2dCheck(const VECTOR3* from, const VECTOR3* to, q19_12 radius);
+
+// ====================
 
 s32 func_800382B0(s32 arg0);
 
@@ -3973,21 +3992,6 @@ void func_800803FC(VECTOR3* pos, s32 idx);
 
 /** @brief Forces a clicked controller input status for `ControllerFlag_Select`. */
 void Input_SelectClickSet(void);
-
-/** @brief Performs a 2D distance check on the XZ plane between two positions.
- *
- * @param from First position (Q19.12).
- * @param to Second position (Q19.12).
- * @param radius Intersection radius.
- * @return `true` if the 2D distance exceeds the radius, `false` otherwise.
- */
-bool Math_Distance2dCheck(const VECTOR3* from, const VECTOR3* to, q19_12 radius);
-
-/** Responsible for loading NPCs on the map. */
-void Game_NpcRoomInitSpawn(bool cond);
-
-/** @brief Main NPC update function. Runs through each NPC and calls `g_MapOverlayHeader.charaUpdateFuncs_194` for them. */
-void Game_NpcUpdate(void);
 
 void SysState_Gameplay_Update(void);
 

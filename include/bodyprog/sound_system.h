@@ -10,9 +10,9 @@
  * This code specifically handle file streaming and some general
  * sound game effects.
  *
- * @note Name recognition.
+ * @note Name deobfuscation.
  * `Tokimeki Memorial ~Forever With You~` and `Konami International Rally Championship` symbols
- * indicate that what are named `commands` in the decomp are actually named as `tasks`. TM
+ * indicate that what are named `commands` in the decomp are actually `tasks`. TM
  * suggests that at some point, they were called `events`.
  */
 

@@ -2172,13 +2172,13 @@ void MapEvent_ScrewdriverTake(void) // 0x800DFA80
 
 void func_800DFAAC(void) // 0x800DFAAC
 {
-    g_Screen_BackgroundImgGamma = 104;
+    g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
     MapMsg_DisplayWithTexture(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 101);
 }
 
 void func_800DFAE4(void) // 0x800DFAE4
 {
-    g_Screen_BackgroundImgGamma = 104;
+    g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
     MapMsg_DisplayWithTexture(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 102);
 }
 
@@ -2189,7 +2189,7 @@ void MapEvent_AmuletOfSolomonTake(void) // 0x800DFB1C
 
 void func_800DFB48(void) // 0x800DFB48
 {
-    g_Screen_BackgroundImgGamma = 0x48;
+    g_Screen_BackgroundImgGamma = Q8(9.0f / 32.0f);
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -2737,7 +2737,7 @@ void func_800E0FF0(void) // 0x800E0FF0
 {
     if (Savegame_EventFlagGet(EventFlag_486) && Savegame_EventFlagGet(EventFlag_549))
     {
-        g_Screen_BackgroundImgGamma = 120;
+        g_Screen_BackgroundImgGamma = Q8(15.0f / 32.0f);
 
         switch (g_SysWork.sysStateStep_C[0])
         {
@@ -2806,7 +2806,7 @@ void func_800E0FF0(void) // 0x800E0FF0
         }
         else
         {
-            g_Screen_BackgroundImgGamma = 112;
+            g_Screen_BackgroundImgGamma = Q8(7.0f / 16.0f);
             MapMsg_DisplayWithTexture(FILE_TIM_ELCWIRE0_TIM, 0, 0, 110);
         }
     }
@@ -2947,7 +2947,7 @@ void func_800E1DAC(void) // 0x800E1DAC
             break;
 
         case 5:
-            g_Screen_BackgroundImgGamma = 48;
+            g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 16, 0, 0, 0, false);
@@ -2958,21 +2958,21 @@ void func_800E1DAC(void) // 0x800E1DAC
             SysWork_StateStepIncrement(0);
 
         case 7:
-            g_Screen_BackgroundImgGamma = 48;
+            g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 17, 0, 0, 0, false);
             break;
 
         case 8:
-            g_Screen_BackgroundImgGamma = 48;
+            g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false);
             break;
 
         case 9:
-            g_Screen_BackgroundImgGamma = 48;
+            g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
             func_800862F8(2, 0, false);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
@@ -3012,7 +3012,7 @@ void func_800E2DEC(void) // 0x800E2DEC
     VECTOR3 playerPosBackup;
     s32     i;
 
-    g_Screen_BackgroundImgGamma = 104;
+    g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
 
     switch (g_SysWork.sysStateStep_C[0])
     {
