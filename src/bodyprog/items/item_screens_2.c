@@ -74,7 +74,7 @@ void Game_TimerUpdate(void) // 0x8004C8DC
         if (g_SavegamePtr->add290Hours_25C_1 < TIME_290_OVERFLOW_MAX)
         {
             g_SavegamePtr->add290Hours_25C_1++;
-            g_SavegamePtr->gameplayTimer_250 += (UINT_MAX - TIME_290_HOURS + 1); // Wrap timer to 0 using unsigned overflow.
+            g_SavegamePtr->gameplayTimer_250 += (UINT_MAX - TIME_290_HOURS) + 1; // Wrap timer to 0 using unsigned overflow.
         }
         else
         {
@@ -1242,12 +1242,12 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
 
 void Gfx_Inventory_CmdOptionsDraw(void) // 0x8004E864
 {
-    GsOT*    ot;
     s32      i;
     s32      idx;
-    POLY_G4* poly;
     s32      x0;
     s32      y0;
+    GsOT*    ot;
+    POLY_G4* poly;
 
     const char* STRS[] = {
         "Use",

@@ -3369,7 +3369,7 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
         var_s1 = Q12(1.0f) - Q8_TO_Q12(MIN(func_80055A50(Q8_TO_Q12(matrix_sp18[0].t[2])), Q12(1.0f)));
     }
 
-    // @hack Make sure compiler doesn't optimize out new_var pointer.
+    // @hack Make sure compiler doesn't optimize out `new_var` pointer.
     if (new_var)
     {
         u8 x = -x;
@@ -3474,7 +3474,7 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
         NormalColor(&D_800AE500[3], &sp58[3]);
     }
 
-    // @hack Needed to get right reg order for `poly_gt4`
+    // @hack Needed to get right reg order for `poly_gt4`.
     new_var2 = &g_WorldEnvWork;
 
     SetRotMatrix(&matrix_sp18[0]);
@@ -3523,7 +3523,7 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
             {
                 packet = poly_gt4 + 1;
                 SetPriority(packet, 0, 0);
-                packet2 = packet + 0xC; // TODO: sizeof()?
+                packet2 = packet + 0xC; // TODO: `sizeof`?
                 SetPriority(packet2, 1, 1);
 
                 poly_g4 = packet2 + 0xC;
@@ -3566,7 +3566,7 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
 // ========================================
 // UNUSED
 // ========================================
-// Split from something related to debug feature that got cut?
+// Split from something related to a cut debug feature?
 
 void Gfx_DebugStringPositionSet(s16 unused, s16 posX, s16 posY) // 0x8005BF0C
 {
