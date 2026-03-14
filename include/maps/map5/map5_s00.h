@@ -12,6 +12,11 @@
 #define KEYFRAME_PlayerState_Unk87 857
 #define KEYFRAME_PlayerState_Unk88 894
 
+#define MAP_ROOM_MIN_X Q12(-120.0f)
+#define MAP_ROOM_MAX_X Q12(80.0f)
+#define MAP_ROOM_MIN_Z Q12(-120.0f)
+#define MAP_ROOM_MAX_Z Q12(80.0f)
+
 #define MAP_FIELD_4C_COUNT 200
 #define MAP_BLOOD_SPLAT_COUNT_MAX 150
 
@@ -94,6 +99,8 @@ s32 func_800D63DC(s32* screenXy);
 void func_800D6414(void);
 
 void func_800D6490(VECTOR3* arg0);
+
+u8 Map_RoomIdxGet(s32 x, s32 z);
 
 void func_800D6790(void);
 
