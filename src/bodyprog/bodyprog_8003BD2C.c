@@ -28,7 +28,7 @@ void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
 {
     u16 var_s0;
 
-    D_800BCE14 = func_80069810();
+    D_800BCE14 = Collision_FlagsGet();
     var_s0     = D_800BCE14;
 
     switch (Map_TypeGet())
@@ -50,10 +50,10 @@ void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
             }
     }
 
-    func_80069820(var_s0);
+    Collision_FlagsSet(var_s0);
 }
 
 void func_8003BE28(void) // 0x8003BE28
 {
-    func_80069820(D_800BCE14);
+    Collision_FlagsSet(D_800BCE14);
 }

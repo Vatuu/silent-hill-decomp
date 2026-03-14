@@ -1580,7 +1580,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
 
     if (flags != 0)
     {
-        func_8006982C(flags);
+        Collision_FlagBitsSet(flags);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))

@@ -98,14 +98,14 @@ void Map_WorldObjectsUpdate(void) // 0x800EA3F0
         (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3)))
     {
         WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object_0, &g_WorldObject_Kidn04.position_1C, &(SVECTOR3){ 0, 0, 0 });
-        func_8006982C(2);
+        Collision_FlagBitsSet(2);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
     {
         if (Savegame_EventFlagGet(EventFlag_346))
         {
-            func_8006982C(4);
+            Collision_FlagBitsSet(4);
 
             if (g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-68.0f))
             {
@@ -114,7 +114,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA3F0
         }
         else
         {
-            func_8006982C(2);
+            Collision_FlagBitsSet(2);
         }
     }
 

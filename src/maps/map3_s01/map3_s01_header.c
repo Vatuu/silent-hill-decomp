@@ -151,7 +151,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .roadDataList_3CC = {
 #include "vc_road_data.h"
     },
-    .field_D2C = {
+    .triggerZones_D2C = {
 #include "header_field_D2C.h"
     },
 };

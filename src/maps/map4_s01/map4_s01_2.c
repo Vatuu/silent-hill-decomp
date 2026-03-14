@@ -1251,7 +1251,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
         }
         else
         {
-            func_8006982C(2);
+            Collision_FlagBitsSet(2);
         }
 
         WorldGfx_ObjectAdd(&WorldObject_D_800D7FF0.object_0, &WorldObject_D_800D7FF0.position_1C, &(SVECTOR3){ 0, 0, 0 });

@@ -1162,12 +1162,12 @@ func_800692A4                                = 0x8006ACF8; // type:func
 //--------------------------------------------------------------------
 //--- PA: 0x0466E0   VA: 0x8006B240   subsegment: c, bodyprog_800697EC
 //--------------------------------------------------------------------
-func_800697EC                                = 0x8006B240; // type:func
-func_80069810                                = 0x8006B264; // type:func
-func_80069820                                = 0x8006B274; // type:func
-func_8006982C                                = 0x8006B280; // type:func
+Collision_Init                               = 0x8006B240; // type:func
+Collision_FlagsGet                           = 0x8006B264; // type:func
+Collision_FlagsSet                           = 0x8006B274; // type:func
+Collision_FlagBitsSet                        = 0x8006B280; // type:func
 func_80069844                                = 0x8006B298; // type:func
-func_80069860                                = 0x8006B2B4; // type:func
+Collision_TriggerZonesUpdate                 = 0x8006B2B4; // type:func
 IpdCollData_FixOffsets                       = 0x8006B390; // type:func
 func_80069994                                = 0x8006B3E8; // type:func
 func_800699E4                                = 0x8006B438; // type:func

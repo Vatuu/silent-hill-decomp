@@ -911,7 +911,7 @@ typedef struct
     s8                 field_0_9  : 1;
     s8                 field_0_10 : 1;
     s8                 field_0_11 : 5;
-    u16                field_2    : 16;
+    u16                field_2    : 16; // Collision flags.
     s_func_8006ABC0    field_4;
     s32                field_34;
     s16                field_38;
@@ -1148,16 +1148,17 @@ typedef struct _WorldObject
 } s_WorldObject;
 STATIC_ASSERT_SIZEOF(s_WorldObject, 16);
 
-typedef struct
+/** @brief World space trigger zone. */
+typedef struct _TriggerZone
 {
-    u8  endOfArray_0_0 : 1;  // End of array marker.
-    s32 positionX_0_1  : 10; // X
-    s32 positionZ_0_11 : 10; // Z
-    u32 sizeX_0_21     : 4;  // X size
-    u32 sizeZ_0_25     : 4;  // Z size
-    u32 field_0_29     : 3;  // Related to ground height? Used to set `s_func_8006F338::field_2C` which then gets copied by `func_8006F250`, that func has only been seen called by AirScreamer?
-} s_func_8006F8FC;
-STATIC_ASSERT_SIZEOF(s_func_8006F8FC, 4);
+    u8  endOfArray_0_0 : 1; // End of array marker.
+    s32 positionX_0_1  : 10;
+    s32 positionZ_0_11 : 10;
+    u32 sizeX_0_21     : 4;
+    u32 sizeZ_0_25     : 4;
+    u32 field_0_29     : 3; // Related to ground height? Used to set `s_func_8006F338::field_2C` which then gets copied by `func_8006F250`, that func has only been seen called by AirScreamer?
+} s_TriggerZone;
+STATIC_ASSERT_SIZEOF(s_TriggerZone, 4);
 
 typedef struct _HeldItem
 {
@@ -1186,7 +1187,7 @@ typedef struct _WorldGfxWork
     s_CharaModel      charaModels_CC[GROUP_CHARA_COUNT];
     s_CharaModel      harryModel_164C;
     s_HeldItem        heldItem_1BAC;             /** The item held by the player. */
-    s_func_8006F8FC*  field_1BD8;
+    s_TriggerZone*  triggerZone_1BD8;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; /** Debug camera info. */
     s_LmHeader        itemLmHdr_1BE4;
     u8                itemLmData_1BF4[4096 - sizeof(s_LmHeader)]; // Retail game uses 2.75kb file, but they allocate 4kb for it.
@@ -1301,10 +1302,10 @@ typedef struct _WorldEnvWork
 
 typedef struct
 {
-    u16              field_0; // Flags.
-    u8               field_2; // Size of `field_4`.
-    u8               unk_3;
-    s_func_8006F8FC* field_4[20]; // Guessed size.
+    u16            flags_0;
+    u8             triggerZoneCount_2;
+    u8             unk_3;
+    s_TriggerZone* triggerZones_4[20]; // Guessed size.
 } s_800C4478;
 
 typedef struct
@@ -1662,10 +1663,10 @@ typedef struct _MapOverlayHeader
     s32*                   data_18C;
     s32*                   data_190;
     void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `Game_NpcUpdate`. */
-    s8                     charaGroupIds_248[GROUP_CHARA_COUNT];                              /** `e_CharacterId` values where if `s_SpawnInfo::charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
-    s_SpawnInfo            charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
+    s8                     charaGroupIds_248[GROUP_CHARA_COUNT]; /** `e_CharacterId` values where if `s_SpawnInfo::charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
+    s_SpawnInfo            charaSpawns_24C[2][16];               /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
     VC_ROAD_DATA           roadDataList_3CC[100];
-    s_func_8006F8FC        field_D2C[200];
+    s_TriggerZone          triggerZones_D2C[200];
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 0x104C);
 
@@ -3670,20 +3671,36 @@ bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u
 
 void func_800692A4(u16 arg0, u16 arg1, u16 arg2);
 
-void func_800697EC(void);
+// ============= `bodyprog/collision.c` ===============
 
-/** Flags getter. */
-u16 func_80069810(void);
+/** @brief Initializes the collision subsystem, resetting flags and clearing the trigger zone count. */
+void Collision_Init(void);
 
-/** Flags sette. */
-void func_80069820(u16 flags);
+/** @brief Gets the active collision flags. */
+u16 Collision_FlagsGet(void);
 
-/** Flags setter. */
-void func_8006982C(u16 flags);
+/** @brief Sets the active collision flags.
+ *
+ * @param collFlags New collision flags.
+ */
+void Collision_FlagsSet(u16 collFlags);
 
-void func_80069844(s32 arg0);
+//Collision_FlagBitsSet
+/** @brief Sets additional active collision flags using OR.
+ *
+ * @param collFlags Collision flag bits to set.
+ */
+void Collision_FlagBitsSet(u16 collFlags);
 
-void func_80069860(s32 arg0, s32 arg1, s_func_8006F8FC* arg2);
+void func_80069844(s32 collFlags);
+
+/** @brief Scans trigger zones and collects those containing the given XZ position.
+ *
+ * @param posX Query X position.
+ * @param posZ Query Z position.
+ * @param zones Array of trigger zone definitions.
+ */
+void Collision_TriggerZonesUpdate(q19_12 posX, q19_12 posZ, s_TriggerZone* zones);
 
 void IpdCollData_FixOffsets(s_IpdCollisionData* collData);
 
@@ -3827,12 +3844,12 @@ void func_8006F250(s32* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12
 
 void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ);
 
-bool func_8006F3C4(s_func_8006F338* arg0, s_func_8006F8FC* arg1);
+bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone);
 
 /** Translates something. */
 s32 func_8006F620(VECTOR3* pos, s_func_8006AB50* arg1, s32 arg2, s32 arg3);
 
-void func_8006F8FC(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s_func_8006F8FC* arg4);
+void func_8006F8FC(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s_TriggerZone* zone);
 
 q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle);
 

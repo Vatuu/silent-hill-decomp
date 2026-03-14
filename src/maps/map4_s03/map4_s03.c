@@ -4986,7 +4986,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
         }
         else
         {
-            func_8006982C(2);
+            Collision_FlagBitsSet(2);
         }
 
         WorldGfx_ObjectAdd(&g_WorldObject_Fence.object_0, &g_WorldObject_Fence.position_1C, &g_WorldObject_Fence.rotation_28);
@@ -5001,7 +5001,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
 
         if (!Savegame_EventFlagGet(EventFlag_327))
         {
-            func_8006982C(2);
+            Collision_FlagBitsSet(2);
             WorldGfx_ObjectAdd(&g_WorldObject_Mal6[0], &g_WorldObject_UnkPos, &g_WorldObject_UnkRot);
         }
         else

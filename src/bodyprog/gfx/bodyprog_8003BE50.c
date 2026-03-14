@@ -109,7 +109,7 @@ void WorldGfx_MapInit(void) // 0x8003C048
     g_WorldGfxWork.useStoredPoint_4 = false;
 
     Map_Init(GLOBAL_LM_BUFFER, IPD_BUFFER, 0x2C000);
-    func_800697EC();
+    Collision_Init();
 
     g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
 

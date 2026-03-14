@@ -1117,7 +1117,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
         D_800DD528 = 0;
     }
 
-    func_8006982C(flags);
+    Collision_FlagBitsSet(flags);
 
     if (projCellX == 4 && projCellZ == -2)
     {

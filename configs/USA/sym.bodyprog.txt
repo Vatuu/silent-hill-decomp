@@ -946,6 +946,11 @@ GameState_MapScreen_Update                   = 0x80066EB0; // type:func
 //--------------------------------------------------------------------
 //--- PA: 0x044C8C   VA: 0x800697EC   subsegment: c, bodyprog_800697EC
 //--------------------------------------------------------------------
+Collision_Init                               = 0x800697EC; // type:func
+Collision_FlagsGet                           = 0x80069810; // type:func
+Collision_FlagsSet                           = 0x80069820; // type:func
+Collision_FlagBitsSet                        = 0x8006982C; // type:func
+Collision_TriggerZonesUpdate                 = 0x80069860; // type:func
 IpdCollData_FixOffsets                       = 0x8006993C; // type:func
 Collision_Get                                = 0x800699F8; // type:func
 Ray_LineCheck                                = 0x8006D90C; // type:func

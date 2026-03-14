@@ -199,7 +199,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
     {
         if (Savegame_EventFlagGet(EventFlag_346))
         {
-            func_8006982C(4);
+            Collision_FlagBitsSet(4);
             func_80069844(2);
 
             if (g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-68.0f))
@@ -210,7 +210,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
         else
         {
             func_80069844(4);
-            func_8006982C(2);
+            Collision_FlagBitsSet(2);
         }
     }
 

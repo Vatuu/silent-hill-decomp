@@ -1159,7 +1159,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D1718
     }
 
     func_80069844(0xFFFF);
-    func_8006982C(flags);
+    Collision_FlagBitsSet(flags);
 }
 
 void func_800D1AE4(void) // 0x800D1AE4

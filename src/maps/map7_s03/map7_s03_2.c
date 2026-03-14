@@ -10255,12 +10255,12 @@ void func_800E98EC(void) // 0x800E98EC
 
     if (D_800F4818)
     {
-        func_8006982C(2);
+        Collision_FlagBitsSet(2);
     }
 
     if (D_800F4819)
     {
-        func_8006982C(4);
+        Collision_FlagBitsSet(4);
     }
 }
 
