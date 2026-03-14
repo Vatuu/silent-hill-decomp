@@ -36,7 +36,7 @@ u16        g_Player_IsTurningLeft;
 u16        g_Player_IsTurningRight;
 u8         D_800C4588;
 s8         pad_bss_800C4589[7];
-s_800C4590 D_800C4590;
+s_CollisionResult D_800C4590;
 u16        g_Player_IsSteppingLeftHold;
 u16        g_Player_IsSteppingRightHold;
 VECTOR3    D_800C45B0;
@@ -6610,7 +6610,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
         sp30.vz = offset.vz;
     }
 
-    func_80069B24(&D_800C4590, &offset, chara);
+    Collision_WallDetect(&D_800C4590, &offset, chara);
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S05)
     {

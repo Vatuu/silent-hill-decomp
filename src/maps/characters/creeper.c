@@ -683,7 +683,7 @@ void Ai_Creeper_Control_5(s_SubCharacter* creeper)
 
 void sharedFunc_800D983C_1_s02(s_SubCharacter* creeper)
 {
-    s_800C4590 unused;
+    s_CollisionResult unused;
 
     creeper->fallSpeed_34 += g_GravitySpeed >> 2;
 

@@ -782,6 +782,7 @@ typedef struct _IpdCollisionData
     u8                     unk_31[3];
     u8                     field_34[256];
 } s_IpdCollisionData;
+STATIC_ASSERT_SIZEOF(s_IpdCollisionData, 308);
 
 typedef struct _IpdModelBuffer_C
 {
@@ -1039,7 +1040,7 @@ STATIC_ASSERT_SIZEOF(s_CharaAnimDataInfo, 24);
 typedef struct
 {
     q4_12 field_0;
-    s16   field_2;
+    q3_12 field_2;
     u16   field_4;  // Related to damage. Multiplier?
     s8    field_6;  // Accessed by `func_8008BF84` as `u16`
     s8    unk_7;
@@ -1047,7 +1048,7 @@ typedef struct
     u8    field_9;  /** `e_CharacterId` */
     u8    field_A;  // Accessed by `func_8008BF84` as `u16`
     u8    field_B;
-    u16   field_C;
+    q4_12 field_C;
     u8    field_E;  // Keyframe index offset?
     u8    field_F;  // Keyframe index offset?
     u8    field_10; // State.
@@ -1704,7 +1705,7 @@ typedef struct
     s8      field_14;  // Count of something? 12 is significant.
     s8      unk_15[3]; // Probably padding.
     s32     field_18;
-} s_800C4590;
+} s_CollisionResult;
 
 typedef struct
 {
@@ -3191,7 +3192,7 @@ s32 Chara_NpcIdxGet(s_SubCharacter* chara);
 
 void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara);
 
-s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1);
+s32 func_8005C944(s_SubCharacter* chara, s_CollisionResult* collResult);
 
 s32 func_8005D86C(s32 arg0);
 
@@ -3641,7 +3642,7 @@ bool func_80064334(POLY_FT4** poly, s32 idx);
 /** Displays gun shooting effects. */
 void func_8006342C(s32 weaponAttack, q3_12 angle0, s16 angle1, GsCOORDINATE2* coord);
 
-s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, q3_12 offsetX, q3_12 offsetZ);
+s32 func_8005CB20(s_SubCharacter* chara, s_CollisionResult* collResult, q3_12 offsetX, q3_12 offsetZ);
 
 /** Computes something for a targeted NPC. */
 bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR3* unkOffset, u32 npcIdx, q19_12 angleConstraint);
@@ -3722,23 +3723,52 @@ void func_800699E4(s_IpdCollisionData* collData);
  */
 void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ);
 
-s32 func_80069B24(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara);
+/** @brief Detects a wall collision using the scratchpad for performance.
+ *
+ * @param result Output collision result.
+ * @param offset Movement offset.
+ * @param chara Character to check.
+ * @return Wall response code.
+ */
+s32 Collision_WallDetect(s_CollisionResult* collResult, VECTOR3* offset, s_SubCharacter* chara);
 
-s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 arg4);
+/** @brief Handles a wall collision response by sampling the ground at 9 points around a character.
+ *
+ * @param result Output collision result.
+ * @param offset Movement offset.
+ * @param chara Character to check.
+ * @param response Initial collision pass response.
+ * @return Wall response code.
+ */
+s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset, s_SubCharacter* chara, s32 response);
 
-void func_80069DF0(s_800C4590* arg0, const VECTOR3* pos, s32 arg2, s32 arg3);
+void func_80069DF0(s_CollisionResult* collResult, const VECTOR3* pos, s32 arg2, s32 arg3);
 
-s32 func_80069FFC(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara);
+/** @brief Applies collision detection for a character's movement offset.
+ *
+ * @param result Output collision result.
+ * @param offset Movement offset to test.
+ * @param chara Character performing movement.
+ * @return Collision result response.
+ */
+s32 Collision_OffsetApply(s_CollisionResult* collResult, VECTOR3* offset, s_SubCharacter* chara);
 
-void func_8006A178(s_800C4590* arg0, q19_12 posX, q19_12 posY, q19_12 posZ, q19_12 heightY);
+void func_8006A178(s_CollisionResult* collResult, q19_12 posX, q19_12 posY, q19_12 posZ, q19_12 heightY);
 
-s_SubCharacter** func_8006A1A4(s32* charaCount, s_SubCharacter* chara, bool arg2);
+/** @brief Gets an array of active characters for collision testing.
+ *
+ * @param charaCount Output number of characters found.
+ * @param excludeChara Character to exclude (typically the one being tested).
+ * @param includePlayer Filter out the player.
+ * @return Active characters.
+ */
+s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubCharacter* excludeChara, bool includePlayer);
 
 s32 func_8006A3B4(s32 arg0, VECTOR* offset, s_func_8006AB50* arg2);
 
 s32 func_8006A42C(s32 arg0, VECTOR3* offset, s_func_8006AB50* arg2);
 
-s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* offset, s_func_8006AB50* arg2, s32 arg3,
+s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_func_8006AB50* arg2, s32 arg3,
                   s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** charas, s32 charaCount);
 
 void func_8006A940(VECTOR3* offset, s_func_8006AB50* arg1, s_SubCharacter** charas, s32 charaCount);

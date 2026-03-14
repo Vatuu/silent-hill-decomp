@@ -166,7 +166,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 #else
     #define UnkStruct D_800C4590
 #endif
-        func_80069B24(&UnkStruct, &offset, chara);
+        Collision_WallDetect(&UnkStruct, &offset, chara);
         chara->position_18.vx += UnkStruct.offset_0.vx;
         chara->position_18.vy += UnkStruct.offset_0.vy;
         chara->position_18.vz += UnkStruct.offset_0.vz;
@@ -1011,7 +1011,7 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
     vec.vz = D_800C4610.vz - g_SysWork.playerWork_4C.player_0.position_18.vz;
     vec.vy = Q12_MULT_PRECISE(g_SysWork.playerWork_4C.player_0.fallSpeed_34, g_DeltaTime);
 
-    func_80069B24(&D_800C4590, &vec, &g_SysWork.playerWork_4C.player_0);
+    Collision_WallDetect(&D_800C4590, &vec, &g_SysWork.playerWork_4C.player_0);
 
     D_800C4610.vx = g_SysWork.playerWork_4C.player_0.position_18.vx + D_800C4590.offset_0.vx;
     D_800C4610.vz = g_SysWork.playerWork_4C.player_0.position_18.vz + D_800C4590.offset_0.vz;

@@ -741,7 +741,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
 void sharedFunc_800D140C_1_s00(s_SubCharacter* larvalStalker, GsCOORDINATE2* coords)
 {
-    s_800C4590 sp18;
+    s_CollisionResult sp18;
 
     larvalStalker->fallSpeed_34 += g_GravitySpeed >> 1;
 

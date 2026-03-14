@@ -1147,7 +1147,7 @@ void Ai_Romper_Control_11(s_SubCharacter* romper)
 
 void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
 {
-    s_800C4590 sp10;
+    s_CollisionResult sp10;
     VECTOR3    pos; // Q19.12
     s16        temp_s4;
     s32        temp_s0;
@@ -1183,7 +1183,7 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
         pos.vx += romperProps.offsetX_F8;
         pos.vz += romperProps.offsetZ_FA;
 
-        func_80069B24(&sp10, &pos, romper);
+        Collision_WallDetect(&sp10, &pos, romper);
 
         romper->position_18.vx += sp10.offset_0.vx;
         romper->position_18.vz += sp10.offset_0.vz;

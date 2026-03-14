@@ -10442,7 +10442,7 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
     sharedData_800F21FC_2_s00.vz = Q12_MULT_PRECISE(g_DeltaTime, playerOffsetZ);
 
     if (g_DeltaTime != Q12(0.0f) &&
-        func_80069B24(&sharedData_800E2350_0_s01, &sharedData_800F21FC_2_s00, &g_SysWork.playerWork_4C.player_0))
+        Collision_WallDetect(&sharedData_800E2350_0_s01, &sharedData_800F21FC_2_s00, &g_SysWork.playerWork_4C.player_0))
     {
         playerOffsetX = sharedData_800E2350_0_s01.offset_0.vx;
         playerOffsetZ = sharedData_800E2350_0_s01.offset_0.vz;
@@ -11961,7 +11961,7 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
 
     airScreamer->field_D4.radius_0 = 0;
 
-    func_80069B24(&sharedData_800E2350_0_s01, &sharedData_800DE1D0_0_s01, airScreamer);
+    Collision_WallDetect(&sharedData_800E2350_0_s01, &sharedData_800DE1D0_0_s01, airScreamer);
 
     sharedFunc_800D8244_0_s01(airScreamer);
 
@@ -12568,13 +12568,13 @@ void sharedFunc_800D72E8_0_s01(s_SubCharacter* airScreamer, q19_12 angle0, q19_1
     sharedFunc_800D72E8_0_s01_subfunc(angle1 - airScreamer->rotation_24.vz, 4);
 }
 
-s32 sharedFunc_800D7440_0_s01(s_800C4590* arg0, VECTOR* offset, s_SubCharacter* airScreamer)
+s32 sharedFunc_800D7440_0_s01(s_CollisionResult* arg0, VECTOR* offset, s_SubCharacter* airScreamer)
 {
     q19_12      groundHeight;
     q19_12      posY;
     s32         result;
     s32         cond;
-    s_800C4590* localArg0C;
+    s_CollisionResult* localArg0C;
 
     localArg0C = arg0;
 
@@ -12582,7 +12582,7 @@ s32 sharedFunc_800D7440_0_s01(s_800C4590* arg0, VECTOR* offset, s_SubCharacter* 
     sharedFunc_800D8714_0_s01(airScreamer, airScreamer->moveSpeed_38, airScreamer->headingAngle_3C);
     sharedFunc_800D87FC_0_s01(airScreamer);
 
-    result = func_80069B24(localArg0C, offset, airScreamer);
+    result = Collision_WallDetect(localArg0C, offset, airScreamer);
 
     posY         = airScreamer->position_18.vy;
     groundHeight = Collision_GroundHeightGet(airScreamer->position_18.vx + localArg0C->offset_0.vx, airScreamer->position_18.vz + localArg0C->offset_0.vz);

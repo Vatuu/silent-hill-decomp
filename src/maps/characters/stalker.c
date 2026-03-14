@@ -2012,7 +2012,7 @@ void Ai_Stalker_Control_13(s_SubCharacter* stalker)
 
 void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker)
 {
-    s_800C4590* sp10[7];
+    s_CollisionResult* sp10[7];
     q3_12       newHeadingAngle;
     q19_12      prevMoveSpeed;
     u16         newFlags;

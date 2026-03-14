@@ -1102,7 +1102,7 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
 
 void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
 {
-    s_800C4590  sp10;
+    s_CollisionResult  sp10;
     s_Collision coll;
     u8          flag1Val;
 

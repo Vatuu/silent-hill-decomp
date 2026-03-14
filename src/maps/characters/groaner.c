@@ -1041,7 +1041,7 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner)
 
 void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
 {
-    s_800C4590 sp10;
+    s_CollisionResult sp10;
     q3_12      angleDeltaToHeading;
 
     if (groaner->model_0.anim_4.status_0 != ANIM_STATUS(GroanerAnim_10, true))

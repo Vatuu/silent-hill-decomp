@@ -5271,7 +5271,7 @@ void func_800DED68(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DED68
 
 void func_800DEE44(s_SubCharacter* incubus) // 0x800DEE44
 {
-    s_800C4590 sp10;
+    s_CollisionResult sp10;
 
     incubus->fallSpeed_34 += g_GravitySpeed;
 
@@ -6280,7 +6280,7 @@ void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E0670
 
 void func_800E0728(s_SubCharacter* chara) // 0x800E0728
 {
-    s_800C4590 sp10;
+    s_CollisionResult sp10;
 
     chara->fallSpeed_34 += g_GravitySpeed;
     func_8005C944(chara, &sp10);

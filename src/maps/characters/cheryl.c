@@ -81,7 +81,7 @@ void Ai_Cheryl_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x
     offset.vz = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime);
 
-    func_80069B24(&sharedData_800E39BC_0_s00, &offset, chara);
+    Collision_WallDetect(&sharedData_800E39BC_0_s00, &offset, chara);
 
     chara->position_18.vx += offset.vx;
     chara->position_18.vy += sharedData_800E39BC_0_s00.offset_0.vy;

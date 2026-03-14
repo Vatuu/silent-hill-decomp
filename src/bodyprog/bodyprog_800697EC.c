@@ -162,18 +162,18 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
     coll->field_6 = sp38.field_8C;
 }
 
-s32 func_80069B24(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara) // 0x80069B24
+s32 Collision_WallDetect(s_CollisionResult* collResult, VECTOR3* offset, s_SubCharacter* chara) // 0x80069B24
 {
-    s32 var0;
-    s32 var1;
+    s32 stackPtr;
+    s32 response;
 
-    var0 = SetSp(0x1F8003D8);
-    var1 = func_80069BA8(arg0, offset, chara, func_80069FFC(arg0, offset, chara));
-    SetSp(var0);
-    return var1;
+    stackPtr = SetSp(0x1F8003D8);
+    response = Collision_WallResponse(collResult, offset, chara, Collision_OffsetApply(collResult, offset, chara));
+    SetSp(stackPtr);
+    return response;
 }
 
-s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 arg4) // 0x80069BA8
+s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset, s_SubCharacter* chara, s32 response) // 0x80069BA8
 {
     #define POINT_COUNT          9
     #define ANGLE_STEP           Q12_ANGLE(370.0f / POINT_COUNT) // @bug? Maybe `360.0f` was intended.
@@ -188,12 +188,12 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 
     s32             wallCount;
     s32             var_s6;
 
-    if (arg4 == NO_VALUE)
+    if (response == NO_VALUE)
     {
-        arg4 = 1;
+        response = 1;
         if (chara == &g_SysWork.playerWork_4C && chara->health_B0 > Q12(0.0f))
         {
-            func_80069DF0(arg0, &chara->position_18, chara->position_18.vy, chara->rotation_24.vy);
+            func_80069DF0(collResult, &chara->position_18, chara->position_18.vy, chara->rotation_24.vy);
         }
     }
 
@@ -212,14 +212,14 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 
         case Chara_PuppetDoctor:
             wallHeightBound = chara->position_18.vy - WALL_HEIGHT;
 
-            switch (arg0->field_14)
+            switch (collResult->field_14)
             {
                 case 12:
                     collType = CollisionType_Unk2;
                     break;
 
                 default:
-                    collType = (arg0->field_C < wallHeightBound) ? CollisionType_Wall : CollisionType_None;
+                    collType = (collResult->field_C < wallHeightBound) ? CollisionType_Wall : CollisionType_None;
                     break;
             }
 
@@ -259,22 +259,22 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 
                 case 1:
                     if (wallCount < WALL_COUNT_THRESHOLD)
                     {
-                        arg0->field_C = chara->position_18.vy;
+                        collResult->field_C = chara->position_18.vy;
                     }
                     break;
 
                 case 2:
                     if (var_s6 != 12)
                     {
-                        arg0->field_C  = groundHeight;
-                        arg0->field_14 = 12;
+                        collResult->field_C  = groundHeight;
+                        collResult->field_14 = 12;
                     }
                     break;
             }
             break;
     }
 
-    return arg4;
+    return response;
 
     #undef POINT_COUNT
     #undef ANGLE_STEP
@@ -293,7 +293,7 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 
     static const u8 unk_rdata[] = { 0x00, 0x00, 0x42, 0x24, 0x00, 0x00, 0x00, 0x00 };
 #endif
 
-void func_80069DF0(s_800C4590* arg0, const VECTOR3* pos, s32 arg2, s32 arg3) // 0x80069DF0
+void func_80069DF0(s_CollisionResult* collResult, const VECTOR3* pos, s32 arg2, s32 arg3) // 0x80069DF0
 {
     #define POINT_COUNT 16
     #define ANGLE_STEP  Q12_ANGLE(360.0f / POINT_COUNT)
@@ -354,17 +354,17 @@ void func_80069DF0(s_800C4590* arg0, const VECTOR3* pos, s32 arg2, s32 arg3) // 
     }
 
     angle = ((var_s0 + var_a0) << 8) >> 1;
-    arg0->offset_0.vx = Q12_MULT_PRECISE(Math_Sin(angle), Q12(1.0f / 16.0f));
-    arg0->offset_0.vz = Q12_MULT_PRECISE(Math_Cos(angle), Q12(1.0f / 16.0f));
+    collResult->offset_0.vx = Q12_MULT_PRECISE(Math_Sin(angle), Q12(1.0f / 16.0f));
+    collResult->offset_0.vz = Q12_MULT_PRECISE(Math_Cos(angle), Q12(1.0f / 16.0f));
 
     #undef POINT_COUNT
     #undef ANGLE_STEP
 }
 
-s32 func_80069FFC(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara) // 0x80069FFC
+s32 Collision_OffsetApply(s_CollisionResult* collResult, VECTOR3* offset, s_SubCharacter* chara) // 0x80069FFC
 {
     s_func_8006AB50 sp28;
-    VECTOR3         offsetSpy;
+    VECTOR3         offsetCpy;
     s32             collDataIdx;
     s32             charaCount;
     s32             var_s1; // TODO: Maybe `bool`?
@@ -375,17 +375,16 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara) // 0
 
     if (func_800426E4(chara->position_18.vx, chara->position_18.vz) == NULL)
     {
-        func_8006A178(arg0, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(8.0f));
+        func_8006A178(collResult, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(8.0f));
         return 1;
     }
 
     sp28.rotation_C.vy = chara->field_C8.field_0;
     sp28.rotation_C.vx = chara->field_C8.field_2;
     sp28.rotation_C.vz = chara->field_D4.radius_0;
-
     sp28.field_12 = chara->field_E1_0;
 
-    offsetSpy = *offset;
+    offsetCpy = *offset;
 
     switch (chara->model_0.charaId_0)
     {
@@ -401,50 +400,52 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara) // 0
             break;
     }
 
-    return func_8006A4A8(arg0, &offsetSpy, &sp28, var_s1, func_800425D8(&collDataIdx), collDataIdx, NULL, 0, func_8006A1A4(&charaCount, chara, true), charaCount);
+    return func_8006A4A8(collResult, &offsetCpy, &sp28, var_s1,
+                         func_800425D8(&collDataIdx), collDataIdx, NULL, 0,
+                         Collision_ActiveCharactersGet(&charaCount, chara, true), charaCount);
 }
 
-void func_8006A178(s_800C4590* arg0, q19_12 posX, q19_12 posY, q19_12 posZ, q19_12 heightY) // 0x8006A178
+void func_8006A178(s_CollisionResult* collResult, q19_12 posX, q19_12 posY, q19_12 posZ, q19_12 heightY) // 0x8006A178
 {
-    arg0->offset_0.vx = posX;
-    arg0->offset_0.vy = posY;
-    arg0->offset_0.vz = posZ;
-    arg0->field_12    = 0;
-    arg0->field_10    = 0;
-    arg0->field_14    = 0;
-    arg0->field_18    = 0xFFFF0000;
-    arg0->field_C     = heightY;
+    collResult->offset_0.vx = posX;
+    collResult->offset_0.vy = posY;
+    collResult->offset_0.vz = posZ;
+    collResult->field_12    = 0;
+    collResult->field_10    = 0;
+    collResult->field_14    = 0;
+    collResult->field_18    = 0xFFFF0000;
+    collResult->field_C     = heightY;
 }
 
-s_SubCharacter** func_8006A1A4(s32* charaCount, s_SubCharacter* chara, bool arg2) // 0x8006A1A4
+s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubCharacter* excludeChara, bool includePlayer) // 0x8006A1A4
 {
-    s_SubCharacter* curChara;
-    static s_SubCharacter* D_800C4458[7];
-    static s_SubCharacter** D_800C4474; /** Array of active characters? */
+    s_SubCharacter*         curChara;
+    static s_SubCharacter*  D_800C4458[7];
+    static s_SubCharacter** activeCharas; /** Array of active characters. */
 
-    if (chara != NULL &&
-        (chara->model_0.charaId_0 == Chara_None || chara->field_E1_0 == 0 ||
-        (chara->field_E1_0 == 1 && arg2 == true)))
+    if (excludeChara != NULL &&
+        (excludeChara->model_0.charaId_0 == Chara_None || excludeChara->field_E1_0 == 0 ||
+        (excludeChara->field_E1_0 == 1 && includePlayer == true)))
     {
         *charaCount = 0;
         return &D_800C4458;
     }
 
     *charaCount = 0;
-    D_800C4474 = &D_800C4458;
+    activeCharas = &D_800C4458;
 
     for (curChara = &g_SysWork.npcs_1A0[0]; curChara < &g_SysWork.npcs_1A0[ARRAY_SIZE(g_SysWork.npcs_1A0)]; curChara++)
     {
         if (curChara->model_0.charaId_0 != Chara_None)
         {
             if (curChara->field_E1_0 != 0 &&
-                (curChara->field_E1_0 != 1 || arg2 != true) &&
-                curChara != chara &&
-                (arg2 != true || chara == NULL || chara->field_E1_0 != 4 || curChara->field_E1_0 >= chara->field_E1_0))
+                (curChara->field_E1_0 != 1 || includePlayer != true) &&
+                curChara != excludeChara &&
+                (includePlayer != true || excludeChara == NULL || excludeChara->field_E1_0 != 4 || curChara->field_E1_0 >= excludeChara->field_E1_0))
             {
                 *charaCount += 1;
-                *D_800C4474 = curChara;
-                D_800C4474++;
+                *activeCharas = curChara;
+                activeCharas++;
                 curChara->field_E0 = 0;
             }
         }
@@ -454,13 +455,13 @@ s_SubCharacter** func_8006A1A4(s32* charaCount, s_SubCharacter* chara, bool arg2
     if (curChara->model_0.charaId_0 != Chara_None)
     {
         if (curChara->field_E1_0 != 0 &&
-            (curChara->field_E1_0 != 1 || arg2 != true) &&
-            curChara != chara &&
-            (arg2 != true || chara == NULL || chara->field_E1_0 != 4 || curChara->field_E1_0 >= chara->field_E1_0))
+            (curChara->field_E1_0 != 1 || includePlayer != true) &&
+            curChara != excludeChara &&
+            (includePlayer != true || excludeChara == NULL || excludeChara->field_E1_0 != 4 || curChara->field_E1_0 >= excludeChara->field_E1_0))
         {
             *charaCount += 1;
-            *D_800C4474 = curChara;
-            D_800C4474++;
+            *activeCharas = curChara;
+            activeCharas++;
             curChara->field_E0 = 0;
         }
     }
@@ -495,7 +496,7 @@ s32 func_8006A42C(s32 arg0, VECTOR3* offset, s_func_8006AB50* arg2) // 0x8006A42
     return func_8006A4A8(arg0, &offsetCpy, arg2, 0, func_800425D8(&collDataIdx), collDataIdx, NULL, 0, NULL, 0);
 }
 
-s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* offset, s_func_8006AB50* arg2, s32 arg3,
+s32 func_8006A4A8(s_CollisionResult* arg0, VECTOR3* offset, s_func_8006AB50* arg2, s32 arg3,
                   s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** charas, s32 charaCount) // 0x8006A4A8
 {
     s_func_8006CC44      sp18;
@@ -2393,7 +2394,7 @@ bool func_8006DA08(s_RayData* ray, VECTOR3* from, VECTOR3* dir, s_SubCharacter* 
     s32              scratchAddr;
     s_SubCharacter** charas;
 
-    charas = func_8006A1A4(&sp28, chara, false);
+    charas = Collision_ActiveCharactersGet(&sp28, chara, false);
 
     ray->hasHit_0 = false;
     if (Ray_TraceSetup((s32)PSX_SCRATCH, 0, 0, from, dir, 0, 0, charas, sp28))
@@ -2438,7 +2439,7 @@ bool func_8006DB3C(s_RayData* ray, VECTOR3* from, VECTOR3* dir, s_SubCharacter* 
     s32              scratchAddr;
     s_SubCharacter** charas;
 
-    charas       = func_8006A1A4(&charaCount, chara, true);
+    charas       = Collision_ActiveCharactersGet(&charaCount, chara, true);
     ray->hasHit_0 = false;
 
     if (Ray_TraceSetup((s32)PSX_SCRATCH, 1, 0, from, dir, 0, 0, charas, charaCount))

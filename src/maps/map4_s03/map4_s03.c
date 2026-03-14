@@ -2896,7 +2896,7 @@ void func_800D54B4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D54B4
 
 void func_800D55C8(s_SubCharacter* chara) // 0x800D55C8
 {
-    s_800C4590 sp10;
+    s_CollisionResult sp10;
     VECTOR     unkPos; // Q19.12
     VECTOR     sp40;
     VECTOR     sp50;

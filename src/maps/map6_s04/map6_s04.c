@@ -576,7 +576,7 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
 void func_800D9790(s_SubCharacter* chara, s_Model* model) // 0x800D9790
 {
-    s_800C4590 sp10;
+    s_CollisionResult sp10;
     VECTOR3    sp30;
     VECTOR3    sp40;
     s32        temp_s4;
@@ -604,7 +604,7 @@ void func_800D9790(s_SubCharacter* chara, s_Model* model) // 0x800D9790
                 chara->field_D4.radius_0 = Q12(0.3f) - (((chara->model_0.anim_4.keyframeIdx_8 - 216) * Q12(3.0f)) / 100);
             }
 
-            func_80069B24(&sp10, &sp40, chara);
+            Collision_WallDetect(&sp10, &sp40, chara);
 
             chara->position_18.vx += sp10.offset_0.vx;
             chara->position_18.vz += sp10.offset_0.vz;
@@ -625,7 +625,7 @@ void func_800D9790(s_SubCharacter* chara, s_Model* model) // 0x800D9790
             chara->field_D8.offsetZ_2 = Q12(0.0f);
             chara->field_D8.offsetX_0 = Q12(0.0f);
 
-            func_80069B24(&sp10, &sp40, chara);
+            Collision_WallDetect(&sp10, &sp40, chara);
 
             chara->position_18.vx += sp10.offset_0.vx;
             chara->position_18.vy  = Q12(0.0f);

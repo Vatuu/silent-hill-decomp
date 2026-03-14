@@ -1016,7 +1016,7 @@ void Ai_SplitHead_Control_8(s_SubCharacter* splitHead)
 
 void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead)
 {
-    s_800C4590 sp18;
+    s_CollisionResult sp18;
     VECTOR3    pos;
 
     splitHead->headingAngle_3C = splitHead->rotation_24.vy;

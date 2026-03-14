@@ -688,7 +688,7 @@ void func_800D3564(s_SubCharacter* floatstinger) // 0x800D3564
 
 void func_800D35F0(s_SubCharacter* floatstinger) // 0x800D35F0
 {
-    s_800C4590 sp10;
+    s_CollisionResult sp10;
     VECTOR3    sp30;
     q3_12      headingAngle;
     s32        temp_s0;
@@ -705,7 +705,7 @@ void func_800D35F0(s_SubCharacter* floatstinger) // 0x800D35F0
     sp30.vz = Q12_MULT_PRECISE(temp_s0 >> temp_s3, Math_Cos(headingAngle) >> temp_s3) << temp_s2;
     sp30.vy = Q12_MULT_PRECISE(g_DeltaTime, floatstinger->fallSpeed_34);
 
-    func_80069B24(&sp10, &sp30, floatstinger);
+    Collision_WallDetect(&sp10, &sp30, floatstinger);
 
     offsetY = sp10.offset_0.vy;
     floatstinger->position_18.vx += sp10.offset_0.vx;
@@ -717,7 +717,7 @@ void func_800D35F0(s_SubCharacter* floatstinger) // 0x800D35F0
     sp30.vx = D_800DB898;
     sp30.vz = D_800DB89C;
 
-    func_80069B24(&sp10, &sp30, floatstinger);
+    Collision_WallDetect(&sp10, &sp30, floatstinger);
     floatstinger->position_18.vx += sp10.offset_0.vx;
     floatstinger->position_18.vz += sp10.offset_0.vz;
 

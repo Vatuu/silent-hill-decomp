@@ -334,9 +334,9 @@ extern VECTOR3 sharedData_800DE1E0_0_s01;
 
 extern VECTOR3 sharedData_800DE1F0_0_s01; // Q19.12
 
-extern s_800C4590 sharedData_800E2350_0_s01;
+extern s_CollisionResult sharedData_800E2350_0_s01;
 
-extern s_800C4590 sharedData_800E39BC_0_s00;
+extern s_CollisionResult sharedData_800E39BC_0_s00;
 
 extern s32 sharedData_800DD5A0_0_s00;
 extern s16 sharedData_800DD5A4_0_s00; // Used as index into array of vectors.
