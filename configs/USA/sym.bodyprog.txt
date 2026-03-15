@@ -501,11 +501,11 @@ Game_RadioSoundStop                          = 0x80037188; // type:func
 //---------------------------------------------------------------------------
 Chara_PositionSet                            = 0x800371E8; // type:func
 Game_PlayerHeightUpdate                      = 0x80037334; // type:func
-Event_ItemTriggersClear.0                    = 0x80037388; // filename:Event_ItemTriggersClear type:func - Compiler adds suffix to end of nested func names.
 
 //---------------------------------------------------------------------
-//--- PA: 0x01286C   VA: 0x800373CC   subsegment: c, events/events_main
+//--- PA: 0x012828   VA: 0x80037388   subsegment: c, events/events_main
 //---------------------------------------------------------------------
+Event_ItemTriggersClear.0                    = 0x80037388; // filename:Event_ItemTriggersClear type:func - Compiler adds suffix to end of nested func names.
 Event_Update                                 = 0x800373CC; // type:func
 Event_CollideFacingCheck                     = 0x800378D4; // type:func
 Event_CollideObbFacingCheck                  = 0x80037A4C; // type:func

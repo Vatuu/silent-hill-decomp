@@ -163,7 +163,7 @@ segments:
       - [0x11A58,   c, events/map_msg_display]   # }
       - [0x125F4,   c, events/radio]             # }
       - [0x12688,   c, events/player_pos_update] # }
-      - [0x1286C,   c, events/events_main]       # }
+      - [0x12828,   c, events/events_main]       # }
       - [0x13264,   c, events/npc_main]          # }
       - [0x14074,   c, events/game_sys_states]   # }
       - [0x15FC8,   c, title] # Name convention from SH2/4.
