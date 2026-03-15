@@ -49,9 +49,13 @@ D_8002510C                                   = 0x80025104;
 //---------------------------------------------------------------------------
 DEFAULT_CONTROLLER_CONFIGS                   = 0x80025114;
 
-//---------------------------------------------------------------------
-//--- PA: 0x000610   VA: 0x80025170   subsegment: rodata, sys/memcard_2
-//---------------------------------------------------------------------
+//----------------------------------------------------------------------
+//--- PA: 0x000610   VA: 0x80025170   subsegment: .rodata, sys/memcard_2
+//----------------------------------------------------------------------
+
+//------------------------------------------------------
+//--- PA: 0x00068C   VA: 0x800251EC   subsegment: rodata
+//------------------------------------------------------
 
 //----------------------------------------------------------------------------
 //--- PA: 0x000698   VA: 0x800251F8   subsegment: .rodata, game_boot/game_load
@@ -424,9 +428,9 @@ Settings_RestoreControlDefaults              = 0x800331D0; // type:func
 nullsub_800334C8                             = 0x80033218; // type:func
 func_800334D0                                = 0x80033220; // type:func
 
-//------------------------------------------------------------------
-//--- PA: 0x00E6C8   VA: 0x80033228   subsegment: asm, sys/memcard_2
-//------------------------------------------------------------------
+//----------------------------------------------------------------
+//--- PA: 0x00E6C8   VA: 0x80033228   subsegment: c, sys/memcard_2
+//----------------------------------------------------------------
 MemCard_FilesAreNotUsedCheck                 = 0x80033228; // type:func
 func_80033548                                = 0x80033298; // type:func
 
@@ -1870,11 +1874,15 @@ g_PrevVBlanks                                = 0x800ABC30;
 g_baseVabAudiosTaskId                        = 0x800ABC34;
 g_GameStateUpdateFuncs                       = 0x800ABC3C;
 
-//-------------------------------------------------------------------
-//--- PA: 0x087134   VA: 0x800ABC94   subsegment: data, sys/memcard_2
-//-------------------------------------------------------------------
+//--------------------------------------------------------------------
+//--- PA: 0x087134   VA: 0x800ABC94   subsegment: .data, sys/memcard_2
+//--------------------------------------------------------------------
 g_SlotElementSelectedIdx                     = 0x800ABC94;
 g_SelectedSaveSlotIdx                        = 0x800ABC96;
+D_800A97D9                                   = 0x800ABC99;
+D_800A97DC                                   = 0x800ABC9C;
+D_800A97E0                                   = 0x800ABCA0;
+allFileStatus                                = 0x800ABCA4;
 
 //--------------------------------------------------------------------------------------
 //--- PA: 0x087164   VA: 0x800ABCC4   subsegment: .data, game_boot/background_sound_init
@@ -2220,11 +2228,18 @@ g_SysWork                                    = 0x800BC618; // type:SysWork size:
 g_GameWork                                   = 0x800BED80; // type:GameWork size:0x5D8
 g_Screen_FadeStatus                          = 0x800BF364;
 
-//---------------------------------------------------
-//--- PA: 0x09A810   VA: 0x800BF370   subsegment: bss
-//---------------------------------------------------
+//-------------------------------------------------------------------
+//--- PA: 0x09A810   VA: 0x800BF370   subsegment: .bss, sys/memcard_2
+//-------------------------------------------------------------------
+D_800BCD18                                   = 0x800BF370;
+D_800BCD20                                   = 0x800BF378;
 g_MemCard_SavegameCount                      = 0x800BF380;
 g_MemCard_ActiveSavegameEntry                = 0x800BF384;
+g_Savegame_ElementCount0                     = 0x800BF388;
+g_MemCard_AllMemCardsStatus                  = 0x800BF38C;
+g_SaveScreen_SaveScreenState                 = 0x800BF390;
+g_MemCard_TotalElementsCount                 = 0x800BF392;
+g_Savegame_ElementCount1                     = 0x800BF394;
 g_Savegame_SelectedElementIdx                = 0x800BF396;
 g_SelectedFileIdx                            = 0x800BF397;
 g_SelectedDeviceId                           = 0x800BF398;

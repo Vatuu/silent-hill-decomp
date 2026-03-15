@@ -164,6 +164,13 @@ bool func_80033548(void) // 0x80033548
             {
                 case MemCardResult_Success:
                     g_MemCard_ActiveSavegameEntry->type_4 = SavegameEntryType_NoMemCard;
+
+#if VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix?
+                    if (g_SelectedSaveSlotIdx == (WrapIdx(i) >> 2))
+                    {
+                        g_SelectedSaveSlotIdx = g_SelectedSaveSlotIdx == 0;
+                    }
+#endif
                     break;
 
                 case MemCardResult_LoadError:
