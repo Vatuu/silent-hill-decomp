@@ -152,7 +152,7 @@ There's still a lot of work ahead:
             <td colspan=2>Purpose</td>
           </tr>
           <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map"/></a><br/>42/43 matched.</td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map&color=rgb(255,215,0)"/></a><br/>43/43 matched!</td>
             <td colspan=2>Map and character code.</td>
           </tr>
           <tr>
@@ -318,7 +318,7 @@ There's still a lot of work ahead:
         <tr>
           <th colspan=3>🏙🍹 MAP5 🍹🏙</th>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map5_s00"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map5_s00&label=MAP5_S00"/></a></td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map5_s00"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map5_s00&label=MAP5_S00&color=rgb(255,215,0)"/></a></td>
             <td colspan=2>Sewers lower and upper levels.</td>
         </tr>
         <tr>
