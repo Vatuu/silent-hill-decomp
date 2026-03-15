@@ -1519,7 +1519,7 @@ void func_800D2364(void) // 0x800D2364
     ptr->field_18.vy = Q12(0.0f);
     ptr->field_18.vz = Q12(-1.25f);
 
-    func_80049C2C(&ptr->field_24, 0x3C000, 0, -0x14000);
+    Vw_WorldScreenMatrixAtPositionGet(&ptr->field_24, 0x3C000, 0, -0x14000);
 
     gte_SetRotMatrix(&ptr->field_24);
     gte_SetTransMatrix(&ptr->field_24);

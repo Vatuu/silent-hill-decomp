@@ -1618,7 +1618,7 @@ void func_800D35DC(SVECTOR* rot) // 0x800D35DC
 
     ot = g_OrderingTable0[idx].org;
 
-    func_80049C2C(&ptr->world_8, ptr->x_0, 0, ptr->z_4);
+    Vw_WorldScreenMatrixAtPositionGet(&ptr->world_8, ptr->x_0, 0, ptr->z_4);
     func_800D0C50(rot, &ptr->world_8);
     func_800D1604(ot, rot->vy);
     func_800D1FF4(ot);
@@ -3788,7 +3788,7 @@ void func_800D7718(void) // 0x800D7718
     s32         i;
     s_800E06A0* ptr;
 
-    func_80049C2C(&mat, Q12(160.0f), Q12(0.0f), Q12(40.0f));
+    Vw_WorldScreenMatrixAtPositionGet(&mat, Q12(160.0f), Q12(0.0f), Q12(40.0f));
     SetRotMatrix(&mat);
     SetTransMatrix(&mat);
 

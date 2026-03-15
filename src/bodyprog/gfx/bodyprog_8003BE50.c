@@ -499,7 +499,7 @@ void Gfx_WorldObjectDraw(s_WorldObject* obj) // 0x8003CBA4
     rot.vz = Q10_TO_Q12(obj->rotationZ_C);
 
     Math_RotMatrixZxyNeg(&rot, &coord.coord);
-    func_80049B6C(&coord, &mats[1], &mats[0]);
+    Vw_CoordToWorldAndViewMatrices(&coord, &mats[1], &mats[0]);
     func_8003CC7C(obj->model_0, &mats[0], &mats[1]);
 }
 
@@ -805,7 +805,7 @@ void WorldGfx_HeldItemDraw(void) // 0x8003D058
             Bone_ModelAssign(&heldItem->bone_18, heldItem->lmHdr_14, 0);
         }
 
-        func_80049B6C(coord, &mat1, &mat0);
+        Vw_CoordToWorldAndViewMatrices(coord, &mat1, &mat0);
         func_80057090(&heldItem->bone_18.modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
     }
 }

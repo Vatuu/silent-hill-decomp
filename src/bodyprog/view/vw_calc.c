@@ -176,13 +176,13 @@ q19_12 vwRetNewAngSpdToTargetAng(q19_12 now_ang_spd, q3_12 now_ang, q3_12 tgt_an
     return vwRetNewVelocityToTargetVal(now_ang_spd, Q12(0.0f), Q12_ANGLE_NORM_S(tgt_ang - now_ang), accel_spd, total_max_ang_spd, dec_val_lim_spd);
 }
 
-s32 func_800494B0(s32 arg0, s32 arg1, s32 arg2) // 0x800494B0
+q19_12 Vw_ClampedSpeedToTargetGet(q19_12 speedFrom, q19_12 speedTo, q19_12 rateMax) // 0x800494B0
 {
-    s32 range;
-    s32 arange;
+    q19_12 range;
+    q19_12 arange;
 
-    range  = Q12_MULT_PRECISE(arg2, g_DeltaTime);
-    arange = arg1 - arg0;
+    range  = Q12_MULT_PRECISE(rateMax, g_DeltaTime);
+    arange = speedTo - speedFrom;
     arange = CLAMP(arange, -range, range);
 
     if (g_DeltaTime == Q12(0.0f))
@@ -193,12 +193,12 @@ s32 func_800494B0(s32 arg0, s32 arg1, s32 arg2) // 0x800494B0
     return Q12(arange) / g_DeltaTime;
 }
 
-s32 func_80049530(VECTOR* arg0, DVECTOR* arg1) // 0x80049530
+s32 Vw_TransformAndProjectPoint(VECTOR* worldPos, DVECTOR* screenPos) // 0x80049530
 {
     VECTOR sp10;
     s32    ret;
 
-    ApplyRotMatrixLV(arg0, &sp10);
+    ApplyRotMatrixLV(worldPos, &sp10);
 
     // TODO: Make macros for these?
 
@@ -222,7 +222,7 @@ s32 func_80049530(VECTOR* arg0, DVECTOR* arg1) // 0x80049530
         "mtc2       $zero, $1" ::"r"(&sp10) : "$12", "$13", "$14");
 
     gte_rtps();
-    gte_stsxy(arg1);
+    gte_stsxy(screenPos);
 
     __asm__ volatile(
         "mfc2    $12, $2;"
@@ -397,7 +397,7 @@ void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* outMat) //
     *outMat = rootCoord->workm;
 }
 
-void func_80049AF8(GsCOORDINATE2* rootCoord, MATRIX* outMat) // 0x80049AF8
+void Vw_CoordToViewSpaceMatrix(GsCOORDINATE2* rootCoord, MATRIX* viewMat) // 0x80049AF8
 {
     MATRIX localMat;
 
@@ -405,10 +405,10 @@ void func_80049AF8(GsCOORDINATE2* rootCoord, MATRIX* outMat) // 0x80049AF8
     localMat.t[0] -= D_800C3868.t[0];
     localMat.t[1] -= D_800C3868.t[1];
     localMat.t[2] -= D_800C3868.t[2];
-    Vw_MultiplyAndTransformMatrix(&VbWvsMatrix, &localMat, outMat);
+    Vw_MultiplyAndTransformMatrix(&VbWvsMatrix, &localMat, viewMat);
 }
 
-void func_80049B6C(GsCOORDINATE2* rootCoord, MATRIX* outMat0, MATRIX* outMat1) // 0x80049B6C
+void Vw_CoordToWorldAndViewMatrices(GsCOORDINATE2* rootCoord, MATRIX* outMat0, MATRIX* outMat1) // 0x80049B6C
 {
     Vw_CoordHierarchyMatrixCompute(rootCoord, outMat0);
     outMat0->t[0] -= D_800C3868.t[0];
@@ -421,7 +421,7 @@ void func_80049B6C(GsCOORDINATE2* rootCoord, MATRIX* outMat0, MATRIX* outMat1) /
     outMat0->t[2] += D_800C3868.t[2];
 }
 
-void func_80049C2C(MATRIX* outMat, q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80049C2C
+void Vw_WorldScreenMatrixAtPositionGet(MATRIX* worldToScreenMat, q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80049C2C
 {
     VECTOR in; // Q23.8
     VECTOR out;
@@ -432,15 +432,15 @@ void func_80049C2C(MATRIX* outMat, q19_12 posX, q19_12 posY, q19_12 posZ) // 0x8
     ApplyMatrixLV(&GsWSMATRIX, &in, &out);
 
     // Copy matrix fields as 32-bit words. Maybe inlined `CopyMatrix` func?
-    *(u32*)&outMat->m[0][0] = *(u32*)&GsWSMATRIX.m[0][0];
-    *(u32*)&outMat->m[0][2] = *(u32*)&GsWSMATRIX.m[0][2];
-    *(u32*)&outMat->m[1][1] = *(u32*)&GsWSMATRIX.m[1][1];
-    *(u32*)&outMat->m[2][0] = *(u32*)&GsWSMATRIX.m[2][0];
-    outMat->m[2][2]         = GsWSMATRIX.m[2][2];
+    *(u32*)&worldToScreenMat->m[0][0] = *(u32*)&GsWSMATRIX.m[0][0];
+    *(u32*)&worldToScreenMat->m[0][2] = *(u32*)&GsWSMATRIX.m[0][2];
+    *(u32*)&worldToScreenMat->m[1][1] = *(u32*)&GsWSMATRIX.m[1][1];
+    *(u32*)&worldToScreenMat->m[2][0] = *(u32*)&GsWSMATRIX.m[2][0];
+    worldToScreenMat->m[2][2]         = GsWSMATRIX.m[2][2];
 
-    outMat->t[0] = out.vx + GsWSMATRIX.t[0];
-    outMat->t[1] = out.vy + GsWSMATRIX.t[1];
-    outMat->t[2] = out.vz + GsWSMATRIX.t[2];
+    worldToScreenMat->t[0] = out.vx + GsWSMATRIX.t[0];
+    worldToScreenMat->t[1] = out.vy + GsWSMATRIX.t[1];
+    worldToScreenMat->t[2] = out.vz + GsWSMATRIX.t[2];
 }
 
 bool Vw_AabbVisibleInScreenCheck(s32 minX, s32 maxX, s32 minY, s32 maxY, s32 minZ, s32 maxZ) // 0x80049D04
@@ -459,7 +459,7 @@ bool Vw_AabbVisibleInScreenCheck(s32 minX, s32 maxX, s32 minY, s32 maxY, s32 min
     s32     screenCenterY;
     u32     screenDepth;
 
-    func_80049C2C(&worldMat, minX, minY, minZ);
+    Vw_WorldScreenMatrixAtPositionGet(&worldMat, minX, minY, minZ);
     SetRotMatrix(&worldMat);
     SetTransMatrix(&worldMat);
 

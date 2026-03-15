@@ -835,7 +835,7 @@ bool Particle_Update(s_Particle* partHead)
     g_SysWork.coord_22A8.coord.t[2] = Q12_TO_Q8(g_Particle_Position.vz);
 
     g_SysWork.coord_22A8.flg = false;
-    func_80049B6C(&g_SysWork.coord_22A8, &mat1, &mat0);
+    Vw_CoordToWorldAndViewMatrices(&g_SysWork.coord_22A8, &mat1, &mat0);
     gte_SetRotMatrix(&mat0);
     gte_SetTransMatrix(&mat0);
 
@@ -1423,7 +1423,7 @@ bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CC6E8
     g_SysWork.coord_22F8.coord.t[0] = Q8(0.0f);
     g_SysWork.coord_22F8.flg        = false;
 
-    func_80049B6C(&g_SysWork.coord_22F8, &sp10, &sp30);
+    Vw_CoordToWorldAndViewMatrices(&g_SysWork.coord_22F8, &sp10, &sp30);
     gte_SetRotMatrix(&sp30);
     gte_SetTransMatrix(&sp30);
 
@@ -3998,7 +3998,7 @@ void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
     g_SysWork.coord_22F8.coord.t[1] = Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vy);
     g_SysWork.coord_22F8.coord.t[2] = Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vz);
 
-    func_80049B6C(&g_SysWork.coord_22F8, &matUnused, &worldMat);
+    Vw_CoordToWorldAndViewMatrices(&g_SysWork.coord_22F8, &matUnused, &worldMat);
 
     gte_SetRotMatrix(&worldMat);
     gte_SetTransMatrix(&worldMat);
@@ -4219,7 +4219,7 @@ void Particle_BeamDraw(const VECTOR3* from, const VECTOR3* to)
     g_SysWork.coord_22F8.coord.t[1] = Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vy);
     g_SysWork.coord_22F8.coord.t[2] = Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vz);
 
-    func_80049B6C(&g_SysWork.coord_22F8, &matUnused0, &worldMat);
+    Vw_CoordToWorldAndViewMatrices(&g_SysWork.coord_22F8, &matUnused0, &worldMat);
 
     gte_SetRotMatrix(&worldMat);
     gte_SetTransMatrix(&worldMat);

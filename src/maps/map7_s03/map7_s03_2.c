@@ -1904,7 +1904,7 @@ void func_800D90C8(void) // 0x800D90C8
 
     ptr = &D_800F3D58;
 
-    func_80049C2C(&ptr->mat_10, ptr->field_0.vx, 0, ptr->field_0.vz);
+    Vw_WorldScreenMatrixAtPositionGet(&ptr->mat_10, ptr->field_0.vx, 0, ptr->field_0.vz);
     SetRotMatrix(&ptr->mat_10);
     SetTransMatrix(&ptr->mat_10);
 }
@@ -4254,7 +4254,7 @@ void func_800DD6CC(void) // 0x800DD6CC
     activeBufferIdx = g_ActiveBufferIdx;
     ot              = g_OrderingTable0[activeBufferIdx].org;
 
-    func_80049C2C(&D_800F48A8.mat_8, posX, Q12(0.0f), posZ);
+    Vw_WorldScreenMatrixAtPositionGet(&D_800F48A8.mat_8, posX, Q12(0.0f), posZ);
     func_800DC544(ot);
     func_800D917C();
 }
@@ -4318,7 +4318,7 @@ void func_800DD868(void) // 0x800DD868
     activeBufferIdx = g_ActiveBufferIdx;
     ot              = g_OrderingTable0[activeBufferIdx].org;
 
-    func_80049C2C(&D_800F48A8.mat_8, posX, Q12(0.0f), posZ);
+    Vw_WorldScreenMatrixAtPositionGet(&D_800F48A8.mat_8, posX, Q12(0.0f), posZ);
     func_800DC544(ot);
 }
 
@@ -7011,11 +7011,11 @@ q19_12 func_800E2444(q19_12 dampingRate, q19_12 current, q19_12 target) // 0x800
 
 void func_800E24A0(s_800F4B40_1C* arg0) // 0x800E24A0
 {
-    VECTOR3 sp30;
-    VECTOR3 sp40;
-    DVECTOR sp50;
-    DVECTOR sp58;
-    s32     temp_s0;
+    VECTOR3 pos0; // Q19.12
+    VECTOR3 pos1; // Q19.12
+    DVECTOR screenPos0;
+    DVECTOR screenPos1;
+    s32     projDepth;
     q23_8   var_a1;
 
     if (arg0->pos_10 != Q12(0.0f) && arg0->field_12 != 0 && arg0->field_14 != 0)
@@ -7023,25 +7023,25 @@ void func_800E24A0(s_800F4B40_1C* arg0) // 0x800E24A0
         SetRotMatrix(&GsWSMATRIX);
         SetTransMatrix(&GsWSMATRIX);
 
-        sp30.vx = Q12_TO_Q8(arg0->vec_0->vx);
-        sp30.vy = Q12_TO_Q8(arg0->vec_0->vy + arg0->field_4);
-        sp30.vz = Q12_TO_Q8(arg0->vec_0->vz);
+        pos0.vx = Q12_TO_Q8(arg0->vec_0->vx);
+        pos0.vy = Q12_TO_Q8(arg0->vec_0->vy + arg0->field_4);
+        pos0.vz = Q12_TO_Q8(arg0->vec_0->vz);
 
-        sp40.vx = Q12_TO_Q8(arg0->vec_8->vx);
-        sp40.vy = Q12_TO_Q8(arg0->vec_8->vy + arg0->field_C);
-        sp40.vz = Q12_TO_Q8(arg0->vec_8->vz);
+        pos1.vx = Q12_TO_Q8(arg0->vec_8->vx);
+        pos1.vy = Q12_TO_Q8(arg0->vec_8->vy + arg0->field_C);
+        pos1.vz = Q12_TO_Q8(arg0->vec_8->vz);
 
-        temp_s0 = func_80049530(&sp30, &sp50) * 4;
-        func_80049530(&sp40, &sp58);
+        projDepth = Vw_TransformAndProjectPoint(&pos0, &screenPos0) * 4;
+        Vw_TransformAndProjectPoint(&pos1, &screenPos1);
 
         var_a1 = Q8(16.0f);
         if (arg0->field_1E != 0)
         {
-            var_a1 = Q8(16384.0f) / MAX(temp_s0, Q8(1.5f));
+            var_a1 = Q8(16384.0f) / MAX(projDepth, Q8(1.5f));
         }
 
-        func_800E2968(D_800F4B40.field_118, 16, 6, &sp50, &sp58, 0,
-                      Math_MulFixed(Q12_TO_Q8(arg0->pos_10), var_a1, Q12_SHIFT), 0, Q12(1.0f),
+        func_800E2968(D_800F4B40.field_118, 16, 6, &screenPos0, &screenPos1, 0,
+                      Math_MulFixed(Q12_TO_Q8(arg0->pos_10), var_a1, Q12_SHIFT), Q12(0.0f), Q12(1.0f),
                       D_800F4B40.field_18, arg0->field_12, arg0->field_14);
         func_800E2C28(D_800F4B40.field_118, 16, 6, 1, 1);
     }

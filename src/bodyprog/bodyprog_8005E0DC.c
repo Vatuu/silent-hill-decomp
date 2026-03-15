@@ -314,7 +314,7 @@ void func_8005E89C(void) // 0x8005E89C
     ptr->field_0.vy = Q8(posY);
     ptr->field_0.vz = Q8(posZ);
 
-    func_80049C2C(&ptr->field_C, Q12(posX), Q12(posY), Q12(posZ));
+    Vw_WorldScreenMatrixAtPositionGet(&ptr->field_C, Q12(posX), Q12(posY), Q12(posZ));
 
     gte_SetRotMatrix(&ptr->field_C);
     gte_SetTransMatrix(&ptr->field_C);

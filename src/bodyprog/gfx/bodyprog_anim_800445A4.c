@@ -756,7 +756,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q
             if (var_s0 != curImage->clutY)
             {
                 var_s0 = curImage->clutY;
-                func_80049AF8(&coord[var_s0], &mat0);
+                Vw_CoordToViewSpaceMatrix(&coord[var_s0], &mat0);
                 SetRotMatrix(&mat0);
                 SetTransMatrix(&mat0);
             }
@@ -802,7 +802,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q
     {
         if (curBone->bone_0.modelInfo_0.field_0 >= 0)
         {
-            func_80049B6C(&coord[(u8)curBone->bone_0.field_10], &mat1, &mat0);
+            Vw_CoordToWorldAndViewMatrices(&coord[(u8)curBone->bone_0.field_10], &mat1, &mat0);
 
             if (curBone->bone_0.modelInfo_0.field_0 & (1 << 0))
             {

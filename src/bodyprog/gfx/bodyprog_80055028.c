@@ -292,7 +292,7 @@ s32 func_800557DC(void) // 0x800557DC
 {
     MATRIX mat;
 
-    func_80049C2C(&mat, g_WorldEnvWork.field_60.vx, g_WorldEnvWork.field_60.vy, g_WorldEnvWork.field_60.vz);
+    Vw_WorldScreenMatrixAtPositionGet(&mat, g_WorldEnvWork.field_60.vx, g_WorldEnvWork.field_60.vy, g_WorldEnvWork.field_60.vz);
     return Q8_TO_Q12(mat.t[2]);
 }
 
@@ -3355,7 +3355,7 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
 
     temp_v1 = 0x79C << (arg5 + 2);
     sp494   = g_WorldEnvWork.isFogEnabled_1 ? MIN(temp_v1, g_WorldEnvWork.fogFarDistance_10) : temp_v1;
-    func_80049C2C(&matrix_sp18[0], x, y, z);
+    Vw_WorldScreenMatrixAtPositionGet(&matrix_sp18[0], x, y, z);
 
     // @hack Pointer needed for match, is there a way to remove this?
     // `func_80056D8C` `func_8005801C` `func_8005AC50` all seem to do similar thing without needing pointer?

@@ -142,7 +142,7 @@ void func_8004BD74(s32 displayItemIdx, GsDOBJ2* arg1, s32 arg2)  // 0x8004BD74
     s32 j;
     s32 i;
 
-    func_80049B6C(arg1->coord2, &sp50, &sp10);
+    Vw_CoordToWorldAndViewMatrices(arg1->coord2, &sp50, &sp10);
 
     sp30 = sp10;
 

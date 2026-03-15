@@ -864,7 +864,7 @@ vwSetCoordRefAndEntou                        = 0x800489B8; // type:func
 vwSetViewInfoDirectMatrix                    = 0x80048AC8; // type:func
 vwSetViewInfo                                = 0x80048B20; // type:func
 Vw_ClampAngleRange                           = 0x80048B80; // type:func
-func_80048E3C                                = 0x80048C14; // type:func
+Vw_LineSegmentIntersectionCheck              = 0x80048C14; // type:func
 
 //---------------------------------------------------------------
 //--- PA: 0x0241A0   VA: 0x80048D00   subsegment: c, view/vw_calc
@@ -874,16 +874,16 @@ vwLimitOverLimVector                         = 0x80048F24; // type:func
 vwDecreaseSideOfVector                       = 0x80049000; // type:func
 vwRetNewVelocityToTargetVal                  = 0x80049160; // type:func
 vwRetNewAngSpdToTargetAng                    = 0x8004923C; // type:func
-func_800494B0                                = 0x80049288; // type:func
-func_80049530                                = 0x80049308; // type:func
+Vw_ClampedSpeedToTargetGet                   = 0x80049288; // type:func
+Vw_TransformAndProjectPoint                  = 0x80049308; // type:func
 vwMatrixToAngleYXZ                           = 0x800493AC; // type:func
 Vw_MultiplyAndTransformMatrix                = 0x80049484; // type:func
 vbSetWorldScreenMatrix                       = 0x800495BC; // type:func
 vbSetRefView                                 = 0x800496B0; // type:func
 Vw_CoordHierarchyMatrixCompute               = 0x8004975C; // type:func
-func_80049AF8                                = 0x800498D0; // type:func
-func_80049B6C                                = 0x80049944; // type:func
-func_80049C2C                                = 0x80049A04; // type:func
+Vw_CoordToViewSpaceMatrix                    = 0x800498D0; // type:func
+Vw_CoordToWorldAndViewMatrices               = 0x80049944; // type:func
+Vw_WorldScreenMatrixAtPositionGet            = 0x80049A04; // type:func
 Vw_AabbVisibleInScreenCheck                  = 0x80049ADC; // type:func
 Vw_AabbVisibleInFrustumCheck                 = 0x80049D10; // type:func
 func_8004A54C                                = 0x8004A324; // type:func

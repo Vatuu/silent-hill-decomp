@@ -946,7 +946,7 @@ void func_800D3F84(VECTOR3* floatstinger, s32 arg1, s32 arg2) // 0x800D3F84
     sp10.vy = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vy, Q12_SHIFT));
     sp10.vz = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vz, Q12_SHIFT));
 
-    func_80049C2C(&sp20, sp10.vx, sp10.vy, sp10.vz);
+    Vw_WorldScreenMatrixAtPositionGet(&sp20, sp10.vx, sp10.vy, sp10.vz);
 
     gte_SetRotMatrix(&sp20);
     gte_SetTransMatrix(&sp20);

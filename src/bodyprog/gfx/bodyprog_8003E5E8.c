@@ -127,7 +127,7 @@ void func_8003E740(void) // 0x8003E740
 
     poly = (POLY_FT4*)GsOUT_PACKET_P;
 
-    func_80049AF8(&g_SysWork.playerBoneCoords_890[HarryBone_RightHand], &sp18);
+    Vw_CoordToViewSpaceMatrix(&g_SysWork.playerBoneCoords_890[HarryBone_RightHand], &sp18);
     SetRotMatrix(&sp18);
     SetTransMatrix(&sp18);
 
@@ -448,7 +448,7 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
 
     if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].effectsInfo_0.field_E == 3)
     {
-        func_80049AF8(g_SysWork.field_235C, &mat);
+        Vw_CoordToViewSpaceMatrix(g_SysWork.field_235C, &mat);
         ApplyMatrixLV(&mat, (VECTOR*)&g_SysWork.pointLightPosition_2360, &sp48); // Bug? `g_SysWork.pointLightPosition_2360` is `VECTOR3`.
         ptr->field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].field_30 = sp48.vz + (mat.t[2] * 16);
     }

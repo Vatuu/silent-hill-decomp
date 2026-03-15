@@ -39,7 +39,7 @@ void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3) // 0x800652F4
     ptr->field_40.vy = Q8(posY);
     ptr->field_40.vz = Q8(posZ);
 
-    func_80049C2C(&ptr->field_20, Q12(posX), Q12(posY), Q12(posZ));
+    Vw_WorldScreenMatrixAtPositionGet(&ptr->field_20, Q12(posX), Q12(posY), Q12(posZ));
 
     gte_SetRotMatrix(&ptr->field_20);
     gte_SetTransMatrix(&ptr->field_20);
@@ -154,7 +154,7 @@ void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
     ptr->field_2C.vy = Q8(y);
     ptr->field_2C.vz = Q8(z);
 
-    func_80049C2C(&ptr->field_C, Q12(x), Q12(y), Q12(z));
+    Vw_WorldScreenMatrixAtPositionGet(&ptr->field_C, Q12(x), Q12(y), Q12(z));
 
     gte_SetRotMatrix(&ptr->field_C);
     gte_SetTransMatrix(&ptr->field_C);
@@ -242,7 +242,7 @@ void func_80066184(void) // 0x80066184
     ptr->field_3C.vy = Q12_FLOOR(g_SysWork.playerWork_4C.player_0.position_18.vy);
     ptr->field_3C.vz = Q12_FLOOR(g_SysWork.playerWork_4C.player_0.position_18.vz);
 
-    func_80049C2C(&ptr->field_4, ptr->field_3C.vx, ptr->field_3C.vy, ptr->field_3C.vz);
+    Vw_WorldScreenMatrixAtPositionGet(&ptr->field_4, ptr->field_3C.vx, ptr->field_3C.vy, ptr->field_3C.vz);
 
     gte_SetRotMatrix(&ptr->field_4);
     gte_SetTransMatrix(&ptr->field_4);

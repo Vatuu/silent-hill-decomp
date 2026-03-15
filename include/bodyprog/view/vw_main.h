@@ -30,6 +30,7 @@ void vwGetViewAngle(SVECTOR* ang);
  */
 void Vw_SetLookAtMatrix(const VECTOR3* pos, const VECTOR3* lookAt);
 
+// @todo Doc.
 void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p,
                            q19_12 ref_x, q19_12 ref_y, q19_12 ref_z,
                            q3_12 cam_ang_y, q3_12 cam_ang_z, q19_12 cam_y, q19_12 cam_xz_r);
@@ -53,6 +54,17 @@ void vwSetViewInfo(void);
  */
 void Vw_ClampAngleRange(q3_12* angleMin, q3_12* angleMax, q3_12 angleConstraintMin, q3_12 angleConstraintMax);
 
-s16 func_80048E3C(s16 arg0, s16 arg1, s16 arg2, q3_12 arg3, q3_12 arg4);
+/** @brief Computes the parametric intersection ratio of a line segment against a bounded interval.
+ * Used in collision to compute how far a moving edge must be clipped.
+ *
+ * @param segmentLength Length/extent of the segment.
+ * @param segmentDir Direction component of the line segment.
+ * @param distToBound Signed distance to the boundary.
+ * @param boundsMin Minimum bound of valid interval.
+ * @param boundsMax Maximum bound of valid interval.
+ * @return `Q12(1.0f)` if no intersection, `Q12(0.0f)` if at boundary.
+ */
+q3_12 Vw_LineSegmentIntersectionCheck(s16 segmentLength, s16 segmentDir,
+                                      s16 distToBound, q3_12 boundsMin, q3_12 boundsMax);
 
 #endif

@@ -523,7 +523,7 @@ void func_800EC4B4(s32 arg0) // 0x800EC4B4
     ptr->field_5C.vy = posY << 8;
     ptr->field_5C.vz = posZ << 8;
 
-    func_80049C2C(&ptr->field_4, FP_TO(posX, Q12_SHIFT), FP_TO(posY, Q12_SHIFT), FP_TO(posZ, Q12_SHIFT));
+    Vw_WorldScreenMatrixAtPositionGet(&ptr->field_4, FP_TO(posX, Q12_SHIFT), FP_TO(posY, Q12_SHIFT), FP_TO(posZ, Q12_SHIFT));
 
     gte_SetRotMatrix(&ptr->field_4);
     gte_SetTransMatrix(&ptr->field_4);

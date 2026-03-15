@@ -162,26 +162,27 @@ void Vw_ClampAngleRange(q3_12* angleMin, q3_12* angleMax, q3_12 angleConstraintM
     *angleMax = Q12_ANGLE_NORM_U(rotToAngleMax + prevAngleMin);
 }
 
-s16 func_80048E3C(s16 arg0, s16 arg1, s16 arg2, q3_12 arg3, q3_12 arg4) // 0x80048E3C
+q3_12 Vw_LineSegmentIntersectionCheck(s16 segmentLength, s16 segmentDir,
+                                      s16 distToBound, q3_12 boundsMin, q3_12 boundsMax) // 0x80048E3C
 {
     s32   temp_a0;
     q3_12 temp_lo;
 
-    if (arg1 > 0)
+    if (segmentDir > 0)
     {
-        if (arg2 < 0)
+        if (distToBound < 0)
         {
             return Q12(1.0f);
         }
     }
-    else if (arg1 >= 0 || arg2 > 0)
+    else if (segmentDir >= 0 || distToBound > 0)
     {
         return Q12(1.0f);
     }
 
-    if (arg2 == 0)
+    if (distToBound == 0)
     {
-        if (arg3 <= 0 && arg4 >= 0)
+        if (boundsMin <= 0 && boundsMax >= 0)
         {
             return Q12(0.0f);
         }
@@ -189,16 +190,16 @@ s16 func_80048E3C(s16 arg0, s16 arg1, s16 arg2, q3_12 arg3, q3_12 arg4) // 0x800
         return Q12(1.0f);
     }
 
-    if (ABS(arg2) > ABS(arg1))
+    if (ABS(distToBound) > ABS(segmentDir))
     {
         return Q12(1.0f);
     }
     else
     {
-        temp_lo = FP_FROM(arg2 << 16, Q4_SHIFT) / arg1;
-        temp_a0 = Q12_MULT(arg0, temp_lo);
+        temp_lo = FP_FROM(distToBound << 16, Q4_SHIFT) / segmentDir;
+        temp_a0 = Q12_MULT(segmentLength, temp_lo);
 
-        if (temp_a0 < arg3 || arg4 < temp_a0)
+        if (temp_a0 < boundsMin || boundsMax < temp_a0)
         {
             return Q12(1.0f);
         }

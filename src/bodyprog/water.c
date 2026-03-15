@@ -779,7 +779,7 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
     sp50.coord.t[1] = Q12_TO_Q8(posY);
     sp50.coord.t[2] = Q12_TO_Q8(posXz->vz);
 
-    func_80049AF8(&sp50, &spA0);
+    Vw_CoordToViewSpaceMatrix(&sp50, &spA0);
     SetRotMatrix(&spA0);
     SetTransMatrix(&spA0);
 

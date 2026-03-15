@@ -86,19 +86,32 @@ extern MATRIX            VbWvsMatrix;
 extern VC_WATCH_MV_PARAM vcWatchMvPrmSt;
 extern q19_12            vcSelfViewTimer;
 
-static inline void Vc_CurNearRoadSet(VC_WORK* work, VC_NEAR_ROAD_DATA* road)
+/** @brief Sets the active camera path collision.
+ *
+ * @param work Camera workspace.
+ * @param road Camera path collision to set as active.
+ */
+static inline void Vc_CurNearRoadSet(VC_WORK* work, const VC_NEAR_ROAD_DATA* road)
 {
     memcpy(&work->cur_near_road_2B8, road, sizeof(VC_NEAR_ROAD_DATA));
 }
 
-static inline void Vc_FlagClear(s32 flag)
+/** @brief Clears a set of camera flags.
+ *
+ * @param flag Camera flags to clear.
+ */
+static inline void Vc_FlagClear(s32 flags)
 {
-    vcWork.flags_8 &= ~flag;
+    vcWork.flags_8 &= ~flags;
 }
 
-static inline void Vc_FlagSet(s32 flag)
+/** @brief Sets a set of camera flags.
+ *
+ * @param flag Camera flags to set.
+ */
+static inline void Vc_FlagSet(s32 flags)
 {
-    vcWork.flags_8 |= flag;
+    vcWork.flags_8 |= flags;
 }
 
 #endif
