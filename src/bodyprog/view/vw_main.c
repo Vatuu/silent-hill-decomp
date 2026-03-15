@@ -162,7 +162,7 @@ void Vw_ClampAngleRange(q3_12* angleMin, q3_12* angleMax, q3_12 angleConstraintM
     *angleMax = Q12_ANGLE_NORM_U(rotToAngleMax + prevAngleMin);
 }
 
-s16 func_80048E3C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) // 0x80048E3C
+s16 func_80048E3C(s16 arg0, s16 arg1, s16 arg2, q3_12 arg3, q3_12 arg4) // 0x80048E3C
 {
     s32   temp_a0;
     q3_12 temp_lo;
