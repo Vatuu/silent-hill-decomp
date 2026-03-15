@@ -43,7 +43,7 @@ bool Demo_SequenceAdvance(s32 incrementAmt) // 0x8008EF20
         { FILE_MISC_DEMO0003_DAT, FILE_MISC_PLAY0003_DAT, 0 },
         { FILE_MISC_DEMO000B_DAT, FILE_MISC_PLAY000B_DAT, 0 },
         { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, 0 },
-#elif VERSION_IS(JAP0)
+#elif VERSION_REGION_IS(NTSCJ)
         { FILE_MISC_DEMO0006_DAT, FILE_MISC_PLAY0006_DAT, 0 },
         { FILE_MISC_DEMO0007_DAT, FILE_MISC_PLAY0007_DAT, 0 },
         { FILE_MISC_DEMO0008_DAT, FILE_MISC_PLAY0008_DAT, 0 },
@@ -376,6 +376,10 @@ bool Demo_Update(void) // 0x8008F5D8
 const s16 unkRodata_8002B2F2 = 0x8008;
 #elif VERSION_IS(JAP0)
 const s16 unkRodata_8002B2F2 = 0x2009;
+#elif VERSION_IS(JAP1)
+const s16 unkRodata_8002B2F2 = 0x8008;
+#elif VERSION_IS(JAP2)
+const s16 unkRodata_8002B2F2 = 0x8EA4;
 #endif
 
 bool Demo_ControllerDataUpdate(void) // 0x8008F7CC
