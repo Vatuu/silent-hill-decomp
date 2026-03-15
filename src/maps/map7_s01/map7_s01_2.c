@@ -2412,12 +2412,12 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
 
             if (Savegame_EventFlagGet(EventFlag_486) && !Savegame_EventFlagGet(EventFlag_549))
             {
-                if (D_800E2CE8)
+                if (D_800E2CE8 != Q12(0.0f))
                 {
                     D_800E2CE8 -= g_DeltaTime;
-                    if (D_800E2CE8 < 0)
+                    if (D_800E2CE8 < Q12(0.0f))
                     {
-                        D_800E2CE8 = 0;
+                        D_800E2CE8 = Q12(0.0f);
                     }
                     break;
                 }
