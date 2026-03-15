@@ -68,6 +68,7 @@ JAP1_STREAM = [
 
 JAP1_BODYPROG = [
     [0x12F, b'\xFE'],
+    [0x9B7, b'\x20'],
     [0x93724, b'\xFF\x0F\xFF\x03'],
     [0x9A80C, b'\x1D\x00\x04\xA2'],
     [0x9A838, b'\x00\x11\x03\x00\x08\x41\x03\x08'],
