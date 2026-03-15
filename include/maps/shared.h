@@ -108,7 +108,7 @@ typedef struct _SfxVolume
 typedef struct
 {
     s_AnimInfo  animInfo_0[56];
-    s32         unk_380[301][2]; // Unknown size, biggest constant index used is 35. Associated with anims.
+    s32         field_380[301][2]; // Unknown size, biggest constant index used is 35. Associated with anims.
     s_SfxVolume sfxVolumes_CE8[11];
     u_Property  properties_D14[4];
     u16         field_D24[2][3][2];
@@ -135,7 +135,7 @@ typedef struct
     VECTOR3           field_11C; // Q19.12
     VECTOR3           field_128;
     VECTOR3           field_134;
-    VECTOR3           unk_140;
+    VECTOR3           field_140;
     union
     {
         struct

@@ -1769,8 +1769,8 @@ typedef struct
     s16   field_0;
     s16   field_2; // Move dist?
     q3_12 field_4; // Angle.
-    s16   unk_6;
-    s16   unk_8;
+    s16   field_6;
+    s16   field_8;
     s16   unk_A;
     s16   field_C;
     s16   field_E;
@@ -1787,11 +1787,11 @@ typedef struct
     s_800AE204* ptr_0;
     u8          count_4;
     u8          unk_5;
-    s16         unk_6;
-    u8          unk_8;
-    u8          unk_9;
-    u8          unk_A;
-    u8          unk_B;
+    s16         field_6;
+    u8          field_8;
+    u8          field_9;
+    u8          field_A;
+    u8          field_B;
 } s_800AE4DC;
 
 typedef struct

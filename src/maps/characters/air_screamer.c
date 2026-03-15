@@ -204,7 +204,7 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer)
     flags = airScreamerProps.flags_11C;
     posZ  = airScreamer->position_18.vz;
 
-    temp_v0 = sharedData_800CAA98_0_s01.unk_380[39][airScreamer->model_0.anim_4.keyframeIdx_8];
+    temp_v0 = sharedData_800CAA98_0_s01.field_380[39][airScreamer->model_0.anim_4.keyframeIdx_8];
 
     BIT_GET(bit1, temp_v0, 1);
     BIT_GET(bit2, temp_v0, 2);
@@ -9499,7 +9499,7 @@ void sharedFunc_800DD534_2_s00(s_SubCharacter* airScreamer)
     sharedFunc_800DD2C4_2_s00(airScreamer, Q12(-2.2f), 1);
     sharedFunc_800DEC84_2_s00(airScreamer, Q12(30.0f), airScreamer->rotation_24.vy);
 
-    airScreamer->moveSpeed_38  = sharedData_800CAA98_0_s01.unk_380[9][0];
+    airScreamer->moveSpeed_38  = sharedData_800CAA98_0_s01.field_380[9][0];
     airScreamerProps.timer_120 = Q12(10.0f);
 }
 
@@ -9584,7 +9584,7 @@ void sharedFunc_800DD588_2_s00(s_SubCharacter* airScreamer)
         return;
     }
 
-    airScreamer->moveSpeed_38  = sharedData_800CAA98_0_s01.unk_380[9][0];
+    airScreamer->moveSpeed_38  = sharedData_800CAA98_0_s01.field_380[9][0];
     airScreamerProps.timer_120 = Q12(10.0f);
 
 #undef ANGLE_STEP_COUNT
@@ -9649,7 +9649,7 @@ void sharedFunc_800DD834_2_s00(s_SubCharacter* airScreamer)
         return;
     }
 
-    airScreamer->moveSpeed_38  = sharedData_800CAA98_0_s01.unk_380[9][0];
+    airScreamer->moveSpeed_38  = sharedData_800CAA98_0_s01.field_380[9][0];
     airScreamerProps.timer_120 = Q12(10.0f);
 
 #undef ANGLE_STEP_COUNT
@@ -9878,7 +9878,7 @@ void sharedFunc_800DDA80_2_s00(s_SubCharacter* airScreamer)
             break;
     }
 
-    airScreamer->moveSpeed_38   = sharedData_800CAA98_0_s01.unk_380[9][0];
+    airScreamer->moveSpeed_38   = sharedData_800CAA98_0_s01.field_380[9][0];
     airScreamer->position_18.vx = newPosX;
     airScreamer->position_18.vz = newPosZ;
     airScreamerProps.timer_120  = Q12(10.0f);
@@ -10540,15 +10540,15 @@ void sharedFunc_800D5638_0_s01(s_SubCharacter* airScreamer)
     dst->field_B4[idx0][2] = 0;
 
     idx0                   = 0;
-    dst->field_B4[idx0][2] = src->unk_380[2][0];
-    dst->field_B4[idx0][1] = src->unk_380[2][1];
+    dst->field_B4[idx0][2] = src->field_380[2][0];
+    dst->field_B4[idx0][1] = src->field_380[2][1];
 
     idx0                   = 1;
-    dst->field_B4[idx0][2] = src->unk_380[11][0];
-    dst->field_B4[idx0][1] = src->unk_380[11][1];
+    dst->field_B4[idx0][2] = src->field_380[11][0];
+    dst->field_B4[idx0][1] = src->field_380[11][1];
 
     idx0                   = 3;
-    dst->field_B4[idx0][1] = src->unk_380[30][1];
+    dst->field_B4[idx0][1] = src->field_380[30][1];
 
     sharedFunc_800D5E78_0_s01(airScreamer, Q12_ANGLE(0.0f));
 }
@@ -10571,15 +10571,15 @@ void sharedFunc_800DF2D0_2_s00(s_SubCharacter* airScreamer)
     dst->field_B4[idx0][2] = 0;
 
     idx0                   = 0;
-    dst->field_B4[idx0][2] = src->unk_380[2][0];
-    dst->field_B4[idx0][1] = src->unk_380[2][1];
+    dst->field_B4[idx0][2] = src->field_380[2][0];
+    dst->field_B4[idx0][1] = src->field_380[2][1];
 
     idx0                   = 1;
-    dst->field_B4[idx0][2] = src->unk_380[11][0];
-    dst->field_B4[idx0][1] = src->unk_380[11][1];
+    dst->field_B4[idx0][2] = src->field_380[11][0];
+    dst->field_B4[idx0][1] = src->field_380[11][1];
 
     idx0                   = 3;
-    dst->field_B4[idx0][1] = src->unk_380[30][1];
+    dst->field_B4[idx0][1] = src->field_380[30][1];
 
     sharedFunc_800D5E78_0_s01(airScreamer, angleDiff);
 }
@@ -10594,8 +10594,8 @@ void sharedFunc_800DF358_2_s00(s_SubCharacter* airScreamer)
 
     angle0   = func_80080478(&airScreamer->position_18, &airScreamerProps.targetPosition_F8);
     angle0   = Q12_ANGLE_NORM_S(angle0 - airScreamer->rotation_24.vy);
-    element0 = sharedData_800CAA98_0_s01.unk_380[30][0] / 2;
-    element1 = sharedData_800CAA98_0_s01.unk_380[30][1];
+    element0 = sharedData_800CAA98_0_s01.field_380[30][0] / 2;
+    element1 = sharedData_800CAA98_0_s01.field_380[30][1];
 
     if (angle0 <= Q12_ANGLE(0.5f))
     {
@@ -10617,10 +10617,10 @@ void sharedFunc_800DF358_2_s00(s_SubCharacter* airScreamer)
     ptr = &sharedData_800CAA98_0_s01;
 
     idx                                        = 1;
-    sharedData_800E21D0_0_s01.field_B4[0][2]   = ptr->unk_380[2][0];
-    sharedData_800E21D0_0_s01.field_B4[0][1]   = ptr->unk_380[2][1];
-    sharedData_800E21D0_0_s01.field_B4[idx][2] = sharedData_800CAA98_0_s01.unk_380[11][0];
-    sharedData_800E21D0_0_s01.field_B4[idx][1] = sharedData_800CAA98_0_s01.unk_380[11][1];
+    sharedData_800E21D0_0_s01.field_B4[0][2]   = ptr->field_380[2][0];
+    sharedData_800E21D0_0_s01.field_B4[0][1]   = ptr->field_380[2][1];
+    sharedData_800E21D0_0_s01.field_B4[idx][2] = sharedData_800CAA98_0_s01.field_380[11][0];
+    sharedData_800E21D0_0_s01.field_B4[idx][1] = sharedData_800CAA98_0_s01.field_380[11][1];
     sharedData_800E21D0_0_s01.field_B4[idx][3] = 0;
     sharedData_800E21D0_0_s01.field_B4[idx][0] = 1;
 
@@ -10711,8 +10711,8 @@ void sharedFunc_800DF448_2_s00(s_SubCharacter* airScreamer, bool cond)
         }
     }
 
-    var_t1 = sharedData_800CAA98_0_s01.unk_380[var_v1_2][0];
-    var_t2 = sharedData_800CAA98_0_s01.unk_380[var_v1_2][1];
+    var_t1 = sharedData_800CAA98_0_s01.field_380[var_v1_2][0];
+    var_t2 = sharedData_800CAA98_0_s01.field_380[var_v1_2][1];
 
     if (temp_s2 < 6)
     {
@@ -10728,8 +10728,8 @@ void sharedFunc_800DF448_2_s00(s_SubCharacter* airScreamer, bool cond)
         }
     }
 
-    temp  = sharedData_800CAA98_0_s01.unk_380[var_a0][0];
-    temp2 = sharedData_800CAA98_0_s01.unk_380[var_a0][1];
+    temp  = sharedData_800CAA98_0_s01.field_380[var_a0][0];
+    temp2 = sharedData_800CAA98_0_s01.field_380[var_a0][1];
 
     sharedData_800E21D0_0_s01.field_B4[0][1] = temp2;
     sharedData_800E21D0_0_s01.field_B4[0][2] = temp;
@@ -10742,8 +10742,8 @@ void sharedFunc_800DF448_2_s00(s_SubCharacter* airScreamer, bool cond)
 
     ptr = &sharedData_800CAA98_0_s01;
 
-    temp3 = ptr->unk_380[var_a2][0];
-    temp4 = ptr->unk_380[var_a2][1];
+    temp3 = ptr->field_380[var_a2][0];
+    temp4 = ptr->field_380[var_a2][1];
 
     idx                                        = 3;
     sharedData_800E21D0_0_s01.field_B4[idx][2] = var_t1;
@@ -10783,8 +10783,8 @@ void sharedFunc_800DF60C_2_s00(s_SubCharacter* airScreamer)
         idx1 = 11;
     }
 
-    var_t2 = sharedData_800CAA98_0_s01.unk_380[30][0];
-    var_t3 = sharedData_800CAA98_0_s01.unk_380[30][1];
+    var_t2 = sharedData_800CAA98_0_s01.field_380[30][0];
+    var_t3 = sharedData_800CAA98_0_s01.field_380[30][1];
 
     if (temp_t1 < 6)
     {
@@ -10804,11 +10804,11 @@ void sharedFunc_800DF60C_2_s00(s_SubCharacter* airScreamer)
 
     sharedData_800E21D0_0_s01.field_B4[0][3] = 0;
     sharedData_800E21D0_0_s01.field_B4[0][0] = 1;
-    sharedData_800E21D0_0_s01.field_B4[0][2] = ptr->unk_380[2][0];
-    sharedData_800E21D0_0_s01.field_B4[0][1] = ptr->unk_380[2][1];
+    sharedData_800E21D0_0_s01.field_B4[0][2] = ptr->field_380[2][0];
+    sharedData_800E21D0_0_s01.field_B4[0][1] = ptr->field_380[2][1];
 
-    temp3 = ptr->unk_380[idx1][0];
-    temp4 = ptr->unk_380[idx1][1];
+    temp3 = ptr->field_380[idx1][0];
+    temp4 = ptr->field_380[idx1][1];
 
     idx0                                        = 3;
     sharedData_800E21D0_0_s01.field_B4[idx0][2] = var_t2;
@@ -10850,8 +10850,8 @@ void sharedFunc_800DF710_2_s00(s_SubCharacter* airScreamer)
         animIdx = 11;
     }
 
-    element0 = sharedData_800CAA98_0_s01.unk_380[29][0];
-    element1 = sharedData_800CAA98_0_s01.unk_380[29][1];
+    element0 = sharedData_800CAA98_0_s01.field_380[29][0];
+    element1 = sharedData_800CAA98_0_s01.field_380[29][1];
 
     if (angle0 <= Q12_ANGLE(0.5f))
     {
@@ -10867,17 +10867,17 @@ void sharedFunc_800DF710_2_s00(s_SubCharacter* airScreamer)
         }
     }
 
-    element2 = sharedData_800CAA98_0_s01.unk_380[1][0];
+    element2 = sharedData_800CAA98_0_s01.field_380[1][0];
 
     idx                                        = 0;
     sharedData_800E21D0_0_s01.field_B4[idx][2] = element2;
-    sharedData_800E21D0_0_s01.field_B4[idx][1] = sharedData_800CAA98_0_s01.unk_380[1][1];
+    sharedData_800E21D0_0_s01.field_B4[idx][1] = sharedData_800CAA98_0_s01.field_380[1][1];
 
     ptr = &sharedData_800CAA98_0_s01;
 
     idx                                        = 1;
-    element3                                   = ptr->unk_380[animIdx][0];
-    element4                                   = ptr->unk_380[animIdx][1];
+    element3                                   = ptr->field_380[animIdx][0];
+    element4                                   = ptr->field_380[animIdx][1];
     sharedData_800E21D0_0_s01.field_B4[idx][2] = element3;
     sharedData_800E21D0_0_s01.field_B4[idx][1] = element4;
 
@@ -10906,15 +10906,15 @@ void sharedFunc_800DF80C_2_s00(s_SubCharacter* airScreamer)
     sharedData_800E21D0_0_s01.field_B4[idx][2] = 0;
 
     idx                                      = 0;
-    sharedData_800E21D0_0_s01.field_B4[0][2] = src->unk_380[2][0];
-    sharedData_800E21D0_0_s01.field_B4[0][1] = src->unk_380[2][1];
+    sharedData_800E21D0_0_s01.field_B4[0][2] = src->field_380[2][0];
+    sharedData_800E21D0_0_s01.field_B4[0][1] = src->field_380[2][1];
 
     idx                                        = 1;
-    sharedData_800E21D0_0_s01.field_B4[idx][2] = src->unk_380[11][0];
-    sharedData_800E21D0_0_s01.field_B4[idx][1] = src->unk_380[11][1];
+    sharedData_800E21D0_0_s01.field_B4[idx][2] = src->field_380[11][0];
+    sharedData_800E21D0_0_s01.field_B4[idx][1] = src->field_380[11][1];
 
     idx                                        = 3;
-    sharedData_800E21D0_0_s01.field_B4[idx][1] = src->unk_380[30][1];
+    sharedData_800E21D0_0_s01.field_B4[idx][1] = src->field_380[30][1];
 
     if (angle1 < Q12_ANGLE(0.0f))
     {
@@ -10945,8 +10945,8 @@ void sharedFunc_800DF8A0_2_s00(s_SubCharacter* airScreamer)
         var_a3 = 30;
     }
 
-    temp3 = sharedData_800CAA98_0_s01.unk_380[idx0][0];
-    temp4 = sharedData_800CAA98_0_s01.unk_380[idx0][1];
+    temp3 = sharedData_800CAA98_0_s01.field_380[idx0][0];
+    temp4 = sharedData_800CAA98_0_s01.field_380[idx0][1];
 
     sharedData_800E21D0_0_s01.field_B4[0][2] = temp3;
     sharedData_800E21D0_0_s01.field_B4[0][1] = temp4;
@@ -10954,11 +10954,11 @@ void sharedFunc_800DF8A0_2_s00(s_SubCharacter* airScreamer)
     ptr = &sharedData_800CAA98_0_s01;
 
     idx1                                        = 1;
-    sharedData_800E21D0_0_s01.field_B4[idx1][2] = ptr->unk_380[11][0];
-    sharedData_800E21D0_0_s01.field_B4[idx1][1] = ptr->unk_380[11][1];
+    sharedData_800E21D0_0_s01.field_B4[idx1][2] = ptr->field_380[11][0];
+    sharedData_800E21D0_0_s01.field_B4[idx1][1] = ptr->field_380[11][1];
 
     idx1                                        = 3;
-    sharedData_800E21D0_0_s01.field_B4[idx1][1] = ptr->unk_380[var_a3][1];
+    sharedData_800E21D0_0_s01.field_B4[idx1][1] = ptr->field_380[var_a3][1];
     sharedData_800E21D0_0_s01.field_B4[idx1][2] = 0;
 
     sharedFunc_800D5E78_0_s01(airScreamer, 0);
@@ -11091,8 +11091,8 @@ void sharedFunc_800D57C8_0_s01(s_SubCharacter* airScreamer)
         idx2 = 18;
     }
 
-    element0 = sharedData_800CAA98_0_s01.unk_380[idx1][0];
-    element1 = sharedData_800CAA98_0_s01.unk_380[idx1][1];
+    element0 = sharedData_800CAA98_0_s01.field_380[idx1][0];
+    element1 = sharedData_800CAA98_0_s01.field_380[idx1][1];
     if (angle <= Q12_ANGLE(0.5f))
     {
         element1 = -element1;
@@ -11110,8 +11110,8 @@ void sharedFunc_800D57C8_0_s01(s_SubCharacter* airScreamer)
 
     ptr = &sharedData_800CAA98_0_s01;
 
-    element2 = ptr->unk_380[idx0][0];
-    element3 = ptr->unk_380[idx0][1];
+    element2 = ptr->field_380[idx0][0];
+    element3 = ptr->field_380[idx0][1];
 
     idx3                                        = 0;
     sharedData_800E21D0_0_s01.field_B4[idx3][2] = element2;
@@ -11119,8 +11119,8 @@ void sharedFunc_800D57C8_0_s01(s_SubCharacter* airScreamer)
     sharedData_800E21D0_0_s01.field_B4[idx3][3] = dist;
     sharedData_800E21D0_0_s01.field_B4[idx3][0] = 1;
 
-    element4 = ptr->unk_380[idx2][0];
-    element5 = ptr->unk_380[idx2][1];
+    element4 = ptr->field_380[idx2][0];
+    element5 = ptr->field_380[idx2][1];
 
     idx3                                        = 1;
     sharedData_800E21D0_0_s01.field_B4[idx3][2] = element4;
@@ -11210,8 +11210,8 @@ void sharedFunc_800D598C_0_s01(s_SubCharacter* airScreamer)
         idx2 = 18;
     }
 
-    element0 = sharedData_800CAA98_0_s01.unk_380[35][0]; // Hardcoded 35 instead of `idx1`.
-    element1 = sharedData_800CAA98_0_s01.unk_380[35][1];
+    element0 = sharedData_800CAA98_0_s01.field_380[35][0]; // Hardcoded 35 instead of `idx1`.
+    element1 = sharedData_800CAA98_0_s01.field_380[35][1];
 
     if (angle <= Q12_ANGLE(0.5f))
     {
@@ -11230,8 +11230,8 @@ void sharedFunc_800D598C_0_s01(s_SubCharacter* airScreamer)
 
     ptr = &sharedData_800CAA98_0_s01;
 
-    element2 = ptr->unk_380[7][0]; // Hardcoded 7 instead of `idx0`.
-    element3 = ptr->unk_380[7][1];
+    element2 = ptr->field_380[7][0]; // Hardcoded 7 instead of `idx0`.
+    element3 = ptr->field_380[7][1];
 
     idx3                                        = 0;
     sharedData_800E21D0_0_s01.field_B4[idx3][2] = element2;
@@ -11239,8 +11239,8 @@ void sharedFunc_800D598C_0_s01(s_SubCharacter* airScreamer)
     sharedData_800E21D0_0_s01.field_B4[idx3][3] = 0;
     sharedData_800E21D0_0_s01.field_B4[idx3][0] = 1;
 
-    element4 = ptr->unk_380[idx2][0];
-    element5 = ptr->unk_380[idx2][1];
+    element4 = ptr->field_380[idx2][0];
+    element5 = ptr->field_380[idx2][1];
 
     idx3                                        = 1;
     sharedData_800E21D0_0_s01.field_B4[idx3][2] = element4;
@@ -11318,8 +11318,8 @@ void sharedFunc_800D5B10_0_s01(s_SubCharacter* airScreamer)
         idx2 = 18;
     }
 
-    element0 = sharedData_800CAA98_0_s01.unk_380[34][0];
-    element1 = sharedData_800CAA98_0_s01.unk_380[34][1];
+    element0 = sharedData_800CAA98_0_s01.field_380[34][0];
+    element1 = sharedData_800CAA98_0_s01.field_380[34][1];
 
     if (angle <= Q12_ANGLE(0.5f))
     {
@@ -11338,15 +11338,15 @@ void sharedFunc_800D5B10_0_s01(s_SubCharacter* airScreamer)
 
     ptr = &sharedData_800CAA98_0_s01;
 
-    element2 = ptr->unk_380[6][0];
-    element3 = ptr->unk_380[6][1];
+    element2 = ptr->field_380[6][0];
+    element3 = ptr->field_380[6][1];
 
     idx3                                        = 0;
     sharedData_800E21D0_0_s01.field_B4[idx3][2] = element2;
     sharedData_800E21D0_0_s01.field_B4[idx3][1] = element3;
 
-    element4 = ptr->unk_380[idx2][0];
-    element5 = ptr->unk_380[idx2][1];
+    element4 = ptr->field_380[idx2][0];
+    element5 = ptr->field_380[idx2][1];
 
     idx3                                        = 1;
     sharedData_800E21D0_0_s01.field_B4[idx3][2] = element4;
@@ -11379,8 +11379,8 @@ void sharedFunc_800D5C90_0_s01(s_SubCharacter* airScreamer)
     angle0 = func_80080478(&airScreamer->position_18, &airScreamerProps.targetPosition_F8);
     angle1 = Q12_ANGLE_NORM_S(angle0 - airScreamer->rotation_24.vy);
 
-    element0 = sharedData_800CAA98_0_s01.unk_380[35][0] / 2;
-    element1 = sharedData_800CAA98_0_s01.unk_380[35][1];
+    element0 = sharedData_800CAA98_0_s01.field_380[35][0] / 2;
+    element1 = sharedData_800CAA98_0_s01.field_380[35][1];
 
     if (angle1 <= Q12_ANGLE(0.5f))
     {
@@ -11401,14 +11401,14 @@ void sharedFunc_800D5C90_0_s01(s_SubCharacter* airScreamer)
     idx                                        = 0;
     sharedData_800E21D0_0_s01.field_B4[idx][3] = 0;
     sharedData_800E21D0_0_s01.field_B4[idx][0] = 1;
-    sharedData_800E21D0_0_s01.field_B4[idx][2] = ptr->unk_380[7][0];
-    sharedData_800E21D0_0_s01.field_B4[idx][1] = ptr->unk_380[7][1];
+    sharedData_800E21D0_0_s01.field_B4[idx][2] = ptr->field_380[7][0];
+    sharedData_800E21D0_0_s01.field_B4[idx][1] = ptr->field_380[7][1];
 
     idx                                        = 1;
     sharedData_800E21D0_0_s01.field_B4[idx][3] = 0;
     sharedData_800E21D0_0_s01.field_B4[idx][0] = 1;
-    sharedData_800E21D0_0_s01.field_B4[idx][2] = ptr->unk_380[15][0];
-    sharedData_800E21D0_0_s01.field_B4[idx][1] = ptr->unk_380[15][1];
+    sharedData_800E21D0_0_s01.field_B4[idx][2] = ptr->field_380[15][0];
+    sharedData_800E21D0_0_s01.field_B4[idx][1] = ptr->field_380[15][1];
 
     idx                                        = 3;
     sharedData_800E21D0_0_s01.field_B4[idx][2] = element0;
@@ -11433,16 +11433,16 @@ void sharedFunc_800D5D80_0_s01(s_SubCharacter* airScreamer)
     base   = &sharedData_800E21D0_0_s01;
 
     idx                    = 0;
-    base->field_B4[idx][2] = src->unk_380[7][0];
-    base->field_B4[idx][1] = src->unk_380[7][1];
+    base->field_B4[idx][2] = src->field_380[7][0];
+    base->field_B4[idx][1] = src->field_380[7][1];
 
     idx                    = 1;
-    base->field_B4[idx][2] = src->unk_380[20][0];
-    base->field_B4[idx][1] = src->unk_380[20][1];
+    base->field_B4[idx][2] = src->field_380[20][0];
+    base->field_B4[idx][1] = src->field_380[20][1];
 
     idx                    = 3;
     base->field_B4[idx][2] = 0;
-    base->field_B4[idx][1] = src->unk_380[35][1];
+    base->field_B4[idx][1] = src->field_380[35][1];
 
     if (angle1 < Q12_ANGLE(0.0f))
     {
@@ -11462,16 +11462,16 @@ void sharedFunc_800D5E14_0_s01(s_SubCharacter* airScreamer)
     base = &sharedData_800E21D0_0_s01;
 
     idx                    = 0;
-    base->field_B4[idx][2] = src->unk_380[7][0];
-    base->field_B4[idx][1] = src->unk_380[7][1];
+    base->field_B4[idx][2] = src->field_380[7][0];
+    base->field_B4[idx][1] = src->field_380[7][1];
 
     idx                    = 1;
-    base->field_B4[idx][2] = src->unk_380[19][0];
-    base->field_B4[idx][1] = src->unk_380[19][1];
+    base->field_B4[idx][2] = src->field_380[19][0];
+    base->field_B4[idx][1] = src->field_380[19][1];
 
     idx                    = 3;
     base->field_B4[idx][2] = 0;
-    base->field_B4[idx][1] = src->unk_380[35][1];
+    base->field_B4[idx][1] = src->field_380[35][1];
 
     sharedFunc_800D5E78_0_s01(airScreamer, 0);
 }
@@ -11491,8 +11491,8 @@ void sharedFunc_800E012C_2_s00(s_SubCharacter* airScreamer)
     angleDeltaToPlayer = Q12_ANGLE_NORM_S(angleDeltaToPlayer - airScreamer->rotation_24.vy);
 
     idx     = 33;
-    temp_a0 = sharedData_800CAA98_0_s01.unk_380[idx][0];
-    var_t1  = sharedData_800CAA98_0_s01.unk_380[idx][1];
+    temp_a0 = sharedData_800CAA98_0_s01.field_380[idx][0];
+    var_t1  = sharedData_800CAA98_0_s01.field_380[idx][1];
     var_t0  = temp_a0 / 2;
 
     if (angleDeltaToPlayer <= Q12_ANGLE(0.5f))
@@ -11509,8 +11509,8 @@ void sharedFunc_800E012C_2_s00(s_SubCharacter* airScreamer)
         }
     }
 
-    sharedData_800E21D0_0_s01.field_B4[0][2] = sharedData_800CAA98_0_s01.unk_380[5][0] / 2;
-    sharedData_800E21D0_0_s01.field_B4[0][1] = sharedData_800CAA98_0_s01.unk_380[5][1];
+    sharedData_800E21D0_0_s01.field_B4[0][2] = sharedData_800CAA98_0_s01.field_380[5][0] / 2;
+    sharedData_800E21D0_0_s01.field_B4[0][1] = sharedData_800CAA98_0_s01.field_380[5][1];
 
     idx                                        = 3;
     sharedData_800E21D0_0_s01.field_B4[idx][2] = var_t0;
@@ -11518,7 +11518,7 @@ void sharedFunc_800E012C_2_s00(s_SubCharacter* airScreamer)
     sharedData_800E21D0_0_s01.field_B4[idx][3] = angleDeltaToPlayer;
     sharedData_800E21D0_0_s01.field_B4[idx][0] = 1;
 
-    ptr = sharedData_800CAA98_0_s01.unk_380[19];
+    ptr = sharedData_800CAA98_0_s01.field_380[19];
 
     idx                                        = 1;
     sharedData_800E21D0_0_s01.field_B4[idx][2] = ptr[0];
@@ -11613,8 +11613,8 @@ void sharedFunc_800E021C_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2)
             break;
     }
 
-    var_a3 = sharedData_800CAA98_0_s01.unk_380[temp_v1][0];
-    var_t0 = sharedData_800CAA98_0_s01.unk_380[temp_v1][1];
+    var_a3 = sharedData_800CAA98_0_s01.field_380[temp_v1][0];
+    var_t0 = sharedData_800CAA98_0_s01.field_380[temp_v1][1];
 
     if (angleToUnk <= Q12_ANGLE(0.5f))
     {
@@ -11630,15 +11630,15 @@ void sharedFunc_800E021C_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2)
         }
     }
 
-    temp  = sharedData_800CAA98_0_s01.unk_380[var_a0][0];
-    temp2 = sharedData_800CAA98_0_s01.unk_380[var_a0][1];
+    temp  = sharedData_800CAA98_0_s01.field_380[var_a0][0];
+    temp2 = sharedData_800CAA98_0_s01.field_380[var_a0][1];
 
     sharedData_800E21D0_0_s01.field_B4[0][2] = temp;
     sharedData_800E21D0_0_s01.field_B4[0][1] = temp2;
 
     ptr   = &sharedData_800CAA98_0_s01;
-    temp3 = ptr->unk_380[var_a2][0];
-    temp4 = ptr->unk_380[var_a2][1];
+    temp3 = ptr->field_380[var_a2][0];
+    temp4 = ptr->field_380[var_a2][1];
 
     idx                                        = 1;
     sharedData_800E21D0_0_s01.field_B4[idx][2] = temp3;
@@ -11679,15 +11679,15 @@ void sharedFunc_800E041C_2_s00(s_SubCharacter* airScreamer)
     sharedData_800E21D0_0_s01.field_B4[idx][2] = 0;
 
     idx                                      = 0;
-    sharedData_800E21D0_0_s01.field_B4[0][2] = src->unk_380[9][0];
-    sharedData_800E21D0_0_s01.field_B4[0][1] = src->unk_380[9][1];
+    sharedData_800E21D0_0_s01.field_B4[0][2] = src->field_380[9][0];
+    sharedData_800E21D0_0_s01.field_B4[0][1] = src->field_380[9][1];
 
     idx                                        = 1;
-    sharedData_800E21D0_0_s01.field_B4[idx][2] = src->unk_380[27][0];
-    sharedData_800E21D0_0_s01.field_B4[idx][1] = src->unk_380[27][1];
+    sharedData_800E21D0_0_s01.field_B4[idx][2] = src->field_380[27][0];
+    sharedData_800E21D0_0_s01.field_B4[idx][1] = src->field_380[27][1];
 
     idx                                        = 3;
-    sharedData_800E21D0_0_s01.field_B4[idx][1] = src->unk_380[37][1];
+    sharedData_800E21D0_0_s01.field_B4[idx][1] = src->field_380[37][1];
 
     if (angle1 < Q12_ANGLE(0.0f))
     {
@@ -11705,18 +11705,18 @@ void sharedFunc_800E04B0_2_s00(s_SubCharacter* chara)
     src = &sharedData_800CAA98_0_s01;
 
     idx                                      = 0;
-    sharedData_800E21D0_0_s01.field_B4[0][2] = src->unk_380[9][0];
-    sharedData_800E21D0_0_s01.field_B4[0][1] = src->unk_380[9][1];
+    sharedData_800E21D0_0_s01.field_B4[0][2] = src->field_380[9][0];
+    sharedData_800E21D0_0_s01.field_B4[0][1] = src->field_380[9][1];
 
     idx                                        = 3;
     sharedData_800E21D0_0_s01.field_B4[idx][2] = 0;
 
     idx                                        = 1;
-    sharedData_800E21D0_0_s01.field_B4[idx][2] = src->unk_380[26][0];
-    sharedData_800E21D0_0_s01.field_B4[idx][1] = src->unk_380[26][1];
+    sharedData_800E21D0_0_s01.field_B4[idx][2] = src->field_380[26][0];
+    sharedData_800E21D0_0_s01.field_B4[idx][1] = src->field_380[26][1];
 
     idx                                        = 3;
-    sharedData_800E21D0_0_s01.field_B4[idx][1] = src->unk_380[37][1];
+    sharedData_800E21D0_0_s01.field_B4[idx][1] = src->field_380[37][1];
 
     sharedFunc_800D5E78_0_s01(chara, 0);
 }
@@ -11737,8 +11737,8 @@ void sharedFunc_800E0514_2_s00(s_SubCharacter* airScreamer)
     angleDeltaToTarget = func_80080478(&airScreamer->position_18, &airScreamerProps.targetPosition_F8);
     angleDeltaToTarget = Q12_ANGLE_NORM_S(angleDeltaToTarget - airScreamer->rotation_24.vy);
 
-    temp_a0 = sharedData_800CAA98_0_s01.unk_380[37][0];
-    var_t6  = sharedData_800CAA98_0_s01.unk_380[37][1];
+    temp_a0 = sharedData_800CAA98_0_s01.field_380[37][0];
+    var_t6  = sharedData_800CAA98_0_s01.field_380[37][1];
     var_t5  = temp_a0 / 2;
 
     if (angleDeltaToTarget <= Q12_ANGLE(0.5f))
@@ -11767,11 +11767,11 @@ void sharedFunc_800E0514_2_s00(s_SubCharacter* airScreamer)
 
     ptr = &sharedData_800CAA98_0_s01;
 
-    sharedData_800E21D0_0_s01.field_B4[0][2] = ptr->unk_380[9][0];
-    sharedData_800E21D0_0_s01.field_B4[0][1] = ptr->unk_380[9][1];
+    sharedData_800E21D0_0_s01.field_B4[0][2] = ptr->field_380[9][0];
+    sharedData_800E21D0_0_s01.field_B4[0][1] = ptr->field_380[9][1];
 
-    sharedData_800E21D0_0_s01.field_B4[idx2][2] = ptr->unk_380[22][0];
-    sharedData_800E21D0_0_s01.field_B4[idx2][1] = ptr->unk_380[22][1];
+    sharedData_800E21D0_0_s01.field_B4[idx2][2] = ptr->field_380[22][0];
+    sharedData_800E21D0_0_s01.field_B4[idx2][1] = ptr->field_380[22][1];
 
     sharedFunc_800D5E78_0_s01(airScreamer, angleDeltaToTarget / 2);
 }
@@ -12138,7 +12138,7 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer)
     temp = sharedFunc_800D7440_0_s01(&sharedData_800E2350_0_s01, &sharedData_800DE200_0_s01, airScreamer);
     temp = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01.offset_0, &sharedData_800DE210_0_s01, airScreamer, temp, &sharedData_800E21D0_0_s01.field_128);
 
-    sharedFunc_800D6C7C_0_s01(&sharedData_800DE200_0_s01, airScreamer, temp, &sharedData_800E21D0_0_s01.unk_140);
+    sharedFunc_800D6C7C_0_s01(&sharedData_800DE200_0_s01, airScreamer, temp, &sharedData_800E21D0_0_s01.field_140);
 
     angle1 = ratan2(posX, posZ);
     angle0 = Q12_SQUARE_PRECISE(posX) +

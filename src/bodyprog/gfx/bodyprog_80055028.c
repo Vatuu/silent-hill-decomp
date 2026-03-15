@@ -3349,8 +3349,8 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
     POLY_G4*          poly_g4;
 
     temp_fp = &D_800AE4DC[arg0];
-    sp4A0   = temp_fp->unk_A | (temp_fp->unk_9 << 8);
-    sp4A8   = temp_fp->unk_8 | (temp_fp->unk_B << 8);
+    sp4A0   = temp_fp->field_A | (temp_fp->field_9 << 8);
+    sp4A8   = temp_fp->field_8 | (temp_fp->field_B << 8);
     sp498   = ReadGeomScreen();
 
     temp_v1 = 0x79C << (arg5 + 2);
@@ -3398,7 +3398,7 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
         Vw_CoordHierarchyMatrixCompute(D_800C42B8, &matrix_sp18[1]);
 
         matrix_sp18[1].t[0] = Q12_TO_Q8(x);
-        matrix_sp18[1].t[1] = Q12_TO_Q8(y) + temp_fp->unk_6;
+        matrix_sp18[1].t[1] = Q12_TO_Q8(y) + temp_fp->field_6;
         matrix_sp18[1].t[2] = Q12_TO_Q8(z);
 
         func_80057228(&matrix_sp18[1], g_WorldEnvWork.field_54, &g_WorldEnvWork.field_58, &g_WorldEnvWork.field_60);
@@ -3505,13 +3505,13 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
 
             poly_gt4->clut       = clut;
             *(s32*)&poly_gt4->r3 = temp_a0;
-            *(s16*)&poly_gt4->u0 = *(s16*)&temp_fp->unk_8;
+            *(s16*)&poly_gt4->u0 = *(s16*)&temp_fp->field_8;
             *(s16*)&poly_gt4->u1 = sp4A0;
             *(s16*)&poly_gt4->u2 = sp4A8;
-            *(s16*)&poly_gt4->u3 = *(s16*)&temp_fp->unk_A;
+            *(s16*)&poly_gt4->u3 = *(s16*)&temp_fp->field_A;
 
-            temp_a0_2 = Q12_MULT(var_s6->unk_8, temp_lo_2);
-            temp_v1_4 = Q12_MULT(var_s6->unk_6, temp_lo_2);
+            temp_a0_2 = Q12_MULT(var_s6->field_8, temp_lo_2);
+            temp_v1_4 = Q12_MULT(var_s6->field_6, temp_lo_2);
 
             setXY4(poly_gt4,
                    field_1C.vx, field_1C.vy - (temp_a0_2 * 2),
