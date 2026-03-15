@@ -172,6 +172,47 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
     }
 
     res = sharedData_800ED430_2_s02[(xIdx * 3) + yIdx];
+#elif defined(MAP5_S00)
+    res = 0;
+
+    if (x >= Q12(-40.0f))
+    {
+        if (CheckRange(x, Q12(16.0), Q12(24.0)) && z > Q12(-8.0))
+        {
+            res = (z < Q12(48.0)) ? 2 : 1;
+        }
+        else if (CheckRange(z + Q12(12.0), Q12(-4.0), Q12(4.0)) && CheckRange(x - Q12(40.0), Q12(-8.0), Q12(8.0)))
+        {
+            res = 3;
+        }
+        else if (CheckRange(x, Q12(48.0), Q12(56.0)) && CheckRange(z + Q12(40.0), Q12(-8.0), Q12(8.0)))
+        {
+            res = 4;
+        }
+    }
+    else if (CheckRange(x, Q12(-64.0f), Q12(-56.0f)))
+    {
+        if (z > Q12(-8.0))
+        {
+            res = 9;
+        }
+        else if (CheckRange(z + Q12(52.0), Q12(-36.0), Q12(36.0)))
+        {
+            res = 8;
+        }
+    }
+    else if (x > Q12(-64.0) && z < Q12(-88.0))
+    {
+        res = 10;
+    }
+    else if (CheckRange(z, Q12(-94.0), Q12(-90.0)) && x > Q12(-89.0))
+    {
+        res = 11;
+    }
+    else if (CheckRange(x, Q12(-96.0), Q12(-88.0)) && CheckRange(z + Q12(46.0), Q12(-30.0), Q12(30.0)))
+    {
+        res = 13;
+    }
 #elif defined(MAP5_S01)
     xIdx = GetXIdx(x, z);
 
@@ -239,19 +280,26 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
         if (x < MAP_ROOM_MIN_X || x >= MAP_ROOM_MAX_X ||
             z < MAP_ROOM_MIN_Z || z >= MAP_ROOM_MAX_Z)
         {
-            return 0;
+            // TODO: Not sure why these two maps need this.
+            #if defined(MAP6_S00) || defined(MAP6_S02)
+                return 0;
+            #else
+                res = 0;
+            #endif
         }
-
-        x = (x - MAP_ROOM_MIN_X) / CHUNK_CELL_SIZE;
-        z = (z - MAP_ROOM_MIN_Z) / CHUNK_CELL_SIZE;
-
-        res = MAP_ROOM_IDXS[(x * MAP_ROOM_STRIDE_Z) + z];
-#ifdef MAP_HAS_SECONDARY_GRID
-        if (res == 0)
+        else
         {
-            res = 26;
-        }
+            x = (x - MAP_ROOM_MIN_X) / CHUNK_CELL_SIZE;
+            z = (z - MAP_ROOM_MIN_Z) / CHUNK_CELL_SIZE;
+
+            res = MAP_ROOM_IDXS[(x * MAP_ROOM_STRIDE_Z) + z];
+#ifdef MAP_HAS_SECONDARY_GRID
+            if (res == 0)
+            {
+                res = 26;
+            }
 #endif
+        }
 
 #undef MAP_ROOM_STRIDE_Z
     }
