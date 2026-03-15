@@ -1247,11 +1247,11 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
     {
         if (Savegame_EventFlagGet(EventFlag_302))
         {
-            func_80069844(0xFFFF);
+            func_80069844(CollisionFlag_All);
         }
         else
         {
-            Collision_FlagBitsSet(2);
+            Collision_FlagBitsSet(CollisionFlag_1);
         }
 
         WorldGfx_ObjectAdd(&WorldObject_D_800D7FF0.object_0, &WorldObject_D_800D7FF0.position_1C, &(SVECTOR3){ 0, 0, 0 });
@@ -1266,7 +1266,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
     }
     else
     {
-        func_80069844(0xFFFF);
+        func_80069844(CollisionFlag_All);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 5, -1, 5) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))

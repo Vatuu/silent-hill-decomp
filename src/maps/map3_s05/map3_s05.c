@@ -1038,7 +1038,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
     s32     cellZ;
     s32     projCellX;
     s32     projCellZ;
-    s32     flags;
+    s32     collFlags;
     s32     i;
     s32     newZ;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
@@ -1049,8 +1049,8 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
     cellZ = g_SysWork.playerWork_4C.player_0.position_18.vz / CHUNK_CELL_SIZE;
     projCellZ = (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(0.0f)) ? (cellZ + 1) : (cellZ - 1);
 
-    flags = 0;
-    func_80069844(0xFFFF);
+    collFlags = CollisionFlag_None;
+    func_80069844(CollisionFlag_All);
 
     if (projCellX == 2 && projCellZ == -3 && !Savegame_EventFlagGet(EventFlag_M3S05_PickupVideoTape))
     {
@@ -1071,12 +1071,12 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S05_CabinetPushed))
         {
-            flags |= 1 << 1;
+            collFlags |= CollisionFlag_1;
             Savegame_EventFlagSet(EventFlag_288);
         }
         else
         {
-            flags |= 1 << 2;
+            collFlags |= CollisionFlag_2;
             Savegame_EventFlagClear(EventFlag_288);
         }
 
@@ -1117,7 +1117,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
         D_800DD528 = 0;
     }
 
-    Collision_FlagBitsSet(flags);
+    Collision_FlagBitsSet(collFlags);
 
     if (projCellX == 4 && projCellZ == -2)
     {

@@ -3471,11 +3471,11 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
     s32 cellX0;
     s32 projCellZ0;
     s32 projCellX0;
-    u16 flags;
+    u16 collFlags;
 
     #define playerChara g_SysWork.playerWork_4C.player_0
 
-    flags = 0;
+    collFlags = CollisionFlag_None;
 
     if (!Savegame_EventFlagGet(EventFlag_466))
     {
@@ -3511,7 +3511,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
 
             if (Savegame_EventFlagGet(EventFlag_443))
             {
-                flags = 1 << 1;
+                collFlags = CollisionFlag_1;
 
                 if (g_SysWork.sysState_8 != SysState_EventCallFunc)
                 {
@@ -3564,8 +3564,8 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
             func_8005DE0C(Sfx_Unk1615, &D_800CC7CC, Q8(0.5f), Q12(32.0f), 0);
     }
 
-    func_80069844(0xFFFF);
-    Collision_FlagBitsSet(flags);
+    func_80069844(CollisionFlag_All);
+    Collision_FlagBitsSet(collFlags);
     func_800E0204();
 }
 

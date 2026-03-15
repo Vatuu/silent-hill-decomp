@@ -353,7 +353,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
     s32  temp_s0_2;
     s32  var_v0_2;
     s32  temp_s0;
-    s32  flags;
+    s32  collFlags;
     s32  temp_a0;
     s32  i;
     s16* ptr;
@@ -367,7 +367,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
         func_8003A16C();
     }
 
-    func_80069844(0xFFFF);
+    func_80069844(CollisionFlag_All);
 
     if (PLAYER_IN_MAP_CHUNK_2(vx, 1, 0, -1, 0))
     {
@@ -376,7 +376,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
             func_8005DC1C(Sfx_Unk1614, &g_WorldObjectPos0, Q8(0.5f), 0);
             Savegame_EventFlagSet(EventFlag_430);
 
-            for (i = 0; i < 6; i++)
+            for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
             {
                 if (g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_None &&
                     g_SysWork.npcs_1A0[i].position_18.vz < Q12(36.5f))
@@ -391,14 +391,14 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
         WorldGfx_ObjectAdd(&g_WorldObject0[temp_s0], &g_WorldObjectPos0, &D_800CB258);
         if (temp_s0 != 0)
         {
-            flags = (1 << 2) | (1 << 3);
+            collFlags = CollisionFlag_2 | CollisionFlag_3;
         }
         else
         {
-            flags = 1 << 1;
+            collFlags = CollisionFlag_1;
         }
 
-        Collision_FlagBitsSet(flags);
+        Collision_FlagBitsSet(collFlags);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))

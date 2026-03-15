@@ -22,7 +22,7 @@ s_800C4478 D_800C4478;
 
 void Collision_Init(void) // 0x800697EC
 {
-    Collision_FlagsSet(1);
+    Collision_FlagsSet(CollisionFlag_0);
     D_800C4478.triggerZoneCount_2 = 0;
 }
 
@@ -43,7 +43,7 @@ void Collision_FlagBitsSet(u16 collFlags) // 0x8006982C
 
 void func_80069844(s32 collFlags) // 0x80069844
 {
-    D_800C4478.flags_0 = (D_800C4478.flags_0 & ~collFlags) | (1 << 0);
+    D_800C4478.flags_0 = (D_800C4478.flags_0 & ~collFlags) | CollisionFlag_0;
 }
 
 void Collision_TriggerZonesUpdate(q19_12 posX, q19_12 posZ, s_TriggerZone* zones) // 0x80069860
@@ -193,7 +193,7 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset,
         response = 1;
         if (chara == &g_SysWork.playerWork_4C && chara->health_B0 > Q12(0.0f))
         {
-            func_80069DF0(collResult, &chara->position_18, chara->position_18.vy, chara->rotation_24.vy);
+            Collision_GroundProbeRadial(collResult, &chara->position_18, chara->position_18.vy, chara->rotation_24.vy);
         }
     }
 
@@ -293,7 +293,8 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset,
     static const u8 unk_rdata[] = { 0x00, 0x00, 0x42, 0x24, 0x00, 0x00, 0x00, 0x00 };
 #endif
 
-void func_80069DF0(s_CollisionResult* collResult, const VECTOR3* pos, s32 arg2, s32 arg3) // 0x80069DF0
+void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* pos,
+                                 q19_12 startGroundHeight, q19_12 startHeadingAngle) // 0x80069DF0
 {
     #define POINT_COUNT 16
     #define ANGLE_STEP  Q12_ANGLE(360.0f / POINT_COUNT)
@@ -307,24 +308,24 @@ void func_80069DF0(s_CollisionResult* collResult, const VECTOR3* pos, s32 arg2, 
     s32         i;
     q19_12      groundHeightMax;
     q19_12      groundHeightMin;
-    s32         var_s5;
+    s32         lowestGroundHeightIdx;
 
     groundHeightMin = Q12(-30.0f);
     groundHeightMax = Q12(30.0f);
-    var_s5 = 0;
+    lowestGroundHeightIdx = 0;
 
     // Collect ground heights around position?
     for (i = 0; i < POINT_COUNT; i++)
     {
         Collision_Get(&coll,
-                      pos->vx + Math_Sin((arg3 & 0xF) + (i * ANGLE_STEP)),
-                      pos->vz + Math_Cos((arg3 & 0xF) + (i * ANGLE_STEP)));
+                      pos->vx + Math_Sin((startHeadingAngle & 0xF) + (i * ANGLE_STEP)),
+                      pos->vz + Math_Cos((startHeadingAngle & 0xF) + (i * ANGLE_STEP)));
         groundHeights[i] = coll.groundHeight_0;
 
         if (groundHeightMin < coll.groundHeight_0)
         {
-            groundHeightMin = coll.groundHeight_0;
-            var_s5 = i;
+            groundHeightMin       = coll.groundHeight_0;
+            lowestGroundHeightIdx = i;
         }
 
         if (coll.groundHeight_0 < groundHeightMax)
@@ -334,20 +335,20 @@ void func_80069DF0(s_CollisionResult* collResult, const VECTOR3* pos, s32 arg2, 
     }
 
     groundHeight = (groundHeightMin + groundHeightMax) >> 1; // `/ 2`.
-    if (groundHeight < (arg2 - Q12(0.1f)))
+    if (groundHeight < (startGroundHeight - Q12(0.1f)))
     {
-        groundHeight = arg2 - Q12(0.1f);
+        groundHeight = startGroundHeight - Q12(0.1f);
     }
 
-    for (i = var_s5 + 1, var_a0 = var_s5;
-         i < (var_s5 + POINT_COUNT) && groundHeight < groundHeights[i & 0xF];
+    for (i = lowestGroundHeightIdx + 1, var_a0 = lowestGroundHeightIdx;
+         i < (lowestGroundHeightIdx + POINT_COUNT) && groundHeight < groundHeights[i & 0xF];
          i++)
     {
         var_a0 = i;
     }
 
-    for (i = var_s5 - 1, var_s0 = var_s5;
-         i < (var_s5 - POINT_COUNT) && groundHeight < groundHeights[i & 0xF];
+    for (i = lowestGroundHeightIdx - 1, var_s0 = lowestGroundHeightIdx;
+         i < (lowestGroundHeightIdx - POINT_COUNT) && groundHeight < groundHeights[i & 0xF];
          i--)
     {
         var_s0 = i;

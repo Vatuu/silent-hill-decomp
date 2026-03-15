@@ -92,7 +92,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA3F0
     s32      tmp1;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    func_80069844(0xFFFF);
+    func_80069844(CollisionFlag_All);
 
     if ((PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3)) ||
         (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3)))

@@ -62,6 +62,16 @@ typedef enum _BgmFlags
     BgmFlag_Unk9 = 1 << 9
 } e_BgmFlags;
 
+typedef enum _CollisionFlags
+{
+    CollisionFlag_None = 0,
+    CollisionFlag_0    = 1 << 0,
+    CollisionFlag_1    = 1 << 1,
+    CollisionFlag_2    = 1 << 2,
+    CollisionFlag_3    = 1 << 3,
+    CollisionFlag_All  = 0xFFFF
+} e_CollisionFlags;
+
 typedef enum _CollisionType
 {
     CollisionType_None = 0,
@@ -439,7 +449,7 @@ typedef struct
 typedef struct
 {
     s32              field_0;
-    s16              field_4;
+    s16              field_4; // Collision flags.
     s16              field_6;
     q7_8             field_8; // Distance X?
     s8               unk_A[2];
@@ -1303,7 +1313,7 @@ typedef struct _WorldEnvWork
 
 typedef struct
 {
-    u16            flags_0;
+    u16            flags_0; // Collision flags.
     u8             triggerZoneCount_2;
     u8             unk_3;
     s_TriggerZone* triggerZones_4[20]; // Guessed size.
@@ -2437,7 +2447,7 @@ extern s8* D_800BCDE0; // Type assumed.
 /** Angles. */
 extern s16 D_800BCDE8[8];
 
-extern u16 D_800BCE14;
+extern u16 g_CollisionFlags;
 
 extern s_WorldGfxWork g_WorldGfxWork;
 
@@ -2570,6 +2580,8 @@ void func_8003943C(void);
 void SysState_Fmv_Update(void);
 
 s32 Map_TypeGet(void);
+
+void func_8003BD48(const s_SubCharacter* chara);
 
 void CharaModel_Free(s_CharaModel* model);
 
@@ -3725,7 +3737,7 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ);
 
 /** @brief Detects a wall collision using the scratchpad for performance.
  *
- * @param result Output collision result.
+ * @param collResult Output collision result.
  * @param offset Movement offset.
  * @param chara Character to check.
  * @return Wall response code.
@@ -3734,7 +3746,7 @@ s32 Collision_WallDetect(s_CollisionResult* collResult, VECTOR3* offset, s_SubCh
 
 /** @brief Handles a wall collision response by sampling the ground at 9 points around a character.
  *
- * @param result Output collision result.
+ * @param collResult Output collision result.
  * @param offset Movement offset.
  * @param chara Character to check.
  * @param response Initial collision pass response.
@@ -3742,11 +3754,20 @@ s32 Collision_WallDetect(s_CollisionResult* collResult, VECTOR3* offset, s_SubCh
  */
 s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset, s_SubCharacter* chara, s32 response);
 
-void func_80069DF0(s_CollisionResult* collResult, const VECTOR3* pos, s32 arg2, s32 arg3);
+/** @brief Probes ground heights at 16 radial points to determine the terrain slope direction.
+ * Creates a terrain avoidance force to push away from illegal positions.
+ *
+ * @param collResult Output collision result with XZ offset vector pointing away from the highest terrain.
+ * @param pos Center position.
+ * @param startGroundHeight Starting character Y position.
+ * @param startHeadingAngle Starting heading angle on the XZ plane for the probe circle.
+ */
+void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* pos,
+                                 q19_12 startGroundHeight, q19_12 startHeadingAngle);
 
 /** @brief Applies collision detection for a character's movement offset.
  *
- * @param result Output collision result.
+ * @param collResult Output collision result.
  * @param offset Movement offset to test.
  * @param chara Character performing movement.
  * @return Collision result response.

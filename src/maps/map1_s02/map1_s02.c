@@ -1436,10 +1436,10 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
 {
     s32 rng0;
     s32 rng1;
-    s32 flags;
+    s32 collFlags;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    flags = 0;
+    collFlags = CollisionFlag_None;
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
     {
@@ -1513,7 +1513,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
         }
         else
         {
-            flags = 1 << 1;
+            collFlags = CollisionFlag_1;
         }
 
         WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
@@ -1530,7 +1530,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
         if (g_WorldObject6.rotation_28.vy != Q12_ANGLE(180.0f) ||
             g_WorldObject7.rotation_28.vy != g_WorldObject6.rotation_28.vy)
         {
-            flags |= 1 << 2;
+            collFlags |= CollisionFlag_2;
             Savegame_EventFlagClear(EventFlag_362);
         }
         else
@@ -1538,7 +1538,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
             Savegame_EventFlagSet(EventFlag_362);
         }
 
-        flags |= 1 << 1;
+        collFlags |= CollisionFlag_1;
     }
     else
     {
@@ -1576,11 +1576,11 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
         WorldGfx_ObjectAdd(&g_WorldObjectB.object_0, &g_WorldObjectB.position_1C, &g_WorldObjectB.rotation_28);
     }
 
-    func_80069844(0xFFFF);
+    func_80069844(CollisionFlag_All);
 
-    if (flags != 0)
+    if (collFlags != CollisionFlag_None)
     {
-        Collision_FlagBitsSet(flags);
+        Collision_FlagBitsSet(collFlags);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))

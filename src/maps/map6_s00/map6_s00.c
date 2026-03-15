@@ -413,10 +413,10 @@ void Map_WorldObjectsInit(void) // 0x800EBCE8
 
 void Map_WorldObjectsUpdate(void) // 0x800EBEE0
 {
-    s32 flags;
+    s32 collFlags;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    flags = 0;
+    collFlags = CollisionFlag_None;
 
     if (!Savegame_EventFlagGet(EventFlag_401) && Savegame_EventFlagGet(EventFlag_403))
     {
@@ -428,7 +428,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EBEE0
     {
         if (!Savegame_EventFlagGet(EventFlag_402))
         {
-            flags |= 1 << 1;
+            collFlags |= CollisionFlag_1;
         }
 
         Text_Debug_PositionSet(30, 30);
@@ -450,7 +450,8 @@ void Map_WorldObjectsUpdate(void) // 0x800EBEE0
             {
                 WorldGfx_ObjectAdd(&g_WorldObject_DrOpen1.object_0, &g_WorldObject_DrOpen1.position_1C, &(SVECTOR3){ 0, 0, 0 });
                 WorldGfx_ObjectAdd(&g_WorldObject_DrOpen2.object_0, &g_WorldObject_DrOpen2.position_1C, &(SVECTOR3){ 0, 0, 0 });
-                flags |= 1 << 1;
+
+                collFlags |= CollisionFlag_1;
             }
             else
             {
@@ -459,8 +460,8 @@ void Map_WorldObjectsUpdate(void) // 0x800EBEE0
         }
     }
 
-    func_80069844(0xFFFF);
-    Collision_FlagBitsSet(flags);
+    func_80069844(CollisionFlag_All);
+    Collision_FlagBitsSet(collFlags);
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {

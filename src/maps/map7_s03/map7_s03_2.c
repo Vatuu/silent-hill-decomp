@@ -10251,7 +10251,7 @@ void func_800E98EC(void) // 0x800E98EC
         }
     }
 
-    func_80069844(0xFFFF);
+    func_80069844(CollisionFlag_All);
 
     if (D_800F4818)
     {

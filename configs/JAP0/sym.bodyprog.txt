@@ -1174,7 +1174,7 @@ func_800699E4                                = 0x8006B438; // type:func
 Collision_Get                                = 0x8006B44C; // type:func
 Collision_WallDetect                         = 0x8006B578; // type:func
 Collision_WallResponse                       = 0x8006B5FC; // type:func
-func_80069DF0                                = 0x8006B844; // type:func
+Collision_GroundProbeRadial                  = 0x8006B844; // type:func
 Collision_OffsetApply                        = 0x8006BA50; // type:func
 func_8006A178                                = 0x8006BBCC; // type:func
 Collision_ActiveCharactersGet                = 0x8006BBF8; // type:func
@@ -2965,7 +2965,7 @@ D_800BCDE8                                   = 0x800BF318;
 //--- PA: 0x09A7C8   VA: 0x800BF328   subsegment: bss
 //---------------------------------------------------
 vcRefPosSt                                   = 0x800BF328;
-D_800BCE14                                   = 0x800BF344;
+g_CollisionFlags                             = 0x800BF344;
 g_WorldGfxWork                               = 0x800BF348;
 
 //---------------------------------------------------------------------------
