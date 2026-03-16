@@ -277,6 +277,16 @@ D_8002B54C                                   = 0x8002B278;
 // Override default sym names that collide with USA names
 D_8002B54C_JPN                               = 0x8002B54C;
 
+//---------------------------------------------------------------------
+//--- PA: 0x0094D0   VA: 0x8002E030   subsegment: .rodata, libsd/smf_io
+//---------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+//--- PA: 0x009764   VA: 0x8002E2C4   subsegment: .rodata, libsd/smf_mid
+//----------------------------------------------------------------------
+D_8002E258                                   = 0x8002E2C4;
+D_8002E260                                   = 0x8002E2CC;
+
 
 
 //================================================
@@ -1673,6 +1683,9 @@ GsInitGraph2                                 = 0x80096D1C; // type:func
 GsSortClear                                  = 0x80096FA4; // type:func
 GsGetActiveBuff                              = 0x800970DC; // type:func
 GsInitVcount                                 = 0x8009727C; // type:func
+SetRCnt                                      = 0x800972BC; // type:func
+StartRCnt                                    = 0x80097390; // type:func
+StopRCnt                                     = 0x800973C0; // type:func
 GsGetVcount                                  = 0x8009742C; // type:func
 GsClearVcount                                = 0x8009745C; // type:func
 GsSwapDispBuff                               = 0x8009748C; // type:func
@@ -1740,33 +1753,60 @@ PadChkVsync                                  = 0x8009CAC8; // type:func
 PadStartCom                                  = 0x8009CAE8; // type:func
 PadGetState                                  = 0x8009CB74; // type:func
 PadInfoMode                                  = 0x8009CC34; // type:func
+PadSetActAlign                               = 0x8009CEA8; // type:func
 PadSetMainMode                               = 0x8009CEE0; // type:func
+PadSetAct                                    = 0x8009CF28; // type:func
 func_8009E310_JPN                            = 0x8009E310; // type:func
 PadInitDirect                                = 0x8009EBC8; // type:func
+lib_8009ED90                                 = 0x8009ED90; // type:func - Collides with USA lib_unk name.
 SpuClearReverbWorkArea                       = 0x8009F778; // type:func
 SpuSetTransferMode                           = 0x8009FA38; // type:func
 SpuSetVoiceAttr                              = 0x8009FA68; // type:func
 SpuGetVoiceAttr                              = 0x800A0268; // type:func
+
+//-----------------------------------------------------------------------
+//--- PA: 0x07BAF8   VA: 0x800A0658   subsegment: c, lib_unk/lib_8009E198
+//-----------------------------------------------------------------------
 func_8009E198                                = 0x800A0658; // type:func
 func_8009E230                                = 0x800A06F0; // type:func
 func_8009E268                                = 0x800A0728; // type:func
 func_8009E2A0                                = 0x800A0760; // type:func
 func_8009E2D8                                = 0x800A0798; // type:func
 func_8009E310                                = 0x800A07D0; // type:func
+func_8009E3B0                                = 0x800A0870; // type:func
+func_8009E438                                = 0x800A08F8; // type:func
 func_8009E4F8                                = 0x800A09B8; // type:func
+func_8009E520                                = 0x800A09E0; // type:func
 func_8009E550                                = 0x800A0A10; // type:func
 func_8009E61C                                = 0x800A0ADC; // type:func
 func_8009E718                                = 0x800A0BD8; // type:func
 func_8009E7D8                                = 0x800A0C98; // type:func
+func_8009E82C                                = 0x800A0CEC; // type:func
 func_8009E97C                                = 0x800A0E3C; // type:func
+func_8009E9D0                                = 0x800A0E90; // type:func
 func_8009EBB8                                = 0x800A1078; // type:func
 func_8009EC1C                                = 0x800A10DC; // type:func
+func_8009EC64                                = 0x800A1124; // type:func
 func_8009ECCC                                = 0x800A118C; // type:func
 func_8009ED74                                = 0x800A1234; // type:func
 func_8009ED7C                                = 0x800A123C; // type:func
+func_8009ED90                                = 0x800A1250; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x07C704   VA: 0x800A1264   subsegment: c, libsd/smf_snd
+//----------------------------------------------------------------
+tone_adsr_mem                                = 0x800A1264; // type:func
+tone_adsr_back                               = 0x800A12F0; // type:func
+sd_alloc_sort                                = 0x800A137C; // type:func
+SdSpuMalloc                                  = 0x800A1460; // type:func
+SdSpuMallocWithStartAddr                     = 0x800A15E0; // type:func
+SdSpuFree                                    = 0x800A1824; // type:func
+SdWorkInit                                   = 0x800A18C0; // type:func
 SdInit                                       = 0x800A1950; // type:func
 SdStart                                      = 0x800A1990; // type:func
+SdStart2                                     = 0x800A19D0; // type:func
 SdSetTickMode                                = 0x800A19F0; // type:func
+SdSeqCalledTbyT                              = 0x800A19FC; // type:func
 SdSetStereo                                  = 0x800A1A28; // type:func
 SdSetMono                                    = 0x800A1A34; // type:func
 SdSetReservedVoice                           = 0x800A1A44; // type:func
@@ -1776,30 +1816,167 @@ SdQuit                                       = 0x800A1B0C; // type:func
 SdSetSerialAttr                              = 0x800A1B3C; // type:func
 SdSetSerialVol                               = 0x800A1BC0; // type:func
 SdSetMVol                                    = 0x800A1C1C; // type:func
+SdVabOpenHead                                = 0x800A1C5C; // type:func
 SdVabOpenHeadSticky                          = 0x800A1DDC; // type:func
+SdVabFakeHead                                = 0x800A1F80; // type:func
+SdVbOpenOne                                  = 0x800A2068; // type:func
 SdVabTransBody                               = 0x800A21F8; // type:func
 SdVabTransBodyPartly                         = 0x800A229C; // type:func
 SdVabTransCompleted                          = 0x800A2384; // type:func
 SdVabClose                                   = 0x800A23C0; // type:func
 SdSetAutoKeyOffMode                          = 0x800A2424; // type:func
+SdAutoKeyOffCheck                            = 0x800A2430; // type:func
 SdSeqOpen                                    = 0x800A2564; // type:func
+SdSeqOpenWithAccNum                          = 0x800A2614; // type:func
 SdSeqPlay                                    = 0x800A26D0; // type:func
 SdSeqStop                                    = 0x800A2798; // type:func
 SdSeqClose                                   = 0x800A283C; // type:func
+SdSeqPause                                   = 0x800A28D8; // type:func
+SdSeqReplay                                  = 0x800A29F4; // type:func
 SdSeqSetVol                                  = 0x800A2BB0; // type:func
+SdSeqGetVol                                  = 0x800A2C0C; // type:func
+SdUtFlush                                    = 0x800A2C54; // type:func
 SdUtReverbOn                                 = 0x800A2C74; // type:func
+SdUtReverbOff                                = 0x800A2C9C; // type:func
 SdUtSetReverbType                            = 0x800A2CCC; // type:func
 SdUtSetReverbDepth                           = 0x800A2D1C; // type:func
+SdSetRVol                                    = 0x800A2D5C; // type:func
+SdUtSEAllKeyOff                              = 0x800A2D9C; // type:func
+SdUtAllKeyOff                                = 0x800A2EA8; // type:func
+SdUtGetVabHdr                                = 0x800A2F00; // type:func
 SdVoKeyOn                                    = 0x800A2F60; // type:func
 SdVoKeyOff                                   = 0x800A31BC; // type:func
+SdVoKeyOffWithRROff                          = 0x800A3300; // type:func
 SdUtKeyOnV                                   = 0x800A3440; // type:func
 SdUtKeyOn                                    = 0x800A39F4; // type:func
+SdVbKeyOn                                    = 0x800A3B80; // type:func
 SdUtKeyOffV                                  = 0x800A3DB4; // type:func
 SdUtKeyOffVWithRROff                         = 0x800A3ED8; // type:func
+SdGetSeqStatus                               = 0x800A3FD4; // type:func
+SdUtSetDetVVol                               = 0x800A4090; // type:func
+SdUtSetVVol                                  = 0x800A40DC; // type:func
+SdUtGetDetVVol                               = 0x800A4138; // type:func
+SdUtGetVVol                                  = 0x800A41A8; // type:func
+SdGetTempo                                   = 0x800A4228; // type:func
+SdSetTempo                                   = 0x800A4264; // type:func
+SdSetSeqWide                                 = 0x800A42D8; // type:func
 SdGetMidiVol                                 = 0x800A4310; // type:func
 SdSetMidiVol                                 = 0x800A4350; // type:func
+SdSetMidiExpress                             = 0x800A4384; // type:func
+SdGetMidiExpress                             = 0x800A43B8; // type:func
+SdGetMidiPan                                 = 0x800A43F8; // type:func
+SdSetMidiPan                                 = 0x800A4438; // type:func
+SdGetMidiPitchBendFine                       = 0x800A446C; // type:func
+SdSetMidiPitchBendFine                       = 0x800A44AC; // type:func
+SdGetTrackTranspause                         = 0x800A44F0; // type:func
+SdSetTrackTranspause                         = 0x800A44F8; // type:func
+SdGetTrackMute                               = 0x800A4500; // type:func
+SdSetTrackMute                               = 0x800A4550; // type:func
+SdGetSeqControlStatus                        = 0x800A45AC; // type:func
+SdGetSeqPlayStatus                           = 0x800A45F4; // type:func
+SdGetSeqBeat                                 = 0x800A46A0; // type:func
+SdGetSeqBeat2                                = 0x800A470C; // type:func
+SsSetMVol                                    = 0x800A4754; // type:func
+SsEnd                                        = 0x800A4780; // type:func
 SsSetSerialAttr                              = 0x800A47A0; // type:func
 SsSetSerialVol                               = 0x800A47C8; // type:func
+SsUtAllKeyOff                                = 0x800A47F8; // type:func
+
+//-------------------------------------------------------------------
+//--- PA: 0x07FCBC   VA: 0x800A481C   subsegment: asm, lib/libspu/s_q
+//-------------------------------------------------------------------
+SpuQuit                                      = 0x800A481C; // type:func
+DisableEvent                                 = 0x800A489C; // type:func
+SpuInitMalloc                                = 0x800A48AC; // type:func
+SpuSetReverb                                 = 0x800A490C; // type:func
+SpuSetReverbModeParam                        = 0x800A49DC; // type:func
+SpuReserveReverbWorkArea                     = 0x800A538C; // type:func
+SpuSetReverbVoice                            = 0x800A53DC; // type:func
+SpuSetKey                                    = 0x800A56CC; // type:func
+SpuGetKeyStatus                              = 0x800A588C; // type:func
+SpuSetKeyOnWithAttr                          = 0x800A591C; // type:func
+SpuWrite                                     = 0x800A594C; // type:func
+SpuSetTransferStartAddr                      = 0x800A59AC; // type:func
+SpuIsTransferCompleted                       = 0x800A5A0C; // type:func
+SpuSetCommonAttr                             = 0x800A5ABC; // type:func
+
+//---------------------------------------------------------------
+//--- PA: 0x0812DC   VA: 0x800A5E3C   subsegment: c, libsd/smf_io
+//---------------------------------------------------------------
+set_note_on                                  = 0x800A5E3C; // type:func
+set_midi_info                                = 0x800A5E78; // type:func
+Note2Pitch                                   = 0x800A5E98; // type:func
+tre_calc                                     = 0x800A5FE0; // type:func
+vib_calc                                     = 0x800A61F0; // type:func
+random_calc                                  = 0x800A6330; // type:func
+volume_calc                                  = 0x800A63D4; // type:func
+smf_vol_set                                  = 0x800A6610; // type:func
+master_vol_set                               = 0x800A6720; // type:func
+seq_master_vol_set                           = 0x800A67D4; // type:func
+toremoro_set                                 = 0x800A685C; // type:func
+pitch_bend_calc                              = 0x800A68DC; // type:func
+pitch_calc                                   = 0x800A6954; // type:func
+midi_mod                                     = 0x800A6AC8; // type:func
+midi_porta                                   = 0x800A6B78; // type:func
+replay_reverb_set                            = 0x800A6C08; // type:func
+midi_vsync                                   = 0x800A6CF8; // type:func
+sound_seq_off                                = 0x800A6EF4; // type:func
+sound_off                                    = 0x800A71E0; // type:func
+vol_calc                                     = 0x800A7350; // type:func
+adsr_set                                     = 0x800A7358; // type:func
+rr_off                                       = 0x800A73C8; // type:func
+voice_check                                  = 0x800A7424; // type:func
+key_on                                       = 0x800A7618; // type:func
+key_off                                      = 0x800A813C; // type:func
+key_press                                    = 0x800A828C; // type:func
+get_vab_tone                                 = 0x800A8294; // type:func
+smf_data_entry                               = 0x800A8344; // type:func
+control_change                               = 0x800A8728; // type:func
+program_change                               = 0x800A90EC; // type:func
+chan_press                                   = 0x800A9118; // type:func
+pitch_bend                                   = 0x800A9120; // type:func
+control_code_set                             = 0x800A9170; // type:func
+
+//-----------------------------------------------------------------------
+//--- PA: 0x084618   VA: 0x800A9178   subsegment: asm, lib/bodyprog_84618
+//-----------------------------------------------------------------------
+SpuGetReverbVoice                            = 0x800A9178; // type:func
+
+//-----------------------------------------------------------------
+//--- PA: 0x084678   VA: 0x800A91D8   subsegment: c, libsd/smf_main
+//-----------------------------------------------------------------
+smf_timer                                    = 0x800A91D8; // type:func
+smf_timer_set                                = 0x800A9280; // type:func
+smf_timer_end                                = 0x800A9318; // type:func
+smf_timer_stop                               = 0x800A9388; // type:func
+smf_vsync                                    = 0x800A93D4; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x084918   VA: 0x800A9478   subsegment: c, libsd/smf_mid
+//----------------------------------------------------------------
+MemCmp                                       = 0x800A9478; // type:func
+readMThd                                     = 0x800A94BC; // type:func
+readMTrk                                     = 0x800A957C; // type:func
+readEOF                                      = 0x800A963C; // type:func
+egetc                                        = 0x800A96FC; // type:func
+readvarinum                                  = 0x800A9774; // type:func
+to32bit                                      = 0x800A97FC; // type:func
+to16bit                                      = 0x800A9828; // type:func
+read32bit                                    = 0x800A983C; // type:func
+read16bit                                    = 0x800A98A8; // type:func
+readheader                                   = 0x800A98E8; // type:func
+len_add                                      = 0x800A9CD4; // type:func
+metaevent                                    = 0x800A9CE8; // type:func
+sysex                                        = 0x800A9FAC; // type:func
+chanmessage                                  = 0x800AA014; // type:func
+readtrack                                    = 0x800AA584; // type:func
+readtrack2                                   = 0x800AA6B4; // type:func
+track_head_read                              = 0x800AA908; // type:func
+delta_time_conv                              = 0x800AA970; // type:func
+midi_file_out                                = 0x800AAB34; // type:func
+midi_smf_main                                = 0x800AAE10; // type:func
+midi_smf_stop                                = 0x800AB134; // type:func
+midi_smf_stat                                = 0x800AB1C0; // type:func
 
 
 
@@ -2171,6 +2348,51 @@ D_800AFE24                                   = 0x800B2308;
 //--- PA: 0x08D800   VA: 0x800B2360   subsegment: data
 //----------------------------------------------------
 SQRT                                         = 0x800B2620;
+
+//---------------------------------------------------------------------------
+//--- PA: 0x08EEE0   VA: 0x800B3A40   subsegment: .data, lib_unk/lib_8009E198
+//---------------------------------------------------------------------------
+D_800B13EC                                   = 0x800B3A40;
+D_800B13FC                                   = 0x800B3A50;
+D_800B140C                                   = 0x800B3A60;
+D_800B141C                                   = 0x800B3A70;
+D_800B142C                                   = 0x800B3A80;
+
+//---------------------------------------------------------------------
+//--- PA: 0x08EF30   VA: 0x800B3A90   subsegment: .data, libsd/smf_main
+//---------------------------------------------------------------------
+sd_interrupt_start_flag                      = 0x800B3A90;
+sd_keyoff_mode                               = 0x800B3A94;
+sd_mono_st_flag                              = 0x800B3A98;
+sd_reverb_mode                               = 0x800B3A9C;
+body_partly_size                             = 0x800B3AA0;
+sd_reverb_area_size                          = 0x800B3AA4;
+_spu_rev_param                               = 0x800B3ACC;
+PitchTbl                                     = 0x800B3D7C;
+random_tbl                                   = 0x800B497C;
+sd_reserved_voice                            = 0x800B4B7C;
+spu_ch_tbl                                   = 0x800B4B84;
+sd_int_flag                                  = 0x800B4BE4;
+sd_int_flag2                                 = 0x800B4BE8;
+smf_start_flag                               = 0x800B4BEC;
+sd_timer_sync                                = 0x800B4BF0;
+sd_timer_flag                                = 0x800B4C08;
+time_flag                                    = 0x800B4C0C;
+smf_file_no                                  = 0x800B4C10;
+eof_char                                     = 0x800B4C18;
+chantype                                     = 0x800B4C1C;
+
+
+
+//================================================
+//=== .sdata section
+//================================================
+
+
+//----------------------------------------------------------------------------
+//--- PA: 0x090104   VA: 0x800B4C64   subsegment: .sdata, lib_unk/lib_8009E198
+//----------------------------------------------------------------------------
+D_800B2610                                   = 0x800B4C64;
 
 
 
@@ -2639,13 +2861,34 @@ GsOUT_PACKET_P                               = 0x800C9670;
 GsFCALL4                                     = 0x800C9688; // type:u8 size:0x130
 D_800C97C8_JPN                               = 0x800C97C8;
 
-//---------------------------------------------------
-//--- PA: 0x0A51E8   VA: 0x800C9D48   subsegment: bss
-//---------------------------------------------------
+//-------------------------------------------------------------------
+//--- PA: 0x0A4F10   VA: 0x800C9A70   subsegment: .bss, libsd/smf_snd
+//-------------------------------------------------------------------
+vab_h                                        = 0x800C9A70;
+sd_vb_malloc_rec                             = 0x800C9C30;
+sd_seq_loop_mode                             = 0x800C9CB8;
+sd_tick_mode                                 = 0x800C9CBC;
+sd_spu_alloc                                 = 0x800C9CC0;
 
 //---------------------------------------------------
-//--- PA: 0x0A65F8   VA: 0x800CB158   subsegment: bss
+//--- PA: 0x0A51E0   VA: 0x800C9D40   subsegment: bss
 //---------------------------------------------------
+
+//------------------------------------------------------------------
+//--- PA: 0x0A51E8   VA: 0x800C9D48   subsegment: .bss, libsd/smf_io
+//------------------------------------------------------------------
+s_attr                                       = 0x800C9D48;
+D_800C9C28                                   = 0x800C9D50;
+D_800C9C34                                   = 0x800C9D5C;
+smf_midi                                     = 0x800C9D90;
+smf_midi_sound_off                           = 0x800CA910;
+smf_port                                     = 0x800CA970;
+sd_timer_event                               = 0x800CB150;
+
+//-------------------------------------------------------------------
+//--- PA: 0x0A65F8   VA: 0x800CB158   subsegment: .bss, libsd/smf_mid
+//-------------------------------------------------------------------
+smf_song                                     = 0x800CB158;
 g_MapOverlayHeader                           = 0x800CBBD4; // type:MapOverlayHeader size:0x104C
 D_800CBAE0                                   = 0x800CBC08;
 open_main                                    = 0x801E2AF0; // type:func

@@ -26,7 +26,7 @@ options:
   asm_jtbl_label_macro: jlabel
   asm_data_macro: dlabel
 
-  section_order: [".rodata", ".text", ".data", ".bss"]
+  section_order: [".rodata", ".text", ".data", ".sdata", ".bss"]
 
   symbol_addrs_path:
     - configs/JAP1/screens/sym.b_konami.txt
@@ -101,6 +101,8 @@ segments:
       - [0x64C0, .rodata, ranking]
       - [0x6798, rodata] # Garbage padding
       - [0x67A0, rodata]
+      - [0x94D0, .rodata, libsd/smf_io]
+      - [0x9764, .rodata, libsd/smf_mid]
 
       - [0x985C, c, memcard]
       - [0xC6F4, c, screen/background_draw]
@@ -168,6 +170,17 @@ segments:
       - [0x6E728, c, credits_init]
 
       - [0x6EAAC, asm, lib/psyq]
+      
+      - [0x7BAF8, c, lib_unk/lib_8009E198]
+      - [0x7C704, c, libsd/smf_snd]
+      
+      - [0x7FCBC, asm, lib/libspu/s_q]
+
+      - [0x812DC, c, libsd/smf_io]
+      - [0x84618, asm, lib/bodyprog_84618] # TODO: libspu
+
+      - [0x84678, c, libsd/smf_main]
+      - [0x84918, c, libsd/smf_mid]
 
       - [0x866F8, data, bodyprog]
       - [0x867B8, .data, screen/background_draw]
@@ -199,6 +212,12 @@ segments:
       - [0x8D778, .data, ranking]
       - [0x8D78C, .data, credits_init]
       - [0x8D800, data]
+      - [0x8EEE0, .data, lib_unk/lib_8009E198]
+      - [0x8EF30, .data, libsd/smf_main]
+      
+      # .sdata section
+      - [0x90104, .sdata, lib_unk/lib_8009E198]
+      - [0x9010A, pad] # Garbage padding, some reason splat doesn't output data into the .s, so postbuild currently has to add it.
 
       - [0x90110, .bss, memcard]
       - [0x93718, .bss, text/text_debug_draw]
@@ -261,10 +280,12 @@ segments:
       - [0xA4A38, bss]
       - [0xA4B24, pad]
       - [0xA4B28, bss]
+      - [0xA4F10, .bss, libsd/smf_snd]
+      - [0xA51E0, bss]
       - [0xA51E4, pad]
-      - [0xA51E8, bss]
+      - [0xA51E8, .bss, libsd/smf_io]
       - [0xA65F4, pad]
-      - [0xA65F8, bss]
+      - [0xA65F8, .bss, libsd/smf_mid]
 
   # Random garbage data at end, define as bin file to make Splat ignore it.
   - name: footer_data
