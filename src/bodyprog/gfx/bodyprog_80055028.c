@@ -796,7 +796,7 @@ void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, e_FsFile fileIdx, s_FsImageDesc*
     sp10Ptr = sp10;
     sp18Ptr = sp18;
 
-    while (sp10Ptr < sp18 && *sp18Ptr != '.')
+    while (sp10Ptr < &sp10[ARRAY_SIZE(sp10)] && *sp18Ptr != '.')
     {
         *sp10Ptr++ = *sp18Ptr++;
     }
