@@ -1092,17 +1092,17 @@ void StringCopy(char* prevStr, char* newStr) // 0x80056D64
 // ENVIRONMENT AND SCREEN GFX 2 (Drawing?)
 // ========================================
 
-void func_80056D8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, GsOT* arg6, s32 arg7) // 0x80056D8C
+void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, GsOT* ot, s32 arg7) // 0x80056D8C
 {
     s16       var_a3;
     s16       var_a3_2;
     s16       var_v1;
     s16       var_v1_2;
-    s32       temp_a0_2;
-    s32       var_s0;
+    q23_8     temp_a0_2;
+    q19_12    var_s0;
     s32       var_t1;
-    s32       var_v0;
-    s32       var_v1_3;
+    q23_8     var_v0;
+    q23_8     var_v1_3;
     s32       var_v1_4;
     POLY_G4*  poly;
     DR_MODE*  mode;
@@ -1141,8 +1141,7 @@ void func_80056D8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, G
     }
 
     var_v0 = var_t1 >> 4;
-
-    if (var_v0 < (var_v1_3 + 0x300))
+    if (var_v0 < (var_v1_3 + Q8(3.0f)))
     {
         if (var_t1 < 0)
         {
@@ -1150,12 +1149,12 @@ void func_80056D8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, G
         }
 
         var_s0 = (func_80055A50(var_t1) * 16) + g_WorldEnvWork.fogIntensity_18;
-        var_s0 = MIN(var_s0, 0x1000);
+        var_s0 = MIN(var_s0, Q12(1.0f));
 
         var_v1_4 = MAX(arg5 >> 7, 1);
 
         packet = GsOUT_PACKET_P;
-        tag    = &arg6->org[var_v1_4];
+        tag    = &ot->org[var_v1_4];
 
         SetPriority(packet, 0, 0);
         AddPrim(tag, packet);
@@ -1167,8 +1166,8 @@ void func_80056D8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, G
         *(u32*)&poly->r1 =
         *(u32*)&poly->r2 =
         *(u32*)&poly->r3 = Q12_MULT(g_WorldEnvWork.fogColor_1C.r, var_s0)       +
-                           (Q12_MULT(g_WorldEnvWork.fogColor_1C.g, var_s0) << 8) +
-                           (Q12_MULT(g_WorldEnvWork.fogColor_1C.b, var_s0) << 16);
+                          (Q12_MULT(g_WorldEnvWork.fogColor_1C.g, var_s0) << 8) +
+                          (Q12_MULT(g_WorldEnvWork.fogColor_1C.b, var_s0) << 16);
 
         SetPolyG4(poly);
 
@@ -1324,7 +1323,7 @@ void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* 
         }
 
         func_80057B7C(curMeshHdr, vertOffset, scratchData, mat);
-        func_8005801C(curMeshHdr, scratchData, otTag, arg2);
+        Gfx_MeshDraw(curMeshHdr, scratchData, otTag, arg2);
     }
 }
 
@@ -1669,7 +1668,7 @@ void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     }
 }
 
-void func_8005801C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, s32 arg3) // 0x8005801C
+void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, s32 arg3) // 0x8005801C
 {
     s32          sp10;
     s32          sp14;
@@ -3242,7 +3241,7 @@ void Material_TimFileNameGet(char* filename, s_Material* mat) // 0x8005B3BC
 
 INCLUDE_RODATA("bodyprog/nonmatchings/gfx/bodyprog_80055028", D_80028544);
 
-void func_8005B424(VECTOR3* vec0, VECTOR3* vec1) // 0x8005B424
+void func_8005B424(VECTOR3* vec0, const VECTOR3* vec1) // 0x8005B424
 {
     vec0->vz = 0;
     vec0->vy = 0;
@@ -3311,7 +3310,7 @@ void func_8005B55C(GsCOORDINATE2* coord) // 0x8005B55C
     }
 }
 
-void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x8005B62C
+void Gfx_BillboardDraw(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_arg4, s32 arg5) // 0x8005B62C
 {
     MATRIX            matrix_sp18[2];
     CVECTOR           sp58[5];
@@ -3323,8 +3322,8 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
     s32               sp498;
     u16               sp4A0;
     u16               sp4A8;
-    s_WorldEnvWork*   new_var;
-    s_WorldEnvWork*   new_var2;
+    s_WorldEnvWork*   worldEnvWork;
+    s_WorldEnvWork*   worldEngWork1;
     s32               temp_a0;
     s32               temp_a0_2;
     s32               temp_lo;
@@ -3334,12 +3333,12 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
     s32               temp_v1;
     s32               temp_v1_2;
     s32               temp_v1_4;
-    s32               var_s0;
+    q19_12            posX0;
+    q19_12            posY0;
+    q19_12            posZ0;
     s32               var_s1;
-    s32               var_s1_2;
-    s32               var_s2;
     s32               var_v0;
-    s_800AE204*       var_s6;
+    s_800AE204*       curPtr;
     s_800AE4DC*       temp_fp;
     s32               temp;
     s32               i;
@@ -3355,12 +3354,12 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
 
     temp_v1 = 0x79C << (arg5 + 2);
     sp494   = g_WorldEnvWork.isFogEnabled_1 ? MIN(temp_v1, g_WorldEnvWork.fogFarDistance_10) : temp_v1;
-    Vw_WorldScreenMatrixAtPositionGet(&matrix_sp18[0], x, y, z);
+    Vw_WorldScreenMatrixAtPositionGet(&matrix_sp18[0], posX, posY, posZ);
 
     // @hack Pointer needed for match, is there a way to remove this?
-    // `func_80056D8C` `func_8005801C` `func_8005AC50` all seem to do similar thing without needing pointer?
-    new_var = &g_WorldEnvWork;
-    if (!new_var->isFogEnabled_1)
+    // `Gfx_FogOverlayQuadDraw` `Gfx_MeshDraw` `func_8005AC50` all seem to do similar thing without needing pointer?
+    worldEnvWork = &g_WorldEnvWork;
+    if (!worldEnvWork->isFogEnabled_1)
     {
         var_s1 = Q12(1.0f);
     }
@@ -3370,7 +3369,7 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
     }
 
     // @hack Make sure compiler doesn't optimize out `new_var` pointer.
-    if (new_var)
+    if (worldEnvWork != NULL)
     {
         u8 x = -x;
     }
@@ -3397,9 +3396,9 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
     {
         Vw_CoordHierarchyMatrixCompute(D_800C42B8, &matrix_sp18[1]);
 
-        matrix_sp18[1].t[0] = Q12_TO_Q8(x);
-        matrix_sp18[1].t[1] = Q12_TO_Q8(y) + temp_fp->field_6;
-        matrix_sp18[1].t[2] = Q12_TO_Q8(z);
+        matrix_sp18[1].t[0] = Q12_TO_Q8(posX);
+        matrix_sp18[1].t[1] = Q12_TO_Q8(posY) + temp_fp->field_6;
+        matrix_sp18[1].t[2] = Q12_TO_Q8(posZ);
 
         func_80057228(&matrix_sp18[1], g_WorldEnvWork.field_54, &g_WorldEnvWork.field_58, &g_WorldEnvWork.field_60);
 
@@ -3423,18 +3422,18 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
 
         if (g_WorldEnvWork.isFogEnabled_1)
         {
-            var_s2   = Q12_MULT(sp70.m[0][0], var_s1);
-            var_s1_2 = Q12_MULT(sp70.m[0][1], var_s1);
-            var_s0   = Q12_MULT(sp70.m[0][2], var_s1);
+            posX0 = Q12_MULT(sp70.m[0][0], var_s1);
+            posY0 = Q12_MULT(sp70.m[0][1], var_s1);
+            posZ0 = Q12_MULT(sp70.m[0][2], var_s1);
         }
         else
         {
-            var_s2   = sp70.m[0][0];
-            var_s1_2 = sp70.m[0][1];
-            var_s0   = sp70.m[0][2];
+            posX0 = sp70.m[0][0];
+            posY0 = sp70.m[0][1];
+            posZ0 = sp70.m[0][2];
         }
 
-        temp_v0 = SquareRoot0(SQUARE(var_s2) + SQUARE(var_s1_2) + SQUARE(var_s0));
+        temp_v0 = SquareRoot0(SQUARE(posX0) + SQUARE(posY0) + SQUARE(posZ0));
 
         if (temp_v0 > Q12(0.25f))
         {
@@ -3444,9 +3443,9 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
 
             temp_lo = var_v0 / temp_v0;
 
-            var_s2   = Q12_MULT(var_s2, temp_lo);
-            var_s1_2 = Q12_MULT(var_s1_2, temp_lo);
-            var_s0   = Q12_MULT(var_s0, temp_lo);
+            posX0   = Q12_MULT(posX0, temp_lo);
+            posY0 = Q12_MULT(posY0, temp_lo);
+            posZ0   = Q12_MULT(posZ0, temp_lo);
 
             if (g_WorldEnvWork.field_0 == 1)
             {
@@ -3457,17 +3456,17 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
             }
         }
 
-        sp70.m[0][0] = var_s2;
-        sp70.m[0][1] = var_s1_2;
-        sp70.m[0][2] = var_s0;
+        sp70.m[0][0] = posX0;
+        sp70.m[0][1] = posY0;
+        sp70.m[0][2] = posZ0;
 
-        sp70.m[1][0] = -var_s0 >> 4;
-        sp70.m[1][1] = var_s1_2 >> 4;
-        sp70.m[1][2] = var_s2 >> 4;
+        sp70.m[1][0] = -posZ0 >> 4;
+        sp70.m[1][1] = posY0 >> 4;
+        sp70.m[1][2] = posX0 >> 4;
 
-        sp70.m[2][0] = var_s0 >> 4;
-        sp70.m[2][1] = var_s1_2 >> 4;
-        sp70.m[2][2] = -var_s2 >> 4;
+        sp70.m[2][0] = posZ0 >> 4;
+        sp70.m[2][1] = posY0 >> 4;
+        sp70.m[2][2] = -posX0 >> 4;
 
         SetLightMatrix(&sp70);
         NormalColor3(&D_800AE500[0], &D_800AE500[1], &D_800AE500[2], &sp58[0], &sp58[1], &sp58[2]);
@@ -3475,15 +3474,15 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
     }
 
     // @hack Needed to get right reg order for `poly_gt4`.
-    new_var2 = &g_WorldEnvWork;
+    worldEngWork1 = &g_WorldEnvWork;
 
     SetRotMatrix(&matrix_sp18[0]);
     SetTransMatrix(&matrix_sp18[0]);
 
-    for (var_s6 = temp_fp->ptr_0, poly_gt4 = GsOUT_PACKET_P;
-         var_s6 < &temp_fp->ptr_0[temp_fp->count_4]; var_s6++)
+    for (curPtr = temp_fp->ptr_0, poly_gt4 = GsOUT_PACKET_P;
+         curPtr < &temp_fp->ptr_0[temp_fp->count_4]; curPtr++)
     {
-        temp_v0_2 = RotTransPers((SVECTOR*)&var_s6->field_14, &field_1C, &field_24, &field_24);
+        temp_v0_2 = RotTransPers((SVECTOR*)&curPtr->field_14, &field_1C, &field_24, &field_24);
         temp_a0   = temp_v0_2 << 2;
 
         if (temp_v0_2 > 32 && temp_a0 < sp494)
@@ -3510,8 +3509,8 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
             *(s16*)&poly_gt4->u2 = sp4A8;
             *(s16*)&poly_gt4->u3 = *(s16*)&temp_fp->field_A;
 
-            temp_a0_2 = Q12_MULT(var_s6->field_8, temp_lo_2);
-            temp_v1_4 = Q12_MULT(var_s6->field_6, temp_lo_2);
+            temp_a0_2 = Q12_MULT(curPtr->field_8, temp_lo_2);
+            temp_v1_4 = Q12_MULT(curPtr->field_6, temp_lo_2);
 
             setXY4(poly_gt4,
                    field_1C.vx, field_1C.vy - (temp_a0_2 * 2),
@@ -3519,7 +3518,7 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
                    field_1C.vx - temp_v1_4, field_1C.vy - temp_a0_2,
                    field_1C.vx, field_1C.vy);
 
-            if (new_var2->isFogEnabled_1)
+            if (worldEngWork1->isFogEnabled_1)
             {
                 packet = poly_gt4 + 1;
                 SetPriority(packet, 0, 0);
@@ -3528,7 +3527,7 @@ void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5) // 0x
 
                 poly_g4 = packet2 + 0xC;
 
-                temp = (func_80055A50(temp_v0_2 << 6) * 16) + new_var2->fogIntensity_18;
+                temp = (func_80055A50(temp_v0_2 << 6) * 16) + worldEngWork1->fogIntensity_18;
 
                 gte_lddp(0x1000 - MIN(temp, 0x1000));
                 gte_ldrgb(&g_WorldEnvWork.fogColor_1C);

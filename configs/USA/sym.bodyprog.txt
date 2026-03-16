@@ -906,7 +906,9 @@ LmHeader_ModelCountGet                       = 0x80056C80; // type:func
 Bone_ModelAssign                             = 0x80056C8C; // type:func
 Lm_ModelFind                                 = 0x80056CB4; // type:func
 StringCopy                                   = 0x80056D64; // type:func
+Gfx_FogOverlayQuadDraw                       = 0x80056D8C; // type:func
 func_800571D0                                = 0x800571D0; // type:func size:0x58 - Fix for truncated function.
+Gfx_MeshDraw                                 = 0x8005801C; // type:func
 Texture_Init                                 = 0x8005B1A0; // type:func
 Texture_Get                                  = 0x8005B1FC; // type:func
 Texture_RefCountReset                        = 0x8005B370; // type:func
@@ -915,6 +917,7 @@ Material_TimFileNameGet                      = 0x8005B3BC; // type:func
 Textures_ActiveTex_CountReset                = 0x8005B46C; // type:func
 Textures_ActiveTex_PutTextures               = 0x8005B474; // type:func
 Textures_ActiveTex_FindTexture               = 0x8005B4BC; // type:func
+Gfx_BillboardDraw                            = 0x8005B62C; // type:func
 Gfx_DebugStringPositionSet                   = 0x8005BF0C; // type:func
 
 //-------------------------------------------------------------------------

@@ -3132,7 +3132,7 @@ void Texture_RefClear(s_Texture* tex);
 
 void Material_TimFileNameGet(char* filename, s_Material* mat);
 
-void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
+void func_8005B424(VECTOR3* vec0, const VECTOR3* vec1);
 
 /** @unused No references. */
 void func_800563E8(s_LmHeader* lmHdr, s32 arg1, s32 arg2, s32 arg3);
@@ -3166,7 +3166,8 @@ bool Lm_ModelFind(s_WorldObjectModel* arg0, s_LmHeader* lmHdr, s_WorldObjectMeta
 
 void StringCopy(char* prevStr, char* newStr);
 
-void func_80056D8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, GsOT* arg6, s32 arg7);
+/** @brief Draws a 2D fog overlay quad. */
+void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, GsOT* ot, s32 arg7);
 
 /** Crucial 3D drawing function. */
 void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
@@ -3189,14 +3190,14 @@ void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
 
 /** Main quad drawing func? */
-void func_8005801C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, s32 arg3);
+void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, s32 arg3);
 
 /** `arg4` unused. */
 s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBuf9, e_FsFile fileIdx, s32 arg4);
 
 void func_8005B55C(GsCOORDINATE2* coord);
 
-void func_8005B62C(s32 arg0, s32 x, s32 y, s32 z, GsOT* ot_arg4, s32 arg5);
+void Gfx_BillboardDraw(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_arg4, s32 arg5);
 
 u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2);
 

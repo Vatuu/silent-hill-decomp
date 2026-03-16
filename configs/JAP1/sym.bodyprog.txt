@@ -1071,7 +1071,7 @@ LmHeader_ModelCountGet                       = 0x80058788; // type:func
 Bone_ModelAssign                             = 0x80058794; // type:func
 Lm_ModelFind                                 = 0x800587BC; // type:func
 StringCopy                                   = 0x8005886C; // type:func
-func_80056D8C                                = 0x80058894; // type:func
+Gfx_FogOverlayQuadDraw                       = 0x80058894; // type:func
 func_80057090                                = 0x80058B98; // type:func
 func_800571D0                                = 0x80058CD8; // type:func size:0x58
 func_80057228                                = 0x80058D30; // type:func
@@ -1081,7 +1081,7 @@ func_8005759C                                = 0x800590A4; // type:func
 func_80057658                                = 0x80059160; // type:func
 func_80057A3C                                = 0x80059544; // type:func
 func_80057B7C                                = 0x80059684; // type:func
-func_8005801C                                = 0x80059B24; // type:func
+Gfx_MeshDraw                                 = 0x80059B24; // type:func
 func_80059D50                                = 0x8005B858; // type:func
 func_80059E34                                = 0x8005B93C; // type:func
 func_8005A21C                                = 0x8005BD24; // type:func
@@ -1102,7 +1102,7 @@ Textures_ActiveTex_CountReset                = 0x8005CF74; // type:func
 Textures_ActiveTex_PutTextures               = 0x8005CF7C; // type:func
 Textures_ActiveTex_FindTexture               = 0x8005CFC4; // type:func
 func_8005B55C                                = 0x8005D064; // type:func
-func_8005B62C                                = 0x8005D134; // type:func
+Gfx_BillboardDraw                            = 0x8005D134; // type:func
 Gfx_DebugStringPositionSet                   = 0x8005DA14; // type:func
 
 //-------------------------------------------------------------------------

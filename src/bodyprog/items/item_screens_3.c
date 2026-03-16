@@ -803,7 +803,7 @@ s_800AE204 D_800AE204[26] = {
     { 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0 }
 };
 
-s_800AE4DC D_800AE4DC[3] = // Used in `func_8005B62C` (https://decomp.me/scratch/2BvV1)
+s_800AE4DC D_800AE4DC[3] = // Used in `Gfx_BillboardDraw` (https://decomp.me/scratch/2BvV1)
 {
     { &D_800AE204[1],  3,  0, 0,      0, 0x80, 0x3F, 0xBF },
     { &D_800AE204[0],  12, 0, 0,      0, 0x80, 0x3F, 0xBF },
