@@ -12,6 +12,7 @@ DMACallback           = 0x800133BC;
 GetVideoMode          = 0x80013E50;
 CdReady               = 0x80014120;
 CdReadyCallback       = 0x80014154;
+CdGetSector           = 0x80014544;
 CdDataCallback        = 0x80014584;
 CdPosToInt            = 0x800146CC;
 ResetGraph            = 0x800180FC;
