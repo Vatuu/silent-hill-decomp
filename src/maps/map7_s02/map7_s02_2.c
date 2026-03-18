@@ -11,35 +11,7 @@
 #include "maps/characters/kaufmann.h"
 #include "maps/characters/lisa.h"
 
-#include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D8C74
-
-#include "maps/shared/sharedFunc_800D88C0_0_s00.h" // 0x800D8C88
-
-#include "maps/shared/sharedFunc_800D8904_0_s00.h" // 0x800D8CCC
-
-#include "maps/shared/sharedFunc_800D891C_0_s00.h" // 0x800D8CE4
-
-#include "maps/shared/sharedFunc_800D8928_0_s00.h" // 0x800D8CF0
-
-#include "maps/shared/sharedFunc_800D893C_0_s00.h" // 0x800D8D04
-
-#include "maps/shared/sharedFunc_800D8950_0_s00.h" // 0x800D8D18
-
-#include "maps/shared/sharedFunc_800D8964_0_s00.h" // 0x800D8D2C
-
-#include "maps/shared/sharedFunc_800D8A00_0_s00.h" // 0x800D8E38
-
-#include "maps/shared/sharedFunc_800D9064_0_s00.h" // 0x800D949C
-
-#include "maps/shared/sharedFunc_800D9078_0_s00.h" // 0x800D94B0
-
-#include "maps/shared/sharedFunc_800D908C_0_s00.h" // 0x800D94C4
-
-#include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800D95C0
-
-#include "maps/shared/Anim_StartKeyframeIdxGet.h" // 0x800D9654
-
-#include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D96F4
+#include "../src/maps/chara_util.c" // 0x800D8C74
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D9754
 

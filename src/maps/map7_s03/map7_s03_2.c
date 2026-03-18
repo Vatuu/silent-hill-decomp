@@ -19,35 +19,7 @@
 
 #define incubusProps incubus->properties_E4.incubus
 
-#include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D5040
-
-#include "maps/shared/sharedFunc_800D88C0_0_s00.h" // 0x800D5054
-
-#include "maps/shared/sharedFunc_800D8904_0_s00.h" // 0x800D5098
-
-#include "maps/shared/sharedFunc_800D891C_0_s00.h" // 0x800D50B0
-
-#include "maps/shared/sharedFunc_800D8928_0_s00.h" // 0x800D50BC
-
-#include "maps/shared/sharedFunc_800D893C_0_s00.h" // 0x800D50D0
-
-#include "maps/shared/sharedFunc_800D8950_0_s00.h" // 0x800D50E4
-
-#include "maps/shared/sharedFunc_800D8964_0_s00.h" // 0x800D50F8
-
-#include "maps/shared/sharedFunc_800D8A00_0_s00.h" // 0x800D5234
-
-#include "maps/shared/sharedFunc_800D9064_0_s00.h" // 0x800D5898
-
-#include "maps/shared/sharedFunc_800D9078_0_s00.h" // 0x800D58AC
-
-#include "maps/shared/sharedFunc_800D908C_0_s00.h" // 0x800D58C0
-
-#include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800D59BC
-
-#include "maps/shared/Anim_StartKeyframeIdxGet.h" // 0x800D5AA8
-
-#include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D5B68
+#include "../src/maps/chara_util.c" // 0x800D5040
 
 void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5BC8
 {

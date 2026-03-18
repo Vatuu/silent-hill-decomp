@@ -12,35 +12,7 @@
 #include "maps/characters/alessa.h"
 #include "maps/characters/dahlia.h"
 
-#include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800DD5B8
-
-#include "maps/shared/sharedFunc_800D88C0_0_s00.h" // 0x800DD5CC
-
-#include "maps/shared/sharedFunc_800D8904_0_s00.h" // 0x800DD610
-
-#include "maps/shared/sharedFunc_800D891C_0_s00.h" // 0x800DD628
-
-#include "maps/shared/sharedFunc_800D8928_0_s00.h" // 0x800DD634
-
-#include "maps/shared/sharedFunc_800D893C_0_s00.h" // 0x800DD648
-
-#include "maps/shared/sharedFunc_800D8950_0_s00.h" // 0x800DD65C
-
-#include "maps/shared/sharedFunc_800D8964_0_s00.h" // 0x800DD670
-
-#include "maps/shared/sharedFunc_800D8A00_0_s00.h" // 0x800DD764);
-
-#include "maps/shared/sharedFunc_800D9064_0_s00.h" // 0x800DDDC8
-
-#include "maps/shared/sharedFunc_800D9078_0_s00.h" // 0x800DDDDC
-
-#include "maps/shared/sharedFunc_800D908C_0_s00.h" // 0x800DDDF0
-
-#include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800DDEEC
-
-#include "maps/shared/Anim_StartKeyframeIdxGet.h" // 0x800DDFEC
-
-#include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800DE064
+#include "../src/maps/chara_util.c" // 0x800DD5B8
 
 void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DE0C4
 {

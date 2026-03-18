@@ -54,7 +54,11 @@ extern s_Bgm_Update D_800EFC74;
 extern q19_12          D_800EFC7C; // Timer.
 extern u16             D_800EFC80[];
 
+s16 func_800CD20C(void);
+
 void func_800CD818(void);
+
+void func_800CD860(void);
 
 /** @brief Handles a First Aid Kit, Health Drink, Handgun Bullets, or Rifle Shells item pickup event. */
 void MapEvent_CommonItemTake(void);

@@ -14,35 +14,7 @@
     #define ENEMY_CHARA_ID Chara_Mumbler
 #endif
 
-#include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D88AC
-
-#include "maps/shared/sharedFunc_800D88C0_0_s00.h" // 0x800D88C0
-
-#include "maps/shared/sharedFunc_800D8904_0_s00.h" // 0x800D8904
-
-#include "maps/shared/sharedFunc_800D891C_0_s00.h" // 0x800D891C
-
-#include "maps/shared/sharedFunc_800D8928_0_s00.h" // 0x800D8928
-
-#include "maps/shared/sharedFunc_800D893C_0_s00.h" // 0x800D893C
-
-#include "maps/shared/sharedFunc_800D8950_0_s00.h" // 0x800D8950
-
-#include "maps/shared/sharedFunc_800D8964_0_s00.h" // 0x800D8964
-
-#include "maps/shared/sharedFunc_800D8A00_0_s00.h" // 0x800D8A00
-
-#include "maps/shared/sharedFunc_800D9064_0_s00.h" // 0x800D9064
-
-#include "maps/shared/sharedFunc_800D9078_0_s00.h" // 0x800D9078
-
-#include "maps/shared/sharedFunc_800D908C_0_s00.h" // 0x800D908C
-
-#include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800D9188
-
-#include "maps/shared/Anim_StartKeyframeIdxGet.h" // 0x800D921C
-
-#include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D923C
+#include "../src/maps/chara_util.c" // 0x800D88AC
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D929C
 

@@ -4,35 +4,7 @@
 #include "main/rng.h"
 #include "maps/map3/map3_s02.h"
 
-#include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800CF404
-
-#include "maps/shared/sharedFunc_800D88C0_0_s00.h" // 0x800CF418
-
-#include "maps/shared/sharedFunc_800D8904_0_s00.h" // 0x800CF45C
-
-#include "maps/shared/sharedFunc_800D891C_0_s00.h" // 0x800CF474
-
-#include "maps/shared/sharedFunc_800D8928_0_s00.h" // 0x800CF480
-
-#include "maps/shared/sharedFunc_800D893C_0_s00.h" // 0x800CF494
-
-#include "maps/shared/sharedFunc_800D8950_0_s00.h" // 0x800CF4A8
-
-#include "maps/shared/sharedFunc_800D8964_0_s00.h" // 0x800CF4BC
-
-#include "maps/shared/sharedFunc_800D8A00_0_s00.h" // 0x800CF548
-
-#include "maps/shared/sharedFunc_800D9064_0_s00.h" // 0x800CFBAC
-
-#include "maps/shared/sharedFunc_800D9078_0_s00.h" // 0x800CFBC0
-
-#include "maps/shared/sharedFunc_800D908C_0_s00.h" // 0x800CFBD4
-
-#include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800CFCD0
-
-#include "maps/shared/Anim_StartKeyframeIdxGet.h" // 0x800CFD64
-
-#include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800CFD70
+#include "../src/maps/chara_util.c" // 0x800CF404
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CFDD0
 

@@ -7,35 +7,7 @@
 #include "maps/map2/map2_s01.h"
 #include "maps/characters/dahlia.h"
 
-#include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800CDDA0
-
-#include "maps/shared/sharedFunc_800D88C0_0_s00.h" // 0x800CDDB4
-
-#include "maps/shared/sharedFunc_800D8904_0_s00.h" // 0x800CDDF8
-
-#include "maps/shared/sharedFunc_800D891C_0_s00.h" // 0x800CDE10
-
-#include "maps/shared/sharedFunc_800D8928_0_s00.h" // 0x800CDE1C
-
-#include "maps/shared/sharedFunc_800D893C_0_s00.h" // 0x800CDE30
-
-#include "maps/shared/sharedFunc_800D8950_0_s00.h" // 0x800CDE44
-
-#include "maps/shared/sharedFunc_800D8964_0_s00.h" // 0x800CDE58
-
-#include "maps/shared/sharedFunc_800D8A00_0_s00.h" // 0x800CDEF4
-
-#include "maps/shared/sharedFunc_800D9064_0_s00.h" // 0x800CE558
-
-#include "maps/shared/sharedFunc_800D9078_0_s00.h" // 0x800CE56C
-
-#include "maps/shared/sharedFunc_800D908C_0_s00.h" // 0x800CE580
-
-#include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800CE67C
-
-#include "maps/shared/Anim_StartKeyframeIdxGet.h" // 0x800CE730
-
-#include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800CE750
+#include "../src/maps/chara_util.c" // 0x800CDDA0
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CE7B0
 

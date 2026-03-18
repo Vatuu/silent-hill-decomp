@@ -1648,16 +1648,16 @@ typedef struct _MapOverlayHeader
     void                   (*func_124)(s_SubCharacter*); // Assumed return type.
     s32                    (*func_128)(s_SubCharacter*); // Assumed return type.
     s32                    (*func_12C)(s_SubCharacter*); // Assumed return type.
-    void                   (*func_130)(); // func(?).
+    void                   (*func_130)(s_SubCharacter*);
     s32                    (*func_134)(s_SubCharacter*); // Assumed return type.
     s32                    (*func_138)(s_SubCharacter*); // Keyframe state getter. Return value depends on the anim update function being used.
-    s32                    (*func_13C)(s32, s32, void*, s16, s32); // `arg0` is `s_SubCharacter*`.
-    void                   (*func_140)(); // func(?).
-    void                   (*func_144)(); // func(?).
-    void                   (*func_148)(); // func(?).
-    void                   (*func_14C)(); // func(?).
-    void                   (*animStartKeyframeIdxGet_150)();
-    void                   (*func_154)(); // func(?).
+    bool                   (*func_13C)(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, s32 angleIn, s32 arg4); // `arg0` is `s_SubCharacter*`.
+    void                   (*func_140)(s_SubCharacter* chara);
+    void                   (*func_144)(s_SubCharacter* chara);
+    bool                   (*func_148)(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfxId, s32 pitch);
+    bool                   (*func_14C)(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfxId);
+    s32                    (*animStartKeyframeIdxGet_150)(s_SubCharacter* chara);
+    void                   (*func_154)(s_SubCharacter* chara);
     void                   (*func_158)(q19_12 x, q19_12 z); // only map1_s05, map1_s06.
     void                   (*func_15C)(); // func(?) only map5_s01.
     void                   (*func_160)(); // func(?) only map5_s01.
