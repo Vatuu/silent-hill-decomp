@@ -2098,10 +2098,17 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
             {
                 STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].duration_8.constant = Q12(24.0f);
             }
+#if VERSION_EQUAL_OR_NEWER(USA) // TODO: Check which versions have this.
             else if (ANIM_TIME_RANGE_CHECK(stalker->model_0.anim_4.time_4, 59, 65))
             {
                 STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].duration_8.constant = Q12(32.0f);
             }
+#else // JAP0
+            else if (ANIM_TIME_RANGE_CHECK(stalker->model_0.anim_4.time_4, 59, 64))
+            {
+                STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].duration_8.constant = Q12(36.0f);
+            }
+#endif
             else
             {
                 STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].duration_8.constant = Q12_MULT_PRECISE(MAX(stalker->moveSpeed_38, Q12(0.1f)), Q12(30.67f));
@@ -2168,7 +2175,11 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
 
     ptr = PSX_SCRATCH;
 
+#if VERSION_EQUAL_OR_NEWER(USA)
     if (ANIM_TIME_RANGE_CHECK(stalker->model_0.anim_4.time_4, 60, 65))
+#else // JAP0
+    if (ANIM_TIME_RANGE_CHECK(stalker->model_0.anim_4.time_4, 60, 66))
+#endif
     {
         // TODO: Use macro?
         *(s32*)&ptr->field_30.vx = 0x21FFFB;
@@ -2255,7 +2266,6 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
 
     stalkerProps.angle_114 = ptr->angle_44;
 }
-
 
 // TODO: Size of arrays may be incorrect. One big array doesn't match.
 extern s_Keyframe sharedData_800DDBA8_0_s00;

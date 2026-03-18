@@ -1,4 +1,6 @@
+
 // All maps have these messages at the beginning.
+#if VERSION_REGION_IS(NTSC)
     "Yes",
     "No",
     "Someday,_someone_may_experience ~N\t\t\t\t\t\t\t\t\t\t\tthese_bizarre_events._Hopefully, ~N\t\t\t\t\t\t\t\t\t\t\tthey_will_find_my_notes_useful. ~E ",
@@ -14,3 +16,20 @@
     "It's_locked.~E ",
     "It's_unlocked.~E ",
     "~C6Now_Making!~C7~E",
+#elif VERSION_REGION_IS(NTSCJ)
+    "はい",
+    "いいえ",
+    "いつか誰かの目にとまるかもしれない ~N\t\t\t\t\t\t\t\t\t\t今までの奇妙な出来事を書き記しておこう ~E ",
+    " ~D ここの地図は持っていない ~E ",
+    " ~D 暗くて地図を見ることができない ~E ",
+    " ~C2 携帯用救急キット ~C7 がある ~N 取りますか？ ~S4 ",
+    " ~C2 栄養剤 ~C7 がある ~N 取りますか？ ~S4 ",
+    " ~C2 アンプル ~C7 がある ~N 取りますか？ ~S4 ",
+    " ~C2 ハンドガンの弾 ~C7 がある ~N 取りますか？ ~S4 ",
+    " ~C2 ライフルの弾 ~C7 がある ~N 取りますか？ ~S4 ",
+    " ~C2 ショットガンの弾 ~C7 がある ~N 取りますか？ ~S4 ",
+    " 鍵が壊れているようだ ~N この扉を開けることはできない ~E ",
+    " 鍵がかかっている ~E ",
+    " 鍵を開けた ~E ",
+    " ~C4 −開発中− ~C7 ~E ",
+#endif

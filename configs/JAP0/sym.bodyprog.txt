@@ -2805,6 +2805,7 @@ D_800A998C                                   = 0x800ABD28;
 //------------------------------------------------------------------------
 //--- PA: 0x0871D8   VA: 0x800ABD38   subsegment: .data, events/bgm_update
 //------------------------------------------------------------------------
+D_800A999C                                   = 0x800ABD38;
 D_800A99A0                                   = 0x800ABD3C;
 g_Bgm_LayerLimits                            = 0x800ABD40;
 
@@ -2938,7 +2939,7 @@ g_Strings2dLayerIdx                          = 0x800AF838;
 //--- PA: 0x08AD00   VA: 0x800AF860   subsegment: .data, items/item_screens_3
 //---------------------------------------------------------------------------
 g_Items_GunsMaxLoadAmmo                      = 0x800AF860;
-D_800AD4C8                                   = 0x800AF888;
+D_800AD4C8                                   = 0x800AF888; // size:0x690
 g_Inventory_CmdSelectedIdx                   = 0x800AFF18;
 g_Inventory_SelectionId                      = 0x800AFF1C;
 INVENTORY_ITEM_NAMES                         = 0x800AFF20;
@@ -3462,6 +3463,7 @@ g_Inventory_IsScrolling                      = 0x800C5EC0;
 g_Inventory_GameDifficulty                   = 0x800C5EC4;
 g_Inventory_SelectionBordersDraw             = 0x800C5EC8;
 g_Inventory_PrevSelectionId                  = 0x800C5ECC;
+D_800C39A0                                   = 0x800C5ED0;
 
 //--------------------------------------------------------------------------
 //--- PA: 0x0A1378   VA: 0x800C5ED8   subsegment: .bss, items/item_screens_3
@@ -3579,6 +3581,7 @@ D_800C45EC                                   = 0x800C6B1C;
 g_Player_IsMovingBackward                    = 0x800C6B20;
 g_Player_PrevPosition                        = 0x800C6B28;
 g_Player_IsRunning                           = 0x800C6B34;
+D_800C4606                                   = 0x800C6B36;
 g_Player_HeadingAngle                        = 0x800C6B38;
 D_800C4610                                   = 0x800C6B40;
 D_800C4618                                   = 0x800C6B48;

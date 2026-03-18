@@ -7,6 +7,13 @@
 #include "maps/characters/cheryl.h"
 #include "inline_no_dmpsx.h"
 
+// Enemy character used on this map changes depending on the region.
+#if VERSION_REGION_IS(NTSC)
+    #define ENEMY_CHARA_ID Chara_GreyChild
+#elif VERSION_REGION_IS(NTSCJ)
+    #define ENEMY_CHARA_ID Chara_Mumbler
+#endif
+
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D88AC
 
 #include "maps/shared/sharedFunc_800D88C0_0_s00.h" // 0x800D88C0
@@ -82,6 +89,8 @@ void GameBoot_LoadScreen_StageString(void) // 0x800D95D4
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+
+#if VERSION_REGION_IS(NTSC)
     "~J0(2.5)\tCheryl.__Where_could_you_be? ~E ",
     "~J0(1.5)\tIt's_strange... ",
     "~J0(2.0)\tIt's_quiet.__Too_quiet. ",
@@ -106,6 +115,31 @@ const char* MAP_MESSAGES[] = {
     "\tCan't_get_out_of_town ~N\n\tthrough_here. ~E ",
     "\tMy_car... ~N\n\ttoo_banged_up_to_drive. ",
     "\tWhere's_Cheryl? ~N\n\tHope_she's_safe. ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    "~J0(2.5)\tシェリル……どこへ行ったんだ？ ~E ",
+    "~J0(1.5)\tおかしい…… ",
+    "~J0(2.0)\t……静かだ　静かすぎる ",
+    "~J0(3.0)\tまるで人のいない町のようだ…… ~E ",
+    "~J0(3.0)\tシェリル…… ~E ",
+    "~J0(1.5) \t……足音？ ~E ",
+    "~J0(2.8)\tシェリル……？ ~N\n\t\t\tシェリルなのか！？ ~E ",
+    "~J0(1.2)\tどこへ行くんだ？ ~E ",
+    "~J0(1.8)\t待つんだ……待ってくれ！ ~E ",
+    "\tシェリルを追わなくては…… ~E ",
+    "\tおかしい……暗くなってきたな ~E ",
+    "\t行き止まり……？ ~N\n\tそんな馬鹿な！ ~E ",
+    "~J0(1.6)\tこれは何だ？ ",
+    "~J0(2.5)\tさっきからいったい ~N\n\t\t\tどうなってるんだ！？ ~E ",
+    "\tこれは……？ ~E ",
+    "\t……ないよりは　ましか ~E ",
+    "\t何で……こんなものが…… ~E ",
+    "\t金網で道がふさがれている！ ~E ",
+    "\t壊れた車椅子だ　なぜこんなところに？ ~E ",
+    "\t何だ……？　これは…… ~E ",
+    "\t道がふさがれている ~N\n\tここから町を出ることはできないな ~E ",
+    "\t乗ってきた車だ ~N\n\t壊れて動かなくなっている ",
+    "\t……シェリルはどこに行ったのだろう？ ~N\n\t無事ならいいのだが…… ~E "
+#endif
 };
 
 void func_800D9610(void) // 0x800D9610
@@ -892,7 +926,7 @@ void func_800DB514(void) // 0x800DB514
             if (Fs_QueueDoThingWhenEmpty())
             {
                 D_800DFB60++;
-                Chara_Load(1, Chara_GreyChild, &g_SysWork.npcCoords_FC0[0], 0, NULL, NULL);
+                Chara_Load(1, ENEMY_CHARA_ID, &g_SysWork.npcCoords_FC0[0], 0, NULL, NULL);
             }
 
         case 7:
@@ -927,9 +961,9 @@ void func_800DB514(void) // 0x800DB514
             SysWork_StateSetNext(SysState_Gameplay);
 
             Chara_ProcessLoads();
-            Chara_Spawn(Chara_GreyChild, 0, Q12(-252.0f), Q12(223.0f), Q12_ANGLE(180.0f), 5);
-            Chara_Spawn(Chara_GreyChild, 1, Q12(-254.0f), Q12(221.0f), Q12_ANGLE(135.0f), 5);
-            Chara_Spawn(Chara_GreyChild, 2, Q12(-259.0f), Q12(232.0f), Q12_ANGLE(0.0f),   5);
+            Chara_Spawn(ENEMY_CHARA_ID, 0, Q12(-252.0f), Q12(223.0f), Q12_ANGLE(180.0f), 5);
+            Chara_Spawn(ENEMY_CHARA_ID, 1, Q12(-254.0f), Q12(221.0f), Q12_ANGLE(135.0f), 5);
+            Chara_Spawn(ENEMY_CHARA_ID, 2, Q12(-259.0f), Q12(232.0f), Q12_ANGLE(0.0f),   5);
             break;
     }
 
@@ -938,7 +972,7 @@ void func_800DB514(void) // 0x800DB514
         if (Fs_QueueDoThingWhenEmpty())
         {
             D_800DFB60++;
-            Chara_Load(1, Chara_GreyChild, &g_SysWork.npcCoords_FC0[0], 0, NULL, NULL);
+            Chara_Load(1, ENEMY_CHARA_ID, &g_SysWork.npcCoords_FC0[0], 0, NULL, NULL);
         }
     }
 }
@@ -1075,7 +1109,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             // Make all grey children aggressive?
             for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
             {
-                if (g_SysWork.npcs_1A0[i].model_0.charaId_0 == Chara_GreyChild)
+                if (g_SysWork.npcs_1A0[i].model_0.charaId_0 == ENEMY_CHARA_ID)
                 {
                     g_SysWork.npcs_1A0[i].model_0.controlState_2     = ModelState_Uninitialized;
                     g_SysWork.npcs_1A0[i].model_0.stateStep_3 = 6;
@@ -1188,9 +1222,9 @@ void MapEvent_GreyChildrenSpawn(void) // 0x800DC1E8
     {
         if (PLAYER_IN_MAP_CHUNK(vx, 1, -7, -1, -7) && PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7))
         {
-            Chara_Spawn(Chara_GreyChild, 0, Q12(-252.0f), Q12(223.0f), Q12_ANGLE(180.0f), 5);
-            Chara_Spawn(Chara_GreyChild, 1, Q12(-254.0f), Q12(221.0f), Q12_ANGLE(135.0f), 5);
-            Chara_Spawn(Chara_GreyChild, 2, Q12(-259.0f), Q12(232.0f), Q12_ANGLE(0.0f),   5);
+            Chara_Spawn(ENEMY_CHARA_ID, 0, Q12(-252.0f), Q12(223.0f), Q12_ANGLE(180.0f), 5);
+            Chara_Spawn(ENEMY_CHARA_ID, 1, Q12(-254.0f), Q12(221.0f), Q12_ANGLE(135.0f), 5);
+            Chara_Spawn(ENEMY_CHARA_ID, 2, Q12(-259.0f), Q12(232.0f), Q12_ANGLE(0.0f),   5);
         }
     }
 }
