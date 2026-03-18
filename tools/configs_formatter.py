@@ -264,6 +264,14 @@ def sort_and_format_with_yaml_comments(input_text, section_map, subsegment_map):
     # Sort variables by address
     variables.sort(key=lambda x: x['address'])
 
+    # Determine which subsegments are non-empty (have at least one variable within their address range)
+    sorted_subseg_addrs = sorted(subsegment_map.keys())
+    non_empty_subsegments = set()
+    for i, addr in enumerate(sorted_subseg_addrs):
+        next_addr = sorted_subseg_addrs[i + 1] if i + 1 < len(sorted_subseg_addrs) else float('inf')
+        if any(addr <= v['address'] < next_addr for v in variables):
+            non_empty_subsegments.add(addr)
+
     # Build output by processing variables in order and inserting subsegments when needed
     output_lines = []
     seen_sections = set()
@@ -279,8 +287,11 @@ def sort_and_format_with_yaml_comments(input_text, section_map, subsegment_map):
                 subsegments_to_add.append((sub_addr, section_name, subseg_comments))
                 used_subsegments.add(sub_addr)
 
-        # Sort subsegments by address and add them
+        # Sort subsegments by address and add them (skip empty subsegments)
         for sub_addr, section_name, subseg_comments in sorted(subsegments_to_add):
+            if sub_addr not in non_empty_subsegments:
+                continue
+
             # print(f"DEBUG FORMAT: Adding subsegment 0x{sub_addr:08X} before variable 0x{address:08X}")
 
             # Add section header if not seen before
