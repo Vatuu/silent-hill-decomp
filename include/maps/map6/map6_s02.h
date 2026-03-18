@@ -135,6 +135,8 @@ s32 func_800D1D40(void);
 
 void func_800D2170(s32 arg0);
 
+void func_800D2364(void);
+
 void func_800D32D0(void);
 
 void func_800D1AE4(void);

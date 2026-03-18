@@ -1612,7 +1612,7 @@ typedef struct _MapOverlayHeader
     s_MapOverlayHeader_94* field_94;                    // only map1_s02, map1_s03.
     s32                    (*func_98)(POLY_FT4** poly, s32); // only map1_s02, map1_s03.
     void                   (*func_9C)();                // only map1_s02, map1_s03.
-    s32*                   func_A0; // only map1_s03.
+    void*                  ptr_A0; // M1S03 only, pointer to `s_800E3A40` array.
     s32                    (*func_A4)(POLY_FT4** poly, s32); // func(?) only map1_s03.
     void                   (*func_A8)(); // func(?) only map6_s02.
     s32                    (*func_AC)(POLY_FT4** poly, s32); // func(?) only map4_s03, map4_s05.

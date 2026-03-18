@@ -276,4 +276,6 @@ void Map_WorldObjectsInit(void);
 
 void Map_WorldObjectsUpdate(void);
 
+void func_800E5628(void);
+
 #endif
