@@ -81,10 +81,6 @@
 
 #include "maps/shared/Ai_PuppetNurse_Control13.h" // 0x800CFFD4
 
-INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04", g_NursePuppet_SfxOffsets);
-
-INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04", g_PuppetNurse_ModelStates0);
-
 #include "maps/shared/Ai_PuppetNurse_Control.h" // 0x800D0094
 
 #include "maps/shared/sharedFunc_800D02E4_3_s03.h" // 0x800D01A8

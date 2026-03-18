@@ -82,10 +82,6 @@
 
 #include "maps/shared/Ai_PuppetNurse_Control13.h"
 
-INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", g_NursePuppet_SfxOffsets);
-
-INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", g_PuppetNurse_ModelStates0);
-
 #include "maps/shared/Ai_PuppetNurse_Control.h" // 0x800D01D0
 
 #include "maps/shared/sharedFunc_800D02E4_3_s03.h"

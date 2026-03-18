@@ -466,12 +466,6 @@ extern s32 g_PuppetNurseHurtSfxIdxs[4];
 
 extern s_SfxPair g_NursePuppetSfxs[18];
 
-// Only used by `Ai_PuppetNurse_AnimSfxGet`. Currently causes a mismatch. Try to move it when more code gets decompiled.
-extern u8 g_NursePuppet_SfxOffsets[4]; // = { 9, 6, 7, 8 };
-
-// Only used by `Ai_PuppetNurse_Control8`. Currently causes a mismatch. Try to move it when more code gets decompiled.
-extern u16 g_PuppetNurse_ModelStates0[8]; // = { 9, 9, 9, 6, 6, 9, 7, 7 }; // + 2 bytes of padding.
-
 extern u8 g_NursePuppet_AnimSfxs[580];
 
 extern s32 g_PuppetNurse_AnimStatus0[2];

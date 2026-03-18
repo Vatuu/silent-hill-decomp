@@ -1,6 +1,5 @@
 void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
 {
-    u16          modelStates[8];
     s32          controlState;
     q19_12       speed;
 #if !defined(M2CTX)
@@ -37,26 +36,28 @@ void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
             break;
 
         case 2:
-            memcpy(modelStates, g_PuppetNurse_ModelStates0, sizeof(g_PuppetNurse_ModelStates0));
-
-            if (nurse->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
             {
-                if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                u16 modelStates[8] = { 9, 9, 9, 6, 6, 9, 7, 7 };
+                
+                if (nurse->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
                 {
-                    controlState = PuppetNurseControl_9;
+                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    {
+                        controlState = PuppetNurseControl_9;
+                    }
+                    else
+                    {
+                        controlState = modelStates[(Rng_Rand16() >> 4) & 7];
+                    }
+
+                    nurse->model_0.controlState_2 = controlState;
+                    nurse->model_0.stateStep_3 = 0;
                 }
                 else
                 {
-                    controlState = modelStates[(Rng_Rand16() >> 4) & 7];
+                    speed = Rng_GenerateUInt(0, 0x1FF); // TODO: Combine with the +0.8f below?
+                    Chara_MoveSpeedUpdate(nurse, (speed + Q12(0.8f)));
                 }
-
-                nurse->model_0.controlState_2 = controlState;
-                nurse->model_0.stateStep_3 = 0;
-            }
-            else
-            {
-                speed = Rng_GenerateUInt(0, 0x1FF); // TODO: Combine with the +0.8f below?
-                Chara_MoveSpeedUpdate(nurse, (speed + Q12(0.8f)));
             }
             break;
     }

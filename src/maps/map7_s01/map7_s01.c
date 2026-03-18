@@ -88,10 +88,6 @@ const VECTOR D_800CA5C8 = {};
 
 #include "maps/shared/Ai_PuppetNurse_Control13.h" // 0x800D4104
 
-INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01", g_NursePuppet_SfxOffsets);
-
-INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01", g_PuppetNurse_ModelStates0);
-
 #include "maps/shared/Ai_PuppetNurse_Control.h" // 0x800D41C4
 
 #include "maps/shared/sharedFunc_800D02E4_3_s03.h" // 0x800D42D8
