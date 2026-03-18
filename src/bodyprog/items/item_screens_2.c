@@ -409,10 +409,6 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
     }
 }
 
-#if VERSION_REGION_IS(NTSCJ)
-INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026120);
-INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_2", Gfx_Results_Save);
-#else
 void Gfx_Results_Save(void) // 0x8004D1A0
 {
     s32      i;
@@ -451,10 +447,12 @@ void Gfx_Results_Save(void) // 0x8004D1A0
 
     GsOT* ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
+#if VERSION_REGION_IS(NTSC)
     const char* SAVE_DIALOG_STRS[] = {
         "\x07Is_it_OK_to_save?",
         "\x07Yes_____________No"
     };
+#endif
 
     for (i = 0; i < 24; i++)
     {
@@ -490,9 +488,10 @@ void Gfx_Results_Save(void) // 0x8004D1A0
         }
 
         addPrim(&ot->org[7], line);
-        GsOUT_PACKET_P = (PACKET*)line + sizeof(LINE_F2);
+        GsOUT_PACKET_P = &line[1];
     }
 
+#if VERSION_REGION_IS(NTSC)
     g_SysWork.enableHighResGlyphs_2350_0 = true;
 
     Gfx_StringSetPosition(90, 92);
@@ -502,6 +501,36 @@ void Gfx_Results_Save(void) // 0x8004D1A0
     Gfx_StringDraw("\x07Yes_____________No", DEFAULT_MAP_MESSAGE_LENGTH);
 
     g_SysWork.enableHighResGlyphs_2350_0 = false;
+
+#elif VERSION_REGION_IS(NTSCJ)
+    for (i = 0; i < 2; i++)
+    {
+        s32       isSecondLoop; // @hack?
+        POLY_FT4* poly;
+
+        isSecondLoop = i != 0;
+        poly         = GsOUT_PACKET_P;
+
+        setPolyFT4(poly);
+        poly->tpage = 4;
+        poly->clut  = 0x7f93;
+        setRGB0(poly, 0x80, 0x80, 0x80);
+
+        if (isSecondLoop)
+        {
+            setUV4(poly, 0x6c, 0x10, 0x6c, 0x20, 0xf0, 0x10, 0xf0, 0x20);
+            setXY4(poly, -0x3F, 0x10, -0x3F, 0x30, 0x45, 0x10, 0x45, 0x30);
+        }
+        else
+        {
+            setUV4(poly, 0x0, 0x10, 0x0, 0x20, 0x60, 0x10, 0x60, 0x20);
+            setXY4(poly, -0x30, -0x30, -0x30, -0x10, 0x30, -0x30, 0x30, -0x10);
+        }
+
+        addPrim(&ot->org[6], poly);
+        GsOUT_PACKET_P = &poly[1];
+    }
+#endif
 
     Gfx_StringSetPosition(82, 200);
     Gfx_StringDraw("NEXT_GAME_MODE", 15);
@@ -523,7 +552,6 @@ void Gfx_Results_Save(void) // 0x8004D1A0
             break;
     }
 }
-#endif
 
 void Inventory_Logic(void) // 0x8004D518
 {
