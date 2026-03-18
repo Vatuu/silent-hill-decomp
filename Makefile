@@ -245,8 +245,6 @@ else
 
 define make_elf_target
 
-ifeq ($(GAME_VERSION), USA)
-
 $2: $2.elf
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $$< $$@
 ifneq (,$(filter $1,$(TARGET_POSTBUILD)))
@@ -262,28 +260,6 @@ $2.elf: $(call get_o_files, $1, $(GEN_COMP_TU))
 		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt \
 		-T $(CONFIG_DIR)/lib_externs.ld \
 		-o $$@
-
-#else GAME_VERSION
-else
-
-$2: $2.elf
-	$(OBJCOPY) $(OBJCOPY_FLAGS) $$< $$@
-ifneq (,$(filter $1,$(TARGET_POSTBUILD)))
-	-$(POSTBUILD) $1
-endif
-
-$2.elf: $(call get_o_files, $1, $(GEN_COMP_TU))
-	@mkdir -p $(dir $2)
-	$(LD) $(LD_FLAGS) \
-		-Map $2.map \
-		-T $(LINKER_DIR)/$1.ld \
-		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_syms_auto.$(notdir $1).txt \
-		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt \
-		-T $(CONFIG_DIR)/lib_externs.ld \
-		-o $$@
-
-#endif GAME_VERSION
-endif
 
 #endef make_elf_target
 endef
@@ -621,7 +597,7 @@ generate: $(LD_FILES)
 objdiff-config:
 	rm -rf $(EXPECTED_DIR)
 	mkdir -p $(EXPECTED_DIR)
-	$(MAKE) objdiff-generate
+	$(MAKE) GAME_VERSION=$(GAME_VERSION) objdiff-generate
 	$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config-retail.yaml $(GAME_VERSION_DIR)
 
 objdiff-config-all:
@@ -635,8 +611,8 @@ objdiff-config-all:
 	$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config-retail.yaml ALL
 
 objdiff-generate:
-	$(MAKE) GEN_COMP_TU=1 regenerate
-	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 GEN_COMP_TU=1 build
+	$(MAKE) GAME_VERSION=$(GAME_VERSION) GEN_COMP_TU=1 regenerate
+	$(MAKE) GAME_VERSION=$(GAME_VERSION) NON_MATCHING=1 SKIP_ASM=1 GEN_COMP_TU=1 build
 	mv $(BUILD_DIR)/$(ASM_DIR) $(EXPECTED_DIR)
 
 report:
