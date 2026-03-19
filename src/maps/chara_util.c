@@ -20,7 +20,7 @@
  * collapses the switch into a direct block, matching single-case maps
  * that skip checking the case entirely.
  *
- * Used by both `sharedFunc_800D8964_0_s00` and `Anim_StartKeyframeIdxGet` in this file.
+ * Used by both `Chara_AnimPlaybackStateGet` and `Chara_AnimStartKeyframeIdxGet` in this file.
  */
 
 #if defined(MAP_CHARA_COUNT) && MAP_CHARA_COUNT > 1
@@ -67,27 +67,27 @@ void sharedFunc_800D8904_0_s00(s_SubCharacter* player, q19_12 afkTime)
     player->model_0.stateStep_3                   = 0;
 }
 
-void sharedFunc_800D891C_0_s00(s_SubCharacter* player)
+void Player_RunTimerReset(s_SubCharacter* player)
 {
     player->properties_E4.player.runTimer_F8 = 1;
 }
 
-void sharedFunc_800D8928_0_s00(s_SubCharacter* chara)
+void Chara_Lock(s_SubCharacter* chara)
 {
     chara->model_0.anim_4.flags_2 &= ~AnimFlag_Unlocked;
 }
 
-s32 sharedFunc_800D893C_0_s00(s_SubCharacter* chara)
+s32 Chara_IsLockedCheck(s_SubCharacter* chara)
 {
     return ~(chara->model_0.anim_4.flags_2 & AnimFlag_Unlocked);
 }
 
-void sharedFunc_800D8950_0_s00(s_SubCharacter* chara)
+void Chara_Unlock(s_SubCharacter* chara)
 {
     chara->model_0.anim_4.flags_2 |= AnimFlag_Unlocked;
 }
 
-s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
+s32 Chara_AnimPlaybackStateGet(s_SubCharacter* chara)
 {
     s_AnimInfo* animInfo = NULL;
 
@@ -161,7 +161,7 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
 #endif
 
 #ifdef HAS_Chara_BloodyLisa
-    #ifdef MAP7_S03 // In M7S03 this checks for Lisa instead of BloodyLisa (while Anim_StartKeyframeIdxGet checks for BloodyLisa instead?)
+    #ifdef MAP7_S03 // In M7S03 this checks for Lisa instead of BloodyLisa (while Chara_AnimStartKeyframeIdxGet checks for BloodyLisa instead?)
         CHARA_CASE(Chara_Lisa):
     #else
         CHARA_CASE(Chara_BloodyLisa):
@@ -215,10 +215,7 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
     return -1;
 }
 
-// Seems like this function is intended to be called repeatedly, swapping between states.
-// Might be called many times in a single logic update or over multiple updates.
-// Very similar to `sharedFunc_800D23EC_0_s00`, but that func is for the player.
-bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, s32 angleIn, s32 arg4)
+bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, q19_12 angleIn, s32 arg4)
 {
     #define ANGLE_THRESHOLD (Q12_ANGLE(360.0) >> 6) // 360 / 64 = 5.625 degrees.
 
@@ -252,7 +249,8 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             }
             else
             {
-                sharedData_800DF1FA_0_s00 = Q12_ANGLE_ABS(ratan2(arg2[0].vx - chara->position_18.vx, arg2[0].vz - chara->position_18.vz));
+                sharedData_800DF1FA_0_s00 = Q12_ANGLE_ABS(ratan2(arg2[0].vx - chara->position_18.vx,
+                                                                 arg2[0].vz - chara->position_18.vz));
                 Math_ShortestAngleGet(chara->rotation_24.vy, sharedData_800DF1FA_0_s00, &shortestAngle);
 
                 if (ABS(shortestAngle) < ANGLE_THRESHOLD)
@@ -308,7 +306,8 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             break;
 
         case 4:
-            sharedData_800DF1FA_0_s00 = Q12_ANGLE_ABS(ratan2(arg2[sharedData_800DF1F8_0_s00].vx - chara->position_18.vx, arg2[sharedData_800DF1F8_0_s00].vz - chara->position_18.vz));
+            sharedData_800DF1FA_0_s00 = Q12_ANGLE_ABS(ratan2(arg2[sharedData_800DF1F8_0_s00].vx - chara->position_18.vx,
+                                                      arg2[sharedData_800DF1F8_0_s00].vz - chara->position_18.vz));
             sharedData_800DF1F4_0_s00 = SquareRoot0(Q12_2D_DISTANCE_SQR(arg2[sharedData_800DF1F8_0_s00], chara->position_18));
 
             charaStateEC = 5;
@@ -332,7 +331,8 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             Math_ShortestAngleGet(chara->rotation_24.vy, sharedData_800DF1FA_0_s00, &shortestAngle);
 
             // Turn toward.
-            angleStep = TIMESTEP_SCALE_30_FPS(g_DeltaTime, (shortestAngle < Q12_ANGLE(45.0f)) ? Q12_ANGLE(2.9f) : Q12_ANGLE(22.5f));
+            angleStep = TIMESTEP_SCALE_30_FPS(g_DeltaTime, (shortestAngle < Q12_ANGLE(45.0f)) ? Q12_ANGLE(2.9f) :
+                                                                                                Q12_ANGLE(22.5f));
 
             if (ABS(shortestAngle) < ANGLE_THRESHOLD)
             {
@@ -420,12 +420,12 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
     return false;
 }
 
-void sharedFunc_800D9064_0_s00(s_SubCharacter* chara)
+void Chara_VisibleSet(s_SubCharacter* chara)
 {
     chara->model_0.anim_4.flags_2 |= AnimFlag_Visible;
 }
 
-void sharedFunc_800D9078_0_s00(s_SubCharacter* chara)
+void Chara_InvisibleSet(s_SubCharacter* chara)
 {
     chara->model_0.anim_4.flags_2 &= ~AnimFlag_Visible;
 }
@@ -475,7 +475,7 @@ bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
     {
         if (chara->model_0.anim_4.keyframeIdx_8 >= keyframeIdx)
         {
-            if (!(chara->properties_E4.player.flags_11C & PlayerFlag_Unk13))
+            if (!(chara->properties_E4.player.flags_11C & PlayerFlag_SfxActive))
             {
                 switch (sfxId)
                 {
@@ -555,20 +555,20 @@ bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
                         break;
                 }
 
-                chara->properties_E4.player.flags_11C |= PlayerFlag_Unk13;
+                chara->properties_E4.player.flags_11C |= PlayerFlag_SfxActive;
                 return true;
             }
         }
         else
         {
-            chara->properties_E4.player.flags_11C &= ~PlayerFlag_Unk13;
+            chara->properties_E4.player.flags_11C &= ~PlayerFlag_SfxActive;
         }
     }
 
     return false;
 }
 
-s32 Anim_StartKeyframeIdxGet(s_SubCharacter* chara)
+s32 Chara_AnimStartKeyframeIdxGet(s_SubCharacter* chara)
 {
     s_AnimInfo* animInfo = NULL;
 
@@ -639,7 +639,7 @@ s32 Anim_StartKeyframeIdxGet(s_SubCharacter* chara)
             break;
 #endif
 
-// M7S02 uses Chara_GhostDoctor in sharedFunc_800D8964_0_s00, but includes Lisa/BloodyLisa here?
+// M7S02 uses Chara_GhostDoctor in Chara_AnimPlaybackStateGet, but includes Lisa/BloodyLisa here?
 #if defined(HAS_Chara_Lisa) || defined(HAS_Chara_GhostDoctor)
         CHARA_CASE(Chara_Lisa):
             animInfo = &LISA_ANIM_INFOS[chara->model_0.anim_4.status_0];

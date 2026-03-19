@@ -540,7 +540,7 @@ bool func_80071620(u32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, e_Sfx
 
     if (chara->model_0.anim_4.keyframeIdx_8 >= keyframeIdx)
     {
-        if (g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C & PlayerFlag_Unk13)
+        if (g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C & PlayerFlag_SfxActive)
         {
             return false;
         }
@@ -581,12 +581,12 @@ bool func_80071620(u32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, e_Sfx
                 break;
         }
 
-        g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_Unk13;
+        g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_SfxActive;
         return true;
     }
     else
     {
-        g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk13;
+        g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_SfxActive;
 
         do {} while (false); // @hack Required for match.
 

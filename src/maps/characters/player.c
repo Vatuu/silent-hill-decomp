@@ -339,7 +339,7 @@ void Player_ControlUnfreeze(bool setIdle)
     g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2              = Q12(0.0f);
     g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0              = Q12(0.0f);
     g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~(PlayerFlag_Unk2 |
-                                                                    PlayerFlag_Unk13 |
+                                                                    PlayerFlag_SfxActive |
                                                                     PlayerFlag_DamageReceived |
                                                                     PlayerFlag_Moving);
 

@@ -410,8 +410,8 @@ void func_800CED88(void) // 0x800CED88
             if (step > 13)
             {
                 dahlia = dahliaChara;
-                if ((dahlia->model_0.anim_4.time_4 - Q12(Anim_StartKeyframeIdxGet(dahlia))) <= Q12(30.0f) &&
-                    (dahlia->model_0.anim_4.time_4 - Q12(Anim_StartKeyframeIdxGet(dahlia))) >= Q12(21.0f))
+                if ((dahlia->model_0.anim_4.time_4 - Q12(Chara_AnimStartKeyframeIdxGet(dahlia))) <= Q12(30.0f) &&
+                    (dahlia->model_0.anim_4.time_4 - Q12(Chara_AnimStartKeyframeIdxGet(dahlia))) >= Q12(21.0f))
                 {
                     Savegame_EventFlagSet(EventFlag_176);
                 }

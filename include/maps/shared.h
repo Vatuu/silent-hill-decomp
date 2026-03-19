@@ -764,30 +764,35 @@ void sharedFunc_800E0514_2_s00(s_SubCharacter* airScreamer);
 /** Air Screamer state step getter. `const` is required for match. */
 bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer);
 
-/** Among other things, sets the players's anim to anim 3 (which might actually be flags if the field packs more data). */
+/** Among other things, sets the players's anim to anim 3 (which might actually be flags if the field packs more data).
+ * Maybe not player but another character?
+ */
 void sharedFunc_800D88C0_0_s00(s_SubCharacter* player, bool cond);
 
 /** Resets some player properties. */
 void sharedFunc_800D8904_0_s00(s_SubCharacter* player, q19_12 afkTime);
 
-void sharedFunc_800D891C_0_s00(s_SubCharacter* player);
+void Player_RunTimerReset(s_SubCharacter* player);
 
 /** Locks a character's animation. */
-void sharedFunc_800D8928_0_s00(s_SubCharacter* chara);
+void Chara_Lock(s_SubCharacter* chara);
 
 /** Unlocked flag getter. */
-s32 sharedFunc_800D893C_0_s00(s_SubCharacter* chara);
+s32 Chara_IsLockedCheck(s_SubCharacter* chara);
 
 /** Unlocks a character's animation. */
-void sharedFunc_800D8950_0_s00(s_SubCharacter* chara);
+void Chara_Unlock(s_SubCharacter* chara);
 
-bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, s32 angleIn, s32 arg4);
+// Seems like this function is intended to be called repeatedly, swapping between states.
+// Might be called many times in a single logic update or over multiple updates.
+// Very similar to `sharedFunc_800D23EC_0_s00`, but that func is for the player.
+bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, q19_12 angleIn, s32 arg4);
 
-void sharedFunc_800D9064_0_s00(s_SubCharacter* chara);
+void Chara_VisibleSet(s_SubCharacter* chara);
 
-void sharedFunc_800D9078_0_s00(s_SubCharacter* chara);
+void Chara_InvisibleSet(s_SubCharacter* chara);
 
-s32 Anim_StartKeyframeIdxGet(s_SubCharacter* chara);
+s32 Chara_AnimStartKeyframeIdxGet(s_SubCharacter* chara);
 
 /** Humanoid init function? */
 void sharedFunc_800D923C_0_s00(s_SubCharacter* chara);
@@ -993,10 +998,11 @@ void sharedFunc_800D8804_0_s01(void);
 s32 sharedFunc_800D929C_0_s00(void);
 
 /** NPC anim func. Checks if the active keyframe is at the start or end of the anim's range. */
-s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara);
+s32 Chara_AnimPlaybackStateGet(s_SubCharacter* chara);
 
 bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfxId);
 
+/** Character SFX func? */
 bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfxId, s32 pitch);
 
 void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7);

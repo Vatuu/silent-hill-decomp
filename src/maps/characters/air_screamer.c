@@ -232,7 +232,7 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer)
     BIT_GET(bit27, flags, 27);
 
     cond1 = false;
-    if (flags & PlayerFlag_Unk13 || cond0)
+    if (flags & PlayerFlag_SfxActive || cond0)
     {
         cond1 = true;
     }

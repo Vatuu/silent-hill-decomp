@@ -777,7 +777,7 @@ typedef enum _PlayerFlags
     PlayerFlag_Unk10          = 1 << 10, // `PlayerFlag_MeleeAttack`?
     PlayerFlag_Unk11          = 1 << 11, // `PlayerFlag_GunAttack`?
     PlayerFlag_Unk12          = 1 << 12,
-    PlayerFlag_Unk13          = 1 << 13,
+    PlayerFlag_SfxActive      = 1 << 13,
     PlayerFlag_DamageReceived = 1 << 14,
     PlayerFlag_Moving         = 1 << 15,
     PlayerFlag_Unk16          = 1 << 16,

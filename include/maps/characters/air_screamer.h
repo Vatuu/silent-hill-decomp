@@ -18,7 +18,7 @@ typedef enum _AirScreamerFlags
     AirScreamerFlag_10   = 1 << 10,
     AirScreamerFlag_11   = 1 << 11,
     AirScreamerFlag_12   = 1 << 12,
-    AirScreamerFlag_13   = 1 << 13,
+    AirScreamerFlag_13   = 1 << 13, // SFX active? Mirrors similar player flag?
     AirScreamerFlag_14   = 1 << 14,
     AirScreamerFlag_15   = 1 << 15,
     AirScreamerFlag_16   = 1 << 16,

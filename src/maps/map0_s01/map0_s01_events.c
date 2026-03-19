@@ -189,7 +189,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             }
 
             temp_s0_5 = D_800DE251;
-            if (D_800DE251 == 1 && sharedFunc_800D8964_0_s00(&g_SysWork.npcs_1A0[0]) == temp_s0_5)
+            if (D_800DE251 == 1 && Chara_AnimPlaybackStateGet(&g_SysWork.npcs_1A0[0]) == temp_s0_5)
             {
                 func_80085EB8(0, &g_SysWork.npcs_1A0[0], 11, false);
                 D_800DE251++;
