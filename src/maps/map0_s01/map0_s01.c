@@ -7,7 +7,7 @@
 #include "maps/characters/air_screamer.h"
 #include "maps/characters/player.h"
 
-#include "../src/maps/unk_draw_m0s01.c" // 0x800CCB8C
+#include "../src/maps/particle_glass.c" // 0x800CCB8C
 
 #include "../src/maps/particle.c"
 

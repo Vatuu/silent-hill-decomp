@@ -7,7 +7,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/twinfeeler.h"
 
-#include "../src/maps/unk_draw_m4s03.c" // 0x800CB0A4
+#include "../src/maps/particle_acid.c" // 0x800CB0A4
 
 #include "../src/maps/particle.c"
 

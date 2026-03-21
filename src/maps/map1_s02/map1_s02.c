@@ -8,7 +8,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
-#include "../src/maps/unk_draw_m1s02.c" // 0x800CBA4C
+#include "../src/maps/particle_water.c" // 0x800CBA4C
 
 #include "../src/maps/particle.c"
 

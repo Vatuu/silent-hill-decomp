@@ -10,7 +10,7 @@
 
 #define floatstingerProps floatstinger->properties_E4.floatstinger
 
-#include "../src/maps/unk_draw_m4s03.c" // 0x800CACA4
+#include "../src/maps/particle_acid.c" // 0x800CACA4
 
 #include "../src/maps/unk_draw_m1s03.c" // 0x800CC300
 

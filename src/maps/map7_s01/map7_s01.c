@@ -8,7 +8,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/puppet_nurse.h"
 
-#include "../src/maps/unk_draw_m0s01.c" // 0x800CC9A4
+#include "../src/maps/particle_glass.c" // 0x800CC9A4
 
 #include "../src/maps/particle.c"
 

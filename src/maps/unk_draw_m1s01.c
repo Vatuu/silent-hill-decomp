@@ -7,7 +7,7 @@
 #include "maps/shared.h"
 
 // Unknown drawing code included in M1S01 and M6S04.
-// Called by cutscene event code?
+// Called by cutscene event code? Might be related to smoke/steam particle effects.
 // TODO: Make this separate split in each map instead of `#include`.
 
 void sharedFunc_800CB7F4_1_s01(void)

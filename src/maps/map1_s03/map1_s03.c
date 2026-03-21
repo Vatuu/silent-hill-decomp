@@ -11,7 +11,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
-#include "../src/maps/unk_draw_m1s02.c" // 0x800CBCE0
+#include "../src/maps/particle_water.c" // 0x800CBCE0
 
 void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2) // 0x800CDCE0
 {

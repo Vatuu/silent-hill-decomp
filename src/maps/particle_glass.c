@@ -6,8 +6,8 @@
 #include "bodyprog/math/math.h"
 #include "maps/shared.h"
 
-// Unknown drawing code included in M0S01 and M7S01
-// Called by cutscene event code?
+// Glass-breaking particle effect? Included in M0S01 and M7S01
+// Called by cutscene event code.
 // TODO: Make this separate split in each map instead of `#include`.
 
 void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7)

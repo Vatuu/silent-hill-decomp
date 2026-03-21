@@ -6,8 +6,8 @@
 #include "bodyprog/math/math.h"
 #include "maps/shared.h"
 
-// Unknown drawing code included in M1S02 and M1S03.
-// Called by cutscene event code and M1S02 `Map_WorldObjectsUpdate`.
+// Waterfall particle effect? Included in M1S02 and M1S03.
+// Called by cutscene event code and M1S02 `Map_WorldObjectsUpdate`, likely draws the water used in the school key puzzle.
 // TODO: Make this separate split in each map instead of `#include`.
 
 void sharedFunc_800CBA4C_1_s02(s32 idx, s32 arg1, s32 arg2)

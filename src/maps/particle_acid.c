@@ -6,8 +6,8 @@
 #include "bodyprog/math/math.h"
 #include "maps/shared.h"
 
-// Unknown drawing code included in M4S03 and M4S05
-// Floatstinger and Twinfeeler enemy code seems to call into this, maybe related to drawing them?
+// Twinfeeler/Floatstinger acid particle effect? Included in M4S03 and M4S05
+// Both Floatstinger and Twinfeeler enemy code call into this.
 // TODO: Make this separate split in each map instead of `#include`.
 
 void sharedFunc_800CB0A4_4_s03(VECTOR3* arg0, VECTOR3* arg1)
