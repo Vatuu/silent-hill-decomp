@@ -9,17 +9,7 @@
 
 #include "../src/maps/unk_draw.c" // 0x800CAAD0
 
-#include "maps/shared/sharedFunc_800CBE7C_1_s05.h" // 0x800CBE7C
-
-#include "maps/shared/sharedFunc_800CBF74_1_s05.h" // 0x800CBF74
-
-#include "maps/shared/sharedFunc_800CC618_1_s05.h" // 0x800CC618
-
-#include "maps/shared/sharedFunc_800CCDD4_1_s05.h" // 0x800CCDD4
-
-#include "maps/shared/sharedFunc_800CCE2C_1_s05.h" // 0x800CCE2C
-
-#include "maps/shared/sharedFunc_800CCF30_1_s05.h" // 0x800CCF30
+#include "../src/maps/unk_draw_m1s05.c" // 0x800CBE7C
 
 #include "../src/maps/particle.c"
 

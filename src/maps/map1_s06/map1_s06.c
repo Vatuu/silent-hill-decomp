@@ -7,17 +7,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/split_head.h"
 
-#include "maps/shared/sharedFunc_800CBE7C_1_s05.h" // 0x800CAFC4
-
-#include "maps/shared/sharedFunc_800CBF74_1_s05.h" // 0x800CB0BC
-
-#include "maps/shared/sharedFunc_800CC618_1_s05.h" // 0x800CB760
-
-#include "maps/shared/sharedFunc_800CCDD4_1_s05.h" // 0x800CBF1C
-
-#include "maps/shared/sharedFunc_800CCE2C_1_s05.h" // 0x800CBF74
-
-#include "maps/shared/sharedFunc_800CCF30_1_s05.h" // 0x800CC078
+#include "../src/maps/unk_draw_m1s05.c" // 0x800CAFC4
 
 #include "../src/maps/particle.c"
 
