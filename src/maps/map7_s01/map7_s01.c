@@ -8,11 +8,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/puppet_nurse.h"
 
-const VECTOR D_800CA5C8 = {};
-
-#include "maps/shared/sharedFunc_800CCB8C_0_s01.h" // 0x800CC9A4
-
-#include "maps/shared/sharedFunc_800CD1F8_0_s01.h" // 0x800CD010
+#include "../src/maps/unk_draw_m0s01.c" // 0x800CC9A4
 
 #include "../src/maps/particle.c"
 

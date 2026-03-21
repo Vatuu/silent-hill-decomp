@@ -7,11 +7,7 @@
 #include "maps/characters/air_screamer.h"
 #include "maps/characters/player.h"
 
-const VECTOR D_800CA5C8 = {};
-
-#include "maps/shared/sharedFunc_800CCB8C_0_s01.h" // 0x800CCB8C
-
-#include "maps/shared/sharedFunc_800CD1F8_0_s01.h" // 0x800CD1F8
+#include "../src/maps/unk_draw_m0s01.c" // 0x800CCB8C
 
 #include "../src/maps/particle.c"
 
