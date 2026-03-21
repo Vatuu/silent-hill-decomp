@@ -11,15 +11,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
-#include "maps/shared/sharedFunc_800CBA4C_1_s02.h" // 0x800CBCE0
-
-#include "maps/shared/sharedFunc_800CBC98_1_s02.h" // 0x800CBF2C
-
-#include "maps/shared/sharedFunc_800CBD58_1_s02.h" // 0x800CBFEC
-
-#include "maps/shared/sharedFunc_800CBDA8_1_s02.h" // 0x800CC03C
-
-#include "maps/shared/sharedFunc_800CCE60_1_s02.h" // 0x800CD0F4
+#include "../src/maps/unk_draw_m1s02.c" // 0x800CBCE0
 
 void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2) // 0x800CDCE0
 {
