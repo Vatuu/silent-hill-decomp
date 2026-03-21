@@ -2,6 +2,83 @@
 
 #include <psyq/gtemac.h>
 
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/math/math.h"
+#include "maps/shared.h"
+
+// Unknown drawing code included in M1S01 and M6S04.
+// Called by cutscene event code?
+// TODO: Make this separate split in each map instead of `#include`.
+
+void sharedFunc_800CB7F4_1_s01(void)
+{
+    s32 count;
+    s32 i;
+
+    count = sharedData_800DEE50_1_s01.field_4;
+    for (i = 0; i < ARRAY_SIZE(sharedData_800DFB7C_0_s00); i++)
+    {
+        if (sharedData_800DFB7C_0_s00[i].field_A != 0)
+        {
+            continue;
+        }
+
+        sharedData_800DFB7C_0_s00[i].field_A         = 13;
+        sharedData_800DFB7C_0_s00[i].field_C.field_0 = ((TO_FIXED(sharedData_800DEE50_1_s01.field_6 - sharedData_800DEE50_1_s01.field_8, Q12_SHIFT) / sharedData_800DEE50_1_s01.field_C) * count) / sharedData_800DEE50_1_s01.field_4;
+
+        count--;
+        if (count == 0)
+        {
+            break;
+        }
+    }
+
+    sharedData_800DEE50_1_s01.field_10 = 0;
+    D_800C4414                        |= 1 << 1;
+}
+
+void sharedFunc_800CB8A0_1_s01(s32 idx)
+{
+    s32    rngB;
+    q19_12 angleZ;
+    s16    rngX;
+
+    if (sharedData_800DEE50_1_s01.field_2 == 0)
+    {
+        sharedData_800DFB7C_0_s00[idx].field_A = 14;
+    }
+
+    if (sharedData_800DEE50_1_s01.field_0 == 0)
+    {
+        rngX                                = (Rng_Rand16() % sharedData_800DEE50_1_s01.field_A);
+        angleZ                              = Rng_GenerateUInt(0, 4095);
+        sharedData_800DFB7C_0_s00[idx].field_0.vx_0 = (s32)(rngX * Math_Cos(angleZ)) >> Q12_SHIFT;
+        sharedData_800DFB7C_0_s00[idx].field_4.vz_4 = (s32)(rngX * Math_Sin(angleZ)) >> Q12_SHIFT;
+    }
+    else
+    {
+        sharedData_800DFB7C_0_s00[idx].field_0.vx_0 = (Rng_Rand16() % (sharedData_800DEE50_1_s01.field_A * 2)) - sharedData_800DEE50_1_s01.field_A;
+        sharedData_800DFB7C_0_s00[idx].field_4.vz_4 = (Rng_Rand16() % (sharedData_800DEE50_1_s01.field_A * 2)) - sharedData_800DEE50_1_s01.field_A;
+    }
+
+    sharedData_800DFB7C_0_s00[idx].vy_8            = sharedData_800DEE50_1_s01.field_8;
+    sharedData_800DFB7C_0_s00[idx].field_B         = Rng_Rand16() % 3;
+    sharedData_800DFB7C_0_s00[idx].field_C.field_0 = 0;
+}
+
+bool sharedFunc_800CBA38_1_s01(s32 idx)
+{
+    sharedData_800DFB7C_0_s00[idx].field_C.field_0 += Q12_MULT_PRECISE(g_DeltaTime, ((Rng_Rand16() % Q12_ANGLE(144.0f)) + Q12_ANGLE(288.0f)));
+
+    if (Q12_DIV(sharedData_800DEE50_1_s01.field_6 - sharedData_800DEE50_1_s01.field_8, sharedData_800DEE50_1_s01.field_C) < sharedData_800DFB7C_0_s00[idx].field_C.field_0)
+    {
+        sharedFunc_800CB8A0_1_s01(idx);
+        return true;
+    }
+
+    return false;
+}
+
 bool sharedFunc_800CBB30_1_s01(POLY_FT4** poly, s32 idx)
 {
     typedef struct

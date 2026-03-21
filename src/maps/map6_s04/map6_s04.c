@@ -8,13 +8,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
-#include "maps/shared/sharedFunc_800CB7F4_1_s01.h" // 0x800CC7E0
-
-#include "maps/shared/sharedFunc_800CB8A0_1_s01.h" // 0x800CC88C
-
-#include "maps/shared/sharedFunc_800CBA38_1_s01.h" // 0x800CCA24
-
-#include "maps/shared/sharedFunc_800CBB30_1_s01.h" // 0x800CCB1C
+#include "../src/maps/unk_draw_m1s01.c" // 0x800CC7E0
 
 #include "../src/maps/particle.c"
 
