@@ -7,13 +7,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/split_head.h"
 
-#include "maps/shared/sharedFunc_800CAAD0_1_s05.h" // 0x800CAAD0
-
-#include "maps/shared/sharedFunc_800CABF8_1_s05.h" // 0x800CABF8
-
-#include "maps/shared/sharedFunc_800CB040_1_s05.h" // 0x800CB040
-
-#include "maps/shared/sharedFunc_800CB884_1_s05.h" // 0x800CB884
+#include "../src/maps/unk_draw.c" // 0x800CAAD0
 
 #include "maps/shared/sharedFunc_800CBE7C_1_s05.h" // 0x800CBE7C
 

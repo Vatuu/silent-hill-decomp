@@ -9,13 +9,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/puppet_nurse.h"
 
-#include "maps/shared/sharedFunc_800CAAD0_1_s05.h" // 0x800CB5F4
-
-#include "maps/shared/sharedFunc_800CABF8_1_s05.h" // 0x800CB71C
-
-#include "maps/shared/sharedFunc_800CB040_1_s05.h" // 0x800CBB64
-
-#include "maps/shared/sharedFunc_800CB884_1_s05.h" // 0x800CC3A8
+#include "../src/maps/unk_draw.c" // 0x800CB5F4
 
 #include "../src/maps/particle.c"
 
