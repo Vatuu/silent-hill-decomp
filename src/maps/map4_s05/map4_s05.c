@@ -10,13 +10,7 @@
 
 #define floatstingerProps floatstinger->properties_E4.floatstinger
 
-#include "maps/shared/sharedFunc_800CB0A4_4_s03.h" // 0x800CACA4
-
-#include "maps/shared/sharedFunc_800CB1B0_4_s03.h" // 0x800CADB0
-
-#include "maps/shared/sharedFunc_800CBE54_4_s03.h" // 0x800CBA54
-
-#include "maps/shared/sharedFunc_800CC004_4_s03.h" // 0x800CBC04
+#include "../src/maps/unk_draw_m4s03.c" // 0x800CACA4
 
 #include "maps/shared/sharedFunc_800CE5D4_1_s03.h" // 0x800CC300
 

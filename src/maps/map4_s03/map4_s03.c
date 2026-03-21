@@ -7,13 +7,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/twinfeeler.h"
 
-#include "maps/shared/sharedFunc_800CB0A4_4_s03.h" // 0x800CB0A4
-
-#include "maps/shared/sharedFunc_800CB1B0_4_s03.h" // 0x800CB1B0
-
-#include "maps/shared/sharedFunc_800CBE54_4_s03.h" // 0x800CBE54
-
-#include "maps/shared/sharedFunc_800CC004_4_s03.h" // 0x800CC004
+#include "../src/maps/unk_draw_m4s03.c" // 0x800CB0A4
 
 #include "../src/maps/particle.c"
 
