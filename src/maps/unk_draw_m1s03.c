@@ -2,6 +2,30 @@
 
 #include <psyq/gtemac.h>
 
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/math/math.h"
+#include "maps/shared.h"
+
+// Unknown drawing code included in M1S03, M4S05, M5S01, M6S01 and M6S02.
+// Called by cutscene event code?
+// TODO: Make this separate split in each map instead of `#include`.
+
+void sharedFunc_800CE5D4_1_s03(VECTOR3* arg0, u16 arg1, u16 arg2, u32 arg3)
+{
+    s32 idx;
+
+    idx = func_8005E7E0(35);
+    if (idx != NO_VALUE)
+    {
+        sharedData_800DFB7C_0_s00[idx].field_0.vx_0        = Q12_TO_Q8(arg0->vx);
+        sharedData_800DFB7C_0_s00[idx].vy_8            = Q12_TO_Q8(arg0->vy);
+        sharedData_800DFB7C_0_s00[idx].field_4.vz_4        = Q12_TO_Q8(arg0->vz);
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = arg1 / 2;
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 = Q12_TO_Q8(arg2);
+        sharedData_800DFB7C_0_s00[idx].field_B         = arg3;
+    }
+}
+
 bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
 {
     // TODO: Is there a way to make `Rng_GenerateInt` fit instead?

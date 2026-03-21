@@ -10,9 +10,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/romper.h"
 
-#include "maps/shared/sharedFunc_800CE5D4_1_s03.h" // 0x800CCA90
-
-#include "maps/shared/sharedFunc_800CE688_1_s03.h" // 0x800CCB44
+#include "../src/maps/unk_draw_m1s03.c" // 0x800CCA90
 
 s16 func_800CD20C(void) // 0x800CD20C
 {

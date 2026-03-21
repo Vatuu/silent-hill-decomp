@@ -12,9 +12,7 @@
 
 #include "../src/maps/unk_draw_m4s03.c" // 0x800CACA4
 
-#include "maps/shared/sharedFunc_800CE5D4_1_s03.h" // 0x800CC300
-
-#include "maps/shared/sharedFunc_800CE688_1_s03.h" // 0x800CC3B4
+#include "../src/maps/unk_draw_m1s03.c" // 0x800CC300
 
 #include "../src/maps/particle.c"
 

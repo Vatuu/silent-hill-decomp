@@ -188,9 +188,7 @@ bool func_800CE164(POLY_FT4** poly, s32 idx) // 0x800CE164
     return true;
 }
 
-#include "maps/shared/sharedFunc_800CE5D4_1_s03.h" // 0x800CE5D4
-
-#include "maps/shared/sharedFunc_800CE688_1_s03.h" // 0x800CE688
+#include "../src/maps/unk_draw_m1s03.c" // 0x800CE5D4
 
 #include "../src/maps/particle.c"
 
@@ -1482,11 +1480,11 @@ void func_800DCDDC(void) // 0x800DCDDC
             Map_MessageWithAudio(46, &D_800E2102, D_800E2000); // "What?"
             break;
 
-
         case 6:
             SysWork_StateStepIncrementAfterTime(&D_800E617C, Q12(40.0f), Q12(0.0f), Q12(30.0f), true, true);
             sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
             break;
+            
         case 7:
             MapMsg_DisplayAndHandleSelection(false, 47, 0, 0, 0, false); // "That light!?"
             sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
