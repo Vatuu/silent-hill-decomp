@@ -58,7 +58,9 @@ segments:
       - [0x4, .rodata, map1_s00_header]
       - [0x1050, .rodata, particle]
       - [0x1278, .rodata, player]
-      - [0x1398, .rodata, map1_s00]
+      - [0x1398, .rodata, Chara_LarvalStalker]
+      - [0x14A0, .rodata, Chara_Stalker]
+      - [0x1800, .rodata, map1_s00]
 
       - [0x2230, c, map1_s00_header]
       - [0x2230, c, map1_s00_events_data]
@@ -67,7 +69,9 @@ segments:
       # .text section
       - [0x2230, c, particle]
       - [0x4B64, c, player]
-      - [0x5AD8, c, map1_s00]
+      - [0x5AD8, c, Chara_LarvalStalker]
+      - [0x8F80, c, Chara_Stalker]
+      - [0xE1D0, c, map1_s00]
 
       # .data section
       - [0x10ED4, .data, map1_s00_anim_info]

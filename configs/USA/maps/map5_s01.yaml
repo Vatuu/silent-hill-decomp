@@ -57,7 +57,10 @@ segments:
       - [0x0, rodata]
       - [0x4, .rodata, map5_s01_header]
       - [0x1050, .rodata, particle]
-      - [0x1278, .rodata, map5_s01]
+      - [0x1278, .rodata, Chara_AirScreamer]
+      - [0x2CFC, rodata]
+      - [0x2D00, .rodata, Chara_Groaner]
+      - [0x2E68, .rodata, map5_s01]
       - [0x3515, rodata] # 3 random bytes, linker artifact, splat doesn't seem to write to .s so postbuild.py has to patch them back in.
 
       - [0x3518, c, map5_s01_header]
@@ -69,7 +72,9 @@ segments:
       - [0x3C94, c, unk_draw_800CD20C]
       - [0x4D3C, c, particle]
       - [0x7B40, c, player]
-      - [0x8CE4, c, map5_s01]
+      - [0x8CE4, c, Chara_AirScreamer]
+      - [0x19D1C, c, Chara_Groaner]
+      - [0x1E2F4, c, map5_s01]
 
       # .data section
       - [0x23D6C, .data, map5_s01_anim_info]

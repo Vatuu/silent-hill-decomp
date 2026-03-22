@@ -6,9 +6,9 @@
 //================================================
 
 
-//-----------------------------------------------------------------
-//--- PA: 0x0011C0   VA: 0x800CA738   subsegment: .rodata, map1_s01
-//-----------------------------------------------------------------
+//----------------------------------------------------------------------
+//--- PA: 0x0012C8   VA: 0x800CA840   subsegment: .rodata, Chara_Stalker
+//----------------------------------------------------------------------
 sharedData_800CAB70_0_s00       = 0x800CA8D0; // type:VECTOR
 
 
@@ -66,9 +66,9 @@ sharedFunc_800D2EA4_0_s00       = 0x800CE5E4; // type:func
 sharedFunc_800D2EB4_0_s00       = 0x800CE5F4; // type:func
 sharedFunc_800D2EF4_0_s00       = 0x800CE634; // type:func
 
-//-----------------------------------------------------------
-//--- PA: 0x0050D0   VA: 0x800CE648   subsegment: c, map1_s01
-//-----------------------------------------------------------
+//----------------------------------------------------------------------
+//--- PA: 0x0050D0   VA: 0x800CE648   subsegment: c, Chara_LarvalStalker
+//----------------------------------------------------------------------
 Ai_LarvalStalker_Update         = 0x800CE648; // type:func
 Ai_LarvalStalker_ControlUpdate  = 0x800CE760; // type:func
 sharedFunc_800D140C_1_s00       = 0x800D0A04; // type:func
@@ -76,6 +76,10 @@ sharedFunc_800D1524_1_s00       = 0x800D0B1C; // type:func
 Ai_LarvalStalker_Init           = 0x800D0CF4; // type:func
 sharedFunc_800D17BC_1_s00       = 0x800D0DB4; // type:func
 sharedFunc_800D1DBC_1_s00       = 0x800D13B4; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x008578   VA: 0x800D1AF0   subsegment: c, Chara_Stalker
+//----------------------------------------------------------------
 Ai_Stalker_Update               = 0x800D1AF0; // type:func
 Ai_Stalker_Init                 = 0x800D1C84; // type:func
 sharedFunc_800D3308_0_s00       = 0x800D1EF0; // type:func
@@ -97,6 +101,10 @@ sharedFunc_800D6970_0_s00       = 0x800D56F8; // type:func
 sharedFunc_800D70C4_0_s00       = 0x800D5E4C; // type:func
 sharedFunc_800D7BE8_0_s00       = 0x800D6970; // type:func
 sharedFunc_800D7E04_0_s00       = 0x800D6B8C; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x00D7C8   VA: 0x800D6D40   subsegment: c, map1_s01
+//-----------------------------------------------------------
 Ai_Cat_Update                   = 0x800D6D40; // type:func
 sharedFunc_800D929C_0_s00       = 0x800D6F34; // type:func
 Map_RoomIdxGet                  = 0x800D6F44; // type:func

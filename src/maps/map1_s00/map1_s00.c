@@ -13,12 +13,6 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
-// TODO: Move this line into separate `Chara_LarvalStalker` split.
-#include "../src/maps/characters/larval_stalker.c" // 0x800CF050
-
-// TODO: Move this line into separate `Chara_Stalker` split.
-#include "../src/maps/characters/stalker.c" // 0x800D24F8
-
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D7748
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D7758

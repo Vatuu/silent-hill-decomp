@@ -4,31 +4,7 @@
 #include "main/rng.h"
 #include "maps/map4/map4_s02.h"
 #include "maps/particle.h"
-#include "maps/characters/air_screamer.h"
-#include "maps/characters/groaner.h"
 #include "maps/characters/player.h"
-#include "maps/characters/romper.h"
-
-INCLUDE_RODATA("maps/map4_s02/nonmatchings/map4_s02", D_800CA780);
-
-INCLUDE_RODATA("maps/map4_s02/nonmatchings/map4_s02", D_800CA78C);
-
-INCLUDE_RODATA("maps/map4_s02/nonmatchings/map4_s02", D_800CA7A4);
-
-INCLUDE_RODATA("maps/map4_s02/nonmatchings/map4_s02", D_800CA7BC);
-
-INCLUDE_RODATA("maps/map4_s02/nonmatchings/map4_s02", D_800CA7D4);
-
-INCLUDE_RODATA("maps/map4_s02/nonmatchings/map4_s02", sharedData_800CAA98_0_s01);
-
-// TODO: Move this line into separate `Chara_AirScreamer` split.
-#include "../src/maps/characters/air_screamer.c" // 0x800D0B24
-
-// TODO: Move this line into separate `Chara_Groaner` split.
-#include "../src/maps/characters/groaner.c" // 0x800E1B5C
-
-// TODO: Move this line into separate `Chara_Romper` split.
-#include "../src/maps/characters/romper.c" // 0x800E6134
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800E9D28
 

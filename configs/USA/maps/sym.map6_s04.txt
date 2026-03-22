@@ -6,9 +6,9 @@
 //================================================
 
 
-//-----------------------------------------------------------------
-//--- PA: 0x001738   VA: 0x800CACB0   subsegment: .rodata, map6_s04
-//-----------------------------------------------------------------
+//----------------------------------------------------------------------
+//--- PA: 0x001840   VA: 0x800CADB8   subsegment: .rodata, Chara_Stalker
+//----------------------------------------------------------------------
 sharedData_800CAB70_0_s00           = 0x800CAE48; // type:VECTOR
 
 
@@ -66,9 +66,9 @@ sharedFunc_800D2EA4_0_s00           = 0x800D0054; // type:func
 sharedFunc_800D2EB4_0_s00           = 0x800D0064; // type:func
 sharedFunc_800D2EF4_0_s00           = 0x800D00A4; // type:func
 
-//-----------------------------------------------------------
-//--- PA: 0x006B40   VA: 0x800D00B8   subsegment: c, map6_s04
-//-----------------------------------------------------------
+//----------------------------------------------------------------------
+//--- PA: 0x006B40   VA: 0x800D00B8   subsegment: c, Chara_LarvalStalker
+//----------------------------------------------------------------------
 Ai_LarvalStalker_Update             = 0x800D00B8; // type:func
 Ai_LarvalStalker_ControlUpdate      = 0x800D01D0; // type:func
 sharedFunc_800D140C_1_s00           = 0x800D2474; // type:func
@@ -76,6 +76,10 @@ sharedFunc_800D1524_1_s00           = 0x800D258C; // type:func
 Ai_LarvalStalker_Init               = 0x800D2764; // type:func
 sharedFunc_800D17BC_1_s00           = 0x800D2824; // type:func
 sharedFunc_800D1DBC_1_s00           = 0x800D2E24; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x009FE8   VA: 0x800D3560   subsegment: c, Chara_Stalker
+//----------------------------------------------------------------
 Ai_Stalker_Update                   = 0x800D3560; // type:func
 Ai_Stalker_Init                     = 0x800D36F4; // type:func
 sharedFunc_800D3308_0_s00           = 0x800D3960; // type:func
@@ -97,6 +101,10 @@ sharedFunc_800D6970_0_s00           = 0x800D7168; // type:func
 sharedFunc_800D70C4_0_s00           = 0x800D78BC; // type:func
 sharedFunc_800D7BE8_0_s00           = 0x800D83E0; // type:func
 sharedFunc_800D7E04_0_s00           = 0x800D85FC; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x00F238   VA: 0x800D87B0   subsegment: c, map6_s04
+//-----------------------------------------------------------
 Ai_MonsterCybil_Update              = 0x800D8908; // type:func
 Ai_MonsterCybil_Init                = 0x800D89CC; // type:func
 

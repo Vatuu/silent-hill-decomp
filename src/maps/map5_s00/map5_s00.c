@@ -9,15 +9,7 @@
 #include "main/rng.h"
 #include "maps/map5/map5_s00.h"
 #include "maps/particle.h"
-#include "maps/characters/creeper.h"
 #include "maps/characters/player.h"
-#include "maps/characters/hanged_scratcher.h"
-
-// TODO: Move this line into separate `Chara_HangedScratcher` split.
-#include "../src/maps/characters/hanged_scratcher.c" // 0x800CFC24
-
-// TODO: Move this line into separate `Chara_Creeper` split.
-#include "../src/maps/characters/creeper.c" // 0x800D387C
 
 void func_800D5B00(void) // 0x800D5B00
 {

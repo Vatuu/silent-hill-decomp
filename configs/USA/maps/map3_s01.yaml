@@ -57,7 +57,8 @@ segments:
       - [0x0, rodata]
       - [0x4, .rodata, map3_s01_header]
       - [0x1050, .rodata, particle]
-      - [0x12C8, .rodata, map3_s01]
+      - [0x12C8, .rodata, Chara_Creeper]
+      - [0x1368, .rodata, map3_s01]
 
       - [0x1C9C, c, map3_s01_header]
       - [0x1C9C, c, map3_s01_events_data]
@@ -66,7 +67,8 @@ segments:
       # .text section
       - [0x1C9C, c, particle]
       - [0x4A70, c, player]
-      - [0x58D4, c, map3_s01]
+      - [0x58D4, c, Chara_Creeper]
+      - [0x7B48, c, map3_s01]
 
       # .data section
       - [0xA494, .data, map3_s01_anim_info]

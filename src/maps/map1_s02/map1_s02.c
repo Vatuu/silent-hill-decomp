@@ -12,14 +12,6 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
-#include "../src/maps/characters/player.c"
-
-// TODO: Move this line into separate `Chara_Stalker` split.
-#include "../src/maps/characters/stalker.c" // 0x800D2948
-
-// TODO: Move this line into separate `Chara_Creeper` split.
-#include "../src/maps/characters/creeper.c" // 0x800D7B98
-
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D9E0C
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D9E1C

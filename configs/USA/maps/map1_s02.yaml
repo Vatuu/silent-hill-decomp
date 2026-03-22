@@ -58,7 +58,11 @@ segments:
       - [0x4, .rodata, map1_s02_header]
       - [0x1050, .rodata, particle]
       - [0x1204, rodata]
-      - [0x120A, .rodata, map1_s02]
+      - [0x1208, .rodata, player]
+      - [0x14E4, rodata]
+      - [0x14E8, .rodata, Chara_Stalker]
+      - [0x1848, .rodata, Chara_Creeper]
+      - [0x18E8, .rodata, map1_s02]
 
       - [0x24D4, c, map1_s02_header]
       - [0x24D4, c, map1_s02_events_data]
@@ -67,7 +71,10 @@ segments:
       # .text section
       - [0x24D4, c, particle_water]
       - [0x44D4, c, particle]
-      - [0x714C, c, map1_s02]
+      - [0x714C, c, player]
+      - [0x93D0, c, Chara_Stalker]
+      - [0xE620, c, Chara_Creeper]
+      - [0x10894, c, map1_s02]
 
       # .data section
       - [0x157E0, .data, map1_s02_anim_info]

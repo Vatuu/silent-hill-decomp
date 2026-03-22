@@ -58,9 +58,9 @@ sharedFunc_800D2EA4_0_s00        = 0x800CFBC0; // type:func
 sharedFunc_800D2EB4_0_s00        = 0x800CFBD0; // type:func
 sharedFunc_800D2EF4_0_s00        = 0x800CFC10; // type:func
 
-//-----------------------------------------------------------
-//--- PA: 0x0066AC   VA: 0x800CFC24   subsegment: c, map5_s00
-//-----------------------------------------------------------
+//------------------------------------------------------------------------
+//--- PA: 0x0066AC   VA: 0x800CFC24   subsegment: c, Chara_HangedScratcher
+//------------------------------------------------------------------------
 Ai_HangedScratcher_Update        = 0x800CFC24; // type:func
 Ai_HangedScratcher_Init          = 0x800CFCA8; // type:func
 sharedFunc_800CFF74_5_s00        = 0x800CFF74; // type:func
@@ -86,6 +86,10 @@ sharedFunc_800D2844_5_s00        = 0x800D2844; // type:func
 sharedFunc_800D2C18_5_s00        = 0x800D2C18; // type:func
 sharedFunc_800D3214_5_s00        = 0x800D3214; // type:func
 sharedFunc_800D3300_5_s00        = 0x800D3300; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x00A304   VA: 0x800D387C   subsegment: c, Chara_Creeper
+//----------------------------------------------------------------
 Ai_Creeper_Update                = 0x800D387C; // type:func
 Ai_Creeper_Init                  = 0x800D390C; // type:func - extra code at end compared to 1_s02
 sharedFunc_800D7EE8_1_s02        = 0x800D3BDC; // type:func
@@ -98,6 +102,10 @@ Ai_Creeper_Control_5             = 0x800D5468; // type:func
 sharedFunc_800D983C_1_s02        = 0x800D5530; // type:func
 sharedFunc_800D9960_1_s02        = 0x800D5654; // type:func
 sharedFunc_800D99D0_1_s02        = 0x800D56C4; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x00C588   VA: 0x800D5B00   subsegment: c, map5_s00
+//-----------------------------------------------------------
 sharedFunc_800D929C_0_s00        = 0x800D64F8; // type:func
 Map_RoomIdxGet                   = 0x800D6508; // type:func
 GameBoot_LoadScreen_StageString  = 0x800D67EC; // type:func

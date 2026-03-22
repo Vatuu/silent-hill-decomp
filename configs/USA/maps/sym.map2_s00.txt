@@ -6,9 +6,9 @@
 //================================================
 
 
-//-----------------------------------------------------------------
-//--- PA: 0x0012E8   VA: 0x800CA860   subsegment: .rodata, map2_s00
-//-----------------------------------------------------------------
+//--------------------------------------------------------------------------
+//--- PA: 0x0012E8   VA: 0x800CA860   subsegment: .rodata, Chara_AirScreamer
+//--------------------------------------------------------------------------
 sharedData_800CAA98_0_s01       = 0x800CA908; // type:s32 size:0xD6C
 
 
@@ -69,9 +69,9 @@ sharedFunc_800D2EA4_0_s00       = 0x800D1EDC; // type:func
 sharedFunc_800D2EB4_0_s00       = 0x800D1EEC; // type:func
 sharedFunc_800D2EF4_0_s00       = 0x800D1F2C; // type:func
 
-//-----------------------------------------------------------
-//--- PA: 0x0089C8   VA: 0x800D1F40   subsegment: c, map2_s00
-//-----------------------------------------------------------
+//--------------------------------------------------------------------
+//--- PA: 0x0089C8   VA: 0x800D1F40   subsegment: c, Chara_AirScreamer
+//--------------------------------------------------------------------
 Ai_AirScreamer_Update           = 0x800D1F40; // type:func
 sharedFunc_800D21E4_0_s01       = 0x800D1FB4; // type:func
 sharedFunc_800D2200_0_s01       = 0x800D1FD0; // type:func
@@ -239,6 +239,10 @@ sharedFunc_800D82B8_0_s01       = 0x800E2A1C; // type:func
 sharedFunc_800D8714_0_s01       = 0x800E2E78; // type:func
 sharedFunc_800D87FC_0_s01       = 0x800E2F60; // type:func
 sharedFunc_800D8804_0_s01       = 0x800E2F68; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x019A00   VA: 0x800E2F78   subsegment: c, Chara_Groaner
+//----------------------------------------------------------------
 Ai_Groaner_Update               = 0x800E2F78; // type:func
 Ai_Groaner_Init                 = 0x800E3074; // type:func - `map2_s00` includes extra block at end of function compared to other maps.
 sharedFunc_800E33DC_2_s00       = 0x800E33DC; // type:func
@@ -254,6 +258,10 @@ sharedFunc_800E5AA4_2_s00       = 0x800E5AA4; // type:func
 sharedFunc_800E5EC4_2_s00       = 0x800E5EC4; // type:func
 sharedFunc_800E6338_2_s00       = 0x800E6338; // type:func
 sharedFunc_800E71E8_2_s00       = 0x800E71E8; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x01E140   VA: 0x800E76B8   subsegment: c, map2_s00
+//-----------------------------------------------------------
 sharedFunc_800D929C_0_s00       = 0x800E76B8; // type:func
 Map_RoomIdxGet                  = 0x800E76C8; // type:func
 Map_RoomBgmInit                 = 0x800E7914; // type:func

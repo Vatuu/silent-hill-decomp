@@ -15,11 +15,6 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
-// TODO: Move this line into separate `Chara_Stalker` split.
-#include "../src/maps/characters/stalker.c" // 0x800D2DC0
-
-// TODO: Move this line into separate `Chara_Creeper` split.
-#include "../src/maps/characters/creeper.c" // 0x800D8010
 
 void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DA284
 {

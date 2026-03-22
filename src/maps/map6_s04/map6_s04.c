@@ -11,12 +11,6 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
-// TODO: Move this line into separate `Chara_LarvalStalker` split.
-#include "../src/maps/characters/larval_stalker.c" // 0x800D00B8
-
-// TODO: Move this line into separate `Chara_Stalker` split.
-#include "../src/maps/characters/stalker.c" // 0x800D3560
-
 void func_800D87B0(s_SubCharacter* chara) // 0x800D87B0
 {
     if (chara->properties_E4.player.moveDistance_126 != Q12(0.0f))

@@ -6,9 +6,9 @@
 //================================================
 
 
-//-----------------------------------------------------------------
-//--- PA: 0x001328   VA: 0x800CA8A0   subsegment: .rodata, map6_s03
-//-----------------------------------------------------------------
+//----------------------------------------------------------------------
+//--- PA: 0x001328   VA: 0x800CA8A0   subsegment: .rodata, Chara_Stalker
+//----------------------------------------------------------------------
 sharedData_800CAB70_0_s00        = 0x800CA930; // type:VECTOR
 
 
@@ -70,9 +70,9 @@ sharedFunc_800D2EA4_0_s00        = 0x800CEF68; // type:func
 sharedFunc_800D2EB4_0_s00        = 0x800CEF78; // type:func
 sharedFunc_800D2EF4_0_s00        = 0x800CEFB8; // type:func
 
-//-----------------------------------------------------------
-//--- PA: 0x005A54   VA: 0x800CEFCC   subsegment: c, map6_s03
-//-----------------------------------------------------------
+//----------------------------------------------------------------
+//--- PA: 0x005A54   VA: 0x800CEFCC   subsegment: c, Chara_Stalker
+//----------------------------------------------------------------
 Ai_Stalker_Update                = 0x800CEFCC; // type:func
 Ai_Stalker_Init                  = 0x800CF160; // type:func
 sharedFunc_800D3308_0_s00        = 0x800CF414; // type:func
@@ -94,6 +94,10 @@ sharedFunc_800D6970_0_s00        = 0x800D2C1C; // type:func
 sharedFunc_800D70C4_0_s00        = 0x800D3370; // type:func
 sharedFunc_800D7BE8_0_s00        = 0x800D3E94; // type:func
 sharedFunc_800D7E04_0_s00        = 0x800D40B0; // type:func
+
+//------------------------------------------------------------------------
+//--- PA: 0x00ACEC   VA: 0x800D4264   subsegment: c, Chara_HangedScratcher
+//------------------------------------------------------------------------
 Ai_HangedScratcher_Update        = 0x800D4264; // type:func
 Ai_HangedScratcher_Init          = 0x800D42E8; // type:func
 sharedFunc_800CFF74_5_s00        = 0x800D45B4; // type:func
@@ -119,6 +123,10 @@ sharedFunc_800D2844_5_s00        = 0x800D6E84; // type:func
 sharedFunc_800D2C18_5_s00        = 0x800D7258; // type:func
 sharedFunc_800D3214_5_s00        = 0x800D7854; // type:func
 sharedFunc_800D3300_5_s00        = 0x800D7998; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x00E99C   VA: 0x800D7F14   subsegment: c, map6_s03
+//-----------------------------------------------------------
 sharedFunc_800D929C_0_s00        = 0x800D7F14; // type:func
 Map_RoomIdxGet                   = 0x800D7F24; // type:func
 GameBoot_LoadScreen_StageString  = 0x800D81A4; // type:func

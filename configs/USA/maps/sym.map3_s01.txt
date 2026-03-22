@@ -7,7 +7,7 @@
 
 
 //-----------------------------------------------------------------
-//--- PA: 0x0012C8   VA: 0x800CA840   subsegment: .rodata, map3_s01
+//--- PA: 0x001368   VA: 0x800CA8E0   subsegment: .rodata, map3_s01
 //-----------------------------------------------------------------
 sharedData_800CB088_3_s01       = 0x800CB088;
 sharedData_800CB094_3_s01       = 0x800CB094;
@@ -71,9 +71,9 @@ sharedFunc_800D2EA4_0_s00       = 0x800CEDE8; // type:func
 sharedFunc_800D2EB4_0_s00       = 0x800CEDF8; // type:func
 sharedFunc_800D2EF4_0_s00       = 0x800CEE38; // type:func
 
-//-----------------------------------------------------------
-//--- PA: 0x0058D4   VA: 0x800CEE4C   subsegment: c, map3_s01
-//-----------------------------------------------------------
+//----------------------------------------------------------------
+//--- PA: 0x0058D4   VA: 0x800CEE4C   subsegment: c, Chara_Creeper
+//----------------------------------------------------------------
 Ai_Creeper_Update               = 0x800CEE4C; // type:func
 Ai_Creeper_Init                 = 0x800CEEDC; // type:func
 sharedFunc_800D7EE8_1_s02       = 0x800CF19C; // type:func
@@ -86,6 +86,10 @@ Ai_Creeper_Control_5            = 0x800D0A28; // type:func
 sharedFunc_800D983C_1_s02       = 0x800D0AF0; // type:func
 sharedFunc_800D9960_1_s02       = 0x800D0C14; // type:func
 sharedFunc_800D99D0_1_s02       = 0x800D0C84; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x007B48   VA: 0x800D10C0   subsegment: c, map3_s01
+//-----------------------------------------------------------
 sharedFunc_800D929C_0_s00       = 0x800D10C0; // type:func
 Map_RoomIdxGet                  = 0x800D10D0; // type:func
 Map_RoomBgmInit                 = 0x800D1178; // type:func

@@ -6,9 +6,9 @@
 //================================================
 
 
-//-----------------------------------------------------------------
-//--- PA: 0x001610   VA: 0x800CAB88   subsegment: .rodata, map1_s03
-//-----------------------------------------------------------------
+//----------------------------------------------------------------------
+//--- PA: 0x001610   VA: 0x800CAB88   subsegment: .rodata, Chara_Stalker
+//----------------------------------------------------------------------
 sharedData_800CAB70_0_s00           = 0x800CAC18; // type:VECTOR
 
 
@@ -85,9 +85,9 @@ sharedFunc_800D2EA4_0_s00           = 0x800D2D5C; // type:func
 sharedFunc_800D2EB4_0_s00           = 0x800D2D6C; // type:func
 sharedFunc_800D2EF4_0_s00           = 0x800D2DAC; // type:func
 
-//-----------------------------------------------------------
-//--- PA: 0x009848   VA: 0x800D2DC0   subsegment: c, map1_s03
-//-----------------------------------------------------------
+//----------------------------------------------------------------
+//--- PA: 0x009848   VA: 0x800D2DC0   subsegment: c, Chara_Stalker
+//----------------------------------------------------------------
 Ai_Stalker_Update                   = 0x800D2DC0; // type:func
 Ai_Stalker_Init                     = 0x800D2F54; // type:func
 sharedFunc_800D3308_0_s00           = 0x800D31C0; // type:func
@@ -109,6 +109,10 @@ sharedFunc_800D6970_0_s00           = 0x800D69C8; // type:func
 sharedFunc_800D70C4_0_s00           = 0x800D711C; // type:func
 sharedFunc_800D7BE8_0_s00           = 0x800D7C40; // type:func
 sharedFunc_800D7E04_0_s00           = 0x800D7E5C; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x00EA98   VA: 0x800D8010   subsegment: c, Chara_Creeper
+//----------------------------------------------------------------
 Ai_Creeper_Update                   = 0x800D8010; // type:func
 Ai_Creeper_Init                     = 0x800D80A0; // type:func
 sharedFunc_800D7EE8_1_s02           = 0x800D8360; // type:func
@@ -121,6 +125,10 @@ Ai_Creeper_Control_5                = 0x800D9BEC; // type:func
 sharedFunc_800D983C_1_s02           = 0x800D9CB4; // type:func
 sharedFunc_800D9960_1_s02           = 0x800D9DD8; // type:func
 sharedFunc_800D99D0_1_s02           = 0x800D9E48; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x010D0C   VA: 0x800DA284   subsegment: c, map1_s03
+//-----------------------------------------------------------
 Ai_LockerDeadBody_Update            = 0x800DA284; // type:func
 sharedFunc_800D929C_0_s00           = 0x800DA424; // type:func
 Map_RoomIdxGet                      = 0x800DA434; // type:func

@@ -57,7 +57,10 @@ segments:
       - [0x0, rodata]
       - [0x4, .rodata, map2_s00_header]
       - [0x1050, .rodata, particle]
-      - [0x12E8, .rodata, map2_s00]
+      - [0x12E8, .rodata, Chara_AirScreamer]
+      - [0x2D6C, rodata]
+      - [0x2D70, .rodata, Chara_Groaner]
+      - [0x2ED8, .rodata, map2_s00]
 
       - [0x4048, c, map2_s00_header]
       - [0x4048, c, map2_s00_events_data]
@@ -66,7 +69,9 @@ segments:
       # .text section
       - [0x4048, c, particle]
       - [0x744C, c, player]
-      - [0x89C8, c, map2_s00]
+      - [0x89C8, c, Chara_AirScreamer]
+      - [0x19A00, c, Chara_Groaner]
+      - [0x1E140, c, map2_s00]
 
       # .data section
       - [0x25134, .data, map2_s00_anim_info]
