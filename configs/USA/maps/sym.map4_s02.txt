@@ -7,7 +7,7 @@
 
 
 //-----------------------------------------------------------------
-//--- PA: 0x001050   VA: 0x800CA5C8   subsegment: .rodata, map4_s02
+//--- PA: 0x001208   VA: 0x800CA780   subsegment: .rodata, map4_s02
 //-----------------------------------------------------------------
 sharedData_800CAA98_0_s01       = 0x800CA824; // type:s32 size:0xD6C
 
@@ -19,7 +19,7 @@ sharedData_800CAA98_0_s01       = 0x800CA824; // type:s32 size:0xD6C
 
 
 //-----------------------------------------------------------
-//--- PA: 0x003290   VA: 0x800CC808   subsegment: c, map4_s02
+//--- PA: 0x003290   VA: 0x800CC808   subsegment: c, particle
 //-----------------------------------------------------------
 Particle_SystemUpdate           = 0x800CC808; // type:func
 Particle_CameraMovedCheck       = 0x800CCBFC; // type:func
@@ -41,6 +41,10 @@ Particle_SoundUpdate            = 0x800CEBB0; // type:func
 Particle_SoundStop              = 0x800CECFC; // type:func
 Particle_HyperBlasterBeamDraw   = 0x800CED1C; // type:func
 Particle_BeamDraw               = 0x800CF594; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x006408   VA: 0x800CF980   subsegment: c, map4_s02
+//-----------------------------------------------------------
 sharedFunc_800CDAA8_0_s02       = 0x800CF980; // type:func
 sharedFunc_800D1C38_0_s00       = 0x800CFC74; // type:func
 sharedFunc_800D209C_0_s00       = 0x800D00A0; // type:func

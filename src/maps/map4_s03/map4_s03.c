@@ -1,3 +1,5 @@
+#include "inline_no_dmpsx.h"
+#include <psyq/gtemac.h>
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player.h"
@@ -6,8 +8,6 @@
 #include "maps/particle.h"
 #include "maps/characters/player.h"
 #include "maps/characters/twinfeeler.h"
-
-#include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"
 
@@ -21,12 +21,15 @@
 
 void func_800D078C(void) // 0x800D078C
 {
+    // @hack string needs to be in separate TU for the alignment in this TU to match properly.
+    // Might need to move this func + related ones to new split?
+    extern const char D_800CA77C[]; // "SPUM602F".
     u32        tpage1;
     u16        x;
     u16        y;
     s_Texture* tex;
 
-    tex    = Texture_InfoGet("SPUM602F");
+    tex    = Texture_InfoGet(D_800CA77C);
     tpage1 = tex->imageDesc_0.tPage[1];
     x      = tex->imageDesc_0.clutX;
     y      = tex->imageDesc_0.clutY;

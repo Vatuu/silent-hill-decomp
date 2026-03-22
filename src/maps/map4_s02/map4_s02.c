@@ -9,11 +9,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/romper.h"
 
-#include "../src/maps/particle.c"
-
 #include "../src/maps/characters/player.c"
-
-INCLUDE_RODATA("maps/map4_s02/nonmatchings/map4_s02", D_800CA77C);
 
 INCLUDE_RODATA("maps/map4_s02/nonmatchings/map4_s02", D_800CA780);
 

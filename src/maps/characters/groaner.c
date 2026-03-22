@@ -7,6 +7,12 @@
 
 #define groanerProps groaner->properties_E4.groaner
 
+// @hack Needed to fix mismatch in `sharedFunc_800E39D8_2_s00`.
+// Same as version in `rng.h` but without parenthesess around it.
+// TODO: Changing `rng.h` version still doesn't let it match though?
+#define Rng_GenerateIntFromInput(rand, low, high) \
+    (s32)((rand) % (((high) - (low)) + 1)) + (low)
+
 void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     u8 prevControlState;

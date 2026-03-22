@@ -56,7 +56,8 @@ segments:
       # .rodata section
       - [0x0, rodata]
       - [0x4, .rodata, map5_s01_header]
-      - [0x1050, .rodata, map5_s01]
+      - [0x1050, .rodata, particle]
+      - [0x1278, .rodata, map5_s01]
       - [0x3515, rodata] # 3 random bytes, linker artifact, splat doesn't seem to write to .s so postbuild.py has to patch them back in.
 
       - [0x3518, c, map5_s01_header]
@@ -65,7 +66,9 @@ segments:
 
       # .text section
       - [0x3518, c, unk_draw_m1s03]
-      - [0x3C94, c, map5_s01]
+      - [0x3C94, c, unk_draw_800CD20C]
+      - [0x4D3C, c, particle]
+      - [0x7B40, c, map5_s01]
 
       # .data section
       - [0x23D6C, .data, map5_s01_anim_info]
