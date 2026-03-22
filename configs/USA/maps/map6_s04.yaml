@@ -68,8 +68,8 @@ segments:
 
       # .text section
       - [0x3268, c, unk_draw_m1s01]
-      - [0x3E40, c, particle]
-      - [0x4FC8, c, map6_s04]
+      - [0x3E34, c, particle]
+      - [0x4FBC, c, map6_s04]
       - [0x12D3C, c, Chara_AlessaDahlia]
       - [0x14040, c, map6_s04_2]
 
