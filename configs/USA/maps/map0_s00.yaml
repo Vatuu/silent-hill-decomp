@@ -58,7 +58,9 @@ segments:
       - [0x4, .rodata, map0_s00_header]
       - [0x1050, .rodata, particle]
       - [0x13DC, rodata]
-      - [0x13E0, .rodata, map0_s00]
+      - [0x13E0, .rodata, player]
+      - [0x1564, rodata]
+      - [0x1568, .rodata, Chara_Stalker]
       - [0x18C8, .rodata, Chara_Cheryl]
       - [0x18DC, rodata]
       - [0x18E0, .rodata, map0_s00_2]
@@ -70,7 +72,8 @@ segments:
 
       # .text section
       - [0x2138, c, particle]
-      - [0x78BC, c, map0_s00]
+      - [0x78BC, c, player]
+      - [0x9990, c, Chara_Stalker]
       - [0xEA40, c, Chara_Cheryl]
       - [0xF334, c, map0_s00_2]
 

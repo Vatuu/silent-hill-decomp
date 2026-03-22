@@ -67,7 +67,7 @@ segments:
 
       # .text section
       - [0x1E90, c, particle]
-      - [0x4C64, c, map3_s00]
+      - [0x4C64, c, player]
       - [0x5CA4, c, Chara_Kaufmann]
       - [0x690C, c, map3_s00_2]
 

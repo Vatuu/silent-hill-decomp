@@ -7,7 +7,7 @@
 
 
 //-----------------------------------------------------------------
-//--- PA: 0x001278   VA: 0x800CA7F0   subsegment: .rodata, map1_s00
+//--- PA: 0x001398   VA: 0x800CA910   subsegment: .rodata, map1_s00
 //-----------------------------------------------------------------
 sharedData_800CAB70_0_s00       = 0x800CAAA8; // type:VECTOR
 
@@ -39,9 +39,9 @@ Particle_SoundStop              = 0x800CD458; // type:func
 Particle_HyperBlasterBeamDraw   = 0x800CD478; // type:func
 Particle_BeamDraw               = 0x800CDCF0; // type:func
 
-//-----------------------------------------------------------
-//--- PA: 0x004B64   VA: 0x800CE0DC   subsegment: c, map1_s00
-//-----------------------------------------------------------
+//---------------------------------------------------------
+//--- PA: 0x004B64   VA: 0x800CE0DC   subsegment: c, player
+//---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02       = 0x800CE0DC; // type:func
 sharedFunc_800D1C38_0_s00       = 0x800CE610; // type:func
 sharedFunc_800D209C_0_s00       = 0x800CEA3C; // type:func
@@ -67,6 +67,10 @@ sharedFunc_800D2E9C_0_s00       = 0x800CEFE4; // type:func
 sharedFunc_800D2EA4_0_s00       = 0x800CEFEC; // type:func
 sharedFunc_800D2EB4_0_s00       = 0x800CEFFC; // type:func
 sharedFunc_800D2EF4_0_s00       = 0x800CF03C; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x005AD8   VA: 0x800CF050   subsegment: c, map1_s00
+//-----------------------------------------------------------
 Ai_LarvalStalker_Update         = 0x800CF050; // type:func
 Ai_LarvalStalker_ControlUpdate  = 0x800CF168; // type:func
 sharedFunc_800D140C_1_s00       = 0x800D140C; // type:func

@@ -25,9 +25,9 @@ Particle_SoundStop                  = 0x800CDA4C; // type:func
 Particle_HyperBlasterBeamDraw       = 0x800CDA6C; // type:func
 Particle_BeamDraw                   = 0x800CE2E4; // type:func
 
-//-----------------------------------------------------------
-//--- PA: 0x005158   VA: 0x800CE6D0   subsegment: c, map4_s01
-//-----------------------------------------------------------
+//---------------------------------------------------------
+//--- PA: 0x005158   VA: 0x800CE6D0   subsegment: c, player
+//---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02           = 0x800CE6D0; // type:func
 sharedFunc_800D1C38_0_s00           = 0x800CF3B0; // type:func
 sharedFunc_800D209C_0_s00           = 0x800CF7DC; // type:func

@@ -38,9 +38,9 @@ Particle_SoundStop              = 0x800CE7E4; // type:func
 Particle_HyperBlasterBeamDraw   = 0x800CE804; // type:func
 Particle_BeamDraw               = 0x800CF07C; // type:func
 
-//-----------------------------------------------------------
-//--- PA: 0x005EF0   VA: 0x800CF468   subsegment: c, map1_s06
-//-----------------------------------------------------------
+//---------------------------------------------------------
+//--- PA: 0x005EF0   VA: 0x800CF468   subsegment: c, player
+//---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02       = 0x800CF468; // type:func
 sharedFunc_800D1C38_0_s00       = 0x800CF868; // type:func
 sharedFunc_800D209C_0_s00       = 0x800CFCB8; // type:func
@@ -66,6 +66,10 @@ sharedFunc_800D2E9C_0_s00       = 0x800D0260; // type:func
 sharedFunc_800D2EA4_0_s00       = 0x800D0268; // type:func
 sharedFunc_800D2EB4_0_s00       = 0x800D0278; // type:func
 sharedFunc_800D2EF4_0_s00       = 0x800D02B8; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x006D54   VA: 0x800D02CC   subsegment: c, map1_s06
+//-----------------------------------------------------------
 Ai_SplitHead_Update             = 0x800D02CC; // type:func
 Ai_SplitHead_Init               = 0x800D038C; // type:func
 sharedFunc_800CF990_1_s05       = 0x800D0444; // type:func

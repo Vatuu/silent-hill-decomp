@@ -65,7 +65,8 @@ segments:
 
       # .text section
       - [0x135C, c, particle]
-      - [0x24E4, c, map4_s06]
+      - [0x24E4, c, player]
+      - [0x3218, c, map4_s06]
 
       # .data section
       - [0x3528, .data, map4_s06_anim_info]

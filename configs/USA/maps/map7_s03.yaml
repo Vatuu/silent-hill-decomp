@@ -57,7 +57,7 @@ segments:
       - [0x0, rodata]
       - [0x4, .rodata, map7_s03_header]
       - [0x1050, .rodata, particle]
-      - [0x1278, .rodata, map7_s03]
+      - [0x1278, .rodata, player]
       - [0x1528, .rodata, Chara_Cybil]
       - [0x1618, .rodata, Chara_Dahlia]
       - [0x16EC, rodata]
@@ -75,7 +75,7 @@ segments:
 
       # .text section
       - [0x3BF8, c, particle]
-      - [0x667C, c, map7_s03]
+      - [0x667C, c, player]
       - [0x7B20, c, Chara_Cybil]
       - [0x8DF0, c, Chara_Dahlia]
       - [0x9990, c, Chara_Alessa]

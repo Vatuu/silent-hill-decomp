@@ -68,7 +68,8 @@ segments:
       - [0x3518, c, unk_draw_m1s03]
       - [0x3C94, c, unk_draw_800CD20C]
       - [0x4D3C, c, particle]
-      - [0x7B40, c, map5_s01]
+      - [0x7B40, c, player]
+      - [0x8CE4, c, map5_s01]
 
       # .data section
       - [0x23D6C, .data, map5_s01_anim_info]

@@ -57,7 +57,7 @@ segments:
       - [0x0, rodata]
       - [0x4, .rodata, map5_s03_header]
       - [0x1050, .rodata, particle]
-      - [0x1278, .rodata, map5_s03]
+      - [0x1278, .rodata, player]
       - [0x1398, .rodata, Chara_Kaufmann]
       - [0x1464, rodata]
       - [0x1468, .rodata, map5_s03_2]
@@ -67,7 +67,7 @@ segments:
       - [0x237C, c, map5_s03_header]
       - [0x237C, c, map5_s03_events_data]
       - [0x237C, c, particle]
-      - [0x5024, c, map5_s03]
+      - [0x5024, c, player]
       - [0x6364, c, Chara_Kaufmann]
       - [0x6FD4, c, map5_s03_2]
 

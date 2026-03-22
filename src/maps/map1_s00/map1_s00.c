@@ -13,8 +13,6 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
-#include "../src/maps/characters/player.c"
-
 // TODO: Move this line into separate `Chara_LarvalStalker` split.
 #include "../src/maps/characters/larval_stalker.c" // 0x800CF050
 

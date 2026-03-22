@@ -57,10 +57,10 @@ segments:
       - [0x0, rodata]
       - [0x4, .rodata, map7_s02_header]
       - [0x1050, .rodata, particle]
-      - [0x10A0, .rodata, map7_s02]
+      - [0x10A0, .rodata, player]
+      - [0x16D0, .rodata, Chara_Stalker]
       - [0x1A30, .rodata, Chara_Lisa]
-      - [0x1AD0, .rodata, Chara_Bloodsucker]
-      - [0x1AE0, .rodata, Chara_Dahlia]
+      - [0x1AD0, .rodata, Chara_Dahlia]
       - [0x1BA4, rodata]
       - [0x1BA8, .rodata, Chara_GhostChildAlessa]
       - [0x1BD8, .rodata, Chara_Kaufmann]
@@ -72,7 +72,8 @@ segments:
 
       # .text section
       - [0x46EC, c, particle]
-      - [0x5874, c, map7_s02]
+      - [0x5874, c, player]
+      - [0x7180, c, Chara_Stalker]
       - [0xC420, c, Chara_Lisa]
       - [0xCF0C, c, Chara_BloodyLisa]
       - [0xD2FC, c, Chara_Bloodsucker]

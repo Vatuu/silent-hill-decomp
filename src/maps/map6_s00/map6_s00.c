@@ -12,8 +12,6 @@
 #include "maps/characters/player.h"
 #include "maps/characters/romper.h"
 
-#include "../src/maps/characters/player.c"
-
 INCLUDE_RODATA("maps/map6_s00/nonmatchings/map6_s00", D_800CA858);
 
 INCLUDE_RODATA("maps/map6_s00/nonmatchings/map6_s00", D_800CA864);

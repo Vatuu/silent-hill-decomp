@@ -12,8 +12,6 @@
 #include "maps/characters/floatstinger.h"
 #include "maps/characters/player.h"
 
-#include "../src/maps/characters/player.c"
-
 #define floatstingerProps floatstinger->properties_E4.floatstinger
 
 void Ai_Floatstinger_Update(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D16FC

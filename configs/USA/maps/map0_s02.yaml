@@ -64,7 +64,8 @@ segments:
       - [0x1778, c, map0_s02_header]
       - [0x1778, c, map0_s02_events_data]
       - [0x1778, c, particle]
-      - [0x4530, c, map0_s02]
+      - [0x4530, c, player]
+      - [0x5264, c, map0_s02]
       - [0x5650, c, map0_s02_events]
 
       # .data section

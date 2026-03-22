@@ -58,7 +58,7 @@ segments:
       - [0x4, .rodata, map4_s04_header]
       - [0x1050, .rodata, particle]
       - [0x1204, rodata]
-      - [0x1208, .rodata, map4_s04]
+      - [0x1208, .rodata, player]
       - [0x1328, .rodata, Chara_Lisa]
       - [0x13C8, .rodata, map4_s04_2]
 
@@ -68,7 +68,7 @@ segments:
 
       # .text section
       - [0x26E8, c, particle]
-      - [0x54C4, c, map4_s04]
+      - [0x54C4, c, player]
       - [0x6928, c, Chara_Lisa]
       - [0x7414, c, map4_s04_2]
 

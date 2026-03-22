@@ -11,8 +11,6 @@
 #include "maps/characters/player.h"
 #include "maps/characters/split_head.h"
 
-#include "../src/maps/characters/player.c"
-
 // TODO: Move this line into separate `Chara_SplitHead` split.
 #include "../src/maps/characters/split_head.c" // 0x800D02CC
 

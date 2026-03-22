@@ -7,8 +7,6 @@
 #include "maps/characters/creeper.h"
 #include "maps/characters/player.h"
 
-#include "../src/maps/characters/player.c"
-
 // TODO: Move this line into separate `Chara_Creeper` split.
 #include "../src/maps/characters/creeper.c" // 0x800CEE4C
 

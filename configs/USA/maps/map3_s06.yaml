@@ -68,7 +68,7 @@ segments:
 
       # .text section
       - [0x1D68, c, particle]
-      - [0x4B3C, c, map3_s06]
+      - [0x4B3C, c, player]
       - [0x5B80, c, Chara_Dahlia]
       - [0x6760, c, map3_s06_2]
 

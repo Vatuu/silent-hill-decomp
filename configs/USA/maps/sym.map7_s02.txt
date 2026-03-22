@@ -6,9 +6,9 @@
 //================================================
 
 
-//-----------------------------------------------------------------
-//--- PA: 0x0010A0   VA: 0x800CA618   subsegment: .rodata, map7_s02
-//-----------------------------------------------------------------
+//----------------------------------------------------------------------
+//--- PA: 0x0016D0   VA: 0x800CAC48   subsegment: .rodata, Chara_Stalker
+//----------------------------------------------------------------------
 sharedData_800CAB70_0_s00           = 0x800CACD8; // type:VECTOR
 
 //-------------------------------------------------------------------
@@ -34,9 +34,9 @@ Particle_SoundStop                  = 0x800CE168; // type:func
 Particle_HyperBlasterBeamDraw       = 0x800CE188; // type:func
 Particle_BeamDraw                   = 0x800CEA00; // type:func
 
-//-----------------------------------------------------------
-//--- PA: 0x005874   VA: 0x800CEDEC   subsegment: c, map7_s02
-//-----------------------------------------------------------
+//---------------------------------------------------------
+//--- PA: 0x005874   VA: 0x800CEDEC   subsegment: c, player
+//---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02           = 0x800CEDEC; // type:func
 sharedFunc_800D1C38_0_s00           = 0x800CFC94; // type:func
 sharedFunc_800D209C_0_s00           = 0x800D00E4; // type:func
@@ -62,6 +62,10 @@ sharedFunc_800D2E9C_0_s00           = 0x800D068C; // type:func
 sharedFunc_800D2EA4_0_s00           = 0x800D0694; // type:func
 sharedFunc_800D2EB4_0_s00           = 0x800D06A4; // type:func
 sharedFunc_800D2EF4_0_s00           = 0x800D06E4; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x007180   VA: 0x800D06F8   subsegment: c, Chara_Stalker
+//----------------------------------------------------------------
 Ai_Stalker_Update                   = 0x800D06F8; // type:func
 Ai_Stalker_Init                     = 0x800D088C; // type:func
 sharedFunc_800D3308_0_s00           = 0x800D0AF8; // type:func

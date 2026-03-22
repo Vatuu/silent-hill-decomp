@@ -67,7 +67,8 @@ segments:
       # .text section
       - [0x1A4C, c, unk_draw_m1s05]
       - [0x31BC, c, particle]
-      - [0x5EF0, c, map1_s06]
+      - [0x5EF0, c, player]
+      - [0x6D54, c, map1_s06]
 
       # .data section
       - [0xD7C8, .data, map1_s06_anim_info]

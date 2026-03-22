@@ -9,8 +9,6 @@
 #include "maps/characters/player.h"
 #include "maps/characters/twinfeeler.h"
 
-#include "../src/maps/characters/player.c"
-
 #include "maps/shared/sharedFunc_800CD6B0_3_s03.h" // 0x800D04BC
 
 #include "maps/shared/sharedFunc_800CD7F8_3_s03.h" // 0x800D0604

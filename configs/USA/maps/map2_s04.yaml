@@ -64,7 +64,8 @@ segments:
       - [0x1654, c, map2_s04_header]
       - [0x1654, c, map2_s04_events_data]
       - [0x1654, c, particle]
-      - [0x27DC, c, map2_s04]
+      - [0x27DC, c, player]
+      - [0x3510, c, map2_s04]
 
       # .data section
       - [0x4564, .data, map2_s04_anim_info]

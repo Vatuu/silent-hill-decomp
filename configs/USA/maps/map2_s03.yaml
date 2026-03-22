@@ -64,7 +64,8 @@ segments:
       - [0x138C, c, map2_s03_header]
       - [0x138C, c, map2_s03_events_data]
       - [0x138C, c, particle]
-      - [0x2514, c, map2_s03]
+      - [0x2514, c, player]
+      - [0x3248, c, map2_s03]
 
       # .data section
       - [0x35C4, .data, map2_s03_anim_info]

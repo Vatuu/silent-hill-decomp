@@ -57,7 +57,8 @@ segments:
       - [0x0, rodata]
       - [0x4, .rodata, map1_s00_header]
       - [0x1050, .rodata, particle]
-      - [0x1278, .rodata, map1_s00]
+      - [0x1278, .rodata, player]
+      - [0x1398, .rodata, map1_s00]
 
       - [0x2230, c, map1_s00_header]
       - [0x2230, c, map1_s00_events_data]
@@ -65,7 +66,8 @@ segments:
 
       # .text section
       - [0x2230, c, particle]
-      - [0x4B64, c, map1_s00]
+      - [0x4B64, c, player]
+      - [0x5AD8, c, map1_s00]
 
       # .data section
       - [0x10ED4, .data, map1_s00_anim_info]

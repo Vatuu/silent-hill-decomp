@@ -64,7 +64,8 @@ segments:
       - [0x13E4, c, map1_s04_header]
       - [0x13E4, c, map1_s04_events_data]
       - [0x13E4, c, particle]
-      - [0x256C, c, map1_s04]
+      - [0x256C, c, player]
+      - [0x32A0, c, map1_s04]
 
       # .data section
       - [0x3938, .data, map1_s04_anim_info]

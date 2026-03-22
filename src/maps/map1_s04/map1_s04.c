@@ -11,8 +11,6 @@
 
 #include "maps/characters/player.h"
 
-#include "../src/maps/characters/player.c"
-
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CC818
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800CC828

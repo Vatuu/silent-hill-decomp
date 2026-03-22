@@ -8,8 +8,6 @@
 #include "maps/characters/groaner.h"
 #include "maps/characters/player.h"
 
-#include "../src/maps/characters/player.c"
-
 INCLUDE_RODATA("maps/map2_s00/nonmatchings/map2_s00", D_800CA860);
 
 INCLUDE_RODATA("maps/map2_s00/nonmatchings/map2_s00", D_800CA870);

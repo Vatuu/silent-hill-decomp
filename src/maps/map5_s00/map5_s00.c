@@ -13,8 +13,6 @@
 #include "maps/characters/player.h"
 #include "maps/characters/hanged_scratcher.h"
 
-#include "../src/maps/characters/player.c"
-
 // TODO: Move this line into separate `Chara_HangedScratcher` split.
 #include "../src/maps/characters/hanged_scratcher.c" // 0x800CFC24
 
