@@ -7,15 +7,9 @@
 #include "maps/characters/air_screamer.h"
 #include "maps/characters/player.h"
 
-#include "../src/maps/particle_glass.c" // 0x800CCB8C
-
-#include "../src/maps/particle.c"
-
 #include "../src/maps/characters/player.c"
 
 INCLUDE_RODATA("maps/map0_s01/nonmatchings/map0_s01", D_800CA9F0);
-
-INCLUDE_RODATA("maps/map0_s01/nonmatchings/map0_s01", D_800CA9F4);
 
 INCLUDE_RODATA("maps/map0_s01/nonmatchings/map0_s01", D_800CAA00);
 

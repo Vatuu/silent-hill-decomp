@@ -1,3 +1,7 @@
+#include "inline_no_dmpsx.h"
+
+#include <psyq/gtemac.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player.h"
@@ -6,10 +10,6 @@
 #include "maps/particle.h"
 #include "maps/characters/player.h"
 #include "maps/characters/split_head.h"
-
-#include "../src/maps/unk_draw_m1s05.c" // 0x800CAFC4
-
-#include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"
 

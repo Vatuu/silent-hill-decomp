@@ -56,13 +56,21 @@ segments:
       # .rodata section
       - [0x0, rodata]
       - [0x4, .rodata, map1_s03_header]
-      - [0x1050, .rodata, map1_s03]
+      - [0x1050, .rodata, unk_draw_800CDCE0]
+      - [0x1064, rodata]
+      - [0x1068, .rodata, particle]
+      - [0x121C, rodata]
+      - [0x1220, .rodata, map1_s03]
 
       - [0x2768, c, map1_s03_header]
       - [0x2768, c, map1_s03_events_data]
       - [0x2768, c, map1_s03_anim_info]
       # .text section
-      - [0x2768, c, map1_s03]
+      - [0x2768, c, particle_water]
+      - [0x4768, c, unk_draw_800CDCE0]
+      - [0x505C, c, unk_draw_m1s03]
+      - [0x57D8, c, particle]
+      - [0x85B4, c, map1_s03]
 
       # .data section
       - [0x15A00, .data, map1_s03_anim_info]

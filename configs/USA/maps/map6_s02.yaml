@@ -56,7 +56,7 @@ segments:
       # .rodata section
       - [0x0, rodata]
       - [0x4, .rodata, map6_s02_header]
-      - [0x1050, .rodata, map6_s02]
+      - [0x1050, .rodata, particle]
       - [0x10A0, .rodata, Chara_Alessa]
       - [0x10CC, rodata]
       - [0x10D0, .rodata, map6_s02_2]
@@ -66,7 +66,9 @@ segments:
       - [0x1628, c, map6_s02_anim_info]
 
       # .text section
-      - [0x1628, c, map6_s02]
+      - [0x1628, c, unk_draw_m1s03]
+      - [0x1DA4, c, particle]
+      - [0x2F2C, c, map6_s02]
       - [0x41BC, c, Chara_Alessa]
       - [0x4938, c, map6_s02_2]
 

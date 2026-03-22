@@ -4,6 +4,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "main/rng.h"
 #include "maps/shared.h"
 
 // Twinfeeler/Floatstinger acid particle effect? Included in M4S03 and M4S05

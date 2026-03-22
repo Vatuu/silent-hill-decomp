@@ -7,8 +7,6 @@
 #include "maps/characters/player.h"
 #include "maps/characters/twinfeeler.h"
 
-#include "../src/maps/particle_acid.c" // 0x800CB0A4
-
 #include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"

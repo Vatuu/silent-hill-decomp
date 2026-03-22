@@ -56,7 +56,9 @@ segments:
       # .rodata section
       - [0x0, rodata]
       - [0x4, .rodata, map0_s00_header]
-      - [0x1050, .rodata, map0_s00]
+      - [0x1050, .rodata, particle]
+      - [0x13DC, rodata]
+      - [0x13E0, .rodata, map0_s00]
       - [0x18C8, .rodata, Chara_Cheryl]
       - [0x18DC, rodata]
       - [0x18E0, .rodata, map0_s00_2]
@@ -65,9 +67,10 @@ segments:
       - [0x2138, c, map0_s00_header]
       - [0x2138, c, map0_s00_events_data] # Could this be merge with `map0_s00_events`? (That file should contain strings and functions of events just like map0_s01 counterpart)
       - [0x2138, c, map0_s00_anim_info]
-      
+
       # .text section
-      - [0x2138, c, map0_s00]
+      - [0x2138, c, particle]
+      - [0x78BC, c, map0_s00]
       - [0xEA40, c, Chara_Cheryl]
       - [0xF334, c, map0_s00_2]
 

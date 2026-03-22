@@ -3,8 +3,16 @@
 #include <psyq/gtemac.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/math/math.h"
 #include "main/rng.h"
-#include "maps/shared.h"
+
+#if defined(MAP1_S05)
+#include "maps/map1/map1_s05.h" // For `sharedData_800DFB7C_0_s00` size.
+#elif defined(MAP3_S05)
+#include "maps/map3/map3_s05.h" // For `sharedData_800DFB7C_0_s00` size.
+#elif defined(MAP4_S01)
+#include "maps/map4/map4_s01.h" // For `sharedData_800DFB7C_0_s00` size.
+#endif
 
 // Unknown drawing code included in M1S05, M3S05 and M4S01.
 // Might be used by some kind of world object, based on M1S05 `Map_WorldObjectsInit` calling into this?

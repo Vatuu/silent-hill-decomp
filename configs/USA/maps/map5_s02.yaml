@@ -56,7 +56,8 @@ segments:
       # .rodata section
       - [0x0, rodata]
       - [0x4, .rodata, map5_s02_header]
-      - [0x1050, .rodata, map5_s02]
+      - [0x1050, .rodata, particle]
+      - [0x10A0, .rodata, map5_s02]
       - [0x1490, .rodata, Chara_Kaufmann]
       - [0x155C, rodata]
       - [0x1560, .rodata, map5_s02_2]
@@ -65,7 +66,8 @@ segments:
       - [0x2154, c, map5_s02_events_data]
       - [0x2154, c, map5_s02_anim_info]
       # .text section
-      - [0x2154, c, map5_s02]
+      - [0x2154, c, particle]
+      - [0x32DC, c, map5_s02]
       - [0x9930, c, Chara_Kaufmann]
       - [0xA584, c, map5_s02_2]
 

@@ -10,8 +10,6 @@
 #include "maps/characters/player.h"
 #include "maps/characters/romper.h"
 
-#include "../src/maps/unk_draw_m1s03.c" // 0x800CCA90
-
 s16 func_800CD20C(void) // 0x800CD20C
 {
     s32      i;

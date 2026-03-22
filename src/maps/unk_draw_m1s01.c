@@ -4,7 +4,13 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "maps/shared.h"
+#include "main/rng.h"
+
+#if defined(MAP1_S01)
+#include "maps/map1/map1_s01.h" // For `sharedData_800DFB7C_0_s00` size.
+#elif defined(MAP6_S04)
+#include "maps/map6/map6_s04.h" // For `sharedData_800DFB7C_0_s00` size.
+#endif
 
 // Unknown drawing code included in M1S01 and M6S04.
 // Called by cutscene event code? Might be related to smoke/steam particle effects.

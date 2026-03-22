@@ -7,7 +7,7 @@
 
 
 //-----------------------------------------------------------
-//--- PA: 0x003BF8   VA: 0x800CD170   subsegment: c, map7_s03
+//--- PA: 0x003BF8   VA: 0x800CD170   subsegment: c, particle
 //-----------------------------------------------------------
 Particle_SystemUpdate               = 0x800CD170; // type:func
 Particle_CameraMovedCheck           = 0x800CD608; // type:func
@@ -26,6 +26,10 @@ sharedFunc_800D0B18_0_s00           = 0x800CEDD8; // type:func
 Particle_SoundStop                  = 0x800CEF70; // type:func
 Particle_HyperBlasterBeamDraw       = 0x800CEF90; // type:func
 Particle_BeamDraw                   = 0x800CF808; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x00667C   VA: 0x800CFBF4   subsegment: c, map7_s03
+//-----------------------------------------------------------
 sharedFunc_800CDAA8_0_s02           = 0x800CFBF4; // type:func
 sharedFunc_800D1C38_0_s00           = 0x800D0640; // type:func
 sharedFunc_800D209C_0_s00           = 0x800D0A84; // type:func

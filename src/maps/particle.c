@@ -1,6 +1,22 @@
 #include "inline_no_dmpsx.h"
 
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/math/math.h"
+#include "main/rng.h"
+#include "maps/shared.h"
 #include "maps/particle.h"
+
+#if defined(MAP0_S00)
+#include "maps/map0/map0_s00.h" // TODO: Move particle-related decls to particle.h
+#elif defined(MAP7_S03)
+#include "maps/map7/map7_s03.h" // TODO: Move particle-related decls to particle.h
+#elif defined(MAP0_S02)
+#include "maps/map0/map0_s02.h" // TODO: Find why removing this include causes mismatch.
+#elif defined(MAP3_S00)
+#include "maps/map3/map3_s00.h" // TODO: Find why removing this include causes mismatch.
+#elif defined(MAP3_S01)
+#include "maps/map3/map3_s01.h" // TODO: Find why removing this include causes mismatch.
+#endif
 
 // Particle-related functions.
 //

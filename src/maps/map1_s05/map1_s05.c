@@ -5,13 +5,11 @@
 #include "maps/map1/map1_s05.h"
 #include "maps/particle.h"
 #include "maps/characters/player.h"
+#include "inline_no_dmpsx.h"
+
+#include <psyq/gtemac.h>
+
 #include "maps/characters/split_head.h"
-
-#include "../src/maps/unk_draw.c" // 0x800CAAD0
-
-#include "../src/maps/unk_draw_m1s05.c" // 0x800CBE7C
-
-#include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"
 

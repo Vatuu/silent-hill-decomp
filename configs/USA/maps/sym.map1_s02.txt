@@ -7,7 +7,7 @@
 
 
 //-----------------------------------------------------------------
-//--- PA: 0x001050   VA: 0x800CA5C8   subsegment: .rodata, map1_s02
+//--- PA: 0x00120A   VA: 0x800CA782   subsegment: .rodata, map1_s02
 //-----------------------------------------------------------------
 sharedData_800CAB70_0_s00       = 0x800CAAF0; // type:VECTOR
 
@@ -18,14 +18,18 @@ sharedData_800CAB70_0_s00       = 0x800CAAF0; // type:VECTOR
 //================================================
 
 
-//-----------------------------------------------------------
-//--- PA: 0x0024D4   VA: 0x800CBA4C   subsegment: c, map1_s02
-//-----------------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x0024D4   VA: 0x800CBA4C   subsegment: c, particle_water
+//-----------------------------------------------------------------
 sharedFunc_800CBA4C_1_s02       = 0x800CBA4C; // type:func
 sharedFunc_800CBC98_1_s02       = 0x800CBC98; // type:func
 sharedFunc_800CBD58_1_s02       = 0x800CBD58; // type:func
 sharedFunc_800CBDA8_1_s02       = 0x800CBDA8; // type:func
 sharedFunc_800CCE60_1_s02       = 0x800CCE60; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x0044D4   VA: 0x800CDA4C   subsegment: c, particle
+//-----------------------------------------------------------
 Particle_SystemUpdate           = 0x800CDA4C; // type:func
 Particle_CameraMovedCheck       = 0x800CDE40; // type:func
 Particle_SnowInitialize         = 0x800CDF18; // type:func
@@ -44,6 +48,10 @@ Particle_SoundUpdate            = 0x800CF8F4; // type:func
 Particle_SoundStop              = 0x800CFA40; // type:func
 Particle_HyperBlasterBeamDraw   = 0x800CFA60; // type:func
 Particle_BeamDraw               = 0x800D02D8; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x00714C   VA: 0x800D06C4   subsegment: c, map1_s02
+//-----------------------------------------------------------
 sharedFunc_800CDAA8_0_s02       = 0x800D06C4; // type:func
 sharedFunc_800D1C38_0_s00       = 0x800D1624; // type:func
 sharedFunc_800D209C_0_s00       = 0x800D1AAC; // type:func

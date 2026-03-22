@@ -8,10 +8,6 @@
 #include "maps/characters/player.h"
 #include "maps/characters/puppet_nurse.h"
 
-#include "../src/maps/particle_glass.c" // 0x800CC9A4
-
-#include "../src/maps/particle.c"
-
 #include "../src/maps/characters/player.c"
 
 #include "../src/maps/characters/puppet_nurse.c" // 0x800D16A4

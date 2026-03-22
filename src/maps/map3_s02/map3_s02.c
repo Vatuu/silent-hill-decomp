@@ -6,8 +6,6 @@
 #include "maps/characters/creeper.h"
 #include "maps/characters/player.h"
 
-#include "../src/maps/particle.c"
-
 #include "../src/maps/characters/player.c"
 
 // TODO: Move this line into separate `Chara_Creeper` split.

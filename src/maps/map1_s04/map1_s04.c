@@ -5,9 +5,11 @@
 #include "main/rng.h"
 #include "maps/map1/map1_s04.h"
 #include "maps/particle.h"
-#include "maps/characters/player.h"
+#include "inline_no_dmpsx.h"
 
-#include "../src/maps/particle.c"
+#include <psyq/gtemac.h>
+
+#include "maps/characters/player.h"
 
 #include "../src/maps/characters/player.c"
 

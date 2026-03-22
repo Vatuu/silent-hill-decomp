@@ -7,7 +7,7 @@
 
 
 //-----------------------------------------------------------------
-//--- PA: 0x001238   VA: 0x800CA7B0   subsegment: .rodata, map0_s01
+//--- PA: 0x001470   VA: 0x800CA9E8   subsegment: .rodata, map0_s01
 //-----------------------------------------------------------------
 sharedData_800CAA98_0_s01           = 0x800CAA98; // type:s32 size:0xD6C
 
@@ -23,11 +23,15 @@ D_800CC8FC                          = 0x800CC8FC;
 //================================================
 
 
-//-----------------------------------------------------------
-//--- PA: 0x003614   VA: 0x800CCB8C   subsegment: c, map0_s01
-//-----------------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x003614   VA: 0x800CCB8C   subsegment: c, particle_glass
+//-----------------------------------------------------------------
 sharedFunc_800CCB8C_0_s01           = 0x800CCB8C; // type:func
 sharedFunc_800CD1F8_0_s01           = 0x800CD1F8; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x004A88   VA: 0x800CE000   subsegment: c, particle
+//-----------------------------------------------------------
 Particle_SystemUpdate               = 0x800CE000; // type:func
 Particle_CameraMovedCheck           = 0x800CE4C4; // type:func
 Particle_SnowInitialize             = 0x800CE59C; // type:func
@@ -46,6 +50,10 @@ sharedFunc_800D0B18_0_s00           = 0x800CFE20; // type:func
 Particle_SoundStop                  = 0x800CFFB8; // type:func
 Particle_HyperBlasterBeamDraw       = 0x800CFFD8; // type:func
 Particle_BeamDraw                   = 0x800D0850; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x0076C4   VA: 0x800D0C3C   subsegment: c, map0_s01
+//-----------------------------------------------------------
 sharedFunc_800CDAA8_0_s02           = 0x800D0C3C; // type:func
 sharedFunc_800D1C38_0_s00           = 0x800D16C4; // type:func
 sharedFunc_800D209C_0_s00           = 0x800D1B00; // type:func

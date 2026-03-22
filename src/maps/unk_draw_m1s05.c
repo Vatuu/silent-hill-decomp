@@ -3,6 +3,8 @@
 #include <psyq/gtemac.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/math/math.h"
+#include "main/rng.h"
 #include "maps/shared.h"
 
 // Unknown drawing code included in M1S05 and M1S06

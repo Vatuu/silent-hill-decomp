@@ -56,7 +56,7 @@ segments:
       # .rodata section
       - [0x0, rodata]
       - [0x4, .rodata, map3_s00_header]
-      - [0x1050, .rodata, map3_s00]
+      - [0x1050, .rodata, particle]
       - [0x12C8, .rodata, Chara_Kaufmann]
       - [0x1394, rodata]
       - [0x1398, .rodata, map3_s00_2]
@@ -66,7 +66,8 @@ segments:
       - [0x1E90, c, map3_s00_anim_info]
 
       # .text section
-      - [0x1E90, c, map3_s00]
+      - [0x1E90, c, particle]
+      - [0x4C64, c, map3_s00]
       - [0x5CA4, c, Chara_Kaufmann]
       - [0x690C, c, map3_s00_2]
 

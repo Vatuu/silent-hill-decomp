@@ -6,8 +6,4 @@
 #include "maps/particle.h"
 #include "maps/characters/player.h"
 
-#include "../src/maps/unk_draw_m1s03.c" // 0x800CBB60
-
-#include "../src/maps/particle.c"
-
 #include "../src/maps/characters/player.c"

@@ -4,6 +4,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "main/rng.h"
 #include "maps/shared.h"
 
 // Unknown drawing code included in M1S03, M4S05, M5S01, M6S01 and M6S02.

@@ -56,7 +56,9 @@ segments:
       # .rodata section
       - [0x0, rodata]
       - [0x4, .rodata, map7_s01_header]
-      - [0x1050, .rodata, map7_s01]
+      - [0x1050, .rodata, particle_glass]
+      - [0x1060, .rodata, particle]
+      - [0x10B0, .rodata, map7_s01]
       - [0x1824, rodata]
       - [0x1828, .rodata, Chara_GhostChildAlessa]
       - [0x1858, .rodata, Chara_Lisa]
@@ -66,7 +68,9 @@ segments:
       - [0x342C, c, map7_s01_events_data]
       - [0x342C, c, map7_s01_anim_info]
       # .text section
-      - [0x342C, c, map7_s01]
+      - [0x342C, c, particle_glass]
+      - [0x48A0, c, particle]
+      - [0x5A28, c, map7_s01]
       - [0xB440, c, Chara_GhostChildAlessa]
       - [0xB884, c, Chara_Lisa]
       - [0xC370, c, Chara_BloodyLisa]

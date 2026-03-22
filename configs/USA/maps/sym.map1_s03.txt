@@ -7,7 +7,7 @@
 
 
 //-----------------------------------------------------------------
-//--- PA: 0x001050   VA: 0x800CA5C8   subsegment: .rodata, map1_s03
+//--- PA: 0x001220   VA: 0x800CA798   subsegment: .rodata, map1_s03
 //-----------------------------------------------------------------
 sharedData_800CAB70_0_s00           = 0x800CAC18; // type:VECTOR
 
@@ -18,16 +18,24 @@ sharedData_800CAB70_0_s00           = 0x800CAC18; // type:VECTOR
 //================================================
 
 
-//-----------------------------------------------------------
-//--- PA: 0x002768   VA: 0x800CBCE0   subsegment: c, map1_s03
-//-----------------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x002768   VA: 0x800CBCE0   subsegment: c, particle_water
+//-----------------------------------------------------------------
 sharedFunc_800CBA4C_1_s02           = 0x800CBCE0; // type:func
 sharedFunc_800CBC98_1_s02           = 0x800CBF2C; // type:func
 sharedFunc_800CBD58_1_s02           = 0x800CBFEC; // type:func
 sharedFunc_800CBDA8_1_s02           = 0x800CC03C; // type:func
 sharedFunc_800CCE60_1_s02           = 0x800CD0F4; // type:func
+
+//-----------------------------------------------------------------
+//--- PA: 0x00505C   VA: 0x800CE5D4   subsegment: c, unk_draw_m1s03
+//-----------------------------------------------------------------
 sharedFunc_800CE5D4_1_s03           = 0x800CE5D4; // type:func
 sharedFunc_800CE688_1_s03           = 0x800CE688; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x0057D8   VA: 0x800CED50   subsegment: c, particle
+//-----------------------------------------------------------
 Particle_SystemUpdate               = 0x800CED50; // type:func
 Particle_CameraMovedCheck           = 0x800CF144; // type:func
 Particle_SnowInitialize             = 0x800CF21C; // type:func
@@ -47,6 +55,10 @@ Particle_SoundUpdate                = 0x800D0D5C; // type:func
 Particle_SoundStop                  = 0x800D0EA8; // type:func
 Particle_HyperBlasterBeamDraw       = 0x800D0EC8; // type:func
 Particle_BeamDraw                   = 0x800D1740; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x0085B4   VA: 0x800D1B2C   subsegment: c, map1_s03
+//-----------------------------------------------------------
 sharedFunc_800CDAA8_0_s02           = 0x800D1B2C; // type:func
 sharedFunc_800D1C38_0_s00           = 0x800D235C; // type:func
 sharedFunc_800D209C_0_s00           = 0x800D27AC; // type:func

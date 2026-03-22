@@ -1,3 +1,7 @@
+#include "inline_no_dmpsx.h"
+
+#include <psyq/gtemac.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player.h"
@@ -8,15 +12,9 @@
 #include "maps/characters/floatstinger.h"
 #include "maps/characters/player.h"
 
-#define floatstingerProps floatstinger->properties_E4.floatstinger
-
-#include "../src/maps/particle_acid.c" // 0x800CACA4
-
-#include "../src/maps/unk_draw_m1s03.c" // 0x800CC300
-
-#include "../src/maps/particle.c"
-
 #include "../src/maps/characters/player.c"
+
+#define floatstingerProps floatstinger->properties_E4.floatstinger
 
 void Ai_Floatstinger_Update(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D16FC
 {

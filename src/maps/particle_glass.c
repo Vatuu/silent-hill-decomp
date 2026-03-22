@@ -4,6 +4,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "main/rng.h"
 #include "maps/shared.h"
 
 // Glass-breaking particle effect? Included in M0S01 and M7S01

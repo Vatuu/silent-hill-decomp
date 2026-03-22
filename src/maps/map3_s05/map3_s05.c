@@ -9,10 +9,6 @@
 #include "maps/characters/player.h"
 #include "maps/characters/puppet_nurse.h"
 
-#include "../src/maps/unk_draw.c" // 0x800CB5F4
-
-#include "../src/maps/particle.c"
-
 #include "../src/maps/characters/player.c"
 
 // TODO: Move this line into separate `Chara_Creeper` split.

@@ -8,8 +8,4 @@
 
 // TODO: Func declarations in header.
 
-#include "../src/maps/unk_draw.c" // 0x800CC19C
-
-#include "../src/maps/particle.c"
-
 #include "../src/maps/characters/player.c"

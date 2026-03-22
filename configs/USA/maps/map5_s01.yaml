@@ -64,7 +64,8 @@ segments:
       - [0x3518, c, map5_s01_anim_info]
 
       # .text section
-      - [0x3518, c, map5_s01]
+      - [0x3518, c, unk_draw_m1s03]
+      - [0x3C94, c, map5_s01]
 
       # .data section
       - [0x23D6C, .data, map5_s01_anim_info]

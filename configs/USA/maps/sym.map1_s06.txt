@@ -6,15 +6,19 @@
 //================================================
 
 
-//-----------------------------------------------------------
-//--- PA: 0x001A4C   VA: 0x800CAFC4   subsegment: c, map1_s06
-//-----------------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x001A4C   VA: 0x800CAFC4   subsegment: c, unk_draw_m1s05
+//-----------------------------------------------------------------
 sharedFunc_800CBE7C_1_s05       = 0x800CAFC4; // type:func
 sharedFunc_800CBF74_1_s05       = 0x800CB0BC; // type:func
 sharedFunc_800CC618_1_s05       = 0x800CB760; // type:func
 sharedFunc_800CCDD4_1_s05       = 0x800CBF1C; // type:func
 sharedFunc_800CCE2C_1_s05       = 0x800CBF74; // type:func
 sharedFunc_800CCF30_1_s05       = 0x800CC078; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x0031BC   VA: 0x800CC734   subsegment: c, particle
+//-----------------------------------------------------------
 Particle_SystemUpdate           = 0x800CC734; // type:func
 Particle_CameraMovedCheck       = 0x800CCCE4; // type:func
 Particle_SnowInitialize         = 0x800CCDBC; // type:func
@@ -33,6 +37,10 @@ sharedFunc_800D0B18_0_s00       = 0x800CE64C; // type:func
 Particle_SoundStop              = 0x800CE7E4; // type:func
 Particle_HyperBlasterBeamDraw   = 0x800CE804; // type:func
 Particle_BeamDraw               = 0x800CF07C; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x005EF0   VA: 0x800CF468   subsegment: c, map1_s06
+//-----------------------------------------------------------
 sharedFunc_800CDAA8_0_s02       = 0x800CF468; // type:func
 sharedFunc_800D1C38_0_s00       = 0x800CF868; // type:func
 sharedFunc_800D209C_0_s00       = 0x800CFCB8; // type:func

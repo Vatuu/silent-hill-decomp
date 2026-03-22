@@ -4,7 +4,13 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "maps/shared.h"
+#include "main/rng.h"
+
+#if defined(MAP1_S02)
+#include "maps/map1/map1_s02.h" // For `sharedData_800DFB7C_0_s00` size.
+#elif defined(MAP1_S03)
+#include "maps/map1/map1_s03.h" // For `sharedData_800DFB7C_0_s00` size.
+#endif
 
 // Waterfall particle effect? Included in M1S02 and M1S03.
 // Called by cutscene event code and M1S02 `Map_WorldObjectsUpdate`, likely draws the water used in the school key puzzle.
