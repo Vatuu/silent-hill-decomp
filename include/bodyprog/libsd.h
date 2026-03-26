@@ -9,7 +9,7 @@
  * libref.pdf v4.4 may be useful, though was likely based on an earlier SDK.
  */
 
- #define SD_VOICE_COUNT 24
+#define SD_VOICE_COUNT 24
 
 /** `SD_ALLOC_SLOTS` must equal `SD_VAB_SLOTS` due to `SdWorkInit` loop, but they're mostly unrelated. */
 
@@ -485,4 +485,4 @@ u8   midi_smf_main(void);
 void midi_smf_stop(s32 access_num);
 s16  midi_smf_stat(s32 access_no); /** Returns SMF_STAT. */
 
-#endif /* _LIBSD_H */
+#endif

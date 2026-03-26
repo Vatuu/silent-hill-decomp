@@ -16,14 +16,6 @@
  * suggests that at some point, they were called `events`.
  */
 
-// ==========
-// CONSTANTS
-// ==========
-
-// TODO: Part of an enum?
-#define AUDIO_TYPE_MONO   1
-#define AUDIO_TYPE_STEREO 2
-
 // ==============
 // HELPER MACROS
 // ==============
@@ -48,6 +40,13 @@
 // ======
 // ENUMS
 // ======
+
+/** @brief Audio modes. */
+typedef enum _AudioMode
+{
+    AudioMode_Mono   = 1,
+    AudioMode_Stereo = 2
+} e_AudioMode;
 
 /** @brief Audio types. */
 typedef enum _AudioType
@@ -224,7 +223,7 @@ extern s_AudioItemData g_AudioData[];
 extern u8 g_Sd_ReverbDepths[];
 
 // Odd access. See `Sd_BgmLayerVolumeSet` and `Sd_BgmLayerVolumeGet`.
-extern u8 D_800AA604[][];
+extern u8 D_800AA604[41][16];
 
 extern s_XaItemData g_XaItemData[];
 
@@ -302,7 +301,7 @@ extern u8 g_Sd_CurrentTask;
  * * `Winning Eleven 6` calls it `SD_call`.
  * * `Silent Scope 3` and `Silent Hill 2` call it `sd_call`.
  *
- * Each game varies the functionallity mainly based on its requirements,
+ * Each game's implementation varies slightly depending on the requirements,
  * but in all instances, it's used to pass a command/task to the
  * audio streaming system. The most similar are IRC and SH2.
  */

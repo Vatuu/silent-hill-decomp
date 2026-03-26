@@ -48,8 +48,8 @@ s8 g_PaperMapMarkingFileIdxs[] = {
     3, 3, 3, 3, 3, 3, 3, 3
 };
 
-char* D_800A99E4[] = {
-    0,          "PAD_NEAR", "AIDKIT_N", "DRINK_NE",
+char* D_800A99E4[8] = {
+    NULL,       "PAD_NEAR", "AIDKIT_N", "DRINK_NE",
     "AMPULE_N", "BULLET_N", "SHELL_NE", "SHOT_NEA"
 };
 

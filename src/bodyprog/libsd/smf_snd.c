@@ -1752,6 +1752,7 @@ s32 SdUtSetVVol(s16 vc, s16 voll, s16 volr) // 0x800A1C1C
 s32 SdUtGetDetVVol(s16 vc, u16* voll, u16* volr) // 0x800A1C78
 {
     SpuVoiceAttr s_attr;
+
     s_attr.mask  = 0;
     s_attr.voice = spu_ch_tbl[vc];
 
@@ -1765,6 +1766,7 @@ s32 SdUtGetDetVVol(s16 vc, u16* voll, u16* volr) // 0x800A1C78
 s32 SdUtGetVVol(s16 vc, u16* voll, u16* volr) // 0x800A1CE8
 {
     SpuVoiceAttr s_attr;
+
     s_attr.mask  = 0;
     s_attr.voice = spu_ch_tbl[vc];
 

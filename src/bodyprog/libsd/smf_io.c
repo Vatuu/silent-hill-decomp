@@ -17,12 +17,12 @@ s32  sd_timer_event;
 
 void set_note_on(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4) // 0x800A397C
 {
-    func_800485B0(arg0, arg1, arg2, arg3, arg4); // Nullsub
+    func_800485B0(arg0, arg1, arg2, arg3, arg4); // Nullsub.
 }
 
 void set_midi_info(s32 type, u8 midiChannel, u32 value) // 0x800A39B8
 {
-    func_800485B8(type, midiChannel, value); // Nullsub
+    func_800485B8(type, midiChannel, value); // Nullsub.
 }
 
 u16 Note2Pitch(s16 note, s16 cent, s16 sample_note, s16 sample_cent) // 0x800A39D8

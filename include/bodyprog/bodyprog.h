@@ -2172,7 +2172,7 @@ extern s32 D_800A99A0;
 /** Relative file offset for map texture? */
 extern s8 D_800A99B5;
 
-extern char* D_800A99E4[];
+extern char* D_800A99E4[8];
 
 extern s8 g_PaperMapFileIdxs[];
 
@@ -2296,7 +2296,7 @@ extern u32 D_800A9FB0;
 
 extern s32 D_800A9FB4[];
 
-extern u8 D_800AA604[][16];
+extern u8 D_800AA604[41][16];
 
 extern u8 D_800AE185;
 

@@ -34,17 +34,17 @@ char pad_bss_800C37D1[3];
 // STATIC VARIABLES
 // ========================================
 
-static CdlLOC                 D_800C15E8;
-static s_800C15F0             D_800C15F0[4];
+static CdlLOC     D_800C15E8;
+static s_800C15F0 D_800C15F0[4];
 
- /** @brief `e_SfxId` | Stores the index of the currently playing SFX. */
-static u16                    g_AudioPlayingIdxList[24];
+/** @brief `e_SfxId` | Stores the index of the currently playing SFX. */
+static u16 g_AudioPlayingIdxList[24];
 
- /** @brief Stores the pitch of currently playing SFX.
- * Shares the same index of where the SFX is stored in `g_AudioPlayingIdxList`.
- */
-static s16                    g_AudioPlayingPitchList[24];
-static s_Sd_AudioWork         g_Sd_AudioWork;
+/** @brief Stores the pitch of currently playing SFX.
+* Shares the same index of where the SFX is stored in `g_AudioPlayingIdxList`.
+*/
+static s16            g_AudioPlayingPitchList[24];
+static s_Sd_AudioWork g_Sd_AudioWork;
 
 /** @brief Holds states for different audio types streaming. */
 static s_AudioStreamingStates g_Sd_AudioStreamingStates;
@@ -1643,7 +1643,6 @@ void Sd_KdtLoad_LoadCheck(void) // 0x80048498
     g_Sd_AudioWork.cdErrorCount_0++;
 }
 
-
 /** In Jan 16 Demo and the Nov 24, 98 Preview,
  * all these functions also nullsub. Additionally,
  * `func_800485C0` doesn't exist in the Jan 16 Demo.
@@ -1659,7 +1658,6 @@ void func_800485C0(s32 idx) // 0x800485C0
 }
 
 #define CD_ERROR_LIMIT 600 // Matches value used in beatmania `FSCD.C`.
-
 
 void Sd_TaskPoolExecute(void) // 0x800485D8
 {
