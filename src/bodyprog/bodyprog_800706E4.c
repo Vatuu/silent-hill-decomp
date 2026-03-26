@@ -4227,18 +4227,18 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                 if (g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
                     if (g_SysWork.playerCombat_38.currentWeaponAmmo_10 == 0 &&
-                        (g_SavegamePtr->equippedWeapon_AA >> 5) == 5 &&
+                        INVENTORY_ITEM_GROUP(g_SavegamePtr->equippedWeapon_AA) == InventoryItemGroup_GunWeapons &&
                         g_SysWork.playerCombat_38.totalWeaponAmmo_11 != 0)
                     {
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_Reload;
+                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20              = PlayerUpperBodyState_Reload;
                         g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
 
                         if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Aim ||
                             g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Attack)
                         {
                             g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Reload;
-                            chara->model_0.stateStep_3                      = 0;
-                            chara->model_0.controlState_2                          = ModelState_Uninitialized;
+                            chara->model_0.stateStep_3                          = 0;
+                            chara->model_0.controlState_2                       = ModelState_Uninitialized;
                         }
                     }
                 }
@@ -7746,7 +7746,7 @@ void Game_SavegameResetPlayer(void) // 0x8007E530
 void Game_PlayerInfoInit(void) // 0x8007E5AC
 {
     s32      i;
-    u32      temp_t0;
+    u32      itemGroupId;
     s_Model* model;
     s_Model* extraModel;
 
@@ -7768,13 +7768,10 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     g_SysWork.playerWork_4C.player_0.field_E1_0 = 3;
     g_Inventory_EquippedItem                    = g_SavegamePtr->equippedWeapon_AA;
 
-    // Should be `g_SavegamePtr->equippedWeapon_AA / 32`, but causes swap register missmatch.
-    temp_t0 = g_SavegamePtr->equippedWeapon_AA >> 5;
+    itemGroupId = INVENTORY_ITEM_GROUP(g_SavegamePtr->equippedWeapon_AA);
 
-    // Assign weapon which the player was holding when saving.
-    // `temp_t0` == 4 means melee weapon, 5 means gun weapon.
-    // Other values are non-equipable items.
-    if (temp_t0 >= 4 && temp_t0 < 6)
+    // Assign weapon that the player was holding when saving.
+    if (itemGroupId == InventoryItemGroup_MeleeWeapons || itemGroupId == InventoryItemGroup_GunWeapons)
     {
         for (i = 0; g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA && i < INVENTORY_ITEM_COUNT_MAX; i++);
 
@@ -7782,7 +7779,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
         g_SysWork.playerCombat_38.currentWeaponAmmo_10  = g_SavegamePtr->items_0[i].count_1;
         g_SysWork.playerCombat_38.weaponInventoryIdx_12 = i;
 
-        if (temp_t0 == 4)
+        if (itemGroupId == InventoryItemGroup_MeleeWeapons)
         {
             g_SysWork.playerCombat_38.totalWeaponAmmo_11 = 0;
         }
