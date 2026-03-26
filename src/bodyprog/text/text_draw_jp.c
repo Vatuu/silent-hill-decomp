@@ -1,3 +1,4 @@
+#include <psyq/libapi.h>
 
 #include "game.h"
 
@@ -283,6 +284,7 @@ void func_8004AA28(void) // 0x8004AA28
     func_8003652C();
 }
 
+// TODO: Matches USA `func_8004B6D4`, rename symbols to match.
 void func_8004AA6C(s16 x, s16 y) // 0x8004AA6C
 {
     if (x != NO_VALUE)
@@ -297,6 +299,7 @@ void func_8004AA6C(s16 x, s16 y) // 0x8004AA6C
     }
 }
 
+// TODO: Matches USA `func_8004B74C`, rename symbols to match.
 void func_8004AAE4(s16 arg0) // 0x8004AAE4
 {
     if (arg0 < 0 || arg0 >= 5)
@@ -496,11 +499,35 @@ INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", Gfx_StringDraw_JP);
 
 INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C394);
 
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C7E4);
+void func_8004C7E4(void) // 0x8004C7E4
+{
+    // TODO: .rodata? `u8` used as placeholder, likely some kind of struct.
+    extern u8      D_80025EB4;
+    extern u8      D_80025EE0;
+    extern u8      D_80025F0C;
+    extern VECTOR3 D_80025F38;
 
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C870);
+    VECTOR3 unused = D_80025F38;
 
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C8AC);
+    D_800C3920 = 0x14;
+
+    func_8004C918(&D_80025EB4, 1, 1, 5);
+    func_8004C918(&D_80025EE0, 1, 1, 6);
+    func_8004C918(&D_80025F0C, 1, 1, 7);
+}
+
+void func_8004C870(void)  // 0x8004C870
+{
+    extern u8 D_80025F44; // TODO: .rodata? `u8` used as placeholder, likely some kind of struct.
+
+    D_800C3920 = 0x14;
+    func_8004C918(&D_80025F44, 1, 1, 5);
+}
+
+void func_8004C8AC(u8* arg0) // 0x8004C8AC
+{
+    Krom2RawAdd2(arg0[1] | (arg0[0] << 8));
+}
 
 INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C8D8);
 
