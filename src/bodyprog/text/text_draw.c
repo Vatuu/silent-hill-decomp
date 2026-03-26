@@ -6,25 +6,6 @@
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
 
-#define MAP_MSG_CODE_MARKER        '~' /** Message code start. */
-#define MAP_MSG_CODE_COLOR         'C' /** Set color. */
-#define MAP_MSG_CODE_DISPLAY_ALL   'D' /** Display message instantly without roll. */
-#define MAP_MSG_CODE_END           'E' /** End message. */
-#define MAP_MSG_CODE_HIGH_RES      'H' /** High-resolution glyph drawing. */
-#define MAP_MSG_CODE_JUMP          'J' /** Jump timer. */
-#define MAP_MSG_CODE_LINE_POSITION 'L' /** Set next line position. */
-#define MAP_MSG_CODE_MIDDLE        'M' /** Align center. */
-#define MAP_MSG_CODE_NEWLINE       'N' /** Newline. */
-#define MAP_MSG_CODE_SELECT        'S' /** Display dialog prompt with selectable entries. */
-#define MAP_MSG_CODE_TAB           'T' /** Inset line. */
-
-#define FONT_12X16_GLYPH_COUNT        84
-#define FONT_12X16_GLYPH_SIZE_X       12
-#define FONT_12X16_GLYPH_SIZE_Y       16
-#define FONT_12X16_SPACE_SIZE         6
-#define FONT_12X16_LINE_COUNT_MAX     9
-#define FONT_12X16_ATLAS_COLUMN_COUNT (FONT_12X16_GLYPH_COUNT / 4)
-
 static const s32 pad_rodata_80025D68 = 0;
 
 DVECTOR g_StringPosition;
