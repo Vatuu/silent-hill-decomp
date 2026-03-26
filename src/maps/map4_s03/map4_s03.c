@@ -2835,7 +2835,7 @@ void func_800D54B4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D54B4
 {
     VECTOR3         pos; // Q19.12
     MATRIX          sp30;
-    s32             var_s0;
+    s32             var_s0; // `e_EquippedWeaponId`
     s32             var_v0;
     q19_12          posX;
     q19_12          posY;
@@ -2850,7 +2850,7 @@ void func_800D54B4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D54B4
         case 5:
         case 6:
         case 8:
-            var_s0 = 61;
+            var_s0 = EquippedWeaponId_Unk61;
             var_v0 = 14;
             break;
 
@@ -2861,12 +2861,12 @@ void func_800D54B4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D54B4
         case 7:
         case 9:
         case 10:
-            var_s0 = 0;
+            var_s0 = 0; // Skips code below.
             var_v0 = 0;
             break;
     }
 
-    if (var_s0 != 0)
+    if (var_s0)
     {
         Vw_CoordHierarchyMatrixCompute(&coords[var_v0], &sp30);
 

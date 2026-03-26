@@ -695,14 +695,14 @@ static inline void func_80071968_Switch0(void)
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Kick, AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Kick, AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Hold):
             case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Kick, AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Unk31,AttackInputType_Tap):
                 break;
         }
@@ -754,14 +754,14 @@ static inline void func_80071968_Switch1(void)
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Unk3,  AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk8,  AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk9,  AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Kick,  AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Stomp,  AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Unk3,  AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk8,  AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk9,  AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Kick,  AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Stomp,  AttackInputType_Hold):
             case WEAPON_ATTACK(EquippedWeaponId_Unk3,  AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk8,  AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk9,  AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Kick,  AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Stomp,  AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Unk31, AttackInputType_Tap):
                 break;
         }
@@ -2234,11 +2234,11 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             break;
 
         case PlayerState_KickEnemy:
-            func_80070DF0(extra, chara, WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Tap), ANIM_STATUS(24, true));
+            func_80070DF0(extra, chara, WEAPON_ATTACK(EquippedWeaponId_Kick, AttackInputType_Tap), ANIM_STATUS(24, true));
             break;
 
         case PlayerState_StompEnemy:
-            func_80070DF0(extra, chara, WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Tap), ANIM_STATUS(25, true));
+            func_80070DF0(extra, chara, WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Tap), ANIM_STATUS(25, true));
             break;
     }
 
@@ -7544,8 +7544,8 @@ void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D
             switch (g_SysWork.playerCombat_38.weaponAttack_F)
             {
                 case NO_VALUE:
-                case EquippedWeaponId_Unk8:
-                case EquippedWeaponId_Unk9:
+                case EquippedWeaponId_Kick:
+                case EquippedWeaponId_Stomp:
                     Math_SetSVectorFast(&sp90, 0, 60, 134);
                     Vw_CoordHierarchyMatrixCompute(&coord[17], &sp50);
                     break;

@@ -1820,7 +1820,7 @@ void func_800EB3F4(void) // 0x800EB3F4
 
             if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                g_SysWork.playerCombat_38.weaponAttack_F %= 10; // TODO: Use macro.
+                g_SysWork.playerCombat_38.weaponAttack_F = WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F);
             }
 
             vcReturnPreAutoCamWork(true);

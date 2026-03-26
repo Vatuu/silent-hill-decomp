@@ -1336,8 +1336,8 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
             }
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_Kick, AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Tap):
             if (target->flags_3E & CharaFlag_Unk2)
             {
                 var_s0 = Q12(1000.0f);
@@ -1383,7 +1383,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
             break;
 
         default:
-            if (target != &g_SysWork.playerWork_4C && !(target->flags_3E & CharaFlag_Unk3))
+            if (target != &g_SysWork.playerWork_4C.player_0 && !(target->flags_3E & CharaFlag_Unk3))
             {
                 damageAmt *= 4;
             }

@@ -1703,7 +1703,7 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
             {
                 savePtr->items_0[0].id_0    = savePtr->items_0[i].id_0;
                 savePtr->items_0[0].count_1 = savePtr->items_0[i].count_1;
-                savePtr->items_0[i].id_0    = 0xFF;
+                savePtr->items_0[i].id_0    = InventoryItemId_Empty;
                 savePtr->items_0[i].count_1 = 0;
             }
 

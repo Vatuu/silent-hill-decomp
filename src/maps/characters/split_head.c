@@ -202,9 +202,8 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
 
     if (splitHeadProps.flags_E8 & SplitHeadFlag_0)
     {
-        // TODO: Odd `WEAPON_ATTACK` value. Input type 3 doesn't exist.
         if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Hard &&
-            g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Hammer, 3))
+            g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap))
         {
             damageAmt <<= 5;
         }

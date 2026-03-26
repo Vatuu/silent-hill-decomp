@@ -537,8 +537,7 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
             attackPos.vz             = scratcher->position_18.vz;
             scratcherProps.flags_E8 |= HangedScratcherFlag_5;
 
-            // TODO: 44 is `WEAPON_ATTACK`?
-            func_8008A0E4(1, 44, scratcher, &attackPos, &g_SysWork.playerWork_4C.player_0, scratcher->rotation_24.vy,
+            func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk44, AttackInputType_Tap), scratcher, &attackPos, &g_SysWork.playerWork_4C.player_0, scratcher->rotation_24.vy,
                           ratan2(distToPlayer, (g_SysWork.playerWork_4C.player_0.position_18.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_6) - attackPos.vy));
         }
         else if (ANIM_STATUS_IDX_GET(scratcher->model_0.anim_4.status_0) == HangedScratcherAnim_14)
@@ -1073,8 +1072,7 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
 
         scratcherProps.flags_E8 |= HangedScratcherFlag_5;
 
-        // TODO: 45 is `WEAPON_ATTACK`?
-        func_8008A0E4(1, 45, scratcher, &attackPos, &g_SysWork.playerWork_4C.player_0, scratcher->rotation_24.vy, Q12_ANGLE(90.0f));
+        func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk45, AttackInputType_Tap), scratcher, &attackPos, &g_SysWork.playerWork_4C.player_0, scratcher->rotation_24.vy, Q12_ANGLE(90.0f));
     }
 
     if (scratcher->model_0.anim_4.status_0 == ANIM_STATUS(HangedScratcherAnim_15, true))

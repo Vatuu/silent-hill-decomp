@@ -505,7 +505,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             {
                 if (sharedData_800E237C_0_s01 == 0)
                 {
-                    func_8006342C(63, 1024, chara->rotation_24.vy, &g_SysWork.npcCoords_FC0[0]);
+                    func_8006342C(EquippedWeaponId_Unk63, 1024, chara->rotation_24.vy, &g_SysWork.npcCoords_FC0[0]);
                     func_8005DC1C(Sfx_Unk1622, &chara->position_18, Q8(0.75f), 0);
                     sharedData_800E237C_0_s01 = 1;
                 }

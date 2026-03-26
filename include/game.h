@@ -781,20 +781,37 @@ typedef enum _EquippedWeaponId
     EquippedWeaponId_Chainsaw       = 5,
     EquippedWeaponId_Katana         = 6,
     EquippedWeaponId_Axe            = 7,
-    EquippedWeaponId_Unk8           = 8,
-    EquippedWeaponId_Unk9           = 9,
+    EquippedWeaponId_Kick           = 8,
+    EquippedWeaponId_Stomp          = 9,
 
-    EquippedWeaponId_Unk31          = 31,
+    EquippedWeaponId_Unk31          = 31, // LarvalStalker attack.
     EquippedWeaponId_Handgun        = 32,
     EquippedWeaponId_HuntingRifle   = 33,
     EquippedWeaponId_Shotgun        = 34,
     EquippedWeaponId_HyperBlaster   = 35,
 
-    EquippedWeaponId_Unk37          = 37,
+    EquippedWeaponId_Unk37          = 37, // SplitHead attack.
 
-    EquippedWeaponId_HandgunBullets = 64,
-    EquippedWeaponId_RifleShells    = 65,
-    EquippedWeaponId_ShotgunShells  = 66,
+    EquippedWeaponId_Unk44          = 44, // } HangedScratcher attack.
+    EquippedWeaponId_Unk45          = 45, // }
+
+    EquippedWeaponId_Unk48          = 48, // } Stalker attack.
+    EquippedWeaponId_Unk49          = 49, // }
+
+    EquippedWeaponId_Unk56          = 56, // PuppetNurse attack.
+
+    EquippedWeaponId_Unk59          = 59, // FloatStinger attack.
+
+    EquippedWeaponId_Unk61          = 61, // Twinfeeler attack.
+
+    EquippedWeaponId_Unk63          = 63, // Cybil/MonsterCybil attack.
+
+    EquippedWeaponId_HandgunBullets = 64, // MonsterCybil attack?
+    EquippedWeaponId_RifleShells    = 65, // MonsterCybil attack?
+    EquippedWeaponId_ShotgunShells  = 66, // MonsterCybil attack?
+
+    EquippedWeaponId_Unk69          = 69, // Bloodsucker attack.
+    EquippedWeaponId_Unk70          = 70, // Kaufmann attack on Dahlia?
 
     EquippedWeaponId_Flashlight     = 96,
     EquippedWeaponId_PocketRadio    = 97,

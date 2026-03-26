@@ -1883,7 +1883,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             {
                 if (!(g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C & PlayerFlag_Unk6))
                 {
-                    func_8006342C(0x20, 0x340, playerChara->rotation_24.vy, coord);
+                    func_8006342C(EquippedWeaponId_Handgun, 0x340, playerChara->rotation_24.vy, coord);
                     func_8005F6B0(&g_SysWork.npcs_1A0[1], &(VECTOR3){ Q12(140.39f), Q12(-0.55f), Q12(22.76f) }, 3, 3);
                     g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_Unk6;
                 }

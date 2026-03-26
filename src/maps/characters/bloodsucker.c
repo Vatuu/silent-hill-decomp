@@ -298,6 +298,5 @@ void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr,
 
     bloodsucker->field_44.field_0 = 1;
 
-    // TODO: 0x45 should be `WEAPON_ATTACK` macro?
-    func_8008A0E4(1, 0x45, bloodsucker, &scratchData->field_38, &g_SysWork.playerWork_4C.player_0, Q12_ANGLE(90.0f), Q12_ANGLE(90.0f));
+    func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap), bloodsucker, &scratchData->field_38, &g_SysWork.playerWork_4C.player_0, Q12_ANGLE(90.0f), Q12_ANGLE(90.0f));
 }

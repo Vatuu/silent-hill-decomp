@@ -1509,7 +1509,8 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
         }
 
         // Equipped item.
-        if (g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 != (u8)InventoryItemId_Empty && g_Inventory_EquippedItemIdx != NO_VALUE)
+        if (g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 != (u8)InventoryItemId_Empty && 
+            g_Inventory_EquippedItemIdx != NO_VALUE)
         {
             g_Items_Transforms[7].rotate.vx = INVENTORY_ITEM_ROTATIONS[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vx;
             g_Items_Transforms[7].rotate.vz = INVENTORY_ITEM_ROTATIONS[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vy;
@@ -2928,11 +2929,11 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
             if (g_Inventory_ScrollTransitionTimer == 9)
             {
-                g_Inventory_EquippedItem                            = 0;
-                g_SavegamePtr->equippedWeapon_AA                    = 0;
+                g_Inventory_EquippedItem                        = InventoryItemId_Unequipped;
+                g_SavegamePtr->equippedWeapon_AA                = InventoryItemId_Unequipped;
                 g_SysWork.playerCombat_38.weaponAttack_F        = NO_VALUE;
                 g_SysWork.playerCombat_38.weaponInventoryIdx_12 = NO_VALUE;
-                g_Inventory_ScrollTransitionTimer                   = 0;
+                g_Inventory_ScrollTransitionTimer               = 0;
 
                 temp = g_SysWork.inventoryItemSelectedIdx_2351;
                 if (temp == NO_VALUE)
@@ -2993,8 +2994,9 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
                 if (g_Inventory_ScrollTransitionTimer == 9)
                 {
-                    g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 = 0xFF;
-                    ptr                                                                  = &g_GameWork;
+                    g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 = InventoryItemId_Empty;
+
+                    ptr = &g_GameWork;
                     do
                     {
                         g_Inventory_ScrollTransitionTimer = 0;
@@ -3027,8 +3029,9 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
                 if (g_Inventory_ScrollTransitionTimer == 9)
                 {
-                    g_SavegamePtr->items_0[g_SysWork.playerCombat_38.weaponInventoryIdx_12 + 1].id_0 = 0xFF;
-                    g_Inventory_ScrollTransitionTimer                                                    = 0;
+                    g_SavegamePtr->items_0[g_SysWork.playerCombat_38.weaponInventoryIdx_12 + 1].id_0 = InventoryItemId_Empty;
+
+                    g_Inventory_ScrollTransitionTimer = 0;
 
                     func_8004EF48();
 
@@ -3170,8 +3173,9 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
                 if (g_Inventory_ScrollTransitionTimer == 9)
                 {
-                    g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351 + 1].id_0 = 0xFF;
-                    g_Inventory_ScrollTransitionTimer                                        = 0;
+                    g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351 + 1].id_0 = InventoryItemId_Empty;
+
+                    g_Inventory_ScrollTransitionTimer = 0;
 
                     func_8004EF48();
 
@@ -3248,8 +3252,9 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
                 if (g_Inventory_ScrollTransitionTimer == 9)
                 {
-                    g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 = 0xFF;
-                    g_Inventory_ScrollTransitionTimer                                    = 0;
+                    g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 = InventoryItemId_Empty;
+
+                    g_Inventory_ScrollTransitionTimer = 0;
 
                     *selectedItemId                 = 0;
                     D_800AE188                      = 0;
@@ -3317,8 +3322,9 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     {
                         if (D_800C3E18[i] == g_SysWork.inventoryItemSelectedIdx_2351)
                         {
-                            g_SavegamePtr->items_0[D_800C3E18[i]].id_0 = 0xFF;
-                            i                                          = 7;
+                            g_SavegamePtr->items_0[D_800C3E18[i]].id_0 = InventoryItemId_Empty;
+
+                            i = 7;
                         }
                     }
                 }
@@ -3957,7 +3963,7 @@ void func_800540A4(s8 arg0) // 0x800540A4
 
             if (!g_SavegamePtr->items_0[i].count_1)
             {
-                g_SavegamePtr->items_0[i].id_0 = NO_VALUE;
+                g_SavegamePtr->items_0[i].id_0 = InventoryItemId_Empty;
             }
 
             g_SavegamePtr->inventorySlotCount_AB = func_8004F190(g_SavegamePtr);

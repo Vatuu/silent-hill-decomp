@@ -170,7 +170,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             if (chara->model_0.anim_4.keyframeIdx_8 >= 95 && g_SysWork.npcs_1A0[0].properties_E4.dahlia.properties_120.val32 == 0)
             {
                 g_SysWork.npcs_1A0[0].properties_E4.dahlia.properties_120.val32 = 1;
-                func_8006342C(70, 0, 0, &g_SysWork.npcCoords_FC0[0]);
+                func_8006342C(EquippedWeaponId_Unk70, 0, 0, &g_SysWork.npcCoords_FC0[0]);
             }
 
             Model_AnimStatusSet(&chara->model_0, 5, false);
