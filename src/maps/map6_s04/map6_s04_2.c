@@ -3476,9 +3476,9 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
         projCellZ0 = cellZ0 + 15;
     }
 
-    switch (PACKED_CELL_XZ(projCellX0, projCellZ0))
+    switch (CELL_XZ(projCellX0, projCellZ0))
     {
-        case PACKED_CELL_XZ(17, 19):
+        case CELL_XZ(17, 19):
             func_800E636C();
 
             if (Savegame_EventFlagGet(EventFlag_443))
@@ -3499,7 +3499,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
             }
             break;
 
-        case PACKED_CELL_XZ(15, 15):
+        case CELL_XZ(15, 15):
             WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position_1C, &g_WorldObject9.rotation_28);
 
         default:

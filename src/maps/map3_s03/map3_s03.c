@@ -916,9 +916,9 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
         projCellZ0 = cellZ0 + 15;
     }
 
-    switch (PACKED_CELL_XZ(projCellX0, projCellZ0))
+    switch (CELL_XZ(projCellX0, projCellZ0))
     {
-        case PACKED_CELL_XZ(17, 18):
+        case CELL_XZ(17, 18):
             if (g_SysWork.sysState_8 == SysState_Gameplay && (g_WorldObject_Dr->position_1C.vz != Q12(59.1f)))
             {
                 drZ = Q12(59.1f);
@@ -935,7 +935,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
             }
             break;
 
-        case PACKED_CELL_XZ(15, 20):
+        case CELL_XZ(15, 20):
             colorsPos.vz = Q12(140.0f);
 
             if (Savegame_EventFlagGet(EventFlag_265) ||
@@ -1043,7 +1043,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
             }
             break;
 
-        case PACKED_CELL_XZ(12, 18):
+        case CELL_XZ(12, 18):
             if (Savegame_EventFlagGet(EventFlag_250))
             {
                 flags |= 1 << 2;
@@ -1078,14 +1078,14 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
             }
             break;
 
-        case PACKED_CELL_XZ(15, 15):
+        case CELL_XZ(15, 15):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfCat))
             {
                 WorldGfx_ObjectAdd(&g_WorldObject_Plate1.object_0, &g_WorldObject_Plate1.position_1C, &(SVECTOR3){ 0, 0, 0 });
             }
             break;
 
-        case PACKED_CELL_XZ(12, 15):
+        case CELL_XZ(12, 15):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfTurtle))
             {
                 WorldGfx_ObjectAdd(&g_WorldObject_Panel.object_0, &g_WorldObject_Panel.position_1C, &g_WorldObject_Panel.rotation_28);
@@ -1100,35 +1100,35 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
             }
             break;
 
-        case PACKED_CELL_XZ(13, 18):
+        case CELL_XZ(13, 18):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupLighter))
             {
                 WorldGfx_ObjectAdd(&g_WorldObject_Lighter.object_0, &g_WorldObject_Lighter.position_1C, &g_WorldObject_Lighter.rotation_28);
             }
             break;
 
-        case PACKED_CELL_XZ(14, 17):
+        case CELL_XZ(14, 17):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupDisinfectingAlcohol))
             {
                 WorldGfx_ObjectAdd(&g_WorldObject_Alcohol.object_0, &g_WorldObject_Alcohol.position_1C, &(SVECTOR3){ 0, 0, 0 });
             }
             break;
 
-        case PACKED_CELL_XZ(13, 17):
+        case CELL_XZ(13, 17):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupBasementStoreroomKey))
             {
                 WorldGfx_ObjectAdd(&g_WorldObject_Key.object_0, &g_WorldObject_Key.position_1C, &(SVECTOR3){ 0, 0, 0 });
             }
             break;
 
-        case PACKED_CELL_XZ(14, 15):
+        case CELL_XZ(14, 15):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupBloodPack))
             {
                 WorldGfx_ObjectAdd(&g_WorldObject_Blood0.object_0, &g_WorldObject_Blood0.position_1C, &g_WorldObject_Blood0.rotation_28);
             }
             break;
 
-        case PACKED_CELL_XZ(14, 14):
+        case CELL_XZ(14, 14):
             WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position_1C, &g_WorldObject_SavePad.rotation_28);
             break;
     }

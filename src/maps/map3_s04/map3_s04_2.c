@@ -497,9 +497,9 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
         projCellZ0 = cellZ0 + 15;
     }
 
-    switch (PACKED_CELL_XZ(projCellX0, projCellZ0))
+    switch (CELL_XZ(projCellX0, projCellZ0))
     {
-        case PACKED_CELL_XZ(19, 18):
+        case CELL_XZ(19, 18):
             if (!Savegame_EventFlagGet(EventFlag_M3S04_PickupPlateOfQueen))
             {
                 WorldGfx_ObjectAdd(&g_WorldObject_Plate.object_0, &g_WorldObject_Plate.position_1C, &D_800CB35C);
@@ -508,7 +508,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
             WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position_1C, &g_WorldObject_SavePad.rotation_28);
             break;
 
-        case PACKED_CELL_XZ(17, 18):
+        case CELL_XZ(17, 18):
             if (g_SysWork.sysState_8 == SysState_Gameplay && g_WorldObject_Dr->position_1C.vz != Q12(59.1f))
             {
                 drZ = Q12(59.1f);

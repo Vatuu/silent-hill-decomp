@@ -25,7 +25,7 @@ struct _Model;
 #define NPC_BONE_COUNT_MAX        10 * NPC_COUNT_MAX
 #define GROUP_CHARA_COUNT         4 /** While up to 6 NPCs and a player can exist in the game world, only 4 different character types (including the player) can be loaded at a time. */
 #define INVENTORY_ITEM_COUNT_MAX  40
-#define INVENTORY_ITEMS_PER_GROUP 32 /** Number of `e_InventoryItemId`'s per `e_InventoryItemGroup` */
+#define INVENTORY_ITEM_GROUP_SIZE 32 /** Number of `e_InventoryItemId`s per `e_InventoryItemGroup`. */
 #define INPUT_ACTION_COUNT        14
 #define CONTROLLER_COUNT_MAX      2
 
@@ -264,7 +264,7 @@ struct _Model;
  * @param z Z cell coordinate.
  * @return Packed XZ cell coordinates.
  */
-#define PACKED_CELL_XZ(x, z) \
+#define CELL_XZ(x, z) \
     ((x) + ((z) << 8))
 
 #define HAS_FLAG(ptr, idx) \
@@ -276,24 +276,40 @@ struct _Model;
 #define CLEAR_FLAG(ptr, idx) \
     ((((u32*)ptr)[(idx) >> 5] &= ~((1 << 0) << ((idx) & 0x1F))))
 
-/** Returns the `e_InventoryItemGroup` for an `e_InventoryItemId`
- * Divides the item ID by 32 (`INVENTORY_ITEMS_PER_GROUP`), uses shift for matching. */
+/** @brief Gets the `e_InventoryItemGroup` for an `e_InventoryItemId`.
+ * Divides the item ID by 32 (`INVENTORY_ITEM_GROUP_SIZE`), using a bitwise shift to match.
+ *
+ * @param itemId Item ID to process.
+ * @return Inventory item group.
+ */
 #define INVENTORY_ITEM_GROUP(itemId) \
     ((itemId) >> 5)
 
-/** Returns the index of an `e_InventoryItemId` inside the group it belongs to.
- * Modulos the item ID by 32 (`INVENTORY_ITEMS_PER_GROUP`), using AND for matching.
- * (e.g. itemId 65 would be index 1 into group 2) */
+/** @brief Gets the index of an `e_InventoryItemId` inside the group it belongs to.
+ * Modulos the item ID by 32 (`INVENTORY_ITEM_GROUP_SIZE`), using AND to match.
+ * E.g. `itemId` 65 would be index 1, group 2.
+ *
+ * @param itemId Item ID to process.
+ * @return Inventory item group.
+ */
 #define INVENTORY_ITEM_GROUP_ID(itemId) \
     ((itemId) & 0x1F)
 
-/** Returns `e_InventoryItemId` of the ammo for given weapon. */
+/** @brief Gets the `e_InventoryItemId` of the ammo for a given weapon item.
+ *
+ * @param itemId Weapon item ID to process.
+ * @return Inventory item group.
+ */
 #define INVENTORY_WEAPON_AMMO_ID(weaponId) \
-    ((weaponId) + INVENTORY_ITEMS_PER_GROUP)
+    ((weaponId) + INVENTORY_ITEM_GROUP_SIZE)
 
-/** Returns `e_InventoryItemId` of the weapon for given ammo. */
+/** @brief Gets the `e_InventoryItemId` of the weapon for a given ammo item.
+ *
+ * @param ammoId Ammo ID to process.
+ * @return Inventory item group.
+ */
 #define INVENTORY_AMMO_WEAPON_ID(ammoId) \
-    ((ammoId) - INVENTORY_ITEMS_PER_GROUP)
+    ((ammoId) - INVENTORY_ITEM_GROUP_SIZE)
 
 /** @brief Sync modes used by `DrawSync` and `VSync`. */
 typedef enum _SyncMode
@@ -629,7 +645,7 @@ typedef enum _InventoryCmdId
     InventoryCmdId_Unk11         = 11 // Flashlight in daytime?
 } e_InventoryCmdId;
 
-// Every 32 item IDs get treated as a separate group by some code.
+/** @brief Inventory item groups. Every 32nd item ID is treated as a separate group by some code. */
 typedef enum _InventoryItemGroup
 {
     InventoryItemGroup_None          = 0,
@@ -639,12 +655,13 @@ typedef enum _InventoryItemGroup
     InventoryItemGroup_MeleeWeapons  = 4,
     InventoryItemGroup_GunWeapons    = 5,
     InventoryItemGroup_GunAmmo       = 6,
-    InventoryItemGroup_PortableItems = 7,
+    InventoryItemGroup_PortableItems = 7
 } e_InventoryItemGroup;
 
+/** @brief Inventory item IDs. */
 typedef enum _InventoryItemId
 {
-    // Group 0
+    // Group 0 (None)
     InventoryItemId_Empty                 = NO_VALUE,
     InventoryItemId_Unequipped            = 0,
 
@@ -784,13 +801,13 @@ typedef enum _EquippedWeaponId
     EquippedWeaponId_Kick           = 8,
     EquippedWeaponId_Stomp          = 9,
 
-    EquippedWeaponId_Unk31          = 31, // LarvalStalker attack.
+    EquippedWeaponId_Unk31          = 31, // Larval Stalker attack.
     EquippedWeaponId_Handgun        = 32,
     EquippedWeaponId_HuntingRifle   = 33,
     EquippedWeaponId_Shotgun        = 34,
     EquippedWeaponId_HyperBlaster   = 35,
 
-    EquippedWeaponId_Unk37          = 37, // SplitHead attack.
+    EquippedWeaponId_Unk37          = 37, // Split Head attack.
 
     EquippedWeaponId_Unk44          = 44, // } HangedScratcher attack.
     EquippedWeaponId_Unk45          = 45, // }
@@ -798,17 +815,17 @@ typedef enum _EquippedWeaponId
     EquippedWeaponId_Unk48          = 48, // } Stalker attack.
     EquippedWeaponId_Unk49          = 49, // }
 
-    EquippedWeaponId_Unk56          = 56, // PuppetNurse attack.
+    EquippedWeaponId_Unk56          = 56, // Puppet Nurse attack.
 
-    EquippedWeaponId_Unk59          = 59, // FloatStinger attack.
+    EquippedWeaponId_Unk59          = 59, // Float Stinger attack.
 
     EquippedWeaponId_Unk61          = 61, // Twinfeeler attack.
 
-    EquippedWeaponId_Unk63          = 63, // Cybil/MonsterCybil attack.
+    EquippedWeaponId_Unk63          = 63, // Cybil or Monster Cybil attack.
 
-    EquippedWeaponId_HandgunBullets = 64, // MonsterCybil attack?
-    EquippedWeaponId_RifleShells    = 65, // MonsterCybil attack?
-    EquippedWeaponId_ShotgunShells  = 66, // MonsterCybil attack?
+    EquippedWeaponId_HandgunBullets = 64, // Monster Cybil attack?
+    EquippedWeaponId_RifleShells    = 65, // Monster Cybil attack?
+    EquippedWeaponId_ShotgunShells  = 66, // Monster Cybil attack?
 
     EquippedWeaponId_Unk69          = 69, // Bloodsucker attack.
     EquippedWeaponId_Unk70          = 70, // Kaufmann attack on Dahlia?
