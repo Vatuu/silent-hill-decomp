@@ -1477,6 +1477,8 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
 
     // Set texture.
     Gfx_Primitive2dTextureSet(0, 0, 7, 1);
+
+    #undef ARROW_COUNT
 }
 
 bool Player_ItemRemove(u8 itemId, u8 count) // 0x8004EE94
@@ -1869,7 +1871,7 @@ void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x8004F57C
         Gfx_Primitive2dTextureSet(192, 0, 6, 1);
     }
 #else
-    char* strs[2] = // 0x800262AC
+    char* STRS[2] =
     {
         "Too_dark_to_look_at\n\t\tthe_map_here.",
         "I_don't_have_the_map\n\t\tfor_this_place."
@@ -1877,7 +1879,7 @@ void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x8004F57C
 
     Gfx_StringSetPosition(30, 232);
     Gfx_StringSetColor(StringColorId_White);
-    Gfx_StringDraw(strs[strIdx], DEFAULT_MAP_MESSAGE_LENGTH);
+    Gfx_StringDraw(STRS[strIdx], DEFAULT_MAP_MESSAGE_LENGTH);
 #endif
 }
 

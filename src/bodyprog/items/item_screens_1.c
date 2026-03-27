@@ -9,7 +9,6 @@
 
 static const s32 pad_rodata_80025E90 = 0;
 
-
 s8 D_800C3960;
 
 s8 D_800C3961;

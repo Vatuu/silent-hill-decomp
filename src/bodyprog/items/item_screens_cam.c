@@ -8,7 +8,6 @@
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 
-
 GsCOORD2PARAM D_800C3928;
 s8 g_Player_WeaponAttack;
 s8 pad_bss_800C3951[3];
