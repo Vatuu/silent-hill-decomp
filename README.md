@@ -8,26 +8,29 @@
 An in-progress decompilation of the 1.1 US release of <i>Silent Hill</i> on the PlayStation 1.
 </div>
 
-## Progress
-Due to the limited memory on the PlayStation 1, games often distribute their logic and functionality across different binary overlays. *Silent Hill* follows this approach by separating core engine code, some screen-related code, and map stage logic code into many distinct binaries. The main executable (`SLUS_007.07` on the 1.1 NTSC release) serves primarily as a memory handler.
+> [!IMPORTANT]
+This project itself **is not**, and **will not**, produce a port, to PC or any other platform. It is a **decompilation** of the original game code which can be compiled back into a binary identical to the original.
 
-<details>
-<summary>What does the decompilation percentage mean? <b><i>(click to expand)</i></b></summary>
+## Progress
+
+### *What does the decompilation percentage mean?*
 
 The percentage tracks how much of the game's compiled code has been matched, meaning we've written C code that compiles to an output identical to the original assembly code.
 
-Reaching 100% means every function in the game is accounted for, but that's only the end of the first phase, not the project as a whole.
+Reaching 100% means every function in the game is accounted for, but that's **only the end of the first phase, not the project as a whole**.
 
 There's still a lot of work ahead:
 
-- **Deobfuscation & naming**: many functions and variables still have generated names like `func_80241A30`. We'll need to figure out the actual purposes of these and name them meaningfully.
+- **Deobfuscation and naming**: many functions and variables still have generated names like `func_80241A30`. We'll need to figure out the actual purposes of these and name them meaningfully.
 - **Data migration**: raw binary data needs to be parsed into proper C structs so the data can be made understandable.
 - **Shiftability**: making the build not rely on hardcoded memory addresses so that code and data can be modified without breaking everything.
 - **Documentation**: understanding and documenting how the game's systems work together to aid in mods and future projects.
 
 100% will be a milestone worth celebrating, but there's still plenty left to do!
 
-</details>
+### *What are the multiple progress trackers for?*
+
+Due to the limited memory on the PlayStation 1, games often distribute their logic and functionality across different binary overlays. *Silent Hill* follows this approach by separating core engine code, some screen-related code, and map stage logic code into many distinct binaries. The main executable (`SLUS_007.07` on the 1.1 NTSC release) serves primarily as a memory handler.
 
 <table align=center>
     <tbody>
