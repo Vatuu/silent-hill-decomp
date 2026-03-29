@@ -38,7 +38,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <th colspan=3>Total Progress</th>
         </tr>
         <tr>
-            <td colspan=3 align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=matched_code_percent"/></a><br/><a href="https://decomp.dev/Vatuu/silent-hill-decomp"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&label=Silent+Hill+%28Fuzzy+Match%29&measure=fuzzy_match_percent"/></a></td>
+            <td colspan=3 align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=matched_code_percent"/></a><br/><a href="https://decomp.dev/Vatuu/silent-hill-decomp"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&label=Silent+Hill+%28Matched%20Data%29&measure=matched_data_percent"/></a></td>
         </tr>
         <tr>
             <th colspan=3>⚙ SLUS-00707 ⚙</th>
