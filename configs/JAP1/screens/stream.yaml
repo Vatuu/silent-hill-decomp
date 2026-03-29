@@ -9,6 +9,7 @@ options:
 
   asm_path: asm/JAP1/screens/stream
   src_path: src/screens/stream
+  o_path: ../../lib
   asset_path: asm/JAP1/screens/stream
   build_path: build/JAP1
 
@@ -38,8 +39,6 @@ options:
   undefined_funcs_auto_path: linkers/JAP1/screens/undefined_funcs_auto.stream.txt
   undefined_syms_auto_path: linkers/JAP1/screens/undefined_syms_auto.stream.txt
 
-  extensions_path: tools/splat_ext
-
   subalign: 4
 
   string_encoding: ASCII
@@ -56,24 +55,24 @@ segments:
     subsegments:
       # .rodata section
       - [0x0, rodata]
-      - [0x4, o, ../../lib/libpress/libpress, .rdata]
+      - [0x4, o, libpress/libpress, .rdata]
 
       # .text section
       - [0x54, c, stream]
-      - [0xF18, o, ../../lib/libds/dscb]
-      - [0xF78, o, ../../lib/libpress/libpress]
-      - [0x1608, o, ../../lib/libpress/vlc]
+      - [0xF18, o, libds/dscb]
+      - [0xF78, o, libpress/libpress]
+      - [0x1608, o, libpress/vlc]
 
       # .data section
       - [0x1988, .data, stream]
-      - [0x19A8, o, ../../lib/libpress/libpress, .data]
-      - [0x1AF8, o, ../../lib/libpress/vlc, .data]
-      - [0x1B28, o, ../../lib/libpress/table, .data]
+      - [0x19A8, o, libpress/libpress, .data]
+      - [0x1AF8, o, libpress/vlc, .data]
+      - [0x1B28, o, libpress/table, .data]
 
       # .bss section
       - [0x12B28, .bss, stream]
       - [0x12B2C, pad] # Garbage
-      - [0x12B30, o, ../../lib/libds/dscb, .bss]
+      - [0x12B30, o, libds/dscb, .bss]
 
   # Random garbage data at end, overlaps into .bss causing issues, define as seperate segment
   - name: footer_data

@@ -732,6 +732,12 @@ $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
 	@mkdir -p $(dir $@)
 	$(SPLAT) $(SPLAT_FLAGS) $<
 
+	@# Poor mans prebuild.py, zero padding bytes inside .bss section after splat has run (only needed for `make report`)
+	@- sed -i 's/\.word 0xD892383C/.word 0x00000000/g' asm/USA/bodyprog/screen/screen_fade.s 2>/dev/null || true
+	@- sed -i 's/\.byte 0x70/.byte 0x00/g' asm/USA/bodyprog/sys/memcard_2.s 2>/dev/null || true
+	@- sed -i 's/\.short 0x8DE5/.short 0x0000/g' asm/USA/bodyprog/sys/memcard_2.s 2>/dev/null || true
+	@- sed -i 's/\.word 0x00144000/.word 0x00000000/g' asm/USA/bodyprog/credits_init.s 2>/dev/null || true
+
 ### Settings
 .SECONDARY:
 .PHONY: clean default build
