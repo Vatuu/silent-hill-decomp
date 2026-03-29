@@ -39,6 +39,9 @@ extern DVECTOR D_800C5E10;
 extern s32 D_800C5E14;
 extern s32 D_800C5E1C;
 
+extern s32 D_800C5E30[];
+extern s32 D_800C5E20;
+
 const u32 pad_rodata_80025D54 = 0;
 
 /** @brief Glyph widths for the 12x16 font. Used for kerning. */
@@ -489,9 +492,279 @@ void Gfx_StringSetColor_JP(s16 colorId) // 0x8004A8DC
     D_800AF83C = colorId;
 }
 
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", Gfx_MapMsg_CalculateWidths);
+s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
+{
+    RECT  sp10;
+    s32   i;
+    s32   temp;
+    s32   j;
+    s32   ret;
+    s32   msgArg;
+    s32   msgCode;
+    s32   msgCode2;
+    s32   charCode;
+    char* mapMsg;
 
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004B45C);
+    ret                     = 0;
+    D_800C5E1C              = 1;
+    g_MapMsg_AudioLoadBlock = 0;
+
+    for (i = 0; i < FONT_12X16_LINE_COUNT_MAX; i++)
+    {
+        D_800C5E30[i] = 0;
+    }
+
+    mapMsg = g_MapOverlayHeader.mapMessages_30[mapMsgIdx];
+
+    for (j = 0; j < FONT_12X16_LINE_COUNT_MAX;)
+    {
+        for (i = 0; i < 21;)
+        {
+            charCode = *mapMsg;
+
+            switch (charCode)
+            {
+                case '\t':
+                case '\n':
+                case ' ':
+                    mapMsg++;
+                    break;
+
+                case MAP_MSG_CODE_MARKER:
+                    msgCode = *++mapMsg;
+                    msgArg  = *++mapMsg - '0';
+
+                    if (msgCode == MAP_MSG_CODE_NEWLINE)
+                    {
+                        j++;
+                        D_800C5E30[D_800C5E1C - 1] = i;
+                        i                          = 21;
+                        D_800C5E1C++;
+                    }
+                    else if (msgCode == MAP_MSG_CODE_JUMP)
+                    {
+                        if (msgArg == 2)
+                        {
+                            g_MapMsg_AudioLoadBlock = 3;
+                        }
+
+                        while (msgArg != ' ' && msgArg != '\t')
+                        {
+                            msgArg = *++mapMsg;
+                        }
+                    }
+                    else
+                    {
+                        mapMsg++;
+                    }
+                    break;
+
+                case 0:
+                    j                          = FONT_12X16_LINE_COUNT_MAX;
+                    D_800C5E30[D_800C5E1C - 1] = i;
+                    i                          = 21;
+                    break;
+
+                default:
+                    mapMsg += 2;
+                    i++;
+                    break;
+            }
+        }
+    }
+
+    mapMsg = g_MapOverlayHeader.mapMessages_30[mapMsgIdx];
+
+    for (j = 0; j < FONT_12X16_LINE_COUNT_MAX; j++)
+    {
+        setRECT(&sp10, 0, 0, 0, 0);
+
+        for (i = 0; i < 21;)
+        {
+            charCode = *mapMsg;
+
+            switch (charCode)
+            {
+                case '\t':
+                case '\n':
+                case ' ':
+                    mapMsg++;
+                    break;
+
+                case MAP_MSG_CODE_MARKER:
+                    msgCode2 = *++mapMsg;
+                    msgArg   = *++mapMsg - '0';
+
+                    switch (msgCode2)
+                    {
+                        case MAP_MSG_CODE_COLOR:
+                        case MAP_MSG_CODE_TAB:
+                            break;
+
+                        case MAP_MSG_CODE_NEWLINE:
+                            switch (D_800C38B0.positionIdx_1)
+                            {
+                                case 4:
+                                    setRECT(&sp10, (j % 5) << 6, (j / 5) ? 0x1E0 : FONT_12X16_GLYPH_SIZE_Y, i * 3, 0x10);
+                                    break;
+
+                                default:
+                                    setRECT(&sp10, j << 6, (D_800C38B0.positionIdx_1 & 1) ? 0x1E0 : FONT_12X16_GLYPH_SIZE_Y, i * 3, 0x10);
+                                    break;
+                            }
+                            i = 21;
+                            break;
+
+                        case MAP_MSG_CODE_LINE_POSITION:
+                            D_800C38B0.positionIdx_1 = msgArg;
+                            break;
+
+                        case MAP_MSG_CODE_JUMP:
+                            while (msgArg != ' ' && msgArg != '\t')
+                            {
+                                msgArg = *++mapMsg;
+                            }
+                            break;
+
+                        case MAP_MSG_CODE_HIGH_RES:
+                            g_SysWork.enableHighResGlyphs_2350_0 = true;
+                            break;
+
+                        case MAP_MSG_CODE_SELECT:
+                            ret = msgArg;
+                            break;
+                    }
+                    mapMsg++;
+                    break;
+
+                case 0:
+                    switch (D_800C38B0.positionIdx_1)
+                    {
+                        case 4:
+                            setRECT(&sp10, (j % 5) << 6, (j / 5) ? 0x1E0 : FONT_12X16_GLYPH_SIZE_Y, i * 3, 0x10);
+                            break;
+
+                        default:
+                            setRECT(&sp10, j << 6, (D_800C38B0.positionIdx_1 & 1) ? 0x1E0 : FONT_12X16_GLYPH_SIZE_Y, i * 3, 0x10);
+                            break;
+                    }
+                    i = 21;
+                    j = FONT_12X16_LINE_COUNT_MAX;
+                    break;
+
+                default:
+                    temp = func_8004C8AC(mapMsg);
+                    if (temp == -1)
+                    {
+                        mapMsg++;
+                    }
+                    else
+                    {
+                        D_800C3920 = D_800C5E30[j];
+                        func_8004C8D8(temp, &i, 0);
+                        mapMsg += 2;
+                        i++;
+                    }
+                    break;
+            }
+        }
+
+        if (sp10.w != 0)
+        {
+            LoadImage(&sp10, (u32*)0x801E1E80);
+            DrawSync(0);
+        }
+    }
+
+    return ret;
+}
+
+void func_8004B45C(s32 arg0, s32 arg1) // 0x8004B45C
+{
+    s32   sp10[3] = { 0 };
+    RECT  sp20;
+    s32   j;
+    s32   ret;
+    s32   i;
+    char* mapMsg;
+
+    D_800C5E20 = arg1;
+
+    for (i = 0; i < arg1; i++)
+    {
+        mapMsg = g_MapOverlayHeader.mapMessages_30[arg0 + i];
+
+        for (j = 0; j < 21;)
+        {
+            switch (*mapMsg)
+            {
+                case '\t':
+                case ' ':
+                    mapMsg++;
+                    break;
+
+                case 0:
+                    sp10[i] = j;
+                    j       = 21;
+                    break;
+
+                default:
+                    mapMsg += 2;
+                    j++;
+                    break;
+            }
+        }
+    }
+
+    for (i = 0; i < arg1; i += 1)
+    {
+        mapMsg = g_MapOverlayHeader.mapMessages_30[arg0 + i];
+
+        setRECT(&sp20, 0, 0, 0, 0);
+
+        for (j = 0; j < 21;)
+        {
+            switch (*mapMsg)
+            {
+                case '\t':
+                case ' ':
+                    mapMsg++;
+                    break;
+
+                case 0:
+                    setRECT(&sp20, ((i >> 1) << 6) + 0xC0,
+                            ((i & 1) * 0x1D0) + FONT_12X16_GLYPH_SIZE_Y,
+                            sp10[i] * 3, FONT_12X16_GLYPH_SIZE_Y);
+                    j = 21;
+                    break;
+
+                default:
+                    ret = func_8004C8AC(mapMsg);
+                    if (ret == -1)
+                    {
+                        mapMsg++;
+                    }
+                    else
+                    {
+                        D_800C3920 = sp10[i];
+                        func_8004C8D8(ret, &j, 0);
+                        mapMsg += 2;
+                        j++;
+                    }
+                    break;
+            }
+        }
+
+        if (sp20.w != 0)
+        {
+            LoadImage(&sp20, (u32*)0x801E1E80);
+            if (i != 2)
+            {
+                DrawSync(0);
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", Gfx_MapMsg_StringDraw);
 
@@ -524,9 +797,9 @@ void func_8004C870(void)  // 0x8004C870
     func_8004C918(&D_80025F44, 1, 1, 5);
 }
 
-void func_8004C8AC(u8* arg0) // 0x8004C8AC
+s32 func_8004C8AC(u8* arg0) // 0x8004C8AC
 {
-    Krom2RawAdd2(arg0[1] | (arg0[0] << 8));
+    return Krom2RawAdd2(arg0[1] | (arg0[0] << 8));
 }
 
 INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C8D8);
