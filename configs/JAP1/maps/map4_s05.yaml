@@ -24,6 +24,7 @@ options:
   asm_function_macro: glabel
   asm_jtbl_label_macro: jlabel
   asm_data_macro: dlabel
+  generate_asm_macros_files: False # Disabled as our include_asm.h is customized to work with different game versions.
 
   section_order: [".rodata", ".text", ".data", ".bss"]
 
