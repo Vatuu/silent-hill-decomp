@@ -217,7 +217,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
         unkPos.vz = (curNpc.position_18.vz + curNpc.field_D8.offsetZ_2) - unkOffset->vz;
 
         angle2 = ratan2(unkPos.vx, unkPos.vz);
-        if (angleConstraint < ABS(func_8005BF38(angle0 - angle2)))
+        if (angleConstraint < ABS(Math_AngleNormalizeSigned(angle0 - angle2)))
         {
             continue;
         }
@@ -229,7 +229,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
         }
 
         angle3 = ratan2(mag1, unkPos.vy);
-        if (angleConstraint < ABS(func_8005BF38(angle1 - angle3)))
+        if (angleConstraint < ABS(Math_AngleNormalizeSigned(angle1 - angle3)))
         {
             continue;
         }

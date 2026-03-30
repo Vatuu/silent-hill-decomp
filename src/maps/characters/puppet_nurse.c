@@ -342,7 +342,7 @@ bool Ai_PuppetNurse_SomeAngleCheck(s_SubCharacter* nurse)
              Q12_SQUARE_PRECISE(nurse->damage_B4.position_0.vz);
 
     damageAngle = ratan2(nurse->damage_B4.position_0.vx, nurse->damage_B4.position_0.vz);
-    damageAngle = ABS(func_8005BF38(damageAngle - nurse->rotation_24.vy));
+    damageAngle = ABS(Math_AngleNormalizeSigned(damageAngle - nurse->rotation_24.vy));
     if (sumSqr > Q12_ANGLE(360.0f) && damageAngle > Q12_ANGLE(10.0f))
     {
         return true;
@@ -451,7 +451,7 @@ void Ai_PuppetNurse_Move(s_SubCharacter* nurse)
                    Q12(0.76f);
     distAbs = ABS(distToPlayer);
 
-    angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(nurse->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                        nurse->rotation_24.vy);
     absAngle           = ABS(angleDeltaToPlayer);
 
@@ -628,12 +628,12 @@ bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse)
     q19_12 limit;
 
     distSubtract = Q12(0.78f);
-    angle        = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx,
+    angle        = Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx,
                                         g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz) -
                                  nurse->rotation_24.vy);
     absAngle     = ABS(angle);
 
-    angle2 = func_8005BF38(g_SysWork.playerWork_4C.player_0.rotation_24.vy - nurse->rotation_24.vy);
+    angle2 = Math_AngleNormalizeSigned(g_SysWork.playerWork_4C.player_0.rotation_24.vy - nurse->rotation_24.vy);
     angle2 = ABS(angle2);
 
     if (angle2 > Q12_ANGLE(90.0f))
@@ -793,7 +793,7 @@ void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
     switch (nurse->model_0.stateStep_3)
     {
         case 0:
-            angle = func_8005BF38((g_SysWork.playerWork_4C.player_0.rotation_24.vy - nurse->rotation_24.vy) - Q12_ANGLE(90.0f));
+            angle = Math_AngleNormalizeSigned((g_SysWork.playerWork_4C.player_0.rotation_24.vy - nurse->rotation_24.vy) - Q12_ANGLE(90.0f));
             if (angle < Q12_ANGLE(0.0f))
             {
                 nurse->properties_E4.puppetNurse.field_104 = -angle;
@@ -879,7 +879,7 @@ void sharedFunc_800CEEE0_3_s03(s_SubCharacter* nurse)
     {
         nurseCpy->properties_E4.puppetNurse.field_11C = func_8006F99C(nurse, Q12_ANGLE(360.0f), nurse->rotation_24.vy);
     }
-    angle = func_8005BF38(nurseCpy->properties_E4.puppetNurse.field_11C - nurse->rotation_24.vy);
+    angle = Math_AngleNormalizeSigned(nurseCpy->properties_E4.puppetNurse.field_11C - nurse->rotation_24.vy);
     if (ABS(angle) > Q12_ANGLE(5.0f))
     {
         if (angle > Q12_ANGLE(0.0f))
@@ -914,7 +914,7 @@ void sharedFunc_800CF0B4_3_s03(s_SubCharacter* nurse)
                                                                             Q12_ANGLE(360.0f),
                                                                             true);
 
-    angle = func_8005BF38(localNurse->properties_E4.puppetNurse.field_11C - nurse->rotation_24.vy);
+    angle = Math_AngleNormalizeSigned(localNurse->properties_E4.puppetNurse.field_11C - nurse->rotation_24.vy);
     if (ABS(angle) > Q12_ANGLE(5.0f))
     {
         if (angle > Q12_ANGLE(0.0f))
@@ -978,7 +978,7 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
     deltaZ = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz);
     dist   = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
 
-    angle    = func_8005BF38(Math_AngleBetweenPositionsGet(nurse->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+    angle    = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                              nurse->rotation_24.vy);
     angleAbs = ABS(angle);
 
@@ -1091,7 +1091,7 @@ void sharedFunc_800CF7F4_3_s03(s_SubCharacter* nurse)
                                                                                       true);
     }
 
-    angle = func_8005BF38(nurse->properties_E4.dummy.properties_E8[13].val16[0] - nurse->rotation_24.vy);
+    angle = Math_AngleNormalizeSigned(nurse->properties_E4.dummy.properties_E8[13].val16[0] - nurse->rotation_24.vy);
     if (ABS(angle) > Q12_ANGLE(5.0f))
     {
         if (angle > Q12_ANGLE(0.0f))
@@ -1140,7 +1140,7 @@ void Ai_PuppetNurse_Control12(s_SubCharacter* nurse)
     s_SubCharacter* nurseCpy;
 
     animStatus         = nurse->model_0.anim_4.status_0;
-    angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(nurse->position_18, g_SysWork.playerWork_4C.player_0.position_18) - nurse->rotation_24.vy);
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position_18, g_SysWork.playerWork_4C.player_0.position_18) - nurse->rotation_24.vy);
     angleDeltaAbs      = abs(angleDeltaToPlayer);
 
     distToPlayer = Math_Vector2MagCalc((g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx),
@@ -1336,7 +1336,7 @@ void Ai_PuppetNurse_Control11(s_SubCharacter* nurse)
                                                           true);
     }
 
-    angle = func_8005BF38(localNurseProps.field_11C - nurse->rotation_24.vy);
+    angle = Math_AngleNormalizeSigned(localNurseProps.field_11C - nurse->rotation_24.vy);
     if (ABS(angle) > Q12_ANGLE(5.0f))
     {
         if (angle > Q12_ANGLE(0.0f))
@@ -1536,7 +1536,7 @@ void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse)
         nurse->properties_E4.puppetNurse.damage_F4.position_0.vz = -nurse->properties_E4.puppetNurse.damage_F4.position_0.vz;
     }
 
-    nurse->rotation_24.vy = func_8005BF38(nurse->rotation_24.vy);
+    nurse->rotation_24.vy = Math_AngleNormalizeSigned(nurse->rotation_24.vy);
 }
 
 void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coord)

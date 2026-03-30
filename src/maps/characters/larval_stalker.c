@@ -95,12 +95,12 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
     q19_12  targetX;
     q19_12  targetZ;
 
-    angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(larvalStalker->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(larvalStalker->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                        larvalStalker->rotation_24.vy);
     distToTarget       = Math_Vector2MagCalc(larvalStalkerProps.targetPositionX - larvalStalker->position_18.vx,
                                              larvalStalkerProps.targetPositionZ - larvalStalker->position_18.vz);
 
-    larvalStalker->rotation_24.vy = func_8005BF38(larvalStalker->rotation_24.vy);
+    larvalStalker->rotation_24.vy = Math_AngleNormalizeSigned(larvalStalker->rotation_24.vy);
 
     if (ANIM_STATUS_IDX_GET(larvalStalker->model_0.anim_4.status_0) != LarvalStalkerAnim_1)
     {
@@ -245,7 +245,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                         targetX = larvalStalkerProps.targetPositionX + Rng_GenerateInt(0, Q12(1.5f) - 1);
                         targetZ = larvalStalkerProps.targetPositionZ + Rng_GenerateInt(0, Q12(1.5f) - 1);
                         larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(larvalStalker, Q12(2.0f), targetX, targetZ, Q12(1.0f), true);
-                        Chara_TurnModulate(func_8005BF38(larvalStalkerProps.angle_108 - larvalStalker->rotation_24.vy), Q12_ANGLE(1.5f), Q12_ANGLE(30.0f));
+                        Chara_TurnModulate(Math_AngleNormalizeSigned(larvalStalkerProps.angle_108 - larvalStalker->rotation_24.vy), Q12_ANGLE(1.5f), Q12_ANGLE(30.0f));
                     }
                     else
                     {
@@ -261,13 +261,13 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                         larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(larvalStalker, Q12(2.0f), larvalStalkerProps.targetPositionX, larvalStalkerProps.targetPositionZ, Q12(1.0f), true);
                     }
 
-                    Chara_TurnModulate(func_8005BF38(larvalStalkerProps.angle_108 - larvalStalker->rotation_24.vy), Q12_ANGLE(1.5f), Q12_ANGLE(30.0f));
+                    Chara_TurnModulate(Math_AngleNormalizeSigned(larvalStalkerProps.angle_108 - larvalStalker->rotation_24.vy), Q12_ANGLE(1.5f), Q12_ANGLE(30.0f));
                     break;
                 }
 
                 if (larvalStalkerProps.flags_E8 & LarvalStalkerFlag_3)
                 {
-                    Chara_TurnModulate(func_8005BF38(larvalStalkerProps.angle_108 - larvalStalker->rotation_24.vy), Q12_ANGLE(1.5f), Q12_ANGLE(30.0f));
+                    Chara_TurnModulate(Math_AngleNormalizeSigned(larvalStalkerProps.angle_108 - larvalStalker->rotation_24.vy), Q12_ANGLE(1.5f), Q12_ANGLE(30.0f));
                     if (!Rng_GenerateInt(0, 15)) // 1 in 16 chance.
                     {
                         larvalStalkerProps.flags_E8 &= ~LarvalStalkerFlag_3;
@@ -324,7 +324,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                     }
                 }
 
-                angleDeltaToPlayer = func_8005BF38(g_SysWork.playerWork_4C.player_0.rotation_24.vy - larvalStalker->rotation_24.vy);
+                angleDeltaToPlayer = Math_AngleNormalizeSigned(g_SysWork.playerWork_4C.player_0.rotation_24.vy - larvalStalker->rotation_24.vy);
                 if (Q12_ANGLE(90.0f) < ABS(angleDeltaToPlayer))
                 {
                     if (distToTarget >= Q12(0.29004f))
@@ -426,7 +426,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 larvalStalkerProps.timer_EC = Q12(0.0f);
             }
 
-            Chara_TurnModulate(func_8005BF38(larvalStalkerProps.angle_108 - larvalStalker->rotation_24.vy), 33, 682);
+            Chara_TurnModulate(Math_AngleNormalizeSigned(larvalStalkerProps.angle_108 - larvalStalker->rotation_24.vy), 33, 682);
 
             if (larvalStalker->moveSpeed_38 >= Q12(0.9004f) && !Rng_GenerateUInt(0, 255))
             {
@@ -546,7 +546,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 larvalStalkerProps.timer_EC = Q12(0.0f);
             }
 
-            Chara_TurnModulate(func_8005BF38(larvalStalkerProps.angle_108 - larvalStalker->rotation_24.vy), Q12_ANGLE(1.5f), 682);
+            Chara_TurnModulate(Math_AngleNormalizeSigned(larvalStalkerProps.angle_108 - larvalStalker->rotation_24.vy), Q12_ANGLE(1.5f), 682);
 
             if ((larvalStalker->moveSpeed_38 >= Q12(0.9004f)) && !Rng_GenerateInt(0, 63)) // 1 in 64 chance.
             {
@@ -681,7 +681,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 larvalStalkerProps.timer_EC = Q12(0.0f);
             }
 
-            Chara_TurnModulate(func_8005BF38(larvalStalkerProps.angle_108 - larvalStalker->rotation_24.vy), Q12_ANGLE(1.5f), 170);
+            Chara_TurnModulate(Math_AngleNormalizeSigned(larvalStalkerProps.angle_108 - larvalStalker->rotation_24.vy), Q12_ANGLE(1.5f), 170);
             break;
 
         case LarvalStalkerControl_12:
@@ -907,15 +907,15 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
     }
     else
     {
-        if (func_8005BF38(Math_AngleBetweenPositionsGet(larvalStalker->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+        if (Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(larvalStalker->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                           larvalStalker->rotation_24.vy) < Q12_ANGLE(0.0f))
         {
-            angle = -func_8005BF38(Math_AngleBetweenPositionsGet(larvalStalker->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+            angle = -Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(larvalStalker->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                    larvalStalker->rotation_24.vy);
         }
         else
         {
-            angle = func_8005BF38(Math_AngleBetweenPositionsGet(larvalStalker->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+            angle = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(larvalStalker->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                   larvalStalker->rotation_24.vy);
         }
 

@@ -2133,7 +2133,7 @@ void func_800D43AC(s_SubCharacter* twinfeeler, s32 arg1) // 0x800D43AC
         var_s1 = 170;
     }
 
-    angleDeltaToPlayer = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - twinfeeler->position_18.vx,
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - twinfeeler->position_18.vx,
                                        g_SysWork.playerWork_4C.player_0.position_18.vz - twinfeeler->position_18.vz) -
                                 twinfeeler->rotation_24.vy);
 
@@ -2644,7 +2644,7 @@ void Twinfeeler_Control_3(s_SubCharacter* chara) // 0x800D4FC0
         chara->headingAngle_3C = temp_v0;
         chara->rotation_24.vy  = temp_v0;
 
-        angleDeltaToPlayer = func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx -
+        angleDeltaToPlayer = Math_AngleNormalizeSigned((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx -
                                                    chara->position_18.vx,
                                                g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                                            temp_v0));
@@ -2952,7 +2952,7 @@ void func_800D55C8(s_SubCharacter* chara) // 0x800D55C8
         chara->properties_E4.twinfeeler.field_EC.position_0.vz = -chara->properties_E4.twinfeeler.field_EC.position_0.vz;
     }
 
-    chara->rotation_24.vy = func_8005BF38(chara->rotation_24.vy);
+    chara->rotation_24.vy = Math_AngleNormalizeSigned(chara->rotation_24.vy);
 }
 
 void func_800D5888(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5888

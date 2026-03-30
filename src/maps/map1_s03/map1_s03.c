@@ -709,8 +709,8 @@ void func_800DAF18(void) // 0x800DAF18
 
         if (var_v0 >= 6 && var_v0 < 0x25)
         {
-            if ((g_SysWork.sysStateStep_C[0] == 7 && func_8005BF38(D_800E20F8 - temp_s2) < 0) ||
-                (g_SysWork.sysStateStep_C[0] == 12 && func_8005BF38(D_800E20F8 - temp_s2) > 0))
+            if ((g_SysWork.sysStateStep_C[0] == 7 && Math_AngleNormalizeSigned(D_800E20F8 - temp_s2) < 0) ||
+                (g_SysWork.sysStateStep_C[0] == 12 && Math_AngleNormalizeSigned(D_800E20F8 - temp_s2) > 0))
             {
                 if (D_800E2101 == 0)
                 {
@@ -738,11 +738,11 @@ void func_800DAF18(void) // 0x800DAF18
                     D_800E2101++;
                 }
 
-                g_WorldObject5.rotation_28.vx += func_8005BF38(D_800E20F8 - temp_s2);
+                g_WorldObject5.rotation_28.vx += Math_AngleNormalizeSigned(D_800E20F8 - temp_s2);
 
                 if (D_800E2100 != 0)
                 {
-                    D_800E20FC -= func_8005BF38(D_800E20F8 - temp_s2);
+                    D_800E20FC -= Math_AngleNormalizeSigned(D_800E20F8 - temp_s2);
 
                     if (D_800E20FC < 0)
                     {

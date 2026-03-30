@@ -3642,8 +3642,14 @@ s_Texture* Textures_ActiveTex_FindTexture(char* texName, s_ActiveTextures* activ
  */
 void Gfx_DebugStringPositionSet(s16 unused, s16 posX, s16 posY);
 
-/** Angle func. */
-q3_12 func_8005BF38(q3_12 angle);
+/** @brief Normalizes a signed Q3.12 fixed-point angle to the clamped signed integer range `[-2048, 2047]`.
+ * Appears it might have same effect as `Q12_ANGLE_NORM_S` macro, maybe this was written by someone unaware of that?
+ * TOOD: Once build is shiftable, check if calls to this can simply be switched over to that.
+ *
+ * @param angle Q3.12 angle to normalize.
+ * @return Q3.12 normalized angle.
+ */
+q3_12 Math_AngleNormalizeSigned(q3_12 angle);
 
 bool func_8005BF58(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9);
 

@@ -3323,7 +3323,7 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
 
         do
         {
-            angle1 = func_8005BF38(angle2 - var_a0);
+            angle1 = Math_AngleNormalizeSigned(angle2 - var_a0);
         }
         while (false); // @hack
 
@@ -4494,7 +4494,7 @@ void func_800DDCC4(s_SubCharacter* incubus) // 0x800DDCC4
     s16 var_v0_2;
     s32 tmp;
 
-    temp_v0 = func_8005BF38(ratan2(
+    temp_v0 = Math_AngleNormalizeSigned(ratan2(
                                 g_SysWork.playerWork_4C.player_0.position_18.vx - incubus->position_18.vx,
                                 g_SysWork.playerWork_4C.player_0.position_18.vz - incubus->position_18.vz) -
                             incubus->rotation_24.vy);
@@ -4665,7 +4665,7 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDF3C
                     func_800DD464(&coordsVec);
                 }
 
-                angleDeltaToPlayer = abs(func_8005BF38(Math_AngleBetweenPositionsGet(incubus->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                                        incubus->rotation_24.vy));
 
                 if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
@@ -4821,7 +4821,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
                     func_800DD464(&coordsVec);
                 }
 
-                angleDeltaToPlayer = abs(func_8005BF38(Math_AngleBetweenPositionsGet(incubus->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                                        incubus->rotation_24.vy));
 
                 if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
@@ -4977,7 +4977,7 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
                     func_800DD464(&coordsVec);
                 }
 
-                angleDeltaToPlayer = abs(func_8005BF38(Math_AngleBetweenPositionsGet(incubus->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                                        incubus->rotation_24.vy));
 
                 if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
@@ -5249,7 +5249,7 @@ void func_800DEE44(s_SubCharacter* incubus) // 0x800DEE44
 
     func_8005C944(incubus, &sp10);
 
-    incubus->rotation_24.vy = func_8005BF38(incubus->rotation_24.vy);
+    incubus->rotation_24.vy = Math_AngleNormalizeSigned(incubus->rotation_24.vy);
 }
 
 void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DEE90
@@ -5883,7 +5883,7 @@ void func_800DFE10(s_SubCharacter* chara) // 0x800DFE10
     s16 var_v0_2;
     s32 tmp;
 
-    temp_v0 = func_8005BF38(ratan2(
+    temp_v0 = Math_AngleNormalizeSigned(ratan2(
                                 g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
                                 g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                             chara->rotation_24.vy);
@@ -6040,7 +6040,7 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
                     func_800DD464(&coordsVec);
                 }
 
-                angleDeltaToPlayer = abs(func_8005BF38(Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                                        chara->rotation_24.vy));
 
                 if (localChara->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
@@ -6256,7 +6256,7 @@ void func_800E0728(s_SubCharacter* chara) // 0x800E0728
 
     chara->fallSpeed_34 += g_GravitySpeed;
     func_8005C944(chara, &sp10);
-    chara->rotation_24.vy = func_8005BF38(chara->rotation_24.vy);
+    chara->rotation_24.vy = Math_AngleNormalizeSigned(chara->rotation_24.vy);
 }
 
 void func_800E0774(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800E0774

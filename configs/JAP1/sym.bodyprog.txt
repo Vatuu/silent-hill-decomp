@@ -1061,7 +1061,7 @@ Gfx_DebugStringPositionSet                   = 0x8005DA14; // type:func
 //-------------------------------------------------------------------------
 //--- PA: 0x038EE0   VA: 0x8005DA40   subsegment: c, bodyprog_math_8005BF38
 //-------------------------------------------------------------------------
-func_8005BF38                                = 0x8005DA40; // type:func
+Math_AngleNormalizeSigned                    = 0x8005DA40; // type:func
 func_8005BF58                                = 0x8005DA60; // type:func
 func_8005C1CC                                = 0x8005DCD4; // type:func
 func_8005C478                                = 0x8005DF80; // type:func

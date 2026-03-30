@@ -208,7 +208,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
             creeper->health_B0       = Q12(20.0f);
             creeper->flags_3E       |= CharaFlag_Unk2;
 
-            if (ABS(func_8005BF38(Math_AngleBetweenPositionsGet(creeper->position_18, playerChara.position_18) -
+            if (ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(creeper->position_18, playerChara.position_18) -
                                   creeper->rotation_24.vy)) < Q12_ANGLE(60.0f))
             {
                 creeper->model_0.anim_4.status_0 = ANIM_STATUS(CreeperAnim_7, false);
@@ -373,7 +373,7 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
 
     #define playerChara g_SysWork.playerWork_4C.player_0
 
-    angleDeltaToPlayer = func_8005BF38((Math_AngleBetweenPositionsGet(creeper->position_18, playerChara.position_18) -
+    angleDeltaToPlayer = Math_AngleNormalizeSigned((Math_AngleBetweenPositionsGet(creeper->position_18, playerChara.position_18) -
                                         creeper->rotation_24.vy));
 
     if (((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1) && func_8006FD90(creeper, 0, Q12(12.0f), Q12(8.0f))) ||
@@ -476,7 +476,7 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
             }
         }
 
-        unkAngleDelta = func_8005BF38(creeperProps.rotationY_108 - creeper->rotation_24.vy);
+        unkAngleDelta = Math_AngleNormalizeSigned(creeperProps.rotationY_108 - creeper->rotation_24.vy);
         if (TIMESTEP_ANGLE(1, 2) < ABS(unkAngleDelta))
         {
             if (unkAngleDelta > Q12_ANGLE(0.0f))
@@ -551,9 +551,9 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
             creeper->moveSpeed_38 = moveSpeed;
         }
 
-        if (TIMESTEP_ANGLE(1, 2) < ABS(func_8005BF38((Math_AngleBetweenPositionsGet(creeper->position_18, playerChara.position_18) - creeper->rotation_24.vy))))
+        if (TIMESTEP_ANGLE(1, 2) < ABS(Math_AngleNormalizeSigned((Math_AngleBetweenPositionsGet(creeper->position_18, playerChara.position_18) - creeper->rotation_24.vy))))
         {
-            if ((func_8005BF38((Math_AngleBetweenPositionsGet(creeper->position_18, playerChara.position_18) - creeper->rotation_24.vy)) << 16) > 0)
+            if ((Math_AngleNormalizeSigned((Math_AngleBetweenPositionsGet(creeper->position_18, playerChara.position_18) - creeper->rotation_24.vy)) << 16) > 0)
             {
                 creeper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.5f));
             }
@@ -619,9 +619,9 @@ void Ai_Creeper_Control_4(s_SubCharacter* creeper)
 
     if (creeper->model_0.anim_4.status_0 == ANIM_STATUS(CreeperAnim_7, true))
     {
-        if (creeper->rotation_24.vy != func_8005BF38(creeper->headingAngle_3C + Q12_ANGLE(180.0f)))
+        if (creeper->rotation_24.vy != Math_AngleNormalizeSigned(creeper->headingAngle_3C + Q12_ANGLE(180.0f)))
         {
-            if (func_8005BF38((creeper->headingAngle_3C + Q12_ANGLE(180.0f)) - creeper->rotation_24.vy) > Q12_ANGLE(0.0f))
+            if (Math_AngleNormalizeSigned((creeper->headingAngle_3C + Q12_ANGLE(180.0f)) - creeper->rotation_24.vy) > Q12_ANGLE(0.0f))
             {
                 creeper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(30.0f));
             }
@@ -709,7 +709,7 @@ void sharedFunc_800D983C_1_s02(s_SubCharacter* creeper)
         creeperProps.flags_E8 &= ~CreeperFlag_2;
     }
 
-    creeper->rotation_24.vy = func_8005BF38(creeper->rotation_24.vy);
+    creeper->rotation_24.vy = Math_AngleNormalizeSigned(creeper->rotation_24.vy);
 }
 
 void sharedFunc_800D9960_1_s02(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)

@@ -285,7 +285,7 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
 
     distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - splitHead->position_18.vx,
                                              g_SysWork.playerWork_4C.player_0.position_18.vz - splitHead->position_18.vz);
-    angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                        splitHead->rotation_24.vy);
 
     if (splitHead->model_0.anim_4.status_0 == ANIM_STATUS(SplitHeadAnim_11, true))
@@ -517,7 +517,7 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
 
     splitHeadProps.timer_F2 += g_DeltaTime;
 
-    angleToPlayer = func_8005BF38((splitHeadProps.angle_F0 - splitHead->rotation_24.vy));
+    angleToPlayer = Math_AngleNormalizeSigned((splitHeadProps.angle_F0 - splitHead->rotation_24.vy));
     if (TIMESTEP_ANGLE(3, 3) < ABS(angleToPlayer))
     {
         if (angleToPlayer > Q12_ANGLE(0.0f))
@@ -534,8 +534,8 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
         splitHead->rotation_24.vy = splitHeadProps.angle_F0;
     }
 
-    angleToPlayer      = ABS(func_8005BF38(splitHeadProps.angle_F0 - splitHead->rotation_24.vy));
-    angleDeltaToPlayer = ABS(func_8005BF38(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+    angleToPlayer      = ABS(Math_AngleNormalizeSigned(splitHeadProps.angle_F0 - splitHead->rotation_24.vy));
+    angleDeltaToPlayer = ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                            splitHead->rotation_24.vy));
 
     if (ABS(angleToPlayer - angleDeltaToPlayer) < Q12_ANGLE(15.0f))
@@ -598,7 +598,7 @@ void Ai_SplitHead_Control_3(s_SubCharacter* splitHead)
 
     distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - splitHead->position_18.vx,
                                              g_SysWork.playerWork_4C.player_0.position_18.vz - splitHead->position_18.vz);
-    angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                        splitHead->rotation_24.vy);
 
     if (splitHead->model_0.anim_4.status_0 == ANIM_STATUS(SplitHeadAnim_11, true))
@@ -846,7 +846,7 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
 
     splitHeadProps.timer_F2 += g_DeltaTime;
 
-    angleToPlayer = func_8005BF38((splitHeadProps.angle_F0 - splitHead->rotation_24.vy));
+    angleToPlayer = Math_AngleNormalizeSigned((splitHeadProps.angle_F0 - splitHead->rotation_24.vy));
 
     if (TIMESTEP_ANGLE(1, 4) < ABS(angleToPlayer))
     {
@@ -864,8 +864,8 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
         splitHead->rotation_24.vy = splitHeadProps.angle_F0;
     }
 
-    angleToPlayer   = ABS(func_8005BF38(splitHeadProps.angle_F0 - splitHead->rotation_24.vy));
-    angle2 = ABS(func_8005BF38(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) - splitHead->rotation_24.vy));
+    angleToPlayer   = ABS(Math_AngleNormalizeSigned(splitHeadProps.angle_F0 - splitHead->rotation_24.vy));
+    angle2 = ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) - splitHead->rotation_24.vy));
 
     if (ABS(angleToPlayer - angle2) < Q12_ANGLE(15.0f))
     {
@@ -977,7 +977,7 @@ void Ai_SplitHead_Control_7(s_SubCharacter* splitHead)
     {
         Chara_MoveSpeedUpdate3(splitHead, Q12(0.8f), Q12(-1.2f));
 
-        angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+        angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                            splitHead->rotation_24.vy);
         if (TIMESTEP_ANGLE(3, 3) < ABS(angleDeltaToPlayer)) // @hack `(g_DeltaTime / 3) >> 3` should be same as `g_DeltaTime / 24`, but that doesn't match?
         {
@@ -1051,7 +1051,7 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
     s32         i;
     s_AnimInfo* animInfo;
 
-    splitHead->rotation_24.vy = func_8005BF38(splitHead->rotation_24.vy);
+    splitHead->rotation_24.vy = Math_AngleNormalizeSigned(splitHead->rotation_24.vy);
 
     switch (splitHead->model_0.anim_4.status_0)
     {
@@ -1273,8 +1273,8 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
     dist   = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
 
     sp98[0] = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - sp20[0].vx, g_SysWork.playerWork_4C.player_0.position_18.vz - sp20[0].vz);
-    sp98[1] = func_8005BF38((ratan2(sp20[1].vx - sp20[0].vx, sp20[1].vz - sp20[0].vz) - sp98[0]));
-    sp98[2] = func_8005BF38((ratan2(sp20[2].vx - sp20[0].vx, sp20[2].vz - sp20[0].vz) - sp98[0]));
+    sp98[1] = Math_AngleNormalizeSigned((ratan2(sp20[1].vx - sp20[0].vx, sp20[1].vz - sp20[0].vz) - sp98[0]));
+    sp98[2] = Math_AngleNormalizeSigned((ratan2(sp20[2].vx - sp20[0].vx, sp20[2].vz - sp20[0].vz) - sp98[0]));
 
     if (sp98[1] < 0x400 && sp98[2] > -0x400)
     {

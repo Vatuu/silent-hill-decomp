@@ -374,7 +374,7 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
 
     distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - scratcher->position_18.vx,
                                              g_SysWork.playerWork_4C.player_0.position_18.vz - scratcher->position_18.vz);
-    angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(scratcher->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                        scratcher->rotation_24.vy);
     angleDeltaToPlayer = ABS(angleDeltaToPlayer);
 
@@ -436,7 +436,7 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
             scratcherProps.timer_EA              = Q12(0.0f);
         }
 
-        targetRotDelta = func_8005BF38(scratcherProps.targetHeadingAngle_EC - scratcher->rotation_24.vy);
+        targetRotDelta = Math_AngleNormalizeSigned(scratcherProps.targetHeadingAngle_EC - scratcher->rotation_24.vy);
         if (ABS(targetRotDelta) > TIMESTEP_ANGLE(1, 2))
         {
             if (targetRotDelta > Q12_ANGLE(0.0f))
@@ -497,7 +497,7 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
 
     distToPlayer          = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - scratcher->position_18.vx,
                                                 g_SysWork.playerWork_4C.player_0.position_18.vz - scratcher->position_18.vz);
-    angleDeltaToPlayer    = func_8005BF38(Math_AngleBetweenPositionsGet(scratcher->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+    angleDeltaToPlayer    = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                           scratcher->rotation_24.vy);
     angleDeltaToPlayerAbs = ABS(angleDeltaToPlayer);
 
@@ -637,7 +637,7 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
 
     distToPlayer          = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - scratcher->position_18.vx,
                                                 g_SysWork.playerWork_4C.player_0.position_18.vz - scratcher->position_18.vz);
-    angleDeltaToPlayer    = func_8005BF38(Math_AngleBetweenPositionsGet(scratcher->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+    angleDeltaToPlayer    = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                           scratcher->rotation_24.vy);
     angleDeltaToPlayerAbs = ABS(angleDeltaToPlayer);
     angleToPlayer         = Math_AngleBetweenPositionsGet(scratcher->position_18, g_SysWork.playerWork_4C.player_0.position_18);
@@ -700,7 +700,7 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
             }
         }
 
-        targetRotDelta = func_8005BF38(scratcherProps.targetHeadingAngle_EC - scratcher->rotation_24.vy);
+        targetRotDelta = Math_AngleNormalizeSigned(scratcherProps.targetHeadingAngle_EC - scratcher->rotation_24.vy);
         if (ABS(targetRotDelta) > TIMESTEP_ANGLE(1, 3))
         {
             if (targetRotDelta > Q12_ANGLE(0.0f))
@@ -724,7 +724,7 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
         if (Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - scratcher->position_18.vx,
                                 g_SysWork.playerWork_4C.player_0.position_18.vz - scratcher->position_18.vz) < Q12(1.2f))
         {
-            if (ABS(func_8005BF38(Math_AngleBetweenPositionsGet(scratcher->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+            if (ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                   scratcher->rotation_24.vy)) < Q12_ANGLE(20.0f))
             {
                 scratcher->model_0.controlState_2  = HangedScratcherControl_15;
@@ -1026,7 +1026,7 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
 
     distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - scratcher->position_18.vx,
                                              g_SysWork.playerWork_4C.player_0.position_18.vz - scratcher->position_18.vz);
-    angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(scratcher->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                        scratcher->rotation_24.vy);
 
     if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 116, 123) &&
@@ -1104,7 +1104,7 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
     s_Collision coll;
     u8          flag1Val;
 
-    scratcher->rotation_24.vy  = func_8005BF38(scratcher->rotation_24.vy);
+    scratcher->rotation_24.vy  = Math_AngleNormalizeSigned(scratcher->rotation_24.vy);
     scratcher->headingAngle_3C = scratcher->rotation_24.vy;
 
     switch (scratcher->model_0.controlState_2)
@@ -1171,7 +1171,7 @@ void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, G
 
 #define curAnimInfo HANGED_SCRATCHER_ANIM_INFOS[scratcher->model_0.anim_4.status_0]
 
-    scratcher->rotation_24.vy = func_8005BF38(scratcher->rotation_24.vy);
+    scratcher->rotation_24.vy = Math_AngleNormalizeSigned(scratcher->rotation_24.vy);
 
     switch (scratcher->model_0.anim_4.status_0)
     {

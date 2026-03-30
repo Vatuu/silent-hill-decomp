@@ -735,7 +735,7 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
     temp2   = Q12_MULT_PRECISE(arg3, SCREEN_HEIGHT);
     temp_s1 = (temp4 / temp2) - (SCREEN_HEIGHT / 2);
 
-    temp_v0_7 = func_8005BF38(angle);
+    temp_v0_7 = Math_AngleNormalizeSigned(angle);
 
     sp10[0] = temp_s2 + FP_FROM(Math_Sin(temp_v0_7) * 6, Q12_SHIFT);
     sp10[1] = (temp_s1 + FP_FROM(Math_Cos(temp_v0_7) * -6, Q12_SHIFT)) * 2;

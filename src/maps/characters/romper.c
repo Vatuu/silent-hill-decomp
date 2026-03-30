@@ -448,7 +448,7 @@ void Ai_Romper_Control_2(s_SubCharacter* romper)
     s32    flags;
     bool   cond;
 
-    angleDeltaToTarget = func_8005BF38(romperProps.rotationY_F2 - romper->rotation_24.vy);
+    angleDeltaToTarget = Math_AngleNormalizeSigned(romperProps.rotationY_F2 - romper->rotation_24.vy);
     if (TIMESTEP_ANGLE(3, 3) < ABS(angleDeltaToTarget))
     {
         if (angleDeltaToTarget > Q12_ANGLE(0.0f))
@@ -467,7 +467,7 @@ void Ai_Romper_Control_2(s_SubCharacter* romper)
 
     if (romper->rotation_24.vy == romperProps.rotationY_F2 || func_8007029C(romper, Q12(1.0f), romper->rotation_24.vy))
     {
-        angleDeltaToTarget = func_8005BF38(romper->rotation_24.vy - ratan2(romperProps.targetPositionX_FC  - romper->position_18.vx,
+        angleDeltaToTarget = Math_AngleNormalizeSigned(romper->rotation_24.vy - ratan2(romperProps.targetPositionX_FC  - romper->position_18.vx,
                                                                            romperProps.targetPositionZ_100 - romper->position_18.vz));
         if (ABS(angleDeltaToTarget) > Q12_ANGLE(15.0f))
         {
@@ -603,7 +603,7 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
 
         angleToTarget = ratan2(romperProps.targetPositionX_FC - romper->position_18.vx,
                                romperProps.targetPositionZ_100 - romper->position_18.vz);
-        angleDeltaToTarget = ABS(func_8005BF38(angleToTarget - romper->rotation_24.vy));
+        angleDeltaToTarget = ABS(Math_AngleNormalizeSigned(angleToTarget - romper->rotation_24.vy));
         unkDist   = Q12_MULT_PRECISE(angleDeltaToTarget * 2, Q12(4.0f));
 
         if (!(romperProps.flags_E8 & RomperFlag_4) && unkDist < distToTarget)
@@ -663,7 +663,7 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
 
     for (i = 0; i < 3; i++)
     {
-        angleToTarget = func_8005BF38(romperProps.rotationY_F2 - romper->rotation_24.vy);
+        angleToTarget = Math_AngleNormalizeSigned(romperProps.rotationY_F2 - romper->rotation_24.vy);
 
         if (TIMESTEP_ANGLE(1, 3) < ABS(angleToTarget))
         {
@@ -731,7 +731,7 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
         return;
     }
 
-    if (ABS(func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - romper->position_18.vx,
+    if (ABS(Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - romper->position_18.vx,
                                  g_SysWork.playerWork_4C.player_0.position_18.vz - romper->position_18.vz) -
                           romper->rotation_24.vy)) < 0x155)
     {
@@ -834,7 +834,7 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
 
     for (i = 0; i < 3; i++)
     {
-        angle0 = func_8005BF38(romperProps.rotationY_F2 - romper->rotation_24.vy);
+        angle0 = Math_AngleNormalizeSigned(romperProps.rotationY_F2 - romper->rotation_24.vy);
         if (TIMESTEP_ANGLE(1, 4) < ABS(angle0))
         {
             if (angle0 > 0)
@@ -859,7 +859,7 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
         return;
     }
 
-    angle0 = func_8005BF38(romperProps.rotationY_F2 - romper->rotation_24.vy);
+    angle0 = Math_AngleNormalizeSigned(romperProps.rotationY_F2 - romper->rotation_24.vy);
     if (angle0 >= Q12_ANGLE(0.0f))
     {
         angle1 = Q12_ANGLE(180.0f) - angle0;
@@ -919,7 +919,7 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
 
         for (i = 0; i < 4; i++)
         {
-            temp_v0_4 = func_8005BF38(unkAngle - romper->rotation_24.vy);
+            temp_v0_4 = Math_AngleNormalizeSigned(unkAngle - romper->rotation_24.vy);
 
             if ((((g_DeltaTime >> 3) + 1) >> 1) < ABS(temp_v0_4))
             {
@@ -940,7 +940,7 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
     }
     else if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_2, true))
     {
-        unkAngle1 = func_8005BF38(temp_v0_3 - romper->rotation_24.vy);
+        unkAngle1 = Math_AngleNormalizeSigned(temp_v0_3 - romper->rotation_24.vy);
         if (TIMESTEP_ANGLE(1, 4) < ABS(unkAngle1))
         {
             if (unkAngle1 > Q12_ANGLE(0.0f))
@@ -1240,7 +1240,7 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
         romperProps.offsetX_F8 = Q12(0.0f);
     }
 
-    romper->rotation_24.vy = func_8005BF38(romper->rotation_24.vy);
+    romper->rotation_24.vy = Math_AngleNormalizeSigned(romper->rotation_24.vy);
 
     if (romper->fallSpeed_34 != Q12(0.0f))
     {
@@ -1356,7 +1356,7 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCO
             break;
     }
 
-    angleDeltaToTarget = func_8005BF38(romperProps.angle_EC - romper->rotation_24.vy);
+    angleDeltaToTarget = Math_AngleNormalizeSigned(romperProps.angle_EC - romper->rotation_24.vy);
     if (angleDeltaToTarget == Q12_ANGLE(0.0f))
     {
         unkAngle = Q12_ANGLE(0.0f);

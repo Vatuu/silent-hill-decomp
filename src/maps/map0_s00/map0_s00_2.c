@@ -1246,11 +1246,11 @@ block7:
             }
         }
 
-        var_s1 = func_8005BF38(ratan2(g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.playerWork_4C.player_0.position_18.vx,
+        var_s1 = Math_AngleNormalizeSigned(ratan2(g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.playerWork_4C.player_0.position_18.vx,
                                       g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.playerWork_4C.player_0.position_18.vz) -
                                g_SysWork.playerWork_4C.player_0.headingAngle_3C);
 
-        temp_a0 = func_8005BF38(ratan2(Q12(-62.0f) - g_SysWork.playerWork_4C.player_0.position_18.vx,
+        temp_a0 = Math_AngleNormalizeSigned(ratan2(Q12(-62.0f) - g_SysWork.playerWork_4C.player_0.position_18.vx,
                                        Q12(106.0f) - g_SysWork.playerWork_4C.player_0.position_18.vz) -
                                 g_SysWork.playerWork_4C.player_0.headingAngle_3C);
 

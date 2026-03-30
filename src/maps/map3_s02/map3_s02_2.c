@@ -381,7 +381,7 @@ s16 func_800D1354(void) // 0x800D1354
     // TODO: Use `Math_Vector2MagCalc`.
     x = g_SysWork.playerWork_4C.player_0.position_18.vx - Q12(95.2f);
     z = g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(140.0f);
-    cos0 = Math_Cos(func_8005BF38((ratan2(x, z) - ratan2(Q12(4.8f) + 1, Q12(12.8f) + 1))));
+    cos0 = Math_Cos(Math_AngleNormalizeSigned((ratan2(x, z) - ratan2(Q12(4.8f) + 1, Q12(12.8f) + 1))));
 
     x6 = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vx - Q12(95.2f));
     z6 = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(140.0f));

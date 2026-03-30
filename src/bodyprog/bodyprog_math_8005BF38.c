@@ -17,7 +17,7 @@
 // MATHS?
 // ========================================
 
-q3_12 func_8005BF38(q3_12 angle) // 0x8005BF38
+q3_12 Math_AngleNormalizeSigned(q3_12 angle) // 0x8005BF38
 {
     q3_12 outAngle;
     q3_12 angleNorm;
@@ -169,9 +169,9 @@ u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2) // 
     s32   var1;
     s32   temp;
 
-    angle0 = func_8005BF38(ratan2(x0 - x1, y0 - y1));
-    angle1 = func_8005BF38(ratan2(x0 - x2, y0 - y2));
-    angle2 = func_8005BF38(ratan2(x2 - x1, y2 - y1));
+    angle0 = Math_AngleNormalizeSigned(ratan2(x0 - x1, y0 - y1));
+    angle1 = Math_AngleNormalizeSigned(ratan2(x0 - x2, y0 - y2));
+    angle2 = Math_AngleNormalizeSigned(ratan2(x2 - x1, y2 - y1));
     mag0   = Math_Vector2MagCalc(x0 - x1, y0 - y1);
     mag1   = Math_Vector2MagCalc(x0 - x2, y0 - y2);
 

@@ -333,8 +333,8 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
             ((var_s5 == 0 && Rng_GenerateUInt(0, 3)) || (var_s5 == 2 && Rng_GenerateUInt(0, 3)))) // 1 in 4 chance.
         {
             if (g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f) &&
-                ABS(func_8005BF38(angle - floatstinger->headingAngle_3C)) < Q12_ANGLE(90.0f) &&
-                ABS(func_8005BF38(angle - floatstinger->rotation_24.vy)) < Q12_ANGLE(30.0f) &&
+                ABS(Math_AngleNormalizeSigned(angle - floatstinger->headingAngle_3C)) < Q12_ANGLE(90.0f) &&
+                ABS(Math_AngleNormalizeSigned(angle - floatstinger->rotation_24.vy)) < Q12_ANGLE(30.0f) &&
                 !(g_SysWork.playerWork_4C.player_0.flags_3E & (1 << 3)) &&
                 !Rng_GenerateUInt(0, 7)) // 1 in 8 chance.
             {
@@ -346,8 +346,8 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                  Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - floatstinger->position_18.vx,
                                      g_SysWork.playerWork_4C.player_0.position_18.vz - floatstinger->position_18.vz) < Q12(6.5f))
         {
-            if (ABS(func_8005BF38(angle - floatstinger->headingAngle_3C)) < Q12_ANGLE(90.0f) &&
-                ABS(func_8005BF38(angle - floatstinger->rotation_24.vy)) < Q12_ANGLE(15.0f))
+            if (ABS(Math_AngleNormalizeSigned(angle - floatstinger->headingAngle_3C)) < Q12_ANGLE(90.0f) &&
+                ABS(Math_AngleNormalizeSigned(angle - floatstinger->rotation_24.vy)) < Q12_ANGLE(15.0f))
             {
                 var_v1 = ABS(floatstinger->position_18.vy);
 
@@ -1113,7 +1113,7 @@ bool func_800D4458(s_SubCharacter* floatstinger, VECTOR3* arg1) // 0x800D4458
     }
 
 
-    angle1 = ABS(func_8005BF38(angle0 - floatstinger->rotation_24.vy));
+    angle1 = ABS(Math_AngleNormalizeSigned(angle0 - floatstinger->rotation_24.vy));
     if ((Q12_ANGLE(90.0f) - angle1) < Q12_ANGLE(0.0f))
     {
         angle2 = Q12_ANGLE(180.0f) - angle1;
@@ -1180,7 +1180,7 @@ s32 func_800D48A4(s_SubCharacter* floatstinger, s16 arg1, s16 arg2) // 0x800D48A
 
         if (func_8006DA08(&ray, &sp30, &sp40, floatstinger) == false)
         {
-            return func_8005BF38(arg2 + var_s1);
+            return Math_AngleNormalizeSigned(arg2 + var_s1);
         }
     }
 
@@ -1217,7 +1217,7 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 newRotY) //
         rotY = newRotY - rotY;
     }
 
-    angle1 = func_8005BF38(rotY);
+    angle1 = Math_AngleNormalizeSigned(rotY);
     if (ABS(angle1) > ((floatstingerProps.flags_E8 & FloatstingerFlag_0) ? ABS(((Q12_MULT_PRECISE(floatstingerProps.field_EE, g_DeltaTime) * 3) >> 4) + 1) : ABS((Q12_MULT_PRECISE(floatstingerProps.field_EE, g_DeltaTime) >> 1) + 1)))
     {
         if (angle1 > Q12_ANGLE(0.0f))
@@ -1233,7 +1233,7 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 newRotY) //
                                                                                                                                Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f))));
         }
 
-        floatstinger->rotation_24.vy = func_8005BF38(Q12_MULT_PRECISE(g_DeltaTime, floatstingerProps.field_EE) + floatstinger->rotation_24.vy);
+        floatstinger->rotation_24.vy = Math_AngleNormalizeSigned(Q12_MULT_PRECISE(g_DeltaTime, floatstingerProps.field_EE) + floatstinger->rotation_24.vy);
     }
     else
     {
@@ -1343,9 +1343,9 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 newRotY) //
         {
             floatstinger->moveSpeed_38 = (floatstinger->moveSpeed_38 + ((floatstinger->moveSpeed_38 * dist) / Q12(4.0f))) >> 1;
 
-            if (ABS(func_8005BF38(unkAngle - floatstinger->headingAngle_3C)) > Q12_ANGLE(45.0f))
+            if (ABS(Math_AngleNormalizeSigned(unkAngle - floatstinger->headingAngle_3C)) > Q12_ANGLE(45.0f))
             {
-                floatstinger->moveSpeed_38 = Q12_MULT_PRECISE(floatstinger->moveSpeed_38, (ABS(func_8005BF38(unkAngle - floatstinger->headingAngle_3C)) << 1) + Q12_ANGLE(45.0f));
+                floatstinger->moveSpeed_38 = Q12_MULT_PRECISE(floatstinger->moveSpeed_38, (ABS(Math_AngleNormalizeSigned(unkAngle - floatstinger->headingAngle_3C)) << 1) + Q12_ANGLE(45.0f));
             }
         }
     }
@@ -1563,7 +1563,7 @@ void func_800D6800(void) // 0x800D6800
             MAP_POINTS[14].positionX_0 = g_SysWork.playerWork_4C.player_0.position_18.vx;
             MAP_POINTS[14].positionZ_8 = g_SysWork.playerWork_4C.player_0.position_18.vz;
             // TODO: Likely wrong union field.
-            MAP_POINTS[14].triggerParam0_4_16 = ((u32)func_8005BF38(g_SysWork.playerWork_4C.player_0.rotation_24.vy) + Q12(1.0f)) >> 4;
+            MAP_POINTS[14].triggerParam0_4_16 = ((u32)Math_AngleNormalizeSigned(g_SysWork.playerWork_4C.player_0.rotation_24.vy) + Q12(1.0f)) >> 4;
 
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 52, false);
 

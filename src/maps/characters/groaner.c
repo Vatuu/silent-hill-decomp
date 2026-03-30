@@ -178,7 +178,7 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
         newHeadingAngle = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
     }
 
-    unkAngle = func_8005BF38((newHeadingAngle - groaner->rotation_24.vy) + Q12_ANGLE(180.0f));
+    unkAngle = Math_AngleNormalizeSigned((newHeadingAngle - groaner->rotation_24.vy) + Q12_ANGLE(180.0f));
 
     // TODO: Unsure if `field_FE` is an angle.
     groanerProps.field_FE = CLAMP_LOW(unkDist >> 2, Q12_ANGLE(90.0f));
@@ -359,7 +359,7 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
 
     if (groanerProps.flags_E8.val16[0] & GroanerFlag_0)
     {
-        unkAngleDelta = func_8005BF38(groanerProps.angle_FC - groaner->rotation_24.vy);
+        unkAngleDelta = Math_AngleNormalizeSigned(groanerProps.angle_FC - groaner->rotation_24.vy);
         if (TIMESTEP_ANGLE(3, 2) < ABS(unkAngleDelta))
         {
             if (unkAngleDelta > Q12_ANGLE(0.0f))
@@ -403,7 +403,7 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
                                                                          ABS((posX - targetPosX) >> 1) + ABS(posZ - targetPosZ)))
             {
                 // TODO: Cleaner random angle generation.
-                if (ABS(func_8005BF38(groaner->rotation_24.vy - ratan2(groaner->position_18.vx - groanerProps.targetPositionX_F4,
+                if (ABS(Math_AngleNormalizeSigned(groaner->rotation_24.vy - ratan2(groaner->position_18.vx - groanerProps.targetPositionX_F4,
                                                                        groaner->position_18.vz - groanerProps.targetPositionZ_F8))) < (Rng_GenerateUInt(Q12_ANGLE(45.0f), Q12_ANGLE(50.7f) - 1)))
                 {
                     randTargetPosX        = groanerProps.targetPositionX_F4 + Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1);
@@ -523,7 +523,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
 
     for (i = 0; i < 3; i++)
     {
-        angle0 = func_8005BF38(groanerProps.angle_FC - groaner->rotation_24.vy);
+        angle0 = Math_AngleNormalizeSigned(groanerProps.angle_FC - groaner->rotation_24.vy);
 
         if (((g_DeltaTime >> 3) + 1) < ABS(angle0))
         {
@@ -542,7 +542,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
         }
     }
 
-    angleDeltaToTarget = func_8005BF38(groanerProps.angle_FC - groaner->rotation_24.vy);
+    angleDeltaToTarget = Math_AngleNormalizeSigned(groanerProps.angle_FC - groaner->rotation_24.vy);
     if (angleDeltaToTarget < Q12_ANGLE(20.0f))
     {
         Chara_MoveSpeedUpdate4(groaner, Q12(9.5f), Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f)));
@@ -576,7 +576,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
         {
             if (groaner->position_18.vy - g_SysWork.playerWork_4C.player_0.position_18.vy < Q12(0.8f))
             {
-                if (ABS(func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - groaner->position_18.vx,
+                if (ABS(Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - groaner->position_18.vx,
                                              g_SysWork.playerWork_4C.player_0.position_18.vz - groaner->position_18.vz) -
                                       groaner->rotation_24.vy)) < Q12_ANGLE(30.0f))
                 {
@@ -633,7 +633,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
     deltaZ       = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vz - groaner->position_18.vz);
     distToPlayer = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
 
-    angleDeltaToPlayer0 = func_8005BF38(Math_AngleBetweenPositionsGet(groaner->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+    angleDeltaToPlayer0 = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(groaner->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                         groaner->rotation_24.vy);
 
     if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) == GroanerAnim_15 ||
@@ -653,7 +653,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
                 groaner->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.25f));
             }
 
-            angleDeltaToPlayer1 = func_8005BF38(Math_AngleBetweenPositionsGet(groaner->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+            angleDeltaToPlayer1 = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(groaner->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                                 groaner->rotation_24.vy);
 
             rotMax = TIMESTEP_ANGLE(1, 3);
@@ -812,7 +812,7 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
 
     for (i = 0; i < 2; i++)
     {
-        temp_a3 = func_8005BF38((groanerProps.angle_FC - groaner->rotation_24.vy));
+        temp_a3 = Math_AngleNormalizeSigned((groanerProps.angle_FC - groaner->rotation_24.vy));
         if (((g_DeltaTime >> 3) + 1) < ABS(temp_a3))
         {
             if (temp_a3 > Q12_ANGLE(0.0f))
@@ -830,7 +830,7 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
         }
     }
 
-    temp_a3 = func_8005BF38(groanerProps.angle_FC - groaner->rotation_24.vy);
+    temp_a3 = Math_AngleNormalizeSigned(groanerProps.angle_FC - groaner->rotation_24.vy);
 
     if (groanerProps.timer_104 >= Q12(0.0f))
     {
@@ -1075,7 +1075,7 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
 
         if (groanerProps.field_FE > Q12(0.0f))
         {
-            angleDeltaToHeading = func_8005BF38((groaner->headingAngle_3C - groaner->rotation_24.vy) + Q12_ANGLE(180.0f));
+            angleDeltaToHeading = Math_AngleNormalizeSigned((groaner->headingAngle_3C - groaner->rotation_24.vy) + Q12_ANGLE(180.0f));
             if (ABS(angleDeltaToHeading) < Q12_ANGLE(45.0f))
             {
                 angleDeltaToHeading = Q12_ANGLE(-180.0f);
@@ -1089,11 +1089,11 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
                 angleDeltaToHeading = Q12_ANGLE(90.0f);
             }
 
-            if (func_8005BF38(groaner->headingAngle_3C - (groaner->rotation_24.vy + angleDeltaToHeading)) > Q12_ANGLE(0.0f))
+            if (Math_AngleNormalizeSigned(groaner->headingAngle_3C - (groaner->rotation_24.vy + angleDeltaToHeading)) > Q12_ANGLE(0.0f))
             {
                 groaner->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, groanerProps.field_FE);
 
-                if (func_8005BF38(groaner->headingAngle_3C - (groaner->rotation_24.vy + angleDeltaToHeading)) <= Q12_ANGLE(0.0f))
+                if (Math_AngleNormalizeSigned(groaner->headingAngle_3C - (groaner->rotation_24.vy + angleDeltaToHeading)) <= Q12_ANGLE(0.0f))
                 {
                     groanerProps.field_FE = Q12(0.0f);
                     groaner->rotation_24.vy                 = groaner->headingAngle_3C - angleDeltaToHeading;
@@ -1103,7 +1103,7 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
             {
                 groaner->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, groanerProps.field_FE);
 
-                if (func_8005BF38(groaner->headingAngle_3C - (groaner->rotation_24.vy + angleDeltaToHeading)) >= Q12_ANGLE(0.0f))
+                if (Math_AngleNormalizeSigned(groaner->headingAngle_3C - (groaner->rotation_24.vy + angleDeltaToHeading)) >= Q12_ANGLE(0.0f))
                 {
                     groanerProps.field_FE = Q12(0.0f);
                     groaner->rotation_24.vy                 = groaner->headingAngle_3C - angleDeltaToHeading;
@@ -1250,7 +1250,7 @@ void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsC
             break;
     }
 
-    angleDeltaToTarget = func_8005BF38(groanerProps.angle_EC - groaner->rotation_24.vy);
+    angleDeltaToTarget = Math_AngleNormalizeSigned(groanerProps.angle_EC - groaner->rotation_24.vy);
     if (angleDeltaToTarget == Q12_ANGLE(0.0f))
     {
         angle0 = Q12_ANGLE(0.0f);
@@ -1282,7 +1282,7 @@ void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsC
     Math_RotMatrixZxyNegGte(&ptr->field_0, &ptr->field_8);
     MulMatrix(&coords[1].coord, &ptr->field_8);
 
-    groaner->rotation_24.vy                 = func_8005BF38(groaner->rotation_24.vy);
+    groaner->rotation_24.vy                 = Math_AngleNormalizeSigned(groaner->rotation_24.vy);
     groanerProps.angle_EC = groaner->rotation_24.vy;
 }
 

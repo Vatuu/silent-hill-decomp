@@ -3509,7 +3509,7 @@ q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 
 
     if (angleOffset != NO_VALUE)
     {
-        return func_8005BF38(angleOffset + headingAngle);
+        return Math_AngleNormalizeSigned(angleOffset + headingAngle);
     }
 
     return Q12_ANGLE(360.0f);
@@ -3577,7 +3577,7 @@ q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 targetPo
 
     if (unkAngle != Q12_ANGLE(-360.0f))
     {
-        return func_8005BF38(unkAngle);
+        return Math_AngleNormalizeSigned(unkAngle);
     }
 
     return Q12_ANGLE(360.0f);
@@ -3594,17 +3594,17 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
     q19_12  distMult;
     q19_12  distMax;
 
-    if (func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+    if (Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
                              g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                       chara->rotation_24.vy) < 0)
     {
-        distMult = (func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+        distMult = (Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
                                         g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                                  chara->rotation_24.vy) * 2) + Q12_ANGLE(360.0f);
     }
     else
     {
-        distMult = (Q12_ANGLE(180.0f) - func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+        distMult = (Q12_ANGLE(180.0f) - Math_AngleNormalizeSigned((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
                                                              g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                                                       chara->rotation_24.vy))) * 2;
     }
