@@ -494,7 +494,7 @@ void Gfx_StringSetColor_JP(s16 colorId) // 0x8004A8DC
 
 s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
 {
-    RECT  sp10;
+    RECT  rect;
     s32   i;
     s32   temp;
     s32   j;
@@ -577,7 +577,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
 
     for (j = 0; j < FONT_12X16_LINE_COUNT_MAX; j++)
     {
-        setRECT(&sp10, 0, 0, 0, 0);
+        setRECT(&rect, 0, 0, 0, 0);
 
         for (i = 0; i < 21;)
         {
@@ -605,13 +605,18 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
                             switch (D_800C38B0.positionIdx_1)
                             {
                                 case 4:
-                                    setRECT(&sp10, (j % 5) << 6, (j / 5) ? 0x1E0 : FONT_12X16_GLYPH_SIZE_Y, i * 3, 0x10);
+                                    setRECT(&rect,
+                                            (j % 5) << 6, (j / 5) ? (SCREEN_HEIGHT * 2) : FONT_12X16_GLYPH_SIZE_Y,
+                                            i * 3, 16);
                                     break;
 
                                 default:
-                                    setRECT(&sp10, j << 6, (D_800C38B0.positionIdx_1 & 1) ? 0x1E0 : FONT_12X16_GLYPH_SIZE_Y, i * 3, 0x10);
+                                    setRECT(&rect,
+                                            j << 6, (D_800C38B0.positionIdx_1 & 0x1) ? (SCREEN_HEIGHT * 2) : FONT_12X16_GLYPH_SIZE_Y,
+                                            i * 3, 16);
                                     break;
                             }
+
                             i = 21;
                             break;
 
@@ -634,6 +639,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
                             ret = msgArg;
                             break;
                     }
+
                     mapMsg++;
                     break;
 
@@ -641,20 +647,25 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
                     switch (D_800C38B0.positionIdx_1)
                     {
                         case 4:
-                            setRECT(&sp10, (j % 5) << 6, (j / 5) ? 0x1E0 : FONT_12X16_GLYPH_SIZE_Y, i * 3, 0x10);
+                            setRECT(&rect,
+                                    (j % 5) << 6, (j / 5) ? (SCREEN_HEIGHT * 2) : FONT_12X16_GLYPH_SIZE_Y,
+                                    i * 3, 16);
                             break;
 
                         default:
-                            setRECT(&sp10, j << 6, (D_800C38B0.positionIdx_1 & 1) ? 0x1E0 : FONT_12X16_GLYPH_SIZE_Y, i * 3, 0x10);
+                            setRECT(&rect,
+                                    j << 6, (D_800C38B0.positionIdx_1 & 0x1) ? (SCREEN_HEIGHT * 2) : FONT_12X16_GLYPH_SIZE_Y,
+                                    i * 3, 16);
                             break;
                     }
+
                     i = 21;
                     j = FONT_12X16_LINE_COUNT_MAX;
                     break;
 
                 default:
                     temp = func_8004C8AC(mapMsg);
-                    if (temp == -1)
+                    if (temp == NO_VALUE)
                     {
                         mapMsg++;
                     }
@@ -669,9 +680,9 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
             }
         }
 
-        if (sp10.w != 0)
+        if (rect.w != 0)
         {
-            LoadImage(&sp10, (u32*)0x801E1E80);
+            LoadImage(&rect, (u32*)0x801E1E80);
             DrawSync(0);
         }
     }
@@ -679,10 +690,10 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
     return ret;
 }
 
-void func_8004B45C(s32 arg0, s32 arg1) // 0x8004B45C
+void func_8004B45C(s32 mapMsgBaseIdx, s32 arg1) // 0x8004B45C
 {
     s32   sp10[3] = { 0 };
-    RECT  sp20;
+    RECT  rect;
     s32   j;
     s32   ret;
     s32   i;
@@ -692,7 +703,7 @@ void func_8004B45C(s32 arg0, s32 arg1) // 0x8004B45C
 
     for (i = 0; i < arg1; i++)
     {
-        mapMsg = g_MapOverlayHeader.mapMessages_30[arg0 + i];
+        mapMsg = g_MapOverlayHeader.mapMessages_30[mapMsgBaseIdx + i];
 
         for (j = 0; j < 21;)
         {
@@ -716,11 +727,11 @@ void func_8004B45C(s32 arg0, s32 arg1) // 0x8004B45C
         }
     }
 
-    for (i = 0; i < arg1; i += 1)
+    for (i = 0; i < arg1; i++)
     {
-        mapMsg = g_MapOverlayHeader.mapMessages_30[arg0 + i];
+        mapMsg = g_MapOverlayHeader.mapMessages_30[mapMsgBaseIdx + i];
 
-        setRECT(&sp20, 0, 0, 0, 0);
+        setRECT(&rect, 0, 0, 0, 0);
 
         for (j = 0; j < 21;)
         {
@@ -732,15 +743,15 @@ void func_8004B45C(s32 arg0, s32 arg1) // 0x8004B45C
                     break;
 
                 case 0:
-                    setRECT(&sp20, ((i >> 1) << 6) + 0xC0,
-                            ((i & 1) * 0x1D0) + FONT_12X16_GLYPH_SIZE_Y,
+                    setRECT(&rect,
+                            ((i >> 1) << 6) + 192, ((i & 1) * 464) + FONT_12X16_GLYPH_SIZE_Y,
                             sp10[i] * 3, FONT_12X16_GLYPH_SIZE_Y);
                     j = 21;
                     break;
 
                 default:
                     ret = func_8004C8AC(mapMsg);
-                    if (ret == -1)
+                    if (ret == NO_VALUE)
                     {
                         mapMsg++;
                     }
@@ -755,9 +766,9 @@ void func_8004B45C(s32 arg0, s32 arg1) // 0x8004B45C
             }
         }
 
-        if (sp20.w != 0)
+        if (rect.w != 0)
         {
-            LoadImage(&sp20, (u32*)0x801E1E80);
+            LoadImage(&rect, (u32*)0x801E1E80);
             if (i != 2)
             {
                 DrawSync(0);

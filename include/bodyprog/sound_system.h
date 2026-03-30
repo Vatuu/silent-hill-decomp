@@ -59,6 +59,21 @@ typedef enum _AudioType
     AudioType_MusicBank     = 3
 } e_AudioType;
 
+/** @brief VAB audio load states. */
+typedef enum _AudioLoadState
+{
+    AudioLoadState_Reset     = 0,
+    AudioLoadState_Stop      = 1,
+    AudioLoadState_OffSet    = 2,
+    AudioLoadState_LoadFile  = 3,
+    AudioLoadState_CheckLoad = 4,
+    AudioLoadState_Move      = 5,
+    AudioLoadState_SetNext   = 6,
+    AudioLoadState_MoveNext  = 7,
+    AudioLoadState_MoveLast  = 8,
+    AudioLoadState_Finalize  = 9
+} e_AudioLoadState;
+
 // ========
 // STRUCTS
 // ========

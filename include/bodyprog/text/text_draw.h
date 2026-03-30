@@ -124,7 +124,7 @@ void func_8004B76C(char* str, bool useFixedWidth);
 void Gfx_StringDrawInt(s32 widthMin, s32 strLength);
 
 #if VERSION_REGION_IS(NTSCJ)
-    void func_8004B45C(s32 arg0, s32 arg1);
+    void func_8004B45C(s32 mapMsgBaseIdx, s32 arg1);
     void func_8004C8D8(u16*, s32*, s32);
     s32 func_8004C8AC(u8*);
 #endif
