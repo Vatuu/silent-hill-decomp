@@ -10,32 +10,34 @@
  * This code specifically handle file streaming and some general
  * sound game effects.
  *
- * @note Name deobfuscation.
+ * @note Name deobfuscation:
  * `Tokimeki Memorial ~Forever With You~` and `Konami International Rally Championship` symbols
- * indicate that what are named `commands` in the decomp are actually `tasks`. TM
- * suggests that at some point, they were called `events`.
+ * indicate what the decomp calls `commands` are actually `tasks`.
+ * TM suggests that at some point, they were called `events`.
  */
 
 // ==============
 // HELPER MACROS
 // ==============
 
-/** @brief Packs an audio type and program index into a single  value.
+/** * @brief Packs an audio type (VAB ID) and program index into a single 16-bit value.
  *
- * The third field from `s_VabInfo` is obfuscated.
- * The value get pass to `SdVoKeyOn` through the first argument (`vab_pro`) where it is used to give a
- * value to the variables `prog` (by doing the equivalent of `vab_progIdx_2 & 0x7F`) and `vabid`
- * (by doing the equivalent of `vab_progIdx_2 >> 8`).
- * This indicates from the values that are 516 (0x204), `prog` receives the value of
- * 2 while `vabid` would receive 4. This also fits with other values like 256 (0x100) and 514 (0x202).
+ * This macro replicates the encoding used in the third field of `s_VabInfo`. 
+ * The resulting value is passed to `SdVoKeyOn` via the `vab_pro` argument, 
+ * where the function extracts:
+ * - The Program Index: derived via `(vab_pro & 0x7F)`.
+ * - The VAB ID: derived via `vab_pro >> 8`.
  *
- * The first argument is related to `e_AudioType` and `g_Sd_AudioType`, used to
- * access the index of `vab_h`, which apparently allocates VAG data in memory.
+ * For example, a value of 516 (0x0204) results in a program index of 4 and a 
+ * VAB ID of 2. Similarly, 256 (0x0100) and 514 (0x0202) follow this bit-packed 
+ * structure.
  *
- * The second value is the index for a VAB-specific attribute named `program`.
+ * @param audioType ID used to index `vab_h`, which manages VAG data allocation in SPU memory.
+ * @param progIdx The specific program index within the VAB attribute table.
+ * @return Packed audio type and program index.
  */
 #define TYPE_AND_PROG_SFX(audioType, progIdx) \
-    (audioType << 8) + progIdx
+    ((audioType << 8) + progIdx)
 
 // ======
 // ENUMS
