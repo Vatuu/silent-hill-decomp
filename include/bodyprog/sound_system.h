@@ -66,7 +66,7 @@ typedef enum _AudioLoadState
 {
     AudioLoadState_Reset     = 0,
     AudioLoadState_Stop      = 1,
-    AudioLoadState_OffSet    = 2,
+    AudioLoadState_SetOff    = 2,
     AudioLoadState_LoadFile  = 3,
     AudioLoadState_CheckLoad = 4,
     AudioLoadState_Move      = 5,
@@ -75,6 +75,28 @@ typedef enum _AudioLoadState
     AudioLoadState_MoveLast  = 8,
     AudioLoadState_Finalize  = 9
 } e_AudioLoadState;
+
+/** @brief XA load states. */
+typedef enum _XaLoadState
+{
+    XaLoadState_Initialize    = 0,
+    XaLoadState_SetMode       = 1,
+    XaLoadState_PrepareFilter = 2,
+    XaLoadState_SetFilter     = 3,
+    XaLoadState_CalculateLba  = 4,
+    XaLoadState_Seek          = 5,
+    XaLoadState_StartRead     = 6,
+    XaLoadState_EnableAudio   = 7
+} e_XaLoadState;
+
+/** @brief XA stop states. */
+typedef enum _XaStopState
+{
+    XaStopState_FadeOut   = 0,
+    XaStopState_Mute      = 1,
+    XaStopState_PauseDisc = 2,
+    XaStopState_Cleanup   = 3
+} e_XaStopState;
 
 // ========
 // STRUCTS
@@ -256,7 +278,7 @@ extern s_VabInfo g_Vab_InfoTable[420];
 // This is done until a way to replicate `common`
 // segment behavior is found.
 
-extern CdlLOC D_800C15E8;
+extern CdlLOC XaCdLocation;
 
 extern s32 pad_bss_800C15EC;
 

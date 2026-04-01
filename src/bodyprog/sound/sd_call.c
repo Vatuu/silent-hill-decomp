@@ -13,15 +13,12 @@
 #include "bodyprog/sound_system.h"
 
 #ifndef PAD_HACK_IGNORE
-// ========================================
-// PADDING
-// ========================================
-const s32 pad_rodata_80025BF4 = 0;
-s32 pad_bss_800C15EC;
-s32 pad_bss_800C1674;
-s32 pad_bss_800C1694;
-char pad_bss_800C37C9[3];
-char pad_bss_800C37D1[3];
+    const s32 pad_rodata_80025BF4 = 0;
+    s32 pad_bss_800C15EC;
+    s32 pad_bss_800C1674;
+    s32 pad_bss_800C1694;
+    char pad_bss_800C37C9[3];
+    char pad_bss_800C37D1[3];
 #endif
 
 // ========================================
@@ -34,7 +31,7 @@ char pad_bss_800C37D1[3];
 // STATIC VARIABLES
 // ========================================
 
-static CdlLOC     D_800C15E8;
+static CdlLOC     XaCdLocation;
 static s_800C15F0 D_800C15F0[4];
 
 /** @brief `e_SfxId` | Stores the index of the currently playing SFX. */
@@ -341,7 +338,7 @@ void sd_work_init(void) // 0x80045E44
     g_Sd_AudioWork.lastVabAudioLoadedIdx_8[1] = 0;
     g_Sd_AudioWork.lastVabAudioLoadedIdx_8[2] = 0;
     g_Sd_AudioWork.xaAudioIdx_4               = 0;
-    g_Sd_AudioWork.isXaStopping_13            = 0;
+    g_Sd_AudioWork.isXaStopping_13            = false;
     g_Sd_AudioWork.cdErrorCount_0             = 0;
     g_Sd_AudioWork.bgmFadeSpeed_14            = 0;
     g_Sd_AudioWork.isAudioLoading_15          = false;
@@ -355,7 +352,7 @@ void sd_work_init(void) // 0x80045E44
     g_Sd_AudioWork.field_E                     = 0;
     g_Sd_AudioWork.field_10                    = 0;
     g_Sd_AudioStreamingStates.audioLoadState_0 = AudioLoadState_Reset;
-    g_Sd_AudioStreamingStates.xaLoadState_1    = 0;
+    g_Sd_AudioStreamingStates.xaLoadState_1    = XaLoadState_Initialize;
     g_Sd_AudioStreamingStates.xaStopState_2    = 0;
     g_Sd_AudioStreamingStates.xaPreLoadState_3 = 0;
     gSDVolConfig.volumeXa_0                    = 84;
@@ -833,6 +830,8 @@ s32 Sd_XaAudioLengthGet(s32 idx) // 0x80046DCC
 
 void Sd_XaAudioPlay(void) // 0x80046E00
 {
+    #define PREGAP 150
+
     static u16 xaAudioIdx;
     static u32 xaFileOffset;
     u32*       xaFileOffsetsPtr;
@@ -842,7 +841,7 @@ void Sd_XaAudioPlay(void) // 0x80046E00
 
     switch (g_Sd_AudioStreamingStates.xaLoadState_1)
     {
-        case 0:
+        case XaLoadState_Initialize:
             if (g_Sd_AudioWork.bgmFadeSpeed_14 == 0)
             {
                 gSDVolConfig.volumeBgm_6 = 24;
@@ -883,75 +882,75 @@ void Sd_XaAudioPlay(void) // 0x80046E00
             gSDVolConfig.volumeXa_0                 = gSDVolConfig.volumeXa_2;
             Sd_SetVolXa(gSDVolConfig.volumeXa_2, gSDVolConfig.volumeXa_2);
             D_800C15F0[0].field_0                   = CdlModeSF | CdlModeRT | CdlModeSpeed;
-            g_Sd_AudioStreamingStates.xaLoadState_1 = 1;
+            g_Sd_AudioStreamingStates.xaLoadState_1 = XaLoadState_SetMode;
             break;
 
-        case 1:
+        case XaLoadState_SetMode:
             if (!Sd_CdPrimitiveCmdTry(CdlSetmode, &D_800C15F0[0].field_0, NULL))
             {
                 g_Sd_AudioWork.cdErrorCount_0           = 0;
-                g_Sd_AudioStreamingStates.xaLoadState_1 = 2;
+                g_Sd_AudioStreamingStates.xaLoadState_1 = XaLoadState_PrepareFilter;
             }
             break;
 
         default:
             break;
 
-        case 2:
+        case XaLoadState_PrepareFilter:
             D_800C15F0[0].field_0                   = g_XaItemData[xaAudioIdx].field_8_24;
             D_800C15F0[0].field_1                   = g_XaItemData[xaAudioIdx].field_4_24;
-            g_Sd_AudioStreamingStates.xaLoadState_1 = 3;
+            g_Sd_AudioStreamingStates.xaLoadState_1 = XaLoadState_SetFilter;
             break;
 
-        case 3:
+        case XaLoadState_SetFilter:
             if (!Sd_CdPrimitiveCmdTry(CdlSetfilter, &D_800C15F0[0].field_0, NULL))
             {
                 g_Sd_AudioWork.cdErrorCount_0           = 0;
-                g_Sd_AudioStreamingStates.xaLoadState_1 = 4;
+                g_Sd_AudioStreamingStates.xaLoadState_1 = XaLoadState_CalculateLba;
             }
             break;
 
-        case 4:
+        case XaLoadState_CalculateLba:
             // @hack Needed for match, weird code.
             xaFileOffsetsPtr      = g_FileXaLoc;
             xaFileOffsetTargetPtr = &xaFileOffsetsPtr[g_XaItemData[xaAudioIdx].xaFileIdx_0];
             xaFileOffset          = *xaFileOffsetTargetPtr;
-            xaFileOffset         += 150 + g_XaItemData[xaAudioIdx].sector_4;
+            xaFileOffset         += PREGAP + g_XaItemData[xaAudioIdx].sector_4;
 
             D_800C1688.field_0 = g_XaItemData[xaAudioIdx].audioLength_8 + 32;
 
-            g_Sd_AudioStreamingStates.xaLoadState_1 = 5;
-            D_800C15E8.sector                       = itob(xaFileOffset % 75);
+            g_Sd_AudioStreamingStates.xaLoadState_1 = XaLoadState_Seek;
+            XaCdLocation.sector                     = itob(xaFileOffset % 75);
             xaFileOffset                           /= 75;
-            D_800C15E8.second                       = itob(xaFileOffset % 60);
+            XaCdLocation.second                     = itob(xaFileOffset % 60);
             xaFileOffset                           /= 60;
-            D_800C15E8.minute                       = itob(xaFileOffset);
+            XaCdLocation.minute                     = itob(xaFileOffset);
             break;
 
-        case 5:
-            if (!Sd_CdPrimitiveCmdTry(CdlSeekL, &D_800C15E8.minute, NULL))
+        case XaLoadState_Seek:
+            if (!Sd_CdPrimitiveCmdTry(CdlSeekL, &XaCdLocation.minute, NULL))
             {
                 g_Sd_AudioWork.cdErrorCount_0           = 0;
-                g_Sd_AudioStreamingStates.xaLoadState_1 = 6;
+                g_Sd_AudioStreamingStates.xaLoadState_1 = XaLoadState_StartRead;
             }
             break;
 
-        case 6:
+        case XaLoadState_StartRead:
             if (!Sd_CdPrimitiveCmdTry(CdlReadN, NULL, NULL))
             {
                 g_Sd_AudioWork.cdErrorCount_0           = 0;
                 D_800C37DC                              = false;
-                g_Sd_AudioStreamingStates.xaLoadState_1 = 7;
+                g_Sd_AudioStreamingStates.xaLoadState_1 = XaLoadState_EnableAudio;
             }
             break;
 
-        case 7:
+        case XaLoadState_EnableAudio:
             g_Sd_AudioWork.xaAudioIdx_4 = xaAudioIdx;
 
             SdSetSerialAttr(0, 0, 1);
             D_800C1688.field_8                      = VSync(SyncMode_Count);
             D_800C1688.field_4                      = 0;
-            g_Sd_AudioStreamingStates.xaLoadState_1 = 0;
+            g_Sd_AudioStreamingStates.xaLoadState_1 = XaLoadState_Initialize;
 
             Sd_TaskPoolUpdate();
             g_Sd_AudioWork.cdErrorCount_0    = 0;
@@ -1029,15 +1028,15 @@ void Sd_XaPreLoadAudio(void) // 0x80047308
             D_800C1688.field_0 = g_XaItemData[xaAudioIdx].audioLength_8 + 32;
 
             g_Sd_AudioStreamingStates.xaPreLoadState_3 = 5;
-            D_800C15E8.sector                          = itob(xaFileOffset % 75);
+            XaCdLocation.sector                        = itob(xaFileOffset % 75);
             xaFileOffset                              /= 75;
-            D_800C15E8.second                          = itob(xaFileOffset % 60);
+            XaCdLocation.second                        = itob(xaFileOffset % 60);
             xaFileOffset                              /= 60;
-            D_800C15E8.minute                          = itob(xaFileOffset);
+            XaCdLocation.minute                        = itob(xaFileOffset);
             break;
 
         case 5:
-            if (!Sd_CdPrimitiveCmdTry(CdlSeekL, &D_800C15E8.minute, NULL))
+            if (!Sd_CdPrimitiveCmdTry(CdlSeekL, &XaCdLocation.minute, NULL))
             {
                 g_Sd_AudioWork.cdErrorCount_0              = 0;
                 g_Sd_AudioStreamingStates.xaPreLoadState_3 = 6;
@@ -1067,45 +1066,45 @@ void Sd_XaAudioStopTaskAdd(void) // 0x8004760C
 
 void Sd_XaAudioStop(void) // 0x80047634
 {
-    g_Sd_AudioWork.isXaStopping_13 = 1;
+    g_Sd_AudioWork.isXaStopping_13 = true;
 
     switch (g_Sd_AudioStreamingStates.xaStopState_2)
     {
-        case 0:
+        case XaStopState_FadeOut:
             Sd_SetVolXa(gSDVolConfig.volumeXa_0, gSDVolConfig.volumeXa_0);
             gSDVolConfig.volumeXa_0 -= 24;
             gSDVolConfig.volumeXa_2  = gSDVolConfig.volumeXa_0;
 
             if (gSDVolConfig.volumeXa_0 < 2)
             {
-                g_Sd_AudioStreamingStates.xaStopState_2 = 1;
+                g_Sd_AudioStreamingStates.xaStopState_2 = XaStopState_Mute;
             }
             break;
 
-        case 1:
+        case XaStopState_Mute:
             gSDVolConfig.volumeXa_0 = 0;
             gSDVolConfig.volumeXa_2 = 0;
 
             Sd_SetVolXa(0, 0);
             SdSetSerialAttr(0, 0, 0);
 
-            g_Sd_AudioStreamingStates.xaStopState_2 = 2;
+            g_Sd_AudioStreamingStates.xaStopState_2 = XaStopState_PauseDisc;
             break;
 
-        case 2:
+        case XaStopState_PauseDisc:
             if (!Sd_CdPrimitiveCmdTry(CdlPause, NULL, NULL))
             {
-                g_Sd_AudioWork.cdErrorCount_0            = 0;
-                g_Sd_AudioStreamingStates.xaStopState_2  = 3;
+                g_Sd_AudioWork.cdErrorCount_0           = 0;
+                g_Sd_AudioStreamingStates.xaStopState_2 = XaStopState_Cleanup;
             }
 
             g_Sd_AudioWork.cdErrorCount_0++;
             break;
 
-        case 3:
-            g_Sd_AudioWork.isXaStopping_13           = 0;
-            g_Sd_AudioWork.xaAudioIdx_4              = 0;
-            g_Sd_AudioStreamingStates.xaStopState_2  = 0;
+        case XaStopState_Cleanup:
+            g_Sd_AudioWork.isXaStopping_13          = false;
+            g_Sd_AudioWork.xaAudioIdx_4             = 0;
+            g_Sd_AudioStreamingStates.xaStopState_2 = XaStopState_FadeOut;
 
             if (g_Sd_AudioWork.bgmFadeSpeed_14 == 0)
             {
@@ -1304,7 +1303,7 @@ void Sd_VabLoad(void) // 0x80047B80
             Sd_VabLoad_TypeClear();
             break;
 
-        case AudioLoadState_OffSet:
+        case AudioLoadState_SetOff:
             Sd_VabLoad_OffSet();
             break;
 
@@ -1345,7 +1344,7 @@ void Sd_VabLoad_TypeClear(void) // 0x80047D1C
 {
     g_Sd_DataMoved = 0;
     SdVabClose(g_Sd_AudioType);
-    g_Sd_AudioStreamingStates.audioLoadState_0 = AudioLoadState_OffSet;
+    g_Sd_AudioStreamingStates.audioLoadState_0 = AudioLoadState_SetOff;
 }
 
 void Sd_VabLoad_OffSet(void) // 0x80047D50
@@ -1558,7 +1557,7 @@ void Sd_KdtLoad(void) // 0x800482D8
             Sd_KdtLoad_StopSeq();
             break;
 
-        case AudioLoadState_OffSet:
+        case AudioLoadState_SetOff:
             Sd_KdtLoad_OffSet();
             break;
 
@@ -1580,7 +1579,7 @@ void Sd_KdtLoad_StopSeq(void) // 0x8004839C
     Sd_StopBgmStep();
     SdSeqClose(g_Sd_AudioType);
 
-    g_Sd_AudioStreamingStates.audioLoadState_0 = AudioLoadState_OffSet;
+    g_Sd_AudioStreamingStates.audioLoadState_0 = AudioLoadState_SetOff;
 }
 
 void Sd_KdtLoad_OffSet(void) // 0x800483D4
@@ -1807,8 +1806,8 @@ void Sd_TaskPoolExecute(void) // 0x800485D8
             g_Sd_AudioStreamingStates.audioLoadState_0 = AudioLoadState_Stop;
         }
 
-        g_Sd_AudioStreamingStates.xaLoadState_1    = 0;
-        g_Sd_AudioStreamingStates.xaStopState_2    = 0;
+        g_Sd_AudioStreamingStates.xaLoadState_1    = XaLoadState_Initialize;
+        g_Sd_AudioStreamingStates.xaStopState_2    = XaStopState_FadeOut;
         g_Sd_AudioStreamingStates.xaPreLoadState_3 = 0;
         g_Sd_AudioWork.cdErrorCount_0              = 0;
     }
@@ -1839,8 +1838,8 @@ u8 Sd_CdPrimitiveCmdTry(s32 com, u8* param, u8* res) // 0x80048954
             g_Sd_AudioStreamingStates.audioLoadState_0 = AudioLoadState_Stop;
         }
 
-        g_Sd_AudioStreamingStates.xaLoadState_1    = 0;
-        g_Sd_AudioStreamingStates.xaStopState_2    = 0;
+        g_Sd_AudioStreamingStates.xaLoadState_1    = XaLoadState_Initialize;
+        g_Sd_AudioStreamingStates.xaStopState_2    = XaStopState_FadeOut;
         g_Sd_AudioStreamingStates.xaPreLoadState_3 = 0;
         g_Sd_AudioWork.cdErrorCount_0              = 0;
     }

@@ -19,10 +19,7 @@
 #define MAIN_MENU_FOG_COUNT 21
 
 #ifndef PAD_HACK_IGNORE
-// ========================================
-// PADDING
-// ========================================
-const s32 pad_rodata_8002547C = 0;
+    const s32 pad_rodata_8002547C = 0;
 #endif
 
 // ========================================

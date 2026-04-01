@@ -3,8 +3,7 @@
 
 #include <psyq/libsnd.h>
 
-/**
- * libsd: konami-customized version of libsnd?
+/** libsd: konami-customized version of libsnd?
  * Majority of the functions work like the libsnd Ss versions.
  * libref.pdf v4.4 may be useful, though was likely based on an earlier SDK.
  */
