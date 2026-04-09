@@ -404,12 +404,12 @@ void func_8005E89C(void) // 0x8005E89C
         {
             if (g_MapOverlayHeader.field_94->field_30[i] == 0)
             {
-                ptr->field_DC[i]            = Math_Sin(g_MapOverlayHeader.field_94->field_34[i]);
-                ptr->field_E4[i]            = Math_Cos(g_MapOverlayHeader.field_94->field_34[i]);
-                ptr->u_field_EC.raw_0[i]    = (g_MapOverlayHeader.field_94->field_5C[i] >> 1) * Math_Sin(g_MapOverlayHeader.field_94->field_34[i]);
-                ptr->u_field_FC.raw_0[i]    = (g_MapOverlayHeader.field_94->field_5C[i] >> 1) * Math_Cos(g_MapOverlayHeader.field_94->field_34[i]);
-                ptr->field_10C[i]           = g_MapOverlayHeader.field_94->field_64[i] * Math_Sin(g_MapOverlayHeader.field_94->field_34[i]);
-                ptr->field_11C[i]           = g_MapOverlayHeader.field_94->field_64[i] * Math_Cos(g_MapOverlayHeader.field_94->field_34[i]);
+                ptr->field_DC[i]         = Math_Sin(g_MapOverlayHeader.field_94->field_34[i]);
+                ptr->field_E4[i]         = Math_Cos(g_MapOverlayHeader.field_94->field_34[i]);
+                ptr->u_field_EC.raw_0[i] = (g_MapOverlayHeader.field_94->field_5C[i] >> 1) * Math_Sin(g_MapOverlayHeader.field_94->field_34[i]);
+                ptr->u_field_FC.raw_0[i] = (g_MapOverlayHeader.field_94->field_5C[i] >> 1) * Math_Cos(g_MapOverlayHeader.field_94->field_34[i]);
+                ptr->field_10C[i]        = g_MapOverlayHeader.field_94->field_64[i] * Math_Sin(g_MapOverlayHeader.field_94->field_34[i]);
+                ptr->field_11C[i]        = g_MapOverlayHeader.field_94->field_64[i] * Math_Cos(g_MapOverlayHeader.field_94->field_34[i]);
             }
             else
             {

@@ -328,7 +328,7 @@ void vbSetRefView(VbRVIEW* rview) // 0x800498D8
     vbSetWorldScreenMatrix(&coord);
 }
 
-void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* outMat) // 0x80049984
+void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* transformMat) // 0x80049984
 {
     GsCOORDINATE2* prevCoord;
     GsCOORDINATE2* parentCoord;
@@ -337,7 +337,7 @@ void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* outMat) //
     // If no root coord provided, set output matrix to identity.
     if (rootCoord == NULL)
     {
-        *outMat = GsIDMATRIX;
+        *transformMat = GsIDMATRIX;
     }
 
     curCoord  = rootCoord;
@@ -394,7 +394,7 @@ void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* outMat) //
     }
 
     // Set output.
-    *outMat = rootCoord->workm;
+    *transformMat = rootCoord->workm;
 }
 
 void Vw_CoordToViewSpaceMatrix(GsCOORDINATE2* rootCoord, MATRIX* viewMat) // 0x80049AF8
@@ -565,13 +565,13 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ
 
     regionFlags.flags[2][2] = 0;
 
-    cullData          = (s_CameraCullData*)PSX_SCRATCH;
-    cullData->field_0 = *modelMat;
+    cullData           = (s_CameraCullData*)PSX_SCRATCH;
+    cullData->modelMat = *modelMat;
 
     ((u32*)&regionFlags)[1] = 0;
     ((u32*)&regionFlags)[0] = 0;
 
-    GsSetLsMatrix(&cullData->field_0);
+    GsSetLsMatrix(&cullData->modelMat);
 
     cullData->field_20[0].vx = minX;
     cullData->field_20[0].vy = minY;
@@ -793,43 +793,50 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ
 
 bool Vw_ScreenRegionSpanCheck(s_CameraScreenRegionFlags* regionFlags) // 0x8004A54C
 {
-    bool cond0;
-    bool cond1;
-    bool cond2;
-    bool cond3;
+    bool isLeft;
+    bool isRight;
+    bool isTop;
+    bool isBottom;
 
-    cond0 = false;
-    cond1 = false;
-    cond2 = false;
-    cond3 = false;
+    isLeft   = false;
+    isRight  = false;
+    isTop    = false;
+    isBottom = false;
 
+    // Check center.
     if (regionFlags->flags[1][1])
     {
         return true;
     }
 
+    // Define vertical span.
     if (regionFlags->flags[1][0] || (regionFlags->flags[0][0] && regionFlags->flags[2][0]))
     {
-        cond0 = true;
+        isLeft = true;
     }
     if (regionFlags->flags[1][2] || (regionFlags->flags[0][2] && regionFlags->flags[2][2]))
     {
-        cond1 = true;
+        isRight = true;
     }
-    if (cond0 && cond1)
+
+    // Check vertical span.
+    if (isLeft && isRight)
     {
         return true;
     }
 
+    // Define horizontal span.
     if (regionFlags->flags[0][1] || (regionFlags->flags[0][0] && regionFlags->flags[0][2]))
     {
-        cond2 = true;
+        isTop = true;
     }
     if (regionFlags->flags[2][1] || (regionFlags->flags[2][0] && regionFlags->flags[2][2]))
     {
-        cond3 = true;
+        isBottom = true;
     }
-    if (cond2 && cond3)
+
+    // Check horizontal span.
+    if (isTop && isBottom)
     {
         return true;
     }
@@ -866,9 +873,6 @@ q19_12 vwVectorToAngle(SVECTOR* ang, const SVECTOR* vec) // 0x8004A714
 
 s32 vwOresenHokan(const s32* y_ary, s32 y_suu, s32 input_x, s32 min_x, s32 max_x) // 0x8004A7C8
 {
-    // `y_ary` = array of Y values.
-    // `y_suu` = `y_ary` size.
-
     s32 amari;    // Remainder when calculating position within interval.
     s32 kukan_w;  // Width of each interval between Y values.
     s32 kukan_no; // Index of the interval containing `input_x` angle.
@@ -886,7 +890,7 @@ s32 vwOresenHokan(const s32* y_ary, s32 y_suu, s32 input_x, s32 min_x, s32 max_x
         }
         else
         {
-            kukan_w  = (max_x - min_x) / (y_suu - 1);
+            kukan_w  = (max_x   - min_x) / (y_suu - 1);
             amari    = (input_x - min_x) % kukan_w;
             kukan_no = (input_x - min_x) / kukan_w;
             if (kukan_no >= (y_suu - 1))

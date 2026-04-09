@@ -2070,7 +2070,7 @@ typedef struct
 
 typedef struct
 {
-    MATRIX  field_0;
+    MATRIX  field_0; // View matrix?
     SVECTOR field_20;
     VECTOR  field_28; // Q27.4
     s32     field_38;
