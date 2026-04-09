@@ -166,8 +166,8 @@ void MainLoop(void) // 0x80032EE0
     Joy_Init();
     VSyncCallback(&Screen_VSyncCallback);
 
-    // NTSC-J moves these calls into the `HP_SAFE1` / `S__SAFE2` anti-modchip overlays.
-    // Likely to make sure those overlays aren't patched out by pirates.
+    // NTSC-J moves these calls into the `HP_SAFE1`/`S__SAFE2` anti-modchip overlays,
+    // likely to make sure those overlays wouldn't be patched out by pirates.
 #if !VERSION_REGION_IS(NTSCJ)
     InitGeom();
     ItemScreen_TmdGsFCallInit();

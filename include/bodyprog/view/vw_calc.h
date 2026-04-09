@@ -114,7 +114,12 @@ bool Vw_AabbVisibleInScreenCheck(s32 minX, s32 maxX, s32 minY, s32 maxY, s32 min
  */
 bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ, s32 maxX, s32 maxY, s32 maxZ, u16 nearPlane, u16 farPlane);
 
-bool func_8004A54C(s_func_8004A54C* arg0);
+/** @brief Checks if screen-space region flags span across the screen center.
+ *
+ * @param regionFlags 3x3 screen region occupancy flags.
+ * @return `true` if geometry spans the visible region, `false` otherwise.
+ */
+bool Vw_ScreenRegionSpanCheck(s_CameraScreenRegionFlags* regionFlags);
 
 /** @brief Converts a rotation to a direction vector with a given length.
  *

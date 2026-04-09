@@ -5,7 +5,7 @@
 
 #define CAMERA_PATH_COLL_COUNT_MAX 10
 
-/** @brief 2D area constraint on the XZ plane. */
+/** @brief 2D camera path area constraint on the XZ plane. */
 typedef struct _VC_LIMIT_AREA
 {
     q11_4 min_hx;
@@ -15,13 +15,13 @@ typedef struct _VC_LIMIT_AREA
 } VC_LIMIT_AREA;
 STATIC_ASSERT_SIZEOF(VC_LIMIT_AREA, 8);
 
-/** @brief Camera internal info. */
+/** @brief Internal camera info. */
 typedef struct _VC_CAMERA_INTINFO
 {
-    u32   mode;      /** Mode state step. */
-    u8    mv_smooth; /** `VC_CAM_MV_TYPE` */
+    u32   mode;        /** Mode state step. */
+    u8    mv_smooth;   /** `VC_CAM_MV_TYPE` */
     // 1 byte of padding.
-    q3_12 ev_cam_rate;
+    q3_12 ev_cam_rate; /** Camera elevation rate. */
 } VC_CAMERA_INTINFO;
 STATIC_ASSERT_SIZEOF(VC_CAMERA_INTINFO, 8);
 
@@ -49,7 +49,7 @@ STATIC_ASSERT_SIZEOF(VC_CAM_MV_PARAM, 16);
 
 /** @brief Camera path data.
  *
- * In SH2 the `.cam` files contain this struct, while in SH1 this is part of `s_MapOverlayHeader`.
+ * @note In SH2, the `.cam` files contain this struct, while in SH1 this is part of `s_MapOverlayHeader`.
  */
 typedef struct _VC_ROAD_DATA
 {
@@ -97,6 +97,7 @@ typedef struct _VC_NEAR_ROAD_DATA
 } VC_NEAR_ROAD_DATA;
 STATIC_ASSERT_SIZEOF(VC_NEAR_ROAD_DATA, 36);
 
+/** @brief Camera workspace. */
 typedef struct _VC_WORK
 {
     u8                        view_cam_active_f_0;            /** `bool` */
@@ -108,7 +109,7 @@ typedef struct _VC_WORK
     q3_12                     scr_half_ang_wy_2C;
     q3_12                     scr_half_ang_wx_2E;
     s16                       geom_screen_dist_30;            /** Related to `GsSetProjection`/`g_GameSys.gs_y_res_58A`. */
-    s16                       field_32; // Padding? Not used.
+    // 2 bytes of padding.
     VC_CAM_MV_PARAM           user_cam_mv_prm_34;             /** Look parameters? */
     VECTOR3                   cam_tgt_pos_44;                 /** Target camera position. */
     VECTOR3                   cam_pos_50;                     /** Q19.12 | Camera position. */
@@ -158,7 +159,7 @@ typedef struct _VC_WORK
 } VC_WORK;
 STATIC_ASSERT_SIZEOF(VC_WORK, 744);
 
-/** @brief Camera view matrix. */
+/** @brief Camera matrix. */
 typedef struct _VbRVIEW
 {
     VECTOR3        vp;
@@ -168,6 +169,7 @@ typedef struct _VbRVIEW
 } VbRVIEW;
 STATIC_ASSERT_SIZEOF(VbRVIEW, 32);
 
+/** @brief Camera view renderer workspace. */
 typedef struct _VW_VIEW_WORK
 {
     VbRVIEW       rview;
@@ -177,7 +179,8 @@ typedef struct _VW_VIEW_WORK
 } VW_VIEW_WORK;
 STATIC_ASSERT_SIZEOF(VW_VIEW_WORK, 132);
 
-typedef struct _s_Vw_AabbVisibleInFrustumCheck
+/** @brief Camera view cull data. */
+typedef struct _CameraCullData
 {
     MATRIX  field_0;
     SVECTOR field_20[8];
@@ -187,13 +190,14 @@ typedef struct _s_Vw_AabbVisibleInFrustumCheck
     s32     field_114;
     DVECTOR field_118[24];
     s32     field_178;
-} s_Vw_AabbVisibleInFrustumCheck;
-STATIC_ASSERT_SIZEOF(s_Vw_AabbVisibleInFrustumCheck, 380);
+} s_CameraCullData;
+STATIC_ASSERT_SIZEOF(s_CameraCullData, 380);
 
-typedef struct _s_func_8004A54C
+/** @brief 3x3 screen region occupancy flags. */
+typedef struct _CameraScreenRegionFlags
 {
-    u8 field_0[3][3];
-} s_func_8004A54C;
-STATIC_ASSERT_SIZEOF(s_func_8004A54C, 9);
+    u8 flags[3][3];
+} s_CameraScreenRegionFlags;
+STATIC_ASSERT_SIZEOF(s_CameraScreenRegionFlags, 9);
 
 #endif

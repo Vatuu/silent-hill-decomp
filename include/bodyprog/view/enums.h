@@ -1,6 +1,7 @@
 #ifndef _BODYPROG_VIEW_ENUMS_H
 #define _BODYPROG_VIEW_ENUMS_H
 
+/** @brief Camera path flags. */
 typedef enum _VC_ROAD_FLAGS
 {
     VC_RD_NOFLAG            = 0,
@@ -16,6 +17,7 @@ typedef enum _VC_ROAD_FLAGS
 } VC_ROAD_FLAGS;
 STATIC_ASSERT_SIZEOF(VC_ROAD_FLAGS, 4);
 
+/** @brief Camera flags. */
 typedef enum _VC_FLAGS
 {
     VC_NOFLAG                = 0,
@@ -33,25 +35,7 @@ typedef enum _VC_FLAGS
 } VC_FLAGS;
 STATIC_ASSERT_SIZEOF(VC_FLAGS, 4);
 
-/** @brief Camera anchor types. */
-typedef enum _CameraAnchor
-{
-    CameraAnchor_Character = 0,
-    CameraAnchor_Ground    = 1,
-    CameraAnchor_Camera    = 2 // TODO: Name uncertain. Relies on some backup camera Y value? -- Sezz
-} e_CameraAnchor;
-
-/** @brief Debug camera mode state steps. */
-typedef enum _DebugCameraMode
-{
-    DebugCameraMode_Collision          = 0,
-    DebugCameraMode_SetReference       = 1,
-    DebugCameraMode_AnalogStickControl = 2,
-    DebugCameraMode_ResetReference     = 3, // TODO: Name uncertain.
-    DebugCameraMode_Init               = 4  // TODO: Name uncertain.
-} e_DebugCameraMode;
-
-/** @brief Camera move type. */
+/** @brief Camera move types. */
 typedef enum _VC_CAM_MV_TYPE
 {
     VC_MV_CHASE        = 0, /** Chase player. */
@@ -64,34 +48,39 @@ typedef enum _VC_CAM_MV_TYPE
 } VC_CAM_MV_TYPE;
 STATIC_ASSERT_SIZEOF(VC_CAM_MV_TYPE, 4);
 
+/** @brief Camera check types. */
 typedef enum _VC_CAM_CHK_TYPE
 {
-    VC_CHK_NEAREST_ROAD_TYPE   = 0,
-    VC_CHK_NEAREST_SWITCH_TYPE = 1
+    VC_CHK_NEAREST_ROAD_TYPE   = 0, /** Closest camera path. */
+    VC_CHK_NEAREST_SWITCH_TYPE = 1  /** Closest switch type. */
 } VC_CAM_CHK_TYPE;
 STATIC_ASSERT_SIZEOF(VC_CAM_CHK_TYPE, 4);
 
 /** @brief Camera path type. */
 typedef enum _VC_ROAD_TYPE
 {
-    VC_RD_TYPE_ROAD           = 0,
-    VC_RD_TYPE_EFFECT         = 1,
-    VC_RD_TYPE_EVENT          = 2,
-    VC_RD_TYPE_ROAD_PRIO_LOW  = 3,
-    VC_RD_TYPE_ROAD_PRIO_HIGH = 4,
-    VC_RD_TYPE_SV_ONLY        = 5,
+    VC_RD_TYPE_ROAD           = 0, /** Regular camera path. */
+    VC_RD_TYPE_EFFECT         = 1, /** Effect camera path. */
+    VC_RD_TYPE_EVENT          = 2, /** Event camera path. */
+    VC_RD_TYPE_ROAD_PRIO_LOW  = 3, /** Low-priority camera path. */
+    VC_RD_TYPE_ROAD_PRIO_HIGH = 4, /** High-priority camera path. */
+    VC_RD_TYPE_SV_ONLY        = 5, /** TODO */
 
     VC_RD_TYPE_SUU            = 6  /** Count. */
 } VC_ROAD_TYPE;
 STATIC_ASSERT_SIZEOF(VC_ROAD_TYPE, 4);
 
-// Not defined in SH2 symbols, values taken from `vrDispMsgVC_ROAD_DIR_TYPE` SH2 debug func.
+/** @brief Camera path direction binding types.
+ *
+ * @note Not defined in SH2 symbols. Values are taken from the `vrDispMsgVC_ROAD_DIR_TYPE` SH2 debug function.
+ */
 typedef enum _VC_ROAD_DIR_TYPE
 {
-    VC_RD_DIR_Z = 0,
-    VC_RD_DIR_X = 1
+    VC_RD_DIR_Z = 0, /** Bound on X-axis. */
+    VC_RD_DIR_X = 1  /** Bound on Z-axis. */
 } VC_ROAD_DIR_TYPE;
 
+/** @brief Camera path spatial constraint size types. */
 typedef enum _VC_AREA_SIZE_TYPE
 {
     VC_AREA_TINY    = 0,
@@ -99,10 +88,11 @@ typedef enum _VC_AREA_SIZE_TYPE
     VC_AREA_WIDE    = 2,
     VC_AREA_OUTDOOR = 3,
 
-//    VC_AREA_SUU     = 4 /**Count. Disabled to remove size warning since it's unused. */
+//    VC_AREA_SUU     = 4 /** Count. Disabled to remove size warning since it's unused. */
 } VC_AREA_SIZE_TYPE;
 STATIC_ASSERT_SIZEOF(VC_AREA_SIZE_TYPE, 4);
 
+/** @brief Rail camera set command types. */
 typedef enum _THROUGH_DOOR_SET_CMD_TYPE
 {
     VC_TDSC_START = 0,
@@ -110,5 +100,23 @@ typedef enum _THROUGH_DOOR_SET_CMD_TYPE
     VC_TDSC_MAIN  = 2
 } THROUGH_DOOR_SET_CMD_TYPE;
 STATIC_ASSERT_SIZEOF(THROUGH_DOOR_SET_CMD_TYPE, 4);
+
+/** @brief Camera anchor types. */
+typedef enum _CameraAnchor
+{
+    CameraAnchor_Character = 0,
+    CameraAnchor_Ground    = 1,
+    CameraAnchor_Camera    = 2 // TODO: Name uncertain. Relies on some backup camera Y value? -- Sezz
+} e_CameraAnchor;
+
+/** @brief Debug camera mode state steps. */
+typedef enum _DebugCameraMode
+{
+    DebugCameraMode_Collide            = 0,
+    DebugCameraMode_SetReference       = 1,
+    DebugCameraMode_AnalogStickControl = 2,
+    DebugCameraMode_ResetReference     = 3, // TODO: Name uncertain.
+    DebugCameraMode_Init               = 4  // TODO: Name uncertain.
+} e_DebugCameraMode;
 
 #endif

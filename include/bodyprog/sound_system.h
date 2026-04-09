@@ -102,7 +102,7 @@ typedef enum _XaStopState
 // STRUCTS
 // ========
 
-// Used for loading XA files. `field_0` holds commands for `Sd_CdPrimitiveCmdTry`
+// Used for loading XA files. `field_0` holds commands for `Sd_CdPrimitiveCmdTry`.
 typedef struct
 {
     u8 field_0;
@@ -130,8 +130,7 @@ typedef struct
                                      * that assigns it is executed. Part of a rule for `SD_Call`.
                                      */
     u8  isStereoEnabled_12;         /** `bool` */
-    s8  isXaStopping_13;            /** `bool` | Set to `true` to stop an XA file in memory from playing, otherwise `false`.
-                                     */
+    s8  isXaStopping_13;            /** `bool` | Set to `true` to stop an XA file in memory from playing, otherwise `false`. */
     u8  bgmFadeSpeed_14;            /** Music fade speed. Range: `[0, 2]`, default: 0. */
     u8  isAudioLoading_15;          /** `bool` | If a KDT or VAB file is being loaded. | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
     u8  isXaNotPlaying_16;          /** `bool` | Playing: `false`, Nothing playing: `true`, default: Nothing playing. */
