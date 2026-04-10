@@ -21,34 +21,34 @@ s32      g_TickCount;
 // the bss data segment related to the view camera system.
 VC_ROAD_DATA vcNullRoadArray[] = {
     {
-        .lim_sw_0          = { Q8(-30.0f), Q8(30.0f), Q8(-30.0f), Q8(30.0f) },
-        .lim_rd_8          = { Q8(-30.0f), Q8(30.0f), Q8(-30.0f), Q8(30.0f) },
-        .flags_10          = VC_RD_NOFLAG,
-        .area_size_type_11 = VC_AREA_WIDE,
-        .rd_type_11        = VC_RD_TYPE_ROAD,
-        .mv_y_type_11      = VC_MV_SELF_VIEW,
-        .lim_rd_max_hy_12  = Q4(6.0f),
-        .lim_rd_min_hy_13  = Q4(-6.0f),
-        .ofs_watch_hy_14   = Q4(0.5f),
+        .lim_sw          = { Q8(-30.0f), Q8(30.0f), Q8(-30.0f), Q8(30.0f) },
+        .lim_rd          = { Q8(-30.0f), Q8(30.0f), Q8(-30.0f), Q8(30.0f) },
+        .flags          = VC_RD_NOFLAG,
+        .area_size_type = VC_AREA_WIDE,
+        .rd_type        = VC_RD_TYPE_ROAD,
+        .mv_y_type      = VC_MV_SELF_VIEW,
+        .lim_rd_max_hy  = Q4(6.0f),
+        .lim_rd_min_hy  = Q4(-6.0f),
+        .ofs_watch_hy   = Q4(0.5f),
         .field_15          = 1,
-        .cam_mv_type_14    = VC_MV_CHASE,
-        .fix_ang_x_16      = Q8_ANGLE(0.0f),
-        .fix_ang_y_17      = Q8_ANGLE(0.0f)
+        .cam_mv_type    = VC_MV_CHASE,
+        .fix_ang_x      = Q8_ANGLE(0.0f),
+        .fix_ang_y      = Q8_ANGLE(0.0f)
     },
     {
-        .lim_sw_0          = { Q8(0.0f), Q8(0.0f), Q8(0.0f), Q8(0.0f) },
-        .lim_rd_8          = { Q8(0.0f), Q8(0.0f), Q8(0.0f), Q8(0.0f) },
-        .flags_10          = VC_RD_END_DATA_F,
-        .area_size_type_11 = VC_AREA_TINY,
-        .rd_type_11        = VC_RD_TYPE_ROAD,
-        .mv_y_type_11      = VC_MV_CHASE,
-        .lim_rd_max_hy_12  = Q4(0.0f),
-        .lim_rd_min_hy_13  = Q4(0.0f),
-        .ofs_watch_hy_14   = Q4(0.0f),
+        .lim_sw          = { Q8(0.0f), Q8(0.0f), Q8(0.0f), Q8(0.0f) },
+        .lim_rd          = { Q8(0.0f), Q8(0.0f), Q8(0.0f), Q8(0.0f) },
+        .flags          = VC_RD_END_DATA_F,
+        .area_size_type = VC_AREA_TINY,
+        .rd_type        = VC_RD_TYPE_ROAD,
+        .mv_y_type      = VC_MV_CHASE,
+        .lim_rd_max_hy  = Q4(0.0f),
+        .lim_rd_min_hy  = Q4(0.0f),
+        .ofs_watch_hy   = Q4(0.0f),
         .field_15          = 0,
-        .cam_mv_type_14    = VC_MV_CHASE,
-        .fix_ang_x_16      = Q8_ANGLE(0.0f),
-        .fix_ang_y_17      = Q8_ANGLE(0.0f)
+        .cam_mv_type    = VC_MV_CHASE,
+        .fix_ang_x      = Q8_ANGLE(0.0f),
+        .fix_ang_y      = Q8_ANGLE(0.0f)
     },
 };
 

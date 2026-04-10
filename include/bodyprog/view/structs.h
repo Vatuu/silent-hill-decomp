@@ -53,19 +53,19 @@ STATIC_ASSERT_SIZEOF(VC_CAM_MV_PARAM, 16);
  */
 typedef struct _VC_ROAD_DATA
 {
-    /* 0x0  */ VC_LIMIT_AREA     lim_sw_0;
-    /* 0x8  */ VC_LIMIT_AREA     lim_rd_8;
-    /* 0x10 */ VC_ROAD_FLAGS     flags_10          : 8; /** `VC_ROAD_FLAGS` | Path flags. */
-    /* 0x11 */ VC_AREA_SIZE_TYPE area_size_type_11 : 2;
-    /* 0x11 */ VC_ROAD_TYPE      rd_type_11        : 3; /** Path type. */
-    /* 0x11 */ u32               mv_y_type_11      : 3; /** `VC_CAM_MV_TYPE` */
-    /* 0x12 */ q27_4             lim_rd_max_hy_12  : 8; /** In SH2, `max_hy` and `min_hy` are part of `VC_LIMIT_AREA`.In SH1, these are separate for some reason. */
-    /* 0x13 */ q27_4             lim_rd_min_hy_13  : 8;
-    /* 0x14 */ q27_4             ofs_watch_hy_14   : 8;
-    /* 0x14 */ u32               field_15          : 4; // TODO: Should be `_14`.
-    /* 0x14 */ s16               cam_mv_type_14    : 4; /** `VC_CAM_MV_TYPE` */
-    /* 0x16 */ q0_7              fix_ang_x_16;          /** @note Part of union in SH2 `VC_ROAD_DATA`. */
-    /* 0x17 */ q0_7              fix_ang_y_17;
+    /* 0x0  */ VC_LIMIT_AREA     lim_sw;
+    /* 0x8  */ VC_LIMIT_AREA     lim_rd;
+    /* 0x10 */ VC_ROAD_FLAGS     flags          : 8; /** `VC_ROAD_FLAGS` | Camera path flags. */
+    /* 0x11 */ VC_AREA_SIZE_TYPE area_size_type : 2;
+    /* 0x11 */ VC_ROAD_TYPE      rd_type        : 3; /** Path type. */
+    /* 0x11 */ u32               mv_y_type      : 3; /** `VC_CAM_MV_TYPE` */
+    /* 0x12 */ q27_4             lim_rd_max_hy  : 8; /** In SH2, `max_hy` and `min_hy` are part of `VC_LIMIT_AREA`.In SH1, these are separate for some reason. */
+    /* 0x13 */ q27_4             lim_rd_min_hy  : 8;
+    /* 0x14 */ q27_4             ofs_watch_hy   : 8;
+    /* 0x14 */ u32               field_15       : 4; // TODO: Should be `_14`.
+    /* 0x14 */ s16               cam_mv_type    : 4; /** `VC_CAM_MV_TYPE` */
+    /* 0x16 */ q0_7              fix_ang_x;          /** @note Part of union in SH2 `VC_ROAD_DATA`. */
+    /* 0x17 */ q0_7              fix_ang_y;
 } VC_ROAD_DATA;
 STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 24);
 
@@ -100,62 +100,62 @@ STATIC_ASSERT_SIZEOF(VC_NEAR_ROAD_DATA, 36);
 /** @brief Camera workspace. */
 typedef struct _VC_WORK
 {
-    /* 0x0   */ u8                        view_cam_active_f;              /** `bool` */
-    /* 0x4   */ VC_ROAD_DATA*             vc_road_ary_list_4;             /** Camera paths for the active map. */
-    /* 0x8   */ u32                       flags_8;                        /** `VC_FLAGS` */
-    /* 0xC   */ u8                        through_door_activate_init_f_C; /** `bool` */
+    /* 0x0   */ u8                        view_cam_active_f;            /** `bool` */
+    /* 0x4   */ VC_ROAD_DATA*             vc_road_ary_list;             /** Camera paths for the active map. */
+    /* 0x8   */ u32                       flags_8;                      /** `VC_FLAGS` */
+    /* 0xC   */ u8                        through_door_activate_init_f; /** `bool` */
     // 3 bytes of padding.
-    /* 0x10  */ VC_THROUGH_DOOR_CAM_PARAM through_door_10;                /** Active rail camera data? */
-    /* 0x1C  */ q3_12                     scr_half_ang_wy_2C;
-    /* 0x2E  */ q3_12                     scr_half_ang_wx_2E;
-    /* 0x30  */ s16                       geom_screen_dist_30;            /** Related to `GsSetProjection`/`g_GameSys.gs_y_res_58A`. */
+    /* 0x10  */ VC_THROUGH_DOOR_CAM_PARAM through_door;                 /** Active rail camera data? */
+    /* 0x1C  */ q3_12                     scr_half_ang_wy;
+    /* 0x2E  */ q3_12                     scr_half_ang_wx;
+    /* 0x30  */ s16                       geom_screen_dist;             /** Related to `GsSetProjection`/`g_GameSys.gs_y_res_58A`. */
     // 2 bytes of padding.
-    /* 0x34  */ VC_CAM_MV_PARAM           user_cam_mv_prm_34;             /** Look parameters? */
-    /* 0x44  */ VECTOR3                   cam_tgt_pos_44;                 /** Target camera position. */
-    /* 0x50  */ VECTOR3                   cam_pos_50;                     /** Q19.12 | Camera position. */
-    /* 0x5C  */ q3_12                     cam_mv_ang_y_5C;                /** Angular velocity on the Y axis. */
+    /* 0x34  */ VC_CAM_MV_PARAM           user_cam_mv_prm;              /** Look parameters? */
+    /* 0x44  */ VECTOR3                   cam_tgt_pos;                  /** Target camera position. */
+    /* 0x50  */ VECTOR3                   cam_pos;                      /** Q19.12 | Camera position. */
+    /* 0x5C  */ q3_12                     cam_mv_ang_y;                 /** Angular velocity on the Y axis. */
     // 2 bytes of padding.
-    /* 0x60  */ VECTOR3                   cam_velo_60;                    /** Q19.12 | Camera velocity. */
-    /* 0x6C  */ s32                       old_cam_excl_area_r_6C;         /** Previous exclusion area radius. */
-    /* 0x70  */ VC_WATCH_MV_PARAM         user_watch_mv_prm_70;
-    /* 0x7C  */ VECTOR3                   watch_tgt_pos_7C;               /** Q19.12 | Target look-at position. */
-    /* 0x88  */ s32                       watch_tgt_max_y_88;             /** Max look-at Y offset. */
-    /* 0x8C  */ s16                       watch_tgt_ang_z_8C;             /** Target look-at Z angle. */
-    /* 0x8E  */ SVECTOR                   cam_mat_ang_8E;                 /** Matrix rotation. */
+    /* 0x60  */ VECTOR3                   cam_velo;                     /** Q19.12 | Camera velocity. */
+    /* 0x6C  */ s32                       old_cam_excl_area_r;          /** Previous exclusion area radius. */
+    /* 0x70  */ VC_WATCH_MV_PARAM         user_watch_mv_prm;
+    /* 0x7C  */ VECTOR3                   watch_tgt_pos;                /** Q19.12 | Target look-at position. */
+    /* 0x88  */ s32                       watch_tgt_max_y;              /** Max look-at Y offset. */
+    /* 0x8C  */ s16                       watch_tgt_ang_z;              /** Target look-at Z angle. */
+    /* 0x8E  */ SVECTOR                   cam_mat_ang;                  /** Matrix rotation. */
     // 2 bytes of padding.
-    /* 0x98  */ MATRIX                    cam_mat_98;                     /** Matrix. */
-    /* 0xB8  */ SVECTOR                   ofs_cam_ang_B8;                 /** Offset rotation. */
-    /* 0xC0  */ SVECTOR                   ofs_cam_ang_spd_C0;             /** Offset rotational speed. */
-    /* 0xC8  */ SVECTOR                   base_cam_ang_C8;                /** Base rotation. */
-    /* 0xD0  */ s8                        unk_D0[8];                      // TODO: Possibly unused or debug data?
-    /* 0xD8  */ u8                        updateLookAtPoint;              /** `bool` */
+    /* 0x98  */ MATRIX                    cam_mat;                      /** Matrix. */
+    /* 0xB8  */ SVECTOR                   ofs_cam_ang;                  /** Offset rotation. */
+    /* 0xC0  */ SVECTOR                   ofs_cam_ang_spd;              /** Offset rotational speed. */
+    /* 0xC8  */ SVECTOR                   base_cam_ang;                 /** Base rotation. */
+    /* 0xD0  */ s8                        unk_D0[8];                    // TODO: Possibly unused or debug data?
+    /* 0xD8  */ u8                        updateLookAtPoint;            /** `bool` */
     // 3 bytes of padding.
     /* 0xDC  */ MATRIX                    lookAtMat;
-    /* 0xFC  */ u8                        updateLookAtMat;                /** `bool` */
+    /* 0xFC  */ u8                        updateLookAtMat;              /** `bool` */
     // 1 byte of padding.
-    /* 0xFE  */ q3_12                     cam_chara2ideal_ang_y_FE;
-    /* 0x100 */ VECTOR3                   cam_tgt_velo_100;               /** Target velocity. */
-    /* 0x10C */ q3_12                     cam_tgt_mv_ang_y_10C;           /** Target Y angles. */
+    /* 0xFE  */ q3_12                     cam_chara2ideal_ang_y;
+    /* 0x100 */ VECTOR3                   cam_tgt_velo;                 /** Target velocity. */
+    /* 0x10C */ q3_12                     cam_tgt_mv_ang_y;             /** Target Y angles. */
     // 2 bytes of padding.
-    /* 0x110 */ q19_12                    cam_tgt_spd_110;                               /** Target speed. */
-    /* 0x114 */ VECTOR3                   chara_pos_114;                                 /** Locked-on character position. */
-    /* 0x120 */ q19_12                    chara_bottom_y_120;                            /** Locked-on character bottom height. */
-    /* 0x124 */ q19_12                    chara_top_y_124;                               /** Locked-on character top height. */
-    /* 0x128 */ q19_12                    chara_center_y_128;                            /** Locked-on character center height. */
-    /* 0x12C */ q19_12                    chara_grnd_y_12C;                              /** Locked-on character height from the ground? */
-    /* 0x130 */ VECTOR3                   chara_head_pos_130;                            /** Q19.12 | Locked-on character head position. */
-    /* 0x13C */ q19_12                    chara_mv_spd_13C;                              /** Locked-on character movement speed. */
-    /* 0x140 */ q3_12                     chara_mv_ang_y_140;                            /** Locked-on character heading angle. */
-    /* 0x142 */ q3_12                     chara_ang_spd_y_142;                           /** Locked-on character heading angle angular speed. */
-    /* 0x144 */ q3_12                     chara_eye_ang_y_144;                           /** Locked-on character look heading angle? */
-    /* 0x146 */ q3_12                     chara_eye_ang_wy_146;                          /** Locked-on character unknown Y angle */
-    /* 0x148 */ q19_12                    chara_watch_xz_r_148;                          /** Locked-on character radius on the XZ plane. */
-    /* 0x14C */ VC_NEAR_ROAD_DATA         near_road_ary_14C[CAMERA_PATH_COLL_COUNT_MAX]; /** Nearby camera path collisions. */
-    /* 0x2B4 */ q19_12                    near_road_suu_2B4;                             /** Count of valid `near_road_ary_14C` entries. */
-    /* 0x2B8 */ VC_NEAR_ROAD_DATA         cur_near_road_2B8;                             /** Closest camera path? */
-    /* 0x2DC */ struct _SubCharacter*     nearest_enemy_2DC;                             /** Closest enemy character. */
-    /* 0x2E0 */ q19_12                    nearest_enemy_xz_dist_2E0;                     /** Distance to the closest enemy character on the XZ plane. */
-    /* 0x2E4 */ q19_12                    watch_pos_y_2E4;                               /** Guessed name. Camera look-at Y position base? Combined with another value later. */
+    /* 0x110 */ q19_12                    cam_tgt_spd;                               /** Target speed. */
+    /* 0x114 */ VECTOR3                   chara_pos;                                 /** Locked-on character position. */
+    /* 0x120 */ q19_12                    chara_bottom_y;                            /** Locked-on character bottom height. */
+    /* 0x124 */ q19_12                    chara_top_y;                               /** Locked-on character top height. */
+    /* 0x128 */ q19_12                    chara_center_y;                            /** Locked-on character center height. */
+    /* 0x12C */ q19_12                    chara_grnd_y;                              /** Locked-on character height from the ground? */
+    /* 0x130 */ VECTOR3                   chara_head_pos;                            /** Q19.12 | Locked-on character head position. */
+    /* 0x13C */ q19_12                    chara_mv_spd;                              /** Locked-on character movement speed. */
+    /* 0x140 */ q3_12                     chara_mv_ang_y;                            /** Locked-on character heading angle. */
+    /* 0x142 */ q3_12                     chara_ang_spd_y;                           /** Locked-on character heading angle angular speed. */
+    /* 0x144 */ q3_12                     chara_eye_ang_y;                           /** Locked-on character look heading angle? */
+    /* 0x146 */ q3_12                     chara_eye_ang_wy;                          /** Locked-on character unknown Y angle */
+    /* 0x148 */ q19_12                    chara_watch_xz_r;                          /** Locked-on character radius on the XZ plane. */
+    /* 0x14C */ VC_NEAR_ROAD_DATA         near_road_ary[CAMERA_PATH_COLL_COUNT_MAX]; /** Nearby camera path collisions. */
+    /* 0x2B4 */ q19_12                    near_road_suu;                             /** Count of valid `near_road_ary` entries. */
+    /* 0x2B8 */ VC_NEAR_ROAD_DATA         cur_near_road;                             /** Closest camera path? */
+    /* 0x2DC */ struct _SubCharacter*     nearest_enemy;                             /** Closest enemy character. */
+    /* 0x2E0 */ q19_12                    nearest_enemy_xz_dist;                     /** Distance to the closest enemy character on the XZ plane. */
+    /* 0x2E4 */ q19_12                    watch_pos_y;                               /** Guessed name. Camera look-at Y position base? Combined with another value later. */
 } VC_WORK;
 STATIC_ASSERT_SIZEOF(VC_WORK, 744);
 
@@ -196,7 +196,7 @@ STATIC_ASSERT_SIZEOF(s_CameraCullData, 380);
 /** @brief 3x3 screen region occupancy flags. */
 typedef struct _CameraScreenRegionFlags
 {
-   /* 0x0 */ u8 flags[3][3];
+   /* 0x0 */ u8 flags[3][3]; /** `bool` */
 } s_CameraScreenRegionFlags;
 STATIC_ASSERT_SIZEOF(s_CameraScreenRegionFlags, 9);
 

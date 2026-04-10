@@ -1079,7 +1079,7 @@ class StructParser:
                     return 'true' if value == 1 else 'false'
                 elif value == -1 and (field_key == "s_AnimInfo.startKeyframeIdx_C" or field_key == "s_AnimInfo.endKeyframeIdx_E"):
                     return "NO_VALUE"
-                elif field_key == "VC_ROAD_DATA.fix_ang_x_16" or field_key == "VC_ROAD_DATA.fix_ang_y_17":
+                elif field_key == "VC_ROAD_DATA.fix_ang_x" or field_key == "VC_ROAD_DATA.fix_ang_y":
                     return process_q8_angle(value & 0xFF)
                 elif field_key == "s_SpawnInfo.rotationY_5":
                     return process_q8_angle(value & 0xFF)

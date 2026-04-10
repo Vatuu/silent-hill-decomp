@@ -93,7 +93,7 @@ extern q19_12            vcSelfViewTimer;
  */
 static inline void Vc_CurNearRoadSet(VC_WORK* work, const VC_NEAR_ROAD_DATA* road)
 {
-    memcpy(&work->cur_near_road_2B8, road, sizeof(VC_NEAR_ROAD_DATA));
+    memcpy(&work->cur_near_road, road, sizeof(VC_NEAR_ROAD_DATA));
 }
 
 /** @brief Clears a set of camera flags.
