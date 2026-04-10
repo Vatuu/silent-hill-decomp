@@ -4,11 +4,12 @@
 #include <psyq/libpad.h>
 #include <psyq/strings.h>
 
-#include "main/fsqueue.h"
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/game_boot/game_boot.h"
+#include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player.h"
+#include "main/fsqueue.h"
 
 void GameBoot_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 {

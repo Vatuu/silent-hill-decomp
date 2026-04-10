@@ -5,6 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
 #include "bodyprog/screen/screen_data.h"

@@ -414,7 +414,7 @@ WorldGfx_CharaModelProcessLoad               = 0x8003D9C8; // type:func
 WorldGfx_HeldItemAttach                      = 0x8003DD80; // type:func
 
 //------------------------------------------------------------------------
-//--- PA: 0x019A88   VA: 0x8003E5E8   subsegment: c, gfx/bodyprog_8003E5E8
+//--- PA: 0x019A88   VA: 0x8003E5E8   subsegment: c, gfx/map_effects
 //------------------------------------------------------------------------
 Options_BrightnessMenu_LinesDraw             = 0x8003E5E8;
 GameFs_FlameGfxLoad                          = 0x8003E710; // type:func
@@ -2373,7 +2373,7 @@ IMAGE_TIM.86                                 = 0x800A9EBC;
 IMAGE_ETC.87                                 = 0x800A9EC4;
 
 //----------------------------------------------------------------------------
-//--- PA: 0x085424   VA: 0x800A9F84   subsegment: .data, gfx/bodyprog_8003E5E8
+//--- PA: 0x085424   VA: 0x800A9F84   subsegment: .data, gfx/map_effects
 //----------------------------------------------------------------------------
 IMAGE_FLAME.241                              = 0x800A9FA8;
 Y_ARRAY.295                                  = 0x800A9FB4;

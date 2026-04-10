@@ -1,5 +1,8 @@
 #include "inline_no_dmpsx.h"
+
 #include <psyq/gtemac.h>
+
+#include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player.h"

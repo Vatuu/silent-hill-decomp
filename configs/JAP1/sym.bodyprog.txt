@@ -628,7 +628,7 @@ func_8003E4A0                                = 0x8003E278; // type:func
 func_8003E544                                = 0x8003E31C; // type:func
 
 //------------------------------------------------------------------------
-//--- PA: 0x019860   VA: 0x8003E3C0   subsegment: c, gfx/bodyprog_8003E5E8
+//--- PA: 0x019860   VA: 0x8003E3C0   subsegment: c, gfx/map_effects
 //------------------------------------------------------------------------
 Options_BrightnessMenu_LinesDraw             = 0x8003E3C0; // type:func
 GameFs_FlameGfxLoad                          = 0x8003E4E8; // type:func
@@ -2964,7 +2964,7 @@ D_800A9F78                                   = 0x800AC438;
 D_800A9F7C                                   = 0x800AC43C;
 
 //----------------------------------------------------------------------------
-//--- PA: 0x0878E0   VA: 0x800AC440   subsegment: .data, gfx/bodyprog_8003E5E8
+//--- PA: 0x0878E0   VA: 0x800AC440   subsegment: .data, gfx/map_effects
 //----------------------------------------------------------------------------
 D_800A9F80                                   = 0x800AC440;
 D_800A9F84                                   = 0x800AC444;
@@ -3358,7 +3358,7 @@ g_MapEventData                               = 0x800BF430;
 D_800BCDE0                                   = 0x800BF438;
 
 //---------------------------------------------------------------------------
-//--- PA: 0x09A8E0   VA: 0x800BF440   subsegment: .bss, gfx/bodyprog_8003E5E8
+//--- PA: 0x09A8E0   VA: 0x800BF440   subsegment: .bss, gfx/map_effects
 //---------------------------------------------------------------------------
 D_800BCDE8                                   = 0x800BF440;
 

@@ -5,6 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/memcard.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
@@ -359,7 +360,8 @@ void Gfx_MapEffectsUpdate(s32 idx0, s32 idx1, e_PrimitiveType primType, void* pr
     Gfx_MapEffectsStepUpdate(&MAP_EFFECTS_INFOS[idx0], &MAP_EFFECTS_INFOS[idx1], primType, primData, arg4, arg5);
 }
 
-void Gfx_MapEffectsStepUpdate(const s_MapEffectsInfo* preset0, const s_MapEffectsInfo* preset1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF74
+void Gfx_MapEffectsStepUpdate(const s_MapEffectsInfo* preset0, const s_MapEffectsInfo* preset1,
+                              e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF74
 {
     if (preset0 == preset1)
     {

@@ -6,6 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/game_boot/game_boot.h"
+#include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/view/vc_util.h"
 #include "main/fsqueue.h"
 

@@ -77,7 +77,7 @@ segments:
       - [0x908, .rodata, title]
       - [0x9AC, rodata] # Garbage padding (should start at 0x9AB but that causes mismatches?)
       - [0x9B0, .rodata, gfx/bodyprog_8003BE50]
-      - [0x1040, .rodata, gfx/bodyprog_8003E5E8]
+      - [0x1040, .rodata, gfx/map_effects]
       - [0x1070, rodata] # Garbage padding
       - [0x1080, .rodata, sound/sd_call]
       - [0x11EC, rodata] # Garbage padding
@@ -153,7 +153,7 @@ segments:
       - [0x15CFC, c, title]
       - [0x16F00, c, bodyprog_8003BD2C]
       - [0x17024, c, gfx/bodyprog_8003BE50]
-      - [0x197BC, c, gfx/bodyprog_8003E5E8]
+      - [0x197BC, c, gfx/map_effects]
       - [0x1B1D8, c, gfx/bodyprog_80040004]
       - [0x1B220, c, view/vc_util]
       - [0x1BC38, c, gfx/bodyprog_80040A64]
@@ -391,7 +391,7 @@ segments:
       - [0x87268, .data, events/game_sys_states]
       - [0x872B0, .data, title]
       - [0x876E8, .data, gfx/bodyprog_8003BE50]
-      - [0x877BC, .data, gfx/bodyprog_8003E5E8]
+      - [0x877BC, .data, gfx/map_effects]
       - [0x87804, data]
       - [0x8ACBC, .data, view/vw_calc]
       - [0x8ACD4, .data, text/text_draw_jp]
@@ -455,7 +455,7 @@ segments:
       - [0x9A7AC, pad] # Garbage.
       - [0x9A7B0, .bss, title]
       - [0x9A7B4, bss]
-      - [0x9A7B8, .bss, gfx/bodyprog_8003E5E8]
+      - [0x9A7B8, .bss, gfx/map_effects]
       - [0x9A7C8, bss]
       - [0x9D5BC, pad] # Garbage
       - [0x9D5C0, .bss, gfx/bodyprog_80040A64]

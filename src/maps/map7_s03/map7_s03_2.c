@@ -1,9 +1,10 @@
 #include <memory.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/map_effects.h"
+#include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
-#include "bodyprog/item_screens.h"
 #include "bodyprog/player.h"
 #include "bodyprog/ranking.h"
 #include "bodyprog/sound_system.h"

@@ -1,6 +1,7 @@
 #include "inline_no_dmpsx.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
