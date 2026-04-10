@@ -1051,7 +1051,7 @@ void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx)
     }
 }
 
-bool Lm_ModelFind(s_WorldObjectModel* arg0, s_LmHeader* lmHdr, s_WorldObjectMetadata* metadata) // 0x80056CB4
+bool Lm_ModelFind(s_WorldObjectModel* model, s_LmHeader* lmHdr, s_WorldObjectMetadata* metadata) // 0x80056CB4
 {
     u_Filename     sp10;
     s32            modelHdrCount;
@@ -1072,8 +1072,8 @@ bool Lm_ModelFind(s_WorldObjectModel* arg0, s_LmHeader* lmHdr, s_WorldObjectMeta
             if (!COMPARE_FILENAMES(&modelHdr->name_0, &sp10))
             {
                 result                       = true;
-                arg0->modelInfo_0.modelIdx_C = i;
-                arg0->modelInfo_0.modelHdr_8 = modelHdr;
+                model->modelInfo_0.modelIdx_C = i;
+                model->modelInfo_0.modelHdr_8 = modelHdr;
             }
         }
     }
@@ -1193,7 +1193,7 @@ void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s3
     }
 }
 
-void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5) // 0x80057090
+void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 arg2, MATRIX* viewMat, MATRIX* worldMat, u16 arg5) // 0x80057090
 {
     s32            temp_a0;
     GsOT_TAG*      otTag;
@@ -1210,23 +1210,23 @@ void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 arg2, MATRIX* mat0, M
     temp_a0 = modelHdr->field_B_4;
     if ((temp_a0 & 0xFF) && temp_a0 >= 0 && temp_a0 < 4) // TODO: `& 0xFF` needed for match.
     {
-        func_80059D50(temp_a0, modelInfo, mat0, arg2, otTag);
+        func_80059D50(temp_a0, modelInfo, viewMat, arg2, otTag);
     }
     else
     {
-        if (mat1 != NULL && g_WorldEnvWork.field_0 != 0)
+        if (worldMat != NULL && g_WorldEnvWork.field_0 != 0)
         {
-            func_80057228(mat1, g_WorldEnvWork.field_54, &g_WorldEnvWork.field_58, &g_WorldEnvWork.field_60);
+            func_80057228(worldMat, g_WorldEnvWork.field_54, &g_WorldEnvWork.field_58, &g_WorldEnvWork.field_60);
         }
 
         if (modelHdr->field_B_0)
         {
             g_WorldEnvWork.field_14C = arg5;
-            func_8005A21C(modelInfo, otTag, arg2, mat0);
+            func_8005A21C(modelInfo, otTag, arg2, viewMat);
         }
         else
         {
-            func_80057344(modelInfo, otTag, arg2, mat0);
+            func_80057344(modelInfo, otTag, arg2, viewMat);
         }
     }
 }

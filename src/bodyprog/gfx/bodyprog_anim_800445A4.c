@@ -710,8 +710,8 @@ extern s_WorldEnvWork const g_WorldEnvWork;
 
 void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q3_12 arg4, u16 arg5, s_FsImageDesc* images) // 0x80045534
 {
-    MATRIX         mat0;
-    MATRIX         mat1;
+    MATRIX         viewMat;
+    MATRIX         worldMat;
     DVECTOR        sp60;
     s32            temp_a1;
     s16            var_fp;
@@ -756,9 +756,9 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q
             if (var_s0 != curImage->clutY)
             {
                 var_s0 = curImage->clutY;
-                Vw_CoordToViewSpaceMatrix(&coord[var_s0], &mat0);
-                SetRotMatrix(&mat0);
-                SetTransMatrix(&mat0);
+                Vw_CoordToViewSpaceMatrix(&coord[var_s0], &viewMat);
+                SetRotMatrix(&viewMat);
+                SetTransMatrix(&viewMat);
             }
 
             gte_ldv0(curImage);
@@ -802,23 +802,23 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q
     {
         if (curBone->bone_0.modelInfo_0.field_0 >= 0)
         {
-            Vw_CoordToWorldAndViewMatrices(&coord[(u8)curBone->bone_0.field_10], &mat1, &mat0);
+            Vw_CoordToWorldAndViewMatrices(&coord[(u8)curBone->bone_0.field_10], &worldMat, &viewMat);
 
             if (curBone->bone_0.modelInfo_0.field_0 & (1 << 0))
             {
-                mat0.m[2][2]         = 0;
-                *(s32*)&mat0.m[2][0] = 0;
-                *(s32*)&mat0.m[1][1] = 0;
-                *(s32*)&mat0.m[0][2] = 0;
-                *(s32*)&mat0.m[0][0] = 0;
+                viewMat.m[2][2]         = 0;
+                *(s32*)&viewMat.m[2][0] = 0;
+                *(s32*)&viewMat.m[1][1] = 0;
+                *(s32*)&viewMat.m[0][2] = 0;
+                *(s32*)&viewMat.m[0][0] = 0;
             }
 
-            func_80057090(&curBone->bone_0.modelInfo_0, ot, arg2, &mat0, &mat1, arg5);
+            func_80057090(&curBone->bone_0.modelInfo_0, ot, arg2, &viewMat, &worldMat, arg5);
 
             if (g_WorldEnvWork.isFogEnabled_1)
             {
-                gte_SetRotMatrix(&mat0);
-                gte_SetTransMatrix(&mat0);
+                gte_SetRotMatrix(&viewMat);
+                gte_SetTransMatrix(&viewMat);
                 gte_ldvxy0_Zero();
                 gte_gte_ldvz0();
                 gte_rtps();

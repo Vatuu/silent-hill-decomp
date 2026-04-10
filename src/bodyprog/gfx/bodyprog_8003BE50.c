@@ -376,17 +376,17 @@ void Gfx_InGameDraw(s32 arg0) // 0x8003C878
 // OBJECTS DRAW
 // ========================================
 
-void WorldObject_ModelNameSet(s_WorldObjectModel* arg0, char* newStr) // 0x8003C8F8
+void WorldObject_ModelNameSet(s_WorldObjectModel* model, char* newStr) // 0x8003C8F8
 {
-    arg0->metadata_10.lmIdx_9 = 0;
-    arg0->modelInfo_0.field_0  = 0;
+    model->metadata_10.lmIdx_9 = 0;
+    model->modelInfo_0.field_0  = 0;
 
-    StringCopy(arg0->metadata_10.name_0.str, newStr);
+    StringCopy(model->metadata_10.name_0.str, newStr);
 
-    arg0->metadata_10.field_8 = 0;
+    model->metadata_10.field_8 = 0;
 }
 
-void WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
+void WorldGfx_ObjectAdd(s_WorldObjectModel* model, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
 {
     q23_8          geomPosX;
     q23_8          geomPosY;
@@ -401,14 +401,14 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVEC
     // Check if array of world objects to draw is full.
     if (g_WorldGfxWork.objectCount_2BE8 < ARRAY_SIZE(g_WorldGfxWork.objects_2BEC))
     {
-        if (arg0->metadata_10.lmIdx_9 == 0)
+        if (model->metadata_10.lmIdx_9 == 0)
         {
             func_8003BED0();
 
-            lmIdx = func_8004287C(arg0, &arg0->metadata_10, g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz);
+            lmIdx = func_8004287C(model, &model->metadata_10, g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz);
             if (lmIdx == 0)
             {
-                if (!Lm_ModelFind(arg0, &g_WorldGfxWork.itemLmHdr_1BE4, &arg0->metadata_10))
+                if (!Lm_ModelFind(model, &g_WorldGfxWork.itemLmHdr_1BE4, &model->metadata_10))
                 {
                     return;
                 }
@@ -418,7 +418,7 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVEC
                 }
             }
 
-            arg0->metadata_10.lmIdx_9 = lmIdx;
+            model->metadata_10.lmIdx_9 = lmIdx;
         }
 
         // Compute geometry position and rotation.
@@ -434,7 +434,7 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVEC
         {
             obj = &g_WorldGfxWork.objects_2BEC[i];
 
-            if (arg0 == obj->model_0 &&
+            if (model == obj->model_0 &&
                 geomPosX == obj->positionX_4 &&
                 geomPosZ == obj->positionZ_8 &&
                 geomPosY == obj->positionY_4 &&
@@ -452,7 +452,7 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVEC
         obj->rotationY_C = geomRotZ;
         if (obj->positionZ_8) {} // @hack Required for match.
         obj->rotationZ_C = geomRotY;
-        obj->model_0     = arg0;
+        obj->model_0     = model;
         obj->positionX_4 = geomPosX;
         obj->positionY_4 = geomPosY;
         obj->positionZ_8 = geomPosZ;
@@ -482,8 +482,8 @@ void Gfx_WorldObjectsDraw(s_WorldGfxWork* worldGfxWork) // 0x8003CB44
 void Gfx_WorldObjectDraw(s_WorldObject* obj) // 0x8003CBA4
 {
     GsCOORDINATE2 coord;
-    SVECTOR       rot; // Q3_12
-    MATRIX        mats[2];
+    SVECTOR       rot;     // Q3_12
+    MATRIX        mats[2]; // View mat, world mat.
 
     coord.flg   = false;
     coord.super = NULL;
@@ -503,36 +503,36 @@ void Gfx_WorldObjectDraw(s_WorldObject* obj) // 0x8003CBA4
     func_8003CC7C(obj->model_0, &mats[0], &mats[1]);
 }
 
-void func_8003CC7C(s_WorldObjectModel* arg0, MATRIX* arg1, MATRIX* arg2) // 0x8003CC7C
+void func_8003CC7C(s_WorldObjectModel* model, MATRIX* viewMat, MATRIX* worldMat) // 0x8003CC7C
 {
     s8                     lmIdx;
     s_WorldObjectMetadata* objMetaCpy;
     s_ModelHeader*         modelHdr;
 
-    lmIdx = arg0->metadata_10.lmIdx_9;
+    lmIdx = model->metadata_10.lmIdx_9;
     if (lmIdx == 0)
     {
         return;
     }
 
-    modelHdr   = arg0->modelInfo_0.modelHdr_8;
-    objMetaCpy = &arg0->metadata_10;
+    modelHdr   = model->modelInfo_0.modelHdr_8;
+    objMetaCpy = &model->metadata_10;
 
     if (lmIdx >= 3 && lmIdx < 7)
     {
         if (!IpdHeader_IsLoaded(lmIdx - 3))
         {
-            arg0->metadata_10.lmIdx_9 = 0;
+            model->metadata_10.lmIdx_9 = 0;
         }
     }
 
     if (COMPARE_FILENAMES(&objMetaCpy->name_0, &modelHdr->name_0))
     {
-        arg0->metadata_10.lmIdx_9 = 0;
+        model->metadata_10.lmIdx_9 = 0;
         return;
     }
 
-    func_80057090(&arg0->modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, arg1, arg2, 0);
+    func_80057090(&model->modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, viewMat, worldMat, 0);
 }
 
 // ========================================
@@ -771,8 +771,8 @@ void func_8003D03C(void) // 0x8003D03C
 
 void WorldGfx_HeldItemDraw(void) // 0x8003D058
 {
-    MATRIX         mat0;
-    MATRIX         mat1;
+    MATRIX         viewMat;
+    MATRIX         worldMat;
     GsCOORDINATE2* coord;
     s_HeldItem*    heldItem;
     s_LmHeader*    lmHdr;
@@ -805,8 +805,8 @@ void WorldGfx_HeldItemDraw(void) // 0x8003D058
             Bone_ModelAssign(&heldItem->bone_18, heldItem->lmHdr_14, 0);
         }
 
-        Vw_CoordToWorldAndViewMatrices(coord, &mat1, &mat0);
-        func_80057090(&heldItem->bone_18.modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
+        Vw_CoordToWorldAndViewMatrices(coord, &worldMat, &viewMat);
+        func_80057090(&heldItem->bone_18.modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, &viewMat, &worldMat, 0);
     }
 }
 

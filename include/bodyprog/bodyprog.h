@@ -2602,10 +2602,10 @@ s32 Ipd_ChunkInitCheck(void);
 /** `arg0` should be `void*`? */
 void Gfx_InGameDraw(s32 arg0);
 
-void WorldObject_ModelNameSet(s_WorldObjectModel* arg0, char* newStr);
+void WorldObject_ModelNameSet(s_WorldObjectModel* model, char* newStr);
 
 /** Submits a world object to draw. */
-void WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVECTOR3* rot);
+void WorldGfx_ObjectAdd(s_WorldObjectModel* model, const VECTOR3* pos, const SVECTOR3* rot);
 
 /** @unused Returns held item ID. */
 s32 WorldGfx_HeldItemIdGet(void);
@@ -2798,7 +2798,7 @@ s_IpdCollisionData** func_800425D8(s32* collDataIdx);
 
 s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ);
 
-s32 func_8004287C(s_WorldObjectModel* arg0, s_WorldObjectMetadata* metadata, q19_12 posX, q19_12 posZ);
+s32 func_8004287C(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q19_12 posX, q19_12 posZ);
 
 /** @brief Gets the load state of an LM file.
  *
@@ -3178,7 +3178,7 @@ s32 LmHeader_ModelCountGet(s_LmHeader* lmHdr);
 
 void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx);
 
-bool Lm_ModelFind(s_WorldObjectModel* arg0, s_LmHeader* lmHdr, s_WorldObjectMetadata* metadata);
+bool Lm_ModelFind(s_WorldObjectModel* model, s_LmHeader* lmHdr, s_WorldObjectMetadata* metadata);
 
 void StringCopy(char* prevStr, char* newStr);
 
@@ -3186,7 +3186,7 @@ void StringCopy(char* prevStr, char* newStr);
 void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, GsOT* ot, s32 arg7);
 
 /** Crucial 3D drawing function. */
-void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
+void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 arg2, MATRIX* viewMat, MATRIX* worldMat, u16 arg5);
 
 s32 func_800571D0(u32 arg0);
 
@@ -4237,7 +4237,7 @@ void Gfx_WorldObjectsDraw(s_WorldGfxWork* worldGfxWork);
  */
 void Gfx_WorldObjectDraw(s_WorldObject* obj);
 
-void func_8003CC7C(s_WorldObjectModel* arg0, MATRIX* arg1, MATRIX* arg2);
+void func_8003CC7C(s_WorldObjectModel* model, MATRIX* arg1, MATRIX* arg2);
 
 /** @brief Advanced a character model LM buffer.
  *

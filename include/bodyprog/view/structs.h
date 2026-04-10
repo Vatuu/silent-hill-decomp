@@ -147,8 +147,8 @@ typedef struct _VC_WORK
     /* 0x13C */ q19_12                    chara_mv_spd;                              /** Locked-on character movement speed. */
     /* 0x140 */ q3_12                     chara_mv_ang_y;                            /** Locked-on character heading angle. */
     /* 0x142 */ q3_12                     chara_ang_spd_y;                           /** Locked-on character heading angle angular speed. */
-    /* 0x144 */ q3_12                     chara_eye_ang_y;                           /** Locked-on character look heading angle? */
-    /* 0x146 */ q3_12                     chara_eye_ang_wy;                          /** Locked-on character unknown Y angle */
+    /* 0x144 */ q3_12                     chara_eye_ang_y;                           /** Locked-on character look heading angle. */
+    /* 0x146 */ q3_12                     chara_eye_ang_wy;                          /** @unused */
     /* 0x148 */ q19_12                    chara_watch_xz_r;                          /** Locked-on character radius on the XZ plane. */
     /* 0x14C */ VC_NEAR_ROAD_DATA         near_road_ary[CAMERA_PATH_COLL_COUNT_MAX]; /** Nearby camera path collisions. */
     /* 0x2B4 */ q19_12                    near_road_suu;                             /** Count of valid `near_road_ary` entries. */

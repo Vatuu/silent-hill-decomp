@@ -135,21 +135,21 @@ void ItemScreen_ItemRotate(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
 
 void func_8004BD74(s32 displayItemIdx, GsDOBJ2* arg1, s32 arg2)  // 0x8004BD74
 {
-    MATRIX sp10;
-    MATRIX sp30;
-    MATRIX sp50;
-    s32 j;
+    MATRIX viewMat;
+    MATRIX localToScreenMat;
+    MATRIX worldMat;
     s32 i;
+    s32 j;
 
-    Vw_CoordToWorldAndViewMatrices(arg1->coord2, &sp50, &sp10);
+    Vw_CoordToWorldAndViewMatrices(arg1->coord2, &worldMat, &viewMat);
 
-    sp30 = sp10;
+    localToScreenMat = viewMat;
 
     for (i = 0; i < 3; i++)
     {
         for (j = 0; j < 3; j++)
         {
-            sp10.m[i][j] = Q12(sp10.m[i][j]) / g_Items_Transforms[displayItemIdx].scale.vx;
+            viewMat.m[i][j] = Q12(viewMat.m[i][j]) / g_Items_Transforms[displayItemIdx].scale.vx;
         }
     }
 
@@ -159,13 +159,13 @@ void func_8004BD74(s32 displayItemIdx, GsDOBJ2* arg1, s32 arg2)  // 0x8004BD74
         {
             for (j = 0; j < 3; j++)
             {
-                sp10.m[i][j] -= Q12_MULT(sp10.m[i][j], Math_Sin((g_Items_Coords[displayItemIdx].coord.t[2] + 0x400) >> 2));
+                viewMat.m[i][j] -= Q12_MULT(viewMat.m[i][j], Math_Sin((g_Items_Coords[displayItemIdx].coord.t[2] + 0x400) >> 2));
             }
         }
     }
 
-    GsSetLightMatrix(&sp10);
-    GsSetLsMatrix(&sp30);
+    GsSetLightMatrix(&viewMat);
+    GsSetLsMatrix(&localToScreenMat);
 
     if (arg2 == 2)
     {

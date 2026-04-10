@@ -921,7 +921,7 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
     }
 }
 
-s32 func_8004287C(s_WorldObjectModel* arg0, s_WorldObjectMetadata* metadata, q19_12 posX, q19_12 posZ) // 0x8004287C
+s32 func_8004287C(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q19_12 posX, q19_12 posZ) // 0x8004287C
 {
     s_IpdChunk* chunks[4];
     q19_12      distsToEdges[4];
@@ -945,7 +945,7 @@ s32 func_8004287C(s_WorldObjectModel* arg0, s_WorldObjectMetadata* metadata, q19
 
     if (Fs_QueueEntryLoadStatusGet(globalLm->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
         globalLm->lmHdr_0->isLoaded_2 &&
-        Lm_ModelFind(arg0, g_Map.globalLm_138.lmHdr_0, metadata))
+        Lm_ModelFind(model, g_Map.globalLm_138.lmHdr_0, metadata))
     {
         return 2;
     }
@@ -1006,7 +1006,7 @@ s32 func_8004287C(s_WorldObjectModel* arg0, s_WorldObjectMetadata* metadata, q19
     for (k = 0; k < chunkIdx; k++)
     {
         curChunk = chunks[k];
-        if (Lm_ModelFind(arg0, curChunk->ipdHdr_0->lmHdr_4, metadata))
+        if (Lm_ModelFind(model, curChunk->ipdHdr_0->lmHdr_4, metadata))
         {
             return (curChunk - g_Map.ipdActive_15C) + 3;
         }
@@ -1665,8 +1665,8 @@ void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s
 
     s_ModelInfo         modelInfo;
     GsCOORDINATE2       coord;
-    MATRIX              sp78;
-    MATRIX              sp98;
+    MATRIX              viewMat;
+    MATRIX              worldMat;
     s32                 geomX;
     s32                 geomY;
     q23_8               cellBoundZ;
@@ -1716,8 +1716,8 @@ void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s
                     coord.workm.t[0] += cellBoundX;
                     coord.workm.t[2] += cellBoundZ;
 
-                    Vw_CoordToWorldAndViewMatrices(&coord, &sp98, &sp78);
-                    func_80057090(&modelInfo, ot, arg4, &sp78, &sp98, 0);
+                    Vw_CoordToWorldAndViewMatrices(&coord, &worldMat, &viewMat);
+                    func_80057090(&modelInfo, ot, arg4, &viewMat, &worldMat, 0);
                 }
             }
 

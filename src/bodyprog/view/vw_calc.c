@@ -399,26 +399,27 @@ void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* transformM
 
 void Vw_CoordToViewSpaceMatrix(GsCOORDINATE2* rootCoord, MATRIX* viewMat) // 0x80049AF8
 {
-    MATRIX localMat;
+    MATRIX worldMat;
 
-    Vw_CoordHierarchyMatrixCompute(rootCoord, &localMat);
-    localMat.t[0] -= D_800C3868.t[0];
-    localMat.t[1] -= D_800C3868.t[1];
-    localMat.t[2] -= D_800C3868.t[2];
-    Vw_MultiplyAndTransformMatrix(&VbWvsMatrix, &localMat, viewMat);
+    Vw_CoordHierarchyMatrixCompute(rootCoord, &worldMat);
+    worldMat.t[0] -= D_800C3868.t[0];
+    worldMat.t[1] -= D_800C3868.t[1];
+    worldMat.t[2] -= D_800C3868.t[2];
+
+    Vw_MultiplyAndTransformMatrix(&VbWvsMatrix, &worldMat, viewMat);
 }
 
-void Vw_CoordToWorldAndViewMatrices(GsCOORDINATE2* rootCoord, MATRIX* outMat0, MATRIX* outMat1) // 0x80049B6C
+void Vw_CoordToWorldAndViewMatrices(GsCOORDINATE2* rootCoord, MATRIX* worldMat, MATRIX* viewMat) // 0x80049B6C
 {
-    Vw_CoordHierarchyMatrixCompute(rootCoord, outMat0);
-    outMat0->t[0] -= D_800C3868.t[0];
-    outMat0->t[1] -= D_800C3868.t[1];
-    outMat0->t[2] -= D_800C3868.t[2];
+    Vw_CoordHierarchyMatrixCompute(rootCoord, worldMat);
+    worldMat->t[0] -= D_800C3868.t[0];
+    worldMat->t[1] -= D_800C3868.t[1];
+    worldMat->t[2] -= D_800C3868.t[2];
 
-    Vw_MultiplyAndTransformMatrix(&VbWvsMatrix, outMat0, outMat1);
-    outMat0->t[0] += D_800C3868.t[0];
-    outMat0->t[1] += D_800C3868.t[1];
-    outMat0->t[2] += D_800C3868.t[2];
+    Vw_MultiplyAndTransformMatrix(&VbWvsMatrix, worldMat, viewMat);
+    worldMat->t[0] += D_800C3868.t[0];
+    worldMat->t[1] += D_800C3868.t[1];
+    worldMat->t[2] += D_800C3868.t[2];
 }
 
 void Vw_WorldScreenMatrixAtPositionGet(MATRIX* worldToScreenMat, q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80049C2C
@@ -683,7 +684,7 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ
 
     if (Vw_ScreenRegionSpanCheck(&regionFlags) != 1)
     {
-        for (i = 0; i < 8; i++)
+        for (i = 0; i < ARRAY_SIZE(cullData->field_60); i++)
         {
             RotTrans(&cullData->field_20[i], &cullData->field_60[i], &cullData->field_178);
         }

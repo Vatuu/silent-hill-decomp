@@ -802,8 +802,8 @@ bool Particle_Update(s_Particle* partHead)
 #if MAP_PARTICLE_HAS_RAIN
     s32 sp64;
 #endif
-    MATRIX      mat0;
-    MATRIX      mat1;
+    MATRIX      viewMat;
+    MATRIX      worldMat;
     VECTOR3     prevPos;
     s16         rand;
     s32         pass;
@@ -858,9 +858,9 @@ bool Particle_Update(s_Particle* partHead)
     g_SysWork.coord_22A8.coord.t[2] = Q12_TO_Q8(g_Particle_Position.vz);
 
     g_SysWork.coord_22A8.flg = false;
-    Vw_CoordToWorldAndViewMatrices(&g_SysWork.coord_22A8, &mat1, &mat0);
-    gte_SetRotMatrix(&mat0);
-    gte_SetTransMatrix(&mat0);
+    Vw_CoordToWorldAndViewMatrices(&g_SysWork.coord_22A8, &worldMat, &viewMat);
+    gte_SetRotMatrix(&viewMat);
+    gte_SetTransMatrix(&viewMat);
 
     // Get starting random value to use later.
     rand = Rng_Rand16();
@@ -1410,8 +1410,8 @@ bool Particle_Update(s_Particle* partHead)
 #if defined(MAP0_S00)
 bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CC6E8
 {
-    MATRIX      sp10;
-    MATRIX      sp30;
+    MATRIX      worldMat;
+    MATRIX      viewMat;
     s_func_800CC8FC sp50;
     VECTOR3         sp90[12];
     s32         sp120[32]; // @hack Unknown type, it's passed to `func_800CC8FC` but it's an unused parameter.
@@ -1446,9 +1446,9 @@ bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CC6E8
     g_SysWork.coord_22F8.coord.t[0] = Q8(0.0f);
     g_SysWork.coord_22F8.flg        = false;
 
-    Vw_CoordToWorldAndViewMatrices(&g_SysWork.coord_22F8, &sp10, &sp30);
-    gte_SetRotMatrix(&sp30);
-    gte_SetTransMatrix(&sp30);
+    Vw_CoordToWorldAndViewMatrices(&g_SysWork.coord_22F8, &worldMat, &viewMat);
+    gte_SetRotMatrix(&viewMat);
+    gte_SetTransMatrix(&viewMat);
 
     if (D_800DD593)
     {
@@ -3994,8 +3994,8 @@ void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
 #if !defined(MAP0_S00)
     SVECTOR           startRelPos;
     SVECTOR           endRelPos;
-    MATRIX            matUnused;
-    MATRIX            worldMat;
+    MATRIX            worldMat; // @unused
+    MATRIX            viewMat;
     s_RayData         ray;
     VECTOR3           beamStart;
     VECTOR3           beamOffset;
@@ -4021,10 +4021,10 @@ void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
     g_SysWork.coord_22F8.coord.t[1] = Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vy);
     g_SysWork.coord_22F8.coord.t[2] = Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vz);
 
-    Vw_CoordToWorldAndViewMatrices(&g_SysWork.coord_22F8, &matUnused, &worldMat);
+    Vw_CoordToWorldAndViewMatrices(&g_SysWork.coord_22F8, &worldMat, &viewMat);
 
-    gte_SetRotMatrix(&worldMat);
-    gte_SetTransMatrix(&worldMat);
+    gte_SetRotMatrix(&viewMat);
+    gte_SetTransMatrix(&viewMat);
 
     beamDirY      = Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, Math_Cos(*rotY));
     beamDirX      = Q12_MULT(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, Math_Sin(*rotY)), Math_Sin(*rotX));
@@ -4227,8 +4227,8 @@ void Particle_BeamDraw(const VECTOR3* from, const VECTOR3* to)
 #if !defined(MAP0_S00)
     SVECTOR   fromDelta; // Q23.8
     SVECTOR   toDelta;   // Q23.8
-    MATRIX    matUnused0;
-    MATRIX    worldMat;
+    MATRIX    worldMat;  // @unused
+    MATRIX    viewMat;
     s32       depth;
     s32       clutBase;
     GsOT*     ot;
@@ -4242,10 +4242,9 @@ void Particle_BeamDraw(const VECTOR3* from, const VECTOR3* to)
     g_SysWork.coord_22F8.coord.t[1] = Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vy);
     g_SysWork.coord_22F8.coord.t[2] = Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vz);
 
-    Vw_CoordToWorldAndViewMatrices(&g_SysWork.coord_22F8, &matUnused0, &worldMat);
-
-    gte_SetRotMatrix(&worldMat);
-    gte_SetTransMatrix(&worldMat);
+    Vw_CoordToWorldAndViewMatrices(&g_SysWork.coord_22F8, &worldMat, &viewMat);
+    gte_SetRotMatrix(&viewMat);
+    gte_SetTransMatrix(&viewMat);
 
     prim = (POLY_FT4*)GsOUT_PACKET_P;
 
