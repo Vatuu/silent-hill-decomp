@@ -1955,7 +1955,7 @@ void func_800DE1FC(void) // 0x800DE1FC
         g_SysWork.pointLightRot_2370.vy = ratan2(sp18.vx - g_SysWork.pointLightPosition_2360.vx, sp18.vz - g_SysWork.pointLightPosition_2360.vz);
         g_SysWork.pointLightRot_2370.vz = 0;
 
-        func_800401CC();
+        Vc_UpdateLookAtPointSetAlt();
     }
 }
 

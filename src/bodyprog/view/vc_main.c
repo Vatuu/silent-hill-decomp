@@ -115,11 +115,11 @@ q19_12 Vc_LookAtPositionYGet(void) // 0x80080A3C
     return vcWork.watch_pos_y;
 }
 
-void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, bool use_through_door_cam_f) // 0x80080A4C
+void vcSetFirstCamWork(VECTOR3* cam_pos, q3_12 chara_eye_ang_y, bool use_through_door_cam_f) // 0x80080A4C
 {
     Math_SVectorZero(&vcWork.ofs_cam_ang_spd);
 
-    vcWork.flags_8 = VC_WARP_CAM_F | VC_WARP_WATCH_F | VC_WARP_CAM_TGT_F;
+    vcWork.flags = VC_WARP_CAM_F | VC_WARP_WATCH_F | VC_WARP_CAM_TGT_F;
 
     vcWork.cam_pos      = *cam_pos;
     vcWork.cam_mv_ang_y = Q12_ANGLE(0.0f);
@@ -158,12 +158,12 @@ void func_80080B58(GsCOORDINATE2* arg0, SVECTOR* rot, VECTOR3* pos) // 0x80080B5
 
 void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable) // 0x80080BF8
 {
-    vcWork.flags_8 = (vcWork.flags_8 | enable) & ~disable;
+    vcWork.flags = (vcWork.flags | enable) & ~disable;
 }
 
-s32 Vc_LookAtOffsetYMaxSet(s32 lookAtOffsetYMax) // 0x80080C18
+q19_12 Vc_LookAtOffsetYMaxSet(q19_12 lookAtOffsetYMax) // 0x80080C18
 {
-    s32 prevVal;
+    q19_12 prevVal;
 
     prevVal                = vcWork.watch_tgt_max_y;
     vcWork.watch_tgt_max_y = lookAtOffsetYMax;
@@ -172,11 +172,11 @@ s32 Vc_LookAtOffsetYMaxSet(s32 lookAtOffsetYMax) // 0x80080C18
 
 void vcUserWatchTarget(VECTOR3* watch_tgt_pos, VC_WATCH_MV_PARAM* watch_prm_p, bool warp_watch_f) // 0x80080C2C
 {
-    vcWork.flags_8 = (vcWork.flags_8 & ~(VC_USER_WATCH_F | VC_VISIBLE_CHARA_F)) | VC_USER_WATCH_F;
+    vcWork.flags = (vcWork.flags & ~(VC_USER_WATCH_F | VC_VISIBLE_CHARA_F)) | VC_USER_WATCH_F;
 
     if (warp_watch_f)
     {
-        vcWork.flags_8 |= VC_WARP_WATCH_F;
+        vcWork.flags |= VC_WARP_WATCH_F;
     }
 
     vcWork.watch_tgt_pos   = *watch_tgt_pos;
@@ -195,10 +195,10 @@ void vcUserWatchTarget(VECTOR3* watch_tgt_pos, VC_WATCH_MV_PARAM* watch_prm_p, b
 void vcUserCamTarget(VECTOR3* cam_tgt_pos, VC_CAM_MV_PARAM* cam_prm_p, bool warp_cam_f) // 0x80080CBC
 {
     // Set flags.
-    vcWork.flags_8 = (vcWork.flags_8 & ~(VC_USER_CAM_F | VC_WARP_CAM_F)) | VC_USER_CAM_F;
+    vcWork.flags = (vcWork.flags & ~(VC_USER_CAM_F | VC_WARP_CAM_F)) | VC_USER_CAM_F;
     if (warp_cam_f)
     {
-        vcWork.flags_8 |= VC_WARP_CAM_F;
+        vcWork.flags |= VC_WARP_CAM_F;
     }
 
     // Set target position.
@@ -219,7 +219,7 @@ void vcChangeProjectionValue(s16 scr_y) // 0x80080D5C
     vcWork.geom_screen_dist = scr_y;
 }
 
-void func_80080D68(void) // 0x80080D68
+void Vc_UpdateLookAtPointSet(void) // 0x80080D68
 {
     vcWork.updateLookAtPoint = true;
 }
@@ -256,10 +256,10 @@ void vcReturnPreAutoCamWork(bool warp_f) // 0x80080ED0
     // Set warp flags if warping.
     if (warp_f)
     {
-        vcWork.flags_8 |= VC_WARP_CAM_F | VC_WARP_WATCH_F | VC_WARP_CAM_TGT_F;
+        vcWork.flags |= VC_WARP_CAM_F | VC_WARP_WATCH_F | VC_WARP_CAM_TGT_F;
     }
 
-    vcWork.flags_8         &= ~(VC_USER_CAM_F | VC_USER_WATCH_F);
+    vcWork.flags         &= ~(VC_USER_CAM_F | VC_USER_WATCH_F);
     vcWork.geom_screen_dist = g_GameWork.gsScreenHeight_58A;
 }
 
@@ -313,29 +313,29 @@ s32 vcExecCamera(void) // 0x80080FBC
     cur_rd_area_size = vcWork.cur_near_road.road_p->area_size_type;
     cur_cam_mv_type  = vcRetCurCamMvType(&vcWork);
 
-    far_watch_rate     = vcRetFarWatchRate(CHECK_FLAG(vcWork.flags_8, VC_PRS_F_VIEW_F, !g_GameWorkConst->config_0.optExtraViewCtrl_28), cur_cam_mv_type, &vcWork);
+    far_watch_rate     = vcRetFarWatchRate(CHECK_FLAG(vcWork.flags, VC_PRS_F_VIEW_F, !g_GameWorkConst->config_0.optExtraViewCtrl_28), cur_cam_mv_type, &vcWork);
     self_view_eff_rate = vcRetSelfViewEffectRate(cur_cam_mv_type, far_watch_rate, &vcWork);
 
-    if (!(vcWork.flags_8 & (VC_USER_CAM_F | VC_USER_WATCH_F)))
+    if (!(vcWork.flags & (VC_USER_CAM_F | VC_USER_WATCH_F)))
     {
         vcSetFlagsByCamMvType(cur_cam_mv_type, far_watch_rate, warp_f);
     }
 
-    if (vcWork.flags_8 & VC_WARP_CAM_TGT_F)
+    if (vcWork.flags & VC_WARP_CAM_TGT_F)
     {
         vcWork.old_cam_excl_area_r = NO_VALUE;
     }
 
     vcGetUseWatchAndCamMvParam(&watch_mv_prm_p, &cam_mv_prm_p, self_view_eff_rate, &vcWork);
 
-    if (!(vcWork.flags_8 & VC_USER_CAM_F))
+    if (!(vcWork.flags & VC_USER_CAM_F))
     {
         vcAutoRenewalCamTgtPos(&vcWork, cur_cam_mv_type, cam_mv_prm_p, (s32)cur_rd_flags, cur_rd_area_size, far_watch_rate);
     }
 
     vcRenewalCamData(&vcWork, cam_mv_prm_p);
 
-    if (!(vcWork.flags_8 & VC_USER_WATCH_F))
+    if (!(vcWork.flags & VC_USER_WATCH_F))
     {
         vcAutoRenewalWatchTgtPosAndAngZ(&vcWork, cur_cam_mv_type, cur_rd_area_size,
                                         far_watch_rate, self_view_eff_rate);
@@ -347,11 +347,11 @@ s32 vcExecCamera(void) // 0x80080FBC
     }
 
     vcRenewalCamMatAng(&vcWork, watch_mv_prm_p, cur_cam_mv_type,
-                       vcWork.flags_8 & VC_VISIBLE_CHARA_F);
+                       vcWork.flags & VC_VISIBLE_CHARA_F);
     vcSetDataToVwSystem(&vcWork, cur_cam_mv_type);
 
     vcWork.through_door_activate_init_f = false;
-    vcWork.flags_8                     &= ~(VC_WARP_CAM_F | VC_WARP_WATCH_F | VC_WARP_CAM_TGT_F);
+    vcWork.flags                     &= ~(VC_WARP_CAM_F | VC_WARP_WATCH_F | VC_WARP_CAM_TGT_F);
 
     return vcRetSmoothCamMvF(&sv_old_cam_pos, &vcWork.cam_pos, &sv_old_cam_mat_ang, &vcWork.cam_mat_ang);
 }
@@ -443,13 +443,13 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
 
     if (g_GameWorkConst->config_0.optExtraViewMode_29)
     {
-        hasViewFlag = (vcWork.flags_8 & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
+        hasViewFlag = (vcWork.flags & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
 
         // TODO: Can this weird XOR be removed? (XOR 1) should be same as `!hasViewFlag`?
         if ((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (hasViewFlag ^ 1) != 0) ||
             (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && hasViewFlag))
         {
-            if (!(w_p->flags_8 & (VC_USER_CAM_F | VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)) &&
+            if (!(w_p->flags & (VC_USER_CAM_F | VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)) &&
                 !func_8008150C(w_p->chara_pos.vx, w_p->chara_pos.vz))
             {
                 return VC_MV_SELF_VIEW;
@@ -559,7 +559,7 @@ q19_12 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_t
     q19_12 railDistZ;
     s32    prsFViewFlag;
 
-    if ((vcWork.flags_8 & (VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)))
+    if ((vcWork.flags & (VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)))
     {
         far_watch_rate = Q12(0.0f);
     }
@@ -622,13 +622,13 @@ q19_12 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_t
     if (g_GameWorkConst->config_0.optExtraViewMode_29)
     {
         // Awkward `VC_PRS_F_VIEW_F` flag check. TODO: Use `CHECK_FLAG`? It's possible this was originally typed manually.
-        prsFViewFlag = vcWork.flags_8 >> 9;
+        prsFViewFlag = vcWork.flags >> 9;
         prsFViewFlag = prsFViewFlag & (1 << 0);
 
         if ((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (prsFViewFlag ^ 1) != 0) ||
             (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && prsFViewFlag))
         {
-            if (!(w_p->flags_8 & (VC_USER_CAM_F | VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)) &&
+            if (!(w_p->flags & (VC_USER_CAM_F | VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)) &&
                 func_8008150C(w_p->chara_pos.vx, w_p->chara_pos.vz))
             {
                 far_watch_rate = Q12(0.0f);
@@ -753,7 +753,7 @@ void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, s32 far_watch_rate, bool 
         Vc_FlagSet(VC_WARP_CAM_F | VC_WARP_CAM_TGT_F);
 
         // Awkward `VC_PRS_F_VIEW_F` flag check.
-        vcPrsFViewFlag = vcWork.flags_8 >> 9;
+        vcPrsFViewFlag = vcWork.flags >> 9;
         vcPrsFViewFlag = vcPrsFViewFlag & 0x1;
 
         // `optExtraViewCtrl && !vcPrsFViewFlag` ||
@@ -762,7 +762,7 @@ void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, s32 far_watch_rate, bool 
             (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && vcPrsFViewFlag))
         {
             // Awkward `VC_OLD_PRS_F_VIEW_F` flag check.
-            vcOldPrsFViewFlag = vcWork.flags_8 >> 10;
+            vcOldPrsFViewFlag = vcWork.flags >> 10;
             vcOldPrsFViewFlag = vcOldPrsFViewFlag & 0x1;
 
             // `!(optExtraViewCtrl && !vcOldPrsFViewFlag)` &&
@@ -793,22 +793,22 @@ void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list) // 0x80
 {
     if (g_DeltaTime != Q12(0.0f))
     {
-        if (vcWork.flags_8 & VC_PRS_F_VIEW_F)
+        if (vcWork.flags & VC_PRS_F_VIEW_F)
         {
-            vcWork.flags_8 |= VC_OLD_PRS_F_VIEW_F;
+            vcWork.flags |= VC_OLD_PRS_F_VIEW_F;
         }
         else
         {
-            vcWork.flags_8 &= ~VC_OLD_PRS_F_VIEW_F;
+            vcWork.flags &= ~VC_OLD_PRS_F_VIEW_F;
         }
 
         if (g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.view_E)
         {
-            vcWork.flags_8 |= VC_PRS_F_VIEW_F;
+            vcWork.flags |= VC_PRS_F_VIEW_F;
         }
         else
         {
-            vcWork.flags_8 &= ~VC_PRS_F_VIEW_F;
+            vcWork.flags &= ~VC_PRS_F_VIEW_F;
         }
     }
 
@@ -1850,7 +1850,7 @@ void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_
             break;
     }
 
-    if (vcWork.flags_8 & VC_WARP_CAM_TGT_F)
+    if (vcWork.flags & VC_WARP_CAM_TGT_F)
     {
         w_p->cam_tgt_pos = ideal_pos;
     }
@@ -1880,7 +1880,7 @@ void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_
 
     w_p->cam_tgt_mv_ang_y = ratan2(tgt_vec.vx, tgt_vec.vz);
 
-    if (g_DeltaTime != Q12(0.0f) || vcWork.flags_8 & VC_WARP_CAM_TGT_F)
+    if (g_DeltaTime != Q12(0.0f) || vcWork.flags & VC_WARP_CAM_TGT_F)
     {
         w_p->cam_tgt_pos.vx += tgt_vec.vx;
         w_p->cam_tgt_pos.vy += tgt_vec.vy;
@@ -1918,7 +1918,7 @@ void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_T
 {
     q19_12 chara2cam_ang_y;
 
-    if (w_p->flags_8 & VC_WARP_WATCH_F)
+    if (w_p->flags & VC_WARP_WATCH_F)
     {
         ideal_pos->vx = w_p->chara_pos.vx;
         ideal_pos->vy = w_p->chara_top_y;
@@ -2269,7 +2269,7 @@ void vcMakeBasicCamTgtMvVec(VECTOR3* tgt_mv_vec, VECTOR3* ideal_pos, VC_WORK* w_
         tgt_mv_vec->vz = Q12_MULT(max_tgt_mv_xz_len, Math_Cos(now2ideal_tgt_ang_y));
     }
 
-    if (g_DeltaTime == Q12(0.0f) && !(vcWork.flags_8 & VC_WARP_CAM_TGT_F))
+    if (g_DeltaTime == Q12(0.0f) && !(vcWork.flags & VC_WARP_CAM_TGT_F))
     {
         tgt_mv_vec->vy = Q12(0.0f);
     }
@@ -2510,7 +2510,7 @@ void vcGetUseWatchAndCamMvParam(VC_WATCH_MV_PARAM** watch_mv_prm_pp, VC_CAM_MV_P
     q19_12           add_ang_accel_y;
     VC_CAM_MV_PARAM* cam_mv_prm_stg_p;
 
-    if (w_p->flags_8 & VC_USER_WATCH_F)
+    if (w_p->flags & VC_USER_WATCH_F)
     {
         *watch_mv_prm_pp = &w_p->user_watch_mv_prm;
     }
@@ -2536,7 +2536,7 @@ void vcGetUseWatchAndCamMvParam(VC_WATCH_MV_PARAM** watch_mv_prm_pp, VC_CAM_MV_P
         vcWatchMvPrmSt.ang_accel_y += add_ang_accel_y;
     }
 
-    cam_mv_prm_stg_p = (w_p->flags_8 & VC_USER_CAM_F) ? &w_p->user_cam_mv_prm : &cam_mv_prm_user;
+    cam_mv_prm_stg_p = (w_p->flags & VC_USER_CAM_F) ? &w_p->user_cam_mv_prm : &cam_mv_prm_user;
     *cam_mv_prm_pp   = cam_mv_prm_stg_p;
 }
 
@@ -2545,7 +2545,7 @@ void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x80084BD8
     q19_12 dec_spd_per_dist_xz;
     q19_12 dec_spd_per_dist_y;
 
-    if (w_p->flags_8 & VC_WARP_CAM_F)
+    if (w_p->flags & VC_WARP_CAM_F)
     {
         w_p->cam_mv_ang_y = ratan2(w_p->cam_tgt_pos.vx - w_p->cam_pos.vx, w_p->cam_tgt_pos.vz - w_p->cam_pos.vz);
         w_p->cam_pos      = w_p->cam_tgt_pos;
@@ -2600,7 +2600,7 @@ void vcRenewalCamMatAng(VC_WORK* w_p, VC_WATCH_MV_PARAM* watch_mv_prm_p, VC_CAM_
         vcAdjCamOfsAngByCharaInScreen(&ofs_tgt_ang, &ofs_cam2chara_btm_ang, &ofs_cam2chara_top_ang, w_p);
     }
 
-    if (w_p->flags_8 & VC_WARP_WATCH_F)
+    if (w_p->flags & VC_WARP_WATCH_F)
     {
         w_p->ofs_cam_ang        = ofs_tgt_ang;
         w_p->ofs_cam_ang_spd.vx = Q12(0.0f);
@@ -2650,7 +2650,7 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
     deltaY = Q12_TO_Q8(w_p->watch_tgt_pos.vy - w_p->cam_pos.vy);
     deltaZ = Q12_TO_Q8(w_p->watch_tgt_pos.vz - w_p->cam_pos.vz);
 
-    if (w_p->flags_8 & VC_USER_WATCH_F)
+    if (w_p->flags & VC_USER_WATCH_F)
     {
         new_base_ang->vx = Q12_ANGLE(0.0f);
         new_base_ang->vy = Q12_ANGLE(0.0f);
@@ -2687,7 +2687,7 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
             new_base_ang_y = temp_a0_2;
         }
 
-        if (!(w_p->flags_8 & VC_WARP_WATCH_F))
+        if (!(w_p->flags & VC_WARP_WATCH_F))
         {
             if (w_p->chara_mv_spd != Q12(0.0f) &&
                 angle < Q12_ANGLE(75.0f) &&

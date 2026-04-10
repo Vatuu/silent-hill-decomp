@@ -431,6 +431,7 @@ Gfx_MapEffectsUpdate                         = 0x8003EF10; // type:func
 Gfx_MapEffectsStepUpdate                     = 0x8003EF74; // type:func
 Gfx_FogParametersSet                         = 0x8003F08C; // type:func
 Gfx_FlashlightUpdate                         = 0x8003F170; // type:func
+Gfx_ProgressAlphaGet                         = 0x8003F6F0;
 Math_WeightedAverageGet                      = 0x8003F7E4; // type:func
 
 //---------------------------------------------------------------
@@ -441,6 +442,7 @@ vcSetCameraUseWarp                           = 0x800400D4; // type:func
 vcRetCamMvSmoothF                            = 0x80040190; // type:func
 Vc_CameraElevationRateLockSet                = 0x800401A0; // type:func
 vcSetEvCamRate                               = 0x800401C0; // type:func Guessed name.
+Vc_UpdateLookAtPointSetAlt                   = 0x800401CC;
 vcMoveAndSetCamera                           = 0x800401EC; // type:func
 vcMakeHeroHeadPos                            = 0x8004047C; // type:func
 vcAddOfsToPos                                = 0x80040518; // type:func
@@ -821,6 +823,7 @@ Vc_LookAtOffsetYMaxSet                       = 0x80080C18; // type:func - An acc
 vcUserWatchTarget                            = 0x80080C2C; // type:func
 vcUserCamTarget                              = 0x80080CBC; // type:func
 vcChangeProjectionValue                      = 0x80080D5C; // type:func - Guessed name. Exists in SH2, but code is different.
+Vc_UpdateLookAtPointSet                      = 0x80080D68;
 vcGetNowWatchPos                             = 0x80080D78; // type:func
 vcGetNowCamPos                               = 0x80080EA8; // type:func
 vcReturnPreAutoCamWork                       = 0x80080ED0; // type:func

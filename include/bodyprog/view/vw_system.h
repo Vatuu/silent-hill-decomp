@@ -102,7 +102,7 @@ static inline void Vc_CurNearRoadSet(VC_WORK* work, const VC_NEAR_ROAD_DATA* roa
  */
 static inline void Vc_FlagClear(s32 flags)
 {
-    vcWork.flags_8 &= ~flags;
+    vcWork.flags &= ~flags;
 }
 
 /** @brief Sets a set of camera flags.
@@ -111,7 +111,7 @@ static inline void Vc_FlagClear(s32 flags)
  */
 static inline void Vc_FlagSet(s32 flags)
 {
-    vcWork.flags_8 |= flags;
+    vcWork.flags |= flags;
 }
 
 #endif

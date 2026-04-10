@@ -9,10 +9,10 @@
  */
 void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list);
 
-/* @brief Enables the camera system. */
+/** @brief Enables the camera system. */
 void vcStartCameraSystem(void);
 
-/* @brief Disables the camera system. */
+/** @brief Disables the camera system. */
 void vcEndCameraSystem(void);
 
 s32 func_80080A10(void);
@@ -29,13 +29,13 @@ void Vc_LookAtPositionYSet(q19_12 lookAtPosY);
  */
 q19_12 Vc_LookAtPositionYGet(void);
 
-void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, bool use_through_door_cam_f);
+void vcSetFirstCamWork(VECTOR3* cam_pos, q3_12 chara_eye_ang_y, bool use_through_door_cam_f);
 
 void func_80080B58(GsCOORDINATE2* arg0, SVECTOR* rot, VECTOR3* pos);
 
 void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable);
 
-s32  Vc_LookAtOffsetYMaxSet(s32 lookAtOffsetYMax);
+q19_12 Vc_LookAtOffsetYMaxSet(q19_12 lookAtOffsetYMax);
 
 void vcUserWatchTarget(VECTOR3* watch_tgt_pos, VC_WATCH_MV_PARAM* watch_prm_p, bool warp_watch_f);
 
@@ -44,7 +44,7 @@ void vcUserCamTarget(VECTOR3* cam_tgt_pos, VC_CAM_MV_PARAM* cam_prm_p, bool warp
 void vcChangeProjectionValue(s16 scr_y);
 
 /** @brief Sets `vcWork.updateLookAtPoint` to `true`. */
-void func_80080D68(void);
+void Vc_UpdateLookAtPointSet(void);
 
 /** @brief Gets the current camera look-at position.
  *

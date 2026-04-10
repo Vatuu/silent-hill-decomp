@@ -426,7 +426,7 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
     MATRIX          mat;
     VECTOR          sp48;
     SVECTOR         rot;
-    s32             temp_v0;
+    q19_12          weight;
     u8              flags;
     s32             temp;
     GsCOORDINATE2*  coord;
@@ -460,12 +460,12 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
     }
     else
     {
-        temp_v0 = func_8003F6F0(func_8003F654(ptr), ptr->field_8, ptr->field_C);
+        weight = Gfx_ProgressAlphaGet(func_8003F654(ptr), ptr->field_8, ptr->field_C);
 
-        func_8003F838(&ptr->field_1C[0], &ptr->field_EC[0], &ptr->field_84[0], temp_v0);
-        func_8003F838(&ptr->field_1C[1], &ptr->field_EC[1], &ptr->field_84[1], temp_v0);
+        func_8003F838(&ptr->field_1C[0], &ptr->field_EC[0], &ptr->field_84[0], weight);
+        func_8003F838(&ptr->field_1C[1], &ptr->field_EC[1], &ptr->field_84[1], weight);
 
-        if (temp_v0 >= Q12(1.0f))
+        if (weight >= Q12(1.0f))
         {
             ptr->primType_0 = PrimitiveType_None;
         }
@@ -611,35 +611,42 @@ u32 func_8003F654(s_SysWork_2388* arg0)
     return 0;
 }
 
-s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2) // 0x8003F6F0
+q19_12 Gfx_ProgressAlphaGet(s32 val, s32 min, s32 max) // 0x8003F6F0
 {
+    #define Q12_BITS     32
+    #define Q12_VAL_BITS 31
+    #define Q12_INT_BITS 19
+
     s32 leadingZeros;
     s32 shift;
 
-    if (arg1 < arg2)
+    if (min < max)
     {
-        arg0 = CLAMP(arg0, arg1, arg2);
+        val = CLAMP(val, min, max);
     }
-    else if (arg2 < arg1)
+    else if (max < min)
     {
-        arg0 = CLAMP(arg0, arg2, arg1);
+        val = CLAMP(val, max, min);
     }
     else
     {
         return Q12(1.0f);
     }
 
-    leadingZeros = 32 - Lzc(arg2 - arg1);
+    leadingZeros = Q12_BITS - Lzc(max - min);
     shift        = 0;
 
-    if ((leadingZeros + 12) >= 31)
+    if ((leadingZeros + Q12_SHIFT) >= Q12_VAL_BITS)
     {
-        shift = leadingZeros - 19;
+        shift = leadingZeros - Q12_INT_BITS;
     }
-
     shift = CLAMP(shift, 0, Q12_SHIFT);
 
-    return ((arg0 - arg1) << (Q12_SHIFT - shift)) / ((arg2 - arg1) >> shift);
+    return ((val - min) << (Q12_SHIFT - shift)) / ((max - min) >> shift);
+
+    #undef Q12_BITS
+    #undef Q12_VAL_BITS
+    #undef Q12_INT_BITS
 }
 
 q19_12 Math_WeightedAverageGet(s32 a, s32 b, q19_12 weight) // 0x8003F7E4

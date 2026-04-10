@@ -6434,7 +6434,7 @@ void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warp
     angleToOtherChara = ratan2(player->position_18.vx - otherChara->position_18.vx,
                                player->position_18.vz - otherChara->position_18.vz);
 
-    vcPrsFViewFlag = (vcWork.flags_8 & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
+    vcPrsFViewFlag = (vcWork.flags & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
     if (((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (vcPrsFViewFlag ^ 1) != 0) ||
          (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && vcPrsFViewFlag)) &&
         (g_GameWorkConst->config_0.optExtraViewMode_29 == 0))

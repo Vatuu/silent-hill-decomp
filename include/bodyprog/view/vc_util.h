@@ -38,6 +38,11 @@ void Vc_CameraElevationRateLockSet(bool isUnlocked);
  */
 void vcSetEvCamRate(q3_12 ev_cam_rate);
 
+/** @brief Sets `vcWork.updateLookAtPoint` to `true`.
+ * Alternative to `Vc_UpdateLookAtPointSet`.
+ */
+void Vc_UpdateLookAtPointSetAlt(void);
+
 /** @brief Moves the camera in relation to the player.
  *
  * @param in_connect_f `true` to lock on player position, `false` to lock on player head position.

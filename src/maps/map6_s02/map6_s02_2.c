@@ -56,17 +56,17 @@ void func_800CED74(s_SubCharacter* chara, bool arg1) // 0x800CED74
     // TODO: These `VC_PRS_F_VIEW_F`/`VC_OLD_PRS_F_VIEW_F` checks have showed up a few times now.
     // With the same odd XOR pattern, and `VC_PRS_F_VIEW_F` check followed by `VC_OLD_PRS_F_VIEW_F`.
     // Inlines have been seen to change condition checks into XOR before, but no luck making an inline for this check yet though.
-    vcPrsFViewFlag = (vcWork.flags_8 & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
+    vcPrsFViewFlag = (vcWork.flags & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
     if (((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (vcPrsFViewFlag ^ 1) != 0) ||
          (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && vcPrsFViewFlag)) &&
         (g_GameWorkConst->config_0.optExtraViewMode_29 != 0))
     {
-        vcPrsFViewFlag2 = (vcWork.flags_8 & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
+        vcPrsFViewFlag2 = (vcWork.flags & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
 
         if ((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (vcPrsFViewFlag2 ^ 1) != 0) ||
             (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && vcPrsFViewFlag2))
         {
-            vcOldPrsFViewFlag = (vcWork.flags_8 & VC_OLD_PRS_F_VIEW_F) == VC_OLD_PRS_F_VIEW_F;
+            vcOldPrsFViewFlag = (vcWork.flags & VC_OLD_PRS_F_VIEW_F) == VC_OLD_PRS_F_VIEW_F;
 
             if ((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (vcOldPrsFViewFlag ^ 1) == 0) ||
                 (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && !vcOldPrsFViewFlag))

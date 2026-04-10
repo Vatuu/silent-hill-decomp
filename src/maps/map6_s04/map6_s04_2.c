@@ -1640,7 +1640,7 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
     u32     temp3;
     q19_12  angle6;
 
-    temp3   = vcWork.flags_8;
+    temp3   = vcWork.flags;
     temp3   = temp3 >> 9;
     temp3   = temp3 & 1;
     temp_s5 = temp3 ^ (g_GameWorkConst->config_0.optExtraViewCtrl_28 != false);
@@ -1753,13 +1753,13 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
 
     if (temp_s5 != 0 && g_GameWorkConst->config_0.optExtraViewMode_29)
     {
-        temp_v1_2 = vcWork.flags_8 >> 9;
+        temp_v1_2 = vcWork.flags >> 9;
         temp_v1_2 = temp_v1_2 & 1;
 
         if (( g_GameWorkConst->config_0.optExtraViewCtrl_28 && (temp_v1_2 ^ 1) != 0) ||
             (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && temp_v1_2 != 0))
         {
-            temp_a0_2 = vcWork.flags_8 >> 10;
+            temp_a0_2 = vcWork.flags >> 10;
             temp_a0_2 = temp_a0_2 & 0x1;
 
             if (( g_GameWorkConst->config_0.optExtraViewCtrl_28 && (temp_a0_2 ^ 1) == 0) ||

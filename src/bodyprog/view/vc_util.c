@@ -73,9 +73,9 @@ void vcSetEvCamRate(q3_12 ev_cam_rate) // 0x800401C0
     g_WorldGfxWork.vcCameraInternalInfo_1BDC.ev_cam_rate = ev_cam_rate;
 }
 
-void func_800401CC(void) // 0x800401CC
+void Vc_UpdateLookAtPointSetAlt(void) // 0x800401CC
 {
-    func_80080D68();
+    Vc_UpdateLookAtPointSet();
 }
 
 void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, bool back_f, bool right_f, bool left_f, bool up_f, bool down_f) // 0x800401EC

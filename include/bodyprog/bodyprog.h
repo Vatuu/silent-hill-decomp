@@ -2668,7 +2668,14 @@ q19_12 func_8003F4DC(GsCOORDINATE2** coords, SVECTOR* rot, q19_12 alpha, s32 arg
 
 u32 func_8003F654(s_SysWork_2388* arg0);
 
-s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2);
+/** @brief Computes the normalized progress alpha in the range `[0.0f, 1.0f]`.
+ *
+ * @param val Current value.
+ * @param min Minumum range.
+ * @param max Maximum range.
+ * @return Normalized progress alpha.
+ */
+q19_12 Gfx_ProgressAlphaGet(s32 val, s32 min, s32 max);
 
 void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q19_12 weight);
 

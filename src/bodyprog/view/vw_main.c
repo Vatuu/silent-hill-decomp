@@ -96,12 +96,12 @@ void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, const MATRIX* cammat) // 0
     vwViewPointInfo.vwcoord.coord = *cammat;
 }
 
-/** @brief Converts a Q23.8 matrix transform to Q19.12, outputting the result to `pos`.
+/** @brief Extracts a position from a matrix, outputting the result to `pos`.
  *
  * Possible original name: `vwMatrixToPosition`.
  *
  * @param `pos` Output position (Q19.12).
- * @param `mat` Matrix to use for conversion.
+ * @param `mat` Matrix to use.
  */
 static inline void Math_MatrixToPosition(VECTOR3* pos, MATRIX* mat)
 {
