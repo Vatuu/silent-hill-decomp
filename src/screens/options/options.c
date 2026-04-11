@@ -4,6 +4,7 @@
 #include <psyq/libetc.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/events/radio.h"
 #include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"

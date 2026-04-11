@@ -2296,6 +2296,7 @@ extern s_EventData* g_ItemTriggerEvents[];
 
 extern s32 pad_bss_800BCD94[5];
 
+/** Radio SFX data. */
 extern s_800BCDA8 D_800BCDA8[2];
 
 extern s_MapPoint2d D_800BCDB0;
@@ -3973,11 +3974,6 @@ void func_80036E48(u16* arg0, s16* arg1);
 void func_8003708C(s16* ptr0, u16* ptr1);
 
 void func_80037124(void);
-
-void func_80037154(void);
-
-/** Radio sound related. */
-void Game_RadioSoundStop(void);
 
 /** Finds the ground hight and warps the player to it? */
 void Game_PlayerHeightUpdate(void);
