@@ -149,7 +149,6 @@ void func_8003E740(void) // 0x8003E740
         setSemiTrans(poly, true);
 
         temp_a0 = D_800BCDE8[idx++];
-
         if ((temp_a0 & 0xFFF) >= 3482) // TODO: `> Q12(0.85f)` also matches, but this gets used for `setRGB0` color?
         {
             D_800A9FB0 -= 16 + (temp_a0 & 0xF);

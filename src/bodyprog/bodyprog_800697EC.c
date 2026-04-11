@@ -501,9 +501,9 @@ s32 func_8006A42C(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
 s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQuery* collQuery, s32 arg3,
                   s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** charas, s32 charaCount) // 0x8006A4A8
 {
-    s_CollisionState      sp18;
+    s_CollisionState     collState;
     VECTOR3              sp120; // Q19.12
-    VECTOR3              sp130;
+    VECTOR3              offset1;
     VECTOR3              offsetCpy;
     s32                  var_a0;
     s32                  i;
@@ -528,9 +528,9 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
 
     collResult->field_18 = func_8006F620(&offsetCpy, collQuery, collQuery->rotation_C.vz, collQuery->rotation_C.vy);
 
-    Collision_QueryInit(&sp18, &offsetCpy, collQuery, arg3);
+    Collision_QueryInit(&collState, &offsetCpy, collQuery, arg3);
 
-    sp130 = offsetCpy;
+    offset1 = offsetCpy;
 
     collResult->offset_0.vz = Q12(0.0f);
     collResult->offset_0.vx = Q12(0.0f);
@@ -538,118 +538,118 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
 
     while (true)
     {
-        if (sp18.field_0_0 != 0)
+        if (collState.field_0_0 != 0)
         {
-            sp18.field_0_8  = sp18.field_4.distance_8 != Q12(0.0f);
-            sp18.field_0_9  = 0;
-            sp18.field_0_10 = 0;
+            collState.field_0_8  = collState.field_4.distance_8 != Q12(0.0f);
+            collState.field_0_9  = 0;
+            collState.field_0_10 = 0;
         }
         else
         {
-            sp18.field_0_8  = sp18.field_4.distance_8 != Q12(0.0f);
-            sp18.field_0_9  = 1;
-            sp18.field_0_10 = 1;
+            collState.field_0_8  = collState.field_4.distance_8 != Q12(0.0f);
+            collState.field_0_9  = 1;
+            collState.field_0_10 = 1;
         }
 
         // Run through collision data.
         for (curCollData = collDataPtrs; curCollData < &collDataPtrs[collDataIdx]; curCollData++)
         {
-            func_8006AD44(&sp18, *curCollData);
+            func_8006AD44(&collState, *curCollData);
         }
 
-        if (sp18.field_44.field_0.field_0 && sp18.field_44.field_0.field_2.vx == sp18.field_44.field_0.field_2.vy)
+        if (collState.field_44.field_0.field_0 && collState.field_44.field_0.field_2.vx == collState.field_44.field_0.field_2.vy)
         {
             cond |= true;
         }
 
-        func_8006CF18(&sp18, arg6, arg7);
+        func_8006CF18(&collState, arg6, arg7);
 
         // Run through characters.
         for (curChara = charas; curChara < &charas[charaCount]; curChara++)
         {
             chara  = *curChara;
-            var_a0 = (chara->field_D4.radius_0 >> 4) + sp18.field_4.field_28;
+            var_a0 = (chara->field_D4.radius_0 >> 4) + collState.field_4.field_28;
 
-            if (chara->field_E1_0 < (u32)sp18.field_4.field_0)
+            if (chara->field_E1_0 < (u32)collState.field_4.field_0)
             {
                 var_a0 -= 15;
             }
 
-            sp18.field_98.field_0 = Q12_TO_Q8(chara->position_18.vx + chara->field_D8.offsetX_4);
-            sp18.field_9C.field_0 = Q12_TO_Q8(chara->position_18.vz + chara->field_D8.offsetZ_6);
+            collState.field_98.field_0 = Q12_TO_Q8(chara->position_18.vx + chara->field_D8.offsetX_4);
+            collState.field_9C.field_0 = Q12_TO_Q8(chara->position_18.vz + chara->field_D8.offsetZ_6);
 
-            sp18.field_A0.s_1.field_0 = Q12_TO_Q8(chara->field_C8.field_0 + chara->position_18.vy);
-            sp18.field_A0.s_1.field_2 = Q12_TO_Q8(chara->field_C8.field_2 + chara->position_18.vy);
-            sp18.field_A0.s_1.field_4 = var_a0;
-            sp18.field_A0.s_1.field_6 = chara->field_E1_0;
-            sp18.field_A0.s_1.field_8 = &chara->field_E0;
+            collState.field_A0.s_1.field_0 = Q12_TO_Q8(chara->field_C8.field_0 + chara->position_18.vy);
+            collState.field_A0.s_1.field_2 = Q12_TO_Q8(chara->field_C8.field_2 + chara->position_18.vy);
+            collState.field_A0.s_1.field_4 = var_a0;
+            collState.field_A0.s_1.field_6 = chara->field_E1_0;
+            collState.field_A0.s_1.field_8 = &chara->field_E0;
 
-            if (sp18.field_0_0 == 0)
+            if (collState.field_0_0 == 0)
             {
                 chara->field_E0 = 0;
             }
 
-            func_8006CC9C(&sp18);
-            func_8006CF18(&sp18, chara->field_E4, chara->field_E1_4);
+            func_8006CC9C(&collState);
+            func_8006CF18(&collState, chara->field_E4, chara->field_E1_4);
         }
 
-        func_8006D01C(&sp120, &sp130, func_8006CB90(&sp18), &sp18);
+        func_8006D01C(&sp120, &offset1, Collision_OffsetAlphaGet(&collState), &collState);
 
         collResult->offset_0.vx += sp120.vx;
         collResult->offset_0.vz += sp120.vz;
 
-        if (sp18.field_0_0)
+        if (collState.field_0_0)
         {
             break;
         }
 
-        if (sp18.field_44.field_0.field_0 || sp18.field_44.field_30.field_0)
+        if (collState.field_44.field_0.field_0 || collState.field_44.field_30.field_0)
         {
             count = 8;
-            if (sp18.field_44.field_8.field_0 < 9)
+            if (collState.field_44.field_8.field_0 < 9)
             {
-                count = sp18.field_44.field_8.field_0;
+                count = collState.field_44.field_8.field_0;
             }
 
             for (i = 0; i < count; i++)
             {
-                *sp18.field_44.field_10[i] += 1;
+                *collState.field_44.field_10[i] += 1;
             }
         }
-        else if (sp18.field_34)
+        else if (collState.field_34)
         {
-            *sp18.field_40 += 1;
+            *collState.field_40 += 1;
         }
         else
         {
             break;
         }
 
-        sp18.field_0_0 = 1;
-        func_8006D774(&sp18, &sp120, &sp130);
+        collState.field_0_0 = 1;
+        func_8006D774(&collState, &sp120, &offset1);
     }
 
-    if (sp18.field_90 == 1)
+    if (collState.field_90 == 1)
     {
         var_v0         = Q12(8.0f);
         collResult->field_14 = 0;
     }
     else
     {
-        collResult->field_14 = sp18.field_94;
-        var_v0         = func_8006CC44(sp18.field_4.positionX_18 + Q12_TO_Q8(sp120.vx), sp18.field_4.positionZ_1C + Q12_TO_Q8(sp120.vz), &sp18) * 16;
+        collResult->field_14 = collState.field_94;
+        var_v0         = func_8006CC44(collState.field_4.positionX_18 + Q12_TO_Q8(sp120.vx), collState.field_4.positionZ_1C + Q12_TO_Q8(sp120.vz), &collState) * 16;
     }
 
     collResult->field_C  = var_v0;
-    collResult->field_10 = sp18.field_88;
-    collResult->field_12 = sp18.field_8C;
+    collResult->field_10 = collState.field_88;
+    collResult->field_12 = collState.field_8C;
 
-    if (cond != 0)
+    if (cond)
     {
         return NO_VALUE;
     }
 
-    return sp18.field_0_0 != 0;
+    return collState.field_0_0 != 0;
 }
 
 void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter** charas, s32 charaCount) // 0x8006A940
@@ -723,25 +723,25 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
     offset->vz = Q12_MULT(var_s4, offset->vz);
 }
 
-void Collision_QueryInit(s_CollisionState* state, VECTOR3* pos, s_CollisionQuery* collQuery, s32 arg3) // 0x8006AB50
+void Collision_QueryInit(s_CollisionState* collState, VECTOR3* pos, s_CollisionQuery* collQuery, s32 arg3) // 0x8006AB50
 {
-    state->field_0_0       = 0;
-    state->field_2         = D_800C4478.flags_0;
-    state->field_4.field_4 = arg3;
+    collState->field_0_0       = 0;
+    collState->field_2         = D_800C4478.flags_0;
+    collState->field_4.field_4 = arg3;
 
-    Collision_QueryDirectionCalc(&state->field_4, pos, collQuery);
+    Collision_QueryDirectionCalc(&collState->field_4, pos, collQuery);
 
-    state->field_7C = 0x1E00;
-    state->field_34 = 0;
-    state->field_44.field_0.field_0  = 0;
-    state->field_44.field_6          = 0;
-    state->field_44.field_8.field_0  = 0;
-    state->field_44.field_36         = 0;
-    state->field_44.field_30.field_0 = 0;
-    state->field_8C = 0;
-    state->field_88 = 0;
-    state->field_90 = 1;
-    state->field_94 = 0;
+    collState->field_7C = 0x1E00;
+    collState->field_34 = 0;
+    collState->field_44.field_0.field_0  = 0;
+    collState->field_44.field_6          = 0;
+    collState->field_44.field_8.field_0  = 0;
+    collState->field_44.field_36         = 0;
+    collState->field_44.field_30.field_0 = 0;
+    collState->field_8C = 0;
+    collState->field_88 = 0;
+    collState->field_90 = 1;
+    collState->field_94 = 0;
 }
 
 void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* pos, const s_CollisionQuery* collQuery) // 0x8006ABC0
@@ -754,7 +754,7 @@ void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* pos, c
 
     result->distance_8 = SquareRoot0(SQUARE(result->offset_C.vx) + SQUARE(result->offset_C.vz));
 
-    if (result->distance_8 != 0)
+    if (result->distance_8 != Q12(0.0f))
     {
         // @unused
         result->direction_14.vx = Q12(result->offset_C.vx) / result->distance_8;
@@ -770,17 +770,17 @@ void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* pos, c
         result->direction_14.vz = Q12(0.0f);
     }
 
-    result->field_28     = FP_FROM(collQuery->rotation_C.vz, Q4_SHIFT); // TODO: Packed angle?
-    result->positionX_18 = Q12_TO_Q8(collQuery->position_0.vx);
-    result->positionZ_1C = Q12_TO_Q8(collQuery->position_0.vz);
-    result->field_20     = result->positionX_18 + result->offset_C.vx;
-    result->field_24     = result->positionZ_1C + result->offset_C.vz;
-    result->field_2A     = FP_FROM(collQuery->rotation_C.vy + collQuery->position_0.vy, Q4_SHIFT); // TODO: Position + rotation? Seems wrong.
-    result->field_2C     = FP_FROM(collQuery->rotation_C.vx + collQuery->position_0.vy, Q4_SHIFT);
-    result->field_0      = collQuery->field_12;
+    result->field_28        = FP_FROM(collQuery->rotation_C.vz, Q4_SHIFT); // TODO: Q8 angle?
+    result->positionX_18    = Q12_TO_Q8(collQuery->position_0.vx);
+    result->positionZ_1C    = Q12_TO_Q8(collQuery->position_0.vz);
+    result->newPositionX_20 = result->positionX_18 + result->offset_C.vx;
+    result->newPositionZ_24 = result->positionZ_1C + result->offset_C.vz;
+    result->field_2A        = FP_FROM(collQuery->rotation_C.vy + collQuery->position_0.vy, Q4_SHIFT); // TODO: Position + rotation? Seems wrong.
+    result->field_2C        = FP_FROM(collQuery->rotation_C.vx + collQuery->position_0.vy, Q4_SHIFT);
+    result->field_0         = collQuery->field_12;
 }
 
-void func_8006AD44(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8006AD44
+void func_8006AD44(s_CollisionState* collState, s_IpdCollisionData* collData) // 0x8006AD44
 {
     s32                    endIdx;
     s32                    startIdx;
@@ -789,70 +789,70 @@ void func_8006AD44(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8
     s_IpdCollisionData_20* curUnk;
 
     if ((collData->field_8_8 == 0 && collData->field_8_16 == 0 && collData->field_8_24 == 0) ||
-        !func_8006AEAC(state, collData))
+        !func_8006AEAC(collState, collData))
     {
         return;
     }
 
-    if (state->field_0_0 == 0)
+    if (collState->field_0_0 == 0)
     {
         func_80069994(collData);
     }
 
-    startIdx = state->field_A0.s_0.field_0;
-    endIdx   = (state->field_A0.s_0.field_0 + state->field_A0.s_0.field_2) - 1;
+    startIdx = collState->field_A0.s_0.field_0;
+    endIdx   = (collState->field_A0.s_0.field_0 + collState->field_A0.s_0.field_2) - 1;
 
-    for (i = state->field_A0.s_0.field_1; i < (state->field_A0.s_0.field_1 + state->field_A0.s_0.field_3); i++)
+    for (i = collState->field_A0.s_0.field_1; i < (collState->field_A0.s_0.field_1 + collState->field_A0.s_0.field_3); i++)
     {
         curUnk = &collData->ptr_20[(i * collData->field_1E) + startIdx];
 
         for (j = startIdx; j <= endIdx; j++, curUnk++)
         {
-            func_8006B1C8(state, collData, curUnk);
+            func_8006B1C8(collState, collData, curUnk);
         }
     }
 
-    if (state->field_0_0 == 0)
+    if (collState->field_0_0 == 0)
     {
         func_800699E4(collData);
     }
 
-    if (state->field_0_10)
+    if (collState->field_0_10)
     {
-        func_8006C838(state, collData);
-        if (state->field_A0.s_0.field_4 != NULL)
+        func_8006C838(collState, collData);
+        if (collState->field_A0.s_0.field_4 != NULL)
         {
-            func_8006CA18(state, collData, state->field_A0.s_0.field_4);
+            func_8006CA18(collState, collData, collState->field_A0.s_0.field_4);
         }
     }
 }
 
-bool func_8006AEAC(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8006AEAC
+bool func_8006AEAC(s_CollisionState* collState, s_IpdCollisionData* collData) // 0x8006AEAC
 {
     s_CollisionState_A8* curUnk;
 
-    if (!func_8006B004(state, collData))
+    if (!func_8006B004(collState, collData))
     {
         return false;
     }
 
-    state->field_98.vec_0.vx = state->field_4.positionX_18 - collData->positionX_0;
-    state->field_98.vec_0.vz = state->field_4.positionZ_1C - collData->positionZ_4;
-    state->field_9C.vec_0.vx = state->field_4.field_20 - collData->positionX_0;
-    state->field_9C.vec_0.vz = state->field_4.field_24 - collData->positionZ_4;
+    collState->field_98.vec_0.vx = collState->field_4.positionX_18 - collData->positionX_0;
+    collState->field_98.vec_0.vz = collState->field_4.positionZ_1C - collData->positionZ_4;
+    collState->field_9C.vec_0.vx = collState->field_4.newPositionX_20 - collData->positionX_0;
+    collState->field_9C.vec_0.vz = collState->field_4.newPositionZ_24 - collData->positionZ_4;
 
-    if ((state->field_98.vec_0.vx / collData->field_1C) < 0 || (state->field_98.vec_0.vx / collData->field_1C) >= collData->field_1E ||
-        ((state->field_98.vec_0.vz / collData->field_1C) < 0) || (state->field_98.vec_0.vz / collData->field_1C) >= collData->field_1F)
+    if ((collState->field_98.vec_0.vx / collData->field_1C) < 0 || (collState->field_98.vec_0.vx / collData->field_1C) >= collData->field_1E ||
+        ((collState->field_98.vec_0.vz / collData->field_1C) < 0) || (collState->field_98.vec_0.vz / collData->field_1C) >= collData->field_1F)
     {
-        state->field_A0.s_0.field_4 = NULL;
+        collState->field_A0.s_0.field_4 = NULL;
         return true;
     }
 
-    state->field_A0.s_0.field_4 = (s_func_8006CA18*)&collData->ptr_20[((state->field_98.vec_0.vz / collData->field_1C) * collData->field_1E) +
-                                                                     (state->field_98.vec_0.vx / collData->field_1C)];
-    state->field_C8             = UCHAR_MAX;
+    collState->field_A0.s_0.field_4 = (s_func_8006CA18*)&collData->ptr_20[((collState->field_98.vec_0.vz / collData->field_1C) * collData->field_1E) +
+                                                                          (collState->field_98.vec_0.vx / collData->field_1C)];
+    collState->field_C8             = UCHAR_MAX;
 
-    for (curUnk = state->field_A0.s_0.field_8; curUnk < &state->field_C8; curUnk++)
+    for (curUnk = collState->field_A0.s_0.field_8; curUnk < &collState->field_C8; curUnk++)
     {
         curUnk->field_0 = 0;
         curUnk->field_1 = UCHAR_MAX;
@@ -862,7 +862,7 @@ bool func_8006AEAC(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8
     return true;
 }
 
-bool func_8006B004(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8006B004
+bool func_8006B004(s_CollisionState* collState, s_IpdCollisionData* collData) // 0x8006B004
 {
     s32 var_a0;
     s32 var_a3;
@@ -878,8 +878,8 @@ bool func_8006B004(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8
     temp_lo_2 = collData->field_1C * collData->field_1F;
     temp_t4   = temp_lo_2 - 1;
 
-    var_a3 = state->field_4.positionX_18 - collData->positionX_0;
-    var_t0 = state->field_4.field_20 - collData->positionX_0;
+    var_a3 = collState->field_4.positionX_18 - collData->positionX_0;
+    var_t0 = collState->field_4.newPositionX_20 - collData->positionX_0;
     if (var_t0 < var_a3)
     {
         var_t0 ^= var_a3;
@@ -887,11 +887,11 @@ bool func_8006B004(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8
         var_t0 ^= var_a3;
     }
 
-    var_a3 -= state->field_4.field_28;
-    var_t0 += state->field_4.field_28;
+    var_a3 -= collState->field_4.field_28;
+    var_t0 += collState->field_4.field_28;
 
-    var_a0 = state->field_4.positionZ_1C - collData->positionZ_4;
-    var_a2 = state->field_4.field_24 - collData->positionZ_4;
+    var_a0 = collState->field_4.positionZ_1C - collData->positionZ_4;
+    var_a2 = collState->field_4.newPositionZ_24 - collData->positionZ_4;
     if (var_a2 < var_a0)
     {
         var_a2 ^= var_a0;
@@ -899,8 +899,8 @@ bool func_8006B004(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8
         var_a2 ^= var_a0;
     }
 
-    var_a0 -= state->field_4.field_28;
-    var_a2 += state->field_4.field_28;
+    var_a0 -= collState->field_4.field_28;
+    var_a2 += collState->field_4.field_28;
 
     if (temp_lo < var_a3 || temp_lo_2 < var_a0 || var_t0 < 0 || var_a2 < 0)
     {
@@ -912,15 +912,15 @@ bool func_8006B004(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8
     var_t0 = limitRange(var_t0, 0, temp_t3);
     var_a2 = limitRange(var_a2, 0, temp_t4);
 
-    state->field_A0.s_0.field_0 = var_a3 / collData->field_1C;
-    state->field_A0.s_0.field_1 = var_a0 / collData->field_1C;
-    state->field_A0.s_0.field_2 = ((var_t0 / collData->field_1C) - state->field_A0.s_0.field_0) + 1;
-    state->field_A0.s_0.field_3 = ((var_a2 / collData->field_1C) - state->field_A0.s_0.field_1) + 1;
+    collState->field_A0.s_0.field_0 = var_a3 / collData->field_1C;
+    collState->field_A0.s_0.field_1 = var_a0 / collData->field_1C;
+    collState->field_A0.s_0.field_2 = ((var_t0 / collData->field_1C) - collState->field_A0.s_0.field_0) + 1;
+    collState->field_A0.s_0.field_3 = ((var_a2 / collData->field_1C) - collState->field_A0.s_0.field_1) + 1;
 
     return true;
 }
 
-void func_8006B1C8(s_CollisionState* state, s_IpdCollisionData* collData, s_IpdCollisionData_20* arg2) // 0x8006B1C8
+void func_8006B1C8(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCollisionData_20* arg2) // 0x8006B1C8
 {
     s32 var;
     s32 i;
@@ -937,37 +937,37 @@ void func_8006B1C8(s_CollisionState* state, s_IpdCollisionData* collData, s_IpdC
 
             if (idx < var)
             {
-                if (func_8006B318(state, collData, idx))
+                if (func_8006B318(collState, collData, idx))
                 {
-                    if (state->field_0_10)
+                    if (collState->field_0_10)
                     {
-                        func_8006B6E8(state, arg2);
+                        func_8006B6E8(collState, arg2);
                     }
 
-                    if (state->field_0_8 || state->field_0_9)
+                    if (collState->field_0_8 || collState->field_0_9)
                     {
-                        if (state->field_CC.field_C.s_field_0.field_1 == 0xFF)
+                        if (collState->field_CC.field_C.s_field_0.field_1 == 0xFF)
                         {
-                            func_8006B9C8(state);
+                            func_8006B9C8(collState);
                         }
 
-                        if (state->field_CC.field_C.s_field_0.field_0 == 0xFF)
+                        if (collState->field_CC.field_C.s_field_0.field_0 == 0xFF)
                         {
-                            func_8006B8F8(&state->field_CC);
-                            func_8006B9C8(state);
+                            func_8006B8F8(&collState->field_CC);
+                            func_8006B9C8(collState);
                         }
                     }
                 }
             }
-            else if (func_8006C3D4(state, collData, idx))
+            else if (func_8006C3D4(collState, collData, idx))
             {
-                func_8006C45C(state);
+                func_8006C45C(collState);
             }
         }
     }
 }
 
-bool func_8006B318(s_CollisionState* state, s_IpdCollisionData* collData, s32 idx) // 0x8006B318
+bool func_8006B318(s_CollisionState* collState, s_IpdCollisionData* collData, s32 idx) // 0x8006B318
 {
     s32                    temp_a0_5;
     s32                    temp_s0;
@@ -977,100 +977,100 @@ bool func_8006B318(s_CollisionState* state, s_IpdCollisionData* collData, s32 id
 
     temp_a3 = &collData->ptr_14[idx];
 
-    if (!((state->field_2 >> (temp_a3->field_0_14 * 4 | temp_a3->field_2_14)) & (1 << 0)))
+    if (!((collState->field_2 >> (temp_a3->field_0_14 * 4 | temp_a3->field_2_14)) & (1 << 0)))
     {
         return false;
     }
 
-    state->field_CC.ipdCollisionData_0 = collData;
-    state->field_CC.field_4 = idx;
+    collState->field_CC.ipdCollisionData_0 = collData;
+    collState->field_CC.field_4 = idx;
 
-    state->field_CC.field_6.vx = temp_a3->field_0_0;
-    state->field_CC.field_6.vy = temp_a3->field_2_0;
-    state->field_CC.field_6.vz = temp_a3->field_4;
+    collState->field_CC.field_6.vx = temp_a3->field_0_0;
+    collState->field_CC.field_6.vy = temp_a3->field_2_0;
+    collState->field_CC.field_6.vz = temp_a3->field_4;
 
-    state->field_CC.field_12 = collData->ptr_C[temp_a3->field_7];
-    state->field_CC.field_18 = collData->ptr_C[temp_a3->field_6];
+    collState->field_CC.field_12 = collData->ptr_C[temp_a3->field_7];
+    collState->field_CC.field_18 = collData->ptr_C[temp_a3->field_6];
 
-    state->field_CC.field_C.s_field_0.field_0 = temp_a3->field_8;
+    collState->field_CC.field_C.s_field_0.field_0 = temp_a3->field_8;
 
-    if ((state->field_CC.field_C.s_field_0.field_0) != 0xFF)
+    if ((collState->field_CC.field_C.s_field_0.field_0) != 0xFF)
     {
-        temp_a0                 = &collData->ptr_10[state->field_CC.field_C.s_field_0.field_0];
-        state->field_CC.field_E  = temp_a0->field_6_8;
-        state->field_CC.field_10 = temp_a0->field_6_5;
+        temp_a0                 = &collData->ptr_10[collState->field_CC.field_C.s_field_0.field_0];
+        collState->field_CC.field_E  = temp_a0->field_6_8;
+        collState->field_CC.field_10 = temp_a0->field_6_5;
 
-        if (state->field_4.field_4 && (temp_a0->field_6_5 == 1 || temp_a0->field_6_0 == 12))
+        if (collState->field_4.field_4 && (temp_a0->field_6_5 == 1 || temp_a0->field_6_0 == 12))
         {
-            state->field_CC.field_12.vy -= Q12(1.0f);
-            state->field_CC.field_18.vy -= Q12(1.0f);
+            collState->field_CC.field_12.vy -= Q12(1.0f);
+            collState->field_CC.field_18.vy -= Q12(1.0f);
         }
     }
 
-    state->field_CC.field_C.s_field_0.field_1 = temp_a3->field_9;
+    collState->field_CC.field_C.s_field_0.field_1 = temp_a3->field_9;
 
-    if ((state->field_CC.field_C.s_field_0.field_1) != 0xFF)
+    if ((collState->field_CC.field_C.s_field_0.field_1) != 0xFF)
     {
-        temp_a0                 = &collData->ptr_10[state->field_CC.field_C.s_field_0.field_1];
-        state->field_CC.field_F  = temp_a0->field_6_8;
-        state->field_CC.field_11 = temp_a0->field_6_5;
+        temp_a0                 = &collData->ptr_10[collState->field_CC.field_C.s_field_0.field_1];
+        collState->field_CC.field_F  = temp_a0->field_6_8;
+        collState->field_CC.field_11 = temp_a0->field_6_5;
 
-        if (state->field_4.field_4 && (temp_a0->field_6_5 == 1 || temp_a0->field_6_0 == 12))
+        if (collState->field_4.field_4 && (temp_a0->field_6_5 == 1 || temp_a0->field_6_0 == 12))
         {
-            state->field_CC.field_12.vy = Q12(-1.0f);
-            state->field_CC.field_18.vy = Q12(-1.0f);
+            collState->field_CC.field_12.vy = Q12(-1.0f);
+            collState->field_CC.field_18.vy = Q12(-1.0f);
         }
     }
 
     temp_v0 = (temp_a3->field_0_0 & 0xFFFF) + (temp_a3->field_2_0 << 16);
     gte_ldR11R12(temp_v0);
     gte_ldR13R21(temp_v0);
-    temp_v0 = (u16)state->field_4.offset_C.vx + (state->field_4.offset_C.vz << 16);
+    temp_v0 = (u16)collState->field_4.offset_C.vx + (collState->field_4.offset_C.vz << 16);
     gte_ldvxy0(temp_v0);
     gte_gte_ldvz0();
     gte_rtv0();
-    gte_stMAC12(&state->field_CC.field_20.field_14);
-    temp_v0 = ((state->field_98.vec_0.vx - state->field_CC.field_12.vx) & 0xFFFF) + ((state->field_98.vec_0.vz - state->field_CC.field_12.vz) << 16);
+    gte_stMAC12(&collState->field_CC.field_20.field_14);
+    temp_v0 = ((collState->field_98.vec_0.vx - collState->field_CC.field_12.vx) & 0xFFFF) + ((collState->field_98.vec_0.vz - collState->field_CC.field_12.vz) << 16);
     gte_ldvxy0(temp_v0);
     gte_gte_ldvz0();
     gte_rtv0();
-    gte_stMAC12(&state->field_CC.field_20.field_0);
+    gte_stMAC12(&collState->field_CC.field_20.field_0);
 
-    temp_s0                            = state->field_CC.field_20.field_0.vx;
-    temp_a0_5                          = state->field_CC.field_20.field_0.vz;
-    state->field_CC.field_20.field_4.vx = state->field_CC.field_20.field_14.vx + temp_s0;
-    state->field_CC.field_20.field_4.vz = state->field_CC.field_20.field_14.vz + temp_a0_5;
+    temp_s0                            = collState->field_CC.field_20.field_0.vx;
+    temp_a0_5                          = collState->field_CC.field_20.field_0.vz;
+    collState->field_CC.field_20.field_4.vx = collState->field_CC.field_20.field_14.vx + temp_s0;
+    collState->field_CC.field_20.field_4.vz = collState->field_CC.field_20.field_14.vz + temp_a0_5;
 
     if (temp_s0 < 0)
     {
-        state->field_CC.field_20.field_8  = 2;
-        state->field_CC.field_20.field_C  = SquareRoot0(SQUARE(temp_s0) + SQUARE(temp_a0_5));
-        state->field_CC.field_20.field_10 = -temp_s0;
+        collState->field_CC.field_20.field_8  = 2;
+        collState->field_CC.field_20.field_C  = SquareRoot0(SQUARE(temp_s0) + SQUARE(temp_a0_5));
+        collState->field_CC.field_20.field_10 = -temp_s0;
     }
-    else if (state->field_CC.field_6.vz < temp_s0)
+    else if (collState->field_CC.field_6.vz < temp_s0)
     {
-        state->field_CC.field_20.field_8  = 2;
-        state->field_CC.field_20.field_C  = SquareRoot0(SQUARE(temp_s0 - state->field_CC.field_6.vz) + SQUARE(temp_a0_5));
-        state->field_CC.field_20.field_10 = temp_s0 - state->field_CC.field_6.vz;
+        collState->field_CC.field_20.field_8  = 2;
+        collState->field_CC.field_20.field_C  = SquareRoot0(SQUARE(temp_s0 - collState->field_CC.field_6.vz) + SQUARE(temp_a0_5));
+        collState->field_CC.field_20.field_10 = temp_s0 - collState->field_CC.field_6.vz;
     }
     else
     {
         if (temp_a0_5 < 0)
         {
-            state->field_CC.field_20.field_C = -temp_a0_5;
+            collState->field_CC.field_20.field_C = -temp_a0_5;
         }
         else
         {
-            state->field_CC.field_20.field_C = temp_a0_5;
+            collState->field_CC.field_20.field_C = temp_a0_5;
         }
 
-        state->field_CC.field_20.field_8 = 1;
+        collState->field_CC.field_20.field_8 = 1;
     }
 
     return true;
 }
 
-void func_8006B6E8(s_CollisionState* state, s_IpdCollisionData_20* arg1) // 0x8006B6E8
+void func_8006B6E8(s_CollisionState* collState, s_IpdCollisionData_20* arg1) // 0x8006B6E8
 {
     s32                 idx;
     s32                 temp_s1;
@@ -1079,10 +1079,10 @@ void func_8006B6E8(s_CollisionState* state, s_IpdCollisionData_20* arg1) // 0x80
     s32                 temp_s4;
     s_CollisionState_A8* temp_s0;
 
-    temp_s1 = state->field_CC.field_C.s_field_0.field_0;
-    temp_s2 = state->field_CC.field_C.s_field_0.field_1;
-    temp_s3 = state->field_CC.field_10;
-    temp_s4 = state->field_CC.field_11;
+    temp_s1 = collState->field_CC.field_C.s_field_0.field_0;
+    temp_s2 = collState->field_CC.field_C.s_field_0.field_1;
+    temp_s3 = collState->field_CC.field_10;
+    temp_s4 = collState->field_CC.field_11;
 
     if (temp_s1 == 0xFF)
     {
@@ -1091,24 +1091,24 @@ void func_8006B6E8(s_CollisionState* state, s_IpdCollisionData_20* arg1) // 0x80
             return;
         }
 
-        idx = state->field_CC.field_F;
+        idx = collState->field_CC.field_F;
     }
     else
     {
-        idx = state->field_CC.field_E;
+        idx = collState->field_CC.field_E;
     }
 
-    temp_s0 = &state->field_A0.s_0.field_8[idx];
-    if (!func_8006B7E0(temp_s0, &state->field_CC.field_20))
+    temp_s0 = &collState->field_A0.s_0.field_8[idx];
+    if (!func_8006B7E0(temp_s0, &collState->field_CC.field_20))
     {
         return;
     }
 
-    temp_s0->field_0 = state->field_CC.field_20.field_8;
-    temp_s0->field_4 = state->field_CC.field_20.field_C;
-    temp_s0->field_2 = state->field_CC.field_20.field_10;
+    temp_s0->field_0 = collState->field_CC.field_20.field_8;
+    temp_s0->field_4 = collState->field_CC.field_20.field_C;
+    temp_s0->field_2 = collState->field_CC.field_20.field_10;
 
-    if (state->field_CC.field_20.field_0.vz >= 0)
+    if (collState->field_CC.field_20.field_0.vz >= 0)
     {
         if (temp_s3 == 1)
         {
@@ -1229,70 +1229,70 @@ void func_8006B8F8(s_CollisionState_CC* arg0) // 0x8006B8F8
     ptr->field_4.vx = (arg0->field_6.vz - ptr->field_4.vx);
 }
 
-void func_8006B9C8(s_CollisionState* state) // 0x8006B9C8
+void func_8006B9C8(s_CollisionState* collState) // 0x8006B9C8
 {
     s32 field_28;
 
-    if (state->field_CC.field_C.s_field_0.field_1 == 0xFF && state->field_CC.field_20.field_0.vz < 0 &&
-        (state->field_4.field_2C >= state->field_CC.field_12.vy || state->field_4.field_2C >= state->field_CC.field_18.vy))
+    if (collState->field_CC.field_C.s_field_0.field_1 == 0xFF && collState->field_CC.field_20.field_0.vz < 0 &&
+        (collState->field_4.field_2C >= collState->field_CC.field_12.vy || collState->field_4.field_2C >= collState->field_CC.field_18.vy))
     {
-        if (state->field_0_9 && state->field_CC.field_20.field_C < state->field_4.field_28)
+        if (collState->field_0_9 && collState->field_CC.field_20.field_C < collState->field_4.field_28)
         {
-            func_8006BB50(state, 0);
+            func_8006BB50(collState, 0);
             return;
         }
 
-        field_28 = state->field_4.field_28;
-        if (state->field_0_9 && state->field_CC.field_20.field_C < (field_28 + 8))
+        field_28 = collState->field_4.field_28;
+        if (collState->field_0_9 && collState->field_CC.field_20.field_C < (field_28 + 8))
         {
-            func_8006BB50(state, 1);
+            func_8006BB50(collState, 1);
         }
 
-        if (state->field_0_8)
+        if (collState->field_0_8)
         {
-            if (!state->field_44.field_0.field_0 &&
-                (-field_28 < state->field_CC.field_20.field_0.vz || -field_28 < state->field_CC.field_20.field_4.vz) &&
-                (-field_28 < state->field_CC.field_20.field_0.vx || -field_28 < state->field_CC.field_20.field_4.vx) &&
-                (state->field_CC.field_20.field_0.vx < (field_28 + state->field_CC.field_6.vz) || state->field_CC.field_20.field_4.vx < (field_28 + state->field_CC.field_6.vz)))
+            if (!collState->field_44.field_0.field_0 &&
+                (-field_28 < collState->field_CC.field_20.field_0.vz || -field_28 < collState->field_CC.field_20.field_4.vz) &&
+                (-field_28 < collState->field_CC.field_20.field_0.vx || -field_28 < collState->field_CC.field_20.field_4.vx) &&
+                (collState->field_CC.field_20.field_0.vx < (field_28 + collState->field_CC.field_6.vz) || collState->field_CC.field_20.field_4.vx < (field_28 + collState->field_CC.field_6.vz)))
             {
-                func_8006BE40(state);
+                func_8006BE40(collState);
             }
         }
     }
 }
 
-void func_8006BB50(s_CollisionState* state, s32 arg1) // 0x8006BB50
+void func_8006BB50(s_CollisionState* collState, s32 arg1) // 0x8006BB50
 {
     q19_12 deltaX;
     q19_12 deltaZ;
     s16    temp2;
 
-    if (func_8006BC34(state) < 0)
+    if (func_8006BC34(collState) < 0)
     {
         return;
     }
 
-    if (state->field_CC.field_20.field_0.vx < 0)
+    if (collState->field_CC.field_20.field_0.vx < 0)
     {
-        deltaX = state->field_98.vec_0.vx - state->field_CC.field_12.vx;
-        deltaZ = state->field_98.vec_0.vz - state->field_CC.field_12.vz;
+        deltaX = collState->field_98.vec_0.vx - collState->field_CC.field_12.vx;
+        deltaZ = collState->field_98.vec_0.vz - collState->field_CC.field_12.vz;
     }
-    else if (state->field_CC.field_6.vz < state->field_CC.field_20.field_0.vx)
+    else if (collState->field_CC.field_6.vz < collState->field_CC.field_20.field_0.vx)
     {
-        deltaX = state->field_98.vec_0.vx - state->field_CC.field_18.vx;
-        deltaZ = state->field_98.vec_0.vz - state->field_CC.field_18.vz;
+        deltaX = collState->field_98.vec_0.vx - collState->field_CC.field_18.vx;
+        deltaZ = collState->field_98.vec_0.vz - collState->field_CC.field_18.vz;
     }
     else
     {
-        deltaX = state->field_CC.field_6.vy;
-        deltaZ = -state->field_CC.field_6.vx;
+        deltaX = collState->field_CC.field_6.vy;
+        deltaZ = -collState->field_CC.field_6.vx;
     }
 
-    temp2 = state->field_4.field_28 - state->field_CC.field_20.field_C;
-    func_8006BCC4(&state->field_44, (u8*)state->field_CC.ipdCollisionData_0 + (state->field_CC.field_4 + 52), arg1, deltaX, deltaZ, temp2);
+    temp2 = collState->field_4.field_28 - collState->field_CC.field_20.field_C;
+    func_8006BCC4(&collState->field_44, (u8*)collState->field_CC.ipdCollisionData_0 + (collState->field_CC.field_4 + 52), arg1, deltaX, deltaZ, temp2);
 }
 
-s32 func_8006BC34(s_CollisionState* state)
+s32 func_8006BC34(s_CollisionState* collState)
 {
     s16 temp_a2;
     s16 temp_a3;
@@ -1301,23 +1301,23 @@ s32 func_8006BC34(s_CollisionState* state)
     u16 temp_a1;
     u16 var_v0;
 
-    temp_v1 = state->field_CC.field_20.field_0.vx;
+    temp_v1 = collState->field_CC.field_20.field_0.vx;
     if (temp_v1 < 0)
     {
-        var_v0 = state->field_CC.field_12.vy;
+        var_v0 = collState->field_CC.field_12.vy;
     }
     else
     {
-        temp_a2 = state->field_CC.field_6.vz;
+        temp_a2 = collState->field_CC.field_6.vz;
         if (temp_a2 < temp_v1)
         {
-            var_v0 = state->field_CC.field_18.vy;
+            var_v0 = collState->field_CC.field_18.vy;
         }
         else
         {
-            temp_a3 = state->field_CC.field_12.vy;
-            temp_v0 = state->field_CC.field_18.vy;
-            temp_a1 = state->field_CC.field_12.vy;
+            temp_a3 = collState->field_CC.field_12.vy;
+            temp_v0 = collState->field_CC.field_18.vy;
+            temp_a1 = collState->field_CC.field_12.vy;
 
             if (temp_a3 == temp_v0)
             {
@@ -1330,7 +1330,7 @@ s32 func_8006BC34(s_CollisionState* state)
         }
     }
 
-    return state->field_4.field_2C - (s16)var_v0;
+    return collState->field_4.field_2C - (s16)var_v0;
 }
 
 void func_8006BCC4(s_CollisionState_44* arg0, s8* arg1, u32 arg2, q3_12 deltaX, q3_12 deltaZ, s16 arg5) // 0x8006BCC4
@@ -1390,7 +1390,7 @@ void func_8006BDDC(s_CollisionState_44_0* arg0, q3_12 rotX, q3_12 rotY) // 0x800
     Vw_ClampAngleRange(&arg0->field_2.vx, &arg0->field_2.vy, rotX, rotY);
 }
 
-void func_8006BE40(s_CollisionState* state) // 0x8006BE40
+void func_8006BE40(s_CollisionState* collState) // 0x8006BE40
 {
     s32 temp_a3;
     s32 var_a2;
@@ -1399,16 +1399,16 @@ void func_8006BE40(s_CollisionState* state) // 0x8006BE40
     s32 temp;
 
     var_a1  = 0;
-    temp_a3 = -state->field_4.field_28;
+    temp_a3 = -collState->field_4.field_28;
     var_a2  = 0;
 
-    if (state->field_CC.field_20.field_0.vz >= temp_a3)
+    if (collState->field_CC.field_20.field_0.vz >= temp_a3)
     {
-        if (state->field_CC.field_20.field_0.vx >= 0)
+        if (collState->field_CC.field_20.field_0.vx >= 0)
         {
-            if (state->field_CC.field_6.vz >= state->field_CC.field_20.field_0.vx)
+            if (collState->field_CC.field_6.vz >= collState->field_CC.field_20.field_0.vx)
             {
-                var_a2 = state->field_CC.field_20.field_0.vx;
+                var_a2 = collState->field_CC.field_20.field_0.vx;
                 var_v1 = 2;
             }
             else
@@ -1423,27 +1423,27 @@ void func_8006BE40(s_CollisionState* state) // 0x8006BE40
     }
     else
     {
-        if (state->field_CC.field_20.field_14.vz == 0)
+        if (collState->field_CC.field_20.field_14.vz == 0)
         {
-            if ((state->field_CC.field_20.field_0.vx > 0) && (state->field_CC.field_20.field_0.vx < state->field_CC.field_6.vz))
+            if ((collState->field_CC.field_20.field_0.vx > 0) && (collState->field_CC.field_20.field_0.vx < collState->field_CC.field_6.vz))
             {
                 var_a1 = 0;
-                var_a2 = state->field_CC.field_20.field_0.vx;
+                var_a2 = collState->field_CC.field_20.field_0.vx;
             }
         }
         else
         {
-            var_a1 = FP_TO(temp_a3 - state->field_CC.field_20.field_0.vz, Q12_SHIFT) / state->field_CC.field_20.field_14.vz;
-            temp   = state->field_CC.field_20.field_14.vx * var_a1;
+            var_a1 = FP_TO(temp_a3 - collState->field_CC.field_20.field_0.vz, Q12_SHIFT) / collState->field_CC.field_20.field_14.vz;
+            temp   = collState->field_CC.field_20.field_14.vx * var_a1;
             temp   = FP_FROM(temp, Q12_SHIFT);
-            var_a2 = temp + state->field_CC.field_20.field_0.vx;
+            var_a2 = temp + collState->field_CC.field_20.field_0.vx;
         }
 
         if (var_a2 < 0)
         {
             var_v1 = 0;
         }
-        else if (state->field_CC.field_6.vz < var_a2)
+        else if (collState->field_CC.field_6.vz < var_a2)
         {
             var_v1 = 1;
         }
@@ -1456,15 +1456,15 @@ void func_8006BE40(s_CollisionState* state) // 0x8006BE40
     switch (var_v1)
     {
         case 0:
-            func_8006BF88(state, &state->field_CC.field_12);
+            func_8006BF88(collState, &collState->field_CC.field_12);
             break;
 
         case 1:
-            func_8006BF88(state, &state->field_CC.field_18);
+            func_8006BF88(collState, &collState->field_CC.field_18);
             break;
 
         case 2:
-            func_8006C0C8(state, var_a1, var_a2);
+            func_8006C0C8(collState, var_a1, var_a2);
             break;
     }
 }
@@ -1493,33 +1493,33 @@ void func_8006BF88(s_CollisionState* state, SVECTOR3* arg1) // 0x8006BF88
     }
 }
 
-void func_8006C0C8(s_CollisionState* state, s16 arg1, s16 arg2) // 0x8006C0C8
+void func_8006C0C8(s_CollisionState* collState, s16 arg1, s16 arg2) // 0x8006C0C8
 {
     s32 temp;
 
-    if (!func_8006C1B8(1, arg1, state) || state->field_CC.field_20.field_14.vz < 0)
+    if (!func_8006C1B8(1, arg1, collState) || collState->field_CC.field_20.field_14.vz < 0)
     {
         return;
     }
 
-    temp = ((state->field_CC.field_18.vy - state->field_CC.field_12.vy) * arg2) / state->field_CC.field_6.vz;
+    temp = ((collState->field_CC.field_18.vy - collState->field_CC.field_12.vy) * arg2) / collState->field_CC.field_6.vz;
 
-    if (temp + state->field_CC.field_12.vy < state->field_4.field_2C)
+    if (temp + collState->field_CC.field_12.vy < collState->field_4.field_2C)
     {
-        state->field_40 = (u8*)state->field_CC.ipdCollisionData_0 + (state->field_CC.field_4 + 52);
-        state->field_34 = 1;
-        state->field_38 = arg1;
-        state->field_3A = (state->field_4.distance_8 * arg1) >> 8;
-        state->field_3C = state->field_CC.field_6.vy;
-        state->field_3E = -state->field_CC.field_6.vx;
+        collState->field_40 = (u8*)collState->field_CC.ipdCollisionData_0 + (collState->field_CC.field_4 + 52);
+        collState->field_34 = 1;
+        collState->field_38 = arg1;
+        collState->field_3A = (collState->field_4.distance_8 * arg1) >> 8;
+        collState->field_3C = collState->field_CC.field_6.vy;
+        collState->field_3E = -collState->field_CC.field_6.vx;
     }
 }
 
-bool func_8006C1B8(u32 arg0, s16 arg1, s_CollisionState* arg2) // 0x8006C1B8
+bool func_8006C1B8(u32 arg0, s16 arg1, s_CollisionState* collState) // 0x8006C1B8
 {
     s32 var;
 
-    var = (arg2->field_4.distance_8 * arg1) >> 8;
+    var = (collState->field_4.distance_8 * arg1) >> 8;
     switch (arg0)
     {
         default:
@@ -1527,9 +1527,9 @@ bool func_8006C1B8(u32 arg0, s16 arg1, s_CollisionState* arg2) // 0x8006C1B8
             return false;
 
         case 2:
-            if (arg2->field_34 != 1)
+            if (collState->field_34 != 1)
             {
-                if (arg2->field_34 == 0)
+                if (collState->field_34 == 0)
                 {
                    return true;
                 }
@@ -1541,11 +1541,11 @@ bool func_8006C1B8(u32 arg0, s16 arg1, s_CollisionState* arg2) // 0x8006C1B8
             break;
 
         case 1:
-            if (arg2->field_34 != arg0)
+            if (collState->field_34 != arg0)
             {
-                if (arg2->field_34 != 0)
+                if (collState->field_34 != 0)
                 {
-                    if (arg2->field_34 == 2)
+                    if (collState->field_34 == 2)
                     {
                         var -= 96;
                     }
@@ -1558,7 +1558,7 @@ bool func_8006C1B8(u32 arg0, s16 arg1, s_CollisionState* arg2) // 0x8006C1B8
             break;
     }
 
-    return var < arg2->field_3A;
+    return var < collState->field_3A;
 }
 
 s16 func_8006C248(s32 arg0, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4) // 0x8006C248
@@ -1613,28 +1613,28 @@ s16 func_8006C248(s32 arg0, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4) // 0
     return temp_lo;
 }
 
-bool func_8006C3D4(s_CollisionState* state, s_IpdCollisionData* collData, s32 idx) // 0x8006C3D4
+bool func_8006C3D4(s_CollisionState* collState, s_IpdCollisionData* collData, s32 idx) // 0x8006C3D4
 {
     s_IpdCollisionData_18* temp_a1;
 
-    state->field_CC.ipdCollisionData_0 = collData;
-    state->field_CC.field_4 = idx;
+    collState->field_CC.ipdCollisionData_0 = collData;
+    collState->field_CC.field_4 = idx;
     temp_a1 = &collData->ptr_18[idx - collData->field_8_16];
 
-    if (!((state->field_2 >> temp_a1->field_0_8) & (1 << 0)))
+    if (!((collState->field_2 >> temp_a1->field_0_8) & (1 << 0)))
     {
         return false;
     }
 
-    state->field_CC.field_5         = temp_a1->field_0_5;
-    state->field_CC.field_6.vx      = temp_a1->vec_2.vx;
-    state->field_CC.field_6.vy      = temp_a1->vec_2.vy;
-    state->field_CC.field_6.vz      = temp_a1->vec_2.vz;
-    state->field_CC.field_C.field_0 = temp_a1->field_8;
+    collState->field_CC.field_5         = temp_a1->field_0_5;
+    collState->field_CC.field_6.vx      = temp_a1->vec_2.vx;
+    collState->field_CC.field_6.vy      = temp_a1->vec_2.vy;
+    collState->field_CC.field_6.vz      = temp_a1->vec_2.vz;
+    collState->field_CC.field_C.field_0 = temp_a1->field_8;
     return true;
 }
 
-void func_8006C45C(s_CollisionState* state) // 0x8006C45C
+void func_8006C45C(s_CollisionState* collState) // 0x8006C45C
 {
     q3_12  distMax;
     q3_12  dist;
@@ -1646,69 +1646,69 @@ void func_8006C45C(s_CollisionState* state) // 0x8006C45C
     s32    temp;
     s32    temp2;
 
-    distMax = state->field_4.field_28 + state->field_CC.field_C.field_0;
+    distMax = collState->field_4.field_28 + collState->field_CC.field_C.field_0;
     bound   = distMax + 8;
-    temp_v1 = state->field_CC.field_6.vx - bound;
+    temp_v1 = collState->field_CC.field_6.vx - bound;
 
-    if (state->field_98.vec_0.vx < temp_v1 &&
-        state->field_9C.vec_0.vx < temp_v1)
+    if (collState->field_98.vec_0.vx < temp_v1 &&
+        collState->field_9C.vec_0.vx < temp_v1)
     {
         return;
     }
 
-    if ((state->field_CC.field_6.vx + bound) < state->field_98.vec_0.vx &&
-        (state->field_CC.field_6.vx + bound) < state->field_9C.vec_0.vx)
+    if ((collState->field_CC.field_6.vx + bound) < collState->field_98.vec_0.vx &&
+        (collState->field_CC.field_6.vx + bound) < collState->field_9C.vec_0.vx)
     {
         return;
     }
 
-    if (state->field_98.vec_0.vz < (state->field_CC.field_6.vz - bound) &&
-        state->field_9C.vec_0.vz < (state->field_CC.field_6.vz - bound))
+    if (collState->field_98.vec_0.vz < (collState->field_CC.field_6.vz - bound) &&
+        collState->field_9C.vec_0.vz < (collState->field_CC.field_6.vz - bound))
     {
         return;
     }
 
-    if ((state->field_CC.field_6.vz + bound) < state->field_98.vec_0.vz &&
-        (state->field_CC.field_6.vz + bound) < state->field_9C.vec_0.vz)
+    if ((collState->field_CC.field_6.vz + bound) < collState->field_98.vec_0.vz &&
+        (collState->field_CC.field_6.vz + bound) < collState->field_9C.vec_0.vz)
     {
         return;
     }
 
-    deltaX = state->field_98.vec_0.vx - state->field_CC.field_6.vx;
-    deltaZ = state->field_98.vec_0.vz - state->field_CC.field_6.vz;
+    deltaX = collState->field_98.vec_0.vx - collState->field_CC.field_6.vx;
+    deltaZ = collState->field_98.vec_0.vz - collState->field_CC.field_6.vz;
     dist   = SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ));
 
-    if (dist < state->field_CC.field_C.field_0 && state->field_CC.field_5 != 1 &&
-        (state->field_C8 == 0xFF || state->field_CC.field_6.vy < state->field_CA))
+    if (dist < collState->field_CC.field_C.field_0 && collState->field_CC.field_5 != 1 &&
+        (collState->field_C8 == 0xFF || collState->field_CC.field_6.vy < collState->field_CA))
     {
-        state->field_C8 = state->field_CC.field_4;
-        state->field_CA = state->field_CC.field_6.vy;
+        collState->field_C8 = collState->field_CC.field_4;
+        collState->field_CA = collState->field_CC.field_6.vy;
     }
 
-    if (!state->field_0_8 && !state->field_0_9 || dist < state->field_CC.field_C.field_0)
-    {
-        return;
-    }
-
-    if (dist < distMax && state->field_0_9)
-    {
-        func_8006C794(state, 0, dist);
-        return;
-    }
-
-    if (dist < (distMax + 8) && state->field_0_9)
-    {
-        func_8006C794(state, 1, dist);
-    }
-
-    if (!state->field_0_8 || state->field_44.field_0.field_0)
+    if (!collState->field_0_8 && !collState->field_0_9 || dist < collState->field_CC.field_C.field_0)
     {
         return;
     }
 
-    var_s2 = func_8006C248(*(s32*)&state->field_4.direction_14, state->field_4.distance_8,
-                           state->field_CC.field_6.vx - state->field_98.vec_0.vx,
-                           state->field_CC.field_6.vz - state->field_98.vec_0.vz,
+    if (dist < distMax && collState->field_0_9)
+    {
+        func_8006C794(collState, 0, dist);
+        return;
+    }
+
+    if (dist < (distMax + 8) && collState->field_0_9)
+    {
+        func_8006C794(collState, 1, dist);
+    }
+
+    if (!collState->field_0_8 || collState->field_44.field_0.field_0)
+    {
+        return;
+    }
+
+    var_s2 = func_8006C248(*(s32*)&collState->field_4.direction_14, collState->field_4.distance_8,
+                           collState->field_CC.field_6.vx - collState->field_98.vec_0.vx,
+                           collState->field_CC.field_6.vz - collState->field_98.vec_0.vz,
                            distMax);
 
     if (var_s2 == -1)
@@ -1721,60 +1721,60 @@ void func_8006C45C(s_CollisionState* state) // 0x8006C45C
         var_s2 = 0;
     }
 
-    if (func_8006C1B8(1, var_s2, state) && state->field_4.field_2C >= state->field_CC.field_6.vy)
+    if (func_8006C1B8(1, var_s2, collState) && collState->field_4.field_2C >= collState->field_CC.field_6.vy)
     {
-        state->field_38 = var_s2;
-        state->field_34 = 1;
-        temp           = state->field_98.vec_0.vx + Q12_MULT(state->field_4.offset_C.vx, var_s2);
-        state->field_3A = (state->field_4.distance_8 * var_s2) >> 8;
-        state->field_40 = (u8*)state->field_CC.ipdCollisionData_0 + (state->field_CC.field_4 + 52);
-        state->field_3C = temp - state->field_CC.field_6.vx;
-        temp2          = state->field_98.vec_0.vz + Q12_MULT(state->field_4.offset_C.vz, var_s2);
-        state->field_3E = temp2 - state->field_CC.field_6.vz;
+        collState->field_38 = var_s2;
+        collState->field_34 = 1;
+        temp           = collState->field_98.vec_0.vx + Q12_MULT(collState->field_4.offset_C.vx, var_s2);
+        collState->field_3A = (collState->field_4.distance_8 * var_s2) >> 8;
+        collState->field_40 = (u8*)collState->field_CC.ipdCollisionData_0 + (collState->field_CC.field_4 + 52);
+        collState->field_3C = temp - collState->field_CC.field_6.vx;
+        temp2          = collState->field_98.vec_0.vz + Q12_MULT(collState->field_4.offset_C.vz, var_s2);
+        collState->field_3E = temp2 - collState->field_CC.field_6.vz;
     }
 }
 
-void func_8006C794(s_CollisionState* state, s32 arg1, s32 dist) // 0x8006C794
+void func_8006C794(s_CollisionState* collState, s32 arg1, s32 dist) // 0x8006C794
 {
-    if (state->field_4.field_2C >= (state->field_CC.field_6.vy + (dist - state->field_CC.field_C.field_0)))
+    if (collState->field_4.field_2C >= (collState->field_CC.field_6.vy + (dist - collState->field_CC.field_C.field_0)))
     {
-        func_8006BCC4(&state->field_44,
-                      (u8*)state->field_CC.ipdCollisionData_0 + (state->field_CC.field_4 + 52),
+        func_8006BCC4(&collState->field_44,
+                      (u8*)collState->field_CC.ipdCollisionData_0 + (collState->field_CC.field_4 + 52),
                       arg1,
-                      state->field_98.vec_0.vx - state->field_CC.field_6.vx,
-                      state->field_98.vec_0.vz - state->field_CC.field_6.vz,
-                      (state->field_4.field_28 + state->field_CC.field_C.field_0) - dist);
+                      collState->field_98.vec_0.vx - collState->field_CC.field_6.vx,
+                      collState->field_98.vec_0.vz - collState->field_CC.field_6.vz,
+                      (collState->field_4.field_28 + collState->field_CC.field_C.field_0) - dist);
     }
 }
 
-void func_8006C838(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8006C838
+void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) // 0x8006C838
 {
     s32                    var_a0;
     s_CollisionState_A8*   curUnk;
     s_IpdCollisionData_10* temp_a1;
     s_IpdCollisionData_18* temp_a0;
 
-    if (!state->field_A0.s_0.field_4)
+    if (!collState->field_A0.s_0.field_4)
     {
         return;
     }
 
-    if (state->field_C8 != 0xFF)
+    if (collState->field_C8 != 0xFF)
     {
-        if (state->field_CA < state->field_7C)
+        if (collState->field_CA < collState->field_7C)
         {
-            temp_a0        = &collData->ptr_18[state->field_C8 - collData->field_8_16];
-            state->field_7C = state->field_CA;
-            state->field_80 = state->field_98.vec_0.vx + collData->positionX_0;
-            state->field_84 = state->field_98.vec_0.vz + collData->positionZ_4;
-            state->field_88 = 0;
-            state->field_8C = 0;
-            state->field_90 = temp_a0->field_0_5;
-            state->field_94 = temp_a0->field_0_0;
+            temp_a0        = &collData->ptr_18[collState->field_C8 - collData->field_8_16];
+            collState->field_7C = collState->field_CA;
+            collState->field_80 = collState->field_98.vec_0.vx + collData->positionX_0;
+            collState->field_84 = collState->field_98.vec_0.vz + collData->positionZ_4;
+            collState->field_88 = 0;
+            collState->field_8C = 0;
+            collState->field_90 = temp_a0->field_0_5;
+            collState->field_94 = temp_a0->field_0_0;
         }
     }
 
-    for (curUnk = &state->field_A0.s_0.field_8[0]; curUnk < &state->field_A0.s_0.field_8[4]; curUnk++)
+    for (curUnk = &collState->field_A0.s_0.field_8[0]; curUnk < &collState->field_A0.s_0.field_8[4]; curUnk++)
     {
         if (curUnk->field_1 != 0xFF)
         {
@@ -1784,29 +1784,29 @@ void func_8006C838(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8
 
             if (temp_a1->field_8 != 0)
             {
-                var_a0 += FP_FROM(temp_a1->field_8 * (state->field_98.vec_0.vx - temp_a1->field_0), Q12_SHIFT);
+                var_a0 += FP_FROM(temp_a1->field_8 * (collState->field_98.vec_0.vx - temp_a1->field_0), Q12_SHIFT);
             }
 
             if (temp_a1->field_A != 0)
             {
-                var_a0 += FP_FROM(temp_a1->field_A * (state->field_98.vec_0.vz - temp_a1->field_4), Q12_SHIFT);
+                var_a0 += FP_FROM(temp_a1->field_A * (collState->field_98.vec_0.vz - temp_a1->field_4), Q12_SHIFT);
             }
 
-            if (var_a0 < state->field_7C)
+            if (var_a0 < collState->field_7C)
             {
-                state->field_7C = var_a0;
-                state->field_80 = state->field_98.vec_0.vx + collData->positionX_0;
-                state->field_84 = state->field_98.vec_0.vz + collData->positionZ_4;
-                state->field_88 = temp_a1->field_8;
-                state->field_8C = temp_a1->field_A;
-                state->field_90 = temp_a1->field_6_5;
-                state->field_94 = temp_a1->field_6_0;
+                collState->field_7C = var_a0;
+                collState->field_80 = collState->field_98.vec_0.vx + collData->positionX_0;
+                collState->field_84 = collState->field_98.vec_0.vz + collData->positionZ_4;
+                collState->field_88 = temp_a1->field_8;
+                collState->field_8C = temp_a1->field_A;
+                collState->field_90 = temp_a1->field_6_5;
+                collState->field_94 = temp_a1->field_6_0;
             }
         }
     }
 }
 
-void func_8006CA18(s_CollisionState* state, s_IpdCollisionData* collData, s_func_8006CA18* arg2) // 0x8006CA18
+void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_func_8006CA18* arg2) // 0x8006CA18
 {
     s32                    startIdx;
     s32                    endIdx;
@@ -1826,61 +1826,61 @@ void func_8006CA18(s_CollisionState* state, s_IpdCollisionData* collData, s_func
     {
         ptr = &collData->ptr_10[*curUnk];
 
-        if (((state->field_2 >> ptr->field_6_11) & (1 << 0)) && ptr->field_6_5 != 1)
+        if (((collState->field_2 >> ptr->field_6_11) & (1 << 0)) && ptr->field_6_5 != 1)
         {
             var_a2 = ptr->field_2;
 
             if (ptr->field_8 != 0)
             {
-                var_a2 += FP_FROM(ptr->field_8 * (state->field_98.vec_0.vx - ptr->field_0), Q12_SHIFT);
+                var_a2 += FP_FROM(ptr->field_8 * (collState->field_98.vec_0.vx - ptr->field_0), Q12_SHIFT);
             }
 
             if (ptr->field_A != 0)
             {
-                var_a2 += FP_FROM(ptr->field_A * (state->field_98.vec_0.vz - ptr->field_4), Q12_SHIFT);
+                var_a2 += FP_FROM(ptr->field_A * (collState->field_98.vec_0.vz - ptr->field_4), Q12_SHIFT);
             }
 
-            if (var_a2 < state->field_7C)
+            if (var_a2 < collState->field_7C)
             {
-                state->field_7C = var_a2;
-                state->field_80 = state->field_98.vec_0.vx + collData->positionX_0;
-                state->field_84 = state->field_98.vec_0.vz + collData->positionZ_4;
-                state->field_88 = ptr->field_8;
-                state->field_8C = ptr->field_A;
-                state->field_90 = ptr->field_6_5;
-                state->field_94 = ptr->field_6_0;
+                collState->field_7C = var_a2;
+                collState->field_80 = collState->field_98.vec_0.vx + collData->positionX_0;
+                collState->field_84 = collState->field_98.vec_0.vz + collData->positionZ_4;
+                collState->field_88 = ptr->field_8;
+                collState->field_8C = ptr->field_A;
+                collState->field_90 = ptr->field_6_5;
+                collState->field_94 = ptr->field_6_0;
             }
         }
     }
 }
 
-s16 func_8006CB90(s_CollisionState* state) // 0x8006CB90
+s16 Collision_OffsetAlphaGet(s_CollisionState* collState) // 0x8006CB90
 {
     s32 temp_v0;
 
-    if (state->field_7C == 0x1E00)
+    if (collState->field_7C == 0x1E00)
     {
         return Q12(1.0f);
     }
 
-    temp_v0 = func_8006CC44(state->field_4.field_20, state->field_4.field_24, state);
-    if ((state->field_4.field_2C + state->field_4.offset_C.vy) < temp_v0 ||
-        temp_v0 == state->field_7C)
+    temp_v0 = func_8006CC44(collState->field_4.newPositionX_20, collState->field_4.newPositionZ_24, collState);
+    if ((collState->field_4.field_2C + collState->field_4.offset_C.vy) < temp_v0 ||
+        temp_v0 == collState->field_7C)
     {
         return Q12(1.0f);
     }
 
-    return FP_TO(state->field_4.distance_8, Q12_SHIFT) / SquareRoot0(SQUARE(state->field_4.distance_8) +
-                                                                     SQUARE(temp_v0 - state->field_4.field_2C));
+    return FP_TO(collState->field_4.distance_8, Q12_SHIFT) / SquareRoot0(SQUARE(collState->field_4.distance_8) +
+                                                                         SQUARE(temp_v0 - collState->field_4.field_2C));
 }
 
-s32 func_8006CC44(q23_8 x, q23_8 z, s_CollisionState* arg2) // 0x8006CC44
+s32 func_8006CC44(q23_8 posX, q23_8 posZ, s_CollisionState* collState) // 0x8006CC44
 {
-    if (arg2->field_94 != 12)
+    if (collState->field_94 != 12)
     {
-        return Q12_MULT(arg2->field_88, x - arg2->field_80) +
-               Q12_MULT(arg2->field_8C, z - arg2->field_84) +
-               arg2->field_7C;
+        return Q12_MULT(collState->field_88, posX - collState->field_80) +
+               Q12_MULT(collState->field_8C, posZ - collState->field_84) +
+               collState->field_7C;
     }
 
     return Q12(0.5f);
@@ -1904,13 +1904,13 @@ void func_8006CC9C(s_CollisionState* state) // 0x8006CC9C
     }
 
     if (state->field_98.field_0 + (state->field_A0.s_1.field_4 + state->field_4.distance_8) < state->field_4.positionX_18 ||
-        state->field_4.field_20 < state->field_98.field_0 - (state->field_A0.s_1.field_4 + state->field_4.distance_8))
+        state->field_4.newPositionX_20 < state->field_98.field_0 - (state->field_A0.s_1.field_4 + state->field_4.distance_8))
     {
         return;
     }
 
     if (state->field_9C.field_0 + (state->field_A0.s_1.field_4 + state->field_4.distance_8) < state->field_4.positionZ_1C ||
-        state->field_4.field_24 < state->field_9C.field_0 - (state->field_A0.s_1.field_4 + state->field_4.distance_8) ||
+        state->field_4.newPositionZ_24 < state->field_9C.field_0 - (state->field_A0.s_1.field_4 + state->field_4.distance_8) ||
         state->field_4.field_2A > state->field_A0.s_1.field_2)
     {
         return;
@@ -1993,7 +1993,7 @@ void func_8006CF18(s_CollisionState* state, s_func_8006CF18* arg1, s32 idx) // 0
     }
 }
 
-void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_CollisionState* arg3) // 0x8006D01C
+void func_8006D01C(VECTOR3* arg0, VECTOR3* offset, q3_12 offsetAlpha, s_CollisionState* collState) // 0x8006D01C
 {
     VECTOR3 sp10;
     s32     temp_s0;
@@ -2001,42 +2001,42 @@ void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_CollisionState* arg
     s32     temp_a0;
     s32     temp_v0;
 
-    sp10.vx = Q12_MULT(arg1->vx, arg2);
-    sp10.vz = Q12_MULT(arg1->vz, arg2);
+    sp10.vx = Q12_MULT(offset->vx, offsetAlpha);
+    sp10.vz = Q12_MULT(offset->vz, offsetAlpha);
 
-    if (arg3->field_44.field_0.field_0 || arg3->field_44.field_30.field_0)
+    if (collState->field_44.field_0.field_0 || collState->field_44.field_30.field_0)
     {
-        arg0->vx = 0;
-        arg0->vz = 0;
-        *arg1    = sp10;
-        func_8006D2B4(arg1, &arg3->field_44);
+        arg0->vx = Q12(0.0f);
+        arg0->vz = Q12(0.0f);
+        *offset    = sp10;
+        func_8006D2B4(offset, &collState->field_44);
         return;
     }
 
-    if (!arg3->field_34)
+    if (!collState->field_34)
     {
         *arg0    = sp10;
-        arg1->vz = 0;
-        arg1->vx = 0;
+        offset->vz = Q12(0.0f);
+        offset->vx = Q12(0.0f);
         return;
     }
 
-    if (arg2 < arg3->field_38)
+    if (offsetAlpha < collState->field_38)
     {
-        arg3->field_34 = 0;
+        collState->field_34 = 0;
         *arg0          = sp10;
-        arg1->vz       = 0;
-        arg1->vx       = 0;
+        offset->vz       = Q12(0.0f);
+        offset->vx       = Q12(0.0f);
         return;
     }
 
-    arg0->vx = Q12_MULT(arg1->vx, arg3->field_38);
-    arg0->vz = Q12_MULT(arg1->vz, arg3->field_38);
-    arg1->vx = sp10.vx - arg0->vx;
-    arg1->vz = sp10.vz - arg0->vz;
+    arg0->vx = Q12_MULT(offset->vx, collState->field_38);
+    arg0->vz = Q12_MULT(offset->vz, collState->field_38);
+    offset->vx = sp10.vx - arg0->vx;
+    offset->vz = sp10.vz - arg0->vz;
 
-    temp_s0 = arg3->field_3C;
-    temp_s1 = arg3->field_3E;
+    temp_s0 = collState->field_3C;
+    temp_s1 = collState->field_3E;
     temp_a0 = SQUARE(temp_s0) + SQUARE(temp_s1);
 
     if (temp_a0 < 256)
@@ -2052,9 +2052,9 @@ void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_CollisionState* arg
         temp_s1 = (temp_s1 << 12) / temp_a0;
     }
 
-    temp_v0  = FP_FROM((arg1->vx * temp_s1) + (arg1->vz * -temp_s0), Q12_SHIFT);
-    arg1->vx = Q12_MULT(temp_v0, temp_s1);
-    arg1->vz = Q12_MULT(temp_v0, -temp_s0);
+    temp_v0  = FP_FROM((offset->vx * temp_s1) + (offset->vz * -temp_s0), Q12_SHIFT);
+    offset->vx = Q12_MULT(temp_v0, temp_s1);
+    offset->vz = Q12_MULT(temp_v0, -temp_s0);
 
     if (temp_s0 > Q12(1.0f / 3.0f))
     {
@@ -2077,37 +2077,37 @@ void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_CollisionState* arg
 
 void func_8006D2B4(VECTOR3* arg0, s_CollisionState_44* arg1) // 0x8006D2B4
 {
-    s16  sp18;
-    s16  sp1A;
-    s16  sp1C;
-    s16  sp1E;
-    s16  temp_v0;
-    s32  temp_v0_4;
-    bool cond;
-    bool var_s1;
-    s16  var_s1_2;
-    s32  var_v1;
-    s16  var_v1_2;
-    s16  var_a0;
-    s16  diff_a0;
-    s16  diff_v1;
+    q3_12  rotY1;
+    q3_12  rotX1;
+    q3_12  angleMin;
+    q3_12  angleMax;
+    q3_12  angle1;
+    q19_12 unkAngleMax;
+    bool   cond;
+    bool   var_s1;
+    q3_12  angle;
+    q19_12 unkAngleMin;
+    s16    var_v1_2;
+    s16    var_a0;
+    q3_12  angle2;
+    q3_12  angle3;
 
     if (arg1->field_30.field_0 != 0)
     {
         var_s1 = false;
         if (arg1->field_0.field_0 != 0)
         {
-            sp18 = arg1->field_0.field_2.vx;
-            sp1A = arg1->field_0.field_2.vy;
+            rotY1 = arg1->field_0.field_2.vx;
+            rotX1 = arg1->field_0.field_2.vy;
             if (arg1->field_8.field_0 != 0)
             {
-                Vw_ClampAngleRange(&sp18, &sp1A, arg1->field_8.field_2.vx, arg1->field_8.field_2.vy);
+                Vw_ClampAngleRange(&rotY1, &rotX1, arg1->field_8.field_2.vx, arg1->field_8.field_2.vy);
             }
         }
         else if (arg1->field_8.field_0 != 0)
         {
-            sp18 = arg1->field_8.field_2.vx;
-            sp1A = arg1->field_8.field_2.vy;
+            rotY1 = arg1->field_8.field_2.vx;
+            rotX1 = arg1->field_8.field_2.vy;
         }
         else
         {
@@ -2120,11 +2120,11 @@ void func_8006D2B4(VECTOR3* arg0, s_CollisionState_44* arg1) // 0x8006D2B4
         }
         else
         {
-            temp_v0  = ratan2(arg0->vz, arg0->vx);
-            var_s1_2 = 0x400;
-            diff_a0  = ((sp1A - (temp_v0 - var_s1_2)) << 20) >> 20;
-            diff_v1  = ((sp18 - (temp_v0 + var_s1_2)) << 20) >> 20;
-            if (diff_a0 < 0 && diff_v1 >= 1)
+            angle1  = ratan2(arg0->vz, arg0->vx);
+            angle = Q12_ANGLE(90.0f);
+            angle2  = Q12_ANGLE_NORM_S(rotX1 - (angle1 - angle));
+            angle3  = Q12_ANGLE_NORM_S(rotY1 - (angle1 + angle));
+            if (angle2 < Q12_ANGLE(0.0f) && angle3 > Q12_ANGLE(0.0f))
             {
                 cond = false;
             }
@@ -2148,12 +2148,10 @@ void func_8006D2B4(VECTOR3* arg0, s_CollisionState_44* arg1) // 0x8006D2B4
                 Vw_ClampAngleRange(&arg1->field_0.field_2.vx, &arg1->field_0.field_2.vy, arg1->field_30.field_2.vx, arg1->field_30.field_2.vy);
 
                 var_a0 = arg1->field_6;
-
                 if (arg1->field_6 < arg1->field_36)
                 {
                     var_a0 = arg1->field_36;
                 }
-
                 arg1->field_6 = var_a0;
             }
         }
@@ -2177,127 +2175,121 @@ void func_8006D2B4(VECTOR3* arg0, s_CollisionState_44* arg1) // 0x8006D2B4
     {
         if (arg1->field_0.field_2.vx == arg1->field_0.field_2.vy)
         {
-            arg0->vx = 0;
-            arg0->vz = 0;
+            arg0->vx = Q12(0.0f);
+            arg0->vz = Q12(0.0f);
             return;
         }
 
-        var_s1_2 = (arg1->field_0.field_2.vx + arg1->field_0.field_2.vy) >> 1;
-
+        angle = (arg1->field_0.field_2.vx + arg1->field_0.field_2.vy) >> 1;
         if (arg1->field_0.field_2.vy < arg1->field_0.field_2.vx)
         {
-            var_s1_2 = (var_s1_2 + 0x800) & 0xFFF;
+            angle = Q12_FRACT(angle + Q12_ANGLE(180.0f));
         }
 
         if (arg1->field_8.field_0 == 0)
         {
-            sp1C = arg1->field_0.field_2.vx;
-            sp1E = arg1->field_0.field_2.vy;
+            angleMin = arg1->field_0.field_2.vx;
+            angleMax = arg1->field_0.field_2.vy;
         }
         else
         {
-            sp1C = arg1->field_0.field_2.vx;
-            sp1E = arg1->field_0.field_2.vy;
+            angleMin = arg1->field_0.field_2.vx;
+            angleMax = arg1->field_0.field_2.vy;
 
-            Vw_ClampAngleRange(&sp1C, &sp1E, arg1->field_8.field_2.vx, arg1->field_8.field_2.vy);
+            Vw_ClampAngleRange(&angleMin, &angleMax, arg1->field_8.field_2.vx, arg1->field_8.field_2.vy);
 
-            sp1C = sp1C & 0xFFF;
-            sp1E = sp1E & 0xFFF;
-
-            if (sp1C == sp1E)
+            angleMin = Q12_FRACT(angleMin);
+            angleMax = Q12_FRACT(angleMax);
+            if (angleMin == angleMax)
             {
-                sp1C = arg1->field_0.field_2.vx;
-                sp1E = arg1->field_0.field_2.vy;
+                angleMin = arg1->field_0.field_2.vx;
+                angleMax = arg1->field_0.field_2.vy;
             }
 
-            if (sp1C != sp1E)
+            if (angleMin != angleMax)
             {
-                var_v1    = ((sp1C - var_s1_2) << 20) >> 20;
-                temp_v0_4 = ((sp1E - var_s1_2) << 20) >> 20;
-
-                if (var_v1 >= 0 || temp_v0_4 <= 0)
+                unkAngleMin = Q12_ANGLE_NORM_S(angleMin - angle);
+                unkAngleMax = Q12_ANGLE_NORM_S(angleMax - angle);
+                if (unkAngleMin >= Q12_ANGLE(0.0f) || unkAngleMax <= Q12_ANGLE(0.0f))
                 {
-                    if (ABS(var_v1) < ABS(temp_v0_4))
+                    if (ABS(unkAngleMin) < ABS(unkAngleMax))
                     {
-                        var_s1_2 = sp1C;
+                        angle = angleMin;
                     }
                     else
                     {
-                        var_s1_2 = sp1E;
+                        angle = angleMax;
                     }
                 }
             }
         }
 
         var_v1_2 = MIN(arg1->field_6 + 2, 16) * 16;
-
-        func_8006D600(arg0, var_s1_2, sp1C, sp1E, var_v1_2);
+        func_8006D600(arg0, angle, angleMin, angleMax, var_v1_2);
     }
 }
 
-void func_8006D600(VECTOR3* pos, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006D600
+void func_8006D600(VECTOR3* pos, q19_12 angle, q19_12 angleMin, q19_12 angleMax, s32 arg4) // 0x8006D600
 {
-    s32    temp_a2;
-    s16    temp_s0;
-    s16    temp_s3;
-    s16    temp;
-    s32    temp_s0_2;
-    s32    deltaX;
-    s32    deltaZ;
-    s32    z;
-    s32    x;
-    s32    temp_v0;
-    s32    var_s0;
-    s32    var_v0_2;
-    q19_12 angle;
+    q19_12 angle3;
+    q3_12  normAngle;
+    q3_12  normAngleMin;
+    q3_12  normAngleMax;
+    q19_12 sinAngle2;
+    q19_12 deltaX;
+    q19_12 deltaZ;
+    q19_12 z;
+    q19_12 x;
+    q19_12 cosAngle2;
+    q19_12 angle2;
+    q19_12 var_v0_2;
+    q19_12 angle1;
 
-    // TODO: Angles here.
-
-    temp_s0 = Q12_FRACT(arg1);
-    temp_s3 = Q12_FRACT(arg2);
-    temp    = Q12_FRACT(arg3);
+    normAngle    = Q12_FRACT(angle);
+    normAngleMin = Q12_FRACT(angleMin);
+    normAngleMax = Q12_FRACT(angleMax);
 
     if (arg4 > 0x100)
     {
         arg4 = 0x100;
     }
 
-    x      = Q12_MULT(arg4, Math_Cos(temp_s0));
-    var_s0 = temp;
-    z      = Q12_MULT(arg4, Math_Sin(temp_s0));
+    x      = Q12_MULT(arg4, Math_Cos(normAngle));
+    angle2 = normAngleMax;
+    z      = Q12_MULT(arg4, Math_Sin(normAngle));
     deltaX = pos->vx - x;
     deltaZ = pos->vz - z;
-    angle  = Q12_FRACT(ratan2(deltaZ, deltaX));
+    angle1  = Q12_FRACT(ratan2(deltaZ, deltaX));
 
-    if (angle < temp_s3)
+    if (angle1 < normAngleMin)
     {
-        angle += Q12_ANGLE(360.0f);
+        angle1 += Q12_ANGLE(360.0f);
     }
 
-    if (var_s0 < temp_s3)
+    if (angle2 < normAngleMin)
     {
-        var_s0 += Q12_ANGLE(360.0f);
+        angle2 += Q12_ANGLE(360.0f);
     }
 
-    temp_a2 = temp_s3 + Q12_ANGLE(360.0f);
-    if (var_s0 < angle)
+    angle3 = normAngleMin + Q12_ANGLE(360.0f);
+    if (angle2 < angle1)
     {
-        if (((var_s0 + temp_a2) >> 1) < angle)
+        if (((angle2 + angle3) >> 1) < angle1)
         {
-            var_s0 = temp_a2;
+            angle2 = angle3;
         }
 
-        temp_s0_2 = Math_Sin(var_s0);
-        temp_v0   = Math_Cos(var_s0);
-        var_v0_2  = Q12_MULT(deltaX, temp_v0) + Q12_MULT(deltaZ, temp_s0_2);
+        sinAngle2 = Math_Sin(angle2);
+        cosAngle2 = Math_Cos(angle2);
 
-        if (var_v0_2 < 0)
+        var_v0_2 = Q12_MULT(deltaX, cosAngle2) + Q12_MULT(deltaZ, sinAngle2);
+        if (var_v0_2 < Q12(0.0f))
         {
-            var_v0_2 = 0;
+            var_v0_2 = Q12(0.0f);
         }
 
-        pos->vx = x + Q12_MULT(var_v0_2, temp_v0);
-        pos->vz = z + Q12_MULT(var_v0_2, temp_s0_2);
+        pos->vx = x + Q12_MULT(var_v0_2, cosAngle2);
+        pos->vz = z + Q12_MULT(var_v0_2, sinAngle2);
     }
 }
 
@@ -2350,10 +2342,10 @@ void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2) // 0x800
         arg0->direction_14.vz = Q12(0.0f);
     }
 
-    arg0->positionX_18 = arg0->positionX_18 + arg1->vx;
-    arg0->positionZ_1C = arg0->positionZ_1C + arg1->vy;
-    arg0->field_20     = arg0->positionX_18 + arg0->offset_C.vx;
-    arg0->field_24     = arg0->positionZ_1C + arg0->offset_C.vz;
+    arg0->positionX_18    = arg0->positionX_18 + arg1->vx;
+    arg0->positionZ_1C    = arg0->positionZ_1C + arg1->vy;
+    arg0->newPositionX_20 = arg0->positionX_18 + arg0->offset_C.vx;
+    arg0->newPositionZ_24 = arg0->positionZ_1C + arg0->offset_C.vz;
 }
 
 // ========================================

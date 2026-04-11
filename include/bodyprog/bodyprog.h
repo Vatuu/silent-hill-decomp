@@ -397,8 +397,8 @@ typedef struct
     DVECTOR_XZ direction_14;
     q23_8      positionX_18;
     q23_8      positionZ_1C;
-    s32        field_20;
-    s32        field_24;
+    q23_8      newPositionX_20;
+    q23_8      newPositionZ_24;
     s16        field_28; // } `SVECTOR3`, packed rotation? Probably not.
     s16        field_2A; // }
     s16        field_2C; // }
@@ -424,7 +424,7 @@ typedef struct
 {
     s8      field_0;
     s8      unk_1;
-    DVECTOR field_2; // Q3.12 | XY rotation.
+    DVECTOR field_2; // Q3.12 | Angle constraint. X is min, Y is max. TODO: Don't use `DVECTOR` for this anymore.
 } s_CollisionState_44_0;
 
 typedef struct
@@ -3835,19 +3835,19 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData);
 
 void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_func_8006CA18* arg2);
 
-s16 func_8006CB90(s_CollisionState* collState);
+s16 Collision_OffsetAlphaGet(s_CollisionState* collState);
 
-s32 func_8006CC44(q23_8 x, q23_8 z, s_CollisionState* arg2);
+s32 func_8006CC44(q23_8 posX, q23_8 posZ, s_CollisionState* collState);
 
 void func_8006CC9C(s_CollisionState* collState);
 
 void func_8006CF18(s_CollisionState* collState, s_func_8006CF18* arg1, s32 idx);
 
-void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_CollisionState* arg3);
+void func_8006D01C(VECTOR3* arg0, VECTOR3* offset, q3_12 offsetAlpha, s_CollisionState* collState);
 
 void func_8006D2B4(VECTOR3* arg0, s_CollisionState_44* arg1);
 
-void func_8006D600(VECTOR3* pos, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void func_8006D600(VECTOR3* pos, q19_12 angle, q19_12 rotX, q19_12 rotY, s32 arg4);
 
 void func_8006D774(s_CollisionState* collState, VECTOR3* arg1, VECTOR3* arg2);
 
