@@ -1203,8 +1203,8 @@ void MemCard_SaveBlockInit(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveIdx
     bzero(saveBlock, sizeof(s_PsxSaveBlock));
 #endif
 
-    saveBlock->magic_0[0]        = 'S';
-    saveBlock->magic_0[1]        = 'C';
+    saveBlock->magic[0]        = 'S';
+    saveBlock->magic[1]        = 'C';
     saveBlock->iconDisplayFlag_2 = 0x11; // ICON_HAS_1_STATIC_FRAME
     saveBlock->blockCount_3      = blockCount;
     bzero(saveBlock->titleNameShiftJis_4, 0x40);

@@ -178,12 +178,12 @@ void Fs_CharaAnimInfoUpdate(s32 idx, e_CharacterId charaId, s_AnmHeader* animFil
         }
         else if (idx >= 2)
         {
-            idx0        = g_CharaTypeAnimInfo[idx - 1].animFile1_8->boneCount_6;
+            idx0        = g_CharaTypeAnimInfo[idx - 1].animFile1_8->boneCount;
             localCoord  = g_CharaTypeAnimInfo[idx - 1].npcCoords_14;
             localCoord += idx0 + 1;
 
             // Check for end of `g_SysWork.npcCoords_FC0` array.
-            if ((&localCoord[animFile->boneCount_6] + 1) >= &g_SysWork.npcCoords_FC0[NPC_BONE_COUNT_MAX])
+            if ((&localCoord[animFile->boneCount] + 1) >= &g_SysWork.npcCoords_FC0[NPC_BONE_COUNT_MAX])
             {
                 localCoord = g_MapOverlayHeader.field_28;
             }
@@ -212,10 +212,10 @@ void Fs_CharaAnimBoneInfoUpdate(void) // 0x8003569C
         {
             coord    = g_CharaTypeAnimInfo[i].npcCoords_14;
             animFile = g_CharaTypeAnimInfo[i + 1].animFile1_8;
-            coord   += g_CharaTypeAnimInfo[i].animFile1_8->boneCount_6 + 1;
+            coord   += g_CharaTypeAnimInfo[i].animFile1_8->boneCount + 1;
 
             // Check for end of `g_SysWork.npcCoords_FC0` array.
-            if ((&coord[animFile->boneCount_6] + 1) >= &g_SysWork.npcCoords_FC0[NPC_BONE_COUNT_MAX])
+            if ((&coord[animFile->boneCount] + 1) >= &g_SysWork.npcCoords_FC0[NPC_BONE_COUNT_MAX])
             {
                 coord = g_MapOverlayHeader.field_28;
             }

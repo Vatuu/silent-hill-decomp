@@ -272,10 +272,10 @@ STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
 
 typedef struct
 {
-    s32               id_0;
-    s32               flags_4;
-    s32               modelCount_8;
-    struct TMD_STRUCT models_c[1];
+    /* 0x0 */ s32               id;
+    /* 0x4 */ s32               flags;
+    /* 0x8 */ s32               modelCount;
+    /* 0xC */ struct TMD_STRUCT models[1];
 } s_TmdFile;
 
 typedef struct
@@ -718,15 +718,15 @@ STATIC_ASSERT_SIZEOF(s_Material, 24);
 
 typedef struct _LmHeader
 {
-    u8             magic_0;    /** See `LM_HEADER_MAGIC`. */
-    u8             version_1;  /** See `LM_VERSION`. */
-    u8             isLoaded_2; /** `bool` */
-    u8             materialCount_3;
-    s_Material*    materials_4;
-    u8             modelCount_8;
-    u8             unk_9[3];
-    s_ModelHeader* modelHdrs_C;
-    u8*            modelOrder_10;
+    /* 0x0  */ u8             magic;    /** See `LM_HEADER_MAGIC`. */
+    /* 0x1  */ u8             version;  /** See `LM_VERSION`. */
+    /* 0x2  */ u8             isLoaded; /** `bool` */
+    /* 0x3  */ u8             materialCount;
+    /* 0x4  */ s_Material*    materials;
+    /* 0x8  */ u8             modelCount;
+               // 3 bytes of padding.
+    /* 0xC  */ s_ModelHeader* modelHdrs;
+    /* 0x10 */ u8*            modelOrder;
 } s_LmHeader;
 
 typedef struct _IpdCollisionData_10
@@ -828,21 +828,21 @@ STATIC_ASSERT_SIZEOF(s_IpdModelBuffer, 24);
 
 typedef struct _IpdModelInfo
 {
-    u8             isGlobalPlm_0; // `false` if loaded from inside `IPD`, `true` if loaded from `*_GLB.PLM`.
-    u8             unk_1[3];
-    u_Filename     modelName_4;
-    s_ModelHeader* modelHdr_C;
+    /** 0x0 */ u8             isGlobalPlm; // `false` if loaded from inside `IPD`, `true` if loaded from `*_GLB.PLM`.
+               // 3 bytes of padding.
+    /** 0x4 */ u_Filename     modelName;
+    /** 0xC */ s_ModelHeader* modelHdr;
 } s_IpdModelInfo;
 STATIC_ASSERT_SIZEOF(s_IpdModelInfo, 16);
 
 typedef struct _IpdHeader
 {
-    u8                 magic_0;
+    u8                 magic;
     u8                 isLoaded_1; /** `bool` */
     s8                 cellX_2;
     s8                 cellZ_3;
     s_LmHeader*        lmHdr_4;
-    u8                 modelCount_8;
+    u8                 modelCount;
     u8                 modelBufferCount_9;
     u8                 modelOrderCount_A;
     u8                 unk_B[1];
@@ -870,18 +870,18 @@ STATIC_ASSERT_SIZEOF(s_AnmBindPose, 6);
 
 typedef struct _AnmHeader
 {
-    u16           dataOffset_0;
-    u8            rotationBoneCount_2;
-    u8            translationBoneCount_3;
-    u16           keyframeDataSize_4; // Size per keyframe, `(rotationBoneCount_2 * 9) + (translationBoneCount_3 * 3)`?
-    u8            boneCount_6;
-    u8            unk_7;
-    u32           activeBones_8; // Holds bit field of bones to update.
-    u32           fileSize_C;
-    u16           keyframeCount_10;
-    u8            scaleLog2_12;
-    u8            rootYOffset_13;
-    s_AnmBindPose bindPoses_14[0]; // Array size = `boneCount_6`.
+    /* 0x0  */ u16           dataOffset;
+    /* 0x2  */ u8            rotationBoneCount;
+    /* 0x3  */ u8            translationBoneCount;
+    /* 0x4  */ u16           keyframeDataSize; // Size per keyframe, `(rotationBoneCount * 9) + (translationBoneCount * 3)`?
+    /* 0x6  */ u8            boneCount;
+               // 1 byte of padding.
+    /* 0x8  */ u32           activeBones;      // Bit field of bones to update.
+    /* 0xC  */ u32           fileSize;
+    /* 0x10 */ u16           keyframeCount;
+    /* 0x12 */ u8            scaleLog2;
+    /* 0x13 */ u8            rootYOffset;
+    /* 0x14 */ s_AnmBindPose bindPoses[0];     // Array size = `boneCount`.
 } s_AnmHeader;
 STATIC_ASSERT_SIZEOF(s_AnmHeader, 20);
 
@@ -3969,35 +3969,6 @@ void func_80036E48(u16* arg0, s16* arg1);
 void func_8003708C(s16* ptr0, u16* ptr1);
 
 void func_80037124(void);
-
-// ==================== `bodyprog/events/npc_main.c` ==============
-
-void Savegame_EnemyStateUpdate(s_SubCharacter* chara);
-
-/** @brief Updates character's damage flag to reflect if damage was taken.
- *
- * @param chara Character to update.
- */
-void Chara_DamagedFlagUpdate(s_SubCharacter* chara);
-
-void func_80037E78(s_SubCharacter* chara);
-
-/** Responsible for loading NPCs on the map. */
-void Game_NpcRoomInitSpawn(bool cond);
-
-/** @brief Main NPC update function. Runs through each NPC and calls `g_MapOverlayHeader.charaUpdateFuncs_194` for them. */
-void Game_NpcUpdate(void);
-
-/** @brief Performs a 2D distance check on the XZ plane between two positions.
- *
- * @param from First position (Q19.12).
- * @param to Second position (Q19.12).
- * @param radius Intersection radius.
- * @return `true` if the 2D distance exceeds the radius, `false` otherwise.
- */
-bool Math_Distance2dCheck(const VECTOR3* from, const VECTOR3* to, q19_12 radius);
-
-// ====================
 
 s32 func_800382B0(s32 arg0);
 

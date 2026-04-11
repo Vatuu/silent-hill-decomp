@@ -6,23 +6,20 @@
 #include "inline_no_dmpsx.h"
 
 // TODO:
-// - Make this separate split in each map that uses it, instead of `#include`
-//   (this file depends on some MAP_X macros from each mapX_sXX.h file though, which the maps .c currently handles including)
-// - Move funcdecls/structs for these out of shared.h header.
+// - Make this separate split in each map that uses it instead of `#include`.
+//   This file depends on some MAP_X macros from each mapX_sXX.h file though, which the maps .c currently handles including.
+// - Move func decls and structs for these out of `shared.h`.
 
-/*
- * Character case switch handling
+/** Character case switch handling.
  *
- * Maps define one or more HAS_Chara_X flags to include their
- * respective switch cases.
- * When only a single case is present (MAP_CHARA_COUNT == 1), the
+ * Maps define one or more `HAS_Chara_X` flags to include their respective switch cases.
+ * When only a single case is present (`MAP_CHARA_COUNT == 1`), the
  * macro below replaces `case N:` with `default:` so that the compiler
  * collapses the switch into a direct block, matching single-case maps
  * that skip checking the case entirely.
  *
  * Used by both `Chara_AnimPlaybackStateGet` and `Chara_AnimStartKeyframeIdxGet` in this file.
  */
-
 #if defined(MAP_CHARA_COUNT) && MAP_CHARA_COUNT > 1
     #define CHARA_CASE(id) case id
 #else

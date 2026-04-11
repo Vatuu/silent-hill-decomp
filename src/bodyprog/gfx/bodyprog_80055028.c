@@ -684,22 +684,22 @@ void LmHeader_FixOffsets(s_LmHeader* lmHdr) // 0x800560FC
 {
     s32 i;
 
-    if (lmHdr->isLoaded_2 == true)
+    if (lmHdr->isLoaded == true)
     {
         return;
     }
-    lmHdr->isLoaded_2 = true;
+    lmHdr->isLoaded = true;
 
     // Add memory address of header to pointer fields.
-    lmHdr->materials_4   = (u8*)lmHdr->materials_4   + (u32)lmHdr;
-    lmHdr->modelHdrs_C   = (u8*)lmHdr->modelHdrs_C   + (u32)lmHdr;
-    lmHdr->modelOrder_10 = (u8*)lmHdr->modelOrder_10 + (u32)lmHdr;
+    lmHdr->materials   = (u8*)lmHdr->materials   + (u32)lmHdr;
+    lmHdr->modelHdrs   = (u8*)lmHdr->modelHdrs   + (u32)lmHdr;
+    lmHdr->modelOrder = (u8*)lmHdr->modelOrder + (u32)lmHdr;
 
-    for (i = 0; i < lmHdr->modelCount_8; i++)
+    for (i = 0; i < lmHdr->modelCount; i++)
     {
-        if (lmHdr->magic_0 == LM_HEADER_MAGIC)
+        if (lmHdr->magic == LM_HEADER_MAGIC)
         {
-            ModelHeader_FixOffsets(&lmHdr->modelHdrs_C[i], lmHdr);
+            ModelHeader_FixOffsets(&lmHdr->modelHdrs[i], lmHdr);
         }
     }
 }
@@ -727,9 +727,9 @@ void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool transparency) // 0x80056244
     s_MeshHeader*  curMeshHdr;
     s_Primitive*   prim;
 
-    modelHdrs = lmHdr->modelHdrs_C;
+    modelHdrs = lmHdr->modelHdrs;
 
-    for (curModelHdr = &modelHdrs[0]; curModelHdr < &modelHdrs[lmHdr->modelCount_8]; curModelHdr++)
+    for (curModelHdr = &modelHdrs[0]; curModelHdr < &modelHdrs[lmHdr->modelCount]; curModelHdr++)
     {
         for (curMeshHdr = &curModelHdr->meshHdrs_C[0]; curMeshHdr < &curModelHdr->meshHdrs_C[curModelHdr->meshCount_8]; curMeshHdr++)
         {
@@ -747,7 +747,7 @@ s32 Lm_MaterialCountGet(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr) 
     s_Material* curMat;
 
     count = 0;
-    for (curMat = lmHdr->materials_4; curMat < (lmHdr->materials_4 + lmHdr->materialCount_3); curMat++)
+    for (curMat = lmHdr->materials; curMat < (lmHdr->materials + lmHdr->materialCount); curMat++)
     {
         if (filterFunc(curMat))
         {
@@ -768,8 +768,8 @@ void func_800563E8(s_LmHeader* lmHdr, s32 arg1, s32 arg2, s32 arg3) // 0x800563E
         arg2 += 15;
     }
 
-    for (i = 0, curMat = &lmHdr->materials_4[0];
-         i < lmHdr->materialCount_3;
+    for (i = 0, curMat = &lmHdr->materials[0];
+         i < lmHdr->materialCount;
          i++, curMat++)
     {
         // TODO: Bitfield stuff? Doesn't seem to match other uses of `field_E`/`field_10` we've seen though.
@@ -816,8 +816,8 @@ bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* i
 {
     s_Material* curMat;
 
-    for (curMat = &lmHdr->materials_4[0];
-         curMat < &lmHdr->materials_4[lmHdr->materialCount_3];
+    for (curMat = &lmHdr->materials[0];
+         curMat < &lmHdr->materials[lmHdr->materialCount];
          curMat++)
     {
         if (!COMPARE_FILENAMES(&curMat->name_0, fileName))
@@ -871,8 +871,8 @@ void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 star
     s_FsImageDesc* curImage;
 
     // Loop could be using `&image[i]`/`&arg0->field_4[i]` instead? Wasn't able to make that match though.
-    for (i = 0, curImage = images, curMat = lmHdr->materials_4;
-         i < lmHdr->materialCount_3;
+    for (i = 0, curImage = images, curMat = lmHdr->materials;
+         i < lmHdr->materialCount;
          i++, curMat++, curImage++)
     {
         Material_TimFileNameGet(filename, curMat);
@@ -885,7 +885,7 @@ void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs,
 {
     s_Material* curMat;
 
-    for (curMat = &lmHdr->materials_4[0]; curMat < &lmHdr->materials_4[lmHdr->materialCount_3]; curMat++)
+    for (curMat = &lmHdr->materials[0]; curMat < &lmHdr->materials[lmHdr->materialCount]; curMat++)
     {
         if (curMat->field_C == 0 && curMat->texture_8 == NULL &&
             (filterFunc == NULL || filterFunc(curMat)))
@@ -903,12 +903,12 @@ bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr) // 0x80056888
 {
     s_Material* curMat;
 
-    if (!lmHdr->isLoaded_2)
+    if (!lmHdr->isLoaded)
     {
         return false;
     }
 
-    for (curMat = &lmHdr->materials_4[0]; curMat < &lmHdr->materials_4[lmHdr->materialCount_3]; curMat++)
+    for (curMat = &lmHdr->materials[0]; curMat < &lmHdr->materials[lmHdr->materialCount]; curMat++)
     {
         if (curMat->field_C != 0)
         {
@@ -936,7 +936,7 @@ void Lm_MaterialFlagsApply(s_LmHeader* lmHdr) // 0x80056954
     s32         matFlags;
     s_Material* curMat;
 
-    for (i = 0, curMat = lmHdr->materials_4; i < lmHdr->materialCount_3; i++, curMat++)
+    for (i = 0, curMat = lmHdr->materials; i < lmHdr->materialCount; i++, curMat++)
     {
         matFlags = (curMat->field_E != curMat->field_F) ? MaterialFlag_0 : MaterialFlag_None;
 
@@ -951,11 +951,11 @@ void Lm_MaterialFlagsApply(s_LmHeader* lmHdr) // 0x80056954
 
         if (matFlags != 0)
         {
-            for (j = 0; j < lmHdr->modelCount_8; j++)
+            for (j = 0; j < lmHdr->modelCount; j++)
             {
-                if (lmHdr->magic_0 == LM_HEADER_MAGIC)
+                if (lmHdr->magic == LM_HEADER_MAGIC)
                 {
-                    Model_MaterialFlagsApply(&lmHdr->modelHdrs_C[j], i, curMat, matFlags);
+                    Model_MaterialFlagsApply(&lmHdr->modelHdrs[j], i, curMat, matFlags);
                 }
             }
 
@@ -1017,7 +1017,7 @@ void Lm_MaterialRefCountDec(s_LmHeader* lmHdr) // 0x80056BF8
     s_Texture*  tex;
 
     // Run through materials.
-    for (curMat = &lmHdr->materials_4[0]; curMat < &lmHdr->materials_4[lmHdr->materialCount_3]; curMat++)
+    for (curMat = &lmHdr->materials[0]; curMat < &lmHdr->materials[lmHdr->materialCount]; curMat++)
     {
         tex = curMat->texture_8;
         if (tex != NULL)
@@ -1035,17 +1035,17 @@ void Lm_MaterialRefCountDec(s_LmHeader* lmHdr) // 0x80056BF8
 
 s32 LmHeader_ModelCountGet(s_LmHeader* lmHdr) // 0x80056C80
 {
-    return lmHdr->modelCount_8;
+    return lmHdr->modelCount;
 }
 
 void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx)
 {
     s_ModelHeader* modelHdr;
 
-    modelHdr = lmHdr->modelHdrs_C;
+    modelHdr = lmHdr->modelHdrs;
     bone->modelInfo_0.modelIdx_C = modelHdrIdx;
 
-    if (lmHdr->magic_0 == LM_HEADER_MAGIC)
+    if (lmHdr->magic == LM_HEADER_MAGIC)
     {
         bone->modelInfo_0.modelHdr_8 = &modelHdr[modelHdrIdx];
     }
@@ -1063,11 +1063,11 @@ bool Lm_ModelFind(s_WorldObjectModel* model, s_LmHeader* lmHdr, s_WorldObjectMet
 
     StringCopy(sp10.str, metadata->name_0.str);
 
-    modelHdrCount = lmHdr->modelCount_8;
+    modelHdrCount = lmHdr->modelCount;
 
-    if (lmHdr->magic_0 == LM_HEADER_MAGIC)
+    if (lmHdr->magic == LM_HEADER_MAGIC)
     {
-        for (i = 0, modelHdr = &lmHdr->modelHdrs_C[i]; i < modelHdrCount; i++, modelHdr++)
+        for (i = 0, modelHdr = &lmHdr->modelHdrs[i]; i < modelHdrCount; i++, modelHdr++)
         {
             if (!COMPARE_FILENAMES(&modelHdr->name_0, &sp10))
             {

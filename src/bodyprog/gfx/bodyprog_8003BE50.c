@@ -61,7 +61,7 @@ void func_8003BED0(void) // 0x8003BED0
 
     itemLmHdr = &g_WorldGfxWork.itemLmHdr_1BE4;
 
-    if (!Fs_QueueIsEntryLoaded(g_WorldGfxWork.itemLmQueueIdx_2BE4) || itemLmHdr->isLoaded_2)
+    if (!Fs_QueueIsEntryLoaded(g_WorldGfxWork.itemLmQueueIdx_2BE4) || itemLmHdr->isLoaded)
     {
         return;
     }
@@ -798,7 +798,7 @@ void WorldGfx_HeldItemDraw(void) // 0x8003D058
     if (Fs_QueueIsEntryLoaded(heldItem->queueIdx_4))
     {
         lmHdr = heldItem->lmHdr_14;
-        if (!lmHdr->isLoaded_2)
+        if (!lmHdr->isLoaded)
         {
             LmHeader_FixOffsets(lmHdr);
             Lm_MaterialFsImageApply1(lmHdr, heldItem->textureName_8, &heldItem->imageDesc_C, BlendMode_Additive);

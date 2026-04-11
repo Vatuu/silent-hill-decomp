@@ -176,7 +176,7 @@ typedef enum _MemCardResult
 // https://github.com/Sparagas/Silent-Hill/blob/1f24eb097a4b99129bc7c9793d23c82244848a27/010%20Editor%20-%20Binary%20Templates/ps1_memory_card.bt#L122C8-L122C17
 typedef struct
 {
-    char magic_0[2];
+    char magic[2];
     u8   iconDisplayFlag_2;
     u8   blockCount_3;
     u16  titleNameShiftJis_4[32];

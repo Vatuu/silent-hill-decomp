@@ -628,12 +628,12 @@ void func_800D99E4(s_SubCharacter* chara, s_Model* modelUpper, s_AnmHeader* anmH
     coords->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
     coords->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
 
-    anmHdr->activeBones_8 = HARRY_LOWER_BODY_BONE_MASK;
+    anmHdr->activeBones = HARRY_LOWER_BODY_BONE_MASK;
 
     animInfo = &MONSTER_CYBIL_ANIM_INFOS[chara->model_0.anim.status];
     animInfo->playbackFunc(&chara->model_0, anmHdr, coords, animInfo);
 
-    anmHdr->activeBones_8 = HARRY_UPPER_BODY_BONE_MASK;
+    anmHdr->activeBones = HARRY_UPPER_BODY_BONE_MASK;
 
     animInfo = &MONSTER_CYBIL_ANIM_INFOS[modelUpper->anim.status];
     animInfo->playbackFunc(modelUpper, anmHdr, coords, animInfo);

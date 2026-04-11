@@ -497,7 +497,7 @@ u32 LmHeader_LoadStateGet(s_GlobalLm* globalLm) // 0x80041BA0
     {
         return StaticModelLoadState_Invalid;
     }
-    else if (globalLm->lmHdr_0->isLoaded_2 && LmHeader_IsTextureLoaded(globalLm->lmHdr_0))
+    else if (globalLm->lmHdr_0->isLoaded && LmHeader_IsTextureLoaded(globalLm->lmHdr_0))
     {
         return StaticModelLoadState_Loaded;
     }
@@ -531,11 +531,11 @@ void Lm_Init(s_GlobalLm* globalLm, s_LmHeader* lmHdr) // 0x80041CB4
 
 void LmHeader_Init(s_LmHeader* lmHdr) // 0x80041CEC
 {
-    lmHdr->magic_0         = LM_HEADER_MAGIC;
-    lmHdr->version_1       = LM_VERSION;
-    lmHdr->isLoaded_2      = true;
-    lmHdr->materialCount_3 = 0;
-    lmHdr->modelCount_8    = 0;
+    lmHdr->magic         = LM_HEADER_MAGIC;
+    lmHdr->version       = LM_VERSION;
+    lmHdr->isLoaded      = true;
+    lmHdr->materialCount = 0;
+    lmHdr->modelCount    = 0;
 }
 
 void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* chunks, s32 chunkCount) // 0x80041D10
@@ -661,7 +661,7 @@ void Map_GlobalLmFree(void) // 0x800420FC
     globalLm = &g_Map.globalLm_138;
 
     if (Fs_QueueEntryLoadStatusGet(globalLm->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
-        globalLm->lmHdr_0->isLoaded_2)
+        globalLm->lmHdr_0->isLoaded)
     {
         Lm_MaterialRefCountDec(g_Map.globalLm_138.lmHdr_0);
     }
@@ -698,7 +698,7 @@ void Ipd_MapFileInfoSet(char* mapTag, e_FsFile plmIdx, s32 activeIpdCount, bool 
         if (plmIdx != g_Map.globalLm_138.fileIdx_4)
         {
             if (Fs_QueueEntryLoadStatusGet(g_Map.globalLm_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
-                g_Map.globalLm_138.lmHdr_0->isLoaded_2)
+                g_Map.globalLm_138.lmHdr_0->isLoaded)
             {
                 Lm_MaterialRefCountDec(g_Map.globalLm_138.lmHdr_0);
             }
@@ -944,7 +944,7 @@ s32 func_8004287C(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q1
     geomZ = Q12_TO_Q8(posZ);
 
     if (Fs_QueueEntryLoadStatusGet(globalLm->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
-        globalLm->lmHdr_0->isLoaded_2 &&
+        globalLm->lmHdr_0->isLoaded &&
         Lm_ModelFind(model, g_Map.globalLm_138.lmHdr_0, metadata))
     {
         return 2;
@@ -1036,7 +1036,7 @@ void Ipd_ChunkInit(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x
     Map_ChunkLoad(&g_Map, posX0, posZ0, posX1, posZ1);
 
     if (Fs_QueueEntryLoadStatusGet(g_Map.globalLm_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
-        !g_Map.globalLm_138.lmHdr_0->isLoaded_2)
+        !g_Map.globalLm_138.lmHdr_0->isLoaded)
     {
         fullPageTexCount                         = g_Map.ipdTextures_430.fullPage_0.count_0;
         g_Map.ipdTextures_430.fullPage_0.count_0 = 4;
@@ -1443,7 +1443,7 @@ void Ipd_ChunkCheckDraw(GsOT* ot, s32 arg1) // 0x80043A24
     }
 
     if (!(queueState == FsQueueEntryLoadStatus_Invalid ||
-          (queueState == FsQueueEntryLoadStatus_Loaded && g_Map.globalLm_138.lmHdr_0->isLoaded_2)))
+          (queueState == FsQueueEntryLoadStatus_Loaded && g_Map.globalLm_138.lmHdr_0->isLoaded)))
     {
         return;
     }
@@ -1585,20 +1585,20 @@ void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s3
     s32             j;
     s_IpdModelInfo* curModelInfo;
 
-    for (i = 0; i < ipdHdr->modelCount_8; i++)
+    for (i = 0; i < ipdHdr->modelCount; i++)
     {
         curModelInfo = &ipdHdr->modelInfo_14[i];
 
-        if (!curModelInfo->isGlobalPlm_0)
+        if (!curModelInfo->isGlobalPlm)
         {
-            curModelInfo->modelHdr_C = LmHeader_ModelHeaderSearch(&curModelInfo->modelName_4, ipdHdr->lmHdr_4);
+            curModelInfo->modelHdr = LmHeader_ModelHeaderSearch(&curModelInfo->modelName, ipdHdr->lmHdr_4);
         }
         else
         {
             for (j = 0; j < lmHdrCount; j++)
             {
-                curModelInfo->modelHdr_C = LmHeader_ModelHeaderSearch(&curModelInfo->modelName_4, lmHdrs[j]);
-                if (curModelInfo->modelHdr_C != NULL)
+                curModelInfo->modelHdr = LmHeader_ModelHeaderSearch(&curModelInfo->modelName, lmHdrs[j]);
+                if (curModelInfo->modelHdr != NULL)
                 {
                     break;
                 }
@@ -1612,9 +1612,9 @@ s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmH
     s32            i;
     s_ModelHeader* modelHeader;
 
-    modelHeader = lmHdr->modelHdrs_C;
+    modelHeader = lmHdr->modelHdrs;
 
-    for (i = 0; i < lmHdr->modelCount_8; i++, modelHeader++)
+    for (i = 0; i < lmHdr->modelCount; i++, modelHeader++)
     {
         if (!COMPARE_FILENAMES(modelName, &modelHeader->name_0))
         {
@@ -1638,9 +1638,9 @@ void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* i
              unkData < &curModelBuffer->field_C[curModelBuffer->field_0];
              unkData++)
         {
-            // `unkData` originally stores model idx, replace that with pointer to the model's `modelHdr_C`.
+            // `unkData` originally stores model idx, replace that with pointer to the model's `modelHdr`.
             s32 modelIdx        = (s32)unkData->modelHdr_0;
-            unkData->modelHdr_0 = ipdModels[modelIdx].modelHdr_C;
+            unkData->modelHdr_0 = ipdModels[modelIdx].modelHdr;
         }
     }
 }

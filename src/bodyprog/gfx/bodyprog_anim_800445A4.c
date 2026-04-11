@@ -26,18 +26,18 @@ void Anim_BoneInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800445A4
 
     GsInitCoordinate2(NULL, boneCoords);
 
-    for (boneIdx = 1, curBindPose = &anmHdr->bindPoses_14[1], curCoord = &boneCoords[1];
-         boneIdx < anmHdr->boneCount_6;
+    for (boneIdx = 1, curBindPose = &anmHdr->bindPoses[1], curCoord = &boneCoords[1];
+         boneIdx < anmHdr->boneCount;
          boneIdx++, curBindPose++, curCoord++)
     {
-        curCoord->super = &boneCoords[anmHdr->bindPoses_14[boneIdx].parentBone];
+        curCoord->super = &boneCoords[anmHdr->bindPoses[boneIdx].parentBone];
 
         // If no translation for this bone, copy over `translationInitial_3`.
         if (curBindPose->translationDataIdx_2 < 0)
         {
             for (i = 0; i < 3; i++)
             {
-                curCoord->coord.t[i] = anmHdr->bindPoses_14[boneIdx].translationInitial_3[i] << anmHdr->scaleLog2_12;
+                curCoord->coord.t[i] = anmHdr->bindPoses[boneIdx].translationInitial_3[i] << anmHdr->scaleLog2;
             }
         }
 
@@ -77,11 +77,11 @@ void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfram
     GsCOORDINATE2* curBoneCoord;
     s_AnmBindPose* curBindPose;
 
-    boneCount     = anmHdr->boneCount_6;
-    frame0Data    = ((u8*)anmHdr + anmHdr->dataOffset_0) + (anmHdr->keyframeDataSize_4 * keyframe0);
-    frame0RotData = frame0Data + (anmHdr->translationBoneCount_3 * 3);
-    frame1Data    = ((u8*)anmHdr + anmHdr->dataOffset_0) + (anmHdr->keyframeDataSize_4 * keyframe1);
-    frame1RotData = frame1Data + (anmHdr->translationBoneCount_3 * 3);
+    boneCount     = anmHdr->boneCount;
+    frame0Data    = ((u8*)anmHdr + anmHdr->dataOffset) + (anmHdr->keyframeDataSize * keyframe0);
+    frame0RotData = frame0Data + (anmHdr->translationBoneCount * 3);
+    frame1Data    = ((u8*)anmHdr + anmHdr->dataOffset) + (anmHdr->keyframeDataSize * keyframe1);
+    frame1RotData = frame1Data + (anmHdr->translationBoneCount * 3);
 
     // For player, use inverted mask of `extra_128.disabledAnimBones_18` to facilitate masking of upper and lower body.
     isPlayer = boneCoords == &g_SysWork.playerBoneCoords_890[HarryBone_Root];
@@ -91,12 +91,12 @@ void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfram
     }
     else
     {
-        activeBoneIdxs = anmHdr->activeBones_8;
+        activeBoneIdxs = anmHdr->activeBones;
     }
 
     // Skip root bone (index 0) and start processing from bone 1.
     boneCoords  = &boneCoords[1];
-    curBindPose = &anmHdr->bindPoses_14[1];
+    curBindPose = &anmHdr->bindPoses[1];
 
     for (boneIdx = 1, curBoneCoord = boneCoords;
          boneIdx < boneCount;
@@ -106,7 +106,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfram
         if (activeBoneIdxs & (1 << boneIdx))
         {
             curBoneCoord->flg = false;
-            scaleLog2      = anmHdr->scaleLog2_12;
+            scaleLog2      = anmHdr->scaleLog2;
 
             boneTranslationDataIdx = curBindPose->translationDataIdx_2;
             if (boneTranslationDataIdx >= 0)
@@ -128,7 +128,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfram
 
                 if (boneTranslationDataIdx == 0)
                 {
-                    curBoneCoord->coord.t[1] -= anmHdr->rootYOffset_13; // TODO: Not sure of purpose of this yet.
+                    curBoneCoord->coord.t[1] -= anmHdr->rootYOffset; // TODO: Not sure of purpose of this yet.
                 }
             }
 
@@ -606,7 +606,7 @@ void func_80045258(s_LinkedBone** boneOrd, s_LinkedBone* bones, s32 boneIdx, s_L
     s_LinkedBone* curBone;
     u8*     curObjOrd;
 
-    for (curObjOrd = lmHdr->modelOrder_10; curObjOrd < &lmHdr->modelOrder_10[lmHdr->modelCount_8]; curObjOrd++)
+    for (curObjOrd = lmHdr->modelOrder; curObjOrd < &lmHdr->modelOrder[lmHdr->modelCount]; curObjOrd++)
     {
         for (curBone = bones; curBone < &bones[boneIdx]; curBone++)
         {

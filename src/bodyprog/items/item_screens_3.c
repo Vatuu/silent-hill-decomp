@@ -3981,7 +3981,7 @@ void Gfx_Items_Display(s_TmdFile* tmd, s32 displayItemIdx, s32 loadableItemIdx)
     GsDOBJ2*           ptr;
     struct TMD_STRUCT* models;
 
-    models = tmd->models_c;
+    models = tmd->models;
 
     GsLinkObject4((u32)&models[loadableItemIdx], &g_Items_ItemsModelData[displayItemIdx], 0);
 
