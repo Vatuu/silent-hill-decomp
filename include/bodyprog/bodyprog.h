@@ -2559,11 +2559,6 @@ void func_80032D1C(void);
 /** Bodyprog entrypoint. Called by `main`. */
 void MainLoop(void);
 
-/** @brief Set player position.
- * Used for setting the position of the player when transitioning in from rooms.
- */
-void Chara_PositionSet(s_MapPoint2d* mapPoint);
-
 void func_8003943C(void);
 
 /** `SysState_Fmv` update function.
@@ -3974,21 +3969,6 @@ void func_80036E48(u16* arg0, s16* arg1);
 void func_8003708C(s16* ptr0, u16* ptr1);
 
 void func_80037124(void);
-
-/** Finds the ground hight and warps the player to it? */
-void Game_PlayerHeightUpdate(void);
-
-// ============ `bodyprog/events/events_main.c` =========================
-
-void Event_Update(bool disableButtonEvents);
-
-bool Event_CollideFacingCheck(s_MapPoint2d* mapPoint);
-
-bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint);
-
-bool Event_CollideObbCheck(s_MapPoint2d* mapPoint);
-
-// =========================
 
 // ==================== `bodyprog/events/npc_main.c` ==============
 

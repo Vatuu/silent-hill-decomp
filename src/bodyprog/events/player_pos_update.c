@@ -5,6 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/events/player_pos_update.h"
 #include "bodyprog/math/math.h"
 
 void Chara_PositionSet(s_MapPoint2d* mapPoint) // 0x800371E8
