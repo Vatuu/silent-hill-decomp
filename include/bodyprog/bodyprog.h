@@ -1010,20 +1010,20 @@ STATIC_ASSERT_SIZEOF(s_Bone, 20);
 
 typedef struct _LinkedBone
 {
-    s_Bone              bone_0;
-    struct _LinkedBone* next_14;
+    /* 0x0  */ s_Bone              bone;
+    /* 0x14 */ struct _LinkedBone* next;
 } s_LinkedBone;
 STATIC_ASSERT_SIZEOF(s_LinkedBone, 24);
 
 typedef struct
 {
-    u8            boneCount_0;
-    u8            boneIdx_1;
-    u8            field_2;
-    s8            field_3;
-    s_LinkedBone* bones_4;
-    s_LinkedBone* bones_8;
-    s_LinkedBone  bones_C[56];
+    /* 0x0 */ u8            boneCount;
+    /* 0x1 */ u8            boneIdx;
+    /* 0x2 */ u8            field_2;
+    /* 0x3 */ s8            field_3;
+    /* 0x4 */ s_LinkedBone* bones_4;
+    /* 0x8 */ s_LinkedBone* bones_8;
+    /* 0xC */ s_LinkedBone  bones_C[56];
 } s_Skeleton;
 STATIC_ASSERT_SIZEOF(s_Skeleton, 1356);
 
@@ -1478,7 +1478,7 @@ typedef struct _SpawnInfo
     q19_12 positionX_0;
     s8     charaId_4;   /** `e_CharacterId` */
     u8     rotationY_5; /** Degrees in Q7.8, range [0, 256]. */
-    s8     flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `controlState_2 = ModelState_Uninitialized`. */
+    s8     flags_6;     /** Copied to `stateStep` in `s_Model`, with `controlState = ModelState_Uninitialized`. */
     s32    gameDifficultyMin_7_0 : 4;
     q19_12 positionZ_8;
 } s_SpawnInfo;
@@ -1487,11 +1487,12 @@ STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
 /** Special map-specific Harry anim data. */
 typedef struct
 {
-    s16   status_0; /** Packed anim status. See `s_ModelAnim::status_0`. */
-    s16   status_2; /** Packed anim status. See `s_ModelAnim::status_0`. */
-    q3_12 time_4;   /** Fixed-point anim time. */
+    s16   status; /** Packed anim status. See `s_ModelAnim::status`. */
+    s16   status_2; /** Packed anim status. See `s_ModelAnim::status`. */
+    q3_12 time;   /** Fixed-point anim time. */
     s16   keyframeIdx_6;
-} s_UnkStruct3_Mo; // Probable size: 8 bytes.
+} s_UnkStruct3_Mo;
+STATIC_ASSERT_SIZEOF(s_UnkStruct3_Mo, 8);
 
 /** Guessed based on in-debugger observation during gameplay.
  * Everything is inited to 0xFFFF and some data is written when the player is hit by monsters.
@@ -1592,7 +1593,7 @@ typedef struct _MapOverlayHeader
     GsCOORDINATE2*         field_28;
     u8*                    loadableItems_2C;
     const char**           mapMessages_30; // Array of strings.
-    s_AnimInfo*            animInfos_34;   // Map-specific anim infos for Harry (for anims 38+).
+    s_AnimInfo*            harryMapAnimInfos_34; // Map-specific anim infos for Harry (for anims 38+).
     s_UnkStruct3_Mo*       field_38; // Array of 40?
     void                   (*worldObjectsInit_3C)(void); // func(?).
     void                   (*worldObjectsUpdate_40)(void);
@@ -3522,6 +3523,7 @@ s32 func_8008A0CC(void); /** Returns 0. */
 
 s64 func_8008A0D4(void); /** Returns 0. */
 
+/** Anim infos setup for character. */
 s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s_SubCharacter* chara2, q3_12 angle0, q3_12 angle1);
 
 u32 func_8008A270(s32 idx);

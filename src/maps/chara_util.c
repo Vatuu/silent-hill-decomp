@@ -44,18 +44,18 @@ void sharedFunc_800D88C0_0_s00(s_SubCharacter* player, bool cond)
 
     if (cond)
     {
-        player->model_0.anim_4.status_0      = ANIM_STATUS(HarryAnim_TransitionToStill, true);
-        player->model_0.anim_4.keyframeIdx_8 = 0;
-        player->model_0.anim_4.time_4        = Q12(0.0f);
-        player->model_0.anim_4.alpha_A       = Q12(1.0f);
+        player->model_0.anim.status      = ANIM_STATUS(HarryAnim_TransitionToStill, true);
+        player->model_0.anim.keyframeIdx = 0;
+        player->model_0.anim.time        = Q12(0.0f);
+        player->model_0.anim.alpha       = Q12(1.0f);
     }
     else
     {
         player->properties_E4.player.afkTimer_E8 = Q12(0.0f);
-        player->model_0.stateStep_3              = 0;
+        player->model_0.stateStep              = 0;
     }
 
-    player->model_0.anim_4.flags_2 |= AnimFlag_Unlocked;
+    player->model_0.anim.flags |= AnimFlag_Unlocked;
 }
 
 void sharedFunc_800D8904_0_s00(s_SubCharacter* player, q19_12 afkTime)
@@ -64,7 +64,7 @@ void sharedFunc_800D8904_0_s00(s_SubCharacter* player, q19_12 afkTime)
     player->properties_E4.player.runTimer_F8      = Q12(0.0f);
     player->properties_E4.player.field_F0         = Q12(0.0f);
     player->properties_E4.player.afkTimer_E8      = afkTime;
-    player->model_0.stateStep_3                   = 0;
+    player->model_0.stateStep                   = 0;
 }
 
 void Player_RunTimerReset(s_SubCharacter* player)
@@ -74,17 +74,17 @@ void Player_RunTimerReset(s_SubCharacter* player)
 
 void Chara_Lock(s_SubCharacter* chara)
 {
-    chara->model_0.anim_4.flags_2 &= ~AnimFlag_Unlocked;
+    chara->model_0.anim.flags &= ~AnimFlag_Unlocked;
 }
 
 s32 Chara_IsLockedCheck(s_SubCharacter* chara)
 {
-    return ~(chara->model_0.anim_4.flags_2 & AnimFlag_Unlocked);
+    return ~(chara->model_0.anim.flags & AnimFlag_Unlocked);
 }
 
 void Chara_Unlock(s_SubCharacter* chara)
 {
-    chara->model_0.anim_4.flags_2 |= AnimFlag_Unlocked;
+    chara->model_0.anim.flags |= AnimFlag_Unlocked;
 }
 
 s32 Chara_AnimPlaybackStateGet(s_SubCharacter* chara)
@@ -96,26 +96,26 @@ s32 Chara_AnimPlaybackStateGet(s_SubCharacter* chara)
 #ifdef HAS_Chara_EndingCybil
         CHARA_CASE(Chara_Cybil):
         CHARA_CASE(Chara_EndingCybil):
-            animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_Cybil
         CHARA_CASE(Chara_Cybil):
-            animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_MonsterCybil
         CHARA_CASE(Chara_MonsterCybil):
-            animInfo = &MONSTER_CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &MONSTER_CYBIL_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_EndingDahlia
         CHARA_CASE(Chara_Dahlia):
         CHARA_CASE(Chara_EndingDahlia):
-            animInfo = &DAHLIA_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &DAHLIA_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
@@ -125,38 +125,38 @@ s32 Chara_AnimPlaybackStateGet(s_SubCharacter* chara)
     #else
         CHARA_CASE(Chara_Dahlia):
     #endif
-            animInfo = &DAHLIA_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &DAHLIA_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_Alessa
         CHARA_CASE(Chara_Alessa):
-            animInfo = &ALESSA_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &ALESSA_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_GhostChildAlessa
         CHARA_CASE(Chara_GhostChildAlessa):
-            animInfo = &GHOST_CHILD_ALESSA_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &GHOST_CHILD_ALESSA_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_EndingKaufmann
         CHARA_CASE(Chara_Kaufmann):
         CHARA_CASE(Chara_EndingKaufmann):
-            animInfo = &KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &KAUFMANN_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_Kaufmann
         CHARA_CASE(Chara_Kaufmann):
-            animInfo = &KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &KAUFMANN_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_Lisa
         CHARA_CASE(Chara_Lisa):
-            animInfo = &LISA_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &LISA_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
@@ -166,48 +166,48 @@ s32 Chara_AnimPlaybackStateGet(s_SubCharacter* chara)
     #else
         CHARA_CASE(Chara_BloodyLisa):
     #endif
-            animInfo = &BLOODY_LISA_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &BLOODY_LISA_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_GhostDoctor
         CHARA_CASE(Chara_GhostDoctor):
-            animInfo = &GHOST_DOCTOR_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &GHOST_DOCTOR_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_Incubator
         CHARA_CASE(Chara_Incubator):
-            animInfo = &INCUBATOR_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &INCUBATOR_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_BloodyIncubator
         CHARA_CASE(Chara_BloodyIncubator):
-            animInfo = &BLOODY_INCUBATOR_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &BLOODY_INCUBATOR_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_Cheryl
         CHARA_CASE(Chara_Cheryl):
-            animInfo = &CHERYL_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &CHERYL_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
     }
 
-    if (animInfo->playbackFunc_0 == Anim_PlaybackOnce)
+    if (animInfo->playbackFunc == Anim_PlaybackOnce)
     {
         if (Anim_DurationGet(chara, animInfo) > Q12(0.0f))
         {
-            return chara->model_0.anim_4.keyframeIdx_8 == animInfo->endKeyframeIdx_E;
+            return chara->model_0.anim.keyframeIdx == animInfo->endKeyframeIdx;
         }
         else
         {
-            return chara->model_0.anim_4.keyframeIdx_8 == animInfo->startKeyframeIdx_C;
+            return chara->model_0.anim.keyframeIdx == animInfo->startKeyframeIdx;
         }
     }
 
-    if (animInfo->playbackFunc_0 == Anim_BlendLinear)
+    if (animInfo->playbackFunc == Anim_BlendLinear)
     {
         return -2;
     }
@@ -226,7 +226,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
 
     // TODO: This data is hard to keep track of and may not point to the right `properties_E4` struct.
     // Short-hand defines to make it easier to follow.
-    #define charaState3  chara->model_0.stateStep_3
+    #define charaState3  chara->model_0.stateStep
     #define charaStateE8 chara->properties_E4.dummy.properties_E8[0].val32
     #define charaStateEC chara->properties_E4.dummy.properties_E8[1].val32
     #define charaStateF4 chara->properties_E4.dummy.properties_E8[3].val32
@@ -422,22 +422,22 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
 
 void Chara_VisibleSet(s_SubCharacter* chara)
 {
-    chara->model_0.anim_4.flags_2 |= AnimFlag_Visible;
+    chara->model_0.anim.flags |= AnimFlag_Visible;
 }
 
 void Chara_InvisibleSet(s_SubCharacter* chara)
 {
-    chara->model_0.anim_4.flags_2 &= ~AnimFlag_Visible;
+    chara->model_0.anim.flags &= ~AnimFlag_Visible;
 }
 
 bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfxId, s32 pitch)
 {
-    if (chara->model_0.anim_4.status_0 != animStatus)
+    if (chara->model_0.anim.status != animStatus)
     {
         return false;
     }
 
-    if (chara->model_0.anim_4.keyframeIdx_8 >= keyframeIdx1)
+    if (chara->model_0.anim.keyframeIdx >= keyframeIdx1)
     {
         if (!(chara->properties_E4.dummy.properties_E8[13].val32 & (1 << 4)))
         {
@@ -451,7 +451,7 @@ bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
         chara->properties_E4.dummy.properties_E8[13].val32 &= ~(1 << 4);
     }
 
-    if (chara->model_0.anim_4.keyframeIdx_8 >= keyframeIdx0)
+    if (chara->model_0.anim.keyframeIdx >= keyframeIdx0)
     {
         if (!(chara->properties_E4.dummy.properties_E8[13].val32 & (1 << 5)))
         {
@@ -471,9 +471,9 @@ bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
 bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfxId)
 {
     // TODO: Should probably be using `properties_E4.npc` struct instead.
-    if (chara->model_0.anim_4.status_0 == animStatus)
+    if (chara->model_0.anim.status == animStatus)
     {
-        if (chara->model_0.anim_4.keyframeIdx_8 >= keyframeIdx)
+        if (chara->model_0.anim.keyframeIdx >= keyframeIdx)
         {
             if (!(chara->properties_E4.player.flags_11C & PlayerFlag_SfxActive))
             {
@@ -581,26 +581,26 @@ s32 Chara_AnimStartKeyframeIdxGet(s_SubCharacter* chara)
 #ifdef HAS_Chara_EndingCybil
         CHARA_CASE(Chara_Cybil):
         CHARA_CASE(Chara_EndingCybil):
-            animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_Cybil
         CHARA_CASE(Chara_Cybil):
-            animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_MonsterCybil
         CHARA_CASE(Chara_MonsterCybil):
-            animInfo = &MONSTER_CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &MONSTER_CYBIL_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_EndingDahlia
         CHARA_CASE(Chara_Dahlia):
         CHARA_CASE(Chara_EndingDahlia):
-            animInfo = &DAHLIA_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &DAHLIA_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
@@ -610,74 +610,74 @@ s32 Chara_AnimStartKeyframeIdxGet(s_SubCharacter* chara)
     #else
         CHARA_CASE(Chara_Dahlia):
     #endif
-            animInfo = &DAHLIA_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &DAHLIA_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_Alessa
         CHARA_CASE(Chara_Alessa):
-            animInfo = &ALESSA_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &ALESSA_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_GhostChildAlessa
         CHARA_CASE(Chara_GhostChildAlessa):
-            animInfo = &GHOST_CHILD_ALESSA_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &GHOST_CHILD_ALESSA_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_EndingKaufmann
         CHARA_CASE(Chara_Kaufmann):
         CHARA_CASE(Chara_EndingKaufmann):
-            animInfo = &KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &KAUFMANN_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_Kaufmann
         CHARA_CASE(Chara_Kaufmann):
-            animInfo = &KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &KAUFMANN_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 // M7S02 uses Chara_GhostDoctor in Chara_AnimPlaybackStateGet, but includes Lisa/BloodyLisa here?
 #if defined(HAS_Chara_Lisa) || defined(HAS_Chara_GhostDoctor)
         CHARA_CASE(Chara_Lisa):
-            animInfo = &LISA_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &LISA_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #if defined(HAS_Chara_BloodyLisa) || defined(HAS_Chara_GhostDoctor)
         CHARA_CASE(Chara_BloodyLisa):
-            animInfo = &BLOODY_LISA_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &BLOODY_LISA_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_Incubator
         CHARA_CASE(Chara_Incubator):
-            animInfo = &INCUBATOR_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &INCUBATOR_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_BloodyIncubator
         CHARA_CASE(Chara_BloodyIncubator):
-            animInfo = &BLOODY_INCUBATOR_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &BLOODY_INCUBATOR_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 
 #ifdef HAS_Chara_Cheryl
         CHARA_CASE(Chara_Cheryl):
-            animInfo = &CHERYL_ANIM_INFOS[chara->model_0.anim_4.status_0];
+            animInfo = &CHERYL_ANIM_INFOS[chara->model_0.anim.status];
             break;
 #endif
 #endif
     }
 
-    return animInfo->startKeyframeIdx_C;
+    return animInfo->startKeyframeIdx;
 }
 
 void sharedFunc_800D923C_0_s00(s_SubCharacter* chara)
 {
-    chara->model_0.stateStep_3 = 0;
+    chara->model_0.stateStep = 0;
 
     chara->field_C8.field_0   = Q12(0.0f);
     chara->field_C8.field_2   = Q12(0.0f);
@@ -695,7 +695,7 @@ void sharedFunc_800D923C_0_s00(s_SubCharacter* chara)
     chara->properties_E4.player.field_F0     = 0;
     chara->properties_E4.player.field_F4     = Q12_ANGLE(0.0f);
 
-    chara->model_0.controlState_2++;
+    chara->model_0.controlState++;
 
     chara->field_E1_0 = 3;
 }

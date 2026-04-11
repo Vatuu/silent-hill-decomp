@@ -1,3 +1,4 @@
+#include "bodyprog/bodyprog.h"
 #include "bodyprog/player.h"
 #include "maps/characters/player.h"
 
@@ -291,14 +292,14 @@ void Player_ControlUnfreeze(bool setIdle)
         g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
 
         // TODO: Will `Character_AnimSet` work here?
-        player->model_0.anim_4.status_0      = ANIM_STATUS(HarryAnim_Idle, true);
-        player->model_0.anim_4.keyframeIdx_8 = 503;
-        extra->model_0.anim_4.status_0       = ANIM_STATUS(HarryAnim_Idle, true);
-        extra->model_0.anim_4.keyframeIdx_8  = 503;
-        player->model_0.anim_4.time_4        = Q12(503);
-        player->model_0.anim_4.alpha_A       = Q12(1.0f);
-        extra->model_0.anim_4.time_4         = Q12(503);
-        extra->model_0.anim_4.alpha_A        = Q12(1.0f);
+        player->model_0.anim.status      = ANIM_STATUS(HarryAnim_Idle, true);
+        player->model_0.anim.keyframeIdx = 503;
+        extra->model_0.anim.status       = ANIM_STATUS(HarryAnim_Idle, true);
+        extra->model_0.anim.keyframeIdx  = 503;
+        player->model_0.anim.time        = Q12(503);
+        player->model_0.anim.alpha       = Q12(1.0f);
+        extra->model_0.anim.time         = Q12(503);
+        extra->model_0.anim.alpha        = Q12(1.0f);
     }
     else
     {
@@ -628,7 +629,7 @@ void Player_AnimLock(void)
 
 s32 Player_AnimIsLocked(void)
 {
-    return ~(g_SysWork.playerWork_4C.player_0.model_0.anim_4.flags_2 & AnimFlag_Unlocked);
+    return ~(g_SysWork.playerWork_4C.player_0.model_0.anim.flags & AnimFlag_Unlocked);
 }
 
 void Player_AnimUnlock(void)
@@ -643,22 +644,22 @@ s32 sharedFunc_800D2DAC_0_s00(void)
 
     // NOTE: There are 37 base anims for Harry. 38 and beyond are map-specific.
     model    = &g_SysWork.playerWork_4C.player_0.model_0;
-    animInfo = &g_MapOverlayHeader.animInfos_34[model->anim_4.status_0 - ANIM_STATUS(38, false)];
+    animInfo = &g_MapOverlayHeader.harryMapAnimInfos_34[model->anim.status - ANIM_STATUS(38, false)];
 
-    if (animInfo->playbackFunc_0 == Anim_PlaybackOnce)
+    if (animInfo->playbackFunc == Anim_PlaybackOnce)
     {
         // Check if anim has started or finished.
         if (Anim_DurationGet(model, animInfo) > Q12(0.0f))
         {
-            return model->anim_4.keyframeIdx_8 == animInfo->endKeyframeIdx_E;
+            return model->anim.keyframeIdx == animInfo->endKeyframeIdx;
         }
         else
         {
-            return model->anim_4.keyframeIdx_8 == animInfo->startKeyframeIdx_C;
+            return model->anim.keyframeIdx == animInfo->startKeyframeIdx;
         }
     }
 
-    if (animInfo->playbackFunc_0 == Anim_BlendLinear)
+    if (animInfo->playbackFunc == Anim_BlendLinear)
     {
         return -2;
     }
@@ -776,10 +777,10 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
             {
                 if (g_SysWork.playerWork_4C.extra_128.state_1C >= 23 && g_SysWork.playerWork_4C.extra_128.state_1C < 27)
                 {
-                    playerChara->model_0.stateStep_3 = 0;
-                    playerChara->model_0.controlState_2     = ModelState_Uninitialized;
-                    playerExtra->model_0.stateStep_3 = 0;
-                    playerExtra->model_0.controlState_2     = ModelState_Uninitialized;
+                    playerChara->model_0.stateStep = 0;
+                    playerChara->model_0.controlState     = ModelState_Uninitialized;
+                    playerExtra->model_0.stateStep = 0;
+                    playerExtra->model_0.controlState     = ModelState_Uninitialized;
                 }
 
                 if (angle >= Q12_ANGLE(90.0f) && angle < Q12_ANGLE(270.0f))
@@ -875,10 +876,10 @@ bool sharedFunc_800D2E94_0_s00(void)
         playerDist = SquareRoot0(SQUARE(Q12(-262.0f) - g_SysWork.playerWork_4C.player_0.position_18.vx) +
                                  SQUARE(Q12(-104.0f) - g_SysWork.playerWork_4C.player_0.position_18.vz));
 
-        if (npcChara->model_0.controlState_2 == ModelState_Uninitialized || npcChara->model_0.stateStep_3 == 0)
+        if (npcChara->model_0.controlState == ModelState_Uninitialized || npcChara->model_0.stateStep == 0)
         {
             npcChara->health_B0 = Q12(400.0f);
-            npcChara->model_0.controlState_2++;
+            npcChara->model_0.controlState++;
             npcChara->field_C8.field_0   = Q12(-0.2f);
             npcChara->field_C8.field_2   = Q12(0.2f);
             npcChara->field_D4.radius_0   = Q12(0.05f);
@@ -894,9 +895,9 @@ bool sharedFunc_800D2E94_0_s00(void)
             npcChara->position_18.vy     = Q12(-1.1f);
             npcChara->position_18.vz     = Q12(-104.0f);
             npcChara->field_E1_0         = 3;
-            npcChara->model_0.stateStep_3++;
+            npcChara->model_0.stateStep++;
             npcChara->flags_3E               |= CharaFlag_Unk3;
-            npcChara->model_0.anim_4.flags_2 &= ~(AnimFlag_Visible | AnimFlag_Unlocked);
+            npcChara->model_0.anim.flags &= ~(AnimFlag_Visible | AnimFlag_Unlocked);
         }
 
         // TODO: `else` branch is duplicated here, is there some way to merge them? Decompiler used `goto`.
@@ -955,8 +956,8 @@ bool sharedFunc_800D2E94_0_s00(void)
         return true;
     }
 
-    npcChara->model_0.controlState_2     = ModelState_Uninitialized;
-    npcChara->model_0.stateStep_3 = 0;
+    npcChara->model_0.controlState     = ModelState_Uninitialized;
+    npcChara->model_0.stateStep = 0;
     npcChara->model_0.charaId_0   = Chara_None;
     npcChara->health_B0           = Q12(0.0f);
 #endif

@@ -163,7 +163,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
         Demo_DemoRandSeedRestore();
 
-        if (player->model_0.anim_4.flags_2 & AnimFlag_Visible)
+        if (player->model_0.anim.flags & AnimFlag_Visible)
         {
             func_8003DA9C(Chara_Harry, g_SysWork.playerBoneCoords_890, 1, g_SysWork.playerWork_4C.player_0.timer_C6, 0);
             Chara_Flag8Clear(&g_SysWork.playerWork_4C.player_0);
@@ -313,6 +313,7 @@ void SysState_GamePaused_Update(void) // 0x800391E8
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.pause_14)
     {
         D_800A9A68 = 0;
+
         SD_Call(4);
         SysWork_StateSetNext(SysState_Gameplay);
     }
@@ -351,15 +352,17 @@ void func_8003943C(void) // 0x8003943C
     s32 val0;
     s32 val1;
 
+    #define isRockDrillAttack (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+
     func_8008B3E4(0);
 
     if (g_SysWork.field_275C > Q12(256.0f))
     {
         val0        = g_SysWork.field_275C - Q12(256.0f);
         roundedVal0 = FP_ROUND_TO_ZERO(val0, Q12_SHIFT);
-        func_8008B438(g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap), roundedVal0, 0);
+        func_8008B438(!isRockDrillAttack, roundedVal0, 0);
 
-        if (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+        if (isRockDrillAttack)
         {
             val1        = g_SysWork.field_2764 - Q12(256.0f);
             roundedVal1 = FP_ROUND_TO_ZERO(val1, Q12_SHIFT);
@@ -368,9 +371,9 @@ void func_8003943C(void) // 0x8003943C
     }
     else
     {
-        func_8008B438(g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap), 0, 0);
+        func_8008B438(!isRockDrillAttack, 0, 0);
 
-        if (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+        if (isRockDrillAttack)
         {
             func_8008B40C(0, 0);
         }
@@ -429,6 +432,8 @@ void func_8003943C(void) // 0x8003943C
             Sd_SfxStop(Sfx_Unk1358);
             break;
     }
+
+    #undef isRockDrillAttack
 }
 
 void SysState_StatusMenu_Update(void) // 0x80039568

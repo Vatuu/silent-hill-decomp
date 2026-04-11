@@ -24,7 +24,7 @@
  */
 void Ai_Lisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (chara->model_0.controlState_2 == ModelState_Uninitialized)
+    if (chara->model_0.controlState == ModelState_Uninitialized)
     {
         Ai_Lisa_Init(chara);
     }
@@ -50,8 +50,8 @@ void Ai_Lisa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE
         return;
     }
 
-    animInfo = &LISA_ANIM_INFOS[chara->model_0.anim_4.status_0];
-    animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+    animInfo = &LISA_ANIM_INFOS[chara->model_0.anim.status];
+    animInfo->playbackFunc(&chara->model_0, anmHdr, coords, animInfo);
 }
 
 /** Addresses
@@ -163,10 +163,10 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 7:
             Model_AnimStatusSet(&chara->model_0, LisaAnim_4, false);
 
-            if (chara->model_0.anim_4.keyframeIdx_8 == 72)
+            if (chara->model_0.anim.keyframeIdx == 72)
             {
                 dahliaProps.stateIdx0 = 20;
-                chara->model_0.stateStep_3 = 0;
+                chara->model_0.stateStep = 0;
             }
             break;
 
@@ -246,11 +246,11 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 8:
-            if (chara->model_0.anim_4.keyframeIdx_8 <= 125)
+            if (chara->model_0.anim.keyframeIdx <= 125)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_5, true), chara, 125, 138, sfx, pitch0);
             }
-            else if (chara->model_0.anim_4.keyframeIdx_8 <= 153)
+            else if (chara->model_0.anim.keyframeIdx <= 153)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_5, true), chara, 153, 138, sfx, pitch0);
             }
@@ -261,9 +261,9 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 12:
-            if (chara->model_0.anim_4.keyframeIdx_8 <= 258)
+            if (chara->model_0.anim.keyframeIdx <= 258)
             {
-                // @bug From the other `keyframeIdx_8` checks here, should this be 258 instead of 263?
+                // @bug From the other `keyframeIdx` checks here, should this be 258 instead of 263?
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_9, true), chara, 263, 258, sfx, pitch1);
             }
             else
@@ -273,11 +273,11 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 13:
-            if (chara->model_0.anim_4.keyframeIdx_8 <= 332)
+            if (chara->model_0.anim.keyframeIdx <= 332)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_10, true), chara, 332, 337, sfx, pitch0);
             }
-            else if (chara->model_0.anim_4.keyframeIdx_8 <= 344)
+            else if (chara->model_0.anim.keyframeIdx <= 344)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_10, true), chara, 344, 337, sfx, pitch0);
             }
@@ -299,11 +299,11 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 16:
-            if (chara->model_0.anim_4.keyframeIdx_8 <= 423)
+            if (chara->model_0.anim.keyframeIdx <= 423)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_13, true), chara, 423, 425, sfx, pitch0);
             }
-            else if (chara->model_0.anim_4.keyframeIdx_8 <= 429)
+            else if (chara->model_0.anim.keyframeIdx <= 429)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_13, true), chara, 429, 425, sfx, pitch0);
             }
@@ -314,11 +314,11 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 17:
-            if (chara->model_0.anim_4.keyframeIdx_8 <= 460)
+            if (chara->model_0.anim.keyframeIdx <= 460)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_14, true), chara, 460, 477, sfx, pitch0);
             }
-            else if (chara->model_0.anim_4.keyframeIdx_8 <= 497)
+            else if (chara->model_0.anim.keyframeIdx <= 497)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_14, true), chara, 497, 477, sfx, pitch0);
             }
@@ -329,11 +329,11 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 18:
-            if (chara->model_0.anim_4.keyframeIdx_8 <= 551)
+            if (chara->model_0.anim.keyframeIdx <= 551)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_15, true), chara, 551, 555, sfx, pitch0);
             }
-            else if (chara->model_0.anim_4.keyframeIdx_8 <= 559)
+            else if (chara->model_0.anim.keyframeIdx <= 559)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_15, true), chara, 559, 555, sfx, pitch0);
             }

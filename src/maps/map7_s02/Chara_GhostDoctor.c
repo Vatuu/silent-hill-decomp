@@ -25,8 +25,8 @@ void Ai_GhostDoctor_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOO
     // TODO: Wrong properties union.
     if (chara->properties_E4.player.field_F0 == 0)
     {
-        animInfo = &GHOST_DOCTOR_ANIM_INFOS[chara->model_0.anim_4.status_0];
-        animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+        animInfo = &GHOST_DOCTOR_ANIM_INFOS[chara->model_0.anim.status];
+        animInfo->playbackFunc(&chara->model_0, anmHdr, coords, animInfo);
     }
 }
 
@@ -46,16 +46,16 @@ void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8C00
 {
     if (chara->properties_E4.player.afkTimer_E8 == Q12(0.0f))
     {
-        if (chara->model_0.stateStep_3 == 0)
+        if (chara->model_0.stateStep == 0)
         {
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
-            chara->model_0.stateStep_3++;
+            chara->model_0.anim.status = ANIM_STATUS(1, false);
+            chara->model_0.stateStep++;
         }
 
         if (chara->properties_E4.player.runTimer_F8 != Q12(0.0f))
         {
             chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
-            chara->model_0.stateStep_3              = 0;
+            chara->model_0.stateStep              = 0;
             chara->properties_E4.player.runTimer_F8 = Q12(0.0f);
         }
     }

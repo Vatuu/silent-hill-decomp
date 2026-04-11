@@ -39,8 +39,8 @@ void Ai_GhostChildAlessa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, 
         return;
     }
 
-    animInfo = &GHOST_CHILD_ALESSA_ANIM_INFOS[chara->model_0.anim_4.status_0];
-    animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+    animInfo = &GHOST_CHILD_ALESSA_ANIM_INFOS[chara->model_0.anim.status];
+    animInfo->playbackFunc(&chara->model_0, anmHdr, coords, animInfo);
 }
 
 /** Addresses
@@ -105,10 +105,10 @@ void Ai_GhostChildAlessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* c
 
         case 6:
             Model_AnimStatusSet(&chara->model_0, GhostChildAlessaAnim_3, false);
-            if (chara->model_0.anim_4.keyframeIdx_8 == 63)
+            if (chara->model_0.anim.keyframeIdx == 63)
             {
                 dahliaProps.stateIdx0 = 7;
-                chara->model_0.stateStep_3 = 0;
+                chara->model_0.stateStep = 0;
             }
             break;
 

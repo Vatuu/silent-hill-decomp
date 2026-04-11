@@ -23,7 +23,7 @@
  */
 void Ai_Alessa_Update(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (alessa->model_0.controlState_2 == ModelState_Uninitialized)
+    if (alessa->model_0.controlState == ModelState_Uninitialized)
     {
         Ai_Alessa_Init(alessa);
     }
@@ -45,8 +45,8 @@ void Ai_Alessa_AnimUpdate(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDIN
 
     if (alessaProps.field_F0 == 0)
     {
-        animInfo = &ALESSA_ANIM_INFOS[alessa->model_0.anim_4.status_0];
-        animInfo->playbackFunc_0(&alessa->model_0, anmHdr, coords, animInfo);
+        animInfo = &ALESSA_ANIM_INFOS[alessa->model_0.anim.status];
+        animInfo->playbackFunc(&alessa->model_0, anmHdr, coords, animInfo);
     }
 }
 
@@ -189,13 +189,13 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
             break;
 
         case 3:
-            if (alessa->model_0.anim_4.keyframeIdx_8 < 90)
+            if (alessa->model_0.anim.keyframeIdx < 90)
             {
-                if (alessa->model_0.anim_4.keyframeIdx_8 <= 60)
+                if (alessa->model_0.anim.keyframeIdx <= 60)
                 {
                     sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_WalkForwardTurnStumble, true), alessa, 60, 71, sfx, pitch0);
                 }
-                else if (alessa->model_0.anim_4.keyframeIdx_8 <= 81)
+                else if (alessa->model_0.anim.keyframeIdx <= 81)
                 {
                     sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_WalkForwardTurnStumble, true), alessa, 81, 71, sfx, pitch0);
                 }
@@ -206,7 +206,7 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
             }
             else
             {
-                if (alessa->model_0.anim_4.keyframeIdx_8 <= 111)
+                if (alessa->model_0.anim.keyframeIdx <= 111)
                 {
                     sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_WalkForwardTurnStumble, true), alessa, 121, 111, sfx, pitch1);
                 }
@@ -218,9 +218,9 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
             break;
 
         case 5:
-            sharedFunc_800D9188_0_s00(alessa->model_0.anim_4.status_0, alessa, 210, Sfx_Unk1638);
+            sharedFunc_800D9188_0_s00(alessa->model_0.anim.status, alessa, 210, Sfx_Unk1638);
 
-            if (alessa->model_0.anim_4.keyframeIdx_8 <= 173)
+            if (alessa->model_0.anim.keyframeIdx <= 173)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_StumbleForwardCrumple, true), alessa, 182, 173, sfx, pitch0);
             }

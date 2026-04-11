@@ -20,7 +20,7 @@
  */
 void Ai_BloodyLisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (chara->model_0.controlState_2 == ModelState_Uninitialized)
+    if (chara->model_0.controlState == ModelState_Uninitialized)
     {
         Ai_BloodyLisa_Init(chara);
     }
@@ -41,8 +41,8 @@ void Ai_BloodyLisa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
 
     if (chara->properties_E4.player.field_F0 == 0)
     {
-        animInfo = &BLOODY_LISA_ANIM_INFOS[chara->model_0.anim_4.status_0];
-        animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+        animInfo = &BLOODY_LISA_ANIM_INFOS[chara->model_0.anim.status];
+        animInfo->playbackFunc(&chara->model_0, anmHdr, coords, animInfo);
     }
 }
 
@@ -113,11 +113,11 @@ void Ai_BloodyLisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
     switch (dahliaProps.stateIdx0)
     {
         case 6:
-            if (chara->model_0.anim_4.keyframeIdx_8 <= 12)
+            if (chara->model_0.anim.keyframeIdx <= 12)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(BloodyLisaAnim_Walk, true), chara, 12, 27, sfx, pitch0);
             }
-            else if (chara->model_0.anim_4.keyframeIdx_8 <= 49)
+            else if (chara->model_0.anim.keyframeIdx <= 49)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(BloodyLisaAnim_Walk, true), chara, 49, 27, sfx, pitch0);
             }

@@ -65,7 +65,7 @@ void Options_BrightnessMenu_LinesDraw(s32 arg0) // 0x8003E5E8
 }
 
 // ========================================
-// EFFECTS (FOG AND LIGHTING)
+// EFFECTS (FOG AND LIGHT)
 // ========================================
 
 static s_MapEffectsPresetIdxs D_800A9F80 = { 1, 1  };

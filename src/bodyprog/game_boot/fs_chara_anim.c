@@ -41,13 +41,13 @@ s_CharaAnimDataInfo g_CharaTypeAnimInfo[GROUP_CHARA_COUNT] = {
 };
 
 s_AnimInfo D_800A998C = {
-    .playbackFunc_0           = Anim_PlaybackLoop,
-    .status_4               = 0,
-    .hasVariableDuration_5 = false,
-    .linkStatus_6              = ANIM_STATUS(0, false),
-    .duration_8            = { Q12(8.0f) },
-    .startKeyframeIdx_C    = 26,
-    .endKeyframeIdx_E      = 44
+    .playbackFunc           = Anim_PlaybackLoop,
+    .status               = 0,
+    .hasVariableDuration = false,
+    .linkStatus              = ANIM_STATUS(0, false),
+    .duration            = { Q12(8.0f) },
+    .startKeyframeIdx    = 26,
+    .endKeyframeIdx      = 44
 };
 
 bool Fs_CharaAnimDataSizeCheck(s32 charaDataAnimInfoIdx0, s32 charaDataAnimInfoIdx1) // 0x8003528C

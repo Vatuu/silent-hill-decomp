@@ -1084,8 +1084,8 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             {
                 if (g_SysWork.npcs_1A0[i].model_0.charaId_0 == ENEMY_CHARA_ID)
                 {
-                    g_SysWork.npcs_1A0[i].model_0.controlState_2     = ModelState_Uninitialized;
-                    g_SysWork.npcs_1A0[i].model_0.stateStep_3 = 6;
+                    g_SysWork.npcs_1A0[i].model_0.controlState     = ModelState_Uninitialized;
+                    g_SysWork.npcs_1A0[i].model_0.stateStep = 6;
                 }
             }
             break;

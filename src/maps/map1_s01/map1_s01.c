@@ -18,48 +18,48 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     s_AnimInfo* animInfo;
     bool        cond;
 
-    if (chara->model_0.controlState_2 == ModelState_Uninitialized)
+    if (chara->model_0.controlState == ModelState_Uninitialized)
     {
-        chara->model_0.controlState_2                                      = 1;
-        chara->model_0.anim_4.status_0                              = ANIM_STATUS(3, true);
-        chara->model_0.anim_4.time_4                                = Q12(7.0f);
-        chara->model_0.anim_4.alpha_A                               = Q12(0.0f);
-        chara->model_0.stateStep_3                                  = 0;
-        chara->model_0.anim_4.keyframeIdx_8                         = 7;
+        chara->model_0.controlState                                      = 1;
+        chara->model_0.anim.status                              = ANIM_STATUS(3, true);
+        chara->model_0.anim.time                                = Q12(7.0f);
+        chara->model_0.anim.alpha                               = Q12(0.0f);
+        chara->model_0.stateStep                                  = 0;
+        chara->model_0.anim.keyframeIdx                         = 7;
         chara->position_18.vy                                       = 0;
         chara->properties_E4.dummy.properties_E8[0].val8[0] = 0;
     }
 
-    if (chara->model_0.stateStep_3 == 0)
+    if (chara->model_0.stateStep == 0)
     {
-        if (chara->model_0.controlState_2 == 2)
+        if (chara->model_0.controlState == 2)
         {
-            chara->model_0.anim_4.status_0      = ANIM_STATUS(1, true);
-            chara->model_0.anim_4.time_4         = Q12(7.0f);
-            chara->model_0.anim_4.keyframeIdx_8 = 7;
+            chara->model_0.anim.status      = ANIM_STATUS(1, true);
+            chara->model_0.anim.time         = Q12(7.0f);
+            chara->model_0.anim.keyframeIdx = 7;
         }
-        else if (chara->model_0.controlState_2 == 3)
+        else if (chara->model_0.controlState == 3)
         {
-            chara->model_0.anim_4.status_0      = ANIM_STATUS(2, true);
-            chara->model_0.anim_4.time_4         = Q12(23.0f);
-            chara->model_0.anim_4.keyframeIdx_8 = 23;
+            chara->model_0.anim.status      = ANIM_STATUS(2, true);
+            chara->model_0.anim.time         = Q12(23.0f);
+            chara->model_0.anim.keyframeIdx = 23;
         }
 
-        chara->model_0.stateStep_3++;
+        chara->model_0.stateStep++;
     }
 
     Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
 
-    animInfo = &CAT_ANIM_INFOS[chara->model_0.anim_4.status_0];
-    animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+    animInfo = &CAT_ANIM_INFOS[chara->model_0.anim.status];
+    animInfo->playbackFunc(&chara->model_0, anmHdr, coords, animInfo);
 
     cond = false;
-    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(1, true))
+    if (chara->model_0.anim.status == ANIM_STATUS(1, true))
     {
         if (((u8)chara->properties_E4.dummy.properties_E8[0].val8[0] == 0 &&
-             (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 20) < 3u) ||
+             (FP_FROM(chara->model_0.anim.time, Q12_SHIFT) - 20) < 3u) ||
             ((u8)chara->properties_E4.dummy.properties_E8[0].val8[0] != 0 &&
-             (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 25) < 3u))
+             (FP_FROM(chara->model_0.anim.time, Q12_SHIFT) - 25) < 3u))
         {
             cond = true;
         }
@@ -67,9 +67,9 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     else
     {
         if (((u8)chara->properties_E4.dummy.properties_E8[0].val8[0] == 0 &&
-             (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 29) < 3u) ||
+             (FP_FROM(chara->model_0.anim.time, Q12_SHIFT) - 29) < 3u) ||
             ((u8)chara->properties_E4.dummy.properties_E8[0].val8[0] != 0 &&
-             (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 36) < 3u))
+             (FP_FROM(chara->model_0.anim.time, Q12_SHIFT) - 36) < 3u))
         {
             cond = true;
         }
@@ -891,8 +891,8 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 8:
-            g_SysWork.npcs_1A0[0].model_0.stateStep_3 = 0;
-            g_SysWork.npcs_1A0[0].model_0.controlState_2++;
+            g_SysWork.npcs_1A0[0].model_0.stateStep = 0;
+            g_SysWork.npcs_1A0[0].model_0.controlState++;
 
             Savegame_EventFlagSet(EventFlag_76);
 
@@ -913,8 +913,8 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 10:
-            g_SysWork.npcs_1A0[0].model_0.stateStep_3 = 0;
-            g_SysWork.npcs_1A0[0].model_0.controlState_2++;
+            g_SysWork.npcs_1A0[0].model_0.stateStep = 0;
+            g_SysWork.npcs_1A0[0].model_0.controlState++;
 
             SysWork_StateStepIncrement(0);
 

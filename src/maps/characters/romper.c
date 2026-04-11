@@ -9,7 +9,7 @@
 
 void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (romper->model_0.controlState_2 == ModelState_Uninitialized)
+    if (romper->model_0.controlState == ModelState_Uninitialized)
     {
         Ai_Romper_Init(romper);
     }
@@ -35,7 +35,7 @@ void Ai_Romper_Init(s_SubCharacter* romper)
     s32 var_v0;
 
     romperProps.flags_E8           = RomperFlag_None;
-    romper->model_0.anim_4.alpha_A = Q12(0.0f);
+    romper->model_0.anim.alpha = Q12(0.0f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
@@ -66,14 +66,14 @@ void Ai_Romper_Init(s_SubCharacter* romper)
     romper->headingAngle_3C = romper->rotation_24.vy;
     Chara_PropertiesClear(romper);
 
-    romper->model_0.controlState_2 = RomperControl_2;
+    romper->model_0.controlState = RomperControl_2;
     Character_AnimSet(romper, ANIM_STATUS(RomperAnim_15, true), 147);
 
     romperProps.field_F0     = 6;
     romperProps.rotationY_F2 = romper->rotation_24.vy;
     romper->moveSpeed_38 = Q12(0.02175f);
 
-    ModelAnim_AnimInfoSet(&romper->model_0.anim_4, ROPMER_ANIM_INFOS);
+    ModelAnim_AnimInfoSet(&romper->model_0.anim, ROPMER_ANIM_INFOS);
     Chara_DamageClear(romper);
 
     romperProps.targetPositionX_FC = romperProps.positionZ_110 = romper->position_18.vx;
@@ -90,7 +90,7 @@ void sharedFunc_800E5FC8_2_s02(s_SubCharacter* chara, s16 arg1, s16 arg2, u8* ar
     q23_8  pitch;
     q23_8  vol;
 
-    animTime  = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
+    animTime  = FP_FROM(chara->model_0.anim.time, Q12_SHIFT);
     arg1Plus2 = arg1 + arg2;
     pitch     = Q8(0.0f);
     vol       = Q8(0.0f);
@@ -139,7 +139,7 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
 {
     q19_12 var_s1;
 
-    switch (romper->model_0.anim_4.status_0)
+    switch (romper->model_0.anim.status)
     {
         case ANIM_STATUS(RomperAnim_2, true):
             sharedFunc_800E5FC8_2_s02(romper, 2, 2, &romperProps.field_114);
@@ -190,7 +190,7 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
 
     romperProps.flags_E8 &= ~RomperFlag_7;
 
-    if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_5, true))
+    if (romper->model_0.anim.status == ANIM_STATUS(RomperAnim_5, true))
     {
         if (romperProps.timer_118 == Q12(0.0f))
         {
@@ -218,7 +218,7 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
         romperProps.field_11A = 0;
     }
 
-    if (romper->model_0.anim_4.status_0 != ANIM_STATUS(RomperAnim_5, true) &&
+    if (romper->model_0.anim.status != ANIM_STATUS(RomperAnim_5, true) &&
         romperProps.field_116 == 0 &&
         romper->health_B0 > Q12(0.0f))
     {
@@ -274,7 +274,7 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
         return;
     }
 
-    prevControlState = romper->model_0.controlState_2;
+    prevControlState = romper->model_0.controlState;
 
     romper->health_B0 = MAX(romper->health_B0 - romper->damage_B4.amount_C, Q12(0.0f));
     romperProps.flags_E8 |= RomperFlag_7;
@@ -297,77 +297,77 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
         romperProps.rotationY_F2 = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - romper->position_18.vx,
                                           g_SysWork.playerWork_4C.player_0.position_18.vz - romper->position_18.vz);
 
-        switch (romper->model_0.anim_4.status_0)
+        switch (romper->model_0.anim.status)
         {
             case ANIM_STATUS(RomperAnim_13, false):
-                romper->model_0.anim_4.time_4 = Q12(109.0f);
+                romper->model_0.anim.time = Q12(109.0f);
 
             case ANIM_STATUS(RomperAnim_13, true):
-                keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 109;
+                keyframeIdx = FP_FROM(romper->model_0.anim.time, Q12_SHIFT) - 109;
                 if (keyframeIdx > 0)
                 {
                     if (keyframeIdx < 7)
                     {
-                        romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_18, true);
+                        romper->model_0.anim.status = ANIM_STATUS(RomperAnim_18, true);
                     }
                     else if (keyframeIdx < 11)
                     {
-                        romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_8, false);
+                        romper->model_0.anim.status = ANIM_STATUS(RomperAnim_8, false);
                     }
                     else if (keyframeIdx > 17)
                     {
-                        romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_7, false);
+                        romper->model_0.anim.status = ANIM_STATUS(RomperAnim_7, false);
                     }
                     else
                     {
-                        romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_17, true);
+                        romper->model_0.anim.status = ANIM_STATUS(RomperAnim_17, true);
                     }
                 }
                 else
                 {
-                    romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_7, false);
+                    romper->model_0.anim.status = ANIM_STATUS(RomperAnim_7, false);
                 }
 
-                if (!ANIM_STATUS_IS_ACTIVE(romper->model_0.anim_4.status_0))
+                if (!ANIM_STATUS_IS_ACTIVE(romper->model_0.anim.status))
                 {
-                    romper->model_0.controlState_2 = RomperControl_6;
+                    romper->model_0.controlState = RomperControl_6;
                 }
                 break;
 
             case ANIM_STATUS(RomperAnim_15, false):
-                romper->model_0.anim_4.time_4 = Q12(147.0f);
+                romper->model_0.anim.time = Q12(147.0f);
 
             case ANIM_STATUS(RomperAnim_15, true):
-                keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 147;
+                keyframeIdx = FP_FROM(romper->model_0.anim.time, Q12_SHIFT) - 147;
                 if (keyframeIdx < 2)
                 {
-                    romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_7, false);
+                    romper->model_0.anim.status = ANIM_STATUS(RomperAnim_7, false);
                 }
                 else if (keyframeIdx >= 10)
                 {
-                    romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_7, false);
+                    romper->model_0.anim.status = ANIM_STATUS(RomperAnim_7, false);
                 }
                 else
                 {
-                    romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_8, false);
+                    romper->model_0.anim.status = ANIM_STATUS(RomperAnim_8, false);
                 }
 
-                romper->model_0.controlState_2 = RomperControl_6;
+                romper->model_0.controlState = RomperControl_6;
                 break;
 
             case ANIM_STATUS(RomperAnim_12, false):
             case ANIM_STATUS(RomperAnim_12, true):
             case ANIM_STATUS(RomperAnim_14, false):
             case ANIM_STATUS(RomperAnim_14, true):
-                romper->model_0.controlState_2  = RomperControl_6;
-                romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_7, false);
+                romper->model_0.controlState  = RomperControl_6;
+                romper->model_0.anim.status = ANIM_STATUS(RomperAnim_7, false);
                 break;
         }
     }
     else if (!(romperProps.flags_E8 & RomperFlag_2))
     {
-        romper->model_0.controlState_2         = RomperControl_7;
-        romper->model_0.anim_4.status_0        = ANIM_STATUS(RomperAnim_11, false);
+        romper->model_0.controlState         = RomperControl_7;
+        romper->model_0.anim.status        = ANIM_STATUS(RomperAnim_11, false);
         romperProps.flags_E8 |= RomperFlag_2;
     }
 
@@ -376,7 +376,7 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
 
     Chara_DamageClear(romper);
 
-    if (prevControlState != romper->model_0.controlState_2)
+    if (prevControlState != romper->model_0.controlState)
     {
         if (romperProps.flags_E8 & RomperFlag_11)
         {
@@ -390,15 +390,15 @@ void Ai_Romper_ControlUpdate(s_SubCharacter* romper)
 {
     u8 controlState;
 
-    if (romper->model_0.controlState_2 != RomperControl_5)
+    if (romper->model_0.controlState != RomperControl_5)
     {
         romper->field_44.field_0 = 0;
     }
 
     // Handle control state.
-    controlState = romper->model_0.controlState_2;
+    controlState = romper->model_0.controlState;
     g_Romper_ControlFuncs[controlState](romper);
-    if (romper->model_0.controlState_2 != controlState)
+    if (romper->model_0.controlState != controlState)
     {
         romperProps.distance_120 = 0;
     }
@@ -432,11 +432,11 @@ void Ai_Romper_Control_1(s_SubCharacter* romper)
     newMoveSpeed         = romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
     romper->moveSpeed_38 = MAX(newMoveSpeed, Q12(0.0f));
 
-    if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_12, true) &&
+    if (romper->model_0.anim.status == ANIM_STATUS(RomperAnim_12, true) &&
         (Rng_GenerateUInt(0, 4095) == 0 || var)) // 1 in 4096 chance.
     {
-        romper->model_0.controlState_2         = RomperControl_2;
-        romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_15, false);
+        romper->model_0.controlState         = RomperControl_2;
+        romper->model_0.anim.status = ANIM_STATUS(RomperAnim_15, false);
     }
 }
 
@@ -510,12 +510,12 @@ void Ai_Romper_Control_2(s_SubCharacter* romper)
         cond += func_80070360(romper, Q12(0.0f), 0x266); // TODO: Last arg is angle? Unclear.
     }
 
-    if (cond != 0 && romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_15, true))
+    if (cond != 0 && romper->model_0.anim.status == ANIM_STATUS(RomperAnim_15, true))
     {
-        romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_19, false);
+        romper->model_0.anim.status = ANIM_STATUS(RomperAnim_19, false);
 
-        if (FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) > 148 &&
-            FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) < 157)
+        if (FP_FROM(romper->model_0.anim.time, Q12_SHIFT) > 148 &&
+            FP_FROM(romper->model_0.anim.time, Q12_SHIFT) < 157)
         {
             romperProps.field_10C = 7;
         }
@@ -578,8 +578,8 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
         romperProps.field_10E += g_DeltaTime;
     }
 
-    if (ANIM_TIME_RANGE_CHECK(romper->model_0.anim_4.time_4, 112, 114) ||
-        ANIM_TIME_RANGE_CHECK(romper->model_0.anim_4.time_4, 121, 126))
+    if (ANIM_TIME_RANGE_CHECK(romper->model_0.anim.time, 112, 114) ||
+        ANIM_TIME_RANGE_CHECK(romper->model_0.anim.time, 121, 126))
     {
         romperProps.flags_E8 &= ~RomperFlag_3;
         romperProps.flags_E8 &= ~RomperFlag_8;
@@ -636,8 +636,8 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
 
         if (romperProps.field_10E > Q12(1.0f) && !Rng_GenerateUInt(0, 15))
         {
-            romper->model_0.controlState_2            = RomperControl_1;
-            romper->model_0.anim_4.status_0           = ANIM_STATUS(RomperAnim_12, false);
+            romper->model_0.controlState            = RomperControl_1;
+            romper->model_0.anim.status           = ANIM_STATUS(RomperAnim_12, false);
             romperProps.rotationY_F2 = romper->rotation_24.vy;
         }
         else if (temp_s0 != 0 || romperProps.rotationY_F2 == Q12_ANGLE(360.0f) ||
@@ -649,11 +649,11 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
             }
 
             // TODO: `ANIM_TIME_RANGE_CHECK` doesn't match?
-            if (FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) < 115 ||
-                FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) > 120)
+            if (FP_FROM(romper->model_0.anim.time, Q12_SHIFT) < 115 ||
+                FP_FROM(romper->model_0.anim.time, Q12_SHIFT) > 120)
             {
-                romper->model_0.controlState_2         = RomperControl_4;
-                romper->model_0.anim_4.status_0        = ANIM_STATUS(RomperAnim_14, false);
+                romper->model_0.controlState         = RomperControl_4;
+                romper->model_0.anim.status        = ANIM_STATUS(RomperAnim_14, false);
                 romperProps.field_10C = 0;
                 romper->moveSpeed_38                   = Q12(0.0f);
                 romperProps.distance_120 = 0;
@@ -735,8 +735,8 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
                                  g_SysWork.playerWork_4C.player_0.position_18.vz - romper->position_18.vz) -
                           romper->rotation_24.vy)) < 0x155)
     {
-        romper->model_0.controlState_2         = RomperControl_5;
-        romper->model_0.anim_4.status_0        = ANIM_STATUS(RomperAnim_2, false);
+        romper->model_0.controlState         = RomperControl_5;
+        romper->model_0.anim.status        = ANIM_STATUS(RomperAnim_2, false);
         romper->field_44.field_0               = 1;
         g_SysWork.field_2284[3]               |= 3;
         romperProps.flags_E8 |= RomperFlag_4 | RomperFlag_11;
@@ -852,9 +852,9 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
         }
     }
 
-    if (!func_8007029C(romper, Q12(2.5f), romper->rotation_24.vy) && ANIM_TIME_RANGE_CHECK(romper->model_0.anim_4.time_4, 131, 132))
+    if (!func_8007029C(romper, Q12(2.5f), romper->rotation_24.vy) && ANIM_TIME_RANGE_CHECK(romper->model_0.anim.time, 131, 132))
     {
-        romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_20, false);
+        romper->model_0.anim.status = ANIM_STATUS(RomperAnim_20, false);
         romper->moveSpeed_38            = Q12(0.0f);
         return;
     }
@@ -888,15 +888,15 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
     s32         i;
     s16         temp;
 
-    if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_2, true))
+    if (romper->model_0.anim.status == ANIM_STATUS(RomperAnim_2, true))
     {
-        if (romper->model_0.anim_4.time_4 > Q12(5.0f))
+        if (romper->model_0.anim.time > Q12(5.0f))
         {
             var_s3 = Q12(0.0f);
         }
         else
         {
-            var_s3 = Q12(0.5f) - (Q12_DIV(romper->model_0.anim_4.time_4 - Q12(2.0f), Q12(3.0f)) >> 1);
+            var_s3 = Q12(0.5f) - (Q12_DIV(romper->model_0.anim.time - Q12(2.0f), Q12(3.0f)) >> 1);
         }
     }
     else
@@ -913,7 +913,7 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
     temp_v0_3 = ratan2(romperProps.targetPositionX_FC - romper->position_18.vx, romperProps.targetPositionZ_100 - romper->position_18.vz);
     unkAngle   = temp_v0_3;
 
-    if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_2, false))
+    if (romper->model_0.anim.status == ANIM_STATUS(RomperAnim_2, false))
     {
         romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f)), Q12(0.0f));
 
@@ -938,7 +938,7 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
             }
         }
     }
-    else if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_2, true))
+    else if (romper->model_0.anim.status == ANIM_STATUS(RomperAnim_2, true))
     {
         unkAngle1 = Math_AngleNormalizeSigned(temp_v0_3 - romper->rotation_24.vy);
         if (TIMESTEP_ANGLE(1, 4) < ABS(unkAngle1))
@@ -953,7 +953,7 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
             }
         }
 
-        if (romper->model_0.anim_4.time_4 == Q12(2.0f))
+        if (romper->model_0.anim.time == Q12(2.0f))
         {
             temp_v1_5 = Math_Vector2MagCalc(romperProps.targetPositionX_FC - romper->position_18.vx,
                                             romperProps.targetPositionZ_100 - romper->position_18.vz);
@@ -965,8 +965,8 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
             romper->fallSpeed_34                   = (temp << 1) - Q12(2.45f);
             romperProps.flags_E8 &= ~RomperFlag_9;
         }
-        else if (FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) == 5 ||
-                 FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) == 6)
+        else if (FP_FROM(romper->model_0.anim.time, Q12_SHIFT) == 5 ||
+                 FP_FROM(romper->model_0.anim.time, Q12_SHIFT) == 6)
         {
             if (!(romperProps.flags_E8 & RomperFlag_9))
             {
@@ -980,8 +980,8 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
 
             if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Multitap), romper, &pos, &g_SysWork.playerWork_4C.player_0, romper->rotation_24.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
             {
-                romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_3, false);
-                romper->model_0.controlState_2  = RomperControl_10;
+                romper->model_0.anim.status = ANIM_STATUS(RomperAnim_3, false);
+                romper->model_0.controlState  = RomperControl_10;
 
                 sharedFunc_800E9714_2_s02(romper);
                 romperProps.flags_E8 |= RomperFlag_10;
@@ -1007,8 +1007,8 @@ void Ai_Romper_Control_6(s_SubCharacter* romper)
 
     romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f)), Q12(0.0f));
 
-    if (ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) == RomperAnim_7 ||
-        ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) == RomperAnim_8)
+    if (ANIM_STATUS_IDX_GET(romper->model_0.anim.status) == RomperAnim_7 ||
+        ANIM_STATUS_IDX_GET(romper->model_0.anim.status) == RomperAnim_8)
     {
         moveDist               = (Q12_MULT_PRECISE(sharedData_800ECA4C_2_s02, g_DeltaTime) * Q12(0.6f)) / Q12(10.0f);
         romperProps.offsetX_F8 = Q12_MULT(moveDist, Math_Sin(romper->rotation_24.vy));
@@ -1029,23 +1029,23 @@ void Ai_Romper_Control_7(s_SubCharacter* romper)
         romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f)), Q12(0.0f));
     }
 
-    if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_11, false) ||
-        ANIM_TIME_RANGE_CHECK(romper->model_0.anim_4.time_4, 93, 96))
+    if (romper->model_0.anim.status == ANIM_STATUS(RomperAnim_11, false) ||
+        ANIM_TIME_RANGE_CHECK(romper->model_0.anim.time, 93, 96))
     {
         moveDist               = (Q12_MULT_PRECISE(sharedData_800ECACC_2_s02, g_DeltaTime) * Q12(1.4f)) / Q12(7.0f);
         romperProps.offsetX_F8 = Q12_MULT(moveDist, Math_Sin(romper->rotation_24.vy));
         romperProps.offsetZ_FA = Q12_MULT(moveDist, Math_Cos(romper->rotation_24.vy));
     }
 
-    if (ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) == RomperAnim_10)
+    if (ANIM_STATUS_IDX_GET(romper->model_0.anim.status) == RomperAnim_10)
     {
         romper->flags_3E |= 2;
     }
 
-    if (romper->health_B0 == Q12(0.0f) && romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_10, true))
+    if (romper->health_B0 == Q12(0.0f) && romper->model_0.anim.status == ANIM_STATUS(RomperAnim_10, true))
     {
-        romper->model_0.controlState_2  = RomperControl_8;
-        romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_6, false);
+        romper->model_0.controlState  = RomperControl_8;
+        romper->model_0.anim.status = ANIM_STATUS(RomperAnim_6, false);
         romper->flags_3E               &= ~CharaFlag_Unk2;
 
         Savegame_EnemyStateUpdate(romper);
@@ -1085,7 +1085,7 @@ void Ai_Romper_Control_10(s_SubCharacter* romper)
                                           romperProps.targetPositionZ_100 - romper->position_18.vz);
     }
 
-    if (romper->model_0.anim_4.status_0 == 11)
+    if (romper->model_0.anim.status == 11)
     {
         romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime, romperProps.field_124 * 4), Q12(0.0f));
     }
@@ -1095,9 +1095,9 @@ void Ai_Romper_Control_10(s_SubCharacter* romper)
     }
 
     romper->field_E1_0 = 0;
-    if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_5, true))
+    if (romper->model_0.anim.status == ANIM_STATUS(RomperAnim_5, true))
     {
-        romperProps.field_104 = romper->model_0.anim_4.time_4 - Q12(20.0f);
+        romperProps.field_104 = romper->model_0.anim.time - Q12(20.0f);
     }
     else
     {
@@ -1108,12 +1108,12 @@ void Ai_Romper_Control_10(s_SubCharacter* romper)
 
     if (player->attackReceived_41 == NO_VALUE)
     {
-        romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_9, false);
-        romper->model_0.controlState_2  = RomperControl_11;
+        romper->model_0.anim.status = ANIM_STATUS(RomperAnim_9, false);
+        romper->model_0.controlState  = RomperControl_11;
         romper->field_E1_0              = 0;
         romper->field_E1_0              = 3;
     }
-    else if (romper->model_0.anim_4.time_4 < Q12(24.0f))
+    else if (romper->model_0.anim.time < Q12(24.0f))
     {
         romperProps.flags_E8 |= RomperFlag_6;
     }
@@ -1136,11 +1136,11 @@ void Ai_Romper_Control_10(s_SubCharacter* romper)
 
 void Ai_Romper_Control_11(s_SubCharacter* romper)
 {
-    if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_12, true) &&
+    if (romper->model_0.anim.status == ANIM_STATUS(RomperAnim_12, true) &&
         !Rng_GenerateInt(0, 7)) // 1 in 8 chance.
     {
         g_SysWork.field_2284[3]                  &= ~((1 << 0) | (1 << 1));
-        romper->model_0.controlState_2                   = RomperControl_1;
+        romper->model_0.controlState                   = RomperControl_1;
         romperProps.flags_E8 &= ~RomperFlag_11;
     }
 }
@@ -1157,8 +1157,8 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
 
     romper->fallSpeed_34 += g_GravitySpeed;
 
-    if (ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) == RomperAnim_3 ||
-        ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) == RomperAnim_5)
+    if (ANIM_STATUS_IDX_GET(romper->model_0.anim.status) == RomperAnim_3 ||
+        ANIM_STATUS_IDX_GET(romper->model_0.anim.status) == RomperAnim_5)
     {
         romper->headingAngle_3C = romperProps.rotationY_F2;
     }
@@ -1190,14 +1190,14 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
 
         if (romperProps.flags_E8 & RomperFlag_10)
         {
-            if (romper->model_0.controlState_2 != RomperControl_10 && romper->position_18.vy <= sp10.field_C)
+            if (romper->model_0.controlState != RomperControl_10 && romper->position_18.vy <= sp10.field_C)
             {
                 romperProps.flags_E8 &= ~RomperFlag_10;
             }
 
             if (romperProps.flags_E8 & RomperFlag_10)
             {
-                if (romper->model_0.controlState_2 == RomperControl_10)
+                if (romper->model_0.controlState == RomperControl_10)
                 {
                     romper->position_18.vy += sp10.offset_0.vy;
                     if (g_SysWork.playerWork_4C.player_0.position_18.vy < romper->position_18.vy)
@@ -1268,12 +1268,12 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCO
 
     ptr = PSX_SCRATCH;
 
-    switch (romper->model_0.anim_4.status_0)
+    switch (romper->model_0.anim.status)
     {
         case ANIM_STATUS(RomperAnim_13, true):
         case ANIM_STATUS(RomperAnim_17, true):
         case ANIM_STATUS(RomperAnim_18, true):
-            ROPMER_ANIM_INFOS[romper->model_0.anim_4.status_0].duration_8.constant = sharedData_800EC950_2_s02;
+            ROPMER_ANIM_INFOS[romper->model_0.anim.status].duration.constant = sharedData_800EC950_2_s02;
             break;
 
         case ANIM_STATUS(RomperAnim_14, false):
@@ -1281,9 +1281,9 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCO
             break;
 
         case ANIM_STATUS(RomperAnim_14, true):
-            ROPMER_ANIM_INFOS[29].startKeyframeIdx_C                               = romperProps.field_10C + 131;
+            ROPMER_ANIM_INFOS[29].startKeyframeIdx                               = romperProps.field_10C + 131;
             romperProps.field_10C                                 = 0;
-            ROPMER_ANIM_INFOS[romper->model_0.anim_4.status_0].duration_8.constant = Q12_MULT_PRECISE(MAX(romper->moveSpeed_38, Q12(1.5f)), Q12(8.32f));
+            ROPMER_ANIM_INFOS[romper->model_0.anim.status].duration.constant = Q12_MULT_PRECISE(MAX(romper->moveSpeed_38, Q12(1.5f)), Q12(8.32f));
             break;
 
         case ANIM_STATUS(RomperAnim_19, false):
@@ -1297,62 +1297,62 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCO
 
     Math_MatrixTransform(&romper->position_18, (SVECTOR*)&romper->rotation_24, coords);
 
-    animInfo = &ROPMER_ANIM_INFOS[romper->model_0.anim_4.status_0];
-    animInfo->playbackFunc_0(&romper->model_0, anmHdr, coords, animInfo);
+    animInfo = &ROPMER_ANIM_INFOS[romper->model_0.anim.status];
+    animInfo->playbackFunc(&romper->model_0, anmHdr, coords, animInfo);
 
-    switch (romper->model_0.anim_4.status_0)
+    switch (romper->model_0.anim.status)
     {
         case ANIM_STATUS(RomperAnim_7, false):
-            romper->model_0.controlState_2 = RomperControl_6;
-            if (romper->model_0.anim_4.time_4 == Q12(127.0f))
+            romper->model_0.controlState = RomperControl_6;
+            if (romper->model_0.anim.time == Q12(127.0f))
             {
-                romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_7, true);
-                romper->model_0.anim_4.time_4   = Q12(39.0f);
+                romper->model_0.anim.status = ANIM_STATUS(RomperAnim_7, true);
+                romper->model_0.anim.time   = Q12(39.0f);
             }
             break;
 
         case ANIM_STATUS(RomperAnim_8, false):
-            romper->model_0.controlState_2 = RomperControl_6;
-            if (romper->model_0.anim_4.time_4 == Q12(116.0f))
+            romper->model_0.controlState = RomperControl_6;
+            if (romper->model_0.anim.time == Q12(116.0f))
             {
-                romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_8, true);
-                romper->model_0.anim_4.time_4   = Q12(50.0f);
+                romper->model_0.anim.status = ANIM_STATUS(RomperAnim_8, true);
+                romper->model_0.anim.time   = Q12(50.0f);
             }
             break;
 
         case ANIM_STATUS(RomperAnim_13, false):
-            if (romper->model_0.controlState_2 == RomperControl_5)
+            if (romper->model_0.controlState == RomperControl_5)
             {
                 romperProps.flags_E8 &= ~RomperFlag_11;
                 g_SysWork.field_2284[3]               &= 0xFFFC;
             }
 
-            romper->model_0.controlState_2        = RomperControl_3;
+            romper->model_0.controlState        = RomperControl_3;
             romperProps.field_F4 = Q12(22.0f) - 1;
 
-            if (romper->model_0.anim_4.time_4 == Q12(49.0f))
+            if (romper->model_0.anim.time == Q12(49.0f))
             {
-                romper->model_0.anim_4.status_0       = ANIM_STATUS(RomperAnim_13, true);
+                romper->model_0.anim.status       = ANIM_STATUS(RomperAnim_13, true);
                 romperProps.field_F4 = Q12_CLAMPED(1.0f);
-                romper->model_0.anim_4.time_4         = Q12(110.0f);
+                romper->model_0.anim.time         = Q12(110.0f);
                 romperProps.field_F0 = 1143;
                 romper->moveSpeed_38                  = 0;
             }
-            else if (romper->model_0.anim_4.time_4 == Q12(60.0f))
+            else if (romper->model_0.anim.time == Q12(60.0f))
             {
-                romper->model_0.anim_4.status_0       = ANIM_STATUS(RomperAnim_13, true);
+                romper->model_0.anim.status       = ANIM_STATUS(RomperAnim_13, true);
                 romperProps.field_F4 = Q12(11.0f) - 1;
                 romperProps.field_F0 = 121;
-                romper->model_0.anim_4.time_4         = Q12(120.0f);
+                romper->model_0.anim.time         = Q12(120.0f);
                 romper->moveSpeed_38                  = Q12(1.2f);
             }
             break;
 
         case ANIM_STATUS(RomperAnim_19, true):
         case ANIM_STATUS(RomperAnim_20, true):
-            romper->model_0.controlState_2        = RomperControl_3;
-            romper->model_0.anim_4.status_0       = ANIM_STATUS(RomperAnim_13, true);
-            romperProps.field_F4 = romper->model_0.anim_4.time_4 - (Q12(109.0f) + 1);
+            romper->model_0.controlState        = RomperControl_3;
+            romper->model_0.anim.status       = ANIM_STATUS(RomperAnim_13, true);
+            romperProps.field_F4 = romper->model_0.anim.time - (Q12(109.0f) + 1);
             break;
     }
 
@@ -1436,10 +1436,10 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
     s32 keyframeIdx;
     s32 i;
 
-    switch (romper->model_0.anim_4.status_0)
+    switch (romper->model_0.anim.status)
     {
         case ANIM_STATUS(RomperAnim_2, true):
-            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 2; i < 2; i++, keyframeIdx++)
+            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim.time, Q12_SHIFT) - 2; i < 2; i++, keyframeIdx++)
             {
                 keyframeIdxs[i] = keyframeIdx - !(keyframeIdx < 5);
             }
@@ -1455,7 +1455,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
             break;
 
         case ANIM_STATUS(RomperAnim_4, true):
-            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 15;
+            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim.time, Q12_SHIFT) - 15;
                  i < 2;
                  i++, keyframeIdx++)
             {
@@ -1466,7 +1466,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
             break;
 
         case ANIM_STATUS(RomperAnim_7, true):
-            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 39;
+            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim.time, Q12_SHIFT) - 39;
                  i < 2;
                  i++, keyframeIdx++)
             {
@@ -1477,7 +1477,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
             break;
 
         case ANIM_STATUS(RomperAnim_8, true):
-            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 50;
+            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim.time, Q12_SHIFT) - 50;
                  i < 2;
                  i++, keyframeIdx++)
             {
@@ -1501,7 +1501,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
             break;
 
         case ANIM_STATUS(RomperAnim_11, true):
-            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 93;
+            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim.time, Q12_SHIFT) - 93;
                 i < 2;
                 i++, keyframeIdx++)
             {
@@ -1512,7 +1512,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
             break;
 
         case ANIM_STATUS(RomperAnim_12, true):
-            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 100;
+            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim.time, Q12_SHIFT) - 100;
                  i < 2;
                  i++, keyframeIdx   = (keyframeIdx + 1) % 9)
             {
@@ -1523,7 +1523,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
             break;
 
         case ANIM_STATUS(RomperAnim_13, true):
-            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 109;
+            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim.time, Q12_SHIFT) - 109;
                  i < 2;
                  i++, keyframeIdx = (keyframeIdx + 1) % 22)
             {
@@ -1538,7 +1538,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
             break;
 
         case ANIM_STATUS(RomperAnim_15, true):
-            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 147;
+            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim.time, Q12_SHIFT) - 147;
                  i < 2;
                  i++, keyframeIdx = (keyframeIdx + 1) % 16)
             {
@@ -1550,7 +1550,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
 
         case ANIM_STATUS(RomperAnim_9, true):
             CopyData(romper, sharedData_800ECD34_2_s02);
-            romper->field_D4.radius_0 = (romper->model_0.anim_4.time_4 - Q12(61.0f)) / 100;
+            romper->field_D4.radius_0 = (romper->model_0.anim.time - Q12(61.0f)) / 100;
             break;
 
         default:
@@ -1560,7 +1560,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
 
     func_8005C814(&romper->field_D8, romper);
 
-    if (ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) != RomperAnim_2)
+    if (ANIM_STATUS_IDX_GET(romper->model_0.anim.status) != RomperAnim_2)
     {
         romper->field_44.field_0 = 0;
     }
@@ -1572,13 +1572,13 @@ s32 sharedFunc_800E939C_2_s02(s_SubCharacter* romper)
     q19_12 relAnimTime;
     u32    var_a3;
 
-    if (romper->model_0.anim_4.time_4 <  Q12(147.0f) ||
-        romper->model_0.anim_4.time_4 >= Q12(163.0f))
+    if (romper->model_0.anim.time <  Q12(147.0f) ||
+        romper->model_0.anim.time >= Q12(163.0f))
     {
         return 0;
     }
 
-    relAnimTime = romper->model_0.anim_4.time_4 - Q12(147.0f);
+    relAnimTime = romper->model_0.anim.time - Q12(147.0f);
     if (relAnimTime < romperProps.field_F4)
     {
         romperProps.field_F0 = 6;
@@ -1617,13 +1617,13 @@ s32 sharedFunc_800E94B4_2_s02(s_SubCharacter* romper)
 
     // TODO: Demagic hex values in this func. Some of the resulting floats are awkward.
 
-    if (romper->model_0.anim_4.time_4 <  Q12(109.0f) ||
-        romper->model_0.anim_4.time_4 >= Q12(131.0f))
+    if (romper->model_0.anim.time <  Q12(109.0f) ||
+        romper->model_0.anim.time >= Q12(131.0f))
     {
         return 0;
     }
 
-    relAnimTime = romper->model_0.anim_4.time_4 - Q12(109.0f);
+    relAnimTime = romper->model_0.anim.time - Q12(109.0f);
     if (relAnimTime < romperProps.field_F4)
     {
         romperProps.field_F0 = -404;

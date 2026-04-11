@@ -532,7 +532,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 164, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 11, false);
 
-            ModelAnim_StatusDecrement(&g_SysWork.npcs_1A0[1].model_0.anim_4);
+            ModelAnim_StatusDecrement(&g_SysWork.npcs_1A0[1].model_0.anim);
             SysWork_StateStepIncrement(0);
 
         case 13:
@@ -564,7 +564,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 13, false);
             func_8003D03C();
             Savegame_EventFlagClear(EventFlag_381);
-            g_SysWork.npcs_1A0[1].model_0.stateStep_3++;
+            g_SysWork.npcs_1A0[1].model_0.stateStep++;
             SysWork_StateStepIncrement(0);
 
         case 20:
@@ -702,7 +702,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
         case 45:
             if (D_800D94F4 == 1)
             {
-                g_SysWork.npcs_1A0[1].model_0.stateStep_3 = 3;
+                g_SysWork.npcs_1A0[1].model_0.stateStep = 3;
                 func_800625F4(&QVECTOR3(139.3f, 0.0f, 23.6f), 120, 3, 1);
             }
 

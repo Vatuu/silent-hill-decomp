@@ -313,7 +313,7 @@ STATIC_ASSERT_SIZEOF(s_MemCard_SaveHeader, 256);
 
 typedef struct
 {
-    s32                   status_0;
+    s32                   status;
     s8                    fileState_4[MEMCARD_FILE_COUNT_MAX];
     s_MemCard_SaveHeader* saveHeader_14; /** Slots saves information. */
     s32                   fileLimit_18;  /** Max count of files allowed in the memory card. */

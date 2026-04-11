@@ -25,8 +25,8 @@ void Ai_Incubator_AnimUpdate(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsC
     // TODO: Wrong properties union.
     if (incubator->properties_E4.player.field_F0 == 0)
     {
-        animInfo = &INCUBATOR_ANIM_INFOS[incubator->model_0.anim_4.status_0];
-        animInfo->playbackFunc_0(&incubator->model_0, anmHdr, coords, animInfo);
+        animInfo = &INCUBATOR_ANIM_INFOS[incubator->model_0.anim.status];
+        animInfo->playbackFunc(&incubator->model_0, anmHdr, coords, animInfo);
     }
 }
 
@@ -74,7 +74,7 @@ void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* coords) // 0x800D3E
             if (incubator->properties_E4.dahlia.resetStateIdx0_F8 != 0)
             {
                 incubator->properties_E4.dahlia.stateIdx0 = 0;
-                incubator->model_0.stateStep_3 = 0;
+                incubator->model_0.stateStep = 0;
                 incubator->properties_E4.dahlia.resetStateIdx0_F8 = 0;
             }
             break;
@@ -85,7 +85,7 @@ void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* coords) // 0x800D3E
             if (incubator->properties_E4.dahlia.resetStateIdx0_F8)
             {
                 incubator->properties_E4.dahlia.stateIdx0 = 0;
-                incubator->model_0.stateStep_3 = 0;
+                incubator->model_0.stateStep = 0;
                 incubator->properties_E4.dahlia.resetStateIdx0_F8 = 0;
             }
             break;
@@ -96,7 +96,7 @@ void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* coords) // 0x800D3E
             if (incubator->properties_E4.dahlia.resetStateIdx0_F8)
             {
                 incubator->properties_E4.dahlia.stateIdx0 = 0;
-                incubator->model_0.stateStep_3 = 0;
+                incubator->model_0.stateStep = 0;
                 incubator->properties_E4.dahlia.resetStateIdx0_F8 = 0;
             }
             break;

@@ -404,13 +404,13 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
         if (D_800DE250 != 0)
         {
             chara0 = &g_SysWork.npcs_1A0[0];
-            chara0->model_0.anim_4.flags_2 |= AnimFlag_Visible;
+            chara0->model_0.anim.flags |= AnimFlag_Visible;
             Dms_CharacterGetPosRot(&chara0->position_18, &chara0->rotation_24, "SIBYL", g_Timer0, FS_BUFFER_11);
             return;
         }
 
         chara1 = &g_SysWork.npcs_1A0[0];
-        chara1->model_0.anim_4.flags_2 &= ~AnimFlag_Visible;
+        chara1->model_0.anim.flags &= ~AnimFlag_Visible;
     }
 }
 

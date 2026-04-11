@@ -10,7 +10,7 @@
 void Ai_HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     // Initialize.
-    if (scratcher->model_0.controlState_2 == HangedScratcherControl_None)
+    if (scratcher->model_0.controlState == HangedScratcherControl_None)
     {
         Ai_HangedScratcher_Init(scratcher);
     }
@@ -43,25 +43,25 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
     scratcher->headingAngle_3C = scratcher->rotation_24.vy;
     scratcher->rotation_24.vx  = Q12_ANGLE(0.0f);
 
-    ModelAnim_AnimInfoSet(&scratcher->model_0.anim_4, HANGED_SCRATCHER_ANIM_INFOS);
+    ModelAnim_AnimInfoSet(&scratcher->model_0.anim, HANGED_SCRATCHER_ANIM_INFOS);
     Chara_DamageClear(scratcher);
 
     // Handle state step.
-    switch (scratcher->model_0.stateStep_3)
+    switch (scratcher->model_0.stateStep)
     {
         case HangedScratcherStateStep_3:
         case HangedScratcherStateStep_9:
-            if (scratcher->model_0.stateStep_3 == HangedScratcherStateStep_3)
+            if (scratcher->model_0.stateStep == HangedScratcherStateStep_3)
             {
-                scratcher->model_0.controlState_2 = HangedScratcherControl_2;
+                scratcher->model_0.controlState = HangedScratcherControl_2;
             }
-            else if (scratcher->model_0.stateStep_3 == HangedScratcherStateStep_7) // @unused This will never run? Meant to be `HangedScratcherStateStep_9`?
+            else if (scratcher->model_0.stateStep == HangedScratcherStateStep_7) // @unused This will never run? Meant to be `HangedScratcherStateStep_9`?
             {
-                scratcher->model_0.controlState_2 = HangedScratcherControl_16;
+                scratcher->model_0.controlState = HangedScratcherControl_16;
             }
             else
             {
-                scratcher->model_0.controlState_2 = HangedScratcherControl_1;
+                scratcher->model_0.controlState = HangedScratcherControl_1;
             }
 
             Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_14, true), 222);
@@ -73,7 +73,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
 
         case HangedScratcherStateStep_7:
         case HangedScratcherStateStep_14:
-            scratcher->model_0.controlState_2 = HangedScratcherControl_5;
+            scratcher->model_0.controlState = HangedScratcherControl_5;
             Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_15, true), 232);
             scratcher->position_18.vy = Q12(0.0f);
             scratcher->rotation_24.vz = Q12_ANGLE(0.0f);
@@ -83,7 +83,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
             scratcherProps.timer_EA = Q12(1.2f);
 
         case HangedScratcherStateStep_6:
-            scratcher->model_0.controlState_2 = HangedScratcherControl_6;
+            scratcher->model_0.controlState = HangedScratcherControl_6;
             Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_15, true), 232);
             scratcher->position_18.vy = Q12(0.0f);
             scratcher->rotation_24.vz = Q12_ANGLE(0.0f);
@@ -92,11 +92,11 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
         case HangedScratcherStateStep_18:
         case HangedScratcherStateStep_19:
         case HangedScratcherStateStep_20:
-            scratcher->model_0.controlState_2 = HangedScratcherControl_14;
+            scratcher->model_0.controlState = HangedScratcherControl_14;
             scratcher->position_18.vy         = Q12(0.0f);
             scratcher->rotation_24.vz         = Q12_ANGLE(0.0f);
 
-            switch (scratcher->model_0.stateStep_3)
+            switch (scratcher->model_0.stateStep)
             {
                 case HangedScratcherStateStep_18:
                     Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_1, true), 0);
@@ -155,7 +155,7 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
         prevHeadingAngle           = scratcher->headingAngle_3C;
         scratcher->headingAngle_3C = ratan2(scratcher->damage_B4.position_0.vx, scratcher->damage_B4.position_0.vz);
 
-        switch (scratcher->model_0.controlState_2)
+        switch (scratcher->model_0.controlState)
         {
             case HangedScratcherControl_4:
                 g_SysWork.field_2284[3] &= ~(1 << 1);
@@ -189,8 +189,8 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
                     }
                 }
 
-                scratcher->model_0.controlState_2  = HangedScratcherControl_9;
-                scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_8, false);
+                scratcher->model_0.controlState  = HangedScratcherControl_9;
+                scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_8, false);
                 break;
 
             case HangedScratcherControl_15:
@@ -202,21 +202,21 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
             case HangedScratcherControl_10:
                 if (scratcher->health_B0 > Q12(100.0f))
                 {
-                    scratcher->model_0.controlState_2  = HangedScratcherControl_10;
-                    scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_9, false);
+                    scratcher->model_0.controlState  = HangedScratcherControl_10;
+                    scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_9, false);
                 }
                 else
                 {
-                    scratcher->model_0.controlState_2  = HangedScratcherControl_12;
-                    scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_23, false);
+                    scratcher->model_0.controlState  = HangedScratcherControl_12;
+                    scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_23, false);
                 }
 
                 break;
 
             case HangedScratcherControl_11:
-                if (scratcher->model_0.anim_4.status_0 == ANIM_STATUS(HangedScratcherAnim_12, true))
+                if (scratcher->model_0.anim.status == ANIM_STATUS(HangedScratcherAnim_12, true))
                 {
-                    scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_21, false);
+                    scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_21, false);
                 }
 
             case HangedScratcherControl_8:
@@ -224,9 +224,9 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
                 break;
 
             case HangedScratcherControl_12:
-                if (scratcher->model_0.anim_4.status_0 == ANIM_STATUS(HangedScratcherAnim_13, true))
+                if (scratcher->model_0.anim.status == ANIM_STATUS(HangedScratcherAnim_13, true))
                 {
-                    scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_22, false);
+                    scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_22, false);
                 }
         }
 
@@ -241,7 +241,7 @@ void Ai_HangedScratcher_ControlUpdate(s_SubCharacter* scratcher)
 {
     s32 animStatus;
 
-    animStatus = scratcher->model_0.anim_4.status_0;
+    animStatus = scratcher->model_0.anim.status;
     if (animStatus != ANIM_STATUS(HangedScratcherAnim_4, true) &&
         animStatus != ANIM_STATUS(HangedScratcherAnim_5, true))
     {
@@ -249,7 +249,7 @@ void Ai_HangedScratcher_ControlUpdate(s_SubCharacter* scratcher)
     }
 
     // Handle control state.
-    switch (scratcher->model_0.controlState_2)
+    switch (scratcher->model_0.controlState)
     {
         case HangedScratcherControl_None:
             break;
@@ -324,8 +324,8 @@ void Ai_HangedScratcher_Control_16(s_SubCharacter* scratcher)
 {
     if (scratcherProps.field_104 != 0)
     {
-        scratcher->model_0.controlState_2  = HangedScratcherControl_7;
-        scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_18, false);
+        scratcher->model_0.controlState  = HangedScratcherControl_7;
+        scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_18, false);
     }
 }
 
@@ -344,8 +344,8 @@ void Ai_HangedScratcher_Control_1(s_SubCharacter* scratcher)
           (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) &&
           func_8006FD90(scratcher, 1, Q12(1.5f), Q12(0.3f)))))
     {
-        scratcher->model_0.controlState_2  = HangedScratcherControl_3;
-        scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_17, false);
+        scratcher->model_0.controlState  = HangedScratcherControl_3;
+        scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_17, false);
     }
 }
 
@@ -360,8 +360,8 @@ void Ai_HangedScratcher_Control_2(s_SubCharacter* chara)
 
     if (distToPlayer < Q12(5.0f) || (distToPlayer < Q12(20.0f) && Rng_Rand16() == 0))
     {
-        chara->model_0.controlState_2  = HangedScratcherControl_3;
-        chara->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_17, false);
+        chara->model_0.controlState  = HangedScratcherControl_3;
+        chara->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_17, false);
     }
 }
 
@@ -452,8 +452,8 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
 
     if (sharedFunc_800D3214_5_s00(scratcher))
     {
-        scratcher->model_0.controlState_2  = HangedScratcherControl_8;
-        scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_16, false);
+        scratcher->model_0.controlState  = HangedScratcherControl_8;
+        scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_16, false);
         scratcher->moveSpeed_38            = Q12(0.0f);
 
         scratcherProps.flags_E8 |= HangedScratcherFlag_1;
@@ -470,9 +470,9 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
                 {
                     if (playerPosYDelta > Q12(-3.7f))
                     {
-                        scratcher->model_0.controlState_2  = HangedScratcherControl_4;
+                        scratcher->model_0.controlState  = HangedScratcherControl_4;
                         scratcherProps.timer_EA            = Q12(0.0f);
-                        scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_4, false);
+                        scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_4, false);
                         g_SysWork.field_2284[3]           |= HangedScratcherFlag_1;
                         return;
                     }
@@ -482,8 +482,8 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
 
         if (distToPlayer > Q12(20.0f) && !Rng_GenerateInt(0, 31)) // 1 in 32 chance.
         {
-            scratcher->model_0.controlState_2  = HangedScratcherControl_2;
-            scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_14, false);
+            scratcher->model_0.controlState  = HangedScratcherControl_2;
+            scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_14, false);
         }
     }
 }
@@ -501,7 +501,7 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
                                           scratcher->rotation_24.vy);
     angleDeltaToPlayerAbs = ABS(angleDeltaToPlayer);
 
-    if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 98, 103))
+    if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 98, 103))
     {
         if (angleDeltaToPlayerAbs > TIMESTEP_ANGLE(1, 2))
         {
@@ -530,7 +530,7 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
     {
         scratcher->moveSpeed_38 = Q12(0.0f);
 
-        if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 104, 105))
+        if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 104, 105))
         {
             attackPos.vx             = scratcher->position_18.vx;
             attackPos.vy             = Q12(-1.45f);
@@ -540,13 +540,13 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
             func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk44, AttackInputType_Tap), scratcher, &attackPos, &g_SysWork.playerWork_4C.player_0, scratcher->rotation_24.vy,
                           ratan2(distToPlayer, (g_SysWork.playerWork_4C.player_0.position_18.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_6) - attackPos.vy));
         }
-        else if (ANIM_STATUS_IDX_GET(scratcher->model_0.anim_4.status_0) == HangedScratcherAnim_14)
+        else if (ANIM_STATUS_IDX_GET(scratcher->model_0.anim.status) == HangedScratcherAnim_14)
         {
             if (distToPlayer > Q12(6.0f) && !Rng_GenerateInt(0, 15)) // 1 in 16 chance.
             {
-                scratcher->model_0.controlState_2  = HangedScratcherControl_3;
+                scratcher->model_0.controlState  = HangedScratcherControl_3;
                 scratcherProps.timer_EA            = Q12(0.0f);
-                scratcher->model_0.anim_4.status_0 = ANIM_STATUS(17, false);
+                scratcher->model_0.anim.status = ANIM_STATUS(17, false);
                 g_SysWork.field_2284[3]           &= ~(1 << 1);
             }
             else
@@ -556,7 +556,7 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
                 if (scratcherProps.timer_EA > Q12(3.0f) && !Rng_GenerateInt(0, 7))
                 {
                     scratcherProps.timer_EA           = Q12(0.0f);
-                    scratcher->model_0.controlState_2 = HangedScratcherControl_2;
+                    scratcher->model_0.controlState = HangedScratcherControl_2;
                     g_SysWork.field_2284[3]          &= ~(1 << 1);
                 }
             }
@@ -584,8 +584,8 @@ void Ai_HangedScratcher_Control_5(s_SubCharacter* scratcher)
             (((u8)g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x2) &&
              ((u8)g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x1) && func_8006FD90(scratcher, 1, Q12(1.2f), Q12(0.3f))))
         {
-            scratcher->model_0.controlState_2  = HangedScratcherControl_7;
-            scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_18, false);
+            scratcher->model_0.controlState  = HangedScratcherControl_7;
+            scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_18, false);
         }
     }
 }
@@ -601,25 +601,25 @@ void Ai_HangedScratcher_Control_6(s_SubCharacter* scratcher)
     Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
 
     if (scratcherProps.timer_EA == Q12(0.0f) &&
-        scratcher->model_0.anim_4.status_0 == ANIM_STATUS(HangedScratcherAnim_15, true))
+        scratcher->model_0.anim.status == ANIM_STATUS(HangedScratcherAnim_15, true))
     {
         if (distToPlayer < Q12(12.0f) && !Rng_GenerateInt(0, 127)) // 1 in 128 chance.
         {
-            scratcher->model_0.controlState_2  = HangedScratcherControl_7;
-            scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_18, false);
+            scratcher->model_0.controlState  = HangedScratcherControl_7;
+            scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_18, false);
         }
         else if (distToPlayer < Q12(6.0f) && !Rng_GenerateInt(0, 15)) // 1 in 16 chance.
         {
-            scratcher->model_0.controlState_2  = HangedScratcherControl_7;
-            scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_18, false);
+            scratcher->model_0.controlState  = HangedScratcherControl_7;
+            scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_18, false);
         }
     }
 
     // @bug Weird function pointer check, code will never run?
     if (&sharedFunc_800D3214_5_s00 == NULL && distToPlayer > Q12(24.0f))
     {
-        scratcher->model_0.controlState_2 = HangedScratcherControl_None;
-        scratcher->model_0.stateStep_3    = 3;
+        scratcher->model_0.controlState = HangedScratcherControl_None;
+        scratcher->model_0.stateStep    = 3;
     }
 
     temp_v1                 = scratcherProps.timer_EA;
@@ -644,9 +644,9 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
 
     if (distToPlayer > Q12(16.0f))
     {
-        scratcher->model_0.controlState_2  = HangedScratcherControl_6;
+        scratcher->model_0.controlState  = HangedScratcherControl_6;
         scratcherProps.timer_EA            = Q12(0.5f);
-        scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_15, false);
+        scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_15, false);
         scratcherProps.field_EE            = 37;
         return;
     }
@@ -727,10 +727,10 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
             if (ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                   scratcher->rotation_24.vy)) < Q12_ANGLE(20.0f))
             {
-                scratcher->model_0.controlState_2  = HangedScratcherControl_15;
+                scratcher->model_0.controlState  = HangedScratcherControl_15;
                 g_SysWork.field_2284[3]           |= 1 << 1;
                 scratcherProps.timer_EA            = Q12(0.0f);
-                scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_5, false);
+                scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_5, false);
             }
         }
     }
@@ -742,7 +742,7 @@ void Ai_HangedScratcher_Control_8(s_SubCharacter* scratcher)
     {
         scratcher->fallSpeed_34 += g_GravitySpeed >> 1;
 
-        if (FP_FROM(scratcher->model_0.anim_4.time_4, Q12_SHIFT) == 259)
+        if (FP_FROM(scratcher->model_0.anim.time, Q12_SHIFT) == 259)
         {
             sharedData_800DE28C_5_s00 = Q12(0.0f);
         }
@@ -756,24 +756,24 @@ void Ai_HangedScratcher_Control_8(s_SubCharacter* scratcher)
         sharedData_800DE28C_5_s00 = Q12(12.0f);
     }
 
-    if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 245, 256))
+    if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 245, 256))
     {
         scratcher->rotation_24.vz = MAX(Q12(0.0f), scratcher->rotation_24.vz - TIMESTEP_SCALE_60_FPS(g_DeltaTime, 45));
     }
 
-    if (ANIM_STATUS_IDX_GET(scratcher->model_0.anim_4.status_0) == HangedScratcherAnim_15)
+    if (ANIM_STATUS_IDX_GET(scratcher->model_0.anim.status) == HangedScratcherAnim_15)
     {
         scratcher->moveSpeed_38 = Q12(0.0f);
 
         if (scratcher->health_B0 > Q12(100.0f))
         {
-            scratcher->model_0.controlState_2 = HangedScratcherControl_6;
+            scratcher->model_0.controlState = HangedScratcherControl_6;
             scratcherProps.timer_EA           = Q12(0.5f);
         }
         else
         {
-            scratcher->model_0.controlState_2  = HangedScratcherControl_12;
-            scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_11, false);
+            scratcher->model_0.controlState  = HangedScratcherControl_12;
+            scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_11, false);
             scratcherProps.field_EE            = 31;
         }
     }
@@ -785,7 +785,7 @@ void Ai_HangedScratcher_Control_9(s_SubCharacter* scratcher)
 
     Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
 
-    if (ANIM_STATUS_IDX_GET(scratcher->model_0.anim_4.status_0) == HangedScratcherAnim_14 &&
+    if (ANIM_STATUS_IDX_GET(scratcher->model_0.anim.status) == HangedScratcherAnim_14 &&
         scratcher->moveSpeed_38 == Q12(0.0f))
     {
         Collision_Get(&coll, scratcher->position_18.vx, scratcher->position_18.vz);
@@ -793,19 +793,19 @@ void Ai_HangedScratcher_Control_9(s_SubCharacter* scratcher)
         {
             if (scratcherProps.flags_E8 & HangedScratcherFlag_1)
             {
-                scratcher->model_0.controlState_2  = HangedScratcherControl_8;
-                scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_16, false);
+                scratcher->model_0.controlState  = HangedScratcherControl_8;
+                scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_16, false);
             }
             else if (!Rng_GenerateInt(0, 7)) // 1 in 8 chance.
             {
-                scratcher->model_0.controlState_2  = HangedScratcherControl_3;
-                scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_17, false);
+                scratcher->model_0.controlState  = HangedScratcherControl_3;
+                scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_17, false);
             }
         }
         else
         {
-            scratcher->model_0.controlState_2  = HangedScratcherControl_11;
-            scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_10, false);
+            scratcher->model_0.controlState  = HangedScratcherControl_11;
+            scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_10, false);
         }
     }
 }
@@ -814,12 +814,12 @@ void Ai_HangedScratcher_Control_10(s_SubCharacter* scratcher)
 {
     Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
 
-    if (ANIM_STATUS_IDX_GET(scratcher->model_0.anim_4.status_0) == HangedScratcherAnim_15 &&
+    if (ANIM_STATUS_IDX_GET(scratcher->model_0.anim.status) == HangedScratcherAnim_15 &&
         scratcher->moveSpeed_38 == Q12(0.0f) &&
         Rng_GenerateInt(0, 7) == 0) // 1 in 8 chance.
     {
-        scratcher->model_0.controlState_2  = HangedScratcherControl_7;
-        scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_18, false);
+        scratcher->model_0.controlState  = HangedScratcherControl_7;
+        scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_18, false);
     }
 }
 
@@ -829,7 +829,7 @@ void Ai_HangedScratcher_Control_11(s_SubCharacter* scratcher)
     {
         scratcher->fallSpeed_34 += g_GravitySpeed >> 1;
 
-        if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 176, 184))
+        if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 176, 184))
         {
             sharedData_800DE28C_5_s00 = Q12(10.0f);
         }
@@ -842,33 +842,33 @@ void Ai_HangedScratcher_Control_11(s_SubCharacter* scratcher)
     {
         Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
 
-        if (ANIM_STATUS_IDX_GET(scratcher->model_0.anim_4.status_0) == HangedScratcherAnim_10)
+        if (ANIM_STATUS_IDX_GET(scratcher->model_0.anim.status) == HangedScratcherAnim_10)
         {
-            if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 176, 185))
+            if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 176, 185))
             {
-                scratcher->model_0.anim_4.time_4        = Q12(186.0f);
-                scratcher->model_0.anim_4.keyframeIdx_8 = 186;
+                scratcher->model_0.anim.time        = Q12(186.0f);
+                scratcher->model_0.anim.keyframeIdx = 186;
             }
 
             sharedData_800DE28C_5_s00 = Q12(8.0f);
         }
     }
 
-    if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 191, 193))
+    if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 191, 193))
     {
         Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_12, true), 202);
         scratcher->rotation_24.vz = Q12_ANGLE(0.0f);
         return;
     }
 
-    if (scratcher->model_0.anim_4.status_0 == ANIM_STATUS(HangedScratcherAnim_12, true))
+    if (scratcher->model_0.anim.status == ANIM_STATUS(HangedScratcherAnim_12, true))
     {
         scratcher->flags_3E |= CharaFlag_Unk2;
 
         if (scratcher->health_B0 <= Q12(0.0f))
         {
-            scratcher->model_0.controlState_2  = HangedScratcherControl_13;
-            scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_6, false);
+            scratcher->model_0.controlState  = HangedScratcherControl_13;
+            scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_6, false);
         }
     }
 }
@@ -880,23 +880,23 @@ void Ai_HangedScratcher_Control_12(s_SubCharacter* scratcher)
 
     Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
 
-    if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 192, 199))
+    if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 192, 199))
     {
-        animDur       = HANGED_SCRATCHER_ANIM_INFOS[scratcher->model_0.anim_4.status_0].duration_8.constant;
+        animDur       = HANGED_SCRATCHER_ANIM_INFOS[scratcher->model_0.anim.status].duration.constant;
         animDurScaled = (Q12_MULT_PRECISE(animDur, g_DeltaTime) * Q12(0.7f)) / Q12(7.0f);
 
         scratcherProps.offsetX_F0 += FP_FROM(animDurScaled * Math_Sin(scratcher->rotation_24.vy), Q12_SHIFT);
         scratcherProps.offsetZ_F2 += FP_FROM(animDurScaled * Math_Cos(scratcher->rotation_24.vy), Q12_SHIFT);
     }
 
-    if (scratcher->model_0.anim_4.status_0 == ANIM_STATUS(HangedScratcherAnim_13, true))
+    if (scratcher->model_0.anim.status == ANIM_STATUS(HangedScratcherAnim_13, true))
     {
         scratcher->flags_3E |= CharaFlag_Unk2;
 
         if (scratcher->health_B0 <= Q12(0.0f))
         {
-            scratcher->model_0.controlState_2  = HangedScratcherControl_13;
-            scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_7, false);
+            scratcher->model_0.controlState  = HangedScratcherControl_13;
+            scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_7, false);
         }
     }
 }
@@ -932,27 +932,27 @@ void Ai_HangedScratcher_Control_14(s_SubCharacter* scratcher)
     VECTOR3     sfxPos;
 
     if ((scratcherProps.flags_E8 & HangedScratcherFlag_7) &&
-        scratcher->model_0.anim_4.status_0 < ANIM_STATUS(HangedScratcherAnim_4, false))
+        scratcher->model_0.anim.status < ANIM_STATUS(HangedScratcherAnim_4, false))
     {
-        HANGED_SCRATCHER_ANIM_INFOS[scratcher->model_0.anim_4.status_0].duration_8.constant = Q12(9.6f);
+        HANGED_SCRATCHER_ANIM_INFOS[scratcher->model_0.anim.status].duration.constant = Q12(9.6f);
     }
     else
     {
-        HANGED_SCRATCHER_ANIM_INFOS[scratcher->model_0.anim_4.status_0].duration_8.constant = Q12(0.0f);
+        HANGED_SCRATCHER_ANIM_INFOS[scratcher->model_0.anim.status].duration.constant = Q12(0.0f);
     }
 
-    if (FP_FROM(scratcher->model_0.anim_4.time_4, Q12_SHIFT) == 51)
+    if (FP_FROM(scratcher->model_0.anim.time, Q12_SHIFT) == 51)
     {
-        scratcher->model_0.anim_4.flags_2 &= ~AnimFlag_Visible;
+        scratcher->model_0.anim.flags &= ~AnimFlag_Visible;
     }
     else
     {
-        scratcher->model_0.anim_4.flags_2 |= AnimFlag_Visible;
+        scratcher->model_0.anim.flags |= AnimFlag_Visible;
     }
 
     if (!(scratcherProps.flags_E8 & HangedScratcherFlag_6))
     {
-        if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 42, 44))
+        if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 42, 44))
         {
             scratcherProps.flags_E8 |= HangedScratcherFlag_6;
 
@@ -967,7 +967,7 @@ void Ai_HangedScratcher_Control_14(s_SubCharacter* scratcher)
             }
         }
 
-        if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 84, 86))
+        if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 84, 86))
         {
             scratcherProps.flags_E8 |= HangedScratcherFlag_6;
 
@@ -986,7 +986,7 @@ void Ai_HangedScratcher_Control_14(s_SubCharacter* scratcher)
             }
         }
 
-        if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 94, 96))
+        if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 94, 96))
         {
             scratcherProps.flags_E8 |= HangedScratcherFlag_6;
 
@@ -1007,7 +1007,7 @@ void Ai_HangedScratcher_Control_14(s_SubCharacter* scratcher)
     }
 
     if (!(scratcherProps.flags_E8 & HangedScratcherFlag_8) &&
-        ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 52, 54))
+        ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 52, 54))
     {
         scratcherProps.flags_E8 |= HangedScratcherFlag_8;
 
@@ -1029,7 +1029,7 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
     angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                        scratcher->rotation_24.vy);
 
-    if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 116, 123) &&
+    if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 116, 123) &&
         distToPlayer > Q12(1.0f) && angleDeltaToPlayer < Q12_ANGLE(20.0f))
     {
         scratcher->moveSpeed_38 = Q12(1.0f);
@@ -1039,7 +1039,7 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
         scratcher->moveSpeed_38 = Q12(0.0f);
     }
 
-    if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 116, 128))
+    if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 116, 128))
     {
         if (ABS(angleDeltaToPlayer) > TIMESTEP_ANGLE(1, 4))
         {
@@ -1059,7 +1059,7 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
         }
     }
 
-    if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 124, 130))
+    if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 124, 130))
     {
         if (scratcher->field_44.field_0 == 0)
         {
@@ -1075,7 +1075,7 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
         func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk45, AttackInputType_Tap), scratcher, &attackPos, &g_SysWork.playerWork_4C.player_0, scratcher->rotation_24.vy, Q12_ANGLE(90.0f));
     }
 
-    if (scratcher->model_0.anim_4.status_0 == ANIM_STATUS(HangedScratcherAnim_15, true))
+    if (scratcher->model_0.anim.status == ANIM_STATUS(HangedScratcherAnim_15, true))
     {
         if (scratcherProps.timer_EA == Q12(0.0f))
         {
@@ -1088,8 +1088,8 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
             (scratcherProps.timer_EA > Q12(0.8f) &&
              !Rng_GenerateInt(0, 31))) // 1 in 32 chance.
         {
-            scratcher->model_0.controlState_2  = HangedScratcherControl_7;
-            scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_18, false);
+            scratcher->model_0.controlState  = HangedScratcherControl_7;
+            scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_18, false);
         }
     }
     else
@@ -1107,7 +1107,7 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
     scratcher->rotation_24.vy  = Math_AngleNormalizeSigned(scratcher->rotation_24.vy);
     scratcher->headingAngle_3C = scratcher->rotation_24.vy;
 
-    switch (scratcher->model_0.controlState_2)
+    switch (scratcher->model_0.controlState)
     {
         case HangedScratcherControl_5:
         case HangedScratcherControl_6:
@@ -1132,7 +1132,7 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
 
         if (flag1Val)
         {
-            if (scratcher->model_0.anim_4.status_0 == ANIM_STATUS(HangedScratcherAnim_10, true))
+            if (scratcher->model_0.anim.status == ANIM_STATUS(HangedScratcherAnim_10, true))
             {
                 Collision_Get(&coll, scratcher->position_18.vx, scratcher->position_18.vz);
                 if (coll.field_8 == 11)
@@ -1144,7 +1144,7 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
                     func_8005DC1C(Sfx_Unk1581, &scratcher->position_18, Q8(0.5f), 0);
                 }
             }
-            else if (scratcher->model_0.anim_4.status_0 == ANIM_STATUS(HangedScratcherAnim_16, true))
+            else if (scratcher->model_0.anim.status == ANIM_STATUS(HangedScratcherAnim_16, true))
             {
                 Collision_Get(&coll, scratcher->position_18.vx, scratcher->position_18.vz);
                 if (coll.field_8 == 11)
@@ -1169,114 +1169,114 @@ void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, G
     s_AnimInfo* animInfo;
     q19_12      newAnimDur;
 
-#define curAnimInfo HANGED_SCRATCHER_ANIM_INFOS[scratcher->model_0.anim_4.status_0]
+#define curAnimInfo HANGED_SCRATCHER_ANIM_INFOS[scratcher->model_0.anim.status]
 
     scratcher->rotation_24.vy = Math_AngleNormalizeSigned(scratcher->rotation_24.vy);
 
-    switch (scratcher->model_0.anim_4.status_0)
+    switch (scratcher->model_0.anim.status)
     {
         case ANIM_STATUS(HangedScratcherAnim_4, true):
             if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
             {
-                curAnimInfo.duration_8.constant = Q12(19.5f);
+                curAnimInfo.duration.constant = Q12(19.5f);
             }
             else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
             {
-                curAnimInfo.duration_8.constant = Q12(19.5f);
+                curAnimInfo.duration.constant = Q12(19.5f);
             }
             else
             {
-                curAnimInfo.duration_8.constant = Q12(26.0f);
+                curAnimInfo.duration.constant = Q12(26.0f);
             }
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_5, false):
             if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
             {
-                curAnimInfo.duration_8.constant = Q12(12.0f);
+                curAnimInfo.duration.constant = Q12(12.0f);
             }
             else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
             {
-                curAnimInfo.duration_8.constant = Q12(8.0f);
+                curAnimInfo.duration.constant = Q12(8.0f);
             }
             else
             {
-                curAnimInfo.duration_8.constant = Q12(18.0f);
+                curAnimInfo.duration.constant = Q12(18.0f);
             }
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_5, true):
             if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
             {
-                curAnimInfo.duration_8.constant = Q12(23.0f);
+                curAnimInfo.duration.constant = Q12(23.0f);
             }
             else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
             {
-                curAnimInfo.duration_8.constant = Q12(15.0f);
+                curAnimInfo.duration.constant = Q12(15.0f);
             }
             else
             {
-                curAnimInfo.duration_8.constant = Q12(34.0f);
+                curAnimInfo.duration.constant = Q12(34.0f);
             }
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_9, true):
-            if (FP_FROM(scratcher->model_0.anim_4.time_4, Q12_SHIFT) != 173)
+            if (FP_FROM(scratcher->model_0.anim.time, Q12_SHIFT) != 173)
             {
-                curAnimInfo.duration_8.constant = Q12(12.0f);
+                curAnimInfo.duration.constant = Q12(12.0f);
                 break;
             }
 
-            curAnimInfo.duration_8.constant = Q12(4.5f);
+            curAnimInfo.duration.constant = Q12(4.5f);
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_23, true):
-            if (FP_FROM(scratcher->model_0.anim_4.time_4, Q12_SHIFT) == 173)
+            if (FP_FROM(scratcher->model_0.anim.time, Q12_SHIFT) == 173)
             {
-                curAnimInfo.duration_8.constant = Q12(3.0f);
+                curAnimInfo.duration.constant = Q12(3.0f);
             }
             else
             {
-                curAnimInfo.duration_8.constant = Q12(9.0f);
+                curAnimInfo.duration.constant = Q12(9.0f);
             }
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_11, true):
-            if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 192, 193))
+            if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 192, 193))
             {
-                curAnimInfo.duration_8.constant = Q12(2.5f);
+                curAnimInfo.duration.constant = Q12(2.5f);
             }
             else
             {
-                curAnimInfo.duration_8.constant = Q12(4.5f);
+                curAnimInfo.duration.constant = Q12(4.5f);
             }
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_10, true):
         case ANIM_STATUS(HangedScratcherAnim_16, true):
-            curAnimInfo.duration_8.constant = sharedData_800DE28C_5_s00;
+            curAnimInfo.duration.constant = sharedData_800DE28C_5_s00;
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_14, true):
         case ANIM_STATUS(HangedScratcherAnim_15, true):
-            switch (scratcher->model_0.controlState_2)
+            switch (scratcher->model_0.controlState)
             {
                 case 1:
-                    curAnimInfo.duration_8.constant = Q12(1.2f);
+                    curAnimInfo.duration.constant = Q12(1.2f);
                     break;
 
                 case 5:
-                    curAnimInfo.duration_8.constant = Q12(2.4f);
+                    curAnimInfo.duration.constant = Q12(2.4f);
                     break;
 
                 default:
-                    curAnimInfo.duration_8.constant = Q12(3.5f);
+                    curAnimInfo.duration.constant = Q12(3.5f);
                     break;
             }
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_17, true):
-            curAnimInfo.duration_8.constant = MAX(Q12(2.0f), Q12_MULT_PRECISE(scratcher->moveSpeed_38, Q12(4.4f)));
+            curAnimInfo.duration.constant = MAX(Q12(2.0f), Q12_MULT_PRECISE(scratcher->moveSpeed_38, Q12(4.4f)));
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_18, true):
@@ -1286,14 +1286,14 @@ void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, G
                 newAnimDur = MAX(Q12(9.0f), newAnimDur);
             }
 
-            curAnimInfo.duration_8.constant = newAnimDur;
+            curAnimInfo.duration.constant = newAnimDur;
             break;
     }
 
     Math_MatrixTransform(&scratcher->position_18, &scratcher->rotation_24, coords);
 
     animInfo = &curAnimInfo;
-    animInfo->playbackFunc_0(&scratcher->model_0, anmHdr, coords, animInfo);
+    animInfo->playbackFunc(&scratcher->model_0, anmHdr, coords, animInfo);
     scratcherProps.field_FC = scratcher->rotation_24.vy;
 
 #undef curAnimInfo
@@ -1351,10 +1351,10 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
     s32 keyframeIdx0;
     s32 keyframeIdx1;
 
-    #define animKeyframeIdx FP_FROM(scratcher->model_0.anim_4.time_4, Q12_SHIFT)
+    #define animKeyframeIdx FP_FROM(scratcher->model_0.anim.time, Q12_SHIFT)
 
     // Handle animation status.
-    switch (scratcher->model_0.anim_4.status_0)
+    switch (scratcher->model_0.anim.status)
     {
         case ANIM_STATUS(HangedScratcherAnim_4, false):
             func_80070400(scratcher, &sharedData_800D980C_5_s00, sharedData_800D9500_5_s00);
@@ -1717,7 +1717,7 @@ bool sharedFunc_800D3214_5_s00(s_SubCharacter* scratcher)
 
 void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
 {
-    #define animKeyframeIdx FP_FROM(scratcher->model_0.anim_4.time_4, Q12_SHIFT)
+    #define animKeyframeIdx FP_FROM(scratcher->model_0.anim.time, Q12_SHIFT)
 
     if (scratcherProps.timer_100 != Q12(0.0f))
     {
@@ -1762,7 +1762,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
             }
         }
 
-        switch (scratcher->model_0.controlState_2)
+        switch (scratcher->model_0.controlState)
         {
             case 1:
             case 16:
@@ -1820,9 +1820,9 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
     scratcherProps.flags_E8 &= ~(HangedScratcherFlag_4 | HangedScratcherFlag_5);
 
     // TODO: Can the `+ 88` etc below be added into the Rng macro calls? Couldn't match with that yet.
-    if (scratcher->model_0.anim_4.status_0 == 35)
+    if (scratcher->model_0.anim.status == 35)
     {
-        if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 272, 273))
+        if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 272, 273))
         {
             if (scratcherProps.field_103 == 0)
             {
@@ -1850,9 +1850,9 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
             scratcherProps.field_102 = 0;
         }
     }
-    else if (scratcher->model_0.anim_4.status_0 == 37)
+    else if (scratcher->model_0.anim.status == 37)
     {
-        if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 285, 286))
+        if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 285, 286))
         {
             if (scratcherProps.field_103 == 0)
             {
@@ -1866,7 +1866,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
             scratcherProps.field_103 = 0;
         }
 
-        if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 277, 278))
+        if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim.time, 277, 278))
         {
             if (scratcherProps.field_102 == 0)
             {
@@ -1880,7 +1880,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
             scratcherProps.field_102 = 0;
         }
     }
-    else if (scratcher->model_0.anim_4.status_0 == 3)
+    else if (scratcher->model_0.anim.status == 3)
     {
         if (scratcherProps.field_103 < 3)
         {

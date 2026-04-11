@@ -21,28 +21,28 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
 {
     s_AnimInfo* animInfo;
 
-    if (chara->model_0.controlState_2 == ModelState_Uninitialized)
+    if (chara->model_0.controlState == ModelState_Uninitialized)
     {
-        chara->model_0.anim_4.alpha_A = Q12(0.0f);
+        chara->model_0.anim.alpha = Q12(0.0f);
         Character_AnimSet(chara, ANIM_STATUS(LockerDeadBodyAnim_2, true), 0);
-        chara->model_0.controlState_2++;
+        chara->model_0.controlState++;
         chara->position_18.vy = Q12(0.0f);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_105))
     {
-        chara->model_0.anim_4.flags_2 &= ~AnimFlag_Visible;
+        chara->model_0.anim.flags &= ~AnimFlag_Visible;
         chara->field_E1_0              = 0;
         return;
     }
 
-    chara->model_0.anim_4.flags_2 |= AnimFlag_Visible;
+    chara->model_0.anim.flags |= AnimFlag_Visible;
 
     if (!Savegame_EventFlagGet(EventFlag_106))
     {
-        if (chara->model_0.anim_4.status_0 == ANIM_STATUS(LockerDeadBodyAnim_2, true))
+        if (chara->model_0.anim.status == ANIM_STATUS(LockerDeadBodyAnim_2, true))
         {
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(LockerDeadBodyAnim_1, true);
+            chara->model_0.anim.status = ANIM_STATUS(LockerDeadBodyAnim_1, true);
         }
 
         chara->field_E1_0 = 0;
@@ -55,8 +55,8 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
 
     Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
 
-    animInfo = &LOCKER_DEAD_BODY_ANIM_INFOS[chara->model_0.anim_4.status_0];
-    animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+    animInfo = &LOCKER_DEAD_BODY_ANIM_INFOS[chara->model_0.anim.status];
+    animInfo->playbackFunc(&chara->model_0, anmHdr, coords, animInfo);
 
     chara->field_C8.field_0   = Q12(-0.3f);
     chara->field_D8.offsetX_4 = Q12(0.06f);
@@ -701,7 +701,7 @@ void func_800DAF18(void) // 0x800DAF18
         temp_s2 = ratan2((sp78.vy * 0x10) + 0xB33, (sp78.vz * 0x10) + 0xCEB8);
         if (D_800E20FE > 2)
         {
-            var_v0 = FP_FROM(g_SysWork.playerWork_4C.player_0.model_0.anim_4.time_4, Q12_SHIFT) - Player_AnimGetSomething();
+            var_v0 = FP_FROM(g_SysWork.playerWork_4C.player_0.model_0.anim.time, Q12_SHIFT) - Player_AnimGetSomething();
         }
         else
         {

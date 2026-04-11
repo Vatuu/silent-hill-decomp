@@ -39,7 +39,7 @@ s_AnimInfo HARRY_M0S00_ANIM_INFOS[] = {
     {}
 };
 
-// Not sure if the `time_4 field` (3rd) is actually time.
+// Not sure if the `time field` (3rd) is actually time.
 // These numbers produce very small and non-round values.
 // I also seen some code read this field and add very small numbers like 4 or 32.
 // This is why FP macros aren't used.

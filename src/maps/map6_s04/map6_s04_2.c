@@ -21,19 +21,19 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
     s32         var_s1;
     s_AnimInfo* animInfo;
 
-    if (chara->model_0.controlState_2 == ModelState_Uninitialized)
+    if (chara->model_0.controlState == ModelState_Uninitialized)
     {
-        chara->model_0.anim_4.alpha_A = Q12(0.0f);
-        chara->model_0.controlState_2        = 1;
-        chara->model_0.stateStep_3    = 0;
+        chara->model_0.anim.alpha = Q12(0.0f);
+        chara->model_0.controlState        = 1;
+        chara->model_0.stateStep    = 0;
         Character_AnimSet(chara, ANIM_STATUS(1, true), 0);
     }
 
-    if (chara->model_0.anim_4.time_4 <= Q12(21.0f))
+    if (chara->model_0.anim.time <= Q12(21.0f))
     {
-        if (chara->model_0.anim_4.time_4 > Q12(13.0f))
+        if (chara->model_0.anim.time > Q12(13.0f))
         {
-            var_s1 = (chara->model_0.anim_4.time_4 - Q12(13.0f)) >> 3;
+            var_s1 = (chara->model_0.anim.time - Q12(13.0f)) >> 3;
         }
         else
         {
@@ -47,8 +47,8 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
 
     Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
 
-    animInfo = &FLAUROS_ANIM_INFOS[chara->model_0.anim_4.status_0];
-    animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+    animInfo = &FLAUROS_ANIM_INFOS[chara->model_0.anim.status];
+    animInfo->playbackFunc(&chara->model_0, anmHdr, coords, animInfo);
 
     for (i = 6; i < 11; i++)
     {
@@ -60,18 +60,18 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE
 {
     s_AnimInfo* animInfo;
 
-    if (chara->model_0.controlState_2 == ModelState_Uninitialized)
+    if (chara->model_0.controlState == ModelState_Uninitialized)
     {
-        chara->model_0.anim_4.alpha_A = Q12(0.0f);
-        chara->model_0.controlState_2        = 1;
-        chara->model_0.stateStep_3    = 0;
+        chara->model_0.anim.alpha = Q12(0.0f);
+        chara->model_0.controlState        = 1;
+        chara->model_0.stateStep    = 0;
         Character_AnimSet(chara, ANIM_STATUS(1, true), 0);
     }
 
     Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
 
-    animInfo = &PARASITE_ANIM_INFOS[chara->model_0.anim_4.status_0];
-    animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+    animInfo = &PARASITE_ANIM_INFOS[chara->model_0.anim.status];
+    animInfo->playbackFunc(&chara->model_0, anmHdr, coords, animInfo);
 }
 
 void func_800DE26C(void) {}
@@ -1785,7 +1785,7 @@ void func_800E1CA0(void) // 0x800E1CA0
 
     for (i = 0; i < 8; i++)
     {
-        g_MapOverlayHeader.animInfos_34[i + 16] = D_800CC424[i];
+        g_MapOverlayHeader.harryMapAnimInfos_34[i + 16] = D_800CC424[i];
     }
 
     for (i = 0; i < 4; i++)
@@ -2319,7 +2319,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
 
             // Possible inline?
             player = &playerChara;
-            if (player->model_0.anim_4.keyframeIdx_8 > 1282)
+            if (player->model_0.anim.keyframeIdx > 1282)
             {
                 func_80085EB8(2, player, 0, false);
             }
@@ -2329,7 +2329,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
         case 5:
             // Possible inline?
             player = &playerChara;
-            if (player->model_0.anim_4.keyframeIdx_8 > 1282)
+            if (player->model_0.anim.keyframeIdx > 1282)
             {
                 func_80085EB8(2, player, 0, false);
             }
@@ -2528,7 +2528,7 @@ void func_800E3244(void) // 0x800E3244
         case 12:
             D_800ED5B0 = Q12(195.0f);
 
-            ModelAnim_StatusIncrement(&g_SysWork.npcs_1A0[1].model_0.anim_4);
+            ModelAnim_StatusIncrement(&g_SysWork.npcs_1A0[1].model_0.anim);
             func_80085EB8(0, &playerChara, 151, false);
             SysWork_StateStepIncrement(0);
 

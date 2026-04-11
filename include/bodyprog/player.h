@@ -309,8 +309,8 @@ typedef struct _800AFBF4
     s16 attackSfx_0;
     s16 reloadSfx_2;
     s16 outOfAmmoSfx_4;
-    u8  animStopAiming_6; /** Packed anim status. See `s_ModelAnim::status_0`. */
-    u8  animAttack_7;     /** Packed anim status. See `s_ModelAnim::status_0`. */
+    u8  animStopAiming_6; /** Packed anim status. See `s_ModelAnim::status`. */
+    u8  animAttack_7;     /** Packed anim status. See `s_ModelAnim::status`. */
     u8  animAttackHold_8;
     u8  field_9;
     u8  field_A; // Attack type?
@@ -613,10 +613,10 @@ bool func_8007F95C(void);
 #define Player_ExtraStateSet(playerChara, extra, state)                              \
 {                                                                                    \
     g_SysWork.playerWork_4C.extra_128.state_1C          = (state);                   \
-    (playerChara)->model_0.stateStep_3                  = 0;                         \
-    (playerChara)->model_0.controlState_2                      = ModelState_Uninitialized;  \
-    (extra)->model_0.stateStep_3                        = 0;                         \
-    (extra)->model_0.controlState_2                            = ModelState_Uninitialized;  \
+    (playerChara)->model_0.stateStep                  = 0;                         \
+    (playerChara)->model_0.controlState                      = ModelState_Uninitialized;  \
+    (extra)->model_0.stateStep                        = 0;                         \
+    (extra)->model_0.controlState                            = ModelState_Uninitialized;  \
     g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None; \
     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None; \
 }
@@ -627,27 +627,27 @@ bool func_8007F95C(void);
  */
 static inline void Player_AnimFlagsSet(u32 flags)
 {
-    s_SubCharacter*       chara;
-    s_PlayerExtra* extra;
+    s_SubCharacter* chara;
+    s_PlayerExtra*  extra;
 
     extra = &g_SysWork.playerWork_4C.extra_128;
     chara = &g_SysWork.playerWork_4C.player_0;
 
-    extra->model_0.anim_4.flags_2 |= flags;
-    chara->model_0.anim_4.flags_2 |= flags;
+    extra->model_0.anim.flags |= flags;
+    chara->model_0.anim.flags |= flags;
 }
 
 /** @brief Clears the given animation flags for both the player character data and extra player data.
  *
- * @param flags Animation flags to clear.
+ * @param clearFlags Animation flags to clear.
  */
-#define Player_AnimFlagsClear(flags)                                  \
+#define Player_AnimFlagsClear(clearFlags)                                  \
 {                                                                     \
     s_PlayerExtra*  playerExtra = &g_SysWork.playerWork_4C.extra_128; \
     s_SubCharacter* playerChara = &g_SysWork.playerWork_4C.player_0;  \
                                                                       \
-    playerExtra->model_0.anim_4.flags_2 &= ~(flags);                  \
-    playerChara->model_0.anim_4.flags_2 &= ~(flags);                  \
+    playerExtra->model_0.anim.flags &= ~(clearFlags);                      \
+    playerChara->model_0.anim.flags &= ~(clearFlags);                      \
 }
 
 #endif

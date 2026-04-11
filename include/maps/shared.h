@@ -1109,8 +1109,8 @@ void sharedFunc_800D0110_7_s00(void);
 
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {
-    anim->animInfo_C  = animInfo;
-    anim->animInfo_10 = NULL;
+    anim->baseAnimInfos  = animInfo;
+    anim->mapAnimInfos = NULL;
 }
 
 // TODO: Could also call this a "transform"? "Pose" is a less common term for a position+rotation struct.

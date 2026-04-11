@@ -1372,9 +1372,9 @@ void func_800DD2D4(void) // 0x800DD2D4
             SysWork_StateStepIncrement(0);
 
         case 4:
-            if (g_SysWork.playerWork_4C.player_0.model_0.anim_4.status_0 & 1)
+            if (g_SysWork.playerWork_4C.player_0.model_0.anim.status & 1)
             {
-                D_800EB6B4 = g_SysWork.playerWork_4C.player_0.model_0.anim_4.time_4 - Q12(Player_AnimGetSomething());
+                D_800EB6B4 = g_SysWork.playerWork_4C.player_0.model_0.anim.time - Q12(Player_AnimGetSomething());
                 if (D_800EB6B4 > Q12(29.0f))
                 {
                     D_800EB6B4 = Q12(29.0f);
@@ -1397,7 +1397,7 @@ void func_800DD2D4(void) // 0x800DD2D4
             SysWork_StateStepIncrement(0);
 
         case 6:
-            D_800EB6B4 = g_SysWork.playerWork_4C.player_0.model_0.anim_4.time_4 - Q12(Player_AnimGetSomething());
+            D_800EB6B4 = g_SysWork.playerWork_4C.player_0.model_0.anim.time - Q12(Player_AnimGetSomething());
 
             scratchData->activeBufferIdx_14 = g_ActiveBufferIdx;
             scratchData->sprt_0             = (SPRT*)GsOUT_PACKET_P;
@@ -1436,7 +1436,7 @@ void func_800DD2D4(void) // 0x800DD2D4
             break;
 
         case 7:
-            D_800EB6B4 = g_SysWork.playerWork_4C.player_0.model_0.anim_4.time_4 - Q12(Player_AnimGetSomething());
+            D_800EB6B4 = g_SysWork.playerWork_4C.player_0.model_0.anim.time - Q12(Player_AnimGetSomething());
             if (D_800EB6B4 > Q12(96.0f))
             {
                 SD_Call(Sfx_XaAudio635);
@@ -1446,7 +1446,7 @@ void func_800DD2D4(void) // 0x800DD2D4
 
         case 8:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.0f), false);
-            D_800EB6B4 = g_SysWork.playerWork_4C.player_0.model_0.anim_4.time_4 - Q12(Player_AnimGetSomething());
+            D_800EB6B4 = g_SysWork.playerWork_4C.player_0.model_0.anim.time - Q12(Player_AnimGetSomething());
             break;
 
         case 9:
@@ -1462,7 +1462,7 @@ void func_800DD2D4(void) // 0x800DD2D4
 
     if (g_SysWork.sysStateStep_C[0] >= 6)
     {
-        g_SysWork.npcs_1A0[0].properties_E4.player.afkTimer_E8 = g_SysWork.playerWork_4C.player_0.model_0.anim_4.time_4 - Q12(Player_AnimGetSomething());
+        g_SysWork.npcs_1A0[0].properties_E4.player.afkTimer_E8 = g_SysWork.playerWork_4C.player_0.model_0.anim.time - Q12(Player_AnimGetSomething());
     }
 
     if (D_800EB6B4 >= Q12(0.0f))

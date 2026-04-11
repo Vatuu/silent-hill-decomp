@@ -50,12 +50,12 @@ void Ai_Cheryl_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINA
             animDur = Q12(27.9f) - 1;
         }
 
-        animInfo[7].duration_8.constant = animDur;
+        animInfo[7].duration.constant = animDur;
     }
 
     if (dahliaProps.properties_F0.val32 == 0)
     {
-        CHERYL_ANIM_INFOS[chara->model_0.anim_4.status_0].playbackFunc_0(&chara->model_0, anmHdr, coord, &CHERYL_ANIM_INFOS[chara->model_0.anim_4.status_0]);
+        CHERYL_ANIM_INFOS[chara->model_0.anim.status].playbackFunc(&chara->model_0, anmHdr, coord, &CHERYL_ANIM_INFOS[chara->model_0.anim.status]);
     }
 }
 
@@ -228,7 +228,7 @@ bool Ai_Cheryl_FootstepTrigger(s32 animStatus, s_SubCharacter* chara, s32 keyfra
     u32 var_a0;
     u32 vol;
 
-    if (chara->model_0.anim_4.status_0 == animStatus)
+    if (chara->model_0.anim.status == animStatus)
     {
         if (distSqr >= 4000000)
         {
@@ -247,7 +247,7 @@ bool Ai_Cheryl_FootstepTrigger(s32 animStatus, s_SubCharacter* chara, s32 keyfra
         }
 
         vol = (12000000 - var_a0) >> 16;
-        if (chara->model_0.anim_4.keyframeIdx_8 >= keyframeIdx1)
+        if (chara->model_0.anim.keyframeIdx >= keyframeIdx1)
         {
             if (!(chara->properties_E4.player.flags_11C & PlayerFlag_Unk4))
             {
@@ -261,7 +261,7 @@ bool Ai_Cheryl_FootstepTrigger(s32 animStatus, s_SubCharacter* chara, s32 keyfra
             chara->properties_E4.player.flags_11C &= ~PlayerFlag_Unk4;
         }
 
-        if (chara->model_0.anim_4.keyframeIdx_8 >= keyframeIdx0)
+        if (chara->model_0.anim.keyframeIdx >= keyframeIdx0)
         {
             if (!(chara->properties_E4.player.flags_11C & PlayerFlag_Unk5))
             {

@@ -1144,7 +1144,7 @@ typedef struct _SaveUserConfig
     u8                 optExtraWeaponCtrl_23;     /** `bool` | Switch: `false`, Press: `true`, default: Press. */
     u8                 optExtraBloodColor_24;     /** `e_BloodColor` | Default: Normal. */
     s8                 optAutoLoad_25;            /** `bool` | Off: `false`, On: `true`, default: Off. */
-    u8                 unk_26;                    // Padding?
+    u8                 unk_26;
     u8                 optExtraOptionsEnabled_27; /** Holds unlocked option flags. */
     s8                 optExtraViewCtrl_28;       /** `bool` | Normal: `false`, Reverse: `true`, default: Normal. */
     s8                 optExtraViewMode_29;       /** `bool` | Normal: `false`, Self View: `true`, default: Normal. */
@@ -1187,54 +1187,54 @@ typedef struct _GameWork
     s8                 bgmIdx_5B2;   // Index of ``.
     s8                 ambientIdx_5B4; // Index of `g_AmbientVabTaskLoadCmds`.
     s_AnalogController rawController_5B4;
-    s8                 unk_5BC[28];
+    s8                 unused_5BC[28]; // @unused Debug data?
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 
 /** @brief Constant character animation info passed to `Anim_Update` functions.
- * The struct itself defines which `Anim_Update` function is to be called.
+ * Defines which `Anim_Update` function is to be called.
  */
 typedef struct _AnimInfo
 {
-    void (*playbackFunc_0)(struct _Model* model, struct _AnmHeader* anmHdr, GsCOORDINATE2* coords, struct _AnimInfo* animInfo);
-    u8 status_4;                      /** Packed anim status. Init base? See `s_ModelAnimData::status_0`. */
-    s8 hasVariableDuration_5;         /** `bool` | Use `duration_8.variableFunc`: `true`, Use `duration_8.constant`: `false`. */
-    u8 linkStatus_6;                  /** Packed anim status link target. See `s_ModelAnim::status_0`. */
-    // 1 byte of padding.
-    union
-    {
-        q19_12 constant;              /** Constant duration at 30 FPS. */
-        q19_12 (*variableFunc)(void); /** Variable duration at 30 FPS via a function. Allows animations to be sped up or slowed down. */
-    } duration_8;
-    s16 startKeyframeIdx_C;           /** Start keyframe index. Sometimes `NO_VALUE`, unknown why. */
-    s16 endKeyframeIdx_E;             /** End keyframe index. */
+    /* 0x0 */ void (*playbackFunc)(struct _Model* model, struct _AnmHeader* anmHdr, GsCOORDINATE2* coords, struct _AnimInfo* animInfo);
+    /* 0x4 */ u8 status;                        /** Packed anim status. Init base? See `s_ModelAnimData::status`. */
+    /* 0x5 */ s8 hasVariableDuration;           /** `bool` | Use `duration.variableFunc`: `true`, Use `duration.constant`: `false`. */
+    /* 0x6 */ u8 linkStatus;                    /** Packed anim status link target. See `s_ModelAnim::status`. */
+              // 1 byte of padding.
+              union
+              {
+                  q19_12 constant;              /** Constant duration at 30 FPS. */
+                  q19_12 (*variableFunc)(void); /** Variable duration at 30 FPS via a function. Allows animations to be sped up or slowed down. */
+    /* 0x8 */ } duration;
+    /* 0xC */ s16 startKeyframeIdx;             /** Start keyframe index. Sometimes `NO_VALUE`, unknown why. */
+    /* 0xE */ s16 endKeyframeIdx;               /** End keyframe index. */
 } s_AnimInfo;
 STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 
 /** @brief Character model animation. */
 typedef struct _ModelAnim
 {
-    u8          status_0;         /** Is active: bit 0, Anim index: bits 1-7. Possible original name: `anim_status`. */
-    u8          maybeSomeState_1; // State says if `time_4` is anim time/anim status or a func ptr? That field could be a union.
-    u16         flags_2;          /** `e_AnimFlags` */
-    q19_12      time_4;           /** Time on timeline. */
-    s16         keyframeIdx_8;    /** Active keyframe index. */
-    q3_12       alpha_A;          /** Keyframe progress alpha. Rename to `keyframeAlpha_A`? */
-    s_AnimInfo* animInfo_C;       // } Arrays of anim infos?
-    s_AnimInfo* animInfo_10;      // }
+    /* 0x0  */ u8          status;             /** Is active: bit 0, Anim index: bits 1-7. */
+    /* 0x1  */ u8          mapAnimStatusStart; /** Start anim status of map-specific anim infos. Only used for Harry. */
+    /* 0x2  */ u16         flags;              /** `e_AnimFlags` */
+    /* 0x4  */ q19_12      time;               /** Time on timeline. */
+    /* 0x8  */ s16         keyframeIdx;        /** Active keyframe index. */
+    /* 0xA  */ q3_12       alpha;              /** Keyframe progress alpha. */
+    /* 0xC  */ s_AnimInfo* baseAnimInfos;      /** Anim infos. For Harry, used for base anims. */
+    /* 0x10 */ s_AnimInfo* mapAnimInfos;       /** Map-specific anim infos. Only used for Harry. */
 } s_ModelAnim;
 STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
 /** @brief Character model. */
 typedef struct _Model
 {
-    s8          charaId_0;      /** `e_CharacterId` */
-    u8          paletteIdx_1;   /** Changes the texture palette index for this model. */
-    u8          controlState_2; /** Active character control state. */
-    u8          stateStep_3;    // Step number or temp data for the current `controlState_2`? In `s_PlayerExtra` always 1, set to 0 for 1 tick when anim state appears to change.
-                                // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
-                                // Sometimes holds actual anim index?
-    s_ModelAnim anim_4;
+    /* 0x0 */ s8          charaId_0;      /** `e_CharacterId` TODO: Trim suffix. Not yet as another struct has the same field. */
+    /* 0x1 */ u8          paletteIdx;   /** Changes the texture palette index for this model. */
+    /* 0x2 */ u8          controlState; /** Active character control state. */
+    /* 0x3 */ u8          stateStep;    // Step number or temp data for the current `controlState`? In `s_PlayerExtra` always 1, set to 0 for 1 tick when anim state appears to change.
+                                        // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
+                                        // Sometimes holds actual anim index?
+    /* 0x4 */ s_ModelAnim anim;
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);
 
@@ -1276,7 +1276,7 @@ typedef struct
 typedef struct _CharaDamage
 {
     VECTOR3 position_0;
-    q19_12 amount_C;
+    q19_12  amount_C;
 } s_CharaDamage;
 
 /** @brief Temporary struct. */
@@ -1757,7 +1757,7 @@ typedef struct _SubCharacter
                            // Possibly `Game_NpcRoomInitSpawn` may have the answer, indicating
                            // it's used to indicate the NPC index in `s_Savegame::ovlEnemyStates`.
     s8  attackReceived_41; // Packed weapon attack indicating what attack has been performed to the character. See `WEAPON_ATTACK`.
-    s8  unk_42[2];         // Most likely padding.
+    s8  unk_42[2];
     s_SubCharacter_44  field_44;
     q19_12  health_B0;
     s_CharaDamage damage_B4;
@@ -1878,6 +1878,7 @@ typedef struct
 } s_StructUnk3;
 STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
 
+// Extra effects info?
 typedef struct
 {
     s32             primType_0; /** `e_PrimitiveType` */
@@ -1888,7 +1889,7 @@ typedef struct
     u8              field_14;
     u8              isFlashlightOn_15;          /** `bool` */
     u8              isFlashlightUnavailable_16; /** `bool` */
-    s8              unk_17;                     // Most likely padding.
+    s8              unk_17;
     q3_12           flashlightIntensity_18;     // Alpha.
     u16             field_1A;
     s_StructUnk3    field_1C[2];
@@ -1914,7 +1915,7 @@ typedef struct _SysWork
     s_PlayerWork    playerWork_4C;
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   playerBoneCoords_890[HarryBone_Count];
-    GsCOORDINATE2   unkCoords_E30[5];  // Might be part of previous array for 5 extra coords which go unused.
+    GsCOORDINATE2   unkCoords_E30[5];                  // Might be part of previous array for 5 extra coords which go unused.
     GsCOORDINATE2   npcCoords_FC0[NPC_BONE_COUNT_MAX]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
     s8              npcId_2280;                        // NPC ID for `npcFlags_2290`. Not an index, starts at 1.
     s8              loadingScreenIdx_2281;
@@ -1960,9 +1961,9 @@ typedef struct _SysWork
     s_SysWork_2388  field_2388;
     s32             field_2510;
     s_SysWork_2514  field_2514;
-    u8              unk_254C[508];
+    s8              unused_254C[508]; // @unused Debug data?
     q3_12           bgmLayerVolumes_2748[BGM_LAYER_COUNT];
-    u8              unk_275A[2];
+    s8              unk_275A[2];
     q19_12          field_275C;
     s32             field_2760;
     s32             field_2764;
@@ -2221,15 +2222,15 @@ static inline s32 Flags16b_IsSet(const u16* flags, s32 flagIdx)
 /** @brief Sets the animation of a character.
  *
  * @param chara Character to set animation for. TODO: Maybe should take `s_ModelAnim` instead? If fits better, also rename to `Anim_Set`.
- * @param animStatus Packed anim status. See `s_ModelAnim::status_0`.
+ * @param animStatus Packed anim status. See `s_ModelAnim::status`.
  * @param keyframeIdx Active keyframe index.
  */
 static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 keyframeIdx)
 {
     // TODO: Problem with header includes prevents `Q12` macro use.
-    chara->model_0.anim_4.status_0      = animStatus;
-    chara->model_0.anim_4.time_4        = keyframeIdx << 12;//Q12(keyframeIdx);
-    chara->model_0.anim_4.keyframeIdx_8 = keyframeIdx;
+    chara->model_0.anim.status      = animStatus;
+    chara->model_0.anim.time        = keyframeIdx << 12;//Q12(keyframeIdx);
+    chara->model_0.anim.keyframeIdx = keyframeIdx;
 }
 
 /** @brief Checks if the `s_SubCharacter*` has the given `flags_3E` value set. */
@@ -2241,18 +2242,18 @@ static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 
  * @param model `s_Model` to update.
  * @param flag Flags to set.
  */
-#define Model_AnimFlagsSet(model, flags) \
-    (model)->anim_4.flags_2 |= (flags)
+#define Model_AnimFlagsSet(model, setFlags) \
+    (model)->anim.flags |= (setFlags)
 
 /** @brief Clears given animation flags for a model.
  *
  * @param model `s_Model` to update.
- * @param flag Flags to clear.
+ * @param clearFlags Flags to clear.
  */
-#define Model_AnimFlagsClear(model, flags) \
-    (model)->anim_4.flags_2 &= ~(flags)
+#define Model_AnimFlagsClear(model, clearFlags) \
+    (model)->anim.flags &= ~(clearFlags)
 
-/** @brief Updates a model anim if `model->stateStep_3` is 0.
+/** @brief Updates a model anim if `model->stateStep` is 0.
  *
  * @param model Model to update.
  * @param animIdx Anim index to set.
@@ -2260,10 +2261,10 @@ static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 
  */
 static inline void Model_AnimStatusSet(s_Model* model, s32 animIdx, bool isActive)
 {
-    if (model->stateStep_3 == 0)
+    if (model->stateStep == 0)
     {
-        model->anim_4.status_0 = ANIM_STATUS(animIdx, isActive);
-        model->stateStep_3++;
+        model->anim.status = ANIM_STATUS(animIdx, isActive);
+        model->stateStep++;
     }
 }
 
@@ -2273,7 +2274,7 @@ static inline void Model_AnimStatusSet(s_Model* model, s32 animIdx, bool isActiv
  */
 static inline void ModelAnim_StatusIncrement(s_ModelAnim* anim)
 {
-    anim->status_0++;
+    anim->status++;
 }
 
 /** @brief Decrements the anim status of a model anim.
@@ -2282,10 +2283,10 @@ static inline void ModelAnim_StatusIncrement(s_ModelAnim* anim)
  */
 static inline void ModelAnim_StatusDecrement(s_ModelAnim* anim)
 {
-    anim->status_0--;
+    anim->status--;
 }
 
-/** @brief Similar to `Model_AnimStatusSet`, but also sets `anim_4.time_4` and `anim_4.keyframeIdx_8`
+/** @brief Similar to `Model_AnimStatusSet`, but also sets `anim.time` and `anim.keyframeIdx`
  * from the `animInfos` `s_AnimInfo` array.
  *
  * @param model Model to update.
@@ -2295,12 +2296,12 @@ static inline void ModelAnim_StatusDecrement(s_ModelAnim* anim)
  * @param animInfosOffset Anim infos offset.
  */
 #define Model_AnimStatusKeyframeSet(model, animIdx, isActive, animInfos, animInfosOffset)                                       \
-    if ((model).stateStep_3 == 0)                                                                                               \
+    if ((model).stateStep == 0)                                                                                               \
     {                                                                                                                           \
-        (model).anim_4.status_0 = ANIM_STATUS(animIdx, isActive);                                                               \
-        (model).stateStep_3++;                                                                                                  \
-        (model).anim_4.time_4        = Q12((animInfos)[ANIM_STATUS(animIdx, isActive) + (animInfosOffset)].startKeyframeIdx_C); \
-        (model).anim_4.keyframeIdx_8 = (animInfos)[ANIM_STATUS(animIdx, (isActive) + (animInfosOffset))].startKeyframeIdx_C;    \
+        (model).anim.status = ANIM_STATUS(animIdx, isActive);                                                               \
+        (model).stateStep++;                                                                                                  \
+        (model).anim.time        = Q12((animInfos)[ANIM_STATUS(animIdx, isActive) + (animInfosOffset)].startKeyframeIdx); \
+        (model).anim.keyframeIdx = (animInfos)[ANIM_STATUS(animIdx, (isActive) + (animInfosOffset))].startKeyframeIdx;    \
     }
 
 /** @brief Attempts to reset a humanoid NPC's anim state index to 0.
@@ -2314,7 +2315,7 @@ static inline void Character_AnimStateReset(s_SubCharacter* chara)
     if (chara->properties_E4.dahlia.resetStateIdx0_F8)
     {
         chara->properties_E4.dahlia.stateIdx0         = 0;
-        chara->model_0.stateStep_3                    = 0;
+        chara->model_0.stateStep                    = 0;
         chara->properties_E4.dahlia.resetStateIdx0_F8 = 0;
     }
 }

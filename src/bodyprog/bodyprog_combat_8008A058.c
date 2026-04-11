@@ -106,12 +106,12 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
     s32          ret;
     s32          var_v0_2;
     s32          count;
-    s_AnimInfo*  anim0;
-    s_AnimInfo*  anim1;
+    s_AnimInfo*  mapAnimInfos;
+    s_AnimInfo*  baseAnimInfos;
     s_ModelAnim* modelAnim;
 
     var_t1    = chara->field_44.field_0;
-    modelAnim = &chara->model_0.anim_4;
+    modelAnim = &chara->model_0.anim;
 
     if (g_DeltaTime == Q12(0.0f) || g_SysWork.sysState_8 != SysState_Gameplay)
     {
@@ -120,15 +120,17 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
 
     if (chara == &g_SysWork.playerWork_4C.player_0)
     {
-        anim1                       = D_800297B8;
-        anim0                       = g_MapOverlayHeader.animInfos_34;
-        modelAnim->animInfo_C       = anim1;
-        modelAnim->maybeSomeState_1 = 76;
-        modelAnim->animInfo_10      = anim0;
-        modelAnim                   = &g_SysWork.playerWork_4C.extra_128.model_0.anim_4;
-        modelAnim->animInfo_C       = anim1;
-        modelAnim->animInfo_10      = anim0;
-        modelAnim->maybeSomeState_1 = 76;
+        baseAnimInfos = D_800297B8;
+        mapAnimInfos  = g_MapOverlayHeader.harryMapAnimInfos_34;
+
+        modelAnim->baseAnimInfos      = baseAnimInfos;
+        modelAnim->mapAnimStatusStart = ANIM_STATUS(38, false); // TODO: 38 is the first anim after base anims. Make a constant?
+        modelAnim->mapAnimInfos      = mapAnimInfos;
+
+        modelAnim                       = &g_SysWork.playerWork_4C.extra_128.model_0.anim;
+        modelAnim->baseAnimInfos      = baseAnimInfos;
+        modelAnim->mapAnimInfos      = mapAnimInfos;
+        modelAnim->mapAnimStatusStart = ANIM_STATUS(38, false);
     }
 
     if (arg0 <= 0)
@@ -138,7 +140,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
     }
 
     chara->field_44.field_2 = weaponAttack;
-    if (!(modelAnim->status_0 & (1 << 0)))
+    if (!(modelAnim->status & (1 << 0)))
     {
         chara->field_44.field_0 = 0;
         chara->field_44.field_8 = 0;
@@ -404,16 +406,16 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
     if (chara == &g_SysWork.playerWork_4C.player_0)
     {
-        var_s0 = &((s_PlayerWork*)chara)->extra_128.model_0.anim_4;
+        var_s0 = &((s_PlayerWork*)chara)->extra_128.model_0.anim;
     }
     else
     {
-        var_s0 = &chara->model_0.anim_4;
+        var_s0 = &chara->model_0.anim;
     }
 
     anim  = func_80044918(var_s0);
-    sp28  = var_s0->time_4;
-    sp28 -= Q12(anim->startKeyframeIdx_C);
+    sp28  = var_s0->time;
+    sp28 -= Q12(anim->startKeyframeIdx);
 
     var_s0_2 = func_8008A270(sp14);
     var_a0   = func_8008A2E0(sp14);

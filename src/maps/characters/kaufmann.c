@@ -22,7 +22,7 @@
  */
 void Ai_Kaufmann_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (chara->model_0.controlState_2 == ModelState_Uninitialized)
+    if (chara->model_0.controlState == ModelState_Uninitialized)
     {
         Ai_Kaufmann_Init(chara);
     }
@@ -45,8 +45,8 @@ void Ai_Kaufmann_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDI
 
     if (chara->properties_E4.player.field_F0 == 0)
     {
-        animInfo = &KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0];
-        animInfo->playbackFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+        animInfo = &KAUFMANN_ANIM_INFOS[chara->model_0.anim.status];
+        animInfo->playbackFunc(&chara->model_0, anmHdr, coords, animInfo);
     }
 }
 
@@ -167,7 +167,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 7:
-            if (chara->model_0.anim_4.keyframeIdx_8 >= 95 && g_SysWork.npcs_1A0[0].properties_E4.dahlia.properties_120.val32 == 0)
+            if (chara->model_0.anim.keyframeIdx >= 95 && g_SysWork.npcs_1A0[0].properties_E4.dahlia.properties_120.val32 == 0)
             {
                 g_SysWork.npcs_1A0[0].properties_E4.dahlia.properties_120.val32 = 1;
                 func_8006342C(EquippedWeaponId_Unk70, 0, 0, &g_SysWork.npcCoords_FC0[0]);
@@ -191,7 +191,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 9:
             Model_AnimStatusSet(&chara->model_0, 7, false);
             Character_AnimStateReset(chara);
-            if (chara->model_0.anim_4.keyframeIdx_8 < 139 || !ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
+            if (chara->model_0.anim.keyframeIdx < 139 || !ANIM_STATUS_IS_ACTIVE(chara->model_0.anim.status))
             {
                 WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 1));
             }
@@ -243,7 +243,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusSet(&chara->model_0, 12, false);
             Character_AnimStateReset(chara);
 
-            if (chara->model_0.anim_4.keyframeIdx_8 >= 364 && ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
+            if (chara->model_0.anim.keyframeIdx >= 364 && ANIM_STATUS_IS_ACTIVE(chara->model_0.anim.status))
             {
                 WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(4, 0));
             }
@@ -274,7 +274,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
 #if defined(MAP7_S03)
             // TODO: Invert like case 15? can't find how to match.
-            if (chara->model_0.anim_4.keyframeIdx_8 < 78 || !ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
+            if (chara->model_0.anim.keyframeIdx < 78 || !ANIM_STATUS_IS_ACTIVE(chara->model_0.anim.status))
             {
                 WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(1, 3));
             }
@@ -298,7 +298,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Character_AnimStateReset(chara);
 
 #if defined(MAP7_S03)
-            if (chara->model_0.anim_4.keyframeIdx_8 < 141)
+            if (chara->model_0.anim.keyframeIdx < 141)
             {
                 WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(4, 3));
             }
@@ -346,7 +346,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 7:
-            sharedFunc_800D9188_0_s00(chara->model_0.anim_4.status_0, chara, 95, Sfx_Unk1492);
+            sharedFunc_800D9188_0_s00(chara->model_0.anim.status, chara, 95, Sfx_Unk1492);
             break;
 
         case 9:
@@ -366,7 +366,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 15:
-            if (chara->model_0.anim_4.keyframeIdx_8 <= 353)
+            if (chara->model_0.anim.keyframeIdx <= 353)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(12, true), chara, 357, 353, sfx, pitch0);
             }
@@ -377,7 +377,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 16:
-            if (chara->model_0.anim_4.keyframeIdx_8 <= 21)
+            if (chara->model_0.anim.keyframeIdx <= 21)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(2, true), chara, 28, 21, sfx, pitch0);
             }
@@ -388,7 +388,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 25:
-            if (chara->model_0.anim_4.keyframeIdx_8 <= 247)
+            if (chara->model_0.anim.keyframeIdx <= 247)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(21, true), chara, 254, 247, sfx, pitch0);
             }
@@ -399,7 +399,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 22:
-            if (chara->model_0.anim_4.keyframeIdx_8 <= 211)
+            if (chara->model_0.anim.keyframeIdx <= 211)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(19, true), chara, 217, 211, sfx, pitch0);
             }

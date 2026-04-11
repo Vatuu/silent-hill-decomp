@@ -22,7 +22,7 @@
  */
 void Ai_Cybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (chara->model_0.controlState_2 == ModelState_Uninitialized)
+    if (chara->model_0.controlState == ModelState_Uninitialized)
     {
         Ai_Cybil_Init(chara);
     }
@@ -44,8 +44,8 @@ void Ai_Cybil_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINA
 
     if (chara->properties_E4.player.field_F0 == 0)
     {
-        animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
-        animInfo->playbackFunc_0(&chara->model_0, animHdr, coords, animInfo);
+        animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim.status];
+        animInfo->playbackFunc(&chara->model_0, animHdr, coords, animInfo);
     }
 }
 
@@ -225,11 +225,11 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusKeyframeSet(chara->model_0, CybilAnim_7, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
 
-            if (chara->model_0.anim_4.keyframeIdx_8 < 91)
+            if (chara->model_0.anim.keyframeIdx < 91)
             {
                 WorldGfx_HeldItemAttach(Chara_Cybil, MODEL_BONE(1, 1));
             }
-            else if (chara->model_0.anim_4.keyframeIdx_8 < 105)
+            else if (chara->model_0.anim.keyframeIdx < 105)
             {
                 WorldGfx_HeldItemAttach(Chara_Cybil, MODEL_BONE(2, 1));
             }
@@ -311,10 +311,10 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Character_AnimStateReset(chara);
             WorldGfx_HeldItemAttach(Chara_EndingCybil, MODEL_BONE(2, 1));
 
-            if (chara->model_0.anim_4.keyframeIdx_8 == 295)
+            if (chara->model_0.anim.keyframeIdx == 295)
             {
                 dahliaProps.stateIdx0 = 30;
-                chara->model_0.stateStep_3 = 0;
+                chara->model_0.stateStep = 0;
             }
             break;
 
@@ -402,7 +402,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 8:
-            sharedFunc_800D9188_0_s00(chara->model_0.anim_4.status_0, chara, 128, Sfx_Unk1368);
+            sharedFunc_800D9188_0_s00(chara->model_0.anim.status, chara, 128, Sfx_Unk1368);
             break;
 
         case 6:
@@ -411,11 +411,11 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 13:
-            if (chara->model_0.anim_4.keyframeIdx_8 <= 185)
+            if (chara->model_0.anim.keyframeIdx <= 185)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_13, true), chara, 185, 189, sfx, pitch0);
             }
-            else if (chara->model_0.anim_4.keyframeIdx_8 <= 192)
+            else if (chara->model_0.anim.keyframeIdx <= 192)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_13, true), chara, 192, 189, sfx, pitch0);
             }
@@ -438,11 +438,11 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 20:
-            if (chara->model_0.anim_4.keyframeIdx_8 <= 373)
+            if (chara->model_0.anim.keyframeIdx <= 373)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_20, true), chara, 373, 380, sfx, pitch0);
             }
-            else if (chara->model_0.anim_4.keyframeIdx_8 <= 391)
+            else if (chara->model_0.anim.keyframeIdx <= 391)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_20, true), chara, 391, 380, sfx, pitch0);
             }
@@ -453,17 +453,17 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 10:
-            sharedFunc_800D9188_0_s00(chara->model_0.anim_4.status_0, chara, 167, Sfx_Unk1370);
+            sharedFunc_800D9188_0_s00(chara->model_0.anim.status, chara, 167, Sfx_Unk1370);
             break;
 
         case 25:
-            if (chara->model_0.anim_4.keyframeIdx_8 <= 63)
+            if (chara->model_0.anim.keyframeIdx <= 63)
             {
-                if (chara->model_0.anim_4.keyframeIdx_8 <= 30)
+                if (chara->model_0.anim.keyframeIdx <= 30)
                 {
                     sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_22, true), chara, 30, 39, sfx, pitch0);
                 }
-                else if (chara->model_0.anim_4.keyframeIdx_8 <= 46)
+                else if (chara->model_0.anim.keyframeIdx <= 46)
                 {
                     sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_22, true), chara, 46, 39, sfx, pitch0);
                 }
@@ -474,7 +474,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             }
             else
             {
-                if (chara->model_0.anim_4.keyframeIdx_8 <= 81)
+                if (chara->model_0.anim.keyframeIdx <= 81)
                 {
                     sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_22, true), chara, 81, 74, sfx, pitch0);
                 }
@@ -488,7 +488,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 28:
             sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_25, true), chara, 201, 198, sfx, pitch0);
 
-            if (sharedFunc_800D9188_0_s00(chara->model_0.anim_4.status_0, chara, 228, Sfx_Unk1699))
+            if (sharedFunc_800D9188_0_s00(chara->model_0.anim.status, chara, 228, Sfx_Unk1699))
             {
                 func_800892A4(6);
             }
@@ -501,7 +501,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
                 sharedData_800E237C_0_s01 = 2;
             }
 
-            if (chara->model_0.anim_4.keyframeIdx_8 == 299)
+            if (chara->model_0.anim.keyframeIdx == 299)
             {
                 if (sharedData_800E237C_0_s01 == 0)
                 {

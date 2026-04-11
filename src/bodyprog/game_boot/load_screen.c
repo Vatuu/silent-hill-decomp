@@ -77,13 +77,13 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
         Game_SpotlightLoadScreenAttribsFix();
         Gfx_LoadScreenMapEffectsUpdate(0, 0);
 
-        model->anim_4.flags_2                                 |= AnimFlag_Visible;
+        model->anim.flags                                 |= AnimFlag_Visible;
         g_SysWork.playerWork_4C.extra_128.disabledAnimBones_18 = 0;
-        model->anim_4.flags_2                                 |= AnimFlag_Unlocked | AnimFlag_Visible;
-        model->anim_4.time_4                                   = Q12(26.0f);
+        model->anim.flags                                 |= AnimFlag_Unlocked | AnimFlag_Visible;
+        model->anim.time                                   = Q12(26.0f);
         g_SysWork.playerWork_4C.player_0.position_18.vy        = Q12(0.2f);
 
-        D_800A998C.status_4 = model->anim_4.status_0;
+        D_800A998C.status = model->anim.status;
 
         Math_MatrixTransform(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, boneCoords);
         g_SysWork.sysState_8++;

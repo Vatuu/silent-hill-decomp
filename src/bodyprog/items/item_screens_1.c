@@ -80,15 +80,15 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
                     g_Player_WeaponAttack == g_SysWork.playerCombat_38.weaponAttack_F)
                 {
                     extraModelPtr0 = &g_SysWork.playerWork_4C.extra_128.model_0;
-                    if (extraModelPtr0->anim_4.status_0 >= ANIM_STATUS(33, false))
+                    if (extraModelPtr0->anim.status >= ANIM_STATUS(33, false))
                     {
                         modelPtr0                                         = &g_SysWork.playerWork_4C.player_0.model_0;
-                        extraModelPtr0->anim_4.status_0                 -= 10;
-                        g_SysWork.playerWork_4C.player_0.model_0.controlState_2       = ModelState_Uninitialized;
-                        g_SysWork.playerWork_4C.player_0.model_0.stateStep_3   = 0;
-                        g_SysWork.playerWork_4C.extra_128.model_0.controlState_2     = ModelState_Uninitialized;
-                        g_SysWork.playerWork_4C.extra_128.model_0.stateStep_3 = 0;
-                        modelPtr0->anim_4.status_0                      -= 10;
+                        extraModelPtr0->anim.status                 -= 10;
+                        g_SysWork.playerWork_4C.player_0.model_0.controlState       = ModelState_Uninitialized;
+                        g_SysWork.playerWork_4C.player_0.model_0.stateStep   = 0;
+                        g_SysWork.playerWork_4C.extra_128.model_0.controlState     = ModelState_Uninitialized;
+                        g_SysWork.playerWork_4C.extra_128.model_0.stateStep = 0;
+                        modelPtr0->anim.status                      -= 10;
                     }
                 }
                 else
@@ -96,17 +96,17 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
                     modelPtr1      = &g_SysWork.playerWork_4C.player_0.model_0;
                     extraModelPtr1 = &g_SysWork.playerWork_4C.extra_128.model_0;
 
-                    modelPtr1->anim_4.status_0                        = ANIM_STATUS(HarryAnim_TransitionToStill, true);
-                    modelPtr1->anim_4.keyframeIdx_8                   = 0;
-                    extraModelPtr1->anim_4.status_0                   = ANIM_STATUS(HarryAnim_TransitionToStill, true);
-                    extraModelPtr1->anim_4.keyframeIdx_8              = 0;
+                    modelPtr1->anim.status                        = ANIM_STATUS(HarryAnim_TransitionToStill, true);
+                    modelPtr1->anim.keyframeIdx                   = 0;
+                    extraModelPtr1->anim.status                   = ANIM_STATUS(HarryAnim_TransitionToStill, true);
+                    extraModelPtr1->anim.keyframeIdx              = 0;
 
-                    g_SysWork.playerWork_4C.player_0.model_0.controlState_2       = ModelState_Uninitialized;
-                    g_SysWork.playerWork_4C.player_0.model_0.stateStep_3   = 0;
+                    g_SysWork.playerWork_4C.player_0.model_0.controlState       = ModelState_Uninitialized;
+                    g_SysWork.playerWork_4C.player_0.model_0.stateStep   = 0;
                     g_SysWork.playerWork_4C.extra_128.upperBodyState_20   = PlayerUpperBodyState_None;
                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24   = PlayerLowerBodyState_None;
-                    g_SysWork.playerWork_4C.extra_128.model_0.controlState_2     = ModelState_Uninitialized;
-                    g_SysWork.playerWork_4C.extra_128.model_0.stateStep_3 = 0;
+                    g_SysWork.playerWork_4C.extra_128.model_0.controlState     = ModelState_Uninitialized;
+                    g_SysWork.playerWork_4C.extra_128.model_0.stateStep = 0;
                 }
 
                 g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
@@ -118,22 +118,22 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
     extraModelPtr2 = &g_SysWork.playerWork_4C.extra_128.model_0;
 
     // Set animation alpha.
-    modelPtr3->anim_4.alpha_A      = Q12(1.0f);
-    extraModelPtr2->anim_4.alpha_A = Q12(1.0f);
+    modelPtr3->anim.alpha      = Q12(1.0f);
+    extraModelPtr2->anim.alpha = Q12(1.0f);
 
     // Disable upper body bones.
     g_SysWork.playerWork_4C.extra_128.disabledAnimBones_18 = HARRY_UPPER_BODY_BONE_MASK;
 
     // Set animation time.
-    modelPtr3->anim_4.time_4      = Q12(modelPtr3->anim_4.keyframeIdx_8);
-    extraModelPtr2->anim_4.time_4 = Q12(extraModelPtr2->anim_4.keyframeIdx_8);
+    modelPtr3->anim.time      = Q12(modelPtr3->anim.keyframeIdx);
+    extraModelPtr2->anim.time = Q12(extraModelPtr2->anim.keyframeIdx);
 
-    Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, modelPtr3->anim_4.keyframeIdx_8, modelPtr3->anim_4.keyframeIdx_8, Q12(1.0f));
+    Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, modelPtr3->anim.keyframeIdx, modelPtr3->anim.keyframeIdx, Q12(1.0f));
 
     // Re-enable upper body bones, disable lower body bones.
     g_SysWork.playerWork_4C.extra_128.disabledAnimBones_18 = HARRY_LOWER_BODY_BONE_MASK;
 
-    Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, extraModelPtr2->anim_4.keyframeIdx_8, extraModelPtr2->anim_4.keyframeIdx_8, Q12(1.0f));
+    Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, extraModelPtr2->anim.keyframeIdx, extraModelPtr2->anim.keyframeIdx, Q12(1.0f));
     func_8004C040();
 }
 

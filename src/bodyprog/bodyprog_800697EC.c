@@ -3788,13 +3788,13 @@ void func_80070400(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* key
     q19_12 invAlpha;
 
     // Compute alpha.
-    if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
+    if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim.status))
     {
-        alpha = Q12_FRACT(chara->model_0.anim_4.time_4);
+        alpha = Q12_FRACT(chara->model_0.anim.time);
     }
     else
     {
-        alpha = chara->model_0.anim_4.alpha_A;
+        alpha = chara->model_0.anim.alpha;
     }
 
     // Compute inverse alpha.
