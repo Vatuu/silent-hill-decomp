@@ -55,10 +55,10 @@ char* D_800A99E4[8] = {
 
 /** @note Related to images display. */
 s_FsImageDesc D_800A9A04   = { .tPage = { 1, 21 }, .clutX = 224, .clutY = 13 };
-s32 D_800A9A0C             = 0;
-s32 g_MapEventSysState     = SysState_Gameplay;
-u32 g_MapEventParam        = 0;
-s32 g_MapEventLastUsedItem = 0;
-s32 g_RadioPitchState      = 0;
+s32           D_800A9A0C             = 0;
+s32           g_MapEventSysState     = SysState_Gameplay;
+u32           g_MapEventParam        = 0;
+s32           g_MapEventLastUsedItem = 0;
+s32           g_RadioPitchState      = 0;
 
 const s32 pad_rodata_80025374 = 0;

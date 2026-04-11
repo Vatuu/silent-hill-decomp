@@ -3,11 +3,11 @@
 
 #include "game.h"
 
+#include "bodyprog/events/bgm_update.h"
 #include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/screen/background_draw.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/sound_background.h"
 
 // BIG TODO: Move tables below to wherever they belong when data migration is performed. I've split these into alphabetised player and NPC sections
 // to make them easier to sort through. -- Sezz

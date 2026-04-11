@@ -3982,20 +3982,6 @@ void SysWork_SavegameReadPlayer(void);
 /** @brief Handles a warm game reboot. */
 void Game_WarmBoot(void);
 
-void Savegame_MapRoomIdxUpdate(void);
-
-/** @Unused */
-s32 func_8003647C(void);
-
-/** @Unused */
-s32 func_80036498(void);
-
-/** @Unused */
-u32 func_800364BC(void);
-
-// Draws a pallete of colors in the frame buffer.
-void func_8003652C(void);
-
 s32 Gfx_MapMsg_Draw(s32 mapMsgIdx);
 
 s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1);

@@ -6,6 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
+#include "bodyprog/events/bgm_update.h"
 #include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
@@ -14,7 +15,6 @@
 #include "bodyprog/ranking.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/sound_background.h"
 #include "bodyprog/sound_system.h"
 #include "bodyprog/text/text_draw.h"
 #include "main/fsqueue.h"
