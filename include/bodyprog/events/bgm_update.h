@@ -14,7 +14,7 @@ typedef struct
 // FUNCTIONS
 // ==========
 
-void Bgm_TrackUpdate(bool);
+void Bgm_TrackUpdate(bool arg0);
 
 void Bgm_AllLayersMute(void);
 

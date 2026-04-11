@@ -2173,23 +2173,6 @@ extern s32 D_800A99A0;
 /** Relative file offset for map texture? */
 extern s8 D_800A99B5;
 
-extern char* D_800A99E4[8];
-
-extern s8 g_PaperMapFileIdxs[];
-
-extern s8 g_PaperMapMarkingFileIdxs[];
-
-extern s_FsImageDesc D_800A9A04;
-
-extern s32 D_800A9A0C; // Old IDB name `FS_AllFilesLoaded`, though FS code doesn't set it.
-
-extern s32 g_MapEventSysState; /** `e_InventoryItemId` */
-
-extern s32 g_MapEventLastUsedItem; /** `e_InventoryItemId` */
-
-/** Radio pitch state based on the distance from the player to an enemy. Range: `[0, 3]`. */
-extern s32 g_RadioPitchState;
-
 extern void (*g_SysStateFuncs[])(void);
 
 extern s32 D_800A9A68;
@@ -2389,8 +2372,6 @@ extern s_CollisionPoint g_CollisionPointCache;
 extern u8 D_800AFD04;
 
 extern u8 D_800AFD05;
-
-extern const s_AreaLoadSfx SfxPairs[25];
 
 extern s32 D_800AFD3C;
 

@@ -115,7 +115,7 @@ void func_800699E4(s_IpdCollisionData* collData) // 0x800699E4
 
 void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
 {
-    s_CollisionQuery    query;
+    s_CollisionQuery    collQuery;
     VECTOR3             pos;
     s_CollisionState    state;
     s_IpdCollisionData* ipdCollData;
@@ -134,13 +134,13 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
         return;
     }
 
-    query.position_0.vx = posX;
-    query.position_0.vy = Q12(0.0f);
-    query.position_0.vz = posZ;
-    query.rotation_C.vx = Q12_ANGLE(0.0f);
-    query.rotation_C.vy = Q12_ANGLE(0.0f);
-    query.rotation_C.vz = Q12_ANGLE(0.0f);
-    Collision_QueryInit(&state, &pos, &query, 0);
+    collQuery.position_0.vx = posX;
+    collQuery.position_0.vy = Q12(0.0f);
+    collQuery.position_0.vz = posZ;
+    collQuery.rotation_C.vx = Q12_ANGLE(0.0f);
+    collQuery.rotation_C.vy = Q12_ANGLE(0.0f);
+    collQuery.rotation_C.vz = Q12_ANGLE(0.0f);
+    Collision_QueryInit(&state, &pos, &collQuery, 0);
 
     state.field_0_8  = 0;
     state.field_0_9  = 0;
@@ -365,15 +365,15 @@ void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* p
 
 s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset, s_SubCharacter* chara) // 0x80069FFC
 {
-    s_CollisionQuery sp28;
-    VECTOR3         offsetCpy;
-    s32             collDataIdx;
-    s32             charaCount;
-    s32             var_s1; // TODO: Maybe `bool`?
+    s_CollisionQuery collQuery;
+    VECTOR3          offsetCpy;
+    s32              collDataIdx;
+    s32              charaCount;
+    s32              var_s1; // TODO: Maybe `bool`?
 
-    sp28.position_0.vx = chara->position_18.vx + chara->field_D8.offsetX_4;
-    sp28.position_0.vy = chara->position_18.vy - Q12(0.02f);
-    sp28.position_0.vz = chara->position_18.vz + chara->field_D8.offsetZ_6;
+    collQuery.position_0.vx = chara->position_18.vx + chara->field_D8.offsetX_4;
+    collQuery.position_0.vy = chara->position_18.vy - Q12(0.02f);
+    collQuery.position_0.vz = chara->position_18.vz + chara->field_D8.offsetZ_6;
 
     if (func_800426E4(chara->position_18.vx, chara->position_18.vz) == NULL)
     {
@@ -381,10 +381,10 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset
         return 1;
     }
 
-    sp28.rotation_C.vy = chara->field_C8.field_0;
-    sp28.rotation_C.vx = chara->field_C8.field_2;
-    sp28.rotation_C.vz = chara->field_D4.radius_0;
-    sp28.field_12 = chara->field_E1_0;
+    collQuery.rotation_C.vy = chara->field_C8.field_0;
+    collQuery.rotation_C.vx = chara->field_C8.field_2;
+    collQuery.rotation_C.vz = chara->field_D4.radius_0;
+    collQuery.field_12 = chara->field_E1_0;
 
     offsetCpy = *offset;
 
@@ -402,7 +402,7 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset
             break;
     }
 
-    return func_8006A4A8(collResult, &offsetCpy, &sp28, var_s1,
+    return func_8006A4A8(collResult, &offsetCpy, &collQuery, var_s1,
                          func_800425D8(&collDataIdx), collDataIdx, NULL, 0,
                          Collision_ActiveCharactersGet(&charaCount, chara, true), charaCount);
 }
@@ -471,13 +471,13 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
     return &D_800C4458;
 }
 
-s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, s_CollisionQuery* query) // 0x8006A3B4
+s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, s_CollisionQuery* collQuery) // 0x8006A3B4
 {
     s32 stackPtr;
     s32 var1;
 
     stackPtr = SetSp(0x1F8003D8);
-    var1 = func_8006A42C(collResult, offset, query);
+    var1 = func_8006A42C(collResult, offset, collQuery);
     SetSp(stackPtr);
 
     if (var1 == NO_VALUE)
@@ -488,17 +488,17 @@ s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, s_Colli
     return var1;
 }
 
-s32 func_8006A42C(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQuery* query) // 0x8006A42C
+s32 func_8006A42C(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQuery* collQuery) // 0x8006A42C
 {
     VECTOR3 offsetCpy;
     s32     collDataIdx;
 
     offsetCpy = *offset;
 
-    return func_8006A4A8(collResult, &offsetCpy, query, 0, func_800425D8(&collDataIdx), collDataIdx, NULL, 0, NULL, 0);
+    return func_8006A4A8(collResult, &offsetCpy, collQuery, 0, func_800425D8(&collDataIdx), collDataIdx, NULL, 0, NULL, 0);
 }
 
-s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQuery* query, s32 arg3,
+s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQuery* collQuery, s32 arg3,
                   s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** charas, s32 charaCount) // 0x8006A4A8
 {
     s_CollisionState      sp18;
@@ -516,19 +516,19 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
 
     cond = false;
 
-    if (query->field_12 == 5)
+    if (collQuery->field_12 == 5)
     {
-        Collision_DefaultResultSet(collResult, offset->vx, offset->vy, offset->vz, query->position_0.vy);
+        Collision_DefaultResultSet(collResult, offset->vx, offset->vy, offset->vz, collQuery->position_0.vy);
         return 0;
     }
 
-    func_8006A940(offset, query, charas, charaCount);
+    func_8006A940(offset, collQuery, charas, charaCount);
 
     offsetCpy = *offset;
 
-    collResult->field_18 = func_8006F620(&offsetCpy, query, query->rotation_C.vz, query->rotation_C.vy);
+    collResult->field_18 = func_8006F620(&offsetCpy, collQuery, collQuery->rotation_C.vz, collQuery->rotation_C.vy);
 
-    Collision_QueryInit(&sp18, &offsetCpy, query, arg3);
+    Collision_QueryInit(&sp18, &offsetCpy, collQuery, arg3);
 
     sp130 = offsetCpy;
 
@@ -652,7 +652,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
     return sp18.field_0_0 != 0;
 }
 
-void func_8006A940(VECTOR3* offset, s_CollisionQuery* query, s_SubCharacter** charas, s32 charaCount) // 0x8006A940
+void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter** charas, s32 charaCount) // 0x8006A940
 {
     q19_12          angle;
     q19_12          posZ;
@@ -674,7 +674,7 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* query, s_SubCharacter** ch
     for (i = 0; i < charaCount; i++)
     {
         curChara = charas[i];
-        if (!curChara->field_E1_0 || curChara->field_E1_0 == (1 << 0) || curChara->field_E1_0 >= query->field_12)
+        if (!curChara->field_E1_0 || curChara->field_E1_0 == (1 << 0) || curChara->field_E1_0 >= collQuery->field_12)
         {
             continue;
         }
@@ -683,18 +683,18 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* query, s_SubCharacter** ch
         temp4 = curChara->field_C8.field_2 + curChara->position_18.vy;
 
         // TODO: Rotation + position? Seems wrong.
-        temp6 = query->rotation_C.vy + query->position_0.vy;
-        temp5 = query->rotation_C.vx + query->position_0.vy;
+        temp6 = collQuery->rotation_C.vy + collQuery->position_0.vy;
+        temp5 = collQuery->rotation_C.vx + collQuery->position_0.vy;
         if (temp3 > temp5 || temp4 < temp6)
         {
             continue;
         }
 
-        posX = (curChara->position_18.vx + curChara->field_D8.offsetX_4) - query->position_0.vx;
-        posZ = (curChara->position_18.vz + curChara->field_D8.offsetZ_6) - query->position_0.vz;
+        posX = (curChara->position_18.vx + curChara->field_D8.offsetX_4) - collQuery->position_0.vx;
+        posZ = (curChara->position_18.vz + curChara->field_D8.offsetZ_6) - collQuery->position_0.vz;
 
         mag = Vc_VectorMagnitudeCalc(posX, Q12(0.0f), posZ);
-        if (((curChara->field_D4.radius_0 + query->rotation_C.vz) + Q12_ANGLE(36.0f)) < mag)
+        if (((curChara->field_D4.radius_0 + collQuery->rotation_C.vz) + Q12_ANGLE(36.0f)) < mag)
         {
             continue;
         }
@@ -723,13 +723,13 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* query, s_SubCharacter** ch
     offset->vz = Q12_MULT(var_s4, offset->vz);
 }
 
-void Collision_QueryInit(s_CollisionState* state, VECTOR3* pos, s_CollisionQuery* query, s32 arg3) // 0x8006AB50
+void Collision_QueryInit(s_CollisionState* state, VECTOR3* pos, s_CollisionQuery* collQuery, s32 arg3) // 0x8006AB50
 {
     state->field_0_0       = 0;
     state->field_2         = D_800C4478.flags_0;
     state->field_4.field_4 = arg3;
 
-    Collision_QueryDirectionCalc(&state->field_4, pos, query);
+    Collision_QueryDirectionCalc(&state->field_4, pos, collQuery);
 
     state->field_7C = 0x1E00;
     state->field_34 = 0;
@@ -744,7 +744,7 @@ void Collision_QueryInit(s_CollisionState* state, VECTOR3* pos, s_CollisionQuery
     state->field_94 = 0;
 }
 
-void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* pos, const s_CollisionQuery* query) // 0x8006ABC0
+void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* pos, const s_CollisionQuery* collQuery) // 0x8006ABC0
 {
     q3_12 headingAngle;
 
@@ -770,14 +770,14 @@ void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* pos, c
         result->direction_14.vz = Q12(0.0f);
     }
 
-    result->field_28     = FP_FROM(query->rotation_C.vz, Q4_SHIFT); // TODO: Packed angle?
-    result->positionX_18 = Q12_TO_Q8(query->position_0.vx);
-    result->positionZ_1C = Q12_TO_Q8(query->position_0.vz);
+    result->field_28     = FP_FROM(collQuery->rotation_C.vz, Q4_SHIFT); // TODO: Packed angle?
+    result->positionX_18 = Q12_TO_Q8(collQuery->position_0.vx);
+    result->positionZ_1C = Q12_TO_Q8(collQuery->position_0.vz);
     result->field_20     = result->positionX_18 + result->offset_C.vx;
     result->field_24     = result->positionZ_1C + result->offset_C.vz;
-    result->field_2A     = FP_FROM(query->rotation_C.vy + query->position_0.vy, Q4_SHIFT); // TODO: Position + rotation? Seems wrong.
-    result->field_2C     = FP_FROM(query->rotation_C.vx + query->position_0.vy, Q4_SHIFT);
-    result->field_0      = query->field_12;
+    result->field_2A     = FP_FROM(collQuery->rotation_C.vy + collQuery->position_0.vy, Q4_SHIFT); // TODO: Position + rotation? Seems wrong.
+    result->field_2C     = FP_FROM(collQuery->rotation_C.vx + collQuery->position_0.vy, Q4_SHIFT);
+    result->field_0      = collQuery->field_12;
 }
 
 void func_8006AD44(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8006AD44
@@ -3309,7 +3309,7 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone) // 0x8006F3
     return arg0->field_28 == 0;
 }
 
-s32 func_8006F620(VECTOR3* pos, s_CollisionQuery* query, s32 arg2, s32 arg3) // 0x8006F620
+s32 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, s32 arg2, s32 arg3) // 0x8006F620
 {
     s32            x0;
     s32            z0;
@@ -3339,7 +3339,7 @@ s32 func_8006F620(VECTOR3* pos, s_CollisionQuery* query, s32 arg2, s32 arg3) // 
     distZ = Q12(0.0f);
     posX  = pos->vx;
     posZ  = pos->vz;
-    sp28  = query->position_0.vy + arg3;
+    sp28  = collQuery->position_0.vy + arg3;
     sp2C  = sp28 + pos->vy;
 
     for (i = 0; i < D_800C4478.triggerZoneCount_2; i++)
@@ -3352,7 +3352,7 @@ s32 func_8006F620(VECTOR3* pos, s_CollisionQuery* query, s32 arg2, s32 arg3) // 
             continue;
         }
 
-        func_8006F8FC(&x0, &z0, query->position_0.vx + posX, query->position_0.vz + posZ, curZone);
+        func_8006F8FC(&x0, &z0, collQuery->position_0.vx + posX, collQuery->position_0.vz + posZ, curZone);
         if (MAX(ABS(x0), ABS(z0)) >= arg2)
         {
             continue;
@@ -3366,7 +3366,7 @@ s32 func_8006F620(VECTOR3* pos, s_CollisionQuery* query, s32 arg2, s32 arg3) // 
 
         if (mag0 > 0)
         {
-            func_8006F8FC(&x1, &z1, query->position_0.vx, query->position_0.vz, curZone);
+            func_8006F8FC(&x1, &z1, collQuery->position_0.vx, collQuery->position_0.vz, curZone);
 
             var_s2 = Q12(0.1f);
 

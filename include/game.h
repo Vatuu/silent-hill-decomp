@@ -1981,8 +1981,6 @@ extern s_Savegame* const       g_SavegamePtr;
 extern s_ControllerData* const g_Controller0;
 extern s_ControllerData* const g_Controller1;
 
-extern u32 g_MapEventParam;
-
 /** @brief Sets `sysState` in `g_SysWork` for the next tick.
  *
  * @param sysState System state to set.

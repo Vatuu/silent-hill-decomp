@@ -1,5 +1,7 @@
 #include "bodyprog/bodyprog.h"
 
+#include "bodyprog/events/bodyprog_data_800A99B4.h"
+
 const s32 pad_rodata_800252B8 = 0;
 
 /** @brief SFX pairs.
@@ -54,7 +56,7 @@ char* D_800A99E4[8] = {
 };
 
 /** @note Related to images display. */
-s_FsImageDesc D_800A9A04   = { .tPage = { 1, 21 }, .clutX = 224, .clutY = 13 };
+s_FsImageDesc D_800A9A04             = { .tPage = { 1, 21 }, .clutX = 224, .clutY = 13 };
 s32           D_800A9A0C             = 0;
 s32           g_MapEventSysState     = SysState_Gameplay;
 u32           g_MapEventParam        = 0;

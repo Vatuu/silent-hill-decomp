@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/events/bodyprog_data_800A99B4.h"
 #include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/screen/screen_data.h"
