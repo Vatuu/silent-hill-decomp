@@ -1711,10 +1711,10 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter_D8, 8);
 
 typedef struct
 {
-    s16 field_0; // Something dependent on `CharaFlag_Unk8`.
-    u8  field_2; // In player: packed weapon attack. See `WEAPON_ATTACK`.
-                 // This is not the same as `attackReceived`, as this value only resets when player is aiming.
-                 // In NPCs: Indicates attack performed on player.
+    s16     field_0; // Something dependent on `CharaFlag_Unk8`.
+    u8      field_2; // In player: packed weapon attack. See `WEAPON_ATTACK`.
+                     // This is not the same as `attackReceived`, as this value only resets when player is aiming.
+                     // In NPCs: Indicates attack performed on player.
     u8      field_3;
     u8      field_4;
     s8      unk_5[3];

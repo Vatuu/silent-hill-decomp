@@ -841,7 +841,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
         if (sp18 != 0)
         {
-            chara->field_44.field_0 = -1;
+            chara->field_44.field_0 = NO_VALUE;
 
             if (chara->model.charaId_0 == Chara_Harry)
             {
