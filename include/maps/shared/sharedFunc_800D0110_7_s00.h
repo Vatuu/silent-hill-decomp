@@ -6,14 +6,14 @@ void sharedFunc_800D0110_7_s00(void)
     q19_12        var_s2;
     s32           mapRoomIdx;
     s32           flags;
-    s_Bgm_Update* bgmLayerLimit;
+    s_BgmLayerLimits* bgmLayerLimit;
 
     flags            = 1 << 0;
     var_s2           = Q12(0.1f);
     mapRoomIdx       = g_SavegamePtr->mapRoomIdx_A5;
     bgmLayerLimit = NULL;
 
-    switch (g_GameWork.bgmIdx_5B2)
+    switch (g_GameWork.bgmTrackIdx_5B2)
     {
         case 5:
             g_SysWork.sysFlags_22A0 &= ~SysFlag_3;
@@ -243,7 +243,7 @@ void sharedFunc_800D0110_7_s00(void)
                 case 29:
                     if (Savegame_EventFlagGet(EventFlag_555))
                     {
-                        if (g_GameWork.bgmIdx_5B2 == 22)
+                        if (g_GameWork.bgmTrackIdx_5B2 == 22)
                         {
                             flags = 1 << 2;
                         }
@@ -256,7 +256,7 @@ void sharedFunc_800D0110_7_s00(void)
                     {
                         if (Savegame_EventFlagGet(EventFlag_552))
                         {
-                            if (g_GameWork.bgmIdx_5B2 == 22)
+                            if (g_GameWork.bgmTrackIdx_5B2 == 22)
                             {
                                 flags = 1 << 3;
                             }
@@ -267,7 +267,7 @@ void sharedFunc_800D0110_7_s00(void)
                         }
                         else
                         {
-                            if (g_GameWork.bgmIdx_5B2 == 22)
+                            if (g_GameWork.bgmTrackIdx_5B2 == 22)
                             {
                                 flags = (1 << 3) | (1 << 4);
                             }
@@ -327,7 +327,7 @@ void sharedFunc_800D0110_7_s00(void)
                     break;
             }
 
-            if (g_GameWork.bgmIdx_5B2 == 22)
+            if (g_GameWork.bgmTrackIdx_5B2 == 22)
             {
                 temp_v0_2 = flags & (1 << 1);
                 temp_v1_5 = flags & (1 << 2);

@@ -99,7 +99,7 @@ bool Bgm_IsCurrentBgmTargetCheck(s32 bgmIdx) // 0x800358A8
         return false;
     }
 
-    return g_GameWork.bgmIdx_5B2 != bgmIdx;
+    return g_GameWork.bgmTrackIdx_5B2 != bgmIdx;
 }
 
 void Bgm_TrackSet(s32 bgmIdx) // 0x800358DC
@@ -114,23 +114,23 @@ void Bgm_TrackSet(s32 bgmIdx) // 0x800358DC
         return;
     }
 
-    g_GameWork.bgmIdx_5B2 = bgmIdx;
+    g_GameWork.bgmTrackIdx_5B2 = bgmIdx;
     SD_Call(g_BgmTaskLoadCmds[bgmIdx]);
 }
 
 void Bgm_BgmChannelSet(void) // 0x80035924
 {
-    if (g_GameWork.bgmIdx_5B2 == 0)
+    if (g_GameWork.bgmTrackIdx_5B2 == 0)
     {
         return;
     }
 
-    if (g_GameWork.bgmIdx_5B2 == 1)
+    if (g_GameWork.bgmTrackIdx_5B2 == 1)
     {
         return;
     }
 
-    SD_Call(g_BgmChannelSetTaskCmds[g_GameWork.bgmIdx_5B2]);
+    SD_Call(g_BgmChannelSetTaskCmds[g_GameWork.bgmTrackIdx_5B2]);
 }
 
 void func_8003596C(void) // 0x8003596C

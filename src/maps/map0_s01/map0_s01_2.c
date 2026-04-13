@@ -50,13 +50,13 @@ void Map_RoomBgmInit_CondFalse(void) // 0x800DA7FC
             var1 = Q12(240.0f);
 
             // FMV has just played and unknown.
-            if (Savegame_EventFlagGet(EventFlag_M0S01_FmvStarted) && g_GameWork.bgmIdx_5B2 == 9)
+            if (Savegame_EventFlagGet(EventFlag_M0S01_FmvStarted) && g_GameWork.bgmTrackIdx_5B2 == 9)
             {
-                flags = BgmFlag_Unk1;
+                flags = BgmFlag_Layer1;
             }
             else
             {
-                flags = BgmFlag_Unk0 | BgmFlag_Unk9;
+                flags = BgmFlag_Layer0 | BgmFlag_MuteAll;
             }
         }
         // Air Screamer cutscene finished.
@@ -65,22 +65,22 @@ void Map_RoomBgmInit_CondFalse(void) // 0x800DA7FC
             if (!Savegame_EventFlagGet(EventFlag_M0S01_AirScreamerDied))
             {
                 var1  = Q12(240.0f);
-                flags = BgmFlag_Unk8;
+                flags = BgmFlag_KeepAlive;
             }
             else
             {
                 var1  = Q12(0.125f);
-                flags = BgmFlag_Unk0 | BgmFlag_Unk9;
+                flags = BgmFlag_Layer0 | BgmFlag_MuteAll;
             }
         }
         else
         {
-            flags = BgmFlag_Unk0;
+            flags = BgmFlag_Layer0;
         }
     }
     else
     {
-        flags = BgmFlag_Unk0;
+        flags = BgmFlag_Layer0;
     }
 
     Bgm_Update(flags, var1, NULL);

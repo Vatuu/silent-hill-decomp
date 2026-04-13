@@ -1,22 +1,22 @@
 void Map_RoomBgmInit_CondFalse(void)
 {
-    const static s_Bgm_Update D_800CA70C = { { 0x80, 0x70, 0x80, 0x80, 0x00, 0x00, 0x00, 0x00 } };
+    const static s_BgmLayerLimits D_800CA70C = { { 0x80, 0x70, 0x80, 0x80, 0x00, 0x00, 0x00, 0x00 } };
 
     u16           flags;
     q19_12        fArg1;
-    s_Bgm_Update* dataPtr;
-    s_Bgm_Update  data;
+    s_BgmLayerLimits* dataPtr;
+    s_BgmLayerLimits  data;
     s32           roomIdx;
 
     dataPtr = sharedData_800D1D14_3_s02;
     roomIdx = g_SavegamePtr->mapRoomIdx_A5;
 
-    if (g_GameWork.bgmIdx_5B2 == 8)
+    if (g_GameWork.bgmTrackIdx_5B2 == 8)
     {
         fArg1 = Q12(240.0f);
         flags = 0xFE;
     }
-    else if (g_GameWork.bgmIdx_5B2 == 32)
+    else if (g_GameWork.bgmTrackIdx_5B2 == 32)
     {
         fArg1 = Q12(0.15f);
         if (Savegame_EventFlagGet(EventFlag_338))
@@ -115,7 +115,7 @@ void Map_RoomBgmInit_CondFalse(void)
                 break;
 
             case 3:
-                if (g_GameWork.bgmIdx_5B2 == 31)
+                if (g_GameWork.bgmTrackIdx_5B2 == 31)
                 {
                     data    = D_800CA70C;
                     dataPtr = &data;

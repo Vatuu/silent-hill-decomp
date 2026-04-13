@@ -50,7 +50,7 @@ extern s32           D_800F15A0;
 extern s32           D_800F1590;
 extern s8            D_800F1594[];
 extern s8            D_800F159D;
-extern s_Bgm_Update D_800EFC74;
+extern s_BgmLayerLimits D_800EFC74;
 extern q19_12          D_800EFC7C; // Timer.
 extern u16             D_800EFC80[];
 

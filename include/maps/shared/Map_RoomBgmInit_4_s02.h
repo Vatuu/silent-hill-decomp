@@ -8,7 +8,7 @@ void Map_RoomBgmInit(bool arg0)
     mapRoomIdx = g_SavegamePtr->mapRoomIdx_A5;
     var_a1  = Q12(0.1f);
 
-    if (g_GameWork.bgmIdx_5B2 == 13)
+    if (g_GameWork.bgmTrackIdx_5B2 == 13)
     {
         var_a2 = sharedData_800ED418_4_s02;
 
@@ -73,7 +73,7 @@ void Map_RoomBgmInit(bool arg0)
                 break;
         }
     }
-    else if (g_GameWork.bgmIdx_5B2 == 33)
+    else if (g_GameWork.bgmTrackIdx_5B2 == 33)
     {
         var_a2 = sharedData_800ED424_4_s02;
 

@@ -495,7 +495,7 @@ typedef enum _SysFlags
     SysFlag_4      = 1 << 4,
     SysFlag_5      = 1 << 5,
     SysFlag_6      = 1 << 6,
-    SysFlag_7      = 1 << 7
+    SysFlag_Mute   = 1 << 7
 } e_SysFlags;
 
 // Temp name.
@@ -1192,10 +1192,10 @@ typedef struct _GameWork
     s32                field_5AC;
     s8                 unk_5B0;
     s8                 mapAnimIdx_5B1;
-    s8                 bgmIdx_5B2;   // Index of ``.
-    s8                 ambientIdx_5B4; // Index of `g_AmbientVabTaskLoadCmds`.
+    s8                 bgmTrackIdx_5B2; /** `BgmTrackIdx` | Currently player background music track. */
+    s8                 ambientIdx_5B4;  // Index of `g_AmbientVabTaskLoadCmds`.
     s_AnalogController rawController_5B4;
-    s8                 unused_5BC[28]; // @unused Debug data?
+    s8                 unused_5BC[28];  // @unused Debug data?
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 

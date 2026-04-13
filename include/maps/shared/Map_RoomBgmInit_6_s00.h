@@ -9,7 +9,7 @@ void Map_RoomBgmInit(bool arg0)
     var_s3  = sharedData_800EFCFC_6_s00;
     temp_a2 = g_SavegamePtr->mapRoomIdx_A5;
     var_s1  = Q12(0.2f);
-    switch (g_GameWork.bgmIdx_5B2)
+    switch (g_GameWork.bgmTrackIdx_5B2)
     {
         case 5:
             g_SysWork.sysFlags_22A0 &= ~SysFlag_3;

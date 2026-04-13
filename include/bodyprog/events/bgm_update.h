@@ -5,10 +5,10 @@
 // STRUCTS
 // ========
 
-typedef struct
+typedef struct _BgmLayerLimits
 {
-    u8 field_0[8];
-} s_Bgm_Update;
+    /* 0x0 */ u8 limits[8];
+} s_BgmLayerLimits;
 
 // ==========
 // FUNCTIONS
@@ -23,8 +23,13 @@ bool Bgm_LayerOnCheck(void);
 
 void Bgm_GlobalLayerVariablesUpdate(void);
 
-// Main music trigger and handler.
-void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr);
+/** @brief Undates background music.
+ *
+ * @param flags BGM layer flags.
+ * @param fadeSpeed Volume fade speed.
+ * @param layerLimits BGM layer limits.
+ */
+void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits);
 
 /** @brief Updates the track index and disables radio effects. */
 void func_800363D0(void);

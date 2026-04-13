@@ -60,7 +60,7 @@ void Bgm_TrackUpdate(bool arg0) // 0x80035DB4
         g_MapOverlayHeader.bgmEvent_10(arg0);
         if (arg0 == false && D_800BCD5C == false)
         {
-            Bgm_Update(BgmFlag_Unk0, Q12(240.0f), 0);
+            Bgm_Update(BgmFlag_Layer0, Q12(240.0f), 0);
         }
     }
 }
@@ -127,7 +127,7 @@ void Bgm_GlobalLayerVariablesUpdate(void) // 0x80035ED0
     g_SysWork.bgmLayerVolumes_2748[ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1] = Q12(0.0f);
 }
 
-void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x80035F4C
+void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0x80035F4C
 {
     s16       temp_v0;
     s32       var_a0;
@@ -142,54 +142,57 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
     q19_12    var_t0;
     bool      cond0;
     s32       endLayerIdx;
-    q3_12*    bgmLayerVols;
-    u8*       bgmLayerLimitCpy;
-    static s8 bgmLayerVolumes[8];
+    q3_12*    layerVols;
+    u8*       layerLimitsCpy;
+    static s8 bgmLayerVols[8];
 
-    flagsCpy           = flags;
-    bgmLayerLimitCpy   = bgmLayerLimitPtr;
-    bgmLayerVols = g_SysWork.bgmLayerVolumes_2748;
+    // Setup.
+    flagsCpy       = flags;
+    layerLimitsCpy = layerLimits;
+    layerVols      = g_SysWork.bgmLayerVolumes_2748;
 
-    if (bgmLayerLimitCpy == NULL)
+    // Ensure layer limits are valid.
+    if (layerLimitsCpy == NULL)
     {
-        bgmLayerLimitCpy = g_Bgm_LayerLimits;
+        layerLimitsCpy = g_Bgm_LayerLimits;
     }
 
+    // Continue music at reduced volume if player is dead.
     if (g_SysWork.playerWork.player.health <= Q12(0.0f) || g_SysWork.sysState_8 == SysState_GameOver)
     {
-        flagsCpy &= BgmFlag_Unk8;
-        flagsCpy |= BgmFlag_Unk0;
-        arg1      = Q12(0.2f);
+        flagsCpy &= BgmFlag_KeepAlive;
+        flagsCpy |= BgmFlag_Layer0;
+        fadeSpeed = Q12(0.2f);
     }
 
-    if (!(flagsCpy & BgmFlag_Unk8))
+    if (!(flagsCpy & BgmFlag_KeepAlive) &&
+        g_RadioPitchState > 0 &&
+        (g_SavegamePtr->itemToggleFlags_AC & ItemToggleFlag_RadioOn))
     {
-        if (g_RadioPitchState > 0 && g_SavegamePtr->itemToggleFlags_AC & ItemToggleFlag_RadioOn)
-        {
-            g_SysWork.sysFlags_22A0 |= SysFlag_2;
-        }
+        g_SysWork.sysFlags_22A0 |= SysFlag_2;
     }
 
-    if (g_SysWork.sysFlags_22A0 & SysFlag_7)
+    // Mute layers.
+    if (g_SysWork.sysFlags_22A0 & SysFlag_Mute)
     {
-        flagsCpy                 = BgmFlag_Unk0 | BgmFlag_Unk9;
+        flagsCpy                 = BgmFlag_Layer0 | BgmFlag_MuteAll;
         g_SysWork.sysFlags_22A0 |= SysFlag_1;
     }
 
-    if (flagsCpy & BgmFlag_Unk0)
+    if (flagsCpy & BgmFlag_Layer0)
     {
-        flagsCpy &= BgmFlag_Unk8 | BgmFlag_Unk9;
+        flagsCpy &= BgmFlag_KeepAlive | BgmFlag_MuteAll;
     }
     else
     {
-        flagsCpy ^= BgmFlag_Unk0;
+        flagsCpy ^= BgmFlag_Layer0;
     }
 
     for (i = 0, endLayerIdx = (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1);
          i < ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748);
          i++)
     {
-        curLayerVol = bgmLayerVols[i];
+        curLayerVol = layerVols[i];
 
         if (i == endLayerIdx)
         {
@@ -204,19 +207,19 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
             }
             else
             {
-                var_a0 = (g_SysWork.sysFlags_22A0 & SysFlag_3) ? Q12(0.5f) : 0;
+                var_a0 = (g_SysWork.sysFlags_22A0 & SysFlag_3) ? Q12(0.5f) : Q12(0.0f);
             }
         }
         else
         {
-            if ((flagsCpy >> i) & BgmFlag_Unk0)
+            if ((flagsCpy >> i) & BgmFlag_Layer0)
             {
-                var_t0 = FP_MULTIPLY(g_DeltaTimeRaw, arg1, Q12_SHIFT - 1); // @hack Should be multiplied by 2 but doesn't match.
+                var_t0 = FP_MULTIPLY(g_DeltaTimeRaw, fadeSpeed, Q12_SHIFT - 1); // @hack Should be multiplied by 2 but doesn't match.
                 var_a0 = Q12(1.0f);
             }
             else
             {
-                var_t0 = Q12_MULT(g_DeltaTimeRaw, arg1);
+                var_t0 = Q12_MULT(g_DeltaTimeRaw, fadeSpeed);
                 var_a0 = Q12(0.0f);
             }
         }
@@ -238,15 +241,15 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
             }
         }
 
-        bgmLayerVols[i] = curLayerVol;
+        layerVols[i] = curLayerVol;
     }
 
     isBgmLayerActive = false;
-    temp_v0          = Q12(1.0f) - bgmLayerVols[8];
+    temp_v0          = Q12(1.0f) - layerVols[8];
 
     for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1); i++)
     {
-        curLayerVol1        = bgmLayerVols[i];
+        curLayerVol1        = layerVols[i];
         isBgmLayerActive |= curLayerVol1 != Q12(0.0f);
 
         if (i == 0)
@@ -260,13 +263,13 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
             curLayerVol1 = Q12(0.0312f);
         }
 
-        curLayerVol1 = (curLayerVol1 * bgmLayerLimitCpy[i]) >> 7;
+        curLayerVol1 = (curLayerVol1 * layerLimitsCpy[i]) >> 7;
         if (curLayerVol1 > Q12(0.0312f))
         {
             curLayerVol1 = Q12(0.0312f);
         }
 
-        bgmLayerVolumes[i] = curLayerVol1;
+        bgmLayerVols[i] = curLayerVol1;
     }
 
     isMusicPlayer = false;
@@ -316,7 +319,7 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
                 break;
         }
     }
-    else if (flagsCpy & BgmFlag_Unk9)
+    else if (flagsCpy & BgmFlag_MuteAll)
     {
         if (D_800A99A0 != 3)
         {
@@ -335,7 +338,7 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
         {
             for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1); i++)
             {
-                Sd_BgmLayerVolumeSet(i, bgmLayerVolumes[i]);
+                Sd_BgmLayerVolumeSet(i, bgmLayerVols[i]);
             }
         }
         else

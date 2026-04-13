@@ -313,6 +313,7 @@ extern CVECTOR sharedData_800E325C_0_s00;
 extern s32 sharedData_800E2370_0_s01[2];
 
 // Each of these holds 8 bytes, passed to `Bgm_Update` which loops through each byte.
+// TODO: Should use `s_BgmLayerLimits`?
 extern u8 sharedData_800CFB14_0_s02[8];
 extern u8 sharedData_800CFB1C_0_s02[8];
 extern u8 sharedData_800CFB24_0_s02[8];
@@ -530,12 +531,12 @@ extern u8 sharedData_800ED458_4_s02[8];
 
 extern void (*g_Romper_ControlFuncs[])(s_SubCharacter* romper);
 
-extern s_Bgm_Update sharedData_800D2F18_7_s00;
-extern s_Bgm_Update sharedData_800D2F20_7_s00;
+extern s_BgmLayerLimits sharedData_800D2F18_7_s00;
+extern s_BgmLayerLimits sharedData_800D2F20_7_s00;
 extern u16          sharedData_800D2F28_7_s00[38]; // Flags array.
-extern s_Bgm_Update sharedData_800D2F74_7_s00;
-extern s_Bgm_Update sharedData_800D2F7C_7_s00;
-extern s_Bgm_Update sharedData_800D2F84_7_s00;
+extern s_BgmLayerLimits sharedData_800D2F74_7_s00;
+extern s_BgmLayerLimits sharedData_800D2F7C_7_s00;
+extern s_BgmLayerLimits sharedData_800D2F84_7_s00;
 
 extern s32 sharedData_800E1570_7_s01;
 extern s32 sharedData_800E1574_7_s01;

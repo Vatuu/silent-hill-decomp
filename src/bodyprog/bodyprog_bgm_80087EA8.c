@@ -42,19 +42,19 @@ void func_80087EDC(s32 cmd) // 0x80087EDC
                 break;
             }
 
-            g_SysWork.sysFlags_22A0 |= SysFlag_7;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Mute;
             SysWork_StateStepIncrement(1);
             break;
 
         case 1:
-            g_SysWork.sysFlags_22A0 |= SysFlag_7;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Mute;
             SD_Call(23);
 
             SysWork_StateStepIncrement(1);
             break;
 
         case 2:
-            g_SysWork.sysFlags_22A0 |= SysFlag_7;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Mute;
 
             if (!func_80045BC8())
             {
