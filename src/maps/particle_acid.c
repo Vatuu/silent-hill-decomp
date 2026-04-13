@@ -205,7 +205,7 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
     {
         sharedData_800DFB7C_0_s00[arg1].field_B++;
 
-        if (ray.hasHit_0 && ray.chara_10 == &g_SysWork.playerWork_4C.player_0)
+        if (ray.hasHit_0 && ray.chara_10 == &g_SysWork.playerWork.player)
         {
             sub = ray.chara_10;
 

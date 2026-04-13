@@ -50,7 +50,7 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
     GsCOORDINATE2* boneCoords;
 
     boneCoords = g_SysWork.playerBoneCoords_890;
-    model      = &g_SysWork.playerWork_4C.player_0.model;
+    model      = &g_SysWork.playerWork.player.model;
 
     if (g_SysWork.sysState_8 == SysState_Gameplay)
     {
@@ -59,17 +59,17 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
             AreaLoad_UpdatePlayerPosition();
         }
 
-        vcInitCamera(&g_MapOverlayHeader, &g_SysWork.playerWork_4C.player_0.position);
+        vcInitCamera(&g_MapOverlayHeader, &g_SysWork.playerWork.player.position);
         func_80040004(&g_MapOverlayHeader);
 
         camLookAt.vy = Q12(-0.6f);
-        camLookAt.vx = g_SysWork.playerWork_4C.player_0.position.vx;
-        camLookAt.vz = g_SysWork.playerWork_4C.player_0.position.vz;
+        camLookAt.vx = g_SysWork.playerWork.player.position.vx;
+        camLookAt.vz = g_SysWork.playerWork.player.position.vz;
 
         vcUserWatchTarget(&camLookAt, NULL, true);
 
-        camLookAt.vx -= Math_Sin(g_SysWork.playerWork_4C.player_0.rotation.vy - Q12_ANGLE(22.5f)) * 2;
-        temp          = Math_Cos(g_SysWork.playerWork_4C.player_0.rotation.vy - Q12_ANGLE(22.5f));
+        camLookAt.vx -= Math_Sin(g_SysWork.playerWork.player.rotation.vy - Q12_ANGLE(22.5f)) * 2;
+        temp          = Math_Cos(g_SysWork.playerWork.player.rotation.vy - Q12_ANGLE(22.5f));
         camLookAt.vy  = Q12(-1.0f);
         camLookAt.vz -= temp * 2;
 
@@ -78,19 +78,19 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
         Gfx_LoadScreenMapEffectsUpdate(0, 0);
 
         model->anim.flags                                 |= AnimFlag_Visible;
-        g_SysWork.playerWork_4C.extra_128.disabledAnimBones_18 = 0;
+        g_SysWork.playerWork.extra.disabledAnimBones = 0;
         model->anim.flags                                 |= AnimFlag_Unlocked | AnimFlag_Visible;
         model->anim.time                                   = Q12(26.0f);
-        g_SysWork.playerWork_4C.player_0.position.vy        = Q12(0.2f);
+        g_SysWork.playerWork.player.position.vy        = Q12(0.2f);
 
         D_800A998C.status = model->anim.status;
 
-        Math_MatrixTransform(&g_SysWork.playerWork_4C.player_0.position, &g_SysWork.playerWork_4C.player_0.rotation, boneCoords);
+        Math_MatrixTransform(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, boneCoords);
         g_SysWork.sysState_8++;
     }
 
     Anim_PlaybackLoop(model, (s_Skeleton*)FS_BUFFER_0, boneCoords, &D_800A998C);
     vcMoveAndSetCamera(true, false, false, false, false, false, false, false);
     Gfx_FlashlightUpdate();
-    func_8003DA9C(Chara_Harry, boneCoords, 1, g_SysWork.playerWork_4C.player_0.timer_C6, 0);
+    func_8003DA9C(Chara_Harry, boneCoords, 1, g_SysWork.playerWork.player.timer_C6, 0);
 }

@@ -78,5 +78,5 @@ void GameBoot_MapLoad(s32 mapIdx) // 0x8003521C
         WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat_38);
     }
 
-    Gfx_PlayerHeldItemAttach(g_SysWork.playerCombat_38.weaponAttack_F);
+    Gfx_PlayerHeldItemAttach(g_SysWork.playerCombat_38.weaponAttack);
 }

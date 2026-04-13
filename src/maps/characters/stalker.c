@@ -223,7 +223,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
             {
                 stalkerProps.timer_10C = 0;
 
-                angle = ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork_4C.player_0.position) -
+                angle = ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position) -
                                           stalker->rotation.vy));
 
                 if (stalkerProps.flags_E8 & StalkerFlag_6)
@@ -553,18 +553,18 @@ void Ai_Stalker_ControlUpdate(s_SubCharacter* stalker)
         }
 
         // TODO: Use `Math_Vector2MagCalc`.
-        temp_v0                      = ((g_SysWork.playerWork_4C.player_0.position.vx - sharedData_800E39E4_0_s00) >> 6);
-        temp_v0_2                    = (g_SysWork.playerWork_4C.player_0.position.vz - sharedData_800E39E8_0_s00) >> 6;
+        temp_v0                      = ((g_SysWork.playerWork.player.position.vx - sharedData_800E39E4_0_s00) >> 6);
+        temp_v0_2                    = (g_SysWork.playerWork.player.position.vz - sharedData_800E39E8_0_s00) >> 6;
         sharedData_800E39EC_0_s00[0] = (FP_TO(SquareRoot0(SQUARE(temp_v0) + SQUARE(temp_v0_2)), Q12_SHIFT) << 6) / g_DeltaTime;
-        sharedData_800E3A0C_0_s00[0] = ratan2(g_SysWork.playerWork_4C.player_0.position.vx - sharedData_800E39E4_0_s00, g_SysWork.playerWork_4C.player_0.position.vz - sharedData_800E39E8_0_s00);
-        sharedData_800E39E4_0_s00    = g_SysWork.playerWork_4C.player_0.position.vx;
-        sharedData_800E39E8_0_s00    = g_SysWork.playerWork_4C.player_0.position.vz;
+        sharedData_800E3A0C_0_s00[0] = ratan2(g_SysWork.playerWork.player.position.vx - sharedData_800E39E4_0_s00, g_SysWork.playerWork.player.position.vz - sharedData_800E39E8_0_s00);
+        sharedData_800E39E4_0_s00    = g_SysWork.playerWork.player.position.vx;
+        sharedData_800E39E8_0_s00    = g_SysWork.playerWork.player.position.vz;
 
         if (sharedData_800DD5A6_0_s00 != 5)
         {
             sharedData_800DD5A6_0_s00++;
-            sharedData_800E3A18_0_s00 = g_SysWork.playerWork_4C.player_0.position.vx;
-            sharedData_800E3A1C_0_s00 = g_SysWork.playerWork_4C.player_0.position.vz;
+            sharedData_800E3A18_0_s00 = g_SysWork.playerWork.player.position.vx;
+            sharedData_800E3A1C_0_s00 = g_SysWork.playerWork.player.position.vz;
         }
         else
         {
@@ -583,8 +583,8 @@ void Ai_Stalker_ControlUpdate(s_SubCharacter* stalker)
             }
 
             temp_s1                   = sharedData_800E39EC_0_s00[0] + (angle1 >> 2);
-            sharedData_800E3A18_0_s00 = ((temp_s1 * Math_Sin(angle)) >> 14) + g_SysWork.playerWork_4C.player_0.position.vx;
-            sharedData_800E3A1C_0_s00 = ((temp_s1 * Math_Cos(angle)) >> 14) + g_SysWork.playerWork_4C.player_0.position.vz;
+            sharedData_800E3A18_0_s00 = ((temp_s1 * Math_Sin(angle)) >> 14) + g_SysWork.playerWork.player.position.vx;
+            sharedData_800E3A1C_0_s00 = ((temp_s1 * Math_Cos(angle)) >> 14) + g_SysWork.playerWork.player.position.vz;
         }
     }
 
@@ -673,13 +673,13 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
     }
 
     if (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_30, true) &&
-        !func_800700F8(stalker, &g_SysWork.playerWork_4C.player_0))
+        !func_800700F8(stalker, &g_SysWork.playerWork.player))
     {
         stalkerProps.timer_F8 = Q12(0.0f);
 
         if (stalkerProps.flags_E8 & StalkerFlag_WarpRotation)
         {
-            stalker->rotation.vy = Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork_4C.player_0.position);
+            stalker->rotation.vy = Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position);
         }
         else
         {
@@ -724,7 +724,7 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
             if ( distToPlayer < Q12(0.9f) &&
                 (distToPlayer > Q12(0.7f) || !Rng_GenerateInt(0, 3))) // 1 in 4 chance.
             {
-                if (ABS(angleDeltaToPlayer) < Q12_ANGLE(90.0f) && g_SysWork.playerWork_4C.player_0.health > Q12(0.0f))
+                if (ABS(angleDeltaToPlayer) < Q12_ANGLE(90.0f) && g_SysWork.playerWork.player.health > Q12(0.0f))
                 {
                     stalker->model.controlState = StalkerControl_5;
                     g_SysWork.flags_2284[3] |= Unk2284Flag_1;
@@ -771,12 +771,12 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
         {
             if (ABS(angleDeltaToPlayer) < Q12_ANGLE(60.0f))
             {
-                if (g_SysWork.playerWork_4C.player_0.health > Q12(0.0f))
+                if (g_SysWork.playerWork.player.health > Q12(0.0f))
                 {
                     stalker->model.controlState = StalkerControl_6;
 
                     // Grab player in front or behind.
-                    grabAngleDelta = Math_AngleNormalizeSigned(g_SysWork.playerWork_4C.player_0.rotation.vy - stalker->rotation.vy);
+                    grabAngleDelta = Math_AngleNormalizeSigned(g_SysWork.playerWork.player.rotation.vy - stalker->rotation.vy);
                     if (ABS(grabAngleDelta) > Q12_ANGLE(90.0f))
                     {
                         stalker->model.anim.status = ANIM_STATUS(StalkerAnim_34, false);
@@ -807,8 +807,8 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
         {
             stalkerProps.targetHeadingAngle_100 = Chara_HeadingAngleGet(stalker,
                                                                         Q12(2.0f),
-                                                                        g_SysWork.playerWork_4C.player_0.position.vx,
-                                                                        g_SysWork.playerWork_4C.player_0.position.vz,
+                                                                        g_SysWork.playerWork.player.position.vx,
+                                                                        g_SysWork.playerWork.player.position.vz,
                                                                         Q12(1.0f),
                                                                         true);
             if (stalkerProps.targetHeadingAngle_100 == Q12_ANGLE(360.0f))
@@ -937,7 +937,7 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
     }
 
     if (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_30, true) && !(stalkerProps.flags_E8 & StalkerFlag_8) &&
-        !func_800700F8(stalker, &g_SysWork.playerWork_4C.player_0))
+        !func_800700F8(stalker, &g_SysWork.playerWork.player))
     {
         stalkerProps.timer_F8 = Q12(0.0f);
 
@@ -979,13 +979,13 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
         }
 
         if ((g_SysWork.flags_2284[3] & Unk2284Flag_0) || func_80070320() ||
-            ABS(stalker->position.vy - g_SysWork.playerWork_4C.player_0.position.vy) > Q12(0.3f) ||
+            ABS(stalker->position.vy - g_SysWork.playerWork.player.position.vy) > Q12(0.3f) ||
             ( (stalkerProps.flags_E8 & StalkerFlag_2) &&  Rng_GenerateInt(0, 3)) || // 3 in 4 chance?
             (!(stalkerProps.flags_E8 & StalkerFlag_2) && !Rng_GenerateInt(0, 3)))   // 1 in 4 chance.
         {
-            if (!(g_SysWork.playerWork_4C.player_0.flags & CharaFlag_Unk4) &&
+            if (!(g_SysWork.playerWork.player.flags & CharaFlag_Unk4) &&
                 distToPlayer < Q12(0.9f) && (distToPlayer > Q12(0.7f) || !Rng_GenerateInt(0, 3)) && // 1 in 4 chance.
-                ABS(angleDeltaToPlayer) < Q12_ANGLE(90.0f) && g_SysWork.playerWork_4C.player_0.health > Q12(0.0f))
+                ABS(angleDeltaToPlayer) < Q12_ANGLE(90.0f) && g_SysWork.playerWork.player.health > Q12(0.0f))
             {
                 stalker->model.controlState = StalkerControl_5;
                 g_SysWork.flags_2284[3] |= Unk2284Flag_1;
@@ -1030,14 +1030,14 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
                 stalker->model.controlState = StalkerControl_4;
             }
         }
-        else if (!(g_SysWork.playerWork_4C.player_0.flags & CharaFlag_Unk4) &&
+        else if (!(g_SysWork.playerWork.player.flags & CharaFlag_Unk4) &&
                  distToPlayer < Q12(1.0f) && distToPlayer > Q12(0.5f) &&
-                 ABS(angleDeltaToPlayer) < Q12_ANGLE(60.0f) && g_SysWork.playerWork_4C.player_0.health > Q12(0.0f))
+                 ABS(angleDeltaToPlayer) < Q12_ANGLE(60.0f) && g_SysWork.playerWork.player.health > Q12(0.0f))
         {
             stalker->model.controlState = StalkerControl_6;
 
             // Grab player in front or behind.
-            grabAngleDelta = Math_AngleNormalizeSigned(g_SysWork.playerWork_4C.player_0.rotation.vy - stalker->rotation.vy);
+            grabAngleDelta = Math_AngleNormalizeSigned(g_SysWork.playerWork.player.rotation.vy - stalker->rotation.vy);
             if (ABS(grabAngleDelta) > Q12_ANGLE(90.0f))
             {
                 stalker->model.anim.status = ANIM_STATUS(StalkerAnim_34, false);
@@ -1130,8 +1130,8 @@ void Ai_Stalker_Control_4(s_SubCharacter* stalker)
     q19_12 deltaX;
     q19_12 deltaZ;
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - stalker->position.vx,
-                                       g_SysWork.playerWork_4C.player_0.position.vz - stalker->position.vz);
+    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
+                                       g_SysWork.playerWork.player.position.vz - stalker->position.vz);
 
     if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))))
     {
@@ -1242,7 +1242,7 @@ void Ai_Stalker_Control_4(s_SubCharacter* stalker)
             stalkerProps.flags_E8 &= ~StalkerFlag_4;
         }
 
-        if (distToPlayer < Q12(2.0f) && distToPlayer < dist1 && !func_800700F8(stalker, &g_SysWork.playerWork_4C.player_0))
+        if (distToPlayer < Q12(2.0f) && distToPlayer < dist1 && !func_800700F8(stalker, &g_SysWork.playerWork.player))
         {
             stalkerProps.timer_F8  = Q12(5.0f);
             stalkerProps.flags_E8 |= StalkerFlag_0;
@@ -1256,8 +1256,8 @@ void Ai_Stalker_Control_4(s_SubCharacter* stalker)
         {
             if (condCombo)
             {
-                stalkerProps.targetPositionX_F0 = g_SysWork.playerWork_4C.player_0.position.vx;
-                stalkerProps.targetPositionZ_F4 = g_SysWork.playerWork_4C.player_0.position.vz;
+                stalkerProps.targetPositionX_F0 = g_SysWork.playerWork.player.position.vx;
+                stalkerProps.targetPositionZ_F4 = g_SysWork.playerWork.player.position.vz;
                 stalkerProps.timer_116          = Q12(0.0f);
             }
 
@@ -1330,12 +1330,12 @@ void Ai_Stalker_Control_5(s_SubCharacter* stalker)
     }
     else if (ANIM_TIME_RANGE_CHECK(stalker->model.anim.time, 50, 61))
     {
-        distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - stalker->position.vx,
-                                           g_SysWork.playerWork_4C.player_0.position.vz - stalker->position.vz);
+        distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
+                                           g_SysWork.playerWork.player.position.vz - stalker->position.vz);
 
         for (i = 0; i < 6; i++)
         {
-            angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork_4C.player_0.position) -
+            angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position) -
                                                stalker->rotation.vy);
             angle1             = TIMESTEP_ANGLE(3, 3); // @hack `(g_DeltaTime / 3) >> 3` should be same as `g_DeltaTime / 24`, but that doesn't match?
             if ((angleDeltaToPlayer >= Q12_ANGLE(0.0f) && angle1 <  angleDeltaToPlayer) ||
@@ -1423,12 +1423,12 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
     stalker->field_E1_0 = 3;
     Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - stalker->position.vx,
-                               g_SysWork.playerWork_4C.player_0.position.vz - stalker->position.vz);
+    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
+                               g_SysWork.playerWork.player.position.vz - stalker->position.vz);
 
     moveSpeed = Q12(0.0f);
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork_4C.player_0.position.vx - stalker->position.vx,
-                                              g_SysWork.playerWork_4C.player_0.position.vz - stalker->position.vz) -
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
+                                              g_SysWork.playerWork.player.position.vz - stalker->position.vz) -
                                        stalker->rotation.vy);
 
     if (ABS(angleDeltaToPlayer) < Q12_ANGLE(45.0f))
@@ -1457,8 +1457,8 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
             }
         }
 
-        angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork_4C.player_0.position.vx - stalker->position.vx,
-                                                  g_SysWork.playerWork_4C.player_0.position.vz - stalker->position.vz) -
+        angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
+                                                  g_SysWork.playerWork.player.position.vz - stalker->position.vz) -
                                            stalker->rotation.vy);
     }
 
@@ -1487,9 +1487,9 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
             stalkerProps.relAnimTime_104 = Q12(0.0f);
         }
 
-        stalker->rotation.vy = Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork_4C.player_0.position);
+        stalker->rotation.vy = Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position);
 
-        if (g_SysWork.playerWork_4C.player_0.attackReceived == NO_VALUE)
+        if (g_SysWork.playerWork.player.attackReceived == NO_VALUE)
         {
             g_SysWork.flags_2284[3]         &= ~Unk2284Flag_0;
             animStatus                       = stalker->model.anim.status;
@@ -1507,7 +1507,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
             stalkerProps.timer_F8 += g_DeltaTime;
             if (stalkerProps.timer_F8 > Q12(1.5f))
             {
-                g_SysWork.playerWork_4C.player_0.damage.amount_C += (FP_TO(D_800AD4C8[50].field_4, Q12_SHIFT) * Rng_GenerateUInt(85, 116)) / 100;
+                g_SysWork.playerWork.player.damage.amount_C += (FP_TO(D_800AD4C8[50].field_4, Q12_SHIFT) * Rng_GenerateUInt(85, 116)) / 100;
                 stalkerProps.timer_F8              = Rng_Rand16() % Q12(0.5f);
             }
         }
@@ -1519,7 +1519,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
         vec0.vz = stalker->position.vz;
 
         // TODO: What's weapon attack 49?
-        if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk49, AttackInputType_Tap), stalker, &vec0, &g_SysWork.playerWork_4C, stalker->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
+        if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk49, AttackInputType_Tap), stalker, &vec0, &g_SysWork.playerWork, stalker->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
         {
             stalkerProps.flags_E8 |= StalkerFlag_5;
             g_SysWork.flags_2284[3] &= ~Unk2284Flag_1;
@@ -1687,8 +1687,8 @@ void Ai_Stalker_Control_8(s_SubCharacter* stalker)
 
     if (cond || func_80070360(stalker, Q12(0.0f), Q12(1.0f)))
     {
-        stalkerProps.targetPositionX_F0 = g_SysWork.playerWork_4C.player_0.position.vx;
-        stalkerProps.targetPositionZ_F4 = g_SysWork.playerWork_4C.player_0.position.vz;
+        stalkerProps.targetPositionX_F0 = g_SysWork.playerWork.player.position.vx;
+        stalkerProps.targetPositionZ_F4 = g_SysWork.playerWork.player.position.vz;
     }
 
     #undef BASE_DIST_MAX
@@ -1929,9 +1929,9 @@ void Ai_Stalker_Control_12(s_SubCharacter* stalker)
     q3_12  angleDeltaToPlayer;
     s32    cond; // Not `bool`?
 
-    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - stalker->position.vx,
-                                             g_SysWork.playerWork_4C.player_0.position.vz - stalker->position.vz);
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork_4C.player_0.position) -
+    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
+                                             g_SysWork.playerWork.player.position.vz - stalker->position.vz);
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position) -
                                        stalker->rotation.vy);
 
     if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))))
@@ -1953,8 +1953,8 @@ void Ai_Stalker_Control_12(s_SubCharacter* stalker)
         return;
     }
 
-    stalkerProps.targetPositionX_F0 = g_SysWork.playerWork_4C.player_0.position.vx;
-    stalkerProps.targetPositionZ_F4 = g_SysWork.playerWork_4C.player_0.position.vz;
+    stalkerProps.targetPositionX_F0 = g_SysWork.playerWork.player.position.vx;
+    stalkerProps.targetPositionZ_F4 = g_SysWork.playerWork.player.position.vz;
 
     if (distToPlayer < Q12(1.2f) && angleDeltaToPlayer < Q12_ANGLE(180.0f))
     {
@@ -2203,7 +2203,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
         ptr->position_38.vz = stalker->position.vz;
 
         // TODO: What's weapon attack 48?
-        func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk48, AttackInputType_Tap), stalker, &ptr->position_38, &g_SysWork.playerWork_4C.player_0,
+        func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk48, AttackInputType_Tap), stalker, &ptr->position_38, &g_SysWork.playerWork.player,
                       ratan2(ptr->field_20.vx - stalker->position.vx, ptr->field_20.vz - stalker->position.vz),
                       ratan2(Math_Vector2MagCalc(stalker->position.vx - ptr->field_20.vx,
                                                  stalker->position.vz - ptr->field_20.vz),
@@ -2215,10 +2215,10 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
     if (stalker->model.controlState == StalkerControl_2 ||
         stalker->model.controlState == StalkerControl_3)
     {
-        ptr->angle_46 = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork_4C.player_0.position) -
+        ptr->angle_46 = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position) -
                                       stalker->rotation.vy);
-        temp          = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - stalker->position.vx,
-                                            g_SysWork.playerWork_4C.player_0.position.vz - stalker->position.vz);
+        temp          = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
+                                            g_SysWork.playerWork.player.position.vz - stalker->position.vz);
 
         if (temp < Q12(3.0f) && ABS(ptr->angle_46) < Q12_ANGLE(45.0f))
         {

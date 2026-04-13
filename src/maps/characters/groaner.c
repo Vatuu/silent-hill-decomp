@@ -161,8 +161,8 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
         groanerProps.field_10F = 4;
     }
 
-    groanerProps.targetPositionX_F4     = g_SysWork.playerWork_4C.player_0.position.vx;
-    groanerProps.targetPositionZ_F8     = g_SysWork.playerWork_4C.player_0.position.vz;
+    groanerProps.targetPositionX_F4     = g_SysWork.playerWork.player.position.vx;
+    groanerProps.targetPositionZ_F8     = g_SysWork.playerWork.player.position.vz;
     groanerProps.flags_E8.val16[0]     |= GroanerFlag_7;
 
     groaner->health = MAX(groaner->health - groaner->damage.amount_C, Q12(0.0f));
@@ -176,7 +176,7 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
     }
     else
     {
-        newHeadingAngle = g_SysWork.playerWork_4C.player_0.rotation.vy;
+        newHeadingAngle = g_SysWork.playerWork.player.rotation.vy;
     }
 
     unkAngle = Math_AngleNormalizeSigned((newHeadingAngle - groaner->rotation.vy) + Q12_ANGLE(180.0f));
@@ -321,16 +321,16 @@ void sharedFunc_800E384C_2_s00(s_SubCharacter* groaner)
     #define getIndex() \
         ((((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 3) == 0) * 2) + ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3) == 2))
 
-    if (func_80070360(groaner, Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - groaner->position.vx,
-            g_SysWork.playerWork_4C.player_0.position.vz - groaner->position.vz), UNK_VAL) != 0 ||
+    if (func_80070360(groaner, Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
+            g_SysWork.playerWork.player.position.vz - groaner->position.vz), UNK_VAL) != 0 ||
         func_8006FD90(groaner, 1, sharedData_800EEE3C_2_s00[getIndex()].field_0, sharedData_800EEE3C_2_s00[getIndex()].field_4))
     {
         groanerProps.flags_E8.val16[0] |= GroanerFlag_7;
 
         if (groanerProps.flags_E8.val16[0] & GroanerFlag_5)
         {
-            groanerProps.targetPositionX_F4 = g_SysWork.playerWork_4C.player_0.position.vx;
-            groanerProps.targetPositionZ_F8 = g_SysWork.playerWork_4C.player_0.position.vz;
+            groanerProps.targetPositionX_F4 = g_SysWork.playerWork.player.position.vx;
+            groanerProps.targetPositionZ_F8 = g_SysWork.playerWork.player.position.vz;
         }
     }
     else
@@ -458,14 +458,14 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
         groanerProps.flags_E8.val16[0] |= GroanerFlag_8;
     }
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - groaner->position.vx,
-                                       g_SysWork.playerWork_4C.player_0.position.vz - groaner->position.vz);
+    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
+                                       g_SysWork.playerWork.player.position.vz - groaner->position.vz);
     distToPlayerMax = Rng_GenerateInt(Q12(4.0f), Q12(8.0f) - 1);
-    temp_s6 = func_800700F8(groaner, &g_SysWork.playerWork_4C.player_0);
+    temp_s6 = func_800700F8(groaner, &g_SysWork.playerWork.player);
 
     if (distToPlayer < distToPlayerMax && !temp_s6)
     {
-        groanerProps.angle_FC = Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork_4C.player_0.position);
+        groanerProps.angle_FC = Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork.player.position);
     }
     else
     {
@@ -569,16 +569,16 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
 
     if (cond && !temp_s6)
     {
-        if (!Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
+        if (!Chara_HasFlag(&g_SysWork.playerWork.player, CharaFlag_Unk4) &&
             !(g_SysWork.flags_2284[3] & Unk2284Flag_1) &&
-            g_SysWork.playerWork_4C.player_0.health > Q12(0.0f) &&
+            g_SysWork.playerWork.player.health > Q12(0.0f) &&
             g_SysWork.sysState_8 == 0 &&
-            (groaner->position.vy - g_SysWork.playerWork_4C.player_0.position.vy) > Q12(-0.8f))
+            (groaner->position.vy - g_SysWork.playerWork.player.position.vy) > Q12(-0.8f))
         {
-            if (groaner->position.vy - g_SysWork.playerWork_4C.player_0.position.vy < Q12(0.8f))
+            if (groaner->position.vy - g_SysWork.playerWork.player.position.vy < Q12(0.8f))
             {
-                if (ABS(Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork_4C.player_0.position.vx - groaner->position.vx,
-                                             g_SysWork.playerWork_4C.player_0.position.vz - groaner->position.vz) -
+                if (ABS(Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
+                                             g_SysWork.playerWork.player.position.vz - groaner->position.vz) -
                                       groaner->rotation.vy)) < Q12_ANGLE(30.0f))
                 {
                     g_SysWork.flags_2284[3]       |= Unk2284Flag_1;
@@ -592,9 +592,9 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
 
     if (distToPlayer < Q12(1.2f))
     {
-        if (Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) ||
+        if (Chara_HasFlag(&g_SysWork.playerWork.player, CharaFlag_Unk4) ||
             (g_SysWork.flags_2284[3] & Unk2284Flag_1) ||
-            g_SysWork.playerWork_4C.player_0.health <= Q12(0.0f) ||
+            g_SysWork.playerWork.player.health <= Q12(0.0f) ||
             g_SysWork.sysState_8 != 0 ||
             !Rng_GenerateInt(0, 15)) // 1 in 16 chance.
         {
@@ -630,11 +630,11 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
     s32     temp2;
 
     // TODO: Use macro.
-    deltaX       = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vx - groaner->position.vx);
-    deltaZ       = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vz - groaner->position.vz);
+    deltaX       = Q12_TO_Q6(g_SysWork.playerWork.player.position.vx - groaner->position.vx);
+    deltaZ       = Q12_TO_Q6(g_SysWork.playerWork.player.position.vz - groaner->position.vz);
     distToPlayer = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
 
-    angleDeltaToPlayer0 = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork_4C.player_0.position) -
+    angleDeltaToPlayer0 = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork.player.position) -
                                         groaner->rotation.vy);
 
     if (ANIM_STATUS_IDX_GET(groaner->model.anim.status) == GroanerAnim_15 ||
@@ -654,7 +654,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
                 groaner->rotation.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.25f));
             }
 
-            angleDeltaToPlayer1 = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork_4C.player_0.position) -
+            angleDeltaToPlayer1 = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork.player.position) -
                                                 groaner->rotation.vy);
 
             rotMax = TIMESTEP_ANGLE(1, 3);
@@ -672,12 +672,12 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
             }
             else
             {
-                groaner->rotation.vy = Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork_4C.player_0.position);
+                groaner->rotation.vy = Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork.player.position);
             }
         }
         else
         {
-            groaner->rotation.vy = Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork_4C.player_0.position);
+            groaner->rotation.vy = Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork.player.position);
         }
         groaner->headingAngle = groaner->rotation.vy;
     }
@@ -706,11 +706,11 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
         if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_9))
         {
             groanerProps.flags_E8.val16[0]                         |= GroanerFlag_9;
-            var_v0                                                = g_SysWork.playerWork_4C.player_0.field_D4.field_2 + 573;
+            var_v0                                                = g_SysWork.playerWork.player.field_D4.field_2 + 573;
             var_v0                                                = (distToPlayer - var_v0) << 1;
             groaner->moveSpeed                                   = MIN(var_v0, Q12(4.5f));
 
-            deltaY                                           = g_SysWork.playerWork_4C.player_0.position.vy - groaner->position.vy;
+            deltaY                                           = g_SysWork.playerWork.player.position.vy - groaner->position.vy;
             groaner->field_44.field_0                             = 1;
             groanerProps.field_10F                                = 2;
             groaner->fallSpeed                                 = Q12_MULT_PRECISE(deltaY - Q12(1.4f), Q12(2.35f));
@@ -722,7 +722,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
         sp20.vx = groaner->position.vx + groaner->field_D8.offsetX_4;
         sp20.vy = groaner->position.vy - Q12(0.8f);
         sp20.vz = groaner->position.vz + groaner->field_D8.offsetZ_6;
-        func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Hold), groaner, &sp20, &g_SysWork.playerWork_4C.player_0, groaner->rotation.vy, Q12_ANGLE(90.0f));
+        func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Hold), groaner, &sp20, &g_SysWork.playerWork.player, groaner->rotation.vy, Q12_ANGLE(90.0f));
     }
 
     if ((ANIM_TIME_REL_KEYFRAME_IDX_GET(groaner->model.anim.time, 222)) < 14u)
@@ -858,8 +858,8 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
         }
     }
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - groaner->position.vx,
-                                       g_SysWork.playerWork_4C.player_0.position.vz - groaner->position.vz);
+    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
+                                       g_SysWork.playerWork.player.position.vz - groaner->position.vz);
     if (distToPlayer > Q12(3.5f))
     {
         if (distToPlayer > Q12(5.25f))

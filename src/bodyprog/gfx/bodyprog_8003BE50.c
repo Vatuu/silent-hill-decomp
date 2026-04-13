@@ -226,7 +226,7 @@ void Map_WorldClear(void) // 0x8003C30C
 void WorldGfx_IpdSamplePointStore(void) // 0x8003C368
 {
     g_WorldGfxWork.useStoredPoint_4 = true;
-    g_WorldGfxWork.ipdSamplePoint_8 = g_SysWork.playerWork_4C.player_0.position;
+    g_WorldGfxWork.ipdSamplePoint_8 = g_SysWork.playerWork.player.position;
 }
 
 void WorldGfx_IpdSamplePointReset(void) // 0x8003C3A0
@@ -243,7 +243,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
                           // the player player position or a position slightly ahead computed from the heading angle.
                           //
                           // In Old Silent Hill (after Cafe 5to2) while standing still, this value is
-                          // the same as `g_SysWork.playerWork_4C.player_0.position`.
+                          // the same as `g_SysWork.playerWork.player.position`.
     VECTOR3         pos1; // Draw distance?
                           // If the conditional `if (g_WorldEnvWork.isFogEnabled_1)` is reversed
                           // to run the `else` block, when fog is enabled, the draw distance
@@ -263,7 +263,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
     u8              flagsCpy;
     s_SubCharacter* chara;
 
-    chara = &g_SysWork.playerWork_4C.player_0;
+    chara = &g_SysWork.playerWork.player;
 
     if (g_WorldGfxWork.useStoredPoint_4)
     {
@@ -406,7 +406,7 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* model, const VECTOR3* pos, const SVE
         {
             func_8003BED0();
 
-            lmIdx = func_8004287C(model, &model->metadata_10, g_SysWork.playerWork_4C.player_0.position.vx, g_SysWork.playerWork_4C.player_0.position.vz);
+            lmIdx = func_8004287C(model, &model->metadata_10, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
             if (lmIdx == 0)
             {
                 if (!Lm_ModelFind(model, &g_WorldGfxWork.itemLmHdr_1BE4, &model->metadata_10))
@@ -550,7 +550,7 @@ s32 WorldGfx_PlayerPrevHeldItem(s_PlayerCombat* combat) // 0x8003CD6C
     s32 itemId;
     s8  weaponAttack;
 
-    weaponAttack = combat->weaponAttack_F;
+    weaponAttack = combat->weaponAttack;
     itemId       = NO_VALUE;
     if (weaponAttack != NO_VALUE)
     {

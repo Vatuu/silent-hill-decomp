@@ -26,7 +26,7 @@ s32 Chara_NpcIdxGet(s_SubCharacter* chara) // 0x8005C7D0
 
     i = 0;
 
-    if (chara == &g_SysWork.playerWork_4C.player_0)
+    if (chara == &g_SysWork.playerWork.player)
     {
         return ARRAY_SIZE(g_SysWork.npcs_1A0);
     }
@@ -234,7 +234,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
             continue;
         }
 
-        if (func_8006DA08(&ray, unkOffset, &unkPos, &g_SysWork.playerWork_4C.player_0) && ray.chara_10 == &g_SysWork.npcs_1A0[i])
+        if (func_8006DA08(&ray, unkOffset, &unkPos, &g_SysWork.playerWork.player) && ray.chara_10 == &g_SysWork.npcs_1A0[i])
         {
             *targetNpcIdx  = i;
             *outAngle0  = angle3;

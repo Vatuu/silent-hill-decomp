@@ -181,8 +181,8 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
                     }
                 }
 
-                if (ABS(scratcher->position.vx - g_SysWork.playerWork_4C.player_0.position.vx) > Q12(0.2f) &&
-                    ABS(scratcher->position.vz - g_SysWork.playerWork_4C.player_0.position.vz) > Q12(0.2f))
+                if (ABS(scratcher->position.vx - g_SysWork.playerWork.player.position.vx) > Q12(0.2f) &&
+                    ABS(scratcher->position.vz - g_SysWork.playerWork.player.position.vz) > Q12(0.2f))
                 {
                     if (coll.field_8 != 7 && (Rng_Rand16() & 0xF) < 4)
                     {
@@ -334,12 +334,12 @@ void Ai_HangedScratcher_Control_1(s_SubCharacter* scratcher)
 {
     q19_12 distToPlayer;
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - scratcher->position.vx,
-                                       g_SysWork.playerWork_4C.player_0.position.vz - scratcher->position.vz);
+    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+                                       g_SysWork.playerWork.player.position.vz - scratcher->position.vz);
 
     // TODO: Invert to return early instead?
     if (distToPlayer < Q12(1.0f) &&
-        !func_800700F8(scratcher, &g_SysWork.playerWork_4C.player_0) &&
+        !func_800700F8(scratcher, &g_SysWork.playerWork.player) &&
         (((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3) == 2 && func_8006FD90(scratcher, 1, Q12(2.0f), Q12(1.5f))) ||
          ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) &&
           (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) &&
@@ -354,8 +354,8 @@ void Ai_HangedScratcher_Control_2(s_SubCharacter* chara)
 {
     q19_12 distToPlayer;
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - chara->position.vx,
-                                       g_SysWork.playerWork_4C.player_0.position.vz - chara->position.vz);
+    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - chara->position.vx,
+                                       g_SysWork.playerWork.player.position.vz - chara->position.vz);
 
     Chara_MoveSpeedUpdate(chara, Q12(4.0f));
 
@@ -373,9 +373,9 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
     q3_12  targetRotDelta;
     q19_12 playerPosYDelta;
 
-    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - scratcher->position.vx,
-                                             g_SysWork.playerWork_4C.player_0.position.vz - scratcher->position.vz);
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork_4C.player_0.position) -
+    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+                                             g_SysWork.playerWork.player.position.vz - scratcher->position.vz);
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork.player.position) -
                                        scratcher->rotation.vy);
     angleDeltaToPlayer = ABS(angleDeltaToPlayer);
 
@@ -405,8 +405,8 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
         {
             scratcherProps.targetHeadingAngle_EC = Chara_HeadingAngleGet(scratcher,
                                                                          Q12(5.0f),
-                                                                         g_SysWork.playerWork_4C.player_0.position.vx,
-                                                                         g_SysWork.playerWork_4C.player_0.position.vz,
+                                                                         g_SysWork.playerWork.player.position.vx,
+                                                                         g_SysWork.playerWork.player.position.vz,
                                                                          Q12_ANGLE(360.0f),
                                                                          true);
             if (scratcherProps.targetHeadingAngle_EC == Q12_ANGLE(360.0f))
@@ -420,8 +420,8 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
         {
             scratcherProps.targetHeadingAngle_EC = Chara_HeadingAngleGet(scratcher,
                                                                          Q12(1.5f),
-                                                                         g_SysWork.playerWork_4C.player_0.position.vx,
-                                                                         g_SysWork.playerWork_4C.player_0.position.vz,
+                                                                         g_SysWork.playerWork.player.position.vx,
+                                                                         g_SysWork.playerWork.player.position.vz,
                                                                          Q12_ANGLE(360.0f),
                                                                          true);
             if (scratcherProps.targetHeadingAngle_EC == Q12_ANGLE(360.0f))
@@ -433,7 +433,7 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
         }
         else
         {
-            scratcherProps.targetHeadingAngle_EC = Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork_4C.player_0.position);
+            scratcherProps.targetHeadingAngle_EC = Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork.player.position);
             scratcherProps.timer_EA              = Q12(0.0f);
         }
 
@@ -461,12 +461,12 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
     }
     else
     {
-        if (!Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, 8) && !(g_SysWork.flags_2284[3] & Unk2284Flag_1))
+        if (!Chara_HasFlag(&g_SysWork.playerWork.player, 8) && !(g_SysWork.flags_2284[3] & Unk2284Flag_1))
         {
-            if (g_SysWork.playerWork_4C.player_0.health > Q12(0.0f) &&
+            if (g_SysWork.playerWork.player.health > Q12(0.0f) &&
                 distToPlayer < Q12(1.0f) && angleDeltaToPlayer < Q12_ANGLE(30.0f))
             {
-                playerPosYDelta = scratcher->position.vy - g_SysWork.playerWork_4C.player_0.position.vy;
+                playerPosYDelta = scratcher->position.vy - g_SysWork.playerWork.player.position.vy;
                 if (playerPosYDelta < Q12(-3.5f))
                 {
                     if (playerPosYDelta > Q12(-3.7f))
@@ -496,9 +496,9 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
     q3_12   angleDeltaToPlayer;
     q3_12   angleDeltaToPlayerAbs;
 
-    distToPlayer          = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - scratcher->position.vx,
-                                                g_SysWork.playerWork_4C.player_0.position.vz - scratcher->position.vz);
-    angleDeltaToPlayer    = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork_4C.player_0.position) -
+    distToPlayer          = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+                                                g_SysWork.playerWork.player.position.vz - scratcher->position.vz);
+    angleDeltaToPlayer    = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork.player.position) -
                                           scratcher->rotation.vy);
     angleDeltaToPlayerAbs = ABS(angleDeltaToPlayer);
 
@@ -538,8 +538,8 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
             attackPos.vz             = scratcher->position.vz;
             scratcherProps.flags_E8 |= HangedScratcherFlag_5;
 
-            func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk44, AttackInputType_Tap), scratcher, &attackPos, &g_SysWork.playerWork_4C.player_0, scratcher->rotation.vy,
-                          ratan2(distToPlayer, (g_SysWork.playerWork_4C.player_0.position.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_6) - attackPos.vy));
+            func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk44, AttackInputType_Tap), scratcher, &attackPos, &g_SysWork.playerWork.player, scratcher->rotation.vy,
+                          ratan2(distToPlayer, (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.field_C8.field_6) - attackPos.vy));
         }
         else if (ANIM_STATUS_IDX_GET(scratcher->model.anim.status) == HangedScratcherAnim_14)
         {
@@ -573,10 +573,10 @@ void Ai_HangedScratcher_Control_5(s_SubCharacter* scratcher)
                                     MAX_OFFSET(scratcher->position.vy, Q12(1.0f), Q12(0.0f)),
                                     MIN_OFFSET(scratcher->position.vz, Q12(0.5f), Q12(0.5f)),
                                     MAX_OFFSET(scratcher->position.vz, Q12(0.5f), Q12(0.5f))) ||
-        Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - scratcher->position.vx,
-                            g_SysWork.playerWork_4C.player_0.position.vz - scratcher->position.vz) < Q12(1.0f))
+        Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+                            g_SysWork.playerWork.player.position.vz - scratcher->position.vz) < Q12(1.0f))
     {
-        if (func_800700F8(scratcher, &g_SysWork.playerWork_4C.player_0))
+        if (func_800700F8(scratcher, &g_SysWork.playerWork.player))
         {
             return;
         }
@@ -596,8 +596,8 @@ void Ai_HangedScratcher_Control_6(s_SubCharacter* scratcher)
     q19_12 distToPlayer;
     u16    temp_v1;
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - scratcher->position.vx,
-                                       g_SysWork.playerWork_4C.player_0.position.vz - scratcher->position.vz);
+    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+                                       g_SysWork.playerWork.player.position.vz - scratcher->position.vz);
 
     Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
 
@@ -636,12 +636,12 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
     bool   cond;
     q3_12  targetRotDelta;
 
-    distToPlayer          = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - scratcher->position.vx,
-                                                g_SysWork.playerWork_4C.player_0.position.vz - scratcher->position.vz);
-    angleDeltaToPlayer    = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork_4C.player_0.position) -
+    distToPlayer          = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+                                                g_SysWork.playerWork.player.position.vz - scratcher->position.vz);
+    angleDeltaToPlayer    = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork.player.position) -
                                           scratcher->rotation.vy);
     angleDeltaToPlayerAbs = ABS(angleDeltaToPlayer);
-    angleToPlayer         = Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork_4C.player_0.position);
+    angleToPlayer         = Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork.player.position);
 
     if (distToPlayer > Q12(16.0f))
     {
@@ -652,7 +652,7 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
         return;
     }
 
-    cond = func_800700F8(scratcher, &g_SysWork.playerWork_4C.player_0);
+    cond = func_800700F8(scratcher, &g_SysWork.playerWork.player);
 
     if (angleDeltaToPlayerAbs < TIMESTEP_ANGLE(1, 3) && !cond)
     {
@@ -694,7 +694,7 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
         {
             scratcherProps.timer_EA = Q12(0.0f);
 
-            scratcherProps.targetHeadingAngle_EC = Chara_HeadingAngleGet(scratcher, Q12(1.0f), g_SysWork.playerWork_4C.player_0.position.vx, g_SysWork.playerWork_4C.player_0.position.vz, Q12_ANGLE(360.0f), true);
+            scratcherProps.targetHeadingAngle_EC = Chara_HeadingAngleGet(scratcher, Q12(1.0f), g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz, Q12_ANGLE(360.0f), true);
             if (scratcherProps.targetHeadingAngle_EC == Q12_ANGLE(360.0f))
             {
                 scratcherProps.targetHeadingAngle_EC = scratcher->rotation.vy - Q12_ANGLE(180.0f);
@@ -720,13 +720,13 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
     }
 
     if (!cond && !(g_SysWork.flags_2284[3] & Unk2284Flag_1) &&
-        !(g_SysWork.playerWork_4C.player_0.flags & CharaFlag_Unk4) &&
-        g_SysWork.playerWork_4C.player_0.health > Q12(0.0f))
+        !(g_SysWork.playerWork.player.flags & CharaFlag_Unk4) &&
+        g_SysWork.playerWork.player.health > Q12(0.0f))
     {
-        if (Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - scratcher->position.vx,
-                                g_SysWork.playerWork_4C.player_0.position.vz - scratcher->position.vz) < Q12(1.2f))
+        if (Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+                                g_SysWork.playerWork.player.position.vz - scratcher->position.vz) < Q12(1.2f))
         {
-            if (ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork_4C.player_0.position) -
+            if (ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork.player.position) -
                                   scratcher->rotation.vy)) < Q12_ANGLE(20.0f))
             {
                 scratcher->model.controlState  = HangedScratcherControl_15;
@@ -1026,9 +1026,9 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
     q19_12  distToPlayer;
     q3_12   angleDeltaToPlayer;
 
-    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - scratcher->position.vx,
-                                             g_SysWork.playerWork_4C.player_0.position.vz - scratcher->position.vz);
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork_4C.player_0.position) -
+    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+                                             g_SysWork.playerWork.player.position.vz - scratcher->position.vz);
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork.player.position) -
                                        scratcher->rotation.vy);
 
     if (ANIM_TIME_RANGE_CHECK(scratcher->model.anim.time, 116, 123) &&
@@ -1056,8 +1056,8 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
         }
         else
         {
-            scratcher->rotation.vy = ratan2(g_SysWork.playerWork_4C.player_0.position.vx - scratcher->position.vx,
-                                               g_SysWork.playerWork_4C.player_0.position.vz - scratcher->position.vz);
+            scratcher->rotation.vy = ratan2(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+                                               g_SysWork.playerWork.player.position.vz - scratcher->position.vz);
         }
     }
 
@@ -1074,7 +1074,7 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
 
         scratcherProps.flags_E8 |= HangedScratcherFlag_5;
 
-        func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk45, AttackInputType_Tap), scratcher, &attackPos, &g_SysWork.playerWork_4C.player_0, scratcher->rotation.vy, Q12_ANGLE(90.0f));
+        func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk45, AttackInputType_Tap), scratcher, &attackPos, &g_SysWork.playerWork.player, scratcher->rotation.vy, Q12_ANGLE(90.0f));
     }
 
     if (scratcher->model.anim.status == ANIM_STATUS(HangedScratcherAnim_15, true))
@@ -1772,8 +1772,8 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
                 {
                     if (!Rng_GenerateInt(0, 511)) // 1 in 512 chance.
                     {
-                        if (Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - scratcher->position.vx,
-                                                g_SysWork.playerWork_4C.player_0.position.vz - scratcher->position.vz) > Q12(6.5f))
+                        if (Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+                                                g_SysWork.playerWork.player.position.vz - scratcher->position.vz) > Q12(6.5f))
                         {
                             scratcherProps.timer_108 = Rng_GenerateInt(Q12(3.5f), Q12(8.0f) - 1);
                             func_8005DC1C(Sfx_Unk1583, &scratcher->position, Q8(0.5f), 0);
@@ -1799,8 +1799,8 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
                 {
                     if (!Rng_GenerateUInt(0, 255)) // 1 in 256 chance.
                     {
-                        if (Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - scratcher->position.vx,
-                                                g_SysWork.playerWork_4C.player_0.position.vz - scratcher->position.vz) > Q12(4.5f))
+                        if (Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+                                                g_SysWork.playerWork.player.position.vz - scratcher->position.vz) > Q12(4.5f))
                         {
                             scratcherProps.timer_108 = Rng_GenerateInt(Q12(3.5f), Q12(7.5f) - 1);
                             func_8005DC1C(Sfx_Unk1583, &scratcher->position, Q8(0.5f), 0);

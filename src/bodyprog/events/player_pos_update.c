@@ -12,7 +12,7 @@ void Chara_PositionSet(s_MapPoint2d* mapPoint) // 0x800371E8
 {
     q19_12 rotY;
 
-    #define playerChara g_SysWork.playerWork_4C.player_0
+    #define playerChara g_SysWork.playerWork.player
 
     rotY = Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0_4_16);
     Math_SVectorSet(&playerChara.rotation, Q12_ANGLE(0.0f), rotY, Q12_ANGLE(0.0f));
@@ -55,6 +55,6 @@ void Game_PlayerHeightUpdate(void) // 0x80037334
         g_MapOverlayHeader.worldObjectsUpdate_40();
     }
 
-    Collision_Get(&coll, g_SysWork.playerWork_4C.player_0.position.vx, g_SysWork.playerWork_4C.player_0.position.vz);
-    g_SysWork.playerWork_4C.player_0.position.vy = coll.groundHeight_0;
+    Collision_Get(&coll, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
+    g_SysWork.playerWork.player.position.vy = coll.groundHeight_0;
 }

@@ -95,8 +95,8 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
         if (!(g_SysWork.flags_22A4 & SysFlag2_4) && HAS_FLAG(ovlEnemiesStatePtr, i) && !HAS_FLAG(g_SysWork.field_228C, i) &&
             curCharaSpawn->flags_6 != 0 && g_SavegamePtr->gameDifficulty_260 >= curCharaSpawn->gameDifficultyMin_7_0 &&
             func_8008F914(curCharaSpawn->positionX_0, curCharaSpawn->positionZ_8) &&
-            !Math_Distance2dCheck(&g_SysWork.playerWork_4C.player_0.position, pos, Q12(22.0f)) &&
-            (!cond || Math_Distance2dCheck(&g_SysWork.playerWork_4C.player_0.position, pos, Q12(20.0f))))
+            !Math_Distance2dCheck(&g_SysWork.playerWork.player.position, pos, Q12(22.0f)) &&
+            (!cond || Math_Distance2dCheck(&g_SysWork.playerWork.player.position, pos, Q12(20.0f))))
         {
             while (HAS_FLAG(&g_SysWork.npcFlags_2290, npcIdx))
             {
@@ -209,8 +209,8 @@ void Game_NpcUpdate(void) // 0x80038354
         return NO_VALUE;
     }
 
-    posXShift6 = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vx);
-    posZShift6 = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vz);
+    posXShift6 = Q12_TO_Q6(g_SysWork.playerWork.player.position.vx);
+    posZShift6 = Q12_TO_Q6(g_SysWork.playerWork.player.position.vz);
 
     Demo_DemoRandSeedBackup();
     Demo_DemoRandSeedRestore();
@@ -246,7 +246,7 @@ void Game_NpcUpdate(void) // 0x80038354
 
                     if (var_t5 != 0)
                     {
-                        s32 playerCell = (g_SysWork.playerWork_4C.player_0.position.vx + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
+                        s32 playerCell = (g_SysWork.playerWork.player.position.vx + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
                         s32 npcCell    = (npc->position.vx                        + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
                         if (npcCell != playerCell)
                         {
@@ -254,7 +254,7 @@ void Game_NpcUpdate(void) // 0x80038354
                         }
 
                         // TODO: Unique vars for these.
-                        playerCell = (g_SysWork.playerWork_4C.player_0.position.vz + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
+                        playerCell = (g_SysWork.playerWork.player.position.vz + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
                         npcCell    = (npc->position.vz                        + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
                         if (npcCell != playerCell)
                         {

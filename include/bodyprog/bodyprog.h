@@ -2379,7 +2379,7 @@ extern q3_12 g_Player_FlexRotationX;
 extern u8 D_800AF220;
 
 /** @brief Last weapon selected. While it is being assigned the value of
- * `g_SysWork::playerCombat_38::weaponAttack_F` this time it is used to determine
+ * `g_SysWork::playerCombat_38::weaponAttack` this time it is used to determine
  * the last weapon used in order to load the required animation data.
  */
 extern s32 g_Player_LastWeaponSelected;

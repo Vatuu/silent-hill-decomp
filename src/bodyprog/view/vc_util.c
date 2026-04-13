@@ -101,13 +101,13 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
             g_WorldGfxWork.vcCameraInternalInfo_1BDC.mode = 0;
 
             first_cam_pos.vy = Q12(-2.2f);
-            first_cam_pos.vx = g_SysWork.playerWork_4C.player_0.position.vx + Q12(7.0f);
-            first_cam_pos.vz = g_SysWork.playerWork_4C.player_0.position.vz;
+            first_cam_pos.vx = g_SysWork.playerWork.player.position.vx + Q12(7.0f);
+            first_cam_pos.vz = g_SysWork.playerWork.player.position.vz;
 
-            vcSetFirstCamWork(&first_cam_pos, g_SysWork.playerWork_4C.player_0.rotation.vy, false);
+            vcSetFirstCamWork(&first_cam_pos, g_SysWork.playerWork.player.rotation.vy, false);
 
         case DebugCameraMode_Collide:
-            hr_p = &g_SysWork.playerWork_4C.player_0;
+            hr_p = &g_SysWork.playerWork.player;
 
             if (in_connect_f)
             {
@@ -231,8 +231,8 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p,
         sys_p->cameraRadiusXz_2380 = RADIUS_MIN;
     }
 
-    vcAddOfsToPos(ref_pos, &g_SysWork.playerWork_4C.player_0.position,
-                  Q12(0.5f), g_SysWork.playerWork_4C.player_0.rotation.vy, Q12(-1.0f));
+    vcAddOfsToPos(ref_pos, &g_SysWork.playerWork.player.position,
+                  Q12(0.5f), g_SysWork.playerWork.player.rotation.vy, Q12(-1.0f));
 
     #undef POS_OFFSET
     #undef RADIUS_MIN

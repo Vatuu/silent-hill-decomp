@@ -923,7 +923,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
                     set_active_data_f = false;
                     if (sc_p == &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353])
                     {
-                        set_active_data_f = g_SysWork.playerCombat_38.isAiming_13 > false;
+                        set_active_data_f = g_SysWork.playerCombat_38.isAiming > false;
                     }
                 }
             }
@@ -1375,7 +1375,7 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, V
 {
     VECTOR3 far_watch_pos; // Q19.12
 
-    #define playerChara g_SysWork.playerWork_4C.player_0
+    #define playerChara g_SysWork.playerWork.player
 
     vcMakeFarWatchTgtPos(&far_watch_pos, w_p, cur_rd_area_size);
     if (cam_mv_type != VC_MV_SELF_VIEW)
@@ -1495,7 +1495,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
     q19_12     corrected_angle_y;
     s_SysWork* sys_work;
 
-    #define playerChara g_SysWork.playerWork_4C.player_0
+    #define playerChara g_SysWork.playerWork.player
 
     delta_x = watch_tgt_pos->vx - w_p->cam_pos.vx;
     delta_y = watch_tgt_pos->vy - w_p->cam_pos.vy;
@@ -1511,7 +1511,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
     sys_work = &g_SysWork;
 
     vwMatrixToAngleYXZ(&cam_ang, head_mat);
-    angle_delta_y = Math_AngleNormalize(cam_ang.vy - sys_work->playerWork_4C.player_0.rotation.vy);
+    angle_delta_y = Math_AngleNormalize(cam_ang.vy - sys_work->playerWork.player.rotation.vy);
 
     // 4-step angle adjustment based on hardcoded anim statuses.
 

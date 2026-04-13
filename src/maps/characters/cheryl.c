@@ -157,7 +157,7 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
             Model_AnimStatusSet(&chara->model, CherylAnim_2, false);
             Character_AnimStateReset(chara);
 
-            g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
             dahliaProps.field_124                                        = Q12_ANGLE(0.0f);
             break;
 
@@ -176,7 +176,7 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
             Model_AnimStatusSet(&chara->model, CherylAnim_2, false);
             Character_AnimStateReset(chara);
 
-            g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
             dahliaProps.field_124                                        = Q12_ANGLE(0.0f);
             break;
     }
@@ -184,8 +184,8 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
     Collision_Get(&coll, chara->position.vx, chara->position.vz);
     func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
 
-    distSqr = SQUARE(Q12_TO_Q8(chara->position.vx - g_SysWork.playerWork_4C.player_0.position.vx)) +
-              SQUARE(Q12_TO_Q8(chara->position.vz - g_SysWork.playerWork_4C.player_0.position.vz));
+    distSqr = SQUARE(Q12_TO_Q8(chara->position.vx - g_SysWork.playerWork.player.position.vx)) +
+              SQUARE(Q12_TO_Q8(chara->position.vz - g_SysWork.playerWork.player.position.vz));
 
     if (g_Player_DisableControl)
     {

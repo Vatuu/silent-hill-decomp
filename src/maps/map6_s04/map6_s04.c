@@ -202,8 +202,8 @@ void func_800D8B14(s_SubCharacter* chara, s_Model* model) // 0x800D8B14
             chara->damage.amount_C = Q12(0.0f);
 
             g_SysWork.npcs_1A0[0].properties.monsterCybil.field_122 = Q12_ANGLE_NORM_U(
-                ratan2(Q12_TO_Q8(chara->position.vx - g_SysWork.playerWork_4C.player_0.position.vx),
-                       Q12_TO_Q8(chara->position.vz - g_SysWork.playerWork_4C.player_0.position.vz)) +
+                ratan2(Q12_TO_Q8(chara->position.vx - g_SysWork.playerWork.player.position.vx),
+                       Q12_TO_Q8(chara->position.vz - g_SysWork.playerWork.player.position.vz)) +
                 Q12(1.0f));
 
             Math_ShortestAngleGet(chara->rotation.vy, g_SysWork.npcs_1A0[0].properties.monsterCybil.field_122, &sp12);
@@ -276,8 +276,8 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
     q19_12      angle0;
     q19_12      moveSpeed;
 
-    g_SysWork.npcs_1A0[0].properties.monsterCybil.field_110 = Q8_TO_Q12(SquareRoot0(SQUARE(Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position.vx - chara->position.vx)) +
-                                                                                       SQUARE(Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position.vz - chara->position.vz))));
+    g_SysWork.npcs_1A0[0].properties.monsterCybil.field_110 = Q8_TO_Q12(SquareRoot0(SQUARE(Q12_TO_Q8(g_SysWork.playerWork.player.position.vx - chara->position.vx)) +
+                                                                                       SQUARE(Q12_TO_Q8(g_SysWork.playerWork.player.position.vz - chara->position.vz))));
 
     g_SysWork.npcs_1A0[0].properties.monsterCybil.field_120 = func_800DB6FC(&chara->position);
 
@@ -659,7 +659,7 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             func_800DC018(chara);
 
-            if (g_SysWork.playerWork_4C.player_0.health > 0 && g_SysWork.npcs_1A0[0].properties.monsterCybil.field_116 == 0)
+            if (g_SysWork.playerWork.player.health > 0 && g_SysWork.npcs_1A0[0].properties.monsterCybil.field_116 == 0)
             {
                 if (g_SysWork.npcs_1A0[0].properties.monsterCybil.field_110 > Q12(0.6f))
                 {
@@ -890,10 +890,10 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                 model->anim.keyframeIdx = chara->model.anim.keyframeIdx;
             }
 
-            if (g_SysWork.playerWork_4C.player_0.health > 0 && g_SysWork.npcs_1A0[0].properties.monsterCybil.field_116 == 0)
+            if (g_SysWork.playerWork.player.health > 0 && g_SysWork.npcs_1A0[0].properties.monsterCybil.field_116 == 0)
             {
                 if (g_SysWork.npcs_1A0[0].properties.monsterCybil.field_110 < Q12(0.8f) &&
-                    (g_SysWork.playerWork_4C.extra_128.state_1C > 50 || g_SysWork.playerWork_4C.extra_128.state_1C < 47))
+                    (g_SysWork.playerWork.extra.state > 50 || g_SysWork.playerWork.extra.state < 47))
                 {
                     if (g_SysWork.npcs_1A0[0].properties.monsterCybil.field_EE == 1)
                     {
@@ -904,8 +904,8 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                     }
                 }
                 else if (g_SysWork.npcs_1A0[0].properties.monsterCybil.field_108 >= Q12(3.0f) &&
-                         (!func_800DB81C(chara) || g_SysWork.playerWork_4C.extra_128.state_1C == 47 ||
-                          g_SysWork.playerWork_4C.extra_128.state_1C == 48))
+                         (!func_800DB81C(chara) || g_SysWork.playerWork.extra.state == 47 ||
+                          g_SysWork.playerWork.extra.state == 48))
                 {
                     if (g_SysWork.npcs_1A0[0].properties.monsterCybil.field_110 <= Q12(4.0f))
                     {
@@ -948,7 +948,7 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
             if (model->anim.keyframeIdx == D_800EA776 && D_800EBB48 < g_SysWork.npcs_1A0[0].properties.monsterCybil.field_F0)
             {
                 if (g_SysWork.npcs_1A0[0].properties.monsterCybil.field_120 != 0 &&
-                    !(g_SysWork.playerWork_4C.player_0.flags & (1 << 3)))
+                    !(g_SysWork.playerWork.player.flags & (1 << 3)))
                 {
                     g_SysWork.npcs_1A0[0].properties.monsterCybil.field_114 = 0;
                     g_SysWork.npcs_1A0[0].properties.monsterCybil.field_EE  = 3;
@@ -1003,7 +1003,7 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                                   WEAPON_ATTACK(EquippedWeaponId_Unk63, AttackInputType_Tap),
                                   chara,
                                   &D_800ED570,
-                                  &g_SysWork.playerWork_4C.player_0,
+                                  &g_SysWork.playerWork.player,
                                   chara->rotation.vy,
                                   g_SysWork.npcs_1A0[0].properties.monsterCybil.field_11A) != NO_VALUE)
                 {
@@ -1081,9 +1081,9 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                 chara->field_44.field_0 = 0;
             }
 
-            if (func_8008A0E4(chara->field_44.field_0, WEAPON_ATTACK(EquippedWeaponId_HandgunBullets, AttackInputType_Tap), chara, &D_800ED570, &g_SysWork.playerWork_4C.player_0, chara->rotation.vy, 0x400) != -1)
+            if (func_8008A0E4(chara->field_44.field_0, WEAPON_ATTACK(EquippedWeaponId_HandgunBullets, AttackInputType_Tap), chara, &D_800ED570, &g_SysWork.playerWork.player, chara->rotation.vy, 0x400) != -1)
             {
-                g_SysWork.playerWork_4C.player_0.damage.position_0.vz = Q12(1.0f);
+                g_SysWork.playerWork.player.damage.position_0.vz = Q12(1.0f);
 
                 if (sharedData_800D16E4_2_s01 == 0)
                 {
@@ -1207,7 +1207,7 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             func_800DC018(chara);
 
-            if (g_SysWork.playerWork_4C.player_0.health > Q12(0.0f) &&
+            if (g_SysWork.playerWork.player.health > Q12(0.0f) &&
                 g_SysWork.npcs_1A0[0].properties.monsterCybil.field_116 == 0)
             {
                 g_SysWork.npcs_1A0[0].properties.monsterCybil.field_126 = 0;
@@ -1298,28 +1298,28 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             if (chara->model.anim.status & 1)
             {
-                chara->model.anim.time        = g_SysWork.playerWork_4C.player_0.model.anim.time - Q12(832.0f);
-                chara->model.anim.keyframeIdx = g_SysWork.playerWork_4C.player_0.model.anim.keyframeIdx - 832;
+                chara->model.anim.time        = g_SysWork.playerWork.player.model.anim.time - Q12(832.0f);
+                chara->model.anim.keyframeIdx = g_SysWork.playerWork.player.model.anim.keyframeIdx - 832;
             }
 
             g_SysWork.npcs_1A0[0].properties.monsterCybil.field_126 = 0;
             angle                                                    = Q12_FRACT((u16)chara->rotation.vy + Q12(1.5f));
 
-            switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+            switch (g_SysWork.playerWork.extra.state)
             {
                 case 32:
-                    var_s3 = g_SysWork.playerWork_4C.player_0.position.vx + Q12_MULT(Math_Sin(angle), Q12(0.62f));
-                    var_a1 = g_SysWork.playerWork_4C.player_0.position.vz + Q12_MULT(Math_Cos(angle), Q12(0.62f));
+                    var_s3 = g_SysWork.playerWork.player.position.vx + Q12_MULT(Math_Sin(angle), Q12(0.62f));
+                    var_a1 = g_SysWork.playerWork.player.position.vz + Q12_MULT(Math_Cos(angle), Q12(0.62f));
                     break;
 
                 case 33:
-                    var_s3 = g_SysWork.playerWork_4C.player_0.position.vx + Q12_MULT(Math_Sin(angle), Q12(0.8f));
-                    var_a1 = g_SysWork.playerWork_4C.player_0.position.vz + Q12_MULT(Math_Cos(angle), Q12(0.8f));
+                    var_s3 = g_SysWork.playerWork.player.position.vx + Q12_MULT(Math_Sin(angle), Q12(0.8f));
+                    var_a1 = g_SysWork.playerWork.player.position.vz + Q12_MULT(Math_Cos(angle), Q12(0.8f));
                     break;
             }
 
-            if (g_SysWork.playerWork_4C.extra_128.state_1C > 31 &&
-                g_SysWork.playerWork_4C.extra_128.state_1C < 34)
+            if (g_SysWork.playerWork.extra.state > 31 &&
+                g_SysWork.playerWork.extra.state < 34)
             {
                 if (var_s3 < chara->position.vx)
                 {
@@ -1394,7 +1394,7 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                 model->anim.keyframeIdx = chara->model.anim.keyframeIdx;
             }
 
-            if (g_SysWork.playerWork_4C.player_0.health > Q12(0.0f) &&
+            if (g_SysWork.playerWork.player.health > Q12(0.0f) &&
                 g_SysWork.npcs_1A0[0].properties.monsterCybil.field_116 == 0 &&
                 g_SysWork.npcs_1A0[0].properties.monsterCybil.field_110 < Q12(0.8f) &&
                 g_SysWork.npcs_1A0[0].properties.monsterCybil.field_106 > 30)
@@ -1447,13 +1447,13 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                                       WEAPON_ATTACK(EquippedWeaponId_ShotgunShells, AttackInputType_Tap),
                                       chara,
                                       &D_800ED570,
-                                      &g_SysWork.playerWork_4C.player_0,
+                                      &g_SysWork.playerWork.player,
                                       chara->rotation.vy,
                                       Q12_ANGLE(90.0f));
 
             if (temp_v0_2 != NO_VALUE)
             {
-                g_SysWork.playerWork_4C.player_0.field_40 = chara->field_40;
+                g_SysWork.playerWork.player.field_40 = chara->field_40;
             }
 
             if (model->anim.keyframeIdx == D_800EA7D6)
@@ -1485,21 +1485,21 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             if (ANIM_STATUS_IS_ACTIVE(model->anim.status))
             {
-                model->anim.time        = g_SysWork.playerWork_4C.player_0.model.anim.time - Q12(832.0f);
-                model->anim.keyframeIdx = g_SysWork.playerWork_4C.player_0.model.anim.keyframeIdx - 832;
+                model->anim.time        = g_SysWork.playerWork.player.model.anim.time - Q12(832.0f);
+                model->anim.keyframeIdx = g_SysWork.playerWork.player.model.anim.keyframeIdx - 832;
             }
 
-            g_SysWork.playerWork_4C.player_0.damage.amount_C = g_DeltaTime * 4;
+            g_SysWork.playerWork.player.damage.amount_C = g_DeltaTime * 4;
 
-            if (g_SysWork.playerWork_4C.player_0.field_40 == NO_VALUE ||
-                g_SysWork.playerWork_4C.player_0.health <= Q12(0.0f) ||
-                g_SysWork.playerWork_4C.player_0.attackReceived == NO_VALUE)
+            if (g_SysWork.playerWork.player.field_40 == NO_VALUE ||
+                g_SysWork.playerWork.player.health <= Q12(0.0f) ||
+                g_SysWork.playerWork.player.attackReceived == NO_VALUE)
             {
                 g_SysWork.npcs_1A0[0].properties.monsterCybil.field_EE = 7;
                 g_SysWork.npcs_1A0[0].properties.monsterCybil.field_EC = 7;
                 model->stateStep                                         = 0;
                 chara->model.stateStep                                 = 0;
-                g_SysWork.playerWork_4C.player_0.damage.amount_C       = Q12(0.0f);
+                g_SysWork.playerWork.player.damage.amount_C       = Q12(0.0f);
             }
 
             if (ANIM_STATUS_IS_ACTIVE(model->anim.status))
@@ -1560,11 +1560,11 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                               WEAPON_ATTACK(EquippedWeaponId_RifleShells, AttackInputType_Tap),
                               chara,
                               &D_800ED570,
-                              &g_SysWork.playerWork_4C.player_0,
+                              &g_SysWork.playerWork.player,
                               chara->rotation.vy,
                               Q12_ANGLE(90.0f)) != NO_VALUE)
             {
-                g_SysWork.playerWork_4C.player_0.damage.position_0.vz = Q12(1.0f);
+                g_SysWork.playerWork.player.damage.position_0.vz = Q12(1.0f);
 
                 if (sharedData_800D16E4_2_s01 == 0)
                 {
@@ -1651,9 +1651,9 @@ void func_800DB4CC(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coord) 
         case 2:
         case 3:
             // TODO: Use macro.
-            angle = ratan2(SquareRoot0(SQUARE((g_SysWork.playerWork_4C.player_0.position.vx - D_800ED570.vx) >> 4) +
-                                     SQUARE((g_SysWork.playerWork_4C.player_0.position.vz - D_800ED570.vz) >> 4)),
-                         (g_SysWork.playerWork_4C.player_0.position.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_6 -
+            angle = ratan2(SquareRoot0(SQUARE((g_SysWork.playerWork.player.position.vx - D_800ED570.vx) >> 4) +
+                                     SQUARE((g_SysWork.playerWork.player.position.vz - D_800ED570.vz) >> 4)),
+                         (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.field_C8.field_6 -
                           D_800ED570.vy) >>
                              4);
 
@@ -1688,8 +1688,8 @@ void func_800DB748(s_SubCharacter* chara) // 0x800DB748
     q3_12 shortestAngle;
 
     // TODO: Not sure if `Q12_TO_Q8` makes sense here, maybe this was just a divide by 16 for some reason.
-    angleToPlayer = Q12_ANGLE_ABS(ratan2(Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position.vx - chara->position.vx),
-                                        Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position.vz - chara->position.vz)));
+    angleToPlayer = Q12_ANGLE_ABS(ratan2(Q12_TO_Q8(g_SysWork.playerWork.player.position.vx - chara->position.vx),
+                                        Q12_TO_Q8(g_SysWork.playerWork.player.position.vz - chara->position.vz)));
 
     Math_ShortestAngleGet(chara->rotation.vy, angleToPlayer, &shortestAngle);
 
@@ -1747,8 +1747,8 @@ s32 func_800DB930(void) // 0x800DB930
         }
 
         // TODO: Use macro.
-        dist = SquareRoot0(SQUARE((g_SysWork.playerWork_4C.player_0.position.vx - sp10.vx) >> 4) +
-                          SQUARE((g_SysWork.playerWork_4C.player_0.position.vz - sp10.vz) >> 4)) << 4;
+        dist = SquareRoot0(SQUARE((g_SysWork.playerWork.player.position.vx - sp10.vx) >> 4) +
+                          SQUARE((g_SysWork.playerWork.player.position.vz - sp10.vz) >> 4)) << 4;
 
         if (dist < shortestDist)
         {
@@ -1774,8 +1774,8 @@ s32 func_800DBA48(s_SubCharacter* chara) // 0x800DBA48
     q19_12 temp;
 
     // TODO: Use macro.
-    temp = SquareRoot0(SQUARE((g_SysWork.playerWork_4C.player_0.position.vx - Q12(20.0f)) >> 4) +
-                       SQUARE((g_SysWork.playerWork_4C.player_0.position.vz - Q12(100.0f)) >> 4)) << 4;
+    temp = SquareRoot0(SQUARE((g_SysWork.playerWork.player.position.vx - Q12(20.0f)) >> 4) +
+                       SQUARE((g_SysWork.playerWork.player.position.vz - Q12(100.0f)) >> 4)) << 4;
     if (temp > Q12(6.5f))
     {
         var_s0 = 0;
@@ -1821,8 +1821,8 @@ s32 func_800DBA48(s_SubCharacter* chara) // 0x800DBA48
 
         if (!func_800DB6FC(&sp10))
         {
-            dist = SquareRoot0(SQUARE((g_SysWork.playerWork_4C.player_0.position.vx - sp10.vx) >> 4) +
-                              SQUARE((g_SysWork.playerWork_4C.player_0.position.vz - sp10.vz) >> 4))
+            dist = SquareRoot0(SQUARE((g_SysWork.playerWork.player.position.vx - sp10.vx) >> 4) +
+                              SQUARE((g_SysWork.playerWork.player.position.vz - sp10.vz) >> 4))
                   << 4;
 
             if (dist < shortestDist)

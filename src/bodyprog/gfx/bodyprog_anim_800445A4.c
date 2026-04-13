@@ -83,11 +83,11 @@ void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfram
     frame1Data    = ((u8*)anmHdr + anmHdr->dataOffset) + (anmHdr->keyframeDataSize * keyframe1);
     frame1RotData = frame1Data + (anmHdr->translationBoneCount * 3);
 
-    // For player, use inverted mask of `extra_128.disabledAnimBones_18` to facilitate masking of upper and lower body.
+    // For player, use inverted mask of `extra.disabledAnimBones` to facilitate masking of upper and lower body.
     isPlayer = boneCoords == &g_SysWork.playerBoneCoords_890[HarryBone_Root];
     if (isPlayer)
     {
-        activeBoneIdxs = ~g_SysWork.playerWork_4C.extra_128.disabledAnimBones_18;
+        activeBoneIdxs = ~g_SysWork.playerWork.extra.disabledAnimBones;
     }
     else
     {
@@ -862,10 +862,10 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q
         temp_s1_2 = g_SysWork.playerBoneCoords_890[1].coord.t[1];
         temp_s1_2 = CLAMP(temp_s1_2, Q8(-2.0f), Q8(0.0f));
 
-        temp_s1_2 += Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position.vy);
-        temp_s1_3  = Math_MulFixed(Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position.vx), GsWSMATRIX.m[2][0], Q12_SHIFT);
+        temp_s1_2 += Q12_TO_Q8(g_SysWork.playerWork.player.position.vy);
+        temp_s1_3  = Math_MulFixed(Q12_TO_Q8(g_SysWork.playerWork.player.position.vx), GsWSMATRIX.m[2][0], Q12_SHIFT);
         temp_s0    = Math_MulFixed(temp_s1_2, GsWSMATRIX.m[2][1], Q12_SHIFT);
-        temp_s1_4  = ((temp_s1_3 + temp_s0) + Math_MulFixed(Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position.vz), GsWSMATRIX.m[2][2], Q12_SHIFT)) + GsWSMATRIX.t[2];
+        temp_s1_4  = ((temp_s1_3 + temp_s0) + Math_MulFixed(Q12_TO_Q8(g_SysWork.playerWork.player.position.vz), GsWSMATRIX.m[2][2], Q12_SHIFT)) + GsWSMATRIX.t[2];
 
         var_s3_2 = (var_s4 + var_s3) >> 1;
         temp_v1  = var_s3_2 - ((var_s3 - var_s4) >> 1);

@@ -547,7 +547,7 @@ s32 Ai_AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
     if (damage0 > Q12(0.0f) || airScreamer->health <= Q12(0.0f))
     {
         temp_a1 = D_800AD4C8[attack].field_10;
-        angle   = Q12_ANGLE_NORM_S(g_SysWork.playerWork_4C.player_0.rotation.vy - airScreamer->rotation.vy);
+        angle   = Q12_ANGLE_NORM_S(g_SysWork.playerWork.player.rotation.vy - airScreamer->rotation.vy);
 
 #ifdef MAP0_S01
         if (airScreamer->health <= Q12(0.0f))
@@ -750,9 +750,9 @@ bool sharedFunc_800D3430_0_s01(s_SubCharacter* airScreamer, q19_12* dist, q19_12
 {
     bool cond;
 
-    sharedData_800DE180_0_s01.vx = g_SysWork.playerWork_4C.player_0.position.vx;
-    sharedData_800DE180_0_s01.vy = g_SysWork.playerWork_4C.player_0.position.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_0; // Head offset.
-    sharedData_800DE180_0_s01.vz = g_SysWork.playerWork_4C.player_0.position.vz;
+    sharedData_800DE180_0_s01.vx = g_SysWork.playerWork.player.position.vx;
+    sharedData_800DE180_0_s01.vy = g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.field_C8.field_0; // Head offset.
+    sharedData_800DE180_0_s01.vz = g_SysWork.playerWork.player.position.vz;
 
     cond = sharedFunc_800D2E04_0_s01(airScreamer, &sharedData_800DE180_0_s01, dist, angle);
     if (cond)
@@ -783,7 +783,7 @@ bool sharedFunc_800D3508_0_s01(s_SubCharacter* airScreamer, q19_12* dist)
     bool   cond;
     // TODO: Fix messy local var reuse.
 
-    #define playerProps g_SysWork.playerWork_4C.player_0.properties.player
+    #define playerProps g_SysWork.playerWork.player.properties.player
 
     offsetDist = playerProps.field_10C << 8;
     if (dist != NULL)
@@ -791,10 +791,10 @@ bool sharedFunc_800D3508_0_s01(s_SubCharacter* airScreamer, q19_12* dist)
         *dist = offsetDist;
     }
 
-    cond = sharedFunc_800D2FB4_0_s01(airScreamer, &g_SysWork.playerWork_4C.player_0.position, offsetDist);
+    cond = sharedFunc_800D2FB4_0_s01(airScreamer, &g_SysWork.playerWork.player.position, offsetDist);
     if (cond)
     {
-        angleToPlayer    = Math_AngleBetweenPositionsGet(airScreamer->position, g_SysWork.playerWork_4C.player_0.position);
+        angleToPlayer    = Math_AngleBetweenPositionsGet(airScreamer->position, g_SysWork.playerWork.player.position);
         angleToPlayerCpy = angleToPlayer;
 
         offsetZ = g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0;
@@ -816,7 +816,7 @@ bool sharedFunc_800D3508_0_s01(s_SubCharacter* airScreamer, q19_12* dist)
         offsetZ = Q12_MULT_PRECISE(offsetDist, Math_Cos(angleToPlayerCpy));
 
         airScreamerProps.position_104.vx = airScreamer->position.vx + offsetX;
-        airScreamerProps.position_104.vy = g_SysWork.playerWork_4C.player_0.position.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_6;
+        airScreamerProps.position_104.vy = g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.field_C8.field_6;
         airScreamerProps.position_104.vz = airScreamer->position.vz + offsetZ;
     }
 
@@ -840,20 +840,20 @@ bool sharedFunc_800D3630_0_s01(s_SubCharacter* airScreamer, q19_12* dist)
     }
 
     // Set target position for pecking?
-    cond = sharedFunc_800D31D0_0_s01(airScreamer, &g_SysWork.playerWork_4C.player_0.position, offsetDist);
+    cond = sharedFunc_800D31D0_0_s01(airScreamer, &g_SysWork.playerWork.player.position, offsetDist);
     if (cond)
     {
         // Compute extra offset distance.
         offsetDist = MAX(offsetDist, Q12(1.5f));
 
         // Compute extra offset.
-        angleToPlayer = Math_AngleBetweenPositionsGet(airScreamer->position, g_SysWork.playerWork_4C.player_0.position);
+        angleToPlayer = Math_AngleBetweenPositionsGet(airScreamer->position, g_SysWork.playerWork.player.position);
         offsetX = Q12_MULT_PRECISE(offsetDist, Math_Sin(angleToPlayer));
         offsetZ = Q12_MULT_PRECISE(offsetDist, Math_Cos(angleToPlayer));
 
         // Set target position slightly ahead of Air Screamer.
         airScreamerProps.position_104.vx = airScreamer->position.vx + offsetX;
-        airScreamerProps.position_104.vy = g_SysWork.playerWork_4C.player_0.position.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_6;
+        airScreamerProps.position_104.vy = g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.field_C8.field_6;
         airScreamerProps.position_104.vz = airScreamer->position.vz + offsetZ;
     }
 
@@ -899,10 +899,10 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* airScreamer)
     s32 headingAngleTo;
     s32 headingAngleFrom;
 
-    headingAngleTo = func_80080478(&g_SysWork.playerWork_4C.player_0.position, &airScreamer->position);
-    headingAngleFrom = g_SysWork.playerWork_4C.player_0.rotation.vy;
+    headingAngleTo = func_80080478(&g_SysWork.playerWork.player.position, &airScreamer->position);
+    headingAngleFrom = g_SysWork.playerWork.player.rotation.vy;
 
-    invDist = Q12(8.0f) - Math_Distance2dGet(&g_SysWork.playerWork_4C.player_0.position, &airScreamer->position);
+    invDist = Q12(8.0f) - Math_Distance2dGet(&g_SysWork.playerWork.player.position, &airScreamer->position);
     if (invDist < Q12(0.0f))
     {
         invDist = Q12(0.0f);
@@ -1350,8 +1350,8 @@ void Ai_AirScreamer_Control_2(s_SubCharacter* airScreamer)
             {
                 Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
 
-                airScreamer->position.vx = g_SysWork.playerWork_4C.player_0.position.vx + Q12(100.0f);
-                airScreamer->position.vz = g_SysWork.playerWork_4C.player_0.position.vz + Q12(100.0f);
+                airScreamer->position.vx = g_SysWork.playerWork.player.position.vx + Q12(100.0f);
+                airScreamer->position.vz = g_SysWork.playerWork.player.position.vz + Q12(100.0f);
 
                 sharedFunc_800D3DFC_0_s01(airScreamer);
                 break;
@@ -1362,8 +1362,8 @@ void Ai_AirScreamer_Control_2(s_SubCharacter* airScreamer)
                 Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
                 sharedFunc_800D2364_0_s01(airScreamer);
 
-                airScreamer->position.vx = g_SysWork.playerWork_4C.player_0.position.vx + Q12(100.0f);
-                airScreamer->position.vz = g_SysWork.playerWork_4C.player_0.position.vz + Q12(100.0f);
+                airScreamer->position.vx = g_SysWork.playerWork.player.position.vx + Q12(100.0f);
+                airScreamer->position.vz = g_SysWork.playerWork.player.position.vz + Q12(100.0f);
 
                 sharedFunc_800D3DFC_0_s01(airScreamer);
                 break;
@@ -2730,9 +2730,9 @@ void Ai_AirScreamer_Control_10(s_SubCharacter* airScreamer)
             else if (temp_fp < Q12(1.1f))
             {
                 temp_s6   = airScreamer->position.vy + airScreamer->field_C8.field_0 + Q12(0.1f);
-                temp_s1_3 = g_SysWork.playerWork_4C.player_0.position.vy;
-                temp_s3_2 = g_SysWork.playerWork_4C.player_0.field_C8.field_4;
-                temp_s7   = g_SysWork.playerWork_4C.player_0.field_C8.field_0;
+                temp_s1_3 = g_SysWork.playerWork.player.position.vy;
+                temp_s3_2 = g_SysWork.playerWork.player.field_C8.field_4;
+                temp_s7   = g_SysWork.playerWork.player.field_C8.field_0;
 
                 temp_s4_2 = Q12_ANGLE_NORM_S(func_80080478(&airScreamer->position, &airScreamerProps.targetPosition_F8) - airScreamer->rotation.vy);
 
@@ -2813,7 +2813,7 @@ void Ai_AirScreamer_Control_10(s_SubCharacter* airScreamer)
                     break;
 
                 case 1:
-                    if (!Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
+                    if (!Chara_HasFlag(&g_SysWork.playerWork.player, CharaFlag_Unk4) &&
                         g_SysWork.npcIdxs_2354[0] == NO_VALUE &&
                         g_SysWork.npcIdxs_2354[1] == NO_VALUE)
                     {
@@ -3512,7 +3512,7 @@ void Ai_AirScreamer_Control_16(s_SubCharacter* airScreamer)
             }
             else
             {
-                sharedFunc_800DDF74_2_s00(airScreamer, Q12(4.0f), func_80080478(&airScreamer->position, &g_SysWork.playerWork_4C.player_0.position));
+                sharedFunc_800DDF74_2_s00(airScreamer, Q12(4.0f), func_80080478(&airScreamer->position, &g_SysWork.playerWork.player.position));
                 airScreamerProps.position_104 = airScreamerProps.targetPosition_F8;
             }
 
@@ -4845,7 +4845,7 @@ void Ai_AirScreamer_Control_23(s_SubCharacter* airScreamer)
     switch (airScreamer->model.stateStep)
     {
         case 0:
-#define angleDiff Q12_ANGLE_NORM_S(g_SysWork.playerWork_4C.player_0.rotation.vy - airScreamer->rotation.vy)
+#define angleDiff Q12_ANGLE_NORM_S(g_SysWork.playerWork.player.rotation.vy - airScreamer->rotation.vy)
 
             distTest = dist0 + (Rng_RandQ12() * 4);
             if (sharedFunc_800DC200_2_s00(airScreamer) && distTest > Q12(8.0f))
@@ -4944,7 +4944,7 @@ void Ai_AirScreamer_Control_23(s_SubCharacter* airScreamer)
                     break;
 
                 case 1:
-                    if (!Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
+                    if (!Chara_HasFlag(&g_SysWork.playerWork.player, CharaFlag_Unk4) &&
                         g_SysWork.npcIdxs_2354[0] == NO_VALUE &&
                         g_SysWork.npcIdxs_2354[1] == NO_VALUE)
                     {
@@ -7323,7 +7323,7 @@ void Ai_AirScreamer_Control_38(s_SubCharacter* airScreamer)
                     break;
 
                 case 1:
-                    if (!Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
+                    if (!Chara_HasFlag(&g_SysWork.playerWork.player, CharaFlag_Unk4) &&
                         (g_SysWork.npcIdxs_2354[0] == NO_VALUE && g_SysWork.npcIdxs_2354[1] == NO_VALUE) &&
                         temp_s7 == 0x23)
                     {
@@ -8337,7 +8337,7 @@ void Ai_AirScreamer_Control_46(s_SubCharacter* airScreamer)
         airScreamerProps.timer_120       = Q12(4.0f);
     }
 
-    sharedFunc_800D529C_0_s01(airScreamer, Q12(1.0f), func_80080478(&airScreamer->position, &g_SysWork.playerWork_4C.player_0.position));
+    sharedFunc_800D529C_0_s01(airScreamer, Q12(1.0f), func_80080478(&airScreamer->position, &g_SysWork.playerWork.player.position));
     sharedFunc_800D598C_0_s01(airScreamer);
 
     switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
@@ -8345,7 +8345,7 @@ void Ai_AirScreamer_Control_46(s_SubCharacter* airScreamer)
         case AirScreamerDamage_None:
             if (airScreamerProps.timer_120 == Q12(0.0f) ||
                 airScreamer == &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353] ||
-                Math_Distance2dGet(&airScreamer->position, &g_SysWork.playerWork_4C.player_0.position) > Q12(6.5f))
+                Math_Distance2dGet(&airScreamer->position, &g_SysWork.playerWork.player.position) > Q12(6.5f))
             {
                 airScreamer->model.controlState = AirScreamerControl_47;
                 airScreamer->model.stateStep    = AirScreamerStateStep_0;
@@ -8471,7 +8471,7 @@ void Ai_AirScreamer_Control_48(s_SubCharacter* airScreamer)
     {
         case AirScreamerDamage_None:
             if (airScreamerProps.timer_120 == Q12(0.0f) ||
-                Math_Distance2dGet(&airScreamer->position, &g_SysWork.playerWork_4C.player_0.position) > Q12(2.0f))
+                Math_Distance2dGet(&airScreamer->position, &g_SysWork.playerWork.player.position) > Q12(2.0f))
             {
                 airScreamer->model.controlState = AirScreamerControl_47;
                 airScreamer->model.stateStep    = AirScreamerStateStep_0;
@@ -9142,13 +9142,13 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
         sharedData_800DE1A0_0_s01.vy = i;
     }
 
-    temp_s0 = g_SysWork.playerWork_4C.player_0.field_E1_0;
+    temp_s0 = g_SysWork.playerWork.player.field_E1_0;
 
-    g_SysWork.playerWork_4C.player_0.field_E1_0 = 0;
+    g_SysWork.playerWork.player.field_E1_0 = 0;
 
     cond = func_8006DB3C(&sharedData_800E2330_0_s01, var_s0, &sharedData_800DE1A0_0_s01, airScreamer);
 
-    g_SysWork.playerWork_4C.player_0.field_E1_0 = temp_s0;
+    g_SysWork.playerWork.player.field_E1_0 = temp_s0;
     offsetX                                     = sharedData_800E2330_0_s01.field_4.vx - posX;
     offsetZ                                     = sharedData_800E2330_0_s01.field_4.vz - posZ;
 
@@ -9351,7 +9351,7 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
 
 q19_12 sharedFunc_800D5274_0_s01(void)
 {
-    return MIN(Q12(-3.0f), g_SysWork.playerWork_4C.player_0.position.vy - Q12(2.0f));
+    return MIN(Q12(-3.0f), g_SysWork.playerWork.player.position.vy - Q12(2.0f));
 }
 
 #ifndef MAP0_S01
@@ -9420,8 +9420,8 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* airScreamer, s32 npcSlot, q19_12 
 
             Chara_Spawn(airScreamer->model.charaId_0,
                         selectNpcSlot,
-                        g_SysWork.playerWork_4C.player_0.position.vx + Q12(20.0f),
-                        g_SysWork.playerWork_4C.player_0.position.vz, Q12_ANGLE(0.0f),
+                        g_SysWork.playerWork.player.position.vx + Q12(20.0f),
+                        g_SysWork.playerWork.player.position.vz, Q12_ANGLE(0.0f),
                         10);
         }
     }
@@ -9441,8 +9441,8 @@ void sharedFunc_800DD2C4_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2)
 
     newPosX    = airScreamer->position.vx;
     newPosZ    = airScreamer->position.vz;
-    playerPosX = g_SysWork.playerWork_4C.player_0.position.vx;
-    playerPosZ = g_SysWork.playerWork_4C.player_0.position.vz;
+    playerPosX = g_SysWork.playerWork.player.position.vx;
+    playerPosZ = g_SysWork.playerWork.player.position.vz;
 
     unkDeltaAngle = Q12_ANGLE_NORM_S(airScreamer->rotation.vy - ratan2(newPosX - playerPosX, newPosZ - playerPosZ));
     headingAngle  = airScreamer->rotation.vy + Q12_ANGLE(180.0f);
@@ -9521,10 +9521,10 @@ void sharedFunc_800DD588_2_s00(s_SubCharacter* airScreamer)
     q19_12 sinRotY;
     s32    i;
 
-    posX = g_SysWork.playerWork_4C.player_0.position.vx;
-    posY = g_SysWork.playerWork_4C.player_0.position.vy;
-    posZ = g_SysWork.playerWork_4C.player_0.position.vz;
-    rotY = g_SysWork.playerWork_4C.player_0.rotation.vy;
+    posX = g_SysWork.playerWork.player.position.vx;
+    posY = g_SysWork.playerWork.player.position.vy;
+    posZ = g_SysWork.playerWork.player.position.vz;
+    rotY = g_SysWork.playerWork.player.rotation.vy;
 
     if (Rng_TestProbability(Q12(0.5f)))
     {
@@ -9607,9 +9607,9 @@ void sharedFunc_800DD834_2_s00(s_SubCharacter* airScreamer)
     q19_12 sinRotY;
     s32    i;
 
-    posX = g_SysWork.playerWork_4C.player_0.position.vx;
-    posY = g_SysWork.playerWork_4C.player_0.position.vy;
-    posZ = g_SysWork.playerWork_4C.player_0.position.vz;
+    posX = g_SysWork.playerWork.player.position.vx;
+    posY = g_SysWork.playerWork.player.position.vy;
+    posZ = g_SysWork.playerWork.player.position.vz;
 
     curAngle = Rng_RandQ12();
     for (i = 0; i < ANGLE_STEP_COUNT; i++, curAngle += Q12_ANGLE(360.0f / ANGLE_STEP_COUNT))
@@ -9675,8 +9675,8 @@ void sharedFunc_800DDA80_2_s00(s_SubCharacter* airScreamer)
     posX = airScreamer->position.vx;
     posZ = airScreamer->position.vz;
 
-    playerPosX = g_SysWork.playerWork_4C.player_0.position.vx;
-    playerPosZ = g_SysWork.playerWork_4C.player_0.position.vz;
+    playerPosX = g_SysWork.playerWork.player.position.vx;
+    playerPosZ = g_SysWork.playerWork.player.position.vz;
 
     newPosX = posX;
     newPosZ = posZ;
@@ -9725,7 +9725,7 @@ void sharedFunc_800DDA80_2_s00(s_SubCharacter* airScreamer)
             break;
 
         case 4:
-            quadrantAngle = Q12_FRACT(g_SysWork.playerWork_4C.player_0.rotation.vy - Q12_ANGLE(45.0f));
+            quadrantAngle = Q12_FRACT(g_SysWork.playerWork.player.rotation.vy - Q12_ANGLE(45.0f));
             switch (quadrantAngle / Q12_ANGLE(90.0f))
             {
                 case 1:
@@ -9972,11 +9972,11 @@ void sharedFunc_800DE11C_2_s00(s_SubCharacter* airScreamer)
     q19_12 headingAngle;
     q19_12 dist;
 
-    playerPosX = g_SysWork.playerWork_4C.player_0.position.vx;
-    playerPosZ = g_SysWork.playerWork_4C.player_0.position.vz;
-    dist       = g_SysWork.playerWork_4C.player_0.field_D4.radius_0;
+    playerPosX = g_SysWork.playerWork.player.position.vx;
+    playerPosZ = g_SysWork.playerWork.player.position.vz;
+    dist       = g_SysWork.playerWork.player.field_D4.radius_0;
 
-    headingAngle = Math_AngleBetweenPositionsGet(g_SysWork.playerWork_4C.player_0.position, airScreamer->position);
+    headingAngle = Math_AngleBetweenPositionsGet(g_SysWork.playerWork.player.position, airScreamer->position);
     newPosX      = playerPosX + Q12_MULT_PRECISE(dist, Math_Sin(headingAngle));
     newPosZ      = playerPosZ + Q12_MULT_PRECISE(dist, Math_Cos(headingAngle));
     newPosY      = Collision_GroundHeightGet(newPosX, newPosZ);
@@ -10262,11 +10262,11 @@ void sharedFunc_800D53AC_0_s01(s_SubCharacter* airScreamer)
     q19_12 angleDeltaToPlayer;
 
     // Set player parameters.
-    playerPosX         = g_SysWork.playerWork_4C.player_0.position.vx;
-    playerPosY         = g_SysWork.playerWork_4C.player_0.position.vy;
-    playerPosZ         = g_SysWork.playerWork_4C.player_0.position.vz;
-    playerHeadingAngle = g_SysWork.playerWork_4C.player_0.rotation.vy;
-    playerRadius       = g_SysWork.playerWork_4C.player_0.field_D4.radius_0;
+    playerPosX         = g_SysWork.playerWork.player.position.vx;
+    playerPosY         = g_SysWork.playerWork.player.position.vy;
+    playerPosZ         = g_SysWork.playerWork.player.position.vz;
+    playerHeadingAngle = g_SysWork.playerWork.player.rotation.vy;
+    playerRadius       = g_SysWork.playerWork.player.field_D4.radius_0;
 
     // Set Air Screamer parameters.
     charaPosX         = airScreamer->position.vx;
@@ -10296,13 +10296,13 @@ void sharedFunc_800D53AC_0_s01(s_SubCharacter* airScreamer)
     if (Math_CheckSignedRange(Q12_ANGLE_NORM_S(angleToPlayer - playerHeadingAngle), AIR_SCREAMER_ANGLE_RANGE))
     {
         targetPosX = playerPosX + Q12_MULT_PRECISE(playerRadius, Math_Sin(angleToPlayer));
-        targetPosY = playerPosY + g_SysWork.playerWork_4C.player_0.field_C8.field_6;
+        targetPosY = playerPosY + g_SysWork.playerWork.player.field_C8.field_6;
         targetPosZ = playerPosZ + Q12_MULT_PRECISE(playerRadius, Math_Cos(angleToPlayer));
     }
     else
     {
         targetPosX = playerPosX + Q12_MULT_PRECISE(playerRadius / 4, Math_Sin(angleToPlayer));
-        targetPosY = playerPosY + g_SysWork.playerWork_4C.player_0.field_C8.field_0;
+        targetPosY = playerPosY + g_SysWork.playerWork.player.field_C8.field_0;
         targetPosZ = playerPosZ + Q12_MULT_PRECISE(playerRadius / 4, Math_Cos(angleToPlayer));
     }
 
@@ -10422,12 +10422,12 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
     q19_12 playerMoveSpeed;
     q19_12 var_v1;
 
-    playerheadingAngle = g_SysWork.playerWork_4C.player_0.headingAngle;
-    playerMoveSpeed    = g_SysWork.playerWork_4C.player_0.moveSpeed;
+    playerheadingAngle = g_SysWork.playerWork.player.headingAngle;
+    playerMoveSpeed    = g_SysWork.playerWork.player.moveSpeed;
 
-    playerPosX = g_SysWork.playerWork_4C.player_0.position.vx;
-    playerPosY = g_SysWork.playerWork_4C.player_0.position.vy;
-    playerPosZ = g_SysWork.playerWork_4C.player_0.position.vz;
+    playerPosX = g_SysWork.playerWork.player.position.vx;
+    playerPosY = g_SysWork.playerWork.player.position.vy;
+    playerPosZ = g_SysWork.playerWork.player.position.vz;
 
     posX = airScreamer->position.vx;
     posZ = airScreamer->position.vz;
@@ -10443,7 +10443,7 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
     sharedData_800F21FC_2_s00.vz = Q12_MULT_PRECISE(g_DeltaTime, playerOffsetZ);
 
     if (g_DeltaTime != Q12(0.0f) &&
-        Collision_WallDetect(&sharedData_800E2350_0_s01, &sharedData_800F21FC_2_s00, &g_SysWork.playerWork_4C.player_0))
+        Collision_WallDetect(&sharedData_800E2350_0_s01, &sharedData_800F21FC_2_s00, &g_SysWork.playerWork.player))
     {
         playerOffsetX = sharedData_800E2350_0_s01.offset_0.vx;
         playerOffsetZ = sharedData_800E2350_0_s01.offset_0.vz;
@@ -10486,7 +10486,7 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
 
     temp_s4       = playerPosX + playerOffsetX;
     temp_s3       = playerPosZ + playerOffsetZ;
-    playerOffsetX = playerPosY + g_SysWork.playerWork_4C.player_0.field_C8.field_0;
+    playerOffsetX = playerPosY + g_SysWork.playerWork.player.field_C8.field_0;
 
     playerOffsetZ = Collision_GroundHeightGet(temp_s4, temp_s3);
     var_v1        = airScreamerProps.groundHeight_124;
@@ -13035,7 +13035,7 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
     animStatus = airScreamer->model.anim.status;
     temp_s1    = &airScreamer->field_44;
 
-    if (!Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
+    if (!Chara_HasFlag(&g_SysWork.playerWork.player, CharaFlag_Unk4) &&
         g_SysWork.npcIdxs_2354[0] == NO_VALUE && g_SysWork.npcIdxs_2354[1] == NO_VALUE &&
         airScreamer->model.controlState != AirScreamerControl_12 && airScreamer->model.controlState != AirScreamerControl_25 &&
         airScreamer->model.controlState != AirScreamerControl_40 && airScreamer->model.controlState != AirScreamerControl_49)

@@ -192,7 +192,7 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset,
     {
         response = 1;
 
-        if (chara == &g_SysWork.playerWork_4C && chara->health > Q12(0.0f))
+        if (chara == &g_SysWork.playerWork && chara->health > Q12(0.0f))
         {
             Collision_GroundProbeRadial(collResult, &chara->position, chara->position.vy, chara->rotation.vy);
         }
@@ -453,7 +453,7 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
         }
     }
 
-    curChara = &g_SysWork.playerWork_4C.player_0;
+    curChara = &g_SysWork.playerWork.player;
     if (curChara->model.charaId_0 != Chara_None)
     {
         if (curChara->field_E1_0 != 0 &&
@@ -3586,18 +3586,18 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
     q19_12  distMult;
     q19_12  distMax;
 
-    if (Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork_4C.player_0.position.vx - chara->position.vx,
-                             g_SysWork.playerWork_4C.player_0.position.vz - chara->position.vz) -
+    if (Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - chara->position.vx,
+                             g_SysWork.playerWork.player.position.vz - chara->position.vz) -
                       chara->rotation.vy) < 0)
     {
-        distMult = (Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork_4C.player_0.position.vx - chara->position.vx,
-                                        g_SysWork.playerWork_4C.player_0.position.vz - chara->position.vz) -
+        distMult = (Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - chara->position.vx,
+                                        g_SysWork.playerWork.player.position.vz - chara->position.vz) -
                                  chara->rotation.vy) * 2) + Q12_ANGLE(360.0f);
     }
     else
     {
-        distMult = (Q12_ANGLE(180.0f) - Math_AngleNormalizeSigned((ratan2(g_SysWork.playerWork_4C.player_0.position.vx - chara->position.vx,
-                                                             g_SysWork.playerWork_4C.player_0.position.vz - chara->position.vz) -
+        distMult = (Q12_ANGLE(180.0f) - Math_AngleNormalizeSigned((ratan2(g_SysWork.playerWork.player.position.vx - chara->position.vx,
+                                                             g_SysWork.playerWork.player.position.vz - chara->position.vz) -
                                                       chara->rotation.vy))) * 2;
     }
 
@@ -3606,8 +3606,8 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
         distMult = Q12_MULT_PRECISE(distMult, i);
     }
 
-    dist = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - chara->position.vx,
-                               g_SysWork.playerWork_4C.player_0.position.vz - chara->position.vz);
+    dist = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - chara->position.vx,
+                               g_SysWork.playerWork.player.position.vz - chara->position.vz);
     distMax = baseDistMax + Q12_MULT_PRECISE(distStep, distMult);
     if (distMax < dist)
     {
@@ -3617,18 +3617,18 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
     pos.vx = chara->position.vx;
     pos.vz = chara->position.vz;
 
-    offset.vx = g_SysWork.playerWork_4C.player_0.position.vx - chara->position.vx;
-    offset.vz = g_SysWork.playerWork_4C.player_0.position.vz - chara->position.vz;
+    offset.vx = g_SysWork.playerWork.player.position.vx - chara->position.vx;
+    offset.vz = g_SysWork.playerWork.player.position.vz - chara->position.vz;
 
     if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
     {
         offset.vy = Q12(0.0f);
-        pos.vy = g_SysWork.playerWork_4C.player_0.position.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_0;
+        pos.vy = g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.field_C8.field_0;
     }
     else
     {
         pos.vy = chara->position.vy + chara->field_C8.field_6;
-        offset.vy = (g_SysWork.playerWork_4C.player_0.position.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_6) -
+        offset.vy = (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.field_C8.field_6) -
                     (chara->position.vy - chara->field_C8.field_6);
     }
 
@@ -3755,10 +3755,10 @@ q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2) // 0x80
     dist = someDist;
     if (dist == Q12(0.0f))
     {
-        deltaX = g_SysWork.playerWork_4C.player_0.position.vx - chara->position.vx;
+        deltaX = g_SysWork.playerWork.player.position.vx - chara->position.vx;
         deltaX = Q12_TO_Q6(deltaX);
 
-        deltaZ = g_SysWork.playerWork_4C.player_0.position.vz - chara->position.vz;
+        deltaZ = g_SysWork.playerWork.player.position.vz - chara->position.vz;
         deltaZ = Q12_TO_Q6(deltaZ);
 
         dist = SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ));
@@ -3766,7 +3766,7 @@ q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2) // 0x80
     }
 
     // TODO: Why `>> 8`?
-    result = Q12_MULT(arg2, g_SysWork.playerWork_4C.player_0.properties.player.field_10C) - (dist >> 8);
+    result = Q12_MULT(arg2, g_SysWork.playerWork.player.properties.player.field_10C) - (dist >> 8);
     if (result < 0)
     {
         result = 0;

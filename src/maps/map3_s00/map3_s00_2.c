@@ -168,7 +168,7 @@ void func_800D0CF8(void) // 0x800D0CF8
 
         case 6:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 7, false);
-            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 0x73, false);
+            func_80085EB8(0, &g_SysWork.playerWork.player, 0x73, false);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -237,7 +237,7 @@ void func_800D0CF8(void) // 0x800D0CF8
         case 15:
             D_800D253C = Q12(110.0f);
 
-            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
+            func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 5, false);
             SysWork_StateStepIncrement(0);
 
@@ -314,7 +314,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 26:
-            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 0x48, false);
+            func_80085EB8(0, &g_SysWork.playerWork.player, 0x48, false);
             SysWork_StateStepIncrement(0);
 
         case 27:
@@ -335,7 +335,7 @@ void func_800D0CF8(void) // 0x800D0CF8
 
         case 28:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 10, false);
-            func_80085EB8(0u, &g_SysWork.playerWork_4C.player_0, 51, false);
+            func_80085EB8(0u, &g_SysWork.playerWork.player, 51, false);
             SysWork_StateStepIncrement(0);
 
         case 29:
@@ -410,7 +410,7 @@ void func_800D0CF8(void) // 0x800D0CF8
 
     if (D_800D253C >= 0)
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position, &g_SysWork.playerWork_4C.player_0.rotation, "HERO", D_800D253C, (s_DmsHeader* )FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800D253C, (s_DmsHeader* )FS_BUFFER_15);
         Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "KAU", D_800D253C, (s_DmsHeader*)FS_BUFFER_15);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D2550, &D_800D2560, NULL, D_800D253C, (s_DmsHeader*)FS_BUFFER_15));
         vcUserCamTarget(&D_800D2550, NULL, true);
@@ -474,11 +474,11 @@ void Map_WorldObjectsUpdate(void) // 0x800D1A98
             WorldGfx_ObjectAdd(&g_WorldObject5.object_0, &g_WorldObject5.position_1C, &g_WorldObject5.rotation_28);
         }
 
-        if (!Savegame_EventFlagGet(EventFlag_200) && (g_SysWork.playerWork_4C.player_0.position.vx < Q12(24.0f)))
+        if (!Savegame_EventFlagGet(EventFlag_200) && (g_SysWork.playerWork.player.position.vx < Q12(24.0f)))
         {
             tmp = Rng_Rand16() % Q12(3.0f);
             rand0 = tmp;
-            diff = g_SysWork.playerWork_4C.player_0.position.vx - Q12(24.0f);
+            diff = g_SysWork.playerWork.player.position.vx - Q12(24.0f);
 
             if (diff >= 0)
             {
@@ -486,7 +486,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D1A98
             }
             else
             {
-                x = (Q12(24.0f) - g_SysWork.playerWork_4C.player_0.position.vx) / 3;
+                x = (Q12(24.0f) - g_SysWork.playerWork.player.position.vx) / 3;
             }
 
             if (rand0 < Math_Sin(x))

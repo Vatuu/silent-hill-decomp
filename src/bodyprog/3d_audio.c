@@ -97,7 +97,7 @@ s32 func_8005D9B8(VECTOR3* pos, q23_8 vol) // 0x8005D9B8
     s32 var_v0;
 
     vwGetViewPosition(&D_800C42C0);
-    D_800C42CC = &g_SysWork.playerWork_4C.player_0.position;
+    D_800C42CC = &g_SysWork.playerWork.player.position;
 
     deltaX = D_800C42C0.vx - D_800C42CC->vx;
     deltaY = D_800C42C0.vy - D_800C42CC->vy;
@@ -232,9 +232,9 @@ static inline s32 AttenuationCalc(s32 volume, VECTOR3* pos, q19_12 falloff)
 {
     q19_12 dist;
 
-    dist = Math_Vector3MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - pos->vx,
-                               g_SysWork.playerWork_4C.player_0.position.vy - pos->vy,
-                               g_SysWork.playerWork_4C.player_0.position.vz - pos->vz);
+    dist = Math_Vector3MagCalc(g_SysWork.playerWork.player.position.vx - pos->vx,
+                               g_SysWork.playerWork.player.position.vy - pos->vy,
+                               g_SysWork.playerWork.player.position.vz - pos->vz);
     return (volume * dist) / falloff;
 }
 

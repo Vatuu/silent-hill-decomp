@@ -154,7 +154,7 @@ void func_800EB11C(void) // 0x800EB11C
             D_800F0044 = 0;
             D_800F0040 = 0;
 
-            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 53, false);
+            func_80085EB8(0, &g_SysWork.playerWork.player, 53, false);
             Game_TurnFlashlightOn();
 
             sharedFunc_800D08B8_0_s00(2, 127);
@@ -177,7 +177,7 @@ void func_800EB11C(void) // 0x800EB11C
 
         case 3:
             D_800F0040 = Q12(23.0f);
-            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 52, false);
+            func_80085EB8(0, &g_SysWork.playerWork.player, 52, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -185,7 +185,7 @@ void func_800EB11C(void) // 0x800EB11C
             break;
 
         case 5:
-            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 126, false);
+            func_80085EB8(0, &g_SysWork.playerWork.player, 126, false);
             Savegame_EventFlagSet(EventFlag_413);
             SysWork_StateStepIncrement(0);
 
@@ -199,7 +199,7 @@ void func_800EB11C(void) // 0x800EB11C
             break;
 
         case 8:
-            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 133, false);
+            func_80085EB8(0, &g_SysWork.playerWork.player, 133, false);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -207,7 +207,7 @@ void func_800EB11C(void) // 0x800EB11C
             break;
 
         case 10:
-            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 114, false);
+            func_80085EB8(0, &g_SysWork.playerWork.player, 114, false);
             Savegame_EventFlagSet(EventFlag_402);
             sharedFunc_800D08B8_0_s00(6, 127);
             Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, 0);
@@ -241,7 +241,7 @@ void func_800EB11C(void) // 0x800EB11C
             break;
 
         case 17:
-            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 127, false);
+            func_80085EB8(0, &g_SysWork.playerWork.player, 127, false);
             Savegame_EventFlagSet(EventFlag_415);
             SysWork_StateStepIncrement(0);
 
@@ -339,7 +339,7 @@ void func_800EB11C(void) // 0x800EB11C
 
     if (D_800F0040 >= 0)
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position, &g_SysWork.playerWork_4C.player_0.rotation, "HERO", D_800F0040, FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800F0040, FS_BUFFER_15);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800F0668, &D_800F0678, NULL, D_800F0040, FS_BUFFER_15));
         vcUserCamTarget(&D_800F0668, NULL, true);
         vcUserWatchTarget(&D_800F0678, NULL, true);
@@ -497,9 +497,9 @@ void func_800EC4B4(s32 arg0) // 0x800EC4B4
     ptr2 = FS_BUFFER_1;
     ptr  = PSX_SCRATCH;
 
-    posX = FP_FROM(g_SysWork.playerWork_4C.player_0.position.vx, Q12_SHIFT);
-    posY = FP_FROM(g_SysWork.playerWork_4C.player_0.position.vy, Q12_SHIFT);
-    posZ = FP_FROM(g_SysWork.playerWork_4C.player_0.position.vz, Q12_SHIFT);
+    posX = FP_FROM(g_SysWork.playerWork.player.position.vx, Q12_SHIFT);
+    posY = FP_FROM(g_SysWork.playerWork.player.position.vy, Q12_SHIFT);
+    posZ = FP_FROM(g_SysWork.playerWork.player.position.vz, Q12_SHIFT);
 
     ptr->field_5C.vx = posX << 8;
     ptr->field_5C.vy = posY << 8;

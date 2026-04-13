@@ -155,7 +155,7 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
         bgmLayerLimitCpy = g_Bgm_LayerLimits;
     }
 
-    if (g_SysWork.playerWork_4C.player_0.health <= Q12(0.0f) || g_SysWork.sysState_8 == SysState_GameOver)
+    if (g_SysWork.playerWork.player.health <= Q12(0.0f) || g_SysWork.sysState_8 == SysState_GameOver)
     {
         flagsCpy &= BgmFlag_Unk8;
         flagsCpy |= BgmFlag_Unk0;
@@ -373,8 +373,8 @@ void Savegame_MapRoomIdxUpdate(void) // 0x80036420
     s32 z;
     s8  newMapRoomIdx;
 
-    x = g_SysWork.playerWork_4C.player_0.position.vx;
-    z = g_SysWork.playerWork_4C.player_0.position.vz;
+    x = g_SysWork.playerWork.player.position.vx;
+    z = g_SysWork.playerWork.player.position.vz;
 
     // Set map room index based on current player position.
     if (g_MapOverlayHeader.getMapRoomIdxFunc_4 == NULL)

@@ -124,13 +124,13 @@ void func_800D0C14(void) // 0x800D0C14
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
             Chara_Load(0, Chara_Dahlia, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
-            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 117, false);
+            func_80085EB8(0, &g_SysWork.playerWork.player, 117, false);
 
             SysWork_StateStepIncrement(0);
 
         case 2:
             SysWork_StateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
-            func_80085EB8(2, &g_SysWork.playerWork_4C.player_0, 0, false);
+            func_80085EB8(2, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case 3:
@@ -147,7 +147,7 @@ void func_800D0C14(void) // 0x800D0C14
             break;
 
         case 5:
-            func_80085EB8(3, &g_SysWork.playerWork_4C.player_0, 0, false);
+            func_80085EB8(3, &g_SysWork.playerWork.player, 0, false);
             D_800D2738 = 0;
             SysWork_StateStepIncrement(0);
 
@@ -214,7 +214,7 @@ void func_800D0C14(void) // 0x800D0C14
             break;
 
         case 15:
-            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
+            func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 0, false);
             SysWork_StateStepIncrement(0);
 
@@ -242,13 +242,13 @@ void func_800D0C14(void) // 0x800D0C14
 
             if (g_CutsceneTimer >= Q12(120.0f))
             {
-                Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model, 2);
+                Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, 2);
             }
             break;
 
         case 21:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 10, false);
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, 2);
+            Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
             SysWork_StateStepIncrement(0);
 
         case 22:
@@ -276,7 +276,7 @@ void func_800D0C14(void) // 0x800D0C14
             break;
 
         case 27:
-            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 111, false);
+            func_80085EB8(0, &g_SysWork.playerWork.player, 111, false);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             D_800D2738 = 0;
             SysWork_StateStepIncrement(0);
@@ -322,7 +322,7 @@ void func_800D0C14(void) // 0x800D0C14
             }
 
         default:
-            func_80085EB8(3, &g_SysWork.playerWork_4C.player_0, 0, false);
+            func_80085EB8(3, &g_SysWork.playerWork.player, 0, false);
 
             // Return to gameplay.
             Player_ControlUnfreeze(true);
@@ -339,14 +339,14 @@ void func_800D0C14(void) // 0x800D0C14
             SD_Call(19);
 
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, 2);
+            Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
             Game_TurnFlashlightOff();
             break;
     }
 
     if (g_CutsceneTimer >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position, &g_SysWork.playerWork_4C.player_0.rotation, "HERO", g_CutsceneTimer, FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_CutsceneTimer, FS_BUFFER_15);
         if (D_800D2737)
         {
             Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "DARIA", g_CutsceneTimer, FS_BUFFER_15);

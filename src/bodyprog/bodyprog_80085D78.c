@@ -84,7 +84,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
     switch (arg0)
     {
         case 0:
-            if (chara == &g_SysWork.playerWork_4C.player_0)
+            if (chara == &g_SysWork.playerWork.player)
             {
                 g_MapOverlayHeader.func_D4(arg2);
             }
@@ -95,7 +95,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
             break;
 
         case 1:
-            if (chara == &g_SysWork.playerWork_4C.player_0)
+            if (chara == &g_SysWork.playerWork.player)
             {
                 keyframeState = g_MapOverlayHeader.func_E8(chara);
                 if (keyframeState == 1)
@@ -114,7 +114,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
             break;
 
         case 2:
-            if (chara == &g_SysWork.playerWork_4C.player_0)
+            if (chara == &g_SysWork.playerWork.player)
             {
                 g_MapOverlayHeader.playerAnimLock_DC();
             }
@@ -125,7 +125,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
             break;
 
         case 3:
-            if (chara == &g_SysWork.playerWork_4C.player_0)
+            if (chara == &g_SysWork.playerWork.player)
             {
                 g_MapOverlayHeader.playerAnimUnlock_E4(chara, arg2);
             }
@@ -136,7 +136,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
             break;
 
         case 4:
-            if (chara == &g_SysWork.playerWork_4C.player_0)
+            if (chara == &g_SysWork.playerWork.player)
             {
                 g_MapOverlayHeader.playerAnimUnlock_E4(chara, arg2);
                 g_MapOverlayHeader.func_D8();
@@ -432,16 +432,16 @@ void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOr
 {
     if (!isPos)
     {
-        D_800C4640[idx0][idx1].vx = g_SysWork.playerWork_4C.player_0.position.vx + offsetOrPosX;
-        D_800C4640[idx0][idx1].vy = g_SysWork.playerWork_4C.player_0.position.vy;
-        D_800C4640[idx0][idx1].vz = g_SysWork.playerWork_4C.player_0.position.vz + offsetOrPosZ;
+        D_800C4640[idx0][idx1].vx = g_SysWork.playerWork.player.position.vx + offsetOrPosX;
+        D_800C4640[idx0][idx1].vy = g_SysWork.playerWork.player.position.vy;
+        D_800C4640[idx0][idx1].vz = g_SysWork.playerWork.player.position.vz + offsetOrPosZ;
 
         D_800C4700[idx0] = angleY;
     }
     else if (isPos == true)
     {
         D_800C4640[idx0][idx1].vx = offsetOrPosX;
-        D_800C4640[idx0][idx1].vy = g_SysWork.playerWork_4C.player_0.position.vy;
+        D_800C4640[idx0][idx1].vy = g_SysWork.playerWork.player.position.vy;
         D_800C4640[idx0][idx1].vz = offsetOrPosZ;
 
         D_800C4700[idx0] = angleY;

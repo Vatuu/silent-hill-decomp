@@ -447,12 +447,12 @@ void Ai_PuppetNurse_Move(s_SubCharacter* nurse)
     q19_12 distAbs;
     q19_12 limit;
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - nurse->position.vx,
-                                       g_SysWork.playerWork_4C.player_0.position.vz - nurse->position.vz) -
+    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - nurse->position.vx,
+                                       g_SysWork.playerWork.player.position.vz - nurse->position.vz) -
                    Q12(0.76f);
     distAbs = ABS(distToPlayer);
 
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position, g_SysWork.playerWork_4C.player_0.position) -
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position, g_SysWork.playerWork.player.position) -
                                        nurse->rotation.vy);
     absAngle           = ABS(angleDeltaToPlayer);
 
@@ -540,7 +540,7 @@ void Ai_PuppetNurse_Control1(s_SubCharacter* nurse)
         localNurse->model.stateStep    = 0;
     }
 
-    if (nurse->properties.puppetNurse.field_11E && g_SysWork.playerWork_4C.player_0.attackReceived == NO_VALUE)
+    if (nurse->properties.puppetNurse.field_11E && g_SysWork.playerWork.player.attackReceived == NO_VALUE)
     {
         localNurse->model.controlState = PuppetNurseControl_8;
         localNurse->model.stateStep    = 0;
@@ -629,12 +629,12 @@ bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse)
     q19_12 limit;
 
     distSubtract = Q12(0.78f);
-    angle        = Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork_4C.player_0.position.vx - nurse->position.vx,
-                                        g_SysWork.playerWork_4C.player_0.position.vz - nurse->position.vz) -
+    angle        = Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - nurse->position.vx,
+                                        g_SysWork.playerWork.player.position.vz - nurse->position.vz) -
                                  nurse->rotation.vy);
     absAngle     = ABS(angle);
 
-    angle2 = Math_AngleNormalizeSigned(g_SysWork.playerWork_4C.player_0.rotation.vy - nurse->rotation.vy);
+    angle2 = Math_AngleNormalizeSigned(g_SysWork.playerWork.player.rotation.vy - nurse->rotation.vy);
     angle2 = ABS(angle2);
 
     if (angle2 > Q12_ANGLE(90.0f))
@@ -642,8 +642,8 @@ bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse)
         distSubtract = Q12(0.85f);
     }
 
-    deltaX  = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vx - nurse->position.vx);
-    deltaZ  = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vz - nurse->position.vz);
+    deltaX  = Q12_TO_Q6(g_SysWork.playerWork.player.position.vx - nurse->position.vx);
+    deltaZ  = Q12_TO_Q6(g_SysWork.playerWork.player.position.vz - nurse->position.vz);
     dist    = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ))) - distSubtract;
     distAbs = ABS(dist);
 
@@ -737,7 +737,7 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
     }
     else if (controlState == 2)
     {
-        if (Chara_AttackReceivedGet(&g_SysWork.playerWork_4C.player_0) == NO_VALUE)
+        if (Chara_AttackReceivedGet(&g_SysWork.playerWork.player) == NO_VALUE)
         {
             nurse->model.controlState = PuppetNurseControl_8;
             nurse->model.stateStep    = 0;
@@ -746,7 +746,7 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
 
         if (nurse->properties.puppetNurse.field_104 >= Q12(1.5f))
         {
-            g_SysWork.playerWork_4C.player_0.damage.amount_C += Q12(D_800AD4C8[EquippedWeaponId_Unk56].field_4);
+            g_SysWork.playerWork.player.damage.amount_C += Q12(D_800AD4C8[EquippedWeaponId_Unk56].field_4);
             nurse->properties.puppetNurse.field_104           = 0;
         }
     }
@@ -794,7 +794,7 @@ void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
     switch (nurse->model.stateStep)
     {
         case 0:
-            angle = Math_AngleNormalizeSigned((g_SysWork.playerWork_4C.player_0.rotation.vy - nurse->rotation.vy) - Q12_ANGLE(90.0f));
+            angle = Math_AngleNormalizeSigned((g_SysWork.playerWork.player.rotation.vy - nurse->rotation.vy) - Q12_ANGLE(90.0f));
             if (angle < Q12_ANGLE(0.0f))
             {
                 nurse->properties.puppetNurse.field_104 = -angle;
@@ -910,8 +910,8 @@ void sharedFunc_800CF0B4_3_s03(s_SubCharacter* nurse)
     Rng_Rand16();
     localNurse->properties.puppetNurse.field_11C = Chara_HeadingAngleGet(nurse,
                                                                             Q12(1.0f),
-                                                                            g_SysWork.playerWork_4C.player_0.position.vx,
-                                                                            g_SysWork.playerWork_4C.player_0.position.vz,
+                                                                            g_SysWork.playerWork.player.position.vx,
+                                                                            g_SysWork.playerWork.player.position.vz,
                                                                             Q12_ANGLE(360.0f),
                                                                             true);
 
@@ -975,11 +975,11 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
 
     localNurse = nurse;
 
-    deltaX = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vx - nurse->position.vx);
-    deltaZ = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vz - nurse->position.vz);
+    deltaX = Q12_TO_Q6(g_SysWork.playerWork.player.position.vx - nurse->position.vx);
+    deltaZ = Q12_TO_Q6(g_SysWork.playerWork.player.position.vz - nurse->position.vz);
     dist   = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
 
-    angle    = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position, g_SysWork.playerWork_4C.player_0.position) -
+    angle    = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position, g_SysWork.playerWork.player.position) -
                              nurse->rotation.vy);
     angleAbs = ABS(angle);
 
@@ -1017,7 +1017,7 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
 
                 somePtr = localNurse->properties.npc.field_124;
                 if (dist < Q12_MULT_PRECISE(somePtr->field_8, Q12(3.0f)) &&
-                    angleAbs < Q12_ANGLE(60.0f) && g_SysWork.playerWork_4C.player_0.health > Q12(0.0f))
+                    angleAbs < Q12_ANGLE(60.0f) && g_SysWork.playerWork.player.health > Q12(0.0f))
                 {
                     nurse->model.controlState = PuppetNurseControl_12;
                     nurse->model.stateStep    = 0;
@@ -1050,8 +1050,8 @@ s32 sharedFunc_800CF600_3_s03(s_SubCharacter* nurse)
     s32 var_v0;
     s32 var_v1;
 
-    temp_a3 = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - nurse->position.vx,
-                                  g_SysWork.playerWork_4C.player_0.position.vz - nurse->position.vz) -
+    temp_a3 = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - nurse->position.vx,
+                                  g_SysWork.playerWork.player.position.vz - nurse->position.vz) -
               0xC28;
 
     var_v0 = ABS(temp_a3);
@@ -1086,8 +1086,8 @@ void sharedFunc_800CF7F4_3_s03(s_SubCharacter* nurse)
     {
         nurse->properties.dummy.properties_E8[13].val16[0] = Chara_HeadingAngleGet(nurse,
                                                                                       Q12(1.0f),
-                                                                                      g_SysWork.playerWork_4C.player_0.position.vx,
-                                                                                      g_SysWork.playerWork_4C.player_0.position.vz,
+                                                                                      g_SysWork.playerWork.player.position.vx,
+                                                                                      g_SysWork.playerWork.player.position.vz,
                                                                                       Q12_ANGLE(360.0f),
                                                                                       true);
     }
@@ -1141,16 +1141,16 @@ void Ai_PuppetNurse_Control12(s_SubCharacter* nurse)
     s_SubCharacter* nurseCpy;
 
     animStatus         = nurse->model.anim.status;
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position, g_SysWork.playerWork_4C.player_0.position) - nurse->rotation.vy);
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position, g_SysWork.playerWork.player.position) - nurse->rotation.vy);
     angleDeltaAbs      = abs(angleDeltaToPlayer);
 
-    distToPlayer = Math_Vector2MagCalc((g_SysWork.playerWork_4C.player_0.position.vx - nurse->position.vx),
-                                       (g_SysWork.playerWork_4C.player_0.position.vz - nurse->position.vz));
+    distToPlayer = Math_Vector2MagCalc((g_SysWork.playerWork.player.position.vx - nurse->position.vx),
+                                       (g_SysWork.playerWork.player.position.vz - nurse->position.vz));
 
     distToPlayer = Q12_MULT_FLOAT_PRECISE(distToPlayer, 1.1f);
     cond         = sharedFunc_800CF294_3_s03(nurse, distToPlayer);
 
-    if (g_SysWork.playerWork_4C.player_0.health < Q12(0.0f) || !cond)
+    if (g_SysWork.playerWork.player.health < Q12(0.0f) || !cond)
     {
         nurse->model.controlState  = 9;
         nurse->model.stateStep     = 0;
@@ -1213,7 +1213,7 @@ void Ai_PuppetNurse_Control12(s_SubCharacter* nurse)
             }
             else if (distToPlayer < 0x266)
             {
-                if (!(g_SysWork.playerWork_4C.player_0.flags & 8))
+                if (!(g_SysWork.playerWork.player.flags & 8))
                 {
                     nurseCpy->properties.dummy.properties_E8[0xD].val16[1] = 0; // nurseCpy + 0x11E
                     nurse->model.controlState                             = 1;
@@ -1246,8 +1246,8 @@ void Ai_PuppetNurse_Control10(s_SubCharacter* nurse)
         nurse->model.stateStep++;
     }
 
-    deltaX = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vx - nurse->position.vx);
-    deltaZ = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vz - nurse->position.vz);
+    deltaX = Q12_TO_Q6(g_SysWork.playerWork.player.position.vx - nurse->position.vx);
+    deltaZ = Q12_TO_Q6(g_SysWork.playerWork.player.position.vz - nurse->position.vz);
     dist   = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
 
     if (sharedFunc_800CF294_3_s03(nurse, dist))
@@ -1309,8 +1309,8 @@ void Ai_PuppetNurse_Control11(s_SubCharacter* nurse)
         }
     }
 
-    deltaX = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vx - nurse->position.vx);
-    deltaZ = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vz - nurse->position.vz);
+    deltaX = Q12_TO_Q6(g_SysWork.playerWork.player.position.vx - nurse->position.vx);
+    deltaZ = Q12_TO_Q6(g_SysWork.playerWork.player.position.vz - nurse->position.vz);
     dist   = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
 
     if (sharedFunc_800CF294_3_s03(nurse, dist))
@@ -1465,7 +1465,7 @@ void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords)
             weaponAttack = EquippedWeaponId_Unk56;
         }
 
-        if (func_8008A0E4(1, weaponAttack, nurse, &pos, &g_SysWork.playerWork_4C.player_0, nurse->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
+        if (func_8008A0E4(1, weaponAttack, nurse, &pos, &g_SysWork.playerWork.player, nurse->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
         {
             localNurse->properties.puppetNurse.flags_122 |= PuppetNurseFlag_0;
         }

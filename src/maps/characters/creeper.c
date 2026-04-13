@@ -138,7 +138,7 @@ void Ai_Creeper_Init(s_SubCharacter* creeper)
 
 void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
 {
-    #define playerChara g_SysWork.playerWork_4C.player_0
+    #define playerChara g_SysWork.playerWork.player
 
     if (creeper->damage.amount_C > Q12(0.0f) && creeper->health > Q12(0.0f))
     {
@@ -372,7 +372,7 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
     q19_12        distToPlayer;
     q19_12        distToTarget;
 
-    #define playerChara g_SysWork.playerWork_4C.player_0
+    #define playerChara g_SysWork.playerWork.player
 
     angleDeltaToPlayer = Math_AngleNormalizeSigned((Math_AngleBetweenPositionsGet(creeper->position, playerChara.position) -
                                         creeper->rotation.vy));
@@ -503,7 +503,7 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
     q19_12  moveSpeed;
     q19_12  moveSpeedTmp0;
 
-    #define playerChara g_SysWork.playerWork_4C.player_0
+    #define playerChara g_SysWork.playerWork.player
 
     if (func_800700F8(creeper, &playerChara))
     {

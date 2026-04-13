@@ -1853,11 +1853,11 @@ void func_800E1D50(void) // 0x800E1D50
             g_SysWork.flags_22A4 |= SysFlag2_3;
 
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
-            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
+            func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 113, false);
+            func_80085EB8(0, &g_SysWork.playerWork.player, 113, false);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -1877,14 +1877,14 @@ void func_800E1D50(void) // 0x800E1D50
             vcReturnPreAutoCamWork(true);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_MonsterCybil, 0, Q12(26.5f), Q12(108.5f), Q12(0.03125f), 3);
-            func_800E15FC(&g_SysWork.playerWork_4C.player_0, &g_SysWork.npcs_1A0[0], true);
+            func_800E15FC(&g_SysWork.playerWork.player, &g_SysWork.npcs_1A0[0], true);
             Savegame_EventFlagSet(EventFlag_441);
             break;
     }
 
     if (D_800ED5B0 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position, &g_SysWork.playerWork_4C.player_0.rotation, D_800CC4C4, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, D_800CC4C4, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800ED590, &D_800ED5A0, NULL, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14));
         vcUserCamTarget(&D_800ED590, NULL, true);
         vcUserWatchTarget(&D_800ED5A0, NULL, true);
@@ -1982,7 +1982,7 @@ void func_800E219C(void) // 0x800E219C
     VECTOR3  lightIntPos;
     SVECTOR3 unused;
 
-    #define playerChara g_SysWork.playerWork_4C.player_0
+    #define playerChara g_SysWork.playerWork.player
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 8)
@@ -2114,7 +2114,7 @@ void func_800E2724(void) // 0x800E2724
 {
     s32 curStateStep;
 
-    #define playerChara g_SysWork.playerWork_4C.player_0
+    #define playerChara g_SysWork.playerWork.player
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -2181,7 +2181,7 @@ void func_800E2950(void) // 0x800E2950
     VECTOR3 camPos;
     VECTOR3 camLookAt;
 
-    #define playerChara g_SysWork.playerWork_4C.player_0
+    #define playerChara g_SysWork.playerWork.player
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -2268,7 +2268,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
     SVECTOR3        unused;
     s_SubCharacter* player;
 
-    #define playerChara g_SysWork.playerWork_4C.player_0
+    #define playerChara g_SysWork.playerWork.player
 
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
@@ -2412,7 +2412,7 @@ void func_800E3244(void) // 0x800E3244
     q19_12   rotX;
     q19_12   rotZ;
 
-    #define playerChara g_SysWork.playerWork_4C.player_0
+    #define playerChara g_SysWork.playerWork.player
 
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
@@ -2718,7 +2718,7 @@ void func_800E3EF4(void) // 0x800E3EF4
     s_FsImageDesc sp30;
     s32           i;
 
-    #define playerChara g_SysWork.playerWork_4C.player_0
+    #define playerChara g_SysWork.playerWork.player
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
@@ -3253,7 +3253,7 @@ void func_800E558C(void) // 0x800E558C
     g_GteScratchData_func_800DD2D4* scratchData;
     s32                             i;
 
-    #define playerChara g_SysWork.playerWork_4C.player_0
+    #define playerChara g_SysWork.playerWork.player
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
@@ -3447,7 +3447,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
     s32 projCellX0;
     u16 collFlags;
 
-    #define playerChara g_SysWork.playerWork_4C.player_0
+    #define playerChara g_SysWork.playerWork.player
 
     collFlags = CollisionFlag_None;
 
@@ -3558,7 +3558,7 @@ void func_800E636C(void) // 0x800E636C
     q19_12   curAngle;
     s32      temp_t1;
 
-    #define playerChara g_SysWork.playerWork_4C.player_0
+    #define playerChara g_SysWork.playerWork.player
 
     if (!Savegame_EventFlagGet(EventFlag_443) || Savegame_EventFlagGet(EventFlag_467))
     {
@@ -3947,7 +3947,7 @@ void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8
     s32 var_s0;
     int new_var;
 
-    #define playerChara g_SysWork.playerWork_4C.player_0
+    #define playerChara g_SysWork.playerWork.player
 
     var_s0 = Sound_StereoBalanceGet(arg1);
 

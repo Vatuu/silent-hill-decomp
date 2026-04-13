@@ -152,7 +152,7 @@ struct _Model;
     (FP_FROM(animTime, Q12_SHIFT) - (baseOffset))
 
 /** @brief Creates a bitmask with a contiguous range of bits set.
- * For use with `s_PlayerExtra::disabledAnimBones_18`.
+ * For use with `s_PlayerExtra::disabledAnimBones`.
  *
  * Generates an `unsigned int` mask with all bits in the range `[fromInclusive, toInclusive]` set.
  *
@@ -231,26 +231,26 @@ struct _Model;
  * if the chunk index will be a positive number. Seems like they forgot to use `ABS`?
  */
 #define PLAYER_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                                        \
-    (__chunkIdx = g_SysWork.playerWork_4C.player_0.position.comp / Q12(40.0f),                        \
-     ((g_SysWork.playerWork_4C.player_0.position.comp >  Q12(0.0f) && (__chunkIdx + (x0)) == (x1)) || \
-      (g_SysWork.playerWork_4C.player_0.position.comp <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
+    (__chunkIdx = g_SysWork.playerWork.player.position.comp / Q12(40.0f),                        \
+     ((g_SysWork.playerWork.player.position.comp >  Q12(0.0f) && (__chunkIdx + (x0)) == (x1)) || \
+      (g_SysWork.playerWork.player.position.comp <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
 
 #define PLAYER_NOT_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                                    \
-    (__chunkIdx = g_SysWork.playerWork_4C.player_0.position.comp / Q12(40.0f),                        \
-     ((g_SysWork.playerWork_4C.player_0.position.comp >  Q12(0.0f) && (__chunkIdx + (x0)) != (x1)) || \
-      (g_SysWork.playerWork_4C.player_0.position.comp <= Q12(0.0f) && (__chunkIdx + (x2)) != (x3))))
+    (__chunkIdx = g_SysWork.playerWork.player.position.comp / Q12(40.0f),                        \
+     ((g_SysWork.playerWork.player.position.comp >  Q12(0.0f) && (__chunkIdx + (x0)) != (x1)) || \
+      (g_SysWork.playerWork.player.position.comp <= Q12(0.0f) && (__chunkIdx + (x2)) != (x3))))
 
 #define MAP_CHUNK_CHECK_VARIABLE_DECL_2() \
     s32 __chunkIdx2
 
 #define PLAYER_IN_MAP_CHUNK_2(comp, x0, x1, x2, x3)                                                      \
-    (__chunkIdx2 = g_SysWork.playerWork_4C.player_0.position.comp / Q12(40.0f),                       \
-     ((g_SysWork.playerWork_4C.player_0.position.comp >  Q12(0.0f) && (__chunkIdx2 + (x0)) < (x1)) || \
-      (g_SysWork.playerWork_4C.player_0.position.comp <= Q12(0.0f) && (__chunkIdx2 + (x2)) < (x3))))
+    (__chunkIdx2 = g_SysWork.playerWork.player.position.comp / Q12(40.0f),                       \
+     ((g_SysWork.playerWork.player.position.comp >  Q12(0.0f) && (__chunkIdx2 + (x0)) < (x1)) || \
+      (g_SysWork.playerWork.player.position.comp <= Q12(0.0f) && (__chunkIdx2 + (x2)) < (x3))))
 
 #define PLAYER_NEAR_POS(comp, base, tol)                                                                                                                             \
-    (((g_SysWork.playerWork_4C.player_0.position.comp - Q12(base)) >= Q12(0.0f)) ? ((g_SysWork.playerWork_4C.player_0.position.comp - Q12(base)) < Q12(tol)) : \
-                                                                                      ((Q12(base) - g_SysWork.playerWork_4C.player_0.position.comp) < Q12(tol)))
+    (((g_SysWork.playerWork.player.position.comp - Q12(base)) >= Q12(0.0f)) ? ((g_SysWork.playerWork.player.position.comp - Q12(base)) < Q12(tol)) : \
+                                                                                      ((Q12(base) - g_SysWork.playerWork.player.position.comp) < Q12(tol)))
 
 #define MIN_OFFSET(x, neg, pos) \
     ((((x) + (-neg)) <= ((x) + (pos))) ? ((x) - (neg)) : ((x) + (pos)))
@@ -1809,12 +1809,12 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
 typedef struct _PlayerExtra
 {
-    s_Model           model;              /** Manages upper half body's animations (torso, arms, head). */
-    s32               disabledAnimBones_18; /** Bitfield of disabled animation bones. Can be created using the `BITMASK_RANGE` macro. */
-    s32               state_1C;             /** `e_PlayerState` */
-    s32               upperBodyState_20;    /** `e_PlayerUpperBodyState` */
-    s32               lowerBodyState_24;    /** `e_PlayerLowerBodyState` */
-    e_InventoryItemId lastUsedItem_28;      /** Holds the last item ID used from inventory when the player is inside an item trigger area. */
+    /* 0x0  */ s_Model           model;             /** Manages upper half body's animations (torso, arms, head). */
+    /* 0x18 */ s32               disabledAnimBones; /** Bitfield of disabled animation bones. Can be created using the `BITMASK_RANGE` macro. */
+    /* 0x1C */ s32               state;             /** `e_PlayerState` */
+    /* 0x20 */ s32               upperBodyState;    /** `e_PlayerUpperBodyState` */
+    /* 0x24 */ s32               lowerBodyState;    /** `e_PlayerLowerBodyState` */
+    /* 0x28 */ e_InventoryItemId lastUsedItem;      /** Holds the last item ID used from inventory when the player is inside an item trigger area. */
 } s_PlayerExtra;
 STATIC_ASSERT_SIZEOF(s_PlayerExtra, 44);
 
@@ -1824,21 +1824,21 @@ STATIC_ASSERT_SIZEOF(s_PlayerExtra, 44);
  */
 typedef struct _PlayerWork
 {
-    s_SubCharacter player_0; /** Possible original name: `player`. */
-    s_PlayerExtra  extra_128;
+    /* 0x0   */ s_SubCharacter player; /** Possible original name: `player`. */
+    /* 0x128 */ s_PlayerExtra  extra;
 } s_PlayerWork;
 STATIC_ASSERT_SIZEOF(s_PlayerWork, 340);
 
 /** @brief Player combat info. */
 typedef struct _PlayerCombat
 {
-    VECTOR3 field_0; // Q19.12 position offset?
-    s8      unk_C[3];
-    s8      weaponAttack_F;        /** Packed weapon attack. See `WEAPON_ATTACK`. */
-    u8      currentWeaponAmmo_10;
-    u8      totalWeaponAmmo_11;
-    s8      weaponInventoryIdx_12; /** Index of the currently equipped weapon in the inventory. */
-    u8      isAiming_13;           /** `bool` */
+    /* 0x0  */ VECTOR3 field_0;            // Q19.12 position offset?
+    /* 0xC  */ s8      __pad_C[3];
+    /* 0xF  */ s8      weaponAttack;       /** Packed weapon attack. See `WEAPON_ATTACK`. */
+    /* 0x10 */ u8      currentWeaponAmmo;
+    /* 0x11 */ u8      totalWeaponAmmo;
+    /* 0x12 */ s8      weaponInventoryIdx; /** Index of the currently equipped weapon in the inventory. */
+    /* 0x13 */ u8      isAiming;           /** `bool` */
 } s_PlayerCombat;
 STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 
@@ -1920,7 +1920,7 @@ typedef struct _SysWork
     s32             field_30;
     s8              unk_34[4]; // Padding?
     s_PlayerCombat  playerCombat_38; // Information related to weapons and attack.
-    s_PlayerWork    playerWork_4C;
+    /* 0x4C */ s_PlayerWork    playerWork;
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   playerBoneCoords_890[HarryBone_Count];
     GsCOORDINATE2   unkCoords_E30[5];                  // Might be part of previous array for 5 extra coords which go unused.

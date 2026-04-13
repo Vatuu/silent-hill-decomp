@@ -67,7 +67,7 @@ s32 func_800706E4(s_Model* model) // 0x800706E4
 
     result = 0;
 
-    switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+    switch (g_SysWork.playerWork.extra.state)
     {
         case 39:
         case 40:
@@ -82,13 +82,13 @@ s32 func_800706E4(s_Model* model) // 0x800706E4
                     if (g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(128, false) ||
                         g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(129, false))
                     {
-                        if (g_SysWork.playerWork_4C.player_0.health <= Q12(0.0f))
+                        if (g_SysWork.playerWork.player.health <= Q12(0.0f))
                         {
-                            g_SysWork.playerWork_4C.player_0.properties.player.afkTimer_E8 -= g_DeltaTime;
-                            if (g_SysWork.playerWork_4C.player_0.properties.player.afkTimer_E8 >= Q12(0.0f))
+                            g_SysWork.playerWork.player.properties.player.afkTimer_E8 -= g_DeltaTime;
+                            if (g_SysWork.playerWork.player.properties.player.afkTimer_E8 >= Q12(0.0f))
                             {
-                                g_SysWork.playerWork_4C.player_0.properties.player.afkTimer_E8 -= g_DeltaTime;
-                                result = g_SysWork.playerWork_4C.player_0.properties.player.afkTimer_E8;
+                                g_SysWork.playerWork.player.properties.player.afkTimer_E8 -= g_DeltaTime;
+                                result = g_SysWork.playerWork.player.properties.player.afkTimer_E8;
                             }
                             else
                             {
@@ -109,14 +109,14 @@ s32 func_800706E4(s_Model* model) // 0x800706E4
                 if (g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(132, true) ||
                     g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(133, false))
                 {
-                    if (g_SysWork.playerWork_4C.player_0.health <= 0)
+                    if (g_SysWork.playerWork.player.health <= 0)
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.afkTimer_E8 -= g_DeltaTime * 2;
-                        if (g_SysWork.playerWork_4C.player_0.properties.player.afkTimer_E8 >= Q12(0.0f))
+                        g_SysWork.playerWork.player.properties.player.afkTimer_E8 -= g_DeltaTime * 2;
+                        if (g_SysWork.playerWork.player.properties.player.afkTimer_E8 >= Q12(0.0f))
                         {
-                            g_SysWork.playerWork_4C.player_0.properties.player.afkTimer_E8 -= g_DeltaTime * 2;
+                            g_SysWork.playerWork.player.properties.player.afkTimer_E8 -= g_DeltaTime * 2;
 
-                            result = g_SysWork.playerWork_4C.player_0.properties.player.afkTimer_E8;
+                            result = g_SysWork.playerWork.player.properties.player.afkTimer_E8;
                         }
                         else
                         {
@@ -187,13 +187,13 @@ s32 func_800706E4(s_Model* model) // 0x800706E4
                     break;
 
                 case ANIM_STATUS(27, true):
-                    if (g_SysWork.playerWork_4C.player_0.health < Q12(30.0f))
+                    if (g_SysWork.playerWork.player.health < Q12(30.0f))
                     {
-                        result = Q12(40.0f) - g_SysWork.playerWork_4C.player_0.health;
+                        result = Q12(40.0f) - g_SysWork.playerWork.player.health;
                     }
                     else
                     {
-                        result = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.properties.player.exhaustionTimer_FC, Q12_SHIFT));
+                        result = Q12(FP_FROM(g_SysWork.playerWork.player.properties.player.exhaustionTimer_FC, Q12_SHIFT));
                     }
                     break;
             }
@@ -224,24 +224,24 @@ void func_80070B84(s_SubCharacter* chara, q19_12 moveDistMax, q19_12 arg2, s32 k
     // @hack Wrapping in loop required for match.
     do
     {
-        if (moveDistMax < g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126)
+        if (moveDistMax < g_SysWork.playerWork.player.properties.player.moveDistance_126)
         {
-            unkMoveDist                                                            = g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 - ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2);
-            g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = unkMoveDist;
+            unkMoveDist                                                            = g_SysWork.playerWork.player.properties.player.moveDistance_126 - ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2);
+            g_SysWork.playerWork.player.properties.player.moveDistance_126 = unkMoveDist;
             if (unkMoveDist < moveDistMax)
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = moveDistMax;
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 = moveDistMax;
             }
         }
-        else if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < moveDistMax)
+        else if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < moveDistMax)
         {
-            moveDist = &g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126;
+            moveDist = &g_SysWork.playerWork.player.properties.player.moveDistance_126;
             if (chara->model.anim.keyframeIdx >= keyframeIdx)
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = *moveDist + TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 = *moveDist + TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = CLAMP(*moveDist, Q12(0.0f), moveDistMax);
+            g_SysWork.playerWork.player.properties.player.moveDistance_126 = CLAMP(*moveDist, Q12(0.0f), moveDistMax);
         }
     }
     while (false); // @hack Required for match.
@@ -263,21 +263,21 @@ void func_80070CF0(s_SubCharacter* chara, q19_12 arg1, q19_12 moveDistMax, q19_1
     }
     while (false); // @hack Required for match.
 
-    if (moveDistMax < g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126)
+    if (moveDistMax < g_SysWork.playerWork.player.properties.player.moveDistance_126)
     {
-        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= modeDistBack;
-        if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < moveDistMax)
+        g_SysWork.playerWork.player.properties.player.moveDistance_126 -= modeDistBack;
+        if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < moveDistMax)
         {
-            g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = moveDistMax;
+            g_SysWork.playerWork.player.properties.player.moveDistance_126 = moveDistMax;
         }
     }
     else
     {
-        moveDist = &g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126;
-        if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < moveDistMax)
+        moveDist = &g_SysWork.playerWork.player.properties.player.moveDistance_126;
+        if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < moveDistMax)
         {
-            g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 += moveDistForward;
-            g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126  = CLAMP(*moveDist, Q12(0.0f), moveDistMax);
+            g_SysWork.playerWork.player.properties.player.moveDistance_126 += moveDistForward;
+            g_SysWork.playerWork.player.properties.player.moveDistance_126  = CLAMP(*moveDist, Q12(0.0f), moveDistMax);
         }
     }
 }
@@ -320,51 +320,51 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* chara, s32 weaponAttack
     if (extra->model.anim.keyframeIdx >= (HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx + D_800AD4C8[weaponAttack].field_E) &&
         ((HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx + D_800AD4C8[weaponAttack].field_E) + D_800AD4C8[weaponAttack].field_F) >= extra->model.anim.keyframeIdx)
     {
-        g_SysWork.playerCombat_38.weaponAttack_F = weaponAttack;
+        g_SysWork.playerCombat_38.weaponAttack = weaponAttack;
 
-        if (!(g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Unk2))
+        if (!(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk2))
         {
             chara->field_44.field_0                                     = 1;
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk2;
+            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk2;
         }
     }
 
     if (animStatus == ANIM_STATUS(HarryAnim_Kick, true) && ANIM_STATUS_IS_ACTIVE(chara->model.anim.status))
     {
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 =  Q12_MULT(D_800AF014[chara->model.anim.keyframeIdx - 457], Math_Cos(chara->rotation.vy));
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = -Q12_MULT(D_800AF014[chara->model.anim.keyframeIdx - 457], Math_Sin(chara->rotation.vy));
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12(0.0f);
+        g_SysWork.playerWork.player.field_D8.offsetX_0 =  Q12_MULT(D_800AF014[chara->model.anim.keyframeIdx - 457], Math_Cos(chara->rotation.vy));
+        g_SysWork.playerWork.player.field_D8.offsetZ_2 = -Q12_MULT(D_800AF014[chara->model.anim.keyframeIdx - 457], Math_Sin(chara->rotation.vy));
+        g_SysWork.playerWork.player.field_D8.offsetX_4 = Q12(0.0f);
+        g_SysWork.playerWork.player.field_D8.offsetZ_6 = Q12(0.0f);
     }
 
     if (animStatus == ANIM_STATUS(HarryAnim_Stomp, true) && ANIM_STATUS_IS_ACTIVE(chara->model.anim.status))
     {
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 =  Q12_MULT(D_800AF04C[chara->model.anim.keyframeIdx - 485], Math_Cos(chara->rotation.vy));
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = -Q12_MULT(D_800AF04C[chara->model.anim.keyframeIdx - 485], Math_Sin(chara->rotation.vy));
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12(0.0f);
+        g_SysWork.playerWork.player.field_D8.offsetX_0 =  Q12_MULT(D_800AF04C[chara->model.anim.keyframeIdx - 485], Math_Cos(chara->rotation.vy));
+        g_SysWork.playerWork.player.field_D8.offsetZ_2 = -Q12_MULT(D_800AF04C[chara->model.anim.keyframeIdx - 485], Math_Sin(chara->rotation.vy));
+        g_SysWork.playerWork.player.field_D8.offsetX_4 = Q12(0.0f);
+        g_SysWork.playerWork.player.field_D8.offsetZ_6 = Q12(0.0f);
     }
 
     if (chara->model.anim.status == animStatus &&
         chara->model.anim.keyframeIdx == HARRY_BASE_ANIM_INFOS[animStatus].endKeyframeIdx)
     {
-        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk2;
+        g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk2;
 
         Player_ExtraStateSet(chara, extra, PlayerState_None);
 
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12(0.0f);
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 = Q12(0.0f);
-        g_SysWork.playerCombat_38.weaponAttack_F            = (g_SavegamePtr->equippedWeapon_AA == InventoryItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife);
+        g_SysWork.playerWork.player.field_D8.offsetZ_6 = Q12(0.0f);
+        g_SysWork.playerWork.player.field_D8.offsetX_4 = Q12(0.0f);
+        g_SysWork.playerWork.player.field_D8.offsetZ_2 = Q12(0.0f);
+        g_SysWork.playerWork.player.field_D8.offsetX_0 = Q12(0.0f);
+        g_SysWork.playerCombat_38.weaponAttack            = (g_SavegamePtr->equippedWeapon_AA == InventoryItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife);
         g_SysWork.targetNpcIdx_2353                         = NO_VALUE;
-        g_SysWork.playerCombat_38.isAiming_13               = false;
+        g_SysWork.playerCombat_38.isAiming               = false;
     }
 }
 
 void Player_CharaTurn_0(s_SubCharacter* chara, e_PlayerLowerBodyState curState) // 0x800711C4
 {
-    if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_Attack ||
+    if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_Attack ||
         !g_Player_IsSteppingLeftTap || !g_Player_IsSteppingRightTap)
     {
         return;
@@ -372,17 +372,17 @@ void Player_CharaTurn_0(s_SubCharacter* chara, e_PlayerLowerBodyState curState) 
 
     if (g_Player_IsTurningLeft)
     {
-        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = curState + PlayerLowerBodyState_QuickTurnLeft;
+        g_SysWork.playerWork.extra.lowerBodyState = curState + PlayerLowerBodyState_QuickTurnLeft;
     }
     else
     {
-        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = curState + PlayerLowerBodyState_QuickTurnRight;
+        g_SysWork.playerWork.extra.lowerBodyState = curState + PlayerLowerBodyState_QuickTurnRight;
     }
 }
 
 void Player_CharaTurn_1(s_SubCharacter* chara, e_PlayerLowerBodyState curState) // 0x80071224
 {
-    if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_Attack ||
+    if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_Attack ||
         !g_Player_IsSteppingLeftTap || !g_Player_IsSteppingRightTap)
     {
         return;
@@ -390,11 +390,11 @@ void Player_CharaTurn_1(s_SubCharacter* chara, e_PlayerLowerBodyState curState) 
 
     if (g_Player_IsTurningRight)
     {
-        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = curState + PlayerLowerBodyState_QuickTurnRight;
+        g_SysWork.playerWork.extra.lowerBodyState = curState + PlayerLowerBodyState_QuickTurnRight;
     }
     else
     {
-        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = curState + PlayerLowerBodyState_QuickTurnLeft;
+        g_SysWork.playerWork.extra.lowerBodyState = curState + PlayerLowerBodyState_QuickTurnLeft;
     }
 }
 
@@ -411,8 +411,8 @@ void Player_CharaRotate(s32 speed) // 0x80071284
             D_800C454C = ((-speed * g_DeltaTime) * g_Player_IsTurningLeft) >> 6;
         }
     }
-    else if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_WalkBackward ||
-             g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_AimWalkBackward)
+    else if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_WalkBackward ||
+             g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_AimWalkBackward)
     {
         if (g_Player_IsTurningRight)
         {
@@ -438,7 +438,7 @@ void Player_CharaRotate(s32 speed) // 0x80071284
 
 void Player_MovementStateReset(s_SubCharacter* chara, e_PlayerLowerBodyState lowerBodyState) // 0x800713B4
 {
-    if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 != lowerBodyState)
+    if (g_SysWork.playerWork.extra.lowerBodyState != lowerBodyState)
     {
         chara->model.stateStep              = 0;
         chara->model.controlState           = ModelState_Uninitialized;
@@ -457,7 +457,7 @@ bool Player_FootstepSfxPlay(s32 animStatus, s_SubCharacter* chara, s32 keyframe0
 
     if (chara->model.anim.keyframeIdx >= keyframe1)
     {
-        if (!(g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Unk4))
+        if (!(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk4))
         {
             if (pitch < 0x20)
             {
@@ -483,18 +483,18 @@ bool Player_FootstepSfxPlay(s32 animStatus, s_SubCharacter* chara, s32 keyframe0
                 chara->properties.player.field_10C = pitch + 0x40;
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk4;
+            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk4;
             return true;
         }
     }
     else
     {
-        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk4;
+        g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk4;
     }
 
     if (chara->model.anim.keyframeIdx >= keyframe0)
     {
-        if (!(g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Unk5))
+        if (!(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk5))
         {
             if (pitch < 32)
             {
@@ -520,13 +520,13 @@ bool Player_FootstepSfxPlay(s32 animStatus, s_SubCharacter* chara, s32 keyframe0
                 chara->properties.player.field_10C = pitch + 64;
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk5;
+            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk5;
             return true;
         }
     }
     else
     {
-        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk5;
+        g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk5;
     }
 
     return false;
@@ -541,7 +541,7 @@ bool func_80071620(u32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, e_Sfx
 
     if (chara->model.anim.keyframeIdx >= keyframeIdx)
     {
-        if (g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_SfxActive)
+        if (g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_SfxActive)
         {
             return false;
         }
@@ -582,12 +582,12 @@ bool func_80071620(u32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, e_Sfx
                 break;
         }
 
-        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_SfxActive;
+        g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_SfxActive;
         return true;
     }
     else
     {
-        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_SfxActive;
+        g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_SfxActive;
 
         do {} while (false); // @hack Required for match.
 
@@ -598,13 +598,13 @@ bool func_80071620(u32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, e_Sfx
 void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800717D0
 {
     // Called by `GameState_InGame_Update`, might be player update function.
-    // - `chara` always `&g_SysWork.playerWork_4C.player_0`.
+    // - `chara` always `&g_SysWork.playerWork.player`.
     // - `arg1`  always `0x8010A600`/`FS_BUFFER_0` (holds anim data).
     // - `coord` always `&g_SysWork.playerBoneCoords_890`.
 
     s_PlayerExtra* extra;
 
-    extra = &g_SysWork.playerWork_4C.extra_128;
+    extra = &g_SysWork.playerWork.extra;
 
     if (g_DeltaTime != Q12(0.0f))
     {
@@ -657,9 +657,9 @@ void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 
 static inline void func_80071968_Switch0(void)
 {
-    if (g_SysWork.playerCombat_38.weaponAttack_F != NO_VALUE)
+    if (g_SysWork.playerCombat_38.weaponAttack != NO_VALUE)
     {
-        switch (g_SysWork.playerCombat_38.weaponAttack_F)
+        switch (g_SysWork.playerCombat_38.weaponAttack)
         {
             case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Tap):
@@ -716,9 +716,9 @@ static inline void func_80071968_Switch0(void)
 
 static inline void func_80071968_Switch1(void)
 {
-    if (g_SysWork.playerCombat_38.weaponAttack_F != NO_VALUE)
+    if (g_SysWork.playerCombat_38.weaponAttack != NO_VALUE)
     {
-        switch (g_SysWork.playerCombat_38.weaponAttack_F)
+        switch (g_SysWork.playerCombat_38.weaponAttack)
         {
             case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Tap):
@@ -777,7 +777,7 @@ void Player_AnimUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, s_AnmHeader*
 {
     s_AnimInfo* animInfo;
 
-    switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+    switch (g_SysWork.playerWork.extra.state)
     {
         case PlayerState_Unk61:
         case PlayerState_Unk62:
@@ -839,7 +839,7 @@ void Player_AnimUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, s_AnmHeader*
             break;
 
         case PlayerState_None:
-            switch (g_SysWork.playerWork_4C.extra_128.upperBodyState_20)
+            switch (g_SysWork.playerWork.extra.upperBodyState)
             {
                 case PlayerUpperBodyState_RunForward:
                 case PlayerUpperBodyState_RunRight:
@@ -969,13 +969,13 @@ void Player_AnimUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, s_AnmHeader*
     if (!g_Player_IsInWalkToRunTransition)
     {
         // Disable upper body bones before playing anim.
-        g_SysWork.playerWork_4C.extra_128.disabledAnimBones_18 = HARRY_UPPER_BODY_BONE_MASK;
+        g_SysWork.playerWork.extra.disabledAnimBones = HARRY_UPPER_BODY_BONE_MASK;
 
         animInfo = &HARRY_BASE_ANIM_INFOS[chara->model.anim.status];
         animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
 
         // Re-enable upper body bones, disable lower body bones.
-        g_SysWork.playerWork_4C.extra_128.disabledAnimBones_18 = HARRY_LOWER_BODY_BONE_MASK;
+        g_SysWork.playerWork.extra.disabledAnimBones = HARRY_LOWER_BODY_BONE_MASK;
 
         animInfo = &HARRY_BASE_ANIM_INFOS[extra->model.anim.status];
         animInfo->playbackFunc(&extra->model, anmHdr, coords, animInfo);
@@ -983,14 +983,14 @@ void Player_AnimUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, s_AnmHeader*
     }
 
     // Disable upper body bones before playing anim.
-    g_SysWork.playerWork_4C.extra_128.disabledAnimBones_18 = HARRY_UPPER_BODY_BONE_MASK;
+    g_SysWork.playerWork.extra.disabledAnimBones = HARRY_UPPER_BODY_BONE_MASK;
     chara->model.anim.status                     = ANIM_STATUS(HarryAnim_Still, false);
 
     animInfo = &HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)];
     animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
 
     // Re-enable upper body bones, disable lower body bones.
-    g_SysWork.playerWork_4C.extra_128.disabledAnimBones_18 = HARRY_LOWER_BODY_BONE_MASK;
+    g_SysWork.playerWork.extra.disabledAnimBones = HARRY_LOWER_BODY_BONE_MASK;
 
     animInfo = &HARRY_BASE_ANIM_INFOS[extra->model.anim.status];
     animInfo->playbackFunc(&extra->model, anmHdr, coords, animInfo);
@@ -1047,17 +1047,17 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
         chara->flags &= ~CharaFlag_Unk4;
     }
 
-    if (g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 != Q12(0.0f))
+    if (g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 != Q12(0.0f))
     {
-        g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 -= g_DeltaTime;
+        g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 -= g_DeltaTime;
     }
 
-    g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 = CLAMP(g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114, Q12(0.0f), Q12(60.0f));
+    g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 = CLAMP(g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114, Q12(0.0f), Q12(60.0f));
 
-    if (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-        g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+    if (g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+        g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
     {
-        func_8004C564(g_SysWork.playerCombat_38.weaponAttack_F, (g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 != 0) ? 4 : 2);
+        func_8004C564(g_SysWork.playerCombat_38.weaponAttack, (g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 != 0) ? 4 : 2);
     }
 
     g_SavegamePtr->healthSaturation_238 -= g_DeltaTime;
@@ -1065,8 +1065,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
     if (g_SavegamePtr->healthSaturation_238 != Q12(0.0f))
     {
-        g_SysWork.playerWork_4C.player_0.health += g_DeltaTime;
-        g_SysWork.playerWork_4C.player_0.health  = CLAMP(g_SysWork.playerWork_4C.player_0.health, Q12(0.0f), Q12(100.0f));
+        g_SysWork.playerWork.player.health += g_DeltaTime;
+        g_SysWork.playerWork.player.health  = CLAMP(g_SysWork.playerWork.player.health, Q12(0.0f), Q12(100.0f));
     }
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP2_S00)
@@ -1079,12 +1079,12 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
         Player_Controller();
     }
 
-    switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+    switch (g_SysWork.playerWork.extra.state)
     {
         case PlayerState_Idle:
-            g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+            g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
             func_8005545C(&playerAngles);
-            g_SysWork.playerWork_4C.player_0.properties.player.quickTurnHeadingAngle_120 = playerAngles.vy;
+            g_SysWork.playerWork.player.properties.player.quickTurnHeadingAngle_120 = playerAngles.vy;
 
             if (extra->model.stateStep == 0)
             {
@@ -1110,7 +1110,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
         case PlayerState_Combat:
             Player_LowerBodyUpdate(chara, extra);
 
-            if (g_SysWork.playerWork_4C.extra_128.state_1C < (u32)PlayerState_Idle)
+            if (g_SysWork.playerWork.extra.state < (u32)PlayerState_Idle)
             {
                 Player_UpperBodyUpdate(chara, extra);
             }
@@ -1119,20 +1119,20 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
         case PlayerState_Unk7:
             func_8007FB94(chara, extra, ANIM_STATUS(100, false));
 
-            if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != Q12(0.0f))
+            if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
 
-                if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < Q12(0.0f))
+                if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < Q12(0.0f))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                 }
             }
 
             if (!(chara->attackReceived >= 68 && chara->attackReceived < 70))
             {
                 g_Player_HeadingAngle                                                  = ratan2(chara->damage.position_0.vx, chara->damage.position_0.vz) - chara->rotation.vy;
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = SQUARE(chara->damage.position_0.vx) + SQUARE(chara->damage.position_0.vz) + SQUARE(chara->damage.position_0.vy);
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 = SQUARE(chara->damage.position_0.vx) + SQUARE(chara->damage.position_0.vz) + SQUARE(chara->damage.position_0.vy);
             }
 
             if (extra->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
@@ -1140,14 +1140,14 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                 chara->attackReceived = NO_VALUE;
 
                 g_SysWork.targetNpcIdx_2353                                      = NO_VALUE;
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_DamageReceived;
+                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_DamageReceived;
 
                 Player_ExtraStateSet(chara, extra, PlayerState_None);
 
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
             }
 
-            D_800C4550               = g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126;
+            D_800C4550               = g_SysWork.playerWork.player.properties.player.moveDistance_126;
             chara->flags         |= CharaFlag_Unk4;
             chara->attackReceived = NO_VALUE;
             break;
@@ -1156,7 +1156,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
         case PlayerState_DamageThrownBack:
             thrownState = PlayerState_None;
 
-            switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+            switch (g_SysWork.playerWork.extra.state)
             {
                 case PlayerState_DamageThrownFront:
                     animStatus  = ANIM_STATUS(HarryAnim_Unk131, true);
@@ -1177,17 +1177,17 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                 chara->properties.player.afkTimer_E8 = Q12(10.0f);
             }
 
-            if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != 0)
+            if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != 0)
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f)) >> 3;
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f)) >> 3;
 
-                if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126) < 0)
+                if ((g_SysWork.playerWork.player.properties.player.moveDistance_126) < 0)
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                 }
             }
 
-            D_800C4550 = g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126;
+            D_800C4550 = g_SysWork.playerWork.player.properties.player.moveDistance_126;
             break;
 
         case PlayerState_EnemyGrabPinnedFrontStart:
@@ -1195,7 +1195,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             romperAttackState = PlayerState_None;
             npcIdx            = 0;
 
-            switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+            switch (g_SysWork.playerWork.extra.state)
             {
                 case PlayerState_EnemyGrabPinnedFrontStart:
                     animStatus        = ANIM_STATUS(HarryAnim_Unk127, true);
@@ -1212,7 +1212,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                     break;
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+            g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
             func_8007FB94(chara, extra, animStatus);
             chara->field_D4.radius_0 = Q12(0.25f);
             chara->field_D4.field_2 = Q12(0.0f);
@@ -1220,15 +1220,15 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             if (ANIM_STATUS_IS_ACTIVE(chara->model.anim.status))
             {
                 temp_s0 = -D_800AF1FC[chara->model.anim.keyframeIdx - g_MapOverlayHeader.field_38[D_800AF220].time];
-                g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 = Q12(0.0f);
-                g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
-                g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12_MULT(temp_s0, Math_Sin(chara->rotation.vy));
-                g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12_MULT(temp_s0, Math_Cos(chara->rotation.vy));
+                g_SysWork.playerWork.player.field_D8.offsetX_0 = Q12(0.0f);
+                g_SysWork.playerWork.player.field_D8.offsetZ_2 = Q12(0.0f);
+                g_SysWork.playerWork.player.field_D8.offsetX_4 = Q12_MULT(temp_s0, Math_Sin(chara->rotation.vy));
+                g_SysWork.playerWork.player.field_D8.offsetZ_6 = Q12_MULT(temp_s0, Math_Cos(chara->rotation.vy));
             }
 
             if (ABS(headingAngle0) < Q12_ANGLE(11.25f))
             {
-                if (g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_EnemyGrabPinnedFrontStart)
+                if (g_SysWork.playerWork.extra.state == PlayerState_EnemyGrabPinnedFrontStart)
                 {
                     chara->rotation.vy = g_SysWork.npcs_1A0[npcIdx].rotation.vy + Q12_ANGLE(180.0f);
                 }
@@ -1271,8 +1271,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
             if (ANIM_STATUS_IS_ACTIVE(chara->model.anim.status))
             {
-                if (g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_EnemyGrabPinnedFrontStart &&
-                    g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_EnemyGrabPinnedFront)
+                if (g_SysWork.playerWork.extra.state >= PlayerState_EnemyGrabPinnedFrontStart &&
+                    g_SysWork.playerWork.extra.state < PlayerState_EnemyGrabPinnedFront)
                 {
                     temp = -0x8000;
                     extra->model.anim.time = (Q12(g_MapOverlayHeader.harryMapAnimInfos_34[chara->model.anim.status - 76].startKeyframeIdx) + model->anim.time) + temp;
@@ -1328,11 +1328,11 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             playeGrabFree_RequiredInputCount                                        = 0;
             enemyGrabReleaseState                                                   = PlayerState_None;
             unkDistThreshold                                                        = Q12(0.0f);
-            g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126  = Q12(0.0f);
+            g_SysWork.playerWork.player.properties.player.moveDistance_126  = Q12(0.0f);
             npcDist                                                                 = Q12(0.0f);
 
             // Accommodates player position (for pinned enemy gram and Romper attack) and establishes required input count to get free.
-            switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+            switch (g_SysWork.playerWork.extra.state)
             {
                 case PlayerState_OnFloorFront:
                 case PlayerState_OnFloorBehind:
@@ -1349,7 +1349,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                         playeGrabFree_RequiredInputCount = 3200;
                     }
 
-                    switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+                    switch (g_SysWork.playerWork.extra.state)
                     {
                         case PlayerState_OnFloorFront:
                             animStatus            = ANIM_STATUS(HarryAnim_Unk132, true);
@@ -1376,7 +1376,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                         SysWork_StateSetNext(SysState_GameOver);
 
                         chara->health                                                         = Q12(100.0f);
-                        g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
+                        g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
                         return;
                     }
                     break;
@@ -1385,7 +1385,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                 case PlayerState_EnemyGrabPinnedBack:
                     unkDistThreshold = Q12(0.65f);
 
-                    switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+                    switch (g_SysWork.playerWork.extra.state)
                     {
                         case PlayerState_EnemyGrabPinnedFront:
                             if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
@@ -1425,10 +1425,10 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                     }
 
                     chara->field_D4.radius_0                        = 0;
-                    g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12(0.0f);
-                    g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
-                    g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
-                    g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 = Q12(0.0f);
+                    g_SysWork.playerWork.player.field_D8.offsetZ_6 = Q12(0.0f);
+                    g_SysWork.playerWork.player.field_D8.offsetX_4 = Q12(0.0f);
+                    g_SysWork.playerWork.player.field_D8.offsetZ_2 = Q12(0.0f);
+                    g_SysWork.playerWork.player.field_D8.offsetX_0 = Q12(0.0f);
 
                     if (ABS(chara->position.vx - D_800C4610.vx) <= Q12(0.05f))
                     {
@@ -1469,7 +1469,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                         SysWork_StateSetNext(SysState_GameOver);
 
                         chara->health                                                         = Q12(100.0f);
-                        g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
+                        g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
                         return;
                     }
                     break;
@@ -1599,7 +1599,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             }
 
             // Accommodates position of player and enemy?
-            switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+            switch (g_SysWork.playerWork.extra.state)
             {
                 case PlayerState_EnemyGrabTorsoFront:
                 case PlayerState_EnemyGrabLegsFront:
@@ -1654,7 +1654,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                     break;
             }
 
-            switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+            switch (g_SysWork.playerWork.extra.state)
             {
                 case PlayerState_EnemyGrabPinnedFront:
                     Math_ShortestAngleGet(chara->rotation.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[0]].rotation.vy + Q12_ANGLE(360.0f)), &headingAngle1);
@@ -1673,18 +1673,18 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             }
 
             // If player isn't thrown to floor (Cybil shoot attack).
-            if (!(g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_OnFloorFront &&
-                  g_SysWork.playerWork_4C.extra_128.state_1C <  PlayerState_GetUpFront))
+            if (!(g_SysWork.playerWork.extra.state >= PlayerState_OnFloorFront &&
+                  g_SysWork.playerWork.extra.state <  PlayerState_GetUpFront))
             {
                 if (unkDistThreshold < npcDist)
                 {
                     g_Player_GrabReleaseInputTimer = playeGrabFree_RequiredInputCount;
-                    if (g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_EnemyGrabPinnedFront)
+                    if (g_SysWork.playerWork.extra.state == PlayerState_EnemyGrabPinnedFront)
                     {
                         g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[0]].moveSpeed = Q12(0.0f);
                     }
 
-                    if (g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_EnemyGrabPinnedBack)
+                    if (g_SysWork.playerWork.extra.state == PlayerState_EnemyGrabPinnedBack)
                     {
                         g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[1]].moveSpeed = Q12(0.0f);
                     }
@@ -1714,28 +1714,28 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
         case PlayerState_EnemyReleasePinnedBack:
         case PlayerState_GetUpFront:
         case PlayerState_GetUpBack:
-            if (g_SysWork.playerWork_4C.extra_128.state_1C != PlayerState_FallBackward)
+            if (g_SysWork.playerWork.extra.state != PlayerState_FallBackward)
             {
-                if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != Q12(0.0f))
+                if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) >> 1; // `/ 2`.
-                    if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & 1)
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) >> 1; // `/ 2`.
+                    if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & 1)
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                        g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                     }
                 }
             }
-            else if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != Q12(0.0f))
+            else if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) >> 2; // `/ 4`.
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) >> 2; // `/ 4`.
 
-                if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & 1)
+                if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & 1)
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                 }
             }
 
-            switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+            switch (g_SysWork.playerWork.extra.state)
             {
                 case PlayerState_GetUpFront:
                     animStatus = ANIM_STATUS(HarryAnim_Unk133, true);
@@ -1790,15 +1790,15 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                     break;
             }
 
-            if (!(g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_FallForward && g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_KickEnemy))
+            if (!(g_SysWork.playerWork.extra.state >= PlayerState_FallForward && g_SysWork.playerWork.extra.state < PlayerState_KickEnemy))
             {
                 func_8007FB94(chara, extra, animStatus);
             }
 
-            D_800C4550 = g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126;
+            D_800C4550 = g_SysWork.playerWork.player.properties.player.moveDistance_126;
             chara->flags |= CharaFlag_Unk4;
 
-            switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+            switch (g_SysWork.playerWork.extra.state)
             {
                 case PlayerState_GetUpFront:
                 case PlayerState_GetUpBack:
@@ -1807,19 +1807,19 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
                     if (chara->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_DamageReceived;
+                        g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_DamageReceived;
 
                         Player_ExtraStateSet(chara, extra, PlayerState_None);
 
-                        g_SysWork.playerWork_4C.player_0.field_D4.radius_0  = Q12(0.3f);
-                        g_SysWork.playerWork_4C.player_0.field_D4.field_2   = Q12(0.23f);
-                        g_SysWork.playerWork_4C.player_0.field_C8.field_0   = Q12(-1.6f);
-                        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12(0.0f);
-                        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
-                        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
-                        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 = Q12(0.0f);
-                        g_SysWork.playerWork_4C.player_0.field_C8.field_2   = Q12(0.0f);
-                        g_SysWork.playerWork_4C.player_0.field_C8.field_6   = Q12(-1.1f);
+                        g_SysWork.playerWork.player.field_D4.radius_0  = Q12(0.3f);
+                        g_SysWork.playerWork.player.field_D4.field_2   = Q12(0.23f);
+                        g_SysWork.playerWork.player.field_C8.field_0   = Q12(-1.6f);
+                        g_SysWork.playerWork.player.field_D8.offsetZ_6 = Q12(0.0f);
+                        g_SysWork.playerWork.player.field_D8.offsetX_4 = Q12(0.0f);
+                        g_SysWork.playerWork.player.field_D8.offsetZ_2 = Q12(0.0f);
+                        g_SysWork.playerWork.player.field_D8.offsetX_0 = Q12(0.0f);
+                        g_SysWork.playerWork.player.field_C8.field_2   = Q12(0.0f);
+                        g_SysWork.playerWork.player.field_C8.field_6   = Q12(-1.1f);
                     }
 
                     chara->attackReceived = NO_VALUE;
@@ -1830,10 +1830,10 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                 case PlayerState_EnemyReleasePinnedFront:
                 case PlayerState_EnemyReleasePinnedBack:
                     chara->properties.player.afkTimer_E8        = Q12(0.0f);
-                    g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12(0.0f);
-                    g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
-                    g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
-                    g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 = Q12(0.0f);
+                    g_SysWork.playerWork.player.field_D8.offsetZ_6 = Q12(0.0f);
+                    g_SysWork.playerWork.player.field_D8.offsetX_4 = Q12(0.0f);
+                    g_SysWork.playerWork.player.field_D8.offsetZ_2 = Q12(0.0f);
+                    g_SysWork.playerWork.player.field_D8.offsetX_0 = Q12(0.0f);
 
                     if (ANIM_STATUS_IS_ACTIVE(chara->model.anim.status))
                     {
@@ -1846,8 +1846,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
                     if (chara->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_DamageReceived;
-                        switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+                        g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_DamageReceived;
+                        switch (g_SysWork.playerWork.extra.state)
                         {
                             case PlayerState_EnemyReleasePinnedFront:
                                 Player_ExtraStateSet(chara, extra, PlayerState_Unk43);
@@ -1858,11 +1858,11 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                                 break;
                         }
 
-                        g_SysWork.playerWork_4C.player_0.field_D4.radius_0  = Q12(0.3f);
-                        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12(0.0f);
-                        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
-                        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
-                        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 = Q12(0.0f);
+                        g_SysWork.playerWork.player.field_D4.radius_0  = Q12(0.3f);
+                        g_SysWork.playerWork.player.field_D8.offsetZ_6 = Q12(0.0f);
+                        g_SysWork.playerWork.player.field_D8.offsetX_4 = Q12(0.0f);
+                        g_SysWork.playerWork.player.field_D8.offsetZ_2 = Q12(0.0f);
+                        g_SysWork.playerWork.player.field_D8.offsetX_0 = Q12(0.0f);
 
                         chara->attackReceived = NO_VALUE;
                     }
@@ -1882,16 +1882,16 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
                     if (chara->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_DamageReceived;
+                        g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_DamageReceived;
 
                         Player_ExtraStateSet(chara, extra, PlayerState_None);
 
                         chara->field_D4.radius_0 = Q12(0.3f);
 
-                        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12(0.0f);
-                        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
-                        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
-                        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 = Q12(0.0f);
+                        g_SysWork.playerWork.player.field_D8.offsetZ_6 = Q12(0.0f);
+                        g_SysWork.playerWork.player.field_D8.offsetX_4 = Q12(0.0f);
+                        g_SysWork.playerWork.player.field_D8.offsetZ_2 = Q12(0.0f);
+                        g_SysWork.playerWork.player.field_D8.offsetX_0 = Q12(0.0f);
                     }
                     break;
 
@@ -1917,13 +1917,13 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                         func_80089470();
                     }
 
-                    if (g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_FallForward)
+                    if (g_SysWork.playerWork.extra.state == PlayerState_FallForward)
                     {
                         chara->properties.player.field_10D = 0;
                         if (ANIM_STATUS_IS_ACTIVE(chara->model.anim.status))
                         {
-                            g_SysWork.playerWork_4C.player_0.field_C8.field_0 = D_800AEEDC[chara->model.anim.keyframeIdx - 379][0];
-                            g_SysWork.playerWork_4C.player_0.field_C8.field_6 = D_800AEEDC[chara->model.anim.keyframeIdx - 379][1];
+                            g_SysWork.playerWork.player.field_C8.field_0 = D_800AEEDC[chara->model.anim.keyframeIdx - 379][0];
+                            g_SysWork.playerWork.player.field_C8.field_6 = D_800AEEDC[chara->model.anim.keyframeIdx - 379][1];
                         }
 
                         if (chara->model.anim.keyframeIdx == HARRY_BASE_ANIM_INFOS[45].endKeyframeIdx)
@@ -1937,9 +1937,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                                 Player_ExtraStateSet(chara, extra, PlayerState_None);
                             }
 
-                            g_SysWork.playerWork_4C.player_0.field_C8.field_0 = Q12(-1.6f);
-                            g_SysWork.playerWork_4C.player_0.field_C8.field_2 = Q12(0.0f);
-                            g_SysWork.playerWork_4C.player_0.field_C8.field_6 = Q12(-1.1f);
+                            g_SysWork.playerWork.player.field_C8.field_0 = Q12(-1.6f);
+                            g_SysWork.playerWork.player.field_C8.field_2 = Q12(0.0f);
+                            g_SysWork.playerWork.player.field_C8.field_6 = Q12(-1.1f);
 
                             chara->field_D4.radius_0 = Q12(0.3f);
                         }
@@ -1950,8 +1950,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
                         if (ANIM_STATUS_IS_ACTIVE(chara->model.anim.status))
                         {
-                            g_SysWork.playerWork_4C.player_0.field_C8.field_0 = D_800AEF78[chara->model.anim.keyframeIdx - 418][0];
-                            g_SysWork.playerWork_4C.player_0.field_C8.field_6 = D_800AEF78[chara->model.anim.keyframeIdx - 418][1];
+                            g_SysWork.playerWork.player.field_C8.field_0 = D_800AEF78[chara->model.anim.keyframeIdx - 418][0];
+                            g_SysWork.playerWork.player.field_C8.field_6 = D_800AEF78[chara->model.anim.keyframeIdx - 418][1];
                         }
 
                         if (chara->model.anim.keyframeIdx == HARRY_BASE_ANIM_INFOS[47].endKeyframeIdx)
@@ -1965,9 +1965,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                                 Player_ExtraStateSet(chara, extra, PlayerState_None);
                             }
 
-                            g_SysWork.playerWork_4C.player_0.field_C8.field_0 = Q12(-1.6f);
-                            g_SysWork.playerWork_4C.player_0.field_C8.field_2 = Q12(0.0f);
-                            g_SysWork.playerWork_4C.player_0.field_C8.field_6 = Q12(-1.1f);
+                            g_SysWork.playerWork.player.field_C8.field_0 = Q12(-1.6f);
+                            g_SysWork.playerWork.player.field_C8.field_2 = Q12(0.0f);
+                            g_SysWork.playerWork.player.field_C8.field_6 = Q12(-1.1f);
 
                             chara->field_D4.radius_0 = Q12(0.3f);
                         }
@@ -2027,7 +2027,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                 extra->model.controlState++;
                 chara->health = Q12(100.0f);
                 chara->model.controlState++;
-                g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
+                g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
                 return;
             }
             break;
@@ -2060,10 +2060,10 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                 }
 
                 temp_s0_3                                    = temp_a2 + Q12_MULT(var_v1_5 - temp_a2, Q12_FRACT(chara->model.anim.time));
-                g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 = Q12(0.0f);
-                g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
-                g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12_MULT(temp_s0_3, Math_Sin(chara->rotation.vy));
-                g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12_MULT(temp_s0_3, Math_Cos(chara->rotation.vy));
+                g_SysWork.playerWork.player.field_D8.offsetX_0 = Q12(0.0f);
+                g_SysWork.playerWork.player.field_D8.offsetZ_2 = Q12(0.0f);
+                g_SysWork.playerWork.player.field_D8.offsetX_4 = Q12_MULT(temp_s0_3, Math_Sin(chara->rotation.vy));
+                g_SysWork.playerWork.player.field_D8.offsetZ_6 = Q12_MULT(temp_s0_3, Math_Cos(chara->rotation.vy));
                 chara->field_D4.radius_0                        = Q12(0.3f);
             }
 
@@ -2079,7 +2079,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                     extra->model.controlState++;
                     chara->health = Q12(100.0f);
                     chara->model.controlState++;
-                    g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
+                    g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
                     return;
                 }
 
@@ -2092,7 +2092,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                 extra->model.controlState++;
                 chara->health = Q12(100.0f);
                 chara->model.controlState++;
-                g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
+                g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
                 return;
             }
             break;
@@ -2129,7 +2129,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
         case PlayerState_DamageFeetBack:
         case PlayerState_DamagePushBack:
         case PlayerState_DamagePushFront:
-            switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+            switch (g_SysWork.playerWork.extra.state)
             {
                 case PlayerState_DamageTorsoBack:
                     func_8007FB94(chara, extra, ANIM_STATUS(105, true));
@@ -2164,10 +2164,10 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                     break;
             }
 
-            switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+            switch (g_SysWork.playerWork.extra.state)
             {
                 case PlayerState_DamagePushBack:
-                    Math_ShortestAngleGet(chara->rotation.vy, g_SysWork.playerWork_4C.player_0.properties.player.field_118, &sp1C);
+                    Math_ShortestAngleGet(chara->rotation.vy, g_SysWork.playerWork.player.properties.player.field_118, &sp1C);
 
                     if (ABS(sp1C) >= Q12_ANGLE(90.0f))
                     {
@@ -2176,7 +2176,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
                     if (ABS(sp1C) < Q12_ANGLE(5.7f))
                     {
-                        chara->rotation.vy = g_SysWork.playerWork_4C.player_0.properties.player.field_118;
+                        chara->rotation.vy = g_SysWork.playerWork.player.properties.player.field_118;
                     }
                     else
                     {
@@ -2185,7 +2185,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                     break;
 
                 case PlayerState_DamagePushFront:
-                    Math_ShortestAngleGet(chara->rotation.vy, g_SysWork.playerWork_4C.player_0.properties.player.field_118, &sp1E);
+                    Math_ShortestAngleGet(chara->rotation.vy, g_SysWork.playerWork.player.properties.player.field_118, &sp1E);
 
                     if (ABS(sp1E) < Q12_ANGLE(90.0f))
                     {
@@ -2194,7 +2194,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
                     if (ABS(sp1E) >= Q12_ANGLE(174.4f))
                     {
-                        chara->rotation.vy = Q12_ANGLE_NORM_U(g_SysWork.playerWork_4C.player_0.properties.player.field_118 + Q12_ANGLE(180.0f));
+                        chara->rotation.vy = Q12_ANGLE_NORM_U(g_SysWork.playerWork.player.properties.player.field_118 + Q12_ANGLE(180.0f));
                     }
                     else
                     {
@@ -2203,34 +2203,34 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                     break;
             }
 
-            if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != 0)
+            if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != 0)
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f)) >> 2;
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f)) >> 2;
 
-                if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & 1)
+                if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & 1)
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                 }
             }
 
             if (!(chara->attackReceived >= 68 && chara->attackReceived < 70))
             {
                 g_Player_HeadingAngle                                                   = ratan2(chara->damage.position_0.vx, chara->damage.position_0.vz) - chara->rotation.vy;
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = SQUARE(chara->damage.position_0.vx) + SQUARE(chara->damage.position_0.vz) + SQUARE(chara->damage.position_0.vy);
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 = SQUARE(chara->damage.position_0.vx) + SQUARE(chara->damage.position_0.vz) + SQUARE(chara->damage.position_0.vy);
             }
 
             if (extra->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
                 chara->attackReceived                                         = NO_VALUE;
                 g_SysWork.targetNpcIdx_2353                                      = NO_VALUE;
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_DamageReceived;
+                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_DamageReceived;
 
                 Player_ExtraStateSet(chara, extra, PlayerState_None);
 
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
             }
 
-            D_800C4550       = g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126;
+            D_800C4550       = g_SysWork.playerWork.player.properties.player.moveDistance_126;
             chara->flags |= CharaFlag_Unk4;
             break;
 
@@ -2258,75 +2258,75 @@ void Player_UpperBodyStateUpdate(s_PlayerExtra* extra, e_PlayerUpperBodyState up
     e_PlayerUpperBodyState prevState;
     s_Model*         charaModel;
 
-    prevState  = g_SysWork.playerWork_4C.extra_128.upperBodyState_20;
-    charaModel = &g_SysWork.playerWork_4C.player_0.model;
+    prevState  = g_SysWork.playerWork.extra.upperBodyState;
+    charaModel = &g_SysWork.playerWork.player.model;
 
-    switch (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24)
+    switch (g_SysWork.playerWork.extra.lowerBodyState)
     {
         case PlayerLowerBodyState_WalkForward:
-            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_WalkForward;
+            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_WalkForward;
 
         default:
             break;
 
         case PlayerLowerBodyState_RunForward:
-            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_RunForward;
+            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_RunForward;
             break;
 
         case PlayerLowerBodyState_WalkBackward:
-            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_WalkBackward;
+            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_WalkBackward;
             break;
 
         case PlayerLowerBodyState_SidestepRight:
-            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_SidestepRight;
+            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_SidestepRight;
             break;
 
         case PlayerLowerBodyState_SidestepLeft:
-            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_SidestepLeft;
+            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_SidestepLeft;
             break;
 
         case PlayerLowerBodyState_RunRight:
-            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_RunRight;
+            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_RunRight;
             break;
 
         case PlayerLowerBodyState_RunLeft:
-            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_RunLeft;
+            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_RunLeft;
             break;
 
         case PlayerLowerBodyState_QuickTurnRight:
-            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_QuickTurnRight;
+            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_QuickTurnRight;
             break;
 
         case PlayerLowerBodyState_QuickTurnLeft:
-            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_QuickTurnLeft;
+            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_QuickTurnLeft;
             break;
 
         case PlayerLowerBodyState_JumpBackward:
-            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_RunJumpBackward;
+            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_RunJumpBackward;
             break;
 
         case PlayerLowerBodyState_RunForwardWallStop:
-            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_RunWallStop;
+            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_RunWallStop;
             break;
 
         case PlayerLowerBodyState_Stumble:
-            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_LowerBodyStumble;
+            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_LowerBodyStumble;
             break;
 
         case PlayerLowerBodyState_RunLeftWallStop:
-            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_RunLeftWallStop;
+            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_RunLeftWallStop;
             break;
 
         case PlayerLowerBodyState_RunRightWallStop:
-            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_RunRightWallStop;
+            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_RunRightWallStop;
             break;
 
         case PlayerLowerBodyState_RunLeftStumble:
-            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_RunLeftStumble;
+            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_RunLeftStumble;
             break;
 
         case PlayerLowerBodyState_RunRightStumble:
-            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_SidestepRightStumble;
+            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_SidestepRightStumble;
             break;
 
         case PlayerLowerBodyState_None:
@@ -2334,7 +2334,7 @@ void Player_UpperBodyStateUpdate(s_PlayerExtra* extra, e_PlayerUpperBodyState up
             {
                 case 0:
                 case 2:
-                    g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+                    g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_None;
                     break;
 
                 case 1:
@@ -2342,45 +2342,45 @@ void Player_UpperBodyStateUpdate(s_PlayerExtra* extra, e_PlayerUpperBodyState up
                     {
                         if (g_Player_IsTurningLeft)
                         {
-                            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_TurnLeft;
+                            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_TurnLeft;
                         }
                     }
                     else
                     {
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_TurnRight;
+                        g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_TurnRight;
                     }
                     break;
 
                 case 3:
                     if (g_Player_IsTurningLeft)
                     {
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_TurnLeft;
+                        g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_TurnLeft;
                         break;
                     }
 
                     if (!g_Player_IsTurningRight)
                     {
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+                        g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_None;
                     }
                     break;
 
                 case 4:
                     if (g_Player_IsTurningRight)
                     {
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_TurnRight;
+                        g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_TurnRight;
                         break;
                     }
 
                     if (!g_Player_IsTurningLeft)
                     {
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+                        g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_None;
                     }
                     break;
             }
             break;
     }
 
-    if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != upperState)
+    if (g_SysWork.playerWork.extra.upperBodyState != upperState)
     {
         extra->model.stateStep = 0;
         extra->model.controlState     = ModelState_Uninitialized;
@@ -2389,7 +2389,7 @@ void Player_UpperBodyStateUpdate(s_PlayerExtra* extra, e_PlayerUpperBodyState up
     switch (prevState)
     {
         case PlayerUpperBodyState_WalkForward:
-            if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_RunForward)
+            if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_RunForward)
             {
                 break;
             }
@@ -2401,7 +2401,7 @@ void Player_UpperBodyStateUpdate(s_PlayerExtra* extra, e_PlayerUpperBodyState up
             break;
 
         case PlayerUpperBodyState_RunForward:
-            if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_WalkForward)
+            if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_WalkForward)
             {
                 break;
             }
@@ -2425,7 +2425,7 @@ void Player_UpperBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
 
     stumbleSfx = (D_800C45C8.field_1 == 10) ? Sfx_Stumble1 : Sfx_Stumble0;
 
-    switch (g_SysWork.playerWork_4C.extra_128.upperBodyState_20)
+    switch (g_SysWork.playerWork.extra.upperBodyState)
     {
         case PlayerUpperBodyState_None:
             func_80071620(55, chara, 551, Sfx_HarryHeavyBreath);
@@ -2480,9 +2480,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
         s32 keyframeIdx1;
         u8  weaponAttack;
 
-        weaponAttack = g_SysWork.playerCombat_38.weaponAttack_F;
+        weaponAttack = g_SysWork.playerCombat_38.weaponAttack;
 
-        switch (g_SysWork.playerCombat_38.weaponAttack_F)
+        switch (g_SysWork.playerCombat_38.weaponAttack)
         {
             case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
                 keyframeIdx0 = 619;
@@ -2521,9 +2521,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 break;
         }
 
-        if (g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_Combat)
+        if (g_SysWork.playerWork.extra.state == PlayerState_Combat)
         {
-            g_SysWork.playerWork_4C.player_0.properties.player.field_104 += g_DeltaTime;
+            g_SysWork.playerWork.player.properties.player.field_104 += g_DeltaTime;
 
             if (!g_GameWork.config_0.optExtraWeaponCtrl_23)
             {
@@ -2551,16 +2551,16 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
             g_Player_MeleeAttackType  = 0;
             g_Player_IsMultiTapAttack = 0;
 
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Shooting;
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk6;
+            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Shooting;
+            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk6;
 
-            if (g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 g_Player_MeleeAttackType    = 0;
                 g_Player_AttackAnimIdx = g_Player_EquippedWeaponInfo.animAttackHold_8;
                 D_800AF220                  = g_Player_EquippedWeaponInfo.field_A >> 4;
             }
-            else if (g_Player_IsAttacking && g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            else if (g_Player_IsAttacking && g_SysWork.playerCombat_38.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 g_Player_MeleeAttackType = 1;
                 g_Player_AttackAnimIdx   = g_Player_EquippedWeaponInfo.animAttackHold_8 - 4;
@@ -2571,7 +2571,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 g_Player_MeleeAttackType = 0;
 
                 // Handle Rock Drill animation.
-                if (g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) ||
+                if (g_SysWork.playerCombat_38.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) ||
                     g_Player_RockDrill_DirectionAttack == 0)
                 {
                     g_Player_AttackAnimIdx = g_Player_EquippedWeaponInfo.animAttackHold_8;
@@ -2591,32 +2591,32 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
 
             extra->model.controlState++;
 
-            if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                g_SysWork.playerCombat_38.weaponAttack_F = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F), AttackInputType_Tap);
+                g_SysWork.playerCombat_38.weaponAttack = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack), AttackInputType_Tap);
             }
 
-            g_SysWork.playerCombat_38.weaponAttack_F += g_Player_MeleeAttackType * 10; // TODO: Macro for this?
+            g_SysWork.playerCombat_38.weaponAttack += g_Player_MeleeAttackType * 10; // TODO: Macro for this?
 
-            D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_E;
-            D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_E +
-                         D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_F;
+            D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_E;
+            D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_E +
+                         D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_F;
         }
 
         // Used for make continuos/hold shooting smoother?
         if (g_SysWork.targetNpcIdx_2353 != NO_VALUE &&
-            g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
             if (!g_GameWork.config_0.optExtraAutoAiming_2C)
             {
                 if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 1))
                 {
-                    func_8005CD38(&enemyAttackedIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, 0x238, Q12(10.0f), 0);
+                    func_8005CD38(&enemyAttackedIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, 0x238, Q12(10.0f), 0);
                     func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &g_SysWork.playerCombat_38, enemyAttackedIdx, Q12_ANGLE(20.0f));
                 }
                 else
                 {
-                    func_8005CD38(&enemyAttackedIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, 0x238, Q12(3.0f), 0);
+                    func_8005CD38(&enemyAttackedIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, 0x238, Q12(3.0f), 0);
                     func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &g_SysWork.playerCombat_38, enemyAttackedIdx, Q12_ANGLE(20.0f));
                 }
             }
@@ -2633,8 +2633,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
 
             if (enemyAttackedIdx == g_SysWork.targetNpcIdx_2353)
             {
-                chara->field_2A = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.playerWork_4C.player_0.position.vx,
-                                                   (g_SysWork.npcs_1A0[enemyAttackedIdx].position.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.playerWork_4C.player_0.position.vz) +
+                chara->field_2A = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.playerWork.player.position.vx,
+                                                   (g_SysWork.npcs_1A0[enemyAttackedIdx].position.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.playerWork.player.position.vz) +
                                             Q12_ANGLE(360.0f));
             }
             else
@@ -2654,17 +2654,17 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
             {
                 if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))
                 {
-                    func_8005CD38(&enemyAttackedIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(3.0f), Q12(3.0f), 5);
+                    func_8005CD38(&enemyAttackedIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(3.0f), Q12(3.0f), 5);
                 }
                 else
                 {
-                    func_8005CD38(&enemyAttackedIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(1.0f), Q12(1.0f), 5);
+                    func_8005CD38(&enemyAttackedIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(1.0f), Q12(1.0f), 5);
                 }
 
                 if (enemyAttackedIdx == g_SysWork.targetNpcIdx_2353)
                 {
-                    temp_a1 = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.playerWork_4C.player_0.position.vx,
-                                               (g_SysWork.npcs_1A0[enemyAttackedIdx].position.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.playerWork_4C.player_0.position.vz) + Q12(1.0f));
+                    temp_a1 = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.playerWork.player.position.vx,
+                                               (g_SysWork.npcs_1A0[enemyAttackedIdx].position.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.playerWork.player.position.vz) + Q12(1.0f));
 
                     Math_ShortestAngleGet(chara->rotation.vy, temp_a1, &ssp20);
                     D_800C454C = g_DeltaTime * 0xF;
@@ -2686,13 +2686,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
             else
             {
                 enemyAttackedIdx                                           = NO_VALUE;
-                g_SysWork.playerWork_4C.player_0.properties.player.field_122 = Q12_ANGLE(90.0f);
+                g_SysWork.playerWork.player.properties.player.field_122 = Q12_ANGLE(90.0f);
                 chara->field_2A                                            = chara->rotation.vy;
             }
 
-            if (g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                if (g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Unk11)
+                if (g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk11)
                 {
                     if (extra->model.stateStep == 0)
                     {
@@ -2709,7 +2709,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                     }
                 }
             }
-            else if (g_Player_IsAttacking && g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            else if (g_Player_IsAttacking && g_SysWork.playerCombat_38.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 if (extra->model.stateStep == 0)
                 {
@@ -2717,7 +2717,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                     extra->model.stateStep++;
                 }
             }
-            else if (g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) ||
+            else if (g_SysWork.playerCombat_38.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) ||
                      g_Player_RockDrill_DirectionAttack == 0)
             {
                 if (extra->model.stateStep == 0)
@@ -2746,35 +2746,35 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
 
         // Audio effects for attack animations, no ammo audio and removes ammo value.
         // Additionally trigger some special state for the Rock Drill.
-        if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+        if (g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
-            if (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
-                WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
+                WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 if (extra->model.anim.keyframeIdx >= D_800C44D0 && D_800C44D4 >= extra->model.anim.keyframeIdx)
                 {
-                    if (!(g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Unk2))
+                    if (!(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk2))
                     {
                         chara->field_44.field_0 = 1;
 
                         func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &chara->position, Q8(0.5f), 0);
 
                         chara->properties.player.field_10C                       = 0x40;
-                        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk2;
+                        g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk2;
                     }
                 }
                 else if (D_800C44D4 < extra->model.anim.keyframeIdx)
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk2;
+                    g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk2;
                 }
             }
-            else if (g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 == Q12(0.0f))
+            else if (g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 == Q12(0.0f))
             {
                 if (extra->model.anim.keyframeIdx >= D_800C44D0 && D_800C44D4 >= extra->model.anim.keyframeIdx &&
-                    !(g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Unk2))
+                    !(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk2))
                 {
                     chara->field_44.field_0                                     = 1;
-                    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk2;
+                    g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk2;
                 }
             }
             else
@@ -2790,18 +2790,18 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
         else
         {
             if (extra->model.anim.keyframeIdx >= D_800C44D0 && D_800C44D4 >= extra->model.anim.keyframeIdx &&
-                !(g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Shooting))
+                !(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Shooting))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Shooting;
+                g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Shooting;
 
-                if (g_SysWork.playerCombat_38.currentWeaponAmmo_10 != 0)
+                if (g_SysWork.playerCombat_38.currentWeaponAmmo != 0)
                 {
                     chara->field_44.field_0 = 1;
 
-                    if (g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
+                    if (g_SysWork.playerCombat_38.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
                     {
-                        g_SysWork.playerCombat_38.currentWeaponAmmo_10--;
-                        g_SavegamePtr->items_0[g_SysWork.playerCombat_38.weaponInventoryIdx_12].count_1--;
+                        g_SysWork.playerCombat_38.currentWeaponAmmo--;
+                        g_SavegamePtr->items_0[g_SysWork.playerCombat_38.weaponInventoryIdx].count_1--;
 
                         func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &chara->position, Q8(0.5f), 0);
                     }
@@ -2820,7 +2820,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                     extra->model.anim.keyframeIdx  = D_800C44F0[D_800AF220].field_6 - 3;
                     extra->model.anim.time          = Q12(D_800C44F0[D_800AF220].field_6 - 3);
 
-                    if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Aim)
+                    if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Aim)
                     {
                         chara->model.anim.keyframeIdx = D_800C44F0[D_800AF220].field_6 - 3;
                         chara->model.anim.time         = Q12(D_800C44F0[D_800AF220].field_6 - 3);
@@ -2832,7 +2832,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
         // Finish attack animation.
         // Though more context about `D_800AF220` and `D_800C44F0` is required,
         // they likely indicate if an attack animation has finished.
-        if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+        if (g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
             // Attack anim.
             if (extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk29, true) ||
@@ -2851,33 +2851,33 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                     extra->model.anim.keyframeIdx = D_800C44F0[0].field_6;
                     extra->model.anim.time         = Q12(extra->model.anim.keyframeIdx);
 
-                    if (g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Unk0)
+                    if (g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk0)
                     {
-                        g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_Combat;
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_AimTargetLock;
+                        g_SysWork.playerWork.extra.state          = PlayerState_Combat;
+                        g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_AimTargetLock;
 
-                        if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Attack)
+                        if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Attack)
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Aim;
+                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Aim;
                         }
                     }
                     else
                     {
-                        g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_None;
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_Aim;
+                        g_SysWork.playerWork.extra.state          = PlayerState_None;
+                        g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_Aim;
                         extra->model.controlState                          = extra->model.stateStep = 0;
 
-                        if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Attack)
+                        if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Attack)
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_Aim;
-                            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk10;
+                            g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_Aim;
+                            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk10;
                         }
                     }
 
-                    g_SysWork.playerWork_4C.player_0.properties.player.field_104  = 0;
-                    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk2;
-                    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Shooting;
-                    g_SysWork.playerCombat_38.weaponAttack_F                = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F), AttackInputType_Tap);
+                    g_SysWork.playerWork.player.properties.player.field_104  = 0;
+                    g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk2;
+                    g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Shooting;
+                    g_SysWork.playerCombat_38.weaponAttack                = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack), AttackInputType_Tap);
                     return true;
                 }
             }
@@ -2887,26 +2887,26 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                   extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk36, true)) &&
                  extra->model.anim.keyframeIdx == D_800C44F0[D_800AF220].field_6)
         {
-            if (g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Unk0)
+            if (g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk0)
             {
-                g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_Combat;
-                g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_AimTargetLock;
+                g_SysWork.playerWork.extra.state          = PlayerState_Combat;
+                g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_AimTargetLock;
 
-                if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Attack)
+                if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Attack)
                 {
-                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Aim;
+                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Aim;
                 }
             }
             else
             {
-                g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_None;
-                g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_Aim;
+                g_SysWork.playerWork.extra.state          = PlayerState_None;
+                g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_Aim;
                 extra->model.controlState                          = extra->model.stateStep = 0;
 
-                if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Attack)
+                if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Attack)
                 {
-                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_Aim;
-                    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk10;
+                    g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_Aim;
+                    g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk10;
                     chara->model.controlState                                      =
                     chara->model.stateStep                                  = 0;
                 }
@@ -2914,17 +2914,17 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
 
             D_800C4556                                                  = NO_VALUE;
             D_800C4554                                                  = NO_VALUE;
-            g_SysWork.playerWork_4C.player_0.properties.player.field_104  = 0;
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Shooting;
+            g_SysWork.playerWork.player.properties.player.field_104  = 0;
+            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Shooting;
             return true;
         }
 
-        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk6;
+        g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk6;
 
         // Handles multitap attack.
-        if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+        if (g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
-            if (g_Player_MeleeAttackType == 0 && g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (g_Player_MeleeAttackType == 0 && g_SysWork.playerCombat_38.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 if (extra->model.anim.keyframeIdx >= keyframeIdx1 &&
                     extra->model.anim.keyframeIdx < keyframeIdx0 &&
@@ -2943,7 +2943,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
             {
                 extra->model.stateStep = 0;
 
-                if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Attack)
+                if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Attack)
                 {
                     chara->model.stateStep = 0;
                 }
@@ -2951,7 +2951,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 g_Player_AttackAnimIdx                       = g_Player_EquippedWeaponInfo.animAttackHold_8 - 2;
                 D_800AF220                                   = (g_Player_EquippedWeaponInfo.field_A >> 4) - 1;
                 g_Player_MeleeAttackType                     = 2;
-                g_SysWork.playerCombat_38.weaponAttack_F = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(weaponAttack), AttackInputType_Multitap);
+                g_SysWork.playerCombat_38.weaponAttack = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(weaponAttack), AttackInputType_Multitap);
 
                 if (extra->model.stateStep == 0)
                 {
@@ -2959,12 +2959,12 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                     extra->model.stateStep++;
                 }
 
-                D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_E;
-                D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_E +
-                             D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_F;
+                D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_E;
+                D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_E +
+                             D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_F;
                 g_Player_IsMultiTapAttack = 0;
 
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk2;
+                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk2;
             }
         }
 
@@ -2973,12 +2973,12 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
 
     enemyAttackedIdx = NO_VALUE;
 
-    if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimTargetLock && g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_Attack)
+    if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimTargetLock && g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_Attack)
     {
-        g_SysWork.playerWork_4C.player_0.properties.player.field_104 = 0;
+        g_SysWork.playerWork.player.properties.player.field_104 = 0;
     }
 
-    switch (g_SysWork.playerWork_4C.extra_128.upperBodyState_20)
+    switch (g_SysWork.playerWork.extra.upperBodyState)
     {
         case PlayerUpperBodyState_None:
             if ((extra->model.anim.status == ANIM_STATUS(HarryAnim_WalkForward, true) ||
@@ -3003,7 +3003,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
             {
                 chara->properties.player.afkTimer_E8 = Q12(0.0f);
 
-                // If not normal idle anim, set it and update `upperBodyState_20`.
+                // If not normal idle anim, set it and update `upperBodyState`.
                 if (extra->model.anim.status != ANIM_STATUS(HarryAnim_Idle, true))
                 {
                     if (extra->model.stateStep == 0)
@@ -3025,14 +3025,14 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 }
             }
 
-            if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_None)
+            if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_None)
             {
                 chara->properties.player.afkTimer_E8 = Q12(0.0f);
             }
 
             chara->field_2A = chara->rotation.vy;
 
-            if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_None)
+            if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_None)
             {
                 chara->properties.player.afkTimer_E8++;
 
@@ -3042,11 +3042,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                     {
                         chara->properties.player.afkTimer_E8             = Q12(0.0f);
                         // TODO: `Player_ExtraStateSet` doesn't match?
-                        g_SysWork.playerWork_4C.extra_128.state_1C              = PlayerState_Idle;
+                        g_SysWork.playerWork.extra.state              = PlayerState_Idle;
                         chara->model.controlState = chara->model.stateStep = 0;
                         extra->model.controlState = extra->model.stateStep = 0;
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20     = PlayerUpperBodyState_None;
-                        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24     = PlayerLowerBodyState_None;
+                        g_SysWork.playerWork.extra.upperBodyState     = PlayerUpperBodyState_None;
+                        g_SysWork.playerWork.extra.lowerBodyState     = PlayerLowerBodyState_None;
                         return true;
                     }
                 }
@@ -3089,7 +3089,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
             break;
 
         case PlayerUpperBodyState_RunWallStop:
-            if (g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_WallStopRight)
+            if (g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_WallStopRight)
             {
                 if (extra->model.stateStep == 0)
                 {
@@ -3318,10 +3318,10 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
         case PlayerUpperBodyState_Aim:
             g_SysWork.targetNpcIdx_2353 = NO_VALUE;
 
-            if (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-                g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+                g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
-                if (g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 != Q12(0.0f))
+                if (g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 != Q12(0.0f))
                 {
                     if (chara->field_44.field_0 <= 0)
                     {
@@ -3342,10 +3342,10 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 }
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk6;
+            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk6;
             chara->field_2A                                             = chara->rotation.vy;
 
-            if (g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 // Aim.
                 if (extra->model.anim.status != ANIM_STATUS(HarryAnim_HandgunAim, true) &&
@@ -3353,11 +3353,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 {
                     if (g_Player_IsAttacking || g_Player_IsShooting)
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk11;
+                        g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk11;
                     }
                     else
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk11;
+                        g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk11;
 
                         if (extra->model.stateStep == 0)
                         {
@@ -3368,14 +3368,14 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 }
                 else
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk11;
+                    g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk11;
                 }
             }
             break;
 
         case PlayerUpperBodyState_AimTargetLock:
-            g_SysWork.playerWork_4C.player_0.properties.player.field_104 += g_DeltaTime;
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk6;
+            g_SysWork.playerWork.player.properties.player.field_104 += g_DeltaTime;
+            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk6;
 
             if (g_Player_IsTurningRight)
             {
@@ -3400,39 +3400,39 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
 
             if (playerTurn != 0)
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk9;
+                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk9;
                 chara->properties.player.field_F4                 = g_Player_FlexRotationX;
 
                 if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))
                 {
-                    func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(2.0f / 3.0f), Q12(10.0f), playerTurn);
+                    func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(2.0f / 3.0f), Q12(10.0f), playerTurn);
                 }
                 else
                 {
-                    func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(1.0f / 3.0f), Q12(3.0f), playerTurn);
+                    func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(1.0f / 3.0f), Q12(3.0f), playerTurn);
                 }
 
                 if (g_Player_TargetNpcIdx == NO_VALUE)
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk12;
+                    g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk12;
                     chara->model.stateStep                                  = 0;
-                    g_SysWork.playerWork_4C.player_0.properties.player.field_122  = Q12_ANGLE(90.0f);
-                    g_SysWork.playerWork_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_Aim;
+                    g_SysWork.playerWork.player.properties.player.field_122  = Q12_ANGLE(90.0f);
+                    g_SysWork.playerWork.extra.upperBodyState             = PlayerUpperBodyState_Aim;
                     g_Player_IsShooting                                         = false;
-                    g_SysWork.playerWork_4C.extra_128.state_1C                      = PlayerState_None;
+                    g_SysWork.playerWork.extra.state                      = PlayerState_None;
                     g_Player_IsAttacking                                        = false;
                     extra->model.controlState                                      = extra->model.stateStep = 0;
 
-                    if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Attack)
+                    if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Attack)
                     {
-                        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Aim;
+                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Aim;
                         chara->model.controlState                          = chara->model.stateStep = 0;
                     }
                 }
                 else
                 {
-                    g_SysWork.playerWork_4C.extra_128.upperBodyState_20         = PlayerUpperBodyState_AimTargetLockSwitch;
-                    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk12;
+                    g_SysWork.playerWork.extra.upperBodyState         = PlayerUpperBodyState_AimTargetLockSwitch;
+                    g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk12;
                     extra->model.controlState                                      = extra->model.stateStep = 0;
                 }
 
@@ -3445,17 +3445,17 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                     if (g_TargetEnemyPosition.vx != g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position.vx ||
                         g_TargetEnemyPosition.vy != g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position.vy ||
                         g_TargetEnemyPosition.vz != g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position.vz ||
-                        g_Player_PrevPosition.vx != g_SysWork.playerWork_4C.player_0.position.vx ||
-                        g_Player_PrevPosition.vy != g_SysWork.playerWork_4C.player_0.position.vy ||
-                        g_Player_PrevPosition.vz != g_SysWork.playerWork_4C.player_0.position.vz)
+                        g_Player_PrevPosition.vx != g_SysWork.playerWork.player.position.vx ||
+                        g_Player_PrevPosition.vy != g_SysWork.playerWork.player.position.vy ||
+                        g_Player_PrevPosition.vz != g_SysWork.playerWork.player.position.vz)
                     {
                         if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))
                         {
-                            func_8005CD38(&enemyAttackedIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, 0x238, Q12(10.0f), 0);
+                            func_8005CD38(&enemyAttackedIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, 0x238, Q12(10.0f), 0);
                         }
                         else
                         {
-                            func_8005CD38(&enemyAttackedIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, 0x11C, Q12(3.0f), 0);
+                            func_8005CD38(&enemyAttackedIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, 0x11C, Q12(3.0f), 0);
                         }
 
                         g_TargetEnemyPosition = g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position;
@@ -3473,18 +3473,18 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
 
                 if (enemyAttackedIdx == g_SysWork.targetNpcIdx_2353 && enemyAttackedIdx != NO_VALUE)
                 {
-                    chara->field_2A = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.playerWork_4C.player_0.position.vx,
-                                                       (g_SysWork.npcs_1A0[enemyAttackedIdx].position.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.playerWork_4C.player_0.position.vz) +
+                    chara->field_2A = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.playerWork.player.position.vx,
+                                                       (g_SysWork.npcs_1A0[enemyAttackedIdx].position.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.playerWork.player.position.vz) +
                                                 Q12_ANGLE(360.0f));
                 }
                 else
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk12;
+                    g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk12;
                     chara->model.stateStep                                  = 0;
-                    g_SysWork.playerWork_4C.player_0.properties.player.field_122  = Q12_ANGLE(90.0f);
+                    g_SysWork.playerWork.player.properties.player.field_122  = Q12_ANGLE(90.0f);
                     g_SysWork.targetNpcIdx_2353                                 = NO_VALUE;
-                    g_SysWork.playerWork_4C.extra_128.state_1C                      = PlayerState_None;
-                    g_SysWork.playerWork_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_Aim;
+                    g_SysWork.playerWork.extra.state                      = PlayerState_None;
+                    g_SysWork.playerWork.extra.upperBodyState             = PlayerUpperBodyState_Aim;
                     extra->model.controlState                                      = extra->model.stateStep = 0;
                 }
             }
@@ -3498,10 +3498,10 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
         case PlayerUpperBodyState_AimStart:
             chara->field_2A = chara->rotation.vy;
 
-            if (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-                g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+                g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
-                if (g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 != Q12(0.0f))
+                if (g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 != Q12(0.0f))
                 {
                     if (extra->model.stateStep == 0)
                     {
@@ -3515,23 +3515,23 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                     extra->model.stateStep++;
                 }
 
-                if (((g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
+                if (((g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
                       extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunAim, true) &&
                       extra->model.anim.keyframeIdx >= (D_800C44F0[0].field_4 + 5)) ||
-                     (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
+                     (g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
                       extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunAim, true) &&
                       extra->model.anim.keyframeIdx >= (D_800C44F0[0].field_4 + 9))) &&
-                    !(g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Unk2))
+                    !(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk2))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 = Q12(60.0f);
+                    g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 = Q12(60.0f);
 
-                    func_8004C564(g_SysWork.playerCombat_38.weaponAttack_F, 0);
+                    func_8004C564(g_SysWork.playerCombat_38.weaponAttack, 0);
 
                     chara->properties.player.field_10C                       = 0x40;
-                    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk2;
+                    g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk2;
                 }
             }
-            else if (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap))
+            else if (g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap))
             {
                 if (extra->model.stateStep == 0)
                 {
@@ -3548,22 +3548,22 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 }
             }
 
-            if (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-                g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+                g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 if (extra->model.anim.keyframeIdx == D_800C44F0[0].field_6 ||
                     extra->model.anim.keyframeIdx == D_800C44F0[5].field_6)
                 {
                     if (extra->model.anim.keyframeIdx == D_800C44F0[0].field_6)
                     {
-                        func_8004C564(g_SysWork.playerCombat_38.weaponAttack_F, 1);
+                        func_8004C564(g_SysWork.playerCombat_38.weaponAttack, 1);
                     }
 
-                    g_SysWork.playerWork_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_Aim;
+                    g_SysWork.playerWork.extra.upperBodyState             = PlayerUpperBodyState_Aim;
                     extra->model.controlState                                      = extra->model.stateStep = 0;
-                    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk2;
+                    g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk2;
 
-                    if (g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 != Q12(0.0f))
+                    if (g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 != Q12(0.0f))
                     {
                         chara->field_44.field_0 = 1;
                     }
@@ -3574,7 +3574,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 if (extra->model.anim.keyframeIdx == D_800C44F0[0].field_6 ||
                     extra->model.anim.keyframeIdx == D_800C44F0[1].field_6)
                 {
-                    g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_Aim;
+                    g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_Aim;
                 }
             }
             break;
@@ -3583,26 +3583,26 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
         case PlayerUpperBodyState_AimTargetLockSwitch:
             sp22 = 0;
 
-            if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_AimStartTargetLock)
+            if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
             {
                 if (g_GameWork.config_0.optExtraAutoAiming_2C)
                 {
                     if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, 0x238, Q12(10.0f), 0);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, 0x238, Q12(10.0f), 0);
                     }
                     else
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, 0x238, Q12(3.0f), 0);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, 0x238, Q12(3.0f), 0);
                     }
                 }
                 else if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 1))
                 {
-                    func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(3.0f), Q12(7.0f), 4);
+                    func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(3.0f), Q12(7.0f), 4);
                 }
                 else
                 {
-                    func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(0.9f), Q12(2.1f), 4);
+                    func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(0.9f), Q12(2.1f), 4);
                 }
 
                 g_SysWork.targetNpcIdx_2353 = g_Player_TargetNpcIdx;
@@ -3632,7 +3632,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
 
             extra->model.controlState++;
 
-            if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_AimStartTargetLock)
+            if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
             {
                 if (extra->model.stateStep == 0)
                 {
@@ -3648,18 +3648,18 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
 
             if (g_SysWork.targetNpcIdx_2353 == NO_VALUE)
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.field_122  = Q12_ANGLE(90.0f);
-                g_SysWork.playerWork_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_Aim;
-                g_SysWork.playerWork_4C.extra_128.state_1C                      = PlayerState_None;
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk12;
+                g_SysWork.playerWork.player.properties.player.field_122  = Q12_ANGLE(90.0f);
+                g_SysWork.playerWork.extra.upperBodyState             = PlayerUpperBodyState_Aim;
+                g_SysWork.playerWork.extra.state                      = PlayerState_None;
+                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk12;
                 extra->model.controlState                                      = extra->model.stateStep = 0;
                 break;
             }
 
             if (!g_GameWork.config_0.optExtraAutoAiming_2C)
             {
-                temp_v0_3 = ratan2((g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position.vx + g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetX_0) - g_SysWork.playerWork_4C.player_0.position.vx,
-                                   (g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position.vz + g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetZ_2) - g_SysWork.playerWork_4C.player_0.position.vz);
+                temp_v0_3 = ratan2((g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position.vx + g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetX_0) - g_SysWork.playerWork.player.position.vx,
+                                   (g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position.vz + g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetZ_2) - g_SysWork.playerWork.player.position.vz);
 
                 temp_s1_2 = Q12_ANGLE_NORM_U(temp_v0_3 + Q12_ANGLE(360.0f));
 
@@ -3692,36 +3692,36 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                     D_800C454C             = 0;
                     chara->field_2A        = temp_s1_2;
 
-                    if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_AimStartTargetLock)
+                    if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk8;
+                        g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk8;
                     }
                     else
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk8;
+                        g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk8;
                     }
 
-                    if (g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Unk9)
+                    if (g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk9)
                     {
                         if (extra->model.anim.keyframeIdx == D_800C44F0[4].field_6)
                         {
-                            g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_Attack;
+                            g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_Attack;
 
-                            if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Aim)
+                            if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Aim)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Attack;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Attack;
                                 chara->model.controlState                          =
                                 chara->model.stateStep                      = 0;
                             }
 
-                            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk9;
+                            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk9;
                             extra->model.controlState                                      =
                             extra->model.stateStep                                  = 0;
                         }
                     }
                     else if (extra->model.anim.keyframeIdx == D_800C44F0[4].field_6)
                     {
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_AimTargetLock;
+                        g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_AimTargetLock;
                         extra->model.controlState                          =
                         extra->model.stateStep                      = 0;
                     }
@@ -3733,10 +3733,10 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
 
             temp_v0_3 = ratan2((g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position.vx +
                                 g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetX_0) -
-                               g_SysWork.playerWork_4C.player_0.position.vx,
+                               g_SysWork.playerWork.player.position.vx,
                                 (g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position.vz +
                                  g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetZ_2) -
-                                g_SysWork.playerWork_4C.player_0.position.vz);
+                                g_SysWork.playerWork.player.position.vz);
 
             temp_s1_2 = Q12_ANGLE_NORM_U(temp_v0_3 + Q12_ANGLE(360.0f));
 
@@ -3763,34 +3763,34 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
             {
                 chara->field_2A = chara->rotation.vy + sp20;
 
-                if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_AimStartTargetLock)
+                if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk8;
+                    g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk8;
                 }
                 else
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk8;
+                    g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk8;
                 }
 
-                if (g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Unk9)
+                if (g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk9)
                 {
                     if (extra->model.anim.keyframeIdx == D_800C44F0[4].field_6)
                     {
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_Attack;
+                        g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_Attack;
 
-                        if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Aim)
+                        if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Aim)
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Attack;
+                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Attack;
                             chara->model.controlState                          = chara->model.stateStep = 0;
                         }
 
-                        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk9;
+                        g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk9;
                         extra->model.controlState                                      = extra->model.stateStep = 0;
                     }
                 }
                 else if (extra->model.anim.keyframeIdx == D_800C44F0[4].field_6)
                 {
-                    g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_AimTargetLock;
+                    g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_AimTargetLock;
                     extra->model.controlState = extra->model.stateStep = 0;
                 }
             }
@@ -3806,31 +3806,31 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
             }
 
             if (extra->model.anim.keyframeIdx == D_800C44F0[D_800AF220].field_4 ||
-                ((g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_RunForward || g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_RunRight ||
-                  g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_RunLeft) &&
+                ((g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_RunForward || g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_RunRight ||
+                  g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_RunLeft) &&
                  (extra->model.anim.keyframeIdx <= D_800C44F0[D_800AF220].field_6)))
             {
-                switch (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24)
+                switch (g_SysWork.playerWork.extra.lowerBodyState)
                 {
                     case PlayerLowerBodyState_RunForward:
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_RunForward;
+                        g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_RunForward;
                         break;
 
                     case PlayerLowerBodyState_RunRight:
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_RunRight;
+                        g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_RunRight;
                         break;
 
                     case PlayerLowerBodyState_AimRunLeft:
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_RunLeft;
+                        g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_RunLeft;
                         break;
 
                     default:
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+                        g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_None;
                         break;
                 }
 
                 extra->model.controlState = extra->model.stateStep = 0;
-                if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_None)
+                if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_None)
                 {
                     chara->model.controlState = chara->model.stateStep = 0;
                 }
@@ -3856,49 +3856,49 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
             }
 
             if ((D_800AF624 + g_Player_EquippedWeaponInfo.field_9) <= extra->model.anim.keyframeIdx &&
-                !(g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Unk2))
+                !(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk2))
             {
                 func_8005DC1C(g_Player_EquippedWeaponInfo.reloadSfx_2, &chara->position, Q8(0.5f), 0);
 
                 chara->properties.player.field_10C                       = 0x20;
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk2;
+                g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk2;
             }
 
             if (extra->model.anim.keyframeIdx == D_800AF626)
             {
                 g_Player_TargetNpcIdx                                       = NO_VALUE;
-                g_SysWork.playerWork_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_Aim;
+                g_SysWork.playerWork.extra.upperBodyState             = PlayerUpperBodyState_Aim;
                 g_SysWork.targetNpcIdx_2353                                 = NO_VALUE;
-                g_SysWork.playerWork_4C.extra_128.state_1C                      = PlayerState_None;
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk2;
+                g_SysWork.playerWork.extra.state                      = PlayerState_None;
+                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk2;
                 extra->model.anim.status                              = ANIM_STATUS(HarryAnim_HandgunAim, true);
                 extra->model.anim.keyframeIdx                         = 588;
                 extra->model.anim.time                                = Q12(588.0f);
 
-                if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Reload)
+                if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Reload)
                 {
-                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Aim;
+                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Aim;
                 }
 
-                if (g_SysWork.playerCombat_38.totalWeaponAmmo_11 != 0)
+                if (g_SysWork.playerCombat_38.totalWeaponAmmo != 0)
                 {
-                    currentAmmoVar = g_SysWork.playerCombat_38.currentWeaponAmmo_10;
-                    totalAmmoVar   = g_SysWork.playerCombat_38.totalWeaponAmmo_11;
+                    currentAmmoVar = g_SysWork.playerCombat_38.currentWeaponAmmo;
+                    totalAmmoVar   = g_SysWork.playerCombat_38.totalWeaponAmmo;
 
-                    Items_AmmoReloadCalculation(&currentAmmoVar, &totalAmmoVar, g_SysWork.playerCombat_38.weaponAttack_F);
+                    Items_AmmoReloadCalculation(&currentAmmoVar, &totalAmmoVar, g_SysWork.playerCombat_38.weaponAttack);
 
-                    g_SysWork.playerCombat_38.currentWeaponAmmo_10 = currentAmmoVar;
-                    g_SysWork.playerCombat_38.totalWeaponAmmo_11   = totalAmmoVar;
+                    g_SysWork.playerCombat_38.currentWeaponAmmo = currentAmmoVar;
+                    g_SysWork.playerCombat_38.totalWeaponAmmo   = totalAmmoVar;
 
                     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
                     {
-                        if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat_38.weaponAttack_F + InventoryItemId_KitchenKnife))
+                        if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat_38.weaponAttack + InventoryItemId_KitchenKnife))
                         {
-                            g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombat_38.currentWeaponAmmo_10;
+                            g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombat_38.currentWeaponAmmo;
                         }
-                        if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat_38.weaponAttack_F + InventoryItemId_Handgun))
+                        if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat_38.weaponAttack + InventoryItemId_Handgun))
                         {
-                            g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombat_38.totalWeaponAmmo_11;
+                            g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombat_38.totalWeaponAmmo;
                         }
                     }
                 }
@@ -3916,7 +3916,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
     s32 i;
 
     // Lock player view onto enemy.
-    switch (g_SysWork.playerWork_4C.extra_128.upperBodyState_20)
+    switch (g_SysWork.playerWork.extra.upperBodyState)
     {
         case PlayerUpperBodyState_None:
         case PlayerUpperBodyState_WalkForward:
@@ -3927,12 +3927,12 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
         case PlayerUpperBodyState_TurnLeft:
             if (!g_Player_IsInWalkToRunTransition)
             {
-                if ((g_Player_IsAiming && g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap)) ||
-                    g_SysWork.playerCombat_38.isAiming_13)
+                if ((g_Player_IsAiming && g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap)) ||
+                    g_SysWork.playerCombat_38.isAiming)
                 {
-                    g_SysWork.playerCombat_38.isAiming_13 = true;
+                    g_SysWork.playerCombat_38.isAiming = true;
 
-                    if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                    if (g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                     {
                         g_Player_TargetNpcIdx = NO_VALUE;
                     }
@@ -3942,75 +3942,75 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                         {
                             if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 1))
                             {
-                                func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, 0x238, Q12(10.0f), 0);
+                                func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, 0x238, Q12(10.0f), 0);
                             }
                             else
                             {
-                                func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, 0x238, Q12(3.0f), 0);
+                                func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, 0x238, Q12(3.0f), 0);
                             }
                         }
                         else if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 1))
                         {
-                            func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(3.0f), Q12(7.0f), 4);
+                            func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(3.0f), Q12(7.0f), 4);
                         }
                         else
                         {
-                            func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(0.9f), Q12(2.1f), 4);
+                            func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(0.9f), Q12(2.1f), 4);
                         }
                     }
 
                     g_SysWork.targetNpcIdx_2353 = g_Player_TargetNpcIdx;
                     if (g_SysWork.targetNpcIdx_2353 == NO_VALUE)
                     {
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20            = PlayerUpperBodyState_AimStart;
-                        g_SysWork.playerWork_4C.player_0.properties.player.field_122 = Q12_ANGLE(90.0f);
+                        g_SysWork.playerWork.extra.upperBodyState            = PlayerUpperBodyState_AimStart;
+                        g_SysWork.playerWork.player.properties.player.field_122 = Q12_ANGLE(90.0f);
                     }
                     else
                     {
-                        g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_Combat;
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_AimStartTargetLock;
+                        g_SysWork.playerWork.extra.state          = PlayerState_Combat;
+                        g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_AimStartTargetLock;
                     }
 
-                    if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_None)
+                    if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_None)
                     {
-                        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Aim;
+                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Aim;
                         chara->model.stateStep                      = 0;
                         chara->model.controlState                          = ModelState_Uninitialized;
                     }
-                    else if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 < PlayerLowerBodyState_Aim)
+                    else if (g_SysWork.playerWork.extra.lowerBodyState < PlayerLowerBodyState_Aim)
                     {
-                        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 += PlayerLowerBodyState_Aim;
+                        g_SysWork.playerWork.extra.lowerBodyState += PlayerLowerBodyState_Aim;
                     }
 
                     extra->model.stateStep            = 0;
                     extra->model.controlState                = ModelState_Uninitialized;
                     chara->properties.player.field_100 = 0;
 
-                    if (g_SysWork.playerCombat_38.totalWeaponAmmo_11 != 0)
+                    if (g_SysWork.playerCombat_38.totalWeaponAmmo != 0)
                     {
-                        if (g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                        if (g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                         {
-                            currentAmmoVar = g_SysWork.playerCombat_38.currentWeaponAmmo_10;
-                            totalAmmoVar   = g_SysWork.playerCombat_38.totalWeaponAmmo_11;
+                            currentAmmoVar = g_SysWork.playerCombat_38.currentWeaponAmmo;
+                            totalAmmoVar   = g_SysWork.playerCombat_38.totalWeaponAmmo;
 
-                            Items_AmmoReloadCalculation(&currentAmmoVar, &totalAmmoVar, g_SysWork.playerCombat_38.weaponAttack_F);
+                            Items_AmmoReloadCalculation(&currentAmmoVar, &totalAmmoVar, g_SysWork.playerCombat_38.weaponAttack);
 
-                            g_SysWork.playerCombat_38.currentWeaponAmmo_10 = currentAmmoVar;
-                            g_SysWork.playerCombat_38.totalWeaponAmmo_11   = totalAmmoVar;
+                            g_SysWork.playerCombat_38.currentWeaponAmmo = currentAmmoVar;
+                            g_SysWork.playerCombat_38.totalWeaponAmmo   = totalAmmoVar;
                         }
                     }
 
-                    if (g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                    if (g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                     {
                         for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
                         {
-                            if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat_38.weaponAttack_F + InventoryItemId_KitchenKnife))
+                            if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat_38.weaponAttack + InventoryItemId_KitchenKnife))
                             {
-                                g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombat_38.currentWeaponAmmo_10;
+                                g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombat_38.currentWeaponAmmo;
                             }
-                            if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat_38.weaponAttack_F + InventoryItemId_Handgun))
+                            if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat_38.weaponAttack + InventoryItemId_Handgun))
                             {
-                                g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombat_38.totalWeaponAmmo_11;
+                                g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombat_38.totalWeaponAmmo;
                             }
                         }
                     }
@@ -4020,7 +4020,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
     }
 
     // Execute finishing move on knocked enemies.
-    switch (g_SysWork.playerWork_4C.extra_128.upperBodyState_20)
+    switch (g_SysWork.playerWork.extra.upperBodyState)
     {
         case PlayerUpperBodyState_None:
         case PlayerUpperBodyState_WalkForward:
@@ -4048,7 +4048,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
     }
 
     // Handle aim state.
-    switch (g_SysWork.playerWork_4C.extra_128.upperBodyState_20)
+    switch (g_SysWork.playerWork.extra.upperBodyState)
     {
         case PlayerUpperBodyState_Aim:
         case PlayerUpperBodyState_AimTargetLock:
@@ -4057,17 +4057,17 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                 (!g_GameWork.config_0.optExtraWeaponCtrl_23 &&  g_Player_IsAiming))
             {
                 chara->properties.player.field_F4                        = 0;
-                g_SysWork.playerWork_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_AimStop;
+                g_SysWork.playerWork.extra.upperBodyState             = PlayerUpperBodyState_AimStop;
                 g_SysWork.targetNpcIdx_2353                                 = NO_VALUE;
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk0;
-                g_SysWork.playerWork_4C.extra_128.state_1C                      = PlayerState_None;
-                g_SysWork.playerCombat_38.isAiming_13                   = false;
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk9;
+                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk0;
+                g_SysWork.playerWork.extra.state                      = PlayerState_None;
+                g_SysWork.playerCombat_38.isAiming                   = false;
+                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk9;
 
-                if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Aim ||
-                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Attack)
+                if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Aim ||
+                    g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Attack)
                 {
-                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
                     chara->model.stateStep                      = 0;
                     chara->model.controlState                          = ModelState_Uninitialized;
                     extra->model.stateStep                      = 0;
@@ -4075,9 +4075,9 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                     break;
                 }
 
-                if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_AimWalkForward)
+                if (g_SysWork.playerWork.extra.lowerBodyState >= PlayerLowerBodyState_AimWalkForward)
                 {
-                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 -= PlayerLowerBodyState_Aim;
+                    g_SysWork.playerWork.extra.lowerBodyState -= PlayerLowerBodyState_Aim;
                 }
 
                 extra->model.stateStep = 0;
@@ -4086,13 +4086,13 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
             }
 
             if ((g_Player_IsAttacking || g_Player_IsShooting) &&
-                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_AimQuickTurnRight &&
-                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_AimQuickTurnLeft)
+                g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_AimQuickTurnRight &&
+                g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_AimQuickTurnLeft)
             {
-                if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                if (g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
-                    if (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-                        g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+                    if (g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+                        g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
                     {
                         if ((extra->model.anim.status != ANIM_STATUS(HarryAnim_HandgunAim, true) ||
                              extra->model.anim.keyframeIdx != D_800C44F0[0].field_6) &&
@@ -4147,17 +4147,17 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                     }
                 }
 
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk0;
+                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk0;
 
-                if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                if (g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
                     if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(3.0f), Q12(3.0f), 5);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(3.0f), Q12(3.0f), 5);
                     }
                     else
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(1.0f), Q12(1.0f), 5);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(1.0f), Q12(1.0f), 5);
                     }
 
                     g_SysWork.targetNpcIdx_2353 = g_Player_TargetNpcIdx;
@@ -4166,33 +4166,33 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                 {
                     if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & PlayerFlag_Unk0))
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(7.0f), Q12(7.0f), 5);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(7.0f), Q12(7.0f), 5);
                     }
                     else
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork_4C.player_0.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(2.1f), Q12(2.1f), 5);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.playerWork.player.properties.player.field_122, &g_SysWork.playerCombat_38, Q12(2.1f), Q12(2.1f), 5);
                     }
                 }
 
                 switch (g_Player_TargetNpcIdx)
                 {
                     default:
-                        if (g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                        if (g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                         {
-                            g_SysWork.playerWork_4C.extra_128.state_1C                      = PlayerState_Combat;
-                            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk0 | PlayerFlag_Unk9;
+                            g_SysWork.playerWork.extra.state                      = PlayerState_Combat;
+                            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk0 | PlayerFlag_Unk9;
 
                             if (g_SysWork.targetNpcIdx_2353 != g_Player_TargetNpcIdx)
                             {
-                                g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_AimTargetLockSwitch;
+                                g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_AimTargetLockSwitch;
                             }
                             else
                             {
-                                g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_Attack;
+                                g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_Attack;
 
-                                if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Aim)
+                                if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Aim)
                                 {
-                                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Attack;
+                                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Attack;
                                     chara->model.stateStep                      = 0;
                                     chara->model.controlState                          = ModelState_Uninitialized;
                                 }
@@ -4202,42 +4202,42 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                             break;
                         }
 
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_Attack;
+                        g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_Attack;
 
-                        if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Aim)
+                        if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Aim)
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Attack;
+                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Attack;
                             chara->model.stateStep                      = 0;
                             chara->model.controlState                          = ModelState_Uninitialized;
                         }
 
                     case NO_VALUE:
-                        g_SysWork.playerWork_4C.player_0.properties.player.field_122  = Q12_ANGLE(90.0f);
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_Attack;
-                        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk9;
+                        g_SysWork.playerWork.player.properties.player.field_122  = Q12_ANGLE(90.0f);
+                        g_SysWork.playerWork.extra.upperBodyState             = PlayerUpperBodyState_Attack;
+                        g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk9;
 
-                        if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Aim)
+                        if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Aim)
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Attack;
+                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Attack;
                             chara->model.stateStep                      = 0;
                             chara->model.controlState                          = ModelState_Uninitialized;
                         }
                         break;
                 }
 
-                if (g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                if (g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
-                    if (g_SysWork.playerCombat_38.currentWeaponAmmo_10 == 0 &&
+                    if (g_SysWork.playerCombat_38.currentWeaponAmmo == 0 &&
                         INVENTORY_ITEM_GROUP(g_SavegamePtr->equippedWeapon_AA) == InventoryItemGroup_GunWeapons &&
-                        g_SysWork.playerCombat_38.totalWeaponAmmo_11 != 0)
+                        g_SysWork.playerCombat_38.totalWeaponAmmo != 0)
                     {
-                        g_SysWork.playerWork_4C.extra_128.upperBodyState_20              = PlayerUpperBodyState_Reload;
-                        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk9;
+                        g_SysWork.playerWork.extra.upperBodyState              = PlayerUpperBodyState_Reload;
+                        g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk9;
 
-                        if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Aim ||
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Attack)
+                        if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Aim ||
+                            g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Attack)
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Reload;
+                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Reload;
                             chara->model.stateStep                          = 0;
                             chara->model.controlState                       = ModelState_Uninitialized;
                         }
@@ -4245,15 +4245,15 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                 }
                 else
                 {
-                    g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_Attack;
+                    g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_Attack;
 
-                    if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Aim ||
-                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) == EquippedWeaponId_SteelPipe ||
-                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) == EquippedWeaponId_Hammer    ||
-                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) == EquippedWeaponId_RockDrill ||
-                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) == EquippedWeaponId_Katana)
+                    if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Aim ||
+                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) == EquippedWeaponId_SteelPipe ||
+                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) == EquippedWeaponId_Hammer    ||
+                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) == EquippedWeaponId_RockDrill ||
+                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) == EquippedWeaponId_Katana)
                     {
-                        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Attack;
+                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Attack;
                         chara->model.stateStep                      = 0;
                         chara->model.controlState                          = ModelState_Uninitialized;
                     }
@@ -4264,7 +4264,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
             }
             else
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk9;
+                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk9;
             }
             break;
     }
@@ -4274,12 +4274,12 @@ void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 animStatus0, 
 {
     s16 headingAngleCpy;
 
-    if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != Q12(0.0f))
+    if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
     {
-        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) >> 1;
-        if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & (1 << 0))
+        g_SysWork.playerWork.player.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) >> 1;
+        if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & (1 << 0))
         {
-            g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+            g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
         }
     }
 
@@ -4289,26 +4289,26 @@ void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 animStatus0, 
         chara->model.stateStep++;
     }
 
-    if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStartTargetLock)
+    if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
     {
         if (chara->model.anim.status == animStatus1 && chara->model.anim.keyframeIdx >= keyframeIdx)
         {
-            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState;
+            g_SysWork.playerWork.extra.lowerBodyState = aimState;
             Player_MovementStateReset(chara, lowerBodyState);
         }
 
         Player_CharaRotate(2);
     }
 
-    if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_None)
+    if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_None)
     {
-        g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
+        g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
         g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
     }
     else
     {
         headingAngleCpy                                                   = headingAngle;
-        g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = headingAngleCpy;
+        g_SysWork.playerWork.player.properties.player.headingAngle_124 = headingAngleCpy;
         g_Player_HeadingAngle                                             = headingAngleCpy;
     }
 }
@@ -4335,7 +4335,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
     s32                    var_a3;
     s32                    aimState;
 
-    if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 < PlayerLowerBodyState_Aim)
+    if (g_SysWork.playerWork.extra.lowerBodyState < PlayerLowerBodyState_Aim)
     {
         aimState = 0;
     }
@@ -4351,7 +4351,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
     speedZ         = SQUARE(chara->position.vz - g_Player_PrevPosition.vz);
     travelDistStep = SquareRoot0(speedX + speedZ);
 
-    switch (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24)
+    switch (g_SysWork.playerWork.extra.lowerBodyState)
     {
         case PlayerLowerBodyState_None:
         case PlayerLowerBodyState_Aim:
@@ -4376,7 +4376,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             break;
     }
 
-    switch (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24)
+    switch (g_SysWork.playerWork.extra.lowerBodyState)
     {
         case PlayerLowerBodyState_None:
         case PlayerLowerBodyState_Aim:
@@ -4388,31 +4388,31 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             // Check if player is aiming.
             if (aimState != 0)
             {
-                if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != Q12(0.0f))
+                if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
-                    if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & 1)
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                    if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & 1)
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                        g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                     }
                 }
             }
-            else if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != Q12(0.0f))
+            else if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2;
-                if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & 1)
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2;
+                if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & 1)
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                 }
             }
 
             // Sets animations during specific idle states while aiming or standing.
-            if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_None)
+            if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_None)
             {
                 // Aim to idle.
-                if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_AimStop)
+                if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStop)
                 {
-                    if (!g_SysWork.playerCombat_38.isAiming_13 && chara->model.stateStep == 0)
+                    if (!g_SysWork.playerCombat_38.isAiming && chara->model.stateStep == 0)
                     {
                         chara->model.anim.status = g_Player_EquippedWeaponInfo.animStopAiming_6;
                         chara->model.stateStep++;
@@ -4435,20 +4435,20 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             }
             else
             {
-                if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_AimStop)
+                if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStop)
                 {
-                    if (!g_SysWork.playerCombat_38.isAiming_13 && chara->model.stateStep == 0)
+                    if (!g_SysWork.playerCombat_38.isAiming && chara->model.stateStep == 0)
                     {
                         chara->model.anim.status = g_Player_EquippedWeaponInfo.animStopAiming_6;
                         chara->model.stateStep++;
                     }
                 }
                 // Melee weapon.
-                else if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                else if (g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
-                    if ((g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-                         g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap)) &&
-                        g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 != Q12(0.0f))
+                    if ((g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+                         g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap)) &&
+                        g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 != Q12(0.0f))
                     {
                         if (chara->model.stateStep == 0)
                         {
@@ -4462,7 +4462,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         chara->model.stateStep++;
                     }
                 }
-                else if (g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Unk6)
+                else if (g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk6)
                 {
                     if (chara->model.stateStep == 0)
                     {
@@ -4470,7 +4470,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         chara->model.stateStep++;
                     }
                 }
-                else if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_AimStartTargetLock)
+                else if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
                 {
                     if (chara->model.stateStep == 0)
                     {
@@ -4478,7 +4478,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         chara->model.stateStep++;
                     }
                 }
-                else if (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap))
+                else if (g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap))
                 {
                     if (chara->model.stateStep == 0)
                     {
@@ -4495,11 +4495,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                     }
                 }
 
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk6;
+                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk6;
             }
 
             // Set idle to move depending on user input.
-            if (g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_Combat) // Aiming at or shooting enemy.
+            if (g_SysWork.playerWork.extra.state == PlayerState_Combat) // Aiming at or shooting enemy.
             {
                 if (ANIM_STATUS_IS_ACTIVE(chara->model.anim.status) &&
                     ANIM_STATUS_IS_ACTIVE(extra->model.anim.status))
@@ -4510,11 +4510,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                     {
                         if (g_Player_IsMovingForward)
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_AimWalkForward;
+                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimWalkForward;
                         }
                         else if (g_Player_IsMovingBackward)
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_AimWalkBackward;
+                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimWalkBackward;
                         }
                     }
                 }
@@ -4527,7 +4527,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 if (ANIM_STATUS_IS_ACTIVE(chara->model.anim.status) &&
                     ANIM_STATUS_IS_ACTIVE(extra->model.anim.status))
                 {
-                    if ((aimState == 0 && g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 == Q12(0.0f))||
+                    if ((aimState == 0 && g_SysWork.playerWork.player.properties.player.moveDistance_126 == Q12(0.0f))||
                         chara->model.anim.status >= ANIM_STATUS(HarryAnim_Unk29, false) ||
                         chara->model.anim.keyframeIdx == D_800C44F0[0].field_6)
                     {
@@ -4537,18 +4537,18 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                             if ((g_Player_IsRunning && temp_s3 == PlayerLowerBodyState_None) &&
                                 (aimState == 0 || (( g_GameWork.config_0.optExtraWeaponCtrl_23 && !g_Player_IsAiming) ||
                                                    (!g_GameWork.config_0.optExtraWeaponCtrl_23 &&  g_Player_IsAiming)) &&
-                                 WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) == EquippedWeaponId_SteelPipe))
+                                 WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) == EquippedWeaponId_SteelPipe))
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunForward;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForward;
                             }
                             else
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState + PlayerLowerBodyState_WalkForward;
+                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_WalkForward;
                             }
                         }
                         else if (g_Player_IsMovingBackward)
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState + PlayerLowerBodyState_WalkBackward;
+                            g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_WalkBackward;
                         }
                         else if (g_Player_IsSteppingRightHold)
                         {
@@ -4557,11 +4557,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
 
                             if (g_Player_IsRunning && aimState == 0 && temp_s3 == PlayerLowerBodyState_None)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunRight;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunRight;
                             }
                             else
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState + PlayerLowerBodyState_SidestepRight;
+                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepRight;
                             }
                         }
                         else if (g_Player_IsSteppingLeftHold)
@@ -4571,30 +4571,30 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
 
                             if (g_Player_IsRunning && aimState == 0 && temp_s3 == PlayerLowerBodyState_None)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunLeft;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunLeft;
                             }
                             else
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState + PlayerLowerBodyState_SidestepLeft;
+                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepLeft;
                             }
                         }
 
-                        if (aimState == 0 && !g_SysWork.playerCombat_38.isAiming_13)
+                        if (aimState == 0 && !g_SysWork.playerCombat_38.isAiming)
                         {
                             if (( g_GameWork.config_0.optExtraWalkRunCtrl_2B && !g_Player_IsRunning) ||
                                 (!g_GameWork.config_0.optExtraWalkRunCtrl_2B &&  g_Player_IsRunning))
                             {
                                 if (g_Player_IsMovingBackward)
                                 {
-                                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_JumpBackward;
-                                    g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_RunJumpBackward;
+                                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_JumpBackward;
+                                    g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_RunJumpBackward;
                                     extra->model.stateStep                      = 0;
                                     extra->model.controlState                          = ModelState_Uninitialized;
                                 }
                             }
                         }
 
-                        if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == aimState && !g_Player_IsInWalkToRunTransition)
+                        if (g_SysWork.playerWork.extra.lowerBodyState == aimState && !g_Player_IsInWalkToRunTransition)
                         {
                             Player_CharaTurn_0(chara, aimState);
                         }
@@ -4612,27 +4612,27 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                     Player_CharaRotate(7);
                 }
 
-                if (aimState != 0 && g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_Aim)
+                if (aimState != 0 && g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_Aim)
                 {
                     if (D_800C454C != Q12(0.0f))
                     {
                         // TODO: Convert hex to clean floats.
                         // Determine speed if using certain weapons while moving?
-                        switch (g_SysWork.playerCombat_38.weaponAttack_F)
+                        switch (g_SysWork.playerCombat_38.weaponAttack)
                         {
                             case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
-                                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = (u32)(D_800C454C * 0x465) >> 9;
+                                g_SysWork.playerWork.player.properties.player.moveDistance_126 = (u32)(D_800C454C * 0x465) >> 9;
                                 break;
 
                             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
                             case WEAPON_ATTACK(EquippedWeaponId_Katana,   AttackInputType_Tap):
                             case WEAPON_ATTACK(EquippedWeaponId_Axe,      AttackInputType_Tap):
-                                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = (u32)(D_800C454C * 0x15F9) >> 11;
+                                g_SysWork.playerWork.player.properties.player.moveDistance_126 = (u32)(D_800C454C * 0x15F9) >> 11;
                                 break;
 
                             case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
                             case WEAPON_ATTACK(EquippedWeaponId_Hammer,    AttackInputType_Tap):
-                                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = ((u32)(D_800C454C * 0xD2F) >> 10);
+                                g_SysWork.playerWork.player.properties.player.moveDistance_126 = ((u32)(D_800C454C * 0xD2F) >> 10);
                                 break;
 
                             case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Tap):
@@ -4640,13 +4640,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
                             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
                             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = (-(D_800C454C * 0x87F0) >> 14);
+                                g_SysWork.playerWork.player.properties.player.moveDistance_126 = (-(D_800C454C * 0x87F0) >> 14);
                                 break;
                         }
 
                         if (g_DeltaTime != Q12(0.0f))
                         {
-                            g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 * 0x88) / g_DeltaTime);
+                            g_SysWork.playerWork.player.properties.player.moveDistance_126 = ((g_SysWork.playerWork.player.properties.player.moveDistance_126 * 0x88) / g_DeltaTime);
                         }
 
                         // Restart timer for idle animation.
@@ -4687,10 +4687,10 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 }
             }
 
-            if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 == Q12(0.0f) ||
+            if (g_SysWork.playerWork.player.properties.player.moveDistance_126 == Q12(0.0f) ||
                  g_Player_IsTurningLeft || g_Player_IsTurningRight)
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
+                g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
                 g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
             }
             break;
@@ -4703,16 +4703,16 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             }
 
             if ((g_SysWork.playerStopFlags_235A & PlayerStopFlag_StopWalking) &&
-                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 < PlayerLowerBodyState_Aim &&
-                g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStop)
+                g_SysWork.playerWork.extra.lowerBodyState < PlayerLowerBodyState_Aim &&
+                g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop)
             {
-                if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != Q12(0.0f))
+                if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2;
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2;
 
-                    if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & (1 << 0))
+                    if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & (1 << 0))
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                        g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                     }
                 }
             }
@@ -4732,22 +4732,22 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         func_80070B84(chara, Q12(0.75f), Q12(1.4f), 2);
                     }
                     // Reduce speed if going too fast while walking.
-                    else if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 > Q12(1.4f))
+                    else if (g_SysWork.playerWork.player.properties.player.moveDistance_126 > Q12(1.4f))
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2;
-                        if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < Q12(1.4f))
+                        g_SysWork.playerWork.player.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2;
+                        if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < Q12(1.4f))
                         {
-                            g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(1.4f);
+                            g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(1.4f);
                         }
                     }
-                    else if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < Q12(1.4f))
+                    else if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < Q12(1.4f))
                     {
                         if (chara->model.anim.keyframeIdx >= 2)
                         {
-                            g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                            g_SysWork.playerWork.player.properties.player.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                         }
 
-                        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = CLAMP(g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126,
+                        g_SysWork.playerWork.player.properties.player.moveDistance_126 = CLAMP(g_SysWork.playerWork.player.properties.player.moveDistance_126,
                                                                                                         Q12(0.0f),
                                                                                                         Q12(1.4f));
                     }
@@ -4766,22 +4766,22 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             }
 
             // Something related to anim and states when aiming or attacking while moving.
-            if (g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_Combat)
+            if (g_SysWork.playerWork.extra.state == PlayerState_Combat)
             {
                 if (g_SysWork.playerStopFlags_235A & PlayerStopFlag_StopWalking)
                 {
-                    if ((g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 < PlayerLowerBodyState_Aim &&
-                         g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStop) ||
+                    if ((g_SysWork.playerWork.extra.lowerBodyState < PlayerLowerBodyState_Aim &&
+                         g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop) ||
                          (chara->model.anim.keyframeIdx >= 10 && chara->model.anim.keyframeIdx <= 11) ||
                           chara->model.anim.keyframeIdx == 22 || chara->model.anim.keyframeIdx == 21)
                     {
-                        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Aim;
+                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Aim;
                     }
                 }
 
                 Player_MovementStateReset(chara, aimState | (1 << 0));
 
-                if (g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
+                if (g_SysWork.playerCombat_38.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
                 {
                     Player_CharaRotate(5);
                 }
@@ -4794,59 +4794,59 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                     if (g_Player_IsRunning)
                     {
                         if (aimState == 0 && temp_s3 == PlayerLowerBodyState_None &&
-                            (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_WalkForward ||
-                             g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_AimStop))
+                            (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_WalkForward ||
+                             g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStop))
                         {
                             if (chara->model.anim.keyframeIdx >= 10 && chara->model.anim.keyframeIdx <= 11)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunForward;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForward;
                                 HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 36;
                                 HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_RunForward, true);
-                                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk5;
+                                g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk5;
                             }
                             else if (chara->model.anim.keyframeIdx >= 21 && chara->model.anim.keyframeIdx <= 22)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunForward;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForward;
                                 HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 26;
                                 HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_RunForward, true);
                             }
                         }
                     }
                 }
-                else if ((g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 < PlayerLowerBodyState_Aim &&
-                          g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStop) ||
+                else if ((g_SysWork.playerWork.extra.lowerBodyState < PlayerLowerBodyState_Aim &&
+                          g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop) ||
                          (chara->model.anim.keyframeIdx >= 10 && chara->model.anim.keyframeIdx <= 11) ||
                           chara->model.anim.keyframeIdx == 22 || chara->model.anim.keyframeIdx == 21)
                 {
                     // Aparently, code intended to change player's state if the player stop walking while either aiming or attacking.
-                    if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                    if (g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
                         aimState != 0)
                     {
                         if (((extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk29, true) ||
                               extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk30, true)) &&
-                            (g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
-                             g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
+                            (g_SysWork.playerCombat_38.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
+                             g_SysWork.playerCombat_38.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
                             extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
-                            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk10;
+                            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model.stateStep                                  = 0;
                             chara->model.controlState                                      = ModelState_Uninitialized;
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_Attack;
+                            g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_Attack;
                         }
                         else
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = aimState;
-                            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk10;
+                            g_SysWork.playerWork.extra.lowerBodyState             = aimState;
+                            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk10;
                         }
                     }
                     else
                     {
-                        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = aimState;
-                        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk10;
+                        g_SysWork.playerWork.extra.lowerBodyState             = aimState;
+                        g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk10;
                     }
                 }
 
-                if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == (aimState + PlayerLowerBodyState_WalkForward) && !g_Player_IsInWalkToRunTransition)
+                if (g_SysWork.playerWork.extra.lowerBodyState == (aimState + PlayerLowerBodyState_WalkForward) && !g_Player_IsInWalkToRunTransition)
                 {
                     Player_CharaTurn_0(chara, aimState);
                 }
@@ -4855,10 +4855,10 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 Player_CharaRotate(5);
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
 
-            if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_RunForward)
+            if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_RunForward)
             {
                 chara->model.anim.status = ANIM_STATUS(HarryAnim_Still, false);
                 chara->model.stateStep++;
@@ -4875,7 +4875,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
 
                 speedX = GET_MOVE_SPEED(speedZoneType);
 
-                if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < Q12(3.5f))
+                if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < Q12(3.5f))
                 {
                     var_a3 = TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
                 }
@@ -4895,7 +4895,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 {
                     speedX = GET_MOVE_SPEED(speedZoneType);
 
-                    if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < Q12(3.5f))
+                    if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < Q12(3.5f))
                     {
                         var_a3 = TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
                     }
@@ -4908,20 +4908,20 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
 
                     func_80070CF0(chara, Q12(2.0f), speedX, var_a3, TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)));
                 }
-                else if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 > GET_MOVE_SPEED(speedZoneType))
+                else if (g_SysWork.playerWork.player.properties.player.moveDistance_126 > GET_MOVE_SPEED(speedZoneType))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
-                    if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < GET_MOVE_SPEED(speedZoneType))
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                    if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < GET_MOVE_SPEED(speedZoneType))
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = GET_MOVE_SPEED(speedZoneType);
+                        g_SysWork.playerWork.player.properties.player.moveDistance_126 = GET_MOVE_SPEED(speedZoneType);
                     }
                 }
                 else
                 {
-                    if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < GET_MOVE_SPEED(speedZoneType))
+                    if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < GET_MOVE_SPEED(speedZoneType))
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 += GET_VAL(g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126);
-                        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126  = CLAMP(g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126, 0, GET_MOVE_SPEED(speedZoneType));
+                        g_SysWork.playerWork.player.properties.player.moveDistance_126 += GET_VAL(g_SysWork.playerWork.player.properties.player.moveDistance_126);
+                        g_SysWork.playerWork.player.properties.player.moveDistance_126  = CLAMP(g_SysWork.playerWork.player.properties.player.moveDistance_126, 0, GET_MOVE_SPEED(speedZoneType));
                     }
                 }
 
@@ -4944,7 +4944,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             }
 
             // Running.
-            if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStartTargetLock &&
+            if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock &&
                 chara->model.anim.status == ANIM_STATUS(HarryAnim_RunForward, true))
             {
                 // TODO: What does `func_8007D6F0` do?
@@ -4953,19 +4953,19 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                     case PlayerLowerBodyState_WalkForward:
                         if (chara->properties.player.runTimer_108 >= (u32)Q12(10.0f))
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Stumble;
+                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Stumble;
                         }
                         else if (chara->model.anim.keyframeIdx >= 30 &&
                                  chara->model.anim.keyframeIdx <= 31)
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = temp_s3;
+                            g_SysWork.playerWork.extra.lowerBodyState = temp_s3;
                             HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 8;
                             HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_WalkForward, true);
                         }
                         else if (chara->model.anim.keyframeIdx >= 41 &&
                                  chara->model.anim.keyframeIdx <= 42)
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = temp_s3;
+                            g_SysWork.playerWork.extra.lowerBodyState = temp_s3;
                             HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 20;
                             HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_WalkForward, true);
                         }
@@ -4974,19 +4974,19 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                     case PlayerLowerBodyState_RunForward:
                         if (chara->properties.player.runTimer_108 >= (u32)Q12(10.0f))
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunForwardWallStop;
+                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForwardWallStop;
                         }
                         else if (chara->model.anim.keyframeIdx >= 30 &&
                                  chara->model.anim.keyframeIdx <= 31)
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
+                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_WalkForward;
                             HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 8;
                             HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_WalkForward, true);
                         }
                         else if (chara->model.anim.keyframeIdx >= 41 &&
                                  chara->model.anim.keyframeIdx <= 42)
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
+                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_WalkForward;
                             HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 20;
                             HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_WalkForward, true);
                         }
@@ -5001,33 +5001,33 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                                 if (chara->model.anim.keyframeIdx >= 30 &&
                                     chara->model.anim.keyframeIdx <= 31)
                                 {
-                                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
+                                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_WalkForward;
                                     HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 8;
                                     HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_WalkForward, true);
                                 }
                                 else if (chara->model.anim.keyframeIdx >= 41 &&
                                          chara->model.anim.keyframeIdx <= 42)
                                 {
-                                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
+                                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_WalkForward;
                                     HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 20;
                                     HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_WalkForward, true);
                                 }
                             }
                             // Set stumble anim if crashed into a wall.
                             else if (chara->properties.player.runTimer_F8 >= 5 &&
-                                     g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >= Q12(3.125f))
+                                     g_SysWork.playerWork.player.properties.player.moveDistance_126 >= Q12(3.125f))
                             {
                                 if (chara->model.anim.keyframeIdx >= 33 &&
                                     chara->model.anim.keyframeIdx <= 34)
                                 {
-                                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_RunForwardWallStop;
-                                    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_WallStopRight;
+                                    g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_RunForwardWallStop;
+                                    g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_WallStopRight;
                                 }
                                 else if (chara->model.anim.keyframeIdx >= 43 &&
                                          chara->model.anim.keyframeIdx <= 44)
                                 {
-                                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_RunForwardWallStop;
-                                    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_WallStopRight;
+                                    g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_RunForwardWallStop;
+                                    g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_WallStopRight;
                                 }
                             }
                             // Change state from running to walking. Difference with first conditional is this only triggers if
@@ -5038,14 +5038,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                                 if (chara->model.anim.keyframeIdx >= 30 &&
                                     chara->model.anim.keyframeIdx <= 31)
                                 {
-                                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
+                                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_WalkForward;
                                     HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 8;
                                     HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_WalkForward, true);
                                 }
                                 else if (chara->model.anim.keyframeIdx >= 41 &&
                                          chara->model.anim.keyframeIdx <= 42)
                                 {
-                                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
+                                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_WalkForward;
                                     HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 20;
                                     HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_WalkForward, true);
                                 }
@@ -5055,7 +5055,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 }
             }
 
-            if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_RunForward)
+            if (g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_RunForward)
             {
                 Player_MovementStateReset(chara, PlayerLowerBodyState_RunForward);
             }
@@ -5063,9 +5063,9 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             Player_CharaRotate(4);
 
             g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
-            g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
 
-            if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_WalkForward)
+            if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_WalkForward)
             {
                 chara->model.anim.status = ANIM_STATUS(HarryAnim_Still, false);
                 chara->model.stateStep++;
@@ -5074,17 +5074,17 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             break;
 
         case PlayerLowerBodyState_RunForwardWallStop:
-            if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != Q12(0.0f))
+            if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) >> 1;
-                if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & (1 << 0))
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) >> 1;
+                if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & (1 << 0))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                 }
             }
 
             // Depending on frame of gait cycle, set left or right wall stop anim variant.
-            if (g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_WallStopRight)
+            if (g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_WallStopRight)
             {
                 if (chara->model.stateStep == 0)
                 {
@@ -5098,14 +5098,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 chara->model.stateStep++;
             }
 
-            if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStartTargetLock)
+            if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
             {
                 if (chara->model.anim.status == ANIM_STATUS(HarryAnim_RunForwardWallStopLeft, true) &&
                     chara->model.anim.keyframeIdx >= 168 ||
                     chara->model.anim.status == ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true) &&
                     chara->model.anim.keyframeIdx >= 158)
                 {
-                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
                     Player_MovementStateReset(chara, PlayerLowerBodyState_RunForwardWallStop);
                 }
 
@@ -5121,15 +5121,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             }
 
             if ((g_SysWork.playerStopFlags_235A & PlayerStopFlag_StopRunning) &&
-                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 < PlayerLowerBodyState_Aim &&
-                g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStop)
+                g_SysWork.playerWork.extra.lowerBodyState < PlayerLowerBodyState_Aim &&
+                g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop)
             {
-                if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != Q12(0.0f))
+                if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2);
-                    if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & (1 << 0))
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 -= ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2);
+                    if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & (1 << 0))
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                        g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                     }
                 }
             }
@@ -5146,22 +5146,22 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 {
                     func_80070B84(chara, Q12(0.75f), Q12(1.15f), 2);
                 }
-                else if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 > Q12(1.15f))
+                else if (g_SysWork.playerWork.player.properties.player.moveDistance_126 > Q12(1.15f))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2;
-                    if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < Q12(1.15f))
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2;
+                    if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < Q12(1.15f))
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(1.15f);
+                        g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(1.15f);
                     }
                 }
-                else if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < Q12(1.15f))
+                else if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < Q12(1.15f))
                 {
                     if (chara->model.anim.keyframeIdx >= 2)
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                        g_SysWork.playerWork.player.properties.player.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                     }
 
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = CLAMP(g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126,
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = CLAMP(g_SysWork.playerWork.player.properties.player.moveDistance_126,
                                                                                                     Q12(0.0f),
                                                                                                     Q12(1.15f));
                 }
@@ -5178,24 +5178,24 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 chara->model.stateStep++;
             }
 
-            if (g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_Combat)
+            if (g_SysWork.playerWork.extra.state == PlayerState_Combat)
             {
                 if (g_SysWork.playerStopFlags_235A & PlayerStopFlag_StopRunning)
                 {
-                    if ((g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 < PlayerLowerBodyState_Aim &&
-                         g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStop) ||
+                    if ((g_SysWork.playerWork.extra.lowerBodyState < PlayerLowerBodyState_Aim &&
+                         g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop) ||
                          (chara->model.anim.keyframeIdx >= 56 &&
                           chara->model.anim.keyframeIdx <= 57) ||
                          chara->model.anim.keyframeIdx == 67 ||
                          chara->model.anim.keyframeIdx == 66)
                     {
-                        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Aim;
+                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Aim;
                     }
                 }
 
                 Player_MovementStateReset(chara, aimState + PlayerLowerBodyState_WalkBackward);
 
-                if (g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
+                if (g_SysWork.playerCombat_38.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
                 {
                     Player_CharaRotate(5);
                 }
@@ -5208,54 +5208,54 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                           chara->model.anim.keyframeIdx <= 67) ||
                          chara->model.anim.keyframeIdx == 46 ||
                          chara->model.anim.keyframeIdx == 47) &&
-                        aimState == 0 && g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStop)
+                        aimState == 0 && g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop)
                     {
                         if (( g_GameWork.config_0.optExtraWalkRunCtrl_2B && !g_Player_IsRunning) ||
                             (!g_GameWork.config_0.optExtraWalkRunCtrl_2B &&  g_Player_IsRunning))
                         {
                             if (g_Player_IsMovingBackward)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_JumpBackward;
-                                g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_RunJumpBackward;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_JumpBackward;
+                                g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_RunJumpBackward;
                                 extra->model.stateStep                      = 0;
                                 extra->model.controlState                          = ModelState_Uninitialized;
                             }
                         }
                     }
                 }
-                else if ((g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 < PlayerLowerBodyState_Aim &&
-                          g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStop) ||
+                else if ((g_SysWork.playerWork.extra.lowerBodyState < PlayerLowerBodyState_Aim &&
+                          g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop) ||
                          (chara->model.anim.keyframeIdx >= 56 && chara->model.anim.keyframeIdx <= 57) ||
                           chara->model.anim.keyframeIdx == 67 || chara->model.anim.keyframeIdx == 66)
                 {
-                    if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                    if (g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
                         aimState != 0)
                     {
                         if (((extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk29, true) ||
                               extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk30, true)) &&
-                             (g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
-                              g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
+                             (g_SysWork.playerCombat_38.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
+                              g_SysWork.playerCombat_38.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
                             extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
-                            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk10;
+                            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model.stateStep                                  = 0;
                             chara->model.controlState                                      = ModelState_Uninitialized;
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_Attack;
+                            g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_Attack;
                         }
                         else
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = aimState;
-                            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk10;
+                            g_SysWork.playerWork.extra.lowerBodyState             = aimState;
+                            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk10;
                         }
                     }
                     else
                     {
-                        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = aimState;
-                        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk10;
+                        g_SysWork.playerWork.extra.lowerBodyState             = aimState;
+                        g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk10;
                     }
                 }
 
-                if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == (aimState + PlayerLowerBodyState_WalkBackward) &&
+                if (g_SysWork.playerWork.extra.lowerBodyState == (aimState + PlayerLowerBodyState_WalkBackward) &&
                     !g_Player_IsInWalkToRunTransition)
                 {
                     Player_CharaTurn_0(chara, aimState);
@@ -5265,18 +5265,18 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 Player_CharaRotate(4);
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(180.0f);
+            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(180.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(180.0f);
             break;
 
         case PlayerLowerBodyState_SidestepRight:
         case PlayerLowerBodyState_AimSidestepRight:
-            if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 > Q12(1.25f))
+            if (g_SysWork.playerWork.player.properties.player.moveDistance_126 > Q12(1.25f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)));
-                if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < Q12(1.25f))
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)));
+                if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < Q12(1.25f))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(1.25f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(1.25f);
                 }
             }
             else
@@ -5284,14 +5284,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 if (chara->model.anim.keyframeIdx >= 100 &&
                     chara->model.anim.keyframeIdx <= 111)
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                 }
                 else if (chara->model.anim.keyframeIdx >= 112)
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                 }
 
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = CLAMP(g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126,
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 = CLAMP(g_SysWork.playerWork.player.properties.player.moveDistance_126,
                                                                                                 Q12(0.0f),
                                                                                                 Q12(1.25f));
             }
@@ -5309,36 +5309,36 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 // If attacking with gun, dispatches to idle aim state instead of attack state.
                 if (!g_Player_IsSteppingRightHold)
                 {
-                    if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                    if (g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
                         aimState != 0)
                     {
                         // Some melee weapons allow attack while sidestepping.
                         if (((extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk29, true) ||
                               extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk30, true)) &&
-                             (g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
-                              g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
+                             (g_SysWork.playerCombat_38.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
+                              g_SysWork.playerCombat_38.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
                               extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
-                            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk10;
+                            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model.stateStep                                  = 0;
                             chara->model.controlState                                      = ModelState_Uninitialized;
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_Attack;
+                            g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_Attack;
                         }
                         else
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState;
+                            g_SysWork.playerWork.extra.lowerBodyState = aimState;
                         }
                     }
                     else
                     {
-                        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState;
+                        g_SysWork.playerWork.extra.lowerBodyState = aimState;
                     }
                 }
                 else if (g_Player_IsRunning != 0 && aimState == 0 && temp_s3 == PlayerLowerBodyState_None)
                 {
-                    if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStop)
+                    if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop)
                     {
-                        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunRight;
+                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunRight;
                     }
                 }
             }
@@ -5347,18 +5347,18 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             Player_MovementStateReset(chara, aimState + PlayerLowerBodyState_SidestepRight);
             Player_CharaRotate(3);
 
-            g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(90.0f);
+            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(90.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(90.0f);
             break;
 
         case PlayerLowerBodyState_SidestepLeft:
         case PlayerLowerBodyState_AimSidestepLeft:
-            if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 > Q12(1.25f))
+            if (g_SysWork.playerWork.player.properties.player.moveDistance_126 > Q12(1.25f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
-                if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < Q12(1.25f))
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < Q12(1.25f))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(1.25f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(1.25f);
                 }
             }
             else
@@ -5366,14 +5366,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 if (chara->model.anim.keyframeIdx >= 75 &&
                     chara->model.anim.keyframeIdx <= 86)
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                 }
                 else if (chara->model.anim.keyframeIdx >= 87)
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                 }
 
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = CLAMP(g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126,
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 = CLAMP(g_SysWork.playerWork.player.properties.player.moveDistance_126,
                                                                                                 Q12(0.0f),
                                                                                                 Q12(1.25f));
             }
@@ -5391,35 +5391,35 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 // If attacking with gun, dispatches to idle aim state instead of attack state.
                 if (!g_Player_IsSteppingLeftHold)
                 {
-                    if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                    if (g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
                         aimState != 0)
                     {
                         if (((extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk29, true) ||
                               extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk30, true)) &&
-                             (g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
-                              g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
+                             (g_SysWork.playerCombat_38.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
+                              g_SysWork.playerCombat_38.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
                              extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
-                            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk10;
+                            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model.stateStep                                  = 0;
                             chara->model.controlState                                      = ModelState_Uninitialized;
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_Attack;
+                            g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_Attack;
                         }
                         else
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState;
+                            g_SysWork.playerWork.extra.lowerBodyState = aimState;
                         }
                     }
                     else
                     {
-                        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState;
+                        g_SysWork.playerWork.extra.lowerBodyState = aimState;
                     }
                 }
                 else if (g_Player_IsRunning != 0 && aimState == 0 && temp_s3 == PlayerLowerBodyState_None)
                 {
-                    if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStop)
+                    if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop)
                     {
-                        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunLeft;
+                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunLeft;
                     }
                 }
             }
@@ -5428,24 +5428,24 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             Player_MovementStateReset(chara, aimState + PlayerLowerBodyState_SidestepLeft);
             Player_CharaRotate(3);
 
-            g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(-90.0f);
+            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(-90.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(-90.0f);
             break;
 
         case PlayerLowerBodyState_RunRight:
             chara->properties.player.exhaustionTimer_FC += g_DeltaTime;
-            if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 > Q12(3.1739f))
+            if (g_SysWork.playerWork.player.properties.player.moveDistance_126 > Q12(3.1739f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
-                if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < Q12(3.1739f))
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < Q12(3.1739f))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(3.1739f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(3.1739f);
                 }
             }
-            else if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < Q12(3.1739f))
+            else if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < Q12(3.1739f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126  = CLAMP(g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126,
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
+                g_SysWork.playerWork.player.properties.player.moveDistance_126  = CLAMP(g_SysWork.playerWork.player.properties.player.moveDistance_126,
                                                                                                  Q12(0.0f),
                                                                                                  Q12(3.1739f));
             }
@@ -5463,21 +5463,21 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 chara->fallSpeed = Q12(-1.0f);
             }
 
-            if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStartTargetLock)
+            if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
             {
                 switch (temp_s3)
                 {
                     case PlayerLowerBodyState_WalkForward:
                         if (chara->properties.player.runTimer_108 >= (u32)Q12(10.0f))
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunRightStumble;
+                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunRightStumble;
                         }
                         else
                         {
                             if (chara->model.anim.status == ANIM_STATUS(HarryAnim_RunRight, true) &&
                                 chara->model.anim.keyframeIdx >= 147)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
                             }
                         }
                         break;
@@ -5485,32 +5485,32 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                     case PlayerLowerBodyState_RunForward:
                         if (chara->properties.player.runTimer_108 >= (u32)Q12(10.0f))
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunRightWallStop;
+                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunRightWallStop;
                         }
                         else
                         {
                             if (chara->model.anim.status == ANIM_STATUS(HarryAnim_RunRight, true) &&
                                 chara->model.anim.keyframeIdx >= 147)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
                             }
                         }
                         break;
 
                     default:
                         if (chara->properties.player.runTimer_F8 >= 5 &&
-                            g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >= Q12(3.125f))
+                            g_SysWork.playerWork.player.properties.player.moveDistance_126 >= Q12(3.125f))
                         {
                             if (chara->model.anim.keyframeIdx >= 144 && (!g_Player_IsRunning || !g_Player_IsSteppingRightHold))
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunRightWallStop;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunRightWallStop;
                             }
                         }
                         else if (chara->model.anim.status == ANIM_STATUS(HarryAnim_RunRight, true) &&
                                  chara->model.anim.keyframeIdx >= 147 &&
                                  (!g_Player_IsRunning || !g_Player_IsSteppingRightHold))
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
                         }
                         break;
                 }
@@ -5519,24 +5519,24 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             Player_MovementStateReset(chara, PlayerLowerBodyState_RunRight);
             Player_CharaRotate(4);
 
-            g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(90.0f);
+            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(90.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(90.0f);
             break;
 
         case PlayerLowerBodyState_RunLeft:
             chara->properties.player.exhaustionTimer_FC += g_DeltaTime;
-            if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 > Q12(3.1739f))
+            if (g_SysWork.playerWork.player.properties.player.moveDistance_126 > Q12(3.1739f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
-                if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < Q12(3.1739f))
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < Q12(3.1739f))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(3.1739f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(3.1739f);
                 }
             }
-            else if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 < Q12(3.1739f))
+            else if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < Q12(3.1739f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126  = CLAMP(g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126,
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
+                g_SysWork.playerWork.player.properties.player.moveDistance_126  = CLAMP(g_SysWork.playerWork.player.properties.player.moveDistance_126,
                                                                                                  Q12(0.0f),
                                                                                                  Q12(3.1739f));
             }
@@ -5553,21 +5553,21 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 chara->fallSpeed = Q12(-1.0f);
             }
 
-            if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStartTargetLock)
+            if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
             {
                 switch (temp_s3)
                 {
                     case PlayerLowerBodyState_WalkForward:
                         if (chara->properties.player.runTimer_108 >= (u32)Q12(10.0f))
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunLeftStumble;
+                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunLeftStumble;
                         }
                         else
                         {
                             if (chara->model.anim.status == ANIM_STATUS(HarryAnim_RunLeft, true) &&
                                 chara->model.anim.keyframeIdx >= 132)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
                             }
                         }
                         break;
@@ -5575,31 +5575,31 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                     case PlayerLowerBodyState_RunForward:
                         if (chara->properties.player.runTimer_108 >= (u32)Q12(10.0f))
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunLeftWallStop;
+                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunLeftWallStop;
                         }
                         else
                         {
                             if (chara->model.anim.status == ANIM_STATUS(HarryAnim_RunLeft, true) &&
                                 chara->model.anim.keyframeIdx >= 132)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
                             }
                         }
                         break;
 
                     default:
                         if (chara->properties.player.runTimer_F8 >= 5 &&
-                            g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >= Q12(3.125f))
+                            g_SysWork.playerWork.player.properties.player.moveDistance_126 >= Q12(3.125f))
                         {
                             if (chara->model.anim.keyframeIdx > 128 && (!g_Player_IsRunning || !g_Player_IsSteppingLeftHold))
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunLeftWallStop;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunLeftWallStop;
                             }
                         }
                         else if (chara->model.anim.status == ANIM_STATUS(HarryAnim_RunLeft, true) && chara->model.anim.keyframeIdx >= 132 &&
                                  (!g_Player_IsRunning || !g_Player_IsSteppingLeftHold))
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
                         }
                         break;
                 }
@@ -5608,7 +5608,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             Player_MovementStateReset(chara, PlayerLowerBodyState_RunLeft);
             Player_CharaRotate(4);
 
-            g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(-90.0f);
+            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(-90.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(-90.0f);
             break;
 
@@ -5616,18 +5616,18 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
         case PlayerLowerBodyState_AimQuickTurnRight:
             g_Player_HeadingAngle = Q12_ANGLE(0.0f);
 
-            if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != Q12(0.0f))
+            if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
-                if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & (1 << 0))
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
+                if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & (1 << 0))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                 }
             }
 
             if (chara->model.controlState == ModelState_Uninitialized)
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.quickTurnHeadingAngle_120 = chara->rotation.vy;
+                g_SysWork.playerWork.player.properties.player.quickTurnHeadingAngle_120 = chara->rotation.vy;
             }
 
             if (chara->model.stateStep == 0)
@@ -5650,12 +5650,12 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 D_800C454C = Q12(0.0f);
             }
 
-            if (ABS_DIFF(g_SysWork.playerWork_4C.player_0.properties.player.quickTurnHeadingAngle_120, chara->rotation.vy) > (Q12_ANGLE(180.0f) - ((s32)(g_DeltaTime * 24) >> 4)))
+            if (ABS_DIFF(g_SysWork.playerWork.player.properties.player.quickTurnHeadingAngle_120, chara->rotation.vy) > (Q12_ANGLE(180.0f) - ((s32)(g_DeltaTime * 24) >> 4)))
             {
-                if (ABS_DIFF(g_SysWork.playerWork_4C.player_0.properties.player.quickTurnHeadingAngle_120, chara->rotation.vy) < (((g_DeltaTime * 24) >> 4) + Q12_ANGLE(180.0f)))
+                if (ABS_DIFF(g_SysWork.playerWork.player.properties.player.quickTurnHeadingAngle_120, chara->rotation.vy) < (((g_DeltaTime * 24) >> 4) + Q12_ANGLE(180.0f)))
                 {
-                    chara->rotation.vy                                                   = g_SysWork.playerWork_4C.player_0.properties.player.quickTurnHeadingAngle_120 + Q12_ANGLE(180.0f);
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(1.4f);
+                    chara->rotation.vy                                                   = g_SysWork.playerWork.player.properties.player.quickTurnHeadingAngle_120 + Q12_ANGLE(180.0f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(1.4f);
                     D_800C454C                                                              = Q12(0.0f);
 
                     // State change.
@@ -5665,11 +5665,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         {
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunForward;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForward;
                             }
                             else
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState + PlayerLowerBodyState_WalkForward;
+                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_WalkForward;
                             }
 
                             chara->model.stateStep = 0;
@@ -5679,11 +5679,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         {
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_JumpBackward;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_JumpBackward;
                             }
                             else
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState + PlayerLowerBodyState_WalkBackward;
+                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_WalkBackward;
                             }
 
                             chara->model.stateStep = 0;
@@ -5695,11 +5695,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
 
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunRight;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunRight;
                             }
                             else
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState + PlayerLowerBodyState_SidestepRight;
+                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepRight;
                             }
 
                             chara->model.stateStep = 0;
@@ -5711,11 +5711,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
 
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunLeft;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunLeft;
                             }
                             else
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState + PlayerLowerBodyState_SidestepLeft;
+                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepLeft;
                             }
 
                             chara->model.stateStep = 0;
@@ -5723,7 +5723,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         }
                         else if (chara->model.anim.keyframeIdx >= 216)
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState;
+                            g_SysWork.playerWork.extra.lowerBodyState = aimState;
                             chara->model.stateStep                      = 0;
                             chara->model.controlState                          = ModelState_Uninitialized;
                         }
@@ -5731,7 +5731,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 }
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
             break;
 
@@ -5739,18 +5739,18 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
         case PlayerLowerBodyState_AimQuickTurnLeft:
             g_Player_HeadingAngle = Q12_ANGLE(0.0f);
 
-            if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != Q12(0.0f))
+            if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
-                if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & (1 << 0))
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
+                if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & (1 << 0))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                 }
             }
 
             if (chara->model.controlState == ModelState_Uninitialized)
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.quickTurnHeadingAngle_120 = chara->rotation.vy;
+                g_SysWork.playerWork.player.properties.player.quickTurnHeadingAngle_120 = chara->rotation.vy;
             }
 
             if (chara->model.stateStep == 0)
@@ -5773,12 +5773,12 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 D_800C454C = Q12(0.0f);
             }
 
-            if (ABS_DIFF(g_SysWork.playerWork_4C.player_0.properties.player.quickTurnHeadingAngle_120, chara->rotation.vy) > (Q12_ANGLE(180.0f) - ((g_DeltaTime * 24) >> 4)))
+            if (ABS_DIFF(g_SysWork.playerWork.player.properties.player.quickTurnHeadingAngle_120, chara->rotation.vy) > (Q12_ANGLE(180.0f) - ((g_DeltaTime * 24) >> 4)))
             {
-                if (ABS_DIFF(g_SysWork.playerWork_4C.player_0.properties.player.quickTurnHeadingAngle_120, chara->rotation.vy) < (((g_DeltaTime * 24) >> 4) + Q12_ANGLE(180.0f)))
+                if (ABS_DIFF(g_SysWork.playerWork.player.properties.player.quickTurnHeadingAngle_120, chara->rotation.vy) < (((g_DeltaTime * 24) >> 4) + Q12_ANGLE(180.0f)))
                 {
-                    chara->rotation.vy                                                   = g_SysWork.playerWork_4C.player_0.properties.player.quickTurnHeadingAngle_120 + Q12_ANGLE(180.0f);
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(1.4f);
+                    chara->rotation.vy                                                   = g_SysWork.playerWork.player.properties.player.quickTurnHeadingAngle_120 + Q12_ANGLE(180.0f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(1.4f);
                     D_800C454C                                                              = Q12(0.0f);
 
                     // State change.
@@ -5788,11 +5788,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         {
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunForward;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForward;
                             }
                             else
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState + PlayerLowerBodyState_WalkForward;
+                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_WalkForward;
                             }
 
                             chara->model.stateStep = 0;
@@ -5802,11 +5802,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         {
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_JumpBackward;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_JumpBackward;
                             }
                             else
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState + PlayerLowerBodyState_WalkBackward;
+                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_WalkBackward;
                             }
 
                             chara->model.stateStep = 0;
@@ -5818,11 +5818,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
 
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunRight;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunRight;
                             }
                             else
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState + PlayerLowerBodyState_SidestepRight;
+                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepRight;
                             }
 
                             chara->model.stateStep = 0;
@@ -5834,11 +5834,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
 
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunLeft;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunLeft;
                             }
                             else
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState + PlayerLowerBodyState_SidestepLeft;
+                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepLeft;
                             }
 
                             chara->model.stateStep = 0;
@@ -5846,7 +5846,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         }
                         else if (chara->model.anim.keyframeIdx >= 229)
                         {
-                            g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState;
+                            g_SysWork.playerWork.extra.lowerBodyState = aimState;
                             chara->model.stateStep                      = 0;
                             chara->model.controlState                          = ModelState_Uninitialized;
                         }
@@ -5854,7 +5854,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 }
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
             break;
 
@@ -5876,21 +5876,21 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 }
 
                 chara->model.controlState++;
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(2.25f);
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(2.25f);
                 D_800C4550                                                              = Q12(2.25f);
             }
             else
             {
-                if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != 0)
+                if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != 0)
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2);
-                    if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & (1 << 0))
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 -= ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2);
+                    if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & (1 << 0))
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                        g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                     }
                 }
 
-                D_800C4550 = g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126;
+                D_800C4550 = g_SysWork.playerWork.player.properties.player.moveDistance_126;
             }
 
             if (chara->model.anim.status == ANIM_STATUS(HarryAnim_JumpBackward, true) && chara->model.anim.keyframeIdx == 246)
@@ -5899,38 +5899,38 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 {
                     Player_ExtraStateSet(chara, extra, PlayerState_FallBackward);
 
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(1.25f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(1.25f);
                 }
                 else
                 {
-                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState;
+                    g_SysWork.playerWork.extra.lowerBodyState = aimState;
                     chara->model.stateStep                      = 0;
                     chara->model.controlState                   = ModelState_Uninitialized;
                     chara->fallSpeed                                 = Q12(0.0f);
                 }
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(180.0f);
+            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(180.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(180.0f);
             break;
 
         case PlayerLowerBodyState_Stumble:
-            if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != Q12(0.0f))
+            if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2) / 3;
-                if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & (1 << 0))
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 -= ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2) / 3;
+                if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & (1 << 0))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                 }
             }
 
             if (D_800C45C8.field_14 <= Q12(0.5f) &&
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != Q12(0.0f))
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 4;
-                if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & (1 << 0))
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 4;
+                if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & (1 << 0))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                 }
             }
 
@@ -5942,7 +5942,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
 
             if (chara->model.anim.status == ANIM_STATUS(HarryAnim_RunForwardStumble, true) && chara->model.anim.keyframeIdx == 179)
             {
-                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
                 Player_MovementStateReset(chara, PlayerLowerBodyState_Stumble);
             }
             break;
@@ -5956,18 +5956,18 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             break;
 
         case PlayerLowerBodyState_RunLeftStumble:
-            if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != Q12(0.0f))
+            if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) >> 2;
-                if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & (1 << 0))
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) >> 2;
+                if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & (1 << 0))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                 }
             }
 
             if (D_800C45C8.field_14 < Q12(0.3401f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
             }
 
             if (chara->model.stateStep == 0)
@@ -5978,34 +5978,34 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
 
             if (chara->model.anim.status == ANIM_STATUS(HarryAnim_RunLeftStumble, true) && chara->model.anim.keyframeIdx == 349)
             {
-                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
                 Player_MovementStateReset(chara, 15);
             }
 
-            if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_None)
+            if (g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_None)
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(-90.0f);
+                g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(-90.0f);
                 g_Player_HeadingAngle                                             = Q12_ANGLE(-90.0f);
                 break;
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
             break;
 
         case PlayerLowerBodyState_RunRightStumble:
-            if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != Q12(0.0f))
+            if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) >> 2;
-                if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & (1 << 0))
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) >> 2;
+                if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & (1 << 0))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                 }
             }
 
             if (D_800C45C8.field_14 < Q12(0.3401f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
             }
 
             if (chara->model.stateStep == 0)
@@ -6016,72 +6016,72 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
 
             if (chara->model.anim.status == ANIM_STATUS(HarryAnim_RunRightStumble, true) && chara->model.anim.keyframeIdx == 378)
             {
-                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
                 Player_MovementStateReset(chara, 16);
             }
 
-            if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_None)
+            if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_None)
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
+                g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
                 g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
                 break;
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124 = Q12_ANGLE(90.0f);
+            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(90.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(90.0f);
             break;
 
         case PlayerLowerBodyState_Attack:
             // If weapon is katana.
-            if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
-                WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) == EquippedWeaponId_Katana)
+            if (g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) == EquippedWeaponId_Katana)
             {
-                if (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Hold))
+                if (g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Hold))
                 {
-                    if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 == Q12(0.0f) &&
+                    if (g_SysWork.playerWork.player.properties.player.moveDistance_126 == Q12(0.0f) &&
                         (extra->model.anim.keyframeIdx >= D_800C44F0[D_800AF220].field_4 + 7))
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(5.0f);
+                        g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(5.0f);
                         g_Player_HeadingAngle                                                   = Q12_ANGLE(0.0f);
                     }
                 }
                 else if (chara->model.stateStep == 0 && !g_Player_IsAttacking)
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(5.0f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(5.0f);
                     g_Player_HeadingAngle                                                   = Q12_ANGLE(0.0f);
                 }
             }
 
-            if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
-                WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) == EquippedWeaponId_Katana)
+            if (g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) == EquippedWeaponId_Katana)
             {
-                if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != Q12(0.0f))
+                if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, 0x444);
-                    if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & (1 << 0))
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, 0x444);
+                    if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & (1 << 0))
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                        g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                     }
                 }
             }
             else
             {
-                if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 != Q12(0.0f))
+                if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
                 {
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
-                    if ((g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 16) & (1 << 0))
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                    if ((g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 16) & (1 << 0))
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                        g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
                     }
                 }
             }
 
             if (g_SysWork.targetNpcIdx_2353 == NO_VALUE ||
-                g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                if (g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                if (g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
-                    if (g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Unk11)
+                    if (g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk11)
                     {
                         if (chara->model.stateStep == 0)
                         {
@@ -6098,10 +6098,10 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         }
                     }
                 }
-                else if (g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Unk10)
+                else if (g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk10)
                 {
-                    if (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) ||
-                        g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+                    if (g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) ||
+                        g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
                     {
                         if (chara->model.stateStep == 0)
                         {
@@ -6123,7 +6123,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         chara->model.stateStep++;
                     }
                 }
-                else if (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+                else if (g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
                 {
                     if (g_Player_RockDrill_DirectionAttack == 1)
                     {
@@ -6183,11 +6183,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 chara->model.stateStep++;
             }
 
-            if (g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) ||
-                (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) != EquippedWeaponId_SteelPipe &&
-                 WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) != EquippedWeaponId_Hammer    &&
-                 WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) != EquippedWeaponId_RockDrill &&
-                 WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) != EquippedWeaponId_Katana))
+            if (g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) ||
+                (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) != EquippedWeaponId_SteelPipe &&
+                 WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) != EquippedWeaponId_Hammer    &&
+                 WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) != EquippedWeaponId_RockDrill &&
+                 WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) != EquippedWeaponId_Katana))
             {
                 if (ANIM_STATUS_IS_ACTIVE(chara->model.anim.status) && ANIM_STATUS_IS_ACTIVE(extra->model.anim.status) &&
                     (chara->model.anim.status >= ANIM_STATUS(HarryAnim_Unk29, false) || chara->model.anim.keyframeIdx == D_800C44F0[0].field_6))
@@ -6196,32 +6196,32 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                     {
                         if (g_Player_IsMovingBackward)
                         {
-                            if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 == Q12(0.0f))
+                            if (g_SysWork.playerWork.player.properties.player.moveDistance_126 == Q12(0.0f))
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_AimWalkBackward;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimWalkBackward;
                             }
                         }
-                        else if (g_SysWork.playerWork_4C.extra_128.state_1C != PlayerState_Combat)
+                        else if (g_SysWork.playerWork.extra.state != PlayerState_Combat)
                         {
                             if (!g_Player_IsSteppingRightHold)
                             {
                                 if (g_Player_IsSteppingLeftHold)
                                 {
-                                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_AimSidestepLeft;
+                                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimSidestepLeft;
                                 }
                             }
                             else
                             {
-                                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_AimSidestepRight;
+                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimSidestepRight;
                             }
                         }
                     }
                     else
                     {
-                        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_AimWalkForward;
+                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimWalkForward;
                     }
 
-                    if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_Attack)
+                    if (g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_Attack)
                     {
                         Player_MovementStateReset(chara, PlayerLowerBodyState_Aim);
                         break;
@@ -6242,28 +6242,28 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             {
                 if (g_Player_IsMovingForward)
                 {
-                    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_AimWalkForward;
+                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimWalkForward;
                 }
                 else if (g_Player_IsMovingBackward)
                 {
-                    if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 == Q12(0.0f))
+                    if (g_SysWork.playerWork.player.properties.player.moveDistance_126 == Q12(0.0f))
                     {
-                        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_AimWalkBackward;
+                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimWalkBackward;
                     }
                 }
-                else if (g_SysWork.playerWork_4C.extra_128.state_1C != PlayerState_Combat)
+                else if (g_SysWork.playerWork.extra.state != PlayerState_Combat)
                 {
                     if (g_Player_IsSteppingRightHold)
                     {
-                        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_AimSidestepRight;
+                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimSidestepRight;
                     }
                     else if (g_Player_IsSteppingLeftHold)
                     {
-                        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_AimSidestepLeft;
+                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimSidestepLeft;
                     }
                 }
 
-                if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_Reload)
+                if (g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_Reload)
                 {
                     Player_MovementStateReset(chara, PlayerLowerBodyState_Aim);
                 }
@@ -6283,13 +6283,13 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
     func_8007FDE0(D_800C4590.field_14, &sfx, &pitch0, &pitch1);
 
     // This entire conditional is the reason why movement stop working when removing this function call.
-    if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_JumpBackward &&
-        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_Reload)
+    if (g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_JumpBackward &&
+        g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_Reload)
     {
-        D_800C4550 = g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126;
+        D_800C4550 = g_SysWork.playerWork.player.properties.player.moveDistance_126;
     }
 
-    switch (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24)
+    switch (g_SysWork.playerWork.extra.lowerBodyState)
     {
         case PlayerLowerBodyState_RunForward:
         case PlayerLowerBodyState_RunRight:
@@ -6330,22 +6330,22 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
     }
 
     // Plays movement sounds.
-    switch (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24)
+    switch (g_SysWork.playerWork.extra.lowerBodyState)
     {
         case PlayerLowerBodyState_None:
         case PlayerLowerBodyState_Aim:
             // Turn right.
-            if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_TurnRight)
+            if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_TurnRight)
             {
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_TurnRight, true), chara, 204, 200, sfx, pitch0);
             }
             // Turn left.
-            else if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_TurnLeft)
+            else if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_TurnLeft)
             {
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_TurnLeft, true), chara, 187, 191, sfx, pitch0);
             }
 
-            if ((g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Moving) &&
+            if ((g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Moving) &&
                 ((chara->model.anim.status >= ANIM_STATUS(HarryAnim_Idle, true) &&
                   chara->model.anim.status <= ANIM_STATUS(HarryAnim_IdleExhausted, false)) ||
                  chara->model.anim.status == ANIM_STATUS(HarryAnim_HandgunAim, true)))
@@ -6353,16 +6353,16 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
                 func_8005DD44(sfx, &chara->position, Q8_CLAMPED(0.095f), pitch0);
 
                 chara->properties.player.field_10C                        = pitch0 + 0x10;
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Moving;
+                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             }
 
             if (chara->model.anim.keyframeIdx == 246 &&
-                !(g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Unk5))
+                !(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk5))
             {
                 func_8005DD44(sfx, &chara->position, Q8(0.5f), pitch1);
 
                 chara->properties.player.field_10C                       = pitch1 + 0x20;
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk5;
+                g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk5;
             }
             break;
 
@@ -6372,13 +6372,13 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
         case PlayerLowerBodyState_WalkBackward:
         case PlayerLowerBodyState_AimWalkBackward:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_WalkBackward, true), chara, 52, 63, sfx, pitch0);
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_AimWalkForward:
         case PlayerLowerBodyState_WalkForward:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_WalkForward, true), chara, 18, 6, sfx, pitch0);
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunForward:
@@ -6387,17 +6387,17 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
                 chara->properties.player.runTimer_F8++;
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_SidestepRight:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_SidestepRight, true), chara, 118, 108, sfx, pitch0);
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_SidestepLeft:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_SidestepLeft, true), chara, 93, 83, sfx, pitch0);
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunRight:
@@ -6406,7 +6406,7 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
                 chara->properties.player.runTimer_F8++;
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunLeft:
@@ -6415,11 +6415,11 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
                 chara->properties.player.runTimer_F8++;
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunForwardWallStop:
-            if (g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_WallStopRight)
+            if (g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_WallStopRight)
             {
                 if (chara->model.anim.keyframeIdx < 152)
                 {
@@ -6442,7 +6442,7 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
                 }
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunLeftWallStop:
@@ -6455,7 +6455,7 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunLeftWallStop, true), chara, 327, 324, sfx, pitch1);
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunRightWallStop:
@@ -6468,7 +6468,7 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunRightWallStop, true), chara, 353, 356, sfx, pitch1);
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_Stumble:
@@ -6481,7 +6481,7 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunForwardStumble, true), chara, 176, 174, sfx, pitch1);
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunLeftStumble:
@@ -6498,7 +6498,7 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunLeftStumble, true), chara, 356, 346, sfx, pitch1);
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunRightStumble:
@@ -6515,26 +6515,26 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunRightStumble, true), chara, 385, 375, sfx, pitch1);
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_QuickTurnLeft:
         case PlayerLowerBodyState_AimQuickTurnLeft:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_QuickTurnLeft, true), chara, 222, 224, sfx, pitch0);
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_QuickTurnRight:
         case PlayerLowerBodyState_AimQuickTurnRight:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_QuickTurnRight, true), chara, 209, 211, sfx, pitch0);
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_JumpBackward:
         case PlayerLowerBodyState_Unk31:
             if (chara->model.anim.keyframeIdx < 243)
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk5;
+                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk5;
             }
 
             if (chara->position.vy == D_800C4590.field_C)
@@ -6542,7 +6542,7 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_JumpBackward, true), chara, 243, 245, sfx, pitch1);
             }
 
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
     }
 }
@@ -6640,9 +6640,9 @@ void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
     chara->position.vy += D_800C4590.offset_0.vy;
     chara->position.vz += D_800C4590.offset_0.vz;
 
-    if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_RunForward ||
-        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_RunRight ||
-        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_RunLeft)
+    if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_RunForward ||
+        g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_RunRight ||
+        g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_RunLeft)
     {
         chara->properties.player.runTimer_108 += SquareRoot0(SQUARE(D_800C4590.offset_0.vx) +
                                                                 SQUARE(D_800C4590.offset_0.vy) +
@@ -6671,7 +6671,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
 
     someAngle = Q12_ANGLE_NORM_U(ratan2(chara->position.vx - g_Player_PrevPosition.vx, chara->position.vz - g_Player_PrevPosition.vz) + Q12_ANGLE(360.0f));
 
-    if (!(g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_FallForward && g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_KickEnemy))
+    if (!(g_SysWork.playerWork.extra.state >= PlayerState_FallForward && g_SysWork.playerWork.extra.state < PlayerState_KickEnemy))
     {
         if (!g_Player_IsInWalkToRunTransition)
         {
@@ -6681,7 +6681,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
                 if (ABS_DIFF(chara->rotation.vy, someAngle) >= Q12_ANGLE(90.0f) &&
                     ABS_DIFF(chara->rotation.vy, someAngle) <  Q12_ANGLE(270.0f))
                 {
-                    if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_JumpBackward)
+                    if (g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_JumpBackward)
                     {
                         Player_ExtraStateSet(chara, extra, PlayerState_FallBackward);
                     }
@@ -6691,7 +6691,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
                     Player_ExtraStateSet(chara, extra, PlayerState_FallForward);
                 }
 
-                g_SysWork.playerCombat_38.isAiming_13 = false;
+                g_SysWork.playerCombat_38.isAiming = false;
             }
         }
     }
@@ -6739,7 +6739,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
         return;
     }
 
-    switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+    switch (g_SysWork.playerWork.extra.state)
     {
         case PlayerState_FallForward:
         case PlayerState_FallBackward:
@@ -6767,16 +6767,16 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
         case PlayerState_OnFloorFront:
         case PlayerState_OnFloorBehind:
             // Related to enemy grabbing.
-            if (chara->damage.amount_C != Q12(0.0f) && !(g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_DamageReceived))
+            if (chara->damage.amount_C != Q12(0.0f) && !(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_DamageReceived))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_DamageReceived;
+                g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_DamageReceived;
                 func_8005DC1C(sfx, &chara->position, Q8(1.0f / 8.0f), 0);
                 chara->properties.player.field_10C = 64;
             }
 
             if (chara->damage.amount_C == Q12(0.0f))
             {
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_DamageReceived;
+                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_DamageReceived;
             }
 
             func_80089494();
@@ -6805,7 +6805,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
 
             if (chara->attackReceived == 47)
             {
-                g_SysWork.playerWork_4C.player_0.field_D4.field_2 = Q12(0.0f);
+                g_SysWork.playerWork.player.field_D4.field_2 = Q12(0.0f);
                 Player_ExtraStateSet(chara, extra, PlayerState_InstantDeath);
                 return;
             }
@@ -6836,23 +6836,23 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
             }
 
             g_SysWork.targetNpcIdx_2353                  = NO_VALUE;
-            g_SysWork.playerCombat_38.weaponAttack_F = (g_SavegamePtr->equippedWeapon_AA == InventoryItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA - InventoryItemId_KitchenKnife);
+            g_SysWork.playerCombat_38.weaponAttack = (g_SavegamePtr->equippedWeapon_AA == InventoryItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA - InventoryItemId_KitchenKnife);
 
-            if (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 func_8004C564(2, 3);
             }
 
-            if (g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_FallForward &&
-                g_SysWork.playerWork_4C.extra_128.state_1C <  PlayerState_Unk7)
+            if (g_SysWork.playerWork.extra.state >= PlayerState_FallForward &&
+                g_SysWork.playerWork.extra.state <  PlayerState_Unk7)
             {
-                g_SysWork.playerWork_4C.player_0.field_C8.field_0   = Q12(-1.6f);
-                g_SysWork.playerWork_4C.player_0.field_C8.field_2   = Q12(0.0f);
-                g_SysWork.playerWork_4C.player_0.field_C8.field_6   = Q12(-1.1f);
-                g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12(0.0f);
-                g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
-                g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
-                g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 = Q12(0.0f);
+                g_SysWork.playerWork.player.field_C8.field_0   = Q12(-1.6f);
+                g_SysWork.playerWork.player.field_C8.field_2   = Q12(0.0f);
+                g_SysWork.playerWork.player.field_C8.field_6   = Q12(-1.1f);
+                g_SysWork.playerWork.player.field_D8.offsetZ_6 = Q12(0.0f);
+                g_SysWork.playerWork.player.field_D8.offsetX_4 = Q12(0.0f);
+                g_SysWork.playerWork.player.field_D8.offsetZ_2 = Q12(0.0f);
+                g_SysWork.playerWork.player.field_D8.offsetX_0 = Q12(0.0f);
             }
 
             enemyRotY = g_SysWork.npcs_1A0[chara->field_40].rotation.vy;
@@ -6878,7 +6878,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                     break;
 
                 case 63:
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(1.5f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(1.5f);
                     Math_ShortestAngleGet(chara->rotation.vy, g_SysWork.npcs_1A0[0].rotation.vy, &headingAngle);
                     g_Player_HeadingAngle = headingAngle;
 
@@ -6966,14 +6966,14 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                     return;
 
                 case 69:
-                    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(1.6f);
+                    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(1.6f);
                     Math_ShortestAngleGet(chara->rotation.vy, Q12_ANGLE(90.0f), &headingAngle);
                     g_Player_HeadingAngle = headingAngle;
 
                 case 68:
                     if (chara->attackReceived != 69)
                     {
-                        g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(4.0f);
+                        g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(4.0f);
                         Math_ShortestAngleGet(chara->rotation.vy, (s16)chara->damage.position_0.vy, &headingAngle);
                         g_Player_HeadingAngle = headingAngle;
                     }
@@ -7030,19 +7030,19 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                     break;
             }
 
-            if ((u32)g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_FallForward)
+            if ((u32)g_SysWork.playerWork.extra.state >= PlayerState_FallForward)
             {
                 chara->properties.player.afkTimer_E8                     = Q12(0.0f);
                 chara->properties.player.field_F4                        = 0;
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk12;
-                g_SysWork.playerCombat_38.isAiming_13                   = false;
-                g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk9;
+                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk12;
+                g_SysWork.playerCombat_38.isAiming                   = false;
+                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk9;
                 chara->field_44.field_0                                     = NO_VALUE;
             }
             break;
     }
 
-    if (g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_Death)
+    if (g_SysWork.playerWork.extra.state == PlayerState_Death)
     {
         Chara_DamageClear(chara);
         return;
@@ -7050,11 +7050,11 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
 
     if (chara->damage.amount_C != Q12(0.0f))
     {
-        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk2;
-        if (!(g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_DamageReceived))
+        g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk2;
+        if (!(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_DamageReceived))
         {
             func_8005DC1C(sfx, &chara->position, Q8(1.0f / 8.0f), 0);
-            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_DamageReceived;
+            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_DamageReceived;
             chara->properties.player.field_10C = 0x40;
         }
 
@@ -7088,10 +7088,10 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
         chara->damage.amount_C = Q12(0.0f);
     }
 
-    if (chara->health <= Q12(0.0f) && g_SysWork.playerWork_4C.extra_128.state_1C != PlayerState_Death &&
-        g_SysWork.playerWork_4C.extra_128.state_1C != PlayerState_Unk36 && g_SysWork.playerWork_4C.extra_128.state_1C != PlayerState_EnemyGrabPinnedFront &&
-        g_SysWork.playerWork_4C.extra_128.state_1C != PlayerState_EnemyGrabPinnedBack && g_SysWork.playerWork_4C.extra_128.state_1C != PlayerState_OnFloorFront &&
-        g_SysWork.playerWork_4C.extra_128.state_1C != PlayerState_OnFloorBehind && !g_Player_IsInWalkToRunTransition)
+    if (chara->health <= Q12(0.0f) && g_SysWork.playerWork.extra.state != PlayerState_Death &&
+        g_SysWork.playerWork.extra.state != PlayerState_Unk36 && g_SysWork.playerWork.extra.state != PlayerState_EnemyGrabPinnedFront &&
+        g_SysWork.playerWork.extra.state != PlayerState_EnemyGrabPinnedBack && g_SysWork.playerWork.extra.state != PlayerState_OnFloorFront &&
+        g_SysWork.playerWork.extra.state != PlayerState_OnFloorBehind && !g_Player_IsInWalkToRunTransition)
     {
         chara->field_40                     = NO_VALUE;
         g_SavegamePtr->healthSaturation_238 = Q12(0.0f);
@@ -7124,10 +7124,10 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
     s32    var_a3;
     q19_12 var_v1;
 
-    switch (g_SysWork.playerWork_4C.extra_128.state_1C)
+    switch (g_SysWork.playerWork.extra.state)
     {
         case PlayerState_Combat:
-            switch (g_SysWork.playerCombat_38.weaponAttack_F)
+            switch (g_SysWork.playerCombat_38.weaponAttack)
             {
                 case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
                     var_a2 = 20;
@@ -7155,15 +7155,15 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
                     break;
             }
 
-            if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_Reload ||
-                g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_Reload ||
+                g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 g_Player_FlexRotationX = Q12_ANGLE(0.0f);
                 g_Player_FlexRotationY = Q12_ANGLE(0.0f);
             }
             else
             {
-                g_Player_FlexRotationX = g_SysWork.playerWork_4C.player_0.properties.player.field_122 - Q12_ANGLE(90.0f);
+                g_Player_FlexRotationX = g_SysWork.playerWork.player.properties.player.field_122 - Q12_ANGLE(90.0f);
 
                 if (ABS(chara->field_2A - chara->rotation.vy) > Q12_ANGLE(180.0f))
                 {
@@ -7181,10 +7181,10 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
                     g_Player_FlexRotationY = chara->field_2A - chara->rotation.vy;
                 }
 
-                if (chara->properties.player.field_100 != 0 || g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_AimStartTargetLock ||
-                    g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_AimTargetLockSwitch)
+                if (chara->properties.player.field_100 != 0 || g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock ||
+                    g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimTargetLockSwitch)
                 {
-                    if (g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_Unk8)
+                    if (g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk8)
                     {
                         var_v1 = Q12_ANGLE(0.0f);
                     }
@@ -7336,8 +7336,8 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
             break;
 
         default:
-            if (g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_Unk52 &&
-                g_SysWork.playerWork_4C.extra_128.state_1C <  PlayerState_Unk59)
+            if (g_SysWork.playerWork.extra.state >= PlayerState_Unk52 &&
+                g_SysWork.playerWork.extra.state <  PlayerState_Unk59)
             {
                 func_80044F14(&coords[HarryBone_Head], Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), g_Player_FlexRotationY);
             }
@@ -7349,7 +7349,7 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
             break;
     }
 
-    if (g_SysWork.enablePlayerMatchAnim_2358 && g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_Unk58)
+    if (g_SysWork.enablePlayerMatchAnim_2358 && g_SysWork.playerWork.extra.state < PlayerState_Unk58)
     {
         func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightUpperArm], Q12_ANGLE(0.0f),   Q12_ANGLE(63.3f), Q12_ANGLE(-8.8f));
         func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightForearm],  Q12_ANGLE(-14.1f), Q12_ANGLE(22.5f), Q12_ANGLE(-30.8f));
@@ -7376,10 +7376,10 @@ s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1) // 0x8007D6F0
     q3_12     angle;
     q4_12     angleDelta;
 
-    temp_s0  = g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 3;
+    temp_s0  = g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 3;
     temp_s0 += Q12(0.75f);
     temp_s1  = Q12(-0.6f);
-    temp_s1 -= g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >> 4;
+    temp_s1 -= g_SysWork.playerWork.player.properties.player.moveDistance_126 >> 4;
 
     temp_s4 = Q12_MULT(Math_Cos(chara->headingAngle), Q12(0.2f)); // Maybe meters?
     temp_s3 = Q12_MULT(Math_Sin(chara->headingAngle), Q12(0.2f)); // Maybe meters?
@@ -7459,9 +7459,9 @@ void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D
     static VECTOR3        D_800C44E0;
     static s32            pad_bss_800C44EC;
 
-    model = &g_SysWork.playerWork_4C.extra_128.model;
+    model = &g_SysWork.playerWork.extra.model;
 
-    if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 < PlayerLowerBodyState_Aim)
+    if (g_SysWork.playerWork.extra.lowerBodyState < PlayerLowerBodyState_Aim)
     {
         vec     = &g_SysWork.playerCombat_38.field_0;
         vec->vx = Q8_TO_Q12(g_SysWork.playerBoneCoords_890[HarryBone_RightFoot].workm.t[0]);
@@ -7470,7 +7470,7 @@ void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D
     }
     else
     {
-        switch (g_SysWork.playerCombat_38.weaponAttack_F)
+        switch (g_SysWork.playerCombat_38.weaponAttack)
         {
             case NO_VALUE:
             case 8:
@@ -7490,22 +7490,22 @@ void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D
         }
     }
 
-    if (g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 != Q12(0.0f))
+    if (g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 != Q12(0.0f))
     {
         g_SysWork.timer_2C++;
 
-        if (g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 >= Q12(3.1739f) || (g_SysWork.timer_2C & (1 << 0)))
+        if (g_SysWork.playerWork.player.properties.player.moveDistance_126 >= Q12(3.1739f) || (g_SysWork.timer_2C & (1 << 0)))
         {
             func_8006342C(g_SavegamePtr->equippedWeapon_AA - InventoryItemId_KitchenKnife, 0, 0, coord);
         }
     }
 
-    if (!(g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_Unk7 && g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_Unk51) &&
-        ((g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_None && g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_Idle) || g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_KickEnemy || g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_StompEnemy))
+    if (!(g_SysWork.playerWork.extra.state >= PlayerState_Unk7 && g_SysWork.playerWork.extra.state < PlayerState_Unk51) &&
+        ((g_SysWork.playerWork.extra.state >= PlayerState_None && g_SysWork.playerWork.extra.state < PlayerState_Idle) || g_SysWork.playerWork.extra.state == PlayerState_KickEnemy || g_SysWork.playerWork.extra.state == PlayerState_StompEnemy))
     {
-        if (g_SysWork.playerCombat_38.weaponAttack_F >= EquippedWeaponId_Handgun && g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim)
+        if (g_SysWork.playerCombat_38.weaponAttack >= EquippedWeaponId_Handgun && g_SysWork.playerWork.extra.lowerBodyState >= PlayerLowerBodyState_Aim)
         {
-            if (g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_Combat && g_Player_TargetNpcIdx != NO_VALUE)
+            if (g_SysWork.playerWork.extra.state == PlayerState_Combat && g_Player_TargetNpcIdx != NO_VALUE)
             {
                 sp98.vx = ratan2((g_SysWork.npcs_1A0[g_Player_TargetNpcIdx].position.vx + g_SysWork.npcs_1A0[g_Player_TargetNpcIdx].field_D8.offsetX_0) - g_SysWork.playerCombat_38.field_0.vx,
                                  (g_SysWork.npcs_1A0[g_Player_TargetNpcIdx].position.vz + g_SysWork.npcs_1A0[g_Player_TargetNpcIdx].field_D8.offsetZ_2) - g_SysWork.playerCombat_38.field_0.vz);
@@ -7521,7 +7521,7 @@ void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D
                 sp98.vx = chara->field_2A;
             }
 
-            sp98.vy  = g_SysWork.playerWork_4C.player_0.properties.player.field_122;
+            sp98.vy  = g_SysWork.playerWork.player.properties.player.field_122;
             unkAngle = sp98.vy;
             if (unkAngle >= Q12_ANGLE(33.75f))
             {
@@ -7537,12 +7537,12 @@ void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D
 
             if (chara->field_44.field_0 > 0)
             {
-                func_8006342C(g_SysWork.playerCombat_38.weaponAttack_F, unkAngle, sp98.vx, coord);
+                func_8006342C(g_SysWork.playerCombat_38.weaponAttack, unkAngle, sp98.vx, coord);
             }
         }
         else
         {
-            switch (g_SysWork.playerCombat_38.weaponAttack_F)
+            switch (g_SysWork.playerCombat_38.weaponAttack)
             {
                 case NO_VALUE:
                 case EquippedWeaponId_Kick:
@@ -7552,55 +7552,55 @@ void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D
                     break;
 
                 default:
-                    if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 < PlayerLowerBodyState_Aim)
+                    if (g_SysWork.playerWork.extra.lowerBodyState < PlayerLowerBodyState_Aim)
                     {
                         Math_SetSVectorFast(&sp90, 0, 60, 134);
                         Vw_CoordHierarchyMatrixCompute(&coord[17], &sp50);
                     }
                     else
                     {
-                        switch (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F))
+                        switch (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack))
                         {
                             case EquippedWeaponId_KitchenKnife:
-                                Math_SetSVectorFastSum(&sp90, Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF),
-                                                        -FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x4B, Q12_SHIFT - 1),
-                                                         Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x4B) >> 1);
+                                Math_SetSVectorFastSum(&sp90, Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0xF),
+                                                        -FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0x4B, Q12_SHIFT - 1),
+                                                         Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0x4B) >> 1);
                                 break;
 
                             case EquippedWeaponId_SteelPipe:
-                                Math_SetSVectorFastSum(&sp90, Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF),
-                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xE1) >> 1),
-                                                         FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x2D, Q12_SHIFT - 2));
+                                Math_SetSVectorFastSum(&sp90, Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0xF),
+                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0xE1) >> 1),
+                                                         FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0x2D, Q12_SHIFT - 2));
                                 break;
 
                             case EquippedWeaponId_Chainsaw:
-                                Math_SetSVectorFastSum(&sp90, Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF) >> 1,
-                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x87) >> 1),
-                                                         (Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x1EF) >> 1));
+                                Math_SetSVectorFastSum(&sp90, Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0xF) >> 1,
+                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0x87) >> 1),
+                                                         (Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0x1EF) >> 1));
                                 break;
 
                             case EquippedWeaponId_RockDrill:
                                 Math_SetSVectorFastSum(&sp90, 0,
-                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x2D)),
-                                                         FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x2D, Q12_SHIFT - 2));
+                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0x2D)),
+                                                         FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0x2D, Q12_SHIFT - 2));
                                 break;
 
                             case EquippedWeaponId_Axe:
                                 Math_SetSVectorFastSum(&sp90, 0,
-                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x2C1) >> 1),
-                                                         Q12_MULT((u32)D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xC3));
+                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0x2C1) >> 1),
+                                                         Q12_MULT((u32)D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0xC3));
                                 break;
 
                             case EquippedWeaponId_Hammer:
-                                Math_SetSVectorFastSum(&sp90, (Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF) >> 1),
-                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x69)),
-                                                         Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x13B) >> 1);
+                                Math_SetSVectorFastSum(&sp90, (Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0xF) >> 1),
+                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0x69)),
+                                                         Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0x13B) >> 1);
                                 break;
 
                             case EquippedWeaponId_Katana:
-                                Math_SetSVectorFastSum(&sp90, (Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF) >> 1),
-                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x13B) >> 1),
-                                                         Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF));
+                                Math_SetSVectorFastSum(&sp90, (Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0xF) >> 1),
+                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0x13B) >> 1),
+                                                         Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, 0xF));
                                 break;
                         }
 
@@ -7624,13 +7624,13 @@ void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D
             sp98.vy = ratan2(temp_s0, sp70.vy - Q12_TO_Q8(g_SysWork.playerCombat_38.field_0.vy));
         }
 
-        if (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap) &&
-            g_SysWork.playerCombat_38.isAiming_13 &&
+        if (g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap) &&
+            g_SysWork.playerCombat_38.isAiming &&
             model->anim.status >= ANIM_STATUS(HarryAnim_HandgunAim, true) && model->anim.keyframeIdx >= 574)
         {
-            if (g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_Idle)
+            if (g_SysWork.playerWork.extra.state < PlayerState_Idle)
             {
-                if (g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_None && g_SysWork.targetNpcIdx_2353 != NO_VALUE)
+                if (g_SysWork.playerWork.extra.state == PlayerState_None && g_SysWork.targetNpcIdx_2353 != NO_VALUE)
                 {
                     g_SysWork.targetNpcIdx_2353 = NO_VALUE;
                 }
@@ -7658,11 +7658,11 @@ void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D
             }
         }
 
-        if (g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_Idle)
+        if (g_SysWork.playerWork.extra.state < PlayerState_Idle)
         {
-            if ((g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
+            if ((g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
                  model->anim.keyframeIdx >= 572 && model->anim.keyframeIdx < 584) ||
-                (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
+                (g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
                  chara->model.anim.keyframeIdx >= 577 && model->anim.keyframeIdx <  583))
             {
                 Math_SetSVectorFast(&sp90, 0, 0, 0);
@@ -7692,22 +7692,22 @@ void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D
             }
         }
 
-        if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStop)
+        if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop)
         {
-            if (g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 if (D_800C4554 != NO_VALUE || D_800C4556 != D_800C4554)
                 {
-                    func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombat_38.weaponAttack_F, chara, &D_800C44E0, &g_SysWork.npcs_1A0[0], D_800C4556, D_800C4554);
+                    func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombat_38.weaponAttack, chara, &D_800C44E0, &g_SysWork.npcs_1A0[0], D_800C4556, D_800C4554);
                 }
                 else
                 {
-                    func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombat_38.weaponAttack_F, chara, &D_800C44E0, &g_SysWork.npcs_1A0[0], sp98.vx, sp98.vy);
+                    func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombat_38.weaponAttack, chara, &D_800C44E0, &g_SysWork.npcs_1A0[0], sp98.vx, sp98.vy);
                 }
             }
             else
             {
-                func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombat_38.weaponAttack_F, chara, &g_SysWork.playerCombat_38.field_0, &g_SysWork.npcs_1A0[0], sp98.vx, sp98.vy);
+                func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombat_38.weaponAttack, chara, &g_SysWork.playerCombat_38.field_0, &g_SysWork.npcs_1A0[0], sp98.vx, sp98.vy);
             }
 
             D_800C42D2 = sp98.vx;
@@ -7753,20 +7753,20 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
 
     SysWork_SavegameReadPlayer();
 
-    g_SysWork.playerWork_4C.player_0.model.charaId_0  = Chara_Harry;
-    g_SysWork.playerWork_4C.extra_128.model.charaId_0 = Chara_Harry;
-    g_SysWork.playerWork_4C.player_0.field_D4.radius_0  = Q12(0.3f);
-    g_SysWork.playerWork_4C.player_0.field_D4.field_2   = Q12(0.23f);
+    g_SysWork.playerWork.player.model.charaId_0  = Chara_Harry;
+    g_SysWork.playerWork.extra.model.charaId_0 = Chara_Harry;
+    g_SysWork.playerWork.player.field_D4.radius_0  = Q12(0.3f);
+    g_SysWork.playerWork.player.field_D4.field_2   = Q12(0.23f);
 
-    extraModel = &g_SysWork.playerWork_4C.player_0.model;
-    model      = &g_SysWork.playerWork_4C.extra_128.model;
+    extraModel = &g_SysWork.playerWork.player.model;
+    model      = &g_SysWork.playerWork.extra.model;
 
     g_SysWork.enablePlayerMatchAnim_2358 = false;
 
     extraModel->anim.flags |= AnimFlag_Unlocked | AnimFlag_Visible;
     model->anim.flags      |= AnimFlag_Unlocked | AnimFlag_Visible;
 
-    g_SysWork.playerWork_4C.player_0.field_E1_0 = 3;
+    g_SysWork.playerWork.player.field_E1_0 = 3;
     g_Inventory_EquippedItem                    = g_SavegamePtr->equippedWeapon_AA;
 
     itemGroupId = INVENTORY_ITEM_GROUP(g_SavegamePtr->equippedWeapon_AA);
@@ -7776,13 +7776,13 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     {
         for (i = 0; g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA && i < INVENTORY_ITEM_COUNT_MAX; i++);
 
-        g_SysWork.playerCombat_38.weaponAttack_F        = g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife;
-        g_SysWork.playerCombat_38.currentWeaponAmmo_10  = g_SavegamePtr->items_0[i].count_1;
-        g_SysWork.playerCombat_38.weaponInventoryIdx_12 = i;
+        g_SysWork.playerCombat_38.weaponAttack        = g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife;
+        g_SysWork.playerCombat_38.currentWeaponAmmo  = g_SavegamePtr->items_0[i].count_1;
+        g_SysWork.playerCombat_38.weaponInventoryIdx = i;
 
         if (itemGroupId == InventoryItemGroup_MeleeWeapons)
         {
-            g_SysWork.playerCombat_38.totalWeaponAmmo_11 = 0;
+            g_SysWork.playerCombat_38.totalWeaponAmmo = 0;
         }
         else
         {
@@ -7792,23 +7792,23 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
 
             if (i == INVENTORY_ITEM_COUNT_MAX)
             {
-                g_SysWork.playerCombat_38.totalWeaponAmmo_11 = 0;
+                g_SysWork.playerCombat_38.totalWeaponAmmo = 0;
             }
             else
             {
-                g_SysWork.playerCombat_38.totalWeaponAmmo_11 = (s8)g_SavegamePtr->items_0[i].count_1;
+                g_SysWork.playerCombat_38.totalWeaponAmmo = (s8)g_SavegamePtr->items_0[i].count_1;
             }
         }
     }
     else
     {
-        g_SysWork.playerCombat_38.weaponAttack_F        = NO_VALUE;
-        g_SysWork.playerCombat_38.currentWeaponAmmo_10  = 0;
-        g_SysWork.playerCombat_38.totalWeaponAmmo_11    = 0;
-        g_SysWork.playerCombat_38.weaponInventoryIdx_12 = NO_VALUE;
+        g_SysWork.playerCombat_38.weaponAttack        = NO_VALUE;
+        g_SysWork.playerCombat_38.currentWeaponAmmo  = 0;
+        g_SysWork.playerCombat_38.totalWeaponAmmo    = 0;
+        g_SysWork.playerCombat_38.weaponInventoryIdx = NO_VALUE;
     }
 
-    g_SysWork.playerCombat_38.isAiming_13 = false;
+    g_SysWork.playerCombat_38.isAiming = false;
     g_Player_GrabReleaseInputTimer        = Q12(0.0f);
     D_800C4588                            = 0;
     D_800C457C                            = 0;
@@ -7833,7 +7833,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     g_GameWork.mapAnimIdx_5B1   = NO_VALUE;
 
     g_SavegamePtr->inventorySlotCount_AB       = CLAMP(g_SavegamePtr->inventorySlotCount_AB, INVENTORY_ITEM_COUNT_MAX / 5, INVENTORY_ITEM_COUNT_MAX);
-    g_SysWork.playerWork_4C.player_0.health = CLAMP(g_SysWork.playerWork_4C.player_0.health, 1, Q12(100.0f));
+    g_SysWork.playerWork.player.health = CLAMP(g_SysWork.playerWork.player.health, 1, Q12(100.0f));
 }
 
 void func_8007E860(void) // 0x8007E860
@@ -7854,7 +7854,7 @@ void func_8007E8C0(void) // 0x8007E8C0
     s_AnimInfo*     animInfos;
     s_SubCharacter* chara;
 
-    chara     = &g_SysWork.playerWork_4C.player_0;
+    chara     = &g_SysWork.playerWork.player;
     animInfos = g_MapOverlayHeader.harryMapAnimInfos_34;
 
     for (i = 76; animInfos->playbackFunc != NULL; i++, animInfos++)
@@ -7868,13 +7868,13 @@ void func_8007E8C0(void) // 0x8007E8C0
     }
 
     chara->properties.player.exhaustionTimer_FC      = Q12(0.0f);
-    g_SysWork.playerWork_4C.player_0.field_C8.field_0   = Q12(-1.6f);
-    g_SysWork.playerWork_4C.player_0.field_C8.field_2   = Q12(0.0f);
-    g_SysWork.playerWork_4C.player_0.field_C8.field_6   = Q12(-1.1f);
-    g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12(0.0f);
-    g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
-    g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
-    g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 = Q12(0.0f);
+    g_SysWork.playerWork.player.field_C8.field_0   = Q12(-1.6f);
+    g_SysWork.playerWork.player.field_C8.field_2   = Q12(0.0f);
+    g_SysWork.playerWork.player.field_C8.field_6   = Q12(-1.1f);
+    g_SysWork.playerWork.player.field_D8.offsetZ_6 = Q12(0.0f);
+    g_SysWork.playerWork.player.field_D8.offsetX_4 = Q12(0.0f);
+    g_SysWork.playerWork.player.field_D8.offsetZ_2 = Q12(0.0f);
+    g_SysWork.playerWork.player.field_D8.offsetX_0 = Q12(0.0f);
     chara->field_D4.radius_0                            = Q12(0.3f);
     chara->field_D4.field_2                             = Q12(0.23f);
     g_GameWork.mapAnimIdx_5B1                           = NO_VALUE;
@@ -7886,14 +7886,14 @@ void func_8007E9C4(void) // 0x8007E9C4
 {
     s_SubCharacter* chara;
 
-    chara = &g_SysWork.playerWork_4C.player_0;
+    chara = &g_SysWork.playerWork.player;
 
     g_Player_IsInWalkToRunTransition                         = false;
-    g_SysWork.playerWork_4C.extra_128.state_1C               = PlayerState_None;
-    g_SysWork.playerWork_4C.extra_128.upperBodyState_20      = PlayerUpperBodyState_None;
-    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24      = PlayerLowerBodyState_None;
-    g_SysWork.playerWork_4C.extra_128.model.stateStep    = 0;
-    g_SysWork.playerWork_4C.extra_128.model.controlState = ModelState_Uninitialized;
+    g_SysWork.playerWork.extra.state               = PlayerState_None;
+    g_SysWork.playerWork.extra.upperBodyState      = PlayerUpperBodyState_None;
+    g_SysWork.playerWork.extra.lowerBodyState      = PlayerLowerBodyState_None;
+    g_SysWork.playerWork.extra.model.stateStep    = 0;
+    g_SysWork.playerWork.extra.model.controlState = ModelState_Uninitialized;
 
     chara->model.stateStep            = 0;
     chara->model.controlState         = ModelState_Uninitialized;
@@ -7901,7 +7901,7 @@ void func_8007E9C4(void) // 0x8007E9C4
     g_Player_FlexRotationY                = Q12_ANGLE(0.0f);
     g_Player_FlexRotationX                = Q12_ANGLE(0.0f);
     D_800C4560                            = NO_VALUE;
-    g_SysWork.playerCombat_38.isAiming_13 = false;
+    g_SysWork.playerCombat_38.isAiming = false;
 
     func_8004C564(0, NO_VALUE);
 
@@ -7977,7 +7977,7 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
 
     g_SysWork.targetNpcIdx_2353 = NO_VALUE;
 
-    switch (g_SysWork.playerCombat_38.weaponAttack_F)
+    switch (g_SysWork.playerCombat_38.weaponAttack)
     {
         case NO_VALUE:
             g_Player_EquippedWeaponInfo = D_800AFBF4[0];
@@ -7987,7 +7987,7 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
             relAnimInfoIdx                                    = 30;
             relKeyframeIdx                                    = 15;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[1];
-            g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0x1030;
+            g_SysWork.playerWork.player.field_C8.field_8 = -0x1030;
             break;
 
         default:
@@ -7997,13 +7997,13 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
             relAnimInfoIdx                                    = 0;
             relKeyframeIdx                                    = 0;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[3];
-            g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0xFD0;
+            g_SysWork.playerWork.player.field_C8.field_8 = -0xFD0;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
         case WEAPON_ATTACK(EquippedWeaponId_Hammer, AttackInputType_Tap):
             g_Player_EquippedWeaponInfo = D_800AFBF4[2];
-            switch (g_SysWork.playerCombat_38.weaponAttack_F)
+            switch (g_SysWork.playerCombat_38.weaponAttack)
             {
                 case WEAPON_ATTACK(EquippedWeaponId_Hammer, AttackInputType_Tap):
                     relAnimInfoIdx = 10;
@@ -8016,56 +8016,56 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
                     break;
             }
 
-            g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0xEC0;
+            g_SysWork.playerWork.player.field_C8.field_8 = -0xEC0;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
             relAnimInfoIdx                                    = 50;
             relKeyframeIdx                                    = 25;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[4];
-            g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0xE90;
+            g_SysWork.playerWork.player.field_C8.field_8 = -0xE90;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
             relAnimInfoIdx                                    = 64;
             relKeyframeIdx                                    = 32;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[5];
-            g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0x12E0;
+            g_SysWork.playerWork.player.field_C8.field_8 = -0x12E0;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Tap):
             relAnimInfoIdx                                    = 40;
             relKeyframeIdx                                    = 20;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[10];
-            g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0xF20;
+            g_SysWork.playerWork.player.field_C8.field_8 = -0xF20;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
             relAnimInfoIdx                                    = 78;
             relKeyframeIdx                                    = 39;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[6];
-            g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0x1600;
+            g_SysWork.playerWork.player.field_C8.field_8 = -0x1600;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
             relAnimInfoIdx                                    = 96;
             relKeyframeIdx                                    = 48;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[7];
-            g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0x1180;
+            g_SysWork.playerWork.player.field_C8.field_8 = -0x1180;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
             relAnimInfoIdx                                    = 114;
             relKeyframeIdx                                    = 57;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[8];
-            g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0x1600;
+            g_SysWork.playerWork.player.field_C8.field_8 = -0x1600;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
             relAnimInfoIdx                                    = 132;
             relKeyframeIdx                                    = 66;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[9];
-            g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0x1610;
+            g_SysWork.playerWork.player.field_C8.field_8 = -0x1610;
             break;
     }
 
@@ -8079,12 +8079,12 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
         D_800C44F0[i] = D_800294F4[i + relKeyframeIdx];
     }
 
-    if (g_SysWork.playerCombat_38.weaponAttack_F != NO_VALUE && g_Player_LastWeaponSelected != g_SysWork.playerCombat_38.weaponAttack_F)
+    if (g_SysWork.playerCombat_38.weaponAttack != NO_VALUE && g_Player_LastWeaponSelected != g_SysWork.playerCombat_38.weaponAttack)
     {
-        g_Player_LastWeaponSelected = g_SysWork.playerCombat_38.weaponAttack_F;
-        func_8007F14C(g_SysWork.playerCombat_38.weaponAttack_F);
+        g_Player_LastWeaponSelected = g_SysWork.playerCombat_38.weaponAttack;
+        func_8007F14C(g_SysWork.playerCombat_38.weaponAttack);
 
-        switch (g_SysWork.playerCombat_38.weaponAttack_F)
+        switch (g_SysWork.playerCombat_38.weaponAttack)
         {
             case EquippedWeaponId_KitchenKnife:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP3_ANM, FS_BUFFER_12);
@@ -8196,9 +8196,9 @@ void Player_DisableDamage(u8* playerIsDead, u8 disableDamage) // 0x8007F250
 
 bool Player_IsAttacking(void) // 0x8007F26C
 {
-    if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_Attack ||
-        g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_KickEnemy ||
-        g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_StompEnemy)
+    if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_Attack ||
+        g_SysWork.playerWork.extra.state == PlayerState_KickEnemy ||
+        g_SysWork.playerWork.extra.state == PlayerState_StompEnemy)
     {
         return true;
     }
@@ -8208,12 +8208,12 @@ bool Player_IsAttacking(void) // 0x8007F26C
 
 bool Player_IsBusy(void) // 0x8007F2AC
 {
-    if (g_SysWork.playerWork_4C.player_0.health <= Q12(0.0f) ||
-        g_SysWork.playerCombat_38.isAiming_13 ||
-        g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_KickEnemy ||
-        g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_StompEnemy ||
-        (g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_Unk7 &&
-         g_SysWork.playerWork_4C.extra_128.state_1C <= PlayerState_GetUpBack))
+    if (g_SysWork.playerWork.player.health <= Q12(0.0f) ||
+        g_SysWork.playerCombat_38.isAiming ||
+        g_SysWork.playerWork.extra.state == PlayerState_KickEnemy ||
+        g_SysWork.playerWork.extra.state == PlayerState_StompEnemy ||
+        (g_SysWork.playerWork.extra.state >= PlayerState_Unk7 &&
+         g_SysWork.playerWork.extra.state <= PlayerState_GetUpBack))
     {
         return true;
     }
@@ -8223,7 +8223,7 @@ bool Player_IsBusy(void) // 0x8007F2AC
 
 s16 Player_AnimGetSomething(void) // 0x8007F308
 {
-    return HARRY_BASE_ANIM_INFOS[g_SysWork.playerWork_4C.player_0.model.anim.status].startKeyframeIdx;
+    return HARRY_BASE_ANIM_INFOS[g_SysWork.playerWork.player.model.anim.status].startKeyframeIdx;
 }
 
 void Player_Controller(void) // 0x8007F32C
@@ -8283,8 +8283,8 @@ void Player_Controller(void) // 0x8007F32C
         g_Player_IsAiming = g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.aim_8;
     }
 
-    if (g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
-        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim)
+    if (g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+        g_SysWork.playerWork.extra.lowerBodyState >= PlayerLowerBodyState_Aim)
     {
         g_Player_IsShooting  = g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.action_6;
         g_Player_IsAttacking = g_Player_IsShooting;
@@ -8317,7 +8317,7 @@ void Player_Controller(void) // 0x8007F32C
         g_Player_IsHoldAttack = false;
     }
 
-    if (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
+    if (g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
     {
         switch (Inventory_HyperBlasterFunctionalTest())
         {
@@ -8337,11 +8337,11 @@ void Player_Controller(void) // 0x8007F32C
     }
 
     // This is the conditional that makes impossible to move when aiming with specific weapons.
-    if (g_SysWork.playerCombat_38.isAiming_13 && (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap) ||
-                                                      (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
-                                                       (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) == EquippedWeaponId_Hammer ||
-                                                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) == EquippedWeaponId_RockDrill ||
-                                                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) == EquippedWeaponId_Katana))))
+    if (g_SysWork.playerCombat_38.isAiming && (g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap) ||
+                                                      (g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                                                       (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) == EquippedWeaponId_Hammer ||
+                                                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) == EquippedWeaponId_RockDrill ||
+                                                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) == EquippedWeaponId_Katana))))
     {
         if (g_Player_IsMovingForward)
         {
@@ -8382,12 +8382,12 @@ bool func_8007F95C(void) // 0x8007F95C
         return false;
     }
 
-    pos0.vx = g_SysWork.playerWork_4C.player_0.position.vx;
-    pos0.vy = g_SysWork.playerWork_4C.player_0.position.vy;
-    pos0.vz = g_SysWork.playerWork_4C.player_0.position.vz;
+    pos0.vx = g_SysWork.playerWork.player.position.vx;
+    pos0.vy = g_SysWork.playerWork.player.position.vy;
+    pos0.vz = g_SysWork.playerWork.player.position.vz;
 
-    if (!g_SysWork.playerCombat_38.isAiming_13 ||
-        g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+    if (!g_SysWork.playerCombat_38.isAiming ||
+        g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
     {
         for (i = 0, curNpc0 = g_SysWork.npcs_1A0, curNpc1 = g_SysWork.npcs_1A0;
              i < ARRAY_SIZE(g_SysWork.npcs_1A0);
@@ -8419,7 +8419,7 @@ bool func_8007F95C(void) // 0x8007F95C
                 if (!Math_Distance2dCheck(&pos0, &pos1, radius) && ABS(pos1.vy - pos0.vy) < Q12(0.3f) &&
                     curNpc0->health > Q12(0.0f) && (curNpc0->flags & CharaFlag_Unk2))
                 {
-                    Math_ShortestAngleGet(g_SysWork.playerWork_4C.player_0.rotation.vy,
+                    Math_ShortestAngleGet(g_SysWork.playerWork.player.rotation.vy,
                                           Q12_ANGLE_NORM_U(ratan2(pos1.vx - pos0.vx, pos1.vz - pos0.vz) + Q12_ANGLE(360.0f)),
                                           &sp30);
 
@@ -8541,12 +8541,12 @@ void func_8007FC48(s_SubCharacter* chara, s_PlayerExtra* extra, s32 animStatus) 
 
 s32 func_8007FD2C(void) // 0x8007FD2C
 {
-    return g_SysWork.playerWork_4C.player_0.properties.player.field_104;
+    return g_SysWork.playerWork.player.properties.player.field_104;
 }
 
 q19_12 Game_GasWeaponPowerTimerValue(void) // 0x8007FD3C
 {
-    return g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114;
+    return g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114;
 }
 
 void func_8007FD4C(bool cond) // 0x8007FD4C
@@ -8554,12 +8554,12 @@ void func_8007FD4C(bool cond) // 0x8007FD4C
     s32             i;
     s_SubCharacter* chara;
 
-    chara = &g_SysWork.playerWork_4C.player_0;
+    chara = &g_SysWork.playerWork.player;
 
     g_Player_GrabReleaseInputTimer = Q12(0.0f);
     chara->field_40                = NO_VALUE;
 
-    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_DamageReceived;
+    g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_DamageReceived;
 
     for (i = 0; i < ARRAY_SIZE(g_SysWork.npcIdxs_2354); i++)
     {
@@ -8568,15 +8568,15 @@ void func_8007FD4C(bool cond) // 0x8007FD4C
 
     if (cond)
     {
-        g_SysWork.playerWork_4C.player_0.field_D4.radius_0   = Q12(0.3f);
-        g_SysWork.playerWork_4C.player_0.field_D4.field_2   = Q12(0.23f);
-        g_SysWork.playerWork_4C.player_0.field_C8.field_0   = Q12(-1.6f);
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12(0.0f);
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 = Q12(0.0f);
-        g_SysWork.playerWork_4C.player_0.field_C8.field_2   = Q12(0.0f);
-        g_SysWork.playerWork_4C.player_0.field_C8.field_6   = Q12(-1.1f);
+        g_SysWork.playerWork.player.field_D4.radius_0   = Q12(0.3f);
+        g_SysWork.playerWork.player.field_D4.field_2   = Q12(0.23f);
+        g_SysWork.playerWork.player.field_C8.field_0   = Q12(-1.6f);
+        g_SysWork.playerWork.player.field_D8.offsetZ_6 = Q12(0.0f);
+        g_SysWork.playerWork.player.field_D8.offsetX_4 = Q12(0.0f);
+        g_SysWork.playerWork.player.field_D8.offsetZ_2 = Q12(0.0f);
+        g_SysWork.playerWork.player.field_D8.offsetX_0 = Q12(0.0f);
+        g_SysWork.playerWork.player.field_C8.field_2   = Q12(0.0f);
+        g_SysWork.playerWork.player.field_C8.field_6   = Q12(-1.1f);
     }
 }
 
@@ -8604,8 +8604,8 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE
 
             if (mapOverlayId == MapOverlayId_MAP2_S00)
             {
-                if (g_SysWork.playerWork_4C.player_0.position.vx >= Q12(95.0f)  && g_SysWork.playerWork_4C.player_0.position.vx <= Q12(105.0f) &&
-                    g_SysWork.playerWork_4C.player_0.position.vz >= Q12(-33.0f) && g_SysWork.playerWork_4C.player_0.position.vz <= Q12(-28.0f))
+                if (g_SysWork.playerWork.player.position.vx >= Q12(95.0f)  && g_SysWork.playerWork.player.position.vx <= Q12(105.0f) &&
+                    g_SysWork.playerWork.player.position.vz >= Q12(-33.0f) && g_SysWork.playerWork.player.position.vz <= Q12(-28.0f))
                 {
                     *sfxId = Sfx_Unk1389;
                 }
@@ -8666,7 +8666,7 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE
             switch (g_SavegamePtr->mapRoomIdx_A5)
             {
                 case 20:
-                    if (g_SysWork.playerWork_4C.player_0.position.vy > Q12(0.0f))
+                    if (g_SysWork.playerWork.player.position.vy > Q12(0.0f))
                     {
                         *sfxId = Sfx_Unk1346;
                     }
@@ -8682,25 +8682,25 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE
             break;
 
         case MapOverlayId_MAP4_S03:
-            if ((g_SysWork.playerWork_4C.player_0.position.vx >= Q12(165.0f)   &&
-                 g_SysWork.playerWork_4C.player_0.position.vz >= Q12(58.5f)    && g_SysWork.playerWork_4C.player_0.position.vz <= Q12(61.5f)) ||
-                (g_SysWork.playerWork_4C.player_0.position.vx <= Q12(112.1f)   &&
-                 g_SysWork.playerWork_4C.player_0.position.vz >= Q12(-101.45f) && g_SysWork.playerWork_4C.player_0.position.vz <= Q12(-98.5f)))
+            if ((g_SysWork.playerWork.player.position.vx >= Q12(165.0f)   &&
+                 g_SysWork.playerWork.player.position.vz >= Q12(58.5f)    && g_SysWork.playerWork.player.position.vz <= Q12(61.5f)) ||
+                (g_SysWork.playerWork.player.position.vx <= Q12(112.1f)   &&
+                 g_SysWork.playerWork.player.position.vz >= Q12(-101.45f) && g_SysWork.playerWork.player.position.vz <= Q12(-98.5f)))
             {
                 *sfxId = Sfx_Unk1565;
             }
 
         case MapOverlayId_MAP6_S00:
-            if ((g_SysWork.playerWork_4C.player_0.position.vx >= Q12(-160.1f)  && g_SysWork.playerWork_4C.player_0.position.vx <= Q12(-158.5f)  &&
-                 g_SysWork.playerWork_4C.player_0.position.vz >= Q12(26.8f)    && g_SysWork.playerWork_4C.player_0.position.vz <= Q12(27.4f))   ||
-                (g_SysWork.playerWork_4C.player_0.position.vx >= Q12(-160.1f)  && g_SysWork.playerWork_4C.player_0.position.vx <= Q12(-158.5f)  &&
-                 g_SysWork.playerWork_4C.player_0.position.vz >= Q12(16.8f)    && g_SysWork.playerWork_4C.player_0.position.vz <= Q12(17.5f))   ||
-                (g_SysWork.playerWork_4C.player_0.position.vx >= Q12(-170.0f)  && g_SysWork.playerWork_4C.player_0.position.vx <= Q12(-165.8f)  &&
-                 g_SysWork.playerWork_4C.player_0.position.vz >= Q12(-16.4f)   && g_SysWork.playerWork_4C.player_0.position.vz <= Q12(-14.35f)) ||
-                (g_SysWork.playerWork_4C.player_0.position.vx >= Q12(-172.7f)  && g_SysWork.playerWork_4C.player_0.position.vx <= Q12(-170.9f)  &&
-                 g_SysWork.playerWork_4C.player_0.position.vz >= Q12(-24.9f)   && g_SysWork.playerWork_4C.player_0.position.vz <= Q12(-21.25f)) ||
-                (g_SysWork.playerWork_4C.player_0.position.vx >= Q12(-170.28f) && g_SysWork.playerWork_4C.player_0.position.vx <= Q12(-165.85f) &&
-                 g_SysWork.playerWork_4C.player_0.position.vz >= Q12(-35.4f)   && g_SysWork.playerWork_4C.player_0.position.vz <= Q12(-34.35f)))
+            if ((g_SysWork.playerWork.player.position.vx >= Q12(-160.1f)  && g_SysWork.playerWork.player.position.vx <= Q12(-158.5f)  &&
+                 g_SysWork.playerWork.player.position.vz >= Q12(26.8f)    && g_SysWork.playerWork.player.position.vz <= Q12(27.4f))   ||
+                (g_SysWork.playerWork.player.position.vx >= Q12(-160.1f)  && g_SysWork.playerWork.player.position.vx <= Q12(-158.5f)  &&
+                 g_SysWork.playerWork.player.position.vz >= Q12(16.8f)    && g_SysWork.playerWork.player.position.vz <= Q12(17.5f))   ||
+                (g_SysWork.playerWork.player.position.vx >= Q12(-170.0f)  && g_SysWork.playerWork.player.position.vx <= Q12(-165.8f)  &&
+                 g_SysWork.playerWork.player.position.vz >= Q12(-16.4f)   && g_SysWork.playerWork.player.position.vz <= Q12(-14.35f)) ||
+                (g_SysWork.playerWork.player.position.vx >= Q12(-172.7f)  && g_SysWork.playerWork.player.position.vx <= Q12(-170.9f)  &&
+                 g_SysWork.playerWork.player.position.vz >= Q12(-24.9f)   && g_SysWork.playerWork.player.position.vz <= Q12(-21.25f)) ||
+                (g_SysWork.playerWork.player.position.vx >= Q12(-170.28f) && g_SysWork.playerWork.player.position.vx <= Q12(-165.85f) &&
+                 g_SysWork.playerWork.player.position.vz >= Q12(-35.4f)   && g_SysWork.playerWork.player.position.vz <= Q12(-34.35f)))
             {
                 *sfxId = Sfx_Unk1600;
             }

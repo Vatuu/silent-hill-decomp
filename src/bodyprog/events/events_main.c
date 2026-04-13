@@ -31,20 +31,20 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         }
     }
 
-    // `lastUsedItem_28` is set by `Inventory_ItemUse` when player uses an item that matches one of the item trigger events.
+    // `lastUsedItem` is set by `Inventory_ItemUse` when player uses an item that matches one of the item trigger events.
     // If it's set, find its index in `g_ItemTriggerItemIds` and use that to get the corresponding `s_EventData` from `g_ItemTriggerEvents`.
     // After processing, the field is cleared and item trigger IDs are reset.
     // (Multi-item events likely repopulate the trigger IDs below based on whichever events are still active?)
-    if (g_SysWork.playerWork_4C.extra_128.lastUsedItem_28 != InventoryItemId_Unequipped)
+    if (g_SysWork.playerWork.extra.lastUsedItem != InventoryItemId_Unequipped)
     {
-        for (i = 0; g_SysWork.playerWork_4C.extra_128.lastUsedItem_28 != g_ItemTriggerItemIds[i]; i++);
+        for (i = 0; g_SysWork.playerWork.extra.lastUsedItem != g_ItemTriggerItemIds[i]; i++);
 
         g_MapEventData         = g_ItemTriggerEvents[i];
-        g_MapEventLastUsedItem = g_SysWork.playerWork_4C.extra_128.lastUsedItem_28;
+        g_MapEventLastUsedItem = g_SysWork.playerWork.extra.lastUsedItem;
         g_MapEventSysState     = g_MapEventData->sysState_8_0;
         g_MapEventParam        = g_MapEventData->eventParam_8_5;
 
-        g_SysWork.playerWork_4C.extra_128.lastUsedItem_28 = InventoryItemId_Unequipped;
+        g_SysWork.playerWork.extra.lastUsedItem = InventoryItemId_Unequipped;
         Event_ItemTriggersClear();
         return;
     }
@@ -117,12 +117,12 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
                 pointRadiusX = mapPoint->triggerParam0_4_16 * Q12(0.25f);
                 pointRadiusZ = mapPoint->triggerParam1_4_24 * Q12(0.25f);
 
-                if (ABS(g_SysWork.playerWork_4C.player_0.position.vx - pointPosX) > pointRadiusX)
+                if (ABS(g_SysWork.playerWork.player.position.vx - pointPosX) > pointRadiusX)
                 {
                     continue;
                 }
 
-                if (ABS(g_SysWork.playerWork_4C.player_0.position.vz - pointPosZ) > pointRadiusZ)
+                if (ABS(g_SysWork.playerWork.player.position.vz - pointPosZ) > pointRadiusZ)
                 {
                     continue;
                 }
@@ -162,8 +162,8 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         // `TriggerActivationType_Item`: When trigger check has passed (player is in the trigger area).
         // Required item ID for event is stored into `g_ItemTriggerItemIds` and event pointer at `g_ItemTriggerEvents`
         // Once player uses an item in the inventory screen, it compares the ID against the ones stored at `g_ItemTriggerItemIds`.
-        // If used item ID matches one that event has requested, `extra_128.lastUsedItem_28` gets set to the item ID.
-        // At the start of this function, if `extra_128.lastUsedItem_28` is set, it will locate the `s_EventData` for it from `g_ItemTriggerEvents` and run the event.
+        // If used item ID matches one that event has requested, `extra.lastUsedItem` gets set to the item ID.
+        // At the start of this function, if `extra.lastUsedItem` is set, it will locate the `s_EventData` for it from `g_ItemTriggerEvents` and run the event.
         if (mapEvent->activationType_4_4 == TriggerActivationType_Item)
         {
             for (i = 0; g_ItemTriggerItemIds[i] != NO_VALUE; i++);
@@ -221,9 +221,9 @@ bool Event_CollideFacingCheck(s_MapPoint2d* mapPoint) // 0x800378D4
 
     if (g_TickCount > D_800A9A20)
     {
-        rotY       = g_SysWork.playerWork_4C.player_0.rotation.vy;
-        D_800A9A24 = g_SysWork.playerWork_4C.player_0.position.vx - (Math_Sin(rotY) >> 3); // `/ 8`.
-        D_800A9A28 = g_SysWork.playerWork_4C.player_0.position.vz - (Math_Cos(rotY) >> 3); // `/ 8`.
+        rotY       = g_SysWork.playerWork.player.rotation.vy;
+        D_800A9A24 = g_SysWork.playerWork.player.position.vx - (Math_Sin(rotY) >> 3); // `/ 8`.
+        D_800A9A28 = g_SysWork.playerWork.player.position.vz - (Math_Cos(rotY) >> 3); // `/ 8`.
         D_800A9A20 = g_TickCount;
     }
 
@@ -244,7 +244,7 @@ bool Event_CollideFacingCheck(s_MapPoint2d* mapPoint) // 0x800378D4
         return false;
     }
 
-    deltaRotY = g_SysWork.playerWork_4C.player_0.rotation.vy - ratan2(deltaX, deltaZ);
+    deltaRotY = g_SysWork.playerWork.player.rotation.vy - ratan2(deltaX, deltaZ);
     if (deltaRotY >= Q12_ANGLE(180.0f))
     {
         deltaRotY -= Q12_ANGLE(360.0f);
@@ -276,13 +276,13 @@ bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint) // 0x80037A4C
     s32    scaledSinPlayerRotY;
     s32    scaledCosRotY;
 
-    halfSinRotY   = Math_Sin(g_SysWork.playerWork_4C.player_0.rotation.vy) >> 1; // `/ 2`.
+    halfSinRotY   = Math_Sin(g_SysWork.playerWork.player.rotation.vy) >> 1; // `/ 2`.
     scaledCosRotY = -Math_Cos(Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0_4_16)) * mapPoint->triggerParam1_4_24;
 
     clampedHalfCosPlayerRotY = halfSinRotY;
 
     temp_a0_2 = scaledCosRotY >> 4; // `/ 16`.
-    deltaX    = mapPoint->positionX_0 - g_SysWork.playerWork_4C.player_0.position.vx;
+    deltaX    = mapPoint->positionX_0 - g_SysWork.playerWork.player.position.vx;
     temp_s2   = deltaX - temp_a0_2;
     temp_s4   = deltaX + temp_a0_2;
 
@@ -301,14 +301,14 @@ bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint) // 0x80037A4C
     {
         if (MIN(halfSinRotY, 0) <= MAX(temp_s2, temp_s4))
         {
-            halfCosPlayerRotY   = Math_Cos(g_SysWork.playerWork_4C.player_0.rotation.vy) >> 1; // `/ 2`.
+            halfCosPlayerRotY   = Math_Cos(g_SysWork.playerWork.player.rotation.vy) >> 1; // `/ 2`.
             scaledSinPlayerRotY = Math_Sin(Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0_4_16)) *
                                   mapPoint->triggerParam1_4_24;
 
             clampedHalfCosPlayerRotY = halfCosPlayerRotY;
 
             temp_a0_2 = scaledSinPlayerRotY >> 4; // `/ 16`.
-            deltaZ    = mapPoint->positionZ_8 - g_SysWork.playerWork_4C.player_0.position.vz;
+            deltaZ    = mapPoint->positionZ_8 - g_SysWork.playerWork.player.position.vz;
             temp_v1   = deltaZ - temp_a0_2;
             temp_a2   = deltaZ + temp_a0_2;
 
@@ -353,13 +353,13 @@ bool Event_CollideObbCheck(s_MapPoint2d* mapPoint) // 0x80037C5C
 
     shift8Field_7 = mapPoint->triggerParam1_4_24 << 8;
 
-    deltaX = g_SysWork.playerWork_4C.player_0.position.vx - mapPoint->positionX_0;
+    deltaX = g_SysWork.playerWork.player.position.vx - mapPoint->positionX_0;
     if (mapPoint->triggerParam1_4_24 << 9 < ABS(deltaX))
     {
         return false;
     }
 
-    deltaZ = g_SysWork.playerWork_4C.player_0.position.vz - mapPoint->positionZ_8;
+    deltaZ = g_SysWork.playerWork.player.position.vz - mapPoint->positionZ_8;
     scale  = 2;
     if ((shift8Field_7 * scale) < ABS(deltaZ))
     {

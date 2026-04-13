@@ -25,6 +25,6 @@ void func_80040004(s_MapOverlayHeader* overlayHeader) // 0x80040004
 
 void func_80040014(void) // 0x80040014
 {
-    Collision_TriggerZonesUpdate(g_SysWork.playerWork_4C.player_0.position.vx, g_SysWork.playerWork_4C.player_0.position.vz, g_WorldGfxWork.triggerZone_1BD8);
+    Collision_TriggerZonesUpdate(g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz, g_WorldGfxWork.triggerZone_1BD8);
 };
 

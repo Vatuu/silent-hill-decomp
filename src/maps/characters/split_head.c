@@ -203,7 +203,7 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
     if (splitHeadProps.flags_E8 & SplitHeadFlag_0)
     {
         if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Hard &&
-            g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap))
+            g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap))
         {
             damageAmt <<= 5;
         }
@@ -283,9 +283,9 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
     q3_12  angleDeltaToPlayer;
     q19_12 distToPlayer;
 
-    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - splitHead->position.vx,
-                                             g_SysWork.playerWork_4C.player_0.position.vz - splitHead->position.vz);
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork_4C.player_0.position) -
+    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - splitHead->position.vx,
+                                             g_SysWork.playerWork.player.position.vz - splitHead->position.vz);
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork.player.position) -
                                        splitHead->rotation.vy);
 
     if (splitHead->model.anim.status == ANIM_STATUS(SplitHeadAnim_11, true))
@@ -326,7 +326,7 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
         }
         else
         {
-            splitHead->rotation.vy = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork_4C.player_0.position);
+            splitHead->rotation.vy = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork.player.position);
         }
     }
     else if (ANIM_STATUS_IDX_GET(splitHead->model.anim.status) == SplitHeadAnim_4)
@@ -379,15 +379,15 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
         }
         else
         {
-            splitHead->rotation.vy = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork_4C.player_0.position);
+            splitHead->rotation.vy = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork.player.position);
         }
 
         if (FP_FROM(splitHead->model.anim.time, Q12_SHIFT) == 35)
         {
-            unkPos.vx = Rng_AddGeneratedUInt(g_SysWork.playerWork_4C.player_0.position.vx, Q12(-0.25f), Q12(0.0f) - 1);
-            unkPos.vy = (g_SysWork.playerWork_4C.player_0.position.vy - Rng_GenerateUInt(0, Q12(0.5f) - 1)) - Q12(1.0f); // TODO: Doesn't match with `Rng_AddGeneratedUInt`?
-            unkPos.vz = Rng_AddGeneratedUInt(g_SysWork.playerWork_4C.player_0.position.vz, Q12(-0.25f), Q12(0.0f) - 1);
-            func_8005F6B0(&g_SysWork.playerWork_4C.player_0, &unkPos, 2, 7);
+            unkPos.vx = Rng_AddGeneratedUInt(g_SysWork.playerWork.player.position.vx, Q12(-0.25f), Q12(0.0f) - 1);
+            unkPos.vy = (g_SysWork.playerWork.player.position.vy - Rng_GenerateUInt(0, Q12(0.5f) - 1)) - Q12(1.0f); // TODO: Doesn't match with `Rng_AddGeneratedUInt`?
+            unkPos.vz = Rng_AddGeneratedUInt(g_SysWork.playerWork.player.position.vz, Q12(-0.25f), Q12(0.0f) - 1);
+            func_8005F6B0(&g_SysWork.playerWork.player, &unkPos, 2, 7);
         }
     }
     else
@@ -414,7 +414,7 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
         }
         else
         {
-            splitHead->rotation.vy = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork_4C.player_0.position);
+            splitHead->rotation.vy = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork.player.position);
         }
     }
 }
@@ -434,13 +434,13 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
     s32       i;
     s32       angleMult;
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - splitHead->position.vx,
-                                       g_SysWork.playerWork_4C.player_0.position.vz - splitHead->position.vz);
+    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - splitHead->position.vx,
+                                       g_SysWork.playerWork.player.position.vz - splitHead->position.vz);
 
     if (splitHeadProps.timer_F2 > Q12(0.6f))
     {
         angle = Q12_ANGLE(0.0f);
-        angleToPlayer = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork_4C.player_0.position);
+        angleToPlayer = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork.player.position);
 
         if (splitHeadProps.flags_E8 & SplitHeadFlag_2)
         {
@@ -535,7 +535,7 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
     }
 
     angleToPlayer      = ABS(Math_AngleNormalizeSigned(splitHeadProps.angle_F0 - splitHead->rotation.vy));
-    angleDeltaToPlayer = ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork_4C.player_0.position) -
+    angleDeltaToPlayer = ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork.player.position) -
                                            splitHead->rotation.vy));
 
     if (ABS(angleToPlayer - angleDeltaToPlayer) < Q12_ANGLE(15.0f))
@@ -566,7 +566,7 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
         }
     }
 
-    angleToPlayer2 = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork_4C.player_0.position);
+    angleToPlayer2 = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork.player.position);
     sp30.vx = Q12_MULT(distToPlayer, Math_Sin(angleToPlayer2));
     sp30.vy = Q12(0.0f);
     sp30.vz = Q12_MULT(distToPlayer, Math_Cos(angleToPlayer2));
@@ -596,9 +596,9 @@ void Ai_SplitHead_Control_3(s_SubCharacter* splitHead)
     q3_12  angleDeltaToPlayer;
     q19_12 distToPlayer;
 
-    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - splitHead->position.vx,
-                                             g_SysWork.playerWork_4C.player_0.position.vz - splitHead->position.vz);
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork_4C.player_0.position) -
+    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - splitHead->position.vx,
+                                             g_SysWork.playerWork.player.position.vz - splitHead->position.vz);
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork.player.position) -
                                        splitHead->rotation.vy);
 
     if (splitHead->model.anim.status == ANIM_STATUS(SplitHeadAnim_11, true))
@@ -641,7 +641,7 @@ void Ai_SplitHead_Control_3(s_SubCharacter* splitHead)
         }
         else
         {
-            splitHead->rotation.vy = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork_4C.player_0.position);
+            splitHead->rotation.vy = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork.player.position);
         }
     }
     else if (ANIM_STATUS_IDX_GET(splitHead->model.anim.status) == SplitHeadAnim_10)
@@ -682,7 +682,7 @@ void Ai_SplitHead_Control_3(s_SubCharacter* splitHead)
         }
         else
         {
-            splitHead->rotation.vy = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork_4C.player_0.position);
+            splitHead->rotation.vy = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork.player.position);
         }
     }
 }
@@ -763,13 +763,13 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
     s32       angleMult;
     q19_12    activeDistMax;
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - splitHead->position.vx,
-                                       g_SysWork.playerWork_4C.player_0.position.vz - splitHead->position.vz);
+    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - splitHead->position.vx,
+                                       g_SysWork.playerWork.player.position.vz - splitHead->position.vz);
 
     if (splitHeadProps.timer_F2 > Q12(0.4f))
     {
         angle = Q12_ANGLE(0.0f);
-        angleToPlayer = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork_4C.player_0.position);
+        angleToPlayer = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork.player.position);
 
         if (splitHeadProps.flags_E8 & SplitHeadFlag_2)
         {
@@ -865,7 +865,7 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
     }
 
     angleToPlayer   = ABS(Math_AngleNormalizeSigned(splitHeadProps.angle_F0 - splitHead->rotation.vy));
-    angle2 = ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork_4C.player_0.position) - splitHead->rotation.vy));
+    angle2 = ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork.player.position) - splitHead->rotation.vy));
 
     if (ABS(angleToPlayer - angle2) < Q12_ANGLE(15.0f))
     {
@@ -895,7 +895,7 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
         }
     }
 
-    angle1 = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork_4C.player_0.position);
+    angle1 = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork.player.position);
 
     sp30.vx = Q12_MULT(distToPlayer, Math_Sin(angle1));
     sp30.vy = Q12(0.0f);
@@ -977,7 +977,7 @@ void Ai_SplitHead_Control_7(s_SubCharacter* splitHead)
     {
         Chara_MoveSpeedUpdate3(splitHead, Q12(0.8f), Q12(-1.2f));
 
-        angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork_4C.player_0.position) -
+        angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork.player.position) -
                                            splitHead->rotation.vy);
         if (TIMESTEP_ANGLE(3, 3) < ABS(angleDeltaToPlayer)) // @hack `(g_DeltaTime / 3) >> 3` should be same as `g_DeltaTime / 24`, but that doesn't match?
         {
@@ -992,7 +992,7 @@ void Ai_SplitHead_Control_7(s_SubCharacter* splitHead)
         }
         else
         {
-            splitHead->rotation.vy = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork_4C.player_0.position);
+            splitHead->rotation.vy = Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork.player.position);
         }
     }
     else
@@ -1268,11 +1268,11 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
     sharedFunc_800D4408_1_s05(&sp20[1], 0x13, -0x24, 5, 0x71);
     sharedFunc_800D4408_1_s05(&sp20[2], 0x17, 0x24, 5, 0x71);
 
-    deltaX = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vx - splitHead->position.vx);
-    deltaZ = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vz - splitHead->position.vz);
+    deltaX = Q12_TO_Q6(g_SysWork.playerWork.player.position.vx - splitHead->position.vx);
+    deltaZ = Q12_TO_Q6(g_SysWork.playerWork.player.position.vz - splitHead->position.vz);
     dist   = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
 
-    sp98[0] = ratan2(g_SysWork.playerWork_4C.player_0.position.vx - sp20[0].vx, g_SysWork.playerWork_4C.player_0.position.vz - sp20[0].vz);
+    sp98[0] = ratan2(g_SysWork.playerWork.player.position.vx - sp20[0].vx, g_SysWork.playerWork.player.position.vz - sp20[0].vz);
     sp98[1] = Math_AngleNormalizeSigned((ratan2(sp20[1].vx - sp20[0].vx, sp20[1].vz - sp20[0].vz) - sp98[0]));
     sp98[2] = Math_AngleNormalizeSigned((ratan2(sp20[2].vx - sp20[0].vx, sp20[2].vz - sp20[0].vz) - sp98[0]));
 
@@ -1317,14 +1317,14 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
 
     unkIdx = 1;
 
-    sp80[0] = func_8005C478(&sp90[0], g_SysWork.playerWork_4C.player_0.position.vx,
-                            g_SysWork.playerWork_4C.player_0.position.vz, sp20[0].vx, sp20[0].vz,
+    sp80[0] = func_8005C478(&sp90[0], g_SysWork.playerWork.player.position.vx,
+                            g_SysWork.playerWork.player.position.vz, sp20[0].vx, sp20[0].vz,
                             (sp20[1].vx + sp20[2].vx) >> 1, (sp20[1].vz + sp20[2].vz) >> 1);
 
     for (i = 1; i < 4; i++)
     {
-        sp80[i] = func_8005C478(&sp90[i], g_SysWork.playerWork_4C.player_0.position.vx,
-                                g_SysWork.playerWork_4C.player_0.position.vz, sp20[0].vx, sp20[0].vz, sp20[i].vx, sp20[i].vz);
+        sp80[i] = func_8005C478(&sp90[i], g_SysWork.playerWork.player.position.vx,
+                                g_SysWork.playerWork.player.position.vz, sp20[0].vx, sp20[0].vz, sp20[i].vx, sp20[i].vz);
 
         if (sp80[i] < sp80[unkIdx])
         {
@@ -1405,8 +1405,8 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
         return;
     }
 
-    newPosX = g_SysWork.playerWork_4C.player_0.position.vx + *offsetX;
-    newPosZ = g_SysWork.playerWork_4C.player_0.position.vz + *offsetZ;
+    newPosX = g_SysWork.playerWork.player.position.vx + *offsetX;
+    newPosZ = g_SysWork.playerWork.player.position.vz + *offsetZ;
 
     for (i = sharedData_800D5AAE_1_s05; i < 9; i++)
     {
@@ -1416,7 +1416,7 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
         sp28[i]              = sp38[k].field_D;
         sp38[k].field_E = i;
 
-        if (g_SysWork.playerWork_4C.player_0.field_D4.radius_0 >= sp38[k].field_0)
+        if (g_SysWork.playerWork.player.field_D4.radius_0 >= sp38[k].field_0)
         {
             k++;
         }
@@ -1447,7 +1447,7 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
                         ptr1->field_D = ptr0->field_D;
                         ptr1->field_E = ptr0->field_E;
 
-                        sp38[k].field_0 = g_SysWork.playerWork_4C.player_0.field_D4.radius_0 - sp38[k].field_0;
+                        sp38[k].field_0 = g_SysWork.playerWork.player.field_D4.radius_0 - sp38[k].field_0;
                         spC8[k]         = ratan2(newPosX - sp38[i].field_4, newPosZ - sp38[i].field_8);
 
                         k++;
@@ -1527,7 +1527,7 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
                         ptr1->field_D = ptr0->field_D;
                         ptr1->field_E = ptr0->field_E;
 
-                        sp38[k].field_0 = g_SysWork.playerWork_4C.player_0.field_D4.radius_0 + sp38[k].field_0;
+                        sp38[k].field_0 = g_SysWork.playerWork.player.field_D4.radius_0 + sp38[k].field_0;
                         spC8[k]         = ratan2(sp38[i].field_4 - newPosX, sp38[i].field_8 - newPosZ);
 
                         k++;
@@ -1543,7 +1543,7 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
         {
             for (i = 0; i < temp_s7; i++)
             {
-                sp38[i].field_0 = g_SysWork.playerWork_4C.player_0.field_D4.radius_0 + sp38[i].field_0;
+                sp38[i].field_0 = g_SysWork.playerWork.player.field_D4.radius_0 + sp38[i].field_0;
                 spC8[i]         = ratan2(sp38[i].field_4 - newPosX, sp38[i].field_8 - newPosZ);
             }
 
@@ -1657,15 +1657,15 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
 
     if (splitHeadProps.flags_E8 & SplitHeadFlag_0)
     {
-        deltaX = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vx - splitHead->position.vx);
-        deltaZ = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vz - splitHead->position.vz);
+        deltaX = Q12_TO_Q6(g_SysWork.playerWork.player.position.vx - splitHead->position.vx);
+        deltaZ = Q12_TO_Q6(g_SysWork.playerWork.player.position.vz - splitHead->position.vz);
 
         if (Q6_TO_Q12((SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)))) < Q12(3.3f))
         {
-            sharedFunc_800D4594_1_s05(&sp18, g_SysWork.playerWork_4C.player_0.position.vx,
-                                      g_SysWork.playerWork_4C.player_0.position.vz, &sharedData_800D8618_1_s05[0], &sharedData_800D8618_1_s05[1]);
-            sharedFunc_800D4594_1_s05(&sp28, g_SysWork.playerWork_4C.player_0.position.vx,
-                                      g_SysWork.playerWork_4C.player_0.position.vz, &sharedData_800D8618_1_s05[0], &sharedData_800D8618_1_s05[8]);
+            sharedFunc_800D4594_1_s05(&sp18, g_SysWork.playerWork.player.position.vx,
+                                      g_SysWork.playerWork.player.position.vz, &sharedData_800D8618_1_s05[0], &sharedData_800D8618_1_s05[1]);
+            sharedFunc_800D4594_1_s05(&sp28, g_SysWork.playerWork.player.position.vx,
+                                      g_SysWork.playerWork.player.position.vz, &sharedData_800D8618_1_s05[0], &sharedData_800D8618_1_s05[8]);
 
             if (splitHead->model.anim.time < Q12(31.0f))
             {
@@ -1673,7 +1673,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
             }
             else if (splitHead->model.anim.time < Q12(33.0f))
             {
-                var_v1_3 = FP_MULTIPLY_PRECISE(g_SysWork.playerWork_4C.player_0.field_D4.radius_0,
+                var_v1_3 = FP_MULTIPLY_PRECISE(g_SysWork.playerWork.player.field_D4.radius_0,
                                                splitHead->model.anim.time + Q12(-31.0f), Q12_SHIFT) >> 1;
             }
             else
@@ -1681,7 +1681,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
                 var_v1_3 = Q12(0.0f);
                 if (splitHead->model.anim.time < Q12(37.0f))
                 {
-                    var_v1_3 = g_SysWork.playerWork_4C.player_0.field_D4.radius_0;
+                    var_v1_3 = g_SysWork.playerWork.player.field_D4.radius_0;
                 }
             }
 
@@ -1689,11 +1689,11 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
                 sp28.field_0 < var_v1_3 &&
                 !(splitHeadProps.flags_E8 & SplitHeadFlag_9))
             {
-                Chara_AttackReceivedSet(&g_SysWork.playerWork_4C.player_0, WEAPON_ATTACK(EquippedWeaponId_Unk37, AttackInputType_Hold));
+                Chara_AttackReceivedSet(&g_SysWork.playerWork.player, WEAPON_ATTACK(EquippedWeaponId_Unk37, AttackInputType_Hold));
 
                 splitHeadProps.flags_E8 |= SplitHeadFlag_1 | SplitHeadFlag_9;
 
-                func_8005DC1C(Sfx_Unk1473, &g_SysWork.playerWork_4C.player_0.position, Q8(0.999f), 2);
+                func_8005DC1C(Sfx_Unk1473, &g_SysWork.playerWork.player.position, Q8(0.999f), 2);
             }
         }
     }

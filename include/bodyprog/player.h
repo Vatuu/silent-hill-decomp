@@ -546,11 +546,11 @@ void Player_AnimUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, s_AnmHeader*
 /** @brief Main update function for player logic. */
 void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
 
-/** @brief Updates `g_SysWork.playerWork_4C.extra_128.upperBodyState_20` and prepares
+/** @brief Updates `g_SysWork.playerWork.extra.upperBodyState` and prepares
  * transitions between running to and from walking animations.
  *
  * @param extra Pointer to `s_PlayerExtra` struct.
- * @param upperState Check if `g_SysWork.playerWork_4C.extra_128.upperBodyState_20` is not the same being input in order to clear animation status.
+ * @param upperState Check if `g_SysWork.playerWork.extra.upperBodyState` is not the same being input in order to clear animation status.
  * @param unused @unused Possibly animation index.
  * @param arg3 Player turn state. Only affects turn animations.
  * * 0 and 2: Idle state.
@@ -610,15 +610,15 @@ void Player_Controller(void);
 /** @brief Determines if the player can stomp or kick a knocked enemy. */
 bool func_8007F95C(void);
 
-#define Player_ExtraStateSet(playerChara, extra, state)                              \
-{                                                                                    \
-    g_SysWork.playerWork_4C.extra_128.state_1C          = (state);                   \
-    (playerChara)->model.stateStep                    = 0;                         \
-    (playerChara)->model.controlState                 = ModelState_Uninitialized;  \
-    (extra)->model.stateStep                          = 0;                         \
-    (extra)->model.controlState                       = ModelState_Uninitialized;  \
-    g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None; \
-    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None; \
+#define Player_ExtraStateSet(playerChara, playerExtra, playerState)        \
+{                                                                          \
+    g_SysWork.playerWork.extra.state          = (playerState);             \
+    (playerChara)->model.stateStep            = 0;                         \
+    (playerChara)->model.controlState         = ModelState_Uninitialized;  \
+    (playerExtra)->model.stateStep            = 0;                         \
+    (playerExtra)->model.controlState         = ModelState_Uninitialized;  \
+    g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_None; \
+    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None; \
 }
 
 /** @brief Sets the given animation flag for both the player character data and extra player data.
@@ -630,8 +630,8 @@ static inline void Player_AnimFlagsSet(u32 flags)
     s_SubCharacter* chara;
     s_PlayerExtra*  extra;
 
-    extra = &g_SysWork.playerWork_4C.extra_128;
-    chara = &g_SysWork.playerWork_4C.player_0;
+    extra = &g_SysWork.playerWork.extra;
+    chara = &g_SysWork.playerWork.player;
 
     extra->model.anim.flags |= flags;
     chara->model.anim.flags |= flags;
@@ -641,13 +641,13 @@ static inline void Player_AnimFlagsSet(u32 flags)
  *
  * @param clearFlags Animation flags to clear.
  */
-#define Player_AnimFlagsClear(clearFlags)                             \
-{                                                                     \
-    s_PlayerExtra*  playerExtra = &g_SysWork.playerWork_4C.extra_128; \
-    s_SubCharacter* playerChara = &g_SysWork.playerWork_4C.player_0;  \
-                                                                      \
-    playerExtra->model.anim.flags &= ~(clearFlags);                 \
-    playerChara->model.anim.flags &= ~(clearFlags);                 \
+#define Player_AnimFlagsClear(clearFlags)                      \
+{                                                              \
+    s_PlayerExtra*  playerExtra = &g_SysWork.playerWork.extra; \
+    s_SubCharacter* playerChara = &g_SysWork.playerWork.player;\
+                                                               \
+    playerExtra->model.anim.flags &= ~(clearFlags);            \
+    playerChara->model.anim.flags &= ~(clearFlags);            \
 }
 
 #endif

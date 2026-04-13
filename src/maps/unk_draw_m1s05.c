@@ -81,8 +81,8 @@ bool sharedFunc_800CBF74_1_s05(POLY_FT4** poly, s32 idx)
     gte_SetRotMatrix(&ptr->field_0.field_C);
     gte_SetTransMatrix(&ptr->field_0.field_C);
 
-    if (ABS(g_SysWork.playerWork_4C.player_0.position.vx - sharedData_800DFB7C_0_s00[idx].field_0.vx_0) +
-            ABS(g_SysWork.playerWork_4C.player_0.position.vz - sharedData_800DFB7C_0_s00[idx].field_4.vz_4) >
+    if (ABS(g_SysWork.playerWork.player.position.vx - sharedData_800DFB7C_0_s00[idx].field_0.vx_0) +
+            ABS(g_SysWork.playerWork.player.position.vz - sharedData_800DFB7C_0_s00[idx].field_4.vz_4) >
         0x14000)
     {
         return false;
@@ -176,8 +176,8 @@ bool sharedFunc_800CC618_1_s05(POLY_FT4** poly, s32 idx)
         sharedData_800DFB7C_0_s00[idx].field_A = 0;
     }
 
-    if (ABS(g_SysWork.playerWork_4C.player_0.position.vx - sharedData_800DFB7C_0_s00[idx].field_0.vx_0) +
-            ABS(g_SysWork.playerWork_4C.player_0.position.vz - sharedData_800DFB7C_0_s00[idx].field_4.vz_4) >
+    if (ABS(g_SysWork.playerWork.player.position.vx - sharedData_800DFB7C_0_s00[idx].field_0.vx_0) +
+            ABS(g_SysWork.playerWork.player.position.vz - sharedData_800DFB7C_0_s00[idx].field_4.vz_4) >
         0x14000)
     {
         return false;
