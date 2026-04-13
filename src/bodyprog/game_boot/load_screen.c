@@ -50,7 +50,7 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
     GsCOORDINATE2* boneCoords;
 
     boneCoords = g_SysWork.playerBoneCoords_890;
-    model      = &g_SysWork.playerWork_4C.player_0.model_0;
+    model      = &g_SysWork.playerWork_4C.player_0.model;
 
     if (g_SysWork.sysState_8 == SysState_Gameplay)
     {
@@ -59,17 +59,17 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
             AreaLoad_UpdatePlayerPosition();
         }
 
-        vcInitCamera(&g_MapOverlayHeader, &g_SysWork.playerWork_4C.player_0.position_18);
+        vcInitCamera(&g_MapOverlayHeader, &g_SysWork.playerWork_4C.player_0.position);
         func_80040004(&g_MapOverlayHeader);
 
         camLookAt.vy = Q12(-0.6f);
-        camLookAt.vx = g_SysWork.playerWork_4C.player_0.position_18.vx;
-        camLookAt.vz = g_SysWork.playerWork_4C.player_0.position_18.vz;
+        camLookAt.vx = g_SysWork.playerWork_4C.player_0.position.vx;
+        camLookAt.vz = g_SysWork.playerWork_4C.player_0.position.vz;
 
         vcUserWatchTarget(&camLookAt, NULL, true);
 
-        camLookAt.vx -= Math_Sin(g_SysWork.playerWork_4C.player_0.rotation_24.vy - Q12_ANGLE(22.5f)) * 2;
-        temp          = Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy - Q12_ANGLE(22.5f));
+        camLookAt.vx -= Math_Sin(g_SysWork.playerWork_4C.player_0.rotation.vy - Q12_ANGLE(22.5f)) * 2;
+        temp          = Math_Cos(g_SysWork.playerWork_4C.player_0.rotation.vy - Q12_ANGLE(22.5f));
         camLookAt.vy  = Q12(-1.0f);
         camLookAt.vz -= temp * 2;
 
@@ -81,11 +81,11 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
         g_SysWork.playerWork_4C.extra_128.disabledAnimBones_18 = 0;
         model->anim.flags                                 |= AnimFlag_Unlocked | AnimFlag_Visible;
         model->anim.time                                   = Q12(26.0f);
-        g_SysWork.playerWork_4C.player_0.position_18.vy        = Q12(0.2f);
+        g_SysWork.playerWork_4C.player_0.position.vy        = Q12(0.2f);
 
         D_800A998C.status = model->anim.status;
 
-        Math_MatrixTransform(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, boneCoords);
+        Math_MatrixTransform(&g_SysWork.playerWork_4C.player_0.position, &g_SysWork.playerWork_4C.player_0.rotation, boneCoords);
         g_SysWork.sysState_8++;
     }
 

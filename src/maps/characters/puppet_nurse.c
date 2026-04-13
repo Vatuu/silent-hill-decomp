@@ -10,7 +10,7 @@
 // - Make this separate split in each map that uses it, instead of `#include`
 // - Move funcdecls/structs for these out of shared.h header.
 
-#define nurseProps nurse->properties_E4.puppetNurse
+#define nurseProps nurse->properties.puppetNurse
 
 q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mat, s32 matCount, VECTOR3* center)
 {
@@ -164,7 +164,7 @@ s32 PuppetNurse_HurtSfxIdGet(s_SubCharacter* nurse)
     s32 weaponAttack;
     s32 idx;
 
-    weaponAttack = nurse->attackReceived_41;
+    weaponAttack = nurse->attackReceived;
     if (weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
         weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Hold) &&
         weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Multitap) &&
@@ -186,7 +186,7 @@ void Ai_PuppetNurse_SfxPlay(s_SubCharacter* nurse, s32 idx)
 
     sfxPair = g_NursePuppetSfxs;
     idx0    = (nurseProps.field_124->idx_1C * 9) + idx;
-    func_8005DC1C(sfxPair[idx0].sfxId, &nurse->position_18, sfxPair[idx0].vol, 0);
+    func_8005DC1C(sfxPair[idx0].sfxId, &nurse->position, sfxPair[idx0].vol, 0);
 }
 
 s32 Ai_PuppetNurse_AnimSfxGet(s32 animFrame)
@@ -200,7 +200,7 @@ s32 Ai_PuppetNurse_AnimSfxGet(s32 animFrame)
 
 void sharedFunc_800CDA88_3_s03(s_SubCharacter* nurse)
 {
-    if (nurse->model_0.stateStep == 0)
+    if (nurse->model.stateStep == 0)
     {
         Ai_PuppetNurse_Control(nurse);
     }
@@ -238,10 +238,10 @@ void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isPuppetDoctor)
 
     chara2 = nurse; // TODO: Not sure why this is needed, possibly an inline here somewhere?
 
-    nurse->moveSpeed_38                = Q12(0.0f);
+    nurse->moveSpeed                = Q12(0.0f);
     nurse->field_E1_0                  = 3;
-    nurse->headingAngle_3C             = nurse->rotation_24.vy;
-    nurseProps.position_E8             = nurse->position_18;
+    nurse->headingAngle             = nurse->rotation.vy;
+    nurseProps.position_E8             = nurse->position;
     nurse->field_D4.radius_0           = Q12(0.3f);
     nurseProps.damage_F4.position_0.vx = Q12(0.0f);
     nurseProps.damage_F4.position_0.vy = Q12(0.0f);
@@ -252,16 +252,16 @@ void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isPuppetDoctor)
     Chara_DamageClear(nurse);
 
     nurseProps.flags_122 = PuppetNurseFlag_None;
-    nurseProps.field_108 = nurse->position_18.vx;
-    nurseProps.field_10C = nurse->position_18.vz;
+    nurseProps.field_108 = nurse->position.vx;
+    nurseProps.field_10C = nurse->position.vz;
 
-    charPalette    = (nurse->model_0.stateStep - 1) % 3;
-    stateStepDiv3  = (nurse->model_0.stateStep - 1) / 3;
+    charPalette    = (nurse->model.stateStep - 1) % 3;
+    stateStepDiv3  = (nurse->model.stateStep - 1) / 3;
     modelVariation = stateStepDiv3 % 3;
     charaState     = stateStepDiv3 / 3;
 
     nurseProps.field_11A = 0;
-    nurse->flags_3E     |= CharaFlag_Unk3;
+    nurse->flags     |= CharaFlag_Unk3;
 
     if (!isPuppetDoctor)
     {
@@ -275,46 +275,46 @@ void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isPuppetDoctor)
         charStatIdx                   = 0;
     }
 
-    chara2->properties_E4.puppetNurse.field_124 = &sharedData_800D5710_3_s03[charStatIdx];
+    chara2->properties.puppetNurse.field_124 = &sharedData_800D5710_3_s03[charStatIdx];
 
-    nurse->health_B0            = chara2->properties_E4.puppetNurse.field_124->health_0;
-    nurse->model_0.paletteIdx = charPalette;
+    nurse->health            = chara2->properties.puppetNurse.field_124->health_0;
+    nurse->model.paletteIdx = charPalette;
 
     switch (charaState)
     {
         case 0:
-            nurse->model_0.controlState       = PuppetNurseControl_11;
-            nurse->model_0.stateStep          = 0;
-            nurse->model_0.anim.time        = Q12(459.0f);
-            nurse->model_0.anim.keyframeIdx = 459;
+            nurse->model.controlState       = PuppetNurseControl_11;
+            nurse->model.stateStep          = 0;
+            nurse->model.anim.time        = Q12(459.0f);
+            nurse->model.anim.keyframeIdx = 459;
             break;
 
         case 1:
-            nurse->model_0.controlState       = PuppetNurseControl_10;
-            nurse->model_0.stateStep          = 0;
-            nurse->model_0.anim.time        = Q12(459.0f);
-            nurse->model_0.anim.keyframeIdx = 459;
+            nurse->model.controlState       = PuppetNurseControl_10;
+            nurse->model.stateStep          = 0;
+            nurse->model.anim.time        = Q12(459.0f);
+            nurse->model.anim.keyframeIdx = 459;
             break;
 
         case 2:
-            nurse->model_0.controlState       = PuppetNurseControl_9;
-            nurse->model_0.stateStep          = 0;
-            nurse->model_0.anim.time        = Q12(459.0f);
-            nurse->model_0.anim.keyframeIdx = 459;
+            nurse->model.controlState       = PuppetNurseControl_9;
+            nurse->model.stateStep          = 0;
+            nurse->model.anim.time        = Q12(459.0f);
+            nurse->model.anim.keyframeIdx = 459;
             break;
     }
 
-    ModelAnim_AnimInfoSet(&nurse->model_0.anim, chara2->properties_E4.puppetNurse.field_124->animInfo_24);
+    ModelAnim_AnimInfoSet(&nurse->model.anim, chara2->properties.puppetNurse.field_124->animInfo_24);
 
-    nurse->model_0.anim.status              = ANIM_STATUS(PuppetNurseAnim_17, false);
-    nurse->model_0.anim.alpha               = Q12(0.0f);
-    chara2->properties_E4.puppetNurse.field_120 = Q12(1.0f);
+    nurse->model.anim.status              = ANIM_STATUS(PuppetNurseAnim_17, false);
+    nurse->model.anim.alpha               = Q12(0.0f);
+    chara2->properties.puppetNurse.field_120 = Q12(1.0f);
 }
 
 void Ai_PuppetNurse_Update(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     // Initialize.
-    if (nurse->model_0.controlState == ModelState_Uninitialized)
+    if (nurse->model.controlState == ModelState_Uninitialized)
     {
         Ai_PuppetNurse_Init(nurse, false);
     }
@@ -325,7 +325,7 @@ void Ai_PuppetNurse_Update(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDIN
 void Ai_PuppetDoctor_Update(s_SubCharacter* doctor, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     // Initialize.
-    if (doctor->model_0.controlState == ModelState_Uninitialized)
+    if (doctor->model.controlState == ModelState_Uninitialized)
     {
         Ai_PuppetNurse_Init(doctor, true);
     }
@@ -338,12 +338,12 @@ bool Ai_PuppetNurse_SomeAngleCheck(s_SubCharacter* nurse)
     q19_12 sumSqr;
     q19_12 damageAngle;
 
-    sumSqr = Q12_SQUARE_PRECISE(nurse->damage_B4.position_0.vx) +
-             Q12_SQUARE_PRECISE(nurse->damage_B4.position_0.vy) +
-             Q12_SQUARE_PRECISE(nurse->damage_B4.position_0.vz);
+    sumSqr = Q12_SQUARE_PRECISE(nurse->damage.position_0.vx) +
+             Q12_SQUARE_PRECISE(nurse->damage.position_0.vy) +
+             Q12_SQUARE_PRECISE(nurse->damage.position_0.vz);
 
-    damageAngle = ratan2(nurse->damage_B4.position_0.vx, nurse->damage_B4.position_0.vz);
-    damageAngle = ABS(Math_AngleNormalizeSigned(damageAngle - nurse->rotation_24.vy));
+    damageAngle = ratan2(nurse->damage.position_0.vx, nurse->damage.position_0.vz);
+    damageAngle = ABS(Math_AngleNormalizeSigned(damageAngle - nurse->rotation.vy));
     if (sumSqr > Q12_ANGLE(360.0f) && damageAngle > Q12_ANGLE(10.0f))
     {
         return true;
@@ -360,7 +360,7 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
 
     nurseCpy = nurse;
 
-    if (nurse->damage_B4.amount_C > Q12(0.0f))
+    if (nurse->damage.amount_C > Q12(0.0f))
     {
         sfxIdx = PuppetNurse_HurtSfxIdGet(nurse);
         if (sfxIdx != NO_VALUE)
@@ -368,66 +368,66 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
             Ai_PuppetNurse_SfxPlay(nurse, sfxIdx);
         }
 
-        switch (nurse->properties_E4.puppetNurse.field_118)
+        switch (nurse->properties.puppetNurse.field_118)
         {
             case 0:
-                nurse->properties_E4.puppetNurse.damage_F4  = nurse->damage_B4;
-                nurse->properties_E4.puppetNurse.field_114 += nurse->damage_B4.amount_C;
+                nurse->properties.puppetNurse.damage_F4  = nurse->damage;
+                nurse->properties.puppetNurse.field_114 += nurse->damage.amount_C;
 
-                newHealth = nurse->health_B0 - nurse->damage_B4.amount_C;
+                newHealth = nurse->health - nurse->damage.amount_C;
                 if (newHealth < Q12(0.0f))
                 {
                     newHealth = Q12(0.0f);
                 }
-                nurse->health_B0 = newHealth;
+                nurse->health = newHealth;
 
                 if (newHealth <= Q12(120.0f))
                 {
-                    nurse->properties_E4.puppetNurse.field_118++;
+                    nurse->properties.puppetNurse.field_118++;
 
                     if (!Ai_PuppetNurse_SomeAngleCheck(nurse))
                     {
-                        nurse->model_0.controlState = PuppetNurseControl_4;
-                        nurse->model_0.stateStep    = 0;
+                        nurse->model.controlState = PuppetNurseControl_4;
+                        nurse->model.stateStep    = 0;
                     }
                     else
                     {
-                        nurse->model_0.controlState = PuppetNurseControl_3;
-                        nurse->model_0.stateStep    = 0;
+                        nurse->model.controlState = PuppetNurseControl_3;
+                        nurse->model.stateStep    = 0;
                     }
 
-                    if (!nurse->health_B0)
+                    if (!nurse->health)
                     {
                         Savegame_EnemyStateUpdate(nurse);
                     }
                 }
                 else
                 {
-                    if (nurse->model_0.controlState != PuppetNurseControl_2 &&
-                        ((nurse->properties_E4.puppetNurse.field_124->field_4 < nurse->properties_E4.puppetNurse.field_114) ||
-                         (nurse->damage_B4.amount_C > Q12(320.0f))))
+                    if (nurse->model.controlState != PuppetNurseControl_2 &&
+                        ((nurse->properties.puppetNurse.field_124->field_4 < nurse->properties.puppetNurse.field_114) ||
+                         (nurse->damage.amount_C > Q12(320.0f))))
                     {
-                        nurse->properties_E4.puppetNurse.field_114 = 0;
-                        nurse->model_0.controlState              = PuppetNurseControl_2;
-                        nurse->model_0.stateStep                 = 0;
+                        nurse->properties.puppetNurse.field_114 = 0;
+                        nurse->model.controlState              = PuppetNurseControl_2;
+                        nurse->model.stateStep                 = 0;
                     }
                 }
                 break;
 
             case 1:
-                if (nurse->health_B0)
+                if (nurse->health)
                 {
                     Ai_PuppetNurse_SfxPlay(nurse, 1);
-                    nurse->health_B0 = Q12(0.0f);
+                    nurse->health = Q12(0.0f);
                     Savegame_EnemyStateUpdate(nurse);
 
-                    if (nurse->model_0.anim.status == ANIM_STATUS(14, true))
+                    if (nurse->model.anim.status == ANIM_STATUS(14, true))
                     {
-                        nurse->model_0.anim.status = ANIM_STATUS(22, false);
+                        nurse->model.anim.status = ANIM_STATUS(22, false);
                     }
                 }
 
-                nurseCpy->properties_E4.npc.field_118++;
+                nurseCpy->properties.npc.field_118++;
 
             case 2:
                 break;
@@ -447,13 +447,13 @@ void Ai_PuppetNurse_Move(s_SubCharacter* nurse)
     q19_12 distAbs;
     q19_12 limit;
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx,
-                                       g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz) -
+    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - nurse->position.vx,
+                                       g_SysWork.playerWork_4C.player_0.position.vz - nurse->position.vz) -
                    Q12(0.76f);
     distAbs = ABS(distToPlayer);
 
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
-                                       nurse->rotation_24.vy);
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position, g_SysWork.playerWork_4C.player_0.position) -
+                                       nurse->rotation.vy);
     absAngle           = ABS(angleDeltaToPlayer);
 
     if (distAbs > Q12(0.03f))
@@ -481,11 +481,11 @@ void Ai_PuppetNurse_Move(s_SubCharacter* nurse)
         addAngle = Q12_MULT_PRECISE(g_DeltaTime, tmpAngle);
         if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
         {
-            nurse->rotation_24.vy += addAngle;
+            nurse->rotation.vy += addAngle;
         }
         else
         {
-            nurse->rotation_24.vy -= addAngle;
+            nurse->rotation.vy -= addAngle;
         }
     }
 }
@@ -504,67 +504,67 @@ void Ai_PuppetNurse_Control1(s_SubCharacter* nurse)
 
     localNurse = nurse;
 
-    if (!nurse->model_0.stateStep)
+    if (!nurse->model.stateStep)
     {
-        if (!nurse->properties_E4.puppetNurse.field_11E)
+        if (!nurse->properties.puppetNurse.field_11E)
         {
-            nurse->model_0.anim.status = 2;
+            nurse->model.anim.status = 2;
         }
         else
         {
             if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
             {
-                nurse->model_0.anim.status = ANIM_STATUS(PuppetNurseAnim_1, false);
+                nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_1, false);
             }
             else
             {
-                nurse->model_0.anim.status = ANIM_STATUS(PuppetNurseAnim_21, false);
+                nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_21, false);
             }
         }
 
-        nurse->properties_E4.puppetNurse.field_11E = func_80070320();
-        localNurse->model_0.stateStep++;
-        nurse->properties_E4.puppetNurse.field_104 = Q12(1.0f);
+        nurse->properties.puppetNurse.field_11E = func_80070320();
+        localNurse->model.stateStep++;
+        nurse->properties.puppetNurse.field_104 = Q12(1.0f);
         return;
     }
 
-    if (nurse->properties_E4.puppetNurse.field_104 < Q12(0.0f) && (nurse->properties_E4.puppetNurse.flags_122 & PuppetNurseFlag_0))
+    if (nurse->properties.puppetNurse.field_104 < Q12(0.0f) && (nurse->properties.puppetNurse.flags_122 & PuppetNurseFlag_0))
     {
-        nurse->properties_E4.puppetNurse.field_104 = Q12(100.0f);
+        nurse->properties.puppetNurse.field_104 = Q12(100.0f);
         Ai_PuppetNurse_SfxPlay(nurse, 0);
     }
 
-    if (localNurse->model_0.anim.status == ANIM_STATUS(PuppetNurseAnim_18, false))
+    if (localNurse->model.anim.status == ANIM_STATUS(PuppetNurseAnim_18, false))
     {
-        localNurse->model_0.controlState = PuppetNurseControl_9;
-        localNurse->model_0.stateStep    = 0;
+        localNurse->model.controlState = PuppetNurseControl_9;
+        localNurse->model.stateStep    = 0;
     }
 
-    if (nurse->properties_E4.puppetNurse.field_11E && g_SysWork.playerWork_4C.player_0.attackReceived_41 == NO_VALUE)
+    if (nurse->properties.puppetNurse.field_11E && g_SysWork.playerWork_4C.player_0.attackReceived == NO_VALUE)
     {
-        localNurse->model_0.controlState = PuppetNurseControl_8;
-        localNurse->model_0.stateStep    = 0;
+        localNurse->model.controlState = PuppetNurseControl_8;
+        localNurse->model.stateStep    = 0;
         return;
     }
 
     Ai_PuppetNurse_Move(localNurse);
-    nurse->properties_E4.puppetNurse.field_104 -= g_DeltaTime;
+    nurse->properties.puppetNurse.field_104 -= g_DeltaTime;
 }
 
 void Ai_PuppetNurse_Control2(s_SubCharacter* nurse)
 {
     s32 moveSpeed;
 
-    if (!nurse->model_0.stateStep)
+    if (!nurse->model.stateStep)
     {
         Ai_PuppetNurse_SfxPlay(nurse, 2);
-        nurse->model_0.anim.status = ANIM_STATUS(PuppetNurseAnim_2, false);
-        nurse->model_0.stateStep++;
+        nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_2, false);
+        nurse->model.stateStep++;
     }
-    if (nurse->model_0.anim.status == ANIM_STATUS(PuppetNurseAnim_18, false))
+    if (nurse->model.anim.status == ANIM_STATUS(PuppetNurseAnim_18, false))
     {
-        nurse->model_0.controlState = PuppetNurseControl_9;
-        nurse->model_0.stateStep    = 0;
+        nurse->model.controlState = PuppetNurseControl_9;
+        nurse->model.stateStep    = 0;
     }
 
     Chara_MoveSpeedUpdate(nurse, Q12(4.0f));
@@ -577,36 +577,36 @@ void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor)
 
     localNurse = nurse;
 
-    if (!nurse->model_0.stateStep)
+    if (!nurse->model.stateStep)
     {
-        if (nurse->model_0.anim.status == ANIM_STATUS(PuppetNurseAnim_2, true))
+        if (nurse->model.anim.status == ANIM_STATUS(PuppetNurseAnim_2, true))
         {
             return;
         }
 
         Ai_PuppetNurse_SfxPlay(nurse, 2);
 
-        nurse->model_0.anim.status = g_PuppetNurse_AnimStatus0[isDoctor];
+        nurse->model.anim.status = g_PuppetNurse_AnimStatus0[isDoctor];
         nurse->field_E1_0              = 4;
-        nurse->flags_3E               |= CharaFlag_Unk2;
-        nurse->model_0.stateStep++;
+        nurse->flags               |= CharaFlag_Unk2;
+        nurse->model.stateStep++;
     }
 
-    animStatus = nurse->model_0.anim.status;
+    animStatus = nurse->model.anim.status;
     if (animStatus == ANIM_STATUS(PuppetNurseAnim_14, true) || animStatus == ANIM_STATUS(PuppetNurseAnim_5, true) ||
         animStatus == ANIM_STATUS(PuppetNurseAnim_5, false) || animStatus == ANIM_STATUS(PuppetNurseAnim_15, true))
     {
-        if (Chara_NpcIdxGet(nurse) != g_SysWork.targetNpcIdx_2353 && nurse->health_B0 == Q12(0.0f))
+        if (Chara_NpcIdxGet(nurse) != g_SysWork.targetNpcIdx_2353 && nurse->health == Q12(0.0f))
         {
-            nurse->health_B0  = NO_VALUE;
+            nurse->health  = NO_VALUE;
             nurse->field_E1_0 = 0;
             func_800622B8(3, nurse, g_PuppetNurse_AnimStatus1[isDoctor], 11);
 
-            localNurse->properties_E4.puppetNurse.flags_122 |= PuppetNurseFlag_1;
+            localNurse->properties.puppetNurse.flags_122 |= PuppetNurseFlag_1;
         }
-        else if (nurse->model_0.anim.status == ANIM_STATUS(PuppetNurseAnim_15, true) && nurse->health_B0 > Q12(0.0f))
+        else if (nurse->model.anim.status == ANIM_STATUS(PuppetNurseAnim_15, true) && nurse->health > Q12(0.0f))
         {
-            nurse->model_0.anim.status = ANIM_STATUS(PuppetNurseAnim_5, false);
+            nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_5, false);
         }
     }
 
@@ -629,12 +629,12 @@ bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse)
     q19_12 limit;
 
     distSubtract = Q12(0.78f);
-    angle        = Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx,
-                                        g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz) -
-                                 nurse->rotation_24.vy);
+    angle        = Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork_4C.player_0.position.vx - nurse->position.vx,
+                                        g_SysWork.playerWork_4C.player_0.position.vz - nurse->position.vz) -
+                                 nurse->rotation.vy);
     absAngle     = ABS(angle);
 
-    angle2 = Math_AngleNormalizeSigned(g_SysWork.playerWork_4C.player_0.rotation_24.vy - nurse->rotation_24.vy);
+    angle2 = Math_AngleNormalizeSigned(g_SysWork.playerWork_4C.player_0.rotation.vy - nurse->rotation.vy);
     angle2 = ABS(angle2);
 
     if (angle2 > Q12_ANGLE(90.0f))
@@ -642,8 +642,8 @@ bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse)
         distSubtract = Q12(0.85f);
     }
 
-    deltaX  = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx);
-    deltaZ  = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz);
+    deltaX  = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vx - nurse->position.vx);
+    deltaZ  = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vz - nurse->position.vz);
     dist    = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ))) - distSubtract;
     distAbs = ABS(dist);
 
@@ -684,11 +684,11 @@ bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse)
         addAngle = Q12_MULT_PRECISE(g_DeltaTime, tmpAngle);
         if (angle > Q12_ANGLE(0.0f))
         {
-            nurse->rotation_24.vy += addAngle;
+            nurse->rotation.vy += addAngle;
         }
         else
         {
-            nurse->rotation_24.vy -= addAngle;
+            nurse->rotation.vy -= addAngle;
         }
     }
 
@@ -699,38 +699,38 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
 {
     s32 controlState;
 
-    if (!nurse->model_0.stateStep)
+    if (!nurse->model.stateStep)
     {
-        nurse->model_0.anim.status        = ANIM_STATUS(PuppetNurseAnim_6, false);
-        nurse->properties_E4.player.field_104 = 0;
-        nurse->model_0.stateStep++;
+        nurse->model.anim.status        = ANIM_STATUS(PuppetNurseAnim_6, false);
+        nurse->properties.player.field_104 = 0;
+        nurse->model.stateStep++;
     }
 
     sharedFunc_800CE7C8_3_s03(nurse);
 
-    controlState = nurse->model_0.stateStep;
+    controlState = nurse->model.stateStep;
     if (controlState == PuppetNurseControl_1)
     {
-        if (nurse->properties_E4.puppetNurse.flags_122 & PuppetNurseFlag_0)
+        if (nurse->properties.puppetNurse.flags_122 & PuppetNurseFlag_0)
         {
-            nurse->model_0.stateStep = 2;
+            nurse->model.stateStep = 2;
         }
         else
         {
-            if (nurse->properties_E4.player.field_104 <= Q12(1.5f))
+            if (nurse->properties.player.field_104 <= Q12(1.5f))
             {
                 if (func_80070320())
                 {
-                    nurse->model_0.controlState  = controlState;
-                    nurse->model_0.stateStep     = 0;
-                    nurse->model_0.anim.status = ANIM_STATUS(PuppetNurseAnim_18, false);
+                    nurse->model.controlState  = controlState;
+                    nurse->model.stateStep     = 0;
+                    nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_18, false);
                     return;
                 }
             }
             else
             {
-                nurse->model_0.controlState = PuppetNurseControl_13;
-                nurse->model_0.stateStep    = 0;
+                nurse->model.controlState = PuppetNurseControl_13;
+                nurse->model.stateStep    = 0;
                 return;
             }
         }
@@ -739,43 +739,43 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
     {
         if (Chara_AttackReceivedGet(&g_SysWork.playerWork_4C.player_0) == NO_VALUE)
         {
-            nurse->model_0.controlState = PuppetNurseControl_8;
-            nurse->model_0.stateStep    = 0;
+            nurse->model.controlState = PuppetNurseControl_8;
+            nurse->model.stateStep    = 0;
             return;
         }
 
-        if (nurse->properties_E4.puppetNurse.field_104 >= Q12(1.5f))
+        if (nurse->properties.puppetNurse.field_104 >= Q12(1.5f))
         {
-            g_SysWork.playerWork_4C.player_0.damage_B4.amount_C += Q12(D_800AD4C8[EquippedWeaponId_Unk56].field_4);
-            nurse->properties_E4.puppetNurse.field_104           = 0;
+            g_SysWork.playerWork_4C.player_0.damage.amount_C += Q12(D_800AD4C8[EquippedWeaponId_Unk56].field_4);
+            nurse->properties.puppetNurse.field_104           = 0;
         }
     }
 
-    nurse->properties_E4.puppetNurse.field_104 += g_DeltaTime;
+    nurse->properties.puppetNurse.field_104 += g_DeltaTime;
 }
 
 void Ai_PuppetNurse_Control6_7(s_SubCharacter* nurse, bool isDoctor)
 {
-    if (!nurse->model_0.stateStep)
+    if (!nurse->model.stateStep)
     {
         Ai_PuppetNurse_SfxPlay(nurse, isDoctor + 1);
 
         if (isDoctor)
         {
-            nurse->model_0.anim.status = ANIM_STATUS(PuppetNurseAnim_8, false);
+            nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_8, false);
         }
         else
         {
-            nurse->model_0.anim.status = ANIM_STATUS(PuppetNurseAnim_7, false);
+            nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_7, false);
         }
 
-        nurse->model_0.stateStep++;
+        nurse->model.stateStep++;
     }
 
-    if (nurse->model_0.anim.status == ANIM_STATUS(PuppetNurseAnim_18, false))
+    if (nurse->model.anim.status == ANIM_STATUS(PuppetNurseAnim_18, false))
     {
-        nurse->model_0.controlState = PuppetNurseControl_9;
-        nurse->model_0.stateStep    = 0;
+        nurse->model.controlState = PuppetNurseControl_9;
+        nurse->model.stateStep    = 0;
     }
 
     Chara_MoveSpeedUpdate(nurse, Q12(4.0f));
@@ -791,38 +791,38 @@ void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
     q19_12 angle;
 #endif
 
-    switch (nurse->model_0.stateStep)
+    switch (nurse->model.stateStep)
     {
         case 0:
-            angle = Math_AngleNormalizeSigned((g_SysWork.playerWork_4C.player_0.rotation_24.vy - nurse->rotation_24.vy) - Q12_ANGLE(90.0f));
+            angle = Math_AngleNormalizeSigned((g_SysWork.playerWork_4C.player_0.rotation.vy - nurse->rotation.vy) - Q12_ANGLE(90.0f));
             if (angle < Q12_ANGLE(0.0f))
             {
-                nurse->properties_E4.puppetNurse.field_104 = -angle;
+                nurse->properties.puppetNurse.field_104 = -angle;
             }
             else
             {
-                nurse->properties_E4.puppetNurse.field_104 = angle;
+                nurse->properties.puppetNurse.field_104 = angle;
             }
 
-            nurse->model_0.stateStep++;
+            nurse->model.stateStep++;
             break;
 
         case 1:
-            if (nurse->properties_E4.puppetNurse.field_104 < 0)
+            if (nurse->properties.puppetNurse.field_104 < 0)
             {
-                nurse->moveSpeed_38            = Q12(-1.0f);
-                nurse->model_0.anim.status = ANIM_STATUS(10, false);
-                nurse->model_0.stateStep     = 2;
+                nurse->moveSpeed            = Q12(-1.0f);
+                nurse->model.anim.status = ANIM_STATUS(10, false);
+                nurse->model.stateStep     = 2;
             }
 
-            nurse->properties_E4.puppetNurse.field_104 -= g_DeltaTime;
+            nurse->properties.puppetNurse.field_104 -= g_DeltaTime;
             break;
 
         case 2:
         {
             u16 modelStates[8] = { 9, 9, 9, 6, 6, 9, 7, 7 };
 
-            if (nurse->model_0.anim.status == ANIM_STATUS(18, false))
+            if (nurse->model.anim.status == ANIM_STATUS(18, false))
             {
                 if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
                 {
@@ -833,8 +833,8 @@ void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
                     controlState = modelStates[(Rng_Rand16() >> 4) & 7];
                 }
 
-                nurse->model_0.controlState = controlState;
-                nurse->model_0.stateStep    = 0;
+                nurse->model.controlState = controlState;
+                nurse->model.stateStep    = 0;
             }
             else
             {
@@ -871,25 +871,25 @@ void sharedFunc_800CEEE0_3_s03(s_SubCharacter* nurse)
     s16             angle;
     s_SubCharacter* nurseCpy;
 
-    limit    = Q12_MULT_PRECISE(nurse->properties_E4.npc.field_124->field_C, Q12(0.27f));
+    limit    = Q12_MULT_PRECISE(nurse->properties.npc.field_124->field_C, Q12(0.27f));
     nurseCpy = nurse;
     Chara_MoveSpeedUpdate2(nurse, Q12(1.4f), limit);
     limit = 0;
 
     if (Rng_GenerateUInt(0, 63) == 0) // 1 in 64 chance.
     {
-        nurseCpy->properties_E4.puppetNurse.field_11C = func_8006F99C(nurse, Q12_ANGLE(360.0f), nurse->rotation_24.vy);
+        nurseCpy->properties.puppetNurse.field_11C = func_8006F99C(nurse, Q12_ANGLE(360.0f), nurse->rotation.vy);
     }
-    angle = Math_AngleNormalizeSigned(nurseCpy->properties_E4.puppetNurse.field_11C - nurse->rotation_24.vy);
+    angle = Math_AngleNormalizeSigned(nurseCpy->properties.puppetNurse.field_11C - nurse->rotation.vy);
     if (ABS(angle) > Q12_ANGLE(5.0f))
     {
         if (angle > Q12_ANGLE(0.0f))
         {
-            nurse->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
+            nurse->rotation.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
         }
         else
         {
-            nurse->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
+            nurse->rotation.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
         }
     }
 }
@@ -900,7 +900,7 @@ void sharedFunc_800CF0B4_3_s03(s_SubCharacter* nurse)
     q3_12           angle;
     s_SubCharacter* localNurse;
 
-    limit      = Q12_MULT_PRECISE(nurse->properties_E4.npc.field_124->field_C, Q12(0.27f));
+    limit      = Q12_MULT_PRECISE(nurse->properties.npc.field_124->field_C, Q12(0.27f));
     localNurse = nurse;
 
     Chara_MoveSpeedUpdate2(nurse, Q12(1.4f), limit);
@@ -908,23 +908,23 @@ void sharedFunc_800CF0B4_3_s03(s_SubCharacter* nurse)
 
     // @note Did they forget to make it an if?
     Rng_Rand16();
-    localNurse->properties_E4.puppetNurse.field_11C = Chara_HeadingAngleGet(nurse,
+    localNurse->properties.puppetNurse.field_11C = Chara_HeadingAngleGet(nurse,
                                                                             Q12(1.0f),
-                                                                            g_SysWork.playerWork_4C.player_0.position_18.vx,
-                                                                            g_SysWork.playerWork_4C.player_0.position_18.vz,
+                                                                            g_SysWork.playerWork_4C.player_0.position.vx,
+                                                                            g_SysWork.playerWork_4C.player_0.position.vz,
                                                                             Q12_ANGLE(360.0f),
                                                                             true);
 
-    angle = Math_AngleNormalizeSigned(localNurse->properties_E4.puppetNurse.field_11C - nurse->rotation_24.vy);
+    angle = Math_AngleNormalizeSigned(localNurse->properties.puppetNurse.field_11C - nurse->rotation.vy);
     if (ABS(angle) > Q12_ANGLE(5.0f))
     {
         if (angle > Q12_ANGLE(0.0f))
         {
-            nurse->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
+            nurse->rotation.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
         }
         else
         {
-            nurse->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
+            nurse->rotation.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
         }
     }
 }
@@ -938,22 +938,22 @@ bool sharedFunc_800CF294_3_s03(s_SubCharacter* arg0, q19_12 dist)
 
     somePtr = &sharedData_800D5A8C_3_s03[sharedFunc_800CEEAC_3_s03()];
 
-    if (arg0->properties_E4.npc.field_11A > 0)
+    if (arg0->properties.npc.field_11A > 0)
     {
-        arg0->properties_E4.npc.field_11A -= g_DeltaTime;
+        arg0->properties.npc.field_11A -= g_DeltaTime;
     }
 
     if (func_80070360(arg0, dist, somePtr->field_8))
     {
-        arg0->properties_E4.npc.field_11A = Q12_ANGLE(360.0f);
+        arg0->properties.npc.field_11A = Q12_ANGLE(360.0f);
     }
 
     temp_v1 = somePtr->field_0;
-    temp_a0 = arg0->properties_E4.npc.field_124->field_8;
+    temp_a0 = arg0->properties.npc.field_124->field_8;
 
     ret = false;
     if (func_8006FD90(arg0, 1, Q12_MULT_PRECISE(temp_v1, temp_a0), Q12_MULT_PRECISE(somePtr->field_4, temp_a0)) ||
-        arg0->properties_E4.npc.field_11A > 0)
+        arg0->properties.npc.field_11A > 0)
     {
         ret = true;
     }
@@ -975,25 +975,25 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
 
     localNurse = nurse;
 
-    deltaX = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx);
-    deltaZ = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz);
+    deltaX = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vx - nurse->position.vx);
+    deltaZ = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vz - nurse->position.vz);
     dist   = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
 
-    angle    = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
-                             nurse->rotation_24.vy);
+    angle    = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position, g_SysWork.playerWork_4C.player_0.position) -
+                             nurse->rotation.vy);
     angleAbs = ABS(angle);
 
-    if (!nurse->model_0.stateStep)
+    if (!nurse->model.stateStep)
     {
-        nurse->properties_E4.player.field_104      = 0;
-        nurse->properties_E4.puppetNurse.field_11C = func_8006F99C(nurse, Q12_ANGLE(360.0f), nurse->rotation_24.vy);
-        nurse->model_0.stateStep++;
+        nurse->properties.player.field_104      = 0;
+        nurse->properties.puppetNurse.field_11C = func_8006F99C(nurse, Q12_ANGLE(360.0f), nurse->rotation.vy);
+        nurse->model.stateStep++;
     }
 
     cond                    = sharedFunc_800CF294_3_s03(nurse, dist);
     nurse->field_44.field_0 = 0;
 
-    switch (nurse->model_0.stateStep)
+    switch (nurse->model.stateStep)
     {
         case 1:
             if (!cond)
@@ -1003,42 +1003,42 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
             }
             else
             {
-                nurse->model_0.stateStep = 2;
+                nurse->model.stateStep = 2;
             }
 
         case 2:
             if (!cond)
             {
-                nurse->model_0.stateStep = 1;
+                nurse->model.stateStep = 1;
             }
             else
             {
                 sharedFunc_800CF0B4_3_s03(nurse);
 
-                somePtr = localNurse->properties_E4.npc.field_124;
+                somePtr = localNurse->properties.npc.field_124;
                 if (dist < Q12_MULT_PRECISE(somePtr->field_8, Q12(3.0f)) &&
-                    angleAbs < Q12_ANGLE(60.0f) && g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
+                    angleAbs < Q12_ANGLE(60.0f) && g_SysWork.playerWork_4C.player_0.health > Q12(0.0f))
                 {
-                    nurse->model_0.controlState = PuppetNurseControl_12;
-                    nurse->model_0.stateStep    = 0;
+                    nurse->model.controlState = PuppetNurseControl_12;
+                    nurse->model.stateStep    = 0;
                 }
             }
             break;
     }
 
-    if (nurse->model_0.stateStep && sharedFunc_800CE398_3_s03(nurse->model_0.anim.status))
+    if (nurse->model.stateStep && sharedFunc_800CE398_3_s03(nurse->model.anim.status))
     {
         if (!Rng_GenerateUInt(0, 31)) // 1 in 32 chance.
         {
             rng                            = Rng_Rand16();
-            nurse->model_0.anim.status = g_PuppetNurse_AnimStatus2[(rng >> 7) & 0x1];
-            nurse->model_0.controlState  = PuppetNurseControl_6;
-            nurse->model_0.stateStep     = 0;
+            nurse->model.anim.status = g_PuppetNurse_AnimStatus2[(rng >> 7) & 0x1];
+            nurse->model.controlState  = PuppetNurseControl_6;
+            nurse->model.stateStep     = 0;
             return;
         }
         else
         {
-            nurse->model_0.anim.status = g_PuppetNurse_AnimStatus3[(Rng_Rand16() >> 2) & 0x3];
+            nurse->model.anim.status = g_PuppetNurse_AnimStatus3[(Rng_Rand16() >> 2) & 0x3];
         }
     }
 }
@@ -1050,18 +1050,18 @@ s32 sharedFunc_800CF600_3_s03(s_SubCharacter* nurse)
     s32 var_v0;
     s32 var_v1;
 
-    temp_a3 = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx,
-                                  g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz) -
+    temp_a3 = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - nurse->position.vx,
+                                  g_SysWork.playerWork_4C.player_0.position.vz - nurse->position.vz) -
               0xC28;
 
     var_v0 = ABS(temp_a3);
 
-    if (var_v0 > 0x7A && nurse->model_0.anim.status != 0x28)
+    if (var_v0 > 0x7A && nurse->model.anim.status != 0x28)
     {
         if (temp_a3 > 0)
         {
             var_a1 = 0x8000;
-            var_v1 = Q12_MULT_PRECISE(nurse->properties_E4.puppetNurse.field_124->field_18, 0x1CCC);
+            var_v1 = Q12_MULT_PRECISE(nurse->properties.puppetNurse.field_124->field_18, 0x1CCC);
         }
         else
         {
@@ -1084,24 +1084,24 @@ void sharedFunc_800CF7F4_3_s03(s_SubCharacter* nurse)
 
     if ((Rng_Rand16() & Q8_CLAMPED(1.0f)) >= Q8(0.5f))
     {
-        nurse->properties_E4.dummy.properties_E8[13].val16[0] = Chara_HeadingAngleGet(nurse,
+        nurse->properties.dummy.properties_E8[13].val16[0] = Chara_HeadingAngleGet(nurse,
                                                                                       Q12(1.0f),
-                                                                                      g_SysWork.playerWork_4C.player_0.position_18.vx,
-                                                                                      g_SysWork.playerWork_4C.player_0.position_18.vz,
+                                                                                      g_SysWork.playerWork_4C.player_0.position.vx,
+                                                                                      g_SysWork.playerWork_4C.player_0.position.vz,
                                                                                       Q12_ANGLE(360.0f),
                                                                                       true);
     }
 
-    angle = Math_AngleNormalizeSigned(nurse->properties_E4.dummy.properties_E8[13].val16[0] - nurse->rotation_24.vy);
+    angle = Math_AngleNormalizeSigned(nurse->properties.dummy.properties_E8[13].val16[0] - nurse->rotation.vy);
     if (ABS(angle) > Q12_ANGLE(5.0f))
     {
         if (angle > Q12_ANGLE(0.0f))
         {
-            nurse->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
+            nurse->rotation.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
         }
         else
         {
-            nurse->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
+            nurse->rotation.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
         }
     }
 }
@@ -1114,14 +1114,14 @@ bool sharedFunc_800CF90C_3_s03(s_SubCharacter* nurse)
     // Run through NPCs.
     for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
     {
-        if ((g_SysWork.npcs_1A0[i].model_0.charaId_0 == Chara_PuppetNurse || g_SysWork.npcs_1A0[i].model_0.charaId_0 == Chara_PuppetDoctor) &&
-            g_SysWork.npcs_1A0[i].health_B0 > Q12(0.0f) &&
+        if ((g_SysWork.npcs_1A0[i].model.charaId_0 == Chara_PuppetNurse || g_SysWork.npcs_1A0[i].model.charaId_0 == Chara_PuppetDoctor) &&
+            g_SysWork.npcs_1A0[i].health > Q12(0.0f) &&
             g_SysWork.npcs_1A0[i].field_40 != nurse->field_40 &&
-            !Math_Distance2dCheck(&nurse->position_18, &g_SysWork.npcs_1A0[i].position_18, Q12(4.0f)))
+            !Math_Distance2dCheck(&nurse->position, &g_SysWork.npcs_1A0[i].position, Q12(4.0f)))
         {
             curNpc = g_SysWork.npcs_1A0;
 
-            if (!(curNpc[i].flags_3E & CharaFlag_Unk2))
+            if (!(curNpc[i].flags & CharaFlag_Unk2))
             {
                 return true;
             }
@@ -1140,25 +1140,25 @@ void Ai_PuppetNurse_Control12(s_SubCharacter* nurse)
     s32             animStatus;
     s_SubCharacter* nurseCpy;
 
-    animStatus         = nurse->model_0.anim.status;
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position_18, g_SysWork.playerWork_4C.player_0.position_18) - nurse->rotation_24.vy);
+    animStatus         = nurse->model.anim.status;
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position, g_SysWork.playerWork_4C.player_0.position) - nurse->rotation.vy);
     angleDeltaAbs      = abs(angleDeltaToPlayer);
 
-    distToPlayer = Math_Vector2MagCalc((g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx),
-                                       (g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz));
+    distToPlayer = Math_Vector2MagCalc((g_SysWork.playerWork_4C.player_0.position.vx - nurse->position.vx),
+                                       (g_SysWork.playerWork_4C.player_0.position.vz - nurse->position.vz));
 
     distToPlayer = Q12_MULT_FLOAT_PRECISE(distToPlayer, 1.1f);
     cond         = sharedFunc_800CF294_3_s03(nurse, distToPlayer);
 
-    if (g_SysWork.playerWork_4C.player_0.health_B0 < Q12(0.0f) || !cond)
+    if (g_SysWork.playerWork_4C.player_0.health < Q12(0.0f) || !cond)
     {
-        nurse->model_0.controlState  = 9;
-        nurse->model_0.stateStep     = 0;
-        nurse->model_0.anim.status = ANIM_STATUS(18, false);
+        nurse->model.controlState  = 9;
+        nurse->model.stateStep     = 0;
+        nurse->model.anim.status = ANIM_STATUS(18, false);
         return;
     }
 
-    switch (nurse->model_0.stateStep)
+    switch (nurse->model.stateStep)
     {
         case 0:
             if (angleDeltaAbs >= Q12_ANGLE(10.1f))
@@ -1167,29 +1167,29 @@ void Ai_PuppetNurse_Control12(s_SubCharacter* nurse)
                 rotAmt     = Q12_MULT_PRECISE(g_DeltaTime, rotAmt);
                 if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
                 {
-                    nurse->rotation_24.vy += rotAmt;
+                    nurse->rotation.vy += rotAmt;
                 }
                 else
                 {
-                    nurse->rotation_24.vy -= rotAmt;
+                    nurse->rotation.vy -= rotAmt;
                 }
 
                 Chara_MoveSpeedUpdate3(nurse, Q12(1.0f), Q12(0.0f));
                 return;
             }
 
-            nurse->model_0.stateStep = 1;
+            nurse->model.stateStep = 1;
 
         case 1:
             if (animStatus >= ANIM_STATUS(17, false) && animStatus < ANIM_STATUS(18, false))
             {
-                nurse->model_0.anim.status = ANIM_STATUS(9, false);
-                nurse->model_0.stateStep++;
+                nurse->model.anim.status = ANIM_STATUS(9, false);
+                nurse->model.stateStep++;
             }
             else if (animStatus >= ANIM_STATUS(18, false) && animStatus < ANIM_STATUS(19, false))
             {
-                nurse->model_0.anim.status = ANIM_STATUS(20, false);
-                nurse->model_0.stateStep++;
+                nurse->model.anim.status = ANIM_STATUS(20, false);
+                nurse->model.stateStep++;
             }
             else
             {
@@ -1207,25 +1207,25 @@ void Ai_PuppetNurse_Control12(s_SubCharacter* nurse)
             {
                 if (distToPlayer < 0x199)
                 {
-                    nurse->model_0.controlState = 5;
-                    nurse->model_0.stateStep    = 0;
+                    nurse->model.controlState = 5;
+                    nurse->model.stateStep    = 0;
                 }
             }
             else if (distToPlayer < 0x266)
             {
-                if (!(g_SysWork.playerWork_4C.player_0.flags_3E & 8))
+                if (!(g_SysWork.playerWork_4C.player_0.flags & 8))
                 {
-                    nurseCpy->properties_E4.dummy.properties_E8[0xD].val16[1] = 0; // nurseCpy + 0x11E
-                    nurse->model_0.controlState                             = 1;
+                    nurseCpy->properties.dummy.properties_E8[0xD].val16[1] = 0; // nurseCpy + 0x11E
+                    nurse->model.controlState                             = 1;
                 }
                 else
                 {
-                    nurseCpy->properties_E4.dummy.properties_E8[0xD].val16[1] = 1; // nurseCpy + 0x11E
-                    nurse->model_0.controlState                             = 1;
+                    nurseCpy->properties.dummy.properties_E8[0xD].val16[1] = 1; // nurseCpy + 0x11E
+                    nurse->model.controlState                             = 1;
                 }
 
-                nurse->model_0.stateStep     = 0;
-                nurse->model_0.anim.status = ANIM_STATUS(18, false);
+                nurse->model.stateStep     = 0;
+                nurse->model.anim.status = ANIM_STATUS(18, false);
             }
 
             sharedFunc_800CF7F4_3_s03(nurse);
@@ -1239,21 +1239,21 @@ void Ai_PuppetNurse_Control10(s_SubCharacter* nurse)
     q19_12 deltaZ;
     q19_12 dist;
 
-    if (!nurse->model_0.stateStep)
+    if (!nurse->model.stateStep)
     {
-        nurse->properties_E4.player.field_104 = 0;
-        nurse->model_0.anim.status        = ANIM_STATUS(19, false);
-        nurse->model_0.stateStep++;
+        nurse->properties.player.field_104 = 0;
+        nurse->model.anim.status        = ANIM_STATUS(19, false);
+        nurse->model.stateStep++;
     }
 
-    deltaX = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx);
-    deltaZ = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz);
+    deltaX = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vx - nurse->position.vx);
+    deltaZ = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vz - nurse->position.vz);
     dist   = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
 
     if (sharedFunc_800CF294_3_s03(nurse, dist))
     {
-        nurse->model_0.controlState = PuppetNurseControl_9;
-        nurse->model_0.stateStep    = 0;
+        nurse->model.controlState = PuppetNurseControl_9;
+        nurse->model.stateStep    = 0;
 
         if (Rng_Rand16() & 0x80)
         {
@@ -1264,7 +1264,7 @@ void Ai_PuppetNurse_Control10(s_SubCharacter* nurse)
             animStatus = ANIM_STATUS(8, false);
         }
 
-        nurse->model_0.anim.status = animStatus;
+        nurse->model.anim.status = animStatus;
     }
 }
 
@@ -1279,15 +1279,15 @@ void Ai_PuppetNurse_Control11(s_SubCharacter* nurse)
     s32             temp_s0;
     s_SubCharacter* localNurse;
 
-    if (!nurse->model_0.stateStep)
+    if (!nurse->model.stateStep)
     {
         nurseProps.field_104           = 0;
-        nurse->model_0.anim.status = ANIM_STATUS(PuppetNurseAnim_17, false);
-        nurseProps.field_11C           = func_8006F99C(nurse, Q12(1.0f), nurse->rotation_24.vy);
-        nurse->model_0.stateStep++;
+        nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_17, false);
+        nurseProps.field_11C           = func_8006F99C(nurse, Q12(1.0f), nurse->rotation.vy);
+        nurse->model.stateStep++;
     }
 
-    if (sharedFunc_800CE398_3_s03(nurse->model_0.anim.status))
+    if (sharedFunc_800CE398_3_s03(nurse->model.anim.status))
     {
         if (Rng_GenerateUInt(0, 15) == 0) // 1 in 16 chance.
         {
@@ -1300,28 +1300,28 @@ void Ai_PuppetNurse_Control11(s_SubCharacter* nurse)
                 controlState = PuppetNurseControl_7;
             }
 
-            nurse->model_0.controlState = controlState;
-            nurse->model_0.stateStep    = 0;
+            nurse->model.controlState = controlState;
+            nurse->model.stateStep    = 0;
         }
         else
         {
-            nurse->model_0.anim.status = g_PuppetNurse_AnimStatus4[(Rng_Rand16() >> 2) & 3];
+            nurse->model.anim.status = g_PuppetNurse_AnimStatus4[(Rng_Rand16() >> 2) & 3];
         }
     }
 
-    deltaX = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx);
-    deltaZ = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz);
+    deltaX = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vx - nurse->position.vx);
+    deltaZ = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vz - nurse->position.vz);
     dist   = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
 
     if (sharedFunc_800CF294_3_s03(nurse, dist))
     {
-        nurse->model_0.controlState = PuppetNurseControl_9;
-        nurse->model_0.stateStep    = 0;
+        nurse->model.controlState = PuppetNurseControl_9;
+        nurse->model.stateStep    = 0;
         return;
     }
 
     localNurse = nurse;
-#define localNurseProps localNurse->properties_E4.puppetNurse
+#define localNurseProps localNurse->properties.puppetNurse
 
     Chara_MoveSpeedUpdate3(nurse, Q12(1.4f), Q12(0.27f));
 
@@ -1337,16 +1337,16 @@ void Ai_PuppetNurse_Control11(s_SubCharacter* nurse)
                                                           true);
     }
 
-    angle = Math_AngleNormalizeSigned(localNurseProps.field_11C - nurse->rotation_24.vy);
+    angle = Math_AngleNormalizeSigned(localNurseProps.field_11C - nurse->rotation.vy);
     if (ABS(angle) > Q12_ANGLE(5.0f))
     {
         if (angle > Q12_ANGLE(0.0f))
         {
-            nurse->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
+            nurse->rotation.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
         }
         else
         {
-            nurse->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
+            nurse->rotation.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
         }
     }
 
@@ -1355,16 +1355,16 @@ void Ai_PuppetNurse_Control11(s_SubCharacter* nurse)
 
 void Ai_PuppetNurse_Control13(s_SubCharacter* nurse)
 {
-    if (nurse->model_0.stateStep == 0)
+    if (nurse->model.stateStep == 0)
     {
-        nurse->model_0.anim.status = ANIM_STATUS(PuppetNurseAnim_10, false);
-        nurse->model_0.stateStep++;
+        nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_10, false);
+        nurse->model.stateStep++;
     }
 
-    if (nurse->model_0.anim.status == ANIM_STATUS(PuppetNurseAnim_18, false))
+    if (nurse->model.anim.status == ANIM_STATUS(PuppetNurseAnim_18, false))
     {
-        nurse->model_0.controlState = PuppetNurseControl_9;
-        nurse->model_0.stateStep    = 0;
+        nurse->model.controlState = PuppetNurseControl_9;
+        nurse->model.stateStep    = 0;
     }
 
     Chara_MoveSpeedUpdate3(nurse, Q12(4.0f), Q12(0.0f));
@@ -1373,7 +1373,7 @@ void Ai_PuppetNurse_Control13(s_SubCharacter* nurse)
 void Ai_PuppetNurse_Control(s_SubCharacter* nurse)
 {
     // Handle control state.
-    switch (nurse->model_0.controlState)
+    switch (nurse->model.controlState)
     {
         case PuppetNurseControl_1:
             Ai_PuppetNurse_Control1(nurse);
@@ -1440,24 +1440,24 @@ void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords)
     s_SubCharacter* localNurse;
 
     localNurse                                  = nurse;
-    nurse->properties_E4.puppetNurse.flags_122 &= ~PuppetNurseFlag_0;
+    nurse->properties.puppetNurse.flags_122 &= ~PuppetNurseFlag_0;
 
-    if (localNurse->model_0.controlState == PuppetNurseControl_1 ||
-        localNurse->model_0.controlState == PuppetNurseControl_5)
+    if (localNurse->model.controlState == PuppetNurseControl_1 ||
+        localNurse->model.controlState == PuppetNurseControl_5)
     {
         Vw_CoordHierarchyMatrixCompute(&coords[10], &mat);
         posX = Q8_TO_Q12(mat.t[0]);
         posY = Q8_TO_Q12(mat.t[1]);
         posZ = Q8_TO_Q12(mat.t[2]);
 
-        nurse->field_C8.field_8 = nurse->position_18.vy - posY;
+        nurse->field_C8.field_8 = nurse->position.vy - posY;
         pos.vx                  = posX;
         pos.vy                  = posY;
         pos.vz                  = posZ;
 
-        if (localNurse->model_0.controlState == PuppetNurseControl_1)
+        if (localNurse->model.controlState == PuppetNurseControl_1)
         {
-            weaponAttack = localNurse->properties_E4.npc.field_124->field_20;
+            weaponAttack = localNurse->properties.npc.field_124->field_20;
         }
         else
         {
@@ -1465,9 +1465,9 @@ void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords)
             weaponAttack = EquippedWeaponId_Unk56;
         }
 
-        if (func_8008A0E4(1, weaponAttack, nurse, &pos, &g_SysWork.playerWork_4C.player_0, nurse->rotation_24.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
+        if (func_8008A0E4(1, weaponAttack, nurse, &pos, &g_SysWork.playerWork_4C.player_0, nurse->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
         {
-            localNurse->properties_E4.puppetNurse.flags_122 |= PuppetNurseFlag_0;
+            localNurse->properties.puppetNurse.flags_122 |= PuppetNurseFlag_0;
         }
     }
 }
@@ -1485,17 +1485,17 @@ void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse)
     q19_12            unkPosY;
     q19_12            unkPosZ;
 
-    temp_s1 = nurse->properties_E4.puppetNurse.field_124->field_2C;
+    temp_s1 = nurse->properties.puppetNurse.field_124->field_2C;
 
-    damagePos.vx = nurse->properties_E4.puppetNurse.damage_F4.position_0.vx;
-    damagePos.vz = nurse->properties_E4.puppetNurse.damage_F4.position_0.vz;
-    damagePos.vy = nurse->properties_E4.puppetNurse.damage_F4.position_0.vy;
+    damagePos.vx = nurse->properties.puppetNurse.damage_F4.position_0.vx;
+    damagePos.vz = nurse->properties.puppetNurse.damage_F4.position_0.vz;
+    damagePos.vy = nurse->properties.puppetNurse.damage_F4.position_0.vy;
 
-    moveSpeed                                      = nurse->moveSpeed_38;
-    nurse->properties_E4.puppetNurse.moveSpeed_110 = moveSpeed;
+    moveSpeed                                      = nurse->moveSpeed;
+    nurse->properties.puppetNurse.moveSpeed_110 = moveSpeed;
 
-    dir.vx = Math_Sin(nurse->rotation_24.vy);
-    dir.vz = Math_Cos(nurse->rotation_24.vy);
+    dir.vx = Math_Sin(nurse->rotation.vy);
+    dir.vz = Math_Cos(nurse->rotation.vy);
     dir.vy = Q12(0.0f);
 
     unkPosX = Q12_MULT_PRECISE(temp_s1, damagePos.vx) + Q12_MULT_PRECISE(moveSpeed, dir.vx);
@@ -1506,38 +1506,38 @@ void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse)
     unkPos.vy = unkPosY;
     unkPos.vz = unkPosZ;
 
-    nurse->moveSpeed_38    = SquareRoot12(Q12_MULT_PRECISE(unkPosX, unkPosX) + Q12_MULT_PRECISE(unkPosZ, unkPosZ));
-    nurse->headingAngle_3C = ratan2(unkPosX, unkPosZ);
-    nurse->fallSpeed_34   += g_GravitySpeed;
+    nurse->moveSpeed    = SquareRoot12(Q12_MULT_PRECISE(unkPosX, unkPosX) + Q12_MULT_PRECISE(unkPosZ, unkPosZ));
+    nurse->headingAngle = ratan2(unkPosX, unkPosZ);
+    nurse->fallSpeed   += g_GravitySpeed;
 
     func_8005C944(nurse, &sp10);
 
-    damagePosComp                                            = nurse->properties_E4.puppetNurse.damage_F4.position_0.vx;
-    nurse->moveSpeed_38                                      = nurse->properties_E4.puppetNurse.moveSpeed_110;
-    nurse->properties_E4.puppetNurse.damage_F4.position_0.vx = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
+    damagePosComp                                            = nurse->properties.puppetNurse.damage_F4.position_0.vx;
+    nurse->moveSpeed                                      = nurse->properties.puppetNurse.moveSpeed_110;
+    nurse->properties.puppetNurse.damage_F4.position_0.vx = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
 
     if (damagePosComp <= Q12(0.0f))
     {
-        nurse->properties_E4.puppetNurse.damage_F4.position_0.vx = -nurse->properties_E4.puppetNurse.damage_F4.position_0.vx;
+        nurse->properties.puppetNurse.damage_F4.position_0.vx = -nurse->properties.puppetNurse.damage_F4.position_0.vx;
     }
 
-    damagePosComp                                            = nurse->properties_E4.puppetNurse.damage_F4.position_0.vy;
-    nurse->properties_E4.puppetNurse.damage_F4.position_0.vy = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
+    damagePosComp                                            = nurse->properties.puppetNurse.damage_F4.position_0.vy;
+    nurse->properties.puppetNurse.damage_F4.position_0.vy = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
 
     if (damagePosComp <= Q12(0.0f))
     {
-        nurse->properties_E4.puppetNurse.damage_F4.position_0.vy = -nurse->properties_E4.puppetNurse.damage_F4.position_0.vy;
+        nurse->properties.puppetNurse.damage_F4.position_0.vy = -nurse->properties.puppetNurse.damage_F4.position_0.vy;
     }
 
-    damagePosComp = nurse->properties_E4.puppetNurse.damage_F4.position_0.vz;
+    damagePosComp = nurse->properties.puppetNurse.damage_F4.position_0.vz;
 
-    nurse->properties_E4.puppetNurse.damage_F4.position_0.vz = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
+    nurse->properties.puppetNurse.damage_F4.position_0.vz = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
     if (damagePosComp <= Q12(0.0f))
     {
-        nurse->properties_E4.puppetNurse.damage_F4.position_0.vz = -nurse->properties_E4.puppetNurse.damage_F4.position_0.vz;
+        nurse->properties.puppetNurse.damage_F4.position_0.vz = -nurse->properties.puppetNurse.damage_F4.position_0.vz;
     }
 
-    nurse->rotation_24.vy = Math_AngleNormalizeSigned(nurse->rotation_24.vy);
+    nurse->rotation.vy = Math_AngleNormalizeSigned(nurse->rotation.vy);
 }
 
 void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coord)
@@ -1551,17 +1551,17 @@ void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOO
     s_AnimInfo* animInfoBase;
 
     animInfoBase = nurseProps.field_124->animInfo_24;
-    sfxIdx0      = Ai_PuppetNurse_AnimSfxGet(FP_FROM(nurse->model_0.anim.time, Q12_SHIFT));
+    sfxIdx0      = Ai_PuppetNurse_AnimSfxGet(FP_FROM(nurse->model.anim.time, Q12_SHIFT));
 
-    WorldGfx_HeldItemAttach(nurse->model_0.charaId_0, nurseProps.modelVariation_119);
-    Math_MatrixTransform(&nurse->position_18, &nurse->rotation_24, coord);
+    WorldGfx_HeldItemAttach(nurse->model.charaId_0, nurseProps.modelVariation_119);
+    Math_MatrixTransform(&nurse->position, &nurse->rotation, coord);
 
-    if (nurse->model_0.anim.status != ANIM_STATUS(0, false))
+    if (nurse->model.anim.status != ANIM_STATUS(0, false))
     {
-        (&animInfoBase[nurse->model_0.anim.status])->playbackFunc(&nurse->model_0, anmHdr, coord, &animInfoBase[nurse->model_0.anim.status]);
+        (&animInfoBase[nurse->model.anim.status])->playbackFunc(&nurse->model, anmHdr, coord, &animInfoBase[nurse->model.anim.status]);
     }
 
-    angle = nurse->properties_E4.npc.field_124->field_18;
+    angle = nurse->properties.npc.field_124->field_18;
     for (i = 0; i < 3; i++)
     {
         for (j = 0; j < 3; j++)
@@ -1570,7 +1570,7 @@ void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOO
         }
     }
 
-    sfxIdx1 = Ai_PuppetNurse_AnimSfxGet(FP_FROM(nurse->model_0.anim.time, Q12_SHIFT));
+    sfxIdx1 = Ai_PuppetNurse_AnimSfxGet(FP_FROM(nurse->model.anim.time, Q12_SHIFT));
     if (sfxIdx1 != sfxIdx0 && sfxIdx1 != 9)
     {
         Ai_PuppetNurse_SfxPlay(nurse, sfxIdx1);
@@ -1611,7 +1611,7 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords)
     Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_RightShin], &boneMats[BoneMatIdx_RightShin]);
     Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_LeftShin], &boneMats[BoneMatIdx_LeftShin]);
 
-    posY                     = localNurse->position_18.vy;
+    posY                     = localNurse->position.vy;
     rightShinPosY            = Q8_TO_Q12(boneMats[BoneMatIdx_RightShin].t[1]);
     leftShinPosY             = Q8_TO_Q12(boneMats[BoneMatIdx_LeftShin].t[1]);
     nurse->field_C8.field_0  = Q8_TO_Q12(boneMats[BoneMatIdx_Head].t[1]);
@@ -1632,8 +1632,8 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords)
     nurse->field_C8.field_6 = ((Q8_TO_Q12(boneMats[BoneMatIdx_Head].t[1]) + Q8_TO_Q12(boneMats[BoneMatIdx_Torso].t[1])) / 2) - posY;
 
     unkQ12 = sharedFunc_800CD6B0_3_s03(boneMats, ARRAY_SIZE(boneMats), &unkPos);
-    deltaX = unkPos.vx - nurse->position_18.vx;
-    deltaY = unkPos.vz - nurse->position_18.vz;
+    deltaX = unkPos.vx - nurse->position.vx;
+    deltaY = unkPos.vz - nurse->position.vz;
 
     unkQ12                    = sharedFunc_800CD940_3_s03(unkQ12 + Q12(0.05f), nurse->field_D4.radius_0);
     nurse->field_D4.field_2   = unkQ12 - Q12(0.05f);
@@ -1643,23 +1643,23 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords)
 
     sharedFunc_800CD920_3_s03(nurse, deltaX, deltaY);
 
-    tempPosComp                                  = nurse->position_18.vx;
-    localNurse->properties_E4.npc.position_E8.vx = tempPosComp;
-    tempPosComp                                  = nurse->position_18.vz;
-    localNurse->properties_E4.npc.position_E8.vz = tempPosComp;
+    tempPosComp                                  = nurse->position.vx;
+    localNurse->properties.npc.position_E8.vx = tempPosComp;
+    tempPosComp                                  = nurse->position.vz;
+    localNurse->properties.npc.position_E8.vz = tempPosComp;
 }
 
 void sharedFunc_800D0968_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords)
 {
     q19_12 posY;
 
-    if (nurse->model_0.anim.flags & AnimFlag_Visible)
+    if (nurse->model.anim.flags & AnimFlag_Visible)
     {
         sharedFunc_800D0828_3_s03(nurse, coords);
         return;
     }
 
-    posY = nurse->position_18.vy;
+    posY = nurse->position.vy;
 
     nurse->field_C8.field_2 = posY;
     nurse->field_C8.field_4 = posY;

@@ -13,7 +13,7 @@
  *  MAP7_S03
  */
 
-#define alessaProps alessa->properties_E4.alessa
+#define alessaProps alessa->properties.alessa
 
 /** Addresses
  * MAP3_S02: 0x800CEC88
@@ -23,7 +23,7 @@
  */
 void Ai_Alessa_Update(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (alessa->model_0.controlState == ModelState_Uninitialized)
+    if (alessa->model.controlState == ModelState_Uninitialized)
     {
         Ai_Alessa_Init(alessa);
     }
@@ -45,8 +45,8 @@ void Ai_Alessa_AnimUpdate(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDIN
 
     if (alessaProps.field_F0 == 0)
     {
-        animInfo = &ALESSA_ANIM_INFOS[alessa->model_0.anim.status];
-        animInfo->playbackFunc(&alessa->model_0, anmHdr, coords, animInfo);
+        animInfo = &ALESSA_ANIM_INFOS[alessa->model.anim.status];
+        animInfo->playbackFunc(&alessa->model, anmHdr, coords, animInfo);
     }
 }
 
@@ -66,9 +66,9 @@ void Ai_Alessa_MovementUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 
-    unused       = alessa->position_18;
-    moveSpeed    = alessa->moveSpeed_38;
-    headingAngle = alessa->headingAngle_3C;
+    unused       = alessa->position;
+    moveSpeed    = alessa->moveSpeed;
+    headingAngle = alessa->headingAngle;
     moveDist     = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveDist);
@@ -76,15 +76,15 @@ void Ai_Alessa_MovementUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
 
     offset.vx = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(alessa->fallSpeed_34, g_DeltaTime);
+    offset.vy = Q12_MULT_PRECISE(alessa->fallSpeed, g_DeltaTime);
 
-    alessa->position_18.vx += offset.vx;
-    alessa->position_18.vy = Q12(0.0f);
-    alessa->position_18.vz += offset.vz;
+    alessa->position.vx += offset.vx;
+    alessa->position.vy = Q12(0.0f);
+    alessa->position.vz += offset.vz;
 
-    coords->coord.t[0] = Q12_TO_Q8(alessa->position_18.vx);
-    coords->coord.t[1] = Q12_TO_Q8(alessa->position_18.vy);
-    coords->coord.t[2] = Q12_TO_Q8(alessa->position_18.vz);
+    coords->coord.t[0] = Q12_TO_Q8(alessa->position.vx);
+    coords->coord.t[1] = Q12_TO_Q8(alessa->position.vy);
+    coords->coord.t[2] = Q12_TO_Q8(alessa->position.vz);
 }
 
 /** Addresses
@@ -120,7 +120,7 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
                 alessaProps.moveSpeed_126  = CLAMP(alessaProps.moveSpeed_126, Q12(0.0f), Q12(1.25f));
             }
 
-            Model_AnimStatusSet(&alessa->model_0, AlessaAnim_WalkForward, false);
+            Model_AnimStatusSet(&alessa->model, AlessaAnim_WalkForward, false);
             Character_AnimStateReset(alessa);
             break;
 
@@ -134,52 +134,52 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
                 }
             }
 
-            Model_AnimStatusKeyframeSet(alessa->model_0, AlessaAnim_StandIdle, true, ALESSA_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(alessa->model, AlessaAnim_StandIdle, true, ALESSA_ANIM_INFOS, 0);
             Character_AnimStateReset(alessa);
             break;
 
         case 4:
-            Model_AnimStatusSet(&alessa->model_0, AlessaAnim_ForcePush, false);
+            Model_AnimStatusSet(&alessa->model, AlessaAnim_ForcePush, false);
             Character_AnimStateReset(alessa);
             break;
 
         case 3:
-            Model_AnimStatusSet(&alessa->model_0, AlessaAnim_WalkForwardTurnStumble, false);
+            Model_AnimStatusSet(&alessa->model, AlessaAnim_WalkForwardTurnStumble, false);
             Character_AnimStateReset(alessa);
             break;
 
         case 5:
-            Model_AnimStatusSet(&alessa->model_0, AlessaAnim_StumbleForwardCrumple, false);
+            Model_AnimStatusSet(&alessa->model, AlessaAnim_StumbleForwardCrumple, false);
             Character_AnimStateReset(alessa);
             break;
 
         case 6:
-            Model_AnimStatusSet(&alessa->model_0, AlessaAnim_CrumpleLookUp, false);
+            Model_AnimStatusSet(&alessa->model, AlessaAnim_CrumpleLookUp, false);
             Character_AnimStateReset(alessa);
             break;
 
         case 7:
-            Model_AnimStatusSet(&alessa->model_0, AlessaAnim_CrumpleShakeHead, false);
+            Model_AnimStatusSet(&alessa->model, AlessaAnim_CrumpleShakeHead, false);
             Character_AnimStateReset(alessa);
             break;
 
         case 8:
-            Model_AnimStatusSet(&alessa->model_0, AlessaAnim_StandLookRight, false);
+            Model_AnimStatusSet(&alessa->model, AlessaAnim_StandLookRight, false);
             Character_AnimStateReset(alessa);
             break;
 
         case 9:
-            Model_AnimStatusSet(&alessa->model_0, AlessaAnim_CrumpleIdle, false);
+            Model_AnimStatusSet(&alessa->model, AlessaAnim_CrumpleIdle, false);
             Character_AnimStateReset(alessa);
             break;
 
         case 10:
-            Model_AnimStatusSet(&alessa->model_0, AlessaAnim_Kneel, false);
+            Model_AnimStatusSet(&alessa->model, AlessaAnim_Kneel, false);
             Character_AnimStateReset(alessa);
             break;
     }
 
-    Collision_Get(&coll, alessa->position_18.vx, alessa->position_18.vz);
+    Collision_Get(&coll, alessa->position.vx, alessa->position.vz);
     func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
 
     switch (alessaProps.stateIdx0)
@@ -189,13 +189,13 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
             break;
 
         case 3:
-            if (alessa->model_0.anim.keyframeIdx < 90)
+            if (alessa->model.anim.keyframeIdx < 90)
             {
-                if (alessa->model_0.anim.keyframeIdx <= 60)
+                if (alessa->model.anim.keyframeIdx <= 60)
                 {
                     sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_WalkForwardTurnStumble, true), alessa, 60, 71, sfx, pitch0);
                 }
-                else if (alessa->model_0.anim.keyframeIdx <= 81)
+                else if (alessa->model.anim.keyframeIdx <= 81)
                 {
                     sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_WalkForwardTurnStumble, true), alessa, 81, 71, sfx, pitch0);
                 }
@@ -206,7 +206,7 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
             }
             else
             {
-                if (alessa->model_0.anim.keyframeIdx <= 111)
+                if (alessa->model.anim.keyframeIdx <= 111)
                 {
                     sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_WalkForwardTurnStumble, true), alessa, 121, 111, sfx, pitch1);
                 }
@@ -218,9 +218,9 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
             break;
 
         case 5:
-            sharedFunc_800D9188_0_s00(alessa->model_0.anim.status, alessa, 210, Sfx_Unk1638);
+            sharedFunc_800D9188_0_s00(alessa->model.anim.status, alessa, 210, Sfx_Unk1638);
 
-            if (alessa->model_0.anim.keyframeIdx <= 173)
+            if (alessa->model.anim.keyframeIdx <= 173)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_StumbleForwardCrumple, true), alessa, 182, 173, sfx, pitch0);
             }
@@ -235,13 +235,13 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
             break;
     }
 
-    alessa->rotation_24.vy  = Q12_ANGLE_ABS(alessa->rotation_24.vy + (sharedData_800D3150_3_s02 >> 4));
-    alessa->headingAngle_3C = alessa->rotation_24.vy;
-    alessa->moveSpeed_38    = alessaProps.moveSpeed_126;
-    alessa->fallSpeed_34   += g_GravitySpeed;
+    alessa->rotation.vy  = Q12_ANGLE_ABS(alessa->rotation.vy + (sharedData_800D3150_3_s02 >> 4));
+    alessa->headingAngle = alessa->rotation.vy;
+    alessa->moveSpeed    = alessaProps.moveSpeed_126;
+    alessa->fallSpeed   += g_GravitySpeed;
 
     coords->flg = false;
-    Math_RotMatrixZxyNegGte(&alessa->rotation_24, &coords->coord);
+    Math_RotMatrixZxyNegGte(&alessa->rotation, &coords->coord);
 }
 
 /** Addresses

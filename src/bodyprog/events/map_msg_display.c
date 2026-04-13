@@ -60,7 +60,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
         hasInput = true;
     }
 
-    g_SysWork.playerWork_4C.player_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
+    g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
     func_8004C564(g_SysWork.playerCombat_38.weaponAttack_F, WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap));
 
     if (msgIdx != mapMsgIdx)

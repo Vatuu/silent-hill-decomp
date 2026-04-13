@@ -117,12 +117,12 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
                 pointRadiusX = mapPoint->triggerParam0_4_16 * Q12(0.25f);
                 pointRadiusZ = mapPoint->triggerParam1_4_24 * Q12(0.25f);
 
-                if (ABS(g_SysWork.playerWork_4C.player_0.position_18.vx - pointPosX) > pointRadiusX)
+                if (ABS(g_SysWork.playerWork_4C.player_0.position.vx - pointPosX) > pointRadiusX)
                 {
                     continue;
                 }
 
-                if (ABS(g_SysWork.playerWork_4C.player_0.position_18.vz - pointPosZ) > pointRadiusZ)
+                if (ABS(g_SysWork.playerWork_4C.player_0.position.vz - pointPosZ) > pointRadiusZ)
                 {
                     continue;
                 }
@@ -221,9 +221,9 @@ bool Event_CollideFacingCheck(s_MapPoint2d* mapPoint) // 0x800378D4
 
     if (g_TickCount > D_800A9A20)
     {
-        rotY       = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
-        D_800A9A24 = g_SysWork.playerWork_4C.player_0.position_18.vx - (Math_Sin(rotY) >> 3); // `/ 8`.
-        D_800A9A28 = g_SysWork.playerWork_4C.player_0.position_18.vz - (Math_Cos(rotY) >> 3); // `/ 8`.
+        rotY       = g_SysWork.playerWork_4C.player_0.rotation.vy;
+        D_800A9A24 = g_SysWork.playerWork_4C.player_0.position.vx - (Math_Sin(rotY) >> 3); // `/ 8`.
+        D_800A9A28 = g_SysWork.playerWork_4C.player_0.position.vz - (Math_Cos(rotY) >> 3); // `/ 8`.
         D_800A9A20 = g_TickCount;
     }
 
@@ -244,7 +244,7 @@ bool Event_CollideFacingCheck(s_MapPoint2d* mapPoint) // 0x800378D4
         return false;
     }
 
-    deltaRotY = g_SysWork.playerWork_4C.player_0.rotation_24.vy - ratan2(deltaX, deltaZ);
+    deltaRotY = g_SysWork.playerWork_4C.player_0.rotation.vy - ratan2(deltaX, deltaZ);
     if (deltaRotY >= Q12_ANGLE(180.0f))
     {
         deltaRotY -= Q12_ANGLE(360.0f);
@@ -276,13 +276,13 @@ bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint) // 0x80037A4C
     s32    scaledSinPlayerRotY;
     s32    scaledCosRotY;
 
-    halfSinRotY   = Math_Sin(g_SysWork.playerWork_4C.player_0.rotation_24.vy) >> 1; // `/ 2`.
+    halfSinRotY   = Math_Sin(g_SysWork.playerWork_4C.player_0.rotation.vy) >> 1; // `/ 2`.
     scaledCosRotY = -Math_Cos(Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0_4_16)) * mapPoint->triggerParam1_4_24;
 
     clampedHalfCosPlayerRotY = halfSinRotY;
 
     temp_a0_2 = scaledCosRotY >> 4; // `/ 16`.
-    deltaX    = mapPoint->positionX_0 - g_SysWork.playerWork_4C.player_0.position_18.vx;
+    deltaX    = mapPoint->positionX_0 - g_SysWork.playerWork_4C.player_0.position.vx;
     temp_s2   = deltaX - temp_a0_2;
     temp_s4   = deltaX + temp_a0_2;
 
@@ -301,14 +301,14 @@ bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint) // 0x80037A4C
     {
         if (MIN(halfSinRotY, 0) <= MAX(temp_s2, temp_s4))
         {
-            halfCosPlayerRotY   = Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy) >> 1; // `/ 2`.
+            halfCosPlayerRotY   = Math_Cos(g_SysWork.playerWork_4C.player_0.rotation.vy) >> 1; // `/ 2`.
             scaledSinPlayerRotY = Math_Sin(Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0_4_16)) *
                                   mapPoint->triggerParam1_4_24;
 
             clampedHalfCosPlayerRotY = halfCosPlayerRotY;
 
             temp_a0_2 = scaledSinPlayerRotY >> 4; // `/ 16`.
-            deltaZ    = mapPoint->positionZ_8 - g_SysWork.playerWork_4C.player_0.position_18.vz;
+            deltaZ    = mapPoint->positionZ_8 - g_SysWork.playerWork_4C.player_0.position.vz;
             temp_v1   = deltaZ - temp_a0_2;
             temp_a2   = deltaZ + temp_a0_2;
 
@@ -353,13 +353,13 @@ bool Event_CollideObbCheck(s_MapPoint2d* mapPoint) // 0x80037C5C
 
     shift8Field_7 = mapPoint->triggerParam1_4_24 << 8;
 
-    deltaX = g_SysWork.playerWork_4C.player_0.position_18.vx - mapPoint->positionX_0;
+    deltaX = g_SysWork.playerWork_4C.player_0.position.vx - mapPoint->positionX_0;
     if (mapPoint->triggerParam1_4_24 << 9 < ABS(deltaX))
     {
         return false;
     }
 
-    deltaZ = g_SysWork.playerWork_4C.player_0.position_18.vz - mapPoint->positionZ_8;
+    deltaZ = g_SysWork.playerWork_4C.player_0.position.vz - mapPoint->positionZ_8;
     scale  = 2;
     if ((shift8Field_7 * scale) < ABS(deltaZ))
     {

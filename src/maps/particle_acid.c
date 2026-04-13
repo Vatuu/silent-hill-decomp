@@ -212,13 +212,13 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
             sharedFunc_800CBE54_4_s03(&ray.field_4, 1);
             sharedFunc_800CBE54_4_s03(&rayFrom, 1);
 
-            if (g_SysWork.npcs_1A0[0].model_0.charaId_0 == Chara_Floatstinger)
+            if (g_SysWork.npcs_1A0[0].model.charaId_0 == Chara_Floatstinger)
             {
-                sub->attackReceived_41 = 60;
+                sub->attackReceived = 60;
             }
-            else if (g_SysWork.npcs_1A0[0].model_0.charaId_0 == Chara_Twinfeeler)
+            else if (g_SysWork.npcs_1A0[0].model.charaId_0 == Chara_Twinfeeler)
             {
-                sub->attackReceived_41 = 62;
+                sub->attackReceived = 62;
             }
         }
         else

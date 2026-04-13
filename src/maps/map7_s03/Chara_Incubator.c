@@ -8,7 +8,7 @@
 
 void Ai_Incubator_Update(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D3BC4
 {
-    if (incubator->model_0.charaId_0 != Chara_Incubator)
+    if (incubator->model.charaId_0 != Chara_Incubator)
     {
         Ai_Incubator_Init(incubator);
     }
@@ -23,10 +23,10 @@ void Ai_Incubator_AnimUpdate(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsC
     s_AnimInfo* animInfo;
 
     // TODO: Wrong properties union.
-    if (incubator->properties_E4.player.field_F0 == 0)
+    if (incubator->properties.player.field_F0 == 0)
     {
-        animInfo = &INCUBATOR_ANIM_INFOS[incubator->model_0.anim.status];
-        animInfo->playbackFunc(&incubator->model_0, anmHdr, coords, animInfo);
+        animInfo = &INCUBATOR_ANIM_INFOS[incubator->model.anim.status];
+        animInfo->playbackFunc(&incubator->model, anmHdr, coords, animInfo);
     }
 }
 
@@ -40,9 +40,9 @@ void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* coords)
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 
-    unused       = incubator->position_18;
-    moveSpeed    = incubator->moveSpeed_38;
-    headingAngle = incubator->headingAngle_3C;
+    unused       = incubator->position;
+    moveSpeed    = incubator->moveSpeed;
+    headingAngle = incubator->headingAngle;
     moveAmt      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
@@ -50,64 +50,64 @@ void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* coords)
 
     offset.vx = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(incubator->fallSpeed_34, g_DeltaTime);
+    offset.vy = Q12_MULT_PRECISE(incubator->fallSpeed, g_DeltaTime);
 
-    incubator->position_18.vx += offset.vx;
-    incubator->position_18.vy  = Q12(0.0f);
-    incubator->position_18.vz += offset.vz;
+    incubator->position.vx += offset.vx;
+    incubator->position.vy  = Q12(0.0f);
+    incubator->position.vz += offset.vz;
 
-    coords->coord.t[0] = Q12_TO_Q8(incubator->position_18.vx);
-    coords->coord.t[1] = Q12_TO_Q8(incubator->position_18.vy);
-    coords->coord.t[2] = Q12_TO_Q8(incubator->position_18.vz);
+    coords->coord.t[0] = Q12_TO_Q8(incubator->position.vx);
+    coords->coord.t[1] = Q12_TO_Q8(incubator->position.vy);
+    coords->coord.t[2] = Q12_TO_Q8(incubator->position.vz);
 }
 
 void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* coords) // 0x800D3E18
 {
-    switch (incubator->properties_E4.dahlia.stateIdx0)
+    switch (incubator->properties.dahlia.stateIdx0)
     {
         case 0:
             break;
 
         case 1:
-            Model_AnimStatusSet(&incubator->model_0, 2, false);
+            Model_AnimStatusSet(&incubator->model, 2, false);
 
-            if (incubator->properties_E4.dahlia.resetStateIdx0_F8 != 0)
+            if (incubator->properties.dahlia.resetStateIdx0_F8 != 0)
             {
-                incubator->properties_E4.dahlia.stateIdx0 = 0;
-                incubator->model_0.stateStep = 0;
-                incubator->properties_E4.dahlia.resetStateIdx0_F8 = 0;
+                incubator->properties.dahlia.stateIdx0 = 0;
+                incubator->model.stateStep = 0;
+                incubator->properties.dahlia.resetStateIdx0_F8 = 0;
             }
             break;
 
         case 2:
-            Model_AnimStatusKeyframeSet(incubator->model_0, 3, true, INCUBATOR_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(incubator->model, 3, true, INCUBATOR_ANIM_INFOS, 0);
 
-            if (incubator->properties_E4.dahlia.resetStateIdx0_F8)
+            if (incubator->properties.dahlia.resetStateIdx0_F8)
             {
-                incubator->properties_E4.dahlia.stateIdx0 = 0;
-                incubator->model_0.stateStep = 0;
-                incubator->properties_E4.dahlia.resetStateIdx0_F8 = 0;
+                incubator->properties.dahlia.stateIdx0 = 0;
+                incubator->model.stateStep = 0;
+                incubator->properties.dahlia.resetStateIdx0_F8 = 0;
             }
             break;
 
         case 3:
-            Model_AnimStatusSet(&incubator->model_0, 1, false);
+            Model_AnimStatusSet(&incubator->model, 1, false);
 
-            if (incubator->properties_E4.dahlia.resetStateIdx0_F8)
+            if (incubator->properties.dahlia.resetStateIdx0_F8)
             {
-                incubator->properties_E4.dahlia.stateIdx0 = 0;
-                incubator->model_0.stateStep = 0;
-                incubator->properties_E4.dahlia.resetStateIdx0_F8 = 0;
+                incubator->properties.dahlia.stateIdx0 = 0;
+                incubator->model.stateStep = 0;
+                incubator->properties.dahlia.resetStateIdx0_F8 = 0;
             }
             break;
     }
 
-    incubator->headingAngle_3C = incubator->rotation_24.vy;
-    incubator->moveSpeed_38 = incubator->properties_E4.splitHead.moveDistance_126;
-    incubator->fallSpeed_34   += g_GravitySpeed;
+    incubator->headingAngle = incubator->rotation.vy;
+    incubator->moveSpeed = incubator->properties.splitHead.moveDistance_126;
+    incubator->fallSpeed   += g_GravitySpeed;
 
     coords->flg = false;
-    Math_RotMatrixZxyNegGte(&incubator->rotation_24, &coords->coord);
+    Math_RotMatrixZxyNegGte(&incubator->rotation, &coords->coord);
 }
 
 void Ai_Incubator_Init(s_SubCharacter* incubator) // 0x800D3F38

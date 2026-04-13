@@ -20,7 +20,7 @@
  */
 void Ai_BloodyLisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (chara->model_0.controlState == ModelState_Uninitialized)
+    if (chara->model.controlState == ModelState_Uninitialized)
     {
         Ai_BloodyLisa_Init(chara);
     }
@@ -39,10 +39,10 @@ void Ai_BloodyLisa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
 {
     s_AnimInfo* animInfo;
 
-    if (chara->properties_E4.player.field_F0 == 0)
+    if (chara->properties.player.field_F0 == 0)
     {
-        animInfo = &BLOODY_LISA_ANIM_INFOS[chara->model_0.anim.status];
-        animInfo->playbackFunc(&chara->model_0, anmHdr, coords, animInfo);
+        animInfo = &BLOODY_LISA_ANIM_INFOS[chara->model.anim.status];
+        animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
     }
 }
 
@@ -61,9 +61,9 @@ void Ai_BloodyLisa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 
-    unused       = chara->position_18;
-    moveSpeed    = chara->moveSpeed_38;
-    headingAngle = chara->headingAngle_3C;
+    unused       = chara->position;
+    moveSpeed    = chara->moveSpeed;
+    headingAngle = chara->headingAngle;
     moveAmt      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
@@ -71,15 +71,15 @@ void Ai_BloodyLisa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
     offset.vx = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime);
+    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed, g_DeltaTime);
 
-    chara->position_18.vx += offset.vx;
-    chara->position_18.vy  = Q12(0.0f);
-    chara->position_18.vz += offset.vz;
+    chara->position.vx += offset.vx;
+    chara->position.vy  = Q12(0.0f);
+    chara->position.vz += offset.vz;
 
-    coords->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
-    coords->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
-    coords->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
+    coords->coord.t[0] = Q12_TO_Q8(chara->position.vx);
+    coords->coord.t[1] = Q12_TO_Q8(chara->position.vy);
+    coords->coord.t[2] = Q12_TO_Q8(chara->position.vz);
 }
 
  /** Addresses
@@ -94,7 +94,7 @@ void Ai_BloodyLisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
     s8          pitch0;
     s8          pitch1;
 
-    #define dahliaProps (chara->properties_E4.dahlia)
+    #define dahliaProps (chara->properties.dahlia)
 
     switch (dahliaProps.stateIdx0)
     {
@@ -102,22 +102,22 @@ void Ai_BloodyLisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 6:
-            Model_AnimStatusSet(&chara->model_0, BloodyLisaAnim_Walk, false);
+            Model_AnimStatusSet(&chara->model, BloodyLisaAnim_Walk, false);
             Character_AnimStateReset(chara);
             break;
     }
 
-    Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
+    Collision_Get(&coll, chara->position.vx, chara->position.vz);
     func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
 
     switch (dahliaProps.stateIdx0)
     {
         case 6:
-            if (chara->model_0.anim.keyframeIdx <= 12)
+            if (chara->model.anim.keyframeIdx <= 12)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(BloodyLisaAnim_Walk, true), chara, 12, 27, sfx, pitch0);
             }
-            else if (chara->model_0.anim.keyframeIdx <= 49)
+            else if (chara->model.anim.keyframeIdx <= 49)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(BloodyLisaAnim_Walk, true), chara, 49, 27, sfx, pitch0);
             }
@@ -128,13 +128,13 @@ void Ai_BloodyLisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
     }
 
-    chara->rotation_24.vy  = Q12_ANGLE_ABS(chara->rotation_24.vy + Q8_TO_Q4(sharedData_800E2C38_7_s01));
-    chara->headingAngle_3C = chara->rotation_24.vy;
-    chara->moveSpeed_38    = dahliaProps.moveDistance_126;
-    chara->fallSpeed_34   += g_GravitySpeed;
+    chara->rotation.vy  = Q12_ANGLE_ABS(chara->rotation.vy + Q8_TO_Q4(sharedData_800E2C38_7_s01));
+    chara->headingAngle = chara->rotation.vy;
+    chara->moveSpeed    = dahliaProps.moveDistance_126;
+    chara->fallSpeed   += g_GravitySpeed;
 
     coords->flg = false;
-    Math_RotMatrixZxyNegGte(&chara->rotation_24, &coords->coord);
+    Math_RotMatrixZxyNegGte(&chara->rotation, &coords->coord);
 }
 
  /** Addresses

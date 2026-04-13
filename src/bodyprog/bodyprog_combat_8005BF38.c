@@ -58,8 +58,8 @@ void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara) // 0x8005C814
     offsetX1 = arg0->offsetX_4;
     offsetZ1 = arg0->offsetZ_6;
 
-    cosRotY = Math_Cos(chara->rotation_24.vy);
-    sinRotY = Math_Sin(chara->rotation_24.vy);
+    cosRotY = Math_Cos(chara->rotation.vy);
+    sinRotY = Math_Sin(chara->rotation.vy);
 
     chara->field_D8.offsetX_0 = FP_FROM(( offsetX0 * cosRotY) + (offsetZ0 * sinRotY), Q12_SHIFT);
     chara->field_D8.offsetZ_2 = FP_FROM((-offsetX0 * sinRotY) + (offsetZ0 * cosRotY), Q12_SHIFT);
@@ -80,8 +80,8 @@ s32 func_8005C944(s_SubCharacter* chara, s_CollisionResult* collResult) // 0x800
     q19_12            sinHeadingAngle;
     s32               wallResponse;
 
-    headingAngle = chara->headingAngle_3C;
-    temp_s0 = Q12_MULT_PRECISE(g_DeltaTime, chara->moveSpeed_38);
+    headingAngle = chara->headingAngle;
+    temp_s0 = Q12_MULT_PRECISE(g_DeltaTime, chara->moveSpeed);
     temp_s2 = OVERFLOW_GUARD(temp_s0);
     temp_s3 = temp_s2 >> 1;
 
@@ -91,18 +91,18 @@ s32 func_8005C944(s_SubCharacter* chara, s_CollisionResult* collResult) // 0x800
 
     offset.vx = Q12_MULT_PRECISE(temp_s0_2, temp_v0) << temp_s2;
     offset.vz = Q12_MULT_PRECISE(temp_s0_2, Math_Cos(headingAngle) >> temp_s3) << temp_s2;
-    offset.vy = Q12_MULT_PRECISE(g_DeltaTime, chara->fallSpeed_34);
+    offset.vy = Q12_MULT_PRECISE(g_DeltaTime, chara->fallSpeed);
 
     wallResponse = Collision_WallDetect(&collResult0, &offset, chara);
 
-    chara->position_18.vx += collResult0.offset_0.vx;
-    chara->position_18.vy += collResult0.offset_0.vy;
-    chara->position_18.vz += collResult0.offset_0.vz;
+    chara->position.vx += collResult0.offset_0.vx;
+    chara->position.vy += collResult0.offset_0.vy;
+    chara->position.vz += collResult0.offset_0.vz;
 
-    if (chara->position_18.vy > collResult0.field_C)
+    if (chara->position.vy > collResult0.field_C)
     {
-        chara->position_18.vy = collResult0.field_C;
-        chara->fallSpeed_34   = Q12(0.0f);
+        chara->position.vy = collResult0.field_C;
+        chara->fallSpeed   = Q12(0.0f);
     }
 
     if (collResult != NULL)
@@ -127,8 +127,8 @@ s32 func_8005CB20(s_SubCharacter* chara, s_CollisionResult* arg1, q3_12 offsetX,
     q19_12     sinHeadingAngle;
     s32        ret;
 
-    headingAngle = chara->headingAngle_3C;
-    temp_s0 = Q12_MULT_PRECISE(g_DeltaTime, chara->moveSpeed_38);
+    headingAngle = chara->headingAngle;
+    temp_s0 = Q12_MULT_PRECISE(g_DeltaTime, chara->moveSpeed);
     temp_s2 = OVERFLOW_GUARD(temp_s0);
     temp_s3 = temp_s2 >> 1;
 
@@ -140,21 +140,21 @@ s32 func_8005CB20(s_SubCharacter* chara, s_CollisionResult* arg1, q3_12 offsetX,
     temp_v0_4 = Math_Cos(headingAngle) >> temp_s3;
     offset.vz = (s32)Q12_MULT_PRECISE(temp_s0_2, temp_v0_4) << temp_s2;
 
-    sinHeadingAngle = chara->fallSpeed_34;
+    sinHeadingAngle = chara->fallSpeed;
     offset.vx += offsetX;
     offset.vy  = Q12_MULT_PRECISE(g_DeltaTime, sinHeadingAngle);
     offset.vz += offsetZ;
 
     ret = Collision_WallDetect(&sp10, &offset, chara);
 
-    chara->position_18.vx += sp10.offset_0.vx;
-    chara->position_18.vy += sp10.offset_0.vy;
-    chara->position_18.vz += sp10.offset_0.vz;
+    chara->position.vx += sp10.offset_0.vx;
+    chara->position.vy += sp10.offset_0.vy;
+    chara->position.vz += sp10.offset_0.vz;
 
-    if (chara->position_18.vy > sp10.field_C)
+    if (chara->position.vy > sp10.field_C)
     {
-        chara->position_18.vy = sp10.field_C;
-        chara->fallSpeed_34   = Q12(0.0f);
+        chara->position.vy = sp10.field_C;
+        chara->fallSpeed   = Q12(0.0f);
     }
 
     if (arg1 != NULL)
@@ -188,9 +188,9 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
         return false;
     }
 
-    unkPos.vx = (npc.position_18.vx + npc.field_D8.offsetX_0) - unkOffset->vx;
-    unkPos.vy = (npc.position_18.vy + npc.field_C8.field_6) - unkOffset->vy;
-    unkPos.vz = (npc.position_18.vz + npc.field_D8.offsetZ_2) - unkOffset->vz;
+    unkPos.vx = (npc.position.vx + npc.field_D8.offsetX_0) - unkOffset->vx;
+    unkPos.vy = (npc.position.vy + npc.field_C8.field_6) - unkOffset->vy;
+    unkPos.vz = (npc.position.vz + npc.field_D8.offsetZ_2) - unkOffset->vz;
 
     mag0 = Math_Vector2MagCalc(unkPos.vx, unkPos.vz);
     angle0 = ratan2(unkPos.vx, unkPos.vz);
@@ -206,15 +206,15 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
         #define curNpc g_SysWork.npcs_1A0[i]
 
         // Check if NPC is valid.
-        if (curNpc.model_0.charaId_0 == Chara_None ||
-            curNpc.health_B0 < Q12(0.0f) || i == npcIdx)
+        if (curNpc.model.charaId_0 == Chara_None ||
+            curNpc.health < Q12(0.0f) || i == npcIdx)
         {
             continue;
         }
 
-        unkPos.vx = (curNpc.position_18.vx + curNpc.field_D8.offsetX_0) - unkOffset->vx;
-        unkPos.vy = (curNpc.position_18.vy + curNpc.field_C8.field_6) - unkOffset->vy;
-        unkPos.vz = (curNpc.position_18.vz + curNpc.field_D8.offsetZ_2) - unkOffset->vz;
+        unkPos.vx = (curNpc.position.vx + curNpc.field_D8.offsetX_0) - unkOffset->vx;
+        unkPos.vy = (curNpc.position.vy + curNpc.field_C8.field_6) - unkOffset->vy;
+        unkPos.vz = (curNpc.position.vz + curNpc.field_D8.offsetZ_2) - unkOffset->vz;
 
         angle2 = ratan2(unkPos.vx, unkPos.vz);
         if (angleConstraint < ABS(Math_AngleNormalizeSigned(angle0 - angle2)))

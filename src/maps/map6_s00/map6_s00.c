@@ -339,7 +339,7 @@ void func_800EB11C(void) // 0x800EB11C
 
     if (D_800F0040 >= 0)
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", D_800F0040, FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position, &g_SysWork.playerWork_4C.player_0.rotation, "HERO", D_800F0040, FS_BUFFER_15);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800F0668, &D_800F0678, NULL, D_800F0040, FS_BUFFER_15));
         vcUserCamTarget(&D_800F0668, NULL, true);
         vcUserWatchTarget(&D_800F0678, NULL, true);
@@ -497,9 +497,9 @@ void func_800EC4B4(s32 arg0) // 0x800EC4B4
     ptr2 = FS_BUFFER_1;
     ptr  = PSX_SCRATCH;
 
-    posX = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vx, Q12_SHIFT);
-    posY = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vy, Q12_SHIFT);
-    posZ = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vz, Q12_SHIFT);
+    posX = FP_FROM(g_SysWork.playerWork_4C.player_0.position.vx, Q12_SHIFT);
+    posY = FP_FROM(g_SysWork.playerWork_4C.player_0.position.vy, Q12_SHIFT);
+    posZ = FP_FROM(g_SysWork.playerWork_4C.player_0.position.vz, Q12_SHIFT);
 
     ptr->field_5C.vx = posX << 8;
     ptr->field_5C.vy = posY << 8;

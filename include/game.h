@@ -231,26 +231,26 @@ struct _Model;
  * if the chunk index will be a positive number. Seems like they forgot to use `ABS`?
  */
 #define PLAYER_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                                        \
-    (__chunkIdx = g_SysWork.playerWork_4C.player_0.position_18.comp / Q12(40.0f),                        \
-     ((g_SysWork.playerWork_4C.player_0.position_18.comp >  Q12(0.0f) && (__chunkIdx + (x0)) == (x1)) || \
-      (g_SysWork.playerWork_4C.player_0.position_18.comp <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
+    (__chunkIdx = g_SysWork.playerWork_4C.player_0.position.comp / Q12(40.0f),                        \
+     ((g_SysWork.playerWork_4C.player_0.position.comp >  Q12(0.0f) && (__chunkIdx + (x0)) == (x1)) || \
+      (g_SysWork.playerWork_4C.player_0.position.comp <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
 
 #define PLAYER_NOT_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                                    \
-    (__chunkIdx = g_SysWork.playerWork_4C.player_0.position_18.comp / Q12(40.0f),                        \
-     ((g_SysWork.playerWork_4C.player_0.position_18.comp >  Q12(0.0f) && (__chunkIdx + (x0)) != (x1)) || \
-      (g_SysWork.playerWork_4C.player_0.position_18.comp <= Q12(0.0f) && (__chunkIdx + (x2)) != (x3))))
+    (__chunkIdx = g_SysWork.playerWork_4C.player_0.position.comp / Q12(40.0f),                        \
+     ((g_SysWork.playerWork_4C.player_0.position.comp >  Q12(0.0f) && (__chunkIdx + (x0)) != (x1)) || \
+      (g_SysWork.playerWork_4C.player_0.position.comp <= Q12(0.0f) && (__chunkIdx + (x2)) != (x3))))
 
 #define MAP_CHUNK_CHECK_VARIABLE_DECL_2() \
     s32 __chunkIdx2
 
 #define PLAYER_IN_MAP_CHUNK_2(comp, x0, x1, x2, x3)                                                      \
-    (__chunkIdx2 = g_SysWork.playerWork_4C.player_0.position_18.comp / Q12(40.0f),                       \
-     ((g_SysWork.playerWork_4C.player_0.position_18.comp >  Q12(0.0f) && (__chunkIdx2 + (x0)) < (x1)) || \
-      (g_SysWork.playerWork_4C.player_0.position_18.comp <= Q12(0.0f) && (__chunkIdx2 + (x2)) < (x3))))
+    (__chunkIdx2 = g_SysWork.playerWork_4C.player_0.position.comp / Q12(40.0f),                       \
+     ((g_SysWork.playerWork_4C.player_0.position.comp >  Q12(0.0f) && (__chunkIdx2 + (x0)) < (x1)) || \
+      (g_SysWork.playerWork_4C.player_0.position.comp <= Q12(0.0f) && (__chunkIdx2 + (x2)) < (x3))))
 
 #define PLAYER_NEAR_POS(comp, base, tol)                                                                                                                             \
-    (((g_SysWork.playerWork_4C.player_0.position_18.comp - Q12(base)) >= Q12(0.0f)) ? ((g_SysWork.playerWork_4C.player_0.position_18.comp - Q12(base)) < Q12(tol)) : \
-                                                                                      ((Q12(base) - g_SysWork.playerWork_4C.player_0.position_18.comp) < Q12(tol)))
+    (((g_SysWork.playerWork_4C.player_0.position.comp - Q12(base)) >= Q12(0.0f)) ? ((g_SysWork.playerWork_4C.player_0.position.comp - Q12(base)) < Q12(tol)) : \
+                                                                                      ((Q12(base) - g_SysWork.playerWork_4C.player_0.position.comp) < Q12(tol)))
 
 #define MIN_OFFSET(x, neg, pos) \
     ((((x) + (-neg)) <= ((x) + (pos))) ? ((x) - (neg)) : ((x) + (pos)))
@@ -559,7 +559,7 @@ typedef enum _ControllerFlags
     ControllerFlag_LStickLeft   = 1 << 27  // 0x8000000
 } e_ControllerFlags;
 
-/** @brief Character flags. Used by `s_SubCharacter::flags_3E`. */
+/** @brief Character flags. Used by `s_SubCharacter::flags`. */
 typedef enum _CharaFlags
 {
     CharaFlag_None    = 0,
@@ -1310,7 +1310,7 @@ typedef struct _PropertiesPlayer
     u8            field_10C;    // Player SFX pitch?
     u8            field_10D;
     s8            unk_10E[2];
-    q19_12        timer_110; // Increases when `flags_3E & CharaFlag_Unk4` is set, reset when reaches `D_800C45EC`.
+    q19_12        timer_110; // Increases when `flags & CharaFlag_Unk4` is set, reset when reaches `D_800C45EC`.
     q19_12        gasWeaponPowerTimer_114; // Timer for the rock drill and chainsaw power.
     s16           field_118;
     s8            unk_11A[2];
@@ -1713,7 +1713,7 @@ typedef struct
 {
     s16 field_0; // Something dependent on `CharaFlag_Unk8`.
     u8  field_2; // In player: packed weapon attack. See `WEAPON_ATTACK`.
-                 // This is not the same as `attackReceived_41`, as this value only resets when player is aiming.
+                 // This is not the same as `attackReceived`, as this value only resets when player is aiming.
                  // In NPCs: Indicates attack performed on player.
     u8      field_3;
     u8      field_4;
@@ -1750,35 +1750,35 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter_D4, 4);
 
 typedef struct _SubCharacter
 {
-    /* 0x0  */ s_Model           model_0;           // In player: Manage the half lower part of Harry's body animations (legs and feet).
-    /* 0x18 */ VECTOR3           position_18;       /** Q19.12 */
-    /* 0x24 */ SVECTOR3          rotation_24;       /** Q3.12 */
-    /* 0x2A */ q3_12             field_2A;          // Angle related to `rotation_24`, unknown purpose.
-    /* 0x2C */ SVECTOR3          rotationSpeed_2C;  /** Q3.12 | Range: `[Q12_ANGLE(-157.5f), Q12_ANGLE(157.5f)]`. */
-    /* 0x32 */ q3_12             field_32;          // Related to `rotationSpeed_2C`, unknown purpose.
-    /* 0x34 */ q19_12            fallSpeed_34;
-    /* 0x38 */ q19_12            moveSpeed_38;
-    /* 0x3C */ q3_12             headingAngle_3C;
-    /* 0x3E */ s16               flags_3E;          /** `e_CharaFlags` */
-    /* 0x40 */ s8                field_40;          // In player: Index of the NPC attacking the player.
-                                                    // In NPCs: Unknown.
-                                                    // Possibly `Game_NpcRoomInitSpawn` may have the answer, indicating
-                                                    // it's used to indicate the NPC index in `s_Savegame::ovlEnemyStates`.
-    /* 0x41 */ s8                attackReceived_41; // Packed weapon attack indicating what attack has been performed to the character. See `WEAPON_ATTACK`.
+    /* 0x0  */ s_Model           model;          // In player: Manage the half lower part of Harry's body animations (legs and feet).
+    /* 0x18 */ VECTOR3           position;       /** Q19.12 */
+    /* 0x24 */ SVECTOR3          rotation;       /** Q3.12 */
+    /* 0x2A */ q3_12             field_2A;       // Angle related to `rotation`, unknown purpose.
+    /* 0x2C */ SVECTOR3          rotationSpeed;  /** Q3.12 | Range: `[Q12_ANGLE(-157.5f), Q12_ANGLE(157.5f)]`. */
+    /* 0x32 */ q3_12             field_32;       // Related to `rotationSpeed`, unknown purpose.
+    /* 0x34 */ q19_12            fallSpeed;
+    /* 0x38 */ q19_12            moveSpeed;
+    /* 0x3C */ q3_12             headingAngle;
+    /* 0x3E */ s16               flags;          /** `e_CharaFlags` */
+    /* 0x40 */ s8                field_40;       // In player: Index of the NPC attacking the player.
+                                                 // In NPCs: Unknown.
+                                                 // Possibly `Game_NpcRoomInitSpawn` may have the answer, indicating
+                                                 // it's used to indicate the NPC index in `s_Savegame::ovlEnemyStates`.
+    /* 0x41 */ s8                attackReceived; // Packed weapon attack indicating what attack has been performed to the character. See `WEAPON_ATTACK`.
                // 2 bytes of padding.
     /* 0x44 */ s_SubCharacter_44 field_44;
-    /* 0xB0 */ q19_12            health_B0;
-    /* 0xB4 */ s_CharaDamage     damage_B4;
-    /* 0xC4 */ u16               deathTimer_C4;     // Part of `shBattleInfo` struct in SH2, may use something similar here.
-    /* 0xC6 */ q3_12             timer_C6;          // Some sort of timer. Written to by `Ai_LarvalStalker_Update`.
+    /* 0xB0 */ q19_12            health;
+    /* 0xB4 */ s_CharaDamage     damage;
+    /* 0xC4 */ u16               deathTimer;     // Part of `shBattleInfo` struct in SH2, may use something similar here.
+    /* 0xC6 */ q3_12             timer_C6;       // Some sort of timer. Written to by `Ai_LarvalStalker_Update`.
 
     // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
     /* 0xC8 */ s_SubCharacter_C8 field_C8;
-    /* 0xD4 */ s_SubCharacter_D4 field_D4;          // Contains collision radius and somethign else.
-    /* 0xD8 */ s_SubCharacter_D8 field_D8;          // Translation data?
-    /* 0xE0 */ u8                field_E0;          // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.
-    /* 0xE1 */ s8                field_E1_0 : 4;    // State.
-    /* 0xE1 */ u8                field_E1_4 : 4;    // Index for array of `s_func_8006CF18`.
+    /* 0xD4 */ s_SubCharacter_D4 field_D4;       // Contains collision radius and somethign else.
+    /* 0xD8 */ s_SubCharacter_D8 field_D8;       // Translation data?
+    /* 0xE0 */ u8                field_E0;       // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.
+    /* 0xE1 */ s8                field_E1_0 : 4; // State.
+    /* 0xE1 */ u8                field_E1_4 : 4; // Index for array of `s_func_8006CF18`.
     /* 0xE4 */ s_func_8006CF18*  field_E4;
 
              union
@@ -1803,13 +1803,13 @@ typedef struct _SubCharacter
                  s_PropertiesSplitHead       splitHead;
                  s_PropertiesStalker         stalker;
                  s_PropertiesTwinfeeler      twinfeeler;
-    /* 0xE4 */ } properties_E4;
+    /* 0xE4 */ } properties;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
 typedef struct _PlayerExtra
 {
-    s_Model           model_0;              /** Manages upper half body's animations (torso, arms, head). */
+    s_Model           model;              /** Manages upper half body's animations (torso, arms, head). */
     s32               disabledAnimBones_18; /** Bitfield of disabled animation bones. Can be created using the `BITMASK_RANGE` macro. */
     s32               state_1C;             /** `e_PlayerState` */
     s32               upperBodyState_20;    /** `e_PlayerUpperBodyState` */
@@ -2234,14 +2234,14 @@ static inline s32 Flags16b_IsSet(const u16* flags, s32 flagIdx)
 static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 keyframeIdx)
 {
     // TODO: Problem with header includes prevents `Q12` macro use.
-    chara->model_0.anim.status      = animStatus;
-    chara->model_0.anim.time        = keyframeIdx << 12;//Q12(keyframeIdx);
-    chara->model_0.anim.keyframeIdx = keyframeIdx;
+    chara->model.anim.status      = animStatus;
+    chara->model.anim.time        = keyframeIdx << 12;//Q12(keyframeIdx);
+    chara->model.anim.keyframeIdx = keyframeIdx;
 }
 
-/** @brief Checks if the `s_SubCharacter*` has the given `flags_3E` value set. */
+/** @brief Checks if the `s_SubCharacter*` has the given `flags` value set. */
 #define Chara_HasFlag(chara, flag) \
-    ((chara)->flags_3E & (flag))
+    ((chara)->flags & (flag))
 
 /** @brief Sets given animation flags for a model.
  *
@@ -2318,11 +2318,11 @@ static inline void Character_AnimStateReset(s_SubCharacter* chara)
 {
     // TODO: This uses `dahlia` part of union, but is most likely either a `human` part shared with all humanoid characters
     // or humanoids only share a small portion early in the union.
-    if (chara->properties_E4.dahlia.resetStateIdx0_F8)
+    if (chara->properties.dahlia.resetStateIdx0_F8)
     {
-        chara->properties_E4.dahlia.stateIdx0         = 0;
-        chara->model_0.stateStep                    = 0;
-        chara->properties_E4.dahlia.resetStateIdx0_F8 = 0;
+        chara->properties.dahlia.stateIdx0         = 0;
+        chara->model.stateStep                    = 0;
+        chara->properties.dahlia.resetStateIdx0_F8 = 0;
     }
 }
 
@@ -2333,7 +2333,7 @@ static inline void Character_AnimStateReset(s_SubCharacter* chara)
 #define Chara_PropertiesClear(chara)                           \
     for (i = 0; i < 16; i++)                                   \
     {                                                          \
-        chara->properties_E4.dummy.properties_E8[i].val32 = 0; \
+        chara->properties.dummy.properties_E8[i].val32 = 0; \
     }
 
 /** @brief Clears a character's damage field.
@@ -2341,10 +2341,10 @@ static inline void Character_AnimStateReset(s_SubCharacter* chara)
  * @param chara Character to update.
  */
 #define Chara_DamageClear(chara)                  \
-    (chara)->damage_B4.amount_C      = Q12(0.0f); \
-    (chara)->damage_B4.position_0.vz = Q12(0.0f); \
-    (chara)->damage_B4.position_0.vy = Q12(0.0f); \
-    (chara)->damage_B4.position_0.vx = Q12(0.0f)
+    (chara)->damage.amount_C      = Q12(0.0f); \
+    (chara)->damage.position_0.vz = Q12(0.0f); \
+    (chara)->damage.position_0.vy = Q12(0.0f); \
+    (chara)->damage.position_0.vx = Q12(0.0f)
 
 /** @brief Sets a character's received attack type.
  *
@@ -2355,13 +2355,13 @@ static inline void Character_AnimStateReset(s_SubCharacter* chara)
  * @param attack Attack type to set.
  */
 #define Chara_AttackReceivedSet(chara, attack) \
-    (chara)->attackReceived_41 = (attack)
+    (chara)->attackReceived = (attack)
 
 /** @brief Gets a character's received attack type.
  *
  * @param chara Character to update.
  */
 #define Chara_AttackReceivedGet(chara) \
-    (chara)->attackReceived_41
+    (chara)->attackReceived
 
 #endif

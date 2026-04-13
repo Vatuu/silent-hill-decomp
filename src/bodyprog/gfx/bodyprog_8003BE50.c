@@ -226,7 +226,7 @@ void Map_WorldClear(void) // 0x8003C30C
 void WorldGfx_IpdSamplePointStore(void) // 0x8003C368
 {
     g_WorldGfxWork.useStoredPoint_4 = true;
-    g_WorldGfxWork.ipdSamplePoint_8 = g_SysWork.playerWork_4C.player_0.position_18;
+    g_WorldGfxWork.ipdSamplePoint_8 = g_SysWork.playerWork_4C.player_0.position;
 }
 
 void WorldGfx_IpdSamplePointReset(void) // 0x8003C3A0
@@ -243,7 +243,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
                           // the player player position or a position slightly ahead computed from the heading angle.
                           //
                           // In Old Silent Hill (after Cafe 5to2) while standing still, this value is
-                          // the same as `g_SysWork.playerWork_4C.player_0.position_18`.
+                          // the same as `g_SysWork.playerWork_4C.player_0.position`.
     VECTOR3         pos1; // Draw distance?
                           // If the conditional `if (g_WorldEnvWork.isFogEnabled_1)` is reversed
                           // to run the `else` block, when fog is enabled, the draw distance
@@ -271,18 +271,18 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
     }
     else
     {
-        pos0 = chara->position_18;
+        pos0 = chara->position;
     }
 
-    moveAmt = (chara->moveSpeed_38 * Q12(5.5f)) / 16015; // TODO: `Q12(3.91f)`? What's this doing?
+    moveAmt = (chara->moveSpeed * Q12(5.5f)) / 16015; // TODO: `Q12(3.91f)`? What's this doing?
     moveAmt = CLAMP(moveAmt, Q12(0.0f), Q12(5.5f));
 
-    pos0.vx += Q12_MULT_PRECISE(moveAmt, Math_Sin(chara->headingAngle_3C));
-    pos0.vz += Q12_MULT_PRECISE(moveAmt, Math_Cos(chara->headingAngle_3C));
+    pos0.vx += Q12_MULT_PRECISE(moveAmt, Math_Sin(chara->headingAngle));
+    pos0.vz += Q12_MULT_PRECISE(moveAmt, Math_Cos(chara->headingAngle));
 
     if (g_WorldGfxWork.mapInfo_0 == &MAP_INFOS[MapType_THR] &&
-        chara->position_18.vx >= Q12(-40.0f) && chara->position_18.vx <= Q12(40.0f) &&
-        chara->position_18.vz >= Q12(200.0f) && chara->position_18.vz <= Q12(240.0f))
+        chara->position.vx >= Q12(-40.0f) && chara->position.vx <= Q12(40.0f) &&
+        chara->position.vz >= Q12(200.0f) && chara->position.vz <= Q12(240.0f))
     {
         pos0.vz = Q12(200.0f);
     }
@@ -311,33 +311,33 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
         pos1.vx += temp_s0_2;
         pos1.vz += temp_v1_4;
 
-        if (Vc_VectorMagnitudeCalc(pos1.vx - chara->position_18.vx, Q12(0.0f), pos1.vz - chara->position_18.vz) > Q12(16.0f))
+        if (Vc_VectorMagnitudeCalc(pos1.vx - chara->position.vx, Q12(0.0f), pos1.vz - chara->position.vz) > Q12(16.0f))
         {
             var_s1  = Q12(14.0f);
-            pos1.vx = chara->position_18.vx + Q12_MULT(Math_Sin(rot.vy), var_s1);
-            pos1.vz = chara->position_18.vz + Q12_MULT(Math_Cos(rot.vy), var_s1);
+            pos1.vx = chara->position.vx + Q12_MULT(Math_Sin(rot.vy), var_s1);
+            pos1.vz = chara->position.vz + Q12_MULT(Math_Cos(rot.vy), var_s1);
         }
     }
     else
     {
-        pos1     = chara->position_18;
-        pos1.vx += FP_FROM(Q12(Math_Sin(chara->rotation_24.vy)), Q12_SHIFT);
-        pos1.vz += FP_FROM(Q12(Math_Cos(chara->rotation_24.vy)), Q12_SHIFT);
+        pos1     = chara->position;
+        pos1.vx += FP_FROM(Q12(Math_Sin(chara->rotation.vy)), Q12_SHIFT);
+        pos1.vz += FP_FROM(Q12(Math_Cos(chara->rotation.vy)), Q12_SHIFT);
     }
 
     flagsCpy = g_WorldGfxWork.mapInfo_0->flags_6;
     if ((flagsCpy & MapFlag_Interior) && (flagsCpy & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
     {
-        var_a1 = chara->position_18.vx / Q12(2.5f);
-        if (chara->position_18.vx < Q12(0.0f))
+        var_a1 = chara->position.vx / Q12(2.5f);
+        if (chara->position.vx < Q12(0.0f))
         {
             var_a1--;
         }
 
-        var_a0  = chara->position_18.vz / Q12(2.5f);
+        var_a0  = chara->position.vz / Q12(2.5f);
         temp_a1 = var_a1 * Q12(2.5f);
 
-        if (chara->position_18.vz < Q12(0.0f))
+        if (chara->position.vz < Q12(0.0f))
         {
             var_a0--;
         }
@@ -406,7 +406,7 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* model, const VECTOR3* pos, const SVE
         {
             func_8003BED0();
 
-            lmIdx = func_8004287C(model, &model->metadata_10, g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz);
+            lmIdx = func_8004287C(model, &model->metadata_10, g_SysWork.playerWork_4C.player_0.position.vx, g_SysWork.playerWork_4C.player_0.position.vz);
             if (lmIdx == 0)
             {
                 if (!Lm_ModelFind(model, &g_WorldGfxWork.itemLmHdr_1BE4, &model->metadata_10))
@@ -435,7 +435,7 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* model, const VECTOR3* pos, const SVE
         {
             obj = &g_WorldGfxWork.objects_2BEC[i];
 
-            if (model == obj->model_0 &&
+            if (model == obj->model &&
                 geomPosX == obj->positionX_4 &&
                 geomPosZ == obj->positionZ_8 &&
                 geomPosY == obj->positionY_4 &&
@@ -453,7 +453,7 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* model, const VECTOR3* pos, const SVE
         obj->rotationY_C = geomRotZ;
         if (obj->positionZ_8) {} // @hack Required for match.
         obj->rotationZ_C = geomRotY;
-        obj->model_0     = model;
+        obj->model     = model;
         obj->positionX_4 = geomPosX;
         obj->positionY_4 = geomPosY;
         obj->positionZ_8 = geomPosZ;
@@ -501,7 +501,7 @@ void Gfx_WorldObjectDraw(s_WorldObject* obj) // 0x8003CBA4
 
     Math_RotMatrixZxyNeg(&rot, &coord.coord);
     Vw_CoordToWorldAndViewMatrices(&coord, &mats[1], &mats[0]);
-    func_8003CC7C(obj->model_0, &mats[0], &mats[1]);
+    func_8003CC7C(obj->model, &mats[0], &mats[1]);
 }
 
 void func_8003CC7C(s_WorldObjectModel* model, MATRIX* viewMat, MATRIX* worldMat) // 0x8003CC7C

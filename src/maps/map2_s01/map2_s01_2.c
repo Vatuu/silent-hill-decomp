@@ -412,8 +412,8 @@ void func_800CED88(void) // 0x800CED88
             if (step > 13)
             {
                 dahlia = dahliaChara;
-                if ((dahlia->model_0.anim.time - Q12(Chara_AnimStartKeyframeIdxGet(dahlia))) <= Q12(30.0f) &&
-                    (dahlia->model_0.anim.time - Q12(Chara_AnimStartKeyframeIdxGet(dahlia))) >= Q12(21.0f))
+                if ((dahlia->model.anim.time - Q12(Chara_AnimStartKeyframeIdxGet(dahlia))) <= Q12(30.0f) &&
+                    (dahlia->model.anim.time - Q12(Chara_AnimStartKeyframeIdxGet(dahlia))) >= Q12(21.0f))
                 {
                     Savegame_EventFlagSet(EventFlag_176);
                 }
@@ -423,8 +423,8 @@ void func_800CED88(void) // 0x800CED88
 
     if (g_Timer0 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&playerChara->position_18, (SVECTOR3*)&playerChara->rotation_24, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
-        Dms_CharacterGetPosRot(&dahliaChara->position_18, (SVECTOR3*)&dahliaChara->rotation_24, "DAHLIA", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&playerChara->position, (SVECTOR3*)&playerChara->rotation, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&dahliaChara->position, (SVECTOR3*)&dahliaChara->rotation, "DAHLIA", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_15));
         vcUserCamTarget(&g_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_CameraLookAtTarget, NULL, true);

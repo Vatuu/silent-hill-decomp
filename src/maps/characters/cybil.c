@@ -22,7 +22,7 @@
  */
 void Ai_Cybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (chara->model_0.controlState == ModelState_Uninitialized)
+    if (chara->model.controlState == ModelState_Uninitialized)
     {
         Ai_Cybil_Init(chara);
     }
@@ -42,10 +42,10 @@ void Ai_Cybil_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINA
 {
     s_AnimInfo* animInfo;
 
-    if (chara->properties_E4.player.field_F0 == 0)
+    if (chara->properties.player.field_F0 == 0)
     {
-        animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim.status];
-        animInfo->playbackFunc(&chara->model_0, animHdr, coords, animInfo);
+        animInfo = &CYBIL_ANIM_INFOS[chara->model.anim.status];
+        animInfo->playbackFunc(&chara->model, animHdr, coords, animInfo);
     }
 }
 
@@ -65,9 +65,9 @@ void Ai_Cybil_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 
-    unused       = chara->position_18;
-    moveSpeed    = chara->moveSpeed_38;
-    headingAngle = chara->headingAngle_3C;
+    unused       = chara->position;
+    moveSpeed    = chara->moveSpeed;
+    headingAngle = chara->headingAngle;
     moveAmt      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
@@ -75,15 +75,15 @@ void Ai_Cybil_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
     offset.vx = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime);
+    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed, g_DeltaTime);
 
-    chara->position_18.vx += offset.vx;
-    chara->position_18.vy  = Q12(0.0f);
-    chara->position_18.vz += offset.vz;
+    chara->position.vx += offset.vx;
+    chara->position.vy  = Q12(0.0f);
+    chara->position.vz += offset.vz;
 
-    coords->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
-    coords->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
-    coords->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
+    coords->coord.t[0] = Q12_TO_Q8(chara->position.vx);
+    coords->coord.t[1] = Q12_TO_Q8(chara->position.vy);
+    coords->coord.t[2] = Q12_TO_Q8(chara->position.vz);
 }
 
 /** Addresses
@@ -99,7 +99,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
     s8          pitch0;
     s8          pitch1;
 
-    #define dahliaProps (chara->properties_E4.dahlia)
+    #define dahliaProps (chara->properties.dahlia)
 
     switch (dahliaProps.stateIdx0)
     {
@@ -113,7 +113,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
                 }
             }
 
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_1, false);
+            Model_AnimStatusSet(&chara->model, CybilAnim_1, false);
             Character_AnimStateReset(chara);
             break;
 
@@ -133,9 +133,9 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             }
 
 #if defined(MAP0_S01)
-            Model_AnimStatusKeyframeSet(chara->model_0, CybilAnim_3, true, CYBIL_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model, CybilAnim_3, true, CYBIL_ANIM_INFOS, 0);
 #else
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_3, false);
+            Model_AnimStatusSet(&chara->model, CybilAnim_3, false);
 #endif
             Character_AnimStateReset(chara);
             break;
@@ -157,7 +157,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
             // TODO: This uses `ANIM_STATUS(21, false)`, but then fetches `ANIM_STATUS(22, true)` keyframe.
             // Added `animInfosOffset` but maybe there's better way.
-            Model_AnimStatusKeyframeSet(chara->model_0, CybilAnim_21, false, CYBIL_ANIM_INFOS, 1);
+            Model_AnimStatusKeyframeSet(chara->model, CybilAnim_21, false, CYBIL_ANIM_INFOS, 1);
             Character_AnimStateReset(chara);
             break;
 
@@ -173,7 +173,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
             sharedData_800E2378_0_s01 = g_DeltaTime * 7;
 
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_4, false);
+            Model_AnimStatusSet(&chara->model, CybilAnim_4, false);
             Character_AnimStateReset(chara);
             break;
 
@@ -189,7 +189,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
             sharedData_800E2378_0_s01 = g_DeltaTime * -7;
 
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_5, false);
+            Model_AnimStatusSet(&chara->model, CybilAnim_5, false);
             Character_AnimStateReset(chara);
             break;
 
@@ -203,7 +203,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
                 }
             }
 
-            Model_AnimStatusKeyframeSet(chara->model_0, CybilAnim_1, true, CYBIL_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model, CybilAnim_1, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
@@ -217,19 +217,19 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
                 }
             }
 
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_1, false);
+            Model_AnimStatusSet(&chara->model, CybilAnim_1, false);
             Character_AnimStateReset(chara);
             break;
 
         case 6:
-            Model_AnimStatusKeyframeSet(chara->model_0, CybilAnim_7, true, CYBIL_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model, CybilAnim_7, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
 
-            if (chara->model_0.anim.keyframeIdx < 91)
+            if (chara->model.anim.keyframeIdx < 91)
             {
                 WorldGfx_HeldItemAttach(Chara_Cybil, MODEL_BONE(1, 1));
             }
-            else if (chara->model_0.anim.keyframeIdx < 105)
+            else if (chara->model.anim.keyframeIdx < 105)
             {
                 WorldGfx_HeldItemAttach(Chara_Cybil, MODEL_BONE(2, 1));
             }
@@ -240,94 +240,94 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 7:
-            Model_AnimStatusKeyframeSet(chara->model_0, CybilAnim_8, true, CYBIL_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model, CybilAnim_8, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
         case 8:
-            Model_AnimStatusKeyframeSet(chara->model_0, CybilAnim_9, true, CYBIL_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model, CybilAnim_9, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
         case 9:
-            Model_AnimStatusKeyframeSet(chara->model_0, CybilAnim_10, true, CYBIL_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model, CybilAnim_10, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             WorldGfx_HeldItemAttach(Chara_Cybil, MODEL_BONE(1, 1));
             break;
 
         case 10:
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_11, true);
+            Model_AnimStatusSet(&chara->model, CybilAnim_11, true);
             Character_AnimStateReset(chara);
             break;
 
         case 11:
-            Model_AnimStatusKeyframeSet(chara->model_0, CybilAnim_12, true, CYBIL_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model, CybilAnim_12, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
         case 13:
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_13, false);
+            Model_AnimStatusSet(&chara->model, CybilAnim_13, false);
             Character_AnimStateReset(chara);
             break;
 
         case 14:
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_14, false);
+            Model_AnimStatusSet(&chara->model, CybilAnim_14, false);
             Character_AnimStateReset(chara);
             break;
 
         case 15:
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_15, false);
+            Model_AnimStatusSet(&chara->model, CybilAnim_15, false);
             Character_AnimStateReset(chara);
             break;
 
         case 16:
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_16, false);
+            Model_AnimStatusSet(&chara->model, CybilAnim_16, false);
             Character_AnimStateReset(chara);
             break;
 
         case 17:
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_17, false);
+            Model_AnimStatusSet(&chara->model, CybilAnim_17, false);
             Character_AnimStateReset(chara);
             break;
 
         case 18:
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_18, false);
+            Model_AnimStatusSet(&chara->model, CybilAnim_18, false);
             Character_AnimStateReset(chara);
             break;
 
         case 19:
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_19, false);
+            Model_AnimStatusSet(&chara->model, CybilAnim_19, false);
             Character_AnimStateReset(chara);
             break;
 
         case 20:
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_20, false);
+            Model_AnimStatusSet(&chara->model, CybilAnim_20, false);
             Character_AnimStateReset(chara);
             break;
 
         case 21:
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_26, false);
-            Model_AnimStatusKeyframeSet(chara->model_0, CybilAnim_26, true, CYBIL_ANIM_INFOS, 0);
+            Model_AnimStatusSet(&chara->model, CybilAnim_26, false);
+            Model_AnimStatusKeyframeSet(chara->model, CybilAnim_26, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             WorldGfx_HeldItemAttach(Chara_EndingCybil, MODEL_BONE(2, 1));
 
-            if (chara->model_0.anim.keyframeIdx == 295)
+            if (chara->model.anim.keyframeIdx == 295)
             {
                 dahliaProps.stateIdx0 = 30;
-                chara->model_0.stateStep = 0;
+                chara->model.stateStep = 0;
             }
             break;
 
         case 22:
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_27, false);
-            Model_AnimStatusKeyframeSet(chara->model_0, CybilAnim_27, true, CYBIL_ANIM_INFOS, 0);
+            Model_AnimStatusSet(&chara->model, CybilAnim_27, false);
+            Model_AnimStatusKeyframeSet(chara->model, CybilAnim_27, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             WorldGfx_HeldItemAttach(Chara_EndingCybil, MODEL_BONE(2, 1));
             break;
 
         case 23:
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_28, false);
-            Model_AnimStatusKeyframeSet(chara->model_0, CybilAnim_28, true, CYBIL_ANIM_INFOS, 0);
+            Model_AnimStatusSet(&chara->model, CybilAnim_28, false);
+            Model_AnimStatusKeyframeSet(chara->model, CybilAnim_28, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             WorldGfx_HeldItemAttach(Chara_EndingCybil, MODEL_BONE(2, 1));
 
@@ -338,45 +338,45 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 24:
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_29, false);
-            Model_AnimStatusKeyframeSet(chara->model_0, CybilAnim_29, true, CYBIL_ANIM_INFOS, 0);
+            Model_AnimStatusSet(&chara->model, CybilAnim_29, false);
+            Model_AnimStatusKeyframeSet(chara->model, CybilAnim_29, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             WorldGfx_HeldItemAttach(Chara_EndingCybil, MODEL_BONE(2, 1));
             break;
 
         case 25:
-            Model_AnimStatusKeyframeSet(chara->model_0, CybilAnim_22, true, CYBIL_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model, CybilAnim_22, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
         case 26:
-            Model_AnimStatusKeyframeSet(chara->model_0, CybilAnim_23, true, CYBIL_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model, CybilAnim_23, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
         case 27:
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_24, false);
+            Model_AnimStatusSet(&chara->model, CybilAnim_24, false);
             Character_AnimStateReset(chara);
             break;
 
         case 29:
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_30, false);
+            Model_AnimStatusSet(&chara->model, CybilAnim_30, false);
             Character_AnimStateReset(chara);
             break;
 
         case 28:
-            Model_AnimStatusKeyframeSet(chara->model_0, CybilAnim_25, true, CYBIL_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model, CybilAnim_25, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
         case 30:
-            Model_AnimStatusSet(&chara->model_0, CybilAnim_31, false);
+            Model_AnimStatusSet(&chara->model, CybilAnim_31, false);
             Character_AnimStateReset(chara);
             WorldGfx_HeldItemAttach(Chara_EndingCybil, MODEL_BONE(2, 1));
             break;
     }
 
-    Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
+    Collision_Get(&coll, chara->position.vx, chara->position.vz);
     func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
 
 #if defined(MAP6_S01)
@@ -402,7 +402,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 8:
-            sharedFunc_800D9188_0_s00(chara->model_0.anim.status, chara, 128, Sfx_Unk1368);
+            sharedFunc_800D9188_0_s00(chara->model.anim.status, chara, 128, Sfx_Unk1368);
             break;
 
         case 6:
@@ -411,11 +411,11 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 13:
-            if (chara->model_0.anim.keyframeIdx <= 185)
+            if (chara->model.anim.keyframeIdx <= 185)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_13, true), chara, 185, 189, sfx, pitch0);
             }
-            else if (chara->model_0.anim.keyframeIdx <= 192)
+            else if (chara->model.anim.keyframeIdx <= 192)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_13, true), chara, 192, 189, sfx, pitch0);
             }
@@ -438,11 +438,11 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 20:
-            if (chara->model_0.anim.keyframeIdx <= 373)
+            if (chara->model.anim.keyframeIdx <= 373)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_20, true), chara, 373, 380, sfx, pitch0);
             }
-            else if (chara->model_0.anim.keyframeIdx <= 391)
+            else if (chara->model.anim.keyframeIdx <= 391)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_20, true), chara, 391, 380, sfx, pitch0);
             }
@@ -453,17 +453,17 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 10:
-            sharedFunc_800D9188_0_s00(chara->model_0.anim.status, chara, 167, Sfx_Unk1370);
+            sharedFunc_800D9188_0_s00(chara->model.anim.status, chara, 167, Sfx_Unk1370);
             break;
 
         case 25:
-            if (chara->model_0.anim.keyframeIdx <= 63)
+            if (chara->model.anim.keyframeIdx <= 63)
             {
-                if (chara->model_0.anim.keyframeIdx <= 30)
+                if (chara->model.anim.keyframeIdx <= 30)
                 {
                     sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_22, true), chara, 30, 39, sfx, pitch0);
                 }
-                else if (chara->model_0.anim.keyframeIdx <= 46)
+                else if (chara->model.anim.keyframeIdx <= 46)
                 {
                     sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_22, true), chara, 46, 39, sfx, pitch0);
                 }
@@ -474,7 +474,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             }
             else
             {
-                if (chara->model_0.anim.keyframeIdx <= 81)
+                if (chara->model.anim.keyframeIdx <= 81)
                 {
                     sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_22, true), chara, 81, 74, sfx, pitch0);
                 }
@@ -488,7 +488,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 28:
             sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_25, true), chara, 201, 198, sfx, pitch0);
 
-            if (sharedFunc_800D9188_0_s00(chara->model_0.anim.status, chara, 228, Sfx_Unk1699))
+            if (sharedFunc_800D9188_0_s00(chara->model.anim.status, chara, 228, Sfx_Unk1699))
             {
                 func_800892A4(6);
             }
@@ -497,16 +497,16 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 22:
             if (sharedData_800E237C_0_s01 == 1)
             {
-                func_8005DC1C(Sfx_Unk1673, &g_SysWork.npcs_1A0[1].position_18, Q8(0.75f), 0);
+                func_8005DC1C(Sfx_Unk1673, &g_SysWork.npcs_1A0[1].position, Q8(0.75f), 0);
                 sharedData_800E237C_0_s01 = 2;
             }
 
-            if (chara->model_0.anim.keyframeIdx == 299)
+            if (chara->model.anim.keyframeIdx == 299)
             {
                 if (sharedData_800E237C_0_s01 == 0)
                 {
-                    func_8006342C(EquippedWeaponId_Unk63, 1024, chara->rotation_24.vy, &g_SysWork.npcCoords_FC0[0]);
-                    func_8005DC1C(Sfx_Unk1622, &chara->position_18, Q8(0.75f), 0);
+                    func_8006342C(EquippedWeaponId_Unk63, 1024, chara->rotation.vy, &g_SysWork.npcCoords_FC0[0]);
+                    func_8005DC1C(Sfx_Unk1622, &chara->position, Q8(0.75f), 0);
                     sharedData_800E237C_0_s01 = 1;
                 }
             }
@@ -521,13 +521,13 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
     }
 
-    chara->rotation_24.vy  = Q12_ANGLE_ABS(chara->rotation_24.vy + (sharedData_800E2378_0_s01 >> 4));
-    chara->headingAngle_3C = chara->rotation_24.vy;
-    chara->moveSpeed_38    = dahliaProps.moveDistance_126;
-    chara->fallSpeed_34   += g_GravitySpeed;
+    chara->rotation.vy  = Q12_ANGLE_ABS(chara->rotation.vy + (sharedData_800E2378_0_s01 >> 4));
+    chara->headingAngle = chara->rotation.vy;
+    chara->moveSpeed    = dahliaProps.moveDistance_126;
+    chara->fallSpeed   += g_GravitySpeed;
 
     coords->flg = false;
-    Math_RotMatrixZxyNegGte(&chara->rotation_24, &coords->coord);
+    Math_RotMatrixZxyNegGte(&chara->rotation, &coords->coord);
 }
 
 /** Addresses

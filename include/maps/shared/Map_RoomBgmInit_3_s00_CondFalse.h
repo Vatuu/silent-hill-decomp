@@ -19,7 +19,7 @@ void Map_RoomBgmInit_CondFalse(void)
                     if (!Savegame_EventFlagGet(EventFlag_197))
                     {
                         // Test player Z position against specific value.
-                        if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(143.2f))
+                        if (g_SysWork.playerWork_4C.player_0.position.vz > Q12(143.2f))
                         {
                             flags = 0x6;
                         }

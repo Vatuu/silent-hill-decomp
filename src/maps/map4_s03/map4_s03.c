@@ -1406,10 +1406,10 @@ void func_800D3114(void) // 0x800D3114
     switch (ptr->field_0)
     {
         case 0:
-            Math_Vector3Translate(&sp10, &ptr->position_C, ptr->chara_8->rotation_24.vy, 0x1400);
+            Math_Vector3Translate(&sp10, &ptr->position_C, ptr->chara_8->rotation.vy, 0x1400);
             func_800D19CC(&sp10);
             func_800D1AFC();
-            func_800D26FC(&sp10, ptr->chara_8->rotation_24.vy);
+            func_800D26FC(&sp10, ptr->chara_8->rotation.vy);
             ptr->field_0++;
             break;
 
@@ -1457,7 +1457,7 @@ void func_800D326C(void) // 0x800D326C
     switch (ptr->field_0)
     {
         case 0:
-            Math_Vector3Translate(&sp10, &ptr->position_C, ptr->chara_8->rotation_24.vy, 0x14CC);
+            Math_Vector3Translate(&sp10, &ptr->position_C, ptr->chara_8->rotation.vy, 0x14CC);
             func_800D19CC(&sp10);
             ptr->field_0++;
             break;
@@ -1473,8 +1473,8 @@ void func_800D326C(void) // 0x800D326C
         case 2:
             if (ptr->field_4 >= 0x599)
             {
-                Math_Vector3Translate(&sp10, &ptr->position_C, ptr->chara_8->rotation_24.vy, 0x1266);
-                func_800D26FC(&sp10, ptr->chara_8->rotation_24.vy);
+                Math_Vector3Translate(&sp10, &ptr->position_C, ptr->chara_8->rotation.vy, 0x1266);
+                func_800D26FC(&sp10, ptr->chara_8->rotation.vy);
                 func_800D1AFC();
                 ptr->field_0++;
             }
@@ -1541,11 +1541,11 @@ s_800E0930* func_800D344C(s_SubCharacter* chara, void (*funcptr)(s_800E0930*)) /
     {
         if (!ptr->funcptr_18)
         {
-            Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
+            Collision_Get(&coll, chara->position.vx, chara->position.vz);
             ptr->chara_8       = chara;
-            ptr->position_C.vx = chara->position_18.vx;
+            ptr->position_C.vx = chara->position.vx;
             ptr->position_C.vy = coll.groundHeight_0;
-            ptr->position_C.vz = chara->position_18.vz;
+            ptr->position_C.vz = chara->position.vz;
             ptr->funcptr_18    = funcptr;
             ptr->field_4       = 0;
             ptr->field_0       = 0;
@@ -1637,29 +1637,29 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
     s_AnimInfo*      anim;
     s_func_800D3694* ptr;
 
-    twinfeeler->position_18.vy = D_800DB1E0[twinfeeler->model_0.stateStep];
+    twinfeeler->position.vy = D_800DB1E0[twinfeeler->model.stateStep];
 
-    if (twinfeeler->model_0.controlState == TwinfeelerControl_None)
+    if (twinfeeler->model.controlState == TwinfeelerControl_None)
     {
-        twinfeeler->model_0.controlState       = TwinfeelerControl_1;
-        twinfeeler->model_0.anim.status      = ANIM_STATUS(TwinfeelerAnim_6, true);
-        twinfeeler->model_0.anim.keyframeIdx = 163;
-        twinfeeler->health_B0                    = 1;
-        twinfeeler->model_0.anim.time        = Q12(163.0f);
-        twinfeeler->model_0.anim.alpha       = Q12(0.0f);
+        twinfeeler->model.controlState       = TwinfeelerControl_1;
+        twinfeeler->model.anim.status      = ANIM_STATUS(TwinfeelerAnim_6, true);
+        twinfeeler->model.anim.keyframeIdx = 163;
+        twinfeeler->health                    = 1;
+        twinfeeler->model.anim.time        = Q12(163.0f);
+        twinfeeler->model.anim.alpha       = Q12(0.0f);
         twinfeeler->field_E1_0                   = 3;
-        twinfeeler->model_0.stateStep         -= 18;
-        twinfeeler->rotation_24.vx               = D_800DB1E8[twinfeeler->model_0.stateStep];
-        twinfeeler->rotation_24.vy               = D_800DB1F0[twinfeeler->model_0.stateStep];
+        twinfeeler->model.stateStep         -= 18;
+        twinfeeler->rotation.vx               = D_800DB1E8[twinfeeler->model.stateStep];
+        twinfeeler->rotation.vy               = D_800DB1F0[twinfeeler->model.stateStep];
     }
 
-    if (twinfeeler->model_0.stateStep == 1)
+    if (twinfeeler->model.stateStep == 1)
     {
-        twinfeeler->timer_C6 = Q12(0.75f) - func_80055D78(twinfeeler->position_18.vx, twinfeeler->position_18.vy, twinfeeler->position_18.vz) * 16;
+        twinfeeler->timer_C6 = Q12(0.75f) - func_80055D78(twinfeeler->position.vx, twinfeeler->position.vy, twinfeeler->position.vz) * 16;
     }
     else
     {
-        twinfeeler->timer_C6 = Q12(1.0f) - func_80055D78(twinfeeler->position_18.vx, twinfeeler->position_18.vy, twinfeeler->position_18.vz) * 16;
+        twinfeeler->timer_C6 = Q12(1.0f) - func_80055D78(twinfeeler->position.vx, twinfeeler->position.vy, twinfeeler->position.vz) * 16;
     }
 
     if (twinfeeler->timer_C6 < Q12(0.0f))
@@ -1671,13 +1671,13 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
         twinfeeler->timer_C6 = Q12(1.0f);
     }
 
-    if (twinfeeler->health_B0 > Q12(0.0f) && twinfeeler->damage_B4.amount_C > Q12(0.0f))
+    if (twinfeeler->health > Q12(0.0f) && twinfeeler->damage.amount_C > Q12(0.0f))
     {
-        twinfeeler->health_B0               = Q12(0.0f);
-        twinfeeler->model_0.anim.status = ANIM_STATUS(TwinfeelerAnim_7, false);
+        twinfeeler->health               = Q12(0.0f);
+        twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_7, false);
     }
 
-    if (twinfeeler->health_B0 > Q12(0.0f) && twinfeeler->properties_E4.twinfeeler.field_E8.val32 == 0)
+    if (twinfeeler->health > Q12(0.0f) && twinfeeler->properties.twinfeeler.field_E8.val32 == 0)
     {
         if (Rng_GenerateUInt(0, 3)) // 1 in 4 chance.
         {
@@ -1688,37 +1688,37 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
             var_a0 = Sfx_Unk1552;
         }
 
-        func_8005DC1C(var_a0, &twinfeeler->position_18, Q8(0.5f), 0);
-        twinfeeler->properties_E4.twinfeeler.field_E8.val32 = Rng_GenerateInt(Q12(1.0f), Q12(1.8f) - 1);
+        func_8005DC1C(var_a0, &twinfeeler->position, Q8(0.5f), 0);
+        twinfeeler->properties.twinfeeler.field_E8.val32 = Rng_GenerateInt(Q12(1.0f), Q12(1.8f) - 1);
     }
     else
     {
-        twinfeeler->properties_E4.twinfeeler.field_E8.val32 -= g_DeltaTime;
-        if (twinfeeler->properties_E4.twinfeeler.field_E8.val32 < 0)
+        twinfeeler->properties.twinfeeler.field_E8.val32 -= g_DeltaTime;
+        if (twinfeeler->properties.twinfeeler.field_E8.val32 < 0)
         {
-            twinfeeler->properties_E4.twinfeeler.field_E8.val32 = 0;
+            twinfeeler->properties.twinfeeler.field_E8.val32 = 0;
         }
     }
 
-    if (twinfeeler->model_0.anim.status == ANIM_STATUS(TwinfeelerAnim_20, true))
+    if (twinfeeler->model.anim.status == ANIM_STATUS(TwinfeelerAnim_20, true))
     {
-        if (twinfeeler->health_B0 == Q12(0.0f))
+        if (twinfeeler->health == Q12(0.0f))
         {
             if (Chara_NpcIdxGet(twinfeeler) != g_SysWork.targetNpcIdx_2353)
             {
-                twinfeeler->health_B0  = NO_VALUE;
+                twinfeeler->health  = NO_VALUE;
                 twinfeeler->field_E1_0 = 0;
                 Savegame_EnemyStateUpdate(twinfeeler);
             }
         }
     }
 
-    Math_MatrixTransform(&twinfeeler->position_18, (SVECTOR*)&twinfeeler->rotation_24, coords);
+    Math_MatrixTransform(&twinfeeler->position, (SVECTOR*)&twinfeeler->rotation, coords);
 
-    anim = &TWINFEELER_ANIM_INFOS[twinfeeler->model_0.anim.status];
-    anim->playbackFunc(&twinfeeler->model_0, anmHdr, coords, anim);
+    anim = &TWINFEELER_ANIM_INFOS[twinfeeler->model.anim.status];
+    anim->playbackFunc(&twinfeeler->model, anmHdr, coords, anim);
 
-    temp_s0 = D_800DB1D8[twinfeeler->model_0.stateStep];
+    temp_s0 = D_800DB1D8[twinfeeler->model.stateStep];
     func_800705E4(coords, 0, temp_s0, temp_s0, temp_s0);
 
     twinfeeler->field_C8.field_4   = Q12(0.0f);
@@ -1741,14 +1741,14 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
 
     twinfeeler->field_C8.field_0   = Q12_MULT_PRECISE(Q8_TO_Q12(ptr->field_28.vy), temp_s0);
     twinfeeler->field_C8.field_6   = twinfeeler->field_C8.field_0 + 122;
-    twinfeeler->field_D8.offsetX_0 = Q12_MULT_PRECISE(twinfeeler->position_18.vx - Q8_TO_Q12(ptr->field_28.vx), temp_s0);
-    twinfeeler->field_D8.offsetZ_2 = Q12_MULT_PRECISE(twinfeeler->position_18.vz - Q8_TO_Q12(ptr->field_28.vz), temp_s0);
+    twinfeeler->field_D8.offsetX_0 = Q12_MULT_PRECISE(twinfeeler->position.vx - Q8_TO_Q12(ptr->field_28.vx), temp_s0);
+    twinfeeler->field_D8.offsetZ_2 = Q12_MULT_PRECISE(twinfeeler->position.vz - Q8_TO_Q12(ptr->field_28.vz), temp_s0);
     twinfeeler->field_D4.field_2   = Q12(0.05f);
 }
 
 void func_800D3AE0(s_SubCharacter* chara, s32 soundIdx)
 {
-    func_8005DC1C(D_800DB1F8[soundIdx].id_0, &chara->position_18, D_800DB1F8[soundIdx].volume_2.val16, 0);
+    func_8005DC1C(D_800DB1F8[soundIdx].id_0, &chara->position, D_800DB1F8[soundIdx].volume_2.val16, 0);
 }
 
 u32 func_800D3B1C(void) // 0x800D3B1C
@@ -1768,15 +1768,15 @@ void func_800D3B44(bool disableDamage)
 
 void func_800D3B68(s_SubCharacter* twinfeeler) // 0x800D3B68
 {
-    twinfeeler->health_B0 = twinfeeler->properties_E4.npc.field_11C;
+    twinfeeler->health = twinfeeler->properties.npc.field_11C;
 }
 
 void func_800D3B74(s_SubCharacter* twinfeeler) // 0x800D3B74
 {
-    if (twinfeeler->health_B0 >= Q12(0.0f))
+    if (twinfeeler->health >= Q12(0.0f))
     {
-        twinfeeler->properties_E4.npc.field_11C = twinfeeler->health_B0;
-        twinfeeler->health_B0                   = NO_VALUE;
+        twinfeeler->properties.npc.field_11C = twinfeeler->health;
+        twinfeeler->health                   = NO_VALUE;
     }
 }
 
@@ -1788,38 +1788,38 @@ void func_800D3B98(s_SubCharacter* twinfeeler) // 0x800D3B98
     q19_12      posX;
     q19_12      posZ;
 
-    headingAngle   = twinfeeler->rotation_24.vy;
+    headingAngle   = twinfeeler->rotation.vy;
     dist = Q12_MULT_PRECISE(Math_Sin(headingAngle), Q12(1.0f));
 
-    Collision_Get(&coll, twinfeeler->position_18.vx + dist,
-                  Q12_MULT_PRECISE(Math_Cos(headingAngle), Q12(1.0f)) + twinfeeler->position_18.vz);
+    Collision_Get(&coll, twinfeeler->position.vx + dist,
+                  Q12_MULT_PRECISE(Math_Cos(headingAngle), Q12(1.0f)) + twinfeeler->position.vz);
 
-    twinfeeler->position_18.vy = coll.groundHeight_0;
+    twinfeeler->position.vy = coll.groundHeight_0;
 
-    if (twinfeeler->position_18.vy < Q12(-1.0f))
+    if (twinfeeler->position.vy < Q12(-1.0f))
     {
-        posX = twinfeeler->position_18.vx;
-        posZ = twinfeeler->position_18.vz;
+        posX = twinfeeler->position.vx;
+        posZ = twinfeeler->position.vz;
         Collision_Get(&coll, posX, posZ);
 
-        twinfeeler->position_18.vy = coll.groundHeight_0;
-        if (twinfeeler->position_18.vy < Q12(-1.0f))
+        twinfeeler->position.vy = coll.groundHeight_0;
+        if (twinfeeler->position.vy < Q12(-1.0f))
         {
-            twinfeeler->position_18.vx = Q12(118.5f);
-            twinfeeler->position_18.vz = Q12(137.9f);
+            twinfeeler->position.vx = Q12(118.5f);
+            twinfeeler->position.vz = Q12(137.9f);
 
             Collision_Get(&coll, posX, posZ);
-            twinfeeler->position_18.vy = coll.groundHeight_0;
+            twinfeeler->position.vy = coll.groundHeight_0;
         }
     }
 
-    twinfeeler->properties_E4.twinfeeler.field_114 &= ~(1 << 2);
+    twinfeeler->properties.twinfeeler.field_114 &= ~(1 << 2);
 }
 
 void func_800D3CBC(s_SubCharacter* twinfeeler) // 0x800D3CBC
 {
-    twinfeeler->position_18.vy               = Q12(10.0f);
-    twinfeeler->properties_E4.npc.field_114 |= 1 << 2;
+    twinfeeler->position.vy               = Q12(10.0f);
+    twinfeeler->properties.npc.field_114 |= 1 << 2;
 }
 
 bool Twinfeeler_Init(s_SubCharacter* twinfeeler) // 0x800D3CD4
@@ -1835,68 +1835,68 @@ bool Twinfeeler_Init(s_SubCharacter* twinfeeler) // 0x800D3CD4
         return false;
     }
 
-    posX = twinfeeler->position_18.vx;
-    posZ = twinfeeler->position_18.vz;
+    posX = twinfeeler->position.vx;
+    posZ = twinfeeler->position.vz;
 
-    twinfeeler->health_B0 = Q12(3000.0f);
+    twinfeeler->health = Q12(3000.0f);
 
-    localTwinfeeler->properties_E4.twinfeeler.field_120 = NO_VALUE;
+    localTwinfeeler->properties.twinfeeler.field_120 = NO_VALUE;
 
     twinfeeler->field_D4.radius_0 = Q12(0.3f);
 
-    twinfeeler->model_0.anim.alpha = Q12(0.0f);
+    twinfeeler->model.anim.alpha = Q12(0.0f);
 
-    twinfeeler->moveSpeed_38    = Q12(0.0f);
-    twinfeeler->headingAngle_3C = twinfeeler->rotation_24.vy;
+    twinfeeler->moveSpeed    = Q12(0.0f);
+    twinfeeler->headingAngle = twinfeeler->rotation.vy;
     twinfeeler->field_E1_0      = 4;
 
-    localTwinfeeler->properties_E4.twinfeeler.field_EC.position_0.vx = Q12(0.0f);
-    localTwinfeeler->properties_E4.twinfeeler.field_EC.position_0.vy = Q12(0.0f);
-    localTwinfeeler->properties_E4.twinfeeler.field_EC.position_0.vz = Q12(0.0f);
-    localTwinfeeler->properties_E4.twinfeeler.field_10C              = 0;
-    localTwinfeeler->properties_E4.twinfeeler.field_110              = 0;
-    localTwinfeeler->properties_E4.twinfeeler.field_114              = 0;
-    localTwinfeeler->properties_E4.twinfeeler.field_100              = posX;
-    localTwinfeeler->properties_E4.twinfeeler.field_104              = posZ;
+    localTwinfeeler->properties.twinfeeler.field_EC.position_0.vx = Q12(0.0f);
+    localTwinfeeler->properties.twinfeeler.field_EC.position_0.vy = Q12(0.0f);
+    localTwinfeeler->properties.twinfeeler.field_EC.position_0.vz = Q12(0.0f);
+    localTwinfeeler->properties.twinfeeler.field_10C              = 0;
+    localTwinfeeler->properties.twinfeeler.field_110              = 0;
+    localTwinfeeler->properties.twinfeeler.field_114              = 0;
+    localTwinfeeler->properties.twinfeeler.field_100              = posX;
+    localTwinfeeler->properties.twinfeeler.field_104              = posZ;
 
     func_800D3CBC(twinfeeler);
 
     twinfeeler->field_D8.offsetX_4 = Q12(0.0f);
     twinfeeler->field_D8.offsetZ_6 = Q12(0.0f);
-    twinfeeler->flags_3E          |= CharaFlag_Unk3;
+    twinfeeler->flags          |= CharaFlag_Unk3;
 
-    if (twinfeeler->model_0.stateStep != 0)
+    if (twinfeeler->model.stateStep != 0)
     {
-        twinfeeler->model_0.controlState     = twinfeeler->model_0.stateStep;
-        twinfeeler->model_0.stateStep = 0;
+        twinfeeler->model.controlState     = twinfeeler->model.stateStep;
+        twinfeeler->model.stateStep = 0;
     }
     else
     {
-        twinfeeler->model_0.controlState     = TwinfeelerControl_11;
-        twinfeeler->model_0.stateStep = 0;
+        twinfeeler->model.controlState     = TwinfeelerControl_11;
+        twinfeeler->model.stateStep = 0;
     }
 
-    *(u16*)&localTwinfeeler->properties_E4.twinfeeler.field_E8.val16[1] = NO_VALUE;
+    *(u16*)&localTwinfeeler->properties.twinfeeler.field_E8.val16[1] = NO_VALUE;
 
     func_800D3B74(twinfeeler);
 
     Character_AnimSet(twinfeeler, ANIM_STATUS(TwinfeelerAnim_8, false), 258);
-    ModelAnim_AnimInfoSet(&twinfeeler->model_0.anim, TWINFEELER_ANIM_INFOS);
+    ModelAnim_AnimInfoSet(&twinfeeler->model.anim, TWINFEELER_ANIM_INFOS);
 
     Chara_DamageClear(twinfeeler);
 
-    func_800D354C(&twinfeeler->position_18);
-    twinfeeler->flags_3E |= CharaFlag_Unk9;
+    func_800D354C(&twinfeeler->position);
+    twinfeeler->flags |= CharaFlag_Unk9;
     return true;
 }
 
 void func_800D3E18(s_SubCharacter* chara) // 0x800D3E18
 {
-    *(u16*)&chara->properties_E4.twinfeeler.field_E8.val16[1] = NO_VALUE;
+    *(u16*)&chara->properties.twinfeeler.field_E8.val16[1] = NO_VALUE;
 
     Sd_SfxStop(Sfx_Unk1567);
     Sd_SfxStop(Sfx_Unk1559);
-    func_800D354C(&chara->position_18);
+    func_800D354C(&chara->position);
 }
 
 void func_800D3E58(s_SubCharacter* twinfeeler) // 0x800D3E58
@@ -1905,39 +1905,39 @@ void func_800D3E58(s_SubCharacter* twinfeeler) // 0x800D3E58
     s32 var_a1;
     u8  temp_s1;
 
-    if (twinfeeler->damage_B4.amount_C > Q12(0.0f) && twinfeeler->health_B0 >= Q12(0.0f))
+    if (twinfeeler->damage.amount_C > Q12(0.0f) && twinfeeler->health >= Q12(0.0f))
     {
-        twinfeeler->properties_E4.twinfeeler.field_EC   = twinfeeler->damage_B4;
-        twinfeeler->properties_E4.twinfeeler.field_10C += twinfeeler->damage_B4.amount_C;
-        twinfeeler->health_B0                           = MAX(twinfeeler->health_B0 - twinfeeler->damage_B4.amount_C, Q12(0.0f));
+        twinfeeler->properties.twinfeeler.field_EC   = twinfeeler->damage;
+        twinfeeler->properties.twinfeeler.field_10C += twinfeeler->damage.amount_C;
+        twinfeeler->health                           = MAX(twinfeeler->health - twinfeeler->damage.amount_C, Q12(0.0f));
 
-        temp_s1 = D_800DB190[twinfeeler->model_0.anim.status >> 1];
+        temp_s1 = D_800DB190[twinfeeler->model.anim.status >> 1];
 
-        if (twinfeeler->health_B0 > Q12(20.0f))
+        if (twinfeeler->health > Q12(20.0f))
         {
-            if (twinfeeler->properties_E4.twinfeeler.field_10C > 0 &&
-                twinfeeler->model_0.controlState != TwinfeelerControl_2 && !(temp_s1 & 0x1))
+            if (twinfeeler->properties.twinfeeler.field_10C > 0 &&
+                twinfeeler->model.controlState != TwinfeelerControl_2 && !(temp_s1 & 0x1))
             {
-                twinfeeler->properties_E4.twinfeeler.field_10C = 0;
-                twinfeeler->model_0.controlState             = TwinfeelerControl_2;
-                twinfeeler->model_0.stateStep                = 0;
+                twinfeeler->properties.twinfeeler.field_10C = 0;
+                twinfeeler->model.controlState             = TwinfeelerControl_2;
+                twinfeeler->model.stateStep                = 0;
             }
         }
-        else if (func_800D3B1C() == 0 && twinfeeler->model_0.controlState != TwinfeelerControl_9)
+        else if (func_800D3B1C() == 0 && twinfeeler->model.controlState != TwinfeelerControl_9)
         {
             if (!(temp_s1 & (1 << 1)))
             {
-                twinfeeler->properties_E4.twinfeeler.field_118 = 1;
+                twinfeeler->properties.twinfeeler.field_118 = 1;
             }
             else
             {
-                twinfeeler->properties_E4.twinfeeler.field_118 = 0;
+                twinfeeler->properties.twinfeeler.field_118 = 0;
             }
 
-            twinfeeler->health_B0              = NO_VALUE;
-            twinfeeler->model_0.controlState = TwinfeelerControl_9;
-            twinfeeler->model_0.stateStep    = 0;
-            twinfeeler->flags_3E              |= CharaFlag_Unk2;
+            twinfeeler->health              = NO_VALUE;
+            twinfeeler->model.controlState = TwinfeelerControl_9;
+            twinfeeler->model.stateStep    = 0;
+            twinfeeler->flags              |= CharaFlag_Unk2;
         }
     }
 
@@ -1946,50 +1946,50 @@ void func_800D3E58(s_SubCharacter* twinfeeler) // 0x800D3E58
 
 void func_800D3FB0(s_SubCharacter* twinfeeler) // 0x800D3FB0
 {
-    if (twinfeeler->model_0.controlState >= TwinfeelerControl_2)
+    if (twinfeeler->model.controlState >= TwinfeelerControl_2)
     {
-        twinfeeler->model_0.controlState     = TwinfeelerControl_12;
-        twinfeeler->model_0.stateStep = 0;
+        twinfeeler->model.controlState     = TwinfeelerControl_12;
+        twinfeeler->model.stateStep = 0;
     }
     else
     {
-        twinfeeler->model_0.stateStep = 12;
+        twinfeeler->model.stateStep = 12;
     }
 }
 
 void func_800D3FD8(s_SubCharacter* twinfeeler) // 0x800D3FD8
 {
-    if (twinfeeler->model_0.controlState >= TwinfeelerControl_2)
+    if (twinfeeler->model.controlState >= TwinfeelerControl_2)
     {
-        twinfeeler->model_0.controlState     = TwinfeelerControl_13;
-        twinfeeler->model_0.stateStep = 0;
+        twinfeeler->model.controlState     = TwinfeelerControl_13;
+        twinfeeler->model.stateStep = 0;
     }
     else
     {
-        twinfeeler->model_0.stateStep = 13;
+        twinfeeler->model.stateStep = 13;
     }
 }
 
 void func_800D4000(s_SubCharacter* twinfeeler) // 0x800D4000
 {
-    if (twinfeeler->model_0.controlState >= TwinfeelerControl_2)
+    if (twinfeeler->model.controlState >= TwinfeelerControl_2)
     {
-        twinfeeler->model_0.controlState     = TwinfeelerControl_3;
-        twinfeeler->model_0.stateStep = 0;
+        twinfeeler->model.controlState     = TwinfeelerControl_3;
+        twinfeeler->model.stateStep = 0;
     }
     else
     {
-        twinfeeler->model_0.stateStep = 3;
+        twinfeeler->model.stateStep = 3;
     }
 }
 
 void Twinfeeler_Control_11(s_SubCharacter* twinfeeler) // 0x800D4028
 {
-    if (twinfeeler->model_0.stateStep == 0)
+    if (twinfeeler->model.stateStep == 0)
     {
         func_800D3B74(twinfeeler);
-        twinfeeler->moveSpeed_38 = Q12(0.0f);
-        twinfeeler->model_0.stateStep++;
+        twinfeeler->moveSpeed = Q12(0.0f);
+        twinfeeler->model.stateStep++;
     }
 
     func_800D3CBC(twinfeeler);
@@ -2001,126 +2001,126 @@ void Twinfeeler_Control_12(s_SubCharacter* twinfeeler) // 0x800D4078
 
     localTwinfeeler = twinfeeler;
 
-    if (twinfeeler->model_0.stateStep == 0)
+    if (twinfeeler->model.stateStep == 0)
     {
-        twinfeeler->rotation_24.vy  = Q12_ANGLE(0.0f);
-        twinfeeler->headingAngle_3C = Q12_ANGLE(0.0f);
-        twinfeeler->position_18.vx  = Q12(118.5f);
-        twinfeeler->position_18.vz  = Q12(137.9f);
+        twinfeeler->rotation.vy  = Q12_ANGLE(0.0f);
+        twinfeeler->headingAngle = Q12_ANGLE(0.0f);
+        twinfeeler->position.vx  = Q12(118.5f);
+        twinfeeler->position.vz  = Q12(137.9f);
 
         func_800D3504(twinfeeler);
 
-        twinfeeler->properties_E4.twinfeeler.field_FC = Q12(0.7f);
-        twinfeeler->model_0.stateStep++;
+        twinfeeler->properties.twinfeeler.field_FC = Q12(0.7f);
+        twinfeeler->model.stateStep++;
     }
 
-    switch (twinfeeler->model_0.stateStep)
+    switch (twinfeeler->model.stateStep)
     {
         case 1:
-            if (twinfeeler->properties_E4.twinfeeler.field_FC < Q12(0.0f))
+            if (twinfeeler->properties.twinfeeler.field_FC < Q12(0.0f))
             {
                 func_800D3B98(twinfeeler);
 
-                twinfeeler->moveSpeed_38            = Q12(1.8f);
-                twinfeeler->model_0.anim.status = ANIM_STATUS(TwinfeelerAnim_1, false);
+                twinfeeler->moveSpeed            = Q12(1.8f);
+                twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_1, false);
 
                 func_800D3AE0(twinfeeler, 5);
-                twinfeeler->model_0.stateStep++;
+                twinfeeler->model.stateStep++;
             }
 
         case 2:
-            if (localTwinfeeler->model_0.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
+            if (localTwinfeeler->model.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
             {
-                twinfeeler->properties_E4.twinfeeler.field_FC = Q12(1.0f);
-                localTwinfeeler->moveSpeed_38                     = Q12(1.2f);
-                localTwinfeeler->model_0.anim.status          = ANIM_STATUS(TwinfeelerAnim_8, false);
+                twinfeeler->properties.twinfeeler.field_FC = Q12(1.0f);
+                localTwinfeeler->moveSpeed                     = Q12(1.2f);
+                localTwinfeeler->model.anim.status          = ANIM_STATUS(TwinfeelerAnim_8, false);
 
                 func_800D3AE0(localTwinfeeler, 4);
-                localTwinfeeler->model_0.stateStep++;
+                localTwinfeeler->model.stateStep++;
             }
             break;
 
         case 3:
-            if (twinfeeler->properties_E4.twinfeeler.field_FC < Q12(0.0f))
+            if (twinfeeler->properties.twinfeeler.field_FC < Q12(0.0f))
             {
-                twinfeeler->moveSpeed_38 = Q12(0.8877f);
+                twinfeeler->moveSpeed = Q12(0.8877f);
 
                 Sd_SfxStop(Sfx_Unk1567);
                 func_800D3AE0(twinfeeler, 1);
 
-                twinfeeler->model_0.anim.status = ANIM_STATUS(TwinfeelerAnim_2, false);
+                twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_2, false);
                 func_800D3528(twinfeeler);
 
-                twinfeeler->model_0.stateStep++;
+                twinfeeler->model.stateStep++;
             }
             break;
 
         case 4:
-            if (twinfeeler->model_0.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
+            if (twinfeeler->model.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
             {
-                twinfeeler->model_0.controlState = TwinfeelerControl_11;
-                twinfeeler->model_0.stateStep    = 0;
+                twinfeeler->model.controlState = TwinfeelerControl_11;
+                twinfeeler->model.stateStep    = 0;
                 Sd_SfxStop(Sfx_Unk1559);
             }
             break;
     }
 
-    twinfeeler->properties_E4.twinfeeler.field_FC -= g_DeltaTime;
+    twinfeeler->properties.twinfeeler.field_FC -= g_DeltaTime;
 }
 
 void Twinfeeler_Control_13(s_SubCharacter* twinfeeler) // 0x800D4248
 {
-    if (twinfeeler->model_0.stateStep == 0)
+    if (twinfeeler->model.stateStep == 0)
     {
-        twinfeeler->position_18.vx  = Q12(131.0f);
-        twinfeeler->position_18.vz  = Q12(140.0f);
-        twinfeeler->rotation_24.vy  = Q12_ANGLE(90.0f);
-        twinfeeler->headingAngle_3C = Q12_ANGLE(90.0f);
+        twinfeeler->position.vx  = Q12(131.0f);
+        twinfeeler->position.vz  = Q12(140.0f);
+        twinfeeler->rotation.vy  = Q12_ANGLE(90.0f);
+        twinfeeler->headingAngle = Q12_ANGLE(90.0f);
 
         func_800D3504(twinfeeler);
-        twinfeeler->properties_E4.twinfeeler.field_FC = Q12(0.7f);
+        twinfeeler->properties.twinfeeler.field_FC = Q12(0.7f);
 
         Savegame_EnemyStateUpdate(twinfeeler);
-        twinfeeler->model_0.stateStep++;
+        twinfeeler->model.stateStep++;
     }
 
-    switch (twinfeeler->model_0.stateStep)
+    switch (twinfeeler->model.stateStep)
     {
         case 1:
-            if (twinfeeler->properties_E4.twinfeeler.field_FC < Q12(0.0f))
+            if (twinfeeler->properties.twinfeeler.field_FC < Q12(0.0f))
             {
                 func_800D3B98(twinfeeler);
 
-                twinfeeler->model_0.anim.status = ANIM_STATUS(TwinfeelerAnim_23, false);
-                twinfeeler->moveSpeed_38            = Q12(1.35f);
+                twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_23, false);
+                twinfeeler->moveSpeed            = Q12(1.35f);
 
                 func_800D3AE0(twinfeeler, 5);
-                twinfeeler->model_0.stateStep++;
+                twinfeeler->model.stateStep++;
             }
             break;
 
         case 2:
-            if (twinfeeler->model_0.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
+            if (twinfeeler->model.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
             {
-                twinfeeler->moveSpeed_38 = Q12(0.8877f);
+                twinfeeler->moveSpeed = Q12(0.8877f);
                 func_800D3AE0(twinfeeler, 1);
 
-                twinfeeler->model_0.anim.status = 4;
-                twinfeeler->model_0.stateStep++;
+                twinfeeler->model.anim.status = 4;
+                twinfeeler->model.stateStep++;
             }
             break;
 
         case 3:
-            if (twinfeeler->model_0.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
+            if (twinfeeler->model.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
             {
                 Sd_SfxStop(Sfx_Unk1559);
-                twinfeeler->model_0.controlState = TwinfeelerControl_11;
-                twinfeeler->model_0.stateStep    = 1;
+                twinfeeler->model.controlState = TwinfeelerControl_11;
+                twinfeeler->model.stateStep    = 1;
             }
             break;
     }
 
-    twinfeeler->properties_E4.twinfeeler.field_FC -= g_DeltaTime;
+    twinfeeler->properties.twinfeeler.field_FC -= g_DeltaTime;
 }
 
 void func_800D43AC(s_SubCharacter* twinfeeler, s32 arg1) // 0x800D43AC
@@ -2138,20 +2138,20 @@ void func_800D43AC(s_SubCharacter* twinfeeler, s32 arg1) // 0x800D43AC
         var_s1 = 170;
     }
 
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - twinfeeler->position_18.vx,
-                                       g_SysWork.playerWork_4C.player_0.position_18.vz - twinfeeler->position_18.vz) -
-                                twinfeeler->rotation_24.vy);
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork_4C.player_0.position.vx - twinfeeler->position.vx,
+                                       g_SysWork.playerWork_4C.player_0.position.vz - twinfeeler->position.vz) -
+                                twinfeeler->rotation.vy);
 
     if ((u32)ABS(angleDeltaToPlayer) > 56) // TODO: Needs casting to `u32`.
     {
         temp_v0_2 = Q12_MULT_PRECISE(g_DeltaTime, var_s1);
         if (angleDeltaToPlayer > Q12_ANGLE(0.0f))
         {
-            twinfeeler->rotation_24.vy += temp_v0_2;
+            twinfeeler->rotation.vy += temp_v0_2;
         }
         else
         {
-            twinfeeler->rotation_24.vy -= temp_v0_2;
+            twinfeeler->rotation.vy -= temp_v0_2;
         }
     }
 }
@@ -2183,8 +2183,8 @@ s32 func_800D4488(VECTOR3* arg0, s32 arg1) // 0x800D4488
     temp_s3 = temp3 + temp2;
     temp_s3 = temp_s3 * newVar;
 
-    angle = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - temp_s4,
-                     g_SysWork.playerWork_4C.player_0.position_18.vz - temp_s3);
+    angle = ratan2(g_SysWork.playerWork_4C.player_0.position.vx - temp_s4,
+                     g_SysWork.playerWork_4C.player_0.position.vz - temp_s3);
 
     sinAngle = Math_Sin(angle);
     temp_v1 = temp_s3 - Math_Cos(angle);
@@ -2225,43 +2225,43 @@ void Twinfeeler_Control_5(s_SubCharacter* twinfeeler)
 
     localTwinfeeler = twinfeeler;
 
-    if (twinfeeler->model_0.stateStep == 0)
+    if (twinfeeler->model.stateStep == 0)
     {
-        twinfeeler->properties_E4.twinfeeler.field_FC = Q12(0.7f);
+        twinfeeler->properties.twinfeeler.field_FC = Q12(0.7f);
         func_800D3504(twinfeeler);
 
-        twinfeeler->model_0.stateStep++;
+        twinfeeler->model.stateStep++;
     }
 
-    switch (twinfeeler->model_0.stateStep)
+    switch (twinfeeler->model.stateStep)
     {
         case 1:
-            if (twinfeeler->properties_E4.twinfeeler.field_FC < Q12(0.0f))
+            if (twinfeeler->properties.twinfeeler.field_FC < Q12(0.0f))
             {
                 func_800D3B68(twinfeeler);
                 func_800D3B98(twinfeeler);
 
-                twinfeeler->moveSpeed_38            = Q12(1.8f);
-                twinfeeler->model_0.anim.status = ANIM_STATUS(TwinfeelerAnim_1, false);
+                twinfeeler->moveSpeed            = Q12(1.8f);
+                twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_1, false);
 
                 func_800D3AE0(twinfeeler, 5);
-                twinfeeler->model_0.stateStep++;
+                twinfeeler->model.stateStep++;
             }
             break;
 
         case 2:
-            func_800D43AC(twinfeeler, FP_FROM(twinfeeler->model_0.anim.time, Q12_SHIFT));
+            func_800D43AC(twinfeeler, FP_FROM(twinfeeler->model.anim.time, Q12_SHIFT));
             break;
     }
 
-    localTwinfeeler->properties_E4.twinfeeler.field_FC -= g_DeltaTime;
+    localTwinfeeler->properties.twinfeeler.field_FC -= g_DeltaTime;
 
-    if (twinfeeler->model_0.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
+    if (twinfeeler->model.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
     {
-        func_800D4558(twinfeeler->rotation_24.vy, twinfeeler->position_18.vx, twinfeeler->position_18.vz);
+        func_800D4558(twinfeeler->rotation.vy, twinfeeler->position.vx, twinfeeler->position.vz);
 
-        twinfeeler->model_0.controlState = TwinfeelerControl_10;
-        twinfeeler->model_0.stateStep    = 0;
+        twinfeeler->model.controlState = TwinfeelerControl_10;
+        twinfeeler->model.stateStep    = 0;
     }
 }
 
@@ -2280,30 +2280,30 @@ void Twinfeeler_Control_6(s_SubCharacter* twinfeeler, GsCOORDINATE2* arg1) // 0x
 
     localChara = twinfeeler;
 
-    temp_s1 = twinfeeler->model_0.stateStep == 0;
+    temp_s1 = twinfeeler->model.stateStep == 0;
     if (temp_s1)
     {
-        twinfeeler->properties_E4.twinfeeler.field_FC = Q12(0.7f);
+        twinfeeler->properties.twinfeeler.field_FC = Q12(0.7f);
         func_800D3504(twinfeeler);
 
-        twinfeeler->model_0.stateStep++;
+        twinfeeler->model.stateStep++;
     }
 
-    temp_s1 = FP_FROM(twinfeeler->model_0.anim.time, Q12_SHIFT);
+    temp_s1 = FP_FROM(twinfeeler->model.anim.time, Q12_SHIFT);
 
-    switch (twinfeeler->model_0.stateStep)
+    switch (twinfeeler->model.stateStep)
     {
         case 1:
-            if (twinfeeler->properties_E4.twinfeeler.field_FC < Q12(0.0f))
+            if (twinfeeler->properties.twinfeeler.field_FC < Q12(0.0f))
             {
                 func_800D3B68(twinfeeler);
                 func_800D3B98(twinfeeler);
 
-                twinfeeler->moveSpeed_38            = Q12(1.8f);
-                twinfeeler->model_0.anim.status = 2;
+                twinfeeler->moveSpeed            = Q12(1.8f);
+                twinfeeler->model.anim.status = 2;
 
                 func_800D3AE0(twinfeeler, 5);
-                twinfeeler->model_0.stateStep++;
+                twinfeeler->model.stateStep++;
             }
             break;
 
@@ -2316,12 +2316,12 @@ void Twinfeeler_Control_6(s_SubCharacter* twinfeeler, GsCOORDINATE2* arg1) // 0x
                 sp30.vx = Q8_TO_Q12(sp10.t[0]);
                 sp30.vy = Q8_TO_Q12(sp10.t[1]);
                 sp30.vz = Q8_TO_Q12(sp10.t[2]);
-                sp40.vx = g_SysWork.playerWork_4C.player_0.position_18.vx;
-                sp40.vy = g_SysWork.playerWork_4C.player_0.position_18.vy - Q12(1.0f);
-                sp40.vz = g_SysWork.playerWork_4C.player_0.position_18.vz;
+                sp40.vx = g_SysWork.playerWork_4C.player_0.position.vx;
+                sp40.vy = g_SysWork.playerWork_4C.player_0.position.vy - Q12(1.0f);
+                sp40.vz = g_SysWork.playerWork_4C.player_0.position.vz;
 
                 func_800D46E0(&sp30, &sp40);
-                twinfeeler->model_0.stateStep++;
+                twinfeeler->model.stateStep++;
             }
 
         case 3:
@@ -2329,13 +2329,13 @@ void Twinfeeler_Control_6(s_SubCharacter* twinfeeler, GsCOORDINATE2* arg1) // 0x
             break;
     }
 
-    if (twinfeeler->model_0.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
+    if (twinfeeler->model.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
     {
-        twinfeeler->model_0.controlState = TwinfeelerControl_10;
-        twinfeeler->model_0.stateStep    = 0;
+        twinfeeler->model.controlState = TwinfeelerControl_10;
+        twinfeeler->model.stateStep    = 0;
     }
 
-    localChara->properties_E4.twinfeeler.field_FC -= g_DeltaTime;
+    localChara->properties.twinfeeler.field_FC -= g_DeltaTime;
 }
 
 bool func_800D48CC(s32 arg0, s32 arg1) // 0x800D48CC
@@ -2369,34 +2369,34 @@ bool func_800D4924(VECTOR3* vec, q19_12 angle) // 0x800D4924
 
 void Twinfeeler_Control_10(s_SubCharacter* twinfeeler) // 0x800D49C0
 {
-    if (twinfeeler->model_0.stateStep == 0)
+    if (twinfeeler->model.stateStep == 0)
     {
-        twinfeeler->moveSpeed_38            = Q12(1.2f);
-        twinfeeler->model_0.anim.status = ANIM_STATUS(TwinfeelerAnim_8, false);
+        twinfeeler->moveSpeed            = Q12(1.2f);
+        twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_8, false);
 
         func_800D3AE0(twinfeeler, 4);
-        twinfeeler->model_0.stateStep++;
+        twinfeeler->model.stateStep++;
     }
-    else if (func_800D4924(&twinfeeler->position_18, twinfeeler->rotation_24.vy))
+    else if (func_800D4924(&twinfeeler->position, twinfeeler->rotation.vy))
     {
-        twinfeeler->model_0.controlState = TwinfeelerControl_4;
-        twinfeeler->model_0.stateStep    = 0;
+        twinfeeler->model.controlState = TwinfeelerControl_4;
+        twinfeeler->model.stateStep    = 0;
     }
 }
 
 void Twinfeeler_Control_7(s_SubCharacter* twinfeeler) // 0x800D4A34
 {
-    if (twinfeeler->model_0.stateStep == 0)
+    if (twinfeeler->model.stateStep == 0)
     {
-        twinfeeler->model_0.anim.status = ANIM_STATUS(TwinfeelerAnim_17, false);
-        twinfeeler->moveSpeed_38            = Q12(0.0f);
-        twinfeeler->model_0.stateStep++;
+        twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_17, false);
+        twinfeeler->moveSpeed            = Q12(0.0f);
+        twinfeeler->model.stateStep++;
     }
 
-    if (twinfeeler->model_0.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
+    if (twinfeeler->model.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
     {
-        twinfeeler->model_0.controlState = TwinfeelerControl_8;
-        twinfeeler->model_0.stateStep    = 0;
+        twinfeeler->model.controlState = TwinfeelerControl_8;
+        twinfeeler->model.stateStep    = 0;
     }
 }
 
@@ -2405,10 +2405,10 @@ void Twinfeeler_Control_8(s_SubCharacter* chara, GsCOORDINATE2* coords)
     MATRIX  sp10;
     VECTOR3 pos; // Q19.12
 
-    if (chara->model_0.stateStep == 0)
+    if (chara->model.stateStep == 0)
     {
         func_800D3AE0(chara, 3);
-        chara->model_0.anim.status = ANIM_STATUS(TwinfeelerAnim_12, false);
+        chara->model.anim.status = ANIM_STATUS(TwinfeelerAnim_12, false);
 
         Vw_CoordHierarchyMatrixCompute(&coords[14], &sp10);
 
@@ -2416,16 +2416,16 @@ void Twinfeeler_Control_8(s_SubCharacter* chara, GsCOORDINATE2* coords)
         pos.vy = Q8_TO_Q12(sp10.t[1]);
         pos.vz = Q8_TO_Q12(sp10.t[2]);
 
-        func_800D46E0(&pos, &g_SysWork.playerWork_4C.player_0.position_18);
+        func_800D46E0(&pos, &g_SysWork.playerWork_4C.player_0.position);
 
-        chara->moveSpeed_38 = Q12(0.0f);
-        chara->model_0.stateStep++;
+        chara->moveSpeed = Q12(0.0f);
+        chara->model.stateStep++;
     }
 
-    if (chara->model_0.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
+    if (chara->model.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
     {
-        chara->model_0.controlState = TwinfeelerControl_10;
-        chara->model_0.stateStep    = 0;
+        chara->model.controlState = TwinfeelerControl_10;
+        chara->model.stateStep    = 0;
     }
 }
 
@@ -2435,32 +2435,32 @@ void Twinfeeler_Control_4(s_SubCharacter* twinfeeler)
 
     localTwinfeeler = twinfeeler;
 
-    if (twinfeeler->model_0.stateStep == 0)
+    if (twinfeeler->model.stateStep == 0)
     {
         func_800D3528(twinfeeler);
-        twinfeeler->properties_E4.twinfeeler.field_FC = Q12(0.0f);
+        twinfeeler->properties.twinfeeler.field_FC = Q12(0.0f);
         func_800D3AE0(twinfeeler, 1);
 
-        twinfeeler->model_0.anim.status = ANIM_STATUS(TwinfeelerAnim_2, false);
-        twinfeeler->moveSpeed_38            = Q12(0.8877f);
-        twinfeeler->model_0.stateStep++;
+        twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_2, false);
+        twinfeeler->moveSpeed            = Q12(0.8877f);
+        twinfeeler->model.stateStep++;
     }
 
-    if (twinfeeler->model_0.stateStep == 1 && twinfeeler->properties_E4.twinfeeler.field_FC >= Q12(1.0f))
+    if (twinfeeler->model.stateStep == 1 && twinfeeler->properties.twinfeeler.field_FC >= Q12(1.0f))
     {
         func_800D3B74(twinfeeler);
-        twinfeeler->model_0.stateStep++;
+        twinfeeler->model.stateStep++;
     }
 
-    if (twinfeeler->model_0.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
+    if (twinfeeler->model.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
     {
         Sd_SfxStop(Sfx_Unk1559);
 
-        twinfeeler->model_0.controlState = TwinfeelerControl_3;
-        twinfeeler->model_0.stateStep    = 0;
+        twinfeeler->model.controlState = TwinfeelerControl_3;
+        twinfeeler->model.stateStep    = 0;
     }
 
-    localTwinfeeler->properties_E4.twinfeeler.field_FC += g_DeltaTime;
+    localTwinfeeler->properties.twinfeeler.field_FC += g_DeltaTime;
 }
 
 bool func_800D4C0C(u32 row, s32 col) // 0x800D4C0C
@@ -2539,7 +2539,7 @@ u32 func_800D4DD8(void) // 0x800D4DD8
 {
     s32 var_v0;
 
-    var_v0 = (g_SysWork.playerWork_4C.player_0.rotation_24.vy - 256) & 0xFFF;
+    var_v0 = (g_SysWork.playerWork_4C.player_0.rotation.vy - 256) & 0xFFF;
     if (var_v0 < 0)
     {
         var_v0 += 0x1FF;
@@ -2576,8 +2576,8 @@ s32 func_800D4E78(s32 arg0, s32 arg1) // 0x800D4E78
     temp_s2  = Q12_MULT_PRECISE(Math_Sin(arg1), temp_s0);
     var_v0_2 = Q12_MULT_PRECISE(Math_Cos(arg1), temp_s0);
 
-    var_s2  = var_v0_2 + g_SysWork.playerWork_4C.player_0.position_18.vz;
-    var_s0  = g_SysWork.playerWork_4C.player_0.position_18.vx + temp_s2;
+    var_s2  = var_v0_2 + g_SysWork.playerWork_4C.player_0.position.vz;
+    var_s0  = g_SysWork.playerWork_4C.player_0.position.vx + temp_s2;
     temp_a3 = var_s0 >> 4;
 
     var_a2 = temp_a3 - 0x7100;
@@ -2632,58 +2632,58 @@ void Twinfeeler_Control_3(s_SubCharacter* chara) // 0x800D4FC0
     q3_12 angleDeltaToPlayer;
     s16   var_v0_2;
 
-    if (chara->model_0.stateStep == 0)
+    if (chara->model.stateStep == 0)
     {
-        chara->properties_E4.twinfeeler.field_FC = Q12(2.0f);
-        chara->model_0.anim.status           = ANIM_STATUS(TwinfeelerAnim_8, false);
-        chara->model_0.stateStep++;
+        chara->properties.twinfeeler.field_FC = Q12(2.0f);
+        chara->model.anim.status           = ANIM_STATUS(TwinfeelerAnim_8, false);
+        chara->model.stateStep++;
     }
 
     func_800D3CBC(chara);
 
-    if (chara->properties_E4.twinfeeler.field_FC < Q12(0.0f))
+    if (chara->properties.twinfeeler.field_FC < Q12(0.0f))
     {
-        temp_v0 = func_800D4488(&chara->position_18,
-                                func_800D4E78(g_SysWork.playerWork_4C.player_0.moveSpeed_38, g_SysWork.playerWork_4C.player_0.headingAngle_3C) & 0xFFFF);
+        temp_v0 = func_800D4488(&chara->position,
+                                func_800D4E78(g_SysWork.playerWork_4C.player_0.moveSpeed, g_SysWork.playerWork_4C.player_0.headingAngle) & 0xFFFF);
 
-        chara->headingAngle_3C = temp_v0;
-        chara->rotation_24.vy  = temp_v0;
+        chara->headingAngle = temp_v0;
+        chara->rotation.vy  = temp_v0;
 
-        angleDeltaToPlayer = Math_AngleNormalizeSigned((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx -
-                                                   chara->position_18.vx,
-                                               g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
+        angleDeltaToPlayer = Math_AngleNormalizeSigned((ratan2(g_SysWork.playerWork_4C.player_0.position.vx -
+                                                   chara->position.vx,
+                                               g_SysWork.playerWork_4C.player_0.position.vz - chara->position.vz) -
                                            temp_v0));
 
         angleDeltaToPlayer = ABS(angleDeltaToPlayer);
 
         if (angleDeltaToPlayer >= Q12_ANGLE(45.0f))
         {
-            chara->model_0.controlState = TwinfeelerControl_5;
+            chara->model.controlState = TwinfeelerControl_5;
         }
         else
         {
-            chara->model_0.controlState = TwinfeelerControl_6;
+            chara->model.controlState = TwinfeelerControl_6;
         }
 
-        chara->model_0.stateStep = 0;
+        chara->model.stateStep = 0;
     }
 
-    chara->properties_E4.twinfeeler.field_FC -= g_DeltaTime;
+    chara->properties.twinfeeler.field_FC -= g_DeltaTime;
 }
 
 void Twinfeeler_Control_2(s_SubCharacter* twinfeeler) // 0x800D50D8
 {
-    if (twinfeeler->model_0.stateStep == 0)
+    if (twinfeeler->model.stateStep == 0)
     {
-        twinfeeler->model_0.anim.status = ANIM_STATUS(TwinfeelerAnim_13, false);
-        twinfeeler->model_0.stateStep++;
+        twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_13, false);
+        twinfeeler->model.stateStep++;
     }
 
-    if (twinfeeler->model_0.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
+    if (twinfeeler->model.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
     {
-        twinfeeler->model_0.controlState     = TwinfeelerControl_4;
-        twinfeeler->model_0.stateStep = 0;
-        twinfeeler->moveSpeed_38        = Q12(0.0f);
+        twinfeeler->model.controlState     = TwinfeelerControl_4;
+        twinfeeler->model.stateStep = 0;
+        twinfeeler->moveSpeed        = Q12(0.0f);
     }
 }
 
@@ -2694,97 +2694,97 @@ void Twinfeeler_Control_9(s_SubCharacter* twinfeeler) // 0x800D511C
 
     localTwinfeeler = twinfeeler;
 
-    if (twinfeeler->model_0.stateStep == 0)
+    if (twinfeeler->model.stateStep == 0)
     {
         Sd_SfxStop(Sfx_Unk1559);
 
-        if (twinfeeler->properties_E4.twinfeeler.field_118 == 0)
+        if (twinfeeler->properties.twinfeeler.field_118 == 0)
         {
-            twinfeeler->model_0.anim.status = ANIM_STATUS(TwinfeelerAnim_17, false);
-            twinfeeler->model_0.stateStep     = 1;
+            twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_17, false);
+            twinfeeler->model.stateStep     = 1;
         }
         else
         {
             func_800D3AE0(twinfeeler, 0);
-            twinfeeler->model_0.anim.status = ANIM_STATUS(TwinfeelerAnim_16, false);
-            twinfeeler->model_0.stateStep     = 2;
+            twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_16, false);
+            twinfeeler->model.stateStep     = 2;
         }
     }
 
-    switch (twinfeeler->model_0.stateStep)
+    switch (twinfeeler->model.stateStep)
     {
         case 1:
-            if (twinfeeler->model_0.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
+            if (twinfeeler->model.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
             {
                 func_800D3AE0(twinfeeler, 0);
-                twinfeeler->model_0.anim.status = ANIM_STATUS(TwinfeelerAnim_16, false);
-                twinfeeler->model_0.stateStep++;
+                twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_16, false);
+                twinfeeler->model.stateStep++;
             }
             break;
 
         case 2:
-            if (twinfeeler->model_0.anim.status == ANIM_STATUS(TwinfeelerAnim_22, false))
+            if (twinfeeler->model.anim.status == ANIM_STATUS(TwinfeelerAnim_22, false))
             {
-                localTwinfeeler->properties_E4.twinfeeler.field_FC = Q12(5.0f);
-                twinfeeler->model_0.stateStep++;
+                localTwinfeeler->properties.twinfeeler.field_FC = Q12(5.0f);
+                twinfeeler->model.stateStep++;
             }
             break;
 
         case 3:
-            if (localTwinfeeler->properties_E4.twinfeeler.field_FC < Q12(0.0f))
+            if (localTwinfeeler->properties.twinfeeler.field_FC < Q12(0.0f))
             {
-                twinfeeler->model_0.anim.status = ANIM_STATUS(TwinfeelerAnim_11, false);
-                twinfeeler->model_0.stateStep++;
+                twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_11, false);
+                twinfeeler->model.stateStep++;
             }
             break;
 
         case 4:
-            if (twinfeeler->model_0.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
+            if (twinfeeler->model.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
             {
-                twinfeeler->moveSpeed_38            = Q12(1.2f);
-                twinfeeler->model_0.anim.status = ANIM_STATUS(TwinfeelerAnim_8, false);
-                twinfeeler->model_0.stateStep++;
+                twinfeeler->moveSpeed            = Q12(1.2f);
+                twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_8, false);
+                twinfeeler->model.stateStep++;
             }
             break;
 
         case 5:
-            temp_s1 = func_800D4558(twinfeeler->rotation_24.vy, twinfeeler->position_18.vx, twinfeeler->position_18.vz);
-            if (func_800D4924(&twinfeeler->position_18, twinfeeler->rotation_24.vy) ||
+            temp_s1 = func_800D4558(twinfeeler->rotation.vy, twinfeeler->position.vx, twinfeeler->position.vz);
+            if (func_800D4924(&twinfeeler->position, twinfeeler->rotation.vy) ||
                 temp_s1 < Q12(2.0f))
             {
                 func_800D3528(twinfeeler);
                 func_800D3AE0(twinfeeler, 1);
 
-                twinfeeler->model_0.anim.status = ANIM_STATUS(TwinfeelerAnim_2, false);
-                twinfeeler->moveSpeed_38            = Q12(0.8877f);
-                twinfeeler->model_0.stateStep++;
+                twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_2, false);
+                twinfeeler->moveSpeed            = Q12(0.8877f);
+                twinfeeler->model.stateStep++;
             }
             break;
 
         case 6:
-            if (twinfeeler->model_0.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
+            if (twinfeeler->model.anim.status == ANIM_STATUS(TwinfeelerAnim_18, false))
             {
                 Sd_SfxStop(Sfx_Unk1559);
                 Savegame_EventFlagSet(EventFlag_326);
 
-                twinfeeler->model_0.controlState = ANIM_STATUS(TwinfeelerAnim_5, true);
-                twinfeeler->model_0.stateStep    = 0;
+                twinfeeler->model.controlState = ANIM_STATUS(TwinfeelerAnim_5, true);
+                twinfeeler->model.stateStep    = 0;
             }
             break;
     }
 
-    if (twinfeeler->model_0.stateStep < 5)
+    if (twinfeeler->model.stateStep < 5)
     {
         Chara_MoveSpeedUpdate(twinfeeler, Q12(1.0f));
     }
 
-    localTwinfeeler->properties_E4.twinfeeler.field_FC -= g_DeltaTime;
+    localTwinfeeler->properties.twinfeeler.field_FC -= g_DeltaTime;
 }
 
 void Twinfeeler_ControlUpdate(s_SubCharacter* twinfeeler, GsCOORDINATE2* coords) // 0x800D53B0
 {
     // Handle control state.
-    switch (twinfeeler->model_0.controlState)
+    switch (twinfeeler->model.controlState)
     {
         case TwinfeelerControl_11:
             Twinfeeler_Control_11(twinfeeler);
@@ -2850,7 +2850,7 @@ void func_800D54B4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D54B4
     localChara = chara;
 
     // Handle control state.
-    switch (chara->model_0.controlState)
+    switch (chara->model.controlState)
     {
         case 5:
         case 6:
@@ -2879,15 +2879,15 @@ void func_800D54B4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D54B4
         posY = Q8_TO_Q12(sp30.t[0]);
         posZ = Q8_TO_Q12(sp30.t[2]);
 
-        chara->field_C8.field_8 = chara->position_18.vy - posX;
+        chara->field_C8.field_8 = chara->position.vy - posX;
 
         pos.vx = posY;
         pos.vy = posX;
         pos.vz = posZ;
 
-        if (func_8008A0E4(1, var_s0, chara, &pos, &g_SysWork.playerWork_4C.player_0, chara->rotation_24.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
+        if (func_8008A0E4(1, var_s0, chara, &pos, &g_SysWork.playerWork_4C.player_0, chara->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
         {
-            localChara->properties_E4.twinfeeler.field_114 |= 1 << 0;
+            localChara->properties.twinfeeler.field_114 |= 1 << 0;
         }
     }
 }
@@ -2904,15 +2904,15 @@ void func_800D55C8(s_SubCharacter* chara) // 0x800D55C8
     s32        temp_s2;
     s32        temp_v0;
 
-    unkPos.vx = chara->properties_E4.twinfeeler.field_EC.position_0.vx;
-    unkPos.vz = chara->properties_E4.twinfeeler.field_EC.position_0.vz;
-    unkPos.vy = chara->properties_E4.twinfeeler.field_EC.position_0.vy;
+    unkPos.vx = chara->properties.twinfeeler.field_EC.position_0.vx;
+    unkPos.vz = chara->properties.twinfeeler.field_EC.position_0.vz;
+    unkPos.vy = chara->properties.twinfeeler.field_EC.position_0.vy;
 
-    moveSpeed                                  = chara->moveSpeed_38;
-    chara->properties_E4.twinfeeler.field_108 = moveSpeed;
+    moveSpeed                                  = chara->moveSpeed;
+    chara->properties.twinfeeler.field_108 = moveSpeed;
 
-    sp40.vx = Math_Sin(chara->rotation_24.vy);
-    sp40.vz = Math_Cos(chara->rotation_24.vy);
+    sp40.vx = Math_Sin(chara->rotation.vy);
+    sp40.vz = Math_Cos(chara->rotation.vy);
     sp40.vy = Q12(0.0f);
 
     temp_s2   = Q12_MULT_PRECISE(unkPos.vx, Q12(3.5f)) + Q12_MULT_PRECISE(moveSpeed, sp40.vx);
@@ -2923,53 +2923,53 @@ void func_800D55C8(s_SubCharacter* chara) // 0x800D55C8
     sp50.vy = temp_v0;
     sp50.vz = temp_s0_2;
 
-    chara->moveSpeed_38    = SquareRoot12(Q12_MULT_PRECISE(temp_s2, temp_s2) + Q12_MULT_PRECISE(temp_s0_2, temp_s0_2));
-    chara->headingAngle_3C = ratan2(temp_s2, temp_s0_2);
-    chara->fallSpeed_34   += g_GravitySpeed;
+    chara->moveSpeed    = SquareRoot12(Q12_MULT_PRECISE(temp_s2, temp_s2) + Q12_MULT_PRECISE(temp_s0_2, temp_s0_2));
+    chara->headingAngle = ratan2(temp_s2, temp_s0_2);
+    chara->fallSpeed   += g_GravitySpeed;
 
-    if (!(chara->properties_E4.twinfeeler.field_114 & (1 << 2)))
+    if (!(chara->properties.twinfeeler.field_114 & (1 << 2)))
     {
         func_8005C944(chara, &sp10);
     }
 
-    posComp                                             = chara->properties_E4.twinfeeler.field_EC.position_0.vx;
-    chara->moveSpeed_38                                    = chara->properties_E4.twinfeeler.field_108;
-    chara->properties_E4.twinfeeler.field_EC.position_0.vx = SquareRoot12(Q12_MULT_PRECISE(posComp, posComp) >> g_VBlanks);
+    posComp                                             = chara->properties.twinfeeler.field_EC.position_0.vx;
+    chara->moveSpeed                                    = chara->properties.twinfeeler.field_108;
+    chara->properties.twinfeeler.field_EC.position_0.vx = SquareRoot12(Q12_MULT_PRECISE(posComp, posComp) >> g_VBlanks);
 
     if (posComp <= Q12(0.0f))
     {
-        chara->properties_E4.twinfeeler.field_EC.position_0.vx = -chara->properties_E4.twinfeeler.field_EC.position_0.vx;
+        chara->properties.twinfeeler.field_EC.position_0.vx = -chara->properties.twinfeeler.field_EC.position_0.vx;
     }
 
-    posComp                                             = chara->properties_E4.twinfeeler.field_EC.position_0.vy;
-    chara->properties_E4.twinfeeler.field_EC.position_0.vy = SquareRoot12(Q12_MULT_PRECISE(posComp, posComp) >> g_VBlanks);
+    posComp                                             = chara->properties.twinfeeler.field_EC.position_0.vy;
+    chara->properties.twinfeeler.field_EC.position_0.vy = SquareRoot12(Q12_MULT_PRECISE(posComp, posComp) >> g_VBlanks);
 
     if (posComp <= Q12(0.0f))
     {
-        chara->properties_E4.twinfeeler.field_EC.position_0.vy = -chara->properties_E4.twinfeeler.field_EC.position_0.vy;
+        chara->properties.twinfeeler.field_EC.position_0.vy = -chara->properties.twinfeeler.field_EC.position_0.vy;
     }
 
-    posComp                                             = chara->properties_E4.twinfeeler.field_EC.position_0.vz;
-    chara->properties_E4.twinfeeler.field_EC.position_0.vz = SquareRoot12(Q12_MULT_PRECISE(posComp, posComp) >> g_VBlanks);
+    posComp                                             = chara->properties.twinfeeler.field_EC.position_0.vz;
+    chara->properties.twinfeeler.field_EC.position_0.vz = SquareRoot12(Q12_MULT_PRECISE(posComp, posComp) >> g_VBlanks);
 
     if (posComp <= Q12(0.0f))
     {
-        chara->properties_E4.twinfeeler.field_EC.position_0.vz = -chara->properties_E4.twinfeeler.field_EC.position_0.vz;
+        chara->properties.twinfeeler.field_EC.position_0.vz = -chara->properties.twinfeeler.field_EC.position_0.vz;
     }
 
-    chara->rotation_24.vy = Math_AngleNormalizeSigned(chara->rotation_24.vy);
+    chara->rotation.vy = Math_AngleNormalizeSigned(chara->rotation.vy);
 }
 
 void func_800D5888(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5888
 {
     s_AnimInfo* animInfo;
 
-    Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
+    Math_MatrixTransform(&chara->position, &chara->rotation, coords);
 
-    if (chara->model_0.anim.status != ANIM_STATUS(0, false))
+    if (chara->model.anim.status != ANIM_STATUS(0, false))
     {
-        animInfo = &TWINFEELER_ANIM_INFOS[chara->model_0.anim.status];
-        animInfo->playbackFunc(&chara->model_0, anmHdr, coords, animInfo);
+        animInfo = &TWINFEELER_ANIM_INFOS[chara->model.anim.status];
+        animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
     }
 }
 
@@ -2982,7 +2982,7 @@ void func_800D5904(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5904
     q19_12 posY;
     q19_12 posZ;
 
-    if (chara->model_0.anim.status == ANIM_STATUS(2, true))
+    if (chara->model.anim.status == ANIM_STATUS(2, true))
     {
         Vw_CoordHierarchyMatrixCompute(&coords[6], &mat);
     }
@@ -2991,9 +2991,9 @@ void func_800D5904(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5904
         Vw_CoordHierarchyMatrixCompute(&coords[14], &mat);
     }
 
-    posY = chara->position_18.vy;
-    posX = Q8_TO_Q12(mat.t[0]) - chara->position_18.vx;
-    posZ = Q8_TO_Q12(mat.t[2]) - chara->position_18.vz;
+    posY = chara->position.vy;
+    posX = Q8_TO_Q12(mat.t[0]) - chara->position.vx;
+    posZ = Q8_TO_Q12(mat.t[2]) - chara->position.vz;
 
     unkBasePosY = Q8_TO_Q12(mat.t[1]) - posY;
     unkPosY = unkBasePosY - Q12(0.25f);
@@ -3043,7 +3043,7 @@ void func_800D59EC(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D59EC
 
     func_800D59C0(bones);
 
-    temp_v1 = FP_FROM(chara->model_0.anim.time, Q12_SHIFT);
+    temp_v1 = FP_FROM(chara->model.anim.time, Q12_SHIFT);
 
     if (temp_v1 < 0x20)
     {
@@ -3099,13 +3099,13 @@ void func_800D5B6C(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5B6C
 {
     q19_12 posY;
 
-    if (chara->model_0.anim.flags & AnimFlag_Visible)
+    if (chara->model.anim.flags & AnimFlag_Visible)
     {
         func_800D5904(chara, coords);
         return;
     }
 
-    posY            = chara->position_18.vy;
+    posY            = chara->position.vy;
     chara->field_C8.field_2 = posY;
     chara->field_C8.field_4 = posY;
     chara->field_C8.field_0 = posY - Q12(1.0f);
@@ -3114,7 +3114,7 @@ void func_800D5B6C(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5B6C
 
 void func_800D5BC8(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5BC8
 {
-    if (chara->model_0.stateStep == 0)
+    if (chara->model.stateStep == 0)
     {
         Twinfeeler_ControlUpdate(chara, coords);
     }
@@ -3169,7 +3169,7 @@ void func_800D5C3C(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5C3C
 
     localChara = chara;
 
-    temp_s2  = localChara->properties_E4.twinfeeler.field_114 >> 2;
+    temp_s2  = localChara->properties.twinfeeler.field_114 >> 2;
     temp_s2 ^= 1;
     temp_s2 &= 1;
 
@@ -3179,7 +3179,7 @@ void func_800D5C3C(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5C3C
     {
         Vw_CoordHierarchyMatrixCompute(&coords[D_800CA814[i]], &sp60);
 
-        if (func_800D5BF8(i, sp60.t[1], D_800CA824[i], &localChara->properties_E4.twinfeeler.field_E8.val16[1]))
+        if (func_800D5BF8(i, sp60.t[1], D_800CA824[i], &localChara->properties.twinfeeler.field_E8.val16[1]))
         {
             pos.vx = Q8_TO_Q12(sp60.t[0]);
             pos.vy = Q12(0.0f);
@@ -3213,7 +3213,7 @@ void func_800D5DF4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5DF4
         func_800D5C3C(chara, coords);
     }
 
-    func_800D35DC(&chara->rotation_24);
+    func_800D35DC(&chara->rotation);
 }
 
 void func_800D5E30(s_SubCharacter* twinfeeler, GsCOORDINATE2* coords) // 0x800D5E30
@@ -3235,7 +3235,7 @@ void func_800D5E30(s_SubCharacter* twinfeeler, GsCOORDINATE2* coords) // 0x800D5
     {
         Vw_CoordHierarchyMatrixCompute(&coords[D_800DB3A0[i]], &sp10);
 
-        posY    = twinfeeler->position_18.vy;
+        posY    = twinfeeler->position.vy;
         newPosX = Q8_TO_Q12(sp10.t[0]);
         newPosY = Q8_TO_Q12(sp10.t[1]);
         newPosZ = Q8_TO_Q12(sp10.t[2]);
@@ -3252,14 +3252,14 @@ void func_800D5E30(s_SubCharacter* twinfeeler, GsCOORDINATE2* coords) // 0x800D5
 
 void Twinfeeler_Update(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5F28
 {
-    if (twinfeeler->model_0.controlState == ModelState_Uninitialized)
+    if (twinfeeler->model.controlState == ModelState_Uninitialized)
     {
         Twinfeeler_TextureLoad(); // Just calls `Fs_QueueStartReadTim`.
-        twinfeeler->model_0.controlState = TwinfeelerControl_1;
-        twinfeeler->model_0.stateStep = 0;
+        twinfeeler->model.controlState = TwinfeelerControl_1;
+        twinfeeler->model.stateStep = 0;
     }
 
-    if (twinfeeler->model_0.controlState != TwinfeelerControl_1 || Twinfeeler_Init(twinfeeler))
+    if (twinfeeler->model.controlState != TwinfeelerControl_1 || Twinfeeler_Init(twinfeeler))
     {
         if (g_DeltaTime != Q12(0.0f))
         {
@@ -3273,9 +3273,9 @@ void Twinfeeler_Update(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDI
             func_800D5DF4(twinfeeler, coords);
             func_800D59EC(twinfeeler, coords);
             func_800D5E30(twinfeeler, coords);
-            func_800D3B44(twinfeeler->flags_3E & CharaFlag_Unk2);
+            func_800D3B44(twinfeeler->flags & CharaFlag_Unk2);
 
-            if (twinfeeler->model_0.controlState != TwinfeelerControl_10)
+            if (twinfeeler->model.controlState != TwinfeelerControl_10)
             {
                 Sd_SfxStop(Sfx_Unk1567);
             }
@@ -3346,8 +3346,8 @@ void func_800D6704(void) // 0x800D6704
     // Breaks from loop if there are any characters with ID in range [1, 24].
     for (i = 0; i < 6; i++)
     {
-        if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry &&
-            g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil)
+        if (g_SysWork.npcs_1A0[i].model.charaId_0 >= Chara_Harry &&
+            g_SysWork.npcs_1A0[i].model.charaId_0 <= Chara_MonsterCybil)
         {
             break;
         }
@@ -3379,7 +3379,7 @@ void func_800D6774(void) // 0x800D6774
         case 0:
             // Warp camera.
             Camera_PositionSet(NULL, Q12(120.5f), Q12(-9.5f), Q12(137.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vy, g_SysWork.playerWork_4C.player_0.position_18.vz,
+            Camera_LookAtSet(NULL, g_SysWork.playerWork_4C.player_0.position.vx, g_SysWork.playerWork_4C.player_0.position.vy, g_SysWork.playerWork_4C.player_0.position.vz,
                              Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             D_800DB9E0 = Q12(0.0f);
@@ -3440,11 +3440,11 @@ void func_800D6774(void) // 0x800D6774
                 func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 128, false);
             }
 
-            Collision_Get(&coll, g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz);
+            Collision_Get(&coll, g_SysWork.playerWork_4C.player_0.position.vx, g_SysWork.playerWork_4C.player_0.position.vz);
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
 
-            g_SysWork.playerWork_4C.player_0.position_18.vy = coll.groundHeight_0;
+            g_SysWork.playerWork_4C.player_0.position.vy = coll.groundHeight_0;
 
             func_8005DC1C(Sfx_Unk1556, &QVECTOR3(119.5f, 0.0f, 141.5f), Q8(0.5f), 0);
             func_80089470();
@@ -3490,8 +3490,8 @@ void func_800D6774(void) // 0x800D6774
             Player_ControlFreeze();
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 52, false);
 
-            g_SysWork.playerWork_4C.player_0.position_18.vx += Q12(0.5f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy += Q12_ANGLE(45.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx += Q12(0.5f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy += Q12_ANGLE(45.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -3520,9 +3520,9 @@ void func_800D6774(void) // 0x800D6774
 
         case 13:
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(120.0f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(141.5f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-45.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(120.0f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(141.5f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(-45.0f);
 
             Savegame_EventFlagSet(EventFlag_329);
 
@@ -3577,9 +3577,9 @@ void func_800D6F24(void) // 0x800D6F24
             break;
 
         case 3:
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(124.4f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(140.9f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(124.4f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(140.9f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(90.0f);
 
             Camera_PositionSet(NULL, Q12(122.1f), Q12(-4.34f), Q12(141.87f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(125.65f), Q12(-2.74f), Q12(140.95f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -3612,8 +3612,8 @@ void func_800D6F24(void) // 0x800D6F24
             break;
 
         case 8:
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(126.86f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(140.36f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(126.86f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(140.36f);
 
             Camera_PositionSet(NULL, Q12(122.55f), Q12(-2.1f), Q12(138.5f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(126.39f), Q12(-1.73f), Q12(139.56f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -3631,9 +3631,9 @@ void func_800D6F24(void) // 0x800D6F24
             break;
 
         case 10:
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(126.86f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(140.36f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(126.86f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(140.36f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(90.0f);
 
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
 
@@ -4745,11 +4745,11 @@ void func_800D8FC0(void) // 0x800D8FC0
             Fs_QueueStartSeek(FILE_1ST_NO_BLOCK_TIM);
 
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(162.77f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(55.43f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(180.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(162.77f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(55.43f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(180.0f);
 
-            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model, 2);
             func_8008D438();
 
             // Warp camera.
@@ -4789,9 +4789,9 @@ void func_800D8FC0(void) // 0x800D8FC0
             Savegame_EventFlagSet(EventFlag_330);
 
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(162.77f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(55.43f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(180.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(162.77f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(55.43f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(180.0f);
             break;
     }
 }
@@ -4815,7 +4815,7 @@ void func_800D960C(void) // 0x800D960C
             func_800D76BC(2);
             D_800DB9E2 = 0;
 
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, 2);
 
             func_8008D448();
             SysWork_StateStepIncrement(0);
@@ -4949,7 +4949,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
             {
                 func_8005DC1C(Sfx_Unk1555, &QVECTOR3(130.5f, 0.0f, -93.0f), Q8(0.5f), 0);
 
-                g_SysWork.playerWork_4C.player_0.fallSpeed_34 += Q12(1.0f);
+                g_SysWork.playerWork_4C.player_0.fallSpeed += Q12(1.0f);
                 D_800E05AE += Q12(1.0f);
             }
 
@@ -5081,7 +5081,7 @@ void func_800DA3E0(void) // 0x800DA3E0
     if ((PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) || PLAYER_IN_MAP_CHUNK(vx, 1, 5, -1, 5)) &&
         PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
     {
-        if (vcRetCamMvSmoothF() == 0 && (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(125.8f) || D_800E05E2 == 1))
+        if (vcRetCamMvSmoothF() == 0 && (g_SysWork.playerWork_4C.player_0.position.vx > Q12(125.8f) || D_800E05E2 == 1))
         {
             if (D_800E05E2 != 0)
             {

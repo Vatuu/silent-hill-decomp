@@ -461,8 +461,8 @@ void func_800D85D8(void) // 0x800D85D8
             Camera_PositionSet(NULL, Q12(-56.41f), Q12(-5.67f), Q12(-55.39f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-56.4f), Q12(-1.8699f), Q12(-54.16f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(-2.3f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.position.vy = Q12(-2.3f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(0.0f);
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
             func_80085EB8(0u, &g_SysWork.playerWork_4C.player_0, 88, false);
@@ -470,31 +470,31 @@ void func_800D85D8(void) // 0x800D85D8
 
         case 3:
             SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
-            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
+            g_SysWork.playerWork_4C.player_0.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
             break;
 
         case 4:
-            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
+            g_SysWork.playerWork_4C.player_0.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
             break;
 
         default:
             if (Savegame_EventFlagGet(EventFlag_78))
             {
-                g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-60.0f);
-                g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(0.0f);
-                g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-63.7f);
-                g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(0.0f);
+                g_SysWork.playerWork_4C.player_0.position.vx = Q12(-60.0f);
+                g_SysWork.playerWork_4C.player_0.position.vy = Q12(0.0f);
+                g_SysWork.playerWork_4C.player_0.position.vz = Q12(-63.7f);
+                g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(0.0f);
 
                 Savegame_EventFlagClear(EventFlag_184);
                 Savegame_EventFlagClear(EventFlag_78);
             }
             else if (Savegame_EventFlagGet(EventFlag_81))
             {
-                g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-60.0f);
-                g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(0.6f);
-                g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-56.3f);
-                g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(180.0f);
+                g_SysWork.playerWork_4C.player_0.position.vx = Q12(-60.0f);
+                g_SysWork.playerWork_4C.player_0.position.vy = Q12(0.6f);
+                g_SysWork.playerWork_4C.player_0.position.vz = Q12(-56.3f);
+                g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(180.0f);
 
                 Savegame_EventFlagClear(EventFlag_185);
                 Savegame_EventFlagClear(EventFlag_81);
@@ -540,10 +540,10 @@ void func_800D8948(void) // 0x800D8948
             Camera_PositionSet(NULL, Q12(-56.74f), Q12(-1.7698f), Q12(-55.13f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-55.43f), Q12(-5.5f), Q12(-54.56f),Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),  true);
 
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-56.34f);
-            g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(-2.276f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-55.1f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(-56.34f);
+            g_SysWork.playerWork_4C.player_0.position.vy = Q12(-2.276f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(-55.1f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(0.0f);
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 87, false);
@@ -562,19 +562,19 @@ void func_800D8948(void) // 0x800D8948
         case 4:
             SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
 
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(0.0f);
-            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3f));
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3f));
             break;
 
         case 5:
-            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3f));
+            g_SysWork.playerWork_4C.player_0.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3f));
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
             break;
         default:
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
 
-            g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(0.0f);
+            g_SysWork.playerWork_4C.player_0.position.vy = Q12(0.0f);
             break;
         }
 }

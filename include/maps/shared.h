@@ -1179,7 +1179,7 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectDescNoRot, 40);
  * @param speed Move speed (Q*.12).
  */
 #define Chara_MoveSpeedUpdate(chara, speed) \
-    chara->moveSpeed_38 = APPROACH(chara->moveSpeed_38, Q12(0.0f), Q12_MULT_PRECISE(g_DeltaTime, speed))
+    chara->moveSpeed = APPROACH(chara->moveSpeed, Q12(0.0f), Q12_MULT_PRECISE(g_DeltaTime, speed))
 
 // TODO: Is it possible to merge these macros?
 #define Chara_MoveSpeedUpdate2(chara, speed, limit)                       \
@@ -1188,7 +1188,7 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectDescNoRot, 40);
     q19_12 newSpeed;                                                      \
     q19_12 newMoveSpeed;                                                  \
                                                                           \
-    moveSpeed = chara->moveSpeed_38;                                      \
+    moveSpeed = chara->moveSpeed;                                      \
     if (moveSpeed > limit)                                                \
     {                                                                     \
         newMoveSpeed = limit;                                             \
@@ -1208,13 +1208,13 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectDescNoRot, 40);
             newMoveSpeed = newSpeed;                                      \
         }                                                                 \
     }                                                                     \
-    chara->moveSpeed_38 = newMoveSpeed;                                   \
+    chara->moveSpeed = newMoveSpeed;                                   \
 }
 
 #define Chara_MoveSpeedUpdate3(chara, speed, limit) \
-    chara->moveSpeed_38 = APPROACH(chara->moveSpeed_38, limit, Q12_MULT_PRECISE(g_DeltaTime, speed))
+    chara->moveSpeed = APPROACH(chara->moveSpeed, limit, Q12_MULT_PRECISE(g_DeltaTime, speed))
 
 #define Chara_MoveSpeedUpdate4(chara, speed, limit) \
-    chara->moveSpeed_38 = APPROACH_ALT(chara->moveSpeed_38, limit, Q12_MULT_PRECISE(g_DeltaTime, speed))
+    chara->moveSpeed = APPROACH_ALT(chara->moveSpeed, limit, Q12_MULT_PRECISE(g_DeltaTime, speed))
 
 #endif

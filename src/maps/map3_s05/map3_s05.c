@@ -199,9 +199,9 @@ void func_800D5C98(void) // 0x800D5C98
 
         case 2:
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(20.4f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-20.0f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(20.4f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(-20.0f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(90.0f);
             g_SysWork.playerWork_4C.player_0.field_E1_0     = 5;
 
             // Warp camera.
@@ -255,9 +255,9 @@ void func_800D5C98(void) // 0x800D5C98
             SysWork_StateSetNext(SysState_Gameplay);
 
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(20.6f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-20.0f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(20.6f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(-20.0f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(90.0f);
 
             func_80086470(3U, InventoryItemId_Lighter, 1, false);
             g_SysWork.playerWork_4C.player_0.field_E1_0 = 3;
@@ -286,9 +286,9 @@ void func_800D5FC4(void) // 0x800D5FC4
 
         case 2:
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(20.3f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-20.0f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(20.3f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(-20.0f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(90.0f);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(19.5f), Q12(-1.09f), Q12(-20.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -445,9 +445,9 @@ void func_800D64E0(void) // 0x800D64E0
 
         case 2:
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(20.65f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-20.0f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12(0.25f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(20.65f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(-20.0f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12(0.25f);
             g_SysWork.playerWork_4C.player_0.field_E1_0 = 0;
             g_SysWork.playerWork_4C.player_0.field_E1_0 = 5;
 
@@ -574,7 +574,7 @@ void func_800D64E0(void) // 0x800D64E0
             func_8008D448();
             vcReturnPreAutoCamWork(true);
 
-            g_SysWork.playerWork_4C.player_0.position_18.vx -= Q12(1.2f);
+            g_SysWork.playerWork_4C.player_0.position.vx -= Q12(1.2f);
 
             SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
 
@@ -722,9 +722,9 @@ void func_800D6D1C(void) // 0x800D6D1C
             vcReturnPreAutoCamWork(true);
 
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(21.0f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-99.4f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(21.0f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(-99.4f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(0.0f);
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
@@ -816,9 +816,9 @@ void func_800D72AC(void) // 0x800D72AC
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 105, false);
 
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(57.15f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-22.8f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(57.15f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(-22.8f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(90.0f);
 
             SD_Call(Sfx_Unk1535);
             SysWork_StateStepIncrement(0);
@@ -826,7 +826,7 @@ void func_800D72AC(void) // 0x800D72AC
         case 6:
             tmp0 = Q12_MULT_PRECISE(g_DeltaTime, Q12(0.23f));
             distAdd = tmp0;
-            g_SysWork.playerWork_4C.player_0.position_18.vx += distAdd;
+            g_SysWork.playerWork_4C.player_0.position.vx += distAdd;
             g_WorldObject0.position_1C.vx += distAdd;
 
             if (g_WorldObject0.position_1C.vx > Q12(61.0f))
@@ -847,13 +847,13 @@ void func_800D72AC(void) // 0x800D72AC
         case 7:
             tmp0 = Q12_MULT_PRECISE(g_DeltaTime, Q12(0.23f));
             distAdd = tmp0;
-            g_SysWork.playerWork_4C.player_0.position_18.vx += distAdd;
+            g_SysWork.playerWork_4C.player_0.position.vx += distAdd;
             g_WorldObject0.position_1C.vx += distAdd;
 
             if (g_WorldObject0.position_1C.vx > Q12(61.25f))
             {
                 tmp0 = g_WorldObject0.position_1C.vx - Q12(61.25f);
-                g_SysWork.playerWork_4C.player_0.position_18.vx -= tmp0;
+                g_SysWork.playerWork_4C.player_0.position.vx -= tmp0;
                 g_WorldObject0.position_1C.vx -= tmp0;
             }
 
@@ -951,11 +951,11 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
     s32     newZ;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    cellX = g_SysWork.playerWork_4C.player_0.position_18.vx / CHUNK_CELL_SIZE;
-    projCellX = (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(0.0f)) ? (cellX + 1) : (cellX - 1);
+    cellX = g_SysWork.playerWork_4C.player_0.position.vx / CHUNK_CELL_SIZE;
+    projCellX = (g_SysWork.playerWork_4C.player_0.position.vx > Q12(0.0f)) ? (cellX + 1) : (cellX - 1);
 
-    cellZ = g_SysWork.playerWork_4C.player_0.position_18.vz / CHUNK_CELL_SIZE;
-    projCellZ = (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(0.0f)) ? (cellZ + 1) : (cellZ - 1);
+    cellZ = g_SysWork.playerWork_4C.player_0.position.vz / CHUNK_CELL_SIZE;
+    projCellZ = (g_SysWork.playerWork_4C.player_0.position.vz > Q12(0.0f)) ? (cellZ + 1) : (cellZ - 1);
 
     collFlags = CollisionFlag_None;
     func_80069844(CollisionFlag_All);

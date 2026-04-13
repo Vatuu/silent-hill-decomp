@@ -22,28 +22,28 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
 {
     s_AnimInfo* animInfo;
 
-    if (chara->model_0.controlState == ModelState_Uninitialized)
+    if (chara->model.controlState == ModelState_Uninitialized)
     {
-        chara->model_0.anim.alpha = Q12(0.0f);
+        chara->model.anim.alpha = Q12(0.0f);
         Character_AnimSet(chara, ANIM_STATUS(LockerDeadBodyAnim_2, true), 0);
-        chara->model_0.controlState++;
-        chara->position_18.vy = Q12(0.0f);
+        chara->model.controlState++;
+        chara->position.vy = Q12(0.0f);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_105))
     {
-        chara->model_0.anim.flags &= ~AnimFlag_Visible;
+        chara->model.anim.flags &= ~AnimFlag_Visible;
         chara->field_E1_0              = 0;
         return;
     }
 
-    chara->model_0.anim.flags |= AnimFlag_Visible;
+    chara->model.anim.flags |= AnimFlag_Visible;
 
     if (!Savegame_EventFlagGet(EventFlag_106))
     {
-        if (chara->model_0.anim.status == ANIM_STATUS(LockerDeadBodyAnim_2, true))
+        if (chara->model.anim.status == ANIM_STATUS(LockerDeadBodyAnim_2, true))
         {
-            chara->model_0.anim.status = ANIM_STATUS(LockerDeadBodyAnim_1, true);
+            chara->model.anim.status = ANIM_STATUS(LockerDeadBodyAnim_1, true);
         }
 
         chara->field_E1_0 = 0;
@@ -54,10 +54,10 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
         chara->field_E1_0 = 3;
     }
 
-    Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
+    Math_MatrixTransform(&chara->position, &chara->rotation, coords);
 
-    animInfo = &LOCKER_DEAD_BODY_ANIM_INFOS[chara->model_0.anim.status];
-    animInfo->playbackFunc(&chara->model_0, anmHdr, coords, animInfo);
+    animInfo = &LOCKER_DEAD_BODY_ANIM_INFOS[chara->model.anim.status];
+    animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
 
     chara->field_C8.field_0   = Q12(-0.3f);
     chara->field_D8.offsetX_4 = Q12(0.06f);
@@ -517,9 +517,9 @@ void func_800DAF18(void) // 0x800DAF18
             sharedData_800E30C8_1_s02.field_64[sharedData_800E30C8_1_s02.field_78] = 0x4CC;
 
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = -0xB733;
-            g_SysWork.playerWork_4C.player_0.position_18.vz = -0xCF33;
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = 0x400;
+            g_SysWork.playerWork_4C.player_0.position.vx = -0xB733;
+            g_SysWork.playerWork_4C.player_0.position.vz = -0xCF33;
+            g_SysWork.playerWork_4C.player_0.rotation.vy = 0x400;
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -559,7 +559,7 @@ void func_800DAF18(void) // 0x800DAF18
                 func_800CE0CC(2);
             }
 
-            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, AnimFlag_Visible);
+            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model, AnimFlag_Visible);
 
             func_8008D438();
             Camera_PositionSet(NULL, D_800E1F88[0].vx, D_800E1F88[0].vy, D_800E1F88[0].vz, 0, 0, 0, 0, true);
@@ -654,7 +654,7 @@ void func_800DAF18(void) // 0x800DAF18
             break;
 
         case 11:
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, AnimFlag_Visible);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, AnimFlag_Visible);
 
             func_8008D448();
             Game_FlashlightAttributesFix();
@@ -702,7 +702,7 @@ void func_800DAF18(void) // 0x800DAF18
         temp_s2 = ratan2((sp78.vy * 0x10) + 0xB33, (sp78.vz * 0x10) + 0xCEB8);
         if (D_800E20FE > 2)
         {
-            var_v0 = FP_FROM(g_SysWork.playerWork_4C.player_0.model_0.anim.time, Q12_SHIFT) - Player_AnimGetSomething();
+            var_v0 = FP_FROM(g_SysWork.playerWork_4C.player_0.model.anim.time, Q12_SHIFT) - Player_AnimGetSomething();
         }
         else
         {
@@ -771,9 +771,9 @@ void func_800DAF18(void) // 0x800DAF18
         temp_s0_2 = Sound_StereoBalanceGet(&D_800CBAB0) >> 1;
         vwGetViewPosition(&sp48);
 
-        temp_v1_9 = Math_Vector3MagCalc((((g_SysWork.playerWork_4C.player_0.position_18.vx + sp48.vx) >> 1) + 0xA333),
-                                        ((g_SysWork.playerWork_4C.player_0.position_18.vy + sp48.vy) >> 1),
-                                        (((g_SysWork.playerWork_4C.player_0.position_18.vz + sp48.vz) >> 1) + 0xD599));
+        temp_v1_9 = Math_Vector3MagCalc((((g_SysWork.playerWork_4C.player_0.position.vx + sp48.vx) >> 1) + 0xA333),
+                                        ((g_SysWork.playerWork_4C.player_0.position.vy + sp48.vy) >> 1),
+                                        (((g_SysWork.playerWork_4C.player_0.position.vz + sp48.vz) >> 1) + 0xD599));
 
         if (temp_v1_9 < 0x1000)
         {
@@ -969,10 +969,10 @@ void func_800DC310(void) // 0x800DC310
 
         case 2:
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-59.36f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(18.37f);
-            g_SysWork.playerWork_4C.player_0.moveSpeed_38 = Q12(0.0f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(90.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(-59.36f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(18.37f);
+            g_SysWork.playerWork_4C.player_0.moveSpeed = Q12(0.0f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(90.0f);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(-60.16f), Q12(-2.7f), Q12(19.76f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -1072,11 +1072,11 @@ void func_800DC780(void) // 0x800DC780
             Camera_LookAtSet(NULL, Q12(-62.99f), Q12(-2.29f), Q12(21.37f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = ratan2(Q12(-61.4f) - g_SysWork.playerWork_4C.player_0.position_18.vx,
-                                                                Q12(20.8f)  - g_SysWork.playerWork_4C.player_0.position_18.vz);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = ratan2(Q12(-61.4f) - g_SysWork.playerWork_4C.player_0.position.vx,
+                                                                Q12(20.8f)  - g_SysWork.playerWork_4C.player_0.position.vz);
 
             func_8008D438();
-            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, AnimFlag_Visible);
+            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model, AnimFlag_Visible);
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -1099,7 +1099,7 @@ void func_800DC780(void) // 0x800DC780
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_107);
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, AnimFlag_Visible);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, AnimFlag_Visible);
             func_8008D448();
             break;
     }
@@ -1354,7 +1354,7 @@ void func_800DCDDC(void) // 0x800DCDDC
     D_800E201C += g_DeltaTime;
     if (D_800E617C >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", D_800E617C, (s_DmsHeader*)FS_BUFFER_13);
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position, &g_SysWork.playerWork_4C.player_0.rotation, "HERO", D_800E617C, (s_DmsHeader*)FS_BUFFER_13);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800E6160, &D_800E6170, NULL, D_800E617C, (s_DmsHeader*)FS_BUFFER_13));
         vcUserCamTarget(&D_800E6160, NULL, true);
         vcUserWatchTarget(&D_800E6170, NULL, true);
@@ -1424,11 +1424,11 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
                 WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C, &g_WorldObject7.rotation_28);
             }
 
-            if ((g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-57.5f)) && (g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(21.6f)))
+            if ((g_SysWork.playerWork_4C.player_0.position.vx < Q12(-57.5f)) && (g_SysWork.playerWork_4C.player_0.position.vz < Q12(21.6f)))
             {
                 if (!Savegame_EventFlagGet(EventFlag_100))
                 {
-                    if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-60.0f))
+                    if (g_SysWork.playerWork_4C.player_0.position.vx > Q12(-60.0f))
                     {
                         if (D_800E62D0 == 2)
                         {
@@ -1436,9 +1436,9 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
                         }
 
                         // Warp camera.
-                        Camera_PositionSet(NULL, Q12(-61.18f), Q12(-3.0f), g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(0.49f),
+                        Camera_PositionSet(NULL, Q12(-61.18f), Q12(-3.0f), g_SysWork.playerWork_4C.player_0.position.vz + Q12(0.49f),
                                            Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800E62D0 == 0);
-                        Camera_LookAtSet(NULL, Q12(-58.48f), Q12(-0.31f), g_SysWork.playerWork_4C.player_0.position_18.vz - Q12(0.72f),
+                        Camera_LookAtSet(NULL, Q12(-58.48f), Q12(-0.31f), g_SysWork.playerWork_4C.player_0.position.vz - Q12(0.72f),
                                          Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800E62D0 == 0);
 
                         D_800E62D0 = 1;
@@ -1452,12 +1452,12 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
                 }
                 else if (Savegame_EventFlagGet(EventFlag_107))
                 {
-                    if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(18.6f))
+                    if (g_SysWork.playerWork_4C.player_0.position.vz > Q12(18.6f))
                     {
                         // Warp camera.
-                        Camera_PositionSet(NULL, Q12(-60.27f), Q12(-0.41f), g_SysWork.playerWork_4C.player_0.position_18.vz - Q12(2.25f),
+                        Camera_PositionSet(NULL, Q12(-60.27f), Q12(-0.41f), g_SysWork.playerWork_4C.player_0.position.vz - Q12(2.25f),
                                            Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800E62D0 == 0);
-                        Camera_LookAtSet(NULL, Q12(-59.75f), Q12(-1.09f), g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(1.65f),
+                        Camera_LookAtSet(NULL, Q12(-59.75f), Q12(-1.09f), g_SysWork.playerWork_4C.player_0.position.vz + Q12(1.65f),
                                          Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800E62D0 == 0);
 
                         D_800E62D0 = 1;
@@ -1488,14 +1488,14 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
     {
         // Warp camera.
         Camera_PositionSet(NULL, Q12(-60.63f), Q12(-4.14f), Q12(17.42f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-        if (g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(18.5f))
+        if (g_SysWork.playerWork_4C.player_0.position.vz < Q12(18.5f))
         {
             Camera_LookAtSet(NULL, Q12(-60.0f), Q12(0.0f), Q12(18.5f),
                              Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
         }
         else
         {
-            Camera_LookAtSet(NULL, Q12(-60.0f), Q12(0.0f), g_SysWork.playerWork_4C.player_0.position_18.vz,
+            Camera_LookAtSet(NULL, Q12(-60.0f), Q12(0.0f), g_SysWork.playerWork_4C.player_0.position.vz,
                              Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
         }
 
@@ -1505,7 +1505,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
     if (!Savegame_EventFlagGet(EventFlag_53) &&
         PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
-        x = g_SysWork.playerWork_4C.player_0.position_18.vx;
+        x = g_SysWork.playerWork_4C.player_0.position.vx;
         if (x < Q12(-100.0f))
         {
             D_800E638C += g_DeltaTime;
@@ -1639,7 +1639,7 @@ void func_800DE624(void) // 0x800DE624
         func_80088FF4(Chara_GreyChild, 15, 3);
     }
 
-    playerHealth = g_SysWork.playerWork_4C.player_0.health_B0;
+    playerHealth = g_SysWork.playerWork_4C.player_0.health;
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
         playerHealth -= Q12(50.0f);

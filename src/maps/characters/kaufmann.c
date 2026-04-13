@@ -22,7 +22,7 @@
  */
 void Ai_Kaufmann_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (chara->model_0.controlState == ModelState_Uninitialized)
+    if (chara->model.controlState == ModelState_Uninitialized)
     {
         Ai_Kaufmann_Init(chara);
     }
@@ -43,10 +43,10 @@ void Ai_Kaufmann_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDI
 {
     s_AnimInfo* animInfo;
 
-    if (chara->properties_E4.player.field_F0 == 0)
+    if (chara->properties.player.field_F0 == 0)
     {
-        animInfo = &KAUFMANN_ANIM_INFOS[chara->model_0.anim.status];
-        animInfo->playbackFunc(&chara->model_0, anmHdr, coords, animInfo);
+        animInfo = &KAUFMANN_ANIM_INFOS[chara->model.anim.status];
+        animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
     }
 }
 
@@ -67,9 +67,9 @@ void Ai_Kaufmann_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 
-    unused       = chara->position_18;
-    moveSpeed    = chara->moveSpeed_38;
-    headingAngle = chara->headingAngle_3C;
+    unused       = chara->position;
+    moveSpeed    = chara->moveSpeed;
+    headingAngle = chara->headingAngle;
     moveAmt      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
@@ -77,15 +77,15 @@ void Ai_Kaufmann_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
     offset.vx = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime);
+    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed, g_DeltaTime);
 
-    chara->position_18.vx += offset.vx;
-    chara->position_18.vy  = Q12(0.0f);
-    chara->position_18.vz += offset.vz;
+    chara->position.vx += offset.vx;
+    chara->position.vy  = Q12(0.0f);
+    chara->position.vz += offset.vz;
 
-    coords->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
-    coords->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
-    coords->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
+    coords->coord.t[0] = Q12_TO_Q8(chara->position.vx);
+    coords->coord.t[1] = Q12_TO_Q8(chara->position.vy);
+    coords->coord.t[2] = Q12_TO_Q8(chara->position.vz);
 }
 
 /** Addresses
@@ -102,7 +102,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
     s8          pitch0;
     s8          pitch1;
 
-    #define dahliaProps (chara->properties_E4.dahlia)
+    #define dahliaProps (chara->properties.dahlia)
 
     switch (dahliaProps.stateIdx0)
     {
@@ -116,7 +116,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
                 }
             }
 
-            Model_AnimStatusSet(&chara->model_0, 1, false);
+            Model_AnimStatusSet(&chara->model, 1, false);
             Character_AnimStateReset(chara);
             break;
 
@@ -135,7 +135,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
                 dahliaProps.moveDistance_126  = CLAMP(dahliaProps.moveDistance_126, 0, Q12(1.25f));
             }
 
-            Model_AnimStatusSet(&chara->model_0, 3, false);
+            Model_AnimStatusSet(&chara->model, 3, false);
             Character_AnimStateReset(chara);
 #if defined(MAP5_S03)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(4, 3));
@@ -143,13 +143,13 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 5:
-            Model_AnimStatusKeyframeSet(chara->model_0, 1, true, KAUFMANN_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model, 1, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 0));
             break;
 
         case 24:
-            Model_AnimStatusKeyframeSet(chara->model_0, 20, true, KAUFMANN_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model, 20, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
 #if defined(MAP5_S03)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(4, 3));
@@ -159,7 +159,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 6:
-            Model_AnimStatusKeyframeSet(chara->model_0, 4, true, KAUFMANN_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model, 4, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
 #if defined(MAP3_S00)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(3, 1));
@@ -167,13 +167,13 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 7:
-            if (chara->model_0.anim.keyframeIdx >= 95 && g_SysWork.npcs_1A0[0].properties_E4.dahlia.properties_120.val32 == 0)
+            if (chara->model.anim.keyframeIdx >= 95 && g_SysWork.npcs_1A0[0].properties.dahlia.properties_120.val32 == 0)
             {
-                g_SysWork.npcs_1A0[0].properties_E4.dahlia.properties_120.val32 = 1;
+                g_SysWork.npcs_1A0[0].properties.dahlia.properties_120.val32 = 1;
                 func_8006342C(EquippedWeaponId_Unk70, 0, 0, &g_SysWork.npcCoords_FC0[0]);
             }
 
-            Model_AnimStatusSet(&chara->model_0, 5, false);
+            Model_AnimStatusSet(&chara->model, 5, false);
             Character_AnimStateReset(chara);
 #if defined(MAP3_S00)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(3, 1));
@@ -181,7 +181,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 8:
-            Model_AnimStatusSet(&chara->model_0, 6, false);
+            Model_AnimStatusSet(&chara->model, 6, false);
             Character_AnimStateReset(chara);
 #if defined(MAP3_S00)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(3, 1));
@@ -189,9 +189,9 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 9:
-            Model_AnimStatusSet(&chara->model_0, 7, false);
+            Model_AnimStatusSet(&chara->model, 7, false);
             Character_AnimStateReset(chara);
-            if (chara->model_0.anim.keyframeIdx < 139 || !ANIM_STATUS_IS_ACTIVE(chara->model_0.anim.status))
+            if (chara->model.anim.keyframeIdx < 139 || !ANIM_STATUS_IS_ACTIVE(chara->model.anim.status))
             {
                 WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 1));
             }
@@ -203,12 +203,12 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 10:
-            Model_AnimStatusSet(&chara->model_0, 8, false);
+            Model_AnimStatusSet(&chara->model, 8, false);
             Character_AnimStateReset(chara);
             break;
 
         case 11:
-            Model_AnimStatusKeyframeSet(chara->model_0, 9, true, KAUFMANN_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model, 9, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
 #if defined(MAP5_S02)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 1));
@@ -216,7 +216,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 12:
-            Model_AnimStatusKeyframeSet(chara->model_0, 22, true, KAUFMANN_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model, 22, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
 #if defined(MAP5_S02)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 1));
@@ -224,7 +224,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 13:
-            Model_AnimStatusSet(&chara->model_0, 10, false);
+            Model_AnimStatusSet(&chara->model, 10, false);
             Character_AnimStateReset(chara);
 #if defined(MAP5_S02)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 1));
@@ -232,7 +232,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 14:
-            Model_AnimStatusSet(&chara->model_0, 11, false);
+            Model_AnimStatusSet(&chara->model, 11, false);
             Character_AnimStateReset(chara);
 #if defined(MAP5_S02)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 1));
@@ -240,17 +240,17 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 15:
-            Model_AnimStatusSet(&chara->model_0, 12, false);
+            Model_AnimStatusSet(&chara->model, 12, false);
             Character_AnimStateReset(chara);
 
-            if (chara->model_0.anim.keyframeIdx >= 364 && ANIM_STATUS_IS_ACTIVE(chara->model_0.anim.status))
+            if (chara->model.anim.keyframeIdx >= 364 && ANIM_STATUS_IS_ACTIVE(chara->model.anim.status))
             {
                 WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(4, 0));
             }
             break;
 
         case 16:
-            Model_AnimStatusSet(&chara->model_0, 2, false);
+            Model_AnimStatusSet(&chara->model, 2, false);
             Character_AnimStateReset(chara);
 #if defined(MAP5_S03)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 3));
@@ -258,23 +258,23 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 25:
-            Model_AnimStatusSet(&chara->model_0, 21, false);
+            Model_AnimStatusSet(&chara->model, 21, false);
             Character_AnimStateReset(chara);
             WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(3, 3));
             break;
 
         case 17:
-            Model_AnimStatusSet(&chara->model_0, 13, false);
+            Model_AnimStatusSet(&chara->model, 13, false);
             Character_AnimStateReset(chara);
             break;
 
         case 18:
-            Model_AnimStatusSet(&chara->model_0, 16, false);
+            Model_AnimStatusSet(&chara->model, 16, false);
             Character_AnimStateReset(chara);
 
 #if defined(MAP7_S03)
             // TODO: Invert like case 15? can't find how to match.
-            if (chara->model_0.anim.keyframeIdx < 78 || !ANIM_STATUS_IS_ACTIVE(chara->model_0.anim.status))
+            if (chara->model.anim.keyframeIdx < 78 || !ANIM_STATUS_IS_ACTIVE(chara->model.anim.status))
             {
                 WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(1, 3));
             }
@@ -286,7 +286,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 19:
-            Model_AnimStatusSet(&chara->model_0, 17, false);
+            Model_AnimStatusSet(&chara->model, 17, false);
             Character_AnimStateReset(chara);
 #if defined(MAP7_S03)
             WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(4, 3));
@@ -294,11 +294,11 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 20:
-            Model_AnimStatusKeyframeSet(chara->model_0, 18, true, KAUFMANN_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model, 18, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
 
 #if defined(MAP7_S03)
-            if (chara->model_0.anim.keyframeIdx < 141)
+            if (chara->model.anim.keyframeIdx < 141)
             {
                 WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(4, 3));
             }
@@ -310,7 +310,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 21:
-            Model_AnimStatusSet(&chara->model_0, 15, false);
+            Model_AnimStatusSet(&chara->model, 15, false);
             Character_AnimStateReset(chara);
 
 #if defined(MAP7_S03)
@@ -319,7 +319,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 22:
-            Model_AnimStatusKeyframeSet(chara->model_0, 19, true, KAUFMANN_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model, 19, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
 #if defined(MAP7_S03)
             WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(1, 3));
@@ -327,12 +327,12 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 23:
-            Model_AnimStatusSet(&chara->model_0, 14, false);
+            Model_AnimStatusSet(&chara->model, 14, false);
             Character_AnimStateReset(chara);
             break;
     }
 
-    Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
+    Collision_Get(&coll, chara->position.vx, chara->position.vz);
     func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
 
     switch (dahliaProps.stateIdx0)
@@ -346,7 +346,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 7:
-            sharedFunc_800D9188_0_s00(chara->model_0.anim.status, chara, 95, Sfx_Unk1492);
+            sharedFunc_800D9188_0_s00(chara->model.anim.status, chara, 95, Sfx_Unk1492);
             break;
 
         case 9:
@@ -366,7 +366,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 15:
-            if (chara->model_0.anim.keyframeIdx <= 353)
+            if (chara->model.anim.keyframeIdx <= 353)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(12, true), chara, 357, 353, sfx, pitch0);
             }
@@ -377,7 +377,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 16:
-            if (chara->model_0.anim.keyframeIdx <= 21)
+            if (chara->model.anim.keyframeIdx <= 21)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(2, true), chara, 28, 21, sfx, pitch0);
             }
@@ -388,7 +388,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 25:
-            if (chara->model_0.anim.keyframeIdx <= 247)
+            if (chara->model.anim.keyframeIdx <= 247)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(21, true), chara, 254, 247, sfx, pitch0);
             }
@@ -399,7 +399,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 22:
-            if (chara->model_0.anim.keyframeIdx <= 211)
+            if (chara->model.anim.keyframeIdx <= 211)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(19, true), chara, 217, 211, sfx, pitch0);
             }
@@ -410,13 +410,13 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
     }
 
-    chara->rotation_24.vy  = Q12_ANGLE_ABS(chara->rotation_24.vy + (sharedData_800D5CF4_3_s00 >> 4));
-    chara->headingAngle_3C = chara->rotation_24.vy;
-    chara->moveSpeed_38    = dahliaProps.moveDistance_126;
-    chara->fallSpeed_34   += g_GravitySpeed;
+    chara->rotation.vy  = Q12_ANGLE_ABS(chara->rotation.vy + (sharedData_800D5CF4_3_s00 >> 4));
+    chara->headingAngle = chara->rotation.vy;
+    chara->moveSpeed    = dahliaProps.moveDistance_126;
+    chara->fallSpeed   += g_GravitySpeed;
 
     coords->flg = false;
-    Math_RotMatrixZxyNegGte(&chara->rotation_24, &coords->coord);
+    Math_RotMatrixZxyNegGte(&chara->rotation, &coords->coord);
 }
 
 /** Addresses
@@ -430,7 +430,7 @@ void Ai_Kaufmann_Init(s_SubCharacter* chara)
 {
     sharedFunc_800D923C_0_s00(chara);
 
-    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[14].val32 = 0; // TODO: Change to `properties_E4.humanoid`?
+    g_SysWork.npcs_1A0[0].properties.dummy.properties_E8[14].val32 = 0; // TODO: Change to `properties.humanoid`?
 
     sharedData_800D5CF4_3_s00 = 0;
 

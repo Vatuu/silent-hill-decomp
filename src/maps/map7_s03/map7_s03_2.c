@@ -18,7 +18,7 @@
 #include "maps/characters/kaufmann.h"
 #include "screens/credits/credits.h"
 
-#define incubusProps incubus->properties_E4.incubus
+#define incubusProps incubus->properties.incubus
 
 #include "../src/maps/chara_util.c" // 0x800D5040
 
@@ -28,11 +28,11 @@ void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOO
     s32         var_a2;
     s_AnimInfo* animInfo;
 
-    if (incubus->model_0.controlState == ModelState_Uninitialized)
+    if (incubus->model.controlState == ModelState_Uninitialized)
     {
-        incubus->model_0.anim.alpha = Q12(0.0f);
-        incubus->model_0.controlState        = 1;
-        incubus->model_0.stateStep    = 0;
+        incubus->model.anim.alpha = Q12(0.0f);
+        incubus->model.controlState        = 1;
+        incubus->model.stateStep    = 0;
         Character_AnimSet(incubus, ANIM_STATUS(1, true), 0);
 
         D_800EDA00 = 0;
@@ -50,10 +50,10 @@ void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOO
 
     temp_s0 = Math_Sin(var_a2 >> 2);
 
-    Math_MatrixTransform(&incubus->position_18, &incubus->rotation_24, coords);
+    Math_MatrixTransform(&incubus->position, &incubus->rotation, coords);
 
-    animInfo = &LITTLE_INCUBUS_ANIM_INFOS[incubus->model_0.anim.status];
-    animInfo->playbackFunc(&incubus->model_0, anmHdr, coords, animInfo);
+    animInfo = &LITTLE_INCUBUS_ANIM_INFOS[incubus->model.anim.status];
+    animInfo->playbackFunc(&incubus->model, anmHdr, coords, animInfo);
 
     func_800705E4(coords, 1, temp_s0, temp_s0, temp_s0);
     func_800705E4(coords, 7, temp_s0, temp_s0, temp_s0);
@@ -2934,9 +2934,9 @@ void func_800DB608(void) // 0x800DB608
         speed = (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy) ? Q12(0.2f) : Q12(0.7f);
 
         // Velocity value based on previously saved player position?
-        ptr->velocityX_3C      = ((g_SysWork.playerWork_4C.player_0.position_18.vx - ptr->playerPosition_30.vx) * speed) / g_DeltaTime;
-        ptr->velocityZ_40      = ((g_SysWork.playerWork_4C.player_0.position_18.vz - ptr->playerPosition_30.vz) * speed) / g_DeltaTime;
-        ptr->playerPosition_30 = g_SysWork.playerWork_4C.player_0.position_18;
+        ptr->velocityX_3C      = ((g_SysWork.playerWork_4C.player_0.position.vx - ptr->playerPosition_30.vx) * speed) / g_DeltaTime;
+        ptr->velocityZ_40      = ((g_SysWork.playerWork_4C.player_0.position.vz - ptr->playerPosition_30.vz) * speed) / g_DeltaTime;
+        ptr->playerPosition_30 = g_SysWork.playerWork_4C.player_0.position;
     }
     else
     {
@@ -3192,7 +3192,7 @@ void func_800DBC18(q19_12 damageAmt) // 0x800DBC18
 {
     s32 i;
 
-    g_SysWork.playerWork_4C.player_0.attackReceived_41 = 67; // TODO: What weapon attack?
+    g_SysWork.playerWork_4C.player_0.attackReceived = 67; // TODO: What weapon attack?
 
     if (D_800F3DB4 > Q12(0.8f))
     {
@@ -3210,7 +3210,7 @@ void func_800DBC18(q19_12 damageAmt) // 0x800DBC18
         damageAmt >>= 1;
     }
 
-    g_SysWork.playerWork_4C.player_0.damage_B4.amount_C += damageAmt;
+    g_SysWork.playerWork_4C.player_0.damage.amount_C += damageAmt;
 }
 
 bool func_800DBCA4(MATRIX* mat, VECTOR3* outVec) // 0x800DBCA4
@@ -3278,7 +3278,7 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
     sp4C = 67;
     dist = Q12_MULT_PRECISE(arg0->rotationZ_4D8, Q12(0.9f));
 
-    if (g_SysWork.npcs_1A0[2].model_0.charaId_0 == Chara_Incubus)
+    if (g_SysWork.npcs_1A0[2].model.charaId_0 == Chara_Incubus)
     {
         sp4C = 3;
     }
@@ -3358,7 +3358,7 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
                 {
                     func_800DBC18(Q12(30.0f));
                     func_800DACFC(&sp20, 0, 0);
-                    func_800DBAE8(&g_SysWork.playerWork_4C.player_0.position_18, 1);
+                    func_800DBAE8(&g_SysWork.playerWork_4C.player_0.position, 1);
                 }
                 else
                 {
@@ -3366,7 +3366,7 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
                     func_800DACFC(&sp20, 0, 1);
                 }
 
-                func_800DBAE8(&g_SysWork.playerWork_4C.player_0.position_18, 3);
+                func_800DBAE8(&g_SysWork.playerWork_4C.player_0.position, 3);
             }
 
             if (i < arg0->field_20)
@@ -4196,7 +4196,7 @@ void func_800DD594(const VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coo
     ptr->positionZ_4 = (newPosZ >> 18) << 18;
     ptr->field_28 = chara;
     ptr->coords_2C = coords;
-    ptr->playerPosition_30 = g_SysWork.playerWork_4C.player_0.position_18;
+    ptr->playerPosition_30 = g_SysWork.playerWork_4C.player_0.position;
     ptr->field_44 = 0;
     ptr->field_48 = arg3;
 
@@ -4272,7 +4272,7 @@ void func_800DD7D0(VECTOR3* charaPos) // 0x800DD7D0
     ptr->positionX_0 = gridX;
     ptr->positionZ_4 = gridZ;
 
-    ptr->playerPosition_30 = g_SysWork.playerWork_4C.player_0.position_18;
+    ptr->playerPosition_30 = g_SysWork.playerWork_4C.player_0.position;
     ptr->field_44          = 1;
     ptr->field_48          = 2;
 
@@ -4309,7 +4309,7 @@ void func_800DD8CC(VECTOR3* charaPos) // 0x800DD8CC
     ptr->positionX_0 = gridX;
     ptr->positionZ_4 = gridZ;
 
-    ptr->playerPosition_30 = g_SysWork.playerWork_4C.player_0.position_18;
+    ptr->playerPosition_30 = g_SysWork.playerWork_4C.player_0.position;
     ptr->field_44          = 1;
     ptr->field_48          = 2;
 
@@ -4333,40 +4333,40 @@ void func_800DD98C(bool disableDamage) // 0x800DD98C
 
 void func_800DD9B0(s_SubCharacter* chara) // 0x800DD9B0
 {
-    if (chara->model_0.controlState != ModelState_Uninitialized)
+    if (chara->model.controlState != ModelState_Uninitialized)
     {
-        chara->model_0.controlState     = 2;
-        chara->model_0.stateStep = 0;
+        chara->model.controlState     = 2;
+        chara->model.stateStep = 0;
     }
     else
     {
-        chara->model_0.stateStep = 2;
+        chara->model.stateStep = 2;
     }
 }
 
 void func_800DD9D4(s_SubCharacter* chara) // 0x800DD9D4
 {
-    if (chara->model_0.controlState != ModelState_Uninitialized)
+    if (chara->model.controlState != ModelState_Uninitialized)
     {
-        chara->model_0.controlState     = 10;
-        chara->model_0.stateStep = 0;
+        chara->model.controlState     = 10;
+        chara->model.stateStep = 0;
     }
     else
     {
-        chara->model_0.stateStep = 10;
+        chara->model.stateStep = 10;
     }
 }
 
 void func_800DD9F8(s_SubCharacter* chara) // 0x800DD9F8
 {
-    if (chara->model_0.controlState != ModelState_Uninitialized)
+    if (chara->model.controlState != ModelState_Uninitialized)
     {
-        chara->model_0.controlState     = 3;
-        chara->model_0.stateStep = 0;
+        chara->model.controlState     = 3;
+        chara->model.stateStep = 0;
     }
     else
     {
-        chara->model_0.stateStep = 3;
+        chara->model.stateStep = 3;
     }
 }
 
@@ -4375,68 +4375,68 @@ bool Ai_Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDA
     u8              activeStateStep;
     s_SubCharacter* localIncubus; // TODO: Not sure why this is needed here, could be an inline in this func and others.
 
-    incubus->model_0.anim.alpha = Q12(0.0f);
+    incubus->model.anim.alpha = Q12(0.0f);
     localIncubus                    = incubus;
 
     // Set starting health.
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        incubus->health_B0 = Q12(30000.0f);
+        incubus->health = Q12(30000.0f);
     }
     else
     {
-        incubus->health_B0 = Q12(40000.0f);
+        incubus->health = Q12(40000.0f);
     }
 
-    incubus->moveSpeed_38       = Q12(0.0f);
-    incubus->headingAngle_3C    = incubus->rotation_24.vy;
+    incubus->moveSpeed       = Q12(0.0f);
+    incubus->headingAngle    = incubus->rotation.vy;
     incubus->field_D4.radius_0   = Q12(0.3f);
     incubus->field_E1_0         = 4;
     incubus->field_D8.offsetX_4 = Q12(0.0f);
     incubus->field_D8.offsetZ_6 = Q12(0.0f);
-    incubus->flags_3E          |= CharaFlag_Unk3;
+    incubus->flags          |= CharaFlag_Unk3;
 
-    localIncubus->properties_E4.dummy.properties_E8[2].val32 = 0;
-    localIncubus->properties_E4.dummy.properties_E8[1].val32 = 0;
+    localIncubus->properties.dummy.properties_E8[2].val32 = 0;
+    localIncubus->properties.dummy.properties_E8[1].val32 = 0;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        localIncubus->properties_E4.dummy.properties_E8[3].val32 = Q12(300.0f);
+        localIncubus->properties.dummy.properties_E8[3].val32 = Q12(300.0f);
     }
     else
     {
-        localIncubus->properties_E4.dummy.properties_E8[3].val32 = Q12(30.0f);
+        localIncubus->properties.dummy.properties_E8[3].val32 = Q12(30.0f);
     }
 
-    activeStateStep = incubus->model_0.stateStep;
+    activeStateStep = incubus->model.stateStep;
     if (activeStateStep != IncubusStateStep_0)
     {
-        incubus->model_0.stateStep = IncubusStateStep_0;
-        incubus->model_0.controlState     = activeStateStep;
+        incubus->model.stateStep = IncubusStateStep_0;
+        incubus->model.controlState     = activeStateStep;
     }
     else
     {
-        incubus->model_0.controlState     = IncubusControl_1;
-        incubus->model_0.stateStep = IncubusStateStep_0;
+        incubus->model.controlState     = IncubusControl_1;
+        incubus->model.stateStep = IncubusStateStep_0;
     }
 
     Character_AnimSet(incubus, ANIM_STATUS(IncubusAnim_3, false), 338);
-    ModelAnim_AnimInfoSet(&incubus->model_0.anim, INCUBUS_ANIM_INFOS);
+    ModelAnim_AnimInfoSet(&incubus->model.anim, INCUBUS_ANIM_INFOS);
 
     Chara_DamageClear(incubus);
-    incubus->flags_3E |= CharaFlag_Unk9;
+    incubus->flags |= CharaFlag_Unk9;
 
     return true;
 }
 
 void func_800DDB3C(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
-    func_800DD62C(&chara->position_18, chara, coords);
+    func_800DD62C(&chara->position, chara, coords);
 }
 
 void func_800DDB68(s_SubCharacter* chara, s32 soundIdx) // 0x800DDB68
 {
-    func_8005DC1C(D_800EC8C8[soundIdx].id_0, &chara->position_18, D_800EC8C8[soundIdx].volume_2.val16, 0);
+    func_8005DC1C(D_800EC8C8[soundIdx].id_0, &chara->position, D_800EC8C8[soundIdx].volume_2.val16, 0);
 }
 
 s32 func_800DDBA4(s32 idx) // 0x800DDBA4
@@ -4452,8 +4452,8 @@ void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
     {
         if (incubusProps.bossFightTimer_F4 < Q12(0.0f))
         {
-            incubus->health_B0 = Q12(0.0f);
-            incubus->damage_B4.amount_C = 1;
+            incubus->health = Q12(0.0f);
+            incubus->damage.amount_C = 1;
         }
 
         if (!func_8004C328(false))
@@ -4461,25 +4461,25 @@ void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
             incubusProps.bossFightTimer_F4 -= g_DeltaTime;
         }
 
-        if (!(incubus->flags_3E & CharaFlag_Unk3))
+        if (!(incubus->flags & CharaFlag_Unk3))
         {
-            incubus->damage_B4.amount_C *= 10;
+            incubus->damage.amount_C *= 10;
         }
 
-        if (incubus->damage_B4.amount_C > Q12(0.0f))
+        if (incubus->damage.amount_C > Q12(0.0f))
         {
-            newHealth = incubus->health_B0 - incubus->damage_B4.amount_C;
+            newHealth = incubus->health - incubus->damage.amount_C;
             if (newHealth < Q12(0.0f))
             {
                 newHealth = Q12(0.0f);
             }
-            incubus->health_B0 = newHealth;
+            incubus->health = newHealth;
 
             if (newHealth < Q12(20.0f) && func_800DD964() == 0)
             {
-                incubus->health_B0 = Q12(0.0f);
-                incubus->model_0.controlState = IncubusControl_12;
-                incubus->model_0.stateStep = IncubusStateStep_0;
+                incubus->health = Q12(0.0f);
+                incubus->model.controlState = IncubusControl_12;
+                incubus->model.stateStep = IncubusStateStep_0;
                 incubusProps.someState_F0++;
             }
         }
@@ -4496,9 +4496,9 @@ void func_800DDCC4(s_SubCharacter* incubus) // 0x800DDCC4
     s32 tmp;
 
     temp_v0 = Math_AngleNormalizeSigned(ratan2(
-                                g_SysWork.playerWork_4C.player_0.position_18.vx - incubus->position_18.vx,
-                                g_SysWork.playerWork_4C.player_0.position_18.vz - incubus->position_18.vz) -
-                            incubus->rotation_24.vy);
+                                g_SysWork.playerWork_4C.player_0.position.vx - incubus->position.vx,
+                                g_SysWork.playerWork_4C.player_0.position.vz - incubus->position.vz) -
+                            incubus->rotation.vy);
     var_v0  = ABS(temp_v0);
 
     if (var_v0 > Q12_ANGLE(10.0f))
@@ -4507,21 +4507,21 @@ void func_800DDCC4(s_SubCharacter* incubus) // 0x800DDCC4
         tmp      = Q12_MULT_PRECISE(g_DeltaTime, var_v0_2);
         if (temp_v0 > 0)
         {
-            incubus->rotation_24.vy += tmp;
+            incubus->rotation.vy += tmp;
         }
         else
         {
-            incubus->rotation_24.vy -= tmp;
+            incubus->rotation.vy -= tmp;
         }
     }
 }
 
 void func_800DDDB0(s_SubCharacter* incubus) // 0x800DDDB0
 {
-    if (incubus->model_0.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == IncubusStateStep_0)
     {
-        incubus->model_0.anim.status = ANIM_STATUS(IncubusAnim_1, false);
-        incubus->model_0.stateStep++;
+        incubus->model.anim.status = ANIM_STATUS(IncubusAnim_1, false);
+        incubus->model.stateStep++;
     }
 }
 
@@ -4531,69 +4531,69 @@ void func_800DDDD8(s_SubCharacter* incubus) // 0x800DDDD8
 
     localIncubus = incubus;
 
-    if (incubus->model_0.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == IncubusStateStep_0)
     {
-        incubus->model_0.anim.status        = ANIM_STATUS(IncubusAnim_2, false);
+        incubus->model.anim.status        = ANIM_STATUS(IncubusAnim_2, false);
         incubusProps.timer_E8 = Q12(0.0f);
-        incubus->model_0.stateStep++;
+        incubus->model.stateStep++;
         return;
     }
 
-    switch (incubus->model_0.stateStep)
+    switch (incubus->model.stateStep)
     {
         case IncubusStateStep_1:
             if (incubusProps.timer_E8 >= Q12(1.5f))
             {
-                incubus->model_0.stateStep = 2;
+                incubus->model.stateStep = 2;
             }
             break;
 
         case IncubusStateStep_2:
             if (incubusProps.timer_E8 >= Q12(2.5f))
             {
-                incubus->model_0.stateStep = 3;
+                incubus->model.stateStep = 3;
             }
             break;
 
         case IncubusStateStep_3:
             if (incubusProps.timer_E8 >= Q12(3.5f))
             {
-                incubus->model_0.stateStep = 4;
+                incubus->model.stateStep = 4;
             }
             break;
 
         case IncubusStateStep_4:
             if (incubusProps.timer_E8 >= Q12(4.5f))
             {
-                incubus->model_0.stateStep = 5;
+                incubus->model.stateStep = 5;
             }
             break;
     }
 
-    if (incubus->model_0.anim.status == ANIM_STATUS(4, false))
+    if (incubus->model.anim.status == ANIM_STATUS(4, false))
     {
-        incubus->model_0.controlState = IncubusControl_5;
-        incubus->model_0.stateStep    = 0;
+        incubus->model.controlState = IncubusControl_5;
+        incubus->model.stateStep    = 0;
     }
 
-    localIncubus->properties_E4.incubus.timer_E8 += g_DeltaTime;
+    localIncubus->properties.incubus.timer_E8 += g_DeltaTime;
 }
 
 void func_800DDEEC(s_SubCharacter* incubus) // 0x800DDEEC
 {
-    if (incubus->model_0.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == IncubusStateStep_0)
     {
-        incubus->model_0.anim.status = ANIM_STATUS(IncubusAnim_4, false);
-        incubus->model_0.stateStep++;
+        incubus->model.anim.status = ANIM_STATUS(IncubusAnim_4, false);
+        incubus->model.stateStep++;
     }
 }
 
 void func_800DDF14(s_SubCharacter* incubus) // 0x800DDF14
 {
-    if (incubus->model_0.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == IncubusStateStep_0)
     {
-        incubus->model_0.anim.status = ANIM_STATUS(IncubusAnim_4, false);
-        incubus->model_0.stateStep++;
+        incubus->model.anim.status = ANIM_STATUS(IncubusAnim_4, false);
+        incubus->model.stateStep++;
     }
 }
 
@@ -4606,9 +4606,9 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDF3C
 
     localIncubus = incubus;
 
-    if (incubus->model_0.stateStep == 0)
+    if (incubus->model.stateStep == 0)
     {
-        incubus->model_0.stateStep++;
+        incubus->model.stateStep++;
         incubusProps.timer_E8 = Q12(1.5f);
         return;
     }
@@ -4618,7 +4618,7 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDF3C
         func_800DDCC4(incubus);
     }
 
-    switch (incubus->model_0.stateStep)
+    switch (incubus->model.stateStep)
     {
         case 1:
             if (coords)
@@ -4633,13 +4633,13 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDF3C
                     func_800DD240(&coordsVec);
                 }
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f))
+                if (localIncubus->properties.incubus.timer_E8 < Q12(0.0f))
                 {
-                    localIncubus->properties_E4.incubus.timer_E8 = Q12(2.5f);
-                    incubus->model_0.stateStep++;
+                    localIncubus->properties.incubus.timer_E8 = Q12(2.5f);
+                    incubus->model.stateStep++;
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+                localIncubus->properties.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -4666,17 +4666,17 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDF3C
                     func_800DD464(&coordsVec);
                 }
 
-                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
-                                                       incubus->rotation_24.vy));
+                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position, g_SysWork.playerWork_4C.player_0.position) -
+                                                       incubus->rotation.vy));
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
+                if (localIncubus->properties.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
                 {
-                    localIncubus->properties_E4.incubus.timer_E8 = Q12(0.3f);
-                    incubus->model_0.stateStep++;
+                    localIncubus->properties.incubus.timer_E8 = Q12(0.3f);
+                    incubus->model.stateStep++;
                     break;
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+                localIncubus->properties.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -4699,13 +4699,13 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDF3C
                     func_800DD240(&coordsVec);
                 }
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f))
+                if (localIncubus->properties.incubus.timer_E8 < Q12(0.0f))
                 {
-                    incubus->model_0.stateStep++;
-                    localIncubus->properties_E4.incubus.timer_E8 = Q12(2.0f);
+                    incubus->model.stateStep++;
+                    localIncubus->properties.incubus.timer_E8 = Q12(2.0f);
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+                localIncubus->properties.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -4727,18 +4727,18 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDF3C
                     func_800DD464(&coordsVec);
                 }
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f))
+                if (localIncubus->properties.incubus.timer_E8 < Q12(0.0f))
                 {
-                    incubus->model_0.stateStep++;
+                    incubus->model.stateStep++;
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+                localIncubus->properties.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
         case 5:
-            incubus->model_0.controlState = IncubusControl_11;
-            incubus->model_0.stateStep    = IncubusStateStep_0;
+            incubus->model.controlState = IncubusControl_11;
+            incubus->model.stateStep    = IncubusStateStep_0;
             break;
     }
 }
@@ -4752,11 +4752,11 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
 
     localIncubus = incubus;
 
-    if (incubus->model_0.stateStep == 0)
+    if (incubus->model.stateStep == 0)
     {
         incubusProps.timer_E8 = Q12(1.5f);
-        incubus->flags_3E                      &= ~CharaFlag_Unk3;
-        incubus->model_0.stateStep++;
+        incubus->flags                      &= ~CharaFlag_Unk3;
+        incubus->model.stateStep++;
         return;
     }
 
@@ -4765,7 +4765,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
         func_800DDCC4(incubus);
     }
 
-    switch (incubus->model_0.stateStep)
+    switch (incubus->model.stateStep)
     {
         case 1:
             if (coords)
@@ -4780,21 +4780,21 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
                     func_800DD240(&coordsVec);
                 }
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f))
+                if (localIncubus->properties.incubus.timer_E8 < Q12(0.0f))
                 {
                     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
                     {
-                        localIncubus->properties_E4.incubus.timer_E8 = Q12(1.0f);
+                        localIncubus->properties.incubus.timer_E8 = Q12(1.0f);
                     }
                     else
                     {
-                        localIncubus->properties_E4.incubus.timer_E8 = Q12(2.5f);
+                        localIncubus->properties.incubus.timer_E8 = Q12(2.5f);
                     }
 
-                    incubus->model_0.stateStep++;
+                    incubus->model.stateStep++;
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+                localIncubus->properties.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -4822,17 +4822,17 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
                     func_800DD464(&coordsVec);
                 }
 
-                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
-                                                       incubus->rotation_24.vy));
+                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position, g_SysWork.playerWork_4C.player_0.position) -
+                                                       incubus->rotation.vy));
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
+                if (localIncubus->properties.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
                 {
-                    localIncubus->properties_E4.incubus.timer_E8 = Q12(0.3f);
-                    incubus->model_0.stateStep++;
+                    localIncubus->properties.incubus.timer_E8 = Q12(0.3f);
+                    incubus->model.stateStep++;
                     break;
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+                localIncubus->properties.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -4855,21 +4855,21 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
                     func_800DD240(&coordsVec);
                 }
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f))
+                if (localIncubus->properties.incubus.timer_E8 < Q12(0.0f))
                 {
-                    incubus->model_0.stateStep++;
+                    incubus->model.stateStep++;
 
                     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
                     {
-                        localIncubus->properties_E4.incubus.timer_E8 = Q12(3.0f);
+                        localIncubus->properties.incubus.timer_E8 = Q12(3.0f);
                     }
                     else
                     {
-                        localIncubus->properties_E4.incubus.timer_E8 = Q12(2.0f);
+                        localIncubus->properties.incubus.timer_E8 = Q12(2.0f);
                     }
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+                localIncubus->properties.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -4891,19 +4891,19 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
                     func_800DD464(&coordsVec);
                 }
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f))
+                if (localIncubus->properties.incubus.timer_E8 < Q12(0.0f))
                 {
-                    incubus->model_0.stateStep++;
+                    incubus->model.stateStep++;
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+                localIncubus->properties.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
         case 5:
-            incubus->model_0.controlState = IncubusControl_11;
-            incubus->model_0.stateStep    = IncubusStateStep_0;
-            incubus->flags_3E              |= CharaFlag_Unk3;
+            incubus->model.controlState = IncubusControl_11;
+            incubus->model.stateStep    = IncubusStateStep_0;
+            incubus->flags              |= CharaFlag_Unk3;
             break;
     }
 }
@@ -4918,9 +4918,9 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
 
     localIncubus = incubus;
 
-    if (incubus->model_0.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == IncubusStateStep_0)
     {
-        incubus->model_0.stateStep++;
+        incubus->model.stateStep++;
         incubusProps.timer_E8 = Q12(1.5f);
         return;
     }
@@ -4930,7 +4930,7 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
         func_800DDCC4(incubus);
     }
 
-    switch (incubus->model_0.stateStep)
+    switch (incubus->model.stateStep)
     {
         case 1:
             if (coords)
@@ -4945,13 +4945,13 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
                     func_800DD240(&coordsVec);
                 }
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f))
+                if (localIncubus->properties.incubus.timer_E8 < Q12(0.0f))
                 {
-                    localIncubus->properties_E4.incubus.timer_E8 = Q12(2.5f);
-                    incubus->model_0.stateStep++;
+                    localIncubus->properties.incubus.timer_E8 = Q12(2.5f);
+                    incubus->model.stateStep++;
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+                localIncubus->properties.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -4978,16 +4978,16 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
                     func_800DD464(&coordsVec);
                 }
 
-                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
-                                                       incubus->rotation_24.vy));
+                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position, g_SysWork.playerWork_4C.player_0.position) -
+                                                       incubus->rotation.vy));
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
+                if (localIncubus->properties.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
                 {
-                    localIncubus->properties_E4.incubus.timer_E8 = Q12(0.3f);
-                    incubus->model_0.stateStep++;
+                    localIncubus->properties.incubus.timer_E8 = Q12(0.3f);
+                    incubus->model.stateStep++;
                     break;
                 }
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+                localIncubus->properties.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -5001,9 +5001,9 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
                 coordsVec.vz = Q8_TO_Q12(coordsMat.t[2]);
 
                 ptr          = &D_800F48A8;
-                playerPos.vx = g_SysWork.playerWork_4C.player_0.position_18.vx + ptr->velocityX_3C;
-                playerPos.vy = g_SysWork.playerWork_4C.player_0.position_18.vy;
-                playerPos.vz = g_SysWork.playerWork_4C.player_0.position_18.vz + ptr->velocityZ_40;
+                playerPos.vx = g_SysWork.playerWork_4C.player_0.position.vx + ptr->velocityX_3C;
+                playerPos.vy = g_SysWork.playerWork_4C.player_0.position.vy;
+                playerPos.vz = g_SysWork.playerWork_4C.player_0.position.vz + ptr->velocityZ_40;
 
                 if (!(Rng_Rand16() & 0x10))
                 {
@@ -5016,13 +5016,13 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
                     func_800DD240(&coordsVec);
                 }
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f))
+                if (localIncubus->properties.incubus.timer_E8 < Q12(0.0f))
                 {
-                    incubus->model_0.stateStep++;
-                    localIncubus->properties_E4.incubus.timer_E8 = Q12(2.0f);
+                    incubus->model.stateStep++;
+                    localIncubus->properties.incubus.timer_E8 = Q12(2.0f);
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+                localIncubus->properties.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -5036,9 +5036,9 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
                 coordsVec.vz = Q8_TO_Q12(coordsMat.t[2]);
 
                 ptr          = &D_800F48A8;
-                playerPos.vx = g_SysWork.playerWork_4C.player_0.position_18.vx + ptr->velocityX_3C;
-                playerPos.vy = g_SysWork.playerWork_4C.player_0.position_18.vy;
-                playerPos.vz = g_SysWork.playerWork_4C.player_0.position_18.vz + ptr->velocityZ_40;
+                playerPos.vx = g_SysWork.playerWork_4C.player_0.position.vx + ptr->velocityX_3C;
+                playerPos.vy = g_SysWork.playerWork_4C.player_0.position.vy;
+                playerPos.vz = g_SysWork.playerWork_4C.player_0.position.vz + ptr->velocityZ_40;
 
                 if (!(Rng_Rand16() & 0x51))
                 {
@@ -5050,18 +5050,18 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
                     func_800DD464(&coordsVec);
                 }
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f))
+                if (localIncubus->properties.incubus.timer_E8 < Q12(0.0f))
                 {
-                    incubus->model_0.stateStep++;
+                    incubus->model.stateStep++;
                 }
 
-                localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+                localIncubus->properties.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
         case 5:
-            incubus->model_0.controlState = IncubusControl_11;
-            incubus->model_0.stateStep    = IncubusStateStep_0;
+            incubus->model.controlState = IncubusControl_11;
+            incubus->model.stateStep    = IncubusStateStep_0;
             break;
     }
 }
@@ -5070,9 +5070,9 @@ void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEA54
 {
     func_800DDB3C(incubus, coords);
 
-    incubus->model_0.controlState             = IncubusControl_11;
-    incubus->model_0.stateStep                = IncubusStateStep_0;
-    incubus->properties_E4.player.positionY_EC |= 1 << 2;
+    incubus->model.controlState             = IncubusControl_11;
+    incubus->model.stateStep                = IncubusStateStep_0;
+    incubus->properties.player.positionY_EC |= 1 << 2;
 }
 
 q19_12 func_800DEA90(void) // 0x800DEA90
@@ -5093,28 +5093,28 @@ q19_12 func_800DEA90(void) // 0x800DEA90
 
 void func_800DEAF4(s_SubCharacter* incubus) // 0x800DEAF4
 {
-    if (incubus->model_0.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == IncubusStateStep_0)
     {
         incubusProps.timer_E8 = func_800DEA90();
-        incubus->model_0.stateStep++;
+        incubus->model.stateStep++;
         return;
     }
 
     func_800DDCC4(incubus);
 
     // Handle state step.
-    switch (incubus->model_0.stateStep)
+    switch (incubus->model.stateStep)
     {
         case IncubusStateStep_1:
             if (incubusProps.timer_E8 <= Q12(0.0f))
             {
-                incubus->model_0.stateStep = IncubusStateStep_2;
+                incubus->model.stateStep = IncubusStateStep_2;
             }
             break;
 
         case IncubusStateStep_2:
-            incubus->model_0.controlState = IncubusControl_7;
-            incubus->model_0.stateStep    = IncubusStateStep_0;
+            incubus->model.controlState = IncubusControl_7;
+            incubus->model.stateStep    = IncubusStateStep_0;
             break;
     }
 
@@ -5125,45 +5125,45 @@ void func_800DEBA8(s_SubCharacter* incubus) // 0x800DEBA8
 {
     s_SubCharacter* localIncubus = incubus;
 
-    if (incubus->model_0.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == IncubusStateStep_0)
     {
-        if (incubus->model_0.anim.status != ANIM_STATUS(IncubusAnim_3, true))
+        if (incubus->model.anim.status != ANIM_STATUS(IncubusAnim_3, true))
         {
-            incubus->model_0.anim.status = ANIM_STATUS(IncubusAnim_3, false);
+            incubus->model.anim.status = ANIM_STATUS(IncubusAnim_3, false);
         }
 
         incubusProps.timer_E8 = Q12(0.5f);
-        incubus->model_0.stateStep++;
+        incubus->model.stateStep++;
     }
     else
     {
         if (incubusProps.timer_E8 < 0)
         {
             Savegame_EventFlagSet(EventFlag_578);
-            incubus->model_0.controlState = IncubusControl_13;
-            incubus->model_0.stateStep    = IncubusStateStep_0;
+            incubus->model.controlState = IncubusControl_13;
+            incubus->model.stateStep    = IncubusStateStep_0;
         }
 
-        localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+        localIncubus->properties.incubus.timer_E8 -= g_DeltaTime;
     }
 }
 
 void func_800DEC38(s_SubCharacter* incubus) // 0x800DEC38
 {
-    if (incubus->model_0.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == IncubusStateStep_0)
     {
-        if (incubus->model_0.anim.status != ANIM_STATUS(IncubusAnim_3, true))
+        if (incubus->model.anim.status != ANIM_STATUS(IncubusAnim_3, true))
         {
-            incubus->model_0.anim.status = ANIM_STATUS(IncubusAnim_3, false);
+            incubus->model.anim.status = ANIM_STATUS(IncubusAnim_3, false);
         }
 
-        incubus->model_0.stateStep++;
+        incubus->model.stateStep++;
     }
 }
 
 void func_800DEC74(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEC74
 {
-    switch (incubus->model_0.controlState)
+    switch (incubus->model.controlState)
     {
         case IncubusControl_1:
             break;
@@ -5220,7 +5220,7 @@ void func_800DED68(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DED68
 
     func_800DB608();
 
-    switch (incubus->model_0.controlState)
+    switch (incubus->model.controlState)
     {
         case IncubusControl_6:
             func_800DDF3C(incubus, coords);
@@ -5235,7 +5235,7 @@ void func_800DED68(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DED68
             break;
     }
 
-    if (incubus->model_0.anim.status != ANIM_STATUS(IncubusAnim_3, true))
+    if (incubus->model.anim.status != ANIM_STATUS(IncubusAnim_3, true))
     {
         Vw_CoordHierarchyMatrixCompute(&coords[2], &mat);
         Vc_LookAtPositionYSet(Q12_MULT_FLOAT_PRECISE(Q8_TO_Q12(mat.t[1]), 0.65f));
@@ -5246,11 +5246,11 @@ void func_800DEE44(s_SubCharacter* incubus) // 0x800DEE44
 {
     s_CollisionResult sp10;
 
-    incubus->fallSpeed_34 += g_GravitySpeed;
+    incubus->fallSpeed += g_GravitySpeed;
 
     func_8005C944(incubus, &sp10);
 
-    incubus->rotation_24.vy = Math_AngleNormalizeSigned(incubus->rotation_24.vy);
+    incubus->rotation.vy = Math_AngleNormalizeSigned(incubus->rotation.vy);
 }
 
 void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DEE90
@@ -5258,17 +5258,17 @@ void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* 
     s32 prevSfxIdx;
     s32 sfxIdx;
 
-    #define animUpdateFunc INCUBUS_ANIM_INFOS[incubus->model_0.anim.status].playbackFunc
+    #define animUpdateFunc INCUBUS_ANIM_INFOS[incubus->model.anim.status].playbackFunc
 
-    Math_MatrixTransform(&incubus->position_18, &incubus->rotation_24, coords);
+    Math_MatrixTransform(&incubus->position, &incubus->rotation, coords);
 
-    prevSfxIdx = func_800DDBA4(FP_FROM(incubus->model_0.anim.time, Q12_SHIFT));
-    if (incubus->model_0.anim.status != ANIM_STATUS(IncubusAnim_Still, false))
+    prevSfxIdx = func_800DDBA4(FP_FROM(incubus->model.anim.time, Q12_SHIFT));
+    if (incubus->model.anim.status != ANIM_STATUS(IncubusAnim_Still, false))
     {
-        animUpdateFunc(&incubus->model_0, anmHdr, coords, &INCUBUS_ANIM_INFOS[incubus->model_0.anim.status]);
+        animUpdateFunc(&incubus->model, anmHdr, coords, &INCUBUS_ANIM_INFOS[incubus->model.anim.status]);
     }
 
-    sfxIdx = func_800DDBA4(FP_FROM(incubus->model_0.anim.time, Q12_SHIFT));
+    sfxIdx = func_800DDBA4(FP_FROM(incubus->model.anim.time, Q12_SHIFT));
     if (sfxIdx != 13 && sfxIdx != prevSfxIdx)
     {
         func_800DDB68(incubus, sfxIdx);
@@ -5285,9 +5285,9 @@ void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEF50
     q19_12 offsetZ;
 
     Vw_CoordHierarchyMatrixCompute(&coords[2], &coordMat);
-    offsetX = Q8_TO_Q12(coordMat.t[0]) - incubus->position_18.vx;
-    offsetY = Q8_TO_Q12(coordMat.t[1]) - incubus->position_18.vy;
-    offsetZ = Q8_TO_Q12(coordMat.t[2]) - incubus->position_18.vz;
+    offsetX = Q8_TO_Q12(coordMat.t[0]) - incubus->position.vx;
+    offsetY = Q8_TO_Q12(coordMat.t[1]) - incubus->position.vy;
+    offsetZ = Q8_TO_Q12(coordMat.t[2]) - incubus->position.vz;
 
     incubus->field_D4.radius_0 = Q12(0.5f);
     incubus->field_D4.field_2  = Q12(0.5f);
@@ -5306,13 +5306,13 @@ void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEFE8
 {
     q19_12 posY;
 
-    if (incubus->model_0.anim.flags & AnimFlag_Visible)
+    if (incubus->model.anim.flags & AnimFlag_Visible)
     {
         func_800DEF50(incubus, coords);
         return;
     }
 
-    posY = incubus->position_18.vy;
+    posY = incubus->position.vy;
 
     incubus->field_C8.field_2 = posY;
     incubus->field_C8.field_4 = posY;
@@ -5322,7 +5322,7 @@ void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEFE8
 
 void func_800DF044(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DF044
 {
-    if (incubus->model_0.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == IncubusStateStep_0)
     {
         func_800DEC74(incubus, coords);
     }
@@ -5332,13 +5332,13 @@ void func_800DF074(s_SubCharacter* incubus) // 0x800DF074
 {
     u8 controlState;
 
-    controlState = incubus->model_0.controlState;
+    controlState = incubus->model.controlState;
     if (controlState != IncubusControl_2 &&
         controlState != IncubusControl_4 &&
         controlState != IncubusControl_13 &&
         controlState != IncubusControl_3 &&
         controlState != IncubusControl_5 &&
-        (incubus->properties_E4.player.positionY_EC & (1 << 2)))
+        (incubus->properties.player.positionY_EC & (1 << 2)))
     {
         func_800DD6CC();
     }
@@ -5346,8 +5346,8 @@ void func_800DF074(s_SubCharacter* incubus) // 0x800DF074
 
 void Ai_Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DF0D8
 {
-    if ((incubus->model_0.controlState != IncubusControl_0 || Ai_Incubus_Init(incubus, coords)) &&
-        incubus->model_0.controlState != IncubusControl_1)
+    if ((incubus->model.controlState != IncubusControl_0 || Ai_Incubus_Init(incubus, coords)) &&
+        incubus->model.controlState != IncubusControl_1)
     {
         if (g_DeltaTime != Q12(0.0f))
         {
@@ -5359,7 +5359,7 @@ void Ai_Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINAT
             func_800DEFE8(incubus, coords);
             func_800DED68(incubus, coords);
             func_800DF074(incubus);
-            func_800DD98C(incubus->flags_3E & CharaFlag_Unk2);
+            func_800DD98C(incubus->flags & CharaFlag_Unk2);
         }
         else
         {
@@ -5725,8 +5725,8 @@ void func_800DFA48(VECTOR3* arg0, VECTOR3* arg1) // 0x800DFA48
     Chara_AttackReceivedSet(&g_SysWork.playerWork_4C.player_0, 68);
 
     angle                                                    = ratan2(arg0->vx - arg1->vx, arg0->vz - arg1->vz);
-    g_SysWork.playerWork_4C.player_0.damage_B4.amount_C      = 1;
-    g_SysWork.playerWork_4C.player_0.damage_B4.position_0.vy = angle;
+    g_SysWork.playerWork_4C.player_0.damage.amount_C      = 1;
+    g_SysWork.playerWork_4C.player_0.damage.position_0.vy = angle;
     ptr->field_588                                           = angle;
 
     D_800F3DB8 = 1;
@@ -5735,7 +5735,7 @@ void func_800DFA48(VECTOR3* arg0, VECTOR3* arg1) // 0x800DFA48
     ptr->field_4.vy = Q12_TO_Q8(arg0->vy) - Q8(1.3f);
     ptr->field_4.vz = Q12_TO_Q8(arg0->vz);
 
-    func_8005DC1C(Sfx_Unk1673, &g_SysWork.playerWork_4C.player_0.position_18, Q8(0.5f), 0);
+    func_8005DC1C(Sfx_Unk1673, &g_SysWork.playerWork_4C.player_0.position, Q8(0.5f), 0);
 }
 
 s32 func_800DFB04(void) // 0x800DFB04
@@ -5755,27 +5755,27 @@ void func_800DFB2C(bool disableDamage) // 0x800DFB2C
 
 void func_800DFB50(s_SubCharacter* chara) // 0x800DFB50
 {
-    if (chara->model_0.controlState != ModelState_Uninitialized)
+    if (chara->model.controlState != ModelState_Uninitialized)
     {
-        chara->model_0.controlState     = 4;
-        chara->model_0.stateStep = 0;
+        chara->model.controlState     = 4;
+        chara->model.stateStep = 0;
     }
     else
     {
-        chara->model_0.stateStep = 4;
+        chara->model.stateStep = 4;
     }
 }
 
 void func_800DFB74(s_SubCharacter* chara) // 0x800DFB74
 {
-    if (chara->model_0.controlState != ModelState_Uninitialized)
+    if (chara->model.controlState != ModelState_Uninitialized)
     {
-        chara->model_0.controlState     = 2;
-        chara->model_0.stateStep = 0;
+        chara->model.controlState     = 2;
+        chara->model.stateStep = 0;
     }
     else
     {
-        chara->model_0.stateStep = 2;
+        chara->model.stateStep = 2;
     }
 }
 
@@ -5785,91 +5785,91 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
 
     localChara = chara;
 
-    chara->model_0.anim.alpha = Q12(0.0f);
+    chara->model.anim.alpha = Q12(0.0f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        chara->health_B0 = Q12(17995.605f); // TODO: Some percentage taken from 30000?
+        chara->health = Q12(17995.605f); // TODO: Some percentage taken from 30000?
     }
     else
     {
-        chara->health_B0 = Q12(30000.0f);
+        chara->health = Q12(30000.0f);
     }
 
-    chara->moveSpeed_38       = 0;
+    chara->moveSpeed       = 0;
     chara->field_D4.radius_0  = Q12(0.3f);
     chara->field_D8.offsetX_4 = Q12(0.0f);
     chara->field_D8.offsetZ_6 = Q12(0.0f);
     chara->field_E1_0         = 4;
-    chara->headingAngle_3C    = chara->rotation_24.vy;
-    chara->flags_3E          |= CharaFlag_Unk3;
+    chara->headingAngle    = chara->rotation.vy;
+    chara->flags          |= CharaFlag_Unk3;
 
-    localChara->properties_E4.player.field_F0 = 0;
+    localChara->properties.player.field_F0 = 0;
 
-    if (chara->model_0.stateStep == 0)
+    if (chara->model.stateStep == 0)
     {
-        chara->model_0.controlState = 1;
-        chara->model_0.stateStep    = 0;
+        chara->model.controlState = 1;
+        chara->model.stateStep    = 0;
     }
     else
     {
-        chara->model_0.controlState = chara->model_0.stateStep;
-        chara->model_0.stateStep    = 0;
+        chara->model.controlState = chara->model.stateStep;
+        chara->model.stateStep    = 0;
     }
 
     Character_AnimSet(chara, ANIM_STATUS(2, false), 115);
-    ModelAnim_AnimInfoSet(&chara->model_0.anim, UNKKOWN_23_ANIM_INFOS);
+    ModelAnim_AnimInfoSet(&chara->model.anim, UNKKOWN_23_ANIM_INFOS);
 
     Chara_DamageClear(chara);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        localChara->properties_E4.player.field_F4 = Q12(300.0f);
+        localChara->properties.player.field_F4 = Q12(300.0f);
     }
     else
     {
-        localChara->properties_E4.player.field_F4 = Q12(30.0f);
+        localChara->properties.player.field_F4 = Q12(30.0f);
     }
 
-    func_800DD67C(&chara->position_18, chara, coords);
+    func_800DD67C(&chara->position, chara, coords);
     func_800DFA14();
 
-    chara->flags_3E |= CharaFlag_Unk9;
+    chara->flags |= CharaFlag_Unk9;
     return true;
 }
 
 void func_800DFCE4(s_SubCharacter* chara) // 0x800DFCE4
 {
     // TODO: Unknown23Props
-    if (chara->properties_E4.dummy.properties_E8[2].val32 == 0)
+    if (chara->properties.dummy.properties_E8[2].val32 == 0)
     {
-        if (chara->properties_E4.dummy.properties_E8[3].val32 < 0)
+        if (chara->properties.dummy.properties_E8[3].val32 < 0)
         {
-            chara->health_B0          = 0;
-            chara->damage_B4.amount_C = 1;
+            chara->health          = 0;
+            chara->damage.amount_C = 1;
         }
 
         if (!func_8004C328(false))
         {
-            chara->properties_E4.dummy.properties_E8[3].val32 -= g_DeltaTime;
+            chara->properties.dummy.properties_E8[3].val32 -= g_DeltaTime;
         }
 
-        if (!(chara->flags_3E & CharaFlag_Unk3))
+        if (!(chara->flags & CharaFlag_Unk3))
         {
-            chara->damage_B4.amount_C *= 10;
+            chara->damage.amount_C *= 10;
         }
 
-        if (chara->damage_B4.amount_C > Q12(0.0f))
+        if (chara->damage.amount_C > Q12(0.0f))
         {
-            chara->health_B0 = MAX(Q12(0.0f), chara->health_B0 - chara->damage_B4.amount_C);
-            if (chara->health_B0 <= Q12(0.0f) && func_800DFB04() == 0)
+            chara->health = MAX(Q12(0.0f), chara->health - chara->damage.amount_C);
+            if (chara->health <= Q12(0.0f) && func_800DFB04() == 0)
             {
                 Savegame_EventFlagSet(EventFlag_582);
-                chara->model_0.controlState = 5;
-                chara->model_0.stateStep    = 0;
-                chara->health_B0              = NO_VALUE;
-                chara->flags_3E              |= CharaFlag_Unk2;
-                chara->properties_E4.dummy.properties_E8[2].val32++;
+                chara->model.controlState = 5;
+                chara->model.stateStep    = 0;
+                chara->health              = NO_VALUE;
+                chara->flags              |= CharaFlag_Unk2;
+                chara->properties.dummy.properties_E8[2].val32++;
             }
         }
     }
@@ -5885,9 +5885,9 @@ void func_800DFE10(s_SubCharacter* chara) // 0x800DFE10
     s32 tmp;
 
     temp_v0 = Math_AngleNormalizeSigned(ratan2(
-                                g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
-                                g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
-                            chara->rotation_24.vy);
+                                g_SysWork.playerWork_4C.player_0.position.vx - chara->position.vx,
+                                g_SysWork.playerWork_4C.player_0.position.vz - chara->position.vz) -
+                            chara->rotation.vy);
     var_v0  = ABS(temp_v0);
 
     if (var_v0 > Q12_ANGLE(10.0f))
@@ -5896,43 +5896,43 @@ void func_800DFE10(s_SubCharacter* chara) // 0x800DFE10
         tmp      = Q12_MULT_PRECISE(g_DeltaTime, var_v0_2);
         if (temp_v0 > 0)
         {
-            chara->rotation_24.vy += tmp;
+            chara->rotation.vy += tmp;
         }
         else
         {
-            chara->rotation_24.vy -= tmp;
+            chara->rotation.vy -= tmp;
         }
     }
 }
 
 void func_800DFEF0(s_SubCharacter* chara) // 0x800DFEF0
 {
-    if (chara->model_0.stateStep == 0)
+    if (chara->model.stateStep == 0)
     {
-        chara->model_0.stateStep++;
+        chara->model.stateStep++;
         return;
     }
 
-    if (chara->model_0.anim.status == 8)
+    if (chara->model.anim.status == 8)
     {
-        chara->model_0.controlState     = 2;
-        chara->model_0.stateStep = 0;
+        chara->model.controlState     = 2;
+        chara->model.stateStep = 0;
     }
 }
 
 void func_800DFF28(s_SubCharacter* chara) // 0x800DFF28
 {
-    if (chara->model_0.stateStep == 0)
+    if (chara->model.stateStep == 0)
     {
-        chara->model_0.stateStep++;
+        chara->model.stateStep++;
     }
 }
 
 void func_800DFF44(s_SubCharacter* chara) // 0x800DFF44
 {
-    if (chara->model_0.stateStep == 0)
+    if (chara->model.stateStep == 0)
     {
-        chara->model_0.stateStep++;
+        chara->model.stateStep++;
     }
 }
 
@@ -5947,11 +5947,11 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
 
     // TODO: Use `Chara_Unknown23` properties struct instead of Incubus properties.
 
-    if (chara->model_0.stateStep == 0)
+    if (chara->model.stateStep == 0)
     {
-        chara->model_0.stateStep++;
-        chara->properties_E4.incubus.timer_E8 = Q12(1.5f);
-        chara->flags_3E                      &= ~CharaFlag_Unk3;
+        chara->model.stateStep++;
+        chara->properties.incubus.timer_E8 = Q12(1.5f);
+        chara->flags                      &= ~CharaFlag_Unk3;
         return;
     }
 
@@ -5960,7 +5960,7 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
         func_800DFE10(chara);
     }
 
-    switch (chara->model_0.stateStep)
+    switch (chara->model.stateStep)
     {
         case 1:
             if (coords)
@@ -5985,21 +5985,21 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
                     func_800DD0EC(&coordsVec, 10);
                 }
 
-                if (localChara->properties_E4.incubus.timer_E8 < Q12(0.0f))
+                if (localChara->properties.incubus.timer_E8 < Q12(0.0f))
                 {
                     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
                     {
-                        localChara->properties_E4.incubus.timer_E8 = Q12(2.0f);
+                        localChara->properties.incubus.timer_E8 = Q12(2.0f);
                     }
                     else
                     {
-                        localChara->properties_E4.incubus.timer_E8 = Q12(2.5f);
+                        localChara->properties.incubus.timer_E8 = Q12(2.5f);
                     }
 
-                    chara->model_0.stateStep++;
+                    chara->model.stateStep++;
                 }
 
-                localChara->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+                localChara->properties.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -6041,17 +6041,17 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
                     func_800DD464(&coordsVec);
                 }
 
-                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
-                                                       chara->rotation_24.vy));
+                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(chara->position, g_SysWork.playerWork_4C.player_0.position) -
+                                                       chara->rotation.vy));
 
-                if (localChara->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
+                if (localChara->properties.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
                 {
-                    localChara->properties_E4.incubus.timer_E8 = Q12(0.3f);
-                    chara->model_0.stateStep++;
+                    localChara->properties.incubus.timer_E8 = Q12(0.3f);
+                    chara->model.stateStep++;
                     break;
                 }
 
-                localChara->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+                localChara->properties.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -6093,21 +6093,21 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
                     func_800DD464(&coordsVec);
                 }
 
-                if (localChara->properties_E4.incubus.timer_E8 < Q12(0.0f))
+                if (localChara->properties.incubus.timer_E8 < Q12(0.0f))
                 {
-                    chara->model_0.stateStep++;
+                    chara->model.stateStep++;
 
                     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
                     {
-                        localChara->properties_E4.incubus.timer_E8 = Q12(2.5f);
+                        localChara->properties.incubus.timer_E8 = Q12(2.5f);
                     }
                     else
                     {
-                        localChara->properties_E4.incubus.timer_E8 = Q12(1.5f);
+                        localChara->properties.incubus.timer_E8 = Q12(1.5f);
                     }
                 }
 
-                localChara->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+                localChara->properties.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -6139,19 +6139,19 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
                     func_800DD464(&coordsVec);
                 }
 
-                if (localChara->properties_E4.incubus.timer_E8 < Q12(0.0f))
+                if (localChara->properties.incubus.timer_E8 < Q12(0.0f))
                 {
-                    chara->model_0.stateStep++;
+                    chara->model.stateStep++;
                 }
 
-                localChara->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+                localChara->properties.incubus.timer_E8 -= g_DeltaTime;
             }
             break;
 
         case 5:
-            chara->model_0.controlState = 2;
-            chara->model_0.stateStep    = 0;
-            chara->flags_3E              |= CharaFlag_Unk3;
+            chara->model.controlState = 2;
+            chara->model.stateStep    = 0;
+            chara->flags              |= CharaFlag_Unk3;
             break;
     }
 }
@@ -6176,36 +6176,36 @@ void func_800E0528(s_SubCharacter* chara) // 0x800E0528
 {
     // TODO: Wrong union members used here.
 
-    if (chara->model_0.stateStep == 0)
+    if (chara->model.stateStep == 0)
     {
-        chara->properties_E4.incubus.timer_E8 = func_800E04C4();
-        chara->model_0.stateStep++;
+        chara->properties.incubus.timer_E8 = func_800E04C4();
+        chara->model.stateStep++;
         return;
     }
 
     func_800DFE10(chara);
 
-    switch (chara->model_0.stateStep)
+    switch (chara->model.stateStep)
     {
         case 1:
-            if (chara->properties_E4.incubus.timer_E8 <= Q12(0.0f))
+            if (chara->properties.incubus.timer_E8 <= Q12(0.0f))
             {
-                chara->model_0.stateStep = 2;
+                chara->model.stateStep = 2;
             }
             break;
 
         case 2:
-            chara->model_0.controlState     = 3;
-            chara->model_0.stateStep = 0;
+            chara->model.controlState     = 3;
+            chara->model.stateStep = 0;
             break;
     }
 
-    chara->properties_E4.incubus.timer_E8 -= g_DeltaTime;
+    chara->properties.incubus.timer_E8 -= g_DeltaTime;
 }
 
 void func_800E05DC(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E05DC
 {
-    switch (chara->model_0.controlState)
+    switch (chara->model.controlState)
     {
         case 4:
             func_800DFEF0(chara);
@@ -6238,16 +6238,16 @@ void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E0670
 
     func_800DB608();
 
-    if (chara->model_0.controlState == 3)
+    if (chara->model.controlState == 3)
     {
         func_800DFF60(chara, coords);
     }
 
-    dist = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
-                               g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
+    dist = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position.vx - chara->position.vx,
+                               g_SysWork.playerWork_4C.player_0.position.vz - chara->position.vz);
     if (dist < Q12(2.5f) && func_800DFB04() == 0)
     {
-        func_800DFA48(&g_SysWork.playerWork_4C.player_0.position_18, &chara->position_18);
+        func_800DFA48(&g_SysWork.playerWork_4C.player_0.position, &chara->position);
     }
 }
 
@@ -6255,21 +6255,21 @@ void func_800E0728(s_SubCharacter* chara) // 0x800E0728
 {
     s_CollisionResult sp10;
 
-    chara->fallSpeed_34 += g_GravitySpeed;
+    chara->fallSpeed += g_GravitySpeed;
     func_8005C944(chara, &sp10);
-    chara->rotation_24.vy = Math_AngleNormalizeSigned(chara->rotation_24.vy);
+    chara->rotation.vy = Math_AngleNormalizeSigned(chara->rotation.vy);
 }
 
 void func_800E0774(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800E0774
 {
     s_AnimInfo* animInfo;
 
-    Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
+    Math_MatrixTransform(&chara->position, &chara->rotation, coords);
 
-    if (chara->model_0.anim.status != ANIM_STATUS(0, false))
+    if (chara->model.anim.status != ANIM_STATUS(0, false))
     {
-        animInfo = &UNKKOWN_23_ANIM_INFOS[chara->model_0.anim.status];
-        animInfo->playbackFunc(&chara->model_0, anmHdr, coords, animInfo);
+        animInfo = &UNKKOWN_23_ANIM_INFOS[chara->model.anim.status];
+        animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
     }
 }
 
@@ -6281,9 +6281,9 @@ void func_800E07F0(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E07F0
     q19_12 posZ;
 
     Vw_CoordHierarchyMatrixCompute(&coords[2], &mat);
-    posX = Q8_TO_Q12(mat.t[0]) - chara->position_18.vx;
-    posY = Q8_TO_Q12(mat.t[1]) - chara->position_18.vy;
-    posZ = Q8_TO_Q12(mat.t[2]) - chara->position_18.vz;
+    posX = Q8_TO_Q12(mat.t[0]) - chara->position.vx;
+    posY = Q8_TO_Q12(mat.t[1]) - chara->position.vy;
+    posZ = Q8_TO_Q12(mat.t[2]) - chara->position.vz;
 
     chara->field_D4.radius_0 = Q12(0.5f);
     chara->field_D4.field_2  = Q12(0.5f);
@@ -6302,13 +6302,13 @@ void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E0888
 {
     q19_12 posY;
 
-    if (chara->model_0.anim.flags & AnimFlag_Visible)
+    if (chara->model.anim.flags & AnimFlag_Visible)
     {
         func_800E07F0(chara, coords);
         return;
     }
 
-    posY            = chara->position_18.vy;
+    posY            = chara->position.vy;
     chara->field_C8.field_2 = posY;
     chara->field_C8.field_4 = posY;
     chara->field_C8.field_0 = posY - Q12(1.0f);
@@ -6317,7 +6317,7 @@ void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E0888
 
 void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E08E4
 {
-    if (chara->model_0.stateStep == 0)
+    if (chara->model.stateStep == 0)
     {
         func_800E05DC(chara, coords);
     }
@@ -6331,12 +6331,12 @@ void func_800E0914(s_SubCharacter* chara) // 0x800E0914
 
 void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800E093C
 {
-    if (chara->model_0.controlState == ModelState_Uninitialized)
+    if (chara->model.controlState == ModelState_Uninitialized)
     {
         Ai_Unknown23_Init(chara, coords);
     }
 
-    if (chara->model_0.controlState != 1)
+    if (chara->model.controlState != 1)
     {
         if (g_DeltaTime != Q12(0.0f))
         {
@@ -6348,7 +6348,7 @@ void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINAT
             func_800E0888(chara, coords);
             func_800E0670(chara, coords);
             func_800E0914(chara);
-            func_800DFB2C(chara->flags_3E & CharaFlag_Unk2);
+            func_800DFB2C(chara->flags & CharaFlag_Unk2);
         }
         else
         {
@@ -6432,8 +6432,8 @@ void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warp
     s32     vcPrsFViewFlag;
 
     isCamUpdated        = false;
-    angleToOtherChara = ratan2(player->position_18.vx - otherChara->position_18.vx,
-                               player->position_18.vz - otherChara->position_18.vz);
+    angleToOtherChara = ratan2(player->position.vx - otherChara->position.vx,
+                               player->position.vz - otherChara->position.vz);
 
     vcPrsFViewFlag = (vcWork.flags & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
     if (((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (vcPrsFViewFlag ^ 1) != 0) ||
@@ -6442,14 +6442,14 @@ void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warp
     {
         isCamUpdated = true;
 
-        camTargetPos.vx = player->position_18.vx +
-                          Q12_MULT_FLOAT(Math_Sin(player->rotation_24.vy), 1.5f) +
+        camTargetPos.vx = player->position.vx +
+                          Q12_MULT_FLOAT(Math_Sin(player->rotation.vy), 1.5f) +
                           Q12_MULT_FLOAT(Math_Sin(angleToOtherChara), 2.5f);
-        camTargetPos.vz = player->position_18.vz +
-                          Q12_MULT_FLOAT(Math_Cos(player->rotation_24.vy), 1.5f) +
+        camTargetPos.vz = player->position.vz +
+                          Q12_MULT_FLOAT(Math_Cos(player->rotation.vy), 1.5f) +
                           Q12_MULT_FLOAT(Math_Cos(angleToOtherChara), 2.5f);
 
-        if (otherChara->model_0.charaId_0 == Chara_Incubus)
+        if (otherChara->model.charaId_0 == Chara_Incubus)
         {
             camTargetPos.vy = Q12(-1.4f);
         }
@@ -6458,14 +6458,14 @@ void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warp
             camTargetPos.vy = Q12(-2.3f);
         }
 
-        camLookAtTargetPos.vx = otherChara->position_18.vx + FP_FROM(Q12(Math_Sin(angleToOtherChara)), Q12_SHIFT);
-        camLookAtTargetPos.vz = otherChara->position_18.vz + FP_FROM(Q12(Math_Cos(angleToOtherChara)), Q12_SHIFT);
+        camLookAtTargetPos.vx = otherChara->position.vx + FP_FROM(Q12(Math_Sin(angleToOtherChara)), Q12_SHIFT);
+        camLookAtTargetPos.vz = otherChara->position.vz + FP_FROM(Q12(Math_Cos(angleToOtherChara)), Q12_SHIFT);
 
         if (warpCamera)
         {
             camLookAtTargetPos.vy = Q12(-0.002f);
         }
-        else if (otherChara->model_0.charaId_0 == Chara_Incubus)
+        else if (otherChara->model.charaId_0 == Chara_Incubus)
         {
             camLookAtTargetPos.vy = Vc_LookAtPositionYGet();
         }
@@ -6845,7 +6845,7 @@ void func_800E1854(void) // 0x800E1854
         case 5:
             if (D_800F4B40.timer_10 < Q12(2.0f))
             {
-                VECTOR3* srcPos = &g_SysWork.npcs_1A0[4].position_18;
+                VECTOR3* srcPos = &g_SysWork.npcs_1A0[4].position;
                 sp10            = *srcPos;
                 sp10.vy        -= Q12(1.1f);
 
@@ -7029,14 +7029,14 @@ void func_800E2664(s32 arg0, s16 arg1) // 0x800E2664
     if (arg1 > Q12_ANGLE_NORM_U(func_800E28F4()))
     {
         VECTOR3* srcPos;
-        srcPos = &g_SysWork.npcs_1A0[4].position_18;
+        srcPos = &g_SysWork.npcs_1A0[4].position;
 
         angle   = Q12_ANGLE_NORM_U(func_800E28F4());
         pos0.vx = srcPos->vx + Q12_MULT(Math_Sin(angle), arg0);
         pos0.vz = srcPos->vz + Q12_MULT(Math_Cos(angle), arg0);
         pos0.vy = ((func_800E28F4() % (arg0 * 2)) - arg0) - Q12(1.0f);
 
-        pos1     = g_SysWork.npcs_1A0[4].position_18;
+        pos1     = g_SysWork.npcs_1A0[4].position;
         pos1.vy -= Q12(1.1f);
         pos1.vx += Q12_MULT_FLOAT(Math_Sin(angle), 0.4f);
         pos1.vz += Q12_MULT_FLOAT(Math_Cos(angle), 0.4f);
@@ -7056,16 +7056,16 @@ void func_800E27D0(s32 arg0, s16 arg1, s32 arg2, VECTOR3* pos) // 0x800E27D0
         angle = Q12_ANGLE_NORM_U(func_800E28F4());
         if (arg2 != 0)
         {
-            srcPos  = &g_SysWork.npcs_1A0[1].position_18;
+            srcPos  = &g_SysWork.npcs_1A0[1].position;
             pos0.vx = srcPos->vx - Q12(0.5f);
             pos0.vy = srcPos->vy - Q12(1.2f);
             pos0.vz = srcPos->vz;
         }
         else
         {
-            // @hack Pointer to `position_18` needed for match, but doesn't work as a `VECTOR3*` variable?
-            pos0.vx = (&g_SysWork.npcs_1A0[4].position_18)->vx + Q12_MULT(Math_Sin(angle), arg0);
-            pos0.vz = (&g_SysWork.npcs_1A0[4].position_18)->vz + Q12_MULT(Math_Cos(angle), arg0);
+            // @hack Pointer to `position` needed for match, but doesn't work as a `VECTOR3*` variable?
+            pos0.vx = (&g_SysWork.npcs_1A0[4].position)->vx + Q12_MULT(Math_Sin(angle), arg0);
+            pos0.vz = (&g_SysWork.npcs_1A0[4].position)->vz + Q12_MULT(Math_Cos(angle), arg0);
             pos0.vy = (func_800E28F4() % (arg0 >> 1)) - (arg0 >> 2);
         }
 
@@ -7205,39 +7205,39 @@ void func_800E2E90(void) // 0x800E2E90
     {
         if (D_800F4807 != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position, &g_SysWork.playerWork_4C.player_0.rotation, "HERO", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F4808)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "SIBYL", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "SIBYL", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F4809 != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[1].position_18, &g_SysWork.npcs_1A0[1].rotation_24, "DARIA", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[1].position, &g_SysWork.npcs_1A0[1].rotation, "DARIA", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F480A != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[2].position_18, &g_SysWork.npcs_1A0[2].rotation_24, "ARSIA", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[2].position, &g_SysWork.npcs_1A0[2].rotation, "ARSIA", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F480B != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[3].position_18, &g_SysWork.npcs_1A0[3].rotation_24, "KAU", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[3].position, &g_SysWork.npcs_1A0[3].rotation, "KAU", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F480C != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[4].position_18, &g_SysWork.npcs_1A0[4].rotation_24, "MAR", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[4].position, &g_SysWork.npcs_1A0[4].rotation, "MAR", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F480D != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[5].position_18, &g_SysWork.npcs_1A0[5].rotation_24, "BAR", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[5].position, &g_SysWork.npcs_1A0[5].rotation, "BAR", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F480E != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "LITL", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "LITL", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F480F != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[2].position_18, &g_SysWork.npcs_1A0[2].rotation_24, "BOS", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[2].position, &g_SysWork.npcs_1A0[2].rotation, "BOS", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F4810 != 0)
         {
@@ -7489,7 +7489,7 @@ void func_800E3390(void) // 0x800E3390
 
             D_800F4807 = true;
 
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, 2);
             func_800E2E90();
 
             D_800F4805 = NO_VALUE;
@@ -7541,7 +7541,7 @@ void func_800E3390(void) // 0x800E3390
 
     if (D_800F480C && D_800F4805 == 3 && Savegame_EventFlagGet(EventFlag_391))
     {
-        g_SysWork.npcs_1A0[4].rotation_24.vy += Q12_ANGLE(180.0f);
+        g_SysWork.npcs_1A0[4].rotation.vy += Q12_ANGLE(180.0f);
     }
 }
 
@@ -7593,7 +7593,7 @@ void func_800E3C48(void) // 0x800E3C48
                 Savegame_EventFlagSet(EventFlag_585);
                 Savegame_EventFlagSet(EventFlag_587);
             }
-            g_SysWork.playerWork_4C.player_0.health_B0 = Q12(100.0f);
+            g_SysWork.playerWork_4C.player_0.health = Q12(100.0f);
             break;
 
         default:
@@ -7613,7 +7613,7 @@ void func_800E3D18(void) // 0x800E3D18
         case 0:
             Player_ControlFreeze();
 
-            g_SysWork.playerWork_4C.player_0.health_B0 = Q12(100.0f);
+            g_SysWork.playerWork_4C.player_0.health = Q12(100.0f);
             g_SysWork.field_30                    = 20;
             g_SysWork.sysStateStep_C[0]           = 0;
             g_SysWork.flags_22A4                 |= SysFlag2_3;
@@ -7751,7 +7751,7 @@ void func_800E3F30(void) // 0x800E3F30
 
             g_SysWork.pointLightIntensity_2378 = Q12(0.7f);
 
-            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model, 2);
 
             SysWork_StateStepIncrement(0);
             D_800EDA04 = 0;
@@ -7804,7 +7804,7 @@ void func_800E3F30(void) // 0x800E3F30
         case 11:
             Savegame_EventFlagClear(EventFlag_576);
             SysWork_StateStepIncrement(0);
-            func_800D6804(&g_SysWork.npcs_1A0[1].position_18, &g_SysWork.npcs_1A0[0].position_18);
+            func_800D6804(&g_SysWork.npcs_1A0[1].position, &g_SysWork.npcs_1A0[0].position);
 
         case 12:
             Map_MessageWithAudio(22, &D_800F4804, &D_800ED768);
@@ -7843,7 +7843,7 @@ void func_800E3F30(void) // 0x800E3F30
             g_SysWork.sysStateStep_C[0] = 0;
             D_800F4805++;
 
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, 2);
             func_800E9490(&g_SysWork.npcs_1A0[0]);
 
             D_800F4808 = 0;
@@ -8015,13 +8015,13 @@ void func_800E4714(void) // 0x800E4714
         case 21:
             D_800F4809 = 0;
 
-            Model_AnimFlagsClear(&g_SysWork.npcs_1A0[1].model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.npcs_1A0[1].model, 2);
             func_800E941C();
             func_800E9444(Chara_Incubator, &g_SysWork.npcs_1A0[4]);
 
             D_800F4814 = 2;
 
-            Model_AnimFlagsClear(&g_SysWork.npcs_1A0[4].model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.npcs_1A0[4].model, 2);
             SysWork_StateStepIncrement(0);
 
         case 22:
@@ -8031,7 +8031,7 @@ void func_800E4714(void) // 0x800E4714
             {
                 if (D_800F481B == 0)
                 {
-                    Model_AnimFlagsClear(&g_SysWork.npcs_1A0[2].model_0, 2);
+                    Model_AnimFlagsClear(&g_SysWork.npcs_1A0[2].model, 2);
                     func_800E1788(2);
                     D_800F481B++;
                 }
@@ -8069,8 +8069,8 @@ void func_800E4714(void) // 0x800E4714
 
             D_800F480C = 1;
 
-            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[4].model_0, 2);
-            func_800DD7D0(&g_SysWork.npcs_1A0[1].position_18);
+            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[4].model, 2);
+            func_800DD7D0(&g_SysWork.npcs_1A0[1].position);
 
             D_800F4828 = 1;
 
@@ -8142,11 +8142,11 @@ void func_800E514C(void) // 0x800E514C
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[1], 19, false);
 
-            func_8005DC1C(Sfx_Unk1670, &g_SysWork.npcs_1A0[1].position_18, Q8_CLAMPED(0.785f), 0);
+            func_8005DC1C(Sfx_Unk1670, &g_SysWork.npcs_1A0[1].position, Q8_CLAMPED(0.785f), 0);
 
             g_SysWork.pointLightIntensity_2378 = Q12(0.7f);
 
-            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[1].model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[1].model, 2);
 
             Savegame_EventFlagClear(EventFlag_591);
             Savegame_EventFlagClear(EventFlag_592);
@@ -8303,7 +8303,7 @@ void func_800E514C(void) // 0x800E514C
 
             func_800E941C();
             func_800E9444(Chara_BloodyIncubator, &g_SysWork.npcs_1A0[5]);
-            Model_AnimFlagsClear(&g_SysWork.npcs_1A0[5].model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.npcs_1A0[5].model, 2);
             func_80085EB8(0, &g_SysWork.npcs_1A0[4], 2, false);
             WorldGfx_CharaModelTransparentSet(Chara_BloodyIncubator, false);
 
@@ -8362,7 +8362,7 @@ void func_800E514C(void) // 0x800E514C
 
             D_800F480D = 1;
 
-            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[5].model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[5].model, 2);
             func_80085EB8(0, &g_SysWork.npcs_1A0[5], 1, false);
             SysWork_StateStepIncrement(0);
 
@@ -8472,9 +8472,9 @@ void func_800E514C(void) // 0x800E514C
             if (g_SysWork.field_28 > Q12(0.3f))
             {
                 localRand           = Rng_Rand16();
-                pos.vx              = g_SysWork.npcs_1A0[0].position_18.vx + Q12(0.2f);
-                pos.vy              = g_SysWork.npcs_1A0[0].position_18.vy + Q12(-0.9f);
-                pos.vz              = g_SysWork.npcs_1A0[0].position_18.vz + Q12(0.2f);
+                pos.vx              = g_SysWork.npcs_1A0[0].position.vx + Q12(0.2f);
+                pos.vy              = g_SysWork.npcs_1A0[0].position.vy + Q12(-0.9f);
+                pos.vz              = g_SysWork.npcs_1A0[0].position.vz + Q12(0.2f);
                 g_SysWork.field_28 -= Q12(0.2f);
                 g_SysWork.field_28 -= Rng_GenerateIntFromInput(localRand, 0, Q12(0.1f) - 1);
 
@@ -8669,7 +8669,7 @@ void func_800E62CC(void) // 0x800E62CC
 
         case 7:
             func_800E9444(Chara_BloodyIncubator, &g_SysWork.npcs_1A0[5]);
-            Model_AnimFlagsClear(&g_SysWork.npcs_1A0[5].model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.npcs_1A0[5].model, 2);
             func_800E1788(12);
             SysWork_StateStepIncrement(0);
 
@@ -8685,7 +8685,7 @@ void func_800E62CC(void) // 0x800E62CC
 
         case 9:
             D_800F480D = 1;
-            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[5].model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[5].model, 2);
 
             func_80085EB8(0, &g_SysWork.npcs_1A0[5], 6, false);
             WorldGfx_CharaModelTransparentSet(Chara_BloodyIncubator, true);
@@ -8697,7 +8697,7 @@ void func_800E62CC(void) // 0x800E62CC
 
             D_800F480F = 0;
 
-            func_800D7E50(&g_SysWork.npcs_1A0[2].position_18);
+            func_800D7E50(&g_SysWork.npcs_1A0[2].position);
             func_800D947C();
 
             Savegame_EventFlagSet(EventFlag_592);
@@ -8846,7 +8846,7 @@ void func_800E62CC(void) // 0x800E62CC
                 func_800E941C();
                 func_800E9444(Chara_EndingCybil, g_SysWork.npcs_1A0);
                 D_800F4808 = 1;
-                Model_AnimFlagsClear(&g_SysWork.npcs_1A0[0].model_0, 2);
+                Model_AnimFlagsClear(&g_SysWork.npcs_1A0[0].model, 2);
                 SysWork_StateStepIncrement(0);
             }
             else
@@ -8857,7 +8857,7 @@ void func_800E62CC(void) // 0x800E62CC
 
         case 34:
             func_80085EB8(0, g_SysWork.npcs_1A0, 26, false);
-            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[0].model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[0].model, 2);
             func_800E9490(&g_SysWork.npcs_1A0[5]);
             func_800E9260(Chara_EndingKaufmann, 5);
             Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio657);
@@ -9014,7 +9014,7 @@ void func_800E70F0(void) // 0x800E70F0
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
             func_800E1788(4);
 
-            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[1].model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[1].model, 2);
             g_SysWork.pointLightIntensity_2378 = Q12(0.8f);
             SysWork_StateStepIncrement(0);
 
@@ -9123,7 +9123,7 @@ void func_800E7380(void) // 0x800E7380
 
         case 5:
             func_800E9260(Chara_EndingCybil, 5);
-            func_800D7E50(&g_SysWork.playerWork_4C.player_0.position_18);
+            func_800D7E50(&g_SysWork.playerWork_4C.player_0.position);
             func_800D947C();
 
             D_800F4824 = 0;
@@ -9254,8 +9254,8 @@ void func_800E787C(void) // 0x800E787C
             D_800F4819 = 1;
             D_800F481A = 1;
 
-            Model_AnimFlagsClear(&g_SysWork.npcs_1A0[5].model_0, 2);
-            func_800D7E50(&g_SysWork.playerWork_4C.player_0.position_18);
+            Model_AnimFlagsClear(&g_SysWork.npcs_1A0[5].model, 2);
+            func_800D7E50(&g_SysWork.playerWork_4C.player_0.position);
 
             func_800D947C();
             D_800F4824 = 0;
@@ -9329,7 +9329,7 @@ void func_800E787C(void) // 0x800E787C
             {
                 func_800E941C();
                 func_800E9444(Chara_BloodyIncubator, &g_SysWork.npcs_1A0[5]);
-                Model_AnimFlagsClear(&g_SysWork.npcs_1A0[5].model_0, 2);
+                Model_AnimFlagsClear(&g_SysWork.npcs_1A0[5].model, 2);
                 func_801E2E28(D_800F481C);
                 SysWork_StateStepIncrement(0);
             }
@@ -9364,22 +9364,22 @@ void func_800E787C(void) // 0x800E787C
             D_800F4808 = 0;
             D_800F4807 = false;
 
-            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[5].model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[5].model, 2);
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 5, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[5], 9, false);
             WorldGfx_CharaModelTransparentSet(Chara_BloodyIncubator, true);
 
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(140.0f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-100.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(140.0f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(-100.0f);
 
             D_800F4819 = 0;
             D_800F481A = 0;
             D_800F4838 = 0;
             D_800F4824 = 0;
 
-            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, 2);
-            func_800D7E50(&g_SysWork.playerWork_4C.player_0.position_18);
+            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model, 2);
+            func_800D7E50(&g_SysWork.playerWork_4C.player_0.position);
 
             SysWork_StateStepIncrement(0);
             Rng_SetSeed(0);
@@ -9404,7 +9404,7 @@ void func_800E787C(void) // 0x800E787C
 
             D_800F4819 = 1;
 
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, 2);
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             Gfx_MapEffectsUpdate(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
@@ -9413,7 +9413,7 @@ void func_800E787C(void) // 0x800E787C
             D_800F4838 = 1;
             D_800F4824 = 0;
 
-            func_800D7E50(&g_SysWork.playerWork_4C.player_0.position_18);
+            func_800D7E50(&g_SysWork.playerWork_4C.player_0.position);
             SysWork_StateStepIncrement(0);
 
         case 21:
@@ -9437,17 +9437,17 @@ void func_800E787C(void) // 0x800E787C
             D_800F47F0 = Q12(61.0f);
             D_800F480D = 1;
 
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(140.0f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-100.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(140.0f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(-100.0f);
 
             D_800F4808 = 0;
             D_800F4807 = 0;
             D_800F4819 = 0;
 
-            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model, 2);
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            func_800D7E50(&g_SysWork.playerWork_4C.player_0.position_18);
+            func_800D7E50(&g_SysWork.playerWork_4C.player_0.position);
             SysWork_StateStepIncrement(0);
 
         case 24:
@@ -9489,7 +9489,7 @@ void func_800E787C(void) // 0x800E787C
             D_800F4806 = 1;
             D_800F4820 = 0;
 
-            func_800D7E50(&g_SysWork.playerWork_4C.player_0.position_18);
+            func_800D7E50(&g_SysWork.playerWork_4C.player_0.position);
             Sd_SfxStop(Sfx_Unk1690);
 
             D_800F480D = 0;
@@ -9503,7 +9503,7 @@ void func_800E787C(void) // 0x800E787C
             D_800F4819 = 0;
             D_800F4818 = 1;
 
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, 2);
             Gfx_MapInitMapEffectsUpdate(9, 9);
             Gfx_MapEffectsUpdate(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
@@ -9641,7 +9641,7 @@ void func_800E86BC(void) // 0x800E86BC
             D_800F481A = 1;
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            func_800D7E50(&g_SysWork.playerWork_4C.player_0.position_18);
+            func_800D7E50(&g_SysWork.playerWork_4C.player_0.position);
             func_800D947C();
             D_800F4824 = 0;
             D_800F4820 = 1;
@@ -9673,9 +9673,9 @@ void func_800E86BC(void) // 0x800E86BC
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[5], 11, false);
 
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(140.0f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-100.0f);
-            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(140.0f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(-100.0f);
+            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model, 2);
 
             Savegame_EventFlagSet(EventFlag_575);
 
@@ -9710,7 +9710,7 @@ void func_800E86BC(void) // 0x800E86BC
             D_800F4820 = 0;
             D_800F4818 = 1;
 
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, 2);
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             D_800F483C = Q12(70.0f);
@@ -9817,10 +9817,10 @@ void func_800E8D20(void) // 0x800E8D20
             D_800F4808 = 1;
             D_800F4804 = 0;
 
-            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model, 2);
             func_80085EB8(3, &g_SysWork.playerWork_4C.player_0, 0, false);
             D_800F47F0 = 0;
-            func_800D7E50(&g_SysWork.playerWork_4C.player_0.position_18);
+            func_800D7E50(&g_SysWork.playerWork_4C.player_0.position);
             func_800D947C();
 
             D_800F4824 = 0;
@@ -9858,7 +9858,7 @@ void func_800E8D20(void) // 0x800E8D20
 
         case 7:
             D_800F47F0 = Q12(123.0f);
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, 2);
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
@@ -9998,14 +9998,14 @@ void func_800E9444(e_CharacterId charaId, s_SubCharacter* chara) // 0x800E9444
 {
     bzero(chara, sizeof(s_SubCharacter));
 
-    chara->model_0.charaId_0       = charaId;
-    chara->model_0.controlState  = 0;
-    chara->model_0.anim.flags |= 2;
+    chara->model.charaId_0       = charaId;
+    chara->model.controlState  = 0;
+    chara->model.anim.flags |= 2;
 }
 
 void func_800E9490(s_SubCharacter* chara) // 0x800E9490
 {
-    chara->model_0.charaId_0 = Chara_None;
+    chara->model.charaId_0 = Chara_None;
 }
 
 void func_800E9498(void) // 0x800E9498

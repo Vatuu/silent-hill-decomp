@@ -360,7 +360,7 @@ void sharedFunc_800D0110_7_s00(void)
 
             if (Savegame_EventFlagGet(EventFlag_577))
             {
-                if (g_SysWork.npcs_1A0[0].health_B0 < Q12(500.0f))
+                if (g_SysWork.npcs_1A0[0].health < Q12(500.0f))
                 {
                     flags = (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1 << 5) | (1 << 8);
                 }
@@ -474,7 +474,7 @@ void sharedFunc_800D0110_7_s00(void)
                     {
                         var_s2 = Q12(1.0f);
 
-                        if (!(g_SysWork.npcs_1A0[2].flags_3E & 4))
+                        if (!(g_SysWork.npcs_1A0[2].flags & 4))
                         {
                             flags = (1 << 1) | (1 << 8);
                         }

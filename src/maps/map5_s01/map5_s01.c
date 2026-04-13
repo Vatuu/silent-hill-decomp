@@ -28,8 +28,8 @@ void func_800EB6B0(void) // 0x800EB6B0
     s32    var_v1;
     s32    temp_s1;
 
-    posX  = g_SysWork.playerWork_4C.player_0.position_18.vx;
-    posZ  = g_SysWork.playerWork_4C.player_0.position_18.vz;
+    posX  = g_SysWork.playerWork_4C.player_0.position.vx;
+    posZ  = g_SysWork.playerWork_4C.player_0.position.vz;
     temp_s1 = D_800EFC80[g_SavegamePtr->mapRoomIdx_A5];
 
     if (g_SavegamePtr->mapRoomIdx_A5 == 10)
@@ -317,9 +317,9 @@ void func_800EBF70(void) // 0x800EBF70
 
             SysWork_StateStepIncrementAfterFade(0, true, 2, 0, false);
 
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(52.0f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-57.8f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(107.6f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(52.0f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(-57.8f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(107.6f);
 
             camPos.vx = Q12(49.8f);
             camPos.vy = Q12(-1.5f);
@@ -660,9 +660,9 @@ void func_800EC42C(void) // 0x800EC42C
 
     if (D_800F3E0C >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", D_800F3E0C, (s_DmsHeader*)FS_BUFFER_13);
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position, &g_SysWork.playerWork_4C.player_0.rotation, "HERO", D_800F3E0C, (s_DmsHeader*)FS_BUFFER_13);
 
-        g_SysWork.playerWork_4C.player_0.position_18.vx -= Q12(20.0f);
+        g_SysWork.playerWork_4C.player_0.position.vx -= Q12(20.0f);
 
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800F3DF0, &D_800F3E00, NULL, D_800F3E0C, (s_DmsHeader*)FS_BUFFER_13));
 

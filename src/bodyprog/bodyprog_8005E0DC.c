@@ -308,9 +308,9 @@ void func_8005E89C(void) // 0x8005E89C
 
     ptr = PSX_SCRATCH;
 
-    posX            = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vx, Q12_SHIFT);
-    posY            = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vy, Q12_SHIFT);
-    posZ            = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vz, Q12_SHIFT);
+    posX            = FP_FROM(g_SysWork.playerWork_4C.player_0.position.vx, Q12_SHIFT);
+    posY            = FP_FROM(g_SysWork.playerWork_4C.player_0.position.vy, Q12_SHIFT);
+    posZ            = FP_FROM(g_SysWork.playerWork_4C.player_0.position.vz, Q12_SHIFT);
     ptr->field_0.vx = Q8(posX);
     ptr->field_0.vy = Q8(posY);
     ptr->field_0.vz = Q8(posZ);
@@ -439,18 +439,18 @@ void func_8005E89C(void) // 0x8005E89C
                 chara = &g_SysWork.npcs_1A0[D_800C42E8[i].field_1];
             }
 
-            ptr->field_34[i] = CLAMP_CUSTOM((chara->position_18.vx + chara->field_D8.offsetX_0) - D_800C42E8[i].field_4,
-                                            (chara->position_18.vx + chara->field_D8.offsetX_0) - curPtr->field_4,
+            ptr->field_34[i] = CLAMP_CUSTOM((chara->position.vx + chara->field_D8.offsetX_0) - D_800C42E8[i].field_4,
+                                            (chara->position.vx + chara->field_D8.offsetX_0) - curPtr->field_4,
                                             -Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)),
                                              Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)));
 
-            ptr->field_64[i] = CLAMP_CUSTOM((chara->position_18.vy + chara->field_C8.field_6) - D_800C42E8[i].field_2,
-                                            (chara->position_18.vy + chara->field_C8.field_6) - curPtr->field_2,
+            ptr->field_64[i] = CLAMP_CUSTOM((chara->position.vy + chara->field_C8.field_6) - D_800C42E8[i].field_2,
+                                            (chara->position.vy + chara->field_C8.field_6) - curPtr->field_2,
                                             -Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)) >> 4,
                                             Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)));
 
-            ptr->field_94[i] = CLAMP_CUSTOM((chara->position_18.vz + chara->field_D8.offsetZ_2) - D_800C42E8[i].field_8,
-                                            (chara->position_18.vz + chara->field_D8.offsetZ_2) - curPtr->field_8,
+            ptr->field_94[i] = CLAMP_CUSTOM((chara->position.vz + chara->field_D8.offsetZ_2) - D_800C42E8[i].field_8,
+                                            (chara->position.vz + chara->field_D8.offsetZ_2) - curPtr->field_8,
                                             -Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)),
                                              Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)));
 
@@ -793,7 +793,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
             }
         }
 
-        if (chara->model_0.charaId_0 == Chara_SplitHead)
+        if (chara->model.charaId_0 == Chara_SplitHead)
         {
             i = 24;
         }
@@ -802,9 +802,9 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
         {
             D_800C42E8[i].field_0 = 1;
             D_800C42E8[i].field_1 = Chara_NpcIdxGet(chara);
-            D_800C42E8[i].field_4 = chara->position_18.vx + chara->field_D8.offsetX_0;
-            D_800C42E8[i].field_2 = chara->position_18.vy + chara->field_C8.field_6;
-            D_800C42E8[i].field_8 = chara->position_18.vz + chara->field_D8.offsetZ_2;
+            D_800C42E8[i].field_4 = chara->position.vx + chara->field_D8.offsetX_0;
+            D_800C42E8[i].field_2 = chara->position.vy + chara->field_C8.field_6;
+            D_800C42E8[i].field_8 = chara->position.vz + chara->field_D8.offsetZ_2;
         }
     }
     else
@@ -845,7 +845,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
             g_MapOverlayHeader.unkTable1_4C[idx].field_B              = i * 4;
             g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 = Rng_GenerateUInt(0, 255);
 
-            if (chara->model_0.charaId_0 == Chara_Floatstinger)
+            if (chara->model.charaId_0 == Chara_Floatstinger)
             {
                 g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3 = 96;
             }
@@ -1703,17 +1703,17 @@ void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3) 
         temp_s3 = Rng_Rand16() % D_800AE5F0[temp_s0 * 4]       + D_800AE5F0[(temp_s0 * 4) + 1];
         temp_s2 = Rng_Rand16() % D_800AE5F0[(temp_s0 * 4) + 2] + D_800AE5F0[(temp_s0 * 4) + 3];
 
-        g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 = chara->position_18.vx +
-                                                            Q12_MULT(temp_s3, Math_Sin(chara->rotation_24.vy)) -
-                                                            Q12_MULT(temp_s2, Math_Cos(chara->rotation_24.vy));
-        g_MapOverlayHeader.unkTable1_4C[idx].vy_8 = chara->position_18.vy;
-        g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = chara->position_18.vz +
-                                                            Q12_MULT(temp_s3, Math_Cos(chara->rotation_24.vy)) +
-                                                            Q12_MULT(temp_s2, Math_Sin(chara->rotation_24.vy));
+        g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 = chara->position.vx +
+                                                            Q12_MULT(temp_s3, Math_Sin(chara->rotation.vy)) -
+                                                            Q12_MULT(temp_s2, Math_Cos(chara->rotation.vy));
+        g_MapOverlayHeader.unkTable1_4C[idx].vy_8 = chara->position.vy;
+        g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = chara->position.vz +
+                                                            Q12_MULT(temp_s3, Math_Cos(chara->rotation.vy)) +
+                                                            Q12_MULT(temp_s2, Math_Sin(chara->rotation.vy));
 
         Collision_Get(&coll, g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
 
-        if (ABS_DIFF(coll.groundHeight_0, chara->position_18.vy) > Q12(0.15f))
+        if (ABS_DIFF(coll.groundHeight_0, chara->position.vy) > Q12(0.15f))
         {
             g_MapOverlayHeader.unkTable1_4C[(idx)].field_A = 0;
         }
@@ -1770,7 +1770,7 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
     if (g_MapOverlayHeader.unkTable1_4C[idx].field_A == 3)
     {
         var_s7 = 0xC;
-        if (g_SysWork.npcs_1A0[g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0].model_0.charaId_0 == Chara_None)
+        if (g_SysWork.npcs_1A0[g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0].model.charaId_0 == Chara_None)
         {
             g_MapOverlayHeader.unkTable1_4C[idx].field_A = 0;
             return false;

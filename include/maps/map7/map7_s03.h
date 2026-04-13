@@ -150,7 +150,7 @@ typedef struct
     s_SubCharacter* field_28;
     GsCOORDINATE2*  coords_2C;
     VECTOR3         playerPosition_30;
-    q19_12          velocityX_3C; // } Some kind of velocity based on `playerChara.position_18` - `this.playerPosition_30`
+    q19_12          velocityX_3C; // } Some kind of velocity based on `playerChara.position` - `this.playerPosition_30`
     q19_12          velocityZ_40; // }
     s32             field_44;
     s32             field_48;

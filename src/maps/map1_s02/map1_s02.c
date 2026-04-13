@@ -213,8 +213,8 @@ void func_800DA384(void) // 0x800DA384
             sharedFunc_800D08B8_0_s00(6, 127);
             Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, 0);
 
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-13.3f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-68.1f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(-13.3f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(-68.1f);
 
             func_800865FC(true, 0, 0, Q12_ANGLE(-45.0f), Q12(-18.18f), Q12(-62.24f));
             Savegame_EventFlagClear(EventFlag_92);
@@ -267,10 +267,10 @@ void func_800DA384(void) // 0x800DA384
         default:
             if (isSkipped)
             {
-                g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-18.18f);
-                g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(0.0f);
-                g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-62.24f);
-                g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-45.0f);
+                g_SysWork.playerWork_4C.player_0.position.vx = Q12(-18.18f);
+                g_SysWork.playerWork_4C.player_0.position.vy = Q12(0.0f);
+                g_SysWork.playerWork_4C.player_0.position.vz = Q12(-62.24f);
+                g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(-45.0f);
 
                 Player_ControlUnfreeze(true);
                 SysWork_StateSetNext(SysState_Gameplay);
@@ -523,9 +523,9 @@ void func_800DB058(void) // 0x800DB058
             g_SysWork.field_30 = 20;
 
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(56.5f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(19.3f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12(-0.25f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(56.5f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(19.3f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12(-0.25f);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(60.59f), Q12(-0.83f), Q12(18.34f), 0, 0, 0, 0, true);
@@ -657,8 +657,8 @@ void func_800DB368(void) // 0x800DB368
             break;
 
         case 9:
-            Camera_PositionSet(NULL, g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(4.0f), Q12(-1.5f), g_SysWork.playerWork_4C.player_0.position_18.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, g_SysWork.playerWork_4C.player_0.position_18.vx, Q12(-1.0f), g_SysWork.playerWork_4C.player_0.position_18.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_PositionSet(NULL, g_SysWork.playerWork_4C.player_0.position.vx + Q12(4.0f), Q12(-1.5f), g_SysWork.playerWork_4C.player_0.position.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, g_SysWork.playerWork_4C.player_0.position.vx, Q12(-1.0f), g_SysWork.playerWork_4C.player_0.position.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             SysWork_StateStepIncrement(0);
 
@@ -695,8 +695,8 @@ void func_800DB368(void) // 0x800DB368
             MapMsg_DisplayAndHandleSelection(false, 31, 0, 0, 0, false);
 
             // Warp camera.
-            Camera_PositionSet(NULL, g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(4.0f) + func_800868F4(Q12(-2.8f), Q12(6.5f), 0), Q12(-1.5f), g_SysWork.playerWork_4C.player_0.position_18.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
-            Camera_LookAtSet(NULL, g_SysWork.playerWork_4C.player_0.position_18.vx + func_800868F4(Q12(-2.8f), Q12(6.5f), 3), Q12(-1.0f), g_SysWork.playerWork_4C.player_0.position_18.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+            Camera_PositionSet(NULL, g_SysWork.playerWork_4C.player_0.position.vx + Q12(4.0f) + func_800868F4(Q12(-2.8f), Q12(6.5f), 0), Q12(-1.5f), g_SysWork.playerWork_4C.player_0.position.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+            Camera_LookAtSet(NULL, g_SysWork.playerWork_4C.player_0.position.vx + func_800868F4(Q12(-2.8f), Q12(6.5f), 3), Q12(-1.0f), g_SysWork.playerWork_4C.player_0.position.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             break;
 
         case 16:
@@ -777,9 +777,9 @@ void func_800DB368(void) // 0x800DB368
             Camera_LookAtSet(NULL, Q12(20.28f), Q12(-0.42f), Q12(143.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(20.3f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(143.5f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-90.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(20.3f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(143.5f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(-90.0f);
 
             Fs_QueueWaitForEmpty();
             g_SysWork.field_30 = 0;
@@ -816,7 +816,7 @@ void func_800DBB7C(void) // 0x800DBB7C
             break;
 
         case 2:
-            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model, 2);
 
             func_8008D438();
 
@@ -881,7 +881,7 @@ void func_800DBB7C(void) // 0x800DBB7C
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, 2);
 
             func_8008D448();
 
@@ -1245,7 +1245,7 @@ void func_800DCF00(void) // 0x800DCF00
         var_t0     = MIN(var_t0, Q12(0.4f));
         D_800E1FE4 = var_t0;
 
-        g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime, D_800E1FE4);
+        g_SysWork.playerWork_4C.player_0.position.vy += Q12_MULT_PRECISE(g_DeltaTime, D_800E1FE4);
         g_WorldObject0.position_1C.vy                   += Q12_MULT_PRECISE(g_DeltaTime, D_800E1FE4);
     }
 }

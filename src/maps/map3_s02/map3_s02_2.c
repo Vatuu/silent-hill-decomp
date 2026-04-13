@@ -262,7 +262,7 @@ void func_800D0608(void) // 0x800D0608
             g_SysWork.field_236C = NULL;
             g_SysWork.pointLightIntensity_2378 = Q12(0.7f);
 
-            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model, 2);
 
             func_8008D438();
             Gfx_MapInitMapEffectsUpdate(16, 16);
@@ -294,7 +294,7 @@ void func_800D0608(void) // 0x800D0608
 
             SysWork_StateSetNext(SysState_Gameplay);
 
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, 2);
 
             func_8008D448();
             Game_FlashlightAttributesFix();
@@ -313,7 +313,7 @@ void func_800D0608(void) // 0x800D0608
 
     if (D_800D1FEC >= 0)
     {
-        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "ARISA", D_800D1FEC, FS_BUFFER_24);
+        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "ARISA", D_800D1FEC, FS_BUFFER_24);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&cameraPos, &cameraTarget, NULL, D_800D1FEC, FS_BUFFER_24));
         vcUserCamTarget(&cameraPos, NULL, true);
         vcUserWatchTarget(&cameraTarget, NULL, true);
@@ -350,7 +350,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D0F9C
             D_800D1FBC = MAX(D_800D1FBC, Q12_MULT_PRECISE(func_800D1354(), Q12(24.0f)) + Q12(25.0f));
         }
 
-        if (!Savegame_EventFlagGet(EventFlag_233) && g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-129.0f))
+        if (!Savegame_EventFlagGet(EventFlag_233) && g_SysWork.playerWork_4C.player_0.position.vz < Q12(-129.0f))
         {
             Savegame_EventFlagSet(EventFlag_233);
             func_8005DC1C(Sfx_Unk1523, &D_800CAAF8, Q8(0.5f), 0);
@@ -360,7 +360,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D0F9C
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -4, -1, -4))
     {
 
-        if (!Savegame_EventFlagGet(EventFlag_234) && g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(67.0f))
+        if (!Savegame_EventFlagGet(EventFlag_234) && g_SysWork.playerWork_4C.player_0.position.vx < Q12(67.0f))
         {
             Savegame_EventFlagSet(EventFlag_234);
             func_8005DC1C(Sfx_Unk1523, &QVECTOR3(69.6f, -1.2f, -138.4f), Q8(0.5f), 0);
@@ -380,12 +380,12 @@ s16 func_800D1354(void) // 0x800D1354
     s32 z6;
 
     // TODO: Use `Math_Vector2MagCalc`.
-    x = g_SysWork.playerWork_4C.player_0.position_18.vx - Q12(95.2f);
-    z = g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(140.0f);
+    x = g_SysWork.playerWork_4C.player_0.position.vx - Q12(95.2f);
+    z = g_SysWork.playerWork_4C.player_0.position.vz + Q12(140.0f);
     cos0 = Math_Cos(Math_AngleNormalizeSigned((ratan2(x, z) - ratan2(Q12(4.8f) + 1, Q12(12.8f) + 1))));
 
-    x6 = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vx - Q12(95.2f));
-    z6 = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(140.0f));
+    x6 = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vx - Q12(95.2f));
+    z6 = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vz + Q12(140.0f));
 
     tmp0 = FP_FROM((cos0 * Q6_TO_Q12((SquareRoot0(SQUARE(x6) + SQUARE(z6))))), Q12_SHIFT);
     var1 = FP_TO(tmp0, Q12_SHIFT) / Q6_TO_Q12(SquareRoot0(0xBAC52));

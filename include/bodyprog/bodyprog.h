@@ -1187,7 +1187,7 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectModel, 28);
 /** @brief Geometry space world object to draw. */
 typedef struct _WorldObject
 {
-    s_WorldObjectModel* model_0;
+    s_WorldObjectModel* model;
     s32                 positionX_4 : 18; /** Q9.8 */
     s32                 positionY_4 : 14; /** Q5.8 */
     s32                 positionZ_8 : 18; /** Q9.8 */

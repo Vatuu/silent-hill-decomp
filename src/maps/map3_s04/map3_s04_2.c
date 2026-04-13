@@ -79,8 +79,8 @@ void func_800D21C4(void) // 0x800D21C4
     {
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
-            if ((g_SysWork.npcs_1A0[i].model_0.charaId_0 > Chara_None && g_SysWork.npcs_1A0[i].model_0.charaId_0 < Chara_LockerDeadBody) &&
-                g_SysWork.npcs_1A0[i].health_B0 > Q12(0.0f))
+            if ((g_SysWork.npcs_1A0[i].model.charaId_0 > Chara_None && g_SysWork.npcs_1A0[i].model.charaId_0 < Chara_LockerDeadBody) &&
+                g_SysWork.npcs_1A0[i].health > Q12(0.0f))
             {
                 break;
             }
@@ -423,8 +423,8 @@ void func_800D2668(void) // 0x800D2668
 
     if (D_800D5A40 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", D_800D5A40, FS_BUFFER_11);
-        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "LISA", D_800D5A40, FS_BUFFER_11);
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position, &g_SysWork.playerWork_4C.player_0.rotation, "HERO", D_800D5A40, FS_BUFFER_11);
+        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "LISA", D_800D5A40, FS_BUFFER_11);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D5A20, &D_800D5A30, NULL, D_800D5A40, FS_BUFFER_11));
         vcUserCamTarget(&D_800D5A20, NULL, true);
         vcUserWatchTarget(&D_800D5A30, NULL, true);
@@ -478,10 +478,10 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
     q19_12 drZ;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    cellZ0 = g_SysWork.playerWork_4C.player_0.position_18.vz / CHUNK_CELL_SIZE;
-    cellX0 = g_SysWork.playerWork_4C.player_0.position_18.vx / CHUNK_CELL_SIZE;
+    cellZ0 = g_SysWork.playerWork_4C.player_0.position.vz / CHUNK_CELL_SIZE;
+    cellX0 = g_SysWork.playerWork_4C.player_0.position.vx / CHUNK_CELL_SIZE;
 
-    if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(0.0f))
+    if (g_SysWork.playerWork_4C.player_0.position.vx > Q12(0.0f))
     {
         projCellX0 = cellX0 + 17;
     }
@@ -490,7 +490,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
         projCellX0 = cellX0 + 15;
     }
 
-    if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(0.0f))
+    if (g_SysWork.playerWork_4C.player_0.position.vz > Q12(0.0f))
     {
         projCellZ0 = cellZ0 + 17;
     }
@@ -532,8 +532,8 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
     {
         if (!Savegame_EventFlagGet(EventFlag_300))
         {
-            if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(101.5f) &&
-                g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(59.0f))
+            if (g_SysWork.playerWork_4C.player_0.position.vx > Q12(101.5f) &&
+                g_SysWork.playerWork_4C.player_0.position.vz > Q12(59.0f))
             {
                 func_8005DC1C(Sfx_Unk1530, &D_800CB364, Q8_CLAMPED(1.0f), 2);
                 Savegame_EventFlagSet(EventFlag_300);
@@ -550,7 +550,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
     {
         if (!Savegame_EventFlagGet(EventFlag_316))
         {
-            if (Savegame_EventFlagGet(EventFlag_301) && g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(104.0f))
+            if (Savegame_EventFlagGet(EventFlag_301) && g_SysWork.playerWork_4C.player_0.position.vz > Q12(104.0f))
             {
                 if (!Vw_AabbVisibleInScreenCheck(Q12(139.0f), Q12(142.0f), Q12(-3.0f), Q12(0.0f), Q12(98.8f), Q12(99.0f)))
                 {
@@ -559,7 +559,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
                 }
             }
 
-            if (g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(100.0f))
+            if (g_SysWork.playerWork_4C.player_0.position.vz < Q12(100.0f))
             {
                 Savegame_EventFlagSet(EventFlag_301);
             }

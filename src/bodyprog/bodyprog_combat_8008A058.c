@@ -111,7 +111,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
     s_ModelAnim* modelAnim;
 
     var_t1    = chara->field_44.field_0;
-    modelAnim = &chara->model_0.anim;
+    modelAnim = &chara->model.anim;
 
     if (g_DeltaTime == Q12(0.0f) || g_SysWork.sysState_8 != SysState_Gameplay)
     {
@@ -127,7 +127,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
         modelAnim->mapAnimStatusStart = ANIM_STATUS(38, false); // TODO: 38 is the first anim after base anims. Make a constant?
         modelAnim->mapAnimInfos      = mapAnimInfos;
 
-        modelAnim                       = &g_SysWork.playerWork_4C.extra_128.model_0.anim;
+        modelAnim                       = &g_SysWork.playerWork_4C.extra_128.model.anim;
         modelAnim->baseAnimInfos      = baseAnimInfos;
         modelAnim->mapAnimInfos      = mapAnimInfos;
         modelAnim->mapAnimStatusStart = ANIM_STATUS(38, false);
@@ -185,9 +185,9 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
         }
     }
 
-    if (chara->model_0.charaId_0 != Chara_Harry)
+    if (chara->model.charaId_0 != Chara_Harry)
     {
-        if (g_SysWork.playerWork_4C.player_0.attackReceived_41 != NO_VALUE)
+        if (g_SysWork.playerWork_4C.player_0.attackReceived != NO_VALUE)
         {
             ret = 0;
         }
@@ -275,17 +275,17 @@ s32 func_8008A35C(s_800AD4C8* arg0, s32 arg1) // 0x8008A35C
 
 void Chara_Flag8Clear(s_SubCharacter* chara) // 0x8008A384
 {
-    chara->flags_3E &= ~CharaFlag_Unk8;
+    chara->flags &= ~CharaFlag_Unk8;
 }
 
 void Chara_Flag8Set(s_SubCharacter* chara) // 0x8008A398
 {
-    chara->flags_3E |= CharaFlag_Unk8;
+    chara->flags |= CharaFlag_Unk8;
 }
 
 void func_8008A3AC(s_SubCharacter* chara) // 0x8008A3AC
 {
-    if (!(chara->flags_3E & CharaFlag_Unk8))
+    if (!(chara->flags & CharaFlag_Unk8))
     {
         chara->field_44.field_0 = 0;
         func_8008A3E0(chara);
@@ -406,11 +406,11 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
     if (chara == &g_SysWork.playerWork_4C.player_0)
     {
-        var_s0 = &((s_PlayerWork*)chara)->extra_128.model_0.anim;
+        var_s0 = &((s_PlayerWork*)chara)->extra_128.model.anim;
     }
     else
     {
-        var_s0 = &chara->model_0.anim;
+        var_s0 = &chara->model.anim;
     }
 
     anim  = func_80044918(var_s0);
@@ -496,7 +496,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
             if (sp34 == 0 && charaId == Chara_Harry)
             {
-                if (chara->model_0.charaId_0 == charaId)
+                if (chara->model.charaId_0 == charaId)
                 {
                     var_a0_2 = func_8007FD2C();
                 }
@@ -551,22 +551,22 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                 {
                     temp_s1_2 = &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353];
 
-                    if (temp_s1_2->model_0.charaId_0 >= Chara_AirScreamer)
+                    if (temp_s1_2->model.charaId_0 >= Chara_AirScreamer)
                     {
                         do
                         {
-                            if (temp_s1_2->model_0.charaId_0 < Chara_LockerDeadBody)
+                            if (temp_s1_2->model.charaId_0 < Chara_LockerDeadBody)
                             {
-                                temp_v0_4 = chara->position_18.vx - temp_s1_2->position_18.vx;
-                                temp_v0_5 = chara->position_18.vy - temp_s1_2->position_18.vy;
-                                temp_v0_6 = chara->position_18.vz - temp_s1_2->position_18.vz;
+                                temp_v0_4 = chara->position.vx - temp_s1_2->position.vx;
+                                temp_v0_5 = chara->position.vy - temp_s1_2->position.vy;
+                                temp_v0_6 = chara->position.vz - temp_s1_2->position.vz;
 
                                 temp6   = Q12_MULT_PRECISE(temp_v0_4, temp_v0_4) + Q12_MULT_PRECISE(temp_v0_5, temp_v0_5);
                                 temp_s0 = Q12_MULT_PRECISE(temp_v0_6, temp_v0_6) + temp6;
 
                                 sp30 = SquareRoot12(temp_s0);
 
-                                if (temp_s1_2->flags_3E & CharaFlag_Unk2)
+                                if (temp_s1_2->flags & CharaFlag_Unk2)
                                 {
                                     temp_s0 = temp_s0 - 0x800;
                                     if (temp_s0 < 0)
@@ -647,7 +647,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
                     var_s6 += sp4C;
 
-                    if (chara->model_0.charaId_0 == Chara_Harry)
+                    if (chara->model.charaId_0 == Chara_Harry)
                     {
                         func_800892A4(5);
                     }
@@ -843,7 +843,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
         {
             chara->field_44.field_0 = -1;
 
-            if (chara->model_0.charaId_0 == Chara_Harry)
+            if (chara->model.charaId_0 == Chara_Harry)
             {
                 switch (sp14)
                 {
@@ -1119,22 +1119,22 @@ bool func_8008B474(s32 arg0, q23_8 vol, s32 soundType) // 0x8008B474
         // NOTE: func_8005DC1C calls func_8005DC3C. `soundType` is `pitch` when calling `func_8005DC3C` directly.
         if (unkVol > Q12(256.0f))
         {
-            func_8005DC1C(sfxId, &g_SysWork.playerWork_4C.player_0.position_18, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), soundType);
+            func_8005DC1C(sfxId, &g_SysWork.playerWork_4C.player_0.position, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), soundType);
         }
         else
         {
-            func_8005DC1C(sfxId, &g_SysWork.playerWork_4C.player_0.position_18, Q8_CLAMPED(0.0f), soundType);
+            func_8005DC1C(sfxId, &g_SysWork.playerWork_4C.player_0.position, Q8_CLAMPED(0.0f), soundType);
         }
     }
     else
     {
         if (unkVol > Q12(256.0f))
         {
-            func_8005DC3C(sfxId, &g_SysWork.playerWork_4C.player_0.position_18, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), 4, soundType);
+            func_8005DC3C(sfxId, &g_SysWork.playerWork_4C.player_0.position, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), 4, soundType);
         }
         else
         {
-            func_8005DC3C(sfxId, &g_SysWork.playerWork_4C.player_0.position_18, 0, 4, soundType);
+            func_8005DC3C(sfxId, &g_SysWork.playerWork_4C.player_0.position, 0, 4, soundType);
         }
     }
 
@@ -1289,7 +1289,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
                     break;
             }
 
-            if (target->model_0.charaId_0 == Chara_Padlock)
+            if (target->model.charaId_0 == Chara_Padlock)
             {
                 func_8005DC1C(Sfx_Unk1392, arg2, Q8(0.5f), 0);
             }
@@ -1340,7 +1340,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
 
         case WEAPON_ATTACK(EquippedWeaponId_Kick, AttackInputType_Tap):
         case WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Tap):
-            if (target->flags_3E & CharaFlag_Unk2)
+            if (target->flags & CharaFlag_Unk2)
             {
                 var_s0 = Q12(1000.0f);
             }
@@ -1385,7 +1385,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
             break;
 
         default:
-            if (target != &g_SysWork.playerWork_4C.player_0 && !(target->flags_3E & CharaFlag_Unk3))
+            if (target != &g_SysWork.playerWork_4C.player_0 && !(target->flags & CharaFlag_Unk3))
             {
                 damageAmt *= 4;
             }
@@ -1458,20 +1458,20 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
 
     if (damageAmt != Q12(0.0f))
     {
-        target->damage_B4.amount_C += damageAmt;
+        target->damage.amount_C += damageAmt;
     }
 
     if (var_s7 != 0)
     {
         temp              = Q12_MULT_PRECISE(var_s7, offsetX);
-        target->damage_B4.position_0.vx += temp;
+        target->damage.position_0.vx += temp;
         temp              = Q12_MULT_PRECISE(var_s7, offsetY);
-        target->damage_B4.position_0.vy += temp;
+        target->damage.position_0.vy += temp;
         temp              = Q12_MULT_PRECISE(var_s7, offsetZ);
-        target->damage_B4.position_0.vz += temp;
+        target->damage.position_0.vz += temp;
     }
 
-    target->attackReceived_41 = weaponAttack;
+    target->attackReceived = weaponAttack;
     sp14                     |= sp10;
     attacker->field_44.field_8 = sp14;
 
@@ -1483,10 +1483,10 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
         {
             var_a3 = NO_VALUE;
 
-            switch (target->model_0.charaId_0)
+            switch (target->model.charaId_0)
             {
                 case Chara_Harry:
-                    if (target->health_B0 >= Q12(0.0f))
+                    if (target->health >= Q12(0.0f))
                     {
                         var_a3 = 1;
                     }
@@ -1546,7 +1546,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
                 case Chara_Incubus:
                 case Chara_Unknown23:
                 case Chara_Incubator:
-                    if (!(target->flags_3E & CharaFlag_Unk3))
+                    if (!(target->flags & CharaFlag_Unk3))
                     {
                         if (weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap))
                         {
@@ -1744,10 +1744,10 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
     chara1 = chara0;
     sp14 = 0;
 
-    posX = chara->position_18.vx;
-    posZ = chara->position_18.vz;
+    posX = chara->position.vx;
+    posZ = chara->position.vz;
 
-    posY  = chara->position_18.vy;
+    posY  = chara->position.vy;
     posY += chara->field_C8.field_0;
 
     D_800C47C8[0].vx = posX;
@@ -1757,26 +1757,26 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
     for (i = var_v0; i > 0; i--, chara1++, sp18 *= 2)
     {
         if (g_SysWork.sysState_8 == SysState_GameOver ||
-            g_SysWork.playerWork_4C.player_0.health_B0 <= Q12(0.0f) ||
+            g_SysWork.playerWork_4C.player_0.health <= Q12(0.0f) ||
             chara1 == chara ||
-            chara1->model_0.charaId_0 == Chara_None ||
-            chara1->health_B0 < Q12(0.0f) ||
+            chara1->model.charaId_0 == Chara_None ||
+            chara1->health < Q12(0.0f) ||
             !chara1->field_E1_0)
         {
             continue;
         }
 
-        D_800C47E8.vx = chara1->position_18.vx + chara1->field_D8.offsetX_0;
-        D_800C47E8.vy = chara1->position_18.vy;
-        D_800C47E8.vz = chara1->position_18.vz + chara1->field_D8.offsetZ_2;
-        if (Math_Distance2dGet(&chara->position_18, &D_800C47E8) > Q12(3.0f))
+        D_800C47E8.vx = chara1->position.vx + chara1->field_D8.offsetX_0;
+        D_800C47E8.vy = chara1->position.vy;
+        D_800C47E8.vz = chara1->position.vz + chara1->field_D8.offsetZ_2;
+        if (Math_Distance2dGet(&chara->position, &D_800C47E8) > Q12(3.0f))
         {
             continue;
         }
 
-        temp_s1 = chara1->position_18.vx;
-        var_v1  = chara1->position_18.vy;
-        temp_s2 = chara1->position_18.vz;
+        temp_s1 = chara1->position.vx;
+        var_v1  = chara1->position.vy;
+        temp_s2 = chara1->position.vz;
 
         temp_s0 = chara1->field_D8.offsetX_0;
         temp_s3 = chara1->field_D8.offsetZ_2;
@@ -1813,16 +1813,16 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
             continue;
         }
 
-        temp_t4_2  = chara1->position_18.vx;
+        temp_t4_2  = chara1->position.vx;
         temp_t4_2 += chara1->field_D8.offsetX_0;
 
         var_v1   = temp_t4_2 - countX;
-        temp_t5  = chara1->position_18.vz;
+        temp_t5  = chara1->position.vz;
         temp_t5 += chara1->field_D8.offsetZ_2;
 
         temp_v0_8 = temp_t5 - coundZ;
 
-        sp58    = chara1->position_18.vy;
+        sp58    = chara1->position.vy;
         temp_s6 = chara1->field_C8.field_4;
         temp_s5 = chara1->field_C8.field_0;
 

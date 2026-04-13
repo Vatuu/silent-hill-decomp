@@ -23,10 +23,10 @@ void Map_RoomBgmInit(bool arg0) // 0x800D494C
     s32 var_a0;
 
     var_a0 = 1;
-    if (g_SysWork.npcs_1A0[0].health_B0 > 0)
+    if (g_SysWork.npcs_1A0[0].health > 0)
     {
         var_a0 = 2;
-        if (g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[0].val16[0] & 0x10)
+        if (g_SysWork.npcs_1A0[0].properties.dummy.properties_E8[0].val16[0] & 0x10)
         {
             var_a0 = 6;
         }

@@ -432,16 +432,16 @@ void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOr
 {
     if (!isPos)
     {
-        D_800C4640[idx0][idx1].vx = g_SysWork.playerWork_4C.player_0.position_18.vx + offsetOrPosX;
-        D_800C4640[idx0][idx1].vy = g_SysWork.playerWork_4C.player_0.position_18.vy;
-        D_800C4640[idx0][idx1].vz = g_SysWork.playerWork_4C.player_0.position_18.vz + offsetOrPosZ;
+        D_800C4640[idx0][idx1].vx = g_SysWork.playerWork_4C.player_0.position.vx + offsetOrPosX;
+        D_800C4640[idx0][idx1].vy = g_SysWork.playerWork_4C.player_0.position.vy;
+        D_800C4640[idx0][idx1].vz = g_SysWork.playerWork_4C.player_0.position.vz + offsetOrPosZ;
 
         D_800C4700[idx0] = angleY;
     }
     else if (isPos == true)
     {
         D_800C4640[idx0][idx1].vx = offsetOrPosX;
-        D_800C4640[idx0][idx1].vy = g_SysWork.playerWork_4C.player_0.position_18.vy;
+        D_800C4640[idx0][idx1].vy = g_SysWork.playerWork_4C.player_0.position.vy;
         D_800C4640[idx0][idx1].vz = offsetOrPosZ;
 
         D_800C4700[idx0] = angleY;
@@ -765,9 +765,9 @@ void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) // 0x8008
         // Run through NPCs.
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
-            if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry &&
-                g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil &&
-                g_SysWork.npcs_1A0[i].health_B0 > Q12(0.0f))
+            if (g_SysWork.npcs_1A0[i].model.charaId_0 >= Chara_Harry &&
+                g_SysWork.npcs_1A0[i].model.charaId_0 <= Chara_MonsterCybil &&
+                g_SysWork.npcs_1A0[i].health > Q12(0.0f))
             {
                 break;
             }
@@ -955,8 +955,8 @@ void Event_ItemTake(e_InventoryItemId itemId, s32 itemCount, e_EventFlag eventFl
         // Run through NPCs.
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
-            if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry && g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil &&
-                g_SysWork.npcs_1A0[i].health_B0 > Q12(0.0f))
+            if (g_SysWork.npcs_1A0[i].model.charaId_0 >= Chara_Harry && g_SysWork.npcs_1A0[i].model.charaId_0 <= Chara_MonsterCybil &&
+                g_SysWork.npcs_1A0[i].health > Q12(0.0f))
             {
                 break;
             }

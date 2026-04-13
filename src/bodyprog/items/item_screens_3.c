@@ -1845,7 +1845,7 @@ void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
     };
 
     ot     = &g_OrderingTable0[g_ActiveBufferIdx];
-    health = g_SysWork.playerWork_4C.player_0.health_B0;
+    health = g_SysWork.playerWork_4C.player_0.health;
 
     if (health < Q12(10.0f))
     {
@@ -1869,8 +1869,8 @@ void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
         {
             if (i == 2)
             {
-                if (g_SysWork.playerWork_4C.player_0.health_B0 != Q12(100.0f) &&
-                    ((Rng_Rand16() % ((g_SysWork.playerWork_4C.player_0.health_B0 >> 13) + 2) == 0) || D_800AE198 != 0))
+                if (g_SysWork.playerWork_4C.player_0.health != Q12(100.0f) &&
+                    ((Rng_Rand16() % ((g_SysWork.playerWork_4C.player_0.health >> 13) + 2) == 0) || D_800AE198 != 0))
                 {
                     D_800AE198++;
 
@@ -1985,7 +1985,7 @@ void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
 
     if (g_Inventory_HealthStatusScanlinePosition != -300)
     {
-        healthSegment = FP_FROM(g_SysWork.playerWork_4C.player_0.health_B0, Q12_SHIFT);
+        healthSegment = FP_FROM(g_SysWork.playerWork_4C.player_0.health, Q12_SHIFT);
 
         if (healthSegment < 39)
         {
@@ -2054,11 +2054,11 @@ void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
         }
     }
 
-    if (g_SysWork.playerWork_4C.player_0.health_B0 < Q12(10.0f))
+    if (g_SysWork.playerWork_4C.player_0.health < Q12(10.0f))
     {
         healthStage = 3;
     }
-    else if (g_SysWork.playerWork_4C.player_0.health_B0 < Q12(50.0f))
+    else if (g_SysWork.playerWork_4C.player_0.health < Q12(50.0f))
     {
         healthStage = 2;
     }
@@ -3018,21 +3018,21 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                         switch (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0)
                         {
                             case InventoryItemId_FirstAidKit:
-                                g_SysWork.playerWork_4C.player_0.health_B0 += Q12(80.0f);
+                                g_SysWork.playerWork_4C.player_0.health += Q12(80.0f);
                                 break;
 
                             case InventoryItemId_HealthDrink:
-                                g_SysWork.playerWork_4C.player_0.health_B0 += Q12(40.0f);
+                                g_SysWork.playerWork_4C.player_0.health += Q12(40.0f);
                                 break;
 
                             case InventoryItemId_Ampoule:
-                                g_SysWork.playerWork_4C.player_0.health_B0 += Q12(100.0f);
+                                g_SysWork.playerWork_4C.player_0.health += Q12(100.0f);
                                 g_SavegamePtr->healthSaturation_238    = Q12(300.0f);
                                 break;
                         }
 
                         Sd_PlaySfx(Sfx_Unk1325, -0x40, 0x40);
-                        g_SysWork.playerWork_4C.player_0.health_B0 = CLAMP(g_SysWork.playerWork_4C.player_0.health_B0, Q12(0.0f), Q12(100.0f));
+                        g_SysWork.playerWork_4C.player_0.health = CLAMP(g_SysWork.playerWork_4C.player_0.health, Q12(0.0f), Q12(100.0f));
                         g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].count_1--;
                         break;
                 }

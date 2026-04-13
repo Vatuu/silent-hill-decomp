@@ -242,13 +242,13 @@ void func_800D0C14(void) // 0x800D0C14
 
             if (g_CutsceneTimer >= Q12(120.0f))
             {
-                Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+                Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model, 2);
             }
             break;
 
         case 21:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 10, false);
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, 2);
             SysWork_StateStepIncrement(0);
 
         case 22:
@@ -339,17 +339,17 @@ void func_800D0C14(void) // 0x800D0C14
             SD_Call(19);
 
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, 2);
             Game_TurnFlashlightOff();
             break;
     }
 
     if (g_CutsceneTimer >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", g_CutsceneTimer, FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position, &g_SysWork.playerWork_4C.player_0.rotation, "HERO", g_CutsceneTimer, FS_BUFFER_15);
         if (D_800D2737)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "DARIA", g_CutsceneTimer, FS_BUFFER_15);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "DARIA", g_CutsceneTimer, FS_BUFFER_15);
         }
 
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D2718, &D_800D2728, NULL, g_CutsceneTimer, FS_BUFFER_15));

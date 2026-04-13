@@ -1221,7 +1221,7 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
     // @bugfix Pre-JAP1 versions don't check which NPC the Aglaophotis is being used on, allowing for a skip by using it
     // on any NPC. JAP1 onward added an extra check before allowing it to be used.
     #if VERSION_EQUAL_OR_NEWER(JAP1)
-        #define CHARA_ID_CHECK (g_SysWork.npcs_1A0[0].model_0.charaId_0 == Chara_MonsterCybil)
+        #define CHARA_ID_CHECK (g_SysWork.npcs_1A0[0].model.charaId_0 == Chara_MonsterCybil)
     #else
         #define CHARA_ID_CHECK true
     #endif
@@ -1234,8 +1234,8 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP6_S04)
     {
-        if ((CHARA_ID_CHECK && !Math_Distance2dCheck(&playerChara.position_18, &g_SysWork.npcs_1A0[0].position_18, Q12(0.7f))) &&
-            ABS(playerChara.position_18.vy - g_SysWork.npcs_1A0[0].position_18.vy) < Q12(0.3f) &&
+        if ((CHARA_ID_CHECK && !Math_Distance2dCheck(&playerChara.position, &g_SysWork.npcs_1A0[0].position, Q12(0.7f))) &&
+            ABS(playerChara.position.vy - g_SysWork.npcs_1A0[0].position.vy) < Q12(0.3f) &&
             playerExtra.state_1C == PlayerState_None &&
             g_SavegamePtr->items_0[inventoryItemIdx].id_0 == InventoryItemId_UnknownLiquid)
         {

@@ -54,7 +54,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
         {
         Inventory_ExitAnimEquippedItemUpdate_block:
             g_SysWork.playerWork_4C.player_0.field_44.field_0                             = 0;
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
+            g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
         }
 
         switch (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24)
@@ -72,50 +72,50 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
                     g_Player_WeaponAttack != g_SysWork.playerCombat_38.weaponAttack_F)
                 {
                     g_SysWork.playerWork_4C.extra_128.state_1C                     = PlayerState_None;
-                    g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C = PlayerFlag_None;
+                    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C = PlayerFlag_None;
                 }
 
                 if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim &&
                     g_SysWork.playerCombat_38.weaponAttack_F != NO_VALUE &&
                     g_Player_WeaponAttack == g_SysWork.playerCombat_38.weaponAttack_F)
                 {
-                    extraModelPtr0 = &g_SysWork.playerWork_4C.extra_128.model_0;
+                    extraModelPtr0 = &g_SysWork.playerWork_4C.extra_128.model;
                     if (extraModelPtr0->anim.status >= ANIM_STATUS(33, false))
                     {
-                        modelPtr0                                         = &g_SysWork.playerWork_4C.player_0.model_0;
+                        modelPtr0                                         = &g_SysWork.playerWork_4C.player_0.model;
                         extraModelPtr0->anim.status                 -= 10;
-                        g_SysWork.playerWork_4C.player_0.model_0.controlState       = ModelState_Uninitialized;
-                        g_SysWork.playerWork_4C.player_0.model_0.stateStep   = 0;
-                        g_SysWork.playerWork_4C.extra_128.model_0.controlState     = ModelState_Uninitialized;
-                        g_SysWork.playerWork_4C.extra_128.model_0.stateStep = 0;
+                        g_SysWork.playerWork_4C.player_0.model.controlState       = ModelState_Uninitialized;
+                        g_SysWork.playerWork_4C.player_0.model.stateStep   = 0;
+                        g_SysWork.playerWork_4C.extra_128.model.controlState     = ModelState_Uninitialized;
+                        g_SysWork.playerWork_4C.extra_128.model.stateStep = 0;
                         modelPtr0->anim.status                      -= 10;
                     }
                 }
                 else
                 {
-                    modelPtr1      = &g_SysWork.playerWork_4C.player_0.model_0;
-                    extraModelPtr1 = &g_SysWork.playerWork_4C.extra_128.model_0;
+                    modelPtr1      = &g_SysWork.playerWork_4C.player_0.model;
+                    extraModelPtr1 = &g_SysWork.playerWork_4C.extra_128.model;
 
                     modelPtr1->anim.status                        = ANIM_STATUS(HarryAnim_TransitionToStill, true);
                     modelPtr1->anim.keyframeIdx                   = 0;
                     extraModelPtr1->anim.status                   = ANIM_STATUS(HarryAnim_TransitionToStill, true);
                     extraModelPtr1->anim.keyframeIdx              = 0;
 
-                    g_SysWork.playerWork_4C.player_0.model_0.controlState       = ModelState_Uninitialized;
-                    g_SysWork.playerWork_4C.player_0.model_0.stateStep   = 0;
+                    g_SysWork.playerWork_4C.player_0.model.controlState       = ModelState_Uninitialized;
+                    g_SysWork.playerWork_4C.player_0.model.stateStep   = 0;
                     g_SysWork.playerWork_4C.extra_128.upperBodyState_20   = PlayerUpperBodyState_None;
                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24   = PlayerLowerBodyState_None;
-                    g_SysWork.playerWork_4C.extra_128.model_0.controlState     = ModelState_Uninitialized;
-                    g_SysWork.playerWork_4C.extra_128.model_0.stateStep = 0;
+                    g_SysWork.playerWork_4C.extra_128.model.controlState     = ModelState_Uninitialized;
+                    g_SysWork.playerWork_4C.extra_128.model.stateStep = 0;
                 }
 
-                g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
-                g_SysWork.playerWork_4C.player_0.properties_E4.player.afkTimer_E8            = Q12(0.0f);
+                g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+                g_SysWork.playerWork_4C.player_0.properties.player.afkTimer_E8            = Q12(0.0f);
         }
     }
 
-    modelPtr3      = &g_SysWork.playerWork_4C.player_0.model_0;
-    extraModelPtr2 = &g_SysWork.playerWork_4C.extra_128.model_0;
+    modelPtr3      = &g_SysWork.playerWork_4C.player_0.model;
+    extraModelPtr2 = &g_SysWork.playerWork_4C.extra_128.model;
 
     // Set animation alpha.
     modelPtr3->anim.alpha      = Q12(1.0f);
@@ -289,7 +289,7 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
 
             func_8008B398();
 
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
+            g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
             break;
 
         case 0:
@@ -338,7 +338,7 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
                     func_8008B398();
                     D_800C3963                                                                    = 0;
                     D_800C3962                                                                    = 0;
-                    g_SysWork.playerWork_4C.player_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
+                    g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
                     g_SysWork.playerWork_4C.player_0.field_44.field_0                             = 0;
                 }
             }
@@ -352,7 +352,7 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
                     func_8008B438(0, 0, 0);
                     func_8008B3E4(Q8(0.0f));
 
-                    g_SysWork.playerWork_4C.player_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
+                    g_SysWork.playerWork_4C.player_0.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
                     D_800C3963                                                              -= 2;
                 }
             }

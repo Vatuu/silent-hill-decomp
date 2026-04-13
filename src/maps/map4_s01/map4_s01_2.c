@@ -171,9 +171,9 @@ void func_800D1FF0(void) // 0x800D1FF0
             SD_Call(Sfx_Unk1538);
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 105, false);
 
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(178.3f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(61.9f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(178.3f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(61.9f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(0.0f);
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -185,7 +185,7 @@ void func_800D1FF0(void) // 0x800D1FF0
         case 6:
             tmp = Q12_MULT_PRECISE(g_DeltaTime, Q12(0.22f));
 
-            g_SysWork.playerWork_4C.player_0.position_18.vz += tmp;
+            g_SysWork.playerWork_4C.player_0.position.vz += tmp;
             WorldObject_D_800D7FF0.position_1C.vz += tmp;
 
             D_800D5AE8 += Q12_MULT_PRECISE(g_DeltaTime, Q12(2.0f));
@@ -197,7 +197,7 @@ void func_800D1FF0(void) // 0x800D1FF0
             if (WorldObject_D_800D7FF0.position_1C.vz > Q12(63.6814f))
             {
                 tmp = WorldObject_D_800D7FF0.position_1C.vz - Q12(63.6814f);
-                g_SysWork.playerWork_4C.player_0.position_18.vz -= tmp;
+                g_SysWork.playerWork_4C.player_0.position.vz -= tmp;
                 WorldObject_D_800D7FF0.position_1C.vz -= tmp;
 
                 SysWork_StateStepIncrement(0);
@@ -538,11 +538,11 @@ void func_800D2408(void) // 0x800D2408
 
     if (g_Timer0 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(playerChara.position_18, playerChara.rotation_24, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
+        Dms_CharacterGetPosRot(playerChara.position, playerChara.rotation, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
 
         if (D_800D5AEB != 0)
         {
-            Dms_CharacterGetPosRot(cybilChara.position_18, cybilChara.rotation_24, "SIBYL", g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
+            Dms_CharacterGetPosRot(cybilChara.position, cybilChara.rotation, "SIBYL", g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
         }
 
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPosition, &g_CutsceneCameraLookAt, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_11));
@@ -668,7 +668,7 @@ void func_800D2F74(void) // 0x800D2F74
 
     if (g_Timer1 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(playerChara.position_18, playerChara.rotation_24, "HERO", g_Timer1, (s_DmsHeader*)FS_BUFFER_11);
+        Dms_CharacterGetPosRot(playerChara.position, playerChara.rotation, "HERO", g_Timer1, (s_DmsHeader*)FS_BUFFER_11);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPosition, &g_CutsceneCameraLookAt, NULL, g_Timer1, (s_DmsHeader*)FS_BUFFER_11));
         vcUserCamTarget(&g_CutsceneCameraPosition, NULL, true);
         vcUserWatchTarget(&g_CutsceneCameraLookAt, NULL, true);
@@ -748,8 +748,8 @@ void func_800D3420(void) // 0x800D3420
             func_8008D438();
 
             g_SysWork.pointLightIntensity_2378                       = Q12(2.5f);
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(180.0f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(60.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(180.0f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(60.0f);
 
             Ipd_CloseRangeChunksInit();
             SD_Call(Sfx_Unk1540);
@@ -846,7 +846,7 @@ void func_800D3420(void) // 0x800D3420
 
         case 10:
             Chara_Spawn(Chara_Cybil, 0, Q12(183.0f), Q12(61.0f), Q12_ANGLE(0.0f), 3);
-            Model_AnimFlagsClear(&(playerChara)->model_0, 2);
+            Model_AnimFlagsClear(&(playerChara)->model, 2);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -962,7 +962,7 @@ void func_800D3420(void) // 0x800D3420
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_306);
 
-            Model_AnimFlagsSet(&(playerChara)->model_0, 2);
+            Model_AnimFlagsSet(&(playerChara)->model, 2);
             g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
@@ -976,10 +976,10 @@ void func_800D3420(void) // 0x800D3420
 
     if (D_800D5AFC >= 0)
     {
-        Dms_CharacterGetPosRot(playerChara.position_18, playerChara.rotation_24, "HERO", D_800D5AFC, FS_BUFFER_11);
+        Dms_CharacterGetPosRot(playerChara.position, playerChara.rotation, "HERO", D_800D5AFC, FS_BUFFER_11);
         if (g_SysWork.sysStateStep_C[0] >= 10)
         {
-            Dms_CharacterGetPosRot(cybilChara.position_18, cybilChara.rotation_24, "SIBYL", D_800D5AFC, FS_BUFFER_11);
+            Dms_CharacterGetPosRot(cybilChara.position, cybilChara.rotation, "SIBYL", D_800D5AFC, FS_BUFFER_11);
         }
 
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPosition, &g_CutsceneCameraLookAt, NULL, D_800D5AFC, FS_BUFFER_11));
@@ -1172,7 +1172,7 @@ void func_800D4410(void) // 0x800D4410
 
     if (g_Timer2 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(playerChara.position_18, playerChara.rotation_24, "HERO", g_Timer2, (s_DmsHeader*)FS_BUFFER_11);
+        Dms_CharacterGetPosRot(playerChara.position, playerChara.rotation, "HERO", g_Timer2, (s_DmsHeader*)FS_BUFFER_11);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPosition, &g_CutsceneCameraLookAt, NULL, g_Timer2, (s_DmsHeader*)FS_BUFFER_11));
         vcUserCamTarget(&g_CutsceneCameraPosition, NULL, true);
         vcUserWatchTarget(&g_CutsceneCameraLookAt, NULL, true);

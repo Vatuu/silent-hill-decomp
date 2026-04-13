@@ -25,13 +25,13 @@ void Savegame_EnemyStateUpdate(s_SubCharacter* chara) // 0x80037DC4
 
 void Chara_DamagedFlagUpdate(s_SubCharacter* chara) // 0x80037E40
 {
-    if (chara->damage_B4.amount_C > Q12(0.0f))
+    if (chara->damage.amount_C > Q12(0.0f))
     {
-        chara->flags_3E |= CharaFlag_Damaged;
+        chara->flags |= CharaFlag_Damaged;
     }
     else
     {
-        chara->flags_3E &= ~CharaFlag_Damaged;
+        chara->flags &= ~CharaFlag_Damaged;
     }
 }
 
@@ -40,17 +40,17 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
     s8  idx;
     s32 cond;
 
-    // TODO: Strange `chara->headingAngle_3C` access.
-    if (chara->health_B0 <= Q12(0.0f) && (*(s32*)&chara->headingAngle_3C & 0x600000) == 0x200000)
+    // TODO: Strange `chara->headingAngle` access.
+    if (chara->health <= Q12(0.0f) && (*(s32*)&chara->headingAngle & 0x600000) == 0x200000)
     {
-        idx = chara->attackReceived_41;
+        idx = chara->attackReceived;
         if (idx < 39) // TODO: What weapon attack?
         {
             cond = D_800AD4C8[idx].field_10 == 3;
             func_800914C4(cond, func_8009146C(cond) + 1);
         }
 
-        chara->flags_3E |= CharaFlag_Dead;
+        chara->flags |= CharaFlag_Dead;
     }
 }
 
@@ -95,8 +95,8 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
         if (!(g_SysWork.flags_22A4 & SysFlag2_4) && HAS_FLAG(ovlEnemiesStatePtr, i) && !HAS_FLAG(g_SysWork.field_228C, i) &&
             curCharaSpawn->flags_6 != 0 && g_SavegamePtr->gameDifficulty_260 >= curCharaSpawn->gameDifficultyMin_7_0 &&
             func_8008F914(curCharaSpawn->positionX_0, curCharaSpawn->positionZ_8) &&
-            !Math_Distance2dCheck(&g_SysWork.playerWork_4C.player_0.position_18, pos, Q12(22.0f)) &&
-            (!cond || Math_Distance2dCheck(&g_SysWork.playerWork_4C.player_0.position_18, pos, Q12(20.0f))))
+            !Math_Distance2dCheck(&g_SysWork.playerWork_4C.player_0.position, pos, Q12(22.0f)) &&
+            (!cond || Math_Distance2dCheck(&g_SysWork.playerWork_4C.player_0.position, pos, Q12(20.0f))))
         {
             while (HAS_FLAG(&g_SysWork.npcFlags_2290, npcIdx))
             {
@@ -107,29 +107,29 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
 
             if (curCharaSpawn->charaId_4 > Chara_None)
             {
-                g_SysWork.npcs_1A0[npcIdx].model_0.charaId_0 = curCharaSpawn->charaId_4;
+                g_SysWork.npcs_1A0[npcIdx].model.charaId_0 = curCharaSpawn->charaId_4;
             }
             else
             {
-                g_SysWork.npcs_1A0[npcIdx].model_0.charaId_0 = (i < 16) ? charaId0 : charaId1;
+                g_SysWork.npcs_1A0[npcIdx].model.charaId_0 = (i < 16) ? charaId0 : charaId1;
             }
 
             g_SysWork.npcs_1A0[npcIdx].field_40               = i;
-            g_SysWork.npcs_1A0[npcIdx].model_0.controlState = ModelState_Uninitialized;
-            g_SysWork.npcs_1A0[npcIdx].model_0.stateStep    = curCharaSpawn->flags_6;
-            g_SysWork.npcs_1A0[npcIdx].position_18.vx         = curCharaSpawn->positionX_0;
-            g_SysWork.npcs_1A0[npcIdx].position_18.vz         = curCharaSpawn->positionZ_8;
+            g_SysWork.npcs_1A0[npcIdx].model.controlState = ModelState_Uninitialized;
+            g_SysWork.npcs_1A0[npcIdx].model.stateStep    = curCharaSpawn->flags_6;
+            g_SysWork.npcs_1A0[npcIdx].position.vx         = curCharaSpawn->positionX_0;
+            g_SysWork.npcs_1A0[npcIdx].position.vz         = curCharaSpawn->positionZ_8;
 
             Collision_Get(&coll, curCharaSpawn->positionX_0, curCharaSpawn->positionZ_8);
 
-            g_SysWork.npcs_1A0[npcIdx].position_18.vy = coll.groundHeight_0;
-            g_SysWork.npcs_1A0[npcIdx].rotation_24.vy = curCharaSpawn->rotationY_5 * 16;
+            g_SysWork.npcs_1A0[npcIdx].position.vy = coll.groundHeight_0;
+            g_SysWork.npcs_1A0[npcIdx].rotation.vy = curCharaSpawn->rotationY_5 * 16;
 
             SET_FLAG(&g_SysWork.npcFlags_2290, npcIdx);
             SET_FLAG(g_SysWork.field_228C, i);
 
             chara                          = &g_SysWork.npcs_1A0[npcIdx];
-            chara->model_0.anim.flags |= AnimFlag_Visible;
+            chara->model.anim.flags |= AnimFlag_Visible;
         }
     }
 }
@@ -209,8 +209,8 @@ void Game_NpcUpdate(void) // 0x80038354
         return NO_VALUE;
     }
 
-    posXShift6 = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vx);
-    posZShift6 = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vz);
+    posXShift6 = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vx);
+    posZShift6 = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position.vz);
 
     Demo_DemoRandSeedBackup();
     Demo_DemoRandSeedRestore();
@@ -224,12 +224,12 @@ void Game_NpcUpdate(void) // 0x80038354
 
     for (k = 0, npc = g_SysWork.npcs_1A0; k < ARRAY_SIZE(g_SysWork.npcs_1A0); k++, npc++)
     {
-        if (npc->model_0.charaId_0 != Chara_None && npc->model_0.charaId_0 != Chara_Padlock)
+        if (npc->model.charaId_0 != Chara_None && npc->model.charaId_0 != Chara_Padlock)
         {
-            if (npc->model_0.charaId_0 <= Chara_MonsterCybil)
+            if (npc->model.charaId_0 <= Chara_MonsterCybil)
             {
-                temp_t3 = Q12_SQUARE_PRECISE(Q12_TO_Q6(npc->position_18.vx) - posXShift6) +
-                          Q12_SQUARE_PRECISE(Q12_TO_Q6(npc->position_18.vz) - posZShift6);
+                temp_t3 = Q12_SQUARE_PRECISE(Q12_TO_Q6(npc->position.vx) - posXShift6) +
+                          Q12_SQUARE_PRECISE(Q12_TO_Q6(npc->position.vz) - posZShift6);
                 var_t5 = 0;
 
                 if (g_MapOverlayHeader.mapInfo_0->flags_6 & MapFlag_Interior)
@@ -239,23 +239,23 @@ void Game_NpcUpdate(void) // 0x80038354
 
                 for (j = 0; j < 3; j++)
                 {
-                    if (npc->health_B0 <= Q12(0.0f) || npc->flags_3E & CharaFlag_Unk9 || temp_t3 >= field_0[j].field_4)
+                    if (npc->health <= Q12(0.0f) || npc->flags & CharaFlag_Unk9 || temp_t3 >= field_0[j].field_4)
                     {
                         continue;
                     }
 
                     if (var_t5 != 0)
                     {
-                        s32 playerCell = (g_SysWork.playerWork_4C.player_0.position_18.vx + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
-                        s32 npcCell    = (npc->position_18.vx                        + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
+                        s32 playerCell = (g_SysWork.playerWork_4C.player_0.position.vx + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
+                        s32 npcCell    = (npc->position.vx                        + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
                         if (npcCell != playerCell)
                         {
                             continue;
                         }
 
                         // TODO: Unique vars for these.
-                        playerCell = (g_SysWork.playerWork_4C.player_0.position_18.vz + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
-                        npcCell    = (npc->position_18.vz                        + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
+                        playerCell = (g_SysWork.playerWork_4C.player_0.position.vz + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
+                        npcCell    = (npc->position.vz                        + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
                         if (npcCell != playerCell)
                         {
                             continue;
@@ -275,16 +275,16 @@ void Game_NpcUpdate(void) // 0x80038354
 
                     field_0[j].bitIdx_0   = temp2 >> 3;
                     field_0[j].field_4    = temp_t3;
-                    field_0[j].field_8.vx = npc->position_18.vx;
-                    field_0[j].field_8.vz = npc->position_18.vz;
+                    field_0[j].field_8.vx = npc->position.vx;
+                    field_0[j].field_8.vz = npc->position.vz;
                     break;
                 }
 
                 new_var = temp_t3;
 
-                if (new_var > ((var_t5 == 0 && npc->health_B0 < Q12(0.0f)) ? SQUARE(24) : SQUARE(40)))
+                if (new_var > ((var_t5 == 0 && npc->health < Q12(0.0f)) ? SQUARE(24) : SQUARE(40)))
                 {
-                    npc->model_0.charaId_0 = Chara_None;
+                    npc->model.charaId_0 = Chara_None;
                     SysWork_NpcFlagClear(k);
                     CLEAR_FLAG(g_SysWork.field_228C, npc->field_40);
                     continue;
@@ -292,35 +292,35 @@ void Game_NpcUpdate(void) // 0x80038354
 
                 if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 0x2 && temp_t3 > SQUARE(15)) ||
                     (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 0x2) &&
-                     Camera_Distance2dGet(&npc->position_18) > SQUARE(15)))
+                     Camera_Distance2dGet(&npc->position) > SQUARE(15)))
                 {
-                    npc->model_0.anim.flags &= ~AnimFlag_Visible;
+                    npc->model.anim.flags &= ~AnimFlag_Visible;
                 }
                 else
                 {
 
-                    npc->model_0.anim.flags |= AnimFlag_Visible;
+                    npc->model.anim.flags |= AnimFlag_Visible;
                 }
             }
 
-            npc->model_0.anim.flags |= AnimFlag_Unlocked;
+            npc->model.anim.flags |= AnimFlag_Unlocked;
 
-            animDataInfoIdx = g_CharaAnimInfoIdxs[npc->model_0.charaId_0];
+            animDataInfoIdx = g_CharaAnimInfoIdxs[npc->model.charaId_0];
             coord           = g_CharaTypeAnimInfo[animDataInfoIdx].npcCoords_14;
 
             Chara_Flag8Clear(npc);
             Chara_DamagedFlagUpdate(npc);
             func_8003BD48(npc);
 
-            g_MapOverlayHeader.charaUpdateFuncs_194[npc->model_0.charaId_0](npc, g_CharaTypeAnimInfo[animDataInfoIdx].animFile1_8, coord);
+            g_MapOverlayHeader.charaUpdateFuncs_194[npc->model.charaId_0](npc, g_CharaTypeAnimInfo[animDataInfoIdx].animFile1_8, coord);
 
             func_8003BE28();
             func_80037E78(npc);
             func_8008A3AC(npc);
 
-            if (npc->model_0.anim.flags & AnimFlag_Visible)
+            if (npc->model.anim.flags & AnimFlag_Visible)
             {
-                func_8003DA9C(npc->model_0.charaId_0, coord, 1, npc->timer_C6, (s8)npc->model_0.paletteIdx);
+                func_8003DA9C(npc->model.charaId_0, coord, 1, npc->timer_C6, (s8)npc->model.paletteIdx);
             }
         }
     }

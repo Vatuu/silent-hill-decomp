@@ -94,7 +94,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
             break;
     }
 
-    if (g_SysWork.sysState_8 != SysState_Gameplay && g_SysWork.playerWork_4C.player_0.health_B0 <= Q12(0.0f))
+    if (g_SysWork.sysState_8 != SysState_Gameplay && g_SysWork.playerWork_4C.player_0.health <= Q12(0.0f))
     {
         SysWork_StateSetNext(SysState_Gameplay);
     }
@@ -167,7 +167,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
         Demo_DemoRandSeedRestore();
 
-        if (player->model_0.anim.flags & AnimFlag_Visible)
+        if (player->model.anim.flags & AnimFlag_Visible)
         {
             func_8003DA9C(Chara_Harry, g_SysWork.playerBoneCoords_890, 1, g_SysWork.playerWork_4C.player_0.timer_C6, 0);
             Chara_Flag8Clear(&g_SysWork.playerWork_4C.player_0);
@@ -191,10 +191,10 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
 
     player = &g_SysWork.playerWork_4C.player_0;
 
-    Event_Update(player->attackReceived_41 != NO_VALUE);
+    Event_Update(player->attackReceived != NO_VALUE);
     Savegame_MapRoomIdxUpdate();
 
-    switch (FP_ROUND_SCALED(player->health_B0, 10, Q12_SHIFT))
+    switch (FP_ROUND_SCALED(player->health, 10, Q12_SHIFT))
     {
         case 0:
             func_800892A4(17);
@@ -222,7 +222,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
             break;
     }
 
-    if (g_SysWork.playerWork_4C.player_0.health_B0 <= Q12(0.0f))
+    if (g_SysWork.playerWork_4C.player_0.health <= Q12(0.0f))
     {
         return;
     }
@@ -644,8 +644,8 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     if (D_800BCDB0.triggerParam1_4_24 == 1)
     {
         mapPoint                = &g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventData->pointOfInterestIdx_5];
-        offsetZ                 = g_SysWork.playerWork_4C.player_0.position_18.vz - mapPoint->positionZ_8;
-        D_800BCDB0.positionX_0 += g_SysWork.playerWork_4C.player_0.position_18.vx - mapPoint->positionX_0;
+        offsetZ                 = g_SysWork.playerWork_4C.player_0.position.vz - mapPoint->positionZ_8;
+        D_800BCDB0.positionX_0 += g_SysWork.playerWork_4C.player_0.position.vx - mapPoint->positionX_0;
         D_800BCDB0.positionZ_8 += offsetZ;
     }
 
@@ -716,8 +716,8 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
     {
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
-            if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry && g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil &&
-                g_SysWork.npcs_1A0[i].health_B0 > Q12(0.0f))
+            if (g_SysWork.npcs_1A0[i].model.charaId_0 >= Chara_Harry && g_SysWork.npcs_1A0[i].model.charaId_0 <= Chara_MonsterCybil &&
+                g_SysWork.npcs_1A0[i].health > Q12(0.0f))
             {
                 break;
             }
@@ -765,10 +765,10 @@ void SysWork_SavegameUpdatePlayer(void) // 0x8003A120
     save = g_SavegamePtr;
 
     save->locationId_A8       = g_MapEventParam;
-    save->playerPositionX_244 = g_SysWork.playerWork_4C.player_0.position_18.vx;
-    save->playerPositionZ_24C = g_SysWork.playerWork_4C.player_0.position_18.vz;
-    save->playerRotationY_248 = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
-    save->playerHealth_240    = g_SysWork.playerWork_4C.player_0.health_B0;
+    save->playerPositionX_244 = g_SysWork.playerWork_4C.player_0.position.vx;
+    save->playerPositionZ_24C = g_SysWork.playerWork_4C.player_0.position.vz;
+    save->playerRotationY_248 = g_SysWork.playerWork_4C.player_0.rotation.vy;
+    save->playerHealth_240    = g_SysWork.playerWork_4C.player_0.health;
 }
 
 void func_8003A16C(void) // 0x8003A16C
@@ -784,10 +784,10 @@ void func_8003A16C(void) // 0x8003A16C
 
 void SysWork_SavegameReadPlayer(void) // 0x8003A1F4
 {
-    g_SysWork.playerWork_4C.player_0.position_18.vx = g_SavegamePtr->playerPositionX_244;
-    g_SysWork.playerWork_4C.player_0.position_18.vz = g_SavegamePtr->playerPositionZ_24C;
-    g_SysWork.playerWork_4C.player_0.rotation_24.vy = g_SavegamePtr->playerRotationY_248;
-    g_SysWork.playerWork_4C.player_0.health_B0      = g_SavegamePtr->playerHealth_240;
+    g_SysWork.playerWork_4C.player_0.position.vx = g_SavegamePtr->playerPositionX_244;
+    g_SysWork.playerWork_4C.player_0.position.vz = g_SavegamePtr->playerPositionZ_24C;
+    g_SysWork.playerWork_4C.player_0.rotation.vy = g_SavegamePtr->playerRotationY_248;
+    g_SysWork.playerWork_4C.player_0.health      = g_SavegamePtr->playerHealth_240;
 }
 
 void SysState_SaveMenu_Update(void) // 0x8003A230

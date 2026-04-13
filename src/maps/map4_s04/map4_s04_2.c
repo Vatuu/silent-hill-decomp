@@ -350,15 +350,15 @@ void func_800D1910(void) // 0x800D1910
             break;
     }
 
-    g_SysWork.npcs_1A0[0].position_18.vy = Q12(0.0f);
+    g_SysWork.npcs_1A0[0].position.vy = Q12(0.0f);
 
     if (D_800D6EF4 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position, &g_SysWork.playerWork_4C.player_0.rotation, "HERO", D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15);
 
         if (D_800D37C0 != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "LISA", D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "LISA", D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15);
         }
 
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D6ED8, &D_800D6EE8, NULL, D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15));
@@ -520,7 +520,7 @@ void func_800D23E4(void) // 0x800D23E4
             break;
 
         case 20:
-            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model, 2);
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 53, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 21, false);
             SysWork_StateStepIncrement(0);
@@ -556,7 +556,7 @@ void func_800D23E4(void) // 0x800D23E4
 
             SD_Call(19);
 
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, 2);
 
             func_8003D01C();
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
@@ -581,8 +581,8 @@ void func_800D23E4(void) // 0x800D23E4
 
     if (D_800D6EF4 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", D_800D6EF4, FS_BUFFER_15);
-        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "LISA", D_800D6EF4, FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position, &g_SysWork.playerWork_4C.player_0.rotation, "HERO", D_800D6EF4, FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "LISA", D_800D6EF4, FS_BUFFER_15);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D6ED8, &D_800D6EE8, NULL, D_800D6EF4, FS_BUFFER_15));
         vcUserCamTarget(&D_800D6ED8, NULL, true);
         vcUserWatchTarget(&D_800D6EE8, NULL, true);

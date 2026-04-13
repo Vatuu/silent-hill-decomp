@@ -118,12 +118,12 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 
     if (cond)
     {
-        Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
+        Collision_Get(&coll, chara->position.vx, chara->position.vz);
 
-        temp_s2 = Math_Sin(chara->headingAngle_3C);
-        temp_s2 = Q12_MULT(chara->moveSpeed_38, temp_s2);
-        temp_s0 = Math_Cos(chara->headingAngle_3C);
-        temp_s0 = Q12_MULT(chara->moveSpeed_38, temp_s0);
+        temp_s2 = Math_Sin(chara->headingAngle);
+        temp_s2 = Q12_MULT(chara->moveSpeed, temp_s2);
+        temp_s0 = Math_Cos(chara->headingAngle);
+        temp_s0 = Q12_MULT(chara->moveSpeed, temp_s0);
 
         temp_s3 = Math_Cos(ABS(coll.field_4) >> 3); // `/ 8`.
         temp_v0 = Math_Cos(ABS(coll.field_6) >> 3); // `/ 8`.
@@ -133,21 +133,21 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
     }
     else
     {
-        var_s0 = Q12_MULT(chara->moveSpeed_38, Math_Sin(chara->headingAngle_3C));
-        var_v1 = Q12_MULT(chara->moveSpeed_38, Math_Cos(chara->headingAngle_3C));
+        var_s0 = Q12_MULT(chara->moveSpeed, Math_Sin(chara->headingAngle));
+        var_v1 = Q12_MULT(chara->moveSpeed, Math_Cos(chara->headingAngle));
     }
 
-    if (chara->moveSpeed_38 >= 0)
+    if (chara->moveSpeed >= 0)
     {
-        chara->moveSpeed_38 = SquareRoot0(SQUARE(var_s0) + SQUARE(var_v1));
+        chara->moveSpeed = SquareRoot0(SQUARE(var_s0) + SQUARE(var_v1));
     }
     else
     {
-        chara->moveSpeed_38 = -SquareRoot0(SQUARE(var_s0) + SQUARE(var_v1));
+        chara->moveSpeed = -SquareRoot0(SQUARE(var_s0) + SQUARE(var_v1));
     }
 
-    moveSpeed    = chara->moveSpeed_38;
-    headingAngle = chara->headingAngle_3C;
+    moveSpeed    = chara->moveSpeed;
+    headingAngle = chara->headingAngle;
     moveAmt      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
@@ -155,7 +155,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 
     offset.vx = Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed_34, g_DeltaTime);
+    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed, g_DeltaTime);
 
     if (cond)
     {
@@ -168,47 +168,47 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
     #define UnkStruct D_800C4590
 #endif
         Collision_WallDetect(&UnkStruct, &offset, chara);
-        chara->position_18.vx += UnkStruct.offset_0.vx;
-        chara->position_18.vy += UnkStruct.offset_0.vy;
-        chara->position_18.vz += UnkStruct.offset_0.vz;
+        chara->position.vx += UnkStruct.offset_0.vx;
+        chara->position.vy += UnkStruct.offset_0.vy;
+        chara->position.vz += UnkStruct.offset_0.vz;
 
         if (UnkStruct.field_14 == 0)
         {
-            UnkStruct.field_C = chara->properties_E4.player.positionY_EC;
+            UnkStruct.field_C = chara->properties.player.positionY_EC;
         }
 
-        if (chara->position_18.vy > UnkStruct.field_C)
+        if (chara->position.vy > UnkStruct.field_C)
         {
-            chara->position_18.vy = UnkStruct.field_C;
-            chara->fallSpeed_34   = Q12(0.0f);
+            chara->position.vy = UnkStruct.field_C;
+            chara->fallSpeed   = Q12(0.0f);
         }
     }
     else
     {
-        chara->position_18.vx += offset.vx;
-        chara->position_18.vz += offset.vz;
+        chara->position.vx += offset.vx;
+        chara->position.vz += offset.vz;
 
         if (g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_Unk87 ||
             (g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_Unk89 && g_SysWork.playerWork_4C.extra_128.state_1C != PlayerState_Unk106))
         {
-            chara->position_18.vy = Q12(0.0f);
+            chara->position.vy = Q12(0.0f);
         }
 
-        chara->fallSpeed_34 = Q12(0.0f);
+        chara->fallSpeed = Q12(0.0f);
     }
 
     if (g_DeltaTime == Q12(0.0f))
     {
-        chara->rotationSpeed_2C.vy = Q12_ANGLE(0.0f);
+        chara->rotationSpeed.vy = Q12_ANGLE(0.0f);
     }
     else
     {
-        chara->rotationSpeed_2C.vy = FP_TO(sharedData_800E39D8_0_s00, 8) / g_DeltaTime;
+        chara->rotationSpeed.vy = FP_TO(sharedData_800E39D8_0_s00, 8) / g_DeltaTime;
     }
 
-    coords->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
-    coords->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
-    coords->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
+    coords->coord.t[0] = Q12_TO_Q8(chara->position.vx);
+    coords->coord.t[1] = Q12_TO_Q8(chara->position.vy);
+    coords->coord.t[2] = Q12_TO_Q8(chara->position.vz);
 }
 
 void sharedFunc_800D209C_0_s00(void)
@@ -242,9 +242,9 @@ void Player_ControlFreeze(void)
 
     D_800AF216 = 0;
 
-    playerChara->properties_E4.player.afkTimer_E8        = Q12(0.0f);
-    playerChara->properties_E4.player.runTimer_F8        = Q12(0.0f);
-    playerChara->properties_E4.player.exhaustionTimer_FC = Q12(0.0f);
+    playerChara->properties.player.afkTimer_E8        = Q12(0.0f);
+    playerChara->properties.player.runTimer_F8        = Q12(0.0f);
+    playerChara->properties.player.exhaustionTimer_FC = Q12(0.0f);
 
     Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Unk52);
 
@@ -265,8 +265,8 @@ void Player_ControlFreeze(void)
     sharedData_800E39D8_0_s00 = 0;
 
     playerChara->field_D4.field_2                               = Q12(0.0f);
-    g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
-    playerChara->flags_3E                                      |= CharaFlag_Unk4;
+    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
+    playerChara->flags                                      |= CharaFlag_Unk4;
     playerChara->field_E1_0                                     = 4;
 
     if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
@@ -292,21 +292,21 @@ void Player_ControlUnfreeze(bool setIdle)
         g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
 
         // TODO: Will `Character_AnimSet` work here?
-        player->model_0.anim.status      = ANIM_STATUS(HarryAnim_Idle, true);
-        player->model_0.anim.keyframeIdx = 503;
-        extra->model_0.anim.status       = ANIM_STATUS(HarryAnim_Idle, true);
-        extra->model_0.anim.keyframeIdx  = 503;
-        player->model_0.anim.time        = Q12(503);
-        player->model_0.anim.alpha       = Q12(1.0f);
-        extra->model_0.anim.time         = Q12(503);
-        extra->model_0.anim.alpha        = Q12(1.0f);
+        player->model.anim.status      = ANIM_STATUS(HarryAnim_Idle, true);
+        player->model.anim.keyframeIdx = 503;
+        extra->model.anim.status       = ANIM_STATUS(HarryAnim_Idle, true);
+        extra->model.anim.keyframeIdx  = 503;
+        player->model.anim.time        = Q12(503);
+        player->model.anim.alpha       = Q12(1.0f);
+        extra->model.anim.time         = Q12(503);
+        extra->model.anim.alpha        = Q12(1.0f);
     }
     else
     {
         Player_ExtraStateSet(player, extra, PlayerState_None);
     }
 
-    player->attackReceived_41 = NO_VALUE;
+    player->attackReceived = NO_VALUE;
     player->field_40          = NO_VALUE;
     g_SysWork.npcIdxs_2354[1] = NO_VALUE;
     g_SysWork.npcIdxs_2354[0] = NO_VALUE;
@@ -339,18 +339,18 @@ void Player_ControlUnfreeze(bool setIdle)
     g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4              = Q12(0.0f);
     g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2              = Q12(0.0f);
     g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0              = Q12(0.0f);
-    g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~(PlayerFlag_Unk2 |
+    g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~(PlayerFlag_Unk2 |
                                                                     PlayerFlag_SfxActive |
                                                                     PlayerFlag_DamageReceived |
                                                                     PlayerFlag_Moving);
 
-    player->flags_3E  &= ~CharaFlag_Unk4;
+    player->flags  &= ~CharaFlag_Unk4;
     player->field_E1_0 = 3;
 
     Player_AnimFlagsSet(AnimFlag_Unlocked);
 
-    g_Player_PrevPosition.vx = player->position_18.vx;
-    g_Player_PrevPosition.vz = player->position_18.vz;
+    g_Player_PrevPosition.vx = player->position.vx;
+    g_Player_PrevPosition.vz = player->position.vz;
 
 #if !defined(MAP0_S00)
     g_Player_FlexRotationY = Q12_ANGLE(0.0f);
@@ -388,18 +388,18 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             break;
 
         case 1:
-            if (localVec->vx == playerChara->position_18.vx && localVec->vz == playerChara->position_18.vz)
+            if (localVec->vx == playerChara->position.vx && localVec->vz == playerChara->position.vz)
             {
                 D_800C4588 = 6;
                 break;
             }
 
-            sharedData_800E39E0_0_s00 = Q12_ANGLE_ABS(ratan2(localVec->vx - playerChara->position_18.vx, localVec->vz - playerChara->position_18.vz));
-            Math_ShortestAngleGet(playerChara->rotation_24.vy, sharedData_800E39E0_0_s00, &playerRotDelta);
+            sharedData_800E39E0_0_s00 = Q12_ANGLE_ABS(ratan2(localVec->vx - playerChara->position.vx, localVec->vz - playerChara->position.vz));
+            Math_ShortestAngleGet(playerChara->rotation.vy, sharedData_800E39E0_0_s00, &playerRotDelta);
 
             if (ABS(playerRotDelta) < ANGLE_THRESHOLD)
             {
-                playerChara->rotation_24.vy = sharedData_800E39E0_0_s00;
+                playerChara->rotation.vy = sharedData_800E39E0_0_s00;
                 D_800C4588                  = 3;
                 break;
             }
@@ -420,16 +420,16 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             break;
 
         case 2:
-            Math_ShortestAngleGet(playerChara->rotation_24.vy, sharedData_800E39E0_0_s00, &playerRotDelta);
+            Math_ShortestAngleGet(playerChara->rotation.vy, sharedData_800E39E0_0_s00, &playerRotDelta);
             if (ABS(playerRotDelta) < ANGLE_THRESHOLD)
             {
-                playerChara->rotation_24.vy = sharedData_800E39E0_0_s00;
+                playerChara->rotation.vy = sharedData_800E39E0_0_s00;
                 D_800C4588                  = 3;
             }
             break;
 
         case 3:
-            playerVecDist = SquareRoot0(Q12_2D_DISTANCE_SQR(localVec[0], playerChara->position_18));
+            playerVecDist = SquareRoot0(Q12_2D_DISTANCE_SQR(localVec[0], playerChara->position));
             if (ABS((int)playerVecDist) < Q8(0.15f)) // @hack Needs to be `int` for `ABS` to match?
             {
                 Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Unk52);
@@ -454,23 +454,23 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
 
         case 4:
             sharedData_800E39E0_0_s00 = Q12_ANGLE_ABS(ratan2(localVec[sharedData_800DD5A4_0_s00].vx -
-                                                            playerChara->position_18.vx, localVec[sharedData_800DD5A4_0_s00].vz -
-                                                            playerChara->position_18.vz));
+                                                            playerChara->position.vx, localVec[sharedData_800DD5A4_0_s00].vz -
+                                                            playerChara->position.vz));
             if (sharedData_800DD5A4_0_s00 + 1 < vecCount)
             {
                 sharedData_800E39E2_0_s00 = Q12_ANGLE_ABS(ratan2(localVec[sharedData_800DD5A4_0_s00 + 1].vx -
-                                                                playerChara->position_18.vx, localVec[sharedData_800DD5A4_0_s00 + 1].vz -
-                                                                playerChara->position_18.vz));
+                                                                playerChara->position.vx, localVec[sharedData_800DD5A4_0_s00 + 1].vz -
+                                                                playerChara->position.vz));
             }
             else
             {
                 sharedData_800E39E2_0_s00 = sharedData_800E39E0_0_s00;
             }
 
-            sharedData_800DD5A0_0_s00 = SquareRoot0(Q12_2D_DISTANCE_SQR(localVec[sharedData_800DD5A4_0_s00], playerChara->position_18));
+            sharedData_800DD5A0_0_s00 = SquareRoot0(Q12_2D_DISTANCE_SQR(localVec[sharedData_800DD5A4_0_s00], playerChara->position));
             D_800C4588                = 5;
 
-            Math_ShortestAngleGet(playerChara->rotation_24.vy, sharedData_800E39E2_0_s00, &g_Player_FlexRotationY);
+            Math_ShortestAngleGet(playerChara->rotation.vy, sharedData_800E39E2_0_s00, &g_Player_FlexRotationY);
 
             g_Player_FlexRotationY = CLAMP(g_Player_FlexRotationY, Q12_ANGLE(-45.0f), Q12_ANGLE(45.0f));
 
@@ -480,39 +480,39 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             if (sharedData_800DD5A4_0_s00 + 1 < vecCount)
             {
                 sharedData_800E39E2_0_s00 = ratan2(localVec[sharedData_800DD5A4_0_s00 + 1].vx -
-                                                   playerChara->position_18.vx, localVec[sharedData_800DD5A4_0_s00 + 1].vz -
-                                                   playerChara->position_18.vz);
+                                                   playerChara->position.vx, localVec[sharedData_800DD5A4_0_s00 + 1].vz -
+                                                   playerChara->position.vz);
             }
             else
             {
                 sharedData_800E39E2_0_s00 = ratan2(localVec[sharedData_800DD5A4_0_s00].vx -
-                                                   playerChara->position_18.vx, localVec[sharedData_800DD5A4_0_s00].vz -
-                                                   playerChara->position_18.vz);
+                                                   playerChara->position.vx, localVec[sharedData_800DD5A4_0_s00].vz -
+                                                   playerChara->position.vz);
             }
 
             sharedData_800E39E2_0_s00 = Q12_ANGLE_ABS(sharedData_800E39E2_0_s00);
 
-            Math_ShortestAngleGet(playerChara->rotation_24.vy, sharedData_800E39E2_0_s00, &playerRotDelta);
+            Math_ShortestAngleGet(playerChara->rotation.vy, sharedData_800E39E2_0_s00, &playerRotDelta);
 
             // Turn toward.
             angleStep = TIMESTEP_SCALE_30_FPS(g_DeltaTime, (playerRotDelta < Q12_ANGLE(45.0f)) ? Q12_ANGLE(2.9f) : Q12_ANGLE(22.5f));
 
             if (ABS(playerRotDelta) < ANGLE_THRESHOLD)
             {
-                playerChara->rotation_24.vy = sharedData_800E39E2_0_s00;
+                playerChara->rotation.vy = sharedData_800E39E2_0_s00;
             }
             else if (playerRotDelta < Q12_ANGLE(0.0f))
             {
-                playerChara->rotation_24.vy -= angleStep;
+                playerChara->rotation.vy -= angleStep;
             }
             else
             {
-                playerChara->rotation_24.vy += angleStep;
+                playerChara->rotation.vy += angleStep;
             }
 
-            playerChara->rotation_24.vy = Q12_ANGLE_ABS(playerChara->rotation_24.vy);
+            playerChara->rotation.vy = Q12_ANGLE_ABS(playerChara->rotation.vy);
 
-            playerVecDist = SquareRoot0(Q12_2D_DISTANCE_SQR(localVec[sharedData_800DD5A4_0_s00], playerChara->position_18));
+            playerVecDist = SquareRoot0(Q12_2D_DISTANCE_SQR(localVec[sharedData_800DD5A4_0_s00], playerChara->position));
 
             // Uses `playerExtraState` index to work out distance to check against? Odd.
             if (playerVecDist < Q12_TO_Q8((playerExtraState - 53) * Q12(0.15f) + Q12(0.15f)) ||
@@ -520,7 +520,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             {
                 sharedData_800DD5A4_0_s00++;
 
-                playerVecDist = SquareRoot0(Q12_2D_DISTANCE_SQR(localVec[sharedData_800DD5A4_0_s00], playerChara->position_18));
+                playerVecDist = SquareRoot0(Q12_2D_DISTANCE_SQR(localVec[sharedData_800DD5A4_0_s00], playerChara->position));
 
                 if (sharedData_800DD5A4_0_s00 == vecCount)
                 {
@@ -534,15 +534,15 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
 
             sharedData_800DD5A0_0_s00 = playerVecDist;
 
-            Math_ShortestAngleGet(playerChara->rotation_24.vy, sharedData_800E39E2_0_s00, &g_Player_FlexRotationY);
+            Math_ShortestAngleGet(playerChara->rotation.vy, sharedData_800E39E2_0_s00, &g_Player_FlexRotationY);
             g_Player_FlexRotationY = CLAMP(g_Player_FlexRotationY, Q12_ANGLE(-45.0f), Q12_ANGLE(45.0f));
             break;
 
         case 6:
-            Math_ShortestAngleGet(playerChara->rotation_24.vy, angle, &playerRotDelta);
+            Math_ShortestAngleGet(playerChara->rotation.vy, angle, &playerRotDelta);
             if (ABS(playerRotDelta) < ANGLE_THRESHOLD)
             {
-                playerChara->rotation_24.vy = angle;
+                playerChara->rotation.vy = angle;
                 D_800C4588                  = 8;
                 break;
             }
@@ -562,10 +562,10 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             break;
 
         case 7:
-            Math_ShortestAngleGet(playerChara->rotation_24.vy, angle, &playerRotDelta);
+            Math_ShortestAngleGet(playerChara->rotation.vy, angle, &playerRotDelta);
             if (ABS(playerRotDelta) < ANGLE_THRESHOLD)
             {
-                playerChara->rotation_24.vy = angle;
+                playerChara->rotation.vy = angle;
                 Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Unk52);
                 D_800C457C = 0;
                 D_800C4588 = 8;
@@ -576,7 +576,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             D_800C4606                                                              = 1;
             sharedData_800E39E0_0_s00                                               = 0;
             D_800C4588                                                              = 0;
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
+            g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
             return true;
     }
 #endif
@@ -591,7 +591,7 @@ void sharedFunc_800D2C7C_0_s00(s32 playerExtraState)
     extra  = &g_SysWork.playerWork_4C.extra_128;
     player = &g_SysWork.playerWork_4C.player_0;
 
-    g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
+    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
 
     D_800C4606 = 0;
 
@@ -629,7 +629,7 @@ void Player_AnimLock(void)
 
 s32 Player_AnimIsLocked(void)
 {
-    return ~(g_SysWork.playerWork_4C.player_0.model_0.anim.flags & AnimFlag_Unlocked);
+    return ~(g_SysWork.playerWork_4C.player_0.model.anim.flags & AnimFlag_Unlocked);
 }
 
 void Player_AnimUnlock(void)
@@ -643,7 +643,7 @@ s32 sharedFunc_800D2DAC_0_s00(void)
     s_AnimInfo* animInfo;
 
     // NOTE: There are 37 base anims for Harry. 38 and beyond are map-specific.
-    model    = &g_SysWork.playerWork_4C.player_0.model_0;
+    model    = &g_SysWork.playerWork_4C.player_0.model;
     animInfo = &g_MapOverlayHeader.harryMapAnimInfos_34[model->anim.status - ANIM_STATUS(38, false)];
 
     if (animInfo->playbackFunc == Anim_PlaybackOnce)
@@ -671,12 +671,12 @@ s32 sharedFunc_800D2DAC_0_s00(void)
 
 bool Player_MoveDistanceIsZero(void)
 {
-    return g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 == Q12(0.0f);
+    return g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 == Q12(0.0f);
 }
 
 void Player_MoveDistanceClear(void)
 {
-    g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
+    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
 }
 
 void sharedFunc_800D2E6C_0_s00(void)
@@ -700,8 +700,8 @@ void Player_FallBackward(void)
     playerChara = &g_SysWork.playerWork_4C.player_0;
     playerExtra = &g_SysWork.playerWork_4C.extra_128;
 
-    g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(2.3f);
-    g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124       = Q12_ANGLE(180.0f);
+    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(2.3f);
+    g_SysWork.playerWork_4C.player_0.properties.player.headingAngle_124       = Q12_ANGLE(180.0f);
     g_Player_HeadingAngle                                                   = Q12_ANGLE(180.0f);
 
     Player_ExtraStateSet(playerChara, playerExtra, PlayerState_FallBackward);
@@ -721,7 +721,7 @@ void Player_DamageFeetFront(void)
     playerChara = &g_SysWork.playerWork_4C.player_0;
     playerExtra = &g_SysWork.playerWork_4C.extra_128;
 
-    func_8005DC1C(Sfx_Unk1317, &playerChara->position_18, Q8(1.0f / 8.0f), 0);
+    func_8005DC1C(Sfx_Unk1317, &playerChara->position, Q8(1.0f / 8.0f), 0);
 
     Player_ExtraStateSet(playerChara, playerExtra, PlayerState_DamageFeetFront);
 #endif
@@ -748,7 +748,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
     }
     else
     {
-        g_SysWork.playerWork_4C.player_0.properties_E4.player.field_118 = Q12_ANGLE_ABS(ratan2(vec->vx, vec->vz));
+        g_SysWork.playerWork_4C.player_0.properties.player.field_118 = Q12_ANGLE_ABS(ratan2(vec->vx, vec->vz));
     }
 
     if (posX == Q12(0.0f) && posZ == Q12(0.0f))
@@ -759,7 +759,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
     D_800C45B0.vx = posX;
     D_800C45B0.vz = posZ;
 
-    if (g_SysWork.npcs_1A0[0].health_B0 <= Q12(0.0f) || g_Player_IsInWalkToRunTransition || playerChara->health_B0 <= Q12(0.0f))
+    if (g_SysWork.npcs_1A0[0].health <= Q12(0.0f) || g_Player_IsInWalkToRunTransition || playerChara->health <= Q12(0.0f))
     {
         return;
     }
@@ -771,16 +771,16 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
     {
         if (g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_DamagePushBack || g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_Unk31)
         {
-            angle = Q12_ANGLE_ABS(Q12_ANGLE_ABS(ratan2(vec->vx, vec->vz)) - (u16)playerChara->rotation_24.vy);
+            angle = Q12_ANGLE_ABS(Q12_ANGLE_ABS(ratan2(vec->vx, vec->vz)) - (u16)playerChara->rotation.vy);
 
             if (D_800D587C > Q12(1.75f))
             {
                 if (g_SysWork.playerWork_4C.extra_128.state_1C >= 23 && g_SysWork.playerWork_4C.extra_128.state_1C < 27)
                 {
-                    playerChara->model_0.stateStep = 0;
-                    playerChara->model_0.controlState     = ModelState_Uninitialized;
-                    playerExtra->model_0.stateStep = 0;
-                    playerExtra->model_0.controlState     = ModelState_Uninitialized;
+                    playerChara->model.stateStep = 0;
+                    playerChara->model.controlState     = ModelState_Uninitialized;
+                    playerExtra->model.stateStep = 0;
+                    playerExtra->model.controlState     = ModelState_Uninitialized;
                 }
 
                 if (angle >= Q12_ANGLE(90.0f) && angle < Q12_ANGLE(270.0f))
@@ -793,7 +793,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
                 }
 
                 Player_ExtraStateSet(playerChara, playerExtra, playerExtraState);
-                func_8005DC1C(Sfx_Unk1326, &playerChara->position_18, Q8(1.0f / 8.0f), 0);
+                func_8005DC1C(Sfx_Unk1326, &playerChara->position, Q8(1.0f / 8.0f), 0);
             }
             else if ((g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_DamageTorsoBack || g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_DamageFeetFront) &&
                      g_SysWork.playerWork_4C.extra_128.state_1C != PlayerState_DamagePushBack &&
@@ -819,14 +819,14 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
                 Player_ExtraStateSet(playerChara, playerExtra, playerExtraState);
             }
 
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk12;
+            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk12;
 
-            playerChara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
-            playerChara->properties_E4.player.field_F4    = 0;
+            playerChara->properties.player.afkTimer_E8 = Q12(0.0f);
+            playerChara->properties.player.field_F4    = 0;
             g_SysWork.playerCombat_38.isAiming_13     = false;
             playerChara->field_44.field_0                 = NO_VALUE;
 
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
+            g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk9;
 
             playerChara->field_44.field_0 = NO_VALUE; // Redundant set needed for match.
         }
@@ -834,29 +834,29 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
 
     if (vecSqr > Q12(1.75f))
     {
-        playerChara->damage_B4.amount_C = SquareRoot0(vecSqr) * 4;
+        playerChara->damage.amount_C = SquareRoot0(vecSqr) * 4;
     }
     else
     {
-        playerChara->damage_B4.amount_C = SquareRoot0(vecSqr) * 64;
+        playerChara->damage.amount_C = SquareRoot0(vecSqr) * 64;
     }
 
-    if (!(g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived) &&
+    if (!(g_SysWork.playerWork_4C.player_0.properties.player.flags_11C & PlayerFlag_DamageReceived) &&
         vecSqr > Q12(0.75f) && vecSqr <= Q12(1.75f))
     {
-        func_8005DC1C(Sfx_Unk1327, &playerChara->position_18, Q8(1.0f / 8.0f), 0);
+        func_8005DC1C(Sfx_Unk1327, &playerChara->position, Q8(1.0f / 8.0f), 0);
 
-        playerChara->properties_E4.player.field_10C = 64;
-        g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_DamageReceived;
+        playerChara->properties.player.field_10C = 64;
+        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C |= PlayerFlag_DamageReceived;
     }
 
-    if (playerChara->damage_B4.amount_C != Q12(0.0f))
+    if (playerChara->damage.amount_C != Q12(0.0f))
     {
-        g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
+        g_SysWork.playerWork_4C.player_0.properties.player.flags_11C &= ~PlayerFlag_Unk2;
 
-        playerChara->health_B0 -= playerChara->damage_B4.amount_C;
-        func_800893D0(playerChara->damage_B4.amount_C);
-        playerChara->damage_B4.amount_C = Q12(0.0f);
+        playerChara->health -= playerChara->damage.amount_C;
+        func_800893D0(playerChara->damage.amount_C);
+        playerChara->damage.amount_C = Q12(0.0f);
     }
 #endif
 }
@@ -869,17 +869,17 @@ bool sharedFunc_800D2E94_0_s00(void)
 
     npcChara = &g_SysWork.npcs_1A0[5];
 
-    if (g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-255.0f) &&
-        g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(-110.0f) &&
-        g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-100.0f))
+    if (g_SysWork.playerWork_4C.player_0.position.vx < Q12(-255.0f) &&
+        g_SysWork.playerWork_4C.player_0.position.vz > Q12(-110.0f) &&
+        g_SysWork.playerWork_4C.player_0.position.vz < Q12(-100.0f))
     {
-        playerDist = SquareRoot0(SQUARE(Q12(-262.0f) - g_SysWork.playerWork_4C.player_0.position_18.vx) +
-                                 SQUARE(Q12(-104.0f) - g_SysWork.playerWork_4C.player_0.position_18.vz));
+        playerDist = SquareRoot0(SQUARE(Q12(-262.0f) - g_SysWork.playerWork_4C.player_0.position.vx) +
+                                 SQUARE(Q12(-104.0f) - g_SysWork.playerWork_4C.player_0.position.vz));
 
-        if (npcChara->model_0.controlState == ModelState_Uninitialized || npcChara->model_0.stateStep == 0)
+        if (npcChara->model.controlState == ModelState_Uninitialized || npcChara->model.stateStep == 0)
         {
-            npcChara->health_B0 = Q12(400.0f);
-            npcChara->model_0.controlState++;
+            npcChara->health = Q12(400.0f);
+            npcChara->model.controlState++;
             npcChara->field_C8.field_0   = Q12(-0.2f);
             npcChara->field_C8.field_2   = Q12(0.2f);
             npcChara->field_D4.radius_0   = Q12(0.05f);
@@ -891,75 +891,75 @@ bool sharedFunc_800D2E94_0_s00(void)
             npcChara->field_D8.offsetX_4 = Q12(0.0f);
             npcChara->field_D8.offsetZ_2 = Q12(0.0f);
             npcChara->field_D8.offsetX_0 = Q12(0.0f);
-            npcChara->position_18.vx     = Q12(-262.0f);
-            npcChara->position_18.vy     = Q12(-1.1f);
-            npcChara->position_18.vz     = Q12(-104.0f);
+            npcChara->position.vx     = Q12(-262.0f);
+            npcChara->position.vy     = Q12(-1.1f);
+            npcChara->position.vz     = Q12(-104.0f);
             npcChara->field_E1_0         = 3;
-            npcChara->model_0.stateStep++;
-            npcChara->flags_3E               |= CharaFlag_Unk3;
-            npcChara->model_0.anim.flags &= ~(AnimFlag_Visible | AnimFlag_Unlocked);
+            npcChara->model.stateStep++;
+            npcChara->flags               |= CharaFlag_Unk3;
+            npcChara->model.anim.flags &= ~(AnimFlag_Visible | AnimFlag_Unlocked);
         }
 
         // TODO: `else` branch is duplicated here, is there some way to merge them? Decompiler used `goto`.
-        if (npcChara->health_B0 > Q12(0.0f))
+        if (npcChara->health > Q12(0.0f))
         {
             if (playerDist < Q12(2.0f) &&
                 Savegame_EventFlagGet(EventFlag_167) && !Savegame_EventFlagGet(EventFlag_168) &&
                 g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap))
             {
-                npcChara->model_0.charaId_0 = Chara_Padlock;
+                npcChara->model.charaId_0 = Chara_Padlock;
             }
             else
             {
-                if (npcChara->health_B0 <= Q12(0.0f))
+                if (npcChara->health <= Q12(0.0f))
                 {
-                    if (Savegame_EventFlagGet(EventFlag_167) && npcChara->model_0.charaId_0 == Chara_Padlock)
+                    if (Savegame_EventFlagGet(EventFlag_167) && npcChara->model.charaId_0 == Chara_Padlock)
                     {
-                        npcChara->flags_3E |= CharaFlag_Unk1;
+                        npcChara->flags |= CharaFlag_Unk1;
                         Savegame_EventFlagSet(EventFlag_168);
                     }
                 }
 
-                npcChara->model_0.charaId_0 = Chara_None;
+                npcChara->model.charaId_0 = Chara_None;
             }
         }
         else
         {
-            if (Savegame_EventFlagGet(EventFlag_167) && npcChara->model_0.charaId_0 == Chara_Padlock)
+            if (Savegame_EventFlagGet(EventFlag_167) && npcChara->model.charaId_0 == Chara_Padlock)
             {
-                npcChara->flags_3E |= CharaFlag_Unk1;
+                npcChara->flags |= CharaFlag_Unk1;
                 Savegame_EventFlagSet(EventFlag_168);
             }
-            npcChara->model_0.charaId_0 = Chara_None;
+            npcChara->model.charaId_0 = Chara_None;
         }
 
-        if (npcChara->damage_B4.amount_C != Q12(0.0f))
+        if (npcChara->damage.amount_C != Q12(0.0f))
         {
             if (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) == EquippedWeaponId_KitchenKnife)
             {
-                npcChara->damage_B4.amount_C >>= 1;
+                npcChara->damage.amount_C >>= 1;
             }
 
             // Apply `damageReceived` to character health.
             if (g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                npcChara->health_B0 = NO_VALUE;
+                npcChara->health = NO_VALUE;
             }
             else
             {
-                npcChara->health_B0 -= npcChara->damage_B4.amount_C;
+                npcChara->health -= npcChara->damage.amount_C;
             }
 
-            npcChara->damage_B4.amount_C = Q12(0.0f);
+            npcChara->damage.amount_C = Q12(0.0f);
         }
 
         return true;
     }
 
-    npcChara->model_0.controlState     = ModelState_Uninitialized;
-    npcChara->model_0.stateStep = 0;
-    npcChara->model_0.charaId_0   = Chara_None;
-    npcChara->health_B0           = Q12(0.0f);
+    npcChara->model.controlState     = ModelState_Uninitialized;
+    npcChara->model.stateStep = 0;
+    npcChara->model.charaId_0   = Chara_None;
+    npcChara->health           = Q12(0.0f);
 #endif
     return false;
 }
@@ -984,9 +984,9 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
     q3_12   angle0;
     bool    isInFront;
 
-    g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
-    g_SysWork.playerWork_4C.player_0.headingAngle_3C                       = Q12_ANGLE(0.0f);
-    isInFront                                                              = Math_AngleFrontCheck(*angle, g_SysWork.playerWork_4C.player_0.rotation_24.vy);
+    g_SysWork.playerWork_4C.player_0.properties.player.moveDistance_126 = Q12(0.0f);
+    g_SysWork.playerWork_4C.player_0.headingAngle                       = Q12_ANGLE(0.0f);
+    isInFront                                                              = Math_AngleFrontCheck(*angle, g_SysWork.playerWork_4C.player_0.rotation.vy);
 
     angle--; // @hack Permuter find, needed for match.
     angle++;
@@ -1002,20 +1002,20 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
         D_800C4610.vz = *offsetZ + FP_FROM((-Math_Sin(*angle) * -0xCB) + (Math_Cos(*angle) * 0x3C6), Q12_SHIFT);
     }
 
-    headingAngle = g_SysWork.playerWork_4C.player_0.headingAngle_3C;
+    headingAngle = g_SysWork.playerWork_4C.player_0.headingAngle;
     vec.vx       = Math_Sin(headingAngle); // @unused
     vec.vx       = Q12(0.0f);
     vec.vz       = Math_Cos(headingAngle); // @unused
     vec.vz       = Q12(0.0f);
 
-    vec.vx = D_800C4610.vx - g_SysWork.playerWork_4C.player_0.position_18.vx;
-    vec.vz = D_800C4610.vz - g_SysWork.playerWork_4C.player_0.position_18.vz;
-    vec.vy = Q12_MULT_PRECISE(g_SysWork.playerWork_4C.player_0.fallSpeed_34, g_DeltaTime);
+    vec.vx = D_800C4610.vx - g_SysWork.playerWork_4C.player_0.position.vx;
+    vec.vz = D_800C4610.vz - g_SysWork.playerWork_4C.player_0.position.vz;
+    vec.vy = Q12_MULT_PRECISE(g_SysWork.playerWork_4C.player_0.fallSpeed, g_DeltaTime);
 
     Collision_WallDetect(&D_800C4590, &vec, &g_SysWork.playerWork_4C.player_0);
 
-    D_800C4610.vx = g_SysWork.playerWork_4C.player_0.position_18.vx + D_800C4590.offset_0.vx;
-    D_800C4610.vz = g_SysWork.playerWork_4C.player_0.position_18.vz + D_800C4590.offset_0.vz;
+    D_800C4610.vx = g_SysWork.playerWork_4C.player_0.position.vx + D_800C4590.offset_0.vx;
+    D_800C4610.vz = g_SysWork.playerWork_4C.player_0.position.vz + D_800C4590.offset_0.vz;
 
     // TODO: Convert hex to float or fraction.
     if (!isInFront)
@@ -1035,7 +1035,7 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
 
 s32 sharedFunc_800D2EA4_0_s00(void)
 {
-    return g_SysWork.playerWork_4C.player_0.properties_E4.player.field_10D;
+    return g_SysWork.playerWork_4C.player_0.properties.player.field_10D;
 }
 
 void sharedFunc_800D2EB4_0_s00(void)

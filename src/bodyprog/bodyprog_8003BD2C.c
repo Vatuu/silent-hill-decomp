@@ -34,8 +34,8 @@ void func_8003BD48(const s_SubCharacter* chara) // 0x8003BD48
     switch (Map_TypeGet())
     {
         case 0:
-            if (chara->position_18.vx >= Q12(191.6f) && chara->position_18.vx <= Q12(198.8f) &&
-                chara->position_18.vz >= Q12(-96.0f) && chara->position_18.vz <= Q12(-90.3f))
+            if (chara->position.vx >= Q12(191.6f) && chara->position.vx <= Q12(198.8f) &&
+                chara->position.vz >= Q12(-96.0f) && chara->position.vz <= Q12(-90.3f))
             {
                 collFlags = (collFlags & ~CollisionFlag_1) | CollisionFlag_2;
             }
@@ -43,8 +43,8 @@ void func_8003BD48(const s_SubCharacter* chara) // 0x8003BD48
 
         case 3:
         case 4:
-            if (chara->position_18.vx >= Q12(-100.0f) && chara->position_18.vx <= Q12(-94.5f) &&
-                chara->position_18.vz >= Q12(-70.3f)  && chara->position_18.vz <= Q12(-62.0f))
+            if (chara->position.vx >= Q12(-100.0f) && chara->position.vx <= Q12(-94.5f) &&
+                chara->position.vz >= Q12(-70.3f)  && chara->position.vz <= Q12(-62.0f))
             {
                 collFlags = (collFlags & ~CollisionFlag_1) | CollisionFlag_2;
             }

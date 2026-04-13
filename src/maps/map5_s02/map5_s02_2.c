@@ -126,9 +126,9 @@ void func_800D4B58(void) // 0x800D4B58
             Camera_LookAtSet(NULL, Q12(134.29f), Q12(-0.21f), Q12(63.18f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(134.9f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(62.45f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(-90.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(134.9f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(62.45f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(-90.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -155,7 +155,7 @@ void func_800D4B58(void) // 0x800D4B58
             Savegame_EventFlagSet(EventFlag_375);
 
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(135.15f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(135.15f);
 
             SysWork_StateStepIncrement(0);
 
@@ -188,9 +188,9 @@ void func_800D4E64(void) // 0x800D4E64
             Savegame_EventFlagSet(EventFlag_396);
 
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(135.05f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(59.75f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(180.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(135.05f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(59.75f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(180.0f);
 
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
@@ -298,9 +298,9 @@ void func_800D519C(void) // 0x800D519C
 
             g_WorldObject_BDoor1.rotation_28.vy = Q12_ANGLE(-142.21f);
 
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(135.05f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(59.75f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(180.f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(135.05f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(59.75f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(180.f);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -463,7 +463,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             DmsHeader_FixOffsets(FS_BUFFER_17);
 
             D_800DA6EC                                 = 0;
-            g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(0.0f);
+            g_SysWork.playerWork_4C.player_0.position.vy = Q12(0.0f);
 
             Chara_Load(0, Chara_Kaufmann, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_Load(1, Chara_Mumbler, &g_SysWork.npcCoords_FC0[30], 0, NULL, NULL);
@@ -533,7 +533,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 164, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 11, false);
 
-            ModelAnim_StatusDecrement(&g_SysWork.npcs_1A0[1].model_0.anim);
+            ModelAnim_StatusDecrement(&g_SysWork.npcs_1A0[1].model.anim);
             SysWork_StateStepIncrement(0);
 
         case 13:
@@ -565,7 +565,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 13, false);
             func_8003D03C();
             Savegame_EventFlagClear(EventFlag_381);
-            g_SysWork.npcs_1A0[1].model_0.stateStep++;
+            g_SysWork.npcs_1A0[1].model.stateStep++;
             SysWork_StateStepIncrement(0);
 
         case 20:
@@ -604,7 +604,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
         case 27:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 9, false);
-            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model, 2);
             SysWork_StateStepIncrement(0);
 
         case 28:
@@ -627,7 +627,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
         case 32:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 1, false);
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 73, false);
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, 2);
             SysWork_StateStepIncrement(0);
 
         case 33:
@@ -687,7 +687,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             if (!D_800D94F4)
             {
                 Chara_ProcessLoads();
-                g_SysWork.npcs_1A0[0].model_0.charaId_0 = Chara_Kaufmann;
+                g_SysWork.npcs_1A0[0].model.charaId_0 = Chara_Kaufmann;
                 Chara_Spawn(Chara_Mumbler, 0, Q12(140.5f), Q12(23.0f), Q12_ANGLE(0.0f), 17);
                 D_800D94F4 = 1;
             }
@@ -703,7 +703,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
         case 45:
             if (D_800D94F4 == 1)
             {
-                g_SysWork.npcs_1A0[1].model_0.stateStep = 3;
+                g_SysWork.npcs_1A0[1].model.stateStep = 3;
                 func_800625F4(&QVECTOR3(139.3f, 0.0f, 23.6f), 120, 3, 1);
             }
 
@@ -726,12 +726,12 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
         default:
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
-            g_SysWork.playerWork_4C.player_0.position_18.vy = 0;
+            g_SysWork.playerWork_4C.player_0.position.vy = 0;
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
             func_8007F14C((u8)g_SysWork.playerCombat_38.weaponAttack_F);
 
-            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model, 2);
             vcReturnPreAutoCamWork(true);
 
             D_800DA6EC = NO_VALUE;
@@ -753,9 +753,9 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
     if (D_800DA6EC >= 0)
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", D_800DA6EC, FS_BUFFER_17);
-        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "KAU", D_800DA6EC, FS_BUFFER_17);
-        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[1].position_18, &g_SysWork.npcs_1A0[1].rotation_24, "CLD4", D_800DA6EC, FS_BUFFER_17);
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position, &g_SysWork.playerWork_4C.player_0.rotation, "HERO", D_800DA6EC, FS_BUFFER_17);
+        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "KAU", D_800DA6EC, FS_BUFFER_17);
+        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[1].position, &g_SysWork.npcs_1A0[1].rotation, "CLD4", D_800DA6EC, FS_BUFFER_17);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800DA6CC, &D_800DA6DC, NULL, D_800DA6EC, FS_BUFFER_17));
         vcUserCamTarget(&D_800DA6CC, NULL, true);
         vcUserWatchTarget(&D_800DA6DC, NULL, true);

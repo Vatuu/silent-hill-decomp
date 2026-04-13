@@ -61,12 +61,12 @@ bool func_800CB25C(POLY_FT4** poly, s32 idx) // 0x800CB25C
 
     ptr = PSX_SCRATCH;
 
-    if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-80.0f))
+    if (g_SysWork.playerWork_4C.player_0.position.vx > Q12(-80.0f))
     {
         return false;
     }
 
-    if (g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(0.0f))
+    if (g_SysWork.playerWork_4C.player_0.position.vz < Q12(0.0f))
     {
         return false;
     }

@@ -126,9 +126,9 @@ void func_800D1628(void) // 0x800D1628
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
 
             // Warp player.
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(103.64f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(59.49f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(51.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(103.64f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(59.49f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(51.0f);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(103.54f), Q12(-2.91f), Q12(59.2f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -375,12 +375,12 @@ void func_800D1AF8(void) // 0x800D1AF8
 
         case 14:
             SysWork_StateStepIncrementAfterTime(&D_800D6F58, Q12(10.0f), Q12(0.0f), Q12(17.0f), true, true);
-            Model_AnimFlagsClear(&g_SysWork.npcs_1A0[0].model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.npcs_1A0[0].model, 2);
             break;
 
         case 15:
             func_80086C58(&g_SysWork.npcs_1A0[0], 16);
-            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[0].model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[0].model, 2);
             SysWork_StateStepIncrementAfterTime(&D_800D6F58, Q12(10.0f), Q12(18.0f), Q12(38.0f), true, false);
             break;
 
@@ -531,8 +531,8 @@ void func_800D1AF8(void) // 0x800D1AF8
 
     if (D_800D6F58 >= 0)
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", D_800D6F58, FS_BUFFER_17);
-        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "KAU", D_800D6F58, FS_BUFFER_17);
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position, &g_SysWork.playerWork_4C.player_0.rotation, "HERO", D_800D6F58, FS_BUFFER_17);
+        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "KAU", D_800D6F58, FS_BUFFER_17);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D6F38, &D_800D6F48, NULL, D_800D6F58, FS_BUFFER_17));
         vcUserCamTarget(&D_800D6F38, NULL, true);
         vcUserWatchTarget(&D_800D6F48, NULL, true);
@@ -587,9 +587,9 @@ void func_800D2674(void) // 0x800D2674
         case 4:
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
 
-            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(104.17f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(59.5f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.position.vx = Q12(104.17f);
+            g_SysWork.playerWork_4C.player_0.position.vz = Q12(59.5f);
+            g_SysWork.playerWork_4C.player_0.rotation.vy = Q12_ANGLE(0.0f);
 
             Camera_PositionSet(NULL, Q12(102.07f), Q12(-1.42f), Q12(58.77f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(105.14f), Q12(0.37f), Q12(60.61f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -601,7 +601,7 @@ void func_800D2674(void) // 0x800D2674
         case 5:
         case 6:
             moveAmt                                          = Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.14f);
-            g_SysWork.playerWork_4C.player_0.position_18.vz += moveAmt;
+            g_SysWork.playerWork_4C.player_0.position.vz += moveAmt;
             g_WorldObject_Movaches.position_1C.vz      += moveAmt;
 
             if (g_SysWork.sysStateStep_C[0] == 5)
@@ -619,7 +619,7 @@ void func_800D2674(void) // 0x800D2674
                 {
                     moveAmt = g_WorldObject_Movaches.position_1C.vz - Q12(60.44f);
 
-                    g_SysWork.playerWork_4C.player_0.position_18.vz -= moveAmt;
+                    g_SysWork.playerWork_4C.player_0.position.vz -= moveAmt;
                     g_WorldObject_Movaches.position_1C.vz      -= moveAmt;
                 }
 
