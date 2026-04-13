@@ -159,7 +159,7 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
         switch (scratcher->model_0.controlState)
         {
             case HangedScratcherControl_4:
-                g_SysWork.flags_2284[3] &= ~(1 << 1);
+                g_SysWork.flags_2284[3] &= ~Unk2284Flag_1;
 
             case HangedScratcherControl_1:
             case HangedScratcherControl_2:
@@ -195,7 +195,7 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
                 break;
 
             case HangedScratcherControl_15:
-                g_SysWork.flags_2284[3] &= ~(1 << 1);
+                g_SysWork.flags_2284[3] &= ~Unk2284Flag_1;
 
             case HangedScratcherControl_5:
             case HangedScratcherControl_6:
@@ -461,7 +461,7 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
     }
     else
     {
-        if (!Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, 8) && !(g_SysWork.flags_2284[3] & (1 << 1)))
+        if (!Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, 8) && !(g_SysWork.flags_2284[3] & Unk2284Flag_1))
         {
             if (g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f) &&
                 distToPlayer < Q12(1.0f) && angleDeltaToPlayer < Q12_ANGLE(30.0f))
@@ -548,7 +548,7 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
                 scratcher->model_0.controlState  = HangedScratcherControl_3;
                 scratcherProps.timer_EA            = Q12(0.0f);
                 scratcher->model_0.anim.status = ANIM_STATUS(17, false);
-                g_SysWork.flags_2284[3]           &= ~(1 << 1);
+                g_SysWork.flags_2284[3]           &= ~Unk2284Flag_1;
             }
             else
             {
@@ -558,7 +558,7 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
                 {
                     scratcherProps.timer_EA           = Q12(0.0f);
                     scratcher->model_0.controlState = HangedScratcherControl_2;
-                    g_SysWork.flags_2284[3]          &= ~(1 << 1);
+                    g_SysWork.flags_2284[3]          &= ~Unk2284Flag_1;
                 }
             }
         }
@@ -719,7 +719,8 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
         }
     }
 
-    if (!cond && !(g_SysWork.flags_2284[3] & 2) && !(g_SysWork.playerWork_4C.player_0.flags_3E & CharaFlag_Unk4) &&
+    if (!cond && !(g_SysWork.flags_2284[3] & Unk2284Flag_1) &&
+        !(g_SysWork.playerWork_4C.player_0.flags_3E & CharaFlag_Unk4) &&
         g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
     {
         if (Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - scratcher->position_18.vx,
@@ -729,7 +730,7 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
                                   scratcher->rotation_24.vy)) < Q12_ANGLE(20.0f))
             {
                 scratcher->model_0.controlState  = HangedScratcherControl_15;
-                g_SysWork.flags_2284[3]           |= 1 << 1;
+                g_SysWork.flags_2284[3]           |= Unk2284Flag_1;
                 scratcherProps.timer_EA            = Q12(0.0f);
                 scratcher->model_0.anim.status = ANIM_STATUS(HangedScratcherAnim_5, false);
             }
@@ -1080,7 +1081,7 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
     {
         if (scratcherProps.timer_EA == Q12(0.0f))
         {
-            g_SysWork.flags_2284[3] &= ~(1 << 1);
+            g_SysWork.flags_2284[3] &= ~Unk2284Flag_1;
         }
 
         scratcherProps.timer_EA += g_DeltaTime;

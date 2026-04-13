@@ -296,7 +296,7 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
 
     if (prevControlState != groaner->model_0.controlState && prevControlState == GroanerControl_3)
     {
-        g_SysWork.flags_2284[3] &= ~(1 << 1);
+        g_SysWork.flags_2284[3] &= ~Unk2284Flag_1;
     }
 }
 
@@ -570,7 +570,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
     if (cond && !temp_s6)
     {
         if (!Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
-            !(g_SysWork.flags_2284[3] & (1 << 1)) &&
+            !(g_SysWork.flags_2284[3] & Unk2284Flag_1) &&
             g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f) &&
             g_SysWork.sysState_8 == 0 &&
             (groaner->position_18.vy - g_SysWork.playerWork_4C.player_0.position_18.vy) > Q12(-0.8f))
@@ -581,7 +581,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
                                              g_SysWork.playerWork_4C.player_0.position_18.vz - groaner->position_18.vz) -
                                       groaner->rotation_24.vy)) < Q12_ANGLE(30.0f))
                 {
-                    g_SysWork.flags_2284[3]       |= 1 << 1;
+                    g_SysWork.flags_2284[3]       |= Unk2284Flag_1;
                     groaner->model_0.controlState  = GroanerControl_3;
                     groaner->model_0.anim.status = ANIM_STATUS(GroanerAnim_15, false);
                     return;
@@ -593,7 +593,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
     if (distToPlayer < Q12(1.2f))
     {
         if (Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) ||
-            (g_SysWork.flags_2284[3] & (1 << 1)) ||
+            (g_SysWork.flags_2284[3] & Unk2284Flag_1) ||
             g_SysWork.playerWork_4C.player_0.health_B0 <= Q12(0.0f) ||
             g_SysWork.sysState_8 != 0 ||
             !Rng_GenerateInt(0, 15)) // 1 in 16 chance.
@@ -742,7 +742,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
         groaner->model_0.controlState                         = GroanerControl_4;
         groaner->rotation_24.vy                                += Q12(0.125f);
         groanerProps.angle_EC += Q12(0.125f);
-        g_SysWork.flags_2284[3]                              &= ~(1 << 1);
+        g_SysWork.flags_2284[3]                              &= ~Unk2284Flag_1;
 
         Character_AnimSet(groaner, ANIM_STATUS(GroanerAnim_16, true), 363);
         groanerProps.flags_E8.val16[0]                         &= ~GroanerFlag_9;

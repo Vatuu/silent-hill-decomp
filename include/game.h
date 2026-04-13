@@ -311,6 +311,14 @@ struct _Model;
 #define INVENTORY_AMMO_WEAPON_ID(ammoId) \
     ((ammoId) - INVENTORY_ITEM_GROUP_SIZE)
 
+/** @brief Unknown flags used by `s_SysWork::flags_2284`. */
+typedef enum _Unk2284Flags
+{
+    Unk2284Flag_None = 0,
+    Unk2284Flag_0    = 1 << 0,
+    Unk2284Flag_1    = 1 << 1
+} e_Unk2284Flags;
+
 /** @brief Sync modes used by `DrawSync` and `VSync`. */
 typedef enum _SyncMode
 {
@@ -1742,60 +1750,60 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter_D4, 4);
 
 typedef struct _SubCharacter
 {
-    s_Model  model_0;          // In player: Manage the half lower part of Harry's body animations (legs and feet).
-    VECTOR3  position_18;      /** Q19.12 */
-    SVECTOR3 rotation_24;      /** Q3.12 */
-    q3_12    field_2A;         // Angle related to `rotation_24`, unknown purpose.
-    SVECTOR3 rotationSpeed_2C; /** Q3.12 | Range: `[Q12_ANGLE(-157.5f), Q12_ANGLE(157.5f)]`. */
-    q3_12    field_32;         // Related to `rotationSpeed_2C`, unknown purpose.
-    q19_12   fallSpeed_34;
-    q19_12   moveSpeed_38;
-    q3_12    headingAngle_3C;
-    s16      flags_3E;     /** `e_CharaFlags` */
-    s8       field_40;     // In player: Index of the NPC attacking the player.
-                           // In NPCs: Unknown.
-                           // Possibly `Game_NpcRoomInitSpawn` may have the answer, indicating
-                           // it's used to indicate the NPC index in `s_Savegame::ovlEnemyStates`.
-    s8  attackReceived_41; // Packed weapon attack indicating what attack has been performed to the character. See `WEAPON_ATTACK`.
-    s8  unk_42[2];
-    s_SubCharacter_44  field_44;
-    q19_12  health_B0;
-    s_CharaDamage damage_B4;
-    u16     deathTimer_C4; // Part of `shBattleInfo` struct in SH2, may use something similar here.
-    q3_12   timer_C6;      // Some sort of timer. Written to by `Ai_LarvalStalker_Update`.
+    /* 0x0  */ s_Model           model_0;           // In player: Manage the half lower part of Harry's body animations (legs and feet).
+    /* 0x18 */ VECTOR3           position_18;       /** Q19.12 */
+    /* 0x24 */ SVECTOR3          rotation_24;       /** Q3.12 */
+    /* 0x2A */ q3_12             field_2A;          // Angle related to `rotation_24`, unknown purpose.
+    /* 0x2C */ SVECTOR3          rotationSpeed_2C;  /** Q3.12 | Range: `[Q12_ANGLE(-157.5f), Q12_ANGLE(157.5f)]`. */
+    /* 0x32 */ q3_12             field_32;          // Related to `rotationSpeed_2C`, unknown purpose.
+    /* 0x34 */ q19_12            fallSpeed_34;
+    /* 0x38 */ q19_12            moveSpeed_38;
+    /* 0x3C */ q3_12             headingAngle_3C;
+    /* 0x3E */ s16               flags_3E;          /** `e_CharaFlags` */
+    /* 0x40 */ s8                field_40;          // In player: Index of the NPC attacking the player.
+                                                    // In NPCs: Unknown.
+                                                    // Possibly `Game_NpcRoomInitSpawn` may have the answer, indicating
+                                                    // it's used to indicate the NPC index in `s_Savegame::ovlEnemyStates`.
+    /* 0x41 */ s8                attackReceived_41; // Packed weapon attack indicating what attack has been performed to the character. See `WEAPON_ATTACK`.
+               // 2 bytes of padding.
+    /* 0x44 */ s_SubCharacter_44 field_44;
+    /* 0xB0 */ q19_12            health_B0;
+    /* 0xB4 */ s_CharaDamage     damage_B4;
+    /* 0xC4 */ u16               deathTimer_C4;     // Part of `shBattleInfo` struct in SH2, may use something similar here.
+    /* 0xC6 */ q3_12             timer_C6;          // Some sort of timer. Written to by `Ai_LarvalStalker_Update`.
 
     // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
-    s_SubCharacter_C8 field_C8;
-    s_SubCharacter_D4 field_D4; // Contains collision radius and somethign else.
-    s_SubCharacter_D8 field_D8; // Translation data?
-    u8                field_E0; // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.
-    s8                field_E1_0 : 4; // State.
-    u8                field_E1_4 : 4; // Index for array of `s_func_8006CF18`.
-    s_func_8006CF18*  field_E4;
+    /* 0xC8 */ s_SubCharacter_C8 field_C8;
+    /* 0xD4 */ s_SubCharacter_D4 field_D4;          // Contains collision radius and somethign else.
+    /* 0xD8 */ s_SubCharacter_D8 field_D8;          // Translation data?
+    /* 0xE0 */ u8                field_E0;          // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.
+    /* 0xE1 */ s8                field_E1_0 : 4;    // State.
+    /* 0xE1 */ u8                field_E1_4 : 4;    // Index for array of `s_func_8006CF18`.
+    /* 0xE4 */ s_func_8006CF18*  field_E4;
 
-    union
-    {
-        s_PropertiesDummy           dummy;
-        s_PropertiesPlayer          player;
-        s_PropertiesNpc             npc;
-
-        s_PropertiesAirScreamer     airScreamer;
-        s_PropertiesAlessa          alessa;
-        s_PropertiesBloodsucker     bloodsucker;
-        s_PropertiesCreeper         creeper;
-        s_PropertiesDahlia          dahlia;
-        s_PropertiesFloatstinger    floatstinger;
-        e_PropertiesGroaner         groaner;
-        s_PropertiesHangedScratcher hangedScratcher;
-        s_PropertiesIncubus         incubus;
-        s_PropertiesLarvalStalker   larvalStalker;
-        s_PropertiesMonsterCybil    monsterCybil;
-        s_PropertiesPuppetNurse     puppetNurse;
-        s_PropertiesRomper          romper;
-        s_PropertiesSplitHead       splitHead;
-        s_PropertiesStalker         stalker;
-        s_PropertiesTwinfeeler      twinfeeler;
-    } properties_E4;
+             union
+             {
+                 s_PropertiesDummy           dummy;
+                 s_PropertiesPlayer          player;
+                 s_PropertiesNpc             npc;
+             
+                 s_PropertiesAirScreamer     airScreamer;
+                 s_PropertiesAlessa          alessa;
+                 s_PropertiesBloodsucker     bloodsucker;
+                 s_PropertiesCreeper         creeper;
+                 s_PropertiesDahlia          dahlia;
+                 s_PropertiesFloatstinger    floatstinger;
+                 e_PropertiesGroaner         groaner;
+                 s_PropertiesHangedScratcher hangedScratcher;
+                 s_PropertiesIncubus         incubus;
+                 s_PropertiesLarvalStalker   larvalStalker;
+                 s_PropertiesMonsterCybil    monsterCybil;
+                 s_PropertiesPuppetNurse     puppetNurse;
+                 s_PropertiesRomper          romper;
+                 s_PropertiesSplitHead       splitHead;
+                 s_PropertiesStalker         stalker;
+                 s_PropertiesTwinfeeler      twinfeeler;
+    /* 0xE4 */ } properties_E4;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
@@ -1921,7 +1929,7 @@ typedef struct _SysWork
     s8              loadingScreenIdx_2281;
     s8              field_2282;                        /** `e_EventDataUnkCutsceneState` */
     s8              sfxPairIdx_2283;                   /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
-    u16             flags_2284[GROUP_CHARA_COUNT];     /** Flags for character groups. Only flags 0 and 1 used. */
+    u16             flags_2284[GROUP_CHARA_COUNT];     /** `e_Unk2284Flags` | Flags for character groups. Only flags 0 and 1 used. */
                                                        // Enabling a flag for Larval Stalkers causes them to die.
     s32             field_228C[1];
     s32             npcFlags_2290; // Flags related to NPCs. Each bit corresponds to `npcs_1A0` index.

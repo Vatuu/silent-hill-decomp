@@ -47,7 +47,7 @@
 // ENUMS
 // ======
 
-/** @brief SFX pair indices for `SFX_PAIRS`. */
+/** @brief SFX pair indices. Used for `SFX_PAIRS`. */
 typedef enum _SfxPairIdx
 {
     SfxPairIdx_0  = 0,

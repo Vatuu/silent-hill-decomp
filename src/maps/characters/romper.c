@@ -382,7 +382,7 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
         if (romperProps.flags_E8 & RomperFlag_11)
         {
             romperProps.flags_E8 &= ~RomperFlag_11;
-            g_SysWork.flags_2284[3] &= ~((1 << 0) | (1 << 1));
+            g_SysWork.flags_2284[3] &= ~(Unk2284Flag_0 | Unk2284Flag_1);
         }
     }
 }
@@ -715,7 +715,8 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
         return;
     }
 
-    if (g_SysWork.sysState_8 != SysState_Gameplay || (g_SysWork.flags_2284[3] & ((1 << 0) | (1 << 1))))
+    if (g_SysWork.sysState_8 != SysState_Gameplay ||
+        (g_SysWork.flags_2284[3] & (Unk2284Flag_0 | Unk2284Flag_1)))
     {
         return;
     }
@@ -739,7 +740,7 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
         romper->model_0.controlState         = RomperControl_5;
         romper->model_0.anim.status        = ANIM_STATUS(RomperAnim_2, false);
         romper->field_44.field_0               = 1;
-        g_SysWork.flags_2284[3]               |= (1 << 0) | (1 << 1);
+        g_SysWork.flags_2284[3]               |= Unk2284Flag_0 | Unk2284Flag_1;
         romperProps.flags_E8 |= RomperFlag_4 | RomperFlag_11;
     }
 }
@@ -1140,7 +1141,7 @@ void Ai_Romper_Control_11(s_SubCharacter* romper)
     if (romper->model_0.anim.status == ANIM_STATUS(RomperAnim_12, true) &&
         !Rng_GenerateInt(0, 7)) // 1 in 8 chance.
     {
-        g_SysWork.flags_2284[3]                  &= ~((1 << 0) | (1 << 1));
+        g_SysWork.flags_2284[3]                  &= ~(Unk2284Flag_0 | Unk2284Flag_1);
         romper->model_0.controlState                   = RomperControl_1;
         romperProps.flags_E8 &= ~RomperFlag_11;
     }
@@ -1325,7 +1326,7 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCO
             if (romper->model_0.controlState == RomperControl_5)
             {
                 romperProps.flags_E8 &= ~RomperFlag_11;
-                g_SysWork.flags_2284[3]               &= 0xFFFC;
+                g_SysWork.flags_2284[3]               &= ~(Unk2284Flag_0 | Unk2284Flag_1);
             }
 
             romper->model_0.controlState        = RomperControl_3;
