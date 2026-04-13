@@ -17,11 +17,11 @@
 
 void GameState_KonamiLogo_Update(void) // 0x800C95AC
 {
-    while (g_GameWork.gameState_594 == GameState_KonamiLogo)
+    while (g_GameWork.gameState == GameState_KonamiLogo)
     {
         Joy_Update();
 
-        switch (g_GameWork.gameStateStep_598[0])
+        switch (g_GameWork.gameStateSteps[0])
         {
             case KonamiLogoStateStep_Init:
                 Screen_Init(SCREEN_WIDTH * 2, true);
@@ -39,13 +39,13 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
                 // Start loading `ANIM/HB_BASE.ANM` (base Harry animations).
                 Fs_QueueStartRead(FILE_ANIM_HB_BASE_ANM, FS_BUFFER_0);
 
-                g_GameWork.gameStateStep_598[0]++;
+                g_GameWork.gameStateSteps[0]++;
                 break;
 
             case KonamiLogoStateStep_WaitForFade:
                 if (ScreenFade_IsNone())
                 {
-                    g_GameWork.gameStateStep_598[0] = KonamiLogoStateStep_LogoDelay;
+                    g_GameWork.gameStateSteps[0] = KonamiLogoStateStep_LogoDelay;
                 }
                 break;
 
@@ -54,7 +54,7 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
                 {
                     ScreenFade_Start(false, false, false);
                     g_ScreenFadeTimestep            = Q12(0.2f);
-                    g_GameWork.gameStateStep_598[0] = KonamiLogoStateStep_FinishAfterFade;
+                    g_GameWork.gameStateSteps[0] = KonamiLogoStateStep_FinishAfterFade;
                 }
                 break;
 
@@ -134,11 +134,11 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
 {
     static u8 nextGameState = GameState_Init; // 0x800CA4F0
 
-    while (g_GameWork.gameState_594 == GameState_KcetLogo)
+    while (g_GameWork.gameState == GameState_KcetLogo)
     {
         Joy_Update();
 
-        switch (g_GameWork.gameStateStep_598[0])
+        switch (g_GameWork.gameStateSteps[0])
         {
             case KcetLogoStateStep_Init:
                 Settings_RestoreDefaults();
@@ -149,7 +149,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 GameFs_BgEtcGfxLoad();
                 Fs_QueueStartRead(FILE_BG_HP_SAFE1_BIN, FS_BUFFER_5);
                 Fs_QueueStartRead(FILE_BG_S__SAFE2_BIN, FS_BUFFER_6);
-                g_GameWork.gameStateStep_598[0]++;
+                g_GameWork.gameStateSteps[0]++;
                 break;
 
             case KcetLogoStateStep_CheckMemCards:
@@ -204,9 +204,9 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     sd_work_init();
 #endif
 
-                    while (g_GameWork.gameStateStep_598[0] < KcetLogoStateStep_NoMemCard)
+                    while (g_GameWork.gameStateSteps[0] < KcetLogoStateStep_NoMemCard)
                     {
-                        g_GameWork.gameStateStep_598[0] = GameState_KcetLogo_MemCardCheck();
+                        g_GameWork.gameStateSteps[0] = GameState_KcetLogo_MemCardCheck();
                         MemCard_Update();
                         VSync(SyncMode_Wait);
                     }
@@ -222,10 +222,10 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 GameFs_StreamBinLoad();
                 nextGameState = GameState_MovieIntroFadeIn;
 
-                g_GameWork.gameStateStep_598[0] = KcetLogoStateStep_LogoDelay;
+                g_GameWork.gameStateSteps[0] = KcetLogoStateStep_LogoDelay;
                 g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateStep_598[1] = 0;
-                g_GameWork.gameStateStep_598[2] = 0;
+                g_GameWork.gameStateSteps[1] = 0;
+                g_GameWork.gameStateSteps[2] = 0;
                 break;
 
             case KcetLogoStateStep_NoMemCardFreeSpace:
@@ -237,10 +237,10 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 GameFs_StreamBinLoad();
                 nextGameState = GameState_MovieIntroFadeIn;
 
-                g_GameWork.gameStateStep_598[0] = KcetLogoStateStep_LogoDelay;
+                g_GameWork.gameStateSteps[0] = KcetLogoStateStep_LogoDelay;
                 g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateStep_598[1] = 0;
-                g_GameWork.gameStateStep_598[2] = 0;
+                g_GameWork.gameStateSteps[1] = 0;
+                g_GameWork.gameStateSteps[2] = 0;
                 break;
 
             case KcetLogoStateStep_NoSaveGame:
@@ -248,32 +248,32 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 GameFs_TitleGfxSeek();
                 nextGameState = GameState_MovieIntro;
 
-                g_GameWork.gameStateStep_598[0] = KcetLogoStateStep_LogoDelay;
+                g_GameWork.gameStateSteps[0] = KcetLogoStateStep_LogoDelay;
                 g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateStep_598[1] = 0;
-                g_GameWork.gameStateStep_598[2] = 0;
+                g_GameWork.gameStateSteps[1] = 0;
+                g_GameWork.gameStateSteps[2] = 0;
                 break;
 
             case KcetLogoStateStep_HasSavegame:
-                while (g_GameWork.gameStateStep_598[1] < 3)
+                while (g_GameWork.gameStateSteps[1] < 3)
                 {
-                    switch (g_GameWork.gameStateStep_598[1])
+                    switch (g_GameWork.gameStateSteps[1])
                     {
                         case 0:
                             MemCard_ProcessSet(MemCardProcess_Load_Game, g_SelectedDeviceId, 0, 0);
-                            g_GameWork.gameStateStep_598[2] = 0;
-                            g_GameWork.gameStateStep_598[1]++;
+                            g_GameWork.gameStateSteps[2] = 0;
+                            g_GameWork.gameStateSteps[1]++;
 
                         case 1:
                             if (MemCard_LastMemCardResultGet() != MemCardResult_Success)
                             {
-                                g_GameWork.gameStateStep_598[2] = 0;
-                                g_GameWork.gameStateStep_598[1]++;
+                                g_GameWork.gameStateSteps[2] = 0;
+                                g_GameWork.gameStateSteps[1]++;
                             }
                             break;
 
                         case 2:
-                            if (g_GameWorkConst->config_0.optAutoLoad_25)
+                            if (g_GameWorkConst->config.optAutoLoad_25)
                             {
                                 Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
                                 Fs_QueueStartSeek(FILE_TIM_SAVELOAD_TIM);
@@ -286,8 +286,8 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                                 nextGameState = GameState_MovieIntro;
                             }
 
-                            g_GameWork.gameStateStep_598[2] = 0;
-                            g_GameWork.gameStateStep_598[1]++;
+                            g_GameWork.gameStateSteps[2] = 0;
+                            g_GameWork.gameStateSteps[1]++;
                             break;
                     }
 
@@ -296,10 +296,10 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     VSync(SyncMode_Wait);
                 }
 
-                g_GameWork.gameStateStep_598[0] = KcetLogoStateStep_LogoDelay;
+                g_GameWork.gameStateSteps[0] = KcetLogoStateStep_LogoDelay;
                 g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateStep_598[1] = 0;
-                g_GameWork.gameStateStep_598[2] = 0;
+                g_GameWork.gameStateSteps[1] = 0;
+                g_GameWork.gameStateSteps[2] = 0;
                 break;
 
             case KcetLogoStateStep_LogoDelay:
@@ -307,7 +307,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 {
                     ScreenFade_Start(false, false, false);
                     g_ScreenFadeTimestep = Q12(0.2f);
-                    g_GameWork.gameStateStep_598[0]++;
+                    g_GameWork.gameStateSteps[0]++;
                 }
                 break;
 
@@ -347,15 +347,15 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     g_SysWork.counters_1C[0] = 0;
                     g_SysWork.counters_1C[1] = 0;
 
-                    g_GameWork.gameStateStep_598[1] = 0;
-                    g_GameWork.gameStateStep_598[2] = 0;
+                    g_GameWork.gameStateSteps[1] = 0;
+                    g_GameWork.gameStateSteps[2] = 0;
 
                     SysWork_StateSetNext(SysState_Gameplay);
 
-                    g_GameWork.gameStateStep_598[0] = g_GameWork.gameState_594;
-                    g_GameWork.gameState_594        = nextGameState;
-                    g_GameWork.gameStatePrev_590    = g_GameWork.gameStateStep_598[0];
-                    g_GameWork.gameStateStep_598[0] = 0;
+                    g_GameWork.gameStateSteps[0] = g_GameWork.gameState;
+                    g_GameWork.gameState        = nextGameState;
+                    g_GameWork.gameStatePrev    = g_GameWork.gameStateSteps[0];
+                    g_GameWork.gameStateSteps[0] = 0;
                 }
                 break;
         }

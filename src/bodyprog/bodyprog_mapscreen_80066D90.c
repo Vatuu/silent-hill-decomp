@@ -42,7 +42,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
     func_800363D0();
     Game_TimerUpdate();
 
-    switch (g_GameWork.gameStateStep_598[0])
+    switch (g_GameWork.gameStateSteps[0])
     {
         case 0:
             Screen_Refresh(SCREEN_WIDTH, true);
@@ -62,10 +62,10 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
             g_IntervalVBlanks = 1;
             ScreenFade_Start(true, true, false);
 
-            g_GameWork.gameStateStep_598[0] = 2;
+            g_GameWork.gameStateSteps[0] = 2;
             g_SysWork.counters_1C[1]              = 0;
-            g_GameWork.gameStateStep_598[1] = 0;
-            g_GameWork.gameStateStep_598[2] = 0;
+            g_GameWork.gameStateSteps[1] = 0;
+            g_GameWork.gameStateSteps[2] = 0;
             break;
 
         case 2:
@@ -98,13 +98,13 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
 
             func_800692A4(var_s6, var_s5, temp_s4);
 
-            if ((g_GameWork.gameStatePrev_590 == GameState_InventoryScreen && g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2) ||
-                (g_GameWork.gameStatePrev_590 != GameState_InventoryScreen && g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 |
-                                                                                                               g_GameWorkPtr->config_0.controllerConfig_0.map_18)))
+            if ((g_GameWork.gameStatePrev == GameState_InventoryScreen && g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2) ||
+                (g_GameWork.gameStatePrev != GameState_InventoryScreen && g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.cancel_2 |
+                                                                                                               g_GameWorkPtr->config.controllerConfig.map_18)))
             {
                 SD_Call(Sfx_MenuMap);
 
-                if (g_GameWork.gameStatePrev_590 == GameState_InventoryScreen)
+                if (g_GameWork.gameStatePrev == GameState_InventoryScreen)
                 {
                     GsDrawOt(&g_OrderingTable0[g_ActiveBufferIdx]);
                     VSync(SyncMode_Wait);
@@ -119,14 +119,14 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
                     ScreenFade_Start(true, false, false);
                 }
 
-                g_GameWork.gameStateStep_598[0] = 4;
+                g_GameWork.gameStateSteps[0] = 4;
                 g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateStep_598[1] = 0;
-                g_GameWork.gameStateStep_598[2] = 0;
+                g_GameWork.gameStateSteps[1] = 0;
+                g_GameWork.gameStateSteps[2] = 0;
                 break;
             }
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
             {
                 if (D_800AE770 != 0)
                 {
@@ -158,10 +158,10 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
                             ScreenFade_Start(true, false, false);
 
                             D_800C444C                      = NO_VALUE;
-                            g_GameWork.gameStateStep_598[0] = 3;
+                            g_GameWork.gameStateSteps[0] = 3;
                             g_SysWork.counters_1C[1]              = 0;
-                            g_GameWork.gameStateStep_598[1] = 0;
-                            g_GameWork.gameStateStep_598[2] = 0;
+                            g_GameWork.gameStateSteps[1] = 0;
+                            g_GameWork.gameStateSteps[2] = 0;
                             break;
                         }
                     }
@@ -176,10 +176,10 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
                             ScreenFade_Start(true, false, false);
 
                             D_800C444C = NO_VALUE;
-                            g_GameWork.gameStateStep_598[0] = 3;
+                            g_GameWork.gameStateSteps[0] = 3;
                             g_SysWork.counters_1C[1]              = 0;
-                            g_GameWork.gameStateStep_598[1] = 0;
-                            g_GameWork.gameStateStep_598[2] = 0;
+                            g_GameWork.gameStateSteps[1] = 0;
+                            g_GameWork.gameStateSteps[2] = 0;
                             break;
                         }
                     }
@@ -204,10 +204,10 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
 
                 SD_Call(Sfx_MenuMap);
 
-                g_GameWork.gameStateStep_598[0] = 1;
+                g_GameWork.gameStateSteps[0] = 1;
                 g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateStep_598[1] = 0;
-                g_GameWork.gameStateStep_598[2] = 0;
+                g_GameWork.gameStateSteps[1] = 0;
+                g_GameWork.gameStateSteps[2] = 0;
                 break;
             }
 
@@ -229,10 +229,10 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
             Fs_QueueWaitForEmpty();
             ScreenFade_Start(true, true, false);
 
-            g_GameWork.gameStateStep_598[0] = 2;
+            g_GameWork.gameStateSteps[0] = 2;
             g_SysWork.counters_1C[1]              = 0;
-            g_GameWork.gameStateStep_598[1] = 0;
-            g_GameWork.gameStateStep_598[2] = 0;
+            g_GameWork.gameStateSteps[1] = 0;
+            g_GameWork.gameStateSteps[2] = 0;
             break;
 
         case 4:
@@ -248,11 +248,11 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
 
             if (ScreenFade_IsFinished())
             {
-                if (g_GameWork.gameStatePrev_590 == GameState_InGame || g_GameWork.gameStatePrev_590 == GameState_LoadMapScreen)
+                if (g_GameWork.gameStatePrev == GameState_InGame || g_GameWork.gameStatePrev == GameState_LoadMapScreen)
                 {
                     func_80066E7C();
                     Screen_Init(SCREEN_WIDTH, false);
-                    g_GameWork.gameStatePrev_590 = GameState_InGame;
+                    g_GameWork.gameStatePrev = GameState_InGame;
                 }
 
                 Game_StateSetPrevious();

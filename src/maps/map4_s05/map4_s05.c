@@ -1421,7 +1421,7 @@ const VECTOR3 D_800CABE4 = { 0xFFF8C800, 0x00002000, 0x0006E800 };
 
 void func_800D61AC(void) // 0x800D61AC
 {
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 12)
     {
         // Warp player.

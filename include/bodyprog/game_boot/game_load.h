@@ -5,7 +5,7 @@
 
 void Anim_CharaTypeAnimInfoClear(void);
 
-/** Handles `g_GameWork.gameStateStep_598[0]`.
+/** Handles `g_GameWork.gameStateSteps[0]`.
  * Used to handle map loading and room changes.
  */
 void GameBoot_GameStartup(void);

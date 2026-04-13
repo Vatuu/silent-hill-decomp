@@ -715,13 +715,13 @@ void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4
 {
     if (arg0 != NO_VALUE)
     {
-        g_MapMsg_GlyphSprite.x = arg0 + (-g_GameWork.gsScreenWidth_588 / 2);
+        g_MapMsg_GlyphSprite.x = arg0 + (-g_GameWork.gsScreenWidth / 2);
         D_800C391C   = g_MapMsg_GlyphSprite.x;
     }
 
     if (arg1 != NO_VALUE)
     {
-        g_MapMsg_GlyphSprite.y = arg1 + (-g_GameWork.gsScreenHeight_58A / 2);
+        g_MapMsg_GlyphSprite.y = arg1 + (-g_GameWork.gsScreenHeight / 2);
     }
 }
 

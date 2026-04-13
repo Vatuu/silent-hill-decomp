@@ -268,8 +268,8 @@ void func_800E7D54(void) // 0x800E7D54
     for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
     {
         // Breaks if there are any characters with IDs in range `[Chara_Harry, Chara_MonsterCybil]` with health above `Q12(0.0f)`.
-        if (g_SysWork.npcs_1A0[i].model.charaId_0 >= Chara_Harry &&
-            g_SysWork.npcs_1A0[i].model.charaId_0 <= Chara_MonsterCybil &&
+        if (g_SysWork.npcs_1A0[i].model.charaId >= Chara_Harry &&
+            g_SysWork.npcs_1A0[i].model.charaId <= Chara_MonsterCybil &&
             g_SysWork.npcs_1A0[i].health > Q12(0.0f))
         {
             break;
@@ -329,8 +329,8 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
                     SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
 
                     if (g_SysWork.sysStateStep_C[0] == sysState0 &&
-                        (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-                                                          g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
+                        (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 |
+                                                          g_GameWorkPtr->config.controllerConfig.cancel_2)))
                     {
                         SysWork_StateStepSet(0, 3);
                     }
@@ -452,7 +452,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
     s32 zoomHuh;
     s16 curve;
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4)
     {
         if (g_SysWork.sysStateStep_C[0] == 2)
         {
@@ -571,8 +571,8 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             g_Gfx_PaperMapMarkingAlpha++;
             if (g_Gfx_PaperMapMarkingAlpha >= 128)
             {
-                if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-                                                     g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+                if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 |
+                                                     g_GameWorkPtr->config.controllerConfig.cancel_2))
                 {
                     SysWork_StateStepIncrement(0);
                 }
@@ -627,7 +627,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
 {
     s16 curve;
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4)
     {
         if (!D_800F2295)
         {
@@ -778,7 +778,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             D_800F2298++;
             if (D_800F2298 >= 0x80)
             {
-                if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+                if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 | g_GameWorkPtr->config.controllerConfig.cancel_2))
                 {
                     SysWork_StateStepIncrement(0);
                 }
@@ -1267,8 +1267,8 @@ void func_800E9DD8(void) // 0x800E9DD8
             Screen_BackgroundImgDrawAlt(D_800F22A0);
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
 
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-                                                 g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 |
+                                                 g_GameWorkPtr->config.controllerConfig.cancel_2))
             {
                 SysWork_StateStepIncrement(0);
             }

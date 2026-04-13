@@ -152,14 +152,14 @@ void func_8008F94C() // 0x8008F94C
 
     D_800C48B3 = g_SavegamePtr->locationId_A8;
     D_800C3E40 = 7;
-    temp_a0_2  = g_GameWork.config_0.optExtraOptionsEnabled_27;
+    temp_a0_2  = g_GameWork.config.optExtraOptionsEnabled_27;
 
     if ((temp_a0_2 & 0x3) && (temp_a0_2 & 0xC))
     {
         D_800C3E40 = 0xF;
     }
 
-    if (g_GameWork.config_0.optExtraOptionsEnabled_27 & 1)
+    if (g_GameWork.config.optExtraOptionsEnabled_27 & 1)
     {
         D_800C3E40 |= 0x10;
     }
@@ -429,14 +429,14 @@ void func_800904F4() // 0x800904F4
 
     Savegame_EventFlagSet(EventFlag_62);
 
-    extraOptions = g_GameWork.config_0.optExtraOptionsEnabled_27;
+    extraOptions = g_GameWork.config.optExtraOptionsEnabled_27;
 
     if ((extraOptions & 0x3) && (extraOptions & 0xC))
     {
         Savegame_EventFlagSet(EventFlag_57);
     }
 
-    if (g_GameWork.config_0.optExtraOptionsEnabled_27 & (1 << 0))
+    if (g_GameWork.config.optExtraOptionsEnabled_27 & (1 << 0))
     {
         Savegame_EventFlagSet(EventFlag_58);
     }
@@ -501,7 +501,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
 
     Gfx_StringSetColor(StringColorId_White);
 
-    if (g_GameWork.gameStateStep_598[1] < 0x17)
+    if (g_GameWork.gameStateSteps[1] < 0x17)
     {
         Gfx_StringSetPosition(0x64, -0x54);
         Gfx_StringDraw(D_8002B4C0[0], 20);

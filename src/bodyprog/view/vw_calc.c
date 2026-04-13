@@ -514,8 +514,8 @@ bool Vw_AabbVisibleInScreenCheck(s32 minX, s32 maxX, s32 minY, s32 maxY, s32 min
         return false;
     }
 
-    screenCenterX = (g_GameWork.gsScreenWidth_588  / 2) + 2;
-    screenCenterY = (g_GameWork.gsScreenHeight_58A / 2) + 2;
+    screenCenterX = (g_GameWork.gsScreenWidth  / 2) + 2;
+    screenCenterY = (g_GameWork.gsScreenHeight / 2) + 2;
 
     if (screenMaxX < -screenCenterX || screenCenterX < screenMinX ||
         screenMaxY < -screenCenterY || screenCenterY < screenMinY)
@@ -629,9 +629,9 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ
         {
             cullData->field_118[cullData->field_114++] = screenPos;
 
-            if (screenPos.vx >= -(g_GameWork.gsScreenWidth_588 >> 1))
+            if (screenPos.vx >= -(g_GameWork.gsScreenWidth >> 1))
             {
-                if ((g_GameWork.gsScreenWidth_588 >> 1) < screenPos.vx)
+                if ((g_GameWork.gsScreenWidth >> 1) < screenPos.vx)
                 {
                     flag0Idx = 2;
                 }
@@ -645,9 +645,9 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ
                 flag0Idx = 0;
             }
 
-            if (screenPos.vy >= -(g_GameWork.gsScreenHeight_58A >> 1))
+            if (screenPos.vy >= -(g_GameWork.gsScreenHeight >> 1))
             {
-                if ((g_GameWork.gsScreenHeight_58A >> 1) < screenPos.vy)
+                if ((g_GameWork.gsScreenHeight >> 1) < screenPos.vy)
                 {
                     flag1Idx = 2;
                 }
@@ -729,9 +729,9 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ
         {
             RotTransPers(&cullData->field_C4[i], screenPoints, &cullData->field_178, &cullData->field_178);
 
-            if (screenPoints->vx >= -(g_GameWork.gsScreenWidth_588 >> 1))
+            if (screenPoints->vx >= -(g_GameWork.gsScreenWidth >> 1))
             {
-                if ((g_GameWork.gsScreenWidth_588 >> 1) < screenPoints->vx)
+                if ((g_GameWork.gsScreenWidth >> 1) < screenPoints->vx)
                 {
                     flag0Idx = 2;
                 }
@@ -745,9 +745,9 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ
                 flag0Idx = 0;
             }
 
-            if (screenPoints->vy >= -(g_GameWork.gsScreenHeight_58A >> 1))
+            if (screenPoints->vy >= -(g_GameWork.gsScreenHeight >> 1))
             {
-                if ((g_GameWork.gsScreenHeight_58A >> 1) < screenPoints->vy)
+                if ((g_GameWork.gsScreenHeight >> 1) < screenPoints->vy)
                 {
                     flag1Idx = 2;
                 }

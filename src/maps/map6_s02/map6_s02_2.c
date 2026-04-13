@@ -59,19 +59,19 @@ void func_800CED74(s_SubCharacter* chara, bool arg1) // 0x800CED74
     // With the same odd XOR pattern, and `VC_PRS_F_VIEW_F` check followed by `VC_OLD_PRS_F_VIEW_F`.
     // Inlines have been seen to change condition checks into XOR before, but no luck making an inline for this check yet though.
     vcPrsFViewFlag = (vcWork.flags & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
-    if (((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (vcPrsFViewFlag ^ 1) != 0) ||
-         (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && vcPrsFViewFlag)) &&
-        (g_GameWorkConst->config_0.optExtraViewMode_29 != 0))
+    if (((g_GameWorkConst->config.optExtraViewCtrl_28 && (vcPrsFViewFlag ^ 1) != 0) ||
+         (!g_GameWorkConst->config.optExtraViewCtrl_28 && vcPrsFViewFlag)) &&
+        (g_GameWorkConst->config.optExtraViewMode_29 != 0))
     {
         vcPrsFViewFlag2 = (vcWork.flags & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
 
-        if ((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (vcPrsFViewFlag2 ^ 1) != 0) ||
-            (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && vcPrsFViewFlag2))
+        if ((g_GameWorkConst->config.optExtraViewCtrl_28 && (vcPrsFViewFlag2 ^ 1) != 0) ||
+            (!g_GameWorkConst->config.optExtraViewCtrl_28 && vcPrsFViewFlag2))
         {
             vcOldPrsFViewFlag = (vcWork.flags & VC_OLD_PRS_F_VIEW_F) == VC_OLD_PRS_F_VIEW_F;
 
-            if ((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (vcOldPrsFViewFlag ^ 1) == 0) ||
-                (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && !vcOldPrsFViewFlag))
+            if ((g_GameWorkConst->config.optExtraViewCtrl_28 && (vcOldPrsFViewFlag ^ 1) == 0) ||
+                (!g_GameWorkConst->config.optExtraViewCtrl_28 && !vcOldPrsFViewFlag))
             {
                 vcReturnPreAutoCamWork(true);
             }
@@ -127,7 +127,7 @@ void func_800CF0B8(void) // 0x800CF0B8
     Savegame_EventFlagClear(EventFlag_412);
 
     hasSkippedEarly = false;
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] <= 19)
     {
         // Sets flag to `true` if player skipped before step 19.
@@ -580,7 +580,7 @@ void func_800D0500(void) // 0x800D0500
     s32 var_v0_2;
     s32 var_v1;
 
-    g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
+    g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
 
     var_s2 = 0;
 
@@ -1500,7 +1500,7 @@ void func_800D2364(void) // 0x800D2364
     gte_ReadGeomScreen(&ptr->field_64);
 
     ptr->field_68 = g_ActiveBufferIdx;
-    temp          = Q12_MULT_PRECISE((g_GameWork.config_0.optBrightness_22 * 8) + 4, Screen_FadeInProgressGet());
+    temp          = Q12_MULT_PRECISE((g_GameWork.config.optBrightness_22 * 8) + 4, Screen_FadeInProgressGet());
 
     ptr->field_4 = GsOUT_PACKET_P;
 
@@ -1761,7 +1761,7 @@ void func_800D32D0(void) // 0x800D32D0
             g_SavegamePtr->clearGameCount_24A                    = CLAMP(g_SavegamePtr->clearGameCount_24A, 1, 99);
             g_SavegamePtr->field_27A                             = 1 << 4;
             g_SavegamePtr->clearGameEndings_24B                 |= 1 << 4;
-            g_GameWorkConst->config_0.optExtraOptionsEnabled_27 |= 1 << 4;
+            g_GameWorkConst->config.optExtraOptionsEnabled_27 |= 1 << 4;
             g_SavegamePtr->locationId_A8                         = SaveLocationId_NextFear;
 
             SysWork_StateSetNext(SysState_StatusMenu);

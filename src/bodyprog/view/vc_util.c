@@ -16,7 +16,7 @@ void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, const VECTOR3* chr_
     g_WorldGfxWork.vcCameraInternalInfo_1BDC.mode        = 0;
 
     vcSetCameraUseWarp(chr_pos, g_SysWork.cameraAngleY_237A);
-    SetGeomScreen(g_GameWork.gsScreenHeight_58A);
+    SetGeomScreen(g_GameWork.gsScreenHeight);
     vwInitViewInfo();
     vcInitVCSystem(map_overlay_ptr->roadDataList_3CC);
     vcStartCameraSystem();

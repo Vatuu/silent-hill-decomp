@@ -68,7 +68,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
     // is a value divisible by 3, the intro FMV will play. Otherwise, it defaults to a gameplay demo.
     playInGameDemo = ((g_Demo_ReproducedCount + 1) % 3) != 0;
 
-    if (g_GameWork.gameStateStep_598[0] == 0)
+    if (g_GameWork.gameStateSteps[0] == 0)
     {
         g_MainMenuState = 0;
 
@@ -78,16 +78,16 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         }
         else
         {
-            g_GameWork.gameStateStep_598[0] = 1;
+            g_GameWork.gameStateSteps[0] = 1;
         }
     }
 
     switch (g_MainMenuState)
     {
         case MenuState_Start:
-            g_GameWork.background2dColor_58C.r = 0;
-            g_GameWork.background2dColor_58C.g = 0;
-            g_GameWork.background2dColor_58C.b = 0;
+            g_GameWork.background2dColor.r = 0;
+            g_GameWork.background2dColor.g = 0;
+            g_GameWork.background2dColor.b = 0;
 
             Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
             Screen_Init(SCREEN_WIDTH, true);
@@ -102,12 +102,12 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             {
                 GameBoot_GameStartup();
 
-                if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.counters_1C[1] == 0)
+                if (g_GameWork.gameStateSteps[0] == 1 && g_SysWork.counters_1C[1] == 0)
                 {
                     g_Demo_ReproducedCount++;
                 }
 
-                if (g_GameWork.gameState_594 == GameState_MainLoadScreen)
+                if (g_GameWork.gameState == GameState_MainLoadScreen)
                 {
                     g_Demo_ReproducedCount++;
                 }
@@ -115,7 +115,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
             g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Start) | (1 << MainMenuEntry_Option);
 
-            if (g_GameWork.autosave_90.playerHealth_240 > Q12(0.0f))
+            if (g_GameWork.autosave.playerHealth_240 > Q12(0.0f))
             {
                 g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Continue) | (1 << MainMenuEntry_Start) | (1 << MainMenuEntry_Option);
             }
@@ -144,11 +144,11 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
             {
                 SD_Call(Sfx_MenuMove);
-                g_GameWork.gameState_594 = GameState_MainMenu;
+                g_GameWork.gameState = GameState_MainMenu;
 
-                if (g_GameWork.gameStateStep_598[0] != 1)
+                if (g_GameWork.gameStateSteps[0] != 1)
                 {
-                    g_GameWork.gameStateStep_598[0] = 1;
+                    g_GameWork.gameStateSteps[0] = 1;
                     Fs_QueueReset();
                 }
             }
@@ -167,13 +167,13 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             // Wrap selection.
             g_MainMenu_SelectedEntry %= MainMenuEntry_Count;
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
             {
-                g_GameWork.gameState_594 = GameState_MainMenu;
+                g_GameWork.gameState = GameState_MainMenu;
 
-                if (g_GameWork.gameStateStep_598[0] != 1)
+                if (g_GameWork.gameStateSteps[0] != 1)
                 {
-                    g_GameWork.gameStateStep_598[0] = 1;
+                    g_GameWork.gameStateSteps[0] = 1;
                     Fs_QueueReset();
                 }
 
@@ -192,9 +192,9 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 switch (g_MainMenu_SelectedEntry)
                 {
                     case MainMenuEntry_Continue:
-                        if (g_GameWork.autosave_90.playerHealth_240 > Q12(0.0f))
+                        if (g_GameWork.autosave.playerHealth_240 > Q12(0.0f))
                         {
-                            g_GameWork.savegame_30C = g_GameWork.autosave_90;
+                            g_GameWork.savegame = g_GameWork.autosave;
                         }
                         else
                         {
@@ -234,26 +234,26 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             {
                 GameBoot_GameStartup();
 
-                if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.counters_1C[1] == 0)
+                if (g_GameWork.gameStateSteps[0] == 1 && g_SysWork.counters_1C[1] == 0)
                 {
                     g_Demo_ReproducedCount++;
                 }
 
-                if (g_GameWork.gameState_594 == GameState_MainLoadScreen)
+                if (g_GameWork.gameState == GameState_MainLoadScreen)
                 {
                     g_Demo_ReproducedCount++;
                 }
             }
 
             if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown) ||
-                g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-                                                 g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+                g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 |
+                                                 g_GameWorkPtr->config.controllerConfig.cancel_2))
             {
-                g_GameWork.gameState_594 = GameState_MainMenu;
+                g_GameWork.gameState = GameState_MainMenu;
 
-                if (g_GameWork.gameStateStep_598[0] != 1)
+                if (g_GameWork.gameStateSteps[0] != 1)
                 {
-                    g_GameWork.gameStateStep_598[0] = 1;
+                    g_GameWork.gameStateSteps[0] = 1;
                     Fs_QueueReset();
                 }
             }
@@ -285,7 +285,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             }
 
             // Select game difficulty.
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
             {
                 GameBoot_SavegameInitialize(0, newGameSelectedDifficultyIdx - 1);
                 GameBoot_PlayerInit();
@@ -300,7 +300,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 g_MainMenuState     = 4;
             }
             // Cancel.
-            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
             {
                 SD_Call(Sfx_MenuCancel);
                 g_MainMenuState = 1;
@@ -314,7 +314,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 Screen_Refresh(SCREEN_WIDTH, 0);
                 Fs_QueueWaitForEmpty();
 
-                if (g_GameWork.autosave_90.playerHealth_240 > Q12(0.0f))
+                if (g_GameWork.autosave.playerHealth_240 > Q12(0.0f))
                 {
                     NEXT_GAME_STATES[1] = GameState_MainLoadScreen;
                 }
@@ -326,15 +326,15 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
                 MemCard_Disable();
 
-                prevState                       = g_GameWork.gameState_594;
-                g_GameWork.gameStateStep_598[0] = prevState;
-                g_GameWork.gameState_594        = NEXT_GAME_STATES[g_MainMenu_SelectedEntry];
+                prevState                       = g_GameWork.gameState;
+                g_GameWork.gameStateSteps[0] = prevState;
+                g_GameWork.gameState        = NEXT_GAME_STATES[g_MainMenu_SelectedEntry];
                 g_SysWork.counters_1C[0]        = 0;
-                g_GameWork.gameStatePrev_590    = prevState;
-                g_GameWork.gameStateStep_598[0] = 0;
+                g_GameWork.gameStatePrev    = prevState;
+                g_GameWork.gameStateSteps[0] = 0;
                 g_SysWork.counters_1C[1]        = 0;
-                g_GameWork.gameStateStep_598[1] = 0;
-                g_GameWork.gameStateStep_598[2] = 0;
+                g_GameWork.gameStateSteps[1] = 0;
+                g_GameWork.gameStateSteps[2] = 0;
 
                 SysWork_StateSetNext(SysState_Gameplay);
             }
@@ -348,13 +348,13 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
     if (!playInGameDemo)
     {
-        switch (g_GameWork.gameStateStep_598[0])
+        switch (g_GameWork.gameStateSteps[0])
         {
             case 1:
                 if (g_SysWork.counters_1C[1] > 1740)
                 {
                     GameFs_StreamBinLoad();
-                    g_GameWork.gameStateStep_598[0]++;
+                    g_GameWork.gameStateSteps[0]++;
                 }
                 break;
 
@@ -363,9 +363,9 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 {
                     g_Demo_ReproducedCount++;
 
-                    g_GameWork.background2dColor_58C.r = 0;
-                    g_GameWork.background2dColor_58C.g = 0;
-                    g_GameWork.background2dColor_58C.b = 0;
+                    g_GameWork.background2dColor.r = 0;
+                    g_GameWork.background2dColor.g = 0;
+                    g_GameWork.background2dColor.b = 0;
 
                     Game_StateSetNext(GameState_MovieIntro);
                 }
@@ -373,7 +373,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         }
     }
 
-    if (g_GameWork.gameState_594 == GameState_MainMenu)
+    if (g_GameWork.gameState == GameState_MainMenu)
     {
         MainMenu_BackgroundDraw();
         func_8003B560();

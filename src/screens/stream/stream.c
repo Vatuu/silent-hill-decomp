@@ -16,7 +16,7 @@
 
 void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
 {
-    switch (g_GameWork.gameStateStep_598[0])
+    switch (g_GameWork.gameStateSteps[0])
     {
         case 0:
             VSync(SyncMode_Wait8);
@@ -28,14 +28,14 @@ void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
 
             GameFs_TitleGfxLoad();
 
-            g_GameWork.gameStateStep_598[0]++;
+            g_GameWork.gameStateSteps[0]++;
             break;
 
         case 1:
             if (g_Controller0->btnsHeld_C != 0 || g_SysWork.counters_1C[0] > 300)
             {
                 ScreenFade_Start(false, false, false);
-                g_GameWork.gameStateStep_598[0] = 2;
+                g_GameWork.gameStateSteps[0] = 2;
             }
             break;
 
@@ -54,15 +54,15 @@ void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
 void GameState_MovieIntro_Update(void) // 0x801E279C
 {
 #if VERSION_REGION_IS(NTSCJ)
-    if (g_GameWork.gameStatePrev_590 == GameState_KcetLogo ||
-        g_GameWork.gameStatePrev_590 == GameState_AutoLoadSavegame)
+    if (g_GameWork.gameStatePrev == GameState_KcetLogo ||
+        g_GameWork.gameStatePrev == GameState_AutoLoadSavegame)
     {
         Fs_QueueStartRead(FILE_TIM_WATER_TIM, g_OvlDynamic);
         Fs_QueueWaitForEmpty();
     }
 #endif
 
-    open_main((g_GameWorkConst->config_0.optExtraOptionsEnabled_27 & (1 << 0)) ? FILE_XA_C2_20670 : FILE_XA_C1_20670, 0);
+    open_main((g_GameWorkConst->config.optExtraOptionsEnabled_27 & (1 << 0)) ? FILE_XA_C2_20670 : FILE_XA_C1_20670, 0);
     Game_StateSetNext(GameState_MainMenu);
 
     g_ScreenFadeTimestep = Q12(1.0f);
@@ -83,7 +83,7 @@ void GameState_DebugMoviePlayer_Update(void) // 0x801E2908
 {
     static s32 g_Debug_MoviePlayerIdx = 0; // 0x801E3F3C
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
     {
         Game_StateSetNext(GameState_Unk16); // Changes to non-existent state 22 and crashes. Maybe removed debug menu.
     }
@@ -106,7 +106,7 @@ void GameState_DebugMoviePlayer_Update(void) // 0x801E2908
     Text_Debug_Draw(Text_Debug_IntToString(2, g_Debug_MoviePlayerIdx));
 #endif
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
     {
         open_main(FILE_XA_ZC_14392 - g_Debug_MoviePlayerIdx, 0);
     }
@@ -208,8 +208,8 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
     do
     {
         disp.disp.y   = 256 - (m->dec.rectid * SCREEN_HEIGHT);
-        disp.screen.x = g_GameWorkConst->config_0.optScreenPosX_1C;
-        disp.screen.y = (8 + ((224 - m->height) / 2)) + g_GameWorkConst->config_0.optScreenPosY_1D;
+        disp.screen.x = g_GameWorkConst->config.optScreenPosX_1C;
+        disp.screen.y = (8 + ((224 - m->height) / 2)) + g_GameWorkConst->config.optScreenPosY_1D;
         disp.disp.y   = (disp.disp.y   <  16) ? 16 : ((disp.disp.y > 256)   ? 256 : disp.disp.y);
         disp.screen.h = (disp.screen.h <= 0)  ? 1  : ((disp.screen.h > 208) ? 208 : disp.screen.h);
 
@@ -240,7 +240,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
         strSync(&m->dec);
         VSync(SyncMode_Wait);
     }
-    while (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    while (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
            MainLoop_ShouldWarmReset() <= ResetType_None);
 
     SsSetSerialVol(0, 0, 0);

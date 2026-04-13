@@ -3346,8 +3346,8 @@ void func_800D6704(void) // 0x800D6704
     // Breaks from loop if there are any characters with ID in range [1, 24].
     for (i = 0; i < 6; i++)
     {
-        if (g_SysWork.npcs_1A0[i].model.charaId_0 >= Chara_Harry &&
-            g_SysWork.npcs_1A0[i].model.charaId_0 <= Chara_MonsterCybil)
+        if (g_SysWork.npcs_1A0[i].model.charaId >= Chara_Harry &&
+            g_SysWork.npcs_1A0[i].model.charaId <= Chara_MonsterCybil)
         {
             break;
         }
@@ -3368,7 +3368,7 @@ void func_800D6774(void) // 0x800D6774
     s32         i;
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 11)
     {
         SysWork_StateStepSet(0, 12);
@@ -3555,7 +3555,7 @@ void func_800D6F24(void) // 0x800D6F24
     void* var_s0;
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 9)
     {
         SysWork_StateStepSet(0, 9);
@@ -4678,7 +4678,7 @@ void func_800D8FC0(void) // 0x800D8FC0
     scratchData = PSX_SCRATCH_ADDR(0);
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 5)
     {
         SysWork_StateStepSet(0, 5);
@@ -4799,7 +4799,7 @@ void func_800D8FC0(void) // 0x800D8FC0
 void func_800D960C(void) // 0x800D960C
 {
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 4)
     {
         SysWork_StateStepReset();

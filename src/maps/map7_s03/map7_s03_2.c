@@ -3278,7 +3278,7 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
     sp4C = 67;
     dist = Q12_MULT_PRECISE(arg0->rotationZ_4D8, Q12(0.9f));
 
-    if (g_SysWork.npcs_1A0[2].model.charaId_0 == Chara_Incubus)
+    if (g_SysWork.npcs_1A0[2].model.charaId == Chara_Incubus)
     {
         sp4C = 3;
     }
@@ -6436,9 +6436,9 @@ void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warp
                                player->position.vz - otherChara->position.vz);
 
     vcPrsFViewFlag = (vcWork.flags & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
-    if (((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (vcPrsFViewFlag ^ 1) != 0) ||
-         (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && vcPrsFViewFlag)) &&
-        (g_GameWorkConst->config_0.optExtraViewMode_29 == 0))
+    if (((g_GameWorkConst->config.optExtraViewCtrl_28 && (vcPrsFViewFlag ^ 1) != 0) ||
+         (!g_GameWorkConst->config.optExtraViewCtrl_28 && vcPrsFViewFlag)) &&
+        (g_GameWorkConst->config.optExtraViewMode_29 == 0))
     {
         isCamUpdated = true;
 
@@ -6449,7 +6449,7 @@ void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warp
                           Q12_MULT_FLOAT(Math_Cos(player->rotation.vy), 1.5f) +
                           Q12_MULT_FLOAT(Math_Cos(angleToOtherChara), 2.5f);
 
-        if (otherChara->model.charaId_0 == Chara_Incubus)
+        if (otherChara->model.charaId == Chara_Incubus)
         {
             camTargetPos.vy = Q12(-1.4f);
         }
@@ -6465,7 +6465,7 @@ void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warp
         {
             camLookAtTargetPos.vy = Q12(-0.002f);
         }
-        else if (otherChara->model.charaId_0 == Chara_Incubus)
+        else if (otherChara->model.charaId == Chara_Incubus)
         {
             camLookAtTargetPos.vy = Vc_LookAtPositionYGet();
         }
@@ -7272,7 +7272,7 @@ void func_800E3390(void) // 0x800E3390
 {
     s32 i;
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         D_800F4805 > 0 && D_800F4805 < 4)
     {
         D_800F4805 = 5;
@@ -9998,14 +9998,14 @@ void func_800E9444(e_CharacterId charaId, s_SubCharacter* chara) // 0x800E9444
 {
     bzero(chara, sizeof(s_SubCharacter));
 
-    chara->model.charaId_0       = charaId;
+    chara->model.charaId       = charaId;
     chara->model.controlState  = 0;
     chara->model.anim.flags |= 2;
 }
 
 void func_800E9490(s_SubCharacter* chara) // 0x800E9490
 {
-    chara->model.charaId_0 = Chara_None;
+    chara->model.charaId = Chara_None;
 }
 
 void func_800E9498(void) // 0x800E9498
@@ -10303,7 +10303,7 @@ void func_800E9C28(void) // 0x800E9C28
 
             g_SavegamePtr->field_27A                             = 1 << (D_800F481C - 1);
             g_SavegamePtr->clearGameEndings_24B                 |= 1 << (D_800F481C - 1);
-            g_GameWorkConst->config_0.optExtraOptionsEnabled_27 |= 1 << (D_800F481C - 1);
+            g_GameWorkConst->config.optExtraOptionsEnabled_27 |= 1 << (D_800F481C - 1);
 
             g_SavegamePtr->locationId_A8 = SaveLocationId_NextFear;
 

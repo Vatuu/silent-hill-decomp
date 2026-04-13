@@ -233,9 +233,9 @@ s32 Inventory_HyperBlasterUnlockTest(void) // 0x8004C45C
     if (g_SavegamePtr->mapOverlayId_A4 > MapOverlayId_MAP0_S00)
     {
         // Konami gun controller connected.
-        if (g_GameWork.controllers_38[1].analogController_0.status         == 0 &&
-            g_GameWork.controllers_38[1].analogController_0.received_bytes == 1 &&
-            g_GameWork.controllers_38[1].analogController_0.terminal_type  == PadTerminalType_GunControllerKonami)
+        if (g_GameWork.controllers[1].analogController_0.status         == 0 &&
+            g_GameWork.controllers[1].analogController_0.received_bytes == 1 &&
+            g_GameWork.controllers[1].analogController_0.terminal_type  == PadTerminalType_GunControllerKonami)
         {
             return 1;
         }
@@ -261,9 +261,9 @@ s32 Inventory_HyperBlasterFunctionalTest(void) // 0x8004C4F8
         }
 
         // Returns 1 if controller port 2 has Konami gun controller connected.
-        return g_GameWork.controllers_38[1].analogController_0.status         == 0 &&
-               g_GameWork.controllers_38[1].analogController_0.received_bytes == 1 &&
-               g_GameWork.controllers_38[1].analogController_0.terminal_type  == PadTerminalType_GunControllerKonami;
+        return g_GameWork.controllers[1].analogController_0.status         == 0 &&
+               g_GameWork.controllers[1].analogController_0.received_bytes == 1 &&
+               g_GameWork.controllers[1].analogController_0.terminal_type  == PadTerminalType_GunControllerKonami;
     }
 
     // Neither of the conditions has been completed.

@@ -13,19 +13,19 @@ void sharedFunc_800D0110_7_s00(void)
     mapRoomIdx       = g_SavegamePtr->mapRoomIdx_A5;
     bgmLayerLimit = NULL;
 
-    switch (g_GameWork.bgmTrackIdx_5B2)
+    switch (g_GameWork.bgmIdx)
     {
         case 5:
             g_SysWork.sysFlags_22A0 &= ~SysFlag_3;
 
-            switch (g_GameWork.gameState_594)
+            switch (g_GameWork.gameState)
             {
                 case GameState_InventoryScreen:
                 case GameState_LoadStatusScreen:
-                    if (g_GameWork.gameState_594 != GameState_InventoryScreen || g_GameWork.gameStateStep_598[1] != 25)
+                    if (g_GameWork.gameState != GameState_InventoryScreen || g_GameWork.gameStateSteps[1] != 25)
                     {
                         flags = (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7);
-                        if (g_GameWork.gameStatePrev_590 != GameState_SaveScreen)
+                        if (g_GameWork.gameStatePrev != GameState_SaveScreen)
                         {
                             var_s2 = Q12(240.0f);
                         }
@@ -243,7 +243,7 @@ void sharedFunc_800D0110_7_s00(void)
                 case 29:
                     if (Savegame_EventFlagGet(EventFlag_555))
                     {
-                        if (g_GameWork.bgmTrackIdx_5B2 == 22)
+                        if (g_GameWork.bgmIdx == 22)
                         {
                             flags = 1 << 2;
                         }
@@ -256,7 +256,7 @@ void sharedFunc_800D0110_7_s00(void)
                     {
                         if (Savegame_EventFlagGet(EventFlag_552))
                         {
-                            if (g_GameWork.bgmTrackIdx_5B2 == 22)
+                            if (g_GameWork.bgmIdx == 22)
                             {
                                 flags = 1 << 3;
                             }
@@ -267,7 +267,7 @@ void sharedFunc_800D0110_7_s00(void)
                         }
                         else
                         {
-                            if (g_GameWork.bgmTrackIdx_5B2 == 22)
+                            if (g_GameWork.bgmIdx == 22)
                             {
                                 flags = (1 << 3) | (1 << 4);
                             }
@@ -327,7 +327,7 @@ void sharedFunc_800D0110_7_s00(void)
                     break;
             }
 
-            if (g_GameWork.bgmTrackIdx_5B2 == 22)
+            if (g_GameWork.bgmIdx == 22)
             {
                 temp_v0_2 = flags & (1 << 1);
                 temp_v1_5 = flags & (1 << 2);
@@ -524,7 +524,7 @@ void sharedFunc_800D0110_7_s00(void)
                 {
                     if (!func_80045BC8())
                     {
-                        Bgm_BgmChannelSet();
+                        Bgm_ChannelSet();
                     }
                     else
                     {

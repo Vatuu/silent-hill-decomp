@@ -204,13 +204,13 @@ void func_800EBA40(void) // 0x800EBA40
             Game_TimerUpdate();
             Gfx_CursorDraw((s16)(FP_FROM(D_800F0354, Q12_SHIFT) + 8), FP_FROM(D_800F0358, Q12_SHIFT) + 8, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
             {
                 SysWork_StateStepSet(0, 7);
                 break;
             }
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
             {
                 for (i = 0; i < ARRAY_SIZE(D_800F0158); i++)
                 {
@@ -344,23 +344,23 @@ void func_800EBF70(void) // 0x800EBF70
         case 3:
             if (Fs_QueueDoThingWhenEmpty())
             {
-                g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
+                g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
 
                 func_800CD860();
                 SysWork_StateStepIncrement(0);
             }
 
         case 4:
-            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
             SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
             break;
 
         case 5:
             Game_TimerUpdate();
-            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
 
             temp_v0 = func_800CD20C();
-            if (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            if (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2))
             {
                 if (temp != temp_v0)
                 {
@@ -375,7 +375,7 @@ void func_800EBF70(void) // 0x800EBF70
             break;
 
         case 6:
-            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
 
             func_800CD20C();
             SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);

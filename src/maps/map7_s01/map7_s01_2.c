@@ -157,7 +157,7 @@ void func_800D725C(void) // 0x800D725C
 {
     s_FsImageDesc charaTex;
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 4 && g_SysWork.sysStateStep_C[0] <= 20)
     {
         SysWork_StateStepSet(0, 22);
@@ -337,7 +337,7 @@ void func_800D7A60(void) // 0x800D7A60
     SVECTOR3 rot;
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] <= 15)
     {
         SysWork_StateStepSet(0, 17);
@@ -1005,13 +1005,13 @@ void func_800D94DC(void) // 0x800D94DC
             Game_TimerUpdate();
             Gfx_CursorDraw((s16)(FP_FROM(sharedData_800E2CA8_7_s01, Q12_SHIFT) + 8), FP_FROM(sharedData_800E2CAC_7_s01, Q12_SHIFT) + 8, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
             {
                 SysWork_StateStepSet(0, 8);
                 break;
             }
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
             {
                 for (i = 0; i < ARRAY_SIZE(D_800E1510); i++)
                 {
@@ -1250,7 +1250,7 @@ void func_800D9C9C(void) // 0x800D9C9C
             break;
 
         case 4:
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
             {
                 if (!Savegame_EventFlagGet(EventFlag_487) && (D_800E1690.field_0 == 1 || D_800E1690.field_0 == 5 || D_800E1690.field_0 == 6))
                 {
@@ -1261,7 +1261,7 @@ void func_800D9C9C(void) // 0x800D9C9C
                     SysWork_StateStepSet(0, 15);
                 }
             }
-            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
             {
                 SysWork_StateStepSet(0, 15);
             }
@@ -1319,13 +1319,13 @@ void func_800D9C9C(void) // 0x800D9C9C
             // TODO: Should `Gfx_CursorDraw` first args be `s16`?
             Gfx_CursorDraw((s16)(FP_FROM(sharedData_800E2CA8_7_s01, 12) + 8), (s16)FP_FROM(sharedData_800E2CAC_7_s01, 12) + 8, 8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 0xC);
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
             {
                 SysWork_StateStepSet(0, 15);
                 break;
             }
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
             {
                 for (i = 0; i < 3; i++)
                 {
@@ -1789,7 +1789,7 @@ void func_800DB3D0(void) // 0x800DB3D0
             }
 
             ScreenFade_Reset();
-            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
 
             SD_Call(Sfx_Unk1657);
             SysWork_StateStepIncrement(0);
@@ -1797,7 +1797,7 @@ void func_800DB3D0(void) // 0x800DB3D0
 
         case 1:
             SysWork_StateStepIncrementAfterFade(2, true, 1, Q12(2.5f), false);
-            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
             break;
 
         case 2:
@@ -1941,7 +1941,7 @@ void func_800DCE20(void) // 0x800DCE20
     s32 i;
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 6)
     {
         SysWork_StateStepSet(0, 6);
@@ -2210,7 +2210,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
         case CELL_XZ(14, 15):
             if (!Savegame_EventFlagGet(EventFlag_485))
             {
-                if (g_SysWork.npcs_1A0[0].model.charaId_0 != Chara_GhostChildAlessa)
+                if (g_SysWork.npcs_1A0[0].model.charaId != Chara_GhostChildAlessa)
                 {
                     Chara_Spawn(Chara_GhostChildAlessa, 0, Q12(-60.0f), Q12(-20.0f), Q12_ANGLE(180.0f), 3);
                     Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio569);
@@ -2223,7 +2223,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
                     SD_Call(Sfx_XaAudio569);
                 }
             }
-            else if (g_SysWork.npcs_1A0[0].model.charaId_0 == Chara_GhostChildAlessa)
+            else if (g_SysWork.npcs_1A0[0].model.charaId == Chara_GhostChildAlessa)
             {
                 g_SysWork.npcs_1A0[0].properties.dahlia.field_124 = Q12(1.25f);
                 func_8008677C(g_SysWork.npcs_1A0, 2, 1);
@@ -2298,7 +2298,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
             break;
 
         case CELL_XZ(18, 15):
-            if (g_SysWork.npcs_1A0[0].model.charaId_0 == Chara_GhostChildAlessa)
+            if (g_SysWork.npcs_1A0[0].model.charaId == Chara_GhostChildAlessa)
             {
                 g_SysWork.npcs_1A0[0].timer_C6 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.2f));
 

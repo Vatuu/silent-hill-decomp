@@ -75,12 +75,12 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
     Demo_DemoRandSeedBackup();
 
-    switch (g_GameWork.gameStateStep_598[0])
+    switch (g_GameWork.gameStateSteps[0])
     {
         case 0:
             ScreenFade_Start(true, true, false);
             g_ScreenFadeTimestep            = Q12(3.0f);
-            g_GameWork.gameStateStep_598[0] = 1;
+            g_GameWork.gameStateSteps[0] = 1;
 
         case 1:
             DrawSync(SyncMode_Wait);
@@ -89,7 +89,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
             func_800892A4(1);
 
             g_IntervalVBlanks = 2;
-            g_GameWork.gameStateStep_598[0]++;
+            g_GameWork.gameStateSteps[0]++;
             g_SysWork.sysFlags_22A0 |= SysFlag_6;
             break;
     }
@@ -132,7 +132,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
     D_800A9A0C = ScreenFade_IsFinished() && Fs_QueueDoThingWhenEmpty();
 
-    if (!(g_SysWork.sysFlags_22A0 & SysFlag_Freeze) && g_MapOverlayHeader.worldObjectsUpdate_40 != NULL)
+    if (!(g_SysWork.sysFlags_22A0 & SysFlag_Pause) && g_MapOverlayHeader.worldObjectsUpdate_40 != NULL)
     {
         g_MapOverlayHeader.worldObjectsUpdate_40();
     }
@@ -142,7 +142,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
     Demo_DemoRandSeedRestore();
     Demo_DemoRandSeedRestore();
 
-    if (!(g_SysWork.sysFlags_22A0 & SysFlag_Freeze))
+    if (!(g_SysWork.sysFlags_22A0 & SysFlag_Pause))
     {
         func_80040014();
         vcMoveAndSetCamera(false, false, false, false, false, false, false, false);
@@ -227,7 +227,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
         return;
     }
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.light_A &&
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.light_A &&
         g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1))
     {
         Game_FlashlightToggle();
@@ -237,7 +237,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
     {
         SysWork_StateSetNext(g_MapEventSysState);
     }
-    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.pause_14)
+    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.pause_14)
     {
         SysWork_StateSetNext(SysState_GamePaused);
     }
@@ -245,16 +245,16 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
     {
         return;
     }
-    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16)
+    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.item_16)
     {
         SysWork_StateSetNext(SysState_StatusMenu);
     }
-    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18)
+    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.map_18)
     {
         SysWork_StateSetNext(SysState_MapScreen);
         g_SysWork.isMgsStringSet_18 = false;
     }
-    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.option_1A)
+    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.option_1A)
     {
         SysWork_StateSetNext(SysState_OptionsMenu);
     }
@@ -314,7 +314,7 @@ void SysState_GamePaused_Update(void) // 0x800391E8
         return;
     }
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.pause_14)
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.pause_14)
     {
         D_800A9A68 = 0;
 
@@ -444,27 +444,27 @@ void SysState_StatusMenu_Update(void) // 0x80039568
 {
     e_GameState gameState;
 
-    gameState = g_GameWork.gameState_594;
+    gameState = g_GameWork.gameState;
 
-    g_GameWork.gameState_594 = GameState_LoadStatusScreen;
+    g_GameWork.gameState = GameState_LoadStatusScreen;
     g_SysWork.counters_1C[0] = 0;
     g_SysWork.counters_1C[1] = 0;
 
-    g_GameWork.gameStateStep_598[1] = 0;
-    g_GameWork.gameStateStep_598[2] = 0;
+    g_GameWork.gameStateSteps[1] = 0;
+    g_GameWork.gameStateSteps[2] = 0;
 
     SysWork_StateSetNext(SysState_Gameplay);
 
-    g_GameWork.gameStateStep_598[0] = gameState;
-    g_GameWork.gameStatePrev_590    = gameState;
-    g_GameWork.gameStateStep_598[0] = 0;
+    g_GameWork.gameStateSteps[0] = gameState;
+    g_GameWork.gameStatePrev    = gameState;
+    g_GameWork.gameStateSteps[0] = 0;
 }
 
 void GameState_LoadStatusScreen_Update(void) // 0x800395C0
 {
     s_Savegame* save;
 
-    if (g_GameWork.gameStateStep_598[0] == 0)
+    if (g_GameWork.gameStateSteps[0] == 0)
     {
         DrawSync(SyncMode_Wait);
         g_IntervalVBlanks = 1;
@@ -481,7 +481,7 @@ void GameState_LoadStatusScreen_Update(void) // 0x800395C0
         func_800540A4(save->mapOverlayId_A4);
         GameFs_MapItemsTextureLoad(save->mapOverlayId_A4);
 
-        g_GameWork.gameStateStep_598[0]++;
+        g_GameWork.gameStateSteps[0]++;
     }
 
     Screen_BackgroundMotionBlur(SyncMode_Wait2);
@@ -496,7 +496,7 @@ void SysState_MapScreen_Update(void) // 0x800396D4
 {
     if (!HAS_MAP(g_SavegamePtr->paperMapIdx_A9))
     {
-        if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
+        if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.map_18 ||
             Gfx_MapMsg_Draw(MapMsgIdx_NoMap) > MapMsgState_Idle)
         {
             SysWork_StateSetNext(SysState_Gameplay);
@@ -506,7 +506,7 @@ void SysState_MapScreen_Update(void) // 0x800396D4
              ((g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) ||
               (g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0))))
     {
-        if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
+        if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.map_18 ||
             Gfx_MapMsg_Draw(MapMsgIdx_TooDarkForMap) > MapMsgState_Idle)
         {
             SysWork_StateSetNext(SysState_Gameplay);
@@ -537,7 +537,7 @@ void SysState_MapScreen_Update(void) // 0x800396D4
 
 void GameState_LoadMapScreen_Update(void) // 0x8003991C
 {
-    if (g_GameWork.gameStateStep_598[0] == 0)
+    if (g_GameWork.gameStateSteps[0] == 0)
     {
         DrawSync(SyncMode_Wait);
         g_IntervalVBlanks = 1;
@@ -551,7 +551,7 @@ void GameState_LoadMapScreen_Update(void) // 0x8003991C
         }
 
         Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[g_SavegamePtr->paperMapIdx_A9], FS_BUFFER_2, &g_PaperMapImg);
-        g_GameWork.gameStateStep_598[0]++;
+        g_GameWork.gameStateSteps[0]++;
     }
 
     Screen_BackgroundMotionBlur(SyncMode_Wait2);
@@ -614,10 +614,10 @@ void SysState_Fmv_Update(void) // 0x80039A58
     // Return to game.
     Game_StateSetNext(GameState_InGame);
 
-    // If flag is set, returns to `GameState_InGame` with `gameStateStep[0]` = 1.
+    // If flag is set, returns to `GameState_InGame` with `gameStateSteps[0]` = 1.
     if (g_MapEventData->flags_8_13 & EventParamUnkState_1)
     {
-        g_GameWork.gameStateStep_598[0] = 1;
+        g_GameWork.gameStateSteps[0] = 1;
     }
 }
 
@@ -677,7 +677,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
         g_SysWork.flags_22A4 &= ~SysFlag2_6;
     }
 
-    g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
+    g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
     Game_StateSetNext(GameState_MainLoadScreen);
     Screen_BackgroundMotionBlur(SyncMode_Immediate);
 }
@@ -716,7 +716,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
     {
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
-            if (g_SysWork.npcs_1A0[i].model.charaId_0 >= Chara_Harry && g_SysWork.npcs_1A0[i].model.charaId_0 <= Chara_MonsterCybil &&
+            if (g_SysWork.npcs_1A0[i].model.charaId >= Chara_Harry && g_SysWork.npcs_1A0[i].model.charaId <= Chara_MonsterCybil &&
                 g_SysWork.npcs_1A0[i].health > Q12(0.0f))
             {
                 break;
@@ -775,10 +775,10 @@ void func_8003A16C(void) // 0x8003A16C
 {
     if (!(g_SysWork.flags_22A4 & SysFlag2_1))
     {
-        // Update `savegame_30C` with player info.
+        // Update `savegame` with player info.
         SysWork_SavegameUpdatePlayer();
 
-        g_GameWork.autosave_90 = g_GameWork.savegame_30C;
+        g_GameWork.autosave = g_GameWork.savegame;
     }
 }
 
@@ -827,21 +827,21 @@ void SysState_SaveMenu_Update(void) // 0x8003A230
 
                 func_8003943C();
 
-                gameState = g_GameWork.gameState_594;
+                gameState = g_GameWork.gameState;
 
-                g_GameWork.gameState_594 = GameState_SaveScreen;
+                g_GameWork.gameState = GameState_SaveScreen;
 
                 g_SysWork.counters_1C[0] = 0;
                 g_SysWork.counters_1C[1] = 0;
 
-                g_GameWork.gameStateStep_598[1] = 0;
-                g_GameWork.gameStateStep_598[2] = 0;
+                g_GameWork.gameStateSteps[1] = 0;
+                g_GameWork.gameStateSteps[2] = 0;
 
                 SysWork_StateSetNext(SysState_Gameplay);
 
-                g_GameWork.gameStateStep_598[0] = gameState;
-                g_GameWork.gameStatePrev_590    = gameState;
-                g_GameWork.gameStateStep_598[0] = 0;
+                g_GameWork.gameStateSteps[0] = gameState;
+                g_GameWork.gameStatePrev    = gameState;
+                g_GameWork.gameStateSteps[0] = 0;
             }
             break;
     }
@@ -891,22 +891,22 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             g_MapOverlayHeader.playerControlFreeze_C8();
             g_SysWork.field_28 = Q12(0.0f);
 
-            if (g_GameWork.autosave_90.continueCount_27B < 99)
+            if (g_GameWork.autosave.continueCount_27B < 99)
             {
-                g_GameWork.autosave_90.continueCount_27B++;
+                g_GameWork.autosave.continueCount_27B++;
             }
 
             MainMenu_SelectedOptionIdxReset();
 
             // If every game over tip has been seen, reset flag bits.
-            if (g_GameWork.config_0.seenGameOverTips_2E[0] == SHRT_MAX)
+            if (g_GameWork.config.seenGameOverTips_2E[0] == SHRT_MAX)
             {
-                g_GameWork.config_0.seenGameOverTips_2E[0] = 0;
+                g_GameWork.config.seenGameOverTips_2E[0] = 0;
             }
 
             randTipVal = 0;
 
-            seenTipIdxs[0] = g_GameWork.config_0.seenGameOverTips_2E[0];
+            seenTipIdxs[0] = g_GameWork.config.seenGameOverTips_2E[0];
             for (tipIdx = 0; tipIdx < TIP_COUNT; tipIdx++)
             {
                 if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
@@ -976,8 +976,8 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             Gfx_StringDraw("\aGAME_OVER", DEFAULT_MAP_MESSAGE_LENGTH);
             g_SysWork.field_28++;
 
-            if ((g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-                                                  g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)) ||
+            if ((g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 |
+                                                  g_GameWorkPtr->config.controllerConfig.cancel_2)) ||
                 g_SysWork.field_28 > Q12(1.0f / 17.0f))
             {
                 SysWork_StateStepIncrement(0);
@@ -1013,8 +1013,8 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             g_SysWork.field_28++;
             Screen_BackgroundImgDraw(&g_DeathTipImg);
 
-            if (!(g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-                                                   g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
+            if (!(g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 |
+                                                   g_GameWorkPtr->config.controllerConfig.cancel_2)))
             {
                 if (g_SysWork.field_28 <= 480)
                 {
@@ -1023,7 +1023,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             }
 
             // TODO: some inline FlagSet func? couldn't get matching ver, but pretty sure temp_a0 can be removed somehow
-            temp_a0 = &g_GameWork.config_0.seenGameOverTips_2E[(prevTipIdx >> 5)];
+            temp_a0 = &g_GameWork.config.seenGameOverTips_2E[(prevTipIdx >> 5)];
             *temp_a0 |= (1 << 0) << (prevTipIdx & 0x1F);
 
             SysWork_StateStepIncrement(0);
@@ -1041,9 +1041,9 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             break;
     }
 
-    if (g_SysWork.sysStateStep_C[0] >= 2 || g_GameWork.gameState_594 != GameState_InGame)
+    if (g_SysWork.sysStateStep_C[0] >= 2 || g_GameWork.gameState != GameState_InGame)
     {
-        g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
+        g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
     }
 
     #undef TIP_COUNT
@@ -1051,11 +1051,11 @@ void SysState_GameOver_Update(void) // 0x8003A52C
 
 void GameState_MapEvent_Update(void) // 0x8003AA4C
 {
-    if (g_GameWork.gameStateStep_598[0] == 0)
+    if (g_GameWork.gameStateSteps[0] == 0)
     {
         g_IntervalVBlanks               = 1;
         ScreenFade_Start(true, true, false);
-        g_GameWork.gameStateStep_598[0] = 1;
+        g_GameWork.gameStateSteps[0] = 1;
     }
 
     D_800A9A0C = ScreenFade_IsFinished() && Fs_QueueDoThingWhenEmpty();

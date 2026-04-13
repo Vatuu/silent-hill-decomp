@@ -101,8 +101,8 @@ bool func_80033548(void) // 0x80033548
     MemCard_SysInit2();
     MemCard_InitStatus();
 
-    if (g_GameWork.gameState_594 == GameState_SaveScreen ||
-        g_GameWork.gameState_594 == GameState_KcetLogo)
+    if (g_GameWork.gameState == GameState_SaveScreen ||
+        g_GameWork.gameState == GameState_KcetLogo)
     {
         g_SaveScreen_SaveScreenState = SaveScreenState_Save;
     }
@@ -433,8 +433,8 @@ bool func_80033548(void) // 0x80033548
             g_SelectedSaveSlotIdx = 0;
         }
 
-        g_GameWork.gameStateStep_598[1] = 0;
-        g_GameWork.gameStateStep_598[2] = 0;
+        g_GameWork.gameStateSteps[1] = 0;
+        g_GameWork.gameStateSteps[2] = 0;
     }
 
     switch (sp3C)

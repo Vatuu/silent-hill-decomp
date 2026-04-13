@@ -119,7 +119,7 @@ void func_800D0B64(void) // 0x800D0B64
     #define lisaChara g_SysWork.npcs_1A0[0]
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
     {
         SysWork_StateStepSet(0, EventState_Skip);
@@ -395,7 +395,7 @@ void func_800D1604(void) // 0x800D1604
     if (g_SysWork.sysStateStep_C[0] >= 7)
     {
         temp_v0 = Screen_FadeInProgressGet();
-        temp_v1 = (g_GameWork.config_0.optBrightness_22 * 8) + 4;
+        temp_v1 = (g_GameWork.config.optBrightness_22 * 8) + 4;
 
         ptr->field_14 = GsOUT_PACKET_P;
 
@@ -454,7 +454,7 @@ void func_800D1604(void) // 0x800D1604
 
     GsOUT_PACKET_P = ptr->field_8;
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4)
     {
         if (g_SysWork.sysStateStep_C[0] >= 3)
         {

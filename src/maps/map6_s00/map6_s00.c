@@ -96,7 +96,7 @@ void func_800EB11C(void) // 0x800EB11C
     s32 vol;
 
     // Skip.
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4 &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
     {
         SysWork_StateStepSet(0, EventState_Skip);

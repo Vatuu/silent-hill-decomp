@@ -92,7 +92,7 @@ void vcStartCameraSystem(void) // 0x800809DC
     vcWork.view_cam_active_f = true;
     vcWork.updateLookAtPoint = false;
     vcWork.updateLookAtMat   = false;
-    vcWork.geom_screen_dist  = g_GameWork.gsScreenHeight_58A;
+    vcWork.geom_screen_dist  = g_GameWork.gsScreenHeight;
 }
 
 void vcEndCameraSystem(void) // 0x80080A04
@@ -260,7 +260,7 @@ void vcReturnPreAutoCamWork(bool warp_f) // 0x80080ED0
     }
 
     vcWork.flags         &= ~(VC_USER_CAM_F | VC_USER_WATCH_F);
-    vcWork.geom_screen_dist = g_GameWork.gsScreenHeight_58A;
+    vcWork.geom_screen_dist = g_GameWork.gsScreenHeight;
 }
 
 void vcSetSubjChara(VECTOR3* chara_pos,
@@ -313,7 +313,7 @@ s32 vcExecCamera(void) // 0x80080FBC
     cur_rd_area_size = vcWork.cur_near_road.road_p->area_size_type;
     cur_cam_mv_type  = vcRetCurCamMvType(&vcWork);
 
-    far_watch_rate     = vcRetFarWatchRate(CHECK_FLAG(vcWork.flags, VC_PRS_F_VIEW_F, !g_GameWorkConst->config_0.optExtraViewCtrl_28), cur_cam_mv_type, &vcWork);
+    far_watch_rate     = vcRetFarWatchRate(CHECK_FLAG(vcWork.flags, VC_PRS_F_VIEW_F, !g_GameWorkConst->config.optExtraViewCtrl_28), cur_cam_mv_type, &vcWork);
     self_view_eff_rate = vcRetSelfViewEffectRate(cur_cam_mv_type, far_watch_rate, &vcWork);
 
     if (!(vcWork.flags & (VC_USER_CAM_F | VC_USER_WATCH_F)))
@@ -366,7 +366,7 @@ void vcSetAllNpcDeadTimer(void) // 0x8008123C
     for (curChara = &g_SysWork.npcs_1A0[0]; curChara < &g_SysWork.npcs_1A0[ARRAY_SIZE(g_SysWork.npcs_1A0)]; curChara++)
     {
         // Continue if invalid character.
-        if (curChara->model.charaId_0 == Chara_None)
+        if (curChara->model.charaId == Chara_None)
         {
             continue;
         }
@@ -441,13 +441,13 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
 {
     bool hasViewFlag;
 
-    if (g_GameWorkConst->config_0.optExtraViewMode_29)
+    if (g_GameWorkConst->config.optExtraViewMode_29)
     {
         hasViewFlag = (vcWork.flags & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
 
         // TODO: Can this weird XOR be removed? (XOR 1) should be same as `!hasViewFlag`?
-        if ((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (hasViewFlag ^ 1) != 0) ||
-            (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && hasViewFlag))
+        if ((g_GameWorkConst->config.optExtraViewCtrl_28 && (hasViewFlag ^ 1) != 0) ||
+            (!g_GameWorkConst->config.optExtraViewCtrl_28 && hasViewFlag))
         {
             if (!(w_p->flags & (VC_USER_CAM_F | VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)) &&
                 !func_8008150C(w_p->chara_pos.vx, w_p->chara_pos.vz))
@@ -619,14 +619,14 @@ q19_12 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_t
         }
     }
 
-    if (g_GameWorkConst->config_0.optExtraViewMode_29)
+    if (g_GameWorkConst->config.optExtraViewMode_29)
     {
         // Awkward `VC_PRS_F_VIEW_F` flag check. TODO: Use `CHECK_FLAG`? It's possible this was originally typed manually.
         prsFViewFlag = vcWork.flags >> 9;
         prsFViewFlag = prsFViewFlag & (1 << 0);
 
-        if ((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (prsFViewFlag ^ 1) != 0) ||
-            (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && prsFViewFlag))
+        if ((g_GameWorkConst->config.optExtraViewCtrl_28 && (prsFViewFlag ^ 1) != 0) ||
+            (!g_GameWorkConst->config.optExtraViewCtrl_28 && prsFViewFlag))
         {
             if (!(w_p->flags & (VC_USER_CAM_F | VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)) &&
                 func_8008150C(w_p->chara_pos.vx, w_p->chara_pos.vz))
@@ -758,8 +758,8 @@ void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, s32 far_watch_rate, bool 
 
         // `optExtraViewCtrl && !vcPrsFViewFlag` ||
         // `!optExtraViewCtrl && vcPrsFViewFlag`
-        if ((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (vcPrsFViewFlag ^ 1) != 0) ||
-            (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && vcPrsFViewFlag))
+        if ((g_GameWorkConst->config.optExtraViewCtrl_28 && (vcPrsFViewFlag ^ 1) != 0) ||
+            (!g_GameWorkConst->config.optExtraViewCtrl_28 && vcPrsFViewFlag))
         {
             // Awkward `VC_OLD_PRS_F_VIEW_F` flag check.
             vcOldPrsFViewFlag = vcWork.flags >> 10;
@@ -767,10 +767,10 @@ void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, s32 far_watch_rate, bool 
 
             // `!(optExtraViewCtrl && !vcOldPrsFViewFlag)` &&
             // `!(!optExtraViewCtrl && vcOldPrsFViewFlag)`
-            if (!(g_GameWorkConst->config_0.optExtraViewCtrl_28 && (vcOldPrsFViewFlag ^ 1) != 0) &&
-                !(!g_GameWorkConst->config_0.optExtraViewCtrl_28 && vcOldPrsFViewFlag))
+            if (!(g_GameWorkConst->config.optExtraViewCtrl_28 && (vcOldPrsFViewFlag ^ 1) != 0) &&
+                !(!g_GameWorkConst->config.optExtraViewCtrl_28 && vcOldPrsFViewFlag))
             {
-                if (g_GameWorkConst->config_0.optExtraViewMode_29)
+                if (g_GameWorkConst->config.optExtraViewMode_29)
                 {
                     Vc_FlagSet(VC_WARP_WATCH_F);
                 }
@@ -802,7 +802,7 @@ void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list) // 0x80
             vcWork.flags &= ~VC_OLD_PRS_F_VIEW_F;
         }
 
-        if (g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.view_E)
+        if (g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.view_E)
         {
             vcWork.flags |= VC_PRS_F_VIEW_F;
         }
@@ -812,8 +812,8 @@ void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list) // 0x80
         }
     }
 
-    vcWork.scr_half_ang_wx = (s16)(ratan2(g_GameWork.gsScreenWidth_588,  vcWork.geom_screen_dist) >> 1);
-    vcWork.scr_half_ang_wy = (s16)(ratan2(g_GameWork.gsScreenHeight_58A, vcWork.geom_screen_dist) >> 1);
+    vcWork.scr_half_ang_wx = (s16)(ratan2(g_GameWork.gsScreenWidth,  vcWork.geom_screen_dist) >> 1);
+    vcWork.scr_half_ang_wy = (s16)(ratan2(g_GameWork.gsScreenHeight, vcWork.geom_screen_dist) >> 1);
 
     if (vcWork.through_door_activate_init_f)
     {
@@ -890,8 +890,8 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
 
     for (sc_p = &g_SysWork.npcs_1A0[0]; sc_p < &g_SysWork.npcs_1A0[ARRAY_SIZE(g_SysWork.npcs_1A0)]; sc_p++)
     {
-        if (sc_p->model.charaId_0 >= Chara_AirScreamer &&
-            sc_p->model.charaId_0 <= Chara_MonsterCybil &&
+        if (sc_p->model.charaId >= Chara_AirScreamer &&
+            sc_p->model.charaId <= Chara_MonsterCybil &&
             (sc_p->deathTimer <= ENEMY_DEATH_TIME_MAX || sc_p->health >= Q12(0.0f)) &&
             !(sc_p->flags & CharaFlag_Unk5)) // `sc_p->battle(ShBattleInfo).status & (1 << 5)` in SH2.
         {
@@ -914,8 +914,8 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
             }
 
             // TODO: Not sure how to move the `set_active_data_f = true` part out of this if.
-            if (sc_p->model.charaId_0 >= Chara_HangedScratcher ||
-                (set_active_data_f = true, (sc_p->model.charaId_0 < Chara_Stalker)))
+            if (sc_p->model.charaId >= Chara_HangedScratcher ||
+                (set_active_data_f = true, (sc_p->model.charaId < Chara_Stalker)))
             {
                 set_active_data_f = true;
                 if (sc_p->flags & CharaFlag_Unk2) // `sc_p->battle(ShBattleInfo).status & (1 << 2)` in SH2.
@@ -1738,8 +1738,8 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
         }
 
         // Compute look-at Y anchor.
-        ofs_y = Q8_TO_Q12(CHARA_FILE_INFOS[sc_p->model.charaId_0].cameraOffsetY_C_2);
-        switch (CHARA_FILE_INFOS[sc_p->model.charaId_0].cameraAnchor_C_0)
+        ofs_y = Q8_TO_Q12(CHARA_FILE_INFOS[sc_p->model.charaId].cameraOffsetY_C_2);
+        switch (CHARA_FILE_INFOS[sc_p->model.charaId].cameraAnchor_C_0)
         {
             default:
             case CameraAnchor_Character:
@@ -1813,7 +1813,7 @@ void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, s1
     q19_12 dist;
     q3_12  cam_ang_x;
 
-    max_cam_ang_x = ratan2(cam_pos->vy + Q12(5.0f), Q12(13.0f)) - ratan2(g_GameWork.gsScreenHeight_58A / 2, sy);
+    max_cam_ang_x = ratan2(cam_pos->vy + Q12(5.0f), Q12(13.0f)) - ratan2(g_GameWork.gsScreenHeight / 2, sy);
     dist          = Vc_VectorMagnitudeCalc(watch_pos->vx - cam_pos->vx, 0, watch_pos->vz - cam_pos->vz);
     cam_ang_x     = ratan2(-watch_pos->vy + cam_pos->vy, dist);
 
@@ -1926,7 +1926,7 @@ void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_T
         return;
     }
 
-    if (g_GameWorkConst->config_0.optExtraViewMode_29)
+    if (g_GameWorkConst->config.optExtraViewMode_29)
     {
         chara2cam_ang_y = w_p->chara_eye_ang_y   + Q12_ANGLE(140.0f);
         ideal_pos->vy   = w_p->chara_head_pos.vy + Q12(0.07f);

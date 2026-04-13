@@ -206,7 +206,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
         #define curNpc g_SysWork.npcs_1A0[i]
 
         // Check if NPC is valid.
-        if (curNpc.model.charaId_0 == Chara_None ||
+        if (curNpc.model.charaId == Chara_None ||
             curNpc.health < Q12(0.0f) || i == npcIdx)
         {
             continue;

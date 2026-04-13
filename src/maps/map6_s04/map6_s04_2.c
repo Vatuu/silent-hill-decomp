@@ -1645,7 +1645,7 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
     temp3   = vcWork.flags;
     temp3   = temp3 >> 9;
     temp3   = temp3 & 1;
-    temp_s5 = temp3 ^ (g_GameWorkConst->config_0.optExtraViewCtrl_28 != false);
+    temp_s5 = temp3 ^ (g_GameWorkConst->config.optExtraViewCtrl_28 != false);
 
     Vc_VectorMagnitudeCalc(player->position.vx - npc->position.vx, Q12(0.0f), player->position.vz - npc->position.vz);
     angle2 = ratan2(player->position.vx - Q12(20.0f), player->position.vz - Q12(100.0f));
@@ -1753,19 +1753,19 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
 
     sp18.vy = -Math_Sin(Q12_ANGLE(-20.0f)) * Q12(3.0f) / Math_Cos(Q12_ANGLE(-20.0f)) - Q12(2.4f);
 
-    if (temp_s5 != 0 && g_GameWorkConst->config_0.optExtraViewMode_29)
+    if (temp_s5 != 0 && g_GameWorkConst->config.optExtraViewMode_29)
     {
         temp_v1_2 = vcWork.flags >> 9;
         temp_v1_2 = temp_v1_2 & 1;
 
-        if (( g_GameWorkConst->config_0.optExtraViewCtrl_28 && (temp_v1_2 ^ 1) != 0) ||
-            (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && temp_v1_2 != 0))
+        if (( g_GameWorkConst->config.optExtraViewCtrl_28 && (temp_v1_2 ^ 1) != 0) ||
+            (!g_GameWorkConst->config.optExtraViewCtrl_28 && temp_v1_2 != 0))
         {
             temp_a0_2 = vcWork.flags >> 10;
             temp_a0_2 = temp_a0_2 & 0x1;
 
-            if (( g_GameWorkConst->config_0.optExtraViewCtrl_28 && (temp_a0_2 ^ 1) == 0) ||
-                (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && temp_a0_2 == 0))
+            if (( g_GameWorkConst->config.optExtraViewCtrl_28 && (temp_a0_2 ^ 1) == 0) ||
+                (!g_GameWorkConst->config.optExtraViewCtrl_28 && temp_a0_2 == 0))
             {
                 vcReturnPreAutoCamWork(true);
                 return;
@@ -1816,7 +1816,7 @@ void func_800E1D50(void) // 0x800E1D50
     q19_12   rotZ;
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
     {
         SysWork_StateStepSet(0, EventState_Skip);
@@ -1984,7 +1984,7 @@ void func_800E219C(void) // 0x800E219C
 
     #define playerChara g_SysWork.playerWork.player
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 8)
     {
         SysWork_StateStepReset();
@@ -2271,7 +2271,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
     #define playerChara g_SysWork.playerWork.player
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] == 7)
     {
         SysWork_StateStepSet(0, 8);
@@ -2415,7 +2415,7 @@ void func_800E3244(void) // 0x800E3244
     #define playerChara g_SysWork.playerWork.player
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 27)
     {
         if (g_SysWork.sysStateStep_C[0] != 20 &&
@@ -2722,7 +2722,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 4 && g_SysWork.sysStateStep_C[0] < 63)
     {
         func_800E01F4();
@@ -3122,7 +3122,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             break;
 
         case 66:
-            if (g_SysWork.npcs_1A0[1].model.charaId_0 == Chara_Flauros)
+            if (g_SysWork.npcs_1A0[1].model.charaId == Chara_Flauros)
             {
                 func_80088F94(&g_SysWork.npcs_1A0[1], 0, 0);
             }
@@ -3257,7 +3257,7 @@ void func_800E558C(void) // 0x800E558C
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4 &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 6)
     {
         SysWork_StateStepSet(0, 6);
@@ -3328,7 +3328,7 @@ void func_800E558C(void) // 0x800E558C
             break;
 
         case 7:
-            if (g_SysWork.npcs_1A0[0].model.charaId_0 != Chara_Alessa)
+            if (g_SysWork.npcs_1A0[0].model.charaId != Chara_Alessa)
             {
                 Chara_ProcessLoads();
                 Chara_Spawn(Chara_Alessa, 0, playerChara.position.vx + Q12(1.0f), playerChara.position.vz, Q12_ANGLE(11.3f), 3);

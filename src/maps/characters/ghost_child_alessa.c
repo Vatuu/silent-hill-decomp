@@ -16,7 +16,7 @@
  */
 void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (chara->model.charaId_0 != Chara_GhostChildAlessa)
+    if (chara->model.charaId != Chara_GhostChildAlessa)
     {
         Ai_GhostChildAlessa_Init(chara);
     }

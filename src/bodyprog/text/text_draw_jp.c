@@ -292,13 +292,13 @@ void func_8004AA6C(s16 x, s16 y) // 0x8004AA6C
 {
     if (x != NO_VALUE)
     {
-        D_800C5DEC = x + (-g_GameWork.gsScreenWidth_588 / 2);
+        D_800C5DEC = x + (-g_GameWork.gsScreenWidth / 2);
         D_800C391C = D_800C5DEC;
     }
 
     if (y != NO_VALUE)
     {
-        D_800C5DEE = y + (-g_GameWork.gsScreenHeight_58A / 2);
+        D_800C5DEE = y + (-g_GameWork.gsScreenHeight / 2);
     }
 }
 

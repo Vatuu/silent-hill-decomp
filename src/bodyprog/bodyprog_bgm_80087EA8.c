@@ -18,7 +18,7 @@
 
 void func_80087EA8(s32 cmd) // 0x80087EA8
 {
-    if (!Bgm_IsCurrentBgmTargetCheck(cmd))
+    if (!Bgm_ActiveBgmTrackCheck(cmd))
     {
         return;
     }
@@ -36,7 +36,7 @@ void func_80087EDC(s32 cmd) // 0x80087EDC
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
-            if (!Bgm_IsCurrentBgmTargetCheck(cmd))
+            if (!Bgm_ActiveBgmTrackCheck(cmd))
             {
                 SysWork_StateStepSet(1, 3);
                 break;

@@ -487,15 +487,15 @@ typedef enum _PaperMapIdx
 // Temp name. Related to music.
 typedef enum _SysFlags
 {
-    SysFlag_None   = 0,
-    SysFlag_Freeze = 1 << 0,
-    SysFlag_1      = 1 << 1,
-    SysFlag_2      = 1 << 2,
-    SysFlag_3      = 1 << 3,
-    SysFlag_4      = 1 << 4,
-    SysFlag_5      = 1 << 5,
-    SysFlag_6      = 1 << 6,
-    SysFlag_Mute   = 1 << 7
+    SysFlag_None  = 0,
+    SysFlag_Pause = 1 << 0,
+    SysFlag_1     = 1 << 1,
+    SysFlag_2     = 1 << 2,
+    SysFlag_3     = 1 << 3,
+    SysFlag_4     = 1 << 4,
+    SysFlag_5     = 1 << 5,
+    SysFlag_6     = 1 << 6,
+    SysFlag_Mute  = 1 << 7
 } e_SysFlags;
 
 // Temp name.
@@ -1141,7 +1141,7 @@ STATIC_ASSERT_SIZEOF(s_EventData, 12);
 
 typedef struct _SaveUserConfig
 {
-    s_ControllerConfig controllerConfig_0;
+    s_ControllerConfig controllerConfig;
     s8                 optScreenPosX_1C;          /** Range: [-11, 11], default: 0. */
     s8                 optScreenPosY_1D;          /** Range: [-8, 8], default: 0. */
     u8                 optSoundType_1E;           /** `bool` | Stereo: `false`, Monaural: `true`, default: Stereo. */
@@ -1152,7 +1152,7 @@ typedef struct _SaveUserConfig
     u8                 optExtraWeaponCtrl_23;     /** `bool` | Switch: `false`, Press: `true`, default: Press. */
     u8                 optExtraBloodColor_24;     /** `e_BloodColor` | Default: Normal. */
     s8                 optAutoLoad_25;            /** `bool` | Off: `false`, On: `true`, default: Off. */
-    u8                 unk_26;
+    u8                 unk_26; // Padding.
     u8                 optExtraOptionsEnabled_27; /** Holds unlocked option flags. */
     s8                 optExtraViewCtrl_28;       /** `bool` | Normal: `false`, Reverse: `true`, default: Normal. */
     s8                 optExtraViewMode_29;       /** `bool` | Normal: `false`, Self View: `true`, default: Normal. */
@@ -1166,36 +1166,35 @@ typedef struct _SaveUserConfig
 } s_SaveUserConfig;
 STATIC_ASSERT_SIZEOF(s_SaveUserConfig, 56);
 
-/** @brief Game workspace. Stores miscellaneous gameplay-related data.
- */
+/** @brief Game workspace. Stores miscellaneous gameplay-related data. */
 typedef struct _GameWork
 {
-    s_SaveUserConfig   config_0;
-    s_ControllerData   controllers_38[CONTROLLER_COUNT_MAX];
-    s_Savegame         autosave_90;
-    s_Savegame         savegame_30C;
-    u16                gsScreenWidth_588;
-    u16                gsScreenHeight_58A;
-    s_PrimColor        background2dColor_58C;
-    e_GameState        gameStatePrev_590;
-    e_GameState        gameState_594;
-    s32                gameStateStep_598[3]; /** Temp data used by current `gameState`. Can be another state ID or other data.
-                                              * This states could be sub-states for specific events of individual screens
-                                              * because of the way it's normally used in menus. For example: in the settings
-                                              * screen, [0] is used to define what option the player has selected, and [1] is used
-                                              * during specific settings screens, such as the position screen or the brightness screen.
-                                              *
-                                              * [2] is likely rarely used or maybe only used during maps.
-                                              */
-    s8                 unk_5A4[4];
-    s32                field_5A8;
-    s32                field_5AC;
-    s8                 unk_5B0;
-    s8                 mapAnimIdx_5B1;
-    s8                 bgmTrackIdx_5B2; /** `BgmTrackIdx` | Currently player background music track. */
-    s8                 ambientIdx_5B4;  // Index of `g_AmbientVabTaskLoadCmds`.
-    s_AnalogController rawController_5B4;
-    s8                 unused_5BC[28];  // @unused Debug data?
+    /* 0x0   */ s_SaveUserConfig   config;
+    /* 0x38  */ s_ControllerData   controllers[CONTROLLER_COUNT_MAX];
+    /* 0x90  */ s_Savegame         autosave;
+    /* 0x30C */ s_Savegame         savegame;
+    /* 0x588 */ u16                gsScreenWidth;
+    /* 0x58A */ u16                gsScreenHeight;
+    /* 0x58C */ s_PrimColor        background2dColor;
+    /* 0x590 */ e_GameState        gameStatePrev;
+    /* 0x594 */ e_GameState        gameState;
+    /* 0x598 */ s32                gameStateSteps[3]; /** Sub-state steps used by the current `gameState`. Can other state IDs or data.
+                                                       * This states could be sub-states for specific events of individual screens
+                                                       * because of the way it's normally used in menus. For example: in the settings
+                                                       * screen, [0] is used to define what option the player has selected, and [1] is used
+                                                       * during specific settings screens, such as the position screen or the brightness screen.
+                                                       *
+                                                       * [2] is likely rarely used or maybe only used during maps.
+                                                       */
+    /* 0x5A4 */ s8                 unk_5A4[4];        // Padding?
+    /* 0x5A8 */ s32                field_5A8;
+    /* 0x5AC */ s32                field_5AC;
+    /* 0x5B0 */ s8                 unk_5B0;           // Padding?
+    /* 0x5B1 */ s8                 mapAnimIdx;
+    /* 0x5B2 */ s8                 bgmIdx;            /** `BgmTrackIdx` | Currently player background music track. */
+    /* 0x5B4 */ s8                 ambientIdx;        /** Index of `g_AmbientVabTaskLoadCmds`. */
+    /* 0x5B4 */ s_AnalogController rawController;
+    /* 0x5BC */ s8                 unused_5BC[28];    // @unused Debug data?
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 
@@ -1236,7 +1235,7 @@ STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 /** @brief Character model. */
 typedef struct _Model
 {
-    /* 0x0 */ s8          charaId_0;      /** `e_CharacterId` TODO: Trim suffix. Not yet as another struct has the same field. */
+    /* 0x0 */ s8          charaId;      /** `e_CharacterId` */
     /* 0x1 */ u8          paletteIdx;   /** Changes the texture palette index for this model. */
     /* 0x2 */ u8          controlState; /** Active character control state. */
     /* 0x3 */ u8          stateStep;    // Step number or temp data for the current `controlState`? In `s_PlayerExtra` always 1, set to 0 for 1 tick when anim state appears to change.
@@ -2103,21 +2102,21 @@ static inline void Game_StateSetNext_ClearStateSteps(e_GameState gameState)
 {
     e_GameState prevState;
 
-    prevState = g_GameWork.gameState_594;
+    prevState = g_GameWork.gameState;
 
-    g_GameWork.gameState_594        = gameState;
+    g_GameWork.gameState        = gameState;
     g_SysWork.counters_1C[0]              = 0;
     g_SysWork.counters_1C[1]              = 0;
-    g_GameWork.gameStateStep_598[1] = 0;
-    g_GameWork.gameStateStep_598[2] = 0;
+    g_GameWork.gameStateSteps[1] = 0;
+    g_GameWork.gameStateSteps[2] = 0;
 
     SysWork_StateSetNext(SysState_Gameplay);
 
-    g_GameWork.gameStateStep_598[1] = 0;
-    g_GameWork.gameStateStep_598[2] = 0;
-    g_GameWork.gameStateStep_598[0] = prevState;
-    g_GameWork.gameStatePrev_590    = prevState;
-    g_GameWork.gameStateStep_598[0] = 0;
+    g_GameWork.gameStateSteps[1] = 0;
+    g_GameWork.gameStateSteps[2] = 0;
+    g_GameWork.gameStateSteps[0] = prevState;
+    g_GameWork.gameStatePrev    = prevState;
+    g_GameWork.gameStateSteps[0] = 0;
 }
 
 /** @brief Sets the GameState to be used in the next game update.
@@ -2127,19 +2126,19 @@ static inline void Game_StateSetNext(e_GameState gameState)
 {
     e_GameState prevState;
 
-    prevState = g_GameWork.gameState_594;
+    prevState = g_GameWork.gameState;
 
-    g_GameWork.gameState_594        = gameState;
+    g_GameWork.gameState        = gameState;
     g_SysWork.counters_1C[0]              = 0;
     g_SysWork.counters_1C[1]              = 0;
-    g_GameWork.gameStateStep_598[1] = 0;
-    g_GameWork.gameStateStep_598[2] = 0;
+    g_GameWork.gameStateSteps[1] = 0;
+    g_GameWork.gameStateSteps[2] = 0;
 
     SysWork_StateSetNext(SysState_Gameplay);
 
-    g_GameWork.gameStateStep_598[0] = prevState;
-    g_GameWork.gameStatePrev_590    = prevState;
-    g_GameWork.gameStateStep_598[0] = 0;
+    g_GameWork.gameStateSteps[0] = prevState;
+    g_GameWork.gameStatePrev    = prevState;
+    g_GameWork.gameStateSteps[0] = 0;
 }
 
 /** @brief Returns the GameState to the previously used state.
@@ -2149,19 +2148,19 @@ static inline void Game_StateSetPrevious()
 {
     e_GameState prevState;
 
-    prevState = g_GameWork.gameState_594;
+    prevState = g_GameWork.gameState;
 
     g_SysWork.counters_1C[0]              = 0;
     g_SysWork.counters_1C[1]              = 0;
-    g_GameWork.gameStateStep_598[1] = 0;
-    g_GameWork.gameStateStep_598[2] = 0;
+    g_GameWork.gameStateSteps[1] = 0;
+    g_GameWork.gameStateSteps[2] = 0;
 
     SysWork_StateSetNext(SysState_Gameplay);
 
-    g_GameWork.gameStateStep_598[0] = prevState;
-    g_GameWork.gameState_594        = g_GameWork.gameStatePrev_590;
-    g_GameWork.gameStatePrev_590    = prevState;
-    g_GameWork.gameStateStep_598[0] = 0;
+    g_GameWork.gameStateSteps[0] = prevState;
+    g_GameWork.gameState        = g_GameWork.gameStatePrev;
+    g_GameWork.gameStatePrev    = prevState;
+    g_GameWork.gameStateSteps[0] = 0;
 }
 
 /** @brief Gets an event flag state from the savegame event flags array.

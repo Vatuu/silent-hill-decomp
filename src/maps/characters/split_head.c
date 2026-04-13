@@ -1067,11 +1067,11 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
         case ANIM_STATUS(SplitHeadAnim_13, true):
         case ANIM_STATUS(SplitHeadAnim_14, false):
         case ANIM_STATUS(SplitHeadAnim_14, true):
-            WorldGfx_HeldItemAttach(splitHead->model.charaId_0, 2);
+            WorldGfx_HeldItemAttach(splitHead->model.charaId, 2);
             break;
 
         default:
-            WorldGfx_HeldItemAttach(splitHead->model.charaId_0, 1);
+            WorldGfx_HeldItemAttach(splitHead->model.charaId, 1);
             break;
     }
 

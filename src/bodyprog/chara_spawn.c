@@ -68,7 +68,7 @@ s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12
         var_a0 = 0;
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
-            if (g_SysWork.npcs_1A0[i].model.charaId_0 != Chara_None)
+            if (g_SysWork.npcs_1A0[i].model.charaId != Chara_None)
             {
                 var_a0++;
             }
@@ -84,14 +84,14 @@ s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12
     for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
     {
         // Skip occupied slot.
-        if (g_SysWork.npcs_1A0[i].model.charaId_0 != Chara_None)
+        if (g_SysWork.npcs_1A0[i].model.charaId != Chara_None)
         {
             continue;
         }
 
         bzero(&g_SysWork.npcs_1A0[i], sizeof(s_SubCharacter));
 
-        g_SysWork.npcs_1A0[i].model.charaId_0 = charaId;
+        g_SysWork.npcs_1A0[i].model.charaId = charaId;
         g_SysWork.npcs_1A0[i].field_40 = arg1_1;
 
         if (charaId <= Chara_MonsterCybil && arg1 < 64)
@@ -126,12 +126,12 @@ void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unused2) // 0x80088F9
         return;
     }
 
-    if (chara->model.charaId_0 <= Chara_MonsterCybil)
+    if (chara->model.charaId <= Chara_MonsterCybil)
     {
         CLEAR_FLAG(g_SysWork.field_228C, chara->field_40);
     }
 
-    chara->model.charaId_0 = Chara_None;
+    chara->model.charaId = Chara_None;
 }
 
 void func_80088FF4(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags) // 0x80088FF4

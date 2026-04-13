@@ -34,14 +34,14 @@ void Screen_BackgroundImgDraw(s_FsImageDesc* image) // 0x800314EC
 
     ot          = (GsOT*)&g_OtTags1[g_ActiveBufferIdx + 1][0];
     packet      = GsOUT_PACKET_P;
-    baseYOffset = -120 << (g_GameWork.gsScreenHeight_58A >> 8);
+    baseYOffset = -120 << (g_GameWork.gsScreenHeight >> 8);
     texShift    = image->tPage[0];
     texPageX    = image->tPage[1];
     texOffsetY  = image->v;
 
-    for (y = 0; (g_GameWork.gsScreenHeight_58A >> 8) >= y; y++)
+    for (y = 0; (g_GameWork.gsScreenHeight >> 8) >= y; y++)
     {
-        for (x = 0; ((g_GameWork.gsScreenWidth_588 - 1) >> (8 - texShift)) >= x; x++)
+        for (x = 0; ((g_GameWork.gsScreenWidth - 1) >> (8 - texShift)) >= x; x++)
         {
             sprt = (SPRT*)packet;
 
@@ -62,7 +62,7 @@ void Screen_BackgroundImgDraw(s_FsImageDesc* image) // 0x800314EC
             tileX = x << 8;
 
             setXY0Fast(sprt,
-                       (tileX - (g_GameWork.gsScreenWidth_588 >> 1)) - (image->u << (2 - texShift)),
+                       (tileX - (g_GameWork.gsScreenWidth >> 1)) - (image->u << (2 - texShift)),
                        baseYOffset + ((256 - texOffsetY) * y));
 
             packet += sizeof(SPRT);
@@ -77,7 +77,7 @@ void Screen_BackgroundImgDraw(s_FsImageDesc* image) // 0x800314EC
     }
 
     GsOUT_PACKET_P                  = packet;
-    g_SysWork.sysFlags_22A0        |= SysFlag_Freeze;
+    g_SysWork.sysFlags_22A0        |= SysFlag_Pause;
     g_Screen_BackgroundImgGamma = Q8(0.5f);
 }
 
@@ -131,7 +131,7 @@ void Screen_BackgroundImgTransition(s_FsImageDesc* image0, s_FsImageDesc* image1
         }
     }
 
-    g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
+    g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
     GsOUT_PACKET_P = (PACKET*)poly;
 }
 
@@ -176,7 +176,7 @@ void Screen_BackgroundImgDrawAlt(s_FsImageDesc* image) // 0x80031AAC
     }
 
     GsOUT_PACKET_P                  = (PACKET*)poly;
-    g_SysWork.sysFlags_22A0        |= SysFlag_Freeze;
+    g_SysWork.sysFlags_22A0        |= SysFlag_Pause;
     g_Screen_BackgroundImgGamma = Q8(0.5f);
 }
 
@@ -227,7 +227,7 @@ bool Screen_BackgroundMotionBlur(s32 vBlanks) // 0x80031CCC
             setWH(sprt, 256, 224);
             *((u32*)&sprt->u0) = texOffsetY << 8;
 
-            setXY0Fast(sprt, (-g_GameWork.gsScreenWidth_588 / 2) + (j << 8), offsetY);
+            setXY0Fast(sprt, (-g_GameWork.gsScreenWidth / 2) + (j << 8), offsetY);
 
             sprt++;
             tPage = (DR_TPAGE*)sprt;

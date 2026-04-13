@@ -8,7 +8,7 @@
 /** @brief Options menu states.
  *
  * When the user navigates an options menu, this facilitates menu switching
- * via `s_GameWork::gameStateStep[0]`.
+ * via `s_GameWork::gameStateSteps[0]`.
  */
 typedef enum _OptionsMenuState
 {
@@ -83,7 +83,7 @@ typedef enum _BloodColor
 /** @brief Screen position menu states.
  *
  * When the user navigates the screen position menu, this facilitates menu switching
- * via `s_GameWork::gameStateStep[1]`.
+ * via `s_GameWork::gameStateSteps[1]`.
  */
 typedef enum _ScreenPosMenuState
 {
@@ -96,7 +96,7 @@ typedef enum _ScreenPosMenuState
 /** @brief Controller config menu states. Also used as entries for the left presets pane.
  *
  * When the user navigates the controller config menu, this facilitates menu switching
- * via `s_GameWork::gameStateStep[1]`.
+ * via `s_GameWork::gameStateSteps[1]`.
  */
 typedef enum _ControllerMenuState
 {
@@ -134,7 +134,7 @@ typedef enum _InputAction
 /** @brief Brightness menu states.
  *
  * When the user navigates the brightness menu, this facilitates menu switching
- * via `s_GameWork::gameStateStep[1]`.
+ * via `s_GameWork::gameStateSteps[1]`.
  */
 typedef enum _BrightnessMenuState
 {

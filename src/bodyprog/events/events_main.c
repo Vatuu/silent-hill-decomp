@@ -101,7 +101,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         // `TriggerActivationType_Button`: Only continue processing event when action button is pressed and
         // `Player_IsBusy` returns `false`.
         if (mapEvent->activationType_4_4 == TriggerActivationType_Button &&
-            (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.action_6) ||
+            (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.action_6) ||
             disableButtonEvents || Player_IsBusy()))
         {
             continue;

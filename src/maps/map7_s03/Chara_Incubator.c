@@ -8,7 +8,7 @@
 
 void Ai_Incubator_Update(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D3BC4
 {
-    if (incubator->model.charaId_0 != Chara_Incubator)
+    if (incubator->model.charaId != Chara_Incubator)
     {
         Ai_Incubator_Init(incubator);
     }

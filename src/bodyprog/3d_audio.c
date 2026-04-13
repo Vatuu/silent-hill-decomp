@@ -151,7 +151,7 @@ void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType, 
     q23_8 balance;
 
     // Get stereo balance.
-    if (soundType & (1 << 0) || g_GameWork.config_0.optSoundType_1E)
+    if (soundType & (1 << 0) || g_GameWork.config.optSoundType_1E)
     {
         balance = 0;
     }
@@ -200,7 +200,7 @@ void func_8005DD44(e_SfxId sfxId, VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD
     s32   balance;
 
     // Get stereo balance.
-    if (g_GameWork.config_0.optSoundType_1E)
+    if (g_GameWork.config.optSoundType_1E)
     {
         balance = 0;
     }
@@ -247,7 +247,7 @@ void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 vol, q19_12 falloff, s8 pitc
     u8  att1;
     s32 att2;
 
-    if (g_GameWork.config_0.optSoundType_1E)
+    if (g_GameWork.config.optSoundType_1E)
     {
         balance = 0;
     }

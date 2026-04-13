@@ -946,7 +946,7 @@ void func_800DC310(void) // 0x800DC310
         EventState_Skip           = 13
     } e_EventState;
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 11)
     {
         ScreenFade_ResetTimestep();

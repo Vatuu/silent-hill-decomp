@@ -25,7 +25,7 @@ typedef enum _DemoState
 /** @brief Initial demo game state data, stored inside `MISC/DEMO****.DAT` files. */
 typedef struct _DemoWork
 {
-    s_SaveUserConfig config_0;
+    s_SaveUserConfig config;
     u8               unk_38[200];
     s_Savegame       savegame_100;
     u8               unk_37C[1148];
@@ -38,7 +38,7 @@ STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
 typedef struct _DemoFrameData
 {
     s_AnalogController analogController_0;
-    s8                 gameStateExpected_8; /** Expected value of `g_GameWork.gameState_594` before `analogController_0` is processed, if it doesn't match `Demo_Update` will display `STEP ERROR` and stop reading demo. */
+    s8                 gameStateExpected_8; /** Expected value of `g_GameWork.gameState` before `analogController_0` is processed, if it doesn't match `Demo_Update` will display `STEP ERROR` and stop reading demo. */
     u8                 videoPresentInterval_9;
     s8                 unk_A[2];
     u32                randSeed_C;

@@ -8,7 +8,7 @@
 
 void Ai_BloodyIncubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D3684
 {
-    if (chara->model.charaId_0 != Chara_BloodyIncubator)
+    if (chara->model.charaId != Chara_BloodyIncubator)
     {
         Ai_BloodyIncubator_Init(chara);
     }

@@ -198,7 +198,7 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset,
         }
     }
 
-    switch (chara->model.charaId_0)
+    switch (chara->model.charaId)
     {
         case Chara_Harry:
         case Chara_Groaner:
@@ -388,7 +388,7 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset
 
     offsetCpy = *offset;
 
-    switch (chara->model.charaId_0)
+    switch (chara->model.charaId)
     {
         case Chara_Harry:
         case Chara_Groaner:
@@ -426,7 +426,7 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
     static s_SubCharacter** activeCharas; /** Array of active characters. */
 
     if (excludeChara != NULL &&
-        (excludeChara->model.charaId_0 == Chara_None || excludeChara->field_E1_0 == 0 ||
+        (excludeChara->model.charaId == Chara_None || excludeChara->field_E1_0 == 0 ||
         (excludeChara->field_E1_0 == 1 && includePlayer == true)))
     {
         *charaCount = 0;
@@ -438,7 +438,7 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
 
     for (curChara = &g_SysWork.npcs_1A0[0]; curChara < &g_SysWork.npcs_1A0[ARRAY_SIZE(g_SysWork.npcs_1A0)]; curChara++)
     {
-        if (curChara->model.charaId_0 != Chara_None)
+        if (curChara->model.charaId != Chara_None)
         {
             if (curChara->field_E1_0 != 0 &&
                 (curChara->field_E1_0 != 1 || includePlayer != true) &&
@@ -454,7 +454,7 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
     }
 
     curChara = &g_SysWork.playerWork.player;
-    if (curChara->model.charaId_0 != Chara_None)
+    if (curChara->model.charaId != Chara_None)
     {
         if (curChara->field_E1_0 != 0 &&
             (curChara->field_E1_0 != 1 || includePlayer != true) &&
@@ -705,7 +705,7 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
         var_a0 = var_v0;
 
         // Radius calc?
-        if (curChara->model.charaId_0 == Chara_HangedScratcher)
+        if (curChara->model.charaId == Chara_HangedScratcher)
         {
             var_a0 = MIN(var_a0, Q12(0.6f));
         }

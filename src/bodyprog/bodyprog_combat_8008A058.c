@@ -185,7 +185,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
         }
     }
 
-    if (chara->model.charaId_0 != Chara_Harry)
+    if (chara->model.charaId != Chara_Harry)
     {
         if (g_SysWork.playerWork.player.attackReceived != NO_VALUE)
         {
@@ -496,7 +496,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
             if (sp34 == 0 && charaId == Chara_Harry)
             {
-                if (chara->model.charaId_0 == charaId)
+                if (chara->model.charaId == charaId)
                 {
                     var_a0_2 = func_8007FD2C();
                 }
@@ -551,11 +551,11 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                 {
                     temp_s1_2 = &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353];
 
-                    if (temp_s1_2->model.charaId_0 >= Chara_AirScreamer)
+                    if (temp_s1_2->model.charaId >= Chara_AirScreamer)
                     {
                         do
                         {
-                            if (temp_s1_2->model.charaId_0 < Chara_LockerDeadBody)
+                            if (temp_s1_2->model.charaId < Chara_LockerDeadBody)
                             {
                                 temp_v0_4 = chara->position.vx - temp_s1_2->position.vx;
                                 temp_v0_5 = chara->position.vy - temp_s1_2->position.vy;
@@ -647,7 +647,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
                     var_s6 += sp4C;
 
-                    if (chara->model.charaId_0 == Chara_Harry)
+                    if (chara->model.charaId == Chara_Harry)
                     {
                         func_800892A4(5);
                     }
@@ -843,7 +843,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
         {
             chara->field_44.field_0 = NO_VALUE;
 
-            if (chara->model.charaId_0 == Chara_Harry)
+            if (chara->model.charaId == Chara_Harry)
             {
                 switch (sp14)
                 {
@@ -1289,7 +1289,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
                     break;
             }
 
-            if (target->model.charaId_0 == Chara_Padlock)
+            if (target->model.charaId == Chara_Padlock)
             {
                 func_8005DC1C(Sfx_Unk1392, arg2, Q8(0.5f), 0);
             }
@@ -1483,7 +1483,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
         {
             var_a3 = NO_VALUE;
 
-            switch (target->model.charaId_0)
+            switch (target->model.charaId)
             {
                 case Chara_Harry:
                     if (target->health >= Q12(0.0f))
@@ -1759,7 +1759,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
         if (g_SysWork.sysState_8 == SysState_GameOver ||
             g_SysWork.playerWork.player.health <= Q12(0.0f) ||
             chara1 == chara ||
-            chara1->model.charaId_0 == Chara_None ||
+            chara1->model.charaId == Chara_None ||
             chara1->health < Q12(0.0f) ||
             !chara1->field_E1_0)
         {

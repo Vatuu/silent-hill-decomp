@@ -8,7 +8,7 @@ void Map_RoomBgmInit_CondFalse(void)
     u8*    dataPtr;
 
     fArg1    = Q12(0.2f);
-    soundCmd = g_GameWork.bgmTrackIdx_5B2;
+    soundCmd = g_GameWork.bgmIdx;
     if (soundCmd == 36)
     {
         dataPtr = &sharedData_800EB738_6_s04;

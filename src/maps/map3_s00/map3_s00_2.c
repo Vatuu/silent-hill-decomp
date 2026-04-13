@@ -87,7 +87,7 @@ void func_800D0CF8(void) // 0x800D0CF8
         EventState_CutsceneSkip  = 36
     } e_EventState;
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= EventState_CutsceneStart && g_SysWork.sysStateStep_C[0] < EventState_CutsceneEnd)
     {
         SysWork_StateStepSet(0, EventState_CutsceneSkip);

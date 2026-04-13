@@ -228,7 +228,7 @@ void func_800D7308(void)
     g_SysWork.sysFlags_22A0 |= SysFlag_1;
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
     {
         SysWork_StateStepSet(0, EventState_Skip);
@@ -382,7 +382,7 @@ void func_800D7864(void) // 0x800D7864
 
     g_SysWork.sysFlags_22A0 |= SysFlag_1;
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= MEDALLION_CUTSCENE_START && g_SysWork.sysStateStep_C[0] < MEDALLION_CUTSCENE_END)
     {
         ScreenFade_ResetTimestep();
@@ -576,7 +576,7 @@ void MapEvent_PianoPuzzle(bool playNote) // 0x800D7F18
         return;
     }
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
     {
         SysWork_StateStepIncrement(0);
         return;
@@ -594,7 +594,7 @@ void MapEvent_PianoPuzzle(bool playNote) // 0x800D7F18
     cursorY = FP_FROM(g_PianoCursorY, Q12_SHIFT) + 8;
     Gfx_CursorDraw(cursorX, cursorY, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
     {
         if (FP_FROM(g_PianoCursorY, Q12_SHIFT) >= 34)
         {
@@ -822,7 +822,7 @@ void func_800D87C0(void) // 0x800D87C0
     s_WorldObjectDesc* obj;
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
     {
         if ( g_SysWork.sysStateStep_C[0]  < 4)

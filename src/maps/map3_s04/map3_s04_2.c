@@ -79,7 +79,7 @@ void func_800D21C4(void) // 0x800D21C4
     {
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
-            if ((g_SysWork.npcs_1A0[i].model.charaId_0 > Chara_None && g_SysWork.npcs_1A0[i].model.charaId_0 < Chara_LockerDeadBody) &&
+            if ((g_SysWork.npcs_1A0[i].model.charaId > Chara_None && g_SysWork.npcs_1A0[i].model.charaId < Chara_LockerDeadBody) &&
                 g_SysWork.npcs_1A0[i].health > Q12(0.0f))
             {
                 break;
@@ -205,7 +205,7 @@ void func_800D2668(void) // 0x800D2668
     SVECTOR3* tmpSvec;
 
     // Skip.
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4 &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 23)
     {
         SysWork_StateStepSet(0, EventState_Skip);

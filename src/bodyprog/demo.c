@@ -130,37 +130,37 @@ s32 Demo_PlayFileBufferSetup(void) // 0x8008F0BC
 
 void Demo_DemoFileSavegameUpdate(void) // 0x8008F13C
 {
-    g_GameWork.savegame_30C = DEMO_WORK()->savegame_100;
+    g_GameWork.savegame = DEMO_WORK()->savegame_100;
 }
 
 void Demo_GameGlobalsUpdate(void) // 0x8008F1A0
 {
     // Backup current user config.
-    g_Demo_UserConfigBackup = g_GameWork.config_0;
+    g_Demo_UserConfigBackup = g_GameWork.config;
 
     // Update `Demo_RandSeed`.
     g_Demo_RandSeed = DEMO_WORK()->randSeed_7FC;
 
     // Replace user config with config from demo file.
-    g_GameWork.config_0 = DEMO_WORK()->config_0;
+    g_GameWork.config = DEMO_WORK()->config;
 
     // Restore user system settings over demo values.
-    g_GameWork.config_0.optScreenPosX_1C       = g_Demo_UserConfigBackup.optScreenPosX_1C;
-    g_GameWork.config_0.optScreenPosY_1D       = g_Demo_UserConfigBackup.optScreenPosY_1D;
-    g_GameWork.config_0.optSoundType_1E        = g_Demo_UserConfigBackup.optSoundType_1E;
-    g_GameWork.config_0.optVolumeBgm_1F        = OPT_SOUND_VOLUME_MIN;                     // Disable BGM during demo.
-    g_GameWork.config_0.optVolumeSe_20         = g_Demo_UserConfigBackup.optVolumeSe_20;
-    g_GameWork.config_0.optVibrationEnabled_21 = OPT_VIBRATION_DISABLED;                   // Disable vibration during demo.
-    g_GameWork.config_0.optBrightness_22       = g_Demo_UserConfigBackup.optBrightness_22;
+    g_GameWork.config.optScreenPosX_1C       = g_Demo_UserConfigBackup.optScreenPosX_1C;
+    g_GameWork.config.optScreenPosY_1D       = g_Demo_UserConfigBackup.optScreenPosY_1D;
+    g_GameWork.config.optSoundType_1E        = g_Demo_UserConfigBackup.optSoundType_1E;
+    g_GameWork.config.optVolumeBgm_1F        = OPT_SOUND_VOLUME_MIN;                     // Disable BGM during demo.
+    g_GameWork.config.optVolumeSe_20         = g_Demo_UserConfigBackup.optVolumeSe_20;
+    g_GameWork.config.optVibrationEnabled_21 = OPT_VIBRATION_DISABLED;                   // Disable vibration during demo.
+    g_GameWork.config.optBrightness_22       = g_Demo_UserConfigBackup.optBrightness_22;
 
-    Sd_SetVolume(OPT_SOUND_VOLUME_MIN, OPT_SOUND_VOLUME_MIN, g_GameWork.config_0.optVolumeSe_20);
+    Sd_SetVolume(OPT_SOUND_VOLUME_MIN, OPT_SOUND_VOLUME_MIN, g_GameWork.config.optVolumeSe_20);
 }
 
 void Demo_GameGlobalsRestore(void) // 0x8008F2BC
 {
-    g_GameWork.config_0 = g_Demo_UserConfigBackup;
+    g_GameWork.config = g_Demo_UserConfigBackup;
 
-    Sd_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.config_0.optVolumeBgm_1F, g_GameWork.config_0.optVolumeSe_20);
+    Sd_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.config.optVolumeBgm_1F, g_GameWork.config.optVolumeSe_20);
 }
 
 void Demo_GameRandSeedUpdate(void) // 0x8008F33C
@@ -228,7 +228,7 @@ s32 Demo_StateGet(s32 gameState)
             {
                 return DemoState_Exit;
             }
-            else if (g_GameWork.gameStatePrev_590 == GameState_SaveScreen)
+            else if (g_GameWork.gameStatePrev == GameState_SaveScreen)
             {
                 return DemoState_Exit;
             }
@@ -338,18 +338,18 @@ bool Demo_Update(void) // 0x8008F5D8
     gameWork = &g_GameWork;
 
     // Handle demo state.
-    switch (Demo_StateGet(gameWork->gameState_594))
+    switch (Demo_StateGet(gameWork->gameState))
     {
         case DemoState_Step:
             g_Demo_CurFrameData = &g_Demo_PlayFileBufferPtr[g_Demo_DemoStep];
 
-            if (g_Demo_CurFrameData->gameStateExpected_8 != gameWork->gameState_594)
+            if (g_Demo_CurFrameData->gameStateExpected_8 != gameWork->gameState)
             {
                 Text_Debug_PositionSet(8, 80);
                 Text_Debug_Draw("STEP ERROR:[H:");
                 Text_Debug_Draw(Text_Debug_IntToString(2, g_Demo_CurFrameData->gameStateExpected_8));
                 Text_Debug_Draw("]/[M:");
-                Text_Debug_Draw(Text_Debug_IntToString(2, gameWork->gameState_594));
+                Text_Debug_Draw(Text_Debug_IntToString(2, gameWork->gameState));
                 Text_Debug_Draw("]");
 
                 g_Demo_CurFrameData = NULL;

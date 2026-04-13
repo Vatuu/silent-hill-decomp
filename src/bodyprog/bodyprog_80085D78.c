@@ -765,8 +765,8 @@ void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) // 0x8008
         // Run through NPCs.
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
-            if (g_SysWork.npcs_1A0[i].model.charaId_0 >= Chara_Harry &&
-                g_SysWork.npcs_1A0[i].model.charaId_0 <= Chara_MonsterCybil &&
+            if (g_SysWork.npcs_1A0[i].model.charaId >= Chara_Harry &&
+                g_SysWork.npcs_1A0[i].model.charaId <= Chara_MonsterCybil &&
                 g_SysWork.npcs_1A0[i].health > Q12(0.0f))
             {
                 break;
@@ -826,8 +826,8 @@ void func_8008716C(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimeste
         case 4:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
 
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-                                                 g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 |
+                                                 g_GameWorkPtr->config.controllerConfig.cancel_2))
             {
                 SysWork_StateStepIncrement(1);
             }
@@ -917,8 +917,8 @@ void MapMsg_DisplayWithTexture1(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_1
                 break;
             }
 
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-                                                 g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 |
+                                                 g_GameWorkPtr->config.controllerConfig.cancel_2))
             {
                 SysWork_StateStepIncrement(1);
             }
@@ -955,7 +955,7 @@ void Event_ItemTake(e_InventoryItemId itemId, s32 itemCount, e_EventFlag eventFl
         // Run through NPCs.
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
-            if (g_SysWork.npcs_1A0[i].model.charaId_0 >= Chara_Harry && g_SysWork.npcs_1A0[i].model.charaId_0 <= Chara_MonsterCybil &&
+            if (g_SysWork.npcs_1A0[i].model.charaId >= Chara_Harry && g_SysWork.npcs_1A0[i].model.charaId <= Chara_MonsterCybil &&
                 g_SysWork.npcs_1A0[i].health > Q12(0.0f))
             {
                 break;
@@ -1015,7 +1015,7 @@ void Event_CommonItemTake(u32 pickupType, e_EventFlag eventFlagIdx) // 0x800879F
     s32 ammoCountMult;
 
     // Compute ammo count multiplier.
-    ammoCountMult = g_GameWork.config_0.optExtraBulletAdjust_2D + 1;
+    ammoCountMult = g_GameWork.config.optExtraBulletAdjust_2D + 1;
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
         ammoCountMult = CLAMP(ammoCountMult, EASY_DIFFICULTY_AMMO_COUNT_MULT_MIN, ammoCountMult);

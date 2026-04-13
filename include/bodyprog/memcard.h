@@ -290,7 +290,7 @@ STATIC_ASSERT_SIZEOF(s_Savegame_Container, 640);
 /** @brief Contains `s_SaveUserConfig` data padded to 128 bytes with a footer at the end containing checksum + magic. */
 typedef struct _SaveUserConfigContainer
 {
-    s_SaveUserConfig config_0;
+    s_SaveUserConfig config;
     u8                pad_38[68];
     s_Savegame_Footer footer_7C;
 } s_Savegame_UserConfigs;

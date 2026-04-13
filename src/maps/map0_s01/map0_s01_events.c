@@ -83,7 +83,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
     s_SubCharacter* chara1;
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 5 && g_SysWork.sysStateStep_C[0] < 47)
     {
         SysWork_StateStepSet(0, EventState_Skip);
@@ -442,7 +442,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
 
         case 5:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 | g_GameWorkPtr->config.controllerConfig.cancel_2))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -467,7 +467,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
 
         case 9:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 | g_GameWorkPtr->config.controllerConfig.cancel_2))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -492,7 +492,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
             SysWork_StateSetNext(SysState_Gameplay);
             Game_WarmBoot();
 
-            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
             break;
     }
 }
@@ -1047,7 +1047,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
 
     if (Savegame_EventFlagGet(EventFlag_47))
     {
-        if (g_SysWork.npcs_1A0[0].model.charaId_0 == Chara_AirScreamer && g_SysWork.npcs_1A0[0].health == NO_VALUE)
+        if (g_SysWork.npcs_1A0[0].model.charaId == Chara_AirScreamer && g_SysWork.npcs_1A0[0].health == NO_VALUE)
         {
             Savegame_EventFlagSet(EventFlag_M0S01_AirScreamerDied);
             Savegame_EventFlagClear(EventFlag_49);

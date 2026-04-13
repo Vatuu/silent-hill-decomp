@@ -437,7 +437,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
     SVECTOR3 unused;
     s32      i;
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 41)
     {
         SysWork_StateStepSet(0, 43);
@@ -687,7 +687,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             if (!D_800D94F4)
             {
                 Chara_ProcessLoads();
-                g_SysWork.npcs_1A0[0].model.charaId_0 = Chara_Kaufmann;
+                g_SysWork.npcs_1A0[0].model.charaId = Chara_Kaufmann;
                 Chara_Spawn(Chara_Mumbler, 0, Q12(140.5f), Q12(23.0f), Q12_ANGLE(0.0f), 17);
                 D_800D94F4 = 1;
             }

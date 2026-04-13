@@ -99,9 +99,9 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
     ot             = &g_OrderingTable0[g_ActiveBufferIdx].org[(arg0->vz + 2) >> 3];
 
     cond = false;
-    if (arg0->vx >= (-g_GameWork.gsScreenWidth_588 >> 1) && (g_GameWork.gsScreenWidth_588 >> 1) >= arg0->vx)
+    if (arg0->vx >= (-g_GameWork.gsScreenWidth >> 1) && (g_GameWork.gsScreenWidth >> 1) >= arg0->vx)
     {
-        if (arg0->vy >= (-g_GameWork.gsScreenHeight_58A >> 1) && (g_GameWork.gsScreenHeight_58A >> 1) >= arg0->vy &&
+        if (arg0->vy >= (-g_GameWork.gsScreenHeight >> 1) && (g_GameWork.gsScreenHeight >> 1) >= arg0->vy &&
             arg0->vz >= 0)
         {
             cond = arg1 > 0x354;
@@ -120,8 +120,8 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
         tile->h  = 1;
         AddPrim(ot, tile);
 
-        sp10.x = arg0->vx + (g_GameWork.gsScreenWidth_588 / 2);
-        sp10.y = arg0->vy + (g_GameWork.gsScreenHeight_58A / 2);
+        sp10.x = arg0->vx + (g_GameWork.gsScreenWidth / 2);
+        sp10.y = arg0->vy + (g_GameWork.gsScreenHeight / 2);
         if (g_ActiveBufferIdx == 1)
         {
             sp10.y += 32;
@@ -314,8 +314,8 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     };
 
     // TODO: 512 is probably a screen constant.
-    if (arg2->vx < ((-g_GameWork.gsScreenWidth_588  >> 1) - 512) || ((g_GameWork.gsScreenWidth_588  >> 1) + 512) < arg2->vx ||
-        arg2->vy < ((-g_GameWork.gsScreenHeight_58A >> 1) - 512) || ((g_GameWork.gsScreenHeight_58A >> 1) + 512) < arg2->vy)
+    if (arg2->vx < ((-g_GameWork.gsScreenWidth  >> 1) - 512) || ((g_GameWork.gsScreenWidth  >> 1) + 512) < arg2->vx ||
+        arg2->vy < ((-g_GameWork.gsScreenHeight >> 1) - 512) || ((g_GameWork.gsScreenHeight >> 1) + 512) < arg2->vy)
     {
         return;
     }

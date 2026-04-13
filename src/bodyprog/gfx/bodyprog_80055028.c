@@ -1120,13 +1120,13 @@ void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s3
         return;
     }
 
-    var_a3 = MAX(arg0, ~(g_GameWork.gsScreenWidth_588 >> 1));
-    var_v1 = MAX(arg1, ~(g_GameWork.gsScreenHeight_58A >> 1));
+    var_a3 = MAX(arg0, ~(g_GameWork.gsScreenWidth >> 1));
+    var_v1 = MAX(arg1, ~(g_GameWork.gsScreenHeight >> 1));
 
-    var_v1_2 = CLAMP_HIGH(arg2, (g_GameWork.gsScreenWidth_588 >> 1) + 1);
+    var_v1_2 = CLAMP_HIGH(arg2, (g_GameWork.gsScreenWidth >> 1) + 1);
     temp_s6  = var_v1_2;
 
-    var_a3_2 = CLAMP_HIGH(temp_s5, (g_GameWork.gsScreenHeight_58A >> 1) + 1);
+    var_a3_2 = CLAMP_HIGH(temp_s5, (g_GameWork.gsScreenHeight >> 1) + 1);
     temp_s5  = var_a3_2;
 
     temp_a0_2 = 0x79C << (arg7 + 2);
@@ -1739,7 +1739,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
         }
     }
 
-    scratchData->field_380.s_0.field_0    = g_GameWork.gsScreenWidth_588 >> 1;
+    scratchData->field_380.s_0.field_0    = g_GameWork.gsScreenWidth >> 1;
     scratchData->field_380.s_0.field_4    = g_WorldEnvWork.fogIntensity_18;
     scratchData->field_380.s_0.field_8    = g_WorldEnvWork.worldTintColor_28;
     scratchData->field_380.s_0.field_8.cd = 0x3C;
@@ -2558,7 +2558,7 @@ void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchDat
     var_t9  = g_WorldEnvWork.isFogEnabled_1 ? MIN(temp_v1, g_WorldEnvWork.fogFarDistance_10) : temp_v1;
 
     poly                        = (POLY_FT4*)GsOUT_PACKET_P;
-    scratchData->field_380.s_0.field_0 = g_GameWork.gsScreenWidth_588 >> 1;
+    scratchData->field_380.s_0.field_0 = g_GameWork.gsScreenWidth >> 1;
 
     for (prim = meshHdr->primitives_4; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
     {

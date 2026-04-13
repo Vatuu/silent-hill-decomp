@@ -73,35 +73,35 @@ void GameState_Boot_Update(void) // 0x80032D1C
     s32 gameState;
     s32 VabAudioTaskId;
 
-    switch (g_GameWork.gameStateStep_598[0])
+    switch (g_GameWork.gameStateSteps[0])
     {
         case 0:
-            g_GameWork.background2dColor_58C.r = 0;
-            g_GameWork.background2dColor_58C.g = 0;
-            g_GameWork.background2dColor_58C.b = 0;
+            g_GameWork.background2dColor.r = 0;
+            g_GameWork.background2dColor.g = 0;
+            g_GameWork.background2dColor.b = 0;
 
             Screen_Init(SCREEN_WIDTH, false);
             g_SysWork.counters_1C[1]              = 0;
-            g_GameWork.gameStateStep_598[1] = 0;
-            g_GameWork.gameStateStep_598[2] = 0;
-            g_GameWork.gameStateStep_598[0]++;
+            g_GameWork.gameStateSteps[1] = 0;
+            g_GameWork.gameStateSteps[2] = 0;
+            g_GameWork.gameStateSteps[0]++;
             break;
 
         case 1:
             if (!Sd_AudioStreamingCheck())
             {
-                VabAudioTaskId = g_baseVabAudiosTaskId[g_GameWork.gameStateStep_598[1]];
+                VabAudioTaskId = g_baseVabAudiosTaskId[g_GameWork.gameStateSteps[1]];
                 if (VabAudioTaskId != 0)
                 {
                     SD_Call(VabAudioTaskId);
-                    g_GameWork.gameStateStep_598[1]++;
+                    g_GameWork.gameStateSteps[1]++;
                 }
                 else
                 {
                     g_SysWork.counters_1C[1]              = 0;
-                    g_GameWork.gameStateStep_598[1] = 0;
-                    g_GameWork.gameStateStep_598[2] = 0;
-                    g_GameWork.gameStateStep_598[0]++;
+                    g_GameWork.gameStateSteps[1] = 0;
+                    g_GameWork.gameStateSteps[2] = 0;
+                    g_GameWork.gameStateSteps[0]++;
                 }
             }
             break;
@@ -111,7 +111,7 @@ void GameState_Boot_Update(void) // 0x80032D1C
             Fs_QueueStartReadTim(FILE_1ST_KONAMI_TIM, FS_BUFFER_1, &g_KonamiLogoImg);
 
             ScreenFade_Start(true, false, false);
-            g_GameWork.gameStateStep_598[0]++;
+            g_GameWork.gameStateSteps[0]++;
             break;
 
         case 3:
@@ -119,20 +119,20 @@ void GameState_Boot_Update(void) // 0x80032D1C
             {
                 Fs_QueueWaitForEmpty();
 
-                gameState = g_GameWork.gameState_594;
+                gameState = g_GameWork.gameState;
 
                 g_SysWork.counters_1C[0] = 0;
                 g_SysWork.counters_1C[1] = 0;
 
-                g_GameWork.gameStateStep_598[1] = 0;
-                g_GameWork.gameStateStep_598[2] = 0;
+                g_GameWork.gameStateSteps[1] = 0;
+                g_GameWork.gameStateSteps[2] = 0;
 
                 SysWork_StateSetNext(SysState_Gameplay);
 
-                g_GameWork.gameStateStep_598[0] = gameState;
-                g_GameWork.gameState_594        = gameState + 1;
-                g_GameWork.gameStatePrev_590    = gameState;
-                g_GameWork.gameStateStep_598[0] = 0;
+                g_GameWork.gameStateSteps[0] = gameState;
+                g_GameWork.gameState        = gameState + 1;
+                g_GameWork.gameStatePrev    = gameState;
+                g_GameWork.gameStateSteps[0] = 0;
             }
             break;
     }
@@ -195,12 +195,12 @@ void MainLoop(void) // 0x80032EE0
 
         g_ActiveBufferIdx = GsGetActiveBuff();
 
-        if (g_GameWork.gameState_594 == GameState_MainLoadScreen ||
-            g_GameWork.gameState_594 == GameState_InGame)
+        if (g_GameWork.gameState == GameState_MainLoadScreen ||
+            g_GameWork.gameState == GameState_InGame)
         {
             GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ActiveBufferIdx << 17));
         }
-        else if (g_GameWork.gameState_594 == GameState_InventoryScreen)
+        else if (g_GameWork.gameState == GameState_InventoryScreen)
         {
             GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ActiveBufferIdx * 40000));
         }
@@ -215,7 +215,7 @@ void MainLoop(void) // 0x80032EE0
         g_SysWork.sysFlags_22A0 = SysFlag_None;
 
         // Call update function for current GameState.
-        g_GameStateUpdateFuncs[g_GameWork.gameState_594]();
+        g_GameStateUpdateFuncs[g_GameWork.gameState]();
 
         Demo_Update();
         Demo_GameRandSeedSet();
@@ -313,7 +313,7 @@ void MainLoop(void) // 0x80032EE0
 
         // Draw objects?
         GsSwapDispBuff();
-        GsSortClear(g_GameWork.background2dColor_58C.r, g_GameWork.background2dColor_58C.g, g_GameWork.background2dColor_58C.b, &g_OrderingTable0[g_ActiveBufferIdx]);
+        GsSortClear(g_GameWork.background2dColor.r, g_GameWork.background2dColor.g, g_GameWork.background2dColor.b, &g_OrderingTable0[g_ActiveBufferIdx]);
         GsDrawOt(&g_OrderingTable0[g_ActiveBufferIdx]);
         GsDrawOt(&g_OrderingTable2[g_ActiveBufferIdx]);
     }

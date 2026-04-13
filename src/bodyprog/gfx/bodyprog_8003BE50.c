@@ -157,7 +157,7 @@ void CharaModel_Free(s_CharaModel* model) // 0x8003C1AC
     s_FsImageDesc image = { 0 };
 
     //memset(&image, 0, 8);
-    model->charaId_0  = Chara_None;
+    model->charaId  = Chara_None;
     model->isLoaded_1 = false;
     model->queueIdx_4 = 0;
     model->lmHdr_8    = MAP_CHARA_LM_BUFFER;
@@ -834,7 +834,7 @@ void WorldGfx_HarryCharaLoad(void) // 0x8003D160
     Fs_QueueStartRead(CHARA_FILE_INFOS[Chara_Harry].modelFileIdx, harryLmHdr);
     queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[Chara_Harry].textureFileIdx, FS_BUFFER_1, &image);
 
-    g_WorldGfxWork.harryModel_164C.charaId_0 = Chara_Harry;
+    g_WorldGfxWork.harryModel_164C.charaId = Chara_Harry;
     harryModel->isLoaded_1               = false;
     harryModel->queueIdx_4               = queueIdx;
     harryModel->lmHdr_8                  = harryLmHdr;
@@ -862,12 +862,12 @@ s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHeader* mapHdr) // 0x8003D21C
         {
             if (!cond)
             {
-                if (curCharaId != curModel->charaId_0)
+                if (curCharaId != curModel->charaId)
                 {
                     cond = true;
                     for (j = i; j < ARRAY_SIZE(g_WorldGfxWork.charaModels_CC); j++)
                     {
-                        g_WorldGfxWork.charaModels_CC[j].charaId_0 = Chara_None;
+                        g_WorldGfxWork.charaModels_CC[j].charaId = Chara_None;
                     }
                 }
             }
@@ -1025,7 +1025,7 @@ void WorldGfx_CharaLmBufferAssign(s8 forceFree) // 0x8003D5B4
     {
         curModel = &g_WorldGfxWork.charaModels_CC[i];
 
-        charaId = curModel->charaId_0;
+        charaId = curModel->charaId;
         if (charaId != Chara_None)
         {
             lmData = (s32)curModel->lmHdr_8 + Fs_GetFileSize(CHARA_FILE_INFOS[charaId].modelFileIdx);
@@ -1039,9 +1039,9 @@ void WorldGfx_CharaLmBufferAssign(s8 forceFree) // 0x8003D5B4
 
 void WorldGfx_CharaFree(s_CharaModel* model) // 0x8003D6A4
 {
-    if (model->charaId_0 != Chara_None)
+    if (model->charaId != Chara_None)
     {
-        g_WorldGfxWork.registeredCharaModels_18[model->charaId_0] = NULL;
+        g_WorldGfxWork.registeredCharaModels_18[model->charaId] = NULL;
         CharaModel_Free(model);
     }
 }
@@ -1056,7 +1056,7 @@ void WorldGfx_CharaLoad(e_CharacterId charaId, s32 modeIdx, s_LmHeader* lmHdr, s
     {
         lmHdrBuf = lmHdr;
     }
-    else if (g_WorldGfxWork.charaModels_CC[modeIdx].charaId_0 != Chara_None)
+    else if (g_WorldGfxWork.charaModels_CC[modeIdx].charaId != Chara_None)
     {
         lmHdrBuf = g_WorldGfxWork.charaModels_CC[modeIdx].lmHdr_8;
     }
@@ -1087,7 +1087,7 @@ s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmH
     s_FsImageDesc* modelTex;
 
     model        = &g_WorldGfxWork.charaModels_CC[modelIdx];
-    modelCharaId = model->charaId_0;
+    modelCharaId = model->charaId;
     modelTex     = &model->texture_C;
 
     // If character is invalid, set model as unused.
@@ -1120,7 +1120,7 @@ s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmH
     }
 
     // Set loaded model data.
-    model->charaId_0  = charaId;
+    model->charaId  = charaId;
     model->isLoaded_1 = false;
     model->queueIdx_4 = queueIdx;
     model->lmHdr_8    = lmHdr;
@@ -1155,12 +1155,12 @@ void WorldGfx_CharaModelProcessLoad(s_CharaModel* model) // 0x8003D9C8
 {
     s_Skeleton* skel;
 
-    if (!model->isLoaded_1 && model->charaId_0 != Chara_None && Fs_QueueIsEntryLoaded(model->queueIdx_4))
+    if (!model->isLoaded_1 && model->charaId != Chara_None && Fs_QueueIsEntryLoaded(model->queueIdx_4))
     {
         model->isLoaded_1 = true;
 
         LmHeader_FixOffsets(model->lmHdr_8);
-        Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[model->charaId_0].textureFileIdx, &model->texture_C, CHARA_FILE_INFOS[model->charaId_0].materialBlendMode_6_10 % 4);
+        Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[model->charaId].textureFileIdx, &model->texture_C, CHARA_FILE_INFOS[model->charaId].materialBlendMode_6_10 % 4);
 
         skel = &model->skeleton_14;
 

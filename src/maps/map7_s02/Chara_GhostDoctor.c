@@ -8,7 +8,7 @@
 
 void Ai_GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D8AF0
 {
-    if (chara->model.charaId_0 != Chara_GhostDoctor)
+    if (chara->model.charaId != Chara_GhostDoctor)
     {
         Ai_GhostDoctor_Init(chara);
     }

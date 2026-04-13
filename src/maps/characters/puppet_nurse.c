@@ -1114,7 +1114,7 @@ bool sharedFunc_800CF90C_3_s03(s_SubCharacter* nurse)
     // Run through NPCs.
     for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
     {
-        if ((g_SysWork.npcs_1A0[i].model.charaId_0 == Chara_PuppetNurse || g_SysWork.npcs_1A0[i].model.charaId_0 == Chara_PuppetDoctor) &&
+        if ((g_SysWork.npcs_1A0[i].model.charaId == Chara_PuppetNurse || g_SysWork.npcs_1A0[i].model.charaId == Chara_PuppetDoctor) &&
             g_SysWork.npcs_1A0[i].health > Q12(0.0f) &&
             g_SysWork.npcs_1A0[i].field_40 != nurse->field_40 &&
             !Math_Distance2dCheck(&nurse->position, &g_SysWork.npcs_1A0[i].position, Q12(4.0f)))
@@ -1553,7 +1553,7 @@ void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOO
     animInfoBase = nurseProps.field_124->animInfo_24;
     sfxIdx0      = Ai_PuppetNurse_AnimSfxGet(FP_FROM(nurse->model.anim.time, Q12_SHIFT));
 
-    WorldGfx_HeldItemAttach(nurse->model.charaId_0, nurseProps.modelVariation_119);
+    WorldGfx_HeldItemAttach(nurse->model.charaId, nurseProps.modelVariation_119);
     Math_MatrixTransform(&nurse->position, &nurse->rotation, coord);
 
     if (nurse->model.anim.status != ANIM_STATUS(0, false))

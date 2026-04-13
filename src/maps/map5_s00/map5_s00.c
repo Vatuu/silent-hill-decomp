@@ -529,7 +529,7 @@ void func_800D6B00(void) // 0x800D6B00
             break;
 
         case 5:
-            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
             func_800862F8(7, FILE_TIM_DRAINKEY_TIM, false);
             break;
 
@@ -669,7 +669,7 @@ void func_800D6B00(void) // 0x800D6B00
 void func_800D732C(void) // 0x800D732C
 {
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 3)
     {
         ScreenFade_ResetTimestep();
@@ -732,7 +732,7 @@ void func_800D732C(void) // 0x800D732C
 void func_800D75FC(void) // 0x800D75FC
 {
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 6)
     {
         ScreenFade_ResetTimestep();
@@ -803,7 +803,7 @@ void func_800D75FC(void) // 0x800D75FC
 void func_800D7940(void) // 0x800D7940
 {
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 6)
     {
         ScreenFade_ResetTimestep();
@@ -873,7 +873,7 @@ void func_800D7940(void) // 0x800D7940
 void func_800D7C84(void) // 0x800D7C84
 {
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 6)
     {
         ScreenFade_ResetTimestep();
@@ -938,7 +938,7 @@ void func_800D7C84(void) // 0x800D7C84
 void func_800D7F88(void) // 0x800D7F88
 {
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 6)
     {
         ScreenFade_ResetTimestep();

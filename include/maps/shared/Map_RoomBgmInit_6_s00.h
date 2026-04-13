@@ -9,20 +9,20 @@ void Map_RoomBgmInit(bool arg0)
     var_s3  = sharedData_800EFCFC_6_s00;
     temp_a2 = g_SavegamePtr->mapRoomIdx_A5;
     var_s1  = Q12(0.2f);
-    switch (g_GameWork.bgmTrackIdx_5B2)
+    switch (g_GameWork.bgmIdx)
     {
         case 5:
             g_SysWork.sysFlags_22A0 &= ~SysFlag_3;
 
-            switch (g_GameWork.gameState_594)
+            switch (g_GameWork.gameState)
             {
                 case GameState_InventoryScreen:
                 case GameState_LoadStatusScreen:
-                    if ((g_GameWork.gameState_594 != GameState_InventoryScreen) || (g_GameWork.gameStateStep_598[1] != 25))
+                    if ((g_GameWork.gameState != GameState_InventoryScreen) || (g_GameWork.gameStateSteps[1] != 25))
                     {
                         flags = 0xFE;
 
-                        if (g_GameWork.gameStatePrev_590 != GameState_SaveScreen)
+                        if (g_GameWork.gameStatePrev != GameState_SaveScreen)
                         {
                             var_s1 = Q12(240.0f);
                             break;

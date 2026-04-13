@@ -112,7 +112,7 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
 
     vcSetEvCamRate(g_BlackBorderShade);
 
-    if (g_SysWork.sysFlags_22A0 & SysFlag_Freeze)
+    if (g_SysWork.sysFlags_22A0 & SysFlag_Pause)
     {
         return;
     }
@@ -171,6 +171,6 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
 
     if (!(g_SysWork.flags_22A4 & SysFlag2_3))
     {
-        vcChangeProjectionValue(g_GameWork.gsScreenHeight_58A + Q12_MULT(377 - g_GameWork.gsScreenHeight_58A, g_BlackBorderShade));
+        vcChangeProjectionValue(g_GameWork.gsScreenHeight + Q12_MULT(377 - g_GameWork.gsScreenHeight, g_BlackBorderShade));
     }
 }

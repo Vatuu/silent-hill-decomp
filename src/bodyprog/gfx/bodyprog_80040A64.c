@@ -31,7 +31,7 @@ s8 Sound_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
     s32     balance;
 
     // If monoural sound type, default to balance of 0.
-    if (g_GameWork.config_0.optSoundType_1E)
+    if (g_GameWork.config.optSoundType_1E)
     {
         return 0;
     }
@@ -62,7 +62,7 @@ bool func_80040B74(e_CharacterId charaId) // 0x80040B74
 
     for (i = 0; i < ARRAY_SIZE(g_WorldGfxWork.charaModels_CC); i++)
     {
-        if (g_WorldGfxWork.charaModels_CC[i].charaId_0 == charaId)
+        if (g_WorldGfxWork.charaModels_CC[i].charaId == charaId)
         {
             return true;
         }
@@ -98,28 +98,28 @@ void func_80040BAC(void) // 0x80040BAC
     {
         if (i < 2)
         {
-            posTable[i].vx = g_GameWork.gsScreenWidth_588 / 2;
-            posTable[i].vy = (g_GameWork.gsScreenHeight_58A / 4) * i;
+            posTable[i].vx = g_GameWork.gsScreenWidth / 2;
+            posTable[i].vy = (g_GameWork.gsScreenHeight / 4) * i;
         }
         else if (i < 6)
         {
-            posTable[i].vx = (g_GameWork.gsScreenWidth_588 >> 1) - (((g_GameWork.gsScreenWidth_588 >> 1) >> 1) * (i - 2));
-            posTable[i].vy = g_GameWork.gsScreenHeight_58A / 2;
+            posTable[i].vx = (g_GameWork.gsScreenWidth >> 1) - (((g_GameWork.gsScreenWidth >> 1) >> 1) * (i - 2));
+            posTable[i].vy = g_GameWork.gsScreenHeight / 2;
         }
         else if (i < 10)
         {
-            posTable[i].vx = -g_GameWork.gsScreenWidth_588 / 2;
-            posTable[i].vy = (g_GameWork.gsScreenHeight_58A >> 1) - (((g_GameWork.gsScreenHeight_58A >> 1) >> 1) * (i - 6));
+            posTable[i].vx = -g_GameWork.gsScreenWidth / 2;
+            posTable[i].vy = (g_GameWork.gsScreenHeight >> 1) - (((g_GameWork.gsScreenHeight >> 1) >> 1) * (i - 6));
         }
         else if (i < 14)
         {
-            posTable[i].vx = (-g_GameWork.gsScreenWidth_588 / 2) + ((g_GameWork.gsScreenWidth_588 >> 2) * (i - 10));
-            posTable[i].vy = -g_GameWork.gsScreenHeight_58A / 2;
+            posTable[i].vx = (-g_GameWork.gsScreenWidth / 2) + ((g_GameWork.gsScreenWidth >> 2) * (i - 10));
+            posTable[i].vy = -g_GameWork.gsScreenHeight / 2;
         }
         else
         {
-            posTable[i].vx = g_GameWork.gsScreenWidth_588 / 2;
-            posTable[i].vy = -g_GameWork.gsScreenHeight_58A / 2 + ((g_GameWork.gsScreenHeight_58A >> 2) * (i - 14));
+            posTable[i].vx = g_GameWork.gsScreenWidth / 2;
+            posTable[i].vy = -g_GameWork.gsScreenHeight / 2 + ((g_GameWork.gsScreenHeight >> 2) * (i - 14));
         }
     }
 
@@ -1763,7 +1763,7 @@ bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 posX, q
                 coord.workm.t[2] = posZ;
 
                 Vw_CoordToViewSpaceMatrix(&coord, &mat);
-                return Vw_AabbVisibleInFrustumCheck(&mat, modelBuf->field_4, -0x800, modelBuf->field_8, modelBuf->field_6, 0x400, modelBuf->field_A, 0x1900, g_GameWork.gsScreenHeight_58A);
+                return Vw_AabbVisibleInFrustumCheck(&mat, modelBuf->field_4, -0x800, modelBuf->field_8, modelBuf->field_6, 0x400, modelBuf->field_A, 0x1900, g_GameWork.gsScreenHeight);
             }
         }
     }

@@ -80,7 +80,7 @@ void Ai_Creeper_Init(s_SubCharacter* creeper)
     i = 0;
     do
     {
-        if (creeper == &g_SysWork.npcs_1A0[i] || g_SysWork.npcs_1A0[i].model.charaId_0 != Chara_Creeper)
+        if (creeper == &g_SysWork.npcs_1A0[i] || g_SysWork.npcs_1A0[i].model.charaId != Chara_Creeper)
         {
             i++;
             continue;
@@ -338,7 +338,7 @@ void Ai_Creeper_Control_1(s_SubCharacter* creeper)
                     #define curNpc g_SysWork.npcs_1A0[i]
 
                     // Check if NPC is Creeper.
-                    if (curNpc.model.charaId_0 != Chara_Creeper)
+                    if (curNpc.model.charaId != Chara_Creeper)
                     {
                         continue;
                     }
@@ -593,7 +593,7 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
         // Alert other Creepers.
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
-            if (creeper->model.charaId_0 == Chara_Creeper &&
+            if (creeper->model.charaId == Chara_Creeper &&
                 !Math_Distance2dCheck(&creeper->position, &g_SysWork.npcs_1A0[i].position, Q12(16.0f)))
             {
                 g_SysWork.npcs_1A0[i].properties.creeper.flags_E8 |= CreeperFlag_Alerted;

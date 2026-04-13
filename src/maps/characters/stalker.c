@@ -1907,7 +1907,7 @@ void Ai_Stalker_Control_10(s_SubCharacter* stalker)
         stalker->timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
         if (stalker->timer_C6 > Q12(1.0f))
         {
-            stalker->model.charaId_0 = Chara_None;
+            stalker->model.charaId = Chara_None;
         }
     }
 #endif
@@ -2084,7 +2084,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
     s_AnimInfo*                  animInfo;
     s_sharedFunc_800D6970_0_s00* ptr;
 
-    WorldGfx_HeldItemAttach(stalker->model.charaId_0, 2);
+    WorldGfx_HeldItemAttach(stalker->model.charaId, 2);
 
     switch (stalker->model.anim.status)
     {

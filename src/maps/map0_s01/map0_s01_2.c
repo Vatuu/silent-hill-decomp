@@ -50,7 +50,7 @@ void Map_RoomBgmInit_CondFalse(void) // 0x800DA7FC
             var1 = Q12(240.0f);
 
             // FMV has just played and unknown.
-            if (Savegame_EventFlagGet(EventFlag_M0S01_FmvStarted) && g_GameWork.bgmTrackIdx_5B2 == 9)
+            if (Savegame_EventFlagGet(EventFlag_M0S01_FmvStarted) && g_GameWork.bgmIdx == 9)
             {
                 flags = BgmFlag_Layer1;
             }

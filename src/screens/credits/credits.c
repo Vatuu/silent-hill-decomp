@@ -149,38 +149,38 @@ void GameState_Unk15_Update(void) // 0x801E3094
     bool (*routines[3])() = { func_801E3124, func_801E342C, func_801E3304 };
 
     D_800C48F0 += g_VBlanks;
-    if (routines[g_GameWork.gameStateStep_598[0]]())
+    if (routines[g_GameWork.gameStateSteps[0]]())
     {
         g_SysWork.counters_1C[1]              = 0;
-        g_GameWork.gameStateStep_598[1] = 0;
-        g_GameWork.gameStateStep_598[2] = 0;
-        g_GameWork.gameStateStep_598[0]++;
+        g_GameWork.gameStateSteps[1] = 0;
+        g_GameWork.gameStateSteps[2] = 0;
+        g_GameWork.gameStateSteps[0]++;
     }
 }
 
 bool func_801E3124(void) // 0x801E3124
 {
-    switch (g_GameWork.gameStateStep_598[1])
+    switch (g_GameWork.gameStateSteps[1])
     {
         case 0:
             switch (g_Screen_FadeStatus)
             {
                 case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
-                    g_GameWork.background2dColor_58C.r = Q8_COLOR(1.0f);
-                    g_GameWork.background2dColor_58C.g = Q8_COLOR(1.0f);
-                    g_GameWork.background2dColor_58C.b = Q8_COLOR(1.0f);
+                    g_GameWork.background2dColor.r = Q8_COLOR(1.0f);
+                    g_GameWork.background2dColor.g = Q8_COLOR(1.0f);
+                    g_GameWork.background2dColor.b = Q8_COLOR(1.0f);
                     break;
 
                 case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
-                    g_GameWork.background2dColor_58C.r = Q8_COLOR(0.0f);
-                    g_GameWork.background2dColor_58C.g = Q8_COLOR(0.0f);
-                    g_GameWork.background2dColor_58C.b = Q8_COLOR(0.0f);
+                    g_GameWork.background2dColor.r = Q8_COLOR(0.0f);
+                    g_GameWork.background2dColor.g = Q8_COLOR(0.0f);
+                    g_GameWork.background2dColor.b = Q8_COLOR(0.0f);
                     break;
             }
 
             SD_Call(18);
             SD_Call(16);
-            g_GameWork.gameStateStep_598[1]++;
+            g_GameWork.gameStateSteps[1]++;
             break;
 
         case 1:
@@ -199,7 +199,7 @@ bool func_801E3124(void) // 0x801E3124
                     break;
             }
 
-            g_GameWork.gameStateStep_598[1]++;
+            g_GameWork.gameStateSteps[1]++;
             break;
 
         case 2:
@@ -207,7 +207,7 @@ bool func_801E3124(void) // 0x801E3124
 
             g_IntervalVBlanks = 1;
             D_801E5E74        = 0x3C;
-            g_GameWork.gameStateStep_598[1]++;
+            g_GameWork.gameStateSteps[1]++;
             break;
 
         case 3:
@@ -215,9 +215,9 @@ bool func_801E3124(void) // 0x801E3124
 
             if (D_801E5E74 <= 0 && Sd_AudioStreamingCheck() < 2)
             {
-                g_GameWork.background2dColor_58C.r = 0;
-                g_GameWork.background2dColor_58C.g = 0;
-                g_GameWork.background2dColor_58C.b = 0;
+                g_GameWork.background2dColor.r = 0;
+                g_GameWork.background2dColor.g = 0;
+                g_GameWork.background2dColor.b = 0;
                 return true;
             }
 
@@ -229,18 +229,18 @@ bool func_801E3124(void) // 0x801E3124
 
 s32 func_801E3304(void) // 0x801E3304
 {
-    if (g_GameWork.gameStatePrev_590 == GameState_InGame)
+    if (g_GameWork.gameStatePrev == GameState_InGame)
     {
-        if (g_GameWork.gameStateStep_598[1] == 0)
+        if (g_GameWork.gameStateSteps[1] == 0)
         {
             Screen_Init(SCREEN_WIDTH, false);
 
             ScreenFade_Reset();
-            g_GameWork.gameStateStep_598[1]++;
+            g_GameWork.gameStateSteps[1]++;
         }
-        else if (g_GameWork.gameStateStep_598[1] != 10)
+        else if (g_GameWork.gameStateSteps[1] != 10)
         {
-            g_GameWork.gameStateStep_598[1]++;
+            g_GameWork.gameStateSteps[1]++;
         }
         else
         {
@@ -265,8 +265,8 @@ bool func_801E342C(void) // 0x801E342C
     GsOT* ot;
     TILE* tile;
 
-    if (((g_GameWork.config_0.optExtraOptionsEnabled_27 >> (D_801E5E8C - 1)) & (1 << 0)) &&
-        (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
+    if (((g_GameWork.config.optExtraOptionsEnabled_27 >> (D_801E5E8C - 1)) & (1 << 0)) &&
+        (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4))
     {
         D_800C48F0 = D_801E5558[D_801E5E8C].field_4 + (D_801E5E84 / 2);
         SD_Call(19);
@@ -283,7 +283,7 @@ bool func_801E342C(void) // 0x801E342C
     GsOUT_PACKET_P += sizeof(TILE);
     temp = func_801E3684();
 
-    switch (g_GameWork.gameStateStep_598[1])
+    switch (g_GameWork.gameStateSteps[1])
     {
         case 0:
             switch (g_Screen_FadeStatus)
@@ -298,7 +298,7 @@ bool func_801E342C(void) // 0x801E342C
             }
 
             g_ScreenFadeTimestep = Q12(1.0f);
-            g_GameWork.gameStateStep_598[1]++;
+            g_GameWork.gameStateSteps[1]++;
             D_801E5E78 = 180;
             break;
 
@@ -311,7 +311,7 @@ bool func_801E342C(void) // 0x801E342C
             D_801E5E78--;
             if (!Sd_AudioStreamingCheck())
             {
-                g_GameWork.gameStateStep_598[1]++;
+                g_GameWork.gameStateSteps[1]++;
             }
             break;
 
@@ -319,15 +319,15 @@ bool func_801E342C(void) // 0x801E342C
             D_801E5E78--;
             if (D_801E5E78 <= 0)
             {
-                g_Screen_FadeStatus             = g_GameWork.gameStateStep_598[1];
-                g_GameWork.gameStateStep_598[1] = 3;
+                g_Screen_FadeStatus             = g_GameWork.gameStateSteps[1];
+                g_GameWork.gameStateSteps[1] = 3;
             }
             break;
 
         case 3:
             if (g_Screen_FadeStatus == SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false))
             {
-                g_GameWork.gameStateStep_598[1] = 4;
+                g_GameWork.gameStateSteps[1] = 4;
                 return true;
             }
             break;
@@ -656,8 +656,8 @@ bool func_801E3970(void) // 0x801E3970
             }
         }
     }
-    else if (((g_GameWork.config_0.optExtraOptionsEnabled_27 >> (D_801E5E8C - 1)) & (1 << 0)) &&
-             (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
+    else if (((g_GameWork.config.optExtraOptionsEnabled_27 >> (D_801E5E8C - 1)) & (1 << 0)) &&
+             (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4))
     {
         skipTo = D_801E5E84 + 168;
         skipTo = FP_TO(skipTo, Q12_SHIFT) / Q12(1.0f); // TODO: What math macro matches?

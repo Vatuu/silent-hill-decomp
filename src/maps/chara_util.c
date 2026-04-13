@@ -88,7 +88,7 @@ s32 Chara_AnimPlaybackStateGet(s_SubCharacter* chara)
 {
     s_AnimInfo* animInfo = NULL;
 
-    switch (chara->model.charaId_0)
+    switch (chara->model.charaId)
     {
 #ifdef HAS_Chara_EndingCybil
         CHARA_CASE(Chara_Cybil):
@@ -569,7 +569,7 @@ s32 Chara_AnimStartKeyframeIdxGet(s_SubCharacter* chara)
 {
     s_AnimInfo* animInfo = NULL;
 
-    switch (chara->model.charaId_0)
+    switch (chara->model.charaId)
     {
 #if defined(MAP5_S02) || defined(MAP5_S03)
         // `animInfo` left as `NULL`.

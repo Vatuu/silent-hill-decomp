@@ -146,7 +146,7 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
     s32  time;
 
     skipCutscene = false;
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 13)
     {
         skipCutscene = true;
@@ -1082,7 +1082,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             // Make all grey children aggressive?
             for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
             {
-                if (g_SysWork.npcs_1A0[i].model.charaId_0 == ENEMY_CHARA_ID)
+                if (g_SysWork.npcs_1A0[i].model.charaId == ENEMY_CHARA_ID)
                 {
                     g_SysWork.npcs_1A0[i].model.controlState     = ModelState_Uninitialized;
                     g_SysWork.npcs_1A0[i].model.stateStep = 6;
@@ -1191,7 +1191,7 @@ void MapEvent_GreyChildrenSpawn(void) // 0x800DC1E8
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    if (Savegame_EventFlagGet(EventFlag_17) && g_SysWork.npcs_1A0[0].model.charaId_0 == Chara_None)
+    if (Savegame_EventFlagGet(EventFlag_17) && g_SysWork.npcs_1A0[0].model.charaId == Chara_None)
     {
         if (PLAYER_IN_MAP_CHUNK(vx, 1, -7, -1, -7) && PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7))
         {
@@ -1402,7 +1402,7 @@ void func_800DC8D8(void) // 0x800DC8D8
         if (g_SysWork.npcs_1A0[0].position.vx > Q12(-58.0f))
         {
             Savegame_EventFlagSet(EventFlag_11);
-            g_SysWork.npcs_1A0[0].model.charaId_0 = Chara_None;
+            g_SysWork.npcs_1A0[0].model.charaId = Chara_None;
 
             func_8005DC1C(Sfx_Unk1354, &QVECTOR3(-57.0f, -1.0f, 47.0f), Q8(0.5f), 0);
         }

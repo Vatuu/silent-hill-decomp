@@ -291,7 +291,7 @@ void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0
                 }
                 else
                 {
-                    Bgm_BgmChannelSet();
+                    Bgm_ChannelSet();
                     D_800A99A0 = 2;
                 }
                 break;

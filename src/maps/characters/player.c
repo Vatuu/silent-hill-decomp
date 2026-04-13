@@ -907,30 +907,30 @@ bool sharedFunc_800D2E94_0_s00(void)
                 Savegame_EventFlagGet(EventFlag_167) && !Savegame_EventFlagGet(EventFlag_168) &&
                 g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap))
             {
-                npcChara->model.charaId_0 = Chara_Padlock;
+                npcChara->model.charaId = Chara_Padlock;
             }
             else
             {
                 if (npcChara->health <= Q12(0.0f))
                 {
-                    if (Savegame_EventFlagGet(EventFlag_167) && npcChara->model.charaId_0 == Chara_Padlock)
+                    if (Savegame_EventFlagGet(EventFlag_167) && npcChara->model.charaId == Chara_Padlock)
                     {
                         npcChara->flags |= CharaFlag_Unk1;
                         Savegame_EventFlagSet(EventFlag_168);
                     }
                 }
 
-                npcChara->model.charaId_0 = Chara_None;
+                npcChara->model.charaId = Chara_None;
             }
         }
         else
         {
-            if (Savegame_EventFlagGet(EventFlag_167) && npcChara->model.charaId_0 == Chara_Padlock)
+            if (Savegame_EventFlagGet(EventFlag_167) && npcChara->model.charaId == Chara_Padlock)
             {
                 npcChara->flags |= CharaFlag_Unk1;
                 Savegame_EventFlagSet(EventFlag_168);
             }
-            npcChara->model.charaId_0 = Chara_None;
+            npcChara->model.charaId = Chara_None;
         }
 
         if (npcChara->damage.amount_C != Q12(0.0f))
@@ -958,7 +958,7 @@ bool sharedFunc_800D2E94_0_s00(void)
 
     npcChara->model.controlState     = ModelState_Uninitialized;
     npcChara->model.stateStep = 0;
-    npcChara->model.charaId_0   = Chara_None;
+    npcChara->model.charaId   = Chara_None;
     npcChara->health           = Q12(0.0f);
 #endif
     return false;

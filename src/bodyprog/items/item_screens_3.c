@@ -662,7 +662,7 @@ s16 D_800AE5CC[18] =
     0x22, 0x0
 };
 
-// https://decomp.me/scratch/HNL4n Referenced under `if (g_GameWork.config_0.optExtraBloodColor_24 != 0xE)`
+// https://decomp.me/scratch/HNL4n Referenced under `if (g_GameWork.config.optExtraBloodColor_24 != 0xE)`
 // Similar access pattern to the table above.
 s16 D_800AE5F0[136] = {
     0x0001, 0x0000, 0x0001, 0x0000,
@@ -1268,7 +1268,7 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
     Gfx_StringSetColor(StringColorId_White);
 
     // In inventory.
-    if (g_GameWork.gameStateStep_598[1] < 21)
+    if (g_GameWork.gameStateSteps[1] < 21)
     {
         for (i = 0; i < ARRAY_SIZE(LABEL_STR_POS_TABLE); i++)
         {
@@ -1470,7 +1470,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         var_t6 = -1;
     }
 
-    if (g_GameWork.gameStateStep_598[1] != 20)
+    if (g_GameWork.gameStateSteps[1] != 20)
     {
         for (i = 0; i < 2; i++)
         {
@@ -1637,7 +1637,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
     D_800C3B68[0][2].vy = D_800C3B68[0][1].vy;
     D_800C3B68[0][3].vy = D_800C3B68[0][0].vy;
 
-    if (*arg0 == 8 || g_GameWork.gameStateStep_598[1] == 0xF)
+    if (*arg0 == 8 || g_GameWork.gameStateSteps[1] == 0xF)
     {
         poly_g4 = (POLY_G4*)GsOUT_PACKET_P;
 
@@ -1694,7 +1694,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
 
         Gfx_Primitive2dTextureSet(0, 0, 5, 2);
 
-        if ((D_800AE190 >= 0x21 && *arg0 == 8) || (D_800AE190 < 0x21 && g_GameWork.gameStateStep_598[1] == 0xF))
+        if ((D_800AE190 >= 0x21 && *arg0 == 8) || (D_800AE190 < 0x21 && g_GameWork.gameStateSteps[1] == 0xF))
         {
             for (i = 0; i < 2; i++)
             {
@@ -2511,7 +2511,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
     s_GameWork*  ptr2;
     s32*         ptr3;
 
-    switch (g_GameWork.gameStateStep_598[1])
+    switch (g_GameWork.gameStateSteps[1])
     {
         case 1:
             for (i = 0; i < 7; i++)
@@ -2696,9 +2696,9 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 g_SysWork.playerCombat_38.weaponInventoryIdx = g_SysWork.inventoryItemSelectedIdx_2351;
 
                 *selectedItemId                 = 0;
-                temp3                           = g_GameWork.gameStateStep_598[2];
+                temp3                           = g_GameWork.gameStateSteps[2];
                 D_800AE188                      = 0;
-                g_GameWork.gameStateStep_598[1] = 1;
+                g_GameWork.gameStateSteps[1] = 1;
                 D_800C3BA8                      = temp3;
 
                 func_8004EF48();
@@ -2734,9 +2734,9 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 }
 
                 *selectedItemId                 = 0;
-                temp3                           = g_GameWork.gameStateStep_598[2];
+                temp3                           = g_GameWork.gameStateSteps[2];
                 v0                              = 1;
-                g_GameWork.gameStateStep_598[1] = v0;
+                g_GameWork.gameStateSteps[1] = v0;
                 D_800C3BA8                      = temp3;
 
                 func_8004EF48();
@@ -2792,8 +2792,8 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     do
                     {
                         g_Inventory_ScrollTransitionTimer = 0;
-                        temp4                             = ptr->gameStateStep_598[2];
-                        g_GameWork.gameStateStep_598[1]   = 1;
+                        temp4                             = ptr->gameStateSteps[2];
+                        g_GameWork.gameStateSteps[1]   = 1;
                         D_800C3BA8                        = temp4;
                     }
                     while (0); // @hack
@@ -2829,8 +2829,8 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
                     *selectedItemId                 = 0;
                     D_800AE188                      = 0;
-                    temp5                           = g_GameWork.gameStateStep_598[2];
-                    g_GameWork.gameStateStep_598[1] = 1;
+                    temp5                           = g_GameWork.gameStateSteps[2];
+                    g_GameWork.gameStateSteps[1] = 1;
                     D_800C3BA8                      = temp5;
                 }
                 else
@@ -2856,8 +2856,8 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     g_Inventory_ScrollTransitionTimer = 0;
                     *selectedItemId                   = 0;
                     D_800AE188                        = 0;
-                    temp5                             = g_GameWork.gameStateStep_598[2];
-                    g_GameWork.gameStateStep_598[1]   = 1;
+                    temp5                             = g_GameWork.gameStateSteps[2];
+                    g_GameWork.gameStateSteps[1]   = 1;
                     D_800C3BA8                        = temp5;
                 }
             }
@@ -2937,8 +2937,8 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     do
                     {
                         g_Inventory_ScrollTransitionTimer = 0;
-                        temp4                             = ptr2->gameStateStep_598[2];
-                        g_GameWork.gameStateStep_598[1]   = 1;
+                        temp4                             = ptr2->gameStateSteps[2];
+                        g_GameWork.gameStateSteps[1]   = 1;
                         D_800C3BA8                        = temp4;
                     }
                     while (0); // @hack
@@ -2973,8 +2973,8 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
                     *selectedItemId                 = 0;
                     D_800AE188                      = 0;
-                    temp5                           = g_GameWork.gameStateStep_598[2];
-                    g_GameWork.gameStateStep_598[1] = 1;
+                    temp5                           = g_GameWork.gameStateSteps[2];
+                    g_GameWork.gameStateSteps[1] = 1;
                     D_800C3BA8                      = temp5;
                 }
                 else
@@ -3000,8 +3000,8 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     g_Inventory_ScrollTransitionTimer = 0;
                     *selectedItemId                   = 0;
                     D_800AE188                        = 0;
-                    temp5                             = g_GameWork.gameStateStep_598[2];
-                    g_GameWork.gameStateStep_598[1]   = 1;
+                    temp5                             = g_GameWork.gameStateSteps[2];
+                    g_GameWork.gameStateSteps[1]   = 1;
                     D_800C3BA8                        = temp5;
                 }
             }
@@ -3050,8 +3050,8 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
                     *selectedItemId                 = 0;
                     D_800AE188                      = 0;
-                    temp4                           = g_GameWork.gameStateStep_598[2];
-                    g_GameWork.gameStateStep_598[1] = 1;
+                    temp4                           = g_GameWork.gameStateSteps[2];
+                    g_GameWork.gameStateSteps[1] = 1;
                     D_800C3BA8                      = temp4;
 
                     func_8004EF48();
@@ -3079,8 +3079,8 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     *selectedItemId                   = 0;
                     D_800AE188                        = 0;
 
-                    temp5                           = g_GameWork.gameStateStep_598[2];
-                    g_GameWork.gameStateStep_598[1] = 1;
+                    temp5                           = g_GameWork.gameStateSteps[2];
+                    g_GameWork.gameStateSteps[1] = 1;
                     D_800C3BA8                      = temp5;
                 }
             }
@@ -3106,8 +3106,8 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     *selectedItemId                                                      = 0;
                     D_800AE188                                                           = 0;
 
-                    temp3                           = g_GameWork.gameStateStep_598[2];
-                    g_GameWork.gameStateStep_598[1] = 17;
+                    temp3                           = g_GameWork.gameStateSteps[2];
+                    g_GameWork.gameStateSteps[1] = 17;
                     D_800C3BA8                      = temp3;
 
                     for (i = 0; i < 7; i++)
@@ -3145,8 +3145,8 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
             {
                 if (Fs_QueueGetLength() == 0)
                 {
-                    g_GameWork.gameStateStep_598[1] = 14;
-                    g_GameWork.gameStateStep_598[2] = 0;
+                    g_GameWork.gameStateSteps[1] = 14;
+                    g_GameWork.gameStateSteps[2] = 0;
                 }
             }
             break;
@@ -3155,15 +3155,15 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
             D_800AE190++;
             D_800AE190 = CLAMP(D_800AE190, 0, 0x40);
 
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.action_6 |
-                                                 g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.action_6 |
+                                                 g_GameWorkPtr->config.controllerConfig.cancel_2))
             {
                 if (D_800AE190 == 0x40)
                 {
                     g_Inventory_ScrollTransitionTimer    = 0;
                     g_Inventory_SelectionBordersDraw = 0;
-                    g_GameWork.gameStateStep_598[1]      = 15;
-                    g_GameWork.gameStateStep_598[2]      = 0;
+                    g_GameWork.gameStateSteps[1]      = 15;
+                    g_GameWork.gameStateSteps[2]      = 0;
                     D_800AE190                           = 0;
                 }
             }
@@ -3177,13 +3177,13 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
             if (D_800AE190 > 0x20)
             {
                 g_Inventory_ScrollTransitionTimer = 0;
-                temp2                             = g_GameWork.gameStateStep_598[2];
-                g_GameWork.gameStateStep_598[1]   = 1;
+                temp2                             = g_GameWork.gameStateSteps[2];
+                g_GameWork.gameStateSteps[1]   = 1;
                 ptr3                              = &D_800C3BA8;
 
                 do {} while (0); // @hack
 
-                g_GameWork.gameStateStep_598[2]      = 0;
+                g_GameWork.gameStateSteps[2]      = 0;
                 *ptr3                                = temp2;
                 *selectedItemId                      = 0;
                 D_800AE188                           = 0;
@@ -3811,7 +3811,7 @@ void Gfx_Items_Draw(void) // 0x80054200
 
     temp_s5 = (g_SysWork.inventoryItemSelectedIdx_2351 - 3 + g_SavegamePtr->inventorySlotCount_AB) % g_SavegamePtr->inventorySlotCount_AB;
 
-    if (g_GameWork.gameStateStep_598[1] < 21) // If screen is inventory
+    if (g_GameWork.gameStateSteps[1] < 21) // If screen is inventory
     {
         for (inventoryItemsIdx = 0; inventoryItemsIdx < 7; inventoryItemsIdx++)
         {

@@ -380,9 +380,9 @@ Fs_CharaAnimBoneInfoUpdate                   = 0x8003536C; // type:func
 //--- PA: 0x0108F0   VA: 0x80035450   subsegment: c, game_boot/background_sound_init
 //----------------------------------------------------------------------------------
 Bgm_Init                                     = 0x80035450; // type:func
-Bgm_IsCurrentBgmTargetCheck                  = 0x80035578; // type:func
+Bgm_ActiveBgmTrackCheck                  = 0x80035578; // type:func
 Bgm_TrackSet                                 = 0x800355AC; // type:func
-Bgm_BgmChannelSet                            = 0x800355F4; // type:func
+Bgm_ChannelSet                            = 0x800355F4; // type:func
 func_8003596C                                = 0x8003563C; // type:func
 Sd_AmbientSfxInit                            = 0x8003566C; // type:func
 Sd_IsCurrentAmbientTargetCheck               = 0x80035780; // type:func

@@ -12,7 +12,7 @@
 
 void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D7FB8
 {
-    if (chara->model.charaId_0 != Chara_Cheryl)
+    if (chara->model.charaId != Chara_Cheryl)
     {
         Ai_Cheryl_Init(chara);
     }

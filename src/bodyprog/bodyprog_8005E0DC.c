@@ -595,7 +595,7 @@ s32 func_8005F55C(s32 arg0) // 0x8005F55C
     }
 
     // TODO: Use available enums.
-    switch (g_GameWork.config_0.optExtraBloodColor_24)
+    switch (g_GameWork.config.optExtraBloodColor_24)
     {
         case 3:
             return 6;
@@ -622,7 +622,7 @@ s32 func_8005F55C(s32 arg0) // 0x8005F55C
         case 14:
         {
             // TODO: Use available enums. Some values appear unused.
-            switch (g_GameWork.config_0.optExtraBloodColor_24)
+            switch (g_GameWork.config.optExtraBloodColor_24)
             {
                 case 5:
                     return 7;
@@ -651,7 +651,7 @@ s32 func_8005F55C(s32 arg0) // 0x8005F55C
     }
 
     // TODO: Use available enums. Some values appear unused.
-    switch (g_GameWork.config_0.optExtraBloodColor_24)
+    switch (g_GameWork.config.optExtraBloodColor_24)
     {
         case 1:
         case 2:
@@ -705,7 +705,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
     s32            curDist;
     GsCOORDINATE2* camCoord;
 
-    if (g_GameWork.config_0.optExtraBloodColor_24 == 14) // TODO: Demagic 14.
+    if (g_GameWork.config.optExtraBloodColor_24 == 14) // TODO: Demagic 14.
     {
         arg3 = 5;
     }
@@ -778,7 +778,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
             break;
     }
 
-    if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
+    if (g_GameWork.config.optExtraBloodColor_24 == 14)
     {
         count = 0;
     }
@@ -793,7 +793,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
             }
         }
 
-        if (chara->model.charaId_0 == Chara_SplitHead)
+        if (chara->model.charaId == Chara_SplitHead)
         {
             i = 24;
         }
@@ -845,7 +845,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
             g_MapOverlayHeader.unkTable1_4C[idx].field_B              = i * 4;
             g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 = Rng_GenerateUInt(0, 255);
 
-            if (chara->model.charaId_0 == Chara_Floatstinger)
+            if (chara->model.charaId == Chara_Floatstinger)
             {
                 g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3 = 96;
             }
@@ -1017,7 +1017,7 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
 
     ptr->field_148 = g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0;
 
-    if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
+    if (g_GameWork.config.optExtraBloodColor_24 == 14)
     {
         g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 += (u16)g_DeltaTime * 4;
     }
@@ -1199,7 +1199,7 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
 
     setSemiTrans(*poly, true);
 
-    if (g_GameWork.config_0.optExtraBloodColor_24 == 0xE)
+    if (g_GameWork.config.optExtraBloodColor_24 == 0xE)
     {
         *(s32*)&(*poly)->u1 = (((ptr->field_164 << 5) + ptr->field_16C) << 8) + 0x2B0000 + ((ptr->field_150 << 5) + ptr->field_158);
         *(s32*)&(*poly)->u2 = (((ptr->field_164 << 5) + ptr->field_170) << 8) + ((ptr->field_150 << 5) + ptr->field_15C);
@@ -1214,7 +1214,7 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
 
     if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 3))
     {
-        if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
+        if (g_GameWork.config.optExtraBloodColor_24 == 14)
         {
             func_80055A90(&ptr->field_130, &ptr->field_134, 0x40, ptr->field_140 * 16);
 
@@ -1272,7 +1272,7 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
         return true;
     }
 
-    if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
+    if (g_GameWork.config.optExtraBloodColor_24 == 14)
     {
         temp_s0             = func_80055D78(g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].vy_8, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
         *(u16*)&(*poly)->r0 = temp_s0 + (func_80055D78(g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].vy_8, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4) << 8);
@@ -1681,7 +1681,7 @@ void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3) 
     s32         idx;
     s32         i;
 
-    if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
+    if (g_GameWork.config.optExtraBloodColor_24 == 14)
     {
         return;
     }
@@ -1770,7 +1770,7 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
     if (g_MapOverlayHeader.unkTable1_4C[idx].field_A == 3)
     {
         var_s7 = 0xC;
-        if (g_SysWork.npcs_1A0[g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0].model.charaId_0 == Chara_None)
+        if (g_SysWork.npcs_1A0[g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0].model.charaId == Chara_None)
         {
             g_MapOverlayHeader.unkTable1_4C[idx].field_A = 0;
             return false;

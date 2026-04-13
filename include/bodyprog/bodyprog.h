@@ -1197,7 +1197,7 @@ typedef struct _WaterZone
 
 typedef struct
 {
-    u8            charaId_0;  /** `e_CharacterId` */
+    u8            charaId;  /** `e_CharacterId` */
     u8            isLoaded_1; /** `bool` */
     // 2 bytes of padding.
     s32           queueIdx_4;

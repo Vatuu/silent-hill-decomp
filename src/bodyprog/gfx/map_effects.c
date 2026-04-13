@@ -41,11 +41,11 @@ void Options_BrightnessMenu_LinesDraw(s32 arg0) // 0x8003E5E8
         line = (LINE_G2*)packet;
         setLineG2(line);
 
-        line->x1 = ((g_GameWork.gsScreenWidth_588 - 64) / 20) * i;
+        line->x1 = ((g_GameWork.gsScreenWidth - 64) / 20) * i;
         line->x0 = line->x1;
 
         line->y0 = -16;
-        line->y1 = (g_GameWork.gsScreenHeight_58A / 2) - 45;
+        line->y1 = (g_GameWork.gsScreenHeight / 2) - 45;
 
         color = (arg0 * 8) + 4;
 
@@ -889,7 +889,7 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     s32   temp_v1;
     q23_8 brightness;
 
-    temp_v1    = Q12_MULT(arg0->field_2E, (g_GameWork.config_0.optBrightness_22 * 8) + 4);
+    temp_v1    = Q12_MULT(arg0->field_2E, (g_GameWork.config.optBrightness_22 * 8) + 4);
     brightness = CLAMP(temp_v1, Q8_CLAMPED(0.0f), Q8_CLAMPED(1.0f));
 
     func_80055330(arg0->effectsInfo_0.field_0.s_field_0.field_2, arg0->effectsInfo_0.field_6, arg0->effectsInfo_0.field_0.s_field_0.field_1, arg0->effectsInfo_0.worldTintR_8, arg0->effectsInfo_0.worldTintG_A, arg0->effectsInfo_0.worldTintB_C, brightness);

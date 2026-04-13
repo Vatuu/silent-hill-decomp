@@ -9,7 +9,7 @@
 
 void Joy_Init(void) // 0x8003441C
 {
-    PadInitDirect(&g_GameWork.rawController_5B4, g_Controller1);
+    PadInitDirect(&g_GameWork.rawController, g_Controller1);
     PadStartCom();
 }
 
@@ -17,17 +17,17 @@ void Joy_ReadP1(void) // 0x80034450
 {
     s_ControllerData* cont;
 
-    cont = &g_GameWork.controllers_38[0];
+    cont = &g_GameWork.controllers[0];
 
-    // NOTE: `memcpy` is close, reads `rawController_5B4` as two `s32`s, but doesn't give match.
-    // memcpy(&cont->analogController_0, &g_GameWork.rawController_5B4, sizeof(s_AnalogController));
+    // NOTE: `memcpy` is close, reads `rawController` as two `s32`s, but doesn't give match.
+    // memcpy(&cont->analogController_0, &g_GameWork.rawController, sizeof(s_AnalogController));
 
-    *(s32*)&cont->analogController_0        = *(s32*)&g_GameWork.rawController_5B4;
-    *(s32*)&cont->analogController_0.rightX = *(s32*)&g_GameWork.rawController_5B4.rightX;
+    *(s32*)&cont->analogController_0        = *(s32*)&g_GameWork.rawController;
+    *(s32*)&cont->analogController_0.rightX = *(s32*)&g_GameWork.rawController.rightX;
 
     // Alternate
-    // ((s32*)&cont->analogController_0)[0] = ((s32*)&g_GameWork.rawController_5B4)[0];
-    // ((s32*)&cont->analogController_0)[1] = ((s32*)&g_GameWork.rawController_5B4)[1];
+    // ((s32*)&cont->analogController_0)[0] = ((s32*)&g_GameWork.rawController)[0];
+    // ((s32*)&cont->analogController_0)[1] = ((s32*)&g_GameWork.rawController)[1];
 }
 
 void Joy_Update(void) // 0x8003446C
@@ -220,7 +220,7 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
             }
             else if (val == 0x10)
             {
-                if (!(btnsHeld & g_GameWorkPtr->config_0.controllerConfig_0.run_C))
+                if (!(btnsHeld & g_GameWorkPtr->config.controllerConfig.run_C))
                 {
                     processedInputFlags |= 0xE0000000;
                 }

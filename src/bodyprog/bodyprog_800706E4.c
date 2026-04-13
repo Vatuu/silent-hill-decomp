@@ -400,7 +400,7 @@ void Player_CharaTurn_1(s_SubCharacter* chara, e_PlayerLowerBodyState curState) 
 
 void Player_CharaRotate(s32 speed) // 0x80071284
 {
-    if (g_GameWork.config_0.optExtraRetreatTurn_2A)
+    if (g_GameWork.config.optExtraRetreatTurn_2A)
     {
         if (g_Player_IsTurningRight)
         {
@@ -2525,7 +2525,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
         {
             g_SysWork.playerWork.player.properties.player.field_104 += g_DeltaTime;
 
-            if (!g_GameWork.config_0.optExtraWeaponCtrl_23)
+            if (!g_GameWork.config.optExtraWeaponCtrl_23)
             {
                 g_Player_HasActionInput      = false;
                 g_Player_HasMoveInput        = false;
@@ -2607,7 +2607,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
         if (g_SysWork.targetNpcIdx_2353 != NO_VALUE &&
             g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
-            if (!g_GameWork.config_0.optExtraAutoAiming_2C)
+            if (!g_GameWork.config.optExtraAutoAiming_2C)
             {
                 if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 1))
                 {
@@ -2650,7 +2650,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
         }
         else
         {
-            if (g_SysWork.targetNpcIdx_2353 != NO_VALUE && !g_GameWork.config_0.optExtraAutoAiming_2C)
+            if (g_SysWork.targetNpcIdx_2353 != NO_VALUE && !g_GameWork.config.optExtraAutoAiming_2C)
             {
                 if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))
                 {
@@ -3585,7 +3585,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
 
             if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
             {
-                if (g_GameWork.config_0.optExtraAutoAiming_2C)
+                if (g_GameWork.config.optExtraAutoAiming_2C)
                 {
                     if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))
                     {
@@ -3611,7 +3611,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
             D_800AF220 = 1;
             chara->properties.player.field_100++;
 
-            if (!g_GameWork.config_0.optExtraWeaponCtrl_23)
+            if (!g_GameWork.config.optExtraWeaponCtrl_23)
             {
                 g_Player_HasActionInput      = false;
                 g_Player_HasMoveInput        = false;
@@ -3656,7 +3656,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 break;
             }
 
-            if (!g_GameWork.config_0.optExtraAutoAiming_2C)
+            if (!g_GameWork.config.optExtraAutoAiming_2C)
             {
                 temp_v0_3 = ratan2((g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position.vx + g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetX_0) - g_SysWork.playerWork.player.position.vx,
                                    (g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position.vz + g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetZ_2) - g_SysWork.playerWork.player.position.vz);
@@ -3938,7 +3938,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                     }
                     else
                     {
-                        if (g_GameWork.config_0.optExtraAutoAiming_2C)
+                        if (g_GameWork.config.optExtraAutoAiming_2C)
                         {
                             if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 1))
                             {
@@ -4053,8 +4053,8 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
         case PlayerUpperBodyState_Aim:
         case PlayerUpperBodyState_AimTargetLock:
             // Stop aiming.
-            if (( g_GameWork.config_0.optExtraWeaponCtrl_23 && !g_Player_IsAiming) ||
-                (!g_GameWork.config_0.optExtraWeaponCtrl_23 &&  g_Player_IsAiming))
+            if (( g_GameWork.config.optExtraWeaponCtrl_23 && !g_Player_IsAiming) ||
+                (!g_GameWork.config.optExtraWeaponCtrl_23 &&  g_Player_IsAiming))
             {
                 chara->properties.player.field_F4                        = 0;
                 g_SysWork.playerWork.extra.upperBodyState             = PlayerUpperBodyState_AimStop;
@@ -4535,8 +4535,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         {
                             // Restrict aiming when going from idle to run.
                             if ((g_Player_IsRunning && temp_s3 == PlayerLowerBodyState_None) &&
-                                (aimState == 0 || (( g_GameWork.config_0.optExtraWeaponCtrl_23 && !g_Player_IsAiming) ||
-                                                   (!g_GameWork.config_0.optExtraWeaponCtrl_23 &&  g_Player_IsAiming)) &&
+                                (aimState == 0 || (( g_GameWork.config.optExtraWeaponCtrl_23 && !g_Player_IsAiming) ||
+                                                   (!g_GameWork.config.optExtraWeaponCtrl_23 &&  g_Player_IsAiming)) &&
                                  WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) == EquippedWeaponId_SteelPipe))
                             {
                                 g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForward;
@@ -4581,8 +4581,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
 
                         if (aimState == 0 && !g_SysWork.playerCombat_38.isAiming)
                         {
-                            if (( g_GameWork.config_0.optExtraWalkRunCtrl_2B && !g_Player_IsRunning) ||
-                                (!g_GameWork.config_0.optExtraWalkRunCtrl_2B &&  g_Player_IsRunning))
+                            if (( g_GameWork.config.optExtraWalkRunCtrl_2B && !g_Player_IsRunning) ||
+                                (!g_GameWork.config.optExtraWalkRunCtrl_2B &&  g_Player_IsRunning))
                             {
                                 if (g_Player_IsMovingBackward)
                                 {
@@ -5210,8 +5210,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                          chara->model.anim.keyframeIdx == 47) &&
                         aimState == 0 && g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop)
                     {
-                        if (( g_GameWork.config_0.optExtraWalkRunCtrl_2B && !g_Player_IsRunning) ||
-                            (!g_GameWork.config_0.optExtraWalkRunCtrl_2B &&  g_Player_IsRunning))
+                        if (( g_GameWork.config.optExtraWalkRunCtrl_2B && !g_Player_IsRunning) ||
+                            (!g_GameWork.config.optExtraWalkRunCtrl_2B &&  g_Player_IsRunning))
                         {
                             if (g_Player_IsMovingBackward)
                             {
@@ -7649,7 +7649,7 @@ void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D
                 sp20.vy = Q8_TO_Q12(sp80.vy);
                 sp20.vz = Q8_TO_Q12(sp80.vz);
 
-                if (g_GameWork.config_0.optExtraAutoAiming_2C)
+                if (g_GameWork.config.optExtraAutoAiming_2C)
                 {
                     sp98.vx = chara->field_2A;
                 }
@@ -7753,8 +7753,8 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
 
     SysWork_SavegameReadPlayer();
 
-    g_SysWork.playerWork.player.model.charaId_0  = Chara_Harry;
-    g_SysWork.playerWork.extra.model.charaId_0 = Chara_Harry;
+    g_SysWork.playerWork.player.model.charaId  = Chara_Harry;
+    g_SysWork.playerWork.extra.model.charaId = Chara_Harry;
     g_SysWork.playerWork.player.field_D4.radius_0  = Q12(0.3f);
     g_SysWork.playerWork.player.field_D4.field_2   = Q12(0.23f);
 
@@ -7830,7 +7830,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     }
 
     g_Player_LastWeaponSelected = NO_VALUE;
-    g_GameWork.mapAnimIdx_5B1   = NO_VALUE;
+    g_GameWork.mapAnimIdx   = NO_VALUE;
 
     g_SavegamePtr->inventorySlotCount_AB       = CLAMP(g_SavegamePtr->inventorySlotCount_AB, INVENTORY_ITEM_COUNT_MAX / 5, INVENTORY_ITEM_COUNT_MAX);
     g_SysWork.playerWork.player.health = CLAMP(g_SysWork.playerWork.player.health, 1, Q12(100.0f));
@@ -7877,7 +7877,7 @@ void func_8007E8C0(void) // 0x8007E8C0
     g_SysWork.playerWork.player.field_D8.offsetX_0 = Q12(0.0f);
     chara->field_D4.radius_0                            = Q12(0.3f);
     chara->field_D4.field_2                             = Q12(0.23f);
-    g_GameWork.mapAnimIdx_5B1                           = NO_VALUE;
+    g_GameWork.mapAnimIdx                           = NO_VALUE;
 
     func_8007E9C4();
 }
@@ -7954,12 +7954,12 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx) // 0x8007EB64
 {
     #define BASE_FILE_IDX FILE_ANIM_HB_M0S00_ANM
 
-    if (g_GameWork.mapAnimIdx_5B1 != mapIdx ||
+    if (g_GameWork.mapAnimIdx != mapIdx ||
         mapIdx == (FILE_ANIM_HB_M6S04_ANM - BASE_FILE_IDX) ||
         mapIdx == (FILE_ANIM_HB_M7S01_ANM - BASE_FILE_IDX) ||
         mapIdx == (FILE_ANIM_HB_M7S02_ANM - BASE_FILE_IDX))
     {
-        g_GameWork.mapAnimIdx_5B1 = mapIdx;
+        g_GameWork.mapAnimIdx = mapIdx;
         Fs_QueueStartRead(BASE_FILE_IDX + mapIdx, FS_BUFFER_4);
     }
 
@@ -8241,9 +8241,9 @@ void Player_Controller(void) // 0x8007F32C
         g_Player_IsTurningRight   = g_Controller0->sticks_20.sticks_0.leftX >= STICK_THRESHOLD ? (g_Controller0->sticks_20.sticks_0.leftX - (STICK_THRESHOLD - 1)) : 0;
         g_Player_IsMovingForward |= g_Controller0->sticks_20.sticks_0.leftY < -STICK_THRESHOLD;
         g_Player_IsMovingBackward = g_Controller0->sticks_20.sticks_0.leftY >= STICK_THRESHOLD;
-        g_Player_HasMoveInput     = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10 |
+        g_Player_HasMoveInput     = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.stepLeft_10 |
                                                                               (ControllerFlag_LStickUp2 | ControllerFlag_LStickRight2 | ControllerFlag_LStickDown2 | ControllerFlag_LStickLeft2) |
-                                                                              g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12 | g_GameWorkPtr->config_0.controllerConfig_0.aim_8);
+                                                                              g_GameWorkPtr->config.controllerConfig.stepRight_12 | g_GameWorkPtr->config.controllerConfig.aim_8);
     }
     else
     {
@@ -8251,47 +8251,47 @@ void Player_Controller(void) // 0x8007F32C
         g_Player_IsTurningRight   = ((g_Controller0->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == ControllerFlag_LStickRight) << 6;
         g_Player_IsMovingForward |= (g_Controller0->btnsHeld_C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == ControllerFlag_LStickUp;
         g_Player_IsMovingBackward = (g_Controller0->btnsHeld_C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == ControllerFlag_LStickDown;
-        g_Player_HasMoveInput     = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10 |
+        g_Player_HasMoveInput     = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.stepLeft_10 |
                                                                               (ControllerFlag_LStickUp | ControllerFlag_LStickRight | ControllerFlag_LStickDown | ControllerFlag_LStickLeft) |
-                                                                              g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12 | g_GameWorkPtr->config_0.controllerConfig_0.aim_8);
+                                                                              g_GameWorkPtr->config.controllerConfig.stepRight_12 | g_GameWorkPtr->config.controllerConfig.aim_8);
     }
 
-    g_Player_IsSteppingLeftHold  = (g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10) &&
-                                  !(g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12);
+    g_Player_IsSteppingLeftHold  = (g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.stepLeft_10) &&
+                                  !(g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.stepRight_12);
 
-    g_Player_IsSteppingRightHold = (g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12) &&
-                                  !(g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10);
+    g_Player_IsSteppingRightHold = (g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.stepRight_12) &&
+                                  !(g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.stepLeft_10);
 
-    g_Player_IsSteppingLeftTap  |= (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10)  != 0;
-    g_Player_IsSteppingRightTap |= (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12) != 0;
+    g_Player_IsSteppingLeftTap  |= (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.stepLeft_10)  != 0;
+    g_Player_IsSteppingRightTap |= (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.stepRight_12) != 0;
 
-    if (g_GameWork.config_0.optExtraWalkRunCtrl_2B)
+    if (g_GameWork.config.optExtraWalkRunCtrl_2B)
     {
-        g_Player_IsRunning = !(g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.run_C);
-    }
-    else
-    {
-        g_Player_IsRunning = g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.run_C;
-    }
-
-    if (g_GameWork.config_0.optExtraWeaponCtrl_23)
-    {
-        g_Player_IsAiming = g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.aim_8;
+        g_Player_IsRunning = !(g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.run_C);
     }
     else
     {
-        g_Player_IsAiming = g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.aim_8;
+        g_Player_IsRunning = g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.run_C;
+    }
+
+    if (g_GameWork.config.optExtraWeaponCtrl_23)
+    {
+        g_Player_IsAiming = g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.aim_8;
+    }
+    else
+    {
+        g_Player_IsAiming = g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.aim_8;
     }
 
     if (g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
         g_SysWork.playerWork.extra.lowerBodyState >= PlayerLowerBodyState_Aim)
     {
-        g_Player_IsShooting  = g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.action_6;
+        g_Player_IsShooting  = g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.action_6;
         g_Player_IsAttacking = g_Player_IsShooting;
     }
     else
     {
-        attackBtnInput = g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.action_6;
+        attackBtnInput = g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.action_6;
 
         g_Player_IsHoldAttack = (g_Player_IsHoldAttack * 2) & 0x1F;
         g_Player_IsAttacking  = (g_Player_IsAttacking * 2) & 0x3;
@@ -8308,7 +8308,7 @@ void Player_Controller(void) // 0x8007F32C
         }
     }
 
-    g_Player_HasActionInput = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.run_C | g_GameWorkPtr->config_0.controllerConfig_0.action_6);
+    g_Player_HasActionInput = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.run_C | g_GameWorkPtr->config.controllerConfig.action_6);
 
     if (g_SysWork.sysState_8 != SysState_Gameplay)
     {
@@ -8393,16 +8393,16 @@ bool func_8007F95C(void) // 0x8007F95C
              i < ARRAY_SIZE(g_SysWork.npcs_1A0);
              i++, curNpc0++, curNpc1++)
         {
-            if (curNpc1->model.charaId_0 != Chara_None)
+            if (curNpc1->model.charaId != Chara_None)
             {
-                if (curNpc1->model.charaId_0 == Chara_AirScreamer ||
-                    curNpc1->model.charaId_0 == Chara_NightFlutter)
+                if (curNpc1->model.charaId == Chara_AirScreamer ||
+                    curNpc1->model.charaId == Chara_NightFlutter)
                 {
                     radius = Q12(1.2f);
                 }
                 else
                 {
-                    if (curNpc1->model.charaId_0 == Chara_Creeper)
+                    if (curNpc1->model.charaId == Chara_Creeper)
                     {
                         radius = Q12(0.65f);
                     }

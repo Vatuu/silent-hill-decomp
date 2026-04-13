@@ -374,7 +374,7 @@ bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer)
     }
 
     // Set base health with random variation, accounting for differences between Air Screamer and Night Flutter.
-    if (airScreamer->model.charaId_0 == Chara_NightFlutter)
+    if (airScreamer->model.charaId == Chara_NightFlutter)
     {
         airScreamer->health = BASE_HEALTH + (Rng_RandQ12() * NIGHT_FLUTTER_RAND_MAX);
     }
@@ -1008,7 +1008,7 @@ void func_800D3A3C(s_SubCharacter* airScreamer) // 0x800D3A3C
     q19_12 animTime;
     s32    idx;
 
-    idx = g_CharaAnimInfoIdxs[airScreamer->model.charaId_0];
+    idx = g_CharaAnimInfoIdxs[airScreamer->model.charaId];
     Ai_AirScreamer_Update(airScreamer, (&g_CharaTypeAnimInfo[idx])->animFile1_8, (&g_CharaTypeAnimInfo[idx])->npcCoords_14);
 
     airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_17, true);
@@ -8863,7 +8863,7 @@ bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* airScreamer, q19_12 moveSpeedMult
 bool sharedFunc_800DC200_2_s00(s_SubCharacter* airScreamer)
 {
     if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 0x1) &&
-        (g_SavegamePtr->gameDifficulty_260 <= GameDifficulty_Normal || airScreamer->model.charaId_0 == Chara_AirScreamer))
+        (g_SavegamePtr->gameDifficulty_260 <= GameDifficulty_Normal || airScreamer->model.charaId == Chara_AirScreamer))
     {
         return false;
     }
@@ -8915,7 +8915,7 @@ s32 sharedFunc_800DC438_2_s00(s_SubCharacter* airScreamer)
 
     if (!(airScreamerProps.flags_11C & AirScreamerFlag_29) &&
         (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) ||
-         (g_SavegamePtr->gameDifficulty_260 > GameDifficulty_Normal && airScreamer->model.charaId_0 != Chara_AirScreamer)))
+         (g_SavegamePtr->gameDifficulty_260 > GameDifficulty_Normal && airScreamer->model.charaId != Chara_AirScreamer)))
     {
         if (sharedFunc_800DC3BC_2_s00(airScreamer) && (sharedFunc_800DC0A8_2_s00(airScreamer) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(2.0f))))
         {
@@ -9388,7 +9388,7 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* airScreamer, s32 npcSlot, q19_12 
         bitsSet++;
 
         // Check if character is Air Screamer.
-        if (g_SysWork.npcs_1A0[i].model.charaId_0 != airScreamer->model.charaId_0)
+        if (g_SysWork.npcs_1A0[i].model.charaId != airScreamer->model.charaId)
         {
             continue;
         }
@@ -9418,7 +9418,7 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* airScreamer, s32 npcSlot, q19_12 
             s32 selectNpcSlot = npcSlot & 0x1F;
             CLEAR_FLAG(g_SysWork.field_228C, selectNpcSlot);
 
-            Chara_Spawn(airScreamer->model.charaId_0,
+            Chara_Spawn(airScreamer->model.charaId,
                         selectNpcSlot,
                         g_SysWork.playerWork.player.position.vx + Q12(20.0f),
                         g_SysWork.playerWork.player.position.vz, Q12_ANGLE(0.0f),
