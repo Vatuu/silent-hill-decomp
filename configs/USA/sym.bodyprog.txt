@@ -741,7 +741,7 @@ func_8005E89C                                = 0x8005E89C;
 GameState_MapScreen_Update                   = 0x80066EB0; // type:func
 
 //--------------------------------------------------------------------
-//--- PA: 0x044C8C   VA: 0x800697EC   subsegment: c, bodyprog_800697EC
+//--- PA: 0x044C8C   VA: 0x800697EC   subsegment: c, collision
 //--------------------------------------------------------------------
 Collision_Init                               = 0x800697EC; // type:func
 Collision_FlagsGet                           = 0x80069810; // type:func
@@ -2878,7 +2878,9 @@ VbWvsMatrix                                  = 0x800C3888; // type:MATRIX size:0
 //--------------------------------------------------------------------
 g_StringPosition                             = 0x800C38A8; // type:DVECTOR
 g_StringPositionX1                           = 0x800C38AC; // type:s32
-g_MapMsg_WidthTable                          = 0x800C38C8; // type:s32
+g_MapMsg_WidthIdx                            = 0x800C38B4;
+g_MapMsg_Widths                              = 0x800C38C8; // type:s32
+g_MapMsg_GlyphSprite = 0x800C38F8;
 
 //----------------------------------------------------------------------------
 //--- PA: 0x09EDC8   VA: 0x800C3928   subsegment: .bss, items/item_screens_cam

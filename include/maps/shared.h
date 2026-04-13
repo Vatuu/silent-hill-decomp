@@ -523,9 +523,9 @@ extern u16 sharedData_800EFD34_6_s00[];
 
 
 extern u8 sharedData_800ED418_4_s02[8];
-extern s32 sharedData_800ED420_4_s02;   // Audio-related flags?
+extern s32 sharedData_800ED420_4_s02;   // `e_BgmFlags`
 extern u8 sharedData_800ED424_4_s02[8];
-extern u16 sharedData_800ED42C_4_s02[]; // Audio-related flags? Map room index used for access.
+extern u16 sharedData_800ED42C_4_s02[]; // `e_BgmFlags` | Map room index used for access.
 extern u8 sharedData_800ED458_4_s02[8];
 
 extern void (*g_Romper_ControlFuncs[])(s_SubCharacter* romper);

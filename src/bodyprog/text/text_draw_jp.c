@@ -280,10 +280,10 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A61C
 // USA func doesn't come after Gfx_StringDraw though.
 void func_8004AA28(void) // 0x8004AA28
 {
-    D_800C38F8.attribute = 64;
-    D_800C38F8.cx = 304;
-    D_800C38F8.v = 240;
-    D_800C38F8.h = 16;
+    g_MapMsg_GlyphSprite.attribute = 64;
+    g_MapMsg_GlyphSprite.cx = 304;
+    g_MapMsg_GlyphSprite.v = 240;
+    g_MapMsg_GlyphSprite.h = 16;
     func_8003652C();
 }
 
@@ -329,7 +329,7 @@ void func_8004B76C(char* str, bool useFixedWidth) // 0x8004AB04
     GsSPRITE* glyphSprt;
 
     glyphSprt  = (GsSPRITE*)PSX_SCRATCH_ADDR(0x30);
-    *glyphSprt = D_800C38F8;
+    *glyphSprt = g_MapMsg_GlyphSprite;
     ot         = &g_OrderingTable2[g_ActiveBufferIdx];
 
     // Parse string.
@@ -389,7 +389,7 @@ void func_8004B76C(char* str, bool useFixedWidth) // 0x8004AB04
         str++;
     }
 
-    D_800C38F8 = *glyphSprt;
+    g_MapMsg_GlyphSprite = *glyphSprt;
 
     #undef GLYPH_SIZE_X
     #undef GLYPH_SIZE_Y
@@ -412,7 +412,7 @@ void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004AD90
     {
         for (i = 0; i < (widthMin - 1); i++)
         {
-            D_800C38F8.x += GLYPH_SIZE_X;
+            g_MapMsg_GlyphSprite.x += GLYPH_SIZE_X;
         }
     }
 
@@ -438,7 +438,7 @@ void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004AD90
 
         if (widthMin > 0)
         {
-            D_800C38F8.x -= GLYPH_SIZE_X;
+            g_MapMsg_GlyphSprite.x -= GLYPH_SIZE_X;
         }
 
         val = quotient;
@@ -451,7 +451,7 @@ void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004AD90
     {
         str--;
         *str          = '-';
-        D_800C38F8.x -= GLYPH_SIZE_X;
+        g_MapMsg_GlyphSprite.x -= GLYPH_SIZE_X;
     }
 
     // Draw numeric string.
@@ -464,8 +464,8 @@ void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004AD90
 
 void Gfx_MapMsg_DefaultStringInfoSet(void) // 0x8004AEA8
 {
-    D_800C38B0.field_0 = 0;
-    D_800C38B0.positionIdx_1 = 1;
+    D_800C38B0.unused = 0;
+    D_800C38B0.positionIdx = 1;
     D_800C5E1C = 1;
     D_800C5E10.vx = -0x78;
     D_800C5E10.vy = 0x4C;
@@ -499,7 +499,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
     s32   temp;
     s32   j;
     s32   ret;
-    s32   msgArg;
+    s32   posIdx;
     s32   msgCode;
     s32   msgCode2;
     s32   charCode;
@@ -532,7 +532,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
 
                 case MAP_MSG_CODE_MARKER:
                     msgCode = *++mapMsg;
-                    msgArg  = *++mapMsg - '0';
+                    posIdx  = *++mapMsg - '0';
 
                     if (msgCode == MAP_MSG_CODE_NEWLINE)
                     {
@@ -543,14 +543,14 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
                     }
                     else if (msgCode == MAP_MSG_CODE_JUMP)
                     {
-                        if (msgArg == 2)
+                        if (posIdx == 2)
                         {
                             g_MapMsg_AudioLoadBlock = 3;
                         }
 
-                        while (msgArg != ' ' && msgArg != '\t')
+                        while (posIdx != ' ' && posIdx != '\t')
                         {
-                            msgArg = *++mapMsg;
+                            posIdx = *++mapMsg;
                         }
                     }
                     else
@@ -593,7 +593,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
 
                 case MAP_MSG_CODE_MARKER:
                     msgCode2 = *++mapMsg;
-                    msgArg   = *++mapMsg - '0';
+                    posIdx   = *++mapMsg - '0';
 
                     switch (msgCode2)
                     {
@@ -602,7 +602,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
                             break;
 
                         case MAP_MSG_CODE_NEWLINE:
-                            switch (D_800C38B0.positionIdx_1)
+                            switch (D_800C38B0.positionIdx)
                             {
                                 case 4:
                                     setRECT(&rect,
@@ -612,7 +612,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
 
                                 default:
                                     setRECT(&rect,
-                                            j << 6, (D_800C38B0.positionIdx_1 & 0x1) ? (SCREEN_HEIGHT * 2) : FONT_12X16_GLYPH_SIZE_Y,
+                                            j << 6, (D_800C38B0.positionIdx & 0x1) ? (SCREEN_HEIGHT * 2) : FONT_12X16_GLYPH_SIZE_Y,
                                             i * 3, 16);
                                     break;
                             }
@@ -621,13 +621,13 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
                             break;
 
                         case MAP_MSG_CODE_LINE_POSITION:
-                            D_800C38B0.positionIdx_1 = msgArg;
+                            D_800C38B0.positionIdx = posIdx;
                             break;
 
                         case MAP_MSG_CODE_JUMP:
-                            while (msgArg != ' ' && msgArg != '\t')
+                            while (posIdx != ' ' && posIdx != '\t')
                             {
-                                msgArg = *++mapMsg;
+                                posIdx = *++mapMsg;
                             }
                             break;
 
@@ -636,7 +636,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
                             break;
 
                         case MAP_MSG_CODE_SELECT:
-                            ret = msgArg;
+                            ret = posIdx;
                             break;
                     }
 
@@ -644,7 +644,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
                     break;
 
                 case 0:
-                    switch (D_800C38B0.positionIdx_1)
+                    switch (D_800C38B0.positionIdx)
                     {
                         case 4:
                             setRECT(&rect,
@@ -654,7 +654,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
 
                         default:
                             setRECT(&rect,
-                                    j << 6, (D_800C38B0.positionIdx_1 & 0x1) ? (SCREEN_HEIGHT * 2) : FONT_12X16_GLYPH_SIZE_Y,
+                                    j << 6, (D_800C38B0.positionIdx & 0x1) ? (SCREEN_HEIGHT * 2) : FONT_12X16_GLYPH_SIZE_Y,
                                     i * 3, 16);
                             break;
                     }

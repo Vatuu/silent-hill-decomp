@@ -93,7 +93,7 @@ segments:
       - [0x3EC0, .rodata, bodyprog_mapscreen_80066EB0]
       - [0x3EC8, rodata] # Garbage padding
       - [0x3ECC, .rodata, bodyprog_mapscreen_80066D90]
-      - [0x3FE4, .rodata, bodyprog_800697EC]
+      - [0x3FE4, .rodata, collision]
       - [0x4BF0, .rodata, bodyprog_800706E4]
       - [0x5CF0, .rodata, view/vc_main]
       - [0x5F9C, .rodata, bodyprog_80085D78]
@@ -190,7 +190,7 @@ segments:
       - [0x40794,   c, bodyprog_800652F4]
       - [0x42230,   c, bodyprog_mapscreen_80066EB0]
       - [0x42350,   c, bodyprog_mapscreen_80066D90]
-      - [0x44C8C,   c, bodyprog_800697EC]
+      - [0x44C8C,   c, collision]
       - [0x4BB84,   c, bodyprog_800706E4]
       - [0x5BDE0,   c, view/vc_main]
       - [0x61218,   c, bodyprog_80085D78]
@@ -491,7 +491,7 @@ segments:
       - [0x9F8C8, .bss, bodyprog_800652F4]
       - [0x9F8E8, .bss, bodyprog_mapscreen_80066D90]
       - [0x9F8F4,  pad] # Garbage.
-      - [0x9F8F8, .bss, bodyprog_800697EC]
+      - [0x9F8F8, .bss, collision]
       - [0x9F96C,  pad] # Garbage.
       - [0x9F970, .bss, bodyprog_800706E4]
       - [0x9FABC,  pad] # Garbage.

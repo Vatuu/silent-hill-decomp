@@ -47,6 +47,15 @@
 // ENUMS
 // ======
 
+// Used by `func_8006E490` and `func_8006E150`.
+typedef enum _OrientationFlags
+{
+    OrientationFlags_None    = 0,
+    OrientationFlags_InvertX = 1 << 0,
+    OrientationFlags_InvertZ = 1 << 1,
+    OrientationFlags_SwapXz  = 1 << 2
+} e_OrientationFlags;
+
 /** @brief SFX pair indices. Used for `SFX_PAIRS`. */
 typedef enum _SfxPairIdx
 {
@@ -563,8 +572,8 @@ typedef struct
 
 typedef struct
 {
-    s16 field_0;
-    s16 field_2;
+    q3_12 field_0; // X
+    q3_12 field_2; // Z
 } s_func_8006E490_20;
 
 typedef struct

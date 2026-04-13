@@ -45,8 +45,8 @@ typedef enum _StringColorId
 /** Used in string parsing. */
 typedef struct
 {
-    s8 field_0;
-    u8 positionIdx_1;
+    /* 0x0 */ s8 unused;
+    /* 0x1 */ u8 positionIdx;
 } s_800C38B0;
 
 // ========
@@ -63,14 +63,14 @@ extern s_800C38B0 D_800C38B0;
 
 extern s8 pad_bss_800C38B2[2];
 
-extern s32 D_800C38B4;
+extern s32 g_MapMsg_WidthIdx;
 
 extern s32 pad_bss_800C38B8[4];
 
-extern s32 g_MapMsg_WidthTable[12];
+extern s32 g_MapMsg_Widths[12];
 
 /** String glyph sprite. */
-extern GsSPRITE D_800C38F8;
+extern GsSPRITE g_MapMsg_GlyphSprite;
 
 extern s16 D_800C391C;
 

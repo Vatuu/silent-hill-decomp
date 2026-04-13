@@ -2614,7 +2614,7 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
     s32     var_a3;
     u32     flags;
 
-    flags = 0;
+    flags = OrientationFlags_None;
     arg0->field_1C = 0;
 
     if (arg0->field_8.vx < 0 && arg0->field_C < 0 &&
@@ -2642,7 +2642,7 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
 
     if (arg1.vx < 0)
     {
-        flags             |= 1 << 0;
+        flags             |= OrientationFlags_InvertX;
         subroutine_arg4.vx = -subroutine_arg4.vx;
 
         arg1.vx = -arg1.vx;
@@ -2652,7 +2652,7 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
 
     if (arg2.vx < 0)
     {
-        flags             |= 1 << 1;
+        flags             |= OrientationFlags_InvertZ;
         subroutine_arg4.vy = -subroutine_arg4.vy;
         arg2.vx            = -arg2.vx;
         sp18.pad           = -sp18.vy;
@@ -2661,7 +2661,7 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
 
     if (arg1.vx < arg2.vx)
     {
-        flags |= 1 << 2;
+        flags |= OrientationFlags_SwapXz;
 
         temp_a0_3          = subroutine_arg4.vx;
         subroutine_arg4.vx = subroutine_arg4.vy;
@@ -2727,32 +2727,27 @@ void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ) /
 {
     q19_12 tempPosX;
 
-    // TODO: `func_8006E150` also uses these flags. What subsystem are they for?
-    // Flag 0: Invert X.
-    // Flag 1: Invert Z.
-    // Flag 2: Swap XZ.
-
-    if (flags & (1 << 2))
+    if (flags & OrientationFlags_SwapXz)
     {
         tempPosX = posX;
         posX     = posZ;
         posZ     = tempPosX;
     }
 
-    if (flags & (1 << 1))
+    if (flags & OrientationFlags_InvertZ)
     {
         posZ = -posZ;
     }
 
-    if (flags & (1 << 0))
+    if (flags & OrientationFlags_InvertX)
     {
         posX = -posX;
     }
 
     posX = FP_FROM(posX, Q12_SHIFT);
     posZ = FP_FROM(posZ, Q12_SHIFT);
-    if (posX >= 0 && posX < arg0->field_10 &&
-        posZ >= 0 && posZ < arg0->field_14)
+    if (posX >= Q12(0.0f) && posX < arg0->field_10 &&
+        posZ >= Q12(0.0f) && posZ < arg0->field_14)
     {
         arg0->field_20[arg0->field_1C].field_0 = posX;
         arg0->field_20[arg0->field_1C].field_2 = posZ;
@@ -4006,4 +4001,4 @@ const s_AnimInfo D_80028B94[] = {
 };
 
 // Unused data?
-INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_800697EC", D_800294F4);
+INCLUDE_RODATA("bodyprog/nonmatchings/collision", D_800294F4);
