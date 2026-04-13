@@ -628,12 +628,12 @@ void SysState_LoadArea_Update(void) // 0x80039C40
 
     g_SysWork.field_229C            = 0;
     g_SysWork.loadingScreenIdx_2281 = D_800BCDB0.loadingScreenId_4_9;
-    g_SysWork.field_2283            = g_MapEventData->field_8_19;
+    g_SysWork.sfxPairIdx_2283       = g_MapEventData->sfxPairIdx_8_19;
     g_SysWork.field_2282            = g_MapEventData->flags_8_13;
 
-    SD_Call(SfxPairs[g_SysWork.field_2283].sfx_0);
+    SD_Call(SFX_PAIRS[g_SysWork.sfxPairIdx_2283].sfx_0);
 
-    if (g_SysWork.field_2283 == 7)
+    if (g_SysWork.sfxPairIdx_2283 == SfxPairIdx_7)
     {
         D_800BCDD4            = 0;
         g_SysWork.flags_22A4 |= SysFlag2_10;
@@ -689,7 +689,7 @@ void AreaLoad_UpdatePlayerPosition(void) // 0x80039F30
 
 void AreaLoad_TransitionSound(void) // 0x80039F54
 {
-    SD_Call(SfxPairs[g_SysWork.field_2283].sfx_2);
+    SD_Call(SFX_PAIRS[g_SysWork.sfxPairIdx_2283].sfx_2);
 }
 
 s8 func_80039F90(void) // 0x80039F90

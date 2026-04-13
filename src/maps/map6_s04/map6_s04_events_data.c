@@ -16,7 +16,7 @@ s_EventData MAP_EVENTS[19] = {
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 7,
         .flags_8_13           = 1,
-        .field_8_19           = 23,
+        .sfxPairIdx_8_19 = SfxPairIdx_23,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP7_S00,
     },
     {
@@ -27,7 +27,7 @@ s_EventData MAP_EVENTS[19] = {
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 7,
         .flags_8_13           = 1,
-        .field_8_19           = 23,
+        .sfxPairIdx_8_19 = SfxPairIdx_23,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP7_S00,
     },
     {

@@ -32,7 +32,7 @@ s_EventData MAP_EVENTS[12] = {
         .pointOfInterestIdx_5 = 2,
         .sysState_8_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 1,
-        .field_8_19           = 15,
+        .sfxPairIdx_8_19 = SfxPairIdx_15,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP6_S00,
     },
     {

@@ -8,7 +8,7 @@ const s32 pad_rodata_800252B8 = 0;
  *
  * @note Used when loading areas. Maybe facilitates things like the
  * opening and closing door SFX when the player moves between rooms. */
-s_AreaLoadSfx const SfxPairs[25] = {
+s_AreaLoadSfx const SFX_PAIRS[25] = {
     { Sfx_Base, Sfx_Base },
     { Sfx_DoorOpen0, Sfx_DoorClose0 },
     { Sfx_Unk1323, Sfx_Unk1324 },

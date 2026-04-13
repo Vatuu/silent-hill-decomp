@@ -320,7 +320,7 @@ s_EventData MAP_EVENTS[201] = {
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 1,
         .sysState_8_0         = SysState_LoadOverlay,
-        .field_8_19           = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S01,
     },
     {
@@ -383,7 +383,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 6,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 7,
-        .field_8_19           = 4,
+        .sfxPairIdx_8_19 = SfxPairIdx_4,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -391,7 +391,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 7,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 6,
-        .field_8_19           = 4,
+        .sfxPairIdx_8_19 = SfxPairIdx_4,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -399,7 +399,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 8,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 9,
-        .field_8_19           = 4,
+        .sfxPairIdx_8_19 = SfxPairIdx_4,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -407,7 +407,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 9,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 8,
-        .field_8_19           = 4,
+        .sfxPairIdx_8_19 = SfxPairIdx_4,
     },
     {
         .disabledEventFlag_2  = EventFlag_M2S00_DogHouseNoteFound,
@@ -533,7 +533,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 22,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 23,
-        .field_8_19           = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
     },
     {
         .requiredEventFlag_0  = EventFlag_153,
@@ -542,7 +542,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 23,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 22,
-        .field_8_19           = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -559,7 +559,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 24,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 25,
-        .field_8_19           = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
     },
     {
         .requiredEventFlag_0  = EventFlag_159,
@@ -568,7 +568,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 25,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 24,
-        .field_8_19           = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
     },
     {
         .requiredEventFlag_0 = EventFlag_158,
@@ -586,7 +586,7 @@ s_EventData MAP_EVENTS[201] = {
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 25,
         .flags_8_13           = 2,
-        .field_8_19           = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -626,7 +626,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 28,
         .sysState_8_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 134,
-        .field_8_19           = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S02,
     },
     {
@@ -643,7 +643,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 26,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 27,
-        .field_8_19           = 11,
+        .sfxPairIdx_8_19 = SfxPairIdx_11,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -651,7 +651,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 27,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 26,
-        .field_8_19           = 11,
+        .sfxPairIdx_8_19 = SfxPairIdx_11,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -701,7 +701,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 30,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 35,
-        .field_8_19           = 6,
+        .sfxPairIdx_8_19 = SfxPairIdx_6,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -709,7 +709,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 31,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 35,
-        .field_8_19           = 6,
+        .sfxPairIdx_8_19 = SfxPairIdx_6,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -717,7 +717,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 33,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 32,
-        .field_8_19           = 6,
+        .sfxPairIdx_8_19 = SfxPairIdx_6,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -725,7 +725,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 34,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 32,
-        .field_8_19           = 6,
+        .sfxPairIdx_8_19 = SfxPairIdx_6,
     },
     {
         .triggerType_4_0      = TriggerType_TouchFacing,
@@ -742,7 +742,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 40,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 39,
-        .field_8_19           = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
     },
     {
         .requiredEventFlag_0  = EventFlag_MapMark_OldTown_KGordonArrowsOnly,
@@ -751,7 +751,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 39,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 40,
-        .field_8_19           = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
     },
     {
         .requiredEventFlag_0  = EventFlag_M1S06_PickupKGordonKey,
@@ -788,7 +788,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 37,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 38,
-        .field_8_19           = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -796,7 +796,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 38,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 37,
-        .field_8_19           = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -804,7 +804,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 41,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 42,
-        .field_8_19           = 11,
+        .sfxPairIdx_8_19 = SfxPairIdx_11,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -812,7 +812,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 42,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 41,
-        .field_8_19           = 11,
+        .sfxPairIdx_8_19 = SfxPairIdx_11,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -887,7 +887,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 46,
         .sysState_8_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 48,
-        .field_8_19           = 2,
+        .sfxPairIdx_8_19 = SfxPairIdx_2,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP1_S06,
     },
     {
@@ -906,7 +906,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 45,
         .sysState_8_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 47,
-        .field_8_19           = 2,
+        .sfxPairIdx_8_19 = SfxPairIdx_2,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP1_S06,
     },
     {
@@ -915,7 +915,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 45,
         .sysState_8_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 47,
-        .field_8_19           = 2,
+        .sfxPairIdx_8_19 = SfxPairIdx_2,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP1_S00,
     },
     {
@@ -933,7 +933,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 46,
         .sysState_8_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 48,
-        .field_8_19           = 2,
+        .sfxPairIdx_8_19 = SfxPairIdx_2,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP1_S06,
     },
     {
@@ -942,7 +942,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 46,
         .sysState_8_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 48,
-        .field_8_19           = 2,
+        .sfxPairIdx_8_19 = SfxPairIdx_2,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP1_S00,
     },
     {
@@ -966,7 +966,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 49,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 51,
-        .field_8_19           = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
     },
     {
         .requiredEventFlag_0  = EventFlag_163,
@@ -975,7 +975,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 51,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 49,
-        .field_8_19           = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -983,7 +983,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 49,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 52,
-        .field_8_19           = 18,
+        .sfxPairIdx_8_19 = SfxPairIdx_18,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -991,7 +991,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 52,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 49,
-        .field_8_19           = 18,
+        .sfxPairIdx_8_19 = SfxPairIdx_18,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -1065,7 +1065,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 58,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 59,
-        .field_8_19           = 4,
+        .sfxPairIdx_8_19 = SfxPairIdx_4,
     },
     {
         .requiredEventFlag_0  = EventFlag_170,
@@ -1074,7 +1074,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 59,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 58,
-        .field_8_19           = 4,
+        .sfxPairIdx_8_19 = SfxPairIdx_4,
     },
     {
         .requiredEventFlag_0  = EventFlag_170,
@@ -1083,7 +1083,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 58,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 59,
-        .field_8_19           = 4,
+        .sfxPairIdx_8_19 = SfxPairIdx_4,
     },
     {
         .requiredEventFlag_0  = EventFlag_340,
@@ -1424,7 +1424,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 101,
         .sysState_8_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 102,
-        .field_8_19           = 5,
+        .sfxPairIdx_8_19 = SfxPairIdx_5,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S02,
     },
     {
@@ -1433,7 +1433,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 103,
         .sysState_8_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 104,
-        .field_8_19           = 22,
+        .sfxPairIdx_8_19 = SfxPairIdx_22,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S02,
     },
     {
@@ -1442,7 +1442,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 105,
         .sysState_8_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 106,
-        .field_8_19           = 2,
+        .sfxPairIdx_8_19 = SfxPairIdx_2,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP2_S01,
     },
     {
@@ -1451,7 +1451,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 112,
         .sysState_8_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 114,
-        .field_8_19           = 24,
+        .sfxPairIdx_8_19 = SfxPairIdx_24,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S02,
     },
     {
@@ -1460,7 +1460,7 @@ s_EventData MAP_EVENTS[201] = {
         .pointOfInterestIdx_5 = 113,
         .sysState_8_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 114,
-        .field_8_19           = 24,
+        .sfxPairIdx_8_19 = SfxPairIdx_24,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S02,
     },
     {

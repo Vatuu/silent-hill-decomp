@@ -202,7 +202,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
         {
             if (creeper->model_0.controlState == CreeperControl_3)
             {
-                g_SysWork.field_2284[3] &= ~(1 << 1);
+                g_SysWork.flags_2284[3] &= ~(1 << 1);
             }
 
             creeper->model_0.controlState = CreeperControl_4;
@@ -412,14 +412,14 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
                 creeperProps.timer_F0            = Q12(0.0f);
             }
         }
-        else if (!(g_SysWork.field_2284[3] & (1 << 1)) && !Chara_HasFlag(&playerChara, CharaFlag_Unk4) &&
+        else if (!(g_SysWork.flags_2284[3] & (1 << 1)) && !Chara_HasFlag(&playerChara, CharaFlag_Unk4) &&
                  distToPlayer < Q12(0.5f) && ABS(angleDeltaToPlayer) < Q12_ANGLE(10.0f) &&
                  playerChara.health_B0 > Q12(0.0f))
         {
             creeper->model_0.controlState  = CreeperControl_3;
             creeper->model_0.anim.status = ANIM_STATUS(CreeperAnim_12, false);
             creeperProps.timer_F0            = Q12(0.0f);
-            g_SysWork.field_2284[3]         |= 1 << 1;
+            g_SysWork.flags_2284[3]         |= 1 << 1;
         }
         else
         {
@@ -507,7 +507,7 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
 
     if (func_800700F8(creeper, &playerChara))
     {
-        g_SysWork.field_2284[3]         &= ~(1 << 1);
+        g_SysWork.flags_2284[3]         &= ~(1 << 1);
         creeper->model_0.controlState         = CreeperControl_2;
         creeper->model_0.anim.status = ANIM_STATUS(CreeperAnim_13, false);
         return;
@@ -602,7 +602,7 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
     }
     else if (ANIM_STATUS_IDX_GET(creeper->model_0.anim.status) == CreeperAnim_13)
     {
-        g_SysWork.field_2284[3]   &= ~(1 << 1);
+        g_SysWork.flags_2284[3]   &= ~(1 << 1);
         creeper->model_0.controlState   = CreeperControl_2;
         creeperProps.timer_F0      = Q12(0.0f);
         creeperProps.rotationY_108 = Chara_HeadingAngleGet(creeper, Q12(4.8f),

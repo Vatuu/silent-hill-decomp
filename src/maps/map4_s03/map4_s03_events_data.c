@@ -172,7 +172,7 @@ s_EventData MAP_EVENTS[31] = {
         .pointOfInterestIdx_5 = 19,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 20,
-        .field_8_19           = 12,
+        .sfxPairIdx_8_19 = SfxPairIdx_12,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -180,7 +180,7 @@ s_EventData MAP_EVENTS[31] = {
         .pointOfInterestIdx_5 = 20,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 19,
-        .field_8_19           = 12,
+        .sfxPairIdx_8_19 = SfxPairIdx_12,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,

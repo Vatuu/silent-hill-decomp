@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_EVENTS_BODYPROGDATA800A99B4_H
 #define _BODYPROG_EVENTS_BODYPROGDATA800A99B4_H
 
-extern const s_AreaLoadSfx SfxPairs[25];
+extern const s_AreaLoadSfx SFX_PAIRS[25];
 
 extern s8 g_PaperMapFileIdxs[];
 

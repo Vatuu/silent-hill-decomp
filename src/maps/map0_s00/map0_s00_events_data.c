@@ -127,7 +127,7 @@ s_EventData MAP_EVENTS[72] = {
         .pointOfInterestIdx_5 = 18,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 19,
-        .field_8_19           = 4,
+        .sfxPairIdx_8_19 = SfxPairIdx_4,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -144,7 +144,7 @@ s_EventData MAP_EVENTS[72] = {
         .pointOfInterestIdx_5 = 20,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 22,
-        .field_8_19           = 4,
+        .sfxPairIdx_8_19 = SfxPairIdx_4,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -152,7 +152,7 @@ s_EventData MAP_EVENTS[72] = {
         .pointOfInterestIdx_5 = 22,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 21,
-        .field_8_19           = 4,
+        .sfxPairIdx_8_19 = SfxPairIdx_4,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -160,7 +160,7 @@ s_EventData MAP_EVENTS[72] = {
         .pointOfInterestIdx_5 = 21,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 22,
-        .field_8_19           = 4,
+        .sfxPairIdx_8_19 = SfxPairIdx_4,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,

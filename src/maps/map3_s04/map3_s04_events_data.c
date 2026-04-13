@@ -87,7 +87,7 @@ s_EventData MAP_EVENTS[53] = {
         .pointOfInterestIdx_5 = 5,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 4,
-        .field_8_19           = 12,
+        .sfxPairIdx_8_19 = SfxPairIdx_12,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP5_S02,
     },
     {
@@ -163,7 +163,7 @@ s_EventData MAP_EVENTS[53] = {
         .pointOfInterestIdx_5 = 17,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 36,
-        .field_8_19           = 7,
+        .sfxPairIdx_8_19 = SfxPairIdx_7,
     },
     {
         .disabledEventFlag_2  = EventFlag_213,
@@ -172,7 +172,7 @@ s_EventData MAP_EVENTS[53] = {
         .pointOfInterestIdx_5 = 18,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 36,
-        .field_8_19           = 7,
+        .sfxPairIdx_8_19 = SfxPairIdx_7,
     },
     {
         .disabledEventFlag_2  = EventFlag_1477,
@@ -181,7 +181,7 @@ s_EventData MAP_EVENTS[53] = {
         .pointOfInterestIdx_5 = 6,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 26,
-        .field_8_19           = 12,
+        .sfxPairIdx_8_19 = SfxPairIdx_12,
         .field_8_24           = 1,
     },
     {
@@ -191,7 +191,7 @@ s_EventData MAP_EVENTS[53] = {
         .pointOfInterestIdx_5 = 26,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 6,
-        .field_8_19           = 12,
+        .sfxPairIdx_8_19 = SfxPairIdx_12,
     },
     {
         .disabledEventFlag_2  = EventFlag_1479,
@@ -200,7 +200,7 @@ s_EventData MAP_EVENTS[53] = {
         .pointOfInterestIdx_5 = 7,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 24,
-        .field_8_19           = 12,
+        .sfxPairIdx_8_19 = SfxPairIdx_12,
         .field_8_24           = 1,
     },
     {
@@ -210,7 +210,7 @@ s_EventData MAP_EVENTS[53] = {
         .pointOfInterestIdx_5 = 24,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 7,
-        .field_8_19           = 12,
+        .sfxPairIdx_8_19 = SfxPairIdx_12,
     },
     {
         .disabledEventFlag_2  = EventFlag_1481,
@@ -219,7 +219,7 @@ s_EventData MAP_EVENTS[53] = {
         .pointOfInterestIdx_5 = 8,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 23,
-        .field_8_19           = 12,
+        .sfxPairIdx_8_19 = SfxPairIdx_12,
         .field_8_24           = 1,
     },
     {
@@ -229,7 +229,7 @@ s_EventData MAP_EVENTS[53] = {
         .pointOfInterestIdx_5 = 23,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 8,
-        .field_8_19           = 12,
+        .sfxPairIdx_8_19 = SfxPairIdx_12,
     },
     {
         .disabledEventFlag_2  = EventFlag_1482,
@@ -246,7 +246,7 @@ s_EventData MAP_EVENTS[53] = {
         .pointOfInterestIdx_5 = 12,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 21,
-        .field_8_19           = 13,
+        .sfxPairIdx_8_19 = SfxPairIdx_13,
         .field_8_24           = 1,
     },
     {
@@ -256,7 +256,7 @@ s_EventData MAP_EVENTS[53] = {
         .pointOfInterestIdx_5 = 21,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 12,
-        .field_8_19           = 13,
+        .sfxPairIdx_8_19 = SfxPairIdx_13,
     },
     {
         .disabledEventFlag_2  = EventFlag_1487,
@@ -265,7 +265,7 @@ s_EventData MAP_EVENTS[53] = {
         .pointOfInterestIdx_5 = 13,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 20,
-        .field_8_19           = 12,
+        .sfxPairIdx_8_19 = SfxPairIdx_12,
         .field_8_24           = 1,
     },
     {
@@ -275,7 +275,7 @@ s_EventData MAP_EVENTS[53] = {
         .pointOfInterestIdx_5 = 20,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 13,
-        .field_8_19           = 12,
+        .sfxPairIdx_8_19 = SfxPairIdx_12,
     },
     {
         .disabledEventFlag_2  = EventFlag_1489,
@@ -284,7 +284,7 @@ s_EventData MAP_EVENTS[53] = {
         .pointOfInterestIdx_5 = 14,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 19,
-        .field_8_19           = 14,
+        .sfxPairIdx_8_19 = SfxPairIdx_14,
         .field_8_24           = 1,
     },
     {
@@ -294,7 +294,7 @@ s_EventData MAP_EVENTS[53] = {
         .pointOfInterestIdx_5 = 19,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 14,
-        .field_8_19           = 14,
+        .sfxPairIdx_8_19 = SfxPairIdx_14,
     },
     {
         .disabledEventFlag_2  = EventFlag_1491,
@@ -303,7 +303,7 @@ s_EventData MAP_EVENTS[53] = {
         .pointOfInterestIdx_5 = 25,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 30,
-        .field_8_19           = 13,
+        .sfxPairIdx_8_19 = SfxPairIdx_13,
         .field_8_24           = 1,
     },
     {
@@ -313,7 +313,7 @@ s_EventData MAP_EVENTS[53] = {
         .pointOfInterestIdx_5 = 30,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 25,
-        .field_8_19           = 13,
+        .sfxPairIdx_8_19 = SfxPairIdx_13,
         .field_8_24           = 1,
     },
     {

@@ -29,7 +29,7 @@ DEFAULT_CONTROLLER_CONFIGS                   = 0x8002511C;
 //--------------------------------------------------------------------------------------
 //--- PA: 0x000758   VA: 0x800252B8   subsegment: .rodata, events/bodyprog_data_800A99B4
 //--------------------------------------------------------------------------------------
-SfxPairs                                     = 0x800252BC; // type:AreaLoadSfx size:0x64
+SFX_PAIRS                                    = 0x800252BC; // type:AreaLoadSfx size:0x64
 
 //-----------------------------------------------------------------------
 //--- PA: 0x001208   VA: 0x80025D68   subsegment: .rodata, text/text_draw

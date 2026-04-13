@@ -27,7 +27,7 @@ static void GameBoot_NpcClear(void) // 0x80034EC8
 
     for (i = 0; i < GROUP_CHARA_COUNT; i++)
     {
-        g_SysWork.field_2284[i] = 0;
+        g_SysWork.flags_2284[i] = 0;
     }
 }
 

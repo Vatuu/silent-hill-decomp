@@ -44,7 +44,7 @@ s_EventData MAP_EVENTS[21] = {
         .pointOfInterestIdx_5 = 4,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 8,
-        .field_8_19           = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
     },
     {
         .disabledEventFlag_2  = EventFlag_MapMark_AltHospital1F_WomensBathroomBroken,
@@ -53,7 +53,7 @@ s_EventData MAP_EVENTS[21] = {
         .pointOfInterestIdx_5 = 8,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 4,
-        .field_8_19           = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
     },
     {
         .disabledEventFlag_2  = EventFlag_1472,
@@ -70,7 +70,7 @@ s_EventData MAP_EVENTS[21] = {
         .pointOfInterestIdx_5 = 1,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 6,
-        .field_8_19           = 20,
+        .sfxPairIdx_8_19 = SfxPairIdx_20,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -78,7 +78,7 @@ s_EventData MAP_EVENTS[21] = {
         .pointOfInterestIdx_5 = 6,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 1,
-        .field_8_19           = 12,
+        .sfxPairIdx_8_19 = SfxPairIdx_12,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
@@ -86,7 +86,7 @@ s_EventData MAP_EVENTS[21] = {
         .pointOfInterestIdx_5 = 1,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 6,
-        .field_8_19           = 12,
+        .sfxPairIdx_8_19 = SfxPairIdx_12,
     },
     {
         .requiredEventFlag_0  = EventFlag_340,
@@ -95,7 +95,7 @@ s_EventData MAP_EVENTS[21] = {
         .pointOfInterestIdx_5 = 2,
         .sysState_8_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 9,
-        .field_8_19           = 2,
+        .sfxPairIdx_8_19 = SfxPairIdx_2,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP4_S05,
     },
     {
@@ -104,7 +104,7 @@ s_EventData MAP_EVENTS[21] = {
         .pointOfInterestIdx_5 = 2,
         .sysState_8_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 9,
-        .field_8_19           = 2,
+        .sfxPairIdx_8_19 = SfxPairIdx_2,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP4_S02,
     },
     {

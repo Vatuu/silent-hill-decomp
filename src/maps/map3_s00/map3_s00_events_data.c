@@ -53,7 +53,7 @@ s_EventData MAP_EVENTS[17] = {
         .pointOfInterestIdx_5 = 3,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 2,
-        .field_8_19           = 20,
+        .sfxPairIdx_8_19 = SfxPairIdx_20,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP6_S01,
     },
     {
@@ -63,7 +63,7 @@ s_EventData MAP_EVENTS[17] = {
         .pointOfInterestIdx_5 = 2,
         .sysState_8_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 3,
-        .field_8_19           = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP3_S01,
     },
     {
@@ -73,7 +73,7 @@ s_EventData MAP_EVENTS[17] = {
         .pointOfInterestIdx_5 = 1,
         .sysState_8_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 7,
-        .field_8_19           = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP3_S01,
     },
     {
@@ -82,7 +82,7 @@ s_EventData MAP_EVENTS[17] = {
         .activationType_4_4  = TriggerActivationType_Button,
         .sysState_8_0        = SysState_LoadOverlay,
         .eventParam_8_5      = 6,
-        .field_8_19          = 1,
+        .sfxPairIdx_8_19 = SfxPairIdx_1,
         .mapOverlayIdx_8_25  = MapOverlayId_MAP3_S01,
     },
     {

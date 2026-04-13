@@ -42,7 +42,7 @@ s_EventData MAP_EVENTS[13] = {
         .pointOfInterestIdx_5 = 3,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 4,
-        .field_8_19           = 12,
+        .sfxPairIdx_8_19 = SfxPairIdx_12,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP3_S00,
     },
     {
@@ -51,7 +51,7 @@ s_EventData MAP_EVENTS[13] = {
         .pointOfInterestIdx_5 = 4,
         .sysState_8_0         = SysState_LoadRoom,
         .eventParam_8_5       = 3,
-        .field_8_19           = 12,
+        .sfxPairIdx_8_19 = SfxPairIdx_12,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP3_S00,
     },
     {

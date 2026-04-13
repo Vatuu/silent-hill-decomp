@@ -1124,7 +1124,7 @@ typedef struct _EventData
     u32 sysState_8_0       : 5; /** `e_SysState` used by the event. */
     u32 eventParam_8_5     : 8; /** Can be an ID of a `MapMsg`, sound effect, index into `mapEventFuncs_20`, or index into `mapPointsOfInterest_1C` for `areaLoad` events. */
     u32 flags_8_13         : 6; /** `e_EventDataUnkCutsceneState` */
-    u32 field_8_19         : 5;
+    u32 sfxPairIdx_8_19    : 5; /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
     u32 field_8_24         : 1;
     u32 mapOverlayIdx_8_25 : 6;
     u32 field_8_31         : 1;
@@ -1920,9 +1920,9 @@ typedef struct _SysWork
     s8              npcId_2280;                        // NPC ID for `npcFlags_2290`. Not an index, starts at 1.
     s8              loadingScreenIdx_2281;
     s8              field_2282;                        /** `e_EventDataUnkCutsceneState` */
-    s8              field_2283;    // Index into `SfxPairs`.
-    u16             field_2284[4]; // Flags for character types?
-                                   // Enabling a flag for Larval Stalkers causes them to die.
+    s8              sfxPairIdx_2283;                   /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
+    u16             flags_2284[GROUP_CHARA_COUNT];     /** Flags for character groups. Only flags 0 and 1 used. */
+                                                       // Enabling a flag for Larval Stalkers causes them to die.
     s32             field_228C[1];
     s32             npcFlags_2290; // Flags related to NPCs. Each bit corresponds to `npcs_1A0` index.
     s8              unk_2294[4];   // Padding?
