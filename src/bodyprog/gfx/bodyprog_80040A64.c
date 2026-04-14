@@ -782,7 +782,7 @@ void Map_MakeIpdGrid(s_Map* map, char* mapTag, e_FsFile fileIdxStart) // 0x80042
     // Run through all game files.
     for (i = fileIdxStart; i < FS_FILE_COUNT; i++)
     {
-        if (g_FileTable[i].type_8_24 == FileType_Ipd)
+        if (g_FileTable[i].type == FileType_Ipd)
         {
             Fs_GetFileName(sp10, i);
 

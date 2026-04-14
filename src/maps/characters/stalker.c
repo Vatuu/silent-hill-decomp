@@ -250,7 +250,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                     {
                         if (stalker->model.controlState == StalkerControl_5)
                         {
-                            g_SysWork.charaGroupFlags[3] &= ~Unk2284Flag_1;
+                            g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_1;
                         }
 
                         stalker->model.controlState = StalkerControl_7;
@@ -717,7 +717,7 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
             }
         }
 
-        if ((g_SysWork.charaGroupFlags[3] & Unk2284Flag_0) ||
+        if ((g_SysWork.charaGroupFlags[3] & CharaGroupFlag_0) ||
             ( (stalkerProps.flags_E8 & StalkerFlag_2) && Rng_GenerateInt(0, 3) != 0) || // 1 in 4 chance.
             (!(stalkerProps.flags_E8 & StalkerFlag_2) && Rng_GenerateInt(0, 1) != 0))   // 1 in 2 chance.
         {
@@ -727,7 +727,7 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
                 if (ABS(angleDeltaToPlayer) < Q12_ANGLE(90.0f) && g_SysWork.playerWork.player.health > Q12(0.0f))
                 {
                     stalker->model.controlState = StalkerControl_5;
-                    g_SysWork.charaGroupFlags[3] |= Unk2284Flag_1;
+                    g_SysWork.charaGroupFlags[3] |= CharaGroupFlag_1;
 
                     sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1364);
 
@@ -787,7 +787,7 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
                     }
 
                     stalkerProps.keyframeIdx_FC = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 477);
-                    g_SysWork.charaGroupFlags[3]    |= Unk2284Flag_0 | Unk2284Flag_1;
+                    g_SysWork.charaGroupFlags[3]    |= CharaGroupFlag_0 | CharaGroupFlag_1;
                     return;
                 }
             }
@@ -978,7 +978,7 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
             }
         }
 
-        if ((g_SysWork.charaGroupFlags[3] & Unk2284Flag_0) || func_80070320() ||
+        if ((g_SysWork.charaGroupFlags[3] & CharaGroupFlag_0) || func_80070320() ||
             ABS(stalker->position.vy - g_SysWork.playerWork.player.position.vy) > Q12(0.3f) ||
             ( (stalkerProps.flags_E8 & StalkerFlag_2) &&  Rng_GenerateInt(0, 3)) || // 3 in 4 chance?
             (!(stalkerProps.flags_E8 & StalkerFlag_2) && !Rng_GenerateInt(0, 3)))   // 1 in 4 chance.
@@ -988,7 +988,7 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
                 ABS(angleDeltaToPlayer) < Q12_ANGLE(90.0f) && g_SysWork.playerWork.player.health > Q12(0.0f))
             {
                 stalker->model.controlState = StalkerControl_5;
-                g_SysWork.charaGroupFlags[3] |= Unk2284Flag_1;
+                g_SysWork.charaGroupFlags[3] |= CharaGroupFlag_1;
 
                 sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1364);
 
@@ -1048,7 +1048,7 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
             }
 
             stalkerProps.keyframeIdx_FC = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 477);
-            g_SysWork.charaGroupFlags[3]    |= Unk2284Flag_0 | Unk2284Flag_1;
+            g_SysWork.charaGroupFlags[3]    |= CharaGroupFlag_0 | CharaGroupFlag_1;
             stalker->field_44.field_0   = 1;
         }
         else if (distToPlayer < Q12(0.7f))
@@ -1320,7 +1320,7 @@ void Ai_Stalker_Control_5(s_SubCharacter* stalker)
     if (ANIM_STATUS_IDX_GET(stalker->model.anim.status) == StalkerAnim_30)
     {
         stalker->model.controlState = StalkerControl_4;
-        g_SysWork.charaGroupFlags[3] &= ~Unk2284Flag_1;
+        g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_1;
         return;
     }
 
@@ -1491,7 +1491,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
 
         if (g_SysWork.playerWork.player.attackReceived == NO_VALUE)
         {
-            g_SysWork.charaGroupFlags[3]         &= ~Unk2284Flag_0;
+            g_SysWork.charaGroupFlags[3]         &= ~CharaGroupFlag_0;
             animStatus                       = stalker->model.anim.status;
             stalker->model.controlState  = StalkerControl_9;
             stalker->model.anim.status = ANIM_STATUS(StalkerAnim_10, false);
@@ -1522,7 +1522,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
         if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk49, AttackInputType_Tap), stalker, &vec0, &g_SysWork.playerWork, stalker->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
         {
             stalkerProps.flags_E8 |= StalkerFlag_5;
-            g_SysWork.charaGroupFlags[3] &= ~Unk2284Flag_1;
+            g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_1;
 
             sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1366);
 
@@ -1533,7 +1533,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
              stalker->model.anim.status == ANIM_STATUS(StalkerAnim_8, true) ||
              distToPlayer > Q12(2.0f))
     {
-        g_SysWork.charaGroupFlags[3] &= ~(Unk2284Flag_0 | Unk2284Flag_1);
+        g_SysWork.charaGroupFlags[3] &= ~(CharaGroupFlag_0 | CharaGroupFlag_1);
         stalker->model.controlState = StalkerControl_9;
 
         if (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_34, true) ||
@@ -1869,7 +1869,7 @@ void Ai_Stalker_Control_10(s_SubCharacter* stalker)
     {
         stalker->flags &= ~CharaFlag_Unk2;
 
-        if (g_SysWork.targetNpcIdx_2353 != Chara_NpcIdxGet(stalker))
+        if (g_SysWork.targetNpcIdx != Chara_NpcIdxGet(stalker))
         {
             stalker->health  = NO_VALUE;
             stalker->field_E1_0 = 0;

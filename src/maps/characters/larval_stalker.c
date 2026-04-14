@@ -276,7 +276,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                     break;
                 }
 
-                if (!(g_SysWork.charaGroupFlags[3] & Unk2284Flag_0))
+                if (!(g_SysWork.charaGroupFlags[3] & CharaGroupFlag_0))
                 {
                     Chara_TurnModulate(angleDeltaToPlayer, Q12_ANGLE(1.5f), Q12_ANGLE(30.0f));
                 }
@@ -371,7 +371,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
                 if (Chara_AttackReceivedGet(&g_SysWork.playerWork.player) == NO_VALUE)
                 {
-                    g_SysWork.charaGroupFlags[3] &= ~Unk2284Flag_0;
+                    g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_0;
                     larvalStalker->model.anim.status = ANIM_STATUS(LarvalStalkerAnim_5, false);
                     larvalStalker->model.controlState = LarvalStalkerControl_10;
                     larvalStalkerProps.flags_E8 &= ~LarvalStalkerFlag_6;
@@ -494,7 +494,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
                 larvalStalkerProps.timer_EC += g_DeltaTime;
 
-                if (!(g_SysWork.charaGroupFlags[3] & Unk2284Flag_0) && (Q12(5.0f) - FP_TO(larvalStalkerProps.field_EA, Q12_SHIFT)) < larvalStalkerProps.timer_EC)
+                if (!(g_SysWork.charaGroupFlags[3] & CharaGroupFlag_0) && (Q12(5.0f) - FP_TO(larvalStalkerProps.field_EA, Q12_SHIFT)) < larvalStalkerProps.timer_EC)
                 {
                     larvalStalker->model.controlState = LarvalStalkerControl_4;
                     larvalStalker->model.anim.status = ANIM_STATUS(LarvalStalkerAnim_11, false);
@@ -712,7 +712,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
         case LarvalStalkerControl_13:
             larvalStalker->flags &= ~CharaFlag_Unk2;
 
-            if (larvalStalker->health <= Q12(0.0f) && Chara_NpcIdxGet(larvalStalker) != g_SysWork.targetNpcIdx_2353)
+            if (larvalStalker->health <= Q12(0.0f) && Chara_NpcIdxGet(larvalStalker) != g_SysWork.targetNpcIdx)
             {
                 larvalStalker->health = NO_VALUE;
                 larvalStalker->field_E1_0 = 0;

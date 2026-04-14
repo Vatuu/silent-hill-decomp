@@ -375,7 +375,7 @@ void sharedFunc_800D15F0_3_s01(void)
 #ifdef MAP3_S01
             func_8008D448();
             Game_FlashlightAttributesFix();
-            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity = Q12(1.0f);
 #endif
             Sd_SfxStop(Sfx_Unk1499);
             Sd_SfxStop(Sfx_Unk1501);

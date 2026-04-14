@@ -112,7 +112,7 @@ void WorldGfx_MapInit(void) // 0x8003C048
     Map_Init(GLOBAL_LM_BUFFER, IPD_BUFFER, 0x2C000);
     Collision_Init();
 
-    g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+    g_SysWork.pointLightIntensity = Q12(1.0f);
 
     Game_FlashlightAttributesFix();
     func_8005B55C(vwGetViewCoord());

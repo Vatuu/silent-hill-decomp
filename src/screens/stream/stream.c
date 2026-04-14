@@ -140,11 +140,11 @@ void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
     Fs_QueueWaitForEmpty();
     if (num_frames == 0)
     {
-        num_frames = g_FileTable[file_idx].blockCount_0_19 - 7;
+        num_frames = g_FileTable[file_idx].blockCount - 7;
     }
 
     Screen_RectInterlacedClear(0, 16, 480, 480, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
-    movie_main(NULL, num_frames, g_FileTable[file_idx].startSector_0_0);
+    movie_main(NULL, num_frames, g_FileTable[file_idx].startSector);
     Screen_RectInterlacedClear(0, 16, 480, 480, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
     VSync(SyncMode_Wait);
     GsSwapDispBuff();

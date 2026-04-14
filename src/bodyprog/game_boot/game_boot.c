@@ -72,8 +72,8 @@ void GameBoot_MapLoad(s32 mapIdx) // 0x8003521C
     // or because the player saved the game with a weapon equipped), this and the next function
     // make it appear and allocate its data.
     // @note This code has some special functionallity if the player spawns without an equipped weapon.
-    if (g_SysWork.processFlags & (SysWorkProcessFlag_NewGame | SysWorkProcessFlag_LoadSave |
-                                       SysWorkProcessFlag_Continue | SysWorkProcessFlag_BootDemo))
+    if (g_SysWork.processFlags & (ProcessFlag_NewGame | ProcessFlag_LoadSave |
+                                       ProcessFlag_Continue | ProcessFlag_BootDemo))
     {
         WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
     }

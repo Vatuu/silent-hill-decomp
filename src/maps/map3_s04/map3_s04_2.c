@@ -236,13 +236,13 @@ void func_800D2668(void) // 0x800D2668
 
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
-            g_SysWork.pointLightIntensity_2378 = Q12(0.7f);
-            Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(58.34f), Q12(-1.93f), Q12(141.8f));
+            g_SysWork.pointLightIntensity = Q12(0.7f);
+            Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(58.34f), Q12(-1.93f), Q12(141.8f));
 
             // @hack
-            // Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, Q12_ANGLE(-15.0f), Q12_ANGLE(-177.0f), Q12_ANGLE(0.0f));
-            *((s32*) (&(&g_SysWork.pointLightRot_2370)->vx)) = ((s32) (0xff56 & 0xFFFF)) | ((s32) (0xf823 << 16));
-            tmpSvec = &g_SysWork.pointLightRot_2370;
+            // Math_SetSVectorFast(&g_SysWork.pointLightRotation, Q12_ANGLE(-15.0f), Q12_ANGLE(-177.0f), Q12_ANGLE(0.0f));
+            *((s32*) (&(&g_SysWork.pointLightRotation)->vx)) = ((s32) (0xff56 & 0xFFFF)) | ((s32) (0xf823 << 16));
+            tmpSvec = &g_SysWork.pointLightRotation;
             *((s16*) (&tmpSvec->vz)) = 0;
 
             func_8008D438();

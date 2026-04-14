@@ -934,7 +934,7 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* airScreamer)
             dist += distProp8;
         }
 
-        if (airScreamer == &g_SysWork.npcs[g_SysWork.targetNpcIdx_2353])
+        if (airScreamer == &g_SysWork.npcs[g_SysWork.targetNpcIdx])
         {
             dist += Q12(1.0f);
         }
@@ -2814,8 +2814,8 @@ void Ai_AirScreamer_Control_10(s_SubCharacter* airScreamer)
 
                 case 1:
                     if (!Chara_HasFlag(&g_SysWork.playerWork.player, CharaFlag_Unk4) &&
-                        g_SysWork.npcIdxs_2354[0] == NO_VALUE &&
-                        g_SysWork.npcIdxs_2354[1] == NO_VALUE)
+                        g_SysWork.npcIdxs[0] == NO_VALUE &&
+                        g_SysWork.npcIdxs[1] == NO_VALUE)
                     {
                         if (animStatus == ANIM_STATUS(AirScreamerAnim_25, true) ||
                             animStatus == ANIM_STATUS(AirScreamerAnim_23, true))
@@ -4945,8 +4945,8 @@ void Ai_AirScreamer_Control_23(s_SubCharacter* airScreamer)
 
                 case 1:
                     if (!Chara_HasFlag(&g_SysWork.playerWork.player, CharaFlag_Unk4) &&
-                        g_SysWork.npcIdxs_2354[0] == NO_VALUE &&
-                        g_SysWork.npcIdxs_2354[1] == NO_VALUE)
+                        g_SysWork.npcIdxs[0] == NO_VALUE &&
+                        g_SysWork.npcIdxs[1] == NO_VALUE)
                     {
                         if (animStatus == ANIM_STATUS(19, true))
                         {
@@ -7324,7 +7324,7 @@ void Ai_AirScreamer_Control_38(s_SubCharacter* airScreamer)
 
                 case 1:
                     if (!Chara_HasFlag(&g_SysWork.playerWork.player, CharaFlag_Unk4) &&
-                        (g_SysWork.npcIdxs_2354[0] == NO_VALUE && g_SysWork.npcIdxs_2354[1] == NO_VALUE) &&
+                        (g_SysWork.npcIdxs[0] == NO_VALUE && g_SysWork.npcIdxs[1] == NO_VALUE) &&
                         temp_s7 == 0x23)
                     {
                         airScreamer->model.controlState = AirScreamerControl_40;
@@ -8344,7 +8344,7 @@ void Ai_AirScreamer_Control_46(s_SubCharacter* airScreamer)
     {
         case AirScreamerDamage_None:
             if (airScreamerProps.timer_120 == Q12(0.0f) ||
-                airScreamer == &g_SysWork.npcs[g_SysWork.targetNpcIdx_2353] ||
+                airScreamer == &g_SysWork.npcs[g_SysWork.targetNpcIdx] ||
                 Math_Distance2dGet(&airScreamer->position, &g_SysWork.playerWork.player.position) > Q12(6.5f))
             {
                 airScreamer->model.controlState = AirScreamerControl_47;
@@ -13036,7 +13036,7 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
     temp_s1    = &airScreamer->field_44;
 
     if (!Chara_HasFlag(&g_SysWork.playerWork.player, CharaFlag_Unk4) &&
-        g_SysWork.npcIdxs_2354[0] == NO_VALUE && g_SysWork.npcIdxs_2354[1] == NO_VALUE &&
+        g_SysWork.npcIdxs[0] == NO_VALUE && g_SysWork.npcIdxs[1] == NO_VALUE &&
         airScreamer->model.controlState != AirScreamerControl_12 && airScreamer->model.controlState != AirScreamerControl_25 &&
         airScreamer->model.controlState != AirScreamerControl_40 && airScreamer->model.controlState != AirScreamerControl_49)
     {

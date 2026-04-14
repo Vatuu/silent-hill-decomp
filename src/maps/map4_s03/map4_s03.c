@@ -1704,7 +1704,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
     {
         if (twinfeeler->health == Q12(0.0f))
         {
-            if (Chara_NpcIdxGet(twinfeeler) != g_SysWork.targetNpcIdx_2353)
+            if (Chara_NpcIdxGet(twinfeeler) != g_SysWork.targetNpcIdx)
             {
                 twinfeeler->health  = NO_VALUE;
                 twinfeeler->field_E1_0 = 0;
@@ -3426,7 +3426,7 @@ void func_800D6774(void) // 0x800D6774
             func_8008D448();
             Game_FlashlightAttributesFix();
 
-            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity = Q12(1.0f);
             Game_TurnFlashlightOn();
 
             Gfx_MapInitMapEffectsUpdate(6, 3);

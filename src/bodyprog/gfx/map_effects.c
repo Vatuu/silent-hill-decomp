@@ -220,24 +220,24 @@ void func_8003E740(void) // 0x8003E740
 
 void Game_SpotlightLoadScreenAttribsFix(void) // 0x8003EB54
 {
-    g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+    g_SysWork.pointLightIntensity = Q12(1.0f);
 
     g_SysWork.field_235C = &g_SysWork.playerBoneCoords[HarryBone_Root];
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords[HarryBone_Root];
 
-    Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(0.0f), Q12(-0.2f), Q12(-2.0f));
-    Math_SVectorSet(&g_SysWork.pointLightRot_2370, Q12_ANGLE(10.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
+    Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(0.0f), Q12(-0.2f), Q12(-2.0f));
+    Math_SVectorSet(&g_SysWork.pointLightRotation, Q12_ANGLE(10.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
 }
 
 void Game_FlashlightAttributesFix(void) // 0x8003EBA0
 {
-    g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+    g_SysWork.pointLightIntensity = Q12(1.0f);
 
     g_SysWork.field_235C = &g_SysWork.playerBoneCoords[HarryBone_Torso];
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords[HarryBone_Root];
 
-    Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(-0.08f), Q12(-0.28f), Q12(0.12f));
-    Math_SVectorSet(&g_SysWork.pointLightRot_2370, Q12_ANGLE(-15.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
+    Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(-0.08f), Q12(-0.28f), Q12(0.12f));
+    Math_SVectorSet(&g_SysWork.pointLightRotation, Q12_ANGLE(-15.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
 }
 
 void Gfx_MapEffectsAssign(s_MapOverlayHeader* mapHdr) // 0x8003EBF4
@@ -450,7 +450,7 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
     if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].effectsInfo_0.field_E == 3)
     {
         Vw_CoordToViewSpaceMatrix(g_SysWork.field_235C, &mat);
-        ApplyMatrixLV(&mat, (VECTOR*)&g_SysWork.pointLightPosition_2360, &sp48); // Bug? `g_SysWork.pointLightPosition_2360` is `VECTOR3`.
+        ApplyMatrixLV(&mat, (VECTOR*)&g_SysWork.pointLightPosition, &sp48); // Bug? `g_SysWork.pointLightPosition` is `VECTOR3`.
         ptr->field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].field_30 = sp48.vz + (mat.t[2] * 16);
     }
 
@@ -494,10 +494,10 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
     ptr->field_10 = func_8003FEC0(&ptr2->effectsInfo_0);
     func_8003FF2C(ptr2);
 
-    temp = Q12_MULT(func_8003F4DC(&coord, &rot, ptr2->effectsInfo_0.field_4, ptr2->effectsInfo_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.pointLightIntensity_2378);
+    temp = Q12_MULT(func_8003F4DC(&coord, &rot, ptr2->effectsInfo_0.field_4, ptr2->effectsInfo_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.pointLightIntensity);
 
     func_800554C4(temp, ptr2->flashlightLensFlareIntensity_2C, coord, g_SysWork.field_235C, &rot,
-                  g_SysWork.pointLightPosition_2360.vx, g_SysWork.pointLightPosition_2360.vy, g_SysWork.pointLightPosition_2360.vz,
+                  g_SysWork.pointLightPosition.vx, g_SysWork.pointLightPosition.vy, g_SysWork.pointLightPosition.vz,
                   g_WorldGfxWork.mapInfo_0->waterZones_8);
     func_80055814(ptr2->field_30);
 
@@ -544,7 +544,7 @@ q19_12 func_8003F4DC(GsCOORDINATE2** coords, SVECTOR* rot, q19_12 alpha, s32 arg
     {
         default:
         case 1:
-            rot0 = sysWork->pointLightRot_2370;
+            rot0 = sysWork->pointLightRotation;
             break;
 
         case 0:

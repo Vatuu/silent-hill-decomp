@@ -247,7 +247,7 @@ void MapEvent_Generator0(void) // 0x800D27C8
             break;
 
         case 2:
-            g_SysWork.silentYesSelection_2350_4 = true;
+            g_SysWork.silentYesSelection = true;
             MapMsg_DisplayAndHandleSelection(true, 25, EventState_PressSwitch, EventState_DontPressSwitch, 0, false); // "Do you want to press the switch?"
             break;
 
@@ -428,14 +428,14 @@ void Map_WorldObjectsUpdate(void) // 0x800D2E54
             Gfx_MapInitMapEffectsUpdate(4, 4);
 
             g_SysWork.field_235C = NULL;
-            g_SysWork.pointLightPosition_2360.vx = Q12(59.1f);
-            g_SysWork.pointLightPosition_2360.vy = Q12(-3.0f);
-            g_SysWork.pointLightPosition_2360.vz = Q12(19.1f);
+            g_SysWork.pointLightPosition.vx = Q12(59.1f);
+            g_SysWork.pointLightPosition.vy = Q12(-3.0f);
+            g_SysWork.pointLightPosition.vz = Q12(19.1f);
             g_SysWork.field_236C = NULL;
-            g_SysWork.pointLightRot_2370.vx = Q12_ANGLE(-90.0f);
-            g_SysWork.pointLightRot_2370.vy = Q12_ANGLE(0.0f);
-            g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
-            g_SysWork.pointLightIntensity_2378 = Q12(0.7f);
+            g_SysWork.pointLightRotation.vx = Q12_ANGLE(-90.0f);
+            g_SysWork.pointLightRotation.vy = Q12_ANGLE(0.0f);
+            g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
+            g_SysWork.pointLightIntensity = Q12(0.7f);
 
             func_8008D438();
 

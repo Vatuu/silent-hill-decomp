@@ -222,7 +222,7 @@ void sharedFunc_800D209C_0_s00(void)
 
 void Player_MatchArmAnimDisable(void)
 {
-    g_SysWork.enablePlayerMatchAnim_2358 = false;
+    g_SysWork.enablePlayerMatchAnim = false;
 }
 
 void Player_ControlFreeze(void)
@@ -308,8 +308,8 @@ void Player_ControlUnfreeze(bool setIdle)
 
     player->attackReceived = NO_VALUE;
     player->field_40          = NO_VALUE;
-    g_SysWork.npcIdxs_2354[1] = NO_VALUE;
-    g_SysWork.npcIdxs_2354[0] = NO_VALUE;
+    g_SysWork.npcIdxs[1] = NO_VALUE;
+    g_SysWork.npcIdxs[0] = NO_VALUE;
 
 #if !defined(MAP0_S00) && !defined(MAP0_S01)
     func_8003D01C();

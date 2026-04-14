@@ -547,7 +547,7 @@ void func_800D6B00(void) // 0x800D6B00
 
         case 9:
             func_800862F8(2, 0, false);
-            g_SysWork.silentYesSelection_2350_4 = true;
+            g_SysWork.silentYesSelection = true;
             MapMsg_DisplayAndHandleSelection(true, 18, 10, 11, 0, false);
             break;
 
@@ -589,7 +589,7 @@ void func_800D6B00(void) // 0x800D6B00
             Camera_PositionSet(NULL, Q12(-88.04f), Q12(-1.29f), Q12(6.26f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-91.77f), Q12(-0.89f), Q12(7.63f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            g_SysWork.pointLightIntensity_2378 = Q12(2.0f);
+            g_SysWork.pointLightIntensity = Q12(2.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -626,7 +626,7 @@ void func_800D6B00(void) // 0x800D6B00
 
         case 15:
             vcReturnPreAutoCamWork(true);
-            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity = Q12(1.0f);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
             g_SysWork.npcs[D_800DAB7C[0]].model.controlState     = ModelState_Uninitialized;

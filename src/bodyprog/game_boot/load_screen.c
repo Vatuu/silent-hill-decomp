@@ -54,7 +54,7 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
 
     if (g_SysWork.sysState == SysState_Gameplay)
     {
-        if (g_SysWork.processFlags == SysWorkProcessFlag_OverlayTransition)
+        if (g_SysWork.processFlags == ProcessFlag_OverlayTransition)
         {
             AreaLoad_UpdatePlayerPosition();
         }

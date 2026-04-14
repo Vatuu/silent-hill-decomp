@@ -1844,7 +1844,7 @@ void func_800E1D50(void) // 0x800E1D50
 
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
-            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity = Q12(1.0f);
 
             Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_MonsterCybil, g_SysWork.npcCoords, -1, NULL, NULL);
@@ -1888,15 +1888,15 @@ void func_800E1D50(void) // 0x800E1D50
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800ED590, &D_800ED5A0, NULL, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14));
         vcUserCamTarget(&D_800ED590, NULL, true);
         vcUserWatchTarget(&D_800ED5A0, NULL, true);
-        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition_2360, &lintRot, D_800CC4CC, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);
+        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition, &lintRot, D_800CC4CC, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);
         Dms_CharacterGetPosRot(&lintPos, &lintRot, D_800CC4D4, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);
 
-        rotX = Q12_TO_Q6(lintPos.vx - g_SysWork.pointLightPosition_2360.vx);
-        rotZ = Q12_TO_Q6(lintPos.vz - g_SysWork.pointLightPosition_2360.vz);
+        rotX = Q12_TO_Q6(lintPos.vx - g_SysWork.pointLightPosition.vx);
+        rotZ = Q12_TO_Q6(lintPos.vz - g_SysWork.pointLightPosition.vz);
 
-        g_SysWork.pointLightRot_2370.vx = -ratan2(lintPos.vy - g_SysWork.pointLightPosition_2360.vy, Q6_TO_Q12(SquareRoot0(SQUARE(rotX) + SQUARE(rotZ))));
-        g_SysWork.pointLightRot_2370.vy = ratan2(lintPos.vx - g_SysWork.pointLightPosition_2360.vx, lintPos.vz - g_SysWork.pointLightPosition_2360.vz);
-        g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
+        g_SysWork.pointLightRotation.vx = -ratan2(lintPos.vy - g_SysWork.pointLightPosition.vy, Q6_TO_Q12(SquareRoot0(SQUARE(rotX) + SQUARE(rotZ))));
+        g_SysWork.pointLightRotation.vy = ratan2(lintPos.vx - g_SysWork.pointLightPosition.vx, lintPos.vz - g_SysWork.pointLightPosition.vz);
+        g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
     }
 }
 
@@ -2071,7 +2071,7 @@ void func_800E219C(void) // 0x800E219C
             func_8008D448();
             Game_FlashlightAttributesFix();
 
-            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity = Q12(1.0f);
 
             Savegame_EventFlagSet(EventFlag_443);
 
@@ -2096,15 +2096,15 @@ void func_800E219C(void) // 0x800E219C
         vcUserWatchTarget(&D_800ED5A0, NULL, true);
 
         // "LIGHT", cutscene light position?
-        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition_2360, &unused, D_800CC4CC, D_800ED5B0, FS_BUFFER_14);
+        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition, &unused, D_800CC4CC, D_800ED5B0, FS_BUFFER_14);
 
         // "L_INT", interior light or intersection point?
         Dms_CharacterGetPosRot(&lightIntPos, &unused, D_800CC4D4, D_800ED5B0, FS_BUFFER_14);
 
         // Set light rotation.
-        g_SysWork.pointLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz));
-        g_SysWork.pointLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz);
-        g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
+        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
+        g_SysWork.pointLightRotation.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
+        g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
     }
 
     #undef playerChara
@@ -2215,15 +2215,15 @@ void func_800E2950(void) // 0x800E2950
 
             g_SysWork.field_236C = NULL;
 
-            g_SysWork.pointLightRot_2370.vx = -ratan2(camLookAt.vy - camPos.vy, Math_Vector2MagCalc(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz));
-            g_SysWork.pointLightRot_2370.vy = ratan2(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz);
-            g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
+            g_SysWork.pointLightRotation.vx = -ratan2(camLookAt.vy - camPos.vy, Math_Vector2MagCalc(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz));
+            g_SysWork.pointLightRotation.vy = ratan2(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz);
+            g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
 
             g_SysWork.field_235C = NULL;
 
-            g_SysWork.pointLightPosition_2360.vx = camPos.vx;
-            g_SysWork.pointLightPosition_2360.vy = MAX(Q12(-1.5f), camPos.vy);
-            g_SysWork.pointLightPosition_2360.vz = camPos.vz;
+            g_SysWork.pointLightPosition.vx = camPos.vx;
+            g_SysWork.pointLightPosition.vy = MAX(Q12(-1.5f), camPos.vy);
+            g_SysWork.pointLightPosition.vz = camPos.vz;
 
             func_80085EB8(0, &g_SysWork.npcs[0], 4, false);
 
@@ -2254,7 +2254,7 @@ void func_800E2950(void) // 0x800E2950
             func_8008D448();
             Game_FlashlightAttributesFix();
 
-            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity = Q12(1.0f);
             Savegame_EventFlagSet(EventFlag_445);
             break;
     }
@@ -2294,7 +2294,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
             D_800ED5B0           = Q12(96.0f);
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
-            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity = Q12(1.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -2367,7 +2367,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
             vcReturnPreAutoCamWork(true);
             func_8008D448();
             Game_FlashlightAttributesFix();
-            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity = Q12(1.0f);
             SD_Call(19);
             func_80088F94(&g_SysWork.npcs[0], 0, 0);
             break;
@@ -2386,15 +2386,15 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
         vcUserWatchTarget(&D_800ED5A0, NULL, true);
 
         // "LIGHT", cutscene light position?
-        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition_2360, &unused, D_800CC4CC, D_800ED5B0, FS_BUFFER_14);
+        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition, &unused, D_800CC4CC, D_800ED5B0, FS_BUFFER_14);
 
         // "L_INT", interior light or intersection point?
         Dms_CharacterGetPosRot(&lightIntPos, &unused, D_800CC4D4, D_800ED5B0, FS_BUFFER_14);
 
         // Set light rotation.
-        g_SysWork.pointLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz));
-        g_SysWork.pointLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz);
-        g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
+        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
+        g_SysWork.pointLightRotation.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
+        g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
     }
 }
 
@@ -2448,7 +2448,7 @@ void func_800E3244(void) // 0x800E3244
 
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
-            g_SysWork.pointLightIntensity_2378 = Q12(0.5f);
+            g_SysWork.pointLightIntensity = Q12(0.5f);
 
             Chara_Load(1, Chara_Parasite, &g_SysWork.npcCoords[30], 0, NULL, NULL);
 
@@ -2596,7 +2596,7 @@ void func_800E3244(void) // 0x800E3244
 
             func_8008D438();
 
-            g_SysWork.pointLightIntensity_2378 = Q12(0.3594f);
+            g_SysWork.pointLightIntensity = Q12(0.3594f);
             D_800ED5B8 = 1;
 
             SysWork_StateStepIncrement(0);
@@ -2646,7 +2646,7 @@ void func_800E3244(void) // 0x800E3244
             func_8008D448();
             Game_FlashlightAttributesFix();
 
-            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity = Q12(1.0f);
 
             Savegame_EventFlagSet(EventFlag_449);
             Savegame_EventFlagSet(EventFlag_450);
@@ -2668,10 +2668,10 @@ void func_800E3244(void) // 0x800E3244
         lookAtX = FP_FROM(Math_Sin(D_800ED5B6 - Q12(0.172f)) * Q12(3.7f), Q12_SHIFT) + Q12(20.0f);
         Camera_LookAtSet(NULL, lookAtX, Q12(-1.0f), FP_FROM(Math_Cos(D_800ED5B6 - 704) * Q12(3.7f), Q12_SHIFT) + Q12(100.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-        Math_Vector3Set(&g_SysWork.pointLightPosition_2360, FP_FROM(Math_Sin(D_800ED5B6 - Q12(0.2188f)) * Q12(4.8f), Q12_SHIFT) + Q12(20.0f),
+        Math_Vector3Set(&g_SysWork.pointLightPosition, FP_FROM(Math_Sin(D_800ED5B6 - Q12(0.2188f)) * Q12(4.8f), Q12_SHIFT) + Q12(20.0f),
                         Q12(-1.0f),
                         FP_FROM(Math_Cos(D_800ED5B6 - Q12(0.2188f)) * Q12(4.8f), Q12_SHIFT) + Q12(100.0f));
-        Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, Q12_ANGLE(-39.4f), (D_800ED5B6 + Q12_ANGLE(182.9f)), Q12_ANGLE(0.0f));
+        Math_SetSVectorFast(&g_SysWork.pointLightRotation, Q12_ANGLE(-39.4f), (D_800ED5B6 + Q12_ANGLE(182.9f)), Q12_ANGLE(0.0f));
         func_800E74C4();
     }
 
@@ -2685,15 +2685,15 @@ void func_800E3244(void) // 0x800E3244
         vcUserCamTarget(&D_800ED590, NULL, true);
         vcUserWatchTarget(&D_800ED5A0, NULL, true);
 
-        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition_2360, &lintRot, D_800CC4CC, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);
+        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition, &lintRot, D_800CC4CC, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);
         Dms_CharacterGetPosRot(&lintPos, &lintRot, D_800CC4D4, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);
 
-        rotX = Q12_TO_Q6(lintPos.vx - g_SysWork.pointLightPosition_2360.vx);
-        rotZ = Q12_TO_Q6(lintPos.vz - g_SysWork.pointLightPosition_2360.vz);
+        rotX = Q12_TO_Q6(lintPos.vx - g_SysWork.pointLightPosition.vx);
+        rotZ = Q12_TO_Q6(lintPos.vz - g_SysWork.pointLightPosition.vz);
 
-        g_SysWork.pointLightRot_2370.vx = -ratan2(lintPos.vy - g_SysWork.pointLightPosition_2360.vy, Q6_TO_Q12(SquareRoot0(SQUARE(rotX) + SQUARE(rotZ))));
-        g_SysWork.pointLightRot_2370.vy = ratan2(lintPos.vx - g_SysWork.pointLightPosition_2360.vx, lintPos.vz - g_SysWork.pointLightPosition_2360.vz);
-        g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
+        g_SysWork.pointLightRotation.vx = -ratan2(lintPos.vy - g_SysWork.pointLightPosition.vy, Q6_TO_Q12(SquareRoot0(SQUARE(rotX) + SQUARE(rotZ))));
+        g_SysWork.pointLightRotation.vy = ratan2(lintPos.vx - g_SysWork.pointLightPosition.vx, lintPos.vz - g_SysWork.pointLightPosition.vz);
+        g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
     }
 
     #undef playerChara
@@ -2753,7 +2753,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
-            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity = Q12(1.0f);
 
             sharedFunc_800D2EB4_0_s00();
             func_8003D03C();
@@ -2768,7 +2768,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             func_80085EB8(0, &playerChara, 51, false);
             func_80085EB8(0, &g_SysWork.npcs[0], 1, false);
 
-            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity = Q12(1.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -2825,7 +2825,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 14:
             SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(80.0f), Q12(104.0f), true, true);
-            g_SysWork.pointLightIntensity_2378 = Q12(2.0f);
+            g_SysWork.pointLightIntensity = Q12(2.0f);
             Savegame_EventFlagSet(EventFlag_452);
             break;
 
@@ -2833,7 +2833,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             func_80085EB8(0, &playerChara, 150, false);
             func_800DFC94(&D_800ED5B0);
 
-            g_SysWork.pointLightIntensity_2378 = Q12(0.8f);
+            g_SysWork.pointLightIntensity = Q12(0.8f);
 
             SysWork_StateStepIncrement(0);
 
@@ -2857,7 +2857,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
             D_800EBB61 = 3;
             Savegame_EventFlagSet(EventFlag_464);
-            g_SysWork.pointLightIntensity_2378 = Q12(0.7f);
+            g_SysWork.pointLightIntensity = Q12(0.7f);
 
             SysWork_StateStepIncrement(0);
 
@@ -2873,7 +2873,7 @@ void func_800E3EF4(void) // 0x800E3EF4
         case 22:
             func_80085EB8(0, &playerChara, 188, false);
 
-            g_SysWork.pointLightIntensity_2378 = Q12(0.6f);
+            g_SysWork.pointLightIntensity = Q12(0.6f);
             D_800EBB61           = 1;
 
             func_8005DC1C(Sfx_Unk1635, NULL, Q8_CLAMPED(1.0f), 3);
@@ -2891,7 +2891,7 @@ void func_800E3EF4(void) // 0x800E3EF4
         case 25:
             Chara_ProcessLoads();
 
-            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity = Q12(1.0f);
 
             func_8005DC1C(Sfx_Unk1636, NULL, Q8_CLAMPED(1.0f), 3);
             func_800DED30();
@@ -2980,7 +2980,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 41:
             func_80085EB8(0, &playerChara, 51, false);
-            g_SysWork.pointLightIntensity_2378 = Q12(0.6f);
+            g_SysWork.pointLightIntensity = Q12(0.6f);
             SysWork_StateStepIncrement(0);
 
         case 42:
@@ -3022,7 +3022,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             Savegame_EventFlagClear(EventFlag_452);
             Savegame_EventFlagSet(EventFlag_465);
 
-            g_SysWork.pointLightIntensity_2378 = Q12(0.6f);
+            g_SysWork.pointLightIntensity = Q12(0.6f);
 
             SysWork_StateStepIncrement(0);
             break;
@@ -3069,7 +3069,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 54:
             func_80085EB8(0, &g_SysWork.npcs[1], 13, false);
-            g_SysWork.pointLightIntensity_2378 = Q12(0.7f);
+            g_SysWork.pointLightIntensity = Q12(0.7f);
             SysWork_StateStepIncrement(0);
 
         case 55:
@@ -3092,7 +3092,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 59:
             func_80085EB8(0, &playerChara, 123, false);
-            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity = Q12(1.0f);
             SysWork_StateStepIncrement(0);
 
         case 60:
@@ -3149,7 +3149,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             func_8008D448();
             Game_FlashlightAttributesFix();
 
-            g_SysWork.pointLightIntensity_2378  = Q12(1.0f);
+            g_SysWork.pointLightIntensity  = Q12(1.0f);
             g_SysWork.flags_22A4 &= ~SysFlag2_4;
             break;
     }
@@ -3192,16 +3192,16 @@ void func_800E3EF4(void) // 0x800E3EF4
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800ED590, &D_800ED5A0, NULL, D_800ED5B0, FS_BUFFER_14));
         vcUserCamTarget(&D_800ED590, NULL, true);
         vcUserWatchTarget(&D_800ED5A0, NULL, true);
-        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition_2360, &unused, &D_800CC4CC, D_800ED5B0, FS_BUFFER_14);
+        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition, &unused, &D_800CC4CC, D_800ED5B0, FS_BUFFER_14);
         Dms_CharacterGetPosRot(&lightIntPos, &unused, &D_800CC4D4, D_800ED5B0, FS_BUFFER_14);
 
         // Set light rotation.
-        g_SysWork.pointLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition_2360.vy,
-                                                  Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx,
-                                                                      lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz));
-        g_SysWork.pointLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx,
-                                                  lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz);
-        g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
+        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy,
+                                                  Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition.vx,
+                                                                      lightIntPos.vz - g_SysWork.pointLightPosition.vz));
+        g_SysWork.pointLightRotation.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx,
+                                                  lightIntPos.vz - g_SysWork.pointLightPosition.vz);
+        g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
 
         Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "ARSIA", D_800ED5B0, FS_BUFFER_14);
 
@@ -3311,7 +3311,7 @@ void func_800E558C(void) // 0x800E558C
             Chara_Spawn(Chara_Alessa, 0, playerChara.position.vx + Q12(1.0f), playerChara.position.vz, Q12_ANGLE(11.3f), 3);
             func_80085EB8(0, &playerChara, 70, false);
 
-            g_SysWork.pointLightIntensity_2378 = Q12(2.5f);
+            g_SysWork.pointLightIntensity = Q12(2.5f);
 
             SysWork_StateStepIncrement(0);
 

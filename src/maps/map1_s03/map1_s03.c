@@ -626,15 +626,15 @@ void func_800DAF18(void) // 0x800DAF18
                 Camera_LookAtSet(&sp38, 0, 0, 0, 0, 0, 0, 0, true);
 
                 g_SysWork.field_236C               = NULL;
-                g_SysWork.pointLightRot_2370.vx = -ratan2(sp38.vy - sp28.vy,
+                g_SysWork.pointLightRotation.vx = -ratan2(sp38.vy - sp28.vy,
                                                              SquareRoot0(SQUARE((sp38.vx - sp28.vx) >> 6) + SQUARE((sp38.vz - sp28.vz) >> 6)) << 6);
 
-                g_SysWork.pointLightRot_2370.vy = ratan2(sp38.vx - sp28.vx, sp38.vz - sp28.vz);
-                g_SysWork.pointLightRot_2370.vz = 0;
+                g_SysWork.pointLightRotation.vy = ratan2(sp38.vx - sp28.vx, sp38.vz - sp28.vz);
+                g_SysWork.pointLightRotation.vz = 0;
                 g_SysWork.field_235C               = NULL;
-                g_SysWork.pointLightPosition_2360.vx = sp28.vx;
-                g_SysWork.pointLightPosition_2360.vy = MAX(-0x1800, sp28.vy);
-                g_SysWork.pointLightPosition_2360.vz = sp28.vz;
+                g_SysWork.pointLightPosition.vx = sp28.vx;
+                g_SysWork.pointLightPosition.vy = MAX(-0x1800, sp28.vy);
+                g_SysWork.pointLightPosition.vz = sp28.vz;
             }
             break;
 
@@ -691,7 +691,7 @@ void func_800DAF18(void) // 0x800DAF18
 
     if (g_SysWork.sysStateSteps[0] == 7 || g_SysWork.sysStateSteps[0] == 12)
     {
-        Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords[10], &sp58);
+        Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords[HarryBone_RightHand], &sp58);
 
         gte_SetRotMatrix(&sp58);
         gte_SetTransMatrix(&sp58);
@@ -1309,7 +1309,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             break;
 
         case 8:
-            func_80080B58(&g_SysWork.playerBoneCoords[2], &(SVECTOR3){ 0, 0, 0 }, &QVECTOR3(-13.91f, -11.5f, 22.11f));
+            func_80080B58(&g_SysWork.playerBoneCoords[HarryBone_Head], &(SVECTOR3){ 0, 0, 0 }, &QVECTOR3(-13.91f, -11.5f, 22.11f));
             sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
             SysWork_StateStepIncrementDelayed(0x2800, false);
             break;

@@ -72,12 +72,12 @@ void GameBoot_GameStartup(void) // 0x80034964
             g_GameWork.background2dColor.g = 0;
             g_GameWork.background2dColor.b = 0;
 
-            if (g_SysWork.processFlags == SysWorkProcessFlag_RoomTransition)
+            if (g_SysWork.processFlags == ProcessFlag_RoomTransition)
             {
                 AreaLoad_UpdatePlayerPosition();
                 g_GameWork.gameStateSteps[0] = 7;
             }
-            else if (g_SysWork.processFlags == SysWorkProcessFlag_BootDemo)
+            else if (g_SysWork.processFlags == ProcessFlag_BootDemo)
             {
                 demoLoadAttempCount             = 0;
                 g_GameWork.gameStateSteps[0] = 1;
@@ -141,12 +141,12 @@ void GameBoot_GameStartup(void) // 0x80034964
             break;
 
         case 4:
-            if (g_SysWork.processFlags == SysWorkProcessFlag_OverlayTransition)
+            if (g_SysWork.processFlags == ProcessFlag_OverlayTransition)
             {
                 AreaLoad_UpdatePlayerPosition();
             }
-            else if (g_SysWork.processFlags == SysWorkProcessFlag_LoadSave ||
-                     g_SysWork.processFlags == SysWorkProcessFlag_Continue)
+            else if (g_SysWork.processFlags == ProcessFlag_LoadSave ||
+                     g_SysWork.processFlags == ProcessFlag_Continue)
             {
                 g_SysWork.loadingScreenIdx = LoadingScreenId_PlayerRun;
             }
@@ -176,7 +176,7 @@ void GameBoot_GameStartup(void) // 0x80034964
             }
 
             Ipd_PlayerChunkInit(&g_MapOverlayHeader, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
-            if (g_SysWork.processFlags == SysWorkProcessFlag_OverlayTransition)
+            if (g_SysWork.processFlags == ProcessFlag_OverlayTransition)
             {
                 Game_RadioSoundStop();
             }
@@ -199,7 +199,7 @@ void GameBoot_GameStartup(void) // 0x80034964
             break;
 
         case 10:
-            if (g_SysWork.processFlags == SysWorkProcessFlag_BootDemo && !(g_SysWork.flags_22A4 & SysFlag2_1))
+            if (g_SysWork.processFlags == ProcessFlag_BootDemo && !(g_SysWork.flags_22A4 & SysFlag2_1))
             {
                 Demo_Start();
                 g_SysWork.flags_22A4 |= SysFlag2_1;
@@ -214,7 +214,7 @@ void GameBoot_GameStartup(void) // 0x80034964
         case 11:
             if (g_SysWork.counters_1C[0] >= 60)
             {
-                if (g_SysWork.processFlags == SysWorkProcessFlag_RoomTransition)
+                if (g_SysWork.processFlags == ProcessFlag_RoomTransition)
                 {
                     GameBoot_NpcInit();
                 }
@@ -223,7 +223,7 @@ void GameBoot_GameStartup(void) // 0x80034964
                     GameBoot_InGameInit();
                 }
 
-                if (g_SysWork.processFlags <= (u32)SysWorkProcessFlag_OverlayTransition)
+                if (g_SysWork.processFlags <= (u32)ProcessFlag_OverlayTransition)
                 {
                     AreaLoad_TransitionSound();
                 }

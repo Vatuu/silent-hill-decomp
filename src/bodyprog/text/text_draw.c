@@ -142,7 +142,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
     glyphColor = STRING_COLORS[g_StringColorId];
     ot         = &g_OtTags0[g_ActiveBufferIdx][g_Strings2dLayerIdx];
 
-    if (!g_SysWork.enableHighResGlyphs_2350_0)
+    if (!g_SysWork.enableHighResGlyphs)
     {
         packet = GsOUT_PACKET_P;
     }
@@ -185,7 +185,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
             sizeCpy--;
 
             // Draw glyph sprite.
-            if (g_SysWork.enableHighResGlyphs_2350_0)
+            if (g_SysWork.enableHighResGlyphs)
             {
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -260,7 +260,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
         strCpy++;
     }
 
-    if (!g_SysWork.enableHighResGlyphs_2350_0)
+    if (!g_SysWork.enableHighResGlyphs)
     {
         GsOUT_PACKET_P = packet;
     }
@@ -348,7 +348,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
                         break;
 
                     case MAP_MSG_CODE_HIGH_RES:
-                        g_SysWork.enableHighResGlyphs_2350_0 = true;
+                        g_SysWork.enableHighResGlyphs = true;
                         break;
                 }
 
@@ -414,7 +414,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
     color               = STRING_COLORS[g_StringColorId];
     g_StringPosition.vx = -(g_MapMsg_Widths[0] >> 1);
 
-    if (!g_SysWork.enableHighResGlyphs_2350_0)
+    if (!g_SysWork.enableHighResGlyphs)
     {
         packet = GsOUT_PACKET_P;
     }
@@ -599,7 +599,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                         break;
 
                     case MAP_MSG_CODE_HIGH_RES:
-                        g_SysWork.enableHighResGlyphs_2350_0 = true;
+                        g_SysWork.enableHighResGlyphs = true;
                         break;
             }
 
@@ -616,7 +616,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
         default:
             strLength--;
 
-            if (g_SysWork.enableHighResGlyphs_2350_0)
+            if (g_SysWork.enableHighResGlyphs)
             {
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -671,7 +671,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
 
             if (strLength <= 0)
             {
-                if (!g_SysWork.enableHighResGlyphs_2350_0)
+                if (!g_SysWork.enableHighResGlyphs)
                 {
                     GsOUT_PACKET_P = packet;
                 }
@@ -681,7 +681,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
         }
     }
 
-    if (!g_SysWork.enableHighResGlyphs_2350_0)
+    if (!g_SysWork.enableHighResGlyphs)
     {
         GsOUT_PACKET_P = packet;
     }
@@ -708,7 +708,7 @@ void Gfx_MapMsg_DefaultStringInfoSet(void) // 0x8004B684
     D_800C38B0.positionIdx             = 1;
     g_StringPositionX1                   = SCREEN_POSITION_X(-37.5f);
     g_StringColorId                      = StringColorId_White;
-    g_SysWork.enableHighResGlyphs_2350_0 = false;
+    g_SysWork.enableHighResGlyphs = false;
 }
 
 void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4

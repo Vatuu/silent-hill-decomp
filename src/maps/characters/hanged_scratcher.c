@@ -159,7 +159,7 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
         switch (scratcher->model.controlState)
         {
             case HangedScratcherControl_4:
-                g_SysWork.charaGroupFlags[3] &= ~Unk2284Flag_1;
+                g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_1;
 
             case HangedScratcherControl_1:
             case HangedScratcherControl_2:
@@ -195,7 +195,7 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
                 break;
 
             case HangedScratcherControl_15:
-                g_SysWork.charaGroupFlags[3] &= ~Unk2284Flag_1;
+                g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_1;
 
             case HangedScratcherControl_5:
             case HangedScratcherControl_6:
@@ -461,7 +461,7 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
     }
     else
     {
-        if (!Chara_HasFlag(&g_SysWork.playerWork.player, 8) && !(g_SysWork.charaGroupFlags[3] & Unk2284Flag_1))
+        if (!Chara_HasFlag(&g_SysWork.playerWork.player, 8) && !(g_SysWork.charaGroupFlags[3] & CharaGroupFlag_1))
         {
             if (g_SysWork.playerWork.player.health > Q12(0.0f) &&
                 distToPlayer < Q12(1.0f) && angleDeltaToPlayer < Q12_ANGLE(30.0f))
@@ -548,7 +548,7 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
                 scratcher->model.controlState  = HangedScratcherControl_3;
                 scratcherProps.timer_EA            = Q12(0.0f);
                 scratcher->model.anim.status = ANIM_STATUS(17, false);
-                g_SysWork.charaGroupFlags[3]           &= ~Unk2284Flag_1;
+                g_SysWork.charaGroupFlags[3]           &= ~CharaGroupFlag_1;
             }
             else
             {
@@ -558,7 +558,7 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
                 {
                     scratcherProps.timer_EA           = Q12(0.0f);
                     scratcher->model.controlState = HangedScratcherControl_2;
-                    g_SysWork.charaGroupFlags[3]          &= ~Unk2284Flag_1;
+                    g_SysWork.charaGroupFlags[3]          &= ~CharaGroupFlag_1;
                 }
             }
         }
@@ -719,7 +719,7 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
         }
     }
 
-    if (!cond && !(g_SysWork.charaGroupFlags[3] & Unk2284Flag_1) &&
+    if (!cond && !(g_SysWork.charaGroupFlags[3] & CharaGroupFlag_1) &&
         !(g_SysWork.playerWork.player.flags & CharaFlag_Unk4) &&
         g_SysWork.playerWork.player.health > Q12(0.0f))
     {
@@ -730,7 +730,7 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
                                   scratcher->rotation.vy)) < Q12_ANGLE(20.0f))
             {
                 scratcher->model.controlState  = HangedScratcherControl_15;
-                g_SysWork.charaGroupFlags[3]           |= Unk2284Flag_1;
+                g_SysWork.charaGroupFlags[3]           |= CharaGroupFlag_1;
                 scratcherProps.timer_EA            = Q12(0.0f);
                 scratcher->model.anim.status = ANIM_STATUS(HangedScratcherAnim_5, false);
             }
@@ -909,7 +909,7 @@ void Ai_HangedScratcher_Control_13(s_SubCharacter* scratcher)
 
     if (scratcher->health == Q12(0.0f))
     {
-        if (g_SysWork.targetNpcIdx_2353 != Chara_NpcIdxGet(scratcher))
+        if (g_SysWork.targetNpcIdx != Chara_NpcIdxGet(scratcher))
         {
             scratcher->health     = NO_VALUE;
             scratcher->flags     &= ~CharaFlag_Unk2;
@@ -1081,7 +1081,7 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
     {
         if (scratcherProps.timer_EA == Q12(0.0f))
         {
-            g_SysWork.charaGroupFlags[3] &= ~Unk2284Flag_1;
+            g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_1;
         }
 
         scratcherProps.timer_EA += g_DeltaTime;

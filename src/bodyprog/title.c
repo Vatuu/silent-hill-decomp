@@ -74,7 +74,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
         if (playInGameDemo)
         {
-            g_SysWork.processFlags = SysWorkProcessFlag_BootDemo;
+            g_SysWork.processFlags = ProcessFlag_BootDemo;
         }
         else
         {
@@ -202,7 +202,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                         }
 
                         GameBoot_PlayerInit();
-                        g_SysWork.processFlags = SysWorkProcessFlag_Continue;
+                        g_SysWork.processFlags = ProcessFlag_Continue;
                         GameBoot_MapLoad(g_SavegamePtr->mapOverlayId_A4);
                         break;
 
@@ -290,7 +290,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 GameBoot_SavegameInitialize(0, newGameSelectedDifficultyIdx - 1);
                 GameBoot_PlayerInit();
 
-                g_SysWork.processFlags = SysWorkProcessFlag_NewGame;
+                g_SysWork.processFlags = ProcessFlag_NewGame;
 
                 GameBoot_MapLoad(MapOverlayId_MAP0_S00);
                 GameFs_StreamBinLoad();

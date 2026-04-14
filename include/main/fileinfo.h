@@ -45,7 +45,7 @@ typedef enum _FileType
  * its name, size and location on the CD.
  *
  * The file name is stored as 8 6-bit characters represented as two 24-bit bitfields:
- * `name4567_8_0` and `name4567_8_0`. The 6-bit character value maps to ASCII character range `[0x20, 0x5F]`.
+ * `name4567` and `name4567`. The 6-bit character value maps to ASCII character range `[0x20, 0x5F]`.
  * The name does not contain the path or extension.
  *
  * The path and extension are stored as 4-bit indices of the path string in `g_FilePaths` and of
@@ -54,12 +54,12 @@ typedef enum _FileType
  */
 typedef struct _FileInfo
 {
-    u32 startSector_0_0 : 19; /** Index of CD sector where file starts. */
-    u32 blockCount_0_19 : 12; /** Size of file in 256-byte blocks. */
-    u32 pathIdx_4_0     : 4;  /** Index of path to file in `g_FilePaths`. */
-    u32 name0123_4_4    : 24; /** First four 6-bit characters of file name. */
-    u32 name4567_8_0    : 24; /** Second four 6-bit characters of file name. */
-    u32 type_8_24       : 4;  /** `e_FileType` | File type (and index of extension in `g_FileExts`). */
+    /* 0x0+0  */ u32 startSector : 19; /** Index of CD sector where file starts. */
+    /* 0x0+19 */ u32 blockCount  : 12; /** Size of file in 256-byte blocks. */
+    /* 0x4+0  */ u32 pathIdx     : 4;  /** Index of path to file in `g_FilePaths`. */
+    /* 0x4+4  */ u32 name0123    : 24; /** First four 6-bit characters of file name. */
+    /* 0x8+0  */ u32 name4567    : 24; /** Second four 6-bit characters of file name. */
+    /* 0x8+24 */ u32 type        : 4;  /** `e_FileType` | File type (and index of extension in `g_FileExts`). */
 } s_FileInfo;
 STATIC_ASSERT_SIZEOF(s_FileInfo, 12);
 
@@ -79,7 +79,7 @@ extern s_FileInfo g_FileTable[];
 /** @brief Array of file path strings.
  *
  * All possible path strings occuring in the data archives.
- * This is referenced by index (`pathIdx_4_0`) in each file table entry.
+ * This is referenced by index (`pathIdx`) in each file table entry.
  *
  * In SLUS_007.07 there are 11 possible paths. They are all one subfolder deep
  * and have starting and trailing path separators (backslashes).

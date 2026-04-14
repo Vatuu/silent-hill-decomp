@@ -362,7 +362,7 @@ void Map_WorldObjectsInit(void) // 0x800EBCE8
     func_8008D448();
     Game_FlashlightAttributesFix();
 
-    g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+    g_SysWork.pointLightIntensity = Q12(1.0f);
 
     switch (g_SavegamePtr->gameDifficulty_260)
     {

@@ -468,7 +468,7 @@ void sharedFunc_800D0110_7_s00(void)
 
             if (Savegame_EventFlagGet(EventFlag_577) || Savegame_EventFlagGet(EventFlag_591))
             {
-                if (g_SysWork.bgmLayerVolumes_2748[1] == Q12(1.0f))
+                if (g_SysWork.bgmLayerVolumes[1] == Q12(1.0f))
                 {
                     if (Savegame_EventFlagGet(EventFlag_577))
                     {
@@ -487,9 +487,9 @@ void sharedFunc_800D0110_7_s00(void)
                     {
                         var_s2 = Q12(0.12f);
 
-                        if (g_SysWork.bgmLayerVolumes_2748[2] == Q12(1.0f))
+                        if (g_SysWork.bgmLayerVolumes[2] == Q12(1.0f))
                         {
-                            if (g_SysWork.bgmLayerVolumes_2748[3] == Q12(1.0f))
+                            if (g_SysWork.bgmLayerVolumes[3] == Q12(1.0f))
                             {
                                 flags = (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1 << 8);
                             }
@@ -520,7 +520,7 @@ void sharedFunc_800D0110_7_s00(void)
 
                 flags = (1 << 1) | (1 << 8);
 
-                if (g_SysWork.bgmLayerVolumes_2748[0] != Q12(1.0f))
+                if (g_SysWork.bgmLayerVolumes[0] != Q12(1.0f))
                 {
                     if (!func_80045BC8())
                     {
@@ -531,8 +531,8 @@ void sharedFunc_800D0110_7_s00(void)
                         Sd_BgmLayerVolumeSet(0, 0x7F);
                         Sd_BgmLayerVolumeSet(1, 1);
 
-                        g_SysWork.bgmLayerVolumes_2748[0] = Q12(1.0f);
-                        g_SysWork.bgmLayerVolumes_2748[1] = 32;
+                        g_SysWork.bgmLayerVolumes[0] = Q12(1.0f);
+                        g_SysWork.bgmLayerVolumes[1] = 32;
                     }
                 }
             }

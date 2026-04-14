@@ -152,7 +152,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             g_Inventory_SelectionBordersDraw = 0;
             D_800AE178                       = 0;
             g_Inventory_CmdSelectedIdx       = 0;
-            g_Inventory_SelectedItemIdx      = g_SysWork.inventoryItemSelectedIdx_2351;
+            g_Inventory_SelectedItemIdx      = g_SysWork.inventoryItemSelectedIdx;
 
             switch (g_GameWork.gameStatePrev)
             {
@@ -203,7 +203,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
         case 12:
         case 13:
         case 16:
-            if (g_SysWork.inventoryItemSelectedIdx_2351 == g_Inventory_SelectedItemIdx &&
+            if (g_SysWork.inventoryItemSelectedIdx == g_Inventory_SelectedItemIdx &&
                 g_GameWork.gameState == GameState_InventoryScreen &&
                 ScreenFade_IsNone())
             {
@@ -497,7 +497,7 @@ void Gfx_Results_Save(void) // 0x8004D1A0
     }
 
 #if VERSION_REGION_IS(NTSC)
-    g_SysWork.enableHighResGlyphs_2350_0 = true;
+    g_SysWork.enableHighResGlyphs = true;
 
     Gfx_StringSetPosition(90, 92);
     Gfx_StringDraw("\x07Is_it_OK_to_save?", DEFAULT_MAP_MESSAGE_LENGTH);
@@ -505,7 +505,7 @@ void Gfx_Results_Save(void) // 0x8004D1A0
     Gfx_StringSetPosition(94, 122);
     Gfx_StringDraw("\x07Yes_____________No", DEFAULT_MAP_MESSAGE_LENGTH);
 
-    g_SysWork.enableHighResGlyphs_2350_0 = false;
+    g_SysWork.enableHighResGlyphs = false;
 
 #elif VERSION_REGION_IS(NTSCJ)
     for (i = 0; i < 2; i++)
@@ -609,9 +609,9 @@ void Inventory_Logic(void) // 0x8004D518
                 g_Inventory_CmdSelectedIdx       = 0;
                 Sd_PlaySfx(Sfx_MenuMove, -64, 64);
 
-                g_SysWork.inventoryItemSelectedIdx_2351 = ((g_SysWork.inventoryItemSelectedIdx_2351 + g_SavegamePtr->inventorySlotCount_AB) - 1) % g_SavegamePtr->inventorySlotCount_AB;
+                g_SysWork.inventoryItemSelectedIdx = ((g_SysWork.inventoryItemSelectedIdx + g_SavegamePtr->inventorySlotCount_AB) - 1) % g_SavegamePtr->inventorySlotCount_AB;
                 temp                                    = g_SavegamePtr->inventorySlotCount_AB - 3;
-                func_800539A4(0, (g_SysWork.inventoryItemSelectedIdx_2351 + temp) % g_SavegamePtr->inventorySlotCount_AB);
+                func_800539A4(0, (g_SysWork.inventoryItemSelectedIdx + temp) % g_SavegamePtr->inventorySlotCount_AB);
             }
             else if (((g_Inventory_IsRightClicked || g_Inventory_IsRightPulsed) && g_Inventory_SelectionBordersDraw == 8) ||
                      (g_Inventory_IsRightHeld && (g_Inventory_IsScrolling || g_Inventory_SelectionBordersDraw == 8)))
@@ -626,8 +626,8 @@ void Inventory_Logic(void) // 0x8004D518
                 g_Inventory_CmdSelectedIdx           = 0;
                 Sd_PlaySfx(Sfx_MenuMove, 64, 64);
 
-                g_SysWork.inventoryItemSelectedIdx_2351 = (g_SysWork.inventoryItemSelectedIdx_2351 + 1) % g_SavegamePtr->inventorySlotCount_AB;
-                func_800539A4(1, (g_SysWork.inventoryItemSelectedIdx_2351 + 3) % g_SavegamePtr->inventorySlotCount_AB);
+                g_SysWork.inventoryItemSelectedIdx = (g_SysWork.inventoryItemSelectedIdx + 1) % g_SavegamePtr->inventorySlotCount_AB;
+                func_800539A4(1, (g_SysWork.inventoryItemSelectedIdx + 3) % g_SavegamePtr->inventorySlotCount_AB);
             }
             else if (g_Inventory_IsUpClicked != InventorySelectionId_Item && g_Inventory_SelectionBordersDraw == 8)
             {
@@ -659,13 +659,13 @@ void Inventory_Logic(void) // 0x8004D518
             else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0 &&
                      g_Inventory_SelectionBordersDraw >= 8)
             {
-                if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flauros ||
+                if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx].id_0 == InventoryItemId_Flauros ||
                     (g_SysWork.field_2388.isFlashlightUnavailable_16 &&
-                     g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flashlight))
+                     g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx].id_0 == InventoryItemId_Flashlight))
                 {
                     Sd_PlaySfx(Sfx_MenuError, 64, 64);
                 }
-                else if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].command_2 == InventoryCmdId_Unk10)
+                else if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx].command_2 == InventoryCmdId_Unk10)
                 {
                     g_GameWork.gameStateSteps[1] = 12;
                     g_GameWork.gameStateSteps[2] = 0;
@@ -676,7 +676,7 @@ void Inventory_Logic(void) // 0x8004D518
                     g_Inventory_SelectionBordersDraw = 1;
                     g_Inventory_CmdSelectedIdx           = 0;
 
-                    if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].command_2 != InventoryCmdId_Unk11)
+                    if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx].command_2 != InventoryCmdId_Unk11)
                     {
                         g_Inventory_SelectionId = InventorySelectionId_ItemCmd;
                         Sd_PlaySfx(Sfx_MenuConfirm, 64, 64);
@@ -901,7 +901,7 @@ void Inventory_Logic(void) // 0x8004D518
         case InventorySelectionId_EquippedItemCmd:
             if (g_Inventory_SelectionId == InventorySelectionId_ItemCmd)
             {
-                curItemIdx = g_SysWork.inventoryItemSelectedIdx_2351;
+                curItemIdx = g_SysWork.inventoryItemSelectedIdx;
             }
             else
             {
@@ -1308,7 +1308,7 @@ void Gfx_Inventory_CmdOptionsDraw(void) // 0x8004E864
     if (g_Inventory_SelectionId != InventorySelectionId_EquippedItem &&
         g_Inventory_SelectionId != InventorySelectionId_EquippedItemCmd)
     {
-        idx = g_SysWork.inventoryItemSelectedIdx_2351;
+        idx = g_SysWork.inventoryItemSelectedIdx;
     }
     else
     {
@@ -1830,9 +1830,9 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
     j = count;
     count--;
 
-    if (count < g_SysWork.inventoryItemSelectedIdx_2351)
+    if (count < g_SysWork.inventoryItemSelectedIdx)
     {
-        g_SysWork.inventoryItemSelectedIdx_2351 = count;
+        g_SysWork.inventoryItemSelectedIdx = count;
     }
 
     return j;

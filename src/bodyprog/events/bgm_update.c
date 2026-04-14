@@ -70,9 +70,9 @@ void Bgm_AllLayersMute(void) // 0x80035E1C
     s32 i;
 
     // Reset all BGM layer volumes.
-    for (i = 0; i < ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748); i++)
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.bgmLayerVolumes); i++)
     {
-        g_SysWork.bgmLayerVolumes_2748[i] = Q12(0.0f);
+        g_SysWork.bgmLayerVolumes[i] = Q12(0.0f);
     }
 }
 
@@ -81,9 +81,9 @@ bool Bgm_LayerOnCheck(void) // 0x80035E44
     s32 i;
     u16 val;
 
-    for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1); i++)
+    for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1); i++)
     {
-        if (g_SysWork.bgmLayerVolumes_2748[i] != Q12(0.0f))
+        if (g_SysWork.bgmLayerVolumes[i] != Q12(0.0f))
         {
             return false;
         }
@@ -99,7 +99,7 @@ bool Bgm_LayerOnCheck(void) // 0x80035E44
         return false;
     }
 
-    for (i = 1; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1); i++)
+    for (i = 1; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1); i++)
     {
         if (Sd_BgmLayerVolumeGet(i) != 0)
         {
@@ -114,17 +114,17 @@ void Bgm_GlobalLayerVariablesUpdate(void) // 0x80035ED0
 {
     s32 i;
 
-    for (i = 1; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1); i++)
+    for (i = 1; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1); i++)
     {
-        g_SysWork.bgmLayerVolumes_2748[i] = Sd_BgmLayerVolumeGet(i) << 5; // Conversion to Q12.
+        g_SysWork.bgmLayerVolumes[i] = Sd_BgmLayerVolumeGet(i) << 5; // Conversion to Q12.
     }
 
     if (func_80045BC8() == 0)
     {
-        g_SysWork.bgmLayerVolumes_2748[0] = Q12(1.0f);
+        g_SysWork.bgmLayerVolumes[0] = Q12(1.0f);
     }
 
-    g_SysWork.bgmLayerVolumes_2748[ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1] = Q12(0.0f);
+    g_SysWork.bgmLayerVolumes[ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1] = Q12(0.0f);
 }
 
 void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0x80035F4C
@@ -149,7 +149,7 @@ void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0
     // Setup.
     flagsCpy       = flags;
     layerLimitsCpy = layerLimits;
-    layerVols      = g_SysWork.bgmLayerVolumes_2748;
+    layerVols      = g_SysWork.bgmLayerVolumes;
 
     // Ensure layer limits are valid.
     if (layerLimitsCpy == NULL)
@@ -188,8 +188,8 @@ void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0
         flagsCpy ^= BgmFlag_Layer0;
     }
 
-    for (i = 0, endLayerIdx = (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1);
-         i < ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748);
+    for (i = 0, endLayerIdx = (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1);
+         i < ARRAY_SIZE(g_SysWork.bgmLayerVolumes);
          i++)
     {
         curLayerVol = layerVols[i];
@@ -247,7 +247,7 @@ void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0
     isBgmLayerActive = false;
     temp_v0          = Q12(1.0f) - layerVols[8];
 
-    for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1); i++)
+    for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1); i++)
     {
         curLayerVol1        = layerVols[i];
         isBgmLayerActive |= curLayerVol1 != Q12(0.0f);
@@ -336,7 +336,7 @@ void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0
     {
         if (cond0)
         {
-            for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1); i++)
+            for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1); i++)
             {
                 Sd_BgmLayerVolumeSet(i, bgmLayerVols[i]);
             }

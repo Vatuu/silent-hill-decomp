@@ -186,7 +186,7 @@ void func_800D13D8(void) // 0x800D13D8
 
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
-            g_SysWork.pointLightIntensity_2378 = Q12(0.6f);
+            g_SysWork.pointLightIntensity = Q12(0.6f);
 
             Gfx_MapInitMapEffectsUpdate(16, 16);
             func_8008D438();
@@ -480,7 +480,7 @@ void func_800D13D8(void) // 0x800D13D8
             func_8008D448();
             Game_FlashlightAttributesFix();
 
-            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity = Q12(1.0f);
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
@@ -514,12 +514,12 @@ void func_800D13D8(void) // 0x800D13D8
         vcUserCamTarget(&D_800D5354, NULL, true);
         vcUserWatchTarget(&D_800D5364, NULL, true);
 
-        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition_2360, &rot, "LIGHT", D_800D4070, FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition, &rot, "LIGHT", D_800D4070, FS_BUFFER_15);
         Dms_CharacterGetPosRot(&pos, &rot, "L_INT", D_800D4070, FS_BUFFER_15);
 
-        g_SysWork.pointLightRot_2370.vx = -ratan2(pos.vy - g_SysWork.pointLightPosition_2360.vy, Math_Vector2MagCalc(pos.vx - g_SysWork.pointLightPosition_2360.vx, pos.vz - g_SysWork.pointLightPosition_2360.vz));
-        g_SysWork.pointLightRot_2370.vy = ratan2(pos.vx - g_SysWork.pointLightPosition_2360.vx, pos.vz - g_SysWork.pointLightPosition_2360.vz);
-        g_SysWork.pointLightRot_2370.vz = 0;
+        g_SysWork.pointLightRotation.vx = -ratan2(pos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalc(pos.vx - g_SysWork.pointLightPosition.vx, pos.vz - g_SysWork.pointLightPosition.vz));
+        g_SysWork.pointLightRotation.vy = ratan2(pos.vx - g_SysWork.pointLightPosition.vx, pos.vz - g_SysWork.pointLightPosition.vz);
+        g_SysWork.pointLightRotation.vz = 0;
     }
 }
 
@@ -709,7 +709,7 @@ void func_800D2658(void) // 0x800D2658
             break;
 
         case 8:
-            func_80080B58(&g_SysWork.playerBoneCoords[2], &EMPTY_ROT, &UNK_POS);
+            func_80080B58(&g_SysWork.playerBoneCoords[HarryBone_Head], &EMPTY_ROT, &UNK_POS);
 
             for (i = 0; i < 5; i++)
             {

@@ -33,7 +33,7 @@ static void GameBoot_NpcClear(void) // 0x80034EC8
 
 void GameBoot_NpcInit(void) // 0x80034F18
 {
-    vcSetCameraUseWarp(&g_SysWork.playerWork.player.position, g_SysWork.cameraAngleY_237A);
+    vcSetCameraUseWarp(&g_SysWork.playerWork.player.position, g_SysWork.cameraAngleY);
     func_8005E70C();
 
     if (g_SysWork.field_234A)
@@ -55,7 +55,7 @@ void GameBoot_InGameInit(void) // 0x80034FB8
 
     vcInitCamera(&g_MapOverlayHeader, &g_SysWork.playerWork.player.position);
 
-    vcSetCameraUseWarp(&g_SysWork.playerWork.player.position, g_SysWork.cameraAngleY_237A);
+    vcSetCameraUseWarp(&g_SysWork.playerWork.player.position, g_SysWork.cameraAngleY);
     func_80040004(&g_MapOverlayHeader);
     Gfx_MapEffectsSet(0);
     WorldGfx_CharaModelProcessAllLoads();

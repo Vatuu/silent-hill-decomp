@@ -16,7 +16,7 @@ bool Fs_QueueAllocEntryData(s_FsQueueEntry* entry)
 
     if (entry->allocate)
     {
-        entry->data = Fs_AllocMem(ALIGN(entry->info->blockCount_0_19 * FS_BLOCK_SIZE, FS_SECTOR_SIZE));
+        entry->data = Fs_AllocMem(ALIGN(entry->info->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE));
     }
     else
     {
@@ -46,9 +46,9 @@ bool Fs_QueueCanRead(s_FsQueueEntry* entry)
         if (other->postLoad || other->allocate)
         {
             overlap = Fs_QueueDoBuffersOverlap(entry->data,
-                                               ALIGN(entry->info->blockCount_0_19 * FS_BLOCK_SIZE, FS_SECTOR_SIZE),
+                                               ALIGN(entry->info->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE),
                                                other->data,
-                                               other->info->blockCount_0_19 * FS_BLOCK_SIZE);
+                                               other->info->blockCount * FS_BLOCK_SIZE);
         }
 
         if (overlap == true)
@@ -75,7 +75,7 @@ bool Fs_QueueDoBuffersOverlap(u8* data0, u32 size0, u8* data1, u32 size1)
 bool Fs_QueueTickSetLoc(s_FsQueueEntry* entry)
 {
     CdlLOC cdloc;
-    CdIntToPos(entry->info->startSector_0_0, &cdloc);
+    CdIntToPos(entry->info->startSector, &cdloc);
     return CdControl(CdlSetloc, (u_char*)&cdloc, NULL);
 }
 
@@ -84,7 +84,7 @@ bool Fs_QueueTickRead(s_FsQueueEntry* entry)
     s32 sectorCount;
 
     // Round up to sector boundary. Masking not needed because of `>> 11` below.
-    sectorCount = ((entry->info->blockCount_0_19 * FS_BLOCK_SIZE) + FS_SECTOR_SIZE) - 1;
+    sectorCount = ((entry->info->blockCount * FS_BLOCK_SIZE) + FS_SECTOR_SIZE) - 1;
 
     // Overflow check?
     if (sectorCount < 0)
@@ -138,7 +138,7 @@ bool Fs_QueueTickReadPcDrv(s_FsQueueEntry* entry)
     result = false;
 
     strcpy(pathBuf, "sim:.\\DATA");
-    strcat(pathBuf, g_FilePaths[file->pathIdx_4_0]);
+    strcat(pathBuf, g_FilePaths[file->pathIdx]);
     Fs_GetFileInfoName(nameBuf, file);
     strcat(pathBuf, nameBuf);
 
@@ -150,7 +150,7 @@ bool Fs_QueueTickReadPcDrv(s_FsQueueEntry* entry)
             continue;
         }
 
-        temp = read(handle,entry->data, ALIGN(file->blockCount_0_19 * FS_BLOCK_SIZE, FS_SECTOR_SIZE));
+        temp = read(handle,entry->data, ALIGN(file->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE));
         if (temp == NO_VALUE)
         {
             continue;

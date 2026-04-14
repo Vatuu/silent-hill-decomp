@@ -547,9 +547,9 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                 temp_t3_2 = sp54 / 3;
                 sp30      = NO_VALUE;
 
-                if (g_SysWork.targetNpcIdx_2353 >= 0)
+                if (g_SysWork.targetNpcIdx >= 0)
                 {
-                    temp_s1_2 = &g_SysWork.npcs[g_SysWork.targetNpcIdx_2353];
+                    temp_s1_2 = &g_SysWork.npcs[g_SysWork.targetNpcIdx];
 
                     if (temp_s1_2->model.charaId >= Chara_AirScreamer)
                     {

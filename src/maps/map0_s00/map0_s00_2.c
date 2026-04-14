@@ -1009,7 +1009,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             {
                 Math_SetSVectorFast(&offset, 0, -38, 0);
 
-                Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords[2], &neck_lwm);
+                Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords[HarryBone_Head], &neck_lwm);
 
                 // Load transformation matrix.
                 gte_SetRotMatrix(&neck_lwm);

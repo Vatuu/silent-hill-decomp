@@ -597,7 +597,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
             break;
 
         case 2:
-            g_SysWork.silentYesSelection_2350_4 = true;
+            g_SysWork.silentYesSelection = true;
             MapMsg_DisplayAndHandleSelection(true, 29, 3, -1, 0, false); // "Do you want to press the switch?"
             break;
 
@@ -666,7 +666,7 @@ void MapEvent_Boiler1(void)
             break;
 
         case 2:
-            g_SysWork.silentYesSelection_2350_4 = true;
+            g_SysWork.silentYesSelection = true;
             MapMsg_DisplayAndHandleSelection(true, 29, 3, -1, 0, false); // "Do you want to press the switch?"
             break;
 

@@ -1480,7 +1480,7 @@ void func_800EA960(void) // 0x800EA960
             break;
 
         case 4:
-            g_SysWork.silentYesSelection_2350_4 = true;
+            g_SysWork.silentYesSelection = true;
 
             // "The machinery is running. Do you want to press the switch?"
             MapMsg_DisplayAndHandleSelection(true, 44, EventState_PressSwitch, EventState_DontPressSwitch, 0, false);
@@ -1582,7 +1582,7 @@ void func_800EAD2C(void) // 0x800EAD2C
             break;
 
         case 2:
-            g_SysWork.silentYesSelection_2350_4 = true;
+            g_SysWork.silentYesSelection = true;
 
             // "The machinery is running. Do you want to press the switch?"
             MapMsg_DisplayAndHandleSelection(true, 44, EventState_PressSwitch, EventState_DontPressSwitch, 0, false);

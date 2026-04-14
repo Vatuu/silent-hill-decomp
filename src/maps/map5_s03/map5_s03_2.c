@@ -347,7 +347,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
             func_8008D438();
 
-            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity = Q12(1.0f);
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
 
@@ -473,7 +473,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             func_8008D448();
             Game_FlashlightAttributesFix();
 
-            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity = Q12(1.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -521,7 +521,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             func_8008D448();
             Game_FlashlightAttributesFix();
 
-            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity = Q12(1.0f);
 
             SD_Call(19);
             sharedFunc_800D2EF4_0_s00();
@@ -538,15 +538,15 @@ void func_800D1AF8(void) // 0x800D1AF8
         vcUserWatchTarget(&D_800D6F48, NULL, true);
 
         // "LIGHT", cutscene light position?
-        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition_2360, &unused, "LIGHT", D_800D6F58, FS_BUFFER_17);
+        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition, &unused, "LIGHT", D_800D6F58, FS_BUFFER_17);
 
         // "L_INT", interior light or intersection point?
         Dms_CharacterGetPosRot(&lightIntPos, &unused, "L_INT", D_800D6F58, FS_BUFFER_17);
 
         // Set light rotation.
-        g_SysWork.pointLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz));
-        g_SysWork.pointLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz);
-        g_SysWork.pointLightRot_2370.vz = Q12_ANGLE(0.0f);
+        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
+        g_SysWork.pointLightRotation.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
+        g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
     }
 }
 

@@ -15,14 +15,14 @@ void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, const VECTOR3* chr_
     g_WorldGfxWork.vcCameraInternalInfo_1BDC.ev_cam_rate = Q12(0.0f);
     g_WorldGfxWork.vcCameraInternalInfo_1BDC.mode        = 0;
 
-    vcSetCameraUseWarp(chr_pos, g_SysWork.cameraAngleY_237A);
+    vcSetCameraUseWarp(chr_pos, g_SysWork.cameraAngleY);
     SetGeomScreen(g_GameWork.gsScreenHeight);
     vwInitViewInfo();
     vcInitVCSystem(map_overlay_ptr->roadDataList_3CC);
     vcStartCameraSystem();
 
-    g_SysWork.cameraAngleZ_237C   = Q12_ANGLE(0.0f);
-    g_SysWork.cameraRadiusXz_2380 = Q12(3.0f);
+    g_SysWork.cameraAngleZ   = Q12_ANGLE(0.0f);
+    g_SysWork.cameraRadiusXz = Q12(3.0f);
     g_SysWork.cameraY_2384        = Q12(0.0f);
 }
 
@@ -149,7 +149,7 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
             vcSetRefPosAndSysRef2CamParam(&vcRefPosSt, &g_SysWork, for_f, back_f, right_f, left_f, up_f, down_f);
             vwSetCoordRefAndEntou(NULL,
                                   vcRefPosSt.vx, vcRefPosSt.vy, vcRefPosSt.vz,
-                                  g_SysWork.cameraAngleY_237A, g_SysWork.cameraAngleZ_237C, g_SysWork.cameraY_2384, g_SysWork.cameraRadiusXz_2380);
+                                  g_SysWork.cameraAngleY, g_SysWork.cameraAngleZ, g_SysWork.cameraY_2384, g_SysWork.cameraRadiusXz);
             break;
 
         case DebugCameraMode_AnalogStickControl:
@@ -204,19 +204,19 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p,
 
     if (for_f)
     {
-        sys_p->cameraRadiusXz_2380 -= POS_OFFSET;
+        sys_p->cameraRadiusXz -= POS_OFFSET;
     }
     if (back_f)
     {
-        sys_p->cameraRadiusXz_2380 += POS_OFFSET;
+        sys_p->cameraRadiusXz += POS_OFFSET;
     }
     if (right_f)
     {
-        sys_p->cameraAngleY_237A -= g_VBlanks * V_BLANKS_MULT;
+        sys_p->cameraAngleY -= g_VBlanks * V_BLANKS_MULT;
     }
     if (left_f)
     {
-        sys_p->cameraAngleY_237A += g_VBlanks * V_BLANKS_MULT;
+        sys_p->cameraAngleY += g_VBlanks * V_BLANKS_MULT;
     }
     if (up_f)
     {
@@ -226,9 +226,9 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p,
     {
         sys_p->cameraY_2384 += POS_OFFSET;
     }
-    if (sys_p->cameraRadiusXz_2380 < RADIUS_MIN)
+    if (sys_p->cameraRadiusXz < RADIUS_MIN)
     {
-        sys_p->cameraRadiusXz_2380 = RADIUS_MIN;
+        sys_p->cameraRadiusXz = RADIUS_MIN;
     }
 
     vcAddOfsToPos(ref_pos, &g_SysWork.playerWork.player.position,
@@ -348,9 +348,9 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
         ref_pos->vy = Q8_TO_Q12(newCamPos.vy + refOffset.vy);
         ref_pos->vz = Q8_TO_Q12(newCamPos.vz + refOffset.vz);
 
-        sys_p->cameraAngleY_237A   = Math_AngleNormalize(cam_ang.vy + Q12_ANGLE(180.0f));
+        sys_p->cameraAngleY   = Math_AngleNormalize(cam_ang.vy + Q12_ANGLE(180.0f));
         sys_p->cameraY_2384        = Q8_TO_Q12(-refOffset.vy);
-        sys_p->cameraRadiusXz_2380 = Q8_TO_Q12(SquareRoot0(SQUARE(refOffset.vx) + SQUARE(refOffset.vz)));
+        sys_p->cameraRadiusXz = Q8_TO_Q12(SquareRoot0(SQUARE(refOffset.vx) + SQUARE(refOffset.vz)));
     }
 
     #undef MOVE_DIST

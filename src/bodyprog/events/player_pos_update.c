@@ -38,7 +38,7 @@ void Chara_PositionSet(s_MapPoint2d* mapPoint) // 0x800371E8
         g_SavegamePtr->paperMapIdx_A9 = mapPoint->mapIdx_4_0;
     }
 
-    g_SysWork.cameraAngleY_237A = rotY;
+    g_SysWork.cameraAngleY = rotY;
 
     func_8007E9C4();
     Savegame_MapRoomIdxUpdate();

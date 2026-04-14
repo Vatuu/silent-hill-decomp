@@ -599,7 +599,7 @@ void SysState_Fmv_Update(void) // 0x80039A58
 
     // Start playing movie. File to play is based on file ID `BASE_AUDIO_FILE_IDX - g_MapEventParam`.
     // Blocks until movie has finished playback or user has skipped it.
-    open_main(BASE_AUDIO_FILE_IDX - g_MapEventParam, g_FileTable[BASE_AUDIO_FILE_IDX - g_MapEventParam].blockCount_0_19);
+    open_main(BASE_AUDIO_FILE_IDX - g_MapEventParam, g_FileTable[BASE_AUDIO_FILE_IDX - g_MapEventParam].blockCount);
 
     func_800892A4(1);
 
@@ -651,13 +651,13 @@ void SysState_LoadArea_Update(void) // 0x80039C40
 
     if (g_SysWork.sysState == SysState_LoadOverlay)
     {
-        g_SysWork.processFlags    = SysWorkProcessFlag_OverlayTransition;
+        g_SysWork.processFlags    = ProcessFlag_OverlayTransition;
         g_SavegamePtr->mapOverlayId_A4 = g_MapEventData->mapOverlayIdx_8_25;
         GameBoot_MapLoad(g_SavegamePtr->mapOverlayId_A4);
     }
     else
     {
-        g_SysWork.processFlags = SysWorkProcessFlag_RoomTransition;
+        g_SysWork.processFlags = ProcessFlag_RoomTransition;
         Bgm_TrackChange(g_MapEventData->mapOverlayIdx_8_25);
 
         if (g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventData->eventParam_8_5].field_4_5 != 0)
@@ -694,7 +694,7 @@ void AreaLoad_TransitionSound(void) // 0x80039F54
 
 s8 func_80039F90(void) // 0x80039F90
 {
-    if (g_SysWork.processFlags & (SysWorkProcessFlag_RoomTransition | SysWorkProcessFlag_OverlayTransition))
+    if (g_SysWork.processFlags & (ProcessFlag_RoomTransition | ProcessFlag_OverlayTransition))
     {
         return g_SysWork.field_2282;
     }

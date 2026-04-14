@@ -171,9 +171,9 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
                         Sd_PlaySfx(Sfx_MenuCancel, 0, Q8(0.25f));
 
-                        if (g_SysWork.silentYesSelection_2350_4)
+                        if (g_SysWork.silentYesSelection)
                         {
-                            g_SysWork.silentYesSelection_2350_4 = false;
+                            g_SysWork.silentYesSelection = false;
                         }
 
                         stateMachineIdx1 = FINISH_MAP_MSG;
@@ -187,14 +187,14 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                         {
                             Sd_PlaySfx(Sfx_MenuCancel, 0, Q8(0.25f));
                         }
-                        else if (!g_SysWork.silentYesSelection_2350_4)
+                        else if (!g_SysWork.silentYesSelection)
                         {
                             Sd_PlaySfx(Sfx_MenuConfirm, 0, Q8(0.25f));
                         }
 
-                        if (g_SysWork.silentYesSelection_2350_4)
+                        if (g_SysWork.silentYesSelection)
                         {
-                            g_SysWork.silentYesSelection_2350_4 = false;
+                            g_SysWork.silentYesSelection = false;
                         }
 
                         stateMachineIdx1 = FINISH_MAP_MSG;
@@ -274,7 +274,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
     }
 
     g_SysWork.isMgsStringSet            = false;
-    g_SysWork.enableHighResGlyphs_2350_0 = false;
+    g_SysWork.enableHighResGlyphs = false;
     msgDisplayLength               = 0;
 
     if (g_SysWork.sysFlags_22A0 & SysFlag_5)
