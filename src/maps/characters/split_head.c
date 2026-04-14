@@ -1595,7 +1595,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
     q3_12                       var_v1_3;
 
     splitHead->field_C8.field_2   = 0;
-    splitHead->field_D4.radius_0   = 0;
+    splitHead->field_D4.radius_0  = Q12(0.0f);
     splitHead->field_D8.offsetX_4 = Q12(0.0f);
     splitHead->field_D8.offsetZ_6 = Q12(0.0f);
     splitHead->field_E1_0         = 0;

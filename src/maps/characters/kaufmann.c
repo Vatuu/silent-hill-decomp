@@ -170,7 +170,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             if (chara->model.anim.keyframeIdx >= 95 && g_SysWork.npcs[0].properties.dahlia.properties_120.val32 == 0)
             {
                 g_SysWork.npcs[0].properties.dahlia.properties_120.val32 = 1;
-                func_8006342C(EquippedWeaponId_Unk70, 0, 0, &g_SysWork.npcCoords[0]);
+                func_8006342C(EquippedWeaponId_Unk70, Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), &g_SysWork.npcCoords[0]);
             }
 
             Model_AnimStatusSet(&chara->model, 5, false);
@@ -191,6 +191,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 9:
             Model_AnimStatusSet(&chara->model, 7, false);
             Character_AnimStateReset(chara);
+
             if (chara->model.anim.keyframeIdx < 139 || !ANIM_STATUS_IS_ACTIVE(chara->model.anim.status))
             {
                 WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 1));

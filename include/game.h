@@ -1561,7 +1561,7 @@ typedef struct _PropertiesMonsterCybil
     u8     field_116;
     s8     unk_117;
     s16    field_118;
-    q3_12  field_11A; // Angle?
+    q3_12  field_11A; // Angle.
     s16    field_11C;
     s16    field_11E;
     s16    field_120;
@@ -1913,7 +1913,7 @@ typedef struct _SysWork
     /* 0x2C     */ q19_12         timer_2C; // Cutscene message timer?
     /* 0x30     */ s32            field_30;
     /* 0x34     */ s8             unused_34[4]; /** @unused */
-    /* 0x38     */ s_PlayerCombat playerCombat; // Information related to weapons and attack.
+    /* 0x38     */ s_PlayerCombat playerCombat;
     /* 0x4C     */ s_PlayerWork   playerWork;
     /* 0x1A0    */ s_SubCharacter npcs[NPC_COUNT_MAX];
     /* 0x890    */ GsCOORDINATE2  playerBoneCoords[HarryBone_Count];

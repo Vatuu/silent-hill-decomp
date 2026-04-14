@@ -1730,7 +1730,7 @@ void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3) 
     }
 }
 
-void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
+void func_800625F4(VECTOR3* arg0, q3_12 angle, s32 arg2, s32 arg3) // 0x800625F4
 {
     s32 idx;
     s8  var;
@@ -1746,7 +1746,7 @@ void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
     g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0        = arg0->vx;
     g_MapOverlayHeader.unkTable1_4C[idx].vy_8                = arg0->vy;
     g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4        = arg0->vz;
-    g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2 = arg1;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2 = angle;
     g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 = var;
     g_MapOverlayHeader.unkTable1_4C[idx].field_B             = Rng_GenerateUInt(0, 3);
     g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = 6;
@@ -1784,12 +1784,12 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
     if (g_MapOverlayHeader.unkTable1_4C[idx].field_B & (1 << 2))
     {
         g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime;
-
         if (g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 > Q12(2.5f))
         {
             g_MapOverlayHeader.unkTable1_4C[idx].field_B         -= 4;
             g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 = 0;
         }
+
         return false;
     }
 
@@ -1798,7 +1798,6 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
     if (*g_MapOverlayHeader.data_190 != 0)
     {
         g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime;
-
         if (g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 > Q12(45.0f))
         {
             g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 = Q12(45.0f);
@@ -1847,13 +1846,13 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
         }
 
         if (func_8005F680(&colls[0]) || func_8005F680(&colls[1]) || func_8005F680(&colls[2]) || func_8005F680(&colls[3]) ||
-            ABS(colls[0].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) >= 0x267 ||
-            ABS(colls[1].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) >= 0x267 ||
-            ABS(colls[2].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) >= 0x267 ||
-            ABS(colls[3].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) >= 0x267)
+            ABS(colls[0].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) > Q12(0.15f) ||
+            ABS(colls[1].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) > Q12(0.15f) ||
+            ABS(colls[2].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) > Q12(0.15f) ||
+            ABS(colls[3].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) > Q12(0.15f))
         {
             g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2  = ptr->field_2DC;
-            g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 = 0x5000;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 = Q12(5.0f);
         }
 
         *ptr = sp10;
@@ -1862,7 +1861,7 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
         gte_SetTransMatrix(&ptr->field_0.field_C);
     }
 
-    ptr->field_210 = (g_MapOverlayHeader.unkTable1_4C[idx].field_B << 0xD) + 0xE0;
+    ptr->field_210 = (g_MapOverlayHeader.unkTable1_4C[idx].field_B << 13) + 224;
 
     for (i = 0; i < 5; i++)
     {
@@ -1894,12 +1893,12 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
         {
             temp_a1_3 = i * 4 + i + j;
 
-            if (ABS(ptr->field_278[temp_a1_3].vx) >= 0xC9)
+            if (ABS(ptr->field_278[temp_a1_3].vx) > 200)
             {
                 continue;
             }
 
-            if (ABS(ptr->field_278[temp_a1_3].vy) >= 0xA1)
+            if (ABS(ptr->field_278[temp_a1_3].vy) > 160)
             {
                 continue;
             }
@@ -1918,7 +1917,7 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
             *(s32*)&(*poly)->x2 = *(s32*)&ptr->field_278[temp_a1_3 + 5];
             *(s32*)&(*poly)->x3 = *(s32*)&ptr->field_278[temp_a1_3 + 6];
 
-            temp_s2             = (j * 8) + (i << 0xB) + ptr->field_210;
+            temp_s2             = (j * 8) + (i << 11) + ptr->field_210;
             *(s32*)&(*poly)->u0 = (((g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 << 6) | 0x13) << 16) + temp_s2;
             *(s32*)&(*poly)->u1 = temp_s2 + 0x4B0007;
 
@@ -1927,21 +1926,21 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
             *(s32*)&(*poly)->u2 = temp_s2 + 0x700;
             *(s32*)&(*poly)->u3 = temp_s2 + 0x707;
 
-            if (ptr->field_208 > 0x5000)
+            if (ptr->field_208 > Q12(5.0f))
             {
-                temp_v1_6 = 0xA0 - ((ptr->field_208 - 0x5000) >> 0xA);
-                if (temp_v1_6 >= 0x20)
+                temp_v1_6 = 160 - ((ptr->field_208 - Q12(5.0f)) >> 10);
+                if (temp_v1_6 >= 32)
                 {
                     temp_s2 = temp_v1_6;
                 }
                 else
                 {
-                    temp_s2 = 0x20;
+                    temp_s2 = 32;
                 }
             }
             else
             {
-                temp_s2 = 0xA0;
+                temp_s2 = 160;
             }
 
             if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 3))
@@ -1952,8 +1951,8 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
 
                 *(*poly + 2) = *(*poly + 1) = **poly;
 
-                (*poly)->tpage = 0x2B;
-                (*poly)->clut = (*poly + 2)->clut = 0x93;
+                (*poly)->tpage = 43;
+                (*poly)->clut = (*poly + 2)->clut = 147;
                 *(u16*)&(*poly + 1)->r0           = ptr->field_130.r + (ptr->field_130.g << 8);
                 (*poly + 1)->b0                   = ptr->field_130.b;
 
@@ -1978,7 +1977,7 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
     return true;
 }
 
-void func_8006342C(s32 weaponAttack, q3_12 angle0, q3_12 angle1, GsCOORDINATE2* coord) // 0x8006342C
+void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coord) // 0x8006342C
 {
     s32              i;
     s_func_8006342C* ptr;
@@ -2113,13 +2112,13 @@ void func_8006342C(s32 weaponAttack, q3_12 angle0, q3_12 angle1, GsCOORDINATE2* 
             }
             else
             {
-                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.s_0.field_0 = angle0;
-                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.s_0.field_2 = angle1;
+                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.s_0.field_0 = rotY;
+                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.s_0.field_2 = rotX;
             }
 
             g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_B              = Rng_GenerateUInt(0, 1);
             g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_10.s_0.field_0 = Rng_GenerateUInt(0, 1023);
-            g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_10.s_0.field_2 = 0;
+            g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_10.s_0.field_2 = Q12_ANGLE(0.0f);
         }
         else
         {

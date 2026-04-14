@@ -11960,7 +11960,7 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
 
     sharedFunc_800D81D0_0_s01(airScreamer);
 
-    airScreamer->field_D4.radius_0 = 0;
+    airScreamer->field_D4.radius_0 = Q12(0.0f);
 
     Collision_WallDetect(&sharedData_800E2350_0_s01, &sharedData_800DE1D0_0_s01, airScreamer);
 
@@ -13146,7 +13146,7 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
     s32            idx1;
     s32            var_t1;
     s16            new_var;
-    s16            new_var2;
+    q3_12          radius1;
     s16            new_var3;
     q3_12          radius;
     s32            temp;
@@ -13235,11 +13235,11 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
         airScreamer->field_C8.field_0 = var_s2_2;
 
         new_var  = sharedData_800CAA98_0_s01.field_D70[sp10][0];
-        new_var2 = sharedData_800CAA98_0_s01.field_D70[sp10][1];
+        radius1 = sharedData_800CAA98_0_s01.field_D70[sp10][1];
 
         airScreamer->field_E1_0        = 3;
         airScreamer->field_C8.field_2  = new_var;
-        airScreamer->field_D4.radius_0 = new_var2;
+        airScreamer->field_D4.radius_0 = radius1;
     }
     else
     {

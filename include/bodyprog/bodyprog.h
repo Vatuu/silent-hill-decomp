@@ -396,7 +396,7 @@ typedef struct
             s16 field_2;
         } s_0;
     } field_4;
-    s16 vy_8; // Q7.8
+    s16 vy_8; // Q7.8? Usually Q12, need to reevaluate.
     u8  field_A;
     u8  field_B; // Flags?
     union
@@ -422,7 +422,7 @@ typedef struct
     } field_C;
     union
     {
-        q20_12 field_0;
+        q20_12 field_0; // Timer.
         struct
         {
             s16 field_0;
@@ -3680,8 +3680,7 @@ s32 func_8005C1CC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, 
 
 s32 func_8005C7B0(s32 arg0);
 
-/** `arg0` type assumed. */
-void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
+void func_800625F4(VECTOR3* arg0, q3_12 angle, s32 arg2, s32 arg3);
 
 bool func_80062708(POLY_FT4** poly, s32 idx);
 
@@ -3690,8 +3689,8 @@ bool func_80063A50(POLY_FT4** poly, s32 idx);
 // Important for drawing gun smoke effect.
 bool func_80064334(POLY_FT4** poly, s32 idx);
 
-/** Displays gun shooting effects. */
-void func_8006342C(s32 weaponAttack, q3_12 angle0, s16 angle1, GsCOORDINATE2* coord);
+/** Displays gunfire effects. */
+void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coord);
 
 s32 func_8005CB20(s_SubCharacter* chara, s_CollisionResult* collResult, q3_12 offsetX, q3_12 offsetZ);
 
