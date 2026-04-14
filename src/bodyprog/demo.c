@@ -224,7 +224,7 @@ s32 Demo_StateGet(s32 gameState)
     switch (gameState)
     {
         case GameState_InGame:
-            if (g_SysWork.sysState_8 == SysState_GameOver)
+            if (g_SysWork.sysState == SysState_GameOver)
             {
                 return DemoState_Exit;
             }

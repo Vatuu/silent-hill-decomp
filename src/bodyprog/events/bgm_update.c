@@ -158,7 +158,7 @@ void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0
     }
 
     // Continue music at reduced volume if player is dead.
-    if (g_SysWork.playerWork.player.health <= Q12(0.0f) || g_SysWork.sysState_8 == SysState_GameOver)
+    if (g_SysWork.playerWork.player.health <= Q12(0.0f) || g_SysWork.sysState == SysState_GameOver)
     {
         flagsCpy &= BgmFlag_KeepAlive;
         flagsCpy |= BgmFlag_Layer0;

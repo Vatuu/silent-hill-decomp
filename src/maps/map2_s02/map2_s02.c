@@ -80,7 +80,7 @@ void func_800E9E10(void) // 0x800E9E10
 
 void func_800E9EAC(void) // 0x800E9EAC
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -111,7 +111,7 @@ void func_800E9FDC(void) // 0xfunc_800E9FDC
 {
     g_DeltaTime = Q12(0.0f);
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -146,15 +146,15 @@ void Map_WorldObjectsInit(void) // 0x800EA0E0
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        g_SysWork.npcId_2280 = 2;
+        g_SysWork.npcFlagsId = 2;
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
-        g_SysWork.npcId_2280 = 3;
+        g_SysWork.npcFlagsId = 3;
     }
     else
     {
-        g_SysWork.npcId_2280 = 4;
+        g_SysWork.npcFlagsId = 4;
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);

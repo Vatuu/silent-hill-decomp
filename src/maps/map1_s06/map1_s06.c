@@ -58,12 +58,12 @@ const char* MAP_MESSAGES[] = {
 void func_800D5614(void) // 0x800D5614
 {
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 13)
+        g_SysWork.sysStateSteps[0] >= 3 && g_SysWork.sysStateSteps[0] < 13)
     {
         SysWork_StateStepSet(0, 14);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -200,7 +200,7 @@ void func_800D5614(void) // 0x800D5614
 
 void func_800D5B98(void) // 0x800D5B98
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -265,12 +265,12 @@ void func_800D5DD8(void) // 0x800D5DD8
     // Skip.
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4)
     {
-        if (g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 6)
+        if (g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 6)
         {
             SysWork_StateStepSet(0, EventState_Skip);
         }
 
-        if (D_800D7790 == 0 && g_SysWork.sysStateStep_C[0] > 6 && g_SysWork.sysStateStep_C[0] < 12)
+        if (D_800D7790 == 0 && g_SysWork.sysStateSteps[0] > 6 && g_SysWork.sysStateSteps[0] < 12)
         {
             D_800D7790 = 1;
             SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
@@ -286,7 +286,7 @@ void func_800D5DD8(void) // 0x800D5DD8
         }
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -374,7 +374,7 @@ void func_800D5DD8(void) // 0x800D5DD8
                     SysWork_StateStepIncrement(0);
                 }
 
-                if (g_SysWork.sysStateStep_C[0] == 11)
+                if (g_SysWork.sysStateSteps[0] == 11)
                 {
                     SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
                 }

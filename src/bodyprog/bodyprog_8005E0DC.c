@@ -436,7 +436,7 @@ void func_8005E89C(void) // 0x8005E89C
             }
             else
             {
-                chara = &g_SysWork.npcs_1A0[D_800C42E8[i].field_1];
+                chara = &g_SysWork.npcs[D_800C42E8[i].field_1];
             }
 
             ptr->field_34[i] = CLAMP_CUSTOM((chara->position.vx + chara->field_D8.offsetX_0) - D_800C42E8[i].field_4,
@@ -581,7 +581,7 @@ void func_8005E89C(void) // 0x8005E89C
         g_MapOverlayHeader.func_A8();
     }
 
-    if (g_SysWork.field_2388.isFlashlightUnavailable_16 != false && g_SysWork.sysState_8 == 0)
+    if (g_SysWork.field_2388.isFlashlightUnavailable_16 != false && g_SysWork.sysState == 0)
     {
         Game_TurnFlashlightOff();
     }
@@ -1770,7 +1770,7 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
     if (g_MapOverlayHeader.unkTable1_4C[idx].field_A == 3)
     {
         var_s7 = 0xC;
-        if (g_SysWork.npcs_1A0[g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0].model.charaId == Chara_None)
+        if (g_SysWork.npcs[g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0].model.charaId == Chara_None)
         {
             g_MapOverlayHeader.unkTable1_4C[idx].field_A = 0;
             return false;

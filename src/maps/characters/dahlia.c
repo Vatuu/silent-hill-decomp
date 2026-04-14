@@ -272,7 +272,7 @@ void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* coords)
         case 19:
             if (dahlia->model.anim.keyframeIdx >= 40 && !sharedData_800D16E4_2_s01)
             {
-                func_8005F6B0(&g_SysWork.npcs_1A0[1], &(VECTOR3){ Q12(138.3f), Q12(-1.1f), Q12(-100.8f) }, 3, 1);
+                func_8005F6B0(&g_SysWork.npcs[1], &(VECTOR3){ Q12(138.3f), Q12(-1.1f), Q12(-100.8f) }, 3, 1);
                 sharedData_800D16E4_2_s01 = 1;
             }
 

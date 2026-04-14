@@ -934,7 +934,7 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* airScreamer)
             dist += distProp8;
         }
 
-        if (airScreamer == &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353])
+        if (airScreamer == &g_SysWork.npcs[g_SysWork.targetNpcIdx_2353])
         {
             dist += Q12(1.0f);
         }
@@ -8344,7 +8344,7 @@ void Ai_AirScreamer_Control_46(s_SubCharacter* airScreamer)
     {
         case AirScreamerDamage_None:
             if (airScreamerProps.timer_120 == Q12(0.0f) ||
-                airScreamer == &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353] ||
+                airScreamer == &g_SysWork.npcs[g_SysWork.targetNpcIdx_2353] ||
                 Math_Distance2dGet(&airScreamer->position, &g_SysWork.playerWork.player.position) > Q12(6.5f))
             {
                 airScreamer->model.controlState = AirScreamerControl_47;
@@ -9026,8 +9026,8 @@ q19_12 sharedFunc_800DC6E4_2_s00(s_SubCharacter* airScreamer, q19_12 arg1)
             break;
 
         case 1:
-            // TODO: Not sure what this is trying to do, getting index into `npcs_1A0` in strange way?
-            if (!((g_SysWork.npcs_1A0 - airScreamer) & 0x1))
+            // TODO: Not sure what this is trying to do, getting index into `npcs` in strange way?
+            if (!((g_SysWork.npcs - airScreamer) & 0x1))
             {
                 chance = Q12(0.0f);
             }
@@ -9038,7 +9038,7 @@ q19_12 sharedFunc_800DC6E4_2_s00(s_SubCharacter* airScreamer, q19_12 arg1)
             break;
 
         case 0:
-            if (!((g_SysWork.npcs_1A0 - airScreamer) & 0x1))
+            if (!((g_SysWork.npcs - airScreamer) & 0x1))
             {
                 chance /= 2;
             }
@@ -9364,7 +9364,7 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* airScreamer, s32 npcSlot, q19_12 
     s32 bitsSet;
 
     bitsSet = 0;
-    flags   = g_SysWork.npcFlags_2290;
+    flags   = g_SysWork.npcFlags;
     counter = 0;
 
     if (spawnChance < Rng_RandQ12())
@@ -9377,7 +9377,7 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* airScreamer, s32 npcSlot, q19_12 
         return;
     }
 
-    // @bug This loops 32 times, but `npcs_1A0` only has 6 entries. Only accesses `npcs_1A0` when bit is set inside `flags_2290` first.
+    // @bug This loops 32 times, but `npcs` only has 6 entries. Only accesses `npcs` when bit is set inside `flags_2290` first.
     for (i = 0; i < 32; i++)
     {
         if (!(flags & (1 << i)))
@@ -9388,12 +9388,12 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* airScreamer, s32 npcSlot, q19_12 
         bitsSet++;
 
         // Check if character is Air Screamer.
-        if (g_SysWork.npcs_1A0[i].model.charaId != airScreamer->model.charaId)
+        if (g_SysWork.npcs[i].model.charaId != airScreamer->model.charaId)
         {
             continue;
         }
 
-        switch (g_SysWork.npcs_1A0[i].model.controlState)
+        switch (g_SysWork.npcs[i].model.controlState)
         {
             case AirScreamerControl_2:
             case AirScreamerControl_17:
@@ -9409,7 +9409,7 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* airScreamer, s32 npcSlot, q19_12 
         }
     }
 
-    // If free slot in `npcs_1A0` exists and some counter is not over 5 (idle, aggro? currently animating?)
+    // If free slot in `npcs` exists and some counter is not over 5 (idle, aggro? currently animating?)
     if (bitsSet < 32)
     {
         counter = (counter + 2) / 3;

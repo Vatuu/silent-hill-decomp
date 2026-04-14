@@ -224,7 +224,7 @@ void func_800D1A58(void) // 0x800D1A58
     s32     j;
     s32     i;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -300,7 +300,7 @@ void func_800D1A58(void) // 0x800D1A58
             SysWork_StateStepIncrementAfterFade(2, false, false, false, false);
             func_800D17F8(8, 0);
 
-            if (g_SysWork.sysStateStep_C[0] != 6)
+            if (g_SysWork.sysStateSteps[0] != 6)
             {
                 if (g_MapEventLastUsedItem != InventoryItemId_Unequipped)
                 {
@@ -421,7 +421,7 @@ void func_800D1A58(void) // 0x800D1A58
             func_800D17F8(8, 0);
             MapMsg_DisplayAndHandleSelection(false, 48, false, false, 0, false);
 
-            if (g_SysWork.sysStateStep_C[0] != 10)
+            if (g_SysWork.sysStateSteps[0] != 10)
             {
                 SysWork_StateStepSet(0, 8);
             }
@@ -530,7 +530,7 @@ void func_800D1A58(void) // 0x800D1A58
             func_800D17F8(8, 0);
             MapMsg_DisplayAndHandleSelection(false, 50, false, false, 0, false);
 
-            if (g_SysWork.sysStateStep_C[0] != 14)
+            if (g_SysWork.sysStateSteps[0] != 14)
             {
                 SysWork_StateStepSet(0, 12);
             }
@@ -574,7 +574,7 @@ void func_800D2740(void) // 0x800D2740
 
 void func_800D2778(void) // 0x800D2778
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -589,7 +589,7 @@ void func_800D2778(void) // 0x800D2778
 
 void func_800D27F4(void) // 0x800D27F4
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -646,7 +646,7 @@ void func_800D27F4(void) // 0x800D27F4
             Map_MessageWithAudio(27, &D_800D6BDA, &D_800D6B54);
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
 
-            if (g_SysWork.sysStateStep_C[0] == 9 &&
+            if (g_SysWork.sysStateSteps[0] == 9 &&
                 (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.skip_4 | g_GameWorkPtr->config.controllerConfig.cancel_2)))
             {
                 SD_Call(19);
@@ -720,7 +720,7 @@ void func_800D2CDC(void) // 0x800D2CDC
     s32 i;
     s32 state;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -772,7 +772,7 @@ void func_800D2CDC(void) // 0x800D2CDC
             i     = 2;
             for (i = 2; i >= 0; i--)
             {
-                g_SysWork.npcs_1A0[i].model.controlState = state;
+                g_SysWork.npcs[i].model.controlState = state;
             }
 
             func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
@@ -780,7 +780,7 @@ void func_800D2CDC(void) // 0x800D2CDC
             func_800625F4(&QVECTOR3(-141.7f, 0.0f, 60.2f), 110, 15, 0);
             func_800625F4(&QVECTOR3(-141.7f, 0.0f, 60.2f), 100, 15, 0);
             func_8003D03C();
-            WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat_38);
+            WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(-140.45f), Q12(0.03f), Q12(59.45f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -920,7 +920,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
     switch (CELL_XZ(projCellX0, projCellZ0))
     {
         case CELL_XZ(17, 18):
-            if (g_SysWork.sysState_8 == SysState_Gameplay && (g_WorldObject_Dr->position_1C.vz != Q12(59.1f)))
+            if (g_SysWork.sysState == SysState_Gameplay && (g_WorldObject_Dr->position_1C.vz != Q12(59.1f)))
             {
                 drZ = Q12(59.1f);
 

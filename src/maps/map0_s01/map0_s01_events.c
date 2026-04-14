@@ -84,12 +84,12 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 5 && g_SysWork.sysStateStep_C[0] < 47)
+        g_SysWork.sysStateSteps[0] > 5 && g_SysWork.sysStateSteps[0] < 47)
     {
         SysWork_StateStepSet(0, EventState_Skip);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -106,7 +106,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             Fs_QueueStartRead(FILE_ANIM_CAFE_DMS, FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
             DmsHeader_FixOffsets(FS_BUFFER_11);
-            Chara_Load(0, Chara_Cybil, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_Cybil, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Cybil, 0, Q12(4.4f), Q12(269.9f), Q12_ANGLE(0.0f), 2);
 
@@ -158,7 +158,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
         case 11:
         case 12:
         case 13:
-            switch (g_SysWork.sysStateStep_C[0])
+            switch (g_SysWork.sysStateSteps[0])
             {
                 case 10:
                     Map_MessageWithAudio(16, &g_MapMsgSoundIdx, g_MapMsgSounds); // "How do you feel?"
@@ -184,16 +184,16 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
             if (D_800DE251 == 0 && g_Timer0 > Q12(38.0f))
             {
-                func_80085EB8(0, &g_SysWork.npcs_1A0[0], 10, false);
+                func_80085EB8(0, &g_SysWork.npcs[0], 10, false);
                 func_80085EB8(0, &g_SysWork.playerWork.player, 110, false);
 
                 D_800DE251++;
             }
 
             temp_s0_5 = D_800DE251;
-            if (D_800DE251 == 1 && Chara_AnimPlaybackStateGet(&g_SysWork.npcs_1A0[0]) == temp_s0_5)
+            if (D_800DE251 == 1 && Chara_AnimPlaybackStateGet(&g_SysWork.npcs[0]) == temp_s0_5)
             {
-                func_80085EB8(0, &g_SysWork.npcs_1A0[0], 11, false);
+                func_80085EB8(0, &g_SysWork.npcs[0], 11, false);
                 D_800DE251++;
             }
             break;
@@ -233,7 +233,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 22:
-            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 7, false);
+            func_80085EB8(0, &g_SysWork.npcs[0], 7, false);
             SD_Call(Sfx_XaAudio12);
             SysWork_StateStepIncrement(0);
 
@@ -254,7 +254,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
         case 26:
             func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
-            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 8, 0);
+            func_80085EB8(0, &g_SysWork.npcs[0], 8, 0);
             SysWork_StateStepIncrement(0);
 
         case 27:
@@ -265,7 +265,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
         case 28:
             g_Timer0 = Q12(195.0f);
 
-            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 5, false);
+            func_80085EB8(0, &g_SysWork.npcs[0], 5, false);
             SysWork_StateStepIncrement(0);
 
         case 29:
@@ -281,7 +281,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 32:
-            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 1, false);
+            func_80085EB8(0, &g_SysWork.npcs[0], 1, false);
             SysWork_StateStepIncrement(0);
 
         case 33:
@@ -289,7 +289,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 34:
-            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 6, false);
+            func_80085EB8(0, &g_SysWork.npcs[0], 6, false);
             SysWork_StateStepIncrement(0);
 
         case 35:
@@ -308,7 +308,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 38:
-            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 9, false);
+            func_80085EB8(0, &g_SysWork.npcs[0], 9, false);
             func_80085EB8(0, &g_SysWork.playerWork.player, 0x4C, false);
             SysWork_StateStepIncrement(0);
 
@@ -322,7 +322,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 41:
-            func_80085EB8(0, g_SysWork.npcs_1A0, 5, false);
+            func_80085EB8(0, g_SysWork.npcs, 5, false);
             SysWork_StateStepIncrement(0);
 
         case 42:
@@ -340,7 +340,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
         case 45:
             func_80085EB8(0, &g_SysWork.playerWork.player, 90, false);
-            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 1, false);
+            func_80085EB8(0, &g_SysWork.npcs[0], 1, false);
             SysWork_StateStepIncrement(0);
 
         case 46:
@@ -354,9 +354,9 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 48:
-            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+            func_80088F94(&g_SysWork.npcs[0], 0, 0);
             SD_Call(19);
-            Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, 0, 0);
+            Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, 0, 0);
             func_80086470(3, InventoryItemId_Handgun, HANDGUN_AMMO_PICKUP_ITEM_COUNT, false);
             SysWork_StateStepIncrement(0);
 
@@ -404,20 +404,20 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
         if (D_800DE250 != 0)
         {
-            chara0 = &g_SysWork.npcs_1A0[0];
+            chara0 = &g_SysWork.npcs[0];
             chara0->model.anim.flags |= AnimFlag_Visible;
             Dms_CharacterGetPosRot(&chara0->position, &chara0->rotation, "SIBYL", g_Timer0, FS_BUFFER_11);
             return;
         }
 
-        chara1 = &g_SysWork.npcs_1A0[0];
+        chara1 = &g_SysWork.npcs[0];
         chara1->model.anim.flags &= ~AnimFlag_Visible;
     }
 }
 
 void MapEvent_ToBeContinued(void) // 0x800DB790
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -449,9 +449,9 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
 
             SysWork_StateStepIncrementDelayed(Q12(4.0f), false);
 
-            if (g_SysWork.sysStateStep_C[0] == 7)
+            if (g_SysWork.sysStateSteps[0] == 7)
             {
-                g_SysWork.sysStateStep_C[0] = 6;
+                g_SysWork.sysStateSteps[0] = 6;
             }
             break;
 
@@ -474,9 +474,9 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
 
             SysWork_StateStepIncrementDelayed(Q12(4.0f), false);
 
-            if (g_SysWork.sysStateStep_C[0] == 11)
+            if (g_SysWork.sysStateSteps[0] == 11)
             {
-                g_SysWork.sysStateStep_C[0] = 10;
+                g_SysWork.sysStateSteps[0] = 10;
                 break;
             }
             break;
@@ -537,7 +537,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 {
     q19_12 time;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -678,7 +678,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
 
         case 19:
-            func_800D3AC0(&g_SysWork.npcs_1A0[0]);
+            func_800D3AC0(&g_SysWork.npcs[0]);
             SysWork_StateStepIncrement(0);
 
         case 20:
@@ -692,7 +692,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 
         case 21:
             Savegame_EventFlagSet(EventFlag_47);
-            func_800D39F4(&g_SysWork.npcs_1A0[0]);
+            func_800D39F4(&g_SysWork.npcs[0]);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
             g_Timer0 = NO_VALUE;
@@ -713,11 +713,11 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
     {
         Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Timer0, FS_BUFFER_11);
 
-        if (g_SysWork.sysStateStep_C[0] >= 20)
+        if (g_SysWork.sysStateSteps[0] >= 20)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "BIRD", g_Timer0, FS_BUFFER_11);
-            g_SysWork.npcs_1A0[0].position.vx += Q12_MULT(Math_Sin(g_SysWork.npcs_1A0[0].rotation.vy), Q12(0.2f));
-            g_SysWork.npcs_1A0[0].position.vz += Q12_MULT(Math_Cos(g_SysWork.npcs_1A0[0].rotation.vy), Q12(0.2f));
+            Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "BIRD", g_Timer0, FS_BUFFER_11);
+            g_SysWork.npcs[0].position.vx += Q12_MULT(Math_Sin(g_SysWork.npcs[0].rotation.vy), Q12(0.2f));
+            g_SysWork.npcs[0].position.vz += Q12_MULT(Math_Cos(g_SysWork.npcs[0].rotation.vy), Q12(0.2f));
         }
 
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_Timer0, FS_BUFFER_11));
@@ -742,7 +742,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
 {
     static const RECT IMG_BUFFER_RECT = { 320, 256, 160, 240 };
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -811,7 +811,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             // Set cutscene character.
             Chara_Spawn(Chara_AirScreamer, 0, Q12(0.0f), Q12(0.0f), Q12_ANGLE(0.0f), 12);
             DmsHeader_FixOffsets(FS_BUFFER_11);
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "BIRD", 0, FS_BUFFER_11);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "BIRD", 0, FS_BUFFER_11);
 
             // Set camera.
             vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, 0, FS_BUFFER_11));
@@ -875,7 +875,7 @@ void MapEvent_CommonItemTake(void) // 0x800DC864
 
 void MapEvent_AirScreamerDeath(void) // 0x800DC8C8
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -921,13 +921,13 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
     {
         g_SysWork.flags_22A4 |= SysFlag2_5 | SysFlag2_9;
 
-        Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+        Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
 
         if (Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
         {
             Chara_ProcessLoads();
             Chara_Spawn(Chara_AirScreamer, 0, Q12(1048566.0f), Q12(280.0f), Q12_ANGLE(0.0f), 12);
-            func_800D3A3C(&g_SysWork.npcs_1A0[0]);
+            func_800D3A3C(&g_SysWork.npcs[0]);
 
             Fs_QueueStartRead(FILE_ANIM_CAFE2_DMS, FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
@@ -1004,12 +1004,12 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
     {
         if (Savegame_EventFlagGet(EventFlag_41))
         {
-            temp_a1 = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Model_AnimDurationGet(&g_SysWork.npcs_1A0[0].model));
+            temp_a1 = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Model_AnimDurationGet(&g_SysWork.npcs[0].model));
 
             ptr = &g_Timer0;
             if (temp_a1 < Q12(25.0f))
             {
-                var_a2 = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Model_AnimDurationGet(&g_SysWork.npcs_1A0[0].model));
+                var_a2 = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Model_AnimDurationGet(&g_SysWork.npcs[0].model));
             }
             else
             {
@@ -1017,7 +1017,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
             }
             *ptr = var_a2;
 
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "BIRD",
+            Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "BIRD",
                                    g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
 
             if (g_Timer0 >= Q12(25.0f) ||
@@ -1027,8 +1027,8 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
                 Savegame_EventFlagSet(EventFlag_42);
                 vcReturnPreAutoCamWork(true);
 
-                g_SysWork.npcs_1A0[0].position.vy = Q12(-10.0f);
-                g_SysWork.npcs_1A0[0].position.vz = Q12(280.0f);
+                g_SysWork.npcs[0].position.vy = Q12(-10.0f);
+                g_SysWork.npcs[0].position.vz = Q12(280.0f);
             }
         }
         else if (g_SysWork.playerWork.player.position.vx != Q12(4.586f) ||
@@ -1037,7 +1037,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
                  D_800E2560 > Q12(7.5f))
         {
             Savegame_EventFlagSet(EventFlag_41);
-            func_800D3AC0(&g_SysWork.npcs_1A0[0]);
+            func_800D3AC0(&g_SysWork.npcs[0]);
         }
         else
         {
@@ -1047,7 +1047,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
 
     if (Savegame_EventFlagGet(EventFlag_47))
     {
-        if (g_SysWork.npcs_1A0[0].model.charaId == Chara_AirScreamer && g_SysWork.npcs_1A0[0].health == NO_VALUE)
+        if (g_SysWork.npcs[0].model.charaId == Chara_AirScreamer && g_SysWork.npcs[0].health == NO_VALUE)
         {
             Savegame_EventFlagSet(EventFlag_M0S01_AirScreamerDied);
             Savegame_EventFlagClear(EventFlag_49);

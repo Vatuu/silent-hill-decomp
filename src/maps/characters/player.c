@@ -213,7 +213,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 
 void sharedFunc_800D209C_0_s00(void)
 {
-    g_SysWork.playerCombat_38.weaponAttack = NO_VALUE;
+    g_SysWork.playerCombat.weaponAttack = NO_VALUE;
     g_SavegamePtr->equippedWeapon_AA         = InventoryItemId_Unequipped;
 
     Player_ControlFreeze();
@@ -269,9 +269,9 @@ void Player_ControlFreeze(void)
     playerChara->flags                                      |= CharaFlag_Unk4;
     playerChara->field_E1_0                                     = 4;
 
-    if (g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+    if (g_SysWork.playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
     {
-        g_SysWork.playerCombat_38.weaponAttack = WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack);
+        g_SysWork.playerCombat.weaponAttack = WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat.weaponAttack);
     }
 }
 
@@ -329,7 +329,7 @@ void Player_ControlUnfreeze(bool setIdle)
     g_Player_IsSteppingLeftHold  = false;
     g_Player_IsTurningLeft       = false;
 
-    g_SysWork.playerCombat_38.isAiming = false;
+    g_SysWork.playerCombat.isAiming = false;
 
     player->field_D4.field_2                                    = Q12(0.23f);
     g_SysWork.playerWork.player.field_C8.field_0                = Q12(-1.6f);
@@ -682,10 +682,10 @@ void Player_MoveDistanceClear(void)
 void sharedFunc_800D2E6C_0_s00(void)
 {
 #if defined(MAP0_S01)
-    g_SysWork.playerCombat_38.weaponAttack = WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap);
-    WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat_38);
+    g_SysWork.playerCombat.weaponAttack = WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap);
+    WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
 
-    g_SysWork.playerCombat_38.weaponAttack = NO_VALUE;
+    g_SysWork.playerCombat.weaponAttack = NO_VALUE;
 
     func_8003D03C();
 #endif
@@ -759,7 +759,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
     D_800C45B0.vx = posX;
     D_800C45B0.vz = posZ;
 
-    if (g_SysWork.npcs_1A0[0].health <= Q12(0.0f) || g_Player_IsInWalkToRunTransition || playerChara->health <= Q12(0.0f))
+    if (g_SysWork.npcs[0].health <= Q12(0.0f) || g_Player_IsInWalkToRunTransition || playerChara->health <= Q12(0.0f))
     {
         return;
     }
@@ -823,7 +823,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
 
             playerChara->properties.player.afkTimer_E8 = Q12(0.0f);
             playerChara->properties.player.field_F4    = 0;
-            g_SysWork.playerCombat_38.isAiming     = false;
+            g_SysWork.playerCombat.isAiming     = false;
             playerChara->field_44.field_0                 = NO_VALUE;
 
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk9;
@@ -867,7 +867,7 @@ bool sharedFunc_800D2E94_0_s00(void)
     s_SubCharacter* npcChara;
     s32             playerDist;
 
-    npcChara = &g_SysWork.npcs_1A0[5];
+    npcChara = &g_SysWork.npcs[5];
 
     if (g_SysWork.playerWork.player.position.vx < Q12(-255.0f) &&
         g_SysWork.playerWork.player.position.vz > Q12(-110.0f) &&
@@ -905,7 +905,7 @@ bool sharedFunc_800D2E94_0_s00(void)
         {
             if (playerDist < Q12(2.0f) &&
                 Savegame_EventFlagGet(EventFlag_167) && !Savegame_EventFlagGet(EventFlag_168) &&
-                g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap))
+                g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap))
             {
                 npcChara->model.charaId = Chara_Padlock;
             }
@@ -935,13 +935,13 @@ bool sharedFunc_800D2E94_0_s00(void)
 
         if (npcChara->damage.amount_C != Q12(0.0f))
         {
-            if (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack) == EquippedWeaponId_KitchenKnife)
+            if (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat.weaponAttack) == EquippedWeaponId_KitchenKnife)
             {
                 npcChara->damage.amount_C >>= 1;
             }
 
             // Apply `damageReceived` to character health.
-            if (g_SysWork.playerCombat_38.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 npcChara->health = NO_VALUE;
             }
@@ -1042,8 +1042,8 @@ void sharedFunc_800D2EB4_0_s00(void)
 {
     u8 prevVar;
 
-    prevVar = g_SysWork.playerCombat_38.weaponAttack;
-    g_SysWork.playerCombat_38.weaponAttack = NO_VALUE;
+    prevVar = g_SysWork.playerCombat.weaponAttack;
+    g_SysWork.playerCombat.weaponAttack = NO_VALUE;
     sharedData_800DD59C_0_s00 = prevVar;
 
     WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(1, 1));
@@ -1051,6 +1051,6 @@ void sharedFunc_800D2EB4_0_s00(void)
 
 void sharedFunc_800D2EF4_0_s00(void)
 {
-    g_SysWork.playerCombat_38.weaponAttack = sharedData_800DD59C_0_s00;
+    g_SysWork.playerCombat.weaponAttack = sharedData_800DD59C_0_s00;
 }
 

@@ -187,7 +187,7 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
     dir.vy = ptr->field_12C.vy - sharedData_800DFB7C_0_s00[arg1].vy_8;
     dir.vz = ptr->field_12C.vz - sharedData_800DFB7C_0_s00[arg1].field_4.vz_4;
 
-    func_8006DA08(&ray, &rayFrom, &dir, g_SysWork.npcs_1A0);
+    func_8006DA08(&ray, &rayFrom, &dir, g_SysWork.npcs);
     Collision_Get(&coll, rayFrom.vx + dir.vx, rayFrom.vz + dir.vz);
 
     ptr->field_0 = sp10;
@@ -212,11 +212,11 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
             sharedFunc_800CBE54_4_s03(&ray.field_4, 1);
             sharedFunc_800CBE54_4_s03(&rayFrom, 1);
 
-            if (g_SysWork.npcs_1A0[0].model.charaId == Chara_Floatstinger)
+            if (g_SysWork.npcs[0].model.charaId == Chara_Floatstinger)
             {
                 sub->attackReceived = 60;
             }
-            else if (g_SysWork.npcs_1A0[0].model.charaId == Chara_Twinfeeler)
+            else if (g_SysWork.npcs[0].model.charaId == Chara_Twinfeeler)
             {
                 sub->attackReceived = 62;
             }

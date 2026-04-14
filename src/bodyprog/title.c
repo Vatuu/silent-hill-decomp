@@ -74,7 +74,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
         if (playInGameDemo)
         {
-            g_SysWork.processFlags_2298 = SysWorkProcessFlag_BootDemo;
+            g_SysWork.processFlags = SysWorkProcessFlag_BootDemo;
         }
         else
         {
@@ -202,7 +202,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                         }
 
                         GameBoot_PlayerInit();
-                        g_SysWork.processFlags_2298 = SysWorkProcessFlag_Continue;
+                        g_SysWork.processFlags = SysWorkProcessFlag_Continue;
                         GameBoot_MapLoad(g_SavegamePtr->mapOverlayId_A4);
                         break;
 
@@ -290,7 +290,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 GameBoot_SavegameInitialize(0, newGameSelectedDifficultyIdx - 1);
                 GameBoot_PlayerInit();
 
-                g_SysWork.processFlags_2298 = SysWorkProcessFlag_NewGame;
+                g_SysWork.processFlags = SysWorkProcessFlag_NewGame;
 
                 GameBoot_MapLoad(MapOverlayId_MAP0_S00);
                 GameFs_StreamBinLoad();
@@ -499,7 +499,7 @@ static void MainMenu_DifficultyTextDraw(s32 idx) // 0x8003B678
 
 static void MainMenu_BackgroundDraw(void) // 0x8003B758
 {
-    if (g_SysWork.sysState_8 == SysState_Gameplay)
+    if (g_SysWork.sysState == SysState_Gameplay)
     {
         SysWork_StateSetNext(SysState_OptionsMenu);
         func_8003BCF4();

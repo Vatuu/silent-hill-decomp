@@ -113,7 +113,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
     var_t1    = chara->field_44.field_0;
     modelAnim = &chara->model.anim;
 
-    if (g_DeltaTime == Q12(0.0f) || g_SysWork.sysState_8 != SysState_Gameplay)
+    if (g_DeltaTime == Q12(0.0f) || g_SysWork.sysState != SysState_Gameplay)
     {
         return NO_VALUE;
     }
@@ -549,7 +549,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
                 if (g_SysWork.targetNpcIdx_2353 >= 0)
                 {
-                    temp_s1_2 = &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353];
+                    temp_s1_2 = &g_SysWork.npcs[g_SysWork.targetNpcIdx_2353];
 
                     if (temp_s1_2->model.charaId >= Chara_AirScreamer)
                     {
@@ -1756,7 +1756,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
 
     for (i = var_v0; i > 0; i--, chara1++, sp18 *= 2)
     {
-        if (g_SysWork.sysState_8 == SysState_GameOver ||
+        if (g_SysWork.sysState == SysState_GameOver ||
             g_SysWork.playerWork.player.health <= Q12(0.0f) ||
             chara1 == chara ||
             chara1->model.charaId == Chara_None ||

@@ -32,12 +32,12 @@ void sharedFunc_800D15F0_3_s01(void)
 
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] >= 9 && g_SysWork.sysStateStep_C[0] < 17)
+        g_SysWork.sysStateSteps[0] >= 9 && g_SysWork.sysStateSteps[0] < 17)
     {
         SysWork_StateStepSet(0, 17);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
 
@@ -277,7 +277,7 @@ void sharedFunc_800D15F0_3_s01(void)
             {
                 SysWork_StateStepIncrementAfterFade(2, false, false, Q12(2.0f), false);
 
-                if (g_SysWork.sysStateStep_C[0] != 10)
+                if (g_SysWork.sysStateSteps[0] != 10)
                 {
                     func_8005DC1C(Sfx_Unk1501, &sharedData_800CB094_3_s01, Q8(0.5f), 0);
                     SysWork_StateStepSet(0, 14);
@@ -354,7 +354,7 @@ void sharedFunc_800D15F0_3_s01(void)
                 g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime, (i & 1) ? sharedData_800D4D0C_3_s01.vy : -sharedData_800D4D0C_3_s01.vy);
             }
 
-            if (g_SysWork.sysStateStep_C[0] == 15)
+            if (g_SysWork.sysStateSteps[0] == 15)
             {
                 SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
             }

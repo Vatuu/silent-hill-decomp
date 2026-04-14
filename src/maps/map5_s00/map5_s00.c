@@ -505,7 +505,7 @@ void func_800D6B00(void) // 0x800D6B00
     VECTOR3 vec;
     s32     i;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -610,15 +610,15 @@ void func_800D6B00(void) // 0x800D6B00
             }
             else if (D_800DAB78 > Q12(2.5f))
             {
-                g_SysWork.npcs_1A0[D_800DAB7C[2]].properties.dummy.properties_E8[0].val8[0] |= (1 << 7);
+                g_SysWork.npcs[D_800DAB7C[2]].properties.dummy.properties_E8[0].val8[0] |= (1 << 7);
             }
             else if (D_800DAB78 > Q12(1.25f))
             {
-                g_SysWork.npcs_1A0[D_800DAB7C[1]].properties.dummy.properties_E8[0].val8[0] |= (1 << 7);
+                g_SysWork.npcs[D_800DAB7C[1]].properties.dummy.properties_E8[0].val8[0] |= (1 << 7);
             }
             else if (D_800DAB78 > Q12(-0.1f))
             {
-                g_SysWork.npcs_1A0[D_800DAB7C[0]].properties.dummy.properties_E8[0].val8[0] |= (1 << 7);
+                g_SysWork.npcs[D_800DAB7C[0]].properties.dummy.properties_E8[0].val8[0] |= (1 << 7);
             }
 
             func_800D6414();
@@ -629,23 +629,23 @@ void func_800D6B00(void) // 0x800D6B00
             g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
-            g_SysWork.npcs_1A0[D_800DAB7C[0]].model.controlState     = ModelState_Uninitialized;
-            g_SysWork.npcs_1A0[D_800DAB7C[0]].model.stateStep = 17;
-            g_SysWork.npcs_1A0[D_800DAB7C[0]].position.vx     += Q12(-0.1878f);
-            g_SysWork.npcs_1A0[D_800DAB7C[0]].position.vz     += Q12(0.245f);
-            g_SysWork.npcs_1A0[D_800DAB7C[0]].rotation.vy      = Q12_ANGLE(112.5f);
+            g_SysWork.npcs[D_800DAB7C[0]].model.controlState     = ModelState_Uninitialized;
+            g_SysWork.npcs[D_800DAB7C[0]].model.stateStep = 17;
+            g_SysWork.npcs[D_800DAB7C[0]].position.vx     += Q12(-0.1878f);
+            g_SysWork.npcs[D_800DAB7C[0]].position.vz     += Q12(0.245f);
+            g_SysWork.npcs[D_800DAB7C[0]].rotation.vy      = Q12_ANGLE(112.5f);
 
-            g_SysWork.npcs_1A0[D_800DAB7C[1]].model.controlState     = ModelState_Uninitialized;
-            g_SysWork.npcs_1A0[D_800DAB7C[1]].model.stateStep = 17;
-            g_SysWork.npcs_1A0[D_800DAB7C[1]].position.vx     += Q12(1.8128f);
-            g_SysWork.npcs_1A0[D_800DAB7C[1]].position.vz     += Q12(0.799f);
-            g_SysWork.npcs_1A0[D_800DAB7C[1]].rotation.vy      = Q12_ANGLE(180.0f);
+            g_SysWork.npcs[D_800DAB7C[1]].model.controlState     = ModelState_Uninitialized;
+            g_SysWork.npcs[D_800DAB7C[1]].model.stateStep = 17;
+            g_SysWork.npcs[D_800DAB7C[1]].position.vx     += Q12(1.8128f);
+            g_SysWork.npcs[D_800DAB7C[1]].position.vz     += Q12(0.799f);
+            g_SysWork.npcs[D_800DAB7C[1]].rotation.vy      = Q12_ANGLE(180.0f);
 
-            g_SysWork.npcs_1A0[D_800DAB7C[2]].model.controlState     = ModelState_Uninitialized;
-            g_SysWork.npcs_1A0[D_800DAB7C[2]].model.stateStep = 17;
-            g_SysWork.npcs_1A0[D_800DAB7C[2]].position.vx     += Q12(0.6531f);
-            g_SysWork.npcs_1A0[D_800DAB7C[2]].position.vz     += Q12(-1.2493f);
-            g_SysWork.npcs_1A0[D_800DAB7C[2]].rotation.vy      = Q12_ANGLE(0.0f);
+            g_SysWork.npcs[D_800DAB7C[2]].model.controlState     = ModelState_Uninitialized;
+            g_SysWork.npcs[D_800DAB7C[2]].model.stateStep = 17;
+            g_SysWork.npcs[D_800DAB7C[2]].position.vx     += Q12(0.6531f);
+            g_SysWork.npcs[D_800DAB7C[2]].position.vz     += Q12(-1.2493f);
+            g_SysWork.npcs[D_800DAB7C[2]].rotation.vy      = Q12_ANGLE(0.0f);
 
             g_SysWork.playerWork.player.position.vz += Q12(-1.2f);
 
@@ -670,13 +670,13 @@ void func_800D732C(void) // 0x800D732C
 {
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 3)
+        g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 3)
     {
         ScreenFade_ResetTimestep();
         SysWork_StateStepReset();
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             // Warp player.
@@ -733,13 +733,13 @@ void func_800D75FC(void) // 0x800D75FC
 {
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 6)
+        g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 6)
     {
         ScreenFade_ResetTimestep();
         SysWork_StateStepReset();
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -752,7 +752,7 @@ void func_800D75FC(void) // 0x800D75FC
 
         case 2:
             SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
-            if (g_SysWork.sysStateStep_C[0] == 2)
+            if (g_SysWork.sysStateSteps[0] == 2)
             {
                 g_SysWork.field_28 += g_DeltaTimeRaw;
                 if (g_SysWork.field_28 > Q12(1.0f))
@@ -804,13 +804,13 @@ void func_800D7940(void) // 0x800D7940
 {
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 6)
+        g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 6)
     {
         ScreenFade_ResetTimestep();
         SysWork_StateStepReset();
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -824,7 +824,7 @@ void func_800D7940(void) // 0x800D7940
         case 2:
             SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
 
-            if (g_SysWork.sysStateStep_C[0] == 2)
+            if (g_SysWork.sysStateSteps[0] == 2)
             {
                 g_SysWork.field_28 += g_DeltaTimeRaw;
                 if (g_SysWork.field_28 > Q12(1.0f))
@@ -874,7 +874,7 @@ void func_800D7C84(void) // 0x800D7C84
 {
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 6)
+        g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 6)
     {
         ScreenFade_ResetTimestep();
         SysWork_StateStepReset();
@@ -882,7 +882,7 @@ void func_800D7C84(void) // 0x800D7C84
 
     g_SysWork.sysFlags_22A0 |= SysFlag_1;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -939,13 +939,13 @@ void func_800D7F88(void) // 0x800D7F88
 {
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 6)
+        g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 6)
     {
         ScreenFade_ResetTimestep();
         SysWork_StateStepReset();
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -1020,7 +1020,7 @@ void Map_WorldObjectsInit(void) // 0x800D82A8
         func_80088FF4(Chara_Creeper, 7, 0);
         func_80088FF4(Chara_Creeper, 12, 0);
 
-        g_SysWork.npcId_2280 = 3;
+        g_SysWork.npcFlagsId = 3;
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
@@ -1030,11 +1030,11 @@ void Map_WorldObjectsInit(void) // 0x800D82A8
         func_80088FF4(Chara_Creeper, 8, (1 << 0) | (1 << 2) | (1 << 3));
         func_80088FF4(Chara_Creeper, 9, (1 << 0) | (1 << 2) | (1 << 3));
 
-        g_SysWork.npcId_2280 = 4;
+        g_SysWork.npcFlagsId = 4;
     }
     else
     {
-        g_SysWork.npcId_2280 = 4;
+        g_SysWork.npcFlagsId = 4;
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);

@@ -4,13 +4,13 @@ s_EventData MAP_EVENTS[3] = {
     {
         .disabledEventFlag_2 = EventFlag_59,
         .triggerType_4_0     = TriggerType_None,
-        .sysState_8_0        = SysState_ReadMessage,
+        .sysState_0        = SysState_ReadMessage,
         .eventParam_8_5      = 15,
         .flags_8_13          = 1,
     },
     {
         .triggerType_4_0 = TriggerType_None,
-        .sysState_8_0    = SysState_EventCallFunc,
+        .sysState_0    = SysState_EventCallFunc,
         .eventParam_8_5  = 1, // `func_800CCA2C`
         .flags_8_13      = 1,
     },

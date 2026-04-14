@@ -521,7 +521,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                         digit          = 0;
 
                         // Parse time value.
-                        if (g_SysWork.mapMsgTimer_234C == NO_VALUE)
+                        if (g_SysWork.mapMsgTimer == NO_VALUE)
                         {
                             s32 c;
 
@@ -556,7 +556,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                                 digit = digit / 10;
                             }
 
-                            g_SysWork.mapMsgTimer_234C = digit;
+                            g_SysWork.mapMsgTimer = digit;
                             mapMsg                     = mapMsg + 1;
                         }
                         else

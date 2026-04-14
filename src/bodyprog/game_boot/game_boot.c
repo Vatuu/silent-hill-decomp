@@ -43,7 +43,7 @@ void GameBoot_PlayerInit(void) // 0x80035178
     WorldGfx_MapInit();
     CharaModel_AllModelsFree();
     Item_HeldItemModelFree();
-    Anim_BoneInit(FS_BUFFER_0, g_SysWork.playerBoneCoords_890); // Load player anim file?
+    Anim_BoneInit(FS_BUFFER_0, g_SysWork.playerBoneCoords); // Load player anim file?
     WorldGfx_PlayerModelProcessLoad();
 
     g_SysWork.field_229C = NO_VALUE;
@@ -72,11 +72,11 @@ void GameBoot_MapLoad(s32 mapIdx) // 0x8003521C
     // or because the player saved the game with a weapon equipped), this and the next function
     // make it appear and allocate its data.
     // @note This code has some special functionallity if the player spawns without an equipped weapon.
-    if (g_SysWork.processFlags_2298 & (SysWorkProcessFlag_NewGame | SysWorkProcessFlag_LoadSave |
+    if (g_SysWork.processFlags & (SysWorkProcessFlag_NewGame | SysWorkProcessFlag_LoadSave |
                                        SysWorkProcessFlag_Continue | SysWorkProcessFlag_BootDemo))
     {
-        WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat_38);
+        WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
     }
 
-    Gfx_PlayerHeldItemAttach(g_SysWork.playerCombat_38.weaponAttack);
+    Gfx_PlayerHeldItemAttach(g_SysWork.playerCombat.weaponAttack);
 }

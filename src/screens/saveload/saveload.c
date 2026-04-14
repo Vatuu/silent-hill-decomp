@@ -2134,7 +2134,7 @@ void SaveScreen_Continue(void) // 0x801E6F38
 
             GameBoot_PlayerInit();
 
-            g_SysWork.processFlags_2298 = SysWorkProcessFlag_LoadSave;
+            g_SysWork.processFlags = SysWorkProcessFlag_LoadSave;
 
             GameBoot_MapLoad(g_SavegamePtr->mapOverlayId_A4);
 

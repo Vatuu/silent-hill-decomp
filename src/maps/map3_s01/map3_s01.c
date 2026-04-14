@@ -100,7 +100,7 @@ INCLUDE_RODATA("maps/map3_s01/nonmatchings/map3_s01", sharedData_800CB0A0_3_s01)
 
 void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -170,7 +170,7 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
         EventState_5     = 5
     } e_EventState;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case EventState_0:
             Player_ControlFreeze();
@@ -236,7 +236,7 @@ void MapEvent_Generator0(void) // 0x800D27C8
         EventState_DontPressSwitch = NO_VALUE
     } e_EventState;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -282,7 +282,7 @@ void MapEvent_Generator0(void) // 0x800D27C8
 
 void func_800D29A4(void) // 0x800D29A4
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -307,7 +307,7 @@ void func_800D29A4(void) // 0x800D29A4
 
 void func_800D2A88(void) // 0x800D2A88
 {
-    if (g_SysWork.sysStateStep_C[1] == 0)
+    if (g_SysWork.sysStateSteps[1] == 0)
     {
         func_8005DC1C(Sfx_MenuMap, &QVECTOR3(61.72f, -0.8f, 100.5098f), Q8(0.5f), 0);
     }

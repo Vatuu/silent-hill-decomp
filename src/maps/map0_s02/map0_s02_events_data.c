@@ -6,7 +6,7 @@ s_EventData MAP_EVENTS[29] = {
         .triggerType_4_0      = TriggerType_TouchFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 29,
-        .sysState_8_0         = SysState_EventCallFunc,
+        .sysState_0         = SysState_EventCallFunc,
         .eventParam_8_5       = 2, // `MapEvent_CommonItemTake`
     },
     {
@@ -14,7 +14,7 @@ s_EventData MAP_EVENTS[29] = {
         .triggerType_4_0      = TriggerType_TouchFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 30,
-        .sysState_8_0         = SysState_EventCallFunc,
+        .sysState_0         = SysState_EventCallFunc,
         .eventParam_8_5       = 2, // `MapEvent_CommonItemTake`
     },
     {
@@ -22,7 +22,7 @@ s_EventData MAP_EVENTS[29] = {
         .triggerType_4_0      = TriggerType_TouchFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 31,
-        .sysState_8_0         = SysState_EventCallFunc,
+        .sysState_0         = SysState_EventCallFunc,
         .eventParam_8_5       = 2, // `MapEvent_CommonItemTake`
     },
     {
@@ -30,7 +30,7 @@ s_EventData MAP_EVENTS[29] = {
         .triggerType_4_0      = TriggerType_TouchFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 32,
-        .sysState_8_0         = SysState_EventCallFunc,
+        .sysState_0         = SysState_EventCallFunc,
         .eventParam_8_5       = 2, // `MapEvent_CommonItemTake`
     },
     {
@@ -38,7 +38,7 @@ s_EventData MAP_EVENTS[29] = {
         .triggerType_4_0      = TriggerType_TouchFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 33,
-        .sysState_8_0         = SysState_EventCallFunc,
+        .sysState_0         = SysState_EventCallFunc,
         .eventParam_8_5       = 2, // `MapEvent_CommonItemTake`
     },
     {
@@ -46,7 +46,7 @@ s_EventData MAP_EVENTS[29] = {
         .triggerType_4_0      = TriggerType_TouchFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 34,
-        .sysState_8_0         = SysState_EventCallFunc,
+        .sysState_0         = SysState_EventCallFunc,
         .eventParam_8_5       = 2, // `MapEvent_CommonItemTake`
     },
     {
@@ -54,7 +54,7 @@ s_EventData MAP_EVENTS[29] = {
         .triggerType_4_0      = TriggerType_TouchFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 35,
-        .sysState_8_0         = SysState_EventCallFunc,
+        .sysState_0         = SysState_EventCallFunc,
         .eventParam_8_5       = 2, // `MapEvent_CommonItemTake`
     },
     {
@@ -63,7 +63,7 @@ s_EventData MAP_EVENTS[29] = {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 27,
-        .sysState_8_0         = SysState_EventCallFunc,
+        .sysState_0         = SysState_EventCallFunc,
         .eventParam_8_5       = 6, // `MapEvent_ChannelingStoneItemTake`
     },
     {
@@ -72,14 +72,14 @@ s_EventData MAP_EVENTS[29] = {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 28,
-        .sysState_8_0         = SysState_EventCallFunc,
+        .sysState_0         = SysState_EventCallFunc,
         .eventParam_8_5       = 6, // `MapEvent_ChannelingStoneItemTake`
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 24,
-        .sysState_8_0         = SysState_LoadOverlay,
+        .sysState_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 26,
         .sfxPairIdx_8_19 = SfxPairIdx_1,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP2_S00,
@@ -89,14 +89,14 @@ s_EventData MAP_EVENTS[29] = {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 25,
-        .sysState_8_0         = SysState_EventCallFunc,
+        .sysState_0         = SysState_EventCallFunc,
         .eventParam_8_5       = 5, // `MapEvent_KatanaItemTake`
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 3,
-        .sysState_8_0         = SysState_LoadOverlay,
+        .sysState_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 4,
         .sfxPairIdx_8_19 = SfxPairIdx_5,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP2_S00,
@@ -105,28 +105,28 @@ s_EventData MAP_EVENTS[29] = {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 5,
-        .sysState_8_0         = SysState_SaveMenu1,
+        .sysState_0         = SysState_SaveMenu1,
         .eventParam_8_5       = 2,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 21,
-        .sysState_8_0         = SysState_SaveMenu1,
+        .sysState_0         = SysState_SaveMenu1,
         .eventParam_8_5       = 3,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 22,
-        .sysState_8_0         = SysState_SaveMenu1,
+        .sysState_0         = SysState_SaveMenu1,
         .eventParam_8_5       = 3,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 6,
-        .sysState_8_0         = SysState_LoadOverlay,
+        .sysState_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 7,
         .sfxPairIdx_8_19 = SfxPairIdx_21,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP2_S00,
@@ -135,7 +135,7 @@ s_EventData MAP_EVENTS[29] = {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 13,
-        .sysState_8_0         = SysState_LoadOverlay,
+        .sysState_0         = SysState_LoadOverlay,
         .eventParam_8_5       = 14,
         .sfxPairIdx_8_19 = SfxPairIdx_24,
         .mapOverlayIdx_8_25   = MapOverlayId_MAP2_S00,
@@ -144,28 +144,28 @@ s_EventData MAP_EVENTS[29] = {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 8,
-        .sysState_8_0         = SysState_SaveMenu1,
+        .sysState_0         = SysState_SaveMenu1,
         .eventParam_8_5       = 8,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 9,
-        .sysState_8_0         = SysState_SaveMenu1,
+        .sysState_0         = SysState_SaveMenu1,
         .eventParam_8_5       = 8,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 10,
-        .sysState_8_0         = SysState_SaveMenu1,
+        .sysState_0         = SysState_SaveMenu1,
         .eventParam_8_5       = 8,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 11,
-        .sysState_8_0         = SysState_SaveMenu1,
+        .sysState_0         = SysState_SaveMenu1,
         .eventParam_8_5       = 8,
     },
     {
@@ -174,49 +174,49 @@ s_EventData MAP_EVENTS[29] = {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 23,
-        .sysState_8_0         = SysState_EventCallFunc,
+        .sysState_0         = SysState_EventCallFunc,
         .eventParam_8_5       = 4, // `MapEvent_GasolineTankItemTake`
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 15,
-        .sysState_8_0         = SysState_ReadMessage,
+        .sysState_0         = SysState_ReadMessage,
         .eventParam_8_5       = 16,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 16,
-        .sysState_8_0         = SysState_ReadMessage,
+        .sysState_0         = SysState_ReadMessage,
         .eventParam_8_5       = 17,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 17,
-        .sysState_8_0         = SysState_ReadMessage,
+        .sysState_0         = SysState_ReadMessage,
         .eventParam_8_5       = 17,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 18,
-        .sysState_8_0         = SysState_ReadMessage,
+        .sysState_0         = SysState_ReadMessage,
         .eventParam_8_5       = 17,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 19,
-        .sysState_8_0         = SysState_ReadMessage,
+        .sysState_0         = SysState_ReadMessage,
         .eventParam_8_5       = 17,
     },
     {
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 20,
-        .sysState_8_0         = SysState_ReadMessage,
+        .sysState_0         = SysState_ReadMessage,
         .eventParam_8_5       = 18,
     },
     {

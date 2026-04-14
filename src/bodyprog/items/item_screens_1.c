@@ -37,20 +37,20 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
     if (g_SysWork.playerWork.extra.state < PlayerState_Idle &&
         playerState >= PlayerState_None)
     {
-        if (g_Player_WeaponAttack != g_SysWork.playerCombat_38.weaponAttack)
+        if (g_Player_WeaponAttack != g_SysWork.playerCombat.weaponAttack)
         {
-            g_SysWork.playerCombat_38.isAiming = false;
+            g_SysWork.playerCombat.isAiming = false;
         }
 
         weaponId = WEAPON_ATTACK_ID_GET(g_Player_WeaponAttack);
         if (weaponId == EquippedWeaponId_Chainsaw &&
-            g_SysWork.playerCombat_38.weaponAttack != weaponId)
+            g_SysWork.playerCombat.weaponAttack != weaponId)
         {
             goto Inventory_ExitAnimEquippedItemUpdate_block; // TODO: Remove goto if possible.
         }
 
         if (weaponId == EquippedWeaponId_RockDrill &&
-            g_SysWork.playerCombat_38.weaponAttack != WEAPON_ATTACK(weaponId, AttackInputType_Tap))
+            g_SysWork.playerCombat.weaponAttack != WEAPON_ATTACK(weaponId, AttackInputType_Tap))
         {
         Inventory_ExitAnimEquippedItemUpdate_block:
             g_SysWork.playerWork.player.field_44.field_0                             = 0;
@@ -69,15 +69,15 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
             default:
 
                 if (g_SysWork.playerWork.extra.state == PlayerState_Combat &&
-                    g_Player_WeaponAttack != g_SysWork.playerCombat_38.weaponAttack)
+                    g_Player_WeaponAttack != g_SysWork.playerCombat.weaponAttack)
                 {
                     g_SysWork.playerWork.extra.state                     = PlayerState_None;
                     g_SysWork.playerWork.player.properties.player.flags_11C = PlayerFlag_None;
                 }
 
                 if (g_SysWork.playerWork.extra.lowerBodyState >= PlayerLowerBodyState_Aim &&
-                    g_SysWork.playerCombat_38.weaponAttack != NO_VALUE &&
-                    g_Player_WeaponAttack == g_SysWork.playerCombat_38.weaponAttack)
+                    g_SysWork.playerCombat.weaponAttack != NO_VALUE &&
+                    g_Player_WeaponAttack == g_SysWork.playerCombat.weaponAttack)
                 {
                     extraModelPtr0 = &g_SysWork.playerWork.extra.model;
                     if (extraModelPtr0->anim.status >= ANIM_STATUS(33, false))
@@ -128,12 +128,12 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
     modelPtr3->anim.time      = Q12(modelPtr3->anim.keyframeIdx);
     extraModelPtr2->anim.time = Q12(extraModelPtr2->anim.keyframeIdx);
 
-    Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, modelPtr3->anim.keyframeIdx, modelPtr3->anim.keyframeIdx, Q12(1.0f));
+    Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords, modelPtr3->anim.keyframeIdx, modelPtr3->anim.keyframeIdx, Q12(1.0f));
 
     // Re-enable upper body bones, disable lower body bones.
     g_SysWork.playerWork.extra.disabledAnimBones = HARRY_LOWER_BODY_BONE_MASK;
 
-    Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, extraModelPtr2->anim.keyframeIdx, extraModelPtr2->anim.keyframeIdx, Q12(1.0f));
+    Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords, extraModelPtr2->anim.keyframeIdx, extraModelPtr2->anim.keyframeIdx, Q12(1.0f));
     func_8004C040();
 }
 
@@ -160,11 +160,11 @@ bool func_8004C328(bool unused) // 0x8004C328
             hasShotgun = true;
         }
 
-        if (g_SysWork.playerCombat_38.weaponInventoryIdx != NO_VALUE && itemIdx == g_SysWork.playerCombat_38.weaponInventoryIdx)
+        if (g_SysWork.playerCombat.weaponInventoryIdx != NO_VALUE && itemIdx == g_SysWork.playerCombat.weaponInventoryIdx)
         {
             if (itemId >= InventoryItemId_Handgun && itemId <= InventoryItemId_Shotgun)
             {
-                if (g_SysWork.playerCombat_38.currentWeaponAmmo != 0)
+                if (g_SysWork.playerCombat.currentWeaponAmmo != 0)
                 {
                     return true;
                 }

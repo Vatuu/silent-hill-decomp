@@ -54,69 +54,69 @@ s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12
     {
         if (HAS_FLAG(g_SysWork.field_228C, arg1_1))
         {
-            for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
+            for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
             {
-                if (g_SysWork.npcs_1A0[i].field_40 == arg1_1)
+                if (g_SysWork.npcs[i].field_40 == arg1_1)
                 {
                     return i;
                 }
             }
 
-            return ARRAY_SIZE(g_SysWork.npcs_1A0);
+            return ARRAY_SIZE(g_SysWork.npcs);
         }
 
         var_a0 = 0;
-        for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
+        for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
         {
-            if (g_SysWork.npcs_1A0[i].model.charaId != Chara_None)
+            if (g_SysWork.npcs[i].model.charaId != Chara_None)
             {
                 var_a0++;
             }
         }
 
-        if (var_a0 >= g_SysWork.npcId_2280)
+        if (var_a0 >= g_SysWork.npcFlagsId)
         {
             return 0;
         }
     }
 
     // Run through NPC slots.
-    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
     {
         // Skip occupied slot.
-        if (g_SysWork.npcs_1A0[i].model.charaId != Chara_None)
+        if (g_SysWork.npcs[i].model.charaId != Chara_None)
         {
             continue;
         }
 
-        bzero(&g_SysWork.npcs_1A0[i], sizeof(s_SubCharacter));
+        bzero(&g_SysWork.npcs[i], sizeof(s_SubCharacter));
 
-        g_SysWork.npcs_1A0[i].model.charaId = charaId;
-        g_SysWork.npcs_1A0[i].field_40 = arg1_1;
+        g_SysWork.npcs[i].model.charaId = charaId;
+        g_SysWork.npcs[i].field_40 = arg1_1;
 
         if (charaId <= Chara_MonsterCybil && arg1 < 64)
         {
             SET_FLAG(g_SysWork.field_228C, arg1_1);
         }
 
-        SET_FLAG(&g_SysWork.npcFlags_2290, i);
+        SET_FLAG(&g_SysWork.npcFlags, i);
 
-        g_SysWork.npcs_1A0[i].model.controlState     = ModelState_Uninitialized;
-        g_SysWork.npcs_1A0[i].model.stateStep = stateStep;
+        g_SysWork.npcs[i].model.controlState     = ModelState_Uninitialized;
+        g_SysWork.npcs[i].model.stateStep = stateStep;
 
-        g_SysWork.npcs_1A0[i].position.vx = posX;
+        g_SysWork.npcs[i].position.vx = posX;
         Collision_Get(&coll, posX, posZ);
-        g_SysWork.npcs_1A0[i].position.vy = coll.groundHeight_0;
-        g_SysWork.npcs_1A0[i].position.vz = posZ;
-        g_SysWork.npcs_1A0[i].rotation.vy = rotY;
+        g_SysWork.npcs[i].position.vy = coll.groundHeight_0;
+        g_SysWork.npcs[i].position.vz = posZ;
+        g_SysWork.npcs[i].rotation.vy = rotY;
 
-        chara                          = &g_SysWork.npcs_1A0[i];
+        chara                          = &g_SysWork.npcs[i];
         chara->model.anim.flags |= AnimFlag_Visible;
 
         return i;
     }
 
-    return ARRAY_SIZE(g_SysWork.npcs_1A0);
+    return ARRAY_SIZE(g_SysWork.npcs);
 }
 
 void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unused2) // 0x80088F94

@@ -41,7 +41,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
 
         g_MapEventData         = g_ItemTriggerEvents[i];
         g_MapEventLastUsedItem = g_SysWork.playerWork.extra.lastUsedItem;
-        g_MapEventSysState     = g_MapEventData->sysState_8_0;
+        g_MapEventSysState     = g_MapEventData->sysState_0;
         g_MapEventParam        = g_MapEventData->eventParam_8_5;
 
         g_SysWork.playerWork.extra.lastUsedItem = InventoryItemId_Unequipped;
@@ -82,7 +82,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
 
         if (disabledEventFlag != EventFlag_None && Savegame_EventFlagGet(disabledEventFlag) &&
             (disabledEventFlag < 867 || mapEvent->activationType_4_4 == TriggerActivationType_Exclusive ||
-             mapEvent->sysState_8_0 == SysState_EventSetFlag))
+             mapEvent->sysState_0 == SysState_EventSetFlag))
         {
             continue;
         }
@@ -93,7 +93,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         if (mapEvent->triggerType_4_0 == TriggerType_None)
         {
             g_MapEventData     = mapEvent;
-            g_MapEventSysState = mapEvent->sysState_8_0;
+            g_MapEventSysState = mapEvent->sysState_0;
             g_MapEventParam    = mapEvent->eventParam_8_5;
             return;
         }
@@ -179,8 +179,8 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
             if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 2) && !g_SysWork.field_2388.isFlashlightOn_15 &&
                 ((g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & 1) || (g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & 1)))
             {
-                if (mapEvent->sysState_8_0 != SysState_LoadOverlay &&
-                    (mapEvent->sysState_8_0 != SysState_LoadRoom && mapEvent->eventParam_8_5 > 1))
+                if (mapEvent->sysState_0 != SysState_LoadOverlay &&
+                    (mapEvent->sysState_0 != SysState_LoadRoom && mapEvent->eventParam_8_5 > 1))
                 {
                     continue;
                 }
@@ -191,7 +191,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
 
         // If this is `EventSetFlag`, handle setting the flag here and skip running it.
         // (Same as `SysState_EventSetFlag_Update`.)
-        if (mapEvent->sysState_8_0 == SysState_EventSetFlag)
+        if (mapEvent->sysState_0 == SysState_EventSetFlag)
         {
             Savegame_EventFlagSetAlt(mapEvent->disabledEventFlag_2);
             break;
@@ -199,7 +199,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
 
         // Set `g_MapEventSysState` to the SysState needed for the event to be ran on next tick (`SysState_ReadMessage`/`SaveMenu`/`EventCallFunc`/etc.).
         g_MapEventData     = mapEvent;
-        g_MapEventSysState = mapEvent->sysState_8_0;
+        g_MapEventSysState = mapEvent->sysState_0;
         g_MapEventParam    = mapEvent->eventParam_8_5;
         return;
     }

@@ -81,7 +81,7 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch(void)
     if (g_SysWork.playerWork.extra.state == PlayerState_Unk52)
     {
         func_8003D01C();
-        switch (g_SysWork.playerCombat_38.weaponAttack)
+        switch (g_SysWork.playerCombat.weaponAttack)
         {
             case 0:
             case 1:
@@ -132,7 +132,7 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_PlayerExtra* extra)
     {
         func_8003D01C();
 
-        switch (g_SysWork.playerCombat_38.weaponAttack)
+        switch (g_SysWork.playerCombat.weaponAttack)
         {
             case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Tap):
@@ -1389,7 +1389,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             if (playerChara->model.anim.status & 1 << 0)
             {
                 s_SubCharacter* new_var; // @hack Permuter find, maybe an inline here?
-                extra->model.anim.time       = Q12(g_MapOverlayHeader.harryMapAnimInfos_34[playerChara->model.anim.status - 76].startKeyframeIdx) + (new_var = g_SysWork.npcs_1A0)[0].model.anim.time - Q12(261.0f);
+                extra->model.anim.time       = Q12(g_MapOverlayHeader.harryMapAnimInfos_34[playerChara->model.anim.status - 76].startKeyframeIdx) + (new_var = g_SysWork.npcs)[0].model.anim.time - Q12(261.0f);
                 playerChara->model.anim.time = Q12(g_MapOverlayHeader.harryMapAnimInfos_34[playerChara->model.anim.status - 76].startKeyframeIdx) + new_var[0].model.anim.time - Q12(261.0f);
 
                 if (D_800C4606)
@@ -1639,7 +1639,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             {
                 if (!(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk6))
                 {
-                    func_8005F6B0(&g_SysWork.npcs_1A0[1], &(VECTOR3){ Q12(14.94f), Q12(-0.05f), Q12(102.0f) }, 3, 3);
+                    func_8005F6B0(&g_SysWork.npcs[1], &(VECTOR3){ Q12(14.94f), Q12(-0.05f), Q12(102.0f) }, 3, 3);
                     g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk6;
                 }
             }
@@ -1884,7 +1884,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 if (!(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk6))
                 {
                     func_8006342C(EquippedWeaponId_Handgun, 0x340, playerChara->rotation.vy, coord);
-                    func_8005F6B0(&g_SysWork.npcs_1A0[1], &(VECTOR3){ Q12(140.39f), Q12(-0.55f), Q12(22.76f) }, 3, 3);
+                    func_8005F6B0(&g_SysWork.npcs[1], &(VECTOR3){ Q12(140.39f), Q12(-0.55f), Q12(22.76f) }, 3, 3);
                     g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk6;
                 }
             }

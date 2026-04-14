@@ -128,7 +128,7 @@ void func_8003E740(void) // 0x8003E740
 
     poly = (POLY_FT4*)GsOUT_PACKET_P;
 
-    Vw_CoordToViewSpaceMatrix(&g_SysWork.playerBoneCoords_890[HarryBone_RightHand], &sp18);
+    Vw_CoordToViewSpaceMatrix(&g_SysWork.playerBoneCoords[HarryBone_RightHand], &sp18);
     SetRotMatrix(&sp18);
     SetTransMatrix(&sp18);
 
@@ -222,8 +222,8 @@ void Game_SpotlightLoadScreenAttribsFix(void) // 0x8003EB54
 {
     g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
 
-    g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
-    g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
+    g_SysWork.field_235C = &g_SysWork.playerBoneCoords[HarryBone_Root];
+    g_SysWork.field_236C = &g_SysWork.playerBoneCoords[HarryBone_Root];
 
     Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(0.0f), Q12(-0.2f), Q12(-2.0f));
     Math_SVectorSet(&g_SysWork.pointLightRot_2370, Q12_ANGLE(10.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
@@ -233,8 +233,8 @@ void Game_FlashlightAttributesFix(void) // 0x8003EBA0
 {
     g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
 
-    g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[HarryBone_Torso];
-    g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
+    g_SysWork.field_235C = &g_SysWork.playerBoneCoords[HarryBone_Torso];
+    g_SysWork.field_236C = &g_SysWork.playerBoneCoords[HarryBone_Root];
 
     Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(-0.08f), Q12(-0.28f), Q12(0.12f));
     Math_SVectorSet(&g_SysWork.pointLightRot_2370, Q12_ANGLE(-15.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));

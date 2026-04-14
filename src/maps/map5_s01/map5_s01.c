@@ -164,7 +164,7 @@ void func_800EBA40(void) // 0x800EBA40
 
     Game_RadioSoundStop();
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -302,12 +302,12 @@ void func_800EBF70(void) // 0x800EBF70
 
     temp = 0x1D9;
 
-    if (g_SysWork.sysStateStep_C[0] > 2)
+    if (g_SysWork.sysStateSteps[0] > 2)
     {
         Game_RadioSoundStop();
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -423,7 +423,7 @@ void func_800EC42C(void) // 0x800EC42C
     pitch = tmp1 >> 8;
     D_800F0360 += g_DeltaTime;
 
-    if (g_SysWork.sysStateStep_C[0] >= 10)
+    if (g_SysWork.sysStateSteps[0] >= 10)
     {
         D_800F035E -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.5f));
         if (D_800F035E < 0)
@@ -433,7 +433,7 @@ void func_800EC42C(void) // 0x800EC42C
 
         Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, ~(D_800F035E >> 4), pitch);
     }
-    else if (g_SysWork.sysStateStep_C[0] > 0)
+    else if (g_SysWork.sysStateSteps[0] > 0)
     {
         D_800F035E += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.25f));
         if (D_800F035E > Q12(0.9961f))
@@ -444,7 +444,7 @@ void func_800EC42C(void) // 0x800EC42C
         Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, ~(D_800F035E >> 4), pitch);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -507,7 +507,7 @@ void func_800EC42C(void) // 0x800EC42C
             break;
 
         case 8:
-            func_80080B58(&g_SysWork.playerBoneCoords_890[2], &(SVECTOR3){ 0, 0, 0 }, &QVECTOR3(-196.53f, -14.25f, -9.73f));
+            func_80080B58(&g_SysWork.playerBoneCoords[2], &(SVECTOR3){ 0, 0, 0 }, &QVECTOR3(-196.53f, -14.25f, -9.73f));
             sharedFunc_800CE5D4_1_s03(&D_800F0180, Q12(1.0f), Q12(0.1f), 1);
             SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
             break;
@@ -682,15 +682,15 @@ void Map_WorldObjectsInit(void) // 0x800ECB58
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        g_SysWork.npcId_2280 = 3;
+        g_SysWork.npcFlagsId = 3;
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
-        g_SysWork.npcId_2280 = 4;
+        g_SysWork.npcFlagsId = 4;
     }
     else
     {
-        g_SysWork.npcId_2280 = 5;
+        g_SysWork.npcFlagsId = 5;
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);

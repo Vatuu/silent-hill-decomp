@@ -97,12 +97,12 @@ void func_800EB11C(void) // 0x800EB11C
 
     // Skip.
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4 &&
-        g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
+        g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < EventState_Skip)
     {
         SysWork_StateStepSet(0, EventState_Skip);
     }
 
-    if (g_SysWork.sysStateStep_C[0] >= 5 && g_SysWork.sysStateStep_C[0] < 13)
+    if (g_SysWork.sysStateSteps[0] >= 5 && g_SysWork.sysStateSteps[0] < 13)
     {
         scratchData                     = PSX_SCRATCH_ADDR(0);
         scratchData->activeBufferIdx_14 = g_ActiveBufferIdx;
@@ -135,7 +135,7 @@ void func_800EB11C(void) // 0x800EB11C
         GsOUT_PACKET_P = (PACKET*)scratchData->stp_8;
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -283,9 +283,9 @@ void func_800EB11C(void) // 0x800EB11C
 
     func_800EC4B4(D_800F0044);
 
-    if (g_SysWork.sysStateStep_C[0] >= 1 && g_SysWork.sysStateStep_C[0] < 17)
+    if (g_SysWork.sysStateSteps[0] >= 1 && g_SysWork.sysStateSteps[0] < 17)
     {
-        if (g_SysWork.sysStateStep_C[0] >= 2)
+        if (g_SysWork.sysStateSteps[0] >= 2)
         {
             D_800F0686 += g_DeltaTime >> 3;
         }
@@ -309,7 +309,7 @@ void func_800EB11C(void) // 0x800EB11C
         }
         Sd_SfxAttributesUpdate(Sfx_Unk1599, 0, ~vol, 0);
     }
-    else if (g_SysWork.sysStateStep_C[0] >= 17 && g_SysWork.sysStateStep_C[0] < 20)
+    else if (g_SysWork.sysStateSteps[0] >= 17 && g_SysWork.sysStateSteps[0] < 20)
     {
         D_800F0686 -= g_DeltaTime >> 3;
         if (D_800F0686 < 0)
@@ -332,7 +332,7 @@ void func_800EB11C(void) // 0x800EB11C
         Sd_SfxAttributesUpdate(Sfx_Unk1599, 0, ~vol, 0);
     }
 
-    if (g_SysWork.sysStateStep_C[0] >= 5 && g_SysWork.sysStateStep_C[0] < 10)
+    if (g_SysWork.sysStateSteps[0] >= 5 && g_SysWork.sysStateSteps[0] < 10)
     {
         func_800894DC();
     }
@@ -367,15 +367,15 @@ void Map_WorldObjectsInit(void) // 0x800EBCE8
     switch (g_SavegamePtr->gameDifficulty_260)
     {
         case GameDifficulty_Normal:
-            g_SysWork.npcId_2280 = 4;
+            g_SysWork.npcFlagsId = 4;
             break;
 
         case GameDifficulty_Easy:
-            g_SysWork.npcId_2280 = 3;
+            g_SysWork.npcFlagsId = 3;
             break;
 
         default:
-            g_SysWork.npcId_2280 = 5;
+            g_SysWork.npcFlagsId = 5;
             break;
     }
 

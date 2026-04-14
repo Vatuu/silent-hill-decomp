@@ -1283,7 +1283,7 @@ typedef struct _WorldGfxWork
     VECTOR3           ipdSamplePoint_8; /** Used by IPD logic to sample which chunks to load or unload. */
     u8*               charaLmBuffer_14;
     s_CharaModel*     registeredCharaModels_18[Chara_Count];
-    s_CharaModel      charaModels_CC[GROUP_CHARA_COUNT];
+    s_CharaModel      charaModels_CC[CHARA_GROUP_COUNT];
     s_CharaModel      harryModel_164C;
     s_HeldItem        heldItem_1BAC;             /** The item held by the player. */
     s_TriggerZone*  triggerZone_1BD8;
@@ -1763,7 +1763,7 @@ typedef struct _MapOverlayHeader
     s32*                   data_18C;
     s32*                   data_190;
     void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `Game_NpcUpdate`. */
-    s8                     charaGroupIds_248[GROUP_CHARA_COUNT]; /** `e_CharacterId` values where if `s_SpawnInfo::charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
+    s8                     charaGroupIds_248[CHARA_GROUP_COUNT]; /** `e_CharacterId` values where if `s_SpawnInfo::charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_SpawnInfo            charaSpawns_24C[2][16];               /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
     VC_ROAD_DATA           roadDataList_3CC[100];
     s_TriggerZone          triggerZones_D2C[200];
@@ -2428,7 +2428,7 @@ extern q3_12 g_Player_FlexRotationX;
 extern u8 D_800AF220;
 
 /** @brief Last weapon selected. While it is being assigned the value of
- * `g_SysWork::playerCombat_38::weaponAttack` this time it is used to determine
+ * `g_SysWork::playerCombat::weaponAttack` this time it is used to determine
  * the last weapon used in order to load the required animation data.
  */
 extern s32 g_Player_LastWeaponSelected;
@@ -3361,23 +3361,23 @@ void SysWork_StateStepIncrementDelayed(q19_12 delay, bool reset);
 /** @brief Updates character states during events/cutscenes. */
 void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset);
 
-/** @brief Sets `sysStateStep_C` depending on whether `eventFlagIdx` flag is set.
+/** @brief Sets `sysStateSteps` depending on whether `eventFlagIdx` flag is set.
  *
  * @param eventFlagIdx Flag index.
  * @param stepTrue Step to use if flag is set.
  * @param stepFalse Step to use if flag is not set.
- * @param stepSecondary If `true`, sets `sysStateStep_C[1]` instead of `sysStateStep_C[0]`, otherwise sets `sysStateStep_C[0]`.
+ * @param stepSecondary If `true`, sets `sysStateSteps[1]` instead of `sysStateSteps[0]`, otherwise sets `sysStateSteps[0]`.
  */
 void func_8008605C(e_EventFlag eventFlagIdx, s32 stepTrue, s32 stepFalse, bool stepSecondary);
 
-/** @brief Displays a selection menu and sets `sysStateStep_C` depending on the chosen value.
+/** @brief Displays a selection menu and sets `sysStateSteps` depending on the chosen value.
  *
- * @param hasSelection `true` if it waits for a selection, `false` if `sysStateStep_C` increments after displaying.
+ * @param hasSelection `true` if it waits for a selection, `false` if `sysStateSteps` increments after displaying.
  * @param mapMsgIdx Map message index of the message to display.
  * @param step0 Step to use if selection #0 is chosen.
  * @param step1 Step to use if selection #1 is chosen.
  * @param step2 Step to use if selection #2 is chosen.
- * @param stepSecondary If `true`, sets `sysStateStep_C[1]` instead of `sysStateStep_C[0]`, otherwise sets `sysStateStep_C[0]`.
+ * @param stepSecondary If `true`, sets `sysStateSteps[1]` instead of `sysStateSteps[0]`, otherwise sets `sysStateSteps[0]`.
  */
 void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 step0, s32 step1, s32 step2, bool stepSecondary);
 

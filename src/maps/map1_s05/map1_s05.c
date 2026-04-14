@@ -23,10 +23,10 @@ void Map_RoomBgmInit(bool arg0) // 0x800D494C
     s32 var_a0;
 
     var_a0 = 1;
-    if (g_SysWork.npcs_1A0[0].health > 0)
+    if (g_SysWork.npcs[0].health > 0)
     {
         var_a0 = 2;
-        if (g_SysWork.npcs_1A0[0].properties.dummy.properties_E8[0].val16[0] & 0x10)
+        if (g_SysWork.npcs[0].properties.dummy.properties_E8[0].val16[0] & 0x10)
         {
             var_a0 = 6;
         }
@@ -47,7 +47,7 @@ void func_800D49AC(void) // 0x800D49AC
 
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4)
     {
-        if (g_SysWork.sysStateStep_C[0] >= 3)
+        if (g_SysWork.sysStateSteps[0] >= 3)
         {
             sharedData_800D8568_1_s05.field_1  = 0;
             sharedData_800D8568_1_s05.field_10 = 0;
@@ -69,7 +69,7 @@ void func_800D49AC(void) // 0x800D49AC
         }
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -145,9 +145,9 @@ void func_800D4D1C(void) // 0x800D4D1C
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    if (g_SysWork.sysStateStep_C[0] < 5)
+    if (g_SysWork.sysStateSteps[0] < 5)
     {
-        if (g_SysWork.sysStateStep_C[0] > 0)
+        if (g_SysWork.sysStateSteps[0] > 0)
         {
             scratchData->activeBufferIdx_C = g_ActiveBufferIdx;
             scratchData->sprt_0            = (SPRT*)GsOUT_PACKET_P;
@@ -180,7 +180,7 @@ void func_800D4D1C(void) // 0x800D4D1C
         }
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Savegame_EventFlagClear(EventFlag_129);

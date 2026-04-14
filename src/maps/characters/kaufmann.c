@@ -167,10 +167,10 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 7:
-            if (chara->model.anim.keyframeIdx >= 95 && g_SysWork.npcs_1A0[0].properties.dahlia.properties_120.val32 == 0)
+            if (chara->model.anim.keyframeIdx >= 95 && g_SysWork.npcs[0].properties.dahlia.properties_120.val32 == 0)
             {
-                g_SysWork.npcs_1A0[0].properties.dahlia.properties_120.val32 = 1;
-                func_8006342C(EquippedWeaponId_Unk70, 0, 0, &g_SysWork.npcCoords_FC0[0]);
+                g_SysWork.npcs[0].properties.dahlia.properties_120.val32 = 1;
+                func_8006342C(EquippedWeaponId_Unk70, 0, 0, &g_SysWork.npcCoords[0]);
             }
 
             Model_AnimStatusSet(&chara->model, 5, false);
@@ -430,7 +430,7 @@ void Ai_Kaufmann_Init(s_SubCharacter* chara)
 {
     sharedFunc_800D923C_0_s00(chara);
 
-    g_SysWork.npcs_1A0[0].properties.dummy.properties_E8[14].val32 = 0; // TODO: Change to `properties.humanoid`?
+    g_SysWork.npcs[0].properties.dummy.properties_E8[14].val32 = 0; // TODO: Change to `properties.humanoid`?
 
     sharedData_800D5CF4_3_s00 = 0;
 

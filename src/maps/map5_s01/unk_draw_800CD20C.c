@@ -11,7 +11,7 @@ s16 func_800CD20C(void) // 0x800CD20C
 
     if (D_800F159C == 1)
     {
-        if (g_SysWork.sysStateStep_C[0] == 5)
+        if (g_SysWork.sysStateSteps[0] == 5)
         {
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
             {

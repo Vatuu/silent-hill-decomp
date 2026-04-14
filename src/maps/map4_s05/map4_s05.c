@@ -1422,7 +1422,7 @@ const VECTOR3 D_800CABE4 = { 0xFFF8C800, 0x00002000, 0x0006E800 };
 void func_800D61AC(void) // 0x800D61AC
 {
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 12)
+        g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 12)
     {
         // Warp player.
         g_SysWork.playerWork.player.position.vx = Q12(-120.0f);
@@ -1430,16 +1430,16 @@ void func_800D61AC(void) // 0x800D61AC
         g_SysWork.playerWork.player.rotation.vy = Q12(0.25f);
 
         // Warp NPC.
-        g_SysWork.npcs_1A0[0].position.vx = Q12(-114.5f);
-        g_SysWork.npcs_1A0[0].position.vy = Q12(2.0f);
-        g_SysWork.npcs_1A0[0].position.vz = Q12(108.0f);
+        g_SysWork.npcs[0].position.vx = Q12(-114.5f);
+        g_SysWork.npcs[0].position.vy = Q12(2.0f);
+        g_SysWork.npcs[0].position.vz = Q12(108.0f);
 
         vcReturnPreAutoCamWork(true);
         SysWork_StateStepReset();
         Savegame_EventFlagSet(EventFlag_348);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -1512,10 +1512,10 @@ void func_800D61AC(void) // 0x800D61AC
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
 
             // Warp NPC.
-            g_SysWork.npcs_1A0[0].position.vx      = Q12(-114.5f);
-            g_SysWork.npcs_1A0[0].position.vy      = Q12(3.0f);
-            g_SysWork.npcs_1A0[0].position.vz      = Q12(108.0f);
-            g_SysWork.npcs_1A0[0].model.stateStep = 1;
+            g_SysWork.npcs[0].position.vx      = Q12(-114.5f);
+            g_SysWork.npcs[0].position.vy      = Q12(3.0f);
+            g_SysWork.npcs[0].position.vz      = Q12(108.0f);
+            g_SysWork.npcs[0].model.stateStep = 1;
 
             Savegame_EventFlagSet(EventFlag_348);
 
@@ -1539,7 +1539,7 @@ void func_800D61AC(void) // 0x800D61AC
             SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
 
             Savegame_EventFlagSet(EventFlag_349);
-            g_SysWork.npcs_1A0[0].model.stateStep = 2;
+            g_SysWork.npcs[0].model.stateStep = 2;
 
             func_8003A16C();
             break;
@@ -1548,7 +1548,7 @@ void func_800D61AC(void) // 0x800D61AC
 
 void func_800D6800(void) // 0x800D6800
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -1590,10 +1590,10 @@ void func_800D6800(void) // 0x800D6800
             g_SysWork.playerWork.player.rotation.vy = 0;
 
             // Warp NPC.
-            g_SysWork.npcs_1A0[0].position.vx = Q12(-120.0f);
-            g_SysWork.npcs_1A0[0].position.vy = Q12(2.0f);
-            g_SysWork.npcs_1A0[0].position.vz = Q12(108.0f);
-            g_SysWork.npcs_1A0[0].rotation.vy = Q12_ANGLE(180.0f);
+            g_SysWork.npcs[0].position.vx = Q12(-120.0f);
+            g_SysWork.npcs[0].position.vy = Q12(2.0f);
+            g_SysWork.npcs[0].position.vz = Q12(108.0f);
+            g_SysWork.npcs[0].rotation.vy = Q12_ANGLE(180.0f);
             break;
 
         case 4:
@@ -1654,7 +1654,7 @@ void func_800D6BC0(void) // 0x800D6BC0
 
     D_800D7D6C += g_DeltaTime;
 
-    if (g_SysWork.sysStateStep_C[0] >= 10)
+    if (g_SysWork.sysStateSteps[0] >= 10)
     {
         D_800D7D70 -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.5f));
         if (D_800D7D70 < 0)
@@ -1664,7 +1664,7 @@ void func_800D6BC0(void) // 0x800D6BC0
 
         Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, ~(D_800D7D70 >> 4), pitch);
     }
-    else if (g_SysWork.sysStateStep_C[0] > 0)
+    else if (g_SysWork.sysStateSteps[0] > 0)
     {
         D_800D7D70 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.25f));
         if (D_800D7D70 > Q12(0.9961f))
@@ -1675,7 +1675,7 @@ void func_800D6BC0(void) // 0x800D6BC0
         Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, ~(D_800D7D70 >> 4), pitch);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -1742,7 +1742,7 @@ void func_800D6BC0(void) // 0x800D6BC0
             break;
 
         case 8:
-            func_80080B58(&g_SysWork.playerBoneCoords_890[2], &(SVECTOR3){ 0, 0, 0 }, &QVECTOR3(154.31f, -15.5f, 24.07f));
+            func_80080B58(&g_SysWork.playerBoneCoords[2], &(SVECTOR3){ 0, 0, 0 }, &QVECTOR3(154.31f, -15.5f, 24.07f));
             sharedFunc_800CE5D4_1_s03(&D_800D7D88, Q12(1.0f), Q12(0.2f), 1);
             SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
             break;

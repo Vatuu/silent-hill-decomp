@@ -143,7 +143,7 @@ void func_800D1FF0(void) // 0x800D1FF0
 {
     s32 tmp;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -178,7 +178,7 @@ void func_800D1FF0(void) // 0x800D1FF0
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             WorldGfx_PlayerHeldItemSet(InventoryItemId_Handgun);
-            Chara_Load(0, Chara_Cybil, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_Cybil, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Savegame_EventFlagSet(EventFlag_302);
             SysWork_StateStepIncrement(0);
 
@@ -247,16 +247,16 @@ void func_800D2408(void) // 0x800D2408
     SVECTOR3 unused;
 
     #define playerChara &g_SysWork.playerWork.player
-    #define cybilChara  &g_SysWork.npcs_1A0[0]
+    #define cybilChara  &g_SysWork.npcs[0]
 
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 41)
+        g_SysWork.sysStateSteps[0] >= 3 && g_SysWork.sysStateSteps[0] < 41)
     {
         SysWork_StateStepSet(0, EventState_Skip);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             g_MapMsgSoundIdx = 0;
@@ -490,14 +490,14 @@ void func_800D2408(void) // 0x800D2408
 
         case 41:
             sharedFunc_800D2EF4_0_s00();
-            WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat_38);
+            WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
             sharedFunc_800D2EB4_0_s00();
             SysWork_StateStepIncrement(0);
 
         case 42:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
 
-            if (g_SysWork.sysStateStep_C[0] != 42)
+            if (g_SysWork.sysStateSteps[0] != 42)
             {
                 sharedFunc_800D2EF4_0_s00();
                 SysWork_StateStepReset();
@@ -510,7 +510,7 @@ void func_800D2408(void) // 0x800D2408
 
         case 44:
             sharedFunc_800D2EF4_0_s00();
-            WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat_38);
+            WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
             SysWork_StateStepIncrement(0);
 
         default:
@@ -570,12 +570,12 @@ void func_800D2F74(void) // 0x800D2F74
 
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 10)
+        g_SysWork.sysStateSteps[0] >= 3 && g_SysWork.sysStateSteps[0] < 10)
     {
         SysWork_StateStepSet(0, EventState_Skip);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -643,7 +643,7 @@ void func_800D2F74(void) // 0x800D2F74
         case EventState_Skip:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
 
-            if (g_SysWork.sysStateStep_C[0] != 10)
+            if (g_SysWork.sysStateSteps[0] != 10)
             {
                 g_Timer1 = Q12(95.0f);
             }
@@ -698,18 +698,18 @@ void func_800D3420(void) // 0x800D3420
     g_GteScratchData_func_800DD2D4* scratchData;
 
     #define playerChara &g_SysWork.playerWork.player
-    #define cybilChara  &g_SysWork.npcs_1A0[0]
+    #define cybilChara  &g_SysWork.npcs[0]
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
     // Skip.
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4 &&
-        g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 29)
+        g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < 29)
     {
         SysWork_StateStepSet(0, EventState_Skip);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -977,7 +977,7 @@ void func_800D3420(void) // 0x800D3420
     if (D_800D5AFC >= 0)
     {
         Dms_CharacterGetPosRot(playerChara.position, playerChara.rotation, "HERO", D_800D5AFC, FS_BUFFER_11);
-        if (g_SysWork.sysStateStep_C[0] >= 10)
+        if (g_SysWork.sysStateSteps[0] >= 10)
         {
             Dms_CharacterGetPosRot(cybilChara.position, cybilChara.rotation, "SIBYL", D_800D5AFC, FS_BUFFER_11);
         }
@@ -986,7 +986,7 @@ void func_800D3420(void) // 0x800D3420
         vcUserCamTarget(&g_CutsceneCameraPosition, NULL, true);
         vcUserWatchTarget(&g_CutsceneCameraLookAt, NULL, true);
 
-        if (g_SysWork.sysStateStep_C[0] >= 21)
+        if (g_SysWork.sysStateSteps[0] >= 21)
         {
             Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition_2360, &unused, "LIGHT", D_800D5AFC, FS_BUFFER_11);
             Dms_CharacterGetPosRot(&lightIntPos, &unused, "L_INT", D_800D5AFC, FS_BUFFER_11);
@@ -1040,13 +1040,13 @@ void func_800D4410(void) // 0x800D4410
 
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 13)
+        g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < 13)
     {
         SD_Call(19);
-        g_SysWork.sysStateStep_C[0] = EventState_Skip;
+        g_SysWork.sysStateSteps[0] = EventState_Skip;
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();

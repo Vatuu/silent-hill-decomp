@@ -157,13 +157,13 @@ void func_800DA384(void) // 0x800DA384
     isSkipped = false;
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 10)
+        g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 10)
     {
         isSkipped = true;
         SysWork_StateStepReset();
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Camera_PositionSet(NULL, Q12(-19.96f), Q12(-1.4f), Q12(-61.45f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -205,7 +205,7 @@ void func_800DA384(void) // 0x800DA384
             break;
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -295,7 +295,7 @@ void func_800DA384(void) // 0x800DA384
 
 void func_800DA8F8(void) // 0x800DA8F8
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -328,7 +328,7 @@ void func_800DAA00(void) // 0x800DAA00
 
 void MapEvent_GameTrialOver(void) // 0x800DAA2C
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -360,9 +360,9 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
 
             SysWork_StateStepIncrementDelayed(Q12(4.0f), false);
 
-            if (g_SysWork.sysStateStep_C[0] == 7)
+            if (g_SysWork.sysStateSteps[0] == 7)
             {
-                g_SysWork.sysStateStep_C[0] = 6;
+                g_SysWork.sysStateSteps[0] = 6;
             }
             break;
 
@@ -389,9 +389,9 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
 
             SysWork_StateStepIncrementDelayed(Q12(4.0f), false);
 
-            if (g_SysWork.sysStateStep_C[0] == 11)
+            if (g_SysWork.sysStateSteps[0] == 11)
             {
-                g_SysWork.sysStateStep_C[0] = 10;
+                g_SysWork.sysStateSteps[0] = 10;
                 break;
             }
             break;
@@ -415,7 +415,7 @@ extern s16 D_800E1FD0;
 
 void func_800DAD2C(void) // 0x800DAD2C
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -478,7 +478,7 @@ void func_800DAD2C(void) // 0x800DAD2C
             D_800E1FD0 += Q12(0.0313f);
             if (D_800E1FD0 > Q12(1.0f))
             {
-                if (g_SysWork.sysStateStep_C[0] == 8)
+                if (g_SysWork.sysStateSteps[0] == 8)
                 {
                     SysWork_StateStepSet(0, 9);
                     break;
@@ -513,7 +513,7 @@ void func_800DAD2C(void) // 0x800DAD2C
 
 void func_800DB058(void) // 0x800DB058
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             // Freeze player.
@@ -595,9 +595,9 @@ void func_800DB33C(void) // 0x800DB33C
 void func_800DB368(void) // 0x800DB368
 {
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 26)
+        g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < 26)
     {
-        if (g_SysWork.sysStateStep_C[0] < 5)
+        if (g_SysWork.sysStateSteps[0] < 5)
         {
             D_800E1FD8 = true;
         }
@@ -605,7 +605,7 @@ void func_800DB368(void) // 0x800DB368
         SysWork_StateStepSet(0, 27);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -739,7 +739,7 @@ void func_800DB368(void) // 0x800DB368
             sharedFunc_800D2EF4_0_s00();
             SD_Call(19);
 
-            D_800E1FD4 = WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat_38);
+            D_800E1FD4 = WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
             SD_Call(Sfx_Unk1457);
@@ -769,7 +769,7 @@ void func_800DB368(void) // 0x800DB368
                 sharedFunc_800D2EF4_0_s00();
             }
 
-            WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat_38);
+            WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
             func_8003D01C();
 
             // Warp camera.
@@ -803,7 +803,7 @@ void func_800DBB7C(void) // 0x800DBB7C
 {
     q3_12 angleAdd;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -901,7 +901,7 @@ void func_800DBF88(void) // 0x800DBF88
 
 void func_800DBFC8(void) // 0x800DBFC8
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -964,17 +964,17 @@ void func_800DC1E0(void) // 0x800DC1E0
     q19_12 rotY0;
     q19_12 rotY1;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
 
             D_800E1FE2 = 0;
             g_SysWork.field_28 = 0;
-            g_SysWork.sysStateStep_C[1] = 0;
+            g_SysWork.sysStateSteps[1] = 0;
             g_SysWork.timer_2C = 0;
-            g_SysWork.sysStateStep_C[2] = 0;
-            g_SysWork.sysStateStep_C[0]++;
+            g_SysWork.sysStateSteps[2] = 0;
+            g_SysWork.sysStateSteps[0]++;
 
         case 1:
             MapMsg_DisplayAndHandleSelection(2, 41, 2, 4, NO_VALUE, false);
@@ -994,23 +994,23 @@ void func_800DC1E0(void) // 0x800DC1E0
                 Camera_PositionSet(NULL, Q12(61.0f), Q12(-1.2f), Q12(-60.0f), Q12(2.5f), Q12(0.75f), Q12(1.5f), Q12(0.5f), false);
                 SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
 
-                if (g_SysWork.sysStateStep_C[0] != 2 && g_SysWork.sysStateStep_C[0] != 4)
+                if (g_SysWork.sysStateSteps[0] != 2 && g_SysWork.sysStateSteps[0] != 4)
                 {
-                    g_SysWork.sysStateStep_C[0] = 5;
+                    g_SysWork.sysStateSteps[0] = 5;
                     g_SysWork.field_28 = 0;
-                    g_SysWork.sysStateStep_C[1] = 0;
+                    g_SysWork.sysStateSteps[1] = 0;
                     g_SysWork.timer_2C = 0;
-                    g_SysWork.sysStateStep_C[2] = 0;
+                    g_SysWork.sysStateSteps[2] = 0;
                     D_800E1FE2++;
                 }
             }
             else
             {
-                g_SysWork.sysStateStep_C[0] = 5;
+                g_SysWork.sysStateSteps[0] = 5;
                 g_SysWork.field_28 = 0;
-                g_SysWork.sysStateStep_C[1] = 0;
+                g_SysWork.sysStateSteps[1] = 0;
                 g_SysWork.timer_2C = 0;
-                g_SysWork.sysStateStep_C[2] = 0;
+                g_SysWork.sysStateSteps[2] = 0;
             }
             break;
 
@@ -1025,10 +1025,10 @@ void func_800DC1E0(void) // 0x800DC1E0
             }
 
             g_SysWork.field_28 = 0;
-            g_SysWork.sysStateStep_C[1] = 0;
+            g_SysWork.sysStateSteps[1] = 0;
             g_SysWork.timer_2C = 0;
-            g_SysWork.sysStateStep_C[2] = 0;
-            g_SysWork.sysStateStep_C[0]++;
+            g_SysWork.sysStateSteps[2] = 0;
+            g_SysWork.sysStateSteps[0]++;
 
         case 6:
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
@@ -1163,11 +1163,11 @@ void func_800DC1E0(void) // 0x800DC1E0
 
                 Sd_SfxStop(Sfx_Unk1453);
 
-                g_SysWork.sysStateStep_C[0] = 1;
+                g_SysWork.sysStateSteps[0] = 1;
                 g_SysWork.field_28 = 0;
-                g_SysWork.sysStateStep_C[1] = 0;
+                g_SysWork.sysStateSteps[1] = 0;
                 g_SysWork.timer_2C = 0;
-                g_SysWork.sysStateStep_C[2] = 0;
+                g_SysWork.sysStateSteps[2] = 0;
             }
             break;
 
@@ -1189,7 +1189,7 @@ void func_800DC1E0(void) // 0x800DC1E0
 
 void func_800DCF00(void) // 0x800DCF00
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -1230,7 +1230,7 @@ void func_800DCF00(void) // 0x800DCF00
             break;
     }
 
-    if (g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 6)
+    if (g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < 6)
     {
         s32 var_t0;
 
@@ -1252,7 +1252,7 @@ void func_800DCF00(void) // 0x800DCF00
 
 void func_800DD208(void) // 0x800DD208
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();

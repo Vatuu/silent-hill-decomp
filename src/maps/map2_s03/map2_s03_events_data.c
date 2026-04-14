@@ -3,7 +3,7 @@
 s_EventData MAP_EVENTS[2] = {
     {
         .triggerType_4_0 = TriggerType_None,
-        .sysState_8_0    = SysState_ReadMessage,
+        .sysState_0    = SysState_ReadMessage,
         .eventParam_8_5  = 15,
         .flags_8_13      = 1,
     },

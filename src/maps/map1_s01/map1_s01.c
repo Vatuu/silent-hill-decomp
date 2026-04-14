@@ -229,12 +229,12 @@ void func_800D7308(void)
 
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
+        g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < EventState_Skip)
     {
         SysWork_StateStepSet(0, EventState_Skip);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -327,7 +327,7 @@ void func_800D76F4(void) // 0x800D76F4
     #define PICK_UP_MEDALLION_STATE      4
     #define DONT_PICK_UP_MEDALLION_STATE 5
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -383,7 +383,7 @@ void func_800D7864(void) // 0x800D7864
     g_SysWork.sysFlags_22A0 |= SysFlag_1;
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] >= MEDALLION_CUTSCENE_START && g_SysWork.sysStateStep_C[0] < MEDALLION_CUTSCENE_END)
+        g_SysWork.sysStateSteps[0] >= MEDALLION_CUTSCENE_START && g_SysWork.sysStateSteps[0] < MEDALLION_CUTSCENE_END)
     {
         ScreenFade_ResetTimestep();
         SysWork_StateStepSet(0, SKIP_CUTSCENE_STATE);
@@ -395,7 +395,7 @@ void func_800D7864(void) // 0x800D7864
         g_WorldObject0.rotation_28.vy = Q12_ANGLE(28.5f);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -543,31 +543,31 @@ void MapEvent_PianoPuzzle(bool playNote) // 0x800D7F18
         return;
     }
 
-    if (g_SysWork.sysStateStep_C[1] & 1)
+    if (g_SysWork.sysStateSteps[1] & 1)
     {
-        if (g_SysWork.sysStateStep_C[1] == 1)
+        if (g_SysWork.sysStateSteps[1] == 1)
         {
             SysWork_StateStepIncrementDelayed(Q12(0.3f), true);
         }
-        if (g_SysWork.sysStateStep_C[1] == 3)
+        if (g_SysWork.sysStateSteps[1] == 3)
         {
             SysWork_StateStepIncrementDelayed(Q12(0.2f), true);
         }
-        if (g_SysWork.sysStateStep_C[1] == 5)
+        if (g_SysWork.sysStateSteps[1] == 5)
         {
             SysWork_StateStepIncrementDelayed(Q12(0.3f), true);
         }
         return;
     }
 
-    if (g_SysWork.sysStateStep_C[1] == 4)
+    if (g_SysWork.sysStateSteps[1] == 4)
     {
         SD_Call(Sfx_Unk1421);
         SysWork_StateStepSet(1, 5);
         return;
     }
 
-    g_SysWork.sysStateStep_C[1] = 0;
+    g_SysWork.sysStateSteps[1] = 0;
 
     if (g_PianoKeyCounter == 5)
     {
@@ -749,7 +749,7 @@ void MapEvent_PianoPuzzle(bool playNote) // 0x800D7F18
 
 void func_800D857C(void) // 0x800D857C
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -823,9 +823,9 @@ void func_800D87C0(void) // 0x800D87C0
 
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
+        g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < EventState_Skip)
     {
-        if ( g_SysWork.sysStateStep_C[0]  < 4)
+        if ( g_SysWork.sysStateSteps[0]  < 4)
         {
             D_800DD598 = 1;
         }
@@ -833,7 +833,7 @@ void func_800D87C0(void) // 0x800D87C0
         SysWork_StateStepSet(0, EventState_Skip);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -854,9 +854,9 @@ void func_800D87C0(void) // 0x800D87C0
                 SysWork_StateStepIncrement(0);
             }
 
-            if (g_SysWork.sysStateStep_C[0] != 2)
+            if (g_SysWork.sysStateSteps[0] != 2)
             {
-                Chara_Load(2, Chara_Cat, g_SysWork.npcCoords_FC0, 4, NULL, NULL);
+                Chara_Load(2, Chara_Cat, g_SysWork.npcCoords, 4, NULL, NULL);
             }
             break;
 
@@ -892,8 +892,8 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 8:
-            g_SysWork.npcs_1A0[0].model.stateStep = 0;
-            g_SysWork.npcs_1A0[0].model.controlState++;
+            g_SysWork.npcs[0].model.stateStep = 0;
+            g_SysWork.npcs[0].model.controlState++;
 
             Savegame_EventFlagSet(EventFlag_76);
 
@@ -914,8 +914,8 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 10:
-            g_SysWork.npcs_1A0[0].model.stateStep = 0;
-            g_SysWork.npcs_1A0[0].model.controlState++;
+            g_SysWork.npcs[0].model.stateStep = 0;
+            g_SysWork.npcs[0].model.controlState++;
 
             SysWork_StateStepIncrement(0);
 
@@ -948,7 +948,7 @@ void func_800D87C0(void) // 0x800D87C0
 
         case 14:
             func_8005DC1C(Sfx_Unk1448, &QVECTOR3(-56.4f, -0.8f, 16.8f), Q8(0.5f), 0);
-            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+            func_80088F94(&g_SysWork.npcs[0], 0, 0);
             SysWork_StateStepIncrement(0);
 
         case 15:
@@ -991,7 +991,7 @@ void func_800D87C0(void) // 0x800D87C0
             func_80088D34(0);
 
             Savegame_EventFlagSet(EventFlag_76);
-            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+            func_80088F94(&g_SysWork.npcs[0], 0, 0);
             func_8003D01C();
 
             if (D_800DD598 == 0)
@@ -1007,7 +1007,7 @@ void func_800D87C0(void) // 0x800D87C0
 
         if (g_Timer0 >= Q12(16.0f))
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "CAT", g_Timer0, (s_DmsHeader*)FS_BUFFER_16);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "CAT", g_Timer0, (s_DmsHeader*)FS_BUFFER_16);
         }
 
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_16));

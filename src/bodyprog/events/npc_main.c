@@ -85,7 +85,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
 
     for (i = 0; i < 32 && g_VBlanks < 4; i++, curCharaSpawn++)
     {
-        if (g_SysWork.npcFlags_2290 == ((1 << g_SysWork.npcId_2280) - 1)) // TODO: Macro for this check?
+        if (g_SysWork.npcFlags == ((1 << g_SysWork.npcFlagsId) - 1)) // TODO: Macro for this check?
         {
             break;
         }
@@ -98,37 +98,37 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
             !Math_Distance2dCheck(&g_SysWork.playerWork.player.position, pos, Q12(22.0f)) &&
             (!cond || Math_Distance2dCheck(&g_SysWork.playerWork.player.position, pos, Q12(20.0f))))
         {
-            while (HAS_FLAG(&g_SysWork.npcFlags_2290, npcIdx))
+            while (HAS_FLAG(&g_SysWork.npcFlags, npcIdx))
             {
                 npcIdx++;
             }
 
-            bzero(&g_SysWork.npcs_1A0[npcIdx], sizeof(s_SubCharacter));
+            bzero(&g_SysWork.npcs[npcIdx], sizeof(s_SubCharacter));
 
             if (curCharaSpawn->charaId_4 > Chara_None)
             {
-                g_SysWork.npcs_1A0[npcIdx].model.charaId = curCharaSpawn->charaId_4;
+                g_SysWork.npcs[npcIdx].model.charaId = curCharaSpawn->charaId_4;
             }
             else
             {
-                g_SysWork.npcs_1A0[npcIdx].model.charaId = (i < 16) ? charaId0 : charaId1;
+                g_SysWork.npcs[npcIdx].model.charaId = (i < 16) ? charaId0 : charaId1;
             }
 
-            g_SysWork.npcs_1A0[npcIdx].field_40               = i;
-            g_SysWork.npcs_1A0[npcIdx].model.controlState = ModelState_Uninitialized;
-            g_SysWork.npcs_1A0[npcIdx].model.stateStep    = curCharaSpawn->flags_6;
-            g_SysWork.npcs_1A0[npcIdx].position.vx         = curCharaSpawn->positionX_0;
-            g_SysWork.npcs_1A0[npcIdx].position.vz         = curCharaSpawn->positionZ_8;
+            g_SysWork.npcs[npcIdx].field_40               = i;
+            g_SysWork.npcs[npcIdx].model.controlState = ModelState_Uninitialized;
+            g_SysWork.npcs[npcIdx].model.stateStep    = curCharaSpawn->flags_6;
+            g_SysWork.npcs[npcIdx].position.vx         = curCharaSpawn->positionX_0;
+            g_SysWork.npcs[npcIdx].position.vz         = curCharaSpawn->positionZ_8;
 
             Collision_Get(&coll, curCharaSpawn->positionX_0, curCharaSpawn->positionZ_8);
 
-            g_SysWork.npcs_1A0[npcIdx].position.vy = coll.groundHeight_0;
-            g_SysWork.npcs_1A0[npcIdx].rotation.vy = curCharaSpawn->rotationY_5 * 16;
+            g_SysWork.npcs[npcIdx].position.vy = coll.groundHeight_0;
+            g_SysWork.npcs[npcIdx].rotation.vy = curCharaSpawn->rotationY_5 * 16;
 
-            SET_FLAG(&g_SysWork.npcFlags_2290, npcIdx);
+            SET_FLAG(&g_SysWork.npcFlags, npcIdx);
             SET_FLAG(g_SysWork.field_228C, i);
 
-            chara                          = &g_SysWork.npcs_1A0[npcIdx];
+            chara                          = &g_SysWork.npcs[npcIdx];
             chara->model.anim.flags |= AnimFlag_Visible;
         }
     }
@@ -222,7 +222,7 @@ void Game_NpcUpdate(void) // 0x80038354
         field_0[j].field_8.vy = 0;
     }
 
-    for (k = 0, npc = g_SysWork.npcs_1A0; k < ARRAY_SIZE(g_SysWork.npcs_1A0); k++, npc++)
+    for (k = 0, npc = g_SysWork.npcs; k < ARRAY_SIZE(g_SysWork.npcs); k++, npc++)
     {
         if (npc->model.charaId != Chara_None && npc->model.charaId != Chara_Padlock)
         {
@@ -270,7 +270,7 @@ void Game_NpcUpdate(void) // 0x80038354
                         field_0[m].field_8.vz = field_0[m - 1].field_8.vz;
                     }
 
-                    temp_t1 = (u32)npc - (u32)g_SysWork.npcs_1A0;
+                    temp_t1 = (u32)npc - (u32)g_SysWork.npcs;
                     temp2   = ((((temp_t1 * 0x7E8) - (temp_t1 * 0xFD)) * 4) + temp_t1) * -0x3FFFF;
 
                     field_0[j].bitIdx_0   = temp2 >> 3;

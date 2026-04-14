@@ -40,7 +40,7 @@ void func_800CEC30(void) // 0x800CEC30
         {
             Map_MessageWithSfx(38, Sfx_Unk1486, &sfxPos);
 
-            if (g_SysWork.sysState_8 == SysState_Gameplay)
+            if (g_SysWork.sysState == SysState_Gameplay)
             {
                 Savegame_EventFlagSet(EventFlag_180);
             }
@@ -118,16 +118,16 @@ void func_800CED88(void) // 0x800CED88
     s32             step;
     s_SubCharacter* dahlia;
 
-    #define dahliaChara (&g_SysWork.npcs_1A0[0])
+    #define dahliaChara (&g_SysWork.npcs[0])
     #define playerChara (&g_SysWork.playerWork.player)
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
+        g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < EventState_Skip)
     {
         SysWork_StateStepSet(0, EventState_Skip);
     }
 
-    step = g_SysWork.sysStateStep_C[0];
+    step = g_SysWork.sysStateSteps[0];
     switch (step)
     {
         case 0:
@@ -135,7 +135,7 @@ void func_800CED88(void) // 0x800CED88
             Fs_QueueStartRead(FILE_ANIM_CHRC_DMS, FS_BUFFER_15);
             Fs_QueueWaitForEmpty();
             DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_15);
-            Chara_Load(0, Chara_Dahlia, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_Dahlia, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Dahlia, 0, Q12(20.0f), Q12(23.5f), 0, 3);
             sharedFunc_800D88AC_0_s00(dahliaChara);
@@ -365,7 +365,7 @@ void func_800CED88(void) // 0x800CED88
         case EventState_Skip:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
 
-            if (g_SysWork.sysStateStep_C[0] != EventState_Skip)
+            if (g_SysWork.sysStateSteps[0] != EventState_Skip)
             {
                 g_Timer0 = Q12(253.0f);
             }

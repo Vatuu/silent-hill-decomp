@@ -27,7 +27,7 @@ void Chara_PositionSet(s_MapPoint2d* mapPoint) // 0x800371E8
         playerChara.position.vz += Q12_MULT_FLOAT_PRECISE(Math_Cos(rotY), 0.4f);
     }
 
-    g_SysWork.loadingScreenIdx_2281 = mapPoint->loadingScreenId_4_9;
+    g_SysWork.loadingScreenIdx = mapPoint->loadingScreenId_4_9;
 
     if (mapPoint->mapIdx_4_0 == 24) // TODO: Demagic 24.
     {

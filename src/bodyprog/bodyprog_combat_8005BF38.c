@@ -28,12 +28,12 @@ s32 Chara_NpcIdxGet(s_SubCharacter* chara) // 0x8005C7D0
 
     if (chara == &g_SysWork.playerWork.player)
     {
-        return ARRAY_SIZE(g_SysWork.npcs_1A0);
+        return ARRAY_SIZE(g_SysWork.npcs);
     }
 
-    curNpc = &g_SysWork.npcs_1A0[0];
+    curNpc = &g_SysWork.npcs[0];
     player = chara;
-    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++, curNpc++)
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++, curNpc++)
     {
         if (player == curNpc)
         {
@@ -180,10 +180,10 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
     q19_12    mag1;
     s32       i;
 
-    #define npc g_SysWork.npcs_1A0[npcIdx]
+    #define npc g_SysWork.npcs[npcIdx]
 
     // Check if NPC index is valid.
-    if (npcIdx >= ARRAY_SIZE(g_SysWork.npcs_1A0))
+    if (npcIdx >= ARRAY_SIZE(g_SysWork.npcs))
     {
         return false;
     }
@@ -201,9 +201,9 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
     *outAngle1 = angle0;
 
     // Run through NPCs.
-    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
     {
-        #define curNpc g_SysWork.npcs_1A0[i]
+        #define curNpc g_SysWork.npcs[i]
 
         // Check if NPC is valid.
         if (curNpc.model.charaId == Chara_None ||
@@ -234,7 +234,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
             continue;
         }
 
-        if (func_8006DA08(&ray, unkOffset, &unkPos, &g_SysWork.playerWork.player) && ray.chara_10 == &g_SysWork.npcs_1A0[i])
+        if (func_8006DA08(&ray, unkOffset, &unkPos, &g_SysWork.playerWork.player) && ray.chara_10 == &g_SysWork.npcs[i])
         {
             *targetNpcIdx  = i;
             *outAngle0  = angle3;

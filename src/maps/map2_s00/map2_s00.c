@@ -265,23 +265,23 @@ void func_800E7D54(void) // 0x800E7D54
 {
     s32 i;
 
-    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
     {
         // Breaks if there are any characters with IDs in range `[Chara_Harry, Chara_MonsterCybil]` with health above `Q12(0.0f)`.
-        if (g_SysWork.npcs_1A0[i].model.charaId >= Chara_Harry &&
-            g_SysWork.npcs_1A0[i].model.charaId <= Chara_MonsterCybil &&
-            g_SysWork.npcs_1A0[i].health > Q12(0.0f))
+        if (g_SysWork.npcs[i].model.charaId >= Chara_Harry &&
+            g_SysWork.npcs[i].model.charaId <= Chara_MonsterCybil &&
+            g_SysWork.npcs[i].health > Q12(0.0f))
         {
             break;
         }
     }
 
-    if (i != ARRAY_SIZE(g_SysWork.npcs_1A0))
+    if (i != ARRAY_SIZE(g_SysWork.npcs))
     {
         g_DeltaTime = Q12(0.0f);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -301,7 +301,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
 {
     s32 sysState0;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -322,13 +322,13 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
             func_80068E0C(1, 1, 0, 0, 0, 120, Q12(0.5f));
             func_80067914(1, 0, 120, Q12(0.5f));
 
-            sysState0 = g_SysWork.sysStateStep_C[0];
+            sysState0 = g_SysWork.sysStateSteps[0];
             switch (sysState0)
             {
                 case 2:
                     SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
 
-                    if (g_SysWork.sysStateStep_C[0] == sysState0 &&
+                    if (g_SysWork.sysStateSteps[0] == sysState0 &&
                         (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 |
                                                           g_GameWorkPtr->config.controllerConfig.cancel_2)))
                     {
@@ -397,7 +397,7 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
         EventState_DontTakeSteelPipe = 6
     } e_EventState;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -454,13 +454,13 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
 
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4)
     {
-        if (g_SysWork.sysStateStep_C[0] == 2)
+        if (g_SysWork.sysStateSteps[0] == 2)
         {
             SysWork_StateStepSet(0, 13);
         }
         else
         {
-            if (!D_800F228E && g_SysWork.sysStateStep_C[0] > 5 && g_SysWork.sysStateStep_C[0] < 11)
+            if (!D_800F228E && g_SysWork.sysStateSteps[0] > 5 && g_SysWork.sysStateSteps[0] < 11)
             {
                 SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
                 D_800F228E = 1;
@@ -477,7 +477,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
         }
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -579,9 +579,9 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
 
                 SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
 
-                if (g_SysWork.sysStateStep_C[0] > 11)
+                if (g_SysWork.sysStateSteps[0] > 11)
                 {
-                    g_SysWork.sysStateStep_C[0] = 11;
+                    g_SysWork.sysStateSteps[0] = 11;
                 }
 
                 // Clamp map marking fade.
@@ -631,12 +631,12 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
     {
         if (!D_800F2295)
         {
-            if (g_SysWork.sysStateStep_C[0] > 1 && g_SysWork.sysStateStep_C[0] < 10)
+            if (g_SysWork.sysStateSteps[0] > 1 && g_SysWork.sysStateSteps[0] < 10)
             {
                 SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
                 D_800F2295 = 1;
             }
-            else if (g_SysWork.sysStateStep_C[0] > 10 && g_SysWork.sysStateStep_C[0] < 16)
+            else if (g_SysWork.sysStateSteps[0] > 10 && g_SysWork.sysStateSteps[0] < 16)
             {
                 SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
                 D_800F2295 = 2;
@@ -661,7 +661,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
         }
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -785,9 +785,9 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
 
                 SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
 
-                if (g_SysWork.sysStateStep_C[0] > 16)
+                if (g_SysWork.sysStateSteps[0] > 16)
                 {
-                    g_SysWork.sysStateStep_C[0] = 16;
+                    g_SysWork.sysStateSteps[0] = 16;
                 }
 
                 D_800F2298 = 0x80;
@@ -838,7 +838,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
 
 void func_800E9470(void) // 0x800E9470
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -888,7 +888,7 @@ void func_800E9470(void) // 0x800E9470
 
 void MapEvent_DoghouseNote(void) // 0x800E95F8
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -951,7 +951,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
         EventState_DontTakeKey = 9
     } e_EventState;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -1034,7 +1034,7 @@ void func_800E9A74(void) // 0x800E9A74
         EventState_DontTakeKey = 7
     } e_EventState;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -1123,7 +1123,7 @@ void func_800E9DD8(void) // 0x800E9DD8
     s32  locksLeft;
     s16 *timPtr;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -1273,7 +1273,7 @@ void func_800E9DD8(void) // 0x800E9DD8
                 SysWork_StateStepIncrement(0);
             }
 
-            if (g_SysWork.sysStateStep_C[0] != 10)
+            if (g_SysWork.sysStateSteps[0] != 10)
             {
                 SysWork_StateStepSet(0, 4);
             }
@@ -1302,7 +1302,7 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
 {
     s32 tmp;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -1378,7 +1378,7 @@ void func_800EA6E0(void) // 0x800EA6E0
 
     g_Screen_BackgroundImgGamma = Q8(9.0f / 32.0f);
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case EventState_Setup:
             Player_ControlFreeze();
@@ -1455,7 +1455,7 @@ void func_800EA960(void) // 0x800EA960
     s32 balance;
     s16 time;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -1549,7 +1549,7 @@ void func_800EA960(void) // 0x800EA960
 
     if (Savegame_EventFlagGet(EventFlag_164))
     {
-        if (g_SysWork.sysStateStep_C[0] > 4)
+        if (g_SysWork.sysStateSteps[0] > 4)
         {
             func_800894B8(0x90);
         }
@@ -1571,7 +1571,7 @@ void func_800EAD2C(void) // 0x800EAD2C
     s32 vol;
     s32 balance;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -1653,7 +1653,7 @@ void func_800EAD2C(void) // 0x800EAD2C
             break;
     }
 
-    if (g_SysWork.sysStateStep_C[0] > 3)
+    if (g_SysWork.sysStateSteps[0] > 3)
     {
         func_800894B8(0x90);
     }
@@ -1665,7 +1665,7 @@ void func_800EAD2C(void) // 0x800EAD2C
 
 void func_800EB090(void) // 0x800EB090
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -1692,7 +1692,7 @@ void func_800EB174(void) // 0x800EB174
 {
     VECTOR3 sfxPos;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -1761,7 +1761,7 @@ void func_800EB3F4(void) // 0x800EB3F4
     const static VECTOR3 D_800CD45C = { Q12(-261.977f), Q12(-0.1f),  Q12(-104.286f) };
     const static VECTOR3 D_800CD468 = { Q12(-263.0f),   Q12(-1.25f), Q12(-104.0f)   };
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -1820,9 +1820,9 @@ void func_800EB3F4(void) // 0x800EB3F4
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
 
-            if (g_SysWork.playerCombat_38.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (g_SysWork.playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                g_SysWork.playerCombat_38.weaponAttack = WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack);
+                g_SysWork.playerCombat.weaponAttack = WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat.weaponAttack);
             }
 
             vcReturnPreAutoCamWork(true);
@@ -1972,19 +1972,19 @@ void Map_WorldObjectsInit(void) // 0x800EB908
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        g_SysWork.npcId_2280 = 2;
+        g_SysWork.npcFlagsId = 2;
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
-        g_SysWork.npcId_2280 = 3;
+        g_SysWork.npcFlagsId = 3;
     }
     else
     {
-        g_SysWork.npcId_2280 = 4;
+        g_SysWork.npcFlagsId = 4;
     }
 
-    g_SysWork.npcId_2280++;
-    SysWork_NpcFlagSet(g_SysWork.npcId_2280 - 1);
+    g_SysWork.npcFlagsId++;
+    SysWork_NpcFlagSet(g_SysWork.npcFlagsId - 1);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);

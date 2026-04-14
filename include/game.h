@@ -23,7 +23,7 @@ struct _Model;
 
 #define NPC_COUNT_MAX             6
 #define NPC_BONE_COUNT_MAX        10 * NPC_COUNT_MAX
-#define GROUP_CHARA_COUNT         4 /** While up to 6 NPCs and a player can exist in the game world, only 4 different character types (including the player) can be loaded at a time. */
+#define CHARA_GROUP_COUNT         4 /** While up to 6 NPCs and a player can exist in the game world, only 4 different character types (including the player) can be loaded at a time. */
 #define INVENTORY_ITEM_COUNT_MAX  40
 #define INVENTORY_ITEM_GROUP_SIZE 32 /** Number of `e_InventoryItemId`s per `e_InventoryItemGroup`. */
 #define INPUT_ACTION_COUNT        14
@@ -311,7 +311,7 @@ struct _Model;
 #define INVENTORY_AMMO_WEAPON_ID(ammoId) \
     ((ammoId) - INVENTORY_ITEM_GROUP_SIZE)
 
-/** @brief Unknown flags used by `s_SysWork::flags_2284`. */
+/** @brief Unknown flags used by `s_SysWork::charaGroupFlags`. */
 typedef enum _Unk2284Flags
 {
     Unk2284Flag_None = 0,
@@ -1129,7 +1129,7 @@ typedef struct _EventData
     u8  pointOfInterestIdx_5;   /** Index into `g_MapOverlayHeader.mapPointsOfInterest_1C`. */
     u8  requiredItemId_6;       /** `e_InventoryItemId` that player must use from item screen. */
     u8  unk_7[1];
-    u32 sysState_8_0       : 5; /** `e_SysState` used by the event. */
+    u32 sysState_0       : 5; /** `e_SysState` used by the event. */
     u32 eventParam_8_5     : 8; /** Can be an ID of a `MapMsg`, sound effect, index into `mapEventFuncs_20`, or index into `mapPointsOfInterest_1C` for `areaLoad` events. */
     u32 flags_8_13         : 6; /** `e_EventDataUnkCutsceneState` */
     u32 sfxPairIdx_8_19    : 5; /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
@@ -1139,6 +1139,7 @@ typedef struct _EventData
 } s_EventData;
 STATIC_ASSERT_SIZEOF(s_EventData, 12);
 
+/** @brief User options configuration. */
 typedef struct _SaveUserConfig
 {
     s_ControllerConfig controllerConfig;
@@ -1152,7 +1153,7 @@ typedef struct _SaveUserConfig
     u8                 optExtraWeaponCtrl_23;     /** `bool` | Switch: `false`, Press: `true`, default: Press. */
     u8                 optExtraBloodColor_24;     /** `e_BloodColor` | Default: Normal. */
     s8                 optAutoLoad_25;            /** `bool` | Off: `false`, On: `true`, default: Off. */
-    u8                 unk_26; // Padding.
+    u8                 __pad_26;
     u8                 optExtraOptionsEnabled_27; /** Holds unlocked option flags. */
     s8                 optExtraViewCtrl_28;       /** `bool` | Normal: `false`, Reverse: `true`, default: Normal. */
     s8                 optExtraViewMode_29;       /** `bool` | Normal: `false`, Self View: `true`, default: Normal. */
@@ -1178,18 +1179,11 @@ typedef struct _GameWork
     /* 0x58C */ s_PrimColor        background2dColor;
     /* 0x590 */ e_GameState        gameStatePrev;
     /* 0x594 */ e_GameState        gameState;
-    /* 0x598 */ s32                gameStateSteps[3]; /** Sub-state steps used by the current `gameState`. Can other state IDs or data.
-                                                       * This states could be sub-states for specific events of individual screens
-                                                       * because of the way it's normally used in menus. For example: in the settings
-                                                       * screen, [0] is used to define what option the player has selected, and [1] is used
-                                                       * during specific settings screens, such as the position screen or the brightness screen.
-                                                       *
-                                                       * [2] is likely rarely used or maybe only used during maps.
-                                                       */
+    /* 0x598 */ s32                gameStateSteps[3]; /** Sub-state steps used by the current `gameState`. Can be other state IDs or data. */
     /* 0x5A4 */ s8                 unk_5A4[4];        // Padding?
     /* 0x5A8 */ s32                field_5A8;
     /* 0x5AC */ s32                field_5AC;
-    /* 0x5B0 */ s8                 unk_5B0;           // Padding?
+    /* 0x5B0 */ s8                 __pad_5B0;
     /* 0x5B1 */ s8                 mapAnimIdx;
     /* 0x5B2 */ s8                 bgmIdx;            /** `BgmTrackIdx` | Currently player background music track. */
     /* 0x5B4 */ s8                 ambientIdx;        /** Index of `g_AmbientVabTaskLoadCmds`. */
@@ -1245,13 +1239,6 @@ typedef struct _Model
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);
 
-typedef union
-{
-    s32 val32;
-    s16 val16[2];
-    s8  val8[4];
-} u_Property;
-
 // TODO: Unsure if this struct is puppet doctor specific or shared with all characterss. Pointer gets set at puppetDoc+0x124.
 typedef struct
 {
@@ -1285,6 +1272,13 @@ typedef struct _CharaDamage
     VECTOR3 position_0;
     q19_12  amount_C;
 } s_CharaDamage;
+
+typedef union
+{
+    s32 val32;
+    s16 val16[2];
+    s8  val8[4];
+} u_Property;
 
 /** @brief Temporary struct. */
 typedef struct _SubCharPropertiesDummy
@@ -1658,7 +1652,7 @@ STATIC_ASSERT_SIZEOF(s_PropertiesSplitHead, 64);
 typedef struct _PropertiesStalker
 {
     s16    flags_E8; /** `e_StalkerFlags` */
-    s8     unk_EA[2]; // Padding?
+    s8     __pad_EA[2];
     q3_12  offset_EC;
     q3_12  offset_EE;
     q19_12 targetPositionX_F0;
@@ -1671,7 +1665,7 @@ typedef struct _PropertiesStalker
     q19_12 relAnimTime_104;
     q4_12  timer_108;
     u8     field_10A;
-    s8     unk_10B; // Padding?
+    s8     __pad_10B;
     q19_12 timer_10C;
     q19_12 health_110;
     q3_12  angle_114;
@@ -1909,71 +1903,71 @@ STATIC_ASSERT_SIZEOF(s_SysWork_2388, 392);
 /** @brief Main system workspace. Stores key engine data. */
 typedef struct _SysWork
 {
-    s8              unk_0[8];
-    e_SysState      sysState_8;
-    s32             sysStateStep_C[3]; /** Temp data used by current `sysState_8`. Can be another state ID or other data. */
-    s32             isMgsStringSet_18; /** `bool` | Indicates if string have been loaded and is going (or it is) being display. */
-    s32             counters_1C[3];
-    q19_12          field_28; // Multi-purpose? Used as alpha to fade between images in `Screen_BackgroundImgTransition`.
-    q19_12          timer_2C; // Cutscene message timer?
-    s32             field_30;
-    s8              unk_34[4]; // Padding?
-    s_PlayerCombat  playerCombat_38; // Information related to weapons and attack.
-    /* 0x4C */ s_PlayerWork    playerWork;
-    s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
-    GsCOORDINATE2   playerBoneCoords_890[HarryBone_Count];
-    GsCOORDINATE2   unkCoords_E30[5];                  // Might be part of previous array for 5 extra coords which go unused.
-    GsCOORDINATE2   npcCoords_FC0[NPC_BONE_COUNT_MAX]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
-    s8              npcId_2280;                        // NPC ID for `npcFlags_2290`. Not an index, starts at 1.
-    s8              loadingScreenIdx_2281;
-    s8              field_2282;                        /** `e_EventDataUnkCutsceneState` */
-    s8              sfxPairIdx_2283;                   /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
-    u16             flags_2284[GROUP_CHARA_COUNT];     /** `e_Unk2284Flags` | Flags for character groups. Only flags 0 and 1 used. */
-                                                       // Enabling a flag for Larval Stalkers causes them to die.
-    s32             field_228C[1];
-    s32             npcFlags_2290; // Flags related to NPCs. Each bit corresponds to `npcs_1A0` index.
-    s8              unk_2294[4];   // Padding?
-    e_SysWorkProcessFlags processFlags_2298;
-    s32             field_229C;    /** Dead code. It get assigned -1 when the player has been initalized and get 0 assigned when the player changes the area, beyond that, the code do not use this variable. */
-    e_SysFlags      sysFlags_22A0; // Music related.
-    e_SysFlags2     flags_22A4;    // `e_SysFlags2` | `SysFlag2_6` passed as "use through door cam" flag in `vcSetFirstCamWork`. Also `e_SysFlags` or different?
-    GsCOORDINATE2   coord_22A8;    // For particles only?
-    GsCOORDINATE2   coord_22F8;    // Likely related to above.
-    s8              field_2348   : 8;
-    s8              field_2349   : 8; // Particle spawn multiplier?
-    u8              field_234A   : 8; /** `bool` */
-    u8              field_234B_0 : 4;
-    u8              field_234B_4 : 4;
-    s32             mapMsgTimer_234C;
-    u8              enableHighResGlyphs_2350_0    : 4; /** `bool` */
-    u8              silentYesSelection_2350_4     : 4; /** `bool` */
-    u32             inventoryItemSelectedIdx_2351 : 8;
-    u32             flags_2352                    : 8;
-    s8              targetNpcIdx_2353; /** Index of the NPC being targeted by the player. */
-    s8              npcIdxs_2354[4];
-    u8              enablePlayerMatchAnim_2358; /** `bool` | Activates the animation performed by Harry when lighting a match at the beginning of the game. */
-    s8              unk_2359[1];
-    u8              playerStopFlags_235A; /** `e_PlayerStopFlags` */
-    s8              unk_235B[1];
-    GsCOORDINATE2*  field_235C;              // Player torso bone.
-    VECTOR3         pointLightPosition_2360; //                   } Often gets set from DMS cutscene data.
-    GsCOORDINATE2*  field_236C;              // Player root bone. }
-    SVECTOR         pointLightRot_2370;      //                   }
-    s16             pointLightIntensity_2378;
-    q3_12           cameraAngleY_237A;
-    q3_12           cameraAngleZ_237C;
-    s16             field_237E;
-    q19_12          cameraRadiusXz_2380;
-    q19_12          cameraY_2384;
-    s_SysWork_2388  field_2388;
-    s32             field_2510;
-    s_SysWork_2514  field_2514;
-    s8              unused_254C[508]; // @unused Debug data?
-    q3_12           bgmLayerVolumes_2748[BGM_LAYER_COUNT];
-    s8              unk_275A[2];
-    q19_12          field_275C;
-    s32             field_2760;
-    s32             field_2764;
+    /* 0x0    */ s8              unk_0[8];
+    /* 0x8    */ e_SysState      sysState;
+    /* 0xC    */ s32             sysStateSteps[3]; /** Temp data used by current `sysState`. Can be another state ID or other data. */
+    /* 0x10   */ s32             isMgsStringSet;   /** `bool` | Indicates if string have been loaded and is going (or it is) being display. */
+    /* 0x1C   */ s32             counters_1C[3];
+    /* 0x28   */ q19_12          field_28; // Multi-purpose? Used as alpha to fade between images in `Screen_BackgroundImgTransition`.
+    /* 0x2C   */ q19_12          timer_2C; // Cutscene message timer?
+    /* 0x30   */ s32             field_30;
+    /* 0x34   */ s8              unk_34[4];    // Padding?
+    /* 0x38   */ s_PlayerCombat  playerCombat; // Information related to weapons and attack.
+    /* 0x4C   */ s_PlayerWork    playerWork;
+    /* 0x1A0  */ s_SubCharacter  npcs[NPC_COUNT_MAX];
+    /* 0x890  */ GsCOORDINATE2   playerBoneCoords[HarryBone_Count];
+    /* 0xE30  */ GsCOORDINATE2   unkCoords_E30[5];                  // Might be part of previous array for 5 extra coords which go unused.
+    /* 0xFC0  */ GsCOORDINATE2   npcCoords[NPC_BONE_COUNT_MAX]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
+    /* 0x2280 */ s8              npcFlagsId;                        // NPC ID for `npcFlags`. Not an index, starts at 1.
+    /* 0x2281 */ s8              loadingScreenIdx;
+    /* 0x2282 */ s8              field_2282;                        /** `e_EventDataUnkCutsceneState` */
+    /* 0x2283 */ s8              sfxPairIdx_2283;                   /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
+    /* 0x2284 */ u16             charaGroupFlags[CHARA_GROUP_COUNT];     /** `e_Unk2284Flags` | Flags for character groups. */
+                                                                    // Enabling a flag for Larval Stalkers causes them to die.
+    /* 0x228C */ s32             field_228C[1];
+    /* 0x2290 */ s32             npcFlags; // Flags related to NPCs. Each bit corresponds to `npcs` index.
+    /* 0x2294 */ s8              unk_2294[4];   // Padding?
+    /* 0x2298 */ e_SysWorkProcessFlags processFlags;
+    /* 0x229C */ s32             field_229C;    /** Dead code. It get assigned -1 when the player has been initalized and get 0 assigned when the player changes the area, beyond that, the code do not use this variable. */
+    /* 0x22A0 */ e_SysFlags      sysFlags_22A0; // Music related.
+    /* 0x22A4 */ e_SysFlags2     flags_22A4;    // `e_SysFlags2` | `SysFlag2_6` passed as "use through door cam" flag in `vcSetFirstCamWork`. Also `e_SysFlags` or different?
+    /* 0x22A8 */ GsCOORDINATE2   coord_22A8;    // For particles only?
+    /* 0x22F8 */ GsCOORDINATE2   coord_22F8;    // Likely related to above.
+    /* 0x2348 */ s8              field_2348   : 8;
+    /* 0x2349 */ s8              field_2349   : 8; // Particle spawn multiplier?
+    /* 0x234A */ u8              field_234A   : 8; /** `bool` */
+    /* 0x234B */ u8              field_234B_0 : 4;
+    /* 0x234B */ u8              field_234B_4 : 4;
+    /* 0x234C */ s32             mapMsgTimer;
+    /* 0x2350 */ u8              enableHighResGlyphs_2350_0    : 4; /** `bool` */
+    /* 0x2350 */ u8              silentYesSelection_2350_4     : 4; /** `bool` */
+    /* 0x2351 */ u32             inventoryItemSelectedIdx_2351 : 8;
+    /* 0x2352 */ u32             flags_2352                    : 8;
+    /* 0x2353 */ s8              targetNpcIdx_2353; /** Index of the NPC being targeted by the player. */
+    /* 0x2354 */ s8              npcIdxs_2354[4];
+    /* 0x2358 */ u8              enablePlayerMatchAnim_2358; /** `bool` | Activates the animation performed by Harry when lighting a match at the beginning of the game. */
+    /* 0x2359 */ s8              unk_2359[1];
+    /* 0x235A */ u8              playerStopFlags_235A; /** `e_PlayerStopFlags` */
+    /* 0x235B */ s8              unk_235B[1];
+    /* 0x235C */ GsCOORDINATE2*  field_235C;              // Player torso bone.
+    /* 0x2360 */ VECTOR3         pointLightPosition_2360; //                   } Often gets set from DMS cutscene data.
+    /* 0x236C */ GsCOORDINATE2*  field_236C;              // Player root bone. }
+    /* 0x2370 */ SVECTOR         pointLightRot_2370;      //                   }
+    /* 0x2378 */ s16             pointLightIntensity_2378;
+    /* 0x237A */ q3_12           cameraAngleY_237A;
+    /* 0x237C */ q3_12           cameraAngleZ_237C;
+    /* 0x237E */ s16             field_237E;
+    /* 0x2380 */ q19_12          cameraRadiusXz_2380;
+    /* 0x2384 */ q19_12          cameraY_2384;
+    /* 0x2388 */ s_SysWork_2388  field_2388;
+    /* 0x2510 */ s32             field_2510;
+    /* 0x2514 */ s_SysWork_2514  field_2514;
+    /* 0x254C */ s8              unused_254C[508]; // @unused Debug data?
+    /* 0x2748 */ q3_12           bgmLayerVolumes_2748[BGM_LAYER_COUNT];
+    /* 0x275A */ s8              unk_275A[2];
+    /* 0x275C */ q19_12          field_275C;
+    /* 0x2760 */ s32             field_2760;
+    /* 0x2764 */ s32             field_2764;
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 10088);
 
@@ -1998,13 +1992,13 @@ static inline s32 SysWork_StateSetNext(e_SysState sysState)
     s32 state;
 
     state                       =
-    g_SysWork.sysState_8        = sysState;
+    g_SysWork.sysState        = sysState;
     g_SysWork.counters_1C[2]          = 0;
-    g_SysWork.sysStateStep_C[0] = 0;
+    g_SysWork.sysStateSteps[0] = 0;
     g_SysWork.field_28          = 0;//Q12(0.0f);
-    g_SysWork.sysStateStep_C[1] = 0;
+    g_SysWork.sysStateSteps[1] = 0;
     g_SysWork.timer_2C          = 0;//Q12(0.0f);
-    g_SysWork.sysStateStep_C[2] = 0;
+    g_SysWork.sysStateSteps[2] = 0;
     return state;
 }
 
@@ -2017,20 +2011,20 @@ static inline void SysWork_StateStepIncrement(s32 stepIdx)
     if (stepIdx == 0)
     {
         g_SysWork.field_28          = 0;//Q12(0.0f);
-        g_SysWork.sysStateStep_C[1] = 0;
+        g_SysWork.sysStateSteps[1] = 0;
         g_SysWork.timer_2C          = 0;//Q12(0.0f);
-        g_SysWork.sysStateStep_C[2] = 0;
-        g_SysWork.sysStateStep_C[0]++;
+        g_SysWork.sysStateSteps[2] = 0;
+        g_SysWork.sysStateSteps[0]++;
     }
     else if (stepIdx == 1)
     {
         g_SysWork.timer_2C          = 0;//Q12(0.0f);
-        g_SysWork.sysStateStep_C[2] = 0;
-        g_SysWork.sysStateStep_C[1]++;
+        g_SysWork.sysStateSteps[2] = 0;
+        g_SysWork.sysStateSteps[1]++;
     }
     else
     {
-        g_SysWork.sysStateStep_C[2]++;
+        g_SysWork.sysStateSteps[2]++;
     }
 }
 
@@ -2047,23 +2041,23 @@ static inline s32 SysWork_StateStepSet(s32 stepIdx, s32 sysStateStep)
     if (stepIdx == 0)
     {
         step                        =
-        g_SysWork.sysStateStep_C[0] = sysStateStep;
+        g_SysWork.sysStateSteps[0] = sysStateStep;
         g_SysWork.field_28          = 0;//Q12(0.0f);
-        g_SysWork.sysStateStep_C[1] = 0;
+        g_SysWork.sysStateSteps[1] = 0;
         g_SysWork.timer_2C          = 0;//Q12(0.0f);
-        g_SysWork.sysStateStep_C[2] = 0;
+        g_SysWork.sysStateSteps[2] = 0;
     }
     else if (stepIdx == 1)
     {
         step                        =
-        g_SysWork.sysStateStep_C[1] = sysStateStep;
+        g_SysWork.sysStateSteps[1] = sysStateStep;
         g_SysWork.timer_2C          = 0;//Q12(0.0f);
-        g_SysWork.sysStateStep_C[2] = 0;
+        g_SysWork.sysStateSteps[2] = 0;
     }
     else
     {
         step                        =
-        g_SysWork.sysStateStep_C[2] = sysStateStep;
+        g_SysWork.sysStateSteps[2] = sysStateStep;
     }
 
     return step;
@@ -2072,29 +2066,29 @@ static inline s32 SysWork_StateStepSet(s32 stepIdx, s32 sysStateStep)
 /** @brief Resets `sysStateStep` in `g_SysWork` for the next tick. */
 static inline void SysWork_StateStepReset()
 {
-    g_SysWork.sysStateStep_C[0] = NO_VALUE;
+    g_SysWork.sysStateSteps[0] = NO_VALUE;
     g_SysWork.field_28          = 0;//Q12(0.0f);
-    g_SysWork.sysStateStep_C[1] = 0;
+    g_SysWork.sysStateSteps[1] = 0;
     g_SysWork.timer_2C          = 0;//Q12(0.0f);
-    g_SysWork.sysStateStep_C[2] = 0;
+    g_SysWork.sysStateSteps[2] = 0;
 }
 
-/** @brief Sets an NPC flag in the `g_SysWork.npcFlags_2290` bitfield.
+/** @brief Sets an NPC flag in the `g_SysWork.npcFlags` bitfield.
  *
  * @param flagIdx Index of the NPC flag to set.
  */
 static inline void SysWork_NpcFlagSet(s32 flagIdx)
 {
-    g_SysWork.npcFlags_2290 |= 1 << flagIdx;
+    g_SysWork.npcFlags |= 1 << flagIdx;
 }
 
-/** @brief Clears an NPC flag in the `g_SysWork.npcFlags_2290` bitfield.
+/** @brief Clears an NPC flag in the `g_SysWork.npcFlags` bitfield.
  *
  * @param flagIdx Index of the NPC flag to clear.
  */
 static inline void SysWork_NpcFlagClear(s32 flagIdx)
 {
-    CLEAR_FLAG(&g_SysWork.npcFlags_2290, flagIdx);
+    CLEAR_FLAG(&g_SysWork.npcFlags, flagIdx);
 }
 
 /** @brief Clears state steps twice for some reason? Only used once below, others use regular `Game_StateSetNext`. */

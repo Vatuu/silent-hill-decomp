@@ -45,7 +45,7 @@ void func_800D02B4(void) // 0x800D02B4
         EventState_End = 5
     } e_EventState;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case EventState_0:
             Player_ControlFreeze();
@@ -77,7 +77,7 @@ void func_800D02B4(void) // 0x800D02B4
 
 void func_800D03FC(void) // 0x800D03FC
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -237,12 +237,12 @@ void func_800D0608(void) // 0x800D0608
     }
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 4)
+        g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 4)
     {
         SysWork_StateStepSet(0, 4);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -272,7 +272,7 @@ void func_800D0608(void) // 0x800D0608
             break;
 
         case 1:
-            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 2, false);
+            func_80085EB8(0, &g_SysWork.npcs[0], 2, false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.0f), false);
             SysWork_StateStepIncrement(0);
 
@@ -313,7 +313,7 @@ void func_800D0608(void) // 0x800D0608
 
     if (D_800D1FEC >= 0)
     {
-        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "ARISA", D_800D1FEC, FS_BUFFER_24);
+        Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "ARISA", D_800D1FEC, FS_BUFFER_24);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&cameraPos, &cameraTarget, NULL, D_800D1FEC, FS_BUFFER_24));
         vcUserCamTarget(&cameraPos, NULL, true);
         vcUserWatchTarget(&cameraTarget, NULL, true);

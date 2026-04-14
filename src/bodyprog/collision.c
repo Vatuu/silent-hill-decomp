@@ -436,7 +436,7 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
     *charaCount = 0;
     activeCharas = &D_800C4458;
 
-    for (curChara = &g_SysWork.npcs_1A0[0]; curChara < &g_SysWork.npcs_1A0[ARRAY_SIZE(g_SysWork.npcs_1A0)]; curChara++)
+    for (curChara = &g_SysWork.npcs[0]; curChara < &g_SysWork.npcs[ARRAY_SIZE(g_SysWork.npcs)]; curChara++)
     {
         if (curChara->model.charaId != Chara_None)
         {

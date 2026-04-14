@@ -130,7 +130,7 @@ void func_800D7B2C(void)
 {
     g_DeltaTime = Q12(0.0f);
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -228,7 +228,7 @@ void func_800D7EB0(void)
 {
     g_DeltaTime = Q12(0.0f);
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -313,7 +313,7 @@ void func_800D81CC(void) // 0x800D81CC
 {
     g_DeltaTime = Q12(0.0f);
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -382,7 +382,7 @@ void func_800D8354(void) // 0x800D8354
 
     g_DeltaTime = Q12(0.0f);
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -441,13 +441,13 @@ void func_800D85D8(void) // 0x800D85D8
 {
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 5)
+        g_SysWork.sysStateSteps[0] >= 3 && g_SysWork.sysStateSteps[0] < 5)
     {
         ScreenFade_ResetTimestep();
         SysWork_StateStepReset();
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -511,13 +511,13 @@ void func_800D85D8(void) // 0x800D85D8
 void func_800D8948(void) // 0x800D8948
 {
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] >= 4 && g_SysWork.sysStateStep_C[0] < 6)
+        g_SysWork.sysStateSteps[0] >= 4 && g_SysWork.sysStateSteps[0] < 6)
     {
         ScreenFade_ResetTimestep();
         SysWork_StateStepReset();
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -586,7 +586,7 @@ void func_800D8CC4(void) // 0x800D8CC4
 
 void MapEvent_Boiler0(void) // 0x800D8CF0
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -655,7 +655,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
 
 void MapEvent_Boiler1(void)
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -691,7 +691,7 @@ void MapEvent_Boiler1(void)
 
 void MapEvent_Boiler2(void) // 0x800D9148
 {
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();

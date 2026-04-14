@@ -49,12 +49,12 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
     s_Model*       model;
     GsCOORDINATE2* boneCoords;
 
-    boneCoords = g_SysWork.playerBoneCoords_890;
+    boneCoords = g_SysWork.playerBoneCoords;
     model      = &g_SysWork.playerWork.player.model;
 
-    if (g_SysWork.sysState_8 == SysState_Gameplay)
+    if (g_SysWork.sysState == SysState_Gameplay)
     {
-        if (g_SysWork.processFlags_2298 == SysWorkProcessFlag_OverlayTransition)
+        if (g_SysWork.processFlags == SysWorkProcessFlag_OverlayTransition)
         {
             AreaLoad_UpdatePlayerPosition();
         }
@@ -86,7 +86,7 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
         D_800A998C.status = model->anim.status;
 
         Math_MatrixTransform(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, boneCoords);
-        g_SysWork.sysState_8++;
+        g_SysWork.sysState++;
     }
 
     Anim_PlaybackLoop(model, (s_Skeleton*)FS_BUFFER_0, boneCoords, &D_800A998C);

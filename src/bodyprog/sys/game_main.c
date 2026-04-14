@@ -272,7 +272,7 @@ void MainLoop(void) // 0x80032EE0
         }
         else
         {
-            if (g_SysWork.sysState_8 != SysState_Gameplay)
+            if (g_SysWork.sysState != SysState_Gameplay)
             {
                 g_VBlanks     = VSync(SyncMode_Count) - g_PrevVBlanks;
                 g_PrevVBlanks = VSync(SyncMode_Count);

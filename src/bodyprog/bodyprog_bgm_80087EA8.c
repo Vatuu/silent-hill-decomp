@@ -33,7 +33,7 @@ void func_80087EDC(s32 cmd) // 0x80087EDC
         return;
     }
 
-    switch (g_SysWork.sysStateStep_C[1])
+    switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
             if (!Bgm_ActiveBgmTrackCheck(cmd))
@@ -82,7 +82,7 @@ void func_80088048(void) // 0x80088048
         return;
     }
 
-    switch (g_SysWork.sysStateStep_C[1])
+    switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
             Bgm_AllLayersMute();
@@ -109,7 +109,7 @@ void func_800880F0(s32 arg0) // 0x800880F0
         return;
     }
 
-    switch (g_SysWork.sysStateStep_C[1])
+    switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
             Bgm_AllLayersMute();

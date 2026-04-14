@@ -216,12 +216,12 @@ void func_800D1910(void) // 0x800D1910
     }
 
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4 &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 14)
+        g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 14)
     {
         SysWork_StateStepSet(0, 14);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -233,7 +233,7 @@ void func_800D1910(void) // 0x800D1910
 
             D_800D6EF4 = 0;
 
-            Chara_Load(0, Chara_Lisa, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_Lisa, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Lisa, 0, Q12(70.0f), Q12(150.0f), 0, 3);
             func_8003D03C();
@@ -267,7 +267,7 @@ void func_800D1910(void) // 0x800D1910
 
         case 1:
             func_80085EB8(2, &g_SysWork.playerWork.player, 0, false);
-            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 9, false);
+            func_80085EB8(0, &g_SysWork.npcs[0], 9, false);
 
             D_800D37C0 = 1;
 
@@ -322,7 +322,7 @@ void func_800D1910(void) // 0x800D1910
             break;
 
         case 12:
-            func_80086C58(&g_SysWork.npcs_1A0[0], 10);
+            func_80086C58(&g_SysWork.npcs[0], 10);
             SysWork_StateStepIncrementAfterTime(&D_800D6EF4, Q12(10.0f), Q12(25.0f), Q12(46.0f), true, false);
             break;
 
@@ -340,7 +340,7 @@ void func_800D1910(void) // 0x800D1910
             func_80085EB8(3, &g_SysWork.playerWork.player, 0, false);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+            func_80088F94(&g_SysWork.npcs[0], 0, 0);
 
             Savegame_EventFlagSet(EventFlag_338);
 
@@ -350,7 +350,7 @@ void func_800D1910(void) // 0x800D1910
             break;
     }
 
-    g_SysWork.npcs_1A0[0].position.vy = Q12(0.0f);
+    g_SysWork.npcs[0].position.vy = Q12(0.0f);
 
     if (D_800D6EF4 >= Q12(0.0f))
     {
@@ -358,7 +358,7 @@ void func_800D1910(void) // 0x800D1910
 
         if (D_800D37C0 != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "LISA", D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LISA", D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15);
         }
 
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D6ED8, &D_800D6EE8, NULL, D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15));
@@ -373,12 +373,12 @@ void func_800D23E4(void) // 0x800D23E4
     SVECTOR3 unused;
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 22)
+        g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 22)
     {
         SysWork_StateStepSet(0, 26);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -392,7 +392,7 @@ void func_800D23E4(void) // 0x800D23E4
             D_800D6EF4 = 0;
 
             // Load Lisa character.
-            Chara_Load(0, Chara_Lisa, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_Lisa, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Lisa, 0, Q12(60.0f), Q12(140.0f), Q12_ANGLE(0.0f), 3);
 
@@ -417,18 +417,18 @@ void func_800D23E4(void) // 0x800D23E4
             break;
 
         case 1:
-            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 11, false);
+            func_80085EB8(0, &g_SysWork.npcs[0], 11, false);
             func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
             SysWork_StateStepIncrement(0);
             break;
 
         case 2:
-            func_80085EB8(2, &g_SysWork.npcs_1A0[0], 0, false);
+            func_80085EB8(2, &g_SysWork.npcs[0], 0, false);
             SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 3:
-            func_80085EB8(3, &g_SysWork.npcs_1A0[0], 0, false);
+            func_80085EB8(3, &g_SysWork.npcs[0], 0, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -441,7 +441,7 @@ void func_800D23E4(void) // 0x800D23E4
             break;
 
         case 6:
-            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 12, false);
+            func_80085EB8(0, &g_SysWork.npcs[0], 12, false);
             g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
             SysWork_StateStepIncrement(0);
 
@@ -468,7 +468,7 @@ void func_800D23E4(void) // 0x800D23E4
 
         case 9:
             func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
-            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 5, false);
+            func_80085EB8(0, &g_SysWork.npcs[0], 5, false);
 
             g_SysWork.pointLightIntensity_2378 = Q12(1.2f);
             D_800D6EF4           = Q12(55.0f);
@@ -506,7 +506,7 @@ void func_800D23E4(void) // 0x800D23E4
             break;
 
         case 17:
-            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 13, false);
+            func_80085EB8(0, &g_SysWork.npcs[0], 13, false);
             g_SysWork.pointLightIntensity_2378 = Q12(1.2f);
             SysWork_StateStepIncrement(0);
 
@@ -522,7 +522,7 @@ void func_800D23E4(void) // 0x800D23E4
         case 20:
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, 2);
             func_80085EB8(0, &g_SysWork.playerWork.player, 53, false);
-            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 21, false);
+            func_80085EB8(0, &g_SysWork.npcs[0], 21, false);
             SysWork_StateStepIncrement(0);
 
         case 21:
@@ -559,7 +559,7 @@ void func_800D23E4(void) // 0x800D23E4
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
 
             func_8003D01C();
-            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+            func_80088F94(&g_SysWork.npcs[0], 0, 0);
 
             Savegame_EventFlagSet(EventFlag_MapMark_AltHospital1F_RightEntranceBroken);
             Savegame_EventFlagSet(EventFlag_340);
@@ -582,7 +582,7 @@ void func_800D23E4(void) // 0x800D23E4
     if (D_800D6EF4 >= Q12(0.0f))
     {
         Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800D6EF4, FS_BUFFER_15);
-        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position, &g_SysWork.npcs_1A0[0].rotation, "LISA", D_800D6EF4, FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LISA", D_800D6EF4, FS_BUFFER_15);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D6ED8, &D_800D6EE8, NULL, D_800D6EF4, FS_BUFFER_15));
         vcUserCamTarget(&D_800D6ED8, NULL, true);
         vcUserWatchTarget(&D_800D6EE8, NULL, true);

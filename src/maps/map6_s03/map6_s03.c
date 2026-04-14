@@ -199,13 +199,13 @@ void func_800D822C(void) // 0x800D822C
 {
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4)
     {
-        if (g_SysWork.sysStateStep_C[0] == 3)
+        if (g_SysWork.sysStateSteps[0] == 3)
         {
             SysWork_StateStepSet(0, 4);
         }
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -257,13 +257,13 @@ void func_800D84EC(void) // 0x800D84EC
 {
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4)
     {
-        if (g_SysWork.sysStateStep_C[0] == 4)
+        if (g_SysWork.sysStateSteps[0] == 4)
         {
             SysWork_StateStepSet(0, 5);
         }
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -331,7 +331,7 @@ void Map_WorldObjectsInit(void) // 0x800D8818
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        g_SysWork.npcId_2280 = 3;
+        g_SysWork.npcFlagsId = 3;
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
@@ -373,13 +373,13 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
             func_8005DC1C(Sfx_Unk1614, &g_WorldObjectPos0, Q8(0.5f), 0);
             Savegame_EventFlagSet(EventFlag_430);
 
-            for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
+            for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
             {
-                if (g_SysWork.npcs_1A0[i].model.charaId != Chara_None &&
-                    g_SysWork.npcs_1A0[i].position.vz < Q12(36.5f))
+                if (g_SysWork.npcs[i].model.charaId != Chara_None &&
+                    g_SysWork.npcs[i].position.vz < Q12(36.5f))
                 {
-                    g_SysWork.npcs_1A0[i].model.charaId = Chara_None;
-                    Savegame_EnemyStateUpdate(&g_SysWork.npcs_1A0[i]);
+                    g_SysWork.npcs[i].model.charaId = Chara_None;
+                    Savegame_EnemyStateUpdate(&g_SysWork.npcs[i]);
                 }
             }
         }
@@ -484,12 +484,12 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
         {
             Savegame_EventFlagSet(EventFlag_439);
 
-            for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
+            for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
             {
-                if (g_SysWork.npcs_1A0[i].position.vx < Q12(32.0f) &&
-                    g_SysWork.npcs_1A0[i].model.charaId != Chara_None)
+                if (g_SysWork.npcs[i].position.vx < Q12(32.0f) &&
+                    g_SysWork.npcs[i].model.charaId != Chara_None)
                 {
-                    func_80088F94(&g_SysWork.npcs_1A0[i], 0, 0);
+                    func_80088F94(&g_SysWork.npcs[i], 0, 0);
                 }
             }
 

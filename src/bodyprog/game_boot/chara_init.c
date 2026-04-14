@@ -21,13 +21,13 @@ static void GameBoot_NpcClear(void) // 0x80034EC8
     s32 i;
 
     g_SysWork.field_228C[0] = 0;
-    g_SysWork.npcFlags_2290 = 0;
+    g_SysWork.npcFlags = 0;
 
-    bzero(g_SysWork.npcs_1A0, ARRAY_SIZE(g_SysWork.npcs_1A0) * sizeof(s_SubCharacter));
+    bzero(g_SysWork.npcs, ARRAY_SIZE(g_SysWork.npcs) * sizeof(s_SubCharacter));
 
-    for (i = 0; i < GROUP_CHARA_COUNT; i++)
+    for (i = 0; i < CHARA_GROUP_COUNT; i++)
     {
-        g_SysWork.flags_2284[i] = 0;
+        g_SysWork.charaGroupFlags[i] = 0;
     }
 }
 
@@ -65,7 +65,7 @@ void GameBoot_InGameInit(void) // 0x80034FB8
 
     GameBoot_NpcClear();
 
-    g_SysWork.npcId_2280 = 5;
+    g_SysWork.npcFlagsId = 5;
 
     func_8005E650(mapOvlId);
     func_80037124();

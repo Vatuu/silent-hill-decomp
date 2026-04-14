@@ -116,16 +116,16 @@ void func_800D0B64(void) // 0x800D0B64
     } e_EventState;
 
     #define playerChara g_SysWork.playerWork.player
-    #define lisaChara g_SysWork.npcs_1A0[0]
+    #define lisaChara g_SysWork.npcs[0]
 
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
+        g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < EventState_Skip)
     {
         SysWork_StateStepSet(0, EventState_Skip);
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -333,7 +333,7 @@ void func_800D0B64(void) // 0x800D0B64
     {
         Dms_CharacterGetPosRot(&playerChara.position, &playerChara.rotation, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
 
-        if (g_SysWork.sysStateStep_C[0] < 18)
+        if (g_SysWork.sysStateSteps[0] < 18)
         {
             Dms_CharacterGetPosRot(&lisaChara.position, &lisaChara.rotation, "LISA", g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
         }
@@ -342,7 +342,7 @@ void func_800D0B64(void) // 0x800D0B64
         vcUserCamTarget(&g_CutsceneCameraPosition, NULL, true);
         vcUserWatchTarget(&g_CutsceneCameraLookAt, NULL, true);
 
-        if (g_SysWork.sysStateStep_C[0] == 1 || g_SysWork.sysStateStep_C[0] == 2)
+        if (g_SysWork.sysStateSteps[0] == 1 || g_SysWork.sysStateSteps[0] == 2)
         {
             D_800D4362 += g_DeltaTime >> 1;
             if (D_800D4362 > Q12(0.25f))
@@ -351,7 +351,7 @@ void func_800D0B64(void) // 0x800D0B64
             }
         }
 
-        if (g_SysWork.sysStateStep_C[0] >= 10)
+        if (g_SysWork.sysStateSteps[0] >= 10)
         {
             D_800D4362 += Q12_MULT_PRECISE(Rng_GenerateUInt(Q12(0.5f), Q12_CLAMPED(1.0f)), g_DeltaTime) >> 3;
             if (D_800D4362 > Q12(1.0f))
@@ -392,7 +392,7 @@ void func_800D1604(void) // 0x800D1604
 
     ptr->field_18 = g_ActiveBufferIdx;
 
-    if (g_SysWork.sysStateStep_C[0] >= 7)
+    if (g_SysWork.sysStateSteps[0] >= 7)
     {
         temp_v0 = Screen_FadeInProgressGet();
         temp_v1 = (g_GameWork.config.optBrightness_22 * 8) + 4;
@@ -456,16 +456,16 @@ void func_800D1604(void) // 0x800D1604
 
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4)
     {
-        if (g_SysWork.sysStateStep_C[0] >= 3)
+        if (g_SysWork.sysStateSteps[0] >= 3)
         {
-            if (g_SysWork.sysStateStep_C[0] < 12)
+            if (g_SysWork.sysStateSteps[0] < 12)
             {
                 SysWork_StateStepSet(0, 12);
             }
         }
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -507,7 +507,7 @@ void func_800D1604(void) // 0x800D1604
             Map_MessageWithAudio(42, &g_MapMsgSoundIdx, &D_800D31C4);
 
         case 5:
-            if (g_SysWork.sysStateStep_C[0] == 5)
+            if (g_SysWork.sysStateSteps[0] == 5)
             {
                 SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
             }
@@ -515,7 +515,7 @@ void func_800D1604(void) // 0x800D1604
             D_800D31DC[1] = MIN(D_800D31DC[1] + Q12_MULT_PRECISE(g_DeltaTime, Q12(0.32f)), Q12(0.14f));
 
         case 4:
-            if (g_SysWork.sysStateStep_C[0] == 4)
+            if (g_SysWork.sysStateSteps[0] == 4)
             {
                 SysWork_StateStepIncrementDelayed(Q12(0.9f), false);
                 var_t5 = 2;
@@ -547,7 +547,7 @@ void func_800D1604(void) // 0x800D1604
             }
 
         case 3:
-            if (g_SysWork.sysStateStep_C[0] == 3)
+            if (g_SysWork.sysStateSteps[0] == 3)
             {
                 SysWork_StateStepIncrementDelayed(0x1333, false);
             }
@@ -669,7 +669,7 @@ void func_800D1604(void) // 0x800D1604
             break;
     }
 
-    if (g_SysWork.sysStateStep_C[0] >= 3)
+    if (g_SysWork.sysStateSteps[0] >= 3)
     {
         D_800D4362 -= g_DeltaTime >> 3;
         if (D_800D4362 < 0)

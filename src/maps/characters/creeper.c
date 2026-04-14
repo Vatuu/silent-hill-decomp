@@ -80,7 +80,7 @@ void Ai_Creeper_Init(s_SubCharacter* creeper)
     i = 0;
     do
     {
-        if (creeper == &g_SysWork.npcs_1A0[i] || g_SysWork.npcs_1A0[i].model.charaId != Chara_Creeper)
+        if (creeper == &g_SysWork.npcs[i] || g_SysWork.npcs[i].model.charaId != Chara_Creeper)
         {
             i++;
             continue;
@@ -88,9 +88,9 @@ void Ai_Creeper_Init(s_SubCharacter* creeper)
 
         break;
     }
-    while (i < ARRAY_SIZE(g_SysWork.npcs_1A0));
+    while (i < ARRAY_SIZE(g_SysWork.npcs));
 
-    if (i == ARRAY_SIZE(g_SysWork.npcs_1A0))
+    if (i == ARRAY_SIZE(g_SysWork.npcs))
     {
         // No other Creepers present.
         sharedData_800E57CC_1_s02 = 0;
@@ -202,7 +202,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
         {
             if (creeper->model.controlState == CreeperControl_3)
             {
-                g_SysWork.flags_2284[3] &= ~Unk2284Flag_1;
+                g_SysWork.charaGroupFlags[3] &= ~Unk2284Flag_1;
             }
 
             creeper->model.controlState = CreeperControl_4;
@@ -333,9 +333,9 @@ void Ai_Creeper_Control_1(s_SubCharacter* creeper)
                 creeperProps.timer_104 = Q12(0.0f);
 
                 // Update other Creepers.
-                for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
+                for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
                 {
-                    #define curNpc g_SysWork.npcs_1A0[i]
+                    #define curNpc g_SysWork.npcs[i]
 
                     // Check if NPC is Creeper.
                     if (curNpc.model.charaId != Chara_Creeper)
@@ -412,14 +412,14 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
                 creeperProps.timer_F0            = Q12(0.0f);
             }
         }
-        else if (!(g_SysWork.flags_2284[3] & Unk2284Flag_1) && !Chara_HasFlag(&playerChara, CharaFlag_Unk4) &&
+        else if (!(g_SysWork.charaGroupFlags[3] & Unk2284Flag_1) && !Chara_HasFlag(&playerChara, CharaFlag_Unk4) &&
                  distToPlayer < Q12(0.5f) && ABS(angleDeltaToPlayer) < Q12_ANGLE(10.0f) &&
                  playerChara.health > Q12(0.0f))
         {
             creeper->model.controlState  = CreeperControl_3;
             creeper->model.anim.status = ANIM_STATUS(CreeperAnim_12, false);
             creeperProps.timer_F0            = Q12(0.0f);
-            g_SysWork.flags_2284[3]         |= Unk2284Flag_1;
+            g_SysWork.charaGroupFlags[3]         |= Unk2284Flag_1;
         }
         else
         {
@@ -507,7 +507,7 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
 
     if (func_800700F8(creeper, &playerChara))
     {
-        g_SysWork.flags_2284[3]         &= ~Unk2284Flag_1;
+        g_SysWork.charaGroupFlags[3]         &= ~Unk2284Flag_1;
         creeper->model.controlState         = CreeperControl_2;
         creeper->model.anim.status = ANIM_STATUS(CreeperAnim_13, false);
         return;
@@ -591,18 +591,18 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
         creeperProps.flags_E8 |= CreeperFlag_0;
 
         // Alert other Creepers.
-        for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
+        for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
         {
             if (creeper->model.charaId == Chara_Creeper &&
-                !Math_Distance2dCheck(&creeper->position, &g_SysWork.npcs_1A0[i].position, Q12(16.0f)))
+                !Math_Distance2dCheck(&creeper->position, &g_SysWork.npcs[i].position, Q12(16.0f)))
             {
-                g_SysWork.npcs_1A0[i].properties.creeper.flags_E8 |= CreeperFlag_Alerted;
+                g_SysWork.npcs[i].properties.creeper.flags_E8 |= CreeperFlag_Alerted;
             }
         }
     }
     else if (ANIM_STATUS_IDX_GET(creeper->model.anim.status) == CreeperAnim_13)
     {
-        g_SysWork.flags_2284[3]   &= ~Unk2284Flag_1;
+        g_SysWork.charaGroupFlags[3]   &= ~Unk2284Flag_1;
         creeper->model.controlState   = CreeperControl_2;
         creeperProps.timer_F0      = Q12(0.0f);
         creeperProps.rotationY_108 = Chara_HeadingAngleGet(creeper, Q12(4.8f),

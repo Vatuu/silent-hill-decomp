@@ -10,7 +10,7 @@ void sharedFunc_800DB60C_7_s01(void)
     SPRT*     sprt;
     DR_TPAGE* tPage;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 4:
         case 5:
@@ -52,7 +52,7 @@ void sharedFunc_800DB60C_7_s01(void)
             GsOUT_PACKET_P = (PACKET*)tPage;
     }
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();

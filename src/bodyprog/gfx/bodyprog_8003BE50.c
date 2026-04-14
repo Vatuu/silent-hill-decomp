@@ -788,11 +788,11 @@ void WorldGfx_HeldItemDraw(void) // 0x8003D058
     // Distinguish between left-handed and right-handed items.
     if (heldItem->itemId_0 == InventoryItemId_CutscenePhone)
     {
-        coord = &g_SysWork.playerBoneCoords_890[HarryBone_LeftHand];
+        coord = &g_SysWork.playerBoneCoords[HarryBone_LeftHand];
     }
     else
     {
-        coord = &g_SysWork.playerBoneCoords_890[HarryBone_RightHand];
+        coord = &g_SysWork.playerBoneCoords[HarryBone_RightHand];
     }
 
     if (Fs_QueueIsEntryLoaded(heldItem->queueIdx_4))
@@ -852,7 +852,7 @@ s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHeader* mapHdr) // 0x8003D21C
     s_CharaModel* curModel;
 
     for (queueIdx = 0, i = 0, g_WorldGfxWork.charaLmBuffer_14 = MAP_CHARA_LM_BUFFER, cond = false;
-         i < GROUP_CHARA_COUNT;
+         i < CHARA_GROUP_COUNT;
          i++)
     {
         curCharaId = mapHdr->charaGroupIds_248[i];

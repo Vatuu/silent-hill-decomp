@@ -203,7 +203,7 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
     if (splitHeadProps.flags_E8 & SplitHeadFlag_0)
     {
         if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Hard &&
-            g_SysWork.playerCombat_38.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap))
+            g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap))
         {
             damageAmt <<= 5;
         }

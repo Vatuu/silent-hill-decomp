@@ -115,7 +115,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapOverlayId mapOverlayId, s32 arg3)
     u16 temp_v1_3;
 
 #if defined(MAP5_S01)
-    if (g_MapEventParam == 7 && g_SysWork.sysStateStep_C[0] == 8)
+    if (g_MapEventParam == 7 && g_SysWork.sysStateSteps[0] == 8)
     {
         return;
     }
@@ -1782,9 +1782,9 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
             }
             else
             {
-                pos.vx = g_SysWork.playerBoneCoords_890[HarryBone_RightHand].workm.t[0] - Q12_TO_Q8(arg2->field_0.vx);
-                pos.vy = g_SysWork.playerBoneCoords_890[HarryBone_RightHand].workm.t[1] - Q12_TO_Q8(arg2->field_0.vy);
-                pos.vz = g_SysWork.playerBoneCoords_890[HarryBone_RightHand].workm.t[2] - Q12_TO_Q8(arg2->field_0.vz);
+                pos.vx = g_SysWork.playerBoneCoords[HarryBone_RightHand].workm.t[0] - Q12_TO_Q8(arg2->field_0.vx);
+                pos.vy = g_SysWork.playerBoneCoords[HarryBone_RightHand].workm.t[1] - Q12_TO_Q8(arg2->field_0.vy);
+                pos.vz = g_SysWork.playerBoneCoords[HarryBone_RightHand].workm.t[2] - Q12_TO_Q8(arg2->field_0.vz);
             }
 
             temp_s0_3 = SquareRoot0(SQUARE(pos.vx) + SQUARE(pos.vz));
@@ -4028,9 +4028,9 @@ void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
     gte_SetRotMatrix(&viewMat);
     gte_SetTransMatrix(&viewMat);
 
-    beamDirY      = Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, Math_Cos(*rotY));
-    beamDirX      = Q12_MULT(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, Math_Sin(*rotY)), Math_Sin(*rotX));
-    beamDirZ      = Q12_MULT(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack].field_0, Math_Sin(*rotY)), Math_Cos(*rotX));
+    beamDirY      = Q12_MULT(D_800AD4C8[g_SysWork.playerCombat.weaponAttack].field_0, Math_Cos(*rotY));
+    beamDirX      = Q12_MULT(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat.weaponAttack].field_0, Math_Sin(*rotY)), Math_Sin(*rotX));
+    beamDirZ      = Q12_MULT(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat.weaponAttack].field_0, Math_Sin(*rotY)), Math_Cos(*rotX));
     beamStart.vx  = vec0->vx;
     beamStart.vy  = vec0->vy;
     beamStart.vz  = vec0->vz;

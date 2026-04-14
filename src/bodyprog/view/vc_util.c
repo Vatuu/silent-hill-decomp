@@ -158,7 +158,7 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
 
         case DebugCameraMode_ResetReference:
             vcSetRefPosAndSysRef2CamParam(&vcRefPosSt, &g_SysWork, for_f, back_f, right_f, left_f, up_f, down_f);
-            vwSetCoordRefAndEntou(&g_SysWork.playerBoneCoords_890[HarryBone_Head],
+            vwSetCoordRefAndEntou(&g_SysWork.playerBoneCoords[HarryBone_Head],
                                   Q12(0.0f), Q12(-0.15f), Q12(1.0f),
                                   Q12_ANGLE(165.0f), Q12_ANGLE(0.0f), Q12(-0.2f), Q12(1.0f));
             break;
@@ -175,7 +175,7 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
     SVECTOR fpos;     // Q23.8
     VECTOR  vec;
 
-    Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords_890[HarryBone_Head], &neck_lwm);
+    Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords[HarryBone_Head], &neck_lwm);
 
     fpos.vx = Q8(0.0f);
     fpos.vy = Q8(-0.1f);

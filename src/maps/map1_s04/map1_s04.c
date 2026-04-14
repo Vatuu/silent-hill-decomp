@@ -84,7 +84,7 @@ void func_800CCA2C(void) // 0x800CCA2C
 {
     s32 temp_s0;
 
-    switch (g_SysWork.sysStateStep_C[0])
+    switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
