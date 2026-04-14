@@ -107,7 +107,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             return MapMsgState_Finish;
 
         case true:
-            if (g_SysWork.sysFlags_22A0 & SysFlag_5)
+            if (g_SysWork.bgmStatusFlags & BgmStatusFlag_VoiceDialog)
             {
                 if (Sd_AudioStreamingCheck() == 4)
                 {
@@ -157,7 +157,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                         {
                             stateMachineIdx1 = FINISH_MAP_MSG;
 
-                            if (g_SysWork.sysFlags_22A0 & SysFlag_5)
+                            if (g_SysWork.bgmStatusFlags & BgmStatusFlag_VoiceDialog)
                             {
                                 SD_Call(19);
                             }
@@ -242,7 +242,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                         return MapMsgState_Idle;
                     }
 
-                    if (g_SysWork.sysFlags_22A0 & SysFlag_5)
+                    if (g_SysWork.bgmStatusFlags & BgmStatusFlag_VoiceDialog)
                     {
                         SD_Call(19);
                     }
@@ -277,7 +277,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
     g_SysWork.enableHighResGlyphs = false;
     msgDisplayLength               = 0;
 
-    if (g_SysWork.sysFlags_22A0 & SysFlag_5)
+    if (g_SysWork.bgmStatusFlags & BgmStatusFlag_VoiceDialog)
     {
         D_800BCD74 = 1;
     }

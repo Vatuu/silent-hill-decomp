@@ -226,8 +226,8 @@ MAP_EVENTS                       = 0x800DBE24;
 //--- PA: 0x01296C   VA: 0x800DBEE4   subsegment: data
 //----------------------------------------------------
 g_CommonWorldObjectPoses         = 0x800DBEE4; // type:WorldObjectPose size:0x3C
-g_ParticleMapOverlayId0          = 0x800DBF20;
-g_ParticleMapOverlayId1          = 0x800DBF24;
+g_ParticleMapIdx0                = 0x800DBF20;
+g_ParticleMapIdx1                = 0x800DBF24;
 g_Particle_SpeedX                = 0x800DBF28; // type:s32
 g_Particle_SpeedZ                = 0x800DBF2C; // type:s32
 sharedData_800DFB6C_0_s00        = 0x800DBF30; // type:s32

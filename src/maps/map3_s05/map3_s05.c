@@ -32,9 +32,9 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 void func_800D57E8(void) // 0x800D57E8
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
-    if (g_MapEventData->pointOfInterestIdx_5 == 25)
+    if (g_MapEventData->pointOfInterestIdx == 25)
     {
         Map_MessageWithSfx(11, Sfx_Unk1350, &sfxPos);
     }
@@ -83,7 +83,7 @@ void func_800D5934(void) // 0x800D5934
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx_5)
+    switch (g_MapEventData->pointOfInterestIdx)
     {
         case 96:
             pickupType   = CommonPickupItemId_Ampoule;
@@ -111,7 +111,7 @@ void func_800D5934(void) // 0x800D5934
 
 void func_800D59D4(void) // 0x800D59D4
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_BasementStoreroomKey, 1);
     Map_MessageWithSfx(27, Sfx_UseKey, &sfxPos);

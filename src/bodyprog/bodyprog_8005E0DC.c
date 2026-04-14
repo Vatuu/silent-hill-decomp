@@ -48,43 +48,43 @@ void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
             loadedEffectTextureFlags = EffectTextureFlag_None;
             break;
 
-        case MapOverlayId_MAP0_S01:
+        case MapIdx_MAP0_S01:
             if (!Savegame_EventFlagGet(EventFlag_47))
             {
                 effectTexFlags = EffectTextureFlag_Glass;
             }
             break;
 
-        case MapOverlayId_MAP1_S02:
-        case MapOverlayId_MAP1_S03:
+        case MapIdx_MAP1_S02:
+        case MapIdx_MAP1_S03:
             effectTexFlags = EffectTextureFlag_Water;
             break;
 
-        case MapOverlayId_MAP1_S05:
+        case MapIdx_MAP1_S05:
             effectTexFlags = EffectTextureFlag_Fire | EffectTextureFlag_Ef;
             break;
 
-        case MapOverlayId_MAP3_S05:
+        case MapIdx_MAP3_S05:
             if (!Savegame_EventFlagGet(EventFlag_284))
             {
                 effectTexFlags = EffectTextureFlag_Fire;
             }
             break;
 
-        case MapOverlayId_MAP4_S01:
+        case MapIdx_MAP4_S01:
             if (!Savegame_EventFlagGet(EventFlag_306))
             {
                 effectTexFlags = EffectTextureFlag_Fire;
             }
             break;
 
-        case MapOverlayId_MAP4_S05:
+        case MapIdx_MAP4_S05:
             effectTexFlags = EffectTextureFlag_Blood;
             break;
 
-        case MapOverlayId_MAP5_S00:
-        case MapOverlayId_MAP6_S03:
-        case MapOverlayId_MAPX_S00: // @unused
+        case MapIdx_MAP5_S00:
+        case MapIdx_MAP6_S03:
+        case MapIdx_MAPX_S00: // @unused
             effectTexFlags = EffectTextureFlag_WaterRefract;
             break;
     }

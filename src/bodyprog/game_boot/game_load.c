@@ -43,13 +43,13 @@ void GameState_LoadScreen_Update(void) // 0x800348E8
     GameBoot_LoadingScreen();
     GameBoot_GameStartup();
 
-    if (g_SysWork.flags_22A4 & SysFlag2_10)
+    if (g_SysWork.flags_22A4 & UnkSysFlag_10)
     {
         D_800BCDD4++;
 
         if (D_800BCDD4 >= 21)
         {
-            g_SysWork.flags_22A4 &= ~SysFlag2_10;
+            g_SysWork.flags_22A4 &= ~UnkSysFlag_10;
 
             SD_Call(Sfx_Unk1502);
             SD_Call(Sfx_Unk1501);
@@ -199,10 +199,10 @@ void GameBoot_GameStartup(void) // 0x80034964
             break;
 
         case 10:
-            if (g_SysWork.processFlags == ProcessFlag_BootDemo && !(g_SysWork.flags_22A4 & SysFlag2_1))
+            if (g_SysWork.processFlags == ProcessFlag_BootDemo && !(g_SysWork.flags_22A4 & UnkSysFlag_1))
             {
                 Demo_Start();
-                g_SysWork.flags_22A4 |= SysFlag2_1;
+                g_SysWork.flags_22A4 |= UnkSysFlag_1;
             }
 
             if (func_80039F90() & EventParamUnkState_2 || Sd_AmbientSfxInit() == 0)

@@ -96,7 +96,7 @@ void func_800E7B74(void) // 0x800E7B74
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx_5)
+    switch (g_MapEventData->pointOfInterestIdx)
     {
         case 139:
             pickupType   = CommonPickupItemId_FirstAidKit;
@@ -369,7 +369,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_M2S00_WaterWorksCutscene);
 
-            g_SysWork.flags_22A4 &= ~SysFlag2_4;
+            g_SysWork.flags_22A4 &= ~UnkSysFlag_4;
             break;
     }
 }
@@ -616,7 +616,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             vcReturnPreAutoCamWork(false);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
-            g_SysWork.flags_22A4 &= ~SysFlag2_4;
+            g_SysWork.flags_22A4 &= ~UnkSysFlag_4;
 
             func_8003A16C();
             break;
@@ -1107,7 +1107,7 @@ void func_800E9CB4(void) // 0x800E9CB4
 
 void MapEvent_HouseKeyUse(void) // 0x800E9D1C
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_HouseKey, 1);
     Map_MessageWithSfx(31, Sfx_UseKey, &sfxPos); // "Used the House Key."
@@ -1313,7 +1313,7 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
             g_SysWork.playerWork.player.position.vz = Q12(376.5f);
             g_SysWork.playerWork.player.rotation.vy = Q12(-0.25f);
             g_SysWork.field_30 = 20;
-            g_SysWork.flags_22A4 |= SysFlag2_3;
+            g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
@@ -1431,9 +1431,9 @@ void func_800EA6E0(void) // 0x800EA6E0
 void MapEvent_KGordonKeyUse(void) // 0x800EA894
 {
     VECTOR3 sfxPos = {
-        MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0,
+        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0,
         Q12(-1.2f),
-        MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8
+        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8
     };
 
     Player_ItemRemove(InventoryItemId_KGordonKey, 1);
@@ -1696,9 +1696,9 @@ void func_800EB174(void) // 0x800EB174
     {
         case 0:
             Player_ControlFreeze();
-            sfxPos.vx = MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0;
+            sfxPos.vx = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0;
             sfxPos.vy = Q12(-1.2f);
-            sfxPos.vz = MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8;
+            sfxPos.vz = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8;
 
             func_8005DC1C(Sfx_Unk1349, &sfxPos, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
@@ -1945,7 +1945,7 @@ void Map_WorldObjectsInit(void) // 0x800EB908
     if (!Savegame_EventFlagGet(EventFlag_146) ||
         (Savegame_EventFlagGet(EventFlag_193) &&  !Savegame_EventFlagGet(EventFlag_M2S00_WaterWorksCutscene)))
     {
-        g_SysWork.flags_22A4 |= SysFlag2_4;
+        g_SysWork.flags_22A4 |= UnkSysFlag_4;
     }
 
     if (Savegame_EventFlagGet(EventFlag_159))

@@ -580,7 +580,7 @@ void func_800D0500(void) // 0x800D0500
     s32 var_v0_2;
     s32 var_v1;
 
-    g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
+    g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
 
     var_s2 = 0;
 
@@ -1104,7 +1104,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D1718
 
             D_800D4E6D = 1;
         }
-        else if (g_SysWork.sysFlags_22A0 & SysFlag_6)
+        else if (g_SysWork.bgmStatusFlags & BgmStatusFlag_6)
         {
             func_800D2170(true);
             D_800D4E6D = 1;

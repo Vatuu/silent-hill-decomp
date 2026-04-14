@@ -415,7 +415,7 @@ void func_800904F4() // 0x800904F4
     g_SavegamePtr->clearGameEndings_24B = D_800C48B1;
     g_SavegamePtr->field_27A            = ((D_800C48B2 & 0x10) * 8) + 64;
     g_SavegamePtr->isNextFearMode_25C   = 1;
-    g_SavegamePtr->mapOverlayId_A4      = MapOverlayId_MAP0_S01;
+    g_SavegamePtr->mapOverlayId_A4      = MapIdx_MAP0_S01;
 
     if (D_800C48B6 != 0)
     {

@@ -397,8 +397,8 @@ MAP_EVENTS                          = 0x800EFF18;
 //--- PA: 0x026AC0   VA: 0x800F0038   subsegment: data
 //----------------------------------------------------
 g_CommonWorldObjectPoses            = 0x800F0048; // type:WorldObjectPos size:0x3C
-g_ParticleMapOverlayId0             = 0x800F0508;
-g_ParticleMapOverlayId1             = 0x800F050C;
+g_ParticleMapIdx0                   = 0x800F0508;
+g_ParticleMapIdx1                   = 0x800F050C;
 sharedData_800DE170_0_s01           = 0x800F0518; // type:VECTOR3 size:0xC
 sharedData_800DE180_0_s01           = 0x800F0528; // type:VECTOR3 size:0xC
 sharedData_800DE190_0_s01           = 0x800F0538; // type:VECTOR3 size:0xC

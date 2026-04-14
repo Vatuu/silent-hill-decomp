@@ -126,7 +126,7 @@ void MapEvent_CommonItemTake(void) // 0x800EB9A4
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx_5)
+    switch (g_MapEventData->pointOfInterestIdx)
     {
         case 40:
             pickupType   = CommonPickupItemId_RifleShells;
@@ -344,20 +344,20 @@ void func_800EBF70(void) // 0x800EBF70
         case 3:
             if (Fs_QueueDoThingWhenEmpty())
             {
-                g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
+                g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
 
                 func_800CD860();
                 SysWork_StateStepIncrement(0);
             }
 
         case 4:
-            g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
+            g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
             SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
             break;
 
         case 5:
             Game_TimerUpdate();
-            g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
+            g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
 
             temp_v0 = func_800CD20C();
             if (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2))
@@ -375,7 +375,7 @@ void func_800EBF70(void) // 0x800EBF70
             break;
 
         case 6:
-            g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
+            g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
 
             func_800CD20C();
             SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
@@ -397,7 +397,7 @@ void func_800EBF70(void) // 0x800EBF70
 
 void func_800EC2D8(void) // 0x800EC2D8
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_KaufmannKey, 1);
     Map_MessageWithSfx(17, Sfx_UseKey, &sfxPos); // "Used the Kaufmann key."

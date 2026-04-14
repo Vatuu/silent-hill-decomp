@@ -125,7 +125,7 @@ void MapEvent_CommonItemTake(void) // 0x800D12B4
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx_5)
+    switch (g_MapEventData->pointOfInterestIdx)
     {
         case 13:
             pickupType   = CommonPickupItemId_RifleShells;
@@ -167,7 +167,7 @@ void func_800D13D8(void) // 0x800D13D8
 
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
-            g_SysWork.flags_22A4 |= SysFlag2_3;
+            g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             Chara_Load(0, Chara_Cybil, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Fs_QueueStartRead(FILE_ANIM_SIP_DMS, FS_BUFFER_15);

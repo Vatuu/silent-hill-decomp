@@ -274,7 +274,7 @@ extern s16 sharedData_800D5A8C_1_s05;
 extern u8 sharedData_800D5AAE_1_s05;
 extern u8 sharedData_800D5AAF_1_s05;
 
-extern u8      sharedData_800D5CF8_1_s05[];
+extern u8      sharedData_800D5CF8_1_s05[9];
 extern u8      sharedData_800D5D08_1_s05[];
 extern VECTOR3 sharedData_800D8618_1_s05[];
 extern SVECTOR3 sharedData_800D5A90_1_s05[]; // Q7.8
@@ -344,8 +344,8 @@ extern s16 sharedData_800DD5A4_0_s00; // Used as index into array of vectors.
 extern s16 sharedData_800E39E0_0_s00;
 extern s16 sharedData_800E39E2_0_s00;
 
-extern s32 sharedData_800D8684_1_s05;
-extern s32 sharedData_800D8688_1_s05;
+extern q19_12 sharedData_800D8684_1_s05; // Offset X. Used by Split Head.
+extern q19_12 sharedData_800D8688_1_s05; // Offset Z. Used by Split Head.
 
 extern u8      sharedData_800EB738_6_s04;
 extern u8      sharedData_800EB740_6_s04[2];

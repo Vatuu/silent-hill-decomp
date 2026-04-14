@@ -646,7 +646,7 @@ void Ai_SplitHead_Control_3(s_SubCharacter* splitHead)
     }
     else if (ANIM_STATUS_IDX_GET(splitHead->model.anim.status) == SplitHeadAnim_10)
     {
-        Chara_MoveSpeedUpdate(splitHead, 0x1998); // TODO
+        Chara_MoveSpeedUpdate(splitHead, Q12(1.6f) - 1);
 
         sharedData_800D5A8C_1_s05 += g_DeltaTime;
 
@@ -1400,20 +1400,20 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
 
     if (splitHeadProps.flags_E8 & SplitHeadFlag_1)
     {
-        *offsetZ = 0;
-        *offsetX = 0;
+        *offsetZ = Q12(0.0f);
+        *offsetX = Q12(0.0f);
         return;
     }
 
     newPosX = g_SysWork.playerWork.player.position.vx + *offsetX;
     newPosZ = g_SysWork.playerWork.player.position.vz + *offsetZ;
 
-    for (i = sharedData_800D5AAE_1_s05; i < 9; i++)
+    for (i = sharedData_800D5AAE_1_s05; i < ARRAY_SIZE(sp38); i++)
     {
         sharedFunc_800D4594_1_s05(&sp38[k], newPosX, newPosZ, &sharedData_800D8618_1_s05[i], &sharedData_800D8618_1_s05[(i == 8) ? sharedData_800D5AAE_1_s05 : (i + 1)]);
 
-        sp18[i]              = sp38[k].field_C;
-        sp28[i]              = sp38[k].field_D;
+        sp18[i]         = sp38[k].field_C;
+        sp28[i]         = sp38[k].field_D;
         sp38[k].field_E = i;
 
         if (g_SysWork.playerWork.player.field_D4.radius_0 >= sp38[k].field_0)
@@ -1454,7 +1454,7 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
 
                         if (j == 1)
                         {
-                            i += 1;
+                            i++;
                         }
                     }
                 }
@@ -1552,8 +1552,8 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
         break;
     }
 
-    *offsetZ = 0;
-    *offsetX = 0;
+    *offsetZ = Q12(0.0f);
+    *offsetX = Q12(0.0f);
 
     for (i = 0; i < k; i++)
     {
@@ -1567,7 +1567,7 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
         }
     }
 
-    for (i = 0; i < 9; i++)
+    for (i = 0; i < ARRAY_SIZE(sp18); i++)
     {
         sharedData_800D5CF8_1_s05[i] = sp18[i];
         sharedData_800D5D08_1_s05[i] = sp28[i];
@@ -1586,8 +1586,8 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
     s_sharedFunc_800D4594_1_s05 sp18;
     s_sharedFunc_800D4594_1_s05 sp28;
     VECTOR3                     sp38;
-    s32                         sp48;
-    s32                         sp4C;
+    s32                         offsetX;
+    s32                         offsetZ;
     s32                         temp_v0;
     q19_12                      deltaX;
     q19_12                      deltaZ;
@@ -1630,9 +1630,9 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
     }
 
     sharedData_800D5AAF_1_s05 = 0;
-    sp48       = sharedData_800D8684_1_s05;
-    sp4C       = sharedData_800D8688_1_s05;
-    sharedFunc_800D3388_1_s05(splitHead, &sp48, &sp4C);
+    offsetX       = sharedData_800D8684_1_s05;
+    offsetZ       = sharedData_800D8688_1_s05;
+    sharedFunc_800D3388_1_s05(splitHead, &offsetX, &offsetZ);
 
     if (sharedData_800D5AAF_1_s05 != 0)
     {
@@ -1642,18 +1642,18 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
     }
     else
     {
-        temp_v0 = ABS(sp48) - 32;
+        temp_v0 = ABS(offsetX) - 32;
         var_v1  = (temp_v0 < 0) ? 0 : (temp_v0 >> 4);
-        sp38.vx = (sp48 <= 0) ? (var_v1 * -var_v1) : SQUARE(var_v1);
+        sp38.vx = (offsetX <= 0) ? (var_v1 * -var_v1) : SQUARE(var_v1);
 
         sp38.vy = 0;
 
-        temp_v0 = ABS(sp4C) - 32;
+        temp_v0 = ABS(offsetZ) - 32;
         var_v1  = (temp_v0 < 0) ? 0 : (temp_v0 >> 4);
-        sp38.vz = (sp4C <= 0) ? (var_v1 * -var_v1) : SQUARE(var_v1);
+        sp38.vz = (offsetZ <= 0) ? (var_v1 * -var_v1) : SQUARE(var_v1);
     }
 
-    sharedFunc_800D2E8C_0_s00(sp48 + sharedData_800D8684_1_s05, sp4C + sharedData_800D8688_1_s05, &sp38);
+    sharedFunc_800D2E8C_0_s00(offsetX + sharedData_800D8684_1_s05, offsetZ + sharedData_800D8688_1_s05, &sp38);
 
     if (splitHeadProps.flags_E8 & SplitHeadFlag_0)
     {

@@ -16,7 +16,7 @@ void sharedFunc_800D0110_7_s00(void)
     switch (g_GameWork.bgmIdx)
     {
         case 5:
-            g_SysWork.sysFlags_22A0 &= ~SysFlag_3;
+            g_SysWork.bgmStatusFlags &= ~BgmStatusFlag_Duck;
 
             switch (g_GameWork.gameState)
             {
@@ -418,7 +418,7 @@ void sharedFunc_800D0110_7_s00(void)
             {
                 if (Savegame_EventFlagGet(EventFlag_591))
                 {
-                    g_SysWork.sysFlags_22A0 |= SysFlag_2;
+                    g_SysWork.bgmStatusFlags |= BgmStatusFlag_RadioActive;
                 }
                 flags = 1 << 8;
             }

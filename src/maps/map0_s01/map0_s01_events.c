@@ -96,9 +96,9 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
-            g_SysWork.flags_22A4              |= SysFlag2_3;
+            g_SysWork.flags_22A4              |= UnkSysFlag_3;
             g_SavegamePtr->itemToggleFlags_AC &= ~ItemToggleFlag_RadioOn;
-            g_SysWork.flags_22A4              |= SysFlag2_5 | SysFlag2_9;
+            g_SysWork.flags_22A4              |= UnkSysFlag_5 | UnkSysFlag_9;
             g_MapMsgSoundIdx                   = 0;
             D_800DE250                         = 0;
             D_800DE251                         = 0;
@@ -492,7 +492,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
             SysWork_StateSetNext(SysState_Gameplay);
             Game_WarmBoot();
 
-            g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
+            g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
             break;
     }
 }
@@ -704,8 +704,8 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateSetNext(SysState_Gameplay);
             Player_FallBackward();
 
-            g_SysWork.flags_22A4 &= ~SysFlag2_5;
-            g_SysWork.flags_22A4 &= ~SysFlag2_9;
+            g_SysWork.flags_22A4 &= ~UnkSysFlag_5;
+            g_SysWork.flags_22A4 &= ~UnkSysFlag_9;
             break;
     }
 
@@ -857,7 +857,7 @@ void MapEvent_CommonItemTake(void) // 0x800DC864
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx_5)
+    switch (g_MapEventData->pointOfInterestIdx)
     {
         case 13:
             pickupType   = CommonPickupItemId_HealthDrink;
@@ -919,7 +919,7 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
 
     if (Savegame_EventFlagGet(EventFlag_M0S01_CafeCutsceneStarted) && !Savegame_EventFlagGet(EventFlag_47))
     {
-        g_SysWork.flags_22A4 |= SysFlag2_5 | SysFlag2_9;
+        g_SysWork.flags_22A4 |= UnkSysFlag_5 | UnkSysFlag_9;
 
         Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
 
@@ -1057,7 +1057,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
 
     if (Savegame_EventFlagGet(EventFlag_52))
     {
-        if (g_SysWork.sysFlags_22A0 & SysFlag_6)
+        if (g_SysWork.bgmStatusFlags & BgmStatusFlag_6)
         {
             SD_Call(Sfx_RadioInterferenceLoop);
             SD_Call(Sfx_RadioStaticLoop);

@@ -53,7 +53,7 @@ void MapEvent_CommonItemTake(void) // 0x800EB090
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx_5)
+    switch (g_MapEventData->pointOfInterestIdx)
     {
         case 22:
             pickupType   = CommonPickupItemId_HealthDrink;
@@ -141,7 +141,7 @@ void func_800EB11C(void) // 0x800EB11C
             Player_ControlFreeze();
             ScreenFade_ResetTimestep();
             g_SysWork.field_30    = 20;
-            g_SysWork.flags_22A4 |= SysFlag2_3;
+            g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             Fs_QueueStartRead(FILE_ANIM_RSU_DMS, FS_BUFFER_15);
             Fs_QueueWaitForEmpty();

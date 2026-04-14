@@ -95,7 +95,7 @@ void MapEvent_CommonItemTake(void) // 0x800D159C
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx_5)
+    switch (g_MapEventData->pointOfInterestIdx)
     {
         case 37:
             pickupType   = CommonPickupItemId_HealthDrink;
@@ -343,7 +343,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
         case 11:
             g_SysWork.field_30    = 20;
-            g_SysWork.flags_22A4 |= SysFlag2_3;
+            g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             func_8008D438();
 

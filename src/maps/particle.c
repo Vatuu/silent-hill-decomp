@@ -52,7 +52,7 @@
 #if !MAP_USE_PARTICLES
 
 /** Barebones version of `Particle_SystemUpdate`, missing calls to `Particle_Update` and other particle-related code. */
-void Particle_SystemUpdate(s32 unused, e_MapOverlayId mapOverlayId, s32 arg3)
+void Particle_SystemUpdate(s32 unused, e_MapIdx mapOverlayId, s32 arg3)
 {
     s32 temp_s0;
 
@@ -74,7 +74,7 @@ void Particle_SystemUpdate(s32 unused, e_MapOverlayId mapOverlayId, s32 arg3)
 
             sharedData_800DD598_0_s00 = 0;
             g_SysWork.field_234A      = true;
-            g_ParticleMapOverlayId0 = mapOverlayId;
+            g_ParticleMapIdx0 = mapOverlayId;
 
             sharedData_800E0CB8_0_s00 = FP_FROM(sharedData_800E0CB0_0_s00, Q12_SHIFT);
             sharedData_800E0CB6_0_s00 = sharedData_800E0CB0_0_s00;
@@ -87,7 +87,7 @@ void Particle_SystemUpdate(s32 unused, e_MapOverlayId mapOverlayId, s32 arg3)
         default:
             sharedData_800DD584_0_s00 = g_DeltaTime == Q12(0.0f);
 
-            g_ParticleMapOverlayId1 = mapOverlayId;
+            g_ParticleMapIdx1 = mapOverlayId;
 
             temp_s0 = SetSp(PSX_SCRATCH_ADDR(0x3D8));
             SetSp(temp_s0);
@@ -100,7 +100,7 @@ void Particle_SystemUpdate(s32 unused, e_MapOverlayId mapOverlayId, s32 arg3)
 #else /* MAP_USE_PARTICLES */
 
 /** Full version of `Particle_SystemUpdate` used by most maps. */
-void Particle_SystemUpdate(s32 arg1, e_MapOverlayId mapOverlayId, s32 arg3)
+void Particle_SystemUpdate(s32 arg1, e_MapIdx mapOverlayId, s32 arg3)
 {
     s32 temp_a2;
     s32 temp_s0;
@@ -359,7 +359,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapOverlayId mapOverlayId, s32 arg3)
             g_Particle_PrevPosition.vx = Q12(0.0f);
 
             g_SysWork.field_234A = true;
-            g_ParticleMapOverlayId0 = mapOverlayId;
+            g_ParticleMapIdx0 = mapOverlayId;
 
             sharedData_800E0CB8_0_s00 = FP_FROM(sharedData_800E0CB0_0_s00, Q12_SHIFT);
             sharedData_800E0CB6_0_s00 = sharedData_800E0CB0_0_s00;
@@ -369,7 +369,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapOverlayId mapOverlayId, s32 arg3)
 
             Particle_SnowInitialize(g_Particles);
 #if defined(MAP0_S00)
-            func_800CBFB0(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, g_ParticleMapOverlayId0);
+            func_800CBFB0(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, g_ParticleMapIdx0);
 #endif
             SetSp(temp_s0);
             break;
@@ -571,12 +571,12 @@ void Particle_SystemUpdate(s32 arg1, e_MapOverlayId mapOverlayId, s32 arg3)
                 }
             }
 
-            g_ParticleMapOverlayId1 = mapOverlayId;
+            g_ParticleMapIdx1 = mapOverlayId;
             temp_s0_3 = SetSp(PSX_SCRATCH_ADDR(0x3D8));
 
             Particle_Update(g_Particles);
 #if defined(MAP0_S00)
-            func_800CC6E8(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, g_ParticleMapOverlayId1);
+            func_800CC6E8(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, g_ParticleMapIdx1);
 #endif
             SetSp(temp_s0_3);
 
@@ -3951,11 +3951,11 @@ void Particle_SoundUpdate(void)
 
     switch (g_SavegamePtr->mapOverlayId_A4)
     {
-        case MapOverlayId_MAP0_S00:
-        case MapOverlayId_MAP0_S01: // @unused Checks for `MAP0_S01`, but map itself doesn't contain this func?
-        case MapOverlayId_MAP1_S02:
-        case MapOverlayId_MAP1_S03:
-        case MapOverlayId_MAP4_S02:
+        case MapIdx_MAP0_S00:
+        case MapIdx_MAP0_S01: // @unused Checks for `MAP0_S01`, but map itself doesn't contain this func?
+        case MapIdx_MAP1_S02:
+        case MapIdx_MAP1_S03:
+        case MapIdx_MAP4_S02:
             unkValDiv4 = sharedData_800E32CC_0_s00 >> 2; // `sharedData_800E32CC_0_s00 / 4`
 
             if ((sharedData_800E32CC_0_s00 - sharedData_800DD58C_0_s00) > 15)

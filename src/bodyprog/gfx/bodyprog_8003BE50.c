@@ -79,7 +79,7 @@ s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ) // 0x8003BF60
 
     zoneType = SpeedZoneType_Slow;
 
-    if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S00)
+    if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP0_S00)
     {
         return SpeedZoneType_Normal;
     }

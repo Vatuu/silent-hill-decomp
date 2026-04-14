@@ -112,7 +112,7 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
 
     vcSetEvCamRate(g_BlackBorderShade);
 
-    if (g_SysWork.sysFlags_22A0 & SysFlag_Pause)
+    if (g_SysWork.bgmStatusFlags & BgmStatusFlag_Pause)
     {
         return;
     }
@@ -157,7 +157,7 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
         case 0:
             g_BlackBorderShade    = Q12(0.0f);
             g_SysWork.field_30    = 1;
-            g_SysWork.flags_22A4 &= ~SysFlag2_3;
+            g_SysWork.flags_22A4 &= ~UnkSysFlag_3;
             return;
 
         case 1:
@@ -169,7 +169,7 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
     AddPrim(ot, &poly[2]);
     AddPrim(ot, drMode);
 
-    if (!(g_SysWork.flags_22A4 & SysFlag2_3))
+    if (!(g_SysWork.flags_22A4 & UnkSysFlag_3))
     {
         vcChangeProjectionValue(g_GameWork.gsScreenHeight + Q12_MULT(377 - g_GameWork.gsScreenHeight, g_BlackBorderShade));
     }

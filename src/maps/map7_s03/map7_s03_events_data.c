@@ -2,90 +2,90 @@
 
 s_EventData MAP_EVENTS[13] = {
     {
-        .requiredEventFlag_0 = EventFlag_587,
-        .disabledEventFlag_2 = EventFlag_588,
-        .triggerType_4_0     = TriggerType_None,
-        .sysState_0        = SysState_EventCallFunc,
-        .eventParam_8_5      = 7, // `func_800E9AC8`
+        .requiredEventFlag = EventFlag_587,
+        .disabledEventFlag = EventFlag_588,
+        .triggerType     = TriggerType_None,
+        .sysState        = SysState_EventCallFunc,
+        .eventParam      = 7, // `func_800E9AC8`
     },
     {
-        .requiredEventFlag_0 = EventFlag_583,
-        .disabledEventFlag_2 = EventFlag_589,
-        .triggerType_4_0     = TriggerType_None,
-        .sysState_0        = SysState_Fmv,
-        .eventParam_8_5      = 3,
+        .requiredEventFlag = EventFlag_583,
+        .disabledEventFlag = EventFlag_589,
+        .triggerType     = TriggerType_None,
+        .sysState        = SysState_Fmv,
+        .eventParam      = 3,
         .flags_8_13          = 1,
     },
     {
-        .requiredEventFlag_0 = EventFlag_584,
-        .disabledEventFlag_2 = EventFlag_590,
-        .triggerType_4_0     = TriggerType_None,
-        .sysState_0        = SysState_EventCallFunc,
-        .eventParam_8_5      = 6, // `func_800E3E84`
+        .requiredEventFlag = EventFlag_584,
+        .disabledEventFlag = EventFlag_590,
+        .triggerType     = TriggerType_None,
+        .sysState        = SysState_EventCallFunc,
+        .eventParam      = 6, // `func_800E3E84`
     },
     {
-        .requiredEventFlag_0 = EventFlag_585,
-        .disabledEventFlag_2 = EventFlag_590,
-        .triggerType_4_0     = TriggerType_None,
-        .sysState_0        = SysState_Fmv,
-        .eventParam_8_5      = 2,
+        .requiredEventFlag = EventFlag_585,
+        .disabledEventFlag = EventFlag_590,
+        .triggerType     = TriggerType_None,
+        .sysState        = SysState_Fmv,
+        .eventParam      = 2,
         .flags_8_13          = 1,
     },
     {
-        .requiredEventFlag_0 = EventFlag_586,
-        .disabledEventFlag_2 = EventFlag_590,
-        .triggerType_4_0     = TriggerType_None,
-        .sysState_0        = SysState_Fmv,
-        .eventParam_8_5      = 1,
+        .requiredEventFlag = EventFlag_586,
+        .disabledEventFlag = EventFlag_590,
+        .triggerType     = TriggerType_None,
+        .sysState        = SysState_Fmv,
+        .eventParam      = 1,
         .flags_8_13          = 1,
     },
     {
-        .requiredEventFlag_0 = EventFlag_590,
-        .disabledEventFlag_2 = EventFlag_589,
-        .triggerType_4_0     = TriggerType_None,
-        .sysState_0        = SysState_Fmv,
+        .requiredEventFlag = EventFlag_590,
+        .disabledEventFlag = EventFlag_589,
+        .triggerType     = TriggerType_None,
+        .sysState        = SysState_Fmv,
         .flags_8_13          = 1,
     },
     {
-        .requiredEventFlag_0 = EventFlag_589,
-        .triggerType_4_0     = TriggerType_None,
-        .sysState_0        = SysState_EventCallFunc,
-        .eventParam_8_5      = 8, // `func_800E9C28`
+        .requiredEventFlag = EventFlag_589,
+        .triggerType     = TriggerType_None,
+        .sysState        = SysState_EventCallFunc,
+        .eventParam      = 8, // `func_800E9C28`
     },
     {
-        .disabledEventFlag_2 = EventFlag_577,
-        .triggerType_4_0     = TriggerType_None,
-        .sysState_0        = SysState_EventCallFunc,
-        .eventParam_8_5      = 2, // `func_800E3390`
+        .disabledEventFlag = EventFlag_577,
+        .triggerType     = TriggerType_None,
+        .sysState        = SysState_EventCallFunc,
+        .eventParam      = 2, // `func_800E3390`
     },
     {
-        .requiredEventFlag_0 = EventFlag_578,
-        .disabledEventFlag_2 = EventFlag_579,
-        .triggerType_4_0     = TriggerType_None,
-        .sysState_0        = SysState_EventCallFunc,
-        .eventParam_8_5      = 3, // `func_800E3B6C`
+        .requiredEventFlag = EventFlag_578,
+        .disabledEventFlag = EventFlag_579,
+        .triggerType     = TriggerType_None,
+        .sysState        = SysState_EventCallFunc,
+        .eventParam      = 3, // `func_800E3B6C`
     },
     {
-        .requiredEventFlag_0 = EventFlag_579,
-        .disabledEventFlag_2 = EventFlag_580,
-        .triggerType_4_0     = TriggerType_None,
-        .sysState_0        = SysState_Fmv,
-        .eventParam_8_5      = 4,
+        .requiredEventFlag = EventFlag_579,
+        .disabledEventFlag = EventFlag_580,
+        .triggerType     = TriggerType_None,
+        .sysState        = SysState_Fmv,
+        .eventParam      = 4,
         .flags_8_13          = 2,
     },
     {
-        .requiredEventFlag_0 = EventFlag_580,
-        .triggerType_4_0     = TriggerType_None,
-        .sysState_0        = SysState_EventCallFunc,
-        .eventParam_8_5      = 4, // `func_800E3C48`
+        .requiredEventFlag = EventFlag_580,
+        .triggerType     = TriggerType_None,
+        .sysState        = SysState_EventCallFunc,
+        .eventParam      = 4, // `func_800E3C48`
     },
     {
-        .requiredEventFlag_0 = EventFlag_582,
-        .triggerType_4_0     = TriggerType_None,
-        .sysState_0        = SysState_EventCallFunc,
-        .eventParam_8_5      = 5, // `func_800E3D18`
+        .requiredEventFlag = EventFlag_582,
+        .triggerType     = TriggerType_None,
+        .sysState        = SysState_EventCallFunc,
+        .eventParam      = 5, // `func_800E3D18`
     },
     {
-        .triggerType_4_0 = TriggerType_EndOfArray,
+        .triggerType = TriggerType_EndOfArray,
     },
 };

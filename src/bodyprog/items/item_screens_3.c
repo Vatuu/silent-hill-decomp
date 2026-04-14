@@ -3585,11 +3585,11 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
 
     switch (mapId)
     {
-        case MapOverlayId_MAP1_S00:
-        case MapOverlayId_MAP1_S01:
-        case MapOverlayId_MAP1_S02:
-        case MapOverlayId_MAP1_S03:
-        case MapOverlayId_MAP1_S05:
+        case MapIdx_MAP1_S00:
+        case MapIdx_MAP1_S01:
+        case MapIdx_MAP1_S02:
+        case MapIdx_MAP1_S03:
+        case MapIdx_MAP1_S05:
             if (!(g_SysWork.flags_2352 & (1 << 1)))
             {
                 Fs_QueueStartReadTim(FILE_ITEM_TIM01_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
@@ -3597,18 +3597,18 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
             }
             break;
 
-        case MapOverlayId_MAP0_S01:
-        case MapOverlayId_MAP0_S02:
-        case MapOverlayId_MAP1_S06:
-        case MapOverlayId_MAP2_S00:
-        case MapOverlayId_MAP2_S01:
-        case MapOverlayId_MAP2_S02:
-        case MapOverlayId_MAP2_S04:
-        case MapOverlayId_MAP4_S00:
-        case MapOverlayId_MAP4_S01:
-        case MapOverlayId_MAP4_S02:
-        case MapOverlayId_MAP4_S03:
-        case MapOverlayId_MAP4_S05:
+        case MapIdx_MAP0_S01:
+        case MapIdx_MAP0_S02:
+        case MapIdx_MAP1_S06:
+        case MapIdx_MAP2_S00:
+        case MapIdx_MAP2_S01:
+        case MapIdx_MAP2_S02:
+        case MapIdx_MAP2_S04:
+        case MapIdx_MAP4_S00:
+        case MapIdx_MAP4_S01:
+        case MapIdx_MAP4_S02:
+        case MapIdx_MAP4_S03:
+        case MapIdx_MAP4_S05:
             if (!(g_SysWork.flags_2352 & (1 << 2)))
             {
                 Fs_QueueStartReadTim(FILE_ITEM_TIM02_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
@@ -3616,14 +3616,14 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
             }
             break;
 
-        case MapOverlayId_MAP3_S00:
-        case MapOverlayId_MAP3_S01:
-        case MapOverlayId_MAP3_S02:
-        case MapOverlayId_MAP3_S03:
-        case MapOverlayId_MAP3_S04:
-        case MapOverlayId_MAP3_S05:
-        case MapOverlayId_MAP3_S06:
-        case MapOverlayId_MAP4_S04:
+        case MapIdx_MAP3_S00:
+        case MapIdx_MAP3_S01:
+        case MapIdx_MAP3_S02:
+        case MapIdx_MAP3_S03:
+        case MapIdx_MAP3_S04:
+        case MapIdx_MAP3_S05:
+        case MapIdx_MAP3_S06:
+        case MapIdx_MAP4_S04:
             if (!(g_SysWork.flags_2352 & (1 << 3)))
             {
                 Fs_QueueStartReadTim(FILE_ITEM_TIM03_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
@@ -3631,15 +3631,15 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
             }
             break;
 
-        case MapOverlayId_MAP5_S00:
-        case MapOverlayId_MAP5_S01:
-        case MapOverlayId_MAP5_S02:
-        case MapOverlayId_MAP5_S03:
-        case MapOverlayId_MAP6_S00:
-        case MapOverlayId_MAP6_S01:
-        case MapOverlayId_MAP6_S02:
-        case MapOverlayId_MAP6_S03:
-        case MapOverlayId_MAP6_S04:
+        case MapIdx_MAP5_S00:
+        case MapIdx_MAP5_S01:
+        case MapIdx_MAP5_S02:
+        case MapIdx_MAP5_S03:
+        case MapIdx_MAP6_S00:
+        case MapIdx_MAP6_S01:
+        case MapIdx_MAP6_S02:
+        case MapIdx_MAP6_S03:
+        case MapIdx_MAP6_S04:
             if (!(g_SysWork.flags_2352 & (1 << 4)))
             {
                 Fs_QueueStartReadTim(FILE_ITEM_TIM04_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
@@ -3647,8 +3647,8 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
             }
             break;
 
-        case MapOverlayId_MAP7_S00:
-        case MapOverlayId_MAP7_S01:
+        case MapIdx_MAP7_S00:
+        case MapIdx_MAP7_S01:
             if (!(g_SysWork.flags_2352 & (1 << 5)))
             {
                 Fs_QueueStartReadTim(FILE_ITEM_TIM05_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
@@ -3656,8 +3656,8 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
             }
             break;
 
-        case MapOverlayId_MAP7_S02:
-        case MapOverlayId_MAP7_S03:
+        case MapIdx_MAP7_S02:
+        case MapIdx_MAP7_S03:
             if (!(g_SysWork.flags_2352 & (1 << 6)))
             {
                 Fs_QueueStartReadTim(FILE_ITEM_TIM06_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
@@ -3674,63 +3674,63 @@ void GameFs_MapItemsTextureLoad(s32 mapId) // 0x80054024
 {
     switch (mapId)
     {
-        case MapOverlayId_MAP0_S00:
+        case MapIdx_MAP0_S00:
             Fs_QueueStartRead(FILE_ITEM_IT_000_TMD, FS_BUFFER_8);
             break;
 
-        case MapOverlayId_MAP0_S01:
-        case MapOverlayId_MAP0_S02:
-        case MapOverlayId_MAP1_S06:
-        case MapOverlayId_MAP2_S00:
-        case MapOverlayId_MAP2_S01:
-        case MapOverlayId_MAP2_S02:
-        case MapOverlayId_MAP2_S04:
-        case MapOverlayId_MAP4_S00:
-        case MapOverlayId_MAP4_S01:
-        case MapOverlayId_MAP4_S02:
-        case MapOverlayId_MAP4_S03:
-        case MapOverlayId_MAP4_S05:
+        case MapIdx_MAP0_S01:
+        case MapIdx_MAP0_S02:
+        case MapIdx_MAP1_S06:
+        case MapIdx_MAP2_S00:
+        case MapIdx_MAP2_S01:
+        case MapIdx_MAP2_S02:
+        case MapIdx_MAP2_S04:
+        case MapIdx_MAP4_S00:
+        case MapIdx_MAP4_S01:
+        case MapIdx_MAP4_S02:
+        case MapIdx_MAP4_S03:
+        case MapIdx_MAP4_S05:
             Fs_QueueStartRead(FILE_ITEM_IT_001_TMD, FS_BUFFER_8);
             break;
 
-        case MapOverlayId_MAP1_S00:
-        case MapOverlayId_MAP1_S01:
-        case MapOverlayId_MAP1_S02:
-        case MapOverlayId_MAP1_S03:
-        case MapOverlayId_MAP1_S05:
+        case MapIdx_MAP1_S00:
+        case MapIdx_MAP1_S01:
+        case MapIdx_MAP1_S02:
+        case MapIdx_MAP1_S03:
+        case MapIdx_MAP1_S05:
             Fs_QueueStartRead(FILE_ITEM_IT_002_TMD, FS_BUFFER_8);
             break;
 
-        case MapOverlayId_MAP3_S00:
-        case MapOverlayId_MAP3_S01:
-        case MapOverlayId_MAP3_S02:
-        case MapOverlayId_MAP3_S03:
-        case MapOverlayId_MAP3_S04:
-        case MapOverlayId_MAP3_S05:
-        case MapOverlayId_MAP3_S06:
-        case MapOverlayId_MAP4_S04:
+        case MapIdx_MAP3_S00:
+        case MapIdx_MAP3_S01:
+        case MapIdx_MAP3_S02:
+        case MapIdx_MAP3_S03:
+        case MapIdx_MAP3_S04:
+        case MapIdx_MAP3_S05:
+        case MapIdx_MAP3_S06:
+        case MapIdx_MAP4_S04:
             Fs_QueueStartRead(FILE_ITEM_IT_003_TMD, FS_BUFFER_8);
             break;
 
-        case MapOverlayId_MAP5_S00:
-        case MapOverlayId_MAP5_S01:
-        case MapOverlayId_MAP5_S02:
-        case MapOverlayId_MAP5_S03:
-        case MapOverlayId_MAP6_S00:
-        case MapOverlayId_MAP6_S01:
-        case MapOverlayId_MAP6_S02:
-        case MapOverlayId_MAP6_S03:
-        case MapOverlayId_MAP6_S04:
+        case MapIdx_MAP5_S00:
+        case MapIdx_MAP5_S01:
+        case MapIdx_MAP5_S02:
+        case MapIdx_MAP5_S03:
+        case MapIdx_MAP6_S00:
+        case MapIdx_MAP6_S01:
+        case MapIdx_MAP6_S02:
+        case MapIdx_MAP6_S03:
+        case MapIdx_MAP6_S04:
             Fs_QueueStartRead(FILE_ITEM_IT_004_TMD, FS_BUFFER_8);
             break;
 
-        case MapOverlayId_MAP7_S00:
-        case MapOverlayId_MAP7_S01:
+        case MapIdx_MAP7_S00:
+        case MapIdx_MAP7_S01:
             Fs_QueueStartRead(FILE_ITEM_IT_005_TMD, FS_BUFFER_8);
             break;
 
-        case MapOverlayId_MAP7_S02:
-        case MapOverlayId_MAP7_S03:
+        case MapIdx_MAP7_S02:
+        case MapIdx_MAP7_S03:
             Fs_QueueStartRead(FILE_ITEM_IT_006_TMD, FS_BUFFER_8);
             break;
     }

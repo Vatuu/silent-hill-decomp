@@ -86,7 +86,7 @@ void func_800D151C(void) // 0x800D151C
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx_5)
+    switch (g_MapEventData->pointOfInterestIdx)
     {
         case 126:
             pickupType   = CommonPickupItemId_FirstAidKit;
@@ -248,9 +248,9 @@ void func_800D1A58(void) // 0x800D1A58
             break;
 
         case 1:
-            sfxPos.vx = MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0;
+            sfxPos.vx = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0;
             sfxPos.vy = Q12(-1.2f);
-            sfxPos.vz = MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8;
+            sfxPos.vz = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8;
 
             func_8005DC1C(Sfx_DoorLocked, &sfxPos, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
@@ -268,7 +268,7 @@ void func_800D1A58(void) // 0x800D1A58
             break;
 
         case 5:
-            g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
+            g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
 
             Fs_QueueStartReadTim(FILE_TIM_COLORS_TIM, (void*)0x801D2600, &g_ItemInspectionImg);
 

@@ -2,19 +2,19 @@
 
 s_EventData MAP_EVENTS[3] = {
     {
-        .disabledEventFlag_2 = EventFlag_59,
-        .triggerType_4_0     = TriggerType_None,
-        .sysState_0        = SysState_ReadMessage,
-        .eventParam_8_5      = 15,
+        .disabledEventFlag = EventFlag_59,
+        .triggerType     = TriggerType_None,
+        .sysState        = SysState_ReadMessage,
+        .eventParam      = 15,
         .flags_8_13          = 1,
     },
     {
-        .triggerType_4_0 = TriggerType_None,
-        .sysState_0    = SysState_EventCallFunc,
-        .eventParam_8_5  = 1, // `func_800CCA2C`
+        .triggerType = TriggerType_None,
+        .sysState    = SysState_EventCallFunc,
+        .eventParam  = 1, // `func_800CCA2C`
         .flags_8_13      = 1,
     },
     {
-        .triggerType_4_0 = TriggerType_EndOfArray,
+        .triggerType = TriggerType_EndOfArray,
     },
 };

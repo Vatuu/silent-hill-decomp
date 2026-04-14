@@ -43,7 +43,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
     sharedFunc_800D0F28_3_s03(bloodsucker, anmHdr, coords);
 
     // Reset flags if ???
-    if (g_SysWork.sysFlags_22A0 & SysFlag_6)
+    if (g_SysWork.bgmStatusFlags & BgmStatusFlag_6)
     {
         bloodsucker->properties.bloodsucker.flags_118 &= ~BloodsuckerFlag_0;
         bloodsucker->properties.bloodsucker.flags_118 &= ~BloodsuckerFlag_1;

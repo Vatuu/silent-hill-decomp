@@ -246,7 +246,7 @@ void func_800DA248(void) // 0x800DA248
 
             g_SysWork.field_30    = 20;
             g_SysWork.pointLightIntensity  = Q12(0.8f);
-            g_SysWork.flags_22A4 |= SysFlag2_3;
+            g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             Game_TurnFlashlightOn();
             D_800E9ECC = 0;
@@ -577,7 +577,7 @@ void MapEvent_CommonItemTake(void) // 0x800DB3D8
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx_5)
+    switch (g_MapEventData->pointOfInterestIdx)
     {
         case 212:
             pickupType   = CommonPickupItemId_RifleShells;
@@ -625,21 +625,21 @@ void MapEvent_CommonItemTake(void) // 0x800DB3D8
 
 void func_800DB498(void) // 0x800DB498
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
     Map_MessageWithSfx(86, Sfx_DoorLocked, &sfxPos);
 }
 
 void func_800DB52C(void) // 0x800DB52C
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
     Map_MessageWithSfx(88, Sfx_DoorLocked, &sfxPos);
 }
 
 void MapEvent_KeyOfBethorUse(void) // 0x800DB5C0
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_KeyOfBethor, 1);
     Map_MessageWithSfx(77, Sfx_UseKey, &sfxPos);
@@ -648,7 +648,7 @@ void MapEvent_KeyOfBethorUse(void) // 0x800DB5C0
 
 void MapEvent_KeyOfAratronUse(void) // 0x800DB67C
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_KeyOfAratron, 1);
     Map_MessageWithSfx(78, Sfx_UseKey, &sfxPos);
@@ -1362,7 +1362,7 @@ void func_800DD2D4(void) // 0x800DD2D4
         case 3:
             DmsHeader_FixOffsets(FS_BUFFER_11);
             g_SysWork.field_30    = 20;
-            g_SysWork.flags_22A4 |= SysFlag2_3;
+            g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_Bloodsucker, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
@@ -1988,7 +1988,7 @@ void func_800DF21C(void) // 0x800DF21C
             Game_TurnFlashlightOn();
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
-            g_SysWork.flags_22A4 |= SysFlag2_3;
+            g_SysWork.flags_22A4 |= UnkSysFlag_3;
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
 
@@ -2623,7 +2623,7 @@ void func_800E0CB4(void) // 0x800E0CB4
             Player_ControlFreeze();
 
             g_SysWork.field_30    = 20;
-            g_SysWork.flags_22A4 |= SysFlag2_3;
+            g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             Fs_QueueStartRead(FILE_ANIM_DRIVR_DMS, (void*)FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
@@ -2834,7 +2834,7 @@ void func_800E1398(void) // 0x800E1398
             }
 
             ScreenFade_Reset();
-            g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
+            g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
 
             SD_Call(0x679U);
             SysWork_StateStepIncrement(0);
@@ -2842,7 +2842,7 @@ void func_800E1398(void) // 0x800E1398
 
         case 1:
             SysWork_StateStepIncrementAfterFade(2, true, 1, Q12(2.5f), false);
-            g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
+            g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
             break;
 
         case 2:

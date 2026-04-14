@@ -80,7 +80,7 @@ void func_800DA200(void) // 0x800DA200
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx_5)
+    switch (g_MapEventData->pointOfInterestIdx)
     {
         case 107:
             pickupType   = CommonPickupItemId_Ampoule;
@@ -143,7 +143,7 @@ void func_800DA200(void) // 0x800DA200
 
 void MapEvent_LobbyKeyUse(void) // 0x800DA2E4
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_LobbyKey, 1);
     Map_MessageWithSfx(19, Sfx_DoorUnlocked, &sfxPos); // Empty message?
@@ -406,7 +406,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
             SysWork_StateSetNext(SysState_Gameplay);
             Game_WarmBoot();
 
-            g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
+            g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
             break;
     }
 }

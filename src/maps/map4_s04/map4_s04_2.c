@@ -255,7 +255,7 @@ void func_800D1910(void) // 0x800D1910
 
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
-            g_SysWork.flags_22A4 |= SysFlag2_3;
+            g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             func_80085EB8(0, &g_SysWork.playerWork.player, 117, false);
             D_800D37C0 = 0;
@@ -411,7 +411,7 @@ void func_800D23E4(void) // 0x800D23E4
             ScreenFade_ResetTimestep();
 
             D_800D37C1            = 0;
-            g_SysWork.flags_22A4 |= SysFlag2_3;
+            g_SysWork.flags_22A4 |= UnkSysFlag_3;
             func_8005DC1C(Sfx_DoorClose0, &QVECTOR3(54.6f, -1.2f, 141.5f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
             break;

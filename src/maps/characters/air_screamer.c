@@ -1091,7 +1091,7 @@ void Ai_AirScreamer_Control_0(s_SubCharacter* airScreamer)
         case AirScreamerStateStep_13:
             animStatus = ANIM_STATUS(AirScreamerAnim_19, true);
 
-            if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S01)
+            if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP0_S01)
             {
                 var0 = 2;
                 var1 = true;
@@ -13144,7 +13144,7 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
     s32            i;
     s32            var_s2_2;
     s32            idx1;
-    s32            var_t1;
+    q19_12         var_t1;
     s16            new_var;
     q3_12          radius1;
     s16            new_var3;
@@ -13247,7 +13247,7 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
         radius   = sharedData_800CAA98_0_s01.field_D70[0][1];
 
         airScreamer->field_D4.radius_0 = radius;
-        airScreamer->field_D4.field_2  = 0;
+        airScreamer->field_D4.field_2  = Q12(0.0f);
 
         airScreamer->field_C8.field_4 = Q12(0.0f);
         airScreamer->field_C8.field_0 = Q12(0.0f);

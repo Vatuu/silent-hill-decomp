@@ -1232,7 +1232,7 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
     g_GameWork.gameStateSteps[1] = 12;
     g_GameWork.gameStateSteps[2] = 0;
 
-    if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP6_S04)
+    if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP6_S04)
     {
         if ((CHARA_ID_CHECK && !Math_Distance2dCheck(&playerChara.position, &g_SysWork.npcs[0].position, Q12(0.7f))) &&
             ABS(playerChara.position.vy - g_SysWork.npcs[0].position.vy) < Q12(0.3f) &&
@@ -1590,8 +1590,8 @@ void func_8004EF48(void) // 0x8004EF48
                     break;
 
                 case InventoryItemId_PocketRadio:
-                    if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP5_S00 ||
-                        g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP6_S03)
+                    if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP5_S00 ||
+                        g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP6_S03)
                     {
                         g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_Unk10;
                     }

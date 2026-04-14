@@ -1829,7 +1829,7 @@ void func_800E1D50(void) // 0x800E1D50
 
             D_800ED5AC = 0;
             D_800ED5B0 = 0;
-            g_SysWork.flags_22A4 |= SysFlag2_4;
+            g_SysWork.flags_22A4 |= UnkSysFlag_4;
 
             Game_TurnFlashlightOn();
             func_800E1CA0();
@@ -1850,7 +1850,7 @@ void func_800E1D50(void) // 0x800E1D50
             Chara_Load(0, Chara_MonsterCybil, g_SysWork.npcCoords, -1, NULL, NULL);
 
             g_SysWork.field_30 = 20;
-            g_SysWork.flags_22A4 |= SysFlag2_3;
+            g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
@@ -2121,7 +2121,7 @@ void func_800E2724(void) // 0x800E2724
         case 0:
             Player_ControlFreeze();
             ScreenFade_ResetTimestep();
-            g_SysWork.flags_22A4 |= SysFlag2_4;
+            g_SysWork.flags_22A4 |= UnkSysFlag_4;
 
             func_800E1CA0();
             func_8007E860();
@@ -2453,7 +2453,7 @@ void func_800E3244(void) // 0x800E3244
             Chara_Load(1, Chara_Parasite, &g_SysWork.npcCoords[30], 0, NULL, NULL);
 
             g_SysWork.field_30 = 20;
-            g_SysWork.flags_22A4 |= SysFlag2_3;
+            g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -2747,7 +2747,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
-            g_SysWork.flags_22A4 |= SysFlag2_3;
+            g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             func_8008D438();
 
@@ -3150,7 +3150,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             Game_FlashlightAttributesFix();
 
             g_SysWork.pointLightIntensity  = Q12(1.0f);
-            g_SysWork.flags_22A4 &= ~SysFlag2_4;
+            g_SysWork.flags_22A4 &= ~UnkSysFlag_4;
             break;
     }
 
@@ -3284,7 +3284,7 @@ void func_800E558C(void) // 0x800E558C
 
             g_SysWork.field_30    = 20;
             D_800ED5B0            = NO_VALUE;
-            g_SysWork.flags_22A4 |= SysFlag2_3;
+            g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();

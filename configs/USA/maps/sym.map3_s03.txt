@@ -182,8 +182,8 @@ MAP_EVENTS                      = 0x800D64E0;
 //----------------------------------------------------
 sharedData_800D4CD4_3_s01       = 0x800D6B58;
 g_CommonWorldObjectPoses        = 0x800D6B64; // type:WorldObjectPos size:0x64
-g_ParticleMapOverlayId0         = 0x800D6BC8;
-g_ParticleMapOverlayId1         = 0x800D6BCC; // type:s32
+g_ParticleMapIdx0               = 0x800D6BC8;
+g_ParticleMapIdx1               = 0x800D6BCC; // type:s32
 sharedData_800D4D0C_3_s01       = 0x800D6BDC;
 sharedData_800D4D10_3_s01       = 0x800D6BE0;
 sharedData_800D4D14_3_s01       = 0x800D6BE4;

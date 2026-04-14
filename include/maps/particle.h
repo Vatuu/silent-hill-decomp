@@ -114,10 +114,10 @@ extern q3_12   g_Particle_PrevRotationY;
 
 extern s16 D_800F23D0; // MAP7_S03 extern, TODO: Might be sharedData?
 
-extern e_MapOverlayId g_ParticleMapOverlayId0;
-extern e_MapOverlayId g_ParticleMapOverlayId1;
+extern e_MapIdx g_ParticleMapIdx0;
+extern e_MapIdx g_ParticleMapIdx1;
 
-void Particle_SystemUpdate(s32 unused, e_MapOverlayId mapOverlayId, s32 arg3);
+void Particle_SystemUpdate(s32 unused, e_MapIdx mapOverlayId, s32 arg3);
 
 /** @brief Checks if the particle spawn origin has moved significantly since the last tick.
  *

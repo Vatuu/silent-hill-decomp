@@ -179,7 +179,7 @@ bool g_Demo_Play = false;
 void Demo_Start(void) // 0x8008F398
 {
     g_Demo_Play = true;
-    g_SysWork.flags_22A4 |= SysFlag2_1;
+    g_SysWork.flags_22A4 |= UnkSysFlag_1;
 
     Demo_GameGlobalsUpdate();
     Demo_GameRandSeedUpdate();
@@ -191,7 +191,7 @@ void Demo_Start(void) // 0x8008F398
 void Demo_Stop(void) // 0x8008f3f0
 {
     g_Demo_Play = false;
-    g_SysWork.flags_22A4 &= ~SysFlag2_1;
+    g_SysWork.flags_22A4 &= ~UnkSysFlag_1;
 
     Demo_GameGlobalsRestore();
     Demo_GameRandSeedRestore();
@@ -251,7 +251,7 @@ void Demo_ExitDemo(void) // 0x8008F4E4
     g_Demo_FrameCount     = 999 * TICKS_PER_SECOND;
     g_Demo_CurFrameData   = NULL;
     g_Demo_DemoStep       = 0;
-    g_SysWork.flags_22A4 |= SysFlag2_8;
+    g_SysWork.flags_22A4 |= UnkSysFlag_8;
 }
 
 void func_8008F518(void) {} // 0x8008F518
@@ -263,7 +263,7 @@ bool func_8008F520(void) // 0x8008F520
 
 void Demo_DemoRandSeedBackup(void) // 0x8008F528
 {
-    if (g_SysWork.flags_22A4 & SysFlag2_1)
+    if (g_SysWork.flags_22A4 & UnkSysFlag_1)
     {
         g_Demo_RandSeedBackup = Rng_GetSeed();
     }
@@ -271,7 +271,7 @@ void Demo_DemoRandSeedBackup(void) // 0x8008F528
 
 void Demo_DemoRandSeedRestore(void) // 0x8008F560
 {
-    if (g_SysWork.flags_22A4 & SysFlag2_1)
+    if (g_SysWork.flags_22A4 & UnkSysFlag_1)
     {
         Rng_SetSeed(g_Demo_RandSeedBackup);
     }
@@ -282,7 +282,7 @@ void Demo_DemoRandSeedAdvance(void) // 0x8008F598
 #if VERSION_EQUAL_OR_NEWER(USA)
     #define SEED_OFFSET 0x3C6EF35F
 
-    if (g_SysWork.flags_22A4 & SysFlag2_1)
+    if (g_SysWork.flags_22A4 & UnkSysFlag_1)
     {
         Rng_SetSeed(g_Demo_RandSeedBackup + SEED_OFFSET);
     }
@@ -307,7 +307,7 @@ bool Demo_Update(void) // 0x8008F5D8
     D_800C489C        = false;
     prevScreenFade    = g_Screen_FadeStatus;
 
-    if (!(g_SysWork.flags_22A4 & SysFlag2_1))
+    if (!(g_SysWork.flags_22A4 & UnkSysFlag_1))
     {
         g_Demo_CurFrameData = NULL;
         g_Demo_DemoStep     = 0;
@@ -386,7 +386,7 @@ bool Demo_ControllerDataUpdate(void) // 0x8008F7CC
 {
     u32 btns;
 
-    if (!(g_SysWork.flags_22A4 & SysFlag2_1))
+    if (!(g_SysWork.flags_22A4 & UnkSysFlag_1))
     {
         return false;
     }
@@ -427,7 +427,7 @@ bool Demo_PresentIntervalUpdate(void) // 0x8008F87C
 
 bool Demo_GameRandSeedSet(void) // 0x8008F8A8
 {
-    if (!(g_SysWork.flags_22A4 & SysFlag2_1))
+    if (!(g_SysWork.flags_22A4 & UnkSysFlag_1))
     {
         return true;
     }
@@ -445,7 +445,7 @@ bool Demo_GameRandSeedSet(void) // 0x8008F8A8
 
 bool func_8008F914(s32 posX, s32 posZ)
 {
-    if (g_SysWork.flags_22A4 & SysFlag2_1)
+    if (g_SysWork.flags_22A4 & UnkSysFlag_1)
     {
         return func_8004393C(posX, posZ);
     }

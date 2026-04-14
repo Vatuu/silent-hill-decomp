@@ -230,7 +230,7 @@ s32 Inventory_HyperBlasterUnlockTest(void) // 0x8004C45C
         }
     }
 
-    if (g_SavegamePtr->mapOverlayId_A4 > MapOverlayId_MAP0_S00)
+    if (g_SavegamePtr->mapOverlayId_A4 > MapIdx_MAP0_S00)
     {
         // Konami gun controller connected.
         if (g_GameWork.controllers[1].analogController_0.status         == 0 &&
@@ -252,7 +252,7 @@ s32 Inventory_HyperBlasterUnlockTest(void) // 0x8004C45C
 
 s32 Inventory_HyperBlasterFunctionalTest(void) // 0x8004C4F8
 {
-    if (g_SavegamePtr->mapOverlayId_A4 > MapOverlayId_MAP0_S00)
+    if (g_SavegamePtr->mapOverlayId_A4 > MapIdx_MAP0_S00)
     {
         if ((g_SavegamePtr->clearGameEndings_24B & GameEndingFlag_Ufo) != 0)
         {

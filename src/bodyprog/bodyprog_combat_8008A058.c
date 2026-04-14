@@ -1608,17 +1608,17 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
     s32              temp_s0;
     s32              temp_s1;
     s32              temp_s2;
-    s32              temp_s3;
+    q19_12           temp_s3;
     s32              temp_t2;
     s32              j;
     q19_12           temp_t4;
     s32              temp_t4_2;
     s32              temp_t5;
-    s32              temp_v0_5;
+    s32              angle1;
     s32              temp_v0_6;
     s32              temp_v0_7;
     s32              temp_v0_8;
-    s32              var_a1_2;
+    q19_12           var_a1_2;
     s32              var_fp;
     s32              var_s1;
     q19_12           var_s7;
@@ -1789,11 +1789,11 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
         D_800C47C8[1].vy = var_v1;
         temp_s3          = chara1->field_D4.field_2;
 
-        temp_v0_5 = ratan2(temp_s1 - posX, temp_s2 - posZ);
-        temp_v0_6 = Math_Sin(temp_v0_5);
+        angle1 = ratan2(temp_s1 - posX, temp_s2 - posZ);
+        temp_v0_6 = Math_Sin(angle1);
         temp_s0   = Q12_MULT_PRECISE(temp_s3, temp_v0_6);
 
-        var_s1 = Math_Cos(temp_v0_5);
+        var_s1 = Math_Cos(angle1);
 
         posX = temp_s1 - temp_s0;
 
@@ -1860,7 +1860,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
 
         if (var_a1_2 | var_v1)
         {
-            if (var_a1_2 == 0)
+            if (var_a1_2 == Q12(0.0f))
             {
                 if (temp_s3 < var_v1)
                 {

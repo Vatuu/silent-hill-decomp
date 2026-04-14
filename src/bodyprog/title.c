@@ -292,7 +292,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
                 g_SysWork.processFlags = ProcessFlag_NewGame;
 
-                GameBoot_MapLoad(MapOverlayId_MAP0_S00);
+                GameBoot_MapLoad(MapIdx_MAP0_S00);
                 GameFs_StreamBinLoad();
                 SD_Call(Sfx_MenuStartGame);
 

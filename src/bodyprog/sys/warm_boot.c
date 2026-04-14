@@ -39,7 +39,7 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
         return ResetType_None;
     }
 
-    if (g_SysWork.flags_22A4 & SysFlag2_1)
+    if (g_SysWork.flags_22A4 & UnkSysFlag_1)
     {
         if (g_Demo_FrameCount > (TICKS_PER_SECOND * 30))
         {
@@ -75,7 +75,7 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
         return ResetType_WarmBoot;
     }
 
-    return (g_SysWork.flags_22A4 & SysFlag2_8) ? ResetType_WarmBoot : ResetType_None;
+    return (g_SysWork.flags_22A4 & UnkSysFlag_8) ? ResetType_WarmBoot : ResetType_None;
 
     #undef WARM_BOOT_COMBO_HOLD
     #undef WARM_BOOT_COMBO_PRESS
@@ -117,7 +117,7 @@ void Game_WarmBoot(void) // 0x80034264
         VSync(SyncMode_Wait);
     }
 
-    if (g_SysWork.flags_22A4 & SysFlag2_1)
+    if (g_SysWork.flags_22A4 & UnkSysFlag_1)
     {
         Demo_Stop();
     }

@@ -63,7 +63,7 @@ void sharedFunc_800DB60C_7_s01(void)
             break;
 
         case 2:
-            g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
+            g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
 
             Fs_QueueStartReadTim(FILE_TIM_3X3DOR_TIM, IMAGE_BUFFER_5, &g_ItemInspectionImg);
             Fs_QueueWaitForEmpty();

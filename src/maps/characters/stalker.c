@@ -542,9 +542,9 @@ void Ai_Stalker_ControlUpdate(s_SubCharacter* stalker)
         }
     }
 
-    if (!(g_SysWork.sysFlags_22A0 & SysFlag_4))
+    if (!(g_SysWork.bgmStatusFlags & BgmStatusFlag_4))
     {
-        g_SysWork.sysFlags_22A0 |= SysFlag_4;
+        g_SysWork.bgmStatusFlags |= BgmStatusFlag_4;
 
         for (i = 4; i > 0; i--)
         {
@@ -662,7 +662,7 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
                                               sharedData_800E3A1C_0_s00 - stalker->position.vz) -
                                        stalker->rotation.vy);
 
-    if (distToPlayer > Q12(8.0f) && (stalkerProps.flags_E8 & StalkerFlag_0) && !(g_SysWork.flags_22A4 & SysFlag2_MenuOpen))
+    if (distToPlayer > Q12(8.0f) && (stalkerProps.flags_E8 & StalkerFlag_0) && !(g_SysWork.flags_22A4 & UnkSysFlag_MenuOpen))
     {
         if (!Vw_AabbVisibleInScreenCheck(stalker->position.vx - Q12(1.0f), stalker->position.vx + Q12(1.0f),
                                          stalker->position.vy - Q12(1.8f), stalker->position.vy,
@@ -925,7 +925,7 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
     {
         if ((stalkerProps.flags_E8 & StalkerFlag_0) &&
             (stalkerProps.flags_E8 & StalkerFlag_10) &&
-            !(g_SysWork.flags_22A4 & SysFlag2_MenuOpen))
+            !(g_SysWork.flags_22A4 & UnkSysFlag_MenuOpen))
         {
             if (!Vw_AabbVisibleInScreenCheck(stalker->position.vx - Q12(1.0f), stalker->position.vx + Q12(1.0f),
                                              stalker->position.vy - Q12(1.8f), stalker->position.vy,

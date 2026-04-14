@@ -12,7 +12,7 @@ void Map_RoomBgmInit(bool arg0)
     switch (g_GameWork.bgmIdx)
     {
         case 5:
-            g_SysWork.sysFlags_22A0 &= ~SysFlag_3;
+            g_SysWork.bgmStatusFlags &= ~BgmStatusFlag_Duck;
 
             switch (g_GameWork.gameState)
             {

@@ -130,7 +130,7 @@ void Bgm_GlobalLayerVariablesUpdate(void) // 0x80035ED0
 void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0x80035F4C
 {
     s16       temp_v0;
-    s32       var_a0;
+    s32       ducking;
     s32       var_a2;
     q19_12    curLayerVol;
     q19_12    curLayerVol1;
@@ -169,14 +169,14 @@ void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0
         g_RadioPitchState > 0 &&
         (g_SavegamePtr->itemToggleFlags_AC & ItemToggleFlag_RadioOn))
     {
-        g_SysWork.sysFlags_22A0 |= SysFlag_2;
+        g_SysWork.bgmStatusFlags |= BgmStatusFlag_RadioActive;
     }
 
     // Mute layers.
-    if (g_SysWork.sysFlags_22A0 & SysFlag_Mute)
+    if (g_SysWork.bgmStatusFlags & BgmStatusFlag_RequestMute)
     {
         flagsCpy                 = BgmFlag_Layer0 | BgmFlag_MuteAll;
-        g_SysWork.sysFlags_22A0 |= SysFlag_1;
+        g_SysWork.bgmStatusFlags |= BgmStatusFlag_ApplyMute;
     }
 
     if (flagsCpy & BgmFlag_Layer0)
@@ -197,17 +197,17 @@ void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0
         if (i == endLayerIdx)
         {
             var_t0 = Q12_MULT_FLOAT_PRECISE(g_DeltaTimeRaw, 0.25f);
-            if (g_SysWork.sysFlags_22A0 & SysFlag_1)
+            if (g_SysWork.bgmStatusFlags & BgmStatusFlag_ApplyMute)
             {
-                var_a0 = Q12(1.0f);
+                ducking = Q12(1.0f);
             }
-            else if (g_SysWork.sysFlags_22A0 & SysFlag_2)
+            else if (g_SysWork.bgmStatusFlags & BgmStatusFlag_RadioActive)
             {
-                var_a0 = Q12(0.75f);
+                ducking = Q12(0.75f);
             }
             else
             {
-                var_a0 = (g_SysWork.sysFlags_22A0 & SysFlag_3) ? Q12(0.5f) : Q12(0.0f);
+                ducking = (g_SysWork.bgmStatusFlags & BgmStatusFlag_Duck) ? Q12(0.5f) : Q12(0.0f);
             }
         }
         else
@@ -215,17 +215,17 @@ void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0
             if ((flagsCpy >> i) & BgmFlag_Layer0)
             {
                 var_t0 = FP_MULTIPLY(g_DeltaTimeRaw, fadeSpeed, Q12_SHIFT - 1); // @hack Should be multiplied by 2 but doesn't match.
-                var_a0 = Q12(1.0f);
+                ducking = Q12(1.0f);
             }
             else
             {
                 var_t0 = Q12_MULT(g_DeltaTimeRaw, fadeSpeed);
-                var_a0 = Q12(0.0f);
+                ducking = Q12(0.0f);
             }
         }
 
-        var_a2 = var_a0 - curLayerVol;
-        if (curLayerVol != var_a0)
+        var_a2 = ducking - curLayerVol;
+        if (curLayerVol != ducking)
         {
             if (var_t0 < var_a2)
             {
@@ -233,7 +233,7 @@ void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0
             }
             else if (var_a2 >= -var_t0)
             {
-                curLayerVol = var_a0;
+                curLayerVol = ducking;
             }
             else
             {
@@ -354,7 +354,7 @@ void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0
 void func_800363D0(void) // 0x800363D0
 {
     g_RadioPitchState        = 0;
-    g_SysWork.sysFlags_22A0 |= SysFlag_3;
+    g_SysWork.bgmStatusFlags |= BgmStatusFlag_Duck;
     Bgm_TrackUpdate(false);
 }
 

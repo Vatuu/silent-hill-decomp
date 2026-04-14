@@ -117,7 +117,7 @@ const char* MAP_MESSAGES[] = {
 
 void func_800D9610(void) // 0x800D9610
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -162,7 +162,7 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
 
-            g_SysWork.flags_22A4 |= SysFlag2_3;
+            g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             Sd_PlaySfx(Sfx_Unk1361, 0, 0x90);
             SysWork_StateStepIncrement(0);
@@ -1167,7 +1167,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DBF08
             WorldGfx_ObjectAdd(&D_800E3A5C[0], &D_800E3A9C, &D_800E3AAC);
             WorldGfx_ObjectAdd(&D_800E3A5C[1], &D_800E3A9C, &D_800E3AAC);
 
-            if (g_SysWork.sysFlags_22A0 & SysFlag_6)
+            if (g_SysWork.bgmStatusFlags & BgmStatusFlag_6)
             {
                 Savegame_EventFlagClear(EventFlag_188);
             }
@@ -1226,7 +1226,7 @@ void func_800DC33C(void) // 0x800DC33C
                             g_SysWork.npcs[0].position.vz - camPos.vz) <= Q12(16.5f) &&
         g_SysWork.npcs[0].position.vx >= Q12(-58.0f))
     {
-        if (!(g_SysWork.flags_22A4 & SysFlag2_MenuOpen))
+        if (!(g_SysWork.flags_22A4 & UnkSysFlag_MenuOpen))
         {
             if (!Vw_AabbVisibleInScreenCheck(g_SysWork.npcs[0].position.vx - Q12(1.0f),
                                              g_SysWork.npcs[0].position.vx + Q12(1.0f),
@@ -1315,7 +1315,7 @@ void func_800DC694(void) // 0x800DC694
 
     if (mag <= Q12(14.5f) && g_SysWork.npcs[0].position.vz >= Q12(49.0f))
     {
-        if (!(g_SysWork.flags_22A4 & SysFlag2_MenuOpen))
+        if (!(g_SysWork.flags_22A4 & UnkSysFlag_MenuOpen))
         {
             if (!Vw_AabbVisibleInScreenCheck(g_SysWork.npcs[0].position.vx - Q12(1.0f),
                                              g_SysWork.npcs[0].position.vx + Q12(1.0f),

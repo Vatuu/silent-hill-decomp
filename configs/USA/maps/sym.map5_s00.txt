@@ -193,8 +193,8 @@ MAP_EVENTS                       = 0x800DA860;
 //----------------------------------------------------
 //--- PA: 0x011558   VA: 0x800DAAD0   subsegment: data
 //----------------------------------------------------
-g_ParticleMapOverlayId0          = 0x800DAB70;
-g_ParticleMapOverlayId1          = 0x800DAB74;
+g_ParticleMapIdx0                = 0x800DAB70;
+g_ParticleMapIdx1                = 0x800DAB74;
 D_800DAB7C                       = 0x800DAB7C; // size:3
 g_Particle_SpeedX                = 0x800DAB80; // type:s32
 g_Particle_SpeedZ                = 0x800DAB84; // type:s32

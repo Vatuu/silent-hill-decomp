@@ -41,8 +41,8 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
 
         g_MapEventData         = g_ItemTriggerEvents[i];
         g_MapEventLastUsedItem = g_SysWork.playerWork.extra.lastUsedItem;
-        g_MapEventSysState     = g_MapEventData->sysState_0;
-        g_MapEventParam        = g_MapEventData->eventParam_8_5;
+        g_MapEventSysState     = g_MapEventData->sysState;
+        g_MapEventParam        = g_MapEventData->eventParam;
 
         g_SysWork.playerWork.extra.lastUsedItem = InventoryItemId_Unequipped;
         Event_ItemTriggersClear();
@@ -63,7 +63,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
 
         mapEvent++;
 
-        if (mapEvent->triggerType_4_0 == NO_VALUE)
+        if (mapEvent->triggerType == NO_VALUE)
         {
             break;
         }
@@ -71,8 +71,8 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         // `requiredEventFlag`: if set, EventFlag that must be set for event to trigger?
         // `disabledEventFlag`: if set, EventFlag that must not be set for event to trigger?
         // TODO: Can this s32 temp be removed? Trying to set `disabledEventFlag` directly results in `lhu` instead?
-        requiredEventFlag      = mapEvent->requiredEventFlag_0;
-        disabledEventFlag_temp = mapEvent->disabledEventFlag_2;
+        requiredEventFlag      = mapEvent->requiredEventFlag;
+        disabledEventFlag_temp = mapEvent->disabledEventFlag;
         disabledEventFlag      = disabledEventFlag_temp;
 
         if (requiredEventFlag != EventFlag_None && !Savegame_EventFlagGet(requiredEventFlag))
@@ -81,8 +81,8 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         }
 
         if (disabledEventFlag != EventFlag_None && Savegame_EventFlagGet(disabledEventFlag) &&
-            (disabledEventFlag < 867 || mapEvent->activationType_4_4 == TriggerActivationType_Exclusive ||
-             mapEvent->sysState_0 == SysState_EventSetFlag))
+            (disabledEventFlag < 867 || mapEvent->activationType == TriggerActivationType_Exclusive ||
+             mapEvent->sysState == SysState_EventSetFlag))
         {
             continue;
         }
@@ -90,26 +90,26 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         // `TriggerType_None` skips any trigger/activation check and always executes.
         // Maybe used for map-load events, and events that should run every frame?
         // Returns before processing other events until flag checks above disable it.
-        if (mapEvent->triggerType_4_0 == TriggerType_None)
+        if (mapEvent->triggerType == TriggerType_None)
         {
             g_MapEventData     = mapEvent;
-            g_MapEventSysState = mapEvent->sysState_0;
-            g_MapEventParam    = mapEvent->eventParam_8_5;
+            g_MapEventSysState = mapEvent->sysState;
+            g_MapEventParam    = mapEvent->eventParam;
             return;
         }
 
         // `TriggerActivationType_Button`: Only continue processing event when action button is pressed and
         // `Player_IsBusy` returns `false`.
-        if (mapEvent->activationType_4_4 == TriggerActivationType_Button &&
+        if (mapEvent->activationType == TriggerActivationType_Button &&
             (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.action_6) ||
             disableButtonEvents || Player_IsBusy()))
         {
             continue;
         }
 
-        mapPoint = &g_MapOverlayHeader.mapPointsOfInterest_1C[mapEvent->pointOfInterestIdx_5];
+        mapPoint = &g_MapOverlayHeader.mapPointsOfInterest_1C[mapEvent->pointOfInterestIdx];
 
-        switch (mapEvent->triggerType_4_0)
+        switch (mapEvent->triggerType)
         {
             case TriggerType_TouchAabb:
                 pointPosX    = mapPoint->positionX_0;
@@ -153,7 +153,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         // Trigger checks have passed. Check activation type.
 
         // `TriggerActivationType_Exclusive`: Skip processing any other events if this event is active.
-        if (mapEvent->activationType_4_4 == TriggerActivationType_Exclusive && mapEvent == g_MapEventData)
+        if (mapEvent->activationType == TriggerActivationType_Exclusive && mapEvent == g_MapEventData)
         {
             g_MapEventSysState = SysState_Invalid;
             return;
@@ -164,23 +164,23 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         // Once player uses an item in the inventory screen, it compares the ID against the ones stored at `g_ItemTriggerItemIds`.
         // If used item ID matches one that event has requested, `extra.lastUsedItem` gets set to the item ID.
         // At the start of this function, if `extra.lastUsedItem` is set, it will locate the `s_EventData` for it from `g_ItemTriggerEvents` and run the event.
-        if (mapEvent->activationType_4_4 == TriggerActivationType_Item)
+        if (mapEvent->activationType == TriggerActivationType_Item)
         {
             for (i = 0; g_ItemTriggerItemIds[i] != NO_VALUE; i++);
 
             g_ItemTriggerEvents[i]  = mapEvent;
-            g_ItemTriggerItemIds[i] = mapEvent->requiredItemId_6;
+            g_ItemTriggerItemIds[i] = mapEvent->requiredItemId;
             continue;
         }
 
         // `TriggerActivationType_Button`: Only allow button activated events when area is lit up?
-        if (mapEvent->activationType_4_4 == TriggerActivationType_Button)
+        if (mapEvent->activationType == TriggerActivationType_Button)
         {
             if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 2) && !g_SysWork.field_2388.isFlashlightOn_15 &&
                 ((g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & 1) || (g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & 1)))
             {
-                if (mapEvent->sysState_0 != SysState_LoadOverlay &&
-                    (mapEvent->sysState_0 != SysState_LoadRoom && mapEvent->eventParam_8_5 > 1))
+                if (mapEvent->sysState != SysState_LoadOverlay &&
+                    (mapEvent->sysState != SysState_LoadRoom && mapEvent->eventParam > 1))
                 {
                     continue;
                 }
@@ -191,16 +191,16 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
 
         // If this is `EventSetFlag`, handle setting the flag here and skip running it.
         // (Same as `SysState_EventSetFlag_Update`.)
-        if (mapEvent->sysState_0 == SysState_EventSetFlag)
+        if (mapEvent->sysState == SysState_EventSetFlag)
         {
-            Savegame_EventFlagSetAlt(mapEvent->disabledEventFlag_2);
+            Savegame_EventFlagSetAlt(mapEvent->disabledEventFlag);
             break;
         }
 
         // Set `g_MapEventSysState` to the SysState needed for the event to be ran on next tick (`SysState_ReadMessage`/`SaveMenu`/`EventCallFunc`/etc.).
         g_MapEventData     = mapEvent;
-        g_MapEventSysState = mapEvent->sysState_0;
-        g_MapEventParam    = mapEvent->eventParam_8_5;
+        g_MapEventSysState = mapEvent->sysState;
+        g_MapEventParam    = mapEvent->eventParam;
         return;
     }
 

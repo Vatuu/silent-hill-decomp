@@ -397,14 +397,14 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 void func_800D67F4(void) // 0x800D67F4
 {
-    VECTOR3 pos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 pos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
     Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_Unk1576, &pos);
 }
 
 void func_800D6888(void) // 0x800D6888
 {
-    VECTOR3 pos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 pos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
     Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_Unk1576, &pos);
 }
@@ -427,7 +427,7 @@ void MapEvent_CommonItemTake(void) // 0x800D691C
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx_5)
+    switch (g_MapEventData->pointOfInterestIdx)
     {
         case 38:
             pickupType   = CommonPickupItemId_ShotgunShells;
@@ -475,9 +475,9 @@ void MapEvent_CommonItemTake(void) // 0x800D691C
 
 void func_800D69DC(void) // 0x800D69DC
 {
-    VECTOR3 pos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 pos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
-    switch (g_MapEventData->pointOfInterestIdx_5)
+    switch (g_MapEventData->pointOfInterestIdx)
     {
         case 10:
             Player_ItemRemove(InventoryItemId_SewerKey, 1);
@@ -529,7 +529,7 @@ void func_800D6B00(void) // 0x800D6B00
             break;
 
         case 5:
-            g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
+            g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
             func_800862F8(7, FILE_TIM_DRAINKEY_TIM, false);
             break;
 
@@ -880,7 +880,7 @@ void func_800D7C84(void) // 0x800D7C84
         SysWork_StateStepReset();
     }
 
-    g_SysWork.sysFlags_22A0 |= SysFlag_1;
+    g_SysWork.bgmStatusFlags |= BgmStatusFlag_ApplyMute;
 
     switch (g_SysWork.sysStateSteps[0])
     {

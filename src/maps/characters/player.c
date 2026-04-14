@@ -41,7 +41,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 #if defined(MAP0_S00)
     else if (g_SysWork.playerWork.extra.state == PlayerState_Unk74)
     {
-        cond = g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S02;
+        cond = g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP1_S02;
     }
 
 #elif defined(MAP1_S01) || defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP1_S06) || \

@@ -77,7 +77,7 @@ void Screen_BackgroundImgDraw(s_FsImageDesc* image) // 0x800314EC
     }
 
     GsOUT_PACKET_P                  = packet;
-    g_SysWork.sysFlags_22A0        |= SysFlag_Pause;
+    g_SysWork.bgmStatusFlags        |= BgmStatusFlag_Pause;
     g_Screen_BackgroundImgGamma = Q8(0.5f);
 }
 
@@ -131,7 +131,7 @@ void Screen_BackgroundImgTransition(s_FsImageDesc* image0, s_FsImageDesc* image1
         }
     }
 
-    g_SysWork.sysFlags_22A0 |= SysFlag_Pause;
+    g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
     GsOUT_PACKET_P = (PACKET*)poly;
 }
 
@@ -176,7 +176,7 @@ void Screen_BackgroundImgDrawAlt(s_FsImageDesc* image) // 0x80031AAC
     }
 
     GsOUT_PACKET_P                  = (PACKET*)poly;
-    g_SysWork.sysFlags_22A0        |= SysFlag_Pause;
+    g_SysWork.bgmStatusFlags        |= BgmStatusFlag_Pause;
     g_Screen_BackgroundImgGamma = Q8(0.5f);
 }
 

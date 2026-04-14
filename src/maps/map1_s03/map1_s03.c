@@ -89,7 +89,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 void func_800DA7F4(void) // 0x800DA7F4
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_LibraryReserveKey, 1);
     Map_MessageWithSfx(37, Sfx_UseKey, &sfxPos); // "Used the Library reverse key."
@@ -98,7 +98,7 @@ void func_800DA7F4(void) // 0x800DA7F4
 
 void func_800DA8B0(void) // 0x800DA8B0
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_ClassroomKey, 1);
     Map_MessageWithSfx(38, Sfx_UseKey, &sfxPos); // "Used classroom key."
@@ -149,7 +149,7 @@ void func_800DA950(void) // 0x800DA950
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx_5)
+    switch (g_MapEventData->pointOfInterestIdx)
     {
         case 84:
             pickupType   = CommonPickupItemId_ShotgunShells;
@@ -222,9 +222,9 @@ void func_800DAA28(void) // 0x800DAA28
             break;
 
         case 3:
-            if (g_MapEventData->pointOfInterestIdx_5 == 19 || g_MapEventData->pointOfInterestIdx_5 == 20)
+            if (g_MapEventData->pointOfInterestIdx == 19 || g_MapEventData->pointOfInterestIdx == 20)
             {
-                if (g_MapEventData->activationType_4_4 == TriggerActivationType_Item)
+                if (g_MapEventData->activationType == TriggerActivationType_Item)
                 {
                     Savegame_EventFlagSet(EventFlag_M1S02_UsedRubberBall);
                     MapMsg_DisplayAndHandleSelection(false, 36, false, false, 0, false); // "Used rubber ball."
@@ -234,7 +234,7 @@ void func_800DAA28(void) // 0x800DAA28
                     MapMsg_DisplayAndHandleSelection(false, 35, false, false, 0, false); // "Nothing special."
                 }
             }
-            else if (g_MapEventData->pointOfInterestIdx_5 == 17 || g_MapEventData->pointOfInterestIdx_5 == 18)
+            else if (g_MapEventData->pointOfInterestIdx == 17 || g_MapEventData->pointOfInterestIdx == 18)
             {
                 if (Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey))
                 {
@@ -266,7 +266,7 @@ void func_800DABC4(void) // 0x800DABC4
         case 0:
             Player_ControlFreeze();
 
-            if (g_MapEventData->pointOfInterestIdx_5 == 17 || g_MapEventData->pointOfInterestIdx_5 == 18)
+            if (g_MapEventData->pointOfInterestIdx == 17 || g_MapEventData->pointOfInterestIdx == 18)
             {
                 if (Savegame_EventFlagGet(EventFlag_M1S03_KeyDownTheDrain))
                 {
@@ -278,9 +278,9 @@ void func_800DABC4(void) // 0x800DABC4
                     Savegame_EventFlagSet(EventFlag_112);
                 }
             }
-            else if (g_MapEventData->pointOfInterestIdx_5 == 19 || g_MapEventData->pointOfInterestIdx_5 == 20)
+            else if (g_MapEventData->pointOfInterestIdx == 19 || g_MapEventData->pointOfInterestIdx == 20)
             {
-                if (g_MapEventData->activationType_4_4 == TriggerActivationType_Item || Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
+                if (g_MapEventData->activationType == TriggerActivationType_Item || Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
                 {
                     func_800862F8(false, FILE_TIM_BALLHOLE_TIM, false);
                 }
@@ -319,9 +319,9 @@ void func_800DABC4(void) // 0x800DABC4
 
         case 7:
             func_800862F8(2, 0, false);
-            if (g_MapEventData->pointOfInterestIdx_5 == 19 || g_MapEventData->pointOfInterestIdx_5 == 20)
+            if (g_MapEventData->pointOfInterestIdx == 19 || g_MapEventData->pointOfInterestIdx == 20)
             {
-                if (g_MapEventData->activationType_4_4 == TriggerActivationType_Item)
+                if (g_MapEventData->activationType == TriggerActivationType_Item)
                 {
                     Savegame_EventFlagSet(EventFlag_M1S02_UsedRubberBall);
                     MapMsg_DisplayAndHandleSelection(false, 36, false, false, 0, false);
