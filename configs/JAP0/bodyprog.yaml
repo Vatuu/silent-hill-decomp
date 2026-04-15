@@ -74,7 +74,7 @@ segments:
       - [0x6EC, .rodata, events/map_msg_display]
       - [0x744, .rodata, events/bodyprog_data_800A99B4]
       - [0x804, .rodata, events/game_sys_states]
-      - [0x908, .rodata, title]
+      - [0x908, .rodata, events/title]
       - [0x9AC, rodata] # Garbage padding (should start at 0x9AB but that causes mismatches?)
       - [0x9B0, .rodata, gfx/bodyprog_8003BE50]
       - [0x1040, .rodata, gfx/map_effects]
@@ -150,8 +150,8 @@ segments:
       - [0x125A0, c, events/events_main]
       - [0x12F98, c, events/npc_main]
       - [0x13DA8, c, events/game_sys_states]
-      - [0x15CFC, c, title]
-      - [0x16F00, c, bodyprog_8003BD2C]
+      - [0x15CFC, c, events/title]
+      - [0x16F00, c, events/bodyprog_8003BD2C]
       - [0x17024, c, gfx/bodyprog_8003BE50]
       - [0x197BC, c, gfx/map_effects]
       - [0x1B1D8, c, gfx/bodyprog_80040004]
@@ -389,7 +389,7 @@ segments:
       - [0x871F0, .data, events/bodyprog_data_800A99B4]
       - [0x8725C, .data, events/events_main]
       - [0x87268, .data, events/game_sys_states]
-      - [0x872B0, .data, title]
+      - [0x872B0, .data, events/title]
       - [0x876E8, .data, gfx/bodyprog_8003BE50]
       - [0x877BC, .data, gfx/map_effects]
       - [0x87804, data]
@@ -453,7 +453,7 @@ segments:
       - [0x9A74C, pad] # Garbage
       - [0x9A750, .bss, events/game_sys_states]
       - [0x9A7AC, pad] # Garbage.
-      - [0x9A7B0, .bss, title]
+      - [0x9A7B0, .bss, events/title]
       - [0x9A7B4, bss]
       - [0x9A7B8, .bss, gfx/map_effects]
       - [0x9A7C8, bss]

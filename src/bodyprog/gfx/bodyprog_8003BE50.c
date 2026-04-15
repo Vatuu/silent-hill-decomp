@@ -1334,8 +1334,6 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
     }
 }
 
-const s32 pad_rodata_80025BB0 = 0;
-
 void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
 {
     s32 idx;
@@ -1635,3 +1633,5 @@ void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
             break;
     }
 }
+
+const s32 pad_rodata_80025BB0 = 0;

@@ -348,9 +348,9 @@ SysState_EventPlaySound_Update               = 0x8003A4B4; // type:func
 SysState_GameOver_Update                     = 0x8003A52C; // type:func
 GameState_MapEvent_Update                    = 0x8003AA4C; // type:func
 
-//--------------------------------------------------------
-//--- PA: 0x015FC8   VA: 0x8003AB28   subsegment: c, title
-//--------------------------------------------------------
+//---------------------------------------------------------------
+//--- PA: 0x015FC8   VA: 0x8003AB28   subsegment: c, events/title
+//---------------------------------------------------------------
 GameState_MainMenu_Update                    = 0x8003AB28; // type:func
 MainMenu_SelectedOptionIdxReset              = 0x8003B550; // type:func
 MainMenu_MainTextDraw                        = 0x8003B568; // type:func
@@ -362,9 +362,9 @@ MainMenu_FogRandomize                        = 0x8003BAC4; // type:func
 MainMenu_FogScatter                          = 0x8003BBF4; // type:func
 MainMenu_FogUpdate                           = 0x8003BC8C; // type:func
 
-//--------------------------------------------------------------------
-//--- PA: 0x0171CC   VA: 0x8003BD2C   subsegment: c, bodyprog_8003BD2C
-//--------------------------------------------------------------------
+//---------------------------------------------------------------------------
+//--- PA: 0x0171CC   VA: 0x8003BD2C   subsegment: c, events/bodyprog_8003BD2C
+//---------------------------------------------------------------------------
 Map_TypeGet                                  = 0x8003BD2C; // type:func
 
 //------------------------------------------------------------------------
@@ -2352,9 +2352,9 @@ g_RadioPitchState                            = 0x800A9A1C;
 //-----------------------------------------------------------------------------
 g_SysStateFuncs                              = 0x800A9A2C; // type:u32 size:0x3C
 
-//------------------------------------------------------------
-//--- PA: 0x084F14   VA: 0x800A9A74   subsegment: .data, title
-//------------------------------------------------------------
+//-------------------------------------------------------------------
+//--- PA: 0x084F14   VA: 0x800A9A74   subsegment: .data, events/title
+//-------------------------------------------------------------------
 g_MainMenuState                              = 0x800A9A74;
 g_MainMenu_SelectedEntry                     = 0x800A9A78;
 g_MainMenu_VisibleEntryFlags                 = 0x800A9A7C;

@@ -20,10 +20,27 @@ extern s_WorldEnvWork const g_WorldEnvWork;
 
 s16 D_800BCDE8[8];
 
+static s_MapEffectsPresetIdxs D_800A9F80 = { 1, 1  };
+static s_MapEffectsPresetIdxs D_800A9F84 = { 2, 2  };
+static s_MapEffectsPresetIdxs D_800A9F88 = { 6, 3  };
+static s_MapEffectsPresetIdxs D_800A9F8C = { 7, 4  };
+static s_MapEffectsPresetIdxs D_800A9F90 = { 6, 10 };
+static s_MapEffectsPresetIdxs D_800A9F94 = { 6, 5  };
+static s_MapEffectsPresetIdxs D_800A9F98 = { 9, 9  };
+static s_MapEffectsPresetIdxs D_800A9F9C = { 6, 6  };
+static s_MapEffectsPresetIdxs D_800A9FA0 = { 3, 3  };
+static s_MapEffectsPresetIdxs D_800A9FA4 = { 5, 5  };
+
 // ========================================
 // OPTIONS
 // ========================================
 // Possibly the options overlay was at some point part of the engine like `SAVELOAD.BIN` was.
+// Jan 16 Demo (demo where the option overlay is mixed inside engine [bodyprog.bin]) doesn't
+// tells that, this function remains between `GameFs_FlameGfxLoad` and `func_8003E544`.
+// With this in mind there are two possible variables for this function:
+// - It is inside a unique split
+// - It is part of this split
+// 0x80036c48 is the memory address for this function in the Jan 16 Demo.
 
 void Options_BrightnessMenu_LinesDraw(s32 arg0) // 0x8003E5E8
 {
@@ -67,17 +84,6 @@ void Options_BrightnessMenu_LinesDraw(s32 arg0) // 0x8003E5E8
 // ========================================
 // EFFECTS (FOG AND LIGHT)
 // ========================================
-
-static s_MapEffectsPresetIdxs D_800A9F80 = { 1, 1  };
-static s_MapEffectsPresetIdxs D_800A9F84 = { 2, 2  };
-static s_MapEffectsPresetIdxs D_800A9F88 = { 6, 3  };
-static s_MapEffectsPresetIdxs D_800A9F8C = { 7, 4  };
-static s_MapEffectsPresetIdxs D_800A9F90 = { 6, 10 };
-static s_MapEffectsPresetIdxs D_800A9F94 = { 6, 5  };
-static s_MapEffectsPresetIdxs D_800A9F98 = { 9, 9  };
-static s_MapEffectsPresetIdxs D_800A9F9C = { 6, 6  };
-static s_MapEffectsPresetIdxs D_800A9FA0 = { 3, 3  };
-static s_MapEffectsPresetIdxs D_800A9FA4 = { 5, 5  };
 
 void GameFs_FlameGfxLoad(void) // 0x8003E710
 {
