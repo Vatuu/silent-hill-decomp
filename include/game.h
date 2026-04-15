@@ -25,7 +25,7 @@ struct _Model;
 #define NPC_BONE_COUNT_MAX        10 * NPC_COUNT_MAX
 #define CHARA_GROUP_COUNT         4 /** While up to 6 NPCs and a player can exist in the game world, only 4 different character types (including the player) can be loaded at a time. */
 #define INVENTORY_ITEM_COUNT_MAX  40
-#define INVENTORY_ITEM_GROUP_SIZE 32 /** Number of `e_InventoryItemId`s per `e_InventoryItemGroup`. */
+#define INVENTORY_ITEM_GROUP_SIZE 32 /** Number of `e_InvItemId`s per `e_InvItemGroup`. */
 #define INPUT_ACTION_COUNT        14
 #define CONTROLLER_COUNT_MAX      2
 
@@ -276,7 +276,7 @@ struct _Model;
 #define CLEAR_FLAG(ptr, idx) \
     ((((u32*)ptr)[(idx) >> 5] &= ~((1 << 0) << ((idx) & 0x1F))))
 
-/** @brief Gets the `e_InventoryItemGroup` for an `e_InventoryItemId`.
+/** @brief Gets the `e_InvItemGroup` for an `e_InvItemId`.
  * Divides the item ID by 32 (`INVENTORY_ITEM_GROUP_SIZE`), using a bitwise shift to match.
  *
  * @param itemId Item ID to process.
@@ -285,7 +285,7 @@ struct _Model;
 #define INVENTORY_ITEM_GROUP(itemId) \
     ((itemId) >> 5)
 
-/** @brief Gets the index of an `e_InventoryItemId` inside the group it belongs to.
+/** @brief Gets the index of an `e_InvItemId` inside the group it belongs to.
  * Modulos the item ID by 32 (`INVENTORY_ITEM_GROUP_SIZE`), using AND to match.
  * E.g. `itemId` 65 would be index 1, group 2.
  *
@@ -295,7 +295,7 @@ struct _Model;
 #define INVENTORY_ITEM_GROUP_ID(itemId) \
     ((itemId) & 0x1F)
 
-/** @brief Gets the `e_InventoryItemId` of the ammo for a given weapon item.
+/** @brief Gets the `e_InvItemId` of the ammo for a given weapon item.
  *
  * @param itemId Weapon item ID to process.
  * @return Inventory item group.
@@ -303,7 +303,7 @@ struct _Model;
 #define INVENTORY_WEAPON_AMMO_ID(weaponId) \
     ((weaponId) + INVENTORY_ITEM_GROUP_SIZE)
 
-/** @brief Gets the `e_InventoryItemId` of the weapon for a given ammo item.
+/** @brief Gets the `e_InvItemId` of the weapon for a given ammo item.
  *
  * @param ammoId Ammo ID to process.
  * @return Inventory item group.
@@ -637,142 +637,156 @@ typedef enum _SysState
     SysState_Invalid        = 15 /** Used by `Event_Update` to signal that SysState shouldn't be updated. */
 } e_SysState;
 
-/** @brief Inventory command IDs. */
-typedef enum _InventoryCmdId
+/** @brief Inventory item model load flags. */
+typedef enum _InvItemLoadFlags
 {
-    InventoryCmdId_UseHealth     = 0, /** Text is "Use", but this one is used exclusively on health items. */
-    InventoryCmdId_Use           = 1,
-    InventoryCmdId_Equip         = 2,
-    InventoryCmdId_Unequip       = 3,
-    InventoryCmdId_EquipReload   = 4,
-    InventoryCmdId_UnequipReload = 5,
-    InventoryCmdId_OnOff         = 6,
-    InventoryCmdId_Reload        = 7,
-    InventoryCmdId_Look          = 8,
-    InventoryCmdId_UseLook       = 9,
-    InventoryCmdId_Unk10         = 10,
-    InventoryCmdId_Unk11         = 11 // Flashlight in daytime?
-} e_InventoryCmdId;
+    InvItemLoadFlag_None  = 0,
+    InvItemLoadFlag_Tex0  = 1 << 0,
+    InvItemLoadFlag_Tex1  = 1 << 1,
+    InvItemLoadFlag_Tex2  = 1 << 2,
+    InvItemLoadFlag_Tex3  = 1 << 3,
+    InvItemLoadFlag_Tex4  = 1 << 4,
+    InvItemLoadFlag_Tex5  = 1 << 5,
+    InvItemLoadFlag_Tex6  = 1 << 6,
+    InvItemLoadFlag_Model = 1 << 7
+} e_InvItemLoadFlags;
+
+/** @brief Inventory command IDs. */
+typedef enum _InvCmdId
+{
+    InvCmdId_UseHealth     = 0, /** Text is "Use", but this one is used exclusively on health items. */
+    InvCmdId_Use           = 1,
+    InvCmdId_Equip         = 2,
+    InvCmdId_Unequip       = 3,
+    InvCmdId_EquipReload   = 4,
+    InvCmdId_UnequipReload = 5,
+    InvCmdId_OnOff         = 6,
+    InvCmdId_Reload        = 7,
+    InvCmdId_Look          = 8,
+    InvCmdId_UseLook       = 9,
+    InvCmdId_Unk10         = 10,
+    InvCmdId_Unk11         = 11 // Flashlight in daytime?
+} e_InvCmdId;
 
 /** @brief Inventory item groups. Every 32nd item ID is treated as a separate group by some code. */
-typedef enum _InventoryItemGroup
+typedef enum _InvItemGroup
 {
-    InventoryItemGroup_None          = 0,
-    InventoryItemGroup_HealthItems   = 1,
-    InventoryItemGroup_Keys          = 2,
-    InventoryItemGroup_PuzzleItems   = 3,
-    InventoryItemGroup_MeleeWeapons  = 4,
-    InventoryItemGroup_GunWeapons    = 5,
-    InventoryItemGroup_GunAmmo       = 6,
-    InventoryItemGroup_PortableItems = 7
-} e_InventoryItemGroup;
+    InvItemGroup_None          = 0,
+    InvItemGroup_HealthItems   = 1,
+    InvItemGroup_Keys          = 2,
+    InvItemGroup_PuzzleItems   = 3,
+    InvItemGroup_MeleeWeapons  = 4,
+    InvItemGroup_GunWeapons    = 5,
+    InvItemGroup_GunAmmo       = 6,
+    InvItemGroup_PortableItems = 7
+} e_InvItemGroup;
 
 /** @brief Inventory item IDs. */
-typedef enum _InventoryItemId
+typedef enum _InvItemId
 {
     // Group 0 (None)
-    InventoryItemId_Empty                 = NO_VALUE,
-    InventoryItemId_Unequipped            = 0,
+    InvItemId_Empty                 = NO_VALUE,
+    InvItemId_Unequipped            = 0,
 
     // Group 1 (Health Items)
-    InventoryItemId_HealthDrink           = 32,
-    InventoryItemId_FirstAidKit           = 33,
-    InventoryItemId_Ampoule               = 34,
+    InvItemId_HealthDrink           = 32,
+    InvItemId_FirstAidKit           = 33,
+    InvItemId_Ampoule               = 34,
 
     // Group 2 (Keys)
-    InventoryItemId_LobbyKey              = 64,
-    InventoryItemId_HouseKey              = 65,
-    InventoryItemId_KeyOfLion             = 66,
-    InventoryItemId_KeyOfWoodman          = 67,
-    InventoryItemId_KeyOfScarecrow        = 68,
-    InventoryItemId_LibraryReserveKey     = 69,
-    InventoryItemId_ClassroomKey          = 70,
-    InventoryItemId_KGordonKey            = 71,
-    InventoryItemId_DrawbridgeKey         = 72,
-    InventoryItemId_BasementKey           = 73,
-    InventoryItemId_BasementStoreroomKey  = 74,
-    InventoryItemId_ExaminationRoomKey    = 75,
-    InventoryItemId_AntiqueShopKey        = 76,
-    InventoryItemId_SewerKey              = 77,
-    InventoryItemId_KeyOfOphiel           = 78,
-    InventoryItemId_KeyOfHagith           = 79,
-    InventoryItemId_KeyOfPhaleg           = 80,
-    InventoryItemId_KeyOfBethor           = 81,
-    InventoryItemId_KeyOfAratron          = 82,
-    InventoryItemId_NoteToSchool          = 83,
-    InventoryItemId_NoteDoghouse          = 84,
-    InventoryItemId_PictureCard           = 85,
+    InvItemId_LobbyKey              = 64,
+    InvItemId_HouseKey              = 65,
+    InvItemId_KeyOfLion             = 66,
+    InvItemId_KeyOfWoodman          = 67,
+    InvItemId_KeyOfScarecrow        = 68,
+    InvItemId_LibraryReserveKey     = 69,
+    InvItemId_ClassroomKey          = 70,
+    InvItemId_KGordonKey            = 71,
+    InvItemId_DrawbridgeKey         = 72,
+    InvItemId_BasementKey           = 73,
+    InvItemId_BasementStoreroomKey  = 74,
+    InvItemId_ExaminationRoomKey    = 75,
+    InvItemId_AntiqueShopKey        = 76,
+    InvItemId_SewerKey              = 77,
+    InvItemId_KeyOfOphiel           = 78,
+    InvItemId_KeyOfHagith           = 79,
+    InvItemId_KeyOfPhaleg           = 80,
+    InvItemId_KeyOfBethor           = 81,
+    InvItemId_KeyOfAratron          = 82,
+    InvItemId_NoteToSchool          = 83,
+    InvItemId_NoteDoghouse          = 84,
+    InvItemId_PictureCard           = 85,
 
-    InventoryItemId_SewerExitKey          = 87,
-    InventoryItemId_ChannelingStone       = 88,
+    InvItemId_SewerExitKey          = 87,
+    InvItemId_ChannelingStone       = 88,
 
     // Group 3 (Puzzle Items)
-    InventoryItemId_Chemical              = 96,
-    InventoryItemId_GoldMedallion         = 97,
-    InventoryItemId_SilverMedallion       = 98,
-    InventoryItemId_RubberBall            = 99,
-    InventoryItemId_Flauros               = 100,
-    InventoryItemId_PlasticBottle         = 101,
-    InventoryItemId_UnknownLiquid         = 102,
-    InventoryItemId_PlateOfTurtle         = 103,
-    InventoryItemId_PlateOfHatter         = 104,
-    InventoryItemId_PlateOfCat            = 105,
-    InventoryItemId_PlateOfQueen          = 106,
-    InventoryItemId_BloodPack             = 107,
-    InventoryItemId_DisinfectingAlcohol   = 108,
-    InventoryItemId_Lighter               = 109,
-    InventoryItemId_VideoTape             = 110,
+    InvItemId_Chemical              = 96,
+    InvItemId_GoldMedallion         = 97,
+    InvItemId_SilverMedallion       = 98,
+    InvItemId_RubberBall            = 99,
+    InvItemId_Flauros               = 100,
+    InvItemId_PlasticBottle         = 101,
+    InvItemId_UnknownLiquid         = 102,
+    InvItemId_PlateOfTurtle         = 103,
+    InvItemId_PlateOfHatter         = 104,
+    InvItemId_PlateOfCat            = 105,
+    InvItemId_PlateOfQueen          = 106,
+    InvItemId_BloodPack             = 107,
+    InvItemId_DisinfectingAlcohol   = 108,
+    InvItemId_Lighter               = 109,
+    InvItemId_VideoTape             = 110,
 
-    InventoryItemId_KaufmannKey           = 112,
-    InventoryItemId_Receipt               = 113,
-    InventoryItemId_SafeKey               = 114,
-    InventoryItemId_Magnet                = 115,
-    InventoryItemId_MotorcycleKey         = 116,
-    InventoryItemId_BirdCageKey           = 117,
-    InventoryItemId_Pliers                = 118,
-    InventoryItemId_Screwdriver           = 119,
-    InventoryItemId_Camera                = 120,
-    InventoryItemId_RingOfContract        = 121,
-    InventoryItemId_StoneOfTime           = 122,
-    InventoryItemId_AmuletOfSolomon       = 123,
-    InventoryItemId_CrestOfMercury        = 124,
-    InventoryItemId_Ankh                  = 125,
-    InventoryItemId_DaggerOfMelchior      = 126,
-    InventoryItemId_DiskOfOuroboros       = 127,
+    InvItemId_KaufmannKey           = 112,
+    InvItemId_Receipt               = 113,
+    InvItemId_SafeKey               = 114,
+    InvItemId_Magnet                = 115,
+    InvItemId_MotorcycleKey         = 116,
+    InvItemId_BirdCageKey           = 117,
+    InvItemId_Pliers                = 118,
+    InvItemId_Screwdriver           = 119,
+    InvItemId_Camera                = 120,
+    InvItemId_RingOfContract        = 121,
+    InvItemId_StoneOfTime           = 122,
+    InvItemId_AmuletOfSolomon       = 123,
+    InvItemId_CrestOfMercury        = 124,
+    InvItemId_Ankh                  = 125,
+    InvItemId_DaggerOfMelchior      = 126,
+    InvItemId_DiskOfOuroboros       = 127,
 
     // Group 4 (Melee Weapons)
-    InventoryItemId_KitchenKnife          = 128,
-    InventoryItemId_SteelPipe             = 129,
-    InventoryItemId_RockDrill             = 130,
+    InvItemId_KitchenKnife          = 128,
+    InvItemId_SteelPipe             = 129,
+    InvItemId_RockDrill             = 130,
 
-    InventoryItemId_Hammer                = 132,
-    InventoryItemId_Chainsaw              = 133,
-    InventoryItemId_Katana                = 134,
-    InventoryItemId_Axe                   = 135,
+    InvItemId_Hammer                = 132,
+    InvItemId_Chainsaw              = 133,
+    InvItemId_Katana                = 134,
+    InvItemId_Axe                   = 135,
 
     // Group 5 (Guns)
-    InventoryItemId_Handgun               = 160,
-    InventoryItemId_HuntingRifle          = 161,
-    InventoryItemId_Shotgun               = 162,
-    InventoryItemId_HyperBlaster          = 163,
+    InvItemId_Handgun               = 160,
+    InvItemId_HuntingRifle          = 161,
+    InvItemId_Shotgun               = 162,
+    InvItemId_HyperBlaster          = 163,
 
-    InventoryItemId_CutscenePhone         = 164,
-    InventoryItemId_CutsceneFlauros       = 165,
-    InventoryItemId_CutsceneAglaophotis   = 166,
-    InventoryItemId_CutscenePlasticBottle = 167,
-    InventoryItemId_CutsceneBaby          = 168,
-    InventoryItemId_CutsceneBloodPack     = 169,
+    InvItemId_CutscenePhone         = 164,
+    InvItemId_CutsceneFlauros       = 165,
+    InvItemId_CutsceneAglaophotis   = 166,
+    InvItemId_CutscenePlasticBottle = 167,
+    InvItemId_CutsceneBaby          = 168,
+    InvItemId_CutsceneBloodPack     = 169,
 
     // Group 6 (Gun Ammo)
-    InventoryItemId_HandgunBullets        = 192,
-    InventoryItemId_RifleShells           = 193,
-    InventoryItemId_ShotgunShells         = 194,
+    InvItemId_HandgunBullets        = 192,
+    InvItemId_RifleShells           = 193,
+    InvItemId_ShotgunShells         = 194,
 
     // Group 7 (Portable Items)
-    InventoryItemId_Flashlight            = 224,
-    InventoryItemId_PocketRadio           = 225,
-    InventoryItemId_GasolineTank          = 226
-} e_InventoryItemId;
+    InvItemId_Flashlight            = 224,
+    InvItemId_PocketRadio           = 225,
+    InvItemId_GasolineTank          = 226
+} e_InvItemId;
 
 /** @brief Common pickup item IDs. */
 typedef enum _CommonPickupItemId
@@ -793,7 +807,7 @@ typedef enum _AttackInputType
     AttackInputType_Multitap = 2
 } e_AttackInputType;
 
-/** @brief Equipped weapon IDs. Derivative of `e_InventoryItemId`.
+/** @brief Equipped weapon IDs. Derivative of `e_InvItemId`.
  *
  * TODO: Maybe just "Weapon ID", "equipable item ID", "[something else] item ID"?
  */
@@ -1036,9 +1050,9 @@ STATIC_ASSERT_SIZEOF(s_ControllerConfig, 28);
 
 typedef struct _InventoryItem
 {
-    u8 id_0;      /** `InventoryItemId` */
+    u8 id_0;      /** `InvItemId` */
     u8 count_1;
-    u8 command_2; /** `InventoryCmdId` */
+    u8 command_2; /** `InvCmdId` */
     u8 field_3;   // Some sort of index?
 } s_InventoryItem;
 STATIC_ASSERT_SIZEOF(s_InventoryItem, 4);
@@ -1059,7 +1073,7 @@ typedef struct _Savegame
     s16             savegameCount_A6;
     s8              locationId_A8;            /** `e_SaveLocationId` */
     u8              paperMapIdx_A9;           /** `e_PaperMapIdx` | Index of the paper map displayed when opening the map screen. */
-    u8              equippedWeapon_AA;        /** `e_InventoryItemId` | Affects the visible player weapon model. */
+    u8              equippedWeapon_AA;        /** `e_InvItemId` | Affects the visible player weapon model. */
     u8              inventorySlotCount_AB;    /** Item slots. */
     u32             itemToggleFlags_AC;       /** `e_ItemToggleFlags` */
     s32             ovlEnemyStates[45];       /** Flags indicating the enemy states in a given overlay.
@@ -1128,14 +1142,14 @@ typedef struct _EventData
     /* 0x4+0  */ s8  triggerType    : 4; /** `e_TriggerType` */
     /* 0x4+4  */ u8  activationType : 4; /** `e_TriggerActivationType` */
     /* 0x5    */ u8  pointOfInterestIdx; /** Index into `g_MapOverlayHeader.mapPointsOfInterest_1C`. */
-    /* 0x6    */ u8  requiredItemId;     /** `e_InventoryItemId` that player must use from item screen. */
-    /* 0x7    */ u8  __pad_7[1];
+    /* 0x6    */ u8  requiredItemId;     /** `e_InvItemId` that player must use from item screen. */
+    /* 0x7    */ u8  __pad_7;
     /* 0x8+0  */ u32 sysState        : 5; /** `e_SysState` used by the event. */
     /* 0x8+5  */ u32 eventParam      : 8; /** Can be an ID of a `MapMsg`, sound effect, index into `mapEventFuncs_20`, or index into `mapPointsOfInterest_1C` for `areaLoad` events. */
-    /* 0x8+8  */ u32 flags_8_13      : 6; /** `e_EventDataUnkCutsceneState` */
+    /* 0x8+8  */ u32 flags_8_13      : 6; /** `e_EventDataUnkState` */
     /* 0x8+13 */ u32 sfxPairIdx_8_19 : 5; /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
     /* 0x8+19 */ u32 field_8_24      : 1;
-    /* 0x8+24 */ u32 mapIdx   : 6;
+    /* 0x8+24 */ u32 mapIdx          : 6;
     /* 0x8+25 */ u32 field_8_31      : 1;
 } s_EventData;
 STATIC_ASSERT_SIZEOF(s_EventData, 12);
@@ -1193,9 +1207,7 @@ typedef struct _GameWork
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 
-/** @brief Constant character animation info passed to `Anim_Update` functions.
- * Defines which `Anim_Update` function is to be called.
- */
+/** @brief Constant character animation info passed to `Anim_Update` functions. */
 typedef struct _AnimInfo
 {
     /* 0x0 */ void (*playbackFunc)(struct _Model* model, struct _AnmHeader* anmHdr, GsCOORDINATE2* coords, struct _AnimInfo* animInfo);
@@ -1808,7 +1820,7 @@ typedef struct _PlayerExtra
     /* 0x1C */ s32               state;             /** `e_PlayerState` */
     /* 0x20 */ s32               upperBodyState;    /** `e_PlayerUpperBodyState` */
     /* 0x24 */ s32               lowerBodyState;    /** `e_PlayerLowerBodyState` */
-    /* 0x28 */ e_InventoryItemId lastUsedItem;      /** Holds the last item ID used from inventory when the player is inside an item trigger area. */
+    /* 0x28 */ e_InvItemId lastUsedItem;      /** Holds the last item ID used from inventory when the player is inside an item trigger area. */
 } s_PlayerExtra;
 STATIC_ASSERT_SIZEOF(s_PlayerExtra, 44);
 
@@ -1921,7 +1933,7 @@ typedef struct _SysWork
     /* 0xFC0    */ GsCOORDINATE2    npcCoords[NPC_BONE_COUNT_MAX]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
     /* 0x2280   */ s8               npcFlagsId;                    // NPC ID for `npcFlags`. Not an index, starts at 1.
     /* 0x2281   */ s8               loadingScreenIdx;
-    /* 0x2282   */ s8               field_2282;                         /** `e_EventDataUnkCutsceneState` */
+    /* 0x2282   */ s8               field_2282;                         /** `e_EventDataUnkState` */
     /* 0x2283   */ s8               sfxPairIdx_2283;                    /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
     /* 0x2284   */ u16              charaGroupFlags[CHARA_GROUP_COUNT]; /** `e_CharaGroupFlags` */
                                                                         // Enabling a flag for Larval Stalkers causes them to die.
@@ -1931,29 +1943,29 @@ typedef struct _SysWork
     /* 0x2298   */ e_ProcessFlags   processFlags;
     /* 0x229C   */ s32              field_229C; /** Dead code. Set to -1 when the player has been initalized and set to 0 when the player changes areas. Beyond that, this variable is unused. */
     /* 0x22A0   */ e_BgmStatusFlags bgmStatusFlags;
-    /* 0x22A4   */ e_UnkSysFlags    flags_22A4; // `UnkSysFlag_6` passed as "use through door cam" flag in `vcSetFirstCamWork`.
-    /* 0x22A8   */ GsCOORDINATE2    coord_22A8; // For particles only?
-    /* 0x22F8   */ GsCOORDINATE2    coord_22F8; // Likely related to above.
-    /* 0x2348+0 */ s8               field_2348   : 8;
+    /* 0x22A4   */ e_UnkSysFlags    flags_22A4;       // `UnkSysFlag_6` passed as "use through door cam" flag in `vcSetFirstCamWork`.
+    /* 0x22A8   */ GsCOORDINATE2    coord_22A8;       // For particles only?
+    /* 0x22F8   */ GsCOORDINATE2    coord_22F8;       // Likely related to above.
+    /* 0x2348+0 */ s8               field_2348   : 8; // Related to particles.
     /* 0x2349+0 */ s8               field_2349   : 8; // Particle spawn multiplier?
     /* 0x234A+0 */ u8               field_234A   : 8; /** `bool` */
-    /* 0x234B+0 */ u8               field_234B_0 : 4;
-    /* 0x234B+4 */ u8               field_234B_4 : 4;
+    /* 0x234B+0 */ u8               field_234B_0 : 4; /** `bool` | Related to particles. Used to trigger SFX? */
+    /* 0x234B+4 */ u8               field_234B_4 : 4; // Related to particles.
     /* 0x234C   */ s32              mapMsgTimer;
-    /* 0x2350+0 */ u8               enableHighResGlyphs      : 4; /** `bool` */
-    /* 0x2350+4 */ u8               silentYesSelection       : 4; /** `bool` */
-    /* 0x2351+0 */ u32              inventoryItemSelectedIdx : 8;
-    /* 0x2352+0 */ u32              flags_2352               : 8;
-    /* 0x2353   */ s8               targetNpcIdx; /** Index of the NPC in `npcs` being targeted by the player. */
+    /* 0x2350+0 */ u8               enableHighResGlyphs : 4; /** `bool` */
+    /* 0x2350+4 */ u8               silentYesSelection  : 4; /** `bool` */
+    /* 0x2351+0 */ u32              invItemSelectedIdx  : 8;
+    /* 0x2352+0 */ u32              invItemLoadFlags    : 8; /** `e_InvItemLoadFlags` */
+    /* 0x2353   */ s8               targetNpcIdx;            /** Index of the NPC in `npcs` being targeted by the player. */
     /* 0x2354   */ s8               npcIdxs[CHARA_GROUP_COUNT];
     /* 0x2358   */ u8               enablePlayerMatchAnim; /** `bool` | Activates the animation performed by Harry when lighting a match at the beginning of the game. */
     /* 0x2359   */ s8               unused_2359;           /** @unused */
     /* 0x235A   */ u8               playerStopFlags;       /** `e_PlayerStopFlags` */
                 // 1 byte of padding.
-    /* 0x235C   */ GsCOORDINATE2*   field_235C;         // Player torso bone.
-    /* 0x2360   */ VECTOR3          pointLightPosition; //                   } Often gets set from DMS cutscene data.
-    /* 0x236C   */ GsCOORDINATE2*   field_236C;         // Player root bone. }
-    /* 0x2370   */ SVECTOR          pointLightRotation; //                   }
+    /* 0x235C   */ GsCOORDINATE2*   field_235C;         // Bone related to pocket light.
+    /* 0x2360   */ VECTOR3          pointLightPosition; //                               } Often gets set from DMS cutscene data.
+    /* 0x236C   */ GsCOORDINATE2*   field_236C;         // Bone related to pocket light. }
+    /* 0x2370   */ SVECTOR          pointLightRotation; //                               }
     /* 0x2378   */ s16              pointLightIntensity;
     /* 0x237A   */ q3_12            cameraAngleY;
     /* 0x237C   */ q3_12            cameraAngleZ;

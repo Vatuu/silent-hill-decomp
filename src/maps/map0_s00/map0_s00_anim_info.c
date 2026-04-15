@@ -65,12 +65,12 @@ s_UnkStruct3_Mo g_MapHeaderTable_38[18] = {
 };
 
 u8 LOADABLE_INVENTORY_ITEMS[8] = {
-    InventoryItemId_HealthDrink,
-    InventoryItemId_Chainsaw,
-    InventoryItemId_HyperBlaster,
-    InventoryItemId_RockDrill,
-    InventoryItemId_GasolineTank,
-    InventoryItemId_ChannelingStone,
-    InventoryItemId_Katana,
-    InventoryItemId_Unequipped
+    InvItemId_HealthDrink,
+    InvItemId_Chainsaw,
+    InvItemId_HyperBlaster,
+    InvItemId_RockDrill,
+    InvItemId_GasolineTank,
+    InvItemId_ChannelingStone,
+    InvItemId_Katana,
+    InvItemId_Unequipped
 };

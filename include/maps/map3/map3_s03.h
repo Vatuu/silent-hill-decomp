@@ -36,7 +36,7 @@ extern u8 D_800D6BDA;
 
 extern u8 D_800D8140[];
 
-/** Relative inventory item ID since `InventoryItemId_PlateOfTurtle`. */
+/** Relative inventory item ID since `InvItemId_PlateOfTurtle`. */
 extern u8 D_800D8144;
 
 extern u8 D_800D8145;

@@ -36,7 +36,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchAabb,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 57,
-        .requiredItemId     = InventoryItemId_PlasticBottle,
+        .requiredItemId     = InvItemId_PlasticBottle,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 7, // `MapEvent_UseBottleOnLiquid`
     },
@@ -45,7 +45,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 58,
-        .requiredItemId     = InventoryItemId_PlasticBottle,
+        .requiredItemId     = InvItemId_PlasticBottle,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 7, // `MapEvent_UseBottleOnLiquid`
     },
@@ -54,7 +54,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 59,
-        .requiredItemId     = InventoryItemId_PlasticBottle,
+        .requiredItemId     = InvItemId_PlasticBottle,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 7, // `MapEvent_UseBottleOnLiquid`
     },
@@ -63,7 +63,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 60,
-        .requiredItemId     = InventoryItemId_PlasticBottle,
+        .requiredItemId     = InvItemId_PlasticBottle,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 7, // `MapEvent_UseBottleOnLiquid`
     },
@@ -358,7 +358,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 10,
-        .requiredItemId     = InventoryItemId_BasementKey,
+        .requiredItemId     = InvItemId_BasementKey,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 4, // `func_800D1524`
     },

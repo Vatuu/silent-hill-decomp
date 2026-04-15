@@ -125,17 +125,17 @@ void func_800D151C(void) // 0x800D151C
 
 void func_800D1774(void) // 0x800D1774
 {
-    Event_ItemTake(InventoryItemId_PlateOfHatter, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupPlateOfHatter, 15);
+    Event_ItemTake(InvItemId_PlateOfHatter, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupPlateOfHatter, 15);
 }
 
 void func_800D17A0(void) // 0x800D17A0
 {
-    Event_ItemTake(InventoryItemId_PlateOfCat, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupPlateOfCat, 16);
+    Event_ItemTake(InvItemId_PlateOfCat, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupPlateOfCat, 16);
 }
 
 void func_800D17CC(void) // 0x800D17CC
 {
-    Event_ItemTake(InventoryItemId_PlateOfTurtle, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupPlateOfTurtle, 17);
+    Event_ItemTake(InvItemId_PlateOfTurtle, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupPlateOfTurtle, 17);
 }
 
 void func_800D17F8(s32 arg0, s32 arg1) // 0x800D17F8
@@ -237,7 +237,7 @@ void func_800D1A58(void) // 0x800D1A58
                 }
             }
 
-            if (g_MapEventLastUsedItem != InventoryItemId_Unequipped || i != 16)
+            if (g_MapEventLastUsedItem != InvItemId_Unequipped || i != 16)
             {
                 SysWork_StateStepSet(0, 4);
             }
@@ -302,10 +302,10 @@ void func_800D1A58(void) // 0x800D1A58
 
             if (g_SysWork.sysStateSteps[0] != 6)
             {
-                if (g_MapEventLastUsedItem != InventoryItemId_Unequipped)
+                if (g_MapEventLastUsedItem != InvItemId_Unequipped)
                 {
                     SysWork_StateStepSet(0, 7);
-                    D_800D8144 = g_MapEventLastUsedItem - InventoryItemId_PlateOfTurtle;
+                    D_800D8144 = g_MapEventLastUsedItem - InvItemId_PlateOfTurtle;
                 }
                 else if (D_800D8145 == 0)
                 {
@@ -397,7 +397,7 @@ void func_800D1A58(void) // 0x800D1A58
             }
             else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
             {
-                func_80086470(3, D_800D8144 + InventoryItemId_PlateOfTurtle, 1, false);
+                func_80086470(3, D_800D8144 + InvItemId_PlateOfTurtle, 1, false);
                 SysWork_StateStepSet(0, 16);
             }
             break;
@@ -481,19 +481,19 @@ void func_800D1A58(void) // 0x800D1A58
 
                         if (D_800D8140[i] == 0)
                         {
-                            func_80086470(3, InventoryItemId_PlateOfTurtle, 1, false);
+                            func_80086470(3, InvItemId_PlateOfTurtle, 1, false);
                         }
                         else if (D_800D8140[i] == 1)
                         {
-                            func_80086470(3, InventoryItemId_PlateOfHatter, 1, false);
+                            func_80086470(3, InvItemId_PlateOfHatter, 1, false);
                         }
                         else if (D_800D8140[i] == 2)
                         {
-                            func_80086470(3, InventoryItemId_PlateOfCat, 1, false);
+                            func_80086470(3, InvItemId_PlateOfCat, 1, false);
                         }
                         else if (D_800D8140[i] == 3)
                         {
-                            func_80086470(3, InventoryItemId_PlateOfQueen, 1, false);
+                            func_80086470(3, InvItemId_PlateOfQueen, 1, false);
                         }
 
                         temp_v1_8 = EventFlag_265;
@@ -690,29 +690,29 @@ void func_800D27F4(void) // 0x800D27F4
             vcReturnPreAutoCamWork(false);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
-            func_80086470(3, InventoryItemId_VideoTape, 1, false);
+            func_80086470(3, InvItemId_VideoTape, 1, false);
             break;
     }
 }
 
 void func_800D2C2C(void) // 0x800D2C2C
 {
-    Event_ItemTake(InventoryItemId_BloodPack, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupBloodPack, 40);
+    Event_ItemTake(InvItemId_BloodPack, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupBloodPack, 40);
 }
 
 void func_800D2C58(void) // 0x800D2C58
 {
-    Event_ItemTake(InventoryItemId_DisinfectingAlcohol, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupDisinfectingAlcohol, 41);
+    Event_ItemTake(InvItemId_DisinfectingAlcohol, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupDisinfectingAlcohol, 41);
 }
 
 void func_800D2C84(void) // 0x800D2C84
 {
-    Event_ItemTake(InventoryItemId_Lighter, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupLighter, 42);
+    Event_ItemTake(InvItemId_Lighter, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupLighter, 42);
 }
 
 void func_800D2CB0(void) // 0x800D2CB0
 {
-    Event_ItemTake(InventoryItemId_BasementStoreroomKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupBasementStoreroomKey, 43);
+    Event_ItemTake(InvItemId_BasementStoreroomKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupBasementStoreroomKey, 43);
 }
 
 void func_800D2CDC(void) // 0x800D2CDC
@@ -738,7 +738,7 @@ void func_800D2CDC(void) // 0x800D2CDC
             g_SysWork.playerWork.player.position.vz = Q12(61.4f);
             g_SysWork.playerWork.player.rotation.vy = ratan2(Q12(-2.0f), Q12(-1.2f));
 
-            WorldGfx_PlayerHeldItemSet(InventoryItemId_CutsceneBloodPack);
+            WorldGfx_PlayerHeldItemSet(InvItemId_CutsceneBloodPack);
             Fs_QueueWaitForEmpty();
 
             func_8003D01C();

@@ -91,7 +91,7 @@ void func_800DA7F4(void) // 0x800DA7F4
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
-    Player_ItemRemove(InventoryItemId_LibraryReserveKey, 1);
+    Player_ItemRemove(InvItemId_LibraryReserveKey, 1);
     Map_MessageWithSfx(37, Sfx_UseKey, &sfxPos); // "Used the Library reverse key."
     Savegame_EventFlagSet(EventFlag_MapMark_AltSchool2F_LibraryReserveArrows);
 }
@@ -100,7 +100,7 @@ void func_800DA8B0(void) // 0x800DA8B0
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
-    Player_ItemRemove(InventoryItemId_ClassroomKey, 1);
+    Player_ItemRemove(InvItemId_ClassroomKey, 1);
     Map_MessageWithSfx(38, Sfx_UseKey, &sfxPos); // "Used classroom key."
 }
 
@@ -1111,7 +1111,7 @@ void func_800DC9A0(void) // 0x800DC9A0
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InventoryItemId_LibraryReserveKey, 0, false);
+            func_80086470(0, InvItemId_LibraryReserveKey, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1123,12 +1123,12 @@ void func_800DC9A0(void) // 0x800DC9A0
             break;
 
         case 3:
-            func_80086470(1, InventoryItemId_LibraryReserveKey, 0, false);
+            func_80086470(1, InvItemId_LibraryReserveKey, 0, false);
             break;
 
         case 4:
             Savegame_EventFlagSet(EventFlag_M1S03_PickupLibraryReserveKey);
-            if (Gfx_PickupItemAnimate(InventoryItemId_LibraryReserveKey))
+            if (Gfx_PickupItemAnimate(InvItemId_LibraryReserveKey))
             {
                 MapMsg_DisplayAndHandleSelection(true, 44, 5, 6, 0, false);
             }
@@ -1139,7 +1139,7 @@ void func_800DC9A0(void) // 0x800DC9A0
             break;
 
         case 5:
-            func_80086470(3, InventoryItemId_LibraryReserveKey, 1, false);
+            func_80086470(3, InvItemId_LibraryReserveKey, 1, false);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -1341,7 +1341,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             vcReturnPreAutoCamWork(true);
 
             Savegame_EventFlagSet(EventFlag_456);
-            func_80086470(3, InventoryItemId_ChannelingStone, 1, false);
+            func_80086470(3, InvItemId_ChannelingStone, 1, false);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
 

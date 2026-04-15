@@ -83,7 +83,7 @@ s_EventData MAP_EVENTS[42] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 7,
-        .requiredItemId     = InventoryItemId_AntiqueShopKey,
+        .requiredItemId     = InvItemId_AntiqueShopKey,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 2, // `func_800E9D54`
     },

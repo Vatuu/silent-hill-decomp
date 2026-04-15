@@ -557,7 +557,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                             }
 
                             g_SysWork.mapMsgTimer = digit;
-                            mapMsg                     = mapMsg + 1;
+                            mapMsg                = mapMsg + 1;
                         }
                         else
                         {

@@ -78,7 +78,7 @@ void Map_RoomBgmInit_CondFalse(void)
                 break;
 
             case 4:
-                if (!Player_ItemRemove(InventoryItemId_ExaminationRoomKey, 0))
+                if (!Player_ItemRemove(InvItemId_ExaminationRoomKey, 0))
                 {
                     flags = 1 << 0;
                 }

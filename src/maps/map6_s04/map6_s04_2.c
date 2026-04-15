@@ -2457,7 +2457,7 @@ void func_800E3244(void) // 0x800E3244
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
-            WorldGfx_PlayerHeldItemSet(InventoryItemId_CutscenePlasticBottle);
+            WorldGfx_PlayerHeldItemSet(InvItemId_CutscenePlasticBottle);
             Fs_QueueWaitForEmpty();
             SysWork_StateStepIncrement(0);
 
@@ -3139,7 +3139,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
             Savegame_EventFlagSet(EventFlag_451);
 
-            Player_ItemRemove(InventoryItemId_Flauros, 1);
+            Player_ItemRemove(InvItemId_Flauros, 1);
 
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();

@@ -189,7 +189,7 @@ s_EventData MAP_EVENTS[203] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 118,
-        .requiredItemId     = InventoryItemId_BirdCageKey,
+        .requiredItemId     = InvItemId_BirdCageKey,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 12, // `MapEvent_BirdCageKeyUse`
     },
@@ -208,7 +208,7 @@ s_EventData MAP_EVENTS[203] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 119,
-        .requiredItemId     = InventoryItemId_BirdCageKey,
+        .requiredItemId     = InvItemId_BirdCageKey,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 12, // `MapEvent_BirdCageKeyUse`
     },
@@ -227,7 +227,7 @@ s_EventData MAP_EVENTS[203] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 120,
-        .requiredItemId     = InventoryItemId_BirdCageKey,
+        .requiredItemId     = InvItemId_BirdCageKey,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 12, // `MapEvent_BirdCageKeyUse`
     },
@@ -246,7 +246,7 @@ s_EventData MAP_EVENTS[203] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 121,
-        .requiredItemId     = InventoryItemId_BirdCageKey,
+        .requiredItemId     = InvItemId_BirdCageKey,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 12, // `MapEvent_BirdCageKeyUse`
     },
@@ -296,7 +296,7 @@ s_EventData MAP_EVENTS[203] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 117,
-        .requiredItemId     = InventoryItemId_Pliers,
+        .requiredItemId     = InvItemId_Pliers,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 15, // `func_800D8A5C`
     },
@@ -339,7 +339,7 @@ s_EventData MAP_EVENTS[203] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 116,
-        .requiredItemId     = InventoryItemId_StoneOfTime,
+        .requiredItemId     = InvItemId_StoneOfTime,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 18, // `func_800D8FF8`
     },
@@ -633,7 +633,7 @@ s_EventData MAP_EVENTS[203] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 111,
-        .requiredItemId     = InventoryItemId_Screwdriver,
+        .requiredItemId     = InvItemId_Screwdriver,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 35, // `func_800DAE00`
     },
@@ -665,7 +665,7 @@ s_EventData MAP_EVENTS[203] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 125,
-        .requiredItemId     = InventoryItemId_Camera,
+        .requiredItemId     = InvItemId_Camera,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 39, // `func_800DB3D0`
         .flags_8_13           = 1,
@@ -675,7 +675,7 @@ s_EventData MAP_EVENTS[203] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 126,
-        .requiredItemId     = InventoryItemId_Camera,
+        .requiredItemId     = InvItemId_Camera,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 39, // `func_800DB3D0`
         .flags_8_13           = 1,
@@ -744,7 +744,7 @@ s_EventData MAP_EVENTS[203] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 5,
-        .requiredItemId     = InventoryItemId_KeyOfHagith,
+        .requiredItemId     = InvItemId_KeyOfHagith,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 8, // `MapEvent_KeyOfHagithUse`
     },
@@ -903,7 +903,7 @@ s_EventData MAP_EVENTS[203] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 11,
-        .requiredItemId     = InventoryItemId_KeyOfOphiel,
+        .requiredItemId     = InvItemId_KeyOfOphiel,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 7, // `MapEvent_KeyOfOphielUse`
     },
@@ -959,7 +959,7 @@ s_EventData MAP_EVENTS[203] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 12,
-        .requiredItemId     = InventoryItemId_KeyOfPhaleg,
+        .requiredItemId     = InvItemId_KeyOfPhaleg,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 9, // `MapEvent_KeyOfPhalegUse`
     },

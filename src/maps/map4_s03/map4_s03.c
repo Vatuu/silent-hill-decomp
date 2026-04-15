@@ -3358,7 +3358,7 @@ void func_800D6704(void) // 0x800D6704
         g_DeltaTime = Q12(0.0f);
     }
 
-    Event_ItemTake(InventoryItemId_HuntingRifle, RIFLE_AMMO_PICKUP_ITEM_COUNT, EventFlag_M4S03_PickupHuntingRifle, 17);
+    Event_ItemTake(InvItemId_HuntingRifle, RIFLE_AMMO_PICKUP_ITEM_COUNT, EventFlag_M4S03_PickupHuntingRifle, 17);
 }
 
 void func_800D6774(void) // 0x800D6774

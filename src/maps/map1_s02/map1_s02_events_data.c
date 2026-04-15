@@ -285,7 +285,7 @@ s_EventData MAP_EVENTS[121] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 26,
-        .requiredItemId     = InventoryItemId_PictureCard,
+        .requiredItemId     = InvItemId_PictureCard,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 11, // `func_800DB058`
     },

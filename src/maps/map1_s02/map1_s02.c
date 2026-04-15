@@ -145,7 +145,7 @@ void MapEvent_LobbyKeyUse(void) // 0x800DA2E4
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
-    Player_ItemRemove(InventoryItemId_LobbyKey, 1);
+    Player_ItemRemove(InvItemId_LobbyKey, 1);
     Map_MessageWithSfx(19, Sfx_DoorUnlocked, &sfxPos); // Empty message?
 }
 
@@ -584,12 +584,12 @@ void func_800DB058(void) // 0x800DB058
 
 void func_800DB310(void) // 0x800DB310
 {
-    Event_ItemTake(InventoryItemId_PictureCard, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M1S02_PickupPictureCard, 29);
+    Event_ItemTake(InvItemId_PictureCard, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M1S02_PickupPictureCard, 29);
 }
 
 void func_800DB33C(void) // 0x800DB33C
 {
-    Event_ItemTake(InventoryItemId_RubberBall, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M1S02_PickupRubberBall, 37);
+    Event_ItemTake(InvItemId_RubberBall, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M1S02_PickupRubberBall, 37);
 }
 
 void func_800DB368(void) // 0x800DB368
@@ -670,7 +670,7 @@ void func_800DB368(void) // 0x800DB368
             SD_Call(Sfx_Unk1456);
             SD_Call(19);
 
-            D_800E1FD4 = WorldGfx_PlayerHeldItemSet(InventoryItemId_CutscenePhone);
+            D_800E1FD4 = WorldGfx_PlayerHeldItemSet(InvItemId_CutscenePhone);
             SysWork_StateStepIncrement(0);
 
         case 12:
@@ -905,7 +905,7 @@ void func_800DBFC8(void) // 0x800DBFC8
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InventoryItemId_Shotgun, 0, false);
+            func_80086470(0, InvItemId_Shotgun, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -917,7 +917,7 @@ void func_800DBFC8(void) // 0x800DBFC8
             SysWork_StateStepIncrement(0);
 
         case 3:
-            func_80086470(1, InventoryItemId_Shotgun, 0, false);
+            func_80086470(1, InvItemId_Shotgun, 0, false);
             break;
 
         case 4:
@@ -925,7 +925,7 @@ void func_800DBFC8(void) // 0x800DBFC8
             break;
 
         case 5:
-            if (Gfx_PickupItemAnimate(InventoryItemId_Shotgun))
+            if (Gfx_PickupItemAnimate(InvItemId_Shotgun))
             {
                 MapMsg_DisplayAndHandleSelection(true, 40, 6, 7, 0, false);
             }
@@ -934,7 +934,7 @@ void func_800DBFC8(void) // 0x800DBFC8
             break;
 
         case 6:
-            func_80086470(3, InventoryItemId_Shotgun, SHOTGUN_AMMO_PICKUP_ITEM_COUNT, false);
+            func_80086470(3, InvItemId_Shotgun, SHOTGUN_AMMO_PICKUP_ITEM_COUNT, false);
             SysWork_StateStepSet(0, 8);
             break;
 
@@ -1256,7 +1256,7 @@ void func_800DD208(void) // 0x800DD208
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InventoryItemId_ClassroomKey, 0, false);
+            func_80086470(0, InvItemId_ClassroomKey, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1268,7 +1268,7 @@ void func_800DD208(void) // 0x800DD208
             SysWork_StateStepIncrement(0);
 
         case 3:
-            func_80086470(1, InventoryItemId_ClassroomKey, 0, false);
+            func_80086470(1, InvItemId_ClassroomKey, 0, false);
             break;
 
         case 4:
@@ -1276,7 +1276,7 @@ void func_800DD208(void) // 0x800DD208
             break;
 
         case 5:
-            if (Gfx_PickupItemAnimate(InventoryItemId_ClassroomKey))
+            if (Gfx_PickupItemAnimate(InvItemId_ClassroomKey))
             {
                 MapMsg_DisplayAndHandleSelection(true, 51, 6, 7, 0, false);
             }
@@ -1285,7 +1285,7 @@ void func_800DD208(void) // 0x800DD208
             break;
 
         case 6:
-            func_80086470(3, InventoryItemId_ClassroomKey, 1, false);
+            func_80086470(3, InvItemId_ClassroomKey, 1, false);
             SysWork_StateStepSet(0, 8);
             break;
 

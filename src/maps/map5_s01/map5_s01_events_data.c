@@ -207,7 +207,7 @@ s_EventData MAP_EVENTS[44] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 15,
-        .requiredItemId     = InventoryItemId_KaufmannKey,
+        .requiredItemId     = InvItemId_KaufmannKey,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 6, // `func_800EC2D8`
     },
@@ -342,7 +342,7 @@ s_EventData MAP_EVENTS[44] = {
         .triggerType      = TriggerType_TouchAabb,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 39,
-        .requiredItemId     = InventoryItemId_ChannelingStone,
+        .requiredItemId     = InvItemId_ChannelingStone,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 7, // `func_800EC42C`
     },

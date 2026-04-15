@@ -122,7 +122,7 @@ void func_800D1628(void) // 0x800D1628
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InventoryItemId_MotorcycleKey, 0, false);
+            func_80086470(0, InvItemId_MotorcycleKey, 0, false);
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
 
             // Warp player.
@@ -154,11 +154,11 @@ void func_800D1628(void) // 0x800D1628
             SysWork_StateStepIncrement(0);
 
         case 5:
-            func_80086470(1, InventoryItemId_MotorcycleKey, 0, false);
+            func_80086470(1, InvItemId_MotorcycleKey, 0, false);
             break;
 
         case 6:
-            if (Gfx_PickupItemAnimate(InventoryItemId_MotorcycleKey))
+            if (Gfx_PickupItemAnimate(InvItemId_MotorcycleKey))
             {
                 MapMsg_DisplayAndHandleSelection(false, 15, 0, 0, 0, false);
 
@@ -179,8 +179,8 @@ void func_800D1628(void) // 0x800D1628
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
 
-            Player_ItemRemove(InventoryItemId_Magnet, 1);
-            func_80086470(3, InventoryItemId_MotorcycleKey, 1, false);
+            Player_ItemRemove(InvItemId_Magnet, 1);
+            func_80086470(3, InvItemId_MotorcycleKey, 1, false);
             Savegame_EventFlagSet(EventFlag_390);
 
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
@@ -251,7 +251,7 @@ void func_800D1A84(void) // 0x800D1A84
 
 void func_800D1ACC(void) // 0x800D1ACC
 {
-    Event_ItemTake(InventoryItemId_Magnet, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M5S03_PickupMagnet, 53);
+    Event_ItemTake(InvItemId_Magnet, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M5S03_PickupMagnet, 53);
 }
 
 void func_800D1AF8(void) // 0x800D1AF8
@@ -276,7 +276,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
 
-            WorldGfx_PlayerHeldItemSet(InventoryItemId_CutsceneAglaophotis);
+            WorldGfx_PlayerHeldItemSet(InvItemId_CutsceneAglaophotis);
 
             D_800D3C40 = Fs_QueueStartReadTim(FILE_TIM_BICITEM_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
             Fs_QueueStartRead(FILE_ANIM_GARAGE1_DMS, FS_BUFFER_17);

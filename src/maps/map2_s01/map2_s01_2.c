@@ -433,12 +433,12 @@ void func_800CED88(void) // 0x800CED88
 
 void func_800CF798(void) // 0x800CF798
 {
-    Event_ItemTake(InventoryItemId_Flauros, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S01_PickupFlauros, 35);
+    Event_ItemTake(InvItemId_Flauros, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S01_PickupFlauros, 35);
 }
 
 void func_800CF7C4(void) // 0x800CF7C4
 {
-    Event_ItemTake(InventoryItemId_DrawbridgeKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S01_PickupDrawbridgeKey, 36);
+    Event_ItemTake(InvItemId_DrawbridgeKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S01_PickupDrawbridgeKey, 36);
 }
 
 extern u8 D_800D177C;

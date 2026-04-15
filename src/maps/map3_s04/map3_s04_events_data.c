@@ -105,7 +105,7 @@ s_EventData MAP_EVENTS[53] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 5,
-        .requiredItemId     = InventoryItemId_ExaminationRoomKey,
+        .requiredItemId     = InvItemId_ExaminationRoomKey,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 3, // `func_800D250C`
     },

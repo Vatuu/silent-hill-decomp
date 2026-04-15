@@ -173,7 +173,7 @@ s_EventData MAP_EVENTS[103] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 19,
-        .requiredItemId     = InventoryItemId_RubberBall,
+        .requiredItemId     = InvItemId_RubberBall,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 15, // `func_800DCB54`
     },
@@ -182,7 +182,7 @@ s_EventData MAP_EVENTS[103] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 20,
-        .requiredItemId     = InventoryItemId_RubberBall,
+        .requiredItemId     = InvItemId_RubberBall,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 15, // `func_800DCB54`
     },
@@ -403,7 +403,7 @@ s_EventData MAP_EVENTS[103] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 46,
-        .requiredItemId     = InventoryItemId_ClassroomKey,
+        .requiredItemId     = InvItemId_ClassroomKey,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 4, // `func_800DA8B0`
         .flags_8_13           = 1,
@@ -706,7 +706,7 @@ s_EventData MAP_EVENTS[103] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 34,
-        .requiredItemId     = InventoryItemId_LibraryReserveKey,
+        .requiredItemId     = InvItemId_LibraryReserveKey,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 3, // `func_800DA7F4`
     },
@@ -887,7 +887,7 @@ s_EventData MAP_EVENTS[103] = {
         .triggerType      = TriggerType_TouchAabb,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 83,
-        .requiredItemId     = InventoryItemId_ChannelingStone,
+        .requiredItemId     = InvItemId_ChannelingStone,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 16, // `func_800DCDDC`
     },

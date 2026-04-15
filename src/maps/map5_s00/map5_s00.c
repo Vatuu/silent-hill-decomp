@@ -480,12 +480,12 @@ void func_800D69DC(void) // 0x800D69DC
     switch (g_MapEventData->pointOfInterestIdx)
     {
         case 10:
-            Player_ItemRemove(InventoryItemId_SewerKey, 1);
+            Player_ItemRemove(InvItemId_SewerKey, 1);
             Map_MessageWithSfx(15, Sfx_UseKey, &pos);
             break;
 
         case 14:
-            Player_ItemRemove(InventoryItemId_SewerExitKey, 1);
+            Player_ItemRemove(InvItemId_SewerExitKey, 1);
             Map_MessageWithSfx(16, Sfx_UseKey, &pos);
             break;
 
@@ -497,7 +497,7 @@ void func_800D69DC(void) // 0x800D69DC
 
 void MapEvent_SewerKeyTake(void) // 0x800D6AD4
 {
-    Event_ItemTake(InventoryItemId_SewerKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M5S00_PickupSewerKey, 17);
+    Event_ItemTake(InvItemId_SewerKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M5S00_PickupSewerKey, 17);
 }
 
 void func_800D6B00(void) // 0x800D6B00
@@ -554,7 +554,7 @@ void func_800D6B00(void) // 0x800D6B00
         case 10:
             Savegame_EventFlagSet(EventFlag_354);
 
-            func_80086470(3u, InventoryItemId_SewerExitKey, 1, false);
+            func_80086470(3u, InvItemId_SewerExitKey, 1, false);
 
             // Warp player.
             g_SysWork.playerWork.player.position.vx = Q12(-92.0f);

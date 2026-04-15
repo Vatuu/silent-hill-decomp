@@ -641,7 +641,7 @@ void MapEvent_KeyOfBethorUse(void) // 0x800DB5C0
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
-    Player_ItemRemove(InventoryItemId_KeyOfBethor, 1);
+    Player_ItemRemove(InvItemId_KeyOfBethor, 1);
     Map_MessageWithSfx(77, Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_533);
 }
@@ -650,7 +650,7 @@ void MapEvent_KeyOfAratronUse(void) // 0x800DB67C
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
-    Player_ItemRemove(InventoryItemId_KeyOfAratron, 1);
+    Player_ItemRemove(InvItemId_KeyOfAratron, 1);
     Map_MessageWithSfx(78, Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_534);
 }
@@ -750,7 +750,7 @@ void func_800DB738(void) // 0x800DB738
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(false);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
-            func_80086470(3, InventoryItemId_VideoTape, 1, false);
+            func_80086470(3, InvItemId_VideoTape, 1, false);
             break;
     }
 }
@@ -889,7 +889,7 @@ void func_800DBB34(void) // 0x800DBB34
 
 void MapEvent_AnkhTake(void) // 0x800DC120
 {
-    Event_ItemTake(InventoryItemId_Ankh, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S02_PickupAnkh, 81);
+    Event_ItemTake(InvItemId_Ankh, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S02_PickupAnkh, 81);
 }
 
 void func_800DC14C(void) // 0x800DC14C
@@ -1034,7 +1034,7 @@ void func_800DC778(void) // 0x800DC778
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InventoryItemId_KeyOfBethor, 0, false);
+            func_80086470(0, InvItemId_KeyOfBethor, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1046,20 +1046,20 @@ void func_800DC778(void) // 0x800DC778
             break;
 
         case 3:
-            func_80086470(1, InventoryItemId_KeyOfBethor, 0, false);
+            func_80086470(1, InvItemId_KeyOfBethor, 0, false);
             break;
 
         case 4:
             Savegame_EventFlagSet(EventFlag_M7S02_PickupKeyOfBethor);
 
-            if (Gfx_PickupItemAnimate(InventoryItemId_KeyOfBethor))
+            if (Gfx_PickupItemAnimate(InvItemId_KeyOfBethor))
             {
                 MapMsg_DisplayAndHandleSelection(true, 79, 5, 6, 0, false);
             }
             break;
 
         case 5:
-            func_80086470(3, InventoryItemId_KeyOfBethor, 1, false);
+            func_80086470(3, InvItemId_KeyOfBethor, 1, false);
             SysWork_StateStepSet(0, 7);
             break;
 
@@ -1243,7 +1243,7 @@ void func_800DCD00(void) // 0x800DCD00
             break;
 
         case 7:
-            func_80086470(0, InventoryItemId_DaggerOfMelchior, 0, false);
+            func_80086470(0, InvItemId_DaggerOfMelchior, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -1271,11 +1271,11 @@ void func_800DCD00(void) // 0x800DCD00
             break;
 
         case 10:
-            func_80086470(1, InventoryItemId_DaggerOfMelchior, 0, false);
+            func_80086470(1, InvItemId_DaggerOfMelchior, 0, false);
             break;
 
         case 11:
-            if (Gfx_PickupItemAnimate(InventoryItemId_DaggerOfMelchior) != false)
+            if (Gfx_PickupItemAnimate(InvItemId_DaggerOfMelchior) != false)
             {
                 MapMsg_DisplayAndHandleSelection(true, 82, 12, 13, 0, false);
             }
@@ -1284,7 +1284,7 @@ void func_800DCD00(void) // 0x800DCD00
             break;
 
         case 12:
-            func_80086470(3, InventoryItemId_DaggerOfMelchior, 1, false);
+            func_80086470(3, InvItemId_DaggerOfMelchior, 1, false);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -1965,7 +1965,7 @@ void func_800DF1E8(void) {}
 
 void MapEvent_DiskOfOuroborosTake(void) // 0x800DF1F0
 {
-    Event_ItemTake(InventoryItemId_DiskOfOuroboros, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S02_PickupDiskOfOuroboros, 83);
+    Event_ItemTake(InvItemId_DiskOfOuroboros, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S02_PickupDiskOfOuroboros, 83);
 }
 
 void func_800DF21C(void) // 0x800DF21C
@@ -2141,7 +2141,7 @@ void func_800DFA54(void) // 0x800DFA54
 
 void MapEvent_ScrewdriverTake(void) // 0x800DFA80
 {
-    Event_ItemTake(InventoryItemId_Screwdriver, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupScrewdriver, 94);
+    Event_ItemTake(InvItemId_Screwdriver, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupScrewdriver, 94);
 }
 
 void func_800DFAAC(void) // 0x800DFAAC
@@ -2158,7 +2158,7 @@ void func_800DFAE4(void) // 0x800DFAE4
 
 void MapEvent_AmuletOfSolomonTake(void) // 0x800DFB1C
 {
-    Event_ItemTake(InventoryItemId_AmuletOfSolomon, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupAmuletOfSolomon, 96);
+    Event_ItemTake(InvItemId_AmuletOfSolomon, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupAmuletOfSolomon, 96);
 }
 
 void func_800DFB48(void) // 0x800DFB48
@@ -2597,17 +2597,17 @@ void func_800DFDDC(void) // 0x800DFDDC
 
 void MapEvent_CrestOfMercuryTake(void) // 0x800E0C30
 {
-    Event_ItemTake(InventoryItemId_CrestOfMercury, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCrestOfMercury, 97);
+    Event_ItemTake(InvItemId_CrestOfMercury, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCrestOfMercury, 97);
 }
 
 void MapEvent_RingOfContractTake(void) // 0x800E0C5C
 {
-    Event_ItemTake(InventoryItemId_RingOfContract, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupRingOfContract, 93);
+    Event_ItemTake(InvItemId_RingOfContract, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupRingOfContract, 93);
 }
 
 void MapEvent_CameraTake(void) // 0x800E0C88
 {
-    Event_ItemTake(InventoryItemId_Camera, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCamera, 95);
+    Event_ItemTake(InvItemId_Camera, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCamera, 95);
 }
 
 void func_800E0CB4(void) // 0x800E0CB4
@@ -2741,7 +2741,7 @@ void func_800E0FF0(void) // 0x800E0FF0
                 break;
 
             case 6:
-                func_80086470(3, InventoryItemId_KeyOfAratron, 1, false);
+                func_80086470(3, InvItemId_KeyOfAratron, 1, false);
                 Savegame_EventFlagSet(EventFlag_M7S02_PickupKeyOfAratron);
                 SysWork_StateStepIncrement(0);
 
@@ -2880,7 +2880,7 @@ void func_800E1398(void) // 0x800E1398
             Savegame_EventFlagClear(EventFlag_497);
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            func_80086470(3, InventoryItemId_Camera, 1, false);
+            func_80086470(3, InvItemId_Camera, 1, false);
             break;
     }
 }

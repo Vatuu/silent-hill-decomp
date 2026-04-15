@@ -356,7 +356,7 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* chara, s32 weaponAttack
         g_SysWork.playerWork.player.field_D8.offsetX_4 = Q12(0.0f);
         g_SysWork.playerWork.player.field_D8.offsetZ_2 = Q12(0.0f);
         g_SysWork.playerWork.player.field_D8.offsetX_0 = Q12(0.0f);
-        g_SysWork.playerCombat.weaponAttack            = (g_SavegamePtr->equippedWeapon_AA == InventoryItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife);
+        g_SysWork.playerCombat.weaponAttack            = (g_SavegamePtr->equippedWeapon_AA == InvItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA + InvItemId_KitchenKnife);
         g_SysWork.targetNpcIdx                         = NO_VALUE;
         g_SysWork.playerCombat.isAiming               = false;
     }
@@ -3896,11 +3896,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
 
                     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
                     {
-                        if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InventoryItemId_KitchenKnife))
+                        if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InvItemId_KitchenKnife))
                         {
                             g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombat.currentWeaponAmmo;
                         }
-                        if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InventoryItemId_Handgun))
+                        if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InvItemId_Handgun))
                         {
                             g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombat.totalWeaponAmmo;
                         }
@@ -4008,11 +4008,11 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                     {
                         for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
                         {
-                            if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InventoryItemId_KitchenKnife))
+                            if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InvItemId_KitchenKnife))
                             {
                                 g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombat.currentWeaponAmmo;
                             }
-                            if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InventoryItemId_Handgun))
+                            if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InvItemId_Handgun))
                             {
                                 g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombat.totalWeaponAmmo;
                             }
@@ -4232,7 +4232,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                 if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
                     if (g_SysWork.playerCombat.currentWeaponAmmo == 0 &&
-                        INVENTORY_ITEM_GROUP(g_SavegamePtr->equippedWeapon_AA) == InventoryItemGroup_GunWeapons &&
+                        INVENTORY_ITEM_GROUP(g_SavegamePtr->equippedWeapon_AA) == InvItemGroup_GunWeapons &&
                         g_SysWork.playerCombat.totalWeaponAmmo != 0)
                     {
                         g_SysWork.playerWork.extra.upperBodyState              = PlayerUpperBodyState_Reload;
@@ -6840,7 +6840,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
             }
 
             g_SysWork.targetNpcIdx                  = NO_VALUE;
-            g_SysWork.playerCombat.weaponAttack = (g_SavegamePtr->equippedWeapon_AA == InventoryItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA - InventoryItemId_KitchenKnife);
+            g_SysWork.playerCombat.weaponAttack = (g_SavegamePtr->equippedWeapon_AA == InvItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA - InvItemId_KitchenKnife);
 
             if (g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
@@ -7504,7 +7504,7 @@ void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D
         if (g_SysWork.playerWork.player.properties.player.moveDistance_126 >= Q12(3.1739f) ||
             (g_SysWork.timer_2C & (1 << 0)))
         {
-            func_8006342C(g_SavegamePtr->equippedWeapon_AA - InventoryItemId_KitchenKnife,
+            func_8006342C(g_SavegamePtr->equippedWeapon_AA - InvItemId_KitchenKnife,
                           Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), coord);
         }
     }
@@ -7746,7 +7746,7 @@ void Game_SavegameResetPlayer(void) // 0x8007E530
 
     g_SavegamePtr->playerHealth_240      = Q12(100.0f);
     g_SavegamePtr->field_A0              = 0;
-    g_SavegamePtr->equippedWeapon_AA     = InventoryItemId_Unequipped;
+    g_SavegamePtr->equippedWeapon_AA     = InvItemId_Unequipped;
     g_SavegamePtr->healthSaturation_238  = Q12(0.0f);
     g_SavegamePtr->gameplayTimer_250     = Q12(0.0f);
     g_SavegamePtr->runDistance_254       = Q12(0.0f);
@@ -7786,22 +7786,22 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     itemGroupId = INVENTORY_ITEM_GROUP(g_SavegamePtr->equippedWeapon_AA);
 
     // Assign weapon that the player was holding when saving.
-    if (itemGroupId == InventoryItemGroup_MeleeWeapons || itemGroupId == InventoryItemGroup_GunWeapons)
+    if (itemGroupId == InvItemGroup_MeleeWeapons || itemGroupId == InvItemGroup_GunWeapons)
     {
         for (i = 0; g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA && i < INVENTORY_ITEM_COUNT_MAX; i++);
 
-        g_SysWork.playerCombat.weaponAttack        = g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife;
+        g_SysWork.playerCombat.weaponAttack        = g_SavegamePtr->equippedWeapon_AA + InvItemId_KitchenKnife;
         g_SysWork.playerCombat.currentWeaponAmmo  = g_SavegamePtr->items_0[i].count_1;
         g_SysWork.playerCombat.weaponInventoryIdx = i;
 
-        if (itemGroupId == InventoryItemGroup_MeleeWeapons)
+        if (itemGroupId == InvItemGroup_MeleeWeapons)
         {
             g_SysWork.playerCombat.totalWeaponAmmo = 0;
         }
         else
         {
             for (i = 0;
-                 g_SavegamePtr->items_0[i].id_0 != (g_SavegamePtr->equippedWeapon_AA + InventoryItemId_HealthDrink) && i < INVENTORY_ITEM_COUNT_MAX;
+                 g_SavegamePtr->items_0[i].id_0 != (g_SavegamePtr->equippedWeapon_AA + InvItemId_HealthDrink) && i < INVENTORY_ITEM_COUNT_MAX;
                  i++);
 
             if (i == INVENTORY_ITEM_COUNT_MAX)

@@ -365,7 +365,7 @@ void MapEvent_MapTake(void) // 0x800D17B0
 
 void func_800D17D8(void) // 0x800D17D8
 {
-    Event_ItemTake(InventoryItemId_AntiqueShopKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S06_PickupAntiqueShopKey, 36);
+    Event_ItemTake(InvItemId_AntiqueShopKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S06_PickupAntiqueShopKey, 36);
 }
 
 void Map_WorldObjectsInit(void) // 0x800D1804

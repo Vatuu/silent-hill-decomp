@@ -35,7 +35,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
     // If it's set, find its index in `g_ItemTriggerItemIds` and use that to get the corresponding `s_EventData` from `g_ItemTriggerEvents`.
     // After processing, the field is cleared and item trigger IDs are reset.
     // (Multi-item events likely repopulate the trigger IDs below based on whichever events are still active?)
-    if (g_SysWork.playerWork.extra.lastUsedItem != InventoryItemId_Unequipped)
+    if (g_SysWork.playerWork.extra.lastUsedItem != InvItemId_Unequipped)
     {
         for (i = 0; g_SysWork.playerWork.extra.lastUsedItem != g_ItemTriggerItemIds[i]; i++);
 
@@ -44,14 +44,14 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         g_MapEventSysState     = g_MapEventData->sysState;
         g_MapEventParam        = g_MapEventData->eventParam;
 
-        g_SysWork.playerWork.extra.lastUsedItem = InventoryItemId_Unequipped;
+        g_SysWork.playerWork.extra.lastUsedItem = InvItemId_Unequipped;
         Event_ItemTriggersClear();
         return;
     }
 
     Event_ItemTriggersClear();
 
-    g_MapEventLastUsedItem = InventoryItemId_Unequipped;
+    g_MapEventLastUsedItem = InvItemId_Unequipped;
 
     mapEvent = &g_MapOverlayHeader.mapEvents_24[-1];
 

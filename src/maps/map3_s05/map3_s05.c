@@ -113,7 +113,7 @@ void func_800D59D4(void) // 0x800D59D4
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
-    Player_ItemRemove(InventoryItemId_BasementStoreroomKey, 1);
+    Player_ItemRemove(InvItemId_BasementStoreroomKey, 1);
     Map_MessageWithSfx(27, Sfx_UseKey, &sfxPos);
 
     Savegame_EventFlagSet(EventFlag_MapMark_FogHospital3F_NearElevatorBroken);
@@ -259,7 +259,7 @@ void func_800D5C98(void) // 0x800D5C98
             g_SysWork.playerWork.player.position.vz = Q12(-20.0f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
 
-            func_80086470(3U, InventoryItemId_Lighter, 1, false);
+            func_80086470(3U, InvItemId_Lighter, 1, false);
             g_SysWork.playerWork.player.field_E1_0 = 3;
 
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
@@ -594,7 +594,7 @@ void func_800D64E0(void) // 0x800D64E0
 
 void func_800D6BB4(void) // 0x800D6BB4
 {
-    Event_ItemTake(InventoryItemId_VideoTape, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S05_PickupVideoTape, 15);
+    Event_ItemTake(InvItemId_VideoTape, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S05_PickupVideoTape, 15);
 }
 
 void func_800D6BE0(void) // 0x800D6BE0
@@ -628,7 +628,7 @@ void func_800D6BE0(void) // 0x800D6BE0
 
 void func_800D6CF0(void) // 0x800D6CF0
 {
-    Event_ItemTake(InventoryItemId_ExaminationRoomKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S05_PickupExaminationRoomKey, 21);
+    Event_ItemTake(InvItemId_ExaminationRoomKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S05_PickupExaminationRoomKey, 21);
 }
 
 void func_800D6D1C(void) // 0x800D6D1C
@@ -770,7 +770,7 @@ void func_800D719C(void) // 0x800D719C
 
 void func_800D7280(void) // 0x800D7280
 {
-    Event_ItemTake(InventoryItemId_Hammer, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S05_PickupHammer, 31);
+    Event_ItemTake(InvItemId_Hammer, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S05_PickupHammer, 31);
 }
 
 void func_800D72AC(void) // 0x800D72AC

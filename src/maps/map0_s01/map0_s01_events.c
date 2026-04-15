@@ -357,7 +357,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             func_80088F94(&g_SysWork.npcs[0], 0, 0);
             SD_Call(19);
             Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, 0, 0);
-            func_80086470(3, InventoryItemId_Handgun, HANDGUN_AMMO_PICKUP_ITEM_COUNT, false);
+            func_80086470(3, InvItemId_Handgun, HANDGUN_AMMO_PICKUP_ITEM_COUNT, false);
             SysWork_StateStepIncrement(0);
 
         case 49:
@@ -728,13 +728,13 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 
 void MapEvent_PocketRadioItemTake(void) // 0x800DC34C
 {
-    Event_ItemTake(InventoryItemId_PocketRadio, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S01_PickupPocketRadio, 64);
+    Event_ItemTake(InvItemId_PocketRadio, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S01_PickupPocketRadio, 64);
     g_SavegamePtr->itemToggleFlags_AC |= ItemToggleFlag_RadioOn;
 }
 
 void MapEvent_FlashlightItemTake(void) // 0x800DC394
 {
-    Event_ItemTake(InventoryItemId_Flashlight, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S01_PickupFlashlight, 61);
+    Event_ItemTake(InvItemId_Flashlight, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S01_PickupFlashlight, 61);
     Game_TurnFlashlightOff();
 }
 
@@ -843,7 +843,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
 
 void MapEvent_KitchenKnifeItemTake(void) // 0x800DC830
 {
-    Event_ItemTake(InventoryItemId_KitchenKnife, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S01_PickupKitchenKnife, 60);
+    Event_ItemTake(InvItemId_KitchenKnife, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S01_PickupKitchenKnife, 60);
 }
 
 /** Presumably a pickup function. Maybe debug or something unused and commented out. */

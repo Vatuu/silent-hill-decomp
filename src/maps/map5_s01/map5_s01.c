@@ -399,7 +399,7 @@ void func_800EC2D8(void) // 0x800EC2D8
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
-    Player_ItemRemove(InventoryItemId_KaufmannKey, 1);
+    Player_ItemRemove(InvItemId_KaufmannKey, 1);
     Map_MessageWithSfx(17, Sfx_UseKey, &sfxPos); // "Used the Kaufmann key."
     Savegame_EventFlagSet(EventFlag_M5S01_KaufmannKeyUsed);
 }
@@ -648,7 +648,7 @@ void func_800EC42C(void) // 0x800EC42C
 
             vcReturnPreAutoCamWork(true);
             Savegame_EventFlagSet(EventFlag_458);
-            func_80086470(3, InventoryItemId_ChannelingStone, 1, false);
+            func_80086470(3, InvItemId_ChannelingStone, 1, false);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
 

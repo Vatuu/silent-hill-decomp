@@ -169,7 +169,7 @@ void func_800D4B58(void) // 0x800D4B58
 
 void func_800D4DF8(void) // 0x800D4DF8
 {
-    Event_ItemTake(InventoryItemId_SafeKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M5S02_PickupSafeKey, 47);
+    Event_ItemTake(InvItemId_SafeKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M5S02_PickupSafeKey, 47);
 }
 
 void func_800D4E24(void) // 0x800D4E24
@@ -372,7 +372,7 @@ void func_800D54D0(void) // 0x800D54D0
             break;
 
         case 3:
-            func_80086470(0, InventoryItemId_KaufmannKey, 0, false);
+            func_80086470(0, InvItemId_KaufmannKey, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -380,13 +380,13 @@ void func_800D54D0(void) // 0x800D54D0
             break;
 
         case 5:
-            func_80086470(1, InventoryItemId_KaufmannKey, 0, false);
+            func_80086470(1, InvItemId_KaufmannKey, 0, false);
             break;
 
         case 6:
             Savegame_EventFlagSet(EventFlag_380);
 
-            if (Gfx_PickupItemAnimate(InventoryItemId_KaufmannKey))
+            if (Gfx_PickupItemAnimate(InvItemId_KaufmannKey))
             {
                 MapMsg_DisplayAndHandleSelection(false, 50, 0, 0, 0, false);
 
@@ -398,15 +398,15 @@ void func_800D54D0(void) // 0x800D54D0
             break;
 
         case 7:
-            func_80086470(0, InventoryItemId_Receipt, 0, false);
+            func_80086470(0, InvItemId_Receipt, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 8:
-            func_80086470(1, InventoryItemId_Receipt, 0, false);
+            func_80086470(1, InvItemId_Receipt, 0, false);
             break;
 
         case 9:
-            if (Gfx_PickupItemAnimate(InventoryItemId_Receipt))
+            if (Gfx_PickupItemAnimate(InvItemId_Receipt))
             {
                 MapMsg_DisplayAndHandleSelection(false, 49, 0, 0, 0, false);
 
@@ -425,8 +425,8 @@ void func_800D54D0(void) // 0x800D54D0
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_380);
-            func_80086470(3, InventoryItemId_KaufmannKey, 1, false);
-            func_80086470(3, InventoryItemId_Receipt, 1, false);
+            func_80086470(3, InvItemId_KaufmannKey, 1, false);
+            func_80086470(3, InvItemId_Receipt, 1, false);
             break;
     }
 }
@@ -472,7 +472,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
 
-            WorldGfx_PlayerHeldItemSet(InventoryItemId_Handgun);
+            WorldGfx_PlayerHeldItemSet(InvItemId_Handgun);
             g_SysWork.playerWork.player.field_E1_0 = 5;
             func_80085EB8(0, &g_SysWork.playerWork.player, 153, false);
             D_800D94F4 = 0;

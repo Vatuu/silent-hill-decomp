@@ -177,7 +177,7 @@ void func_800D1FF0(void) // 0x800D1FF0
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
-            WorldGfx_PlayerHeldItemSet(InventoryItemId_Handgun);
+            WorldGfx_PlayerHeldItemSet(InvItemId_Handgun);
             Chara_Load(0, Chara_Cybil, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Savegame_EventFlagSet(EventFlag_302);
             SysWork_StateStepIncrement(0);
@@ -1181,7 +1181,7 @@ void func_800D4410(void) // 0x800D4410
 
 void func_800D496C(void) // 0x800D496C
 {
-    Event_ItemTake(InventoryItemId_Axe, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M4S01_PickupAxe, 113);
+    Event_ItemTake(InvItemId_Axe, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M4S01_PickupAxe, 113);
 }
 
 void func_800D4998(void) // 0x800D4998

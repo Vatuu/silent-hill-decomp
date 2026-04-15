@@ -1261,7 +1261,7 @@ STATIC_ASSERT_SIZEOF(s_TriggerZone, 4);
 
 typedef struct _HeldItem
 {
-    s32           itemId_0; /** `e_InventoryItemId` */
+    s32           itemId_0; /** `e_InvItemId` */
     s32           queueIdx_4;
     char*         textureName_8;
     s_FsImageDesc imageDesc_C;
@@ -2391,7 +2391,7 @@ extern s8 pad_bss_800BCDD5[3];
 
 extern s_EventData* g_MapEventData;
 
-/** `e_InventoryItemId` | related to displaying items. */
+/** `e_InvItemId` | related to displaying items. */
 extern u8 D_800AE187;
 
 extern s16 D_800AE1A8;
@@ -2671,10 +2671,10 @@ s32 WorldGfx_PlayerPrevHeldItem(s_PlayerCombat* combat);
 
 /** @brief Loads and sets an item held by the player.
  *
- * @param itemId ID of the held item to load (`e_InventoryItemId`).
+ * @param itemId ID of the held item to load (`e_InvItemId`).
  * @return Model or texture queue index.
  */
-s32 WorldGfx_PlayerHeldItemSet(e_InventoryItemId itemId);
+s32 WorldGfx_PlayerHeldItemSet(e_InvItemId itemId);
 
 void func_8003D01C(void);
 
@@ -3388,7 +3388,7 @@ void SysWork_StateStepIncrementAfterFade(s32 stateStep, bool cond, s32 fadeType,
 void func_800862F8(s32 stateStep, e_FsFile fileIdx, bool reset);
 
 /** Stepped state handler for displaying picked up items? */
-void func_80086470(u32 stateStep, e_InventoryItemId itemId, s32 itemCount, bool reset);
+void func_80086470(u32 stateStep, e_InvItemId itemId, s32 itemCount, bool reset);
 
 void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOrPosX, q19_12 offsetOrPosZ);
 
@@ -3479,7 +3479,7 @@ void MapMsg_DisplayWithTexture(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12
 /** @brief Displays a message with a background texture that is darken after reading the first sentence. */
 void MapMsg_DisplayWithTexture1(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
-void Event_ItemTake(e_InventoryItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx, s32 mapMsgIdx);
+void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx, s32 mapMsgIdx);
 
 void Event_CommonItemTake(u32 pickupType, e_EventFlag eventFlagIdx);
 

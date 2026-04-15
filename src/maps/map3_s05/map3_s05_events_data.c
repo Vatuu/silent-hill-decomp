@@ -103,7 +103,7 @@ s_EventData MAP_EVENTS[104] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 18,
-        .requiredItemId     = InventoryItemId_Lighter,
+        .requiredItemId     = InvItemId_Lighter,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 8, // `func_800D64E0`
     },
@@ -120,7 +120,7 @@ s_EventData MAP_EVENTS[104] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 18,
-        .requiredItemId     = InventoryItemId_DisinfectingAlcohol,
+        .requiredItemId     = InvItemId_DisinfectingAlcohol,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 6, // `func_800D5FC4`
     },
@@ -128,7 +128,7 @@ s_EventData MAP_EVENTS[104] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 18,
-        .requiredItemId     = InventoryItemId_Lighter,
+        .requiredItemId     = InvItemId_Lighter,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 5, // `func_800D5C98`
     },
@@ -280,7 +280,7 @@ s_EventData MAP_EVENTS[104] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 11,
-        .requiredItemId     = InventoryItemId_BasementStoreroomKey,
+        .requiredItemId     = InvItemId_BasementStoreroomKey,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 3, // `func_800D59D4`
     },

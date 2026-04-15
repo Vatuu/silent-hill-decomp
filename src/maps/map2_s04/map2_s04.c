@@ -107,7 +107,7 @@ void MapEvent_MapTake(void) // 0x800CD0D0
 
 void MapEvent_ShotgunTake(void) // 0x800CD0F8
 {
-    Event_ItemTake(InventoryItemId_Shotgun, SHOTGUN_AMMO_PICKUP_ITEM_COUNT, EventFlag_M1S02_PickupShotgun, 26);
+    Event_ItemTake(InvItemId_Shotgun, SHOTGUN_AMMO_PICKUP_ITEM_COUNT, EventFlag_M1S02_PickupShotgun, 26);
 }
 
 extern u8 D_800CF280;

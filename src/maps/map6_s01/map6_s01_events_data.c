@@ -122,7 +122,7 @@ s_EventData MAP_EVENTS[17] = {
         .triggerType      = TriggerType_TouchAabb,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 12,
-        .requiredItemId     = InventoryItemId_ChannelingStone,
+        .requiredItemId     = InvItemId_ChannelingStone,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 5, // `func_800D2658`
     },

@@ -769,7 +769,7 @@ void Map_WorldObjectsInit(void)
 
     WorldObjectInit(&g_WorldObject8, "MAP_HIDE", 96.9405f, -0.3365f, 21.0918f, 0.0f, 66.8f, 0.0f);
 
-    Player_ItemRemove(InventoryItemId_NoteToSchool, 1);
+    Player_ItemRemove(InvItemId_NoteToSchool, 1);
     Savegame_EventFlagSet(EventFlag_147);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)

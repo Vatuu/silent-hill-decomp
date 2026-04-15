@@ -16,7 +16,7 @@ s_UnkStruct3_Mo g_MapHeaderTable_38[3] = {
 };
 
 u8 LOADABLE_INVENTORY_ITEMS[] = {
-    InventoryItemId_Unequipped
+    InvItemId_Unequipped
 };
 
 u8 sharedData_800DD584_0_s00 = 0;

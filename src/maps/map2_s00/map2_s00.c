@@ -292,7 +292,7 @@ void func_800E7D54(void) // 0x800E7D54
             break;
 
         case 2:
-            Event_ItemTake(InventoryItemId_HealthDrink, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupHealthDrink, 6);
+            Event_ItemTake(InvItemId_HealthDrink, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupHealthDrink, 6);
             break;
     }
 }
@@ -376,12 +376,12 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
 
 void func_800E816C(void) // 0x800E816C
 {
-    Event_ItemTake(InventoryItemId_RockDrill, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupRockDrill, 73);
+    Event_ItemTake(InvItemId_RockDrill, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupRockDrill, 73);
 }
 
 void func_800E8198(void) // 0x800E8198
 {
-    Event_ItemTake(InventoryItemId_Chainsaw, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupChainsaw, 76);
+    Event_ItemTake(InvItemId_Chainsaw, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupChainsaw, 76);
 }
 
 void MapEvent_MapTake(void) // 0x800E81C4
@@ -401,7 +401,7 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0u, InventoryItemId_SteelPipe, 0, false);
+            func_80086470(0u, InvItemId_SteelPipe, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -413,20 +413,20 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
             break;
 
         case 3:
-            func_80086470(1, InventoryItemId_SteelPipe, 0, false);
+            func_80086470(1, InvItemId_SteelPipe, 0, false);
             break;
 
         case 4:
             Savegame_EventFlagSet(EventFlag_M2S00_PickupSteelPipe);
 
-            if (Gfx_PickupItemAnimate(InventoryItemId_SteelPipe))
+            if (Gfx_PickupItemAnimate(InvItemId_SteelPipe))
             {
                 MapMsg_DisplayAndHandleSelection(true, 15, EventState_TakeSteelPipe, EventState_DontTakeSteelPipe, 0, false);
             }
             break;
 
         case EventState_TakeSteelPipe:
-            func_80086470(3, InventoryItemId_SteelPipe, 1, false);
+            func_80086470(3, InvItemId_SteelPipe, 1, false);
             SysWork_StateStepSet(0, 7);
             break;
 
@@ -830,7 +830,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            func_80086470(3, InventoryItemId_NoteToSchool, 1, false);
+            func_80086470(3, InvItemId_NoteToSchool, 1, false);
             func_8003A16C();
             break;
     }
@@ -938,7 +938,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            func_80086470(3, InventoryItemId_NoteDoghouse, 1, false);
+            func_80086470(3, InvItemId_NoteDoghouse, 1, false);
             break;
     }
 }
@@ -988,9 +988,9 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
             break;
 
         case EventState_TakeKey:
-            func_80086470(3, InventoryItemId_HouseKey, 1, false);
+            func_80086470(3, InvItemId_HouseKey, 1, false);
             Savegame_EventFlagSet(EventFlag_M2S00_PickupDogHouseKey);
-            Player_ItemRemove(InventoryItemId_NoteDoghouse, 1);
+            Player_ItemRemove(InvItemId_NoteDoghouse, 1);
             SysWork_StateStepIncrement(0);
 
         case EventState_DontTakeKey:
@@ -1015,7 +1015,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
 
 void func_800E9A0C(void) // 0x800E9A0C
 {
-    Event_ItemTake(InventoryItemId_KeyOfLion, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupKeyOfLion, 28);
+    Event_ItemTake(InvItemId_KeyOfLion, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupKeyOfLion, 28);
 
     if (Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfLion))
     {
@@ -1038,7 +1038,7 @@ void func_800E9A74(void) // 0x800E9A74
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InventoryItemId_KeyOfWoodman, 0, false);
+            func_80086470(0, InvItemId_KeyOfWoodman, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1050,7 +1050,7 @@ void func_800E9A74(void) // 0x800E9A74
             SysWork_StateStepIncrement(0);
 
         case 3:
-            func_80086470(1, InventoryItemId_KeyOfWoodman, 0, false);
+            func_80086470(1, InvItemId_KeyOfWoodman, 0, false);
             break;
 
         case 4:
@@ -1058,7 +1058,7 @@ void func_800E9A74(void) // 0x800E9A74
             break;
 
         case 5:
-            if (Gfx_PickupItemAnimate(InventoryItemId_KeyOfWoodman))
+            if (Gfx_PickupItemAnimate(InvItemId_KeyOfWoodman))
             {
                 MapMsg_DisplayAndHandleSelection(true, 29, EventState_TakeKey, EventState_DontTakeKey, 0, false); // "Key of Woodman. Take it?"
             }
@@ -1067,7 +1067,7 @@ void func_800E9A74(void) // 0x800E9A74
             break;
 
         case EventState_TakeKey:
-            func_80086470(3, InventoryItemId_KeyOfWoodman, 1, false);
+            func_80086470(3, InvItemId_KeyOfWoodman, 1, false);
 
             if (Savegame_EventFlagGet(EventFlag_MapMark_OldTown_DogYardKeyLine))
             {
@@ -1094,7 +1094,7 @@ void func_800E9A74(void) // 0x800E9A74
 
 void func_800E9CB4(void) // 0x800E9CB4
 {
-    Event_ItemTake(InventoryItemId_KeyOfScarecrow, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupKeyOfScarecrow, 30);
+    Event_ItemTake(InvItemId_KeyOfScarecrow, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupKeyOfScarecrow, 30);
 
     if (Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfScarecrow))
     {
@@ -1109,7 +1109,7 @@ void MapEvent_HouseKeyUse(void) // 0x800E9D1C
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
-    Player_ItemRemove(InventoryItemId_HouseKey, 1);
+    Player_ItemRemove(InvItemId_HouseKey, 1);
     Map_MessageWithSfx(31, Sfx_UseKey, &sfxPos); // "Used the House Key."
     Savegame_EventFlagSet(EventFlag_MapMark_OldTown_DoghouseDotOnly);
 }
@@ -1163,7 +1163,7 @@ void func_800E9DD8(void) // 0x800E9DD8
             {
                 Savegame_EventFlagSet(EventFlag_M2S00_LockOfLionOpen);
                 g_DoorOfEclypse_MapMsgIdx = 32;
-                Player_ItemRemove(InventoryItemId_KeyOfLion, 1);
+                Player_ItemRemove(InvItemId_KeyOfLion, 1);
                 SysWork_StateStepSet(0, 5);
             }
             else if (Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfWoodman) && !Savegame_EventFlagGet(EventFlag_M2S00_LockOfWoodmanOpen))
@@ -1171,7 +1171,7 @@ void func_800E9DD8(void) // 0x800E9DD8
                 Savegame_EventFlagSet(EventFlag_M2S00_LockOfWoodmanOpen);
                 g_DoorOfEclypse_MapMsgIdx = 33;
 
-                Player_ItemRemove(InventoryItemId_KeyOfWoodman, 1);
+                Player_ItemRemove(InvItemId_KeyOfWoodman, 1);
                 SysWork_StateStepSet(0, 5);
             }
             else if (Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfScarecrow) && !Savegame_EventFlagGet(EventFlag_M2S00_LockOfScarecrowOpen))
@@ -1179,7 +1179,7 @@ void func_800E9DD8(void) // 0x800E9DD8
                 Savegame_EventFlagSet(EventFlag_M2S00_LockOfScarecrowOpen);
                 g_DoorOfEclypse_MapMsgIdx = 34;
 
-                Player_ItemRemove(InventoryItemId_KeyOfScarecrow, 1);
+                Player_ItemRemove(InvItemId_KeyOfScarecrow, 1);
                 SysWork_StateStepSet(0, 5);
             }
             else
@@ -1436,7 +1436,7 @@ void MapEvent_KGordonKeyUse(void) // 0x800EA894
         MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8
     };
 
-    Player_ItemRemove(InventoryItemId_KGordonKey, 1);
+    Player_ItemRemove(InvItemId_KGordonKey, 1);
     Map_MessageWithSfx(39, Sfx_UseKey, &sfxPos); // "Used the K. Gordon key."
 
     Savegame_EventFlagSet(EventFlag_M2S00_KGordonDoorOpen);

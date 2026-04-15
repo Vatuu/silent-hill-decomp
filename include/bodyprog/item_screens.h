@@ -119,7 +119,7 @@ extern s32 g_Inventory_SelectedItemIdx; // 0x800AE17C
  */
 extern s32 g_Items_DisplayedCount; // 0x800AE180
 
-/** `e_InventoryItemId` */
+/** `e_InvItemId` */
 extern u8 g_Inventory_EquippedItem; // 0x800AE184
 
 extern s32 D_800AE190;

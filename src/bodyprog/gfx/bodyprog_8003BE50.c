@@ -554,13 +554,13 @@ s32 WorldGfx_PlayerPrevHeldItem(s_PlayerCombat* combat) // 0x8003CD6C
     itemId       = NO_VALUE;
     if (weaponAttack != NO_VALUE)
     {
-        itemId = weaponAttack + InventoryItemId_KitchenKnife;
+        itemId = weaponAttack + InvItemId_KitchenKnife;
     }
 
     return WorldGfx_PlayerHeldItemSet(itemId);
 }
 
-s32 WorldGfx_PlayerHeldItemSet(e_InventoryItemId itemId) // 0x8003CDA0
+s32 WorldGfx_PlayerHeldItemSet(e_InvItemId itemId) // 0x8003CDA0
 {
     s32         fileIdx;
     s_HeldItem* heldItem;
@@ -581,67 +581,67 @@ s32 WorldGfx_PlayerHeldItemSet(e_InventoryItemId itemId) // 0x8003CDA0
             break;
 
         case NO_VALUE:
-        case InventoryItemId_KitchenKnife:
-        case InventoryItemId_Hammer:
-        case InventoryItemId_Axe:
-        case InventoryItemId_Handgun:
-        case InventoryItemId_HuntingRifle:
-        case InventoryItemId_Shotgun:
+        case InvItemId_KitchenKnife:
+        case InvItemId_Hammer:
+        case InvItemId_Axe:
+        case InvItemId_Handgun:
+        case InvItemId_HuntingRifle:
+        case InvItemId_Shotgun:
             fileIdx                 = NO_VALUE;
             heldItem->textureName_8 = "HERO";
             break;
 
-        case InventoryItemId_SteelPipe:
+        case InvItemId_SteelPipe:
             fileIdx                 = FILE_ITEM_PIPE_TIM;
             heldItem->textureName_8 = "PIPE";
             break;
 
-        case InventoryItemId_CutscenePhone:
+        case InvItemId_CutscenePhone:
             fileIdx                 = FILE_ITEM_PHONE_TIM;
             heldItem->textureName_8 = "PHONE";
             break;
 
-        case InventoryItemId_CutsceneFlauros:
+        case InvItemId_CutsceneFlauros:
             fileIdx                 = FILE_ITEM_FLAUROS_TIM;
             heldItem->textureName_8 = "FLAUROS";
             break;
 
-        case InventoryItemId_CutsceneAglaophotis:
+        case InvItemId_CutsceneAglaophotis:
             fileIdx                 = FILE_ITEM_AGLA_TIM;
             heldItem->textureName_8 = "AGLA";
             break;
 
-        case InventoryItemId_CutscenePlasticBottle:
+        case InvItemId_CutscenePlasticBottle:
             fileIdx                 = FILE_ITEM_BOTL_TIM;
             heldItem->textureName_8 = "BOTL";
             break;
 
-        case InventoryItemId_CutsceneBaby:
+        case InvItemId_CutsceneBaby:
             fileIdx                 = FILE_ITEM_BABY_TIM;
             heldItem->textureName_8 = "BABY";
             break;
 
-        case InventoryItemId_CutsceneBloodPack:
+        case InvItemId_CutsceneBloodPack:
             fileIdx                 = FILE_ITEM_BLOOD_TIM;
             heldItem->textureName_8 = "BLOOD";
             break;
 
-        case InventoryItemId_Chainsaw:
+        case InvItemId_Chainsaw:
             fileIdx                 = FILE_ITEM_CSAW_TIM;
             heldItem->textureName_8 = "CSAW";
             break;
 
-        case InventoryItemId_HyperBlaster:
+        case InvItemId_HyperBlaster:
             fileIdx                 = FILE_ITEM_HPRGUN_TIM;
             heldItem->textureName_8 = "HPRGUN";
             break;
 
-        case InventoryItemId_RockDrill:
+        case InvItemId_RockDrill:
             fileIdx                 = FILE_ITEM_DRILL_TIM;
             heldItem->textureName_8 = "DRILL";
             break;
 
-        case InventoryItemId_Katana:
+        case InvItemId_Katana:
             fileIdx                 = FILE_ITEM_KATANA_TIM;
             heldItem->textureName_8 = "KATANA";
             break;
@@ -681,71 +681,71 @@ s32 WorldGfx_PlayerHeldItemSet(e_InventoryItemId itemId) // 0x8003CDA0
             fileIdx = NO_VALUE;
             break;
 
-        case InventoryItemId_KitchenKnife:
+        case InvItemId_KitchenKnife:
             fileIdx = FILE_ITEM_KNIFE_PLM;
             break;
 
-        case InventoryItemId_SteelPipe:
+        case InvItemId_SteelPipe:
             fileIdx = FILE_ITEM_PIPE_PLM;
             break;
 
-        case InventoryItemId_Hammer:
+        case InvItemId_Hammer:
             fileIdx = FILE_ITEM_HAMMER_PLM;
             break;
 
-        case InventoryItemId_Axe:
+        case InvItemId_Axe:
             fileIdx = FILE_ITEM_AXE_PLM;
             break;
 
-        case InventoryItemId_Handgun:
+        case InvItemId_Handgun:
             fileIdx = FILE_ITEM_HANDGUN_PLM;
             break;
 
-        case InventoryItemId_HuntingRifle:
+        case InvItemId_HuntingRifle:
             fileIdx = FILE_ITEM_RIFLE_PLM;
             break;
 
-        case InventoryItemId_Shotgun:
+        case InvItemId_Shotgun:
             fileIdx = FILE_ITEM_SHOTGUN_PLM;
             break;
 
-        case InventoryItemId_CutscenePhone:
+        case InvItemId_CutscenePhone:
             fileIdx = FILE_ITEM_PHONE_PLM;
             break;
 
-        case InventoryItemId_CutsceneFlauros:
+        case InvItemId_CutsceneFlauros:
             fileIdx = FILE_ITEM_FLAUROS_PLM;
             break;
 
-        case InventoryItemId_CutsceneAglaophotis:
+        case InvItemId_CutsceneAglaophotis:
             fileIdx = FILE_ITEM_AGLA_PLM;
             break;
 
-        case InventoryItemId_CutscenePlasticBottle:
+        case InvItemId_CutscenePlasticBottle:
             fileIdx = FILE_ITEM_BOTL_PLM;
             break;
 
-        case InventoryItemId_CutsceneBaby:
+        case InvItemId_CutsceneBaby:
             fileIdx = FILE_ITEM_BABY_PLM;
             break;
 
-        case InventoryItemId_CutsceneBloodPack:
+        case InvItemId_CutsceneBloodPack:
             fileIdx = FILE_ITEM_BLOOD_PLM;
             break;
 
-        case InventoryItemId_Chainsaw:
+        case InvItemId_Chainsaw:
             fileIdx = FILE_ITEM_CSAW_PLM;
             break;
 
-        case InventoryItemId_HyperBlaster:
+        case InvItemId_HyperBlaster:
             fileIdx = FILE_ITEM_HPRGUN_PLM;
             break;
 
-        case InventoryItemId_RockDrill:
+        case InvItemId_RockDrill:
             fileIdx = FILE_ITEM_DRILL_PLM;
             break;
 
-        case InventoryItemId_Katana:
+        case InvItemId_Katana:
             fileIdx = FILE_ITEM_KATANA_PLM;
             break;
     }
@@ -786,7 +786,7 @@ void WorldGfx_HeldItemDraw(void) // 0x8003D058
     }
 
     // Distinguish between left-handed and right-handed items.
-    if (heldItem->itemId_0 == InventoryItemId_CutscenePhone)
+    if (heldItem->itemId_0 == InvItemId_CutscenePhone)
     {
         coord = &g_SysWork.playerBoneCoords[HarryBone_LeftHand];
     }

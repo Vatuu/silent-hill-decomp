@@ -112,7 +112,7 @@ s_EventData MAP_EVENTS[104] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 12,
-        .requiredItemId     = InventoryItemId_Chemical,
+        .requiredItemId     = InvItemId_Chemical,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 6, // `func_800D7308`
     },

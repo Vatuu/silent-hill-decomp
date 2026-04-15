@@ -27,7 +27,7 @@ void func_800E9D54(void) // 0x800E9D54
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
-    Player_ItemRemove(InventoryItemId_AntiqueShopKey, 1);
+    Player_ItemRemove(InvItemId_AntiqueShopKey, 1);
     Map_MessageWithSfx(15, Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_M2S02_AntiqueShopOpen);
 }

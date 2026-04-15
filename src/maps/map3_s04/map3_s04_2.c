@@ -185,7 +185,7 @@ void func_800D250C(void) // 0x800D250C
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
-    Player_ItemRemove(InventoryItemId_ExaminationRoomKey, 1);
+    Player_ItemRemove(InvItemId_ExaminationRoomKey, 1);
     Map_MessageWithSfx(48, Sfx_UseKey, &sfxPos);
 
     Savegame_EventFlagSet(EventFlag_258);
@@ -433,7 +433,7 @@ void func_800D2668(void) // 0x800D2668
 
 void func_800D2E58(void) // 0x800D2E58
 {
-    Event_ItemTake(InventoryItemId_PlateOfQueen, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S04_PickupPlateOfQueen, 47);
+    Event_ItemTake(InvItemId_PlateOfQueen, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S04_PickupPlateOfQueen, 47);
 }
 
 INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04_2", sharedData_800CB088_3_s01);

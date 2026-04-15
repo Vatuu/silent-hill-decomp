@@ -519,7 +519,7 @@ void func_800CFC34(void) // 0x800CFC34
         default:
             vcReturnPreAutoCamWork(true);
             Savegame_EventFlagSet(EventFlag_460);
-            func_80086470(3, InventoryItemId_ChannelingStone, 1, false);
+            func_80086470(3, InvItemId_ChannelingStone, 1, false);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
             D_800D4E28 = NO_VALUE;

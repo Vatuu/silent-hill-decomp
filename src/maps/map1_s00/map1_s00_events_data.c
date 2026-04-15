@@ -273,7 +273,7 @@ s_EventData MAP_EVENTS[101] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 14,
-        .requiredItemId     = InventoryItemId_GoldMedallion,
+        .requiredItemId     = InvItemId_GoldMedallion,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 6, // `func_800D7B2C`
     },
@@ -301,7 +301,7 @@ s_EventData MAP_EVENTS[101] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 15,
-        .requiredItemId     = InventoryItemId_SilverMedallion,
+        .requiredItemId     = InvItemId_SilverMedallion,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 9, // `func_800D7EB0`
     },

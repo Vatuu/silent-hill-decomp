@@ -83,7 +83,7 @@ void func_800D1524(void) // 0x800D1524
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
-    Player_ItemRemove(InventoryItemId_BasementKey, 1);
+    Player_ItemRemove(InvItemId_BasementKey, 1);
     Map_MessageWithSfx(28, Sfx_UseKey, &sfxPos); // "Used basement key."
 
     Savegame_EventFlagSet(EventFlag_MapMark_585);
@@ -202,15 +202,15 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
             Savegame_EventFlagSet(EventFlag_M3S01_PickupUnknownLiquid);
 
             // Replace Plastic Bottle with Unknown Liquid in inventory.
-            Player_ItemRemove(InventoryItemId_PlasticBottle, 1);
-            func_80086470(3, InventoryItemId_UnknownLiquid, DEFAULT_PICKUP_ITEM_COUNT, false);
+            Player_ItemRemove(InvItemId_PlasticBottle, 1);
+            func_80086470(3, InvItemId_UnknownLiquid, DEFAULT_PICKUP_ITEM_COUNT, false);
             break;
     }
 }
 
 void MapEvent_PlasticBottleTake(void) // 0x800D2720
 {
-    Event_ItemTake(InventoryItemId_PlasticBottle, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S01_PickupPlasticBottle, 21);
+    Event_ItemTake(InvItemId_PlasticBottle, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S01_PickupPlasticBottle, 21);
 }
 
 void MapEvent_MapTake0(void) // 0x800D274C
@@ -225,7 +225,7 @@ void MapEvent_MapTake1(void) // 0x800D2774
 
 void func_800D279C(void) // 0x800D279C
 {
-    Event_ItemTake(InventoryItemId_BasementKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S01_PickupBasementKey, 24);
+    Event_ItemTake(InvItemId_BasementKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S01_PickupBasementKey, 24);
 }
 
 void MapEvent_Generator0(void) // 0x800D27C8

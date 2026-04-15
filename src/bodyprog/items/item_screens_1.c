@@ -148,21 +148,21 @@ bool func_8004C328(bool unused) // 0x8004C328
     hasHuntingRifle = false;
     hasShotgun      = false;
 
-    for (; (itemId = g_SavegamePtr->items_0[itemIdx].id_0) != InventoryItemId_Unequipped; itemIdx++)
+    for (; (itemId = g_SavegamePtr->items_0[itemIdx].id_0) != InvItemId_Unequipped; itemIdx++)
     {
-        if (itemId == InventoryItemId_HuntingRifle)
+        if (itemId == InvItemId_HuntingRifle)
         {
             hasHuntingRifle = true;
         }
 
-        if (itemId == InventoryItemId_Shotgun)
+        if (itemId == InvItemId_Shotgun)
         {
             hasShotgun = true;
         }
 
         if (g_SysWork.playerCombat.weaponInventoryIdx != NO_VALUE && itemIdx == g_SysWork.playerCombat.weaponInventoryIdx)
         {
-            if (itemId >= InventoryItemId_Handgun && itemId <= InventoryItemId_Shotgun)
+            if (itemId >= InvItemId_Handgun && itemId <= InvItemId_Shotgun)
             {
                 if (g_SysWork.playerCombat.currentWeaponAmmo != 0)
                 {
@@ -172,7 +172,7 @@ bool func_8004C328(bool unused) // 0x8004C328
             continue;
         }
 
-        if (itemId == InventoryItemId_Handgun || itemId == InventoryItemId_HandgunBullets)
+        if (itemId == InvItemId_Handgun || itemId == InvItemId_HandgunBullets)
         {
             if (g_SavegamePtr->items_0[itemIdx].count_1 != 0)
             {
@@ -184,15 +184,15 @@ bool func_8004C328(bool unused) // 0x8004C328
         // Checks if player has ammo.
         switch (itemId)
         {
-            case InventoryItemId_HuntingRifle:
-            case InventoryItemId_Shotgun:
+            case InvItemId_HuntingRifle:
+            case InvItemId_Shotgun:
                 if (g_SavegamePtr->items_0[itemIdx].count_1 != 0)
                 {
                     return true;
                 }
                 break;
 
-            case InventoryItemId_RifleShells:
+            case InvItemId_RifleShells:
                 if (hasHuntingRifle)
                 {
                     if (g_SavegamePtr->items_0[itemIdx].count_1 != 0)
@@ -202,7 +202,7 @@ bool func_8004C328(bool unused) // 0x8004C328
                 }
                 break;
 
-            case InventoryItemId_ShotgunShells:
+            case InvItemId_ShotgunShells:
                 if (hasShotgun)
                 {
                     if (g_SavegamePtr->items_0[itemIdx].count_1 != 0)
@@ -224,7 +224,7 @@ s32 Inventory_HyperBlasterUnlockTest(void) // 0x8004C45C
     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
     {
         // Already in inventory, can't add new one.
-        if (g_SavegamePtr->items_0[i].id_0 == InventoryItemId_HyperBlaster)
+        if (g_SavegamePtr->items_0[i].id_0 == InvItemId_HyperBlaster)
         {
             return NO_VALUE;
         }

@@ -129,7 +129,7 @@ s_EventData MAP_EVENTS[21] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 11,
-        .requiredItemId     = InventoryItemId_SafeKey,
+        .requiredItemId     = InvItemId_SafeKey,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 6, // `func_800D4E64`
     },

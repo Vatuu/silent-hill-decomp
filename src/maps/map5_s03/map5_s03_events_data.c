@@ -98,7 +98,7 @@ s_EventData MAP_EVENTS[46] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 15,
-        .requiredItemId     = InventoryItemId_Magnet,
+        .requiredItemId     = InvItemId_Magnet,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 4, // `func_800D1628`
     },
@@ -164,7 +164,7 @@ s_EventData MAP_EVENTS[46] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 16,
-        .requiredItemId     = InventoryItemId_MotorcycleKey,
+        .requiredItemId     = InvItemId_MotorcycleKey,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 8, // `func_800D1AF8`
     },
@@ -173,7 +173,7 @@ s_EventData MAP_EVENTS[46] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 17,
-        .requiredItemId     = InventoryItemId_MotorcycleKey,
+        .requiredItemId     = InvItemId_MotorcycleKey,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 8, // `func_800D1AF8`
     },
@@ -182,7 +182,7 @@ s_EventData MAP_EVENTS[46] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 18,
-        .requiredItemId     = InventoryItemId_MotorcycleKey,
+        .requiredItemId     = InvItemId_MotorcycleKey,
         .sysState         = SysState_EventCallFunc,
         .eventParam       = 8, // `func_800D1AF8`
     },

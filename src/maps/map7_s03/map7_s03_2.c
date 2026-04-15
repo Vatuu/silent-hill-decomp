@@ -8730,7 +8730,7 @@ void func_800E62CC(void) // 0x800E62CC
 
         case 13:
             func_80085EB8(0, &g_SysWork.npcs[5], 2, false);
-            WorldGfx_PlayerHeldItemSet(InventoryItemId_CutsceneBaby);
+            WorldGfx_PlayerHeldItemSet(InvItemId_CutsceneBaby);
             func_800E1788(14);
             SysWork_StateStepIncrement(0);
 

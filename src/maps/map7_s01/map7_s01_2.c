@@ -602,7 +602,7 @@ void MapEvent_KeyOfOphielUse(void) // 0x800D8668
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
-    Player_ItemRemove(InventoryItemId_KeyOfOphiel, 1);
+    Player_ItemRemove(InvItemId_KeyOfOphiel, 1);
     Map_MessageWithSfx(48, Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_530);
 }
@@ -611,7 +611,7 @@ void MapEvent_KeyOfHagithUse(void) // 0x800D8724
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
-    Player_ItemRemove(InventoryItemId_KeyOfHagith, 1);
+    Player_ItemRemove(InvItemId_KeyOfHagith, 1);
     Map_MessageWithSfx(49, Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_531);
 }
@@ -620,7 +620,7 @@ void MapEvent_KeyOfPhalegUse(void) // 0x800D87E0
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
 
-    Player_ItemRemove(InventoryItemId_KeyOfPhaleg, 1);
+    Player_ItemRemove(InvItemId_KeyOfPhaleg, 1);
     Map_MessageWithSfx(50, Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_532);
 }
@@ -655,13 +655,13 @@ void MapEvent_BirdCageKeyUse(void) // 0x800D8984
     const static VECTOR3 sfxPos = { Q12(-179.64f), Q12(-1.0f), Q12(-20.05f) };
 
     Map_MessageWithSfx(79, Sfx_Unk1645, &sfxPos);
-    Player_ItemRemove(InventoryItemId_BirdCageKey, 1);
+    Player_ItemRemove(InvItemId_BirdCageKey, 1);
     Savegame_EventFlagSet(EventFlag_491);
 }
 
 void func_800D89D8(void) // 0x800D89D8
 {
-    Event_ItemTake(InventoryItemId_KeyOfPhaleg, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupKeyOfPhaleg, 59);
+    Event_ItemTake(InvItemId_KeyOfPhaleg, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupKeyOfPhaleg, 59);
 }
 
 void func_800D8A04(void) // 0x800D8A04
@@ -772,7 +772,7 @@ void func_800D8DB4(void) // 0x800D8DB4
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InventoryItemId_KeyOfOphiel, 0, false);
+            func_80086470(0, InvItemId_KeyOfOphiel, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -784,7 +784,7 @@ void func_800D8DB4(void) // 0x800D8DB4
             SysWork_StateStepIncrement(0);
 
         case 3:
-            func_80086470(1, InventoryItemId_KeyOfOphiel, 0, false);
+            func_80086470(1, InvItemId_KeyOfOphiel, 0, false);
             break;
 
         case 4:
@@ -792,7 +792,7 @@ void func_800D8DB4(void) // 0x800D8DB4
             break;
 
         case 5:
-            if (Gfx_PickupItemAnimate(InventoryItemId_KeyOfOphiel))
+            if (Gfx_PickupItemAnimate(InvItemId_KeyOfOphiel))
             {
                 MapMsg_DisplayAndHandleSelection(true, 57, 6, 7, 0, false);
             }
@@ -801,7 +801,7 @@ void func_800D8DB4(void) // 0x800D8DB4
             break;
 
         case 6:
-            func_80086470(3, InventoryItemId_KeyOfOphiel, 1, false);
+            func_80086470(3, InvItemId_KeyOfOphiel, 1, false);
             SysWork_StateStepSet(0, 8);
             break;
 
@@ -930,7 +930,7 @@ void func_800D8FF8(void) // 0x800D8FF8
 
 void func_800D93BC(void) // 0x800D93BC
 {
-    Event_ItemTake(InventoryItemId_KeyOfHagith, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupKeyOfHagith, 58);
+    Event_ItemTake(InvItemId_KeyOfHagith, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupKeyOfHagith, 58);
 }
 
 void func_800D93E8(void) // 0x800D93E8
@@ -940,12 +940,12 @@ void func_800D93E8(void) // 0x800D93E8
 
 void func_800D9414(void) // 0x800D9414
 {
-    Event_ItemTake(InventoryItemId_Pliers, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupPliers, 52);
+    Event_ItemTake(InvItemId_Pliers, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupPliers, 52);
 }
 
 void func_800D9440(void) // 0x800D9440
 {
-    Event_ItemTake(InventoryItemId_Screwdriver, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupScrewdriver, 53);
+    Event_ItemTake(InvItemId_Screwdriver, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupScrewdriver, 53);
 }
 
 void func_800D946C(void) // 0x800D946C
@@ -1086,7 +1086,7 @@ void func_800D94DC(void) // 0x800D94DC
 
 void func_800D99DC(void) // 0x800D99DC
 {
-    Event_ItemTake(InventoryItemId_AmuletOfSolomon, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupAmuletOfSolomon, 60);
+    Event_ItemTake(InvItemId_AmuletOfSolomon, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupAmuletOfSolomon, 60);
 }
 
 void func_800D9A08(void) // 0x800D9A08
@@ -1534,7 +1534,7 @@ void func_800DAB64(void) // 0x800DAB64
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InventoryItemId_StoneOfTime, 0, false);
+            func_80086470(0, InvItemId_StoneOfTime, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1546,7 +1546,7 @@ void func_800DAB64(void) // 0x800DAB64
             SysWork_StateStepIncrement(0);
 
         case 3:
-            func_80086470(1, InventoryItemId_StoneOfTime, 0, false);
+            func_80086470(1, InvItemId_StoneOfTime, 0, false);
             break;
 
         case 4:
@@ -1554,7 +1554,7 @@ void func_800DAB64(void) // 0x800DAB64
             break;
 
         case 5:
-            if (Gfx_PickupItemAnimate(InventoryItemId_StoneOfTime) != false)
+            if (Gfx_PickupItemAnimate(InvItemId_StoneOfTime) != false)
             {
                 MapMsg_DisplayAndHandleSelection(true, 56, 6, 7, 0, false);
             }
@@ -1563,7 +1563,7 @@ void func_800DAB64(void) // 0x800DAB64
             break;
 
         case 6:
-            func_80086470(3, InventoryItemId_StoneOfTime, 1, false);
+            func_80086470(3, InvItemId_StoneOfTime, 1, false);
             SysWork_StateStepSet(0, 8);
             break;
 
@@ -1584,17 +1584,17 @@ void func_800DAB64(void) // 0x800DAB64
 
 void func_800DAD7C(void) // 0x800DAD7C
 {
-    Event_ItemTake(InventoryItemId_CrestOfMercury, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCrestOfMercury, 61);
+    Event_ItemTake(InvItemId_CrestOfMercury, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCrestOfMercury, 61);
 }
 
 void func_800DADA8(void) // 0x800DADA8
 {
-    Event_ItemTake(InventoryItemId_RingOfContract, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupRingOfContract, 51);
+    Event_ItemTake(InvItemId_RingOfContract, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupRingOfContract, 51);
 }
 
 void func_800DADD4(void) // 0x800DADD4
 {
-    Event_ItemTake(InventoryItemId_Camera, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCamera, 55);
+    Event_ItemTake(InvItemId_Camera, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCamera, 55);
 }
 
 void func_800DAE00(void) // 0x800DAE00
@@ -1835,7 +1835,7 @@ void func_800DB3D0(void) // 0x800DB3D0
             Savegame_EventFlagClear(EventFlag_497);
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            func_80086470(3, InventoryItemId_Camera, 1, false);
+            func_80086470(3, InvItemId_Camera, 1, false);
             break;
     }
 }
@@ -1929,7 +1929,7 @@ void func_800DC028(void) // 0x800DC028
 
 void func_800DC080(void) // 0x800DC080
 {
-    Event_ItemTake(InventoryItemId_BirdCageKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupBirdCageKey, 54);
+    Event_ItemTake(InvItemId_BirdCageKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupBirdCageKey, 54);
 }
 
 const VECTOR3 sharedData_800CB094_3_s01 = { 0xFFF9B19A, 0xFFFFE000, 0xFFFC319A };
