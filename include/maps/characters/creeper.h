@@ -4,16 +4,16 @@
 /** @brief Creeper character flags. */
 typedef enum _CreeperFlags
 {
-    CreeperFlag_None    = 0,
-    CreeperFlag_0       = 1 << 0, // Dealt an attack?
-    CreeperFlag_1       = 1 << 1,
-    CreeperFlag_2       = 1 << 2,
-    CreeperFlag_3       = 1 << 3,
-    CreeperFlag_4       = 1 << 4,
-    CreeperFlag_5       = 1 << 5, // Target player position updated?
-    CreeperFlag_6       = 1 << 6,
-    CreeperFlag_7       = 1 << 7,
-    CreeperFlag_Alerted = 1 << 8
+    CreeperFlag_None         = 0,
+    CreeperFlag_HasAttacked  = 1 << 0,
+    CreeperFlag_1            = 1 << 1, // Damaged? Doesn't get set back.
+    CreeperFlag_Falling      = 1 << 2,
+    CreeperFlag_3            = 1 << 3, // Doesn't get set back.
+    CreeperFlag_4            = 1 << 4, // Initialized? Doesn't get set back.
+    CreeperFlag_TargetPlayer = 1 << 5,
+    CreeperFlag_6            = 1 << 6,
+    CreeperFlag_7            = 1 << 7,
+    CreeperFlag_Alerted      = 1 << 8
 } e_CreeperFlags;
 
 /** @brief Creeper character animation indices. */

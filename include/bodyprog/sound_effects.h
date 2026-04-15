@@ -132,8 +132,8 @@ typedef enum _SfxId
     Sfx_Unk1423 = 1423,
     Sfx_Unk1424 = 1424,
     Sfx_Unk1425 = 1425, // Creeper hit?
-    Sfx_Unk1426 = 1426,
-    Sfx_Unk1427 = 1427,
+    Sfx_Unk1426 = 1426, // Creeper chirp.
+    Sfx_Unk1427 = 1427, // Creeper chirp.
 
     Sfx_Unk1429 = 1429,
     Sfx_Unk1430 = 1430,

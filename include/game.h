@@ -1404,19 +1404,19 @@ typedef struct _PropertiesBloodsucker
 /** @brief Creeper character properties. */
 typedef struct _PropertiesCreeper
 {
-    u16    flags_E8; /** `e_CreeperFlags` */ // TODO: `Creeper_ControlWalkForward` and `Creeper_ControlDamage` require `s32`, but changing it breaks matches elsewhere.
-    s8     unk_EA[2];
-    q3_12  offsetX_EC;
-    q3_12  offsetZ_EE;
-    q19_12 timer_F0;                // Timer with unknown purpose.
-    q19_12 targetPositionX_F4;
-    q19_12 targetPositionZ_F8;
-    q19_12 prevTargetPositionX_FC;  // } Unsure. Maybe home position to return to?
-    q19_12 prevTargetPositionZ_100; // }
-    q19_12 timer_104;               // Timer with unknown purpose.
-    q3_12  rotationY_108;
-    s16    animStatus_10A;
-    q4_12  moveSpeed_10C;
+    /* 0xE8  */ u16    flags; /** `e_CreeperFlags` */
+    /* 0xEA  */ s8     __pad_EA[2];
+    /* 0xEC  */ q3_12  collisionOffsetX;
+    /* 0xEE  */ q3_12  collisionOffsetZ;
+    /* 0xF0  */ q19_12 attackTimer;
+    /* 0xF4  */ q19_12 targetPositionX;
+    /* 0xF8  */ q19_12 targetPositionZ;
+    /* 0xFC  */ q19_12 homePositionX;
+    /* 0x100 */ q19_12 homePositionZ;
+    /* 0x104 */ q19_12 chirpTimer;
+    /* 0x108 */ q3_12  angleToTarget;
+    /* 0x10A */ s16    animStatus_10A; // TODO: Purpose unclear.
+    /* 0x10C */ q4_12  moveSpeed;
 } s_PropertiesCreeper;
 STATIC_ASSERT_SIZEOF(s_PropertiesCreeper, 40);
 
