@@ -3701,6 +3701,7 @@ bool func_80060044(POLY_FT4** poly, s32 idx);
 
 bool func_800611C0(POLY_FT4** poly, s32 idx);
 
+/** Spawns blood effect? */
 void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3);
 
 void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2);

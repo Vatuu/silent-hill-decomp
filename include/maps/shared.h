@@ -903,15 +903,15 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper);
 
 void Ai_Creeper_ControlUpdate(s_SubCharacter* creeper);
 
-void Ai_Creeper_Control_1(s_SubCharacter* creeper);
+void Creeper_ControlIdle(s_SubCharacter* creeper);
 
-void Ai_Creeper_Control_2(s_SubCharacter* creeper);
+void Creeper_ControlWalkForward(s_SubCharacter* creeper);
 
-void Ai_Creeper_Control_3(s_SubCharacter* creeper);
+void Creeper_ControlAttack(s_SubCharacter* creeper);
 
-void Ai_Creeper_Control_4(s_SubCharacter* creeper);
+void Creeper_ControlStun(s_SubCharacter* creeper);
 
-void Ai_Creeper_Control_5(s_SubCharacter* creeper);
+void Creeper_ControlDamage(s_SubCharacter* creeper);
 
 void sharedFunc_800D983C_1_s02(s_SubCharacter* creeper);
 
