@@ -25,7 +25,7 @@ typedef enum _CreeperAnim
     CreeperAnim_DeathStart          = 3,
     CreeperAnim_RunForwardStunCont  = 4, // Unsure.
     CreeperAnim_Recoil              = 5,
-    CreeperAnim_Unused6             = 6, // @unused Alternative idle?
+    CreeperAnim_Unused6             = 6, /** @unused Alternative idle or attack? */
     CreeperAnim_StunLoop            = 7,
     CreeperAnim_IdleToRunForward    = 8,
     CreeperAnim_Stunned             = 9,

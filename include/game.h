@@ -1397,8 +1397,8 @@ typedef struct _PropertiesBloodsucker
     q19_12 timer_EC;
     q19_12 timer_F0;
     q19_12 timer_F4;
-    s8     unk_F8[36]; // Unused?
-    s32    flags_118; /** `e_BloodsuckerFlags` */
+    s8     unused_F8[36]; /** @unused */
+    s32    flags;         /** `e_BloodsuckerFlags` */
 } s_PropertiesBloodsucker;
 
 /** @brief Creeper character properties. */
@@ -1445,8 +1445,7 @@ STATIC_ASSERT_SIZEOF(s_PropertiesDahlia, 64);
 typedef struct _PropertiesFloatstinger
 {
     s16        flags_E8;
-    s8         unk_EA[2];
-    s8         unk_EC[2];
+    s8         unk_EA[4];
     q3_12      field_EE; // Angle.
     q19_12     field_F0;
     s16        field_F4;

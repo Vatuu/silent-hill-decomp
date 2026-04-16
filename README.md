@@ -9,7 +9,10 @@ An in-progress decompilation of the 1.1 US release of <i>Silent Hill</i> on the 
 </div>
 
 > [!IMPORTANT]
-This project itself **is not**, and **will not**, produce a port, to PC or any other platform. It is a **decompilation** of the original game code which can be compiled back into a binary identical to the original.
+This project itself **is not**, and **will not**, produce a port, to PC or any other platform. It is a **decompilation** of the original game code which can be compiled back into a binary identical to the original. This codebase is *NOT* port-ready, though preliminary efforts and *sensible, slow progress* is being made which can be followed in the Discord server. There is no rush.
+
+> [!JOURNALISTS]
+If you are a journalist, put in the effort to contact the people involved and do your due research. *DO NOT* spread declarative misinformation about what this project means. We've already had a few cases of sensationalism which set very incorrect expectations.
 
 ## Progress
 

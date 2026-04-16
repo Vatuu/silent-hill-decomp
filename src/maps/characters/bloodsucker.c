@@ -45,8 +45,8 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
     // Reset flags if ???
     if (g_SysWork.bgmStatusFlags & BgmStatusFlag_6)
     {
-        bloodsucker->properties.bloodsucker.flags_118 &= ~BloodsuckerFlag_0;
-        bloodsucker->properties.bloodsucker.flags_118 &= ~BloodsuckerFlag_1;
+        bloodsucker->properties.bloodsucker.flags &= ~BloodsuckerFlag_0;
+        bloodsucker->properties.bloodsucker.flags &= ~BloodsuckerFlag_1;
     }
 
     if (bloodsucker->model.stateStep != 0)
@@ -54,10 +54,10 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
         return;
     }
 
-    if (!(bloodsucker->properties.bloodsucker.flags_118 & BloodsuckerFlag_0))
+    if (!(bloodsucker->properties.bloodsucker.flags & BloodsuckerFlag_0))
     {
         SD_Call(Sfx_Unk1525);
-        bloodsucker->properties.bloodsucker.flags_118 |= BloodsuckerFlag_0;
+        bloodsucker->properties.bloodsucker.flags |= BloodsuckerFlag_0;
     }
 
     func_8005DE0C(Sfx_Unk1525, &bloodsucker->position, bloodsucker->properties.bloodsucker.timer_EC >> 5, Q12(16.0f), 0);
@@ -85,9 +85,9 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
     // SFX timer state handling. TODO: Inspect behavior in-game.
     if (animStatusDiv2 == ((stateStepMul2 + 23) / 2) || animStatusDiv2 == ((stateStepMul2 + 17) / 2))
     {
-        if (!(bloodsucker->properties.bloodsucker.flags_118 & BloodsuckerFlag_1))
+        if (!(bloodsucker->properties.bloodsucker.flags & BloodsuckerFlag_1))
         {
-            bloodsucker->properties.bloodsucker.flags_118 |= BloodsuckerFlag_1;
+            bloodsucker->properties.bloodsucker.flags |= BloodsuckerFlag_1;
             SD_Call(Sfx_Unk1527);
         }
 
@@ -99,13 +99,13 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
 
         func_8005DE0C(Sfx_Unk1527, &bloodsucker->position, bloodsucker->properties.bloodsucker.timer_F4 >> 5, Q12(16.0f), 0);
     }
-    else if (bloodsucker->properties.bloodsucker.flags_118 & BloodsuckerFlag_1)
+    else if (bloodsucker->properties.bloodsucker.flags & BloodsuckerFlag_1)
     {
         bloodsucker->properties.bloodsucker.timer_F4 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 2.0f);
         if (bloodsucker->properties.bloodsucker.timer_F4 < Q12(0.0f))
         {
             bloodsucker->properties.bloodsucker.timer_F4 = Q12(0.0f);
-            bloodsucker->properties.bloodsucker.flags_118 &= ~BloodsuckerFlag_1;
+            bloodsucker->properties.bloodsucker.flags &= ~BloodsuckerFlag_1;
             Sd_SfxStop(Sfx_Unk1527);
         }
     }

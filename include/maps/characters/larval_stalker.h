@@ -17,44 +17,44 @@ typedef enum _LarvalStalkerFlags
 /** @brief Larval Stalker character animation incides. */
 typedef enum _LarvalStalkerAnim
 {
-    LarvalStalkerAnim_Still = 0,
-    LarvalStalkerAnim_1     = 1,
-    LarvalStalkerAnim_2     = 2,
-    LarvalStalkerAnim_3     = 3,
-    LarvalStalkerAnim_4     = 4,
-    LarvalStalkerAnim_5     = 5,
-    LarvalStalkerAnim_6     = 6,
-    LarvalStalkerAnim_7     = 7,
-    LarvalStalkerAnim_8     = 8,
-    LarvalStalkerAnim_9     = 9,
-    LarvalStalkerAnim_10    = 10,
-    LarvalStalkerAnim_11    = 11,
-    LarvalStalkerAnim_12    = 12,
-    LarvalStalkerAnim_13    = 13,
-    LarvalStalkerAnim_14    = 14,
-    LarvalStalkerAnim_15    = 15,
-    LarvalStalkerAnim_16    = 16,
-    LarvalStalkerAnim_17    = 17,
-    LarvalStalkerAnim_18    = 18
+    LarvalStalkerAnim_Still              = 0,
+    LarvalStalkerAnim_GrabAttack         = 1,
+    LarvalStalkerAnim_StunBackEnd        = 2,
+    LarvalStalkerAnim_DeathBackStart     = 3,
+    LarvalStalkerAnim_DeathFrontStart    = 4,
+    LarvalStalkerAnim_StunBackToIdle     = 5,
+    LarvalStalkerAnim_StunFrontToIdle    = 6,
+    LarvalStalkerAnim_StunBackStart      = 7,
+    LarvalStalkerAnim_StunFrontStart     = 8,
+    LarvalStalkerAnim_StunFrontEnd       = 9,
+    LarvalStalkerAnim_Idle               = 10,
+    LarvalStalkerAnim_WalkForward        = 11,
+    LarvalStalkerAnim_WalkForwardAlt     = 12, /** Duplicate of `LarvalStalkerAnim_WalkForward`. */
+    LarvalStalkerAnim_DeathFrontEnd      = 13,
+    LarvalStalkerAnim_DeathBackCont      = 14, /** Bugged/unfinished death transition? */
+    LarvalStalkerAnim_StunBackToIdleAlt  = 15, /** Duplicate of `LarvalStalkerAnim_StunBackToIdle`. */
+    LarvalStalkerAnim_StunFrontToIdleAlt = 16, /** Duplicate of `LarvalStalkerAnim_StunFrontToIdle`. */
+    LarvalStalkerAnim_StunFrontCont      = 17,
+    LarvalStalkerAnim_StunBackRecoil     = 18
 } e_LarvalStalkerAnim;
 
 /** @brief Larval Stalker character control states. */
 typedef enum _LarvalStalkerControl
 {
-    LarvalStalkerControl_None = 0,
-    LarvalStalkerControl_1    = 1,
-    LarvalStalkerControl_2    = 2,
-    LarvalStalkerControl_3    = 3,
-    LarvalStalkerControl_4    = 4,
-    LarvalStalkerControl_5    = 5,
-    LarvalStalkerControl_6    = 6,
-    LarvalStalkerControl_7    = 7,
-    LarvalStalkerControl_8    = 8,
-    LarvalStalkerControl_9    = 9,
-    LarvalStalkerControl_10   = 10,
-    LarvalStalkerControl_11   = 11,
-    LarvalStalkerControl_12   = 12,
-    LarvalStalkerControl_13   = 13
+    LarvalStalkerControl_None        = 0,
+    LarvalStalkerControl_1           = 1,
+    LarvalStalkerControl_2           = 2,
+    LarvalStalkerControl_3           = 3,
+    LarvalStalkerControl_WalkForward = 4,
+    LarvalStalkerControl_Unused5     = 5, /** @unused */
+    LarvalStalkerControl_6           = 6,
+    LarvalStalkerControl_Idle        = 7,
+    LarvalStalkerControl_8           = 8, // Alt walk forward?
+    LarvalStalkerControl_TripOver    = 9,
+    LarvalStalkerControl_Stun        = 10, // Stun, get back up.
+    LarvalStalkerControl_11          = 11,
+    LarvalStalkerControl_12          = 12, // Recoil?
+    LarvalStalkerControl_Death       = 13
 } e_LarvalStalkerControl;
 
 void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
