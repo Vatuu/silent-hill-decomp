@@ -14,11 +14,11 @@ s32 g_StringPositionX1;
 
 s_800C38B0 D_800C38B0;
 
-s8 pad_bss_800C38B2[2];
+s8 __pad_bss_800C38B2[2];
 
 s32 g_MapMsg_WidthIdx;
 
-s32 pad_bss_800C38B8[4];
+s32 __pad_bss_800C38B8[4];
 
 s32 g_MapMsg_Widths[12];
 
@@ -26,11 +26,11 @@ GsSPRITE g_MapMsg_GlyphSprite;
 
 s16 D_800C391C;
 
-s16 pad_bss_800C391E;
+s16 __pad_bss_800C391E;
 
 s32 D_800C3920;
 
-s32 pad_bss_800C3924;
+s32 __pad_bss_800C3924;
 
 /** @brief Glyph widths for the 12x16 font. Used for kerning. */
 static const u8 FONT_12X16_GLYPH_WIDTHS[FONT_12X16_GLYPH_COUNT] = {

@@ -4,13 +4,13 @@
 
 s32      g_VBlanks;
 s32      g_UncappedVBlanks;
-s32      pad_bss_800B5C3C;
+s32      __pad_bss_800B5C3C;
 GsOT_TAG g_OtTags0[2][16];
 
 q19_12   g_DeltaTime;
 
 GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
-s32      pad_bss_800B9CC4;
+s32      __pad_bss_800B9CC4;
 
 q19_12   g_GravitySpeed;
 

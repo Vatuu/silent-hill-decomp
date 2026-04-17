@@ -403,7 +403,7 @@ extern u8 g_Player_IsDead;
  */
 extern u8 g_Player_DisableDamage;
 
-extern u8 pad_bss_800C4563[13];
+extern u8 __pad_bss_800C4563[13];
 
 extern s_800AFBF4 g_Player_EquippedWeaponInfo;
 
@@ -429,7 +429,7 @@ extern s_800AFBF4 g_Player_EquippedWeaponInfo;
  */
 extern u8 D_800C457C;
 
-extern u8 pad_bss_800C457D;
+extern u8 __pad_bss_800C457D;
 
 /** @brief Defines if the player is triggering the aiming action. */
 extern u16 g_Player_IsAiming;
@@ -448,7 +448,7 @@ extern u16 g_Player_IsTurningRight;
 
 extern u8 D_800C4588;
 
-extern s8 pad_bss_800C4589[7];
+extern s8 __pad_bss_800C4589[7];
 
 /** Player instance of this struct. */
 extern s_CollisionResult D_800C4590;
@@ -471,16 +471,16 @@ extern u16 g_Player_IsAttacking;
 /** `bool` */
 extern u16 g_Player_IsShooting;
 
-extern s8 pad_bss_800C45C2[6];
+extern s8 __pad_bss_800C45C2[6];
 
 extern s_800C45C8 D_800C45C8;
 
-extern s8 pad_bss_800C45E0[8];
+extern s8 __pad_bss_800C45E0[8];
 
 /** `bool` */
 extern u16 g_Player_IsMovingForward;
 
-extern s8 pad_bss_800C45EA[2];
+extern s8 __pad_bss_800C45EA[2];
 
 /** Related to game difficulty. Maybe multiplier? */
 extern s32 D_800C45EC;
@@ -488,7 +488,7 @@ extern s32 D_800C45EC;
 /** `bool` */
 extern u16 g_Player_IsMovingBackward;
 
-extern s8 pad_bss_800C45F2[6];
+extern s8 __pad_bss_800C45F2[6];
 
 /** XZ player position copy. */
 extern VECTOR3 g_Player_PrevPosition;
@@ -496,11 +496,11 @@ extern VECTOR3 g_Player_PrevPosition;
 /** @brief Defines if the player is triggering the running action. */
 extern u16 g_Player_IsRunning;
 
-extern s16 pad_bss_800C4606;
+extern s16 __pad_bss_800C4606;
 
 extern q19_12 g_Player_HeadingAngle;
 
-extern s32 pad_bss_800C460C;
+extern s32 __pad_bss_800C460C;
 
 /** Displacement offset. */
 extern VECTOR3 D_800C4610;

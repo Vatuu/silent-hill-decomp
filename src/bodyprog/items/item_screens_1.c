@@ -17,7 +17,7 @@ s8 D_800C3962;
 
 u8 D_800C3963;
 
-s32 pad_bss_800C3964;
+s32 __pad_bss_800C3964;
 
 void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
 {

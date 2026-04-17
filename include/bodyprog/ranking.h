@@ -95,7 +95,7 @@ extern s8 D_800C48D0;
 /** Continue count. */
 extern u8 D_800C48D1;
 
-extern s8 pad_bss_800C48D2[14];
+extern s8 __pad_bss_800C48D2[14];
 
 extern s_800C48E0 D_800C48E0;
 

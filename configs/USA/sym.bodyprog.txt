@@ -44,7 +44,7 @@ INVENTORY_ITEM_ROTATIONS                     = 0x800262FC; // type:DVECTOR size:
 LABEL_STR_POS_TABLE                          = 0x80027DD8; // size:0x20
 
 //--------------------------------------------------------------------------
-//--- PA: 0x004BF0   VA: 0x80029750   subsegment: .rodata, bodyprog_800706E4
+//--- PA: 0x004BF0   VA: 0x80029750   subsegment: .rodata, player_control
 //--------------------------------------------------------------------------
 hack_D_8002A844_fix                          = 0x8002A844; // type:s32
 
@@ -767,7 +767,7 @@ Ray_TraceRun                                 = 0x8006DEB0; // type:func
 Chara_HeadingAngleGet                        = 0x8006FAFC; // type:func
 
 //--------------------------------------------------------------------
-//--- PA: 0x04BB84   VA: 0x800706E4   subsegment: c, bodyprog_800706E4
+//--- PA: 0x04BB84   VA: 0x800706E4   subsegment: c, player_control
 //--------------------------------------------------------------------
 Player_CharaTurn_0                           = 0x800711C4; // type:func
 Player_CharaTurn_1                           = 0x80071224; // type:func
@@ -2932,7 +2932,7 @@ D_800C4418                                   = 0x800C4418; // size:0x10
 D_800C4449                                   = 0x800C4449; // type:u8
 
 //-----------------------------------------------------------------------
-//--- PA: 0x09F970   VA: 0x800C44D0   subsegment: .bss, bodyprog_800706E4
+//--- PA: 0x09F970   VA: 0x800C44D0   subsegment: .bss, player_control
 //-----------------------------------------------------------------------
 D_800C44F0                                   = 0x800C44F0; // size:0x50
 g_TargetEnemyPosition                        = 0x800C4540; 

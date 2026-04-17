@@ -13,7 +13,7 @@
 #include "main/fsqueue.h"
 
 s_800C4818 D_800C4818;
-s32 pad_bss_800C483C;
+s32 __pad_bss_800C483C;
 
 // ========================================
 // WATER EFFECT

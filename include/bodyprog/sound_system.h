@@ -279,7 +279,7 @@ extern s_VabInfo g_Vab_InfoTable[420];
 
 extern CdlLOC XaCdLocation;
 
-extern s32 pad_bss_800C15EC;
+extern s32 __pad_bss_800C15EC;
 
 extern s_800C15F0 D_800C15F0[4];
 
@@ -291,13 +291,13 @@ extern s_Sd_AudioWork g_Sd_AudioWork;
 
 extern s_AudioStreamingStates g_Sd_AudioStreamingStates;
 
-extern s32 pad_bss_800C1674;
+extern s32 __pad_bss_800C1674;
 
 extern s_ChannelsVolumeController gSDVolConfig;
 
 extern s_800C1688 D_800C1688;
 
-extern s32 pad_bss_800C1694;
+extern s32 __pad_bss_800C1694;
 
 extern s_VabPlayingInfo g_Sd_VabPlayingInfo;
 
@@ -307,13 +307,13 @@ extern s32 D_800C16C8[0x840];
 
 extern u8 g_Sd_AudioType;
 
-extern char pad_bss_800C37C9[3];
+extern char __pad_bss_800C37C9[3];
 
 extern u32 g_Sd_DataMoved;
 
 extern u8 g_Sd_VabLoadAttemps;
 
-extern char pad_bss_800C37D1[3];
+extern char __pad_bss_800C37D1[3];
 
 extern s_AudioItemData* g_Sd_VabTargetLoad;
 

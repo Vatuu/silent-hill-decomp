@@ -14,11 +14,11 @@
 
 #ifndef PAD_HACK_IGNORE
     const s32 pad_rodata_80025BF4 = 0;
-    s32 pad_bss_800C15EC;
-    s32 pad_bss_800C1674;
-    s32 pad_bss_800C1694;
-    char pad_bss_800C37C9[3];
-    char pad_bss_800C37D1[3];
+    s32 __pad_bss_800C15EC;
+    s32 __pad_bss_800C1674;
+    s32 __pad_bss_800C1694;
+    char __pad_bss_800C37C9[3];
+    char __pad_bss_800C37D1[3];
 #endif
 
 // ========================================

@@ -2365,29 +2365,29 @@ extern u8 D_800AE185;
 
 extern u8 D_800AE186;
 
-extern s8 pad_bss_800BCD81[3];
+extern s8 __pad_bss_800BCD81[3];
 
 extern s32 g_DeltaTimeCpy;
 
-extern s32 pad_bss_800BCD88[2];
+extern s32 __pad_bss_800BCD88[2];
 
 extern s_EventData* g_ItemTriggerEvents[];
 
-extern s32 pad_bss_800BCD94[5];
+extern s32 __pad_bss_800BCD94[5];
 
 /** Radio SFX data. */
 extern s_800BCDA8 D_800BCDA8[2];
 
 extern s_MapPoint2d D_800BCDB0;
 
-extern s32 pad_bss_800BCDD0;
+extern s32 __pad_bss_800BCDD0;
 
 /** Related to special item interactions. */
 extern s32 g_ItemTriggerItemIds[5];
 
 extern u8 D_800BCDD4;
 
-extern s8 pad_bss_800BCDD5[3];
+extern s8 __pad_bss_800BCDD5[3];
 
 extern s_EventData* g_MapEventData;
 
@@ -2555,7 +2555,7 @@ extern s_800C42E8 D_800C42E8[24];
 
 extern s16 D_800C4408;
 
-extern s16 pad_bss_800C440A;
+extern s16 __pad_bss_800C440A;
 
 extern GsCOORDINATE2* D_800C440C;
 
@@ -2564,7 +2564,7 @@ extern GsCOORDINATE2* D_800C4410;
 /** Flags. */
 extern s8 D_800C4414;
 
-extern s8 pad_bss_800C4415[3];
+extern s8 __pad_bss_800C4415[3];
 
 extern s_800C4418 D_800C4418;
 

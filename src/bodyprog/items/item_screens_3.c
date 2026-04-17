@@ -24,7 +24,7 @@ GsCOORDINATE2 D_800C3AE8; // 0x800C3AE8
 
 SVECTOR3 D_800C3B38; // 0x800C3B38
 
-s16 pad_bss_800C3B3E[5];
+s16 __pad_bss_800C3B3E[5];
 
 VbRVIEW D_800C3B48; // 0x800C3B48
 
@@ -36,7 +36,7 @@ s32 D_800C3BA8;
 
 s32 D_800C3BAC;
 
-s32 pad_bss_800C3BB0[2];
+s32 __pad_bss_800C3BB0[2];
 
 u8 g_Item_MapLoadableItems[48]; // 0x800C3BB8
 
@@ -50,11 +50,11 @@ s32 D_800C3E18[7]; // 0x800C3E18
 
 s32 g_Inventory_EquippedItemIdx; // 0x800C3E34
 
-s32 pad_bss_800C3E38[2];
+s32 __pad_bss_800C3E38[2];
 
 u8 D_800C3E40;
 
-s8 pad_bss_800C3E41[7];
+s8 __pad_bss_800C3E41[7];
 
 GsCOORDINATE2 g_Items_Coords[DISPLAYED_ITEM_COUNT_MAX]; // 0x800C3E48
 

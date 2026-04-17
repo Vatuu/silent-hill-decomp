@@ -10,7 +10,7 @@ s32 g_Demo_DemoFileIdx;
 
 s32 g_Demo_PlayFileIdx;
 
-s32 pad_bss_800C4848[2];
+s32 __pad_bss_800C4848[2];
 
 s_SaveUserConfig g_Demo_UserConfigBackup;
 

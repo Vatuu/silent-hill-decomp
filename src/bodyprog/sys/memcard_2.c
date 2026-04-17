@@ -8,19 +8,19 @@
 
 s16 g_MemCard_SavegameCount;
 
-s16 pad_bss_800BCD2A;
+s16 __pad_bss_800BCD2A;
 
 s_SaveScreenElement* g_MemCard_ActiveSavegameEntry;
 
 u8  g_Savegame_ElementCount0[MEMCARD_SLOT_COUNT_MAX];
 
-s16 pad_bss_800BCD32;
+s16 __pad_bss_800BCD32;
 
 u32 g_MemCard_AllMemCardsStatus;
 
 s8  g_SaveScreen_SaveScreenState;
 
-s8  pad_bss_800BCD39;
+s8  __pad_bss_800BCD39;
 
 s16 g_MemCard_TotalElementsCount;
 
@@ -32,7 +32,7 @@ s8  g_SelectedFileIdx;
 
 s8  g_SelectedDeviceId;
 
-s8  pad_bss_800BCD41[3];
+s8  __pad_bss_800BCD41[3];
 
 u8 g_SlotElementSelectedIdx[MEMCARD_SLOT_COUNT_MAX] = { 0, 0 };
 s8 g_SelectedSaveSlotIdx = 0;

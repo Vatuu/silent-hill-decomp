@@ -35,7 +35,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
     static u8  D_800C4448;
     static u8  D_800C4449; /** Index into `g_PaperMapFileIdxs`. */
     static s8  D_800C444A;
-    static s8  pad_bss_800C444B;
+    static s8  __pad_bss_800C444B;
     static s32 D_800C444C;
     static s32 D_800C4450;
 

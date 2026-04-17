@@ -10,7 +10,7 @@
 
 GsCOORD2PARAM D_800C3928;
 s8 g_Player_WeaponAttack;
-s8 pad_bss_800C3951[3];
+s8 __pad_bss_800C3951[3];
 s32 D_800C3954;
 s32 D_800C3958;
 s32 D_800C395C;

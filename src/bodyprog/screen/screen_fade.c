@@ -10,7 +10,7 @@
 #include "main/fsqueue.h"
 
 const s32 rodataPad_80024CA0 = 0;
-s32       pad_bss_800B5C2C;
+s32       __pad_bss_800B5C2C;
 
 // ========================================
 // GLOBAL VARIABLES

@@ -32,7 +32,7 @@ s32 g_Inventory_GameDifficulty;
 s32 g_Inventory_SelectionBordersDraw;
 s32 g_Inventory_PrevSelectionId;
 
-s32 pad_bss_800C39A0[2];
+s32 __pad_bss_800C39A0[2];
 
 /** Something to do with inventory items. */
 static const s8 D_80025EB0[] = {

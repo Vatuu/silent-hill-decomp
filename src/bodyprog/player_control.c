@@ -26,17 +26,17 @@ s32        g_Player_HasActionInput;
 s8         D_800C4560;
 u8         g_Player_IsDead;
 u8         g_Player_DisableDamage;
-u8         pad_bss_800C4563[13];
+u8         __pad_bss_800C4563[13];
 s_800AFBF4 g_Player_EquippedWeaponInfo;
 u8         D_800C457C;
-u8         pad_bss_800C457D;
+u8         __pad_bss_800C457D;
 u16        g_Player_IsAiming;
 u16        g_Player_IsSteppingLeftTap;
 u16        g_Player_IsSteppingRightTap;
 u16        g_Player_IsTurningLeft;
 u16        g_Player_IsTurningRight;
 u8         D_800C4588;
-s8         pad_bss_800C4589[7];
+s8         __pad_bss_800C4589[7];
 s_CollisionResult D_800C4590;
 u16        g_Player_IsSteppingLeftHold;
 u16        g_Player_IsSteppingRightHold;
@@ -44,30 +44,33 @@ VECTOR3    D_800C45B0;
 u16        g_Player_IsHoldAttack;
 u16        g_Player_IsAttacking;
 u16        g_Player_IsShooting;
-s8         pad_bss_800C45C2[6];
+s8         __pad_bss_800C45C2[6];
 s_800C45C8 D_800C45C8;
-s8         pad_bss_800C45E0[8];
+s8         __pad_bss_800C45E0[8];
 u16        g_Player_IsMovingForward;
-s8         pad_bss_800C45EA[2];
+s8         __pad_bss_800C45EA[2];
 s32        D_800C45EC;
 u16        g_Player_IsMovingBackward;
-s8         pad_bss_800C45F2[6];
+s8         __pad_bss_800C45F2[6];
 VECTOR3    g_Player_PrevPosition;
 u16        g_Player_IsRunning;
-s16        pad_bss_800C4606;
+s16        __pad_bss_800C4606;
 q19_12     g_Player_HeadingAngle;
-s32        pad_bss_800C460C;
+s32        __pad_bss_800C460C;
 VECTOR3    D_800C4610;
 
 #define playerProps g_SysWork.playerWork.player.properties.player
 
 q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
 {
-    q19_12 result;
+    q19_12 duration;
 
-    result = Q12(0.0f);
+    #define playerChara g_SysWork.playerWork.player
+    #define playerExtra g_SysWork.playerWork.extra.state
 
-    switch (g_SysWork.playerWork.extra.state)
+    duration = Q12(0.0f);
+
+    switch (playerExtra)
     {
         case PlayerState_EnemyGrabPinnedFront:
         case PlayerState_EnemyGrabPinnedBack:
@@ -82,23 +85,23 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
                     if (g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(128, false) ||
                         g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(129, false))
                     {
-                        if (g_SysWork.playerWork.player.health <= Q12(0.0f))
+                        if (playerChara.health <= Q12(0.0f))
                         {
                             playerProps.afkTimer_E8 -= g_DeltaTime;
                             if (playerProps.afkTimer_E8 >= Q12(0.0f))
                             {
                                 playerProps.afkTimer_E8 -= g_DeltaTime;
-                                result = playerProps.afkTimer_E8;
+                                duration = playerProps.afkTimer_E8;
                             }
                             else
                             {
-                                result = Q12(0.0f);
+                                duration = Q12(0.0f);
                             }
                             break;
                         }
                     }
 
-                    result = Q12(15.0f);
+                    duration = Q12(15.0f);
             }
             break;
 
@@ -109,24 +112,24 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
                 if (g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(132, true) ||
                     g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(133, false))
                 {
-                    if (g_SysWork.playerWork.player.health <= Q12(0.0f))
+                    if (playerChara.health <= Q12(0.0f))
                     {
                         playerProps.afkTimer_E8 -= g_DeltaTime * 2;
                         if (playerProps.afkTimer_E8 >= Q12(0.0f))
                         {
                             playerProps.afkTimer_E8 -= g_DeltaTime * 2;
 
-                            result = playerProps.afkTimer_E8;
+                            duration = playerProps.afkTimer_E8;
                         }
                         else
                         {
-                            result = Q12(0.0f);
+                            duration = Q12(0.0f);
                         }
                         break;
                     }
                 }
 
-                result = Q12(10.0f);
+                duration = Q12(10.0f);
             }
             break;
 
@@ -136,15 +139,15 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
                 case ANIM_STATUS(HarryAnim_WalkForward, true):
                     if (g_Controller0->sticks_20.sticks_0.leftY < -63)
                     {
-                        result = (ABS(g_Controller0->sticks_20.sticks_0.leftY + 64) * Q12(0.65f) / 64) * 16 + Q12(12.0f);
+                        duration = (ABS(g_Controller0->sticks_20.sticks_0.leftY + 64) * Q12(0.65f) / 64) * 16 + Q12(12.0f);
                     }
                     else if (D_800AF216 != 0)
                     {
-                        result = ((ABS(D_800AF216 - 64) * Q12(0.65f) / 64) * 16) + Q12(12.0f);
+                        duration = ((ABS(D_800AF216 - 64) * Q12(0.65f) / 64) * 16) + Q12(12.0f);
                     }
                     else
                     {
-                        result = Q12(22.0f);
+                        duration = Q12(22.0f);
                     }
                     break;
 
@@ -154,52 +157,55 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
                         if ((model->anim.keyframeIdx >= 40 && model->anim.keyframeIdx < 46) ||
                             (model->anim.keyframeIdx >= 30 && model->anim.keyframeIdx < 36))
                         {
-                            result = ABS(g_Controller0->sticks_20.sticks_0.leftY + 64) * Q12(0.25f) + Q12(16.0f);
+                            duration = ABS(g_Controller0->sticks_20.sticks_0.leftY + 64) * Q12(0.25f) + Q12(16.0f);
                         }
                         else
                         {
-                            result = Q12(32.0f);
+                            duration = Q12(32.0f);
                         }
                     }
                     else if (D_800AF216 != 0)
                     {
-                        result = ABS(D_800AF216 - 64) * Q12(0.25f) + Q12(16.0f);
+                        duration = ABS(D_800AF216 - 64) * Q12(0.25f) + Q12(16.0f);
                     }
                     else
                     {
-                        result = Q12(30.0f);
+                        duration = Q12(30.0f);
                     }
                     break;
 
                 case ANIM_STATUS(HarryAnim_WalkBackward, true):
                     if (g_Controller0->sticks_20.sticks_0.leftY >= 64)
                     {
-                        result = ((ABS(g_Controller0->sticks_20.sticks_0.leftY - 64) * Q12(0.4f) / 64) * Q12(1.0f) / 200) + Q12(15.36f);
+                        duration = ((ABS(g_Controller0->sticks_20.sticks_0.leftY - 64) * Q12(0.4f) / 64) * Q12(1.0f) / 200) + Q12(15.36f);
                     }
                     else if (D_800AF216 != 0)
                     {
-                        result = ((ABS(D_800AF216 - 64) * Q12(0.4f) / 64) * Q12(1.0f) / 200) + Q12(15.36f);
+                        duration = ((ABS(D_800AF216 - 64) * Q12(0.4f) / 64) * Q12(1.0f) / 200) + Q12(15.36f);
                     }
                     else
                     {
-                        result = Q12(23.0f);
+                        duration = Q12(23.0f);
                     }
                     break;
 
                 case ANIM_STATUS(HarryAnim_IdleExhausted, true):
-                    if (g_SysWork.playerWork.player.health < Q12(30.0f))
+                    if (playerChara.health < Q12(30.0f))
                     {
-                        result = Q12(40.0f) - g_SysWork.playerWork.player.health;
+                        duration = Q12(40.0f) - playerChara.health;
                     }
                     else
                     {
-                        result = Q12(FP_FROM(playerProps.exhaustionTimer_FC, Q12_SHIFT));
+                        duration = Q12(FP_FROM(playerProps.exhaustionTimer_FC, Q12_SHIFT));
                     }
                     break;
             }
     }
 
-    return result;
+    return duration;
+
+    #undef playerChara
+    #undef playerExtra
 }
 
 const s_AnimInfo* const D_800297B8 = HARRY_BASE_ANIM_INFOS;
@@ -226,7 +232,7 @@ void func_80070B84(s_SubCharacter* player, q19_12 moveDistMax, q19_12 arg2, s32 
     {
         if (moveDistMax < playerProps.moveDistance_126)
         {
-            unkMoveDist                                                            = playerProps.moveDistance_126 - ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2);
+            unkMoveDist                  = playerProps.moveDistance_126 - ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2);
             playerProps.moveDistance_126 = unkMoveDist;
             if (unkMoveDist < moveDistMax)
             {
@@ -7459,9 +7465,9 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord) // 0x8007
     VECTOR*               vec2; // Q19.12
     VECTOR*               vec3; // Q19.12
     s_Model*              model;
-    static s32            pad_bss_800C44D8[2];
+    static s32            __pad_bss_800C44D8[2];
     static VECTOR3        D_800C44E0;
-    static s32            pad_bss_800C44EC;
+    static s32            __pad_bss_800C44EC;
 
     #define playerExtra  g_SysWork.playerWork.extra
     #define playerCombat g_SysWork.playerCombat
@@ -9073,6 +9079,6 @@ s32 Math_MagnitudeShiftGet(s32 mag) // 0x800808F8
     return shift;
 }
 
-INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_800706E4", hack_D_8002A844_fix);
+INCLUDE_RODATA("bodyprog/nonmatchings/player_control", hack_D_8002A844_fix);
 
 #undef playerProps

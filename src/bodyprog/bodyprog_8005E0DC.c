@@ -17,11 +17,11 @@
 
 s_800C42E8     D_800C42E8[24];
 s16            D_800C4408;
-s16            pad_bss_800C440A;
+s16            __pad_bss_800C440A;
 GsCOORDINATE2* D_800C440C;
 GsCOORDINATE2* D_800C4410;
 s8             D_800C4414; /** Flags. */
-s8             pad_bss_800C4415[3];
+s8             __pad_bss_800C4415[3];
 s_800C4418     D_800C4418;
 
 // ========================================
@@ -33,7 +33,7 @@ void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
     s32        i;
     s32        effectTexFlags;
     static u16 loadedEffectTextureFlags;
-    static s16 pad_bss_800C42DA[7];
+    static s16 __pad_bss_800C42DA[7];
 
     D_800A908C.v     = 0;
     D_800A908C.clutY = 0;

@@ -9,7 +9,7 @@
 #include "bodyprog/memcard.h"
 
 #ifndef PAD_HACK_IGNORE
-    s32 pad_bss_800B5484;
+    s32 __pad_bss_800B5484;
 #endif
 
 // ========================================

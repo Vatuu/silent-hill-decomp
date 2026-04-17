@@ -176,7 +176,7 @@ extern GsCOORD2PARAM D_800C3928;
 /** Packed weapon attack. See `WEAPON_ATTACK`. */
 extern s8 g_Player_WeaponAttack;
 
-extern s8 pad_bss_800C3951[3];
+extern s8 __pad_bss_800C3951[3];
 
 extern s32 D_800C3954;
 
@@ -195,7 +195,7 @@ extern s8 D_800C3962;
 
 extern u8 D_800C3963;
 
-extern s32 pad_bss_800C3964;
+extern s32 __pad_bss_800C3964;
 
 //2.c
 
@@ -241,7 +241,7 @@ extern s32 g_Inventory_SelectionBordersDraw;
  */
 extern s32 g_Inventory_PrevSelectionId;
 
-extern s32 pad_bss_800C39A0[2];
+extern s32 __pad_bss_800C39A0[2];
 
 // 3.c
 
@@ -258,7 +258,7 @@ extern GsCOORDINATE2 D_800C3AE8; // 0x800C3AE8
  */
 extern SVECTOR3 D_800C3B38; // 0x800C3B38
 
-extern s16 pad_bss_800C3B3E[5];
+extern s16 __pad_bss_800C3B3E[5];
 
 extern VbRVIEW D_800C3B48; // 0x800C3B48
 
@@ -274,7 +274,7 @@ extern s32 D_800C3BA8;
 
 extern s32 D_800C3BAC;
 
-extern s32 pad_bss_800C3BB0[2];
+extern s32 __pad_bss_800C3BB0[2];
 
 extern u8 g_Item_MapLoadableItems[48]; // 0x800C3BB8
 
@@ -295,11 +295,11 @@ extern s32 D_800C3E18[7]; // 0x800C3E18
  */
 extern s32 g_Inventory_EquippedItemIdx; // 0x800C3E34
 
-extern s32 pad_bss_800C3E38[2];
+extern s32 __pad_bss_800C3E38[2];
 
 extern u8 D_800C3E40;
 
-extern s8 pad_bss_800C3E41[7];
+extern s8 __pad_bss_800C3E41[7];
 
 extern GsCOORDINATE2 g_Items_Coords[DISPLAYED_ITEM_COUNT_MAX]; // 0x800C3E48
 

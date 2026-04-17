@@ -61,11 +61,11 @@ extern s32 g_StringPositionX1; // 0x800C38AC
 
 extern s_800C38B0 D_800C38B0;
 
-extern s8 pad_bss_800C38B2[2];
+extern s8 __pad_bss_800C38B2[2];
 
 extern s32 g_MapMsg_WidthIdx;
 
-extern s32 pad_bss_800C38B8[4];
+extern s32 __pad_bss_800C38B8[4];
 
 extern s32 g_MapMsg_Widths[12];
 
@@ -74,11 +74,11 @@ extern GsSPRITE g_MapMsg_GlyphSprite;
 
 extern s16 D_800C391C;
 
-extern s16 pad_bss_800C391E;
+extern s16 __pad_bss_800C391E;
 
 extern s32 D_800C3920;
 
-extern s32 pad_bss_800C3924;
+extern s32 __pad_bss_800C3924;
 
 // ==========
 // FUNCTIONS

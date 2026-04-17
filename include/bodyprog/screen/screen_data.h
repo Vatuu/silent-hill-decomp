@@ -30,7 +30,7 @@ extern s32 g_IntervalVBlanks;
 
 extern s32      g_VBlanks;
 extern s32      g_UncappedVBlanks;
-extern s32      pad_bss_800B5C3C;
+extern s32      __pad_bss_800B5C3C;
 extern GsOT_TAG g_OtTags0[2][16];
 
 /** Main gameplay timer. Code pauses gameplay by setting this to `Q12(0.0f)`.
@@ -39,7 +39,7 @@ extern GsOT_TAG g_OtTags0[2][16];
 extern q19_12 g_DeltaTime; /** Possible original name: `_shDeltaTimePerFrame` */
 
 extern GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
-extern s32      pad_bss_800B9CC4;
+extern s32      __pad_bss_800B9CC4;
 
 /** Gravity speed for this tick. */
 extern q19_12 g_GravitySpeed;

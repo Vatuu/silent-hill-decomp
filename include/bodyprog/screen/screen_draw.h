@@ -10,7 +10,7 @@
 
 extern q19_12 g_PrevScreenFadeProgress;
 
-extern s32 pad_bss_800B5C2C;
+extern s32 __pad_bss_800B5C2C;
 
 extern q19_12 g_ScreenFadeTimestep;
 
