@@ -138,7 +138,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .charaSpawns_24C   = {
 #include "chara_spawns.h"
     },
-    .roadDataList_3CC = {
+    .cameraPaths_3CC = {
 #include "vc_road_data.h"
     },
     .triggerZones_D2C = {

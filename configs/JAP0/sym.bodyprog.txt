@@ -1158,7 +1158,7 @@ func_800705E4                                = 0x80072038; // type:func
 //--------------------------------------------------------------------
 //--- PA: 0x04D5D8   VA: 0x80072138   subsegment: c, bodyprog_800706E4
 //--------------------------------------------------------------------
-func_800706E4                                = 0x80072138; // type:func
+Player_VariableAnimDurationGet               = 0x80072138; // type:func
 func_80070B84                                = 0x800725D8; // type:func
 func_80070CF0                                = 0x80072744; // type:func
 func_80070DF0                                = 0x80072844; // type:func

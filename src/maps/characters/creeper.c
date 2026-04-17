@@ -50,8 +50,8 @@ static inline void Ai_Creeper_PropertiesUpdateFromStep(s_SubCharacter* creeper)
             return;
         }
 
-        creeperProps.flags               |= CreeperFlag_4;
-        creeperProps.homePositionX  = creeper->position.vx;
+        creeperProps.flags         |= CreeperFlag_Leader;
+        creeperProps.homePositionX = creeper->position.vx;
         creeperProps.homePositionZ = creeper->position.vz;
     }
 
@@ -403,8 +403,8 @@ void Creeper_ControlWalkForward(s_SubCharacter* creeper)
         if (distToPlayer > Q12(1.2f))
         {
             // TODO: Doesn't match?
-            //if ((*(s32*)creeperProps.flags & (CreeperFlag_4 | CreeperFlag_TargetPlayer)) == CreeperFlag_4)
-            if ((creeper->properties.player.afkTimer_E8 & (CreeperFlag_4 | CreeperFlag_TargetPlayer)) == CreeperFlag_4)
+            //if ((*(s32*)creeperProps.flags & (CreeperFlag_Leader | CreeperFlag_TargetPlayer)) == CreeperFlag_Leader)
+            if ((creeper->properties.player.afkTimer_E8 & (CreeperFlag_Leader | CreeperFlag_TargetPlayer)) == CreeperFlag_Leader)
             {
                 creeperProps.flags          |= CreeperFlag_TargetPlayer;
                 creeperProps.targetPositionX = creeperProps.homePositionX;

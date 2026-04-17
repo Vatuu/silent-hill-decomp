@@ -290,7 +290,7 @@ bool MemCard_NoSavesDoneCheck(s32* outDeviceId, s32* outFileIdx, s32* outSaveIdx
             if (totalSavegameCount < saveInfo.totalSavegameCount_0)
             {
                 *outDeviceId = i;
-                *outFileIdx  = saveInfo.fileIdx_4;
+                *outFileIdx  = saveInfo.fileIdx;
                 *outSaveIdx  = saveInfo.saveIdx_8;
 
                 totalSavegameCount = saveInfo.totalSavegameCount_0;
@@ -1101,7 +1101,7 @@ void MemCard_SaveWithBiggestTotalSavegameCountGet(s32 deviceId, s_MemCard_TotalS
     s32 saveIdx;
     s32 fileIdx;
 
-    result->fileIdx_4            = 0;
+    result->fileIdx            = 0;
     result->saveIdx_8            = 0;
     result->totalSavegameCount_0 = 0;
 
@@ -1123,7 +1123,7 @@ void MemCard_SaveWithBiggestTotalSavegameCountGet(s32 deviceId, s_MemCard_TotalS
 
             if (result->totalSavegameCount_0 < totalSavegameCount)
             {
-                result->fileIdx_4            = fileIdx;
+                result->fileIdx            = fileIdx;
                 result->saveIdx_8            = saveIdx;
                 result->totalSavegameCount_0 = totalSavegameCount;
             }

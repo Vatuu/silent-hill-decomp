@@ -58,4 +58,4 @@ MAP_INFOS    = 0x8002500C;
 D_800CD768_tbl = 0x800CD768;
 
 # @hack Referenced in some HARRY_MXSXX_ANIM_INFOS tables.
-func_800706E4 = 0x800706E4;
+Player_VariableAnimDurationGet = 0x800706E4;

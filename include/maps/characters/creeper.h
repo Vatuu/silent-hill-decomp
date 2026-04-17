@@ -9,9 +9,9 @@ typedef enum _CreeperFlags
     CreeperFlag_1            = 1 << 1, // Damaged? Doesn't get set back.
     CreeperFlag_Falling      = 1 << 2,
     CreeperFlag_3            = 1 << 3, // Doesn't get set back.
-    CreeperFlag_4            = 1 << 4, // Initialized? Doesn't get set back.
+    CreeperFlag_Leader       = 1 << 4,
     CreeperFlag_TargetPlayer = 1 << 5,
-    CreeperFlag_6            = 1 << 6,
+    CreeperFlag_6            = 1 << 6, // Stop pathing?
     CreeperFlag_7            = 1 << 7,
     CreeperFlag_Alerted      = 1 << 8
 } e_CreeperFlags;

@@ -1066,9 +1066,9 @@ typedef struct
 
 typedef struct _GlobalLm
 {
-    s_LmHeader* lmHdr_0;
-    s32         fileIdx_4;
-    s32         queueIdx_8;
+    /* 0x0 */ s_LmHeader* lmHdr;
+    /* 0x4 */ s32         fileIdx;
+    /* 0x8 */ s32         queueIdx;
 } s_GlobalLm;
 
 typedef struct
@@ -1151,7 +1151,7 @@ typedef struct
     u8    field_F;  // Keyframe index offset?
     u8    field_10; // State.
     u8    field_11;
-    u8    field_12;
+    u8    field_12; // SFX ID subgroup. Uses values 0-4.
     u8    unk_13;
     u32*  unk_14; // Some pointer. All entries have the same value `D_800AD4C4`.
 } s_800AD4C8;
@@ -1222,7 +1222,7 @@ typedef struct _WorldObjectMetadata
 {
     u_Filename name_0;
     s8         field_8;
-    s8         lmIdx_9; /** Set to 2 when found in `g_Map.globalLm_138.lmHdr_0` and 3-6 if found in `g_Map.ipdActive_15C[i] (i + 3)`. */
+    s8         lmIdx_9; /** Set to 2 when found in `g_Map.globalLm_138.lmHdr` and 3-6 if found in `g_Map.ipdActive_15C[i] (i + 3)`. */
 } s_WorldObjectMetadata;
 
 // Rough name.
@@ -1765,15 +1765,15 @@ typedef struct _MapOverlayHeader
     void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `Game_NpcUpdate`. */
     s8                     charaGroupIds_248[CHARA_GROUP_COUNT]; /** `e_CharacterId` values where if `s_SpawnInfo::charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_SpawnInfo            charaSpawns_24C[2][16];               /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
-    VC_ROAD_DATA           roadDataList_3CC[100];
+    VC_ROAD_DATA           cameraPaths_3CC[100];
     s_TriggerZone          triggerZones_D2C[200];
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 0x104C);
 
 typedef struct
 {
-    s8 maxIdx_0;
-    u8 selectedEntryIdx_1;
+    /* 0x0 */ s8 maxIdx;
+    /* 0x1 */ u8 selectedEntryIdx;
 } s_MapMsgSelect;
 
 typedef struct
@@ -4279,21 +4279,25 @@ void func_8007E8C0(void);
  */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
-void func_80070B84(s_SubCharacter* chara, q19_12 moveDistMax, q19_12 arg2, s32 keyframeIdx);
+void func_80070B84(s_SubCharacter* player, q19_12 moveDistMax, q19_12 arg2, s32 keyframeIdx);
 
-void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* chara, s32 weaponAttack, s32 animStatus);
+void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttack, s32 animStatus);
 
-// Variable anim duration func for player. It's nearly completely matched https://decomp.me/scratch/PBvwU.
-s32 func_800706E4(s_Model* model);
+/** @brief Gets the variable animation duration for the player.
+ *
+ * @param model Player model.
+ * @return Variable animation duration.
+ */
+q19_12 Player_VariableAnimDurationGet(s_Model* model);
 
 /** Special player SFX handler for heavy breath and damage. */
-bool func_80071620(u32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, e_SfxId sfxId);
+bool func_80071620(u32 animStatus, s_SubCharacter* player, s32 keyframeIdx, e_SfxId sfxId);
 
-void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
+void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* coords);
 
-void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
+void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* coords);
 
-void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord);
+void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord);
 
 /** Player func. */
 void func_8007E9C4(void);

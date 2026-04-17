@@ -220,7 +220,7 @@ typedef enum _PlayerState
     PlayerState_Unk186                    = 186,
     PlayerState_Unk187                    = 187,
     PlayerState_Unk188                    = 188,
-    PlayerState_Unk189                    = 189,
+    PlayerState_Unk189                    = 189
 } e_PlayerState;
 
 /** @brief Upper body player states. */
@@ -517,34 +517,34 @@ void func_8005CD38(s32*, s32*, s_PlayerCombat*, s32, s32, s32);
  *
  * @param chara Player character.
  */
-void func_80070CF0(s_SubCharacter* chara, q19_12 arg1, q19_12 moveDistMax, q19_12 moveDistForward, q19_12 modeDistBack);
+void func_80070CF0(s_SubCharacter* player, q19_12 arg1, q19_12 moveDistMax, q19_12 moveDistForward, q19_12 modeDistBack);
 
-void Player_CharaTurn_0(s_SubCharacter* chara, e_PlayerLowerBodyState curState);
+void Player_CharaTurn_0(s_SubCharacter* player, e_PlayerLowerBodyState curState);
 
-void Player_CharaTurn_1(s_SubCharacter* chara, e_PlayerLowerBodyState curState);
+void Player_CharaTurn_1(s_SubCharacter* player, e_PlayerLowerBodyState curState);
 
 void Player_CharaRotate(s32 speed);
 
 /** @brief Clears movement variables and reset Harry's lower body part animation states in case
  * of switching the player state.
  */
-void Player_MovementStateReset(s_SubCharacter* chara, e_PlayerLowerBodyState lowerBodyState);
+void Player_MovementStateReset(s_SubCharacter* player, e_PlayerLowerBodyState lowerBodyState);
 
 /** Audio-related. */
-bool Player_FootstepSfxPlay(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 keyframe1, s32 sfx, s8 pitch);
+bool Player_FootstepSfxPlay(s32 animStatus, s_SubCharacter* player, s32 keyframe0, s32 keyframe1, s32 sfx, s8 pitch);
 
 /** @brief Main update function for player functionality.
  *
  * @note SH2 symbols have a similar function named `PlayerFunction`, but code-wise they
  * doesn't share many similarities.
  */
-void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Player_Update(s_SubCharacter* player, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 /** Player anim handler? */
-void Player_AnimUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 /** @brief Main update function for player logic. */
-void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
+void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* coords);
 
 /** @brief Updates `g_SysWork.playerWork.extra.upperBodyState` and prepares
  * transitions between running to and from walking animations.
@@ -561,7 +561,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 void Player_UpperBodyStateUpdate(s_PlayerExtra* extra, e_PlayerUpperBodyState upperState, s32 unused, s32 arg3);
 
 /** @brief Triggers animations and actions performed by the player's upper body. */
-void Player_UpperBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra);
+void Player_UpperBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra);
 
 /** @brief Updates animations and status related to player attacks.
  * Returns `true` if animations where succefully finished and if performing a multitap attack.
@@ -571,16 +571,16 @@ bool Player_CombatAnimUpdate(void);
 /** @brief Main animation and state handler for the player's upper body.
  * Returns `true` if combat animations where completed or if the player's health is >60%.
  */
-bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra);
+bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra);
 
 /** @brief Updates upper body states related to combat. */
-void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra);
+void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra);
 
 /** @brief Cancels movement when the player abruptly stops running sideways. */
-void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 arg1, s32 animStatus, s32 keyframeIdx, e_PlayerLowerBodyState lowerBodyState, s32 headingAngle, s32 aimState);
+void Player_StepWallStop_MovementCancel(s_SubCharacter* player, s32 arg1, s32 animStatus, s32 keyframeIdx, e_PlayerLowerBodyState lowerBodyState, s32 headingAngle, s32 aimState);
 
 /** @brief Main player movement function. */
-void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra);
+void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra);
 
 /** @brief Multiple purposes.
  * * Assigns the value used by a global that handles player movement.
@@ -588,7 +588,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra);
  * * Restarts the animation state if the player is not longer exhausted or has recovered health.
  * * Handles audio related to Harry's movements.
  */
-void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra);
+void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra);
 
 /** @brief Checks for damage received by the player and handles the animations
  * for getting hurt or grabbed by monsters.
@@ -596,10 +596,10 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra);
  * @note SH2 symbols have a similar function named `PlayerCheckDamage`, but code-wise it has
  * no similarities.
  */
-void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra);
+void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra);
 
 // Removing this function makes it impossible to run.
-s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1);
+s32 func_8007D6F0(s_SubCharacter* player, s_800C45C8* arg1);
 
 void GameFs_WeaponInfoUpdate(void);
 
