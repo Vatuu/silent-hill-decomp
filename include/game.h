@@ -1629,32 +1629,32 @@ STATIC_ASSERT_SIZEOF(s_PropertiesPuppetNurse, 64);
 /** @brief Romper character properties. */
 typedef struct _PropertiesRomper
 {
-    s32    flags_E8; /** `e_RomperFlags` */
-    q3_12  angle_EC; // Target heading angle?
-    s16    field_EE;
-    q3_12  field_F0; // Move speed accumulation for this tick.
-    q3_12  rotationY_F2;
-    q19_12 field_F4; // Relative anim time?
-    q3_12  offsetX_F8; // } Move offset?
-    q3_12  offsetZ_FA; // }
-    q19_12 targetPositionX_FC;
-    q19_12 targetPositionZ_100;
-    s32    field_104;
-    q19_12 positionX_108;
-    u8     field_10C; // Relative keyframe index?
-    s8     unk_10D;
-    u16    field_10E;
-    q19_12 positionZ_110;
-    u8     field_114;
-    u8     field_115;
-    q3_12  field_116;
-    q3_12  timer_118;
-    u8     field_11A;
-    s8     unk_11B;
-    q3_12  timer_11C;
-    s8     unk_11E[2];
-    q19_12 distance_120; // Distance?
-    q19_12 field_124; // Move speed step?
+    /* 0xE8 */ s32    flags; /** `e_RomperFlags` */
+               q3_12  angle_EC; // Target heading angle?
+               s16    field_EE;
+               q3_12  field_F0; // Move speed accumulation for this tick.
+               q3_12  rotationY_F2;
+               q19_12 field_F4; // Relative anim time?
+    /* 0xF8 */ q3_12  movementOffsetX;
+    /* 0xFA */ q3_12  movementOffsetZ;
+               q19_12 targetPositionX_FC;
+               q19_12 targetPositionZ_100;
+               s32    field_104;
+               q19_12 positionX_108;
+               u8     field_10C; // Relative keyframe index?
+               s8     unk_10D;
+               u16    field_10E;
+               q19_12 positionZ_110;
+               u8     field_114;
+               u8     field_115;
+               q3_12  field_116;
+               q3_12  timer_118;
+               u8     field_11A;
+               s8     unk_11B;
+               q3_12  timer_11C;
+               s8     unk_11E[2];
+               q19_12 distance_120;
+               q19_12 field_124; // Move speed step?
 } s_PropertiesRomper;
 
 /** @brief Split Head character properties. */

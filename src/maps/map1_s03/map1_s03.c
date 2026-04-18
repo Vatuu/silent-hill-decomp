@@ -768,7 +768,7 @@ void func_800DAF18(void) // 0x800DAF18
 
     if (D_800E2100 != 0)
     {
-        temp_s0_2 = Sound_StereoBalanceGet(&D_800CBAB0) >> 1;
+        temp_s0_2 = Vc_StereoBalanceGet(&D_800CBAB0) >> 1;
         vwGetViewPosition(&sp48);
 
         temp_v1_9 = Math_Vector3MagCalc((((g_SysWork.playerWork.player.position.vx + sp48.vx) >> 1) + 0xA333),

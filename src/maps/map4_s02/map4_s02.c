@@ -141,7 +141,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA3F0
             WorldGfx_ObjectAdd(&g_WorldObject_Fan0, &objPos, &objRot);
         }
 
-        audioBalance += Sound_StereoBalanceGet(&objPos);
+        audioBalance += Vc_StereoBalanceGet(&objPos);
         objPos.vz -= Q12(5.0f);
     }
 

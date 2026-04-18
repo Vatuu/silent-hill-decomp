@@ -3949,7 +3949,7 @@ void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8
 
     #define playerChara g_SysWork.playerWork.player
 
-    var_s0 = Sound_StereoBalanceGet(arg1);
+    var_s0 = Vc_StereoBalanceGet(arg1);
 
     if (arg4 == 2)
     {

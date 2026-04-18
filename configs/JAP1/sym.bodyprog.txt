@@ -680,7 +680,7 @@ vcMakeHeroHeadPos                            = 0x80040254; // type:func
 vcAddOfsToPos                                = 0x800402F0; // type:func
 vcSetRefPosAndSysRef2CamParam                = 0x8004039C; // type:func
 vcSetRefPosAndCamPosAngByPad                 = 0x800404AC; // type:func
-Sound_StereoBalanceGet                       = 0x8004083C; // type:func
+Vc_StereoBalanceGet                          = 0x8004083C; // type:func
 func_80040B6C                                = 0x80040944; // type:func
 
 //------------------------------------------------------------------------

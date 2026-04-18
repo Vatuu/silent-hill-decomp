@@ -3582,18 +3582,18 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
     q19_12  distMax;
 
     if (Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - chara->position.vx,
-                             g_SysWork.playerWork.player.position.vz - chara->position.vz) -
-                      chara->rotation.vy) < 0)
+                                         g_SysWork.playerWork.player.position.vz - chara->position.vz) -
+                                  chara->rotation.vy) < 0)
     {
         distMult = (Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - chara->position.vx,
-                                        g_SysWork.playerWork.player.position.vz - chara->position.vz) -
-                                 chara->rotation.vy) * 2) + Q12_ANGLE(360.0f);
+                                                     g_SysWork.playerWork.player.position.vz - chara->position.vz) -
+                                              chara->rotation.vy) * 2) + Q12_ANGLE(360.0f);
     }
     else
     {
         distMult = (Q12_ANGLE(180.0f) - Math_AngleNormalizeSigned((ratan2(g_SysWork.playerWork.player.position.vx - chara->position.vx,
-                                                             g_SysWork.playerWork.player.position.vz - chara->position.vz) -
-                                                      chara->rotation.vy))) * 2;
+                                                                          g_SysWork.playerWork.player.position.vz - chara->position.vz) -
+                                                                   chara->rotation.vy))) * 2;
     }
 
     for (i = distMult; count > 0; count--)

@@ -2719,13 +2719,6 @@ void func_80040004(s_MapOverlayHeader* overlayHdr);
 
 void func_80040014(void);
 
-/** @brief Computes the stereo sound balance based on the relative position to the camera.
- *
- * @param soundPos Sound source position.
- * @return Stereo sound balance in the range [-127, 127], where values affect the left-right channel balance.
- */
-s8 Sound_StereoBalanceGet(const VECTOR3* soundPos);
-
 bool func_80040B74(e_CharacterId charaId);
 
 /** Related to the screen. */

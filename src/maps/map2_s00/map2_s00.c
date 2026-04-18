@@ -1505,7 +1505,7 @@ void func_800EA960(void) // 0x800EA960
                 D_800F534E = Q12(1.0f);
             }
 
-            balance = Sound_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f));
+            balance = Vc_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f));
             if ((Q8_CLAMPED(1.0f) - (D_800F534E >> 4)) >= Q8(0.0f))
             {
                 vol = ~(D_800F534E >> 4) & Q8_CLAMPED(1.0f);
@@ -1523,7 +1523,7 @@ void func_800EA960(void) // 0x800EA960
                 D_800F5344.vz = 0;
 
                 Sd_SfxStop(Sfx_Unk1484);
-                Sd_PlaySfx(Sfx_Unk1485, Sound_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f)), 0);
+                Sd_PlaySfx(Sfx_Unk1485, Vc_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f)), 0);
                 SysWork_StateStepIncrement(0);
             }
             break;
@@ -1612,7 +1612,7 @@ void func_800EAD2C(void) // 0x800EAD2C
                 D_800F534E = Q12(1.0f);
             }
 
-            balance = Sound_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f));
+            balance = Vc_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f));
             if ((Q8_CLAMPED(1.0f) - (D_800F534E >> 4)) >= Q8(0.0f))
             {
                 vol = ~(D_800F534E >> 4) & Q8_CLAMPED(1.0f);
@@ -1629,7 +1629,7 @@ void func_800EAD2C(void) // 0x800EAD2C
             {
                 D_800F5344.vz = 0;
                 Sd_SfxStop(Sfx_Unk1484);
-                Sd_PlaySfx(Sfx_Unk1485, Sound_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f)), 0);
+                Sd_PlaySfx(Sfx_Unk1485, Vc_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f)), 0);
                 SysWork_StateStepIncrement(0);
             }
             break;

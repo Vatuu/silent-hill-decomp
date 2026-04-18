@@ -406,7 +406,7 @@ void Game_NpcUpdate(void) // 0x80038354
             if (D_800BCDA8[l].field_1 >= 0)
             {
                 temp_s0_3 = &field_0[D_800BCDA8[l].field_2];
-                temp_s0_4 = Sound_StereoBalanceGet(&temp_s0_3->field_8);
+                temp_s0_4 = Vc_StereoBalanceGet(&temp_s0_3->field_8);
 
                 var_v1_3 = SquareRoot12(temp_s0_3->field_4 << Q12_SHIFT) >> 8;
                 if (var_s3 != 0)

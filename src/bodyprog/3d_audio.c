@@ -157,7 +157,7 @@ void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType, 
     }
     else
     {
-        balance = Sound_StereoBalanceGet(pos);
+        balance = Vc_StereoBalanceGet(pos);
     }
 
     // Clamp volume.
@@ -206,7 +206,7 @@ void func_8005DD44(e_SfxId sfxId, VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD
     }
     else
     {
-        balance = Sound_StereoBalanceGet(pos);
+        balance = Vc_StereoBalanceGet(pos);
     }
 
     // Clamp volume.
@@ -253,7 +253,7 @@ void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 vol, q19_12 falloff, s8 pitc
     }
     else
     {
-        balance = Sound_StereoBalanceGet(pos);
+        balance = Vc_StereoBalanceGet(pos);
     }
 
     if (vol > 0xFF)

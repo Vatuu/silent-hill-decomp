@@ -554,7 +554,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
     soundPos.vy = g_SysWork.playerWork.player.position.vy;
     soundPos.vz = g_SysWork.playerWork.player.position.vz - Q12(16.0f);
 
-    D_800DB055 = Sound_StereoBalanceGet(&soundPos);
+    D_800DB055 = Vc_StereoBalanceGet(&soundPos);
     if (D_800DB054 < D_800DB055)
     {
         D_800DB054 = MIN((D_800DB054 + (g_DeltaTime >> 6)), 127);
