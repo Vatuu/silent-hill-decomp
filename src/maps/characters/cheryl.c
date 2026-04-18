@@ -25,12 +25,12 @@ void Cheryl_Update(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE2* c
 void Cheryl_AnimUpdate(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D802C
 {
     q19_12      moveSpeed;
-    q19_12      animDur;
+    q19_12      duration;
     s_AnimInfo* animInfo;
 
     #define cherylProps cheryl->properties.cheryl
 
-    if (cherylProps.stateIdx0 == 1)
+    if (cherylProps.controlState == 1)
     {
         D_800DF1CC = Q12_MULT_PRECISE(cheryl->moveSpeed, Q12(30.2f));
     }
@@ -38,20 +38,20 @@ void Cheryl_AnimUpdate(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE
     moveSpeed         = MIN(cheryl->moveSpeed, Q12(2.5f));
     cheryl->moveSpeed = moveSpeed;
 
-    if (cherylProps.stateIdx0 == 2)
+    if (cherylProps.controlState == 2)
     {
         animInfo = CHERYL_ANIM_INFOS;
 
         if (moveSpeed <= Q12(1.5f))
         {
-            animDur = Q12_MULT_PRECISE(moveSpeed, Q12(18.6f));
+            duration = Q12_MULT_PRECISE(moveSpeed, Q12(18.6f));
         }
         else
         {
-            animDur = Q12(27.9f) - 1;
+            duration = Q12(27.9f) - 1;
         }
 
-        animInfo[ANIM_STATUS(CherylAnim_RunForward, true)].duration.constant = animDur;
+        animInfo[ANIM_STATUS(CherylAnim_RunForward, true)].duration.constant = duration;
     }
 
     if (cherylProps.properties_F0.val32 == 0)
@@ -64,7 +64,7 @@ void Cheryl_AnimUpdate(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE
 
 void Cheryl_MovementUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* coords) // 0x800D8124
 {
-    VECTOR3 pos;               // @hack Unused but required.
+    VECTOR3 pos; // @hack Unused but required for match.
     VECTOR3 offset;
     q19_12  moveSpeed;
     q3_12   headingAngle;
@@ -113,11 +113,11 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* coords) // 0x80
     #define playerChara g_SysWork.playerWork.player
     #define playerProps playerChara.properties.player
 
-    D_800E3A30 = 0;
+    D_800E3A30 = Q12(0.0f);
 
-    switch (cherylProps.stateIdx0)
+    switch (cherylProps.controlState)
     {
-        case 0:
+        case CherylControl_Idle:
             if (cherylProps.moveDistance_126 != Q12(0.0f))
             {
                 cherylProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
@@ -130,24 +130,24 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* coords) // 0x80
             Model_AnimStatusSet(&cheryl->model, CherylAnim_Idle, false);
             Character_AnimStateReset(cheryl);
 
-            cherylProps.field_124 = Q12_ANGLE(0.0f);
+            cherylProps.moveDistance_124 = Q12(0.0f);
             break;
 
-        case 1:
-            cherylProps.moveDistance_126 = cherylProps.field_124;
+        case CherylControl_WalkForward:
+            cherylProps.moveDistance_126 = cherylProps.moveDistance_124;
 
             Model_AnimStatusSet(&cheryl->model, CherylAnim_WalkForward, false);
             Character_AnimStateReset(cheryl);
             break;
 
-        case 2:
-            cherylProps.moveDistance_126 = cherylProps.field_124;
+        case CherylControl_RunForward:
+            cherylProps.moveDistance_126 = cherylProps.moveDistance_124;
 
             Model_AnimStatusSet(&cheryl->model, CherylAnim_RunForward, false);
             Character_AnimStateReset(cheryl);
             break;
 
-        case 3:
+        case CherylControl_3:
             if (cherylProps.moveDistance_126 != Q12(0.0f))
             {
                 cherylProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
@@ -163,10 +163,10 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* coords) // 0x80
             Character_AnimStateReset(cheryl);
 
             playerProps.headingAngle_124 = Q12_ANGLE(0.0f);
-            cherylProps.field_124        = Q12_ANGLE(0.0f);
+            cherylProps.moveDistance_124 = Q12(0.0f);
             break;
 
-        case 4:
+        case CherylControl_4:
             if (cherylProps.moveDistance_126 != Q12(0.0f))
             {
                 cherylProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
@@ -182,7 +182,7 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* coords) // 0x80
             Character_AnimStateReset(cheryl);
 
             playerProps.headingAngle_124 = Q12_ANGLE(0.0f);
-            cherylProps.field_124        = Q12_ANGLE(0.0f);
+            cherylProps.moveDistance_124 = Q12(0.0f);
             break;
     }
 
@@ -194,92 +194,96 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* coords) // 0x80
 
     if (g_Player_DisableControl)
     {
-        switch (cherylProps.stateIdx0)
+        switch (cherylProps.controlState)
         {
-            case 1:
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(CherylAnim_WalkForward, true), cheryl, 16, 28, Sfx_Unk1353, pitch0);
+            case CherylControl_WalkForward:
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(CherylAnim_WalkForward, true), cheryl, 16, 28, Sfx_CherylFootstep, pitch0);
                 break;
 
-            case 2:
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(CherylAnim_RunForward, true), cheryl, 53, 42, Sfx_Unk1353, pitch1);
+            case CherylControl_RunForward:
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(CherylAnim_RunForward, true), cheryl, 53, 42, Sfx_CherylFootstep, pitch1);
                 break;
         }
     }
     else
     {
-        switch (cherylProps.stateIdx0)
+        switch (cherylProps.controlState)
         {
-            case 1:
-                Cheryl_FootstepTrigger(ANIM_STATUS(CherylAnim_WalkForward, true), cheryl, 16, 28, distToPlayerSqr, pitch0);
+            case CherylControl_WalkForward:
+                Cheryl_FootstepSfxPlay(ANIM_STATUS(CherylAnim_WalkForward, true), cheryl, 16, 28, distToPlayerSqr, pitch0);
                 break;
 
-            case 2:
-                Cheryl_FootstepTrigger(ANIM_STATUS(CherylAnim_RunForward, true), cheryl, 53, 42, distToPlayerSqr, pitch1);
+            case CherylControl_RunForward:
+                Cheryl_FootstepSfxPlay(ANIM_STATUS(CherylAnim_RunForward, true), cheryl, 53, 42, distToPlayerSqr, pitch1);
                 break;
         }
     }
 
     cheryl->rotation.vy  = Q12_ANGLE_ABS(cheryl->rotation.vy + Q8_TO_Q4(D_800E3A30));
     cheryl->headingAngle = cheryl->rotation.vy;
-    cheryl->moveSpeed    = cherylProps.field_124;
+    cheryl->moveSpeed    = cherylProps.moveDistance_124;
     cheryl->fallSpeed   += g_GravitySpeed;
 
     coords->flg = false;
     Math_RotMatrixZxyNegGte(&cheryl->rotation, &coords->coord);
 }
 
-bool Cheryl_FootstepTrigger(s32 animStatus, s_SubCharacter* cheryl, s32 keyframeIdx0, s32 keyframeIdx1, q23_8 distToPlayerSqr, s32 pitch) // 0x800D8748
+bool Cheryl_FootstepSfxPlay(s32 animStatus, s_SubCharacter* cheryl,
+                            s32 leftFootstepKeyframeIdx, s32 rightFootstepKeyframeIdx, q23_8 distToPlayerSqr, s32 pitch) // 0x800D8748
 {
-    u32 var_a0;
-    u32 vol;
+    q24_8 distSqr;
+    u32   vol;
 
     #define cherylProps cheryl->properties.cheryl
 
     if (cheryl->model.anim.status == animStatus)
     {
-        if (distToPlayerSqr >= 4000000)
+        // Compute volume.
+        if (distToPlayerSqr >= SQUARE(2000))
         {
             if (distToPlayerSqr <= 12000000)
             {
-                var_a0 = distToPlayerSqr;
+                distSqr = distToPlayerSqr;
             }
             else
             {
-                var_a0 = 12000000;
+                distSqr = 12000000;
             }
         }
         else
         {
-            var_a0 = 4000000;
+            distSqr = SQUARE(2000);
         }
+        vol = (12000000 - distSqr) >> 16;
 
-        vol = (12000000 - var_a0) >> 16;
-        if (cheryl->model.anim.keyframeIdx >= keyframeIdx1)
+        // Play right footstep SFX.
+        if (cheryl->model.anim.keyframeIdx >= rightFootstepKeyframeIdx)
         {
-            if (!(cherylProps.flags_11C & CherylFlag_4))
+            if (!(cherylProps.flags & CherylFlag_FootstepRight))
             {
-                func_8005DD44(Sfx_Unk1353, &cheryl->position, vol & 0xFF, pitch);
-                cherylProps.flags_11C |= CherylFlag_4;
+                func_8005DD44(Sfx_CherylFootstep, &cheryl->position, Q8_FRACT(vol), pitch);
+                cherylProps.flags |= CherylFlag_FootstepRight;
                 return true;
             }
         }
         else
         {
-            cherylProps.flags_11C &= ~CherylFlag_4;
+            cherylProps.flags &= ~CherylFlag_FootstepRight;
         }
 
-        if (cheryl->model.anim.keyframeIdx >= keyframeIdx0)
+        // Play left footstep SFX.
+        if (cheryl->model.anim.keyframeIdx >= leftFootstepKeyframeIdx)
         {
-            if (!(cherylProps.flags_11C & CherylFlag_5))
+            if (!(cherylProps.flags & CherylFlag_FootstepLeft))
             {
-                func_8005DD44(Sfx_Unk1353, &cheryl->position, vol & 0xFF, pitch);
-                cherylProps.flags_11C |= CherylFlag_5;
+                func_8005DD44(Sfx_CherylFootstep, &cheryl->position, Q8_FRACT(vol), pitch);
+                cherylProps.flags |= CherylFlag_FootstepLeft;
                 return true;
             }
         }
         else
         {
-            cherylProps.flags_11C &= ~CherylFlag_5;
+            cherylProps.flags &= ~CherylFlag_FootstepLeft;
         }
     }
 

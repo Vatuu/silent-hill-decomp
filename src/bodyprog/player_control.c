@@ -8733,6 +8733,7 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE
             break;
     }
 
+    // TODO: Use range-based rand macro.
     switch (arg0)
     {
         case 5:

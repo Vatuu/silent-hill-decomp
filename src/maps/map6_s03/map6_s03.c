@@ -416,7 +416,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
 
         ptr       = &D_800DFEF0;
         temp_s0_2 = D_800DFEF0;
-        if ((Rng_Rand16() & 0xFF) < ((ABS(D_800DFEF4) << 6) + 0x40))
+        if (Q8_FRACT(Rng_Rand16()) < ((ABS(D_800DFEF4) << 6) + 0x40))
         {
             if (D_800DFEF4 <= 0)
             {

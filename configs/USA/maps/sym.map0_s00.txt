@@ -103,7 +103,7 @@ Cheryl_Update                   = 0x800D7FB8; // type:func
 Cheryl_AnimUpdate               = 0x800D802C; // type:func
 Cheryl_MovementUpdate           = 0x800D8124; // type:func
 Cheryl_ControlUpdate            = 0x800D8310; // type:func
-Cheryl_FootstepTrigger          = 0x800D8748; // type:func
+Cheryl_FootstepSfxPlay          = 0x800D8748; // type:func
 Cheryl_Init                     = 0x800D8888; // type:func
 
 //-------------------------------------------------------------

@@ -382,6 +382,14 @@
 #define Q12_FRACT(x) \
     ((x) & 0xFFF)
 
+/** @brief Extracts the fractional part of a value in Q*.8 fixed-point.
+ *
+ * @param x Q*.8 fixed-point value.
+ * @return Fractional part of `x` in Q*.8 fixed-point.
+ */
+#define Q8_FRACT(x) \
+    ((x) & 0xFF)
+
 // =======================================
 // ABSTRACT Q FORMAT CONVERSION AND UTILS
 // =======================================

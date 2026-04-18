@@ -1406,21 +1406,21 @@ typedef struct _PropertiesBloodsucker
 // TODO: Needs revision. Copy of Dahlia properties.
 typedef struct _PropertiesCheryl
 {
-    s32        stateIdx0;
-    u_Property properties_EC;
-    u_Property properties_F0;
-    u_Property properties_F4;
-    s32        resetStateIdx0_F8;
-    s32        field_FC;
-    s32        field_100;
-    u_Property properties_104;
-    u_Property properties_108;
-    u_Property properties_10C;
-    VECTOR3    field_110;
-    s32        flags_11C;
-    u_Property properties_120;
-    s16        field_124;
-    q3_12      moveDistance_126;
+    /* 0xE8 */  s32        controlState;
+                u_Property properties_EC;
+                u_Property properties_F0;
+                u_Property properties_F4;
+                s32        resetStateIdx0_F8;
+                s32        field_FC;
+                s32        field_100;
+                u_Property properties_104;
+                u_Property properties_108;
+                u_Property properties_10C;
+                VECTOR3    field_110;
+    /* 0x11C */ s32        flags; /** `e_CherylFlags` */
+                u_Property properties_120;
+                q3_12      moveDistance_124;
+                q3_12      moveDistance_126;
 } s_PropertiesCheryl;
 STATIC_ASSERT_SIZEOF(s_PropertiesCheryl, 64);
 

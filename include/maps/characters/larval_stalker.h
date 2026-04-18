@@ -14,7 +14,7 @@ typedef enum _LarvalStalkerFlags
     LarvalStalkerFlag_7    = 1 << 7
 } e_LarvalStalkerFlags;
 
-/** @brief Larval Stalker character animation incides. */
+/** @brief Larval Stalker character animation indices. */
 typedef enum _LarvalStalkerAnim
 {
     LarvalStalkerAnim_Still              = 0,

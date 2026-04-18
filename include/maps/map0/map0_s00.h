@@ -144,6 +144,7 @@ void func_800DD0CC(void);
 
 void func_800DCC54(void);
 
+// Plays distant Cheryl footstep SFX?
 void func_800DA454(void);
 
 void func_800DA5A0(void);

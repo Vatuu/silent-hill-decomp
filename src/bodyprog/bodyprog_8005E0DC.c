@@ -1618,7 +1618,7 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
             temp_v1_6                                                 = (0x80 - (((g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 - 0xCC0) << 7) / 204800)) < 0x20;
             var_a0_3                                                  = !(temp_v1_6) ? (0x80 - (((g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 - 0xCC0) << 7) / 204800)) : 0x20;
             g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3 = var_a0_3;
-            var_t0                                                    = var_a0_3 & 0xFF;
+            var_t0                                                    = Q8_FRACT(var_a0_3);
         }
         else
         {

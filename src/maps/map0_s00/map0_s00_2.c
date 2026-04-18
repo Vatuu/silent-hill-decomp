@@ -426,33 +426,36 @@ void func_800DA254(void) // 0x800DA254
 
 void func_800DA454(void) // 0x800DA454
 {
-    VECTOR3 vec0;
-    s16     angle;
+    VECTOR3 sfxPos;
+    q3_12   angleToTarget;
     s32     temp_s0;
-    s32     sinAngle;
+    q19_12  sinAngleToTarget;
     s32     temp_v0_5;
     s32     temp_v1;
     s32     var_a3;
 
-    if (Math_Vector2MagCalc(Q12(-29.5f) - g_SysWork.playerWork.player.position.vx,
-                            Q12(128.7f) - g_SysWork.playerWork.player.position.vz) >= Q12(16.0f))
+    #define playerChara g_SysWork.playerWork.player
+
+    if (Math_Vector2MagCalc(Q12(-29.5f) - playerChara.position.vx,
+                            Q12(128.7f) - playerChara.position.vz) >= Q12(16.0f))
     {
         D_800DFAB8 += g_DeltaTime;
         if (D_800DFAB8 > Q12(0.8f))
         {
-            angle = ratan2(Q12(-29.5f) - g_SysWork.playerWork.player.position.vx,
-                           Q12(128.7f) - g_SysWork.playerWork.player.position.vz);
-            sinAngle = Math_Sin(angle);
+            angleToTarget = ratan2(Q12(-29.5f) - playerChara.position.vx,
+                                   Q12(128.7f) - playerChara.position.vz);
+            sinAngleToTarget = Math_Sin(angleToTarget);
 
-            vec0.vy = Q12(0.0f);
-            vec0.vx = g_SysWork.playerWork.player.position.vx + (sinAngle * 16);
-            vec0.vz = g_SysWork.playerWork.player.position.vz + (Math_Cos((s32)angle) * 16);
+            sfxPos.vy = Q12(0.0f);
+            sfxPos.vx = playerChara.position.vx + (sinAngleToTarget * 16);
+            sfxPos.vz = playerChara.position.vz + (Math_Cos((q19_12)angleToTarget) * 16);
+            func_8005DD44(Sfx_CherylFootstep, &sfxPos, Rng_GenerateUInt(75, 106), Rng_GenerateInt(-16, 15));
 
-            func_8005DD44(Sfx_Unk1353, &vec0, Rng_GenerateUInt(75, 106), Rng_GenerateInt(-16, 15));
-
-            D_800DFAB8 = 0;
+            D_800DFAB8 = Q12(0.0f);
         }
     }
+
+    #undef playerChara
 }
 
 void func_800DA5A0(void) // 0x800DA5A0
