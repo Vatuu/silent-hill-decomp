@@ -517,7 +517,7 @@ s32 Ai_AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
 
     if (airScreamer->health > Q12(0.0f))
     {
-        if (animStatus == ANIM_STATUS(AirScreamerAnim_21, true))
+        if (animStatus == ANIM_STATUS(AirScreamerAnim_HoverInjured, true))
         {
             damage1 = Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 10.0f);
             if (damage1 < airScreamer->health)
@@ -996,7 +996,7 @@ void func_800D39F4(s_SubCharacter* airScreamer) // 0x800D39F4
     q19_12 animTime;
 
     // TODO: `Character_AnimSet` doesn't match?
-    airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_19, true);
+    airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_HoverVariable, true);
     animTime = func_80044918(&airScreamer->model.anim)->startKeyframeIdx;
     airScreamer->model.stateStep = AirScreamerStateStep_7;
     airScreamer->model.anim.keyframeIdx = animTime;
@@ -1011,7 +1011,7 @@ void func_800D3A3C(s_SubCharacter* airScreamer) // 0x800D3A3C
     idx = g_CharaAnimInfoIdxs[airScreamer->model.charaId];
     Ai_AirScreamer_Update(airScreamer, (&g_CharaTypeAnimInfo[idx])->animFile1_8, (&g_CharaTypeAnimInfo[idx])->npcCoords_14);
 
-    airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_17, true);
+    airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_Glide, true);
     animTime = func_80044918(&airScreamer->model.anim)->startKeyframeIdx;
     airScreamer->model.stateStep = AirScreamerStateStep_3;
     airScreamer->model.anim.keyframeIdx = animTime;
@@ -1089,21 +1089,21 @@ void Ai_AirScreamer_Control_0(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_13:
-            animStatus = ANIM_STATUS(AirScreamerAnim_19, true);
+            animStatus = ANIM_STATUS(AirScreamerAnim_HoverVariable, true);
 
             if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP0_S01)
             {
                 var0 = 2;
                 var1 = true;
                 var2 = 2;
-                animStatus = ANIM_STATUS(AirScreamerAnim_2, true);
+                animStatus = ANIM_STATUS(AirScreamerAnim_HoverBiteAttack, true);
                 controlState = AirScreamerControl_46;
             }
             else
             {
                 var0 = 2;
 
-                if (airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_19, true))
+                if (airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_HoverVariable, true))
                 {
                     animStatus = NO_VALUE;
                 }
@@ -1114,40 +1114,40 @@ void Ai_AirScreamer_Control_0(s_SubCharacter* airScreamer)
 #else
         default:
             var0 = 1;
-            animStatus = ANIM_STATUS(AirScreamerAnim_23, true);
+            animStatus   = ANIM_STATUS(AirScreamerAnim_StandIdle, true);
             controlState = AirScreamerControl_3;
             break;
 
         case AirScreamerStateStep_0:
         case AirScreamerStateStep_2:
             var0 = 1;
-            animStatus = ANIM_STATUS(AirScreamerAnim_25, true);
+            animStatus   = ANIM_STATUS(AirScreamerAnim_WalkForward, true);
             controlState = AirScreamerControl_5;
             break;
 
         case AirScreamerStateStep_3:
             var0 = 1;
-            animStatus = ANIM_STATUS(AirScreamerAnim_19, true);
+            animStatus   = ANIM_STATUS(AirScreamerAnim_HoverVariable, true);
             controlState = AirScreamerControl_19;
             break;
 
         case AirScreamerStateStep_4:
             var0 = 0;
-            animStatus = ANIM_STATUS(AirScreamerAnim_25, true);
+            animStatus   = ANIM_STATUS(AirScreamerAnim_WalkForward, true);
             controlState = AirScreamerControl_4;
-            stateStep = AirScreamerStateStep_64;
+            stateStep    = AirScreamerStateStep_64;
             break;
 
         case AirScreamerStateStep_5:
             var0 = 0;
-            animStatus = ANIM_STATUS(AirScreamerAnim_19, true);
+            animStatus = ANIM_STATUS(AirScreamerAnim_HoverVariable, true);
             controlState = AirScreamerControl_18;
             stateStep = AirScreamerStateStep_64;
             break;
 
         case AirScreamerStateStep_6:
             var0 = 0;
-            animStatus = ANIM_STATUS(AirScreamerAnim_17, true);
+            animStatus = ANIM_STATUS(AirScreamerAnim_Glide, true);
             var2 = 2;
             controlState = AirScreamerControl_33;
             stateStep = AirScreamerStateStep_64;
@@ -1155,14 +1155,14 @@ void Ai_AirScreamer_Control_0(s_SubCharacter* airScreamer)
 
         case AirScreamerStateStep_8:
             var0 = 1;
-            animStatus = ANIM_STATUS(AirScreamerAnim_14, true);
+            animStatus = ANIM_STATUS(AirScreamerAnim_StandBiteAttackEnd, true);
             var2 = 4;
             controlState = AirScreamerControl_9;
             break;
 
         case AirScreamerStateStep_9:
             var0 = 3;
-            animStatus = ANIM_STATUS(AirScreamerAnim_19, true);
+            animStatus = ANIM_STATUS(AirScreamerAnim_HoverVariable, true);
             controlState = AirScreamerControl_19;
             var2 = 2;
             airScreamer->health *= 4;
@@ -1170,7 +1170,7 @@ void Ai_AirScreamer_Control_0(s_SubCharacter* airScreamer)
 
         case AirScreamerStateStep_11:
             var0 = 0;
-            animStatus = ANIM_STATUS(AirScreamerAnim_17, true);
+            animStatus = ANIM_STATUS(AirScreamerAnim_Glide, true);
             controlState = AirScreamerControl_33;
             stateStep = AirScreamerStateStep_65;
             var2 = 2;
@@ -1178,7 +1178,7 @@ void Ai_AirScreamer_Control_0(s_SubCharacter* airScreamer)
 
         case AirScreamerStateStep_7:
             var0 = 0;
-            animStatus = ANIM_STATUS(AirScreamerAnim_17, true);
+            animStatus = ANIM_STATUS(AirScreamerAnim_Glide, true);
             controlState = AirScreamerControl_33;
             stateStep = AirScreamerStateStep_66;
             var2 = 2;
@@ -1186,7 +1186,7 @@ void Ai_AirScreamer_Control_0(s_SubCharacter* airScreamer)
 
         case AirScreamerStateStep_10:
             var0 = 0;
-            animStatus = ANIM_STATUS(AirScreamerAnim_17, true);
+            animStatus = ANIM_STATUS(AirScreamerAnim_Glide, true);
             controlState = AirScreamerControl_33;
             stateStep = AirScreamerStateStep_67;
             var2 = 2;
@@ -1230,7 +1230,7 @@ void Ai_AirScreamer_Control_1(s_SubCharacter* airScreamer)
     {
         case AirScreamerStateStep_0:
             setAnim                              = true;
-            airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_23, true);
+            airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, true);
             airScreamer->model.stateStep     = AirScreamerStateStep_1;
 
         case AirScreamerStateStep_1:
@@ -1239,7 +1239,7 @@ void Ai_AirScreamer_Control_1(s_SubCharacter* airScreamer)
 
         case AirScreamerStateStep_2:
             setAnim                              = true;
-            airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_24, true);
+            airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdleToGlide, true);
             airScreamer->model.stateStep     = AirScreamerStateStep_3;
 
         case AirScreamerStateStep_3:
@@ -1248,7 +1248,7 @@ void Ai_AirScreamer_Control_1(s_SubCharacter* airScreamer)
 
         case AirScreamerStateStep_4:
             setAnim                              = true;
-            airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_15, true);
+            airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToHover, true);
             airScreamer->model.stateStep     = AirScreamerStateStep_5;
 
         case AirScreamerStateStep_5:
@@ -1256,7 +1256,7 @@ void Ai_AirScreamer_Control_1(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_6:
-            if (airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_19, true))
+            if (airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_HoverVariable, true))
             {
                 airScreamer->model.stateStep = AirScreamerStateStep_7;
             }
@@ -1327,7 +1327,7 @@ void Ai_AirScreamer_Control_2(s_SubCharacter* airScreamer)
     bool   activeAnimStatus;
 
     animStatus   = airScreamer->model.anim.status;
-    animStatus12 = ANIM_STATUS(AirScreamerAnim_12, true);
+    animStatus12 = ANIM_STATUS(AirScreamerAnim_DeathThroes, true);
 
     sharedFunc_800D5638_0_s01(airScreamer);
 
@@ -1373,11 +1373,11 @@ void Ai_AirScreamer_Control_2(s_SubCharacter* airScreamer)
             {
                 Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
 
-                if (animStatus == ANIM_STATUS(AirScreamerAnim_26, true) && temp_s3 == true)
+                if (animStatus == ANIM_STATUS(AirScreamerAnim_Stun, true) && temp_s3 == true)
                 {
                     airScreamer->health = NO_VALUE;
 
-                    func_800622B8(3, airScreamer, ANIM_STATUS(AirScreamerAnim_4, true), 2);
+                    func_800622B8(3, airScreamer, ANIM_STATUS(AirScreamerAnim_StandToStun, true), 2);
 
                     airScreamer->model.stateStep = AirScreamerStateStep_1;
 
@@ -1393,12 +1393,12 @@ void Ai_AirScreamer_Control_2(s_SubCharacter* airScreamer)
                 {
                     if (airScreamer->health <= Q12(0.0f))
                     {
-                        airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_5, false);
+                        airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_Death, false);
                         airScreamerProps.flags_11C          |= PlayerFlag_Unk6;
                         break;
                     }
 
-                    airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_12, false);
+                    airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_DeathThroes, false);
                     airScreamer->model.stateStep     = AirScreamerStateStep_2;
                     airScreamerProps.flags_11C          |= PlayerFlag_WallStopRight;
                     break;
@@ -1597,10 +1597,10 @@ void Ai_AirScreamer_Control_4(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_3:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_25, true) || animStatus == ANIM_STATUS(AirScreamerAnim_23, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_WalkForward, true) || animStatus == ANIM_STATUS(AirScreamerAnim_StandIdle, true))
             {
                 var_s3                               = 1;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_22, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdleToHover, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_4;
             }
             break;
@@ -1610,10 +1610,10 @@ void Ai_AirScreamer_Control_4(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_5:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_25, true) || animStatus == ANIM_STATUS(AirScreamerAnim_23, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_WalkForward, true) || animStatus == ANIM_STATUS(AirScreamerAnim_StandIdle, true))
             {
                 var_s3                               = 2;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_24, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdleToGlide, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_6;
             }
             break;
@@ -1975,11 +1975,11 @@ void Ai_AirScreamer_Control_6(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_4:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_25, true) ||
-                animStatus == ANIM_STATUS(AirScreamerAnim_23, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_WalkForward, true) ||
+                animStatus == ANIM_STATUS(AirScreamerAnim_StandIdle, true))
             {
                 switchCond                           = 2;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_22, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdleToHover, false);
 
                 if (field14C_2 || field14C_1)
                 {
@@ -1997,11 +1997,11 @@ void Ai_AirScreamer_Control_6(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_5:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_25, true) ||
-                animStatus == ANIM_STATUS(AirScreamerAnim_23, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_WalkForward, true) ||
+                animStatus == ANIM_STATUS(AirScreamerAnim_StandIdle, true))
             {
                 switchCond                           = 3;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_22, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdleToHover, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_7;
             }
             break;
@@ -2189,10 +2189,10 @@ void Ai_AirScreamer_Control_7(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_4:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_25, true) || animStatus == ANIM_STATUS(AirScreamerAnim_23, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_WalkForward, true) || animStatus == ANIM_STATUS(AirScreamerAnim_StandIdle, true))
             {
                 switchCond                           = 2;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_22, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdleToHover, false);
 
                 if (field14C_1 || field14C_0)
                 {
@@ -2210,10 +2210,10 @@ void Ai_AirScreamer_Control_7(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_5:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_25, true) || animStatus == ANIM_STATUS(AirScreamerAnim_23, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_WalkForward, true) || animStatus == ANIM_STATUS(AirScreamerAnim_StandIdle, true))
             {
                 switchCond                           = 3;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_22, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdleToHover, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_7;
             }
             break;
@@ -2427,11 +2427,11 @@ void Ai_AirScreamer_Control_8(s_SubCharacter* airScreamer)
 #undef angleDiff
 
         case AirScreamerStateStep_4:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_25, true) ||
-                animStatus == ANIM_STATUS(AirScreamerAnim_23, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_WalkForward, true) ||
+                animStatus == ANIM_STATUS(AirScreamerAnim_StandIdle, true))
             {
                 switchCond1                          = 2;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_22, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdleToHover, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_5;
             }
             break;
@@ -2760,11 +2760,11 @@ void Ai_AirScreamer_Control_10(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_2:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_23, true) ||
-                animStatus == ANIM_STATUS(AirScreamerAnim_25, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_StandIdle, true) ||
+                animStatus == ANIM_STATUS(AirScreamerAnim_WalkForward, true))
             {
                 switchCond                           = 2;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_22, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdleToHover, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_3;
             }
             break;
@@ -2774,11 +2774,11 @@ void Ai_AirScreamer_Control_10(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_4:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_23, true) ||
-                animStatus == ANIM_STATUS(AirScreamerAnim_25, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_StandIdle, true) ||
+                animStatus == ANIM_STATUS(AirScreamerAnim_WalkForward, true))
             {
                 switchCond                           = 3;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_24, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdleToGlide, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_5;
             }
             break;
@@ -2817,8 +2817,8 @@ void Ai_AirScreamer_Control_10(s_SubCharacter* airScreamer)
                         g_SysWork.npcIdxs[0] == NO_VALUE &&
                         g_SysWork.npcIdxs[1] == NO_VALUE)
                     {
-                        if (animStatus == ANIM_STATUS(AirScreamerAnim_25, true) ||
-                            animStatus == ANIM_STATUS(AirScreamerAnim_23, true))
+                        if (animStatus == ANIM_STATUS(AirScreamerAnim_WalkForward, true) ||
+                            animStatus == ANIM_STATUS(AirScreamerAnim_StandIdle, true))
                         {
                             airScreamer->model.controlState = AirScreamerControl_12;
                             airScreamer->model.stateStep    = AirScreamerStateStep_0;
@@ -3722,13 +3722,13 @@ void Ai_AirScreamer_Control_17(s_SubCharacter* airScreamer)
         case AirScreamerStateStep_0:
             if (ANIM_STATUS_IS_ACTIVE(animStatus))
             {
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_4, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandToStun, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_1;
             }
             break;
 
         case AirScreamerStateStep_1:
-            if (animStatus != ANIM_STATUS(AirScreamerAnim_4, false))
+            if (animStatus != ANIM_STATUS(AirScreamerAnim_StandToStun, false))
             {
                 airScreamer->model.stateStep             = AirScreamerStateStep_2;
                 airScreamerProps.flags_11C                  |= AirScreamerFlag_3;
@@ -3736,7 +3736,7 @@ void Ai_AirScreamer_Control_17(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_2:
-            if (animStatus != ANIM_STATUS(AirScreamerAnim_4, true))
+            if (animStatus != ANIM_STATUS(AirScreamerAnim_StandToStun, true))
             {
                 cond = true;
             }
@@ -4714,10 +4714,10 @@ void Ai_AirScreamer_Control_22(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_4:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_19, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_HoverVariable, true))
             {
                 switchCond                           = 2;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_27, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_HoverConstant, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_5;
             }
             break;
@@ -4750,15 +4750,15 @@ void Ai_AirScreamer_Control_22(s_SubCharacter* airScreamer)
                     break;
 
                 case 2:
-                    if (animStatus == ANIM_STATUS(AirScreamerAnim_23, true) ||
-                        animStatus == ANIM_STATUS(AirScreamerAnim_25, true))
+                    if (animStatus == ANIM_STATUS(AirScreamerAnim_StandIdle, true) ||
+                        animStatus == ANIM_STATUS(AirScreamerAnim_WalkForward, true))
                     {
                         airScreamer->model.controlState = AirScreamerControl_8;
                         airScreamer->model.stateStep    = AirScreamerStateStep_0;
                     }
                     else if (sharedFunc_800DC0A8_2_s00(airScreamer))
                     {
-                        airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_23, false);
+                        airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
                     break;
 
@@ -5525,10 +5525,10 @@ void Ai_AirScreamer_Control_27(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_2:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_19, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_HoverVariable, true))
             {
                 switchCond                           = 1;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_27, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_HoverConstant, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_3;
             }
             break;
@@ -5538,10 +5538,10 @@ void Ai_AirScreamer_Control_27(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_4:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_19, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_HoverVariable, true))
             {
                 switchCond                           = 2;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_18, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_HoverToGlide, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_5;
             }
             break;
@@ -5575,14 +5575,14 @@ void Ai_AirScreamer_Control_27(s_SubCharacter* airScreamer)
                     break;
 
                 case 1:
-                    if (animStatus == ANIM_STATUS(AirScreamerAnim_23, true) || animStatus == ANIM_STATUS(AirScreamerAnim_25, true))
+                    if (animStatus == ANIM_STATUS(AirScreamerAnim_StandIdle, true) || animStatus == ANIM_STATUS(AirScreamerAnim_WalkForward, true))
                     {
                         airScreamer->model.controlState = AirScreamerControl_14;
                         airScreamer->model.stateStep    = AirScreamerStateStep_0;
                     }
                     else if (sharedFunc_800DC0A8_2_s00(airScreamer))
                     {
-                        airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_23, false);
+                        airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
                     break;
 
@@ -5706,13 +5706,13 @@ void Ai_AirScreamer_Control_29(s_SubCharacter* airScreamer)
         case AirScreamerStateStep_0:
             if (ANIM_STATUS_IS_ACTIVE(animStatus))
             {
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_7, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_HoverRecoil, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_1;
             }
             break;
 
         case AirScreamerStateStep_1:
-            if (animStatus != ANIM_STATUS(AirScreamerAnim_7, false))
+            if (animStatus != ANIM_STATUS(AirScreamerAnim_HoverRecoil, false))
             {
                 airScreamer->model.stateStep = AirScreamerStateStep_2;
                 airScreamerProps.flags_11C      |= AirScreamerFlag_3;
@@ -5720,7 +5720,7 @@ void Ai_AirScreamer_Control_29(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_2:
-            if (animStatus != ANIM_STATUS(AirScreamerAnim_7, true))
+            if (animStatus != ANIM_STATUS(AirScreamerAnim_HoverRecoil, true))
             {
                 var_s1 = 1;
             }
@@ -6336,7 +6336,7 @@ void Ai_AirScreamer_Control_34(s_SubCharacter* airScreamer)
             if (animStatus == ANIM_STATUS(17, true))
             {
                 switchCond                           = 1;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_16, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToWalkForward, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_3;
             }
             break;
@@ -6349,7 +6349,7 @@ void Ai_AirScreamer_Control_34(s_SubCharacter* airScreamer)
             if (animStatus == ANIM_STATUS(17, true))
             {
                 switchCond                           = 2;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_15, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToHover, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_5;
             }
             break;
@@ -6519,10 +6519,10 @@ void Ai_AirScreamer_Control_35(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_4:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_17, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_Glide, true))
             {
                 var_s1                               = 2;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_16, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToWalkForward, false);
 
                 if (!temp_s3 && !temp_s4)
                 {
@@ -6540,10 +6540,10 @@ void Ai_AirScreamer_Control_35(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_5:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_17, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_Glide, true))
             {
                 var_s1                               = 3;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_16, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToWalkForward, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_7;
             }
             break;
@@ -6565,10 +6565,10 @@ void Ai_AirScreamer_Control_35(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_8:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_17, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_Glide, true))
             {
                 var_s1                               = 4;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_15, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToHover, false);
 
                 if (!temp_s3 && !temp_s4)
                 {
@@ -6586,10 +6586,10 @@ void Ai_AirScreamer_Control_35(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_9:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_17, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_Glide, true))
             {
                 var_s1                               = 5;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_15, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToHover, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_11;
             }
             break;
@@ -6797,10 +6797,10 @@ void Ai_AirScreamer_Control_36(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_4:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_17, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_Glide, true))
             {
                 switchCond                           = 2;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_16, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToWalkForward, false);
 
                 if (!field14C_1 && !field14C_0)
                 {
@@ -6818,10 +6818,10 @@ void Ai_AirScreamer_Control_36(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_5:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_17, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_Glide, true))
             {
                 switchCond                           = 3;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_16, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToWalkForward, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_7;
             }
             break;
@@ -6844,10 +6844,10 @@ void Ai_AirScreamer_Control_36(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_8:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_17, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_Glide, true))
             {
                 switchCond                           = 4;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_15, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToHover, false);
 
                 if (!field14C_1 && !field14C_0)
                 {
@@ -6865,10 +6865,10 @@ void Ai_AirScreamer_Control_36(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_9:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_17, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_Glide, true))
             {
                 switchCond                           = 5;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_15, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToHover, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_11;
             }
             break;
@@ -7071,10 +7071,10 @@ void Ai_AirScreamer_Control_37(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_3:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_17, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_Glide, true))
             {
                 switchCond                           = 2;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_16, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToWalkForward, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_4;
             }
             break;
@@ -7084,10 +7084,10 @@ void Ai_AirScreamer_Control_37(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_5:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_17, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_Glide, true))
             {
                 switchCond                           = 3;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_15, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToHover, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_6;
             }
             break;
@@ -7563,15 +7563,15 @@ void Ai_AirScreamer_Control_40(s_SubCharacter* airScreamer)
             airScreamer->model.stateStep = AirScreamerStateStep_1;
 
         case AirScreamerStateStep_1:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_17, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_Glide, true))
             {
                 airScreamer->model.stateStep     = AirScreamerStateStep_2;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_3, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideScratchAttack, false);
             }
             break;
 
         case AirScreamerStateStep_2:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_3, true) &&
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_GlideScratchAttack, true) &&
                 airScreamer->model.anim.keyframeIdx < 8192)
             {
                 airScreamer->model.stateStep = AirScreamerStateStep_3;
@@ -7580,7 +7580,7 @@ void Ai_AirScreamer_Control_40(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_3:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_17, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_Glide, true))
             {
                 cond0 = true;
             }
@@ -7593,7 +7593,7 @@ void Ai_AirScreamer_Control_40(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_4:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_17, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_Glide, true))
             {
                 cond0 = true;
                 cond1 = true;
@@ -7719,10 +7719,10 @@ void Ai_AirScreamer_Control_41(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_3:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_17, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_Glide, true))
             {
                 switchCond                           = 3;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_16, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToWalkForward, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_4;
             }
             break;
@@ -7732,10 +7732,10 @@ void Ai_AirScreamer_Control_41(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_5:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_17, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_Glide, true))
             {
                 switchCond                           = 4;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_15, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToHover, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_6;
             }
             break;
@@ -7900,10 +7900,10 @@ void Ai_AirScreamer_Control_42(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_2:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_17, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_Glide, true))
             {
                 switchCond                           = 1;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_16, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToWalkForward, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_3;
             }
             break;
@@ -7913,10 +7913,10 @@ void Ai_AirScreamer_Control_42(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_4:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_17, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_Glide, true))
             {
                 switchCond                           = 2;
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_15, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToHover, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_5;
             }
             break;
@@ -8067,13 +8067,13 @@ void Ai_AirScreamer_Control_44(s_SubCharacter* airScreamer)
         case AirScreamerStateStep_0:
             if (ANIM_STATUS_IS_ACTIVE(animStatus))
             {
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_8, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideRecoil, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_1;
             }
             break;
 
         case AirScreamerStateStep_1:
-            if (animStatus != ANIM_STATUS(AirScreamerAnim_8, false))
+            if (animStatus != ANIM_STATUS(AirScreamerAnim_GlideRecoil, false))
             {
                 airScreamer->model.stateStep = AirScreamerStateStep_2;
                 airScreamerProps.flags_11C      |= AirScreamerFlag_3;
@@ -8081,7 +8081,7 @@ void Ai_AirScreamer_Control_44(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_2:
-            if (animStatus != ANIM_STATUS(AirScreamerAnim_8, true))
+            if (animStatus != ANIM_STATUS(AirScreamerAnim_GlideRecoil, true))
             {
                 cond = true;
             }
@@ -8269,13 +8269,13 @@ void Ai_AirScreamer_Control_45(s_SubCharacter* airScreamer)
         case AirScreamerStateStep_0:
             if (ANIM_STATUS_IS_ACTIVE(animStatus))
             {
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_11, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToStun, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_1;
             }
             break;
 
         case AirScreamerStateStep_1:
-            if (animStatus != ANIM_STATUS(AirScreamerAnim_11, false))
+            if (animStatus != ANIM_STATUS(AirScreamerAnim_GlideToStun, false))
             {
                 airScreamer->model.stateStep = AirScreamerStateStep_2;
                 airScreamerFlags.flags_11C      |= AirScreamerFlag_3;
@@ -8283,7 +8283,7 @@ void Ai_AirScreamer_Control_45(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_2:
-            if (animStatus != ANIM_STATUS(AirScreamerAnim_11, true))
+            if (animStatus != ANIM_STATUS(AirScreamerAnim_GlideToStun, true))
             {
                 cond = true;
             }
@@ -8322,7 +8322,7 @@ void Ai_AirScreamer_Control_46(s_SubCharacter* airScreamer)
     if (airScreamer->model.stateStep != AirScreamerStateStep_1)
     {
         if (airScreamer->model.stateStep == AirScreamerStateStep_0 &&
-            animStatus == ANIM_STATUS(AirScreamerAnim_2, true) &&
+            animStatus == ANIM_STATUS(AirScreamerAnim_HoverBiteAttack, true) &&
             airScreamer->model.anim.keyframeIdx < 8204)
         {
             airScreamerProps.timer_120       = Q12(4.0f);
@@ -8331,7 +8331,7 @@ void Ai_AirScreamer_Control_46(s_SubCharacter* airScreamer)
             airScreamer->flags           |= CharaFlag_Unk3;
         }
     }
-    else if (ANIM_STATUS(ANIM_STATUS_IDX_GET(animStatus), true) == ANIM_STATUS(AirScreamerAnim_19, true))
+    else if (ANIM_STATUS(ANIM_STATUS_IDX_GET(animStatus), true) == ANIM_STATUS(AirScreamerAnim_HoverVariable, true))
     {
         airScreamer->model.stateStep = AirScreamerStateStep_2;
         airScreamerProps.timer_120       = Q12(4.0f);
@@ -8524,15 +8524,15 @@ void Ai_AirScreamer_Control_49(s_SubCharacter* airScreamer)
             airScreamer->model.stateStep = AirScreamerStateStep_1;
 
         case AirScreamerStateStep_1:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_19, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_HoverVariable, true))
             {
                 airScreamer->model.stateStep     = AirScreamerStateStep_2;
-                airScreamer->model.anim.status = AirScreamerAnim_4;
+                airScreamer->model.anim.status = AirScreamerAnim_StandToStun;
             }
             break;
 
         case AirScreamerStateStep_2:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_2, true) && airScreamer->model.anim.keyframeIdx < 8192)
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_HoverBiteAttack, true) && airScreamer->model.anim.keyframeIdx < 8192)
             {
                 airScreamer->model.stateStep = AirScreamerStateStep_3;
                 airScreamerProps.flags_11C      |= PlayerFlag_Unk5;
@@ -8540,7 +8540,7 @@ void Ai_AirScreamer_Control_49(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_3:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_19, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_HoverVariable, true))
             {
                 cond0 = true;
             }
@@ -8553,7 +8553,7 @@ void Ai_AirScreamer_Control_49(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_4:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_19, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_HoverVariable, true))
             {
                 cond0 = true;
                 cond1 = true;
@@ -8635,13 +8635,13 @@ void Ai_AirScreamer_Control_50(s_SubCharacter* airScreamer)
         case AirScreamerStateStep_0:
             if (ANIM_STATUS_IS_ACTIVE(animStatus))
             {
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_7, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_HoverRecoil, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_1;
             }
             break;
 
         case AirScreamerStateStep_1:
-            if (animStatus != ANIM_STATUS(AirScreamerAnim_7, false))
+            if (animStatus != ANIM_STATUS(AirScreamerAnim_HoverRecoil, false))
             {
                 airScreamer->model.stateStep = AirScreamerStateStep_2;
                 airScreamerProps.flags_11C      |= AirScreamerFlag_3;
@@ -8649,7 +8649,7 @@ void Ai_AirScreamer_Control_50(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_2:
-            if (animStatus != ANIM_STATUS(AirScreamerAnim_7, true))
+            if (animStatus != ANIM_STATUS(AirScreamerAnim_HoverRecoil, true))
             {
                 cond = true;
             }
@@ -8706,13 +8706,13 @@ void Ai_AirScreamer_Control_51(s_SubCharacter* airScreamer)
         case AirScreamerStateStep_0:
             if (ANIM_STATUS_IS_ACTIVE(animStatus))
             {
-                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_10, false);
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_HoverToStun, false);
                 airScreamer->model.stateStep     = AirScreamerStateStep_1;
             }
             break;
 
         case AirScreamerStateStep_1:
-            if (animStatus != ANIM_STATUS(AirScreamerAnim_10, false))
+            if (animStatus != ANIM_STATUS(AirScreamerAnim_HoverToStun, false))
             {
                 airScreamer->model.stateStep = AirScreamerStateStep_2;
                 airScreamerProps.flags_11C      |= AirScreamerFlag_3;
@@ -8720,7 +8720,7 @@ void Ai_AirScreamer_Control_51(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_2:
-            if (animStatus != ANIM_STATUS(AirScreamerAnim_10, true))
+            if (animStatus != ANIM_STATUS(AirScreamerAnim_HoverToStun, true))
             {
                 cond = true;
             }
@@ -8908,7 +8908,7 @@ s32 sharedFunc_800DC438_2_s00(s_SubCharacter* airScreamer)
     s32 stateStep;
 
     stateStep = AirScreamerStateStep_0;
-    if (airScreamer->model.anim.status != ANIM_STATUS(AirScreamerAnim_17, true))
+    if (airScreamer->model.anim.status != ANIM_STATUS(AirScreamerAnim_Glide, true))
     {
         return stateStep;
     }
@@ -10934,7 +10934,7 @@ void sharedFunc_800DF8A0_2_s00(s_SubCharacter* airScreamer)
     s32              temp4;
     s_func_800D2E04* ptr;
 
-    if (airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_4, true) &&
+    if (airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_StandToStun, true) &&
         airScreamer->model.anim.time > Q12(64.0f))
     {
         idx0   = 4;
@@ -12658,20 +12658,20 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* airScreamer)
 
 void sharedFunc_800D76A0_0_s01(s_SubCharacter* airScreamer)
 {
-    if (airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_23, true) ||
-        airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_13, true) ||
-        airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_14, true))
+    if (airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_StandIdle, true) ||
+        airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_StandBiteAttackStart, true) ||
+        airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_StandBiteAttackEnd, true))
     {
         if (sharedFunc_800D77D0_0_s01(airScreamer) != Q12(0.0f))
         {
-            airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_25, false);
+            airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_WalkForward, false);
         }
     }
-    else if (airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_25, true))
+    else if (airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_WalkForward, true))
     {
         if (sharedFunc_800D77D0_0_s01(airScreamer) == Q12(0.0f))
         {
-            airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_23, false);
+            airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
         }
     }
 }
@@ -12771,7 +12771,7 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
 
     switch (animStatus)
     {
-        case ANIM_STATUS(AirScreamerAnim_26, true):
+        case ANIM_STATUS(AirScreamerAnim_Stun, true):
             if (!(airScreamer->model.anim.keyframeIdx == 96) < 1 & airScreamer->health < 1)
             {
                 return Q12(0.0f);
@@ -12782,10 +12782,10 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
             }
             break;
 
-        case ANIM_STATUS(AirScreamerAnim_13, true):
-        case ANIM_STATUS(AirScreamerAnim_14, true):
-        case ANIM_STATUS(AirScreamerAnim_23, true):
-        case ANIM_STATUS(AirScreamerAnim_25, true):
+        case ANIM_STATUS(AirScreamerAnim_StandBiteAttackStart, true):
+        case ANIM_STATUS(AirScreamerAnim_StandBiteAttackEnd, true):
+        case ANIM_STATUS(AirScreamerAnim_StandIdle, true):
+        case ANIM_STATUS(AirScreamerAnim_WalkForward, true):
             moveSpeed = airScreamer->moveSpeed * Q12(0.01f);
             rot       = airScreamer->rotationSpeed.vy * Q12(0.044f);
 
@@ -12836,14 +12836,15 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
             }
             return speed1;
 
-        case ANIM_STATUS(AirScreamerAnim_19, true):
+        case ANIM_STATUS(AirScreamerAnim_HoverVariable, true):
             if (isNotControlState1)
             {
                 return Q12(24.0f);
             }
+
             return Q12_MULT_PRECISE(airScreamer->fallSpeed, Q12(-2.0f)) + Q12(20.0f);
 
-        case ANIM_STATUS(AirScreamerAnim_17, true):
+        case ANIM_STATUS(AirScreamerAnim_Glide, true):
             if (isNotControlState1)
             {
                 return Q12(40.0f);
@@ -12857,10 +12858,10 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
             ret += Q12_MULT_PRECISE(temp_a0, Q12(-1.5f));
             return ret;
 
-        case ANIM_STATUS(AirScreamerAnim_9, true):
-        case ANIM_STATUS(AirScreamerAnim_10, true):
-        case ANIM_STATUS(AirScreamerAnim_11, true):
-        case ANIM_STATUS(AirScreamerAnim_16, true):
+        case ANIM_STATUS(AirScreamerAnim_HoverInjuredBiteAttack, true):
+        case ANIM_STATUS(AirScreamerAnim_HoverToStun, true):
+        case ANIM_STATUS(AirScreamerAnim_GlideToStun, true):
+        case ANIM_STATUS(AirScreamerAnim_GlideToWalkForward, true):
             distToGround = Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz) - airScreamer->position.vy;
             speed1       = Q12(20.0f);
 
@@ -12871,19 +12872,19 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
 
                 switch (animStatus)
                 {
-                    case ANIM_STATUS(AirScreamerAnim_16, true):
+                    case ANIM_STATUS(AirScreamerAnim_GlideToWalkForward, true):
                         ret_3 = Q12(333.0f);
                         break;
 
-                    case ANIM_STATUS(AirScreamerAnim_10, true):
+                    case ANIM_STATUS(AirScreamerAnim_HoverToStun, true):
                         ret_3 = Q12(189.0f);
                         break;
 
-                    case ANIM_STATUS(AirScreamerAnim_11, true):
+                    case ANIM_STATUS(AirScreamerAnim_GlideToStun, true):
                         ret_3 = Q12(215.0f);
                         break;
 
-                    case ANIM_STATUS(AirScreamerAnim_10, false):
+                    case ANIM_STATUS(AirScreamerAnim_HoverToStun, false):
                     default:
                         ret_3 = Q12(171.0f);
                         break;
@@ -13049,11 +13050,11 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
 
         switch (animStatus)
         {
-            case ANIM_STATUS(AirScreamerAnim_2, true):
-            case ANIM_STATUS(AirScreamerAnim_1, true):
+            case ANIM_STATUS(AirScreamerAnim_HoverBiteAttack, true):
+            case ANIM_STATUS(AirScreamerAnim_StandBiteAttack, true):
                 if (temp_s1->field_0 == 0)
                 {
-                    if (animStatus == ANIM_STATUS(AirScreamerAnim_1, true))
+                    if (animStatus == ANIM_STATUS(AirScreamerAnim_StandBiteAttack, true))
                     {
                         temp_s1->field_2 = 40;
                     }
@@ -13079,7 +13080,7 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
                 }
                 break;
 
-            case ANIM_STATUS(AirScreamerAnim_3, true):
+            case ANIM_STATUS(AirScreamerAnim_GlideScratchAttack, true):
                 if (temp_s1->field_0 == 0)
                 {
                     temp_s1->field_2 = 42;

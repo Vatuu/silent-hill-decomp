@@ -4,19 +4,19 @@
 /** @brief Romper character flags. */
 typedef enum _RomperFlags
 {
-    RomperFlag_None = 0,
-    RomperFlag_Falling    = 1 << 0,
-    RomperFlag_1    = 1 << 1,
-    RomperFlag_2    = 1 << 2,
-    RomperFlag_3    = 1 << 3,
-    RomperFlag_4    = 1 << 4, // Jumping?
-    RomperFlag_5    = 1 << 5,
-    RomperFlag_6    = 1 << 6,
-    RomperFlag_7    = 1 << 7,
-    RomperFlag_8    = 1 << 8,
-    RomperFlag_9    = 1 << 9,
-    RomperFlag_10   = 1 << 10,
-    RomperFlag_11   = 1 << 11 // Jumping?
+    RomperFlag_None    = 0,
+    RomperFlag_Falling = 1 << 0,
+    RomperFlag_1       = 1 << 1,
+    RomperFlag_2       = 1 << 2,
+    RomperFlag_3       = 1 << 3,
+    RomperFlag_4       = 1 << 4, // Jumping?
+    RomperFlag_5       = 1 << 5,
+    RomperFlag_6       = 1 << 6,
+    RomperFlag_7       = 1 << 7,
+    RomperFlag_8       = 1 << 8,
+    RomperFlag_9       = 1 << 9,
+    RomperFlag_10      = 1 << 10,
+    RomperFlag_11      = 1 << 11 // Jumping?
 } e_RomperFlags;
 
 /** @brief Romper character animation indices. */

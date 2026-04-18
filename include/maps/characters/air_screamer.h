@@ -42,34 +42,34 @@ typedef enum _AirScreamerFlags
 /** @brief Air Screamer character animation indices. */
 typedef enum _AirScreamerAnim
 {
-    AirScreamerAnim_Still = 0,
-    AirScreamerAnim_1     = 1, // StandAttack
-    AirScreamerAnim_2     = 2, // FlyAttack
-    AirScreamerAnim_3     = 3, // GlideAttack
-    AirScreamerAnim_4     = 4, // StandKnockout
-    AirScreamerAnim_5     = 5, // Death
-    AirScreamerAnim_6     = 6, // StandDamageRecoil
-    AirScreamerAnim_7     = 7, // FlyDamageRecoil
-    AirScreamerAnim_8     = 8, // GlideDamageRecoil
-    AirScreamerAnim_9     = 9, // FlyPeckAttack 2?
-    AirScreamerAnim_10    = 10, // FlyKnockout
-    AirScreamerAnim_11    = 11, // GlideKnockout
-    AirScreamerAnim_12    = 12, // Knockout crawl/attack?
-    AirScreamerAnim_13    = 13, // Stand eat look up?
-    AirScreamerAnim_14    = 14, // Stand eat?
-    AirScreamerAnim_15    = 15, // Glide attack start?
-    AirScreamerAnim_16    = 16, // Glide to stand
-    AirScreamerAnim_17    = 17, // Glide flap
-    AirScreamerAnim_18    = 18, // Fly to glide
-    AirScreamerAnim_19    = 19, // FlyIdle
-    AirScreamerAnim_20    = 20, // Near death die
-    AirScreamerAnim_21    = 21, // near death?
-    AirScreamerAnim_22    = 22,
-    AirScreamerAnim_23    = 23, // StandIdle
-    AirScreamerAnim_24    = 24, // TakeOff
-    AirScreamerAnim_25    = 25, // WalkForward
-    AirScreamerAnim_26    = 26, // Death end?
-    AirScreamerAnim_27    = 27 // FlyIdle duplicate
+    AirScreamerAnim_Still                  = 0,
+    AirScreamerAnim_StandBiteAttack        = 1,
+    AirScreamerAnim_HoverBiteAttack        = 2,
+    AirScreamerAnim_GlideScratchAttack     = 3,
+    AirScreamerAnim_StandToStun            = 4,
+    AirScreamerAnim_Death                  = 5,
+    AirScreamerAnim_StandRecoil            = 6,
+    AirScreamerAnim_HoverRecoil            = 7,
+    AirScreamerAnim_GlideRecoil            = 8,
+    AirScreamerAnim_HoverInjuredBiteAttack = 9,
+    AirScreamerAnim_HoverToStun            = 10,
+    AirScreamerAnim_GlideToStun            = 11,
+    AirScreamerAnim_DeathThroes            = 12,
+    AirScreamerAnim_StandBiteAttackStart   = 13,
+    AirScreamerAnim_StandBiteAttackEnd     = 14,
+    AirScreamerAnim_GlideToHover           = 15,
+    AirScreamerAnim_GlideToWalkForward     = 16,
+    AirScreamerAnim_Glide                  = 17,
+    AirScreamerAnim_HoverToGlide           = 18,
+    AirScreamerAnim_HoverVariable          = 19,
+    AirScreamerAnim_HoverInjuredToStun     = 20,
+    AirScreamerAnim_HoverInjured           = 21,
+    AirScreamerAnim_StandIdleToHover       = 22,
+    AirScreamerAnim_StandIdle              = 23,
+    AirScreamerAnim_StandIdleToGlide       = 24,
+    AirScreamerAnim_WalkForward            = 25,
+    AirScreamerAnim_Stun                   = 26,
+    AirScreamerAnim_HoverConstant          = 27
 } e_AirScreamerAnim;
 
 /** @brief Air Screamer or Night Flutter character control states. */
@@ -79,8 +79,8 @@ typedef enum _AirScreamerControl
     AirScreamerControl_1     = 1,
     AirScreamerControl_2     = 2,
     AirScreamerControl_3     = 3,
-    AirScreamerControl_4     = 4,
-    AirScreamerControl_5     = 5,
+    AirScreamerControl_4     = 4, // } Walk
+    AirScreamerControl_5     = 5, // }
     AirScreamerControl_6     = 6,
     AirScreamerControl_7     = 7,
     AirScreamerControl_8     = 8,
@@ -93,8 +93,8 @@ typedef enum _AirScreamerControl
     AirScreamerControl_15    = 15,
     AirScreamerControl_16    = 16,
     AirScreamerControl_17    = 17,
-    AirScreamerControl_18    = 18,
-    AirScreamerControl_19    = 19,
+    AirScreamerControl_18    = 18, // } Variable duration hover?
+    AirScreamerControl_19    = 19, // }
     AirScreamerControl_20    = 20,
     AirScreamerControl_21    = 21,
     AirScreamerControl_22    = 22,
@@ -166,62 +166,62 @@ typedef enum _AirScreamerDamage
 } e_AirScreamerDamage;
 
 /*s_AnimInfo AIR_SCREAMER_ANIM_INFOS[] = {
-    { Anim_BlendLinear, ANIM_STATUS(0, false), false, NO_VALUE, { Q12(10) }, NO_VALUE, NO_VALUE },
-    { Anim_PlaybackLoop, ANIM_STATUS(0, true), false, NO_VALUE, { Q12(10) }, NO_VALUE, NO_VALUE },
-    { Anim_BlendLinear, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true), { Q12(10) }, NO_VALUE, 0 },
-    { Anim_PlaybackOnce, ANIM_STATUS(1, true), false, ANIM_STATUS(23, false), { Q12(20) }, 0, 11 },
-    { Anim_BlendLinear, ANIM_STATUS(2, false), false, ANIM_STATUS(2, true), { Q12(15) }, NO_VALUE, 12 },
-    { Anim_PlaybackOnce, ANIM_STATUS(2, true), false, ANIM_STATUS(19, false), { Q12(15) }, 12, 25 },
-    { Anim_BlendLinear, ANIM_STATUS(3, false), false, ANIM_STATUS(3, true), { Q12(30) }, NO_VALUE, 26 },
-    { Anim_PlaybackOnce, ANIM_STATUS(3, true), false, ANIM_STATUS(17, false), { Q12(25) }, 26, 55 },
-    { Anim_BlendLinear, ANIM_STATUS(4, false), false, ANIM_STATUS(4, true), { Q12(15) }, NO_VALUE, 56 },
-    { Anim_PlaybackOnce, ANIM_STATUS(4, true), false, ANIM_STATUS(26, false), { Q12(15) }, 56, 80 },
-    { Anim_BlendLinear, ANIM_STATUS(5, false), false, ANIM_STATUS(5, true), { Q12(10) }, NO_VALUE, 81 },
-    { Anim_PlaybackOnce, ANIM_STATUS(5, true), false, ANIM_STATUS(26, false), { Q12(10) }, 81, 99 },
-    { Anim_BlendLinear, ANIM_STATUS(6, false), false, ANIM_STATUS(6, true), { Q12(30) }, NO_VALUE, 100 },
-    { Anim_PlaybackOnce, ANIM_STATUS(6, true), false, ANIM_STATUS(23, false), { Q12(20) }, 100, 114 },
-    { Anim_BlendLinear, ANIM_STATUS(7, false), false, ANIM_STATUS(7, true), { Q12(30) }, NO_VALUE, 115 },
-    { Anim_PlaybackOnce, ANIM_STATUS(7, true), false, ANIM_STATUS(19, false), { Q12(20) }, 115, 129 },
-    { Anim_BlendLinear, ANIM_STATUS(8, false), false, ANIM_STATUS(8, true), { Q12(30) }, NO_VALUE, 130 },
-    { Anim_PlaybackOnce, ANIM_STATUS(8, true), false, ANIM_STATUS(17, false), { Q12(25) }, 130, 153 },
-    { Anim_BlendLinear, ANIM_STATUS(9, false), false, ANIM_STATUS(9, true), { Q12(30) }, NO_VALUE, 154 },
-    { Anim_PlaybackOnce, ANIM_STATUS(9, true), false, ANIM_STATUS(21, false), { Q12(24) }, 154, 171 },
-    { Anim_BlendLinear, ANIM_STATUS(10, false), false, ANIM_STATUS(10, true), { Q12(10) }, NO_VALUE, 172 },
-    { Anim_PlaybackOnce, ANIM_STATUS(10, true), false, ANIM_STATUS(26, false), sharedFunc_800D77D0_0_s01, 172, 189 },
-    { Anim_BlendLinear, ANIM_STATUS(11, false), false, ANIM_STATUS(11, true), { Q12(10) }, NO_VALUE, 190 },
-    { Anim_PlaybackOnce, ANIM_STATUS(11, true), false, ANIM_STATUS(26, false), sharedFunc_800D77D0_0_s01, 190, 230 },
-    { Anim_BlendLinear, ANIM_STATUS(12, false), false, ANIM_STATUS(12, true), { Q12(10) }, NO_VALUE, 231 },
-    { Anim_PlaybackOnce, ANIM_STATUS(12, true), false, ANIM_STATUS(26, false), { Q12(10) }, 231, 242 },
-    { Anim_BlendLinear, ANIM_STATUS(13, false), false, ANIM_STATUS(13, true), { Q12(5) }, NO_VALUE, 243 },
-    { Anim_PlaybackOnce, ANIM_STATUS(13, true), false, ANIM_STATUS(14, false), { Q12(10) }, 243, 272 },
-    { Anim_BlendLinear, ANIM_STATUS(14, false), false, ANIM_STATUS(14, true), { Q12(1.5) }, NO_VALUE, 273 },
-    { Anim_PlaybackLoop, ANIM_STATUS(14, true), false, NO_VALUE, { Q12(10) }, 273, 302 },
-    { Anim_BlendLinear, ANIM_STATUS(15, false), false, ANIM_STATUS(15, true), func_800E21C8, NO_VALUE, 303 },
-    { Anim_PlaybackOnce, ANIM_STATUS(15, true), false, ANIM_STATUS(19, false), func_800E21C8, 303, 314 },
-    { Anim_BlendLinear, ANIM_STATUS(16, false), false, ANIM_STATUS(16, true), { Q12(30) }, NO_VALUE, 315 },
-    { Anim_PlaybackOnce, ANIM_STATUS(16, true), false, ANIM_STATUS(25, false), sharedFunc_800D77D0_0_s01, 315, 339 },
-    { Anim_BlendLinear, ANIM_STATUS(17, false), false, ANIM_STATUS(17, true), func_800E21C8, NO_VALUE, 340 },
-    { Anim_PlaybackLoop, ANIM_STATUS(17, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 340, 352 },
-    { Anim_BlendLinear, ANIM_STATUS(18, false), false, ANIM_STATUS(18, true), { Q12(30) }, NO_VALUE, 353 },
-    { Anim_PlaybackOnce, ANIM_STATUS(18, true), false, ANIM_STATUS(17, false), { Q12(20) }, 353, 364 },
-    { Anim_BlendLinear, ANIM_STATUS(19, false), false, ANIM_STATUS(19, true), func_800E21C8, NO_VALUE, 365 },
-    { Anim_PlaybackLoop, ANIM_STATUS(19, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 365, 376 },
-    { Anim_BlendLinear, ANIM_STATUS(20, false), false, ANIM_STATUS(20, true), { Q12(10) }, NO_VALUE, 377 },
-    { Anim_PlaybackOnce, ANIM_STATUS(20, true), false, ANIM_STATUS(26, false), { Q12(10) }, 377, 383 },
-    { Anim_BlendLinear, ANIM_STATUS(21, false), false, ANIM_STATUS(21, true), { Q12(15) }, NO_VALUE, 384 },
-    { Anim_PlaybackLoop, ANIM_STATUS(21, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 384, 407 },
-    { Anim_BlendLinear, ANIM_STATUS(22, false), false, ANIM_STATUS(22, true), { Q12(30) }, NO_VALUE, 408 },
-    { Anim_PlaybackOnce, ANIM_STATUS(22, true), false, ANIM_STATUS(19, false), { Q12(20) }, 408, 432 },
-    { Anim_BlendLinear, ANIM_STATUS(23, false), false, ANIM_STATUS(23, true), { Q12(10) }, NO_VALUE, 433 },
-    { Anim_PlaybackLoop, ANIM_STATUS(23, true), false, NO_VALUE, func_800E21C8, 433, 447 },
-    { Anim_BlendLinear, ANIM_STATUS(24, false), false, ANIM_STATUS(24, true), func_800E21C8, NO_VALUE, 448 },
-    { Anim_PlaybackOnce, ANIM_STATUS(24, true), false, ANIM_STATUS(17, false), func_800E21C8, 448, 482 },
-    { Anim_BlendLinear, ANIM_STATUS(25, false), false, ANIM_STATUS(25, true), { Q12(30) }, NO_VALUE, 483 },
-    { Anim_PlaybackLoop, ANIM_STATUS(25, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 483, 523 },
-    { Anim_BlendLinear, ANIM_STATUS(26, false), false, ANIM_STATUS(26, true), { Q12(1.5) }, NO_VALUE, 96 },
-    { Anim_PlaybackLoop, ANIM_STATUS(26, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 96, 99 },
-    { Anim_BlendLinear, ANIM_STATUS(27, false), false, ANIM_STATUS(27, true), { Q12(30) }, NO_VALUE, 365 },
-    { Anim_PlaybackLoop, ANIM_STATUS(27, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 365, 376 }
+    { Anim_BlendLinear,  ANIM_STATUS(0, false),  false, NO_VALUE, { Q12(10) }, NO_VALUE, NO_VALUE },
+    { Anim_PlaybackLoop, ANIM_STATUS(0, true),   false, NO_VALUE, { Q12(10) }, NO_VALUE, NO_VALUE },
+    { Anim_BlendLinear,  ANIM_STATUS(1, false),  false, ANIM_STATUS(1, true), { Q12(10) }, NO_VALUE, 0 },
+    { Anim_PlaybackOnce, ANIM_STATUS(1, true),   false, ANIM_STATUS(23, false), { Q12(20) }, 0, 11 },
+    { Anim_BlendLinear,  ANIM_STATUS(2, false),  false, ANIM_STATUS(2, true), { Q12(15) }, NO_VALUE, 12 },
+    { Anim_PlaybackOnce, ANIM_STATUS(2, true),   false, ANIM_STATUS(19, false), { Q12(15) }, 12, 25 },
+    { Anim_BlendLinear,  ANIM_STATUS(3, false),  false, ANIM_STATUS(3, true), { Q12(30) }, NO_VALUE, 26 },
+    { Anim_PlaybackOnce, ANIM_STATUS(3, true),   false, ANIM_STATUS(17, false), { Q12(25) }, 26, 55 },
+    { Anim_BlendLinear,  ANIM_STATUS(4, false),  false, ANIM_STATUS(4, true), { Q12(15) }, NO_VALUE, 56 },
+    { Anim_PlaybackOnce, ANIM_STATUS(4, true),   false, ANIM_STATUS(26, false), { Q12(15) }, 56, 80 },
+    { Anim_BlendLinear,  ANIM_STATUS(5, false),  false, ANIM_STATUS(5, true), { Q12(10) }, NO_VALUE, 81 },
+    { Anim_PlaybackOnce, ANIM_STATUS(5, true),   false, ANIM_STATUS(26, false), { Q12(10) }, 81, 99 },
+    { Anim_BlendLinear,  ANIM_STATUS(6, false),  false, ANIM_STATUS(6, true), { Q12(30) }, NO_VALUE, 100 },
+    { Anim_PlaybackOnce, ANIM_STATUS(6, true),   false, ANIM_STATUS(23, false), { Q12(20) }, 100, 114 },
+    { Anim_BlendLinear,  ANIM_STATUS(7, false),  false, ANIM_STATUS(7, true), { Q12(30) }, NO_VALUE, 115 },
+    { Anim_PlaybackOnce, ANIM_STATUS(7, true),   false, ANIM_STATUS(19, false), { Q12(20) }, 115, 129 },
+    { Anim_BlendLinear,  ANIM_STATUS(8, false),  false, ANIM_STATUS(8, true), { Q12(30) }, NO_VALUE, 130 },
+    { Anim_PlaybackOnce, ANIM_STATUS(8, true),   false, ANIM_STATUS(17, false), { Q12(25) }, 130, 153 },
+    { Anim_BlendLinear,  ANIM_STATUS(9, false),  false, ANIM_STATUS(9, true), { Q12(30) }, NO_VALUE, 154 },
+    { Anim_PlaybackOnce, ANIM_STATUS(9, true),   false, ANIM_STATUS(21, false), { Q12(24) }, 154, 171 },
+    { Anim_BlendLinear,  ANIM_STATUS(10, false), false, ANIM_STATUS(10, true), { Q12(10) }, NO_VALUE, 172 },
+    { Anim_PlaybackOnce, ANIM_STATUS(10, true),  false, ANIM_STATUS(26, false), sharedFunc_800D77D0_0_s01, 172, 189 },
+    { Anim_BlendLinear,  ANIM_STATUS(11, false), false, ANIM_STATUS(11, true), { Q12(10) }, NO_VALUE, 190 },
+    { Anim_PlaybackOnce, ANIM_STATUS(11, true),  false, ANIM_STATUS(26, false), sharedFunc_800D77D0_0_s01, 190, 230 },
+    { Anim_BlendLinear,  ANIM_STATUS(12, false), false, ANIM_STATUS(12, true), { Q12(10) }, NO_VALUE, 231 },
+    { Anim_PlaybackOnce, ANIM_STATUS(12, true),  false, ANIM_STATUS(26, false), { Q12(10) }, 231, 242 },
+    { Anim_BlendLinear,  ANIM_STATUS(13, false), false, ANIM_STATUS(13, true), { Q12(5) }, NO_VALUE, 243 },
+    { Anim_PlaybackOnce, ANIM_STATUS(13, true),  false, ANIM_STATUS(14, false), { Q12(10) }, 243, 272 },
+    { Anim_BlendLinear,  ANIM_STATUS(14, false), false, ANIM_STATUS(14, true), { Q12(1.5) }, NO_VALUE, 273 },
+    { Anim_PlaybackLoop, ANIM_STATUS(14, true),  false, NO_VALUE, { Q12(10) }, 273, 302 },
+    { Anim_BlendLinear,  ANIM_STATUS(15, false), false, ANIM_STATUS(15, true), func_800E21C8, NO_VALUE, 303 },
+    { Anim_PlaybackOnce, ANIM_STATUS(15, true),  false, ANIM_STATUS(19, false), func_800E21C8, 303, 314 },
+    { Anim_BlendLinear,  ANIM_STATUS(16, false), false, ANIM_STATUS(16, true), { Q12(30) }, NO_VALUE, 315 },
+    { Anim_PlaybackOnce, ANIM_STATUS(16, true),  false, ANIM_STATUS(25, false), sharedFunc_800D77D0_0_s01, 315, 339 },
+    { Anim_BlendLinear,  ANIM_STATUS(17, false), false, ANIM_STATUS(17, true), func_800E21C8, NO_VALUE, 340 },
+    { Anim_PlaybackLoop, ANIM_STATUS(17, true),  false, NO_VALUE, sharedFunc_800D77D0_0_s01, 340, 352 },
+    { Anim_BlendLinear,  ANIM_STATUS(18, false), false, ANIM_STATUS(18, true), { Q12(30) }, NO_VALUE, 353 },
+    { Anim_PlaybackOnce, ANIM_STATUS(18, true),  false, ANIM_STATUS(17, false), { Q12(20) }, 353, 364 },
+    { Anim_BlendLinear,  ANIM_STATUS(19, false), false, ANIM_STATUS(19, true), func_800E21C8, NO_VALUE, 365 },
+    { Anim_PlaybackLoop, ANIM_STATUS(19, true),  false, NO_VALUE, sharedFunc_800D77D0_0_s01, 365, 376 },
+    { Anim_BlendLinear,  ANIM_STATUS(20, false), false, ANIM_STATUS(20, true), { Q12(10) }, NO_VALUE, 377 },
+    { Anim_PlaybackOnce, ANIM_STATUS(20, true),  false, ANIM_STATUS(26, false), { Q12(10) }, 377, 383 },
+    { Anim_BlendLinear,  ANIM_STATUS(21, false), false, ANIM_STATUS(21, true), { Q12(15) }, NO_VALUE, 384 },
+    { Anim_PlaybackLoop, ANIM_STATUS(21, true),  false, NO_VALUE, sharedFunc_800D77D0_0_s01, 384, 407 },
+    { Anim_BlendLinear,  ANIM_STATUS(22, false), false, ANIM_STATUS(22, true), { Q12(30) }, NO_VALUE, 408 },
+    { Anim_PlaybackOnce, ANIM_STATUS(22, true),  false, ANIM_STATUS(19, false), { Q12(20) }, 408, 432 },
+    { Anim_BlendLinear,  ANIM_STATUS(23, false), false, ANIM_STATUS(23, true), { Q12(10) }, NO_VALUE, 433 },
+    { Anim_PlaybackLoop, ANIM_STATUS(23, true),  false, NO_VALUE, func_800E21C8, 433, 447 },
+    { Anim_BlendLinear,  ANIM_STATUS(24, false), false, ANIM_STATUS(24, true), func_800E21C8, NO_VALUE, 448 },
+    { Anim_PlaybackOnce, ANIM_STATUS(24, true),  false, ANIM_STATUS(17, false), func_800E21C8, 448, 482 },
+    { Anim_BlendLinear,  ANIM_STATUS(25, false), false, ANIM_STATUS(25, true), { Q12(30) }, NO_VALUE, 483 },
+    { Anim_PlaybackLoop, ANIM_STATUS(25, true),  false, NO_VALUE, sharedFunc_800D77D0_0_s01, 483, 523 },
+    { Anim_BlendLinear,  ANIM_STATUS(26, false), false, ANIM_STATUS(26, true), { Q12(1.5) }, NO_VALUE, 96 },
+    { Anim_PlaybackLoop, ANIM_STATUS(26, true),  false, NO_VALUE, sharedFunc_800D77D0_0_s01, 96, 99 },
+    { Anim_BlendLinear,  ANIM_STATUS(27, false), false, ANIM_STATUS(27, true), { Q12(30) }, NO_VALUE, 365 },
+    { Anim_PlaybackLoop, ANIM_STATUS(27, true),  false, NO_VALUE, sharedFunc_800D77D0_0_s01, 365, 376 }
 };*/
 
 /** @brief Updates an active Air Screamer or Night Flutter character.
