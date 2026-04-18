@@ -511,7 +511,7 @@ extern VECTOR3 D_800C4610;
 // ==========
 
 /** Used for enemy target locking. */
-void func_8005CD38(s32*, s32*, s_PlayerCombat*, s32, s32, s32);
+void func_8005CD38(s32*, s16*, s_PlayerCombat*, s32, s32, s32);
 
 /** Used for player run displacement.
  *
