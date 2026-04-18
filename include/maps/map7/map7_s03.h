@@ -672,7 +672,7 @@ void func_800DBBA0(void);
 
 void func_800DBBD8(MATRIX* mat);
 
-void func_800DBC18(q19_12 damageAmt);
+void func_800DBC18(q19_12 damageAmount);
 
 bool func_800DBCA4(MATRIX* mat, VECTOR3* outVec);
 

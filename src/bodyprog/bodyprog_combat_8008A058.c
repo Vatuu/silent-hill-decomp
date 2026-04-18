@@ -1223,7 +1223,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
     q19_12      offsetX;
     q19_12      offsetY;
     q19_12      offsetZ;
-    q20_12      damageAmt;
+    q20_12      damageAmount;
     s32         var_v1;
     u32         var_s7;
     s32         var_v0;
@@ -1358,7 +1358,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
         var_v1 += 3;
     }
 
-    damageAmt = Q12_MULT_PRECISE(new_var, var_v1 >> 2);
+    damageAmount = Q12_MULT_PRECISE(new_var, var_v1 >> 2);
 
     switch (weaponAttack)
     {
@@ -1387,12 +1387,12 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
         default:
             if (target != &g_SysWork.playerWork.player && !(target->flags & CharaFlag_Unk3))
             {
-                damageAmt *= 4;
+                damageAmount *= 4;
             }
 
             if (offsetY == 1)
             {
-                damageAmt = Q12_MULT_PRECISE(damageAmt, offsetZ);
+                damageAmount = Q12_MULT_PRECISE(damageAmount, offsetZ);
                 var_s7 = Q12_MULT_PRECISE(var_s7, offsetZ);
             }
 
@@ -1456,9 +1456,9 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
             break;
     }
 
-    if (damageAmt != Q12(0.0f))
+    if (damageAmount != Q12(0.0f))
     {
-        target->damage.amount_C += damageAmt;
+        target->damage.amount_C += damageAmount;
     }
 
     if (var_s7 != 0)
@@ -1475,7 +1475,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
     sp14                     |= sp10;
     attacker->field_44.field_8 = sp14;
 
-    if (damageAmt | var_s7)
+    if (damageAmount | var_s7)
     {
         var_a2 = temp_fp->field_12;
 

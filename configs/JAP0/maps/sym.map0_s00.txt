@@ -112,12 +112,12 @@ sharedFunc_800D7E04_0_s00       = 0x800DA2F4; // type:func
 //---------------------------------------------------------------
 //--- PA: 0x00EA00   VA: 0x800DA4A8   subsegment: c, Chara_Cheryl
 //---------------------------------------------------------------
-Ai_Cheryl_Update                = 0x800DA4A8; // type:func
-Ai_Cheryl_AnimUpdate            = 0x800DA51C; // type:func
-Ai_Cheryl_MovementUpdate        = 0x800DA614; // type:func
-Ai_Cheryl_AnimStateUpdate       = 0x800DA800; // type:func
-Ai_Cheryl_FootstepTrigger       = 0x800DAC38; // type:func
-Ai_Cheryl_Init                  = 0x800DAD78; // type:func
+Cheryl_Update                   = 0x800DA4A8; // type:func
+Cheryl_AnimUpdate               = 0x800DA51C; // type:func
+Cheryl_MovementUpdate           = 0x800DA614; // type:func
+Cheryl_ControlUpdate            = 0x800DA800; // type:func
+Cheryl_FootstepTrigger          = 0x800DAC38; // type:func
+Cheryl_Init                     = 0x800DAD78; // type:func
 
 //-------------------------------------------------------------
 //--- PA: 0x00F2F4   VA: 0x800DAD9C   subsegment: c, map0_s00_2

@@ -22,7 +22,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
     s32         headingAngle;
     s16         temp_v0;
     s32         temp_s0;
-    s32         moveAmt;
+    s32         moveDist;
     s32         temp_s2;
     s16         temp_s3;
     s32         scaleRestoreShift;
@@ -148,13 +148,13 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 
     moveSpeed    = chara->moveSpeed;
     headingAngle = chara->headingAngle;
-    moveAmt      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
+    moveDist      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
-    scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
+    scaleRestoreShift = OVERFLOW_GUARD(moveDist);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
-    offset.vx = Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vz = Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
+    offset.vx = Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
+    offset.vz = Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vy = Q12_MULT_PRECISE(chara->fallSpeed, g_DeltaTime);
 
     if (cond)

@@ -563,7 +563,7 @@ void func_800D2640(void) // 0x800D2640
 
 void func_800D2674(void) // 0x800D2674
 {
-    s32 moveAmt;
+    q19_12 moveDist;
 
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -600,9 +600,9 @@ void func_800D2674(void) // 0x800D2674
 
         case 5:
         case 6:
-            moveAmt                                          = Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.14f);
-            g_SysWork.playerWork.player.position.vz += moveAmt;
-            g_WorldObject_Movaches.position_1C.vz      += moveAmt;
+            moveDist                                          = Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.14f);
+            g_SysWork.playerWork.player.position.vz += moveDist;
+            g_WorldObject_Movaches.position_1C.vz      += moveDist;
 
             if (g_SysWork.sysStateSteps[0] == 5)
             {
@@ -617,10 +617,10 @@ void func_800D2674(void) // 0x800D2674
             {
                 if (g_WorldObject_Movaches.position_1C.vz > Q12(60.44f))
                 {
-                    moveAmt = g_WorldObject_Movaches.position_1C.vz - Q12(60.44f);
+                    moveDist = g_WorldObject_Movaches.position_1C.vz - Q12(60.44f);
 
-                    g_SysWork.playerWork.player.position.vz -= moveAmt;
-                    g_WorldObject_Movaches.position_1C.vz      -= moveAmt;
+                    g_SysWork.playerWork.player.position.vz -= moveDist;
+                    g_WorldObject_Movaches.position_1C.vz      -= moveDist;
                 }
 
                 // `D_800D3C44 = MAX(D_800D3C44 - (g_DeltaTime * 2), 0);`?

@@ -102,7 +102,7 @@ extern bool D_800C489C;
 // FUNCTIONS
 // ==========
 
-bool Demo_SequenceAdvance(s32 incrementAmt);
+bool Demo_SequenceAdvance(s32 incrementAmount);
 
 void Demo_DemoDataRead(void);
 

@@ -36,20 +36,20 @@ void func_800D3740(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D3740
     VECTOR3 offset;
     q19_12  moveSpeed;
     q3_12   headingAngle;
-    q19_12  moveAmt;
+    q19_12  moveDist;
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 
     unused       = chara->position;
     moveSpeed    = chara->moveSpeed;
     headingAngle = chara->headingAngle;
-    moveAmt      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
+    moveDist      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
-    scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
+    scaleRestoreShift = OVERFLOW_GUARD(moveDist);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
-    offset.vx = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vz = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
+    offset.vx = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
+    offset.vz = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vy = Q12_MULT_PRECISE(chara->fallSpeed, g_DeltaTime);
 
     chara->position.vx += offset.vx;

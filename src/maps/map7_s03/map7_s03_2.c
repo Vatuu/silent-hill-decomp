@@ -3188,7 +3188,7 @@ void func_800DBBD8(MATRIX* mat) // 0x800DBBD8
     SetTransMatrix(&transformMat);
 }
 
-void func_800DBC18(q19_12 damageAmt) // 0x800DBC18
+void func_800DBC18(q19_12 damageAmount) // 0x800DBC18
 {
     s32 i;
 
@@ -3207,10 +3207,10 @@ void func_800DBC18(q19_12 damageAmt) // 0x800DBC18
 
     for (i = 1; i < D_800F3DB0; i++)
     {
-        damageAmt >>= 1;
+        damageAmount >>= 1;
     }
 
-    g_SysWork.playerWork.player.damage.amount_C += damageAmt;
+    g_SysWork.playerWork.player.damage.amount_C += damageAmount;
 }
 
 bool func_800DBCA4(MATRIX* mat, VECTOR3* outVec) // 0x800DBCA4

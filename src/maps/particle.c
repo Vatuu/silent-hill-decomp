@@ -3715,7 +3715,7 @@ void Particle_BoundaryClamp(VECTOR3* point, VECTOR3* lineStart, VECTOR3* lineEnd
 void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1)
 {
     s32 temp_a1;
-    s32 shiftAmt;
+    s32 shiftAmount;
     s32 var_s0;
     s32 var_s1;
 
@@ -3797,9 +3797,9 @@ void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1)
         sharedData_800E0CB0_0_s00 = (var_s1 * 0x4000) | (var_s0 * 0x1000);
 
         temp_a1  = var_s0 + 4;
-        shiftAmt = (2 - var_s1) * 6;
+        shiftAmount = (2 - var_s1) * 6;
 
-        sharedData_800E0CB0_0_s00 = sharedData_800E0CB0_0_s00 | (temp_a1 << shiftAmt) | (temp_a1 << (shiftAmt + 3));
+        sharedData_800E0CB0_0_s00 = sharedData_800E0CB0_0_s00 | (temp_a1 << shiftAmount) | (temp_a1 << (shiftAmount + 3));
     }
 
     sharedFunc_800D0A60_0_s00(D_800C39A0);

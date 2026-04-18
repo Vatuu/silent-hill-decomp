@@ -36,20 +36,20 @@ void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* coords)
     VECTOR3 offset;
     q19_12  moveSpeed;
     q3_12   headingAngle;
-    q19_12  moveAmt;
+    q19_12  moveDist;
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 
     unused       = incubator->position;
     moveSpeed    = incubator->moveSpeed;
     headingAngle = incubator->headingAngle;
-    moveAmt      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
+    moveDist      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
-    scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
+    scaleRestoreShift = OVERFLOW_GUARD(moveDist);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
-    offset.vx = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vz = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
+    offset.vx = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
+    offset.vz = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vy = Q12_MULT_PRECISE(incubator->fallSpeed, g_DeltaTime);
 
     incubator->position.vx += offset.vx;

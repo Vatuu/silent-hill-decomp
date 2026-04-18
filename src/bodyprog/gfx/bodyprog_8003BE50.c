@@ -254,7 +254,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
     SVECTOR         rot;
     s32             temp_a1;
     s32             temp_a2;
-    q19_12          moveAmt;
+    q19_12          moveDist;
     s32             temp_s0_2;
     s32             temp_v1_4;
     s32             var_a0;
@@ -274,11 +274,11 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
         pos0 = chara->position;
     }
 
-    moveAmt = (chara->moveSpeed * Q12(5.5f)) / 16015; // TODO: `Q12(3.91f)`? What's this doing?
-    moveAmt = CLAMP(moveAmt, Q12(0.0f), Q12(5.5f));
+    moveDist = (chara->moveSpeed * Q12(5.5f)) / 16015; // TODO: `Q12(3.91f)`? What's this doing?
+    moveDist = CLAMP(moveDist, Q12(0.0f), Q12(5.5f));
 
-    pos0.vx += Q12_MULT_PRECISE(moveAmt, Math_Sin(chara->headingAngle));
-    pos0.vz += Q12_MULT_PRECISE(moveAmt, Math_Cos(chara->headingAngle));
+    pos0.vx += Q12_MULT_PRECISE(moveDist, Math_Sin(chara->headingAngle));
+    pos0.vz += Q12_MULT_PRECISE(moveDist, Math_Cos(chara->headingAngle));
 
     if (g_WorldGfxWork.mapInfo_0 == &MAP_INFOS[MapType_THR] &&
         chara->position.vx >= Q12(-40.0f) && chara->position.vx <= Q12(40.0f) &&

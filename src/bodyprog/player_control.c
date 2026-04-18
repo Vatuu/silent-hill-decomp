@@ -603,11 +603,6 @@ bool func_80071620(u32 animStatus, s_SubCharacter* player, s32 keyframeIdx, e_Sf
 
 void Player_Update(s_SubCharacter* player, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800717D0
 {
-    // Called by `GameState_InGame_Update`, might be player update function.
-    // - `chara` always `&g_SysWork.playerWork.player`.
-    // - `arg1`  always `0x8010A600`/`FS_BUFFER_0` (holds anim data).
-    // - `coord` always `&g_SysWork.playerBoneCoords`.
-
     s_PlayerExtra* extra;
 
     extra = &g_SysWork.playerWork.extra;

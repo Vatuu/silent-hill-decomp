@@ -31,7 +31,7 @@ u16 g_Demo_RandSeed = 0;
 // 2 bytes of padding.
 s_DemoFrameData* g_Demo_PlayFileBufferPtr = (s_DemoFrameData*)0x800F5E00;
 
-bool Demo_SequenceAdvance(s32 incrementAmt) // 0x8008EF20
+bool Demo_SequenceAdvance(s32 incrementAmount) // 0x8008EF20
 {
     #define DEMO_FILE_COUNT_MAX 5
 
@@ -52,7 +52,7 @@ bool Demo_SequenceAdvance(s32 incrementAmt) // 0x8008EF20
 #endif
     };
 
-    g_Demo_DemoId += incrementAmt;
+    g_Demo_DemoId += incrementAmount;
 
     while (true)
     {
@@ -75,8 +75,8 @@ bool Demo_SequenceAdvance(s32 incrementAmt) // 0x8008EF20
         }
 
         // If funcptr is set and returned false, skip to next demo.
-        // Direction to skip depends on sign of `incrementAmt` (forward or backward).
-        if (incrementAmt >= 0)
+        // Direction to skip depends on sign of `incrementAmount` (forward or backward).
+        if (incrementAmount >= 0)
         {
             g_Demo_DemoId++;
         }

@@ -173,7 +173,7 @@ void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead)
 void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
 {
     u8  isPlayerDead;
-    s32 damageAmt;
+    s32 damageAmount;
     s32 newHealth;
 
     // `Player_DisableDamage` sets first arg to `g_Player_IsDead` value, which gets set to 1 by `Player_ReceiveDamage` when player health is 0 or below.
@@ -188,16 +188,16 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
         return;
     }
 
-    damageAmt = FP_FROM(splitHead->damage.amount_C, Q12_SHIFT);
+    damageAmount = FP_FROM(splitHead->damage.amount_C, Q12_SHIFT);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        damageAmt >>= 1;
+        damageAmount >>= 1;
     }
 
-    if (damageAmt == 0)
+    if (damageAmount == 0)
     {
-        damageAmt = 1;
+        damageAmount = 1;
     }
 
     if (splitHeadProps.flags_E8 & SplitHeadFlag_0)
@@ -205,15 +205,15 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
         if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Hard &&
             g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap))
         {
-            damageAmt <<= 5;
+            damageAmount <<= 5;
         }
         else
         {
-            damageAmt <<= 4;
+            damageAmount <<= 4;
         }
     }
 
-    newHealth = splitHead->health - damageAmt;
+    newHealth = splitHead->health - damageAmount;
     if (isPlayerDead)
     {
         if (newHealth <= 0)
