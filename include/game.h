@@ -1318,7 +1318,7 @@ typedef struct _PropertiesPlayer
     s8            unk_10E[2];
     q19_12        timer_110; // Increases when `flags & CharaFlag_Unk4` is set, reset when reaches `D_800C45EC`.
     q19_12        gasWeaponPowerTimer_114; // Timer for the rock drill and chainsaw power.
-    s16           field_118;
+    s16           field_118; // q3_12?
     s8            unk_11A[2];
     e_PlayerFlags flags_11C;
     q3_12         quickTurnHeadingAngle_120; /** Target quick turn heading angle. */

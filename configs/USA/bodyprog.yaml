@@ -167,12 +167,12 @@ segments:
       - [0x13264,   c, events/npc_main]          # }
       - [0x14074,   c, events/game_sys_states]   # }
       - [0x15FC8,   c, events/title] # Name convention from SH2/4.
-      - [0x171CC,   c, events/bodyprog_8003BD2C]
+      - [0x171CC,   c, events/bodyprog_8003BD2C] # npc_collisions_update.c?
       - [0x172F0,   c, gfx/bodyprog_8003BE50]
       - [0x19A88,   c, gfx/map_effects]
-      - [0x1B4A4,   c, gfx/bodyprog_80040004]
+      - [0x1B4A4,   c, events/bodyprog_80040004] # triggers_update.c?
       - [0x1B4EC,   c, view/vc_util]
-      - [0x1BF04,   c, gfx/bodyprog_80040A64]
+      - [0x1C014,   c, gfx/bodyprog_80040B74]
       - [0x1FA44,   c, gfx/bodyprog_anim_800445A4]
       - [0x20F1C,   c, sound/sd_call]
       - [0x23ED8,   c, view/vw_main]
@@ -464,7 +464,7 @@ segments:
       - [0x98288, .bss, gfx/map_effects]
       - [0x98298,  bss]
       - [0x9B08C,  pad] # Garbage.
-      - [0x9B090, .bss, gfx/bodyprog_80040A64]
+      - [0x9B090, .bss, gfx/bodyprog_80040B74]
       - [0x9CA4C,  pad] # Garbage.
       - [0x9CA50, .bss, gfx/bodyprog_anim_800445A4]
       - [0x9CA54,  pad] # Garbage.

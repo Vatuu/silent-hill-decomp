@@ -154,9 +154,9 @@ segments:
       - [0x16F00, c, events/bodyprog_8003BD2C]
       - [0x17024, c, gfx/bodyprog_8003BE50]
       - [0x197BC, c, gfx/map_effects]
-      - [0x1B1D8, c, gfx/bodyprog_80040004]
+      - [0x1B1D8, c, events/bodyprog_80040004]
       - [0x1B220, c, view/vc_util]
-      - [0x1BC38, c, gfx/bodyprog_80040A64]
+      - [0x1BD48, c, gfx/bodyprog_80040B74]
       - [0x1F778, c, gfx/bodyprog_anim_800445A4]
       - [0x20C50, c, sound/sd_call]
       - [0x23C0C, c, view/vw_main]
@@ -458,7 +458,7 @@ segments:
       - [0x9A7B8, .bss, gfx/map_effects]
       - [0x9A7C8, bss]
       - [0x9D5BC, pad] # Garbage
-      - [0x9D5C0, .bss, gfx/bodyprog_80040A64]
+      - [0x9D5C0, .bss, gfx/bodyprog_80040B74]
       - [0x9EF7C, pad] # Garbage
       - [0x9EF80, .bss, gfx/bodyprog_anim_800445A4]
       - [0x9EF84, pad] # Garbage

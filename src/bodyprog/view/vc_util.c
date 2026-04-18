@@ -356,4 +356,35 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     #undef MOVE_DIST
 }
 
+s8 Sound_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
+{
+    VECTOR3 camPos; // Q19.12
+    VECTOR  offset; // Q25.6
+    VECTOR  dir;    // Q19.12
+    MATRIX  viewMat;
+    s32     dot;
+    s32     balance;
+
+    // If monoural sound type, default to balance of 0.
+    if (g_GameWork.config.optSoundType_1E)
+    {
+        return 0;
+    }
+
+    // Compute direction from camera to sound.
+    vwGetViewPosition(&camPos);
+    offset.vx = Q12_TO_Q6(soundPos->vx - camPos.vx);
+    offset.vy = Q12_TO_Q6(soundPos->vy - camPos.vy);
+    offset.vz = Q12_TO_Q6(soundPos->vz - camPos.vz);
+    VectorNormal(&offset, &dir);
+
+    // Compute stereo balance.
+    Vw_CoordHierarchyMatrixCompute(vwGetViewCoord(), &viewMat);
+    dot     = Math_MultiplyMatrix(viewMat, dir);
+    balance = CLAMP(dot, -127, 127);
+    return balance;
+}
+
+void func_80040B6C(void) {} // 0x80040B6C
+
 #undef V_BLANKS_MULT

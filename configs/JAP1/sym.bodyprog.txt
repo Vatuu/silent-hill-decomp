@@ -660,9 +660,9 @@ func_8003FE04                                = 0x8003FBDC; // type:func
 func_8003FEC0                                = 0x8003FC98; // type:func
 func_8003FF2C                                = 0x8003FD04; // type:func
 
-//------------------------------------------------------------------------
-//--- PA: 0x01B27C   VA: 0x8003FDDC   subsegment: c, gfx/bodyprog_80040004
-//------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+//--- PA: 0x01B27C   VA: 0x8003FDDC   subsegment: c, events/bodyprog_80040004
+//---------------------------------------------------------------------------
 func_80040004                                = 0x8003FDDC; // type:func
 func_80040014                                = 0x8003FDEC; // type:func
 
@@ -680,12 +680,12 @@ vcMakeHeroHeadPos                            = 0x80040254; // type:func
 vcAddOfsToPos                                = 0x800402F0; // type:func
 vcSetRefPosAndSysRef2CamParam                = 0x8004039C; // type:func
 vcSetRefPosAndCamPosAngByPad                 = 0x800404AC; // type:func
-
-//------------------------------------------------------------------------
-//--- PA: 0x01BCDC   VA: 0x8004083C   subsegment: c, gfx/bodyprog_80040A64
-//------------------------------------------------------------------------
 Sound_StereoBalanceGet                       = 0x8004083C; // type:func
 func_80040B6C                                = 0x80040944; // type:func
+
+//------------------------------------------------------------------------
+//--- PA: 0x01BDEC   VA: 0x8004094C   subsegment: c, gfx/bodyprog_80040B74
+//------------------------------------------------------------------------
 func_80040B74                                = 0x8004094C; // type:func
 func_80040BAC                                = 0x80040984; // type:func
 func_80040E7C                                = 0x80040C54; // type:func
@@ -3370,7 +3370,7 @@ g_CollisionFlags                             = 0x800BF46C;
 g_WorldGfxWork                               = 0x800BF470;
 
 //---------------------------------------------------------------------------
-//--- PA: 0x09D6E8   VA: 0x800C2248   subsegment: .bss, gfx/bodyprog_80040A64
+//--- PA: 0x09D6E8   VA: 0x800C2248   subsegment: .bss, gfx/bodyprog_80040B74
 //---------------------------------------------------------------------------
 D_800BFBF0                                   = 0x800C2248;
 D_800C1010                                   = 0x800C3668;
