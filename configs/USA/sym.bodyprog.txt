@@ -759,7 +759,7 @@ Collision_ActiveCharactersGet                = 0x8006A1A4; // type:func
 Collision_OffsetCheck                        = 0x8006A3B4; // type:func
 Collision_QueryInit                          = 0x8006AB50; // type:func
 Collision_QueryDirectionCalc                 = 0x8006ABC0; // type:func
-func_8006CB90                                = 0x8006CB90;
+Collision_OffsetAlphaGet                     = 0x8006CB90;
 Ray_LineCheck                                = 0x8006D90C; // type:func
 Ray_MissSet                                  = 0x8006DAE4; // type:func
 Ray_TraceSetup                               = 0x8006DCE0; // type:func
@@ -769,6 +769,7 @@ Chara_HeadingAngleGet                        = 0x8006FAFC; // type:func
 //-----------------------------------------------------------------
 //--- PA: 0x04BB84   VA: 0x800706E4   subsegment: c, player_control
 //-----------------------------------------------------------------
+Player_VariableAnimDurationGet               = 0x800706E4;
 Player_CharaTurn_0                           = 0x800711C4; // type:func
 Player_CharaTurn_1                           = 0x80071224; // type:func
 Player_CharaRotate                           = 0x80071284; // type:func

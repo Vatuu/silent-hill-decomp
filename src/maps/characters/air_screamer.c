@@ -99,7 +99,7 @@ bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer)
 
         // Run through flags defining which SFX to play.
         data = &sharedData_800CAA98_0_s01;
-        for (i = 0; i < 11; i++)
+        for (i = 0; i < ARRAY_SIZE(data->sfxVolumes_CE8); i++)
         {
             if (flags & (1 << i))
             {
