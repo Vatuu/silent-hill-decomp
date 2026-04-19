@@ -127,9 +127,9 @@ void Item_HeldItemModelFree(void) // 0x8003C0C0
 
     heldItem->itemId_0                       = NO_VALUE;
     heldItem->lmHdr_14                       = HELD_ITEM_LM_BUFFER;
-    heldItem->bone_18.modelInfo_0.field_0    = 0;
-    heldItem->bone_18.modelInfo_0.coord_4    = NULL;
-    heldItem->bone_18.modelInfo_0.modelHdr_8 = NULL;
+    heldItem->bone_18.modelInfo.field_0    = 0;
+    heldItem->bone_18.modelInfo.coord_4    = NULL;
+    heldItem->bone_18.modelInfo.modelHdr_8 = NULL;
 }
 
 void CharaModel_AllModelsFree(void) // 0x8003C110
@@ -380,7 +380,7 @@ void Gfx_InGameDraw(s32 arg0) // 0x8003C878
 void WorldObject_ModelNameSet(s_WorldObjectModel* model, char* newStr) // 0x8003C8F8
 {
     model->metadata_10.lmIdx_9 = 0;
-    model->modelInfo_0.field_0  = 0;
+    model->modelInfo.field_0  = 0;
 
     StringCopy(model->metadata_10.name_0.str, newStr);
 
@@ -516,7 +516,7 @@ void func_8003CC7C(s_WorldObjectModel* model, MATRIX* viewMat, MATRIX* worldMat)
         return;
     }
 
-    modelHdr   = model->modelInfo_0.modelHdr_8;
+    modelHdr   = model->modelInfo.modelHdr_8;
     objMetaCpy = &model->metadata_10;
 
     if (lmIdx >= 3 && lmIdx < 7)
@@ -533,7 +533,7 @@ void func_8003CC7C(s_WorldObjectModel* model, MATRIX* viewMat, MATRIX* worldMat)
         return;
     }
 
-    func_80057090(&model->modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, viewMat, worldMat, 0);
+    func_80057090(&model->modelInfo, &g_OrderingTable0[g_ActiveBufferIdx], 1, viewMat, worldMat, 0);
 }
 
 // ========================================
@@ -762,12 +762,12 @@ s32 WorldGfx_PlayerHeldItemSet(e_InvItemId itemId) // 0x8003CDA0
 
 void func_8003D01C(void) // 0x8003D01C
 {
-    g_WorldGfxWork.heldItem_1BAC.bone_18.modelInfo_0.field_0 &= ~(1 << 31);
+    g_WorldGfxWork.heldItem_1BAC.bone_18.modelInfo.field_0 &= ~(1 << 31);
 }
 
 void func_8003D03C(void) // 0x8003D03C
 {
-    g_WorldGfxWork.heldItem_1BAC.bone_18.modelInfo_0.field_0 |= 1 << 31;
+    g_WorldGfxWork.heldItem_1BAC.bone_18.modelInfo.field_0 |= 1 << 31;
 }
 
 void WorldGfx_HeldItemDraw(void) // 0x8003D058
@@ -807,7 +807,7 @@ void WorldGfx_HeldItemDraw(void) // 0x8003D058
         }
 
         Vw_CoordToWorldAndViewMatrices(coord, &worldMat, &viewMat);
-        func_80057090(&heldItem->bone_18.modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, &viewMat, &worldMat, 0);
+        func_80057090(&heldItem->bone_18.modelInfo, &g_OrderingTable0[g_ActiveBufferIdx], 1, &viewMat, &worldMat, 0);
     }
 }
 
@@ -1160,7 +1160,7 @@ void WorldGfx_CharaModelProcessLoad(s_CharaModel* model) // 0x8003D9C8
         model->isLoaded_1 = true;
 
         LmHeader_FixOffsets(model->lmHdr_8);
-        Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[model->charaId].textureFileIdx, &model->texture_C, CHARA_FILE_INFOS[model->charaId].materialBlendMode_6_10 % 4);
+        Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[model->charaId].textureFileIdx, &model->texture_C, CHARA_FILE_INFOS[model->charaId].materialBlendMode % 4);
 
         skel = &model->skeleton_14;
 
@@ -1172,7 +1172,7 @@ void WorldGfx_CharaModelProcessLoad(s_CharaModel* model) // 0x8003D9C8
     }
 }
 
-void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, q3_12 timer, s32 arg4) // 0x8003DA9C
+void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12 timer, s32 arg4) // 0x8003DA9C
 {
     CVECTOR tintColor = { 0 };
     s16     ret;
@@ -1205,7 +1205,7 @@ void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, q3_12 
     }
 
     func_80045534(&g_WorldGfxWork.registeredCharaModels_18[charaId]->skeleton_14, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
-                  coord, Q8_TO_Q12(CHARA_FILE_INFOS[charaId].field_6), ret, CHARA_FILE_INFOS[charaId].field_8);
+                  boneCoords, Q8_TO_Q12(CHARA_FILE_INFOS[charaId].field_6), ret, CHARA_FILE_INFOS[charaId].field_8);
 
     if (timer != Q12(0.0f))
     {

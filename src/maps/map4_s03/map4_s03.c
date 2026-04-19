@@ -3023,7 +3023,7 @@ void func_800D59C0(s_LinkedBone* bone) // 0x800D59C0
 
     for (i = 0; i < 56; i++)
     {
-        bone[i].bone.modelInfo_0.field_0 &= ~1;
+        bone[i].bone.modelInfo.field_0 &= ~1;
     }
 }
 
@@ -3063,7 +3063,7 @@ void func_800D59EC(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D59EC
                 }
 
                 bone                       = &bones[idx - 1].bone;
-                bone->modelInfo_0.field_0 |= 1 << 0;
+                bone->modelInfo.field_0 |= 1 << 0;
             }
         }
     }
@@ -3088,7 +3088,7 @@ void func_800D59EC(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D59EC
                     }
 
                     bone                       = &bones[idx - 1].bone;
-                    bone->modelInfo_0.field_0 |= 1 << 0;
+                    bone->modelInfo.field_0 |= 1 << 0;
                 }
             }
         }

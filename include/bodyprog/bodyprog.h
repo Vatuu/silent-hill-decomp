@@ -1079,14 +1079,16 @@ typedef struct
     s32            modelIdx_C;
 } s_ModelInfo;
 
+/** @brief IPD skeleton model bone. */
 typedef struct _Bone
 {
-    s_ModelInfo   modelInfo_0;
-    s8            field_10;
-    s8            unk_11[3];
+    /* 0x0  */ s_ModelInfo modelInfo;
+    /* 0x10 */ s8          idx;
+               // 3 bytes of padding.
 } s_Bone;
 STATIC_ASSERT_SIZEOF(s_Bone, 20);
 
+/** @brief IPD skeleton model bone node. */
 typedef struct _LinkedBone
 {
     /* 0x0  */ s_Bone              bone;
@@ -1123,14 +1125,14 @@ typedef struct
 // or `s_AnimMetadata`?
 typedef struct _CharaAnimDataInfo
 {
-    s8             charaId0_0;  /** `e_CharacterId` */
-    s8             charaId1_1;  /** `e_CharacterId` */
-    // 2 bytes of padding.
-    s32            animFile0_4; // s_AnmHeader* animFile0_4; // TODO: Needs to be a pointer.
-    s_AnmHeader*   animFile1_8;
-    s32            animBufferSize1_C;
-    s32            animBufferSize2_10;
-    GsCOORDINATE2* npcCoords_14;
+    /* 0x0  */ s8             charaId0_0;  /** `e_CharacterId` */
+    /* 0x1  */ s8             charaId1_1;  /** `e_CharacterId` */
+               // 2 bytes of padding.
+    /* 0x4  */ s32            animFile0_4; // s_AnmHeader* animFile0_4; // TODO: Needs to be a pointer.
+    /* 0x8  */ s_AnmHeader*   animFile1_8;
+    /* 0xC  */ s32            animBufferSize1_C;
+    /* 0x10 */ s32            animBufferSize2_10;
+    /* 0x14 */ GsCOORDINATE2* npcBoneCoords;
 } s_CharaAnimDataInfo;
 STATIC_ASSERT_SIZEOF(s_CharaAnimDataInfo, 24);
 
@@ -1228,7 +1230,7 @@ typedef struct _WorldObjectMetadata
 // Rough name.
 typedef struct _WorldObjectModel
 {
-    s_ModelInfo           modelInfo_0;
+    s_ModelInfo           modelInfo;
     s_WorldObjectMetadata metadata_10;
 } s_WorldObjectModel;
 STATIC_ASSERT_SIZEOF(s_WorldObjectModel, 28);
@@ -1286,7 +1288,7 @@ typedef struct _WorldGfxWork
     s_CharaModel      charaModels_CC[CHARA_GROUP_COUNT];
     s_CharaModel      harryModel_164C;
     s_HeldItem        heldItem_1BAC;             /** The item held by the player. */
-    s_TriggerZone*  triggerZone_1BD8;
+    s_TriggerZone*    triggerZone_1BD8;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; /** Debug camera info. */
     s_LmHeader        itemLmHdr_1BE4;
     u8                itemLmData_1BF4[4096 - sizeof(s_LmHeader)]; // Retail game uses 2.75kb file, but they allocate 4kb for it.
@@ -1432,15 +1434,15 @@ typedef struct
 /** Holds file IDs of anim/model/texture for each `e_CharacterId`, along with some data used in VC camera code. */
 typedef struct
 {
-    s16            animFileIdx;
-    s16            modelFileIdx;
-    s16            textureFileIdx         : 16;
-    q8_8           field_6                : 10;
-    u16            materialBlendMode_6_10 : 6; /** `e_BlendMode` */
-    s_FsImageDesc* field_8;                    // Extra texture pointer? Usually `NULL` in `CHARA_FILE_INFOS`.
-    u16            cameraAnchor_C_0  : 2;      /** `e_CameraAnchor` */
-    q19_12         cameraOffsetY_C_2 : 14;
-    // 2 bytes of padding.
+    /* 0x0    */ s16            animFileIdx;
+    /* 0x2    */ s16            modelFileIdx;
+    /* 0x4+0  */ s16            textureFileIdx    : 16;
+    /* 0x4+16 */ q8_8           field_6           : 10;
+    /* 0x4+26 */ u16            materialBlendMode : 6; /** `e_BlendMode` */
+    /* 0x8    */ s_FsImageDesc* field_8;               // TODO: Extra texture pointer? Usually `NULL` in `CHARA_FILE_INFOS`.
+    /* 0xC+0  */ u16            cameraAnchor  : 2;     /** `e_CameraAnchor` */
+    /* 0xC+2  */ q19_12         cameraOffsetY : 14;
+                 // 2 bytes of padding.
 } s_CharaFileInfo;
 STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
 
@@ -3031,7 +3033,7 @@ void func_800453E8(s_Skeleton* skel, bool cond);
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, bool cond);
 
-void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q3_12 arg4, u16 arg5, s_FsImageDesc* images);
+void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* boneCoords, q3_12 arg4, u16 arg5, s_FsImageDesc* images);
 
 /** `arg0` is probably a bit flag. */
 void func_8004C564(u8 arg0, s8 weaponAttack);
@@ -4222,7 +4224,7 @@ void WorldGfx_CharaModelProcessAllLoads(void);
 
 void WorldGfx_CharaModelProcessLoad(s_CharaModel* model);
 
-void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, q3_12 timer, s32 arg4);
+void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12 timer, s32 arg4);
 
 /** Something for Harry. `arg` is a packed value. */
 void func_8003DE60(s_Skeleton* skel, s32 arg1);

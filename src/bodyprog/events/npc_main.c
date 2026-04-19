@@ -168,7 +168,7 @@ void Game_NpcUpdate(void) // 0x80038354
     s32                l;
     s32                animDataInfoIdx;
     s32                temp2;
-    GsCOORDINATE2*     coord;
+    GsCOORDINATE2*     boneCoords;
     s_SubCharacter*    npc;
     s_func_800382EC_0* temp_s0_3;
 
@@ -306,13 +306,13 @@ void Game_NpcUpdate(void) // 0x80038354
             npc->model.anim.flags |= AnimFlag_Unlocked;
 
             animDataInfoIdx = g_CharaAnimInfoIdxs[npc->model.charaId];
-            coord           = g_CharaTypeAnimInfo[animDataInfoIdx].npcCoords_14;
+            boneCoords      = g_CharaTypeAnimInfo[animDataInfoIdx].npcBoneCoords;
 
             Chara_Flag8Clear(npc);
             Chara_DamagedFlagUpdate(npc);
             func_8003BD48(npc);
 
-            g_MapOverlayHeader.charaUpdateFuncs_194[npc->model.charaId](npc, g_CharaTypeAnimInfo[animDataInfoIdx].animFile1_8, coord);
+            g_MapOverlayHeader.charaUpdateFuncs_194[npc->model.charaId](npc, g_CharaTypeAnimInfo[animDataInfoIdx].animFile1_8, boneCoords);
 
             func_8003BE28();
             func_80037E78(npc);
@@ -320,7 +320,7 @@ void Game_NpcUpdate(void) // 0x80038354
 
             if (npc->model.anim.flags & AnimFlag_Visible)
             {
-                func_8003DA9C(npc->model.charaId, coord, 1, npc->timer_C6, (s8)npc->model.paletteIdx);
+                func_8003DA9C(npc->model.charaId, boneCoords, 1, npc->timer_C6, (s8)npc->model.paletteIdx);
             }
         }
     }

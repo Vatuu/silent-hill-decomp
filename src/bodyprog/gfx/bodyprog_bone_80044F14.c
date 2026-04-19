@@ -2,9 +2,9 @@
 #include "inline_no_dmpsx.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/math/math.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
 s8* D_800C15B0;
@@ -15,20 +15,18 @@ s8* D_800C15B0;
 
 void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q19_12 rotY) // 0x80044F14
 {
-    SVECTOR* var1;
-    MATRIX*  var2;
+    SVECTOR* rot; // Q3.12
+    MATRIX*  rotMat;
     
-    var1 = PSX_SCRATCH;
-    var2 = PSX_SCRATCH_ADDR(sizeof(SVECTOR));
+    rot    = PSX_SCRATCH;
+    rotMat = PSX_SCRATCH_ADDR(sizeof(SVECTOR));
     
-    var1->vz = rotZ;
-    var1->vy = rotY;
-    var1->vx = rotX;
+    rot->vz = rotZ;
+    rot->vy = rotY;
+    rot->vx = rotX;
 
-    // TODO: Make FS buffer constant for this.
-
-    Math_RotMatrixZxyNegGte(var1, var2);
-    MulMatrix(&coord->coord, var2);
+    Math_RotMatrixZxyNegGte(rot, rotMat);
+    MulMatrix(&coord->coord, rotMat);
 }
 
 s8 Bone_ModelIdxGet(s8* ptr, bool reset) // 0x80044F6C
@@ -78,7 +76,7 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
     // Traverse bone hierarchy and clear flags.
     for (curBone = &skel->bones_8[0]; curBone < &skel->bones_8[skel->boneCount]; curBone++)
     {
-        curBone->bone.modelInfo_0.field_0 = 0;
+        curBone->bone.modelInfo.field_0 = 0;
     }
 }
 
@@ -111,12 +109,11 @@ void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr) // 0x8004506C
     func_80045108(skel, lmHdr, (s8*)sp10, 0);
 }
 
-// Anim func.
 void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3) // 0x80045108
 {
     s_LinkedBone*  curBone;
     s_LinkedBone** curBoneOrd;
-    s32      boneIdx;
+    s32            boneIdx;
 
     if (arg3 == 0)
     {
@@ -156,13 +153,13 @@ void Skeleton_BoneModelAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2) // 
 void func_80045258(s_LinkedBone** boneOrd, s_LinkedBone* bones, s32 boneIdx, s_LmHeader* lmHdr) // 0x80045258
 {
     s_LinkedBone* curBone;
-    u8*     curObjOrd;
+    u8*           curObjOrd;
 
     for (curObjOrd = lmHdr->modelOrder; curObjOrd < &lmHdr->modelOrder[lmHdr->modelCount]; curObjOrd++)
     {
         for (curBone = bones; curBone < &bones[boneIdx]; curBone++)
         {
-            if (curBone->bone.modelInfo_0.modelIdx_C == *curObjOrd)
+            if (curBone->bone.modelInfo.modelIdx_C == *curObjOrd)
             {
                 *boneOrd = curBone;
                 boneOrd  = &curBone->next;
@@ -175,43 +172,42 @@ void func_80045258(s_LinkedBone** boneOrd, s_LinkedBone* bones, s32 boneIdx, s_L
 
 void func_800452EC(s_Skeleton* skel) // 0x800452EC
 {
-    s32            temp_a0;
-    s32            var_v0;
-    u32            temp_v1;
+    s32            boneIdxTens;
+    s32            boneIdx;
+    u32            boneIdxOnes;
     s_LinkedBone*  curBone;
     s_ModelHeader* modelHdr;
 
     curBone = skel->bones_4;
-    while (curBone)
+    while (curBone != NULL)
     {
-        modelHdr = curBone->bone.modelInfo_0.modelHdr_8;
-        temp_v1 = modelHdr->name_0.str[1] - '0';
-        temp_a0 = modelHdr->name_0.str[0] - '0';
+        modelHdr    = curBone->bone.modelInfo.modelHdr_8;
+        boneIdxOnes = modelHdr->name_0.str[1] - '0';
+        boneIdxTens = modelHdr->name_0.str[0] - '0';
 
-        if (temp_v1 < 10 && temp_a0 >= 0 && temp_a0 < 10)
+        if (boneIdxOnes < 10 && boneIdxTens >= 0 && boneIdxTens < 10)
         {
-            var_v0 = (temp_a0 * 10) + temp_v1;
+            boneIdx = (boneIdxTens * 10) + boneIdxOnes;
         }
         else
         {
-            var_v0 = 0;
+            boneIdx = 0;
         }
 
-        curBone->bone.field_10 = var_v0;
-
-        curBone = curBone->next;
+        curBone->bone.idx = boneIdx;
+        curBone           = curBone->next;
     }
 }
 
 void func_80045360(s_Skeleton* skel, s8* arg1) // 0x80045360
 {
     s32 i;
-    s32 status;
+    s32 boneIdx;
 
-    for (status = Bone_ModelIdxGet(arg1, true), i = 0; status != -2; i++)
+    for (boneIdx = Bone_ModelIdxGet(arg1, true), i = 0; boneIdx != -2; i++)
     {
-        skel->bones_8[i].bone.field_10 = status;
-        status = Bone_ModelIdxGet(arg1, false);
+        skel->bones_8[i].bone.idx = boneIdx;
+        boneIdx = Bone_ModelIdxGet(arg1, false);
     }
 }
 
@@ -224,11 +220,11 @@ void func_800453E8(s_Skeleton* skel, bool cond) // 0x800453E8
     {
         if (cond)
         {
-            curBone->bone.modelInfo_0.field_0 &= ~(1 << 31);
+            curBone->bone.modelInfo.field_0 &= ~(1 << 31);
         }
         else
         {
-            curBone->bone.modelInfo_0.field_0 |= 1 << 31;
+            curBone->bone.modelInfo.field_0 |= 1 << 31;
         }
     }
 }
@@ -246,11 +242,11 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
     {
         if (cond)
         {
-            bones[modelIdx].bone.modelInfo_0.field_0 &= ~(1 << 31);
+            bones[modelIdx].bone.modelInfo.field_0 &= ~(1 << 31);
         }
         else
         {
-            bones[modelIdx].bone.modelInfo_0.field_0 |= 1 << 31;
+            bones[modelIdx].bone.modelInfo.field_0 |= 1 << 31;
         }
 
         modelIdx = Bone_ModelIdxGet(arg1, false);
@@ -259,7 +255,7 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
 
 extern s_WorldEnvWork const g_WorldEnvWork;
 
-void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q3_12 arg4, u16 arg5, s_FsImageDesc* images) // 0x80045534
+void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* boneCoords, q3_12 arg4, u16 arg5, s_FsImageDesc* images) // 0x80045534
 {
     MATRIX         viewMat;
     MATRIX         worldMat;
@@ -307,7 +303,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q
             if (clutY != curImage->clutY)
             {
                 clutY = curImage->clutY;
-                Vw_CoordToViewSpaceMatrix(&coord[clutY], &viewMat);
+                Vw_CoordToViewSpaceMatrix(&boneCoords[clutY], &viewMat);
                 SetRotMatrix(&viewMat);
                 SetTransMatrix(&viewMat);
             }
@@ -351,11 +347,11 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q
 
     for (curBone = skel->bones_4; curBone != NULL; curBone = curBone->next)
     {
-        if (curBone->bone.modelInfo_0.field_0 >= 0)
+        if (curBone->bone.modelInfo.field_0 >= 0)
         {
-            Vw_CoordToWorldAndViewMatrices(&coord[(u8)curBone->bone.field_10], &worldMat, &viewMat);
+            Vw_CoordToWorldAndViewMatrices(&boneCoords[(u8)curBone->bone.idx], &worldMat, &viewMat);
 
-            if (curBone->bone.modelInfo_0.field_0 & (1 << 0))
+            if (curBone->bone.modelInfo.field_0 & (1 << 0))
             {
                 viewMat.m[2][2]         = 0;
                 *(s32*)&viewMat.m[2][0] = 0;
@@ -364,7 +360,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q
                 *(s32*)&viewMat.m[0][0] = 0;
             }
 
-            func_80057090(&curBone->bone.modelInfo_0, ot, arg2, &viewMat, &worldMat, arg5);
+            func_80057090(&curBone->bone.modelInfo, ot, arg2, &viewMat, &worldMat, arg5);
 
             if (g_WorldEnvWork.isFogEnabled_1)
             {

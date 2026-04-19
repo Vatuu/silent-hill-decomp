@@ -29,7 +29,7 @@ bool Chara_ProcessLoads(void) // 0x80088D0C
 void func_80088D34(s32 idx) // 0x80088D34
 {
     idx++;
-    Anim_BoneInit(g_CharaTypeAnimInfo[idx].animFile1_8, g_CharaTypeAnimInfo[idx].npcCoords_14);
+    Anim_BoneInit(g_CharaTypeAnimInfo[idx].animFile1_8, g_CharaTypeAnimInfo[idx].npcBoneCoords);
 }
 
 s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep) // 0x80088D78

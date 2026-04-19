@@ -3,7 +3,7 @@
 #include "game.h"
 
 s_CharaFileInfo CHARA_FILE_INFOS[] = {
-/* `Chara_` name       { `animFileIdx`          `modelFileIdx`         `textureFileIdx`       `field_6`  `materialBlendMode_6_10` `field_8`    `cameraAnchor_C_0`      `cameraOffsetY_C_2` } */
+/* `Chara_` name       { `animFileIdx`          `modelFileIdx`         `textureFileIdx`       `field_6`  `materialBlendMode` `field_8`    `cameraAnchor`      `cameraOffsetY` } */
 /* None             */ {  NO_VALUE,              FILE_1ST_2ZANKO80_TIM, FILE_1ST_2ZANKO80_TIM, Q8(0.0f),  BlendMode_Average,       NULL,        CameraAnchor_Character, Q8(0.0f)           },
 /* Harry            */ {  FILE_ANIM_HB_BASE_ANM, FILE_CHARA_HERO_ILM,   FILE_CHARA_HERO_TIM,   Q8(0.25f), BlendMode_Additive,      NULL,        CameraAnchor_Character, Q8(-0.7f)          },
 /* AirScreamer      */ {  FILE_ANIM_BIRD_ANM,    FILE_CHARA_BIRD_ILM,   FILE_CHARA_REBIRD_TIM, Q8(0.25f), BlendMode_Subtractive,   &D_800A90B4, CameraAnchor_Character, Q8(-0.6f)          },

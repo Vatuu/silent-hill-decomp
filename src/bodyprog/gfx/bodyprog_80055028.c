@@ -1043,11 +1043,11 @@ void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx)
     s_ModelHeader* modelHdr;
 
     modelHdr = lmHdr->modelHdrs;
-    bone->modelInfo_0.modelIdx_C = modelHdrIdx;
+    bone->modelInfo.modelIdx_C = modelHdrIdx;
 
     if (lmHdr->magic == LM_HEADER_MAGIC)
     {
-        bone->modelInfo_0.modelHdr_8 = &modelHdr[modelHdrIdx];
+        bone->modelInfo.modelHdr_8 = &modelHdr[modelHdrIdx];
     }
 }
 
@@ -1072,8 +1072,8 @@ bool Lm_ModelFind(s_WorldObjectModel* model, s_LmHeader* lmHdr, s_WorldObjectMet
             if (!COMPARE_FILENAMES(&modelHdr->name_0, &sp10))
             {
                 result                       = true;
-                model->modelInfo_0.modelIdx_C = i;
-                model->modelInfo_0.modelHdr_8 = modelHdr;
+                model->modelInfo.modelIdx_C = i;
+                model->modelInfo.modelHdr_8 = modelHdr;
             }
         }
     }
