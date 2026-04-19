@@ -512,6 +512,10 @@ Anim_PlaybackOnce                            = 0x800449F0; // type:func
 Anim_PlaybackLoop                            = 0x80044B38; // type:func
 Anim_BlendLinear                             = 0x80044CA4; // type:func
 Anim_BlendEaseOut                            = 0x80044DF0; // type:func
+
+//-----------------------------------------------------------------------------
+//--- PA: 0x0203B4   VA: 0x80044F14   subsegment: c, gfx/bodyprog_bone_80044F14
+//-----------------------------------------------------------------------------
 Bone_ModelIdxGet                             = 0x80044F6C; // type:func
 Skeleton_Init                                = 0x80044FE0; // type:func
 Skeleton_BoneModelAssign                     = 0x800451B0; // type:func

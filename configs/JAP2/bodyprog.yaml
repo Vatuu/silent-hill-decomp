@@ -139,6 +139,7 @@ segments:
       - [0x1B2C4, c, view/vc_util]
       - [0x1BDEC, c, gfx/bodyprog_80040B74]
       - [0x1F81C, c, gfx/bodyprog_anim_800445A4]
+      - [0x2018C, c, gfx/bodyprog_bone_80044F14]
       - [0x20CF4, c, sound/sd_call]
       - [0x23CB0, c, view/vw_main]
       - [0x241A0, c, view/vw_calc] # Contains part of SH2's `vb_main`?
@@ -408,7 +409,7 @@ segments:
       - [0x9D6E4, pad]
       - [0x9D6E8, .bss, gfx/bodyprog_80040B74]
       - [0x9F0A4, pad]
-      - [0x9F0A8, .bss, gfx/bodyprog_anim_800445A4]
+      - [0x9F0A8, .bss, gfx/bodyprog_bone_80044F14]
       - [0x9F0AD, pad]
       - [0x9F0B0, .bss, sound/sd_call]
       - [0xA12D8, .bss, view/vw_main]

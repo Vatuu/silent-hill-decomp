@@ -1,0 +1,471 @@
+#include "game.h"
+#include "inline_no_dmpsx.h"
+
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/math/math.h"
+#include "main/fsqueue.h"
+
+s8* D_800C15B0;
+
+// ========================================
+// BONES AND SKELETONS
+// ========================================
+
+void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q19_12 rotY) // 0x80044F14
+{
+    SVECTOR* var1;
+    MATRIX*  var2;
+    
+    var1 = PSX_SCRATCH;
+    var2 = PSX_SCRATCH_ADDR(sizeof(SVECTOR));
+    
+    var1->vz = rotZ;
+    var1->vy = rotY;
+    var1->vx = rotX;
+
+    // TODO: Make FS buffer constant for this.
+
+    Math_RotMatrixZxyNegGte(var1, var2);
+    MulMatrix(&coord->coord, var2);
+}
+
+s8 Bone_ModelIdxGet(s8* ptr, bool reset) // 0x80044F6C
+{
+    // TODO: These two are probably part of a bigger struct.
+    // `boneMeshIdx` is not referenced directly anywhere else.
+    // It must be reset somewhere at some point.
+    #define boneIdxs    D_800C15B0
+    #define boneMeshIdx D_800C15B4
+
+    if (reset)
+    {
+        boneIdxs = ptr;
+    }
+
+    // LM has <= 1 model.
+    if (boneIdxs[0] != -3)
+    {
+        // -2 for 0 models, 0 for 1 model.
+        boneMeshIdx = boneIdxs[0];
+        boneIdxs++;
+    }
+    // Increment `boneMeshIdx` and break loop when equal to number of models.
+    else if (++boneMeshIdx >= (boneIdxs[1] - 1))
+    {
+        boneIdxs++;
+    }
+
+    return boneMeshIdx;
+}
+
+void Skeleton_Init(s_Skeleton* skel, s_LinkedBone* bones, u8 boneCount) // 0x80044FE0
+{
+    skel->bones_8 = bones;
+    skel->boneCount = boneCount;
+    skel->boneIdx = 0;
+    skel->field_2 = 1;
+    skel->bones_4 = NULL;
+
+    func_80045014(skel);
+}
+
+void func_80045014(s_Skeleton* skel) // 0x80045014
+{
+    s_LinkedBone* curBone;
+
+    // Traverse bone hierarchy and clear flags.
+    for (curBone = &skel->bones_8[0]; curBone < &skel->bones_8[skel->boneCount]; curBone++)
+    {
+        curBone->bone.modelInfo_0.field_0 = 0;
+    }
+}
+
+void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr) // 0x8004506C
+{
+    u8  sp10[4]; // Size unsure, this could be larger.
+    s32 modelCount;
+
+    modelCount = LmHeader_ModelCountGet(lmHdr);
+    sp10[0]    = 0;
+
+    switch (modelCount)
+    {
+        case 0:
+            sp10[0] = BoneHierarchy_End;
+            break;
+
+        case 1:
+            sp10[0] = 0;
+            sp10[1] = BoneHierarchy_End;
+            break;
+
+        default:
+            sp10[1] = BoneHierarchy_MultiModel;
+            sp10[2] = LmHeader_ModelCountGet(lmHdr) - 1;
+            sp10[3] = BoneHierarchy_End;
+            break;
+    }
+
+    func_80045108(skel, lmHdr, (s8*)sp10, 0);
+}
+
+// Anim func.
+void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3) // 0x80045108
+{
+    s_LinkedBone*  curBone;
+    s_LinkedBone** curBoneOrd;
+    s32      boneIdx;
+
+    if (arg3 == 0)
+    {
+        skel->boneIdx = 0;
+        skel->bones_4   = NULL;
+    }
+
+    boneIdx = skel->boneIdx;
+    Skeleton_BoneModelAssign(skel, lmHdr, arg2);
+
+    curBoneOrd = &skel->bones_4;
+    while (*curBoneOrd != NULL)
+    {
+        curBone    = *curBoneOrd;
+        curBoneOrd = &curBone->next;
+    }
+
+    // `Skeleton_BoneModelAssign` increments `boneIdx`.
+    func_80045258(curBoneOrd, &skel->bones_8[boneIdx], skel->boneIdx - boneIdx, lmHdr);
+    func_800453E8(skel, false);
+}
+
+void Skeleton_BoneModelAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2) // 0x800451B0
+{
+    s32 modelIdx;
+
+    modelIdx = Bone_ModelIdxGet(arg2, true);
+    while (modelIdx != BoneHierarchy_End)
+    {
+        Bone_ModelAssign(&skel->bones_8[skel->boneIdx].bone, lmHdr, modelIdx);
+
+        skel->boneIdx++;
+        modelIdx = Bone_ModelIdxGet(arg2, false);
+    }
+}
+
+void func_80045258(s_LinkedBone** boneOrd, s_LinkedBone* bones, s32 boneIdx, s_LmHeader* lmHdr) // 0x80045258
+{
+    s_LinkedBone* curBone;
+    u8*     curObjOrd;
+
+    for (curObjOrd = lmHdr->modelOrder; curObjOrd < &lmHdr->modelOrder[lmHdr->modelCount]; curObjOrd++)
+    {
+        for (curBone = bones; curBone < &bones[boneIdx]; curBone++)
+        {
+            if (curBone->bone.modelInfo_0.modelIdx_C == *curObjOrd)
+            {
+                *boneOrd = curBone;
+                boneOrd  = &curBone->next;
+            }
+        }
+    }
+
+    *boneOrd = NULL;
+}
+
+void func_800452EC(s_Skeleton* skel) // 0x800452EC
+{
+    s32            temp_a0;
+    s32            var_v0;
+    u32            temp_v1;
+    s_LinkedBone*  curBone;
+    s_ModelHeader* modelHdr;
+
+    curBone = skel->bones_4;
+    while (curBone)
+    {
+        modelHdr = curBone->bone.modelInfo_0.modelHdr_8;
+        temp_v1 = modelHdr->name_0.str[1] - '0';
+        temp_a0 = modelHdr->name_0.str[0] - '0';
+
+        if (temp_v1 < 10 && temp_a0 >= 0 && temp_a0 < 10)
+        {
+            var_v0 = (temp_a0 * 10) + temp_v1;
+        }
+        else
+        {
+            var_v0 = 0;
+        }
+
+        curBone->bone.field_10 = var_v0;
+
+        curBone = curBone->next;
+    }
+}
+
+void func_80045360(s_Skeleton* skel, s8* arg1) // 0x80045360
+{
+    s32 i;
+    s32 status;
+
+    for (status = Bone_ModelIdxGet(arg1, true), i = 0; status != -2; i++)
+    {
+        skel->bones_8[i].bone.field_10 = status;
+        status = Bone_ModelIdxGet(arg1, false);
+    }
+}
+
+void func_800453E8(s_Skeleton* skel, bool cond) // 0x800453E8
+{
+    s_LinkedBone* curBone;
+
+    // Traverse bone hierarchy and set flags according to `cond`.
+    for (curBone = &skel->bones_8[0]; curBone < &skel->bones_8[skel->boneCount]; curBone++)
+    {
+        if (cond)
+        {
+            curBone->bone.modelInfo_0.field_0 &= ~(1 << 31);
+        }
+        else
+        {
+            curBone->bone.modelInfo_0.field_0 |= 1 << 31;
+        }
+    }
+}
+
+void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
+{
+    s_LinkedBone* bones;
+    s32           modelIdx;
+
+    bones = skel->bones_8;
+
+    // Traverse bone hierarchy and set flag 31 according to some condition.
+    modelIdx = Bone_ModelIdxGet(arg1, true);
+    while (modelIdx != -2)
+    {
+        if (cond)
+        {
+            bones[modelIdx].bone.modelInfo_0.field_0 &= ~(1 << 31);
+        }
+        else
+        {
+            bones[modelIdx].bone.modelInfo_0.field_0 |= 1 << 31;
+        }
+
+        modelIdx = Bone_ModelIdxGet(arg1, false);
+    }
+}
+
+extern s_WorldEnvWork const g_WorldEnvWork;
+
+void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q3_12 arg4, u16 arg5, s_FsImageDesc* images) // 0x80045534
+{
+    MATRIX         viewMat;
+    MATRIX         worldMat;
+    DVECTOR        sp60;
+    s32            temp_a1;
+    s16            var_fp;
+    s16            var_s3;
+    s16            var_s4;
+    s16            var_s5;
+    s16            var_s6;
+    s16            var_s7;
+    s32            temp_a0;
+    s32            temp_s0;
+    s32            temp_s1_2;
+    s32            temp_s1_3;
+    s32            temp_s1_4;
+    s32            temp_v1;
+    s32            clutY;
+    s32            var_s2;
+    s32            var_s3_2;
+    s32            var_v0_2;
+    s32            var_v0_4;
+    s32            var_v0_5;
+    s_FsImageDesc* curImage;
+    s_LinkedBone*  curBone;
+
+    var_s5 = SHRT_MAX;
+    var_s6 = SHRT_MAX;
+    var_s4 = SHRT_MAX;
+    var_s7 = -SHRT_MAX;
+    var_fp = -SHRT_MAX;
+    var_s3 = -SHRT_MAX;
+
+    if (skel->field_2 == 0)
+    {
+        return;
+    }
+
+    clutY = NO_VALUE;
+
+    if (images != NULL)
+    {
+        for (curImage = images; curImage->clutY != NO_VALUE; curImage++)
+        {
+            if (clutY != curImage->clutY)
+            {
+                clutY = curImage->clutY;
+                Vw_CoordToViewSpaceMatrix(&coord[clutY], &viewMat);
+                SetRotMatrix(&viewMat);
+                SetTransMatrix(&viewMat);
+            }
+
+            gte_ldv0(curImage);
+            gte_rtps();
+            gte_stsxy(&sp60);
+            temp_a1 = gte_stSZ3();
+
+            if (sp60.vx < var_s5)
+            {
+                var_s5 = sp60.vx;
+            }
+
+            if (var_s7 < sp60.vx)
+            {
+                var_s7 = sp60.vx;
+            }
+
+            if (sp60.vy < var_s6)
+            {
+                var_s6 = sp60.vy;
+            }
+
+            if (var_fp < sp60.vy)
+            {
+                var_fp = sp60.vy;
+            }
+
+            if (temp_a1 < var_s4)
+            {
+                var_s4 = temp_a1;
+            }
+
+            if (var_s3 < temp_a1)
+            {
+                var_s3 = temp_a1;
+            }
+        }
+    }
+
+    for (curBone = skel->bones_4; curBone != NULL; curBone = curBone->next)
+    {
+        if (curBone->bone.modelInfo_0.field_0 >= 0)
+        {
+            Vw_CoordToWorldAndViewMatrices(&coord[(u8)curBone->bone.field_10], &worldMat, &viewMat);
+
+            if (curBone->bone.modelInfo_0.field_0 & (1 << 0))
+            {
+                viewMat.m[2][2]         = 0;
+                *(s32*)&viewMat.m[2][0] = 0;
+                *(s32*)&viewMat.m[1][1] = 0;
+                *(s32*)&viewMat.m[0][2] = 0;
+                *(s32*)&viewMat.m[0][0] = 0;
+            }
+
+            func_80057090(&curBone->bone.modelInfo_0, ot, arg2, &viewMat, &worldMat, arg5);
+
+            if (g_WorldEnvWork.isFogEnabled_1)
+            {
+                gte_SetRotMatrix(&viewMat);
+                gte_SetTransMatrix(&viewMat);
+                gte_ldvxy0_Zero();
+                gte_gte_ldvz0();
+                gte_rtps();
+                gte_stsxy(&sp60);
+                temp_a1 = gte_stSZ3();
+
+                if (sp60.vx < var_s5)
+                {
+                    var_s5 = sp60.vx;
+                }
+
+                if (var_s7 < sp60.vx)
+                {
+                    var_s7 = sp60.vx;
+                }
+
+                if (sp60.vy < var_s6)
+                {
+                    var_s6 = sp60.vy;
+                }
+
+                if (var_fp < sp60.vy)
+                {
+                    var_fp = sp60.vy;
+                }
+
+                if (temp_a1 < var_s4)
+                {
+                    var_s4 = temp_a1;
+                }
+
+                if (var_s3 < temp_a1)
+                {
+                    var_s3 = temp_a1;
+                }
+            }
+        }
+    }
+
+    if (g_WorldEnvWork.isFogEnabled_1)
+    {
+        temp_s1_2 = g_SysWork.playerBoneCoords[1].coord.t[1];
+        temp_s1_2 = CLAMP(temp_s1_2, Q8(-2.0f), Q8(0.0f));
+
+        temp_s1_2 += Q12_TO_Q8(g_SysWork.playerWork.player.position.vy);
+        temp_s1_3  = Math_MulFixed(Q12_TO_Q8(g_SysWork.playerWork.player.position.vx), GsWSMATRIX.m[2][0], Q12_SHIFT);
+        temp_s0    = Math_MulFixed(temp_s1_2, GsWSMATRIX.m[2][1], Q12_SHIFT);
+        temp_s1_4  = ((temp_s1_3 + temp_s0) + Math_MulFixed(Q12_TO_Q8(g_SysWork.playerWork.player.position.vz), GsWSMATRIX.m[2][2], Q12_SHIFT)) + GsWSMATRIX.t[2];
+
+        var_s3_2 = (var_s4 + var_s3) >> 1;
+        temp_v1  = var_s3_2 - ((var_s3 - var_s4) >> 1);
+
+        temp_a0 = temp_v1 - 0x33;
+
+        if (temp_s1_4 >= (temp_v1 - 0x41A))
+        {
+            if (temp_s1_4 < (temp_v1 - 0x1A))
+            {
+                var_v0_2  = temp_s1_4 + 0x3E7;
+                var_v0_2 -= temp_a0;
+                var_v0_2  = Q12(var_v0_2);
+
+                if (var_v0_2 < 0)
+                {
+                    var_v0_2 += 0x3FF;
+                }
+
+                var_s3_2 += Math_MulFixed(temp_a0 - var_s3_2, var_v0_2 >> 10, Q12_SHIFT);
+            }
+            else if (temp_s1_4 < temp_a0)
+            {
+                var_s3_2 = temp_a0;
+            }
+            else if (temp_s1_4 < var_s3_2)
+            {
+                var_s3_2 = temp_s1_4;
+            }
+        }
+
+        var_s3_2 = MAX(var_s3_2, 4);
+
+        var_s2 = Q8_TO_Q12(var_s4) - arg4;
+        var_s2 = MAX(var_s2, 0);
+
+        clutY   = ReadGeomScreen();
+        var_v0_4 = Q12_TO_Q8(arg4) * clutY;
+
+        if (var_s4 >= 5)
+        {
+            var_v0_5 = (var_v0_4 / var_s4) + 2;
+        }
+        else
+        {
+            var_v0_5 = (var_v0_4 / 4) + 2;
+        }
+
+        Gfx_FogOverlayQuadDraw(var_s5 - var_v0_5, var_s6 - var_v0_5, var_s7 + var_v0_5, var_fp + var_v0_5, var_s3_2 * 16, var_s2, ot, arg2);
+    }
+}

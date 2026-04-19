@@ -760,6 +760,10 @@ Anim_PlaybackOnce                            = 0x800447C8; // type:func
 Anim_PlaybackLoop                            = 0x80044910; // type:func
 Anim_BlendLinear                             = 0x80044A7C; // type:func
 Anim_BlendEaseOut                            = 0x80044BC8; // type:func
+
+//-----------------------------------------------------------------------------
+//--- PA: 0x02018C   VA: 0x80044CEC   subsegment: c, gfx/bodyprog_bone_80044F14
+//-----------------------------------------------------------------------------
 func_80044F14                                = 0x80044CEC; // type:func
 Bone_ModelIdxGet                             = 0x80044D44; // type:func
 Skeleton_Init                                = 0x80044DB8; // type:func
@@ -3377,7 +3381,7 @@ D_800C1010                                   = 0x800C3668;
 g_Map                                        = 0x800C3678;
 
 //--------------------------------------------------------------------------------
-//--- PA: 0x09F0A8   VA: 0x800C3C08   subsegment: .bss, gfx/bodyprog_anim_800445A4
+//--- PA: 0x09F0A8   VA: 0x800C3C08   subsegment: .bss, gfx/bodyprog_bone_80044F14
 //--------------------------------------------------------------------------------
 D_800C15B0                                   = 0x800C3C08;
 D_800C15B4                                   = 0x800C3C0C;
