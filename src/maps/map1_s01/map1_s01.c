@@ -1054,13 +1054,13 @@ void Map_WorldObjectsInit(void) // 0x800D91EC
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        func_80088FF4(Chara_GreyChild, 10, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 10, SpawnFlag_None);
     }
     else if (g_SavegamePtr->gameDifficulty_260 == 1)
     {
-        func_80088FF4(Chara_GreyChild, 0, SpawnFlag_0 | SpawnFlag_1);
-        func_80088FF4(Chara_GreyChild, 1, SpawnFlag_0 | SpawnFlag_1);
-        func_80088FF4(Chara_GreyChild, 2, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 0, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 1, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 2, SpawnFlag_0 | SpawnFlag_1);
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
@@ -1183,27 +1183,27 @@ void func_800D9DDC(void) // 0x800D9DDC
     {
         if (Savegame_EventFlagGet(EventFlag_M1S01_PickupChemical))
         {
-            func_80088FF4(Chara_GreyChild, 0, SpawnFlag_0 | SpawnFlag_1);
+            Chara_SpawnFlagsSet(Chara_GreyChild, 0, SpawnFlag_0 | SpawnFlag_1);
         }
 
         if (Savegame_EventFlagGet(EventFlag_M1S01_PickupGoldMedallion))
         {
-            func_80088FF4(Chara_GreyChild, 1, SpawnFlag_0 | SpawnFlag_1);
+            Chara_SpawnFlagsSet(Chara_GreyChild, 1, SpawnFlag_0 | SpawnFlag_1);
 
             if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
             {
-                func_80088FF4(Chara_GreyChild, 2, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_2);
+                Chara_SpawnFlagsSet(Chara_GreyChild, 2, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_2);
             }
         }
     }
 
     if (Savegame_EventFlagGet(EventFlag_77))
     {
-        func_80088FF4(Chara_GreyChild, 3, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 3, SpawnFlag_0 | SpawnFlag_1);
 
         if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
         {
-            func_80088FF4(Chara_GreyChild, 7, SpawnFlag_None);
+            Chara_SpawnFlagsSet(Chara_GreyChild, 7, SpawnFlag_None);
         }
     }
 }

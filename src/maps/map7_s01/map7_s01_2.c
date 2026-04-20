@@ -2577,22 +2577,22 @@ void func_800DEDA4(void) // 0x800DEDA4
     {
         if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
         {
-            func_80088FF4(16, 2, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3 | SpawnFlag_4);
+            Chara_SpawnFlagsSet(16, 2, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3 | SpawnFlag_4);
         }
 
-        func_80088FF4(16, 3, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3 | SpawnFlag_4);
+        Chara_SpawnFlagsSet(16, 3, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3 | SpawnFlag_4);
     }
     else if (Savegame_EventFlagGet(EventFlag_485))
     {
-        func_80088FF4(16, 0, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_4);
-        func_80088FF4(16, 1, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_4);
+        Chara_SpawnFlagsSet(16, 0, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_4);
+        Chara_SpawnFlagsSet(16, 1, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_4);
     }
 
     if (Savegame_EventFlagGet(EventFlag_525) && g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
     {
-        func_80088FF4(16, 12, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_4);
-        func_80088FF4(16, 13, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_2 | SpawnFlag_4);
-        func_80088FF4(16, 14, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3 | SpawnFlag_4);
+        Chara_SpawnFlagsSet(16, 12, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_4);
+        Chara_SpawnFlagsSet(16, 13, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_2 | SpawnFlag_4);
+        Chara_SpawnFlagsSet(16, 14, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3 | SpawnFlag_4);
     }
 }
 

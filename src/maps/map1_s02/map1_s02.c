@@ -1354,22 +1354,22 @@ void Map_WorldObjectsInit(void) // 0x800DD494
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        func_80088FF4(Chara_GreyChild, 1, SpawnFlag_None);
-        func_80088FF4(Chara_GreyChild, 3, SpawnFlag_None);
-        func_80088FF4(Chara_GreyChild, 8, SpawnFlag_None);
-        func_80088FF4(Chara_Creeper, 1, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 1, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 3, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 8, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_Creeper, 1, SpawnFlag_None);
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        func_80088FF4(Chara_GreyChild, 11, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
-        func_80088FF4(Chara_GreyChild, 13, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
-        func_80088FF4(Chara_GreyChild, 14, SpawnFlag_0 | SpawnFlag_1);
-        func_80088FF4(Chara_GreyChild, 15, SpawnFlag_0 | SpawnFlag_1);
-        func_80088FF4(Chara_Creeper, 0, SpawnFlag_0 | SpawnFlag_2 | SpawnFlag_3);
-        func_80088FF4(Chara_Creeper, 2, SpawnFlag_0 | SpawnFlag_2 | SpawnFlag_3);
-        func_80088FF4(Chara_Creeper, 4, SpawnFlag_0 | SpawnFlag_2 | SpawnFlag_3);
-        func_80088FF4(Chara_Creeper, 6, SpawnFlag_0 | SpawnFlag_2 | SpawnFlag_3);
-        func_80088FF4(Chara_Creeper, 9, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 11, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 13, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 14, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 15, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_Creeper, 0, SpawnFlag_0 | SpawnFlag_2 | SpawnFlag_3);
+        Chara_SpawnFlagsSet(Chara_Creeper, 2, SpawnFlag_0 | SpawnFlag_2 | SpawnFlag_3);
+        Chara_SpawnFlagsSet(Chara_Creeper, 4, SpawnFlag_0 | SpawnFlag_2 | SpawnFlag_3);
+        Chara_SpawnFlagsSet(Chara_Creeper, 6, SpawnFlag_0 | SpawnFlag_2 | SpawnFlag_3);
+        Chara_SpawnFlagsSet(Chara_Creeper, 9, SpawnFlag_0 | SpawnFlag_1);
     }
 
     sharedData_800E30C8_1_s02.field_0[0]  = -0x10666;
@@ -1664,21 +1664,21 @@ void func_800DEC88(void) // 0x800DEC88
     {
         if (g_SavegamePtr->gameDifficulty_260 == 1)
         {
-            func_80089034(Chara_GreyChild, 12, Q12(134.1f), Q12(21.3f));
+            Chara_SpawnPositionSet(Chara_GreyChild, 12, Q12(134.1f), Q12(21.3f));
         }
         else
         {
-            func_80088FF4(Chara_GreyChild, 12, SpawnFlag_None);
+            Chara_SpawnFlagsSet(Chara_GreyChild, 12, SpawnFlag_None);
         }
     }
 
     if (Savegame_EventFlagGet(EventFlag_98))
     {
-        func_80088FF4(Chara_Creeper, 7, SpawnFlag_2 | SpawnFlag_3);
-        func_80088FF4(Chara_Creeper, 8, SpawnFlag_2 | SpawnFlag_3);
+        Chara_SpawnFlagsSet(Chara_Creeper, 7, SpawnFlag_2 | SpawnFlag_3);
+        Chara_SpawnFlagsSet(Chara_Creeper, 8, SpawnFlag_2 | SpawnFlag_3);
         if (g_SavegamePtr->gameDifficulty_260 == 1)
         {
-            func_80088FF4(Chara_Creeper, 9, SpawnFlag_2 | SpawnFlag_3);
+            Chara_SpawnFlagsSet(Chara_Creeper, 9, SpawnFlag_2 | SpawnFlag_3);
         }
     }
 }

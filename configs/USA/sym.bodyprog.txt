@@ -913,6 +913,8 @@ Map_BoxOutlineDraw                           = 0x80088370;
 Chara_Load                                   = 0x80088C7C; // type:func
 Chara_ProcessLoads                           = 0x80088D0C; // type:func
 Chara_Spawn                                  = 0x80088D78; // type:func
+Chara_SpawnFlagsSet                          = 0x80088FF4; // type:func
+Chara_SpawnPositionSet                       = 0x80089034; // type:func
 
 //---------------------------------------------------------------------------
 //--- PA: 0x0654F8   VA: 0x8008A058   subsegment: c, bodyprog_combat_8008A058

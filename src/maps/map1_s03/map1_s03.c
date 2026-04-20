@@ -1384,12 +1384,12 @@ void Map_WorldObjectsInit(void) // 0x800DD3AC
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        func_80088FF4(Chara_GreyChild, 1, SpawnFlag_None);
-        func_80088FF4(Chara_GreyChild, 5, SpawnFlag_None);
-        func_80088FF4(Chara_GreyChild, 6, SpawnFlag_None);
-        func_80088FF4(Chara_GreyChild, 7, SpawnFlag_None);
-        func_80088FF4(Chara_Creeper, 5, SpawnFlag_None);
-        func_80088FF4(Chara_Creeper, 6, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 1, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 5, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 6, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 7, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_Creeper, 5, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_Creeper, 6, SpawnFlag_None);
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
@@ -1618,25 +1618,25 @@ void func_800DE624(void) // 0x800DE624
 
     if (Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey) && g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
     {
-        func_80088FF4(Chara_GreyChild, 9, SpawnFlag_0 | SpawnFlag_1);
-        func_80088FF4(Chara_GreyChild, 10, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 9, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 10, SpawnFlag_0 | SpawnFlag_1);
     }
 
     if (Savegame_EventFlagGet(EventFlag_M1S03_PickupLibraryReserveKey))
     {
         if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
         {
-            func_80088FF4(Chara_GreyChild, 12, SpawnFlag_0 | SpawnFlag_1);
+            Chara_SpawnFlagsSet(Chara_GreyChild, 12, SpawnFlag_0 | SpawnFlag_1);
         }
 
         if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
         {
-            func_80088FF4(Chara_GreyChild, 13, SpawnFlag_0 | SpawnFlag_1);
-            func_80088FF4(Chara_GreyChild, 11, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_2);
+            Chara_SpawnFlagsSet(Chara_GreyChild, 13, SpawnFlag_0 | SpawnFlag_1);
+            Chara_SpawnFlagsSet(Chara_GreyChild, 11, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_2);
         }
 
-        func_80088FF4(Chara_GreyChild, 14, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
-        func_80088FF4(Chara_GreyChild, 15, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 14, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
+        Chara_SpawnFlagsSet(Chara_GreyChild, 15, SpawnFlag_0 | SpawnFlag_1);
     }
 
     playerHealth = g_SysWork.playerWork.player.health;
@@ -1652,33 +1652,33 @@ void func_800DE624(void) // 0x800DE624
 
     if (playerHealth > Q12(20.0f))
     {
-        func_80088FF4(Chara_Creeper, 0, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_Creeper, 0, SpawnFlag_0 | SpawnFlag_1);
     }
     else
     {
-        func_80088FF4(Chara_Creeper, 0, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_Creeper, 0, SpawnFlag_None);
     }
 
     if (playerHealth > Q12(60.0f))
     {
-        func_80088FF4(Chara_Creeper, 1, SpawnFlag_0 | SpawnFlag_1);
-        func_80088FF4(Chara_Creeper, 2, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_Creeper, 1, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_Creeper, 2, SpawnFlag_0 | SpawnFlag_1);
     }
     else
     {
-        func_80088FF4(Chara_Creeper, 1, SpawnFlag_None);
-        func_80088FF4(Chara_Creeper, 2, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_Creeper, 1, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_Creeper, 2, SpawnFlag_None);
     }
 
     if (playerHealth > Q12(80.0f))
     {
-        func_80088FF4(Chara_Creeper, 3, SpawnFlag_0 | SpawnFlag_1);
-        func_80088FF4(Chara_Creeper, 4, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_Creeper, 3, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_Creeper, 4, SpawnFlag_0 | SpawnFlag_1);
     }
     else
     {
-        func_80088FF4(Chara_Creeper, 3, SpawnFlag_None);
-        func_80088FF4(Chara_Creeper, 4, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_Creeper, 3, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_Creeper, 4, SpawnFlag_None);
     }
 }
 

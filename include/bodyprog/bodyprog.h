@@ -1556,12 +1556,12 @@ typedef struct _MapPoint2d
     q19_12 positionX_0;
 
     // Optional data.
-    u32   mapIdx_4_0          : 5; /** `e_PaperMapIdx`? */
-    u32   field_4_5           : 4;
-    u32   loadingScreenId_4_9 : 3; /** `e_LoadingScreenId` */
-    u32   field_4_12          : 4;
-    q24_8 triggerParam0_4_16  : 8; // Usually a `Q8_ANGLE`
-    u32   triggerParam1_4_24  : 8;
+    u32    mapIdx_4_0          : 5; /** `e_PaperMapIdx`? */
+    u32    field_4_5           : 4;
+    u32    loadingScreenId_4_9 : 3; /** `e_LoadingScreenId` */
+    u32    field_4_12          : 4;
+    q24_8  triggerParam0_4_16  : 8; // Usually a `Q8_ANGLE`
+    u32    triggerParam1_4_24  : 8;
 
     q19_12 positionZ_8;
 } s_MapPoint2d;
@@ -1571,10 +1571,12 @@ STATIC_ASSERT_SIZEOF(s_MapPoint2d, 12);
 typedef struct _SpawnInfo
 {
     q19_12 positionX_0;
+
     s8     charaId_4; /** `e_CharacterId` */
     q0_8   rotationY_5;
     s8     flags_6;                   /** `e_SpawnFlags` | Copied to `stateStep` in `s_Model`, with `controlState = ModelState_Uninitialized`. */
-    s32    gameDifficultyMin_7_0 : 4; /** `e_GameDifficulty` | Minimum difficulty required for spawn. */
+    s32    gameDifficultyMin_7_0 : 4; /** `e_GameDifficulty` | Minimum difficulty required for successful spawn. */
+
     q19_12 positionZ_8;
 } s_SpawnInfo;
 STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
@@ -3529,9 +3531,9 @@ void func_80088D34(s32 idx);
 
 s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep);
 
-void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unused2);
+void func_80088F94(s_SubCharacter* chara, s32 unused0, s32 unused1);
 
-void func_80088FF4(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags);
+void Chara_SpawnFlagsSet(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags);
 
 bool func_8008F434(s32 arg0);
 
@@ -4437,7 +4439,7 @@ void GameState_LoadMapScreen_Update(void);
 void GameState_Unk15_Update(void);
 
 /** Handles character spawn? */
-void func_80089034(e_CharacterId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ);
+void Chara_SpawnPositionSet(e_CharacterId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ);
 
 /* Does the map zoom in, red lines? Argument types guessed based on f`unc_800E83C0` in MAP2_S00. */
 void Map_BoxOutlineDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, s16 arg8);

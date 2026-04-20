@@ -36,7 +36,7 @@ s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12
 {
     s_Collision     coll;
     s32             i;
-    s32             var_a0;
+    s32             npcFlagsId;
     s32             arg1_1;
     s_SubCharacter* chara;
 
@@ -65,16 +65,16 @@ s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12
             return ARRAY_SIZE(g_SysWork.npcs);
         }
 
-        var_a0 = 0;
+        npcFlagsId = 0;
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
         {
             if (g_SysWork.npcs[i].model.charaId != Chara_None)
             {
-                var_a0++;
+                npcFlagsId++;
             }
         }
 
-        if (var_a0 >= g_SysWork.npcFlagsId)
+        if (npcFlagsId >= g_SysWork.npcFlagsId)
         {
             return 0;
         }
@@ -119,7 +119,7 @@ s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12
     return ARRAY_SIZE(g_SysWork.npcs);
 }
 
-void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unused2) // 0x80088F94
+void func_80088F94(s_SubCharacter* chara, s32 unused0, s32 unuse12) // 0x80088F94
 {
     if (chara == NULL)
     {
@@ -134,7 +134,7 @@ void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unused2) // 0x80088F9
     chara->model.charaId = Chara_None;
 }
 
-void func_80088FF4(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags) // 0x80088FF4
+void Chara_SpawnFlagsSet(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags) // 0x80088FF4
 {
     s_SpawnInfo* spawnInfo;
 
@@ -142,14 +142,14 @@ void func_80088FF4(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags) // 0x800
     spawnInfo->flags_6 = spawnFlags;
 }
 
-void func_80089034(e_CharacterId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ) // 0x80089034
+void Chara_SpawnPositionSet(e_CharacterId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ) // 0x80089034
 {
-    s_MapPoint2d* mapPoint0;
-    s_MapPoint2d* mapPoint1;
+    s_SpawnInfo* spawnInfo0;
+    s_SpawnInfo* spawnInfo1;
 
-    mapPoint0              = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
-    mapPoint0->positionX_0 = posX;
+    spawnInfo0              = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
+    spawnInfo0->positionX_0 = posX;
 
-    mapPoint1              = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
-    mapPoint1->positionZ_8 = posZ;
+    spawnInfo1              = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
+    spawnInfo1->positionZ_8 = posZ;
 }

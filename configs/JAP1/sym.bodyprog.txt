@@ -1430,8 +1430,8 @@ Chara_ProcessLoads                           = 0x8008A81C; // type:func
 func_80088D34                                = 0x8008A844; // type:func
 Chara_Spawn                                  = 0x8008A888; // type:func
 func_80088F94                                = 0x8008AAA4; // type:func
-func_80088FF4                                = 0x8008AB04; // type:func
-func_80089034                                = 0x8008AB44; // type:func
+Chara_SpawnFlagsSet                          = 0x8008AB04; // type:func
+Chara_SpawnPositionSet                       = 0x8008AB44; // type:func
 
 //--------------------------------------------------------------------
 //--- PA: 0x066040   VA: 0x8008ABA0   subsegment: c, bodyprog_80089090

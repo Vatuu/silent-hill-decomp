@@ -592,8 +592,8 @@ void func_800D43B8(void) // 0x800D43B8
 {
     if (Savegame_EventFlagGet(EventFlag_300))
     {
-        func_80088FF4(Chara_PuppetDoctor, 2, SpawnFlag_0);
-        func_80088FF4(Chara_PuppetDoctor, 3, SpawnFlag_0);
+        Chara_SpawnFlagsSet(Chara_PuppetDoctor, 2, SpawnFlag_0);
+        Chara_SpawnFlagsSet(Chara_PuppetDoctor, 3, SpawnFlag_0);
     }
 }
 
