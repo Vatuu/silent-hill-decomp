@@ -1018,7 +1018,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
                 gte_SetRotMatrix(&neck_lwm);
                 gte_SetTransMatrix(&neck_lwm);
 
-                // Transform offset into world space.
+                // Transform offset into world-space.
                 gte_ldv0(&offset);
                 gte_rtv0tr();
                 gte_stlvnl(&worldPos);

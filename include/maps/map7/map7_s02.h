@@ -158,7 +158,7 @@ void Ai_GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDIN
 void Ai_GhostDoctor_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 /** @brief Updates the transform of the `coord` matrix to the character's position, converting
- * from world space to geometry space.
+ * from world-space to geometry space.
  *
  * @param chara Reference character.
  * @param coord Output coord to update.

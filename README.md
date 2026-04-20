@@ -24,7 +24,7 @@ Reaching 100% means every function in the game is accounted for, but that's **on
 
 There's still a lot of work ahead:
 
-- **Deobfuscation and naming**: many functions and variables still have generated names like `func_80241A30`. We'll need to figure out the actual purposes of these and name them meaningfully.
+- **Deobfuscation and naming**: many functions and variables still have generated names like `func_80241A30`. We'll need to figure out the actual purposes of these and name them appropriately.
 - **Data migration**: raw binary data needs to be parsed into proper C structs so the data can be made understandable.
 - **Shiftability**: making the build not rely on hardcoded memory addresses so that code and data can be modified without breaking everything.
 - **Documentation**: understanding and documenting how the game's systems work together to aid in mods and future projects.

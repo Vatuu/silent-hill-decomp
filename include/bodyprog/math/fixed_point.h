@@ -417,7 +417,7 @@
 
 /** @brief Converts floating-point degrees to signed Q3.12 fixed-point, full rotation integer range `[0, 4096]`.
  *
- * This angle format is used in world space.
+ * This angle format is used in world-space.
  *
  * @note 1 degree = 11.377778 units.
  *

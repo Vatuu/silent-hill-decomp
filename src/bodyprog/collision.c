@@ -55,12 +55,12 @@ void Collision_TriggerZonesUpdate(q19_12 posX, q19_12 posZ, s_TriggerZone* zones
     q19_12         maxZ;
 
     D_800C4478.triggerZoneCount_2 = 0;
-    for (curZone = zones; !curZone->endOfArray_0_0; curZone++)
+    for (curZone = zones; !curZone->isEndOfArray; curZone++)
     {
-        minX = FP_TO(curZone->positionX_0_1, Q12_SHIFT);
-        maxX = FP_TO(curZone->positionX_0_1 + curZone->sizeX_0_21, Q12_SHIFT);
-        minZ = FP_TO(curZone->positionZ_0_11, Q12_SHIFT);
-        maxZ = FP_TO(curZone->positionZ_0_11 + curZone->sizeZ_0_25, Q12_SHIFT);
+        minX = FP_TO(curZone->positionX, Q12_SHIFT);
+        maxX = FP_TO(curZone->positionX + curZone->sizeX, Q12_SHIFT);
+        minZ = FP_TO(curZone->positionZ, Q12_SHIFT);
+        maxZ = FP_TO(curZone->positionZ + curZone->sizeZ, Q12_SHIFT);
 
         minX -= Q12(16.0f);
         maxX += Q12(16.0f);
@@ -93,7 +93,7 @@ void IpdCollData_FixOffsets(s_IpdCollisionData* collData) // 0x8006993C
 
 void func_80069994(s_IpdCollisionData* collData) // 0x80069994
 {
-    s32* ptr;
+    s32* curPtr;
 
     collData->field_30++;
     if (collData->field_30 > 252)
@@ -101,9 +101,9 @@ void func_80069994(s_IpdCollisionData* collData) // 0x80069994
         collData->field_30 = 0;
 
         // TODO: Is this `memset`/`bzero`?
-        for (ptr = &collData->field_34[0]; ptr < &collData->field_34[256]; ptr++)
+        for (curPtr = &collData->field_34[0]; curPtr < &collData->field_34[256]; curPtr++)
         {
-            *ptr = 0;
+            *curPtr = 0;
         }
     }
 }
@@ -419,22 +419,22 @@ void Collision_DefaultResultSet(s_CollisionResult* collResult, q19_12 offsetX, q
     collResult->field_C     = groundHeight;
 }
 
-s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubCharacter* excludeChara, bool includePlayer) // 0x8006A1A4
+s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubCharacter* excludedChara, bool includePlayer) // 0x8006A1A4
 {
     s_SubCharacter*         curChara;
-    static s_SubCharacter*  D_800C4458[7];
-    static s_SubCharacter** activeCharas; /** Array of active characters. */
+    static s_SubCharacter*  activeCharas[7];
+    static s_SubCharacter** curActiveChara; /** Array of active characters. */
 
-    if (excludeChara != NULL &&
-        (excludeChara->model.charaId == Chara_None || excludeChara->field_E1_0 == 0 ||
-        (excludeChara->field_E1_0 == 1 && includePlayer == true)))
+    if (excludedChara != NULL &&
+        (excludedChara->model.charaId == Chara_None || excludedChara->field_E1_0 == 0 ||
+        (excludedChara->field_E1_0 == 1 && includePlayer == true)))
     {
         *charaCount = 0;
-        return &D_800C4458;
+        return &activeCharas;
     }
 
-    *charaCount = 0;
-    activeCharas = &D_800C4458;
+    *charaCount    = 0;
+    curActiveChara = &activeCharas;
 
     for (curChara = &g_SysWork.npcs[0]; curChara < &g_SysWork.npcs[ARRAY_SIZE(g_SysWork.npcs)]; curChara++)
     {
@@ -442,12 +442,12 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
         {
             if (curChara->field_E1_0 != 0 &&
                 (curChara->field_E1_0 != 1 || includePlayer != true) &&
-                curChara != excludeChara &&
-                (includePlayer != true || excludeChara == NULL || excludeChara->field_E1_0 != 4 || curChara->field_E1_0 >= excludeChara->field_E1_0))
+                curChara != excludedChara &&
+                (includePlayer != true || excludedChara == NULL || excludedChara->field_E1_0 != 4 || curChara->field_E1_0 >= excludedChara->field_E1_0))
             {
-                *charaCount += 1;
-                *activeCharas = curChara;
-                activeCharas++;
+                *charaCount++;
+                *curActiveChara = curChara;
+                curActiveChara++;
                 curChara->field_E0 = 0;
             }
         }
@@ -458,17 +458,18 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
     {
         if (curChara->field_E1_0 != 0 &&
             (curChara->field_E1_0 != 1 || includePlayer != true) &&
-            curChara != excludeChara &&
-            (includePlayer != true || excludeChara == NULL || excludeChara->field_E1_0 != 4 || curChara->field_E1_0 >= excludeChara->field_E1_0))
+            curChara != excludedChara &&
+            (includePlayer != true || excludedChara == NULL || excludedChara->field_E1_0 != 4 ||
+             curChara->field_E1_0 >= excludedChara->field_E1_0))
         {
-            *charaCount += 1;
-            *activeCharas = curChara;
-            activeCharas++;
+            *charaCount++;
+            *curActiveChara = curChara;
+            curActiveChara++;
             curChara->field_E0 = 0;
         }
     }
 
-    return &D_800C4458;
+    return &activeCharas;
 }
 
 s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, s_CollisionQuery* collQuery) // 0x8006A3B4
@@ -3226,10 +3227,10 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone) // 0x8006F3
     s32    var_v0;
     s32    var_v0_2;
 
-    minX = Q12(zone->positionX_0_1);
-    maxX = Q12(zone->positionX_0_1 + zone->sizeX_0_21);
-    minZ = Q12(zone->positionZ_0_11);
-    maxZ = Q12(zone->positionZ_0_11 + zone->sizeZ_0_25);
+    minX = Q12(zone->positionX);
+    maxX = Q12(zone->positionX + zone->sizeX);
+    minZ = Q12(zone->positionZ);
+    maxZ = Q12(zone->positionZ + zone->sizeZ);
 
     if ((minX >= arg0->field_1C || arg0->field_18 >= maxX) &&
         (minZ >= arg0->field_24 || arg0->field_20 >= maxZ))
@@ -3241,7 +3242,7 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone) // 0x8006F3
         arg0->field_4 >= minZ && maxZ >= arg0->field_4)
     {
         arg0->field_28 = Q12(0.0f);
-        arg0->field_2C = (-Q12(zone->field_0_29) >> 1) - Q12(1.5f); // NOTE: `-` sign on the outside required for match.
+        arg0->field_2C = (-Q12(zone->height) >> 1) - Q12(1.5f);
     }
     else
     {
@@ -3289,81 +3290,79 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone) // 0x8006F3
         if (var_v1 < arg0->field_28)
         {
             arg0->field_28 = var_v1;
-            arg0->field_2C = (-Q12(zone->field_0_29) >> 1) - Q12(1.5f); // NOTE: `-` sign on the outside required for match.
+            arg0->field_2C = (-Q12(zone->height) >> 1) - Q12(1.5f);
         }
     }
 
     return arg0->field_28 == 0;
 }
 
-s32 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 arg2, q19_12 arg3) // 0x8006F620
+q19_12 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 dist, q19_12 offsetY) // 0x8006F620
 {
     q19_12         x0;
     q19_12         z0;
     q19_12         x1;
     q19_12         z1;
-    q19_12         sp28;
-    q19_12         sp2C;
+    q19_12         collOffsetY;
+    q19_12         posY;
     q19_12         distX;
     q19_12         distZ;
-    s32            temp_a0;
-    q19_12         temp_s0;
-    s32            max1;
-    s32            temp_s0_3;
-    s32            mag0;
+    q19_12         temp_a0;
+    q19_12         zoneHeight;
+    q19_12         max1;
+    q19_12         temp_s0_3;
+    q19_12         mag0;
     q19_12         angle;
     q19_12         var_s2;
     s32            i;
     q19_12         posX;
     q19_12         posZ;
-    s32            result;
+    s32            height;
     s32            var_v1;
     s_TriggerZone* curZone;
 
-    result = Q12(-16.0f);
+    height = Q12(-16.0f);
 
     distX = Q12(0.0f);
     distZ = Q12(0.0f);
 
-    posX  = pos->vx;
-    posZ  = pos->vz;
-
-    sp28  = collQuery->position_0.vy + arg3;
-    sp2C  = sp28 + pos->vy;
+    posX        = pos->vx;
+    posZ        = pos->vz;
+    collOffsetY = collQuery->position_0.vy + offsetY;
+    posY        = collOffsetY + pos->vy;
 
     for (i = 0; i < D_800C4478.triggerZoneCount_2; i++)
     {
         curZone = D_800C4478.triggerZones_4[i];
 
-        temp_s0 = (-Q12(curZone->field_0_29) >> 1) - Q12(1.5f); // NOTE: `-` sign on the outside required for match.
-        if ((sp2C - temp_s0) >= Q12(0.0f))
+        // Check height.
+        zoneHeight = (-Q12(curZone->height) >> 1) - Q12(1.5f);
+        if ((posY - zoneHeight) >= Q12(0.0f))
         {
             continue;
         }
 
         func_8006F8FC(&x0, &z0, collQuery->position_0.vx + posX, collQuery->position_0.vz + posZ, curZone);
-        if (MAX(ABS(x0), ABS(z0)) >= arg2)
+        if (MAX(ABS(x0), ABS(z0)) >= dist)
         {
             continue;
         }
 
         mag0 = Vc_VectorMagnitudeCalc(x0, Q12(0.0f), z0);
-        if (mag0 >= arg2)
+        if (mag0 >= dist)
         {
             continue;
         }
 
-        if (mag0 > 0)
+        if (mag0 > Q12(0.0f))
         {
             func_8006F8FC(&x1, &z1, collQuery->position_0.vx, collQuery->position_0.vz, curZone);
 
             var_s2 = Q12(0.1f);
-
-            max1 = Vc_VectorMagnitudeCalc(x1, Q12(0.0f), z1);
-
-            if ((arg2 - max1) <= Q12(0.1f))
+            max1   = Vc_VectorMagnitudeCalc(x1, Q12(0.0f), z1);
+            if ((dist - max1) <= Q12(0.1f))
             {
-                var_s2 = arg2 - max1;
+                var_s2 = dist - max1;
             }
 
             if ((mag0 - max1) < var_s2)
@@ -3377,9 +3376,9 @@ s32 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 arg2, q19_12
         }
         else
         {
-            if (temp_s0 < result)
+            if (zoneHeight < height)
             {
-                result = temp_s0;
+                height = zoneHeight;
             }
 
             posX = pos->vx;
@@ -3394,10 +3393,10 @@ s32 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 arg2, q19_12
     pos->vx = posX;
     pos->vz = posZ;
 
-    if (result != Q12(-16.0f))
+    if (height != Q12(-16.0f))
     {
         var_v1  = Q12(0.1f);
-        temp_a0 = result - sp28;
+        temp_a0 = height - collOffsetY;
 
         if (temp_a0 < Q12(0.1f))
         {
@@ -3410,7 +3409,7 @@ s32 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 arg2, q19_12
         }
     }
 
-    return result;
+    return height;
 }
 
 void func_8006F8FC(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s_TriggerZone* zone) // 0x8006F8FC
@@ -3421,10 +3420,10 @@ void func_8006F8FC(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s
     q19_12 maxZ;
 
     // TODO: Using `Q12` doesn't match? There's an identical block in `func_8006F3C4`.
-    minX = FP_TO(zone->positionX_0_1, Q12_SHIFT);
-    maxX = FP_TO(zone->positionX_0_1 + zone->sizeX_0_21, Q12_SHIFT);
-    minZ = FP_TO(zone->positionZ_0_11, Q12_SHIFT);
-    maxZ = FP_TO(zone->positionZ_0_11 + zone->sizeZ_0_25, Q12_SHIFT);
+    minX = FP_TO(zone->positionX, Q12_SHIFT);
+    maxX = FP_TO(zone->positionX + zone->sizeX, Q12_SHIFT);
+    minZ = FP_TO(zone->positionZ, Q12_SHIFT);
+    maxZ = FP_TO(zone->positionZ + zone->sizeZ, Q12_SHIFT);
 
     if (posX < minX)
     {

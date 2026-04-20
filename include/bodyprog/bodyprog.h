@@ -617,8 +617,8 @@ typedef struct
     s32    field_1C; // X }
     s32    field_20; // Z }
     s32    field_24; // Z }
-    q19_12 field_28; // } Maybe XZ position.
-    q19_12 field_2C; // }
+    q19_12 field_28; // Maybe XZ position.
+    q19_12 field_2C; // Base height?
 } s_func_8006F338;
 
 typedef struct
@@ -1255,25 +1255,26 @@ typedef struct _WorldObject
     s32                 positionX_4 : 18; /** Q9.8 */
     s32                 positionY_4 : 14; /** Q5.8 */
     s32                 positionZ_8 : 18; /** Q9.8 */
-    s32                 pad_8_18    : 14;
+    s32                 __pad_8_18  : 14;
     s32                 rotationX_C : 10; /** Q0.10 */
     s32                 rotationY_C : 12; /** Q0.12 */
     s32                 rotationZ_C : 10; /** Q0.10 */
 } s_WorldObject;
 STATIC_ASSERT_SIZEOF(s_WorldObject, 16);
 
-/** @brief World space trigger zone. */
+/** @brief World-space trigger zone. */
 typedef struct _TriggerZone
 {
-    u8  endOfArray_0_0 : 1; // End of array marker.
-    s32 positionX_0_1  : 10;
-    s32 positionZ_0_11 : 10;
-    u32 sizeX_0_21     : 4;
-    u32 sizeZ_0_25     : 4;
-    u32 field_0_29     : 3; // Related to ground height? Used to set `s_func_8006F338::field_2C` which then gets copied by `func_8006F250`, that func has only been seen called by AirScreamer?
+    /* 0x0+0  */ u8  isEndOfArray : 1;  /** `bool` | Marks last entry. */
+    /* 0x+01  */ s32 positionX    : 10; /** Meter steps. */
+    /* 0x+011 */ s32 positionZ    : 10; /** Meter steps. */
+    /* 0x0+21 */ u32 sizeX        : 4;  /** Meter steps. */
+    /* 0x0+25 */ u32 sizeZ        : 4;  /** Meter steps. */
+    /* 0x0+29 */ u32 height       : 3;  /** Half-meter steps. Used to set `s_func_8006F338::field_2C` which is then copied by `func_8006F250`. */
 } s_TriggerZone;
 STATIC_ASSERT_SIZEOF(s_TriggerZone, 4);
 
+/** @brief Hand-held player item. */
 typedef struct _HeldItem
 {
     s32           itemId_0; /** `e_InvItemId` */
@@ -1283,7 +1284,7 @@ typedef struct _HeldItem
     s_LmHeader*   lmHdr_14;
     s_Bone        bone_18;
 } s_HeldItem;
-STATIC_ASSERT_SIZEOF(s_HeldItem, 0x2C);
+STATIC_ASSERT_SIZEOF(s_HeldItem, 44);
 
 /** @brief World GFX workspace.
  * TODO: Could be `s_RendererWork`? Will depend on where other data resides.
@@ -1304,7 +1305,7 @@ typedef struct _WorldGfxWork
     s_TriggerZone*    triggerZone_1BD8;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; /** Debug camera info. */
     s_LmHeader        itemLmHdr_1BE4;
-    u8                itemLmData_1BF4[4096 - sizeof(s_LmHeader)]; // Retail game uses 2.75kb file, but they allocate 4kb for it.
+    u8                itemLmData_1BF4[4096 - sizeof(s_LmHeader)]; // 4kb allocated for 2.75kb game files.
     s32               itemLmQueueIdx_2BE4;
     s32               objectCount_2BE8;                     /** `objects_2BEC` size. */
     s_WorldObject     objects_2BEC[WORLD_OBJECT_COUNT_MAX]; /** World objects to draw. */
@@ -1788,20 +1789,20 @@ typedef struct _MapOverlayHeader
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 0x104C);
 
-typedef struct
+typedef struct _MapMsgSelect
 {
     /* 0x0 */ s8 maxIdx;
     /* 0x1 */ u8 selectedEntryIdx;
 } s_MapMsgSelect;
 
-typedef struct
+typedef struct _MapEffectsPresetIdxs
 {
     u8 presetIdx1_0;
     u8 presetIdx2_1;
 } s_MapEffectsPresetIdxs;
 
 /** @brief Line of sight data for finished ray trace. TODO: Could rename to `s_Los` to keep "ray" as a generic math term? */
-typedef struct
+typedef struct _RayData
 {
     s8              hasHit_0; /** `bool` */
     u8              field_1;
@@ -1813,15 +1814,15 @@ typedef struct
     q7_8            field_1C; // Angle.
 } s_RayData;
 
-typedef struct
+typedef struct _CollisionResult
 {
-    VECTOR3 offset_0;  // Q19.12
-    s32     field_C;   // Absolute ground height? Might be using `s_Collision` substruct?
+    VECTOR3 offset_0; // Q19.12
+    q19_12  field_C;  // Absolute ground height? Might be using `s_Collision` substruct?
     s16     field_10;
     s16     field_12;
-    s8      field_14;  // Count of something? 12 is significant.
-    s8      unk_15[3]; // Probably padding.
-    s32     field_18;
+    s8      field_14; // Count of something? 12 is significant.
+    s8      __pad_15[3];
+    q19_12  field_18;
 } s_CollisionResult;
 
 typedef struct
@@ -1845,9 +1846,9 @@ typedef struct
     {
         struct
         {
-            DVECTOR  screenPos_3DC;
-            s32      depthP_3E0;
-            s16      rotMatrix_3E4[3][3]; // Truncated `MATRIX` without the `long t[3];` transfer vector?
+            DVECTOR screenPos_3DC;
+            s32     depthP_3E0;
+            s16     rotMatrix_3E4[3][3]; // Truncated `MATRIX` without the `long t[3];` transfer vector?
         } vertex;
 
         struct
@@ -3841,11 +3842,11 @@ void Collision_DefaultResultSet(s_CollisionResult* collResult, q19_12 offsetX, q
 /** @brief Gets an array of active characters for collision testing.
  *
  * @param charaCount Output number of characters found.
- * @param excludeChara Character to exclude (typically the one being tested).
+ * @param excludedChara Character to exclude, typically the one being tested.
  * @param includePlayer Filter out the player.
  * @return Active characters.
  */
-s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubCharacter* excludeChara, bool includePlayer);
+s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubCharacter* excludedChara, bool includePlayer);
 
 /** @brief Checks a movement offset against a collision result.
  *
@@ -3986,8 +3987,8 @@ void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDe
 
 bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone);
 
-/** Translates something. */
-s32 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 arg2, q19_12 arg3);
+/** Translates something. Unsure on 3rd param's name. */
+q19_12 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 dist, q19_12 offsetY);
 
 void func_8006F8FC(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s_TriggerZone* zone);
 
