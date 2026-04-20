@@ -57,8 +57,8 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
 void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
 {
     s_Collision     coll;
-    s32             charaId0;
-    s32             charaId1;
+    s32             groupCharaId0;
+    s32             groupCharaId1;
     s32             npcIdx;
     s32             i;
     s32*            ovlEnemiesStatePtr;
@@ -80,8 +80,8 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
         }
     }
 
-    charaId0 = g_MapOverlayHeader.charaGroupIds_248[0];
-    charaId1 = g_MapOverlayHeader.charaGroupIds_248[1];
+    groupCharaId0 = g_MapOverlayHeader.charaGroupIds_248[0];
+    groupCharaId1 = g_MapOverlayHeader.charaGroupIds_248[1];
 
     for (i = 0; i < 32 && g_VBlanks < 4; i++, curCharaSpawn++)
     {
@@ -92,8 +92,10 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
 
         pos = (VECTOR3*)curCharaSpawn;
 
-        if (!(g_SysWork.flags_22A4 & UnkSysFlag_4) && HAS_FLAG(ovlEnemiesStatePtr, i) && !HAS_FLAG(g_SysWork.field_228C, i) &&
-            curCharaSpawn->flags_6 != 0 && g_SavegamePtr->gameDifficulty_260 >= curCharaSpawn->gameDifficultyMin_7_0 &&
+        if (!(g_SysWork.flags_22A4 & UnkSysFlag_4) &&
+            HAS_FLAG(ovlEnemiesStatePtr, i) && !HAS_FLAG(g_SysWork.field_228C, i) &&
+            curCharaSpawn->flags_6 != 0 &&
+            g_SavegamePtr->gameDifficulty_260 >= curCharaSpawn->gameDifficultyMin_7_0 &&
             func_8008F914(curCharaSpawn->positionX_0, curCharaSpawn->positionZ_8) &&
             !Math_Distance2dCheck(&g_SysWork.playerWork.player.position, pos, Q12(22.0f)) &&
             (!cond || Math_Distance2dCheck(&g_SysWork.playerWork.player.position, pos, Q12(20.0f))))
@@ -111,24 +113,24 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
             }
             else
             {
-                g_SysWork.npcs[npcIdx].model.charaId = (i < 16) ? charaId0 : charaId1;
+                g_SysWork.npcs[npcIdx].model.charaId = (i < 16) ? groupCharaId0 : groupCharaId1;
             }
 
-            g_SysWork.npcs[npcIdx].field_40               = i;
+            g_SysWork.npcs[npcIdx].field_40           = i;
             g_SysWork.npcs[npcIdx].model.controlState = ModelState_Uninitialized;
             g_SysWork.npcs[npcIdx].model.stateStep    = curCharaSpawn->flags_6;
-            g_SysWork.npcs[npcIdx].position.vx         = curCharaSpawn->positionX_0;
-            g_SysWork.npcs[npcIdx].position.vz         = curCharaSpawn->positionZ_8;
+            g_SysWork.npcs[npcIdx].position.vx        = curCharaSpawn->positionX_0;
+            g_SysWork.npcs[npcIdx].position.vz        = curCharaSpawn->positionZ_8;
 
             Collision_Get(&coll, curCharaSpawn->positionX_0, curCharaSpawn->positionZ_8);
 
             g_SysWork.npcs[npcIdx].position.vy = coll.groundHeight_0;
-            g_SysWork.npcs[npcIdx].rotation.vy = curCharaSpawn->rotationY_5 * 16;
+            g_SysWork.npcs[npcIdx].rotation.vy = Q8_TO_Q12(curCharaSpawn->rotationY_5);
 
             SET_FLAG(&g_SysWork.npcFlags, npcIdx);
             SET_FLAG(g_SysWork.field_228C, i);
 
-            chara                          = &g_SysWork.npcs[npcIdx];
+            chara                    = &g_SysWork.npcs[npcIdx];
             chara->model.anim.flags |= AnimFlag_Visible;
         }
     }

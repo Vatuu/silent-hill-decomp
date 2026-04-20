@@ -1354,22 +1354,22 @@ void Map_WorldObjectsInit(void) // 0x800DD494
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        func_80088FF4(Chara_GreyChild, 1, 0);
-        func_80088FF4(Chara_GreyChild, 3, 0);
-        func_80088FF4(Chara_GreyChild, 8, 0);
-        func_80088FF4(Chara_Creeper, 1, 0);
+        func_80088FF4(Chara_GreyChild, 1, SpawnFlag_None);
+        func_80088FF4(Chara_GreyChild, 3, SpawnFlag_None);
+        func_80088FF4(Chara_GreyChild, 8, SpawnFlag_None);
+        func_80088FF4(Chara_Creeper, 1, SpawnFlag_None);
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        func_80088FF4(Chara_GreyChild, 11, 11);
-        func_80088FF4(Chara_GreyChild, 13, 11);
-        func_80088FF4(Chara_GreyChild, 14, 3);
-        func_80088FF4(Chara_GreyChild, 15, 3);
-        func_80088FF4(Chara_Creeper, 0, 13);
-        func_80088FF4(Chara_Creeper, 2, 13);
-        func_80088FF4(Chara_Creeper, 4, 13);
-        func_80088FF4(Chara_Creeper, 6, 13);
-        func_80088FF4(Chara_Creeper, 9, 3);
+        func_80088FF4(Chara_GreyChild, 11, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
+        func_80088FF4(Chara_GreyChild, 13, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
+        func_80088FF4(Chara_GreyChild, 14, SpawnFlag_0 | SpawnFlag_1);
+        func_80088FF4(Chara_GreyChild, 15, SpawnFlag_0 | SpawnFlag_1);
+        func_80088FF4(Chara_Creeper, 0, SpawnFlag_0 | SpawnFlag_2 | SpawnFlag_3);
+        func_80088FF4(Chara_Creeper, 2, SpawnFlag_0 | SpawnFlag_2 | SpawnFlag_3);
+        func_80088FF4(Chara_Creeper, 4, SpawnFlag_0 | SpawnFlag_2 | SpawnFlag_3);
+        func_80088FF4(Chara_Creeper, 6, SpawnFlag_0 | SpawnFlag_2 | SpawnFlag_3);
+        func_80088FF4(Chara_Creeper, 9, SpawnFlag_0 | SpawnFlag_1);
     }
 
     sharedData_800E30C8_1_s02.field_0[0]  = -0x10666;
@@ -1668,17 +1668,17 @@ void func_800DEC88(void) // 0x800DEC88
         }
         else
         {
-            func_80088FF4(Chara_GreyChild, 12, 0);
+            func_80088FF4(Chara_GreyChild, 12, SpawnFlag_None);
         }
     }
 
     if (Savegame_EventFlagGet(EventFlag_98))
     {
-        func_80088FF4(Chara_Creeper, 7, 12);
-        func_80088FF4(Chara_Creeper, 8, 12);
+        func_80088FF4(Chara_Creeper, 7, SpawnFlag_2 | SpawnFlag_3);
+        func_80088FF4(Chara_Creeper, 8, SpawnFlag_2 | SpawnFlag_3);
         if (g_SavegamePtr->gameDifficulty_260 == 1)
         {
-            func_80088FF4(Chara_Creeper, 9, 12);
+            func_80088FF4(Chara_Creeper, 9, SpawnFlag_2 | SpawnFlag_3);
         }
     }
 }

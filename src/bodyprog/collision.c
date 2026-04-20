@@ -3296,23 +3296,23 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone) // 0x8006F3
     return arg0->field_28 == 0;
 }
 
-s32 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, s32 arg2, s32 arg3) // 0x8006F620
+s32 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 arg2, q19_12 arg3) // 0x8006F620
 {
-    s32            x0;
-    s32            z0;
-    s32            x1;
-    s32            z1;
-    s32            sp28;
-    s32            sp2C;
-    s32            distX;
-    s32            distZ;
+    q19_12         x0;
+    q19_12         z0;
+    q19_12         x1;
+    q19_12         z1;
+    q19_12         sp28;
+    q19_12         sp2C;
+    q19_12         distX;
+    q19_12         distZ;
     s32            temp_a0;
-    s32            temp_s0;
+    q19_12         temp_s0;
     s32            max1;
     s32            temp_s0_3;
     s32            mag0;
     q19_12         angle;
-    s32            var_s2;
+    q19_12         var_s2;
     s32            i;
     q19_12         posX;
     q19_12         posZ;
@@ -3324,17 +3324,19 @@ s32 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, s32 arg2, s32 arg3)
 
     distX = Q12(0.0f);
     distZ = Q12(0.0f);
+
     posX  = pos->vx;
     posZ  = pos->vz;
+
     sp28  = collQuery->position_0.vy + arg3;
     sp2C  = sp28 + pos->vy;
 
     for (i = 0; i < D_800C4478.triggerZoneCount_2; i++)
     {
         curZone = D_800C4478.triggerZones_4[i];
-        temp_s0 = (-Q12(curZone->field_0_29) >> 1) - Q12(1.5f); // NOTE: `-` sign on the outside required for match.
 
-        if ((sp2C - temp_s0) >= 0)
+        temp_s0 = (-Q12(curZone->field_0_29) >> 1) - Q12(1.5f); // NOTE: `-` sign on the outside required for match.
+        if ((sp2C - temp_s0) >= Q12(0.0f))
         {
             continue;
         }
@@ -3455,7 +3457,7 @@ void func_8006F8FC(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s
 }
 
 // ========================================
-// CHARACTERS ANIMATION RELATED
+// CHARACTER ANIMATION
 // ========================================
 
 q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 0x8006F99C

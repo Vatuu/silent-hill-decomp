@@ -774,16 +774,16 @@ void Map_WorldObjectsInit(void)
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        func_80088FF4(Chara_GreyChild, 3, 0);
-        func_80088FF4(Chara_GreyChild, 9, 0);
+        func_80088FF4(Chara_GreyChild, 3, SpawnFlag_None);
+        func_80088FF4(Chara_GreyChild, 9, SpawnFlag_None);
     }
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        func_80088FF4(Chara_GreyChild, 10, 11);
-        func_80088FF4(Chara_GreyChild, 11, 3);
-        func_80088FF4(Chara_GreyChild, 12, 3);
-        func_80088FF4(Chara_GreyChild, 13, 3);
+        func_80088FF4(Chara_GreyChild, 10, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
+        func_80088FF4(Chara_GreyChild, 11, SpawnFlag_0 | SpawnFlag_1);
+        func_80088FF4(Chara_GreyChild, 12, SpawnFlag_0 | SpawnFlag_1);
+        func_80088FF4(Chara_GreyChild, 13, SpawnFlag_0 | SpawnFlag_1);
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
@@ -984,7 +984,7 @@ void func_800DA3FC(void) // 0x800DA3FC
 {
     if (Savegame_EventFlagGet(EventFlag_M1S01_PickupSilverMedallion))
     {
-        func_80088FF4(Chara_GreyChild, 0, 3);
-        func_80088FF4(Chara_GreyChild, 1, 3);
+        func_80088FF4(Chara_GreyChild, 0, SpawnFlag_0 | SpawnFlag_1);
+        func_80088FF4(Chara_GreyChild, 1, SpawnFlag_0 | SpawnFlag_1);
     }
 }

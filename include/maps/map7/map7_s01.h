@@ -246,7 +246,7 @@ void func_800DC080(void);
 
 void func_800DCE20(void);
 
-void func_800DD348(void* unused, s32 idx, u8 val);
+void func_800DD348(void* unused, s32 idx, u8 spawnFlags);
 
 void Map_WorldObjectsInit(void);
 

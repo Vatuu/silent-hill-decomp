@@ -2022,12 +2022,12 @@ void func_800DCE20(void) // 0x800DCE20
     }
 }
 
-void func_800DD348(void* unused, s32 idx, u8 val) // 0x800DD348
+void func_800DD348(void* unused, s32 idx, u8 spawnFlags) // 0x800DD348
 {
-    u8* spawnFlags;
+    u8* curSpawnFlags;
 
-    spawnFlags  = &g_MapOverlayHeader.charaSpawns_24C[0][idx].flags_6;
-    *spawnFlags = val;
+    curSpawnFlags  = &g_MapOverlayHeader.charaSpawns_24C[0][idx].flags_6;
+    *curSpawnFlags = spawnFlags;
 }
 
 void Map_WorldObjectsInit(void) // 0x800DD368
@@ -2577,22 +2577,22 @@ void func_800DEDA4(void) // 0x800DEDA4
     {
         if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
         {
-            func_80088FF4(16, 2, 27);
+            func_80088FF4(16, 2, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3 | SpawnFlag_4);
         }
 
-        func_80088FF4(16, 3, 27);
+        func_80088FF4(16, 3, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3 | SpawnFlag_4);
     }
     else if (Savegame_EventFlagGet(EventFlag_485))
     {
-        func_80088FF4(16, 0, 19);
-        func_80088FF4(16, 1, 19);
+        func_80088FF4(16, 0, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_4);
+        func_80088FF4(16, 1, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_4);
     }
 
     if (Savegame_EventFlagGet(EventFlag_525) && g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
     {
-        func_80088FF4(16, 12, 19);
-        func_80088FF4(16, 13, 23);
-        func_80088FF4(16, 14, 27);
+        func_80088FF4(16, 12, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_4);
+        func_80088FF4(16, 13, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_2 | SpawnFlag_4);
+        func_80088FF4(16, 14, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3 | SpawnFlag_4);
     }
 }
 

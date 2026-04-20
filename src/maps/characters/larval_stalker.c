@@ -790,7 +790,7 @@ void sharedFunc_800D1524_1_s00(s_SubCharacter* larvalStalker, s_AnmHeader* anmHd
 {
     s_AnimInfo* animInfo;
 
-    #define activeAnimInfo     LARVAL_STALKER_ANIM_INFOS[larvalStalker->model.anim.status]
+    #define activeAnimInfo LARVAL_STALKER_ANIM_INFOS[larvalStalker->model.anim.status]
 
     switch (larvalStalker->model.anim.status)
     {

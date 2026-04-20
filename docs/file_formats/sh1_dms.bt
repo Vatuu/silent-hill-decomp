@@ -71,8 +71,8 @@ struct DMSEntry(int isCharacter)
 
 struct DMSHeader
 {
-    byte isLoaded_0;
-    byte characterCount_1;
+    byte isLoaded;
+    byte characterCount;
     byte intervalCount_2;
     byte field_3; // Usually 0, but sometimes filled in.
     uint32 field_4; // Unknown, correlates to file size?
@@ -92,4 +92,4 @@ FSeek(header.intervalOffset_8);
 DMSInterval intervals[header.intervalCount_2];
 
 FSeek(header.charactersOffset_10);
-DMSEntry characters(1)[header.characterCount_1]<optimize=false>;
+DMSEntry characters(1)[header.characterCount]<optimize=false>;

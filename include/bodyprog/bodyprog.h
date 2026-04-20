@@ -47,6 +47,17 @@
 // ENUMS
 // ======
 
+/** @brief Character spawn flags. */
+typedef enum _SpawnFlags
+{
+    SpawnFlag_None = 0,
+    SpawnFlag_0    = 1 << 0,
+    SpawnFlag_1    = 1 << 1,
+    SpawnFlag_2    = 1 << 2,
+    SpawnFlag_3    = 1 << 3,
+    SpawnFlag_4    = 1 << 4
+} e_SpawnFlags;
+
 // Used by `func_8006E490` and `func_8006E150`.
 typedef enum _OrientationFlags
 {
@@ -463,7 +474,7 @@ STATIC_ASSERT_SIZEOF(s_Collision, 12);
 typedef struct
 {
     VECTOR3  position_0; // Q19.12
-    SVECTOR3 rotation_C; // Q3.12
+    SVECTOR3 rotation_C; // Q3.12 TODO: Not a rotation? Y position is added to this.
     s8       field_12;
 } s_CollisionQuery;
 
@@ -1463,13 +1474,13 @@ typedef struct
 } s_DmsKeyframeCharacter;
 STATIC_ASSERT_SIZEOF(s_DmsKeyframeCharacter, 12);
 
-typedef struct
+typedef struct _DmsEntry
 {
     s16       keyframeCount_0;
-    u8        svectorCount_2;
-    u8        field_3;      // Usually 0, but sometimes filled in, possibly junk data left in padding byte.
-    char      name_4[4];    // First 4 chars of name. E.g. Code checks for "DAHLIA", file is "DAHL".
-    SVECTOR3* svectorPtr_8; // Pointer to `SVECTOR3`s. Unknown purpose.
+    u8        svectorCount_2; /** `svectors_8` array size. */
+    u8        field_3;        // Usually 0, but sometimes filled in, possibly junk data left in padding byte.
+    char      name_4[4];      // First 4 `char`s of name. E.g. If code checks for "DAHLIA", file is "DAHL".
+    SVECTOR3* svectors_8;     // Pointer to `SVECTOR3`s. Unknown purpose.
     union
     {
         s_DmsKeyframeCharacter* character;
@@ -1478,24 +1489,24 @@ typedef struct
 } s_DmsEntry;
 STATIC_ASSERT_SIZEOF(s_DmsEntry, 16);
 
-typedef struct
+typedef struct _DmsInterval
 {
     s16 startKeyframeIdx_0;
     s16 frameCount_2; /** Frame duration at 30 FPS. */
 } s_DmsInterval;
 STATIC_ASSERT_SIZEOF(s_DmsInterval, 4);
 
-typedef struct
+typedef struct _DmsHeader
 {
-    u8             isLoaded_0; /** `bool` */
-    u8             characterCount_1;
-    u8             intervalCount_2;
-    u8             field_3; // Usually 0, but sometimes filled in.
-    u32            field_4; // Unknown, correlates with DMS file size.
-    s_DmsInterval* intervalPtr_8;
-    VECTOR3        origin_C; /** Q23.8 | Origin point. Gets added to character positions. */
-    s_DmsEntry*    characters_18;
-    s_DmsEntry     camera_1C;
+    /* 0x0  */ u8             isLoaded; /** `bool` */
+    /* 0x1  */ u8             characterCount; /** `characters_18` array size. */
+    /* 0x2  */ u8             intervalCount_2; /** `intervals_8` array size. */
+    /* 0x3  */ u8             field_3;         // Usually 0, but sometimes filled in.
+    /* 0x4  */ u32            field_4;         // Unknown, correlates with DMS file size.
+    /* 0x8  */ s_DmsInterval* intervals_8;
+    /* 0xC  */ VECTOR3        origin_C; /** Q23.8 | Origin point. Gets added to character positions. */
+    /* 0x18 */ s_DmsEntry*    characters_18;
+    /* 0x1C */ s_DmsEntry     camera_1C;
 } s_DmsHeader;
 STATIC_ASSERT_SIZEOF(s_DmsHeader, 44);
 
@@ -1556,13 +1567,14 @@ typedef struct _MapPoint2d
 } s_MapPoint2d;
 STATIC_ASSERT_SIZEOF(s_MapPoint2d, 12);
 
+/** @brief Character spawn info. */
 typedef struct _SpawnInfo
 {
     q19_12 positionX_0;
-    s8     charaId_4;   /** `e_CharacterId` */
-    u8     rotationY_5; /** Degrees in Q7.8, range [0, 256]. */
-    s8     flags_6;     /** Copied to `stateStep` in `s_Model`, with `controlState = ModelState_Uninitialized`. */
-    s32    gameDifficultyMin_7_0 : 4;
+    s8     charaId_4; /** `e_CharacterId` */
+    q0_8   rotationY_5;
+    s8     flags_6;                   /** `e_SpawnFlags` | Copied to `stateStep` in `s_Model`, with `controlState = ModelState_Uninitialized`. */
+    s32    gameDifficultyMin_7_0 : 4; /** `e_GameDifficulty` | Minimum difficulty required for spawn. */
     q19_12 positionZ_8;
 } s_SpawnInfo;
 STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
@@ -3976,7 +3988,7 @@ void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDe
 bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone);
 
 /** Translates something. */
-s32 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, s32 arg2, s32 arg3);
+s32 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 arg2, q19_12 arg3);
 
 void func_8006F8FC(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s_TriggerZone* zone);
 

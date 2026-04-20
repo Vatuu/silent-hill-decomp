@@ -3381,16 +3381,16 @@ void Map_WorldObjectsInit(void) // 0x800E3804
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        func_80088FF4(Chara_Stalker, 5, 0);
-        func_80088FF4(Chara_Stalker, 7, 0);
-        func_80088FF4(Chara_Stalker, 8, 0);
+        func_80088FF4(Chara_Stalker, 5, SpawnFlag_None);
+        func_80088FF4(Chara_Stalker, 7, SpawnFlag_None);
+        func_80088FF4(Chara_Stalker, 8, SpawnFlag_None);
     }
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        func_80088FF4(Chara_Stalker, 9, 11);
-        func_80088FF4(Chara_Stalker, 12, 3);
-        func_80088FF4(Chara_Stalker, 13, 3);
-        func_80088FF4(Chara_Stalker, 14, 3);
+        func_80088FF4(Chara_Stalker, 9, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
+        func_80088FF4(Chara_Stalker, 12, SpawnFlag_0 | SpawnFlag_1);
+        func_80088FF4(Chara_Stalker, 13, SpawnFlag_0 | SpawnFlag_1);
+        func_80088FF4(Chara_Stalker, 14, SpawnFlag_0 | SpawnFlag_1);
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
@@ -3772,12 +3772,12 @@ void func_800E5628(void) // 0x800E5628
 
     if (Savegame_EventFlagGet(EventFlag_M7S02_PickupKeyOfAratron))
     {
-        func_80088FF4(Chara_Stalker, 3, 3);
+        func_80088FF4(Chara_Stalker, 3, SpawnFlag_0 | SpawnFlag_1);
 
         if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
         {
-            func_80088FF4(Chara_Stalker, 10, 0xB);
-            func_80088FF4(Chara_Stalker, 10, 3);
+            func_80088FF4(Chara_Stalker, 10, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
+            func_80088FF4(Chara_Stalker, 10, SpawnFlag_0 | SpawnFlag_1);
         }
     }
 

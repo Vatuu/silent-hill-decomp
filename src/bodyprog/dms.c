@@ -19,21 +19,21 @@ void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
 {
     s_DmsEntry* curEntry;
 
-    if (dmsHdr->isLoaded_0)
+    if (dmsHdr->isLoaded)
     {
         return;
     }
 
-    dmsHdr->isLoaded_0 = true;
+    dmsHdr->isLoaded = true;
 
     // Add memory address of DMS header to offsets in `dmsHdr`.
-    dmsHdr->intervalPtr_8 = (u8*)dmsHdr->intervalPtr_8 + (u32)dmsHdr;
+    dmsHdr->intervals_8 = (u8*)dmsHdr->intervals_8 + (u32)dmsHdr;
     dmsHdr->characters_18 = (u8*)dmsHdr->characters_18 + (u32)dmsHdr;
 
     DmsEntry_FixOffsets(&dmsHdr->camera_1C, dmsHdr);
 
     for (curEntry = dmsHdr->characters_18;
-         curEntry < &dmsHdr->characters_18[dmsHdr->characterCount_1];
+         curEntry < &dmsHdr->characters_18[dmsHdr->characterCount];
          curEntry++)
     {
         DmsEntry_FixOffsets(curEntry, dmsHdr);
@@ -43,12 +43,12 @@ void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
 void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* dmsHdr) // 0x8008CA44
 {
     entry->keyframes_C.character = (u32)entry->keyframes_C.character + (u32)dmsHdr;
-    entry->svectorPtr_8          = (u32)entry->svectorPtr_8 + (u32)dmsHdr;
+    entry->svectors_8          = (u32)entry->svectors_8 + (u32)dmsHdr;
 }
 
 s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* dmsHdr) // 0x8008CA60
 {
-    return &dmsHdr->intervalPtr_8[idx];
+    return &dmsHdr->intervals_8[idx];
 }
 
 void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, q19_12 time, s_DmsHeader* dmsHdr) // 0x8008CA74
@@ -80,7 +80,7 @@ s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* dmsHdr) // 0x8008CB10
 {
     s32 i;
 
-    for (i = 0; i < dmsHdr->characterCount_1; i++)
+    for (i = 0; i < dmsHdr->characterCount; i++)
     {
         if (!strncmp(name, dmsHdr->characters_18[i].name_4, 4))
         {
@@ -236,8 +236,8 @@ u32 Dms_IntervalStateGet(q19_12 time, s_DmsHeader* dmsHdr)
 
     frameTime = FP_FROM(time, Q12_SHIFT);
 
-    for (curInterval = dmsHdr->intervalPtr_8;
-         curInterval < &dmsHdr->intervalPtr_8[dmsHdr->intervalCount_2];
+    for (curInterval = dmsHdr->intervals_8;
+         curInterval < &dmsHdr->intervals_8[dmsHdr->intervalCount_2];
          curInterval++)
     {
         if (frameTime != ((curInterval->startKeyframeIdx_0 + curInterval->frameCount_2) - 1))
@@ -263,9 +263,8 @@ s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry) // 0x8008D330
     SVECTOR3* curVec;
 
     keyframeIdx0 = arg0;
-    for (curVec = camEntry->svectorPtr_8; curVec < &camEntry->svectorPtr_8[camEntry->svectorCount_2]; curVec++)
+    for (curVec = camEntry->svectors_8; curVec < &camEntry->svectors_8[camEntry->svectorCount_2]; curVec++)
     {
-
         if (arg0 < curVec->vx)
         {
             break;
