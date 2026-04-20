@@ -315,7 +315,7 @@ void func_800D725C(void) // 0x800D725C
         default:
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_482);
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             Chara_ProcessLoads();
             SD_Call(19);
             break;
@@ -408,7 +408,7 @@ void func_800D7A60(void) // 0x800D7A60
 
         case 8:
             func_80085EB8(0, &g_SysWork.playerWork.player, 158, false);
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             func_8005DC1C(Sfx_Unk1337, &g_WorldObject_Door.position_1C, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
@@ -455,7 +455,7 @@ void func_800D7A60(void) // 0x800D7A60
 
         case 18:
             SD_Call(19);
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -2270,7 +2270,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
                 g_SysWork.npcs[0].timer_C6 = npcTimer;
                 if (g_SysWork.npcs[0].position.vz < Q12(-30.0f) || g_SysWork.npcs[0].timer_C6 == Q12(1.0f))
                 {
-                    func_80088F94(g_SysWork.npcs, 0, 0);
+                    Chara_ModelCharaIdClear(g_SysWork.npcs, 0, 0);
                 }
             }
             break;
@@ -2304,7 +2304,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
 
                 if (g_SysWork.npcs[0].timer_C6 > Q12(1.0f))
                 {
-                    func_80088F94(&g_SysWork.npcs[0], 0, 0);
+                    Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
                 }
             }
 

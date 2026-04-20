@@ -340,7 +340,7 @@ void func_800D1910(void) // 0x800D1910
             func_80085EB8(3, &g_SysWork.playerWork.player, 0, false);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
 
             Savegame_EventFlagSet(EventFlag_338);
 
@@ -559,7 +559,7 @@ void func_800D23E4(void) // 0x800D23E4
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
 
             func_8003D01C();
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
 
             Savegame_EventFlagSet(EventFlag_MapMark_AltHospital1F_RightEntranceBroken);
             Savegame_EventFlagSet(EventFlag_340);

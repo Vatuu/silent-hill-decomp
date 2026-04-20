@@ -441,7 +441,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
 
         case 27:
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             func_8005DC1C(Sfx_Unk1595, &QVECTOR3(103.0f, -1.2f, 17.6f), Q8(0.5f), 0);
 
             Savegame_EventFlagClear(EventFlag_395);
@@ -493,7 +493,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             sharedFunc_800D2EF4_0_s00();
 
             WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
 
             Fs_QueueWaitForEmpty();
 

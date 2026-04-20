@@ -2369,7 +2369,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
             Game_FlashlightAttributesFix();
             g_SysWork.pointLightIntensity = Q12(1.0f);
             SD_Call(19);
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             break;
     }
 
@@ -2549,7 +2549,7 @@ void func_800E3244(void) // 0x800E3244
         case 14:
             D_800ED5B0 = Q12(216.0f);
 
-            func_80088F94(&g_SysWork.npcs[1], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[1], 0, 0);
             func_80085EB8(0, &playerChara, 161, false);
             SysWork_StateStepIncrement(0);
 
@@ -2590,7 +2590,7 @@ void func_800E3244(void) // 0x800E3244
             D_800ED5B4 = -0x7A;
 
             Model_AnimFlagsClear(&playerChara.model, (1<<1));
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
 
             D_800ED5B0 = NO_VALUE;
 
@@ -2651,8 +2651,8 @@ void func_800E3244(void) // 0x800E3244
             Savegame_EventFlagSet(EventFlag_449);
             Savegame_EventFlagSet(EventFlag_450);
 
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
-            func_80088F94(&g_SysWork.npcs[1], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[1], 0, 0);
 
             Sd_SfxStop(Sfx_Unk1625);
             Sd_SfxStop(Sfx_Unk1624);
@@ -2916,7 +2916,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 29:
             func_80085EB8(0, &playerChara, 51, false);
-            func_80088F94(&g_SysWork.npcs[1], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[1], 0, 0);
 
             D_800EBB61 = 1;
 
@@ -3124,7 +3124,7 @@ void func_800E3EF4(void) // 0x800E3EF4
         case 66:
             if (g_SysWork.npcs[1].model.charaId == Chara_Flauros)
             {
-                func_80088F94(&g_SysWork.npcs[1], 0, 0);
+                Chara_ModelCharaIdClear(&g_SysWork.npcs[1], 0, 0);
             }
 
             SysWork_StateStepIncrement(0);
@@ -3134,8 +3134,8 @@ void func_800E3EF4(void) // 0x800E3EF4
             SysWork_StateSetNext(SysState_Gameplay);
             ScreenFade_ResetTimestep();
 
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
-            func_80088F94(&g_SysWork.npcs[1], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[1], 0, 0);
 
             Savegame_EventFlagSet(EventFlag_451);
 

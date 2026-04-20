@@ -912,7 +912,9 @@ Map_BoxOutlineDraw                           = 0x80088370;
 //--------------------------------------------------------------
 Chara_Load                                   = 0x80088C7C; // type:func
 Chara_ProcessLoads                           = 0x80088D0C; // type:func
+Chara_BonesInit                              = 0x80088D34; // type:func
 Chara_Spawn                                  = 0x80088D78; // type:func
+Chara_ModelCharaIdClear                      = 0x80088F94; // type:func
 Chara_SpawnFlagsSet                          = 0x80088FF4; // type:func
 Chara_SpawnPositionSet                       = 0x80089034; // type:func
 

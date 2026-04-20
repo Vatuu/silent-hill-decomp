@@ -948,7 +948,7 @@ void func_800D87C0(void) // 0x800D87C0
 
         case 14:
             func_8005DC1C(Sfx_Unk1448, &QVECTOR3(-56.4f, -0.8f, 16.8f), Q8(0.5f), 0);
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             SysWork_StateStepIncrement(0);
 
         case 15:
@@ -988,10 +988,10 @@ void func_800D87C0(void) // 0x800D87C0
             Savegame_EventFlagSet(EventFlag_77);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            func_80088D34(0);
+            Chara_BonesInit(0);
 
             Savegame_EventFlagSet(EventFlag_76);
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             func_8003D01C();
 
             if (D_800DD598 == 0)

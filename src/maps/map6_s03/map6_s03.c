@@ -489,7 +489,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
                 if (g_SysWork.npcs[i].position.vx < Q12(32.0f) &&
                     g_SysWork.npcs[i].model.charaId != Chara_None)
                 {
-                    func_80088F94(&g_SysWork.npcs[i], 0, 0);
+                    Chara_ModelCharaIdClear(&g_SysWork.npcs[i], 0, 0);
                 }
             }
 

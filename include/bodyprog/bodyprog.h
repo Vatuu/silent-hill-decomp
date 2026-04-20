@@ -2954,7 +2954,6 @@ void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s
  */
 bool Gfx_ChunkSubcellVisibleCheck(s_IpdModelBuffer* modelBuf, q7_8 subcellX, q7_8 subcellZ, q23_8 posX, q23_8 posZ);
 
-/** Loads anim file? */
 void Anim_BoneInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 s_AnimInfo* func_80044918(s_ModelAnim* anim);
@@ -3527,15 +3526,13 @@ bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 forceFree, s
 
 bool Chara_ProcessLoads(void);
 
-void func_80088D34(s32 idx);
+void Chara_BonesInit(s32 idx);
 
-s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep);
+s32 Chara_Spawn(e_CharacterId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep);
 
-void func_80088F94(s_SubCharacter* chara, s32 unused0, s32 unused1);
+void Chara_ModelCharaIdClear(s_SubCharacter* chara, s32 unused0, s32 unused1);
 
 void Chara_SpawnFlagsSet(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags);
-
-bool func_8008F434(s32 arg0);
 
 // ========================
 

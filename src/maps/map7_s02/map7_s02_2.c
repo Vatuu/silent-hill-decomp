@@ -375,7 +375,7 @@ void func_800DA248(void) // 0x800DA248
         default:
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_482);
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             Chara_ProcessLoads();
             SD_Call(19);
             break;
@@ -469,7 +469,7 @@ void func_800DAA4C(void) // 0x800DAA4C
 
         case 8:
             func_80085EB8(0, &g_SysWork.playerWork.player, 158, false);
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             func_8005DC1C(Sfx_Unk1337, &g_WorldObject_Door.position_1C, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
@@ -516,7 +516,7 @@ void func_800DAA4C(void) // 0x800DAA4C
 
         case 18:
             SD_Call(19);
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -850,7 +850,7 @@ void func_800DBB34(void) // 0x800DBB34
             g_SysWork.npcs[0].timer_C6 += Q12_MULT_PRECISE(Q12(0.25f), g_DeltaTime);
             if (g_SysWork.npcs[0].timer_C6 > Q12(1.0f))
             {
-                func_80088F94(&g_SysWork.npcs[0], 0, 0);
+                Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
                 SysWork_StateStepIncrement(0);
             }
             break;
@@ -869,7 +869,7 @@ void func_800DBB34(void) // 0x800DBB34
             break;
 
         case 15:
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             SD_Call(19);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
@@ -1811,10 +1811,10 @@ void func_800DE1FC(void) // 0x800DE1FC
             break;
 
         case 5:
-            func_80088F94(&g_SysWork.npcs[1], 0, 0);
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
-            func_80088F94(&g_SysWork.npcs[2], 0, 0);
-            func_80088F94(&g_SysWork.npcs[3], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[1], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[2], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[3], 0, 0);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -1912,10 +1912,10 @@ void func_800DE1FC(void) // 0x800DE1FC
             break;
 
         case 10:
-            func_80088F94(&g_SysWork.npcs[1], 0, 0);
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
-            func_80088F94(&g_SysWork.npcs[2], 0, 0);
-            func_80088F94(&g_SysWork.npcs[3], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[1], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[2], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[3], 0, 0);
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
             Savegame_EventFlagSet(EventFlag_551);
@@ -2094,8 +2094,8 @@ void func_800DF21C(void) // 0x800DF21C
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
-            func_80088F94(&g_SysWork.npcs[1], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[1], 0, 0);
             Anim_CharaTypeAnimInfoClear();
             func_8008D448();
             Game_FlashlightAttributesFix();

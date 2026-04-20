@@ -355,7 +355,7 @@ void func_800CED88(void) // 0x800CED88
 
         case 29:
             func_8005DC1C(Sfx_Unk1324, &QVECTOR3(12.0f, -1.2f, 24.0f), Q8(0.5f), 0);
-            func_80088F94(dahliaChara, 0, 0);
+            Chara_ModelCharaIdClear(dahliaChara, 0, 0);
             SysWork_StateStepIncrement(0);
 
         case 30:
@@ -383,7 +383,7 @@ void func_800CED88(void) // 0x800CED88
             Savegame_EventFlagSet(EventFlag_MapMark_FogCentralTown_HospitalCircle);
             Savegame_EventFlagSet(EventFlag_MapMark_AltCentralTown_HospitalCircle);
 
-            func_80088F94(dahliaChara, 0, 0);
+            Chara_ModelCharaIdClear(dahliaChara, 0, 0);
 
             g_Timer0 = NO_VALUE;
 

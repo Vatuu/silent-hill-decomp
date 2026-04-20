@@ -3596,7 +3596,7 @@ void func_800D6F24(void) // 0x800D6F24
             break;
 
         case 6:
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
 
             Savegame_EventFlagSet(EventFlag_327);
 
@@ -3635,7 +3635,7 @@ void func_800D6F24(void) // 0x800D6F24
             g_SysWork.playerWork.player.position.vz = Q12(140.36f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
 
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
 
             Savegame_EventFlagSet(EventFlag_327);
 

@@ -356,7 +356,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 30:
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             D_800D253C = Q12(243.0f);
             SysWork_StateStepIncrement(0);
 
@@ -386,7 +386,7 @@ void func_800D0CF8(void) // 0x800D0CF8
 
         case 37:
             D_800D253C = Q12(243.0f);
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             SysWork_StateStepIncrement(0);
             break;
 

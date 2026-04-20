@@ -381,7 +381,7 @@ void func_800D2668(void) // 0x800D2668
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             sharedFunc_800D2EF4_0_s00();
-            func_80088F94(g_SysWork.npcs, 0, 0);
+            Chara_ModelCharaIdClear(g_SysWork.npcs, 0, 0);
 
             D_800D5A40 = NO_VALUE;
 

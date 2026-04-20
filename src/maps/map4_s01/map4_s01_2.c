@@ -522,7 +522,7 @@ void func_800D2408(void) // 0x800D2408
 
             D_800D8018 = 0;
 
-            func_80088F94(cybilChara, 0, 0);
+            Chara_ModelCharaIdClear(cybilChara, 0, 0);
             Fs_QueueWaitForEmpty();
             func_8003D01C();
             SD_Call(19);

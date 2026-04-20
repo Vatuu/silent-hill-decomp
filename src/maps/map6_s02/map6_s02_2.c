@@ -277,7 +277,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             break;
 
         case 16:
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             SysWork_StateStepIncrement(0);
 
         case 17:
@@ -324,7 +324,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             g_SysWork.playerWork.player.position.vz = Q12(-19.5f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(164.1f);
 
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             Player_ControlUnfreeze(true);
 
             SysWork_StateSetNext(SysState_Gameplay);

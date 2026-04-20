@@ -638,7 +638,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 35:
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
 
             D_800DA6EC = Q12(316.0f);
@@ -692,7 +692,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
                 D_800D94F4 = 1;
             }
 
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             sharedFunc_800D2EF4_0_s00();
             WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
 

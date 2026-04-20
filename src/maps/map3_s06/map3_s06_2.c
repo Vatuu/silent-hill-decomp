@@ -277,7 +277,7 @@ void func_800D0C14(void) // 0x800D0C14
 
         case 27:
             func_80085EB8(0, &g_SysWork.playerWork.player, 111, false);
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             D_800D2738 = 0;
             SysWork_StateStepIncrement(0);
 
@@ -338,7 +338,7 @@ void func_800D0C14(void) // 0x800D0C14
             Savegame_EventFlagSet(EventFlag_295);
             SD_Call(19);
 
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
             Game_TurnFlashlightOff();
             break;

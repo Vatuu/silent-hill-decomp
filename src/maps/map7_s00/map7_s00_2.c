@@ -244,7 +244,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 18:
-            func_80088F94(&lisaChara, 0, 0);
+            Chara_ModelCharaIdClear(&lisaChara, 0, 0);
             func_80085EB8(0, &playerChara, 139, false);
 
             Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(16.3f), Q12(-1.55f), Q12(-138.6f));
@@ -314,7 +314,7 @@ void func_800D0B64(void) // 0x800D0B64
             g_SysWork.pointLightIntensity = Q12(1.0f);
 
             Savegame_EventFlagSet(EventFlag_471);
-            func_80088F94(&lisaChara, 0, 0);
+            Chara_ModelCharaIdClear(&lisaChara, 0, 0);
 
             g_Timer0 = NO_VALUE;
 

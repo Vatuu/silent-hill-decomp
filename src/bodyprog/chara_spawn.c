@@ -26,13 +26,13 @@ bool Chara_ProcessLoads(void) // 0x80088D0C
     return true;
 }
 
-void func_80088D34(s32 idx) // 0x80088D34
+void Chara_BonesInit(s32 idx) // 0x80088D34
 {
     idx++;
     Anim_BoneInit(g_CharaTypeAnimInfo[idx].animFile1_8, g_CharaTypeAnimInfo[idx].npcBoneCoords);
 }
 
-s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep) // 0x80088D78
+s32 Chara_Spawn(e_CharacterId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep) // 0x80088D78
 {
     s_Collision     coll;
     s32             i;
@@ -40,10 +40,10 @@ s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12
     s32             arg1_1;
     s_SubCharacter* chara;
 
-    if (charaId <= Chara_MonsterCybil && arg1 < 0x40)
+    if (charaId <= Chara_MonsterCybil && spawnFlags < 64)
     {
         arg1_1 = 0x1F;
-        arg1_1 = arg1 & arg1_1;
+        arg1_1 = spawnFlags & arg1_1;
     }
     else
     {
@@ -94,23 +94,23 @@ s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12
         g_SysWork.npcs[i].model.charaId = charaId;
         g_SysWork.npcs[i].field_40 = arg1_1;
 
-        if (charaId <= Chara_MonsterCybil && arg1 < 64)
+        if (charaId <= Chara_MonsterCybil && spawnFlags < 64)
         {
             SET_FLAG(g_SysWork.field_228C, arg1_1);
         }
 
         SET_FLAG(&g_SysWork.npcFlags, i);
 
-        g_SysWork.npcs[i].model.controlState     = ModelState_Uninitialized;
-        g_SysWork.npcs[i].model.stateStep = stateStep;
+        g_SysWork.npcs[i].model.controlState = ModelState_Uninitialized;
+        g_SysWork.npcs[i].model.stateStep    = stateStep;
+        g_SysWork.npcs[i].position.vx        = posX;
 
-        g_SysWork.npcs[i].position.vx = posX;
         Collision_Get(&coll, posX, posZ);
         g_SysWork.npcs[i].position.vy = coll.groundHeight_0;
         g_SysWork.npcs[i].position.vz = posZ;
         g_SysWork.npcs[i].rotation.vy = rotY;
 
-        chara                          = &g_SysWork.npcs[i];
+        chara                    = &g_SysWork.npcs[i];
         chara->model.anim.flags |= AnimFlag_Visible;
 
         return i;
@@ -119,7 +119,7 @@ s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12
     return ARRAY_SIZE(g_SysWork.npcs);
 }
 
-void func_80088F94(s_SubCharacter* chara, s32 unused0, s32 unuse12) // 0x80088F94
+void Chara_ModelCharaIdClear(s_SubCharacter* chara, s32 unused0, s32 unuse1) // 0x80088F94
 {
     if (chara == NULL)
     {

@@ -366,7 +366,7 @@ void func_800D13D8(void) // 0x800D13D8
             break;
 
         case 35:
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             func_8005DC1C(Sfx_Unk1609, &QVECTOR3(-19.95f, -1.2f, 60.7f), Q8(0.5f), 0);
             func_80085EB8(0, &g_SysWork.playerWork.player, 113, false);
             SysWork_StateStepIncrement(0);
@@ -426,7 +426,7 @@ void func_800D13D8(void) // 0x800D13D8
             break;
 
         case 46:
-            func_80088F94(&g_SysWork.npcs[1], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[1], 0, 0);
             func_8005DC1C(Sfx_Unk1604, &QVECTOR3(-21.3f, -1.2f, 58.7f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
@@ -462,8 +462,8 @@ void func_800D13D8(void) // 0x800D13D8
             break;
 
         case 54:
-            func_80088F94(&g_SysWork.npcs[0], 0, 0);
-            func_80088F94(&g_SysWork.npcs[1], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&g_SysWork.npcs[1], 0, 0);
 
             D_800D4070 = Q12(169.0f);
 
