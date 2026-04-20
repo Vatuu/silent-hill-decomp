@@ -688,7 +688,7 @@ LmHeader_ModelHeaderSearch                   = 0x80043C60; // type:func
 IpdHeader_ModelBufferLinkObjectLists         = 0x80043CBC; // type:func
 func_80044044                                = 0x80043D78; // type:func
 Gfx_IpdChunkDraw                             = 0x80043DC4; // type:func
-func_80044420                                = 0x80044154; // type:func
+Gfx_ChunkSubcellVisibleCheck                 = 0x80044154; // type:func
 
 //-----------------------------------------------------------------------------
 //--- PA: 0x01F778   VA: 0x800442D8   subsegment: c, gfx/bodyprog_anim_800445A4

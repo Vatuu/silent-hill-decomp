@@ -435,7 +435,7 @@ u32 IpdHeader_LoadStateGet(s_IpdChunk* chunk) // 0x80041B1C
     {
         return StaticModelLoadState_Invalid;
     }
-    else if (chunk->ipdHdr_0->isLoaded_1 && IpdHeader_IsTextureLoaded(chunk->ipdHdr_0))
+    else if (chunk->ipdHdr_0->isLoaded && IpdHeader_IsTextureLoaded(chunk->ipdHdr_0))
     {
         return StaticModelLoadState_Loaded;
     }
@@ -567,9 +567,9 @@ void Map_PlaceIpdAtCell(s16 ipdFileIdx, s32 cellX, s32 cellZ) // 0x80041ED0
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
             ipdHdr = curChunk->ipdHdr_0;
-            if (ipdHdr->isLoaded_1)
+            if (ipdHdr->isLoaded)
             {
-                Lm_MaterialRefCountDec(ipdHdr->lmHdr_4);
+                Lm_MaterialRefCountDec(ipdHdr->lmHdr);
             }
         }
 
@@ -702,9 +702,9 @@ void Ipd_ActiveChunksClear(s_Map* map, s32 arg1) // 0x80042300
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
             ipdHdr1 = curChunk->ipdHdr_0;
-            if (ipdHdr1->isLoaded_1)
+            if (ipdHdr1->isLoaded)
             {
-                Lm_MaterialRefCountDec(ipdHdr1->lmHdr_4);
+                Lm_MaterialRefCountDec(ipdHdr1->lmHdr);
             }
         }
 
@@ -822,7 +822,7 @@ s_IpdCollisionData** func_800425D8(s32* collDataIdx) // 0x800425D8
         if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
             ipdHdr = ptr->ipdHdr_0;
-            if (ipdHdr->isLoaded_1)
+            if (ipdHdr->isLoaded)
             {
                 collData = IpdHeader_CollisionDataGet(ipdHdr);
                 if (collData != NULL)
@@ -866,10 +866,10 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
 
         // Check if chunk matches cell coordinates.
         ipdHdr = curChunk->ipdHdr_0;
-        if (ipdHdr->isLoaded_1 &&
+        if (ipdHdr->isLoaded &&
             curChunk->cellX_8 == cellX && curChunk->cellZ_A == cellZ)
         {
-            return &ipdHdr->collisionData_54;
+            return &ipdHdr->collisionData;
         }
     }
 
@@ -925,7 +925,7 @@ s32 func_8004287C(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q1
             continue;
         }
 
-        if (!curChunk->ipdHdr_0->isLoaded_1)
+        if (!curChunk->ipdHdr_0->isLoaded)
         {
             continue;
         }
@@ -969,7 +969,7 @@ s32 func_8004287C(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q1
     for (k = 0; k < chunkIdx; k++)
     {
         curChunk = chunks[k];
-        if (Lm_ModelFind(model, curChunk->ipdHdr_0->lmHdr_4, metadata))
+        if (Lm_ModelFind(model, curChunk->ipdHdr_0->lmHdr, metadata))
         {
             return (curChunk - g_Map.ipdActive_15C) + 3;
         }
@@ -1105,9 +1105,9 @@ s32 Map_ChunkLoad(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
                     if (Fs_QueueEntryLoadStatusGet(chunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
                     {
                         ipdHdr = chunk->ipdHdr_0;
-                        if (ipdHdr->isLoaded_1)
+                        if (ipdHdr->isLoaded)
                         {
-                            Lm_MaterialRefCountDec(ipdHdr->lmHdr_4);
+                            Lm_MaterialRefCountDec(ipdHdr->lmHdr);
                         }
                     }
 
@@ -1141,7 +1141,7 @@ void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1
             Ipd_DistanceToEdgeCalc(curChunk, posX0, posZ0, posX1, posZ1, isExterior);
         }
 
-        if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) < FsQueueEntryLoadStatus_Loaded || !curChunk->ipdHdr_0->isLoaded_1)
+        if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) < FsQueueEntryLoadStatus_Loaded || !curChunk->ipdHdr_0->isLoaded)
         {
             curChunk->materialCount_14 = 0;
         }
@@ -1175,10 +1175,10 @@ void Ipd_ChunkMaterialsApply(s_Map* map) // 0x800433B8
     {
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            if (curChunk->ipdHdr_0->isLoaded_1 &&
+            if (curChunk->ipdHdr_0->isLoaded &&
                 curChunk->distance0_C > Q12(0.0f) && curChunk->distance1_10 > Q12(0.0f))
             {
-                Lm_MaterialRefCountDec(curChunk->ipdHdr_0->lmHdr_4);
+                Lm_MaterialRefCountDec(curChunk->ipdHdr_0->lmHdr);
             }
         }
     }
@@ -1187,11 +1187,11 @@ void Ipd_ChunkMaterialsApply(s_Map* map) // 0x800433B8
     {
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            if (curChunk->ipdHdr_0->isLoaded_1 &&
+            if (curChunk->ipdHdr_0->isLoaded &&
                 (curChunk->distance0_C <= Q12(0.0f) || curChunk->distance1_10 <= Q12(0.0f)))
             {
                 Ipd_MaterialsLoad(curChunk->ipdHdr_0, &map->ipdTextures_430.fullPage_0, &map->ipdTextures_430.halfPage_2C, map->texFileIdx_134);
-                Lm_MaterialFlagsApply(curChunk->ipdHdr_0->lmHdr_4);
+                Lm_MaterialFlagsApply(curChunk->ipdHdr_0->lmHdr);
             }
         }
     }
@@ -1434,19 +1434,19 @@ bool Ipd_CellPositionMatchCheck(s_IpdChunk* chunk, s_Map* map)
 
 bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr) // 0x80043B70
 {
-    if (!ipdHdr->isLoaded_1)
+    if (!ipdHdr->isLoaded)
     {
         return false;
     }
 
-    return LmHeader_IsTextureLoaded(ipdHdr->lmHdr_4);
+    return LmHeader_IsTextureLoaded(ipdHdr->lmHdr);
 }
 
 s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr) // 0x80043BA4
 {
-    if (ipdHdr->isLoaded_1)
+    if (ipdHdr->isLoaded)
     {
-        return &ipdHdr->collisionData_54;
+        return &ipdHdr->collisionData;
     }
 
     return NULL;
@@ -1454,48 +1454,48 @@ s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr) // 0x80043BA
 
 void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveTextures* fullPageActiveTexs, s_ActiveTextures* halfPageActiveTexs, e_FsFile fileIdx) // 0x80043BC4
 {
-    if (ipdHdr->isLoaded_1)
+    if (ipdHdr->isLoaded)
     {
         return;
     }
-    ipdHdr->isLoaded_1 = true;
+    ipdHdr->isLoaded = true;
 
     IpdHeader_FixHeaderOffsets(ipdHdr);
-    IpdCollData_FixOffsets(&ipdHdr->collisionData_54);
-    LmHeader_FixOffsets(ipdHdr->lmHdr_4);
-    func_8008E4EC(ipdHdr->lmHdr_4);
+    IpdCollData_FixOffsets(&ipdHdr->collisionData);
+    LmHeader_FixOffsets(ipdHdr->lmHdr);
+    func_8008E4EC(ipdHdr->lmHdr);
     Ipd_MaterialsLoad(ipdHdr, fullPageActiveTexs, halfPageActiveTexs, fileIdx);
-    Lm_MaterialFlagsApply(ipdHdr->lmHdr_4);
+    Lm_MaterialFlagsApply(ipdHdr->lmHdr);
     IpdHeader_ModelLinkObjectLists(ipdHdr, lmHdrs, lmHdrCount);
-    IpdHeader_ModelBufferLinkObjectLists(ipdHdr, ipdHdr->modelInfo_14);
+    IpdHeader_ModelBufferLinkObjectLists(ipdHdr, ipdHdr->modelInfo);
 }
 
 void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* fullPageActiveTexs, s_ActiveTextures* halfPageActiveTexs, e_FsFile fileIdx) // 0x80043C7C
 {
-    if (!ipdHdr->isLoaded_1)
+    if (!ipdHdr->isLoaded)
     {
         return;
     }
 
     if (fullPageActiveTexs != NULL)
     {
-        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, fullPageActiveTexs, &LmFilter_IsFullPage, fileIdx, BlendMode_Additive);
+        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr, fullPageActiveTexs, &LmFilter_IsFullPage, fileIdx, BlendMode_Additive);
     }
 
     if (halfPageActiveTexs != NULL)
     {
-        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, halfPageActiveTexs, &LmFilter_IsHalfPage, fileIdx, BlendMode_Additive);
+        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr, halfPageActiveTexs, &LmFilter_IsHalfPage, fileIdx, BlendMode_Additive);
     }
 }
 
 s32 Ipd_HalfPageMaterialCountGet(s_IpdHeader* ipdHdr) // 0x80043D00
 {
-    if (!ipdHdr->isLoaded_1)
+    if (!ipdHdr->isLoaded)
     {
         return 0;
     }
 
-    return Lm_MaterialCountGet(LmFilter_IsHalfPage, ipdHdr->lmHdr_4);
+    return Lm_MaterialCountGet(LmFilter_IsHalfPage, ipdHdr->lmHdr);
 }
 
 bool LmFilter_IsFullPage(s_Material* mat) // 0x80043D44
@@ -1527,18 +1527,18 @@ void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHdr) // 0x80043DA4
 {
     s_IpdModelBuffer* curModelBuf;
 
-    ipdHdr->lmHdr_4           = (u8*)ipdHdr->lmHdr_4 + (u32)ipdHdr;
-    ipdHdr->modelInfo_14      = (u8*)ipdHdr->modelInfo_14 + (u32)ipdHdr;
-    ipdHdr->modelBuffers_18   = (u8*)ipdHdr->modelBuffers_18 + (u32)ipdHdr;
-    ipdHdr->modelOrderList_50 = (u8*)ipdHdr->modelOrderList_50 + (u32)ipdHdr;
+    ipdHdr->lmHdr           = (u8*)ipdHdr->lmHdr + (u32)ipdHdr;
+    ipdHdr->modelInfo      = (u8*)ipdHdr->modelInfo + (u32)ipdHdr;
+    ipdHdr->modelBuffers   = (u8*)ipdHdr->modelBuffers + (u32)ipdHdr;
+    ipdHdr->modelOrderList = (u8*)ipdHdr->modelOrderList + (u32)ipdHdr;
 
-    for (curModelBuf = &ipdHdr->modelBuffers_18[0];
-         curModelBuf < &ipdHdr->modelBuffers_18[ipdHdr->modelBufferCount_9];
+    for (curModelBuf = &ipdHdr->modelBuffers[0];
+         curModelBuf < &ipdHdr->modelBuffers[ipdHdr->modelBufferCount];
          curModelBuf++)
     {
         curModelBuf->field_C  = (u8*)curModelBuf->field_C + (u32)ipdHdr;
         curModelBuf->field_10 = (u8*)curModelBuf->field_10 + (u32)ipdHdr;
-        curModelBuf->field_14 = (u8*)curModelBuf->field_14 + (u32)ipdHdr;
+        curModelBuf->subcellPositions = (u8*)curModelBuf->subcellPositions + (u32)ipdHdr;
     }
 }
 
@@ -1550,11 +1550,11 @@ void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s3
 
     for (i = 0; i < ipdHdr->modelCount; i++)
     {
-        curModelInfo = &ipdHdr->modelInfo_14[i];
+        curModelInfo = &ipdHdr->modelInfo[i];
 
         if (!curModelInfo->isGlobalPlm)
         {
-            curModelInfo->modelHdr = LmHeader_ModelHeaderSearch(&curModelInfo->modelName, ipdHdr->lmHdr_4);
+            curModelInfo->modelHdr = LmHeader_ModelHeaderSearch(&curModelInfo->modelName, ipdHdr->lmHdr);
         }
         else
         {
@@ -1593,17 +1593,17 @@ void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* i
     s_IpdModelBuffer*   curModelBuffer;
     s_IpdModelBuffer_C* unkData;
 
-    for (curModelBuffer = ipdHdr->modelBuffers_18;
-         curModelBuffer < &ipdHdr->modelBuffers_18[ipdHdr->modelBufferCount_9];
+    for (curModelBuffer = ipdHdr->modelBuffers;
+         curModelBuffer < &ipdHdr->modelBuffers[ipdHdr->modelBufferCount];
          curModelBuffer++)
     {
         for (unkData = &curModelBuffer->field_C[0];
              unkData < &curModelBuffer->field_C[curModelBuffer->field_0];
              unkData++)
         {
-            // `unkData` originally stores model idx, replace that with pointer to the model's `modelHdr`.
-            s32 modelIdx        = (s32)unkData->modelHdr_0;
-            unkData->modelHdr_0 = ipdModels[modelIdx].modelHdr;
+            // TODO: `unkData` originally stores model idx, replace that with pointer to the model's `modelHdr`.
+            s32 modelIdx      = (s32)unkData->modelHdr;
+            unkData->modelHdr = ipdModels[modelIdx].modelHdr;
         }
     }
 }
@@ -1613,13 +1613,13 @@ void func_80044044(s_IpdHeader* ipd, s32 cellX, s32 cellZ) // 0x80044044
     s32 prevCellX;
     s32 prevCellZ;
 
-    prevCellX = ipd->cellX_2;
-    prevCellZ = ipd->cellZ_3;
+    prevCellX = ipd->cellX;
+    prevCellZ = ipd->cellZ;
 
-    ipd->cellX_2                       = cellX;
-    ipd->cellZ_3                       = cellZ;
-    ipd->collisionData_54.positionX_0 += (cellX - prevCellX) * Q12_TO_Q8(CHUNK_CELL_SIZE);
-    ipd->collisionData_54.positionZ_4 += (cellZ - prevCellZ) * Q12_TO_Q8(CHUNK_CELL_SIZE);
+    ipd->cellX                       = cellX;
+    ipd->cellZ                       = cellZ;
+    ipd->collisionData.positionX_0 += (cellX - prevCellX) * Q12_TO_Q8(CHUNK_CELL_SIZE);
+    ipd->collisionData.positionZ_4 += (cellZ - prevCellZ) * Q12_TO_Q8(CHUNK_CELL_SIZE);
 }
 
 void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 arg4) // 0x80044090
@@ -1627,11 +1627,11 @@ void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s
     #define CHUNK_SUBCELL_SIZE Q8(8.0f)
 
     s_ModelInfo         modelInfo;
-    GsCOORDINATE2       coord;
+    GsCOORDINATE2       modelCoord;
     MATRIX              viewMat;
     MATRIX              worldMat;
     s32                 geomX;
-    s32                 geomY;
+    s32                 geomZ;
     q23_8               cellBoundZ;
     q23_8               cellBoundX;
     s32                 subcellZ;
@@ -1644,42 +1644,45 @@ void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s
 
     // Convert position to geometry space.
     geomX = Q12_TO_Q8(posX);
-    geomY = Q12_TO_Q8(posZ);
+    geomZ = Q12_TO_Q8(posZ);
 
     // Compute cell boundary position.
-    cellBoundX = ipdHdr->cellX_2 * Q12_TO_Q8(CHUNK_CELL_SIZE);
-    cellBoundZ = ipdHdr->cellZ_3 * Q12_TO_Q8(CHUNK_CELL_SIZE);
+    cellBoundX = ipdHdr->cellX * Q12_TO_Q8(CHUNK_CELL_SIZE);
+    cellBoundZ = ipdHdr->cellZ * Q12_TO_Q8(CHUNK_CELL_SIZE);
 
     // Compute subcells.
     subcellX = FLOOR_TO_STEP(geomX - cellBoundX, CHUNK_SUBCELL_SIZE);
-    subcellZ = FLOOR_TO_STEP(geomY - cellBoundZ, CHUNK_SUBCELL_SIZE);
+    subcellZ = FLOOR_TO_STEP(geomZ - cellBoundZ, CHUNK_SUBCELL_SIZE);
     subcellX = MAX(subcellX, 0);
     subcellZ = MAX(subcellZ, 0);
     subcellX = MIN(subcellX, 4);
     subcellZ = MIN(subcellZ, 4);
 
-    modelInfo.coord_4 = &coord;
-    coord.flg         = true;
+    modelInfo.coord = &modelCoord;
+    modelCoord.flg         = true;
     modelInfo.field_0 = 0;
-    coord.super       = NULL;
+    modelCoord.super       = NULL;
 
-    temp_fp = &ipdHdr->textureCount_1C + (subcellZ * 10) + (subcellX * 2);
+    temp_fp = &ipdHdr->textureCount + (subcellZ * 10) + (subcellX * 2);
     for (i = temp_fp[0]; i < (temp_fp[1] + temp_fp[0]); i++)
     {
-        ipdModelBuf = &ipdHdr->modelBuffers_18[ipdHdr->modelOrderList_50[i]];
+        ipdModelBuf = &ipdHdr->modelBuffers[ipdHdr->modelOrderList[i]];
 
-        if (func_80044420(ipdModelBuf, geomX - cellBoundX, geomY - cellBoundZ, cellBoundX, cellBoundZ))
+        if (Gfx_ChunkSubcellVisibleCheck(ipdModelBuf, geomX - cellBoundX, geomZ - cellBoundZ, cellBoundX, cellBoundZ))
         {
             for (curBufC = ipdModelBuf->field_C; curBufC < &ipdModelBuf->field_C[ipdModelBuf->field_0]; curBufC++)
             {
-                modelInfo.modelHdr_8 = curBufC->modelHdr_0;
-                if (modelInfo.modelHdr_8 != NULL)
+                modelInfo.modelHdr = curBufC->modelHdr;
+                if (modelInfo.modelHdr != NULL)
                 {
-                    coord.workm       = curBufC->field_4;
-                    coord.workm.t[0] += cellBoundX;
-                    coord.workm.t[2] += cellBoundZ;
+                    // Set model matrix.
+                    modelCoord.workm = curBufC->mat;
 
-                    Vw_CoordToWorldAndViewMatrices(&coord, &worldMat, &viewMat);
+                    // Offset model on XZ plane.
+                    modelCoord.workm.t[0] += cellBoundX;
+                    modelCoord.workm.t[2] += cellBoundZ;
+
+                    Vw_CoordToWorldAndViewMatrices(&modelCoord, &worldMat, &viewMat);
                     func_80057090(&modelInfo, ot, arg4, &viewMat, &worldMat, 0);
                 }
             }
@@ -1703,30 +1706,36 @@ void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s
     #undef CHUNK_SUBCELL_SIZE
 }
 
-bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 posX, q23_8 posZ) // 0x80044420
+bool Gfx_ChunkSubcellVisibleCheck(s_IpdModelBuffer* modelBuf, q7_8 subcellX, q7_8 subcellZ, q23_8 posX, q23_8 posZ) // 0x80044420
 {
-    GsCOORDINATE2 coord;
-    MATRIX        mat;
-    SVECTOR*      ptr;
+    GsCOORDINATE2 viewCoord;
+    MATRIX        viewMat;
+    SVECTOR*      curSubcellPos; // TODO: Subcell? Cell?
 
-    for (ptr = modelBuf->field_14; ptr < &modelBuf->field_14[modelBuf->field_2]; ptr++)
+    // Run through subcell positions.
+    for (curSubcellPos = modelBuf->subcellPositions;
+         curSubcellPos < &modelBuf->subcellPositions[modelBuf->subcellCount];
+         curSubcellPos++)
     {
-        if (ptr->vx < arg1 &&
-            arg1 < ptr->vy &&
-            ptr->vz < arg2)
+        if (curSubcellPos->vx < subcellX          &&
+            subcellX          < curSubcellPos->vy &&
+            curSubcellPos->vz < subcellZ)
         {
-            if (arg2 < ptr->pad)
+            if (subcellZ < curSubcellPos->pad) // TODO: `pad` access indicates different struct.
             {
-                coord.flg   = true;
-                coord.super = NULL;
-                coord.workm = GsIDMATRIX;
+                viewCoord.flg   = true;
+                viewCoord.super = NULL;
+                viewCoord.workm = GsIDMATRIX;
 
-                coord.workm.t[0] = posX;
-                coord.workm.t[1] = Q8(0.0f);
-                coord.workm.t[2] = posZ;
+                viewCoord.workm.t[0] = posX;
+                viewCoord.workm.t[1] = Q8(0.0f);
+                viewCoord.workm.t[2] = posZ;
 
-                Vw_CoordToViewSpaceMatrix(&coord, &mat);
-                return Vw_AabbVisibleInFrustumCheck(&mat, modelBuf->field_4, -0x800, modelBuf->field_8, modelBuf->field_6, 0x400, modelBuf->field_A, 0x1900, g_GameWork.gsScreenHeight);
+                Vw_CoordToViewSpaceMatrix(&viewCoord, &viewMat);
+                return Vw_AabbVisibleInFrustumCheck(&viewMat,
+                                                    modelBuf->minX, Q8(-8.0f), modelBuf->minZ,
+                                                    modelBuf->maxX, Q8(4.0f), modelBuf->maxZ,
+                                                    Q8(25.0f), g_GameWork.gsScreenHeight);
             }
         }
     }

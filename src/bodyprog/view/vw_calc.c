@@ -528,7 +528,10 @@ bool Vw_AabbVisibleInScreenCheck(s32 minX, s32 maxX, s32 minY, s32 maxY, s32 min
     }
 }
 
-bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ, s32 maxX, s32 maxY, s32 maxZ, u16 nearPlane, u16 farPlane) // 0x80049F38
+bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat,
+                                  q7_8 minX, q7_8 minY, q7_8 minZ,
+                                  q23_8 maxX, q23_8 maxY, q23_8 maxZ,
+                                  u16 nearPlane, u16 farPlane)
 {
     u8                        flags0[3];
     u8                        flags1[3];

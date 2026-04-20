@@ -128,8 +128,8 @@ void Item_HeldItemModelFree(void) // 0x8003C0C0
     heldItem->itemId_0                       = NO_VALUE;
     heldItem->lmHdr_14                       = HELD_ITEM_LM_BUFFER;
     heldItem->bone_18.modelInfo.field_0    = 0;
-    heldItem->bone_18.modelInfo.coord_4    = NULL;
-    heldItem->bone_18.modelInfo.modelHdr_8 = NULL;
+    heldItem->bone_18.modelInfo.coord      = NULL;
+    heldItem->bone_18.modelInfo.modelHdr = NULL;
 }
 
 void CharaModel_AllModelsFree(void) // 0x8003C110
@@ -158,7 +158,7 @@ void CharaModel_Free(s_CharaModel* model) // 0x8003C1AC
 
     //memset(&image, 0, 8);
     model->charaId  = Chara_None;
-    model->isLoaded_1 = false;
+    model->isLoaded = false;
     model->queueIdx_4 = 0;
     model->lmHdr_8    = MAP_CHARA_LM_BUFFER;
     model->texture_C  = image;
@@ -516,7 +516,7 @@ void func_8003CC7C(s_WorldObjectModel* model, MATRIX* viewMat, MATRIX* worldMat)
         return;
     }
 
-    modelHdr   = model->modelInfo.modelHdr_8;
+    modelHdr   = model->modelInfo.modelHdr;
     objMetaCpy = &model->metadata_10;
 
     if (lmIdx >= 3 && lmIdx < 7)
@@ -835,7 +835,7 @@ void WorldGfx_HarryCharaLoad(void) // 0x8003D160
     queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[Chara_Harry].textureFileIdx, FS_BUFFER_1, &image);
 
     g_WorldGfxWork.harryModel_164C.charaId = Chara_Harry;
-    harryModel->isLoaded_1               = false;
+    harryModel->isLoaded               = false;
     harryModel->queueIdx_4               = queueIdx;
     harryModel->lmHdr_8                  = harryLmHdr;
     g_WorldGfxWork.harryModel_164C.texture_C = image;
@@ -1121,7 +1121,7 @@ s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmH
 
     // Set loaded model data.
     model->charaId  = charaId;
-    model->isLoaded_1 = false;
+    model->isLoaded = false;
     model->queueIdx_4 = queueIdx;
     model->lmHdr_8    = lmHdr;
     model->texture_C  = *tex;
@@ -1155,9 +1155,9 @@ void WorldGfx_CharaModelProcessLoad(s_CharaModel* model) // 0x8003D9C8
 {
     s_Skeleton* skel;
 
-    if (!model->isLoaded_1 && model->charaId != Chara_None && Fs_QueueIsEntryLoaded(model->queueIdx_4))
+    if (!model->isLoaded && model->charaId != Chara_None && Fs_QueueIsEntryLoaded(model->queueIdx_4))
     {
-        model->isLoaded_1 = true;
+        model->isLoaded = true;
 
         LmHeader_FixOffsets(model->lmHdr_8);
         Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[model->charaId].textureFileIdx, &model->texture_C, CHARA_FILE_INFOS[model->charaId].materialBlendMode % 4);

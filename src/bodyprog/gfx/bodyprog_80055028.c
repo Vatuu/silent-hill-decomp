@@ -1043,11 +1043,11 @@ void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx)
     s_ModelHeader* modelHdr;
 
     modelHdr = lmHdr->modelHdrs;
-    bone->modelInfo.modelIdx_C = modelHdrIdx;
+    bone->modelInfo.modelIdx = modelHdrIdx;
 
     if (lmHdr->magic == LM_HEADER_MAGIC)
     {
-        bone->modelInfo.modelHdr_8 = &modelHdr[modelHdrIdx];
+        bone->modelInfo.modelHdr = &modelHdr[modelHdrIdx];
     }
 }
 
@@ -1072,8 +1072,8 @@ bool Lm_ModelFind(s_WorldObjectModel* model, s_LmHeader* lmHdr, s_WorldObjectMet
             if (!COMPARE_FILENAMES(&modelHdr->name_0, &sp10))
             {
                 result                       = true;
-                model->modelInfo.modelIdx_C = i;
-                model->modelInfo.modelHdr_8 = modelHdr;
+                model->modelInfo.modelIdx = i;
+                model->modelInfo.modelHdr = modelHdr;
             }
         }
     }
@@ -1199,7 +1199,7 @@ void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 arg2, MATRIX* viewMat
     GsOT_TAG*      otTag;
     s_ModelHeader* modelHdr;
 
-    modelHdr = modelInfo->modelHdr_8;
+    modelHdr = modelInfo->modelHdr;
 
     if (modelInfo->field_0 < 0)
     {
@@ -1290,7 +1290,7 @@ void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* 
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    modelHdr     = modelInfo->modelHdr_8;
+    modelHdr     = modelInfo->modelHdr;
     vertOffset   = modelHdr->vertexOffset_9;
     normalOffset = modelHdr->normalOffset_A;
 
@@ -2504,7 +2504,7 @@ void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, s32 arg3, GsOT
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    modelHdr = modelInfo->modelHdr_8;
+    modelHdr = modelInfo->modelHdr;
 
     for (curMeshHdr = &modelHdr->meshHdrs_C[0]; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
     {
@@ -2695,7 +2695,7 @@ void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* 
             break;
     }
 
-    modelHdr     = modelInfo->modelHdr_8;
+    modelHdr     = modelInfo->modelHdr;
     vertOffset   = modelHdr->vertexOffset_9;
     normalOffset = modelHdr->normalOffset_A;
 

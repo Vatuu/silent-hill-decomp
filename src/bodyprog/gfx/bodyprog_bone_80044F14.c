@@ -159,7 +159,7 @@ void func_80045258(s_LinkedBone** boneOrd, s_LinkedBone* bones, s32 boneIdx, s_L
     {
         for (curBone = bones; curBone < &bones[boneIdx]; curBone++)
         {
-            if (curBone->bone.modelInfo.modelIdx_C == *curObjOrd)
+            if (curBone->bone.modelInfo.modelIdx == *curObjOrd)
             {
                 *boneOrd = curBone;
                 boneOrd  = &curBone->next;
@@ -181,7 +181,7 @@ void func_800452EC(s_Skeleton* skel) // 0x800452EC
     curBone = skel->bones_4;
     while (curBone != NULL)
     {
-        modelHdr    = curBone->bone.modelInfo.modelHdr_8;
+        modelHdr    = curBone->bone.modelInfo.modelHdr;
         boneIdxOnes = modelHdr->name_0.str[1] - '0';
         boneIdxTens = modelHdr->name_0.str[0] - '0';
 

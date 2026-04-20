@@ -882,26 +882,28 @@ typedef struct _IpdCollisionData
 } s_IpdCollisionData;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData, 308);
 
+// Node of some kind?
 typedef struct _IpdModelBuffer_C
 {
-    s_ModelHeader* modelHdr_0;
-    MATRIX         field_4;
+    /* 0x0 */ s_ModelHeader* modelHdr;
+    /* 0x4 */ MATRIX         mat;
 } s_IpdModelBuffer_C;
 STATIC_ASSERT_SIZEOF(s_IpdModelBuffer_C, 36);
 
+/** @brief IPD model buffer. */
 typedef struct _IpdModelBuffer
 {
-    u8                  field_0; // Count of `field_C` entries.
-    u8                  field_1;
-    u8                  field_2;
-    s8                  unk_3;
-    s16                 field_4;
-    s16                 field_6;
-    s16                 field_8;
-    s16                 field_A;
-    s_IpdModelBuffer_C* field_C;
-    SVECTOR*            field_10; // Pointer to unknown collision data, type assumed.
-    SVECTOR*            field_14; // Pointer to unknown collision data, type assumed.
+    /* 0x0  */ u8                  field_0; // Count of `field_C` entries.
+    /* 0x1  */ u8                  field_1;
+    /* 0x2  */ u8                  subcellCount;
+    /* 0x3  */ s8                  __pad_3;
+    /* 0x4  */ q7_8                minX; // } TODO: Cell range or subcell range?
+    /* 0x6  */ q7_8                maxX; // }
+    /* 0x8  */ q7_8                minZ; // }
+    /* 0xA  */ q7_8                maxZ; // }
+    /* 0xC  */ s_IpdModelBuffer_C* field_C;
+    /* 0x10 */ SVECTOR*            field_10;         // Pointer to unknown collision data.
+    /* 0x14 */ SVECTOR*            subcellPositions; /** XZ positions. TODO: Use different struct. */
 } s_IpdModelBuffer;
 STATIC_ASSERT_SIZEOF(s_IpdModelBuffer, 24);
 
@@ -914,36 +916,35 @@ typedef struct _IpdModelInfo
 } s_IpdModelInfo;
 STATIC_ASSERT_SIZEOF(s_IpdModelInfo, 16);
 
+/** @brief IPD model header. */
 typedef struct _IpdHeader
 {
-    u8                 magic;
-    u8                 isLoaded_1; /** `bool` */
-    s8                 cellX_2;
-    s8                 cellZ_3;
-    s_LmHeader*        lmHdr_4;
-    u8                 modelCount;
-    u8                 modelBufferCount_9;
-    u8                 modelOrderCount_A;
-    u8                 unk_B[1];
-    u8                 unk_C[8];
-    s_IpdModelInfo*    modelInfo_14;
-    s_IpdModelBuffer*  modelBuffers_18;
-    u8                 textureCount_1C; // Should it be `u32`?
-                                        // "`u8` - Relative pointer to textures list"
-                                        // "`u32` - Relative pointer to object order"
-    u8                 unk_1D[3];
-    u8                 unk_20[48];
-    u8*                modelOrderList_50;
-    s_IpdCollisionData collisionData_54;
+    /* 0x0  */ u8                 magic;
+    /* 0x1  */ u8                 isLoaded; /** `bool` */
+    /* 0x3  */ s8                 cellX;
+    /* 0x3  */ s8                 cellZ;
+    /* 0x4  */ s_LmHeader*        lmHdr;
+    /* 0x8  */ u8                 modelCount;
+    /* 0x9  */ u8                 modelBufferCount;
+    /* 0xA  */ u8                 modelOrderCount;
+    /* 0xB  */ s8                 unk_B[9];
+    /* 0x14 */ s_IpdModelInfo*    modelInfo;
+    /* 0x18 */ s_IpdModelBuffer*  modelBuffers;
+    /* 0x1C */ u8                 textureCount; // Should it be `u32`?
+                                                // "`u8` - Relative pointer to textures list"
+                                                // "`u32` - Relative pointer to object order"
+    /* 0x1D */ s8                 unk_1D[51];
+    /* 0x50 */ u8*                modelOrderList;
+    /* 0x54 */ s_IpdCollisionData collisionData;
 } s_IpdHeader;
 
 // See: https://github.com/laura-a-n-n/silent-hill-museum/blob/main/ksy/sh1anm.ksy
 typedef struct _AnmBindPose
 {
-    s8 parentBone;
-    s8 rotationDataIdx_1;
-    s8 translationDataIdx_2;
-    s8 translationInitial_3[3];
+    /* 0x0 */ s8 parentBone;
+    /* 0x1 */ s8 rotationDataIdx;
+    /* 0x2 */ s8 translationDataIdx;
+    /* 0x3 */ s8 translationInitial[3];
 } s_AnmBindPose;
 STATIC_ASSERT_SIZEOF(s_AnmBindPose, 6);
 
@@ -981,7 +982,7 @@ typedef struct
     u32        field_8;
     s32        field_C;
     s16        field_10;
-    u8         unk_12[2];
+    s8         __pad_12[2];
     DVECTOR_XZ field_14;
 } s_CollisionState_CC_20;
 
@@ -1064,6 +1065,7 @@ typedef struct
     // TODO: May be incomplete. Maybe not, added the final padding based on `Collision_Get`.
 } s_CollisionState;
 
+/** @brief Global LM model. */
 typedef struct _GlobalLm
 {
     /* 0x0 */ s_LmHeader* lmHdr;
@@ -1073,10 +1075,10 @@ typedef struct _GlobalLm
 
 typedef struct
 {
-    s32            field_0; // Bone flags?
-    GsCOORDINATE2* coord_4;
-    s_ModelHeader* modelHdr_8;
-    s32            modelIdx_C;
+    /* 0x0 */ s32            field_0; // Bone flags?
+    /* 0x4 */ GsCOORDINATE2* coord;
+    /* 0x8 */ s_ModelHeader* modelHdr;
+    /* 0xC */ s32            modelIdx;
 } s_ModelInfo;
 
 /** @brief IPD skeleton model bone. */
@@ -1200,7 +1202,7 @@ typedef struct _WaterZone
 typedef struct
 {
     u8            charaId;  /** `e_CharacterId` */
-    u8            isLoaded_1; /** `bool` */
+    u8            isLoaded; /** `bool` */
     // 2 bytes of padding.
     s32           queueIdx_4;
     s_LmHeader*   lmHdr_8;
@@ -2929,7 +2931,14 @@ void func_80044044(s_IpdHeader* ipd, s32 cellX, s32 cellZ);
  */
 void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 arg4);
 
-bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 posX, q23_8 posZ);
+/** @brief Checks if an IPD chunk subcell is visible.
+ *
+ * @param modelBuf IPD model buffer.
+ * @param subcellX X subcell position.
+ * @param subcellZ Z subcell position.
+ * @param posX X cell position? TODO: Subcell/cell intent unclear, needs more research.
+ */
+bool Gfx_ChunkSubcellVisibleCheck(s_IpdModelBuffer* modelBuf, q7_8 subcellX, q7_8 subcellZ, q23_8 posX, q23_8 posZ);
 
 /** Loads anim file? */
 void Anim_BoneInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);

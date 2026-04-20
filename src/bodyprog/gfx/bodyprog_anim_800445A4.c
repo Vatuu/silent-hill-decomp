@@ -48,17 +48,17 @@ void Anim_BoneInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800445A4
     {
         curCoord->super = &boneCoords[anmHdr->bindPoses[boneIdx].parentBone];
 
-        // If no translation for this bone, copy over `translationInitial_3`.
-        if (curBindPose->translationDataIdx_2 < 0)
+        // If no translation for this bone, copy over `translationInitial`.
+        if (curBindPose->translationDataIdx < 0)
         {
             for (i = 0; i < 3; i++)
             {
-                curCoord->coord.t[i] = anmHdr->bindPoses[boneIdx].translationInitial_3[i] << anmHdr->scaleLog2;
+                curCoord->coord.t[i] = anmHdr->bindPoses[boneIdx].translationInitial[i] << anmHdr->scaleLog2;
             }
         }
 
         // If no rotation for this bone, create identity matrix.
-        if (curBindPose->rotationDataIdx_1 < 0)
+        if (curBindPose->rotationDataIdx < 0)
         {
             for (i = 0; i < 3; i++)
             {
@@ -124,7 +124,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfram
             curBoneCoord->flg = false;
             scaleLog2      = anmHdr->scaleLog2;
 
-            boneTranslationDataIdx = curBindPose->translationDataIdx_2;
+            boneTranslationDataIdx = curBindPose->translationDataIdx;
             if (boneTranslationDataIdx >= 0)
             {
                 // 3-byte vector translation.
@@ -148,7 +148,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfram
                 }
             }
 
-            boneRotationDataIdx = curBindPose->rotationDataIdx_1;
+            boneRotationDataIdx = curBindPose->rotationDataIdx;
             if (boneRotationDataIdx >= 0)
             {
                 // 9-byte rotation matrix.
