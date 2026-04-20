@@ -443,9 +443,10 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
             if (curChara->field_E1_0 != 0 &&
                 (curChara->field_E1_0 != 1 || includePlayer != true) &&
                 curChara != excludedChara &&
-                (includePlayer != true || excludedChara == NULL || excludedChara->field_E1_0 != 4 || curChara->field_E1_0 >= excludedChara->field_E1_0))
+                (includePlayer != true || excludedChara == NULL || excludedChara->field_E1_0 != 4 ||
+                 curChara->field_E1_0 >= excludedChara->field_E1_0))
             {
-                *charaCount++;
+                *charaCount += 1;
                 *curActiveChara = curChara;
                 curActiveChara++;
                 curChara->field_E0 = 0;
@@ -459,10 +460,9 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
         if (curChara->field_E1_0 != 0 &&
             (curChara->field_E1_0 != 1 || includePlayer != true) &&
             curChara != excludedChara &&
-            (includePlayer != true || excludedChara == NULL || excludedChara->field_E1_0 != 4 ||
-             curChara->field_E1_0 >= excludedChara->field_E1_0))
+            (includePlayer != true || excludedChara == NULL || excludedChara->field_E1_0 != 4 || curChara->field_E1_0 >= excludedChara->field_E1_0))
         {
-            *charaCount++;
+            *charaCount += 1;
             *curActiveChara = curChara;
             curActiveChara++;
             curChara->field_E0 = 0;
