@@ -178,31 +178,31 @@ bool sharedFunc_800CC618_1_s05(POLY_FT4** poly, s32 idx)
 
     if (ABS(g_SysWork.playerWork.player.position.vx - sharedData_800DFB7C_0_s00[idx].field_0.vx_0) +
             ABS(g_SysWork.playerWork.player.position.vz - sharedData_800DFB7C_0_s00[idx].field_4.vz_4) >
-        0x14000)
+        Q12(20.0f))
     {
         return false;
     }
 
     ptr->field_168 = CLAMP_HIGH(sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_2, ((sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 * sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_2) / 2456) + 8);
 
-    *(s32*)&ptr->field_12C = ((((sharedData_800DFB7C_0_s00[idx].field_0.vx_0 >> 4) - (u16)ptr->field_0.field_0.vx) - (u16)ptr->field_168) & 0xFFFF) +
-                             (((sharedData_800DFB7C_0_s00[idx].vy_8 >> 4) - ptr->field_0.field_0.vy) << 0x10);
-    ptr->field_12C.vz = (sharedData_800DFB7C_0_s00[idx].field_4.vz_4 >> 4) - ptr->field_0.field_0.vz + (u16)ptr->field_168;
+    *(s32*)&ptr->field_12C = (((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx) - (u16)ptr->field_168) & 0xFFFF) +
+                             ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy) << 16);
+    ptr->field_12C.vz = Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4) - ptr->field_0.field_0.vz + (u16)ptr->field_168;
 
-    *(s32*)&ptr->field_134 = (((u16)ptr->field_168 + ((sharedData_800DFB7C_0_s00[idx].field_0.vx_0 >> 4) - (u16)ptr->field_0.field_0.vx)) & 0xFFFF) +
-                             (((sharedData_800DFB7C_0_s00[idx].vy_8 >> 4) - ptr->field_0.field_0.vy) << 0x10);
+    *(s32*)&ptr->field_134 = (((u16)ptr->field_168 + (Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx)) & 0xFFFF) +
+                             ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy) << 16);
     temp              = (u16)ptr->field_168;
-    ptr->field_134.vz = temp + ((sharedData_800DFB7C_0_s00[idx].field_4.vz_4 >> 4) - ptr->field_0.field_0.vz);
+    ptr->field_134.vz = temp + (Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4) - ptr->field_0.field_0.vz);
 
-    *(s32*)&ptr->field_13C = ((((sharedData_800DFB7C_0_s00[idx].field_0.vx_0 >> 4) - (u16)ptr->field_0.field_0.vx) - (u16)ptr->field_168) & 0xFFFF) +
-                             (((sharedData_800DFB7C_0_s00[idx].vy_8 >> 4) - ptr->field_0.field_0.vy) << 0x10);
+    *(s32*)&ptr->field_13C = (((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx) - (u16)ptr->field_168) & 0xFFFF) +
+                             ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy) << 16);
     temp2             = (u16)ptr->field_168;
-    ptr->field_13C.vz = ((sharedData_800DFB7C_0_s00[idx].field_4.vz_4 >> 4) - ptr->field_0.field_0.vz) - temp2;
+    ptr->field_13C.vz = (Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4) - ptr->field_0.field_0.vz) - temp2;
 
-    *(s32*)&ptr->field_144 = (((u16)ptr->field_168 + ((sharedData_800DFB7C_0_s00[idx].field_0.vx_0 >> 4) - (u16)ptr->field_0.field_0.vx)) & 0xFFFF) +
-                             (((sharedData_800DFB7C_0_s00[idx].vy_8 >> 4) - ptr->field_0.field_0.vy) << 0x10);
+    *(s32*)&ptr->field_144 = (((u16)ptr->field_168 + (Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx)) & 0xFFFF) +
+                             ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy) << 16);
     temp3             = (u16)ptr->field_168;
-    ptr->field_144.vz = ((sharedData_800DFB7C_0_s00[idx].field_4.vz_4 >> 4) - ptr->field_0.field_0.vz) - temp3;
+    ptr->field_144.vz = (Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4) - ptr->field_0.field_0.vz) - temp3;
 
     gte_ldv3c(&ptr->field_12C);
     gte_rtpt();
@@ -215,7 +215,7 @@ bool sharedFunc_800CC618_1_s05(POLY_FT4** poly, s32 idx)
 
     ptr->field_14C.vx = (ptr->field_14C.vx + ptr->field_14C.vy + ptr->field_14C.vz + ptr->field_158) >> 2;
 
-    if (ptr->field_14C.vx - 0x10 <= 0 || ((ptr->field_14C.vx - 0x10) >> 3) >= ORDERING_TABLE_SIZE ||
+    if ((ptr->field_14C.vx - 16) <= 0 || ((ptr->field_14C.vx - 16) >> 3) >= ORDERING_TABLE_SIZE ||
         ABS(ptr->field_15C.vx) > 200 || ABS(ptr->field_15C.vy) > 160)
     {
         return false;
@@ -226,8 +226,8 @@ bool sharedFunc_800CC618_1_s05(POLY_FT4** poly, s32 idx)
     ptr->field_164 = (ptr->field_160 * (func_80055D78(sharedData_800DFB7C_0_s00[idx].field_0.vx_0, sharedData_800DFB7C_0_s00[idx].vy_8, sharedData_800DFB7C_0_s00[idx].field_4.vz_4))) >> 7;
     ptr->field_160 = CLAMP_HIGH(ptr->field_160, ptr->field_164);
 
-    temp_a0_3      = sharedData_800DFB7C_0_s00[idx].field_10.s_1.field_3 & 7;
-    ptr->field_16C = (!(sharedData_800DFB7C_0_s00[idx].field_10.s_1.field_3 & 8)) << 5;
+    temp_a0_3      = sharedData_800DFB7C_0_s00[idx].field_10.s_1.field_3 & 0x7;
+    ptr->field_16C = (!(sharedData_800DFB7C_0_s00[idx].field_10.s_1.field_3 & 0x8)) << 5;
     ptr->field_180 = MIN(sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 / 2456, 7) << 5;
 
     temp_v1_7 = temp_a0_3 ^ 0x1;
@@ -426,7 +426,7 @@ bool sharedFunc_800CCF30_1_s05(POLY_FT4** poly, s32 idx)
     sharedData_800DFB7C_0_s00[temp_s3].field_A = 0;
 
     *(s32*)&ptr->field_12C = ((sharedData_800DFB7C_0_s00[idx].field_0.s_1.field_0 - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                             ((sharedData_800DFB7C_0_s00[idx].vy_8 - ptr->field_0.field_0.vy) << 0x10);
+                             ((sharedData_800DFB7C_0_s00[idx].vy_8 - ptr->field_0.field_0.vy) << 16);
     ptr->field_12C.vz = sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_0 - ptr->field_0.field_0.vz;
 
     gte_ldv0(&ptr->field_12C);
@@ -440,7 +440,7 @@ bool sharedFunc_800CCF30_1_s05(POLY_FT4** poly, s32 idx)
     }
 
     *(s32*)&ptr->field_12C = ((sharedData_800DFB7C_0_s00[temp_s3].field_0.s_1.field_0 - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                             ((sharedData_800DFB7C_0_s00[temp_s3].vy_8 - ptr->field_0.field_0.vy) << 0x10);
+                             ((sharedData_800DFB7C_0_s00[temp_s3].vy_8 - ptr->field_0.field_0.vy) << 16);
     ptr->field_12C.vz = sharedData_800DFB7C_0_s00[temp_s3].field_4.s_0.field_0 - ptr->field_0.field_0.vz;
 
     gte_ldv0(&ptr->field_12C);
@@ -452,11 +452,11 @@ bool sharedFunc_800CCF30_1_s05(POLY_FT4** poly, s32 idx)
 
     if (ptr->field_138 >= ptr->field_134)
     {
-        var_v0_4 = (ptr->field_134 * 3 + var_a1) >> 2;
+        var_v0_4 = ((ptr->field_134 * 3) + var_a1) >> 2;
     }
     else
     {
-        var_v0_4 = (ptr->field_138 * 3 + var_a1) >> 2;
+        var_v0_4 = ((ptr->field_138 * 3) + var_a1) >> 2;
     }
 
     ptr->field_134 = var_v0_4;
@@ -469,11 +469,10 @@ bool sharedFunc_800CCF30_1_s05(POLY_FT4** poly, s32 idx)
     ptr->field_148 = ratan2(ptr->field_140.vy - ptr->field_13C.vy, ptr->field_140.vx - ptr->field_13C.vx);
 
     ptr->field_14C = CLAMP_LOW(
-        FP_MULTIPLY_PRECISE(0x1000 - (SquareRoot0(SQUARE((sharedData_800DFB7C_0_s00[idx].field_0.vx_0 - sharedData_800DFB7C_0_s00[temp_s3].field_0.vx_0) >> 6) +
-                                                  SQUARE((sharedData_800DFB7C_0_s00[idx].field_4.vz_4 - sharedData_800DFB7C_0_s00[temp_s3].field_4.vz_4) >> 6))
-                                      << 6),
-                            0x18, Q12_SHIFT) *
-            ptr->field_0.field_2C / ptr->field_134,
+        FP_MULTIPLY_PRECISE(Q12(1.0f) - Math_Vector2MagCalc(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 - sharedData_800DFB7C_0_s00[temp_s3].field_0.vx_0,
+                                                            sharedData_800DFB7C_0_s00[idx].field_4.vz_4 - sharedData_800DFB7C_0_s00[temp_s3].field_4.vz_4),
+                            24,
+                            Q12_SHIFT) * ptr->field_0.field_2C / ptr->field_134,
         1);
 
     ptr->field_144.vx = Q12_MULT(ptr->field_14C, Math_Sin(ptr->field_148));
@@ -489,9 +488,9 @@ bool sharedFunc_800CCF30_1_s05(POLY_FT4** poly, s32 idx)
     *(u16*)&(*poly)->u2 = (sharedData_800DFB7C_0_s00[idx].field_B * 0xC00) + 0x4B00;
     *(u16*)&(*poly)->u3 = (sharedData_800DFB7C_0_s00[idx].field_B * 0xC00) + 0x4B7F;
 
-    temp = func_80055D78(((sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + sharedData_800DFB7C_0_s00[temp_s3].field_0.vx_0) * 0x10) >> 1,
+    temp = func_80055D78(((sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + sharedData_800DFB7C_0_s00[temp_s3].field_0.vx_0) * 16) >> 1,
                          (sharedData_800DFB7C_0_s00[idx].vy_8 + sharedData_800DFB7C_0_s00[temp_s3].vy_8) * 8,
-                         ((sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + sharedData_800DFB7C_0_s00[temp_s3].field_4.vz_4) * 0x10) >> 1);
+                         ((sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + sharedData_800DFB7C_0_s00[temp_s3].field_4.vz_4) * 16) >> 1);
 
     temp_v1_3 = (sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 * temp) >> 6;
 

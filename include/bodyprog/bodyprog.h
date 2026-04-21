@@ -386,7 +386,7 @@ typedef struct
 {
     union
     {
-        s32 vx_0; // Q23.8 } Displacement offset. `func_80062708` indicates Q12?
+        q19_12 vx_0; // Displacement offset.
         struct
         {
             s16 field_0;
@@ -400,16 +400,16 @@ typedef struct
     } field_0;
     union
     {
-        s32 vz_4; // Q23.8 } `func_80062708` indicates Q12?
+        q19_12 vz_4;
         struct
         {
             s16 field_0;
             s16 field_2;
         } s_0;
     } field_4;
-    s16 vy_8; // Q7.8? Usually Q12, need to reevaluate.
-    u8  field_A;
-    u8  field_B; // Flags?
+    q3_12 vy_8;
+    u8    field_A;
+    u8    field_B; // Flags?
     union
     {
         s32 field_0;
@@ -427,8 +427,8 @@ typedef struct
         } s_1;
         struct
         {
-            u16 field_0;
-            u16 field_2;
+            q4_12 field_0;
+            u16   field_2;
         } s_2;
     } field_C;
     union
@@ -481,7 +481,7 @@ typedef struct
 typedef struct
 {
     s32        field_0;
-    s32        field_4; // `bool`?
+    bool       field_4;
     q19_12     distance_8;
     SVECTOR    offset_C; // Q23.8
     DVECTOR_XZ direction_14;
@@ -806,6 +806,7 @@ typedef struct _Material
 } s_Material;
 STATIC_ASSERT_SIZEOF(s_Material, 24);
 
+/** @brief LM file header. */
 typedef struct _LmHeader
 {
     /* 0x0  */ u8             magic;    /** See `LM_HEADER_MAGIC`. */
@@ -959,20 +960,21 @@ typedef struct _AnmBindPose
 } s_AnmBindPose;
 STATIC_ASSERT_SIZEOF(s_AnmBindPose, 6);
 
+/** @brief ANM file header. */
 typedef struct _AnmHeader
 {
     /* 0x0  */ u16           dataOffset;
     /* 0x2  */ u8            rotationBoneCount;
     /* 0x3  */ u8            translationBoneCount;
-    /* 0x4  */ u16           keyframeDataSize; // Size per keyframe, `(rotationBoneCount * 9) + (translationBoneCount * 3)`?
-    /* 0x6  */ u8            boneCount;
+    /* 0x4  */ u16           keyframeDataSize; /** Size per keyframe. `(rotationBoneCount * 9) + (translationBoneCount * 3)`? */
+    /* 0x6  */ u8            boneCount;        /** Size of `bindPoses`. */
                // 1 byte of padding.
-    /* 0x8  */ u32           activeBones;      // Bit field of bones to update.
+    /* 0x8  */ u32           activeBones; /** Bit field of bones to update. */
     /* 0xC  */ u32           fileSize;
     /* 0x10 */ u16           keyframeCount;
     /* 0x12 */ u8            scaleLog2;
     /* 0x13 */ u8            rootYOffset;
-    /* 0x14 */ s_AnmBindPose bindPoses[0];     // Array size = `boneCount`.
+    /* 0x14 */ s_AnmBindPose bindPoses[0];
 } s_AnmHeader;
 STATIC_ASSERT_SIZEOF(s_AnmHeader, 20);
 
@@ -1625,21 +1627,21 @@ typedef struct
 
 typedef struct
 {
-    u8  field_0;
-    u8  field_1;
-    u8  field_2;
-    u8  field_3;
-    s16 field_4;
-    s16 field_6;
-    s16 field_8;
-    s16 field_A;
-    s16 field_C;
-    s16 field_E;
-    s16 field_10;
-    s16 field_12;
-    s32 field_14;
-    s32 field_18;
-    s32 field_1C;
+    u8    field_0;
+    u8    field_1;
+    u8    field_2;
+    u8    field_3;
+    s16   field_4;
+    s16   field_6;
+    s16   field_8;
+    s16   field_A;
+    s16   field_C;
+    s16   field_E;
+    q3_12 field_10;
+    s16   field_12;
+    s32   field_14;
+    s32   field_18;
+    s32   field_1C;
 } s_MapOverlayHeader_7C;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader_7C, 0x20);
 
@@ -1647,7 +1649,7 @@ typedef struct
 {
     s32    field_0[4];
     s16    field_10[4];
-    s32    field_18[4];
+    q19_12 field_18[4];
     u16    field_28[4];
     u8     field_30[4];
     q3_12  field_34[4]; // Y angles.
@@ -1987,9 +1989,9 @@ typedef struct
     MATRIX  field_C;
     s32     field_2C;
     DVECTOR field_30;
-    s16     field_34[24];
-    s16     field_64[24];
-    s16     field_94[24];
+    q3_12   field_34[24];
+    q3_12   field_64[24];
+    q3_12   field_94[24];
     s16     field_C4;
     s16     field_C6;
     s16     field_C8;
@@ -2003,7 +2005,7 @@ typedef struct
     s16     field_E4[4];
     union
     {
-        DVECTOR field_0[4];
+        DVECTOR field_0[4]; // Q19.12
         s32     raw_0[4];
     } u_field_EC;
     union
@@ -2011,8 +2013,8 @@ typedef struct
         DVECTOR field_0[4];
         s32     raw_0[4];
     } u_field_FC; // Q3.12 | Positions or offsets.
-    s32     field_10C[4];
-    s32     field_11C[4];
+    q19_12  field_10C[4]; // X offsets?
+    q19_12  field_11C[4]; // Z offsets?
 } s_func_8005E89C;
 
 typedef struct
@@ -2056,7 +2058,7 @@ typedef struct
     DVECTOR         field_16C;
     s32             field_170;
     s32             field_174;
-    s32             field_178;
+    q19_12          field_178;
     s32             field_17C;
     s32             field_180;
     s32             field_184;
@@ -3859,7 +3861,7 @@ s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, s_Colli
 
 s32 func_8006A42C(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQuery* collQuery);
 
-s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQuery* collQuery, s32 arg3,
+s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQuery* collQuery, bool arg3,
                   s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** charas, s32 charaCount);
 
 // Claude suggests `Collision_NpcMovementDampen`? Investigate.
@@ -3870,9 +3872,9 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
  * @param collState Collision state to initialize.
  * @param offset Movement offset.
  * @param collQuery Input collision query parameters.
- * @param arg3 Configuration flag. @todo What is it?
+ * @param arg3 Configuration flag. TODO: What is it?
  */
-void Collision_QueryInit(s_CollisionState* collState, VECTOR3* offset, s_CollisionQuery* collQuery, s32 arg3);
+void Collision_QueryInit(s_CollisionState* collState, VECTOR3* offset, s_CollisionQuery* collQuery, bool arg3);
 
 /** @brief Calculates the movement direction vector and distance from a position offset.
  *

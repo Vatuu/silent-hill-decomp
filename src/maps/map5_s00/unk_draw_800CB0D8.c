@@ -81,33 +81,37 @@ bool func_800CB25C(POLY_FT4** poly, s32 idx) // 0x800CB25C
 
     if (sharedData_800DFB7C_0_s00[idx].field_B != 0)
     {
-        sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 += Rng_GenerateUInt(-0x20, 0x20 - 1);
+        sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 += Rng_GenerateUInt(-32, 32 - 1);
         sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0  = CLAMP_MIN_THEN_LOW(sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0, 0, 0xFFF);
 
         ptr->field_15C = Q12_MULT_PRECISE(sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0, Q12(1.5f));
 
         setPolyFT4(*poly);
 
-        Math_SetSVectorFastSum(&ptr->field_12C[0], ((sharedData_800DFB7C_0_s00[idx].field_0.vx_0 - ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
-                               ((sharedData_800DFB7C_0_s00[idx].vy_8) >> 4) - ptr->field_0.field_0.vy,
-                               ((sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + ptr->field_15C) >> 4) - ptr->field_0.field_0.vz);
+        Math_SetSVectorFastSum(&ptr->field_12C[0],
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 - ptr->field_15C) - (u16)ptr->field_0.field_0.vx,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + ptr->field_15C) - ptr->field_0.field_0.vz);
 
-        Math_SetSVectorFastSum(&ptr->field_12C[1], ((sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
-                               ((sharedData_800DFB7C_0_s00[idx].vy_8) >> 4) - ptr->field_0.field_0.vy,
-                               ((sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + ptr->field_15C) >> 4) - ptr->field_0.field_0.vz);
+        Math_SetSVectorFastSum(&ptr->field_12C[1],
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + ptr->field_15C) - (u16)ptr->field_0.field_0.vx,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + ptr->field_15C) - ptr->field_0.field_0.vz);
 
-        Math_SetSVectorFastSum(&ptr->field_12C[2], ((sharedData_800DFB7C_0_s00[idx].field_0.vx_0 - ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
-                               ((sharedData_800DFB7C_0_s00[idx].vy_8) >> 4) - ptr->field_0.field_0.vy,
-                               ((sharedData_800DFB7C_0_s00[idx].field_4.vz_4 - ptr->field_15C) >> 4) - ptr->field_0.field_0.vz);
+        Math_SetSVectorFastSum(&ptr->field_12C[2],
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 - ptr->field_15C) - (u16)ptr->field_0.field_0.vx,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 - ptr->field_15C) - ptr->field_0.field_0.vz);
 
         gte_ldv3c(&ptr->field_12C);
         gte_rtpt();
         gte_stsxy3_g3(*poly);
         gte_stsz3c(&ptr->field_148);
 
-        Math_SetSVectorFastSum(&ptr->field_12C[0], ((sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
-                               ((sharedData_800DFB7C_0_s00[idx].vy_8) >> 4) - ptr->field_0.field_0.vy,
-                               ((sharedData_800DFB7C_0_s00[idx].field_4.vz_4 - ptr->field_15C) >> 4) - ptr->field_0.field_0.vz);
+        Math_SetSVectorFastSum(&ptr->field_12C[0],
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + ptr->field_15C) - (u16)ptr->field_0.field_0.vx,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 - ptr->field_15C) - ptr->field_0.field_0.vz);
 
         gte_ldv0(&ptr->field_12C);
         gte_rtps();
@@ -129,25 +133,25 @@ bool func_800CB25C(POLY_FT4** poly, s32 idx) // 0x800CB25C
         *(s32*)&(*poly)->x3 = *(s32*)&ptr->field_144;
         setSemiTrans(*poly, 1);
 
-        if (CLAMP_LOW(Q12_MULT_PRECISE(0x1000 - sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0, 0x20), 0) < 0x10)
+        if (CLAMP_LOW(Q12_MULT_PRECISE(Q12(1.0f) - sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0, 32), 0) < 16)
         {
-            var_v0_4 = MAX(Q12_MULT_PRECISE(0x1000 - sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0, 0x20), 0);
+            var_v0_4 = MAX(Q12_MULT_PRECISE(Q12(1.0f) - sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0, 32), 0);
         }
         else
         {
-            var_v0_4 = 0x10;
+            var_v0_4 = 16;
         }
 
         ptr->field_160 = var_v0_4;
 
-        setUV0AndClutSum(*poly, 224, 160 + (sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 5), 0x13);
-        setUV1AndTPageSum(*poly, 255, 160 + (sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 5), 0x4B);
+        setUV0AndClutSum(*poly, 224, 160 + (sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 5), 19);
+        setUV1AndTPageSum(*poly, 255, 160 + (sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 5), 75);
         setUV2Sum(*poly, 224, 191 + (sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 5));
         setUV3Sum(*poly, 255, 191 + (sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 5));
 
         setRGB0Fast(*poly, ptr->field_160, ptr->field_160, ptr->field_160);
 
-        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_148.vx + 0x80) >> 3], *poly);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_148.vx + 128) >> 3], *poly);
         *poly += 1;
     }
     else
@@ -156,9 +160,10 @@ bool func_800CB25C(POLY_FT4** poly, s32 idx) // 0x800CB25C
         {
             for (j = 0; j < 3; j++)
             {
-                Math_SetSVectorFastSum(&ptr->field_12C[j], ((((((i + j) % 5) * Q12(1.5f)) >> 1) - Q12(93.5f)) >> 4) - (u16)ptr->field_0.field_0.vx,
-                                       0x80 - ptr->field_0.field_0.vy,
-                                       ((0x9999 - ((i + j) / 5 * Q12(1.5f) >> 1)) >> 4) - ptr->field_0.field_0.vz);
+                Math_SetSVectorFastSum(&ptr->field_12C[j],
+                                       Q12_TO_Q8(((((i + j) % 5) * Q12(1.5f)) >> 1) - Q12(93.5f)) - (u16)ptr->field_0.field_0.vx,
+                                       Q8(0.5f) - ptr->field_0.field_0.vy,
+                                       Q12_TO_Q8(Q8(153.6f) - ((i + j) / 5 * Q12(1.5f) >> 1)) - ptr->field_0.field_0.vz);
             }
 
             gte_ldv3c(&ptr->field_12C[0]);
@@ -167,9 +172,10 @@ bool func_800CB25C(POLY_FT4** poly, s32 idx) // 0x800CB25C
             gte_stsz3c(&sp78[i / 5][i % 5]);
         }
 
-        Math_SetSVectorFastSum(&ptr->field_12C[0], -0x5A80 - (u16)ptr->field_0.field_0.vx,
-                               0x80 - ptr->field_0.field_0.vy,
-                               0x699 - ptr->field_0.field_0.vz);
+        Math_SetSVectorFastSum(&ptr->field_12C[0],
+                               Q8(-90.5f) - (u16)ptr->field_0.field_0.vx,
+                               Q8(0.5f) - ptr->field_0.field_0.vy,
+                               Q8(6.6f) - ptr->field_0.field_0.vz);
 
         gte_ldv0(&ptr->field_12C);
         gte_rtps();
@@ -212,7 +218,7 @@ bool func_800CB25C(POLY_FT4** poly, s32 idx) // 0x800CB25C
 
                 ptr->field_158 = (sp78[i][j] + sp78[i + 1][j] + sp78[i][j + 1] + sp78[i + 1][j + 1]) >> 2;
 
-                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_158 + 0x80) >> 3], *poly);
+                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_158 + 128) >> 3], *poly);
                 *poly += 1;
             }
         }

@@ -458,14 +458,14 @@ void func_800DAF18(void) // 0x800DAF18
             D_800E3A40[0].vx_0     = -0xA333;
             D_800E3A40[0].field_8  = 0x1EB;
             D_800E3A40[0].field_C  = 0x147;
-            D_800E3A40[0].vz_4     = -0xD599;
+            D_800E3A40[0].vz_4     = Q12(-13.35f);
             D_800E3A40[0].idx_14   = 2;
             D_800E3A40[0].field_12 = 0x28;
             D_800E3A40[0].field_E  = 0x400;
             D_800E3A40[0].field_10 = 0x4CC;
 
-            D_800E3A40[1].vx_0     = -0xA400;
-            D_800E3A40[1].vz_4     = -0x11B85;
+            D_800E3A40[1].vx_0     = Q12(-10.25f);
+            D_800E3A40[1].vz_4     = Q12(-17.72f);
             D_800E3A40[1].field_C  = 0xCC;
             D_800E3A40[1].field_12 = 0x28;
 
@@ -476,7 +476,7 @@ void func_800DAF18(void) // 0x800DAF18
                 sharedData_800E30C8_1_s02.field_28[2] = 0x6D1E;
                 sharedData_800E30C8_1_s02.field_34[2] = 0xC00;
                 sharedData_800E30C8_1_s02.field_74    = 0x96;
-                sharedData_800E30C8_1_s02.field_18[2] = -0x11C00;
+                sharedData_800E30C8_1_s02.field_18[2] = Q12(-17.75f);
                 sharedData_800E30C8_1_s02.field_30[2] = 0;
                 sharedData_800E30C8_1_s02.field_3C[2] = 0x4CC;
                 sharedData_800E30C8_1_s02.field_44[2] = 0x800;
@@ -492,8 +492,8 @@ void func_800DAF18(void) // 0x800DAF18
                 D_800E3A40[1].field_E  = 0x333;
                 D_800E3A40[1].field_10 = 0x599;
                 D_800E3A40[2].field_C  = 0xF5;
-                D_800E3A40[2].vx_0     = -0x10DC2;
-                D_800E3A40[2].vz_4     = -0x11C00;
+                D_800E3A40[2].vx_0     = Q12(-16.86f);
+                D_800E3A40[2].vz_4     = Q12(-17.75f);
                 D_800E3A40[2].field_8  = 0x333;
                 D_800E3A40[2].idx_14   = 3;
                 D_800E3A40[2].field_12 = 0x3C;

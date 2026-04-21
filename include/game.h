@@ -1608,21 +1608,21 @@ STATIC_ASSERT_SIZEOF(s_PropertiesMonsterCybil, 64);
 /** @brief Puppet Nurse or Puppet Doctor character properties. */
 typedef struct _PropertiesPuppetNurse
 {
-    VECTOR3          position_E8; /** Q19.12 */
-    s_CharaDamage    damage_F4;
-    q19_12           field_104;
-    s32              field_108;
-    s32              field_10C;
-    q19_12           moveSpeed_110;
-    s32              field_114;
-    u8               field_118;
-    u8               modelVariation_119;
-    u16              field_11A;
-    q3_12            field_11C; // Angle.
-    s16              field_11E;
-    s16              field_120;
-    u16              flags_122; /** `e_PuppetNurseFlags` */
-    s_800D5710*      field_124;
+    VECTOR3       position_E8; /** Q19.12 */
+    s_CharaDamage damage_F4;
+    q19_12        field_104;
+    s32           field_108;
+    s32           field_10C;
+    q19_12        moveSpeed_110;
+    s32           field_114;
+    u8            field_118;
+    u8            modelVariation_119;
+    u16           field_11A;
+    q3_12         field_11C; // Angle.
+    s16           field_11E;
+    s16           field_120;
+    u16           flags_122; /** `e_PuppetNurseFlags` */
+    s_800D5710*   field_124;
 } s_PropertiesPuppetNurse;
 STATIC_ASSERT_SIZEOF(s_PropertiesPuppetNurse, 64);
 
@@ -1745,7 +1745,7 @@ typedef struct
                      // In NPCs: Indicates attack performed on player.
     u8      field_3;
     u8      field_4;
-    s8      unk_5[3];
+    s8      __pad_5[3];
     s32     field_8;  // } Fields used by `func_8008A3E0`. Types guessed for now.
     s16     field_C;  // } Angle?
     s16     field_E;  // } Angle?

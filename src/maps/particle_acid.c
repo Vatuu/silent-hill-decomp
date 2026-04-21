@@ -19,10 +19,10 @@ void sharedFunc_800CB0A4_4_s03(VECTOR3* arg0, VECTOR3* arg1)
     if (idx != NO_VALUE)
     {
         sharedData_800DFB7C_0_s00[idx].field_0.vx_0         = arg0->vx;
-        sharedData_800DFB7C_0_s00[idx].vy_8            = arg0->vy;
+        sharedData_800DFB7C_0_s00[idx].vy_8                 = arg0->vy;
         sharedData_800DFB7C_0_s00[idx].field_4.vz_4         = arg0->vz;
-        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = ratan2(arg1->vx - arg0->vx, arg1->vz - arg0->vz);
-        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 = ratan2(arg1->vy - arg0->vy, Math_Vector2MagCalc(arg1->vx - arg0->vx, arg1->vz - arg0->vz));
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0  = ratan2(arg1->vx - arg0->vx, arg1->vz - arg0->vz);
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2  = ratan2(arg1->vy - arg0->vy, Math_Vector2MagCalc(arg1->vx - arg0->vx, arg1->vz - arg0->vz));
         sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 = D_800C4418.field_8;
         sharedData_800DFB7C_0_s00[idx].field_B              = 0;
         sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 = Q12(1.0f);
@@ -34,7 +34,7 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
     typedef struct
     {
         s_func_8005E89C field_0;
-        VECTOR3         field_12C;
+        VECTOR3         field_12C; // Q19.12
         SVECTOR         field_138;
         DVECTOR         field_140;
         s32             field_144;
@@ -90,8 +90,10 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
         ptr->field_12C.vx = sharedData_800DFB7C_0_s00[arg1].field_0.vx_0 + Q12_MULT(temp_s1, ptr->field_14C);
         ptr->field_12C.vz = sharedData_800DFB7C_0_s00[arg1].field_4.vz_4 + Q12_MULT(temp_s1, ptr->field_14E);
 
-        Math_SetSVectorFastSum(&ptr->field_138, (ptr->field_12C.vx >> 4) - (u16)ptr->field_0.field_0.vx,
-                               (ptr->field_12C.vy >> 4) - ptr->field_0.field_0.vy, (ptr->field_12C.vz >> 4) - ptr->field_0.field_0.vz);
+        Math_SetSVectorFastSum(&ptr->field_138,
+                               Q12_TO_Q8(ptr->field_12C.vx) - (u16)ptr->field_0.field_0.vx,
+                               Q12_TO_Q8(ptr->field_12C.vy) - ptr->field_0.field_0.vy,
+                               Q12_TO_Q8(ptr->field_12C.vz) - ptr->field_0.field_0.vz);
 
         gte_ldv0(&ptr->field_138);
         gte_rtps();
@@ -109,10 +111,9 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
         }
 
         temp_a3        = (i + D_800C4418.field_C) - ptr->field_154;
-        ptr->field_150 = (((D_800C4418.field_2 * (D_800C4418.field_C - temp_a3) + D_800C4418.field_4 * temp_a3) /
-                           D_800C4418.field_C * ptr->field_0.field_2C) /
-                          ptr->field_144) >>
-                         4;
+        ptr->field_150 = Q12_TO_Q8(((D_800C4418.field_2 * (D_800C4418.field_C - temp_a3) + D_800C4418.field_4 * temp_a3) /
+                                    D_800C4418.field_C * ptr->field_0.field_2C) /
+                                   ptr->field_144);
 
         setPolyFT4(*poly);
 
@@ -121,7 +122,7 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
         setXY2Fast(*poly, (u16)ptr->field_140.vx - (u16)ptr->field_150, ptr->field_140.vy - ptr->field_150);
         setXY3Fast(*poly, (u16)ptr->field_140.vx + (u16)ptr->field_150, ptr->field_140.vy - ptr->field_150);
 
-        ptr->field_15C = 0x80 - ((temp_a3 << 7) / (D_800C4418.field_C + 1));
+        ptr->field_15C = 128 - ((temp_a3 << 7) / (D_800C4418.field_C + 1));
         ptr->field_15C = (ptr->field_15C * func_80055D78(ptr->field_12C.vx, ptr->field_12C.vy, ptr->field_12C.vz)) >> 8;
 
         if (sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_0 < (D_800C4418.field_8 >> 1))
@@ -280,8 +281,10 @@ bool sharedFunc_800CC004_4_s03(POLY_FT4** poly, s32 arg1)
         return false;
     }
 
-    Math_SetSVectorFastSum(&ptr->field_12C, (sharedData_800DFB7C_0_s00[arg1].field_0.vx_0 >> 4) - (u16)ptr->field_0.field_0.vx,
-                           (sharedData_800DFB7C_0_s00[arg1].vy_8 >> 4) - ptr->field_0.field_0.vy, (sharedData_800DFB7C_0_s00[arg1].field_4.vz_4 >> 4) - ptr->field_0.field_0.vz);
+    Math_SetSVectorFastSum(&ptr->field_12C,
+                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[arg1].field_0.vx_0) - (u16)ptr->field_0.field_0.vx,
+                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[arg1].vy_8) - ptr->field_0.field_0.vy,
+                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[arg1].field_4.vz_4) - ptr->field_0.field_0.vz);
 
     gte_ldv0(&ptr->field_12C);
     gte_rtps();

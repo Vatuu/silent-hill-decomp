@@ -140,7 +140,7 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
     collQuery.rotation_C.vx = Q12_ANGLE(0.0f);
     collQuery.rotation_C.vy = Q12_ANGLE(0.0f);
     collQuery.rotation_C.vz = Q12_ANGLE(0.0f);
-    Collision_QueryInit(&state, &pos, &collQuery, 0);
+    Collision_QueryInit(&state, &pos, &collQuery, false);
 
     state.field_0_8  = 0;
     state.field_0_9  = 0;
@@ -369,7 +369,7 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset
     VECTOR3          offsetCpy;
     s32              collDataIdx;
     s32              charaCount;
-    s32              var_s1; // TODO: Maybe `bool`?
+    bool             cond;
 
     collQuery.position_0.vx = chara->position.vx + chara->field_D8.offsetX_4;
     collQuery.position_0.vy = chara->position.vy - Q12(0.02f);
@@ -394,15 +394,15 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset
         case Chara_Groaner:
         case Chara_Wormhead:
         case Chara_Romper:
-            var_s1 = 1;
+            cond = true;
             break;
 
         default:
-            var_s1 = 0;
+            cond = false;
             break;
     }
 
-    return func_8006A4A8(collResult, &offsetCpy, &collQuery, var_s1,
+    return func_8006A4A8(collResult, &offsetCpy, &collQuery, cond,
                          func_800425D8(&collDataIdx), collDataIdx, NULL, 0,
                          Collision_ActiveCharactersGet(&charaCount, chara, true), charaCount);
 }
@@ -496,10 +496,11 @@ s32 func_8006A42C(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
 
     offsetCpy = *offset;
 
-    return func_8006A4A8(collResult, &offsetCpy, collQuery, 0, func_800425D8(&collDataIdx), collDataIdx, NULL, 0, NULL, 0);
+    return func_8006A4A8(collResult, &offsetCpy, collQuery, false,
+                         func_800425D8(&collDataIdx), collDataIdx, NULL, 0, NULL, 0);
 }
 
-s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQuery* collQuery, s32 arg3,
+s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQuery* collQuery, bool arg3,
                   s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** charas, s32 charaCount) // 0x8006A4A8
 {
     s_CollisionState     collState;
@@ -724,7 +725,7 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
     offset->vz = Q12_MULT(var_s4, offset->vz);
 }
 
-void Collision_QueryInit(s_CollisionState* collState, VECTOR3* pos, s_CollisionQuery* collQuery, s32 arg3) // 0x8006AB50
+void Collision_QueryInit(s_CollisionState* collState, VECTOR3* pos, s_CollisionQuery* collQuery, bool arg3) // 0x8006AB50
 {
     collState->field_0_0       = 0;
     collState->field_2         = D_800C4478.flags_0;

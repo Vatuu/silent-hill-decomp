@@ -134,9 +134,9 @@ bool func_800CE164(POLY_FT4** poly, s32 idx) // 0x800CE164
     }
 
     Math_SetSVectorFastSum(&scratch->field_12C,
-                           (sharedData_800DFB7C_0_s00[idx].field_0.vx_0 >> 4) - (u16)scratch->field_0.field_0.vx,
-                           ((s32)sharedData_800DFB7C_0_s00[idx].vy_8 >> 4) - scratch->field_0.field_0.vy,
-                           (sharedData_800DFB7C_0_s00[idx].field_4.vz_4 >> 4) - scratch->field_0.field_0.vz);
+                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0) - (u16)scratch->field_0.field_0.vx,
+                           Q12_TO_Q8((s32)sharedData_800DFB7C_0_s00[idx].vy_8) - scratch->field_0.field_0.vy,
+                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4) - scratch->field_0.field_0.vz);
 
     gte_ldv0(&scratch->field_12C);
     gte_rtps();
