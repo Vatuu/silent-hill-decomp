@@ -2272,10 +2272,10 @@ bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
 
         for (ptr->field_1D8 = 0; ptr->field_1D8 < 3; ptr->field_1D8++)
         {
-            *(s32*)&ptr->field_14C[ptr->field_1D8] = (((Q8_TO_Q4(g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + ptr->field_16C[ptr->field_1D8].vx) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                                                      ((Q8_TO_Q4(g_MapOverlayHeader.unkTable1_4C[idx].vy_8 + ptr->field_16C[ptr->field_1D8].vy) - ptr->field_0.field_0.vy) << 16));
-
-            (&ptr->field_14C[ptr->field_1D8])->vz = Q8_TO_Q4(g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + ptr->field_16C[ptr->field_1D8].vz) - ptr->field_0.field_0.vz;
+            Math_SetSVectorFastSum(&ptr->field_14C[ptr->field_1D8],
+                                   Q8_TO_Q4(g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + ptr->field_16C[ptr->field_1D8].vx) - (u16)ptr->field_0.field_0.vx,
+                                   Q8_TO_Q4(g_MapOverlayHeader.unkTable1_4C[idx].vy_8 + ptr->field_16C[ptr->field_1D8].vy) - ptr->field_0.field_0.vy,
+                                   Q8_TO_Q4(g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + ptr->field_16C[ptr->field_1D8].vz) - ptr->field_0.field_0.vz);
         }
 
         gte_ldv3c(&ptr->field_14C);
@@ -2283,9 +2283,10 @@ bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
         gte_stsxy3_g3(*poly);
         gte_stsz3c(&ptr->field_1BC);
 
-        *(s32*)&ptr->field_14C[0].vx = (((Q12_TO_Q8(g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + ptr->field_19C.vx)) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                                       (((Q12_TO_Q8(g_MapOverlayHeader.unkTable1_4C[idx].vy_8 + ptr->field_19C.vy)) - ptr->field_0.field_0.vy) << 16);
-        ptr->field_14C[0].vz = (Q12_TO_Q8(g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + ptr->field_19C.vz)) - ptr->field_0.field_0.vz;
+        Math_SetSVectorFastSum(&ptr->field_14C[0],
+                               (Q12_TO_Q8(g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + ptr->field_19C.vx)) - (u16)ptr->field_0.field_0.vx,
+                               (Q12_TO_Q8(g_MapOverlayHeader.unkTable1_4C[idx].vy_8 + ptr->field_19C.vy)) - ptr->field_0.field_0.vy,
+                               (Q12_TO_Q8(g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + ptr->field_19C.vz)) - ptr->field_0.field_0.vz);
 
         gte_ldv0(&ptr->field_14C);
         gte_rtps();
@@ -2371,9 +2372,10 @@ bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
     ptr->field_158                                              = g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0;
     g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 += temp_s4;
 
-    *(s32*)&ptr->field_138 = ((Q12_TO_Q8(g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                             ((Q12_TO_Q8((g_MapOverlayHeader.unkTable1_4C[idx].vy_8)) - ptr->field_0.field_0.vy) << 16);
-    ptr->field_138.vz = Q12_TO_Q8(g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4) - ptr->field_0.field_0.vz;
+    Math_SetSVectorFastSum(&ptr->field_138,
+                           Q12_TO_Q8(g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx,
+                           Q12_TO_Q8((g_MapOverlayHeader.unkTable1_4C[idx].vy_8)) - ptr->field_0.field_0.vy,
+                           Q12_TO_Q8(g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4) - ptr->field_0.field_0.vz);
 
     gte_ldv0(&ptr->field_138);
     gte_rtps();
@@ -2502,8 +2504,10 @@ bool func_80064FC0(POLY_FT4** polys, s32 idx) // 0x80064FC0
 
     g_MapOverlayHeader.unkTable1_4C[idx].field_A = 0;
     temp                                         = g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - ptr->field_0.field_0.vx;
-    *(s32*)&ptr->field_12C.vx                    = (temp & 0xFFFF) + ((g_MapOverlayHeader.unkTable1_4C[idx].vy_8 - ptr->field_0.field_0.vy) << 16);
-    ptr->field_12C.vz                            = g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 - ptr->field_0.field_0.vz;
+    Math_SetSVectorFastSum(&ptr->field_12C,
+                           temp,
+                           g_MapOverlayHeader.unkTable1_4C[idx].vy_8 - ptr->field_0.field_0.vy,
+                           g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 - ptr->field_0.field_0.vz);
 
     gte_ldv0(&ptr->field_12C);
     gte_rtps();

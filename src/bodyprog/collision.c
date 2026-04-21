@@ -1563,15 +1563,15 @@ bool func_8006C1B8(u32 arg0, s16 arg1, s_CollisionState* collState) // 0x8006C1B
     return var < collState->field_3A;
 }
 
-s16 func_8006C248(s32 arg0, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4) // 0x8006C248
+s16 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4) // 0x8006C248
 {
     DVECTOR sp10;
     s16     temp_v0;
     s16     var_v1;
     s16     temp_lo;
 
-    gte_ldR11R12(arg0);
-    gte_ldR13R21(arg0);
+    gte_ldR11R12(packedDir);
+    gte_ldR13R21(packedDir);
     gte_ldvxy0((deltaX & 0xFFFF) + (deltaZ << 16));
     gte_gte_ldvz0();
     gte_rtv0();

@@ -569,7 +569,9 @@ void sharedFunc_800CBE7C_1_s05(q23_8 posX, q23_8 posY, q23_8 posZ, s32 arg3, s32
 
 void sharedFunc_800CCDD4_1_s05(POLY_FT4** poly, s32 idx);
 
-void sharedFunc_800CCE2C_1_s05(s32 arg0, s32 arg1, q23_8 posX0, q23_8 posY0, q23_8 posZ0, q23_8 posX1, q23_8 posY1, q23_8 posZ1);
+void sharedFunc_800CCE2C_1_s05(s32 arg0, s32 arg1,
+                               q19_12 posX0, q19_12 posY0, q19_12 posZ0,
+                               q19_12 posX1, q19_12 posY1, q19_12 posZ1);
 
 void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, q23_8 posX, q23_8 posY, q23_8 posZ);
 

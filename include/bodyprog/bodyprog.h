@@ -1934,7 +1934,7 @@ typedef struct
     POLY_FT4* field_0;
     SVECTOR   field_4; // Q23.8
     MATRIX    field_C;
-    VECTOR3   field_2C; // Q23.8
+    VECTOR3   field_2C; // Q23.8 | Set as grid-aligned player position in `func_80065B94`.
     s32       field_38;
     DVECTOR   field_3C;
     s32       field_40;
@@ -3920,7 +3920,7 @@ void func_8006C0C8(s_CollisionState* collState, s16 arg1, s16 arg2);
 
 bool func_8006C1B8(u32 arg0, s16 arg1, s_CollisionState* collState);
 
-s16 func_8006C248(s32 arg0, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4);
+s16 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4);
 
 bool func_8006C3D4(s_CollisionState* collState, s_IpdCollisionData* collData, s32 idx);
 

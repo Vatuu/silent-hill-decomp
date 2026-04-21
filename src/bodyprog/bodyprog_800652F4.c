@@ -133,9 +133,9 @@ void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3) // 0x800652F4
 void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
 {
     s16              temp_s0;
-    s32              x;
-    s32              y;
-    s32              z;
+    s32              gridPosX;
+    s32              gridPosY;
+    s32              gridPosZ;
     s16              temp_fp;
     s32              i;
     s16              temp;
@@ -147,22 +147,24 @@ void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
 
     ptr = PSX_SCRATCH;
 
-    x                = FP_FROM(g_SysWork.playerWork.player.position.vx, Q12_SHIFT);
-    y                = FP_FROM(g_SysWork.playerWork.player.position.vy, Q12_SHIFT);
-    z                = FP_FROM(g_SysWork.playerWork.player.position.vz, Q12_SHIFT);
-    ptr->field_2C.vx = Q8(x);
-    ptr->field_2C.vy = Q8(y);
-    ptr->field_2C.vz = Q8(z);
+    gridPosX         = FP_FROM(g_SysWork.playerWork.player.position.vx, Q12_SHIFT);
+    gridPosY         = FP_FROM(g_SysWork.playerWork.player.position.vy, Q12_SHIFT);
+    gridPosZ         = FP_FROM(g_SysWork.playerWork.player.position.vz, Q12_SHIFT);
+    ptr->field_2C.vx = Q8(gridPosX);
+    ptr->field_2C.vy = Q8(gridPosY);
+    ptr->field_2C.vz = Q8(gridPosZ);
 
-    Vw_WorldScreenMatrixAtPositionGet(&ptr->field_C, Q12(x), Q12(y), Q12(z));
+    Vw_WorldScreenMatrixAtPositionGet(&ptr->field_C, Q12(gridPosX), Q12(gridPosY), Q12(gridPosZ));
 
     gte_SetRotMatrix(&ptr->field_C);
     gte_SetTransMatrix(&ptr->field_C);
     gte_ReadGeomScreen(&ptr->field_38);
 
     temp                 = Q12_TO_Q8(arg0->vx) - ptr->field_2C.vx;
-    *(s32*)&ptr->field_4 = (temp & 0xFFFF) + ((Q12_TO_Q8(arg0->vy) - ptr->field_2C.vy) << 16);
-    ptr->field_4.vz      = Q12_TO_Q8(arg0->vz) - ptr->field_2C.vz;
+    Math_SetSVectorFastSum(&ptr->field_4,
+                           temp,
+                           Q12_TO_Q8(arg0->vy) - ptr->field_2C.vy,
+                           Q12_TO_Q8(arg0->vz) - ptr->field_2C.vz);
 
     gte_ldv0(&ptr->field_4);
     gte_rtps();
@@ -233,7 +235,7 @@ void func_80066184(void) // 0x80066184
 
     if (g_Controller0->btnsHeld_C & ControllerFlag_Cross)
     {
-        D_800AE73C = ((D_800AE73C - g_DeltaTime) < Q12(0.0f)) ? 0 : (D_800AE73C - g_DeltaTime);
+        D_800AE73C = ((D_800AE73C - g_DeltaTime) < Q12(0.0f)) ? Q12(0.0f) : (D_800AE73C - g_DeltaTime);
     }
 
     ptr = PSX_SCRATCH;
@@ -250,8 +252,10 @@ void func_80066184(void) // 0x80066184
 
     for (i = 0; i < 4; i++)
     {
-        *(s32*)&ptr->field_24[i].vx = (Q12_TO_Q8((D_800AE71C[i][0] - ptr->field_3C.vx)) & 0xFFFF) + (Q12_TO_Q8((-81 - ptr->field_3C.vy)) << 16);
-        ptr->field_24[i].vz         = Q12_TO_Q8(D_800AE71C[i][1] - ptr->field_3C.vz);
+        Math_SetSVectorFastSum(&ptr->field_24[i],
+                               Q12_TO_Q8(D_800AE71C[i][0] - ptr->field_3C.vx),
+                               Q12_TO_Q8(-81 - ptr->field_3C.vy),
+                               Q12_TO_Q8(D_800AE71C[i][1] - ptr->field_3C.vz));
     }
 
     gte_ldv3c(&ptr->field_24);

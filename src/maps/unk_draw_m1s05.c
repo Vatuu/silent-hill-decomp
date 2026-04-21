@@ -16,7 +16,6 @@ void sharedFunc_800CBE7C_1_s05(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
     s32 i;
 
     i = func_8005E7E0(7);
-
     if (i != NO_VALUE)
     {
         sharedData_800DFB7C_0_s00[i].field_0.vx_0         = Rng_AddGeneratedUInt(arg0, -32, 31) * 16;
@@ -35,18 +34,18 @@ bool sharedFunc_800CBF74_1_s05(POLY_FT4** poly, s32 idx)
 {
     typedef struct
     {
-        s_func_8005E89C field_0;
-        s_Collision     field_12C;
-        SVECTOR         field_138;
-        s32             field_140;
-        DVECTOR         field_144;
-        s32             field_148;
-        s32             field_14C;
+        /* 0x0   */ s_func_8005E89C field_0;
+        /* 0x12C */ s_Collision     collision;
+        /* 0x138 */ SVECTOR         cameraRotation; // Q3.12
+        /* 0x140 */ s32             field_140;
+        /* 0x144 */ DVECTOR         field_144;
+        /* 0x148 */ s32             field_148;
+        /* 0x14C */ s32             field_14C;
     } s_sharedFunc_800CBF74_1_s05;
 
-    VECTOR3                      sp10;
+    VECTOR3                      sfxPos; // Q19.12
     s32                          temp_v0;
-    s32                          temp_v0_2;
+    q19_12                       temp_v0_2;
     s32                          var_v1;
     s_sharedFunc_800CBF74_1_s05* ptr;
 
@@ -61,52 +60,53 @@ bool sharedFunc_800CBF74_1_s05(POLY_FT4** poly, s32 idx)
 
     sharedData_800DFB7C_0_s00[idx].field_4.vz_4        += Q12_MULT_PRECISE(g_DeltaTime, temp_v0_2);
     sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 += g_GravitySpeed >> 1;
-    sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2  = CLAMP_LOW(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 - Q12_MULT_PRECISE(g_DeltaTime, 0x800), 0);
+    sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2  = CLAMP_LOW(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 - Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(180.0f)), Q12_ANGLE(0.0f));
 
-    Collision_Get(&ptr->field_12C, sharedData_800DFB7C_0_s00[idx].field_0.vx_0, sharedData_800DFB7C_0_s00[idx].field_4.vz_4);
+    Collision_Get(&ptr->collision, sharedData_800DFB7C_0_s00[idx].field_0.vx_0, sharedData_800DFB7C_0_s00[idx].field_4.vz_4);
 
-    if (ptr->field_12C.groundHeight_0 < sharedData_800DFB7C_0_s00[idx].vy_8 || sharedData_800DFB7C_0_s00[idx].vy_8 > 0)
+    if (ptr->collision.groundHeight_0 < sharedData_800DFB7C_0_s00[idx].vy_8 || sharedData_800DFB7C_0_s00[idx].vy_8 > Q12(0.0f))
     {
-        sharedData_800DFB7C_0_s00[idx].vy_8                = MIN(ptr->field_12C.groundHeight_0, 0);
+        sharedData_800DFB7C_0_s00[idx].vy_8                = MIN(ptr->collision.groundHeight_0, 0);
         sharedData_800DFB7C_0_s00[idx].field_B             = 1;
-        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = 0;
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = Q12_ANGLE(0.0f);
 
-        sp10.vx = sharedData_800DFB7C_0_s00[idx].field_0.vx_0;
-        sp10.vy = sharedData_800DFB7C_0_s00[idx].vy_8;
-        sp10.vz = sharedData_800DFB7C_0_s00[idx].field_4.vz_4;
+        sfxPos.vx = sharedData_800DFB7C_0_s00[idx].field_0.vx_0;
+        sfxPos.vy = sharedData_800DFB7C_0_s00[idx].vy_8;
+        sfxPos.vz = sharedData_800DFB7C_0_s00[idx].field_4.vz_4;
 
-        func_8005DC1C(0x5C4, &sp10, 0x80, 0);
+        func_8005DC1C(Sfx_Unk1476, &sfxPos, Q8(0.5f), 0);
     }
 
     gte_SetRotMatrix(&ptr->field_0.field_C);
     gte_SetTransMatrix(&ptr->field_0.field_C);
 
     if (ABS(g_SysWork.playerWork.player.position.vx - sharedData_800DFB7C_0_s00[idx].field_0.vx_0) +
-            ABS(g_SysWork.playerWork.player.position.vz - sharedData_800DFB7C_0_s00[idx].field_4.vz_4) >
-        0x14000)
+        ABS(g_SysWork.playerWork.player.position.vz - sharedData_800DFB7C_0_s00[idx].field_4.vz_4) >
+        Q12(20.0f))
     {
         return false;
     }
 
-    *(s32*)&ptr->field_138 = (((sharedData_800DFB7C_0_s00[idx].field_0.vx_0 >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                             (((sharedData_800DFB7C_0_s00[idx].vy_8 >> 4) - ptr->field_0.field_0.vy) << 0x10);
-    ptr->field_138.vz = (sharedData_800DFB7C_0_s00[idx].field_4.vz_4 >> 4) - ptr->field_0.field_0.vz;
+    Math_SetSVectorFastSum(&ptr->cameraRotation,
+                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx,
+                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy,
+                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4) - ptr->field_0.field_0.vz);
 
-    gte_ldv0(&ptr->field_138);
+    gte_ldv0(&ptr->cameraRotation);
     gte_rtps();
     gte_stsxy(&ptr->field_144);
     gte_stsz(&ptr->field_140);
 
-    if (ptr->field_140 - 0x10 <= 0 || ((ptr->field_140 - 0x10) >> 3) >= ORDERING_TABLE_SIZE ||
+    if ((ptr->field_140 - 16) <= 0 || ((ptr->field_140 - 16) >> 3) >= ORDERING_TABLE_SIZE ||
         ABS(ptr->field_144.vx) > 200 || ABS(ptr->field_144.vy) > 160)
     {
         return false;
     }
 
-    vwGetViewAngle(&ptr->field_138);
+    vwGetViewAngle(&ptr->cameraRotation);
 
     ptr->field_148 = ptr->field_0.field_2C * 4 / ptr->field_140;
-    ptr->field_14C = ((((ptr->field_138.vx + 0x400) >> 9) + 7) * ptr->field_0.field_2C) / ptr->field_140;
+    ptr->field_14C = ((((ptr->cameraRotation.vx + 0x400) >> 9) + 7) * ptr->field_0.field_2C) / ptr->field_140;
 
     setXY0Fast(*poly, (u16)ptr->field_144.vx - (u16)ptr->field_148, ptr->field_144.vy - ptr->field_14C);
     setXY1Fast(*poly, (u16)ptr->field_144.vx + (u16)ptr->field_148, ptr->field_144.vy - ptr->field_14C);
@@ -133,7 +133,7 @@ bool sharedFunc_800CC618_1_s05(POLY_FT4** poly, s32 idx)
     typedef struct
     {
         s_func_8005E89C field_0;
-        SVECTOR         field_12C;
+        SVECTOR         collision;
         SVECTOR         field_134;
         SVECTOR         field_13C;
         SVECTOR         field_144;
@@ -167,11 +167,10 @@ bool sharedFunc_800CC618_1_s05(POLY_FT4** poly, s32 idx)
 
     ptr = PSX_SCRATCH;
 
-    ptr->field_160 = MAX(0xFF - (sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 * 0x10 / 1228), 0);
+    ptr->field_160 = MAX(0xFF - ((sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 * 16) / Q12(0.3f)), 0);
 
     sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 += g_DeltaTime;
-
-    if (sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 > 0x4CC0)
+    if (sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 > 0x4CC0) // TODO: Demagic.
     {
         sharedData_800DFB7C_0_s00[idx].field_A = 0;
     }
@@ -185,26 +184,30 @@ bool sharedFunc_800CC618_1_s05(POLY_FT4** poly, s32 idx)
 
     ptr->field_168 = CLAMP_HIGH(sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_2, ((sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 * sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_2) / 2456) + 8);
 
-    *(s32*)&ptr->field_12C = (((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx) - (u16)ptr->field_168) & 0xFFFF) +
-                             ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy) << 16);
-    ptr->field_12C.vz = Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4) - ptr->field_0.field_0.vz + (u16)ptr->field_168;
+    Math_SetSVectorFastSum(&ptr->collision,
+                           (Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx) - (u16)ptr->field_168,
+                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy,
+                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4) - ptr->field_0.field_0.vz + (u16)ptr->field_168);
 
+    // TODO: Use `Math_SetSVectorFastSum`.
     *(s32*)&ptr->field_134 = (((u16)ptr->field_168 + (Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx)) & 0xFFFF) +
                              ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy) << 16);
     temp              = (u16)ptr->field_168;
     ptr->field_134.vz = temp + (Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4) - ptr->field_0.field_0.vz);
 
+    // TODO: Use `Math_SetSVectorFastSum`.
     *(s32*)&ptr->field_13C = (((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx) - (u16)ptr->field_168) & 0xFFFF) +
                              ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy) << 16);
     temp2             = (u16)ptr->field_168;
     ptr->field_13C.vz = (Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4) - ptr->field_0.field_0.vz) - temp2;
 
+    // TODO: Use `Math_SetSVectorFastSum`.
     *(s32*)&ptr->field_144 = (((u16)ptr->field_168 + (Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx)) & 0xFFFF) +
                              ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy) << 16);
     temp3             = (u16)ptr->field_168;
     ptr->field_144.vz = (Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4) - ptr->field_0.field_0.vz) - temp3;
 
-    gte_ldv3c(&ptr->field_12C);
+    gte_ldv3c(&ptr->collision);
     gte_rtpt();
     gte_stsxy3_g3(*poly);
     gte_stsz3c(&ptr->field_14C);
@@ -347,7 +350,7 @@ bool sharedFunc_800CC618_1_s05(POLY_FT4** poly, s32 idx)
     *(u16*)&(*poly)->u3 = ptr->field_16C + ptr->field_17C + ((ptr->field_180 + ptr->field_190) << 8);
 
     setRGBC0(*poly, ptr->field_160, ptr->field_160, ptr->field_160, 0x2E);
-    addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_14C.vx - 0x10) >> 3], *poly, 9);
+    addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_14C.vx - 16) >> 3], *poly, 9);
     *poly += 1;
 
     return true;
@@ -365,7 +368,9 @@ void sharedFunc_800CCDD4_1_s05(POLY_FT4** poly, s32 idx)
     }
 }
 
-void sharedFunc_800CCE2C_1_s05(s32 arg0, s32 arg1, s32 posX0, s32 posY0, s32 posZ0, s32 posX1, s32 posY1, s32 posZ1)
+void sharedFunc_800CCE2C_1_s05(s32 arg0, s32 arg1,
+                               q19_12 posX0, q19_12 posY0, q19_12 posZ0,
+                               q19_12 posX1, q19_12 posY1, q19_12 posZ1)
 {
     s32 idx0;
     s32 idx1;
@@ -400,9 +405,9 @@ bool sharedFunc_800CCF30_1_s05(POLY_FT4** poly, s32 idx)
     typedef struct
     {
         s_func_8005E89C field_0;
-        SVECTOR         field_12C;
+        SVECTOR         collision;
         s32             field_134;
-        s32             field_138;
+        s32             cameraRotation;
         DVECTOR         field_13C;
         DVECTOR         field_140;
         DVECTOR         field_144;
@@ -425,11 +430,12 @@ bool sharedFunc_800CCF30_1_s05(POLY_FT4** poly, s32 idx)
     sharedData_800DFB7C_0_s00[idx].field_A     = 0;
     sharedData_800DFB7C_0_s00[temp_s3].field_A = 0;
 
-    *(s32*)&ptr->field_12C = ((sharedData_800DFB7C_0_s00[idx].field_0.s_1.field_0 - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                             ((sharedData_800DFB7C_0_s00[idx].vy_8 - ptr->field_0.field_0.vy) << 16);
-    ptr->field_12C.vz = sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_0 - ptr->field_0.field_0.vz;
+    Math_SetSVectorFastSum(&ptr->collision,
+                           sharedData_800DFB7C_0_s00[idx].field_0.s_1.field_0 - (u16)ptr->field_0.field_0.vx,
+                           sharedData_800DFB7C_0_s00[idx].vy_8 - ptr->field_0.field_0.vy,
+                           sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_0 - ptr->field_0.field_0.vz);
 
-    gte_ldv0(&ptr->field_12C);
+    gte_ldv0(&ptr->collision);
     gte_rtps();
     gte_stsxy(&ptr->field_13C);
     gte_stsz(&ptr->field_134);
@@ -439,24 +445,25 @@ bool sharedFunc_800CCF30_1_s05(POLY_FT4** poly, s32 idx)
         return false;
     }
 
-    *(s32*)&ptr->field_12C = ((sharedData_800DFB7C_0_s00[temp_s3].field_0.s_1.field_0 - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                             ((sharedData_800DFB7C_0_s00[temp_s3].vy_8 - ptr->field_0.field_0.vy) << 16);
-    ptr->field_12C.vz = sharedData_800DFB7C_0_s00[temp_s3].field_4.s_0.field_0 - ptr->field_0.field_0.vz;
+    Math_SetSVectorFastSum(&ptr->collision,
+                           sharedData_800DFB7C_0_s00[temp_s3].field_0.s_1.field_0 - (u16)ptr->field_0.field_0.vx,
+                           sharedData_800DFB7C_0_s00[temp_s3].vy_8 - ptr->field_0.field_0.vy,
+                           sharedData_800DFB7C_0_s00[temp_s3].field_4.s_0.field_0 - ptr->field_0.field_0.vz);
 
-    gte_ldv0(&ptr->field_12C);
+    gte_ldv0(&ptr->collision);
     gte_rtps();
     gte_stsxy(&ptr->field_140);
-    gte_stsz(&ptr->field_138);
+    gte_stsz(&ptr->cameraRotation);
 
-    var_a1 = MAX(ptr->field_134, ptr->field_138);
+    var_a1 = MAX(ptr->field_134, ptr->cameraRotation);
 
-    if (ptr->field_138 >= ptr->field_134)
+    if (ptr->cameraRotation >= ptr->field_134)
     {
         var_v0_4 = ((ptr->field_134 * 3) + var_a1) >> 2;
     }
     else
     {
-        var_v0_4 = ((ptr->field_138 * 3) + var_a1) >> 2;
+        var_v0_4 = ((ptr->cameraRotation * 3) + var_a1) >> 2;
     }
 
     ptr->field_134 = var_v0_4;
