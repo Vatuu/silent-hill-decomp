@@ -49,7 +49,7 @@ void func_8008D464(void) // 0x8008D464
 
 void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones) // 0x8008D470
 {
-    s32          var;
+    s32          posY;
     s_WaterZone* waterZone;
 
     if (D_800C4818.field_0 == 0)
@@ -75,11 +75,11 @@ void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones
         {
             func_8008E5B4();
 
-            if (waterZone->isEnabled_0 == true)
+            if (waterZone->isEnabled == true)
             {
-                var = waterZone->illumination_2 << 8; // TODO: What's the format?
-                func_8008E794(pos, D_800C4818.field_20, var);
-                func_8008EA68(rot, pos, var);
+                posY = Q4_TO_Q12(waterZone->illumination);
+                func_8008E794(pos, D_800C4818.field_20, posY);
+                func_8008EA68(rot, pos, posY);
             }
         }
     }
@@ -241,7 +241,7 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
 
     temp0 = vwOresenHokan(&Y_ARRAY_0, ARRAY_SIZE(Y_ARRAY_0), x0, 0, Q8(16.0f));
     temp1 = vwOresenHokan(&Y_ARRAY_1, ARRAY_SIZE(Y_ARRAY_1), x1, Q8(0.8f), Q8(13.0f));
-    res   = FP_MULTIPLY(vwOresenHokan(&Y_ARRAY_2, ARRAY_SIZE(Y_ARRAY_2), x2, Q8(3.335f), Q8(7.425f)), // Yucky floats, maybe these aren't distances?
+    res   = FP_MULTIPLY(vwOresenHokan(&Y_ARRAY_2, ARRAY_SIZE(Y_ARRAY_2), x2, Q8(3.335f), Q8(7.425f)), // TODO: Yucky floats, maybe these aren't distances?
                         Q12_MULT(temp0, temp1),
                         Q12_SHIFT);
 
@@ -441,8 +441,8 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     {
         temp_v0_7 = D_800AFD7C[i] + sp20;
 
-        var_s3 = Q12_MULT((Math_Cos(temp_v0_7 - arg3) + 0x1B33), (Math_Cos((temp_v0_7 * 0xC) + sp24) + 0x1000) >> 1);
-        var_s3 = MIN(var_s3, 0x1800);
+        var_s3 = Q12_MULT((Math_Cos(temp_v0_7 - arg3) + Q12(1.7f)), (Math_Cos((temp_v0_7 * 12) + sp24) + Q12(1.0f)) >> 1);
+        var_s3 = MIN(var_s3, Q12(1.5f));
 
         temp_s1   = Math_Sin(temp_v0_7);
         temp_s0_3 = Math_Cos(temp_v0_7);
@@ -564,10 +564,10 @@ s_WaterZone* Map_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones)
         return NULL;
     }
 
-    for (curWaterZone = waterZones; curWaterZone->isEnabled_0; curWaterZone++)
+    for (curWaterZone = waterZones; curWaterZone->isEnabled; curWaterZone++)
     {
-        if (posX >= curWaterZone->minX_4 && posX < curWaterZone->maxX_6 &&
-            posZ >= curWaterZone->minZ_8 && posZ < curWaterZone->maxZ_A)
+        if (posX >= curWaterZone->minX && posX < curWaterZone->maxX &&
+            posZ >= curWaterZone->minZ && posZ < curWaterZone->maxZ)
         {
             return curWaterZone;
         }
@@ -778,7 +778,7 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
     sp50.coord.m[0][2] =  Math_Sin(angle1);
     sp50.coord.m[2][0] = -Math_Sin(angle1);
 
-    sp50.super = NULL;
+    sp50.super      = NULL;
     sp50.coord.t[0] = Q12_TO_Q8(posXz->vx);
     sp50.coord.t[1] = Q12_TO_Q8(posY);
     sp50.coord.t[2] = Q12_TO_Q8(posXz->vz);

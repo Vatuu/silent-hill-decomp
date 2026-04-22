@@ -20,11 +20,11 @@
 
 void func_80040004(s_MapOverlayHeader* overlayHeader) // 0x80040004
 {
-    g_WorldGfxWork.triggerZone_1BD8 = &overlayHeader->triggerZones_D2C[0];
+    g_WorldGfxWork.triggerZone = &overlayHeader->triggerZones_D2C[0];
 }
 
 void func_80040014(void) // 0x80040014
 {
-    Collision_TriggerZonesUpdate(g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz, g_WorldGfxWork.triggerZone_1BD8);
+    Collision_TriggerZonesUpdate(g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz, g_WorldGfxWork.triggerZone);
 };
 

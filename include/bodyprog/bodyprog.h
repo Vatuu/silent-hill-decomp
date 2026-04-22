@@ -178,17 +178,17 @@ typedef enum _CollisionType
     CollisionType_Unk2 = 2
 } e_CollisionType;
 
-/** Map flags. */
-typedef enum _MapFlags
+/** @brief Map GFX flags. */
+typedef enum _MapGfxFlags
 {
-    MapFlag_FourActiveChunks = 0,      /** Used by exterior maps. */
-    MapFlag_OneActiveChunk   = 1 << 0,
-    MapFlag_TwoActiveChunks  = 1 << 1,
-    MapFlag_Interior         = 1 << 2,
-    MapFlag_Unk3             = 1 << 3  /** @unused Unused map type `XXX` has this flag. */
-} e_MapFlags;
+    MapGfxFlag_FourActiveChunks = 0,      /** Used by exterior maps. */
+    MapGfxFlag_OneActiveChunk   = 1 << 0,
+    MapGfxFlag_TwoActiveChunks  = 1 << 1,
+    MapGfxFlag_Interior         = 1 << 2,
+    MapGfxFlag_Unk3             = 1 << 3  /** @unused Unused map type `XXX` has this flag. */
+} e_MapGfxFlags;
 
-/** @brief Used as index into `MAP_INFOS` array.
+/** @brief Used as index into `MAP_GFX_INFOS` array.
  * TODO: Add descriptions for which areas are included in each type?
 */
 typedef enum _MapType
@@ -1191,48 +1191,52 @@ typedef struct
 } s_800BCDA8;
 STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
+/** @brief Speed zone. Defines a volume used for player speed modulation. */
 typedef struct _SpeedZone
 {
-    s8   type_0; /** `e_SpeedZoneType` */
-    // 1 byte of padding.
-    q11_4 minX_2;
-    q11_4 maxX_4;
-    q11_4 minZ_6;
-    q11_4 maxZ_8;
+    /* 0x0 */ s8   type; /** `e_SpeedZoneType` */
+              // 1 byte of padding.
+    /* 0x2 */ q11_4 minX;
+    /* 0x4 */ q11_4 maxX;
+    /* 0x6 */ q11_4 minZ;
+    /* 0x/ */ q11_4 maxZ;
 } s_SpeedZone;
 
+/** @brief Water zone. Defines a volume used for visual water effects. */
 typedef struct _WaterZone
 {
-    u8  isEnabled_0; /** `bool` */
-    // 1 byte of padding.
-    s16 illumination_2;
-    q11_4 minX_4;
-    q11_4 maxX_6;
-    q11_4 minZ_8;
-    q11_4 maxZ_A;
+    /* 0x0 */ u8    isEnabled; /** `bool` */
+              // 1 byte of padding.
+    /* 0x2 */ q11_4 illumination;
+    /* 0x4 */ q11_4 minX;
+    /* 0x6 */ q11_4 maxX;
+    /* 0x8 */ q11_4 minZ;
+    /* 0xA */ q11_4 maxZ;
 } s_WaterZone;
 
-typedef struct
+/** @brief Character model. */
+typedef struct _CharaModel
 {
-    u8            charaId;  /** `e_CharacterId` */
-    u8            isLoaded; /** `bool` */
-    // 2 bytes of padding.
-    s32           queueIdx_4;
-    s_LmHeader*   lmHdr;
-    s_FsImageDesc texture_C;
-    s_Skeleton    skeleton_14;
+    /* 0x0  */ u8            charaId;  /** `e_CharacterId` */
+    /* 0x1  */ u8            isLoaded; /** `bool` */
+               // 2 bytes of padding.
+    /* 0x4  */ s32           queueIdx;
+    /* 0x8  */ s_LmHeader*   lmHdr;
+    /* 0xC  */ s_FsImageDesc texture;
+    /* 0x14 */ s_Skeleton    skeleton;
 } s_CharaModel;
 STATIC_ASSERT_SIZEOF(s_CharaModel, 1376);
 
-typedef struct _MapInfo
+/** @brief Map GFX info. */
+typedef struct _MapGfxInfo
 {
-    s16                plmFileIdx_0;
-    char               tag_2[4];
-    u8                 flags_6; /** `e_MapFlags` */
-    // 1 byte of padding.
-    const s_WaterZone* waterZones_8;
-    const s_SpeedZone* speedZones_C;
-} s_MapInfo;
+    /* 0x0 */ s16                plmFileIdx_0;
+    /* 0x2 */ char               tag_2[4];
+    /* 0x6 */ u8                 flags_6; /** `e_MapGfxFlags` */
+              // 1 byte of padding.
+    /* 0x8 */ const s_WaterZone* waterZones_8;
+    /* 0xC */ const s_SpeedZone* speedZones_C;
+} s_MapGfxInfo;
 
 // Rough name.
 typedef struct _WorldObjectMetadata
@@ -1250,7 +1254,7 @@ typedef struct _WorldObjectModel
 } s_WorldObjectModel;
 STATIC_ASSERT_SIZEOF(s_WorldObjectModel, 28);
 
-/** @brief Geometry space world object to draw. */
+/** @brief Geometry-space world object to draw. */
 typedef struct _WorldObject
 {
     s_WorldObjectModel* model;
@@ -1279,12 +1283,12 @@ STATIC_ASSERT_SIZEOF(s_TriggerZone, 4);
 /** @brief Hand-held player item. */
 typedef struct _HeldItem
 {
-    s32           itemId_0; /** `e_InvItemId` */
-    s32           queueIdx_4;
-    char*         textureName_8;
-    s_FsImageDesc imageDesc_C;
-    s_LmHeader*   lmHdr_14;
-    s_Bone        bone_18;
+    /* 0x0  */ s32           itemId; /** `e_InvItemId` */
+    /* 0x4  */ s32           queueIdx;
+    /* 0x8  */ char*         textureName;
+    /* 0xC  */ s_FsImageDesc imageDesc;
+    /* 0x14 */ s_LmHeader*   lmHdr;
+    /* 0x18 */ s_Bone        bone;
 } s_HeldItem;
 STATIC_ASSERT_SIZEOF(s_HeldItem, 44);
 
@@ -1295,37 +1299,37 @@ STATIC_ASSERT_SIZEOF(s_HeldItem, 44);
  */
 typedef struct _WorldGfxWork
 {
-    s_MapInfo*        mapInfo_0;
-    u8                useStoredPoint_4; /** `bool` */
-    u8                unk_5[3];
-    VECTOR3           ipdSamplePoint_8; /** Used by IPD logic to sample which chunks to load or unload. */
-    u8*               charaLmBuffer_14;
-    s_CharaModel*     registeredCharaModels_18[Chara_Count];
-    s_CharaModel      charaModels_CC[CHARA_GROUP_COUNT];
-    s_CharaModel      harryModel_164C;
-    s_HeldItem        heldItem_1BAC;             /** The item held by the player. */
-    s_TriggerZone*    triggerZone_1BD8;
-    VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; /** Debug camera info. */
-    s_LmHeader        itemLmHdr_1BE4;
-    u8                itemLmData_1BF4[4096 - sizeof(s_LmHeader)]; // 4kb allocated for 2.75kb game files.
-    s32               itemLmQueueIdx_2BE4;
-    s32               objectCount_2BE8;                     /** `objects_2BEC` size. */
-    s_WorldObject     objects_2BEC[WORLD_OBJECT_COUNT_MAX]; /** World objects to draw. */
+    /* 0x0    */ s_MapGfxInfo*     mapGfxInfo;
+    /* 0x4    */ u8                useStoredPoint; /** `bool` */
+    /* 0x5    */ s8                __pad_5[3];
+    /* 0x8    */ VECTOR3           ipdSamplePoint; /** Used by IPD logic to sample which chunks to load or unload. */
+    /* 0x14   */ u8*               charaLmBuffer;
+    /* 0x18   */ s_CharaModel*     registeredCharaModels[Chara_Count];
+    /* 0xCC   */ s_CharaModel      charaModels[CHARA_GROUP_COUNT];
+    /* 0x164C */ s_CharaModel      harryModel;
+    /* 0x1BAC */ s_HeldItem        heldItem; /** Item held by the player. */
+    /* 0x1BD8 */ s_TriggerZone*    triggerZone;
+    /* 0x1BDC */ VC_CAMERA_INTINFO vcCameraInternalInfo; /** Debug camera info. */
+    /* 0x1BE4 */ s_LmHeader        itemLmHdr;
+    /* 0x1BF4 */ u8                itemLmData[4096 - sizeof(s_LmHeader)]; // 4kb allocated for 2.75kb game files.
+    /* 0x2BE4 */ s32               itemLmQueueIdx;
+    /* 0x2BE8 */ s32               objectCount;                     /** `objects` size. */
+    /* 0x2BEC */ s_WorldObject     objects[WORLD_OBJECT_COUNT_MAX]; /** World objects to draw. */
 } s_WorldGfxWork;
 STATIC_ASSERT_SIZEOF(s_WorldGfxWork, 11708);
 
-// IPD data?
+/** @brief IPD map geometry chunk. */
 typedef struct
 {
-    s_IpdHeader* ipdHdr_0;
-    s32          queueIdx_4;
-    s16          cellX_8;
-    s16          cellZ_A;
-    q19_12       distance0_C;
-    q19_12       distance1_10;
-    u8           materialCount_14;
-    s8           unk_15[3];
-    s32          outsideCount_18;
+    /* 0x0  */ s_IpdHeader* ipdHdr;
+    /* 0x4  */ s32          queueIdx;
+    /* 0x8  */ s16          cellX;
+    /* 0xA  */ s16          cellZ;
+    /* 0xC  */ q19_12       distance0;
+    /* 0x10 */ q19_12       distance1;
+    /* 0x14 */ u8           materialCount;
+    /* 0x15 */ s8           __pad_15[3];
+    /* 0x18 */ s32          outsideCount;
 } s_IpdChunk;
 STATIC_ASSERT_SIZEOF(s_IpdChunk, 28);
 
@@ -1671,7 +1675,7 @@ typedef struct
  */
 typedef struct _MapOverlayHeader
 {
-    s_MapInfo*             mapInfo_0;
+    s_MapGfxInfo*             mapGfxInfo;
     u8                     (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxUpdate`.
     s8                     field_8;
     s32                    (*func_C)();
@@ -2185,7 +2189,7 @@ typedef struct
 
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to `main/` headers?
 
-extern const s_MapInfo MAP_INFOS[MapType_Count];
+extern const s_MapGfxInfo MAP_GFX_INFOS[MapType_Count];
 
 extern char D_80028544[16];
 
@@ -2778,7 +2782,7 @@ void Lm_Init(s_GlobalLm* globalLm, s_LmHeader* lmHdr);
 
 void LmHeader_Init(s_LmHeader* lmHdr);
 
-/** @brief Clears `queueIdx_4` in array of `s_IpdChunk` */
+/** @brief Clears `queueIdx` in array of `s_IpdChunk` */
 void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* chunks, s32 chunkCount);
 
 void Ipd_TexturesInit(void);

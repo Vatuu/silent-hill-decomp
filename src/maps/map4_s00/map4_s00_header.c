@@ -22,7 +22,7 @@ void (*g_MapEventFuncs[])() = {
 }; 
 
 const s_MapOverlayHeader g_MapOverlayHeader = {
-    .mapInfo_0                        = &MAP_INFOS[MapType_SPR],
+    .mapGfxInfo                        = &MAP_GFX_INFOS[MapType_SPR],
     .getMapRoomIdxFunc_4              = Map_RoomIdxGet,
     .field_8                          = 15,
     .func_C                           = sharedFunc_800D929C_0_s00,

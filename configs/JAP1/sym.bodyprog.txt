@@ -21,7 +21,7 @@ g_SavegamePtr                                = 0x80024D40;
 g_Controller0                                = 0x80024D44;
 g_Controller1                                = 0x80024D48;
 g_GameWorkPtr                                = 0x80024D4C;
-MAP_INFOS                                    = 0x80025004;
+MAP_GFX_INFOS                                = 0x80025004;
 
 //-----------------------------------------------------------------------
 //--- PA: 0x0005A4   VA: 0x80025104   subsegment: .rodata, sys/fs_screens

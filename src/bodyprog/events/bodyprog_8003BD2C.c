@@ -12,7 +12,7 @@
 
 s32 Map_TypeGet(void) // 0x8003BD2C
 {
-    return g_WorldGfxWork.mapInfo_0 - MAP_INFOS;
+    return g_WorldGfxWork.mapGfxInfo - MAP_GFX_INFOS;
 }
 
 void func_8003BD48(const s_SubCharacter* chara) // 0x8003BD48
