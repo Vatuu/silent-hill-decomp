@@ -3449,7 +3449,7 @@ void func_800DC3EC(s_800F3DAC* arg0) // 0x800DC3EC
     // TODO: Might be using some kind of `CLAMP` in this func, couldn't get match with our macros though.
     valMax = arg0->field_18;
 
-    field20Val = ((arg0->timer_C - arg0->timer_8) * 30) / (arg0->timer_C / 2);
+    field20Val = ((arg0->timer_C - arg0->timer) * 30) / (arg0->timer_C / 2);
     // TODO: `field20Val = MIN(maxVal, field20Val)`?
     if (field20Val >= valMax)
     {
@@ -3457,9 +3457,9 @@ void func_800DC3EC(s_800F3DAC* arg0) // 0x800DC3EC
     }
     arg0->field_20 = field20Val;
 
-    if (arg0->timer_8 < (arg0->timer_C / 2))
+    if (arg0->timer < (arg0->timer_C / 2))
     {
-        field1CVal = (((arg0->timer_C / 2) - arg0->timer_8) * 30) / (arg0->timer_C / 2);
+        field1CVal = (((arg0->timer_C / 2) - arg0->timer) * 30) / (arg0->timer_C / 2);
         // TODO: `field1CVal = MIN(maxVal, field1CVal)`?
         if (field1CVal >= valMax)
         {
@@ -3508,7 +3508,7 @@ void func_800DC544(GsOT_TAG* ot) // 0x800DC544
             continue;
         }
 
-        if (ptr->timer_8 > Q12(0.0f) || ptr->field_1C != ptr->field_18)
+        if (ptr->timer > Q12(0.0f) || ptr->field_1C != ptr->field_18)
         {
             func_800DC3EC(ptr);
 
@@ -3518,7 +3518,7 @@ void func_800DC544(GsOT_TAG* ot) // 0x800DC544
             }
 
             func_800DBD94(ptr, ot);
-            ptr->timer_8 -= g_DeltaTime;
+            ptr->timer -= g_DeltaTime;
         }
         else
         {
@@ -4034,7 +4034,7 @@ void func_800DD0EC(const VECTOR3* pos, s32 coordIdx) // 0x800DD0EC
         ptr0->field_4E4    = 3;
         ptr0->rotationZ_4D8     = Q12_ANGLE(108.0f);
         ptr0->timer_C      = Q12(1.0f);
-        ptr0->timer_8      = Q12(1.0f);
+        ptr0->timer      = Q12(1.0f);
         ptr0->coordIdx_4EC = coordIdx;
         ptr0->field_14     = Q12_ANGLE(15.0f);
         func_800DCDDC(ptr0, &newPos, pos);
@@ -4065,7 +4065,7 @@ void func_800DD260(const VECTOR3* arg0, const VECTOR3* pos) // 0x800DD260
         ptr->rotationZ_4D8  = Q12_ANGLE(43.2f);
         ptr->field_4E4 = 4;
         ptr->timer_C   = Q12(0.5f);
-        ptr->timer_8   = Q12(0.5f);
+        ptr->timer   = Q12(0.5f);
         ptr->field_14  = Q12_ANGLE(45.0f);
 
         func_800DCDDC(ptr, arg0, pos);
@@ -4082,7 +4082,7 @@ void func_800DD2C8(const VECTOR3* arg0, const VECTOR3* arg1) // 0x800DD2C8
         ptr->rotationZ_4D8  = Q12_ANGLE(180.0f);
         ptr->field_4E4 = 4;
         ptr->timer_C   = Q12(0.5f);
-        ptr->timer_8   = Q12(0.5f);
+        ptr->timer   = Q12(0.5f);
         ptr->field_14  = Q12_ANGLE(45.0f);
 
         func_800DCDDC(ptr, arg0, arg1);
@@ -4102,7 +4102,7 @@ void func_800DD32C(const VECTOR3* arg0, const VECTOR3* arg1) // 0x800DD32C
         retPtr->rotationZ_4D8  = Q12_ANGLE(216.0f);
         retPtr->field_4E4 = 6;
         retPtr->timer_C   = Q12(2.0f);
-        retPtr->timer_8   = Q12(2.0f);
+        retPtr->timer   = Q12(2.0f);
         retPtr->field_14  = Q12_ANGLE(45.0f);
 
         func_800DCDDC(retPtr, arg0, arg1);
@@ -4141,7 +4141,7 @@ void func_800DD464(const VECTOR3* arg0) // 0x800DD464
         ptr->rotationZ_4D8  = Q12_ANGLE(90.0f);
         ptr->field_4E4 = 2;
         ptr->timer_C   = Q12(1.5f);
-        ptr->timer_8   = Q12(1.5f);
+        ptr->timer   = Q12(1.5f);
         ptr->field_14  = Q12_ANGLE(20.0f);
 
         func_800DCDDC(ptr, arg0, arg0);
@@ -4242,7 +4242,7 @@ void func_800DD738(const VECTOR3* pos0, const VECTOR3* pos1, q19_12 rotZ, q19_12
         ptr->field_4E4 = 7;
         ptr->rotationZ_4D8  = rotZ;
         ptr->timer_C   = timer;
-        ptr->timer_8   = timer;
+        ptr->timer   = timer;
         ptr->field_14  = Q12_ANGLE(45.0f);
 
         func_800DCDDC(ptr, pos0, pos1);
@@ -6494,7 +6494,7 @@ void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warp
 void func_800E16FC(void) // 0x800E16FC
 {
     D_800F4B40.field_0  = NO_VALUE;
-    D_800F4B40.timer_8  = Q12(0.0f);
+    D_800F4B40.timer  = Q12(0.0f);
     D_800F4B40.field_18[0] = 250;
     D_800F4B40.field_18[1] = 200;
     D_800F4B40.field_18[2] = 150;
@@ -6517,7 +6517,7 @@ void func_800E1788(s32 arg0) // 0x800E1788
     {
         D_800F4B40.field_0  = arg0;
         D_800F4B40.field_4  = 0;
-        D_800F4B40.timer_8  = Q12(0.0f);
+        D_800F4B40.timer  = Q12(0.0f);
         D_800F4B40.field_C  = 0;
         D_800F4B40.timer_10 = Q12(0.0f);
     }
@@ -6673,11 +6673,11 @@ void func_800E1854(void) // 0x800E1854
                     break;
 
                 case 1:
-                    if (D_800F4B40.timer_8 > Q12(0.6f))
+                    if (D_800F4B40.timer > Q12(0.6f))
                     {
                         D_800F4B40.field_4 = 2;
                         func_800E1FE0(&D_800ED274[4]);
-                        D_800F4B40.timer_8 = Q12(0.0f);
+                        D_800F4B40.timer = Q12(0.0f);
                     }
                     break;
             }
@@ -6716,7 +6716,7 @@ void func_800E1854(void) // 0x800E1854
             D_800F4B30.vy = Q8_TO_Q12(g_SysWork.npcCoords[1].workm.t[1]);
             D_800F4B30.vz = Q8_TO_Q12(g_SysWork.npcCoords[1].workm.t[2]);
 
-            if (D_800F4B40.field_4 == 0 && D_800F4B40.timer_8 > Q12(0.5f))
+            if (D_800F4B40.field_4 == 0 && D_800F4B40.timer > Q12(0.5f))
             {
                 D_800F4B40.field_4 = 1;
                 func_800E1FE0(&D_800ED274[8]);
@@ -6748,11 +6748,11 @@ void func_800E1854(void) // 0x800E1854
                     break;
 
                 case 1:
-                    if (D_800F4B40.timer_8 > Q12(3.5f))
+                    if (D_800F4B40.timer > Q12(3.5f))
                     {
                         D_800F4B40.field_4 = 2;
                         func_800E1FE0(&D_800ED274[12]);
-                        D_800F4B40.timer_8 = Q12(0.0f);
+                        D_800F4B40.timer = Q12(0.0f);
                     }
                     break;
             }
@@ -6767,36 +6767,36 @@ void func_800E1854(void) // 0x800E1854
                     break;
 
                 case 1:
-                    if (D_800F4B40.timer_8 > Q12(2.0f))
+                    if (D_800F4B40.timer > Q12(2.0f))
                     {
                         func_800E1FE0(&D_800ED274[14]);
-                        D_800F4B40.timer_8 = Q12(0.0f);
+                        D_800F4B40.timer = Q12(0.0f);
                         D_800F4B40.field_4++;
                     }
                     break;
 
                 case 2:
-                    if (D_800F4B40.timer_8 > Q12(3.0f))
+                    if (D_800F4B40.timer > Q12(3.0f))
                     {
-                        D_800F4B40.timer_8 = Q12(0.0f);
+                        D_800F4B40.timer = Q12(0.0f);
                         D_800F4B40.field_4++;
                     }
                     // @bug Missed `break` here?
 
                 case 3:
-                    if (D_800F4B40.timer_8 > Q12(0.1f))
+                    if (D_800F4B40.timer > Q12(0.1f))
                     {
                         func_800E1FE0(&D_800ED274[15]);
-                        D_800F4B40.timer_8 = Q12(0.0f);
+                        D_800F4B40.timer = Q12(0.0f);
                         D_800F4B40.field_4++;
                     }
                     break;
 
                 case 4:
-                    if (D_800F4B40.timer_8 > Q12(0.25f))
+                    if (D_800F4B40.timer > Q12(0.25f))
                     {
                         func_800E1FE0(&D_800ED274[14]);
-                        D_800F4B40.timer_8 = Q12(0.0f);
+                        D_800F4B40.timer = Q12(0.0f);
                         D_800F4B40.field_4--;
                     }
                     break;
@@ -6804,7 +6804,7 @@ void func_800E1854(void) // 0x800E1854
             break;
 
         case 14:
-            if (D_800F4B40.field_4 == 0 && D_800F4B40.timer_8 > Q12(4.0f))
+            if (D_800F4B40.field_4 == 0 && D_800F4B40.timer > Q12(4.0f))
             {
                 func_800E1FE0(&D_800ED274[16]);
                 D_800F4B40.field_4++;
@@ -6892,7 +6892,7 @@ void func_800E1854(void) // 0x800E1854
     func_800E24A0(&D_800F4B40.field_1C[0]);
     func_800E24A0(&D_800F4B40.field_1C[1]);
 
-    D_800F4B40.timer_8  += g_DeltaTime;
+    D_800F4B40.timer  += g_DeltaTime;
     D_800F4B40.timer_10 += g_DeltaTime;
 }
 

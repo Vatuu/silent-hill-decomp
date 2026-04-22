@@ -1218,7 +1218,7 @@ typedef struct
     u8            isLoaded; /** `bool` */
     // 2 bytes of padding.
     s32           queueIdx_4;
-    s_LmHeader*   lmHdr_8;
+    s_LmHeader*   lmHdr;
     s_FsImageDesc texture_C;
     s_Skeleton    skeleton_14;
 } s_CharaModel;
@@ -2131,7 +2131,7 @@ typedef struct
     s32             field_1DC;
     s32             field_1E0;
     s32             field_1E4;
-    s32             field_1E8;
+    q19_12          field_1E8;
 } s_func_80063A50;
 
 typedef struct

@@ -1472,9 +1472,9 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
         setRGB2(arrowPoly, timestep * 8, timestep * 8, timestep * 8);
 
         setXY3(arrowPoly,
-               ARROW_TRIS[i].vertex0_0.vx, ARROW_TRIS[i].vertex0_0.vy,
-               ARROW_TRIS[i].vertex1_4.vx, ARROW_TRIS[i].vertex1_4.vy,
-               ARROW_TRIS[i].vertex2_8.vx, ARROW_TRIS[i].vertex2_8.vy);
+               ARROW_TRIS[i].vertex0.vx, ARROW_TRIS[i].vertex0.vy,
+               ARROW_TRIS[i].vertex1.vx, ARROW_TRIS[i].vertex1.vy,
+               ARROW_TRIS[i].vertex2.vx, ARROW_TRIS[i].vertex2.vy);
 
         addPrim(&ot->org[7], arrowPoly);
         GsOUT_PACKET_P = (PACKET*)arrowPoly + sizeof(POLY_G3);

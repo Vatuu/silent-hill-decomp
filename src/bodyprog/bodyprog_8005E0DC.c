@@ -1824,7 +1824,7 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
     else
     {
         ptr->field_2DC = (ptr->field_208 * (u16)g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2) / Q12(5.0f);
-        temp_s2        = (ptr->field_2DC >> 1) * 0x10;
+        temp_s2        = (ptr->field_2DC >> 1) * 16; // To Q12.
 
         sp10 = *ptr;
 
@@ -1866,9 +1866,9 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
         for (j = 0; j < 5; j++)
         {
             Math_SetSVectorFastSum(&ptr->field_134[(i * 5) + j],
-                ((Q12_TO_Q8(g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx) - (u16)ptr->field_2DC) + ((ptr->field_2DC >> 1) * j),
-                Q12_TO_Q8(g_MapOverlayHeader.unkTable1_4C[idx].vy_8) - ptr->field_0.field_0.vy,
-                ((Q12_TO_Q8(g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4) - ptr->field_0.field_0.vz) - ptr->field_2DC) + ((ptr->field_2DC >> 1) * i));
+                                   ((Q12_TO_Q8(g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx) - (u16)ptr->field_2DC) + ((ptr->field_2DC >> 1) * j),
+                                   Q12_TO_Q8(g_MapOverlayHeader.unkTable1_4C[idx].vy_8) - ptr->field_0.field_0.vy,
+                                   ((Q12_TO_Q8(g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4) - ptr->field_0.field_0.vz) - ptr->field_2DC) + ((ptr->field_2DC >> 1) * i));
         }
     }
 
@@ -2144,8 +2144,8 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
             g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_B = Rng_GenerateInt(0, 2);
         }
 
-        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_C.s_0.field_0      = Rng_GenerateUInt(0, 4095);
-        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_C.s_0.field_2      = 0;
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_C.s_0.field_0  = Rng_GenerateUInt(0, 4095);
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_C.s_0.field_2  = 0;
         g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_10.s_0.field_0 = 0;
     }
 }
@@ -2162,7 +2162,7 @@ bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
             ptr->field_1DC         = 0xCC;
             ptr->field_1E0         = 0x333;
             ptr->field_1E4         = 0xA3;
-            ptr->field_1E8         = 0x100;
+            ptr->field_1E8         = Q12(1.0f / 16.0f);
             Math_SetSVectorFast(&ptr->field_164, 2, 0xFFF1, 0x47);
 
             Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);

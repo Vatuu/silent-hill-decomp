@@ -264,9 +264,9 @@ void strSetDefDecEnv(DECENV* dec, s32 x0, s32 y0, s32 x1, s32 y1) // 0x801E2F8C
     dec->rectid    = 0;
     dec->isdone    = 0;
 
-    setRECT(&dec->rect[0], x0, y0, SCREEN_WIDTH * PPW, SCREEN_HEIGHT);
-    setRECT(&dec->rect[1], x1, y1, SCREEN_WIDTH * PPW, SCREEN_HEIGHT);
-    setRECT(&dec->slice, x0, y0, 16 * PPW, SCREEN_HEIGHT);
+    setRECT(&dec->rect[0], x0, y0, PPW(SCREEN_WIDTH), SCREEN_HEIGHT);
+    setRECT(&dec->rect[1], x1, y1, PPW(SCREEN_WIDTH), SCREEN_HEIGHT);
+    setRECT(&dec->slice, x0, y0, PPW(16), SCREEN_HEIGHT);
 }
 
 void strInit(CdlLOC* loc, void (*callback)()) // 0x801E300C
@@ -401,7 +401,7 @@ u_long* strNext(DECENV* dec) // 0x801E331C
         m->height = sector->height;
     }
 
-    dec->rect[0].w = dec->rect[1].w = m->width * PPW;
+    dec->rect[0].w = dec->rect[1].w = PPW(m->width);
     dec->rect[0].h = dec->rect[1].h = m->height;
     dec->slice.h                    = m->height;
     return addr;

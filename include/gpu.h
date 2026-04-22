@@ -47,53 +47,60 @@ enum PrimRectFlags
     RECT_MODULATE = 1 << 0               /** Use primitive color to modulate texture. */
 };
 
+/** @brief 2D screen-space line. */
 typedef struct _Line2d
 {
-    DVECTOR vertex0_0;
-    DVECTOR vertex1_4;
+    /* 0x0 */ DVECTOR vertex0;
+    /* 0x4 */ DVECTOR vertex1;
 } s_Line2d;
 STATIC_ASSERT_SIZEOF(s_Line2d, 8);
 
+/** @brief 2D screen-space triangle. */
 typedef struct _Triangle2d
 {
-    DVECTOR vertex0_0;
-    DVECTOR vertex1_4;
-    DVECTOR vertex2_8;
+    /* 0x0 */ DVECTOR vertex0;
+    /* 0x4 */ DVECTOR vertex1;
+    /* 0x8 */ DVECTOR vertex2;
 } s_Triangle2d;
 STATIC_ASSERT_SIZEOF(s_Triangle2d, 12);
 
+/** @brief 2D screen-space quad. */
 typedef struct _Quad2d
 {
-    DVECTOR vertex0_0;
-    DVECTOR vertex1_4;
-    DVECTOR vertex2_8;
-    DVECTOR vertex3_C;
+    /* 0x0 */ DVECTOR vertex0;
+    /* 0x4 */ DVECTOR vertex1;
+    /* 0x8 */ DVECTOR vertex2;
+    /* 0xC */ DVECTOR vertex3;
 } s_Quad2d;
 STATIC_ASSERT_SIZEOF(s_Quad2d, 16);
 
+/** @brief Colored 2D screen-space line. */
 typedef struct _ColoredLine2d
 {
-    s_Line2d line_0;
-    u16      r_8;
-    u16      g_A;
-    u16      b_C;
-    u16      __pad_E; // Maybe 4th component of a RGB+code struct?
+    /* 0x0 */ s_Line2d line;
+    /* 0x8 */ u16      r;
+    /* 0xA */ u16      g;
+    /* 0xC */ u16      b;
+    /* 0xE */ u16      __pad_E; // Maybe 4th component of an RGB+code struct?
 } s_ColoredLine2d;
 STATIC_ASSERT_SIZEOF(s_ColoredLine2d, 16);
 
+/** @brief 2D screen-space line border. */
 typedef struct _LineBorder
 {
-    s_Line2d lines_0[RECT_VERT_COUNT];
+    /* 0x0 */ s_Line2d lines[RECT_VERT_COUNT];
 } s_LineBorder;
 STATIC_ASSERT_SIZEOF(s_LineBorder, 32);
 
+/** @brief 2D screen-space quad border. */
 typedef struct _QuadBorder
 {
-    s_Quad2d quads_0[RECT_VERT_COUNT];
+    /* 0x0 */ s_Quad2d quads[RECT_VERT_COUNT];
 } s_QuadBorder;
 STATIC_ASSERT_SIZEOF(s_QuadBorder, 64);
 
-typedef struct
+/** @brief Primitive color. */
+typedef struct _PrimColor
 {
     u8 r;
     u8 g;

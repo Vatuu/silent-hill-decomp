@@ -88,13 +88,13 @@ def readOverlayAddressesFromExe():
 
     try:
         # Read b_konami/map address from 0x80010000
-        addr_80010000 = default_space.getAddress(0x80010000)
-        map_addr = mem.getInt(addr_80010000) & 0xFFFFFFFF
+        addr0010000 = default_space.getAddress(0x80010000)
+        map_addr = mem.getInt(addr0010000) & 0xFFFFFFFF
         print("  b_konami/map address: 0x{:08X}".format(map_addr))
         
         # Read bodyprog address from 0x80010004
-        addr_80010004 = default_space.getAddress(0x80010004)
-        bodyprog_addr = mem.getInt(addr_80010004) & 0xFFFFFFFF
+        addr0010004 = default_space.getAddress(0x80010004)
+        bodyprog_addr = mem.getInt(addr0010004) & 0xFFFFFFFF
         print("  bodyprog address: 0x{:08X}".format(bodyprog_addr))
         
         OverlayAddrs["b_konami"] = map_addr

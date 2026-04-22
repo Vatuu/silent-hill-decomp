@@ -160,7 +160,7 @@ void CharaModel_Free(s_CharaModel* model) // 0x8003C1AC
     model->charaId  = Chara_None;
     model->isLoaded = false;
     model->queueIdx_4 = 0;
-    model->lmHdr_8    = MAP_CHARA_LM_BUFFER;
+    model->lmHdr    = MAP_CHARA_LM_BUFFER;
     model->texture_C  = image;
 }
 
@@ -837,7 +837,7 @@ void WorldGfx_HarryCharaLoad(void) // 0x8003D160
     g_WorldGfxWork.harryModel_164C.charaId = Chara_Harry;
     harryModel->isLoaded               = false;
     harryModel->queueIdx_4               = queueIdx;
-    harryModel->lmHdr_8                  = harryLmHdr;
+    harryModel->lmHdr                  = harryLmHdr;
     g_WorldGfxWork.harryModel_164C.texture_C = image;
 }
 
@@ -966,7 +966,7 @@ void WorldGfx_CharaModelTransparentSet(e_CharacterId charaId, bool enableTranspa
     s_CharaModel* model;
 
     model = g_WorldGfxWork.registeredCharaModels_18[charaId];
-    Lm_TransparentPrimSet(model->lmHdr_8, enableTransparency);
+    Lm_TransparentPrimSet(model->lmHdr, enableTransparency);
 
     rect.x = model->texture_C.clutX;
     rect.y = model->texture_C.clutY;
@@ -999,8 +999,8 @@ void WorldGfx_CharaModelMaterialSet(s32 charaId, s32 blendMode) // 0x8003D550
     s_CharaModel* model;
 
     model = g_WorldGfxWork.registeredCharaModels_18[charaId];
-    Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[charaId].textureFileIdx, &model->texture_C, blendMode);
-    Lm_MaterialFlagsApply(model->lmHdr_8);
+    Lm_MaterialFileIdxApply(model->lmHdr, CHARA_FILE_INFOS[charaId].textureFileIdx, &model->texture_C, blendMode);
+    Lm_MaterialFlagsApply(model->lmHdr);
 }
 
 void WorldGfx_CharaLmBufferAssign(s8 forceFree) // 0x8003D5B4
@@ -1028,7 +1028,7 @@ void WorldGfx_CharaLmBufferAssign(s8 forceFree) // 0x8003D5B4
         charaId = curModel->charaId;
         if (charaId != Chara_None)
         {
-            lmData = (s32)curModel->lmHdr_8 + Fs_GetFileSize(CHARA_FILE_INFOS[charaId].modelFileIdx);
+            lmData = (s32)curModel->lmHdr + Fs_GetFileSize(CHARA_FILE_INFOS[charaId].modelFileIdx);
             if (g_WorldGfxWork.charaLmBuffer_14 < lmData)
             {
                 g_WorldGfxWork.charaLmBuffer_14 = lmData;
@@ -1058,7 +1058,7 @@ void WorldGfx_CharaLoad(e_CharacterId charaId, s32 modeIdx, s_LmHeader* lmHdr, s
     }
     else if (g_WorldGfxWork.charaModels_CC[modeIdx].charaId != Chara_None)
     {
-        lmHdrBuf = g_WorldGfxWork.charaModels_CC[modeIdx].lmHdr_8;
+        lmHdrBuf = g_WorldGfxWork.charaModels_CC[modeIdx].lmHdr;
     }
     else
     {
@@ -1102,7 +1102,7 @@ s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmH
     {
         if (charaId == modelCharaId)
         {
-            if (lmHdr == model->lmHdr_8 && memcmp(tex, modelTex, sizeof(s_FsImageDesc)) == 0)
+            if (lmHdr == model->lmHdr && memcmp(tex, modelTex, sizeof(s_FsImageDesc)) == 0)
             {
                 return 0;
             }
@@ -1123,7 +1123,7 @@ s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmH
     model->charaId  = charaId;
     model->isLoaded = false;
     model->queueIdx_4 = queueIdx;
-    model->lmHdr_8    = lmHdr;
+    model->lmHdr    = lmHdr;
     model->texture_C  = *tex;
     return queueIdx;
 }
@@ -1159,14 +1159,14 @@ void WorldGfx_CharaModelProcessLoad(s_CharaModel* model) // 0x8003D9C8
     {
         model->isLoaded = true;
 
-        LmHeader_FixOffsets(model->lmHdr_8);
-        Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[model->charaId].textureFileIdx, &model->texture_C, CHARA_FILE_INFOS[model->charaId].materialBlendMode % 4);
+        LmHeader_FixOffsets(model->lmHdr);
+        Lm_MaterialFileIdxApply(model->lmHdr, CHARA_FILE_INFOS[model->charaId].textureFileIdx, &model->texture_C, CHARA_FILE_INFOS[model->charaId].materialBlendMode % 4);
 
         skel = &model->skeleton_14;
 
-        Lm_MaterialFlagsApply(model->lmHdr_8);
+        Lm_MaterialFlagsApply(model->lmHdr);
         Skeleton_Init(skel, model->skeleton_14.bones_C, 56);
-        func_8004506C(skel, model->lmHdr_8);
+        func_8004506C(skel, model->lmHdr);
         func_800452EC(skel);
         func_800453E8(skel, true);
     }

@@ -276,10 +276,10 @@ void SaveScreen_SlotStrAndBottomRectDraw(void) // 0x801E2EBC
         Gfx_StringDraw(SLOT_STRS[i], 50);
     }
 
-    line.vertex0_0.vx = -136;
-    line.vertex0_0.vy = 60;
-    line.vertex1_4.vx = 272;
-    line.vertex1_4.vy = 40;
+    line.vertex0.vx = -136;
+    line.vertex0.vy = 60;
+    line.vertex1.vx = 272;
+    line.vertex1.vy = 40;
     SaveScreen_RectSaveInfoDraw(&line);
 }
 
@@ -912,8 +912,8 @@ void SaveScreen_SlotBorder(void) // 0x801E4010
             setRGB0(borderLine, Q8_COLOR(0.0f), Q8_COLOR(1.0f), Q8_COLOR(0.0f));
 
             setXY2(borderLine,
-                   BORDER_LINES[j][i].vertex0_0.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_LINES[j][i].vertex0_0.vy,
-                   BORDER_LINES[j][i].vertex1_4.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_LINES[j][i].vertex1_4.vy);
+                   BORDER_LINES[j][i].vertex0.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_LINES[j][i].vertex0.vy,
+                   BORDER_LINES[j][i].vertex1.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_LINES[j][i].vertex1.vy);
 
             addPrim((u8*)ot->org + LAYER_28, borderLine);
             GsOUT_PACKET_P = (u8*)borderLine + sizeof(LINE_F2);
@@ -935,10 +935,10 @@ void SaveScreen_SlotBorder(void) // 0x801E4010
             setRGB3(glowPoly, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
 
             setXY4(glowPoly,
-                   BORDER_GLOW_QUADS[j][i].vertex0_0.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_GLOW_QUADS[j][i].vertex0_0.vy,
-                   BORDER_GLOW_QUADS[j][i].vertex1_4.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_GLOW_QUADS[j][i].vertex1_4.vy,
-                   BORDER_GLOW_QUADS[j][i].vertex2_8.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_GLOW_QUADS[j][i].vertex2_8.vy,
-                   BORDER_GLOW_QUADS[j][i].vertex3_C.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_GLOW_QUADS[j][i].vertex3_C.vy);
+                   BORDER_GLOW_QUADS[j][i].vertex0.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_GLOW_QUADS[j][i].vertex0.vy,
+                   BORDER_GLOW_QUADS[j][i].vertex1.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_GLOW_QUADS[j][i].vertex1.vy,
+                   BORDER_GLOW_QUADS[j][i].vertex2.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_GLOW_QUADS[j][i].vertex2.vy,
+                   BORDER_GLOW_QUADS[j][i].vertex3.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_GLOW_QUADS[j][i].vertex3.vy);
 
             addPrim((u8*)ot->org + LAYER_28, glowPoly);
             GsOUT_PACKET_P = (u8*)glowPoly + sizeof(POLY_G4);
@@ -1091,10 +1091,10 @@ void SaveScreen_NavigationDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, 
             thumbOffsetX    = (slotIdx * SLOT_COLUMN_OFFSET) - 139;
             thumbOffsetTopY = i - SCROLL_BAR_OFFSET_Y;
             setXY4(thumbPoly,
-                   (SCROLL_BAR_TRACK_QUADS[0].vertex0_0.vx + thumbOffsetX) + i,  (SCROLL_BAR_TRACK_QUADS[0].vertex0_0.vy + thumbOffsetY) + thumbOffsetTopY,
-                   (SCROLL_BAR_TRACK_QUADS[0].vertex0_0.vx + thumbOffsetX) + i, ((SCROLL_BAR_TRACK_QUADS[0].vertex0_0.vy + thumbOffsetY) + thumbOffsetBottomY) - (i + SCROLL_BAR_OFFSET_Y),
-                   (SCROLL_BAR_TRACK_QUADS[1].vertex0_0.vx + thumbOffsetX) - i,  (SCROLL_BAR_TRACK_QUADS[1].vertex0_0.vy + thumbOffsetY) + thumbOffsetTopY,
-                   (SCROLL_BAR_TRACK_QUADS[1].vertex0_0.vx + thumbOffsetX) - i, ((SCROLL_BAR_TRACK_QUADS[1].vertex0_0.vy + thumbOffsetY) + thumbOffsetBottomY) - (i + SCROLL_BAR_OFFSET_Y));
+                   (SCROLL_BAR_TRACK_QUADS[0].vertex0.vx + thumbOffsetX) + i,  (SCROLL_BAR_TRACK_QUADS[0].vertex0.vy + thumbOffsetY) + thumbOffsetTopY,
+                   (SCROLL_BAR_TRACK_QUADS[0].vertex0.vx + thumbOffsetX) + i, ((SCROLL_BAR_TRACK_QUADS[0].vertex0.vy + thumbOffsetY) + thumbOffsetBottomY) - (i + SCROLL_BAR_OFFSET_Y),
+                   (SCROLL_BAR_TRACK_QUADS[1].vertex0.vx + thumbOffsetX) - i,  (SCROLL_BAR_TRACK_QUADS[1].vertex0.vy + thumbOffsetY) + thumbOffsetTopY,
+                   (SCROLL_BAR_TRACK_QUADS[1].vertex0.vx + thumbOffsetX) - i, ((SCROLL_BAR_TRACK_QUADS[1].vertex0.vy + thumbOffsetY) + thumbOffsetBottomY) - (i + SCROLL_BAR_OFFSET_Y));
 
             // Ensure inner rectangle is on top.
             addPrim(((u8*)ot->org + LAYER_28) - (i * 4), thumbPoly);
@@ -1147,9 +1147,9 @@ void SaveScreen_NavigationDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, 
 
             arrowOffsetX = (slotIdx * SLOT_COLUMN_OFFSET) - 139;
             setXY3(arrowPoly,
-                   SCROLL_BAR_ARROW_TRIS[i][j].vertex0_0.vx + arrowOffsetX, SCROLL_BAR_ARROW_TRIS[i][j].vertex0_0.vy - SCROLL_BAR_OFFSET_Y,
-                   SCROLL_BAR_ARROW_TRIS[i][j].vertex1_4.vx + arrowOffsetX, SCROLL_BAR_ARROW_TRIS[i][j].vertex1_4.vy - SCROLL_BAR_OFFSET_Y,
-                   SCROLL_BAR_ARROW_TRIS[i][j].vertex2_8.vx + arrowOffsetX, SCROLL_BAR_ARROW_TRIS[i][j].vertex2_8.vy - SCROLL_BAR_OFFSET_Y);
+                   SCROLL_BAR_ARROW_TRIS[i][j].vertex0.vx + arrowOffsetX, SCROLL_BAR_ARROW_TRIS[i][j].vertex0.vy - SCROLL_BAR_OFFSET_Y,
+                   SCROLL_BAR_ARROW_TRIS[i][j].vertex1.vx + arrowOffsetX, SCROLL_BAR_ARROW_TRIS[i][j].vertex1.vy - SCROLL_BAR_OFFSET_Y,
+                   SCROLL_BAR_ARROW_TRIS[i][j].vertex2.vx + arrowOffsetX, SCROLL_BAR_ARROW_TRIS[i][j].vertex2.vy - SCROLL_BAR_OFFSET_Y);
 
             addPrim((u8*)ot->org + LAYER_28, arrowPoly);
             GsOUT_PACKET_P = (u8*)arrowPoly + sizeof(POLY_G3);
@@ -1169,10 +1169,10 @@ void SaveScreen_NavigationDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, 
 
         trackOffsetX = (slotIdx * SLOT_COLUMN_OFFSET) - 139;
         setXY4(trackPoly,
-               SCROLL_BAR_TRACK_QUADS[i].vertex0_0.vx + trackOffsetX, SCROLL_BAR_TRACK_QUADS[i].vertex0_0.vy - SCROLL_BAR_OFFSET_Y,
-               SCROLL_BAR_TRACK_QUADS[i].vertex1_4.vx + trackOffsetX, SCROLL_BAR_TRACK_QUADS[i].vertex1_4.vy - SCROLL_BAR_OFFSET_Y,
-               SCROLL_BAR_TRACK_QUADS[i].vertex2_8.vx + trackOffsetX, SCROLL_BAR_TRACK_QUADS[i].vertex2_8.vy - SCROLL_BAR_OFFSET_Y,
-               SCROLL_BAR_TRACK_QUADS[i].vertex3_C.vx + trackOffsetX, SCROLL_BAR_TRACK_QUADS[i].vertex3_C.vy - SCROLL_BAR_OFFSET_Y);
+               SCROLL_BAR_TRACK_QUADS[i].vertex0.vx + trackOffsetX, SCROLL_BAR_TRACK_QUADS[i].vertex0.vy - SCROLL_BAR_OFFSET_Y,
+               SCROLL_BAR_TRACK_QUADS[i].vertex1.vx + trackOffsetX, SCROLL_BAR_TRACK_QUADS[i].vertex1.vy - SCROLL_BAR_OFFSET_Y,
+               SCROLL_BAR_TRACK_QUADS[i].vertex2.vx + trackOffsetX, SCROLL_BAR_TRACK_QUADS[i].vertex2.vy - SCROLL_BAR_OFFSET_Y,
+               SCROLL_BAR_TRACK_QUADS[i].vertex3.vx + trackOffsetX, SCROLL_BAR_TRACK_QUADS[i].vertex3.vy - SCROLL_BAR_OFFSET_Y);
 
         addPrim((u8*)ot->org + LAYER_32, trackPoly);
         GsOUT_PACKET_P = (u8*)trackPoly + sizeof(POLY_G4);
@@ -1261,15 +1261,15 @@ void SaveScreen_SaveBorderDraw(s_SaveScreenElement* saveEntry, s_SaveScreenEleme
         if (firstLineIdx == 0)
         {
             setXY2(borderLine,
-                   entryBorderLines[i].vertex0_0.vx + borderLineOffsetX, entryBorderLines[i].vertex0_0.vy + borderLineOffsetY,
-                   entryBorderLines[i].vertex1_4.vx + borderLineOffsetX, entryBorderLines[i].vertex1_4.vy + borderLineOffsetY);
+                   entryBorderLines[i].vertex0.vx + borderLineOffsetX, entryBorderLines[i].vertex0.vy + borderLineOffsetY,
+                   entryBorderLines[i].vertex1.vx + borderLineOffsetX, entryBorderLines[i].vertex1.vy + borderLineOffsetY);
         }
         // Entry at boundary between files.
         else
         {
             setXY2(borderLine,
-                   entryBorderLines[i].vertex0_0.vx + borderLineOffsetX, (entryBorderLines[i].vertex0_0.vy + borderLineOffsetY) - ((i + (s32)((u32)i >> 31)) >> 1),
-                   entryBorderLines[i].vertex1_4.vx + borderLineOffsetX,  entryBorderLines[i].vertex1_4.vy + borderLineOffsetY);
+                   entryBorderLines[i].vertex0.vx + borderLineOffsetX, (entryBorderLines[i].vertex0.vy + borderLineOffsetY) - ((i + (s32)((u32)i >> 31)) >> 1),
+                   entryBorderLines[i].vertex1.vx + borderLineOffsetX,  entryBorderLines[i].vertex1.vy + borderLineOffsetY);
         }
 
         addPrim((u8*)ot->org + LAYER_24, borderLine);
@@ -1381,11 +1381,11 @@ void SaveScreen_SlotStatusMsgStepDraw(s_LineBorder* borderLines, s_QuadBorder* b
     {
         borderLine = (LINE_F2*)GsOUT_PACKET_P;
         setLineF2(borderLine);
-        setRGB0(borderLine, coloredLine->r_8, coloredLine->g_A, coloredLine->b_C);
+        setRGB0(borderLine, coloredLine->r, coloredLine->g, coloredLine->b);
 
         setXY2(borderLine,
-               borderLines->lines_0[i].vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), borderLines->lines_0[i].vertex0_0.vy,
-               borderLines->lines_0[i].vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), borderLines->lines_0[i].vertex1_4.vy);
+               borderLines->lines[i].vertex0.vx + (slotIdx * SLOT_COLUMN_OFFSET), borderLines->lines[i].vertex0.vy,
+               borderLines->lines[i].vertex1.vx + (slotIdx * SLOT_COLUMN_OFFSET), borderLines->lines[i].vertex1.vy);
 
         addPrim((u8*)ot->org + LAYER_28, borderLine);
         GsOUT_PACKET_P = (u8*)borderLine + sizeof(LINE_F2);
@@ -1398,17 +1398,17 @@ void SaveScreen_SlotStatusMsgStepDraw(s_LineBorder* borderLines, s_QuadBorder* b
         setPolyG4(glowPoly);
         setSemiTrans(glowPoly, true);
 
-        setRGB0(glowPoly, coloredLine->r_8 / 2, coloredLine->g_A / 2, coloredLine->b_C / 2);
+        setRGB0(glowPoly, coloredLine->r / 2, coloredLine->g / 2, coloredLine->b / 2);
         setRGB1(glowPoly, 0, 0, 0);
-        setRGB2(glowPoly, coloredLine->r_8 / 2, coloredLine->g_A / 2, coloredLine->b_C / 2);
+        setRGB2(glowPoly, coloredLine->r / 2, coloredLine->g / 2, coloredLine->b / 2);
         setRGB3(glowPoly, 0, 0, 0);
 
-        glowLine = (s_Line2d*)&borderGlowQuads->quads_0[i].vertex2_8;
+        glowLine = (s_Line2d*)&borderGlowQuads->quads[i].vertex2;
         setXY4(glowPoly,
-               borderGlowQuads->quads_0[i].vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), borderGlowQuads->quads_0[i].vertex0_0.vy,
-               borderGlowQuads->quads_0[i].vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), borderGlowQuads->quads_0[i].vertex1_4.vy,
-               borderGlowQuads->quads_0[i].vertex2_8.vx + (slotIdx * SLOT_COLUMN_OFFSET), glowLine->vertex0_0.vy,
-               glowLine->vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), glowLine->vertex1_4.vy);
+               borderGlowQuads->quads[i].vertex0.vx + (slotIdx * SLOT_COLUMN_OFFSET), borderGlowQuads->quads[i].vertex0.vy,
+               borderGlowQuads->quads[i].vertex1.vx + (slotIdx * SLOT_COLUMN_OFFSET), borderGlowQuads->quads[i].vertex1.vy,
+               borderGlowQuads->quads[i].vertex2.vx + (slotIdx * SLOT_COLUMN_OFFSET), glowLine->vertex0.vy,
+               glowLine->vertex1.vx + (slotIdx * SLOT_COLUMN_OFFSET), glowLine->vertex1.vy);
 
         addPrim((u8*)ot->org + LAYER_32, glowPoly);
         GsOUT_PACKET_P = (u8*)glowPoly + sizeof(POLY_G4);
@@ -1424,10 +1424,10 @@ void SaveScreen_SlotStatusMsgStepDraw(s_LineBorder* borderLines, s_QuadBorder* b
     setRGB0(unkPoly, Q8_COLOR(0.1875f), Q8_COLOR(0.1875f), Q8_COLOR(0.1875f));
 
     setXY4(unkPoly,
-           coloredLine->line_0.vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET),                                    coloredLine->line_0.vertex0_0.vy,
-           coloredLine->line_0.vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET),                                    coloredLine->line_0.vertex0_0.vy + coloredLine->line_0.vertex1_4.vy,
-           coloredLine->line_0.vertex0_0.vx + coloredLine->line_0.vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), coloredLine->line_0.vertex0_0.vy,
-           coloredLine->line_0.vertex0_0.vx + coloredLine->line_0.vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), coloredLine->line_0.vertex0_0.vy + coloredLine->line_0.vertex1_4.vy);
+           coloredLine->line.vertex0.vx + (slotIdx * SLOT_COLUMN_OFFSET),                                    coloredLine->line.vertex0.vy,
+           coloredLine->line.vertex0.vx + (slotIdx * SLOT_COLUMN_OFFSET),                                    coloredLine->line.vertex0.vy + coloredLine->line.vertex1.vy,
+           coloredLine->line.vertex0.vx + coloredLine->line.vertex1.vx + (slotIdx * SLOT_COLUMN_OFFSET), coloredLine->line.vertex0.vy,
+           coloredLine->line.vertex0.vx + coloredLine->line.vertex1.vx + (slotIdx * SLOT_COLUMN_OFFSET), coloredLine->line.vertex0.vy + coloredLine->line.vertex1.vy);
 
     addPrim((u8*)ot->org + LAYER_32, unkPoly);
     GsOUT_PACKET_P = (u8*)unkPoly + sizeof(POLY_F4);
@@ -1446,24 +1446,24 @@ void SaveScreen_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
 
     // Adjusted lines?
     DVECTOR adjLines[] = {
-        { line->vertex0_0.vx,                            line->vertex0_0.vy },
-        { (line->vertex0_0.vx + line->vertex1_4.vx) - 8, line->vertex0_0.vy },
-        { line->vertex0_0.vx + line->vertex1_4.vx,       line->vertex0_0.vy + 8},
-        { line->vertex0_0.vx + line->vertex1_4.vx,       line->vertex0_0.vy + line->vertex1_4.vy },
-        { line->vertex0_0.vx + 8,                        line->vertex0_0.vy + line->vertex1_4.vy },
-        { line->vertex0_0.vx,                            (line->vertex0_0.vy + line->vertex1_4.vy) - 8 }
+        { line->vertex0.vx,                            line->vertex0.vy },
+        { (line->vertex0.vx + line->vertex1.vx) - 8, line->vertex0.vy },
+        { line->vertex0.vx + line->vertex1.vx,       line->vertex0.vy + 8},
+        { line->vertex0.vx + line->vertex1.vx,       line->vertex0.vy + line->vertex1.vy },
+        { line->vertex0.vx + 8,                        line->vertex0.vy + line->vertex1.vy },
+        { line->vertex0.vx,                            (line->vertex0.vy + line->vertex1.vy) - 8 }
     };
 
     s_Triangle2d tris[] = {
         {
-            { line->vertex0_0.vx + line->vertex1_4.vx,       line->vertex0_0.vy },
-            { (line->vertex0_0.vx + line->vertex1_4.vx) - 8, line->vertex0_0.vy },
-            { line->vertex0_0.vx + line->vertex1_4.vx,       line->vertex0_0.vy + 8 },
+            { line->vertex0.vx + line->vertex1.vx,       line->vertex0.vy },
+            { (line->vertex0.vx + line->vertex1.vx) - 8, line->vertex0.vy },
+            { line->vertex0.vx + line->vertex1.vx,       line->vertex0.vy + 8 },
         },
         {
-            { line->vertex0_0.vx,     line->vertex0_0.vy + line->vertex1_4.vy },
-            { line->vertex0_0.vx + 8, line->vertex0_0.vy + line->vertex1_4.vy },
-            { line->vertex0_0.vx,     (line->vertex0_0.vy + line->vertex1_4.vy) - 8 }
+            { line->vertex0.vx,     line->vertex0.vy + line->vertex1.vy },
+            { line->vertex0.vx + 8, line->vertex0.vy + line->vertex1.vy },
+            { line->vertex0.vx,     (line->vertex0.vy + line->vertex1.vy) - 8 }
         }
     };
 
@@ -1480,9 +1480,9 @@ void SaveScreen_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
         setRGB0(poly_f3, color, Q8_COLOR(0.1875f), Q8_COLOR(0.1875f));
 
         setXY3(poly_f3,
-               tris[i].vertex0_0.vx, tris[i].vertex0_0.vy,
-               tris[i].vertex1_4.vx, tris[i].vertex1_4.vy,
-               tris[i].vertex2_8.vx, tris[i].vertex2_8.vy);
+               tris[i].vertex0.vx, tris[i].vertex0.vy,
+               tris[i].vertex1.vx, tris[i].vertex1.vy,
+               tris[i].vertex2.vx, tris[i].vertex2.vy);
 
         addPrim((u8*)ot->org + LAYER_32, poly_f3);
         GsOUT_PACKET_P  = (u8*)poly_f3;
@@ -1498,10 +1498,10 @@ void SaveScreen_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
     setRGB0(poly_f4, Q8_COLOR(0.1875f), Q8_COLOR(0.1875f), Q8_COLOR(0.1875f));
 
     setXY4(poly_f4,
-           line->vertex0_0.vx,                      line->vertex0_0.vy,
-           line->vertex0_0.vx,                      line->vertex0_0.vy + line->vertex1_4.vy,
-           line->vertex0_0.vx + line->vertex1_4.vx, line->vertex0_0.vy,
-           line->vertex0_0.vx + line->vertex1_4.vx, line->vertex0_0.vy + line->vertex1_4.vy);
+           line->vertex0.vx,                      line->vertex0.vy,
+           line->vertex0.vx,                      line->vertex0.vy + line->vertex1.vy,
+           line->vertex0.vx + line->vertex1.vx, line->vertex0.vy,
+           line->vertex0.vx + line->vertex1.vx, line->vertex0.vy + line->vertex1.vy);
 
     addPrim((u8*)ot->org + LAYER_36, poly_f4);
     GsOUT_PACKET_P = (u8*)poly_f4 + sizeof(POLY_F4);

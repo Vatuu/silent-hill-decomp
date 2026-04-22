@@ -116,7 +116,7 @@ typedef struct _800F3DAC
 {
     s32    field_0;
     u8     unk_4[4];
-    q19_12 timer_8;
+    q19_12 timer;
     q19_12 timer_C;
     s32    field_10;
     q19_12 field_14; // Values seem like `Q12_ANGLE`, but haven't confirmed how it's used yet.
@@ -314,7 +314,7 @@ typedef struct
 {
     s32            field_0;
     s32            field_4;
-    q19_12         timer_8;
+    q19_12         timer;
     s32            field_C;
     q19_12         timer_10;
     u8             unk_14[4];

@@ -1,10 +1,6 @@
 #ifndef _SCREENS_SAVELOAD_H
 #define _SCREENS_SAVELOAD_H
 
-/** @brief This header contains variables, structs, or
- * function specifically intended for the save and load screen.
- */
-
 // ============
 // ENUMERATORS
 // ============
