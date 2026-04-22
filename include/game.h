@@ -1272,7 +1272,7 @@ STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
 
 typedef struct
 {
-    VECTOR3 position_0;
+    VECTOR3 position;
     s16     field_C;
     s16     field_E;
     s16     field_10;
@@ -1282,7 +1282,7 @@ typedef struct
 
 typedef struct _CharaDamage
 {
-    VECTOR3 position_0;
+    VECTOR3 position;
     q19_12  amount_C;
 } s_CharaDamage;
 
@@ -2371,9 +2371,9 @@ static inline void Character_AnimStateReset(s_SubCharacter* chara)
  */
 #define Chara_DamageClear(chara)                  \
     (chara)->damage.amount_C      = Q12(0.0f); \
-    (chara)->damage.position_0.vz = Q12(0.0f); \
-    (chara)->damage.position_0.vy = Q12(0.0f); \
-    (chara)->damage.position_0.vx = Q12(0.0f)
+    (chara)->damage.position.vz = Q12(0.0f); \
+    (chara)->damage.position.vy = Q12(0.0f); \
+    (chara)->damage.position.vx = Q12(0.0f)
 
 /** @brief Sets a character's received attack type.
  *

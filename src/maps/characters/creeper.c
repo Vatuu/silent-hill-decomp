@@ -147,15 +147,15 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
         creeperProps.chirpTimer = Q12(0.0f);
 
         // TODO: Weird position scaling?
-        creeper->damage.position_0.vx += (creeper->moveSpeed * Math_Sin(creeper->headingAngle)) >> 15;
-        creeper->damage.position_0.vz += (creeper->moveSpeed * Math_Cos(creeper->headingAngle)) >> 15;
+        creeper->damage.position.vx += (creeper->moveSpeed * Math_Sin(creeper->headingAngle)) >> 15;
+        creeper->damage.position.vz += (creeper->moveSpeed * Math_Cos(creeper->headingAngle)) >> 15;
 
-        creeper->moveSpeed = (SquareRoot0(SQUARE(Q12_TO_Q6(creeper->damage.position_0.vx)) +
-                                          SQUARE(Q12_TO_Q6(creeper->damage.position_0.vz))) << 18) /
+        creeper->moveSpeed = (SquareRoot0(SQUARE(Q12_TO_Q6(creeper->damage.position.vx)) +
+                                          SQUARE(Q12_TO_Q6(creeper->damage.position.vz))) << 18) /
                               Q12(0.8f);
 
-        creeper->fallSpeed    = FP_TO(creeper->damage.position_0.vy, Q12_SHIFT) / Q12(0.8f);
-        creeper->headingAngle = Rng_AddGeneratedUInt(ratan2(creeper->damage.position_0.vx, creeper->damage.position_0.vz), -128, 127);
+        creeper->fallSpeed    = FP_TO(creeper->damage.position.vy, Q12_SHIFT) / Q12(0.8f);
+        creeper->headingAngle = Rng_AddGeneratedUInt(ratan2(creeper->damage.position.vx, creeper->damage.position.vz), -128, 127);
 
         creeperProps.flags |= CreeperFlag_1;
 

@@ -200,21 +200,21 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
             stalkerProps.health_110 -= stalker->damage.amount_C >> 2;
             stalkerProps.flags_E8   |= StalkerFlag_0 | StalkerFlag_10;
 
-            stalker->damage.position_0.vx += Q12_MULT(stalker->moveSpeed, Math_Sin(stalker->headingAngle)) >> 3;
-            stalker->damage.position_0.vz += Q12_MULT(stalker->moveSpeed, Math_Cos(stalker->headingAngle)) >> 3;
+            stalker->damage.position.vx += Q12_MULT(stalker->moveSpeed, Math_Sin(stalker->headingAngle)) >> 3;
+            stalker->damage.position.vz += Q12_MULT(stalker->moveSpeed, Math_Cos(stalker->headingAngle)) >> 3;
 
             if (stalkerProps.flags_E8 & StalkerFlag_6)
             {
-                mag          = Math_Vector2MagCalc(stalker->damage.position_0.vx, stalker->damage.position_0.vz);
+                mag          = Math_Vector2MagCalc(stalker->damage.position.vx, stalker->damage.position.vz);
                 stalker->moveSpeed = (mag << 12) / 0xC000;
             }
             else
             {
-                mag          = Math_Vector2MagCalc(stalker->damage.position_0.vx, stalker->damage.position_0.vz);
+                mag          = Math_Vector2MagCalc(stalker->damage.position.vx, stalker->damage.position.vz);
                 stalker->moveSpeed = (mag << 12) / Q12(1.5f);
             }
 
-            stalker->headingAngle              = ratan2(stalker->damage.position_0.vx, stalker->damage.position_0.vz);
+            stalker->headingAngle              = ratan2(stalker->damage.position.vx, stalker->damage.position.vz);
             stalkerProps.flags_E8                |= StalkerFlag_13;
             stalkerProps.timer_10C += stalker->damage.amount_C;
 

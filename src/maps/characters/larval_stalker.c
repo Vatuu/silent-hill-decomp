@@ -880,11 +880,11 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
     larvalStalkerProps.flags_E8 |= LarvalStalkerFlag_7;
 
     larvalStalker->health                = MAX(larvalStalker->health - larvalStalker->damage.amount_C, Q12(0.0f));
-    larvalStalker->damage.position_0.vx += FP_FROM(larvalStalker->moveSpeed * Math_Sin(larvalStalker->headingAngle), Q12_SHIFT);
-    larvalStalker->damage.position_0.vz += FP_FROM(larvalStalker->moveSpeed * Math_Cos(larvalStalker->headingAngle), Q12_SHIFT);
-    larvalStalker->moveSpeed             = FP_TO(Math_Vector2MagCalc(larvalStalker->damage.position_0.vx, larvalStalker->damage.position_0.vz), Q12_SHIFT) / Q12(2.4f);
-    larvalStalker->fallSpeed             = FP_TO(larvalStalker->damage.position_0.vy, Q12_SHIFT) / Q12(2.4f);
-    larvalStalker->headingAngle          = ratan2(larvalStalker->damage.position_0.vx, larvalStalker->damage.position_0.vz);
+    larvalStalker->damage.position.vx += FP_FROM(larvalStalker->moveSpeed * Math_Sin(larvalStalker->headingAngle), Q12_SHIFT);
+    larvalStalker->damage.position.vz += FP_FROM(larvalStalker->moveSpeed * Math_Cos(larvalStalker->headingAngle), Q12_SHIFT);
+    larvalStalker->moveSpeed             = FP_TO(Math_Vector2MagCalc(larvalStalker->damage.position.vx, larvalStalker->damage.position.vz), Q12_SHIFT) / Q12(2.4f);
+    larvalStalker->fallSpeed             = FP_TO(larvalStalker->damage.position.vy, Q12_SHIFT) / Q12(2.4f);
+    larvalStalker->headingAngle          = ratan2(larvalStalker->damage.position.vx, larvalStalker->damage.position.vz);
 
     larvalStalkerProps.flags_E8       |= LarvalStalkerFlag_1;
     larvalStalkerProps.targetPositionX = g_SysWork.playerWork.player.position.vx;

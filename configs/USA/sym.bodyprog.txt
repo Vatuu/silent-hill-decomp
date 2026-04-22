@@ -19,7 +19,7 @@ g_GameWorkPtr                                = 0x80024D54; // type:u32
 //---------------------------------------------------------------------
 //--- PA: 0x0001FC   VA: 0x80024D5C   subsegment: .rodata, sys/map_info
 //---------------------------------------------------------------------
-MAP_GFX_INFOS                                = 0x8002500C; // type:MapType size:0xF0
+MAP_INFOS                                    = 0x8002500C; // type:MapType size:0xF0
 
 //---------------------------------------------------------------------------
 //--- PA: 0x0005BC   VA: 0x8002511C   subsegment: .rodata, sys/settings_reset

@@ -1083,7 +1083,7 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             if (func_8008A0E4(chara->field_44.field_0, WEAPON_ATTACK(EquippedWeaponId_HandgunBullets, AttackInputType_Tap), chara, &D_800ED570, &g_SysWork.playerWork.player, chara->rotation.vy, 0x400) != -1)
             {
-                g_SysWork.playerWork.player.damage.position_0.vz = Q12(1.0f);
+                g_SysWork.playerWork.player.damage.position.vz = Q12(1.0f);
 
                 if (sharedData_800D16E4_2_s01 == 0)
                 {
@@ -1564,7 +1564,7 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                               chara->rotation.vy,
                               Q12_ANGLE(90.0f)) != NO_VALUE)
             {
-                g_SysWork.playerWork.player.damage.position_0.vz = Q12(1.0f);
+                g_SysWork.playerWork.player.damage.position.vz = Q12(1.0f);
 
                 if (sharedData_800D16E4_2_s01 == 0)
                 {

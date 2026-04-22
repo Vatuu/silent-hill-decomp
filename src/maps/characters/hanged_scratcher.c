@@ -148,13 +148,13 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
     if (scratcher->damage.amount_C > Q12(0.0f) && scratcher->health > Q12(0.0f))
     {
         scratcher->health                = MAX(Q12(0.0f), scratcher->health - scratcher->damage.amount_C);
-        scratcher->damage.position_0.vx += (scratcher->moveSpeed * Math_Sin(scratcher->headingAngle)) >> 14; // TODO: Weird shift?
-        scratcher->damage.position_0.vz += (scratcher->moveSpeed * Math_Cos(scratcher->headingAngle)) >> 14;
+        scratcher->damage.position.vx += (scratcher->moveSpeed * Math_Sin(scratcher->headingAngle)) >> 14; // TODO: Weird shift?
+        scratcher->damage.position.vz += (scratcher->moveSpeed * Math_Cos(scratcher->headingAngle)) >> 14;
 
         prevMoveSpeed              = scratcher->moveSpeed;
-        scratcher->moveSpeed    = FP_TO(Math_Vector2MagCalc(scratcher->damage.position_0.vx, scratcher->damage.position_0.vz), Q12_SHIFT) / Q12(4.0f);
+        scratcher->moveSpeed    = FP_TO(Math_Vector2MagCalc(scratcher->damage.position.vx, scratcher->damage.position.vz), Q12_SHIFT) / Q12(4.0f);
         prevHeadingAngle           = scratcher->headingAngle;
-        scratcher->headingAngle = ratan2(scratcher->damage.position_0.vx, scratcher->damage.position_0.vz);
+        scratcher->headingAngle = ratan2(scratcher->damage.position.vx, scratcher->damage.position.vz);
 
         switch (scratcher->model.controlState)
         {
@@ -221,7 +221,7 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
                 }
 
             case HangedScratcherControl_8:
-                scratcher->fallSpeed += FP_TO(scratcher->damage.position_0.vy, Q12_SHIFT) / Q12(4.0f);
+                scratcher->fallSpeed += FP_TO(scratcher->damage.position.vy, Q12_SHIFT) / Q12(4.0f);
                 break;
 
             case HangedScratcherControl_12:

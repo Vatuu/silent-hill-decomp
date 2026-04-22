@@ -166,13 +166,13 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
     groanerProps.flags_E8.val16[0]     |= GroanerFlag_7;
 
     groaner->health = MAX(groaner->health - groaner->damage.amount_C, Q12(0.0f));
-    unkDist         = Math_Vector2MagCalc(groaner->damage.position_0.vx, groaner->damage.position_0.vz);
+    unkDist         = Math_Vector2MagCalc(groaner->damage.position.vx, groaner->damage.position.vz);
 
     // Set new heading angle.
-    if (groaner->damage.position_0.vx != Q12(0.0f) ||
-        groaner->damage.position_0.vz != Q12(0.0f))
+    if (groaner->damage.position.vx != Q12(0.0f) ||
+        groaner->damage.position.vz != Q12(0.0f))
     {
-        newHeadingAngle = ratan2(groaner->damage.position_0.vx, groaner->damage.position_0.vz);
+        newHeadingAngle = ratan2(groaner->damage.position.vx, groaner->damage.position.vz);
     }
     else
     {
@@ -184,7 +184,7 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
     // TODO: Unsure if `field_FE` is an angle.
     groanerProps.field_FE = CLAMP_LOW(unkDist >> 2, Q12_ANGLE(90.0f));
 
-    temp_v0 = FP_TO(groaner->damage.position_0.vy, Q12_SHIFT);
+    temp_v0 = FP_TO(groaner->damage.position.vy, Q12_SHIFT);
 
     groaner->headingAngle = newHeadingAngle;
 

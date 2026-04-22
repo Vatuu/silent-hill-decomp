@@ -1134,8 +1134,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
             if (!(player->attackReceived >= 68 && player->attackReceived < 70))
             {
-                g_Player_HeadingAngle                                                  = ratan2(player->damage.position_0.vx, player->damage.position_0.vz) - player->rotation.vy;
-                playerProps.moveDistance_126 = SQUARE(player->damage.position_0.vx) + SQUARE(player->damage.position_0.vz) + SQUARE(player->damage.position_0.vy);
+                g_Player_HeadingAngle                                                  = ratan2(player->damage.position.vx, player->damage.position.vz) - player->rotation.vy;
+                playerProps.moveDistance_126 = SQUARE(player->damage.position.vx) + SQUARE(player->damage.position.vz) + SQUARE(player->damage.position.vy);
             }
 
             if (extra->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
@@ -2218,8 +2218,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
             if (!(player->attackReceived >= 68 && player->attackReceived < 70)) // TODO: Demagic.
             {
-                g_Player_HeadingAngle                                                   = ratan2(player->damage.position_0.vx, player->damage.position_0.vz) - player->rotation.vy;
-                playerProps.moveDistance_126 = SQUARE(player->damage.position_0.vx) + SQUARE(player->damage.position_0.vz) + SQUARE(player->damage.position_0.vy);
+                g_Player_HeadingAngle                                                   = ratan2(player->damage.position.vx, player->damage.position.vz) - player->rotation.vy;
+                playerProps.moveDistance_126 = SQUARE(player->damage.position.vx) + SQUARE(player->damage.position.vz) + SQUARE(player->damage.position.vy);
             }
 
             if (extra->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
@@ -6804,9 +6804,9 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
         case PlayerState_Unk35:
         case PlayerState_EnemyGrabPinnedFrontStart:
         case PlayerState_EnemyGrabPinnedBackStart:
-            player->damage.position_0.vz = Q12(0.0f);
-            player->damage.position_0.vy = Q12(0.0f);
-            player->damage.position_0.vx = Q12(0.0f);
+            player->damage.position.vz = Q12(0.0f);
+            player->damage.position.vy = Q12(0.0f);
+            player->damage.position.vx = Q12(0.0f);
 
             if (player->attackReceived == 47)
             {
@@ -6871,7 +6871,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             }
             else if (player->attackReceived == 68)
             {
-                enemyRotY = player->damage.position_0.vy;
+                enemyRotY = player->damage.position.vy;
             }
 
             enemyRotY = Q12_ANGLE_NORM_U((enemyRotY - player->rotation.vy) + Q12_ANGLE(360.0f));
@@ -6979,7 +6979,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                     if (player->attackReceived != 69)
                     {
                         playerProps.moveDistance_126 = Q12(4.0f);
-                        Math_ShortestAngleGet(player->rotation.vy, (s16)player->damage.position_0.vy, &headingAngle);
+                        Math_ShortestAngleGet(player->rotation.vy, (s16)player->damage.position.vy, &headingAngle);
                         g_Player_HeadingAngle = headingAngle;
                     }
 
@@ -8945,16 +8945,16 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
 
     coll = &g_CollisionPointCache.collision_C;
 
-    collX = g_CollisionPointCache.position_0.vx;
-    collZ = g_CollisionPointCache.position_0.vz;
+    collX = g_CollisionPointCache.position.vx;
+    collZ = g_CollisionPointCache.position.vz;
     if (g_CollisionPointCache.field_18 != NO_VALUE && collX == posX && collZ == posZ)
     {
         return;
     }
 
     Collision_Get(coll, posX, posZ);
-    g_CollisionPointCache.position_0.vx = posX;
-    g_CollisionPointCache.position_0.vz = posZ;
+    g_CollisionPointCache.position.vx = posX;
+    g_CollisionPointCache.position.vz = posZ;
 
     count = coll->field_8;
     switch (coll->field_8)
@@ -9008,14 +9008,14 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
             break;
     }
 
-    g_CollisionPointCache.position_0.vy = groundHeight;
+    g_CollisionPointCache.position.vy = groundHeight;
     g_CollisionPointCache.field_18      = count;
 }
 
 q19_12 Collision_GroundHeightGet(q19_12 posX, q19_12 posZ) // 0x80080884
 {
     Collision_Fill(posX, posZ);
-    return g_CollisionPointCache.position_0.vy;
+    return g_CollisionPointCache.position.vy;
 }
 
 s32 func_800808AC(q19_12 posX, q19_12 posZ) // 0x800808AC

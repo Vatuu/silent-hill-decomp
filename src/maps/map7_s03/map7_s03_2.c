@@ -5726,7 +5726,7 @@ void func_800DFA48(VECTOR3* arg0, VECTOR3* arg1) // 0x800DFA48
 
     angle                                                    = ratan2(arg0->vx - arg1->vx, arg0->vz - arg1->vz);
     g_SysWork.playerWork.player.damage.amount_C      = 1;
-    g_SysWork.playerWork.player.damage.position_0.vy = angle;
+    g_SysWork.playerWork.player.damage.position.vy = angle;
     ptr->field_588                                           = angle;
 
     D_800F3DB8 = 1;

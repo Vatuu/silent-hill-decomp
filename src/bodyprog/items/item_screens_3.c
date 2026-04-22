@@ -1173,7 +1173,7 @@ s_800AFBF4 D_800AFBF4[11] = {
 
 /** @brief Cached collision point data. */
 s_CollisionPoint g_CollisionPointCache = {
-    .position_0  = {},
+    .position  = {},
     .collision_C = {},
     .field_18    = NO_VALUE
 };

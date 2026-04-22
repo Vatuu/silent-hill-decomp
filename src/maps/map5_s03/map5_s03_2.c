@@ -692,12 +692,12 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_SavePad, &g_WorldObjectPose_SavePad[0].position_0, &g_WorldObjectPose_SavePad[0].rotation_C);
+        WorldGfx_ObjectAdd(&g_WorldObject_SavePad, &g_WorldObjectPose_SavePad[0].position, &g_WorldObjectPose_SavePad[0].rotation_C);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_SavePad, &g_WorldObjectPose_SavePad[1].position_0, &g_WorldObjectPose_SavePad[1].rotation_C);
+        WorldGfx_ObjectAdd(&g_WorldObject_SavePad, &g_WorldObjectPose_SavePad[1].position, &g_WorldObjectPose_SavePad[1].rotation_C);
 
         if (!Savegame_EventFlagGet(EventFlag_M5S03_PickupMagnet))
         {
@@ -709,7 +709,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S03_HealthDrink0))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_HealthDrink, &g_WorldObjectPose_HealthDrink0.position_0, &g_WorldObjectPose_HealthDrink0.rotation_C);
+            WorldGfx_ObjectAdd(&g_WorldObject_HealthDrink, &g_WorldObjectPose_HealthDrink0.position, &g_WorldObjectPose_HealthDrink0.rotation_C);
         }
     }
 
@@ -717,7 +717,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S03_ShotgunShells))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_ShotgunShells, &g_WorldObjectPose_ShotgunShells.position_0, &g_WorldObjectPose_ShotgunShells.rotation_C);
+            WorldGfx_ObjectAdd(&g_WorldObject_ShotgunShells, &g_WorldObjectPose_ShotgunShells.position, &g_WorldObjectPose_ShotgunShells.rotation_C);
         }
     }
 
@@ -725,7 +725,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S03_HealthDrink1))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_HealthDrink, &g_WorldObjectPose_HealthDrink1.position_0, &g_WorldObjectPose_HealthDrink1.rotation_C);
+            WorldGfx_ObjectAdd(&g_WorldObject_HealthDrink, &g_WorldObjectPose_HealthDrink1.position, &g_WorldObjectPose_HealthDrink1.rotation_C);
         }
     }
 

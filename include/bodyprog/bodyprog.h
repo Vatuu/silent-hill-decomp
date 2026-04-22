@@ -178,17 +178,17 @@ typedef enum _CollisionType
     CollisionType_Unk2 = 2
 } e_CollisionType;
 
-/** @brief Map GFX flags. */
-typedef enum _MapGfxFlags
+/** @brief Map flags. */
+typedef enum _MapFlags
 {
-    MapGfxFlag_FourActiveChunks = 0,      /** Used by exterior maps. */
-    MapGfxFlag_OneActiveChunk   = 1 << 0,
-    MapGfxFlag_TwoActiveChunks  = 1 << 1,
-    MapGfxFlag_Interior         = 1 << 2,
-    MapGfxFlag_Unk3             = 1 << 3  /** @unused Unused map type `XXX` has this flag. */
-} e_MapGfxFlags;
+    MapFlag_FourActiveChunks = 0,      /** Used by exterior maps. */
+    MapFlag_OneActiveChunk   = 1 << 0,
+    MapFlag_TwoActiveChunks  = 1 << 1,
+    MapFlag_Interior         = 1 << 2,
+    MapFlag_Unk3             = 1 << 3  /** @unused Unused map type `XXX` has this flag. */
+} e_MapFlags;
 
-/** @brief Used as index into `MAP_GFX_INFOS` array.
+/** @brief Used as index into `MAP_INFOS` array.
  * TODO: Add descriptions for which areas are included in each type?
 */
 typedef enum _MapType
@@ -473,7 +473,7 @@ STATIC_ASSERT_SIZEOF(s_Collision, 12);
 
 typedef struct
 {
-    VECTOR3  position_0; // Q19.12
+    VECTOR3  position; // Q19.12
     SVECTOR3 rotation_C; // Q3.12 TODO: Not a rotation? Y position is added to this.
     s8       field_12;
 } s_CollisionQuery;
@@ -928,7 +928,7 @@ typedef struct _IpdModelInfo
 } s_IpdModelInfo;
 STATIC_ASSERT_SIZEOF(s_IpdModelInfo, 16);
 
-/** @brief IPD model header. */
+/** @brief IPD model file header. */
 typedef struct _IpdHeader
 {
     /* 0x0  */ u8                 magic;
@@ -1177,7 +1177,7 @@ STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 /** @brief Collision point data. */
 typedef struct
 {
-    VECTOR3     position_0; // Q19.12
+    VECTOR3     position; // Q19.12
     s_Collision collision_C;
     s32         field_18; // Count of points in circle?
 } s_CollisionPoint;
@@ -1232,11 +1232,11 @@ typedef struct _MapGfxInfo
 {
     /* 0x0 */ s16                plmFileIdx_0;
     /* 0x2 */ char               tag_2[4];
-    /* 0x6 */ u8                 flags_6; /** `e_MapGfxFlags` */
+    /* 0x6 */ u8                 flags_6; /** `e_MapFlags` */
               // 1 byte of padding.
     /* 0x8 */ const s_WaterZone* waterZones_8;
     /* 0xC */ const s_SpeedZone* speedZones_C;
-} s_MapGfxInfo;
+} s_MapInfo;
 
 // Rough name.
 typedef struct _WorldObjectMetadata
@@ -1299,7 +1299,7 @@ STATIC_ASSERT_SIZEOF(s_HeldItem, 44);
  */
 typedef struct _WorldGfxWork
 {
-    /* 0x0    */ s_MapGfxInfo*     mapGfxInfo;
+    /* 0x0    */ s_MapInfo*        mapInfo;
     /* 0x4    */ u8                useStoredPoint; /** `bool` */
     /* 0x5    */ s8                __pad_5[3];
     /* 0x8    */ VECTOR3           ipdSamplePoint; /** Used by IPD logic to sample which chunks to load or unload. */
@@ -1451,8 +1451,10 @@ typedef struct
     s16 field_6; // Keyframe index or time.
 } s_800C44F0; // Probable size: 8 bytes.
 
-/** Holds file IDs of anim/model/texture for each `e_CharacterId`, along with some data used in VC camera code. */
-typedef struct
+/** @brief Character file info.
+ * Holds file IDs of anim/model/texture for each `e_CharacterId` along with some data used in VC camera code.
+ */
+typedef struct _CharaFileInfo
 {
     /* 0x0    */ s16            animFileIdx;
     /* 0x2    */ s16            modelFileIdx;
@@ -1466,54 +1468,59 @@ typedef struct
 } s_CharaFileInfo;
 STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
 
-typedef struct
+/** @brief DMS cutscene camera keyframe. */
+typedef struct _DmsKeyframeCamera
 {
-    SVECTOR3 positionTarget_0; /** Q7.8 */
-    SVECTOR3 lookAtTarget_6;   /** Q7.8 */
-    s16      field_C[2];       // `field_C[1]` gets passed to `vcChangeProjectionValue`.
+    /* 0x0 */ SVECTOR3 positionTarget; /** Q7.8 */
+    /* 0x6 */ SVECTOR3 lookAtTarget;   /** Q7.8 */
+    /* 0xC */ s16      field_C[2];     // `field_C[1]` gets passed to `vcChangeProjectionValue`.
 } s_DmsKeyframeCamera;
 STATIC_ASSERT_SIZEOF(s_DmsKeyframeCamera, 16);
 
+/** @brief DMS cutscene character transform keyframe. */
 typedef struct
 {
-    SVECTOR3 position_0; /** Q7.8 */
-    SVECTOR3 rotation_6; /** Q7.8 */
+    /* 0x0 */ SVECTOR3 position; /** Q7.8 */
+    /* 0x6 */ SVECTOR3 rotation; /** Q7.8 */
 } s_DmsKeyframeCharacter;
 STATIC_ASSERT_SIZEOF(s_DmsKeyframeCharacter, 12);
 
+/** @brief DMS cutscene entry. */
 typedef struct _DmsEntry
 {
-    s16       keyframeCount_0;
-    u8        svectorCount_2; /** `svectors_8` array size. */
-    u8        field_3;        // Usually 0, but sometimes filled in, possibly junk data left in padding byte.
-    char      name_4[4];      // First 4 `char`s of name. E.g. If code checks for "DAHLIA", file is "DAHL".
-    SVECTOR3* svectors_8;     // Pointer to `SVECTOR3`s. Unknown purpose.
-    union
-    {
-        s_DmsKeyframeCharacter* character;
-        s_DmsKeyframeCamera*    camera;
-    } keyframes_C;
+    /* 0x0 */ s16       keyframeCount;
+    /* 0x2 */ u8        svectorCount; /** `svectors` array size. */
+    /* 0x3 */ u8        field_3;      // Usually 0, but sometimes filled in, possibly junk data left in padding byte.
+    /* 0x4 */ char      name[4];      // First 4 `char`s of name. E.g. If code checks for "DAHLIA", file is "DAHL".
+    /* 0x8 */ SVECTOR3* svectors;     // Pointer to `SVECTOR3`s. Unknown purpose.
+              union
+              {
+                  s_DmsKeyframeCharacter* character;
+                  s_DmsKeyframeCamera*    camera;
+    /* 0xC */ } keyframes;
 } s_DmsEntry;
 STATIC_ASSERT_SIZEOF(s_DmsEntry, 16);
 
+/** @brief DMS cutscene interval */
 typedef struct _DmsInterval
 {
-    s16 startKeyframeIdx_0;
-    s16 frameCount_2; /** Frame duration at 30 FPS. */
+    /* 0x0 */ s16 startKeyframeIdx;
+    /* 0x2 */ s16 frameCount; /** Frame duration at 30 FPS. */
 } s_DmsInterval;
 STATIC_ASSERT_SIZEOF(s_DmsInterval, 4);
 
+/** @brief DMS cutscene header. */
 typedef struct _DmsHeader
 {
-    /* 0x0  */ u8             isLoaded; /** `bool` */
-    /* 0x1  */ u8             characterCount; /** `characters_18` array size. */
-    /* 0x2  */ u8             intervalCount_2; /** `intervals_8` array size. */
-    /* 0x3  */ u8             field_3;         // Usually 0, but sometimes filled in.
-    /* 0x4  */ u32            field_4;         // Unknown, correlates with DMS file size.
-    /* 0x8  */ s_DmsInterval* intervals_8;
-    /* 0xC  */ VECTOR3        origin_C; /** Q23.8 | Origin point. Gets added to character positions. */
-    /* 0x18 */ s_DmsEntry*    characters_18;
-    /* 0x1C */ s_DmsEntry     camera_1C;
+    /* 0x0  */ u8             isLoaded;       /** `bool` */
+    /* 0x1  */ u8             characterCount; /** `characters` array size. */
+    /* 0x2  */ u8             intervalCount;  /** `intervals` array size. */
+    /* 0x3  */ u8             field_3;        // Usually 0, but sometimes filled in.
+    /* 0x4  */ u32            field_4;        // Unknown, correlates with DMS file size.
+    /* 0x8  */ s_DmsInterval* intervals;
+    /* 0xC  */ VECTOR3        origin;         /** Q23.8 | Origin position. Gets added to character positions. */
+    /* 0x18 */ s_DmsEntry*    characters;
+    /* 0x1C */ s_DmsEntry     camera;
 } s_DmsHeader;
 STATIC_ASSERT_SIZEOF(s_DmsHeader, 44);
 
@@ -1675,7 +1682,7 @@ typedef struct
  */
 typedef struct _MapOverlayHeader
 {
-    s_MapGfxInfo*             mapGfxInfo;
+    s_MapInfo*             mapInfo;
     u8                     (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxUpdate`.
     s8                     field_8;
     s32                    (*func_C)();
@@ -2189,7 +2196,7 @@ typedef struct
 
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to `main/` headers?
 
-extern const s_MapGfxInfo MAP_GFX_INFOS[MapType_Count];
+extern const s_MapInfo MAP_INFOS[MapType_Count];
 
 extern char D_80028544[16];
 
@@ -3303,6 +3310,8 @@ void func_8005E89C(void);
 
 s32 func_8005F55C(s32 arg0);
 
+// `dms.c` ================================================
+
 void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr);
 
 void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* dmsHdr);
@@ -3337,6 +3346,8 @@ u32 Dms_IntervalStateGet(q19_12 time, s_DmsHeader* dmsHdr);
 s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry);
 
 s32 Math_LerpFixed12(s16 from, s16 to, q19_12 alpha);
+
+// ====================
 
 void func_8008D41C(void);
 

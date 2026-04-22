@@ -1464,11 +1464,11 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
     if (var_s7 != 0)
     {
         temp              = Q12_MULT_PRECISE(var_s7, offsetX);
-        target->damage.position_0.vx += temp;
+        target->damage.position.vx += temp;
         temp              = Q12_MULT_PRECISE(var_s7, offsetY);
-        target->damage.position_0.vy += temp;
+        target->damage.position.vy += temp;
         temp              = Q12_MULT_PRECISE(var_s7, offsetZ);
-        target->damage.position_0.vz += temp;
+        target->damage.position.vz += temp;
     }
 
     target->attackReceived = weaponAttack;

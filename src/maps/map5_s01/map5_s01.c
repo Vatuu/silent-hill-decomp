@@ -726,7 +726,7 @@ void Map_WorldObjectsUpdate(void) // 0x800ECC8C
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S01_RifleShells0))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[0].position_0, &g_CommonWorldObjectPoses[0].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation_C);
         }
     }
 
@@ -734,7 +734,7 @@ void Map_WorldObjectsUpdate(void) // 0x800ECC8C
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S01_HandgunBullets))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position_0, &g_CommonWorldObjectPoses[1].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation_C);
         }
     }
 
@@ -742,7 +742,7 @@ void Map_WorldObjectsUpdate(void) // 0x800ECC8C
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S01_FirstAidKit))
         {
-            WorldGfx_ObjectAdd(g_CommonWorldObjects, &g_CommonWorldObjectPoses[2].position_0, &g_CommonWorldObjectPoses[2].rotation_C);
+            WorldGfx_ObjectAdd(g_CommonWorldObjects, &g_CommonWorldObjectPoses[2].position, &g_CommonWorldObjectPoses[2].rotation_C);
         }
     }
 
@@ -750,7 +750,7 @@ void Map_WorldObjectsUpdate(void) // 0x800ECC8C
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S01_HealthDrink))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[3].position_0, &g_CommonWorldObjectPoses[3].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[3].position, &g_CommonWorldObjectPoses[3].rotation_C);
         }
     }
 
@@ -758,7 +758,7 @@ void Map_WorldObjectsUpdate(void) // 0x800ECC8C
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S01_RifleShells1))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[4].position_0, &g_CommonWorldObjectPoses[4].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[4].position, &g_CommonWorldObjectPoses[4].rotation_C);
         }
     }
 }

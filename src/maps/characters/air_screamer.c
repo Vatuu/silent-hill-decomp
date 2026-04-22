@@ -427,9 +427,9 @@ void sharedFunc_800D2B00_0_s01(s_SubCharacter* airScreamer)
 
 void sharedFunc_800D2B10_0_s01(s_SubCharacter* airScreamer)
 {
-    airScreamer->damage.position_0.vx = Q12(0.0f);
-    airScreamer->damage.position_0.vy = Q12(0.0f);
-    airScreamer->damage.position_0.vz = Q12(0.0f);
+    airScreamer->damage.position.vx = Q12(0.0f);
+    airScreamer->damage.position.vy = Q12(0.0f);
+    airScreamer->damage.position.vz = Q12(0.0f);
     airScreamer->damage.amount_C      = Q12(0.0f);
     airScreamerProps.field_F4            = 0;
 }
@@ -12076,13 +12076,13 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer)
     q20_12 angle3;
     s32    temp;
 
-    newPosX = Q12_MULT_PRECISE(airScreamer->damage.position_0.vx, Q12(3.0f));
-    newPosY = Q12_MULT_PRECISE(airScreamer->damage.position_0.vy, Q12(3.0f));
-    newPosZ = Q12_MULT_PRECISE(airScreamer->damage.position_0.vz, Q12(3.0f));
+    newPosX = Q12_MULT_PRECISE(airScreamer->damage.position.vx, Q12(3.0f));
+    newPosY = Q12_MULT_PRECISE(airScreamer->damage.position.vy, Q12(3.0f));
+    newPosZ = Q12_MULT_PRECISE(airScreamer->damage.position.vz, Q12(3.0f));
 
-    airScreamer->damage.position_0.vx = Q12(0.0f);
-    airScreamer->damage.position_0.vy = Q12(0.0f);
-    airScreamer->damage.position_0.vz = Q12(0.0f);
+    airScreamer->damage.position.vx = Q12(0.0f);
+    airScreamer->damage.position.vy = Q12(0.0f);
+    airScreamer->damage.position.vz = Q12(0.0f);
 
     sp1C = SquareRoot12(Q12_SQUARE_PRECISE(newPosX) +
                         Q12_SQUARE_PRECISE(newPosY) +
@@ -12310,9 +12310,9 @@ void sharedFunc_800D6C7C_0_s01(VECTOR* arg0, s_SubCharacter* airScreamer, s32 ar
         offsetZ = Q12_MULT_PRECISE(offsetZ, sqr);
         if (offsetX | offsetY | offsetZ)
         {
-            airScreamer->damage.position_0.vx += Q12_MULT_PRECISE(offsetX, Q12(0.8f));
-            airScreamer->damage.position_0.vy += Q12_MULT_PRECISE(offsetY, Q12(0.8f));
-            airScreamer->damage.position_0.vz += Q12_MULT_PRECISE(offsetZ, Q12(0.8f));
+            airScreamer->damage.position.vx += Q12_MULT_PRECISE(offsetX, Q12(0.8f));
+            airScreamer->damage.position.vy += Q12_MULT_PRECISE(offsetY, Q12(0.8f));
+            airScreamer->damage.position.vz += Q12_MULT_PRECISE(offsetZ, Q12(0.8f));
         }
     }
 

@@ -234,9 +234,9 @@ void Game_NpcUpdate(void) // 0x80038354
                           Q12_SQUARE_PRECISE(Q12_TO_Q6(npc->position.vz) - posZShift6);
                 var_t5 = 0;
 
-                if (g_MapOverlayHeader.mapGfxInfo->flags_6 & MapGfxFlag_Interior)
+                if (g_MapOverlayHeader.mapInfo->flags_6 & MapFlag_Interior)
                 {
-                    var_t5 = (g_MapOverlayHeader.mapGfxInfo->flags_6 & (MapGfxFlag_OneActiveChunk | MapGfxFlag_TwoActiveChunks)) > 0;
+                    var_t5 = (g_MapOverlayHeader.mapInfo->flags_6 & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)) > 0;
                 }
 
                 for (j = 0; j < 3; j++)
@@ -399,8 +399,8 @@ void Game_NpcUpdate(void) // 0x80038354
         else
         {
             var_s3 = 0;
-            if (!(g_MapOverlayHeader.mapGfxInfo->flags_6 & MapGfxFlag_Interior) ||
-                !(g_MapOverlayHeader.mapGfxInfo->flags_6 & (MapGfxFlag_OneActiveChunk | MapGfxFlag_TwoActiveChunks)))
+            if (!(g_MapOverlayHeader.mapInfo->flags_6 & MapFlag_Interior) ||
+                !(g_MapOverlayHeader.mapInfo->flags_6 & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
             {
                 var_s3 = 1;
             }

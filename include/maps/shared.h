@@ -1119,7 +1119,7 @@ static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo
 // TODO: Could also call this a "transform"? "Pose" is a less common term for a position+rotation struct.
 typedef struct
 {
-    VECTOR3  position_0; // Q19.12
+    VECTOR3  position; // Q19.12
     SVECTOR3 rotation_C; // Q19.12
 } s_WorldObjectPose;
 STATIC_ASSERT_SIZEOF(s_WorldObjectPose, 0x14);
@@ -1144,7 +1144,7 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectDescNoRot, 40);
 
 #define WorldObjectPoseSet(eventPose, posX, posY, posZ, rotX, rotY, rotZ) \
 {                                                                         \
-    Math_Vector3Set(&(eventPose)->position_0, posX, posY, posZ);          \
+    Math_Vector3Set(&(eventPose)->position, posX, posY, posZ);          \
     Math_SetSVectorFast(&(eventPose)->rotation_C, rotX, rotY, rotZ);      \
 }
 

@@ -84,9 +84,9 @@ s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ) // 0x8003BF60
         return SpeedZoneType_Normal;
     }
 
-    if (g_WorldGfxWork.mapGfxInfo->speedZones_C != NULL)
+    if (g_WorldGfxWork.mapInfo->speedZones_C != NULL)
     {
-        curZone = g_WorldGfxWork.mapGfxInfo->speedZones_C;
+        curZone = g_WorldGfxWork.mapInfo->speedZones_C;
         while (curZone->type != NO_VALUE)
         {
             if (posX >= Q4_TO_Q12(curZone->minX) && Q4_TO_Q12(curZone->maxX) >= posX &&
@@ -174,16 +174,16 @@ void Ipd_PlayerChunkInit(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerP
 {
     s32        activeIpdCount;
     u8         flags;
-    s_MapGfxInfo* mapInfo;
+    s_MapInfo* mapInfo;
 
-    g_WorldGfxWork.mapGfxInfo = mapHdr->mapGfxInfo;
+    g_WorldGfxWork.mapInfo = mapHdr->mapInfo;
 
-    flags = mapHdr->mapGfxInfo->flags_6;
-    if (flags & MapGfxFlag_OneActiveChunk)
+    flags = mapHdr->mapInfo->flags_6;
+    if (flags & MapFlag_OneActiveChunk)
     {
         activeIpdCount = 1;
     }
-    else if (flags & MapGfxFlag_TwoActiveChunks)
+    else if (flags & MapFlag_TwoActiveChunks)
     {
         activeIpdCount = 2;
     }
@@ -192,10 +192,10 @@ void Ipd_PlayerChunkInit(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerP
         activeIpdCount = 4;
     }
 
-    mapInfo = mapHdr->mapGfxInfo;
-    Ipd_MapFileInfoSet(mapInfo->tag_2, mapInfo->plmFileIdx_0, activeIpdCount, CHECK_FLAG(mapInfo->flags_6, MapGfxFlag_Interior, false), 0, 0);
+    mapInfo = mapHdr->mapInfo;
+    Ipd_MapFileInfoSet(mapInfo->tag_2, mapInfo->plmFileIdx_0, activeIpdCount, CHECK_FLAG(mapInfo->flags_6, MapFlag_Interior, false), 0, 0);
 
-    if (mapHdr->mapGfxInfo == &MAP_GFX_INFOS[MapType_THR])
+    if (mapHdr->mapInfo == &MAP_INFOS[MapType_THR])
     {
         Map_PlaceIpdAtCell(FILE_BG_THR05FD_IPD, -1, 8);
     }
@@ -212,8 +212,8 @@ void Map_WorldClear(void) // 0x8003C30C
 {
     u8 flags;
 
-    flags = g_WorldGfxWork.mapGfxInfo->flags_6;
-    if ((flags & MapGfxFlag_Interior) && (flags & (MapGfxFlag_OneActiveChunk | MapGfxFlag_TwoActiveChunks)))
+    flags = g_WorldGfxWork.mapInfo->flags_6;
+    if ((flags & MapFlag_Interior) && (flags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
     {
         Map_WorldClearReset();
         return;
@@ -280,7 +280,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
     pos0.vx += Q12_MULT_PRECISE(moveDist, Math_Sin(chara->headingAngle));
     pos0.vz += Q12_MULT_PRECISE(moveDist, Math_Cos(chara->headingAngle));
 
-    if (g_WorldGfxWork.mapGfxInfo == &MAP_GFX_INFOS[MapType_THR] &&
+    if (g_WorldGfxWork.mapInfo == &MAP_INFOS[MapType_THR] &&
         chara->position.vx >= Q12(-40.0f) && chara->position.vx <= Q12(40.0f) &&
         chara->position.vz >= Q12(200.0f) && chara->position.vz <= Q12(240.0f))
     {
@@ -292,8 +292,8 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
         vwGetViewPosition(&pos1);
         vwGetViewAngle(&rot);
 
-        flagsCpy = g_WorldGfxWork.mapGfxInfo->flags_6;
-        if (!(flagsCpy & MapGfxFlag_Interior) || !(flagsCpy & (MapGfxFlag_OneActiveChunk | MapGfxFlag_TwoActiveChunks)))
+        flagsCpy = g_WorldGfxWork.mapInfo->flags_6;
+        if (!(flagsCpy & MapFlag_Interior) || !(flagsCpy & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
         {
             var_s1 = Q12_MULT(Math_Cos(rot.vx), Q12(9.0f));
         }
@@ -325,8 +325,8 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
         pos1.vz += FP_FROM(Q12(Math_Cos(chara->rotation.vy)), Q12_SHIFT);
     }
 
-    flagsCpy = g_WorldGfxWork.mapGfxInfo->flags_6;
-    if ((flagsCpy & MapGfxFlag_Interior) && (flagsCpy & (MapGfxFlag_OneActiveChunk | MapGfxFlag_TwoActiveChunks)))
+    flagsCpy = g_WorldGfxWork.mapInfo->flags_6;
+    if ((flagsCpy & MapFlag_Interior) && (flagsCpy & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
     {
         var_a1 = chara->position.vx / Q12(2.5f);
         if (chara->position.vx < Q12(0.0f))

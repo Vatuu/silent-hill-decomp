@@ -27,13 +27,13 @@ void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
     dmsHdr->isLoaded = true;
 
     // Add memory address of DMS header to offsets in `dmsHdr`.
-    dmsHdr->intervals_8 = (u8*)dmsHdr->intervals_8 + (u32)dmsHdr;
-    dmsHdr->characters_18 = (u8*)dmsHdr->characters_18 + (u32)dmsHdr;
+    dmsHdr->intervals = (u8*)dmsHdr->intervals + (u32)dmsHdr;
+    dmsHdr->characters = (u8*)dmsHdr->characters + (u32)dmsHdr;
 
-    DmsEntry_FixOffsets(&dmsHdr->camera_1C, dmsHdr);
+    DmsEntry_FixOffsets(&dmsHdr->camera, dmsHdr);
 
-    for (curEntry = dmsHdr->characters_18;
-         curEntry < &dmsHdr->characters_18[dmsHdr->characterCount];
+    for (curEntry = dmsHdr->characters;
+         curEntry < &dmsHdr->characters[dmsHdr->characterCount];
          curEntry++)
     {
         DmsEntry_FixOffsets(curEntry, dmsHdr);
@@ -42,13 +42,13 @@ void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
 
 void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* dmsHdr) // 0x8008CA44
 {
-    entry->keyframes_C.character = (u32)entry->keyframes_C.character + (u32)dmsHdr;
-    entry->svectors_8          = (u32)entry->svectors_8 + (u32)dmsHdr;
+    entry->keyframes.character = (u32)entry->keyframes.character + (u32)dmsHdr;
+    entry->svectors          = (u32)entry->svectors + (u32)dmsHdr;
 }
 
 s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* dmsHdr) // 0x8008CA60
 {
-    return &dmsHdr->intervals_8[idx];
+    return &dmsHdr->intervals[idx];
 }
 
 void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, q19_12 time, s_DmsHeader* dmsHdr) // 0x8008CA74
@@ -82,7 +82,7 @@ s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* dmsHdr) // 0x8008CB10
 
     for (i = 0; i < dmsHdr->characterCount; i++)
     {
-        if (!strncmp(name, dmsHdr->characters_18[i].name_4, 4))
+        if (!strncmp(name, dmsHdr->characters[i].name, 4))
         {
             return i;
         }
@@ -100,34 +100,34 @@ void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_
     s_DmsKeyframeCharacter* keyframes;
     s_DmsKeyframeCharacter  curFrame;
 
-    charaEntry = &dmsHdr->characters_18[charaIdx];
+    charaEntry = &dmsHdr->characters[charaIdx];
     func_8008D1D0(&keyframePrev, &keyframeNext, &alpha, time, charaEntry, dmsHdr);
 
-    keyframes = charaEntry->keyframes_C.character;
+    keyframes = charaEntry->keyframes.character;
     Dms_CharacterKeyframeInterpolate(&curFrame, &keyframes[keyframePrev], &keyframes[keyframeNext], alpha);
 
     // Set position.
-    pos->vx = Q8_TO_Q12(curFrame.position_0.vx + dmsHdr->origin_C.vx);
-    pos->vy = Q8_TO_Q12(curFrame.position_0.vy + dmsHdr->origin_C.vy);
-    pos->vz = Q8_TO_Q12(curFrame.position_0.vz + dmsHdr->origin_C.vz);
+    pos->vx = Q8_TO_Q12(curFrame.position.vx + dmsHdr->origin.vx);
+    pos->vy = Q8_TO_Q12(curFrame.position.vy + dmsHdr->origin.vy);
+    pos->vz = Q8_TO_Q12(curFrame.position.vz + dmsHdr->origin.vz);
 
     // Set rotation.
-    rot->vx = curFrame.rotation_6.vx;
-    rot->vy = curFrame.rotation_6.vy;
-    rot->vz = curFrame.rotation_6.vz;
+    rot->vx = curFrame.rotation.vx;
+    rot->vy = curFrame.rotation.vy;
+    rot->vz = curFrame.rotation.vz;
 }
 
 void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha) // 0x8008CC98
 {
     // Low-precision lerp between positions?
-    result->position_0.vx = frame0->position_0.vx + Q12_MULT_PRECISE(frame1->position_0.vx - frame0->position_0.vx, alpha);
-    result->position_0.vy = frame0->position_0.vy + Q12_MULT_PRECISE(frame1->position_0.vy - frame0->position_0.vy, alpha);
-    result->position_0.vz = frame0->position_0.vz + Q12_MULT_PRECISE(frame1->position_0.vz - frame0->position_0.vz, alpha);
+    result->position.vx = frame0->position.vx + Q12_MULT_PRECISE(frame1->position.vx - frame0->position.vx, alpha);
+    result->position.vy = frame0->position.vy + Q12_MULT_PRECISE(frame1->position.vy - frame0->position.vy, alpha);
+    result->position.vz = frame0->position.vz + Q12_MULT_PRECISE(frame1->position.vz - frame0->position.vz, alpha);
 
     // Higher-precision lerp between rotations?
-    result->rotation_6.vx = Math_LerpFixed12(frame0->rotation_6.vx, frame1->rotation_6.vx, alpha);
-    result->rotation_6.vy = Math_LerpFixed12(frame0->rotation_6.vy, frame1->rotation_6.vy, alpha);
-    result->rotation_6.vz = Math_LerpFixed12(frame0->rotation_6.vz, frame1->rotation_6.vz, alpha);
+    result->rotation.vx = Math_LerpFixed12(frame0->rotation.vx, frame1->rotation.vx, alpha);
+    result->rotation.vy = Math_LerpFixed12(frame0->rotation.vy, frame1->rotation.vy, alpha);
+    result->rotation.vz = Math_LerpFixed12(frame0->rotation.vz, frame1->rotation.vz, alpha);
 }
 
 q3_12 func_8008CDBC(q3_12 angle) // 0x8008CDBC
@@ -144,18 +144,18 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
     s32                 camProjValue;
     s_DmsEntry*         camEntry;
 
-    camEntry = &dmsHdr->camera_1C;
+    camEntry = &dmsHdr->camera;
 
     func_8008D1D0(&keyframePrev, &keyframeNext, &alpha, time, camEntry, dmsHdr);
-    camProjValue = Dms_CameraKeyframeInterpolate(&curFrame, &camEntry->keyframes_C.camera[keyframePrev], &camEntry->keyframes_C.camera[keyframeNext], alpha);
+    camProjValue = Dms_CameraKeyframeInterpolate(&curFrame, &camEntry->keyframes.camera[keyframePrev], &camEntry->keyframes.camera[keyframeNext], alpha);
 
-    posTarget->vx = Q8_TO_Q12(curFrame.positionTarget_0.vx + dmsHdr->origin_C.vx);
-    posTarget->vy = Q8_TO_Q12(curFrame.positionTarget_0.vy + dmsHdr->origin_C.vy);
-    posTarget->vz = Q8_TO_Q12(curFrame.positionTarget_0.vz + dmsHdr->origin_C.vz);
+    posTarget->vx = Q8_TO_Q12(curFrame.positionTarget.vx + dmsHdr->origin.vx);
+    posTarget->vy = Q8_TO_Q12(curFrame.positionTarget.vy + dmsHdr->origin.vy);
+    posTarget->vz = Q8_TO_Q12(curFrame.positionTarget.vz + dmsHdr->origin.vz);
 
-    lookAtTarget->vx = Q8_TO_Q12(curFrame.lookAtTarget_6.vx + dmsHdr->origin_C.vx);
-    lookAtTarget->vy = Q8_TO_Q12(curFrame.lookAtTarget_6.vy + dmsHdr->origin_C.vy);
-    lookAtTarget->vz = Q8_TO_Q12(curFrame.lookAtTarget_6.vz + dmsHdr->origin_C.vz);
+    lookAtTarget->vx = Q8_TO_Q12(curFrame.lookAtTarget.vx + dmsHdr->origin.vx);
+    lookAtTarget->vy = Q8_TO_Q12(curFrame.lookAtTarget.vy + dmsHdr->origin.vy);
+    lookAtTarget->vz = Q8_TO_Q12(curFrame.lookAtTarget.vz + dmsHdr->origin.vz);
 
     if (arg2 != NULL)
     {
@@ -182,13 +182,13 @@ bool func_8008CF54(SVECTOR3* rot0, SVECTOR3* rot1) // 0x8008CF54
 
 s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyframeCamera* frame0, const s_DmsKeyframeCamera* frame1, s32 alpha) // 0x8008CFEC
 {
-    result->positionTarget_0.vx = frame0->positionTarget_0.vx + Q12_MULT_PRECISE(frame1->positionTarget_0.vx - frame0->positionTarget_0.vx, alpha);
-    result->positionTarget_0.vy = frame0->positionTarget_0.vy + Q12_MULT_PRECISE(frame1->positionTarget_0.vy - frame0->positionTarget_0.vy, alpha);
-    result->positionTarget_0.vz = frame0->positionTarget_0.vz + Q12_MULT_PRECISE(frame1->positionTarget_0.vz - frame0->positionTarget_0.vz, alpha);
+    result->positionTarget.vx = frame0->positionTarget.vx + Q12_MULT_PRECISE(frame1->positionTarget.vx - frame0->positionTarget.vx, alpha);
+    result->positionTarget.vy = frame0->positionTarget.vy + Q12_MULT_PRECISE(frame1->positionTarget.vy - frame0->positionTarget.vy, alpha);
+    result->positionTarget.vz = frame0->positionTarget.vz + Q12_MULT_PRECISE(frame1->positionTarget.vz - frame0->positionTarget.vz, alpha);
 
-    result->lookAtTarget_6.vx = frame0->lookAtTarget_6.vx + Q12_MULT_PRECISE(frame1->lookAtTarget_6.vx - frame0->lookAtTarget_6.vx, alpha);
-    result->lookAtTarget_6.vy = frame0->lookAtTarget_6.vy + Q12_MULT_PRECISE(frame1->lookAtTarget_6.vy - frame0->lookAtTarget_6.vy, alpha);
-    result->lookAtTarget_6.vz = frame0->lookAtTarget_6.vz + Q12_MULT_PRECISE(frame1->lookAtTarget_6.vz - frame0->lookAtTarget_6.vz, alpha);
+    result->lookAtTarget.vx = frame0->lookAtTarget.vx + Q12_MULT_PRECISE(frame1->lookAtTarget.vx - frame0->lookAtTarget.vx, alpha);
+    result->lookAtTarget.vy = frame0->lookAtTarget.vy + Q12_MULT_PRECISE(frame1->lookAtTarget.vy - frame0->lookAtTarget.vy, alpha);
+    result->lookAtTarget.vz = frame0->lookAtTarget.vz + Q12_MULT_PRECISE(frame1->lookAtTarget.vz - frame0->lookAtTarget.vz, alpha);
 
     result->field_C[0] = Math_LerpFixed12(frame0->field_C[0], frame1->field_C[0], alpha);
     result->field_C[1] = frame0->field_C[1] + Q12_MULT_PRECISE(frame1->field_C[1] - frame0->field_C[1], alpha);
@@ -236,16 +236,16 @@ u32 Dms_IntervalStateGet(q19_12 time, s_DmsHeader* dmsHdr)
 
     frameTime = FP_FROM(time, Q12_SHIFT);
 
-    for (curInterval = dmsHdr->intervals_8;
-         curInterval < &dmsHdr->intervals_8[dmsHdr->intervalCount_2];
+    for (curInterval = dmsHdr->intervals;
+         curInterval < &dmsHdr->intervals[dmsHdr->intervalCount];
          curInterval++)
     {
-        if (frameTime != ((curInterval->startKeyframeIdx_0 + curInterval->frameCount_2) - 1))
+        if (frameTime != ((curInterval->startKeyframeIdx + curInterval->frameCount) - 1))
         {
             continue;
         }
 
-        if (curInterval->frameCount_2 > 1)
+        if (curInterval->frameCount > 1)
         {
             return DmsIntervalState_Ending;
         }
@@ -263,7 +263,7 @@ s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry) // 0x8008D330
     SVECTOR3* curVec;
 
     keyframeIdx0 = arg0;
-    for (curVec = camEntry->svectors_8; curVec < &camEntry->svectors_8[camEntry->svectorCount_2]; curVec++)
+    for (curVec = camEntry->svectors; curVec < &camEntry->svectors[camEntry->svectorCount]; curVec++)
     {
         if (arg0 < curVec->vx)
         {
@@ -281,13 +281,13 @@ s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry) // 0x8008D330
 
     if (keyframeIdx0 >= 0)
     {
-        if ((camEntry->keyframeCount_0 - 1) >= keyframeIdx0)
+        if ((camEntry->keyframeCount - 1) >= keyframeIdx0)
         {
             keyframeIdx1 = keyframeIdx0;
         }
         else
         {
-            keyframeIdx1 = camEntry->keyframeCount_0 - 1;
+            keyframeIdx1 = camEntry->keyframeCount - 1;
         }
     }
     else

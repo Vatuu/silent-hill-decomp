@@ -243,9 +243,9 @@ void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isPuppetDoctor)
     nurse->headingAngle             = nurse->rotation.vy;
     nurseProps.position_E8             = nurse->position;
     nurse->field_D4.radius_0           = Q12(0.3f);
-    nurseProps.damage_F4.position_0.vx = Q12(0.0f);
-    nurseProps.damage_F4.position_0.vy = Q12(0.0f);
-    nurseProps.damage_F4.position_0.vz = Q12(0.0f);
+    nurseProps.damage_F4.position.vx = Q12(0.0f);
+    nurseProps.damage_F4.position.vy = Q12(0.0f);
+    nurseProps.damage_F4.position.vz = Q12(0.0f);
     nurseProps.field_114               = 0;
     nurseProps.field_118               = 0;
 
@@ -338,11 +338,11 @@ bool Ai_PuppetNurse_SomeAngleCheck(s_SubCharacter* nurse)
     q19_12 sumSqr;
     q19_12 damageAngle;
 
-    sumSqr = Q12_SQUARE_PRECISE(nurse->damage.position_0.vx) +
-             Q12_SQUARE_PRECISE(nurse->damage.position_0.vy) +
-             Q12_SQUARE_PRECISE(nurse->damage.position_0.vz);
+    sumSqr = Q12_SQUARE_PRECISE(nurse->damage.position.vx) +
+             Q12_SQUARE_PRECISE(nurse->damage.position.vy) +
+             Q12_SQUARE_PRECISE(nurse->damage.position.vz);
 
-    damageAngle = ratan2(nurse->damage.position_0.vx, nurse->damage.position_0.vz);
+    damageAngle = ratan2(nurse->damage.position.vx, nurse->damage.position.vz);
     damageAngle = ABS(Math_AngleNormalizeSigned(damageAngle - nurse->rotation.vy));
     if (sumSqr > Q12_ANGLE(360.0f) && damageAngle > Q12_ANGLE(10.0f))
     {
@@ -1487,9 +1487,9 @@ void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse)
 
     temp_s1 = nurse->properties.puppetNurse.field_124->field_2C;
 
-    damagePos.vx = nurse->properties.puppetNurse.damage_F4.position_0.vx;
-    damagePos.vz = nurse->properties.puppetNurse.damage_F4.position_0.vz;
-    damagePos.vy = nurse->properties.puppetNurse.damage_F4.position_0.vy;
+    damagePos.vx = nurse->properties.puppetNurse.damage_F4.position.vx;
+    damagePos.vz = nurse->properties.puppetNurse.damage_F4.position.vz;
+    damagePos.vy = nurse->properties.puppetNurse.damage_F4.position.vy;
 
     moveSpeed                                      = nurse->moveSpeed;
     nurse->properties.puppetNurse.moveSpeed_110 = moveSpeed;
@@ -1512,29 +1512,29 @@ void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse)
 
     func_8005C944(nurse, &sp10);
 
-    damagePosComp                                            = nurse->properties.puppetNurse.damage_F4.position_0.vx;
+    damagePosComp                                            = nurse->properties.puppetNurse.damage_F4.position.vx;
     nurse->moveSpeed                                      = nurse->properties.puppetNurse.moveSpeed_110;
-    nurse->properties.puppetNurse.damage_F4.position_0.vx = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
+    nurse->properties.puppetNurse.damage_F4.position.vx = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
 
     if (damagePosComp <= Q12(0.0f))
     {
-        nurse->properties.puppetNurse.damage_F4.position_0.vx = -nurse->properties.puppetNurse.damage_F4.position_0.vx;
+        nurse->properties.puppetNurse.damage_F4.position.vx = -nurse->properties.puppetNurse.damage_F4.position.vx;
     }
 
-    damagePosComp                                            = nurse->properties.puppetNurse.damage_F4.position_0.vy;
-    nurse->properties.puppetNurse.damage_F4.position_0.vy = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
+    damagePosComp                                            = nurse->properties.puppetNurse.damage_F4.position.vy;
+    nurse->properties.puppetNurse.damage_F4.position.vy = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
 
     if (damagePosComp <= Q12(0.0f))
     {
-        nurse->properties.puppetNurse.damage_F4.position_0.vy = -nurse->properties.puppetNurse.damage_F4.position_0.vy;
+        nurse->properties.puppetNurse.damage_F4.position.vy = -nurse->properties.puppetNurse.damage_F4.position.vy;
     }
 
-    damagePosComp = nurse->properties.puppetNurse.damage_F4.position_0.vz;
+    damagePosComp = nurse->properties.puppetNurse.damage_F4.position.vz;
 
-    nurse->properties.puppetNurse.damage_F4.position_0.vz = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
+    nurse->properties.puppetNurse.damage_F4.position.vz = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
     if (damagePosComp <= Q12(0.0f))
     {
-        nurse->properties.puppetNurse.damage_F4.position_0.vz = -nurse->properties.puppetNurse.damage_F4.position_0.vz;
+        nurse->properties.puppetNurse.damage_F4.position.vz = -nurse->properties.puppetNurse.damage_F4.position.vz;
     }
 
     nurse->rotation.vy = Math_AngleNormalizeSigned(nurse->rotation.vy);

@@ -528,7 +528,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2E54
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S01_HealthDrink))
         {
-            WorldGfx_ObjectAdd(&g_WorldObjectA, &g_WorldObjectAPos.position_0, &g_WorldObjectAPos.rotation_C);
+            WorldGfx_ObjectAdd(&g_WorldObjectA, &g_WorldObjectAPos.position, &g_WorldObjectAPos.rotation_C);
         }
     }
 }
