@@ -66,12 +66,10 @@ void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3) // 0x800652F4
     {
         for (j = 0; j < 3; j++)
         {
-            *(s32*)&ptr->field_8[j] = ((((arg0->vx + FP_FROM(Q12_MULT(ptr->field_60[j], Math_Sin(ptr->field_50)) * Math_Cos(arg1) -
-                                        ptr->field_54[j] * Math_Sin(arg1), Q12_SHIFT)) >> 4) - (u16)ptr->field_40.vx) & 0xFFFF) +
-                                      ((((arg0->vy + Q12_MULT(ptr->field_60[j], Math_Cos(ptr->field_50))) >> 4) - ptr->field_40.vy) << 16);
-
-            (&ptr->field_8[j])->vz = ((arg0->vz + (((Q12_MULT(ptr->field_60[j], Math_Sin(ptr->field_50)) * Math_Sin(arg1)) +
-                                     (ptr->field_54[j] * Math_Cos(arg1))) >> Q12_SHIFT)) >> 4) - ptr->field_40.vz;
+            Math_SetSVectorFastSum(&ptr->field_8[j],
+                                   Q12_TO_Q8((arg0->vx + FP_FROM(Q12_MULT(ptr->field_60[j], Math_Sin(ptr->field_50)) * Math_Cos(arg1) - ptr->field_54[j] * Math_Sin(arg1), Q12_SHIFT))) - (u16)ptr->field_40.vx,
+                                   Q12_TO_Q8((arg0->vy + Q12_MULT(ptr->field_60[j], Math_Cos(ptr->field_50)))) - ptr->field_40.vy,
+                                   Q12_TO_Q8((arg0->vz + (((Q12_MULT(ptr->field_60[j], Math_Sin(ptr->field_50)) * Math_Sin(arg1)) + (ptr->field_54[j] * Math_Cos(arg1))) >> Q12_SHIFT))) - ptr->field_40.vz);
         }
 
         gte_ldv3c(&ptr->field_8);

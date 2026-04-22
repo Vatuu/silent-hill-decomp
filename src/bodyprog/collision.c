@@ -1024,6 +1024,7 @@ bool func_8006B318(s_CollisionState* collState, s_IpdCollisionData* collData, s3
         }
     }
 
+    // TODO: Use `Math_SetSVectorFastSum` here?
     temp_v0 = (temp_a3->field_0_0 & 0xFFFF) + (temp_a3->field_2_0 << 16);
     gte_ldR11R12(temp_v0);
     gte_ldR13R21(temp_v0);

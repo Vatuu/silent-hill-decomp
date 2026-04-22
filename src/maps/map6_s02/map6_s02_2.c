@@ -1597,7 +1597,7 @@ void func_800D2364(void) // 0x800D2364
                         else
                         {
                             GET_PTR(sp10, j, i, k) = temp_s0;
-                            ptr->field_6C[j][i]    = -(temp_s0 >> 0xC);
+                            ptr->field_6C[j][i]    = -(temp_s0 >> Q12_SHIFT);
                         }
                     }
                     else
@@ -1610,11 +1610,11 @@ void func_800D2364(void) // 0x800D2364
                                 GET_PTR(sp10, j, i, k + 1)
                                 ++;
                             }
-                            ptr->field_6C[j][i] = -(temp_s0 >> 0xC);
+                            ptr->field_6C[j][i] = -(temp_s0 >> Q12_SHIFT);
                         }
                         else
                         {
-                            ptr->field_6C[j][i] = temp_s0 >> 0xC;
+                            ptr->field_6C[j][i] = temp_s0 >> Q12_SHIFT;
                         }
 
                         GET_PTR(sp10, j, i, k) = temp_s0;
@@ -1640,7 +1640,9 @@ void func_800D2364(void) // 0x800D2364
         {
             for (j = 0; j < 3; j++)
             {
-                Math_SetSVectorFastSum(&ptr->field_44[j], (((i + j) / 17) << 7) - 0x400, -8 * k,
+                Math_SetSVectorFastSum(&ptr->field_44[j],
+                                       (((i + j) / 17) << 7) - 0x400,
+                                       -8 * k,
                                        0x400 - (((i + j) % 17) << 7));
             }
 
@@ -1652,7 +1654,9 @@ void func_800D2364(void) // 0x800D2364
 
         for (i = 287; i < 289; i++)
         {
-            Math_SetSVectorFastSum(&ptr->field_44[0], ((i / 17) << 7) - 0x400, -8 * k,
+            Math_SetSVectorFastSum(&ptr->field_44[0],
+                                   ((i / 17) << 7) - 0x400,
+                                   -8 * k,
                                    0x400 - ((i % 17) << 7));
 
             gte_ldv0(&ptr->field_44[0]);
@@ -1666,10 +1670,8 @@ void func_800D2364(void) // 0x800D2364
             for (j = 0; j < 16; j++)
             {
                 temp_a2 = (var_t2_2->field_484[i][j] + var_t2_2->field_484[i + 1][j] +
-                           var_t2_2->field_484[i][j + 1] + var_t2_2->field_484[i + 1][j + 1]) >>
-                          2;
-
-                if (temp_a2 < 0x41 || (temp_a2 - 0x40) >> 3 >= ORDERING_TABLE_SIZE)
+                           var_t2_2->field_484[i][j + 1] + var_t2_2->field_484[i + 1][j + 1]) >> 2;
+                if (temp_a2 < 65 || ((temp_a2 - 64) >> 3) >= ORDERING_TABLE_SIZE)
                 {
                     continue;
                 }
