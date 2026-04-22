@@ -3346,13 +3346,13 @@ void func_800867B4(s32 state, s32 paperMapFileIdx);
 
 void func_800868DC(s32 idx);
 
-/** @brief Displays a map message with a sound.
+/** @brief Displays a map message with dialog audio and increments the audio index.
  *
  * @param mapMsgIdx Index of the message to display.
- * @param soundIdx Index of the sound to play.
- * @param sounds Sound indices.
+ * @param audioIdx Index of the dialog audio command to play.
+ * @param audioCmds Dialog audio commands.
  */
-void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* soundsIdxs);
+void Map_MessageWithAudio(s32 mapMsgIdx, u8* audioIdx, const u16* audioCmds);
 
 /** @brief Sets the camera position target.
  *

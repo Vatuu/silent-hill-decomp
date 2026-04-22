@@ -518,7 +518,7 @@ s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
     return Q12_MULT(arg0, Math_Sin(arg1 + ((arg2 * D_800C4710[idx]) / arg3)));
 }
 
-void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* soundsIdxs) // 0x800869E4
+void Map_MessageWithAudio(s32 mapMsgIdx, u8* audioIdx, const u16* audioCmds) // 0x800869E4
 {
     s32 mapMsgState;
 
@@ -531,8 +531,8 @@ void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* soundsIdxs) // 0x800
     }
     else if (mapMsgState == MapMsgState_Finish)
     {
-        SD_Call(soundsIdxs[*soundIdx]);
-        *soundIdx += 1;
+        SD_Call(audioCmds[*audioIdx]);
+        *audioIdx += 1;
     }
 }
 
