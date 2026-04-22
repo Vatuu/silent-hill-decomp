@@ -44,15 +44,14 @@ extern u16 D_800D3BDC;
 
 extern s32 D_800D3C40;
 
-extern s16 D_800D3C44; // Time.
+extern q3_12 D_800D3C44; // Time.
 
-extern VECTOR3 D_800D6F38;
-
-extern VECTOR3 D_800D6F48;
+extern VECTOR3 g_CutsceneCameraPositionTarget;
+extern VECTOR3 g_CutsceneCameraLookAtTarget;
 
 extern u8 D_800D6F54;
 
-extern s32 D_800D6F58;
+extern q19_12 g_CutsceneTimer;
 
 void func_800D1004(s32 arg0);
 

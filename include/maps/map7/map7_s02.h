@@ -66,8 +66,8 @@ extern u8 D_800E9D8E;
 extern s8 D_800E9ECC;
 extern u8 D_800E9ECD;
 
-/** Time. */
-extern s32 D_800E9ED0;
+extern q19_12 D_800E9ED0;
+
 extern s16 D_800E9ED4;
 extern s16 D_800E9ED6;
 extern s16 D_800E9ED8;
@@ -81,11 +81,11 @@ extern s_800EA494 D_800EA494;
 
 extern u8 D_800EA4A9;
 
-extern VECTOR3 D_800EB694;
-extern VECTOR3 D_800EB6A4;
+extern VECTOR3 g_CutsceneCameraPositionTarget;
+extern VECTOR3 g_CutsceneCameraLookAtTarget;
 
 extern u8     D_800EB6B0;
-extern q19_12 D_800EB6B4; // Timer.
+extern q19_12 g_CutsceneTimer; // Timer.
 
 extern s_WorldObjectDesc      g_WorldObject_Door;
 extern s_WorldObjectDesc      g_WorldObject_Beans[16];

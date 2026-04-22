@@ -261,7 +261,7 @@ MAP_EVENTS                      = 0x800E1C40;
 //----------------------------------------------------
 //--- PA: 0x0164F8   VA: 0x800E1FA0   subsegment: data
 //----------------------------------------------------
-g_Timer0                        = 0x800E1FA0;
+g_CutsceneTimer                 = 0x800E1FA0;
 D_800DFAB8                      = 0x800E1FA4;
 g_MapMsgSounds                  = 0x800E1FA8;
 D_800DFAC2                      = 0x800E1FAE;

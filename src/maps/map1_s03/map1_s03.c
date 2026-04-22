@@ -1260,7 +1260,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             Fs_QueueStartReadTim(FILE_TIM_ENBAN_TIM, FS_BUFFER_1, &D_800E2004);
             Fs_QueueStartRead(FILE_ANIM_UFO1_DMS, FS_BUFFER_13);
 
-            D_800E617C = NO_VALUE;
+            g_CutsceneTimer = NO_VALUE;
             ScreenFade_ResetTimestep();
 
             SD_Call(Sfx_Unk1467);
@@ -1283,7 +1283,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             break;
 
         case 3:
-            D_800E617C = 0;
+            g_CutsceneTimer = Q12(0.0f);
 
             SysWork_StateStepIncrementAfterFade(0, true, 3, 0, false);
             Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_13);
@@ -1300,7 +1300,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             break;
 
         case 6:
-            SysWork_StateStepIncrementAfterTime(&D_800E617C, Q12(40.0f), Q12(0.0f), Q12(30.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(40.0f), Q12(0.0f), Q12(30.0f), true, true);
             sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
             break;
             
@@ -1346,19 +1346,19 @@ void func_800DCDDC(void) // 0x800DCDDC
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
 
-            D_800E617C = NO_VALUE;
+            g_CutsceneTimer = NO_VALUE;
 
             Sd_SfxStop(Sfx_Unk1467);
             break;
     }
 
     D_800E201C += g_DeltaTime;
-    if (D_800E617C >= Q12(0.0f))
+    if (g_CutsceneTimer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800E617C, (s_DmsHeader*)FS_BUFFER_13);
-        vcChangeProjectionValue(Dms_CameraTargetGet(&D_800E6160, &D_800E6170, NULL, D_800E617C, (s_DmsHeader*)FS_BUFFER_13));
-        vcUserCamTarget(&D_800E6160, NULL, true);
-        vcUserWatchTarget(&D_800E6170, NULL, true);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_CutsceneTimer, (s_DmsHeader*)FS_BUFFER_13);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_CutsceneTimer, (s_DmsHeader*)FS_BUFFER_13));
+        vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
+        vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
     }
 }
 

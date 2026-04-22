@@ -353,9 +353,9 @@ void func_800D0C14(void) // 0x800D0C14
             Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "DARIA", g_CutsceneTimer, FS_BUFFER_15);
         }
 
-        vcChangeProjectionValue(Dms_CameraTargetGet(&D_800D2718, &D_800D2728, NULL, g_CutsceneTimer, FS_BUFFER_15));
-        vcUserCamTarget(&D_800D2718, NULL, true);
-        vcUserWatchTarget(&D_800D2728, NULL, true);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_CutsceneTimer, FS_BUFFER_15));
+        vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
+        vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
     }
 }
 

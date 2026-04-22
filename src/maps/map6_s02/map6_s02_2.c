@@ -399,7 +399,7 @@ void func_800CFC34(void) // 0x800CFC34
             Fs_QueueStartReadTim(FILE_TIM_ENBAN_TIM, FS_BUFFER_1, &D_800D3B70);
             Fs_QueueStartRead(FILE_ANIM_UFO5_DMS, FS_BUFFER_13);
 
-            D_800D4E28 = NO_VALUE;
+            g_CutsceneTimer = NO_VALUE;
 
             ScreenFade_ResetTimestep();
 
@@ -425,7 +425,8 @@ void func_800CFC34(void) // 0x800CFC34
             break;
 
         case 3:
-            D_800D4E28 = 0;
+            g_CutsceneTimer = Q12(0.0f);
+
             SysWork_StateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
             Dms_HeaderFixOffsets(FS_BUFFER_13);
             func_8003D03C();
@@ -441,7 +442,7 @@ void func_800CFC34(void) // 0x800CFC34
             break;
 
         case 6:
-            SysWork_StateStepIncrementAfterTime(&D_800D4E28, Q12(40.0f), Q12(0.0f), Q12(30.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(40.0f), Q12(0.0f), Q12(30.0f), true, true);
 
             for (i = 0; i < 15; i++)
             {
@@ -523,7 +524,7 @@ void func_800CFC34(void) // 0x800CFC34
             func_80086470(3, InvItemId_ChannelingStone, 1, false);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
-            D_800D4E28 = NO_VALUE;
+            g_CutsceneTimer = NO_VALUE;
 
             if (Savegame_EventFlagGet(EventFlag_469))
             {
@@ -563,13 +564,13 @@ void func_800CFC34(void) // 0x800CFC34
         }
     }
 
-    if (D_800D4E28 >= 0)
+    if (g_CutsceneTimer >= Q12(0.0f))
     {
         // TODO: Remove null chars from "HERO" once later rodata is added.
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO\0\0\0\0", D_800D4E28, FS_BUFFER_13);
-        vcChangeProjectionValue(Dms_CameraTargetGet(&D_800D4E0C, &D_800D4E1C, NULL, D_800D4E28, FS_BUFFER_13));
-        vcUserCamTarget(&D_800D4E0C, NULL, true);
-        vcUserWatchTarget(&D_800D4E1C, NULL, true);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO\0\0\0\0", g_CutsceneTimer, FS_BUFFER_13);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_CutsceneTimer, FS_BUFFER_13));
+        vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
+        vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
     }
 }
 

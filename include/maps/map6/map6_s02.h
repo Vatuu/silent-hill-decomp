@@ -85,11 +85,10 @@ extern s32 D_800D3CA0;
 extern u8 D_800D4E08;
 extern s8 D_800D4E09;
 
-extern VECTOR3 D_800D4E0C;
+extern VECTOR3 g_CutsceneCameraPositionTarget;
+extern VECTOR3 g_CutsceneCameraLookAtTarget;
 
-extern VECTOR3 D_800D4E1C;
-
-extern s32 D_800D4E28;
+extern q19_12 g_CutsceneTimer;
 
 extern s8 D_800D4E2C;
 

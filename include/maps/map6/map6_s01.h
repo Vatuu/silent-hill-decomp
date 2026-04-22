@@ -24,7 +24,7 @@
 
 #include "maps/shared.h"
 
-extern s32 D_800D4070;
+extern q19_12 g_CutsceneTimer;
 
 extern u16 D_800D4074;
 
@@ -51,9 +51,8 @@ extern q19_12 D_800D41B4;
 
 extern u8 D_800D5345;
 
-extern VECTOR3 D_800D5354;
-
-extern VECTOR3 D_800D5364;
+extern VECTOR3 g_CutsceneCameraPositionTarget;
+extern VECTOR3 g_CutsceneCameraLookAtTarget;
 
 extern u8 D_800D5370;
 

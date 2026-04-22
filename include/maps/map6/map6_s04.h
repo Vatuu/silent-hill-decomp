@@ -144,14 +144,12 @@ extern VECTOR3 D_800EBB70;
 
 extern s8 D_800ED543;
 
-extern VECTOR3 D_800ED590;
-
-extern VECTOR3 D_800ED5A0;
+extern VECTOR3 g_CutsceneCameraPositionTarget;
+extern VECTOR3 g_CutsceneCameraLookAtTarget;
 
 extern u8 D_800ED5AC; // g_MapMsgSoundIdx
 
-/** Time. */
-extern q19_12 D_800ED5B0;
+extern q19_12 g_CutsceneTimer;
 
 extern q3_12 D_800ED5B6; // Angle.
 

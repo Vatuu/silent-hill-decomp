@@ -138,7 +138,7 @@ MAP_EVENTS                      = 0x800D03AC;
 //--- PA: 0x006F84   VA: 0x800D04FC   subsegment: data
 //----------------------------------------------------
 g_MapMsgSounds                  = 0x800D04FC; // type:u16 size:0x28
-g_Timer0                        = 0x800D0524; // type:s32
+g_CutsceneTimer                 = 0x800D0524; // type:s32
 g_CommonWorldObjectPoses        = 0x800D0528; // type:WorldObjectPos size:0x1C
 g_ParticleMapIdx0               = 0x800D053C;
 g_ParticleMapIdx1               = 0x800D0540; // type:s32

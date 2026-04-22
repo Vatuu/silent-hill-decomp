@@ -23,7 +23,7 @@
 #include "maps/shared.h"
 
 extern u16 g_MapMsgSounds[20];
-extern q19_12 g_Timer0;
+extern q19_12 g_CutsceneTimer;
 extern VECTOR3 g_CameraPositionTarget;
 extern VECTOR3 g_CameraLookAtTarget;
 extern u8 g_MapMsgSoundIdx;

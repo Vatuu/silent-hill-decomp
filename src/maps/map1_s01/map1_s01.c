@@ -807,7 +807,7 @@ void func_800D8794(void) // 0x800D8794
     MapMsg_DisplayWithTexture(FILE_TIM_LOCKER0_TIM, Q12(0.0f), Q12(0.0f), 32);
 }
 
-extern s32 g_Timer0; // Cutscene timer.
+extern q19_12 g_CutsceneTimer; // Cutscene timer.
 extern u8 D_800DD598;
 extern VECTOR3 g_CameraPositionTarget;
 extern VECTOR3 g_CameraLookAtTarget;
@@ -868,7 +868,7 @@ void func_800D87C0(void) // 0x800D87C0
         case 4:
             Dms_HeaderFixOffsets((s_DmsHeader* )FS_BUFFER_16);
 
-            g_Timer0 = Q12(0.0f);
+            g_CutsceneTimer = Q12(0.0f);
 
             func_80085EB8(0u, &g_SysWork.playerWork.player, 85, false);
             func_8003D03C();
@@ -876,7 +876,7 @@ void func_800D87C0(void) // 0x800D87C0
             SysWork_StateStepIncrement(0);
 
         case 5:
-            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(12.0f))), Q12(8.0f));
+            g_CutsceneTimer = MIN((g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(12.0f))), Q12(8.0f));
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -885,8 +885,8 @@ void func_800D87C0(void) // 0x800D87C0
             SysWork_StateStepIncrement(0);
 
         case 7:
-            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(12.0f))), Q12(8.0f));
-            if (g_Timer0 >= Q12(8.0f))
+            g_CutsceneTimer = MIN((g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(12.0f))), Q12(8.0f));
+            if (g_CutsceneTimer >= Q12(8.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -905,13 +905,13 @@ void func_800D87C0(void) // 0x800D87C0
             SysWork_StateStepIncrement(0);
 
         case 9:
-            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f))), Q12(33.0f));
-            if (g_Timer0 >= Q12(33.0f))
+            g_CutsceneTimer = MIN((g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f))), Q12(33.0f));
+            if (g_CutsceneTimer >= Q12(33.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
 
-            g_Timer0 = MAX(g_Timer0, Q12(16.0f));
+            g_CutsceneTimer = MAX(g_CutsceneTimer, Q12(16.0f));
             break;
 
         case 10:
@@ -921,30 +921,30 @@ void func_800D87C0(void) // 0x800D87C0
             SysWork_StateStepIncrement(0);
 
         case 11:
-            g_Timer0 = MIN((Q12_MULT_PRECISE(g_DeltaTime, Q12(21.0f)) + g_Timer0), Q12(48.0f));
-            if (g_Timer0 >= Q12(48.0f))
+            g_CutsceneTimer = MIN((Q12_MULT_PRECISE(g_DeltaTime, Q12(21.0f)) + g_CutsceneTimer), Q12(48.0f));
+            if (g_CutsceneTimer >= Q12(48.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
 
-            g_Timer0 = MAX(g_Timer0, Q12(34.0f));
+            g_CutsceneTimer = MAX(g_CutsceneTimer, Q12(34.0f));
             break;
 
         case 12:
             MapMsg_DisplayAndHandleSelection(false, 33, 0, 0, 0, false); // "Just a cat..."
 
-            g_Timer0 = MIN((Q12_MULT_PRECISE(g_DeltaTime, Q12(20.0f)) + g_Timer0), Q12(121.0f));
-            g_Timer0 = MAX(g_Timer0, Q12(49.0f));
+            g_CutsceneTimer = MIN((Q12_MULT_PRECISE(g_DeltaTime, Q12(20.0f)) + g_CutsceneTimer), Q12(121.0f));
+            g_CutsceneTimer = MAX(g_CutsceneTimer, Q12(49.0f));
             break;
 
         case 13:
-            g_Timer0 = MIN((Q12_MULT_PRECISE(g_DeltaTime, Q12(20.0f)) + g_Timer0), Q12(121.0f));
-            if (g_Timer0 >= Q12(121.0f))
+            g_CutsceneTimer = MIN((Q12_MULT_PRECISE(g_DeltaTime, Q12(20.0f)) + g_CutsceneTimer), Q12(121.0f));
+            if (g_CutsceneTimer >= Q12(121.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
 
-            g_Timer0 = MAX(g_Timer0, Q12(49.0f));
+            g_CutsceneTimer = MAX(g_CutsceneTimer, Q12(49.0f));
             break;
 
         case 14:
@@ -978,7 +978,7 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         default:
-            g_Timer0 = NO_VALUE;
+            g_CutsceneTimer = NO_VALUE;
             g_SysWork.playerWork.player.position.vx += FP_FROM((Math_Sin(g_SysWork.playerWork.player.rotation.vy + Q12_ANGLE(180.0f)) * Q12(1.1f)), Q12_SHIFT);
             g_SysWork.playerWork.player.position.vz += FP_FROM((Math_Cos(g_SysWork.playerWork.player.rotation.vy + Q12_ANGLE(180.0f)) * Q12(1.1f)), Q12_SHIFT);
 
@@ -1002,16 +1002,16 @@ void func_800D87C0(void) // 0x800D87C0
             break;
     }
 
-    if (g_Timer0 >= Q12(0.0f))
+    if (g_CutsceneTimer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_16);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_CutsceneTimer, (s_DmsHeader*)FS_BUFFER_16);
 
-        if (g_Timer0 >= Q12(16.0f))
+        if (g_CutsceneTimer >= Q12(16.0f))
         {
-            Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "CAT", g_Timer0, (s_DmsHeader*)FS_BUFFER_16);
+            Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "CAT", g_CutsceneTimer, (s_DmsHeader*)FS_BUFFER_16);
         }
 
-        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_16));
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_CutsceneTimer, (s_DmsHeader*)FS_BUFFER_16));
         vcUserCamTarget(&g_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_CameraLookAtTarget, NULL, true);
     }
@@ -1019,7 +1019,7 @@ void func_800D87C0(void) // 0x800D87C0
     if (Savegame_EventFlagGet(EventFlag_76) && !Savegame_EventFlagGet(EventFlag_77))
     {
         obj = &g_WorldObject1;
-        tmp0 = MIN((g_Timer0 - Q12(16.0f)), Q12(2.0f));
+        tmp0 = MIN((g_CutsceneTimer - Q12(16.0f)), Q12(2.0f));
 
         obj->rotation_28.vy = Q12_MULT_PRECISE(tmp0, Q12_ANGLE(-4.1f)) - Q12_ANGLE(42.05f);
     }

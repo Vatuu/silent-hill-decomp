@@ -35,13 +35,12 @@ extern u16 D_800D947C;
 
 extern u8 D_800D94F4;
 
-extern VECTOR3 D_800DA6CC;
-
-extern VECTOR3 D_800DA6DC;
+extern VECTOR3 g_CutsceneCameraPositionTarget;
+extern VECTOR3 g_CutsceneCameraLookAtTarget;
 
 extern u8 D_800DA6E8;
 
-extern s32 D_800DA6EC;
+extern q19_12 g_CutsceneTimer;
 
 extern s_WorldObjectDesc g_WorldObject_BDoor1;
 extern s_WorldObjectDesc g_WorldObject_06LBag;

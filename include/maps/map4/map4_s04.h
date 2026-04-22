@@ -39,12 +39,11 @@ extern u8 D_800D37C0;
 
 extern u8 D_800D37C1;
 
-extern VECTOR3 D_800D6ED8;
+extern VECTOR3 g_CutsceneCameraPositionTarget;
 
-extern VECTOR3 D_800D6EE8;
+extern VECTOR3 g_CutsceneCameraLookAtTarget;
 
-/** Time. */
-extern q19_12 D_800D6EF4;
+extern q19_12 g_CutsceneTimer;
 
 extern u8 D_800D6EF8;
 

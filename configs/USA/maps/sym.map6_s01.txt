@@ -157,6 +157,7 @@ MAP_EVENTS                          = 0x800D3FA4;
 //----------------------------------------------------
 //--- PA: 0x00AAF8   VA: 0x800D4070   subsegment: data
 //----------------------------------------------------
+g_CutsceneTimer                     = 0x800D4070;
 g_CommonWorldObjectPoses            = 0x800D4128; // type:WorldObjectPos size:0x3C
 g_ParticleMapIdx0                   = 0x800D4164;
 g_ParticleMapIdx1                   = 0x800D4168; // type:s32
@@ -185,4 +186,6 @@ sharedData_800E2378_0_s01           = 0x800D5338; // type:s32
 sharedData_800E237C_0_s01           = 0x800D533C; // type:s32
 sharedData_800D16E0_2_s01           = 0x800D5340; // type:s32
 sharedData_800D16E4_2_s01           = 0x800D5344; // type:s8
+g_CutsceneCameraPositionTarget      = 0x800D5354;
+g_CutsceneCameraLookAtTarget        = 0x800D5364;
 g_CommonWorldObjects                = 0x800D54F4; // type:WorldObject_0 size:0xA8

@@ -49,10 +49,9 @@ extern u8 D_800DE250;
 extern u8 D_800DE251;
 
 extern VECTOR3 g_CutsceneCameraPositionTarget; // 0x800E2380
-
 extern VECTOR3 g_CutsceneCameraLookAtTarget; // 0x800E2390
 
-extern q19_12 g_Timer0; // 0x800E239C
+extern q19_12 g_CutsceneTimer; // 0x800E239C
 
 extern u8 g_MapMsgSoundIdx; // 0x800E23A0
 

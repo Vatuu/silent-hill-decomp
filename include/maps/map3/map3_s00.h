@@ -36,9 +36,11 @@ extern VECTOR3 D_800CB2FC;
 extern VECTOR3 D_800CB308;
 extern u16 D_800D24F0;
 extern VECTOR3 D_800D2530;
-extern s32 D_800D253C;
-extern VECTOR3 D_800D2550;
-extern VECTOR3 D_800D2560;
+
+extern q19_12  g_CutsceneTimer;
+extern VECTOR3 g_CutsceneCameraPositionTarget;
+extern VECTOR3 g_CutsceneCameraLookAtTarget;
+
 extern u8 D_800D256C;
 
 void func_800CCE88();

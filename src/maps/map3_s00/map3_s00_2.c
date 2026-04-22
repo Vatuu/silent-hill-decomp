@@ -113,7 +113,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             sharedFunc_800D88AC_0_s00(&g_SysWork.npcs[0]);
 
             g_SysWork.field_30 = 20;
-            D_800D253C = 0;
+            g_CutsceneTimer = Q12(0.0f);
             D_800D256C = 0;
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
@@ -140,10 +140,10 @@ void func_800D0CF8(void) // 0x800D0CF8
             SysWork_StateStepIncrement(0);
 
         case EventState_CutsceneStart:
-            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(12.0f));
-            if (D_800D253C > Q12(10.0f))
+            g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(12.0f));
+            if (g_CutsceneTimer > Q12(10.0f))
             {
-                D_800D253C = Q12(10.0f);
+                g_CutsceneTimer = Q12(10.0f);
                 SysWork_StateStepIncrement(0);
             }
             break;
@@ -151,16 +151,16 @@ void func_800D0CF8(void) // 0x800D0CF8
         case 5:
             func_80085EB8(1, g_SysWork.npcs, 0, false);
 
-            if (D_800D253C < Q12(11.0f))
+            if (g_CutsceneTimer < Q12(11.0f))
             {
-                D_800D253C = Q12(11.0f);
+                g_CutsceneTimer = Q12(11.0f);
             }
             else
             {
-                D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
-                if (D_800D253C > Q12(25.0f))
+                g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
+                if (g_CutsceneTimer > Q12(25.0f))
                 {
-                    D_800D253C = Q12(25.0f);
+                    g_CutsceneTimer = Q12(25.0f);
                 }
             }
 
@@ -175,10 +175,10 @@ void func_800D0CF8(void) // 0x800D0CF8
         case 7:
             Map_MessageWithAudio(15, &D_800D256C, &D_800D24F0);
 
-            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
-            if (D_800D253C > Q12(25.0f))
+            g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
+            if (g_CutsceneTimer > Q12(25.0f))
             {
-                D_800D253C = Q12(25.0f);
+                g_CutsceneTimer = Q12(25.0f);
                 SysWork_StateStepIncrement(0);
             }
             break;
@@ -189,20 +189,20 @@ void func_800D0CF8(void) // 0x800D0CF8
         case 9:
             Map_MessageWithAudio(15, &D_800D256C, &D_800D24F0);
 
-            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
-            if (D_800D253C > Q12(109.0f))
+            g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
+            if (g_CutsceneTimer > Q12(109.0f))
             {
-                D_800D253C = Q12(109.0f);
+                g_CutsceneTimer = Q12(109.0f);
             }
             break;
 
         case 10:
             Map_MessageWithAudio(16, &D_800D256C, &D_800D24F0);
 
-            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
-            if (D_800D253C > Q12(109.0f))
+            g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
+            if (g_CutsceneTimer > Q12(109.0f))
             {
-                D_800D253C = Q12(109.0f);
+                g_CutsceneTimer = Q12(109.0f);
             }
             break;
 
@@ -210,10 +210,10 @@ void func_800D0CF8(void) // 0x800D0CF8
             Map_MessageWithAudio(17, &D_800D256C, &D_800D24F0);
             SysWork_StateStepIncrementDelayed(0x7000, false);
 
-            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
-            if (D_800D253C > Q12(109.0f))
+            g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
+            if (g_CutsceneTimer > Q12(109.0f))
             {
-                D_800D253C = Q12(109.0f);
+                g_CutsceneTimer = Q12(109.0f);
             }
             break;
 
@@ -224,10 +224,10 @@ void func_800D0CF8(void) // 0x800D0CF8
         case 13:
             Map_MessageWithAudio(17, &D_800D256C, &D_800D24F0);
 
-            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
-            if (D_800D253C > Q12(109.0f))
+            g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
+            if (g_CutsceneTimer > Q12(109.0f))
             {
-                D_800D253C = Q12(109.0f);
+                g_CutsceneTimer = Q12(109.0f);
             }
             break;
 
@@ -236,7 +236,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 15:
-            D_800D253C = Q12(110.0f);
+            g_CutsceneTimer = Q12(110.0f);
 
             func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
             func_80085EB8(0, &g_SysWork.npcs[0], 5, false);
@@ -251,7 +251,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 18:
-            D_800D253C = Q12(111.0f);
+            g_CutsceneTimer = Q12(111.0f);
             Map_MessageWithAudio(23, &D_800D256C, &D_800D24F0);
             break;
 
@@ -268,16 +268,16 @@ void func_800D0CF8(void) // 0x800D0CF8
             SysWork_StateStepIncrement(0);
 
         case 22:
-            if (D_800D253C < Q12(112.0f))
+            if (g_CutsceneTimer < Q12(112.0f))
             {
-                D_800D253C = Q12(112.0f);
+                g_CutsceneTimer = Q12(112.0f);
             }
             else
             {
-                D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
-                if (D_800D253C > Q12(174.0f))
+                g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
+                if (g_CutsceneTimer > Q12(174.0f))
                 {
-                    D_800D253C = Q12(174.0f);
+                    g_CutsceneTimer = Q12(174.0f);
                 }
             }
 
@@ -287,10 +287,10 @@ void func_800D0CF8(void) // 0x800D0CF8
         case 23:
             Map_MessageWithAudio(41, &D_800D256C, &D_800D24F0);
 
-            D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
-            if (D_800D253C > Q12(174.0f))
+            g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
+            if (g_CutsceneTimer > Q12(174.0f))
             {
-                D_800D253C = Q12(174.0f);
+                g_CutsceneTimer = Q12(174.0f);
             }
             break;
 
@@ -299,18 +299,18 @@ void func_800D0CF8(void) // 0x800D0CF8
             SysWork_StateStepIncrement(0);
 
         case 25:
-            if (D_800D253C >= Q12(175.0f))
+            if (g_CutsceneTimer >= Q12(175.0f))
             {
-                D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
-                if (D_800D253C > Q12(182.0f))
+                g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
+                if (g_CutsceneTimer > Q12(182.0f))
                 {
-                    D_800D253C = Q12(182.0f);
+                    g_CutsceneTimer = Q12(182.0f);
                     SysWork_StateStepIncrement(0);
                 }
             }
             else
             {
-                D_800D253C = Q12(175.0f);
+                g_CutsceneTimer = Q12(175.0f);
             }
             break;
 
@@ -319,16 +319,16 @@ void func_800D0CF8(void) // 0x800D0CF8
             SysWork_StateStepIncrement(0);
 
         case 27:
-            if (D_800D253C < Q12(175.0f))
+            if (g_CutsceneTimer < Q12(175.0f))
             {
-                D_800D253C = Q12(175.0f);
+                g_CutsceneTimer = Q12(175.0f);
             }
             else
             {
-                D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
-                if (D_800D253C > Q12(220.0f))
+                g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
+                if (g_CutsceneTimer > Q12(220.0f))
                 {
-                    D_800D253C = Q12(220.0f);
+                    g_CutsceneTimer = Q12(220.0f);
                     SysWork_StateStepIncrement(0);
                 }
             }
@@ -340,16 +340,16 @@ void func_800D0CF8(void) // 0x800D0CF8
             SysWork_StateStepIncrement(0);
 
         case 29:
-            if (D_800D253C < Q12(221.0f))
+            if (g_CutsceneTimer < Q12(221.0f))
             {
-                D_800D253C = Q12(221.0f);
+                g_CutsceneTimer = Q12(221.0f);
             }
             else
             {
-                D_800D253C += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
-                if (D_800D253C > Q12(242.0f))
+                g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
+                if (g_CutsceneTimer > Q12(242.0f))
                 {
-                    D_800D253C = Q12(242.0f);
+                    g_CutsceneTimer = Q12(242.0f);
                 }
             }
 
@@ -358,7 +358,7 @@ void func_800D0CF8(void) // 0x800D0CF8
 
         case 30:
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
-            D_800D253C = Q12(243.0f);
+            g_CutsceneTimer = Q12(243.0f);
             SysWork_StateStepIncrement(0);
 
         case 31:
@@ -386,7 +386,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 37:
-            D_800D253C = Q12(243.0f);
+            g_CutsceneTimer = Q12(243.0f);
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             SysWork_StateStepIncrement(0);
             break;
@@ -400,7 +400,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             vcReturnPreAutoCamWork(true);
             SD_Call(0x13);
 
-            D_800D253C = NO_VALUE;
+            g_CutsceneTimer = NO_VALUE;
 
             Savegame_EventFlagSet(EventFlag_197);
             Savegame_EventFlagSet(EventFlag_198);
@@ -409,13 +409,13 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
     }
 
-    if (D_800D253C >= 0)
+    if (g_CutsceneTimer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800D253C, (s_DmsHeader* )FS_BUFFER_15);
-        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "KAU", D_800D253C, (s_DmsHeader*)FS_BUFFER_15);
-        vcChangeProjectionValue(Dms_CameraTargetGet(&D_800D2550, &D_800D2560, NULL, D_800D253C, (s_DmsHeader*)FS_BUFFER_15));
-        vcUserCamTarget(&D_800D2550, NULL, true);
-        vcUserWatchTarget(&D_800D2560, NULL, true);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_CutsceneTimer, (s_DmsHeader* )FS_BUFFER_15);
+        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "KAU", g_CutsceneTimer, (s_DmsHeader*)FS_BUFFER_15);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_CutsceneTimer, (s_DmsHeader*)FS_BUFFER_15));
+        vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
+        vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
     }
 }
 

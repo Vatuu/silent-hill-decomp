@@ -48,7 +48,7 @@ extern s32 g_Timer2;
 
 extern u8 D_800D5AEB;
 
-extern s32 g_Timer0;
+extern q19_12 g_CutsceneTimer;
 
 extern u8 D_800D5AF0;
 
@@ -83,7 +83,7 @@ extern s_WorldObjectDesc      WorldObject_D_800D80B0;
 extern s_WorldObjectDescNoRot WorldObject_D_800D80E0[2];
 
 /** Time. */
-extern s16 D_800D5AE8;
+extern q3_12 D_800D5AE8;
 
 void func_800D1B78(s32 arg0);
 

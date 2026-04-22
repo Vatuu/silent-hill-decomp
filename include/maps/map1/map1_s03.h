@@ -52,9 +52,11 @@ extern u8  D_800E2101;
 extern u8 D_800E2102; // g_MapMsgSoundIdx
 
 extern s_WorldObjectDesc g_WorldObject5; // 0x800E6130
-extern VECTOR3 D_800E6160;
-extern VECTOR3 D_800E6170;
-extern s32 D_800E617C;
+
+extern VECTOR3 g_CutsceneCameraPositionTarget;
+extern VECTOR3 g_CutsceneCameraLookAtTarget;
+extern s32     g_CutsceneTimer;
+
 extern s_WorldObjectDesc g_WorldObject0; // 0x800E6180
 extern s_WorldObjectDesc g_WorldObject1; // 0x800E61B0
 extern s_WorldObjectDesc g_WorldObject2; // 0x800E61E0

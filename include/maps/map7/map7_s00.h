@@ -39,7 +39,7 @@ extern s16 D_800D4362;
 extern u8 g_MapMsgSoundIdx;
 extern VECTOR3 g_CutsceneCameraPosition;
 extern VECTOR3 g_CutsceneCameraLookAt;
-extern s32 g_Timer0;
+extern q19_12 g_CutsceneTimer;
 extern s8 D_800D31D8;
 
 extern u16 g_MapMsgSounds[24];

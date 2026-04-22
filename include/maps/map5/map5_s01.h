@@ -36,9 +36,11 @@ extern u8 D_800F035C;
 extern u8 D_800F035D;
 extern q3_12 D_800F035E; // Time.
 extern q19_12 D_800F0360;
-extern VECTOR3 D_800F3DF0;
-extern VECTOR3 D_800F3E00;
-extern q19_12 D_800F3E0C; // Time.
+
+extern VECTOR3 g_CutsceneCameraPositionTarget;
+extern VECTOR3 g_CutsceneCameraLookAtTarget;
+extern q19_12 g_CutsceneTimer;
+
 extern s32           D_800ED5C8;
 extern GsF_LIGHT     D_800F1450[][2];
 extern GsCOORDINATE2 D_800F1510;

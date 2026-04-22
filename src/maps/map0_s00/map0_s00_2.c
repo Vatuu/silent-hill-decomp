@@ -137,7 +137,7 @@ void func_800D9610(void) // 0x800D9610
     }
 }
 
-extern s32 g_Timer0;
+extern q19_12 g_CutsceneTimer;
 extern VECTOR3 g_CameraPositionTarget;
 extern VECTOR3 g_CameraLookAtTarget;
 
@@ -180,7 +180,7 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             Chara_Load(0, Chara_Cheryl, g_SysWork.npcCoords, 0, NULL, NULL);
             SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(3.0f), false);
 
-            g_Timer0 = Q12(0.0f);
+            g_CutsceneTimer = Q12(0.0f);
 
             SysWork_StateStepIncrement(0);
             break;
@@ -190,9 +190,9 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             SysWork_StateStepIncrement(0);
 
         case 4:
-            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
-            g_Timer0 = MIN(time, Q12(22.0f));
-            if (g_Timer0 >= Q12(22.0f))
+            time     = g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
+            g_CutsceneTimer = MIN(time, Q12(22.0f));
+            if (g_CutsceneTimer >= Q12(22.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -203,33 +203,33 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             SysWork_StateStepIncrement(0);
 
         case 6:
-            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(8.0f));
-            g_Timer0 = MIN(time, Q12(26.0f));
-            if (g_Timer0 >= Q12(26.0f))
+            time     = g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(8.0f));
+            g_CutsceneTimer = MIN(time, Q12(26.0f));
+            if (g_CutsceneTimer >= Q12(26.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
             break;
 
         case 7:
-            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
+            g_CutsceneTimer = MIN((g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
             MapMsg_DisplayAndHandleSelection(false, 15, false, false, 0, false);
             break;
 
         case 8:
-            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
+            g_CutsceneTimer = MIN((g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
             SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
         case 9:
-            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
+            g_CutsceneTimer = MIN((g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
             MapMsg_DisplayAndHandleSelection(false, 16, false, false, 0, false);
             break;
 
         case 10:
-            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f));
-            g_Timer0 = MIN(time, Q12(72.0f));
-            if (g_Timer0 >= Q12(72.0f))
+            time     = g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f));
+            g_CutsceneTimer = MIN(time, Q12(72.0f));
+            if (g_CutsceneTimer >= Q12(72.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -248,7 +248,7 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             break;
 
         default:
-            g_Timer0 = NO_VALUE;
+            g_CutsceneTimer = NO_VALUE;
 
             if (skipCutscene)
             {
@@ -273,10 +273,10 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             break;
     }
 
-    if (g_Timer0 >= Q12(0.0f))
+    if (g_CutsceneTimer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_16);
-        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_16));
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_CutsceneTimer, (s_DmsHeader*)FS_BUFFER_16);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_CutsceneTimer, (s_DmsHeader*)FS_BUFFER_16));
         vcUserCamTarget(&g_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_CameraLookAtTarget, NULL, true);
     }

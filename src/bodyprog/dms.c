@@ -88,16 +88,18 @@ s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* dmsHdr) // 0x8008CB10
 
 void Dms_CharacterTransformGetByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_12 time, s_DmsHeader* dmsHdr) // 0x8008CB90
 {
-    s_DmsEntry*             charaEntry;
     s32                     prevKeyframeIdx;
     s32                     nextKeyframeIdx;
     s32                     alpha;
-    s_DmsKeyframeCharacter* charaKeyframes;
     s_DmsKeyframeCharacter  curFrame;
+    s_DmsEntry*             charaEntry;
+    s_DmsKeyframeCharacter* charaKeyframes;
 
+    // Get keyframe interpolation. 
     charaEntry = &dmsHdr->characters[charaIdx];
     Dms_CameraKeyframeInterpGet(&prevKeyframeIdx, &nextKeyframeIdx, &alpha, time, charaEntry, dmsHdr);
 
+    // Interpolate frame.
     charaKeyframes = charaEntry->keyframes.character;
     Dms_CharacterKeyframeInterpolate(&curFrame,
                                      &charaKeyframes[prevKeyframeIdx], &charaKeyframes[nextKeyframeIdx],

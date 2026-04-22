@@ -215,7 +215,7 @@ MAP_EVENTS                      = 0x800DF754;
 //----------------------------------------------------
 //--- PA: 0x01653C   VA: 0x800DFAB4   subsegment: data
 //----------------------------------------------------
-g_Timer0                        = 0x800DFAB4; // type:s32
+g_CutsceneTimer                 = 0x800DFAB4; // type:s32
 g_MapMsgSounds                  = 0x800DFABC; // type:u16
 g_WarpCamera                    = 0x800DFAD8; // type:s32
 g_ParticleMapIdx0               = 0x800DFB4C;

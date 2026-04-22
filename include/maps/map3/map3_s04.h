@@ -26,14 +26,14 @@
 extern s_WorldObjectDescNoRot g_WorldObject_Dr[6];
 extern s_WorldObjectDescNoRot g_WorldObject_Plate;
 extern s_WorldObjectDesc      g_WorldObject_SavePad;
-extern s_WorldObjectModel        g_CommonWorldObjects[6];
+extern s_WorldObjectModel     g_CommonWorldObjects[6];
 extern s_WorldObjectPose      g_CommonWorldObjectPoses[2];
 
 extern u16 D_800D599C;
-extern VECTOR3 D_800D5A20;
-extern VECTOR3 D_800D5A30;
+extern VECTOR3 g_CutsceneCameraPositionTarget;
+extern VECTOR3 g_CutsceneCameraLookAtTarget;
 extern u8 D_800D5A3C;
-extern s32 D_800D5A40;
+extern q19_12 g_CutsceneTimer;
 extern s16 D_800D5A48[3];
 extern s16 D_800D5A4E;
 

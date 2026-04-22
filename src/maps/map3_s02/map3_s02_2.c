@@ -119,8 +119,8 @@ void func_800D03FC(void) // 0x800D03FC
 
 void func_800D0608(void) // 0x800D0608
 {
-    VECTOR3  cameraPos;
-    VECTOR3  cameraTarget;
+    VECTOR3  camPosTarget;
+    VECTOR3  camLookAtTarget;
     VECTOR3  lightIntPos;
     SVECTOR3 unused;
 
@@ -315,9 +315,9 @@ void func_800D0608(void) // 0x800D0608
     if (D_800D1FEC >= 0)
     {
         Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "ARISA", D_800D1FEC, FS_BUFFER_24);
-        vcChangeProjectionValue(Dms_CameraTargetGet(&cameraPos, &cameraTarget, NULL, D_800D1FEC, FS_BUFFER_24));
-        vcUserCamTarget(&cameraPos, NULL, true);
-        vcUserWatchTarget(&cameraTarget, NULL, true);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&camPosTarget, &camLookAtTarget, NULL, D_800D1FEC, FS_BUFFER_24));
+        vcUserCamTarget(&camPosTarget, NULL, true);
+        vcUserWatchTarget(&camLookAtTarget, NULL, true);
         Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", D_800D1FEC, FS_BUFFER_24);
         Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", D_800D1FEC, FS_BUFFER_24);
 

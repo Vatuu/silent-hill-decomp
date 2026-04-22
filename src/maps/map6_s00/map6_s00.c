@@ -153,7 +153,7 @@ void func_800EB11C(void) // 0x800EB11C
 
             D_800F0684 = 0;
             D_800F0044 = 0;
-            D_800F0040 = 0;
+            g_CutsceneTimer = Q12(0.0f);
 
             func_80085EB8(0, &g_SysWork.playerWork.player, 53, false);
             Game_TurnFlashlightOn();
@@ -169,15 +169,15 @@ void func_800EB11C(void) // 0x800EB11C
 
         case 1:
             SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
-            SysWork_StateStepIncrementAfterTime(&D_800F0040, Q12(12.5f), Q12(0.0f), Q12(22.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(12.5f), Q12(0.0f), Q12(22.0f), true, false);
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterTime(&D_800F0040, Q12(12.5f), Q12(0.0f), Q12(22.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(12.5f), Q12(0.0f), Q12(22.0f), true, true);
             break;
 
         case 3:
-            D_800F0040 = Q12(23.0f);
+            g_CutsceneTimer = Q12(23.0f);
             func_80085EB8(0, &g_SysWork.playerWork.player, 52, false);
             SysWork_StateStepIncrement(0);
 
@@ -192,11 +192,11 @@ void func_800EB11C(void) // 0x800EB11C
 
         case 6:
             Map_MessageWithAudio(16, &D_800F0684, &D_800F0038);
-            SysWork_StateStepIncrementAfterTime(&D_800F0040, Q12(18.0f), Q12(23.0f), Q12(43.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(18.0f), Q12(23.0f), Q12(43.0f), true, false);
             break;
 
         case 7:
-            SysWork_StateStepIncrementAfterTime(&D_800F0040, Q12(18.0f), Q12(23.0f), Q12(43.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(18.0f), Q12(23.0f), Q12(43.0f), true, true);
             break;
 
         case 8:
@@ -204,7 +204,7 @@ void func_800EB11C(void) // 0x800EB11C
             SysWork_StateStepIncrement(0);
 
         case 9:
-            SysWork_StateStepIncrementAfterTime(&D_800F0040, Q12(4.2f), Q12(44.0f), Q12(47.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(4.2f), Q12(44.0f), Q12(47.0f), true, true);
             break;
 
         case 10:
@@ -220,7 +220,7 @@ void func_800EB11C(void) // 0x800EB11C
             Map_MessageWithAudio(17, &D_800F0684, &D_800F0038);
 
         case 12:
-            SysWork_StateStepIncrementAfterTime(&D_800F0040, Q12(4.0f), Q12(48.0f), Q12(57.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(4.0f), Q12(48.0f), Q12(57.0f), true, true);
             D_800F0044 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.0f);
             break;
 
@@ -232,7 +232,7 @@ void func_800EB11C(void) // 0x800EB11C
             Map_MessageWithAudio(18, &D_800F0684, &D_800F0038);
 
         case 15:
-            SysWork_StateStepIncrementAfterTime(&D_800F0040, Q12(4.0f), Q12(58.0f), Q12(67.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(4.0f), Q12(58.0f), Q12(67.0f), true, true);
             D_800F0044 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.7f);
             break;
 
@@ -248,7 +248,7 @@ void func_800EB11C(void) // 0x800EB11C
 
         case 18:
             MapMsg_DisplayAndHandleSelection(false, 19, 0, 0, 0, false);
-            SysWork_StateStepIncrementAfterTime(&D_800F0040, Q12(2.5f), Q12(68.0f), Q12(143.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(2.5f), Q12(68.0f), Q12(143.0f), true, false);
 
             D_800F0044 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
             if (D_800F0044 > Q12(16.0f))
@@ -267,7 +267,7 @@ void func_800EB11C(void) // 0x800EB11C
             vcReturnPreAutoCamWork(true);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
-            D_800F0040 = NO_VALUE;
+            g_CutsceneTimer = NO_VALUE;
 
             Savegame_EventFlagSet(EventFlag_402);
             Savegame_EventFlagClear(EventFlag_414);
@@ -338,12 +338,12 @@ void func_800EB11C(void) // 0x800EB11C
         func_800894DC();
     }
 
-    if (D_800F0040 >= 0)
+    if (g_CutsceneTimer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800F0040, FS_BUFFER_15);
-        vcChangeProjectionValue(Dms_CameraTargetGet(&D_800F0668, &D_800F0678, NULL, D_800F0040, FS_BUFFER_15));
-        vcUserCamTarget(&D_800F0668, NULL, true);
-        vcUserWatchTarget(&D_800F0678, NULL, true);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_CutsceneTimer, FS_BUFFER_15);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_CutsceneTimer, FS_BUFFER_15));
+        vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
+        vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
     }
 }
 

@@ -111,7 +111,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Cybil, 0, Q12(4.4f), Q12(269.9f), Q12_ANGLE(0.0f), 2);
 
-            g_Timer0 = Q12(0.0f);
+            g_CutsceneTimer = Q12(0.0f);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -138,16 +138,16 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 6:
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(7.8f), Q12(0.0f), Q12(5.0f), false, true);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(7.8f), Q12(0.0f), Q12(5.0f), false, true);
             break;
 
         case 7:
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(7.8f), Q12(0.0f), Q12(26.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(7.8f), Q12(0.0f), Q12(26.0f), true, false);
             Map_MessageWithAudio(15, &g_MapMsgSoundIdx, g_MapMsgSounds); // "Was I dreaming?"
             break;
 
         case 8:
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(7.8f), Q12(0.0f), Q12(26.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(7.8f), Q12(0.0f), Q12(26.0f), true, true);
             break;
 
         case 9:
@@ -170,7 +170,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
                     break;
 
                 case 12:
-                    if (g_Timer0 == Q12(48.0f) && D_800DE251 == 2)
+                    if (g_CutsceneTimer == Q12(48.0f) && D_800DE251 == 2)
                     {
                         SysWork_StateStepSet(0, 13);
                     }
@@ -181,9 +181,9 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
                     break;
             }
 
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(4.0f), Q12(27.0f), Q12(48.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(4.0f), Q12(27.0f), Q12(48.0f), true, false);
 
-            if (D_800DE251 == 0 && g_Timer0 > Q12(38.0f))
+            if (D_800DE251 == 0 && g_CutsceneTimer > Q12(38.0f))
             {
                 func_80085EB8(0, &g_SysWork.npcs[0], 10, false);
                 func_80085EB8(0, &g_SysWork.playerWork.player, 110, false);
@@ -200,12 +200,12 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 14:
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(3.0f), Q12(49.0f), Q12(139.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(3.0f), Q12(49.0f), Q12(139.0f), true, false);
             Map_MessageWithAudio(25, &g_MapMsgSoundIdx, g_MapMsgSounds); // "Have you seen a little girl?"
             break;
 
         case 15:
-            g_Timer0 = Q12(140.0f);
+            g_CutsceneTimer = Q12(140.0f);
             SysWork_StateStepIncrement(0);
 
         case 16:
@@ -221,7 +221,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 19:
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(10.0f), Q12(141.0f), Q12(152.0f), false, true);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(141.0f), Q12(152.0f), false, true);
             break;
 
         case 20:
@@ -229,7 +229,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 21:
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(10.0f), Q12(141.0f), Q12(159.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(141.0f), Q12(159.0f), true, true);
             Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio12);
             break;
 
@@ -239,7 +239,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 23:
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(10.0f), Q12(160.0f), Q12(173.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(160.0f), Q12(173.0f), true, false);
             MapMsg_DisplayAndHandleSelection(false, 43, 0, 0, 0, false);
             Text_Debug_PositionSet(30, 30);
             break;
@@ -249,7 +249,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 25:
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(10.0f), Q12(174.0f), Q12(184.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(174.0f), Q12(184.0f), true, false);
             Map_MessageWithAudio(44, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
@@ -259,12 +259,12 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 27:
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(10.0f), Q12(185.0f), Q12(194.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(185.0f), Q12(194.0f), true, false);
             Map_MessageWithAudio(45, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
         case 28:
-            g_Timer0 = Q12(195.0f);
+            g_CutsceneTimer = Q12(195.0f);
 
             func_80085EB8(0, &g_SysWork.npcs[0], 5, false);
             SysWork_StateStepIncrement(0);
@@ -286,7 +286,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 33:
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(20.0f), Q12(207.0f), Q12(222.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(20.0f), Q12(207.0f), Q12(222.0f), true, true);
             break;
 
         case 34:
@@ -294,17 +294,17 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 35:
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(5.0f), Q12(223.0f), Q12(251.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(5.0f), Q12(223.0f), Q12(251.0f), true, false);
             Map_MessageWithAudio(51, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
         case 36:
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(5.0f), Q12(223.0f), Q12(251.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(5.0f), Q12(223.0f), Q12(251.0f), true, false);
             SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
             break;
 
         case 37:
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(5.0f), Q12(223.0f), Q12(251.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(5.0f), Q12(223.0f), Q12(251.0f), true, false);
             Map_MessageWithAudio(55, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
@@ -314,12 +314,12 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 39:
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(10.0f), Q12(252.0f), Q12(280.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(252.0f), Q12(280.0f), true, false);
             Map_MessageWithAudio(57, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
         case 40:
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(10.0f), Q12(252.0f), Q12(280.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(252.0f), Q12(280.0f), true, true);
             break;
 
         case 41:
@@ -327,12 +327,12 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 42:
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(10.0f), Q12(281.0f), Q12(296.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(281.0f), Q12(296.0f), true, true);
             break;
 
         case 43:
             func_80085EB8(0, &g_SysWork.playerWork.player, 0x33, false);
-            g_Timer0 = Q12(297.0f);
+            g_CutsceneTimer = Q12(297.0f);
             SysWork_StateStepIncrement(0);
 
         case 44:
@@ -345,7 +345,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 46:
-            SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(10.0f), Q12(298.0f), Q12(308.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(298.0f), Q12(308.0f), true, true);
             break;
 
         case 47:
@@ -366,7 +366,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 50:
-            g_Timer0 = Q12(308.0f);
+            g_CutsceneTimer = Q12(308.0f);
             SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
@@ -392,22 +392,22 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SD_Call(23);
 
             Savegame_EventFlagSet(EventFlag_49);
-            g_Timer0 = NO_VALUE;
+            g_CutsceneTimer = NO_VALUE;
             break;
     }
 
-    if (g_Timer0 >= Q12(0.0f))
+    if (g_CutsceneTimer >= Q12(0.0f))
     {
-        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_Timer0, FS_BUFFER_11));
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_CutsceneTimer, FS_BUFFER_11));
         vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Timer0, FS_BUFFER_11);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_CutsceneTimer, FS_BUFFER_11);
 
         if (D_800DE250 != 0)
         {
-            chara0 = &g_SysWork.npcs[0];
+            chara0                    = &g_SysWork.npcs[0];
             chara0->model.anim.flags |= AnimFlag_Visible;
-            Dms_CharacterTransformGet(&chara0->position, &chara0->rotation, "SIBYL", g_Timer0, FS_BUFFER_11);
+            Dms_CharacterTransformGet(&chara0->position, &chara0->rotation, "SIBYL", g_CutsceneTimer, FS_BUFFER_11);
             return;
         }
 
@@ -556,7 +556,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             g_SysWork.playerWork.player.position.vz = Q12(269.7f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(5.0f);
 
-            g_Timer0 = Q12(26.0f);
+            g_CutsceneTimer = Q12(26.0f);
 
             SysWork_StateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
 
@@ -576,9 +576,9 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 4:
-            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
-            g_Timer0 = MIN(time, Q12(37.0f));
-            if (g_Timer0 >= Q12(37.0f))
+            time     = g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
+            g_CutsceneTimer = MIN(time, Q12(37.0f));
+            if (g_CutsceneTimer >= Q12(37.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -601,16 +601,16 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 9:
-            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
-            g_Timer0 = MIN(time, Q12(52.0f));
-            if (g_Timer0 >= Q12(52.0f))
+            time     = g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
+            g_CutsceneTimer = MIN(time, Q12(52.0f));
+            if (g_CutsceneTimer >= Q12(52.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
             break;
 
         case 10:
-            g_Timer0 = MAX(g_Timer0, Q12(53.0f));
+            g_CutsceneTimer = MAX(g_CutsceneTimer, Q12(53.0f));
             D_800E23A1 = 0x80;
             Savegame_EventFlagSet(EventFlag_M0S01_AirScreamerIntroCutsceneStarted);
 
@@ -622,10 +622,10 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 12:
-            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
-            g_Timer0 = MIN(time, Q12(75.0f));
+            time     = g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
+            g_CutsceneTimer = MIN(time, Q12(75.0f));
 
-            if (g_Timer0 >= Q12(75.0f))
+            if (g_CutsceneTimer >= Q12(75.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -636,14 +636,14 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 
             D_800E23A1 = 0xE0;
             Savegame_EventFlagSet(EventFlag_46);
-            g_Timer0 = Q12(76.0f);
+            g_CutsceneTimer = Q12(76.0f);
 
             SysWork_StateStepIncrement(0);
 
         case 14:
-            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f));
-            g_Timer0 = MIN(time, Q12(115.0f));
-            if (g_Timer0 >= Q12(115.0f))
+            time     = g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f));
+            g_CutsceneTimer = MIN(time, Q12(115.0f));
+            if (g_CutsceneTimer >= Q12(115.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -655,9 +655,9 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 16:
-            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f));
-            g_Timer0 = MIN(time, Q12(146.0f));
-            if (g_Timer0 >= Q12(146.0f))
+            time     = g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f));
+            g_CutsceneTimer = MIN(time, Q12(146.0f));
+            if (g_CutsceneTimer >= Q12(146.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -670,9 +670,9 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 18:
-            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f));
-            g_Timer0 = MIN(time, Q12(147.0f));
-            if (g_Timer0 >= Q12(147.0f))
+            time     = g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f));
+            g_CutsceneTimer = MIN(time, Q12(147.0f));
+            if (g_CutsceneTimer >= Q12(147.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -683,9 +683,9 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 20:
-            time     = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f));
-            g_Timer0 = MIN(time, Q12(154.0f));
-            if (g_Timer0 >= Q12(154.0f))
+            time     = g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f));
+            g_CutsceneTimer = MIN(time, Q12(154.0f));
+            if (g_CutsceneTimer >= Q12(154.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -696,7 +696,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             func_800D39F4(&g_SysWork.npcs[0]);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
-            g_Timer0 = NO_VALUE;
+            g_CutsceneTimer = NO_VALUE;
 
             vcReturnPreAutoCamWork(true);
 
@@ -710,18 +710,18 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
     }
 
-    if (g_Timer0 >= Q12(0.0f))
+    if (g_CutsceneTimer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Timer0, FS_BUFFER_11);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_CutsceneTimer, FS_BUFFER_11);
 
         if (g_SysWork.sysStateSteps[0] >= 20)
         {
-            Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "BIRD", g_Timer0, FS_BUFFER_11);
+            Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "BIRD", g_CutsceneTimer, FS_BUFFER_11);
             g_SysWork.npcs[0].position.vx += Q12_MULT(Math_Sin(g_SysWork.npcs[0].rotation.vy), Q12(0.2f));
             g_SysWork.npcs[0].position.vz += Q12_MULT(Math_Cos(g_SysWork.npcs[0].rotation.vy), Q12(0.2f));
         }
 
-        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_Timer0, FS_BUFFER_11));
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_CutsceneTimer, FS_BUFFER_11));
         vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
     }
@@ -941,7 +941,7 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
         Gfx_MapInitMapEffectsUpdate(6, 3);
     }
 
-    g_Timer0 = Q12(0.0f);
+    g_CutsceneTimer = Q12(0.0f);
     D_800E2560 = 0;
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
@@ -1005,12 +1005,12 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
     {
         if (Savegame_EventFlagGet(EventFlag_41))
         {
-            temp_a1 = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Model_AnimDurationGet(&g_SysWork.npcs[0].model));
+            temp_a1 = g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Model_AnimDurationGet(&g_SysWork.npcs[0].model));
 
-            ptr = &g_Timer0;
+            ptr = &g_CutsceneTimer;
             if (temp_a1 < Q12(25.0f))
             {
-                var_a2 = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime, Model_AnimDurationGet(&g_SysWork.npcs[0].model));
+                var_a2 = g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Model_AnimDurationGet(&g_SysWork.npcs[0].model));
             }
             else
             {
@@ -1019,9 +1019,9 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
             *ptr = var_a2;
 
             Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "BIRD",
-                                   g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
+                                   g_CutsceneTimer, (s_DmsHeader*)FS_BUFFER_11);
 
-            if (g_Timer0 >= Q12(25.0f) ||
+            if (g_CutsceneTimer >= Q12(25.0f) ||
                 ABS(g_SysWork.playerWork.player.position.vx - Q12(4.586f)) > Q12(0.7f) ||
                 ABS(g_SysWork.playerWork.player.position.vz - Q12(267.2852f)) > Q12(0.7f))
             {
