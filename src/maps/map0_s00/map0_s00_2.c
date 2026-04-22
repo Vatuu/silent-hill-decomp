@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/dms.h"
 #include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player.h"

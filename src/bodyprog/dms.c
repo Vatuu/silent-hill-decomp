@@ -5,15 +5,12 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/dms.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound_system.h"
 #include "main/fsqueue.h"
-
-// ========================================
-// DMS FILE HANDLING
-// ========================================
 
 void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
 {
@@ -43,7 +40,7 @@ void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
 void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* dmsHdr) // 0x8008CA44
 {
     entry->keyframes.character = (u32)entry->keyframes.character + (u32)dmsHdr;
-    entry->svectors          = (u32)entry->svectors + (u32)dmsHdr;
+    entry->svectors            = (u32)entry->svectors + (u32)dmsHdr;
 }
 
 s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* dmsHdr) // 0x8008CA60
@@ -66,7 +63,7 @@ void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, 
 
 #if VERSION_EQUAL_OR_OLDER(PROTO_981216)
         // Code seen in 98-12-16 build.
-        Text_Debug_Draw(charName);
+        Text_Debug_Draw(charaName);
         Text_Debug_Draw(" doesn't exist in dms.");
 #endif
     }
