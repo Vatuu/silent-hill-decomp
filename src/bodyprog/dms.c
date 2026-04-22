@@ -12,7 +12,7 @@
 #include "bodyprog/sound_system.h"
 #include "main/fsqueue.h"
 
-void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
+void Dms_HeaderFixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
 {
     s_DmsEntry* curEntry;
 
@@ -24,31 +24,29 @@ void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
     dmsHdr->isLoaded = true;
 
     // Add memory address of DMS header to offsets in `dmsHdr`.
-    dmsHdr->intervals = (u8*)dmsHdr->intervals + (u32)dmsHdr;
+    dmsHdr->intervals  = (u8*)dmsHdr->intervals  + (u32)dmsHdr;
     dmsHdr->characters = (u8*)dmsHdr->characters + (u32)dmsHdr;
 
-    DmsEntry_FixOffsets(&dmsHdr->camera, dmsHdr);
+    Dms_EntryFixOffsets(&dmsHdr->camera, dmsHdr);
 
-    for (curEntry = dmsHdr->characters;
-         curEntry < &dmsHdr->characters[dmsHdr->characterCount];
-         curEntry++)
+    for (curEntry = dmsHdr->characters; curEntry < &dmsHdr->characters[dmsHdr->characterCount]; curEntry++)
     {
-        DmsEntry_FixOffsets(curEntry, dmsHdr);
+        Dms_EntryFixOffsets(curEntry, dmsHdr);
     }
 }
 
-void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* dmsHdr) // 0x8008CA44
+void Dms_EntryFixOffsets(s_DmsEntry* entry, s_DmsHeader* dmsHdr) // 0x8008CA44
 {
     entry->keyframes.character = (u32)entry->keyframes.character + (u32)dmsHdr;
     entry->svectors            = (u32)entry->svectors + (u32)dmsHdr;
 }
 
-s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* dmsHdr) // 0x8008CA60
+s_DmsInterval* Dms_IntervalGet(volatile s32 unused, s32 intervalIdx, s_DmsHeader* dmsHdr) // 0x8008CA60
 {
-    return &dmsHdr->intervals[idx];
+    return &dmsHdr->intervals[intervalIdx];
 }
 
-void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, q19_12 time, s_DmsHeader* dmsHdr) // 0x8008CA74
+void Dms_CharacterTransformGet(VECTOR3* pos, SVECTOR3* rot, const char* charaName, q19_12 time, s_DmsHeader* dmsHdr) // 0x8008CA74
 {
     s32 charaIdx;
 
@@ -69,7 +67,7 @@ void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, 
     }
     else
     {
-        Dms_CharacterGetPosRotByIdx(pos, rot, charaIdx, time, dmsHdr);
+        Dms_CharacterTransformGetByIdx(pos, rot, charaIdx, time, dmsHdr);
     }
 }
 
@@ -88,20 +86,22 @@ s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* dmsHdr) // 0x8008CB10
     return NO_VALUE;
 }
 
-void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_12 time, s_DmsHeader* dmsHdr) // 0x8008CB90
+void Dms_CharacterTransformGetByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_12 time, s_DmsHeader* dmsHdr) // 0x8008CB90
 {
     s_DmsEntry*             charaEntry;
-    s32                     keyframePrev;
-    s32                     keyframeNext;
+    s32                     prevKeyframeIdx;
+    s32                     nextKeyframeIdx;
     s32                     alpha;
-    s_DmsKeyframeCharacter* keyframes;
+    s_DmsKeyframeCharacter* charaKeyframes;
     s_DmsKeyframeCharacter  curFrame;
 
     charaEntry = &dmsHdr->characters[charaIdx];
-    func_8008D1D0(&keyframePrev, &keyframeNext, &alpha, time, charaEntry, dmsHdr);
+    Dms_CameraKeyframeInterpGet(&prevKeyframeIdx, &nextKeyframeIdx, &alpha, time, charaEntry, dmsHdr);
 
-    keyframes = charaEntry->keyframes.character;
-    Dms_CharacterKeyframeInterpolate(&curFrame, &keyframes[keyframePrev], &keyframes[keyframeNext], alpha);
+    charaKeyframes = charaEntry->keyframes.character;
+    Dms_CharacterKeyframeInterpolate(&curFrame,
+                                     &charaKeyframes[prevKeyframeIdx], &charaKeyframes[nextKeyframeIdx],
+                                     alpha);
 
     // Set position.
     pos->vx = Q8_TO_Q12(curFrame.position.vx + dmsHdr->origin.vx);
@@ -116,35 +116,35 @@ void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_
 
 void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha) // 0x8008CC98
 {
-    // Low-precision lerp between positions?
+    // Low-precision lerp between positions.
     result->position.vx = frame0->position.vx + Q12_MULT_PRECISE(frame1->position.vx - frame0->position.vx, alpha);
     result->position.vy = frame0->position.vy + Q12_MULT_PRECISE(frame1->position.vy - frame0->position.vy, alpha);
     result->position.vz = frame0->position.vz + Q12_MULT_PRECISE(frame1->position.vz - frame0->position.vz, alpha);
 
-    // Higher-precision lerp between rotations?
-    result->rotation.vx = Math_LerpFixed12(frame0->rotation.vx, frame1->rotation.vx, alpha);
-    result->rotation.vy = Math_LerpFixed12(frame0->rotation.vy, frame1->rotation.vy, alpha);
-    result->rotation.vz = Math_LerpFixed12(frame0->rotation.vz, frame1->rotation.vz, alpha);
+    // High-precision lerp between rotations.
+    result->rotation.vx = Dms_AngleLerp(frame0->rotation.vx, frame1->rotation.vx, alpha);
+    result->rotation.vy = Dms_AngleLerp(frame0->rotation.vy, frame1->rotation.vy, alpha);
+    result->rotation.vz = Dms_AngleLerp(frame0->rotation.vz, frame1->rotation.vz, alpha);
 }
 
-q3_12 func_8008CDBC(q3_12 angle) // 0x8008CDBC
+q3_12 Dms_FovScaleGet(q3_12 fovAngle) // 0x8008CDBC
 {
-    return (96 * Math_Cos(angle / 2)) / Math_Sin(angle / 2);
+    return (96 * Math_Cos(fovAngle / 2)) / Math_Sin(fovAngle / 2);
 }
 
-s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, q19_12 time, s_DmsHeader* dmsHdr) // 0x8008CE1C
+s32 Dms_CameraTargetGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, q19_12 time, s_DmsHeader* dmsHdr) // 0x8008CE1C
 {
     s32                 keyframePrev;
     s32                 keyframeNext;
     s32                 alpha;
     s_DmsKeyframeCamera curFrame;
-    s32                 camProjValue;
+    s32                 camProjVal;
     s_DmsEntry*         camEntry;
 
     camEntry = &dmsHdr->camera;
 
-    func_8008D1D0(&keyframePrev, &keyframeNext, &alpha, time, camEntry, dmsHdr);
-    camProjValue = Dms_CameraKeyframeInterpolate(&curFrame, &camEntry->keyframes.camera[keyframePrev], &camEntry->keyframes.camera[keyframeNext], alpha);
+    Dms_CameraKeyframeInterpGet(&keyframePrev, &keyframeNext, &alpha, time, camEntry, dmsHdr);
+    camProjVal = Dms_CameraKeyframeInterpolate(&curFrame, &camEntry->keyframes.camera[keyframePrev], &camEntry->keyframes.camera[keyframeNext], alpha);
 
     posTarget->vx = Q8_TO_Q12(curFrame.positionTarget.vx + dmsHdr->origin.vx);
     posTarget->vy = Q8_TO_Q12(curFrame.positionTarget.vy + dmsHdr->origin.vy);
@@ -159,11 +159,11 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
         *arg2 = curFrame.field_C[0];
     }
 
-    // `camProjValue` comes from `curFrame.field_C[1]`, return value is passed to `vcChangeProjectionValue`.
-    return camProjValue;
+    // `camProjVal` comes from `curFrame.field_C[1]`, return value is passed to `vcChangeProjectionValue`.
+    return camProjVal;
 }
 
-bool func_8008CF54(SVECTOR3* rot0, SVECTOR3* rot1) // 0x8008CF54
+bool Dms_RotationsCompare(const SVECTOR3* rot0, const SVECTOR3* rot1) // 0x8008CF54
 {
     #define ANGLE_EPSILON Q12_ANGLE(360.0f / 16.0f) // 22.5 degrees
 
@@ -187,43 +187,43 @@ s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyfra
     result->lookAtTarget.vy = frame0->lookAtTarget.vy + Q12_MULT_PRECISE(frame1->lookAtTarget.vy - frame0->lookAtTarget.vy, alpha);
     result->lookAtTarget.vz = frame0->lookAtTarget.vz + Q12_MULT_PRECISE(frame1->lookAtTarget.vz - frame0->lookAtTarget.vz, alpha);
 
-    result->field_C[0] = Math_LerpFixed12(frame0->field_C[0], frame1->field_C[0], alpha);
+    result->field_C[0] = Dms_AngleLerp(frame0->field_C[0], frame1->field_C[0], alpha);
     result->field_C[1] = frame0->field_C[1] + Q12_MULT_PRECISE(frame1->field_C[1] - frame0->field_C[1], alpha);
 
     return result->field_C[1];
 }
 
-void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, q19_12* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* dmsHdr) // 0x8008D1D0
+void Dms_CameraKeyframeInterpGet(s32* prevRelKeyframeIdx, s32* nextRelKeyframeIdx, q19_12* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* dmsHdr) // 0x8008D1D0
 {
-    s32 prevVal;
-    s32 nextVal;
+    s32 prevAbsKeyframeIdx;
+    s32 nextAbsKeyframeIdx;
 
-    prevVal = 0;
-    nextVal = 0;
+    prevAbsKeyframeIdx = 0;
+    nextAbsKeyframeIdx = 0;
 
     switch (Dms_IntervalStateGet(time, dmsHdr))
     {
         case DmsIntervalState_Interpolating:
-            prevVal = FP_FROM(time, Q12_SHIFT);
-            nextVal = prevVal + 1;
-            *alpha  = Q12_FRACT(time);
+            prevAbsKeyframeIdx = FP_FROM(time, Q12_SHIFT);
+            nextAbsKeyframeIdx = prevAbsKeyframeIdx + 1;
+            *alpha             = Q12_FRACT(time);
             break;
 
         case DmsIntervalState_SingleFrame:
-            prevVal = FP_FROM(time, Q12_SHIFT);
-            nextVal = prevVal;
-            *alpha  = Q12(0.0f);
+            prevAbsKeyframeIdx = FP_FROM(time, Q12_SHIFT);
+            nextAbsKeyframeIdx = prevAbsKeyframeIdx;
+            *alpha             = Q12(0.0f);
             break;
 
         case DmsIntervalState_Ending:
-            prevVal = FP_FROM(time, Q12_SHIFT) - 1;
-            nextVal = prevVal + 1;
-            *alpha  = Q12_FRACT(time) + Q12(1.0f);
+            prevAbsKeyframeIdx = FP_FROM(time, Q12_SHIFT) - 1;
+            nextAbsKeyframeIdx = prevAbsKeyframeIdx + 1;
+            *alpha             = Q12_FRACT(time) + Q12(1.0f);
             break;
     }
 
-    *prevKeyframe = func_8008D330(prevVal, camEntry);
-    *nextKeyframe = func_8008D330(nextVal, camEntry);
+    *prevRelKeyframeIdx = Dms_CameraRelKeyframeIdxGet(prevAbsKeyframeIdx, camEntry);
+    *nextRelKeyframeIdx = Dms_CameraRelKeyframeIdxGet(nextAbsKeyframeIdx, camEntry);
 }
 
 u32 Dms_IntervalStateGet(q19_12 time, s_DmsHeader* dmsHdr)
@@ -253,49 +253,49 @@ u32 Dms_IntervalStateGet(q19_12 time, s_DmsHeader* dmsHdr)
     return DmsIntervalState_Interpolating;
 }
 
-s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry) // 0x8008D330
+s32 Dms_CameraRelKeyframeIdxGet(s32 absKeyframeIdx, s_DmsEntry* camEntry) // 0x8008D330
 {
-    s32       keyframeIdx0;
-    s32       keyframeIdx1;
-    SVECTOR3* curVec;
+    s32       relKeyframeIdx0;
+    s32       relKeyframeIdx1;
+    SVECTOR3* curSegment;
 
-    keyframeIdx0 = arg0;
-    for (curVec = camEntry->svectors; curVec < &camEntry->svectors[camEntry->svectorCount]; curVec++)
+    relKeyframeIdx0 = absKeyframeIdx;
+    for (curSegment = camEntry->svectors; curSegment < &camEntry->svectors[camEntry->svectorCount]; curSegment++)
     {
-        if (arg0 < curVec->vx)
+        if (absKeyframeIdx < curSegment->vx)
         {
             break;
         }
 
-        if (arg0 <= curVec->vy)
+        if (absKeyframeIdx <= curSegment->vy)
         {
-            keyframeIdx0 = curVec->vz;
+            relKeyframeIdx0 = curSegment->vz;
             break;
         }
 
-        keyframeIdx0 -= curVec->vy - curVec->vx;
+        relKeyframeIdx0 -= curSegment->vy - curSegment->vx;
     }
 
-    if (keyframeIdx0 >= 0)
+    if (relKeyframeIdx0 >= 0)
     {
-        if ((camEntry->keyframeCount - 1) >= keyframeIdx0)
+        if ((camEntry->keyframeCount - 1) >= relKeyframeIdx0)
         {
-            keyframeIdx1 = keyframeIdx0;
+            relKeyframeIdx1 = relKeyframeIdx0;
         }
         else
         {
-            keyframeIdx1 = camEntry->keyframeCount - 1;
+            relKeyframeIdx1 = camEntry->keyframeCount - 1;
         }
     }
     else
     {
-        keyframeIdx1 = 0;
+        relKeyframeIdx1 = 0;
     }
 
-    return keyframeIdx1;
+    return relKeyframeIdx1;
 }
 
-s32 Math_LerpFixed12(s16 from, s16 to, q19_12 alpha) // 0x8008D3D4
+s32 Dms_AngleLerp(q3_12 angleFrom, q3_12 angleTo, q19_12 alpha) // 0x8008D3D4
 {
-    return Q12_ANGLE_NORM_S((s32)(Q12_MULT_PRECISE(Q12_ANGLE_NORM_S(to - from), alpha)) + from);
+    return Q12_ANGLE_NORM_S((s32)(Q12_MULT_PRECISE(Q12_ANGLE_NORM_S(angleTo - angleFrom), alpha)) + angleFrom);
 }

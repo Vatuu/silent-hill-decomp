@@ -106,7 +106,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
             Fs_QueueStartRead(FILE_ANIM_CAFE_DMS, FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets(FS_BUFFER_11);
+            Dms_HeaderFixOffsets(FS_BUFFER_11);
             Chara_Load(0, Chara_Cybil, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Cybil, 0, Q12(4.4f), Q12(269.9f), Q12_ANGLE(0.0f), 2);
@@ -398,16 +398,16 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
     if (g_Timer0 >= Q12(0.0f))
     {
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_Timer0, FS_BUFFER_11));
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_Timer0, FS_BUFFER_11));
         vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Timer0, FS_BUFFER_11);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Timer0, FS_BUFFER_11);
 
         if (D_800DE250 != 0)
         {
             chara0 = &g_SysWork.npcs[0];
             chara0->model.anim.flags |= AnimFlag_Visible;
-            Dms_CharacterGetPosRot(&chara0->position, &chara0->rotation, "SIBYL", g_Timer0, FS_BUFFER_11);
+            Dms_CharacterTransformGet(&chara0->position, &chara0->rotation, "SIBYL", g_Timer0, FS_BUFFER_11);
             return;
         }
 
@@ -712,16 +712,16 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 
     if (g_Timer0 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Timer0, FS_BUFFER_11);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Timer0, FS_BUFFER_11);
 
         if (g_SysWork.sysStateSteps[0] >= 20)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "BIRD", g_Timer0, FS_BUFFER_11);
+            Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "BIRD", g_Timer0, FS_BUFFER_11);
             g_SysWork.npcs[0].position.vx += Q12_MULT(Math_Sin(g_SysWork.npcs[0].rotation.vy), Q12(0.2f));
             g_SysWork.npcs[0].position.vz += Q12_MULT(Math_Cos(g_SysWork.npcs[0].rotation.vy), Q12(0.2f));
         }
 
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_Timer0, FS_BUFFER_11));
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_Timer0, FS_BUFFER_11));
         vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
     }
@@ -811,11 +811,11 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
         case 10:
             // Set cutscene character.
             Chara_Spawn(Chara_AirScreamer, 0, Q12(0.0f), Q12(0.0f), Q12_ANGLE(0.0f), 12);
-            DmsHeader_FixOffsets(FS_BUFFER_11);
-            Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "BIRD", 0, FS_BUFFER_11);
+            Dms_HeaderFixOffsets(FS_BUFFER_11);
+            Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "BIRD", 0, FS_BUFFER_11);
 
             // Set camera.
-            vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, 0, FS_BUFFER_11));
+            vcChangeProjectionValue(Dms_CameraTargetGet(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, 0, FS_BUFFER_11));
             vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
             vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
 
@@ -932,7 +932,7 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
 
             Fs_QueueStartRead(FILE_ANIM_CAFE2_DMS, FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
+            Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_11);
         }
     }
 
@@ -1018,7 +1018,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
             }
             *ptr = var_a2;
 
-            Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "BIRD",
+            Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "BIRD",
                                    g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
 
             if (g_Timer0 >= Q12(25.0f) ||

@@ -146,7 +146,7 @@ void func_800EB11C(void) // 0x800EB11C
 
             Fs_QueueStartRead(FILE_ANIM_RSU_DMS, FS_BUFFER_15);
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets(FS_BUFFER_15);
+            Dms_HeaderFixOffsets(FS_BUFFER_15);
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -340,8 +340,8 @@ void func_800EB11C(void) // 0x800EB11C
 
     if (D_800F0040 >= 0)
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800F0040, FS_BUFFER_15);
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800F0668, &D_800F0678, NULL, D_800F0040, FS_BUFFER_15));
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800F0040, FS_BUFFER_15);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&D_800F0668, &D_800F0678, NULL, D_800F0040, FS_BUFFER_15));
         vcUserCamTarget(&D_800F0668, NULL, true);
         vcUserWatchTarget(&D_800F0678, NULL, true);
     }

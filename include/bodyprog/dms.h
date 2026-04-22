@@ -6,7 +6,7 @@ typedef struct _DmsKeyframeCamera
 {
     /* 0x0 */ SVECTOR3 positionTarget; /** Q7.8 */
     /* 0x6 */ SVECTOR3 lookAtTarget;   /** Q7.8 */
-    /* 0xC */ s16      field_C[2];     // `field_C[1]` gets passed to `vcChangeProjectionValue`.
+    /* 0xC */ q3_12    field_C[2];     // Projection angles? `field_C[1]` gets passed to `vcChangeProjectionValue`.
 } s_DmsKeyframeCamera;
 STATIC_ASSERT_SIZEOF(s_DmsKeyframeCamera, 16);
 
@@ -25,7 +25,7 @@ typedef struct _DmsEntry
     /* 0x2 */ u8        svectorCount; /** `svectors` array size. */
     /* 0x3 */ u8        field_3;      // Usually 0, but sometimes filled in, possibly junk data left in padding byte.
     /* 0x4 */ char      name[4];      // First 4 `char`s of name. E.g. If code checks for "DAHLIA", file is "DAHL".
-    /* 0x8 */ SVECTOR3* svectors;     // Pointer to `SVECTOR3`s. Unknown purpose.
+    /* 0x8 */ SVECTOR3* svectors;     // TODO: NOT `SVECTOR3`. Needs new struct.
               union
               {
                   s_DmsKeyframeCharacter* character;
@@ -57,41 +57,47 @@ typedef struct _DmsHeader
 } s_DmsHeader;
 STATIC_ASSERT_SIZEOF(s_DmsHeader, 44);
 
-// `dms.c` ================================================
+void Dms_HeaderFixOffsets(s_DmsHeader* dmsHdr);
 
-void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr);
+void Dms_EntryFixOffsets(s_DmsEntry* entry, s_DmsHeader* dmsHdr);
 
-void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* dmsHdr);
+/** @unused `volatile` needed for match. */
+s_DmsInterval* Dms_IntervalGet(volatile s32 unused, s32 intervalIdx, s_DmsHeader* dmsHdr);
 
-/** @unused? `volatile` needed for match. */
-s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* dmsHdr);
-
-void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, q19_12 time, s_DmsHeader* dmsHdr);
-
-void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, s32 time, s_DmsHeader* dmsHdr);
+void Dms_CharacterTransformGet(VECTOR3* pos, SVECTOR3* rot, const char* charaName, q19_12 time, s_DmsHeader* dmsHdr);
 
 s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* dmsHdr);
 
-void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_12 time, s_DmsHeader* dmsHdr);
+void Dms_CharacterTransformGetByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_12 time, s_DmsHeader* dmsHdr);
 
 void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha);
 
-/** @unused? Returns `96 * cotangent(angle / 2)`. Possibly camera/FOV related. */
-q3_12 func_8008CDBC(q3_12 angle);
+/** @brief Computes an FOV scale.
+ *
+ * @param fovAngle FOV angle.
+ * @return FOV scale.
+ */
+q3_12 Dms_FovScaleGet(q3_12 fovAngle);
 
-s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, q19_12 time, s_DmsHeader* dmsHdr);
+/** @brief Gets the camera position and look-at targets */
+s32 Dms_CameraTargetGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, q19_12 time, s_DmsHeader* dmsHdr);
 
-/** @unused Returns whether any axis differs by more than 22.5 degrees (1/16 of full rotation). */
-bool func_8008CF54(SVECTOR3* rot0, SVECTOR3* rot1);
+/** @brief @unused Checks if any axis between two rotations differs by more than 22.5 degrees (1/16 of a full rotation).
+ *
+ * @param rot0 First rotation.
+ * @param rot1 Second rotation.
+ * @return `true` if the rotations differ by the epsilon, `false` otehrwise.
+ */
+bool Dms_RotationsCompare(const SVECTOR3* rot0, const SVECTOR3* rot1);
 
 s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyframeCamera* frame0, const s_DmsKeyframeCamera* frame1, s32 alpha);
 
-void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, q19_12* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* dmsHdr);
+void Dms_CameraKeyframeInterpGet(s32* prevRelKeyframeIdx, s32* nextRelKeyframeIdx, q19_12* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* dmsHdr);
 
 u32 Dms_IntervalStateGet(q19_12 time, s_DmsHeader* dmsHdr);
 
-s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry);
+s32 Dms_CameraRelKeyframeIdxGet(s32 absKeyframeIdx, s_DmsEntry* camEntry);
 
-s32 Math_LerpFixed12(s16 from, s16 to, q19_12 alpha);
+s32 Dms_AngleLerp(q3_12 angleFrom, q3_12 angleTo, q19_12 alpha);
 
 #endif

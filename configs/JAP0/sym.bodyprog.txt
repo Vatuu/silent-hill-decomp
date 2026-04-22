@@ -1420,21 +1420,21 @@ func_8008BF84                                = 0x8008D9A0; // type:func
 //------------------------------------------------------
 //--- PA: 0x06985C   VA: 0x8008E3BC   subsegment: c, dms
 //------------------------------------------------------
-DmsHeader_FixOffsets                         = 0x8008E3BC; // type:func
-DmsEntry_FixOffsets                          = 0x8008E460; // type:func
-func_8008CA60                                = 0x8008E47C; // type:func
-Dms_CharacterGetPosRot                       = 0x8008E490; // type:func
+Dms_HeaderFixOffsets                         = 0x8008E3BC; // type:func
+Dms_EntryFixOffsets                          = 0x8008E460; // type:func
+Dms_IntervalGet                              = 0x8008E47C; // type:func
+Dms_CharacterTransformGet                    = 0x8008E490; // type:func
 Dms_CharacterFindIdxByName                   = 0x8008E52C; // type:func
-Dms_CharacterGetPosRotByIdx                  = 0x8008E5AC; // type:func
+Dms_CharacterTransformGetByIdx               = 0x8008E5AC; // type:func
 Dms_CharacterKeyframeInterpolate             = 0x8008E6B4; // type:func
-func_8008CDBC                                = 0x8008E7D8; // type:func
-Dms_CameraGetTargetPos                       = 0x8008E838; // type:func
-func_8008CF54                                = 0x8008E970; // type:func
+Dms_FovScaleGet                              = 0x8008E7D8; // type:func
+Dms_CameraTargetGet                          = 0x8008E838; // type:func
+Dms_RotationsCompare                         = 0x8008E970; // type:func
 Dms_CameraKeyframeInterpolate                = 0x8008EA08; // type:func
-func_8008D1D0                                = 0x8008EBEC; // type:func
+Dms_CameraKeyframeInterpGet                  = 0x8008EBEC; // type:func
 Dms_IntervalStateGet                         = 0x8008ECE0; // type:func
-func_8008D330                                = 0x8008ED4C; // type:func
-Math_LerpFixed12                             = 0x8008EDF0; // type:func
+Dms_CameraRelKeyframeIdxGet                  = 0x8008ED4C; // type:func
+Dms_AngleLerp                                = 0x8008EDF0; // type:func
 
 //--------------------------------------------------------
 //--- PA: 0x06A2D8   VA: 0x8008EE38   subsegment: c, water

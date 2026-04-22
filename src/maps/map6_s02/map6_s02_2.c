@@ -427,7 +427,7 @@ void func_800CFC34(void) // 0x800CFC34
         case 3:
             D_800D4E28 = 0;
             SysWork_StateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
-            DmsHeader_FixOffsets(FS_BUFFER_13);
+            Dms_HeaderFixOffsets(FS_BUFFER_13);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             Game_TurnFlashlightOn();
@@ -566,8 +566,8 @@ void func_800CFC34(void) // 0x800CFC34
     if (D_800D4E28 >= 0)
     {
         // TODO: Remove null chars from "HERO" once later rodata is added.
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO\0\0\0\0", D_800D4E28, FS_BUFFER_13);
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D4E0C, &D_800D4E1C, NULL, D_800D4E28, FS_BUFFER_13));
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO\0\0\0\0", D_800D4E28, FS_BUFFER_13);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&D_800D4E0C, &D_800D4E1C, NULL, D_800D4E28, FS_BUFFER_13));
         vcUserCamTarget(&D_800D4E0C, NULL, true);
         vcUserWatchTarget(&D_800D4E1C, NULL, true);
     }

@@ -866,7 +866,7 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 4:
-            DmsHeader_FixOffsets((s_DmsHeader* )FS_BUFFER_16);
+            Dms_HeaderFixOffsets((s_DmsHeader* )FS_BUFFER_16);
 
             g_Timer0 = Q12(0.0f);
 
@@ -1004,14 +1004,14 @@ void func_800D87C0(void) // 0x800D87C0
 
     if (g_Timer0 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_16);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_16);
 
         if (g_Timer0 >= Q12(16.0f))
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "CAT", g_Timer0, (s_DmsHeader*)FS_BUFFER_16);
+            Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "CAT", g_Timer0, (s_DmsHeader*)FS_BUFFER_16);
         }
 
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_16));
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_16));
         vcUserCamTarget(&g_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_CameraLookAtTarget, NULL, true);
     }

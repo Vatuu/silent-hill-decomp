@@ -479,7 +479,7 @@ void func_800EC42C(void) // 0x800EC42C
             D_800F3E0C = 0;
 
             SysWork_StateStepIncrementAfterFade(0, true, 3, 0, false);
-            DmsHeader_FixOffsets((s_DmsHeader* )FS_BUFFER_13);
+            Dms_HeaderFixOffsets((s_DmsHeader* )FS_BUFFER_13);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             Game_TurnFlashlightOn();
@@ -661,11 +661,11 @@ void func_800EC42C(void) // 0x800EC42C
 
     if (D_800F3E0C >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800F3E0C, (s_DmsHeader*)FS_BUFFER_13);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800F3E0C, (s_DmsHeader*)FS_BUFFER_13);
 
         g_SysWork.playerWork.player.position.vx -= Q12(20.0f);
 
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800F3DF0, &D_800F3E00, NULL, D_800F3E0C, (s_DmsHeader*)FS_BUFFER_13));
+        vcChangeProjectionValue(Dms_CameraTargetGet(&D_800F3DF0, &D_800F3E00, NULL, D_800F3E0C, (s_DmsHeader*)FS_BUFFER_13));
 
         D_800F3DF0.vx -= Q12(20.0f);
         D_800F3E00.vx -= Q12(20.0f);

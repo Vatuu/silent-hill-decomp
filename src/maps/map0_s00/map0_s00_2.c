@@ -176,7 +176,7 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             break;
 
         case 2:
-            DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_16);
+            Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_16);
             Chara_Load(0, Chara_Cheryl, g_SysWork.npcCoords, 0, NULL, NULL);
             SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(3.0f), false);
 
@@ -275,8 +275,8 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
 
     if (g_Timer0 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_16);
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_16));
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_16);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_16));
         vcUserCamTarget(&g_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_CameraLookAtTarget, NULL, true);
     }

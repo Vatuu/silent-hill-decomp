@@ -228,7 +228,7 @@ void func_800D2668(void) // 0x800D2668
             Chara_Spawn(Chara_Lisa, 0, Q12(4.4f), Q12(269.9f), 0, 3);
 
             sharedFunc_800D88AC_0_s00(&g_SysWork.npcs[0]);
-            DmsHeader_FixOffsets(FS_BUFFER_11);
+            Dms_HeaderFixOffsets(FS_BUFFER_11);
 
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
@@ -424,9 +424,9 @@ void func_800D2668(void) // 0x800D2668
 
     if (D_800D5A40 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800D5A40, FS_BUFFER_11);
-        Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LISA", D_800D5A40, FS_BUFFER_11);
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D5A20, &D_800D5A30, NULL, D_800D5A40, FS_BUFFER_11));
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800D5A40, FS_BUFFER_11);
+        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LISA", D_800D5A40, FS_BUFFER_11);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&D_800D5A20, &D_800D5A30, NULL, D_800D5A40, FS_BUFFER_11));
         vcUserCamTarget(&D_800D5A20, NULL, true);
         vcUserWatchTarget(&D_800D5A30, NULL, true);
     }

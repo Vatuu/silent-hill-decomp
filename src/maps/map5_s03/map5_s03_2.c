@@ -335,7 +335,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
         case 9:
             Chara_ProcessLoads();
-            DmsHeader_FixOffsets(FS_BUFFER_17);
+            Dms_HeaderFixOffsets(FS_BUFFER_17);
             SysWork_StateStepIncrement(0);
 
         case 10:
@@ -532,17 +532,17 @@ void func_800D1AF8(void) // 0x800D1AF8
 
     if (D_800D6F58 >= 0)
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800D6F58, FS_BUFFER_17);
-        Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "KAU", D_800D6F58, FS_BUFFER_17);
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D6F38, &D_800D6F48, NULL, D_800D6F58, FS_BUFFER_17));
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800D6F58, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "KAU", D_800D6F58, FS_BUFFER_17);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&D_800D6F38, &D_800D6F48, NULL, D_800D6F58, FS_BUFFER_17));
         vcUserCamTarget(&D_800D6F38, NULL, true);
         vcUserWatchTarget(&D_800D6F48, NULL, true);
 
         // "LIGHT", cutscene light position?
-        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition, &unused, "LIGHT", D_800D6F58, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", D_800D6F58, FS_BUFFER_17);
 
         // "L_INT", interior light or intersection point?
-        Dms_CharacterGetPosRot(&lightIntPos, &unused, "L_INT", D_800D6F58, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", D_800D6F58, FS_BUFFER_17);
 
         // Set light rotation.
         g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));

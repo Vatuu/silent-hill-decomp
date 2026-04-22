@@ -1286,7 +1286,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             D_800E617C = 0;
 
             SysWork_StateStepIncrementAfterFade(0, true, 3, 0, false);
-            DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_13);
+            Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_13);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             Game_TurnFlashlightOn();
@@ -1355,8 +1355,8 @@ void func_800DCDDC(void) // 0x800DCDDC
     D_800E201C += g_DeltaTime;
     if (D_800E617C >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800E617C, (s_DmsHeader*)FS_BUFFER_13);
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800E6160, &D_800E6170, NULL, D_800E617C, (s_DmsHeader*)FS_BUFFER_13));
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800E617C, (s_DmsHeader*)FS_BUFFER_13);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&D_800E6160, &D_800E6170, NULL, D_800E617C, (s_DmsHeader*)FS_BUFFER_13));
         vcUserCamTarget(&D_800E6160, NULL, true);
         vcUserWatchTarget(&D_800E6170, NULL, true);
     }

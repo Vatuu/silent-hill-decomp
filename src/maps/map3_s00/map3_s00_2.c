@@ -108,7 +108,7 @@ void func_800D0CF8(void) // 0x800D0CF8
 
             Fs_QueueStartRead(FILE_ANIM_HP1F03_DMS, FS_BUFFER_15);
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_15);
+            Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_15);
             Chara_Spawn(Chara_Kaufmann, 0, Q12(100.0f), Q12(100.0f), 0, 3);
             sharedFunc_800D88AC_0_s00(&g_SysWork.npcs[0]);
 
@@ -411,9 +411,9 @@ void func_800D0CF8(void) // 0x800D0CF8
 
     if (D_800D253C >= 0)
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800D253C, (s_DmsHeader* )FS_BUFFER_15);
-        Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "KAU", D_800D253C, (s_DmsHeader*)FS_BUFFER_15);
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D2550, &D_800D2560, NULL, D_800D253C, (s_DmsHeader*)FS_BUFFER_15));
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800D253C, (s_DmsHeader* )FS_BUFFER_15);
+        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "KAU", D_800D253C, (s_DmsHeader*)FS_BUFFER_15);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&D_800D2550, &D_800D2560, NULL, D_800D253C, (s_DmsHeader*)FS_BUFFER_15));
         vcUserCamTarget(&D_800D2550, NULL, true);
         vcUserWatchTarget(&D_800D2560, NULL, true);
     }

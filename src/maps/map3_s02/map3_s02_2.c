@@ -255,7 +255,7 @@ void func_800D0608(void) // 0x800D0608
 
             Fs_QueueStartRead(FILE_ANIM_DWSTWY_DMS, FS_BUFFER_24);
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets(FS_BUFFER_24);
+            Dms_HeaderFixOffsets(FS_BUFFER_24);
 
             Chara_Spawn(Chara_Alessa, 0, Q12(80.0f), Q12(100.0f), Q12_ANGLE(0.0f), 3);
 
@@ -314,12 +314,12 @@ void func_800D0608(void) // 0x800D0608
 
     if (D_800D1FEC >= 0)
     {
-        Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "ARISA", D_800D1FEC, FS_BUFFER_24);
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&cameraPos, &cameraTarget, NULL, D_800D1FEC, FS_BUFFER_24));
+        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "ARISA", D_800D1FEC, FS_BUFFER_24);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&cameraPos, &cameraTarget, NULL, D_800D1FEC, FS_BUFFER_24));
         vcUserCamTarget(&cameraPos, NULL, true);
         vcUserWatchTarget(&cameraTarget, NULL, true);
-        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition, &unused, "LIGHT", D_800D1FEC, FS_BUFFER_24);
-        Dms_CharacterGetPosRot(&lightIntPos, &unused, "L_INT", D_800D1FEC, FS_BUFFER_24);
+        Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", D_800D1FEC, FS_BUFFER_24);
+        Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", D_800D1FEC, FS_BUFFER_24);
 
         g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
         g_SysWork.pointLightRotation.vy = ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);

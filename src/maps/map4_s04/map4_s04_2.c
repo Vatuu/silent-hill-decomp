@@ -230,7 +230,7 @@ void func_800D1910(void) // 0x800D1910
 
             Fs_QueueStartRead(FILE_ANIM_HSPTL4_DMS, FS_BUFFER_15);
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_15);
+            Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_15);
 
             D_800D6EF4 = 0;
 
@@ -355,14 +355,14 @@ void func_800D1910(void) // 0x800D1910
 
     if (D_800D6EF4 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15);
 
         if (D_800D37C0 != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LISA", D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15);
+            Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LISA", D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15);
         }
 
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D6ED8, &D_800D6EE8, NULL, D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15));
+        vcChangeProjectionValue(Dms_CameraTargetGet(&D_800D6ED8, &D_800D6EE8, NULL, D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15));
         vcUserCamTarget(&D_800D6ED8, NULL, true);
         vcUserWatchTarget(&D_800D6EE8, NULL, true);
     }
@@ -388,7 +388,7 @@ void func_800D23E4(void) // 0x800D23E4
 
             Fs_QueueStartRead(FILE_ANIM_HSPTL5_DMS, FS_BUFFER_15);
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets(FS_BUFFER_15);
+            Dms_HeaderFixOffsets(FS_BUFFER_15);
 
             D_800D6EF4 = 0;
 
@@ -582,17 +582,17 @@ void func_800D23E4(void) // 0x800D23E4
 
     if (D_800D6EF4 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800D6EF4, FS_BUFFER_15);
-        Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LISA", D_800D6EF4, FS_BUFFER_15);
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D6ED8, &D_800D6EE8, NULL, D_800D6EF4, FS_BUFFER_15));
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800D6EF4, FS_BUFFER_15);
+        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LISA", D_800D6EF4, FS_BUFFER_15);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&D_800D6ED8, &D_800D6EE8, NULL, D_800D6EF4, FS_BUFFER_15));
         vcUserCamTarget(&D_800D6ED8, NULL, true);
         vcUserWatchTarget(&D_800D6EE8, NULL, true);
 
         // "LIGHT", cutscene light position?
-        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition, &unused, "LIGHT", D_800D6EF4, FS_BUFFER_15);
+        Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", D_800D6EF4, FS_BUFFER_15);
 
         // "L_INT", interior light or intersection point?
-        Dms_CharacterGetPosRot(&lightIntPos, &unused, "L_INT", D_800D6EF4, FS_BUFFER_15);
+        Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", D_800D6EF4, FS_BUFFER_15);
 
         // Set light rotation.
         g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));

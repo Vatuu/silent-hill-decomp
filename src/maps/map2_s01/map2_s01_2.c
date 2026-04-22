@@ -135,7 +135,7 @@ void func_800CED88(void) // 0x800CED88
             Player_ControlFreeze();
             Fs_QueueStartRead(FILE_ANIM_CHRC_DMS, FS_BUFFER_15);
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_15);
+            Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_15);
             Chara_Load(0, Chara_Dahlia, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Dahlia, 0, Q12(20.0f), Q12(23.5f), 0, 3);
@@ -424,9 +424,9 @@ void func_800CED88(void) // 0x800CED88
 
     if (g_Timer0 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&playerChara->position, (SVECTOR3*)&playerChara->rotation, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
-        Dms_CharacterGetPosRot(&dahliaChara->position, (SVECTOR3*)&dahliaChara->rotation, "DAHLIA", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_15));
+        Dms_CharacterTransformGet(&playerChara->position, (SVECTOR3*)&playerChara->rotation, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
+        Dms_CharacterTransformGet(&dahliaChara->position, (SVECTOR3*)&dahliaChara->rotation, "DAHLIA", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_15));
         vcUserCamTarget(&g_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_CameraLookAtTarget, NULL, true);
     }

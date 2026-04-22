@@ -139,7 +139,7 @@ void func_800D0B64(void) // 0x800D0B64
             Savegame_EventFlagSet(EventFlag_476);
             Fs_QueueStartRead(FILE_ANIM_HSPTL6_DMS, FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
+            Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_11);
 
             g_Timer0 = Q12(0.0f);
             g_SysWork.field_235C = NULL;
@@ -332,14 +332,14 @@ void func_800D0B64(void) // 0x800D0B64
 
     if (g_Timer0 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&playerChara.position, &playerChara.rotation, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
+        Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
 
         if (g_SysWork.sysStateSteps[0] < 18)
         {
-            Dms_CharacterGetPosRot(&lisaChara.position, &lisaChara.rotation, "LISA", g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
+            Dms_CharacterTransformGet(&lisaChara.position, &lisaChara.rotation, "LISA", g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
         }
 
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPosition, &g_CutsceneCameraLookAt, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_11));
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CutsceneCameraPosition, &g_CutsceneCameraLookAt, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_11));
         vcUserCamTarget(&g_CutsceneCameraPosition, NULL, true);
         vcUserWatchTarget(&g_CutsceneCameraLookAt, NULL, true);
 

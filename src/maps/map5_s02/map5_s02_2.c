@@ -461,7 +461,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
             Fs_QueueStartRead(FILE_ANIM_POOL1_DMS, FS_BUFFER_17);
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets(FS_BUFFER_17);
+            Dms_HeaderFixOffsets(FS_BUFFER_17);
 
             D_800DA6EC                                 = 0;
             g_SysWork.playerWork.player.position.vy = Q12(0.0f);
@@ -754,18 +754,18 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
     if (D_800DA6EC >= 0)
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800DA6EC, FS_BUFFER_17);
-        Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "KAU", D_800DA6EC, FS_BUFFER_17);
-        Dms_CharacterGetPosRot(&g_SysWork.npcs[1].position, &g_SysWork.npcs[1].rotation, "CLD4", D_800DA6EC, FS_BUFFER_17);
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800DA6CC, &D_800DA6DC, NULL, D_800DA6EC, FS_BUFFER_17));
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800DA6EC, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "KAU", D_800DA6EC, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&g_SysWork.npcs[1].position, &g_SysWork.npcs[1].rotation, "CLD4", D_800DA6EC, FS_BUFFER_17);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&D_800DA6CC, &D_800DA6DC, NULL, D_800DA6EC, FS_BUFFER_17));
         vcUserCamTarget(&D_800DA6CC, NULL, true);
         vcUserWatchTarget(&D_800DA6DC, NULL, true);
 
         // "LIGHT", cutscene light position?
-        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition, &unused, "LIGHT", D_800DA6EC, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", D_800DA6EC, FS_BUFFER_17);
 
         // "L_INT", interior light or intersection point?
-        Dms_CharacterGetPosRot(&lightIntPos, &unused, "L_INT", D_800DA6EC, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", D_800DA6EC, FS_BUFFER_17);
 
         // Set light rotation.
         g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));

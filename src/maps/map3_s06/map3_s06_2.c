@@ -106,7 +106,7 @@ void func_800D0C14(void) // 0x800D0C14
 
             Fs_QueueStartRead(FILE_ANIM_HSPTL2_DMS, FS_BUFFER_15);
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets(FS_BUFFER_15);
+            Dms_HeaderFixOffsets(FS_BUFFER_15);
 
             g_CutsceneTimer = Q12(0.0f);
             D_800D2736 = 0;
@@ -347,13 +347,13 @@ void func_800D0C14(void) // 0x800D0C14
 
     if (g_CutsceneTimer >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_CutsceneTimer, FS_BUFFER_15);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_CutsceneTimer, FS_BUFFER_15);
         if (D_800D2737)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "DARIA", g_CutsceneTimer, FS_BUFFER_15);
+            Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "DARIA", g_CutsceneTimer, FS_BUFFER_15);
         }
 
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D2718, &D_800D2728, NULL, g_CutsceneTimer, FS_BUFFER_15));
+        vcChangeProjectionValue(Dms_CameraTargetGet(&D_800D2718, &D_800D2728, NULL, g_CutsceneTimer, FS_BUFFER_15));
         vcUserCamTarget(&D_800D2718, NULL, true);
         vcUserWatchTarget(&D_800D2728, NULL, true);
     }

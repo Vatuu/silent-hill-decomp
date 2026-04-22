@@ -7206,58 +7206,58 @@ void func_800E2E90(void) // 0x800E2E90
     {
         if (D_800F4807 != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F4808)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "SIBYL", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "SIBYL", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F4809 != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs[1].position, &g_SysWork.npcs[1].rotation, "DARIA", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&g_SysWork.npcs[1].position, &g_SysWork.npcs[1].rotation, "DARIA", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F480A != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs[2].position, &g_SysWork.npcs[2].rotation, "ARSIA", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&g_SysWork.npcs[2].position, &g_SysWork.npcs[2].rotation, "ARSIA", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F480B != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs[3].position, &g_SysWork.npcs[3].rotation, "KAU", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&g_SysWork.npcs[3].position, &g_SysWork.npcs[3].rotation, "KAU", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F480C != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs[4].position, &g_SysWork.npcs[4].rotation, "MAR", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&g_SysWork.npcs[4].position, &g_SysWork.npcs[4].rotation, "MAR", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F480D != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs[5].position, &g_SysWork.npcs[5].rotation, "BAR", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&g_SysWork.npcs[5].position, &g_SysWork.npcs[5].rotation, "BAR", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F480E != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LITL", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LITL", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F480F != 0)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs[2].position, &g_SysWork.npcs[2].rotation, "BOS", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&g_SysWork.npcs[2].position, &g_SysWork.npcs[2].rotation, "BOS", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F4810 != 0)
         {
-            Dms_CharacterGetPosRot(&g_WorldObject_Bin.position_1C, &g_WorldObject_Bin.rotation_28, "BIN", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&g_WorldObject_Bin.position_1C, &g_WorldObject_Bin.rotation_28, "BIN", D_800F47F0, D_800ED230[D_800F4806]);
         }
         if (D_800F4812 != 0)
         {
-            Dms_CharacterGetPosRot(&g_WorldObject_Baby.position_1C, &g_WorldObject_Baby.rotation_28, "BABY", D_800F47F0, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&g_WorldObject_Baby.position_1C, &g_WorldObject_Baby.rotation_28, "BABY", D_800F47F0, D_800ED230[D_800F4806]);
         }
 
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800F47B8, &D_800F47C8, NULL, D_800F47F0, D_800ED230[D_800F4806]));
+        vcChangeProjectionValue(Dms_CameraTargetGet(&D_800F47B8, &D_800F47C8, NULL, D_800F47F0, D_800ED230[D_800F4806]));
         vcUserCamTarget(&D_800F47B8, NULL, true);
         vcUserWatchTarget(&D_800F47C8, NULL, true);
 
         // "LIGHT", cutscene light position?
-        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition, &D_800F47E8, "LIGHT", D_800F47F0, D_800ED230[D_800F4806]);
+        Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &D_800F47E8, "LIGHT", D_800F47F0, D_800ED230[D_800F4806]);
 
         // "L_INT", interior light or intersection point?
-        Dms_CharacterGetPosRot(&D_800F47D8, &D_800F47E8, "L_INT", D_800F47F0, D_800ED230[D_800F4806]);
+        Dms_CharacterTransformGet(&D_800F47D8, &D_800F47E8, "L_INT", D_800F47F0, D_800ED230[D_800F4806]);
 
         // Set light rotation.
         g_SysWork.pointLightRotation.vx = -ratan2(D_800F47D8.vy - g_SysWork.pointLightPosition.vy,
@@ -7322,7 +7322,7 @@ void func_800E3390(void) // 0x800E3390
 
             Fs_QueueStartRead(FILE_ANIM_LAST12_DMS, FS_BUFFER_20);
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets(FS_BUFFER_20);
+            Dms_HeaderFixOffsets(FS_BUFFER_20);
 
             D_800F4806 = 0;
             D_800F47F0 = 0;
@@ -7407,7 +7407,7 @@ void func_800E3390(void) // 0x800E3390
                 }
 
                 Fs_QueueWaitForEmpty();
-                DmsHeader_FixOffsets(FS_BUFFER_18);
+                Dms_HeaderFixOffsets(FS_BUFFER_18);
 
                 if (!D_800F4816)
                 {
@@ -7452,7 +7452,7 @@ void func_800E3390(void) // 0x800E3390
                 }
 
                 Fs_QueueWaitForEmpty();
-                DmsHeader_FixOffsets(FS_BUFFER_18);
+                Dms_HeaderFixOffsets(FS_BUFFER_18);
 
                 D_800F4806 = 1;
                 if (D_800F4813 != 2)
@@ -8134,7 +8134,7 @@ void func_800E514C(void) // 0x800E514C
 
             D_800F4804 = 0;
 
-            DmsHeader_FixOffsets(FS_BUFFER_18);
+            Dms_HeaderFixOffsets(FS_BUFFER_18);
 
             D_800F4806 = 1;
             D_800F47F0 = 0;
@@ -8618,7 +8618,7 @@ void func_800E62CC(void) // 0x800E62CC
     switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
-            DmsHeader_FixOffsets(FS_BUFFER_20);
+            Dms_HeaderFixOffsets(FS_BUFFER_20);
 
             D_800F4806 = 0;
             D_800F47F0 = 0;
@@ -9006,7 +9006,7 @@ void func_800E70F0(void) // 0x800E70F0
     {
         case 0:
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_18);
+            Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_18);
 
             D_800F4806 = 1;
             D_800F47F0 = Q12(0.0f);
@@ -9242,7 +9242,7 @@ void func_800E787C(void) // 0x800E787C
 
         case 1:
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets(FS_BUFFER_18);
+            Dms_HeaderFixOffsets(FS_BUFFER_18);
             D_800F4806 = 1;
             D_800F47F0 = 0;
 
@@ -9359,7 +9359,7 @@ void func_800E787C(void) // 0x800E787C
             D_800F4806 = 0;
             D_800F47F0 = 0;
 
-            DmsHeader_FixOffsets(FS_BUFFER_20);
+            Dms_HeaderFixOffsets(FS_BUFFER_20);
 
             D_800F480D = 1;
             D_800F4808 = 0;
@@ -9632,7 +9632,7 @@ void func_800E86BC(void) // 0x800E86BC
         case 1:
             func_80085EB8(0, &g_SysWork.playerWork.player, 176, false);
 
-            DmsHeader_FixOffsets(FS_BUFFER_18);
+            Dms_HeaderFixOffsets(FS_BUFFER_18);
             Fs_QueueStartRead(FILE_ANIM_ENDBB_DMS, FS_BUFFER_20);
 
             D_800F4806 = 1;
@@ -9662,7 +9662,7 @@ void func_800E86BC(void) // 0x800E86BC
 
         case 4:
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets(FS_BUFFER_20);
+            Dms_HeaderFixOffsets(FS_BUFFER_20);
 
             D_800F4806 = 0;
             D_800F47F0 = 0;
@@ -9808,7 +9808,7 @@ void func_800E8D20(void) // 0x800E8D20
     {
         case 0:
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets(FS_BUFFER_20);
+            Dms_HeaderFixOffsets(FS_BUFFER_20);
 
             D_800F4806 = 0;
 
