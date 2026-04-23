@@ -63,56 +63,56 @@ void GameBoot_LoadScreen_StageString(void) // 0x800D95D4
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
-
 #if VERSION_REGION_IS(NTSC)
-    "~J0(2.5)\tCheryl.__Where_could_you_be? ~E ",
-    "~J0(1.5)\tIt's_strange... ",
-    "~J0(2.0)\tIt's_quiet.__Too_quiet. ",
-    "~J0(3.0)\tThis_place_is ~N\n\t\t\tlike_a_ghost_town. ~E ",
-    "~J0(3.0)\tCheryl. ~E ",
-    "~J0(1.5)\tFootsteps? ~E ",
-    "~J0(2.8)\tCheryl? ~N\n\t\t\tIs_that_Cheryl!? ~E ",
-    "~J0(1.2)\tWhere_are_you_going? ~E ",
-    "~J0(1.8)\tHey_wait...stop! ~E ",
-    "\tI'd_better_follow_Cheryl... ~E ",
-    "\tThat's_strange, ~N\n\tit's_getting_darker. ~E ",
-    "\tA_dead_end? ~N\n\tWhat_the_hell!? ~E ",
-    "~J0(1.6)\tWhat_is_this? ",
-    "~J0(2.5)\tWhat's_going_on_here!? ~E ",
-    "\tWhat's_this? ~E ",
-    "\t......better_than_nothing, ~N\n\tI_guess. ~E ",
-    "\tWhat? ~N\n\tWhat's_this_doing_here? ~E ",
-    "\tBlocked_by_a_fence? ~E ",
-    "\tA_broken_wheelchair? ~N\n\tWhat's_this_doing_here? ~E ",
-    "\tWhat_the..? ~N\n\tWhat_is_it? ~E ",
-    "\tThe_street_is_blocked.",
-    "\tCan't_get_out_of_town ~N\n\tthrough_here. ~E ",
-    "\tMy_car... ~N\n\ttoo_banged_up_to_drive. ",
-    "\tWhere's_Cheryl? ~N\n\tHope_she's_safe. ~E "
+    /* 15 */ "~J0(2.5)\tCheryl.__Where_could_you_be? ~E ",
+    /* 16 */ "~J0(1.5)\tIt's_strange... ",
+    /* 17 */ "~J0(2.0)\tIt's_quiet.__Too_quiet. ",
+    /* 18 */ "~J0(3.0)\tThis_place_is ~N\n\t\t\tlike_a_ghost_town. ~E ",
+    /* 19 */ "~J0(3.0)\tCheryl. ~E ",
+    /* 20 */ "~J0(1.5)\tFootsteps? ~E ",
+    /* 21 */ "~J0(2.8)\tCheryl? ~N\n\t\t\tIs_that_Cheryl!? ~E ",
+    /* 22 */ "~J0(1.2)\tWhere_are_you_going? ~E ",
+    /* 23 */ "~J0(1.8)\tHey_wait...stop! ~E ",
+    /* 24 */ "\tI'd_better_follow_Cheryl... ~E ",
+    /* 25 */ "\tThat's_strange, ~N\n\tit's_getting_darker. ~E ",
+    /* 26 */ "\tA_dead_end? ~N\n\tWhat_the_hell!? ~E ",
+    /* 27 */ "~J0(1.6)\tWhat_is_this? ",
+    /* 28 */ "~J0(2.5)\tWhat's_going_on_here!? ~E ",
+    /* 29 */ "\tWhat's_this? ~E ",
+    /* 30 */ "\t......better_than_nothing, ~N\n\tI_guess. ~E ",
+    /* 31 */ "\tWhat? ~N\n\tWhat's_this_doing_here? ~E ",
+    /* 32 */ "\tBlocked_by_a_fence? ~E ",
+    /* 33 */ "\tA_broken_wheelchair? ~N\n\tWhat's_this_doing_here? ~E ",
+    /* 34 */ "\tWhat_the..? ~N\n\tWhat_is_it? ~E ",
+    /* 35 */ "\tThe_street_is_blocked.",
+    /* 36 */ "\tCan't_get_out_of_town ~N\n\tthrough_here. ~E ",
+    /* 37 */ "\tMy_car... ~N\n\ttoo_banged_up_to_drive. ",
+    /* 38 */ "\tWhere's_Cheryl? ~N\n\tHope_she's_safe. ~E "
 #elif VERSION_REGION_IS(NTSCJ)
-    "~J0(2.5)\tシェリル……どこへ行ったんだ？ ~E ",
-    "~J0(1.5)\tおかしい…… ",
-    "~J0(2.0)\t……静かだ　静かすぎる ",
-    "~J0(3.0)\tまるで人のいない町のようだ…… ~E ",
-    "~J0(3.0)\tシェリル…… ~E ",
-    "~J0(1.5) \t……足音？ ~E ",
-    "~J0(2.8)\tシェリル……？ ~N\n\t\t\tシェリルなのか！？ ~E ",
-    "~J0(1.2)\tどこへ行くんだ？ ~E ",
-    "~J0(1.8)\t待つんだ……待ってくれ！ ~E ",
-    "\tシェリルを追わなくては…… ~E ",
-    "\tおかしい……暗くなってきたな ~E ",
-    "\t行き止まり……？ ~N\n\tそんな馬鹿な！ ~E ",
-    "~J0(1.6)\tこれは何だ？ ",
-    "~J0(2.5)\tさっきからいったい ~N\n\t\t\tどうなってるんだ！？ ~E ",
-    "\tこれは……？ ~E ",
-    "\t……ないよりは　ましか ~E ",
-    "\t何で……こんなものが…… ~E ",
-    "\t金網で道がふさがれている！ ~E ",
-    "\t壊れた車椅子だ　なぜこんなところに？ ~E ",
-    "\t何だ……？　これは…… ~E ",
-    "\t道がふさがれている ~N\n\tここから町を出ることはできないな ~E ",
-    "\t乗ってきた車だ ~N\n\t壊れて動かなくなっている ",
-    "\t……シェリルはどこに行ったのだろう？ ~N\n\t無事ならいいのだが…… ~E "
+    /* 15 */ "~J0(2.5)\tシェリル……どこへ行ったんだ？ ~E ",
+    /* 16 */ "~J0(1.5)\tおかしい…… ",
+    /* 17 */ "~J0(2.0)\t……静かだ　静かすぎる ",
+    /* 18 */ "~J0(3.0)\tまるで人のいない町のようだ…… ~E ",
+    /* 19 */ "~J0(3.0)\tシェリル…… ~E ",
+    /* 20 */ "~J0(1.5) \t……足音？ ~E ",
+    /* 21 */ "~J0(2.8)\tシェリル……？ ~N\n\t\t\tシェリルなのか！？ ~E ",
+    /* 22 */ "~J0(1.2)\tどこへ行くんだ？ ~E ",
+    /* 23 */ "~J0(1.8)\t待つんだ……待ってくれ！ ~E ",
+    /* 24 */ "\tシェリルを追わなくては…… ~E ",
+    /* 25 */ "\tおかしい……暗くなってきたな ~E ",
+    /* 26 */ "\t行き止まり……？ ~N\n\tそんな馬鹿な！ ~E ",
+    /* 27 */ "~J0(1.6)\tこれは何だ？ ",
+    /* 28 */ "~J0(2.5)\tさっきからいったい ~N\n\t\t\tどうなってるんだ！？ ~E ",
+    /* 29 */ "\tこれは……？ ~E ",
+    /* 30 */ "\t……ないよりは　ましか ~E ",
+    /* 31 */ "\t何で……こんなものが…… ~E ",
+    /* 32 */ "\t金網で道がふさがれている！ ~E ",
+    /* 33 */ "\t壊れた車椅子だ　なぜこんなところに？ ~E ",
+    /* 34 */ "\t何だ……？　これは…… ~E ",
+    /* 35 */ "\t道がふさがれている ~N\n\tここから町を出ることはできないな ~E ",
+    /* 36 */ // TODO: JAP versions concatenate 35+36 into single string? Code would need adjustment too with `#ifdef`.
+    /* 37 */ "\t乗ってきた車だ ~N\n\t壊れて動かなくなっている ",
+    /* 38 */ "\t……シェリルはどこに行ったのだろう？ ~N\n\t無事ならいいのだが…… ~E "
 #endif
 };
 
@@ -552,7 +552,7 @@ void func_800DA5A0(void) // 0x800DA5A0
             SysWork_StateStepIncrement(0);
 
         case 2:
-            Map_MessageWithAudio(21, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
+            Map_MessageWithAudio(21, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Cheryl? Is that Cheryl!?"
             break;
 
         case 3:
@@ -587,7 +587,7 @@ void func_800DA5A0(void) // 0x800DA5A0
             break;
 
         case 8:
-            Map_MessageWithAudio(22, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
+            Map_MessageWithAudio(22, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Where are you going?"
             break;
 
         case 9:
@@ -600,7 +600,7 @@ void func_800DA5A0(void) // 0x800DA5A0
             break;
 
         case 11:
-            Map_MessageWithAudio(23, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
+            Map_MessageWithAudio(23, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Hey wait...stop!"
             break;
 
         default:
@@ -1000,7 +1000,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
 {
     typedef enum _EventState
     {
-        EventState_0              = 0,
+        EventState_Setup              = 0,
         EventState_1              = 1,
         EventState_2              = 2,
         EventState_3              = 3,
@@ -1012,7 +1012,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
     VECTOR  camPos; // Q19.12
     s32     i;
 
-    // Control cutscene.
+    // Control player and camera movement.
     switch (g_SysWork.sysStateSteps[0])
     {
         case EventState_3:
@@ -1099,7 +1099,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             }
             break;
 
-        case EventState_0:
+        case EventState_Setup:
         case EventState_1:
         case EventState_2:
             break;
@@ -1111,10 +1111,12 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             break;
     }
 
+    // Control audio, messages, and game states.
     switch (g_SysWork.sysStateSteps[0])
     {
-        case EventState_0:
+        case EventState_Setup:
             Player_ControlFreeze();
+
             Map_PlaceIpdAtCell(FILE_BG_THRF908_IPD, -7, 6);
             Sd_SfxStop(Sfx_Unk1358);
             Sd_PlaySfx(Sfx_Unk1359, 0, 208);
@@ -1231,7 +1233,8 @@ void Map_WorldObjectsUpdate(void) // 0x800DBF08
         if (PLAYER_IN_MAP_CHUNK(vx, 1, -7, -1, -7) &&
             (PLAYER_IN_MAP_CHUNK(vz, 1, 6, -1, 6) || PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7)))
         {
-            D_800E3AAC.vz += Q12_MULT_PRECISE(g_DeltaTime, (-0x400 - (Rng_Rand16() & 0x1FF)));
+            // Spin wheelchair wheel?
+            D_800E3AAC.vz += Q12_MULT_PRECISE(g_DeltaTime, (Q12_ANGLE(-90.0f) - (Rng_Rand16() & 0x1FF)));
             WorldGfx_ObjectAdd(&D_800E3A5C[0], &D_800E3A9C, &D_800E3AAC);
             WorldGfx_ObjectAdd(&D_800E3A5C[1], &D_800E3A9C, &D_800E3AAC);
 
@@ -1249,7 +1252,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DBF08
 
             if (!Savegame_EventFlagGet(EventFlag_24))
             {
-                func_8005DE0C(Sfx_Unk1358, &D_800E3A9C, 0x40, 0x8000, 0);
+                func_8005DE0C(Sfx_Unk1358, &D_800E3A9C, Q8(0.25f), Q12(8.0f), 0);
             }
         }
     }
