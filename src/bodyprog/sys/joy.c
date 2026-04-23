@@ -220,7 +220,7 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
             }
             else if (val == 0x10)
             {
-                if (!(btnsHeld & g_GameWorkPtr->config.controllerConfig.run_C))
+                if (!(btnsHeld & g_GameWorkPtr->config.controllerConfig.run))
                 {
                     processedInputFlags |= 0xE0000000;
                 }

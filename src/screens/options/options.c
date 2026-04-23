@@ -285,8 +285,8 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
 
         // Leave to gameplay (if options menu was accessed with `Option` input action).
         if (g_GameWork.gameStatePrev == GameState_InGame &&
-            !(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0) &&
-            (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.option_1A))
+            !(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter) &&
+            (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.option))
         {
             Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
 
@@ -437,12 +437,12 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
     }
 
     // Leave menu.
-    if ((g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.cancel_2 |
+    if ((g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.cancel |
                                           (ControllerFlag_L2 | ControllerFlag_R2 |
                                            ControllerFlag_L1 | ControllerFlag_R1))) &&
         g_GameWork.gameStateSteps[0] != OptionsMenuState_LeaveExtraOptions)
     {
-        if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
+        if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
         {
             Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
         }
@@ -499,8 +499,8 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 
     // Leave to gameplay (if options menu was accessed with `Option` input action).
     if (g_GameWork.gameStatePrev == GameState_InGame &&
-        !(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0) &&
-        (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.option_1A))
+        !(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter) &&
+        (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.option))
     {
         Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
 
@@ -532,8 +532,8 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
     {
         case MainOptionsMenuEntry_Exit:
             // Exit menu to gameplay.
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 |
-                                                 g_GameWorkPtr->config.controllerConfig.cancel_2))
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter |
+                                                 g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
 
@@ -546,7 +546,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 
         case MainOptionsMenuEntry_Controller:
             // Enter controller screen.
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 Sd_PlaySfx(Sfx_MenuConfirm, 0, 64);
                 Fs_QueueStartReadTim(FILE_TIM_OPTION2_TIM, IMAGE_BUFFER_3, &g_ControllerButtonAtlasImg);
@@ -561,7 +561,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 
         case MainOptionsMenuEntry_ScreenPosition:
             // Enter screen position screen.
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 Sd_PlaySfx(Sfx_MenuConfirm, 0, 64);
 
@@ -574,7 +574,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
             break;
 
         case MainOptionsMenuEntry_Brightness:
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 Sd_PlaySfx(Sfx_MenuConfirm, 0, 64);
                 if (g_GameWork.gameStatePrev == GameState_MainMenu)
@@ -710,8 +710,8 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 
     // Reset selection cursor.
     if (((g_GameWork.gameStateSteps[0] != OptionsMenuState_EnterExtraOptions && g_MainOptionsMenu_SelectedEntry != MainOptionsMenuEntry_Exit) &&
-         !(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)) &&
-        (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2))
+         !(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)) &&
+        (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel))
     {
         Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
 
@@ -1484,7 +1484,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
             }
 
             // Start background color fade.
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 if (screenPosMenu_BackgroundFade == 255)
                 {
@@ -1494,7 +1494,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
             }
 
             // Leave menu.
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
             {
                 Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
 
@@ -1772,10 +1772,10 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
             }
 
             // Fade screen and leave menu.
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 |
-                                                 g_GameWorkPtr->config.controllerConfig.cancel_2))
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter |
+                                                 g_GameWorkPtr->config.controllerConfig.cancel))
             {
-                if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+                if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
                 {
                     Sd_PlaySfx(Sfx_MenuConfirm, 0, Q8(0.25f));
                 }
@@ -2129,8 +2129,8 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
             selectedEntries.preset = ControllerMenuState_Exit;
 
             // Leave menu.
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 |
-                                                 g_GameWorkPtr->config.controllerConfig.cancel_2))
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter |
+                                                 g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 SD_Call(Sfx_MenuCancel);
 
@@ -2165,13 +2165,13 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
             selectedEntries.preset = g_GameWork.gameStateSteps[1];
 
             // Set binding preset.
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 SD_Call(Sfx_MenuConfirm);
                 Settings_RestoreControlDefaults(g_GameWork.gameStateSteps[1] - 1);
             }
             // Reset selection cursor.
-            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
             {
                 SD_Call(Sfx_MenuCancel);
                 g_GameWork.gameStateSteps[1] = ControllerMenuState_Exit;

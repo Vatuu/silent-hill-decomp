@@ -19,7 +19,7 @@ void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINAT
     u8 prevControlState;
 
     // Initialize.
-    if (groaner->model.controlState == ModelState_Uninitialized)
+    if (groaner->model.controlState == 0)
     {
         Ai_Groaner_Init(groaner);
     }

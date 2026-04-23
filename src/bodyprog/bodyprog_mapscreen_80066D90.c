@@ -98,9 +98,9 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
 
             func_800692A4(var_s6, var_s5, temp_s4);
 
-            if ((g_GameWork.gameStatePrev == GameState_InventoryScreen && g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2) ||
-                (g_GameWork.gameStatePrev != GameState_InventoryScreen && g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.cancel_2 |
-                                                                                                               g_GameWorkPtr->config.controllerConfig.map_18)))
+            if ((g_GameWork.gameStatePrev == GameState_InventoryScreen && g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel) ||
+                (g_GameWork.gameStatePrev != GameState_InventoryScreen && g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.cancel |
+                                                                                                               g_GameWorkPtr->config.controllerConfig.map)))
             {
                 SD_Call(Sfx_MenuMap);
 
@@ -126,7 +126,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
                 break;
             }
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 if (D_800AE770 != 0)
                 {

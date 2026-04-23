@@ -122,7 +122,7 @@ void func_800CED88(void) // 0x800CED88
     #define dahliaChara (&g_SysWork.npcs[0])
     #define playerChara (&g_SysWork.playerWork.player)
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < EventState_Skip)
     {
         SysWork_StateStepSet(0, EventState_Skip);

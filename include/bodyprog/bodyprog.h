@@ -1532,7 +1532,7 @@ typedef struct _SpawnInfo
 
     s8     charaId_4; /** `e_CharacterId` */
     q0_8   rotationY_5;
-    s8     flags_6;                   /** `e_SpawnFlags` | Copied to `stateStep` in `s_Model`, with `controlState = ModelState_Uninitialized`. */
+    s8     flags_6;                   /** `e_SpawnFlags` | Copied to `stateStep` in `s_Model`, with `controlState = 0`. */
     s32    gameDifficultyMin_7_0 : 4; /** `e_GameDifficulty` | Minimum difficulty required for successful spawn. */
 
     q19_12 positionZ_8;

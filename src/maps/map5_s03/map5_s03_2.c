@@ -260,7 +260,7 @@ void func_800D1AF8(void) // 0x800D1AF8
     SVECTOR3 unused;
     VECTOR3  lightIntPos;
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 14 && g_SysWork.sysStateSteps[0] < 29)
     {
         SysWork_StateStepSet(0, 32);

@@ -3155,8 +3155,8 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
             D_800AE190++;
             D_800AE190 = CLAMP(D_800AE190, 0, 0x40);
 
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.action_6 |
-                                                 g_GameWorkPtr->config.controllerConfig.cancel_2))
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.action |
+                                                 g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 if (D_800AE190 == 0x40)
                 {

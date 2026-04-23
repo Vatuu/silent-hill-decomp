@@ -117,7 +117,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
             }
 
             g_SysWork.npcs[npcIdx].field_40           = i;
-            g_SysWork.npcs[npcIdx].model.controlState = ModelState_Uninitialized;
+            g_SysWork.npcs[npcIdx].model.controlState = 0;
             g_SysWork.npcs[npcIdx].model.stateStep    = curCharaSpawn->flags_6;
             g_SysWork.npcs[npcIdx].position.vx        = curCharaSpawn->positionX_0;
             g_SysWork.npcs[npcIdx].position.vz        = curCharaSpawn->positionZ_8;

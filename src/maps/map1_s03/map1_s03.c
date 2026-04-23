@@ -23,7 +23,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
 {
     s_AnimInfo* animInfo;
 
-    if (chara->model.controlState == ModelState_Uninitialized)
+    if (chara->model.controlState == 0)
     {
         chara->model.anim.alpha = Q12(0.0f);
         Character_AnimSet(chara, ANIM_STATUS(LockerDeadBodyAnim_2, true), 0);
@@ -947,7 +947,7 @@ void func_800DC310(void) // 0x800DC310
         EventState_Skip           = 13
     } e_EventState;
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 3 && g_SysWork.sysStateSteps[0] < 11)
     {
         ScreenFade_ResetTimestep();

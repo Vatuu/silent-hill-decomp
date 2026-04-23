@@ -79,7 +79,7 @@ void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDI
 
     extraModel = &g_Ai_MonsterCybil_ExtraModel;
 
-    if (chara->model.controlState == ModelState_Uninitialized)
+    if (chara->model.controlState == 0)
     {
         Ai_MonsterCybil_Init(chara, extraModel);
     }

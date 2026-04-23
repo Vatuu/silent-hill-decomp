@@ -167,7 +167,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             // Wrap selection.
             g_MainMenu_SelectedEntry %= MainMenuEntry_Count;
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 g_GameWork.gameState = GameState_MainMenu;
 
@@ -246,8 +246,8 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             }
 
             if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown) ||
-                g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 |
-                                                 g_GameWorkPtr->config.controllerConfig.cancel_2))
+                g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter |
+                                                 g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 g_GameWork.gameState = GameState_MainMenu;
 
@@ -285,7 +285,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             }
 
             // Select game difficulty.
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 GameBoot_SavegameInitialize(0, newGameSelectedDifficultyIdx - 1);
                 GameBoot_PlayerInit();
@@ -300,7 +300,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 g_MainMenuState     = 4;
             }
             // Cancel.
-            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
             {
                 SD_Call(Sfx_MenuCancel);
                 g_MainMenuState = 1;

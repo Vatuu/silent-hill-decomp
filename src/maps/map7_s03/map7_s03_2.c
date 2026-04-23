@@ -29,7 +29,7 @@ void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOO
     s32         var_a2;
     s_AnimInfo* animInfo;
 
-    if (incubus->model.controlState == ModelState_Uninitialized)
+    if (incubus->model.controlState == 0)
     {
         incubus->model.anim.alpha = Q12(0.0f);
         incubus->model.controlState        = 1;
@@ -4334,7 +4334,7 @@ void func_800DD98C(bool disableDamage) // 0x800DD98C
 
 void func_800DD9B0(s_SubCharacter* chara) // 0x800DD9B0
 {
-    if (chara->model.controlState != ModelState_Uninitialized)
+    if (chara->model.controlState != 0)
     {
         chara->model.controlState     = 2;
         chara->model.stateStep = 0;
@@ -4347,7 +4347,7 @@ void func_800DD9B0(s_SubCharacter* chara) // 0x800DD9B0
 
 void func_800DD9D4(s_SubCharacter* chara) // 0x800DD9D4
 {
-    if (chara->model.controlState != ModelState_Uninitialized)
+    if (chara->model.controlState != 0)
     {
         chara->model.controlState     = 10;
         chara->model.stateStep = 0;
@@ -4360,7 +4360,7 @@ void func_800DD9D4(s_SubCharacter* chara) // 0x800DD9D4
 
 void func_800DD9F8(s_SubCharacter* chara) // 0x800DD9F8
 {
-    if (chara->model.controlState != ModelState_Uninitialized)
+    if (chara->model.controlState != 0)
     {
         chara->model.controlState     = 3;
         chara->model.stateStep = 0;
@@ -5756,7 +5756,7 @@ void func_800DFB2C(bool disableDamage) // 0x800DFB2C
 
 void func_800DFB50(s_SubCharacter* chara) // 0x800DFB50
 {
-    if (chara->model.controlState != ModelState_Uninitialized)
+    if (chara->model.controlState != 0)
     {
         chara->model.controlState     = 4;
         chara->model.stateStep = 0;
@@ -5769,7 +5769,7 @@ void func_800DFB50(s_SubCharacter* chara) // 0x800DFB50
 
 void func_800DFB74(s_SubCharacter* chara) // 0x800DFB74
 {
-    if (chara->model.controlState != ModelState_Uninitialized)
+    if (chara->model.controlState != 0)
     {
         chara->model.controlState     = 2;
         chara->model.stateStep = 0;
@@ -6332,7 +6332,7 @@ void func_800E0914(s_SubCharacter* chara) // 0x800E0914
 
 void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800E093C
 {
-    if (chara->model.controlState == ModelState_Uninitialized)
+    if (chara->model.controlState == 0)
     {
         Ai_Unknown23_Init(chara, coords);
     }
@@ -7273,7 +7273,7 @@ void func_800E3390(void) // 0x800E3390
 {
     s32 i;
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         D_800F4805 > 0 && D_800F4805 < 4)
     {
         D_800F4805 = 5;

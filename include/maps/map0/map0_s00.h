@@ -88,7 +88,7 @@ extern s_800DFB48 D_800DFB48;
 
 extern s32 D_800DFB54;
 
-extern s32 D_800DFB5C;
+extern q19_12 D_800DFB5C;
 
 extern u8 D_800DFB60;
 
@@ -137,26 +137,28 @@ void MapEvent_CutsceneCherylFootsteps2(void);
 // Plays distant Cheryl footstep SFX?
 void Cheryl_DistantFootstepSfxPlay(void);
 
-/** @brief Handles the cutscene in which Harry spots Cheryl in the fog for the first time and begins to follow her. */
+/** @brief Handles the cutscene event in which Harry spots Cheryl in the fog for the first time and begins to follow
+ * her.
+ */
 void MapEvent_CutsceneCherylSpotted(void);
 
-/** @brief Handles the cutscene in which Harry is redirected to searching for Cheryl after the player attempts to run
- * off in the wrong direction.
+/** @brief Handles the cutscene event in which Harry is redirected to searching for Cheryl after the player attempts to
+ * run off in the wrong direction.
  */
 void MapEvent_CutsceneCherylRedirect0(void);
 
-/** @brief Handles the cutscene in which Harry is redirected to searching for Cheryl after the player attempts to run
- * off in the wrong direction.
+/** @brief Handles the cutscene event in which Harry is redirected to searching for Cheryl after the player attempts to
+ * run off in the wrong direction.
  */
 void MapEvent_CutsceneCherylRedirect1(void);
 
-/** @brief Handles the cutscene in which Harry is redirected to searching for Cheryl after the player attempts to run
- * off in the wrong direction.
+/** @brief Handles the cutscene event in which Harry is redirected to searching for Cheryl after the player attempts to
+ * run off in the wrong direction.
  */
 void MapEvent_CutsceneCherylRedirect2(void);
 
-/** @brief Handles the cutscene in which Harry is redirected to searching for Cheryl after the player attempts to run
- * off in the wrong direction.
+/** @brief Handles the cutscene event in which Harry is redirected to searching for Cheryl after the player attempts to
+ * run off in the wrong direction.
  */
 void MapEvent_CutsceneCherylRedirect3(void);
 
@@ -168,7 +170,7 @@ void MapEvent_CutsceneCherylIntoTheAlley(void);
 // TODO: Which cutscene?
 void func_800DB26C(void);
 
-/** @brief Handles the cutscene in which the alley gets darker and Harry lights a match. */
+/** @brief Handles the cutscene event in which the alley gets darker and Harry lights a match. */
 void MapEven_CutsceneAlleyGetsDarker(void);
 
 // Dead end cutscene

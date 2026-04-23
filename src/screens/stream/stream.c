@@ -83,7 +83,7 @@ void GameState_DebugMoviePlayer_Update(void) // 0x801E2908
 {
     static s32 g_Debug_MoviePlayerIdx = 0; // 0x801E3F3C
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
     {
         Game_StateSetNext(GameState_Unk16); // Changes to non-existent state 22 and crashes. Maybe removed debug menu.
     }
@@ -106,7 +106,7 @@ void GameState_DebugMoviePlayer_Update(void) // 0x801E2908
     Text_Debug_Draw(Text_Debug_IntToString(2, g_Debug_MoviePlayerIdx));
 #endif
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
     {
         open_main(FILE_XA_ZC_14392 - g_Debug_MoviePlayerIdx, 0);
     }
@@ -240,7 +240,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
         strSync(&m->dec);
         VSync(SyncMode_Wait);
     }
-    while (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    while (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
            MainLoop_ShouldWarmReset() <= ResetType_None);
 
     SsSetSerialVol(0, 0, 0);

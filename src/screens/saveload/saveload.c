@@ -1807,7 +1807,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 }
 
                 // Overwrite or format savegame entry.
-                if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+                if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
                 {
                     if (g_SaveScreen_IsFormatting | g_SaveScreen_IsNewSaveSelected)
                     {
@@ -1828,7 +1828,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
             }
 
             // Exit save screen.
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
             {
                 ScreenFade_Start(false, false, false);
                 g_GameWork.gameStateSteps[1] = 2;
@@ -1865,7 +1865,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 SD_Call(Sfx_MenuMove);
             }
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 if (!isSaveWriteOptionSelected)
                 {
@@ -1885,7 +1885,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
             }
 
             // Cancel overwrite.
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
             {
                 g_GameWork.gameStateSteps[1] = 0;
                 g_GameWork.gameStateSteps[2] = 0;

@@ -802,7 +802,7 @@ void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list) // 0x80
             vcWork.flags &= ~VC_OLD_PRS_F_VIEW_F;
         }
 
-        if (g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.view_E)
+        if (g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.view)
         {
             vcWork.flags |= VC_PRS_F_VIEW_F;
         }

@@ -205,13 +205,13 @@ void func_800EBA40(void) // 0x800EBA40
             Game_TimerUpdate();
             Gfx_CursorDraw((s16)(FP_FROM(D_800F0354, Q12_SHIFT) + 8), FP_FROM(D_800F0358, Q12_SHIFT) + 8, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
             {
                 SysWork_StateStepSet(0, 7);
                 break;
             }
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 for (i = 0; i < ARRAY_SIZE(D_800F0158); i++)
                 {
@@ -361,7 +361,7 @@ void func_800EBF70(void) // 0x800EBF70
             g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
 
             temp_v0 = func_800CD20C();
-            if (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2))
+            if (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 if (temp != temp_v0)
                 {

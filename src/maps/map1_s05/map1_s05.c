@@ -45,7 +45,7 @@ void func_800D49AC(void) // 0x800D49AC
 {
     s32 i;
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4)
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip)
     {
         if (g_SysWork.sysStateSteps[0] >= 3)
         {

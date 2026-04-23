@@ -101,7 +101,7 @@ s32 Chara_Spawn(e_CharacterId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ,
 
         SET_FLAG(&g_SysWork.npcFlags, i);
 
-        g_SysWork.npcs[i].model.controlState = ModelState_Uninitialized;
+        g_SysWork.npcs[i].model.controlState = 0;
         g_SysWork.npcs[i].model.stateStep    = stateStep;
         g_SysWork.npcs[i].position.vx        = posX;
 

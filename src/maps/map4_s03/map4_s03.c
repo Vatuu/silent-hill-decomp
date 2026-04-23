@@ -3252,7 +3252,7 @@ void func_800D5E30(s_SubCharacter* twinfeeler, GsCOORDINATE2* coords) // 0x800D5
 
 void Twinfeeler_Update(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5F28
 {
-    if (twinfeeler->model.controlState == ModelState_Uninitialized)
+    if (twinfeeler->model.controlState == 0)
     {
         Twinfeeler_TextureLoad(); // Just calls `Fs_QueueStartReadTim`.
         twinfeeler->model.controlState = TwinfeelerControl_1;
@@ -3368,7 +3368,7 @@ void func_800D6774(void) // 0x800D6774
     s32         i;
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 11)
     {
         SysWork_StateStepSet(0, 12);
@@ -3555,7 +3555,7 @@ void func_800D6F24(void) // 0x800D6F24
     void* var_s0;
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 9)
     {
         SysWork_StateStepSet(0, 9);
@@ -4678,7 +4678,7 @@ void func_800D8FC0(void) // 0x800D8FC0
     scratchData = PSX_SCRATCH_ADDR(0);
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 5)
     {
         SysWork_StateStepSet(0, 5);
@@ -4799,7 +4799,7 @@ void func_800D8FC0(void) // 0x800D8FC0
 void func_800D960C(void) // 0x800D960C
 {
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < 4)
     {
         SysWork_StateStepReset();

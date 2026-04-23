@@ -169,7 +169,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
 
     // Skip.
     skip = false;
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= EventState_3 &&
         g_SysWork.sysStateSteps[0] <  EventState_13)
     {
@@ -491,6 +491,8 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
     q19_12 prevPlayerPosX;
     q19_12 prevPlayerPosZ;
 
+    #define cherylChara g_SysWork.npcs[0]
+
     switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
@@ -500,7 +502,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
                                Q12(0.0f), Q12(0.0f),
                                Q12(0.0f), Q12(0.0f),
                                true);
-            Camera_LookAtSet(&g_SysWork.npcs[0].position,
+            Camera_LookAtSet(&cherylChara.position,
                              Q12(0.0f), Q12(-1.0f), Q12(0.0f),
                              Q12(0.0f), Q12(0.0f),
                              Q12(0.0f), Q12(0.0f),
@@ -525,7 +527,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
                                Q12(0.0f), Q12(0.0f),
                                Q12(0.0f), Q12(0.0f),
                                false);
-            Camera_LookAtSet(&g_SysWork.npcs[0].position,
+            Camera_LookAtSet(&cherylChara.position,
                              Q12(0.0f), Q12(-1.0f), Q12(0.0f),
                              Q12(0.0f), Q12(0.0f),
                              Q12(0.0f), Q12(0.0f),
@@ -534,7 +536,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
 
         case 3:
             // Warp camera.
-            Camera_LookAtSet(&g_SysWork.npcs[0].position,
+            Camera_LookAtSet(&cherylChara.position,
                              Q12(0.0f), Q12(-1.0f), Q12(0.0f),
                              Q12(0.0f), Q12(0.0f),
                              Q12(0.0f), Q12(0.0f),
@@ -556,7 +558,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
     {
         case 0:
             Player_ControlFreeze();
-            sharedFunc_800D88AC_0_s00(&g_SysWork.npcs[0]);
+            sharedFunc_800D88AC_0_s00(&cherylChara);
             func_800865FC(true, 1, 0, Q12_ANGLE(-135.0f), Q12(-35.0f), Q12(120.0f));
 
             prevPlayerPosX = g_SysWork.playerWork.player.position.vx;
@@ -583,15 +585,15 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             break;
 
         case 3:
-            g_SysWork.npcs[0].properties.player.headingAngle_124 = Q12(1.8f);
+            cherylChara.properties.player.headingAngle_124 = Q12(1.8f);
 
-            func_80086728(&g_SysWork.npcs[0], 2, 1, 0);
+            func_80086728(&cherylChara, 2, 1, 0);
             SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
             break;
 
         case 4:
-            g_SysWork.npcs[0].properties.player.headingAngle_124 = Q12(1.8f);
-            func_80086728(&g_SysWork.npcs[0], 2, 1, 0);
+            cherylChara.properties.player.headingAngle_124 = Q12(1.8f);
+            func_80086728(&cherylChara, 2, 1, 0);
             break;
 
         case 5:
@@ -622,8 +624,8 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             SysWork_StateStepIncrement(0);
 
         case 10:
-            g_SysWork.npcs[0].properties.player.headingAngle_124 = Q12(0.55f);
-            func_80086728(&g_SysWork.npcs[0], 1, 1, 0);
+            cherylChara.properties.player.headingAngle_124 = Q12(0.55f);
+            func_80086728(&cherylChara, 1, 1, 0);
             break;
 
         case 11:
@@ -635,9 +637,11 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             Savegame_EventFlagSet(EventFlag_4);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            sharedFunc_800D88C0_0_s00(&g_SysWork.npcs[0], false);
+            sharedFunc_800D88C0_0_s00(&cherylChara, false);
             break;
     }
+
+    #undef cherylChara
 }
 
 void MapEvent_CutsceneCherylRedirect0(void) // 0x800DAA68
@@ -773,6 +777,8 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
     s32    temp;
     s32    temp2;
 
+    #define cherylChara g_SysWork.npcs[0]
+
     switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
@@ -780,9 +786,9 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
             Player_ControlFreeze();
 
             // Warp Cheryl to starting position in the alley.
-            g_SysWork.npcs[0].position.vx = Q12(-62.0f);
-            g_SysWork.npcs[0].rotation.vy = Q12_ANGLE(180.0f);
-            g_SysWork.npcs[0].position.vz = g_SysWork.playerWork.player.position.vz - Q12(19.0f);
+            cherylChara.position.vx = Q12(-62.0f);
+            cherylChara.rotation.vy = Q12_ANGLE(180.0f);
+            cherylChara.position.vz = g_SysWork.playerWork.player.position.vz - Q12(19.0f);
 
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
@@ -861,10 +867,15 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
 
             func_800865FC(true, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
     }
+
+    #undef cherylChara
 }
 
 void func_800DB26C(void) // 0x800DB26C
 {
+    #define playerChara g_SysWork.playerWork.player
+    #define cherylChara g_SysWork.npcs[0]
+
     // Warp camera.
     if (g_SysWork.sysStateSteps[0] == 0)
     {
@@ -886,12 +897,12 @@ void func_800DB26C(void) // 0x800DB26C
         case 0:
             Player_ControlFreeze();
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
-            func_800865FC(true, 0, 0, Q12_ANGLE(-90.0f), Q12(-60.5f), g_SysWork.playerWork.player.position.vz);
+            func_800865FC(true, 0, 0, Q12_ANGLE(-90.0f), Q12(-60.5f), playerChara.position.vz);
 
-            // Warp Cheryl?
-            g_SysWork.npcs[0].position.vx = Q12(-62.0f);
-            g_SysWork.npcs[0].rotation.vy = Q12_ANGLE(180.0f);
-            g_SysWork.npcs[0].position.vz = g_SysWork.playerWork.player.position.vz - Q12(9.0f);
+            // Warp Cheryl.
+            cherylChara.position.vx = Q12(-62.0f);
+            cherylChara.rotation.vy = Q12_ANGLE(180.0f);
+            cherylChara.position.vz = playerChara.position.vz - Q12(9.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -932,6 +943,9 @@ void func_800DB26C(void) // 0x800DB26C
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
+
+    #undef playerChara
+    #undef cherylChara
 }
 
 void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
@@ -941,7 +955,7 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
         case 0:
             Player_ControlFreeze();
 
-            D_800DFB5C = 0;
+            D_800DFB5C = Q12(0.0f);
             D_800DFB60 = 0;
 
             GameFs_FlameGfxLoad();
@@ -1218,7 +1232,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             {
                 if (g_SysWork.npcs[i].model.charaId == ENEMY_CHARA_ID)
                 {
-                    g_SysWork.npcs[i].model.controlState = ModelState_Uninitialized;
+                    g_SysWork.npcs[i].model.controlState = 0;
                     g_SysWork.npcs[i].model.stateStep    = 6;
                 }
             }

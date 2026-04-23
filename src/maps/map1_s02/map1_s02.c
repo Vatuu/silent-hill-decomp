@@ -156,7 +156,7 @@ void func_800DA384(void) // 0x800DA384
 
     isSkipped = false;
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 10)
     {
         isSkipped = true;
@@ -353,7 +353,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
 
         case 5:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 | g_GameWorkPtr->config.controllerConfig.cancel_2))
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter | g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -382,7 +382,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
         case 9:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
 
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 | g_GameWorkPtr->config.controllerConfig.cancel_2))
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter | g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -594,7 +594,7 @@ void func_800DB33C(void) // 0x800DB33C
 
 void func_800DB368(void) // 0x800DB368
 {
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < 26)
     {
         if (g_SysWork.sysStateSteps[0] < 5)

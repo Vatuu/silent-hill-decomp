@@ -87,7 +87,7 @@ void func_800D0B10(void) // 0x800D0B10
 void func_800D0C14(void) // 0x800D0C14
 {
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 4 && g_SysWork.sysStateSteps[0] < 30)
     {
         SysWork_StateStepSet(0, 30);

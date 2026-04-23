@@ -20,7 +20,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     s_AnimInfo* animInfo;
     bool        cond;
 
-    if (chara->model.controlState == ModelState_Uninitialized)
+    if (chara->model.controlState == 0)
     {
         chara->model.controlState                                      = 1;
         chara->model.anim.status                              = ANIM_STATUS(3, true);
@@ -229,7 +229,7 @@ void func_800D7308(void)
     g_SysWork.bgmStatusFlags |= BgmStatusFlag_ApplyMute;
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < EventState_Skip)
     {
         SysWork_StateStepSet(0, EventState_Skip);
@@ -383,7 +383,7 @@ void func_800D7864(void) // 0x800D7864
 
     g_SysWork.bgmStatusFlags |= BgmStatusFlag_ApplyMute;
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= MEDALLION_CUTSCENE_START && g_SysWork.sysStateSteps[0] < MEDALLION_CUTSCENE_END)
     {
         ScreenFade_ResetTimestep();
@@ -577,7 +577,7 @@ void MapEvent_PianoPuzzle(bool playNote) // 0x800D7F18
         return;
     }
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
     {
         SysWork_StateStepIncrement(0);
         return;
@@ -595,7 +595,7 @@ void MapEvent_PianoPuzzle(bool playNote) // 0x800D7F18
     cursorY = FP_FROM(g_PianoCursorY, Q12_SHIFT) + 8;
     Gfx_CursorDraw(cursorX, cursorY, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
     {
         if (FP_FROM(g_PianoCursorY, Q12_SHIFT) >= 34)
         {
@@ -823,7 +823,7 @@ void func_800D87C0(void) // 0x800D87C0
     s_WorldObjectDesc* obj;
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < EventState_Skip)
     {
         if ( g_SysWork.sysStateSteps[0]  < 4)

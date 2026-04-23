@@ -314,7 +314,7 @@ void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isPuppetDoctor)
 void Ai_PuppetNurse_Update(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     // Initialize.
-    if (nurse->model.controlState == ModelState_Uninitialized)
+    if (nurse->model.controlState == 0)
     {
         Ai_PuppetNurse_Init(nurse, false);
     }
@@ -325,7 +325,7 @@ void Ai_PuppetNurse_Update(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDIN
 void Ai_PuppetDoctor_Update(s_SubCharacter* doctor, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     // Initialize.
-    if (doctor->model.controlState == ModelState_Uninitialized)
+    if (doctor->model.controlState == 0)
     {
         Ai_PuppetNurse_Init(doctor, true);
     }

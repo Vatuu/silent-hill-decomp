@@ -251,7 +251,7 @@ void func_800D2408(void) // 0x800D2408
     #define cybilChara  &g_SysWork.npcs[0]
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 3 && g_SysWork.sysStateSteps[0] < 41)
     {
         SysWork_StateStepSet(0, EventState_Skip);
@@ -569,7 +569,7 @@ void func_800D2F74(void) // 0x800D2F74
     #define playerChara &g_SysWork.playerWork.player
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 3 && g_SysWork.sysStateSteps[0] < 10)
     {
         SysWork_StateStepSet(0, EventState_Skip);
@@ -703,7 +703,7 @@ void func_800D3420(void) // 0x800D3420
     scratchData = PSX_SCRATCH_ADDR(0);
 
     // Skip.
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4 &&
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip &&
         g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < 29)
     {
         SysWork_StateStepSet(0, EventState_Skip);
@@ -1039,7 +1039,7 @@ void func_800D4410(void) // 0x800D4410
     #define playerChara &g_SysWork.playerWork.player
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < 13)
     {
         SD_Call(19);

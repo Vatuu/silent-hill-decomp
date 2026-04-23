@@ -23,7 +23,7 @@
  */
 void Ai_Alessa_Update(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (alessa->model.controlState == ModelState_Uninitialized)
+    if (alessa->model.controlState == 0)
     {
         Ai_Alessa_Init(alessa);
     }

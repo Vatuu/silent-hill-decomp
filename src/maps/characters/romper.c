@@ -10,7 +10,7 @@
 
 void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (romper->model.controlState == ModelState_Uninitialized)
+    if (romper->model.controlState == 0)
     {
         Ai_Romper_Init(romper);
     }

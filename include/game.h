@@ -890,7 +890,7 @@ typedef enum _PlayerFlags
     PlayerFlag_Unk31          = 1 << 31
 } e_PlayerFlags;
 
-/** @brief Character IDs. The `CHARA_FILE_INFOS` array associates each character ID with animimation, model, and texture files. */
+/** @brief Character IDs. The `CHARA_FILE_INFOS` array associates each character ID with asset files. */
 typedef enum _CharacterId
 {
     Chara_None             = 0,
@@ -944,13 +944,7 @@ typedef enum _CharacterId
     Chara_Hack = NO_VALUE, // @hack Force enum to be treated as `s32`.
 } e_CharacterId;
 
-/** @brief Character model states. TODO: Remove. Each character should have its own enum of control states. */
-typedef enum _ModelState
-{
-    ModelState_Uninitialized = 0,
-
-} e_ModelState;
-
+/** @brief Game difficulties. */
 typedef enum _GameDifficulty
 {
     GameDifficulty_Easy   = -1,
@@ -958,22 +952,24 @@ typedef enum _GameDifficulty
     GameDifficulty_Hard   = 1
 } e_GameDifficulty;
 
+/** @brief Event trigger types. */
 typedef enum _TriggerType
 {
     TriggerType_EndOfArray     = NO_VALUE,
     TriggerType_None           = 0, /** Skips trigger/activation type checks. Always activates if required event flags are set and skips processing later events until flags deactivate it. */
-    TriggerType_TouchAabb      = 1, /** Checks if the player has entered a rectangular area aligned to world axes. */
-    TriggerType_TouchFacing    = 2, /** Checks if the player is within a small area and facing toward the trigger point. */
-    TriggerType_TouchObbFacing = 3, /** Checks if the player has stepped into a shaped area and is facing toward it. */
-    TriggerType_TouchObb       = 4, /** Checks if the player has stepped into a shaped area. No facing requirement. */
+    TriggerType_TouchAabb      = 1, /** Player has collided with an AABB. */
+    TriggerType_TouchFacing    = 2, /** Player collided with a trigger is facing toward it. */
+    TriggerType_TouchObbFacing = 3, /** Player collided with an OBB and is facing toward it. */
+    TriggerType_TouchObb       = 4, /** Player collided with an OBB. No facing requirement. */
 } e_TriggerType;
 
+/** @brief Event triger activation types. */
 typedef enum _TriggerActivationType
 {
     TriggerActivationType_None      = 0, /** No activation conditions other than event flag/trigger checks. */
-    TriggerActivationType_Exclusive = 1, /** Prevents other events from being triggered while this event is active. */
-    TriggerActivationType_Button    = 2, /** Requires a button press to activate. */
-    TriggerActivationType_Item      = 3, /** Requires an inventory item to activate. */
+    TriggerActivationType_Exclusive = 1, /** Prevents other events from being triggered while the event is active. */
+    TriggerActivationType_Button    = 2, /** Requires a button press. */
+    TriggerActivationType_Item      = 3, /** Requires an inventory item. */
 } e_TriggerActivationType;
 
 /** Some events indicate specific cutscenes behavior via flags. */
@@ -1031,23 +1027,24 @@ STATIC_ASSERT_SIZEOF(s_ControllerData, 44);
  */
 typedef struct _ControllerConfig
 {
-    u16 enter_0;
-    u16 cancel_2;
-    u16 skip_4;
-    u16 action_6;
-    u16 aim_8;
-    u16 light_A;
-    u16 run_C;
-    u16 view_E;
-    u16 stepLeft_10;
-    u16 stepRight_12;
-    u16 pause_14;
-    u16 item_16;
-    u16 map_18;
-    u16 option_1A;
+    /* 0x0  */ u16 enter;
+    /* 0x2  */ u16 cancel;
+    /* 0x4  */ u16 skip;
+    /* 0x6  */ u16 action;
+    /* 0x8  */ u16 aim;
+    /* 0xA  */ u16 light;
+    /* 0xC  */ u16 run;
+    /* 0xE  */ u16 view;
+    /* 0x10 */ u16 stepLeft;
+    /* 0x12 */ u16 stepRight;
+    /* 0x14 */ u16 pause;
+    /* 0x16 */ u16 item;
+    /* 0x18 */ u16 map;
+    /* 0x1A */ u16 option;
 } s_ControllerConfig;
 STATIC_ASSERT_SIZEOF(s_ControllerConfig, 28);
 
+/** @brief Inventory item entry. */
 typedef struct _InventoryItem
 {
     u8 id_0;      /** `InvItemId` */
@@ -1057,12 +1054,14 @@ typedef struct _InventoryItem
 } s_InventoryItem;
 STATIC_ASSERT_SIZEOF(s_InventoryItem, 4);
 
+/** @brief Special inventory item toggle flags. */
 typedef enum _ItemToggleFlags
 {
     ItemToggleFlag_RadioOn       = 1 << 0,
     ItemToggleFlag_FlashlightOff = 1 << 1
 } e_ItemToggleFlags;
 
+/** @brief Savegame data. */
 typedef struct _Savegame
 {
     s_InventoryItem items_0[INVENTORY_ITEM_COUNT_MAX];
@@ -1365,7 +1364,7 @@ typedef struct _PropertiesAirScreamer
     VECTOR3 targetPosition_F8; /** Q19.12 */
     VECTOR3 position_104;      /** Q19.12 | Set to either Air Screamer position with slight offset toward player or player position. */
     VECTOR3 position_110;
-    s32     flags_11C; /** `e_AirScreamerFlags` */
+    s32     flags; /** `e_AirScreamerFlags` */
     q19_12  timer_120;
     q19_12  groundHeight_124;
 } s_PropertiesAirScreamer;

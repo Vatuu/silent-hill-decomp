@@ -158,7 +158,7 @@ void func_800D725C(void) // 0x800D725C
 {
     s_FsImageDesc charaTex;
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 4 && g_SysWork.sysStateSteps[0] <= 20)
     {
         SysWork_StateStepSet(0, 22);
@@ -338,7 +338,7 @@ void func_800D7A60(void) // 0x800D7A60
     SVECTOR3 rot;
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] <= 15)
     {
         SysWork_StateStepSet(0, 17);
@@ -1006,13 +1006,13 @@ void func_800D94DC(void) // 0x800D94DC
             Game_TimerUpdate();
             Gfx_CursorDraw((s16)(FP_FROM(sharedData_800E2CA8_7_s01, Q12_SHIFT) + 8), FP_FROM(sharedData_800E2CAC_7_s01, Q12_SHIFT) + 8, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
             {
                 SysWork_StateStepSet(0, 8);
                 break;
             }
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 for (i = 0; i < ARRAY_SIZE(D_800E1510); i++)
                 {
@@ -1251,7 +1251,7 @@ void func_800D9C9C(void) // 0x800D9C9C
             break;
 
         case 4:
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 if (!Savegame_EventFlagGet(EventFlag_487) && (D_800E1690.field_0 == 1 || D_800E1690.field_0 == 5 || D_800E1690.field_0 == 6))
                 {
@@ -1262,7 +1262,7 @@ void func_800D9C9C(void) // 0x800D9C9C
                     SysWork_StateStepSet(0, 15);
                 }
             }
-            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
             {
                 SysWork_StateStepSet(0, 15);
             }
@@ -1320,13 +1320,13 @@ void func_800D9C9C(void) // 0x800D9C9C
             // TODO: Should `Gfx_CursorDraw` first args be `s16`?
             Gfx_CursorDraw((s16)(FP_FROM(sharedData_800E2CA8_7_s01, 12) + 8), (s16)FP_FROM(sharedData_800E2CAC_7_s01, 12) + 8, 8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 0xC);
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
             {
                 SysWork_StateStepSet(0, 15);
                 break;
             }
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 for (i = 0; i < 3; i++)
                 {
@@ -1942,7 +1942,7 @@ void func_800DCE20(void) // 0x800DCE20
     s32 i;
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 6)
     {
         SysWork_StateStepSet(0, 6);

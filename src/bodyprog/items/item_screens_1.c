@@ -84,9 +84,9 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
                     {
                         modelPtr0                                         = &g_SysWork.playerWork.player.model;
                         extraModelPtr0->anim.status                 -= 10;
-                        g_SysWork.playerWork.player.model.controlState       = ModelState_Uninitialized;
+                        g_SysWork.playerWork.player.model.controlState       = 0;
                         g_SysWork.playerWork.player.model.stateStep   = 0;
-                        g_SysWork.playerWork.extra.model.controlState     = ModelState_Uninitialized;
+                        g_SysWork.playerWork.extra.model.controlState     = 0;
                         g_SysWork.playerWork.extra.model.stateStep = 0;
                         modelPtr0->anim.status                      -= 10;
                     }
@@ -101,11 +101,11 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
                     extraModelPtr1->anim.status                   = ANIM_STATUS(HarryAnim_TransitionToStill, true);
                     extraModelPtr1->anim.keyframeIdx              = 0;
 
-                    g_SysWork.playerWork.player.model.controlState       = ModelState_Uninitialized;
+                    g_SysWork.playerWork.player.model.controlState       = 0;
                     g_SysWork.playerWork.player.model.stateStep   = 0;
                     g_SysWork.playerWork.extra.upperBodyState   = PlayerUpperBodyState_None;
                     g_SysWork.playerWork.extra.lowerBodyState   = PlayerLowerBodyState_None;
-                    g_SysWork.playerWork.extra.model.controlState     = ModelState_Uninitialized;
+                    g_SysWork.playerWork.extra.model.controlState     = 0;
                     g_SysWork.playerWork.extra.model.stateStep = 0;
                 }
 

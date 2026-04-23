@@ -629,19 +629,19 @@ void func_800D6B00(void) // 0x800D6B00
             g_SysWork.pointLightIntensity = Q12(1.0f);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
-            g_SysWork.npcs[D_800DAB7C[0]].model.controlState     = ModelState_Uninitialized;
+            g_SysWork.npcs[D_800DAB7C[0]].model.controlState     = 0;
             g_SysWork.npcs[D_800DAB7C[0]].model.stateStep = 17;
             g_SysWork.npcs[D_800DAB7C[0]].position.vx     += Q12(-0.1878f);
             g_SysWork.npcs[D_800DAB7C[0]].position.vz     += Q12(0.245f);
             g_SysWork.npcs[D_800DAB7C[0]].rotation.vy      = Q12_ANGLE(112.5f);
 
-            g_SysWork.npcs[D_800DAB7C[1]].model.controlState     = ModelState_Uninitialized;
+            g_SysWork.npcs[D_800DAB7C[1]].model.controlState     = 0;
             g_SysWork.npcs[D_800DAB7C[1]].model.stateStep = 17;
             g_SysWork.npcs[D_800DAB7C[1]].position.vx     += Q12(1.8128f);
             g_SysWork.npcs[D_800DAB7C[1]].position.vz     += Q12(0.799f);
             g_SysWork.npcs[D_800DAB7C[1]].rotation.vy      = Q12_ANGLE(180.0f);
 
-            g_SysWork.npcs[D_800DAB7C[2]].model.controlState     = ModelState_Uninitialized;
+            g_SysWork.npcs[D_800DAB7C[2]].model.controlState     = 0;
             g_SysWork.npcs[D_800DAB7C[2]].model.stateStep = 17;
             g_SysWork.npcs[D_800DAB7C[2]].position.vx     += Q12(0.6531f);
             g_SysWork.npcs[D_800DAB7C[2]].position.vz     += Q12(-1.2493f);
@@ -669,7 +669,7 @@ void func_800D6B00(void) // 0x800D6B00
 void func_800D732C(void) // 0x800D732C
 {
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 3)
     {
         ScreenFade_ResetTimestep();
@@ -732,7 +732,7 @@ void func_800D732C(void) // 0x800D732C
 void func_800D75FC(void) // 0x800D75FC
 {
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 6)
     {
         ScreenFade_ResetTimestep();
@@ -803,7 +803,7 @@ void func_800D75FC(void) // 0x800D75FC
 void func_800D7940(void) // 0x800D7940
 {
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 6)
     {
         ScreenFade_ResetTimestep();
@@ -873,7 +873,7 @@ void func_800D7940(void) // 0x800D7940
 void func_800D7C84(void) // 0x800D7C84
 {
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 6)
     {
         ScreenFade_ResetTimestep();
@@ -938,7 +938,7 @@ void func_800D7C84(void) // 0x800D7C84
 void func_800D7F88(void) // 0x800D7F88
 {
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 6)
     {
         ScreenFade_ResetTimestep();

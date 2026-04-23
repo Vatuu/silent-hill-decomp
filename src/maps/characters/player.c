@@ -778,9 +778,9 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
                 if (g_SysWork.playerWork.extra.state >= 23 && g_SysWork.playerWork.extra.state < 27)
                 {
                     playerChara->model.stateStep = 0;
-                    playerChara->model.controlState     = ModelState_Uninitialized;
+                    playerChara->model.controlState     = 0;
                     playerExtra->model.stateStep = 0;
-                    playerExtra->model.controlState     = ModelState_Uninitialized;
+                    playerExtra->model.controlState     = 0;
                 }
 
                 if (angle >= Q12_ANGLE(90.0f) && angle < Q12_ANGLE(270.0f))
@@ -876,7 +876,7 @@ bool sharedFunc_800D2E94_0_s00(void)
         playerDist = SquareRoot0(SQUARE(Q12(-262.0f) - g_SysWork.playerWork.player.position.vx) +
                                  SQUARE(Q12(-104.0f) - g_SysWork.playerWork.player.position.vz));
 
-        if (npcChara->model.controlState == ModelState_Uninitialized || npcChara->model.stateStep == 0)
+        if (npcChara->model.controlState == 0 || npcChara->model.stateStep == 0)
         {
             npcChara->health = Q12(400.0f);
             npcChara->model.controlState++;
@@ -956,7 +956,7 @@ bool sharedFunc_800D2E94_0_s00(void)
         return true;
     }
 
-    npcChara->model.controlState     = ModelState_Uninitialized;
+    npcChara->model.controlState     = 0;
     npcChara->model.stateStep = 0;
     npcChara->model.charaId   = Chara_None;
     npcChara->health           = Q12(0.0f);

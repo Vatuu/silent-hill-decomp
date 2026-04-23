@@ -633,7 +633,7 @@ void func_800D6CF0(void) // 0x800D6CF0
 
 void func_800D6D1C(void) // 0x800D6D1C
 {
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 11)
     {
         SysWork_StateStepSet(0, 15);

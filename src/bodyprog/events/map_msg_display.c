@@ -53,9 +53,9 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
     // Check for user input.
     hasInput = false;
-    if ((g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter_0 |
-                                          g_GameWorkPtr->config.controllerConfig.cancel_2)) ||
-        (g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.skip_4))
+    if ((g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter |
+                                          g_GameWorkPtr->config.controllerConfig.cancel)) ||
+        (g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.skip))
     {
         hasInput = true;
     }
@@ -164,7 +164,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                             break;
                         }
                     }
-                    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel_2)
+                    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
                     {
                         g_MapMsg_Select.maxIdx           = temp;
                         g_MapMsg_Select.selectedEntryIdx = g_MapMsg_SelectCancelIdx;
@@ -179,7 +179,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                         stateMachineIdx1 = FINISH_MAP_MSG;
                         break;
                     }
-                    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter_0)
+                    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
                     {
                         g_MapMsg_Select.maxIdx = temp;
 

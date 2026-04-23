@@ -266,7 +266,7 @@ bool func_801E342C(void) // 0x801E342C
     TILE* tile;
 
     if (((g_GameWork.config.optExtraOptionsEnabled_27 >> (D_801E5E8C - 1)) & (1 << 0)) &&
-        (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4))
+        (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip))
     {
         D_800C48F0 = D_801E5558[D_801E5E8C].field_4 + (D_801E5E84 / 2);
         SD_Call(19);
@@ -657,7 +657,7 @@ bool func_801E3970(void) // 0x801E3970
         }
     }
     else if (((g_GameWork.config.optExtraOptionsEnabled_27 >> (D_801E5E8C - 1)) & (1 << 0)) &&
-             (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4))
+             (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip))
     {
         skipTo = D_801E5E84 + 168;
         skipTo = FP_TO(skipTo, Q12_SHIFT) / Q12(1.0f); // TODO: What math macro matches?

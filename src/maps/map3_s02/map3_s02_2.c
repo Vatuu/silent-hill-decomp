@@ -237,7 +237,7 @@ void func_800D0608(void) // 0x800D0608
         GsOUT_PACKET_P = (PACKET*)scratch->stp_8;
     }
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 4)
     {
         SysWork_StateStepSet(0, 4);
