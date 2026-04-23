@@ -5,14 +5,14 @@ s_EventData MAP_EVENTS[18] = {
         .requiredEventFlag = EventFlag_347,
         .disabledEventFlag = EventFlag_349,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 3, // `func_800D61AC`
     },
     {
         .requiredEventFlag = EventFlag_350,
         .disabledEventFlag = EventFlag_352,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 4, // `func_800D6800`
     },
     {
@@ -91,7 +91,7 @@ s_EventData MAP_EVENTS[18] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 9,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 1, // `MapEvent_DoorLocked`
         .flags_8_13           = 1,
     },
@@ -99,14 +99,14 @@ s_EventData MAP_EVENTS[18] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 10,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 15,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
@@ -129,7 +129,7 @@ s_EventData MAP_EVENTS[18] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 17,
         .requiredItemId     = InvItemId_ChannelingStone,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 5, // `func_800D6BC0`
     },
     {

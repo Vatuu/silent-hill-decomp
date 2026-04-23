@@ -6,7 +6,7 @@ s_EventData MAP_EVENTS[17] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 13,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 2, // `MapEvent_CommonItemTake`
     },
     {
@@ -14,7 +14,7 @@ s_EventData MAP_EVENTS[17] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 14,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 2, // `MapEvent_CommonItemTake`
     },
     {
@@ -22,7 +22,7 @@ s_EventData MAP_EVENTS[17] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 15,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 2, // `MapEvent_CommonItemTake`
     },
     {
@@ -73,14 +73,14 @@ s_EventData MAP_EVENTS[17] = {
         .requiredEventFlag = EventFlag_423,
         .disabledEventFlag = EventFlag_424,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 3, // `func_800D13D8`
     },
     {
         .requiredEventFlag = EventFlag_425,
         .disabledEventFlag = EventFlag_426,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 4, // `func_800D236C`
     },
     {
@@ -123,7 +123,7 @@ s_EventData MAP_EVENTS[17] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 12,
         .requiredItemId     = InvItemId_ChannelingStone,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 5, // `func_800D2658`
     },
     {

@@ -5,7 +5,7 @@ s_EventData MAP_EVENTS[13] = {
         .requiredEventFlag = EventFlag_587,
         .disabledEventFlag = EventFlag_588,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 7, // `func_800E9AC8`
     },
     {
@@ -20,7 +20,7 @@ s_EventData MAP_EVENTS[13] = {
         .requiredEventFlag = EventFlag_584,
         .disabledEventFlag = EventFlag_590,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 6, // `func_800E3E84`
     },
     {
@@ -49,20 +49,20 @@ s_EventData MAP_EVENTS[13] = {
     {
         .requiredEventFlag = EventFlag_589,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 8, // `func_800E9C28`
     },
     {
         .disabledEventFlag = EventFlag_577,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 2, // `func_800E3390`
     },
     {
         .requiredEventFlag = EventFlag_578,
         .disabledEventFlag = EventFlag_579,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 3, // `func_800E3B6C`
     },
     {
@@ -76,13 +76,13 @@ s_EventData MAP_EVENTS[13] = {
     {
         .requiredEventFlag = EventFlag_580,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 4, // `func_800E3C48`
     },
     {
         .requiredEventFlag = EventFlag_582,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 5, // `func_800E3D18`
     },
     {

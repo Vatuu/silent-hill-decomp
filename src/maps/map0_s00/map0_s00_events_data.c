@@ -4,7 +4,7 @@ s_EventData MAP_EVENTS[72] = {
     {
         .disabledEventFlag = EventFlag_1,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 2, // `MapEvent_CutsceneOpening`
         .flags_8_13          = 1,
     },
@@ -12,24 +12,24 @@ s_EventData MAP_EVENTS[72] = {
         .disabledEventFlag  = EventFlag_2,
         .triggerType      = TriggerType_TouchAabb,
         .pointOfInterestIdx = 7,
-        .sysState         = SysState_EventCallFunc,
-        .eventParam       = 3, // `func_800D9D98`
+        .sysState         = SysState_EventCallback,
+        .eventParam       = 3, // `MapEvent_CutsceneCherylFootsteps0`
         .flags_8_13           = 1,
     },
     {
         .disabledEventFlag  = EventFlag_2,
         .triggerType      = TriggerType_TouchAabb,
         .pointOfInterestIdx = 8,
-        .sysState         = SysState_EventCallFunc,
-        .eventParam       = 4, // `func_800DA028`
+        .sysState         = SysState_EventCallback,
+        .eventParam       = 4, // `MapEvent_CutsceneCherylFootsteps1`
         .flags_8_13           = 1,
     },
     {
         .disabledEventFlag  = EventFlag_2,
         .triggerType      = TriggerType_TouchAabb,
         .pointOfInterestIdx = 9,
-        .sysState         = SysState_EventCallFunc,
-        .eventParam       = 5, // `func_800DA254`
+        .sysState         = SysState_EventCallback,
+        .eventParam       = 5, // `MapEvent_CutsceneCherylFootsteps2`
         .flags_8_13           = 1,
     },
     {
@@ -37,8 +37,8 @@ s_EventData MAP_EVENTS[72] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 5,
-        .sysState         = SysState_EventCallFunc,
-        .eventParam       = 5, // `func_800DA254`
+        .sysState         = SysState_EventCallback,
+        .eventParam       = 5, // `MapEvent_CutsceneCherylFootsteps2`
         .flags_8_13           = 1,
     },
     {
@@ -52,8 +52,8 @@ s_EventData MAP_EVENTS[72] = {
         .requiredEventFlag = EventFlag_3,
         .disabledEventFlag = EventFlag_4,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
-        .eventParam      = 6, // `func_800DA5A0`
+        .sysState        = SysState_EventCallback,
+        .eventParam      = 6, // `MapEvent_CutsceneCherylSpotted`
     },
     {
         .requiredEventFlag  = EventFlag_4,
@@ -69,8 +69,8 @@ s_EventData MAP_EVENTS[72] = {
         .triggerType      = TriggerType_TouchObb,
         .activationType   = TriggerActivationType_Exclusive,
         .pointOfInterestIdx = 11,
-        .sysState         = SysState_EventCallFunc,
-        .eventParam       = 7, // `func_800DAA68`
+        .sysState         = SysState_EventCallback,
+        .eventParam       = 7, // `MapEvent_CutsceneCherylRedirect0`
     },
     {
         .requiredEventFlag  = EventFlag_4,
@@ -78,8 +78,8 @@ s_EventData MAP_EVENTS[72] = {
         .triggerType      = TriggerType_TouchObb,
         .activationType   = TriggerActivationType_Exclusive,
         .pointOfInterestIdx = 12,
-        .sysState         = SysState_EventCallFunc,
-        .eventParam       = 8, // `func_800DAB8C`
+        .sysState         = SysState_EventCallback,
+        .eventParam       = 8, // `MapEvent_CutsceneCherylRedirect1`
     },
     {
         .requiredEventFlag  = EventFlag_4,
@@ -87,8 +87,8 @@ s_EventData MAP_EVENTS[72] = {
         .triggerType      = TriggerType_TouchObb,
         .activationType   = TriggerActivationType_Exclusive,
         .pointOfInterestIdx = 13,
-        .sysState         = SysState_EventCallFunc,
-        .eventParam       = 9, // `func_800DACB0`
+        .sysState         = SysState_EventCallback,
+        .eventParam       = 9, // `MapEvent_CutsceneCherylRedirect2`
     },
     {
         .requiredEventFlag  = EventFlag_4,
@@ -96,28 +96,28 @@ s_EventData MAP_EVENTS[72] = {
         .triggerType      = TriggerType_TouchObb,
         .activationType   = TriggerActivationType_Exclusive,
         .pointOfInterestIdx = 14,
-        .sysState         = SysState_EventCallFunc,
-        .eventParam       = 10, // `func_800DADD4`
+        .sysState         = SysState_EventCallback,
+        .eventParam       = 10, // `MapEvent_CutsceneCherylRedirect3`
     },
     {
         .disabledEventFlag  = EventFlag_7,
         .triggerType      = TriggerType_TouchAabb,
         .pointOfInterestIdx = 15,
-        .sysState         = SysState_EventCallFunc,
-        .eventParam       = 11, // `func_800DAEFC`
+        .sysState         = SysState_EventCallback,
+        .eventParam       = 11, // `MapEvent_CutsceneCherylIntoTheAlley`
     },
     {
         .disabledEventFlag  = EventFlag_7,
         .triggerType      = TriggerType_TouchAabb,
         .pointOfInterestIdx = 16,
-        .sysState         = SysState_EventCallFunc,
-        .eventParam       = 11, // `func_800DAEFC`
+        .sysState         = SysState_EventCallback,
+        .eventParam       = 11, // `MapEvent_CutsceneCherylIntoTheAlley`
     },
     {
         .disabledEventFlag  = EventFlag_7,
         .triggerType      = TriggerType_TouchAabb,
         .pointOfInterestIdx = 17,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 12, // `func_800DB26C`
     },
     {
@@ -166,36 +166,36 @@ s_EventData MAP_EVENTS[72] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 23,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 24,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 25,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .requiredEventFlag = EventFlag_15,
         .disabledEventFlag = EventFlag_17,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
-        .eventParam      = 13, // `func_800DB514`
+        .sysState        = SysState_EventCallback,
+        .eventParam      = 13, // `MapEven_CutsceneAlleyGetsDarker`
     },
     {
         .requiredEventFlag  = EventFlag_14,
         .disabledEventFlag  = EventFlag_19,
         .triggerType      = TriggerType_TouchAabb,
         .pointOfInterestIdx = 27,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 14, // `func_800DB870`
         .flags_8_13           = 1,
     },
@@ -223,7 +223,7 @@ s_EventData MAP_EVENTS[72] = {
         .triggerType      = TriggerType_TouchObb,
         .activationType   = TriggerActivationType_Exclusive,
         .pointOfInterestIdx = 26,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 15, // `MapEvent_CutsceneAlleyNightmare`
         .flags_8_13           = 1,
     },
@@ -263,7 +263,7 @@ s_EventData MAP_EVENTS[72] = {
         .requiredEventFlag = EventFlag_25,
         .disabledEventFlag = EventFlag_26,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 16, // `func_800DBE00`
         .flags_8_13          = 1,
     },

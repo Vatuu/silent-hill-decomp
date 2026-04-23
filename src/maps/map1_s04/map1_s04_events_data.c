@@ -10,7 +10,7 @@ s_EventData MAP_EVENTS[3] = {
     },
     {
         .triggerType = TriggerType_None,
-        .sysState    = SysState_EventCallFunc,
+        .sysState    = SysState_EventCallback,
         .eventParam  = 1, // `func_800CCA2C`
         .flags_8_13      = 1,
     },

@@ -6,7 +6,7 @@ s_EventData MAP_EVENTS[23] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 13,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 2, // `MapEvent_CommonItemTake`
     },
     {
@@ -14,7 +14,7 @@ s_EventData MAP_EVENTS[23] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 14,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 2, // `MapEvent_CommonItemTake`
     },
     {
@@ -28,7 +28,7 @@ s_EventData MAP_EVENTS[23] = {
         .requiredEventFlag = EventFlag_M0S01_FmvStarted,
         .disabledEventFlag = EventFlag_M0S01_CafeCutsceneStarted,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 3, // `MapEvent_CafeCutscene`
         .flags_8_13          = 1,
     },
@@ -38,14 +38,14 @@ s_EventData MAP_EVENTS[23] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 6,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 5, // `MapEvent_AirScreamerIntroCutscene`
     },
     {
         .requiredEventFlag = EventFlag_M0S01_AirScreamerDied,
         .disabledEventFlag = EventFlag_M0S01_AirScreamerDeathPlayed,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 11, // `MapEvent_AirScreamerDeath`
     },
     {
@@ -88,7 +88,7 @@ s_EventData MAP_EVENTS[23] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 1,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 6, // `MapEvent_KitchenKnifeItemTake`
     },
     {
@@ -96,7 +96,7 @@ s_EventData MAP_EVENTS[23] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 2,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 7, // `MapEvent_FlashlightItemTake`
     },
     {
@@ -104,7 +104,7 @@ s_EventData MAP_EVENTS[23] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 3,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 8, // `MapEvent_MapItemTake`
     },
     {
@@ -113,7 +113,7 @@ s_EventData MAP_EVENTS[23] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 4,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 9, // `MapEvent_PocketRadioItemTake`
     },
     {

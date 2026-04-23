@@ -1593,7 +1593,7 @@ void func_800DADA8(void) // 0x800DADA8
     Event_ItemTake(InvItemId_RingOfContract, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupRingOfContract, 51);
 }
 
-void func_800DADD4(void) // 0x800DADD4
+void MapEvent_CutsceneCherylRedirect3(void) // 0x800DADD4
 {
     Event_ItemTake(InvItemId_Camera, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCamera, 55);
 }

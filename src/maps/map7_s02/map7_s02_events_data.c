@@ -6,7 +6,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 212,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 3, // `MapEvent_CommonItemTake`
     },
     {
@@ -14,7 +14,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 213,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 3, // `MapEvent_CommonItemTake`
     },
     {
@@ -22,7 +22,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 214,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 3, // `MapEvent_CommonItemTake`
     },
     {
@@ -30,7 +30,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 215,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 3, // `MapEvent_CommonItemTake`
     },
     {
@@ -38,7 +38,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 216,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 3, // `MapEvent_CommonItemTake`
     },
     {
@@ -46,7 +46,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 217,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 3, // `MapEvent_CommonItemTake`
     },
     {
@@ -54,7 +54,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 218,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 3, // `MapEvent_CommonItemTake`
     },
     {
@@ -62,7 +62,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 219,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 3, // `MapEvent_CommonItemTake`
     },
     {
@@ -98,7 +98,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 109,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 45, // `func_800E32E0`
     },
     {
@@ -106,7 +106,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 102,
         .requiredItemId     = InvItemId_VideoTape,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 8, // `func_800DB738`
     },
     {
@@ -120,7 +120,7 @@ s_EventData MAP_EVENTS[251] = {
         .requiredEventFlag = EventFlag_547,
         .disabledEventFlag = EventFlag_548,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 9, // `func_800DBB34`
     },
     {
@@ -128,7 +128,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 100,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 10, // `MapEvent_AnkhTake`
     },
     {
@@ -136,7 +136,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 101,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 10, // `MapEvent_AnkhTake`
     },
     {
@@ -144,7 +144,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 99,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 11, // `func_800DC14C`
     },
     {
@@ -153,7 +153,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 98,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 12, // `func_800DC778`
     },
     {
@@ -161,21 +161,21 @@ s_EventData MAP_EVENTS[251] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 96,
         .requiredItemId     = InvItemId_RingOfContract,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 14, // `func_800DC954`
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 96,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 15, // `func_800DCD00`
     },
     {
         .requiredEventFlag  = EventFlag_553,
         .triggerType      = TriggerType_TouchAabb,
         .pointOfInterestIdx = 104,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 16, // `func_800DD2D4`
     },
     {
@@ -183,21 +183,21 @@ s_EventData MAP_EVENTS[251] = {
         .disabledEventFlag  = EventFlag_555,
         .triggerType      = TriggerType_TouchAabb,
         .pointOfInterestIdx = 104,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 17, // `func_800DD9E8`
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 95,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 18, // `func_800DDEC8`
     },
     {
         .requiredEventFlag = EventFlag_550,
         .disabledEventFlag = EventFlag_551,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 20, // `func_800DE1FC`
     },
     {
@@ -205,21 +205,21 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 93,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 21, // `MapEvent_DiskOfOuroborosTake`
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 94,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 43, // `func_800E2DC0`
     },
     {
         .requiredEventFlag = EventFlag_559,
         .disabledEventFlag = EventFlag_560,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 22, // `func_800DF21C`
     },
     {
@@ -349,7 +349,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 30,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 2, // `MapEvent_DoorUnlocked`
         .flags_8_13           = 1,
     },
@@ -357,7 +357,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 10,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 1, // `MapEvent_DoorLocked`
         .flags_8_13           = 1,
     },
@@ -572,7 +572,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 55,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 1, // `MapEvent_DoorLocked`
         .flags_8_13           = 1,
     },
@@ -625,7 +625,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 67,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 39, // `sharedFunc_800DB60C_7_s01`
         .flags_8_13           = 1,
     },
@@ -685,7 +685,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 74,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 7, // `MapEvent_KeyOfAratronUse`
     },
     {
@@ -695,7 +695,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 74,
         .requiredItemId     = InvItemId_KeyOfAratron,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 7, // `MapEvent_KeyOfAratronUse`
     },
     {
@@ -732,14 +732,14 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 74,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 5, // `func_800DB52C`
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 74,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 1, // `MapEvent_DoorLocked`
         .flags_8_13           = 1,
     },
@@ -749,7 +749,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 75,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 6, // `MapEvent_KeyOfBethorUse`
     },
     {
@@ -759,7 +759,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 75,
         .requiredItemId     = InvItemId_KeyOfBethor,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 6, // `MapEvent_KeyOfBethorUse`
     },
     {
@@ -785,14 +785,14 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 75,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 4, // `func_800DB498`
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 75,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 1, // `MapEvent_DoorLocked`
         .flags_8_13           = 1,
     },
@@ -890,7 +890,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 86,
         .requiredItemId     = InvItemId_AmuletOfSolomon,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 44, // `func_800E2DEC`
         .flags_8_13           = 1,
     },
@@ -900,7 +900,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 86,
         .requiredItemId     = InvItemId_CrestOfMercury,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 44, // `func_800E2DEC`
         .flags_8_13           = 1,
     },
@@ -910,7 +910,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 86,
         .requiredItemId     = InvItemId_Ankh,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 44, // `func_800E2DEC`
         .flags_8_13           = 1,
     },
@@ -920,7 +920,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 86,
         .requiredItemId     = InvItemId_DaggerOfMelchior,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 44, // `func_800E2DEC`
         .flags_8_13           = 1,
     },
@@ -930,7 +930,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 86,
         .requiredItemId     = InvItemId_DiskOfOuroboros,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 44, // `func_800E2DEC`
         .flags_8_13           = 1,
     },
@@ -938,7 +938,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 86,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 44, // `func_800E2DEC`
     },
     {
@@ -989,21 +989,21 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 122,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 23, // `func_800DFA54`
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 123,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 23, // `func_800DFA54`
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 124,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 23, // `func_800DFA54`
     },
     {
@@ -1012,21 +1012,21 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 108,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 24, // `MapEvent_ScrewdriverTake`
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 115,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 25, // `func_800DFAAC`
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 114,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 26, // `func_800DFAE4`
     },
     {
@@ -1034,14 +1034,14 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 113,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 27, // `MapEvent_AmuletOfSolomonTake`
     },
     {
         .requiredEventFlag = EventFlag_481,
         .disabledEventFlag = EventFlag_482,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 28, // `func_800DA248`
     },
     {
@@ -1056,7 +1056,7 @@ s_EventData MAP_EVENTS[251] = {
         .requiredEventFlag = EventFlag_483,
         .disabledEventFlag = EventFlag_484,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 29, // `func_800DAA4C`
     },
     {
@@ -1071,7 +1071,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 112,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 30, // `func_800DFB48`
     },
     {
@@ -1079,7 +1079,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 127,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 31, // `func_800DFDDC`
         .flags_8_13           = 1,
     },
@@ -1088,7 +1088,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 128,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 31, // `func_800DFDDC`
         .flags_8_13           = 1,
     },
@@ -1097,7 +1097,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 129,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 31, // `func_800DFDDC`
         .flags_8_13           = 1,
     },
@@ -1106,7 +1106,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 130,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 31, // `func_800DFDDC`
         .flags_8_13           = 1,
     },
@@ -1115,7 +1115,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 131,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 31, // `func_800DFDDC`
         .flags_8_13           = 1,
     },
@@ -1124,7 +1124,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 132,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 31, // `func_800DFDDC`
         .flags_8_13           = 1,
     },
@@ -1133,7 +1133,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 133,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 31, // `func_800DFDDC`
         .flags_8_13           = 1,
     },
@@ -1142,7 +1142,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 134,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 32, // `MapEvent_CrestOfMercuryTake`
     },
     {
@@ -1150,7 +1150,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 135,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 32, // `MapEvent_CrestOfMercuryTake`
     },
     {
@@ -1158,7 +1158,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 136,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 32, // `MapEvent_CrestOfMercuryTake`
     },
     {
@@ -1166,7 +1166,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 137,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 33, // `MapEvent_RingOfContractTake`
     },
     {
@@ -1174,7 +1174,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 138,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 33, // `MapEvent_RingOfContractTake`
     },
     {
@@ -1182,7 +1182,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 139,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 33, // `MapEvent_RingOfContractTake`
     },
     {
@@ -1190,7 +1190,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 106,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 34, // `MapEvent_CameraTake`
     },
     {
@@ -1207,14 +1207,14 @@ s_EventData MAP_EVENTS[251] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 103,
         .requiredItemId     = InvItemId_Screwdriver,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 35, // `func_800E0CB4`
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 103,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 36, // `func_800E0FF0`
     },
     {
@@ -1223,7 +1223,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 125,
         .requiredItemId     = InvItemId_Camera,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 38, // `func_800E1398`
         .flags_8_13           = 1,
     },
@@ -1233,7 +1233,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 126,
         .requiredItemId     = InvItemId_Camera,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 38, // `func_800E1398`
         .flags_8_13           = 1,
     },
@@ -1242,7 +1242,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 125,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 37, // `func_800E12E4`
         .flags_8_13           = 1,
     },
@@ -1251,7 +1251,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 126,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 37, // `func_800E12E4`
         .flags_8_13           = 1,
     },
@@ -1260,7 +1260,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 111,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 40, // `func_800E1DAC`
     },
     {
@@ -1268,7 +1268,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 110,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 41, // `func_800E1FF4`
     },
     {
@@ -1289,7 +1289,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 23,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 42, // `sharedFunc_800D15F0_3_s01`
     },
     {
@@ -1417,126 +1417,126 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 34,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 35,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 36,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 37,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 38,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 42,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 43,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 44,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 45,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 50,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 56,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 57,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 58,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 59,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 60,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 61,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 89,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 90,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {

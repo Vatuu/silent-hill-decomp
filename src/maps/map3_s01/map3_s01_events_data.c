@@ -6,7 +6,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 101,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 2, // `func_800D14BC`
     },
     {
@@ -14,7 +14,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 100,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 3, // `func_800D1500`
     },
     {
@@ -28,7 +28,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 75,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 13, // `func_800D2A88`
     },
     {
@@ -37,7 +37,7 @@ s_EventData MAP_EVENTS[111] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 57,
         .requiredItemId     = InvItemId_PlasticBottle,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 7, // `MapEvent_UseBottleOnLiquid`
     },
     {
@@ -46,7 +46,7 @@ s_EventData MAP_EVENTS[111] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 58,
         .requiredItemId     = InvItemId_PlasticBottle,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 7, // `MapEvent_UseBottleOnLiquid`
     },
     {
@@ -55,7 +55,7 @@ s_EventData MAP_EVENTS[111] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 59,
         .requiredItemId     = InvItemId_PlasticBottle,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 7, // `MapEvent_UseBottleOnLiquid`
     },
     {
@@ -64,7 +64,7 @@ s_EventData MAP_EVENTS[111] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 60,
         .requiredItemId     = InvItemId_PlasticBottle,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 7, // `MapEvent_UseBottleOnLiquid`
     },
     {
@@ -72,7 +72,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchAabb,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 57,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 6, // `MapEvent_UnknownLiquidInteract`
     },
     {
@@ -80,7 +80,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 58,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 6, // `MapEvent_UnknownLiquidInteract`
     },
     {
@@ -88,7 +88,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 59,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 6, // `MapEvent_UnknownLiquidInteract`
     },
     {
@@ -96,7 +96,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 60,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 6, // `MapEvent_UnknownLiquidInteract`
     },
     {
@@ -136,7 +136,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 62,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 8, // `MapEvent_PlasticBottleTake`
     },
     {
@@ -144,7 +144,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 63,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 10, // `MapEvent_MapTake1`
     },
     {
@@ -152,7 +152,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 64,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 10, // `MapEvent_MapTake1`
     },
     {
@@ -160,7 +160,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 65,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 11, // `func_800D279C`
     },
     {
@@ -168,7 +168,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 66,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 12, // `MapEvent_Generator0`
     },
     {
@@ -176,7 +176,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 66,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 14, // `func_800D29A4`
         .flags_8_13           = 1,
     },
@@ -184,7 +184,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 55,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 5, // `sharedFunc_800D15F0_3_s01`
     },
     {
@@ -299,7 +299,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 40,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
@@ -332,7 +332,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 43,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
@@ -349,7 +349,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 10,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 4, // `func_800D1524`
     },
     {
@@ -359,7 +359,7 @@ s_EventData MAP_EVENTS[111] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 10,
         .requiredItemId     = InvItemId_BasementKey,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 4, // `func_800D1524`
     },
     {
@@ -386,7 +386,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 10,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 1, // `MapEvent_DoorLocked`
         .flags_8_13           = 1,
     },
@@ -402,7 +402,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 68,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 9, // `MapEvent_MapTake0`
     },
     {
@@ -429,7 +429,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 4,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
@@ -437,7 +437,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 5,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
@@ -445,7 +445,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 6,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
@@ -510,7 +510,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 13,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
@@ -609,7 +609,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 33,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
@@ -636,7 +636,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 47,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
@@ -644,7 +644,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 48,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
@@ -671,7 +671,7 @@ s_EventData MAP_EVENTS[111] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 51,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {

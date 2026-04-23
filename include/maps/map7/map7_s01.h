@@ -226,7 +226,7 @@ void func_800DAD7C(void);
 
 void func_800DADA8(void);
 
-void func_800DADD4(void);
+void MapEvent_CutsceneCherylRedirect3(void);
 
 void func_800DAE00(void);
 

@@ -4048,7 +4048,7 @@ void SysWork_AutosaveUpdate(void);
 
 void SysState_SaveMenu_Update(void);
 
-void SysState_EventCallFunc_Update(void);
+void SysState_EventCallback_Update(void);
 
 void SysState_EventSetFlag_Update(void);
 

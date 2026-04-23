@@ -108,15 +108,88 @@ extern u8 D_800E34EC;
 
 extern u8 D_800E39AC;
 
-// Wheelchair wheel in alley?
+// Wheelchair and its spinning wheel in the alley?
 extern s_WorldObjectModel D_800E3A5C[2];
 extern VECTOR3            D_800E3A9C;
 extern SVECTOR3           D_800E3AAC;
 
-/** @brief Updates the alley nightmare cutscene event. */
+/** Open alley gate event? */
+void func_800D9610(void);
+
+/** @brief Handles the cutscene event in which Harry wakes up from the car crash to find Cheryl missing. */
+void MapEvent_CutsceneOpening(void);
+
+/** @brief Handles the cutscene event in which Harry hears Cheryl's footsteps for the first time and moves toward their
+ * source.
+ */
+void MapEvent_CutsceneCherylFootsteps0(void);
+
+/** @brief Handles the cutscene event in which Harry hears Cheryl's footsteps for the first time and moves toward their
+ * source.
+ */
+void MapEvent_CutsceneCherylFootsteps1(void);
+
+/** @brief Handles the cutscene event in which Harry hears Cheryl's footsteps for the first time and moves toward their
+ * source.
+ */
+void MapEvent_CutsceneCherylFootsteps2(void);
+
+// Plays distant Cheryl footstep SFX?
+void Cheryl_DistantFootstepSfxPlay(void);
+
+/** @brief Handles the cutscene in which Harry spots Cheryl in the fog for the first time and begins to follow her. */
+void MapEvent_CutsceneCherylSpotted(void);
+
+/** @brief Handles the cutscene in which Harry is redirected to searching for Cheryl after the player attempts to run
+ * off in the wrong direction.
+ */
+void MapEvent_CutsceneCherylRedirect0(void);
+
+/** @brief Handles the cutscene in which Harry is redirected to searching for Cheryl after the player attempts to run
+ * off in the wrong direction.
+ */
+void MapEvent_CutsceneCherylRedirect1(void);
+
+/** @brief Handles the cutscene in which Harry is redirected to searching for Cheryl after the player attempts to run
+ * off in the wrong direction.
+ */
+void MapEvent_CutsceneCherylRedirect2(void);
+
+/** @brief Handles the cutscene in which Harry is redirected to searching for Cheryl after the player attempts to run
+ * off in the wrong direction.
+ */
+void MapEvent_CutsceneCherylRedirect3(void);
+
+/** @brief Handles the cutscene event in which Harry spots Cheryl in the fog for the second time and follows her into
+ * the alley.
+ */
+void MapEvent_CutsceneCherylIntoTheAlley(void);
+
+// TODO: Which cutscene?
+void func_800DB26C(void);
+
+/** @brief Handles the cutscene in which the alley gets darker and Harry lights a match. */
+void MapEven_CutsceneAlleyGetsDarker(void);
+
+// Dead end cutscene
+void func_800DB870(void);
+
+/** @brief Handles the cutscene event in which Harry spots the dead body on a chain link fence and is promptly ambushed
+ * by Grey Children.
+ */
 void MapEvent_CutsceneAlleyNightmare(void);
 
+// Stops sound effects and warps the player to the ground.
 void func_800DBE00(void);
+
+void Map_WorldObjectsInit(void);
+
+void Map_WorldObjectsUpdate(void);
+
+/** @brief Handles the map event which spawns Grey Children to ambush Harry. */
+void MapEvent_GreyChildrenSpawn(void);
+
+// Alley rail camera setup events?
 
 void func_800DC33C(void);
 
@@ -126,54 +199,12 @@ void func_800DC8D8(void);
 
 void func_800DCA30(void);
 
+void func_800DCC54(void);
+
 s32 func_800DCDA8(void);
 
 s32 func_800DCF38(s32);
 
 void func_800DD0CC(void);
-
-void Map_WorldObjectsInit(void);
-
-void Map_WorldObjectsUpdate(void);
-
-void MapEvent_GreyChildrenSpawn(void);
-
-void func_800DD0CC(void);
-
-void func_800DCC54(void);
-
-// Plays distant Cheryl footstep SFX?
-void func_800DA454(void);
-
-void func_800DA5A0(void);
-
-void func_800D9610(void);
-
-void func_800D9D98(void);
-
-void func_800DA028(void);
-
-void func_800DA254(void);
-
-void func_800DAA68(void);
-
-void func_800DAB8C(void);
-
-void func_800DACB0(void);
-
-void func_800DADD4(void);
-
-void func_800DAEFC(void);
-
-void func_800DB26C(void);
-
-void func_800DB514(void);
-
-void func_800DB870(void);
-
-void func_800DADD4(void);
-
-/** @brief Updates the opening cutscene event. */
-void MapEvent_CutsceneOpening(void);
 
 #endif

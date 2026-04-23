@@ -118,7 +118,11 @@ const char* MAP_MESSAGES[] = {
 
 void func_800D9610(void) // 0x800D9610
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
+    VECTOR3 sfxPos = {
+        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0,
+        Q12(-1.2f),
+        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8
+    };
 
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -305,9 +309,9 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
     }
 }
 
-void func_800D9D98(void) // 0x800D9D98
+void MapEvent_CutsceneCherylFootsteps0(void) // 0x800D9D98
 {
-    func_800DA454();
+    Cheryl_DistantFootstepSfxPlay();
 
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -355,9 +359,9 @@ void func_800D9D98(void) // 0x800D9D98
     }
 }
 
-void func_800DA028(void) // 0x800DA028
+void MapEvent_CutsceneCherylFootsteps1(void) // 0x800DA028
 {
-    func_800DA454();
+    Cheryl_DistantFootstepSfxPlay();
 
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -402,9 +406,9 @@ void func_800DA028(void) // 0x800DA028
     }
 }
 
-void func_800DA254(void) // 0x800DA254
+void MapEvent_CutsceneCherylFootsteps2(void) // 0x800DA254
 {
-    func_800DA454();
+    Cheryl_DistantFootstepSfxPlay();
 
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -434,9 +438,9 @@ void func_800DA254(void) // 0x800DA254
             break;
 
         case 6:
-            func_800865FC(true, 0, 0, Q12_ANGLE(-135.0f), Q12(5.0f), 0x81000);
-            func_800865FC(true, 0, 1, Q12_ANGLE(-90.0f), -0x6000, 0x80000);
-            func_800865FC(true, 0, 2, Q12_ANGLE(-90.0f), -0x11800, 0x81800);
+            func_800865FC(true, 0, 0, Q12_ANGLE(-135.0f), Q12(5.0f),   Q12(129.0f));
+            func_800865FC(true, 0, 1, Q12_ANGLE(-90.0f),  Q12(-6.0f),  Q12(128.0f));
+            func_800865FC(true, 0, 2, Q12_ANGLE(-90.0f),  Q12(-17.5f), Q12(129.5f));
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -448,7 +452,7 @@ void func_800DA254(void) // 0x800DA254
     }
 }
 
-void func_800DA454(void) // 0x800DA454
+void Cheryl_DistantFootstepSfxPlay(void) // 0x800DA454
 {
     VECTOR3 sfxPos;
     q3_12   angleToTarget;
@@ -482,7 +486,7 @@ void func_800DA454(void) // 0x800DA454
     #undef playerChara
 }
 
-void func_800DA5A0(void) // 0x800DA5A0
+void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
 {
     q19_12 prevPlayerPosX;
     q19_12 prevPlayerPosZ;
@@ -636,7 +640,7 @@ void func_800DA5A0(void) // 0x800DA5A0
     }
 }
 
-void func_800DAA68(void) // 0x800DAA68
+void MapEvent_CutsceneCherylRedirect0(void) // 0x800DAA68
 {
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -668,7 +672,7 @@ void func_800DAA68(void) // 0x800DAA68
     }
 }
 
-void func_800DAB8C(void) // 0x800DAB8C
+void MapEvent_CutsceneCherylRedirect1(void) // 0x800DAB8C
 {
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -699,7 +703,7 @@ void func_800DAB8C(void) // 0x800DAB8C
     }
 }
 
-void func_800DACB0(void) // 0x800DACB0
+void MapEvent_CutsceneCherylRedirect2(void) // 0x800DACB0
 {
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -730,7 +734,7 @@ void func_800DACB0(void) // 0x800DACB0
     }
 }
 
-void func_800DADD4(void) // 0x800DADD4
+void MapEvent_CutsceneCherylRedirect3(void) // 0x800DADD4
 {
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -762,7 +766,7 @@ void func_800DADD4(void) // 0x800DADD4
     }
 }
 
-void func_800DAEFC(void) // 0x800DAEFC
+void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
 {
     q19_12 offsetY;
     q19_12 offsetZ;
@@ -772,8 +776,10 @@ void func_800DAEFC(void) // 0x800DAEFC
     switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
+            // Freeze player.
             Player_ControlFreeze();
 
+            // Warp Cheryl to starting position in the alley.
             g_SysWork.npcs[0].position.vx = Q12(-62.0f);
             g_SysWork.npcs[0].rotation.vy = Q12_ANGLE(180.0f);
             g_SysWork.npcs[0].position.vz = g_SysWork.playerWork.player.position.vz - Q12(19.0f);
@@ -787,8 +793,18 @@ void func_800DAEFC(void) // 0x800DAEFC
 
         case 2:
             func_800865FC(false, 0, 0, Q12_ANGLE(180.0f), Q12(0.0f), Q12(0.0f));
-            Camera_PositionSet(&g_SysWork.playerWork.player.position, Q12(0.24f), Q12(-4.06f), Q12(-5.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(&g_SysWork.playerWork.player.position, Q12(-0.72f), Q12(-2.11f), Q12(-1.63f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
+            // Warp camera.
+            Camera_PositionSet(&g_SysWork.playerWork.player.position,
+                               Q12(0.24f), Q12(-4.06f), Q12(-5.0f),
+                               Q12(0.0f), Q12(0.0f),
+                               Q12(0.0f), Q12(0.0f),
+                               true);
+            Camera_LookAtSet(&g_SysWork.playerWork.player.position,
+                             Q12(-0.72f), Q12(-2.11f), Q12(-1.63f),
+                             Q12(0.0f), Q12(0.0f),
+                             Q12(0.0f), Q12(0.0f),
+                             true);
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -796,7 +812,9 @@ void func_800DAEFC(void) // 0x800DAEFC
             break;
 
         case 4:
-            func_800865FC(true, 0, 0, Q12_ANGLE(180.0f), Q12(-62.0f), g_SysWork.playerWork.player.position.vz - Q12(10.0f));
+            func_800865FC(true, 0, 0,
+                         Q12_ANGLE(180.0f),
+                         Q12(-62.0f), g_SysWork.playerWork.player.position.vz - Q12(10.0f));
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
@@ -847,10 +865,19 @@ void func_800DAEFC(void) // 0x800DAEFC
 
 void func_800DB26C(void) // 0x800DB26C
 {
+    // Warp camera.
     if (g_SysWork.sysStateSteps[0] == 0)
     {
-        Camera_PositionSet(NULL, Q12(-62.0f), Q12(-2.24f), Q12(117.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-        Camera_LookAtSet(NULL, Q12(-62.0f), Q12(-0.7f), Q12(104.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+        Camera_PositionSet(NULL,
+                           Q12(-62.0f), Q12(-2.24f), Q12(117.0f),
+                           Q12(0.0f), Q12(0.0f),
+                           Q12(0.0f), Q12(0.0f),
+                           true);
+        Camera_LookAtSet(NULL,
+                         Q12(-62.0f), Q12(-0.7f), Q12(104.0f),
+                         Q12(0.0f), Q12(0.0f),
+                         Q12(0.0f), Q12(0.0f),
+                         true);
         func_800868DC(2);
     }
 
@@ -859,8 +886,9 @@ void func_800DB26C(void) // 0x800DB26C
         case 0:
             Player_ControlFreeze();
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
-            func_800865FC(1, 0, 0, Q12_ANGLE(-90.0f), Q12(-60.5f), g_SysWork.playerWork.player.position.vz);
+            func_800865FC(true, 0, 0, Q12_ANGLE(-90.0f), Q12(-60.5f), g_SysWork.playerWork.player.position.vz);
 
+            // Warp Cheryl?
             g_SysWork.npcs[0].position.vx = Q12(-62.0f);
             g_SysWork.npcs[0].rotation.vy = Q12_ANGLE(180.0f);
             g_SysWork.npcs[0].position.vz = g_SysWork.playerWork.player.position.vz - Q12(9.0f);
@@ -878,7 +906,7 @@ void func_800DB26C(void) // 0x800DB26C
         case 3:
             g_DeltaTime >>= 1; // `/ 2`.
 
-            func_800865FC(0, 0, 0, Q12_ANGLE(-135.0f), Q12(0.0f), Q12(0.0f));
+            func_800865FC(false, 0, 0, Q12_ANGLE(-135.0f), Q12(0.0f), Q12(0.0f));
             SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
@@ -897,14 +925,16 @@ void func_800DB26C(void) // 0x800DB26C
         default:
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_7);
-            func_800865FC(1, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
+
+            func_800865FC(true, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
             Player_ControlUnfreeze(false);
+
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
 
-void func_800DB514(void) // 0x800DB514
+void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
 {
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -1206,7 +1236,7 @@ void func_800DBE00(void) // 0x800DBE00
     func_800892A4(4);
 
     SysWork_StateSetNext(SysState_Gameplay);
-    g_SysWork.playerWork.player.position.vy = 0;
+    g_SysWork.playerWork.player.position.vy = Q12(0.0f);
 }
 
 void Map_WorldObjectsInit(void) // 0x800DBE68
@@ -1660,7 +1690,7 @@ s32 func_800DCF38(s32 arg0) // 0x800DCF38
 
     var_t0 = 0;
 
-    if (g_SysWork.sysState == SysState_EventCallFunc)
+    if (g_SysWork.sysState == SysState_EventCallback)
     {
         if (!Savegame_EventFlagGet(EventFlag_15))
         {

@@ -629,7 +629,7 @@ typedef enum _SysState
     SysState_ReadMessage    = 7,
     SysState_SaveMenu0      = 8,
     SysState_SaveMenu1      = 9,
-    SysState_EventCallFunc  = 10,
+    SysState_EventCallback  = 10,
     SysState_EventSetFlag   = 11,
     SysState_EventPlaySound = 12,
     SysState_GameOver       = 13,

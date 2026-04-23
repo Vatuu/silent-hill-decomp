@@ -3488,7 +3488,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
             {
                 collFlags = CollisionFlag_1;
 
-                if (g_SysWork.sysState != SysState_EventCallFunc)
+                if (g_SysWork.sysState != SysState_EventCallback)
                 {
                     func_800E15FC(&playerChara, &g_SysWork.npcs[0], false);
                 }

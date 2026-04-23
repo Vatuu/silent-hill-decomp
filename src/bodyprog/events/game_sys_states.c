@@ -46,7 +46,7 @@ static void (*g_SysStateFuncs[])(void) = {
     SysState_ReadMessage_Update,
     SysState_SaveMenu_Update,
     SysState_SaveMenu_Update,
-    SysState_EventCallFunc_Update,
+    SysState_EventCallback_Update,
     SysState_EventSetFlag_Update,
     SysState_EventPlaySound_Update,
     SysState_GameOver_Update,
@@ -847,7 +847,7 @@ void SysState_SaveMenu_Update(void) // 0x8003A230
     }
 }
 
-void SysState_EventCallFunc_Update(void) // 0x8003A3C8
+void SysState_EventCallback_Update(void) // 0x8003A3C8
 {
     if (g_MapEventData->flags_8_13 != EventParamUnkState_None)
     {

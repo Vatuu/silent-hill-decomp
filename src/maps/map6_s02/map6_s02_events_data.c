@@ -62,13 +62,13 @@ s_EventData MAP_EVENTS[12] = {
         .requiredEventFlag = EventFlag_409,
         .disabledEventFlag = EventFlag_410,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 3, // `func_800CF0B8`
     },
     {
         .requiredEventFlag = EventFlag_588,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 6, // `func_800D32D0`
     },
     {
@@ -77,13 +77,13 @@ s_EventData MAP_EVENTS[12] = {
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 8,
         .requiredItemId     = InvItemId_ChannelingStone,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 4, // `func_800CFC34`
     },
     {
         .requiredEventFlag = EventFlag_469,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 5, // `func_800D0500`
     },
     {

@@ -12,7 +12,7 @@ s_EventData MAP_EVENTS[13] = {
         .requiredEventFlag = EventFlag_476,
         .disabledEventFlag = EventFlag_471,
         .triggerType     = TriggerType_None,
-        .sysState        = SysState_EventCallFunc,
+        .sysState        = SysState_EventCallback,
         .eventParam      = 3, // `func_800D0B64`
     },
     {
@@ -26,14 +26,14 @@ s_EventData MAP_EVENTS[13] = {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 1,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 2,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .flags_8_13           = 1,
     },
     {
@@ -58,7 +58,7 @@ s_EventData MAP_EVENTS[13] = {
         .disabledEventFlag  = EventFlag_472,
         .triggerType      = TriggerType_TouchAabb,
         .pointOfInterestIdx = 5,
-        .sysState         = SysState_EventCallFunc,
+        .sysState         = SysState_EventCallback,
         .eventParam       = 4, // `func_800D1604`
     },
     {
