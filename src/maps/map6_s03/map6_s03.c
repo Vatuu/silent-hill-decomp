@@ -354,7 +354,6 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
     s32  temp_a0;
     s32  i;
     s16* ptr;
-
     MAP_CHUNK_CHECK_VARIABLE_DECL();
     MAP_CHUNK_CHECK_VARIABLE_DECL_2();
 

@@ -137,26 +137,46 @@ void func_800D9610(void) // 0x800D9610
     }
 }
 
-extern q19_12 g_Cutscene_Timer;
+extern q19_12  g_Cutscene_Timer;
 extern VECTOR3 g_CameraPositionTarget;
 extern VECTOR3 g_CameraLookAtTarget;
 
-void MapEvent_OpeningCutscene(void) // 0x0x800D9748
+void MapEvent_CutsceneOpening(void) // 0x0x800D9748
 {
-    bool skipCutscene;
-    s32  time;
-
-    skipCutscene = false;
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
-        g_SysWork.sysStateSteps[0] >= 3 && g_SysWork.sysStateSteps[0] < 13)
+    typedef enum _EventState
     {
-        skipCutscene = true;
+        EventState_Initialize = 0,
+        EventState_LoadChunks = 1,
+        EventState_2          = 2,
+        EventState_3          = 3,
+        EventState_4          = 4,
+        EventState_5          = 5,
+        EventState_6          = 6,
+        EventState_7          = 7,
+        EventState_8          = 8,
+        EventState_9          = 9,
+        EventState_10         = 10,
+        EventState_11         = 11,
+        EventState_12         = 12,
+        EventState_13         = 13
+    } e_EventState;
+
+    bool skip;
+
+    // Skip.
+    skip = false;
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip_4) &&
+        g_SysWork.sysStateSteps[0] >= EventState_3 &&
+        g_SysWork.sysStateSteps[0] <  EventState_13)
+    {
+        skip = true;
         SysWork_StateStepReset();
     }
 
+    // Control cutscene.
     switch (g_SysWork.sysStateSteps[0])
     {
-        case 0:
+        case EventState_Initialize:
             Player_ControlFreeze();
             Fs_QueueStartRead(FILE_ANIM_OPEN_DMS, FS_BUFFER_16);
 
@@ -168,90 +188,89 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             Sd_PlaySfx(Sfx_Unk1361, 0, 0x90);
             SysWork_StateStepIncrement(0);
 
-        case 1:
-            if (Fs_QueueDoThingWhenEmpty())
+        case EventState_LoadChunks:
+            if (Fs_QueueChunksLoad())
             {
                 SysWork_StateStepIncrement(0);
             }
             break;
 
-        case 2:
+        case EventState_2:
+            // Load Cheryl character.
             Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_16);
             Chara_Load(0, Chara_Cheryl, g_SysWork.npcCoords, 0, NULL, NULL);
-            SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(3.0f), false);
 
+            SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(3.0f), false);
             g_Cutscene_Timer = Q12(0.0f);
 
             SysWork_StateStepIncrement(0);
             break;
 
-        case 3:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 0x35, false);
+        case EventState_3:
+            func_80085EB8(0, &g_SysWork.playerWork.player, 53, false);
             SysWork_StateStepIncrement(0);
 
-        case 4:
-            time     = g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
-            g_Cutscene_Timer = MIN(time, Q12(22.0f));
+        case EventState_4:
+            g_Cutscene_Timer = MIN(g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f)), Q12(22.0f));
             if (g_Cutscene_Timer >= Q12(22.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
             break;
 
-        case 5:
+        case EventState_5:
             func_80085EB8(0, &g_SysWork.playerWork.player, 74, false);
             SysWork_StateStepIncrement(0);
 
-        case 6:
-            time     = g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(8.0f));
-            g_Cutscene_Timer = MIN(time, Q12(26.0f));
+        case EventState_6:
+            g_Cutscene_Timer = MIN(g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(8.0f)), Q12(26.0f));
             if (g_Cutscene_Timer >= Q12(26.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
             break;
 
-        case 7:
+        case EventState_7:
             g_Cutscene_Timer = MIN((g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
-            MapMsg_DisplayAndHandleSelection(false, 15, false, false, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 15, false, false, 0, false); // "Cheryl. Where could you be?"
             break;
 
-        case 8:
+        case EventState_8:
             g_Cutscene_Timer = MIN((g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
             SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
-        case 9:
+        case EventState_9:
             g_Cutscene_Timer = MIN((g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
-            MapMsg_DisplayAndHandleSelection(false, 16, false, false, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 16, false, false, 0, false); // "It's strange..."
             break;
 
-        case 10:
-            time     = g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f));
-            g_Cutscene_Timer = MIN(time, Q12(72.0f));
+        case EventState_10:
+            g_Cutscene_Timer = MIN(g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f)), Q12(72.0f));
             if (g_Cutscene_Timer >= Q12(72.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
             break;
 
-        case 11:
+        case EventState_11:
             SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
             break;
 
-        case 12:
-            MapMsg_DisplayAndHandleSelection(false, 19, false, false, 0, false);
+        case EventState_12:
+            MapMsg_DisplayAndHandleSelection(false, 19, false, false, 0, false); // "Cheryl."
             break;
 
-        case 13:
+        case EventState_13:
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         default:
             g_Cutscene_Timer = NO_VALUE;
 
-            if (skipCutscene)
+            if (skip)
             {
+                // Restore player control.
                 Player_ControlUnfreeze(true);
                 SysWork_StateSetNext(SysState_Gameplay);
 
@@ -262,17 +281,21 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             }
             else
             {
+                // Restore player control.
                 Player_ControlUnfreeze(false);
                 SysWork_StateSetNext(SysState_Gameplay);
             }
 
             SysWork_StateStepIncrementAfterFade(false, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
+
+            // Load Cheryl character.
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Cheryl, 0, Q12(-29.5f), Q12(128.7f), Q12(-0.3125f), 1);
             break;
     }
 
+    // Control player and camera.
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
         Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_16);
@@ -310,7 +333,7 @@ void func_800D9D98(void) // 0x800D9D98
             break;
 
         case 5:
-            MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false); // "Footsteps?"
             break;
 
         case 6:
@@ -360,7 +383,7 @@ void func_800DA028(void) // 0x800DA028
             break;
 
         case 5:
-            MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false); // "Footsteps?"
             break;
 
         case 6:
@@ -407,7 +430,7 @@ void func_800DA254(void) // 0x800DA254
             break;
 
         case 5:
-            MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false); // "Footsteps?"
             break;
 
         case 6:
@@ -631,7 +654,7 @@ void func_800DAA68(void) // 0x800DAA68
             break;
 
         case 3:
-            MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false); // "I'd better follow Cheryl..."
             break;
 
         case 4:
@@ -639,6 +662,7 @@ void func_800DAA68(void) // 0x800DAA68
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
     }
@@ -662,7 +686,7 @@ void func_800DAB8C(void) // 0x800DAB8C
             break;
 
         case 3:
-            MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false); // "I'd better follow Cheryl..."
             break;
 
         case 4:
@@ -693,7 +717,7 @@ void func_800DACB0(void) // 0x800DACB0
             break;
 
         case 3:
-            MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false); // "I'd better follow Cheryl..."
             break;
 
         case 4:
@@ -905,7 +929,7 @@ void func_800DB514(void) // 0x800DB514
             SysWork_StateStepIncrement(0);
 
         case 4:
-            MapMsg_DisplayAndHandleSelection(false, 25, 0, 0, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 25, 0, 0, 0, false); // "That's strange, it's getting darker."
             break;
 
         case 5:
@@ -919,7 +943,7 @@ void func_800DB514(void) // 0x800DB514
             }
             break;
 
-            if (Fs_QueueDoThingWhenEmpty())
+            if (Fs_QueueChunksLoad())
             {
                 D_800DFB60++;
                 Chara_Load(1, ENEMY_CHARA_ID, &g_SysWork.npcCoords[0], 0, NULL, NULL);
@@ -948,7 +972,7 @@ void func_800DB514(void) // 0x800DB514
 
         case 11:
             Savegame_EventFlagSet(EventFlag_17);
-            MapMsg_DisplayAndHandleSelection(false, 30, 0, 0, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 30, 0, 0, 0, false); // "......better than nothing, I guess."
             break;
 
         default:
@@ -965,7 +989,7 @@ void func_800DB514(void) // 0x800DB514
 
     if (D_800DFB60 == 0)
     {
-        if (Fs_QueueDoThingWhenEmpty())
+        if (Fs_QueueChunksLoad())
         {
             D_800DFB60++;
             Chara_Load(1, ENEMY_CHARA_ID, &g_SysWork.npcCoords[0], 0, NULL, NULL);
@@ -975,21 +999,31 @@ void func_800DB514(void) // 0x800DB514
 
 void func_800DB870(void) // 0x800DB870
 {
+    typedef enum _EventState
+    {
+        EventState_Freeze     = 0,
+        EventState_1          = 1,
+        EventState_MsgDeadEnd = 2,
+        EventState_Unfreeze   = 3
+    } e_EventState;
+
     switch (g_SysWork.sysStateSteps[0])
     {
-        case 0:
+        case EventState_Freeze:
+            // Freeze player.
             Player_ControlFreeze();
             SysWork_StateStepIncrement(0);
 
-        case 1:
+        case EventState_1:
             func_80085DF0();
             break;
 
-        case 2:
-            MapMsg_DisplayAndHandleSelection(false, 26, 0, 0, 0, false);
+        case EventState_MsgDeadEnd:
+            MapMsg_DisplayAndHandleSelection(false, 26, 0, 0, 0, false); // "A dead end? What the hell!?"
             break;
 
-        default:
+        default: // `EventState_Unfreeze`
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -1000,7 +1034,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
 {
     typedef enum _EventState
     {
-        EventState_Setup              = 0,
+        EventState_Initialize     = 0,
         EventState_1              = 1,
         EventState_2              = 2,
         EventState_3              = 3,
@@ -1099,7 +1133,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             }
             break;
 
-        case EventState_Setup:
+        case EventState_Initialize:
         case EventState_1:
         case EventState_2:
             break;
@@ -1114,7 +1148,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
     // Control audio, messages, and game states.
     switch (g_SysWork.sysStateSteps[0])
     {
-        case EventState_Setup:
+        case EventState_Initialize:
             Player_ControlFreeze();
 
             Map_PlaceIpdAtCell(FILE_BG_THRF908_IPD, -7, 6);

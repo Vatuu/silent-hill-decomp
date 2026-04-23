@@ -22,7 +22,7 @@ s_MapPoint2d MAP_POINTS[] = {
 void (*g_MapEventFuncs[])() = {
     func_800D9610,
     NULL,
-    MapEvent_OpeningCutscene,
+    MapEvent_CutsceneOpening,
     func_800D9D98,
     func_800DA028,
     func_800DA254,

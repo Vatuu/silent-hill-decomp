@@ -1367,7 +1367,7 @@ void func_800EA6E0(void) // 0x800EA6E0
     // TODO: Probably inaccurate. Need to figure out what the unknown functions are doing.
     typedef enum _EventState
     {
-        EventState_Setup       = 0,
+        EventState_Initialize  = 0,
         EventState_FadeOutGame = 1,
         EventState_Load        = 2, // TODO: Something else?
         EventState_FadeInMap   = 3,
@@ -1380,7 +1380,7 @@ void func_800EA6E0(void) // 0x800EA6E0
 
     switch (g_SysWork.sysStateSteps[0])
     {
-        case EventState_Setup:
+        case EventState_Initialize:
             Player_ControlFreeze();
             func_800862F8(0, FILE_TIM_KEYMAP_TIM, false);
             SysWork_StateStepIncrement(0);

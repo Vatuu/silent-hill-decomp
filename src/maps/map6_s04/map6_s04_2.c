@@ -1098,7 +1098,7 @@ void func_800E0204(void) // 0x800E0204
 {
     if (D_800ED588 == 0)
     {
-        if (!Fs_QueueDoThingWhenEmpty())
+        if (!Fs_QueueChunksLoad())
         {
             return;
         }
@@ -3010,7 +3010,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             }
 
         case 44:
-            if (Fs_QueueDoThingWhenEmpty())
+            if (Fs_QueueChunksLoad())
             {
                 SysWork_StateStepIncrement(0);
             }

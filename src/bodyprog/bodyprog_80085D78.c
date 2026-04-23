@@ -318,7 +318,7 @@ void func_800862F8(s32 stateStep, e_FsFile fileIdx, bool reset) // 0x800862F8
             {
                 SysWork_StateStepIncrement(2);
 
-                if (Fs_QueueDoThingWhenEmpty())
+                if (Fs_QueueChunksLoad())
                 {
                     func_80085D78(reset);
                 }
@@ -326,7 +326,7 @@ void func_800862F8(s32 stateStep, e_FsFile fileIdx, bool reset) // 0x800862F8
             break;
 
         case 1:
-            if (Fs_QueueDoThingWhenEmpty())
+            if (Fs_QueueChunksLoad())
             {
                 func_80085D78(reset);
             }
@@ -402,7 +402,7 @@ void func_80086470(u32 stateStep, e_InvItemId itemId, s32 itemCount, bool reset)
             SysWork_StateStepIncrement(2);
 
         case 1:
-            if (!Fs_QueueDoThingWhenEmpty())
+            if (!Fs_QueueChunksLoad())
             {
                 break;
             }

@@ -95,7 +95,7 @@ extern s32 g_Demo_DemoStep; // 0x800C4894
 
 extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
 
-/** Something for demo handling. Set in `Fs_QueueDoThingWhenEmpty`. */
+/** Something for demo handling. Set in `Fs_QueueChunksLoad`. */
 extern bool D_800C489C;
 
 // ==========

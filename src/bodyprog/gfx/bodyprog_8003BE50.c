@@ -353,7 +353,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
     Ipd_ChunkInit(pos0.vx, pos0.vz, pos1.vx, pos1.vz);
 }
 
-s32 Ipd_ChunkInitCheck(void) // 0x8003C850
+bool Ipd_ChunkInitCheck(void) // 0x8003C850
 {
     Ipd_CloseRangeChunksInit();
     return Ipd_AreChunksLoaded();

@@ -5,7 +5,7 @@ s_EventData MAP_EVENTS[72] = {
         .disabledEventFlag = EventFlag_1,
         .triggerType     = TriggerType_None,
         .sysState        = SysState_EventCallFunc,
-        .eventParam      = 2, // `MapEvent_OpeningCutscene`
+        .eventParam      = 2, // `MapEvent_CutsceneOpening`
         .flags_8_13          = 1,
     },
     {

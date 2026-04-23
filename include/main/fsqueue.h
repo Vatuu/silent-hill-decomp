@@ -262,22 +262,24 @@ typedef struct _FsQueue
 /** The FS queue. See `s_FsQueue`. */
 extern s_FsQueue g_FsQueue;
 
-/** @brief Check if queue entry index has been loaded and post-loaded.
+/** @brief Checks if a queue entry index has been loaded and post-loaded.
  *
  * @param queueIdx Index of the queue entry to check.
  * @return `true` if the entry has been fully processed, `false` otherwise.
  */
 bool Fs_QueueIsEntryLoaded(s32 queueIdx);
 
-/** @brief Get number of operations currently in the queue.
+/** @brief Gets the number of operations currently in the queue.
+ *
  * @return Number of operations in the queue. Includes both pending reads and pending post-loads.
  */
 s32 Fs_QueueGetLength(void);
 
-/** @brief TODO: Unknown. If queue is empty, call `func_8003C850`.
- * @return `true` when queue is empty and the call succeeds, `false` otherwise.
+/** @brief Loads map chunks currently in view.
+ *
+ * @return `true` if the chunks in view are loaded, `false` otherwise.
  */
-bool Fs_QueueDoThingWhenEmpty(void);
+bool Fs_QueueChunksLoad(void);
 
 /** @brief Spin-waits for the queue to become empty while calling `Fs_QueueUpdate`.
  * Calls some bodyprog functions before and after the wait, `VSync` during the waits and `DrawSync`

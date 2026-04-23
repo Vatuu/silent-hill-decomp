@@ -28,7 +28,7 @@ void func_80087EA8(s32 cmd) // 0x80087EA8
 
 void func_80087EDC(s32 cmd) // 0x80087EDC
 {
-    if (Sd_AudioStreamingCheck() || !Fs_QueueDoThingWhenEmpty())
+    if (Sd_AudioStreamingCheck() || !Fs_QueueChunksLoad())
     {
         return;
     }

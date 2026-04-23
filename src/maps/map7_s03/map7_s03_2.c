@@ -7935,7 +7935,7 @@ void func_800E4714(void) // 0x800E4714
             break;
 
         case 9:
-            if (Fs_QueueDoThingWhenEmpty())
+            if (Fs_QueueChunksLoad())
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -8292,7 +8292,7 @@ void func_800E514C(void) // 0x800E514C
             break;
 
         case 25:
-            if (Fs_QueueDoThingWhenEmpty())
+            if (Fs_QueueChunksLoad())
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -8391,7 +8391,7 @@ void func_800E514C(void) // 0x800E514C
             break;
 
         case 38:
-            if (Fs_QueueDoThingWhenEmpty())
+            if (Fs_QueueChunksLoad())
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -8447,7 +8447,7 @@ void func_800E514C(void) // 0x800E514C
             break;
 
         case 47:
-            if (Fs_QueueDoThingWhenEmpty())
+            if (Fs_QueueChunksLoad())
             {
                 SysWork_StateStepIncrement(0);
             }

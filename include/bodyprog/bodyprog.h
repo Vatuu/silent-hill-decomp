@@ -2629,8 +2629,11 @@ void CharaModel_Free(s_CharaModel* model);
 
 void Ipd_PlayerChunkInit(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerPosZ);
 
-/** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
-s32 Ipd_ChunkInitCheck(void);
+/** @brief Loads map chunks in view and checks if they are loaded.
+ *
+ * @param `true` if chunks in view are loaded, `false` otherwise.
+ */
+bool Ipd_ChunkInitCheck(void);
 
 /** `arg0` should be `void*`? */
 void Gfx_InGameDraw(s32 arg0);

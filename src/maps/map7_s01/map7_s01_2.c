@@ -862,7 +862,7 @@ void func_800D8FF8(void) // 0x800D8FF8
             break;
 
         case 3:
-            if (Fs_QueueDoThingWhenEmpty() != false)
+            if (Fs_QueueChunksLoad() != false)
             {
                 SysWork_StateStepIncrement(0);
             }

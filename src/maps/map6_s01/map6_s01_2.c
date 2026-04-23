@@ -246,7 +246,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 12:
-            if (Fs_QueueDoThingWhenEmpty() != false)
+            if (Fs_QueueChunksLoad() != false)
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -671,7 +671,7 @@ void func_800D2658(void) // 0x800D2658
             break;
 
         case 2:
-            if (Fs_QueueDoThingWhenEmpty())
+            if (Fs_QueueChunksLoad())
             {
                 SysWork_StateStepIncrement(0);
             }

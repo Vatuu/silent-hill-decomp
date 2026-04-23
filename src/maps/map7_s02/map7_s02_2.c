@@ -1354,7 +1354,7 @@ void func_800DD2D4(void) // 0x800DD2D4
             break;
 
         case 2:
-            if (Fs_QueueDoThingWhenEmpty())
+            if (Fs_QueueChunksLoad())
             {
                 SysWork_StateStepIncrement(0);
             }

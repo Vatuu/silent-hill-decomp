@@ -1276,7 +1276,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             break;
 
         case 2:
-            if (Fs_QueueDoThingWhenEmpty())
+            if (Fs_QueueChunksLoad())
             {
                 SysWork_StateStepIncrement(0);
             }

@@ -343,7 +343,7 @@ void func_800EBF70(void) // 0x800EBF70
             break;
 
         case 3:
-            if (Fs_QueueDoThingWhenEmpty())
+            if (Fs_QueueChunksLoad())
             {
                 g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
 
@@ -469,7 +469,7 @@ void func_800EC42C(void) // 0x800EC42C
             break;
 
         case 2:
-            if (Fs_QueueDoThingWhenEmpty() != false)
+            if (Fs_QueueChunksLoad() != false)
             {
                 SysWork_StateStepIncrement(0);
             }

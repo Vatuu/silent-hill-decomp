@@ -173,6 +173,7 @@ void func_800DB870(void);
 
 void func_800DADD4(void);
 
-void MapEvent_OpeningCutscene(void);
+/** @brief Updates the opening cutscene event. */
+void MapEvent_CutsceneOpening(void);
 
 #endif

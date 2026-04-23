@@ -387,7 +387,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
         case 25:
             if (ScreenFade_IsFinished())
             {
-                if (Fs_QueueDoThingWhenEmpty())
+                if (Fs_QueueChunksLoad())
                 {
                     g_Demo_ReproducedCount = 0;
 

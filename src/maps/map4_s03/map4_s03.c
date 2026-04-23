@@ -1384,7 +1384,7 @@ void func_800D2ED0(GsOT_TAG* arg0) // 0x800D2ED0
 void Twinfeeler_TextureLoad(void) // 0x800D3038
 {
     // TODO: Does game ever use this texture afterward?
-    // After this `Twinfeeler_Init` checks `Fs_QueueDoThingWhenEmpty()` before proceeding.
+    // After this `Twinfeeler_Init` checks `Fs_QueueChunksLoad()` before proceeding.
     // Could it be some preload/warm-up before the actual enemy file loads? If so, this func should be renamed.
     Fs_QueueStartReadTim(FILE_TEST_WARMTEST_TIM, FS_BUFFER_1, &D_800A9094);
 }
@@ -1830,7 +1830,7 @@ bool Twinfeeler_Init(s_SubCharacter* twinfeeler) // 0x800D3CD4
 
     localTwinfeeler = twinfeeler;
 
-    if (!Fs_QueueDoThingWhenEmpty())
+    if (!Fs_QueueChunksLoad())
     {
         return false;
     }

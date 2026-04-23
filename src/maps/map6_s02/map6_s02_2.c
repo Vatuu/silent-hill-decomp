@@ -418,7 +418,7 @@ void func_800CFC34(void) // 0x800CFC34
             break;
 
         case 2:
-            if (Fs_QueueDoThingWhenEmpty())
+            if (Fs_QueueChunksLoad())
             {
                 SysWork_StateStepIncrement(0);
             }

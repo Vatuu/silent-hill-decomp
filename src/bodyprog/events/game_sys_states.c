@@ -130,7 +130,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
     }
     Demo_DemoRandSeedRestore();
 
-    D_800A9A0C = ScreenFade_IsFinished() && Fs_QueueDoThingWhenEmpty();
+    D_800A9A0C = ScreenFade_IsFinished() && Fs_QueueChunksLoad();
 
     if (!(g_SysWork.bgmStatusFlags & BgmStatusFlag_Pause) && g_MapOverlayHeader.worldObjectsUpdate_40 != NULL)
     {
@@ -486,7 +486,7 @@ void GameState_LoadStatusScreen_Update(void) // 0x800395C0
 
     Screen_BackgroundMotionBlur(SyncMode_Wait2);
 
-    if (Fs_QueueDoThingWhenEmpty())
+    if (Fs_QueueChunksLoad())
     {
         Game_StateSetNext(GameState_InventoryScreen);
     }
@@ -556,7 +556,7 @@ void GameState_LoadMapScreen_Update(void) // 0x8003991C
 
     Screen_BackgroundMotionBlur(SyncMode_Wait2);
 
-    if (Fs_QueueDoThingWhenEmpty())
+    if (Fs_QueueChunksLoad())
     {
         Game_StateSetNext(GameState_MapScreen);
     }
@@ -1058,7 +1058,7 @@ void GameState_MapEvent_Update(void) // 0x8003AA4C
         g_GameWork.gameStateSteps[0] = 1;
     }
 
-    D_800A9A0C = ScreenFade_IsFinished() && Fs_QueueDoThingWhenEmpty();
+    D_800A9A0C = ScreenFade_IsFinished() && Fs_QueueChunksLoad();
 
     Savegame_EventFlagSetAlt(g_MapEventData->disabledEventFlag);
 

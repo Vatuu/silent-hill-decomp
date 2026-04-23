@@ -1702,7 +1702,7 @@ void func_800D6BC0(void) // 0x800D6BC0
             break;
 
         case 2:
-            if (Fs_QueueDoThingWhenEmpty())
+            if (Fs_QueueChunksLoad())
             {
                 SysWork_StateStepIncrement(0);
             }
