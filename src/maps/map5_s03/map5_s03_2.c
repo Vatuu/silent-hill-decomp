@@ -272,7 +272,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             Player_ControlFreeze();
 
             D_800D6F54 = 0;
-            g_CutsceneTimer = NO_VALUE;
+            g_Cutscene_Timer = NO_VALUE;
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -352,7 +352,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
 
-            g_CutsceneTimer = Q12(0.0f);
+            g_Cutscene_Timer = Q12(0.0f);
 
             func_80085EB8(0, &g_SysWork.playerWork.player, 159, false);
 
@@ -375,19 +375,19 @@ void func_800D1AF8(void) // 0x800D1AF8
             SysWork_StateStepIncrement(0);
 
         case 14:
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(0.0f), Q12(17.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(0.0f), Q12(17.0f), true, true);
             Model_AnimFlagsClear(&g_SysWork.npcs[0].model, 2);
             break;
 
         case 15:
             func_80086C58(&g_SysWork.npcs[0], 16);
             Model_AnimFlagsSet(&g_SysWork.npcs[0].model, 2);
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(18.0f), Q12(38.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(18.0f), Q12(38.0f), true, false);
             break;
 
         case 16:
             Map_MessageWithAudio(27, &D_800D6F54, &D_800D3BDC);
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(18.0f), Q12(38.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(18.0f), Q12(38.0f), true, false);
             break;
 
         case 17:
@@ -396,7 +396,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             SysWork_StateStepIncrement(0);
 
         case 18:
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(39.0f), Q12(75.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(39.0f), Q12(75.0f), true, true);
             break;
 
         case 19:
@@ -404,7 +404,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             func_80085EB8(0, &g_SysWork.npcs[0], 5, false);
             func_8003D03C();
 
-            g_CutsceneTimer = Q12(76.0f);
+            g_Cutscene_Timer = Q12(76.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -414,11 +414,11 @@ void func_800D1AF8(void) // 0x800D1AF8
 
         case 21:
             Map_MessageWithAudio(32, &D_800D6F54, &D_800D3BDC);
-            g_CutsceneTimer = Q12(77.0f);
+            g_Cutscene_Timer = Q12(77.0f);
             break;
 
         case 22:
-            g_CutsceneTimer = Q12(78.0f);
+            g_Cutscene_Timer = Q12(78.0f);
             Map_MessageWithAudio(36, &D_800D6F54, &D_800D3BDC);
             break;
 
@@ -427,7 +427,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             SysWork_StateStepIncrement(0);
 
         case 24:
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(78.0f), Q12(98.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(78.0f), Q12(98.0f), true, true);
             break;
 
         case 25:
@@ -438,7 +438,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             SysWork_StateStepIncrement(0);
 
         case 26:
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(99.0f), Q12(121.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(99.0f), Q12(121.0f), true, true);
             break;
 
         case 27:
@@ -447,7 +447,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
             Savegame_EventFlagClear(EventFlag_395);
 
-            g_CutsceneTimer = Q12(122.0f);
+            g_Cutscene_Timer = Q12(122.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -467,7 +467,7 @@ void func_800D1AF8(void) // 0x800D1AF8
         case 29:
             vcReturnPreAutoCamWork(true);
 
-            g_CutsceneTimer = NO_VALUE;
+            g_Cutscene_Timer = NO_VALUE;
 
             sharedFunc_800D2EF4_0_s00();
             func_8003D01C();
@@ -501,7 +501,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             vcReturnPreAutoCamWork(true);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
-            g_CutsceneTimer = Q12(122.0f);
+            g_Cutscene_Timer = Q12(122.0f);
 
             SysWork_StateStepIncrement(0);
             break;
@@ -517,7 +517,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
-            g_CutsceneTimer = NO_VALUE;
+            g_Cutscene_Timer = NO_VALUE;
 
             func_8008D448();
             Game_FlashlightAttributesFix();
@@ -530,19 +530,19 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
     }
 
-    if (g_CutsceneTimer >= Q12(0.0f))
+    if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_CutsceneTimer, FS_BUFFER_17);
-        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "KAU", g_CutsceneTimer, FS_BUFFER_17);
-        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_CutsceneTimer, FS_BUFFER_17));
-        vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
-        vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "KAU", g_Cutscene_Timer, FS_BUFFER_17);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_17));
+        vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
+        vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
 
         // "LIGHT", cutscene light position?
-        Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", g_CutsceneTimer, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", g_Cutscene_Timer, FS_BUFFER_17);
 
         // "L_INT", interior light or intersection point?
-        Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", g_CutsceneTimer, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", g_Cutscene_Timer, FS_BUFFER_17);
 
         // Set light rotation.
         g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));

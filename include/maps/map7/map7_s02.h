@@ -81,11 +81,11 @@ extern s_800EA494 D_800EA494;
 
 extern u8 D_800EA4A9;
 
-extern VECTOR3 g_CutsceneCameraPositionTarget;
-extern VECTOR3 g_CutsceneCameraLookAtTarget;
+extern VECTOR3 g_Cutscene_CameraPositionTarget;
+extern VECTOR3 g_Cutscene_CameraLookAtTarget;
 
 extern u8     D_800EB6B0;
-extern q19_12 g_CutsceneTimer; // Timer.
+extern q19_12 g_Cutscene_Timer; // Timer.
 
 extern s_WorldObjectDesc      g_WorldObject_Door;
 extern s_WorldObjectDesc      g_WorldObject_Beans[16];

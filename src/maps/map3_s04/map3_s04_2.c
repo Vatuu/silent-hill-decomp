@@ -250,7 +250,7 @@ void func_800D2668(void) // 0x800D2668
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
 
-            g_CutsceneTimer = 0;
+            g_Cutscene_Timer = 0;
             D_800D5A4E = 0;
 
             SysWork_StateStepIncrement(0);
@@ -275,11 +275,11 @@ void func_800D2668(void) // 0x800D2668
 
         case 5:
             Map_MessageWithAudio(19, &D_800D5A3C, &D_800D599C);
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(1.0f), Q12(21.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(1.0f), Q12(21.0f), true, false);
             break;
 
         case 6:
-            g_CutsceneTimer = Q12(22.0f);
+            g_Cutscene_Timer = Q12(22.0f);
 
             func_80085EB8(0, &g_SysWork.npcs[0], 7, false);
             SysWork_StateStepIncrement(0);
@@ -335,23 +335,23 @@ void func_800D2668(void) // 0x800D2668
 
         case 18:
             Map_MessageWithAudio(42, &D_800D5A3C, &D_800D599C);
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
             break;
 
         case 19:
             SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
             break;
 
         case 20:
             Map_MessageWithAudio(43, &D_800D5A3C, &D_800D599C);
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
             break;
 
         case 21:
             Map_MessageWithAudio(45, &D_800D5A3C, &D_800D599C);
             SysWork_StateStepIncrementDelayed(Q12(2.2f), false);
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
 
             if (g_SysWork.sysStateSteps[0] != 21)
             {
@@ -361,12 +361,12 @@ void func_800D2668(void) // 0x800D2668
 
         case 22:
             Map_MessageWithAudio(45, &D_800D5A3C, &D_800D599C);
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
             break;
 
         case 23:
             SysWork_StateStepIncrementAfterFade(1, true, 0, 0, false);
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
             break;
 
         case 24:
@@ -384,7 +384,7 @@ void func_800D2668(void) // 0x800D2668
             sharedFunc_800D2EF4_0_s00();
             Chara_ModelCharaIdClear(g_SysWork.npcs, 0, 0);
 
-            g_CutsceneTimer = NO_VALUE;
+            g_Cutscene_Timer = NO_VALUE;
 
             Savegame_EventFlagSet(EventFlag_294);
             Savegame_EventFlagSet(EventFlag_MapMark_AltHospital1F_WomensBathroomBroken);
@@ -422,13 +422,13 @@ void func_800D2668(void) // 0x800D2668
         }
     }
 
-    if (g_CutsceneTimer >= Q12(0.0f))
+    if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_CutsceneTimer, FS_BUFFER_11);
-        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LISA", g_CutsceneTimer, FS_BUFFER_11);
-        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_CutsceneTimer, FS_BUFFER_11));
-        vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
-        vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_11);
+        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LISA", g_Cutscene_Timer, FS_BUFFER_11);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_11));
+        vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
+        vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
     }
 }
 

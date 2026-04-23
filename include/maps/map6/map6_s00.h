@@ -49,11 +49,11 @@ typedef struct
 } s_func_800EC4B4_2;
 
 extern u16     D_800F0038;
-extern q19_12  g_CutsceneTimer;
+extern q19_12  g_Cutscene_Timer;
 extern s32     D_800F0044;
 extern DVECTOR D_800F0084[17][17];
-extern VECTOR3 g_CutsceneCameraPositionTarget;
-extern VECTOR3 g_CutsceneCameraLookAtTarget;
+extern VECTOR3 g_Cutscene_CameraPositionTarget;
+extern VECTOR3 g_Cutscene_CameraLookAtTarget;
 extern u8      D_800F0684;
 extern s16     D_800F0686;
 

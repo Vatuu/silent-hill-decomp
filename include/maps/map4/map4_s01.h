@@ -35,41 +35,31 @@
 
 #include "maps/shared.h"
 
-extern u16 g_MapMsgSounds[84];
-extern u16 g_MapMsgSounds1[4];
-extern u16 g_MapMsgSounds2[2];
-extern u8 g_MapMsgSoundIdx;
-extern u8 g_MapMsgSoundIdx1;
-extern u8 g_MapMsgSoundIdx2;
+extern u16    g_Cutscene_MapMsgAudioCmds[84];
+extern u16    g_Cutscene_MapMsgAudioCmds0[4];
+extern u16    g_Cutscene_MapMsgAudioCmds1[2];
+extern u8     g_Cutscene_MapMsgAudioIdx;
+extern u8     g_Cutscene_MapMsgAudioIdx0;
+extern u8     g_Cutscene_MapMsgAudioIdx1;
+extern u16    g_Cutscene_MapMsgAudioCmds2;
+extern q19_12 g_Cutscene_Timer2;
+extern u8     g_Cutscene_UpdateSibyl; /** `bool` */
+extern q19_12 g_Cutscene_Timer0;
+extern q19_12 g_Cutscene_Timer1;
+extern u8     g_Cutscene_MapMsgAudioIdx2;
+extern u8     D_800D5AF9; // `bool` | Play some cutscene sound.
+extern q19_12 g_Cutscene_Timer3;
 
-extern u16 D_800D5ACC;
+extern q19_12 D_800D5B00; // Timer.
 
-extern s32 g_Timer2;
+extern q3_12 D_800D5B04;
 
-extern u8 D_800D5AEB;
+extern u8 D_800D5B06; /** `bool` */
 
-extern q19_12 g_CutsceneTimer;
+extern q3_12 D_800D7F30;
 
-extern u8 D_800D5AF0;
-
-extern s32 g_Timer1;
-
-extern u8 D_800D5AF8;
-
-extern u8 D_800D5AF9;
-
-extern s32 D_800D5AFC;
-
-extern s32 D_800D5B00;
-
-extern s16 D_800D5B04;
-
-extern u8 D_800D5B06;
-
-extern s16 D_800D7F30;
-
-extern VECTOR3 g_CutsceneCameraPosition;
-extern VECTOR3 g_CutsceneCameraLookAt;
+extern VECTOR3 g_Cutscene_CameraPosition;
+extern VECTOR3 g_Cutscene_CameraLookAt;
 
 extern s_WorldObjectDescNoRot WorldObject_D_800D7FF0;
 

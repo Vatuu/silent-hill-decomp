@@ -137,14 +137,14 @@ MAP_EVENTS                      = 0x800D03AC;
 //----------------------------------------------------
 //--- PA: 0x006F84   VA: 0x800D04FC   subsegment: data
 //----------------------------------------------------
-g_MapMsgSounds                  = 0x800D04FC; // type:u16 size:0x28
-g_CutsceneTimer                 = 0x800D0524; // type:s32
+g_Cutscene_MapMsgAudioCmds      = 0x800D04FC; // type:u16 size:0x28
+g_Cutscene_Timer                = 0x800D0524; // type:s32
 g_CommonWorldObjectPoses        = 0x800D0528; // type:WorldObjectPos size:0x1C
 g_ParticleMapIdx0               = 0x800D053C;
 g_ParticleMapIdx1               = 0x800D0540; // type:s32
 g_CameraPositionTarget          = 0x800D054C; // type:VECTOR3 size:0xC
 g_CameraLookAtTarget            = 0x800D055C; // type:VECTOR3 size:0xC
-g_MapMsgSoundIdx                = 0x800D0568; // type:u8
+g_Cutscene_MapMsgAudioIdx       = 0x800D0568; // type:u8
 g_Particle_SpeedX               = 0x800D056C;
 g_Particle_SpeedZ               = 0x800D0570;
 sharedData_800DFB6C_0_s00       = 0x800D0574; // type:s32

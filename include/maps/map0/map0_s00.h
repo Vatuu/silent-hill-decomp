@@ -31,8 +31,8 @@
 
 typedef struct
 {
-    s16 field_0;
-    s16 field_2; // Angle.
+    s16   field_0;
+    q3_12 field_2; // Angle.
 } s_800DFB44;
 
 typedef struct
@@ -56,7 +56,7 @@ extern u8 D_800DD594;
 /** Time. */
 extern q19_12 D_800DFAB8;
 
-extern u16 g_MapMsgSounds[]; // 0x800DFABC
+extern u16 g_Cutscene_MapMsgAudioCmds[];
 
 extern u8 D_800DFAC2;
 
@@ -71,14 +71,14 @@ extern q19_12 D_800DFAD0;
 
 extern s32 D_800DFAD4;
 
-extern bool g_WarpCamera; // 0x800DFAD8
+extern bool g_WarpCamera;
 
 extern q19_12 D_800DFADC;
 
 extern VECTOR3 D_800DFAE0[];  // }  TODO might be one big table.
 extern VECTOR3 D_800DFB28[3]; // }
 
-extern u8 g_MapMsgSoundIdx; // 0x800DFB58
+extern u8 g_Cutscene_MapMsgAudioIdx;
 
 extern s32 D_800DFB40;
 
@@ -108,14 +108,12 @@ extern u8 D_800E34EC;
 
 extern u8 D_800E39AC;
 
+// Wheelchair wheel in alley?
 extern s_WorldObjectModel D_800E3A5C[2];
+extern VECTOR3            D_800E3A9C;
+extern SVECTOR3           D_800E3AAC;
 
-extern VECTOR3 D_800E3A9C;
-
-extern SVECTOR3 D_800E3AAC;
-
-void func_800D0124(void);
-
+/** @brief Updates the alley nightmare cutscene event. */
 void MapEvent_CutsceneAlleyNightmare(void);
 
 void func_800DBE00(void);

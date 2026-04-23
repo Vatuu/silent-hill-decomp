@@ -149,11 +149,11 @@ MAP_EVENTS                          = 0x800D2478;
 //----------------------------------------------------
 //--- PA: 0x009158   VA: 0x800D26D0   subsegment: data
 //----------------------------------------------------
-g_CutsceneTimer                     = 0x800D2704; // type:s32
+g_Cutscene_Timer                    = 0x800D2704; // type:s32
 g_ParticleMapIdx0                   = 0x800D2708;
 g_ParticleMapIdx1                   = 0x800D270C;
-g_CutsceneCameraPositionTarget      = 0x800D2718;
-g_CutsceneCameraLookAtTarget        = 0x800D2728;
+g_Cutscene_CameraPositionTarget     = 0x800D2718;
+g_Cutscene_CameraLookAtTarget       = 0x800D2728;
 g_Particle_SpeedX                   = 0x800D273C; // type:s32
 g_Particle_SpeedZ                   = 0x800D2740; // type:s32
 sharedData_800DFB6C_0_s00           = 0x800D2744; // type:s32

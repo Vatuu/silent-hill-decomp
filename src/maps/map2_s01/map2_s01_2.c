@@ -141,7 +141,7 @@ void func_800CED88(void) // 0x800CED88
             Chara_Spawn(Chara_Dahlia, 0, Q12(20.0f), Q12(23.5f), 0, 3);
             sharedFunc_800D88AC_0_s00(dahliaChara);
 
-            g_CutsceneTimer = Q12(0.0f);
+            g_Cutscene_Timer = Q12(0.0f);
             g_SysWork.field_30 = 20;
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
@@ -150,7 +150,7 @@ void func_800CED88(void) // 0x800CED88
             func_8003D03C();
 
             Savegame_EventFlagSet(EventFlag_182);
-            g_MapMsgSoundIdx = 0;
+            g_Cutscene_MapMsgAudioIdx = 0;
 
             SysWork_StateStepIncrement(0);
 
@@ -159,15 +159,15 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 2:
-            Map_MessageWithAudio(15, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            Map_MessageWithAudio(15, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
         case 3:
-            Map_MessageWithAudio(18, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            Map_MessageWithAudio(18, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
         case 4:
-            Map_MessageWithAudio(23, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            Map_MessageWithAudio(23, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             SysWork_StateStepIncrementDelayed(Q12(1.2f), false);
             break;
 
@@ -176,34 +176,34 @@ void func_800CED88(void) // 0x800CED88
             SysWork_StateStepIncrement(0);
 
         case 6:
-            Map_MessageWithAudio(23, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            Map_MessageWithAudio(23, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
 
-            if (g_CutsceneTimer < Q12(1.0f))
+            if (g_Cutscene_Timer < Q12(1.0f))
             {
-                g_CutsceneTimer = Q12(1.0f);
+                g_Cutscene_Timer = Q12(1.0f);
                 break;
             }
 
-            g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(5.0f));
-            if (g_CutsceneTimer > Q12(23.0f))
+            g_Cutscene_Timer += Q12_MULT_PRECISE(g_DeltaTime, Q12(5.0f));
+            if (g_Cutscene_Timer > Q12(23.0f))
             {
-                g_CutsceneTimer = Q12(23.0f);
+                g_Cutscene_Timer = Q12(23.0f);
             }
             break;
 
         case 7:
-            Map_MessageWithAudio(0x18, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            Map_MessageWithAudio(0x18, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
 
-            if (g_CutsceneTimer < Q12(1.0f))
+            if (g_Cutscene_Timer < Q12(1.0f))
             {
-                g_CutsceneTimer = Q12(1.0f);
+                g_Cutscene_Timer = Q12(1.0f);
                 break;
             }
 
-            g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(5.0f));
-            if (g_CutsceneTimer > Q12(23.0f))
+            g_Cutscene_Timer += Q12_MULT_PRECISE(g_DeltaTime, Q12(5.0f));
+            if (g_Cutscene_Timer > Q12(23.0f))
             {
-                g_CutsceneTimer = Q12(23.0f);
+                g_Cutscene_Timer = Q12(23.0f);
             }
             break;
 
@@ -213,7 +213,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 9:
-            Map_MessageWithAudio(25, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            Map_MessageWithAudio(25, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
         case 10:
@@ -226,12 +226,12 @@ void func_800CED88(void) // 0x800CED88
 
         case 12:
             func_80085EB8(1, dahliaChara, 0, false);
-            Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            Map_MessageWithAudio(29, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
         case 13:
             SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
-            Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            Map_MessageWithAudio(29, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
         case 14:
@@ -240,48 +240,48 @@ void func_800CED88(void) // 0x800CED88
 
         case 15:
             func_80085EB8(1, dahliaChara, 0, false);
-            Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            Map_MessageWithAudio(29, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
         case 16:
             SysWork_StateStepIncrement(0);
 
         case 17:
-            Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            Map_MessageWithAudio(29, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
         case 18:
             func_80085EB8(0, dahliaChara, 8, false);
             SysWork_StateStepIncrement(0);
 
         case 19:
-            Map_MessageWithAudio(33, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            Map_MessageWithAudio(33, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
 
-            if (g_CutsceneTimer >= Q12(142.0f))
+            if (g_Cutscene_Timer >= Q12(142.0f))
             {
-                g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
+                g_Cutscene_Timer += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
 
-                if (g_CutsceneTimer > Q12(165.0f))
+                if (g_Cutscene_Timer > Q12(165.0f))
                 {
-                    g_CutsceneTimer = Q12(165.0f);
+                    g_Cutscene_Timer = Q12(165.0f);
                 }
                 break;
             }
 
-            g_CutsceneTimer = Q12(142.0f);
+            g_Cutscene_Timer = Q12(142.0f);
             break;
 
         case 20:
             SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
 
-            if (g_CutsceneTimer < Q12(142.0f))
+            if (g_Cutscene_Timer < Q12(142.0f))
             {
-                g_CutsceneTimer = Q12(142.0f);
+                g_Cutscene_Timer = Q12(142.0f);
                 break;
             }
 
-            g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
-            if (g_CutsceneTimer > Q12(165.0f))
+            g_Cutscene_Timer += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
+            if (g_Cutscene_Timer > Q12(165.0f))
             {
-                g_CutsceneTimer = Q12(165.0f);
+                g_Cutscene_Timer = Q12(165.0f);
             }
             break;
 
@@ -292,18 +292,18 @@ void func_800CED88(void) // 0x800CED88
         case 22:
             SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
 
-            if (g_CutsceneTimer >= Q12(166.0f))
+            if (g_Cutscene_Timer >= Q12(166.0f))
             {
-                g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
+                g_Cutscene_Timer += Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
 
-                if (g_CutsceneTimer > Q12(180.0f))
+                if (g_Cutscene_Timer > Q12(180.0f))
                 {
-                    g_CutsceneTimer = Q12(180.0f);
+                    g_Cutscene_Timer = Q12(180.0f);
                 }
                 break;
             }
 
-            g_CutsceneTimer = Q12(166.0f);
+            g_Cutscene_Timer = Q12(166.0f);
             break;
 
         case 23:
@@ -311,32 +311,32 @@ void func_800CED88(void) // 0x800CED88
             SysWork_StateStepIncrement(0);
 
         case 24:
-            Map_MessageWithAudio(34, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            Map_MessageWithAudio(34, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
 
-            if (g_CutsceneTimer < Q12(166.0f))
+            if (g_Cutscene_Timer < Q12(166.0f))
             {
-                g_CutsceneTimer = Q12(166.0f);
+                g_Cutscene_Timer = Q12(166.0f);
                 break;
             }
 
-            g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
-            if (g_CutsceneTimer > Q12(253.0f))
+            g_Cutscene_Timer += Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
+            if (g_Cutscene_Timer > Q12(253.0f))
             {
-                g_CutsceneTimer = Q12(253.0f);
+                g_Cutscene_Timer = Q12(253.0f);
             }
             break;
 
         case 25:
-            if (g_CutsceneTimer < Q12(166.0f))
+            if (g_Cutscene_Timer < Q12(166.0f))
             {
-                g_CutsceneTimer = Q12(166.0f);
+                g_Cutscene_Timer = Q12(166.0f);
             }
             else
             {
-                g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
-                if (g_CutsceneTimer > Q12(253.0f))
+                g_Cutscene_Timer += Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
+                if (g_Cutscene_Timer > Q12(253.0f))
                 {
-                    g_CutsceneTimer = Q12(253.0f);
+                    g_Cutscene_Timer = Q12(253.0f);
                     SysWork_StateStepIncrement(0);
                 }
             }
@@ -368,7 +368,7 @@ void func_800CED88(void) // 0x800CED88
 
             if (g_SysWork.sysStateSteps[0] != EventState_Skip)
             {
-                g_CutsceneTimer = Q12(253.0f);
+                g_Cutscene_Timer = Q12(253.0f);
             }
             break;
 
@@ -386,7 +386,7 @@ void func_800CED88(void) // 0x800CED88
 
             Chara_ModelCharaIdClear(dahliaChara, 0, 0);
 
-            g_CutsceneTimer = NO_VALUE;
+            g_Cutscene_Timer = NO_VALUE;
 
             SD_Call(19);
             func_8003D01C();
@@ -397,16 +397,16 @@ void func_800CED88(void) // 0x800CED88
     {
         if (step >= 10)
         {
-            if (g_CutsceneTimer < Q12(24.0f))
+            if (g_Cutscene_Timer < Q12(24.0f))
             {
-                g_CutsceneTimer = Q12(24.0f);
+                g_Cutscene_Timer = Q12(24.0f);
             }
             else
             {
-                g_CutsceneTimer += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
-                if (g_CutsceneTimer > Q12(141.0f))
+                g_Cutscene_Timer += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
+                if (g_Cutscene_Timer > Q12(141.0f))
                 {
-                    g_CutsceneTimer = Q12(141.0f);
+                    g_Cutscene_Timer = Q12(141.0f);
                 }
             }
 
@@ -422,11 +422,11 @@ void func_800CED88(void) // 0x800CED88
         }
     }
 
-    if (g_CutsceneTimer >= Q12(0.0f))
+    if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&playerChara->position, (SVECTOR3*)&playerChara->rotation, "HERO", g_CutsceneTimer, (s_DmsHeader*)FS_BUFFER_15);
-        Dms_CharacterTransformGet(&dahliaChara->position, (SVECTOR3*)&dahliaChara->rotation, "DAHLIA", g_CutsceneTimer, (s_DmsHeader*)FS_BUFFER_15);
-        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_CutsceneTimer, (s_DmsHeader*)FS_BUFFER_15));
+        Dms_CharacterTransformGet(&playerChara->position, (SVECTOR3*)&playerChara->rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_15);
+        Dms_CharacterTransformGet(&dahliaChara->position, (SVECTOR3*)&dahliaChara->rotation, "DAHLIA", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_15);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_15));
         vcUserCamTarget(&g_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_CameraLookAtTarget, NULL, true);
     }

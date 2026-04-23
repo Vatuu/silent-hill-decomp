@@ -36,13 +36,13 @@ extern s_WorldObjectModel   g_WorldObject0[6];
 extern s_WorldObjectDesc g_WorldObject1;
 
 extern s16 D_800D4362;
-extern u8 g_MapMsgSoundIdx;
-extern VECTOR3 g_CutsceneCameraPosition;
-extern VECTOR3 g_CutsceneCameraLookAt;
-extern q19_12 g_CutsceneTimer;
+extern u8 g_Cutscene_MapMsgAudioIdx;
+extern VECTOR3 g_Cutscene_CameraPosition;
+extern VECTOR3 g_Cutscene_CameraLookAt;
+extern q19_12 g_Cutscene_Timer;
 extern s8 D_800D31D8;
 
-extern u16 g_MapMsgSounds[24];
+extern u16 g_Cutscene_MapMsgAudioCmds[24];
 
 extern u16 D_800D31C4;
 extern s16 D_800D31DC[];

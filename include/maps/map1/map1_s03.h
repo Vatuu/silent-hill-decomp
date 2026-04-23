@@ -33,7 +33,7 @@ extern u16     D_800E1F7C[];
 extern VECTOR3 D_800E1F88[];
 extern VECTOR3 D_800E1FC4[];
 
-extern u16 D_800E2000[1]; // g_MapMsgSounds
+extern u16 D_800E2000[1]; // g_Cutscene_MapMsgAudioCmds
 extern s_FsImageDesc D_800E2004;
 extern VECTOR3 D_800E200C;
 extern s16 D_800E2018;
@@ -49,13 +49,13 @@ extern s16 D_800E20FC;
 extern s16 D_800E20FE;
 extern u8  D_800E2100;
 extern u8  D_800E2101;
-extern u8 D_800E2102; // g_MapMsgSoundIdx
+extern u8 D_800E2102; // g_Cutscene_MapMsgAudioIdx
 
 extern s_WorldObjectDesc g_WorldObject5; // 0x800E6130
 
-extern VECTOR3 g_CutsceneCameraPositionTarget;
-extern VECTOR3 g_CutsceneCameraLookAtTarget;
-extern s32     g_CutsceneTimer;
+extern VECTOR3 g_Cutscene_CameraPositionTarget;
+extern VECTOR3 g_Cutscene_CameraLookAtTarget;
+extern s32     g_Cutscene_Timer;
 
 extern s_WorldObjectDesc g_WorldObject0; // 0x800E6180
 extern s_WorldObjectDesc g_WorldObject1; // 0x800E61B0

@@ -137,7 +137,7 @@ void func_800D9610(void) // 0x800D9610
     }
 }
 
-extern q19_12 g_CutsceneTimer;
+extern q19_12 g_Cutscene_Timer;
 extern VECTOR3 g_CameraPositionTarget;
 extern VECTOR3 g_CameraLookAtTarget;
 
@@ -180,7 +180,7 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             Chara_Load(0, Chara_Cheryl, g_SysWork.npcCoords, 0, NULL, NULL);
             SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(3.0f), false);
 
-            g_CutsceneTimer = Q12(0.0f);
+            g_Cutscene_Timer = Q12(0.0f);
 
             SysWork_StateStepIncrement(0);
             break;
@@ -190,9 +190,9 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             SysWork_StateStepIncrement(0);
 
         case 4:
-            time     = g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
-            g_CutsceneTimer = MIN(time, Q12(22.0f));
-            if (g_CutsceneTimer >= Q12(22.0f))
+            time     = g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
+            g_Cutscene_Timer = MIN(time, Q12(22.0f));
+            if (g_Cutscene_Timer >= Q12(22.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -203,33 +203,33 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             SysWork_StateStepIncrement(0);
 
         case 6:
-            time     = g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(8.0f));
-            g_CutsceneTimer = MIN(time, Q12(26.0f));
-            if (g_CutsceneTimer >= Q12(26.0f))
+            time     = g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(8.0f));
+            g_Cutscene_Timer = MIN(time, Q12(26.0f));
+            if (g_Cutscene_Timer >= Q12(26.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
             break;
 
         case 7:
-            g_CutsceneTimer = MIN((g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
+            g_Cutscene_Timer = MIN((g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
             MapMsg_DisplayAndHandleSelection(false, 15, false, false, 0, false);
             break;
 
         case 8:
-            g_CutsceneTimer = MIN((g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
+            g_Cutscene_Timer = MIN((g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
             SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
         case 9:
-            g_CutsceneTimer = MIN((g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
+            g_Cutscene_Timer = MIN((g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
             MapMsg_DisplayAndHandleSelection(false, 16, false, false, 0, false);
             break;
 
         case 10:
-            time     = g_CutsceneTimer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f));
-            g_CutsceneTimer = MIN(time, Q12(72.0f));
-            if (g_CutsceneTimer >= Q12(72.0f))
+            time     = g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f));
+            g_Cutscene_Timer = MIN(time, Q12(72.0f));
+            if (g_Cutscene_Timer >= Q12(72.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -248,7 +248,7 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             break;
 
         default:
-            g_CutsceneTimer = NO_VALUE;
+            g_Cutscene_Timer = NO_VALUE;
 
             if (skipCutscene)
             {
@@ -273,10 +273,10 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             break;
     }
 
-    if (g_CutsceneTimer >= Q12(0.0f))
+    if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_CutsceneTimer, (s_DmsHeader*)FS_BUFFER_16);
-        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_CutsceneTimer, (s_DmsHeader*)FS_BUFFER_16));
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_16);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_16));
         vcUserCamTarget(&g_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_CameraLookAtTarget, NULL, true);
     }
@@ -461,14 +461,23 @@ void func_800DA454(void) // 0x800DA454
 
 void func_800DA5A0(void) // 0x800DA5A0
 {
-    s32 temp_s1_2;
-    s32 temp_s2;
+    q19_12 prevPlayerPosX;
+    q19_12 prevPlayerPosZ;
 
     switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
-            Camera_PositionSet(NULL, Q12(-22.0f), Q12(-2.4f), Q12(130.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(&g_SysWork.npcs[0].position, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            // Warp camera.
+            Camera_PositionSet(NULL,
+                               Q12(-22.0f), Q12(-2.4f), Q12(130.1f),
+                               Q12(0.0f), Q12(0.0f),
+                               Q12(0.0f), Q12(0.0f),
+                               true);
+            Camera_LookAtSet(&g_SysWork.npcs[0].position,
+                             Q12(0.0f), Q12(-1.0f), Q12(0.0f),
+                             Q12(0.0f), Q12(0.0f),
+                             Q12(0.0f), Q12(0.0f),
+                             true);
             break;
 
         case 1:
@@ -481,6 +490,7 @@ void func_800DA5A0(void) // 0x800DA5A0
         case 4:
         case 5:
         case 6:
+            // Move camera.
             Camera_PositionSet(NULL,
                                Q12(-22.0f) - func_800868F4(Q12(4.0f),  Q12(5.0f), 0),
                                Q12(-2.4f)  - func_800868F4(Q12(-1.5f), Q12(5.0f), 1),
@@ -488,11 +498,20 @@ void func_800DA5A0(void) // 0x800DA5A0
                                Q12(0.0f), Q12(0.0f),
                                Q12(0.0f), Q12(0.0f),
                                false);
-            Camera_LookAtSet(&g_SysWork.npcs[0].position, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+            Camera_LookAtSet(&g_SysWork.npcs[0].position,
+                             Q12(0.0f), Q12(-1.0f), Q12(0.0f),
+                             Q12(0.0f), Q12(0.0f),
+                             Q12(0.0f), Q12(0.0f),
+                             false);
             break;
 
         case 3:
-            Camera_LookAtSet(&g_SysWork.npcs[0].position, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+            // Warp camera.
+            Camera_LookAtSet(&g_SysWork.npcs[0].position,
+                             Q12(0.0f), Q12(-1.0f), Q12(0.0f),
+                             Q12(0.0f), Q12(0.0f),
+                             Q12(0.0f), Q12(0.0f),
+                             false);
             break;
 
         case 7:
@@ -513,17 +532,17 @@ void func_800DA5A0(void) // 0x800DA5A0
             sharedFunc_800D88AC_0_s00(&g_SysWork.npcs[0]);
             func_800865FC(true, 1, 0, Q12_ANGLE(-135.0f), Q12(-35.0f), Q12(120.0f));
 
-            temp_s1_2 = g_SysWork.playerWork.player.position.vx;
-            temp_s2 = g_SysWork.playerWork.player.position.vz;
-            g_MapMsgSoundIdx = 0;
+            prevPlayerPosX = g_SysWork.playerWork.player.position.vx;
+            prevPlayerPosZ = g_SysWork.playerWork.player.position.vz;
 
+            g_Cutscene_MapMsgAudioIdx = 0;
+
+            // Temporarily warp player to initialize required chunks.
             g_SysWork.playerWork.player.position.vx = Q12(-40.0f);
             g_SysWork.playerWork.player.position.vz = Q12(127.0f);
-
             Ipd_CloseRangeChunksInit();
-
-            g_SysWork.playerWork.player.position.vx = temp_s1_2;
-            g_SysWork.playerWork.player.position.vz = temp_s2;
+            g_SysWork.playerWork.player.position.vx = prevPlayerPosX;
+            g_SysWork.playerWork.player.position.vz = prevPlayerPosZ;
 
             SysWork_StateStepIncrement(0);
             break;
@@ -533,7 +552,7 @@ void func_800DA5A0(void) // 0x800DA5A0
             SysWork_StateStepIncrement(0);
 
         case 2:
-            Map_MessageWithAudio(0x15, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            Map_MessageWithAudio(21, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
         case 3:
@@ -568,7 +587,7 @@ void func_800DA5A0(void) // 0x800DA5A0
             break;
 
         case 8:
-            Map_MessageWithAudio(22, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            Map_MessageWithAudio(22, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
         case 9:
@@ -581,7 +600,7 @@ void func_800DA5A0(void) // 0x800DA5A0
             break;
 
         case 11:
-            Map_MessageWithAudio(0x17, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            Map_MessageWithAudio(23, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
         default:
@@ -979,32 +998,69 @@ void func_800DB870(void) // 0x800DB870
 
 void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
 {
+    typedef enum _EventState
+    {
+        EventState_0              = 0,
+        EventState_1              = 1,
+        EventState_2              = 2,
+        EventState_3              = 3,
+        EventState_LookAtDeadBody = 4
+    } e_EventState;
+
     MATRIX  neck_lwm;
     SVECTOR offset;
-    VECTOR  worldPos;
+    VECTOR  camPos; // Q19.12
     s32     i;
 
+    // Control cutscene.
     switch (g_SysWork.sysStateSteps[0])
     {
-        case 3:
+        case EventState_3:
+            // Warp camera.
             if (D_800DFACC == 0)
             {
-                Camera_PositionSet(NULL, Q12(-254.63f), Q12(-0.77f), Q12(219.56f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-                Camera_LookAtSet(&g_SysWork.playerWork.player.position, Q12(0.0f), Q12(-0.6f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+                Camera_PositionSet(NULL,
+                                   Q12(-254.63f), Q12(-0.77f), Q12(219.56f),
+                                   Q12(0.0f), Q12(0.0f),
+                                   Q12(0.0f), Q12(0.0f),
+                                   true);
+                Camera_LookAtSet(&g_SysWork.playerWork.player.position,
+                                 Q12(0.0f), Q12(-0.6f), Q12(0.0f),
+                                 Q12(0.0f), Q12(0.0f),
+                                 Q12(0.0f), Q12(0.0f),
+                                 true);
                 D_800DFACC++;
             }
 
-            Camera_LookAtSet(&g_SysWork.playerWork.player.position, Q12(0.0f), Q12(-0.6f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.039f), false);
+            // Warp camera.
+            Camera_LookAtSet(&g_SysWork.playerWork.player.position,
+                             Q12(0.0f), Q12(-0.6f), Q12(0.0f),
+                             Q12(0.0f), Q12(0.0f),
+                             Q12(0.0f), Q12(0.039f),
+                             false);
             break;
 
-        case 4:
+        case EventState_LookAtDeadBody:
             if (D_800DFACC == 1)
             {
-                s32 val = D_800DFACC;
+                bool warpCam = D_800DFACC;
 
+                // Make player invisible.
                 Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
-                Camera_PositionSet(NULL, Q12(-250.81f), Q12(-0.32f), Q12(218.59f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), val);
-                Camera_LookAtSet(NULL, Q12(-247.13f), Q12(-0.56f), Q12(217.04f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), val);
+
+                // Warp camera.
+                Camera_PositionSet(NULL,
+                                   Q12(-250.81f), Q12(-0.32f), Q12(218.59f),
+                                   Q12(0.0f), Q12(0.0f),
+                                   Q12(0.0f), Q12(0.0f),
+                                   warpCam);
+                Camera_LookAtSet(NULL,
+                                 Q12(-247.13f), Q12(-0.56f), Q12(217.04f),
+                                 Q12(0.0f), Q12(0.0f),
+                                 Q12(0.0f), Q12(0.0f),
+                                 warpCam);
+
+                // Warp player.
                 Math_Vector3Set(&g_SysWork.playerWork.player.position, Q12(-251.12f), Q12(0.0f), Q12(218.56f));
 
                 D_800DFACC++;
@@ -1022,27 +1078,34 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
                 // Transform offset into world-space.
                 gte_ldv0(&offset);
                 gte_rtv0tr();
-                gte_stlvnl(&worldPos);
+                gte_stlvnl(&camPos);
 
-                // Extract `worldPos` from result.
-                worldPos.vx = Q8_TO_Q12(worldPos.vx);
-                worldPos.vy = Q8_TO_Q12(worldPos.vy);
-                worldPos.vz = Q8_TO_Q12(worldPos.vz);
+                // Extract `camPos` from result.
+                camPos.vx = Q8_TO_Q12(camPos.vx);
+                camPos.vy = Q8_TO_Q12(camPos.vy);
+                camPos.vz = Q8_TO_Q12(camPos.vz);
 
-                // Use position to update camera.
-                Camera_PositionSet(NULL, worldPos.vx, worldPos.vy, worldPos.vz, Q12(0.0f), Q12(3.0f), Q12(0.0f), Q12(0.0f), false);
-
-                // Set camera rotation to look at point in front of player.
-                Camera_LookAtSet(NULL, Q12(-247.43f), Q12(-1.0298f), Q12(217.34f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+                // Set camera to look toward handing dead body.
+                Camera_PositionSet(NULL,
+                                   camPos.vx, camPos.vy, camPos.vz,
+                                   Q12(0.0f), Q12(3.0f),
+                                   Q12(0.0f), Q12(0.0f),
+                                   false);
+                Camera_LookAtSet(NULL,
+                                 Q12(-247.43f), Q12(-1.0298f), Q12(217.34f),
+                                 Q12(0.0f), Q12(0.0f),
+                                 Q12(0.0f), Q12(0.0f),
+                                 false);
             }
             break;
 
-        case 0:
-        case 1:
-        case 2:
+        case EventState_0:
+        case EventState_1:
+        case EventState_2:
             break;
 
         default:
+            // Restore player control.
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
             vcReturnPreAutoCamWork(true);
             break;
@@ -1050,7 +1113,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
 
     switch (g_SysWork.sysStateSteps[0])
     {
-        case 0:
+        case EventState_0:
             Player_ControlFreeze();
             Map_PlaceIpdAtCell(FILE_BG_THRF908_IPD, -7, 6);
             Sd_SfxStop(Sfx_Unk1358);
@@ -1062,34 +1125,35 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
 
             SysWork_StateStepIncrement(0);
 
-        case 1:
+        case EventState_1:
             SysWork_StateStepIncrementAfterFade(2, true, 2, Q12(0.0f), false);
             break;
 
-        case 2:
+        case EventState_2:
             func_80085DF0();
             break;
 
-        case 3:
+        case EventState_3:
             func_800866D4(53, 2, 0);
             break;
 
-        case 4:
+        case EventState_LookAtDeadBody:
             Map_MessageWithAudio(27, &D_800DFB61, &D_800DFAC8); // "What is this?"
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
-            // Make all grey children aggressive?
+            // Make all Grey Children aggressive.
             for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
             {
                 if (g_SysWork.npcs[i].model.charaId == ENEMY_CHARA_ID)
                 {
-                    g_SysWork.npcs[i].model.controlState     = ModelState_Uninitialized;
-                    g_SysWork.npcs[i].model.stateStep = 6;
+                    g_SysWork.npcs[i].model.controlState = ModelState_Uninitialized;
+                    g_SysWork.npcs[i].model.stateStep    = 6;
                 }
             }
             break;
@@ -1415,39 +1479,57 @@ void func_800DC8D8(void) // 0x800DC8D8
 
 void func_800DCA30(void) // 0x800DCA30
 {
-    q19_12 offsetX;
-    q19_12 offsetY;
-    q19_12 offsetZ;
-    q19_12 posX;
-    q19_12 posZ;
-    q3_12  rotY;
+    q19_12 camPosX;
+    q19_12 camPosY;
+    q19_12 camPosZ;
+    q19_12 playerPosX;
+    q19_12 playerPosZ;
+    q3_12  playerRotY;
     float  four; // @hack Permuter find.
 
-    posX = g_SysWork.playerWork.player.position.vx;
-    posZ = g_SysWork.playerWork.player.position.vz;
-    rotY = g_SysWork.playerWork.player.rotation.vy;
+    playerPosX = g_SysWork.playerWork.player.position.vx;
+    playerPosZ = g_SysWork.playerWork.player.position.vz;
+    playerRotY = g_SysWork.playerWork.player.rotation.vy;
 
     if (Savegame_EventFlagGet(EventFlag_8))
     {
-        if (posZ < Q12(48.0f) && posX > Q12(-59.0f))
+        // Warp camera.
+        if (playerPosZ < Q12(48.0f) && playerPosX > Q12(-59.0f))
         {
-            Camera_PositionSet(NULL, Q12(-60.55f), Q12(-0.51f), Q12(47.63f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), g_WarpCamera);
-            Camera_LookAtSet(NULL, Q12(-56.91f), Q12(-1.26f), Q12(46.14f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), g_WarpCamera);
+            Camera_PositionSet(NULL,
+                               Q12(-60.55f), Q12(-0.51f), Q12(47.63f),
+                               Q12(0.0f), Q12(0.0f),
+                               Q12(0.0f), Q12(0.0f),
+                               g_WarpCamera);
+            Camera_LookAtSet(NULL,
+                             Q12(-56.91f), Q12(-1.26f), Q12(46.14f),
+                             Q12(0.0f), Q12(0.0f),
+                             Q12(0.0f), Q12(0.0f),
+                             g_WarpCamera);
             g_WarpCamera = false;
             return;
         }
 
-        if (posZ < Q12(100.0f) || (posZ < Q12(121.0f) && posX < Q12(-58.0f)))
+        // Warp camera.
+        if (playerPosZ < Q12(100.0f) || (playerPosZ < Q12(121.0f) && playerPosX < Q12(-58.0f)))
         {
             four = 4.0f;
 
-            offsetY = Q12_MULT(Math_Cos(rotY), Q12(0.2f)) - Q12(1.8f);
-            offsetZ = posZ;
-            offsetZ += Q12_MULT(Math_Cos(rotY), Q12(2.0f)) + Q12(four);
-            offsetX = MAX(MIN(Q12(-61.5f), posX), Q12(-63.5f));
+            camPosY  = Q12_MULT(Math_Cos(playerRotY), Q12(0.2f)) - Q12(1.8f);
+            camPosZ  = playerPosZ;
+            camPosZ += Q12_MULT(Math_Cos(playerRotY), Q12(2.0f)) + Q12(four);
+            camPosX  = MAX(MIN(Q12(-61.5f), playerPosX), Q12(-63.5f));
 
-            Camera_PositionSet(NULL, offsetX, offsetY, offsetZ, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), !g_WarpCamera);
-            Camera_LookAtSet(NULL, posX, Q12(-0.7f), posZ - Q12(5.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), !g_WarpCamera);
+            Camera_PositionSet(NULL,
+                               camPosX, camPosY, camPosZ,
+                               Q12(0.0f), Q12(0.0f),
+                               Q12(0.0f), Q12(0.0f),
+                               !g_WarpCamera);
+            Camera_LookAtSet(NULL,
+                             playerPosX, Q12(-0.7f), playerPosZ - Q12(5.0f),
+                             Q12(0.0f), Q12(0.0f),
+                             Q12(0.0f), Q12(0.0f),
+                             !g_WarpCamera);
             g_WarpCamera = true;
             return;
         }
@@ -1472,9 +1554,7 @@ void func_800DCC54(void) // 0x800DCC54
         if (!Savegame_EventFlagGet(EventFlag_18))
         {
             sharedFunc_800D0B18_0_s00(6);
-
             Savegame_EventFlagSet(EventFlag_18);
-
             Sd_PlaySfx(Sfx_Unk1359, 0, Q8(0.75f));
 
             D_800DFADC = Q12(60.0f);

@@ -24,9 +24,9 @@
 
 #include "maps/shared.h"
 
-extern q19_12 g_CutsceneTimer;
-extern u16    g_CutsceneAudioCmds0;
-extern u16    g_CutsceneAudioCmds1;
+extern q19_12 g_Cutscene_Timer;
+extern u16    g_Cutscene_MapMsgAudioCmds0;
+extern u16    g_Cutscene_MapMsgAudioCmds1;
 
 extern u16 D_800D4108;
 
@@ -34,10 +34,10 @@ extern s_FsImageDesc D_800D410C;
 
 extern DVECTOR D_800D4114[];
 
-extern u8 g_CutsceneUpdate_Sibyl; /** `bool` */
-extern u8 g_CutsceneUpdate_Daria; /** `bool` */
+extern u8 g_Cutscene_UpdateSibyl; /** `bool` */
+extern u8 g_Cutscene_UpdateDaria; /** `bool` */
 
-extern u8 g_CutsceneAudioIdx1;
+extern u8 g_Cutscene_MapMsgAudioIdx1;
 
 extern VECTOR3 D_800D4174[5];
 
@@ -48,9 +48,9 @@ extern q19_12 D_800D41B4;
 
 extern u8 D_800D5345; /** `bool` */
 
-extern VECTOR3 g_CutsceneCameraPositionTarget;
-extern VECTOR3 g_CutsceneCameraLookAtTarget;
-extern u8      g_CutsceneAudioIdx0;
+extern VECTOR3 g_Cutscene_CameraPositionTarget;
+extern VECTOR3 g_Cutscene_CameraLookAtTarget;
+extern u8      g_Cutscene_MapMsgAudioIdx0;
 
 extern s_WorldObjectDesc  D_800D5374;
 extern s_WorldObjectDesc  D_800D53A4[7];

@@ -261,9 +261,9 @@ MAP_EVENTS                      = 0x800E1C40;
 //----------------------------------------------------
 //--- PA: 0x0164F8   VA: 0x800E1FA0   subsegment: data
 //----------------------------------------------------
-g_CutsceneTimer                 = 0x800E1FA0;
+g_Cutscene_Timer                = 0x800E1FA0;
 D_800DFAB8                      = 0x800E1FA4;
-g_MapMsgSounds                  = 0x800E1FA8;
+g_Cutscene_MapMsgAudioCmds      = 0x800E1FA8;
 D_800DFAC2                      = 0x800E1FAE;
 D_800DFAC4                      = 0x800E1FB0;
 D_800DFAC8                      = 0x800E1FB4;
@@ -280,7 +280,7 @@ D_800DFB48                      = 0x800E2034;
 g_ParticleMapIdx0               = 0x800E2038;
 g_ParticleMapIdx1               = 0x800E203C;
 D_800DFB54                      = 0x800E2040;
-g_MapMsgSoundIdx                = 0x800E2044;
+g_Cutscene_MapMsgAudioIdx       = 0x800E2044;
 D_800DFB5C                      = 0x800E2048;
 D_800DFB60                      = 0x800E204C;
 D_800DFB61                      = 0x800E204D;

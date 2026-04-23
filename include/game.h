@@ -503,7 +503,7 @@ typedef enum _UnkSysFlags
 {
     UnkSysFlag_None     = 0,
     UnkSysFlag_0        = 1 << 0,
-    UnkSysFlag_1        = 1 << 1,
+    UnkSysFlag_1        = 1 << 1, // Demo in progress?
 
     UnkSysFlag_3        = 1 << 3,
     UnkSysFlag_4        = 1 << 4,

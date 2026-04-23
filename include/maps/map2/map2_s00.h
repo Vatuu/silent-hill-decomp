@@ -24,7 +24,7 @@
 
 #include "maps/shared.h"
 
-extern u16 g_MapMsgSounds[2]; // 0x800F1A10
+extern u16 g_Cutscene_MapMsgAudioCmds[2]; // 0x800F1A10
 
 extern s16 g_Gfx_LockTimFileIdxs[8]; // 0x800F1A14
 
@@ -44,7 +44,7 @@ extern u8 D_800F228E;
 /** Paper map marking fade alpha. Used to fade in the marking sprite to half opacity. */
 extern s32 g_Gfx_PaperMapMarkingAlpha; // 0x800F2290
 
-extern u8 g_MapMsgSoundIdx; // 0x800F2294
+extern u8 g_Cutscene_MapMsgAudioIdx; // 0x800F2294
 
 extern u8 D_800F2295;
 

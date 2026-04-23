@@ -428,7 +428,7 @@ extern s_WorldObjectDesc g_WorldObject_Baby;
 
 extern GsCOORDINATE2 g_NpcBoneCoords[HarryBone_Count];
 
-extern q19_12 g_CutsceneTimer; // Count of objects to load?
+extern q19_12 g_Cutscene_Timer; // Count of objects to load?
 
 extern VECTOR3 g_WorldObject_UnkPos;
 
@@ -436,18 +436,18 @@ extern VECTOR3 g_WorldObject_UnkPos;
 extern u8 D_800F4804; // `bool`
 extern u8 D_800F4805;
 extern u8 D_800F4806; // `bool`
-extern u8 g_CutsceneUpdate_Hero; // `bool`
-extern u8 g_CutsceneUpdate_Sibyl; // `bool`
-extern u8 g_CutsceneUpdate_Daria; // `bool`
-extern u8 g_CutsceneUpdate_Arsia; // `bool`
-extern u8 g_CutsceneUpdate_Kau; // `bool`
-extern u8 g_CutsceneUpdate_Mar; // `bool`
-extern u8 g_CutsceneUpdate_Bar; // `bool`
-extern u8 g_CutsceneUpdate_Litl; // `bool`
-extern u8 g_CutsceneUpdate_Bos; // `bool`
-extern u8 g_CutsceneUpdate_Bin; // `bool`
+extern u8 g_Cutscene_UpdateHero; // `bool`
+extern u8 g_Cutscene_UpdateSibyl; // `bool`
+extern u8 g_Cutscene_UpdateDaria; // `bool`
+extern u8 g_Cutscene_UpdateArsia; // `bool`
+extern u8 g_Cutscene_UpdateKau; // `bool`
+extern u8 g_Cutscene_UpdateMar; // `bool`
+extern u8 g_Cutscene_UpdateBar; // `bool`
+extern u8 g_Cutscene_UpdateLitl; // `bool`
+extern u8 g_Cutscene_UpdateBos; // `bool`
+extern u8 g_Cutscene_UpdateBin; // `bool`
 extern u8 D_800F4811; // `bool`
-extern u8 g_CutsceneUpdate_Baby; // `bool`
+extern u8 g_Cutscene_UpdateBaby; // `bool`
 extern u8 D_800F4813;
 extern u8 D_800F4814;
 extern u8 D_800F4815; // `bool`
@@ -545,8 +545,8 @@ extern VECTOR3 D_800ED250;
 
 extern s_func_800E1FE0 D_800ED274[18];
 
-extern VECTOR3 g_CutsceneCameraPositionTarget;
-extern VECTOR3 g_CutsceneCameraLookAtTarget;
+extern VECTOR3 g_Cutscene_CameraPositionTarget;
+extern VECTOR3 g_Cutscene_CameraLookAtTarget;
 
 extern VECTOR3 D_800F47D8;
 extern SVECTOR3 D_800F47E8;

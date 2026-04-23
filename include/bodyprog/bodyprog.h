@@ -3967,7 +3967,7 @@ void nullsub_800334C8(void);
 
 bool func_80033548(void);
 
-/** @brief Updates the savegame buffer with the current player SysWork info (position, rotation, health, event index). */
+/** @brief Updates the savegame buffer with current player info (position, rotation, health, event index). */
 void SysWork_SavegameUpdatePlayer(void);
 
 /** @brief Updates SysWork with player info from the savegame buffer (position, rotation, health). */
@@ -4040,7 +4040,8 @@ s8 func_80039F90(void);
 
 void SysState_ReadMessage_Update(void);
 
-void func_8003A16C(void);
+/** @brief Updates the active autosave savegame entry with the most recent savegame. */
+void SysWork_AutosaveUpdate(void);
 
 void SysState_SaveMenu_Update(void);
 

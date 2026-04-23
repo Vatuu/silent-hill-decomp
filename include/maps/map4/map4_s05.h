@@ -32,10 +32,10 @@ extern q3_12 D_800D785C;
 
 extern s_AnimInfo FLOATSTINGER_ANIM_INFOS[];
 
-extern VECTOR3 g_CutsceneCameraPositionTarget;
-extern VECTOR3 g_CutsceneCameraLookAtTarget;
+extern VECTOR3 g_Cutscene_CameraPositionTarget;
+extern VECTOR3 g_Cutscene_CameraLookAtTarget;
 
-extern q19_12 g_CutsceneTimer;
+extern q19_12 g_Cutscene_Timer;
 
 extern s_FsImageDesc D_800D7D64;
 

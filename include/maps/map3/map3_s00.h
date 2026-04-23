@@ -37,9 +37,9 @@ extern VECTOR3 D_800CB308;
 extern u16 D_800D24F0;
 extern VECTOR3 D_800D2530;
 
-extern q19_12  g_CutsceneTimer;
-extern VECTOR3 g_CutsceneCameraPositionTarget;
-extern VECTOR3 g_CutsceneCameraLookAtTarget;
+extern q19_12  g_Cutscene_Timer;
+extern VECTOR3 g_Cutscene_CameraPositionTarget;
+extern VECTOR3 g_Cutscene_CameraLookAtTarget;
 
 extern u8 D_800D256C;
 

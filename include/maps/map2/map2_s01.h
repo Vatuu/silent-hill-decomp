@@ -22,11 +22,11 @@
 
 #include "maps/shared.h"
 
-extern u16 g_MapMsgSounds[20];
-extern q19_12 g_CutsceneTimer;
+extern u16 g_Cutscene_MapMsgAudioCmds[20];
+extern q19_12 g_Cutscene_Timer;
 extern VECTOR3 g_CameraPositionTarget;
 extern VECTOR3 g_CameraLookAtTarget;
-extern u8 g_MapMsgSoundIdx;
+extern u8 g_Cutscene_MapMsgAudioIdx;
 
 void func_800CB010(s32 arg0, s32 arg1, s32 arg2);
 

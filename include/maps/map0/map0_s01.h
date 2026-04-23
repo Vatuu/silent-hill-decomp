@@ -32,7 +32,7 @@
 
 #include "maps/shared.h"
 
-extern u16 g_MapMsgSounds[]; // 0x800DE0CC
+extern u16 g_Cutscene_MapMsgAudioCmds[]; // 0x800DE0CC
 
 extern u16 D_800DE124;
 
@@ -48,12 +48,12 @@ extern u8 D_800DE250;
 
 extern u8 D_800DE251;
 
-extern VECTOR3 g_CutsceneCameraPositionTarget; // 0x800E2380
-extern VECTOR3 g_CutsceneCameraLookAtTarget; // 0x800E2390
+extern VECTOR3 g_Cutscene_CameraPositionTarget; // 0x800E2380
+extern VECTOR3 g_Cutscene_CameraLookAtTarget; // 0x800E2390
 
-extern q19_12 g_CutsceneTimer; // 0x800E239C
+extern q19_12 g_Cutscene_Timer; // 0x800E239C
 
-extern u8 g_MapMsgSoundIdx; // 0x800E23A0
+extern u8 g_Cutscene_MapMsgAudioIdx; // 0x800E23A0
 
 extern u8 D_800E23A1;
 

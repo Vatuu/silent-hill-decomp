@@ -668,7 +668,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             Savegame_EventFlagSet(EventFlag_MapMark_11);
             func_800862F8(0, FILE_TIM_TOSCHOOL_TIM, false);
 
-            g_MapMsgSoundIdx = 0;
+            g_Cutscene_MapMsgAudioIdx = 0;
             D_800F2298 = 0;
             D_800F229C = 0;
 
@@ -704,7 +704,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
             func_800862F8(2, 0, false);
-            Map_MessageWithAudio(19, &g_MapMsgSoundIdx, &g_MapMsgSounds); // "Isn't this Cheryl's sketchbook?"
+            Map_MessageWithAudio(19, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds); // "Isn't this Cheryl's sketchbook?"
             break;
 
         case 8:

@@ -144,12 +144,12 @@ extern VECTOR3 D_800EBB70;
 
 extern s8 D_800ED543;
 
-extern VECTOR3 g_CutsceneCameraPositionTarget;
-extern VECTOR3 g_CutsceneCameraLookAtTarget;
+extern VECTOR3 g_Cutscene_CameraPositionTarget;
+extern VECTOR3 g_Cutscene_CameraLookAtTarget;
 
-extern u8 D_800ED5AC; // g_MapMsgSoundIdx
+extern u8 D_800ED5AC; // g_Cutscene_MapMsgAudioIdx
 
-extern q19_12 g_CutsceneTimer;
+extern q19_12 g_Cutscene_Timer;
 
 extern q3_12 D_800ED5B6; // Angle.
 
@@ -180,7 +180,7 @@ extern u8  D_800ED5B8;
 extern u8 D_800ED5F0;
 extern u8 D_800ED840;
 extern s8 D_800ED841;
-extern u16 D_800EBA34[23]; // `g_MapMsgSounds`
+extern u16 D_800EBA34[23]; // `g_Cutscene_MapMsgAudioCmds`
 extern s16 D_800ED5B4;
 extern s16 D_800EA856;
 

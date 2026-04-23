@@ -58,9 +58,9 @@ void vcGetNowWatchPos(VECTOR3* watch_pos);
  */
 void vcGetNowCamPos(VECTOR3* cam_pos);
 
-/** @brief Sets camera flags to set up a warp? TODO: Unsure.
+/** @brief Restores the camera to a controllable state after a cutscene.
  *
- * @param warp_f Warp.
+ * @param warp_f `true` to warp back, otherwise transition over time.
  */
 void vcReturnPreAutoCamWork(bool warp_f);
 

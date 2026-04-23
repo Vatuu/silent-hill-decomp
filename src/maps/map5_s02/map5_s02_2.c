@@ -462,7 +462,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             Fs_QueueWaitForEmpty();
             Dms_HeaderFixOffsets(FS_BUFFER_17);
 
-            g_CutsceneTimer                                 = Q12(0.0f);
+            g_Cutscene_Timer                                 = Q12(0.0f);
             g_SysWork.playerWork.player.position.vy = Q12(0.0f);
 
             Chara_Load(0, Chara_Kaufmann, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
@@ -491,7 +491,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 3:
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(8.0f), Q12(0.0f), Q12(20.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(8.0f), Q12(0.0f), Q12(20.0f), true, true);
             break;
 
         case 4:
@@ -500,7 +500,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 5:
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(8.0f), Q12(21.0f), Q12(31.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(8.0f), Q12(21.0f), Q12(31.0f), true, true);
             break;
 
         case 6:
@@ -517,7 +517,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 8:
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(32.0f), Q12(43.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(32.0f), Q12(43.0f), true, true);
             break;
 
         case 9:
@@ -525,7 +525,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 10:
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(44.0f), Q12(56.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(44.0f), Q12(56.0f), true, true);
             break;
 
         case 11:
@@ -540,12 +540,12 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 13:
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(63.0f), Q12(93.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(63.0f), Q12(93.0f), true, true);
             break;
 
         case 14:
             func_80086C58(&g_SysWork.playerWork.player, 165);
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(94.0f), Q12(150.0f), false, false);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(94.0f), Q12(150.0f), false, false);
             break;
 
         case 15:
@@ -553,7 +553,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 16:
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(94.0f), Q12(150.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(94.0f), Q12(150.0f), true, true);
             break;
 
         case 17:
@@ -561,7 +561,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 18:
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(151.0f), Q12(175.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(151.0f), Q12(175.0f), true, true);
             break;
 
         case 19:
@@ -574,7 +574,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 20:
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(176.0f), Q12(206.0f), false, true);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(176.0f), Q12(206.0f), false, true);
             break;
 
         case 21:
@@ -583,7 +583,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             func_800625F4(&QVECTOR3(139.3f, 0.0f, 23.6f), 120, 3, 1);
 
             D_800D94F4 = 2;
-            g_CutsceneTimer = Q12(207.0f);
+            g_Cutscene_Timer = Q12(207.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -597,12 +597,12 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
         case 24:
             Map_MessageWithAudio(17, &D_800DA6E8, &D_800D947C);
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(207.0f), Q12(227.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(207.0f), Q12(227.0f), true, false);
             break;
 
         case 25:
             func_80085EB8(0, &g_SysWork.npcs[0], 5, false);
-            g_CutsceneTimer = Q12(228.0f);
+            g_Cutscene_Timer = Q12(228.0f);
             SysWork_StateStepIncrement(0);
 
         case 26:
@@ -616,12 +616,12 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
         case 28:
             SysWork_StateStepIncrementDelayed(Q12(1.8f), false);
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(229.0f), Q12(294.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(229.0f), Q12(294.0f), true, false);
             break;
 
         case 29:
             Map_MessageWithAudio(30, &D_800DA6E8, &D_800D947C);
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(10.0f), Q12(229.0f), Q12(294.0f), true, false);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(229.0f), Q12(294.0f), true, false);
             break;
 
         case 30:
@@ -641,14 +641,14 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             Map_MessageWithAudio(31, &D_800DA6E8, &D_800D947C);
 
         case 34:
-            SysWork_StateStepIncrementAfterTime(&g_CutsceneTimer, Q12(8.0f), Q12(295.0f), Q12(315.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(8.0f), Q12(295.0f), Q12(315.0f), true, true);
             break;
 
         case 35:
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
 
-            g_CutsceneTimer = Q12(316.0f);
+            g_Cutscene_Timer = Q12(316.0f);
 
             sharedFunc_800D2EF4_0_s00();
             WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
@@ -703,7 +703,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             sharedFunc_800D2EF4_0_s00();
             WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
 
-            g_CutsceneTimer = Q12(316.0f);
+            g_Cutscene_Timer = Q12(316.0f);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -742,7 +742,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
             vcReturnPreAutoCamWork(true);
 
-            g_CutsceneTimer = NO_VALUE;
+            g_Cutscene_Timer = NO_VALUE;
 
             Savegame_EventFlagSet(EventFlag_379);
             func_8008D448();
@@ -759,21 +759,21 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
         WorldGfx_ObjectAdd(&g_WorldObject_06LBag.object_0, &g_WorldObject_06LBag.position_1C, &g_WorldObject_06LBag.rotation_28);
     }
 
-    if (g_CutsceneTimer >= Q12(0.0f))
+    if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_CutsceneTimer, FS_BUFFER_17);
-        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "KAU", g_CutsceneTimer, FS_BUFFER_17);
-        Dms_CharacterTransformGet(&g_SysWork.npcs[1].position, &g_SysWork.npcs[1].rotation, "CLD4", g_CutsceneTimer, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "KAU", g_Cutscene_Timer, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&g_SysWork.npcs[1].position, &g_SysWork.npcs[1].rotation, "CLD4", g_Cutscene_Timer, FS_BUFFER_17);
 
-        vcChangeProjectionValue(Dms_CameraTargetGet(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_CutsceneTimer, FS_BUFFER_17));
-        vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
-        vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
+        vcChangeProjectionValue(Dms_CameraTargetGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_17));
+        vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
+        vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
 
         // "LIGHT", cutscene light position?
-        Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", g_CutsceneTimer, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", g_Cutscene_Timer, FS_BUFFER_17);
 
         // "L_INT", interior light or intersection point?
-        Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", g_CutsceneTimer, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", g_Cutscene_Timer, FS_BUFFER_17);
 
         // Set light rotation.
         g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));

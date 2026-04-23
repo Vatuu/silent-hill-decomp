@@ -30,10 +30,10 @@ extern s_WorldObjectModel     g_CommonWorldObjects[6];
 extern s_WorldObjectPose      g_CommonWorldObjectPoses[2];
 
 extern u16 D_800D599C;
-extern VECTOR3 g_CutsceneCameraPositionTarget;
-extern VECTOR3 g_CutsceneCameraLookAtTarget;
+extern VECTOR3 g_Cutscene_CameraPositionTarget;
+extern VECTOR3 g_Cutscene_CameraLookAtTarget;
 extern u8 D_800D5A3C;
-extern q19_12 g_CutsceneTimer;
+extern q19_12 g_Cutscene_Timer;
 extern s16 D_800D5A48[3];
 extern s16 D_800D5A4E;
 
