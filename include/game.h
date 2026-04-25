@@ -1712,18 +1712,18 @@ typedef struct _PropertiesTwinfeeler
 {
     /* 0xE8  */ u_Property    field_E8;
     /* 0xEC  */ s_CharaDamage damage;
-    /* 0xFC  */ q19_12        field_FC; // Timer?
+    /* 0xFC  */ q19_12        digTimer;
     /* 0x100 */ q19_12        spawnPositionX; /** @unused */
     /* 0x104 */ q19_12        spawnPositionZ; /** @unused */
-    /* 0x108 */ s32           field_108;
-    /* 0x10C */ s32           field_10C;
-    /* 0x110 */ s16           field_110;
+    /* 0x108 */ q19_12        prevMoveSpeed;
+    /* 0x10C */ q19_12        accumulatedDamage;
+    /* 0x110 */ s16           field_110; /** @unused */
     /* 0x112 */ s8            __pad_112[2];
-    /* 0x114 */ u32           flags; /** `e_TwinfeelerFlags` */
-    /* 0x118 */ u16           field_118;
+    /* 0x114 */ u32           flags;     /** `e_TwinfeelerFlags` */
+    /* 0x118 */ u16           field_118; /** `bool` */
     /* 0x11C */ s8            __pad_11C[2];
-    /* 0x120 */ s32           field_120;
-    /* 0x124 */ u_Property    properties_124[2];
+    /* 0x120 */ s32           field_120; /** @unused */
+    /* 0x124 */ s8            __pad_124[8];
 } s_PropertiesTwinfeeler;
 STATIC_ASSERT_SIZEOF(s_PropertiesTwinfeeler, 64);
 

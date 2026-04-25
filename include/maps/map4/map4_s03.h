@@ -62,13 +62,14 @@ typedef struct
 } s_800E0698;
 STATIC_ASSERT_SIZEOF(s_800E0698, 0x264);
 
+// Special Twinfeeler data?
 typedef struct
 {
-    s32     field_0;
-    s32     field_4;
-    s_SubCharacter* chara_8;
-    VECTOR3 position_C;
-    void    (*funcptr_18)(struct s_800E0930*);
+    /* 0x0  */ s32             field_0;
+    /* 0x4  */ s32             field_4;
+    /* 0x8  */ s_SubCharacter* chara;
+    /* 0xC  */ VECTOR3         position;
+    /* 0x18 */ void            (*funcptr_18)(struct s_800E0930*);
 } s_800E0930;
 
 typedef struct
@@ -333,11 +334,17 @@ void func_800D3428(void);
 
 void func_800D354C(VECTOR3* arg0);
 
-void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* arg1, GsCOORDINATE2* arg2);
+void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-// Used to resurface.
-void func_800D3B98(s_SubCharacter* twinfeeler);
+/** @brief Teleports a Twinfeeler above ground and clears the `TwinfeelerFlag_Underground` flag.
+ *
+ * @param twinfeeler Twinfeeler character to update.
+ */
+void Twinfeeler_GroundSet(s_SubCharacter* twinfeeler);
 
+// TODO: Does game ever use this texture afterward?
+// After this `Twinfeeler_Init` checks `Fs_QueueChunksLoad()` before proceeding.
+// Could it be some preload/warm-up before the actual enemy file loads? If so, this func should be renamed.
 void Twinfeeler_TextureLoad(void);
 
 /** @brief Translates a vector in the direction of a given Y axis heading angle along the XZ plane.
@@ -373,8 +380,11 @@ void func_800D3B68(s_SubCharacter* twinfeeler);
 
 void func_800D3B74(s_SubCharacter* twinfeeler);
 
-// Snaps position to underground.
-void func_800D3CBC(s_SubCharacter* twinfeeler);
+/** @brief Teleports a Twinfeeler underground and sets the `TwinfeelerFlag_Underground` flag.
+ *
+ * @param twinfeeler Twinfeeler character to update.
+ */
+void Twinfeeler_UndergroundSet(s_SubCharacter* twinfeeler);
 
 bool Twinfeeler_Init(s_SubCharacter* twinfeeler);
 
@@ -399,7 +409,7 @@ bool func_800D4924(VECTOR3* vec, q19_12 angle); // Assumed return type.
 
 void Twinfeeler_Control_10(s_SubCharacter* twinfeeler);
 
-void Twinfeeler_Control_7(s_SubCharacter* twinfeeler);
+void Twinfeeler_ControlStand(s_SubCharacter* twinfeeler);
 
 void Twinfeeler_Control_4(s_SubCharacter* twinfeeler);
 
@@ -425,7 +435,7 @@ void Twinfeeler_Control_2(s_SubCharacter* twinfeeler);
 
 void Twinfeeler_ControlUpdate(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
-void func_800D54B4(s_SubCharacter* chara, GsCOORDINATE2*);
+void func_800D54B4(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
 s32 func_800D4558(q19_12 angle, s32 arg1, s32 arg2);
 
@@ -508,25 +518,26 @@ void func_800D0FD4(s32* ord, void* arg1, u8* arg2, MATRIX* arg3, s32 arg4, s32 a
 
 void func_800D1604(GsOT_TAG* ot, int arg1);
 
-void func_800D3E18(s_SubCharacter* chara);
+void func_800D3E18(s_SubCharacter* twinfeeler);
 
 void Twinfeeler_ControlAttack(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
 s32 func_800D4E78(s32 arg0, s32 arg1);
 
+// Handles damage response?
 void Twinfeeler_Control_9(s_SubCharacter* twinfeeler);
 
-void func_800D54B4(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800D54B4(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
-void func_800D55C8(s_SubCharacter* chara);
+void func_800D55C8(s_SubCharacter* twinfeeler);
 
 void func_800D59C0(s_LinkedBone* bone);
 
-void func_800D59EC(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800D59EC(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
-void func_800D5C3C(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800D5C3C(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
-void func_800D5E30(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800D5E30(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
 s32 func_800D78F4(s_800E06A0* arg0, s32 arg1);
 
