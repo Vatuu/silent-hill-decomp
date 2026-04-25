@@ -180,7 +180,7 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
     // Second arg is used to set `g_Player_DisableDamage`.
     // `isPlayerDead` gets checked below. If it's set, Split Head health isn't allowed to go below 0.
     // Presumably this is used to prevent both player + Split Head from dying at the same moment?
-    Player_DisableDamage(&isPlayerDead, splitHead->health == 0);
+    Player_DisableDamage(&isPlayerDead, splitHead->health == Q12(0.0f));
 
     // Return early if no damage or health is already 0.
     if (splitHead->damage.amount == Q12(0.0f) || splitHead->health == 0) // TODO: Split Head health isn't Q12 going off checks below?
@@ -256,7 +256,7 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
 
     Chara_DamageClear(splitHead);
 
-    Player_DisableDamage(&isPlayerDead, splitHead->health == 0);
+    Player_DisableDamage(&isPlayerDead, splitHead->health == Q12(0.0f));
 }
 
 void Ai_SplitHead_ControlUpdate(s_SubCharacter* splitHead)

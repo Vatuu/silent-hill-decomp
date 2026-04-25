@@ -1710,7 +1710,10 @@ typedef struct _PropertiesStalker
 /** @brief Twinfeeler character properties. */
 typedef struct _PropertiesTwinfeeler
 {
+    // TODO: Weird `field_E8` access.
     /* 0xE8  */ u_Property    field_E8;
+    /* 0xE8  */ //q3_12         sfxTimer_E8;
+    /* 0xE8  */ //q4_12         field_EA;
     /* 0xEC  */ s_CharaDamage damage;
     /* 0xFC  */ q19_12        digTimer;
     /* 0x100 */ q19_12        spawnPositionX; /** @unused */
@@ -1721,7 +1724,7 @@ typedef struct _PropertiesTwinfeeler
     /* 0x112 */ s8            __pad_112[2];
     /* 0x114 */ u32           flags;     /** `e_TwinfeelerFlags` */
     /* 0x118 */ u16           field_118; /** `bool` */
-    /* 0x11C */ s8            __pad_11C[2];
+    /* 0x11C */ s8            __pad_11C[2]; // TODO: Should be `s32 prevHealth`.
     /* 0x120 */ s32           field_120; /** @unused */
     /* 0x124 */ s8            __pad_124[8];
 } s_PropertiesTwinfeeler;

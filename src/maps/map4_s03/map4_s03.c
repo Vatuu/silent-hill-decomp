@@ -562,15 +562,15 @@ void func_800D17FC(void) // 0x800D17FC
     }
 }
 
-void func_800D185C(s32 arg0, s32 arg1) // 0x800D185C
+void func_800D185C(s32 arg0, s32 idx) // 0x800D185C
 {
     s_800DF580* ptr;
 
-    ptr = &D_800DF580[arg1];
+    ptr = &D_800DF580[idx];
     if (ptr->field_8 <= 0)
     {
-        ptr->field_4  = arg1 & 1;
-        ptr->field_0  = arg1;
+        ptr->field_4  = idx & 0x1;
+        ptr->field_0  = idx;
         ptr->field_8  = Q12(1.0f);
         ptr->field_3C = 1;
         ptr->field_C8 = NULL;
@@ -608,16 +608,16 @@ s_800DF580* func_800D1900(VECTOR* arg0, s32 arg1) // 0x800D1900
     return NULL;
 }
 
-void func_800D19AC(VECTOR3* vec) // 0x800D19AC
+void func_800D19AC(VECTOR3* pos) // 0x800D19AC
 {
-    func_800D1900(vec, 3);
+    func_800D1900(pos, 3);
 }
 
-void func_800D19CC(VECTOR3* vec) // 0x800D19CC
+void func_800D19CC(const VECTOR3* pos) // 0x800D19CC
 {
-    D_800E08F0.vx = vec->vx;
-    D_800E08F0.vy = vec->vy;
-    D_800E08F0.vz = vec->vz;
+    D_800E08F0.vx = pos->vx;
+    D_800E08F0.vy = pos->vy;
+    D_800E08F0.vz = pos->vz;
 }
 
 bool func_800D19F0(s_800DF580* arg0) // 0x800D19F0
@@ -1051,52 +1051,52 @@ void func_800D21AC(GsOT_TAG* ot, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D21AC
     GsOUT_PACKET_P = (PACKET*)poly;
 }
 
-void func_800D2684(VECTOR* arg0, s32 arg1) // 0x800D2684
+void func_800D2684(VECTOR* pos, q19_12 headingAngle) // 0x800D2684
 {
     s32         i;
-    s_800E0900* ptr;
+    s_800E0900* curPtr;
 
-    ptr = D_800E0900;
+    curPtr = D_800E0900;
 
-    for (i = 0; i < 2; i++, ptr++)
+    for (i = 0; i < ARRAY_SIZE(D_800E0900); i++, curPtr++)
     {
-        if (ptr->field_0 <= Q12(0.0f))
+        if (curPtr->field_0 <= Q12(0.0f))
         {
-            ptr->field_0  = Q12(4.5f);
-            ptr->field_C  = Q12(0.5f);
-            ptr->field_10 = Q12(0.4f);
+            curPtr->field_0  = Q12(4.5f);
+            curPtr->field_C  = Q12(0.5f);
+            curPtr->field_10 = Q12(0.4f);
 
-            func_800D0DE4(&ptr->field_4, arg0, Q12_ANGLE(0.0f), Q12(0.0f));
+            func_800D0DE4(&curPtr->field_4, pos, Q12_ANGLE(0.0f), Q12(0.0f));
             return;
         }
     }
 }
 
-void func_800D26FC(VECTOR* arg0, s32 arg1) // 0x800D26FC
+void func_800D26FC(VECTOR* pos, q19_12 headingAngle) // 0x800D26FC
 {
     s32         i;
-    s_800E0440* ptr;
+    s_800E0440* curPtr;
 
-    ptr = D_800E0440;
+    curPtr = D_800E0440;
 
-    for (i = 0; i < 3; i++, ptr++)
+    for (i = 0; i < ARRAY_SIZE(D_800E0440); i++, curPtr++)
     {
-        if (ptr->field_0 <= Q12(0.0f))
+        if (curPtr->field_0 <= Q12(0.0f))
         {
-            ptr->field_0  = Q12(8.0f);
-            ptr->field_C  = Q12(0.0f);
-            ptr->field_10 = Q12(0.0f);
-            ptr->field_14 = arg1;
+            curPtr->field_0  = Q12(8.0f);
+            curPtr->field_C  = Q12(0.0f);
+            curPtr->field_10 = Q12(0.0f);
+            curPtr->field_14 = headingAngle;
 
-            func_800D0DE4(&ptr->field_4, arg0, Q12_ANGLE(0.0f), Q12(0.0f));
+            func_800D0DE4(&curPtr->field_4, pos, Q12_ANGLE(0.0f), Q12(0.0f));
             break;
         }
     }
 
-    func_800D2684(arg0, arg1);
+    func_800D2684(pos, headingAngle);
 }
 
-void func_800D2790(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D2790
+void func_800D2790(GsOT_TAG* ot, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D2790
 {
     SVECTOR   sp20[9];
     DVECTOR   sp68[9];
@@ -1121,7 +1121,7 @@ void func_800D2790(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D27
     s32       idx;
     u8*       var_t4;
     GsOT_TAG* temp_v0_3;
-    GsOT_TAG* ot;
+    GsOT_TAG* ot0;
     POLY_GT4* poly;
     POLY_GT4* poly2;
     u16*      var_v1_2;
@@ -1130,7 +1130,7 @@ void func_800D2790(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D27
     var_s4 = 0;
     var_s0 = sp20;
 
-    temp_v0 = Q12_MULT_PRECISE(arg3, 0xCC);
+    temp_v0 = Q12_MULT_PRECISE(arg3, Q12(0.05f));
     temp_v1 = temp_v0;
 
     for (i = -1; i < 2; i++)
@@ -1221,8 +1221,8 @@ void func_800D2790(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D27
         var_s1 += 3;
     }
 
-    temp_v0_3 = &arg0[var_s4 >> 1];
-    ot        = &temp_v0_3[25];
+    temp_v0_3 = &ot[var_s4 >> 1];
+    ot0        = &temp_v0_3[25];
 
     poly = (POLY_GT4*)GsOUT_PACKET_P;
 
@@ -1245,7 +1245,7 @@ void func_800D2790(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D27
         setPolyGT4(poly);
         setSemiTrans(poly, 1);
 
-        addPrim(ot, poly);
+        addPrim(ot0, poly);
         poly++;
 
         idx = var_t4[0];
@@ -1263,7 +1263,7 @@ void func_800D2790(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D27
         setPolyGT4(poly);
         setSemiTrans(poly, 1);
 
-        addPrim(ot - 25, poly);
+        addPrim(ot0 - 25, poly);
         poly++;
     }
 
@@ -1311,21 +1311,21 @@ void func_800D2D28(GsOT_TAG* arg0)
 
     ptr = D_800E0900;
     vwGetViewAngle(&sp30);
-    temp_s4 = sp30.vy + 0x800;
+    temp_s4 = sp30.vy + Q12(0.5f);
 
     for (i = 0; i < 2; i++, ptr++)
     {
         if (ptr->field_0 > 0)
         {
             ptr->field_10 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.7f));
-            ptr->field_10  = MIN(0x1000, ptr->field_10);
+            ptr->field_10  = MIN(Q12(1.0f), ptr->field_10);
 
             if (ptr->field_0 > 0x2B33)
             {
-                var_a0 = ptr->field_C + Q12_MULT_PRECISE(g_DeltaTime, 0x800);
-                if (var_a0 > 0x1000)
+                var_a0 = ptr->field_C + Q12_MULT_PRECISE(g_DeltaTime, Q12(0.5f));
+                if (var_a0 > Q12(1.0f))
                 {
-                    ptr->field_C = 0x1000;
+                    ptr->field_C = Q12(1.0f);
                 }
                 else
                 {
@@ -1334,7 +1334,7 @@ void func_800D2D28(GsOT_TAG* arg0)
             }
             else
             {
-                ptr->field_C -= Q12_MULT_PRECISE(g_DeltaTime, 0x666);
+                ptr->field_C -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.4f));
                 ptr->field_C  = MAX(ptr->field_C, 0);
             }
 
@@ -1386,48 +1386,51 @@ void Twinfeeler_TextureLoad(void) // 0x800D3038
     Fs_QueueStartReadTim(FILE_TEST_WARMTEST_TIM, FS_BUFFER_1, &D_800A9094);
 }
 
-void Math_Vector3Translate(VECTOR3* outVec, const VECTOR3* inVec, q19_12 headingAngle, q19_12 dist) // 0x800D3068
+void Twinfeeler_Translate(VECTOR3* newPos, const VECTOR3* pos, q19_12 headingAngle, q19_12 dist) // 0x800D3068
 {
-    outVec->vx = inVec->vx + Q12_MULT_PRECISE(Math_Sin(headingAngle), dist);
-    outVec->vy = inVec->vy;
-    outVec->vz = inVec->vz + Q12_MULT_PRECISE(Math_Cos(headingAngle), dist);
+    newPos->vx = pos->vx + Q12_MULT_PRECISE(Math_Sin(headingAngle), dist);
+    newPos->vy = pos->vy;
+    newPos->vz = pos->vz + Q12_MULT_PRECISE(Math_Cos(headingAngle), dist);
 }
 
 void func_800D3114(void) // 0x800D3114
 {
-    VECTOR3     sp10;
+    VECTOR3     newPos; // Q19.12
     s_800E0930* ptr;
 
     ptr = D_800E0930;
 
-    switch (ptr->field_0)
+    switch (ptr->stateStep)
     {
         case 0:
-            Math_Vector3Translate(&sp10, &ptr->position, ptr->chara->rotation.vy, Q12(1.25f));
-            func_800D19CC(&sp10);
+            Twinfeeler_Translate(&newPos, &ptr->position, ptr->chara->rotation.vy, Q12(1.25f));
+            func_800D19CC(&newPos);
             func_800D1AFC();
-            func_800D26FC(&sp10, ptr->chara->rotation.vy);
-            ptr->field_0++;
+            func_800D26FC(&newPos, ptr->chara->rotation.vy);
+
+            ptr->stateStep++;
             break;
 
         case 1:
-            if (ptr->field_4 >= Q12(0.8f))
+            if (ptr->timer >= Q12(0.8f))
             {
                 func_800D1AFC();
-                ptr->field_0++;
+
+                ptr->stateStep++;
             }
             break;
 
         case 2:
-            if (ptr->field_4 >= Q12(1.0f))
+            if (ptr->timer >= Q12(1.0f))
             {
                 func_800D1C48();
-                ptr->field_0++;
+
+                ptr->stateStep++;
             }
             break;
 
         case 3:
-            if (ptr->field_4 >= Q12(1.5f))
+            if (ptr->timer >= Q12(1.5f))
             {
                 func_800D1AFC();
                 ptr->funcptr_18 = NULL;
@@ -1440,55 +1443,58 @@ void func_800D3114(void) // 0x800D3114
             break;
     }
 
-    ptr->field_4 += g_DeltaTime;
+    ptr->timer += g_DeltaTime;
 }
 
 INCLUDE_RODATA("maps/map4_s03/nonmatchings/map4_s03", D_800CA788);
 
 void func_800D326C(void) // 0x800D326C
 {
-    VECTOR3     sp10;
+    VECTOR3     newPos; // Q19.12
     s_800E0930* ptr;
 
     ptr = D_800E0930;
 
-    switch (ptr->field_0)
+    switch (ptr->stateStep)
     {
         case 0:
-            Math_Vector3Translate(&sp10, &ptr->position, ptr->chara->rotation.vy, Q12(1.3f));
-            func_800D19CC(&sp10);
-            ptr->field_0++;
+            Twinfeeler_Translate(&newPos, &ptr->position, ptr->chara->rotation.vy, Q12(1.3f));
+            func_800D19CC(&newPos);
+
+            ptr->stateStep++;
             break;
 
         case 1:
-            if (ptr->field_4 >= Q12(0.3f))
+            if (ptr->timer >= Q12(0.3f))
             {
-                ptr->field_0++;
+                ptr->stateStep++;
             }
 
             func_800D1C48();
             break;
 
         case 2:
-            if (ptr->field_4 >= Q12(0.35f))
+            if (ptr->timer >= Q12(0.35f))
             {
-                Math_Vector3Translate(&sp10, &ptr->position, ptr->chara->rotation.vy, Q12(1.15f));
-                func_800D26FC(&sp10, ptr->chara->rotation.vy);
+                Twinfeeler_Translate(&newPos, &ptr->position, ptr->chara->rotation.vy, Q12(1.15f));
+                func_800D26FC(&newPos, ptr->chara->rotation.vy);
                 func_800D1AFC();
-                ptr->field_0++;
+
+                ptr->stateStep++;
             }
             break;
 
         case 3:
-            if (ptr->field_4 >= Q12(0.9f))
+            if (ptr->timer >= Q12(0.9f))
             {
                 func_800D1C48();
-                ptr->field_0++;
+
+                ptr->stateStep++;
             }
             break;
 
         case 4:
-            if (ptr->field_4 >= Q12(1.3f))
+            if (ptr->timer >= Q12(1.3f))
             {
                 func_800D1AFC();
                 ptr->funcptr_18 = NULL;
@@ -1496,7 +1502,7 @@ void func_800D326C(void) // 0x800D326C
             break;
     }
 
-    ptr->field_4 += g_DeltaTime;
+    ptr->timer += g_DeltaTime;
 }
 
 void func_800D33D0(void) // 0x800D33D0
@@ -1536,10 +1542,9 @@ s_800E0930* func_800D344C(s_SubCharacter* twinfeeler, void (*funcptr)(s_800E0930
     s_800E0930* curPtr;
 
     curPtr = D_800E0930;
-
-    for (i = 0; i < 3; i++, curPtr++)
+    for (i = 0; i < ARRAY_SIZE(D_800E0930); i++, curPtr++)
     {
-        if (!curPtr->funcptr_18)
+        if (curPtr->funcptr_18 == NULL)
         {
             Collision_Get(&coll, twinfeeler->position.vx, twinfeeler->position.vz);
 
@@ -1548,8 +1553,8 @@ s_800E0930* func_800D344C(s_SubCharacter* twinfeeler, void (*funcptr)(s_800E0930
             curPtr->position.vy = coll.groundHeight_0;
             curPtr->position.vz = twinfeeler->position.vz;
             curPtr->funcptr_18  = funcptr;
-            curPtr->field_4     = 0;
-            curPtr->field_0     = 0;
+            curPtr->timer       = Q12(0.0f);
+            curPtr->stateStep   = 0;
             return curPtr;
         }
     }
@@ -1613,10 +1618,9 @@ void func_800D35DC(SVECTOR* rot) // 0x800D35DC
     }
 
     idx = g_ActiveBufferIdx;
+    ot  = g_OrderingTable0[idx].org;
 
-    ot = g_OrderingTable0[idx].org;
-
-    Vw_WorldScreenMatrixAtPositionGet(&ptr->world_8, ptr->x_0, 0, ptr->z_4);
+    Vw_WorldScreenMatrixAtPositionGet(&ptr->world_8, ptr->x_0, Q12(0.0f), ptr->z_4);
     func_800D0C50(rot, &ptr->world_8);
     func_800D1604(ot, rot->vy);
     func_800D1FF4(ot);
@@ -1677,7 +1681,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
         twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_DeathStart, false);
     }
 
-    if (twinfeeler->health > Q12(0.0f) && twinfeelerProps.field_E8.val32 == 0)
+    if (twinfeeler->health > Q12(0.0f) && twinfeelerProps.field_E8.val32 == Q12(0.0f))
     {
         if (Rng_GenerateUInt(0, 3)) // 1 in 4 chance.
         {
@@ -1757,7 +1761,7 @@ u32 func_800D3B1C(void) // 0x800D3B1C
 {
     u8 sp10;
 
-    Player_DisableDamage(&sp10, 0);
+    Player_DisableDamage(&sp10, false);
     return sp10;
 }
 
@@ -1770,14 +1774,14 @@ void func_800D3B44(bool disableDamage)
 
 void func_800D3B68(s_SubCharacter* twinfeeler) // 0x800D3B68
 {
-    twinfeeler->health = twinfeeler->properties.npc.field_11C;
+    twinfeeler->health = twinfeeler->properties.npc.field_11C; // TODO: Update properties struct.
 }
 
 void func_800D3B74(s_SubCharacter* twinfeeler) // 0x800D3B74
 {
     if (twinfeeler->health >= Q12(0.0f))
     {
-        twinfeeler->properties.npc.field_11C = twinfeeler->health;
+        twinfeeler->properties.npc.field_11C = twinfeeler->health; // TODO: Update properties struct.
         twinfeeler->health                   = NO_VALUE;
     }
 }
@@ -1793,11 +1797,12 @@ void Twinfeeler_GroundSet(s_SubCharacter* twinfeeler) // 0x800D3B98
     headingAngle = twinfeeler->rotation.vy;
     dist         = Q12_MULT_PRECISE(Math_Sin(headingAngle), Q12(1.0f));
 
+    // Snap to ground.
     Collision_Get(&coll, twinfeeler->position.vx + dist,
                   Q12_MULT_PRECISE(Math_Cos(headingAngle), Q12(1.0f)) + twinfeeler->position.vz);
     twinfeeler->position.vy = coll.groundHeight_0;
 
-    // Snap to ground.
+    // Fallback snap.
     if (twinfeeler->position.vy < Q12(-1.0f))
     {
         posX = twinfeeler->position.vx;
@@ -1894,13 +1899,13 @@ bool Twinfeeler_Init(s_SubCharacter* twinfeeler) // 0x800D3CD4
     return true;
 }
 
-void func_800D3E18(s_SubCharacter* chara) // 0x800D3E18
+void func_800D3E18(s_SubCharacter* twinfeeler) // 0x800D3E18
 {
-    *(u16*)&chara->properties.twinfeeler.field_E8.val16[1] = NO_VALUE;
+    *(u16*)&twinfeeler->properties.twinfeeler.field_E8.val16[1] = NO_VALUE;
 
     Sd_SfxStop(Sfx_Unk1567);
     Sd_SfxStop(Sfx_Unk1559);
-    func_800D354C(&chara->position);
+    func_800D354C(&twinfeeler->position);
 }
 
 void func_800D3E58(s_SubCharacter* twinfeeler) // 0x800D3E58
@@ -3154,7 +3159,7 @@ bool func_800D5BF8(s32 arg0, s32 arg1, s32 arg2, u16* arg3) // 0x800D5BF8
 void func_800D5C3C(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x800D5C3C
 {
     s32             temp_s1;
-    s32             temp_s2;
+    s32             undergroundFlag;
     s32             var_a1;
     s32             i;
     s_SubCharacter* localChara;
@@ -3173,26 +3178,27 @@ void func_800D5C3C(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
         0xFFFFFFE9, 0xFFFFFFE9, 0xFFFFFFE4, 0xFFFFFFE4
     };
 
-    MATRIX sp60;
+    MATRIX transformMat;
     VECTOR pos;
 
     localChara = twinfeeler;
 
-    temp_s2  = localChara->properties.twinfeeler.flags >> 2;
-    temp_s2 ^= 1;
-    temp_s2 &= 1;
+    // Weird `TwinfeelerFlag_Underground` check.
+    undergroundFlag  = localChara->properties.twinfeeler.flags >> 2;
+    undergroundFlag ^= 1;
+    undergroundFlag &= 1;
 
     Text_Debug_PositionSet(170, 20);
 
     for (i = 0; i < 16; i++)
     {
-        Vw_CoordHierarchyMatrixCompute(&boneCoords[D_800CA814[i]], &sp60);
+        Vw_CoordHierarchyMatrixCompute(&boneCoords[D_800CA814[i]], &transformMat);
 
-        if (func_800D5BF8(i, sp60.t[1], D_800CA824[i], &localChara->properties.twinfeeler.field_E8.val16[1]))
+        if (func_800D5BF8(i, transformMat.t[1], D_800CA824[i], &localChara->properties.twinfeeler.field_E8.val16[1]))
         {
-            pos.vx = Q8_TO_Q12(sp60.t[0]);
+            pos.vx = Q8_TO_Q12(transformMat.t[0]);
             pos.vy = Q12(0.0f);
-            pos.vz = Q8_TO_Q12(sp60.t[2]);
+            pos.vz = Q8_TO_Q12(transformMat.t[2]);
 
             if (i < 0)
             {
@@ -3207,7 +3213,7 @@ void func_800D5C3C(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
 
             func_800D185C(&pos, temp_s1);
 
-            if (func_800D48CC(sp60.t[0], sp60.t[2]) && temp_s2 != 0)
+            if (func_800D48CC(transformMat.t[0], transformMat.t[2]) && undergroundFlag != 0)
             {
                 func_800D2150(&pos, temp_s1);
             }

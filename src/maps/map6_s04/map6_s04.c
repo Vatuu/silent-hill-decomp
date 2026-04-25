@@ -167,7 +167,7 @@ void func_800D8B14(s_SubCharacter* chara, s_Model* model) // 0x800D8B14
 
     g_SysWork.npcs[0].properties.monsterCybil.field_F8 = CLAMP(g_SysWork.npcs[0].properties.monsterCybil.field_F8, Q12(0.0f), INT_MAX);
 
-    Player_DisableDamage(&sp10, 0);
+    Player_DisableDamage(&sp10, false);
 
     if (sp10 != 0)
     {
@@ -198,7 +198,7 @@ void func_800D8B14(s_SubCharacter* chara, s_Model* model) // 0x800D8B14
         {
             g_SysWork.npcs[0].properties.monsterCybil.field_F8 += chara->damage.amount;
 
-            chara->health         -= chara->damage.amount;
+            chara->health       -= chara->damage.amount;
             chara->damage.amount = Q12(0.0f);
 
             g_SysWork.npcs[0].properties.monsterCybil.field_122 = Q12_ANGLE_NORM_U(
@@ -212,7 +212,7 @@ void func_800D8B14(s_SubCharacter* chara, s_Model* model) // 0x800D8B14
 
             if (chara->health <= Q12(0.0f))
             {
-                Player_DisableDamage(&sp10, 1);
+                Player_DisableDamage(&sp10, true);
                 Savegame_EventFlagSet(EventFlag_446);
                 func_8004C564(0, NO_VALUE);
             }

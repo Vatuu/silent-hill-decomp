@@ -12,7 +12,7 @@
 #define MAP_ROOM_MIN_Z Q12(-120.0f)
 #define MAP_ROOM_MAX_Z Q12(240.0f)
 
-#define MAP_FIELD_4C_COUNT 250
+#define MAP_FIELD_4C_COUNT        250
 #define MAP_BLOOD_SPLAT_COUNT_MAX 150
 
 #include "maps/shared.h"
@@ -33,7 +33,7 @@ typedef struct
     SVECTOR field_0; // } Note: Not sure if these are actually `SVECTOR`.
     SVECTOR field_8; // } That struct fits and works with some copy code, but could be a custom struct of 4 `u16`s.
 } s_800DB7D4;
-STATIC_ASSERT_SIZEOF(s_800DB7D4, 0x10);
+STATIC_ASSERT_SIZEOF(s_800DB7D4, 16);
 
 typedef struct
 {
@@ -49,7 +49,7 @@ typedef struct
     s16     field_34;
     s16     field_36;
 } s_800E06A0;
-STATIC_ASSERT_SIZEOF(s_800E06A0, 0x38);
+STATIC_ASSERT_SIZEOF(s_800E06A0, 56);
 
 typedef struct
 {
@@ -60,13 +60,13 @@ typedef struct
     s8                 unk_254[4];
     VECTOR3            field_258;
 } s_800E0698;
-STATIC_ASSERT_SIZEOF(s_800E0698, 0x264);
+STATIC_ASSERT_SIZEOF(s_800E0698, 612);
 
-// Special Twinfeeler data?
+// Used by Twinfeeler for random spawn locations when resurfacing?
 typedef struct
 {
-    /* 0x0  */ s32             field_0;
-    /* 0x4  */ s32             field_4;
+    /* 0x0  */ s32             stateStep;
+    /* 0x4  */ q19_12          timer;
     /* 0x8  */ s_SubCharacter* chara;
     /* 0xC  */ VECTOR3         position;
     /* 0x18 */ void            (*funcptr_18)(struct s_800E0930*);
@@ -158,9 +158,9 @@ extern s_800DF580 D_800DF580[];
 
 extern s_800E0300 D_800E0300[16];
 
-extern s_800E0440 D_800E0440[];
+extern s_800E0440 D_800E0440[3];
 
-extern s_800E0900 D_800E0900[];
+extern s_800E0900 D_800E0900[2];
 
 extern s_800E0930 D_800E0930[3];
 
@@ -181,15 +181,15 @@ extern u16 D_800DB92C;
 extern u16 D_800DB9E0;
 extern u8  D_800DB9E2;
 
-extern s_WorldObjectDesc g_WorldObject_Fence;
-extern s_WorldObjectDesc g_WorldObject_Mal5_21;
-extern s_WorldObjectModel   g_WorldObject_Mal6[2];
-extern VECTOR3           g_WorldObject_UnkPos;
-extern SVECTOR3          g_WorldObject_UnkRot;
-extern s_WorldObjectDesc g_WorldObject_SavePad;
-extern s_WorldObjectModel   g_CommonWorldObjects[6];
-extern s_WorldObjectModel   D_800E08D0;
-extern s_WorldObjectPose g_CommonWorldObjectPoses[3]; // 0x800DB930
+extern s_WorldObjectDesc  g_WorldObject_Fence;
+extern s_WorldObjectDesc  g_WorldObject_Mal5_21;
+extern s_WorldObjectModel g_WorldObject_Mal6[2];
+extern VECTOR3            g_WorldObject_UnkPos;
+extern SVECTOR3           g_WorldObject_UnkRot;
+extern s_WorldObjectDesc  g_WorldObject_SavePad;
+extern s_WorldObjectModel g_CommonWorldObjects[6];
+extern s_WorldObjectModel D_800E08D0;
+extern s_WorldObjectPose  g_CommonWorldObjectPoses[3]; // 0x800DB930
 extern VECTOR3 D_800DB7C8;
 extern SVECTOR D_800DB924;
 
@@ -282,13 +282,13 @@ void func_800D13B4(u8* arg0, s32 arg1, s32 arg2, s32 arg3);
 // TODO: Could be `SVECTOR3`, need to check callers.
 void func_800D1478(SVECTOR* arg0, s32 arg1, q19_12 headingAngle, s32 mode, SVECTOR* arg4);
 
-void func_800D19AC(VECTOR3* vec);
+void func_800D19AC(VECTOR3* pos);
 
-void func_800D19CC(VECTOR3* vec);
+void func_800D19CC(const VECTOR3* pos);
 
 void func_800D17FC(void);
 
-void func_800D185C(s32 arg0, s32 arg1);
+void func_800D185C(s32 arg0, s32 idx);
 
 s_800DF580* func_800D1900(VECTOR* arg0, s32 arg1);
 
@@ -316,11 +316,11 @@ void func_800D2D28(GsOT_TAG* arg0);
 
 void func_800D2120(void);
 
-void func_800D2684(VECTOR* arg0, s32 arg1);
+void func_800D2684(VECTOR* pos, q19_12 headingAngle);
 
-void func_800D26FC(VECTOR* arg0, s32 arg1);
+void func_800D26FC(VECTOR* pos, q19_12 headingAngle);
 
-void func_800D2790(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3);
+void func_800D2790(GsOT_TAG* ot, MATRIX* arg1, s32 arg2, s32 arg3);
 
 void func_800D2CC8(void);
 
@@ -347,14 +347,14 @@ void Twinfeeler_GroundSet(s_SubCharacter* twinfeeler);
 // Could it be some preload/warm-up before the actual enemy file loads? If so, this func should be renamed.
 void Twinfeeler_TextureLoad(void);
 
-/** @brief Translates a vector in the direction of a given Y axis heading angle along the XZ plane.
+/** @brief Translates a position in the direction of a given Y-axis heading angle along the XZ plane.
  *
- * @param outVec Output vector (Q19.12).
- * @param inVec Input vector (Q19.12).
- * @param headingAngle Y axis heading angle.
+ * @param newPos Output translated position (Q19.12).
+ * @param pos Start position (Q19.12).
+ * @param headingAngle Y-axis heading angle.
  * @param dist Translation distance.
  */
-void Math_Vector3Translate(VECTOR3* outVec, const VECTOR3* inVec, q19_12 headingAngle, q19_12 dist);
+void Twinfeeler_Translate(VECTOR3* newPos, const VECTOR3* pos, q19_12 headingAngle, q19_12 dist);
 
 void func_800D3114(void); // Assumed args/return type.
 

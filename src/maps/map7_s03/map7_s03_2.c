@@ -4321,7 +4321,7 @@ s32 func_800DD964(void) // 0x8007F250
 {
     u8 sp10;
 
-    Player_DisableDamage(&sp10, 0);
+    Player_DisableDamage(&sp10, false);
     return sp10;
 }
 
@@ -5758,8 +5758,8 @@ void func_800DFB50(s_SubCharacter* chara) // 0x800DFB50
 {
     if (chara->model.controlState != 0)
     {
-        chara->model.controlState     = 4;
-        chara->model.stateStep = 0;
+        chara->model.controlState = 4;
+        chara->model.stateStep    = 0;
     }
     else
     {
@@ -5771,8 +5771,8 @@ void func_800DFB74(s_SubCharacter* chara) // 0x800DFB74
 {
     if (chara->model.controlState != 0)
     {
-        chara->model.controlState     = 2;
-        chara->model.stateStep = 0;
+        chara->model.controlState = 2;
+        chara->model.stateStep    = 0;
     }
     else
     {
@@ -5797,13 +5797,13 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
         chara->health = Q12(30000.0f);
     }
 
-    chara->moveSpeed       = 0;
+    chara->moveSpeed        = Q12(0.0f);
     chara->field_D4.radius_0  = Q12(0.3f);
     chara->field_D8.offsetX_4 = Q12(0.0f);
     chara->field_D8.offsetZ_6 = Q12(0.0f);
     chara->field_E1_0         = 4;
-    chara->headingAngle    = chara->rotation.vy;
-    chara->flags          |= CharaFlag_Unk3;
+    chara->headingAngle     = chara->rotation.vy;
+    chara->flags           |= CharaFlag_Unk3;
 
     localChara->properties.player.field_F0 = 0;
 
