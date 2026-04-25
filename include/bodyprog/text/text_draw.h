@@ -8,7 +8,7 @@
 
 #define MAP_MSG_CODE_MARKER        '~' /** Message code start. */
 #define MAP_MSG_CODE_COLOR         'C' /** Set color. */
-#define MAP_MSG_CODE_DISPLAY_ALL   'D' /** Display message instantly without roll. */
+#define MAP_MSG_CODE_DISPLAY_ALL   'D' /** Display message instantly with no rollout. */
 #define MAP_MSG_CODE_END           'E' /** End message. */
 #define MAP_MSG_CODE_HIGH_RES      'H' /** High-resolution glyph drawing. */
 #define MAP_MSG_CODE_JUMP          'J' /** Jump timer. */

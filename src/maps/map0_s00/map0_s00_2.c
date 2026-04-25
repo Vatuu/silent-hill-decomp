@@ -772,11 +772,12 @@ void MapEvent_CutsceneCherylRedirect3(void) // 0x800DADD4
 
 void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
 {
-    q19_12 offsetY;
-    q19_12 offsetZ;
-    s32    temp;
-    s32    temp2;
+    q19_12 camPosY;
+    q19_12 camPosZ;
+    q19_12 playerOffsetZ0;
+    q19_12 playerOffsetZ1;
 
+    #define playerChara g_SysWork.playerWork.player
     #define cherylChara g_SysWork.npcs[0]
 
     switch (g_SysWork.sysStateSteps[0])
@@ -788,7 +789,7 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
             // Warp Cheryl to starting position in the alley.
             cherylChara.position.vx = Q12(-62.0f);
             cherylChara.rotation.vy = Q12_ANGLE(180.0f);
-            cherylChara.position.vz = g_SysWork.playerWork.player.position.vz - Q12(19.0f);
+            cherylChara.position.vz = playerChara.position.vz - Q12(19.0f);
 
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
@@ -801,12 +802,12 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
             func_800865FC(false, 0, 0, Q12_ANGLE(180.0f), Q12(0.0f), Q12(0.0f));
 
             // Warp camera.
-            Camera_PositionSet(&g_SysWork.playerWork.player.position,
+            Camera_PositionSet(&playerChara.position,
                                Q12(0.24f), Q12(-4.06f), Q12(-5.0f),
                                Q12(0.0f), Q12(0.0f),
                                Q12(0.0f), Q12(0.0f),
                                true);
-            Camera_LookAtSet(&g_SysWork.playerWork.player.position,
+            Camera_LookAtSet(&playerChara.position,
                              Q12(-0.72f), Q12(-2.11f), Q12(-1.63f),
                              Q12(0.0f), Q12(0.0f),
                              Q12(0.0f), Q12(0.0f),
@@ -820,7 +821,7 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
         case 4:
             func_800865FC(true, 0, 0,
                          Q12_ANGLE(180.0f),
-                         Q12(-62.0f), g_SysWork.playerWork.player.position.vz - Q12(10.0f));
+                         Q12(-62.0f), playerChara.position.vz - Q12(10.0f));
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
@@ -832,27 +833,30 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
         case 6:
             func_800866D4(54, 1, false);
 
-            offsetY = Q12_MULT(Math_Cos(g_SysWork.playerWork.player.rotation.vy), Q12(0.6f)) - Q12(1.84f);
-            temp = Q12_MULT(Math_Cos(g_SysWork.playerWork.player.rotation.vy), Q12(2.0f)) + Q12(4.0f);
+            camPosY        = Q12_MULT(Math_Cos(playerChara.rotation.vy), Q12(0.6f)) - Q12(1.84f);
+            playerOffsetZ0 = Q12_MULT(Math_Cos(playerChara.rotation.vy), Q12(2.0f)) + Q12(4.0f);
 
-            if ((g_SysWork.playerWork.player.position.vz + temp) < Q12(130.0f))
+            if ((playerChara.position.vz + playerOffsetZ0) < Q12(130.0f))
             {
-                temp2 = Q12_MULT(Math_Cos(g_SysWork.playerWork.player.rotation.vy), Q12(2.0f)) + Q12(4.0f);
-                offsetZ = g_SysWork.playerWork.player.position.vz + temp2;
+                playerOffsetZ1 = Q12_MULT(Math_Cos(playerChara.rotation.vy), Q12(2.0f)) + Q12(4.0f);
+                camPosZ        = playerChara.position.vz + playerOffsetZ1;
             }
             else
             {
-                offsetZ = Q12(130.0f);
+                camPosZ = Q12(130.0f);
             }
 
-            Camera_PositionSet(NULL, Q12(-62.0f), offsetY, offsetZ, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800DFAC4);
-            Camera_LookAtSet(NULL,
-                               g_SysWork.playerWork.player.position.vx,
-                               Q12(-0.7f),
-                               g_SysWork.playerWork.player.position.vz - Q12(5.0f),
+            // Warp camera.
+            Camera_PositionSet(NULL,
+                               Q12(-62.0f), camPosY, camPosZ,
                                Q12(0.0f), Q12(0.0f),
                                Q12(0.0f), Q12(0.0f),
                                D_800DFAC4);
+            Camera_LookAtSet(NULL,
+                             playerChara.position.vx, Q12(-0.7f), playerChara.position.vz - Q12(5.0f),
+                             Q12(0.0f), Q12(0.0f),
+                             Q12(0.0f), Q12(0.0f),
+                             D_800DFAC4);
 
             D_800DFAC4 = false;
             break;
@@ -868,6 +872,7 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
             func_800865FC(true, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
     }
 
+    #undef playerChara
     #undef cherylChara
 }
 

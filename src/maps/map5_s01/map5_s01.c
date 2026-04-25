@@ -112,11 +112,11 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
-    "~H\tThere_is_a_ ~C5 Resort_area_map ~C7 . ~N\n\tTake_it? ~S4 ",
-    "\tNothing_unusual. ~E ",
-    "\tUsed_the_ ~C2 Kaufmann_key ~C7 . ~E ",
-    "~J0(1.0)\tWhat? ~E ",
-    "~J0(2.5)\tThat_light!? ~E "
+    /* 15 */ "~H\tThere_is_a_ ~C5 Resort_area_map ~C7 . ~N\n\tTake_it? ~S4 ",
+    /* 16 */ "\tNothing_unusual. ~E ",
+    /* 17 */ "\tUsed_the_ ~C2 Kaufmann_key ~C7 . ~E ",
+    /* 18 */ "~J0(1.0)\tWhat? ~E ",
+    /* 19 */ "~J0(2.5)\tThat_light!? ~E "
 };
 
 void MapEvent_CommonItemTake(void) // 0x800EB9A4

@@ -50,7 +50,6 @@ char* g_Savegame_SaveLocationNames[] = {
     "Next_fear"
 };
 
-
 /** @brief Reduntant code. Some overwrite status.
  * Indicates if the player is or have overwritten
  * a save.

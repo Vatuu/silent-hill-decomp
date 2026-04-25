@@ -411,12 +411,12 @@ void func_800D6888(void) // 0x800D6888
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
-    "\tUsed_the_ ~C2 Sewer_key ~C7 . ~E ",
-    "\tUsed_the_ ~C2 Sewer_exit_key ~C7 . ~E ",
-    "\tThere_is_a_ ~C2 Sewer_key ~C7 . ~N\n\tTake_it? ~S4 ",
-    "\tThere_is_a_ ~C2 Sewer_exit_key ~C7 ~N\n\tin_the_water._Take_it? ~S4 ",
-    "\tGot_to_find_Cheryl. ~N\n\tNo_time_to_go_back. ~E ",
-    "~H\tThere_is_a_ ~C5 Sewer_map ~N\n\t(connecting_to_resort_area) ~C7 . ~N\n\tTake_it? ~S4 "
+    /* 15 */ "\tUsed_the_ ~C2 Sewer_key ~C7 . ~E ",
+    /* 16 */ "\tUsed_the_ ~C2 Sewer_exit_key ~C7 . ~E ",
+    /* 17 */ "\tThere_is_a_ ~C2 Sewer_key ~C7 . ~N\n\tTake_it? ~S4 ",
+    /* 18 */ "\tThere_is_a_ ~C2 Sewer_exit_key ~C7 ~N\n\tin_the_water._Take_it? ~S4 ",
+    /* 19 */ "\tGot_to_find_Cheryl. ~N\n\tNo_time_to_go_back. ~E ",
+    /* 20 */ "~H\tThere_is_a_ ~C5 Sewer_map ~N\n\t(connecting_to_resort_area) ~C7 . ~N\n\tTake_it? ~S4 "
 };
 
 void MapEvent_CommonItemTake(void) // 0x800D691C

@@ -22,8 +22,8 @@ void func_800EA338(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
-    "~C3\tgreen_lion ~E ",
-    "~C3\tAlchemilla_Hospital ~E "
+    /* 15 */ "~C3\tgreen_lion ~E ",
+    /* 16 */ "~C3\tAlchemilla_Hospital ~E "
 };
 
 void Map_WorldObjectsInit(void) // 0x800EA340

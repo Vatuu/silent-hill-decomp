@@ -1412,10 +1412,10 @@ void func_800D61A4(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
-    "~J0(1.0)\tWhat? ~E ",
-    "~J0(2.5)\tThat_light!? ~E ",
-    "\tThe_stairs_are_wrecked! ~E ",
-    "~C3\tAlchemilla_Hospital ~E "
+    /* 15 */ "~J0(1.0)\tWhat? ~E ",
+    /* 16 */ "~J0(2.5)\tThat_light!? ~E ",
+    /* 17 */ "\tThe_stairs_are_wrecked! ~E ",
+    /* 18 */ "~C3\tAlchemilla_Hospital ~E "
 };
 
 const VECTOR3 D_800CABE4 = { 0xFFF8C800, 0x00002000, 0x0006E800 };

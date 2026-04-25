@@ -491,7 +491,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
             sp4C &= 0xF;
             sp50  = D_800AFD1C[sp50 & 0xF];
             sp4C++;
-            charaId = sp1C->field_9;
+            charaId = sp1C->charaId_9;
             sp4C = sp4C * sp50;
 
             if (sp34 == 0 && charaId == Chara_Harry)

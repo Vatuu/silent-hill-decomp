@@ -1154,23 +1154,23 @@ STATIC_ASSERT_SIZEOF(s_CharaAnimDataInfo, 24);
 /** Related to weapon attacks. Stats, SFX IDs, damange values, etc.? */
 typedef struct
 {
-    q4_12 field_0;
-    q3_12 field_2;
-    u16   field_4;  // Related to damage. Multiplier?
-    s8    field_6;  // Accessed by `func_8008BF84` as `u16`
-    s8    unk_7;
-    u8    field_8;  // Accessed by `func_8008BF84` as `u16`
-    u8    field_9;  /** `e_CharacterId` */
-    u8    field_A;  // Accessed by `func_8008BF84` as `u16`
-    u8    field_B;
-    q4_12 field_C;
-    u8    field_E;  // Keyframe index offset?
-    u8    field_F;  // Keyframe index offset?
-    u8    field_10; // State.
-    u8    field_11;
-    u8    field_12; // SFX ID subgroup. Uses values 0-4.
-    u8    unk_13;
-    u32*  unk_14; // Some pointer. All entries have the same value `D_800AD4C4`.
+    /* 0x0  */ q4_12 field_0;
+    /* 0x2  */ q3_12 field_2;
+    /* 0x4  */ u16   field_4; // Related to damage. Multiplier?
+    /* 0x6  */ s8    field_6; // Accessed by `func_8008BF84` as `u16`
+    /* 0x7  */ s8    unk_7;
+    /* 0x8  */ u8    field_8;   // Accessed by `func_8008BF84` as `u16`
+    /* 0x9  */ u8    charaId_9; /** `e_CharacterId` */
+    /* 0xA  */ u8    field_A;   // Accessed by `func_8008BF84` as `u16`
+    /* 0xB  */ u8    field_B;
+    /* 0xC  */ q4_12 field_C;
+    /* 0xE  */ u8    field_E;  // Keyframe index offset?
+    /* 0xF  */ u8    field_F;  // Keyframe index offset?
+    /* 0x10 */ u8    field_10; // State.
+    /* 0x11 */ u8    field_11;
+    /* 0x12 */ u8    field_12; // SFX ID subgroup. Uses values 0-4.
+    /* 0x13 */ s8    __pad_13;
+    /* 0x14 */ u32*  unk_14; // Some pointer. All entries have the same value `D_800AD4C4`.
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 

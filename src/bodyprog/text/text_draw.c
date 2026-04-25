@@ -108,8 +108,8 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
     // TODO: This only works for one case. There may originally have been some other generic macro.
     #define setSprtUvClut(glyphSprt, idx, clut)                                                                                                     \
     *((u32*)&(glyphSprt)->u0) = (((idx) % FONT_12X16_ATLAS_COLUMN_COUNT) * FONT_12X16_GLYPH_SIZE_X) + /* `u0`:   Column in atlas. */            \
-                                (ATLAS_BASE_Y << 8)                                                     + /* `v0`:   Row 0 in atlas with offset. */ \
-                                ((clut) << 16)                                                            /* `clut`: Packed magic value. */
+                                (ATLAS_BASE_Y << 8)                                                 + /* `v0`:   Row 0 in atlas with offset. */ \
+                                ((clut) << 16)                                                        /* `clut`: Packed magic value. */
 
     s32       posX;
     s32       posY;
@@ -204,10 +204,10 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
 
                 u0 = (glyphIdx % FONT_12X16_ATLAS_COLUMN_COUNT) * FONT_12X16_GLYPH_SIZE_X;
 
-                *((u32*)&glyphPoly->u0) = u0 + (0xF000 + (0x7FD3 << 16));                                                      // `u0`, `v0`, `clut`.
+                *((u32*)&glyphPoly->u0) = u0 + (0xF000 + (0x7FD3 << 16));                                                    // `u0`, `v0`, `clut`.
                 *((u32*)&glyphPoly->u1) = u0 + (((((glyphIdx / FONT_12X16_ATLAS_COLUMN_COUNT) & 0xF) | 16) << 16) | 0xFF00); // `u1`, `v1`, `page`.
-                *((u16*)&glyphPoly->u2) = u0 - 0xFF4;                                                                          // `u2`, `v2`.
-                *((u16*)&glyphPoly->u3) = u0 - 0xF4;                                                                           // `u3`, `v3`.
+                *((u16*)&glyphPoly->u2) = u0 - 0xFF4;                                                                        // `u2`, `v2`.
+                *((u16*)&glyphPoly->u3) = u0 - 0xF4;                                                                         // `u3`, `v3`.
 
                 addPrim(ot, glyphPoly);
                 GsOUT_PACKET_P = (u8*)glyphPoly + sizeof(POLY_FT4);
@@ -550,10 +550,10 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                                 c = *mapMsg;
                             }
 
-                            digit = digit << 12;
+                            digit <<= 12;
                             for (i = 0; i < fractionDigits; i++)
                             {
-                                digit = digit / 10;
+                                digit /= 10;
                             }
 
                             g_SysWork.mapMsgTimer = digit;
@@ -669,6 +669,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
 
             mapMsg++;
 
+            // Stop drawing if length exceeded.
             if (strLength <= 0)
             {
                 if (!g_SysWork.enableHighResGlyphs)

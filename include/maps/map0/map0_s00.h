@@ -60,7 +60,7 @@ extern u16 g_Cutscene_MapMsgAudioCmds[];
 
 extern u8 D_800DFAC2;
 
-extern s32 D_800DFAC4;
+extern bool D_800DFAC4; // `g_WarpCamera0`
 
 extern u16 D_800DFAC8;
 

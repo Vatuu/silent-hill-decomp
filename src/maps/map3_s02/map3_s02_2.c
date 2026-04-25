@@ -28,8 +28,8 @@ void func_800D02AC(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
-    "\tNothing_happens_when_the ~N\n\televator_button_is_pressed. ~E ",
-    "\tIt's_locked! ~E "
+    /* 15 */ "\tNothing_happens_when_the ~N\n\televator_button_is_pressed. ~E ",
+    /* 16 */ "\tIt's_locked! ~E "
 };
 
 const VECTOR3 D_800CAAF8 = { Q12(100.0f), Q12(-1.2f), Q12(-127.2f) };
