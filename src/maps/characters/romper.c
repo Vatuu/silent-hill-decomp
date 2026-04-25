@@ -265,12 +265,12 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
         {
             if (Rng_GenerateInt(Q12(4.0f), Q12(8.0f) - 1) < romper->position.vy)
             {
-                romper->damage.amount_C = Q12(3000.0f);
+                romper->damage.amount = Q12(3000.0f);
             }
         }
     }
 
-    if (romper->damage.amount_C == Q12(0.0f) || romper->health <= Q12(0.0f))
+    if (romper->damage.amount == Q12(0.0f) || romper->health <= Q12(0.0f))
     {
         Chara_DamageClear(romper);
         return;
@@ -278,7 +278,7 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
 
     prevControlState = romper->model.controlState;
 
-    romper->health = MAX(romper->health - romper->damage.amount_C, Q12(0.0f));
+    romper->health = MAX(romper->health - romper->damage.amount, Q12(0.0f));
     romperProps.flags |= RomperFlag_7;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
@@ -1125,7 +1125,7 @@ void Ai_Romper_Control_10(s_SubCharacter* romper)
     {
         romperProps.flags &= ~RomperFlag_6;
 
-        g_SysWork.playerWork.player.damage.amount_C += (FP_TO(D_800AD4C8[55].field_4, Q12_SHIFT) *
+        g_SysWork.playerWork.player.damage.amount += (FP_TO(D_800AD4C8[55].field_4, Q12_SHIFT) *
                                                                Rng_GenerateUInt(85, 116)) / 100;
 
         sp10.vx = romper->position.vx + FP_FROM(FP_TO(Math_Sin(romper->rotation.vy) >> 1, Q12_SHIFT), Q12_SHIFT);

@@ -320,12 +320,12 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
     s32                sp6C;
     s32                sp70;
     s32                sp74;
-    s32                sp78;
+    q19_12             sp78;
     s32                sp7C;
-    s32                sp80;
+    q19_12             sp80;
     s32                sp84;
-    s32                sp88;
-    s32                sp8C;
+    q19_12             sp88;
+    q19_12             sp8C;
     s32                sp90;
     s32                sp94;
     DVECTOR*           temp_s0_14;
@@ -338,11 +338,11 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
     s32                temp_s0_7;
     s32                temp_s0_8;
     s32                temp_s0_9;
-    s32                temp_s0_10;
+    q19_12             temp_s0_10;
     s32                var_s0_2;
     s32                temp_s1_3;
     s32                temp_s1_4;
-    s32                temp_s1_5;
+    q19_12             temp_s1_5;
     s32                temp_s2_2;
     s32                var_s2;
     s32                temp_v0_10;
@@ -706,13 +706,13 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                 }
                 else
                 {
-                    sp5C = 0;
+                    sp5C = Q12(0.0f);
                 }
             }
             else
             {
                 sp58 = 1;
-                sp5C = 0x1000;
+                sp5C = Q12(1.0f);
             }
 
             if (sp10 == 2)
@@ -1458,7 +1458,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
 
     if (damageAmount != Q12(0.0f))
     {
-        target->damage.amount_C += damageAmount;
+        target->damage.amount += damageAmount;
     }
 
     if (var_s7 != 0)

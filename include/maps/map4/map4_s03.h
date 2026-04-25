@@ -208,8 +208,8 @@ extern s32 D_800DAA50;
 extern s32 D_800DAA54;
 extern u16 D_800DB980[];
 
-extern s32 D_800E05A8;   // Angle?
-extern q3_12 D_800E05AC; // Angle?
+extern q19_12 D_800E05A8; // Angle?
+extern q3_12 D_800E05AC;  // Angle?
 extern u16 D_800E05AE;
 
 extern u8 D_800E05E0;
@@ -233,11 +233,11 @@ extern u8 D_800DAE80[];
 
 extern s16 D_800DB1D8[];
 
-extern q3_12 D_800DB1E0[]; // Y positions?
+extern q3_12 D_800DB1E0[]; // Twinfeeler Y positions.
 
-extern s16 D_800DB1E8[];
+extern q3_12 D_800DB1E8[]; // Twinfeeler X rotations.
 
-extern s16 D_800DB1F0[];
+extern q3_12 D_800DB1F0[]; // Twinfeeler Y rotations.
 
 extern u8 D_800DB190[];
 
@@ -335,7 +335,8 @@ void func_800D354C(VECTOR3* arg0);
 
 void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* arg1, GsCOORDINATE2* arg2);
 
-void func_800D3B98(s_SubCharacter* chara);
+// Used to resurface.
+void func_800D3B98(s_SubCharacter* twinfeeler);
 
 void Twinfeeler_TextureLoad(void);
 
@@ -352,15 +353,15 @@ void func_800D3114(void); // Assumed args/return type.
 
 void func_800D326C(void);
 
-s_800E0930* func_800D344C(s_SubCharacter* chara, void (*funcptr)());
+s_800E0930* func_800D344C(s_SubCharacter* twinfeeler, void (*funcptr)());
 
-void func_800D3504(s_SubCharacter* chara);
+void func_800D3504(s_SubCharacter* twinfeeler);
 
-void func_800D3528(s_SubCharacter* chara);
+void func_800D3528(s_SubCharacter* twinfeeler);
 
-void func_800D354C(VECTOR3*);
+void func_800D354C(VECTOR3* arg0);
 
-void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void func_800D3AE0(s_SubCharacter* chara, s32 soundIdx);
 
@@ -372,6 +373,7 @@ void func_800D3B68(s_SubCharacter* twinfeeler);
 
 void func_800D3B74(s_SubCharacter* twinfeeler);
 
+// Snaps position to underground.
 void func_800D3CBC(s_SubCharacter* twinfeeler);
 
 bool Twinfeeler_Init(s_SubCharacter* twinfeeler);
@@ -384,9 +386,14 @@ void func_800D3FD8(s_SubCharacter* twinfeeler);
 
 void func_800D4000(s_SubCharacter* twinfeeler);
 
-void Twinfeeler_Control_11(s_SubCharacter* twinfeeler);
+void Twinfeeler_ControlIdle(s_SubCharacter* twinfeeler);
 
-void func_800D46E0(VECTOR3* vec0, VECTOR3* vec1);
+/** @brief Throws an acid projectile attack.
+ *
+ * @param from Start position (Q19.12).
+ * @param to End position (Q19.12).
+ */
+void Twinfeeler_AcidThrow(VECTOR3* from, VECTOR3* to);
 
 bool func_800D4924(VECTOR3* vec, q19_12 angle); // Assumed return type.
 
@@ -406,7 +413,7 @@ u32 func_800D4DD8(void);
 
 u16 func_800D4E00(s32 arg0, s32 arg1, s32 arg2);
 
-s32 func_800D4488(VECTOR3*, s32);
+q19_12 func_800D4488(VECTOR3* arg0, s32 arg1);
 
 void Twinfeeler_Control_12(s_SubCharacter* twinfeeler);
 
@@ -416,7 +423,7 @@ void func_800D43AC(s_SubCharacter* twinfeeler, s32 arg1);
 
 void Twinfeeler_Control_2(s_SubCharacter* twinfeeler);
 
-void Twinfeeler_ControlUpdate(s_SubCharacter* twinfeeler, GsCOORDINATE2* coords);
+void Twinfeeler_ControlUpdate(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
 void func_800D54B4(s_SubCharacter* chara, GsCOORDINATE2*);
 
@@ -424,29 +431,29 @@ s32 func_800D4558(q19_12 angle, s32 arg1, s32 arg2);
 
 void Twinfeeler_Control_5(s_SubCharacter* twinfeeler);
 
-void Twinfeeler_Control_6(s_SubCharacter* twinfeeler, GsCOORDINATE2* arg1);
+void Twinfeeler_Control_6(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
 bool func_800D48CC(s32 arg0, s32 arg1);
 
 void func_800D55C8(s_SubCharacter*);
 
-void func_800D5888(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void func_800D5888(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-void func_800D5904(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800D5904(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
-void func_800D59EC(s_SubCharacter*, GsCOORDINATE2*);
+void func_800D59EC(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
-void func_800D5B6C(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800D5B6C(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
-void func_800D5BC8(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800D5BC8(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
 bool func_800D5BF8(s32 arg0, s32 arg1, s32 arg2, u16* arg3);
 
-void func_800D5DF4(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800D5DF4(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
-void func_800D5E30(s_SubCharacter* twinfeeler, GsCOORDINATE2* coords);
+void func_800D5E30(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
-void Twinfeeler_Update(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Twinfeeler_Update(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 /** @brief Handles a First Aid Kit or Rifle Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
@@ -503,7 +510,7 @@ void func_800D1604(GsOT_TAG* ot, int arg1);
 
 void func_800D3E18(s_SubCharacter* chara);
 
-void Twinfeeler_Control_8(s_SubCharacter* twinfeeler, GsCOORDINATE2* coords);
+void Twinfeeler_ControlAttack(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
 s32 func_800D4E78(s32 arg0, s32 arg1);
 

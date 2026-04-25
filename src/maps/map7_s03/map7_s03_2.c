@@ -3211,7 +3211,7 @@ void func_800DBC18(q19_12 damageAmount) // 0x800DBC18
         damageAmount >>= 1;
     }
 
-    g_SysWork.playerWork.player.damage.amount_C += damageAmount;
+    g_SysWork.playerWork.player.damage.amount += damageAmount;
 }
 
 bool func_800DBCA4(MATRIX* mat, VECTOR3* outVec) // 0x800DBCA4
@@ -4454,7 +4454,7 @@ void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
         if (incubusProps.bossFightTimer_F4 < Q12(0.0f))
         {
             incubus->health = Q12(0.0f);
-            incubus->damage.amount_C = 1;
+            incubus->damage.amount = 1;
         }
 
         if (!func_8004C328(false))
@@ -4464,12 +4464,12 @@ void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
 
         if (!(incubus->flags & CharaFlag_Unk3))
         {
-            incubus->damage.amount_C *= 10;
+            incubus->damage.amount *= 10;
         }
 
-        if (incubus->damage.amount_C > Q12(0.0f))
+        if (incubus->damage.amount > Q12(0.0f))
         {
-            newHealth = incubus->health - incubus->damage.amount_C;
+            newHealth = incubus->health - incubus->damage.amount;
             if (newHealth < Q12(0.0f))
             {
                 newHealth = Q12(0.0f);
@@ -5726,7 +5726,7 @@ void func_800DFA48(VECTOR3* arg0, VECTOR3* arg1) // 0x800DFA48
     Chara_AttackReceivedSet(&g_SysWork.playerWork.player, 68);
 
     angle                                                    = ratan2(arg0->vx - arg1->vx, arg0->vz - arg1->vz);
-    g_SysWork.playerWork.player.damage.amount_C      = 1;
+    g_SysWork.playerWork.player.damage.amount      = 1;
     g_SysWork.playerWork.player.damage.position.vy = angle;
     ptr->field_588                                           = angle;
 
@@ -5847,7 +5847,7 @@ void func_800DFCE4(s_SubCharacter* chara) // 0x800DFCE4
         if (chara->properties.dummy.properties_E8[3].val32 < 0)
         {
             chara->health          = 0;
-            chara->damage.amount_C = 1;
+            chara->damage.amount = 1;
         }
 
         if (!func_8004C328(false))
@@ -5857,12 +5857,12 @@ void func_800DFCE4(s_SubCharacter* chara) // 0x800DFCE4
 
         if (!(chara->flags & CharaFlag_Unk3))
         {
-            chara->damage.amount_C *= 10;
+            chara->damage.amount *= 10;
         }
 
-        if (chara->damage.amount_C > Q12(0.0f))
+        if (chara->damage.amount > Q12(0.0f))
         {
-            chara->health = MAX(Q12(0.0f), chara->health - chara->damage.amount_C);
+            chara->health = MAX(Q12(0.0f), chara->health - chara->damage.amount);
             if (chara->health <= Q12(0.0f) && func_800DFB04() == 0)
             {
                 Savegame_EventFlagSet(EventFlag_582);

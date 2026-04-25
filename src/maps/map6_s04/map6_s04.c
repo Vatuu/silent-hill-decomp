@@ -185,21 +185,21 @@ void func_800D8B14(s_SubCharacter* chara, s_Model* model) // 0x800D8B14
     if (g_SysWork.npcs[0].properties.monsterCybil.field_EE == 9 ||
         g_SysWork.npcs[0].properties.monsterCybil.field_EE == 11)
     {
-        chara->damage.amount_C = Q12(0.0f);
+        chara->damage.amount = Q12(0.0f);
     }
     else
     {
         if (g_SysWork.npcs[0].properties.monsterCybil.field_EE != 12)
         {
-            chara->damage.amount_C = chara->damage.amount_C >> 1;
+            chara->damage.amount = chara->damage.amount >> 1;
         }
 
-        if (chara->damage.amount_C != Q12(0.0f))
+        if (chara->damage.amount != Q12(0.0f))
         {
-            g_SysWork.npcs[0].properties.monsterCybil.field_F8 += chara->damage.amount_C;
+            g_SysWork.npcs[0].properties.monsterCybil.field_F8 += chara->damage.amount;
 
-            chara->health         -= chara->damage.amount_C;
-            chara->damage.amount_C = Q12(0.0f);
+            chara->health         -= chara->damage.amount;
+            chara->damage.amount = Q12(0.0f);
 
             g_SysWork.npcs[0].properties.monsterCybil.field_122 = Q12_ANGLE_NORM_U(
                 ratan2(Q12_TO_Q8(chara->position.vx - g_SysWork.playerWork.player.position.vx),
@@ -1489,7 +1489,7 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                 model->anim.keyframeIdx = g_SysWork.playerWork.player.model.anim.keyframeIdx - 832;
             }
 
-            g_SysWork.playerWork.player.damage.amount_C = g_DeltaTime * 4;
+            g_SysWork.playerWork.player.damage.amount = g_DeltaTime * 4;
 
             if (g_SysWork.playerWork.player.field_40 == NO_VALUE ||
                 g_SysWork.playerWork.player.health <= Q12(0.0f) ||
@@ -1499,7 +1499,7 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                 g_SysWork.npcs[0].properties.monsterCybil.field_EC = 7;
                 model->stateStep                                         = 0;
                 chara->model.stateStep                                 = 0;
-                g_SysWork.playerWork.player.damage.amount_C       = Q12(0.0f);
+                g_SysWork.playerWork.player.damage.amount       = Q12(0.0f);
             }
 
             if (ANIM_STATUS_IS_ACTIVE(model->anim.status))

@@ -25,7 +25,7 @@ void Savegame_EnemyStateUpdate(s_SubCharacter* chara) // 0x80037DC4
 
 void Chara_DamagedFlagUpdate(s_SubCharacter* chara) // 0x80037E40
 {
-    if (chara->damage.amount_C > Q12(0.0f))
+    if (chara->damage.amount > Q12(0.0f))
     {
         chara->flags |= CharaFlag_Damaged;
     }

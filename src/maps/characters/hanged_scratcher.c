@@ -145,9 +145,9 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
     q19_12      prevMoveSpeed;
     q3_12       prevHeadingAngle;
 
-    if (scratcher->damage.amount_C > Q12(0.0f) && scratcher->health > Q12(0.0f))
+    if (scratcher->damage.amount > Q12(0.0f) && scratcher->health > Q12(0.0f))
     {
-        scratcher->health                = MAX(Q12(0.0f), scratcher->health - scratcher->damage.amount_C);
+        scratcher->health                = MAX(Q12(0.0f), scratcher->health - scratcher->damage.amount);
         scratcher->damage.position.vx += (scratcher->moveSpeed * Math_Sin(scratcher->headingAngle)) >> 14; // TODO: Weird shift?
         scratcher->damage.position.vz += (scratcher->moveSpeed * Math_Cos(scratcher->headingAngle)) >> 14;
 

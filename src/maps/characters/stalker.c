@@ -175,7 +175,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
     var_a0                 = stalkerProps.timer_10C - Q12_MULT_PRECISE(g_DeltaTime, Q12(20.0f));
     stalkerProps.timer_10C = MAX(var_a0, Q12(0.0f));
 
-    if (stalker->damage.amount_C > Q12(0.0f) && stalker->health > Q12(0.0f))
+    if (stalker->damage.amount > Q12(0.0f) && stalker->health > Q12(0.0f))
     {
         sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1365);
     }
@@ -183,7 +183,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
     if (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_34, true) ||
         stalker->model.anim.status == ANIM_STATUS(StalkerAnim_35, true))
     {
-        stalker->damage.amount_C = Q12(0.0f);
+        stalker->damage.amount = Q12(0.0f);
     }
 
     if (stalker->health > Q12(0.0f))
@@ -192,12 +192,12 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
         stalker->health = MIN(newHealth, stalkerProps.health_110);
     }
 
-    if (stalker->damage.amount_C > Q12(0.0f))
+    if (stalker->damage.amount > Q12(0.0f))
     {
         if (stalker->health > Q12(0.0f))
         {
-            stalker->health       = MAX(stalker->health - stalker->damage.amount_C, Q12(0.0f));
-            stalkerProps.health_110 -= stalker->damage.amount_C >> 2;
+            stalker->health       = MAX(stalker->health - stalker->damage.amount, Q12(0.0f));
+            stalkerProps.health_110 -= stalker->damage.amount >> 2;
             stalkerProps.flags_E8   |= StalkerFlag_0 | StalkerFlag_10;
 
             stalker->damage.position.vx += Q12_MULT(stalker->moveSpeed, Math_Sin(stalker->headingAngle)) >> 3;
@@ -216,7 +216,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
 
             stalker->headingAngle              = ratan2(stalker->damage.position.vx, stalker->damage.position.vz);
             stalkerProps.flags_E8                |= StalkerFlag_13;
-            stalkerProps.timer_10C += stalker->damage.amount_C;
+            stalkerProps.timer_10C += stalker->damage.amount;
 
             if (stalkerProps.timer_10C >= sharedData_800E3A2C_0_s00 ||
                 (!(stalkerProps.flags_E8 & StalkerFlag_6) && stalker->health <= sharedData_800E3A24_0_s00))
@@ -1507,7 +1507,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
             stalkerProps.timer_F8 += g_DeltaTime;
             if (stalkerProps.timer_F8 > Q12(1.5f))
             {
-                g_SysWork.playerWork.player.damage.amount_C += (FP_TO(D_800AD4C8[50].field_4, Q12_SHIFT) * Rng_GenerateUInt(85, 116)) / 100;
+                g_SysWork.playerWork.player.damage.amount += (FP_TO(D_800AD4C8[50].field_4, Q12_SHIFT) * Rng_GenerateUInt(85, 116)) / 100;
                 stalkerProps.timer_F8              = Rng_Rand16() % Q12(0.5f);
             }
         }

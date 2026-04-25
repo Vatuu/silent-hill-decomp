@@ -7,22 +7,18 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 
-// Twinfeeler/Floatstinger acid particle effect? Included in M4S03 and M4S05
-// Both Floatstinger and Twinfeeler enemy code call into this.
-// TODO: Make this separate split in each map instead of `#include`.
-
-void sharedFunc_800CB0A4_4_s03(VECTOR3* arg0, VECTOR3* arg1)
+void sharedFunc_800CB0A4_4_s03(VECTOR3* from, VECTOR3* to)
 {
     s32 idx;
 
     idx = func_8005E7E0(33);
     if (idx != NO_VALUE)
     {
-        sharedData_800DFB7C_0_s00[idx].field_0.vx_0         = arg0->vx;
-        sharedData_800DFB7C_0_s00[idx].vy_8                 = arg0->vy;
-        sharedData_800DFB7C_0_s00[idx].field_4.vz_4         = arg0->vz;
-        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0  = ratan2(arg1->vx - arg0->vx, arg1->vz - arg0->vz);
-        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2  = ratan2(arg1->vy - arg0->vy, Math_Vector2MagCalc(arg1->vx - arg0->vx, arg1->vz - arg0->vz));
+        sharedData_800DFB7C_0_s00[idx].field_0.vx_0         = from->vx;
+        sharedData_800DFB7C_0_s00[idx].vy_8                 = from->vy;
+        sharedData_800DFB7C_0_s00[idx].field_4.vz_4         = from->vz;
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0  = ratan2(to->vx - from->vx, to->vz - from->vz);
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2  = ratan2(to->vy - from->vy, Math_Vector2MagCalc(to->vx - from->vx, to->vz - from->vz));
         sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 = D_800C4418.field_8;
         sharedData_800DFB7C_0_s00[idx].field_B              = 0;
         sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 = Q12(1.0f);
@@ -256,7 +252,7 @@ void sharedFunc_800CBE54_4_s03(VECTOR3* arg0, s32 arg1)
     }
 }
 
-bool sharedFunc_800CC004_4_s03(POLY_FT4** poly, s32 arg1)
+bool sharedFunc_800CC004_4_s03(POLY_FT4** poly, s32 idx)
 {
     typedef struct
     {
@@ -273,18 +269,18 @@ bool sharedFunc_800CC004_4_s03(POLY_FT4** poly, s32 arg1)
 
     ptr = PSX_SCRATCH;
 
-    sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0 += g_DeltaTime;
+    sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 += g_DeltaTime;
 
-    if (sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_0 > Q12(1.4f))
+    if (sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 > Q12(1.4f))
     {
-        sharedData_800DFB7C_0_s00[arg1].field_A = 0;
+        sharedData_800DFB7C_0_s00[idx].field_A = 0;
         return false;
     }
 
     Math_SetSVectorFastSum(&ptr->field_12C,
-                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[arg1].field_0.vx_0) - (u16)ptr->field_0.field_0.vx,
-                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[arg1].vy_8) - ptr->field_0.field_0.vy,
-                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[arg1].field_4.vz_4) - ptr->field_0.field_0.vz);
+                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx,
+                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy,
+                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4) - ptr->field_0.field_0.vz);
 
     gte_ldv0(&ptr->field_12C);
     gte_rtps();
@@ -303,8 +299,8 @@ bool sharedFunc_800CC004_4_s03(POLY_FT4** poly, s32 arg1)
 
     setPolyFT4(*poly);
 
-    ptr->field_13C = (ptr->field_0.field_2C * Q12_MULT_PRECISE(sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_2,
-                                                               Q12(sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_0 >> 1) /
+    ptr->field_13C = (ptr->field_0.field_2C * Q12_MULT_PRECISE(sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_2,
+                                                               Q12(sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 >> 1) /
                                                                5734 + 0x800) /
                                               ptr->field_138) >> 4;
 
@@ -313,33 +309,33 @@ bool sharedFunc_800CC004_4_s03(POLY_FT4** poly, s32 arg1)
     setXY2Fast(*poly, (u16)ptr->field_134.vx - (u16)ptr->field_13C, ptr->field_134.vy - ptr->field_13C);
     setXY3Fast(*poly, (u16)ptr->field_134.vx + (u16)ptr->field_13C, ptr->field_134.vy - ptr->field_13C);
 
-    if (sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_0 > Q12(0.4f))
+    if (sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 > Q12(0.4f))
     {
-        ptr->field_140 = sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 - (sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 * (sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_0 - Q12(0.4f))) / Q12(1.0f);
+        ptr->field_140 = sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0 - (sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0 * (sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 - Q12(0.4f))) / Q12(1.0f);
     }
     else
     {
-        ptr->field_140 = (sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 * sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_0) / Q12(0.4f);
+        ptr->field_140 = (sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0 * sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0) / Q12(0.4f);
     }
 
-    ptr->field_140 = (ptr->field_140 * (func_80055D78(sharedData_800DFB7C_0_s00[arg1].field_0.vx_0, sharedData_800DFB7C_0_s00[arg1].vy_8, sharedData_800DFB7C_0_s00[arg1].field_4.vz_4))) >> 8;
+    ptr->field_140 = (ptr->field_140 * (func_80055D78(sharedData_800DFB7C_0_s00[idx].field_0.vx_0, sharedData_800DFB7C_0_s00[idx].vy_8, sharedData_800DFB7C_0_s00[idx].field_4.vz_4))) >> 8;
 
     setRGB0Fast(*poly, ptr->field_140 >> 1, ptr->field_140 >> 1, ptr->field_140 >> 1);
     setSemiTrans(*poly, 1);
 
-    *(s32*)&(*poly)->u0 = (((sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 1) == 0) << 6) +
-                          (!(sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 2) ? 0xE4000 : 0xE0000);
+    *(s32*)&(*poly)->u0 = (((sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0 & 1) == 0) << 6) +
+                          (!(sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0 & 2) ? 0xE4000 : 0xE0000);
 
-    *(s32*)&(*poly)->u1 = (!(sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 1) ? 0x7F : 0x3F) +
-                          (!(sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 2) ? 0x2D4000 : 0x2D0000);
+    *(s32*)&(*poly)->u1 = (!(sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0 & 1) ? 0x7F : 0x3F) +
+                          (!(sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0 & 2) ? 0x2D4000 : 0x2D0000);
 
-    *(u16*)&(*poly)->u2 = (((sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 1) == 0) << 6) |
-                          (!(sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 2) ? 0x7F00 : 0x3F00);
+    *(u16*)&(*poly)->u2 = (((sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0 & 1) == 0) << 6) |
+                          (!(sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0 & 2) ? 0x7F00 : 0x3F00);
 
-    *(u16*)&(*poly)->u3 = (!(sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 1) ? 0x7F : 0x3F) |
-                          (!(sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 2) ? 0x7F00 : 0x3F00);
+    *(u16*)&(*poly)->u3 = (!(sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0 & 1) ? 0x7F : 0x3F) |
+                          (!(sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0 & 2) ? 0x7F00 : 0x3F00);
 
-    if (sharedData_800DFB7C_0_s00[arg1].field_B != 0)
+    if (sharedData_800DFB7C_0_s00[idx].field_B != 0)
     {
         ptr->field_138 -= 0x80;
     }

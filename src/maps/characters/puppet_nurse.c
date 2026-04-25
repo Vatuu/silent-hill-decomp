@@ -360,7 +360,7 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
 
     nurseCpy = nurse;
 
-    if (nurse->damage.amount_C > Q12(0.0f))
+    if (nurse->damage.amount > Q12(0.0f))
     {
         sfxIdx = PuppetNurse_HurtSfxIdGet(nurse);
         if (sfxIdx != NO_VALUE)
@@ -372,9 +372,9 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
         {
             case 0:
                 nurse->properties.puppetNurse.damage_F4  = nurse->damage;
-                nurse->properties.puppetNurse.field_114 += nurse->damage.amount_C;
+                nurse->properties.puppetNurse.field_114 += nurse->damage.amount;
 
-                newHealth = nurse->health - nurse->damage.amount_C;
+                newHealth = nurse->health - nurse->damage.amount;
                 if (newHealth < Q12(0.0f))
                 {
                     newHealth = Q12(0.0f);
@@ -405,7 +405,7 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
                 {
                     if (nurse->model.controlState != PuppetNurseControl_2 &&
                         ((nurse->properties.puppetNurse.field_124->field_4 < nurse->properties.puppetNurse.field_114) ||
-                         (nurse->damage.amount_C > Q12(320.0f))))
+                         (nurse->damage.amount > Q12(320.0f))))
                     {
                         nurse->properties.puppetNurse.field_114 = 0;
                         nurse->model.controlState              = PuppetNurseControl_2;
@@ -746,7 +746,7 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
 
         if (nurse->properties.puppetNurse.field_104 >= Q12(1.5f))
         {
-            g_SysWork.playerWork.player.damage.amount_C += Q12(D_800AD4C8[EquippedWeaponId_Unk56].field_4);
+            g_SysWork.playerWork.player.damage.amount += Q12(D_800AD4C8[EquippedWeaponId_Unk56].field_4);
             nurse->properties.puppetNurse.field_104           = 0;
         }
     }

@@ -124,7 +124,7 @@ void func_800D1968(s_SubCharacter* floatstinger) // 0x800D1968
                                                              Q12_MULT_PRECISE(g_DeltaTime, Q12(150.0f)),
                                                              Q12(0.0f));
 
-    if (floatstinger->damage.amount_C > Q12(0.0f))
+    if (floatstinger->damage.amount > Q12(0.0f))
     {
         if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
         {
@@ -135,21 +135,21 @@ void func_800D1968(s_SubCharacter* floatstinger) // 0x800D1968
             var_a1 = Q12(300.0f);
         }
 
-        floatstingerProps.field_108 += floatstinger->damage.amount_C;
+        floatstingerProps.field_108 += floatstinger->damage.amount;
 
         if (var_a1 < floatstingerProps.field_108)
         {
-            floatstinger->damage.amount_C -= floatstingerProps.field_108 - var_a1;
+            floatstinger->damage.amount -= floatstingerProps.field_108 - var_a1;
             floatstingerProps.field_108       = var_a1;
-            if (floatstinger->damage.amount_C < Q12(0.0f))
+            if (floatstinger->damage.amount < Q12(0.0f))
             {
-                floatstinger->damage.amount_C = Q12(0.0f);
+                floatstinger->damage.amount = Q12(0.0f);
             }
         }
 
         Player_DisableDamage(&sp20, 0u);
 
-        newHealth = floatstinger->health - floatstinger->damage.amount_C;
+        newHealth = floatstinger->health - floatstinger->damage.amount;
         if (sp20 != 0)
         {
             if (newHealth <= Q12(0.0f))
@@ -163,8 +163,8 @@ void func_800D1968(s_SubCharacter* floatstinger) // 0x800D1968
         }
         floatstinger->health = newHealth;
 
-        floatstingerProps.field_F8 += FP_FROM(floatstinger->damage.amount_C, Q12_SHIFT);
-        floatstingerProps.field_FA += FP_FROM(floatstinger->damage.amount_C, Q12_SHIFT);
+        floatstingerProps.field_F8 += FP_FROM(floatstinger->damage.amount, Q12_SHIFT);
+        floatstingerProps.field_FA += FP_FROM(floatstinger->damage.amount, Q12_SHIFT);
 
         func_8005DC1C(Sfx_Unk1570, &sp10, Q8(0.5f), 0);
 

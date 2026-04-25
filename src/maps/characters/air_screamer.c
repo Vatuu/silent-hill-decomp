@@ -437,7 +437,7 @@ void sharedFunc_800D2B10_0_s01(s_SubCharacter* airScreamer)
     airScreamer->damage.position.vx = Q12(0.0f);
     airScreamer->damage.position.vy = Q12(0.0f);
     airScreamer->damage.position.vz = Q12(0.0f);
-    airScreamer->damage.amount_C      = Q12(0.0f);
+    airScreamer->damage.amount      = Q12(0.0f);
     airScreamerProps.field_F4            = 0;
 }
 
@@ -498,7 +498,7 @@ s32 Ai_AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
     u8     temp_a1;
     q19_12 angle;
 
-    damage0     = airScreamer->damage.amount_C;
+    damage0     = airScreamer->damage.amount;
     animStatus = airScreamer->model.anim.status;
     attack     = airScreamer->attackReceived;
     damageType        = AirScreamerDamage_None;
@@ -537,7 +537,7 @@ s32 Ai_AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
             }
         }
 
-        airScreamer->damage.amount_C = Q12(0.0f);
+        airScreamer->damage.amount = Q12(0.0f);
         angle                     = mult; // @hack
 
         damage0 = Q12_MULT_PRECISE(damage0, angle);
@@ -12306,7 +12306,7 @@ void sharedFunc_800D6C7C_0_s01(VECTOR* arg0, s_SubCharacter* airScreamer, s32 ar
         sqr += Q12_MULT_PRECISE(offsetZ, offsetZ);
         sqr  = SquareRoot12(sqr);
 
-        airScreamer->damage.amount_C += Math_PreservedSignSubtract(sqr, Q12(5.0f));
+        airScreamer->damage.amount += Math_PreservedSignSubtract(sqr, Q12(5.0f));
         if (sqr != Q12(0.0f))
         {
             sqr = Q12(Math_PreservedSignSubtract(sqr, Q12(6.0f))) / sqr;

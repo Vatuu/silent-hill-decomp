@@ -1102,18 +1102,20 @@ void GameBoot_LoadScreen_StageString(void);
 
 void sharedFunc_800CBE54_4_s03(VECTOR3* arg0, s32 arg1);
 
-bool sharedFunc_800CC004_4_s03(POLY_FT4** poly, s32 arg1);
+bool sharedFunc_800CC004_4_s03(POLY_FT4** poly, s32 idx);
 
 bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1);
 
-void sharedFunc_800CB0A4_4_s03(VECTOR3* arg0, VECTOR3* arg1);
+// Twinfeeler and Floatstinger acid particle effect. Included in M4S03 and M4S05
+// TODO: Make this separate split in each map instead of `#include`.
+void sharedFunc_800CB0A4_4_s03(VECTOR3* from, VECTOR3* to);
 
 void sharedFunc_800D0110_7_s00(void);
 
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {
-    anim->baseAnimInfos  = animInfo;
-    anim->mapAnimInfos = NULL;
+    anim->baseAnimInfos = animInfo;
+    anim->mapAnimInfos  = NULL;
 }
 
 // TODO: Could also call this a "transform"? "Pose" is a less common term for a position+rotation struct.

@@ -183,12 +183,12 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
     Player_DisableDamage(&isPlayerDead, splitHead->health == 0);
 
     // Return early if no damage or health is already 0.
-    if (splitHead->damage.amount_C == Q12(0.0f) || splitHead->health == 0) // TODO: Split Head health isn't Q12 going off checks below?
+    if (splitHead->damage.amount == Q12(0.0f) || splitHead->health == 0) // TODO: Split Head health isn't Q12 going off checks below?
     {
         return;
     }
 
-    damageAmount = FP_FROM(splitHead->damage.amount_C, Q12_SHIFT);
+    damageAmount = FP_FROM(splitHead->damage.amount, Q12_SHIFT);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {

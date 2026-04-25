@@ -1805,7 +1805,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             {
                 case PlayerState_GetUpFront:
                 case PlayerState_GetUpBack:
-                    player->damage.amount_C                  = Q12(0.0f);
+                    player->damage.amount                  = Q12(0.0f);
                     player->properties.player.afkTimer_E8 = Q12(0.0f);
 
                     if (player->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
@@ -6740,7 +6740,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
     if (g_Player_DisableControl || g_Player_DisableDamage)
     {
-        player->damage.amount_C = Q12(0.0f);
+        player->damage.amount = Q12(0.0f);
         return;
     }
 
@@ -6772,14 +6772,14 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
         case PlayerState_OnFloorFront:
         case PlayerState_OnFloorBehind:
             // Related to enemy grabbing.
-            if (player->damage.amount_C != Q12(0.0f) && !(playerProps.flags_11C & PlayerFlag_DamageReceived))
+            if (player->damage.amount != Q12(0.0f) && !(playerProps.flags_11C & PlayerFlag_DamageReceived))
             {
                 playerProps.flags_11C |= PlayerFlag_DamageReceived;
                 func_8005DC1C(sfxId, &player->position, Q8(1.0f / 8.0f), 0);
                 player->properties.player.field_10C = 64;
             }
 
-            if (player->damage.amount_C == Q12(0.0f))
+            if (player->damage.amount == Q12(0.0f))
             {
                 playerProps.flags_11C &= ~PlayerFlag_DamageReceived;
             }
@@ -6818,7 +6818,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             if (player->attackReceived >= 68 &&
                 player->attackReceived <  70)
             {
-                player->damage.amount_C = Q12(0.0f);
+                player->damage.amount = Q12(0.0f);
             }
             break;
 
@@ -6899,7 +6899,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
                 case 60:
                 case 62:
-                    player->damage.amount_C = Q12(10.0f);
+                    player->damage.amount = Q12(10.0f);
                     Player_ExtraStateSet(player, extra, PlayerState_DamageHead);
                     break;
 
@@ -7053,7 +7053,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
         return;
     }
 
-    if (player->damage.amount_C != Q12(0.0f))
+    if (player->damage.amount != Q12(0.0f))
     {
         playerProps.flags_11C &= ~PlayerFlag_Unk2;
         if (!(playerProps.flags_11C & PlayerFlag_DamageReceived))
@@ -7065,22 +7065,22 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
         if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP0_S00)
         {
-            player->health -= player->damage.amount_C * 2;
+            player->health -= player->damage.amount * 2;
         }
         else
         {
             switch (g_SavegamePtr->gameDifficulty_260)
             {
                 case GameDifficulty_Easy:
-                    player->damage.amount_C = (player->damage.amount_C * 3) >> 2; // `/ 4`.
+                    player->damage.amount = (player->damage.amount * 3) >> 2; // `/ 4`.
                     break;
 
                 case GameDifficulty_Hard:
-                    player->damage.amount_C = (player->damage.amount_C * 6) >> 2; // `/ 4`.
+                    player->damage.amount = (player->damage.amount * 6) >> 2; // `/ 4`.
                     break;
             }
 
-            player->health -= player->damage.amount_C;
+            player->health -= player->damage.amount;
         }
 
         if (player->health < Q12(0.0f))
@@ -7089,8 +7089,8 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             g_Player_IsDead  = true;
         }
 
-        func_800893D0(player->damage.amount_C);
-        player->damage.amount_C = Q12(0.0f);
+        func_800893D0(player->damage.amount);
+        player->damage.amount = Q12(0.0f);
     }
 
     if (player->health <= Q12(0.0f) && g_SysWork.playerWork.extra.state != PlayerState_Death &&

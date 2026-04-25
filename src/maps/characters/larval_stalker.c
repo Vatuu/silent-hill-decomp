@@ -321,7 +321,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                         }
 
                         Chara_AttackReceivedSet(&g_SysWork.playerWork.player, WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap));
-                        g_SysWork.playerWork.player.damage.amount_C += (FP_TO(D_800AD4C8[WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap)].field_4, Q12_SHIFT) * ((Rng_Rand16() & 0x1F) + 0x55)) / 100;
+                        g_SysWork.playerWork.player.damage.amount += (FP_TO(D_800AD4C8[WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap)].field_4, Q12_SHIFT) * ((Rng_Rand16() & 0x1F) + 0x55)) / 100;
                     }
                 }
 
@@ -870,7 +870,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
     s32    keyframe2;
     s16    keyframeOffset;
 
-    if (larvalStalker->damage.amount_C <= Q12(0.0f) || larvalStalker->health <= Q12(0.0f))
+    if (larvalStalker->damage.amount <= Q12(0.0f) || larvalStalker->health <= Q12(0.0f))
     {
         return;
     }
@@ -879,7 +879,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
 
     larvalStalkerProps.flags_E8 |= LarvalStalkerFlag_7;
 
-    larvalStalker->health                = MAX(larvalStalker->health - larvalStalker->damage.amount_C, Q12(0.0f));
+    larvalStalker->health                = MAX(larvalStalker->health - larvalStalker->damage.amount, Q12(0.0f));
     larvalStalker->damage.position.vx += FP_FROM(larvalStalker->moveSpeed * Math_Sin(larvalStalker->headingAngle), Q12_SHIFT);
     larvalStalker->damage.position.vz += FP_FROM(larvalStalker->moveSpeed * Math_Cos(larvalStalker->headingAngle), Q12_SHIFT);
     larvalStalker->moveSpeed             = FP_TO(Math_Vector2MagCalc(larvalStalker->damage.position.vx, larvalStalker->damage.position.vz), Q12_SHIFT) / Q12(2.4f);

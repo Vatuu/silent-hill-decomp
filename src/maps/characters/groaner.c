@@ -140,11 +140,11 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
 
         if (coll.field_8 == 12 && Rng_GenerateInt(Q12(4.0f), Q12(7.0f) - 1) < groaner->position.vy)
         {
-            groaner->damage.amount_C = Q12(1000.0f);
+            groaner->damage.amount = Q12(1000.0f);
         }
     }
 
-    if (groaner->damage.amount_C == Q12(0.0f))
+    if (groaner->damage.amount == Q12(0.0f))
     {
         return;
     }
@@ -165,7 +165,7 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
     groanerProps.targetPositionZ_F8     = g_SysWork.playerWork.player.position.vz;
     groanerProps.flags_E8.val16[0]     |= GroanerFlag_7;
 
-    groaner->health = MAX(groaner->health - groaner->damage.amount_C, Q12(0.0f));
+    groaner->health = MAX(groaner->health - groaner->damage.amount, Q12(0.0f));
     unkDist         = Math_Vector2MagCalc(groaner->damage.position.vx, groaner->damage.position.vz);
 
     // Set new heading angle.

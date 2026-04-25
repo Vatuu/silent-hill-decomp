@@ -1209,7 +1209,7 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 /** @brief Constant character animation info passed to `Anim_Update` functions. */
 typedef struct _AnimInfo
 {
-    /* 0x0 */ void (*playbackFunc)(struct _Model* model, struct _AnmHeader* anmHdr, GsCOORDINATE2* coords, struct _AnimInfo* animInfo);
+    /* 0x0 */ void (*playbackFunc)(struct _Model* model, struct _AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, struct _AnimInfo* animInfo);
     /* 0x4 */ u8 status;                        /** Packed anim status. Init base? See `s_ModelAnimData::status`. */
     /* 0x5 */ s8 hasVariableDuration;           /** `bool` | Use `duration.variableFunc`: `true`, Use `duration.constant`: `false`. */
     /* 0x6 */ u8 linkStatus;                    /** Packed anim status link target. See `s_ModelAnim::status`. */
@@ -1279,10 +1279,11 @@ typedef struct
     u8      field_13;
 } s_func_8006CF18;
 
+/** @brief Character damage info. */
 typedef struct _CharaDamage
 {
-    VECTOR3 position;
-    q19_12  amount_C;
+    /* 0x0 */ VECTOR3 position;
+    /* 0xC */ q19_12  amount;
 } s_CharaDamage;
 
 typedef union
@@ -1709,20 +1710,20 @@ typedef struct _PropertiesStalker
 /** @brief Twinfeeler character properties. */
 typedef struct _PropertiesTwinfeeler
 {
-    u_Property    field_E8;
-    s_CharaDamage field_EC;
-    q19_12        field_FC; // Timer?
-    s32           field_100;
-    s32           field_104;
-    s32           field_108;
-    s32           field_10C;
-    s16           field_110;
-    s8            unk_112[2];
-    u32           field_114; // Flags.
-    u16           field_118;
-    s8            unk_11C[2];
-    s32           field_120;
-    u_Property    properties_124[2];
+    /* 0xE8  */ u_Property    field_E8;
+    /* 0xEC  */ s_CharaDamage damage;
+    /* 0xFC  */ q19_12        field_FC; // Timer?
+    /* 0x100 */ q19_12        spawnPositionX; /** @unused */
+    /* 0x104 */ q19_12        spawnPositionZ; /** @unused */
+    /* 0x108 */ s32           field_108;
+    /* 0x10C */ s32           field_10C;
+    /* 0x110 */ s16           field_110;
+    /* 0x112 */ s8            __pad_112[2];
+    /* 0x114 */ u32           flags; /** `e_TwinfeelerFlags` */
+    /* 0x118 */ u16           field_118;
+    /* 0x11C */ s8            __pad_11C[2];
+    /* 0x120 */ s32           field_120;
+    /* 0x124 */ u_Property    properties_124[2];
 } s_PropertiesTwinfeeler;
 STATIC_ASSERT_SIZEOF(s_PropertiesTwinfeeler, 64);
 
@@ -2369,7 +2370,7 @@ static inline void Character_AnimStateReset(s_SubCharacter* chara)
  * @param chara Character to update.
  */
 #define Chara_DamageClear(chara)                  \
-    (chara)->damage.amount_C      = Q12(0.0f); \
+    (chara)->damage.amount      = Q12(0.0f); \
     (chara)->damage.position.vz = Q12(0.0f); \
     (chara)->damage.position.vy = Q12(0.0f); \
     (chara)->damage.position.vx = Q12(0.0f)

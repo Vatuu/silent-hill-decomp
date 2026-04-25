@@ -141,7 +141,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
     #define playerChara g_SysWork.playerWork.player
 
     // Creeper has been hit.
-    if (creeper->damage.amount_C > Q12(0.0f) && creeper->health > Q12(0.0f))
+    if (creeper->damage.amount > Q12(0.0f) && creeper->health > Q12(0.0f))
     {
         func_8005DC1C(Sfx_Unk1425, &creeper->position, Q8(0.5f), 0);
         creeperProps.chirpTimer = Q12(0.0f);
@@ -225,7 +225,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
     }
 
     // Clear damage.
-    if (creeper->damage.amount_C < Q12(200.0f) || creeper->health <= Q12(0.0f))
+    if (creeper->damage.amount < Q12(200.0f) || creeper->health <= Q12(0.0f))
     {
         Chara_DamageClear(creeper);
     }
