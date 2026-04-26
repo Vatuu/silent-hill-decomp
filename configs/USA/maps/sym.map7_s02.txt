@@ -138,11 +138,11 @@ Ai_GhostChildAlessa_Init            = 0x800D7E88; // type:func
 //-----------------------------------------------------------------
 //--- PA: 0x00E934   VA: 0x800D7EAC   subsegment: c, Chara_Kaufmann
 //-----------------------------------------------------------------
-Ai_Kaufmann_Update                  = 0x800D7EAC; // type:func
-Ai_Kaufmann_AnimUpdate              = 0x800D7F20; // type:func
-Ai_Kaufmann_MovementUpdate          = 0x800D7F68; // type:func
-Ai_Kaufmann_AnimStateUpdate         = 0x800D8100; // type:func
-Ai_Kaufmann_Init                    = 0x800D8AA8; // type:func
+Kaufmann_Update                     = 0x800D7EAC; // type:func
+Kaufmann_AnimUpdate                 = 0x800D7F20; // type:func
+Kaufmann_MovementUpdate             = 0x800D7F68; // type:func
+Kaufmann_ControlUpdate              = 0x800D8100; // type:func
+Kaufmann_Init                       = 0x800D8AA8; // type:func
 
 //--------------------------------------------------------------------
 //--- PA: 0x00F578   VA: 0x800D8AF0   subsegment: c, Chara_GhostDoctor

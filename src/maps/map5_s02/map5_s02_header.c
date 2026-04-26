@@ -178,8 +178,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
         NULL,
         NULL,
         NULL,
-        Ai_Kaufmann_Update,
-        Ai_Kaufmann_Update,
+        Kaufmann_Update,
+        Kaufmann_Update,
     },
     .charaGroupIds_248 = {},
     .charaSpawns_24C   = {

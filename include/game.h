@@ -1547,6 +1547,27 @@ typedef struct _PropertiesIncubus
     s8     unk_F8[48];
 } s_PropertiesIncubus;
 
+/** @brief Kaufmann character properties. TODO: Largely a copy of Dahlia's for now. */
+typedef struct _PropertiesKaufmann
+{
+    /* 0x0   */ s32        controlState; /** `e_KaufmannControl` */
+    /* 0xEC  */ u_Property properties_EC;
+    /* 0xF0  */ u_Property properties_F0;
+    /* 0xF4  */ u_Property properties_F4;
+    /* 0xF8  */ s32        resetStateIdx0_F8;
+    /* 0xFC  */ s32        field_FC;
+    /* 0x100 */ s32        field_100;
+    /* 0x104 */ u_Property properties_104;
+    /* 0x108 */ u_Property properties_108;
+    /* 0x10C */ u_Property properties_10C;
+    /* 0x110 */ VECTOR3    field_110;
+    /* 0x11C */ s32        flags_11C;
+    /* 0x120 */ s32        field_120;
+    /* 0x124 */ s16        field_124;
+    /* 0x126 */ q3_12      moveSpeed;
+} s_PropertiesKaufmann;
+STATIC_ASSERT_SIZEOF(s_PropertiesKaufmann, 64);
+
 /** @brief Larval Stalker character properties. */
 typedef struct _PropertiesLarvalStalker
 {
@@ -1828,6 +1849,7 @@ typedef struct _SubCharacter
                  e_PropertiesGroaner         groaner;
                  s_PropertiesHangedScratcher hangedScratcher;
                  s_PropertiesIncubus         incubus;
+                 s_PropertiesKaufmann        kaufmann;
                  s_PropertiesLarvalStalker   larvalStalker;
                  s_PropertiesMonsterCybil    monsterCybil;
                  s_PropertiesPuppetNurse     puppetNurse;

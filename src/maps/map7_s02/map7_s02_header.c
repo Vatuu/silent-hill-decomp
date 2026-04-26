@@ -183,7 +183,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
         Ai_Stalker_Update, Ai_Stalker_Update, NULL, NULL, NULL, NULL, NULL, NULL,
         NULL, NULL, NULL, NULL, NULL, Ai_Bloodsucker_Update, NULL, NULL,
         NULL, NULL, NULL, NULL, NULL, NULL, Ai_Dahlia_Update, Ai_Dahlia_Update,
-        Ai_Lisa_Update, Ai_BloodyLisa_Update, NULL, Ai_GhostChildAlessa_Update, NULL, NULL, Ai_Kaufmann_Update, Ai_Kaufmann_Update,
+        Ai_Lisa_Update, Ai_BloodyLisa_Update, NULL, Ai_GhostChildAlessa_Update, NULL, NULL, Kaufmann_Update, Kaufmann_Update,
         NULL, NULL, Ai_GhostDoctor_Update },
     .charaGroupIds_248 = { Chara_Stalker },
     .charaSpawns_24C   = {

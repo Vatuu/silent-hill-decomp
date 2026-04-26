@@ -100,11 +100,11 @@ Ai_Incubator_Init                   = 0x800D3F38; // type:func
 //-----------------------------------------------------------------
 //--- PA: 0x00A9E0   VA: 0x800D3F58   subsegment: c, Chara_Kaufmann
 //-----------------------------------------------------------------
-Ai_Kaufmann_Update                  = 0x800D3F58; // type:func
-Ai_Kaufmann_AnimUpdate              = 0x800D3FCC; // type:func
-Ai_Kaufmann_MovementUpdate          = 0x800D4014; // type:func
-Ai_Kaufmann_AnimStateUpdate         = 0x800D41AC; // type:func
-Ai_Kaufmann_Init                    = 0x800D4C14; // type:func
+Kaufmann_Update                     = 0x800D3F58; // type:func
+Kaufmann_AnimUpdate                 = 0x800D3FCC; // type:func
+Kaufmann_MovementUpdate             = 0x800D4014; // type:func
+Kaufmann_ControlUpdate              = 0x800D41AC; // type:func
+Kaufmann_Init                       = 0x800D4C14; // type:func
 
 //-------------------------------------------------------------------
 //--- PA: 0x00B6D8   VA: 0x800D4C50   subsegment: c, Chara_BloodyLisa
