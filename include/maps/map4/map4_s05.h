@@ -65,8 +65,8 @@ extern s16 D_800DB8A8[];
 
 extern GsCOORDINATE2* D_800DB928;
 
-extern s_WorldObjectDescNoRot g_WorldObject_Kidn04;
-extern s_WorldObjectDescNoRot g_WorldObject_Kidn05;
+extern s_WorldObjectPlacement g_WorldObject_Kidn04;
+extern s_WorldObjectPlacement g_WorldObject_Kidn05;
 
 extern u8 D_800DB9B0;
 

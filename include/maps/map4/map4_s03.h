@@ -181,15 +181,15 @@ extern u16 D_800DB92C;
 extern u16 D_800DB9E0;
 extern u8  D_800DB9E2;
 
-extern s_WorldObjectDesc  g_WorldObject_Fence;
-extern s_WorldObjectDesc  g_WorldObject_Mal5_21;
+extern s_WorldObjectPose  g_WorldObject_Fence;
+extern s_WorldObjectPose  g_WorldObject_Mal5_21;
 extern s_WorldObjectModel g_WorldObject_Mal6[2];
 extern VECTOR3            g_WorldObject_UnkPos;
 extern SVECTOR3           g_WorldObject_UnkRot;
-extern s_WorldObjectDesc  g_WorldObject_SavePad;
+extern s_WorldObjectPose  g_WorldObject_SavePad;
 extern s_WorldObjectModel g_CommonWorldObjects[6];
 extern s_WorldObjectModel D_800E08D0;
-extern s_WorldObjectPose  g_CommonWorldObjectPoses[3]; // 0x800DB930
+extern s_Pose  g_CommonWorldObjectPoses[3]; // 0x800DB930
 extern VECTOR3 D_800DB7C8;
 extern SVECTOR D_800DB924;
 

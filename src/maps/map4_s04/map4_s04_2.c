@@ -263,7 +263,7 @@ void func_800D1910(void) // 0x800D1910
 
             Gfx_MapInitMapEffectsUpdate(15, 15);
             SysWork_StateStepIncrement(0);
-            g_WorldObject0.position_1C.vz = Q12(141.0f);
+            g_WorldObject0.position.vz = Q12(141.0f);
             break;
 
         case 1:
@@ -295,7 +295,7 @@ void func_800D1910(void) // 0x800D1910
 
         case 6:
             g_Cutscene_Timer               = Q12(24.0f);
-            g_WorldObject0.position_1C.vz = Q12(140.8f);
+            g_WorldObject0.position.vz = Q12(140.8f);
 
             func_80085EB8(0, &g_SysWork.playerWork.player, 135, false);
             SysWork_StateStepIncrement(0);
@@ -319,7 +319,7 @@ void func_800D1910(void) // 0x800D1910
         case 11:
             Map_MessageWithAudio(44, &D_800D6EF8, &D_800D3734);
             SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(25.0f), Q12(46.0f), true, false);
-            g_WorldObject0.position_1C.vz = Q12(140.95f);
+            g_WorldObject0.position.vz = Q12(140.95f);
             break;
 
         case 12:
@@ -605,7 +605,7 @@ void Map_WorldObjectsInit(void) // 0x800D2D6C
 {
     WorldObjectInit(&g_WorldObjectSavepad, D_800A99E4[1], 106.687f, -1.02f, 144.601f, 0.0f, 163.0f, 0.0f);
 
-    WorldObjectNoRotInit(&g_WorldObject0, "ISU_HIDE", 57.8f, 0.0f, 0.0f);
+    WorldObjectPlacementInit(&g_WorldObject0, "ISU_HIDE", 57.8f, 0.0f, 0.0f);
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800D2DF4
@@ -614,14 +614,14 @@ void Map_WorldObjectsUpdate(void) // 0x800D2DF4
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
-        WorldGfx_ObjectAdd(&g_WorldObjectSavepad.object_0, &g_WorldObjectSavepad.position_1C, &g_WorldObjectSavepad.rotation_28);
+        WorldGfx_ObjectAdd(&g_WorldObjectSavepad.object_0, &g_WorldObjectSavepad.position, &g_WorldObjectSavepad.rotation);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
         if (Savegame_EventFlagGet(EventFlag_337) && !Savegame_EventFlagGet(EventFlag_338))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 }

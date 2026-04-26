@@ -23,11 +23,11 @@
 
 #include "maps/shared.h"
 
-extern s_WorldObjectDescNoRot g_WorldObject_Dr[6];
-extern s_WorldObjectDescNoRot g_WorldObject_Plate;
-extern s_WorldObjectDesc      g_WorldObject_SavePad;
+extern s_WorldObjectPlacement g_WorldObject_Dr[6];
+extern s_WorldObjectPlacement g_WorldObject_Plate;
+extern s_WorldObjectPose      g_WorldObject_SavePad;
 extern s_WorldObjectModel     g_CommonWorldObjects[6];
-extern s_WorldObjectPose      g_CommonWorldObjectPoses[2];
+extern s_Pose      g_CommonWorldObjectPoses[2];
 
 extern u16 D_800D599C;
 extern VECTOR3 g_Cutscene_CameraPositionTarget;

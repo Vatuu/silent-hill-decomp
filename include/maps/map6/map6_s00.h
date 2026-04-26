@@ -57,12 +57,12 @@ extern VECTOR3 g_Cutscene_CameraLookAtTarget;
 extern u8      D_800F0684;
 extern s16     D_800F0686;
 
-extern s_WorldObjectDescNoRot g_WorldObject_Window;
-extern s_WorldObjectDescNoRot g_WorldObject_DrOpen1;
-extern s_WorldObjectDescNoRot g_WorldObject_DrOpen2;
-extern s_WorldObjectDescNoRot g_WorldObject_DrClose;
+extern s_WorldObjectPlacement g_WorldObject_Window;
+extern s_WorldObjectPlacement g_WorldObject_DrOpen1;
+extern s_WorldObjectPlacement g_WorldObject_DrOpen2;
+extern s_WorldObjectPlacement g_WorldObject_DrClose;
 extern s_WorldObjectModel     g_CommonWorldObjects[6];
-extern s_WorldObjectPose      g_CommonWorldObjectPoses[3];
+extern s_Pose      g_CommonWorldObjectPoses[3];
 
 /** @brief Handles a First Aid Kit, Health Drink, or Shotgun Shells item pickup event. */
 void MapEvent_CommonItemTake(void);

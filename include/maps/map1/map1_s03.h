@@ -38,7 +38,7 @@ extern s_FsImageDesc D_800E2004;
 extern VECTOR3 D_800E200C;
 extern s16 D_800E2018;
 extern q19_12 D_800E201C; // Time.
-extern s_WorldObjectPose  g_CommonWorldObjectPoses[10]; // 0x800E2020
+extern s_Pose  g_CommonWorldObjectPoses[10]; // 0x800E2020
 extern s32 D_800E20E8; // Angle.
 extern s16 D_800E20EC;
 extern u8 D_800E20EE;
@@ -51,19 +51,19 @@ extern u8  D_800E2100;
 extern u8  D_800E2101;
 extern u8 D_800E2102; // g_Cutscene_MapMsgAudioIdx
 
-extern s_WorldObjectDesc g_WorldObject5; // 0x800E6130
+extern s_WorldObjectPose g_WorldObject5; // 0x800E6130
 
 extern VECTOR3 g_Cutscene_CameraPositionTarget;
 extern VECTOR3 g_Cutscene_CameraLookAtTarget;
 extern s32     g_Cutscene_Timer;
 
-extern s_WorldObjectDesc g_WorldObject0; // 0x800E6180
-extern s_WorldObjectDesc g_WorldObject1; // 0x800E61B0
-extern s_WorldObjectDesc g_WorldObject2; // 0x800E61E0
-extern s_WorldObjectDescNoRot g_WorldObject3; // 0x800E6210
-extern s_WorldObjectDescNoRot g_WorldObject4; // 0x800E6240
-extern s_WorldObjectDescNoRot g_WorldObject6; // 0x800E6270
-extern s_WorldObjectDesc g_WorldObject7; // 0x800E62A0
+extern s_WorldObjectPose g_WorldObject0; // 0x800E6180
+extern s_WorldObjectPose g_WorldObject1; // 0x800E61B0
+extern s_WorldObjectPose g_WorldObject2; // 0x800E61E0
+extern s_WorldObjectPlacement g_WorldObject3; // 0x800E6210
+extern s_WorldObjectPlacement g_WorldObject4; // 0x800E6240
+extern s_WorldObjectPlacement g_WorldObject6; // 0x800E6270
+extern s_WorldObjectPose g_WorldObject7; // 0x800E62A0
 extern u8 D_800E62D0;
 extern s_WorldObjectModel   g_CommonWorldObjects[6]; // 0x800E62E0
 

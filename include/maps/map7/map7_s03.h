@@ -420,11 +420,11 @@ extern s32 D_800F2434;
 
 extern s32 D_800F3D8C;
 
-extern s_WorldObjectDesc g_WorldObject_Bin;
+extern s_WorldObjectPose g_WorldObject_Bin;
 
-extern s_WorldObjectDesc g_WorldObject_Nu;
+extern s_WorldObjectPose g_WorldObject_Nu;
 
-extern s_WorldObjectDesc g_WorldObject_Baby;
+extern s_WorldObjectPose g_WorldObject_Baby;
 
 extern GsCOORDINATE2 g_NpcBoneCoords[HarryBone_Count];
 

@@ -7242,11 +7242,11 @@ void Map_CutsceneObjectsUpdate(void) // 0x800E2E90
         }
         if (g_Cutscene_UpdateBin)
         {
-            Dms_CharacterTransformGet(&g_WorldObject_Bin.position_1C, &g_WorldObject_Bin.rotation_28, "BIN", g_Cutscene_Timer, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&g_WorldObject_Bin.position, &g_WorldObject_Bin.rotation, "BIN", g_Cutscene_Timer, D_800ED230[D_800F4806]);
         }
         if (g_Cutscene_UpdateBaby)
         {
-            Dms_CharacterTransformGet(&g_WorldObject_Baby.position_1C, &g_WorldObject_Baby.rotation_28, "BABY", g_Cutscene_Timer, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&g_WorldObject_Baby.position, &g_WorldObject_Baby.rotation, "BABY", g_Cutscene_Timer, D_800ED230[D_800F4806]);
         }
 
         vcChangeProjectionValue(Dms_CameraTargetGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, D_800ED230[D_800F4806]));
@@ -8347,7 +8347,7 @@ void func_800E514C(void) // 0x800E514C
             SysWork_StateStepIncrement(0);
 
         case 33:
-            func_800D7144(&g_WorldObject_Bin.position_1C);
+            func_800D7144(&g_WorldObject_Bin.position);
             func_800E1788(9);
             SysWork_StateStepIncrement(0);
 
@@ -10128,21 +10128,21 @@ void Map_WorldObjectsUpdate(void) // 0x800E972C
 {
     if (g_Cutscene_UpdateBin)
     {
-        *(s32*)&(g_WorldObject_Bin.rotation_28.vx) = (u16)D_800F482C;
-        *(s16*)&(g_WorldObject_Bin.rotation_28.vz) = 0;
+        *(s32*)&(g_WorldObject_Bin.rotation.vx) = (u16)D_800F482C;
+        *(s16*)&(g_WorldObject_Bin.rotation.vz) = 0;
 
-        WorldGfx_ObjectAdd(&g_WorldObject_Bin.object_0, &g_WorldObject_Bin.position_1C, &g_WorldObject_Bin.rotation_28);
+        WorldGfx_ObjectAdd(&g_WorldObject_Bin.object_0, &g_WorldObject_Bin.position, &g_WorldObject_Bin.rotation);
         D_800F482C -= (FP_TO(g_DeltaTime, Q12_SHIFT) / Q12(3.6f));
     }
 
     if (D_800F4811)
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_Nu.object_0, &g_WorldObject_Nu.position_1C, &g_WorldObject_Nu.rotation_28);
+        WorldGfx_ObjectAdd(&g_WorldObject_Nu.object_0, &g_WorldObject_Nu.position, &g_WorldObject_Nu.rotation);
     }
 
     if (g_Cutscene_UpdateBaby)
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_Baby.object_0, &g_WorldObject_Baby.position_1C, &g_WorldObject_Baby.rotation_28);
+        WorldGfx_ObjectAdd(&g_WorldObject_Baby.object_0, &g_WorldObject_Baby.position, &g_WorldObject_Baby.rotation);
     }
 
     if (Savegame_EventFlagGet(EventFlag_577) && !Savegame_EventFlagGet(EventFlag_578) && !Savegame_EventFlagGet(EventFlag_582))

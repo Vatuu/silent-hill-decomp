@@ -187,7 +187,7 @@ void func_800D1FF0(void) // 0x800D1FF0
             tmp = Q12_MULT_PRECISE(g_DeltaTime, Q12(0.22f));
 
             g_SysWork.playerWork.player.position.vz += tmp;
-            WorldObject_D_800D7FF0.position_1C.vz += tmp;
+            WorldObject_D_800D7FF0.position.vz += tmp;
 
             D_800D5AE8 += Q12_MULT_PRECISE(g_DeltaTime, Q12(2.0f));
             if (D_800D5AE8 > Q12(1.0f))
@@ -195,16 +195,16 @@ void func_800D1FF0(void) // 0x800D1FF0
                 D_800D5AE8 = Q12(1.0f);
             }
 
-            if (WorldObject_D_800D7FF0.position_1C.vz > Q12(63.6814f))
+            if (WorldObject_D_800D7FF0.position.vz > Q12(63.6814f))
             {
-                tmp = WorldObject_D_800D7FF0.position_1C.vz - Q12(63.6814f);
+                tmp = WorldObject_D_800D7FF0.position.vz - Q12(63.6814f);
                 g_SysWork.playerWork.player.position.vz -= tmp;
-                WorldObject_D_800D7FF0.position_1C.vz -= tmp;
+                WorldObject_D_800D7FF0.position.vz -= tmp;
 
                 SysWork_StateStepIncrement(0);
             }
 
-            func_8005DE0C(Sfx_Unk1538, &WorldObject_D_800D7FF0.position_1C, D_800D5AE8 >> 5, Q12(12.0f), 0);
+            func_8005DE0C(Sfx_Unk1538, &WorldObject_D_800D7FF0.position, D_800D5AE8 >> 5, Q12(12.0f), 0);
             break;
 
         case 7:
@@ -215,7 +215,7 @@ void func_800D1FF0(void) // 0x800D1FF0
             }
 
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(3.0f), false);
-            func_8005DE0C(Sfx_Unk1538, &WorldObject_D_800D7FF0.position_1C, D_800D5AE8 >> 5, Q12(12.0f), 0);
+            func_8005DE0C(Sfx_Unk1538, &WorldObject_D_800D7FF0.position, D_800D5AE8 >> 5, Q12(12.0f), 0);
             break;
 
         default:
@@ -1189,25 +1189,22 @@ void func_800D4998(void) // 0x800D4998
 
 void Map_WorldObjectsInit(void) // 0x800D49C4
 {
-    WorldObjectNoRotInit(&WorldObject_D_800D7FF0, "MOV1_HID", 178.2681f, -0.387f, 63.6814f);
-
-    WorldObjectNoRotInit(&WorldObject_D_800D8020, "MOV1_HID", 174.81f, -1.4197f, 21.3344f);
+    WorldObjectPlacementInit(&WorldObject_D_800D7FF0, "MOV1_HID", 178.2681f, -0.387f, 63.6814f);
+    WorldObjectPlacementInit(&WorldObject_D_800D8020, "MOV1_HID", 174.81f, -1.4197f, 21.3344f);
 
     if (!Savegame_EventFlagGet(EventFlag_302))
     {
-        WorldObject_D_800D7FF0.position_1C.vz = Q12(62.7466f);
+        WorldObject_D_800D7FF0.position.vz = Q12(62.7466f);
     }
 
     WorldObject_ModelNameSet(&WorldObject_D_800D8050.object_0, D_800A99E4[1]);
 
     WorldObjectPoseInit(&WorldObject_D_800D8070, 183.3833f, -1.2673f, 60.951f, 0.0f, 66.01, 0.0f);
     WorldObjectPoseInit(&WorldObject_D_800D8090, 23.4f, -0.91f, 60.8f, 0.0f, 90.4f, 0.0f);
+    WorldObjectPlacementInit(&WorldObject_D_800D80B0, "WALLX_HI", 181.22f, 0.0f, 61.2015f);
+    WorldObjectPlacementInit(&WorldObject_D_800D80E0[0], "CUBE90_H", 180.5647f, -0.502f, 63.8853f);
+    WorldObjectPlacementInit(&WorldObject_D_800D80E0[1], "CUBE9_HI", 180.5647f, -0.502f, 63.8853f);
 
-    WorldObjectNoRotInit(&WorldObject_D_800D80B0, "WALLX_HI", 181.22f, 0.0f, 61.2015f);
-
-    WorldObjectNoRotInit(&WorldObject_D_800D80E0[0], "CUBE90_H", 180.5647f, -0.502f, 63.8853f);
-
-    WorldObjectNoRotInit(&WorldObject_D_800D80E0[1], "CUBE9_HI", 180.5647f, -0.502f, 63.8853f);
     D_800D8018 = 0;
 }
 
@@ -1226,15 +1223,15 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
             Collision_FlagBitsSet(CollisionFlag_1);
         }
 
-        WorldGfx_ObjectAdd(&WorldObject_D_800D7FF0.object_0, &WorldObject_D_800D7FF0.position_1C, &(SVECTOR3){ 0, 0, 0 });
-        WorldGfx_ObjectAdd(&WorldObject_D_800D8050.object_0, &WorldObject_D_800D8070.position, &WorldObject_D_800D8070.rotation_C);
+        WorldGfx_ObjectAdd(&WorldObject_D_800D7FF0.object_0, &WorldObject_D_800D7FF0.position, &(SVECTOR3){ 0, 0, 0 });
+        WorldGfx_ObjectAdd(&WorldObject_D_800D8050.object_0, &WorldObject_D_800D8070.position, &WorldObject_D_800D8070.rotation);
 
         if (Savegame_EventFlagGet(EventFlag_313))
         {
-            WorldGfx_ObjectAdd(&WorldObject_D_800D80B0.object_0, &WorldObject_D_800D80B0.position_1C, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&WorldObject_D_800D80B0.object_0, &WorldObject_D_800D80B0.position, &(SVECTOR3){ 0, 0, 0 });
         }
 
-        WorldGfx_ObjectAdd(&WorldObject_D_800D80E0[D_800D8018].object_0, &WorldObject_D_800D80E0[D_800D8018].position_1C, &(SVECTOR3){ 0, 0, 0 });
+        WorldGfx_ObjectAdd(&WorldObject_D_800D80E0[D_800D8018].object_0, &WorldObject_D_800D80E0[D_800D8018].position, &(SVECTOR3){ 0, 0, 0 });
     }
     else
     {
@@ -1245,12 +1242,12 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S01_PickupAxe))
         {
-            WorldGfx_ObjectAdd(&WorldObject_D_800D8020.object_0, &WorldObject_D_800D8020.position_1C, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&WorldObject_D_800D8020.object_0, &WorldObject_D_800D8020.position, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
     {
-        WorldGfx_ObjectAdd(&WorldObject_D_800D8050.object_0, &WorldObject_D_800D8090.position, &WorldObject_D_800D8090.rotation_C);
+        WorldGfx_ObjectAdd(&WorldObject_D_800D8050.object_0, &WorldObject_D_800D8090.position, &WorldObject_D_800D8090.rotation);
     }
 }

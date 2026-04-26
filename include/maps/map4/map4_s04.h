@@ -47,8 +47,8 @@ extern q19_12 g_Cutscene_Timer;
 
 extern u8 D_800D6EF8;
 
-extern s_WorldObjectDesc      g_WorldObjectSavepad; // 0x800D6F38
-extern s_WorldObjectDescNoRot g_WorldObject0;       // 0x800D6F08
+extern s_WorldObjectPose      g_WorldObjectSavepad; // 0x800D6F38
+extern s_WorldObjectPlacement g_WorldObject0;       // 0x800D6F08
 
 void func_800D1870(void);
 

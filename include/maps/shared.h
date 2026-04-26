@@ -1031,55 +1031,58 @@ static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo
     anim->mapAnimInfos  = NULL;
 }
 
-// TODO: Could also call this a "transform"? "Pose" is a less common term for a position+rotation struct.
-typedef struct
+/** @brief World object description with a pose. */
+typedef struct _WorldObjectPose
 {
-    VECTOR3  position; // Q19.12
-    SVECTOR3 rotation_C; // Q19.12
+    /* 0x0  */ s_WorldObjectModel object_0;
+    /* 0x1C */ VECTOR3            position; /** Q19.12 */
+    /* 0x28 */ SVECTOR3           rotation; /** Q19.12 */
 } s_WorldObjectPose;
-STATIC_ASSERT_SIZEOF(s_WorldObjectPose, 0x14);
+STATIC_ASSERT_SIZEOF(s_WorldObjectPose, 48);
 
-typedef struct
+/** @brief World object description with a position. */
+typedef struct _WorldObjectPlacement
 {
-    s_WorldObjectModel object_0;
-    VECTOR3         position_1C; // Q19.12
-    SVECTOR3        rotation_28; // Q19.12
-} s_WorldObjectDesc;
-STATIC_ASSERT_SIZEOF(s_WorldObjectDesc, 0x30);
+    /* 0x0  */ s_WorldObjectModel object_0;
+    /* 0x1C */ VECTOR3            position; /** Q19.12 */
+} s_WorldObjectPlacement;
+STATIC_ASSERT_SIZEOF(s_WorldObjectPlacement, 40);
 
-typedef struct
-{
-    s_WorldObjectModel object_0;
-    VECTOR3         position_1C; // Q19.12
-} s_WorldObjectDescNoRot;
-STATIC_ASSERT_SIZEOF(s_WorldObjectDescNoRot, 40);
+#define WorldObjectPoseInit(objPose, posX, posY, posZ, rotX, rotY, rotZ) \
+    WorldObjectPoseSet(objPose,                                          \
+                       Q12(posX), Q12(posY), Q12(posZ),                  \
+                       Q12_ANGLE(rotX), Q12_ANGLE(rotY), Q12_ANGLE(rotZ))
+#define WorldObjectPoseSet(objPose, posX, posY, posZ, rotX, rotY, rotZ) \
+{                                                                       \
+    Math_Vector3Set(&(objPose)->position, posX, posY, posZ);            \
+    Math_SetSVectorFast(&(objPose)->rotation, rotX, rotY, rotZ);        \
+}
 
-#define WorldObjectPoseInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
-    WorldObjectPoseSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), Q12_ANGLE(rotX), Q12_ANGLE(rotY), Q12_ANGLE(rotZ))
-
-#define WorldObjectPoseSet(eventPose, posX, posY, posZ, rotX, rotY, rotZ) \
+#define WorldObjectInit(objPose, name, posX, posY, posZ, rotX, rotY, rotZ) \
+    WorldObjectSet(objPose, name,                                          \
+                   Q12(posX), Q12(posY), Q12(posZ),                        \
+                   Q12_ANGLE(rotX), Q12_ANGLE(rotY), Q12_ANGLE(rotZ))
+#define WorldObjectSet(objPose, name, posX, posY, posZ, rotX, rotY, rotZ) \
 {                                                                         \
-    Math_Vector3Set(&(eventPose)->position, posX, posY, posZ);          \
-    Math_SetSVectorFast(&(eventPose)->rotation_C, rotX, rotY, rotZ);      \
+    Math_Vector3Set(&(objPose)->position, posX, posY, posZ);         \
+    Math_SetSVectorFast(&(objPose)->rotation, rotX, rotY, rotZ);     \
+    WorldObject_ModelNameSet(&(objPose)->object_0, (name));               \
 }
 
-#define WorldObjectInit(eventPos, name, posX, posY, posZ, rotX, rotY, rotZ) \
-    WorldObjectSet(eventPos, name, Q12(posX), Q12(posY), Q12(posZ), Q12_ANGLE(rotX), Q12_ANGLE(rotY), Q12_ANGLE(rotZ))
-
-#define WorldObjectSet(eventPose, name, posX, posY, posZ, rotX, rotY, rotZ) \
-{                                                                           \
-    Math_Vector3Set(&(eventPose)->position_1C, posX, posY, posZ);           \
-    Math_SetSVectorFast(&(eventPose)->rotation_28, rotX, rotY, rotZ);       \
-    WorldObject_ModelNameSet(&(eventPose)->object_0, (name));               \
+#define WorldObjectPosePositionInit(objPose, name, posX, posY, posZ) \
+    WorldObject_PosePositionSet(objPose, name, Q12(posX), Q12(posY), Q12(posZ))
+#define WorldObject_PosePositionSet(objPose, name, posX, posY, posZ) \
+{                                                                    \
+    Math_Vector3Set(&(objPose)->position, posX, posY, posZ);    \
+    WorldObject_ModelNameSet(&(objPose)->object_0, (name));          \
 }
 
-#define WorldObjectNoRotInit(eventPos, name, posX, posY, posZ) \
-    WorldObjectNoRotSet(eventPos, name, Q12(posX), Q12(posY), Q12(posZ))
-
-#define WorldObjectNoRotSet(eventPose, name, posX, posY, posZ)    \
+#define WorldObjectPlacementInit(objPlacement, name, posX, posY, posZ) \
+    WorldObject_PlacementSet(objPlacement, name, Q12(posX), Q12(posY), Q12(posZ))
+#define WorldObject_PlacementSet(objPose, name, posX, posY, posZ) \
 {                                                                 \
-    Math_Vector3Set(&(eventPose)->position_1C, posX, posY, posZ); \
-    WorldObject_ModelNameSet(&(eventPose)->object_0, (name));     \
+    Math_Vector3Set(&(objPose)->position, posX, posY, posZ);      \
+    WorldObject_ModelNameSet(&(objPose)->object_0, (name));       \
 }
 
 #define APPROACH(current, target, step) \
@@ -1100,33 +1103,33 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectDescNoRot, 40);
     chara->moveSpeed = APPROACH(chara->moveSpeed, Q12(0.0f), Q12_MULT_PRECISE(g_DeltaTime, speed))
 
 // TODO: Is it possible to merge these macros?
-#define Chara_MoveSpeedUpdate2(chara, speed, limit)                       \
-{                                                                         \
-    q19_12 moveSpeed;                                                     \
-    q19_12 newSpeed;                                                      \
-    q19_12 newMoveSpeed;                                                  \
-                                                                          \
-    moveSpeed = chara->moveSpeed;                                      \
-    if (moveSpeed > limit)                                                \
-    {                                                                     \
-        newMoveSpeed = limit;                                             \
-        limit        = Q12(0.0f);                                         \
+#define Chara_MoveSpeedUpdate2(chara, speed, limit)                      \
+{                                                                        \
+    q19_12 moveSpeed;                                                    \
+    q19_12 newSpeed;                                                     \
+    q19_12 newMoveSpeed;                                                 \
+                                                                         \
+    moveSpeed = chara->moveSpeed;                                        \
+    if (moveSpeed > limit)                                               \
+    {                                                                    \
+        newMoveSpeed = limit;                                            \
+        limit        = Q12(0.0f);                                        \
         newSpeed     = moveSpeed - Q12_MULT_PRECISE(g_DeltaTime, speed); \
-        if (newMoveSpeed < newSpeed)                                      \
-        {                                                                 \
-            newMoveSpeed = newSpeed;                                      \
-        }                                                                 \
-    }                                                                     \
-    else                                                                  \
-    {                                                                     \
-        newMoveSpeed = limit;                                             \
+        if (newMoveSpeed < newSpeed)                                     \
+        {                                                                \
+            newMoveSpeed = newSpeed;                                     \
+        }                                                                \
+    }                                                                    \
+    else                                                                 \
+    {                                                                    \
+        newMoveSpeed = limit;                                            \
         newSpeed     = moveSpeed + Q12_MULT_PRECISE(g_DeltaTime, speed); \
-        if (newMoveSpeed >= newSpeed)                                     \
-        {                                                                 \
-            newMoveSpeed = newSpeed;                                      \
-        }                                                                 \
-    }                                                                     \
-    chara->moveSpeed = newMoveSpeed;                                   \
+        if (newMoveSpeed >= newSpeed)                                    \
+        {                                                                \
+            newMoveSpeed = newSpeed;                                     \
+        }                                                                \
+    }                                                                    \
+    chara->moveSpeed = newMoveSpeed;                                     \
 }
 
 #define Chara_MoveSpeedUpdate3(chara, speed, limit) \

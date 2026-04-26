@@ -333,7 +333,7 @@ void sharedFunc_800D15F0_3_s01(void)
 
             for (i = 0; i < 4; i++)
             {
-                g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime, (i & 1) ? sharedData_800D4D0C_3_s01.vx : -sharedData_800D4D0C_3_s01.vx);
+                g_WorldObject_Dr[i].position.vz += Q12_MULT_PRECISE(g_DeltaTime, (i & 1) ? sharedData_800D4D0C_3_s01.vx : -sharedData_800D4D0C_3_s01.vx);
             }
 
             SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
@@ -346,12 +346,12 @@ void sharedFunc_800D15F0_3_s01(void)
 
             for (i = 0; i < 4; i++)
             {
-                g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime, (i & 1) ? sharedData_800D4D0C_3_s01.vx : -sharedData_800D4D0C_3_s01.vx);
+                g_WorldObject_Dr[i].position.vz += Q12_MULT_PRECISE(g_DeltaTime, (i & 1) ? sharedData_800D4D0C_3_s01.vx : -sharedData_800D4D0C_3_s01.vx);
             }
 
-            for (i = 4; i < 6; i++)
+            for (i = 4; i < ARRAY_SIZE(g_WorldObject_Dr); i++)
             {
-                g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime, (i & 1) ? sharedData_800D4D0C_3_s01.vy : -sharedData_800D4D0C_3_s01.vy);
+                g_WorldObject_Dr[i].position.vz += Q12_MULT_PRECISE(g_DeltaTime, (i & 1) ? sharedData_800D4D0C_3_s01.vy : -sharedData_800D4D0C_3_s01.vy);
             }
 
             if (g_SysWork.sysStateSteps[0] == 15)
@@ -380,12 +380,13 @@ void sharedFunc_800D15F0_3_s01(void)
             Sd_SfxStop(Sfx_Unk1499);
             Sd_SfxStop(Sfx_Unk1501);
             Sd_SfxStop(Sfx_Unk1498);
+
 #if defined(MAP7_S01) || defined(MAP7_S02)
             temp2 = Q12(-60.9f);
 
             for (i = 5; i >= 0; i--)
             {
-                g_WorldObject_Dr[i].position_1C.vz = temp2;
+                g_WorldObject_Dr[i].position.vz = temp2;
             }
 #endif
             break;

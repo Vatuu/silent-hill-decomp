@@ -474,7 +474,7 @@ STATIC_ASSERT_SIZEOF(s_Collision, 12);
 typedef struct
 {
     VECTOR3  position; // Q19.12
-    SVECTOR3 rotation_C; // Q3.12 TODO: Not a rotation? Y position is added to this.
+    SVECTOR3 rotation; // Q3.12 TODO: Not a rotation? Y position is added to this.
     s8       field_12;
 } s_CollisionQuery;
 
@@ -1086,7 +1086,7 @@ typedef struct _GlobalLm
     /* 0x8 */ s32         queueIdx;
 } s_GlobalLm;
 
-typedef struct
+typedef struct _ModelInfo
 {
     /* 0x0 */ s32            field_0; // Bone flags?
     /* 0x4 */ GsCOORDINATE2* coord;
@@ -1241,16 +1241,16 @@ typedef struct _MapGfxInfo
 // Rough name.
 typedef struct _WorldObjectMetadata
 {
-    u_Filename name_0;
-    s8         field_8;
-    s8         lmIdx_9; /** Set to 2 when found in `g_Map.globalLm_138.lmHdr` and 3-6 if found in `g_Map.ipdActive_15C[i] (i + 3)`. */
+    /* 0x0 */ u_Filename name_0;
+    /* 0x8 */ s8         field_8;
+    /* 0x9 */ s8         lmIdx_9; /** Set to 2 when found in `g_Map.globalLm_138.lmHdr` and 3-6 if found in `g_Map.ipdActive_15C[i] (i + 3)`. */
 } s_WorldObjectMetadata;
 
 // Rough name.
 typedef struct _WorldObjectModel
 {
-    s_ModelInfo           modelInfo;
-    s_WorldObjectMetadata metadata_10;
+    /* 0x0  */ s_ModelInfo           modelInfo;
+    /* 0x10 */ s_WorldObjectMetadata metadata;
 } s_WorldObjectModel;
 STATIC_ASSERT_SIZEOF(s_WorldObjectModel, 28);
 

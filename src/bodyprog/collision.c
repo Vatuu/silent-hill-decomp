@@ -137,9 +137,9 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
     collQuery.position.vx = posX;
     collQuery.position.vy = Q12(0.0f);
     collQuery.position.vz = posZ;
-    collQuery.rotation_C.vx = Q12_ANGLE(0.0f);
-    collQuery.rotation_C.vy = Q12_ANGLE(0.0f);
-    collQuery.rotation_C.vz = Q12_ANGLE(0.0f);
+    collQuery.rotation.vx = Q12_ANGLE(0.0f);
+    collQuery.rotation.vy = Q12_ANGLE(0.0f);
+    collQuery.rotation.vz = Q12_ANGLE(0.0f);
     Collision_QueryInit(&state, &pos, &collQuery, false);
 
     state.field_0_8  = 0;
@@ -381,9 +381,9 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset
         return 1;
     }
 
-    collQuery.rotation_C.vy = chara->field_C8.field_0;
-    collQuery.rotation_C.vx = chara->field_C8.field_2;
-    collQuery.rotation_C.vz = chara->field_D4.radius_0;
+    collQuery.rotation.vy = chara->field_C8.field_0;
+    collQuery.rotation.vx = chara->field_C8.field_2;
+    collQuery.rotation.vz = chara->field_D4.radius_0;
     collQuery.field_12 = chara->field_E1_0;
 
     offsetCpy = *offset;
@@ -528,7 +528,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
 
     offsetCpy = *offset;
 
-    collResult->field_18 = func_8006F620(&offsetCpy, collQuery, collQuery->rotation_C.vz, collQuery->rotation_C.vy);
+    collResult->field_18 = func_8006F620(&offsetCpy, collQuery, collQuery->rotation.vz, collQuery->rotation.vy);
 
     Collision_QueryInit(&collState, &offsetCpy, collQuery, arg3);
 
@@ -685,8 +685,8 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
         temp4 = curChara->field_C8.field_2 + curChara->position.vy;
 
         // TODO: Rotation + position? Seems wrong.
-        temp6 = collQuery->rotation_C.vy + collQuery->position.vy;
-        temp5 = collQuery->rotation_C.vx + collQuery->position.vy;
+        temp6 = collQuery->rotation.vy + collQuery->position.vy;
+        temp5 = collQuery->rotation.vx + collQuery->position.vy;
         if (temp3 > temp5 || temp4 < temp6)
         {
             continue;
@@ -696,7 +696,7 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
         posZ = (curChara->position.vz + curChara->field_D8.offsetZ_6) - collQuery->position.vz;
 
         mag = Vc_VectorMagnitudeCalc(posX, Q12(0.0f), posZ);
-        if (((curChara->field_D4.radius_0 + collQuery->rotation_C.vz) + Q12_ANGLE(36.0f)) < mag)
+        if (((curChara->field_D4.radius_0 + collQuery->rotation.vz) + Q12_ANGLE(36.0f)) < mag)
         {
             continue;
         }
@@ -772,13 +772,13 @@ void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* pos, c
         result->direction_14.vz = Q12(0.0f);
     }
 
-    result->field_28        = FP_FROM(collQuery->rotation_C.vz, Q4_SHIFT); // TODO: Q8 angle?
+    result->field_28        = FP_FROM(collQuery->rotation.vz, Q4_SHIFT); // TODO: Q8 angle?
     result->positionX_18    = Q12_TO_Q8(collQuery->position.vx);
     result->positionZ_1C    = Q12_TO_Q8(collQuery->position.vz);
     result->newPositionX_20 = result->positionX_18 + result->offset_C.vx;
     result->newPositionZ_24 = result->positionZ_1C + result->offset_C.vz;
-    result->field_2A        = FP_FROM(collQuery->rotation_C.vy + collQuery->position.vy, Q4_SHIFT); // TODO: Position + rotation? Seems wrong.
-    result->field_2C        = FP_FROM(collQuery->rotation_C.vx + collQuery->position.vy, Q4_SHIFT);
+    result->field_2A        = FP_FROM(collQuery->rotation.vy + collQuery->position.vy, Q4_SHIFT); // TODO: Position + rotation? Seems wrong.
+    result->field_2C        = FP_FROM(collQuery->rotation.vx + collQuery->position.vy, Q4_SHIFT);
     result->field_0         = collQuery->field_12;
 }
 

@@ -61,16 +61,16 @@ extern q3_12 D_800D7F30;
 extern VECTOR3 g_Cutscene_CameraPosition;
 extern VECTOR3 g_Cutscene_CameraLookAt;
 
-extern s_WorldObjectDescNoRot WorldObject_D_800D7FF0;
+extern s_WorldObjectPlacement WorldObject_D_800D7FF0;
 
 extern u8 D_800D8018;
 
-extern s_WorldObjectDesc      WorldObject_D_800D8020;
-extern s_WorldObjectDesc      WorldObject_D_800D8050;
-extern s_WorldObjectPose      WorldObject_D_800D8070;
-extern s_WorldObjectPose      WorldObject_D_800D8090;
-extern s_WorldObjectDesc      WorldObject_D_800D80B0;
-extern s_WorldObjectDescNoRot WorldObject_D_800D80E0[2];
+extern s_WorldObjectPose      WorldObject_D_800D8020;
+extern s_WorldObjectPose      WorldObject_D_800D8050;
+extern s_Pose      WorldObject_D_800D8070;
+extern s_Pose      WorldObject_D_800D8090;
+extern s_WorldObjectPose      WorldObject_D_800D80B0;
+extern s_WorldObjectPlacement WorldObject_D_800D80E0[2];
 
 /** Time. */
 extern q3_12 D_800D5AE8;

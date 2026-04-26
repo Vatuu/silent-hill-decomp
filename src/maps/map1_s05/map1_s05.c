@@ -316,11 +316,11 @@ void Map_WorldObjectsUpdate(void) // 0x800D5400
         g_SysWork.pointLightIntensity = Q12(1.35f) + (((Q12(0.9f) + Q12_MULT_PRECISE(sp18[0], Q12(0.6f))) * Math_Sin(sp18[1])) >> 15);
     }
 
-    g_WorldObject0.rotation_28.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(-90.0f));
-    WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &g_WorldObject0.rotation_28);
+    g_WorldObject0.rotation.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(-90.0f));
+    WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position, &g_WorldObject0.rotation);
 
-    g_WorldObject1.rotation_28.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(15.0f));
-    WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
+    g_WorldObject1.rotation.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(15.0f));
+    WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position, &g_WorldObject1.rotation);
 
     i = 0;
     while (1)

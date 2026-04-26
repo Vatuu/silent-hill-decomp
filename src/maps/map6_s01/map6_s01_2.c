@@ -814,13 +814,13 @@ void Map_WorldObjectsUpdate(void) // 0x800D30DC
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
     {
-        WorldGfx_ObjectAdd(&D_800D5374.object_0, &D_800D5374.position_1C, &D_800D5374.rotation_28);
+        WorldGfx_ObjectAdd(&D_800D5374.object_0, &D_800D5374.position, &D_800D5374.rotation);
 
         if (!D_800D5345)
         {
             for (i = 0; i < ARRAY_SIZE(D_800D53A4); i++)
             {
-                WorldGfx_ObjectAdd(&D_800D53A4[i].object_0, &D_800D53A4[i].position_1C, &D_800D53A4[i].rotation_28);
+                WorldGfx_ObjectAdd(&D_800D53A4[i].object_0, &D_800D53A4[i].position, &D_800D53A4[i].rotation);
             }
         }
     }
@@ -829,7 +829,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D30DC
     {
         if (!Savegame_EventFlagGet(EventFlag_M6S01_RifleShells))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation);
         }
     }
 
@@ -837,7 +837,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D30DC
     {
         if (!Savegame_EventFlagGet(EventFlag_M6S01_HandgunBullets))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation);
         }
     }
 
@@ -845,7 +845,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D30DC
     {
         if (!Savegame_EventFlagGet(EventFlag_M6S01_HealthDrink))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[2].position, &g_CommonWorldObjectPoses[2].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[2].position, &g_CommonWorldObjectPoses[2].rotation);
         }
     }
 }

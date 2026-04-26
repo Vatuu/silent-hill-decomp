@@ -11,7 +11,7 @@
 
 #include "maps/shared.h"
 
-extern s_WorldObjectDescNoRot g_WorldObject_Kidn04;
+extern s_WorldObjectPlacement g_WorldObject_Kidn04;
 
 extern s_WorldObjectModel g_WorldObject_Fan0;
 

@@ -20,17 +20,17 @@
 
 #include "maps/shared.h"
 
-extern s_WorldObjectDescNoRot    g_WorldObject_Dr[6];
-extern s_WorldObjectDescNoRot g_WorldObject1;
-extern s_WorldObjectDesc      g_WorldObject2;
-extern s_WorldObjectDescNoRot g_WorldObject3[2];
-extern s_WorldObjectDesc      g_WorldObject5;
-extern s_WorldObjectDesc      g_WorldObject6;
-extern s_WorldObjectDesc      g_WorldObject7;
-extern s_WorldObjectDesc      g_WorldObject8;
-extern s_WorldObjectDesc      g_WorldObject9;
+extern s_WorldObjectPlacement    g_WorldObject_Dr[6];
+extern s_WorldObjectPlacement g_WorldObject1;
+extern s_WorldObjectPose      g_WorldObject2;
+extern s_WorldObjectPlacement g_WorldObject3[2];
+extern s_WorldObjectPose      g_WorldObject5;
+extern s_WorldObjectPose      g_WorldObject6;
+extern s_WorldObjectPose      g_WorldObject7;
+extern s_WorldObjectPose      g_WorldObject8;
+extern s_WorldObjectPose      g_WorldObject9;
 extern s_WorldObjectModel        g_WorldObjectA;
-extern s_WorldObjectPose      g_WorldObjectAPos;
+extern s_Pose      g_WorldObjectAPos;
 extern s_WorldObjectModel        g_CommonWorldObjects[6];
 
 extern VECTOR3 D_800D4CE4; // Used by `func_800D2E54` only. For some reason it's not in RODATA.

@@ -1816,9 +1816,9 @@ void Map_WorldObjectsInit(void) // 0x800D723C
 {
     D_800DB9B0 = 0;
 
-    WorldObjectNoRotInit(&g_WorldObject_Kidn04, "KIDN04_H", -119.8019f, 5.0f, 107.861f);
+    WorldObjectPlacementInit(&g_WorldObject_Kidn04, "KIDN04_H", -119.8019f, 5.0f, 107.861f);
 
-    WorldObjectNoRotInit(&g_WorldObject_Kidn05, "KIDN05_H", -114.89f, 5.0f, 108.36f);
+    WorldObjectPlacementInit(&g_WorldObject_Kidn05, "KIDN05_H", -114.89f, 5.0f, 108.36f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
@@ -1858,12 +1858,12 @@ void Map_WorldObjectsUpdate(void) // 0x800D7360
 
         if (Savegame_EventFlagGet(EventFlag_348))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Kidn05.object_0, &g_WorldObject_Kidn05.position_1C, &(SVECTOR3){ Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f) });
+            WorldGfx_ObjectAdd(&g_WorldObject_Kidn05.object_0, &g_WorldObject_Kidn05.position, &(SVECTOR3){ Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f) });
             Collision_FlagBitsSet(4);
         }
         else
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object_0, &g_WorldObject_Kidn04.position_1C, &(SVECTOR3){ Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f) });
+            WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object_0, &g_WorldObject_Kidn04.position, &(SVECTOR3){ Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f) });
             Collision_FlagBitsSet(2);
         }
     }

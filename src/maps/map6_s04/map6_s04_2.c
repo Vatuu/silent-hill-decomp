@@ -2854,7 +2854,7 @@ void func_800E3EF4(void) // 0x800E3EF4
         case 19:
             func_80085EB8(0, &playerChara, 152, false);
             func_800DFD08();
-            func_800DEC3C(&g_WorldObject_SFlauros.position_1C, &g_WorldObject_SFlauros.rotation_28);
+            func_800DEC3C(&g_WorldObject_SFlauros.position, &g_WorldObject_SFlauros.rotation);
 
             D_800EBB61 = 3;
             Savegame_EventFlagSet(EventFlag_464);
@@ -2945,7 +2945,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             D_800EBB70.vy = g_SysWork.npcs[0].position.vy - Q12(1.0f);
             D_800EBB70.vz = g_SysWork.npcs[0].position.vz;
 
-            func_800DF5B0(&g_WorldObject_SFlauros.position_1C, &D_800EBB70);
+            func_800DF5B0(&g_WorldObject_SFlauros.position, &D_800EBB70);
             SysWork_StateStepIncrement(0);
 
         case 34:
@@ -3213,11 +3213,11 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         if (D_800EBB61 == 3)
         {
-            Dms_CharacterTransformGet(&g_WorldObject_SFlauros.position_1C, &g_WorldObject_SFlauros.rotation_28, "SFLAU", g_Cutscene_Timer, FS_BUFFER_14);
+            Dms_CharacterTransformGet(&g_WorldObject_SFlauros.position, &g_WorldObject_SFlauros.rotation, "SFLAU", g_Cutscene_Timer, FS_BUFFER_14);
         }
         else if (D_800EBB61 == 1)
         {
-            Dms_CharacterTransformGet(&g_WorldObject_SFlauros.position_1C, &g_WorldObject_SFlauros.rotation_28, "SFLAU", g_Cutscene_Timer, FS_BUFFER_14);
+            Dms_CharacterTransformGet(&g_WorldObject_SFlauros.position, &g_WorldObject_SFlauros.rotation, "SFLAU", g_Cutscene_Timer, FS_BUFFER_14);
             Savegame_EventFlagSet(EventFlag_454);
         }
         else
@@ -3503,7 +3503,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
             break;
 
         case CELL_XZ(15, 15):
-            WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position_1C, &g_WorldObject9.rotation_28);
+            WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position, &g_WorldObject9.rotation);
 
         default:
             if (!Savegame_EventFlagGet(EventFlag_452) &&
@@ -3525,7 +3525,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
 
             if (Savegame_EventFlagGet(EventFlag_454))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_SFlauros.object_0, &g_WorldObject_SFlauros.position_1C, &g_WorldObject_SFlauros.rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_SFlauros.object_0, &g_WorldObject_SFlauros.position, &g_WorldObject_SFlauros.rotation);
             }
 
             if (!D_800ED840)

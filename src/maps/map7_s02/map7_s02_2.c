@@ -461,7 +461,7 @@ void func_800DAA4C(void) // 0x800DAA4C
 
             g_SysWork.pointLightIntensity = Q12(0.8f);
 
-            func_8005DC1C(Sfx_Unk1336, &g_WorldObject_Door.position_1C, Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1336, &g_WorldObject_Door.position, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -471,7 +471,7 @@ void func_800DAA4C(void) // 0x800DAA4C
         case 8:
             func_80085EB8(0, &g_SysWork.playerWork.player, 158, false);
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
-            func_8005DC1C(Sfx_Unk1337, &g_WorldObject_Door.position_1C, Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1337, &g_WorldObject_Door.position, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -555,7 +555,7 @@ void func_800DAA4C(void) // 0x800DAA4C
 
         if (D_800E9ECD != 0)
         {
-            Dms_CharacterTransformGet(&g_WorldObject_Door.position_1C, &g_WorldObject_Door.rotation_28, "ADOOR", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
+            Dms_CharacterTransformGet(&g_WorldObject_Door.position, &g_WorldObject_Door.rotation, "ADOOR", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
         }
 
         vcChangeProjectionValue(Dms_CameraTargetGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11));
@@ -988,16 +988,16 @@ void func_800DC14C(void) // 0x800DC14C
             floorHitCount = 0;
             for (i = 0; i < 16; i++)
             {
-                g_WorldObject_Beans[i].position_1C.vy += Q12_MULT_PRECISE(g_DeltaTime, D_800E9ED0 + FP_FROM(D_800EBA14[i] * Math_Sin(D_800EB9F4[i]), Q12_SHIFT));
-                g_WorldObject_Beans[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime, FP_FROM(D_800EBA14[i] * Math_Cos(D_800EB9F4[i]), Q12_SHIFT));
+                g_WorldObject_Beans[i].position.vy += Q12_MULT_PRECISE(g_DeltaTime, D_800E9ED0 + FP_FROM(D_800EBA14[i] * Math_Sin(D_800EB9F4[i]), Q12_SHIFT));
+                g_WorldObject_Beans[i].position.vz += Q12_MULT_PRECISE(g_DeltaTime, FP_FROM(D_800EBA14[i] * Math_Cos(D_800EB9F4[i]), Q12_SHIFT));
 
-                if (g_WorldObject_Beans[i].position_1C.vy > 0)
+                if (g_WorldObject_Beans[i].position.vy > 0)
                 {
-                    g_WorldObject_Beans[i].position_1C.vy = 0;
+                    g_WorldObject_Beans[i].position.vy = 0;
                     floorHitCount++;
                 }
 
-                WorldGfx_ObjectAdd(&g_WorldObject_Beans[i].object_0, &g_WorldObject_Beans[i].position_1C, &g_WorldObject_Beans[i].rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_Beans[i].object_0, &g_WorldObject_Beans[i].position, &g_WorldObject_Beans[i].rotation);
             }
 
             if (D_800E9ED4 < 0)
@@ -1391,10 +1391,10 @@ void func_800DD2D4(void) // 0x800DD2D4
             SD_Call(Sfx_Unk1668);
             Savegame_EventFlagSet(EventFlag_573);
 
-            g_WorldObject_Dor[0].rotation_28.vy = Q12_ANGLE(25.0f);
-            g_WorldObject_Dor[1].rotation_28.vy = Q12_ANGLE(58.0f);
-            g_WorldObject_Dor[2].rotation_28.vy = Q12_ANGLE(-50.0f);
-            g_WorldObject_Dor[3].rotation_28.vy = Q12_ANGLE(-15.0f);
+            g_WorldObject_Dor[0].rotation.vy = Q12_ANGLE(25.0f);
+            g_WorldObject_Dor[1].rotation.vy = Q12_ANGLE(58.0f);
+            g_WorldObject_Dor[2].rotation.vy = Q12_ANGLE(-50.0f);
+            g_WorldObject_Dor[3].rotation.vy = Q12_ANGLE(-15.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -1738,16 +1738,16 @@ void func_800DE1FC(void) // 0x800DE1FC
 
         case 2:
             SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
-            WorldGfx_ObjectAdd(&g_WorldObject_Cover.object_0, &g_WorldObject_Cover.position_1C, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject_Cover.object_0, &g_WorldObject_Cover.position, &(SVECTOR3){ 0, 0, 0 });
             break;
 
         case 3:
             Map_MessageWithAudio(47, &D_800EB6B0, &D_800E9D30);
-            WorldGfx_ObjectAdd(&g_WorldObject_Cover.object_0, &g_WorldObject_Cover.position_1C, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject_Cover.object_0, &g_WorldObject_Cover.position, &(SVECTOR3){ 0, 0, 0 });
             break;
 
         case 4:
-            WorldGfx_ObjectAdd(&g_WorldObject_Cover.object_0, &g_WorldObject_Cover.position_1C, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject_Cover.object_0, &g_WorldObject_Cover.position, &(SVECTOR3){ 0, 0, 0 });
 
             scratch             = PSX_SCRATCH;
             scratch->drawArea_8 = (DR_AREA*)GsOUT_PACKET_P;
@@ -1819,7 +1819,7 @@ void func_800DE1FC(void) // 0x800DE1FC
             SysWork_StateStepIncrement(0);
 
         case 6:
-            WorldGfx_ObjectAdd(&g_WorldObject_Bed3.object_0, &g_WorldObject_Bed3.position_1C, &g_WorldObject_Bed3.rotation_28);
+            WorldGfx_ObjectAdd(&g_WorldObject_Bed3.object_0, &g_WorldObject_Bed3.position, &g_WorldObject_Bed3.rotation);
 
             colorBase       = D_800E9EDC >> 5;
             scratch         = PSX_SCRATCH;
@@ -2509,18 +2509,18 @@ void func_800DFDDC(void) // 0x800DFDDC
                         SysWork_StateStepIncrement(1);
                     }
 
-                    D_800EBB64.position_1C.vz = ((g_SysWork.field_28 * Q12(0.1f)) / Q12(2.0f)) - Q12(140.6f);
+                    D_800EBB64.position.vz = ((g_SysWork.field_28 * Q12(0.1f)) / Q12(2.0f)) - Q12(140.6f);
                     break;
 
                 case 2:
                     D_800EA492 += g_GravitySpeed >> 1;
 
-                    if (D_800EBB64.position_1C.vy < Q12(-1.05f))
+                    if (D_800EBB64.position.vy < Q12(-1.05f))
                     {
-                        D_800EBB64.position_1C.vy += Q12_MULT_PRECISE(g_DeltaTime, D_800EA492);
-                        if (D_800EBB64.position_1C.vy > Q12(-1.05f))
+                        D_800EBB64.position.vy += Q12_MULT_PRECISE(g_DeltaTime, D_800EA492);
+                        if (D_800EBB64.position.vy > Q12(-1.05f))
                         {
-                            D_800EBB64.position_1C.vy = Q12(-1.05f);
+                            D_800EBB64.position.vy = Q12(-1.05f);
 
                             SysWork_StateStepIncrement(1);
                             g_SysWork.field_28 = Q12(0.0f);
@@ -2532,9 +2532,9 @@ void func_800DFDDC(void) // 0x800DFDDC
                     break;
 
                 case 3:
-                    D_800EBB64.rotation_28.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.0694f));
-                    D_800EBB64.position_1C.vy  = Q12_MULT(Math_Cos(D_800EBB64.rotation_28.vz), Q12(0.15f)) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
-                    D_800EBB64.position_1C.vz  = Q12_MULT(Math_Sin(D_800EBB64.rotation_28.vz), Q12(-0.15f)) - Q12(140.5f);
+                    D_800EBB64.rotation.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.0694f));
+                    D_800EBB64.position.vy  = Q12_MULT(Math_Cos(D_800EBB64.rotation.vz), Q12(0.15f)) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
+                    D_800EBB64.position.vz  = Q12_MULT(Math_Sin(D_800EBB64.rotation.vz), Q12(-0.15f)) - Q12(140.5f);
 
                     g_SysWork.field_28 += g_DeltaTime;
                     if (g_SysWork.field_28 > Q12(0.5f))
@@ -2546,11 +2546,11 @@ void func_800DFDDC(void) // 0x800DFDDC
 
                 case 4:
                     D_800EA492                += g_GravitySpeed;
-                    D_800EBB64.rotation_28.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3333f));
-                    D_800EBB64.position_1C.vy += Q12_MULT_PRECISE(D_800EA492, g_DeltaTime);
-                    D_800EBB64.position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
+                    D_800EBB64.rotation.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3333f));
+                    D_800EBB64.position.vy += Q12_MULT_PRECISE(D_800EA492, g_DeltaTime);
+                    D_800EBB64.position.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
 
-                    if (D_800EBB64.position_1C.vy > 0)
+                    if (D_800EBB64.position.vy > 0)
                     {
                         SysWork_StateStepIncrement(1);
                     }
@@ -2559,10 +2559,10 @@ void func_800DFDDC(void) // 0x800DFDDC
                 case 5:
                     SD_Call(Sfx_Base);
 
-                    D_800EBB64.position_1C.vx = Q12(-139.5f);
-                    D_800EBB64.position_1C.vy = Q12(-0.05f);
-                    D_800EBB64.position_1C.vz = Q12(-140.0f);
-                    D_800EBB64.rotation_28.vz = Q12(-0.25f);
+                    D_800EBB64.position.vx = Q12(-139.5f);
+                    D_800EBB64.position.vy = Q12(-0.05f);
+                    D_800EBB64.position.vz = Q12(-140.0f);
+                    D_800EBB64.rotation.vz = Q12(-0.25f);
 
                     SysWork_StateStepIncrement(0);
                     break;
@@ -3276,7 +3276,6 @@ void Map_WorldObjectsInit(void) // 0x800E3804
     WorldObject_ModelNameSet(&g_WorldObject_SavePad, D_800A99E4[1]);
 
     WorldObjectPoseInit(&g_WorldObject_UnkPose0, -16.6226f, -1.2396f, -59.0691f, 0.0f, 105.21f, 0.0f);
-
     WorldObjectPoseInit(&g_WorldObject_UnkPose1, 58.9993f, -0.82f, -99.0521f, 0.0f, -86.1f, 0.0f);
 
     WorldObject_ModelNameSet(&g_WorldObject_KaigaR[0], "KAIGAR_H");
@@ -3288,97 +3287,70 @@ void Map_WorldObjectsInit(void) // 0x800E3804
     WorldObject_ModelNameSet(&g_WorldObject_KaigaL[1], "KAIGAL2_");
 
     Math_Vector3Set(&g_WorldObject_UnkPos1, Q12(56.0f), Q12(-1.9f), Q12(-21.45f));
-
     Math_SetSVectorFast(&g_WorldObject_UnkRot0, Q12_ANGLE(0.0f), Q12_ANGLE(180.0f), Q12_ANGLE(0.0f));
 
     WorldObjectInit(&g_WorldObject_Bed3, "BED3_HID", 139.6f, 0.0f, -59.6f, 0.0f, 90.0f, 0.0f);
-
-    WorldObjectNoRotInit(&g_WorldObject_Cover, "COVER_HI", 139.71f, 0.3f, -59.55f);
-
-    WorldObjectNoRotInit(&g_WorldObject_Ank, "ANK_HIDE", 21.5767f, -1.3956f, -100.8592f);
-
-    WorldObjectNoRotInit(&g_WorldObject_Ref[0], "REF1_HID", 20.3f, 0.0f, -60.75f);
-    WorldObjectNoRotInit(&g_WorldObject_Ref[1], "REF2_HID", 20.3f, 0.0f, -60.75f);
-
+    WorldObjectPlacementInit(&g_WorldObject_Cover, "COVER_HI", 139.71f, 0.3f, -59.55f);
+    WorldObjectPlacementInit(&g_WorldObject_Ank, "ANK_HIDE", 21.5767f, -1.3956f, -100.8592f);
+    WorldObjectPlacementInit(&g_WorldObject_Ref[0], "REF1_HID", 20.3f, 0.0f, -60.75f);
+    WorldObjectPlacementInit(&g_WorldObject_Ref[1], "REF2_HID", 20.3f, 0.0f, -60.75f);
     WorldObjectInit(&g_WorldObject_Dor[0], "DOR1_HID", 21.15f, -0.8f, -60.0f, 0.0f, 0.0f, 0.0f);
     WorldObjectInit(&g_WorldObject_Dor[1], "DOR2_HID", 21.15f, -0.1f, -60.0f, 0.0f, 0.0f, 0.0f);
     WorldObjectInit(&g_WorldObject_Dor[2], "DOR3_HID", 21.15f, -0.1f, -61.5f, 0.0f, 0.0f, 0.0f);
     WorldObjectInit(&g_WorldObject_Dor[3], "DOR4_HID", 21.15f, -0.8f, -61.5f, 0.0f, 0.0f, 0.0f);
-
-    WorldObjectNoRotInit(&g_WorldObject_Chain1[0], "CHAIN1_N", 20.3f, 0.31f, -60.75f);
-    WorldObjectNoRotInit(&g_WorldObject_Chain1[1], "CHAIN1_H", 20.3f, 0.0206f, -60.75f);
-
-    WorldObjectNoRotInit(&g_WorldObject_Sword, "SWORD_HI", 20.3f, 0.0f, -60.75f);
-
+    WorldObjectPlacementInit(&g_WorldObject_Chain1[0], "CHAIN1_N", 20.3f, 0.31f, -60.75f);
+    WorldObjectPlacementInit(&g_WorldObject_Chain1[1], "CHAIN1_H", 20.3f, 0.0206f, -60.75f);
+    WorldObjectPlacementInit(&g_WorldObject_Sword, "SWORD_HI", 20.3f, 0.0f, -60.75f);
     WorldObjectInit(&g_WorldObject_Jelly, "JELLY_NE", 62.55f, -0.9f, -61.05f, 0.0f, 90.0f, 0.0f);
 
     for (i = 0; i < ARRAY_SIZE(g_WorldObject_Beans); i++)
     {
         beanObjName[4] = (i >> 1) + '1';
         WorldObject_ModelNameSet(&g_WorldObject_Beans[i], beanObjName);
-        g_WorldObject_Beans[i].position_1C.vx = Q12(62.3f);
-        g_WorldObject_Beans[i].position_1C.vy = Rng_GenerateInt(Q12(-1.45f), Q12(-1.3501f) - 1);
-        g_WorldObject_Beans[i].position_1C.vz = Rng_GenerateInt(Q12(-61.07f), Q12(-60.93f) - 1);
-        g_WorldObject_Beans[i].rotation_28.vx = Rng_GenerateUInt(0, 4095);
-        g_WorldObject_Beans[i].rotation_28.vy = Rng_GenerateUInt(0, 4095);
-        g_WorldObject_Beans[i].rotation_28.vz = Rng_GenerateUInt(0, 4095);
+        g_WorldObject_Beans[i].position.vx = Q12(62.3f);
+        g_WorldObject_Beans[i].position.vy = Rng_GenerateInt(Q12(-1.45f), Q12(-1.3501f) - 1);
+        g_WorldObject_Beans[i].position.vz = Rng_GenerateInt(Q12(-61.07f), Q12(-60.93f) - 1);
+        g_WorldObject_Beans[i].rotation.vx = Rng_GenerateUInt(0, 4095);
+        g_WorldObject_Beans[i].rotation.vy = Rng_GenerateUInt(0, 4095);
+        g_WorldObject_Beans[i].rotation.vz = Rng_GenerateUInt(0, 4095);
         D_800EB9F4[i]                         = Rng_GenerateUInt(0, 4095);
         D_800EBA14[i]                         = FP_FROM(Math_Sin(Rng_GenerateUInt(0, 511) | 0x200) * Q12(2.2f), Q12_SHIFT);
     }
 
     WorldObjectInit(&g_WorldObject_Key0, "KEY_HIDE", 62.2f, 0.0f, -61.1f, 0.0f, 0.0f, 90.0f);
-
-    WorldObjectNoRotInit(&g_WorldObject_Wall9, "WALL9_HI", 103.9f, 0.0f, -99.5f);
-
-    WorldObjectNoRotInit(&g_WorldObject_Door9, "DOOR9_HI", 104.0f, -1.6f, -100.2f);
-
-    WorldObjectNoRotInit(&g_WorldObject_Gofu, "GOFU_HID", 17.072f, -1.6f, -19.2f);
-
-    WorldObjectNoRotInit(&g_WorldObject_Driver, "DRIVER_H", -19.2f, 0.0f, -97.45f);
-
-    WorldObjectNoRotInit(&g_WorldObject_Zukan, "ZUKAN_HI", 99.8f, 0.0f, -20.0f);
-
-    WorldObjectNoRotInit(&g_WorldObject_Scrap, "SCRAP_HI", 100.0f, 0.0f, -20.0f);
+    WorldObjectPlacementInit(&g_WorldObject_Wall9, "WALL9_HI", 103.9f, 0.0f, -99.5f);
+    WorldObjectPlacementInit(&g_WorldObject_Door9, "DOOR9_HI", 104.0f, -1.6f, -100.2f);
+    WorldObjectPlacementInit(&g_WorldObject_Gofu, "GOFU_HID", 17.072f, -1.6f, -19.2f);
+    WorldObjectPlacementInit(&g_WorldObject_Driver, "DRIVER_H", -19.2f, 0.0f, -97.45f);
+    WorldObjectPlacementInit(&g_WorldObject_Zukan, "ZUKAN_HI", 99.8f, 0.0f, -20.0f);
+    WorldObjectPlacementInit(&g_WorldObject_Scrap, "SCRAP_HI", 100.0f, 0.0f, -20.0f);
 
     WorldObject_ModelNameSet(&g_WorldObject_Key1, "KEY_HIDE");
-
     WorldObject_ModelNameSet(&g_WorldObject_Futa[0], "FUTA1_HI");
     WorldObject_ModelNameSet(&g_WorldObject_Futa[1], "FUTA2_HI");
 
     WorldObjectPoseInit(&g_WorldObject_UnkPose2, -60.0f, 0.0f, -140.8f, 0.0f, 180.0f, 0.0f);
-
     WorldObjectInit(&g_WorldObject_Camera, "CAMERA_H", -19.6f, -0.8f, -142.2f, 0.0f, 126.7f, 0.0f);
-
     WorldObjectInit(&g_WorldObject_Door, "DOOR_HID", 182.5247f, 0.0f, -106.064f, 0.0f, 0.0f, 0.0f);
-
     WorldObjectInit(&g_WorldObject_Ring, "RING_NEA", -178.381f, -0.5716f, -98.846f, 0.0f, 0.0f, -32.5f);
-
     WorldObjectInit(&g_WorldObject_Gofu_B, "GOFU_B_H", -181.9f, -0.57f, -101.2f, 0.0f, 59.0f, 0.0f);
-
-    WorldObjectNoRotInit(&g_WorldObject_Dr[0], "DR1L_HID", -100.9f, 0.0f, -60.9f);
-    WorldObjectNoRotInit(&g_WorldObject_Dr[1], "DR1R_HID", -100.9f, 0.0f, -60.9f);
-    WorldObjectNoRotInit(&g_WorldObject_Dr[2], "DR3L_HID", -100.9f, 0.0f, -60.9f);
-    WorldObjectNoRotInit(&g_WorldObject_Dr[3], "DR3R_HID", -100.9f, 0.0f, -60.9f);
-    WorldObjectNoRotInit(&g_WorldObject_Dr[4], "DR2L_HID", -100.9f, 0.0f, -60.9f);
-    WorldObjectNoRotInit(&g_WorldObject_Dr[5], "DR2R_HID", -100.9f, 0.0f, -60.9f);
-
-    WorldObjectNoRotInit(&g_WorldObject_Mov1, "MOV1_HID", -21.7317f, -0.387f, -57.2073f);
-
-    WorldObjectNoRotInit(&g_WorldObject_Key2, "KEY_HIDE", 140.6558f, -0.81f, -58.937f);
-
+    WorldObjectPlacementInit(&g_WorldObject_Dr[0], "DR1L_HID", -100.9f, 0.0f, -60.9f);
+    WorldObjectPlacementInit(&g_WorldObject_Dr[1], "DR1R_HID", -100.9f, 0.0f, -60.9f);
+    WorldObjectPlacementInit(&g_WorldObject_Dr[2], "DR3L_HID", -100.9f, 0.0f, -60.9f);
+    WorldObjectPlacementInit(&g_WorldObject_Dr[3], "DR3R_HID", -100.9f, 0.0f, -60.9f);
+    WorldObjectPlacementInit(&g_WorldObject_Dr[4], "DR2L_HID", -100.9f, 0.0f, -60.9f);
+    WorldObjectPlacementInit(&g_WorldObject_Dr[5], "DR2R_HID", -100.9f, 0.0f, -60.9f);
+    WorldObjectPlacementInit(&g_WorldObject_Mov1, "MOV1_HID", -21.7317f, -0.387f, -57.2073f);
+    WorldObjectPlacementInit(&g_WorldObject_Key2, "KEY_HIDE", 140.6558f, -0.81f, -58.937f);
     WorldObjectInit(&g_WorldObject_GofuA[0], "GOFUA_HI", 59.7776f, -1.8433f, -96.1695f, 0.0f, 90.0f, 0.0f);
     WorldObjectInit(&g_WorldObject_GofuA[1], "GOFUB_HI", 59.77f, -1.2757f, -95.924f, 90.0f, 180.0f, 0.0f);
     WorldObjectInit(&g_WorldObject_GofuA[2], "GOFUC_HI", 60.2471f, -1.8104f, -95.917f, 0.0f, 90.0f, 0.0f);
     WorldObjectInit(&g_WorldObject_GofuA[3], "GOFUD_HI", 59.9993f, -1.5943f, -95.9087f, 90.0f, 0.0f, 0.0f);
     WorldObjectInit(&g_WorldObject_GofuA[4], "GOFUE_HI", 60.2496f, -1.2691f, -95.9105f, 90.0f, 0.0f, 0.0f);
-
     WorldObjectInit(&g_WorldObject_KeyX2, "KEYX2_HI", -16.6692f, -1.23f, -61.6f, 90.9f, 90.0f, 0.0f);
-
     WorldObjectInit(&g_WorldObject_Stone, "STONE_HI", -16.6692f, -0.71f, -61.533f, 0.0f, 90.0f, 0.0f);
-
     WorldObjectInit(&g_WorldObject_Window, "WINDOW_H", -16.666f, -1.235f, -61.503f, 0.0f, 90.0f, 0.0f);
-
-    WorldObjectNoRotInit(&g_WorldObject_Kubomi, "KUBOMI_H", -139.5f, 0.0f, -138.1f);
+    WorldObjectPlacementInit(&g_WorldObject_Kubomi, "KUBOMI_H", -139.5f, 0.0f, -138.1f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
@@ -3441,7 +3413,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
         case CELL_XZ(11, 12):
             if (Savegame_EventFlagGet(EventFlag_569))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Diary.object_0, &g_WorldObject_Diary.position_1C, &g_WorldObject_Diary.rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_Diary.object_0, &g_WorldObject_Diary.position, &g_WorldObject_Diary.rotation);
             }
             break;
 
@@ -3451,19 +3423,19 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
             break;
 
         case CELL_XZ(15, 14):
-            WorldGfx_ObjectAdd(&g_WorldObject_Stone.object_0, &g_WorldObject_Stone.position_1C, &g_WorldObject_Stone.rotation_28);
-            WorldGfx_ObjectAdd(&g_WorldObject_Window.object_0, &g_WorldObject_Window.position_1C, &g_WorldObject_Window.rotation_28);
-            WorldGfx_ObjectAdd(&g_WorldObject_SavePad, &g_WorldObject_UnkPose0.position, &g_WorldObject_UnkPose0.rotation_C);
-            WorldGfx_ObjectAdd(&g_WorldObject_KeyX2.object_0, &g_WorldObject_KeyX2.position_1C, &g_WorldObject_KeyX2.rotation_28);
+            WorldGfx_ObjectAdd(&g_WorldObject_Stone.object_0, &g_WorldObject_Stone.position, &g_WorldObject_Stone.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject_Window.object_0, &g_WorldObject_Window.position, &g_WorldObject_Window.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject_SavePad, &g_WorldObject_UnkPose0.position, &g_WorldObject_UnkPose0.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject_KeyX2.object_0, &g_WorldObject_KeyX2.position, &g_WorldObject_KeyX2.rotation);
             break;
 
         case CELL_XZ(20, 14):
             if (Savegame_EventFlagGet(EventFlag_551))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Bed3.object_0, &g_WorldObject_Bed3.position_1C, &g_WorldObject_Bed3.rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_Bed3.object_0, &g_WorldObject_Bed3.position, &g_WorldObject_Bed3.rotation);
                 if (!Savegame_EventFlagGet(EventFlag_M7S02_PickupDiskOfOuroboros))
                 {
-                    WorldGfx_ObjectAdd(&g_WorldObject_Key2.object_0, &g_WorldObject_Key2.position_1C, &(SVECTOR3){ 0, 0, 0 });
+                    WorldGfx_ObjectAdd(&g_WorldObject_Key2.object_0, &g_WorldObject_Key2.position, &(SVECTOR3){ 0, 0, 0 });
                 }
             }
             break;
@@ -3471,35 +3443,35 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
         case CELL_XZ(17, 13):
             if (!Savegame_EventFlagGet(EventFlag_M7S02_PickupAnkh))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Ank.object_0, &g_WorldObject_Ank.position_1C, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Ank.object_0, &g_WorldObject_Ank.position, &(SVECTOR3){ 0, 0, 0 });
             }
             break;
 
         case CELL_XZ(17, 14):
             if (Savegame_EventFlagGet(EventFlag_557))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Ref[1].object_0, &g_WorldObject_Ref[1].position_1C, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Ref[1].object_0, &g_WorldObject_Ref[1].position, &(SVECTOR3){ 0, 0, 0 });
                 for (i = 0; i < 4; i++)
                 {
-                    WorldGfx_ObjectAdd(&g_WorldObject_Dor[i].object_0, &g_WorldObject_Dor[i].position_1C, &g_WorldObject_Dor[i].rotation_28);
+                    WorldGfx_ObjectAdd(&g_WorldObject_Dor[i].object_0, &g_WorldObject_Dor[i].position, &g_WorldObject_Dor[i].rotation);
                 }
             }
             else
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Ref->object_0, &g_WorldObject_Ref->position_1C, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Ref->object_0, &g_WorldObject_Ref->position, &(SVECTOR3){ 0, 0, 0 });
                 if (!Savegame_EventFlagGet(EventFlag_M7S02_PickupDaggerOfMelchior))
                 {
-                    WorldGfx_ObjectAdd(&g_WorldObject_Sword.object_0, &g_WorldObject_Sword.position_1C, &(SVECTOR3){ 0, 0, 0 });
+                    WorldGfx_ObjectAdd(&g_WorldObject_Sword.object_0, &g_WorldObject_Sword.position, &(SVECTOR3){ 0, 0, 0 });
                 }
             }
 
             if (Savegame_EventFlagGet(EventFlag_552))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Chain1[1].object_0, &g_WorldObject_Chain1[1].position_1C, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Chain1[1].object_0, &g_WorldObject_Chain1[1].position, &(SVECTOR3){ 0, 0, 0 });
             }
             else
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Chain1[0].object_0, &g_WorldObject_Chain1[0].position_1C, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Chain1[0].object_0, &g_WorldObject_Chain1[0].position, &(SVECTOR3){ 0, 0, 0 });
             }
 
             if (Savegame_EventFlagGet(EventFlag_M7S02_PickupDaggerOfMelchior))
@@ -3525,41 +3497,41 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
         case CELL_XZ(18, 14):
             if (!Savegame_EventFlagGet(EventFlag_556))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Jelly.object_0, &g_WorldObject_Jelly.position_1C, &g_WorldObject_Jelly.rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_Jelly.object_0, &g_WorldObject_Jelly.position, &g_WorldObject_Jelly.rotation);
             }
             else if (!Savegame_EventFlagGet(EventFlag_M7S02_PickupKeyOfBethor))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Key0.object_0, &g_WorldObject_Key0.position_1C, &g_WorldObject_Key0.rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_Key0.object_0, &g_WorldObject_Key0.position, &g_WorldObject_Key0.rotation);
             }
             break;
 
         case CELL_XZ(19, 13):
             if (Savegame_EventFlagGet(EventFlag_560))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Wall9.object_0, &g_WorldObject_Wall9.position_1C, &(SVECTOR3){ 0, 0, 0 });
-                WorldGfx_ObjectAdd(&g_WorldObject_Door9.object_0, &g_WorldObject_Door9.position_1C, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Wall9.object_0, &g_WorldObject_Wall9.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Door9.object_0, &g_WorldObject_Door9.position, &(SVECTOR3){ 0, 0, 0 });
             }
             break;
 
         case CELL_XZ(17, 15):
             if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupAmuletOfSolomon))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Gofu.object_0, &g_WorldObject_Gofu.position_1C, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Gofu.object_0, &g_WorldObject_Gofu.position, &(SVECTOR3){ 0, 0, 0 });
             }
             break;
 
         case CELL_XZ(15, 13):
             if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupScrewdriver))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Driver.object_0, &g_WorldObject_Driver.position_1C, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Driver.object_0, &g_WorldObject_Driver.position, &(SVECTOR3){ 0, 0, 0 });
             }
             break;
 
         case CELL_XZ(19, 15):
-            WorldGfx_ObjectAdd(&g_WorldObject_Zukan.object_0, &g_WorldObject_Zukan.position_1C, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject_Zukan.object_0, &g_WorldObject_Zukan.position, &(SVECTOR3){ 0, 0, 0 });
             if (Savegame_EventFlagGet(EventFlag_M5S03_SeenSecondNewspaper))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Scrap.object_0, &g_WorldObject_Scrap.position_1C, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Scrap.object_0, &g_WorldObject_Scrap.position, &(SVECTOR3){ 0, 0, 0 });
             }
             break;
 
@@ -3568,13 +3540,13 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
             {
                 if (!Savegame_EventFlagGet(EventFlag_M7S02_PickupKeyOfAratron))
                 {
-                    WorldGfx_ObjectAdd(&g_WorldObject_Key1, &g_WorldObject_UnkPose2.position, &g_WorldObject_UnkPose2.rotation_C);
+                    WorldGfx_ObjectAdd(&g_WorldObject_Key1, &g_WorldObject_UnkPose2.position, &g_WorldObject_UnkPose2.rotation);
                 }
-                WorldGfx_ObjectAdd(&g_WorldObject_Futa[1], &g_WorldObject_UnkPose2.position, &g_WorldObject_UnkPose2.rotation_C);
+                WorldGfx_ObjectAdd(&g_WorldObject_Futa[1], &g_WorldObject_UnkPose2.position, &g_WorldObject_UnkPose2.rotation);
             }
             else
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Futa[0], &g_WorldObject_UnkPose2.position, &g_WorldObject_UnkPose2.rotation_C);
+                WorldGfx_ObjectAdd(&g_WorldObject_Futa[0], &g_WorldObject_UnkPose2.position, &g_WorldObject_UnkPose2.rotation);
             }
 
             if (Savegame_EventFlagGet(EventFlag_486) && !Savegame_EventFlagGet(EventFlag_549))
@@ -3596,66 +3568,66 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
             break;
 
         case CELL_XZ(12, 12):
-            WorldGfx_ObjectAdd(&g_WorldObject_Kubomi.object_0, &g_WorldObject_Kubomi.position_1C, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject_Kubomi.object_0, &g_WorldObject_Kubomi.position, &(SVECTOR3){ 0, 0, 0 });
             break;
 
         case CELL_XZ(15, 12):
             if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupCamera))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Camera.object_0, &g_WorldObject_Camera.position_1C, &g_WorldObject_Camera.rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_Camera.object_0, &g_WorldObject_Camera.position, &g_WorldObject_Camera.rotation);
             }
             break;
 
         case CELL_XZ(21, 13):
-            WorldGfx_ObjectAdd(&g_WorldObject_Door.object_0, &g_WorldObject_Door.position_1C, &g_WorldObject_Door.rotation_28);
+            WorldGfx_ObjectAdd(&g_WorldObject_Door.object_0, &g_WorldObject_Door.position, &g_WorldObject_Door.rotation);
             break;
 
         case CELL_XZ(15, 15):
         case CELL_XZ(13, 14):
             for (i = 0; i < 6; i++)
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object_0, &g_WorldObject_Dr[i].position_1C, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object_0, &g_WorldObject_Dr[i].position, &(SVECTOR3){ 0, 0, 0 });
             }
             break;
 
         case CELL_XZ(11, 13):
             if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupRingOfContract))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Ring.object_0, &g_WorldObject_Ring.position_1C, &g_WorldObject_Ring.rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_Ring.object_0, &g_WorldObject_Ring.position, &g_WorldObject_Ring.rotation);
             }
             if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupCrestOfMercury))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Gofu_B.object_0, &g_WorldObject_Gofu_B.position_1C, &g_WorldObject_Gofu_B.rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_Gofu_B.object_0, &g_WorldObject_Gofu_B.position, &g_WorldObject_Gofu_B.rotation);
             }
             break;
 
         case CELL_XZ(18, 13):
             if (Savegame_EventFlagGet(EventFlag_540))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_GofuA[0].object_0, &g_WorldObject_GofuA[0].position_1C, &g_WorldObject_GofuA->rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_GofuA[0].object_0, &g_WorldObject_GofuA[0].position, &g_WorldObject_GofuA->rotation);
             }
 
             if (Savegame_EventFlagGet(EventFlag_541))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_GofuA[1].object_0, &g_WorldObject_GofuA[1].position_1C, &g_WorldObject_GofuA[1].rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_GofuA[1].object_0, &g_WorldObject_GofuA[1].position, &g_WorldObject_GofuA[1].rotation);
             }
 
             if (Savegame_EventFlagGet(EventFlag_542))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_GofuA[2].object_0, &g_WorldObject_GofuA[2].position_1C, &g_WorldObject_GofuA[2].rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_GofuA[2].object_0, &g_WorldObject_GofuA[2].position, &g_WorldObject_GofuA[2].rotation);
             }
 
             if (Savegame_EventFlagGet(EventFlag_543))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_GofuA[3].object_0, &g_WorldObject_GofuA[3].position_1C, &g_WorldObject_GofuA[3].rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_GofuA[3].object_0, &g_WorldObject_GofuA[3].position, &g_WorldObject_GofuA[3].rotation);
             }
 
             if (Savegame_EventFlagGet(EventFlag_544))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_GofuA[4].object_0, &g_WorldObject_GofuA[4].position_1C, &g_WorldObject_GofuA[4].rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_GofuA[4].object_0, &g_WorldObject_GofuA[4].position, &g_WorldObject_GofuA[4].rotation);
             }
 
-            WorldGfx_ObjectAdd(&g_WorldObject_SavePad, &g_WorldObject_UnkPose1.position, &g_WorldObject_UnkPose1.rotation_C);
+            WorldGfx_ObjectAdd(&g_WorldObject_SavePad, &g_WorldObject_UnkPose1.position, &g_WorldObject_UnkPose1.rotation);
             break;
 
         case CELL_XZ(12, 15):
@@ -3701,7 +3673,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
     {
         if (!Savegame_EventFlagGet(EventFlag_M7S01_RifleShells))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation);
         }
     }
 
@@ -3709,7 +3681,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
     {
         if (!Savegame_EventFlagGet(EventFlag_M7S01_HandgunBullets0))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation);
         }
     }
 
@@ -3717,7 +3689,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
     {
         if (!Savegame_EventFlagGet(EventFlag_M7S01_HealthDrink0))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[2].position, &g_CommonWorldObjectPoses[2].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[2].position, &g_CommonWorldObjectPoses[2].rotation);
         }
     }
 
@@ -3725,7 +3697,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
     {
         if (!Savegame_EventFlagGet(EventFlag_M7S01_HandgunBullets1))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[3].position, &g_CommonWorldObjectPoses[3].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[3].position, &g_CommonWorldObjectPoses[3].rotation);
         }
     }
 
@@ -3733,7 +3705,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
     {
         if (!Savegame_EventFlagGet(EventFlag_M7S01_ShotgunShells))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[5], &g_CommonWorldObjectPoses[4].position, &g_CommonWorldObjectPoses[4].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[5], &g_CommonWorldObjectPoses[4].position, &g_CommonWorldObjectPoses[4].rotation);
         }
     }
 
@@ -3741,7 +3713,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
     {
         if (!Savegame_EventFlagGet(EventFlag_M7S01_FirstAidKit))
         {
-            WorldGfx_ObjectAdd(g_CommonWorldObjects, &g_CommonWorldObjectPoses[5].position, &g_CommonWorldObjectPoses[5].rotation_C);
+            WorldGfx_ObjectAdd(g_CommonWorldObjects, &g_CommonWorldObjectPoses[5].position, &g_CommonWorldObjectPoses[5].rotation);
         }
     }
 
@@ -3749,7 +3721,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
     {
         if (!Savegame_EventFlagGet(EventFlag_M7S01_HandgunBullets2))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[6].position, &g_CommonWorldObjectPoses[6].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[6].position, &g_CommonWorldObjectPoses[6].rotation);
         }
     }
 
@@ -3757,7 +3729,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
     {
         if (!Savegame_EventFlagGet(EventFlag_M7S01_HealthDrink1))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[7].position, &g_CommonWorldObjectPoses[7].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[7].position, &g_CommonWorldObjectPoses[7].rotation);
         }
     }
 }

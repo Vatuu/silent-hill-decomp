@@ -158,7 +158,7 @@ extern s_Model g_Ai_MonsterCybil_ExtraModel; // Some kind of attachment or anoth
 extern s32 D_800ED588;
 extern s32 D_800ED58C;
 
-extern s_WorldObjectDesc g_WorldObject_SFlauros;
+extern s_WorldObjectPose g_WorldObject_SFlauros;
 
 extern s_WorldObjectModel g_WorldObject0[2];
 extern s_WorldObjectModel g_WorldObject1[3];
@@ -172,7 +172,7 @@ extern VECTOR3 D_800ED740;
 extern s_WorldObjectModel g_WorldObject6[3];
 extern s_WorldObjectModel g_WorldObject7[2];
 extern s_WorldObjectModel g_WorldObject8;
-extern s_WorldObjectDesc g_WorldObject9;
+extern s_WorldObjectPose g_WorldObject9;
 
 extern u8 D_800ED5AD;
 extern s16 D_800ED5B4;

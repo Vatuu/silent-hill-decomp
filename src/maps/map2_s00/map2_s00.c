@@ -1908,15 +1908,15 @@ void Map_WorldObjectsInit(void) // 0x800EB908
 {
     D_800F534C = 0;
 
-    WorldObjectInit(&g_WorldObject9, "DRILL_NE", 236.7151f, -0.281f, 345.046f, 2.8f, 7.5f, -180.5f);
-    WorldObjectInit(&g_WorldObjectA, "CHAINSAW", -82.3f, -0.7f, -91.6f, -17.0f, 18.1f, -7.22f);
-    WorldObjectInit(&g_WorldObject0, "IRONPIPE", -187.591f, -0.093f, 300.271f, 4.4f, 36.8f, 2.9f);
+    WorldObjectInit(&g_WorldObject_RockDrill, "DRILL_NE", 236.7151f, -0.281f, 345.046f, 2.8f, 7.5f, -180.5f);
+    WorldObjectInit(&g_WorldObject_Chainsaw, "CHAINSAW", -82.3f, -0.7f, -91.6f, -17.0f, 18.1f, -7.22f);
+    WorldObjectInit(&g_WorldObject_IronPipe, "IRONPIPE", -187.591f, -0.093f, 300.271f, 4.4f, 36.8f, 2.9f);
     WorldObjectInit(&g_WorldObject1, "SKB2_NEA", -186.68f, -0.483f, 300.829f, 4.1f, -74.05f, -9.5f);
     WorldObjectInit(&g_WorldObject2, "PPR1_NEA", -154.56f, 0.0f, 1.78f, 0.0f, -51.7f, 0.0f);
     WorldObjectInit(&g_WorldObject3, "PPR2_NEA", -154.6f, 0.0f, 2.22f, 0.0f, 74.3f, 0.0f);
-    WorldObjectNoRotInit(&g_WorldObjectB[0], "JO0A_HID", 111.94f, -0.81f, 216.25f);
-    WorldObjectNoRotInit(&g_WorldObjectB[1], "JO0B_HID", 111.94f, -0.57f, 216.25f);
-    WorldObjectNoRotInit(&g_WorldObjectB[2], "JO0C_HID", 111.94f, -0.32f, 216.25f);
+    WorldObjectPlacementInit(&g_WorldObjectB[0], "JO0A_HID", 111.94f, -0.81f, 216.25f);
+    WorldObjectPlacementInit(&g_WorldObjectB[1], "JO0B_HID", 111.94f, -0.57f, 216.25f);
+    WorldObjectPlacementInit(&g_WorldObjectB[2], "JO0C_HID", 111.94f, -0.32f, 216.25f);
     WorldObjectInit(&g_WorldObject4[0], "KEY_HIDE", 185.76f, -0.59f, 116.12f, 0.0f, 0.0f, 0.0f);
     WorldObjectInit(&g_WorldObject4[1], "KEY_NEAR", -190.42f, 0.0f, 376.63f, 0.0f, 58.5f, 0.0f);
     WorldObjectInit(&g_WorldObject4[2], "KEY_NEAR", 99.4f, -0.35f, -33.26f, 1.6f, 0.0f, 0.9f);
@@ -2054,12 +2054,12 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
         case CELL_XZ(11, 24):
             if (!Savegame_EventFlagGet(EventFlag_147))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position, &g_WorldObject1.rotation);
             }
 
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupSteelPipe))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &g_WorldObject0.rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_IronPipe.object_0, &g_WorldObject_IronPipe.position, &g_WorldObject_IronPipe.rotation);
             }
             break;
 
@@ -2067,8 +2067,8 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
         case CELL_XZ(12, 15):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_DogHouseNoteFound))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C, &g_WorldObject2.rotation_28);
-                WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &g_WorldObject3.rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position, &g_WorldObject2.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position, &g_WorldObject3.rotation);
             }
             break;
 
@@ -2078,10 +2078,10 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
 
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupMap))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject8.object_0, &g_WorldObject8.position_1C, &g_WorldObject8.rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject8.object_0, &g_WorldObject8.position, &g_WorldObject8.rotation);
             }
 
-            WorldGfx_ObjectAdd(&D_800F56EC, &D_800F574C.position, &D_800F574C.rotation_C);
+            WorldGfx_ObjectAdd(&D_800F56EC, &D_800F574C.position, &D_800F574C.rotation);
             break;
 
         case CELL_XZ(21, 13):
@@ -2146,46 +2146,46 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
         case CELL_XZ(20, 22):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_LockOfLionOpen))
             {
-                WorldGfx_ObjectAdd(&g_WorldObjectB->object_0, &g_WorldObjectB->position_1C, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObjectB->object_0, &g_WorldObjectB->position, &(SVECTOR3){ 0, 0, 0 });
             }
 
             if (!Savegame_EventFlagGet(EventFlag_M2S00_LockOfWoodmanOpen))
             {
-                WorldGfx_ObjectAdd(&g_WorldObjectB[1].object_0, &g_WorldObjectB[1].position_1C, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObjectB[1].object_0, &g_WorldObjectB[1].position, &(SVECTOR3){ 0, 0, 0 });
             }
 
             if (!Savegame_EventFlagGet(EventFlag_M2S00_LockOfScarecrowOpen))
             {
-                WorldGfx_ObjectAdd(&g_WorldObjectB[2].object_0, &g_WorldObjectB[2].position_1C, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObjectB[2].object_0, &g_WorldObjectB[2].position, &(SVECTOR3){ 0, 0, 0 });
             }
 
-            WorldGfx_ObjectAdd(&D_800F56EC, &D_800F570C.position, &D_800F570C.rotation_C);
+            WorldGfx_ObjectAdd(&D_800F56EC, &D_800F570C.position, &D_800F570C.rotation);
             break;
 
         case CELL_XZ(21, 19):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfLion))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject4[0].object_0, &g_WorldObject4[0].position_1C, &g_WorldObject4[0].rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject4[0].object_0, &g_WorldObject4[0].position, &g_WorldObject4[0].rotation);
             }
             break;
 
         case CELL_XZ(11, 26):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfWoodman))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject4[1].object_0, &g_WorldObject4[1].position_1C, &g_WorldObject4[1].rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject4[1].object_0, &g_WorldObject4[1].position, &g_WorldObject4[1].rotation);
             }
             break;
 
         case CELL_XZ(19, 15):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfScarecrow))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject4[2].object_0, &g_WorldObject4[2].position_1C, &g_WorldObject4[2].rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject4[2].object_0, &g_WorldObject4[2].position, &g_WorldObject4[2].rotation);
             }
             break;
 
         case CELL_XZ(19, 24):
         case CELL_XZ(20, 24):
-            WorldGfx_ObjectAdd(&D_800F56EC, &D_800F572C.position, &D_800F572C.rotation_C);
+            WorldGfx_ObjectAdd(&D_800F56EC, &D_800F572C.position, &D_800F572C.rotation);
             break;
 
         default:
@@ -2252,7 +2252,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
 
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupRockDrill))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position_1C, &g_WorldObject9.rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_RockDrill.object_0, &g_WorldObject_RockDrill.position, &g_WorldObject_RockDrill.rotation);
                 Savegame_EventFlagSet(EventFlag_66);
             }
             else
@@ -2335,7 +2335,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
         case CELL_XZ(14, 13):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupChainsaw))
             {
-                WorldGfx_ObjectAdd(&g_WorldObjectA.object_0, &g_WorldObjectA.position_1C, &g_WorldObjectA.rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_Chainsaw.object_0, &g_WorldObject_Chainsaw.position, &g_WorldObject_Chainsaw.rotation);
                 Savegame_EventFlagSet(EventFlag_65);
             }
             else
@@ -2386,7 +2386,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_FirstAidKit0))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[0], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[0], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation);
         }
     }
 
@@ -2394,7 +2394,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HandgunBullets0))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation);
         }
     }
 
@@ -2402,7 +2402,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HandgunBullets1))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[2].position, &g_CommonWorldObjectPoses[2].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[2].position, &g_CommonWorldObjectPoses[2].rotation);
         }
     }
 
@@ -2410,7 +2410,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HealthDrink0))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[3].position, &g_CommonWorldObjectPoses[3].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[3].position, &g_CommonWorldObjectPoses[3].rotation);
         }
     }
 
@@ -2418,7 +2418,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HandgunBullets2))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[4].position, &g_CommonWorldObjectPoses[4].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[4].position, &g_CommonWorldObjectPoses[4].rotation);
         }
     }
 
@@ -2426,7 +2426,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_ShotgunShells0))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[5], &g_CommonWorldObjectPoses[5].position, &g_CommonWorldObjectPoses[5].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[5], &g_CommonWorldObjectPoses[5].position, &g_CommonWorldObjectPoses[5].rotation);
         }
     }
 
@@ -2434,7 +2434,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HealthDrink1))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[6].position, &g_CommonWorldObjectPoses[6].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[6].position, &g_CommonWorldObjectPoses[6].rotation);
         }
     }
 
@@ -2442,7 +2442,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HandgunBullets3))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[7].position, &g_CommonWorldObjectPoses[7].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[7].position, &g_CommonWorldObjectPoses[7].rotation);
         }
     }
 
@@ -2450,7 +2450,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HandgunBullets4))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[8].position, &g_CommonWorldObjectPoses[8].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[8].position, &g_CommonWorldObjectPoses[8].rotation);
         }
     }
 
@@ -2458,7 +2458,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HandgunBullets5))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[9].position, &g_CommonWorldObjectPoses[9].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[9].position, &g_CommonWorldObjectPoses[9].rotation);
         }
     }
 
@@ -2466,7 +2466,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HandgunBullets6))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[10].position, &g_CommonWorldObjectPoses[10].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[10].position, &g_CommonWorldObjectPoses[10].rotation);
         }
     }
 
@@ -2474,7 +2474,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HandgunBullets7))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[11].position, &g_CommonWorldObjectPoses[11].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[11].position, &g_CommonWorldObjectPoses[11].rotation);
         }
     }
 
@@ -2482,7 +2482,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HandgunBullets8))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[12].position, &g_CommonWorldObjectPoses[12].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[12].position, &g_CommonWorldObjectPoses[12].rotation);
         }
     }
 
@@ -2490,7 +2490,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HealthDrink2))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[13].position, &g_CommonWorldObjectPoses[13].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[13].position, &g_CommonWorldObjectPoses[13].rotation);
         }
     }
 
@@ -2498,7 +2498,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HealthDrink3))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[14].position, &g_CommonWorldObjectPoses[14].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[14].position, &g_CommonWorldObjectPoses[14].rotation);
         }
     }
 
@@ -2506,7 +2506,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HealthDrink4))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[15].position, &g_CommonWorldObjectPoses[15].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[15].position, &g_CommonWorldObjectPoses[15].rotation);
         }
     }
 
@@ -2514,7 +2514,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HandgunBullets9))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[16].position, &g_CommonWorldObjectPoses[16].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[16].position, &g_CommonWorldObjectPoses[16].rotation);
         }
     }
 
@@ -2522,7 +2522,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HealthDrink5))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[17].position, &g_CommonWorldObjectPoses[17].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[17].position, &g_CommonWorldObjectPoses[17].rotation);
         }
     }
 
@@ -2530,7 +2530,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HandgunBullets10))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[18].position, &g_CommonWorldObjectPoses[18].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[18].position, &g_CommonWorldObjectPoses[18].rotation);
         }
     }
 
@@ -2538,7 +2538,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HealthDrink6))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[19].position, &g_CommonWorldObjectPoses[19].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[19].position, &g_CommonWorldObjectPoses[19].rotation);
         }
     }
 
@@ -2546,7 +2546,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HealthDrink7))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[20].position, &g_CommonWorldObjectPoses[20].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[20].position, &g_CommonWorldObjectPoses[20].rotation);
         }
     }
 
@@ -2554,7 +2554,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HealthDrink8))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[21].position, &g_CommonWorldObjectPoses[21].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[21].position, &g_CommonWorldObjectPoses[21].rotation);
         }
     }
 
@@ -2562,7 +2562,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HealthDrink9))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[22].position, &g_CommonWorldObjectPoses[22].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[22].position, &g_CommonWorldObjectPoses[22].rotation);
         }
     }
 
@@ -2570,7 +2570,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HealthDrink10))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[23].position, &g_CommonWorldObjectPoses[23].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[23].position, &g_CommonWorldObjectPoses[23].rotation);
         }
     }
 
@@ -2578,7 +2578,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HealthDrink11))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[24].position, &g_CommonWorldObjectPoses[24].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[24].position, &g_CommonWorldObjectPoses[24].rotation);
         }
     }
 
@@ -2586,7 +2586,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_ShotgunShells1))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[5], &g_CommonWorldObjectPoses[25].position, &g_CommonWorldObjectPoses[25].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[5], &g_CommonWorldObjectPoses[25].position, &g_CommonWorldObjectPoses[25].rotation);
         }
     }
 
@@ -2594,7 +2594,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_FirstAidKit1))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[0], &g_CommonWorldObjectPoses[26].position, &g_CommonWorldObjectPoses[26].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[0], &g_CommonWorldObjectPoses[26].position, &g_CommonWorldObjectPoses[26].rotation);
         }
     }
 
@@ -2602,7 +2602,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HandgunBullets11))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[27].position, &g_CommonWorldObjectPoses[27].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[27].position, &g_CommonWorldObjectPoses[27].rotation);
         }
     }
 
@@ -2610,7 +2610,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HandgunBullets12))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[28].position, &g_CommonWorldObjectPoses[28].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[28].position, &g_CommonWorldObjectPoses[28].rotation);
         }
     }
 
@@ -2618,7 +2618,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HandgunBullets13))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[29].position, &g_CommonWorldObjectPoses[29].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[29].position, &g_CommonWorldObjectPoses[29].rotation);
         }
     }
 
@@ -2626,7 +2626,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_HandgunBullets14))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[30].position, &g_CommonWorldObjectPoses[30].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[30].position, &g_CommonWorldObjectPoses[30].rotation);
         }
     }
 
@@ -2634,7 +2634,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_FirstAidKit2))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[0], &g_CommonWorldObjectPoses[31].position, &g_CommonWorldObjectPoses[31].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[0], &g_CommonWorldObjectPoses[31].position, &g_CommonWorldObjectPoses[31].rotation);
         }
     }
 }

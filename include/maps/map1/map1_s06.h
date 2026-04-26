@@ -36,15 +36,15 @@ extern u8 D_800D7790;
 /** Time. */
 extern q3_12 D_800DAF78;
 
-extern s_WorldObjectDesc D_800DAF84;
+extern s_WorldObjectPose D_800DAF84;
 
-extern s_WorldObjectDesc D_800DAFB4;
+extern s_WorldObjectPose D_800DAFB4;
 
 extern u8 D_800DAFE4;
 
-extern s_WorldObjectDesc D_800DAFF4;
+extern s_WorldObjectPose D_800DAFF4;
 
-extern s_WorldObjectDesc D_800DB024;
+extern s_WorldObjectPose D_800DB024;
 
 /** Related to stereo sound balance. */
 extern s8 D_800DB054;
@@ -52,7 +52,7 @@ extern s8 D_800DB054;
 /** Stereo sound balance. */
 extern s8 D_800DB055;
 
-extern s_WorldObjectDesc D_800DB064;
+extern s_WorldObjectPose D_800DB064;
 
 void func_800D560C(void);
 

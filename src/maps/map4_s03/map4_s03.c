@@ -4904,7 +4904,6 @@ void Map_WorldObjectsInit(void) // 0x800D991C
     }
 
     WorldObjectInit(&g_WorldObject_Fence, "FENCE_HI", 130.5f, 0.0f, -93.0f, 0.0f, 0.0f, 0.0f);
-
     WorldObjectInit(&g_WorldObject_Mal5_21, "MAL5_21_", 117.2464f, -0.685f, 145.896f, -36.0f, 243.0f, 60.21f);
 
     WorldObject_ModelNameSet(&g_WorldObject_Mal6[0], "MAL6_27_");
@@ -4953,7 +4952,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 6, -1, 6) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position_1C, &g_WorldObject_SavePad.rotation_28);
+        WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
     }
 
     if ((PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) || PLAYER_IN_MAP_CHUNK(vx, 1, 5, -1, 5)) && PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
@@ -4973,17 +4972,17 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
 
             if (D_800E05AC) {} // @hack
 
-            var = ratan2(Q12_ANGLE(360.0f), FP_FROM(g_GravitySpeed * Math_Cos(g_WorldObject_Fence.rotation_28.vx), Q12_SHIFT));
+            var = ratan2(Q12_ANGLE(360.0f), FP_FROM(g_GravitySpeed * Math_Cos(g_WorldObject_Fence.rotation.vx), Q12_SHIFT));
             var_a0 = MAX(Q12(0.0f), Q12(1.0f) - (D_800E05A8 * 2));
             D_800E05AC = Q12_MULT_PRECISE(var_a0, D_800E05AC + var);
-            g_WorldObject_Fence.rotation_28.vx += Q12_MULT_PRECISE(g_DeltaTime, D_800E05AC);
+            g_WorldObject_Fence.rotation.vx += Q12_MULT_PRECISE(g_DeltaTime, D_800E05AC);
 
             D_800E05AE = MIN(Q12(15.0f), (D_800E05AE + g_GravitySpeed) + (g_GravitySpeed >> 4));
 
-            g_WorldObject_Fence.position_1C.vy += Q12_MULT_PRECISE(g_DeltaTime, D_800E05AE);
-            if (g_WorldObject_Fence.rotation_28.vx > Q12_ANGLE(90.0f))
+            g_WorldObject_Fence.position.vy += Q12_MULT_PRECISE(g_DeltaTime, D_800E05AE);
+            if (g_WorldObject_Fence.rotation.vx > Q12_ANGLE(90.0f))
             {
-                g_WorldObject_Fence.rotation_28.vx = Q12_ANGLE(90.0f);
+                g_WorldObject_Fence.rotation.vx = Q12_ANGLE(90.0f);
             }
 
             if (D_800E05A8 > Q12(1.0f))
@@ -5002,14 +5001,14 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
             Collision_FlagBitsSet(2);
         }
 
-        WorldGfx_ObjectAdd(&g_WorldObject_Fence.object_0, &g_WorldObject_Fence.position_1C, &g_WorldObject_Fence.rotation_28);
+        WorldGfx_ObjectAdd(&g_WorldObject_Fence.object_0, &g_WorldObject_Fence.position, &g_WorldObject_Fence.rotation);
     }
 
     if ((PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) || PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4)) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S03_PickupHuntingRifle))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Mal5_21.object_0, &g_WorldObject_Mal5_21.position_1C, &g_WorldObject_Mal5_21.rotation_28);
+            WorldGfx_ObjectAdd(&g_WorldObject_Mal5_21.object_0, &g_WorldObject_Mal5_21.position, &g_WorldObject_Mal5_21.rotation);
         }
 
         if (!Savegame_EventFlagGet(EventFlag_327))
@@ -5028,7 +5027,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S03_FirstAidKit))
         {
-            WorldGfx_ObjectAdd(g_CommonWorldObjects, &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation_C);
+            WorldGfx_ObjectAdd(g_CommonWorldObjects, &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation);
         }
     }
 
@@ -5036,7 +5035,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S03_RifleShells0))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation);
         }
     }
 
@@ -5044,7 +5043,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S03_RifleShells1))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[2].position, &g_CommonWorldObjectPoses[2].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[2].position, &g_CommonWorldObjectPoses[2].rotation);
         }
     }
 }

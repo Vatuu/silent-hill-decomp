@@ -63,4 +63,11 @@ typedef struct
     s16 vz;
 } DVECTOR_XZ;
 
+/** @brief World position and rotation. */
+typedef struct
+{
+    VECTOR3  position; /** Q19.12 */
+    SVECTOR3 rotation; /** Q19.12 */
+} s_Pose;
+
 #endif

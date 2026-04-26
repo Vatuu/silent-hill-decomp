@@ -379,12 +379,12 @@ void Gfx_InGameDraw(s32 arg0) // 0x8003C878
 
 void WorldObject_ModelNameSet(s_WorldObjectModel* model, char* newStr) // 0x8003C8F8
 {
-    model->metadata_10.lmIdx_9 = 0;
+    model->metadata.lmIdx_9 = 0;
     model->modelInfo.field_0  = 0;
 
-    StringCopy(model->metadata_10.name_0.str, newStr);
+    StringCopy(model->metadata.name_0.str, newStr);
 
-    model->metadata_10.field_8 = 0;
+    model->metadata.field_8 = 0;
 }
 
 void WorldGfx_ObjectAdd(s_WorldObjectModel* model, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
@@ -402,14 +402,14 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* model, const VECTOR3* pos, const SVE
     // Check if array of world objects to draw is full.
     if (g_WorldGfxWork.objectCount < ARRAY_SIZE(g_WorldGfxWork.objects))
     {
-        if (model->metadata_10.lmIdx_9 == 0)
+        if (model->metadata.lmIdx_9 == 0)
         {
             func_8003BED0();
 
-            lmIdx = func_8004287C(model, &model->metadata_10, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
+            lmIdx = func_8004287C(model, &model->metadata, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
             if (lmIdx == 0)
             {
-                if (!Lm_ModelFind(model, &g_WorldGfxWork.itemLmHdr, &model->metadata_10))
+                if (!Lm_ModelFind(model, &g_WorldGfxWork.itemLmHdr, &model->metadata))
                 {
                     return;
                 }
@@ -419,7 +419,7 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* model, const VECTOR3* pos, const SVE
                 }
             }
 
-            model->metadata_10.lmIdx_9 = lmIdx;
+            model->metadata.lmIdx_9 = lmIdx;
         }
 
         // Compute geometry position and rotation.
@@ -510,26 +510,26 @@ void func_8003CC7C(s_WorldObjectModel* model, MATRIX* viewMat, MATRIX* worldMat)
     s_WorldObjectMetadata* objMetaCpy;
     s_ModelHeader*         modelHdr;
 
-    lmIdx = model->metadata_10.lmIdx_9;
+    lmIdx = model->metadata.lmIdx_9;
     if (lmIdx == 0)
     {
         return;
     }
 
     modelHdr   = model->modelInfo.modelHdr;
-    objMetaCpy = &model->metadata_10;
+    objMetaCpy = &model->metadata;
 
     if (lmIdx >= 3 && lmIdx < 7)
     {
         if (!IpdHeader_IsLoaded(lmIdx - 3))
         {
-            model->metadata_10.lmIdx_9 = 0;
+            model->metadata.lmIdx_9 = 0;
         }
     }
 
     if (COMPARE_FILENAMES(&objMetaCpy->name_0, &modelHdr->name_0))
     {
-        model->metadata_10.lmIdx_9 = 0;
+        model->metadata.lmIdx_9 = 0;
         return;
     }
 

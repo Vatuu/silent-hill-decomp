@@ -445,16 +445,14 @@ INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04_2", sharedData_800CB094_3_s0
 
 void Map_WorldObjectsInit(void) // 0x800D3BD0
 {
-    WorldObjectNoRotInit(&g_WorldObject_Plate, "PLATE_NE", 100.0f, 0.0f, 60.0f);
-
+    WorldObjectPlacementInit(&g_WorldObject_Plate, "PLATE_NE", 100.0f, 0.0f, 60.0f);
     WorldObjectInit(&g_WorldObject_SavePad, D_800A99E4[1], 102.5972f, -0.8191f, 58.7896f, 0.0f, 86.0f, 0.0f);
-
-    WorldObjectNoRotInit(&g_WorldObject_Dr[0], "DR1L_HID", 19.1f, 0.0f, 59.1f);
-    WorldObjectNoRotInit(&g_WorldObject_Dr[1], "DR1R_HID", 19.1f, 0.0f, 59.1f);
-    WorldObjectNoRotInit(&g_WorldObject_Dr[2], "DR3L_HID", 19.1f, 0.0f, 59.1f);
-    WorldObjectNoRotInit(&g_WorldObject_Dr[3], "DR3R_HID", 19.1f, 0.0f, 59.1f);
-    WorldObjectNoRotInit(&g_WorldObject_Dr[4], "DR2L_HID", 19.1f, 0.0f, 59.1f);
-    WorldObjectNoRotInit(&g_WorldObject_Dr[5], "DR2R_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectPlacementInit(&g_WorldObject_Dr[0], "DR1L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectPlacementInit(&g_WorldObject_Dr[1], "DR1R_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectPlacementInit(&g_WorldObject_Dr[2], "DR3L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectPlacementInit(&g_WorldObject_Dr[3], "DR3R_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectPlacementInit(&g_WorldObject_Dr[4], "DR2L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectPlacementInit(&g_WorldObject_Dr[5], "DR2R_HID", 19.1f, 0.0f, 59.1f);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);
@@ -505,26 +503,26 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
         case CELL_XZ(19, 18):
             if (!Savegame_EventFlagGet(EventFlag_M3S04_PickupPlateOfQueen))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Plate.object_0, &g_WorldObject_Plate.position_1C, &D_800CB35C);
+                WorldGfx_ObjectAdd(&g_WorldObject_Plate.object_0, &g_WorldObject_Plate.position, &D_800CB35C);
             }
 
-            WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position_1C, &g_WorldObject_SavePad.rotation_28);
+            WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
             break;
 
         case CELL_XZ(17, 18):
-            if (g_SysWork.sysState == SysState_Gameplay && g_WorldObject_Dr->position_1C.vz != Q12(59.1f))
+            if (g_SysWork.sysState == SysState_Gameplay && g_WorldObject_Dr->position.vz != Q12(59.1f))
             {
                 drZ = Q12(59.1f);
 
                 for (i = ARRAY_SIZE(g_WorldObject_Dr) - 1; i >= 0; i--)
                 {
-                    g_WorldObject_Dr[i].position_1C.vz = drZ;
+                    g_WorldObject_Dr[i].position.vz = drZ;
                 }
             }
 
             for (i = 0; i < ARRAY_SIZE(g_WorldObject_Dr); i++)
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object_0, &g_WorldObject_Dr[i].position_1C, &D_800CB35C);
+                WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object_0, &g_WorldObject_Dr[i].position, &D_800CB35C);
             }
             break;
     }
@@ -576,7 +574,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S04_HealthDrink0))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation);
         }
     }
 
@@ -584,7 +582,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S04_HandgunBullets))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation);
         }
     }
 }

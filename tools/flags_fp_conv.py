@@ -57,7 +57,7 @@ def get_flag_name(flagIdx, isMapMarking):
     return flags.get(flagIdx, f"{enumName}{flagIdx}")
 
 def pose_no_rot(line):
-    pattern = r"WorldObjectNoRotSet\(([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^\,\)]+)\)"
+    pattern = r"WorldObject_PlacementSet\(([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^\,\)]+)\)"
     return re.search(pattern, line)
     
 
@@ -114,7 +114,7 @@ def convert_pose(line):
             f"{f1}, {f2}, {f3}, {f4}, {f5}, {f6});"
         )
     else:
-        return f"WorldObjectNoRotInit({obj}, {name}, {f1}, {f2}, {f3});"
+        return f"WorldObjectPlacementInit({obj}, {name}, {f1}, {f2}, {f3});"
 
 
 

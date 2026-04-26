@@ -33,7 +33,7 @@ extern SVECTOR3 D_800CB61C;
 extern s16 D_800D4362;
 
 extern s_WorldObjectModel   g_WorldObject0[6];
-extern s_WorldObjectDesc g_WorldObject1;
+extern s_WorldObjectPose g_WorldObject1;
 
 extern s16 D_800D4362;
 extern u8 g_Cutscene_MapMsgAudioIdx;
