@@ -465,8 +465,8 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             g_Cutscene_Timer                                 = Q12(0.0f);
             g_SysWork.playerWork.player.position.vy = Q12(0.0f);
 
-            Chara_Load(0, Chara_Kaufmann, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
-            Chara_Load(1, Chara_Mumbler, &g_SysWork.npcCoords[30], 0, NULL, NULL);
+            Chara_Load(0, Chara_Kaufmann, &g_SysWork.npcBoneCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(1, Chara_Mumbler, &g_SysWork.npcBoneCoords[30], 0, NULL, NULL);
 
             func_8007F14C(32);
             func_8003D03C();

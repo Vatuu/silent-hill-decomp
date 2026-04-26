@@ -282,7 +282,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             D_800D3C40 = Fs_QueueStartReadTim(FILE_TIM_BICITEM_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
             Fs_QueueStartRead(FILE_ANIM_GARAGE1_DMS, FS_BUFFER_17);
 
-            Chara_Load(0, Chara_Kaufmann, g_SysWork.npcCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_Kaufmann, g_SysWork.npcBoneCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
             func_8005DC1C(Sfx_Unk1597, &QVECTOR3(101.706f, -0.889f, 19.7684f), Q8(0.5f), 0);
 
             SysWork_StateStepIncrement(0);

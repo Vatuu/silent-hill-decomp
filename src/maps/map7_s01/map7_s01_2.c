@@ -178,7 +178,7 @@ void func_800D725C(void) // 0x800D725C
             g_Cutscene_Timer = Q12(0.0f);
             Anim_CharaTypeAnimInfoClear();
 
-            Chara_Load(0, Chara_Lisa, g_SysWork.npcCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_Lisa, g_SysWork.npcBoneCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
 
             ScreenFade_ResetTimestep();
 
@@ -279,7 +279,7 @@ void func_800D725C(void) // 0x800D725C
 
         case 19:
             Chara_FsImageCalc(&charaTex, Chara_BloodyLisa, 2);
-            Chara_Load(1, Chara_BloodyLisa, &g_SysWork.npcCoords[30], 0, LM_BUFFER_2, &charaTex);
+            Chara_Load(1, Chara_BloodyLisa, &g_SysWork.npcBoneCoords[30], 0, LM_BUFFER_2, &charaTex);
 
             g_SysWork.playerWork.player.position.vx = Q12(180.0f);
             g_SysWork.playerWork.player.position.vz = Q12(-100.0f);
@@ -309,7 +309,7 @@ void func_800D725C(void) // 0x800D725C
 
             Ipd_CloseRangeChunksInit();
             Chara_FsImageCalc(&charaTex, Chara_BloodyLisa, 2);
-            Chara_Load(1, Chara_BloodyLisa, &g_SysWork.npcCoords[30], 0, LM_BUFFER_2, &charaTex);
+            Chara_Load(1, Chara_BloodyLisa, &g_SysWork.npcBoneCoords[30], 0, LM_BUFFER_2, &charaTex);
             Chara_ProcessLoads();
             SysWork_StateStepIncrement(0);
 
@@ -1724,7 +1724,7 @@ void func_800DB1F0(void) // 0x800DB1F0
         case 0:
             Player_ControlFreeze();
             ScreenFade_ResetTimestep();
-            Chara_Load(0, Chara_GhostChildAlessa, g_SysWork.npcCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_GhostChildAlessa, g_SysWork.npcBoneCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_GhostChildAlessa, 0, Q12(57.2f), Q12(-20.4f), Q12(-0.25f), 3);
             SysWork_StateStepIncrement(0);
@@ -2550,7 +2550,7 @@ void func_800DEDA4(void) // 0x800DEDA4
         if (D_800A9945 != Chara_GhostChildAlessa || !func_80040B74(Chara_GhostChildAlessa))
         {
             Anim_CharaTypeAnimInfoClear();
-            Chara_Load(0, Chara_GhostChildAlessa, g_SysWork.npcCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_GhostChildAlessa, g_SysWork.npcBoneCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
         }
     }
@@ -2561,7 +2561,7 @@ void func_800DEDA4(void) // 0x800DEDA4
             g_MapOverlayHeader.charaGroupIds_248[0] = Chara_PuppetNurse;
 
             Anim_CharaTypeAnimInfoClear();
-            Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcBoneCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
         }
     }
@@ -2570,7 +2570,7 @@ void func_800DEDA4(void) // 0x800DEDA4
         g_MapOverlayHeader.charaGroupIds_248[0] = Chara_PuppetNurse;
 
         Anim_CharaTypeAnimInfoClear();
-        Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
+        Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcBoneCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
         Chara_ProcessLoads();
     }
 

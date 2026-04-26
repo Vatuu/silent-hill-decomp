@@ -169,7 +169,7 @@ void func_800CF0B8(void) // 0x800CF0B8
         case 1:
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             func_80085EB8(0, &g_SysWork.playerWork.player, 53, false);
-            Chara_Load(0, Chara_Alessa, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_Alessa, &g_SysWork.npcBoneCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             SysWork_StateStepIncrement(0);
 
         case 2:

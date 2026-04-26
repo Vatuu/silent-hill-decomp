@@ -952,6 +952,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
         EventState_Prompt      = 7,
         EventState_TakeKey     = 8,
         EventState_DontTakeKey = 9,
+
         EventState_Finish      = 12
     } e_EventState;
 
@@ -1035,34 +1036,43 @@ void func_800E9A74(void) // 0x800E9A74
 {
     typedef enum _EventState
     {
+        EventState_Initialize  = 0,
+        EventState_1           = 1,
+        EventState_2           = 2,
+        EventState_3           = 3,
+        EventState_4           = 4,
+        EventState_Prompt      = 5,
         EventState_TakeKey     = 6,
-        EventState_DontTakeKey = 7
+        EventState_DontTakeKey = 7,
+        EventState_8           = 8,
+        EventState_Finish      = 9
     } e_EventState;
 
+    // Handle event state.
     switch (g_SysWork.sysStateSteps[0])
     {
-        case 0:
+        case EventState_Initialize:
             Player_ControlFreeze();
             func_80086470(0, InvItemId_KeyOfWoodman, 0, false);
             SysWork_StateStepIncrement(0);
 
-        case 1:
+        case EventState_1:
             func_80085DF0();
             break;
 
-        case 2:
+        case EventState_2:
             func_80085EB8(0, &g_SysWork.playerWork.player, 59, false);
             SysWork_StateStepIncrement(0);
 
-        case 3:
+        case EventState_3:
             func_80086470(1, InvItemId_KeyOfWoodman, 0, false);
             break;
 
-        case 4:
+        case EventState_4:
             func_80085EB8(1, &g_SysWork.playerWork.player, 0, false);
             break;
 
-        case 5:
+        case EventState_Prompt:
             if (Gfx_PickupItemAnimate(InvItemId_KeyOfWoodman))
             {
                 MapMsg_DisplayAndHandleSelection(true, 29, EventState_TakeKey, EventState_DontTakeKey, 0, false); // "Key of Woodman. Take it?"
@@ -1086,11 +1096,11 @@ void func_800E9A74(void) // 0x800E9A74
             Savegame_EventFlagClear(EventFlag_M2S00_PickupKeyOfWoodman);
             SysWork_StateStepIncrement(0);
 
-        case 8:
+        case EventState_8:
             func_80086C58(&g_SysWork.playerWork.player, 60);
             break;
 
-        default:
+        default: // `EventState_Finish`
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -1121,16 +1131,23 @@ void MapEvent_HouseKeyUse(void) // 0x800E9D1C
 
 void func_800E9DD8(void) // 0x800E9DD8
 {
+    typedef enum _EventState
+    {
+        EventState_Initialize = 0,
+        EventState_UseKey     = 4
+    } e_EventState;
+
     s32  idx;
     s32  tim;
     s32  tim2;
     s32  tmp0;
     s32  locksLeft;
-    s16 *timPtr;
+    s16* timPtr;
 
+    // Handle event state.
     switch (g_SysWork.sysStateSteps[0])
     {
-        case 0:
+        case EventState_Initialize:
             Player_ControlFreeze();
             D_800F22A0 = &g_ItemInspectionImg;
             D_800F22A4 = &D_800A9A04;
@@ -1161,20 +1178,20 @@ void func_800E9DD8(void) // 0x800E9DD8
             Screen_BackgroundImgDrawAlt(D_800F22A0);
             break;
 
-        case 4:
+        case EventState_UseKey:
             Screen_BackgroundImgDrawAlt(D_800F22A0);
 
             if (Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfLion) && !Savegame_EventFlagGet(EventFlag_M2S00_LockOfLionOpen))
             {
                 Savegame_EventFlagSet(EventFlag_M2S00_LockOfLionOpen);
-                g_DoorOfEclypse_MapMsgIdx = 32;
+                g_DoorOfEclypse_MapMsgIdx = 32; // "Used the Key of "Lion"."
                 Player_ItemRemove(InvItemId_KeyOfLion, 1);
                 SysWork_StateStepSet(0, 5);
             }
             else if (Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfWoodman) && !Savegame_EventFlagGet(EventFlag_M2S00_LockOfWoodmanOpen))
             {
                 Savegame_EventFlagSet(EventFlag_M2S00_LockOfWoodmanOpen);
-                g_DoorOfEclypse_MapMsgIdx = 33;
+                g_DoorOfEclypse_MapMsgIdx = 33; // "Used the Key of "Woodman"."
 
                 Player_ItemRemove(InvItemId_KeyOfWoodman, 1);
                 SysWork_StateStepSet(0, 5);
@@ -1182,13 +1199,14 @@ void func_800E9DD8(void) // 0x800E9DD8
             else if (Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfScarecrow) && !Savegame_EventFlagGet(EventFlag_M2S00_LockOfScarecrowOpen))
             {
                 Savegame_EventFlagSet(EventFlag_M2S00_LockOfScarecrowOpen);
-                g_DoorOfEclypse_MapMsgIdx = 34;
+                g_DoorOfEclypse_MapMsgIdx = 34; // "Used the Key of "Scarecrow"."
 
                 Player_ItemRemove(InvItemId_KeyOfScarecrow, 1);
                 SysWork_StateStepSet(0, 5);
             }
             else
             {
+                // Count locks.
                 locksLeft = 3;
                 if (Savegame_EventFlagGet(EventFlag_M2S00_LockOfLionOpen))
                 {
@@ -1196,31 +1214,32 @@ void func_800E9DD8(void) // 0x800E9DD8
                 }
                 if (Savegame_EventFlagGet(EventFlag_M2S00_LockOfWoodmanOpen))
                 {
-                    locksLeft -= 1;
+                    locksLeft--;
                 }
                 if (Savegame_EventFlagGet(EventFlag_M2S00_LockOfScarecrowOpen))
                 {
-                    locksLeft -= 1;
+                    locksLeft--;
                 }
 
+                // Get remaining locks message index.
                 switch (locksLeft)
                 {
                     case 0:
-                        g_DoorOfEclypse_MapMsgIdx = 13;
+                        g_DoorOfEclypse_MapMsgIdx = 13; // "It's unlocked."
                         Savegame_EventFlagSet(EventFlag_M2S00_DoorOfEclypseOpen);
                         Savegame_EventFlagSet(EventFlag_MapMark_OldTown_DoghouseArrowsOnly);
                         break;
 
                     case 1:
-                        g_DoorOfEclypse_MapMsgIdx = 58;
+                        g_DoorOfEclypse_MapMsgIdx = 58; // "There is one lock."
                         break;
 
                     case 2:
-                        g_DoorOfEclypse_MapMsgIdx = 57;
+                        g_DoorOfEclypse_MapMsgIdx = 57; // "There are two locks."
                         break;
 
                     case 3:
-                        g_DoorOfEclypse_MapMsgIdx = 56;
+                        g_DoorOfEclypse_MapMsgIdx = 56; // "There are three locks."
                         break;
                 }
 
@@ -1888,28 +1907,18 @@ void func_800EB824(s32 arg0) // 0x800EB824
 void Map_WorldObjectsInit(void) // 0x800EB908
 {
     D_800F534C = 0;
+
     WorldObjectInit(&g_WorldObject9, "DRILL_NE", 236.7151f, -0.281f, 345.046f, 2.8f, 7.5f, -180.5f);
-
     WorldObjectInit(&g_WorldObjectA, "CHAINSAW", -82.3f, -0.7f, -91.6f, -17.0f, 18.1f, -7.22f);
-
     WorldObjectInit(&g_WorldObject0, "IRONPIPE", -187.591f, -0.093f, 300.271f, 4.4f, 36.8f, 2.9f);
-
     WorldObjectInit(&g_WorldObject1, "SKB2_NEA", -186.68f, -0.483f, 300.829f, 4.1f, -74.05f, -9.5f);
-
     WorldObjectInit(&g_WorldObject2, "PPR1_NEA", -154.56f, 0.0f, 1.78f, 0.0f, -51.7f, 0.0f);
-
     WorldObjectInit(&g_WorldObject3, "PPR2_NEA", -154.6f, 0.0f, 2.22f, 0.0f, 74.3f, 0.0f);
-
     WorldObjectNoRotInit(&g_WorldObjectB[0], "JO0A_HID", 111.94f, -0.81f, 216.25f);
-
     WorldObjectNoRotInit(&g_WorldObjectB[1], "JO0B_HID", 111.94f, -0.57f, 216.25f);
-
     WorldObjectNoRotInit(&g_WorldObjectB[2], "JO0C_HID", 111.94f, -0.32f, 216.25f);
-
     WorldObjectInit(&g_WorldObject4[0], "KEY_HIDE", 185.76f, -0.59f, 116.12f, 0.0f, 0.0f, 0.0f);
-
     WorldObjectInit(&g_WorldObject4[1], "KEY_NEAR", -190.42f, 0.0f, 376.63f, 0.0f, 58.5f, 0.0f);
-
     WorldObjectInit(&g_WorldObject4[2], "KEY_NEAR", 99.4f, -0.35f, -33.26f, 1.6f, 0.0f, 0.9f);
 
     WorldObject_ModelNameSet(&g_WorldObject5[0], "AXIS1_HI");
@@ -1955,7 +1964,7 @@ void Map_WorldObjectsInit(void) // 0x800EB908
 
     if (Savegame_EventFlagGet(EventFlag_159))
     {
-        D_800F1A24 = 0x64000;
+        D_800F1A24 = Q12(100.0f);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_166))
@@ -1972,6 +1981,7 @@ void Map_WorldObjectsInit(void) // 0x800EB908
 
     if (Savegame_EventFlagGet(EventFlag_132) && !Savegame_EventFlagGet(EventFlag_M2S00_KGordonDoorOpen))
     {
+        // TODO: Should be `~((1 << 8) | (1 << 6) | (1 << 7));`.
         g_SavegamePtr->ovlEnemyStates[10] &= 0xF3FFFEFF;
     }
 
@@ -2114,12 +2124,14 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
 
             if (!Savegame_EventFlagGet(EventFlag_170))
             {
+                // Chain 1.
                 if (!Savegame_EventFlagGet(EventFlag_169))
                 {
                     WorldGfx_ObjectAdd(&g_WorldObject6[0], &D_800F56CC[0], &(SVECTOR3){ 0, 0, 0 });
                     WorldGfx_ObjectAdd(&g_WorldObject6[1], &D_800F56CC[0], &(SVECTOR3){ 0, 0, 0 });
                     WorldGfx_ObjectAdd(&g_WorldObject6[2], &D_800F56CC[0], &(SVECTOR3){ 0, 0, 0 });
                 }
+                // Chain 2.
                 else
                 {
                     WorldGfx_ObjectAdd(&g_WorldObject7[0], &D_800F56CC[1], &D_800F538C);
@@ -2352,14 +2364,14 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
     }
 
     if (Savegame_EventFlagGet(EventFlag_MapMark_OldTown_BradburyStLeftCross) &&
-        Savegame_EventFlagGet(EventFlag_MapMark_OldTown_BachmanRdBotCross) &&
+        Savegame_EventFlagGet(EventFlag_MapMark_OldTown_BachmanRdBotCross)   &&
         Savegame_EventFlagGet(EventFlag_MapMark_OldTown_ElroyStBotCross))
     {
         Savegame_EventFlagSet(EventFlag_MapMark_OldTown_BotRightHugeComboCross);
     }
 
-    if (Savegame_EventFlagGet(EventFlag_MapMark_OldTown_BlochStLeftCross) &&
-        Savegame_EventFlagGet(EventFlag_MapMark_OldTown_LevinStTopCross) &&
+    if (Savegame_EventFlagGet(EventFlag_MapMark_OldTown_BlochStLeftCross)  &&
+        Savegame_EventFlagGet(EventFlag_MapMark_OldTown_LevinStTopCross)   &&
         Savegame_EventFlagGet(EventFlag_MapMark_OldTown_BlochStRightCross) &&
         Savegame_EventFlagGet(EventFlag_MapMark_OldTown_LevinStBotCross))
     {

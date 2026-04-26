@@ -490,7 +490,7 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
         case 11:
             if (chara->model.anim.keyframeIdx == 38)
             {
-                func_8006342C(EquippedWeaponId_Unk63, Q12_ANGLE(90.0f), chara->rotation.vy, g_SysWork.npcCoords);
+                func_8006342C(EquippedWeaponId_Unk63, Q12_ANGLE(90.0f), chara->rotation.vy, g_SysWork.npcBoneCoords);
             }
 
             sharedFunc_800D9188_0_s00(39, chara, 38, Sfx_Unk1622);
@@ -997,7 +997,7 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                 chara->field_44.field_0          = 1;
 
                 // TODO: What's weapon attack 63?
-                func_8006342C(EquippedWeaponId_Unk63, g_SysWork.npcs[0].properties.monsterCybil.field_11A, chara->rotation.vy, g_SysWork.npcCoords);
+                func_8006342C(EquippedWeaponId_Unk63, g_SysWork.npcs[0].properties.monsterCybil.field_11A, chara->rotation.vy, g_SysWork.npcBoneCoords);
 
                 if (func_8008A0E4(chara->field_44.field_0,
                                   WEAPON_ATTACK(EquippedWeaponId_Unk63, AttackInputType_Tap),

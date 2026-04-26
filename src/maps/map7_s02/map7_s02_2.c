@@ -241,7 +241,7 @@ void func_800DA248(void) // 0x800DA248
             g_Cutscene_Timer = Q12(0.0f);
             Anim_CharaTypeAnimInfoClear();
 
-            Chara_Load(0, Chara_Lisa, g_SysWork.npcCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_Lisa, g_SysWork.npcBoneCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
 
             ScreenFade_ResetTimestep();
 
@@ -339,7 +339,7 @@ void func_800DA248(void) // 0x800DA248
 
         case 19:
             Chara_FsImageCalc(&charaTex, Chara_BloodyLisa, 2);
-            Chara_Load(1, Chara_BloodyLisa, &g_SysWork.npcCoords[30], 0, LM_BUFFER_2, &charaTex);
+            Chara_Load(1, Chara_BloodyLisa, &g_SysWork.npcBoneCoords[30], 0, LM_BUFFER_2, &charaTex);
 
             g_SysWork.playerWork.player.position.vx = Q12(180.0f);
             g_SysWork.playerWork.player.position.vz = Q12(-100.0f);
@@ -369,7 +369,7 @@ void func_800DA248(void) // 0x800DA248
 
             Ipd_CloseRangeChunksInit();
             Chara_FsImageCalc(&charaTex, Chara_BloodyLisa, 2);
-            Chara_Load(1, Chara_BloodyLisa, &g_SysWork.npcCoords[30], 0, LM_BUFFER_2, &charaTex);
+            Chara_Load(1, Chara_BloodyLisa, &g_SysWork.npcBoneCoords[30], 0, LM_BUFFER_2, &charaTex);
             Chara_ProcessLoads();
             SysWork_StateStepIncrement(0);
 
@@ -769,7 +769,7 @@ void func_800DBB34(void) // 0x800DBB34
         case 0:
             Player_ControlFreeze();
             Anim_CharaTypeAnimInfoClear();
-            Chara_Load(0, Chara_GhostChildAlessa, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_GhostChildAlessa, &g_SysWork.npcBoneCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
 
             g_SysWork.field_30 = 20;
 
@@ -1366,7 +1366,7 @@ void func_800DD2D4(void) // 0x800DD2D4
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             Anim_CharaTypeAnimInfoClear();
-            Chara_Load(0, Chara_Bloodsucker, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_Bloodsucker, &g_SysWork.npcBoneCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             func_80085EB8(0, &g_SysWork.playerWork.player, 144, false);
 
             g_Cutscene_Timer = Q12(0.0f);
@@ -1701,9 +1701,9 @@ void func_800DE1FC(void) // 0x800DE1FC
 
             Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_GhostDoctor, &D_800E9EE4, -1, NULL, NULL);
-            Chara_Load(1, Chara_Dahlia, g_SysWork.npcCoords, 0, NULL, NULL);
+            Chara_Load(1, Chara_Dahlia, g_SysWork.npcBoneCoords, 0, NULL, NULL);
             Chara_FsImageCalc(&charaTex, Chara_Kaufmann, 2);
-            Chara_Load(2, Chara_Kaufmann, &g_SysWork.npcCoords[30], 0, LM_BUFFER_2, &charaTex);
+            Chara_Load(2, Chara_Kaufmann, &g_SysWork.npcBoneCoords[30], 0, LM_BUFFER_2, &charaTex);
             Chara_ProcessLoads();
 
             Chara_Spawn(Chara_Kaufmann, 0, Q12(140.0f), Q12(-60.0f), 0, 3);
@@ -2000,9 +2000,9 @@ void func_800DF21C(void) // 0x800DF21C
             g_Cutscene_Timer = Q12(0.0f);
 
             Anim_CharaTypeAnimInfoClear();
-            Chara_Load(0, Chara_GhostChildAlessa, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_GhostChildAlessa, &g_SysWork.npcBoneCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_FsImageCalc(&charaTex, Chara_Dahlia, 2);
-            Chara_Load(1, Chara_Dahlia, &g_SysWork.npcCoords[30], 0, LM_BUFFER_2, &charaTex);
+            Chara_Load(1, Chara_Dahlia, &g_SysWork.npcBoneCoords[30], 0, LM_BUFFER_2, &charaTex);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_GhostChildAlessa, 0, Q12(100.0f), Q12(-100.0f), 0, 3);
             Chara_Spawn(Chara_Dahlia, 0, Q12(100.0f), Q12(-100.0f), 0, 3);
@@ -3767,7 +3767,7 @@ void func_800E5628(void) // 0x800E5628
     if (D_800A9945 != 7 || !func_80040B74(Chara_Stalker))
     {
         Anim_CharaTypeAnimInfoClear();
-        Chara_Load(0, 7, g_SysWork.npcCoords, NO_VALUE, NULL, NULL);
+        Chara_Load(0, 7, g_SysWork.npcBoneCoords, NO_VALUE, NULL, NULL);
         Chara_ProcessLoads();
     }
 

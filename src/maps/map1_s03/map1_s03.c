@@ -411,7 +411,7 @@ void func_800DAF18(void) // 0x800DAF18
             D_800E2101                  = 0;
             g_SysWork.field_28          = 0;
             g_SysWork.sysStateSteps[1] = 0;
-            g_SysWork.timer_2C          = 0;
+            g_SysWork.timer_2C          = Q12(0.0f);
             g_SysWork.sysStateSteps[2] = 0;
             g_SysWork.sysStateSteps[0]++;
 
@@ -529,7 +529,7 @@ void func_800DAF18(void) // 0x800DAF18
 
             g_SysWork.field_28          = 0;
             g_SysWork.sysStateSteps[1] = 0;
-            g_SysWork.timer_2C          = 0;
+            g_SysWork.timer_2C          = Q12(0.0f);
             g_SysWork.sysStateSteps[2] = 0;
             g_SysWork.sysStateSteps[0]++;
 
@@ -541,7 +541,7 @@ void func_800DAF18(void) // 0x800DAF18
             D_800E20FE                  = 0;
             g_SysWork.field_28          = 0;
             g_SysWork.sysStateSteps[1] = 0;
-            g_SysWork.timer_2C          = 0;
+            g_SysWork.timer_2C          = Q12(0.0f);
             g_SysWork.sysStateSteps[2] = 0;
             g_SysWork.sysStateSteps[0]++;
 
@@ -569,7 +569,7 @@ void func_800DAF18(void) // 0x800DAF18
             D_800E20FA                  = 0;
             g_SysWork.field_28          = 0;
             g_SysWork.sysStateSteps[1] = 0;
-            g_SysWork.timer_2C          = 0;
+            g_SysWork.timer_2C          = Q12(0.0f);
             g_SysWork.sysStateSteps[2] = 0;
             g_SysWork.sysStateSteps[0]++;
 
@@ -588,7 +588,7 @@ void func_800DAF18(void) // 0x800DAF18
             {
                 g_SysWork.field_28          = 0;
                 g_SysWork.sysStateSteps[1] = 0;
-                g_SysWork.timer_2C          = 0;
+                g_SysWork.timer_2C          = Q12(0.0f);
                 g_SysWork.sysStateSteps[2] = 0;
                 g_SysWork.sysStateSteps[0]++;
             }
@@ -644,7 +644,7 @@ void func_800DAF18(void) // 0x800DAF18
             {
                 g_SysWork.field_28          = 0;
                 g_SysWork.sysStateSteps[1] = 0;
-                g_SysWork.timer_2C          = 0;
+                g_SysWork.timer_2C          = Q12(0.0f);
                 g_SysWork.sysStateSteps[2] = 0;
                 g_SysWork.sysStateSteps[0]++;
             }
@@ -672,7 +672,7 @@ void func_800DAF18(void) // 0x800DAF18
             D_800E20FE                  = 0;
             g_SysWork.field_28          = 0;
             g_SysWork.sysStateSteps[1] = 0;
-            g_SysWork.timer_2C          = 0;
+            g_SysWork.timer_2C          = Q12(0.0f);
             g_SysWork.sysStateSteps[2] = 0;
             g_SysWork.sysStateSteps[0]++;
 

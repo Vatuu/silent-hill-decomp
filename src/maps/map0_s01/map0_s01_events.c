@@ -107,7 +107,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             Fs_QueueStartRead(FILE_ANIM_CAFE_DMS, FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
             Dms_HeaderFixOffsets(FS_BUFFER_11);
-            Chara_Load(0, Chara_Cybil, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_Cybil, &g_SysWork.npcBoneCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Cybil, 0, Q12(4.4f), Q12(269.9f), Q12_ANGLE(0.0f), 2);
 
@@ -357,7 +357,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
         case 48:
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             SD_Call(19);
-            Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, 0, 0);
+            Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcBoneCoords[0], CHARA_FORCE_FREE_ALL, 0, 0);
             func_80086470(3, InvItemId_Handgun, HANDGUN_AMMO_PICKUP_ITEM_COUNT, false);
             SysWork_StateStepIncrement(0);
 
@@ -934,7 +934,7 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
     {
         g_SysWork.flags_22A4 |= UnkSysFlag_5 | UnkSysFlag_9;
 
-        Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+        Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcBoneCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
 
         if (Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
         {

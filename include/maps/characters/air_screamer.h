@@ -228,7 +228,7 @@ typedef enum _AirScreamerDamage
  *
  * @param airScreamer Air Screamer or Night Flutter character to update.
  * @param animHdr Animation header.
- * @param boneCoords TODO
+ * @param boneCoords Model bone coordinates.
  */
 void Ai_AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 

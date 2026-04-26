@@ -857,7 +857,7 @@ void func_800D87C0(void) // 0x800D87C0
 
             if (g_SysWork.sysStateSteps[0] != 2)
             {
-                Chara_Load(2, Chara_Cat, g_SysWork.npcCoords, 4, NULL, NULL);
+                Chara_Load(2, Chara_Cat, g_SysWork.npcBoneCoords, 4, NULL, NULL);
             }
             break;
 

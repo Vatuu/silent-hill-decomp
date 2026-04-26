@@ -972,7 +972,7 @@ void func_800DC1E0(void) // 0x800DC1E0
             D_800E1FE2 = 0;
             g_SysWork.field_28 = 0;
             g_SysWork.sysStateSteps[1] = 0;
-            g_SysWork.timer_2C = 0;
+            g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateSteps[2] = 0;
             g_SysWork.sysStateSteps[0]++;
 
@@ -999,7 +999,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                     g_SysWork.sysStateSteps[0] = 5;
                     g_SysWork.field_28 = 0;
                     g_SysWork.sysStateSteps[1] = 0;
-                    g_SysWork.timer_2C = 0;
+                    g_SysWork.timer_2C = Q12(0.0f);
                     g_SysWork.sysStateSteps[2] = 0;
                     D_800E1FE2++;
                 }
@@ -1009,7 +1009,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                 g_SysWork.sysStateSteps[0] = 5;
                 g_SysWork.field_28 = 0;
                 g_SysWork.sysStateSteps[1] = 0;
-                g_SysWork.timer_2C = 0;
+                g_SysWork.timer_2C = Q12(0.0f);
                 g_SysWork.sysStateSteps[2] = 0;
             }
             break;
@@ -1026,7 +1026,7 @@ void func_800DC1E0(void) // 0x800DC1E0
 
             g_SysWork.field_28 = 0;
             g_SysWork.sysStateSteps[1] = 0;
-            g_SysWork.timer_2C = 0;
+            g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateSteps[2] = 0;
             g_SysWork.sysStateSteps[0]++;
 
@@ -1166,7 +1166,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                 g_SysWork.sysStateSteps[0] = 1;
                 g_SysWork.field_28 = 0;
                 g_SysWork.sysStateSteps[1] = 0;
-                g_SysWork.timer_2C = 0;
+                g_SysWork.timer_2C = Q12(0.0f);
                 g_SysWork.sysStateSteps[2] = 0;
             }
             break;
