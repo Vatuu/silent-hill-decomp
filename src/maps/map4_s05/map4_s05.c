@@ -147,7 +147,7 @@ void func_800D1968(s_SubCharacter* floatstinger) // 0x800D1968
             }
         }
 
-        Player_DisableDamage(&sp20, 0u);
+        Player_DisableDamage(&sp20, false);
 
         newHealth = floatstinger->health - floatstinger->damage.amount;
         if (sp20 != 0)

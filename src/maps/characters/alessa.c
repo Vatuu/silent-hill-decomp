@@ -21,16 +21,16 @@
  * MAP6_S04: 0x800DC2B4
  * MAP7_S03: 0x800D2F08
  */
-void Ai_Alessa_Update(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_Alessa_Update(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     if (alessa->model.controlState == 0)
     {
         Ai_Alessa_Init(alessa);
     }
 
-    Ai_Alessa_AnimStateUpdate(alessa, coords);
-    Ai_Alessa_MovementUpdate(alessa, coords);
-    Ai_Alessa_AnimUpdate(alessa, anmHdr, coords);
+    Ai_Alessa_AnimStateUpdate(alessa, boneCoords);
+    Ai_Alessa_MovementUpdate(alessa, boneCoords);
+    Ai_Alessa_AnimUpdate(alessa, anmHdr, boneCoords);
 }
 
 /** Addresses
@@ -39,14 +39,14 @@ void Ai_Alessa_Update(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2
  * MAP6_S04: 0x800DC328
  * MAP7_S03: 0x800D2F7C
  */
-void Ai_Alessa_AnimUpdate(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_Alessa_AnimUpdate(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     s_AnimInfo* animInfo;
 
     if (alessaProps.field_F0 == 0)
     {
         animInfo = &ALESSA_ANIM_INFOS[alessa->model.anim.status];
-        animInfo->playbackFunc(&alessa->model, anmHdr, coords, animInfo);
+        animInfo->playbackFunc(&alessa->model, anmHdr, boneCoords, animInfo);
     }
 }
 
@@ -56,7 +56,7 @@ void Ai_Alessa_AnimUpdate(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDIN
  * MAP6_S04: 0x800DC370
  * MAP7_S03: 0x800D2FC4
  */
-void Ai_Alessa_MovementUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
+void Ai_Alessa_MovementUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
 {
     VECTOR3 unused;
     VECTOR3 offset;
@@ -82,9 +82,9 @@ void Ai_Alessa_MovementUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
     alessa->position.vy = Q12(0.0f);
     alessa->position.vz += offset.vz;
 
-    coords->coord.t[0] = Q12_TO_Q8(alessa->position.vx);
-    coords->coord.t[1] = Q12_TO_Q8(alessa->position.vy);
-    coords->coord.t[2] = Q12_TO_Q8(alessa->position.vz);
+    boneCoords->coord.t[0] = Q12_TO_Q8(alessa->position.vx);
+    boneCoords->coord.t[1] = Q12_TO_Q8(alessa->position.vy);
+    boneCoords->coord.t[2] = Q12_TO_Q8(alessa->position.vz);
 }
 
 /** Addresses
@@ -93,7 +93,7 @@ void Ai_Alessa_MovementUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
  * MAP6_S04: 0x800DC508
  * MAP7_S03: 0x800D315C
  */
-void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
+void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
 {
     s_Collision coll;
     e_SfxId     sfx;
@@ -240,8 +240,8 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
     alessa->moveSpeed    = alessaProps.moveSpeed_126;
     alessa->fallSpeed   += g_GravitySpeed;
 
-    coords->flg = false;
-    Math_RotMatrixZxyNegGte(&alessa->rotation, &coords->coord);
+    boneCoords->flg = false;
+    Math_RotMatrixZxyNegGte(&alessa->rotation, &boneCoords->coord);
 }
 
 /** Addresses

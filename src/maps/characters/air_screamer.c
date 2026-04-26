@@ -17,9 +17,9 @@
 
 #define airScreamerProps airScreamer->properties.airScreamer
 
-void Ai_AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
-    sharedFunc_800D21E4_0_s01(anmHdr, coords);
+    sharedFunc_800D21E4_0_s01(anmHdr, boneCoords);
     sharedFunc_800D2200_0_s01(airScreamer);
 
     Ai_AirScreamer_Init(airScreamer);
@@ -33,10 +33,10 @@ void Ai_AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsC
     sharedFunc_800D81B0_0_s01(airScreamer);
 }
 
-bool sharedFunc_800D21E4_0_s01(s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+bool sharedFunc_800D21E4_0_s01(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     sharedData_800E21D0_0_s01.anmHdr_4 = anmHdr;
-    sharedData_800E21D0_0_s01.coords_8 = coords;
+    sharedData_800E21D0_0_s01.coords_8 = boneCoords;
     sharedData_800E21D0_0_s01.flags_0  = false;
     return true;
 }
@@ -12930,7 +12930,7 @@ bool sharedFunc_800D7AB0_0_s01(s_SubCharacter* airScreamer)
     return true;
 }
 
-void sharedFunc_800D7B14_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
+void sharedFunc_800D7B14_0_s01(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 {
     q19_12 bendAngle;
     q3_12  axisBlend;
@@ -12947,7 +12947,7 @@ void sharedFunc_800D7B14_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
         sharedData_800DE220_0_s01.vz = Q12(0.0f);
         sharedData_800DE220_0_s01.vy = Q12_MULT_FLOAT_PRECISE(bendAngle, 0.3f);
         Math_RotMatrixXyxGte(&sharedData_800DE220_0_s01, &sharedData_800DE230_0_s01);
-        MulMatrix(&coords[10].coord, &sharedData_800DE230_0_s01);
+        MulMatrix(&boneCoords[10].coord, &sharedData_800DE230_0_s01);
 
         scaledAngle = Q12_MULT_FLOAT_PRECISE(bendAngle, 0.5f);
 
@@ -12972,7 +12972,7 @@ void sharedFunc_800D7B14_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
         sharedData_800DE230_0_s01.m[2][1] = axisBlend;
         sharedData_800DE230_0_s01.m[1][2] = axisBlend;
 
-        MulMatrix(&coords[9].coord, &sharedData_800DE230_0_s01);
+        MulMatrix(&boneCoords[9].coord, &sharedData_800DE230_0_s01);
 
         scaledAngle = Q12_MULT_FLOAT_PRECISE(bendAngle, 0.2f);
 
@@ -12993,7 +12993,7 @@ void sharedFunc_800D7B14_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
         axisBlend                         = Q12_MULT_FLOAT_PRECISE(Q12(1.0f) - cosScaledAngle, 0.5f);
         sharedData_800DE230_0_s01.m[2][1] = axisBlend;
         sharedData_800DE230_0_s01.m[1][2] = axisBlend;
-        MulMatrix(&coords[1].coord, &sharedData_800DE230_0_s01);
+        MulMatrix(&boneCoords[1].coord, &sharedData_800DE230_0_s01);
 
         scaledAngle = Q12_MULT_FLOAT_PRECISE(bendAngle, 0.2f);
 
@@ -13015,7 +13015,7 @@ void sharedFunc_800D7B14_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
         sharedData_800DE230_0_s01.m[2][1] = axisBlend;
         sharedData_800DE230_0_s01.m[1][2] = axisBlend;
 
-        MulMatrix(&coords[2].coord, &sharedData_800DE230_0_s01);
+        MulMatrix(&boneCoords[2].coord, &sharedData_800DE230_0_s01);
         PopMatrix();
     }
 }

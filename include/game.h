@@ -1406,7 +1406,7 @@ typedef struct _PropertiesBloodsucker
 // TODO: Needs revision. Copy of Dahlia properties.
 typedef struct _PropertiesCheryl
 {
-    /* 0xE8 */  s32        controlState;
+    /* 0xE8 */  s32        controlState; /** `e_CherylControl` */
                 u_Property properties_EC;
                 u_Property properties_F0;
                 u_Property properties_F4;
@@ -1544,7 +1544,7 @@ typedef struct _PropertiesIncubus
     s32    field_EC;
     s32    someState_F0;
     q19_12 bossFightTimer_F4;
-    s8     unk_F8[48];
+    s8     __pad_F8[48];
 } s_PropertiesIncubus;
 
 /** @brief Kaufmann character properties. TODO: Largely a copy of Dahlia's for now. */
@@ -1571,26 +1571,26 @@ STATIC_ASSERT_SIZEOF(s_PropertiesKaufmann, 64);
 /** @brief Larval Stalker character properties. */
 typedef struct _PropertiesLarvalStalker
 {
-    u16        flags_E8; /** `e_LarvalStalkerFlags` */
-    u8         field_EA;
-    u8         unk_EB;
-    q19_12     timer_EC;
-    q20_12     timer_F0;
-    s16        keyframeIdx_F4; // Relative keyframe?
-    s16        keyframeIdx_F8; // Relative keyframe?
-    q19_12     targetPositionX;
-    q19_12     targetPositionZ;
-    q3_12      angle_100;
-    q3_12      angle_102;
-    q19_12     animTime_104;
-    q3_12      angle_108;
-    q4_12      timer_10A;
-    u_Property field_10C;
-    VECTOR3    field_110;
-    s32        flags_11C;
-    u_Property field_120;
-    s16        field_124;
-    q3_12      moveDistance_126;
+    /* 0x */ u16        flags_E8; /** `e_LarvalStalkerFlags` */
+    /* 0x */ u8         field_EA;
+    /* 0x */ u8         unk_EB;
+    /* 0x */ q19_12     timer_EC;
+    /* 0x */ q20_12     timer_F0;
+    /* 0x */ s16        keyframeIdx_F4; // Relative keyframe?
+    /* 0x */ s16        keyframeIdx_F8; // Relative keyframe?
+    /* 0x */ q19_12     targetPositionX;
+    /* 0x */ q19_12     targetPositionZ;
+    /* 0x */ q3_12      angle_100;
+    /* 0x */ q3_12      angle_102;
+    /* 0x */ q19_12     animTime_104;
+    /* 0x */ q3_12      angle_108;
+    /* 0x */ q4_12      timer_10A;
+    /* 0x */ u_Property field_10C;
+    /* 0x */ VECTOR3    field_110;
+    /* 0x */ s32        flags_11C;
+    /* 0x */ u_Property field_120;
+    /* 0x */ s16        field_124;
+    /* 0x */ q3_12      moveDistance_126;
 } s_PropertiesLarvalStalker;
 STATIC_ASSERT_SIZEOF(s_PropertiesLarvalStalker, 64);
 

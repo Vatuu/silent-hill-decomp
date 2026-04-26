@@ -43,7 +43,7 @@ void func_800D02B4(void) // 0x800D02B4
         EventState_2   = 2,
         EventState_3   = 3,
         EventState_4   = 4,
-        EventState_End = 5
+        EventState_Finish = 5
     } e_EventState;
 
     switch (g_SysWork.sysStateSteps[0])
@@ -69,7 +69,7 @@ void func_800D02B4(void) // 0x800D02B4
         case EventState_4:
             SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
 
-        default: // `EventState_End`
+        default: // `EventState_Finish`
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             return;

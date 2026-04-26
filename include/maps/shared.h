@@ -897,30 +897,6 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords);
 
 void sharedFunc_800D0968_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords);
 
-void Ai_Creeper_Update(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void Ai_Creeper_Init(s_SubCharacter* creeper); // `map5_s00` version has extra code at end of func.
-
-void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper);
-
-void Ai_Creeper_ControlUpdate(s_SubCharacter* creeper);
-
-void Creeper_ControlIdle(s_SubCharacter* creeper);
-
-void Creeper_ControlWalkForward(s_SubCharacter* creeper);
-
-void Creeper_ControlAttack(s_SubCharacter* creeper);
-
-void Creeper_ControlStun(s_SubCharacter* creeper);
-
-void Creeper_ControlDamage(s_SubCharacter* creeper);
-
-void sharedFunc_800D983C_1_s02(s_SubCharacter* creeper);
-
-void sharedFunc_800D9960_1_s02(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper);
-
 bool sharedFunc_800D3508_0_s01(s_SubCharacter* airScreamer, q19_12* dist);
 
 bool sharedFunc_800D3630_0_s01(s_SubCharacter* airScreamer, q19_12* dist);
@@ -928,70 +904,7 @@ bool sharedFunc_800D3630_0_s01(s_SubCharacter* airScreamer, q19_12* dist);
 /** Returns flags? Specific to Air Screamer? */
 s32 sharedFunc_800D3758_0_s01(s_SubCharacter* airScreamer, q19_12* outDist, q19_12* outAngle, q19_12 dist, s32* arg4);
 
-void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void Ai_Romper_Init(s_SubCharacter* romper);
-
-/** Romper footstep SFX. */
-void Romper_FootstepSfxPlay(s_SubCharacter* romper, s16 arg1, s16 arg2, u8* arg3);
-
-void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper);
-
-void sharedFunc_800E6420_2_s02(s_SubCharacter* romper);
-
-void Ai_Romper_ControlUpdate(s_SubCharacter* romper);
-
-void Ai_Romper_Control_1(s_SubCharacter* romper);
-
-void Ai_Romper_Control_8(s_SubCharacter* romper);
-
-void Ai_Romper_Control_9(s_SubCharacter* romper);
-
-void Romper_ControlGrabAttack(s_SubCharacter* romper);
-
-void sharedFunc_800E8730_2_s02(s_SubCharacter* romper);
-
-void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper);
-
-s32 sharedFunc_800E939C_2_s02(s_SubCharacter* romper);
-
-s32 sharedFunc_800E94B4_2_s02(s_SubCharacter* romper);
-
-void sharedFunc_800E9714_2_s02(s_SubCharacter* romper);
-
-void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void Ai_Groaner_Init(s_SubCharacter* groaner); // `map2_s00` has extra block at end of func compared to other maps.
-
-void sharedFunc_800E554C_2_s00(s_SubCharacter* groaner);
-
-void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner);
-
-void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner);
-
-void sharedFunc_800E384C_2_s00(s_SubCharacter* groaner);
-
-void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner);
-
-void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner);
-
-void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner);
-
-void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner);
-
-void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner);
-
-void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner);
-
-void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner);
-
-void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner);
-
-/** Related to Air Screamer? */
+/** Set to Split Head bone coords. */
 extern GsCOORDINATE2* sharedData_800D8610_1_s05;
 
 /** Unclear, but funcs past here may be specific to Air Screamer. */

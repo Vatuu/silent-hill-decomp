@@ -73,6 +73,36 @@ typedef enum _GroanerStateStep
     GroanerStateStep_3 = 3
 } e_GroanerStateStep;
 
+void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+
+void Ai_Groaner_Init(s_SubCharacter* groaner); // `map2_s00` has extra block at end of func compared to other maps.
+
+void sharedFunc_800E554C_2_s00(s_SubCharacter* groaner);
+
+void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner);
+
+void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner);
+
+void sharedFunc_800E384C_2_s00(s_SubCharacter* groaner);
+
+void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner);
+
+void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner);
+
+void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner);
+
+void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner);
+
+void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner);
+
+void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner);
+
+void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+
+void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner);
+
+void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner);
+
 /*s_AnimInfo GROANER_ANIM_INFOS[] = {
     { Anim_BlendLinear, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { NULL, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, 0, 0 },

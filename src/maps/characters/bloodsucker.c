@@ -9,7 +9,7 @@
 #include "maps/shared.h"
 #include "maps/characters/bloodsucker.h"
 
-void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     u32 animStatusDiv2;
     s32 stateStepMul2;
@@ -40,7 +40,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
             break;
     }
 
-    sharedFunc_800D0F28_3_s03(bloodsucker, anmHdr, coords);
+    sharedFunc_800D0F28_3_s03(bloodsucker, anmHdr, boneCoords);
 
     // Reset flags if ???
     if (g_SysWork.bgmStatusFlags & BgmStatusFlag_6)
@@ -238,7 +238,7 @@ void Ai_Bloodsucker_Control_4(s_SubCharacter* bloodsucker)
 #endif
 }
 
-void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     typedef struct
     {
@@ -255,10 +255,10 @@ void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr,
 
     scratchData = PSX_SCRATCH;
 
-    Math_MatrixTransform(&bloodsucker->position, &bloodsucker->rotation, coords);
+    Math_MatrixTransform(&bloodsucker->position, &bloodsucker->rotation, boneCoords);
     animInfo = &BLOODSUCKER_ANIM_INFOS[bloodsucker->model.anim.status];
-    animInfo->playbackFunc(&bloodsucker->model, anmHdr, coords, animInfo);
-    Vw_CoordHierarchyMatrixCompute(&coords[14], &scratchData->field_0);
+    animInfo->playbackFunc(&bloodsucker->model, anmHdr, boneCoords, animInfo);
+    Vw_CoordHierarchyMatrixCompute(&boneCoords[14], &scratchData->field_0);
 
     gte_SetRotMatrix(&scratchData->field_0);
     gte_SetTransMatrix(&scratchData->field_0);

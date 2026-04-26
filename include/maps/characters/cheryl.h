@@ -36,10 +36,10 @@ extern s32 D_800DF1CC;
 /** Timer. */
 extern q19_12 D_800E3A30;
 
-void Cheryl_Update(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void Cheryl_AnimUpdate(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void Cheryl_MovementUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* coords);
-void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* coords);
+void Cheryl_Update(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Cheryl_AnimUpdate(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Cheryl_MovementUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords);
+void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords);
 bool Cheryl_FootstepSfxPlay(s32 animStatus, s_SubCharacter* cheryl,
                             s32 leftFootstepKeyframeIdx, s32 rightFootstepKeyframeIdx, q23_8 distToPlayerSqr, s32 pitch);
 void Cheryl_Init(s_SubCharacter* cheryl);

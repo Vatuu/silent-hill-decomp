@@ -5743,7 +5743,7 @@ s32 func_800DFB04(void) // 0x800DFB04
 {
     u8 sp10;
 
-    Player_DisableDamage(&sp10, 0u);
+    Player_DisableDamage(&sp10, false);
     return sp10;
 }
 

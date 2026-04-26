@@ -20,16 +20,16 @@
  * MAP6_S01: 0x800CE4FC
  * MAP7_S03: 0x800D1098
  */
-void Ai_Cybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_Cybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     if (chara->model.controlState == 0)
     {
         Ai_Cybil_Init(chara);
     }
 
-    Ai_Cybil_AnimStateUpdate(chara, coords);
-    Ai_Cybil_MovementUpdate(chara, coords);
-    Ai_Cybil_AnimUpdate(chara, anmHdr, coords);
+    Ai_Cybil_AnimStateUpdate(chara, boneCoords);
+    Ai_Cybil_MovementUpdate(chara, boneCoords);
+    Ai_Cybil_AnimUpdate(chara, anmHdr, boneCoords);
 }
 
 /** Addresses
@@ -38,14 +38,14 @@ void Ai_Cybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* 
  * MAP6_S01: 0x800CE570
  * MAP7_S03: 0x800D110C
  */
-void Ai_Cybil_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINATE2* coords)
+void Ai_Cybil_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINATE2* boneCoords)
 {
     s_AnimInfo* animInfo;
 
     if (chara->properties.player.field_F0 == 0)
     {
         animInfo = &CYBIL_ANIM_INFOS[chara->model.anim.status];
-        animInfo->playbackFunc(&chara->model, animHdr, coords, animInfo);
+        animInfo->playbackFunc(&chara->model, animHdr, boneCoords, animInfo);
     }
 }
 
@@ -55,7 +55,7 @@ void Ai_Cybil_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINA
  * MAP6_S01: 0x800CE5B8
  * MAP7_S03: 0x800D1154
  */
-void Ai_Cybil_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
+void Ai_Cybil_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 {
     VECTOR3 unused;
     VECTOR3 offset;
@@ -81,9 +81,9 @@ void Ai_Cybil_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
     chara->position.vy  = Q12(0.0f);
     chara->position.vz += offset.vz;
 
-    coords->coord.t[0] = Q12_TO_Q8(chara->position.vx);
-    coords->coord.t[1] = Q12_TO_Q8(chara->position.vy);
-    coords->coord.t[2] = Q12_TO_Q8(chara->position.vz);
+    boneCoords->coord.t[0] = Q12_TO_Q8(chara->position.vx);
+    boneCoords->coord.t[1] = Q12_TO_Q8(chara->position.vy);
+    boneCoords->coord.t[2] = Q12_TO_Q8(chara->position.vz);
 }
 
 /** Addresses
@@ -92,7 +92,7 @@ void Ai_Cybil_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
  * MAP6_S01:
  * MAP7_S03:
  */
-void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
+void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 {
     s_Collision coll;
     e_SfxId     sfx;
@@ -526,8 +526,8 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
     chara->moveSpeed    = dahliaProps.moveDistance_126;
     chara->fallSpeed   += g_GravitySpeed;
 
-    coords->flg = false;
-    Math_RotMatrixZxyNegGte(&chara->rotation, &coords->coord);
+    boneCoords->flg = false;
+    Math_RotMatrixZxyNegGte(&chara->rotation, &boneCoords->coord);
 }
 
 /** Addresses

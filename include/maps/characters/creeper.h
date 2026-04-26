@@ -50,4 +50,28 @@ typedef enum _CreeperControl
     CreeperControl_Damage      = 5
 } e_CreeperControl;
 
+void Ai_Creeper_Update(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+
+void Ai_Creeper_Init(s_SubCharacter* creeper); // `map5_s00` version has extra code at end of func.
+
+void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper);
+
+void Ai_Creeper_ControlUpdate(s_SubCharacter* creeper);
+
+void Creeper_ControlIdle(s_SubCharacter* creeper);
+
+void Creeper_ControlWalkForward(s_SubCharacter* creeper);
+
+void Creeper_ControlAttack(s_SubCharacter* creeper);
+
+void Creeper_ControlStun(s_SubCharacter* creeper);
+
+void Creeper_ControlDamage(s_SubCharacter* creeper);
+
+void sharedFunc_800D983C_1_s02(s_SubCharacter* creeper);
+
+void sharedFunc_800D9960_1_s02(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+
+void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper);
+
 #endif

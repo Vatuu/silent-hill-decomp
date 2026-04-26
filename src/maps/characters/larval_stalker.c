@@ -8,7 +8,7 @@
 
 #define larvalStalkerProps larvalStalker->properties.larvalStalker
 
-void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     s8* mapOverlayPtr;
 
@@ -20,8 +20,8 @@ void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr,
 
     sharedFunc_800D17BC_1_s00(larvalStalker);
     Ai_LarvalStalker_ControlUpdate(larvalStalker);
-    sharedFunc_800D140C_1_s00(larvalStalker, coords);
-    sharedFunc_800D1524_1_s00(larvalStalker, anmHdr, coords);
+    sharedFunc_800D140C_1_s00(larvalStalker, boneCoords);
+    sharedFunc_800D1524_1_s00(larvalStalker, anmHdr, boneCoords);
     sharedFunc_800D1DBC_1_s00(larvalStalker);
 
     if (larvalStalkerProps.timer_10A < Q12(3.5f))
@@ -740,7 +740,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
     Chara_DamageClear(larvalStalker);
 }
 
-void sharedFunc_800D140C_1_s00(s_SubCharacter* larvalStalker, GsCOORDINATE2* coords)
+void sharedFunc_800D140C_1_s00(s_SubCharacter* larvalStalker, GsCOORDINATE2* boneCoords)
 {
     s_CollisionResult sp18;
 
@@ -783,10 +783,10 @@ void sharedFunc_800D140C_1_s00(s_SubCharacter* larvalStalker, GsCOORDINATE2* coo
         }
     }
 
-    Math_MatrixTransform(&larvalStalker->position, &larvalStalker->rotation, coords);
+    Math_MatrixTransform(&larvalStalker->position, &larvalStalker->rotation, boneCoords);
 }
 
-void sharedFunc_800D1524_1_s00(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void sharedFunc_800D1524_1_s00(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     s_AnimInfo* animInfo;
 
@@ -832,7 +832,7 @@ void sharedFunc_800D1524_1_s00(s_SubCharacter* larvalStalker, s_AnmHeader* anmHd
     }
 
     animInfo = &LARVAL_STALKER_ANIM_INFOS[larvalStalker->model.anim.status];
-    animInfo->playbackFunc(&larvalStalker->model, anmHdr, coords, animInfo);
+    animInfo->playbackFunc(&larvalStalker->model, anmHdr, boneCoords, animInfo);
 
     #undef activeAnimInfo
 }

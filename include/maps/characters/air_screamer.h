@@ -228,11 +228,11 @@ typedef enum _AirScreamerDamage
  *
  * @param airScreamer Air Screamer or Night Flutter character to update.
  * @param animHdr Animation header.
- * @param coords TODO
+ * @param boneCoords TODO
  */
-void Ai_AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-bool sharedFunc_800D21E4_0_s01(s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+bool sharedFunc_800D21E4_0_s01(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 /** Probes collision and sets `airScreamerProps.groundHeight_124`. */
 void sharedFunc_800D2200_0_s01(s_SubCharacter* airScreamer);
@@ -314,10 +314,10 @@ bool sharedFunc_800D7AB0_0_s01(s_SubCharacter* airScreamer);
 
 /** @brief Applies a multi-stage bend deformation to several model coordinates.
  * Builds three rotation matrices using scaled fractions of `chara->field_2A` and
- * multiplies them into `coords[10]`, `coords[9]`, `coords[1]`, and `coords[2]`.
+ * multiplies them into `boneCoords[10]`, `boneCoords[9]`, `boneCoords[1]`, and `boneCoords[2]`.
  * Used when the animation flag bit 0 is active to drive a chained bending motion.
  */
-void sharedFunc_800D7B14_0_s01(s_SubCharacter* airScreamer, GsCOORDINATE2* coords);
+void sharedFunc_800D7B14_0_s01(s_SubCharacter* airScreamer, GsCOORDINATE2* boneCoords);
 
 bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer);
 

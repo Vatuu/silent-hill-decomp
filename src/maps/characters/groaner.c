@@ -14,7 +14,7 @@
 #define Rng_GenerateIntFromInput(rand, low, high) \
     (s32)((rand) % (((high) - (low)) + 1)) + (low)
 
-void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     u8 prevControlState;
 
@@ -33,7 +33,7 @@ void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINAT
         sharedFunc_800E5AA4_2_s00(groaner);
     }
 
-    sharedFunc_800E5EC4_2_s00(groaner, anmHdr, coords);
+    sharedFunc_800E5EC4_2_s00(groaner, anmHdr, boneCoords);
 
     if (g_DeltaTime != Q12(0.0f))
     {
@@ -1141,7 +1141,7 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
     }
 }
 
-void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     typedef struct
     {
@@ -1220,10 +1220,10 @@ void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsC
             break;
     }
 
-    Math_MatrixTransform(&groaner->position, (SVECTOR*)&groaner->rotation, coords);
+    Math_MatrixTransform(&groaner->position, (SVECTOR*)&groaner->rotation, boneCoords);
 
     animInfo = &GROANER_ANIM_INFOS[groaner->model.anim.status];
-    animInfo->playbackFunc(&groaner->model, anmHdr, coords, animInfo);
+    animInfo->playbackFunc(&groaner->model, anmHdr, boneCoords, animInfo);
 
     ptr = PSX_SCRATCH;
 
@@ -1274,14 +1274,14 @@ void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsC
     ptr->field_0.vz      = 0;
 
     Math_RotMatrixZxyNegGte(&ptr->field_0, &ptr->field_8);
-    MulMatrix(&coords[3].coord, &ptr->field_8);
-    MulMatrix(&coords[4].coord, &ptr->field_8);
+    MulMatrix(&boneCoords[3].coord, &ptr->field_8);
+    MulMatrix(&boneCoords[4].coord, &ptr->field_8);
 
     *(s32*)&ptr->field_0.vx = groanerProps.field_EE << 16;
     ptr->field_0.vz         = 0;
 
     Math_RotMatrixZxyNegGte(&ptr->field_0, &ptr->field_8);
-    MulMatrix(&coords[1].coord, &ptr->field_8);
+    MulMatrix(&boneCoords[1].coord, &ptr->field_8);
 
     groaner->rotation.vy                 = Math_AngleNormalizeSigned(groaner->rotation.vy);
     groanerProps.angle_EC = groaner->rotation.vy;

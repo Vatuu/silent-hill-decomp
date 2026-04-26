@@ -8,7 +8,7 @@
 
 #define scratcherProps scratcher->properties.hangedScratcher
 
-void Ai_HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     // Initialize.
     if (scratcher->model.controlState == HangedScratcherControl_None)
@@ -19,7 +19,7 @@ void Ai_HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, G
     sharedFunc_800CFF74_5_s00(scratcher);
     Ai_HangedScratcher_ControlUpdate(scratcher);
     sharedFunc_800D26D8_5_s00(scratcher);
-    sharedFunc_800D2844_5_s00(scratcher, anmHdr, coords);
+    sharedFunc_800D2844_5_s00(scratcher, anmHdr, boneCoords);
     sharedFunc_800D2C18_5_s00(scratcher);
     sharedFunc_800D3300_5_s00(scratcher);
 }
@@ -1166,7 +1166,7 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
     }
 }
 
-void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     s_AnimInfo* animInfo;
     q19_12      newAnimDur;
@@ -1292,10 +1292,10 @@ void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, G
             break;
     }
 
-    Math_MatrixTransform(&scratcher->position, &scratcher->rotation, coords);
+    Math_MatrixTransform(&scratcher->position, &scratcher->rotation, boneCoords);
 
     animInfo = &curAnimInfo;
-    animInfo->playbackFunc(&scratcher->model, anmHdr, coords, animInfo);
+    animInfo->playbackFunc(&scratcher->model, anmHdr, boneCoords, animInfo);
     scratcherProps.field_FC = scratcher->rotation.vy;
 
 #undef curAnimInfo

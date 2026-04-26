@@ -95,7 +95,7 @@ typedef struct
     { Anim_PlaybackLoop, ANIM_STATUS(14, true), false, NO_VALUE, { Q12(2) }, 34, 36 }
 };*/
 
-void Ai_SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void Ai_SplitHead_Init(s_SubCharacter* splitHead);
 

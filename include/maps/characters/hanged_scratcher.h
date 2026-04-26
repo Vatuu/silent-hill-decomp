@@ -156,7 +156,7 @@ typedef enum _HangedScratcherStateStep
 
 extern q19_12 sharedData_800DE28C_5_s00;
 
-void Ai_HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void Ai_HangedScratcher_Init(s_SubCharacter* scratcher);
 
@@ -198,7 +198,7 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher);
 
 void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher);
 
-void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher);
 

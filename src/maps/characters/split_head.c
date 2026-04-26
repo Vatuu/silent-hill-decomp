@@ -7,9 +7,9 @@
 
 #define splitHeadProps splitHead->properties.splitHead
 
-void Ai_SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
-    sharedData_800D8610_1_s05 = coords;
+    sharedData_800D8610_1_s05 = boneCoords;
 
     // Initialize.
     if (splitHead->model.controlState == SplitHeadControl_None)

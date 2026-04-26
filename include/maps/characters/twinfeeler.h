@@ -65,4 +65,6 @@ typedef enum _TwinfeelerBone
     TwinfeelerBone_Head = 14
 } e_TwinfeelerBone;
 
+// TODO: Move function decls here.
+
 #endif

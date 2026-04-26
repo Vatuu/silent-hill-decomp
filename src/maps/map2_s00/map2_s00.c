@@ -947,13 +947,18 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
 {
     typedef enum _EventState
     {
+        EventState_Initialize  = 0,
+
+        EventState_Prompt      = 7,
         EventState_TakeKey     = 8,
-        EventState_DontTakeKey = 9
+        EventState_DontTakeKey = 9,
+        EventState_Finish      = 12
     } e_EventState;
 
+    // Handle event state.
     switch (g_SysWork.sysStateSteps[0])
     {
-        case 0:
+        case EventState_Initialize:
             Player_ControlFreeze();
             func_800862F8(0, FILE_TIM_INKENNEL_TIM, false);
             SysWork_StateStepIncrement(0);
@@ -982,7 +987,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
         case 6:
             SysWork_StateStepIncrement(0);
 
-        case 7:
+        case EventState_Prompt:
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(true, 27, EventState_TakeKey, EventState_DontTakeKey, 0, false); // "House Key in doghouse. Take it?"
             break;
@@ -1006,7 +1011,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
             func_80086C58(&g_SysWork.playerWork.player, 60);
             break;
 
-        default:
+        default: // `EventState_Finish`
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;

@@ -206,7 +206,7 @@ void sharedFunc_800CDA88_3_s03(s_SubCharacter* nurse)
     }
 }
 
-void Ai_PuppetNurse_UpdateMain(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_PuppetNurse_UpdateMain(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     if (g_DeltaTime != Q12(0.0f))
     {
@@ -214,14 +214,14 @@ void Ai_PuppetNurse_UpdateMain(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOO
         Ai_PuppetNurse_Control(nurse);
         sharedFunc_800CDA88_3_s03(nurse);
         sharedFunc_800D03E4_3_s03(nurse);
-        Ai_PuppetNurse_AnimUpdate(nurse, anmHdr, coords);
-        sharedFunc_800D0968_3_s03(nurse, coords);
-        sharedFunc_800D02E4_3_s03(nurse, coords);
+        Ai_PuppetNurse_AnimUpdate(nurse, anmHdr, boneCoords);
+        sharedFunc_800D0968_3_s03(nurse, boneCoords);
+        sharedFunc_800D02E4_3_s03(nurse, boneCoords);
         return;
     }
     else
     {
-        Ai_PuppetNurse_AnimUpdate(nurse, anmHdr, coords);
+        Ai_PuppetNurse_AnimUpdate(nurse, anmHdr, boneCoords);
     }
 }
 
@@ -311,7 +311,7 @@ void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isPuppetDoctor)
     chara2->properties.puppetNurse.field_120 = Q12(1.0f);
 }
 
-void Ai_PuppetNurse_Update(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_PuppetNurse_Update(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     // Initialize.
     if (nurse->model.controlState == 0)
@@ -319,10 +319,10 @@ void Ai_PuppetNurse_Update(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDIN
         Ai_PuppetNurse_Init(nurse, false);
     }
 
-    Ai_PuppetNurse_UpdateMain(nurse, anmHdr, coords);
+    Ai_PuppetNurse_UpdateMain(nurse, anmHdr, boneCoords);
 }
 
-void Ai_PuppetDoctor_Update(s_SubCharacter* doctor, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_PuppetDoctor_Update(s_SubCharacter* doctor, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     // Initialize.
     if (doctor->model.controlState == 0)
@@ -330,7 +330,7 @@ void Ai_PuppetDoctor_Update(s_SubCharacter* doctor, s_AnmHeader* anmHdr, GsCOORD
         Ai_PuppetNurse_Init(doctor, true);
     }
 
-    Ai_PuppetNurse_UpdateMain(doctor, anmHdr, coords);
+    Ai_PuppetNurse_UpdateMain(doctor, anmHdr, boneCoords);
 }
 
 bool Ai_PuppetNurse_SomeAngleCheck(s_SubCharacter* nurse)
@@ -1429,7 +1429,7 @@ void Ai_PuppetNurse_Control(s_SubCharacter* nurse)
     }
 }
 
-void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords)
+void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords)
 {
     VECTOR3         pos;
     MATRIX          mat; // "Hierarchy matrix"?
@@ -1445,7 +1445,7 @@ void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords)
     if (localNurse->model.controlState == PuppetNurseControl_1 ||
         localNurse->model.controlState == PuppetNurseControl_5)
     {
-        Vw_CoordHierarchyMatrixCompute(&coords[10], &mat);
+        Vw_CoordHierarchyMatrixCompute(&boneCoords[10], &mat);
         posX = Q8_TO_Q12(mat.t[0]);
         posY = Q8_TO_Q12(mat.t[1]);
         posZ = Q8_TO_Q12(mat.t[2]);
@@ -1577,7 +1577,7 @@ void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOO
     }
 }
 
-void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords)
+void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords)
 {
     typedef enum _BoneMatIdx
     {
@@ -1606,10 +1606,10 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords)
     localNurse = nurse;
 
     // Get torso, head, right shin, and left shin bone matrices.
-    Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_Torso], &boneMats[BoneMatIdx_Torso]);
-    Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_Head], &boneMats[BoneMatIdx_Head]);
-    Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_RightShin], &boneMats[BoneMatIdx_RightShin]);
-    Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_LeftShin], &boneMats[BoneMatIdx_LeftShin]);
+    Vw_CoordHierarchyMatrixCompute(&boneCoords[HarryBone_Torso], &boneMats[BoneMatIdx_Torso]);
+    Vw_CoordHierarchyMatrixCompute(&boneCoords[HarryBone_Head], &boneMats[BoneMatIdx_Head]);
+    Vw_CoordHierarchyMatrixCompute(&boneCoords[HarryBone_RightShin], &boneMats[BoneMatIdx_RightShin]);
+    Vw_CoordHierarchyMatrixCompute(&boneCoords[HarryBone_LeftShin], &boneMats[BoneMatIdx_LeftShin]);
 
     posY                     = localNurse->position.vy;
     rightShinPosY            = Q8_TO_Q12(boneMats[BoneMatIdx_RightShin].t[1]);
@@ -1649,13 +1649,13 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords)
     localNurse->properties.npc.position_E8.vz = tempPosComp;
 }
 
-void sharedFunc_800D0968_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords)
+void sharedFunc_800D0968_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords)
 {
     q19_12 posY;
 
     if (nurse->model.anim.flags & AnimFlag_Visible)
     {
-        sharedFunc_800D0828_3_s03(nurse, coords);
+        sharedFunc_800D0828_3_s03(nurse, boneCoords);
         return;
     }
 

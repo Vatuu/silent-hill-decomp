@@ -62,6 +62,39 @@ typedef enum _RomperControl
     RomperControl_GrabAttack  = 11
 } e_RomperControl;
 
+void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+
+void Ai_Romper_Init(s_SubCharacter* romper);
+
+/** Romper footstep SFX. */
+void Romper_FootstepSfxPlay(s_SubCharacter* romper, s16 arg1, s16 arg2, u8* arg3);
+
+void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper);
+
+void sharedFunc_800E6420_2_s02(s_SubCharacter* romper);
+
+void Ai_Romper_ControlUpdate(s_SubCharacter* romper);
+
+void Ai_Romper_Control_1(s_SubCharacter* romper);
+
+void Ai_Romper_Control_8(s_SubCharacter* romper);
+
+void Ai_Romper_Control_9(s_SubCharacter* romper);
+
+void Romper_ControlGrabAttack(s_SubCharacter* romper);
+
+void sharedFunc_800E8730_2_s02(s_SubCharacter* romper);
+
+void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+
+void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper);
+
+s32 sharedFunc_800E939C_2_s02(s_SubCharacter* romper);
+
+s32 sharedFunc_800E94B4_2_s02(s_SubCharacter* romper);
+
+void sharedFunc_800E9714_2_s02(s_SubCharacter* romper);
+
 /*s_AnimInfo ROMPER_ANIM_INFOS[] = {
     { Anim_BlendLinear,  NO_VALUE,               false, ANIM_STATUS(0, false),  { Q12(0.0f) }, NO_VALUE, 0 },
     { NULL,              ANIM_STATUS(0, false),  false, ANIM_STATUS(0, false),  { Q12(0.0f) }, 0, 0 },

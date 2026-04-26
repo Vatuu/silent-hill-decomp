@@ -4,6 +4,7 @@
 #include "maps/particle.h"
 #include "maps/characters/player.h"
 #include "maps/characters/air_screamer.h"
+#include "maps/characters/groaner.h"
 
 extern s_AnimInfo HARRY_M2S00_ANIM_INFOS[];
 

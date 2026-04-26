@@ -39,10 +39,10 @@ extern s_AnimInfo GHOST_CHILD_ALESSA_ANIM_INFOS[];
     { Anim_PlaybackLoop, ANIM_STATUS(GhostChildAlessaAnim_8, true), false, NO_VALUE, { Q12(5.0f) }, 128, 137 }
 };*/
 
-void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void Ai_GhostChildAlessa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void Ai_GhostChildAlessa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords);
-void Ai_GhostChildAlessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Ai_GhostChildAlessa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Ai_GhostChildAlessa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
+void Ai_GhostChildAlessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
 void Ai_GhostChildAlessa_Init(s_SubCharacter* chara);
 
 #endif

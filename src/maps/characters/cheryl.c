@@ -10,19 +10,19 @@
  *  MAP0_S00
  */
 
-void Cheryl_Update(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D7FB8
+void Cheryl_Update(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D7FB8
 {
     if (cheryl->model.charaId != Chara_Cheryl)
     {
         Cheryl_Init(cheryl);
     }
 
-    Cheryl_ControlUpdate(cheryl, coords);
-    Cheryl_MovementUpdate(cheryl, coords);
-    Cheryl_AnimUpdate(cheryl, anmHdr, coords);
+    Cheryl_ControlUpdate(cheryl, boneCoords);
+    Cheryl_MovementUpdate(cheryl, boneCoords);
+    Cheryl_AnimUpdate(cheryl, anmHdr, boneCoords);
 }
 
-void Cheryl_AnimUpdate(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D802C
+void Cheryl_AnimUpdate(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D802C
 {
     q19_12      moveSpeed;
     q19_12      duration;
@@ -56,13 +56,13 @@ void Cheryl_AnimUpdate(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE
 
     if (cherylProps.properties_F0.val32 == 0)
     {
-        CHERYL_ANIM_INFOS[cheryl->model.anim.status].playbackFunc(&cheryl->model, anmHdr, coords, &CHERYL_ANIM_INFOS[cheryl->model.anim.status]);
+        CHERYL_ANIM_INFOS[cheryl->model.anim.status].playbackFunc(&cheryl->model, anmHdr, boneCoords, &CHERYL_ANIM_INFOS[cheryl->model.anim.status]);
     }
 
     #undef cherylProps
 }
 
-void Cheryl_MovementUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* coords) // 0x800D8124
+void Cheryl_MovementUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 0x800D8124
 {
     VECTOR3 pos; // @hack Unused but required for match.
     VECTOR3 offset;
@@ -96,12 +96,12 @@ void Cheryl_MovementUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* coords) // 0x8
         cheryl->fallSpeed   = Q12(0.0f);
     }
 
-    coords->coord.t[0] = Q12_TO_Q8(cheryl->position.vx);
-    coords->coord.t[1] = Q12_TO_Q8(cheryl->position.vy);
-    coords->coord.t[2] = Q12_TO_Q8(cheryl->position.vz);
+    boneCoords->coord.t[0] = Q12_TO_Q8(cheryl->position.vx);
+    boneCoords->coord.t[1] = Q12_TO_Q8(cheryl->position.vy);
+    boneCoords->coord.t[2] = Q12_TO_Q8(cheryl->position.vz);
 }
 
-void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* coords) // 0x800D8310
+void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 0x800D8310
 {
     s_Collision coll;
     e_SfxId     sfx;
@@ -224,8 +224,8 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* coords) // 0x80
     cheryl->moveSpeed    = cherylProps.moveDistance_124;
     cheryl->fallSpeed   += g_GravitySpeed;
 
-    coords->flg = false;
-    Math_RotMatrixZxyNegGte(&cheryl->rotation, &coords->coord);
+    boneCoords->flg = false;
+    Math_RotMatrixZxyNegGte(&cheryl->rotation, &boneCoords->coord);
 }
 
 bool Cheryl_FootstepSfxPlay(s32 animStatus, s_SubCharacter* cheryl,

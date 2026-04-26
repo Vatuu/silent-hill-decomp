@@ -18,16 +18,16 @@
  * MAP7_S02: 0x800D6484
  * MAP7_S03: 0x800D4C50
  */
-void Ai_BloodyLisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_BloodyLisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     if (chara->model.controlState == 0)
     {
         Ai_BloodyLisa_Init(chara);
     }
 
-    Ai_BloodyLisa_AnimStateUpdate(chara, coords);
-    Ai_BloodyLisa_MovementUpdate(chara, coords);
-    Ai_BloodyLisa_AnimUpdate(chara, anmHdr, coords);
+    Ai_BloodyLisa_AnimStateUpdate(chara, boneCoords);
+    Ai_BloodyLisa_MovementUpdate(chara, boneCoords);
+    Ai_BloodyLisa_AnimUpdate(chara, anmHdr, boneCoords);
 }
 
  /** Addresses
@@ -35,14 +35,14 @@ void Ai_BloodyLisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINA
  * MAP7_S02: 0x800D64F8
  * MAP7_S03: 0x800D4CC4
  */
-void Ai_BloodyLisa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_BloodyLisa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     s_AnimInfo* animInfo;
 
     if (chara->properties.player.field_F0 == 0)
     {
         animInfo = &BLOODY_LISA_ANIM_INFOS[chara->model.anim.status];
-        animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
+        animInfo->playbackFunc(&chara->model, anmHdr, boneCoords, animInfo);
     }
 }
 
@@ -51,7 +51,7 @@ void Ai_BloodyLisa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
  * MAP7_S02: 0x800D6540
  * MAP7_S03: 0x800D4D0C
  */
-void Ai_BloodyLisa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
+void Ai_BloodyLisa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 {
     VECTOR3 unused;
     VECTOR3 offset;
@@ -77,9 +77,9 @@ void Ai_BloodyLisa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
     chara->position.vy  = Q12(0.0f);
     chara->position.vz += offset.vz;
 
-    coords->coord.t[0] = Q12_TO_Q8(chara->position.vx);
-    coords->coord.t[1] = Q12_TO_Q8(chara->position.vy);
-    coords->coord.t[2] = Q12_TO_Q8(chara->position.vz);
+    boneCoords->coord.t[0] = Q12_TO_Q8(chara->position.vx);
+    boneCoords->coord.t[1] = Q12_TO_Q8(chara->position.vy);
+    boneCoords->coord.t[2] = Q12_TO_Q8(chara->position.vz);
 }
 
  /** Addresses
@@ -87,7 +87,7 @@ void Ai_BloodyLisa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
  * MAP7_S02: 0x800D66D8
  * MAP7_S03: 0x800D4EA4
  */
-void Ai_BloodyLisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
+void Ai_BloodyLisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 {
     s_Collision coll;
     e_SfxId     sfx;
@@ -133,8 +133,8 @@ void Ai_BloodyLisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
     chara->moveSpeed    = dahliaProps.moveDistance_126;
     chara->fallSpeed   += g_GravitySpeed;
 
-    coords->flg = false;
-    Math_RotMatrixZxyNegGte(&chara->rotation, &coords->coord);
+    boneCoords->flg = false;
+    Math_RotMatrixZxyNegGte(&chara->rotation, &boneCoords->coord);
 }
 
  /** Addresses

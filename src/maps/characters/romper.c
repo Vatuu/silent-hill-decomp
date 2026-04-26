@@ -8,7 +8,7 @@
 
 #define romperProps romper->properties.romper
 
-void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     if (romper->model.controlState == 0)
     {
@@ -22,7 +22,7 @@ void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2
         sharedFunc_800E8DFC_2_s02(romper);
     }
 
-    sharedFunc_800E8A40_2_s02(romper, anmHdr, coords);
+    sharedFunc_800E8A40_2_s02(romper, anmHdr, boneCoords);
     sharedFunc_800E60FC_2_s02(romper);
 }
 
@@ -1256,7 +1256,7 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
     }
 }
 
-void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     typedef struct
     {
@@ -1299,10 +1299,10 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCO
             break;
     }
 
-    Math_MatrixTransform(&romper->position, (SVECTOR*)&romper->rotation, coords);
+    Math_MatrixTransform(&romper->position, (SVECTOR*)&romper->rotation, boneCoords);
 
     animInfo = &ROPMER_ANIM_INFOS[romper->model.anim.status];
-    animInfo->playbackFunc(&romper->model, anmHdr, coords, animInfo);
+    animInfo->playbackFunc(&romper->model, anmHdr, boneCoords, animInfo);
 
     switch (romper->model.anim.status)
     {
@@ -1389,7 +1389,7 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCO
     ptr->field_20.vz      = 0;
 
     Math_RotMatrixZxyNegGte(&ptr->field_20, &ptr->field_0);
-    MulMatrix2(&ptr->field_0, &coords[2].coord);
+    MulMatrix2(&ptr->field_0, &boneCoords[2].coord);
 
     romperProps.angle_EC = romper->rotation.vy;
 }

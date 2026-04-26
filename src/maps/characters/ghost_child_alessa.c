@@ -14,23 +14,23 @@
  * MAP7_S01: 0x800D49B8
  * MAP7_S02: 0x800D7A68
  */
-void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     if (chara->model.charaId != Chara_GhostChildAlessa)
     {
         Ai_GhostChildAlessa_Init(chara);
     }
 
-    Ai_GhostChildAlessa_AnimStateUpdate(chara, coords);
-    Ai_GhostChildAlessa_MovementUpdate(chara, coords);
-    Ai_GhostChildAlessa_AnimUpdate(chara, anmHdr, coords);
+    Ai_GhostChildAlessa_AnimStateUpdate(chara, boneCoords);
+    Ai_GhostChildAlessa_MovementUpdate(chara, boneCoords);
+    Ai_GhostChildAlessa_AnimUpdate(chara, anmHdr, boneCoords);
 }
 
 /** Addresses
  * MAP7_S01: 0x800D4A2C
  * MAP7_S02: 0x800D7ADC
  */
-void Ai_GhostChildAlessa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_GhostChildAlessa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     s_AnimInfo* animInfo;
 
@@ -40,14 +40,14 @@ void Ai_GhostChildAlessa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, 
     }
 
     animInfo = &GHOST_CHILD_ALESSA_ANIM_INFOS[chara->model.anim.status];
-    animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
+    animInfo->playbackFunc(&chara->model, anmHdr, boneCoords, animInfo);
 }
 
 /** Addresses
  * MAP7_S01: 0x800D4A74
  * MAP7_S02: 0x800D7B24
  */
-void Ai_GhostChildAlessa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
+void Ai_GhostChildAlessa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 {
     VECTOR3 unused;
     VECTOR3 offset;
@@ -73,16 +73,16 @@ void Ai_GhostChildAlessa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* co
     chara->position.vy  = Q12(0.0f);
     chara->position.vz += offset.vz;
 
-    coords->coord.t[0] = Q12_TO_Q8(chara->position.vx);
-    coords->coord.t[1] = Q12_TO_Q8(chara->position.vy);
-    coords->coord.t[2] = Q12_TO_Q8(chara->position.vz);
+    boneCoords->coord.t[0] = Q12_TO_Q8(chara->position.vx);
+    boneCoords->coord.t[1] = Q12_TO_Q8(chara->position.vy);
+    boneCoords->coord.t[2] = Q12_TO_Q8(chara->position.vz);
 }
 
 /** Addresses
  * MAP7_S01: 0x800D4C0C
  * MAP7_S02: 0x800D7CBC
  */
-void Ai_GhostChildAlessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
+void Ai_GhostChildAlessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 {
     #define dahliaProps (chara->properties.dahlia)
 
@@ -143,8 +143,8 @@ void Ai_GhostChildAlessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* c
     chara->moveSpeed    = dahliaProps.moveDistance_126;
     chara->fallSpeed   += g_GravitySpeed;
 
-    coords->flg = false;
-    Math_RotMatrixZxyNegGte(&chara->rotation, &coords->coord);
+    boneCoords->flg = false;
+    Math_RotMatrixZxyNegGte(&chara->rotation, &boneCoords->coord);
 }
 
 /** Addresses

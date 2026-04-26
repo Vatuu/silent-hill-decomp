@@ -47,13 +47,13 @@ extern s_AnimInfo ALESSA_ANIM_INFOS[];
 
 extern s32 sharedData_800D3150_3_s02; // Used by `Ai_Alessa_Init`.
 
-void Ai_Alessa_Update(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_Alessa_Update(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-void Ai_Alessa_AnimUpdate(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_Alessa_AnimUpdate(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-void Ai_Alessa_MovementUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords);
+void Ai_Alessa_MovementUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords);
 
-void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords);
+void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords);
 
 /** @brief Initializes an Alessa character.
  *

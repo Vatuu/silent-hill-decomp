@@ -8,7 +8,7 @@
 
 #define stalkerProps stalker->properties.stalker
 
-void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
@@ -47,7 +47,7 @@ void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINAT
             sharedFunc_800D67FC_0_s00(stalker);
         }
 
-        sharedFunc_800D6970_0_s00(stalker, anmHdr, coords);
+        sharedFunc_800D6970_0_s00(stalker, anmHdr, boneCoords);
         sharedFunc_800D70C4_0_s00(stalker);
 
         if (g_DeltaTime != Q12(0.0f))

@@ -8,7 +8,7 @@
 
 #define creeperProps creeper->properties.creeper
 
-void Ai_Creeper_Update(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_Creeper_Update(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     // Initialize.
     if (creeper->model.controlState == CreeperControl_None)
@@ -23,7 +23,7 @@ void Ai_Creeper_Update(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINAT
         sharedFunc_800D983C_1_s02(creeper);
     }
 
-    sharedFunc_800D9960_1_s02(creeper, anmHdr, coords);
+    sharedFunc_800D9960_1_s02(creeper, anmHdr, boneCoords);
     sharedFunc_800D99D0_1_s02(creeper);
 }
 
@@ -719,14 +719,14 @@ void sharedFunc_800D983C_1_s02(s_SubCharacter* creeper)
     creeper->rotation.vy = Math_AngleNormalizeSigned(creeper->rotation.vy);
 }
 
-void sharedFunc_800D9960_1_s02(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void sharedFunc_800D9960_1_s02(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     s_AnimInfo* animInfo;
 
-    Math_MatrixTransform(&creeper->position, &creeper->rotation, coords);
+    Math_MatrixTransform(&creeper->position, &creeper->rotation, boneCoords);
 
     animInfo = &CREEPER_ANIM_INFOS[creeper->model.anim.status];
-    animInfo->playbackFunc(&creeper->model, anmHdr, coords, animInfo);
+    animInfo->playbackFunc(&creeper->model, anmHdr, boneCoords, animInfo);
 }
 
 extern s_Keyframe sharedData_800E0F78_1_s02[];

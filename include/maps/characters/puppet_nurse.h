@@ -51,4 +51,6 @@ typedef enum _PuppetNurseControl
     PuppetNurseControl_13 = 13
 } e_PuppetNurseControl;
 
+// TODO: Move decls here.
+
 #endif
