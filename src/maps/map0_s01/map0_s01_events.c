@@ -80,8 +80,10 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
     } e_EventState;
 
     u8              temp_s0_5;
-    s_SubCharacter* chara0;
-    s_SubCharacter* chara1;
+    s_SubCharacter* cybil0;
+    s_SubCharacter* cybil1;
+
+    #define cybilChara g_SysWork.npcs[0]
 
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
@@ -185,16 +187,16 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
             if (D_800DE251 == 0 && g_Cutscene_Timer > Q12(38.0f))
             {
-                func_80085EB8(0, &g_SysWork.npcs[0], 10, false);
+                func_80085EB8(0, &cybilChara, 10, false);
                 func_80085EB8(0, &g_SysWork.playerWork.player, 110, false);
 
                 D_800DE251++;
             }
 
             temp_s0_5 = D_800DE251;
-            if (D_800DE251 == 1 && Chara_AnimPlaybackStateGet(&g_SysWork.npcs[0]) == temp_s0_5)
+            if (D_800DE251 == 1 && Chara_AnimPlaybackStateGet(&cybilChara) == temp_s0_5)
             {
-                func_80085EB8(0, &g_SysWork.npcs[0], 11, false);
+                func_80085EB8(0, &cybilChara, 11, false);
                 D_800DE251++;
             }
             break;
@@ -234,7 +236,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 22:
-            func_80085EB8(0, &g_SysWork.npcs[0], 7, false);
+            func_80085EB8(0, &cybilChara, 7, false);
             SD_Call(Sfx_XaAudio12);
             SysWork_StateStepIncrement(0);
 
@@ -245,7 +247,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 24:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 0x47, false);
+            func_80085EB8(0, &g_SysWork.playerWork.player, 71, false);
             SysWork_StateStepIncrement(0);
 
         case 25:
@@ -255,7 +257,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
         case 26:
             func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
-            func_80085EB8(0, &g_SysWork.npcs[0], 8, 0);
+            func_80085EB8(0, &cybilChara, 8, 0);
             SysWork_StateStepIncrement(0);
 
         case 27:
@@ -266,7 +268,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
         case 28:
             g_Cutscene_Timer = Q12(195.0f);
 
-            func_80085EB8(0, &g_SysWork.npcs[0], 5, false);
+            func_80085EB8(0, &cybilChara, 5, false);
             SysWork_StateStepIncrement(0);
 
         case 29:
@@ -282,7 +284,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 32:
-            func_80085EB8(0, &g_SysWork.npcs[0], 1, false);
+            func_80085EB8(0, &cybilChara, 1, false);
             SysWork_StateStepIncrement(0);
 
         case 33:
@@ -290,7 +292,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 34:
-            func_80085EB8(0, &g_SysWork.npcs[0], 6, false);
+            func_80085EB8(0, &cybilChara, 6, false);
             SysWork_StateStepIncrement(0);
 
         case 35:
@@ -309,7 +311,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 38:
-            func_80085EB8(0, &g_SysWork.npcs[0], 9, false);
+            func_80085EB8(0, &cybilChara, 9, false);
             func_80085EB8(0, &g_SysWork.playerWork.player, 0x4C, false);
             SysWork_StateStepIncrement(0);
 
@@ -331,7 +333,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 43:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 0x33, false);
+            func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
             g_Cutscene_Timer = Q12(297.0f);
             SysWork_StateStepIncrement(0);
 
@@ -341,7 +343,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
         case 45:
             func_80085EB8(0, &g_SysWork.playerWork.player, 90, false);
-            func_80085EB8(0, &g_SysWork.npcs[0], 1, false);
+            func_80085EB8(0, &cybilChara, 1, false);
             SysWork_StateStepIncrement(0);
 
         case 46:
@@ -355,7 +357,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 48:
-            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&cybilChara, 0, 0);
             SD_Call(19);
             Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcBoneCoords[0], CHARA_FORCE_FREE_ALL, 0, 0);
             func_80086470(3, InvItemId_Handgun, HANDGUN_AMMO_PICKUP_ITEM_COUNT, false);
@@ -405,15 +407,17 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
         if (D_800DE250 != 0)
         {
-            chara0                    = &g_SysWork.npcs[0];
-            chara0->model.anim.flags |= AnimFlag_Visible;
-            Dms_CharacterTransformGet(&chara0->position, &chara0->rotation, "SIBYL", g_Cutscene_Timer, FS_BUFFER_11);
+            cybil0                    = &cybilChara;
+            cybil0->model.anim.flags |= AnimFlag_Visible;
+            Dms_CharacterTransformGet(&cybil0->position, &cybil0->rotation, "SIBYL", g_Cutscene_Timer, FS_BUFFER_11);
             return;
         }
 
-        chara1 = &g_SysWork.npcs[0];
-        chara1->model.anim.flags &= ~AnimFlag_Visible;
+        cybil1 = &cybilChara;
+        cybil1->model.anim.flags &= ~AnimFlag_Visible;
     }
+
+    #undef cybilChara
 }
 
 void MapEvent_ToBeContinued(void) // 0x800DB790
@@ -443,7 +447,8 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
 
         case 5:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter | g_GameWorkPtr->config.controllerConfig.cancel))
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter |
+                                                 g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -468,7 +473,8 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
 
         case 9:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter | g_GameWorkPtr->config.controllerConfig.cancel))
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter |
+                                                 g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -498,41 +504,12 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
     }
 }
 
-const VECTOR3 D_800CCA1C = {
-    0x00000CCC,
-    0xFFFFE99A,
-    0x0010BB33,
-};
-
-const VECTOR3 D_800CCA28 = {
-    0x000004CC,
-    0xFFFFE99A,
-    0x0010BB33,
-};
-
-const VECTOR3 D_800CCA34 = {
-    0x00000CCC,
-    0xFFFFE334,
-    0x0010BB33,
-};
-
-const VECTOR3 D_800CCA40 = {
-    0x00000CCC,
-    0xFFFFE99A,
-    0x00111E66,
-};
-
-const VECTOR3 D_800CCA4C = {
-    0x000004CC,
-    0xFFFFE99A,
-    0x00111E66,
-};
-
-const VECTOR3 D_800CCA58 = {
-    0x00000CCC,
-    0xFFFFE334,
-    0x00108199,
-};
+const VECTOR3 D_800CCA1C = { Q12(0.8f), Q12(-1.4f), Q12(267.7f) };
+const VECTOR3 D_800CCA28 = { Q12(0.3f), Q12(-1.4f), Q12(267.7f) };
+const VECTOR3 D_800CCA34 = { Q12(0.8f), Q12(-1.8f), Q12(267.7f) };
+const VECTOR3 D_800CCA40 = { Q12(0.8f), Q12(-1.4f), Q12(273.9f) };
+const VECTOR3 D_800CCA4C = { Q12(0.3f), Q12(-1.4f), Q12(273.9f) };
+const VECTOR3 D_800CCA58 = { Q12(0.8f), Q12(-1.8f), Q12(264.1f) };
 
 void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 {
@@ -925,10 +902,10 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
     WorldObject_ModelNameSet(&D_800E2450[0], "OUT1_HID");
     WorldObject_ModelNameSet(&D_800E2450[1], "OUT_BLD_");
 
-    WorldObjectInit(&g_EventThing_KitchenKnife, "KNIFE_HI", 5.09f, -1.01f, 274.12f,  0.0f, 32.0f,  0.0f);
-    WorldObjectInit(&g_EventThing_Flashlight,   "FLASH_HI", 5.18f, -1.0f,  267.28f, -3.0f, 111.0f, 0.0f);
-    WorldObjectInit(&g_EventThing_Map,          "MAP_HIDE", 5.24f, -1.0f,  267.21f,  0.0f, 57.0f,  0.0f);
-    WorldObjectInit(&g_EventThing_PocketRadio,  "RADIO_HI", 2.31f, -0.6f,  273.95f,  0.0f, 147.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject_KitchenKnife, "KNIFE_HI", 5.09f, -1.01f, 274.12f,  0.0f, 32.0f,  0.0f);
+    WorldObjectInit(&g_WorldObject_Flashlight,   "FLASH_HI", 5.18f, -1.0f,  267.28f, -3.0f, 111.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject_Map,          "MAP_HIDE", 5.24f, -1.0f,  267.21f,  0.0f, 57.0f,  0.0f);
+    WorldObjectInit(&g_WorldObject_PocketRadio,  "RADIO_HI", 2.31f, -0.6f,  273.95f,  0.0f, 147.0f, 0.0f);
 
     if (Savegame_EventFlagGet(EventFlag_M0S01_CafeCutsceneStarted) && !Savegame_EventFlagGet(EventFlag_47))
     {
@@ -954,7 +931,7 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
     }
 
     g_Cutscene_Timer = Q12(0.0f);
-    D_800E2560 = 0;
+    D_800E2560 = Q12(0.0f);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);
@@ -976,22 +953,22 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
     {
-        WorldGfx_ObjectAdd(&g_EventThing_Map.object_0, &g_EventThing_Map.position, &g_EventThing_Map.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject_Map.object_0, &g_WorldObject_Map.position, &g_WorldObject_Map.rotation);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupFlashlight))
     {
-        WorldGfx_ObjectAdd(&g_EventThing_Flashlight.object_0, &g_EventThing_Flashlight.position, &g_EventThing_Flashlight.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject_Flashlight.object_0, &g_WorldObject_Flashlight.position, &g_WorldObject_Flashlight.rotation);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupPocketRadio))
     {
-        WorldGfx_ObjectAdd(&g_EventThing_PocketRadio.object_0, &g_EventThing_PocketRadio.position, &g_EventThing_PocketRadio.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject_PocketRadio.object_0, &g_WorldObject_PocketRadio.position, &g_WorldObject_PocketRadio.rotation);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife))
     {
-        WorldGfx_ObjectAdd(&g_EventThing_KitchenKnife.object_0, &g_EventThing_KitchenKnife.position, &g_EventThing_KitchenKnife.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject_KitchenKnife.object_0, &g_WorldObject_KitchenKnife.position, &g_WorldObject_KitchenKnife.rotation);
     }
 
     if (Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife) && Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
@@ -1113,12 +1090,12 @@ void CutsceneObjects_Add(s32 arg0) // 0x800DD2EC
 
     if (arg0 == 0)
     {
-        for (i = 0; i < 1; i++)
+        for (i = 0; i < ARRAY_SIZE(D_800E23D0); i++)
         {
             WorldGfx_ObjectAdd(&D_800E23D0[i], &g_CutscenePosition, &DEFAULT_ROT);
         }
 
-        for (i = 0; i < 1; i++)
+        for (i = 0; i < ARRAY_SIZE(D_800E23B0); i++)
         {
             WorldGfx_ObjectAdd(&D_800E23B0[i], &g_CutscenePosition, &DEFAULT_ROT);
         }
@@ -1128,7 +1105,7 @@ void CutsceneObjects_Add(s32 arg0) // 0x800DD2EC
 
     if (arg0 == 1)
     {
-        for (i = 0; i < 2; i++)
+        for (i = 0; i < ARRAY_SIZE(D_800E2450); i++)
         {
             WorldGfx_ObjectAdd(&D_800E2450[i], &g_CutscenePosition, &DEFAULT_ROT);
         }
@@ -1136,12 +1113,12 @@ void CutsceneObjects_Add(s32 arg0) // 0x800DD2EC
         return;
     }
 
-    for (i = 0; i < 1; i++)
+    for (i = 0; i < ARRAY_SIZE(D_800E23D0); i++)
     {
         WorldGfx_ObjectAdd(&D_800E23D0[i], &g_CutscenePosition, &DEFAULT_ROT);
     }
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < ARRAY_SIZE(D_800E23F0); i++)
     {
         WorldGfx_ObjectAdd(&D_800E23F0[i], &g_CutscenePosition, &DEFAULT_ROT);
     }

@@ -32,7 +32,7 @@
 
 #include "maps/shared.h"
 
-extern u16 g_Cutscene_MapMsgAudioCmds[]; // 0x800DE0CC
+extern u16 g_Cutscene_MapMsgAudioCmds[];
 
 extern u16 D_800DE124;
 
@@ -48,31 +48,29 @@ extern u8 D_800DE250;
 
 extern u8 D_800DE251;
 
-extern VECTOR3 g_Cutscene_CameraPositionTarget; // 0x800E2380
-extern VECTOR3 g_Cutscene_CameraLookAtTarget; // 0x800E2390
+extern VECTOR3 g_Cutscene_CameraPositionTarget;
+extern VECTOR3 g_Cutscene_CameraLookAtTarget;
+extern q19_12  g_Cutscene_Timer;
+extern u8      g_Cutscene_MapMsgAudioIdx;
 
-extern q19_12 g_Cutscene_Timer; // 0x800E239C
+extern u8 D_800E23A1; // Radio static SFX falloff.
 
-extern u8 g_Cutscene_MapMsgAudioIdx; // 0x800E23A0
-
-extern u8 D_800E23A1;
-
+// Breaking glass.
 extern s_WorldObjectModel D_800E23B0[1];
 extern s_WorldObjectModel D_800E23D0[1];
 extern s_WorldObjectModel D_800E23F0[3];
 extern s_WorldObjectModel D_800E2450[2];
 
-extern VECTOR3 g_CutscenePosition; // 0x800E2490
-extern s_WorldObjectPose g_EventThing_KitchenKnife; // 0x800E24A0
-extern s_WorldObjectPose g_EventThing_Flashlight; // 0x800E24D0
-extern s_WorldObjectPose g_EventThing_Map; // 0x800E2500
-extern s_WorldObjectPose g_EventThing_PocketRadio; // 0x800E2530
+extern VECTOR3 g_CutscenePosition;
+extern s_WorldObjectPose g_WorldObject_KitchenKnife;
+extern s_WorldObjectPose g_WorldObject_Flashlight;
+extern s_WorldObjectPose g_WorldObject_Map;
+extern s_WorldObjectPose g_WorldObject_PocketRadio;
 
-extern s16 D_800E2560;
+extern q3_12 D_800E2560;
 
-extern s_WorldObjectModel g_CommonWorldObjects[]; // 0x800E2570
+extern s_WorldObjectModel g_CommonWorldObjects[];
 
-/** `arg0` is a struct pointer, might be `s_SubCharacter`. */
 void func_800D2364(s_SubCharacter* chara);
 
 void func_800D426C(s_SubCharacter* chara);

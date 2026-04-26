@@ -1491,26 +1491,26 @@ STATIC_ASSERT_SIZEOF(s_PropertiesFloatstinger, 64);
 /** @brief Groaner character properties. */
 typedef struct _PropertiesGroaner
 {
-    u_Property flags_E8; /** `e_GroanerFlags` TODO: One weird exception where it's accessed as `s32`. */
-    q3_12      angle_EC; // Target heading angle?
-    q3_12      field_EE; // Angle?
-    q3_12      field_F0;
-    q3_12      field_F2;
-    q19_12     targetPositionX_F4;
-    q19_12     targetPositionZ_F8;
-    q3_12      angle_FC;
-    q3_12      field_FE;
-    u16        relKeyframeIdx_100;
-    s8         unk_102[2];
-    q19_12     timer_104;
-    u32        field_108;
-    q3_12      timer_10C;
-    u8         field_10E;
-    u8         field_10F;
-    u8         field_110;
-    u8         field_111;
-    s8         unk_112[2];
-    s16        field_114;
+    /* 0xE8  */ u_Property flags; /** `e_GroanerFlags` TODO: One weird exception where it's accessed as `s32`. */
+    /* 0xEC  */ q3_12      angle_EC; // Target heading angle?
+    /* 0xEE  */ q3_12      field_EE; // Angle?
+    /* 0xF0  */ q3_12      field_F0;
+    /* 0xF2  */ q3_12      field_F2;
+    /* 0xF4  */ q19_12     targetPositionX;
+    /* 0xF8  */ q19_12     targetPositionZ;
+    /* 0xFC  */ q3_12      angle_FC;
+    /* 0xFE  */ q3_12      field_FE;
+    /* 0x100 */ u16        relKeyframeIdx_100;
+    /* 0102x */ s8         __pad_102[2];
+    /* 0x104 */ q19_12     timer_104;
+    /* 0x108 */ u32        field_108;
+    /* 0x10C */ q3_12      timer_10C;
+    /* 0x10E */ u8         field_10E;
+    /* 0x10F */ u8         field_10F;
+    /* 0x110 */ u8         field_110;
+    /* 0x111 */ u8         field_111;
+    /* 0x112 */ s8         __pad_112[2];
+    /* 0x114 */ s16        field_114;
 } e_PropertiesGroaner;
 
 /** @brief Hanged Scratcher character properties. */

@@ -19,7 +19,7 @@ void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINAT
     u8 prevControlState;
 
     // Initialize.
-    if (groaner->model.controlState == 0)
+    if (groaner->model.controlState == GroanerControl_0)
     {
         Ai_Groaner_Init(groaner);
     }
@@ -42,10 +42,10 @@ void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINAT
 
         if (groaner->model.controlState != prevControlState)
         {
-            groanerProps.flags_E8.val16[0] &= ~GroanerFlag_8;
+            groanerProps.flags.val16[0] &= ~GroanerFlag_8;
         }
 
-        if (groanerProps.flags_E8.val16[0] & GroanerFlag_7)
+        if (groanerProps.flags.val16[0] & GroanerFlag_7)
         {
             groaner->flags |= CharaFlag_Unk3;
         }
@@ -60,7 +60,7 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
     s32 i;
 
     Chara_PropertiesClear(groaner);
-    groanerProps.flags_E8.val16[0]  = 0;
+    groanerProps.flags.val16[0]  = 0;
     groaner->model.anim.alpha = Q12(0.0f);
 
     groaner->health = HEALTH_BASE + (Rng_Rand16() % HEALTH_BONUS_MAX);
@@ -97,15 +97,15 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
 
     if (groaner->model.stateStep == GroanerStateStep_3)
     {
-        groaner->model.controlState = 1;
+        groaner->model.controlState = GroanerControl_1;
         Character_AnimSet(groaner, ANIM_STATUS(GroanerAnim_17, true), 371);
-        groanerProps.flags_E8.val16[0] |= GroanerFlag_5;
+        groanerProps.flags.val16[0] |= GroanerFlag_5;
     }
 
     groaner->model.stateStep = GroanerStateStep_0;
 
-    groanerProps.targetPositionX_F4 = groaner->position.vx;
-    groanerProps.targetPositionZ_F8 = groaner->position.vz;
+    groanerProps.targetPositionX = groaner->position.vx;
+    groanerProps.targetPositionZ = groaner->position.vz;
 
 #ifdef MAP2_S00
     if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Hard)
@@ -161,9 +161,9 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
         groanerProps.field_10F = 4;
     }
 
-    groanerProps.targetPositionX_F4     = g_SysWork.playerWork.player.position.vx;
-    groanerProps.targetPositionZ_F8     = g_SysWork.playerWork.player.position.vz;
-    groanerProps.flags_E8.val16[0]     |= GroanerFlag_7;
+    groanerProps.targetPositionX     = g_SysWork.playerWork.player.position.vx;
+    groanerProps.targetPositionZ     = g_SysWork.playerWork.player.position.vz;
+    groanerProps.flags.val16[0]     |= GroanerFlag_7;
 
     groaner->health = MAX(groaner->health - groaner->damage.amount, Q12(0.0f));
     unkDist         = Math_Vector2MagCalc(groaner->damage.position.vx, groaner->damage.position.vz);
@@ -190,11 +190,11 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
 
     Chara_DamageClear(groaner);
 
-    groanerProps.flags_E8.val16[0] |= GroanerFlag_1;
+    groanerProps.flags.val16[0] |= GroanerFlag_1;
     groaner->moveSpeed           = FP_TO(unkDist, Q12_SHIFT) / Q12(1.2f);
     groaner->fallSpeed          += temp_v0 / Q12(1.2f);
 
-    if (groanerProps.flags_E8.val16[0] & GroanerFlag_3)
+    if (groanerProps.flags.val16[0] & GroanerFlag_3)
     {
         groanerProps.field_FE = 0;
 
@@ -243,7 +243,7 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
     }
     else if (groaner->health > Q12(100.0f))
     {
-        if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_10))
+        if (!(groanerProps.flags.val16[0] & GroanerFlag_10))
         {
             if (ABS(unkAngle) < Q12_ANGLE(45.0f))
             {
@@ -275,22 +275,22 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
         Savegame_EnemyStateUpdate(groaner);
 
         groaner->flags                                      |= CharaFlag_Unk2;
-        groanerProps.flags_E8.val16[0]                         |= GroanerFlag_3 | GroanerFlag_12;
+        groanerProps.flags.val16[0]                         |= GroanerFlag_3 | GroanerFlag_12;
 
         if (ABS(unkAngle) < Q12_ANGLE(45.0f))
         {
-            groaner->model.anim.status = ANIM_STATUS(GroanerAnim_3, false);
-            groaner->model.controlState  = GroanerControl_6;
+            groaner->model.anim.status  = ANIM_STATUS(GroanerAnim_3, false);
+            groaner->model.controlState = GroanerControl_6;
         }
         else if (unkAngle > Q12_ANGLE(0.0f))
         {
-            groaner->model.anim.status = ANIM_STATUS(GroanerAnim_7, false);
-            groaner->model.controlState  = GroanerControl_7;
+            groaner->model.anim.status  = ANIM_STATUS(GroanerAnim_7, false);
+            groaner->model.controlState = GroanerControl_7;
         }
         else
         {
-            groaner->model.anim.status = ANIM_STATUS(GroanerAnim_13, false);
-            groaner->model.controlState  = GroanerControl_8;
+            groaner->model.anim.status  = ANIM_STATUS(GroanerAnim_13, false);
+            groaner->model.controlState = GroanerControl_8;
         }
     }
 
@@ -325,17 +325,17 @@ void sharedFunc_800E384C_2_s00(s_SubCharacter* groaner)
             g_SysWork.playerWork.player.position.vz - groaner->position.vz), UNK_VAL) != 0 ||
         func_8006FD90(groaner, 1, sharedData_800EEE3C_2_s00[getIndex()].field_0, sharedData_800EEE3C_2_s00[getIndex()].field_4))
     {
-        groanerProps.flags_E8.val16[0] |= GroanerFlag_7;
+        groanerProps.flags.val16[0] |= GroanerFlag_7;
 
-        if (groanerProps.flags_E8.val16[0] & GroanerFlag_5)
+        if (groanerProps.flags.val16[0] & GroanerFlag_5)
         {
-            groanerProps.targetPositionX_F4 = g_SysWork.playerWork.player.position.vx;
-            groanerProps.targetPositionZ_F8 = g_SysWork.playerWork.player.position.vz;
+            groanerProps.targetPositionX = g_SysWork.playerWork.player.position.vx;
+            groanerProps.targetPositionZ = g_SysWork.playerWork.player.position.vz;
         }
     }
     else
     {
-        groanerProps.flags_E8.val16[0] &= ~GroanerFlag_7;
+        groanerProps.flags.val16[0] &= ~GroanerFlag_7;
     }
 
     if (groaner->model.anim.status != ANIM_STATUS(GroanerAnim_10, true))
@@ -358,7 +358,7 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
 
     Chara_MoveSpeedUpdate4(groaner, Q12(6.0f), Q12_MULT_PRECISE(groanerProps.field_114, Q12(0.5f)));
 
-    if (groanerProps.flags_E8.val16[0] & GroanerFlag_0)
+    if (groanerProps.flags.val16[0] & GroanerFlag_0)
     {
         unkAngleDelta = Math_AngleNormalizeSigned(groanerProps.angle_FC - groaner->rotation.vy);
         if (TIMESTEP_ANGLE(3, 2) < ABS(unkAngleDelta))
@@ -375,7 +375,7 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
         else
         {
             groaner->rotation.vy = groanerProps.angle_FC;
-            groanerProps.flags_E8.val16[0] &= ~GroanerFlag_0;
+            groanerProps.flags.val16[0] &= ~GroanerFlag_0;
         }
     }
     else
@@ -388,74 +388,74 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
                 groanerProps.angle_FC = -groaner->rotation.vy;
             }
 
-            groanerProps.flags_E8.val16[0] |= GroanerFlag_0;
+            groanerProps.flags.val16[0] |= GroanerFlag_0;
         }
         else
         {
             unkRand = Rng_GenerateInt(Q12(2.0f), Q12(6.0f) - 1);
 
             posX       = groaner->position.vx;
-            targetPosX = groanerProps.targetPositionX_F4;
+            targetPosX = groanerProps.targetPositionX;
             posZ       = groaner->position.vz;
-            targetPosZ = groanerProps.targetPositionZ_F8;
+            targetPosZ = groanerProps.targetPositionZ;
 
             // TODO: Demangle condition.
             if (unkRand < (((posX - targetPosX) > (posZ - targetPosZ)) ? ABS(posX - targetPosX) + ABS((posZ - targetPosZ) >> 1) :
                                                                          ABS((posX - targetPosX) >> 1) + ABS(posZ - targetPosZ)))
             {
                 // TODO: Cleaner random angle generation.
-                if (ABS(Math_AngleNormalizeSigned(groaner->rotation.vy - ratan2(groaner->position.vx - groanerProps.targetPositionX_F4,
-                                                                       groaner->position.vz - groanerProps.targetPositionZ_F8))) < (Rng_GenerateUInt(Q12_ANGLE(45.0f), Q12_ANGLE(50.7f) - 1)))
+                if (ABS(Math_AngleNormalizeSigned(groaner->rotation.vy - ratan2(groaner->position.vx - groanerProps.targetPositionX,
+                                                                                groaner->position.vz - groanerProps.targetPositionZ))) < (Rng_GenerateUInt(Q12_ANGLE(45.0f), Q12_ANGLE(50.7f) - 1)))
                 {
-                    randTargetPosX        = groanerProps.targetPositionX_F4 + Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1);
+                    randTargetPosX        = groanerProps.targetPositionX + Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1);
                     groanerProps.angle_FC = Chara_HeadingAngleGet(groaner, Q12_ANGLE(306.0f),
-                                                                  randTargetPosX, groanerProps.targetPositionZ_F8 + Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1),
+                                                                  randTargetPosX, groanerProps.targetPositionZ + Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1),
                                                                   Q12_ANGLE(360.0f), true);
                     if (groanerProps.angle_FC == Q12_ANGLE(360.0f))
                     {
                         groanerProps.angle_FC = -groaner->rotation.vy;
                     }
 
-                    groanerProps.flags_E8.val16[0] |= GroanerFlag_0;
+                    groanerProps.flags.val16[0] |= GroanerFlag_0;
                 }
             }
         }
     }
 
     if (groaner->model.anim.status == ANIM_STATUS(GroanerAnim_17, true) &&
-        (groanerProps.flags_E8.val32 & (GroanerFlag_5 | GroanerFlag_7)) == (GroanerFlag_5 | GroanerFlag_7))
+        (groanerProps.flags.val32 & (GroanerFlag_5 | GroanerFlag_7)) == (GroanerFlag_5 | GroanerFlag_7))
     {
         groaner->model.controlState = GroanerControl_2;
-        groaner->model.anim.status = ANIM_STATUS(GroanerAnim_16, false);
-        groanerProps.flags_E8.val16[0] &= ~GroanerFlag_0;
-        groanerProps.flags_E8.val16[0] |= GroanerFlag_10;
+        groaner->model.anim.status  = ANIM_STATUS(GroanerAnim_16, false);
+        groanerProps.flags.val16[0] &= ~GroanerFlag_0;
+        groanerProps.flags.val16[0] |= GroanerFlag_10;
     }
 }
 
 void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
 {
-    s16           temp_v0_10;
-    q3_12         angle0;
-    q3_12         angleDeltaToTarget;
-    q19_12        headingAngle;
-    s32           temp_s2;
-    s32           temp_s4;
-    q19_12        distToPlayer;
-    bool          temp_s6;
-    bool          cond;
-    s32           var_a1;
-    s32           i;
-    q19_12        distToPlayerMax;
+    s16    temp_v0_10;
+    q3_12  angle0;
+    q3_12  angleDeltaToTarget;
+    q19_12 headingAngle;
+    s32    temp_s2;
+    s32    temp_s4;
+    q19_12 distToPlayer;
+    bool   temp_s6;
+    bool   cond;
+    s32    var_a1;
+    s32    i;
+    q19_12 distToPlayerMax;
 
-    if (groanerProps.flags_E8.val16[0] & GroanerFlag_1)
+    if (groanerProps.flags.val16[0] & GroanerFlag_1)
     {
         return;
     }
 
-    if (groanerProps.flags_E8.val16[0] & GroanerFlag_8)
+    if (groanerProps.flags.val16[0] & GroanerFlag_8)
     {
         groanerProps.timer_104          = Q12(0.0f);
-        groanerProps.flags_E8.val16[0] |= GroanerFlag_8;
+        groanerProps.flags.val16[0] |= GroanerFlag_8;
     }
 
     distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
@@ -485,7 +485,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
                 var_a1 = Rng_GenerateInt(Q12(1.5f), Q12(1.875f) - 1);
             }
 
-            headingAngle = Chara_HeadingAngleGet(groaner, var_a1, groanerProps.targetPositionX_F4, groanerProps.targetPositionZ_F8,
+            headingAngle = Chara_HeadingAngleGet(groaner, var_a1, groanerProps.targetPositionX, groanerProps.targetPositionZ,
                                                  Q12_ANGLE(360.0f), true);
             if (headingAngle == Q12_ANGLE(360.0f))
             {
@@ -578,12 +578,12 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
             if (groaner->position.vy - g_SysWork.playerWork.player.position.vy < Q12(0.8f))
             {
                 if (ABS(Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
-                                             g_SysWork.playerWork.player.position.vz - groaner->position.vz) -
-                                      groaner->rotation.vy)) < Q12_ANGLE(30.0f))
+                                                         g_SysWork.playerWork.player.position.vz - groaner->position.vz) -
+                                                  groaner->rotation.vy)) < Q12_ANGLE(30.0f))
                 {
-                    g_SysWork.charaGroupFlags[3]       |= CharaGroupFlag_1;
-                    groaner->model.controlState  = GroanerControl_3;
-                    groaner->model.anim.status = ANIM_STATUS(GroanerAnim_15, false);
+                    g_SysWork.charaGroupFlags[3] |= CharaGroupFlag_1;
+                    groaner->model.controlState   = GroanerControl_3;
+                    groaner->model.anim.status    = ANIM_STATUS(GroanerAnim_15, false);
                     return;
                 }
             }
@@ -603,13 +603,13 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
         }
     }
 
-    if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_7) &&
+    if (!(groanerProps.flags.val16[0] & GroanerFlag_7) &&
         (distToPlayer > Q12(12.0f) || (!Rng_GenerateUInt(0, 127) && distToPlayer > Q12(6.0f))))
     {
         groaner->model.controlState                         = GroanerControl_1;
         groaner->model.anim.status                        = ANIM_STATUS(GroanerAnim_17, false);
         groanerProps.relKeyframeIdx_100  = 100;
-        groanerProps.flags_E8.val16[0] &= ~GroanerFlag_10;
+        groanerProps.flags.val16[0] &= ~GroanerFlag_10;
     }
 }
 
@@ -683,13 +683,11 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
     }
     else
     {
-        // TODO: Convert 771. Maybe some fraction?
         temp1 = groaner->rotation.vy + Q12(0.125f);
-        temp2 = groaner->headingAngle + Q12_MULT_PRECISE(g_DeltaTime, 771);
-
+        temp2 = groaner->headingAngle + Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(67.8f));
         if (temp2 < temp1)
         {
-            groaner->headingAngle += Q12_MULT_PRECISE(g_DeltaTime, 771);
+            groaner->headingAngle += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(67.8f));
         }
         else
         {
@@ -703,9 +701,9 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
     }
     else if (ANIM_STATUS_IDX_GET(groaner->model.anim.status) == GroanerAnim_10)
     {
-        if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_9))
+        if (!(groanerProps.flags.val16[0] & GroanerFlag_9))
         {
-            groanerProps.flags_E8.val16[0]                         |= GroanerFlag_9;
+            groanerProps.flags.val16[0]                         |= GroanerFlag_9;
             var_v0                                                = g_SysWork.playerWork.player.field_D4.field_2 + 573;
             var_v0                                                = (distToPlayer - var_v0) << 1;
             groaner->moveSpeed                                   = MIN(var_v0, Q12(4.5f));
@@ -745,7 +743,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
         g_SysWork.charaGroupFlags[3]                              &= ~CharaGroupFlag_1;
 
         Character_AnimSet(groaner, ANIM_STATUS(GroanerAnim_16, true), 363);
-        groanerProps.flags_E8.val16[0]                         &= ~GroanerFlag_9;
+        groanerProps.flags.val16[0]                         &= ~GroanerFlag_9;
     }
 }
 
@@ -758,16 +756,16 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
     q19_12 var_s0_2;
     s32    i;
 
-    if (groanerProps.flags_E8.val16[0] & GroanerFlag_1)
+    if (groanerProps.flags.val16[0] & GroanerFlag_1)
     {
         return;
     }
 
-    if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_8))
+    if (!(groanerProps.flags.val16[0] & GroanerFlag_8))
     {
         groanerProps.field_108          = 0;
         groanerProps.timer_104          = Q12(0.0f);
-        groanerProps.flags_E8.val16[0] |= GroanerFlag_8;
+        groanerProps.flags.val16[0] |= GroanerFlag_8;
     }
 
     // TODO: Cleaner random angle generation.
@@ -777,8 +775,8 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
         (temp_s4 != 0 && groanerProps.timer_104 >= Q12(0.0f)))
     {
         temp_s1 = Q12(1.5f) - Rng_GenerateInt(0, 1535);
-        groanerProps.angle_FC = Chara_HeadingAngleGet(groaner, temp_s1, groanerProps.targetPositionX_F4,
-                                                                     groanerProps.targetPositionZ_F8, Q12(1.0f), false);
+        groanerProps.angle_FC = Chara_HeadingAngleGet(groaner, temp_s1, groanerProps.targetPositionX,
+                                                                     groanerProps.targetPositionZ, Q12(1.0f), false);
         if (groanerProps.angle_FC == Q12_ANGLE(360.0f))
         {
             groanerProps.angle_FC = func_8006F99C(groaner, (temp_s1 * 3) >> 2, groaner->rotation.vy);
@@ -840,7 +838,7 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
     else
     {
         temp_a3 = Q12(1.0f) - (((temp_a3 - 227) * 3) >> 1);
-        Chara_MoveSpeedUpdate4(groaner, Q12(9.5f), Q12_MULT_PRECISE(temp_a3, Q12_MULT_PRECISE(groanerProps.field_114, 0x3999)));
+        Chara_MoveSpeedUpdate4(groaner, Q12(9.5f), Q12_MULT_PRECISE(temp_a3, Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f))));
     }
 
     var_s0_2                               = 0;
@@ -880,12 +878,12 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
 
 void sharedFunc_800E554C_2_s00(s_SubCharacter* groaner)
 {
-    if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_1) &&
+    if (!(groanerProps.flags.val16[0] & GroanerFlag_1) &&
         groaner->model.anim.status == ANIM_STATUS(GroanerAnim_9, true) &&
         !Rng_GenerateInt(0, 7)) // 1 in 8 chance.
     {
-        groaner->model.controlState         = GroanerControl_1;
-        groaner->model.anim.status = ANIM_STATUS(GroanerAnim_17, false);
+        groaner->model.controlState = GroanerControl_1;
+        groaner->model.anim.status  = ANIM_STATUS(GroanerAnim_17, false);
     }
 }
 
@@ -896,27 +894,27 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
     u32    animIdx;
     u8     newAnimStatus;
 
-    if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_1))
+    if (!(groanerProps.flags.val16[0] & GroanerFlag_1))
     {
         Chara_MoveSpeedUpdate(groaner, Q12(1.8f));
     }
 
-    if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_2))
+    if (!(groanerProps.flags.val16[0] & GroanerFlag_2))
     {
-        groanerProps.flags_E8.val16[0] &= ~GroanerFlag_4;
+        groanerProps.flags.val16[0] &= ~GroanerFlag_4;
     }
 
     if (groaner->model.controlState == GroanerControl_6)
     {
         if (ANIM_TIME_RANGE_CHECK(groaner->model.anim.time, 39, 48))
         {
-            groanerProps.flags_E8.val16[0] |= GroanerFlag_4;
+            groanerProps.flags.val16[0] |= GroanerFlag_4;
         }
 
-        if (groanerProps.flags_E8.val16[0] & GroanerFlag_4)
+        if (groanerProps.flags.val16[0] & GroanerFlag_4)
         {
             // TODO: Uncleanr float.
-            if (groanerProps.flags_E8.val16[0] & GroanerFlag_5)
+            if (groanerProps.flags.val16[0] & GroanerFlag_5)
             {
                 timeScaled = Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 5.3333f);
             }
@@ -940,12 +938,12 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
         if ((animTime >= 134 && animTime < 157) ||
             (animTime >= 288 && animTime < 311))
         {
-            groanerProps.flags_E8.val16[0] |= GroanerFlag_4;
+            groanerProps.flags.val16[0] |= GroanerFlag_4;
         }
 
-        if (groanerProps.flags_E8.val16[0] & GroanerFlag_4)
+        if (groanerProps.flags.val16[0] & GroanerFlag_4)
         {
-            if (groanerProps.flags_E8.val16[0] & GroanerFlag_5)
+            if (groanerProps.flags.val16[0] & GroanerFlag_5)
             {
                 timeScaled = Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.6954f);
             }
@@ -977,7 +975,7 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
         }
     }
 
-    if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_2) && groaner->health == Q12(0.0f))
+    if (!(groanerProps.flags.val16[0] & GroanerFlag_2) && groaner->health == Q12(0.0f))
     {
         animIdx       = ANIM_STATUS_IDX_GET(groaner->model.anim.status);
         newAnimStatus = ANIM_STATUS((animIdx == GroanerAnim_4) ? GroanerAnim_1 : GroanerAnim_Still, false);
@@ -995,8 +993,8 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
         if (newAnimStatus != GroanerAnim_Still)
         {
             groanerProps.relKeyframeIdx_100 = 0;
-            groaner->model.anim.status                               = newAnimStatus;
-            groaner->model.controlState                                       = GroanerControl_9;
+            groaner->model.anim.status  = newAnimStatus;
+            groaner->model.controlState = GroanerControl_9;
         }
     }
 }
@@ -1006,7 +1004,7 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner)
     s32 newAnimStatus;
     u32 animStatus;
 
-    if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_1))
+    if (!(groanerProps.flags.val16[0] & GroanerFlag_1))
     {
         Chara_MoveSpeedUpdate(groaner, Q12(1.8f));
     }
@@ -1020,7 +1018,7 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner)
         }
     }
 
-    if (!(groanerProps.flags_E8.val32 & (GroanerFlag_2 | GroanerFlag_6)) &&
+    if (!(groanerProps.flags.val32 & (GroanerFlag_2 | GroanerFlag_6)) &&
         groaner->moveSpeed == Q12(0.0f))
     {
         animStatus    = ANIM_STATUS_IDX_GET(groaner->model.anim.status);
@@ -1041,7 +1039,7 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner)
         if (newAnimStatus != ANIM_STATUS(GroanerAnim_Still, false))
         {
             func_800622B8(3, groaner, newAnimStatus, 6);
-            groanerProps.flags_E8.val16[0] |= GroanerFlag_6;
+            groanerProps.flags.val16[0] |= GroanerFlag_6;
         }
     }
 }
@@ -1060,9 +1058,9 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
         groaner->fallSpeed += g_GravitySpeed >> 1;
     }
 
-    if (groanerProps.flags_E8.val16[0] & GroanerFlag_1)
+    if (groanerProps.flags.val16[0] & GroanerFlag_1)
     {
-        if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_2))
+        if (!(groanerProps.flags.val16[0] & GroanerFlag_2))
         {
             if (groaner->model.anim.status == ANIM_STATUS(GroanerAnim_16, true))
             {
@@ -1118,7 +1116,7 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
         }
         else if (groaner->moveSpeed < Q12(0.225f))
         {
-            groanerProps.flags_E8.val16[0] &= ~GroanerFlag_1;
+            groanerProps.flags.val16[0] &= ~GroanerFlag_1;
         }
     }
     else if (groaner->model.anim.status != ANIM_STATUS(GroanerAnim_10, true))
@@ -1133,11 +1131,11 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
 
     if (groaner->position.vy == sp10.field_C)
     {
-        groanerProps.flags_E8.val16[0] &= ~GroanerFlag_2;
+        groanerProps.flags.val16[0] &= ~GroanerFlag_2;
     }
     else
     {
-        groanerProps.flags_E8.val16[0] |= GroanerFlag_2;
+        groanerProps.flags.val16[0] |= GroanerFlag_2;
     }
 }
 
@@ -1176,7 +1174,7 @@ void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsC
             break;
 
         case ANIM_STATUS(GroanerAnim_3, true):
-            if (groanerProps.flags_E8.val16[0] & GroanerFlag_5)
+            if (groanerProps.flags.val16[0] & GroanerFlag_5)
             {
                 GROANER_ANIM_INFOS[groaner->model.anim.status].duration.constant = Q12(32.0f);
             }
@@ -1188,7 +1186,7 @@ void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsC
 
         case ANIM_STATUS(GroanerAnim_7, true):
         case ANIM_STATUS(GroanerAnim_13, true):
-            if (groanerProps.flags_E8.val16[0] & GroanerFlag_5)
+            if (groanerProps.flags.val16[0] & GroanerFlag_5)
             {
                 GROANER_ANIM_INFOS[groaner->model.anim.status].duration.constant = Q12(30.0f);
             }
@@ -1215,7 +1213,7 @@ void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsC
                 }
             }
 
-            constantDur                                                              = Q12_DIV(constantDur * 20, Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f)));
+            constantDur                                                      = Q12_DIV(constantDur * 20, Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f)));
             GROANER_ANIM_INFOS[groaner->model.anim.status].duration.constant = constantDur;
             break;
     }
@@ -1283,7 +1281,7 @@ void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsC
     Math_RotMatrixZxyNegGte(&ptr->field_0, &ptr->field_8);
     MulMatrix(&boneCoords[1].coord, &ptr->field_8);
 
-    groaner->rotation.vy                 = Math_AngleNormalizeSigned(groaner->rotation.vy);
+    groaner->rotation.vy = Math_AngleNormalizeSigned(groaner->rotation.vy);
     groanerProps.angle_EC = groaner->rotation.vy;
 }
 
@@ -1424,7 +1422,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             }
             else
             {
-                keyframeIdx0 = keyframeIdx2 - 14 - !(keyframeIdx2 < 24);
+                keyframeIdx0 = (keyframeIdx2 - 14) - !(keyframeIdx2 < 24);
             }
 
             if (keyframeIdx2 < 11)
@@ -1954,7 +1952,7 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)
                 groanerProps.field_10E = temp_a0;
 
                 if (groaner->health > Q12(0.0f) &&
-                    (groanerProps.flags_E8.val32 & (GroanerFlag_3 | GroanerFlag_12)) == GroanerFlag_3)
+                    (groanerProps.flags.val32 & (GroanerFlag_3 | GroanerFlag_12)) == GroanerFlag_3)
                 {
                     func_8005DC1C(Sfx_Unk1409, &groaner->position, Q8(0.5f), 0);
                 }
@@ -1963,7 +1961,7 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)
                     func_8005DC1C(Sfx_Unk1414, &groaner->position, Q8(0.5f), 0);
                 }
 
-                groanerProps.flags_E8.val16[0] &= ~GroanerFlag_12;
+                groanerProps.flags.val16[0] &= ~GroanerFlag_12;
                 break;
             }
             else if (groanerProps.field_10E != 2 && temp_a0 == 2)
