@@ -64,6 +64,7 @@ void GameBoot_GameStartup(void) // 0x80034964
     // should be triggered.
     static s32 demoLoadAttempCount;
 
+    // Handle boot startup step.
     switch (g_GameWork.gameStateSteps[0])
     {
         case 0:
@@ -191,7 +192,7 @@ void GameBoot_GameStartup(void) // 0x80034964
             break;
 
         case 9:
-            if (Bgm_Init() == 0)
+            if (!Bgm_Init())
             {
                 g_GameWork.gameState = GameState_MainLoadScreen;
                 Game_StateStepIncrement();
@@ -205,7 +206,7 @@ void GameBoot_GameStartup(void) // 0x80034964
                 g_SysWork.flags_22A4 |= UnkSysFlag_1;
             }
 
-            if (func_80039F90() & EventParamUnkState_2 || Sd_AmbientSfxInit() == 0)
+            if (func_80039F90() & EventParamUnkState_2 || !Sd_AmbientSfxInit())
             {
                 Game_StateStepIncrement();
             }
@@ -241,7 +242,7 @@ void GameBoot_GameStartup(void) // 0x80034964
                 if (func_80039F90() & EventParamUnkState_1)
                 {
                     g_GameWork.gameStateSteps[0] = 1;
-                    g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep, IS_SCREEN_FADE_WHITE(g_Screen_FadeStatus));
+                    g_Screen_FadeStatus          = SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep, IS_SCREEN_FADE_WHITE(g_Screen_FadeStatus));
                 }
             }
             break;

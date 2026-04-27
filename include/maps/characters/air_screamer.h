@@ -260,6 +260,8 @@ bool sharedFunc_800D7AB0_0_s01(s_SubCharacter* airScreamer);
  */
 void sharedFunc_800D7B14_0_s01(s_SubCharacter* airScreamer, GsCOORDINATE2* boneCoords);
 
+q19_12 Model_AnimDurationGet(s_Model* model);
+
 bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D81B0_0_s01(s_SubCharacter* airScreamer);

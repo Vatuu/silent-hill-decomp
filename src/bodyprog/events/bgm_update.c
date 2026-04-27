@@ -358,11 +358,11 @@ void func_800363D0(void) // 0x800363D0
     Bgm_TrackUpdate(false);
 }
 
-void Bgm_TrackChange(s32 idx) // 0x8003640C
+void Bgm_TrackChange(s32 bgmIdx) // 0x8003640C
 {
-    if (idx != 0)
+    if (bgmIdx != 0)
     {
-        g_MapOverlayHeader.bgmIdx_14 = idx;
+        g_MapOverlayHeader.bgmIdx_14 = bgmIdx;
     }
 }
 

@@ -513,8 +513,6 @@ const VECTOR3 D_800CCA58 = { Q12(0.8f), Q12(-1.8f), Q12(264.1f) };
 
 void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 {
-    q19_12 time;
-
     #define playerChara      g_SysWork.playerWork.player
     #define airScreamerChara g_SysWork.npcs[0]
 
@@ -556,8 +554,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 4:
-            time     = g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
-            g_Cutscene_Timer = MIN(time, Q12(37.0f));
+            g_Cutscene_Timer = MIN(g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f)), Q12(37.0f));
             if (g_Cutscene_Timer >= Q12(37.0f))
             {
                 SysWork_StateStepIncrement(0);
@@ -581,8 +578,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 9:
-            time     = g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
-            g_Cutscene_Timer = MIN(time, Q12(52.0f));
+            g_Cutscene_Timer = MIN(g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f)), Q12(52.0f));
             if (g_Cutscene_Timer >= Q12(52.0f))
             {
                 SysWork_StateStepIncrement(0);
@@ -602,9 +598,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 12:
-            time     = g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
-            g_Cutscene_Timer = MIN(time, Q12(75.0f));
-
+            g_Cutscene_Timer = MIN(g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f)), Q12(75.0f));
             if (g_Cutscene_Timer >= Q12(75.0f))
             {
                 SysWork_StateStepIncrement(0);
@@ -621,8 +615,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 14:
-            time     = g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f));
-            g_Cutscene_Timer = MIN(time, Q12(115.0f));
+            g_Cutscene_Timer = MIN(g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f)), Q12(115.0f));
             if (g_Cutscene_Timer >= Q12(115.0f))
             {
                 SysWork_StateStepIncrement(0);
@@ -635,8 +628,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 16:
-            time     = g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f));
-            g_Cutscene_Timer = MIN(time, Q12(146.0f));
+            g_Cutscene_Timer = MIN(g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f)), Q12(146.0f));
             if (g_Cutscene_Timer >= Q12(146.0f))
             {
                 SysWork_StateStepIncrement(0);
@@ -650,8 +642,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 18:
-            time     = g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f));
-            g_Cutscene_Timer = MIN(time, Q12(147.0f));
+            g_Cutscene_Timer = MIN(g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f)), Q12(147.0f));
             if (g_Cutscene_Timer >= Q12(147.0f))
             {
                 SysWork_StateStepIncrement(0);
@@ -663,8 +654,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 20:
-            time     = g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f));
-            g_Cutscene_Timer = MIN(time, Q12(154.0f));
+            g_Cutscene_Timer = MIN(g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(18.0f)), Q12(154.0f));
             if (g_Cutscene_Timer >= Q12(154.0f))
             {
                 SysWork_StateStepIncrement(0);

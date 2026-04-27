@@ -16,17 +16,17 @@
 // BGM RELATED
 // ========================================
 
-void func_80087EA8(s32 cmd) // 0x80087EA8
+void func_80087EA8(s32 bgmIdx) // 0x80087EA8
 {
-    if (!Bgm_ActiveBgmTrackCheck(cmd))
+    if (!Bgm_ActiveBgmTrackCheck(bgmIdx))
     {
         return;
     }
 
-    Bgm_TrackSet(cmd);
+    Bgm_TrackSet(bgmIdx);
 }
 
-void func_80087EDC(s32 cmd) // 0x80087EDC
+void func_80087EDC(s32 bgmIdx) // 0x80087EDC
 {
     if (Sd_AudioStreamingCheck() || !Fs_QueueChunksLoad())
     {
@@ -36,7 +36,7 @@ void func_80087EDC(s32 cmd) // 0x80087EDC
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            if (!Bgm_ActiveBgmTrackCheck(cmd))
+            if (!Bgm_ActiveBgmTrackCheck(bgmIdx))
             {
                 SysWork_StateStepSet(1, 3);
                 break;
@@ -58,7 +58,7 @@ void func_80087EDC(s32 cmd) // 0x80087EDC
 
             if (!func_80045BC8())
             {
-                Bgm_TrackSet(cmd);
+                Bgm_TrackSet(bgmIdx);
 
                 SysWork_StateStepIncrement(1);
             }

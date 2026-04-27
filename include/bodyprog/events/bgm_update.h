@@ -34,17 +34,17 @@ void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits);
 /** @brief Updates the track index and disables radio effects. */
 void func_800363D0(void);
 
-void Bgm_TrackChange(s32 idx);
+void Bgm_TrackChange(s32 bgmIdx);
 
 void Savegame_MapRoomIdxUpdate(void);
 
-/** @Unused */
+/** @unused */
 s32 func_8003647C(void);
 
-/** @Unused */
+/** @unused */
 s32 func_80036498(void);
 
-/** @Unused */
+/** @unused */
 u32 func_800364BC(void);
 
 /** @brief Draws a palette of colors in the frame buffer. */

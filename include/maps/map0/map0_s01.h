@@ -71,15 +71,10 @@ extern q3_12 D_800E2560;
 
 extern s_WorldObjectModel g_CommonWorldObjects[];
 
-void func_800D2364(s_SubCharacter* chara);
+void MapEvent_CafeCutscene(void);
 
-void func_800D426C(s_SubCharacter* chara);
-
-void func_800D4420(s_SubCharacter* chara);
-
-void func_800D45BC(s_SubCharacter* chara);
-
-q19_12 Model_AnimDurationGet(s_Model* model);
+/** @brief @unused Handles the demo end screen event after the Air Screamer breaks through the cafe window. Seen in demo builds. */
+void MapEvent_ToBeContinued(void);
 
 /** @brief Handles the Air Screamer cutscene in the cafe. */
 void MapEvent_AirScreamerIntroCutscene(void);
@@ -112,24 +107,5 @@ void Map_WorldObjectsInit(void);
 void Map_WorldObjectsUpdate(void);
 
 void CutsceneObjects_Add(s32 arg0);
-
-void func_800D46C4(s_SubCharacter* chara);
-
-void func_800D5638(s_SubCharacter* chara);
-
-void func_800D4E84(s_SubCharacter*);
-
-void func_800D529C(s_SubCharacter* chara, q19_12 arg1, q19_12 angle);
-
-void MapEvent_CafeCutscene(void);
-
-/** @brief @unused Handles the demo end screen event after the Air Screamer breaks through the cafe window. Seen in demo builds. */
-void MapEvent_ToBeContinued(void);
-
-void func_800D49B0(s_SubCharacter* chara);
-
-void func_800D4894(s_SubCharacter* chara);
-
-void func_800D598C(s_SubCharacter* chara);
 
 #endif

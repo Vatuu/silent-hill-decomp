@@ -13023,12 +13023,10 @@ void sharedFunc_800D7B14_0_s01(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 // TODO: Why is this only included in MAP0_S01?
 // Might indicate there a split here where map0_s01 included another .c file?
 #ifdef MAP0_S01
-
 q19_12 Model_AnimDurationGet(s_Model* model) // 0x800D7E88
 {
     return Anim_DurationGet(model, func_80044918(&model->anim));
 }
-
 #endif
 
 bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)

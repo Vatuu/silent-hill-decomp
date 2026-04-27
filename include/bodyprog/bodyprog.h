@@ -1632,7 +1632,7 @@ typedef struct _MapOverlayHeader
     s32                    (*func_C)();
     // 3 bytes of padding.
     void                   (*bgmEvent_10)(bool);
-    s8                     bgmIdx_14;           // Flags? Music related.
+    s8                     bgmIdx_14;
     u8                     ambientAudioIdx_15; // Ambient file index from `g_AmbientVabTaskLoadCmds`.
     s8                     field_16;           // Set ambient tint and draw distance.
                                                // A value of 3 sets the map to night.
@@ -3428,10 +3428,11 @@ void Event_CommonItemTake(u32 pickupType, e_EventFlag eventFlagIdx);
 
 void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx);
 
-/** Sets sound command. */
-void func_80087EA8(s32 cmd);
+/** Sets BGM. */
+void func_80087EA8(s32 bgmIdx);
 
-void func_80087EDC(s32 cmd);
+/** Sets BGM. */
+void func_80087EDC(s32 bgmIdx);
 
 /** Calls a state handler. */
 void func_80088028(void);
@@ -3983,7 +3984,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx);
 
 s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1);
 
-/** @Unused */
+/** @unused */
 void func_80036E48(u16* arg0, s16* arg1);
 
 void func_8003708C(s16* ptr0, u16* ptr1);

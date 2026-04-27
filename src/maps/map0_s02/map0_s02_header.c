@@ -14,7 +14,7 @@ void (*g_LoadScreenFuncs[])() = {
 };
 
 s_MapPoint2d MAP_POINTS[] = {
-#include "map_points.h"
+    #include "map_points.h"
 };
 
 void (*g_MapEventFuncs[])() = {
@@ -105,17 +105,17 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .func_11C                         = NULL,
     .func_120                         = NULL,
     .func_124                         = NULL,
-    .playerRunTimerReset_128                         = NULL,
-    .charaLock_12C                         = NULL,
-    .charaIsLockedCheck                         = NULL,
-    .charaUnlock_134                         = NULL,
-    .charaAnimPlaybackStateGet_138                         = NULL,
+    .playerRunTimerReset_128          = NULL,
+    .charaLock_12C                    = NULL,
+    .charaIsLockedCheck               = NULL,
+    .charaUnlock_134                  = NULL,
+    .charaAnimPlaybackStateGet_138    = NULL,
     .func_13C                         = NULL,
-    .charaVisibleSet_140                         = NULL,
-    .charaInvisibleSet_144                         = NULL,
+    .charaVisibleSet_140              = NULL,
+    .charaInvisibleSet_144            = NULL,
     .func_148                         = NULL,
     .func_14C                         = NULL,
-    .charaAnimStartKeyframeIdxGet_150      = NULL,
+    .charaAnimStartKeyframeIdxGet_150 = NULL,
     .func_154                         = NULL,
     .func_158                         = NULL,
     .func_15C                         = NULL,
@@ -135,12 +135,12 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .charaUpdateFuncs_194             = {},
     .charaGroupIds_248                = {},
     .charaSpawns_24C                  = {
-#include "chara_spawns.h"
+        #include "chara_spawns.h"
     },
     .cameraPaths_3CC = {
-#include "vc_road_data.h"
+        #include "vc_road_data.h"
     },
     .triggerZones_D2C = {
-#include "header_field_D2C.h"
+        #include "header_field_D2C.h"
     },
 };

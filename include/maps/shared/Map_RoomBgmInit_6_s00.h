@@ -9,6 +9,7 @@ void Map_RoomBgmInit(bool arg0)
     var_s3  = sharedData_800EFCFC_6_s00;
     temp_a2 = g_SavegamePtr->mapRoomIdx_A5;
     var_s1  = Q12(0.2f);
+
     switch (g_GameWork.bgmIdx)
     {
         case 5:

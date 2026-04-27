@@ -40,9 +40,16 @@ static u16 g_AmbientVabTaskLoadCmds[40] = {
     196, 197, 198, 199, 200, 201, 202, 203
 };
 
-s32 Bgm_Init(void) // 0x80035780
+bool Bgm_Init(void) // 0x80035780
 {
-    if (Sd_AudioStreamingCheck())
+    typedef enum _InitStep
+    {
+        InitStep_0 = 0,
+        InitStep_1 = 1,
+        InitStep_2 = 2,
+    } e_InitStep;
+
+    if (Sd_AudioStreamingCheck() != 0)
     {
         return NO_VALUE;
     }
@@ -52,14 +59,15 @@ s32 Bgm_Init(void) // 0x80035780
         return NO_VALUE;
     }
 
+    // Handle BGM initialization step.
     switch (g_GameWork.gameStateSteps[1])
     {
-        case 0:
+        case InitStep_0:
             func_8003596C();
             g_GameWork.gameStateSteps[1]++;
 
-        case 1:
-            if (Bgm_ActiveBgmTrackCheck(g_MapOverlayHeader.bgmIdx_14) == false)
+        case InitStep_1:
+            if (!Bgm_ActiveBgmTrackCheck(g_MapOverlayHeader.bgmIdx_14))
             {
                 g_GameWork.gameStateSteps[1] += 2;
             }
@@ -72,7 +80,7 @@ s32 Bgm_Init(void) // 0x80035780
             }
             break;
 
-        case 2:
+        case InitStep_2:
             if (func_80045BC8() == 0)
             {
                 Bgm_TrackSet(g_MapOverlayHeader.bgmIdx_14);
@@ -81,10 +89,10 @@ s32 Bgm_Init(void) // 0x80035780
             break;
 
         default:
-            return 0;
+            return false;
     }
 
-    return 1;
+    return true;
 }
 
 bool Bgm_ActiveBgmTrackCheck(s32 bgmIdx) // 0x800358A8

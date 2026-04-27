@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_GAMEBOOT_BACKGROUNDSOUNDINIT_H
 #define _BODYPROG_GAMEBOOT_BACKGROUNDSOUNDINIT_H
 
-s32 Bgm_Init(void);
+bool Bgm_Init(void);
 
 /** @brief Checks if a given background music track is not currently playing.
  *
