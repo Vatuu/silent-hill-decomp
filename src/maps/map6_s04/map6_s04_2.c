@@ -2762,7 +2762,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             break;
 
         case 1:
-            func_80087EDC(36);
+            Bgm_CrossfadeToTrack(BgmTrackIdx_36);
             break;
 
         case 2:

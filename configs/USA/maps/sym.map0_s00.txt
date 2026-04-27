@@ -228,6 +228,7 @@ MAP_EVENTS                          = 0x800DF754;
 //----------------------------------------------------
 g_Cutscene_Timer                    = 0x800DFAB4; // type:s32
 g_Cutscene_MapMsgAudioCmds          = 0x800DFABC; // type:u16
+g_WarpCamera0                       = 0x800DFAC4;
 g_WarpCamera                        = 0x800DFAD8; // type:s32
 g_ParticleMapIdx0                   = 0x800DFB4C;
 g_ParticleMapIdx1                   = 0x800DFB50;

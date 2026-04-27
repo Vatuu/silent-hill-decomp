@@ -15,25 +15,25 @@
 
 void Map_RoomBgmInit_CondTrue(void) // 0x800DA7AC
 {
-    s32 var;
+    s32 bgmIdx; // `e_BgmTrackIdx`
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_AirScreamerDied))
     {
         if (!Savegame_EventFlagGet(EventFlag_49)) // If Cybil and Harry cutscene hasn't finished.
         {
-            var = 9;
+            bgmIdx = BgmTrackIdx_9;
         }
         else
         {
-            var = 30;
+            bgmIdx = BgmTrackIdx_30;
         }
     }
     else
     {
-        var = 6;
+        bgmIdx = BgmTrackIdx_6;
     }
 
-    Bgm_TrackChange(var);
+    Bgm_TrackChange(bgmIdx);
 }
 
 void Map_RoomBgmInit_CondFalse(void) // 0x800DA7FC

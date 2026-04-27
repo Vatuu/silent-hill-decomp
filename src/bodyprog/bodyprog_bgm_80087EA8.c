@@ -16,7 +16,7 @@
 // BGM RELATED
 // ========================================
 
-void func_80087EA8(s32 bgmIdx) // 0x80087EA8
+void Bgm_PlayNewTrack(s32 bgmIdx) // 0x80087EA8
 {
     if (!Bgm_ActiveBgmTrackCheck(bgmIdx))
     {
@@ -26,7 +26,7 @@ void func_80087EA8(s32 bgmIdx) // 0x80087EA8
     Bgm_TrackSet(bgmIdx);
 }
 
-void func_80087EDC(s32 bgmIdx) // 0x80087EDC
+void Bgm_CrossfadeToTrack(s32 bgmIdx) // 0x80087EDC
 {
     if (Sd_AudioStreamingCheck() || !Fs_QueueChunksLoad())
     {
@@ -70,9 +70,9 @@ void func_80087EDC(s32 bgmIdx) // 0x80087EDC
     }
 }
 
-void func_80088028(void) // 0x80088028
+void Bgm_CrossfadeToSilence(void) // 0x80088028
 {
-    func_80087EDC(0);
+    Bgm_CrossfadeToTrack(BgmTrackIdx_None);
 }
 
 void func_80088048(void) // 0x80088048
@@ -102,7 +102,7 @@ void func_80088048(void) // 0x80088048
     }
 }
 
-void func_800880F0(s32 arg0) // 0x800880F0
+void func_800880F0(bool arg0) // 0x800880F0
 {
     if (Sd_AudioStreamingCheck())
     {
@@ -114,7 +114,7 @@ void func_800880F0(s32 arg0) // 0x800880F0
         case 0:
             Bgm_AllLayersMute();
 
-            if (arg0 == 0)
+            if (!arg0)
             {
                 SD_Call(22);
             }

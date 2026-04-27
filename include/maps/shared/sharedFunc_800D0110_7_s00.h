@@ -243,7 +243,7 @@ void sharedFunc_800D0110_7_s00(void)
                 case 29:
                     if (Savegame_EventFlagGet(EventFlag_555))
                     {
-                        if (g_GameWork.bgmIdx == 22)
+                        if (g_GameWork.bgmIdx == BgmTrackIdx_22)
                         {
                             flags = 1 << 2;
                         }
@@ -256,7 +256,7 @@ void sharedFunc_800D0110_7_s00(void)
                     {
                         if (Savegame_EventFlagGet(EventFlag_552))
                         {
-                            if (g_GameWork.bgmIdx == 22)
+                            if (g_GameWork.bgmIdx == BgmTrackIdx_22)
                             {
                                 flags = 1 << 3;
                             }
@@ -267,7 +267,7 @@ void sharedFunc_800D0110_7_s00(void)
                         }
                         else
                         {
-                            if (g_GameWork.bgmIdx == 22)
+                            if (g_GameWork.bgmIdx == BgmTrackIdx_22)
                             {
                                 flags = (1 << 3) | (1 << 4);
                             }
@@ -327,7 +327,7 @@ void sharedFunc_800D0110_7_s00(void)
                     break;
             }
 
-            if (g_GameWork.bgmIdx == 22)
+            if (g_GameWork.bgmIdx == BgmTrackIdx_22)
             {
                 temp_v0_2 = flags & (1 << 1);
                 temp_v1_5 = flags & (1 << 2);

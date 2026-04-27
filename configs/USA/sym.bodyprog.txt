@@ -901,6 +901,13 @@ Event_ItemTake                               = 0x800877B8; // type:func
 Event_CommonItemTake                         = 0x800879FC; // type:func
 Event_MapTake                                = 0x80087AF4; // type:func
 
+//------------------------------------------------------------------------
+//--- PA: 0x063348   VA: 0x80087EA8   subsegment: c, bodyprog_bgm_80087EA8
+//------------------------------------------------------------------------
+Bgm_PlayNewTrack                             = 0x80087EA8; // type:func
+Bgm_CrossfadeToTrack                         = 0x80087EDC; // type:func
+Bgm_CrossfadeToSilence                       = 0x80088028; // type:func
+
 //--------------------------------------------------------------------
 //--- PA: 0x063658   VA: 0x800881B8   subsegment: c, bodyprog_800881B8
 //--------------------------------------------------------------------

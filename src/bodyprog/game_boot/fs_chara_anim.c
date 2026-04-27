@@ -41,10 +41,10 @@ s_CharaAnimDataInfo g_CharaTypeAnimInfo[CHARA_GROUP_COUNT] = {
 };
 
 s_AnimInfo D_800A998C = {
-    .playbackFunc           = Anim_PlaybackLoop,
-    .status               = 0,
+    .playbackFunc        = Anim_PlaybackLoop,
+    .status              = 0,
     .hasVariableDuration = false,
-    .linkStatus              = ANIM_STATUS(0, false),
+    .linkStatus          = ANIM_STATUS(0, false),
     .duration            = { Q12(8.0f) },
     .startKeyframeIdx    = 26,
     .endKeyframeIdx      = 44
@@ -86,7 +86,7 @@ s32 Fs_CharaAnimDataInfoIdxGet(e_CharacterId charaId) // 0x800352F8
     return 0;
 }
 
-void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord) // 0x80035338
+void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* boneCoords) // 0x80035338
 {
     s32                  i;
     s_AnmHeader*         localAnimFile; // Local pointer required for match.
@@ -119,7 +119,7 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
     {
         if (idx == 1 || localAnimFile == initAnimDataInfo->animFile1_8)
         {
-            Fs_CharaAnimInfoUpdate(idx, charaId, initAnimDataInfo->animFile1_8, coord);
+            Fs_CharaAnimInfoUpdate(idx, charaId, initAnimDataInfo->animFile1_8, boneCoords);
             return;
         }
         else if (localAnimFile < initAnimDataInfo->animFile1_8)
@@ -127,12 +127,12 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
             initAnimDataInfo->animFile0_4 = localAnimFile;
 
             Mem_Move32(localAnimFile, g_CharaTypeAnimInfo[idx].animFile1_8, g_CharaTypeAnimInfo[idx].animBufferSize2_10);
-            Fs_CharaAnimInfoUpdate(idx, charaId, localAnimFile, coord);
+            Fs_CharaAnimInfoUpdate(idx, charaId, localAnimFile, boneCoords);
             return;
         }
     }
 
-    initAnimDataInfo->npcBoneCoords       = &g_SysWork.npcBoneCoords[0];
+    initAnimDataInfo->npcBoneCoords      = &g_SysWork.npcBoneCoords[0];
     initAnimDataInfo->charaId1_1         = Chara_None;
     initAnimDataInfo->animFile1_8        = NULL;
     initAnimDataInfo->animBufferSize2_10 = 0;
@@ -145,11 +145,11 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
     if (i > 0)
     {
         Mem_Move32(g_CharaTypeAnimInfo[idx].animFile0_4, g_CharaTypeAnimInfo[i].animFile1_8, g_CharaTypeAnimInfo[i].animBufferSize2_10);
-        Fs_CharaAnimInfoUpdate(idx, charaId, initAnimDataInfo->animFile0_4, coord);
+        Fs_CharaAnimInfoUpdate(idx, charaId, initAnimDataInfo->animFile0_4, boneCoords);
     }
     else
     {
-        Fs_QueueStartReadAnm(idx, charaId, localAnimFile, coord);
+        Fs_QueueStartReadAnm(idx, charaId, localAnimFile, boneCoords);
     }
 
     for (i = 1; i < CHARA_GROUP_COUNT; i++)
@@ -161,31 +161,31 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
     }
 }
 
-void Fs_CharaAnimInfoUpdate(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord) // 0x80035560
+void Fs_CharaAnimInfoUpdate(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* boneCoords) // 0x80035560
 {
     s32                  idx0;
-    GsCOORDINATE2*       localCoord;
+    GsCOORDINATE2*       localBoneCoords;
     s_CharaAnimDataInfo* animDataInfo;
 
-    localCoord   = coord;
+    localBoneCoords   = boneCoords;
     animDataInfo = &g_CharaTypeAnimInfo[idx];
 
-    if (localCoord == NULL)
+    if (localBoneCoords == NULL)
     {
         if (idx == 1)
         {
-            localCoord = &g_SysWork.npcBoneCoords[0];
+            localBoneCoords = &g_SysWork.npcBoneCoords[0];
         }
         else if (idx >= 2)
         {
             idx0        = g_CharaTypeAnimInfo[idx - 1].animFile1_8->boneCount;
-            localCoord  = g_CharaTypeAnimInfo[idx - 1].npcBoneCoords;
-            localCoord += idx0 + 1;
+            localBoneCoords  = g_CharaTypeAnimInfo[idx - 1].npcBoneCoords;
+            localBoneCoords += idx0 + 1;
 
             // Check for end of `g_SysWork.npcBoneCoords` array.
-            if ((&localCoord[animFile->boneCount] + 1) >= &g_SysWork.npcBoneCoords[NPC_BONE_COUNT_MAX])
+            if ((&localBoneCoords[animFile->boneCount] + 1) >= &g_SysWork.npcBoneCoords[NPC_BONE_COUNT_MAX])
             {
-                localCoord = g_MapOverlayHeader.field_28;
+                localBoneCoords = g_MapOverlayHeader.field_28;
             }
         }
     }
@@ -193,9 +193,9 @@ void Fs_CharaAnimInfoUpdate(s32 idx, e_CharacterId charaId, s_AnmHeader* animFil
     animDataInfo->charaId1_1         = charaId;
     animDataInfo->animFile1_8        = animFile;
     animDataInfo->animBufferSize2_10 = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
-    animDataInfo->npcBoneCoords       = localCoord;
+    animDataInfo->npcBoneCoords      = localBoneCoords;
 
-    Anim_BoneInit(animFile, localCoord);
+    Anim_BoneInit(animFile, localBoneCoords);
 
     g_CharaAnimInfoIdxs[charaId] = idx;
 }
@@ -203,25 +203,25 @@ void Fs_CharaAnimInfoUpdate(s32 idx, e_CharacterId charaId, s_AnmHeader* animFil
 void Fs_CharaAnimBoneInfoUpdate(void) // 0x8003569C
 {
     s32            i;
-    GsCOORDINATE2* coord;
+    GsCOORDINATE2* boneCoord;
     s_AnmHeader*   animFile;
 
-    for (i = 1; i < CHARA_GROUP_COUNT - 1; i++)
+    for (i = 1; i < (CHARA_GROUP_COUNT - 1); i++)
     {
         if (g_MapOverlayHeader.charaGroupIds_248[i] != Chara_None)
         {
-            coord    = g_CharaTypeAnimInfo[i].npcBoneCoords;
-            animFile = g_CharaTypeAnimInfo[i + 1].animFile1_8;
-            coord   += g_CharaTypeAnimInfo[i].animFile1_8->boneCount + 1;
+            boneCoord  = g_CharaTypeAnimInfo[i].npcBoneCoords;
+            animFile   = g_CharaTypeAnimInfo[i + 1].animFile1_8;
+            boneCoord += g_CharaTypeAnimInfo[i].animFile1_8->boneCount + 1;
 
             // Check for end of `g_SysWork.npcBoneCoords` array.
-            if ((&coord[animFile->boneCount] + 1) >= &g_SysWork.npcBoneCoords[NPC_BONE_COUNT_MAX])
+            if ((&boneCoord[animFile->boneCount] + 1) >= &g_SysWork.npcBoneCoords[NPC_BONE_COUNT_MAX])
             {
-                coord = g_MapOverlayHeader.field_28;
+                boneCoord = g_MapOverlayHeader.field_28;
             }
 
-            g_CharaTypeAnimInfo[i + 1].npcBoneCoords = coord;
-            Anim_BoneInit(animFile, coord);
+            g_CharaTypeAnimInfo[i + 1].npcBoneCoords = boneCoord;
+            Anim_BoneInit(animFile, boneCoord);
         }
     }
 }

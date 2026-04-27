@@ -22,11 +22,11 @@ void Map_RoomBgmInit_CondTrue(void) // 0x800D0EAC
 {
     if (!Savegame_EventFlagGet(EventFlag_424) || (Savegame_EventFlagGet(EventFlag_425) && !Savegame_EventFlagGet(EventFlag_426)))
     {
-        Bgm_TrackChange(23);
+        Bgm_TrackChange(BgmTrackIdx_23);
     }
     else
     {
-        Bgm_TrackChange(20);
+        Bgm_TrackChange(BgmTrackIdx_20);
     }
 }
 

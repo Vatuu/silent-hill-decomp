@@ -73,7 +73,7 @@ void Map_RoomBgmInit(bool arg0)
                 break;
         }
     }
-    else if (g_GameWork.bgmIdx == 33)
+    else if (g_GameWork.bgmIdx == BgmTrackIdx_33)
     {
         var_a2 = sharedData_800ED424_4_s02;
 

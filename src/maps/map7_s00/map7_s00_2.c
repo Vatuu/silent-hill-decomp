@@ -27,31 +27,31 @@ void func_800D001C(s32 arg0) // 0x800D001C
 
 void func_800D0050(void) // 0x800D0050
 {
-    s32 var_a0;
+    s32 bgmIdx; // `e_BgmTrackIdx`
     u32 temp_v1;
 
     if (g_SavegamePtr->mapRoomIdx_A5 == 3)
     {
-        var_a0 = 15;
+        bgmIdx = BgmTrackIdx_15;
     }
     else if (Savegame_EventFlagGet(EventFlag_481))
     {
         if (!Savegame_EventFlagGet(EventFlag_574))
         {
             Savegame_EventFlagSet(EventFlag_574);
-            var_a0 = 1;
+            bgmIdx = BgmTrackIdx_1;
         }
         else
         {
-            var_a0 = 22;
+            bgmIdx = BgmTrackIdx_22;
         }
     }
     else
     {
-        var_a0 = 14;
+        bgmIdx = BgmTrackIdx_14;
     }
 
-    Bgm_TrackChange(var_a0);
+    Bgm_TrackChange(bgmIdx);
 }
 
 void func_800D00D0(void) // 0x800D00D0

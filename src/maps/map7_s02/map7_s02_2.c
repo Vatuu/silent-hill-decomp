@@ -32,30 +32,30 @@ void func_800D9830(s32 arg0) // 0x800D9830
 
 void func_800D9864(void) // 0x800D9864
 {
-    s32 var;
+    s32 bgmIdx; // `e_BgmTrackIdx`
 
     if (g_SavegamePtr->mapRoomIdx_A5 == 3)
     {
-        var = 15;
+        bgmIdx = BgmTrackIdx_15;
     }
     else if (Savegame_EventFlagGet(EventFlag_481))
     {
         if (!Savegame_EventFlagGet(EventFlag_574))
         {
             Savegame_EventFlagSet(EventFlag_574);
-            var = 1;
+            bgmIdx = BgmTrackIdx_1;
         }
         else
         {
-            var = 22;
+            bgmIdx = BgmTrackIdx_22;
         }
     }
     else
     {
-        var = 14;
+        bgmIdx = BgmTrackIdx_14;
     }
 
-    Bgm_TrackChange(var);
+    Bgm_TrackChange(bgmIdx);
 }
 
 void func_800D98E4(void) // 0x800D98E4
@@ -254,11 +254,11 @@ void func_800DA248(void) // 0x800DA248
             func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
             sharedFunc_800D2EB4_0_s00();
             func_8003D03C();
-            Bgm_TrackChange(4);
+            Bgm_TrackChange(BgmTrackIdx_4);
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80087EDC(4);
+            Bgm_CrossfadeToTrack(BgmTrackIdx_4);
             break;
 
         case 2:

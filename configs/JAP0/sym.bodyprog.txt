@@ -1340,9 +1340,9 @@ Event_MapTake                                = 0x80089530; // type:func
 //------------------------------------------------------------------------
 //--- PA: 0x064D84   VA: 0x800898E4   subsegment: c, bodyprog_bgm_80087EA8
 //------------------------------------------------------------------------
-func_80087EA8                                = 0x800898E4; // type:func
-func_80087EDC                                = 0x80089918; // type:func
-func_80088028                                = 0x80089A64; // type:func
+Bgm_PlayNewTrack                             = 0x800898E4; // type:func
+Bgm_CrossfadeToTrack                         = 0x80089918; // type:func
+Bgm_CrossfadeToSilence                       = 0x80089A64; // type:func
 func_80088048                                = 0x80089A84; // type:func
 func_800880F0                                = 0x80089B2C; // type:func
 

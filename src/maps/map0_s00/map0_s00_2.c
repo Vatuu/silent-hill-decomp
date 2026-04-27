@@ -851,14 +851,14 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
                                Q12(-62.0f), camPosY, camPosZ,
                                Q12(0.0f), Q12(0.0f),
                                Q12(0.0f), Q12(0.0f),
-                               D_800DFAC4);
+                               g_WarpCamera0);
             Camera_LookAtSet(NULL,
                              playerChara.position.vx, Q12(-0.7f), playerChara.position.vz - Q12(5.0f),
                              Q12(0.0f), Q12(0.0f),
                              Q12(0.0f), Q12(0.0f),
-                             D_800DFAC4);
+                             g_WarpCamera0);
 
-            D_800DFAC4 = false;
+            g_WarpCamera0 = false;
             break;
 
         default:

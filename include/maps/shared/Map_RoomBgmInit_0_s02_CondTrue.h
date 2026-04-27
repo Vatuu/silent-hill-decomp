@@ -3,7 +3,7 @@ void Map_RoomBgmInit_CondTrue(void)
     switch (g_SavegamePtr->mapRoomIdx_A5)
     {
         case 5:
-            Bgm_TrackChange(6);
+            Bgm_TrackChange(BgmTrackIdx_6);
             break;
 
         case 18:
@@ -11,7 +11,7 @@ void Map_RoomBgmInit_CondTrue(void)
             break;
 
         case 17:
-            Bgm_TrackChange(7);
+            Bgm_TrackChange(BgmTrackIdx_7);
             break;
     }
 }

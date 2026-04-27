@@ -360,7 +360,7 @@ void func_800363D0(void) // 0x800363D0
 
 void Bgm_TrackChange(s32 bgmIdx) // 0x8003640C
 {
-    if (bgmIdx != 0)
+    if (bgmIdx != BgmTrackIdx_None)
     {
         g_MapOverlayHeader.bgmIdx_14 = bgmIdx;
     }

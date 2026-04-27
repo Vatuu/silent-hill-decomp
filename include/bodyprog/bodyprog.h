@@ -124,41 +124,48 @@ typedef enum _BgmFlags
 /** @brief Background music track indices. */
 typedef enum _BgmTrackIdx
 {
-    BgmTrackIdx_0 = 0,
-    BgmTrackIdx_1 = 1,
-    BgmTrackIdx_2 = 2,
-    BgmTrackIdx_3 = 3,
-    BgmTrackIdx_4 = 4,
-    BgmTrackIdx_5 = 5,
-    BgmTrackIdx_6 = 6,
-    BgmTrackIdx_7 = 7,
-    BgmTrackIdx_8 = 8,
-    BgmTrackIdx_9 = 9,
-    BgmTrackIdx_10 = 10,
-    BgmTrackIdx_11 = 11,
-    BgmTrackIdx_12 = 12,
-    BgmTrackIdx_13 = 13,
-    BgmTrackIdx_14 = 14,
-    BgmTrackIdx_15 = 15,
-    BgmTrackIdx_16 = 16,
-    BgmTrackIdx_17 = 17,
-    BgmTrackIdx_18 = 18,
-    BgmTrackIdx_19 = 19,
-    BgmTrackIdx_20 = 20,
-    BgmTrackIdx_21 = 21,
-    BgmTrackIdx_22 = 22,
-    BgmTrackIdx_23 = 23,
-    BgmTrackIdx_24 = 24,
-    BgmTrackIdx_25 = 25,
-    BgmTrackIdx_26 = 26,
-    BgmTrackIdx_27 = 27,
-    BgmTrackIdx_28 = 28,
-    BgmTrackIdx_29 = 29,
-    BgmTrackIdx_30 = 30,
-    BgmTrackIdx_31 = 31,
-    BgmTrackIdx_32 = 32,
-    BgmTrackIdx_33 = 33,
-    BgmTrackIdx_34 = 34
+    BgmTrackIdx_None = 0,
+    BgmTrackIdx_1    = 1,
+    BgmTrackIdx_2    = 2,
+    BgmTrackIdx_3    = 3,
+    BgmTrackIdx_4    = 4,
+    BgmTrackIdx_5    = 5,
+    BgmTrackIdx_6    = 6,
+    BgmTrackIdx_7    = 7,
+    BgmTrackIdx_8    = 8,
+    BgmTrackIdx_9    = 9,
+    BgmTrackIdx_10   = 10,
+    BgmTrackIdx_11   = 11,
+    BgmTrackIdx_12   = 12,
+    BgmTrackIdx_13   = 13,
+    BgmTrackIdx_14   = 14,
+    BgmTrackIdx_15   = 15,
+    BgmTrackIdx_16   = 16,
+    BgmTrackIdx_17   = 17,
+    BgmTrackIdx_18   = 18,
+    BgmTrackIdx_19   = 19,
+    BgmTrackIdx_20   = 20,
+    BgmTrackIdx_21   = 21,
+    BgmTrackIdx_22   = 22,
+    BgmTrackIdx_23   = 23,
+    BgmTrackIdx_24   = 24,
+    BgmTrackIdx_25   = 25,
+    BgmTrackIdx_26   = 26,
+    BgmTrackIdx_27   = 27,
+    BgmTrackIdx_28   = 28,
+    BgmTrackIdx_29   = 29,
+    BgmTrackIdx_30   = 30,
+    BgmTrackIdx_31   = 31,
+    BgmTrackIdx_32   = 32,
+    BgmTrackIdx_33   = 33,
+    BgmTrackIdx_34   = 34,
+    BgmTrackIdx_35   = 35,
+    BgmTrackIdx_36   = 36,
+    BgmTrackIdx_37   = 37,
+    BgmTrackIdx_38   = 38,
+    BgmTrackIdx_39   = 39,
+    BgmTrackIdx_40   = 40,
+    BgmTrackIdx_41   = 41
 } e_BgmTrackIds;
 
 typedef enum _CollisionFlags
@@ -1645,7 +1652,7 @@ typedef struct _MapOverlayHeader
     s_MapPoint2d*          mapPointsOfInterest_1C;
     void                   (**mapEventFuncs_20)(); /** Points to array of event functions. */
     s_EventData*           mapEvents_24;
-    GsCOORDINATE2*         field_28;
+    GsCOORDINATE2*         field_28; // Bone coords of some kind.
     u8*                    loadableItems_2C;
     const char**           mapMessages_30; // Array of strings.
     s_AnimInfo*            harryMapAnimInfos_34; // Map-specific anim infos for Harry (for anims 38+).
@@ -3428,20 +3435,32 @@ void Event_CommonItemTake(u32 pickupType, e_EventFlag eventFlagIdx);
 
 void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx);
 
-/** Sets BGM. */
-void func_80087EA8(s32 bgmIdx);
+// =========================
+// `bodyprog_bgm_80087EA8.c`
+// =========================
 
-/** Sets BGM. */
-void func_80087EDC(s32 bgmIdx);
+/** @brief Plays a new background music track. If the track is already playing, the request is ignored.
+ *
+ * @param bgmIdx Index of the background music track to play.
+ */
+void Bgm_PlayNewTrack(s32 bgmIdx);
 
-/** Calls a state handler. */
-void func_80088028(void);
+/** @brief Handles a multi-step crossfade to a new track.
+ *
+ * @param bgmIdx Index of the background music track to play.
+ */
+void Bgm_CrossfadeToTrack(s32 bgmIdx);
+
+/** @brief Crossfades the currently playing background music track to silence. */
+void Bgm_CrossfadeToSilence(void);
 
 /** State handler. */
 void func_80088048(void);
 
 /** State handler. */
-void func_800880F0(s32 arg0);
+void func_800880F0(bool bool);
+
+// ========================
 
 void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB);
 

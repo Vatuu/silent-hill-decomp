@@ -92,7 +92,7 @@ void Map_RoomBgmInit_CondFalse(void)
         case 7:
         case 8:
         case 9:
-            if (g_GameWork.bgmIdx == 34)
+            if (g_GameWork.bgmIdx == BgmTrackIdx_34)
             {
                 if (Savegame_EventFlagGet(EventFlag_391))
                 {
@@ -122,7 +122,7 @@ void Map_RoomBgmInit_CondFalse(void)
 
         case 19:
         case 20:
-            if (g_GameWork.bgmIdx == 23)
+            if (g_GameWork.bgmIdx == BgmTrackIdx_23)
             {
                 layerLimits = sharedData_800CFB4C_0_s02;
                 fadeSpeed   = Q12(0.25f);
