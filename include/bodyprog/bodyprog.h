@@ -1836,22 +1836,17 @@ typedef struct
     } u;
 } s_GteScratchData2;
 
+// Something for inventory items.
 typedef struct
 {
-    s16   field_0;
-    s16   field_2; // Move dist?
-    q3_12 field_4; // Angle.
-    s16   field_6;
-    s16   field_8;
-    s16   unk_A;
-    s16   field_C;
-    s16   field_E;
-    s16   field_10;
-    s16   unk_12;
-    s16   field_14;
-    s16   field_16;
-    s16   field_18;
-    s16   unk_1A;
+    /* 0x0  */ q3_12   field_0; // `field_16` set to this value.
+    /* 0x2  */ s16     field_2; // Move dist?
+    /* 0x4  */ q3_12   field_4; // Angle.
+    /* 0x6  */ s16     field_6;
+    /* 0x8  */ s16     field_8;
+    /* 0xA  */ s8      __pad_A[2];
+    /* 0xC  */ SVECTOR field_C;  // } Q3.12 | Offsets?
+    /* 0x14 */ SVECTOR field_14; // }
 } s_800AE204;
 
 typedef struct
@@ -2524,7 +2519,7 @@ extern s8 D_800C39A0;
  */
 // extern s_WorldEnvWork g_WorldEnvWork;
 
-extern GsCOORDINATE2* D_800C42B8;
+extern GsCOORDINATE2* D_800C42B8; // Set to view coord.
 
 extern VECTOR3 D_800C42C0;
 
@@ -3211,7 +3206,8 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
 /** `arg4` unused. */
 s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBuf9, e_FsFile fileIdx, s32 arg4);
 
-void func_8005B55C(GsCOORDINATE2* coord);
+/** Initializes values in `D_800AE204` array. */
+void func_8005B55C(GsCOORDINATE2* viewCoord);
 
 void Gfx_BillboardDraw(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_arg4, s32 arg5);
 

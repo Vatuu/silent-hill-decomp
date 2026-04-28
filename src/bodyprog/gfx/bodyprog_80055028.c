@@ -3293,20 +3293,20 @@ s_Texture* Textures_ActiveTex_FindTexture(char* texName, s_ActiveTextures* activ
     return NULL;
 }
 
-void func_8005B55C(GsCOORDINATE2* coord) // 0x8005B55C
+void func_8005B55C(GsCOORDINATE2* viewCoord) // 0x8005B55C
 {
     s_800AE204* curPtr;
 
-    D_800C42B8 = coord;
+    D_800C42B8 = viewCoord;
 
     for (curPtr = &D_800AE204[0]; curPtr < &D_800AE204[26]; curPtr++)
     {
-        curPtr->field_10 = -Math_Cos(curPtr->field_4);
-        curPtr->field_C  = -Math_Sin(curPtr->field_4);
-        curPtr->field_E  = 0;
-        curPtr->field_18 = Q12_MULT(curPtr->field_2, Math_Cos(curPtr->field_4));
-        curPtr->field_14 = Q12_MULT(curPtr->field_2, Math_Sin(curPtr->field_4));
-        curPtr->field_16 = curPtr->field_0;
+        curPtr->field_C.vz = -Math_Cos(curPtr->field_4);
+        curPtr->field_C.vx = -Math_Sin(curPtr->field_4);
+        curPtr->field_C.vy = Q12(0.0f);
+        curPtr->field_14.vz = Q12_MULT(curPtr->field_2, Math_Cos(curPtr->field_4));
+        curPtr->field_14.vx = Q12_MULT(curPtr->field_2, Math_Sin(curPtr->field_4));
+        curPtr->field_14.vy = curPtr->field_0;
     }
 }
 
@@ -3438,9 +3438,7 @@ void Gfx_BillboardDraw(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot
         if (temp_v0 > Q12(0.25f))
         {
             temp_v1_2 = Q12_MULT(temp_v0 - Q12(0.25f), Q12(0.3f)) + Q12(0.25f);
-
             var_v0 = Q12(MIN(temp_v1_2, Q12(1.0f)));
-
             temp_lo = var_v0 / temp_v0;
 
             posX0   = Q12_MULT(posX0, temp_lo);
@@ -3460,13 +3458,13 @@ void Gfx_BillboardDraw(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot
         sp70.m[0][1] = posY0;
         sp70.m[0][2] = posZ0;
 
-        sp70.m[1][0] = -posZ0 >> 4;
-        sp70.m[1][1] = posY0 >> 4;
-        sp70.m[1][2] = posX0 >> 4;
+        sp70.m[1][0] = Q12_TO_Q8(-posZ0);
+        sp70.m[1][1] = Q12_TO_Q8(posY0);
+        sp70.m[1][2] = Q12_TO_Q8(posX0);
 
-        sp70.m[2][0] = posZ0 >> 4;
-        sp70.m[2][1] = posY0 >> 4;
-        sp70.m[2][2] = -posX0 >> 4;
+        sp70.m[2][0] = Q12_TO_Q8(posZ0);
+        sp70.m[2][1] = Q12_TO_Q8(posY0);
+        sp70.m[2][2] = Q12_TO_Q8(-posX0);
 
         SetLightMatrix(&sp70);
         NormalColor3(&D_800AE500[0], &D_800AE500[1], &D_800AE500[2], &sp58[0], &sp58[1], &sp58[2]);
@@ -3487,7 +3485,7 @@ void Gfx_BillboardDraw(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot
 
         if (temp_v0_2 > 32 && temp_a0 < sp494)
         {
-            s32 tpage = 0x2C;
+            s32 tpage = 44;
             s32 clut  = 0x8C;
             temp_lo_2 = Q12(sp498) / temp_a0;
 
