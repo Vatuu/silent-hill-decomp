@@ -100,4 +100,15 @@ typedef enum _HarryBone
     HarryBone_Count         = 18
 } s_HarryBone;
 
+/** @brief Harry character hand mesh variant indices. */
+typedef enum _HarryHandMesh
+{
+    HarryHandMesh_0 = 0,
+    HarryHandMesh_1 = 1,
+    HarryHandMesh_2 = 2,
+    HarryHandMesh_3 = 3,
+    HarryHandMesh_4 = 4,
+    HarryHandMesh_5 = 5
+} e_HarryHandMesh;
+
 #endif

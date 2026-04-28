@@ -1046,7 +1046,7 @@ void sharedFunc_800D2EB4_0_s00(void)
     g_SysWork.playerCombat.weaponAttack = NO_VALUE;
     sharedData_800DD59C_0_s00 = prevVar;
 
-    WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(1, 1));
+    WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(HarryHandMesh_1, 1));
 }
 
 void sharedFunc_800D2EF4_0_s00(void)

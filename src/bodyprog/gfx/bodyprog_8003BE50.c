@@ -1285,31 +1285,31 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
     static s32 D_800A9EE8 = 0x0000FE11;
     static s32 D_800A9EEC = 0x0000FE12;
 
-    // Process first masked value.
+    // Process mesh variant.
     variantIdx = MODEL_BONE_MESH_VARIANT_IDX_GET(arg1);
-    if (variantIdx != 0)
+    if (variantIdx != HarryHandMesh_0)
     {
         func_80045468(skel, &D_800A9ECC, false);
 
         switch (variantIdx)
         {
-            case 1:
+            case HarryHandMesh_1:
                 func_80045468(skel, &D_800A9ED0, true);
                 break;
 
-            case 2:
+            case HarryHandMesh_2:
                 func_80045468(skel, &D_800A9ED4, true);
                 break;
 
-            case 3:
+            case HarryHandMesh_3:
                 func_80045468(skel, &D_800A9ED8, true);
                 break;
 
-            case 4:
+            case HarryHandMesh_4:
                 func_80045468(skel, &D_800A9EDC, true);
                 break;
 
-            case 5:
+            case HarryHandMesh_5:
                 func_80045468(skel, &D_800A9EE0, true);
                 break;
         }

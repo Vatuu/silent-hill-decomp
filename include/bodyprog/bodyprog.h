@@ -1655,7 +1655,7 @@ typedef struct _MapOverlayHeader
     GsCOORDINATE2*         field_28; // Bone coords of some kind.
     u8*                    loadableItems_2C;
     const char**           mapMessages_30; // Array of strings.
-    s_AnimInfo*            harryMapAnimInfos_34; // Map-specific anim infos for Harry (for anims 38+).
+    s_AnimInfo*            harryMapAnimInfos_34; /** Map-specific anim infos for Harry (for anims 38+). */
     s_UnkStruct3_Mo*       field_38; // Array of 40?
     void                   (*worldObjectsInit_3C)(void); // func(?).
     void                   (*worldObjectsUpdate_40)(void);
@@ -1693,21 +1693,21 @@ typedef struct _MapOverlayHeader
     void                   (*func_B8)(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
     void                   (*func_BC)(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
     void                   (*func_C0)(); // func(?).
-    void                   (*playerMatchArmAnimDisable_C4)(); // func(?).
+    void                   (*playerMatchArmAnimDisable_C4)();
     void                   (*playerControlFreeze_C8)();
     void                   (*playerControlUnfreeze_CC)(bool setIdle);
     bool                   (*func_D0)(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount); // 0x800C964C
     s32                    (*func_D4)(s32 playerExtraState); // Points to `sharedFunc_800D2C7C_0_s00` which has `void` return type, but changing this funcptr causes mismatch in `func_80085EB8`
     void                   (*func_D8)();                     // Assumed return type.
     void                   (*playerAnimLock_DC)(void);
-    void                   (*playerAnimIsLocked_E0)(); // func(?).
+    void                   (*playerAnimIsLocked_E0)();
     s32                    (*playerAnimUnlock_E4)(s_SubCharacter*, s32); // Assumed return type.
     s64                    (*func_E8)(s_SubCharacter*);      // Is it really `s64`???
     bool                   (*playerMoveDistIsZero_EC)();
-    void                   (*playerMoveDistClear_F0)(); // func(?).
+    void                   (*playerMoveDistClear_F0)();
     void                   (*playerFallBackward_F4)();
     void                   (*func_F8)(); // func(?).
-    void                   (*playerDamageFeetFront_FC)(); // func(?).
+    void                   (*playerDamageFeetFront_FC)();
     void                   (*func_100)(); // func(?).
     void                   (*func_104)(); // func(?).
     s32                    (*func_108)();
