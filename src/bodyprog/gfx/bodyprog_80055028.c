@@ -2344,7 +2344,7 @@ __block1530:
 
             if (scratchData->field_2B8[scratchData->field_380.s_0.field_14] >= 8)
             {
-                gte_lddp(0x1000 - (scratchData->field_2B8[scratchData->field_380.s_0.field_14] << 5));
+                gte_lddp(Q12(1.0f) - (scratchData->field_2B8[scratchData->field_380.s_0.field_14] << 5));
                 gte_ldrgb(&scratchData->field_380.s_0.field_8);
                 gte_dpcs();
                 gte_strgb(&poly0->r0);
@@ -2368,7 +2368,7 @@ __block1530:
 
             if (scratchData->field_2B8[scratchData->field_380.s_0.field_16] >= 8)
             {
-                gte_lddp(0x1000 - (scratchData->field_2B8[scratchData->field_380.s_0.field_16] << 5));
+                gte_lddp(Q12(1.0f) - (scratchData->field_2B8[scratchData->field_380.s_0.field_16] << 5));
                 gte_ldrgb(&scratchData->field_380.s_0.field_8);
                 gte_dpcs();
                 gte_strgb(&poly0->r2);
@@ -2380,7 +2380,7 @@ __block1530:
 
             if (scratchData->field_2B8[scratchData->field_380.s_0.field_17] >= 8)
             {
-                gte_lddp(0x1000 - (scratchData->field_2B8[scratchData->field_380.s_0.field_17] << 5));
+                gte_lddp(Q12(1.0f) - (scratchData->field_2B8[scratchData->field_380.s_0.field_17] << 5));
                 gte_ldrgb(&scratchData->field_380.s_0.field_8);
                 gte_dpcs();
                 gte_strgb(&poly0->r3);
@@ -3305,9 +3305,9 @@ void func_8005B55C(GsCOORDINATE2* viewCoord) // 0x8005B55C
         curPtr->field_C.vz = -Math_Cos(curPtr->field_4);
         curPtr->field_C.vx = -Math_Sin(curPtr->field_4);
         curPtr->field_C.vy = Q12(0.0f);
-        curPtr->field_14.vz = Q12_MULT(curPtr->field_2, Math_Cos(curPtr->field_4));
-        curPtr->field_14.vx = Q12_MULT(curPtr->field_2, Math_Sin(curPtr->field_4));
-        curPtr->field_14.vy = curPtr->field_0;
+        curPtr->position.vz = Q12_MULT(curPtr->field_2, Math_Cos(curPtr->field_4));
+        curPtr->position.vx = Q12_MULT(curPtr->field_2, Math_Sin(curPtr->field_4));
+        curPtr->position.vy = curPtr->positionY;
     }
 }
 
@@ -3481,7 +3481,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
     for (curPtr = temp_fp->ptr_0, poly_gt4 = GsOUT_PACKET_P;
          curPtr < &temp_fp->ptr_0[temp_fp->count_4]; curPtr++)
     {
-        temp_v0_2 = RotTransPers((SVECTOR*)&curPtr->field_14, &field_1C, &field_24, &field_24);
+        temp_v0_2 = RotTransPers(&curPtr->position, &field_1C, &field_24, &field_24);
         temp_a0   = temp_v0_2 << 2;
 
         if (temp_v0_2 > 32 && temp_a0 < sp494)

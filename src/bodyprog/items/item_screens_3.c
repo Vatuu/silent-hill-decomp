@@ -889,29 +889,29 @@ u32 D_800AE8A0[327] = {
 // Used by `func_80068E0C`. Contains pointers to the table above.
 s_800AEDBC D_800AEDBC[] = {
     {},
-    { &D_800AE8A0[0x00], &D_800AE8A0[0x12],  0x0363, 0x03A8 },
-    { &D_800AE8A0[0x34], &D_800AE8A0[0x3D],  0x03AF, 0x03BE },
-    { &D_800AE8A0[0x34], &D_800AE8A0[0x44],  0x03D1, 0x03F0 },
-    { &D_800AE8A0[0x34], &D_800AE8A0[0x53],  0x03F3, 0x0404 },
-    { &D_800AE8A0[0x5B], &D_800AE8A0[0x69],  0x0415, 0x041A },
-    { &D_800AE8A0[0x5B], &D_800AE8A0[0x6B],  0x0429, 0x0466 },
-    { &D_800AE8A0[0x5B], &D_800AE8A0[0xAA],  0x04C5, 0x04FA },
-    { &D_800AE8A0[0x5B], &D_800AE8A0[0xDE],  0x0549, 0x054E },
-    { &D_800AE8A0[0x5B], &D_800AE8A0[0x69],  0x041F, 0x0424 },
-    { &D_800AE8A0[0x5B], &D_800AE8A0[0x89],  0x0477, 0x04BA },
-    { &D_800AE8A0[0x5B], &D_800AE8A0[0xC4],  0x0507, 0x053C },
-    { &D_800AE8A0[0x5B], &D_800AE8A0[0xDE],  0x0551, 0x0556 },
-    { &D_800AE8A0[0xE0], &D_800AE8A0[0xE6],  0x0559, 0x0562 },
-    { &D_800AE8A0[0xE0], &D_800AE8A0[0xEA],  0x056D, 0x0578 },
-    { &D_800AE8A0[0xE0], &D_800AE8A0[0xEf],  0x0585, 0x0588 },
-    { &D_800AE8A0[0xF0], &D_800AE8A0[0x11A], 0x05E7, 0x05F2 },
-    { &D_800AE8A0[0xF0], &D_800AE8A0[0xFB],  0x058F, 0x05B0 },
-    { &D_800AE8A0[0xF0], &D_800AE8A0[0x124], 0x060F, 0x0612 },
-    { &D_800AE8A0[0xF0], &D_800AE8A0[0x135], 0x0615, 0x0618 },
-    { &D_800AE8A0[0xF0], &D_800AE8A0[0x11f], 0x05FB, 0x0606 },
-    { &D_800AE8A0[0xF0], &D_800AE8A0[0x10B], 0x05BB, 0x05DA },
-    { &D_800AE8A0[0xF0], &D_800AE8A0[0x125], 0x061B, 0x063C },
-    { &D_800AE8A0[0xF0], &D_800AE8A0[0x136], 0x0649, 0x066C },
+    { &D_800AE8A0[0],   &D_800AE8A0[18],  0x0363, 0x03A8 },
+    { &D_800AE8A0[52],  &D_800AE8A0[61],  0x03AF, 0x03BE },
+    { &D_800AE8A0[52],  &D_800AE8A0[68],  0x03D1, 0x03F0 },
+    { &D_800AE8A0[52],  &D_800AE8A0[83],  0x03F3, 0x0404 },
+    { &D_800AE8A0[91],  &D_800AE8A0[105], 0x0415, 0x041A },
+    { &D_800AE8A0[91],  &D_800AE8A0[107], 0x0429, 0x0466 },
+    { &D_800AE8A0[91],  &D_800AE8A0[170], 0x04C5, 0x04FA },
+    { &D_800AE8A0[91],  &D_800AE8A0[222], 0x0549, 0x054E },
+    { &D_800AE8A0[91],  &D_800AE8A0[105], 0x041F, 0x0424 },
+    { &D_800AE8A0[91],  &D_800AE8A0[137], 0x0477, 0x04BA },
+    { &D_800AE8A0[91],  &D_800AE8A0[196], 0x0507, 0x053C },
+    { &D_800AE8A0[91],  &D_800AE8A0[222], 0x0551, 0x0556 },
+    { &D_800AE8A0[224], &D_800AE8A0[230], 0x0559, 0x0562 },
+    { &D_800AE8A0[224], &D_800AE8A0[234], 0x056D, 0x0578 },
+    { &D_800AE8A0[224], &D_800AE8A0[239], 0x0585, 0x0588 },
+    { &D_800AE8A0[240], &D_800AE8A0[282], 0x05E7, 0x05F2 },
+    { &D_800AE8A0[240], &D_800AE8A0[251], 0x058F, 0x05B0 },
+    { &D_800AE8A0[240], &D_800AE8A0[292], 0x060F, 0x0612 },
+    { &D_800AE8A0[240], &D_800AE8A0[309], 0x0615, 0x0618 },
+    { &D_800AE8A0[240], &D_800AE8A0[287], 0x05FB, 0x0606 },
+    { &D_800AE8A0[240], &D_800AE8A0[267], 0x05BB, 0x05DA },
+    { &D_800AE8A0[240], &D_800AE8A0[293], 0x061B, 0x063C },
+    { &D_800AE8A0[240], &D_800AE8A0[310], 0x0649, 0x066C }
 };
 
 s16 D_800AEEDC[][2] = {
@@ -1015,62 +1015,64 @@ s16 D_800AF04C[] = {
     0xFF5D, 0x0000
 };
 
-s16 D_800AF070[] = {
-    0x0000, 0x00A3, 0x0147, 0x01EB,
-    0x028F, 0x0333, 0x03D7, 0x047A,
-    0x051E, 0x05C2, 0x0666, 0x070A,
-    0x07AE, 0x0851, 0x08F5, 0x0999,
-    0x0A3D, 0x0AE1, 0x0B85, 0x0C28,
-    0x0CCC, 0x0D70, 0x0E14, 0x0EB8,
-    0x0F5C, 0x1000, 0x10A3, 0x1147,
-    0x11EB, 0x128F, 0x1333, 0x13D7,
-    0x147A, 0x151E, 0x15C2, 0x1666,
-    0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0xFFD8, 0xFEB9, 0xFD9A,
-    0xFCCD, 0xFC52, 0xFBD8, 0xFB5D,
-    0xFB5D, 0xFB5D, 0xFB5D, 0xFB5D,
-    0xFB5D, 0xFB5D, 0xFB5D, 0xFB5D,
-    0xFB5D, 0xFB5D, 0xFB5D, 0xFB5D,
-    0xFB5D, 0xFB5D, 0xFA90, 0xFA67,
-    0xFA67, 0xFA90, 0xFA90, 0xFAB9,
-    0xFAB9, 0xFAB9, 0xFAE2, 0xFAE2,
-    0xFB0B, 0xFB5D, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000,
-    0xFF34, 0xFE3E, 0xFD9A, 0xFCCD,
-    0xFC00, 0xFB34, 0xFB34, 0xFBAF,
-    0xFC29, 0xFCA4, 0xFD1F, 0xFD9A,
-    0xFE15, 0xFE90, 0xFF0B, 0xFF86,
-    0x0000, 0x007A, 0x011E, 0x0000,
-    0xFFAF, 0xFF86, 0xFF86, 0xFFAF,
-    0xFFD8, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000,
-    0x04CC, 0x04CC, 0x04CC, 0x04CC,
-    0x04CC, 0x04CC, 0x04CC, 0x04CC,
-    0x04CC, 0x04CC, 0x04CC, 0x04CC,
-    0x04CC, 0x04CC, 0x04CC, 0x04CC,
-    0x051E, 0x0547, 0x0570, 0x0599,
-    0x05C2, 0x05EB, 0x0614, 0x063D,
-    0x0666, 0x0666, 0x0666, 0x0666,
-    0x0666, 0x0666, 0x0666, 0x0666,
-    0x0666, 0x0666, 0x0666, 0x0666,
-    0x0666, 0x0666, 0x0666, 0x0666,
-    0x0666, 0x0666, 0x04CC, 0x04CC,
-    0x04CC, 0x04CC, 0x04CC, 0x04CC,
-    0x04CC, 0x04CC, 0x04CC, 0x04CC,
-    0x04CC, 0x0000
+// Distances used in player code.
+q3_12 D_800AF070[] = {
+    Q12(0.0f), Q12(0.04f), Q12(0.08f), Q12(0.12f),
+    Q12(0.16f), Q12(0.20f), Q12(0.24f), Q12(0.28f),
+    Q12(0.32f), Q12(0.36f), Q12(0.40f), Q12(0.44f),
+    Q12(0.48f), Q12(0.52f), Q12(0.56f), Q12(0.60f),
+    Q12(0.64f), Q12(0.68f), Q12(0.72f), Q12(0.76f),
+    Q12(0.80f), Q12(0.84f), Q12(0.88f), Q12(0.92f),
+    Q12(0.96f), Q12(1.00f), Q12(1.04f), Q12(1.08f),
+    Q12(1.12f), Q12(1.16f), Q12(1.20f), Q12(1.24f),
+    Q12(1.28f), Q12(1.32f), Q12(1.36f), Q12(1.40f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(-0.01f), Q12(-0.08f), Q12(-0.15f),
+    Q12(-0.20f), Q12(-0.23f), Q12(-0.26f), Q12(-0.29f),
+    Q12(-0.29f), Q12(-0.29f), Q12(-0.29f), Q12(-0.29f),
+    Q12(-0.29f), Q12(-0.29f), Q12(-0.29f), Q12(-0.29f),
+    Q12(-0.29f), Q12(-0.29f), Q12(-0.29f), Q12(-0.29f),
+    Q12(-0.29f), Q12(-0.29f), Q12(-0.34f), Q12(-0.35f),
+    Q12(-0.35f), Q12(-0.34f), Q12(-0.34f), Q12(-0.33f),
+    Q12(-0.33f), Q12(-0.33f), Q12(-0.32f), Q12(-0.32f),
+    Q12(-0.31f), Q12(-0.29f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(-0.05f), Q12(-0.11f), Q12(-0.15f), Q12(-0.20f),
+    Q12(-0.25f), Q12(-0.30f), Q12(-0.30f), Q12(-0.27f),
+    Q12(-0.24f), Q12(-0.21f), Q12(-0.18f), Q12(-0.15f),
+    Q12(-0.12f), Q12(-0.09f), Q12(-0.06f), Q12(-0.03f),
+    Q12(0.0f), Q12(0.03f), Q12(0.07f), Q12(0.0f),
+    Q12(-0.02f), Q12(-0.03f), Q12(-0.03f), Q12(-0.02f),
+    Q12(-0.01f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.30f), Q12(0.30f), Q12(0.30f), Q12(0.30f),
+    Q12(0.30f), Q12(0.30f), Q12(0.30f), Q12(0.30f),
+    Q12(0.30f), Q12(0.30f), Q12(0.30f), Q12(0.30f),
+    Q12(0.30f), Q12(0.30f), Q12(0.30f), Q12(0.30f),
+    Q12(0.32f), Q12(0.33f), Q12(0.34f), Q12(0.35f),
+    Q12(0.36f), Q12(0.37f), Q12(0.38f), Q12(0.39f),
+    Q12(0.40f), Q12(0.40f), Q12(0.40f), Q12(0.40f),
+    Q12(0.40f), Q12(0.40f), Q12(0.40f), Q12(0.40f),
+    Q12(0.40f), Q12(0.40f), Q12(0.40f), Q12(0.40f),
+    Q12(0.40f), Q12(0.40f), Q12(0.40f), Q12(0.40f),
+    Q12(0.40f), Q12(0.40f), Q12(0.30f), Q12(0.30f),
+    Q12(0.30f), Q12(0.30f), Q12(0.30f), Q12(0.30f),
+    Q12(0.30f), Q12(0.30f), Q12(0.30f), Q12(0.30f),
+    Q12(0.30f), Q12(0.0f)
 };
 
-s16 D_800AF1FC[] = {
-    0x0147, 0x028F, 0x03D7, 0x051E,
-    0x0666, 0x07AE, 0x07AE, 0x0000
+// Distances used in player code.
+q3_12 D_800AF1FC[] = {
+    Q12(0.08f), Q12(0.16f), Q12(0.24f), Q12(0.32f),
+    Q12(0.4f),  Q12(0.48f), Q12(0.48f), Q12(0.0f)
 };
 
 q19_12 g_Player_GrabReleaseInputTimer     = Q12(0.0f);
@@ -1230,7 +1232,7 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
 {
     #define LABEL_COUNT 8
 
-    GsDOBJ2* obj;
+    GsDOBJ2* curObj;
     s32      i;
 
     DVECTOR LABEL_STR_POS_TABLE[LABEL_COUNT] = {
@@ -1280,7 +1282,7 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
         Inventory_PlayerItemScroll(selectedItemId);
 
         // Player items.
-        for (i = 0, obj = &g_Items_ItemsModelData[0]; i < 7; i++, obj++)
+        for (i = 0, curObj = &g_Items_ItemsModelData[0]; i < 7; i++, curObj++)
         {
             if (D_800C3E18[i] == NO_VALUE)
             {
@@ -1298,7 +1300,7 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
             func_800548D8(i);
             GsSetFlatLight(0, &g_Items_Lights[i][0]);
             GsSetFlatLight(1, &g_Items_Lights[i][1]);
-            func_8004BD74(i, obj, 0);
+            func_8004BD74(i, curObj, 0);
         }
 
         // Equipped item.
@@ -1312,7 +1314,7 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
             func_800548D8(7);
             GsSetFlatLight(0, &D_800C3A88[0]);
             GsSetFlatLight(1, &D_800C3A88[1]);
-            func_8004BD74(7, obj, 0);
+            func_8004BD74(7, curObj, 0);
         }
 
         Gfx_Inventory_ItemDescriptionDraw(selectedItemId);
@@ -1371,42 +1373,40 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
     POLY_FT4* poly_ft4;
     LINE_G2*  line_g2;
 
-    s_Inventory_SelectionOutlineVector SelectionOuline_InnerLine[] = // 0x80027E54
-    {
-        { { 0xFFE0, 0xFFCC }, { 0x0040, 0x0080 } },
-        { { 0xFFD0, 0xFF38 }, { 0x0060, 0x0090 } },
-#if VERSION_REGION_IS(NTSCJ)
-        { { 0xFFD0, 0x00A9 }, { 0x0060, 0x0018 } },
-        { { 0xFF70, 0x00A9 }, { 0x0060, 0x0018 } },
-        { { 0x0030, 0x00A9 }, { 0x0060, 0x0018 } },
-#elif VERSION_REGION_IS(NTSC)
-        { { 0xFFD0, 0x00B9 }, { 0x0060, 0x0018 } },
-        { { 0xFF70, 0x00B9 }, { 0x0060, 0x0018 } },
-        { { 0x0030, 0x00B9 }, { 0x0060, 0x0018 } },
-#endif
-        { { 0x0030, 0xFF38 }, { 0x0060, 0x0080 } },
-        { { 0x0030, 0xFF38 }, { 0x0060, 0x0080 } },
-        { { 0xFF70, 0xFF38 }, { 0x0060, 0x009C } },
-        { { 0xFFD0, 0xFF38 }, { 0x00C0, 0x0100 } }
+    s_Inventory_SelectionOutlineVector selectionOutlineInner[] = {
+        { { -32, -52 }, { 64, 128 } },
+        { { -48, -200 }, { 96, 144 } },
+    #if VERSION_REGION_IS(NTSCJ)
+        { { -48, 169 }, { 96, 24 } },
+        { { -144, 169 }, { 96, 24 } },
+        { { 48, 169 }, { 96, 24 } },
+    #elif VERSION_REGION_IS(NTSC)
+        { { -48, 185 }, { 96, 24 } },
+        { { -144, 185 }, { 96, 24 } },
+        { { 48, 185 }, { 96, 24 } },
+    #endif
+        { { 48, -200 }, { 96, 128 } },
+        { { 48, -200 }, { 96, 128 } },
+        { { -144, -200 }, { 96, 156 } },
+        { { -48, -200 }, { 192, 256 } }
     };
 
-    s_Inventory_SelectionOutlineVector SelectionOuline_ConerLines[] = // 0x80027E9C
-    {
-        { { 0xFFDE, 0xFFC8 }, { 0x0022, 0x0050 } },
-        { { 0xFFCE, 0xFF34 }, { 0x0032, 0xFFCC } },
-#if VERSION_REGION_IS(NTSCJ)
-        { { 0xFFCE, 0x00A5 }, { 0x0032, 0x00C5 } },
-        { { 0xFF6E, 0x00A5 }, { 0xFFD2, 0x00C5 } },
-        { { 0x002E, 0x00A5 }, { 0x0092, 0x00C5 } },
-#elif VERSION_REGION_IS(NTSC)
-        { { 0xFFCE, 0x00B5 }, { 0x0032, 0x00D5 } },
-        { { 0xFF6E, 0x00B5 }, { 0xFFD2, 0x00D5 } },
-        { { 0x002E, 0x00B5 }, { 0x0092, 0x00D5 } },
-#endif
-        { { 0x002E, 0xFF34 }, { 0x0092, 0xFFBC } },
-        { { 0x002D, 0xFF34 }, { 0x0092, 0xFFBC } },
-        { { 0xFF6E, 0xFF34 }, { 0xFFD2, 0xFFD8 } },
-        { { 0xFFCE, 0xFF34 }, { 0x0092, 0x003C } }
+    s_Inventory_SelectionOutlineVector selectionOutlineCorner[] = {
+        { { -34, -56 }, { 34, 80 } },
+        { { -50, -204 }, { 50, -52 } },
+    #if VERSION_REGION_IS(NTSCJ)
+        { { -50, 165 }, { 50, 197 } },
+        { { -146, 165 }, { -46, 197 } },
+        { { 46, 165 }, { 146, 197 } },
+    #elif VERSION_REGION_IS(NTSC)
+        { { -50, 181 }, { 50, 213 } },
+        { { -146, 181 }, { -46, 213 } },
+        { { 46, 181 }, { 146, 213 } },
+    #endif
+        { { 46, -204 }, { 146, -68 } },
+        { { 45, -204 }, { 146, -68 } },
+        { { -146, -204 }, { -46, -40 } },
+        { { -50, -204 }, { 146, 60 } }
     };
 
     ot1 = &g_OrderingTable2[g_ActiveBufferIdx];
@@ -1460,15 +1460,15 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                 break;
 
             default:
-                var_t5 = -1;
-                var_t6 = -1;
+                var_t5 = NO_VALUE;
+                var_t6 = NO_VALUE;
                 break;
         }
     }
     else
     {
-        var_t5 = -1;
-        var_t6 = -1;
+        var_t5 = NO_VALUE;
+        var_t6 = NO_VALUE;
     }
 
     if (g_GameWork.gameStateSteps[1] != 20)
@@ -1617,23 +1617,23 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         }
     }
 
-    temp_t3   = (Math_Cos(g_Inventory_SelectionBordersDraw << 7) * Math_Cos(g_Inventory_SelectionBordersDraw << 7) * 0x10) >> 0x10;
+    temp_t3   = (Math_Cos(g_Inventory_SelectionBordersDraw << 7) * Math_Cos(g_Inventory_SelectionBordersDraw << 7) * 16) >> 16;
 
-    D_800C3B68[0][0].vx = SelectionOuline_InnerLine[*arg0].field_0.vx +
-    FP_FROM((new_var = SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vx - SelectionOuline_InnerLine[*arg0].field_0.vx) * temp_t3, Q12_SHIFT);
+    D_800C3B68[0][0].vx = selectionOutlineInner[*arg0].field_0.vx +
+    FP_FROM((new_var = selectionOutlineInner[g_Inventory_PrevSelectionId].field_0.vx - selectionOutlineInner[*arg0].field_0.vx) * temp_t3, Q12_SHIFT);
 
-    D_800C3B68[0][0].vy = SelectionOuline_InnerLine[*arg0].field_0.vy +
-        FP_FROM((SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vy - SelectionOuline_InnerLine[*arg0].field_0.vy) * temp_t3, Q12_SHIFT);
+    D_800C3B68[0][0].vy = selectionOutlineInner[*arg0].field_0.vy +
+        FP_FROM((selectionOutlineInner[g_Inventory_PrevSelectionId].field_0.vy - selectionOutlineInner[*arg0].field_0.vy) * temp_t3, Q12_SHIFT);
 
     D_800C3B68[0][1].vx = D_800C3B68[0][0].vx;
 
-    D_800C3B68[0][1].vy = SelectionOuline_InnerLine[*arg0].field_0.vy + SelectionOuline_InnerLine[*arg0].field_4.vy +
-        FP_FROM(((SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vy + SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_4.vy) -
-        (SelectionOuline_InnerLine[*arg0].field_0.vy + SelectionOuline_InnerLine[*arg0].field_4.vy)) * temp_t3, Q12_SHIFT);
+    D_800C3B68[0][1].vy = selectionOutlineInner[*arg0].field_0.vy + selectionOutlineInner[*arg0].field_4.vy +
+        FP_FROM(((selectionOutlineInner[g_Inventory_PrevSelectionId].field_0.vy + selectionOutlineInner[g_Inventory_PrevSelectionId].field_4.vy) -
+        (selectionOutlineInner[*arg0].field_0.vy + selectionOutlineInner[*arg0].field_4.vy)) * temp_t3, Q12_SHIFT);
 
-    D_800C3B68[0][2].vx = SelectionOuline_InnerLine[*arg0].field_0.vx + SelectionOuline_InnerLine[*arg0].field_4.vx +
-        FP_FROM(((SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vx + SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_4.vx) -
-        (SelectionOuline_InnerLine[*arg0].field_0.vx + SelectionOuline_InnerLine[*arg0].field_4.vx)) * temp_t3, Q12_SHIFT);
+    D_800C3B68[0][2].vx = selectionOutlineInner[*arg0].field_0.vx + selectionOutlineInner[*arg0].field_4.vx +
+        FP_FROM(((selectionOutlineInner[g_Inventory_PrevSelectionId].field_0.vx + selectionOutlineInner[g_Inventory_PrevSelectionId].field_4.vx) -
+        (selectionOutlineInner[*arg0].field_0.vx + selectionOutlineInner[*arg0].field_4.vx)) * temp_t3, Q12_SHIFT);
     D_800C3B68[0][3].vx = D_800C3B68[0][2].vx;
     D_800C3B68[0][2].vy = D_800C3B68[0][1].vy;
     D_800C3B68[0][3].vy = D_800C3B68[0][0].vy;
@@ -1648,28 +1648,28 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         if (D_800AE190 < 0x21)
         {
             setRGB0(poly_g4,
-                    (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10),
-                    (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10),
-                    (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10));
+                    (D_800AE190 >= 16) ? 0xFE : (D_800AE190 * 16),
+                    (D_800AE190 >= 16) ? 0xFE : (D_800AE190 * 16),
+                    (D_800AE190 >= 16) ? 0xFE : (D_800AE190 * 16));
             setRGB1(poly_g4,
-                    (D_800AE190 >= 0x20) ? 0xFE : (D_800AE190 * 8),
-                    (D_800AE190 >= 0x20) ? 0xFE : (D_800AE190 * 8),
-                    (D_800AE190 >= 0x20) ? 0xFE : (D_800AE190 * 8));
+                    (D_800AE190 >= 32) ? 0xFE : (D_800AE190 * 8),
+                    (D_800AE190 >= 32) ? 0xFE : (D_800AE190 * 8),
+                    (D_800AE190 >= 32) ? 0xFE : (D_800AE190 * 8));
             setRGB2(poly_g4,
                     (D_800AE190 >= 8) ? 0xFE : (D_800AE190 * 32),
                     (D_800AE190 >= 8) ? 0xFE : (D_800AE190 * 32),
                     (D_800AE190 >= 8) ? 0xFE : (D_800AE190 * 32));
             setRGB3(poly_g4,
-                    (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10),
-                    (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10),
-                    (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10));
+                    (D_800AE190 >= 16) ? 0xFE : (D_800AE190 * 16),
+                    (D_800AE190 >= 16) ? 0xFE : (D_800AE190 * 16),
+                    (D_800AE190 >= 16) ? 0xFE : (D_800AE190 * 16));
         }
         else
         {
             setRGB0(poly_g4,
-                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0,
-                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0,
-                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0);
+                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 16) : 0,
+                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 16) : 0,
+                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 16) : 0);
             setRGB1(poly_g4,
                     (D_800AE190 < 0x40) ? ((0x40 - D_800AE190) * 8) : 0,
                     (D_800AE190 < 0x40) ? ((0x40 - D_800AE190) * 8) : 0,
@@ -1679,9 +1679,9 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                     (D_800AE190 < 0x28) ? ((0x28 - D_800AE190) * 32) : 0,
                     (D_800AE190 < 0x28) ? ((0x28 - D_800AE190) * 32) : 0);
             setRGB3(poly_g4,
-                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0,
-                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0,
-                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0);
+                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 16) : 0,
+                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 16) : 0,
+                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 16) : 0);
         }
 
         setXY4(poly_g4,
@@ -1706,7 +1706,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
 
                 if (i != 0)
                 {
-                    poly_ft4->tpage = 0x86;
+                    poly_ft4->tpage = 134;
                     setUV4(poly_ft4,
                            0x20, 0x10,
                            0x20, 0xFF,
@@ -1790,19 +1790,19 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
 
         if (i / 3)
         {
-            setXY2(line_g2, SelectionOuline_ConerLines[*arg0].field_4.vx,
-                   (i == 4) ? (SelectionOuline_ConerLines[*arg0].field_4.vy - 1) : SelectionOuline_ConerLines[*arg0].field_4.vy,
-                   (i != 5) ? (SelectionOuline_ConerLines[*arg0].field_4.vx - (SelectionOuline_InnerLine[*arg0].field_4.vx >> 1)) : SelectionOuline_ConerLines[*arg0].field_4.vx,
-                   (i == 5) ? (SelectionOuline_ConerLines[*arg0].field_4.vy - (SelectionOuline_InnerLine[*arg0].field_4.vy >> 1)) :
-                   (i == 4) ? (SelectionOuline_ConerLines[*arg0].field_4.vy - 1) : SelectionOuline_ConerLines[*arg0].field_4.vy);
+            setXY2(line_g2, selectionOutlineCorner[*arg0].field_4.vx,
+                   (i == 4) ? (selectionOutlineCorner[*arg0].field_4.vy - 1) : selectionOutlineCorner[*arg0].field_4.vy,
+                   (i != 5) ? (selectionOutlineCorner[*arg0].field_4.vx - (selectionOutlineInner[*arg0].field_4.vx >> 1)) : selectionOutlineCorner[*arg0].field_4.vx,
+                   (i == 5) ? (selectionOutlineCorner[*arg0].field_4.vy - (selectionOutlineInner[*arg0].field_4.vy >> 1)) :
+                   (i == 4) ? (selectionOutlineCorner[*arg0].field_4.vy - 1) : selectionOutlineCorner[*arg0].field_4.vy);
         }
         else
         {
-            setXY2(line_g2, SelectionOuline_ConerLines[*arg0].field_0.vx,
-                   (i == 1) ? (SelectionOuline_ConerLines[*arg0].field_0.vy - 1) : SelectionOuline_ConerLines[*arg0].field_0.vy,
-                   (i != 2) ? (SelectionOuline_ConerLines[*arg0].field_0.vx + (SelectionOuline_InnerLine[*arg0].field_4.vx >> 1)) : SelectionOuline_ConerLines[*arg0].field_0.vx,
-                   (i == 2) ? (SelectionOuline_ConerLines[*arg0].field_0.vy + (SelectionOuline_InnerLine[*arg0].field_4.vy >> 1)) :
-                   (i == 1) ? (SelectionOuline_ConerLines[*arg0].field_0.vy - 1) : SelectionOuline_ConerLines[*arg0].field_0.vy);
+            setXY2(line_g2, selectionOutlineCorner[*arg0].field_0.vx,
+                   (i == 1) ? (selectionOutlineCorner[*arg0].field_0.vy - 1) : selectionOutlineCorner[*arg0].field_0.vy,
+                   (i != 2) ? (selectionOutlineCorner[*arg0].field_0.vx + (selectionOutlineInner[*arg0].field_4.vx >> 1)) : selectionOutlineCorner[*arg0].field_0.vx,
+                   (i == 2) ? (selectionOutlineCorner[*arg0].field_0.vy + (selectionOutlineInner[*arg0].field_4.vy >> 1)) :
+                   (i == 1) ? (selectionOutlineCorner[*arg0].field_0.vy - 1) : selectionOutlineCorner[*arg0].field_0.vy);
         }
 
         addPrim(&ot0->org[7], line_g2);
@@ -1841,7 +1841,7 @@ void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
     u8 D_80027F04[] = {
         0xFF, 0x00, 0x00, 0x00,
         0xFF, 0xA0, 0x00, 0x00,
-        0xa0, 0xFF, 0x00, 0x00,
+        0xA0, 0xFF, 0x00, 0x00,
         0x00, 0xFF, 0x00, 0x00
     };
 

@@ -206,11 +206,11 @@ s32 func_8008D850(void) // 0x8008D850
     return (unk.field_0 & SHRT_MAX) == SHRT_MAX;
 }
 
-s32 func_8008D8C0(q3_12 lensFlareIntensity, s32 x1, s32 x2) // 0x8008D8C0
+q19_12 func_8008D8C0(q3_12 lensFlareIntensity, q19_12 x1, q19_12 x2) // 0x8008D8C0
 {
-    s32 temp0;
-    s32 temp1;
-    s32 res;
+    q19_12 temp0;
+    q19_12 temp1;
+    q19_12 res;
 
     static s32 Y_ARRAY_0[2] = {
         Q12(0.0f),
@@ -257,12 +257,12 @@ s32 func_8008D8C0(q3_12 lensFlareIntensity, s32 x1, s32 x2) // 0x8008D8C0
     const u8 hack_vcSetWatchTgtXzPos_fix[] = { 0x00, 0x00, 0xA3, 0x8E, 0x00, 0x00, 0x00, 0x00 };
 #endif
 
-// Used by `func_8008D990`.
-s16 D_800AFD7C[] = {
-    0xF839, 0xF889, 0xFA39, 0xFAE4,
+// Angles used by `func_8008D990`.
+q3_12 D_800AFD7C[] = {
+    Q12_ANGLE(-175.0f), 0xF889, 0xFA39, 0xFAE4,
     0xFD56, 0xFDC8, 0xFF56, 0xFFEA,
-    0x38, 0x18E, 0x1C7, 0x2AA,
-    0x4E3, 0x64F, 0x688, 0x6E3
+    Q12_ANGLE(5.0f), Q12_ANGLE(35.0f), Q12_ANGLE(40.0f), Q12_ANGLE(60.0f),
+    Q12_ANGLE(110.0f), Q12_ANGLE(142.0f), Q12_ANGLE(147.0f), Q12_ANGLE(155.0f)
 };
 
 s_FsImageDesc img0 = { .tPage = { 0, 13 } }; // 0x800AFD9C
@@ -273,7 +273,7 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     s32       sp24;
     s32       sp28;
     s32       sp2C;
-    s16       temp_v0_7;
+    q3_12     temp_v0_7;
     s32       temp_a0;
     s32       temp_a0_4;
     s32       temp_a0_5;

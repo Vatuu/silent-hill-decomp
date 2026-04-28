@@ -1445,10 +1445,10 @@ typedef struct
     s8      unk_4[4];
     s16     field_8;
     s16     field_A;
-    VECTOR3 field_C;
+    VECTOR3 field_C; // Q19.12
     s8      unk_18[4];
     s32     field_1C;
-    s32     field_20;
+    q19_12  field_20;
 } s_800C4818;
 
 typedef struct
@@ -1839,26 +1839,26 @@ typedef struct
 // Something for inventory items.
 typedef struct
 {
-    /* 0x0  */ q3_12   field_0; // `field_16` set to this value.
-    /* 0x2  */ s16     field_2; // Move dist?
+    /* 0x0  */ q3_12   positionY;
+    /* 0x2  */ q3_12   field_2; // Move dist?
     /* 0x4  */ q3_12   field_4; // Angle.
     /* 0x6  */ s16     field_6;
     /* 0x8  */ s16     field_8;
     /* 0xA  */ s8      __pad_A[2];
-    /* 0xC  */ SVECTOR field_C;  // } Q3.12 | Offsets?
-    /* 0x14 */ SVECTOR field_14; // }
+    /* 0xC  */ SVECTOR field_C;  // Q3.12 | Offset?
+    /* 0x14 */ SVECTOR position; /** Q3.12 */
 } s_800AE204;
 
 typedef struct
 {
-    s_800AE204* ptr_0;
-    u8          count_4;
-    u8          unk_5;
-    s16         field_6;
-    u8          field_8;
-    u8          field_9;
-    u8          field_A;
-    u8          field_B;
+    /* 0x0 */ s_800AE204* ptr_0;
+    /* 0x4 */ u8          count_4;
+    /* 0x5 */ u8          unk_5;
+    /* 0x6 */ q7_8        field_6;
+    /* 0x8 */ u8          field_8;
+    /* 0x9 */ u8          field_9;
+    /* 0xA */ u8          field_A;
+    /* 0xB */ u8          field_B;
 } s_800AE4DC;
 
 typedef struct
@@ -2562,9 +2562,9 @@ extern s16 D_800AF014[];
 
 extern s16 D_800AF04C[];
 
-extern s16 D_800AF070[]; // Type assumed.
+extern q3_12 D_800AF070[];
 
-extern s16 D_800AF1FC[]; // Type assumed.
+extern q3_12 D_800AF1FC[];
 
 extern u8 D_800C4606;
 
@@ -3279,7 +3279,7 @@ void func_8008D470(q3_12 lensFlareIntensity, SVECTOR* rot, VECTOR3* pos, s_Water
 void func_8008D5A0(VECTOR3* arg0, s16 arg1);
 
 /** Light function. */
-s32 func_8008D8C0(q3_12 lensFlareIntensity, s32 x1, s32 x2);
+q19_12 func_8008D8C0(q3_12 lensFlareIntensity, q19_12 x1, q19_12 x2);
 
 void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4);
 
