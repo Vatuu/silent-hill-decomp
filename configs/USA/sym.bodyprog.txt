@@ -900,7 +900,7 @@ MapMsg_DisplayWithTexture1                   = 0x80087540;
 Event_ItemTake                               = 0x800877B8; // type:func
 Event_CommonItemTake                         = 0x800879FC; // type:func
 Event_MapTake                                = 0x80087AF4; // type:func
-
+WorldEnv_LightTransform                      = 0x80057228; // type:func
 //------------------------------------------------------------------------
 //--- PA: 0x063348   VA: 0x80087EA8   subsegment: c, bodyprog_bgm_80087EA8
 //------------------------------------------------------------------------

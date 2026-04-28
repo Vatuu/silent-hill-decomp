@@ -1397,35 +1397,35 @@ typedef struct
  */
 typedef struct _WorldEnvWork
 {
-    u8            field_0;        // `bool`?
-    u8            isFogEnabled_1; /** `bool` */
-    u8            field_2;
-    u8            field_3;        // Enviroment lighting.
-    s_WaterZone*  waterZones_4;
-    s32           screenBrightness_8;
-    s32           fogNearDistance_C;
-    q23_8         fogFarDistance_10; // "DrawDistanmce" in SHME, "has no effect when fog is disabled".
-    s32           fogDepthShift_14;   // "FogThing1" from SHME. Affects the distance where fog begins.
-    s32           fogIntensity_18;   // "FogThing2" from SHME. Affects the distance where fog begins.
-    CVECTOR       fogColor_1C;
-    s32           field_20;        // Map lighting.
-    u8            field_24; // } RGB. Character color lighting.
-    u8            field_25; // }
-    u8            field_26; // }
-    s8            unk_27;
-    CVECTOR       worldTintColor_28;
-    MATRIX        field_2C;
-    s32           field_4C;
-    s16           field_50;
-    s32           field_54;
-    SVECTOR       field_58; // Rotation.
-    VECTOR3       field_60;
-    SVECTOR       field_6C; // Player current angles?
-    SVECTOR       field_74;
-    SVECTOR       field_7C;
-    s_WorldEnvWork_84 field_84[3];
-    u8            fogRamp_CC[128]; // Fog-related values based on `fogNearDistance_C`/`fogFarDistance_10`.
-    u16           field_14C;
+    /* 0x0   */ u8            field_0;        // `bool`?
+    /* 0x1   */ u8            isFogEnabled_1; /** `bool` */
+    /* 0x2   */ u8            field_2;
+    /* 0x3   */ u8            field_3;        // Enviroment lighting.
+    /* 0x4   */ s_WaterZone*  waterZones_4;
+    /* 0x8   */ s32           screenBrightness_8;
+    /* 0xC   */ s32           fogNearDistance_C;
+    /* 0x10  */ q23_8         fogFarDistance_10; // "DrawDistanmce" in SHME, "has no effect when fog is disabled".
+    /* 0x14  */ s32           fogDepthShift_14;  // "FogThing1" from SHME. Affects the distance where fog begins.
+    /* 0x18  */ s32           fogIntensity_18;   // "FogThing2" from SHME. Affects the distance where fog begins.
+    /* 0x1C  */ CVECTOR       fogColor_1C;
+    /* 0x20  */ s32           field_20; // Map lighting.
+    /* 0x24  */ u8            field_24; // } RGB. Character color lighting.
+    /* 0x25  */ u8            field_25; // }
+    /* 0x26  */ u8            field_26; // }
+    /* 0x27  */ s8            unk_27;
+    /* 0x28  */ CVECTOR       worldTintColor_28;
+    /* 0x2C  */ MATRIX        field_2C;
+    /* 0x4C  */ s32           field_4C; // Light intensity in Q4?
+    /* 0x50  */ q3_12         lensFlareIntensity;
+    /* 0x54  */ q19_12        lightIntensity;
+    /* 0x58  */ SVECTOR       lightRotation; /** Q3.12 */
+    /* 0x60  */ VECTOR3       lightPosition; /** Q19.12 */
+    /* 0x6C  */ SVECTOR       field_6C;      // Player current angles related to light?
+    /* 0x74  */ SVECTOR       field_74;
+    /* 0x7C  */ SVECTOR       field_7C;
+    /* 0x84  */ s_WorldEnvWork_84 field_84[3];
+    /* 0xCC  */ u8            fogRamp_CC[128]; // Fog-related values based on `fogNearDistance_C`/`fogFarDistance_10`.
+    /* 0x14C */ u16           field_14C;
 } s_WorldEnvWork;
 
 typedef struct
@@ -3061,14 +3061,17 @@ void WorldEnv_FogParamsSet(u8 isFogEnabled, u8 fogColorR, u8 fogColorG, u8 fogCo
 
 void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6);
 
-/** `arg0` type assumed. */
-void func_80055434(VECTOR3* vec);
+/** Gets the point light position. */
+void func_80055434(VECTOR3* pos);
 
 s32 func_8005545C(SVECTOR* vec);
 
-s32 func_80055490(SVECTOR* arg0);
+/** Outputs point light rotation and returns light intensity. */
+s32 func_80055490(SVECTOR* rot);
 
-void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1, SVECTOR* rot, q19_12 x, q19_12 y, q19_12 z, s_WaterZone* waterZones);
+/** Light function. */
+void func_800554C4(q19_12 lightIntensity, q3_12 lensFlareIntensity, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1,
+                   SVECTOR* rot, q19_12 posX, q19_12 posY, q19_12 posZ, s_WaterZone* waterZones);
 
 void func_80055648(s32 arg0, SVECTOR* arg1);
 
@@ -3185,7 +3188,7 @@ void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 arg2, MATRIX* viewMa
 
 s32 func_800571D0(u32 arg0);
 
-void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
+void WorldEnv_LightTransform(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
 /** TODO: Unknown `arg2` type. */
 void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
@@ -3209,7 +3212,7 @@ s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBu
 /** Initializes values in `D_800AE204` array. */
 void func_8005B55C(GsCOORDINATE2* viewCoord);
 
-void Gfx_BillboardDraw(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_arg4, s32 arg5);
+void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_arg4, s32 arg5);
 
 u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2);
 
@@ -3270,11 +3273,13 @@ void func_8008D454(void);
 
 void func_8008D464(void);
 
-void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones);
+/** Light function. */
+void func_8008D470(q3_12 lensFlareIntensity, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones);
 
 void func_8008D5A0(VECTOR3* arg0, s16 arg1);
 
-s32 func_8008D8C0(s16 x0, s32 x1, s32 x2);
+/** Light function. */
+s32 func_8008D8C0(q3_12 lensFlareIntensity, s32 x1, s32 x2);
 
 void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4);
 

@@ -47,7 +47,7 @@ void func_8008D464(void) // 0x8008D464
     D_800C4818.field_1 = 0;
 }
 
-void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones) // 0x8008D470
+void func_8008D470(q3_12 lensFlareIntensity, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones) // 0x8008D470
 {
     s32          posY;
     s_WaterZone* waterZone;
@@ -59,7 +59,7 @@ void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones
         if ((ReadGeomScreen() >> 1) < D_800C4818.field_C.vz)
         {
             D_800C4818.field_2 = 1;
-            D_800C4818.field_8 = func_8008D8C0(arg0, D_800C4818.field_C.vz, D_800C4818.field_20);
+            D_800C4818.field_8 = func_8008D8C0(lensFlareIntensity, D_800C4818.field_C.vz, D_800C4818.field_20);
             func_8008D5A0(&D_800C4818.field_C, D_800C4818.field_20);
         }
         else
@@ -206,40 +206,38 @@ s32 func_8008D850(void) // 0x8008D850
     return (unk.field_0 & SHRT_MAX) == SHRT_MAX;
 }
 
-s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
+s32 func_8008D8C0(q3_12 lensFlareIntensity, s32 x1, s32 x2) // 0x8008D8C0
 {
     s32 temp0;
     s32 temp1;
     s32 res;
 
-    // TODO: What Q format are the array values?
-
     static s32 Y_ARRAY_0[2] = {
-        0,
-        0x1000
+        Q12(0.0f),
+        Q12(1.0f)
     };
 
     static s32 Y_ARRAY_1[7] = {
-        0x4000,
-        0x14CC,
-        0x0E66,
-        0x0B33,
-        0x0800,
-        0x0599,
-        0x0333
+        Q12(4.0f),
+        Q12(1.3f),
+        Q12(0.9f),
+        Q12(0.7f),
+        Q12(0.5f),
+        Q12(0.35f),
+        Q12(0.2f)
     };
 
     static s32 Y_ARRAY_2[7] = {
-        0x0266,
-        0x0333,
-        0x0400,
-        0x04CC,
-        0x0599,
-        0x0800,
-        0x14CC
+        Q12(0.15f),
+        Q12(0.2f),
+        Q12(0.25f),
+        Q12(0.3f),
+        Q12(0.35f),
+        Q12(0.5f),
+        Q12(1.3f)
     };
 
-    temp0 = vwOresenHokan(&Y_ARRAY_0, ARRAY_SIZE(Y_ARRAY_0), x0, 0, Q8(16.0f));
+    temp0 = vwOresenHokan(&Y_ARRAY_0, ARRAY_SIZE(Y_ARRAY_0), lensFlareIntensity, 0, Q8(16.0f));
     temp1 = vwOresenHokan(&Y_ARRAY_1, ARRAY_SIZE(Y_ARRAY_1), x1, Q8(0.8f), Q8(13.0f));
     res   = FP_MULTIPLY(vwOresenHokan(&Y_ARRAY_2, ARRAY_SIZE(Y_ARRAY_2), x2, Q8(3.335f), Q8(7.425f)), // TODO: Yucky floats, maybe these aren't distances?
                         Q12_MULT(temp0, temp1),

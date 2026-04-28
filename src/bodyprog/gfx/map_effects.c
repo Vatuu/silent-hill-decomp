@@ -106,7 +106,7 @@ void func_8003E740(void) // 0x8003E740
     s32       sp40[4];
     SVECTOR   sp50;
     DVECTOR   sp58;
-    s32       sp60;
+    s32       depthZ;
     s32       temp_a0;
     s32       temp_s6;
     s32       i;
@@ -138,7 +138,7 @@ void func_8003E740(void) // 0x8003E740
     SetRotMatrix(&sp18);
     SetTransMatrix(&sp18);
 
-    var_s5 = RotTransPers(&sp38, &sp10, &sp60, &sp60);
+    var_s5 = RotTransPers(&sp38, &sp10, &depthZ, &depthZ);
 
     temp_s6  = var_s5 * 4;
     var_s5 >>= 1;
@@ -183,28 +183,28 @@ void func_8003E740(void) // 0x8003E740
         sp50.vx = sp40[0] - 51;
         sp50.vy = sp40[2] - 51;
 
-        RotTransPers(&sp50, &sp58, &sp60, &sp60);
+        RotTransPers(&sp50, &sp58, &depthZ, &depthZ);
 
         poly->x0 = sp10.vx + sp58.vx;
         poly->y0 = sp10.vy + sp58.vy;
         sp50.vx  = sp40[1] + 51;
         sp50.vy  = sp40[3] - 51;
 
-        RotTransPers(&sp50, &sp58, &sp60, &sp60);
+        RotTransPers(&sp50, &sp58, &depthZ, &depthZ);
 
         poly->x1 = sp10.vx + sp58.vx;
         poly->y1 = sp10.vy + sp58.vy;
         sp50.vx  = -51 - sp40[1];
         sp50.vy  = 51 - sp40[3];
 
-        RotTransPers(&sp50, &sp58, &sp60, &sp60);
+        RotTransPers(&sp50, &sp58, &depthZ, &depthZ);
 
         poly->x2 = sp10.vx + sp58.vx;
         poly->y2 = sp10.vy + sp58.vy;
         sp50.vx  = 51 - sp40[0];
         sp50.vy  = 51 - sp40[2];
 
-        RotTransPers(&sp50, &sp58, &sp60, &sp60);
+        RotTransPers(&sp50, &sp58, &depthZ, &depthZ);
 
         poly->x3 = sp10.vx + sp58.vx;
         poly->y3 = sp10.vy + sp58.vy;
@@ -432,10 +432,10 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
 {
     MATRIX          mat;
     VECTOR          sp48;
-    SVECTOR         rot;
+    SVECTOR         rot; // Q19.12
     q19_12          weight;
     u8              flags;
-    s32             temp;
+    q19_12          lightIntensity;
     GsCOORDINATE2*  coord;
     s_StructUnk3*   ptr2;
     s_SysWork_2388* ptr;
@@ -500,9 +500,9 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
     ptr->field_10 = func_8003FEC0(&ptr2->effectsInfo_0);
     func_8003FF2C(ptr2);
 
-    temp = Q12_MULT(func_8003F4DC(&coord, &rot, ptr2->effectsInfo_0.field_4, ptr2->effectsInfo_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.pointLightIntensity);
+    lightIntensity = Q12_MULT(func_8003F4DC(&coord, &rot, ptr2->effectsInfo_0.field_4, ptr2->effectsInfo_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.pointLightIntensity);
 
-    func_800554C4(temp, ptr2->flashlightLensFlareIntensity_2C, coord, g_SysWork.field_235C, &rot,
+    func_800554C4(lightIntensity, ptr2->flashlightLensFlareIntensity_2C, coord, g_SysWork.field_235C, &rot,
                   g_SysWork.pointLightPosition.vx, g_SysWork.pointLightPosition.vy, g_SysWork.pointLightPosition.vz,
                   g_WorldGfxWork.mapInfo->waterZones_8);
     func_80055814(ptr2->field_30);

@@ -40,9 +40,9 @@ void WorldEnv_Init(void) // 0x80055028
     g_WorldEnvWork.fogColor_1C.b = 255;
 
     g_WorldEnvWork.field_4C      = 0;
-    g_WorldEnvWork.field_50      = 0;
-    g_WorldEnvWork.waterZones_4  = 0;
-    g_WorldEnvWork.fogIntensity_18 = 0;
+    g_WorldEnvWork.lensFlareIntensity = Q12(0.0f);
+    g_WorldEnvWork.waterZones_4         = NULL;
+    g_WorldEnvWork.fogIntensity_18       = 0;
 
     gte_SetFarColor(0, 0, 0);
 
@@ -63,12 +63,12 @@ void Gfx_2dEffectsDraw(void) // 0x800550D0
 
     if (g_WorldEnvWork.field_2 != 0)
     {
-        func_80041074(ot, g_WorldEnvWork.field_54, &g_WorldEnvWork.field_58, &g_WorldEnvWork.field_60);
+        func_80041074(ot, g_WorldEnvWork.lightIntensity, &g_WorldEnvWork.lightRotation, &g_WorldEnvWork.lightPosition);
     }
 
-    if (g_WorldEnvWork.field_0 == 1 && g_WorldEnvWork.field_50 != 0)
+    if (g_WorldEnvWork.field_0 == 1 && g_WorldEnvWork.lensFlareIntensity != Q12(0.0f))
     {
-        func_8008D470(g_WorldEnvWork.field_50, &g_WorldEnvWork.field_58, &g_WorldEnvWork.field_60, g_WorldEnvWork.waterZones_4);
+        func_8008D470(g_WorldEnvWork.lensFlareIntensity, &g_WorldEnvWork.lightRotation, &g_WorldEnvWork.lightPosition, g_WorldEnvWork.waterZones_4);
     }
 
     if (g_WorldEnvWork.screenBrightness_8 > 0)
@@ -175,69 +175,70 @@ void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg
 
 void func_80055434(VECTOR3* vec) // 0x80055434
 {
-    *vec = g_WorldEnvWork.field_60;
+    *vec = g_WorldEnvWork.lightPosition;
 }
 
 s32 func_8005545C(SVECTOR* vec) // 0x8005545C
 {
     *vec = g_WorldEnvWork.field_6C;
-    return g_WorldEnvWork.field_54;
+    return g_WorldEnvWork.lightIntensity;
 }
 
-s32 func_80055490(SVECTOR* arg0) // 0x80055490
+s32 func_80055490(SVECTOR* rot) // 0x80055490
 {
-    *arg0 = g_WorldEnvWork.field_58;
-    return g_WorldEnvWork.field_54;
+    *rot = g_WorldEnvWork.lightRotation;
+    return g_WorldEnvWork.lightIntensity;
 }
 
-void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1, SVECTOR* rot, q19_12 x, q19_12 y, q19_12 z, s_WaterZone* waterZones) // 0x800554C4
+void func_800554C4(q19_12 lightIntensity, q3_12 lensFlareIntensity, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1,
+                   SVECTOR* rot, q19_12 posX, q19_12 posY, q19_12 posZ, s_WaterZone* waterZones) // 0x800554C4
 {
     MATRIX   mat;
     SVECTOR  tempSvec;
     VECTOR   vec;
-    VECTOR3* pos0; // Q19.12
-    VECTOR3* pos1; // Q19.12
+    VECTOR3* lightPos;            // Q19.12
+    VECTOR3* transformedLightPos; // Q19.12
 
-    g_WorldEnvWork.field_54 = arg0;
-    g_WorldEnvWork.field_50 = arg1;
-    g_WorldEnvWork.waterZones_4  = waterZones;
+    g_WorldEnvWork.lightIntensity     = lightIntensity;
+    g_WorldEnvWork.lensFlareIntensity = lensFlareIntensity;
+    g_WorldEnvWork.waterZones_4       = waterZones;
 
     if (coord0 == NULL)
     {
-        g_WorldEnvWork.field_58 = *rot;
+        g_WorldEnvWork.lightRotation = *rot;
     }
     else
     {
         Vw_CoordHierarchyMatrixCompute(coord0, &mat);
-        ApplyMatrixSV(&mat, rot, &g_WorldEnvWork.field_58);
+        ApplyMatrixSV(&mat, rot, &g_WorldEnvWork.lightRotation);
     }
 
     if (coord1 == NULL)
     {
-        pos0     = &g_WorldEnvWork.field_60;
-        pos0->vx = x;
-        pos0->vy = y;
-        pos0->vz = z;
+        lightPos     = &g_WorldEnvWork.lightPosition;
+        lightPos->vx = posX;
+        lightPos->vy = posY;
+        lightPos->vz = posZ;
     }
     else
     {
         Vw_CoordHierarchyMatrixCompute(coord1, &mat);
 
-        tempSvec.vx = Q12_TO_Q8(x);
-        tempSvec.vy = Q12_TO_Q8(y);
-        tempSvec.vz = Q12_TO_Q8(z);
+        tempSvec.vx = Q12_TO_Q8(posX);
+        tempSvec.vy = Q12_TO_Q8(posY);
+        tempSvec.vz = Q12_TO_Q8(posZ);
 
         ApplyMatrix(&mat, &tempSvec, &vec);
 
-        pos1     = &g_WorldEnvWork.field_60;
-        pos1->vx = Q8_TO_Q12(vec.vx + mat.t[0]);
-        pos1->vy = Q8_TO_Q12(vec.vy + mat.t[1]);
-        pos1->vz = Q8_TO_Q12(vec.vz + mat.t[2]);
+        transformedLightPos     = &g_WorldEnvWork.lightPosition;
+        transformedLightPos->vx = Q8_TO_Q12(vec.vx + mat.t[0]);
+        transformedLightPos->vy = Q8_TO_Q12(vec.vy + mat.t[1]);
+        transformedLightPos->vz = Q8_TO_Q12(vec.vz + mat.t[2]);
     }
 
-    vwVectorToAngle(&g_WorldEnvWork.field_6C, &g_WorldEnvWork.field_58);
-    g_WorldEnvWork.field_4C = arg0 >> 8;
-    func_80055648(arg0, &g_WorldEnvWork.field_58);
+    vwVectorToAngle(&g_WorldEnvWork.field_6C, &g_WorldEnvWork.lightRotation);
+    g_WorldEnvWork.field_4C = lightIntensity >> 8;
+    func_80055648(lightIntensity, &g_WorldEnvWork.lightRotation);
 }
 
 void func_80055648(s32 arg0, SVECTOR* arg1) // 0x80055648
@@ -292,7 +293,7 @@ s32 func_800557DC(void) // 0x800557DC
 {
     MATRIX mat;
 
-    Vw_WorldScreenMatrixAtPositionGet(&mat, g_WorldEnvWork.field_60.vx, g_WorldEnvWork.field_60.vy, g_WorldEnvWork.field_60.vz);
+    Vw_WorldScreenMatrixAtPositionGet(&mat, g_WorldEnvWork.lightPosition.vx, g_WorldEnvWork.lightPosition.vy, g_WorldEnvWork.lightPosition.vz);
     return Q8_TO_Q12(mat.t[2]);
 }
 
@@ -541,9 +542,9 @@ u8 func_80055D78(q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80055D78
     VECTOR3* ptr0;
     VECTOR3* ptr1;
 
-    pos[0] = Q12_TO_Q8(posX) - Q12_TO_Q8(g_WorldEnvWork.field_60.vx);
-    pos[1] = Q12_TO_Q8(posY) - Q12_TO_Q8(g_WorldEnvWork.field_60.vy);
-    pos[2] = Q12_TO_Q8(posZ) - Q12_TO_Q8(g_WorldEnvWork.field_60.vz);
+    pos[0] = Q12_TO_Q8(posX) - Q12_TO_Q8(g_WorldEnvWork.lightPosition.vx);
+    pos[1] = Q12_TO_Q8(posY) - Q12_TO_Q8(g_WorldEnvWork.lightPosition.vy);
+    pos[2] = Q12_TO_Q8(posZ) - Q12_TO_Q8(g_WorldEnvWork.lightPosition.vz);
 
     if (g_WorldEnvWork.field_0 != 0)
     {
@@ -614,7 +615,7 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat) // 0x80055F08
     u8      field_3;
     s32     field_20;
 
-    func_80057228(mat, g_WorldEnvWork.field_54, &g_WorldEnvWork.field_58, &g_WorldEnvWork.field_60);
+    WorldEnv_LightTransform(mat, g_WorldEnvWork.lightIntensity, &g_WorldEnvWork.lightRotation, &g_WorldEnvWork.lightPosition);
 
     gte_lddqa(g_WorldEnvWork.field_4C);
     gte_lddqb_0();
@@ -1216,7 +1217,7 @@ void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 arg2, MATRIX* viewMat
     {
         if (worldMat != NULL && g_WorldEnvWork.field_0 != 0)
         {
-            func_80057228(worldMat, g_WorldEnvWork.field_54, &g_WorldEnvWork.field_58, &g_WorldEnvWork.field_60);
+            WorldEnv_LightTransform(worldMat, g_WorldEnvWork.lightIntensity, &g_WorldEnvWork.lightRotation, &g_WorldEnvWork.lightPosition);
         }
 
         if (modelHdr->field_B_0)
@@ -1256,7 +1257,7 @@ s32 func_800571D0(u32 arg0) // 0x800571D0
     }
 }
 
-void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80057228
+void WorldEnv_LightTransform(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80057228
 {
     q23_8 posX;
     q23_8 posY;
@@ -3310,7 +3311,7 @@ void func_8005B55C(GsCOORDINATE2* viewCoord) // 0x8005B55C
     }
 }
 
-void Gfx_BillboardDraw(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_arg4, s32 arg5) // 0x8005B62C
+void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_arg4, s32 arg5) // 0x8005B62C
 {
     MATRIX            matrix_sp18[2];
     CVECTOR           sp58[5];
@@ -3347,7 +3348,7 @@ void Gfx_BillboardDraw(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot
     POLY_GT4*         poly_gt4;
     POLY_G4*          poly_g4;
 
-    temp_fp = &D_800AE4DC[arg0];
+    temp_fp = &D_800AE4DC[idx];
     sp4A0   = temp_fp->field_A | (temp_fp->field_9 << 8);
     sp4A8   = temp_fp->field_8 | (temp_fp->field_B << 8);
     sp498   = ReadGeomScreen();
@@ -3400,7 +3401,7 @@ void Gfx_BillboardDraw(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot
         matrix_sp18[1].t[1] = Q12_TO_Q8(posY) + temp_fp->field_6;
         matrix_sp18[1].t[2] = Q12_TO_Q8(posZ);
 
-        func_80057228(&matrix_sp18[1], g_WorldEnvWork.field_54, &g_WorldEnvWork.field_58, &g_WorldEnvWork.field_60);
+        WorldEnv_LightTransform(&matrix_sp18[1], g_WorldEnvWork.lightIntensity, &g_WorldEnvWork.lightRotation, &g_WorldEnvWork.lightPosition);
 
         switch (g_WorldEnvWork.field_0)
         {

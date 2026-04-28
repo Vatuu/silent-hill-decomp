@@ -1943,21 +1943,21 @@ STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
 // Extra effects info?
 typedef struct
 {
-    s32             primType_0; /** `e_PrimitiveType` */
-    s8*             field_4; /** Points to different types of data depending on `field_0`. */
-    s32             field_8; // } Q19.12?
-    s32             field_C; // }
-    s32             field_10;
-    u8              field_14;
-    u8              isFlashlightOn_15;          /** `bool` */
-    u8              isFlashlightUnavailable_16; /** `bool` */
-    s8              __pad_17;
-    q3_12           flashlightIntensity_18;     // Alpha.
-    u16             field_1A;
-    s_StructUnk3    field_1C[2];
-    s_StructUnk3    field_84[2];
-    s_StructUnk3    field_EC[2];
-    s_StructUnk3    field_154;
+    /* 0x0   */ s32             primType_0; /** `e_PrimitiveType` */
+    /* 0x4   */ s8*             field_4;    /** Points to different types of data depending on `field_0`. */
+    /* 0x8   */ s32             field_8;    // } Q19.12?
+    /* 0xC   */ s32             field_C;    // }
+    /* 0x10  */ s32             field_10;
+    /* 0x14  */ u8              field_14;
+    /* 0x15  */ u8              isFlashlightOn_15;          /** `bool` */
+    /* 0x16  */ u8              isFlashlightUnavailable_16; /** `bool` */
+    /* 0x17  */ s8              __pad_17;
+    /* 0x18  */ q3_12           flashlightIntensity_18;
+    /* 0x1A  */ u16             field_1A;
+    /* 0x1C  */ s_StructUnk3    field_1C[2];
+    /* 0x84  */ s_StructUnk3    field_84[2];
+    /* 0xEC  */ s_StructUnk3    field_EC[2];
+    /* 0x154 */ s_StructUnk3    field_154;
 } s_SysWork_2388;
 STATIC_ASSERT_SIZEOF(s_SysWork_2388, 392);
 

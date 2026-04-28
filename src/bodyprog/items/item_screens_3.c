@@ -604,10 +604,10 @@ s_800AE4DC D_800AE4DC[3] = // Used in `Gfx_BillboardDraw` (https://decomp.me/scr
 };
 
 SVECTOR D_800AE500[4] = {
-    SVECTOR(0.0f,      255.65f,  255.65f),
-    SVECTOR(-255.65f,  0.0f,     255.65f),
-    SVECTOR(255.65f,   0.0f,     255.65f),
-    SVECTOR(0.0f,     -255.65f,  255.65f)
+    SVECTOR(0.0f,     255.65f, 255.65f),
+    SVECTOR(-255.65f, 0.0f,    255.65f),
+    SVECTOR(255.65f,  0.0f,    255.65f),
+    SVECTOR(0.0f,    -255.65f, 255.65f)
 };
 
 s16 D_800AE520[] = {
