@@ -62,28 +62,26 @@ struct _Model;
 // TODO: Name might be wrong, but these have something to do with held item meshes.
 // First index is the mesh variant, second is the container of meshes (not bone index in skeleton)?
 // Data addresses are hardcoded.
-/** @brief Packs a model bone containing ???
+/** @brief Packs a model bone containing a mesh variant index and ??? in a single value.
  *
- * @param idx0 ???
+ * @param variantIdx Mesh variant index.
  * @param idx1 ???
- * @return Packed model bone containing ???
+ * @return Packed model bone containing a mesh variant index and ???
  */
-#define MODEL_BONE(idx0, idx1) \
-    (s16)((idx0) | ((idx1) << 4))
+#define MODEL_BONE(variantIdx, idx1) \
+    (s16)((variantIdx) | ((idx1) << 4))
 
-// TODO
-/** @brief Retrieves ???
+/** @brief Retrieves the bone mesh variant index from a packed model bone.
  *
- * @param modelBone Packed model bone containing ???
- * @return Unknown first index.
+ * @param modelBone Packed model bone containing  a mesh variant index and ???
+ * @return Bone mesh variant index.
  */
-#define MODEL_BONE_IDX_0_GET(modelBone) \
+#define MODEL_BONE_MESH_VARIANT_IDX_GET(modelBone) \
     ((modelBone) & 0xF)
 
-// TODO
 /** @brief Retrieves ???
  *
- * @param modelBone Packed model bone containing ???
+ * @param modelBone Packed model bone containing a mesh variant index and ???
  * @return Unknown second index.
  */
 #define MODEL_BONE_IDX_1_GET(modelBone) \
@@ -1800,6 +1798,7 @@ typedef struct _SubCharacter_D4
 } s_SubCharacter_D4;
 STATIC_ASSERT_SIZEOF(s_SubCharacter_D4, 4);
 
+/** @brief Character info. */
 typedef struct _SubCharacter
 {
     /* 0x0  */ s_Model           model;          // In player: Manage the half lower part of Harry's body animations (legs and feet).
@@ -1857,17 +1856,18 @@ typedef struct _SubCharacter
                  s_PropertiesSplitHead       splitHead;
                  s_PropertiesStalker         stalker;
                  s_PropertiesTwinfeeler      twinfeeler;
-    /* 0xE4 */ } properties;
+    /* 0xE8 */ } properties;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
+/** @brief Extra player character info. */
 typedef struct _PlayerExtra
 {
-    /* 0x0  */ s_Model           model;             /** Manages upper half body's animations (torso, arms, head). */
-    /* 0x18 */ s32               disabledAnimBones; /** Bitfield of disabled animation bones. Can be created using the `BITMASK_RANGE` macro. */
-    /* 0x1C */ s32               state;             /** `e_PlayerState` */
-    /* 0x20 */ s32               upperBodyState;    /** `e_PlayerUpperBodyState` */
-    /* 0x24 */ s32               lowerBodyState;    /** `e_PlayerLowerBodyState` */
+    /* 0x0  */ s_Model     model;             /** Manages upper half body's animations (torso, arms, head). */
+    /* 0x18 */ s32         disabledAnimBones; /** Bitfield of disabled animation bones. Can be created using the `BITMASK_RANGE` macro. */
+    /* 0x1C */ s32         state;             /** `e_PlayerState` */
+    /* 0x20 */ s32         upperBodyState;    /** `e_PlayerUpperBodyState` */
+    /* 0x24 */ s32         lowerBodyState;    /** `e_PlayerLowerBodyState` */
     /* 0x28 */ e_InvItemId lastUsedItem;      /** Holds the last item ID used from inventory when the player is inside an item trigger area. */
 } s_PlayerExtra;
 STATIC_ASSERT_SIZEOF(s_PlayerExtra, 44);
@@ -1878,7 +1878,7 @@ STATIC_ASSERT_SIZEOF(s_PlayerExtra, 44);
  */
 typedef struct _PlayerWork
 {
-    /* 0x0   */ s_SubCharacter player; /** Possible original name: `player`. */
+    /* 0x0   */ s_SubCharacter player;
     /* 0x128 */ s_PlayerExtra  extra;
 } s_PlayerWork;
 STATIC_ASSERT_SIZEOF(s_PlayerWork, 340);
@@ -1908,6 +1908,7 @@ typedef union
     } s_field_0;
 } u_Unk0;
 
+/** @brief Map effects info. */
 typedef struct _MapEffectsInfo
 {
     u_Unk0  field_0;
@@ -1918,7 +1919,6 @@ typedef struct _MapEffectsInfo
     q3_12   worldTintB_C;
     u8      field_E; // Fog enabled if not set to 0, `Gfx_FogParametersSet` checks for values 0/1/2/3.
                      // Sets the transparent grey layer overlaid on characters and the enviroment.
-    s8      unk_F; // Padding?
     q19_12  fogDistance_10;
     CVECTOR fogColor_14;
     u8      field_18; // `bool`?
@@ -1951,7 +1951,7 @@ typedef struct
     u8              field_14;
     u8              isFlashlightOn_15;          /** `bool` */
     u8              isFlashlightUnavailable_16; /** `bool` */
-    s8              unk_17;
+    s8              __pad_17;
     q3_12           flashlightIntensity_18;     // Alpha.
     u16             field_1A;
     s_StructUnk3    field_1C[2];
