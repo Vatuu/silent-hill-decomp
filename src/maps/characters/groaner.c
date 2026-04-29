@@ -612,7 +612,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
 
 void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
 {
-    VECTOR3 sp20;
+    VECTOR3 newPos; // Q19.12
     q3_12   angleDeltaToPlayer0;
     q3_12   angleDeltaToPlayer1;
     s32     temp_a2;
@@ -699,24 +699,24 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
     {
         if (!(groanerProps.flags.val16[0] & GroanerFlag_9))
         {
-            groanerProps.flags.val16[0]                         |= GroanerFlag_9;
-            var_v0                                                = g_SysWork.playerWork.player.field_D4.field_2 + 573;
-            var_v0                                                = (distToPlayer - var_v0) << 1;
-            groaner->moveSpeed                                   = MIN(var_v0, Q12(4.5f));
+            groanerProps.flags.val16[0] |= GroanerFlag_9;
+            var_v0                       = g_SysWork.playerWork.player.field_D4.field_2 + 573;
+            var_v0                       = (distToPlayer - var_v0) << 1;
+            groaner->moveSpeed           = MIN(var_v0, Q12(4.5f));
 
-            deltaY                                           = g_SysWork.playerWork.player.position.vy - groaner->position.vy;
-            groaner->field_44.field_0                             = 1;
-            groanerProps.field_10F                                = 2;
-            groaner->fallSpeed                                 = Q12_MULT_PRECISE(deltaY - Q12(1.4f), Q12(2.35f));
+            deltaY                    = g_SysWork.playerWork.player.position.vy - groaner->position.vy;
+            groaner->field_44.field_0 = 1;
+            groanerProps.field_10F    = 2;
+            groaner->fallSpeed        = Q12_MULT_PRECISE(deltaY - Q12(1.4f), Q12(2.35f));
         }
     }
 
     if ((ANIM_TIME_REL_KEYFRAME_IDX_GET(groaner->model.anim.time, 222)) < 2u)
     {
-        sp20.vx = groaner->position.vx + groaner->field_D8.offsetX_4;
-        sp20.vy = groaner->position.vy - Q12(0.8f);
-        sp20.vz = groaner->position.vz + groaner->field_D8.offsetZ_6;
-        func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Hold), groaner, &sp20, &g_SysWork.playerWork.player, groaner->rotation.vy, Q12_ANGLE(90.0f));
+        newPos.vx = groaner->position.vx + groaner->field_D8.offsetX_4;
+        newPos.vy = groaner->position.vy - Q12(0.8f);
+        newPos.vz = groaner->position.vz + groaner->field_D8.offsetZ_6;
+        func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Hold), groaner, &newPos, &g_SysWork.playerWork.player, groaner->rotation.vy, Q12_ANGLE(90.0f));
     }
 
     if ((ANIM_TIME_REL_KEYFRAME_IDX_GET(groaner->model.anim.time, 222)) < 14u)
@@ -733,21 +733,21 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
 
     if (ANIM_STATUS_IDX_GET(groaner->model.anim.status) == GroanerAnim_16)
     {
-        groaner->model.controlState                         = GroanerControl_4;
-        groaner->rotation.vy                                += Q12(0.125f);
+        groaner->model.controlState = GroanerControl_4;
+        groaner->rotation.vy       += Q12(0.125f);
         groanerProps.angle_EC += Q12(0.125f);
-        g_SysWork.charaGroupFlags[3]                              &= ~CharaGroupFlag_1;
+        g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_1;
 
         Character_AnimSet(groaner, ANIM_STATUS(GroanerAnim_16, true), 363);
-        groanerProps.flags.val16[0]                         &= ~GroanerFlag_9;
+        groanerProps.flags.val16[0] &= ~GroanerFlag_9;
     }
 }
 
 void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
 {
     s32    temp_a3;
-    s32    temp_s1;
-    s32    temp_s4;
+    s32    distMax;
+    bool   hasLosHit;
     q19_12 distToPlayer;
     q19_12 var_s0_2;
     s32    i;
@@ -764,21 +764,20 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
         groanerProps.flags.val16[0] |= GroanerFlag_8;
     }
 
-    // TODO: Cleaner random angle generation.
-    temp_s4 = Ray_CharaLosHitCheck(groaner, Q12(0.9f) - Rng_GenerateInt(0, 920), groaner->rotation.vy);
+    hasLosHit = Ray_CharaLosHitCheck(groaner, Q12(0.9f) - Rng_GenerateInt(Q12(0.0f), Q12(0.2247f)), groaner->rotation.vy);
 
-    if (groanerProps.timer_104 == Q12(0.0f) || !Rng_GenerateUInt(0, 31) ||
-        (temp_s4 != 0 && groanerProps.timer_104 >= Q12(0.0f)))
+    if (groanerProps.timer_104 == Q12(0.0f) || !Rng_GenerateUInt(0, 31) || // 1 in 32 chance.
+        (hasLosHit && groanerProps.timer_104 >= Q12(0.0f)))
     {
-        temp_s1 = Q12(1.5f) - Rng_GenerateInt(0, 1535);
-        groanerProps.angleToTarget = Chara_HeadingAngleGet(groaner, temp_s1, groanerProps.targetPositionX,
-                                                                     groanerProps.targetPositionZ, Q12(1.0f), false);
+        distMax = Q12(1.5f) - Rng_GenerateInt(Q12(0.0f), Q12(0.3748f));
+        groanerProps.angleToTarget = Chara_HeadingAngleGet(groaner, distMax, groanerProps.targetPositionX,
+                                                           groanerProps.targetPositionZ, Q12(1.0f), false);
         if (groanerProps.angleToTarget == Q12_ANGLE(360.0f))
         {
-            groanerProps.angleToTarget = func_8006F99C(groaner, (temp_s1 * 3) >> 2, groaner->rotation.vy);
+            groanerProps.angleToTarget = func_8006F99C(groaner, (distMax * 3) >> 2, groaner->rotation.vy);
         }
 
-        if (temp_s4 != 0)
+        if (hasLosHit)
         {
             groanerProps.timer_104 = -(Rng_GenerateInt(Q12(0.375), Q12(0.75f) - 1));
         }

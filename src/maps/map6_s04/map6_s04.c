@@ -1709,14 +1709,14 @@ void func_800DB748(s_SubCharacter* chara) // 0x800DB748
 
 bool func_800DB81C(s_SubCharacter* chara) // 0x800DB81C
 {
-    s_RayData ray;
-    VECTOR3   dir;
+    s_RayTrace trace;
+    VECTOR3    dir; // Q19.12
 
     dir.vy = Q12_MULT(D_800AD4C8[63].field_0, Math_Cos(g_SysWork.npcs[0].properties.monsterCybil.field_11A));
     dir.vx = Q12_MULT(Q12_MULT(D_800AD4C8[63].field_0, Math_Sin(g_SysWork.npcs[0].properties.monsterCybil.field_11A)), Math_Sin(chara->rotation.vy));
     dir.vz = Q12_MULT(Q12_MULT(D_800AD4C8[63].field_0, Math_Sin(g_SysWork.npcs[0].properties.monsterCybil.field_11A)), Math_Cos(chara->rotation.vy));
 
-    if (func_8006DA08(&ray, &D_800ED570, &dir, chara) && ray.chara_10 == NULL)
+    if (func_8006DA08(&trace, &D_800ED570, &dir, chara) && trace.chara_10 == NULL)
     {
         return true;
     }
@@ -1950,10 +1950,10 @@ void func_800DBE5C(s_SubCharacter* chara)
 
 void func_800DC018(s_SubCharacter* chara) // 0x800DC018
 {
-    s_RayData ray;
-    VECTOR3   from;
-    VECTOR3   to;
-    q19_12    newRotY;
+    s_RayTrace trace;
+    VECTOR3    from; // Q19.12
+    VECTOR3    to;   // Q19.12
+    q19_12     newRotY;
 
     switch (g_SysWork.npcs[0].properties.monsterCybil.field_116)
     {
@@ -2006,7 +2006,7 @@ void func_800DC018(s_SubCharacter* chara) // 0x800DC018
             to.vy = from.vy;
             to.vz = chara->position.vz + Q12_MULT(Math_Cos(chara->rotation.vy), Q12(0.3f));
 
-            if (Ray_LineCheck(&ray, &from, &to))
+            if (Ray_LineCheck(&trace, &from, &to))
             {
                 g_SysWork.npcs[0].properties.monsterCybil.field_116 = (Rng_Rand16() & 0x1) + 2;
                 g_SysWork.npcs[0].properties.monsterCybil.field_106 = Q12_ANGLE(0.0f);

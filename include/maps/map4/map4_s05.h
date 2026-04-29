@@ -122,7 +122,8 @@ void func_800D41F0(s_SubCharacter* floatstinger);
 
 bool func_800D4458(s_SubCharacter* floatstinger, VECTOR3* arg1);
 
-s32 func_800D48A4(s_SubCharacter* floatstinger, s16 arg1, s16 arg2);
+// Returns angle.
+q19_12 func_800D48A4(s_SubCharacter* floatstinger, q3_12 dist, q3_12 headingAngle);
 
 void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 angle);
 

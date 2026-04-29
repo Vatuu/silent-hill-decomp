@@ -535,66 +535,6 @@ typedef struct
     s16                  field_36;
 } s_CollisionState_44;
 
-typedef struct
-{
-    q23_8 field_0; // X position.                } Q8 according to `func_8006EE0C`?
-    q23_8 field_4; // Y position.                }
-    q7_8  field_8; // Z position, but why `s16`? }
-    q7_8  field_A; // Y??
-    q7_8  field_C; // Some kind of bound or threshold?
-    s16   field_E;
-} s_RayState_6C; // Unknown size;
-
-typedef struct
-{
-    s16 field_0;
-    s16 field_2;
-} s_RayState_8C;
-
-/** @brief State for an in-progress ray trace. Contains pointers to active characters among other things. */
-typedef struct
-{
-    s32              field_0;
-    s16              field_4; // Collision flags.
-    s16              field_6;
-    q7_8             field_8; // Hit distance? `SHRT_MAX` if no valid hit.
-    s8               unk_A[2];
-    q23_8            field_C;  // } Q23.8 `VECTOR3`
-    q23_8            field_10; // }
-    q23_8            field_14; // }
-    s8               unk_18[4];
-    q7_8             field_1C; // Distance Z?
-    s8               unk_1E[2];
-    s_SubCharacter*  field_20;
-    s16              field_24; // X } Q19.12
-    s16              field_26; // Z }
-    s32              field_28;
-    VECTOR3          field_2C; // Q23.8
-    s8               unk_38[4];
-    s32              field_3C; // X  } Q23.8 `VECTOR3`?
-    s32              field_40; // Y? }
-    s32              field_44; // Z  }
-    s8               unk_48[4];
-    q7_8             field_4C; // X?
-    q7_8             field_4E; // Z?
-    SVECTOR          field_50; // Q23.8
-    u16              field_58;
-    s16              field_5A;
-    s16              field_5C;
-    s16              field_5E;
-    s16              field_60;
-    s8               unk_62[2];
-    s_SubCharacter** characters_64; // Active characters?
-    s32              characterCount_68;
-    s_RayState_6C    field_6C;
-    s32              field_7C;
-    s32              field_80;
-    u16              field_84;
-    u8               unk_86[2];
-    s32              field_88;
-    s_RayState_8C    field_8C[1]; // Unknown size.
-} s_RayState;
-
 // Function from lib_unk
 typedef struct _func_8009ECCC
 {
@@ -1765,18 +1705,78 @@ typedef struct _MapEffectsPresetIdxs
     u8 presetIdx2_1;
 } s_MapEffectsPresetIdxs;
 
-/** @brief Line of sight data for finished ray trace. TODO: Could rename to `s_RayLos`. */
-typedef struct _RayData
+typedef struct
+{
+    q23_8 field_0; // X position.                } Q8 according to `func_8006EE0C`?
+    q23_8 field_4; // Y position.                }
+    q7_8  field_8; // Z position, but why `s16`? }
+    q7_8  field_A; // Y??
+    q7_8  field_C; // Some kind of bound or threshold?
+    s16   field_E;
+} s_RayState_6C; // Unknown size.
+
+typedef struct
+{
+    s16 field_0;
+    s16 field_2;
+} s_RayState_8C;
+
+/** @brief State for an in-progress ray trace. Contains pointers to active characters among other things. */
+typedef struct
+{
+    s32              field_0;
+    s16              field_4; // Collision flags.
+    s16              field_6;
+    q7_8             field_8; // Hit distance? `SHRT_MAX` if no valid hit.
+    s8               unk_A[2];
+    q23_8            field_C;  // } Q23.8 `VECTOR3`
+    q23_8            field_10; // }
+    q23_8            field_14; // }
+    s8               unk_18[4];
+    q7_8             field_1C; // Distance Z?
+    s8               unk_1E[2];
+    s_SubCharacter*  field_20;
+    s16              field_24; // X } Q19.12
+    s16              field_26; // Z }
+    s32              field_28;
+    VECTOR3          field_2C; // Q23.8
+    s8               unk_38[4];
+    s32              field_3C; // X  } Q23.8 `VECTOR3`?
+    s32              field_40; // Y? }
+    s32              field_44; // Z  }
+    s8               unk_48[4];
+    q7_8             field_4C; // X?
+    q7_8             field_4E; // Z?
+    SVECTOR          field_50; // Q23.8
+    u16              field_58;
+    s16              field_5A;
+    s16              field_5C;
+    s16              field_5E;
+    s16              field_60;
+    s8               unk_62[2];
+    s_SubCharacter** characters_64; // Active characters?
+    s32              characterCount_68;
+    s_RayState_6C    field_6C;
+    s32              field_7C;
+    s32              field_80;
+    u16              field_84;
+    u8               unk_86[2];
+    s32              field_88;
+    s_RayState_8C    field_8C[1]; // Unknown size.
+} s_RayState;
+
+/** @brief Ray trace line of sight info. */
+typedef struct _RayTrace
 {
     s8              hasHit_0; /** `bool` */
     u8              field_1;
-    s8              unk_2[2]; // Probably padding.
-    VECTOR3         field_4;  // Q19.12
+    s8              __pad_2[2];
+    VECTOR3         field_4;  /** Q19.12 | Target. */
     s_SubCharacter* chara_10;
     q19_12          field_14; // Hit distance X?
     q19_12          field_18; // Hit distance Z?
     q7_8            field_1C; // Angle.
-} s_RayData;
+} s_RayTrace;
 
 typedef struct _CollisionResult
 {
@@ -2587,7 +2587,7 @@ extern VECTOR3 D_800C47C8[];
 
 extern VECTOR3 D_800C47E8;
 
-extern s_RayData D_800C47F8;
+extern s_RayTrace D_800C47F8;
 
 extern s_800C4818 D_800C4818;
 
@@ -3658,7 +3658,7 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
 s32 func_8005CB20(s_SubCharacter* chara, s_CollisionResult* collResult, q3_12 offsetX, q3_12 offsetZ);
 
 /** Computes something for a targeted NPC. */
-bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR3* unkOffset, u32 npcIdx, q19_12 angleConstraint);
+bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR3* from, u32 npcIdx, q19_12 angleConstraint);
 
 bool func_80060044(POLY_FT4** poly, s32 idx);
 
@@ -3706,7 +3706,6 @@ u16 Collision_FlagsGet(void);
  */
 void Collision_FlagsSet(u16 collFlags);
 
-//Collision_FlagBitsSet
 /** @brief Sets additional active collision flags using OR.
  *
  * @param collFlags Collision flag bits to set.
@@ -3896,12 +3895,12 @@ void func_8006D774(s_CollisionState* collState, VECTOR3* arg1, VECTOR3* arg2);
 /** `arg1` is likely Q23.8. */
 void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2);
 
-bool Ray_LineCheck(s_RayData* ray, VECTOR3* from, VECTOR3* to);
+bool Ray_LineCheck(s_RayTrace* trace, VECTOR3* from, VECTOR3* to);
 
 /** Ray function. */
-bool func_8006DA08(s_RayData* ray, VECTOR3* from, VECTOR3* dir, s_SubCharacter* chara);
+bool func_8006DA08(s_RayTrace* trace, VECTOR3* from, VECTOR3* dir, s_SubCharacter* chara);
 
-void Ray_MissSet(s_RayData* ray, VECTOR3* from, VECTOR3* dir, q23_8 arg3);
+void Ray_MissSet(s_RayTrace* trace, VECTOR3* from, VECTOR3* dir, q23_8 arg3);
 
 /** @brief Checks if an obstruction in a ray's line of sight has been hit, ignoring a specified character.
  *
@@ -3911,13 +3910,13 @@ void Ray_MissSet(s_RayData* ray, VECTOR3* from, VECTOR3* dir, q23_8 arg3);
  * @param excludedChara Character to exclude.
  * @return `true` if there is an obstruction, `false` otherwise.
  */
-bool Ray_LosHitCheck(s_RayData* ray, VECTOR3* from, VECTOR3* dir, s_SubCharacter* excludedChara);
+bool Ray_LosHitCheck(s_RayTrace* trace, VECTOR3* from, VECTOR3* dir, s_SubCharacter* excludedChara);
 
-bool func_8006DC18(s_RayData* ray, VECTOR3* vec1, VECTOR3* vec2);
+bool func_8006DC18(s_RayTrace* trace, VECTOR3* from, VECTOR3* dir);
 
 bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* dir, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount);
 
-bool Ray_TraceRun(s_RayData* ray, s_RayState* arg1);
+bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state);
 
 // Fills `state` with info.
 void func_8006E0AC(s_RayState* state, s_IpdCollisionData* ipdColl);
@@ -4018,6 +4017,8 @@ bool func_80070208(s_SubCharacter* chara, q19_12 dist);
 bool Ray_CharaLosHitCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle);
 
 void func_800705E4(GsCOORDINATE2* coord, s32 idx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ);
+
+// ======================================
 
 void Player_FlexRotationYReset(void);
 

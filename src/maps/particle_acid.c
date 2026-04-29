@@ -45,7 +45,7 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
     } s_func_800CB1B0;
 
     s_func_8005E89C  sp10;
-    s_RayData        ray;
+    s_RayTrace       trace;
     s_Collision      coll;
     VECTOR3          dir;
     VECTOR3          rayFrom;
@@ -184,7 +184,7 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
     dir.vy = ptr->field_12C.vy - sharedData_800DFB7C_0_s00[arg1].vy_8;
     dir.vz = ptr->field_12C.vz - sharedData_800DFB7C_0_s00[arg1].field_4.vz_4;
 
-    func_8006DA08(&ray, &rayFrom, &dir, g_SysWork.npcs);
+    func_8006DA08(&trace, &rayFrom, &dir, g_SysWork.npcs);
     Collision_Get(&coll, rayFrom.vx + dir.vx, rayFrom.vz + dir.vz);
 
     ptr->field_0 = sp10;
@@ -198,15 +198,15 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
     {
         sharedData_800DFB7C_0_s00[arg1].field_10.s_0.field_2 = CLAMP_LOW(sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_2 - (g_DeltaTime << 2), 0);
     }
-    else if (ray.hasHit_0 || coll.groundHeight_0 < sharedData_800DFB7C_0_s00[arg1].vy_8)
+    else if (trace.hasHit_0 || coll.groundHeight_0 < sharedData_800DFB7C_0_s00[arg1].vy_8)
     {
         sharedData_800DFB7C_0_s00[arg1].field_B++;
 
-        if (ray.hasHit_0 && ray.chara_10 == &g_SysWork.playerWork.player)
+        if (trace.hasHit_0 && trace.chara_10 == &g_SysWork.playerWork.player)
         {
-            sub = ray.chara_10;
+            sub = trace.chara_10;
 
-            sharedFunc_800CBE54_4_s03(&ray.field_4, 1);
+            sharedFunc_800CBE54_4_s03(&trace.field_4, 1);
             sharedFunc_800CBE54_4_s03(&rayFrom, 1);
 
             if (g_SysWork.npcs[0].model.charaId == Chara_Floatstinger)

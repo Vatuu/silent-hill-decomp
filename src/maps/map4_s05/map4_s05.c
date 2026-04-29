@@ -1146,47 +1146,47 @@ bool func_800D4458(s_SubCharacter* floatstinger, VECTOR3* arg1) // 0x800D4458
     }
 }
 
-s32 func_800D48A4(s_SubCharacter* floatstinger, s16 arg1, s16 arg2) // 0x800D48A4
+q19_12 func_800D48A4(s_SubCharacter* floatstinger, q3_12 dist, q3_12 headingAngle) // 0x800D48A4
 {
-    s_RayData ray;
-    VECTOR3   sp30;
-    VECTOR3   sp40;
-    s16       var_s1;
-    s32       temp_s0;
-    s32       temp_s4;
-    s32       i;
+    s_RayTrace trace;
+    VECTOR3    from; // Q19.12
+    VECTOR3    dir;  // Q19.12
+    q3_12      unkAngle0;
+    q19_12     unkAngle1;
+    s32        count;
+    s32        i;
 
-    temp_s4 = Rng_Rand16() & 0xFF;
-    temp_s4 = !(temp_s4 < 0x80);
+    count = Rng_Rand16() & 0xFF;
+    count = !(count < 0x80);
 
-    sp30.vx = floatstinger->position.vx;
-    sp30.vy = floatstinger->position.vy + floatstinger->field_C8.field_2;
-    sp30.vz = floatstinger->position.vz;
+    from.vx = floatstinger->position.vx;
+    from.vy = floatstinger->position.vy + floatstinger->field_C8.field_2;
+    from.vz = floatstinger->position.vz;
 
-    for (i = temp_s4; i < (temp_s4 + 8); i++)
+    for (i = count; i < (count + 8); i++)
     {
         if (i & 1)
         {
-            var_s1 = (0x100 << ((i + 1) >> 1)) + (Rng_Rand16() & 0x3F);
+            unkAngle0 = (Q12_ANGLE(22.5f) << ((i + 1) >> 1)) + (Rng_Rand16() & 0x3F);
         }
         else
         {
-            var_s1 = -((0x100 << ((i + 2) >> 1)) + (Rng_Rand16() & 0x3F));
+            unkAngle0 = -((Q12_ANGLE(22.5f) << ((i + 2) >> 1)) + (Rng_Rand16() & 0x3F));
         }
 
-        temp_s0 = var_s1 + arg2;
+        unkAngle1 = unkAngle0 + headingAngle;
 
-        sp40.vx = Q12_MULT(arg1, Math_Sin(temp_s0));
-        sp40.vy = 0;
-        sp40.vz = Q12_MULT(arg1, Math_Cos(temp_s0));
+        dir.vx = Q12_MULT(dist, Math_Sin(unkAngle1));
+        dir.vy = Q12(0.0f);
+        dir.vz = Q12_MULT(dist, Math_Cos(unkAngle1));
 
-        if (func_8006DA08(&ray, &sp30, &sp40, floatstinger) == false)
+        if (func_8006DA08(&trace, &from, &dir, floatstinger) == false)
         {
-            return Math_AngleNormalizeSigned(arg2 + var_s1);
+            return Math_AngleNormalizeSigned(headingAngle + unkAngle0);
         }
     }
 
-    return arg2;
+    return headingAngle;
 }
 
 void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 newRotY) // 0x800D4A3C

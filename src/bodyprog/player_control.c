@@ -7372,17 +7372,17 @@ void Player_FlexRotationYReset(void) // 0x8007D6E0
 
 s32 func_8007D6F0(s_SubCharacter* player, s_800C45C8* arg1) // 0x8007D6F0
 {
-    s_RayData rays[2];
-    VECTOR3   vecs[4];
-    bool      ret[2];
-    s32       temp_lo;
-    s32       temp_s0;
-    s32       temp_s1;
-    s32       temp_s3;
-    s32       temp_s4;
-    s32       temp_s5;
-    q3_12     angle;
-    q4_12     angleDelta;
+    s_RayTrace traces[2];
+    VECTOR3    vecs[4];
+    bool       ret[2];
+    s32        temp_lo;
+    s32        temp_s0;
+    s32        temp_s1;
+    s32        temp_s3;
+    s32        temp_s4;
+    s32        temp_s5;
+    q3_12      angle;
+    q4_12      angleDelta;
 
     temp_s0  = playerProps.moveDistance_126 >> 3;
     temp_s0 += Q12(0.75f);
@@ -7404,7 +7404,7 @@ s32 func_8007D6F0(s_SubCharacter* player, s_800C45C8* arg1) // 0x8007D6F0
     vecs[2].vx = player->position.vx + temp_s4;
     vecs[2].vz = player->position.vz - temp_s3;
 
-    ret[0] = Ray_LineCheck(&rays[0], &vecs[2], &vecs[0]);
+    ret[0] = Ray_LineCheck(&traces[0], &vecs[2], &vecs[0]);
 
     if (ret[0])
     {
@@ -7415,21 +7415,21 @@ s32 func_8007D6F0(s_SubCharacter* player, s_800C45C8* arg1) // 0x8007D6F0
         vecs[3].vx = player->position.vx - temp_s4;
         vecs[3].vz = player->position.vz + temp_s3;
 
-        ret[1] = Ray_LineCheck(&rays[1], &vecs[3], &vecs[1]);
+        ret[1] = Ray_LineCheck(&traces[1], &vecs[3], &vecs[1]);
 
         if (ret[1])
         {
-            arg1->field_14 = (rays[0].field_14 + rays[1].field_14) >> 1;
-            arg1->field_1  = rays[0].field_1;
+            arg1->field_14 = (traces[0].field_14 + traces[1].field_14) >> 1;
+            arg1->field_1  = traces[0].field_1;
 
-            angle      = Q12_ANGLE_NORM_U(((rays[0].field_1C + rays[1].field_1C) >> 1) + Q12_ANGLE(360.0f));
+            angle      = Q12_ANGLE_NORM_U(((traces[0].field_1C + traces[1].field_1C) >> 1) + Q12_ANGLE(360.0f));
             angleDelta = ABS_DIFF(angle, player->headingAngle);
 
             if (angleDelta > Q12_ANGLE(160.0f) && angleDelta < Q12_ANGLE(200.0f))
             {
-                if ((player->position.vy - Q12(1.3f)) < rays[0].field_18 || rays[0].field_1 == 0 || rays[0].field_1 == 12)
+                if ((player->position.vy - Q12(1.3f)) < traces[0].field_18 || traces[0].field_1 == 0 || traces[0].field_1 == 12)
                 {
-                    if ((player->position.vy - Q12(0.3f)) >= rays[0].field_18)
+                    if ((player->position.vy - Q12(0.3f)) >= traces[0].field_18)
                     {
                         return PlayerLowerBodyState_RunForward;
                     }

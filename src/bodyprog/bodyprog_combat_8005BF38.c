@@ -168,17 +168,17 @@ s32 func_8005CB20(s_SubCharacter* chara, s_CollisionResult* arg1, q3_12 offsetX,
 // Important for combat.
 INCLUDE_ASM("bodyprog/nonmatchings/bodyprog_combat_8005BF38", func_8005CD38); // 0x8005CD38
 
-bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR3* unkOffset, u32 npcIdx, q19_12 angleConstraint) // 0x8005D50C
+bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR3* from, u32 npcIdx, q19_12 angleConstraint) // 0x8005D50C
 {
-    s_RayData ray;
-    VECTOR3   unkPos;
-    q3_12     angle1;
-    q3_12     angle0;
-    q3_12     angle2;
-    q3_12     angle3;
-    q19_12    mag0;
-    q19_12    mag1;
-    s32       i;
+    s_RayTrace trace;
+    VECTOR3    unkPos;
+    q3_12      angle1;
+    q3_12      angle0;
+    q3_12      angle2;
+    q3_12      angle3;
+    q19_12     mag0;
+    q19_12     mag1;
+    s32        i;
 
     #define npc g_SysWork.npcs[npcIdx]
 
@@ -188,9 +188,9 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
         return false;
     }
 
-    unkPos.vx = (npc.position.vx + npc.field_D8.offsetX_0) - unkOffset->vx;
-    unkPos.vy = (npc.position.vy + npc.field_C8.field_6) - unkOffset->vy;
-    unkPos.vz = (npc.position.vz + npc.field_D8.offsetZ_2) - unkOffset->vz;
+    unkPos.vx = (npc.position.vx + npc.field_D8.offsetX_0) - from->vx;
+    unkPos.vy = (npc.position.vy + npc.field_C8.field_6) - from->vy;
+    unkPos.vz = (npc.position.vz + npc.field_D8.offsetZ_2) - from->vz;
 
     mag0 = Math_Vector2MagCalc(unkPos.vx, unkPos.vz);
     angle0 = ratan2(unkPos.vx, unkPos.vz);
@@ -212,9 +212,9 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
             continue;
         }
 
-        unkPos.vx = (curNpc.position.vx + curNpc.field_D8.offsetX_0) - unkOffset->vx;
-        unkPos.vy = (curNpc.position.vy + curNpc.field_C8.field_6) - unkOffset->vy;
-        unkPos.vz = (curNpc.position.vz + curNpc.field_D8.offsetZ_2) - unkOffset->vz;
+        unkPos.vx = (curNpc.position.vx + curNpc.field_D8.offsetX_0) - from->vx;
+        unkPos.vy = (curNpc.position.vy + curNpc.field_C8.field_6) - from->vy;
+        unkPos.vz = (curNpc.position.vz + curNpc.field_D8.offsetZ_2) - from->vz;
 
         angle2 = ratan2(unkPos.vx, unkPos.vz);
         if (angleConstraint < ABS(Math_AngleNormalizeSigned(angle0 - angle2)))
@@ -234,7 +234,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
             continue;
         }
 
-        if (func_8006DA08(&ray, unkOffset, &unkPos, &g_SysWork.playerWork.player) && ray.chara_10 == &g_SysWork.npcs[i])
+        if (func_8006DA08(&trace, from, &unkPos, &g_SysWork.playerWork.player) && trace.chara_10 == &g_SysWork.npcs[i])
         {
             *targetNpcIdx  = i;
             *outAngle0  = angle3;
