@@ -827,7 +827,7 @@ typedef struct _IpdCollisionData
     s_IpdCollisionData_10* ptr_10;
     s_IpdCollisionData_14* ptr_14;
     s_IpdCollisionData_18* ptr_18;
-    s16                    field_1C;
+    q7_8                   field_1C;
     u8                     field_1E; // } Used as multipliers for `field_1C` in `func_8006B004`.
     u8                     field_1F; // }
     s_IpdCollisionData_20* ptr_20;
@@ -1729,15 +1729,15 @@ typedef struct
     s16              field_6;
     q7_8             field_8; // Hit distance? `SHRT_MAX` if no valid hit.
     s8               unk_A[2];
-    q23_8            field_C;  // } Q23.8 `VECTOR3`
-    q23_8            field_10; // }
-    q23_8            field_14; // }
+    q19_12           field_C;  // } Q19.12 `VECTOR3`
+    q19_12           field_10; // }
+    q19_12           field_14; // }
     s8               unk_18[4];
     q7_8             field_1C; // Distance Z?
     s8               unk_1E[2];
     s_SubCharacter*  field_20;
-    s16              field_24; // X } Q19.12
-    s16              field_26; // Z }
+    q3_12            field_24; // X
+    q3_12            field_26; // Z
     s32              field_28;
     VECTOR3          field_2C; // Q23.8
     s8               unk_38[4];
@@ -1750,7 +1750,7 @@ typedef struct
     SVECTOR          field_50; // Q23.8
     u16              field_58;
     s16              field_5A;
-    s16              field_5C;
+    s16              field_5C; // 
     s16              field_5E;
     s16              field_60;
     s8               unk_62[2];
@@ -1768,14 +1768,14 @@ typedef struct
 /** @brief Ray trace line of sight info. */
 typedef struct _RayTrace
 {
-    s8              hasHit_0; /** `bool` */
-    u8              field_1;
-    s8              __pad_2[2];
-    VECTOR3         field_4;  /** Q19.12 | Target. */
-    s_SubCharacter* chara_10;
-    q19_12          field_14; // Hit distance X?
-    q19_12          field_18; // Hit distance Z?
-    q7_8            field_1C; // Angle.
+    /* 0x0  */ s8              hasHit; /** `bool` */
+    /* 0x1  */ u8              field_1;
+    /* 0x2  */ s8              __pad_2[2];
+    /* 0x4  */ VECTOR3         target; /** Q19.12 */
+    /* 0x10 */ s_SubCharacter* character;
+    /* 0x14 */ q19_12          field_14; // Hit distance X?
+    /* 0x18 */ q19_12          field_18; // Hit distance Z?
+    /* 0x1C */ q3_12           field_1C; // Angle? Counter??
 } s_RayTrace;
 
 typedef struct _CollisionResult
@@ -3575,7 +3575,7 @@ bool func_8008B474(s32 arg0, q23_8 vol, s32 soundType);
 void func_8008B664(VECTOR3* pos, u32 caseVar);
 
 /** Main attack handling function. */
-s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg2, s32 arg3);
+s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* attackPos, s32 arg3);
 
 s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg3);
 
@@ -3898,23 +3898,23 @@ void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2);
 bool Ray_LineCheck(s_RayTrace* trace, VECTOR3* from, VECTOR3* to);
 
 /** Ray function. */
-bool func_8006DA08(s_RayTrace* trace, VECTOR3* from, VECTOR3* dir, s_SubCharacter* chara);
+bool func_8006DA08(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCharacter* chara);
 
-void Ray_MissSet(s_RayTrace* trace, VECTOR3* from, VECTOR3* dir, q23_8 arg3);
+void Ray_MissSet(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, q23_8 arg3);
 
 /** @brief Checks if an obstruction in a ray's line of sight has been hit, ignoring a specified character.
  *
- * @param ray Ray data.
+ * @param trace Ray trace.
  * @param from Ray origin.
- * @param dir Ray direction with length.
+ * @param offset Ray target offset from origin.
  * @param excludedChara Character to exclude.
  * @return `true` if there is an obstruction, `false` otherwise.
  */
-bool Ray_LosHitCheck(s_RayTrace* trace, VECTOR3* from, VECTOR3* dir, s_SubCharacter* excludedChara);
+bool Ray_LosHitCheck(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCharacter* excludedChara);
 
-bool func_8006DC18(s_RayTrace* trace, VECTOR3* from, VECTOR3* dir);
+bool func_8006DC18(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset);
 
-bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* dir, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount);
+bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* offset, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount);
 
 bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state);
 

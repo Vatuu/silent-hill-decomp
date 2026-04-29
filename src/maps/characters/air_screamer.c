@@ -9156,8 +9156,8 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
     hasLosHit = Ray_LosHitCheck(&sharedData_800E2330_0_s01, var_s0, &sharedData_800DE1A0_0_s01, airScreamer);
 
     g_SysWork.playerWork.player.field_E1_0 = temp_s0;
-    offsetX                                     = sharedData_800E2330_0_s01.field_4.vx - posX;
-    offsetZ                                     = sharedData_800E2330_0_s01.field_4.vz - posZ;
+    offsetX                                     = sharedData_800E2330_0_s01.target.vx - posX;
+    offsetZ                                     = sharedData_800E2330_0_s01.target.vz - posZ;
 
     func_8006F250(sharedData_800E2370_0_s01, posX, posZ, offsetX, offsetZ);
 
@@ -9167,12 +9167,12 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
 
     if (i < 0 && var_a0 < (posY + temp_v1))
     {
-        if ((sharedData_800E2330_0_s01.field_4.vy + temp_v1) < var_a0)
+        if ((sharedData_800E2330_0_s01.target.vy + temp_v1) < var_a0)
         {
-            sharedData_800E2330_0_s01.field_4.vy = var_a0 - temp_v1;
+            sharedData_800E2330_0_s01.target.vy = var_a0 - temp_v1;
         }
     }
-    else if ((sharedData_800E2330_0_s01.field_4.vy + temp_v1) < var_a0)
+    else if ((sharedData_800E2330_0_s01.target.vy + temp_v1) < var_a0)
     {
         temp = sharedData_800E2370_0_s01[0];
 
@@ -9192,27 +9192,27 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
             temp2 = Q12_MULT_PRECISE(i, var_v1);
 
             sharedData_800E2330_0_s01.field_14   = temp;
-            sharedData_800E2330_0_s01.hasHit_0   = hasHit;
-            sharedData_800E2330_0_s01.field_4.vx = temp3 + posX;
-            sharedData_800E2330_0_s01.field_4.vy = temp2 + posY;
-            sharedData_800E2330_0_s01.field_18   = sharedData_800E2330_0_s01.field_4.vy;
+            sharedData_800E2330_0_s01.hasHit   = hasHit;
+            sharedData_800E2330_0_s01.target.vx = temp3 + posX;
+            sharedData_800E2330_0_s01.target.vy = temp2 + posY;
+            sharedData_800E2330_0_s01.field_18   = sharedData_800E2330_0_s01.target.vy;
 
             temp2                                 = Q12_MULT_PRECISE(offsetZ, var_v1);
-            sharedData_800E2330_0_s01.field_4.vz  = temp2 + posZ;
-            sharedData_800E2330_0_s01.field_4.vy += Q12(0.0f); // @hack
+            sharedData_800E2330_0_s01.target.vz  = temp2 + posZ;
+            sharedData_800E2330_0_s01.target.vy += Q12(0.0f); // @hack
         }
     }
 
     if (arg3 != NULL)
     {
-        *arg3 = sharedData_800E2330_0_s01.field_4;
+        *arg3 = sharedData_800E2330_0_s01.target;
 
         if (hasLosHit)
         {
             if (sharedFunc_800D5274_0_s01() < sharedData_800E2330_0_s01.field_18)
             {
                 groundOffset                         = (Rng_RandQ12() / 2) + Q12(1.5f);
-                sharedData_800E2330_0_s01.field_4.vy = sharedData_800E2330_0_s01.field_18 - groundOffset;
+                sharedData_800E2330_0_s01.target.vy = sharedData_800E2330_0_s01.field_18 - groundOffset;
             }
             else
             {
@@ -9221,11 +9221,11 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
                 groundHeight -= groundOffset;
 
                 groundOffset                         = (Rng_RandQ12() / 2) - Q12(0.25f);
-                sharedData_800E2330_0_s01.field_4.vy = airScreamer->position.vy - groundOffset;
+                sharedData_800E2330_0_s01.target.vy = airScreamer->position.vy - groundOffset;
 
-                if (groundHeight < sharedData_800E2330_0_s01.field_4.vy)
+                if (groundHeight < sharedData_800E2330_0_s01.target.vy)
                 {
-                    sharedData_800E2330_0_s01.field_4.vy = groundHeight;
+                    sharedData_800E2330_0_s01.target.vy = groundHeight;
                 }
             }
         }
@@ -9236,11 +9236,11 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
 
 void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
 {
-    q19_12   dist0;
+    q19_12   distToTarget;
     q19_12   posX;
     q19_12   posY;
     q19_12   posZ;
-    s32      vecF8Y;
+    s32      targetPosY;
     q19_12   dist2;
     s32      new_var;
     VECTOR3* pos;
@@ -9249,8 +9249,8 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
     q19_12   dist5;
     s32      temp_hi;
     q19_12   dist1;
-    q19_12   angle;
-    q19_12   temp_v0;
+    q19_12   angleDeltaToTarget;
+    q19_12   angleToTarget;
     q19_12   dist3;
     s32      temp_v0_3;
     s32      temp_v0_4;
@@ -9265,17 +9265,16 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
 
     pos = &airScreamer->position;
 
-    dist0   = Math_Distance2dGet(pos, &airScreamerProps.targetPosition_F8);
-    temp_v0 = func_80080478(pos, &airScreamerProps.targetPosition_F8);
+    distToTarget  = Math_Distance2dGet(pos, &airScreamerProps.targetPosition_F8);
+    angleToTarget = func_80080478(pos, &airScreamerProps.targetPosition_F8);
 
     rotY = airScreamer->rotation.vy;
-
     posX = airScreamer->position.vx;
     posY = airScreamer->position.vy;
     posZ = airScreamer->position.vz;
 
-    angle  = Q12_ANGLE_NORM_S(temp_v0 - rotY);
-    vecF8Y = airScreamerProps.targetPosition_F8.vy;
+    angleDeltaToTarget = Q12_ANGLE_NORM_S(angleToTarget - rotY);
+    targetPosY         = airScreamerProps.targetPosition_F8.vy;
 
     if (sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &airScreamerProps.targetPosition_F8, &sharedData_800DE1B0_0_s01))
     {
@@ -9285,7 +9284,7 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
 
     sharedData_800E21D0_0_s01.flags_0 |= (1 << 27);
 
-    if (angle > Q12_ANGLE(-11.34f) && angle < Q12_ANGLE(11.34f))
+    if (angleDeltaToTarget > Q12_ANGLE(-11.34f) && angleDeltaToTarget < Q12_ANGLE(11.34f))
     {
         sharedData_800DE1C0_0_s01.vx = Math_Sin(rotY) * 2;
         sharedData_800DE1C0_0_s01.vy = Q12(0.0f);
@@ -9293,22 +9292,22 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
 
         if (Ray_LosHitCheck(&sharedData_800E2330_0_s01, pos, &sharedData_800DE1C0_0_s01, airScreamer) && sharedFunc_800D5274_0_s01() < sharedData_800E2330_0_s01.field_18)
         {
-            airScreamerProps.position_110.vx = sharedData_800E2330_0_s01.field_4.vx;
+            airScreamerProps.position_110.vx = sharedData_800E2330_0_s01.target.vx;
             airScreamerProps.position_110.vy = sharedData_800E2330_0_s01.field_18 - Q12(1.5f);
-            airScreamerProps.position_110.vz = sharedData_800E2330_0_s01.field_4.vz;
+            airScreamerProps.position_110.vz = sharedData_800E2330_0_s01.target.vz;
             return;
         }
     }
 
-    dist2 = dist0 - Math_Distance2dGet(&airScreamer->position, &sharedData_800DE1B0_0_s01) + dist3;
+    dist2 = distToTarget - Math_Distance2dGet(&airScreamer->position, &sharedData_800DE1B0_0_s01) + dist3;
 
     var_s5 = INT_MAX;
     var_s7 = Q12(1.0f);
 
-    for (i = 0, curAngle = (rotY + angle / 2) - Q12_ANGLE(90.0f); i < 9; i++, curAngle += Q12_ANGLE(22.5f))
+    for (i = 0, curAngle = (rotY + angleDeltaToTarget / 2) - Q12_ANGLE(90.0f); i < 9; i++, curAngle += Q12_ANGLE(22.5f))
     {
         sharedData_800DE1B0_0_s01.vx = posX + Q12_MULT_PRECISE(Math_Sin(curAngle), Q12(8.0f));
-        sharedData_800DE1B0_0_s01.vy = vecF8Y;
+        sharedData_800DE1B0_0_s01.vy = targetPosY;
         sharedData_800DE1B0_0_s01.vz = posZ + Q12_MULT_PRECISE(Math_Cos(curAngle), Q12(8.0f));
 
         new_var = dist2;
@@ -9344,11 +9343,11 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
     dist5 = dist1 + dist4;
     if (dist5 == Q12(0.0f))
     {
-        airScreamerProps.position_110.vy = vecF8Y;
+        airScreamerProps.position_110.vy = targetPosY;
         return;
     }
 
-    airScreamerProps.position_110.vy = FP_TO(Q12_MULT_PRECISE(vecF8Y, dist1) +
+    airScreamerProps.position_110.vy = FP_TO(Q12_MULT_PRECISE(targetPosY, dist1) +
                                                  Q12_MULT_PRECISE(posY, dist4),
                                              Q12_SHIFT) /
                                        dist5;

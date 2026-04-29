@@ -4075,9 +4075,9 @@ void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
 
         if (i == (primCount - 1))
         {
-            endRelPos.vx = Q12_TO_Q8(trace.field_4.vx - g_SysWork.playerWork.player.position.vx);
-            endRelPos.vy = Q12_TO_Q8(trace.field_4.vy - g_SysWork.playerWork.player.position.vy);
-            endRelPos.vz = Q12_TO_Q8(trace.field_4.vz - g_SysWork.playerWork.player.position.vz);
+            endRelPos.vx = Q12_TO_Q8(trace.target.vx - g_SysWork.playerWork.player.position.vx);
+            endRelPos.vy = Q12_TO_Q8(trace.target.vy - g_SysWork.playerWork.player.position.vy);
+            endRelPos.vz = Q12_TO_Q8(trace.target.vz - g_SysWork.playerWork.player.position.vz);
         }
 
         gte_ldv0(&endRelPos);

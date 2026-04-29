@@ -653,14 +653,14 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                     }
 
                     temp = func_8006DA08(&D_800C4728, &chara->field_44.field_18, &chara->field_44.field_48[0], chara);
-                    ptr  = D_800C4728.chara_10;
+                    ptr  = D_800C4728.character;
 
                     if (temp && ptr != NULL)
                     {
                         chara->field_44.field_48[1].vx = temp_s1_4;
                         chara->field_44.field_48[1].vy = temp2;
                         chara->field_44.field_48[1].vz = temp_s0_9;
-                        func_8008B714(chara, ptr, &D_800C4728.field_4, 0);
+                        func_8008B714(chara, ptr, &D_800C4728.target, 0);
                     }
                 }
             }
@@ -1214,7 +1214,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
     }
 }
 
-s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg2, s32 arg3) // 0x8008B714
+s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* attackPos, s32 arg3) // 0x8008B714
 {
     s32         sp10;
     s32         sp14;
@@ -1291,11 +1291,11 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
 
             if (target->model.charaId == Chara_Padlock)
             {
-                func_8005DC1C(Sfx_Unk1392, arg2, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1392, attackPos, Q8(0.5f), 0);
             }
             else
             {
-                func_8008B664(arg2, weaponAttack);
+                func_8008B664(attackPos, weaponAttack);
             }
         }
     }
@@ -1569,7 +1569,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
 
             if (var_a3 >= 0)
             {
-                func_8005F6B0(target, arg2, var_a2, var_a3);
+                func_8005F6B0(target, attackPos, var_a2, var_a3);
             }
         }
     }

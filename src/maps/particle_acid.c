@@ -25,7 +25,7 @@ void sharedFunc_800CB0A4_4_s03(VECTOR3* from, VECTOR3* to)
     }
 }
 
-bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
+bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 idx)
 {
     typedef struct
     {
@@ -57,22 +57,22 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
     s_func_800CB1B0* ptr;
     s_SubCharacter*  sub;
 
-    if (sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_0 == 0 ||
-        sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_2 == 0)
+    if (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0 == 0 ||
+        sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 == 0)
     {
-        sharedData_800DFB7C_0_s00[arg1].field_A = 0;
+        sharedData_800DFB7C_0_s00[idx].field_A = 0;
         return false;
     }
 
     ptr = PSX_SCRATCH;
 
-    ptr->field_148 = Math_Sin(-sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_2);
-    ptr->field_14A = Math_Cos(-sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_2);
-    ptr->field_14C = Math_Sin(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0 + Q12_ANGLE(180.0f));
-    ptr->field_14E = Math_Cos(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0 + Q12_ANGLE(180.0f));
+    ptr->field_148 = Math_Sin(-sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2);
+    ptr->field_14A = Math_Cos(-sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2);
+    ptr->field_14C = Math_Sin(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 + Q12_ANGLE(180.0f));
+    ptr->field_14E = Math_Cos(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 + Q12_ANGLE(180.0f));
 
     ptr->field_154 = ((D_800C4418.field_C - 1) *
-                      CLAMP_HIGH(Q12_MULT_PRECISE(D_800C4418.field_0, D_800C4418.field_8 - sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_0),
+                      CLAMP_HIGH(Q12_MULT_PRECISE(D_800C4418.field_0, D_800C4418.field_8 - sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0),
                                  D_800C4418.field_A) /
                       D_800C4418.field_A) +
                      1;
@@ -81,10 +81,10 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
     {
         ptr->field_158 = (i * D_800C4418.field_A) / D_800C4418.field_C;
 
-        ptr->field_12C.vy = sharedData_800DFB7C_0_s00[arg1].vy_8 + Q12_MULT(ptr->field_158, ptr->field_148);
+        ptr->field_12C.vy = sharedData_800DFB7C_0_s00[idx].vy_8 + Q12_MULT(ptr->field_158, ptr->field_148);
         temp_s1           = Q12_MULT(ptr->field_158, ptr->field_14A);
-        ptr->field_12C.vx = sharedData_800DFB7C_0_s00[arg1].field_0.vx_0 + Q12_MULT(temp_s1, ptr->field_14C);
-        ptr->field_12C.vz = sharedData_800DFB7C_0_s00[arg1].field_4.vz_4 + Q12_MULT(temp_s1, ptr->field_14E);
+        ptr->field_12C.vx = sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + Q12_MULT(temp_s1, ptr->field_14C);
+        ptr->field_12C.vz = sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + Q12_MULT(temp_s1, ptr->field_14E);
 
         Math_SetSVectorFastSum(&ptr->field_138,
                                Q12_TO_Q8(ptr->field_12C.vx) - (u16)ptr->field_0.field_0.vx,
@@ -121,16 +121,16 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
         ptr->field_15C = 128 - ((temp_a3 << 7) / (D_800C4418.field_C + 1));
         ptr->field_15C = (ptr->field_15C * func_80055D78(ptr->field_12C.vx, ptr->field_12C.vy, ptr->field_12C.vz)) >> 8;
 
-        if (sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_0 < (D_800C4418.field_8 >> 1))
+        if (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0 < (D_800C4418.field_8 >> 1))
         {
-            ptr->field_15C = (ptr->field_15C * sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_0) / (D_800C4418.field_8 >> 1);
+            ptr->field_15C = (ptr->field_15C * sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0) / (D_800C4418.field_8 >> 1);
         }
 
-        ptr->field_15C = Q12_MULT_PRECISE(ptr->field_15C, sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_2);
+        ptr->field_15C = Q12_MULT_PRECISE(ptr->field_15C, sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2);
 
         if (ptr->field_15C == 0)
         {
-            sharedData_800DFB7C_0_s00[arg1].field_A = 0;
+            sharedData_800DFB7C_0_s00[idx].field_A = 0;
         }
 
         setRGB0Fast(*poly, ptr->field_15C >> 2, ptr->field_15C >> 2, ptr->field_15C >> 2);
@@ -158,7 +158,7 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
 
     sp10 = ptr->field_0;
 
-    if (sharedData_800DFB7C_0_s00[arg1].field_B != 0)
+    if (sharedData_800DFB7C_0_s00[idx].field_B != 0)
     {
         temp_v0_9 = Q12_MULT_PRECISE(g_DeltaTime, D_800C4418.field_0 >> 2);
     }
@@ -167,22 +167,22 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
         temp_v0_9 = Q12_MULT_PRECISE(g_DeltaTime, D_800C4418.field_0);
     }
 
-    dir.vy = Q12_MULT(temp_v0_9, Math_Sin(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_2));
-    temp_s1  = Q12_MULT(temp_v0_9, Math_Cos(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_2));
-    dir.vx = Q12_MULT(temp_s1, Math_Sin(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0));
-    dir.vz = Q12_MULT(temp_s1, Math_Cos(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0));
+    dir.vy = Q12_MULT(temp_v0_9, Math_Sin(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2));
+    temp_s1  = Q12_MULT(temp_v0_9, Math_Cos(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2));
+    dir.vx = Q12_MULT(temp_s1, Math_Sin(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0));
+    dir.vz = Q12_MULT(temp_s1, Math_Cos(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0));
 
-    sharedData_800DFB7C_0_s00[arg1].field_0.vx_0 += dir.vx;
-    sharedData_800DFB7C_0_s00[arg1].vy_8         += dir.vy;
-    sharedData_800DFB7C_0_s00[arg1].field_4.vz_4 += dir.vz;
+    sharedData_800DFB7C_0_s00[idx].field_0.vx_0 += dir.vx;
+    sharedData_800DFB7C_0_s00[idx].vy_8         += dir.vy;
+    sharedData_800DFB7C_0_s00[idx].field_4.vz_4 += dir.vz;
 
-    rayFrom.vx = sharedData_800DFB7C_0_s00[arg1].field_0.vx_0;
-    rayFrom.vy = sharedData_800DFB7C_0_s00[arg1].vy_8;
-    rayFrom.vz = sharedData_800DFB7C_0_s00[arg1].field_4.vz_4;
+    rayFrom.vx = sharedData_800DFB7C_0_s00[idx].field_0.vx_0;
+    rayFrom.vy = sharedData_800DFB7C_0_s00[idx].vy_8;
+    rayFrom.vz = sharedData_800DFB7C_0_s00[idx].field_4.vz_4;
 
-    dir.vx = ptr->field_12C.vx - sharedData_800DFB7C_0_s00[arg1].field_0.vx_0;
-    dir.vy = ptr->field_12C.vy - sharedData_800DFB7C_0_s00[arg1].vy_8;
-    dir.vz = ptr->field_12C.vz - sharedData_800DFB7C_0_s00[arg1].field_4.vz_4;
+    dir.vx = ptr->field_12C.vx - sharedData_800DFB7C_0_s00[idx].field_0.vx_0;
+    dir.vy = ptr->field_12C.vy - sharedData_800DFB7C_0_s00[idx].vy_8;
+    dir.vz = ptr->field_12C.vz - sharedData_800DFB7C_0_s00[idx].field_4.vz_4;
 
     func_8006DA08(&trace, &rayFrom, &dir, g_SysWork.npcs);
     Collision_Get(&coll, rayFrom.vx + dir.vx, rayFrom.vz + dir.vz);
@@ -192,21 +192,21 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
     gte_SetRotMatrix(&ptr->field_0.field_C);
     gte_SetTransMatrix(&ptr->field_0.field_C);
 
-    sharedData_800DFB7C_0_s00[arg1].field_10.s_0.field_0 = CLAMP_LOW(sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_0 - g_DeltaTime, 0);
+    sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 = CLAMP_LOW(sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0 - g_DeltaTime, 0);
 
-    if (sharedData_800DFB7C_0_s00[arg1].field_B != 0)
+    if (sharedData_800DFB7C_0_s00[idx].field_B != 0)
     {
-        sharedData_800DFB7C_0_s00[arg1].field_10.s_0.field_2 = CLAMP_LOW(sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_2 - (g_DeltaTime << 2), 0);
+        sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 = CLAMP_LOW(sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 - (g_DeltaTime << 2), 0);
     }
-    else if (trace.hasHit_0 || coll.groundHeight_0 < sharedData_800DFB7C_0_s00[arg1].vy_8)
+    else if (trace.hasHit || coll.groundHeight_0 < sharedData_800DFB7C_0_s00[idx].vy_8)
     {
-        sharedData_800DFB7C_0_s00[arg1].field_B++;
+        sharedData_800DFB7C_0_s00[idx].field_B++;
 
-        if (trace.hasHit_0 && trace.chara_10 == &g_SysWork.playerWork.player)
+        if (trace.hasHit && trace.character == &g_SysWork.playerWork.player)
         {
-            sub = trace.chara_10;
+            sub = trace.character;
 
-            sharedFunc_800CBE54_4_s03(&trace.field_4, 1);
+            sharedFunc_800CBE54_4_s03(&trace.target, 1);
             sharedFunc_800CBE54_4_s03(&rayFrom, 1);
 
             if (g_SysWork.npcs[0].model.charaId == Chara_Floatstinger)

@@ -2357,131 +2357,130 @@ void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2) // 0x800
 
 bool Ray_LineCheck(s_RayTrace* trace, VECTOR3* from, VECTOR3* to) // 0x8006D90C
 {
-    s32     scratchPrev;
-    s32     scratchAddr;
-    VECTOR3 dir; // Q19.12
+    s32         prevScratchAddr;
+    s_RayState* state;
+    VECTOR3     offset; // Q19.12
 
-    dir.vx = to->vx - from->vx;
-    dir.vy = to->vy - from->vy;
-    dir.vz = to->vz - from->vz;
+    offset.vx = to->vx - from->vx;
+    offset.vy = to->vy - from->vy;
+    offset.vz = to->vz - from->vz;
 
-    trace->hasHit_0 = false;
+    trace->hasHit = false;
 
-    if (Ray_TraceSetup((s32)PSX_SCRATCH, 0, 0, from, &dir, 0, 0, NULL, 0))
+    if (Ray_TraceSetup((s_RayState*)PSX_SCRATCH, 0, 0, from, &offset, 0, 0, NULL, 0))
     {
-        scratchPrev   = SetSp((s32)PSX_SCRATCH_ADDR(984));
-        scratchAddr   = (s32)PSX_SCRATCH;
-        trace->hasHit_0 = Ray_TraceRun(trace, PSX_SCRATCH_ADDR(0));
+        prevScratchAddr = SetSp((s32)PSX_SCRATCH_ADDR(984));
 
-        SetSp(scratchPrev);
+        state         = (s_RayState*)PSX_SCRATCH;
+        trace->hasHit = Ray_TraceRun(trace, state);
+
+        SetSp(prevScratchAddr);
     }
 
-    if (!trace->hasHit_0)
+    if (!trace->hasHit)
     {
-        Ray_MissSet(trace, from, &dir, (s16)*(u16*)(&((u8*)scratchAddr)[92]));
+        Ray_MissSet(trace, from, &offset, state->field_5C);
     }
 
-    return trace->hasHit_0;
+    return trace->hasHit;
 }
 
-bool func_8006DA08(s_RayTrace* trace, VECTOR3* from, VECTOR3* dir, s_SubCharacter* chara) // 0x8006DA08
+bool func_8006DA08(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCharacter* chara) // 0x8006DA08
 {
     s32              sp28;
-    s32              scratchPrev;
-    s32              scratchAddr;
+    s32              prevScratch;
+    s_RayState*      state;
     s_SubCharacter** charas;
 
     charas = Collision_ActiveCharactersGet(&sp28, chara, false);
 
-    trace->hasHit_0 = false;
-    if (Ray_TraceSetup((s32)PSX_SCRATCH, 0, 0, from, dir, 0, 0, charas, sp28))
+    trace->hasHit = false;
+    if (Ray_TraceSetup((s_RayState*)PSX_SCRATCH, 0, 0, from, offset, 0, 0, charas, sp28))
     {
-        scratchPrev   = SetSp((s32)PSX_SCRATCH_ADDR(0x3D8));
-        scratchAddr   = (s32)PSX_SCRATCH;
-        trace->hasHit_0 = Ray_TraceRun(trace, PSX_SCRATCH_ADDR(0));
+        prevScratch   = SetSp((s32)PSX_SCRATCH_ADDR(0x3D8));
 
-        SetSp(scratchPrev);
+        state         = (s_RayState*)PSX_SCRATCH;
+        trace->hasHit = Ray_TraceRun(trace, state);
+
+        SetSp(prevScratch);
     }
 
-    if (!trace->hasHit_0)
+    if (!trace->hasHit)
     {
-        Ray_MissSet(trace, from, dir, (s16)*(u16*)(&((u8*)scratchAddr)[92]));
+        Ray_MissSet(trace, from, offset, state->field_5C);
     }
 
-    return trace->hasHit_0;
+    return trace->hasHit;
 }
 
-void Ray_MissSet(s_RayTrace* trace, VECTOR3* from, VECTOR3* dir, q23_8 arg3) // 0x8006DAE4
+void Ray_MissSet(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, q23_8 arg3) // 0x8006DAE4
 {
-    trace->hasHit_0   = false;
-    trace->field_1    = 0;
-    trace->field_4.vx = from->vx + dir->vx;
-    trace->field_4.vy = from->vy + dir->vy;
-    trace->field_4.vz = from->vz + dir->vz;
-    trace->chara_10   = NULL;
-    trace->field_14   = Q8_TO_Q12(arg3);
-    trace->field_18   = Q12(1.875f);
-    trace->field_1C   = Q12_ANGLE(0.0f);
+    trace->hasHit    = false;
+    trace->field_1   = 0;
+    trace->target.vx = from->vx + offset->vx;
+    trace->target.vy = from->vy + offset->vy;
+    trace->target.vz = from->vz + offset->vz;
+    trace->character = NULL;
+    trace->field_14  = Q8_TO_Q12(arg3);
+    trace->field_18  = Q12(1.875f);
+    trace->field_1C  = Q12_ANGLE(0.0f);
 }
 
-static inline void Ray_LosHitCheck_Inline(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, u16* ptr)
-{
-    Ray_MissSet(trace, from, offset, (short)*ptr);
-}
-
-bool Ray_LosHitCheck(s_RayTrace* trace, VECTOR3* from, VECTOR3* dir, s_SubCharacter* excludedChara) // 0x8006DB3C
+bool Ray_LosHitCheck(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCharacter* excludedChara) // 0x8006DB3C
 {
     s32              charaCount;
-    s32              stackPtr;
-    s32              scratchAddr;
+    s32              prevScratchAddr;
+    s_RayState*      state;
     s_SubCharacter** charas;
 
     charas        = Collision_ActiveCharactersGet(&charaCount, excludedChara, true);
-    trace->hasHit_0 = false;
+    trace->hasHit = false;
 
-    if (Ray_TraceSetup((s32)PSX_SCRATCH, 1, 0, from, dir, 0, 0, charas, charaCount))
+    if (Ray_TraceSetup((s_RayState*)PSX_SCRATCH, 1, 0, from, offset, 0, 0, charas, charaCount))
     {
-        stackPtr      = SetSp((s32)PSX_SCRATCH_ADDR(984));
-        scratchAddr   = (s32)PSX_SCRATCH;
-        trace->hasHit_0 = Ray_TraceRun(trace, scratchAddr);
+        prevScratchAddr = SetSp((s32)PSX_SCRATCH_ADDR(984));
 
-        SetSp(stackPtr);
+        state         = (s_RayState*)PSX_SCRATCH;
+        trace->hasHit = Ray_TraceRun(trace, state);
+
+        SetSp(prevScratchAddr);
     }
 
-    if (!trace->hasHit_0)
+    if (!trace->hasHit)
     {
-        Ray_LosHitCheck_Inline(trace, from, dir, &((u8*)scratchAddr)[92]);
+        Ray_MissSet(trace, from, offset, state->field_5C);
     }
 
-    return trace->hasHit_0;
+    return trace->hasHit;
 }
 
-bool func_8006DC18(s_RayTrace* trace, VECTOR3* from, VECTOR3* dir) // 0x8006DC18
+bool func_8006DC18(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset) // 0x8006DC18
 {
-    s32 scratchPrev;
-    s32 scratchAddr;
+    s32         prevScratchAddr;
+    s_RayState* state;
 
-    trace->hasHit_0 = false;
-    if (Ray_TraceSetup((s32)PSX_SCRATCH, 1, 76, from, dir, 0, 0, NULL, 0))
+    trace->hasHit = false;
+    if (Ray_TraceSetup((s32)PSX_SCRATCH, 1, 76, from, offset, 0, 0, NULL, 0))
     {
-        scratchPrev   = SetSp((s32)PSX_SCRATCH_ADDR(0x3D8));
-        scratchAddr   = (s32)PSX_SCRATCH;
-        trace->hasHit_0 = Ray_TraceRun(trace, PSX_SCRATCH_ADDR(0));
+        prevScratchAddr = SetSp((s32)PSX_SCRATCH_ADDR(0x3D8));
 
-        SetSp(scratchPrev);
+        state         = (s_RayState*)PSX_SCRATCH;
+        trace->hasHit = Ray_TraceRun(trace, state);
+
+        SetSp(prevScratchAddr);
     }
 
-    if (!trace->hasHit_0)
+    if (!trace->hasHit)
     {
-        Ray_MissSet(trace, from, dir, (s16)*(u16*)(&((u8*)scratchAddr)[92]));
+        Ray_MissSet(trace, from, offset, state->field_5C);
     }
 
-    return trace->hasHit_0;
+    return trace->hasHit;
 }
 
-bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* dir, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount)
+bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* offset, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount)
 {
-    if (dir->vx == Q12(0.0f) && dir->vz == Q12(0.0f))
+    if (offset->vx == Q12(0.0f) && offset->vz == Q12(0.0f))
     {
         return false;
     }
@@ -2496,9 +2495,9 @@ bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3
     state->field_2C.vy = Q12_TO_Q8(pos->vy);
     state->field_2C.vz = Q12_TO_Q8(pos->vz);
 
-    state->field_50.vx = Q12_TO_Q8(dir->vx);
-    state->field_50.vy = Q12_TO_Q8(dir->vy);
-    state->field_50.vz = Q12_TO_Q8(dir->vz);
+    state->field_50.vx = Q12_TO_Q8(offset->vx);
+    state->field_50.vy = Q12_TO_Q8(offset->vy);
+    state->field_50.vz = Q12_TO_Q8(offset->vz);
 
     state->field_3C = state->field_2C.vx + state->field_50.vx;
 
@@ -2509,7 +2508,7 @@ bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3
     state->field_44 = state->field_2C.vz + state->field_50.vz;
 
     state->field_5C = SquareRoot0(SQUARE(state->field_50.vx) + SQUARE(state->field_50.vz));
-    if (state->field_5C == 0)
+    if (state->field_5C == Q8(0.0f))
     {
         return false;
     }
@@ -2572,14 +2571,14 @@ bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state) // 0x8006DEB0
 
     if (state->field_8 != SHRT_MAX)
     {
-        trace->field_4.vx = Q8_TO_Q12(state->field_C);
-        trace->field_4.vy = Q8_TO_Q12(state->field_10);
-        trace->field_4.vz = Q8_TO_Q12(state->field_14);
-        trace->chara_10   = state->field_20;
-        trace->field_14   = Q8_TO_Q12(state->field_8);
-        trace->field_18   = Q8_TO_Q12(state->field_1C);
-        trace->field_1C   = ratan2(state->field_24, state->field_26);
-        trace->field_1    = state->field_28;
+        trace->target.vx = Q8_TO_Q12(state->field_C);
+        trace->target.vy = Q8_TO_Q12(state->field_10);
+        trace->target.vz = Q8_TO_Q12(state->field_14);
+        trace->character = state->field_20;
+        trace->field_14  = Q8_TO_Q12(state->field_8);
+        trace->field_18  = Q8_TO_Q12(state->field_1C);
+        trace->field_1C  = ratan2(state->field_24, state->field_26);
+        trace->field_1   = state->field_28;
         return true;
     }
 
@@ -2618,7 +2617,7 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
     u32     flags;
 
     flags = OrientationFlags_None;
-    arg0->field_1C = 0;
+    arg0->field_1C = Q8(0.0f);
 
     if (arg0->field_8.vx < 0 && arg0->field_C < 0 &&
         arg0->field_8.vy < 0 && arg0->field_E < 0)
@@ -2723,7 +2722,7 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
             }
         }
     }
-    while (arg0->field_1C < 20 && FP_FROM(sp28.vx, Q12_SHIFT) <= FP_FROM(sp18.vx, Q12_SHIFT));
+    while (arg0->field_1C < Q8(0.08f) && FP_FROM(sp28.vx, Q12_SHIFT) <= FP_FROM(sp18.vx, Q12_SHIFT));
 }
 
 void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ) // 0x8006E490
@@ -2940,6 +2939,7 @@ void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg
                             var_a1 = -var_a1;
                             var_t1 = arg1->field_0_0;
                         }
+
                         state->field_8  = var_a3;
                         state->field_C  = (sp10.vx + state->field_6C.field_0);
                         state->field_10 = (var_a2 - state->field_4E);
@@ -3036,7 +3036,7 @@ void func_8006EE0C(s_RayState_6C* arg0, s32 arg1, s_SubCharacter* chara) // 0x80
 
 void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
 {
-    VECTOR3 sp18; // Q23.8?
+    VECTOR3 pos; // Q19.12
     s32     bound;
     s16     temp_v0;
     s16     temp_v0_2;
@@ -3096,22 +3096,22 @@ void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
         return;
     }
 
-    sp18.vy = state->field_2C.vy + (Q12_MULT(state->field_50.vy, temp_v0));
-    if (((sp18.vy + state->field_4E) < state->field_6C.field_8) || (state->field_6C.field_A < (sp18.vy + state->field_4C)))
+    pos.vy = state->field_2C.vy + (Q12_MULT(state->field_50.vy, temp_v0));
+    if (((pos.vy + state->field_4E) < state->field_6C.field_8) || (state->field_6C.field_A < (pos.vy + state->field_4C)))
     {
         if (state->field_50.vy == 0)
         {
             return;
         }
 
-        if ((sp18.vy + state->field_4E) < state->field_6C.field_8)
+        if ((pos.vy + state->field_4E) < state->field_6C.field_8)
         {
             var_v1 = Q12(state->field_6C.field_8 - (state->field_2C.vy + state->field_4E)) / state->field_50.vy;
             if (var_v1 > Q12(1.0f))
             {
                 return;
             }
-            sp18.vy = state->field_6C.field_8 - state->field_4E;
+            pos.vy = state->field_6C.field_8 - state->field_4E;
         }
         else
         {
@@ -3120,29 +3120,29 @@ void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
             {
                 return;
             }
-            sp18.vy = state->field_6C.field_A - state->field_4C;
+            pos.vy = state->field_6C.field_A - state->field_4C;
         }
 
-        sp18.vx = state->field_2C.vx + Q12_MULT(state->field_50.vx, var_v1);
-        sp18.vz = state->field_2C.vz + Q12_MULT(state->field_50.vz, var_v1);
-        if ((SQUARE(state->field_6C.field_0 - sp18.vx) + SQUARE(state->field_6C.field_4 - sp18.vz)) >= SQUARE(state->field_6C.field_C))
+        pos.vx = state->field_2C.vx + Q12_MULT(state->field_50.vx, var_v1);
+        pos.vz = state->field_2C.vz + Q12_MULT(state->field_50.vz, var_v1);
+        if ((SQUARE(state->field_6C.field_0 - pos.vx) + SQUARE(state->field_6C.field_4 - pos.vz)) >= SQUARE(state->field_6C.field_C))
         {
             return;
         }
     }
     else
     {
-        sp18.vx = state->field_2C.vx + Q12_MULT(state->field_50.vx, temp_v0);
-        sp18.vz = state->field_2C.vz + Q12_MULT(state->field_50.vz, temp_v0);
+        pos.vx = state->field_2C.vx + Q12_MULT(state->field_50.vx, temp_v0);
+        pos.vz = state->field_2C.vz + Q12_MULT(state->field_50.vz, temp_v0);
     }
 
     state->field_8  = temp_v0_2;
-    state->field_C  = sp18.vx;
-    state->field_10 = sp18.vy;
-    state->field_14 = sp18.vz;
+    state->field_C  = pos.vx;
+    state->field_10 = pos.vy;
+    state->field_14 = pos.vz;
     state->field_1C = state->field_6C.field_8;
-    state->field_24 = sp18.vx - state->field_6C.field_0;
-    state->field_26 = sp18.vz - state->field_6C.field_4;
+    state->field_24 = pos.vx - state->field_6C.field_0;
+    state->field_26 = pos.vz - state->field_6C.field_4;
     state->field_20 = chara;
     state->field_28 = 0;
 }
@@ -3658,7 +3658,7 @@ bool Ray_CharaToCharaTargetLosCheck(s_SubCharacter* fromChara, q19_12 toX, q19_1
     isCharaMissed = false;
     if (Ray_LosHitCheck(&trace, &fromChara->position, &dir, fromChara))
     {
-        isCharaMissed = trace.chara_10 == NULL;
+        isCharaMissed = trace.character == NULL;
     }
     return isCharaMissed;
 }
@@ -3675,7 +3675,7 @@ bool Ray_NpcToPlayerLosCheck(s_SubCharacter* fromNpc, s_SubCharacter* toPlayer) 
     dir.vy = Q12(-0.1f);
     dir.vz = toPlayer->position.vz - fromNpc->position.vz;
 
-    return Ray_LosHitCheck(&trace, &from, &dir, fromNpc) && trace.chara_10 == NULL;
+    return Ray_LosHitCheck(&trace, &from, &dir, fromNpc) && trace.character == NULL;
 }
 
 bool Ray_CharaToCharaDistLosCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle) // 0x80070184
@@ -3709,7 +3709,7 @@ bool func_80070208(s_SubCharacter* chara, q19_12 dist) // 0x80070208
     cond = false;
     if (Ray_LosHitCheck(&trace, &chara->position, &offset, chara))
     {
-        cond = trace.chara_10 > NULL;
+        cond = trace.character > NULL;
     }
     return cond;
 }

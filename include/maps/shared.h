@@ -1017,7 +1017,7 @@ void sharedFunc_800CBE54_4_s03(VECTOR3* arg0, s32 arg1);
 
 bool sharedFunc_800CC004_4_s03(POLY_FT4** poly, s32 idx);
 
-bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1);
+bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 idx);
 
 // Twinfeeler and Floatstinger acid particle effect. Included in M4S03 and M4S05
 // TODO: Make this separate split in each map instead of `#include`.

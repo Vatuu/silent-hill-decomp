@@ -496,7 +496,7 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
             dir.vz = Q12_MULT(distMax, Math_Cos((angleToPlayer + angle) + angle1));
             Ray_LosHitCheck(&trace, &splitHead->position, &dir, splitHead);
 
-            if (!trace.hasHit_0 || trace.chara_10 != NULL)
+            if (!trace.hasHit || trace.character != NULL)
             {
                 splitHeadProps.angle_F0 = angle1 + (angleToPlayer + angle);
                 break;
@@ -574,7 +574,7 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
 
     if (distToPlayer < Q12(6.4f) &&
         (angleDeltaToPlayer < Q12_ANGLE(7.5f) || distToPlayer > Q12(3.2f) && angleDeltaToPlayer < Q12_ANGLE(15.0f)) &&
-        (!trace.hasHit_0 || trace.chara_10 != NULL))
+        (!trace.hasHit || trace.character != NULL))
     {
         splitHead->model.controlState = SplitHeadControl_3;
     }
@@ -824,7 +824,7 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
             dir.vz = Q12_MULT(distMax, Math_Cos((angleToPlayer + angle) + angle3));
             Ray_LosHitCheck(&trace, &splitHead->position, &dir, splitHead);
 
-            if (!trace.hasHit_0 || trace.chara_10 != NULL)
+            if (!trace.hasHit || trace.character != NULL)
             {
                 splitHeadProps.angle_F0 = angle3 + (angleToPlayer + angle);
                 break;
@@ -903,7 +903,7 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
 
     if (distToPlayer > Q12(2.85f) && distToPlayer < Q12(4.0f) &&
         angle2 < Q12_ANGLE(15.0f) &&
-        (!trace.hasHit_0 || trace.chara_10 != NULL))
+        (!trace.hasHit || trace.character != NULL))
     {
         splitHead->model.controlState = SplitHeadControl_1;
         if (!Rng_GenerateUInt(0, 7))

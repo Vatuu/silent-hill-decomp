@@ -1716,7 +1716,7 @@ bool func_800DB81C(s_SubCharacter* chara) // 0x800DB81C
     dir.vx = Q12_MULT(Q12_MULT(D_800AD4C8[63].field_0, Math_Sin(g_SysWork.npcs[0].properties.monsterCybil.field_11A)), Math_Sin(chara->rotation.vy));
     dir.vz = Q12_MULT(Q12_MULT(D_800AD4C8[63].field_0, Math_Sin(g_SysWork.npcs[0].properties.monsterCybil.field_11A)), Math_Cos(chara->rotation.vy));
 
-    if (func_8006DA08(&trace, &D_800ED570, &dir, chara) && trace.chara_10 == NULL)
+    if (func_8006DA08(&trace, &D_800ED570, &dir, chara) && trace.character == NULL)
     {
         return true;
     }
