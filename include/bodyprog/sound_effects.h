@@ -116,9 +116,9 @@ typedef enum _SfxId
 
     Sfx_Unk1409 = 1409,
     Sfx_Unk1410 = 1410,
-    Sfx_Unk1411 = 1411,
+    Sfx_Unk1411 = 1411, // Groaner.
 
-    Sfx_Unk1413 = 1413,
+    Sfx_Unk1413 = 1413, // Groaner footstep?
     Sfx_Unk1414 = 1414,
 
     Sfx_Unk1416 = 1416,

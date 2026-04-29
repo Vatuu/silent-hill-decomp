@@ -308,7 +308,7 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttac
     angleTo = Q12_FRACT(ratan2((g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx + g_SysWork.npcs[g_SysWork.targetNpcIdx].field_D8.offsetX_0) - g_SysWork.playerCombat.field_0.vx,
                                (g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz + g_SysWork.npcs[g_SysWork.targetNpcIdx].field_D8.offsetZ_2) - g_SysWork.playerCombat.field_0.vz) +
                           Q12_ANGLE(360.0f));
-    player->field_2A = angleTo;
+    player->angleToTarget = angleTo;
     Math_ShortestAngleGet(player->rotation.vy, angleTo, &shortestAngle);
 
     if (ABS(shortestAngle) >= Q12_ANGLE(8.5f))
@@ -2640,13 +2640,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             if (enemyAttackedIdx == g_SysWork.targetNpcIdx)
             {
-                player->field_2A = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.playerWork.player.position.vx,
+                player->angleToTarget = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.playerWork.player.position.vx,
                                                    (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.playerWork.player.position.vz) +
                                             Q12_ANGLE(360.0f));
             }
             else
             {
-                player->field_2A = player->rotation.vy;
+                player->angleToTarget = player->rotation.vy;
             }
 
             if (extra->model.stateStep == 0)
@@ -2685,7 +2685,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     }
                     else
                     {
-                        player->field_2A =
+                        player->angleToTarget =
                         player->rotation.vy = temp_a1;
                         D_800C454C             = 0;
                     }
@@ -2693,9 +2693,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
             else
             {
-                enemyAttackedIdx                                           = NO_VALUE;
+                enemyAttackedIdx = NO_VALUE;
                 playerProps.field_122 = Q12_ANGLE(90.0f);
-                player->field_2A                                            = player->rotation.vy;
+                player->angleToTarget = player->rotation.vy;
             }
 
             if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
@@ -3038,7 +3038,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 player->properties.player.afkTimer_E8 = Q12(0.0f);
             }
 
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
 
             if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_None)
             {
@@ -3077,7 +3077,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_WalkForward, 5, 0);
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
             break;
 
         case PlayerUpperBodyState_RunForward:
@@ -3093,7 +3093,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunForward, 7, 2);
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
             break;
 
         case PlayerUpperBodyState_RunWallStop:
@@ -3113,7 +3113,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunWallStop, 19, 0);
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunWallStop, 21, 0);
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
             break;
 
         case PlayerUpperBodyState_SidestepRight:
@@ -3124,7 +3124,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_SidestepRight, 13, 0);
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
             break;
 
         case PlayerUpperBodyState_SidestepLeft:
@@ -3135,7 +3135,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_SidestepLeft, 11, 0);
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
             break;
 
         case PlayerUpperBodyState_RunRight:
@@ -3146,7 +3146,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunRight, 17, 0);
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
 
             if (extra->model.anim.status == ANIM_STATUS(HarryAnim_RunRight, true))
             {
@@ -3162,7 +3162,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunLeft, 15, 0);
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
 
             if (extra->model.anim.status == ANIM_STATUS(HarryAnim_RunLeft, true))
             {
@@ -3178,7 +3178,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_WalkBackward, 9, 0);
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
             break;
 
         case PlayerUpperBodyState_QuickTurnRight:
@@ -3195,7 +3195,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 extra->model.anim.time = player->model.anim.time;
             }
 
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
             break;
 
         case PlayerUpperBodyState_QuickTurnLeft:
@@ -3212,7 +3212,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 extra->model.anim.time = player->model.anim.time;
             }
 
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
             break;
 
         case PlayerUpperBodyState_TurnRight:
@@ -3223,7 +3223,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_TurnRight, 27, 3);
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
             break;
 
         case PlayerUpperBodyState_TurnLeft:
@@ -3234,7 +3234,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_TurnLeft, 25, 4);
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
             break;
 
         case PlayerUpperBodyState_RunJumpBackward:
@@ -3250,7 +3250,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunJumpBackward, 33, 0);
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
             break;
 
         case PlayerUpperBodyState_LowerBodyStumble:
@@ -3266,7 +3266,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_LowerBodyStumble, 23, 0);
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
             break;
 
         case PlayerUpperBodyState_RunLeftWallStop:
@@ -3277,7 +3277,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunLeftWallStop, 0x25, 0);
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
             break;
 
         case PlayerUpperBodyState_RunRightWallStop:
@@ -3288,7 +3288,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunRightWallStop, 41, 0);
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
             break;
 
         case PlayerUpperBodyState_RunLeftStumble:
@@ -3304,7 +3304,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunLeftStumble, 39, 0);
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
             break;
 
         case PlayerUpperBodyState_SidestepRightStumble:
@@ -3320,7 +3320,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_SidestepRightStumble, 43, 0);
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
             break;
 
         case PlayerUpperBodyState_Aim:
@@ -3351,7 +3351,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             playerProps.flags_11C &= ~PlayerFlag_Unk6;
-            player->field_2A                                             = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
 
             if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
@@ -3481,7 +3481,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                 if (enemyAttackedIdx == g_SysWork.targetNpcIdx && enemyAttackedIdx != NO_VALUE)
                 {
-                    player->field_2A = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.playerWork.player.position.vx,
+                    player->angleToTarget = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.playerWork.player.position.vx,
                                                        (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.playerWork.player.position.vz) +
                                                 Q12_ANGLE(360.0f));
                 }
@@ -3504,7 +3504,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             break;
 
         case PlayerUpperBodyState_AimStart:
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
 
             if (g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
                 g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
@@ -3698,7 +3698,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 {
                     player->rotation.vy  = temp_s1_2;
                     D_800C454C             = 0;
-                    player->field_2A        = temp_s1_2;
+                    player->angleToTarget        = temp_s1_2;
 
                     if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
                     {
@@ -3735,7 +3735,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     }
                 }
 
-                player->field_2A = player->rotation.vy;
+                player->angleToTarget = player->rotation.vy;
                 break;
             }
 
@@ -3750,13 +3750,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             Math_ShortestAngleGet(player->rotation.vy, temp_s1_2, &sp20);
 
-            sp20      = CLAMP(sp20, -0x180, 0x180);
+            sp20 = CLAMP(sp20, Q12_ANGLE(-33.75f), Q12_ANGLE(33.75f));
 
             temp_v1_3 = g_DeltaTime * 0xF;
             temp_v1_3 = CLAMP(temp_v1_3, 0, 0xFFF);
             var_s0    = temp_v1_3;
 
-            Math_ShortestAngleGet(player->field_2A, temp_s1_2, &sp22);
+            Math_ShortestAngleGet(player->angleToTarget, temp_s1_2, &sp22);
 
             if (ABS(sp22) > Q12_ANGLE(11.25f))
             {
@@ -3765,11 +3765,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     var_s0 = -var_s0;
                 }
 
-                player->field_2A = Q12_ANGLE_NORM_U((player->field_2A + (var_s0 >> 4)) + Q12_ANGLE(360.0f));
+                player->angleToTarget = Q12_ANGLE_NORM_U((player->angleToTarget + (var_s0 >> 4)) + Q12_ANGLE(360.0f));
             }
             else
             {
-                player->field_2A = player->rotation.vy + sp20;
+                player->angleToTarget = player->rotation.vy + sp20;
 
                 if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
                 {
@@ -3846,7 +3846,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 g_SysWork.targetNpcIdx = NO_VALUE;
             }
 
-            player->field_2A = player->rotation.vy;
+            player->angleToTarget = player->rotation.vy;
             break;
 
         case PlayerUpperBodyState_Attack:
@@ -7173,20 +7173,20 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
             {
                 g_Player_FlexRotationX = playerProps.field_122 - Q12_ANGLE(90.0f);
 
-                if (ABS(player->field_2A - player->rotation.vy) > Q12_ANGLE(180.0f))
+                if (ABS(player->angleToTarget - player->rotation.vy) > Q12_ANGLE(180.0f))
                 {
-                    if (player->field_2A > player->rotation.vy)
+                    if (player->angleToTarget > player->rotation.vy)
                     {
-                        g_Player_FlexRotationY = -Q12_ANGLE_NORM_U((player->rotation.vy + Q12_ANGLE(360.0f)) - player->field_2A);
+                        g_Player_FlexRotationY = -Q12_ANGLE_NORM_U((player->rotation.vy + Q12_ANGLE(360.0f)) - player->angleToTarget);
                     }
                     else
                     {
-                        g_Player_FlexRotationY = Q12_ANGLE_NORM_U((player->field_2A + Q12_ANGLE(360.0f)) - player->rotation.vy);
+                        g_Player_FlexRotationY = Q12_ANGLE_NORM_U((player->angleToTarget + Q12_ANGLE(360.0f)) - player->rotation.vy);
                     }
                 }
                 else
                 {
-                    g_Player_FlexRotationY = player->field_2A - player->rotation.vy;
+                    g_Player_FlexRotationY = player->angleToTarget - player->rotation.vy;
                 }
 
                 if (player->properties.player.field_100 != 0 || g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock ||
@@ -7529,9 +7529,9 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord) // 0x8007
             else
             {
                 // @hack Required for match.
-                do { player->field_2A = player->rotation.vy; } while (false);
+                do { player->angleToTarget = player->rotation.vy; } while (false);
 
-                unkRot.vx = player->field_2A;
+                unkRot.vx = player->angleToTarget;
             }
 
             unkRot.vy  = playerProps.field_122;
@@ -7664,7 +7664,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord) // 0x8007
 
                 if (g_GameWork.config.optExtraAutoAiming_2C)
                 {
-                    unkRot.vx = player->field_2A;
+                    unkRot.vx = player->angleToTarget;
                 }
 
                 g_MapOverlayHeader.particleHyperBlasterBeamDraw_178(&sp20, &unkRot.vx, &unkRot.vy);
@@ -7923,7 +7923,7 @@ void func_8007E9C4(void) // 0x8007E9C4
 
     func_8004C564(0, NO_VALUE);
 
-    chara->field_2A         = Q12_ANGLE(90.0f);
+    chara->angleToTarget         = Q12_ANGLE(90.0f);
     g_Player_IsDead         = false;
     g_Player_DisableDamage  = false;
     g_Player_HasActionInput = false;

@@ -254,7 +254,7 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer);
 bool sharedFunc_800D7AB0_0_s01(s_SubCharacter* airScreamer);
 
 /** @brief Applies a multi-stage bend deformation to several model coordinates.
- * Builds three rotation matrices using scaled fractions of `chara->field_2A` and
+ * Builds three rotation matrices using scaled fractions of `chara->angleToTarget` and
  * multiplies them into `boneCoords[10]`, `boneCoords[9]`, `boneCoords[1]`, and `boneCoords[2]`.
  * Used when the animation flag bit 0 is active to drive a chained bending motion.
  */

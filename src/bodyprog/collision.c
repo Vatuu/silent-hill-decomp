@@ -777,7 +777,7 @@ void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* pos, c
     result->positionZ_1C    = Q12_TO_Q8(collQuery->position.vz);
     result->newPositionX_20 = result->positionX_18 + result->offset_C.vx;
     result->newPositionZ_24 = result->positionZ_1C + result->offset_C.vz;
-    result->field_2A        = FP_FROM(collQuery->rotation.vy + collQuery->position.vy, Q4_SHIFT); // TODO: Position + rotation? Seems wrong.
+    result->angleToTarget        = FP_FROM(collQuery->rotation.vy + collQuery->position.vy, Q4_SHIFT); // TODO: Position + rotation? Seems wrong.
     result->field_2C        = FP_FROM(collQuery->rotation.vx + collQuery->position.vy, Q4_SHIFT);
     result->field_0         = collQuery->field_12;
 }
@@ -1914,7 +1914,7 @@ void func_8006CC9C(s_CollisionState* state) // 0x8006CC9C
 
     if (state->field_9C.field_0 + (state->field_A0.s_1.field_4 + state->field_4.distance_8) < state->field_4.positionZ_1C ||
         state->field_4.newPositionZ_24 < state->field_9C.field_0 - (state->field_A0.s_1.field_4 + state->field_4.distance_8) ||
-        state->field_4.field_2A > state->field_A0.s_1.field_2)
+        state->field_4.angleToTarget > state->field_A0.s_1.field_2)
     {
         return;
     }

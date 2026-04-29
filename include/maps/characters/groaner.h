@@ -101,6 +101,7 @@ void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsC
 
 void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner);
 
+// Plays SFX.
 void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner);
 
 /*s_AnimInfo GROANER_ANIM_INFOS[] = {

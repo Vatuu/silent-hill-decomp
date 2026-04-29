@@ -429,7 +429,7 @@ void sharedFunc_800D2B00_0_s01(s_SubCharacter* airScreamer)
 {
     airScreamer->rotation.vx  = Q12_ANGLE(0.0f);
     airScreamer->rotation.vz  = Q12_ANGLE(0.0f);
-    airScreamer->field_2A        = Q12_ANGLE(0.0f);
+    airScreamer->angleToTarget        = Q12_ANGLE(0.0f);
 }
 
 void sharedFunc_800D2B10_0_s01(s_SubCharacter* airScreamer)
@@ -443,13 +443,13 @@ void sharedFunc_800D2B10_0_s01(s_SubCharacter* airScreamer)
 
 void sharedFunc_800D2B28_0_s01(s_SubCharacter* airScreamer)
 {
-    airScreamer->moveSpeed        = Q12(0.0f);
-    airScreamer->fallSpeed        = Q12(0.0f);
-    airScreamer->rotationSpeed.vx = Q12_ANGLE(0.0f);
-    airScreamer->rotationSpeed.vy = Q12_ANGLE(0.0f);
-    airScreamer->rotationSpeed.vz = Q12_ANGLE(0.0f);
-    airScreamer->field_32            = Q12(0.0f);
-    airScreamer->headingAngle     = airScreamer->rotation.vy;
+    airScreamer->moveSpeed           = Q12(0.0f);
+    airScreamer->fallSpeed           = Q12(0.0f);
+    airScreamer->rotationSpeed.vx    = Q12_ANGLE(0.0f);
+    airScreamer->rotationSpeed.vy    = Q12_ANGLE(0.0f);
+    airScreamer->rotationSpeed.vz    = Q12_ANGLE(0.0f);
+    airScreamer->angleToTargetRotationSpeed = Q12_ANGLE(0.0f);
+    airScreamer->headingAngle        = airScreamer->rotation.vy;
 }
 
 void sharedFunc_800D2B4C_0_s01(s_SubCharacter* airScreamer)
@@ -615,7 +615,7 @@ bool sharedFunc_800D2E04_0_s01(s_SubCharacter* airScreamer, VECTOR3* inVec, q19_
     dist0  = (u16)sharedData_800CAA98_0_s01.properties_D14[idx].val16[0];
     angle0 = (u16)sharedData_800CAA98_0_s01.properties_D14[idx].val16[1];
 
-    angle = Q12_ANGLE_NORM_S(ratan2(deltaX, deltaZ) - (airScreamer->rotation.vy + airScreamer->field_2A));
+    angle = Q12_ANGLE_NORM_S(ratan2(deltaX, deltaZ) - (airScreamer->rotation.vy + airScreamer->angleToTarget));
     dist  = SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, 12) + FP_MULTIPLY_PRECISE(deltaZ, deltaZ, 12));
 
     if (outDist != NULL)
@@ -11804,7 +11804,7 @@ void sharedFunc_800D5E78_0_s01(s_SubCharacter* airScreamer, q19_12 angle) // 0x8
         angleCpy = Q12_ANGLE(-60.0f);
     }
 
-    angleDelta = angleCpy - airScreamer->field_2A;
+    angleDelta = angleCpy - airScreamer->angleToTarget;
     if (angleDelta > Q12_ANGLE(0.5f))
     {
         angleDelta -= Q12_ANGLE(0.5f);
@@ -11877,22 +11877,20 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
         return false;
     }
 
-    if (airScreamer->rotationSpeed.vx != 0)
+    if (airScreamer->rotationSpeed.vx != Q12_ANGLE(0.0f))
+    {
+        return false;
+    }
+    if (airScreamer->rotationSpeed.vy != Q12_ANGLE(0.0f))
+    {
+        return false;
+    }
+    if (airScreamer->rotationSpeed.vz != Q12_ANGLE(0.0f))
     {
         return false;
     }
 
-    if (airScreamer->rotationSpeed.vy != 0)
-    {
-        return false;
-    }
-
-    if (airScreamer->rotationSpeed.vz != 0)
-    {
-        return false;
-    }
-
-    if (airScreamer->field_32 != 0)
+    if (airScreamer->angleToTargetRotationSpeed != Q12_ANGLE(0.0f))
     {
         return false;
     }
@@ -12330,57 +12328,57 @@ void sharedFunc_800D6C7C_0_s01(VECTOR* arg0, s_SubCharacter* airScreamer, s32 ar
 
 void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer)
 {
-    s32 tmp0;
-    s32 tmp1;
-    s32 element1;
-    s32 element2;
-    s32 moveSpeed;
+    s32    rotSpeedX;
+    s32    targetRotSpeed;
+    s32    rotSpeedZ;
+    s32    element2;
+    q19_12 rotSpeedCpy;
 
     sharedData_800E21D0_0_s01.flags_0 &= ~0x2B; // TODO: What flags are these?
 
-    element1  = sharedData_800E21D0_0_s01.field_B4[0][1];
+    rotSpeedZ  = sharedData_800E21D0_0_s01.field_B4[0][1];
     element2  = sharedData_800E21D0_0_s01.field_B4[0][2];
-    moveSpeed = airScreamer->moveSpeed;
+    rotSpeedCpy = airScreamer->moveSpeed;
     if (sharedData_800E21D0_0_s01.field_B4[0][0])
     {
         sharedData_800E21D0_0_s01.field_B4[0][0] = 0;
-        moveSpeed                                = sharedFunc_800D71F0_0_s01(moveSpeed, element1, element2, sharedData_800E21D0_0_s01.field_B4[0][3]);
+        rotSpeedCpy                                = sharedFunc_800D71F0_0_s01(rotSpeedCpy, rotSpeedZ, element2, sharedData_800E21D0_0_s01.field_B4[0][3]);
     }
     else
     {
-        moveSpeed = sharedFunc_800D7120_0_s01(moveSpeed, element1, element2);
+        rotSpeedCpy = sharedFunc_800D7120_0_s01(rotSpeedCpy, rotSpeedZ, element2);
     }
-    airScreamer->moveSpeed = moveSpeed;
+    airScreamer->moveSpeed = rotSpeedCpy;
 
-    moveSpeed = airScreamer->fallSpeed;
-    element1  = sharedData_800E21D0_0_s01.field_B4[1][1];
+    rotSpeedCpy = airScreamer->fallSpeed;
+    rotSpeedZ  = sharedData_800E21D0_0_s01.field_B4[1][1];
     element2  = sharedData_800E21D0_0_s01.field_B4[1][2];
     if (sharedData_800E21D0_0_s01.field_B4[1][0])
     {
         sharedData_800E21D0_0_s01.field_B4[1][0] = 0;
-        moveSpeed                                = sharedFunc_800D71F0_0_s01(moveSpeed, element1, element2, sharedData_800E21D0_0_s01.field_B4[1][3]);
+        rotSpeedCpy                                = sharedFunc_800D71F0_0_s01(rotSpeedCpy, rotSpeedZ, element2, sharedData_800E21D0_0_s01.field_B4[1][3]);
     }
     else
     {
-        moveSpeed = sharedFunc_800D7120_0_s01(moveSpeed, element1, element2);
+        rotSpeedCpy = sharedFunc_800D7120_0_s01(rotSpeedCpy, rotSpeedZ, element2);
     }
-    airScreamer->fallSpeed = moveSpeed;
+    airScreamer->fallSpeed = rotSpeedCpy;
 
-    moveSpeed = airScreamer->rotationSpeed.vy;
-    element1  = sharedData_800E21D0_0_s01.field_B4[3][1];
+    rotSpeedCpy = airScreamer->rotationSpeed.vy;
+    rotSpeedZ  = sharedData_800E21D0_0_s01.field_B4[3][1];
     element2  = sharedData_800E21D0_0_s01.field_B4[3][2];
     if (sharedData_800E21D0_0_s01.field_B4[3][0])
     {
 
-        moveSpeed = sharedFunc_800D71F0_0_s01(moveSpeed, element1, element2, sharedData_800E21D0_0_s01.field_B4[3][3]);
+        rotSpeedCpy = sharedFunc_800D71F0_0_s01(rotSpeedCpy, rotSpeedZ, element2, sharedData_800E21D0_0_s01.field_B4[3][3]);
     }
     else
     {
-        moveSpeed = sharedFunc_800D7120_0_s01(moveSpeed, element1, element2);
+        rotSpeedCpy = sharedFunc_800D7120_0_s01(rotSpeedCpy, rotSpeedZ, element2);
     }
-    airScreamer->rotationSpeed.vy = moveSpeed;
+    airScreamer->rotationSpeed.vy = rotSpeedCpy;
 
-    airScreamer->rotation.vy += Q12_MULT_PRECISE(g_DeltaTime, moveSpeed);
+    airScreamer->rotation.vy += Q12_MULT_PRECISE(g_DeltaTime, rotSpeedCpy);
     if (sharedFunc_800D4A80_0_s01(airScreamer) == 3)
     {
         sharedFunc_800D72E8_0_s01(airScreamer, airScreamer->fallSpeed, airScreamer->rotationSpeed.vy);
@@ -12390,19 +12388,19 @@ void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer)
         sharedFunc_800D72E8_0_s01(airScreamer, 0, Q12_ANGLE(0.0f));
     }
 
-    tmp0                             = sharedFunc_800D71F0_0_s01(airScreamer->rotationSpeed.vx, sharedData_800E21D0_0_s01.field_B4[2][1], sharedData_800E21D0_0_s01.field_B4[2][2], sharedData_800E21D0_0_s01.field_B4[2][3]);
-    moveSpeed                        = tmp0;
-    airScreamer->rotationSpeed.vx = tmp0;
-    airScreamer->rotation.vx     += Q12_MULT_PRECISE(g_DeltaTime, moveSpeed);
-    element1                         = sharedFunc_800D71F0_0_s01(airScreamer->rotationSpeed.vz, sharedData_800E21D0_0_s01.field_B4[4][1], sharedData_800E21D0_0_s01.field_B4[4][2], sharedData_800E21D0_0_s01.field_B4[4][3]);
-    moveSpeed                        = element1;
-    airScreamer->rotationSpeed.vz = moveSpeed;
+    rotSpeedX                     = sharedFunc_800D71F0_0_s01(airScreamer->rotationSpeed.vx, sharedData_800E21D0_0_s01.field_B4[2][1], sharedData_800E21D0_0_s01.field_B4[2][2], sharedData_800E21D0_0_s01.field_B4[2][3]);
+    rotSpeedCpy                   = rotSpeedX;
+    airScreamer->rotationSpeed.vx = rotSpeedX;
+    airScreamer->rotation.vx     += Q12_MULT_PRECISE(g_DeltaTime, rotSpeedCpy);
+    rotSpeedZ                     = sharedFunc_800D71F0_0_s01(airScreamer->rotationSpeed.vz, sharedData_800E21D0_0_s01.field_B4[4][1], sharedData_800E21D0_0_s01.field_B4[4][2], sharedData_800E21D0_0_s01.field_B4[4][3]);
+    rotSpeedCpy                   = rotSpeedZ;
+    airScreamer->rotationSpeed.vz = rotSpeedCpy;
 
-    airScreamer->rotation.vz += Q12_MULT_PRECISE(g_DeltaTime, moveSpeed);
-    moveSpeed                    = sharedFunc_800D71F0_0_s01(airScreamer->field_32, sharedData_800E21D0_0_s01.field_B4[5][1], sharedData_800E21D0_0_s01.field_B4[5][2], sharedData_800E21D0_0_s01.field_B4[5][3]);
-    tmp1                         = moveSpeed;
-    airScreamer->field_32        = tmp1;
-    airScreamer->field_2A       += Q12_MULT_PRECISE(g_DeltaTime, tmp1);
+    airScreamer->rotation.vz        += Q12_MULT_PRECISE(g_DeltaTime, rotSpeedCpy);
+    rotSpeedCpy                      = sharedFunc_800D71F0_0_s01(airScreamer->angleToTargetRotationSpeed, sharedData_800E21D0_0_s01.field_B4[5][1], sharedData_800E21D0_0_s01.field_B4[5][2], sharedData_800E21D0_0_s01.field_B4[5][3]);
+    targetRotSpeed                   = rotSpeedCpy;
+    airScreamer->angleToTargetRotationSpeed = targetRotSpeed;
+    airScreamer->angleToTarget      += Q12_MULT_PRECISE(g_DeltaTime, targetRotSpeed);
 }
 
 q19_12 sharedFunc_800D7120_0_s01(q19_12 moveSpeed, s32 arg1, s32 arg2)
@@ -12940,7 +12938,7 @@ void sharedFunc_800D7B14_0_s01(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 
     if (chara->model.anim.flags & AnimFlag_Unlocked)
     {
-        bendAngle = chara->field_2A;
+        bendAngle = chara->angleToTarget;
 
         PushMatrix();
         sharedData_800DE220_0_s01.vx = Q12(0.0f);

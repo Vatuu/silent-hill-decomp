@@ -1496,19 +1496,19 @@ typedef struct _PropertiesGroaner
     /* 0xF2  */ q3_12      field_F2;
     /* 0xF4  */ q19_12     targetPositionX;
     /* 0xF8  */ q19_12     targetPositionZ;
-    /* 0xFC  */ q3_12      angle_FC;
+    /* 0xFC  */ q3_12      angleToTarget;
     /* 0xFE  */ q3_12      field_FE;
     /* 0x100 */ u16        relKeyframeIdx_100;
-    /* 0102x */ s8         __pad_102[2];
+    /* 0x102 */ s8         __pad_102[2];
     /* 0x104 */ q19_12     timer_104;
     /* 0x108 */ u32        field_108;
-    /* 0x10C */ q3_12      timer_10C;
-    /* 0x10E */ u8         field_10E;
-    /* 0x10F */ u8         field_10F;
-    /* 0x110 */ u8         field_110;
-    /* 0x111 */ u8         field_111;
+    /* 0x10C */ q3_12      timer_10C; // SFX timer?
+    /* 0x10E */ u8         field_10E; // } Sound states?
+    /* 0x10F */ u8         field_10F; // }
+    /* 0x110 */ u8         field_110; /** `bool` | Play SFX. */
+    /* 0x111 */ u8         field_111; /** `bool` | Play SFX. */
     /* 0x112 */ s8         __pad_112[2];
-    /* 0x114 */ s16        field_114;
+    /* 0x114 */ q3_12      field_114; // Move speed coefficient?
 } e_PropertiesGroaner;
 
 /** @brief Hanged Scratcher character properties. */
@@ -1705,25 +1705,25 @@ STATIC_ASSERT_SIZEOF(s_PropertiesSplitHead, 64);
 /** @brief Stalker character properties. */
 typedef struct _PropertiesStalker
 {
-    s16    flags_E8; /** `e_StalkerFlags` */
-    s8     __pad_EA[2];
-    q3_12  offset_EC;
-    q3_12  offset_EE;
-    q19_12 targetPositionX_F0;
-    q19_12 targetPositionZ_F4;
-    q19_12 timer_F8;
-    s16    keyframeIdx_FC;    // Or anim status?? Seems to be used as both.
-    s16    relKeyframeIdx_FE; // Unsure.
-    q3_12  targetHeadingAngle_100;
-    s16    sfxId_102;
-    q19_12 relAnimTime_104;
-    q4_12  timer_108;
-    u8     field_10A;
-    s8     __pad_10B;
-    q19_12 timer_10C;
-    q19_12 health_110;
-    q3_12  angle_114;
-    q4_12  timer_116;
+    /* 0xE8  */ s16    flags; /** `e_StalkerFlags` */
+    /* 0xEA  */ s8     __pad_EA[2];
+    /* 0xEC  */ q3_12  offset_EC;
+    /* 0xEE  */ q3_12  offset_EE;
+    /* 0xF0  */ q19_12 targetPositionX;
+    /* 0xF4  */ q19_12 targetPositionZ;
+    /* 0xF8  */ q19_12 timer_F8;
+    /* 0xFC  */ s16    keyframeIdx_FC;    // Or anim status?? Seems to be used as both.
+    /* 0xFE  */ s16    relKeyframeIdx_FE; // Unsure.
+    /* 0x100 */ q3_12  targetHeadingAngle;
+    /* 0x102 */ s16    sfxId_102;
+    /* 0x104 */ q19_12 relAnimTime_104;
+    /* 0x108 */ q4_12  timer_108;
+    /* 0x10A */ u8     field_10A;
+    /* 0x10B */ s8     __pad_10B;
+    /* 0x10C */ q19_12 timer_10C;
+    /* 0x110 */ q19_12 health_110;
+    /* 0x114 */ q3_12  angle_114;
+    /* 0x116 */ q4_12  timer_116;
 } s_PropertiesStalker;
 
 /** @brief Twinfeeler character properties. */
@@ -1804,17 +1804,15 @@ typedef struct _SubCharacter
     /* 0x0  */ s_Model           model;          // In player: Manage the half lower part of Harry's body animations (legs and feet).
     /* 0x18 */ VECTOR3           position;       /** Q19.12 */
     /* 0x24 */ SVECTOR3          rotation;       /** Q3.12 */
-    /* 0x2A */ q3_12             field_2A;       // Angle related to `rotation`, unknown purpose.
-    /* 0x2C */ SVECTOR3          rotationSpeed;  /** Q3.12 | Range: `[Q12_ANGLE(-157.5f), Q12_ANGLE(157.5f)]`. */
-    /* 0x32 */ q3_12             field_32;       // Related to `rotationSpeed`, unknown purpose.
+    /* 0x2A */ q3_12             angleToTarget;
+    /* 0x2C */ SVECTOR3          rotationSpeed;              /** Q3.12 | Rotation speed for `rotation`. */
+    /* 0x32 */ q3_12             angleToTargetRotationSpeed; /** Rotation speed for `angleToTarget`. */
     /* 0x34 */ q19_12            fallSpeed;
     /* 0x38 */ q19_12            moveSpeed;
     /* 0x3C */ q3_12             headingAngle;
     /* 0x3E */ s16               flags;          /** `e_CharaFlags` */
     /* 0x40 */ s8                field_40;       // In player: Index of the NPC attacking the player.
-                                                 // In NPCs: Unknown.
-                                                 // Possibly `Game_NpcRoomInitSpawn` may have the answer, indicating
-                                                 // it's used to indicate the NPC index in `s_Savegame::ovlEnemyStates`.
+                                                 // In NPCs: Unknown. `Game_NpcRoomInitSpawn` sugests it indicates the NPC index in `s_Savegame::ovlEnemyStates`.
     /* 0x41 */ s8                attackReceived; // Packed weapon attack indicating what attack has been performed to the character. See `WEAPON_ATTACK`.
                // 2 bytes of padding.
     /* 0x44 */ s_SubCharacter_44 field_44;

@@ -55,7 +55,7 @@ void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINAT
             sharedFunc_800D7BE8_0_s00(stalker);
         }
 
-        stalkerProps.flags_E8 &= ~StalkerFlag_WarpRotation;
+        stalkerProps.flags &= ~StalkerFlag_WarpRotation;
     }
 }
 
@@ -63,7 +63,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
 {
     s32 i;
 
-    stalkerProps.flags_E8 = StalkerFlag_None;
+    stalkerProps.flags = StalkerFlag_None;
     Chara_PropertiesClear(stalker);
     stalker->health = sharedData_800E3A20_0_s00;
 
@@ -89,11 +89,11 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
     switch (stalker->model.stateStep)
     {
         case StalkerStateStep_11:
-            stalkerProps.flags_E8 |= StalkerFlag_2;
+            stalkerProps.flags |= StalkerFlag_2;
 
         case StalkerStateStep_3:
             stalkerProps.timer_F8  = Q12(2.5f);
-            stalkerProps.flags_E8 |= StalkerFlag_0;
+            stalkerProps.flags |= StalkerFlag_0;
 
         case StalkerStateStep_8:
             stalker->model.controlState = StalkerControl_4;
@@ -102,7 +102,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
 
         case StalkerStateStep_7:
             stalker->model.controlState = StalkerControl_4;
-            stalkerProps.flags_E8   |= StalkerFlag_11;
+            stalkerProps.flags   |= StalkerFlag_11;
             stalker->field_E1_0      = 3;
             break;
 
@@ -110,7 +110,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             stalker->model.controlState = StalkerControl_2;
             stalker->flags       |= CharaFlag_Unk3;
             stalkerProps.timer_F8    = Q12(1.0f);
-            stalkerProps.flags_E8   |= StalkerFlag_0 | StalkerFlag_1;
+            stalkerProps.flags   |= StalkerFlag_0 | StalkerFlag_1;
             stalker->field_E1_0      = 3;
             stalker->flags       &= ~CharaFlag_Unk5;
             break;
@@ -127,7 +127,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             stalker->model.anim.status      = ANIM_STATUS(StalkerAnim_27, true);
             stalker->model.anim.time        = Q12(427.0f);
             stalker->model.anim.keyframeIdx = 427;
-            stalkerProps.flags_E8                |= StalkerFlag_0;
+            stalkerProps.flags                |= StalkerFlag_0;
             stalker->field_E1_0                   = 3;
             break;
 
@@ -152,8 +152,8 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
 
     stalker->model.stateStep    = 0;
     stalkerProps.sfxId_102          = NO_VALUE;
-    stalkerProps.targetPositionX_F0 = stalker->position.vx;
-    stalkerProps.targetPositionZ_F4 = stalker->position.vz;
+    stalkerProps.targetPositionX = stalker->position.vx;
+    stalkerProps.targetPositionZ = stalker->position.vz;
     stalkerProps.health_110         = stalker->health;
 
     ModelAnim_AnimInfoSet(&stalker->model.anim, STALKER_ANIM_INFOS);
@@ -198,12 +198,12 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
         {
             stalker->health       = MAX(stalker->health - stalker->damage.amount, Q12(0.0f));
             stalkerProps.health_110 -= stalker->damage.amount >> 2;
-            stalkerProps.flags_E8   |= StalkerFlag_0 | StalkerFlag_10;
+            stalkerProps.flags   |= StalkerFlag_0 | StalkerFlag_10;
 
             stalker->damage.position.vx += Q12_MULT(stalker->moveSpeed, Math_Sin(stalker->headingAngle)) >> 3;
             stalker->damage.position.vz += Q12_MULT(stalker->moveSpeed, Math_Cos(stalker->headingAngle)) >> 3;
 
-            if (stalkerProps.flags_E8 & StalkerFlag_6)
+            if (stalkerProps.flags & StalkerFlag_6)
             {
                 mag          = Math_Vector2MagCalc(stalker->damage.position.vx, stalker->damage.position.vz);
                 stalker->moveSpeed = (mag << 12) / 0xC000;
@@ -215,18 +215,18 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
             }
 
             stalker->headingAngle              = ratan2(stalker->damage.position.vx, stalker->damage.position.vz);
-            stalkerProps.flags_E8                |= StalkerFlag_13;
+            stalkerProps.flags                |= StalkerFlag_13;
             stalkerProps.timer_10C += stalker->damage.amount;
 
             if (stalkerProps.timer_10C >= sharedData_800E3A2C_0_s00 ||
-                (!(stalkerProps.flags_E8 & StalkerFlag_6) && stalker->health <= sharedData_800E3A24_0_s00))
+                (!(stalkerProps.flags & StalkerFlag_6) && stalker->health <= sharedData_800E3A24_0_s00))
             {
                 stalkerProps.timer_10C = 0;
 
                 angle = ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position) -
                                           stalker->rotation.vy));
 
-                if (stalkerProps.flags_E8 & StalkerFlag_6)
+                if (stalkerProps.flags & StalkerFlag_6)
                 {
                     if (stalker->model.anim.status == 53)
                     {
@@ -246,7 +246,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                 }
                 else
                 {
-                    if (stalker->health > sharedData_800E3A24_0_s00 && !(stalkerProps.flags_E8 & 0x80))
+                    if (stalker->health > sharedData_800E3A24_0_s00 && !(stalkerProps.flags & 0x80))
                     {
                         if (stalker->model.controlState == StalkerControl_5)
                         {
@@ -268,7 +268,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                             }
                         }
                     }
-                    else if (stalkerProps.flags_E8 & StalkerFlag_7)
+                    else if (stalkerProps.flags & StalkerFlag_7)
                     {
                         stalker->model.controlState = StalkerControl_9;
 
@@ -437,7 +437,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                             }
                         }
 
-                        stalkerProps.flags_E8 &= ~(1 << 7);
+                        stalkerProps.flags &= ~(1 << 7);
                     }
                     else
                     {
@@ -497,7 +497,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                 }
 
                 stalkerProps.timer_F8  = Q12(0.0f);
-                stalkerProps.flags_E8 &= 0xF7E7;
+                stalkerProps.flags &= 0xF7E7;
             }
         }
     }
@@ -516,7 +516,7 @@ void Ai_Stalker_ControlUpdate(s_SubCharacter* stalker)
     s32   unkAnimStatus;
     s32   animStatus;
 
-    if (stalkerProps.flags_E8 & StalkerFlag_10)
+    if (stalkerProps.flags & StalkerFlag_10)
     {
         stalker->flags |= CharaFlag_Unk3;
     }
@@ -662,13 +662,13 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
                                               sharedData_800E3A1C_0_s00 - stalker->position.vz) -
                                        stalker->rotation.vy);
 
-    if (distToPlayer > Q12(8.0f) && (stalkerProps.flags_E8 & StalkerFlag_0) && !(g_SysWork.flags_22A4 & UnkSysFlag_MenuOpen))
+    if (distToPlayer > Q12(8.0f) && (stalkerProps.flags & StalkerFlag_0) && !(g_SysWork.flags_22A4 & UnkSysFlag_MenuOpen))
     {
         if (!Vw_AabbVisibleInScreenCheck(stalker->position.vx - Q12(1.0f), stalker->position.vx + Q12(1.0f),
                                          stalker->position.vy - Q12(1.8f), stalker->position.vy,
                                          stalker->position.vz - Q12(1.0f), stalker->position.vz - Q12(1.0f)))
         {
-            stalkerProps.flags_E8 |= StalkerFlag_WarpRotation;
+            stalkerProps.flags |= StalkerFlag_WarpRotation;
         }
     }
 
@@ -677,7 +677,7 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
     {
         stalkerProps.timer_F8 = Q12(0.0f);
 
-        if (stalkerProps.flags_E8 & StalkerFlag_WarpRotation)
+        if (stalkerProps.flags & StalkerFlag_WarpRotation)
         {
             stalker->rotation.vy = Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position);
         }
@@ -718,8 +718,8 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
         }
 
         if ((g_SysWork.charaGroupFlags[3] & CharaGroupFlag_0) ||
-            ( (stalkerProps.flags_E8 & StalkerFlag_2) && Rng_GenerateInt(0, 3) != 0) || // 1 in 4 chance.
-            (!(stalkerProps.flags_E8 & StalkerFlag_2) && Rng_GenerateInt(0, 1) != 0))   // 1 in 2 chance.
+            ( (stalkerProps.flags & StalkerFlag_2) && Rng_GenerateInt(0, 3) != 0) || // 1 in 4 chance.
+            (!(stalkerProps.flags & StalkerFlag_2) && Rng_GenerateInt(0, 1) != 0))   // 1 in 2 chance.
         {
             if ( distToPlayer < Q12(0.9f) &&
                 (distToPlayer > Q12(0.7f) || !Rng_GenerateInt(0, 3))) // 1 in 4 chance.
@@ -805,15 +805,15 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
         // Set target heading angle.
         if (stalkerProps.timer_F8 == Q12(0.0f))
         {
-            stalkerProps.targetHeadingAngle_100 = Chara_HeadingAngleGet(stalker,
+            stalkerProps.targetHeadingAngle = Chara_HeadingAngleGet(stalker,
                                                                         Q12(2.0f),
                                                                         g_SysWork.playerWork.player.position.vx,
                                                                         g_SysWork.playerWork.player.position.vz,
                                                                         Q12(1.0f),
                                                                         true);
-            if (stalkerProps.targetHeadingAngle_100 == Q12_ANGLE(360.0f))
+            if (stalkerProps.targetHeadingAngle == Q12_ANGLE(360.0f))
             {
-                stalkerProps.targetHeadingAngle_100 = stalker->rotation.vy - Q12_ANGLE(180.0f);
+                stalkerProps.targetHeadingAngle = stalker->rotation.vy - Q12_ANGLE(180.0f);
             }
         }
 
@@ -825,13 +825,13 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
         }
 
         // Turn toward target heading angle.
-        if (stalkerProps.flags_E8 & StalkerFlag_WarpRotation)
+        if (stalkerProps.flags & StalkerFlag_WarpRotation)
         {
-            stalker->rotation.vy = stalkerProps.targetHeadingAngle_100;
+            stalker->rotation.vy = stalkerProps.targetHeadingAngle;
         }
         else
         {
-            angleDeltaToTargetHeading = Math_AngleNormalizeSigned(stalkerProps.targetHeadingAngle_100 - stalker->rotation.vy);
+            angleDeltaToTargetHeading = Math_AngleNormalizeSigned(stalkerProps.targetHeadingAngle - stalker->rotation.vy);
             if (TIMESTEP_ANGLE(1, 2) < ABS(angleDeltaToTargetHeading))
             {
                 if (angleDeltaToTargetHeading > Q12_ANGLE(0.0f))
@@ -899,57 +899,57 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
 
     if (cond1 || func_80070360(stalker, distToPlayer, Q12(1.0f)))
     {
-        stalkerProps.targetPositionX_F0 = sharedData_800E3A18_0_s00;
-        stalkerProps.targetPositionZ_F4 = sharedData_800E3A1C_0_s00;
+        stalkerProps.targetPositionX = sharedData_800E3A18_0_s00;
+        stalkerProps.targetPositionZ = sharedData_800E3A1C_0_s00;
 
-        if (!(stalkerProps.flags_E8 & StalkerFlag_10))
+        if (!(stalkerProps.flags & StalkerFlag_10))
         {
-            stalkerProps.flags_E8 |= StalkerFlag_10;
+            stalkerProps.flags |= StalkerFlag_10;
             sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1363);
         }
 
         stalkerProps.timer_116 = Q12(0.0f);
     }
-    else if (stalkerProps.flags_E8 & StalkerFlag_10)
+    else if (stalkerProps.flags & StalkerFlag_10)
     {
         stalkerProps.timer_116 += g_DeltaTime;
 
         if (!Rng_GenerateUInt(0, 511) || stalkerProps.timer_116 > Q12(1.2f))
         {
             stalkerProps.timer_116 = Q12(0.0f);
-            stalkerProps.flags_E8 &= ~StalkerFlag_10;
+            stalkerProps.flags &= ~StalkerFlag_10;
         }
     }
 
     if (distToPlayer > Q12(8.0f))
     {
-        if ((stalkerProps.flags_E8 & StalkerFlag_0) &&
-            (stalkerProps.flags_E8 & StalkerFlag_10) &&
+        if ((stalkerProps.flags & StalkerFlag_0) &&
+            (stalkerProps.flags & StalkerFlag_10) &&
             !(g_SysWork.flags_22A4 & UnkSysFlag_MenuOpen))
         {
             if (!Vw_AabbVisibleInScreenCheck(stalker->position.vx - Q12(1.0f), stalker->position.vx + Q12(1.0f),
                                              stalker->position.vy - Q12(1.8f), stalker->position.vy,
                                              stalker->position.vz - Q12(1.0f), stalker->position.vz - Q12(1.0f)))
             {
-                stalkerProps.flags_E8 |= StalkerFlag_WarpRotation;
+                stalkerProps.flags |= StalkerFlag_WarpRotation;
             }
         }
     }
 
-    if (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_30, true) && !(stalkerProps.flags_E8 & StalkerFlag_8) &&
+    if (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_30, true) && !(stalkerProps.flags & StalkerFlag_8) &&
         !func_800700F8(stalker, &g_SysWork.playerWork.player))
     {
         stalkerProps.timer_F8 = Q12(0.0f);
 
-        if (!(stalkerProps.flags_E8 & StalkerFlag_13))
+        if (!(stalkerProps.flags & StalkerFlag_13))
         {
             Chara_MoveSpeedUpdate3(stalker, Q12_ANGLE(180.0f), (Q12_ANGLE(180.0f) - ABS(angleDeltaToPlayer)) * 2);
         }
 
-        if (stalkerProps.flags_E8 & StalkerFlag_WarpRotation)
+        if (stalkerProps.flags & StalkerFlag_WarpRotation)
         {
-            stalker->rotation.vy = ratan2(stalkerProps.targetPositionX_F0 - stalker->position.vx,
-                                             stalkerProps.targetPositionZ_F4 - stalker->position.vz);
+            stalker->rotation.vy = ratan2(stalkerProps.targetPositionX - stalker->position.vx,
+                                             stalkerProps.targetPositionZ - stalker->position.vz);
         }
         else
         {
@@ -980,8 +980,8 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
 
         if ((g_SysWork.charaGroupFlags[3] & CharaGroupFlag_0) || func_80070320() ||
             ABS(stalker->position.vy - g_SysWork.playerWork.player.position.vy) > Q12(0.3f) ||
-            ( (stalkerProps.flags_E8 & StalkerFlag_2) &&  Rng_GenerateInt(0, 3)) || // 3 in 4 chance?
-            (!(stalkerProps.flags_E8 & StalkerFlag_2) && !Rng_GenerateInt(0, 3)))   // 1 in 4 chance.
+            ( (stalkerProps.flags & StalkerFlag_2) &&  Rng_GenerateInt(0, 3)) || // 3 in 4 chance?
+            (!(stalkerProps.flags & StalkerFlag_2) && !Rng_GenerateInt(0, 3)))   // 1 in 4 chance.
         {
             if (!(g_SysWork.playerWork.player.flags & CharaFlag_Unk4) &&
                 distToPlayer < Q12(0.9f) && (distToPlayer > Q12(0.7f) || !Rng_GenerateInt(0, 3)) && // 1 in 4 chance.
@@ -1058,22 +1058,22 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
     }
     else
     {
-        if (!(stalkerProps.flags_E8 & StalkerFlag_13))
+        if (!(stalkerProps.flags & StalkerFlag_13))
         {
             Chara_MoveSpeedUpdate3(stalker, Q12(0.5f), Q12(0.7f));
         }
 
         if (stalkerProps.timer_F8 == Q12(0.0f))
         {
-            stalkerProps.targetHeadingAngle_100 = Chara_HeadingAngleGet(stalker,
+            stalkerProps.targetHeadingAngle = Chara_HeadingAngleGet(stalker,
                                                                         Q12(2.5f),
-                                                                        stalkerProps.targetPositionX_F0,
-                                                                        stalkerProps.targetPositionZ_F4,
+                                                                        stalkerProps.targetPositionX,
+                                                                        stalkerProps.targetPositionZ,
                                                                         Q12(1.0f),
                                                                         true);
-            if (stalkerProps.targetHeadingAngle_100 == Q12_ANGLE(360.0f))
+            if (stalkerProps.targetHeadingAngle == Q12_ANGLE(360.0f))
             {
-                stalkerProps.targetHeadingAngle_100 = stalker->rotation.vy - Q12_ANGLE(180.0f);
+                stalkerProps.targetHeadingAngle = stalker->rotation.vy - Q12_ANGLE(180.0f);
             }
         }
 
@@ -1084,13 +1084,13 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
             stalkerProps.timer_F8 = Q12(0.0f);
         }
 
-        if (stalkerProps.flags_E8 & StalkerFlag_WarpRotation)
+        if (stalkerProps.flags & StalkerFlag_WarpRotation)
         {
-            stalker->rotation.vy = stalkerProps.targetHeadingAngle_100;
+            stalker->rotation.vy = stalkerProps.targetHeadingAngle;
         }
         else
         {
-            angleDeltaToTargetHeading = Math_AngleNormalizeSigned(stalkerProps.targetHeadingAngle_100 - stalker->rotation.vy);
+            angleDeltaToTargetHeading = Math_AngleNormalizeSigned(stalkerProps.targetHeadingAngle - stalker->rotation.vy);
             if (((g_DeltaTime >> 3) + 1) < ABS(angleDeltaToTargetHeading))
             {
                 if (angleDeltaToTargetHeading > Q12_ANGLE(0.0f))
@@ -1107,8 +1107,8 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
 
     if (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_30, true) && (radiusMax * 2) < distToPlayer)
     {
-        temp = SquareRoot0(SQUARE(Q12_TO_Q6(stalker->position.vx - stalkerProps.targetPositionX_F0)) +
-                           SQUARE(Q12_TO_Q6(stalker->position.vz - stalkerProps.targetPositionZ_F4)));
+        temp = SquareRoot0(SQUARE(Q12_TO_Q6(stalker->position.vx - stalkerProps.targetPositionX)) +
+                           SQUARE(Q12_TO_Q6(stalker->position.vz - stalkerProps.targetPositionZ)));
         temp2 = radiusMin >> 1;
         if (Q6_TO_Q12(temp) < temp2)
         {
@@ -1160,9 +1160,9 @@ void Ai_Stalker_Control_4(s_SubCharacter* stalker)
 
     condCombo |= func_80070360(stalker, distToPlayer, Q12(0.8f));
 
-    if (!(stalkerProps.flags_E8 & StalkerFlag_13))
+    if (!(stalkerProps.flags & StalkerFlag_13))
     {
-        if (stalkerProps.flags_E8 & StalkerFlag_11)
+        if (stalkerProps.flags & StalkerFlag_11)
         {
             Chara_MoveSpeedUpdate3(stalker, Q12(0.5f), Q12(0.35f));
         }
@@ -1172,8 +1172,8 @@ void Ai_Stalker_Control_4(s_SubCharacter* stalker)
         }
     }
 
-    offsetX      = stalker->position.vx - stalkerProps.targetPositionX_F0;
-    offsetZ      = stalker->position.vz - stalkerProps.targetPositionZ_F4;
+    offsetX      = stalker->position.vx - stalkerProps.targetPositionX;
+    offsetZ      = stalker->position.vz - stalkerProps.targetPositionZ;
     distToTarget = MAX(ABS(offsetX), ABS(offsetZ));
 
     if (!(stalker->properties.player.afkTimer_E8 & 0x18))
@@ -1182,36 +1182,36 @@ void Ai_Stalker_Control_4(s_SubCharacter* stalker)
             (!Rng_GenerateInt(0, 127) &&                               // 1 in 128 chance.
              Rng_GenerateUInt(0, Q12_CLAMPED(1.0f)) < FP_TO(distToTarget, Q12_SHIFT) / Q12(4.0f)))
         {
-            if (stalkerProps.flags_E8 & StalkerFlag_11)
+            if (stalkerProps.flags & StalkerFlag_11)
             {
                 deltaX = Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1) - offsetX;
                 deltaZ = Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1) - offsetZ;
-                stalkerProps.targetHeadingAngle_100 = ratan2(deltaX, deltaZ);
+                stalkerProps.targetHeadingAngle = ratan2(deltaX, deltaZ);
             }
             else
             {
                 deltaX = Rng_GenerateInt(Q12(-4.0f), Q12(4.0f) - 1) - offsetX;
                 deltaZ = Rng_GenerateInt(Q12(-4.0f), Q12(4.0f) - 1) - offsetZ;
-                stalkerProps.targetHeadingAngle_100 = ratan2(deltaX, deltaZ);
+                stalkerProps.targetHeadingAngle = ratan2(deltaX, deltaZ);
             }
 
-            stalkerProps.flags_E8 |= StalkerFlag_3;
+            stalkerProps.flags |= StalkerFlag_3;
         }
     }
 
-    if (!(stalkerProps.flags_E8 & StalkerFlag_4) && func_8007029C(stalker, Q12(1.0f), stalker->rotation.vy))
+    if (!(stalkerProps.flags & StalkerFlag_4) && func_8007029C(stalker, Q12(1.0f), stalker->rotation.vy))
     {
-        stalkerProps.targetHeadingAngle_100 = func_8006F99C(stalker, Q12(3.5f), stalker->rotation.vy);
-        if (stalkerProps.targetHeadingAngle_100 == StalkerFlag_WarpRotation)
+        stalkerProps.targetHeadingAngle = func_8006F99C(stalker, Q12(3.5f), stalker->rotation.vy);
+        if (stalkerProps.targetHeadingAngle == StalkerFlag_WarpRotation)
         {
-            stalkerProps.targetHeadingAngle_100 = stalker->rotation.vy + Q12_ANGLE(180.0f);
+            stalkerProps.targetHeadingAngle = stalker->rotation.vy + Q12_ANGLE(180.0f);
         }
 
-        stalkerProps.flags_E8 |= StalkerFlag_4;
+        stalkerProps.flags |= StalkerFlag_4;
     }
 
     // Smoothly rotate toward target direction
-    angle = Math_AngleNormalizeSigned(stalkerProps.targetHeadingAngle_100 - stalker->rotation.vy);
+    angle = Math_AngleNormalizeSigned(stalkerProps.targetHeadingAngle - stalker->rotation.vy);
 
     if (TIMESTEP_ANGLE(1, 4) < ABS(angle))
     {
@@ -1226,53 +1226,53 @@ void Ai_Stalker_Control_4(s_SubCharacter* stalker)
     }
     else
     {
-        stalkerProps.flags_E8 &= ~(StalkerFlag_3 | StalkerFlag_4);
+        stalkerProps.flags &= ~(StalkerFlag_3 | StalkerFlag_4);
     }
 
     // Handle aggressive/chase mode.
-    if (stalkerProps.flags_E8 & StalkerFlag_11)
+    if (stalkerProps.flags & StalkerFlag_11)
     {
         if (!Rng_GenerateInt(0, 1023)) // 1 in 1024 chance.
         {
-            stalkerProps.flags_E8 &= ~StalkerFlag_3;
+            stalkerProps.flags &= ~StalkerFlag_3;
         }
 
         if (!Rng_GenerateInt(0, 1023)) // 1 in 1024 chance.
         {
-            stalkerProps.flags_E8 &= ~StalkerFlag_4;
+            stalkerProps.flags &= ~StalkerFlag_4;
         }
 
         if (distToPlayer < Q12(2.0f) && distToPlayer < dist1 && !func_800700F8(stalker, &g_SysWork.playerWork.player))
         {
             stalkerProps.timer_F8  = Q12(5.0f);
-            stalkerProps.flags_E8 |= StalkerFlag_0;
-            stalkerProps.flags_E8 &= ~StalkerFlag_11;
+            stalkerProps.flags |= StalkerFlag_0;
+            stalkerProps.flags &= ~StalkerFlag_11;
         }
     }
 
-    if ((stalkerProps.flags_E8 & StalkerFlag_0))
+    if ((stalkerProps.flags & StalkerFlag_0))
     {
-        if ((stalkerProps.flags_E8 & StalkerFlag_10) || condCombo)
+        if ((stalkerProps.flags & StalkerFlag_10) || condCombo)
         {
             if (condCombo)
             {
-                stalkerProps.targetPositionX_F0 = g_SysWork.playerWork.player.position.vx;
-                stalkerProps.targetPositionZ_F4 = g_SysWork.playerWork.player.position.vz;
+                stalkerProps.targetPositionX = g_SysWork.playerWork.player.position.vx;
+                stalkerProps.targetPositionZ = g_SysWork.playerWork.player.position.vz;
                 stalkerProps.timer_116          = Q12(0.0f);
             }
 
-            if (!(stalkerProps.flags_E8 & StalkerFlag_10))
+            if (!(stalkerProps.flags & StalkerFlag_10))
             {
-                stalkerProps.flags_E8 |= StalkerFlag_10;
+                stalkerProps.flags |= StalkerFlag_10;
                 sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1363);
             }
 
             if (((!Rng_GenerateInt(0, 15) && stalkerProps.timer_F8 > Q12(1.0f)) && // 1 in 16 chance.
-                 (stalkerProps.flags_E8 & StalkerFlag_1)) ||
+                 (stalkerProps.flags & StalkerFlag_1)) ||
                 (!Rng_GenerateInt(0, 15) && stalkerProps.timer_F8 > Q12(2.5f)) ||  // 1 in 16 chance.
                 (!Rng_GenerateInt(0, 31) && ((dist1 >> 1) < distToPlayer)))        // 1 in 32 chance.
             {
-                if (stalkerProps.flags_E8 & StalkerFlag_1)
+                if (stalkerProps.flags & StalkerFlag_1)
                 {
                     stalker->model.controlState = StalkerControl_2;
                 }
@@ -1281,7 +1281,7 @@ void Ai_Stalker_Control_4(s_SubCharacter* stalker)
                     stalker->model.controlState = StalkerControl_3;
                 }
 
-                stalkerProps.flags_E8 &= ~(StalkerFlag_3 | StalkerFlag_4);
+                stalkerProps.flags &= ~(StalkerFlag_3 | StalkerFlag_4);
             }
             else
             {
@@ -1292,14 +1292,14 @@ void Ai_Stalker_Control_4(s_SubCharacter* stalker)
 
     if (!condCombo)
     {
-        if (stalkerProps.flags_E8 & StalkerFlag_10)
+        if (stalkerProps.flags & StalkerFlag_10)
         {
             stalkerProps.timer_116 += g_DeltaTime;
 
             if (!Rng_GenerateInt(0, 4095) || stalkerProps.timer_116 > Q12(1.2f)) // 1 in 4096 chance.
             {
                 stalkerProps.timer_116 = Q12(0.0f);
-                stalkerProps.flags_E8 &= ~StalkerFlag_10;
+                stalkerProps.flags &= ~StalkerFlag_10;
             }
         }
     }
@@ -1352,7 +1352,7 @@ void Ai_Stalker_Control_5(s_SubCharacter* stalker)
             }
         }
 
-        if (!(stalkerProps.flags_E8 & StalkerFlag_13))
+        if (!(stalkerProps.flags & StalkerFlag_13))
         {
             if (distToPlayer > DIST_TO_PLAYER_MAX)
             {
@@ -1462,7 +1462,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
                                            stalker->rotation.vy);
     }
 
-    if (stalkerProps.flags_E8 & StalkerFlag_5)
+    if (stalkerProps.flags & StalkerFlag_5)
     {
         if (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_9, true))
         {
@@ -1499,8 +1499,8 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
             stalker->field_E1_0              = 0;
             stalker->field_E1_0              = 3;
 
-            stalkerProps.flags_E8 |= StalkerFlag_6;
-            stalkerProps.flags_E8 &= ~StalkerFlag_5;
+            stalkerProps.flags |= StalkerFlag_6;
+            stalkerProps.flags &= ~StalkerFlag_5;
         }
         else
         {
@@ -1521,7 +1521,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
         // TODO: What's weapon attack 49?
         if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk49, AttackInputType_Tap), stalker, &vec0, &g_SysWork.playerWork, stalker->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
         {
-            stalkerProps.flags_E8 |= StalkerFlag_5;
+            stalkerProps.flags |= StalkerFlag_5;
             g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_1;
 
             sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1366);
@@ -1551,7 +1551,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
             stalkerProps.keyframeIdx_FC = stalker->model.anim.status;
         }
 
-        stalkerProps.flags_E8 |= StalkerFlag_6;
+        stalkerProps.flags |= StalkerFlag_6;
         stalker->model.anim.status = ANIM_STATUS(StalkerAnim_36, false);
         stalker->field_E1_0 = 3;
     }
@@ -1567,7 +1567,7 @@ void Ai_Stalker_Control_7(s_SubCharacter* stalker)
 {
     u16 flags;
 
-    if (!(stalkerProps.flags_E8 & StalkerFlag_13))
+    if (!(stalkerProps.flags & StalkerFlag_13))
     {
         Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
     }
@@ -1575,7 +1575,7 @@ void Ai_Stalker_Control_7(s_SubCharacter* stalker)
     if (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_27, true) &&
         !Rng_GenerateInt(0, 3)) // 1 in 4 chance.
     {
-        flags = stalkerProps.flags_E8;
+        flags = stalkerProps.flags;
         if (!(flags & StalkerFlag_13))
         {
             stalker->model.controlState  = (flags & StalkerFlag_1) ? StalkerControl_2 : StalkerControl_3;
@@ -1605,7 +1605,7 @@ void Ai_Stalker_Control_8(s_SubCharacter* stalker)
     q19_12 duration;
 
     stalker->flags &= ~CharaFlag_Unk2;
-    if (!(stalkerProps.flags_E8 & StalkerFlag_13))
+    if (!(stalkerProps.flags & StalkerFlag_13))
     {
         Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
     }
@@ -1642,20 +1642,20 @@ void Ai_Stalker_Control_8(s_SubCharacter* stalker)
         stalkerProps.offset_EE = Q12_MULT(step, Math_Cos(stalker->rotation.vy));
     }
 
-    if (stalkerProps.flags_E8 & StalkerFlag_7)
+    if (stalkerProps.flags & StalkerFlag_7)
     {
         frameIdx = FP_FROM(stalker->model.anim.time, Q12_SHIFT);
         if ((frameIdx >= 121 && frameIdx < 129) ||
             (frameIdx >= 149 && frameIdx < 158) ||
             (frameIdx >= 171 && frameIdx < 176))
         {
-            stalkerProps.flags_E8 &= ~StalkerFlag_7;
+            stalkerProps.flags &= ~StalkerFlag_7;
         }
     }
 
     if (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_27, true) && !Rng_GenerateInt(0, 3)) // 1 in 4 chance.
     {
-        if (stalkerProps.flags_E8 & StalkerFlag_1)
+        if (stalkerProps.flags & StalkerFlag_1)
         {
             stalker->model.controlState = StalkerControl_2;
         }
@@ -1687,8 +1687,8 @@ void Ai_Stalker_Control_8(s_SubCharacter* stalker)
 
     if (cond || func_80070360(stalker, Q12(0.0f), Q12(1.0f)))
     {
-        stalkerProps.targetPositionX_F0 = g_SysWork.playerWork.player.position.vx;
-        stalkerProps.targetPositionZ_F4 = g_SysWork.playerWork.player.position.vz;
+        stalkerProps.targetPositionX = g_SysWork.playerWork.player.position.vx;
+        stalkerProps.targetPositionZ = g_SysWork.playerWork.player.position.vz;
     }
 
     #undef BASE_DIST_MAX
@@ -1707,8 +1707,8 @@ void Ai_Stalker_Control_9(s_SubCharacter* stalker)
         stalker->flags |= CharaFlag_Unk2;
     }
 
-    stalkerProps.flags_E8 |= StalkerFlag_6;
-    if (!(stalkerProps.flags_E8 & StalkerFlag_13))
+    stalkerProps.flags |= StalkerFlag_6;
+    if (!(stalkerProps.flags & StalkerFlag_13))
     {
         Chara_MoveSpeedUpdate(stalker, Q12(FRICTION_PER_FRAME));
     }
@@ -1814,7 +1814,7 @@ void Ai_Stalker_Control_9(s_SubCharacter* stalker)
 
         if (stalker->health > sharedData_800E3A24_0_s00 &&
             !Rng_GenerateInt(0, 7) && // 1 in 8 chance.
-            !(stalkerProps.flags_E8 & StalkerFlag_13))
+            !(stalkerProps.flags & StalkerFlag_13))
         {
             if (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_26, true))
             {
@@ -1830,8 +1830,8 @@ void Ai_Stalker_Control_9(s_SubCharacter* stalker)
             }
 
             stalker->model.controlState = StalkerControl_8;
-            stalkerProps.flags_E8 |= StalkerFlag_7;
-            stalkerProps.flags_E8 &= ~StalkerFlag_6;
+            stalkerProps.flags |= StalkerFlag_7;
+            stalkerProps.flags &= ~StalkerFlag_6;
         }
     }
 }
@@ -1842,7 +1842,7 @@ void Ai_Stalker_Control_10(s_SubCharacter* stalker)
     q19_12 newMoveSpeed;
     s32    newAnimStatus;
 
-    if (!(stalkerProps.flags_E8 & (1 << 13)))
+    if (!(stalkerProps.flags & (1 << 13)))
     {
         // TODO: Use macro.
         curMoveSpeed = stalker->moveSpeed;
@@ -1876,7 +1876,7 @@ void Ai_Stalker_Control_10(s_SubCharacter* stalker)
         }
     }
 
-    // TODO: `stalkerProps.flags_E8` doesn't match?
+    // TODO: `stalkerProps.flags` doesn't match?
     if (stalker->moveSpeed == Q12(0.0f) && !(stalker->properties.player.afkTimer_E8 & (StalkerFlag_8 |StalkerFlag_9)))
     {
         newAnimStatus = (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_31, true)) ? ANIM_STATUS(StalkerAnim_Still, true) :
@@ -1897,12 +1897,12 @@ void Ai_Stalker_Control_10(s_SubCharacter* stalker)
 #if !defined(MAP5_S02) && !defined(MAP7_S02)
             func_800622B8(3, stalker, newAnimStatus, 3);
 #endif
-            stalkerProps.flags_E8 |= StalkerFlag_9;
+            stalkerProps.flags |= StalkerFlag_9;
         }
     }
 
 #if defined(MAP5_S02) || defined(MAP7_S02)
-    if (stalkerProps.flags_E8 & (1 << 9))
+    if (stalkerProps.flags & StalkerFlag_9)
     {
         stalker->timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
         if (stalker->timer_C6 > Q12(1.0f))
@@ -1913,9 +1913,7 @@ void Ai_Stalker_Control_10(s_SubCharacter* stalker)
 #endif
 }
 
-void Ai_Stalker_Control_11(s_SubCharacter* stalker)
-{
-}
+void Ai_Stalker_Control_11(s_SubCharacter* stalker) {}
 
 void Ai_Stalker_Control_12(s_SubCharacter* stalker)
 {
@@ -1953,12 +1951,12 @@ void Ai_Stalker_Control_12(s_SubCharacter* stalker)
         return;
     }
 
-    stalkerProps.targetPositionX_F0 = g_SysWork.playerWork.player.position.vx;
-    stalkerProps.targetPositionZ_F4 = g_SysWork.playerWork.player.position.vz;
+    stalkerProps.targetPositionX = g_SysWork.playerWork.player.position.vx;
+    stalkerProps.targetPositionZ = g_SysWork.playerWork.player.position.vz;
 
     if (distToPlayer < Q12(1.2f) && angleDeltaToPlayer < Q12_ANGLE(180.0f))
     {
-        if (!(stalkerProps.flags_E8 & StalkerFlag_1))
+        if (!(stalkerProps.flags & StalkerFlag_1))
         {
             stalker->model.controlState = StalkerControl_3;
         }
@@ -1971,7 +1969,7 @@ void Ai_Stalker_Control_12(s_SubCharacter* stalker)
 
         stalkerProps.keyframeIdx_FC    = 55;
         stalkerProps.relKeyframeIdx_FE = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 427);
-        stalkerProps.flags_E8         |= StalkerFlag_10;
+        stalkerProps.flags         |= StalkerFlag_10;
 
         sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1363);
     }
@@ -1987,13 +1985,13 @@ void Ai_Stalker_Control_13(s_SubCharacter* stalker)
         stalker->model.anim.status = ANIM_STATUS(StalkerAnim_15, false);
     }
 
-    if (!(stalkerProps.flags_E8 & StalkerFlag_14) &&
+    if (!(stalkerProps.flags & StalkerFlag_14) &&
         stalker->model.anim.time > Q12(211.0f))
     {
         sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1365);
 
         stalker->health     = NO_VALUE;
-        stalkerProps.flags_E8 |= StalkerFlag_14;
+        stalkerProps.flags |= StalkerFlag_14;
     }
 
     if (stalker->model.stateStep == 3)
@@ -2006,7 +2004,7 @@ void Ai_Stalker_Control_13(s_SubCharacter* stalker)
             func_8005F6B0(&g_SysWork.npcs[1], &(VECTOR3){ Q12(140.39f), Q12(-0.55f), Q12(22.76f) }, 3, 3);
 
             stalker->health     = NO_VALUE;
-            stalkerProps.flags_E8 |= StalkerFlag_14;
+            stalkerProps.flags |= StalkerFlag_14;
         }
     }
 }
@@ -2022,12 +2020,12 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker)
     newHeadingAngle         = Math_AngleNormalizeSigned(stalker->rotation.vy);
     stalker->rotation.vy = newHeadingAngle;
 
-    if (stalkerProps.flags_E8 & StalkerFlag_13)
+    if (stalkerProps.flags & StalkerFlag_13)
     {
         Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
         if (stalker->moveSpeed == Q12(0.0f))
         {
-            stalkerProps.flags_E8 &= ~StalkerFlag_13;
+            stalkerProps.flags &= ~StalkerFlag_13;
         }
     }
     else
@@ -2036,7 +2034,7 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker)
     }
 
     prevMoveSpeed = stalker->moveSpeed;
-    if (stalkerProps.flags_E8 & StalkerFlag_WarpRotation)
+    if (stalkerProps.flags & StalkerFlag_WarpRotation)
     {
         if (stalker->model.controlState == StalkerControl_2)
         {
@@ -2059,13 +2057,13 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker)
 
     if (stalker->fallSpeed != Q12(0.0f))
     {
-        newFlags = stalkerProps.flags_E8 | StalkerFlag_8;
+        newFlags = stalkerProps.flags | StalkerFlag_8;
     }
     else
     {
-        newFlags = stalkerProps.flags_E8 & ~StalkerFlag_8;
+        newFlags = stalkerProps.flags & ~StalkerFlag_8;
     }
-    stalkerProps.flags_E8 = newFlags;
+    stalkerProps.flags = newFlags;
 }
 
 void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, GsCOORDINATE2* coord)
@@ -2222,8 +2220,8 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
 
         if (temp < Q12(3.0f) && ABS(ptr->angle_46) < Q12_ANGLE(45.0f))
         {
-            if (sharedData_800E3A18_0_s00 == stalkerProps.targetPositionX_F0 &&
-                sharedData_800E3A1C_0_s00 == stalkerProps.targetPositionZ_F4)
+            if (sharedData_800E3A18_0_s00 == stalkerProps.targetPositionX &&
+                sharedData_800E3A1C_0_s00 == stalkerProps.targetPositionZ)
             {
                 if (ptr->angle_46 > Q12_ANGLE(0.0f))
                 {
@@ -2711,9 +2709,9 @@ void sharedFunc_800D7BE8_0_s00(s_SubCharacter* stalker)
 {
     if (stalkerProps.field_10A == 0)
     {
-        if (!(stalkerProps.flags_E8 & StalkerFlag_10))
+        if (!(stalkerProps.flags & StalkerFlag_10))
         {
-            if (!(stalkerProps.flags_E8 & StalkerFlag_6) && stalker->model.controlState != 12)
+            if (!(stalkerProps.flags & StalkerFlag_6) && stalker->model.controlState != 12)
             {
                 stalkerProps.timer_108 += g_DeltaTime;
                 Rng_Rand16();

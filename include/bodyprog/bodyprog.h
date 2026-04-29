@@ -496,9 +496,9 @@ typedef struct
     q23_8      positionZ_1C;
     q23_8      newPositionX_20;
     q23_8      newPositionZ_24;
-    s16        field_28; // } `SVECTOR3`, packed rotation? Probably not.
-    s16        field_2A; // }
-    s16        field_2C; // }
+    s16        field_28;      // } `SVECTOR3`, packed rotation? Probably not.
+    s16        angleToTarget; // }
+    s16        field_2C;      // }
 } s_func_8006ABC0;
 
 typedef struct
@@ -3628,8 +3628,9 @@ s_Texture* Textures_ActiveTex_FindTexture(char* texName, s_ActiveTextures* activ
 void Gfx_DebugStringPositionSet(s16 unused, s16 posX, s16 posY);
 
 /** @brief Normalizes a signed Q3.12 fixed-point angle to the clamped signed integer range `[-2048, 2047]`.
- * Appears to have the same effect as `Q12_ANGLE_NORM_S` macro. Maybe this was written by someone unaware of that?
- * TODO: Once the build is shiftable, check if calls to this can simply be switched over to the macro.
+ *
+ * TODO: Appears to have the same effect as `Q12_ANGLE_NORM_S` macro. Maybe this was written by someone unaware of that?
+ * Once the build is shiftable, check if calls to this can simply be switched over to the macro.
  *
  * @param angle Angle to normalize.
  * @return Normalized angle.

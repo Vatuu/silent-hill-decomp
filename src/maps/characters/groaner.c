@@ -81,15 +81,13 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
     groaner->headingAngle = groaner->rotation.vy;
 
     groanerProps.field_114 = Rng_GenerateUInt(Q12(0.9375f), Q12(1.0625f) - 1);
-
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
         groanerProps.field_114 += (u32)groanerProps.field_114 / 8;
     }
-
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        groanerProps.field_114 -= ((s32)((u16)groanerProps.field_114 << 16) >> 20); // (value * 0x10000) / 0x100000
+        groanerProps.field_114 -= ((s32)((u16)groanerProps.field_114 << 16) >> 20); // (value * Q12(16.0f)) / Q12(256.0f)
     }
 
     ModelAnim_AnimInfoSet(&groaner->model.anim, GROANER_ANIM_INFOS);
@@ -360,7 +358,7 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
 
     if (groanerProps.flags.val16[0] & GroanerFlag_0)
     {
-        unkAngleDelta = Math_AngleNormalizeSigned(groanerProps.angle_FC - groaner->rotation.vy);
+        unkAngleDelta = Math_AngleNormalizeSigned(groanerProps.angleToTarget - groaner->rotation.vy);
         if (TIMESTEP_ANGLE(3, 2) < ABS(unkAngleDelta))
         {
             if (unkAngleDelta > Q12_ANGLE(0.0f))
@@ -374,7 +372,7 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
         }
         else
         {
-            groaner->rotation.vy = groanerProps.angle_FC;
+            groaner->rotation.vy = groanerProps.angleToTarget;
             groanerProps.flags.val16[0] &= ~GroanerFlag_0;
         }
     }
@@ -382,10 +380,10 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
     {
         if (func_8007029C(groaner, Q12_ANGLE(306.0f), groaner->rotation.vy))
         {
-            groanerProps.angle_FC = func_8006F99C(groaner, Q12_ANGLE(306.0f), groaner->rotation.vy);
-            if (groanerProps.angle_FC == Q12_ANGLE(360.0f))
+            groanerProps.angleToTarget = func_8006F99C(groaner, Q12_ANGLE(306.0f), groaner->rotation.vy);
+            if (groanerProps.angleToTarget == Q12_ANGLE(360.0f))
             {
-                groanerProps.angle_FC = -groaner->rotation.vy;
+                groanerProps.angleToTarget = -groaner->rotation.vy;
             }
 
             groanerProps.flags.val16[0] |= GroanerFlag_0;
@@ -408,12 +406,12 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
                                                                                 groaner->position.vz - groanerProps.targetPositionZ))) < (Rng_GenerateUInt(Q12_ANGLE(45.0f), Q12_ANGLE(50.7f) - 1)))
                 {
                     randTargetPosX        = groanerProps.targetPositionX + Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1);
-                    groanerProps.angle_FC = Chara_HeadingAngleGet(groaner, Q12_ANGLE(306.0f),
+                    groanerProps.angleToTarget = Chara_HeadingAngleGet(groaner, Q12_ANGLE(306.0f),
                                                                   randTargetPosX, groanerProps.targetPositionZ + Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1),
                                                                   Q12_ANGLE(360.0f), true);
-                    if (groanerProps.angle_FC == Q12_ANGLE(360.0f))
+                    if (groanerProps.angleToTarget == Q12_ANGLE(360.0f))
                     {
-                        groanerProps.angle_FC = -groaner->rotation.vy;
+                        groanerProps.angleToTarget = -groaner->rotation.vy;
                     }
 
                     groanerProps.flags.val16[0] |= GroanerFlag_0;
@@ -465,7 +463,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
 
     if (distToPlayer < distToPlayerMax && !temp_s6)
     {
-        groanerProps.angle_FC = Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork.player.position);
+        groanerProps.angleToTarget = Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork.player.position);
     }
     else
     {
@@ -501,7 +499,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
                 groanerProps.timer_104 = Rng_GenerateInt(Q12(0.375f), Q12(1.5f) - 1);
             }
 
-            groanerProps.angle_FC = headingAngle;
+            groanerProps.angleToTarget = headingAngle;
         }
     }
 
@@ -524,7 +522,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
 
     for (i = 0; i < 3; i++)
     {
-        angle0 = Math_AngleNormalizeSigned(groanerProps.angle_FC - groaner->rotation.vy);
+        angle0 = Math_AngleNormalizeSigned(groanerProps.angleToTarget - groaner->rotation.vy);
 
         if (((g_DeltaTime >> 3) + 1) < ABS(angle0))
         {
@@ -539,11 +537,11 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
         }
         else
         {
-            groaner->rotation.vy = groanerProps.angle_FC;
+            groaner->rotation.vy = groanerProps.angleToTarget;
         }
     }
 
-    angleDeltaToTarget = Math_AngleNormalizeSigned(groanerProps.angle_FC - groaner->rotation.vy);
+    angleDeltaToTarget = Math_AngleNormalizeSigned(groanerProps.angleToTarget - groaner->rotation.vy);
     if (angleDeltaToTarget < Q12_ANGLE(20.0f))
     {
         Chara_MoveSpeedUpdate4(groaner, Q12(9.5f), Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f)));
@@ -775,11 +773,11 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
         (temp_s4 != 0 && groanerProps.timer_104 >= Q12(0.0f)))
     {
         temp_s1 = Q12(1.5f) - Rng_GenerateInt(0, 1535);
-        groanerProps.angle_FC = Chara_HeadingAngleGet(groaner, temp_s1, groanerProps.targetPositionX,
+        groanerProps.angleToTarget = Chara_HeadingAngleGet(groaner, temp_s1, groanerProps.targetPositionX,
                                                                      groanerProps.targetPositionZ, Q12(1.0f), false);
-        if (groanerProps.angle_FC == Q12_ANGLE(360.0f))
+        if (groanerProps.angleToTarget == Q12_ANGLE(360.0f))
         {
-            groanerProps.angle_FC = func_8006F99C(groaner, (temp_s1 * 3) >> 2, groaner->rotation.vy);
+            groanerProps.angleToTarget = func_8006F99C(groaner, (temp_s1 * 3) >> 2, groaner->rotation.vy);
         }
 
         if (temp_s4 != 0)
@@ -811,7 +809,7 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
 
     for (i = 0; i < 2; i++)
     {
-        temp_a3 = Math_AngleNormalizeSigned((groanerProps.angle_FC - groaner->rotation.vy));
+        temp_a3 = Math_AngleNormalizeSigned((groanerProps.angleToTarget - groaner->rotation.vy));
         if (((g_DeltaTime >> 3) + 1) < ABS(temp_a3))
         {
             if (temp_a3 > Q12_ANGLE(0.0f))
@@ -825,11 +823,11 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
         }
         else
         {
-            groaner->rotation.vy = groanerProps.angle_FC;
+            groaner->rotation.vy = groanerProps.angleToTarget;
         }
     }
 
-    temp_a3 = Math_AngleNormalizeSigned(groanerProps.angle_FC - groaner->rotation.vy);
+    temp_a3 = Math_AngleNormalizeSigned(groanerProps.angleToTarget - groaner->rotation.vy);
 
     if (groanerProps.timer_104 >= Q12(0.0f))
     {
@@ -841,8 +839,8 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
         Chara_MoveSpeedUpdate4(groaner, Q12(9.5f), Q12_MULT_PRECISE(temp_a3, Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f))));
     }
 
-    var_s0_2                               = 0;
-    groanerProps.field_108                += g_DeltaTime;
+    var_s0_2                = 0;
+    groanerProps.field_108 += g_DeltaTime;
 
     if (groanerProps.field_108 > Q12(6.0f))
     {
@@ -977,8 +975,8 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
 
     if (!(groanerProps.flags.val16[0] & GroanerFlag_2) && groaner->health == Q12(0.0f))
     {
-        animIdx       = ANIM_STATUS_IDX_GET(groaner->model.anim.status);
-        newAnimStatus = ANIM_STATUS((animIdx == GroanerAnim_4) ? GroanerAnim_1 : GroanerAnim_Still, false);
+        animIdx        = ANIM_STATUS_IDX_GET(groaner->model.anim.status);
+        newAnimStatus  = ANIM_STATUS((animIdx == GroanerAnim_4) ? GroanerAnim_1 : GroanerAnim_Still, false);
         groaner->flags &= ~CharaFlag_Unk2;
 
         if (animIdx == GroanerAnim_8)
@@ -1046,8 +1044,8 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner)
 
 void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
 {
-    s_CollisionResult sp10;
-    q3_12      angleDeltaToHeading;
+    s_CollisionResult collResult;
+    q3_12             angleDeltaToHeading;
 
     if (groaner->model.anim.status != ANIM_STATUS(GroanerAnim_10, true))
     {
@@ -1095,7 +1093,7 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
                 if (Math_AngleNormalizeSigned(groaner->headingAngle - (groaner->rotation.vy + angleDeltaToHeading)) <= Q12_ANGLE(0.0f))
                 {
                     groanerProps.field_FE = Q12(0.0f);
-                    groaner->rotation.vy                 = groaner->headingAngle - angleDeltaToHeading;
+                    groaner->rotation.vy = groaner->headingAngle - angleDeltaToHeading;
                 }
             }
             else
@@ -1105,7 +1103,7 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
                 if (Math_AngleNormalizeSigned(groaner->headingAngle - (groaner->rotation.vy + angleDeltaToHeading)) >= Q12_ANGLE(0.0f))
                 {
                     groanerProps.field_FE = Q12(0.0f);
-                    groaner->rotation.vy                 = groaner->headingAngle - angleDeltaToHeading;
+                    groaner->rotation.vy = groaner->headingAngle - angleDeltaToHeading;
                 }
             }
 
@@ -1124,12 +1122,12 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
         groaner->headingAngle = groaner->rotation.vy;
     }
 
-    func_8005CB20(groaner, &sp10, groanerProps.field_F0, groanerProps.field_F2);
+    func_8005CB20(groaner, &collResult, groanerProps.field_F0, groanerProps.field_F2);
 
     groanerProps.field_F2 = Q12(0.0f);
     groanerProps.field_F0 = Q12(0.0f);
 
-    if (groaner->position.vy == sp10.field_C)
+    if (groaner->position.vy == collResult.field_C)
     {
         groanerProps.flags.val16[0] &= ~GroanerFlag_2;
     }
@@ -1561,7 +1559,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 }
                 else
                 {
-                    if (keyframeIdx2 - 1 < 6)
+                    if ((keyframeIdx2 - 1) < 6)
                     {
                         keyframeIdx0 = keyframeIdx2 - (keyframeIdx2 > 0);
                     }
@@ -2016,7 +2014,7 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)
     if ((keyframeIdx > 367 && keyframeIdx < 373) ||
         (keyframeIdx > 390 && keyframeIdx < 397))
     {
-        if (groanerProps.field_111 == 0)
+        if (!groanerProps.field_111)
         {
             func_8005DD44(Sfx_Unk1413, &groaner->position, sfxVol, sfxPitch);
             groanerProps.field_111++;
@@ -2024,7 +2022,7 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)
     }
     else
     {
-        groanerProps.field_111 = 0;
+        groanerProps.field_111 = false;
     }
 }
 

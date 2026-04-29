@@ -283,7 +283,6 @@ void Game_NpcUpdate(void) // 0x80038354
                 }
 
                 new_var = temp_t3;
-
                 if (new_var > ((var_t5 == 0 && npc->health < Q12(0.0f)) ? SQUARE(24) : SQUARE(40)))
                 {
                     npc->model.charaId = Chara_None;

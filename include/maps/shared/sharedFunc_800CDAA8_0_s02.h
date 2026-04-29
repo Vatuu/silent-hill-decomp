@@ -443,7 +443,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 D_800C4606 = 0;
             }
 
-            headingAngle = g_SysWork.playerWork.player.properties.player.headingAngle_124 = 0;
+            headingAngle =
+            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
             break;
 #endif
 
@@ -512,7 +513,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 D_800C4606 = 0;
             }
 
-            headingAngle = g_SysWork.playerWork.player.properties.player.headingAngle_124 = 0;
+            headingAngle =
+            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
 
             g_Player_FlexRotationY = Q12_ANGLE(-28.2f);
             break;
@@ -561,7 +563,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 D_800C4606 = 0;
             }
 
-            headingAngle = g_SysWork.playerWork.player.properties.player.headingAngle_124 = 0;
+            headingAngle = g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
 
             g_Player_FlexRotationY = Q12_ANGLE(28.2f);
             break;
