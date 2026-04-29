@@ -712,6 +712,7 @@ Lm_ModelFind                                 = 0x80056CB4; // type:func
 StringCopy                                   = 0x80056D64; // type:func
 Gfx_FogOverlayQuadDraw                       = 0x80056D8C; // type:func
 func_800571D0                                = 0x800571D0; // type:func size:0x58 - Fix for truncated function.
+WorldEnv_LightTransform                      = 0x80057228; // type:func
 Gfx_MeshDraw                                 = 0x8005801C; // type:func
 Texture_Init                                 = 0x8005B1A0; // type:func
 Texture_Get                                  = 0x8005B1FC; // type:func
@@ -767,9 +768,14 @@ Collision_QueryDirectionCalc                 = 0x8006ABC0; // type:func
 Collision_OffsetAlphaGet                     = 0x8006CB90;
 Ray_LineCheck                                = 0x8006D90C; // type:func
 Ray_MissSet                                  = 0x8006DAE4; // type:func
+Ray_LosHitCheck                              = 0x8006DB3C; // type:func
 Ray_TraceSetup                               = 0x8006DCE0; // type:func
 Ray_TraceRun                                 = 0x8006DEB0; // type:func
 Chara_HeadingAngleGet                        = 0x8006FAFC; // type:func
+Ray_CharaToCharaTargetLosCheck               = 0x80070084; // type:func
+Ray_NpcToPlayerLosCheck                      = 0x800700F8; // type:func
+Ray_CharaToCharaDistLosCheck                 = 0x80070184; // type:func
+Ray_CharaLosHitCheck                         = 0x8007029C; // type:func
 
 //-----------------------------------------------------------------
 //--- PA: 0x04BB84   VA: 0x800706E4   subsegment: c, player_control
@@ -900,7 +906,7 @@ MapMsg_DisplayWithTexture1                   = 0x80087540;
 Event_ItemTake                               = 0x800877B8; // type:func
 Event_CommonItemTake                         = 0x800879FC; // type:func
 Event_MapTake                                = 0x80087AF4; // type:func
-WorldEnv_LightTransform                      = 0x80057228; // type:func
+
 //------------------------------------------------------------------------
 //--- PA: 0x063348   VA: 0x80087EA8   subsegment: c, bodyprog_bgm_80087EA8
 //------------------------------------------------------------------------

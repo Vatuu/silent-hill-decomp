@@ -86,7 +86,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
     s32     temp;
     VECTOR3 pos;
     q19_12  distToTarget;
-    s32     validStep;
+    bool    hasLos;
     s32     idxInfo;
     q19_12  distStep;
     q19_12  baseDistMax;
@@ -147,7 +147,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
         case LarvalStalkerControl_2:
             Chara_MoveSpeedUpdate3(larvalStalker, Q12(1.5f), Q12(0.3f));
 
-            if (func_80070184(larvalStalker, Q12(1.0f), larvalStalker->rotation.vy) || !Rng_GenerateInt(0, 63)) // 1 in 64 chance.
+            if (Ray_CharaToCharaDistLosCheck(larvalStalker, Q12(1.0f), larvalStalker->rotation.vy) || !Rng_GenerateInt(0, 63)) // 1 in 64 chance.
             {
                 larvalStalker->model.anim.status = ANIM_STATUS(LarvalStalkerAnim_Idle, false);
                 larvalStalker->model.controlState = LarvalStalkerControl_3;
@@ -196,8 +196,8 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
             if (larvalStalker->model.anim.status == ANIM_STATUS(LarvalStalkerAnim_Idle, true))
             {
-                validStep = func_80070184(larvalStalker, Q12(0.6f), larvalStalker->rotation.vy);
-                if ((validStep && !Rng_GenerateInt(0, 3)) || // 1 in 4 chance.
+                hasLos = Ray_CharaToCharaDistLosCheck(larvalStalker, Q12(0.6f), larvalStalker->rotation.vy);
+                if ((hasLos && !Rng_GenerateInt(0, 3)) || // 1 in 4 chance.
                     !Rng_GenerateInt(0, 31))                 // 1 in 32 chance.
                 {
                     larvalStalkerProps.angle_108           = Rng_GenerateUInt(Q12_ANGLE(-90.0f), Q12_ANGLE(90.0f) - 1); // -90 >< 90 angle.
@@ -205,7 +205,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 }
                 else if (!Rng_GenerateInt(0, 15)) // 1 in 16 chance.
                 {
-                    if (validStep == false)
+                    if (hasLos == false)
                     {
                         larvalStalker->model.controlState = LarvalStalkerControl_2;
                         larvalStalker->model.anim.status = ANIM_STATUS(LarvalStalkerAnim_WalkForward, false);
@@ -452,7 +452,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             break;
 
         case LarvalStalkerControl_Idle:
-            if (func_800700F8(larvalStalker, &g_SysWork.playerWork.player) || (distStep * 2) < distToTarget)
+            if (Ray_NpcToPlayerLosCheck(larvalStalker, &g_SysWork.playerWork.player) || (distStep * 2) < distToTarget)
             {
                 larvalStalker->model.controlState = LarvalStalkerControl_3;
 

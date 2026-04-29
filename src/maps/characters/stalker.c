@@ -673,7 +673,7 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
     }
 
     if (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_30, true) &&
-        !func_800700F8(stalker, &g_SysWork.playerWork.player))
+        !Ray_NpcToPlayerLosCheck(stalker, &g_SysWork.playerWork.player))
     {
         stalkerProps.timer_F8 = Q12(0.0f);
 
@@ -937,7 +937,7 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
     }
 
     if (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_30, true) && !(stalkerProps.flags & StalkerFlag_8) &&
-        !func_800700F8(stalker, &g_SysWork.playerWork.player))
+        !Ray_NpcToPlayerLosCheck(stalker, &g_SysWork.playerWork.player))
     {
         stalkerProps.timer_F8 = Q12(0.0f);
 
@@ -1199,7 +1199,7 @@ void Ai_Stalker_Control_4(s_SubCharacter* stalker)
         }
     }
 
-    if (!(stalkerProps.flags & StalkerFlag_4) && func_8007029C(stalker, Q12(1.0f), stalker->rotation.vy))
+    if (!(stalkerProps.flags & StalkerFlag_4) && Ray_CharaLosHitCheck(stalker, Q12(1.0f), stalker->rotation.vy))
     {
         stalkerProps.targetHeadingAngle = func_8006F99C(stalker, Q12(3.5f), stalker->rotation.vy);
         if (stalkerProps.targetHeadingAngle == StalkerFlag_WarpRotation)
@@ -1242,7 +1242,7 @@ void Ai_Stalker_Control_4(s_SubCharacter* stalker)
             stalkerProps.flags &= ~StalkerFlag_4;
         }
 
-        if (distToPlayer < Q12(2.0f) && distToPlayer < dist1 && !func_800700F8(stalker, &g_SysWork.playerWork.player))
+        if (distToPlayer < Q12(2.0f) && distToPlayer < dist1 && !Ray_NpcToPlayerLosCheck(stalker, &g_SysWork.playerWork.player))
         {
             stalkerProps.timer_F8  = Q12(5.0f);
             stalkerProps.flags |= StalkerFlag_0;

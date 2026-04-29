@@ -378,7 +378,7 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
     }
     else
     {
-        if (func_8007029C(groaner, Q12_ANGLE(306.0f), groaner->rotation.vy))
+        if (Ray_CharaLosHitCheck(groaner, Q12_ANGLE(306.0f), groaner->rotation.vy))
         {
             groanerProps.angleToTarget = func_8006F99C(groaner, Q12_ANGLE(306.0f), groaner->rotation.vy);
             if (groanerProps.angleToTarget == Q12_ANGLE(360.0f))
@@ -436,10 +436,10 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
     q3_12  angle0;
     q3_12  angleDeltaToTarget;
     q19_12 headingAngle;
-    s32    temp_s2;
-    s32    temp_s4;
+    s32    losDist;
+    bool   hasLosHit;
     q19_12 distToPlayer;
-    bool   temp_s6;
+    bool   hasLosToPlayer;
     bool   cond;
     s32    var_a1;
     s32    i;
@@ -456,27 +456,26 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
         groanerProps.flags.val16[0] |= GroanerFlag_8;
     }
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
-                                       g_SysWork.playerWork.player.position.vz - groaner->position.vz);
+    distToPlayer    = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
+                                          g_SysWork.playerWork.player.position.vz - groaner->position.vz);
     distToPlayerMax = Rng_GenerateInt(Q12(4.0f), Q12(8.0f) - 1);
-    temp_s6 = func_800700F8(groaner, &g_SysWork.playerWork.player);
-
-    if (distToPlayer < distToPlayerMax && !temp_s6)
+    hasLosToPlayer  = Ray_NpcToPlayerLosCheck(groaner, &g_SysWork.playerWork.player);
+    if (distToPlayer < distToPlayerMax && !hasLosToPlayer)
     {
         groanerProps.angleToTarget = Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork.player.position);
     }
     else
     {
-        temp_s2 = Q12(0.9f) - Rng_GenerateInt(0, 920);
-        temp_s4 = func_8007029C(groaner, temp_s2, groaner->rotation.vy);
+        losDist   = Q12(0.9f) - Rng_GenerateInt(Q12(0.0f), Q12(0.2247f));
+        hasLosHit = Ray_CharaLosHitCheck(groaner, losDist, groaner->rotation.vy);
 
-        if ((groanerProps.timer_104 >= Q12(0.0f) && ((temp_s4 != 0 && (temp_s6 || distToPlayer < temp_s2)) ||
+        if ((groanerProps.timer_104 >= Q12(0.0f) && ((hasLosHit && (hasLosToPlayer || distToPlayer < losDist)) ||
              groanerProps.timer_104 == Q12(0.0f))) ||
             !Rng_GenerateUInt(0, 31))
         {
-            if (temp_s4 != 0)
+            if (hasLosHit)
             {
-                var_a1 = temp_s2 + Rng_GenerateInt(0, (temp_s2 >> 2) - 1);
+                var_a1 = losDist + Rng_GenerateInt(Q12(0.0f), (losDist >> 2) - 1);
             }
             else
             {
@@ -487,10 +486,10 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
                                                  Q12_ANGLE(360.0f), true);
             if (headingAngle == Q12_ANGLE(360.0f))
             {
-                headingAngle = func_8006F99C(groaner, (temp_s2 * 3) >> 2, groaner->rotation.vy);
+                headingAngle = func_8006F99C(groaner, (losDist * 3) >> 2, groaner->rotation.vy);
             }
 
-            if (temp_s4 != 0)
+            if (hasLosHit)
             {
                 groanerProps.timer_104 = -(Rng_GenerateInt(Q12(0.375f), Q12(0.75f) - 1));
             }
@@ -565,7 +564,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
         cond = Rng_TestProbabilityBits(12) > (FP_TO(distToPlayer, Q12_SHIFT) / Q12(3.0f)) >> 2;
     }
 
-    if (cond && !temp_s6)
+    if (cond && !hasLosToPlayer)
     {
         if (!Chara_HasFlag(&g_SysWork.playerWork.player, CharaFlag_Unk4) &&
             !(g_SysWork.charaGroupFlags[3] & CharaGroupFlag_1) &&
@@ -604,9 +603,9 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
     if (!(groanerProps.flags.val16[0] & GroanerFlag_7) &&
         (distToPlayer > Q12(12.0f) || (!Rng_GenerateUInt(0, 127) && distToPlayer > Q12(6.0f))))
     {
-        groaner->model.controlState                         = GroanerControl_1;
-        groaner->model.anim.status                        = ANIM_STATUS(GroanerAnim_17, false);
-        groanerProps.relKeyframeIdx_100  = 100;
+        groaner->model.controlState = GroanerControl_1;
+        groaner->model.anim.status  = ANIM_STATUS(GroanerAnim_17, false);
+        groanerProps.relKeyframeIdx_100 = 100;
         groanerProps.flags.val16[0] &= ~GroanerFlag_10;
     }
 }
@@ -621,7 +620,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
     q19_12  deltaX;
     q19_12  deltaZ;
     q19_12  deltaY;
-    s32     temp_v1;
+    q19_12  unkAngle;
     q19_12  rotMax;
     s32     var_v0;
     s32     temp1;
@@ -638,10 +637,9 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
     if (ANIM_STATUS_IDX_GET(groaner->model.anim.status) == GroanerAnim_15 ||
         ANIM_TIME_REL_KEYFRAME_IDX_GET(groaner->model.anim.time, 214) < 9u)
     {
-        temp_v1 = TIMESTEP_ANGLE(1, 3);
-
-        if ((angleDeltaToPlayer0 >= Q12_ANGLE(0.0f) && temp_v1 <  angleDeltaToPlayer0) ||
-            (angleDeltaToPlayer0 <  Q12_ANGLE(0.0f) && temp_v1 < -angleDeltaToPlayer0))
+        unkAngle = TIMESTEP_ANGLE(1, 3);
+        if ((angleDeltaToPlayer0 >= Q12_ANGLE(0.0f) && unkAngle <  angleDeltaToPlayer0) ||
+            (angleDeltaToPlayer0 <  Q12_ANGLE(0.0f) && unkAngle < -angleDeltaToPlayer0))
         {
             if (angleDeltaToPlayer0 > Q12_ANGLE(0.0f))
             {
@@ -767,7 +765,7 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
     }
 
     // TODO: Cleaner random angle generation.
-    temp_s4 = func_8007029C(groaner, Q12(0.9f) - Rng_GenerateInt(0, 920), groaner->rotation.vy);
+    temp_s4 = Ray_CharaLosHitCheck(groaner, Q12(0.9f) - Rng_GenerateInt(0, 920), groaner->rotation.vy);
 
     if (groanerProps.timer_104 == Q12(0.0f) || !Rng_GenerateUInt(0, 31) ||
         (temp_s4 != 0 && groanerProps.timer_104 >= Q12(0.0f)))

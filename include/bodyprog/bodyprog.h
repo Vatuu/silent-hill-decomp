@@ -557,7 +557,7 @@ typedef struct
     s32              field_0;
     s16              field_4; // Collision flags.
     s16              field_6;
-    q7_8             field_8; // Distance X?
+    q7_8             field_8; // Hit distance? `SHRT_MAX` if no valid hit.
     s8               unk_A[2];
     q23_8            field_C;  // } Q23.8 `VECTOR3`
     q23_8            field_10; // }
@@ -1765,7 +1765,7 @@ typedef struct _MapEffectsPresetIdxs
     u8 presetIdx2_1;
 } s_MapEffectsPresetIdxs;
 
-/** @brief Line of sight data for finished ray trace. TODO: Could rename to `s_Los` to keep "ray" as a generic math term? */
+/** @brief Line of sight data for finished ray trace. TODO: Could rename to `s_RayLos`. */
 typedef struct _RayData
 {
     s8              hasHit_0; /** `bool` */
@@ -2455,7 +2455,7 @@ extern s_FsImageDesc D_800A90A4;
 
 extern s_FsImageDesc D_800A90B4;
 
-extern s_SubCharacter D_800BA00C; // Often passed to `func_800700F8`, might not be full `s_SubCharacter`?
+extern s_SubCharacter D_800BA00C; // Often passed to `Ray_NpcToPlayerLosCheck`, might not be full `s_SubCharacter`?
 
 extern u8 D_800BC74F;
 
@@ -3903,8 +3903,15 @@ bool func_8006DA08(s_RayData* ray, VECTOR3* from, VECTOR3* dir, s_SubCharacter* 
 
 void Ray_MissSet(s_RayData* ray, VECTOR3* from, VECTOR3* dir, q23_8 arg3);
 
-/** LOS function. */
-bool func_8006DB3C(s_RayData* ray, VECTOR3* from, VECTOR3* dir, s_SubCharacter* chara);
+/** @brief Checks if an obstruction in a ray's line of sight has been hit, ignoring a specified character.
+ *
+ * @param ray Ray data.
+ * @param from Ray origin.
+ * @param dir Ray direction with length.
+ * @param excludedChara Character to exclude.
+ * @return `true` if there is an obstruction, `false` otherwise.
+ */
+bool Ray_LosHitCheck(s_RayData* ray, VECTOR3* from, VECTOR3* dir, s_SubCharacter* excludedChara);
 
 bool func_8006DC18(s_RayData* ray, VECTOR3* vec1, VECTOR3* vec2);
 
@@ -3912,6 +3919,7 @@ bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3
 
 bool Ray_TraceRun(s_RayData* ray, s_RayState* arg1);
 
+// Fills `state` with info.
 void func_8006E0AC(s_RayState* state, s_IpdCollisionData* ipdColl);
 
 void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2);
@@ -3950,12 +3958,36 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
 
 bool func_80070030(s_SubCharacter* chara, q19_12 posX, q19_12 posY, q19_12 posZ);
 
-/** Checks for character ray miss? */
-bool func_80070084(s_SubCharacter* chara, q19_12 posX, q19_12 posY, q19_12 posZ);
+/** @brief Checks if there's an unobstructed target-based line of sight between a character and any other character.
+ *
+ * @note `fromChara` is excluded.
+ *
+ * @param fromChara Origin character.
+ * @param toX Target X position.
+ * @param toY Target Y position.
+ * @param toZ Target Z position.
+ * @return `true` if there's no obstruction, `false` otherwise.
+ */
+bool Ray_CharaToCharaTargetLosCheck(s_SubCharacter* fromChara, q19_12 toX, q19_12 toY, q19_12 toZ);
 
-bool func_800700F8(s_SubCharacter* npc, s_SubCharacter* player);
+/** @brief Checks if there's an unobstructed line of sight between an NPC and a player.
+ *
+ * @param fromNpc Origin NPC character.
+ * @param toPlayer Target player character.
+ * @return `true` if there's no obstruction, `false` otherwise.
+ */
+bool Ray_NpcToPlayerLosCheck(s_SubCharacter* fromNpc, s_SubCharacter* toPlayer);
 
-bool func_80070184(s_SubCharacter* chara, s32 arg1, q3_12 rotY);
+/** @brief Checks if there's an unobstructed distance-based line of sight between a character and any other character.
+ *
+ * @note `fromChara` is excluded.
+ *
+ * @param fromChara Origin character.
+ * @param dist Ray distance.
+ * @param headingAngle Ray heading angle on the XZ plane.
+ * @return `true` if there's no obstruction, `false` otherwise.
+ */
+bool Ray_CharaToCharaDistLosCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle);
 
 bool func_80070320(void);
 
@@ -3974,7 +4006,16 @@ void func_80070400(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* key
 
 bool func_80070208(s_SubCharacter* chara, q19_12 dist);
 
-s32 func_8007029C(s_SubCharacter* chara, q19_12 dist, q3_12 rotY);
+/** @brief Checks if there's an obstructed distance-based line of sight from a character.
+ *
+ * @note `fromChara` is excluded.
+ *
+ * @param fromChara Origin character.
+ * @param dist Ray distance.
+ * @param headingAngle Ray heading angle on the XZ plane.
+ * @return `true` if there's an obstruction, `false` otherwise.
+ */
+bool Ray_CharaLosHitCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle);
 
 void func_800705E4(GsCOORDINATE2* coord, s32 idx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ);
 

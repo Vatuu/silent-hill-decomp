@@ -2424,19 +2424,19 @@ void Ray_MissSet(s_RayData* ray, VECTOR3* from, VECTOR3* dir, q23_8 arg3) // 0x8
     ray->field_1C   = Q12_ANGLE(0.0f);
 }
 
-static inline void func_8006DB3C_Inline(s_RayData* ray, VECTOR3* dir, VECTOR3* offset, u16* ptr)
+static inline void Ray_LosHitCheck_Inline(s_RayData* ray, VECTOR3* dir, VECTOR3* offset, u16* ptr)
 {
     Ray_MissSet(ray, dir, offset, (short)*ptr);
 }
 
-bool func_8006DB3C(s_RayData* ray, VECTOR3* from, VECTOR3* dir, s_SubCharacter* chara) // 0x8006DB3C
+bool Ray_LosHitCheck(s_RayData* ray, VECTOR3* from, VECTOR3* dir, s_SubCharacter* excludedChara) // 0x8006DB3C
 {
     s32              charaCount;
     s32              stackPtr;
     s32              scratchAddr;
     s_SubCharacter** charas;
 
-    charas       = Collision_ActiveCharactersGet(&charaCount, chara, true);
+    charas      = Collision_ActiveCharactersGet(&charaCount, excludedChara, true);
     ray->hasHit_0 = false;
 
     if (Ray_TraceSetup((s32)PSX_SCRATCH, 1, 0, from, dir, 0, 0, charas, charaCount))
@@ -2450,7 +2450,7 @@ bool func_8006DB3C(s_RayData* ray, VECTOR3* from, VECTOR3* dir, s_SubCharacter* 
 
     if (!ray->hasHit_0)
     {
-        func_8006DB3C_Inline(ray, from, dir, &((u8*)scratchAddr)[92]);
+        Ray_LosHitCheck_Inline(ray, from, dir, &((u8*)scratchAddr)[92]);
     }
 
     return ray->hasHit_0;
@@ -2542,7 +2542,7 @@ bool Ray_TraceRun(s_RayData* ray, s_RayState* state) // 0x8006DEB0
     s_SubCharacter**     curChara;
     s_IpdCollisionData** collDataPtrs;
     s_IpdCollisionData** curCollData;
-    s_RayState_8C*  curUnk;
+    s_RayState_8C*       curUnk;
 
     // Run through IPD collision data.
     collDataPtrs = func_800425D8(&collDataIdx);
@@ -3491,7 +3491,7 @@ q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 
             }
         }
 
-        if (!func_8007029C(chara, dist, curAngleOffset + headingAngle))
+        if (!Ray_CharaLosHitCheck(chara, dist, curAngleOffset + headingAngle))
         {
             angleOffset = curAngleOffset;
         }
@@ -3643,89 +3643,88 @@ bool func_80070030(s_SubCharacter* chara, q19_12 posX, q19_12 posY, q19_12 posZ)
     offset.vy = posY - chara->position.vy;
     offset.vz = posZ - chara->position.vz;
 
-    func_8006DB3C(&ray, &chara->position, &offset, chara);
+    Ray_LosHitCheck(&ray, &chara->position, &offset, chara);
 }
 
-bool func_80070084(s_SubCharacter* chara, q19_12 fromX, q19_12 fromY, q19_12 fromZ) // 0x80070084
+bool Ray_CharaToCharaTargetLosCheck(s_SubCharacter* fromChara, q19_12 toX, q19_12 toY, q19_12 toZ) // 0x80070084
 {
     s_RayData ray;
     VECTOR3   dir; // Q19.12
     bool      isCharaMissed;
 
-    dir.vx = fromX - chara->position.vx;
-    dir.vy = fromY - chara->position.vy;
-    dir.vz = fromZ - chara->position.vz;
+    dir.vx = toX - fromChara->position.vx;
+    dir.vy = toY - fromChara->position.vy;
+    dir.vz = toZ - fromChara->position.vz;
 
     isCharaMissed = false;
-    if (func_8006DB3C(&ray, &chara->position, &dir, chara))
+    if (Ray_LosHitCheck(&ray, &fromChara->position, &dir, fromChara))
     {
         isCharaMissed = ray.chara_10 == NULL;
     }
     return isCharaMissed;
 }
 
-bool func_800700F8(s_SubCharacter* npc, s_SubCharacter* player) // 0x800700F8
+bool Ray_NpcToPlayerLosCheck(s_SubCharacter* fromNpc, s_SubCharacter* toPlayer) // 0x800700F8
 {
     s_RayData ray;
-    VECTOR3   pos;    // Q19.12
-    VECTOR3   offset; // Q19.12
+    VECTOR3   from; // Q19.12
+    VECTOR3   dir;  // Q19.12
 
-    pos = npc->position;
+    from = fromNpc->position;
 
-    offset.vx = player->position.vx - npc->position.vx;
-    offset.vy = Q12(-0.1f);
-    offset.vz = player->position.vz - npc->position.vz;
+    dir.vx = toPlayer->position.vx - fromNpc->position.vx;
+    dir.vy = Q12(-0.1f);
+    dir.vz = toPlayer->position.vz - fromNpc->position.vz;
 
-    return func_8006DB3C(&ray, &pos, &offset, npc) && ray.chara_10 == NULL;
+    return Ray_LosHitCheck(&ray, &from, &dir, fromNpc) && ray.chara_10 == NULL;
 }
 
-bool func_80070184(s_SubCharacter* chara, s32 arg1, q3_12 rotY) // 0x80070184
+bool Ray_CharaToCharaDistLosCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle) // 0x80070184
 {
-    q19_12 posX;
-    q19_12 posY;
-    q19_12 posZ;
-    q19_12 sinRotY;
-    q19_12 cosRotY;
+    q19_12 toX;
+    q19_12 toY;
+    q19_12 toZ;
+    q19_12 sinHeadingAngle;
+    q19_12 cosHeadingAngle;
 
-    sinRotY = Math_Sin(rotY);
-    posX    = chara->position.vx + Q12_MULT(arg1, sinRotY);
+    sinHeadingAngle = Math_Sin(headingAngle);
+    toX             = fromChara->position.vx + Q12_MULT(dist, sinHeadingAngle);
 
-    cosRotY = Math_Cos(rotY);
-    posY    = chara->position.vy;
-    posZ    = chara->position.vz + Q12_MULT(arg1, cosRotY);
+    cosHeadingAngle = Math_Cos(headingAngle);
+    toY             = fromChara->position.vy;
+    toZ             = fromChara->position.vz + Q12_MULT(dist, cosHeadingAngle);
 
-    // The calls to this often have a return, so assumed it just passes return of `func_80070084`.
-    return func_80070084(chara, posX, posY, posZ);
+    return Ray_CharaToCharaTargetLosCheck(fromChara, toX, toY, toZ);
 }
 
 bool func_80070208(s_SubCharacter* chara, q19_12 dist) // 0x80070208
 {
-    s_RayData var;
-    VECTOR3           offset; // Q19.12
-    bool              cond;
+    s_RayData ray;
+    VECTOR3   offset; // Q19.12
+    bool      cond;
 
     offset.vx = Q12_MULT(dist, Math_Sin(chara->rotation.vy));
     offset.vy = Q12(0.0f);
     offset.vz = Q12_MULT(dist, Math_Cos(chara->rotation.vy));
 
     cond = false;
-    if (func_8006DB3C(&var, &chara->position, &offset, chara))
+    if (Ray_LosHitCheck(&ray, &chara->position, &offset, chara))
     {
-        cond = var.chara_10 > 0;
+        cond = ray.chara_10 > NULL;
     }
     return cond;
 }
 
-s32 func_8007029C(s_SubCharacter* chara, q19_12 dist, q3_12 rotY) // 0x8007029C
+bool Ray_CharaLosHitCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle) // 0x8007029C
 {
-    s_RayData var;
-    VECTOR3           offset; // Q19.12
+    s_RayData ray;
+    VECTOR3   dir; // Q19.12
 
-    offset.vx = Q12_MULT(dist, Math_Sin(rotY));
-    offset.vy = Q12(0.0f);
-    offset.vz = Q12_MULT(dist, Math_Cos(rotY));
+    dir.vx = Q12_MULT(dist, Math_Sin(headingAngle));
+    dir.vy = Q12(0.0f);
+    dir.vz = Q12_MULT(dist, Math_Cos(headingAngle));
 
-    return func_8006DB3C(&var, &chara->position, &offset, chara);
+    return Ray_LosHitCheck(&ray, &fromChara->position, &dir, fromChara);
 }
 
 bool func_80070320(void) // 0x80070320

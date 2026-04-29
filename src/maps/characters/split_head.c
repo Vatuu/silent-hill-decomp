@@ -495,7 +495,7 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
             sp30.vy = Q12(0.0f);
             sp30.vz = Q12_MULT(distMax, Math_Cos((angleToPlayer + angle) + angle1));
 
-            func_8006DB3C(&ray, &splitHead->position, &sp30, splitHead);
+            Ray_LosHitCheck(&ray, &splitHead->position, &sp30, splitHead);
 
             if (!ray.hasHit_0 || ray.chara_10 != NULL)
             {
@@ -571,7 +571,7 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
     sp30.vy = Q12(0.0f);
     sp30.vz = Q12_MULT(distToPlayer, Math_Cos(angleToPlayer2));
 
-    func_8006DB3C(&ray, &splitHead->position, &sp30, splitHead);
+    Ray_LosHitCheck(&ray, &splitHead->position, &sp30, splitHead);
 
     if (distToPlayer < Q12(6.4f) &&
         (angleDeltaToPlayer < Q12_ANGLE(7.5f) || distToPlayer > Q12(3.2f) && angleDeltaToPlayer < Q12_ANGLE(15.0f)) &&
@@ -824,7 +824,7 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
             sp30.vy = Q12(0.0f);
             sp30.vz = Q12_MULT(distMax, Math_Cos((angleToPlayer + angle) + angle3));
 
-            func_8006DB3C(&ray, &splitHead->position, &sp30, splitHead);
+            Ray_LosHitCheck(&ray, &splitHead->position, &sp30, splitHead);
 
             if (!ray.hasHit_0 || ray.chara_10 != NULL)
             {
@@ -901,7 +901,7 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
     sp30.vy = Q12(0.0f);
     sp30.vz = Q12_MULT(distToPlayer, Math_Cos(angle1));
 
-    func_8006DB3C(&ray, &splitHead->position, &sp30, splitHead);
+    Ray_LosHitCheck(&ray, &splitHead->position, &sp30, splitHead);
 
     if (distToPlayer > Q12(2.85f) && distToPlayer < Q12(4.0f) &&
         angle2 < Q12_ANGLE(15.0f) &&

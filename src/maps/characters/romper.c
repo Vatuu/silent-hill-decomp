@@ -467,7 +467,7 @@ void Romper_ControlWalkForward(s_SubCharacter* romper)
         romper->rotation.vy = romperProps.rotationY_F2;
     }
 
-    if (romper->rotation.vy == romperProps.rotationY_F2 || func_8007029C(romper, Q12(1.0f), romper->rotation.vy))
+    if (romper->rotation.vy == romperProps.rotationY_F2 || Ray_CharaLosHitCheck(romper, Q12(1.0f), romper->rotation.vy))
     {
         angleDeltaToTarget = Math_AngleNormalizeSigned(romper->rotation.vy - ratan2(romperProps.targetPositionX_FC  - romper->position.vx,
                                                                            romperProps.targetPositionZ_100 - romper->position.vz));
@@ -597,7 +597,7 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
     distToTarget = Math_Vector2MagCalc(romper->position.vx - romperProps.targetPositionX_FC,
                                        romper->position.vz - romperProps.targetPositionZ_100);
 
-    cond = func_800700F8(romper, &g_SysWork.playerWork.player);
+    cond = Ray_NpcToPlayerLosCheck(romper, &g_SysWork.playerWork.player);
 
     if (!(romperProps.flags & RomperFlag_3))
     {
@@ -629,11 +629,11 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
 
         if (romperProps.rotationY_F2 == angleToTarget)
         {
-            temp_s0 = func_8007029C(romper, CLAMP_HIGH(distToTarget, 0x1AAA), romper->rotation.vy);
+            temp_s0 = Ray_CharaLosHitCheck(romper, CLAMP_HIGH(distToTarget, 0x1AAA), romper->rotation.vy);
         }
         else
         {
-            temp_s0 = func_8007029C(romper, 0x1AAA, romper->rotation.vy);
+            temp_s0 = Ray_CharaLosHitCheck(romper, 0x1AAA, romper->rotation.vy);
         }
 
         if (romperProps.field_10E > Q12(1.0f) && !Rng_GenerateUInt(0, 15))
@@ -785,7 +785,7 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
         romperProps.field_10E += g_DeltaTime;
     }
 
-    temp_s0 = func_8007029C(romper, Q12(2.5f), romper->rotation.vy);
+    temp_s0 = Ray_CharaLosHitCheck(romper, Q12(2.5f), romper->rotation.vy);
     if (romperProps.distance_120 == Q12(0.0f) ||
         (temp_s0 != 0 && romperProps.distance_120 >= Q12(0.0f)))
     {
@@ -856,7 +856,7 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
     }
 
     // TODO: Animation 20 doesn't exist?
-    if (!func_8007029C(romper, Q12(2.5f), romper->rotation.vy) && ANIM_TIME_RANGE_CHECK(romper->model.anim.time, 131, 132))
+    if (!Ray_CharaLosHitCheck(romper, Q12(2.5f), romper->rotation.vy) && ANIM_TIME_RANGE_CHECK(romper->model.anim.time, 131, 132))
     {
         romper->model.anim.status = ANIM_STATUS(RomperAnim_20, false);
         romper->moveSpeed         = Q12(0.0f);
