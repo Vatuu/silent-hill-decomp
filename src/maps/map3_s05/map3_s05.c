@@ -32,7 +32,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 void func_800D57E8(void) // 0x800D57E8
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     if (g_MapEventData->pointOfInterestIdx == 25)
     {
@@ -111,7 +111,7 @@ void func_800D5934(void) // 0x800D5934
 
 void func_800D59D4(void) // 0x800D59D4
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     Player_ItemRemove(InvItemId_BasementStoreroomKey, 1);
     Map_MessageWithSfx(27, Sfx_UseKey, &sfxPos);

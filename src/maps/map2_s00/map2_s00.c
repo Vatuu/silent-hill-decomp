@@ -1122,7 +1122,7 @@ void func_800E9CB4(void) // 0x800E9CB4
 
 void MapEvent_HouseKeyUse(void) // 0x800E9D1C
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     Player_ItemRemove(InvItemId_HouseKey, 1);
     Map_MessageWithSfx(31, Sfx_UseKey, &sfxPos); // "Used the House Key."
@@ -1455,9 +1455,9 @@ void func_800EA6E0(void) // 0x800EA6E0
 void MapEvent_KGordonKeyUse(void) // 0x800EA894
 {
     VECTOR3 sfxPos = {
-        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0,
+        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX,
         Q12(-1.2f),
-        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8
+        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ
     };
 
     Player_ItemRemove(InvItemId_KGordonKey, 1);
@@ -1720,9 +1720,9 @@ void func_800EB174(void) // 0x800EB174
     {
         case 0:
             Player_ControlFreeze();
-            sfxPos.vx = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0;
+            sfxPos.vx = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX;
             sfxPos.vy = Q12(-1.2f);
-            sfxPos.vz = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8;
+            sfxPos.vz = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ;
 
             func_8005DC1C(Sfx_Unk1349, &sfxPos, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);

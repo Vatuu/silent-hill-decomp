@@ -1562,10 +1562,10 @@ void func_800D6800(void) // 0x800D6800
         case 2:
             g_SysWork.field_30 = 20;
 
-            MAP_POINTS[14].positionX_0 = g_SysWork.playerWork.player.position.vx;
-            MAP_POINTS[14].positionZ_8 = g_SysWork.playerWork.player.position.vz;
+            MAP_POINTS[14].positionX = g_SysWork.playerWork.player.position.vx;
+            MAP_POINTS[14].positionZ = g_SysWork.playerWork.player.position.vz;
             // TODO: Likely wrong union field.
-            MAP_POINTS[14].triggerParam0_4_16 = ((u32)Math_AngleNormalizeSigned(g_SysWork.playerWork.player.rotation.vy) + Q12(1.0f)) >> 4;
+            MAP_POINTS[14].triggerParam0 = ((u32)Math_AngleNormalizeSigned(g_SysWork.playerWork.player.rotation.vy) + Q12(1.0f)) >> 4;
 
             func_80085EB8(0, &g_SysWork.playerWork.player, 52, false);
 

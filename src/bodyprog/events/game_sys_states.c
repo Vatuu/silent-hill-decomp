@@ -627,7 +627,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     s_MapPoint2d* mapPoint;
 
     g_SysWork.field_229C            = 0;
-    g_SysWork.loadingScreenIdx = D_800BCDB0.loadingScreenId_4_9;
+    g_SysWork.loadingScreenIdx = D_800BCDB0.loadingScreenId;
     g_SysWork.sfxPairIdx_2283       = g_MapEventData->sfxPairIdx_8_19;
     g_SysWork.field_2282            = g_MapEventData->flags_8_13;
 
@@ -641,12 +641,12 @@ void SysState_LoadArea_Update(void) // 0x80039C40
 
     D_800BCDB0 = g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventData->eventParam];
 
-    if (D_800BCDB0.triggerParam1_4_24 == 1)
+    if (D_800BCDB0.triggerParam1 == 1)
     {
         mapPoint                = &g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventData->pointOfInterestIdx];
-        offsetZ                 = g_SysWork.playerWork.player.position.vz - mapPoint->positionZ_8;
-        D_800BCDB0.positionX_0 += g_SysWork.playerWork.player.position.vx - mapPoint->positionX_0;
-        D_800BCDB0.positionZ_8 += offsetZ;
+        offsetZ                 = g_SysWork.playerWork.player.position.vz - mapPoint->positionZ;
+        D_800BCDB0.positionX += g_SysWork.playerWork.player.position.vx - mapPoint->positionX;
+        D_800BCDB0.positionZ += offsetZ;
     }
 
     if (g_SysWork.sysState == SysState_LoadOverlay)

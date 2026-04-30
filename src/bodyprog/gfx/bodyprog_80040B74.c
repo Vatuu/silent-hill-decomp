@@ -1618,7 +1618,7 @@ void func_80044044(s_IpdHeader* ipd, s32 cellX, s32 cellZ) // 0x80044044
 
     ipd->cellX                       = cellX;
     ipd->cellZ                       = cellZ;
-    ipd->collisionData.positionX_0 += (cellX - prevCellX) * Q12_TO_Q8(CHUNK_CELL_SIZE);
+    ipd->collisionData.positionX += (cellX - prevCellX) * Q12_TO_Q8(CHUNK_CELL_SIZE);
     ipd->collisionData.positionZ_4 += (cellZ - prevCellZ) * Q12_TO_Q8(CHUNK_CELL_SIZE);
 }
 

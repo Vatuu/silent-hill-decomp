@@ -90,7 +90,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 void func_800DA7F4(void) // 0x800DA7F4
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     Player_ItemRemove(InvItemId_LibraryReserveKey, 1);
     Map_MessageWithSfx(37, Sfx_UseKey, &sfxPos); // "Used the Library reverse key."
@@ -99,7 +99,7 @@ void func_800DA7F4(void) // 0x800DA7F4
 
 void func_800DA8B0(void) // 0x800DA8B0
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     Player_ItemRemove(InvItemId_ClassroomKey, 1);
     Map_MessageWithSfx(38, Sfx_UseKey, &sfxPos); // "Used classroom key."

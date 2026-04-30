@@ -148,8 +148,8 @@ void Chara_SpawnPositionSet(e_CharacterId charaId, s32 spawnIdx, q19_12 posX, q1
     s_SpawnInfo* spawnInfo1;
 
     spawnInfo0              = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
-    spawnInfo0->positionX_0 = posX;
+    spawnInfo0->positionX = posX;
 
     spawnInfo1              = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
-    spawnInfo1->positionZ_8 = posZ;
+    spawnInfo1->positionZ = posZ;
 }

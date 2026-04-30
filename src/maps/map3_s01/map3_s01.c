@@ -81,7 +81,7 @@ void func_800D1500(void) // 0x800D1500
 
 void func_800D1524(void) // 0x800D1524
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     Player_ItemRemove(InvItemId_BasementKey, 1);
     Map_MessageWithSfx(28, Sfx_UseKey, &sfxPos); // "Used basement key."

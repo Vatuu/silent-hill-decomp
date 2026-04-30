@@ -248,9 +248,9 @@ void func_800D1A58(void) // 0x800D1A58
             break;
 
         case 1:
-            sfxPos.vx = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0;
+            sfxPos.vx = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX;
             sfxPos.vy = Q12(-1.2f);
-            sfxPos.vz = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8;
+            sfxPos.vz = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ;
 
             func_8005DC1C(Sfx_DoorLocked, &sfxPos, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);

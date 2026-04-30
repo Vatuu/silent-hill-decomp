@@ -1379,7 +1379,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                         g_MapOverlayHeader.playerAnimLock_DC();
                         SysWork_StateSetNext(SysState_GameOver);
 
-                        player->health                                                         = Q12(100.0f);
+                        player->health                  = Q12(100.0f);
                         playerProps.gasWeaponPowerTimer_114 = Q12(0.0f);
                         return;
                     }
@@ -1428,7 +1428,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                             break;
                     }
 
-                    player->field_D4.radius_0                        = 0;
+                    player->field_D4.radius_0      = Q12(0.0f);
                     playerChara.field_D8.offsetZ_6 = Q12(0.0f);
                     playerChara.field_D8.offsetX_4 = Q12(0.0f);
                     playerChara.field_D8.offsetZ_2 = Q12(0.0f);
@@ -8784,8 +8784,8 @@ void func_800803FC(VECTOR3* pos, s32 idx) // 0x800803FC
     q19_12 posX;
     q19_12 posZ;
 
-    posX = g_MapOverlayHeader.charaSpawns_24C[0][idx].positionX_0;
-    posZ = g_MapOverlayHeader.charaSpawns_24C[0][idx].positionZ_8;
+    posX = g_MapOverlayHeader.charaSpawns_24C[0][idx].positionX;
+    posZ = g_MapOverlayHeader.charaSpawns_24C[0][idx].positionZ;
 
     pos->vx = posX;
     pos->vy = Collision_GroundHeightGet(posX, posZ);

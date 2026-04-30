@@ -91,7 +91,7 @@ s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, GsCOORDINATE2* coords
     s_FsQueueExtra extra;
 
     fileIdx             = CHARA_FILE_INFOS[charaId].animFileIdx;
-    extra.anm.charaId_4 = charaId;
+    extra.anm.characterId = charaId;
     extra.anm.field_0   = idx;
     extra.anm.coords_8  = coords;
     return Fs_QueueEnqueue(fileIdx, FsQueueOp_Read, FsQueuePostLoadType_Anm, false, dest, 0, &extra);

@@ -143,7 +143,7 @@ void func_800DA200(void) // 0x800DA200
 
 void MapEvent_LobbyKeyUse(void) // 0x800DA2E4
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     Player_ItemRemove(InvItemId_LobbyKey, 1);
     Map_MessageWithSfx(19, Sfx_DoorUnlocked, &sfxPos); // Empty message?

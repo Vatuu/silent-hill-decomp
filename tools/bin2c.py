@@ -1081,7 +1081,7 @@ class StructParser:
                     return "NO_VALUE"
                 elif field_key == "VC_ROAD_DATA.fix_ang_x" or field_key == "VC_ROAD_DATA.fix_ang_y":
                     return process_q8_angle(value & 0xFF)
-                elif field_key == "s_SpawnInfo.rotationY_5":
+                elif field_key == "s_SpawnInfo.rotationY":
                     return process_q8_angle(value & 0xFF)
                 else:
                     enum_type = self.enum_choices.get(field_key)

@@ -74,7 +74,7 @@ const VECTOR3 D_800CB1E0 = { 0x0000E800, 0xFFFFF000, 0x0008BE66 };
 void func_800D21C4(void) // 0x800D21C4
 {
     s32     i;
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     if (!Savegame_EventFlagGet(EventFlag_232) && g_MapEventData->pointOfInterestIdx == 5)
     {
@@ -184,7 +184,7 @@ void func_800D2470(void) // 0x800D2470
 
 void func_800D250C(void) // 0x800D250C
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     Player_ItemRemove(InvItemId_ExaminationRoomKey, 1);
     Map_MessageWithSfx(48, Sfx_UseKey, &sfxPos);

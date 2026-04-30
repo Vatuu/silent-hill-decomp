@@ -112,10 +112,10 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         switch (mapEvent->triggerType)
         {
             case TriggerType_TouchAabb:
-                pointPosX    = mapPoint->positionX_0;
-                pointPosZ    = mapPoint->positionZ_8;
-                pointRadiusX = mapPoint->triggerParam0_4_16 * Q12(0.25f);
-                pointRadiusZ = mapPoint->triggerParam1_4_24 * Q12(0.25f);
+                pointPosX    = mapPoint->positionX;
+                pointPosZ    = mapPoint->positionZ;
+                pointRadiusX = mapPoint->triggerParam0 * Q12(0.25f);
+                pointRadiusZ = mapPoint->triggerParam1 * Q12(0.25f);
 
                 if (ABS(g_SysWork.playerWork.player.position.vx - pointPosX) > pointRadiusX)
                 {
@@ -227,13 +227,13 @@ bool Event_CollideFacingCheck(s_MapPoint2d* mapPoint) // 0x800378D4
         D_800A9A20 = g_TickCount;
     }
 
-    deltaX = mapPoint->positionX_0 - D_800A9A24;
+    deltaX = mapPoint->positionX - D_800A9A24;
     if (ABS(deltaX) > Q12(0.8f))
     {
         return false;
     }
 
-    deltaZ = mapPoint->positionZ_8 - D_800A9A28;
+    deltaZ = mapPoint->positionZ - D_800A9A28;
     if (ABS(deltaZ) > Q12(0.8f))
     {
         return false;
@@ -277,12 +277,12 @@ bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint) // 0x80037A4C
     s32    scaledCosRotY;
 
     halfSinRotY   = Math_Sin(g_SysWork.playerWork.player.rotation.vy) >> 1; // `/ 2`.
-    scaledCosRotY = -Math_Cos(Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0_4_16)) * mapPoint->triggerParam1_4_24;
+    scaledCosRotY = -Math_Cos(Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0)) * mapPoint->triggerParam1;
 
     clampedHalfCosPlayerRotY = halfSinRotY;
 
     temp_a0_2 = scaledCosRotY >> 4; // `/ 16`.
-    deltaX    = mapPoint->positionX_0 - g_SysWork.playerWork.player.position.vx;
+    deltaX    = mapPoint->positionX - g_SysWork.playerWork.player.position.vx;
     temp_s2   = deltaX - temp_a0_2;
     temp_s4   = deltaX + temp_a0_2;
 
@@ -302,13 +302,13 @@ bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint) // 0x80037A4C
         if (MIN(halfSinRotY, 0) <= MAX(temp_s2, temp_s4))
         {
             halfCosPlayerRotY   = Math_Cos(g_SysWork.playerWork.player.rotation.vy) >> 1; // `/ 2`.
-            scaledSinPlayerRotY = Math_Sin(Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0_4_16)) *
-                                  mapPoint->triggerParam1_4_24;
+            scaledSinPlayerRotY = Math_Sin(Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0)) *
+                                  mapPoint->triggerParam1;
 
             clampedHalfCosPlayerRotY = halfCosPlayerRotY;
 
             temp_a0_2 = scaledSinPlayerRotY >> 4; // `/ 16`.
-            deltaZ    = mapPoint->positionZ_8 - g_SysWork.playerWork.player.position.vz;
+            deltaZ    = mapPoint->positionZ - g_SysWork.playerWork.player.position.vz;
             temp_v1   = deltaZ - temp_a0_2;
             temp_a2   = deltaZ + temp_a0_2;
 
@@ -351,15 +351,15 @@ bool Event_CollideObbCheck(s_MapPoint2d* mapPoint) // 0x80037C5C
     s32    scale;
     u32    temp;
 
-    shift8Field_7 = mapPoint->triggerParam1_4_24 << 8;
+    shift8Field_7 = mapPoint->triggerParam1 << 8;
 
-    deltaX = g_SysWork.playerWork.player.position.vx - mapPoint->positionX_0;
-    if (mapPoint->triggerParam1_4_24 << 9 < ABS(deltaX))
+    deltaX = g_SysWork.playerWork.player.position.vx - mapPoint->positionX;
+    if (mapPoint->triggerParam1 << 9 < ABS(deltaX))
     {
         return false;
     }
 
-    deltaZ = g_SysWork.playerWork.player.position.vz - mapPoint->positionZ_8;
+    deltaZ = g_SysWork.playerWork.player.position.vz - mapPoint->positionZ;
     scale  = 2;
     if ((shift8Field_7 * scale) < ABS(deltaZ))
     {
@@ -367,7 +367,7 @@ bool Event_CollideObbCheck(s_MapPoint2d* mapPoint) // 0x80037C5C
     }
 
     // TODO: Odd Q8 angle conversion method. `Q12_ANGLE_FROM_Q8` doesn't match here.
-    angle    = -(mapPoint->triggerParam0_4_16 << 20) >> 16;
+    angle    = -(mapPoint->triggerParam0 << 20) >> 16;
     sinAngle = Math_Sin(angle);
 
     temp = FP_FROM((-deltaX * sinAngle) + (deltaZ * Math_Cos(angle)), Q12_SHIFT);

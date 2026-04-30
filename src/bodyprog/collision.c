@@ -838,9 +838,9 @@ bool func_8006AEAC(s_CollisionState* collState, s_IpdCollisionData* collData) //
         return false;
     }
 
-    collState->field_98.vec_0.vx = collState->field_4.positionX_18 - collData->positionX_0;
+    collState->field_98.vec_0.vx = collState->field_4.positionX_18 - collData->positionX;
     collState->field_98.vec_0.vz = collState->field_4.positionZ_1C - collData->positionZ_4;
-    collState->field_9C.vec_0.vx = collState->field_4.newPositionX_20 - collData->positionX_0;
+    collState->field_9C.vec_0.vx = collState->field_4.newPositionX_20 - collData->positionX;
     collState->field_9C.vec_0.vz = collState->field_4.newPositionZ_24 - collData->positionZ_4;
 
     if ((collState->field_98.vec_0.vx / collData->field_1C) < 0 || (collState->field_98.vec_0.vx / collData->field_1C) >= collData->field_1E ||
@@ -880,8 +880,8 @@ bool func_8006B004(s_CollisionState* collState, s_IpdCollisionData* collData) //
     temp_lo_2 = collData->field_1C * collData->field_1F;
     temp_t4   = temp_lo_2 - 1;
 
-    var_a3 = collState->field_4.positionX_18 - collData->positionX_0;
-    var_t0 = collState->field_4.newPositionX_20 - collData->positionX_0;
+    var_a3 = collState->field_4.positionX_18 - collData->positionX;
+    var_t0 = collState->field_4.newPositionX_20 - collData->positionX;
     if (var_t0 < var_a3)
     {
         var_t0 ^= var_a3;
@@ -1768,7 +1768,7 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) //
         {
             temp_a0        = &collData->ptr_18[collState->field_C8 - collData->field_8_16];
             collState->field_7C = collState->field_CA;
-            collState->field_80 = collState->field_98.vec_0.vx + collData->positionX_0;
+            collState->field_80 = collState->field_98.vec_0.vx + collData->positionX;
             collState->field_84 = collState->field_98.vec_0.vz + collData->positionZ_4;
             collState->field_88 = 0;
             collState->field_8C = 0;
@@ -1798,7 +1798,7 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) //
             if (var_a0 < collState->field_7C)
             {
                 collState->field_7C = var_a0;
-                collState->field_80 = collState->field_98.vec_0.vx + collData->positionX_0;
+                collState->field_80 = collState->field_98.vec_0.vx + collData->positionX;
                 collState->field_84 = collState->field_98.vec_0.vz + collData->positionZ_4;
                 collState->field_88 = temp_a1->field_8;
                 collState->field_8C = temp_a1->field_A;
@@ -1846,7 +1846,7 @@ void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_
             if (var_a2 < collState->field_7C)
             {
                 collState->field_7C = var_a2;
-                collState->field_80 = collState->field_98.vec_0.vx + collData->positionX_0;
+                collState->field_80 = collState->field_98.vec_0.vx + collData->positionX;
                 collState->field_84 = collState->field_98.vec_0.vz + collData->positionZ_4;
                 collState->field_88 = ptr->field_8;
                 collState->field_8C = ptr->field_A;
@@ -2588,7 +2588,7 @@ bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state) // 0x8006DEB0
 void func_8006E0AC(s_RayState* state, s_IpdCollisionData* arg1) // 0x8006E0AC
 {
     // `state` type might be wrong.
-    state->field_6C.field_0 = arg1->positionX_0;
+    state->field_6C.field_0 = arg1->positionX;
     state->field_6C.field_4 = arg1->positionZ_4;
     state->field_6C.field_8 = state->field_2C.vx - state->field_6C.field_0;
     state->field_6C.field_A = state->field_2C.vz - state->field_6C.field_4;

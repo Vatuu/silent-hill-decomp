@@ -14,20 +14,20 @@ void Chara_PositionSet(s_MapPoint2d* mapPoint) // 0x800371E8
 
     #define playerChara g_SysWork.playerWork.player
 
-    rotY = Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0_4_16);
+    rotY = Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0);
     Math_SVectorSet(&playerChara.rotation, Q12_ANGLE(0.0f), rotY, Q12_ANGLE(0.0f));
 
     playerChara.position.vy = Q12(0.0f);
-    playerChara.position.vx = mapPoint->positionX_0;
-    playerChara.position.vz = mapPoint->positionZ_8;
+    playerChara.position.vx = mapPoint->positionX;
+    playerChara.position.vz = mapPoint->positionZ;
 
-    if (mapPoint->triggerParam1_4_24 >= 2)
+    if (mapPoint->triggerParam1 >= 2)
     {
         playerChara.position.vx += Q12_MULT_FLOAT_PRECISE(Math_Sin(rotY), 0.4f);
         playerChara.position.vz += Q12_MULT_FLOAT_PRECISE(Math_Cos(rotY), 0.4f);
     }
 
-    g_SysWork.loadingScreenIdx = mapPoint->loadingScreenId_4_9;
+    g_SysWork.loadingScreenIdx = mapPoint->loadingScreenId;
 
     if (mapPoint->mapIdx_4_0 == 24) // TODO: Demagic 24.
     {

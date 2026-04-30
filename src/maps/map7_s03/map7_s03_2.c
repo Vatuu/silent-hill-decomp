@@ -3228,7 +3228,7 @@ bool func_800DBCA4(MATRIX* mat, VECTOR3* outVec) // 0x800DBCA4
     ptr = &D_800F48A8;
 
     Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords[HarryBone_Torso], &torsoMat);
-    deltaX = torsoMat.t[0] - Q12_TO_Q8(ptr->positionX_0);
+    deltaX = torsoMat.t[0] - Q12_TO_Q8(ptr->positionX);
     deltaY = torsoMat.t[1];
     deltaZ = torsoMat.t[2] - Q12_TO_Q8(ptr->positionZ_4);
 
@@ -3238,7 +3238,7 @@ bool func_800DBCA4(MATRIX* mat, VECTOR3* outVec) // 0x800DBCA4
 
     if ((sqrX + sqrZ + sqrY) <= Q8(SQUARE(2.398f))) // TODO: Odd number, might be different Q format?
     {
-        outVec->vx = Q8_TO_Q12(deltaX) + D_800F48A8.positionX_0;
+        outVec->vx = Q8_TO_Q12(deltaX) + D_800F48A8.positionX;
         outVec->vy = Q8_TO_Q12(deltaY);
         outVec->vz = Q8_TO_Q12(deltaZ) + D_800F48A8.positionZ_4;
         return true;
@@ -3486,7 +3486,7 @@ void func_800DC49C(s_800F3DAC* arg0) // 0x800DC49C
         {
             mat = &arg0->mat_118[arg0->field_18 - 1];
             Math_Vector3Set(&pos,
-                            Q8_TO_Q12(mat->t[0]) + D_800F48A8.positionX_0,
+                            Q8_TO_Q12(mat->t[0]) + D_800F48A8.positionX,
                             Q8_TO_Q12(mat->t[1]),
                             Q8_TO_Q12(mat->t[2]) + D_800F48A8.positionZ_4);
             func_800DAC04(&pos, NULL, cond);
@@ -3854,7 +3854,7 @@ loop:
 
 void func_800DCD94(MATRIX* mat, VECTOR3* pos) // 0x800DCD94
 {
-    mat->t[0] = Q12_TO_Q8(pos->vx - D_800F48A8.positionX_0);
+    mat->t[0] = Q12_TO_Q8(pos->vx - D_800F48A8.positionX);
     mat->t[1] = Q12_TO_Q8(pos->vy);
     mat->t[2] = Q12_TO_Q8(pos->vz - D_800F48A8.positionZ_4);
 }
@@ -4159,7 +4159,7 @@ void func_800DD4CC(s_800F3DAC* arg0) // 0x800DD4CC
     if (arg0->field_4E4 == 3)
     {
         temp_v1 = arg0->field_18 - 1;
-        newPos.vx = Q8_TO_Q12(arg0->mat_118[temp_v1].t[0]) + D_800F48A8.positionX_0;
+        newPos.vx = Q8_TO_Q12(arg0->mat_118[temp_v1].t[0]) + D_800F48A8.positionX;
         newPos.vy = Q8_TO_Q12(arg0->mat_118[temp_v1].t[1]);
         newPos.vz = Q8_TO_Q12(arg0->mat_118[temp_v1].t[2]) + D_800F48A8.positionZ_4;
 
@@ -4193,7 +4193,7 @@ void func_800DD594(const VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coo
         newPosZ += Q12(64.0f) - 1;
     }
 
-    ptr->positionX_0 = newPosX;
+    ptr->positionX = newPosX;
     ptr->positionZ_4 = (newPosZ >> 18) << 18;
     ptr->field_28 = chara;
     ptr->coords_2C = coords;
@@ -4223,7 +4223,7 @@ void func_800DD6CC(void) // 0x800DD6CC
     s32       activeBufferIdx;
     GsOT_TAG* ot;
 
-    posX            = D_800F48A8.positionX_0;
+    posX            = D_800F48A8.positionX;
     posZ            = D_800F48A8.positionZ_4;
     activeBufferIdx = g_ActiveBufferIdx;
     ot              = g_OrderingTable0[activeBufferIdx].org;
@@ -4270,7 +4270,7 @@ void func_800DD7D0(VECTOR3* charaPos) // 0x800DD7D0
     // TODO: Possibly an inline/macro, based on needing separate `s_D_800F48A8*`
     gridX            = (charaPos->vx / Q12(64.0f)) * Q12(64.0f);
     gridZ            = (charaPos->vz / Q12(64.0f)) * Q12(64.0f);
-    ptr->positionX_0 = gridX;
+    ptr->positionX = gridX;
     ptr->positionZ_4 = gridZ;
 
     ptr->playerPosition_30 = g_SysWork.playerWork.player.position;
@@ -4287,7 +4287,7 @@ void func_800DD868(void) // 0x800DD868
     s32       activeBufferIdx;
     GsOT_TAG* ot;
 
-    posX            = D_800F48A8.positionX_0;
+    posX            = D_800F48A8.positionX;
     posZ            = D_800F48A8.positionZ_4;
     activeBufferIdx = g_ActiveBufferIdx;
     ot              = g_OrderingTable0[activeBufferIdx].org;
@@ -4307,7 +4307,7 @@ void func_800DD8CC(VECTOR3* charaPos) // 0x800DD8CC
     // TODO: Possibly an inline/macro, based on needing separate `s_D_800F48A8*`
     gridX            = (charaPos->vx / Q12(64.0f)) * Q12(64.0f);
     gridZ            = (charaPos->vz / Q12(64.0f)) * Q12(64.0f);
-    ptr->positionX_0 = gridX;
+    ptr->positionX = gridX;
     ptr->positionZ_4 = gridZ;
 
     ptr->playerPosition_30 = g_SysWork.playerWork.player.position;

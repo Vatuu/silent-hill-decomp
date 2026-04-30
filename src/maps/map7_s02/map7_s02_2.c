@@ -626,21 +626,21 @@ void MapEvent_CommonItemTake(void) // 0x800DB3D8
 
 void func_800DB498(void) // 0x800DB498
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     Map_MessageWithSfx(86, Sfx_DoorLocked, &sfxPos);
 }
 
 void func_800DB52C(void) // 0x800DB52C
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     Map_MessageWithSfx(88, Sfx_DoorLocked, &sfxPos);
 }
 
 void MapEvent_KeyOfBethorUse(void) // 0x800DB5C0
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     Player_ItemRemove(InvItemId_KeyOfBethor, 1);
     Map_MessageWithSfx(77, Sfx_UseKey, &sfxPos);
@@ -649,7 +649,7 @@ void MapEvent_KeyOfBethorUse(void) // 0x800DB5C0
 
 void MapEvent_KeyOfAratronUse(void) // 0x800DB67C
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     Player_ItemRemove(InvItemId_KeyOfAratron, 1);
     Map_MessageWithSfx(78, Sfx_UseKey, &sfxPos);

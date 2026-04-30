@@ -397,14 +397,14 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 void func_800D67F4(void) // 0x800D67F4
 {
-    VECTOR3 pos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
+    VECTOR3 pos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_Unk1576, &pos);
 }
 
 void func_800D6888(void) // 0x800D6888
 {
-    VECTOR3 pos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
+    VECTOR3 pos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_Unk1576, &pos);
 }
@@ -475,7 +475,7 @@ void MapEvent_CommonItemTake(void) // 0x800D691C
 
 void func_800D69DC(void) // 0x800D69DC
 {
-    VECTOR3 pos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ_8 };
+    VECTOR3 pos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     switch (g_MapEventData->pointOfInterestIdx)
     {

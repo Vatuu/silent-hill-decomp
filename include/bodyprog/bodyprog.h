@@ -593,14 +593,14 @@ typedef struct
  */
 typedef struct _Keyframe
 {
-    q3_12 field_0;
-    q3_12 field_2;
+    q3_12 field_0; // Y?
+    q3_12 field_2; // Y?
     q3_12 field_4;
     q3_12 field_6;
-    q3_12 field_8;
-    q3_12 field_A;
-    q3_12 field_C;
-    q3_12 field_E;
+    q3_12 field_8;  // Character collision radius?
+    q3_12 field_A;  // Something similar to character collision radius?
+    q3_12 field_C;  // X offset?
+    q3_12 field_E;  // Z offset?
     q3_12 field_10; // X offset?
     q3_12 field_12; // Z offset?
 } s_Keyframe;
@@ -817,7 +817,7 @@ STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
 
 typedef struct _IpdCollisionData
 {
-    s32                    positionX_0;
+    s32                    positionX;
     s32                    positionZ_4;
     u32                    field_8_0  : 8;
     u32                    field_8_8  : 8;
@@ -1204,14 +1204,14 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectModel, 28);
 /** @brief Geometry-space world object to draw. */
 typedef struct _WorldObject
 {
-    s_WorldObjectModel* model;
-    s32                 positionX_4 : 18; /** Q9.8 */
-    s32                 positionY_4 : 14; /** Q5.8 */
-    s32                 positionZ_8 : 18; /** Q9.8 */
-    s32                 __pad_8_18  : 14;
-    s32                 rotationX_C : 10; /** Q0.10 */
-    s32                 rotationY_C : 12; /** Q0.12 */
-    s32                 rotationZ_C : 10; /** Q0.10 */
+    /* 0x0    */ s_WorldObjectModel* model;
+    /* 0x4+0  */ s32                 positionX  : 18;
+    /* 0x4+18 */ s32                 positionY  : 14;
+    /* 0x8+0  */ s32                 positionZ : 18;
+    /* 0x8+18 */ s32                 __pad_8_18 : 14;
+    /* 0xC+0  */ s32                 rotationX  : 10;
+    /* 0xC+10 */ s32                 rotationY  : 12;
+    /* 0xC+22 */ s32                 rotationZ  : 10;
 } s_WorldObject;
 STATIC_ASSERT_SIZEOF(s_WorldObject, 16);
 
@@ -1219,8 +1219,8 @@ STATIC_ASSERT_SIZEOF(s_WorldObject, 16);
 typedef struct _TriggerZone
 {
     /* 0x0+0  */ u8  isEndOfArray : 1;  /** `bool` | Marks last entry. */
-    /* 0x+01  */ s32 positionX    : 10; /** Meter steps. */
-    /* 0x+011 */ s32 positionZ    : 10; /** Meter steps. */
+    /* 0x0+1  */ s32 positionX    : 10; /** Meter steps. */
+    /* 0x0+11 */ s32 positionZ    : 10; /** Meter steps. */
     /* 0x0+21 */ u32 sizeX        : 4;  /** Meter steps. */
     /* 0x0+25 */ u32 sizeZ        : 4;  /** Meter steps. */
     /* 0x0+29 */ u32 height       : 3;  /** Half-meter steps. Used to set `s_func_8006F338::field_2C` which is then copied by `func_8006F250`. */
@@ -1266,7 +1266,7 @@ typedef struct _WorldGfxWork
 STATIC_ASSERT_SIZEOF(s_WorldGfxWork, 11708);
 
 /** @brief IPD map geometry chunk. */
-typedef struct
+typedef struct _IpdChunk
 {
     /* 0x0  */ s_IpdHeader* ipdHdr;
     /* 0x4  */ s32          queueIdx;
@@ -1458,35 +1458,30 @@ typedef struct
  * Map headers include an array of these, into which `s_EventData` includes an index. */
 typedef struct _MapPoint2d
 {
-    q19_12 positionX_0;
-
-    // Optional data.
-    u32    mapIdx_4_0          : 5; /** `e_PaperMapIdx`? */
-    u32    field_4_5           : 4;
-    u32    loadingScreenId_4_9 : 3; /** `e_LoadingScreenId` */
-    u32    field_4_12          : 4;
-    q24_8  triggerParam0_4_16  : 8; // Usually a `Q8_ANGLE`
-    u32    triggerParam1_4_24  : 8;
-
-    q19_12 positionZ_8;
+    /* 0x0    */ q19_12 positionX;
+    /* 0x4+0  */ u32    mapIdx_4_0      : 5; /** `e_PaperMapIdx`? */
+    /* 0x4+5  */ u32    field_4_5       : 4;
+    /* 0x4+9  */ u32    loadingScreenId : 3; /** `e_LoadingScreenId` */
+    /* 0x4+12 */ u32    field_4_12      : 4;
+    /* 0x4+16 */ q24_8  triggerParam0   : 8; // Usually a `Q8_ANGLE`.
+    /* 0x4+24 */ u32    triggerParam1   : 8;
+    /* 0x8    */ q19_12 positionZ;
 } s_MapPoint2d;
 STATIC_ASSERT_SIZEOF(s_MapPoint2d, 12);
 
 /** @brief Character spawn info. */
 typedef struct _SpawnInfo
 {
-    q19_12 positionX_0;
-
-    s8     charaId_4; /** `e_CharacterId` */
-    q0_8   rotationY_5;
-    s8     flags_6;                   /** `e_SpawnFlags` | Copied to `stateStep` in `s_Model`, with `controlState = 0`. */
-    s32    gameDifficultyMin_7_0 : 4; /** `e_GameDifficulty` | Minimum difficulty required for successful spawn. */
-
-    q19_12 positionZ_8;
+    /* 0x0   */ q19_12 positionX;
+    /* 0x4   */ s8     characterId; /** `e_CharacterId` */
+    /* 0x5   */ q0_8   rotationY;
+    /* 0x6   */ s8     flags_6;               /** `e_SpawnFlags` | Copied to `stateStep` in `s_Model`, with `controlState = 0`. */
+    /* 0x7+0 */ s32    gameDifficultyMin : 4; /** `e_GameDifficulty` | Minimum difficulty required for successful spawn. */
+    /* 0x8   */ q19_12 positionZ;
 } s_SpawnInfo;
 STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
 
-/** Special map-specific Harry anim data. */
+/** @brief Special map-specific Harry anim data. */
 typedef struct
 {
     s16   status; /** Packed anim status. See `s_ModelAnim::status`. */
@@ -1658,10 +1653,10 @@ typedef struct _MapOverlayHeader
     void                   (*func_11C)(); // func(?).
     void                   (*func_120)(); // func(?).
     void                   (*func_124)(s_SubCharacter*); // Assumed return type.
-    s32                   (*playerRunTimerReset_128)(s_SubCharacter* player);
-    s32                   (*charaLock_12C)(s_SubCharacter* chara);
+    s32                    (*playerRunTimerReset_128)(s_SubCharacter* player);
+    s32                    (*charaLock_12C)(s_SubCharacter* chara);
     void                   (*charaIsLockedCheck)(s_SubCharacter* chara);
-    s32                   (*charaUnlock_134)(s_SubCharacter* chara);
+    s32                    (*charaUnlock_134)(s_SubCharacter* chara);
     s32                    (*charaAnimPlaybackStateGet_138)(s_SubCharacter* chara);
     bool                   (*func_13C)(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, s32 angleIn, s32 arg4); // `arg0` is `s_SubCharacter*`.
     void                   (*charaVisibleSet_140)(s_SubCharacter* chara);
@@ -1686,7 +1681,7 @@ typedef struct _MapOverlayHeader
     s32*                   data_18C;
     s32*                   data_190;
     void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `Game_NpcUpdate`. */
-    s8                     charaGroupIds_248[CHARA_GROUP_COUNT]; /** `e_CharacterId` values where if `s_SpawnInfo::charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
+    s8                     charaGroupIds_248[CHARA_GROUP_COUNT]; /** `e_CharacterId` values where if `s_SpawnInfo::characterId == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_SpawnInfo            charaSpawns_24C[2][16];               /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
     VC_ROAD_DATA           cameraPaths_3CC[100];
     s_TriggerZone          triggerZones_D2C[200];
@@ -1707,13 +1702,13 @@ typedef struct _MapEffectsPresetIdxs
 
 typedef struct
 {
-    q23_8 field_0; // X position.                } Q8 according to `func_8006EE0C`?
-    q23_8 field_4; // Y position.                }
-    q7_8  field_8; // Z position, but why `s16`? }
+    q23_8 field_0; // X position.                } Offset ray hit position?
+    q23_8 field_4; // Z position.                }
+    q7_8  field_8; // Y position, but why `s16`? }
     q7_8  field_A; // Y??
-    q7_8  field_C; // Some kind of bound or threshold?
+    q7_8  field_C; // Some kind of bound or threshold or radius?
     s16   field_E;
-} s_RayState_6C; // Unknown size.
+} s_RayState_6C;
 
 typedef struct
 {
@@ -3931,6 +3926,7 @@ void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg
 
 void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1);
 
+// Fils ray hit data?
 void func_8006EE0C(s_RayState_6C* arg0, s32 arg1, s_SubCharacter* chara);
 
 void func_8006EEB8(s_RayState* state, s_SubCharacter* chara);
