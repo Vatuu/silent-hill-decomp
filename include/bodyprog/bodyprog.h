@@ -588,21 +588,25 @@ typedef struct
     s_func_8006E490_20 field_20[2];
 } s_func_8006E490;
 
-/** @brief Animation keyframe? Doesn't hold bone data, but something gameplay-related
- * which is derived from here.
- */
+/** @brief Axis-aligned bounding box. */
+typedef struct _BoundingBox
+{
+    /* 0x0 */ q3_12 bottom; /** Y+ is down. */
+    /* 0x2 */ q3_12 top;    /** Y- is up. */
+    /* 0x4 */ q3_12 height;
+    /* 0x6 */ q3_12 offsetY;
+} s_BoundingBox;
+
+/** @brief ? */
 typedef struct _Keyframe
 {
-    q3_12 field_0; // Y?
-    q3_12 field_2; // Y?
-    q3_12 field_4;
-    q3_12 field_6;
-    q3_12 field_8;  // Character collision radius?
-    q3_12 field_A;  // Something similar to character collision radius?
-    q3_12 field_C;  // X offset?
-    q3_12 field_E;  // Z offset?
-    q3_12 field_10; // X offset?
-    q3_12 field_12; // Z offset?
+    /* 0x0  */ s_BoundingBox box;
+    /* 0x8  */ q3_12         field_8; // Character collision radius?
+    /* 0xA  */ q3_12         field_A; // Something similar to character collision radius?
+    /* 0xC  */ q3_12         hitboxCenterX;
+    /* 0xE  */ q3_12         hitboxCenterZ;
+    /* 0x10 */ q3_12         collisionCenterX;
+    /* 0x12 */ q3_12         collisionCenterZ;
 } s_Keyframe;
 
 // ========
@@ -2596,6 +2600,60 @@ extern s_800AD4C8 D_800AD4C8[70];
 extern const s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
 
 extern s16 SQRT[100];
+
+// Copies `s_Keyframe`.
+#define CopyData(arg0, data)                            \
+{                                                       \
+    s32 __temp;                                         \
+                                                        \
+    arg0->field_C8.field_0   = data.box.bottom;         \
+                                                        \
+    __temp                   = data.box.top;            \
+    arg0->field_C8.field_2   = __temp;                  \
+    arg0->field_C8.field_4   = data.box.height;         \
+                                                        \
+    __temp                   = data.box.offsetY;        \
+    arg0->field_C8.field_6   = __temp;                  \
+    arg0->field_D8.offsetX_4 = data.collisionCenterX;   \
+                                                        \
+    __temp                   = data.collisionCenterZ;   \
+    arg0->field_D8.offsetZ_6 = __temp;                  \
+    arg0->field_D4.radius_0  = data.field_8;            \
+    arg0->field_D8.offsetX_0 = data.hitboxCenterX;      \
+                                                        \
+    __temp                   = data.hitboxCenterZ;      \
+    arg0->field_D8.offsetZ_2 = __temp;                  \
+                                                        \
+    __temp                   = data.field_A;            \
+    arg0->field_D4.field_2   = __temp;                  \
+}
+
+#define CopyDataAlt(arg0, data)                            \
+{                                                       \
+    s32 __temp;                                         \
+    s32 __temp2;                                        \
+                                                        \
+    arg0->field_C8.field_0   = data.box.bottom;         \
+                                                        \
+    __temp                   = data.box.top;            \
+    arg0->field_C8.field_2   = __temp;                  \
+    arg0->field_C8.field_4   = data.box.height;         \
+                                                        \
+    __temp                   = data.box.offsetY;        \
+    arg0->field_C8.field_6   = __temp;                  \
+    arg0->field_D8.offsetX_4 = data.collisionCenterX;   \
+                                                        \
+    __temp                   = data.collisionCenterZ;   \
+    arg0->field_D8.offsetZ_6 = __temp;                  \
+    arg0->field_D4.radius_0  = data.field_8;            \
+    arg0->field_D8.offsetX_0 = data.hitboxCenterX;      \
+                                                        \
+    __temp                   = data.hitboxCenterZ;      \
+    arg0->field_D8.offsetZ_2 = __temp;                  \
+                                                        \
+    __temp2                  = data.field_A;            \
+    arg0->field_D4.field_2   = __temp2;                 \
+}
 
 // ==========
 // FUNCTIONS

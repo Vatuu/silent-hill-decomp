@@ -3788,15 +3788,15 @@ void func_80070400(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* key
     // Compute inverse alpha.
     invAlpha = Q12(1.0f) - alpha;
 
-    chara->field_C8.field_0   = FP_FROM((keyframe0->field_0 * invAlpha) + (keyframe1->field_0 * alpha), Q12_SHIFT);
-    chara->field_C8.field_2   = FP_FROM((keyframe0->field_2 * invAlpha) + (keyframe1->field_2 * alpha), Q12_SHIFT);
-    chara->field_C8.field_4   = FP_FROM((keyframe0->field_4 * invAlpha) + (keyframe1->field_4 * alpha), Q12_SHIFT);
-    chara->field_C8.field_6   = FP_FROM((keyframe0->field_6 * invAlpha) + (keyframe1->field_6 * alpha), Q12_SHIFT);
-    chara->field_D8.offsetX_4 = FP_FROM((keyframe0->field_10 * invAlpha) + (keyframe1->field_10 * alpha), Q12_SHIFT);
-    chara->field_D8.offsetZ_6 = FP_FROM((keyframe0->field_12 * invAlpha) + (keyframe1->field_12 * alpha), Q12_SHIFT);
+    chara->field_C8.field_0   = FP_FROM((keyframe0->box.bottom * invAlpha) + (keyframe1->box.bottom * alpha), Q12_SHIFT);
+    chara->field_C8.field_2   = FP_FROM((keyframe0->box.top * invAlpha) + (keyframe1->box.top * alpha), Q12_SHIFT);
+    chara->field_C8.field_4   = FP_FROM((keyframe0->box.height * invAlpha) + (keyframe1->box.height * alpha), Q12_SHIFT);
+    chara->field_C8.field_6   = FP_FROM((keyframe0->box.offsetY * invAlpha) + (keyframe1->box.offsetY * alpha), Q12_SHIFT);
+    chara->field_D8.offsetX_4 = FP_FROM((keyframe0->collisionCenterX * invAlpha) + (keyframe1->collisionCenterX * alpha), Q12_SHIFT);
+    chara->field_D8.offsetZ_6 = FP_FROM((keyframe0->collisionCenterZ * invAlpha) + (keyframe1->collisionCenterZ * alpha), Q12_SHIFT);
     chara->field_D4.radius_0  = FP_FROM((keyframe0->field_8 * invAlpha) + (keyframe1->field_8 * alpha), Q12_SHIFT);
-    chara->field_D8.offsetX_0 = FP_FROM((keyframe0->field_C * invAlpha) + (keyframe1->field_C * alpha), Q12_SHIFT);
-    chara->field_D8.offsetZ_2 = FP_FROM((keyframe0->field_E * invAlpha) + (keyframe1->field_E * alpha), Q12_SHIFT);
+    chara->field_D8.offsetX_0 = FP_FROM((keyframe0->hitboxCenterX * invAlpha) + (keyframe1->hitboxCenterX * alpha), Q12_SHIFT);
+    chara->field_D8.offsetZ_2 = FP_FROM((keyframe0->hitboxCenterZ * invAlpha) + (keyframe1->hitboxCenterZ * alpha), Q12_SHIFT);
     chara->field_D4.field_2   = FP_FROM((keyframe0->field_A * invAlpha) + (keyframe1->field_A * alpha), Q12_SHIFT);
 }
 

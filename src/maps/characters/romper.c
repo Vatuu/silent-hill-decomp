@@ -1407,33 +1407,6 @@ extern s_Keyframe sharedData_800ED018_2_s02[];
 extern s_Keyframe sharedData_800ED1D0_2_s02[];
 extern s_Keyframe sharedData_800ED2C0_2_s02;
 
-#define CopyData(arg0, data)                  \
-{                                             \
-    s32 __temp;                               \
-    s32 __temp2;                              \
-                                              \
-    arg0->field_C8.field_0 = data.field_0;    \
-                                              \
-    __temp                 = data.field_2;    \
-    arg0->field_C8.field_2 = __temp;          \
-    arg0->field_C8.field_4 = data.field_4;    \
-                                              \
-    __temp                   = data.field_6;  \
-    arg0->field_C8.field_6   = __temp;        \
-    arg0->field_D8.offsetX_4 = data.field_10; \
-                                              \
-    __temp                   = data.field_12; \
-    arg0->field_D8.offsetZ_6 = __temp;        \
-    arg0->field_D4.radius_0  = data.field_8;  \
-    arg0->field_D8.offsetX_0 = data.field_C;  \
-                                              \
-    __temp                   = data.field_E;  \
-    arg0->field_D8.offsetZ_2 = __temp;        \
-                                              \
-    __temp2                = data.field_A;    \
-    arg0->field_D4.field_2 = __temp2;         \
-}
-
 void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
 {
     s32 keyframeIdxs[2];

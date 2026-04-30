@@ -2293,32 +2293,6 @@ extern s_Keyframe sharedData_800DEE40_0_s00[2];
 extern s_Keyframe sharedData_800DEE68_0_s00[9];
 extern s_Keyframe sharedData_800DEF1C_0_s00[30];
 
-#define CopyData(arg0, data)                  \
-{                                             \
-    s32 __temp;                               \
-                                              \
-    arg0->field_C8.field_0   = data.field_0;  \
-                                              \
-    __temp                   = data.field_2;  \
-    arg0->field_C8.field_2   = __temp;        \
-    arg0->field_C8.field_4   = data.field_4;  \
-                                              \
-    __temp                   = data.field_6;  \
-    arg0->field_C8.field_6   = __temp;        \
-    arg0->field_D8.offsetX_4 = data.field_10; \
-                                              \
-    __temp                   = data.field_12; \
-    arg0->field_D8.offsetZ_6 = __temp;        \
-    arg0->field_D4.radius_0   = data.field_8;  \
-    arg0->field_D8.offsetX_0 = data.field_C;  \
-                                              \
-    __temp                   = data.field_E;  \
-    arg0->field_D8.offsetZ_2 = __temp;        \
-                                              \
-    __temp                   = data.field_A;  \
-    arg0->field_D4.field_2   = __temp;        \
-}
-
 void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
 {
     s32 keyframeIdx0;

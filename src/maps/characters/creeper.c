@@ -743,33 +743,6 @@ extern s_Keyframe sharedData_800E1194_1_s02;
 extern s_Keyframe sharedData_800E11A8_1_s02;
 extern s_Keyframe sharedData_800E11BC_1_s02;
 
-#define CopyData(arg0, data)                  \
-{                                             \
-    s32 __temp;                               \
-    s32 __temp2;                              \
-                                              \
-    arg0->field_C8.field_0   = data.field_0;  \
-                                              \
-    __temp                   = data.field_2;  \
-    arg0->field_C8.field_2   = __temp;        \
-    arg0->field_C8.field_4   = data.field_4;  \
-                                              \
-    __temp                   = data.field_6;  \
-    arg0->field_C8.field_6   = __temp;        \
-    arg0->field_D8.offsetX_4 = data.field_10; \
-                                              \
-    __temp                   = data.field_12; \
-    arg0->field_D8.offsetZ_6 = __temp;        \
-    arg0->field_D4.radius_0  = data.field_8;  \
-    arg0->field_D8.offsetX_0 = data.field_C;  \
-                                              \
-    __temp                   = data.field_E;  \
-    arg0->field_D8.offsetZ_2 = __temp;        \
-                                              \
-    __temp2                  = data.field_A;  \
-    arg0->field_D4.field_2   = __temp2;       \
-}
-
 void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
 {
     s32 keyframeIdx0;
@@ -795,7 +768,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
             break;
 
         case ANIM_STATUS(CreeperAnim_Attack, true):
-            CopyData(creeper, sharedData_800E0FC8_1_s02);
+            CopyDataAlt(creeper, sharedData_800E0FC8_1_s02);
             creeper->field_C8.field_8 = -655;
             break;
 
@@ -813,7 +786,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
         case ANIM_STATUS(CreeperAnim_DeathStart, true):
         case ANIM_STATUS(CreeperAnim_DeathEnd,  false):
         case ANIM_STATUS(CreeperAnim_DeathEnd,  true):
-            CopyData(creeper, sharedData_800E0FDC_1_s02);
+            CopyDataAlt(creeper, sharedData_800E0FDC_1_s02);
             break;
 
         case ANIM_STATUS(CreeperAnim_RunForwardStunCont, false):
@@ -830,12 +803,12 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
         case ANIM_STATUS(CreeperAnim_RunForwardStunCont, true):
         case ANIM_STATUS(CreeperAnim_RunForwardStunEnd, false):
         case ANIM_STATUS(CreeperAnim_RunForwardStunEnd, true):
-            CopyData(creeper, sharedData_800E0FF0_1_s02);
+            CopyDataAlt(creeper, sharedData_800E0FF0_1_s02);
             break;
 
         case ANIM_STATUS(CreeperAnim_StunLoop, false):
         case ANIM_STATUS(CreeperAnim_StunOnce, false):
-            CopyData(creeper, sharedData_800E1004_1_s02[0]);
+            CopyDataAlt(creeper, sharedData_800E1004_1_s02[0]);
             break;
 
         case ANIM_STATUS(CreeperAnim_StunLoop, true):
@@ -850,7 +823,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
 
         case ANIM_STATUS(CreeperAnim_IdleToRunForward, false):
         case ANIM_STATUS(CreeperAnim_RunForwardStunStart, false):
-            CopyData(creeper, sharedData_800E10E0_1_s02[0]);
+            CopyDataAlt(creeper, sharedData_800E10E0_1_s02[0]);
             break;
 
         case ANIM_STATUS(CreeperAnim_IdleToRunForward, true):
@@ -865,7 +838,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
             break;
 
         case ANIM_STATUS(CreeperAnim_Stunned, true):
-            CopyData(creeper, sharedData_800E116C_1_s02);
+            CopyDataAlt(creeper, sharedData_800E116C_1_s02);
             break;
 
         case ANIM_STATUS(CreeperAnim_RunForward, false):
@@ -873,7 +846,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
             break;
 
         case ANIM_STATUS(CreeperAnim_RunForward, true):
-            CopyData(creeper, sharedData_800E1180_1_s02);
+            CopyDataAlt(creeper, sharedData_800E1180_1_s02);
             break;
 
         case ANIM_STATUS(CreeperAnim_Idle, false):
@@ -882,7 +855,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
 
         case ANIM_STATUS(CreeperAnim_Idle, true):
             creeper->properties.creeper.animStatus_10A = ANIM_STATUS(CreeperAnim_Idle, true);
-            CopyData(creeper, sharedData_800E1194_1_s02);
+            CopyDataAlt(creeper, sharedData_800E1194_1_s02);
             break;
 
         case ANIM_STATUS(CreeperAnim_AttackStart, false):
@@ -890,7 +863,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
             break;
 
         case ANIM_STATUS(CreeperAnim_AttackStart, true):
-            CopyData(creeper, sharedData_800E11A8_1_s02);
+            CopyDataAlt(creeper, sharedData_800E11A8_1_s02);
             break;
 
         case ANIM_STATUS(CreeperAnim_WalkForward, false):
@@ -904,12 +877,12 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
             }
             else
             {
-                CopyData(creeper, sharedData_800E11BC_1_s02);
+                CopyDataAlt(creeper, sharedData_800E11BC_1_s02);
             }
             break;
 
         case ANIM_STATUS(CreeperAnim_WalkForward, true):
-            CopyData(creeper, sharedData_800E11BC_1_s02);
+            CopyDataAlt(creeper, sharedData_800E11BC_1_s02);
             break;
     }
 
