@@ -42,6 +42,10 @@ def get_o_target(yaml_file, release, compile_asm_tu):
                                     case ".rodata" | ".data" | ".sdata" | ".bss" | ".sbss" | "pad" | "lib" | ".rdata" | "o":
                                         """
                                         Hi, I don't have any SH fun fact for today.
+                                        
+                                        Now I do, Did you know that some developers from the original Team Silent games
+                                        (apart of Akira Yamaoka [do I have to say who is him?] and Masahiro Ito [monster
+                                        designer from 1 to 3]) also worked in Silent Hill: The Short Message.
                                         """
                             except:
                                 """

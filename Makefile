@@ -23,11 +23,13 @@ SKIP_ASM       ?= 0
 # support it. Additionally, the linker will reorder variables based on their names.
 USE_COMMON     ?= 0
 
+# Fixes Objdiff build feature.
+OBJDIFF_FIX    ?= 0
+
 # Names and Paths
+
+# Retail versions supported:
 #
-# Versions supported
-#
-# Retail:
 # American
 # European
 # Japanese
@@ -562,7 +564,9 @@ endif
 
 # Source Definitions
 
+ifneq ($(OBJDIFF_FIX),1)
 TARGET_OUT_CACHE := $(foreach target,$(TARGET_IN),$(target)|$(call get_target_out_slow,$(target)))
+endif
 
 TARGET_OUT := $(foreach target,$(TARGET_IN),$(call get_target_out,$(target)))
 
@@ -687,9 +691,13 @@ config-formatter:
 
 # Recipes
 
+ifeq ($(OBJDIFF_FIX),1)
+$2: $(info $(patsubst $(BUILD_DIR)/%.c.o,%.c,$2))
+else
 # .elf targets
 # Generate .elf target for each target from TARGET_IN.
 $(foreach target,$(TARGET_IN),$(eval $(call make_elf_target,$(target),$(call get_target_out,$(target)))))
+endif
 
 # Generate objects.
 # (Running make with MAKE_COMPILE_LOG=1 will create a compile.log that can be passed to tools/create_compile_commands.py)
@@ -718,6 +726,8 @@ $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
 	$(call FlagsSwitch, $@)
 	$(MASPSX) $(MASPSX_FLAGS) -o $@ $<
 
+ifneq ($(OBJDIFF_FIX),1)
+
 $(BUILD_DIR)/%.s.o: %.s
 	@mkdir -p $(dir $@)
 	$(call FlagsSwitch, $@)
@@ -732,11 +742,7 @@ $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
 	@mkdir -p $(dir $@)
 	$(SPLAT) $(SPLAT_FLAGS) $<
 
-	@# Poor mans prebuild.py, zero padding bytes inside .bss section after splat has run (only needed for `make report`)
-	@- sed -i 's/\.word 0xD892383C/.word 0x00000000/g' asm/USA/bodyprog/screen/screen_fade.s 2>/dev/null || true
-	@- sed -i 's/\.byte 0x70/.byte 0x00/g' asm/USA/bodyprog/sys/memcard_2.s 2>/dev/null || true
-	@- sed -i 's/\.short 0x8DE5/.short 0x0000/g' asm/USA/bodyprog/sys/memcard_2.s 2>/dev/null || true
-	@- sed -i 's/\.word 0x00144000/.word 0x00000000/g' asm/USA/bodyprog/credits_init.s 2>/dev/null || true
+endif
 
 ### Settings
 .SECONDARY:

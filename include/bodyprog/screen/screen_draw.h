@@ -8,10 +8,11 @@
 // GLOBALS
 // ========
 
-extern q19_12 g_PrevScreenFadeProgress;
-
-extern s32 __pad_bss_800B5C2C;
-
+/** @note This is defined in `screen_draw.c` as in between this and
+ * the previous variable (g_PrevScreenFadeProgress) there is garbage
+ * data it may hint that this variable was defined in a file apart of
+ * `screen_fade.c`.
+ */
 extern q19_12 g_ScreenFadeTimestep;
 
 // ==========

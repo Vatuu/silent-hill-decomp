@@ -164,7 +164,7 @@ def main():
         categories.append(ProgressCategory(category["id"], category["name"]))
     
     with (Path(config["output"])).open("w") as json_file:
-        json.dump(asdict(Config(True, False, build_method, ["build", f"GAME_VERSION={game_version}", "SKIP_ASM=1"] if build_method != "ninja" and game_version != "ALL" else None, units, categories)), json_file, indent=2)
+        json.dump(asdict(Config(True, False, build_method, ["build", f"GAME_VERSION={game_version}", "SKIP_ASM=1", "OBJDIFF_FIX=1"] if build_method != "ninja" and game_version != "ALL" else None, units, categories)), json_file, indent=2)
 
 if __name__ == "__main__":
     main()

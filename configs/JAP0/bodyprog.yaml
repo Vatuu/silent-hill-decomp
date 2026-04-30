@@ -443,6 +443,8 @@ segments:
       - [0x8FFE8, .bss, memcard]
       - [0x935F0, .bss, text/text_debug_draw]
       - [0x935F8, .bss, screen/screen_fade]
+      - [0x935FC, pad]
+      - [0x93600, .bss, screen/screen_draw]
       - [0x93604, bss]
       - [0x9A6E4, pad] # Garbage
       - [0x9A6E8, .bss, sys/memcard_2]

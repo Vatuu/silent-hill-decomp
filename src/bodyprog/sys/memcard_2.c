@@ -32,8 +32,6 @@ s8  g_SelectedFileIdx;
 
 s8  g_SelectedDeviceId;
 
-s8  __pad_bss_800BCD41[3];
-
 u8 g_SlotElementSelectedIdx[MEMCARD_SLOT_COUNT_MAX] = { 0, 0 };
 s8 g_SelectedSaveSlotIdx = 0;
 u8 D_800A97D7 = 0;

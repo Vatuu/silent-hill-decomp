@@ -10,13 +10,6 @@
 #include "main/fsqueue.h"
 
 const s32 rodataPad_80024CA0 = 0;
-s32       __pad_bss_800B5C2C;
-
-// ========================================
-// GLOBAL VARIABLES
-// ========================================
-
-q19_12 g_ScreenFadeTimestep;
 
 // ========================================
 // STATIC VARIABLES
