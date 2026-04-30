@@ -1332,18 +1332,18 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
     switch (scratcher->model.anim.status)
     {
         case ANIM_STATUS(HangedScratcherAnim_4, false):
-            func_80070400(scratcher, &sharedData_800D980C_5_s00, sharedData_800D9500_5_s00);
+            Collision_CharaAnimShapesSet(scratcher, &sharedData_800D980C_5_s00, sharedData_800D9500_5_s00);
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_4, true):
             scratcherProps.field_EE = 9;
 
             relKeyframeIdx = animKeyframeIdx - 98;
-            func_80070400(scratcher, &sharedData_800D9500_5_s00[relKeyframeIdx], &sharedData_800D9500_5_s00[relKeyframeIdx + 1]);
+            Collision_CharaAnimShapesSet(scratcher, &sharedData_800D9500_5_s00[relKeyframeIdx], &sharedData_800D9500_5_s00[relKeyframeIdx + 1]);
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_10, false):
-            func_80070400(scratcher, &sharedData_800D980C_5_s00, sharedData_800D9708_5_s00);
+            Collision_CharaAnimShapesSet(scratcher, &sharedData_800D980C_5_s00, sharedData_800D9708_5_s00);
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_10, true):
@@ -1353,13 +1353,13 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
             keyframeIdx0   = relKeyframeIdx - ((relKeyframeIdx >= 12) ? 1 : 0) - ((relKeyframeIdx >= 14) ? 1 : 0);
             keyframeIdx1   = (relKeyframeIdx + 1) - ((relKeyframeIdx >= 11) ? 1 : 0) - ((relKeyframeIdx >= 13) ? 1 : 0) - ((relKeyframeIdx >= 14) ? 1 : 0);
 
-            func_80070400(scratcher, &sharedData_800D9708_5_s00[keyframeIdx0], &sharedData_800D9708_5_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(scratcher, &sharedData_800D9708_5_s00[keyframeIdx0], &sharedData_800D9708_5_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_12, false):
             if (scratcherProps.field_EE == 21)
             {
-                func_80070400(scratcher, &sharedData_800D97F8_5_s00, &sharedData_800D9668_5_s00);
+                Collision_CharaAnimShapesSet(scratcher, &sharedData_800D97F8_5_s00, &sharedData_800D9668_5_s00);
             }
             else
             {
@@ -1421,17 +1421,17 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
                 keyframeIdx1 = (relKeyframeIdx - 3) - ((relKeyframeIdx == 10) ? 1 : 0);
             }
 
-            func_80070400(scratcher, &sharedData_800D967C_5_s00[keyframeIdx0], &sharedData_800D967C_5_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(scratcher, &sharedData_800D967C_5_s00[keyframeIdx0], &sharedData_800D967C_5_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_14, false):
             if (scratcherProps.field_EE == 9)
             {
-                func_80070400(scratcher, &sharedData_800D9654_5_s00, &sharedData_800D980C_5_s00);
+                Collision_CharaAnimShapesSet(scratcher, &sharedData_800D9654_5_s00, &sharedData_800D980C_5_s00);
             }
             else if (scratcherProps.field_EE == 17)
             {
-                func_80070400(scratcher, &sharedData_800D96F4_5_s00, &sharedData_800D980C_5_s00);
+                Collision_CharaAnimShapesSet(scratcher, &sharedData_800D96F4_5_s00, &sharedData_800D980C_5_s00);
             }
             else
             {
@@ -1448,20 +1448,20 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_16, false):
-            func_80070400(scratcher, &sharedData_800D980C_5_s00, sharedData_800D9820_5_s00);
+            Collision_CharaAnimShapesSet(scratcher, &sharedData_800D980C_5_s00, sharedData_800D9820_5_s00);
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_16, true):
             scratcherProps.field_EE = 33;
 
             relKeyframeIdx = animKeyframeIdx - 244;
-            func_80070400(scratcher, &sharedData_800D9820_5_s00[relKeyframeIdx], &sharedData_800D9820_5_s00[relKeyframeIdx + 1]);
+            Collision_CharaAnimShapesSet(scratcher, &sharedData_800D9820_5_s00[relKeyframeIdx], &sharedData_800D9820_5_s00[relKeyframeIdx + 1]);
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_13, false):
             if (scratcherProps.field_EE == 23)
             {
-                func_80070400(scratcher, &sharedData_800D9AF0_5_s00, &sharedData_800D99EC_5_s00);
+                Collision_CharaAnimShapesSet(scratcher, &sharedData_800D9AF0_5_s00, &sharedData_800D99EC_5_s00);
             }
             else
             {
@@ -1494,17 +1494,17 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
             keyframeIdx0   = relKeyframeIdx - ((relKeyframeIdx > 0) ? 1 : 0) - ((relKeyframeIdx >= 4) ? 1 : 0) - ((relKeyframeIdx >= 5) ? 1 : 0);
             keyframeIdx1   = relKeyframeIdx - ((relKeyframeIdx >= 3) ? 1 : 0) - ((relKeyframeIdx >= 4) ? 1 : 0) - ((relKeyframeIdx >= 8) ? 1 : 0);
 
-            func_80070400(scratcher, &sharedData_800D9A00_5_s00[keyframeIdx0], &sharedData_800D9A00_5_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(scratcher, &sharedData_800D9A00_5_s00[keyframeIdx0], &sharedData_800D9A00_5_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_11, false):
             if (scratcherProps.field_EE == 31)
             {
-                func_80070400(scratcher, &sharedData_800D9B04_5_s00, sharedData_800D9A78_5_s00);
+                Collision_CharaAnimShapesSet(scratcher, &sharedData_800D9B04_5_s00, sharedData_800D9A78_5_s00);
             }
             else
             {
-                func_80070400(scratcher, &sharedData_800D9A64_5_s00, sharedData_800D9A78_5_s00);
+                Collision_CharaAnimShapesSet(scratcher, &sharedData_800D9A64_5_s00, sharedData_800D9A78_5_s00);
             }
             break;
 
@@ -1515,17 +1515,17 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
             keyframeIdx0   = relKeyframeIdx - ((relKeyframeIdx >= 2) ? 1 : 0) - ((relKeyframeIdx >= 8) ? 1 : 0);
             keyframeIdx1   = (relKeyframeIdx + 1) - ((relKeyframeIdx > 0) ? 1 : 0) - ((relKeyframeIdx >= 7) ? 1 : 0) - ((relKeyframeIdx >= 8) ? 1 : 0);
 
-            func_80070400(scratcher, &sharedData_800D9A78_5_s00[keyframeIdx0], &sharedData_800D9A78_5_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(scratcher, &sharedData_800D9A78_5_s00[keyframeIdx0], &sharedData_800D9A78_5_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_15, false):
             if (scratcherProps.field_EE == 33)
             {
-                func_80070400(scratcher, &sharedData_800D99D8_5_s00, &sharedData_800D9B04_5_s00);
+                Collision_CharaAnimShapesSet(scratcher, &sharedData_800D99D8_5_s00, &sharedData_800D9B04_5_s00);
             }
             else if (scratcherProps.field_EE == 19)
             {
-                func_80070400(scratcher, &sharedData_800D9A64_5_s00, &sharedData_800D9B04_5_s00);
+                Collision_CharaAnimShapesSet(scratcher, &sharedData_800D9A64_5_s00, &sharedData_800D9B04_5_s00);
             }
             else
             {
@@ -1560,7 +1560,7 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
 
         case ANIM_STATUS(HangedScratcherAnim_5, true):
             relKeyframeIdx = animKeyframeIdx - 116;
-            func_80070400(scratcher, &sharedData_800D9B2C_5_s00[relKeyframeIdx], &sharedData_800D9B2C_5_s00[relKeyframeIdx + 1]);
+            Collision_CharaAnimShapesSet(scratcher, &sharedData_800D9B2C_5_s00[relKeyframeIdx], &sharedData_800D9B2C_5_s00[relKeyframeIdx + 1]);
             break;
     }
 

@@ -838,7 +838,7 @@ s_IpdCollisionData** func_800425D8(s32* collDataIdx) // 0x800425D8
     return &D_800C1010[0];
 }
 
-s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
+s_IpdCollisionData* Ipd_CollisionDataGet(q19_12 posX, q19_12 posZ) // 0x800426E4
 {
     s32          geomX;
     s32          geomZ;

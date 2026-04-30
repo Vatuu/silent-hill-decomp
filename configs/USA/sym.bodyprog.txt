@@ -473,6 +473,7 @@ Ipd_MapFileInfoSet                           = 0x800421D8; // type:func
 Ipd_ActiveChunksClear                        = 0x80042300; // type:func
 Map_MakeIpdGrid                              = 0x800423F4; // type:func
 ConvertHexToS8                               = 0x8004255C; // type:func
+Ipd_CollisionDataGet                         = 0x800426E4; // type:func
 IpdHeader_IsLoaded                           = 0x80042C04; // type:func
 Ipd_ChunkInit                                = 0x80042C3C; // type:func
 Ipd_PaddedDistanceToEdgeGet                  = 0x80042DE8; // type:func
@@ -765,8 +766,11 @@ Collision_ActiveCharactersGet                = 0x8006A1A4; // type:func
 Collision_OffsetCheck                        = 0x8006A3B4; // type:func
 Collision_QueryInit                          = 0x8006AB50; // type:func
 Collision_QueryDirectionCalc                 = 0x8006ABC0; // type:func
+Ipd_GridCollisionQuery                       = 0x8006AD44; // type:func
 Collision_OffsetAlphaGet                     = 0x8006CB90;
-Ray_LineCheck                                = 0x8006D90C; // type:func
+Ipd_GroundHeightGet                          = 0x8006CC44; // type:func
+Ray_TraceQuery                               = 0x8006D90C; // type:func
+Ray_CharaTraceQuery                          = 0x8006DA08; // type:func
 Ray_MissSet                                  = 0x8006DAE4; // type:func
 Ray_LosHitCheck                              = 0x8006DB3C; // type:func
 Ray_TraceSetup                               = 0x8006DCE0; // type:func
@@ -776,6 +780,7 @@ Ray_CharaToCharaTargetLosCheck               = 0x80070084; // type:func
 Ray_NpcToPlayerLosCheck                      = 0x800700F8; // type:func
 Ray_CharaToCharaDistLosCheck                 = 0x80070184; // type:func
 Ray_CharaLosHitCheck                         = 0x8007029C; // type:func
+Collision_CharaAnimShapesSet                 = 0x80070400; // type:func
 
 //-----------------------------------------------------------------
 //--- PA: 0x04BB84   VA: 0x800706E4   subsegment: c, player_control

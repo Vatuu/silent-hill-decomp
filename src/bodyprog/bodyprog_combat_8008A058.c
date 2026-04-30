@@ -366,7 +366,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
     s32                var_a0;
     s_AnimInfo*        anim;
     s_SubCharacter*    ptr;
-    s32                temp;
+    bool              hasHit;
     s32                temp_t3_2;
     s32                temp2;
     s32                temp3;
@@ -652,10 +652,9 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                         func_800892A4(5);
                     }
 
-                    temp = func_8006DA08(&D_800C4728, &chara->field_44.field_18, &chara->field_44.field_48[0], chara);
+                    hasHit = Ray_CharaTraceQuery(&D_800C4728, &chara->field_44.field_18, &chara->field_44.field_48[0], chara);
                     ptr  = D_800C4728.character;
-
-                    if (temp && ptr != NULL)
+                    if (hasHit && ptr != NULL)
                     {
                         chara->field_44.field_48[1].vx = temp_s1_4;
                         chara->field_44.field_48[1].vy = temp2;
@@ -1801,7 +1800,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
         posZ             = temp_s2 - Q12_MULT_PRECISE(temp_s3, var_s1);
 
         D_800C47C8[1].vz = posZ;
-        var_v1           = Ray_LineCheck(&D_800C47F8, &D_800C47C8[0], &D_800C47C8[1]);
+        var_v1           = Ray_TraceQuery(&D_800C47F8, &D_800C47C8[0], &D_800C47C8[1]);
 
         if (var_v1 != false)
         {

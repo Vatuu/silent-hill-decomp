@@ -234,7 +234,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
             continue;
         }
 
-        if (func_8006DA08(&trace, from, &unkPos, &g_SysWork.playerWork.player) && trace.character == &g_SysWork.npcs[i])
+        if (Ray_CharaTraceQuery(&trace, from, &unkPos, &g_SysWork.playerWork.player) && trace.character == &g_SysWork.npcs[i])
         {
             *targetNpcIdx  = i;
             *outAngle0  = angle3;

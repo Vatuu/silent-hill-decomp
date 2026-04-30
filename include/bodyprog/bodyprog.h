@@ -603,10 +603,8 @@ typedef struct _Keyframe
     /* 0x0  */ s_BoundingBox box;
     /* 0x8  */ q3_12         field_8; // Character collision radius?
     /* 0xA  */ q3_12         field_A; // Something similar to character collision radius?
-    /* 0xC  */ q3_12         hitboxCenterX;
-    /* 0xE  */ q3_12         hitboxCenterZ;
-    /* 0x10 */ q3_12         collisionCenterX;
-    /* 0x12 */ q3_12         collisionCenterZ;
+    /* 0xC  */ DVECTOR_XZ    boxCenter;
+    /* 0x10 */ DVECTOR_XZ    cylinderCenter;
 } s_Keyframe;
 
 typedef struct _Normal
@@ -798,8 +796,8 @@ STATIC_ASSERT_SIZEOF(s_IpdCollisionData_14, 10);
 
 typedef struct
 {
-    s16 field_0;
-    s8  unk_2[2];
+    s16 field_0; // Base index into `s_IpdCollisionData::ptr_28`.
+    s8  __pad_2[2];
 } s_IpdCollisionData_20;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_20, 4);
 
@@ -836,7 +834,7 @@ typedef struct _IpdCollisionData
     u8*                    ptr_28; // Accessed as array of indices into `field_34` by `func_8006E53C`.
     void*                  ptr_2C;
     u8                     field_30;
-    u8                     unk_31[3];
+    u8                     __pad_31[3];
     u8                     field_34[256];
 } s_IpdCollisionData;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData, 308);
@@ -2610,14 +2608,14 @@ extern s16 SQRT[100];
                                                         \
     __temp                   = data.box.offsetY;        \
     arg0->collision.box.field_6   = __temp;                  \
-    arg0->collision.shapeOffsets.cylinder.vx = data.collisionCenterX;   \
+    arg0->collision.shapeOffsets.cylinder.vx = data.cylinderCenter.vx;   \
                                                         \
-    __temp                   = data.collisionCenterZ;   \
+    __temp                   = data.cylinderCenter.vz;   \
     arg0->collision.shapeOffsets.cylinder.vz = __temp;                  \
     arg0->collision.cylinder.radius  = data.field_8;            \
-    arg0->collision.shapeOffsets.box.vx = data.hitboxCenterX;      \
+    arg0->collision.shapeOffsets.box.vx = data.boxCenter.vx;      \
                                                         \
-    __temp                   = data.hitboxCenterZ;      \
+    __temp                   = data.boxCenter.vz;      \
     arg0->collision.shapeOffsets.box.vz = __temp;                  \
                                                         \
     __temp                   = data.field_A;            \
@@ -2637,14 +2635,14 @@ extern s16 SQRT[100];
                                                         \
     __temp                   = data.box.offsetY;        \
     arg0->collision.box.field_6   = __temp;                  \
-    arg0->collision.shapeOffsets.cylinder.vx = data.collisionCenterX;   \
+    arg0->collision.shapeOffsets.cylinder.vx = data.cylinderCenter.vx;   \
                                                         \
-    __temp                   = data.collisionCenterZ;   \
+    __temp                   = data.cylinderCenter.vz;   \
     arg0->collision.shapeOffsets.cylinder.vz = __temp;                  \
     arg0->collision.cylinder.radius  = data.field_8;            \
-    arg0->collision.shapeOffsets.box.vx = data.hitboxCenterX;      \
+    arg0->collision.shapeOffsets.box.vx = data.boxCenter.vx;      \
                                                         \
-    __temp                   = data.hitboxCenterZ;      \
+    __temp                   = data.boxCenter.vz;      \
     arg0->collision.shapeOffsets.box.vz = __temp;                  \
                                                         \
     __temp2                  = data.field_A;            \
@@ -2834,7 +2832,7 @@ bool ConvertHexToS8(s32* out, char hex0, char hex1);
 
 s_IpdCollisionData** func_800425D8(s32* collDataIdx);
 
-s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ);
+s_IpdCollisionData* Ipd_CollisionDataGet(q19_12 posX, q19_12 posZ);
 
 s32 func_8004287C(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q19_12 posX, q19_12 posZ);
 
@@ -3877,7 +3875,7 @@ void Collision_QueryInit(s_CollisionState* collState, VECTOR3* offset, s_Collisi
  */
 void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* offset, const s_CollisionQuery* collQuery);
 
-void func_8006AD44(s_CollisionState* collState, s_IpdCollisionData* collData);
+void Ipd_GridCollisionQuery(s_CollisionState* collState, s_IpdCollisionData* collData);
 
 bool func_8006AEAC(s_CollisionState* collState, s_IpdCollisionData* collData);
 
@@ -3927,7 +3925,7 @@ void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_
 
 s16 Collision_OffsetAlphaGet(s_CollisionState* collState);
 
-s32 func_8006CC44(q23_8 posX, q23_8 posZ, s_CollisionState* collState);
+q23_8 Ipd_GroundHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionState* collState);
 
 void func_8006CC9C(s_CollisionState* collState);
 
@@ -3944,12 +3942,12 @@ void func_8006D774(s_CollisionState* collState, VECTOR3* arg1, VECTOR3* arg2);
 /** `arg1` is likely Q23.8. */
 void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2);
 
-bool Ray_LineCheck(s_RayTrace* trace, VECTOR3* from, VECTOR3* to);
+bool Ray_TraceQuery(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* to);
 
 /** Ray function. */
-bool func_8006DA08(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCharacter* chara);
+bool Ray_CharaTraceQuery(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCharacter* chara);
 
-void Ray_MissSet(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, q23_8 arg3);
+void Ray_MissSet(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, q23_8 arg3);
 
 /** @brief Checks if an obstruction in a ray's line of sight has been hit, ignoring a specified character.
  *
@@ -3963,7 +3961,7 @@ bool Ray_LosHitCheck(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCha
 
 bool func_8006DC18(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset);
 
-bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* offset, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount);
+bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, const VECTOR3* from, const VECTOR3* offset, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount);
 
 bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state);
 
@@ -4051,7 +4049,7 @@ q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2);
  * @param keyframe0 First keyframe.
  * @param keyframe1 Second keyframe.
  */
-void func_80070400(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1);
+void Collision_CharaAnimShapesSet(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1);
 
 bool func_80070208(s_SubCharacter* chara, q19_12 dist);
 

@@ -2303,7 +2303,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
     {
         case ANIM_STATUS(StalkerAnim_8, false):
         case ANIM_STATUS(StalkerAnim_9, false):
-            func_80070400(stalker, &sharedData_800DE440_0_s00[15], &sharedData_800DDBA8_0_s00);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DE440_0_s00[15], &sharedData_800DDBA8_0_s00);
             break;
 
         case ANIM_STATUS(StalkerAnim_8, true):
@@ -2314,23 +2314,23 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
         case ANIM_STATUS(StalkerAnim_38, false):
             if (stalkerProps.keyframeIdx_FC == NO_VALUE)
             {
-                func_80070400(stalker, &sharedData_800DE2C4_0_s00, &sharedData_800DDBBC_0_s00[0]);
+                Collision_CharaAnimShapesSet(stalker, &sharedData_800DE2C4_0_s00, &sharedData_800DDBBC_0_s00[0]);
             }
             else
             {
-                func_80070400(stalker, &sharedData_800DE580_0_s00[20], &sharedData_800DDBBC_0_s00[0]);
+                Collision_CharaAnimShapesSet(stalker, &sharedData_800DE580_0_s00[20], &sharedData_800DDBBC_0_s00[0]);
             }
             break;
 
         case ANIM_STATUS(StalkerAnim_21, false):
-            func_80070400(stalker, &sharedData_800DE2C4_0_s00, &sharedData_800DDBBC_0_s00[0]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DE2C4_0_s00, &sharedData_800DDBBC_0_s00[0]);
             break;
 
         case ANIM_STATUS(StalkerAnim_21, true):
         case ANIM_STATUS(StalkerAnim_38, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 353);
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 352);
-            func_80070400(stalker, &sharedData_800DDBBC_0_s00[keyframeIdx0], &sharedData_800DDBBC_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DDBBC_0_s00[keyframeIdx0], &sharedData_800DDBBC_0_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_31, false):
@@ -2339,17 +2339,17 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             break;
 
         case ANIM_STATUS(StalkerAnim_19, false):
-            func_80070400(stalker, &sharedData_800DE2D8_0_s00, &sharedData_800DDC70_0_s00[0]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DE2D8_0_s00, &sharedData_800DDC70_0_s00[0]);
             break;
 
         case ANIM_STATUS(StalkerAnim_39, false):
             if (stalkerProps.keyframeIdx_FC == NO_VALUE)
             {
-                func_80070400(stalker, &sharedData_800DE2D8_0_s00, &sharedData_800DDC70_0_s00[0]);
+                Collision_CharaAnimShapesSet(stalker, &sharedData_800DE2D8_0_s00, &sharedData_800DDC70_0_s00[0]);
             }
             else
             {
-                func_80070400(stalker, &sharedData_800DE8C8_0_s00[stalkerProps.keyframeIdx_FC], &sharedData_800DDC70_0_s00[0]);
+                Collision_CharaAnimShapesSet(stalker, &sharedData_800DE8C8_0_s00[stalkerProps.keyframeIdx_FC], &sharedData_800DDC70_0_s00[0]);
             }
             break;
 
@@ -2357,7 +2357,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
         case ANIM_STATUS(StalkerAnim_39, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 339);
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 338);
-            func_80070400(stalker, &sharedData_800DDC70_0_s00[keyframeIdx0], &sharedData_800DDC70_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DDC70_0_s00[keyframeIdx0], &sharedData_800DDC70_0_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_32, false):
@@ -2366,17 +2366,17 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             break;
 
         case ANIM_STATUS(StalkerAnim_20, false):
-            func_80070400(stalker, &sharedData_800DE2EC_0_s00, &sharedData_800DDCFC_0_s00[0]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DE2EC_0_s00, &sharedData_800DDCFC_0_s00[0]);
             break;
 
         case ANIM_STATUS(StalkerAnim_40, false):
             if (stalkerProps.keyframeIdx_FC == NO_VALUE)
             {
-                func_80070400(stalker, &sharedData_800DE2EC_0_s00, &sharedData_800DDCFC_0_s00[0]);
+                Collision_CharaAnimShapesSet(stalker, &sharedData_800DE2EC_0_s00, &sharedData_800DDCFC_0_s00[0]);
             }
             else
             {
-                func_80070400(stalker, &sharedData_800DEB0C_0_s00[stalkerProps.keyframeIdx_FC], &sharedData_800DDCFC_0_s00[0]);
+                Collision_CharaAnimShapesSet(stalker, &sharedData_800DEB0C_0_s00[stalkerProps.keyframeIdx_FC], &sharedData_800DDCFC_0_s00[0]);
             }
             break;
 
@@ -2384,7 +2384,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
         case ANIM_STATUS(StalkerAnim_40, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 346);
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 345);
-            func_80070400(stalker, &sharedData_800DDCFC_0_s00[keyframeIdx0], &sharedData_800DDCFC_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DDCFC_0_s00[keyframeIdx0], &sharedData_800DDCFC_0_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_33, false):
@@ -2399,7 +2399,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
         case ANIM_STATUS(StalkerAnim_22, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 362);
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 361);
-            func_80070400(stalker, &sharedData_800DDD88_0_s00[keyframeIdx0], &sharedData_800DDD88_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DDD88_0_s00[keyframeIdx0], &sharedData_800DDD88_0_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_23, false):
@@ -2411,28 +2411,28 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
         case ANIM_STATUS(StalkerAnim_41, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 378);
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 377);
-            func_80070400(stalker, &sharedData_800DDEC8_0_s00[keyframeIdx0], &sharedData_800DDEC8_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DDEC8_0_s00[keyframeIdx0], &sharedData_800DDEC8_0_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_36, false):
-            func_80070400(stalker, &sharedData_800DDBA8_0_s00, &sharedData_800DE008_0_s00[6]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DDBA8_0_s00, &sharedData_800DE008_0_s00[6]);
             break;
 
         case ANIM_STATUS(StalkerAnim_10, false):
-            func_80070400(stalker, &sharedData_800DDBA8_0_s00, &sharedData_800DE008_0_s00[0]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DDBA8_0_s00, &sharedData_800DE008_0_s00[0]);
             break;
 
         case ANIM_STATUS(StalkerAnim_10, true):
         case ANIM_STATUS(StalkerAnim_36, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 96);
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 95);
-            func_80070400(stalker, &sharedData_800DE008_0_s00[keyframeIdx0], &sharedData_800DE008_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DE008_0_s00[keyframeIdx0], &sharedData_800DE008_0_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_24, false):
             if (stalkerProps.relKeyframeIdx_FE != 0)
             {
-                func_80070400(stalker,
+                Collision_CharaAnimShapesSet(stalker,
                               &sharedData_800DDD88_0_s00[stalkerProps.keyframeIdx_FC],
                               &sharedData_800DE0E4_0_s00[stalkerProps.relKeyframeIdx_FE]);
             }
@@ -2445,28 +2445,28 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
         case ANIM_STATUS(StalkerAnim_24, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 394);
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 393);
-            func_80070400(stalker, &sharedData_800DE0E4_0_s00[keyframeIdx0], &sharedData_800DE0E4_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DE0E4_0_s00[keyframeIdx0], &sharedData_800DE0E4_0_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_25, false):
             if (stalkerProps.relKeyframeIdx_FE == 83)
             {
-                func_80070400(stalker, &sharedData_800DDF2C_0_s00[0], &sharedData_800DE1E8_0_s00[1]);
+                Collision_CharaAnimShapesSet(stalker, &sharedData_800DDF2C_0_s00[0], &sharedData_800DE1E8_0_s00[1]);
             }
             else
             {
                 keyframeIdx0 = stalkerProps.keyframeIdx_FC;
                 if (stalkerProps.relKeyframeIdx_FE == 23)
                 {
-                    func_80070400(stalker, &sharedData_800DE580_0_s00[keyframeIdx0 + 20], &sharedData_800DE1E8_0_s00[1]);
+                    Collision_CharaAnimShapesSet(stalker, &sharedData_800DE580_0_s00[keyframeIdx0 + 20], &sharedData_800DE1E8_0_s00[1]);
                 }
                 else if (stalkerProps.relKeyframeIdx_FE == 25)
                 {
-                    func_80070400(stalker, &sharedData_800DE8C8_0_s00[keyframeIdx0], &sharedData_800DE1E8_0_s00[1]);
+                    Collision_CharaAnimShapesSet(stalker, &sharedData_800DE8C8_0_s00[keyframeIdx0], &sharedData_800DE1E8_0_s00[1]);
                 }
                 else if (stalkerProps.relKeyframeIdx_FE == 27)
                 {
-                    func_80070400(stalker, &sharedData_800DEB0C_0_s00[keyframeIdx0], &sharedData_800DE1E8_0_s00[1]);
+                    Collision_CharaAnimShapesSet(stalker, &sharedData_800DEB0C_0_s00[keyframeIdx0], &sharedData_800DE1E8_0_s00[1]);
                 }
             }
             break;
@@ -2474,7 +2474,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
         case ANIM_STATUS(StalkerAnim_25, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 407);
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 406);
-            func_80070400(stalker, &sharedData_800DE1E8_0_s00[keyframeIdx0], &sharedData_800DE1E8_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DE1E8_0_s00[keyframeIdx0], &sharedData_800DE1E8_0_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_26, false):
@@ -2507,65 +2507,65 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
                 keyframeIdx1 = 0;
             }
 
-            func_80070400(stalker, &sharedData_800DE300_0_s00[keyframeIdx0], &sharedData_800DE300_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DE300_0_s00[keyframeIdx0], &sharedData_800DE300_0_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_34, false):
         case ANIM_STATUS(StalkerAnim_35, false):
             keyframeIdx0 = stalkerProps.keyframeIdx_FC;
             keyframeIdx1 = 0;
-            func_80070400(stalker, &sharedData_800DEF1C_0_s00[keyframeIdx0], &sharedData_800DE440_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DEF1C_0_s00[keyframeIdx0], &sharedData_800DE440_0_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_34, true):
         case ANIM_STATUS(StalkerAnim_35, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 461);
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 460);
-            func_80070400(stalker, &sharedData_800DE440_0_s00[keyframeIdx0], &sharedData_800DE440_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DE440_0_s00[keyframeIdx0], &sharedData_800DE440_0_s00[keyframeIdx1]);
 
             stalker->collision.box.field_8 = stalker->collision.box.field_6;
             break;
 
         case ANIM_STATUS(StalkerAnim_11, false):
-            func_80070400(stalker, &sharedData_800DE2C4_0_s00, &sharedData_800DE580_0_s00[20]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DE2C4_0_s00, &sharedData_800DE580_0_s00[20]);
             break;
 
         case ANIM_STATUS(StalkerAnim_11, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 107);
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 106);
-            func_80070400(stalker, &sharedData_800DE580_0_s00[keyframeIdx0 + 20], &sharedData_800DE580_0_s00[keyframeIdx1 + 20]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DE580_0_s00[keyframeIdx0 + 20], &sharedData_800DE580_0_s00[keyframeIdx1 + 20]);
             break;
 
         case ANIM_STATUS(StalkerAnim_12, false):
-            func_80070400(stalker, &sharedData_800DE2D8_0_s00, &sharedData_800DE8C8_0_s00[0]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DE2D8_0_s00, &sharedData_800DE8C8_0_s00[0]);
             break;
 
         case ANIM_STATUS(StalkerAnim_12, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 129);
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 128);
-            func_80070400(stalker, &sharedData_800DE8C8_0_s00[keyframeIdx0], &sharedData_800DE8C8_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DE8C8_0_s00[keyframeIdx0], &sharedData_800DE8C8_0_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_13, false):
-            func_80070400(stalker, &sharedData_800DE2EC_0_s00, &sharedData_800DEB0C_0_s00[0]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DE2EC_0_s00, &sharedData_800DEB0C_0_s00[0]);
             break;
 
         case ANIM_STATUS(StalkerAnim_13, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 158);
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 157);
-            func_80070400(stalker, &sharedData_800DEB0C_0_s00[keyframeIdx0], &sharedData_800DEB0C_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DEB0C_0_s00[keyframeIdx0], &sharedData_800DEB0C_0_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_7, false):
             keyframeIdx0 = stalkerProps.keyframeIdx_FC;
             keyframeIdx1 = stalkerProps.relKeyframeIdx_FE;
-            func_80070400(stalker, &sharedData_800DEF1C_0_s00[keyframeIdx0], &sharedData_800DE580_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DEF1C_0_s00[keyframeIdx0], &sharedData_800DE580_0_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_7, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 50);
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 49);
-            func_80070400(stalker, &sharedData_800DE580_0_s00[keyframeIdx0], &sharedData_800DE580_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DE580_0_s00[keyframeIdx0], &sharedData_800DE580_0_s00[keyframeIdx1]);
 
             stalker->collision.box.field_8                                      = Q12(-0.7f);
             stalkerProps.keyframeIdx_FC = 15;
@@ -2573,7 +2573,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
 
         case ANIM_STATUS(StalkerAnim_1, false):
         case ANIM_STATUS(StalkerAnim_42, false):
-            func_80070400(stalker,
+            Collision_CharaAnimShapesSet(stalker,
                           &sharedData_800DE580_0_s00[19 + stalkerProps.keyframeIdx_FC],
                           &sharedData_800DEC74_0_s00[stalkerProps.relKeyframeIdx_FE]);
             break;
@@ -2582,12 +2582,12 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
         case ANIM_STATUS(StalkerAnim_42, true):
             keyframeIdx0 = FP_FROM(stalker->model.anim.time, Q12_SHIFT);
             keyframeIdx1 = FP_FROM(stalker->model.anim.time, Q12_SHIFT) + 1;
-            func_80070400(stalker, &sharedData_800DEC74_0_s00[keyframeIdx0], &sharedData_800DEC74_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DEC74_0_s00[keyframeIdx0], &sharedData_800DEC74_0_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_3, false):
         case ANIM_STATUS(StalkerAnim_43, false):
-            func_80070400(stalker,
+            Collision_CharaAnimShapesSet(stalker,
                           &sharedData_800DE580_0_s00[19 + stalkerProps.keyframeIdx_FC],
                           &sharedData_800DECB0_0_s00[stalkerProps.relKeyframeIdx_FE]);
             break;
@@ -2596,7 +2596,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
         case ANIM_STATUS(StalkerAnim_43, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 10);
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 9);
-            func_80070400(stalker, &sharedData_800DECB0_0_s00[keyframeIdx0 + 1], &sharedData_800DECB0_0_s00[keyframeIdx1 + 1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DECB0_0_s00[keyframeIdx0 + 1], &sharedData_800DECB0_0_s00[keyframeIdx1 + 1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_2, false):
@@ -2604,18 +2604,18 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             keyframeIdx2 = stalkerProps.keyframeIdx_FC;
             keyframeIdx2--;
             keyframeIdx1 = 0;
-            func_80070400(stalker, &sharedData_800DE580_0_s00[keyframeIdx2 + 20], &sharedData_800DEDA0_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DE580_0_s00[keyframeIdx2 + 20], &sharedData_800DEDA0_0_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_2, true):
         case ANIM_STATUS(StalkerAnim_44, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 4);
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 3);
-            func_80070400(stalker, &sharedData_800DEDA0_0_s00[keyframeIdx0], &sharedData_800DEDA0_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DEDA0_0_s00[keyframeIdx0], &sharedData_800DEDA0_0_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_4, false):
-            func_80070400(stalker,
+            Collision_CharaAnimShapesSet(stalker,
                           &sharedData_800DE8C8_0_s00[stalkerProps.keyframeIdx_FC],
                           &sharedData_800DEE04_0_s00[stalkerProps.relKeyframeIdx_FE]);
             break;
@@ -2623,13 +2623,13 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
         case ANIM_STATUS(StalkerAnim_4, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 20);
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 19);
-            func_80070400(stalker, &sharedData_800DEE04_0_s00[keyframeIdx0], &sharedData_800DEE04_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DEE04_0_s00[keyframeIdx0], &sharedData_800DEE04_0_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_5, false):
             if (stalkerProps.relKeyframeIdx_FE >= 2)
             {
-                func_80070400(stalker,
+                Collision_CharaAnimShapesSet(stalker,
                               &sharedData_800DE8C8_0_s00[stalkerProps.keyframeIdx_FC],
                               &sharedData_800DEE40_0_s00[stalkerProps.relKeyframeIdx_FE]);
             }
@@ -2641,22 +2641,22 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
 
         case ANIM_STATUS(StalkerAnim_5, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 25);
-            func_80070400(stalker, &sharedData_800DEE68_0_s00[keyframeIdx0], &sharedData_800DEE68_0_s00[keyframeIdx0 + 1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DEE68_0_s00[keyframeIdx0], &sharedData_800DEE68_0_s00[keyframeIdx0 + 1]);
             break;
 
         case ANIM_STATUS(StalkerAnim_45, true):
             keyframeIdx0 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 158);
-            func_80070400(stalker, &sharedData_800DEB0C_0_s00[keyframeIdx0 + 1], &sharedData_800DEB0C_0_s00[keyframeIdx0]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DEB0C_0_s00[keyframeIdx0 + 1], &sharedData_800DEB0C_0_s00[keyframeIdx0]);
             break;
 
         case ANIM_STATUS(StalkerAnim_30, false):
             if (stalkerProps.keyframeIdx_FC == 15)
             {
-                func_80070400(stalker, &sharedData_800DE580_0_s00[19], &sharedData_800DEF1C_0_s00[0]);
+                Collision_CharaAnimShapesSet(stalker, &sharedData_800DE580_0_s00[19], &sharedData_800DEF1C_0_s00[0]);
             }
             else if (stalkerProps.keyframeIdx_FC == 55)
             {
-                func_80070400(stalker, &sharedData_800DE300_0_s00[stalkerProps.relKeyframeIdx_FE], &sharedData_800DEF1C_0_s00[0]);
+                Collision_CharaAnimShapesSet(stalker, &sharedData_800DE300_0_s00[stalkerProps.relKeyframeIdx_FE], &sharedData_800DEF1C_0_s00[0]);
             }
             break;
 
@@ -2672,7 +2672,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
                 keyframeIdx1 = 0;
             }
 
-            func_80070400(stalker, &sharedData_800DEF1C_0_s00[keyframeIdx0], &sharedData_800DEF1C_0_s00[keyframeIdx1]);
+            Collision_CharaAnimShapesSet(stalker, &sharedData_800DEF1C_0_s00[keyframeIdx0], &sharedData_800DEF1C_0_s00[keyframeIdx1]);
             break;
     }
 

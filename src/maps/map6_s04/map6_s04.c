@@ -1716,7 +1716,7 @@ bool func_800DB81C(s_SubCharacter* chara) // 0x800DB81C
     dir.vx = Q12_MULT(Q12_MULT(D_800AD4C8[63].field_0, Math_Sin(g_SysWork.npcs[0].properties.monsterCybil.field_11A)), Math_Sin(chara->rotation.vy));
     dir.vz = Q12_MULT(Q12_MULT(D_800AD4C8[63].field_0, Math_Sin(g_SysWork.npcs[0].properties.monsterCybil.field_11A)), Math_Cos(chara->rotation.vy));
 
-    if (func_8006DA08(&trace, &D_800ED570, &dir, chara) && trace.character == NULL)
+    if (Ray_CharaTraceQuery(&trace, &D_800ED570, &dir, chara) && trace.character == NULL)
     {
         return true;
     }
@@ -2006,7 +2006,7 @@ void func_800DC018(s_SubCharacter* chara) // 0x800DC018
             to.vy = from.vy;
             to.vz = chara->position.vz + Q12_MULT(Math_Cos(chara->rotation.vy), Q12(0.3f));
 
-            if (Ray_LineCheck(&trace, &from, &to))
+            if (Ray_TraceQuery(&trace, &from, &to))
             {
                 g_SysWork.npcs[0].properties.monsterCybil.field_116 = (Rng_Rand16() & 0x1) + 2;
                 g_SysWork.npcs[0].properties.monsterCybil.field_106 = Q12_ANGLE(0.0f);

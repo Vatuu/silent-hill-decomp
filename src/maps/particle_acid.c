@@ -184,7 +184,7 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 idx)
     dir.vy = ptr->field_12C.vy - sharedData_800DFB7C_0_s00[idx].vy_8;
     dir.vz = ptr->field_12C.vz - sharedData_800DFB7C_0_s00[idx].field_4.vz_4;
 
-    func_8006DA08(&trace, &rayFrom, &dir, g_SysWork.npcs);
+    Ray_CharaTraceQuery(&trace, &rayFrom, &dir, g_SysWork.npcs);
     Collision_Get(&coll, rayFrom.vx + dir.vx, rayFrom.vz + dir.vz);
 
     ptr->field_0 = sp10;

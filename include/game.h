@@ -1781,7 +1781,7 @@ typedef struct
     VECTOR3 field_48[3];
 } s_SubCharacter_44;
 
-/** @brief Character collision box for current animation frame. */
+/** @brief Character collision box for the active animation frame. */
 typedef struct _CharaBox
 {
     /* 0x0 */ q3_12 field_0; // Top abs height? Set to player head position in `sharedFunc_800D0828_3_s03`.
@@ -1793,7 +1793,7 @@ typedef struct _CharaBox
 } s_CharaBox;
 STATIC_ASSERT_SIZEOF(s_CharaBox, 12);
 
-/** @brief Character collision cylinder for current animation frame. */
+/** @brief Character collision cylinder for the active animation frame. */
 typedef struct _CharaCylinder
 {
     /* 0x0 */ q3_12 radius;
@@ -1809,7 +1809,7 @@ typedef struct _CharaShapeOffsets
 } s_CharaShapeOffsets;
 STATIC_ASSERT_SIZEOF(s_CharaShapeOffsets, 8);
 
-/** @brief Character collision info. */
+/** @brief Character collision info for the active animation frame. */
 typedef struct _CharaCollision
 {
     /* 0x0    */ s_CharaBox          box;

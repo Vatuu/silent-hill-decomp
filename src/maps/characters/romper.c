@@ -1421,7 +1421,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
                 keyframeIdxs[i] = keyframeIdx - !(keyframeIdx < 5);
             }
 
-            func_80070400(romper, &sharedData_800ECC58_2_s02[keyframeIdxs[0]], &sharedData_800ECC58_2_s02[keyframeIdxs[1]]);
+            Collision_CharaAnimShapesSet(romper, &sharedData_800ECC58_2_s02[keyframeIdxs[0]], &sharedData_800ECC58_2_s02[keyframeIdxs[1]]);
             break;
 
         case ANIM_STATUS(RomperAnim_JumpToIdleStart, false):
@@ -1439,7 +1439,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
                 keyframeIdxs[i] = keyframeIdx;
             }
 
-            func_80070400(romper, &sharedData_800ECCD0_2_s02[keyframeIdxs[0]], &sharedData_800ECCD0_2_s02[keyframeIdxs[1]]);
+            Collision_CharaAnimShapesSet(romper, &sharedData_800ECCD0_2_s02[keyframeIdxs[0]], &sharedData_800ECCD0_2_s02[keyframeIdxs[1]]);
             break;
 
         case ANIM_STATUS(RomperAnim_WalkToRunForwardRightEnd, true):
@@ -1450,7 +1450,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
                 keyframeIdxs[i] = keyframeIdx;
             }
 
-            func_80070400(romper, &sharedData_800ECD48_2_s02[keyframeIdxs[0]], &sharedData_800ECD48_2_s02[keyframeIdxs[1]]);
+            Collision_CharaAnimShapesSet(romper, &sharedData_800ECD48_2_s02[keyframeIdxs[0]], &sharedData_800ECD48_2_s02[keyframeIdxs[1]]);
             break;
 
         case ANIM_STATUS(RomperAnim_WalkToRunForwardLeftEnd, true):
@@ -1461,7 +1461,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
                 keyframeIdxs[i] = keyframeIdx;
             }
 
-            func_80070400(romper, &sharedData_800ECE24_2_s02[keyframeIdxs[0]], &sharedData_800ECE24_2_s02[keyframeIdxs[1]]);
+            Collision_CharaAnimShapesSet(romper, &sharedData_800ECE24_2_s02[keyframeIdxs[0]], &sharedData_800ECE24_2_s02[keyframeIdxs[1]]);
             break;
 
         case ANIM_STATUS(RomperAnim_StunToIdleStart, false):
@@ -1485,7 +1485,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
                 keyframeIdxs[i] = keyframeIdx >= 4 ? 4 : keyframeIdx;
             }
 
-            func_80070400(romper, &sharedData_800ECF00_2_s02[keyframeIdxs[0]], &sharedData_800ECF00_2_s02[keyframeIdxs[1]]);
+            Collision_CharaAnimShapesSet(romper, &sharedData_800ECF00_2_s02[keyframeIdxs[0]], &sharedData_800ECF00_2_s02[keyframeIdxs[1]]);
             break;
 
         case ANIM_STATUS(RomperAnim_GrabAttack, true):
@@ -1496,7 +1496,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
                 keyframeIdxs[i] = keyframeIdx;
             }
 
-            func_80070400(romper, &sharedData_800ECF64_2_s02[keyframeIdxs[0]], &sharedData_800ECF64_2_s02[keyframeIdxs[1]]);
+            Collision_CharaAnimShapesSet(romper, &sharedData_800ECF64_2_s02[keyframeIdxs[0]], &sharedData_800ECF64_2_s02[keyframeIdxs[1]]);
             break;
 
         case ANIM_STATUS(RomperAnim_RunForwardLoop, true):
@@ -1507,7 +1507,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
                 keyframeIdxs[i] = keyframeIdx;
             }
 
-            func_80070400(romper, &sharedData_800ED018_2_s02[keyframeIdxs[0]], &sharedData_800ED018_2_s02[keyframeIdxs[1]]);
+            Collision_CharaAnimShapesSet(romper, &sharedData_800ED018_2_s02[keyframeIdxs[0]], &sharedData_800ED018_2_s02[keyframeIdxs[1]]);
             break;
 
         case ANIM_STATUS(RomperAnim_CreepForward, true):
@@ -1522,7 +1522,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
                 keyframeIdxs[i] = keyframeIdx - (keyframeIdx > 0) - !(keyframeIdx < 4) - !(keyframeIdx < 8) - !(keyframeIdx < 12);
             }
 
-            func_80070400(romper, &sharedData_800ED1D0_2_s02[keyframeIdxs[0]], &sharedData_800ED1D0_2_s02[keyframeIdxs[1]]);
+            Collision_CharaAnimShapesSet(romper, &sharedData_800ED1D0_2_s02[keyframeIdxs[0]], &sharedData_800ED1D0_2_s02[keyframeIdxs[1]]);
             break;
 
         case ANIM_STATUS(RomperAnim_9, true):

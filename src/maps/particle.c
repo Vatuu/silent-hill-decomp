@@ -4007,7 +4007,7 @@ void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
     s32               beamDirX;
     s32               beamDirY;
     s32               beamDirZ;
-    bool              cond;
+    bool              hasHit;
     s32               i;
     s32               polyVCoord;
     s32               primCount;
@@ -4039,10 +4039,10 @@ void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
     beamOffset.vz = beamDirZ;
 
     PushMatrix();
-    cond = func_8006DA08(&trace, &beamStart, &beamOffset, &g_SysWork.playerWork.player);
+    hasHit = Ray_CharaTraceQuery(&trace, &beamStart, &beamOffset, &g_SysWork.playerWork.player);
     PopMatrix();
 
-    primCount = cond ? (FP_FROM(trace.field_14, Q12_SHIFT) + 1) : 16;
+    primCount = hasHit ? (FP_FROM(trace.field_14, Q12_SHIFT) + 1) : 16;
 
     for (i = 0; i < primCount; i++)
     {

@@ -7404,7 +7404,7 @@ s32 func_8007D6F0(s_SubCharacter* player, s_800C45C8* arg1) // 0x8007D6F0
     vecs[2].vx = player->position.vx + temp_s4;
     vecs[2].vz = player->position.vz - temp_s3;
 
-    ret[0] = Ray_LineCheck(&traces[0], &vecs[2], &vecs[0]);
+    ret[0] = Ray_TraceQuery(&traces[0], &vecs[2], &vecs[0]);
 
     if (ret[0])
     {
@@ -7415,7 +7415,7 @@ s32 func_8007D6F0(s_SubCharacter* player, s_800C45C8* arg1) // 0x8007D6F0
         vecs[3].vx = player->position.vx - temp_s4;
         vecs[3].vz = player->position.vz + temp_s3;
 
-        ret[1] = Ray_LineCheck(&traces[1], &vecs[3], &vecs[1]);
+        ret[1] = Ray_TraceQuery(&traces[1], &vecs[3], &vecs[1]);
 
         if (ret[1])
         {
