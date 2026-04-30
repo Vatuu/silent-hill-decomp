@@ -1779,8 +1779,8 @@ typedef struct
     VECTOR3 field_48[3];
 } s_SubCharacter_44;
 
-// Maybe AABB, or some basic parameters.
-typedef struct _SubCharacter_C8
+/** @brief Character collision box for current animation frame. */
+typedef struct _CharacterBox
 {
     q3_12 field_0; // Top abs height? Set to player head position in `sharedFunc_800D0828_3_s03`.
     q3_12 field_2; // Bottom abs height? Computed as Y offsets in `sharedFunc_800D0828_3_s03`.
@@ -1788,22 +1788,23 @@ typedef struct _SubCharacter_C8
     q3_12 field_6; // Some kind of Y offset.
     s16   field_8; // Q3.12? Maybe weapon range?
     s16   field_A;
-} s_SubCharacter_C8;
-STATIC_ASSERT_SIZEOF(s_SubCharacter_C8, 12);
+} s_CharacterBox;
+STATIC_ASSERT_SIZEOF(s_CharacterBox, 12);
 
-typedef struct _SubCharacter_D4
+/** @brief Character collision cylinder for current animation frame. */
+typedef struct _CharacterCylinder
 {
-    q3_12 radius_0;
+    q3_12 radius;
     q3_12 field_2;
-} s_SubCharacter_D4;
-STATIC_ASSERT_SIZEOF(s_SubCharacter_D4, 4);
+} s_CharacterCylinder;
+STATIC_ASSERT_SIZEOF(s_CharacterCylinder, 4);
 
 /** @brief Character info. */
 typedef struct _SubCharacter
 {
-    /* 0x0  */ s_Model           model;          // In player: Manage the half lower part of Harry's body animations (legs and feet).
-    /* 0x18 */ VECTOR3           position;       /** Q19.12 */
-    /* 0x24 */ SVECTOR3          rotation;       /** Q3.12 */
+    /* 0x0  */ s_Model           model;    // In player: Manage the half lower part of Harry's body animations (legs and feet).
+    /* 0x18 */ VECTOR3           position; /** Q19.12 */
+    /* 0x24 */ SVECTOR3          rotation; /** Q3.12 */
     /* 0x2A */ q3_12             angleToTarget;
     /* 0x2C */ SVECTOR3          rotationSpeed;              /** Q3.12 | Rotation speed for `rotation`. */
     /* 0x32 */ q3_12             angleToTargetRotationSpeed; /** Rotation speed for `angleToTarget`. */
@@ -1822,38 +1823,38 @@ typedef struct _SubCharacter
     /* 0xC6 */ q3_12             timer_C6;       // Some sort of timer. Written to by `Ai_LarvalStalker_Update`.
 
     // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
-    /* 0xC8 */ s_SubCharacter_C8 field_C8;
-    /* 0xD4 */ s_SubCharacter_D4 field_D4;       // Contains collision radius and somethign else.
-    /* 0xD8 */ s_SubCharacter_D8 field_D8;       // Translation data?
-    /* 0xE0 */ u8                field_E0;       // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.
-    /* 0xE1 */ s8                field_E1_0 : 4; // State.
-    /* 0xE1 */ u8                field_E1_4 : 4; // Index for array of `s_func_8006CF18`.
-    /* 0xE4 */ s_func_8006CF18*  field_E4;
+    /* 0xC8 */ s_CharacterBox      box;
+    /* 0xD4 */ s_CharacterCylinder cylinder;
+    /* 0xD8 */ s_SubCharacter_D8   field_D8;       // Translation data?
+    /* 0xE0 */ u8                  field_E0;       // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.
+    /* 0xE1 */ s8                  field_E1_0 : 4; // State.
+    /* 0xE1 */ u8                  field_E1_4 : 4; // Index for array of `s_func_8006CF18`.
+    /* 0xE4 */ s_func_8006CF18*    field_E4;
 
-             union
-             {
-                 s_PropertiesDummy           dummy;
-                 s_PropertiesPlayer          player;
-                 s_PropertiesNpc             npc;
-             
-                 s_PropertiesAirScreamer     airScreamer;
-                 s_PropertiesAlessa          alessa;
-                 s_PropertiesBloodsucker     bloodsucker;
-                 s_PropertiesCheryl          cheryl;
-                 s_PropertiesCreeper         creeper;
-                 s_PropertiesDahlia          dahlia;
-                 s_PropertiesFloatstinger    floatstinger;
-                 e_PropertiesGroaner         groaner;
-                 s_PropertiesHangedScratcher hangedScratcher;
-                 s_PropertiesIncubus         incubus;
-                 s_PropertiesKaufmann        kaufmann;
-                 s_PropertiesLarvalStalker   larvalStalker;
-                 s_PropertiesMonsterCybil    monsterCybil;
-                 s_PropertiesPuppetNurse     puppetNurse;
-                 s_PropertiesRomper          romper;
-                 s_PropertiesSplitHead       splitHead;
-                 s_PropertiesStalker         stalker;
-                 s_PropertiesTwinfeeler      twinfeeler;
+               union
+               {
+                   s_PropertiesDummy           dummy;
+                   s_PropertiesPlayer          player;
+                   s_PropertiesNpc             npc;
+               
+                   s_PropertiesAirScreamer     airScreamer;
+                   s_PropertiesAlessa          alessa;
+                   s_PropertiesBloodsucker     bloodsucker;
+                   s_PropertiesCheryl          cheryl;
+                   s_PropertiesCreeper         creeper;
+                   s_PropertiesDahlia          dahlia;
+                   s_PropertiesFloatstinger    floatstinger;
+                   e_PropertiesGroaner         groaner;
+                   s_PropertiesHangedScratcher hangedScratcher;
+                   s_PropertiesIncubus         incubus;
+                   s_PropertiesKaufmann        kaufmann;
+                   s_PropertiesLarvalStalker   larvalStalker;
+                   s_PropertiesMonsterCybil    monsterCybil;
+                   s_PropertiesPuppetNurse     puppetNurse;
+                   s_PropertiesRomper          romper;
+                   s_PropertiesSplitHead       splitHead;
+                   s_PropertiesStalker         stalker;
+                   s_PropertiesTwinfeeler      twinfeeler;
     /* 0xE8 */ } properties;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);

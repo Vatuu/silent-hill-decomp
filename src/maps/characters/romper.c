@@ -1527,7 +1527,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
 
         case ANIM_STATUS(RomperAnim_9, true):
             CopyData(romper, sharedData_800ECD34_2_s02);
-            romper->field_D4.radius_0 = (romper->model.anim.time - Q12(61.0f)) / 100;
+            romper->cylinder.radius = (romper->model.anim.time - Q12(61.0f)) / 100;
             break;
 
         default:

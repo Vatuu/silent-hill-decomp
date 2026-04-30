@@ -582,11 +582,11 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
     if (ANIM_TIME_RANGE_CHECK(creeper->model.anim.time, 9, 10))
     {
         creeperPos     = creeper->position;
-        creeperPos.vy += creeper->field_C8.field_8;
+        creeperPos.vy += creeper->box.field_8;
 
         func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Multitap),
                       creeper, &creeperPos, &playerChara, creeper->rotation.vy,
-                      ratan2(Q12(0.4f), (playerChara.position.vy + playerChara.field_C8.field_2) - (creeper->position.vy + creeper->field_C8.field_2)));
+                      ratan2(Q12(0.4f), (playerChara.position.vy + playerChara.box.field_2) - (creeper->position.vy + creeper->box.field_2)));
 
         if (!(creeperProps.flags & CreeperFlag_HasAttacked))
         {
@@ -769,7 +769,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
 
         case ANIM_STATUS(CreeperAnim_Attack, true):
             CopyDataAlt(creeper, sharedData_800E0FC8_1_s02);
-            creeper->field_C8.field_8 = -655;
+            creeper->box.field_8 = -655;
             break;
 
         case ANIM_STATUS(CreeperAnim_DeathStart, false):

@@ -239,7 +239,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 g_SysWork.playerWork.player.moveSpeed <= ((larvalStalkerProps.field_EA * Q12(1.5f) )+ Q12(0.5f)))
             {
                 if (Q12_ANGLE(45.0f) > ABS(angleDeltaToPlayer) &&
-                    (distToTarget < ((larvalStalker->field_D4.radius_0 + Q12(0.05f)) + g_SysWork.playerWork.player.field_D4.radius_0)))
+                    (distToTarget < ((larvalStalker->cylinder.radius + Q12(0.05f)) + g_SysWork.playerWork.player.cylinder.radius)))
                 {
                     if (!Rng_GenerateInt(0, 7)) // 1 in 8 chance.
                     {
@@ -387,13 +387,13 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             }
             else
             {
-                if (distToTarget < ((larvalStalker->field_D4.radius_0 + Q12(0.02f)) + g_SysWork.playerWork.player.field_D4.radius_0))
+                if (distToTarget < ((larvalStalker->cylinder.radius + Q12(0.02f)) + g_SysWork.playerWork.player.cylinder.radius))
                 {
                     Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f));
                 }
 
                 pos     = larvalStalker->position;
-                pos.vy += larvalStalker->field_C8.field_8;
+                pos.vy += larvalStalker->box.field_8;
 
                 if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk31, AttackInputType_Multitap), larvalStalker, &pos, &g_SysWork.playerWork.player, larvalStalker->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
                 {
@@ -1381,17 +1381,17 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
 
         case ANIM_STATUS(LarvalStalkerAnim_GrabAttack, false):
         case ANIM_STATUS(LarvalStalkerAnim_GrabAttack, true):
-            larvalStalker->field_C8.field_0   = Q12(-0.72f);
-            larvalStalker->field_C8.field_4   = Q12(-0.2f);
-            larvalStalker->field_C8.field_6   = Q12(-0.66f);
-            larvalStalker->field_D4.radius_0  = Q12(0.12f);
+            larvalStalker->box.field_0   = Q12(-0.72f);
+            larvalStalker->box.field_4   = Q12(-0.2f);
+            larvalStalker->box.field_6   = Q12(-0.66f);
+            larvalStalker->cylinder.radius  = Q12(0.12f);
             larvalStalker->field_D8.offsetZ_2 = Q12(0.02f);
-            larvalStalker->field_D4.field_2   = Q12(0.11f);
-            larvalStalker->field_C8.field_2   = Q12(0.0f);
+            larvalStalker->cylinder.field_2   = Q12(0.11f);
+            larvalStalker->box.field_2   = Q12(0.0f);
             larvalStalker->field_D8.offsetX_4 = Q12(0.0f);
             larvalStalker->field_D8.offsetZ_6 = Q12(0.0f);
             larvalStalker->field_D8.offsetX_0 = Q12(0.0f);
-            larvalStalker->field_C8.field_8   = Q12(-0.59f);
+            larvalStalker->box.field_8   = Q12(-0.59f);
             break;
     }
 

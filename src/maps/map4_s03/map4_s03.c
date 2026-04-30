@@ -522,7 +522,7 @@ void func_800D1604(GsOT_TAG* ot, int arg1) // 0x800D1604
             continue;
         }
 
-        tick = iter->field_C8 ? iter->field_C8(iter) : 1;
+        tick = iter->box ? iter->box(iter) : 1;
 
         if (tick)
         {
@@ -556,7 +556,7 @@ void func_800D17FC(void) // 0x800D17FC
     {
         ptr->field_8  = 0;
         ptr->field_D0 = 0;
-        ptr->field_C8 = NULL;
+        ptr->box = NULL;
 
         memset(&ptr->field_40, 0, sizeof(ptr->field_40));
     }
@@ -573,7 +573,7 @@ void func_800D185C(s32 arg0, s32 idx) // 0x800D185C
         ptr->field_0  = idx;
         ptr->field_8  = Q12(1.0f);
         ptr->field_3C = 1;
-        ptr->field_C8 = NULL;
+        ptr->box = NULL;
         ptr->field_D0 = 0;
         ptr->field_CC = Q12(1.0f);
 
@@ -592,7 +592,7 @@ s_800DF580* func_800D1900(VECTOR* arg0, s32 arg1) // 0x800D1900
     {
         if (ptr->field_8 <= Q12(0.0f))
         {
-            ptr->field_C8 = NULL;
+            ptr->box = NULL;
             ptr->field_D0 = 0;
             ptr->field_0  = i;
             ptr->field_8  = Q12(1.0f);
@@ -692,7 +692,7 @@ void func_800D1AFC(void) // 0x800D1AFC
             ptr->field_D4 = Rng_GenerateUInt(0, 255);
             ptr->field_CC = Q12(0.3f);
             ptr->field_D0 = 0;
-            ptr->field_C8 = func_800D19F0;
+            ptr->box = func_800D19F0;
             ptr->field_3C = 1;
         }
 
@@ -1320,7 +1320,7 @@ void func_800D2D28(GsOT_TAG* arg0)
             ptr->field_10 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.7f));
             ptr->field_10  = MIN(Q12(1.0f), ptr->field_10);
 
-            if (ptr->field_0 > 0x2B33)
+            if (ptr->field_0 > Q12(2.7f))
             {
                 var_a0 = ptr->field_C + Q12_MULT_PRECISE(g_DeltaTime, Q12(0.5f));
                 if (var_a0 > Q12(1.0f))
@@ -1725,11 +1725,11 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
     temp_s0 = D_800DB1D8[twinfeeler->model.stateStep];
     func_800705E4(boneCoords, 0, temp_s0, temp_s0, temp_s0);
 
-    twinfeeler->field_C8.field_4   = Q12(0.0f);
-    twinfeeler->field_C8.field_2   = Q12(0.0f);
+    twinfeeler->box.field_4   = Q12(0.0f);
+    twinfeeler->box.field_2   = Q12(0.0f);
     twinfeeler->field_D8.offsetZ_6 = Q12(0.0f);
     twinfeeler->field_D8.offsetX_4 = Q12(0.0f);
-    twinfeeler->field_D4.radius_0  = Q12(0.0f);
+    twinfeeler->cylinder.radius  = Q12(0.0f);
 
     ptr = PSX_SCRATCH;
 
@@ -1743,11 +1743,11 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
     gte_rt();
     gte_stlvnl(&ptr->field_28);
 
-    twinfeeler->field_C8.field_0   = Q12_MULT_PRECISE(Q8_TO_Q12(ptr->field_28.vy), temp_s0);
-    twinfeeler->field_C8.field_6   = twinfeeler->field_C8.field_0 + 122;
+    twinfeeler->box.field_0   = Q12_MULT_PRECISE(Q8_TO_Q12(ptr->field_28.vy), temp_s0);
+    twinfeeler->box.field_6   = twinfeeler->box.field_0 + 122;
     twinfeeler->field_D8.offsetX_0 = Q12_MULT_PRECISE(twinfeeler->position.vx - Q8_TO_Q12(ptr->field_28.vx), temp_s0);
     twinfeeler->field_D8.offsetZ_2 = Q12_MULT_PRECISE(twinfeeler->position.vz - Q8_TO_Q12(ptr->field_28.vz), temp_s0);
-    twinfeeler->field_D4.field_2   = Q12(0.05f);
+    twinfeeler->cylinder.field_2   = Q12(0.05f);
 
     #undef twinfeelerProps
 }
@@ -1853,7 +1853,7 @@ bool Twinfeeler_Init(s_SubCharacter* twinfeeler) // 0x800D3CD4
 
     localTwinfeeler->properties.twinfeeler.field_120 = NO_VALUE;
 
-    twinfeeler->field_D4.radius_0 = Q12(0.3f);
+    twinfeeler->cylinder.radius = Q12(0.3f);
     twinfeeler->model.anim.alpha = Q12(0.0f);
     twinfeeler->moveSpeed        = Q12(0.0f);
     twinfeeler->headingAngle     = twinfeeler->rotation.vy;
@@ -2889,7 +2889,7 @@ void func_800D54B4(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
         posY = Q8_TO_Q12(sp30.t[0]);
         posZ = Q8_TO_Q12(sp30.t[2]);
 
-        twinfeeler->field_C8.field_8 = twinfeeler->position.vy - posX;
+        twinfeeler->box.field_8 = twinfeeler->position.vy - posX;
 
         pos.vx = posY;
         pos.vy = posX;
@@ -3011,20 +3011,20 @@ void func_800D5904(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
 
     unkBasePosY = Q8_TO_Q12(transformMat.t[1]) - posY;
     unkPosY = unkBasePosY - Q12(0.25f);
-    twinfeeler->field_C8.field_0 = unkPosY;
+    twinfeeler->box.field_0 = unkPosY;
     if (unkPosY >= posY)
     {
-        twinfeeler->field_C8.field_2 = posY;
+        twinfeeler->box.field_2 = posY;
     }
     else
     {
-        twinfeeler->field_C8.field_2 = unkPosY;
+        twinfeeler->box.field_2 = unkPosY;
     }
 
-    twinfeeler->field_C8.field_4 = unkBasePosY + Q12(0.25f);
-    twinfeeler->field_D4.radius_0 = Q12(0.5f);
-    twinfeeler->field_C8.field_6 = unkBasePosY;
-    twinfeeler->field_D4.field_2 = Q12(0.4f);
+    twinfeeler->box.field_4 = unkBasePosY + Q12(0.25f);
+    twinfeeler->cylinder.radius = Q12(0.5f);
+    twinfeeler->box.field_6 = unkBasePosY;
+    twinfeeler->cylinder.field_2 = Q12(0.4f);
     sharedFunc_800CD920_3_s03(twinfeeler, posX, posZ);
 
     twinfeeler->field_D8.offsetX_0 = twinfeeler->field_D8.offsetX_4;
@@ -3120,10 +3120,10 @@ void func_800D5B6C(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
     }
 
     posY            = twinfeeler->position.vy;
-    twinfeeler->field_C8.field_2 = posY;
-    twinfeeler->field_C8.field_4 = posY;
-    twinfeeler->field_C8.field_0 = posY - Q12(1.0f);
-    twinfeeler->field_C8.field_6 = posY - Q12(0.5f);
+    twinfeeler->box.field_2 = posY;
+    twinfeeler->box.field_4 = posY;
+    twinfeeler->box.field_0 = posY - Q12(1.0f);
+    twinfeeler->box.field_6 = posY - Q12(0.5f);
 }
 
 void func_800D5BC8(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x800D5BC8

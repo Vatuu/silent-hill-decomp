@@ -381,9 +381,9 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset
         return 1;
     }
 
-    collQuery.rotation.vy = chara->field_C8.field_0;
-    collQuery.rotation.vx = chara->field_C8.field_2;
-    collQuery.rotation.vz = chara->field_D4.radius_0;
+    collQuery.rotation.vy = chara->box.field_0;
+    collQuery.rotation.vx = chara->box.field_2;
+    collQuery.rotation.vz = chara->cylinder.radius;
     collQuery.field_12 = chara->field_E1_0;
 
     offsetCpy = *offset;
@@ -570,7 +570,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
         for (curChara = charas; curChara < &charas[charaCount]; curChara++)
         {
             chara  = *curChara;
-            var_a0 = (chara->field_D4.radius_0 >> 4) + collState.field_4.field_28;
+            var_a0 = (chara->cylinder.radius >> 4) + collState.field_4.field_28;
 
             if (chara->field_E1_0 < (u32)collState.field_4.field_0)
             {
@@ -580,8 +580,8 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
             collState.field_98.field_0 = Q12_TO_Q8(chara->position.vx + chara->field_D8.offsetX_4);
             collState.field_9C.field_0 = Q12_TO_Q8(chara->position.vz + chara->field_D8.offsetZ_6);
 
-            collState.field_A0.s_1.field_0 = Q12_TO_Q8(chara->field_C8.field_0 + chara->position.vy);
-            collState.field_A0.s_1.field_2 = Q12_TO_Q8(chara->field_C8.field_2 + chara->position.vy);
+            collState.field_A0.s_1.field_0 = Q12_TO_Q8(chara->box.field_0 + chara->position.vy);
+            collState.field_A0.s_1.field_2 = Q12_TO_Q8(chara->box.field_2 + chara->position.vy);
             collState.field_A0.s_1.field_4 = var_a0;
             collState.field_A0.s_1.field_6 = chara->field_E1_0;
             collState.field_A0.s_1.field_8 = &chara->field_E0;
@@ -681,8 +681,8 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
             continue;
         }
 
-        temp3 = curChara->field_C8.field_0 + curChara->position.vy;
-        temp4 = curChara->field_C8.field_2 + curChara->position.vy;
+        temp3 = curChara->box.field_0 + curChara->position.vy;
+        temp4 = curChara->box.field_2 + curChara->position.vy;
 
         // TODO: Rotation + position? Seems wrong.
         temp6 = collQuery->rotation.vy + collQuery->position.vy;
@@ -696,7 +696,7 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
         posZ = (curChara->position.vz + curChara->field_D8.offsetZ_6) - collQuery->position.vz;
 
         mag = Vc_VectorMagnitudeCalc(posX, Q12(0.0f), posZ);
-        if (((curChara->field_D4.radius_0 + collQuery->rotation.vz) + Q12_ANGLE(36.0f)) < mag)
+        if (((curChara->cylinder.radius + collQuery->rotation.vz) + Q12_ANGLE(36.0f)) < mag)
         {
             continue;
         }
@@ -3015,23 +3015,23 @@ void func_8006EE0C(s_RayState_6C* arg0, s32 arg1, s_SubCharacter* chara) // 0x80
 
     if (arg1 == 1)
     {
-        arg0->field_C = Q12_TO_Q8(chara->field_D4.radius_0);
+        arg0->field_C = Q12_TO_Q8(chara->cylinder.radius);
         offsetX       = chara->field_D8.offsetX_4;
         offsetZ       = chara->field_D8.offsetZ_6;
-        unkY          = chara->position.vy + chara->field_C8.field_2;
+        unkY          = chara->position.vy + chara->box.field_2;
     }
     else
     {
-        arg0->field_C = Q12_TO_Q8(chara->field_D4.field_2);
+        arg0->field_C = Q12_TO_Q8(chara->cylinder.field_2);
         offsetX       = chara->field_D8.offsetX_0;
         offsetZ       = chara->field_D8.offsetZ_2;
-        unkY          = chara->position.vy + chara->field_C8.field_4;
+        unkY          = chara->position.vy + chara->box.field_4;
     }
 
     arg0->field_A = Q12_TO_Q8(unkY);
     arg0->field_0 = Q12_TO_Q8(chara->position.vx + offsetX);
     arg0->field_4 = Q12_TO_Q8(chara->position.vz + offsetZ);
-    arg0->field_8 = Q12_TO_Q8(chara->position.vy + chara->field_C8.field_0);
+    arg0->field_8 = Q12_TO_Q8(chara->position.vy + chara->box.field_0);
 }
 
 void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
@@ -3621,13 +3621,13 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
     if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
     {
         offset.vy = Q12(0.0f);
-        pos.vy = g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.field_C8.field_0;
+        pos.vy = g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.box.field_0;
     }
     else
     {
-        pos.vy = chara->position.vy + chara->field_C8.field_6;
-        offset.vy = (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.field_C8.field_6) -
-                    (chara->position.vy - chara->field_C8.field_6);
+        pos.vy = chara->position.vy + chara->box.field_6;
+        offset.vy = (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.box.field_6) -
+                    (chara->position.vy - chara->box.field_6);
     }
 
     // Maybe `sp10` is not `VECTOR3`. Might need to rewrite this whole function if its `s_RayTrace`?
@@ -3788,16 +3788,16 @@ void func_80070400(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* key
     // Compute inverse alpha.
     invAlpha = Q12(1.0f) - alpha;
 
-    chara->field_C8.field_0   = FP_FROM((keyframe0->box.bottom * invAlpha) + (keyframe1->box.bottom * alpha), Q12_SHIFT);
-    chara->field_C8.field_2   = FP_FROM((keyframe0->box.top * invAlpha) + (keyframe1->box.top * alpha), Q12_SHIFT);
-    chara->field_C8.field_4   = FP_FROM((keyframe0->box.height * invAlpha) + (keyframe1->box.height * alpha), Q12_SHIFT);
-    chara->field_C8.field_6   = FP_FROM((keyframe0->box.offsetY * invAlpha) + (keyframe1->box.offsetY * alpha), Q12_SHIFT);
+    chara->box.field_0   = FP_FROM((keyframe0->box.bottom * invAlpha) + (keyframe1->box.bottom * alpha), Q12_SHIFT);
+    chara->box.field_2   = FP_FROM((keyframe0->box.top * invAlpha) + (keyframe1->box.top * alpha), Q12_SHIFT);
+    chara->box.field_4   = FP_FROM((keyframe0->box.height * invAlpha) + (keyframe1->box.height * alpha), Q12_SHIFT);
+    chara->box.field_6   = FP_FROM((keyframe0->box.offsetY * invAlpha) + (keyframe1->box.offsetY * alpha), Q12_SHIFT);
     chara->field_D8.offsetX_4 = FP_FROM((keyframe0->collisionCenterX * invAlpha) + (keyframe1->collisionCenterX * alpha), Q12_SHIFT);
     chara->field_D8.offsetZ_6 = FP_FROM((keyframe0->collisionCenterZ * invAlpha) + (keyframe1->collisionCenterZ * alpha), Q12_SHIFT);
-    chara->field_D4.radius_0  = FP_FROM((keyframe0->field_8 * invAlpha) + (keyframe1->field_8 * alpha), Q12_SHIFT);
+    chara->cylinder.radius  = FP_FROM((keyframe0->field_8 * invAlpha) + (keyframe1->field_8 * alpha), Q12_SHIFT);
     chara->field_D8.offsetX_0 = FP_FROM((keyframe0->hitboxCenterX * invAlpha) + (keyframe1->hitboxCenterX * alpha), Q12_SHIFT);
     chara->field_D8.offsetZ_2 = FP_FROM((keyframe0->hitboxCenterZ * invAlpha) + (keyframe1->hitboxCenterZ * alpha), Q12_SHIFT);
-    chara->field_D4.field_2   = FP_FROM((keyframe0->field_A * invAlpha) + (keyframe1->field_A * alpha), Q12_SHIFT);
+    chara->cylinder.field_2   = FP_FROM((keyframe0->field_A * invAlpha) + (keyframe1->field_A * alpha), Q12_SHIFT);
 }
 
 void func_800705E4(GsCOORDINATE2* coord, s32 idx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ) // 0x800705E4

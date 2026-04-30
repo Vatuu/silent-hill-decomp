@@ -4391,7 +4391,7 @@ bool Ai_Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDA
 
     incubus->moveSpeed       = Q12(0.0f);
     incubus->headingAngle    = incubus->rotation.vy;
-    incubus->field_D4.radius_0   = Q12(0.3f);
+    incubus->cylinder.radius   = Q12(0.3f);
     incubus->field_E1_0         = 4;
     incubus->field_D8.offsetX_4 = Q12(0.0f);
     incubus->field_D8.offsetZ_6 = Q12(0.0f);
@@ -5290,12 +5290,12 @@ void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEF50
     offsetY = Q8_TO_Q12(coordMat.t[1]) - incubus->position.vy;
     offsetZ = Q8_TO_Q12(coordMat.t[2]) - incubus->position.vz;
 
-    incubus->field_D4.radius_0 = Q12(0.5f);
-    incubus->field_D4.field_2  = Q12(0.5f);
-    incubus->field_C8.field_0  = offsetY - Q12(0.25f);
-    incubus->field_C8.field_2  = offsetY;
-    incubus->field_C8.field_4  = offsetY + Q12(0.25f);
-    incubus->field_C8.field_6  = offsetY;
+    incubus->cylinder.radius = Q12(0.5f);
+    incubus->cylinder.field_2  = Q12(0.5f);
+    incubus->box.field_0  = offsetY - Q12(0.25f);
+    incubus->box.field_2  = offsetY;
+    incubus->box.field_4  = offsetY + Q12(0.25f);
+    incubus->box.field_6  = offsetY;
 
     sharedFunc_800CD920_3_s03(incubus, offsetX, offsetZ);
 
@@ -5315,10 +5315,10 @@ void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEFE8
 
     posY = incubus->position.vy;
 
-    incubus->field_C8.field_2 = posY;
-    incubus->field_C8.field_4 = posY;
-    incubus->field_C8.field_0 = posY - Q12(1.0f);
-    incubus->field_C8.field_6 = posY - Q12(0.5f);
+    incubus->box.field_2 = posY;
+    incubus->box.field_4 = posY;
+    incubus->box.field_0 = posY - Q12(1.0f);
+    incubus->box.field_6 = posY - Q12(0.5f);
 }
 
 void func_800DF044(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DF044
@@ -5798,7 +5798,7 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
     }
 
     chara->moveSpeed        = Q12(0.0f);
-    chara->field_D4.radius_0  = Q12(0.3f);
+    chara->cylinder.radius  = Q12(0.3f);
     chara->field_D8.offsetX_4 = Q12(0.0f);
     chara->field_D8.offsetZ_6 = Q12(0.0f);
     chara->field_E1_0         = 4;
@@ -6286,12 +6286,12 @@ void func_800E07F0(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E07F0
     posY = Q8_TO_Q12(mat.t[1]) - chara->position.vy;
     posZ = Q8_TO_Q12(mat.t[2]) - chara->position.vz;
 
-    chara->field_D4.radius_0 = Q12(0.5f);
-    chara->field_D4.field_2  = Q12(0.5f);
-    chara->field_C8.field_0  = posY - Q12(0.25f);
-    chara->field_C8.field_2  = posY;
-    chara->field_C8.field_4  = posY + Q12(0.25f);
-    chara->field_C8.field_6  = posY;
+    chara->cylinder.radius = Q12(0.5f);
+    chara->cylinder.field_2  = Q12(0.5f);
+    chara->box.field_0  = posY - Q12(0.25f);
+    chara->box.field_2  = posY;
+    chara->box.field_4  = posY + Q12(0.25f);
+    chara->box.field_6  = posY;
 
     sharedFunc_800CD920_3_s03(chara, posX, posZ);
 
@@ -6310,10 +6310,10 @@ void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E0888
     }
 
     posY            = chara->position.vy;
-    chara->field_C8.field_2 = posY;
-    chara->field_C8.field_4 = posY;
-    chara->field_C8.field_0 = posY - Q12(1.0f);
-    chara->field_C8.field_6 = posY - Q12(0.5f);
+    chara->box.field_2 = posY;
+    chara->box.field_4 = posY;
+    chara->box.field_0 = posY - Q12(1.0f);
+    chara->box.field_6 = posY - Q12(0.5f);
 }
 
 void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E08E4

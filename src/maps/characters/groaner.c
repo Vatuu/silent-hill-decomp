@@ -700,7 +700,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
         if (!(groanerProps.flags.val16[0] & GroanerFlag_9))
         {
             groanerProps.flags.val16[0] |= GroanerFlag_9;
-            var_v0                       = g_SysWork.playerWork.player.field_D4.field_2 + 573;
+            var_v0                       = g_SysWork.playerWork.player.cylinder.field_2 + 573;
             var_v0                       = (distToPlayer - var_v0) << 1;
             groaner->moveSpeed           = MIN(var_v0, Q12(4.5f));
 
@@ -1877,7 +1877,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             keyframeIdx1 = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 213;
             func_80070400(groaner, &sharedData_800EEE54_2_s00[keyframeIdx0], &sharedData_800EEE54_2_s00[keyframeIdx1]);
 
-            groaner->field_C8.field_8 = Q12(-0.8f);
+            groaner->box.field_8 = Q12(-0.8f);
             break;
     }
 

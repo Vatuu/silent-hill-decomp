@@ -1021,17 +1021,17 @@ void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead)
     sharedFunc_800D4408_1_s05(&pos, 2, Q8(0.0f), -57, 3);
 
     splitHead->field_D8.offsetX_4 = pos.vx - splitHead->position.vx;
-    splitHead->field_C8.field_0   = pos.vy;
+    splitHead->box.field_0   = pos.vy;
     splitHead->field_D8.offsetZ_6 = pos.vz - splitHead->position.vz;
 
     if (ANIM_STATUS_IDX_GET(splitHead->model.anim.status) == SplitHeadAnim_2 ||
         ANIM_STATUS_IDX_GET(splitHead->model.anim.status) == SplitHeadAnim_14)
     {
-        splitHead->field_D4.radius_0 = Q12(1.3f);
+        splitHead->cylinder.radius = Q12(1.3f);
     }
     else
     {
-        splitHead->field_D4.radius_0 = Q12(1.7f);
+        splitHead->cylinder.radius = Q12(1.7f);
     }
 
     splitHead->field_E1_0 = 4;
@@ -1281,9 +1281,9 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
             if (ABS(sp98[1] - sp98[2]) >= 0x72)
             {
                 splitHeadProps.flags_E8 |= SplitHeadFlag_0;
-                splitHead->field_C8.field_0                  = sp20[0].vy;
-                splitHead->field_C8.field_4                  = sp50[0].vy;
-                splitHead->field_D4.field_2                  = Q12(0.6f);
+                splitHead->box.field_0                  = sp20[0].vy;
+                splitHead->box.field_4                  = sp50[0].vy;
+                splitHead->cylinder.field_2                  = Q12(0.6f);
 
                 offsetX = (sp20[0].vx - splitHead->position.vx) * 3;
 
@@ -1359,17 +1359,17 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
         sharedFunc_800D4408_1_s05(&sp50[3], 1, 0, 0x95, -0x13F);
     }
 
-    splitHead->field_C8.field_0 = FP_FROM((sp20[0].vy * (Q12(1.0f) - sp90[unkIdx])) + (sp20[unkIdx].vy * sp90[unkIdx]), Q12_SHIFT);
-    splitHead->field_C8.field_4 = FP_FROM((sp50[0].vy * (Q12(1.0f) - sp90[unkIdx])) + (sp20[unkIdx + 4].vy * sp90[unkIdx]), Q12_SHIFT);
-    splitHead->field_C8.field_6 = (splitHead->field_C8.field_0 + splitHead->field_C8.field_4) >> 1;
+    splitHead->box.field_0 = FP_FROM((sp20[0].vy * (Q12(1.0f) - sp90[unkIdx])) + (sp20[unkIdx].vy * sp90[unkIdx]), Q12_SHIFT);
+    splitHead->box.field_4 = FP_FROM((sp50[0].vy * (Q12(1.0f) - sp90[unkIdx])) + (sp20[unkIdx + 4].vy * sp90[unkIdx]), Q12_SHIFT);
+    splitHead->box.field_6 = (splitHead->box.field_0 + splitHead->box.field_4) >> 1;
 
     if (unkIdx == 3)
     {
-        splitHead->field_D4.field_2 = Q12(0.6f);
+        splitHead->cylinder.field_2 = Q12(0.6f);
     }
     else
     {
-        splitHead->field_D4.field_2 = FP_FROM(((Q12(1.0f) - sp90[unkIdx]) * Q12(0.6f)) + (sp90[unkIdx] * Q12(0.35f)), Q12_SHIFT);
+        splitHead->cylinder.field_2 = FP_FROM(((Q12(1.0f) - sp90[unkIdx]) * Q12(0.6f)) + (sp90[unkIdx] * Q12(0.35f)), Q12_SHIFT);
     }
 
     splitHead->field_D8.offsetX_0 = FP_FROM((sp20[0].vx * (Q12(1.0f) - sp90[unkIdx])) + (sp20[unkIdx].vx * sp90[unkIdx]), Q12_SHIFT) - splitHead->position.vx;
@@ -1414,7 +1414,7 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
         sp28[i]         = sp38[k].field_D;
         sp38[k].field_E = i;
 
-        if (g_SysWork.playerWork.player.field_D4.radius_0 >= sp38[k].field_0)
+        if (g_SysWork.playerWork.player.cylinder.radius >= sp38[k].field_0)
         {
             k++;
         }
@@ -1445,7 +1445,7 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
                         ptr1->field_D = ptr0->field_D;
                         ptr1->field_E = ptr0->field_E;
 
-                        sp38[k].field_0 = g_SysWork.playerWork.player.field_D4.radius_0 - sp38[k].field_0;
+                        sp38[k].field_0 = g_SysWork.playerWork.player.cylinder.radius - sp38[k].field_0;
                         spC8[k]         = ratan2(newPosX - sp38[i].field_4, newPosZ - sp38[i].field_8);
 
                         k++;
@@ -1525,7 +1525,7 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
                         ptr1->field_D = ptr0->field_D;
                         ptr1->field_E = ptr0->field_E;
 
-                        sp38[k].field_0 = g_SysWork.playerWork.player.field_D4.radius_0 + sp38[k].field_0;
+                        sp38[k].field_0 = g_SysWork.playerWork.player.cylinder.radius + sp38[k].field_0;
                         spC8[k]         = ratan2(sp38[i].field_4 - newPosX, sp38[i].field_8 - newPosZ);
 
                         k++;
@@ -1541,7 +1541,7 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
         {
             for (i = 0; i < temp_s7; i++)
             {
-                sp38[i].field_0 = g_SysWork.playerWork.player.field_D4.radius_0 + sp38[i].field_0;
+                sp38[i].field_0 = g_SysWork.playerWork.player.cylinder.radius + sp38[i].field_0;
                 spC8[i]         = ratan2(sp38[i].field_4 - newPosX, sp38[i].field_8 - newPosZ);
             }
 
@@ -1592,8 +1592,8 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
     s32                         var_v1;
     q3_12                       var_v1_3;
 
-    splitHead->field_C8.field_2   = 0;
-    splitHead->field_D4.radius_0  = Q12(0.0f);
+    splitHead->box.field_2   = 0;
+    splitHead->cylinder.radius  = Q12(0.0f);
     splitHead->field_D8.offsetX_4 = Q12(0.0f);
     splitHead->field_D8.offsetZ_6 = Q12(0.0f);
     splitHead->field_E1_0         = 0;
@@ -1671,7 +1671,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
             }
             else if (splitHead->model.anim.time < Q12(33.0f))
             {
-                var_v1_3 = FP_MULTIPLY_PRECISE(g_SysWork.playerWork.player.field_D4.radius_0,
+                var_v1_3 = FP_MULTIPLY_PRECISE(g_SysWork.playerWork.player.cylinder.radius,
                                                splitHead->model.anim.time + Q12(-31.0f), Q12_SHIFT) >> 1;
             }
             else
@@ -1679,7 +1679,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
                 var_v1_3 = Q12(0.0f);
                 if (splitHead->model.anim.time < Q12(37.0f))
                 {
-                    var_v1_3 = g_SysWork.playerWork.player.field_D4.radius_0;
+                    var_v1_3 = g_SysWork.playerWork.player.cylinder.radius;
                 }
             }
 

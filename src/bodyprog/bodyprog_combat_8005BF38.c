@@ -189,7 +189,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
     }
 
     unkPos.vx = (npc.position.vx + npc.field_D8.offsetX_0) - from->vx;
-    unkPos.vy = (npc.position.vy + npc.field_C8.field_6) - from->vy;
+    unkPos.vy = (npc.position.vy + npc.box.field_6) - from->vy;
     unkPos.vz = (npc.position.vz + npc.field_D8.offsetZ_2) - from->vz;
 
     mag0 = Math_Vector2MagCalc(unkPos.vx, unkPos.vz);
@@ -213,7 +213,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
         }
 
         unkPos.vx = (curNpc.position.vx + curNpc.field_D8.offsetX_0) - from->vx;
-        unkPos.vy = (curNpc.position.vy + curNpc.field_C8.field_6) - from->vy;
+        unkPos.vy = (curNpc.position.vy + curNpc.box.field_6) - from->vy;
         unkPos.vz = (curNpc.position.vz + curNpc.field_D8.offsetZ_2) - from->vz;
 
         angle2 = ratan2(unkPos.vx, unkPos.vz);

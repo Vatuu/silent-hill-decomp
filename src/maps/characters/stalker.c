@@ -1515,7 +1515,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
     else if (ANIM_TIME_RANGE_CHECK(stalker->model.anim.time, 472, 476))
     {
         vec0.vx = stalker->position.vx;
-        vec0.vy = stalker->position.vy + stalker->field_C8.field_8;
+        vec0.vy = stalker->position.vy + stalker->box.field_8;
         vec0.vz = stalker->position.vz;
 
         // TODO: What's weapon attack 49?
@@ -2197,7 +2197,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
         ptr->field_20.vz = Q8_TO_Q12(ptr->field_20.vz);
 
         ptr->position_38.vx = stalker->position.vx;
-        ptr->position_38.vy = stalker->position.vy + stalker->field_C8.field_8;
+        ptr->position_38.vy = stalker->position.vy + stalker->box.field_8;
         ptr->position_38.vz = stalker->position.vz;
 
         // TODO: What's weapon attack 48?
@@ -2205,7 +2205,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
                       ratan2(ptr->field_20.vx - stalker->position.vx, ptr->field_20.vz - stalker->position.vz),
                       ratan2(Math_Vector2MagCalc(stalker->position.vx - ptr->field_20.vx,
                                                  stalker->position.vz - ptr->field_20.vz),
-                             ptr->field_20.vy - (stalker->position.vy + stalker->field_C8.field_8)));
+                             ptr->field_20.vy - (stalker->position.vy + stalker->box.field_8)));
     }
 
     ptr->angle_44 = stalkerProps.angle_114;
@@ -2523,7 +2523,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 460);
             func_80070400(stalker, &sharedData_800DE440_0_s00[keyframeIdx0], &sharedData_800DE440_0_s00[keyframeIdx1]);
 
-            stalker->field_C8.field_8 = stalker->field_C8.field_6;
+            stalker->box.field_8 = stalker->box.field_6;
             break;
 
         case ANIM_STATUS(StalkerAnim_11, false):
@@ -2567,7 +2567,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 49);
             func_80070400(stalker, &sharedData_800DE580_0_s00[keyframeIdx0], &sharedData_800DE580_0_s00[keyframeIdx1]);
 
-            stalker->field_C8.field_8                                      = Q12(-0.7f);
+            stalker->box.field_8                                      = Q12(-0.7f);
             stalkerProps.keyframeIdx_FC = 15;
             break;
 

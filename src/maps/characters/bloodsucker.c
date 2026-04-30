@@ -273,16 +273,16 @@ void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr,
     scratchData->field_28.vy = Q8_TO_Q12(scratchData->field_28.vy);
     scratchData->field_28.vz = Q8_TO_Q12(scratchData->field_28.vz);
 
-    bloodsucker->field_C8.field_0   = scratchData->field_28.vy - Q12(0.05f);
-    bloodsucker->field_C8.field_2   = scratchData->field_28.vy + Q12(0.05f);
-    bloodsucker->field_C8.field_4   = scratchData->field_28.vy + Q12(0.05f);
-    bloodsucker->field_C8.field_6   = scratchData->field_28.vy;
+    bloodsucker->box.field_0   = scratchData->field_28.vy - Q12(0.05f);
+    bloodsucker->box.field_2   = scratchData->field_28.vy + Q12(0.05f);
+    bloodsucker->box.field_4   = scratchData->field_28.vy + Q12(0.05f);
+    bloodsucker->box.field_6   = scratchData->field_28.vy;
     bloodsucker->field_D8.offsetX_0 = scratchData->field_28.vx - bloodsucker->position.vx;
     bloodsucker->field_D8.offsetZ_2 = scratchData->field_28.vz - bloodsucker->position.vz;
-    bloodsucker->field_D4.field_2   = Q12(0.05f);
+    bloodsucker->cylinder.field_2   = Q12(0.05f);
     bloodsucker->field_D8.offsetX_4 = scratchData->field_28.vx - bloodsucker->position.vx;
     bloodsucker->field_D8.offsetZ_6 = scratchData->field_28.vz - bloodsucker->position.vz;
-    bloodsucker->field_D4.radius_0   = Q12(0.05f);
+    bloodsucker->cylinder.radius   = Q12(0.05f);
     Math_SetSVectorFast(&scratchData->field_20, 0, -22, 0);
 
     gte_ldv0(&scratchData->field_20);

@@ -588,7 +588,7 @@ typedef struct
     s_func_8006E490_20 field_20[2];
 } s_func_8006E490;
 
-/** @brief Axis-aligned bounding box. */
+/** @brief Axis-aligned bounding box. TODO: Maybe not a separate struct? */
 typedef struct _BoundingBox
 {
     /* 0x0 */ q3_12 bottom; /** Y+ is down. */
@@ -2606,26 +2606,26 @@ extern s16 SQRT[100];
 {                                                       \
     s32 __temp;                                         \
                                                         \
-    arg0->field_C8.field_0   = data.box.bottom;         \
+    arg0->box.field_0   = data.box.bottom;         \
                                                         \
     __temp                   = data.box.top;            \
-    arg0->field_C8.field_2   = __temp;                  \
-    arg0->field_C8.field_4   = data.box.height;         \
+    arg0->box.field_2   = __temp;                  \
+    arg0->box.field_4   = data.box.height;         \
                                                         \
     __temp                   = data.box.offsetY;        \
-    arg0->field_C8.field_6   = __temp;                  \
+    arg0->box.field_6   = __temp;                  \
     arg0->field_D8.offsetX_4 = data.collisionCenterX;   \
                                                         \
     __temp                   = data.collisionCenterZ;   \
     arg0->field_D8.offsetZ_6 = __temp;                  \
-    arg0->field_D4.radius_0  = data.field_8;            \
+    arg0->cylinder.radius  = data.field_8;            \
     arg0->field_D8.offsetX_0 = data.hitboxCenterX;      \
                                                         \
     __temp                   = data.hitboxCenterZ;      \
     arg0->field_D8.offsetZ_2 = __temp;                  \
                                                         \
     __temp                   = data.field_A;            \
-    arg0->field_D4.field_2   = __temp;                  \
+    arg0->cylinder.field_2   = __temp;                  \
 }
 
 #define CopyDataAlt(arg0, data)                            \
@@ -2633,26 +2633,26 @@ extern s16 SQRT[100];
     s32 __temp;                                         \
     s32 __temp2;                                        \
                                                         \
-    arg0->field_C8.field_0   = data.box.bottom;         \
+    arg0->box.field_0   = data.box.bottom;         \
                                                         \
     __temp                   = data.box.top;            \
-    arg0->field_C8.field_2   = __temp;                  \
-    arg0->field_C8.field_4   = data.box.height;         \
+    arg0->box.field_2   = __temp;                  \
+    arg0->box.field_4   = data.box.height;         \
                                                         \
     __temp                   = data.box.offsetY;        \
-    arg0->field_C8.field_6   = __temp;                  \
+    arg0->box.field_6   = __temp;                  \
     arg0->field_D8.offsetX_4 = data.collisionCenterX;   \
                                                         \
     __temp                   = data.collisionCenterZ;   \
     arg0->field_D8.offsetZ_6 = __temp;                  \
-    arg0->field_D4.radius_0  = data.field_8;            \
+    arg0->cylinder.radius  = data.field_8;            \
     arg0->field_D8.offsetX_0 = data.hitboxCenterX;      \
                                                         \
     __temp                   = data.hitboxCenterZ;      \
     arg0->field_D8.offsetZ_2 = __temp;                  \
                                                         \
     __temp2                  = data.field_A;            \
-    arg0->field_D4.field_2   = __temp2;                 \
+    arg0->cylinder.field_2   = __temp2;                 \
 }
 
 // ==========

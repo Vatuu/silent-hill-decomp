@@ -676,11 +676,11 @@ void sharedFunc_800D923C_0_s00(s_SubCharacter* chara)
 {
     chara->model.stateStep = 0;
 
-    chara->field_C8.field_0   = Q12(0.0f);
-    chara->field_C8.field_2   = Q12(0.0f);
-    chara->field_C8.field_6   = Q12(0.0f);
-    chara->field_D4.radius_0  = Q12(0.0f);
-    chara->field_D4.field_2   = Q12(0.0f);
+    chara->box.field_0   = Q12(0.0f);
+    chara->box.field_2   = Q12(0.0f);
+    chara->box.field_6   = Q12(0.0f);
+    chara->cylinder.radius  = Q12(0.0f);
+    chara->cylinder.field_2   = Q12(0.0f);
     chara->field_D8.offsetZ_6 = Q12(0.0f);
     chara->field_D8.offsetX_4 = Q12(0.0f);
     chara->field_D8.offsetZ_2 = Q12(0.0f);

@@ -126,8 +126,8 @@ typedef struct
     GsCOORDINATE2*    coords_8;
     VECTOR3           matrices_C[1]; // Unknown size.
     s8                unk_10[0x84];
-    s_SubCharacter_C8 field_9C;
-    s_SubCharacter_D4 field_A8;
+    s_CharacterBox field_9C;
+    s_CharacterCylinder field_A8;
     s_SubCharacter_D8 field_AC;
     s32               field_B4[6][4]; // [*][3] is angle.
     s32               field_114;

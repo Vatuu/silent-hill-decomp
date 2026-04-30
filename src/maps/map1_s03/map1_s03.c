@@ -60,16 +60,16 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
     animInfo = &LOCKER_DEAD_BODY_ANIM_INFOS[chara->model.anim.status];
     animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
 
-    chara->field_C8.field_0   = Q12(-0.3f);
+    chara->box.field_0   = Q12(-0.3f);
     chara->field_D8.offsetX_4 = Q12(0.06f);
     chara->field_D8.offsetZ_6 = Q12(0.93f);
-    chara->field_C8.field_2   = Q12(0.0f);
-    chara->field_C8.field_4   = Q12(0.0f);
-    chara->field_C8.field_6   = Q12(0.0f);
+    chara->box.field_2   = Q12(0.0f);
+    chara->box.field_4   = Q12(0.0f);
+    chara->box.field_6   = Q12(0.0f);
     chara->field_D8.offsetX_0 = Q12(0.0f);
     chara->field_D8.offsetZ_2 = Q12(0.0f);
-    chara->field_D4.field_2   = Q12(0.0f);
-    chara->field_D4.radius_0   = Q12(0.33f);
+    chara->cylinder.field_2   = Q12(0.0f);
+    chara->cylinder.radius   = Q12(0.33f);
 
     func_8005C814(&chara->field_D8, chara);
 }

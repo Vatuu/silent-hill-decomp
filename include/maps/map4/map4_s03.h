@@ -92,7 +92,7 @@ typedef struct
     MATRIX  field_1C;
     s32     field_3C;
     u8      field_40[133]; // Type assumed.
-    s32     (*field_C8)(struct s_800DF580*);
+    s32     (*box)(struct s_800DF580*);
     q19_12  field_CC;
     s32     field_D0;
     s32     field_D4;

@@ -126,14 +126,14 @@ void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D8
 
 void func_800D8A90(s_SubCharacter* chara) // 0x800D8A90
 {
-    chara->field_D4.radius_0 = Q12(0.3f);
-    chara->field_D4.field_2 = Q12(0.23f);
-    chara->field_C8.field_0 = Q12(-1.6f);
-    chara->field_C8.field_6 = Q12(-1.05f);
-    chara->field_C8.field_8 = Q12(-1.45f);
+    chara->cylinder.radius = Q12(0.3f);
+    chara->cylinder.field_2 = Q12(0.23f);
+    chara->box.field_0 = Q12(-1.6f);
+    chara->box.field_6 = Q12(-1.05f);
+    chara->box.field_8 = Q12(-1.45f);
     chara->health = Q12(4000.0f);
-    chara->field_C8.field_2 = 0;
-    chara->field_C8.field_4 = 0;
+    chara->box.field_2 = 0;
+    chara->box.field_4 = 0;
 
     chara->field_D8.offsetZ_6 = Q12(0.0f);
     chara->field_D8.offsetX_4 = Q12(0.0f);
@@ -586,7 +586,7 @@ void func_800D9790(s_SubCharacter* chara, s_Model* model) // 0x800D9790
         case 11:
             if (chara->model.anim.status & 1)
             {
-                chara->field_D4.radius_0 = Q12(0.3f) - (((chara->model.anim.keyframeIdx - 216) * Q12(3.0f)) / 100);
+                chara->cylinder.radius = Q12(0.3f) - (((chara->model.anim.keyframeIdx - 216) * Q12(3.0f)) / 100);
             }
 
             Collision_WallDetect(&sp10, &sp40, chara);
@@ -597,14 +597,14 @@ void func_800D9790(s_SubCharacter* chara, s_Model* model) // 0x800D9790
             break;
 
         case 12:
-            chara->field_D4.radius_0 = Q12(0.0f);
+            chara->cylinder.radius = Q12(0.0f);
             chara->position.vx   += sp40.vx;
             chara->position.vz   += sp40.vz;
             chara->fallSpeed      = Q12(0.0f);
             break;
 
         default:
-            chara->field_D4.radius_0  = Q12(0.3f);
+            chara->cylinder.radius  = Q12(0.3f);
             chara->field_D8.offsetZ_6 = Q12(0.0f);
             chara->field_D8.offsetX_4 = Q12(0.0f);
             chara->field_D8.offsetZ_2 = Q12(0.0f);
@@ -1653,7 +1653,7 @@ void func_800DB4CC(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coord) 
             // TODO: Use macro.
             angle = ratan2(SquareRoot0(SQUARE((g_SysWork.playerWork.player.position.vx - D_800ED570.vx) >> 4) +
                                      SQUARE((g_SysWork.playerWork.player.position.vz - D_800ED570.vz) >> 4)),
-                         (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.field_C8.field_6 -
+                         (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.box.field_6 -
                           D_800ED570.vy) >>
                              4);
 
