@@ -121,21 +121,21 @@ typedef struct
 
 typedef struct
 {
-    s32               flags_0;
-    s_AnmHeader*      anmHdr_4;
-    GsCOORDINATE2*    coords_8;
-    VECTOR3           matrices_C[1]; // Unknown size.
-    s8                unk_10[0x84];
-    s_CharacterBox field_9C;
-    s_CharacterCylinder field_A8;
-    s_CharacterShapeOffsets field_AC;
-    s32               field_B4[6][4]; // [*][3] is angle.
-    s32               field_114;
-    s32               field_118;
-    VECTOR3           field_11C; // Q19.12
-    VECTOR3           field_128;
-    VECTOR3           field_134;
-    VECTOR3           field_140;
+    s32                 flags_0;
+    s_AnmHeader*        anmHdr_4;
+    GsCOORDINATE2*      coords_8;
+    VECTOR3             matrices_C[1]; // Unknown size.
+    s8                  unk_10[132];
+    s_CharaBox          field_9C;
+    s_CharaCylinder     cylinder;
+    s_CharaShapeOffsets shapeOffsets;
+    s32                 field_B4[6][4]; // [*][3] is angle.
+    s32                 field_114;
+    s32                 field_118;
+    VECTOR3             field_11C; // Q19.12
+    VECTOR3             field_128;
+    VECTOR3             field_134;
+    VECTOR3             field_140;
     union
     {
         struct

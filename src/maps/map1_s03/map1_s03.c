@@ -34,7 +34,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
     if (!Savegame_EventFlagGet(EventFlag_105))
     {
         chara->model.anim.flags &= ~AnimFlag_Visible;
-        chara->collisionState              = 0;
+        chara->collision.state              = 0;
         return;
     }
 
@@ -47,12 +47,12 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
             chara->model.anim.status = ANIM_STATUS(LockerDeadBodyAnim_1, true);
         }
 
-        chara->collisionState = 0;
+        chara->collision.state = 0;
     }
     else
     {
         Character_AnimSet(chara, ANIM_STATUS(LockerDeadBodyAnim_3, true), 16);
-        chara->collisionState = 3;
+        chara->collision.state = 3;
     }
 
     Math_MatrixTransform(&chara->position, &chara->rotation, coords);
@@ -60,18 +60,18 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
     animInfo = &LOCKER_DEAD_BODY_ANIM_INFOS[chara->model.anim.status];
     animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
 
-    chara->box.field_0   = Q12(-0.3f);
-    chara->shapeOffsets.cylinder.vx = Q12(0.06f);
-    chara->shapeOffsets.cylinder.vz = Q12(0.93f);
-    chara->box.field_2   = Q12(0.0f);
-    chara->box.field_4   = Q12(0.0f);
-    chara->box.field_6   = Q12(0.0f);
-    chara->shapeOffsets.box.vx = Q12(0.0f);
-    chara->shapeOffsets.box.vz = Q12(0.0f);
-    chara->cylinder.field_2   = Q12(0.0f);
-    chara->cylinder.radius   = Q12(0.33f);
+    chara->collision.box.field_0   = Q12(-0.3f);
+    chara->collision.shapeOffsets.cylinder.vx = Q12(0.06f);
+    chara->collision.shapeOffsets.cylinder.vz = Q12(0.93f);
+    chara->collision.box.field_2   = Q12(0.0f);
+    chara->collision.box.field_4   = Q12(0.0f);
+    chara->collision.box.field_6   = Q12(0.0f);
+    chara->collision.shapeOffsets.box.vx = Q12(0.0f);
+    chara->collision.shapeOffsets.box.vz = Q12(0.0f);
+    chara->collision.cylinder.field_2   = Q12(0.0f);
+    chara->collision.cylinder.radius   = Q12(0.33f);
 
-    func_8005C814(&chara->shapeOffsets, chara);
+    func_8005C814(&chara->collision.shapeOffsets, chara);
 }
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800DA424

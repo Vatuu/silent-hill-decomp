@@ -77,7 +77,7 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
     }
 
     groaner->moveSpeed    = Q12(0.0f);
-    groaner->collisionState      = 3;
+    groaner->collision.state      = 3;
     groaner->headingAngle = groaner->rotation.vy;
 
     groanerProps.field_114 = Rng_GenerateUInt(Q12(0.9375f), Q12(1.0625f) - 1);
@@ -700,7 +700,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
         if (!(groanerProps.flags.val16[0] & GroanerFlag_9))
         {
             groanerProps.flags.val16[0] |= GroanerFlag_9;
-            var_v0                       = g_SysWork.playerWork.player.cylinder.field_2 + 573;
+            var_v0                       = g_SysWork.playerWork.player.collision.cylinder.field_2 + 573;
             var_v0                       = (distToPlayer - var_v0) << 1;
             groaner->moveSpeed           = MIN(var_v0, Q12(4.5f));
 
@@ -713,9 +713,9 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
 
     if ((ANIM_TIME_REL_KEYFRAME_IDX_GET(groaner->model.anim.time, 222)) < 2u)
     {
-        newPos.vx = groaner->position.vx + groaner->shapeOffsets.cylinder.vx;
+        newPos.vx = groaner->position.vx + groaner->collision.shapeOffsets.cylinder.vx;
         newPos.vy = groaner->position.vy - Q12(0.8f);
-        newPos.vz = groaner->position.vz + groaner->shapeOffsets.cylinder.vz;
+        newPos.vz = groaner->position.vz + groaner->collision.shapeOffsets.cylinder.vz;
         func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Hold), groaner, &newPos, &g_SysWork.playerWork.player, groaner->rotation.vy, Q12_ANGLE(90.0f));
     }
 
@@ -1009,7 +1009,7 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner)
         if (g_SysWork.targetNpcIdx != Chara_NpcIdxGet(groaner))
         {
             groaner->health  = NO_VALUE;
-            groaner->collisionState = 0;
+            groaner->collision.state = 0;
         }
     }
 
@@ -1877,11 +1877,11 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             keyframeIdx1 = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 213;
             func_80070400(groaner, &sharedData_800EEE54_2_s00[keyframeIdx0], &sharedData_800EEE54_2_s00[keyframeIdx1]);
 
-            groaner->box.field_8 = Q12(-0.8f);
+            groaner->collision.box.field_8 = Q12(-0.8f);
             break;
     }
 
-    func_8005C814(&groaner->shapeOffsets, groaner);
+    func_8005C814(&groaner->collision.shapeOffsets, groaner);
 }
 
 void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)

@@ -473,7 +473,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             sharedFunc_800D2EB4_0_s00();
             WorldGfx_PlayerHeldItemSet(InvItemId_Handgun);
 
-            g_SysWork.playerWork.player.collisionState = 5;
+            g_SysWork.playerWork.player.collision.state = 5;
 
             func_80085EB8(0, &g_SysWork.playerWork.player, 153, false);
             D_800D94F4 = 0;
@@ -749,7 +749,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             Game_FlashlightAttributesFix();
             g_SysWork.pointLightIntensity = Q12(1.0f);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
-            g_SysWork.playerWork.player.collisionState = 3;
+            g_SysWork.playerWork.player.collision.state = 3;
             SD_Call(19);
             break;
     }

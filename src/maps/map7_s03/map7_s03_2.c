@@ -4391,10 +4391,10 @@ bool Ai_Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDA
 
     incubus->moveSpeed       = Q12(0.0f);
     incubus->headingAngle    = incubus->rotation.vy;
-    incubus->cylinder.radius   = Q12(0.3f);
-    incubus->collisionState         = 4;
-    incubus->shapeOffsets.cylinder.vx = Q12(0.0f);
-    incubus->shapeOffsets.cylinder.vz = Q12(0.0f);
+    incubus->collision.cylinder.radius   = Q12(0.3f);
+    incubus->collision.state         = 4;
+    incubus->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+    incubus->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
     incubus->flags          |= CharaFlag_Unk3;
 
     localIncubus->properties.dummy.properties_E8[2].val32 = 0;
@@ -5290,17 +5290,17 @@ void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEF50
     offsetY = Q8_TO_Q12(coordMat.t[1]) - incubus->position.vy;
     offsetZ = Q8_TO_Q12(coordMat.t[2]) - incubus->position.vz;
 
-    incubus->cylinder.radius = Q12(0.5f);
-    incubus->cylinder.field_2  = Q12(0.5f);
-    incubus->box.field_0  = offsetY - Q12(0.25f);
-    incubus->box.field_2  = offsetY;
-    incubus->box.field_4  = offsetY + Q12(0.25f);
-    incubus->box.field_6  = offsetY;
+    incubus->collision.cylinder.radius = Q12(0.5f);
+    incubus->collision.cylinder.field_2  = Q12(0.5f);
+    incubus->collision.box.field_0  = offsetY - Q12(0.25f);
+    incubus->collision.box.field_2  = offsetY;
+    incubus->collision.box.field_4  = offsetY + Q12(0.25f);
+    incubus->collision.box.field_6  = offsetY;
 
     sharedFunc_800CD920_3_s03(incubus, offsetX, offsetZ);
 
-    incubus->shapeOffsets.box.vx = incubus->shapeOffsets.cylinder.vx;
-    incubus->shapeOffsets.box.vz = incubus->shapeOffsets.cylinder.vz;
+    incubus->collision.shapeOffsets.box.vx = incubus->collision.shapeOffsets.cylinder.vx;
+    incubus->collision.shapeOffsets.box.vz = incubus->collision.shapeOffsets.cylinder.vz;
 }
 
 void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEFE8
@@ -5315,10 +5315,10 @@ void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEFE8
 
     posY = incubus->position.vy;
 
-    incubus->box.field_2 = posY;
-    incubus->box.field_4 = posY;
-    incubus->box.field_0 = posY - Q12(1.0f);
-    incubus->box.field_6 = posY - Q12(0.5f);
+    incubus->collision.box.field_2 = posY;
+    incubus->collision.box.field_4 = posY;
+    incubus->collision.box.field_0 = posY - Q12(1.0f);
+    incubus->collision.box.field_6 = posY - Q12(0.5f);
 }
 
 void func_800DF044(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DF044
@@ -5798,10 +5798,10 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
     }
 
     chara->moveSpeed        = Q12(0.0f);
-    chara->cylinder.radius  = Q12(0.3f);
-    chara->shapeOffsets.cylinder.vx = Q12(0.0f);
-    chara->shapeOffsets.cylinder.vz = Q12(0.0f);
-    chara->collisionState         = 4;
+    chara->collision.cylinder.radius  = Q12(0.3f);
+    chara->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+    chara->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+    chara->collision.state         = 4;
     chara->headingAngle     = chara->rotation.vy;
     chara->flags           |= CharaFlag_Unk3;
 
@@ -6286,17 +6286,17 @@ void func_800E07F0(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E07F0
     posY = Q8_TO_Q12(mat.t[1]) - chara->position.vy;
     posZ = Q8_TO_Q12(mat.t[2]) - chara->position.vz;
 
-    chara->cylinder.radius = Q12(0.5f);
-    chara->cylinder.field_2  = Q12(0.5f);
-    chara->box.field_0  = posY - Q12(0.25f);
-    chara->box.field_2  = posY;
-    chara->box.field_4  = posY + Q12(0.25f);
-    chara->box.field_6  = posY;
+    chara->collision.cylinder.radius = Q12(0.5f);
+    chara->collision.cylinder.field_2  = Q12(0.5f);
+    chara->collision.box.field_0  = posY - Q12(0.25f);
+    chara->collision.box.field_2  = posY;
+    chara->collision.box.field_4  = posY + Q12(0.25f);
+    chara->collision.box.field_6  = posY;
 
     sharedFunc_800CD920_3_s03(chara, posX, posZ);
 
-    chara->shapeOffsets.box.vx = chara->shapeOffsets.cylinder.vx;
-    chara->shapeOffsets.box.vz = chara->shapeOffsets.cylinder.vz;
+    chara->collision.shapeOffsets.box.vx = chara->collision.shapeOffsets.cylinder.vx;
+    chara->collision.shapeOffsets.box.vz = chara->collision.shapeOffsets.cylinder.vz;
 }
 
 void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E0888
@@ -6310,10 +6310,10 @@ void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E0888
     }
 
     posY            = chara->position.vy;
-    chara->box.field_2 = posY;
-    chara->box.field_4 = posY;
-    chara->box.field_0 = posY - Q12(1.0f);
-    chara->box.field_6 = posY - Q12(0.5f);
+    chara->collision.box.field_2 = posY;
+    chara->collision.box.field_4 = posY;
+    chara->collision.box.field_0 = posY - Q12(1.0f);
+    chara->collision.box.field_6 = posY - Q12(0.5f);
 }
 
 void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E08E4

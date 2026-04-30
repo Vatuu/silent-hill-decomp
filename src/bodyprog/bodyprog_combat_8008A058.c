@@ -1748,7 +1748,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
     posZ = chara->position.vz;
 
     posY  = chara->position.vy;
-    posY += chara->box.field_0;
+    posY += chara->collision.box.field_0;
 
     D_800C47C8[0].vx = posX;
     D_800C47C8[0].vy = posY;
@@ -1761,14 +1761,14 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
             chara1 == chara ||
             chara1->model.charaId == Chara_None ||
             chara1->health < Q12(0.0f) ||
-            !chara1->collisionState)
+            !chara1->collision.state)
         {
             continue;
         }
 
-        D_800C47E8.vx = chara1->position.vx + chara1->shapeOffsets.box.vx;
+        D_800C47E8.vx = chara1->position.vx + chara1->collision.shapeOffsets.box.vx;
         D_800C47E8.vy = chara1->position.vy;
-        D_800C47E8.vz = chara1->position.vz + chara1->shapeOffsets.box.vz;
+        D_800C47E8.vz = chara1->position.vz + chara1->collision.shapeOffsets.box.vz;
         if (Math_Distance2dGet(&chara->position, &D_800C47E8) > Q12(3.0f))
         {
             continue;
@@ -1778,16 +1778,16 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
         var_v1  = chara1->position.vy;
         temp_s2 = chara1->position.vz;
 
-        temp_s0 = chara1->shapeOffsets.box.vx;
-        temp_s3 = chara1->shapeOffsets.box.vz;
+        temp_s0 = chara1->collision.shapeOffsets.box.vx;
+        temp_s3 = chara1->collision.shapeOffsets.box.vz;
 
         temp_s1 += temp_s0;
 
-        var_v1  += chara1->box.field_0;
+        var_v1  += chara1->collision.box.field_0;
         temp_s2 += temp_s3;
 
         D_800C47C8[1].vy = var_v1;
-        temp_s3          = chara1->cylinder.field_2;
+        temp_s3          = chara1->collision.cylinder.field_2;
 
         angle1 = ratan2(temp_s1 - posX, temp_s2 - posZ);
         temp_v0_6 = Math_Sin(angle1);
@@ -1814,17 +1814,17 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
         }
 
         temp_t4_2  = chara1->position.vx;
-        temp_t4_2 += chara1->shapeOffsets.box.vx;
+        temp_t4_2 += chara1->collision.shapeOffsets.box.vx;
 
         var_v1   = temp_t4_2 - countX;
         temp_t5  = chara1->position.vz;
-        temp_t5 += chara1->shapeOffsets.box.vz;
+        temp_t5 += chara1->collision.shapeOffsets.box.vz;
 
         temp_v0_8 = temp_t5 - coundZ;
 
         sp58    = chara1->position.vy;
-        temp_s6 = chara1->box.field_4;
-        temp_s5 = chara1->box.field_0;
+        temp_s6 = chara1->collision.box.field_4;
+        temp_s5 = chara1->collision.box.field_0;
 
         j   = sp58 - countY;
         temp_t2   = Q12_MULT_PRECISE(var_v1, cosAngle) - Q12_MULT_PRECISE(temp_v0_8, sinAngle);
@@ -1835,7 +1835,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
             continue;
         }
 
-        temp_s3  = chara1->cylinder.field_2;
+        temp_s3  = chara1->collision.cylinder.field_2;
         var_a1_2 = 0;
 
         if (temp_t2 < sp44)

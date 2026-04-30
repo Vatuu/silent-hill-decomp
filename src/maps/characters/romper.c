@@ -63,7 +63,7 @@ void Ai_Romper_Init(s_SubCharacter* romper)
     }
 
     romper->moveSpeed    = Q12(0.0f);
-    romper->collisionState      = 3;
+    romper->collision.state      = 3;
     romper->headingAngle = romper->rotation.vy;
     Chara_PropertiesClear(romper);
 
@@ -1063,7 +1063,7 @@ void Ai_Romper_Control_8(s_SubCharacter* romper)
         if (g_SysWork.targetNpcIdx != Chara_NpcIdxGet(romper))
         {
             romper->health  = NO_VALUE;
-            romper->collisionState = 0;
+            romper->collision.state = 0;
         }
     }
 
@@ -1098,7 +1098,7 @@ void Ai_Romper_Control_10(s_SubCharacter* romper)
         romper->moveSpeed = MAX(romper->moveSpeed - Q12_MULT_PRECISE(g_DeltaTime, romperProps.field_124), Q12(0.0f));
     }
 
-    romper->collisionState = 0;
+    romper->collision.state = 0;
     if (romper->model.anim.status == ANIM_STATUS(RomperAnim_JumpToIdleEnd, true))
     {
         romperProps.field_104 = romper->model.anim.time - Q12(20.0f);
@@ -1114,8 +1114,8 @@ void Ai_Romper_Control_10(s_SubCharacter* romper)
     {
         romper->model.anim.status  = ANIM_STATUS(RomperAnim_9, false);
         romper->model.controlState = RomperControl_GrabAttack;
-        romper->collisionState         = 0;
-        romper->collisionState         = 3;
+        romper->collision.state         = 0;
+        romper->collision.state         = 3;
     }
     else if (romper->model.anim.time < Q12(24.0f))
     {
@@ -1527,7 +1527,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
 
         case ANIM_STATUS(RomperAnim_9, true):
             CopyData(romper, sharedData_800ECD34_2_s02);
-            romper->cylinder.radius = (romper->model.anim.time - Q12(61.0f)) / 100;
+            romper->collision.cylinder.radius = (romper->model.anim.time - Q12(61.0f)) / 100;
             break;
 
         default:
@@ -1535,7 +1535,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
             break;
     }
 
-    func_8005C814(&romper->shapeOffsets, romper);
+    func_8005C814(&romper->collision.shapeOffsets, romper);
 
     if (ANIM_STATUS_IDX_GET(romper->model.anim.status) != RomperAnim_RunToJump)
     {

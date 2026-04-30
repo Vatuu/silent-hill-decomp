@@ -2606,26 +2606,26 @@ extern s16 SQRT[100];
 {                                                       \
     s32 __temp;                                         \
                                                         \
-    arg0->box.field_0   = data.box.bottom;         \
+    arg0->collision.box.field_0   = data.box.bottom;         \
                                                         \
     __temp                   = data.box.top;            \
-    arg0->box.field_2   = __temp;                  \
-    arg0->box.field_4   = data.box.height;         \
+    arg0->collision.box.field_2   = __temp;                  \
+    arg0->collision.box.field_4   = data.box.height;         \
                                                         \
     __temp                   = data.box.offsetY;        \
-    arg0->box.field_6   = __temp;                  \
-    arg0->shapeOffsets.cylinder.vx = data.collisionCenterX;   \
+    arg0->collision.box.field_6   = __temp;                  \
+    arg0->collision.shapeOffsets.cylinder.vx = data.collisionCenterX;   \
                                                         \
     __temp                   = data.collisionCenterZ;   \
-    arg0->shapeOffsets.cylinder.vz = __temp;                  \
-    arg0->cylinder.radius  = data.field_8;            \
-    arg0->shapeOffsets.box.vx = data.hitboxCenterX;      \
+    arg0->collision.shapeOffsets.cylinder.vz = __temp;                  \
+    arg0->collision.cylinder.radius  = data.field_8;            \
+    arg0->collision.shapeOffsets.box.vx = data.hitboxCenterX;      \
                                                         \
     __temp                   = data.hitboxCenterZ;      \
-    arg0->shapeOffsets.box.vz = __temp;                  \
+    arg0->collision.shapeOffsets.box.vz = __temp;                  \
                                                         \
     __temp                   = data.field_A;            \
-    arg0->cylinder.field_2   = __temp;                  \
+    arg0->collision.cylinder.field_2   = __temp;                  \
 }
 
 #define CopyDataAlt(arg0, data)                            \
@@ -2633,26 +2633,26 @@ extern s16 SQRT[100];
     s32 __temp;                                         \
     s32 __temp2;                                        \
                                                         \
-    arg0->box.field_0   = data.box.bottom;         \
+    arg0->collision.box.field_0   = data.box.bottom;         \
                                                         \
     __temp                   = data.box.top;            \
-    arg0->box.field_2   = __temp;                  \
-    arg0->box.field_4   = data.box.height;         \
+    arg0->collision.box.field_2   = __temp;                  \
+    arg0->collision.box.field_4   = data.box.height;         \
                                                         \
     __temp                   = data.box.offsetY;        \
-    arg0->box.field_6   = __temp;                  \
-    arg0->shapeOffsets.cylinder.vx = data.collisionCenterX;   \
+    arg0->collision.box.field_6   = __temp;                  \
+    arg0->collision.shapeOffsets.cylinder.vx = data.collisionCenterX;   \
                                                         \
     __temp                   = data.collisionCenterZ;   \
-    arg0->shapeOffsets.cylinder.vz = __temp;                  \
-    arg0->cylinder.radius  = data.field_8;            \
-    arg0->shapeOffsets.box.vx = data.hitboxCenterX;      \
+    arg0->collision.shapeOffsets.cylinder.vz = __temp;                  \
+    arg0->collision.cylinder.radius  = data.field_8;            \
+    arg0->collision.shapeOffsets.box.vx = data.hitboxCenterX;      \
                                                         \
     __temp                   = data.hitboxCenterZ;      \
-    arg0->shapeOffsets.box.vz = __temp;                  \
+    arg0->collision.shapeOffsets.box.vz = __temp;                  \
                                                         \
     __temp2                  = data.field_A;            \
-    arg0->cylinder.field_2   = __temp2;                 \
+    arg0->collision.cylinder.field_2   = __temp2;                 \
 }
 
 // ==========
@@ -3271,7 +3271,7 @@ u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2);
 
 s32 Chara_NpcIdxGet(s_SubCharacter* chara);
 
-void func_8005C814(s_CharacterShapeOffsets* offsets, s_SubCharacter* chara);
+void func_8005C814(s_CharaShapeOffsets* offsets, s_SubCharacter* chara);
 
 s32 func_8005C944(s_SubCharacter* chara, s_CollisionResult* collResult);
 

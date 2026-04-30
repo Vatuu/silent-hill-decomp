@@ -539,7 +539,7 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
             scratcherProps.flags_E8 |= HangedScratcherFlag_5;
 
             func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk44, AttackInputType_Tap), scratcher, &attackPos, &g_SysWork.playerWork.player, scratcher->rotation.vy,
-                          ratan2(distToPlayer, (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.box.field_6) - attackPos.vy));
+                          ratan2(distToPlayer, (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.field_6) - attackPos.vy));
         }
         else if (ANIM_STATUS_IDX_GET(scratcher->model.anim.status) == HangedScratcherAnim_14)
         {
@@ -912,7 +912,7 @@ void Ai_HangedScratcher_Control_13(s_SubCharacter* scratcher)
         {
             scratcher->health     = NO_VALUE;
             scratcher->flags     &= ~CharaFlag_Unk2;
-            scratcher->collisionState    = 0;
+            scratcher->collision.state    = 0;
             scratcherProps.flags_E8 |= HangedScratcherFlag_9;
         }
     }
@@ -1564,18 +1564,18 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
             break;
     }
 
-    func_8005C814(&scratcher->shapeOffsets, scratcher);
+    func_8005C814(&scratcher->collision.shapeOffsets, scratcher);
 
     if (!(scratcherProps.flags_E8 & HangedScratcherFlag_9))
     {
         if (!(scratcher->flags & (1 << 1)) && scratcher->health > Q12(0.0f) &&
             (scratcherProps.flags_E8 & HangedScratcherFlag_1) && (scratcherProps.flags_E8 & HangedScratcherFlag_0))
         {
-            scratcher->collisionState = 4;
+            scratcher->collision.state = 4;
         }
         else
         {
-            scratcher->collisionState = 2;
+            scratcher->collision.state = 2;
         }
     }
 

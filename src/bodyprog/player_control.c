@@ -305,8 +305,8 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttac
         player->model.stateStep++;
     }
 
-    angleTo = Q12_FRACT(ratan2((g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx + g_SysWork.npcs[g_SysWork.targetNpcIdx].shapeOffsets.box.vx) - g_SysWork.playerCombat.field_0.vx,
-                               (g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz + g_SysWork.npcs[g_SysWork.targetNpcIdx].shapeOffsets.box.vz) - g_SysWork.playerCombat.field_0.vz) +
+    angleTo = Q12_FRACT(ratan2((g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vx) - g_SysWork.playerCombat.field_0.vx,
+                               (g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vz) - g_SysWork.playerCombat.field_0.vz) +
                           Q12_ANGLE(360.0f));
     player->angleToTarget = angleTo;
     Math_ShortestAngleGet(player->rotation.vy, angleTo, &shortestAngle);
@@ -337,18 +337,18 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttac
 
     if (animStatus == ANIM_STATUS(HarryAnim_Kick, true) && ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
     {
-        g_SysWork.playerWork.player.shapeOffsets.box.vx =  Q12_MULT(D_800AF014[player->model.anim.keyframeIdx - 457], Math_Cos(player->rotation.vy));
-        g_SysWork.playerWork.player.shapeOffsets.box.vz = -Q12_MULT(D_800AF014[player->model.anim.keyframeIdx - 457], Math_Sin(player->rotation.vy));
-        g_SysWork.playerWork.player.shapeOffsets.cylinder.vx = Q12(0.0f);
-        g_SysWork.playerWork.player.shapeOffsets.cylinder.vz = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.box.vx =  Q12_MULT(D_800AF014[player->model.anim.keyframeIdx - 457], Math_Cos(player->rotation.vy));
+        g_SysWork.playerWork.player.collision.shapeOffsets.box.vz = -Q12_MULT(D_800AF014[player->model.anim.keyframeIdx - 457], Math_Sin(player->rotation.vy));
+        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
     }
 
     if (animStatus == ANIM_STATUS(HarryAnim_Stomp, true) && ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
     {
-        g_SysWork.playerWork.player.shapeOffsets.box.vx =  Q12_MULT(D_800AF04C[player->model.anim.keyframeIdx - 485], Math_Cos(player->rotation.vy));
-        g_SysWork.playerWork.player.shapeOffsets.box.vz = -Q12_MULT(D_800AF04C[player->model.anim.keyframeIdx - 485], Math_Sin(player->rotation.vy));
-        g_SysWork.playerWork.player.shapeOffsets.cylinder.vx = Q12(0.0f);
-        g_SysWork.playerWork.player.shapeOffsets.cylinder.vz = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.box.vx =  Q12_MULT(D_800AF04C[player->model.anim.keyframeIdx - 485], Math_Cos(player->rotation.vy));
+        g_SysWork.playerWork.player.collision.shapeOffsets.box.vz = -Q12_MULT(D_800AF04C[player->model.anim.keyframeIdx - 485], Math_Sin(player->rotation.vy));
+        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
     }
 
     if (player->model.anim.status == animStatus &&
@@ -358,10 +358,10 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttac
 
         Player_ExtraStateSet(player, extra, PlayerState_None);
 
-        g_SysWork.playerWork.player.shapeOffsets.cylinder.vz = Q12(0.0f);
-        g_SysWork.playerWork.player.shapeOffsets.cylinder.vx = Q12(0.0f);
-        g_SysWork.playerWork.player.shapeOffsets.box.vz = Q12(0.0f);
-        g_SysWork.playerWork.player.shapeOffsets.box.vx = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.box.vz = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.box.vx = Q12(0.0f);
         g_SysWork.playerCombat.weaponAttack            = (g_SavegamePtr->equippedWeapon_AA == InvItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA + InvItemId_KitchenKnife);
         g_SysWork.targetNpcIdx                         = NO_VALUE;
         g_SysWork.playerCombat.isAiming               = false;
@@ -1218,16 +1218,16 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
             playerProps.moveDistance_126 = Q12(0.0f);
             func_8007FB94(player, extra, animStatus);
-            player->cylinder.radius = Q12(0.25f);
-            player->cylinder.field_2 = Q12(0.0f);
+            player->collision.cylinder.radius = Q12(0.25f);
+            player->collision.cylinder.field_2 = Q12(0.0f);
 
             if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
             {
                 dist = -D_800AF1FC[player->model.anim.keyframeIdx - g_MapOverlayHeader.field_38[D_800AF220].time];
-                playerChara.shapeOffsets.box.vx = Q12(0.0f);
-                playerChara.shapeOffsets.box.vz = Q12(0.0f);
-                playerChara.shapeOffsets.cylinder.vx = Q12_MULT(dist, Math_Sin(player->rotation.vy));
-                playerChara.shapeOffsets.cylinder.vz = Q12_MULT(dist, Math_Cos(player->rotation.vy));
+                playerChara.collision.shapeOffsets.box.vx = Q12(0.0f);
+                playerChara.collision.shapeOffsets.box.vz = Q12(0.0f);
+                playerChara.collision.shapeOffsets.cylinder.vx = Q12_MULT(dist, Math_Sin(player->rotation.vy));
+                playerChara.collision.shapeOffsets.cylinder.vz = Q12_MULT(dist, Math_Cos(player->rotation.vy));
             }
 
             if (ABS(headingAngle0) < Q12_ANGLE(11.25f))
@@ -1366,13 +1366,13 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                             break;
                     }
 
-                    player->cylinder.field_2 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.27f));
-                    player->box.field_0 += Q12_MULT_PRECISE(g_DeltaTime, Q12(1.2f));
-                    player->box.field_6 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.9f));
+                    player->collision.cylinder.field_2 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.27f));
+                    player->collision.box.field_0 += Q12_MULT_PRECISE(g_DeltaTime, Q12(1.2f));
+                    player->collision.box.field_6 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.9f));
 
-                    player->cylinder.field_2 = CLAMP(player->cylinder.field_2, Q12(0.23f), Q12(0.5f));
-                    player->box.field_0 = CLAMP(player->box.field_0, Q12(-1.6f), Q12(-0.4));
-                    player->box.field_6 = CLAMP(player->box.field_6, Q12(-1.1f), Q12(-0.2f));
+                    player->collision.cylinder.field_2 = CLAMP(player->collision.cylinder.field_2, Q12(0.23f), Q12(0.5f));
+                    player->collision.box.field_0 = CLAMP(player->collision.box.field_0, Q12(-1.6f), Q12(-0.4));
+                    player->collision.box.field_6 = CLAMP(player->collision.box.field_6, Q12(-1.1f), Q12(-0.2f));
 
                     if (player->health <= Q12(0.0f) && player->properties.player.afkTimer_E8 <= Q12(0.0f))
                     {
@@ -1428,11 +1428,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                             break;
                     }
 
-                    player->cylinder.radius      = Q12(0.0f);
-                    playerChara.shapeOffsets.cylinder.vz = Q12(0.0f);
-                    playerChara.shapeOffsets.cylinder.vx = Q12(0.0f);
-                    playerChara.shapeOffsets.box.vz = Q12(0.0f);
-                    playerChara.shapeOffsets.box.vx = Q12(0.0f);
+                    player->collision.cylinder.radius      = Q12(0.0f);
+                    playerChara.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+                    playerChara.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+                    playerChara.collision.shapeOffsets.box.vz = Q12(0.0f);
+                    playerChara.collision.shapeOffsets.box.vx = Q12(0.0f);
 
                     if (ABS(player->position.vx - D_800C4610.vx) <= Q12(0.05f))
                     {
@@ -1815,15 +1815,15 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
                         Player_ExtraStateSet(player, extra, PlayerState_None);
 
-                        playerChara.cylinder.radius  = Q12(0.3f);
-                        playerChara.cylinder.field_2   = Q12(0.23f);
-                        playerChara.box.field_0   = Q12(-1.6f);
-                        playerChara.shapeOffsets.cylinder.vz = Q12(0.0f);
-                        playerChara.shapeOffsets.cylinder.vx = Q12(0.0f);
-                        playerChara.shapeOffsets.box.vz = Q12(0.0f);
-                        playerChara.shapeOffsets.box.vx = Q12(0.0f);
-                        playerChara.box.field_2   = Q12(0.0f);
-                        playerChara.box.field_6   = Q12(-1.1f);
+                        playerChara.collision.cylinder.radius  = Q12(0.3f);
+                        playerChara.collision.cylinder.field_2   = Q12(0.23f);
+                        playerChara.collision.box.field_0   = Q12(-1.6f);
+                        playerChara.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+                        playerChara.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+                        playerChara.collision.shapeOffsets.box.vz = Q12(0.0f);
+                        playerChara.collision.shapeOffsets.box.vx = Q12(0.0f);
+                        playerChara.collision.box.field_2   = Q12(0.0f);
+                        playerChara.collision.box.field_6   = Q12(-1.1f);
                     }
 
                     player->attackReceived = NO_VALUE;
@@ -1834,18 +1834,18 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 case PlayerState_EnemyReleasePinnedFront:
                 case PlayerState_EnemyReleasePinnedBack:
                     player->properties.player.afkTimer_E8        = Q12(0.0f);
-                    playerChara.shapeOffsets.cylinder.vz = Q12(0.0f);
-                    playerChara.shapeOffsets.cylinder.vx = Q12(0.0f);
-                    playerChara.shapeOffsets.box.vz = Q12(0.0f);
-                    playerChara.shapeOffsets.box.vx = Q12(0.0f);
+                    playerChara.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+                    playerChara.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+                    playerChara.collision.shapeOffsets.box.vz = Q12(0.0f);
+                    playerChara.collision.shapeOffsets.box.vx = Q12(0.0f);
 
                     if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
                     {
-                        player->cylinder.radius = ((player->model.anim.keyframeIdx - g_MapOverlayHeader.field_38[D_800AF220].time) * Q12(0.3f)) / 21;
+                        player->collision.cylinder.radius = ((player->model.anim.keyframeIdx - g_MapOverlayHeader.field_38[D_800AF220].time) * Q12(0.3f)) / 21;
                     }
                     else
                     {
-                        player->cylinder.radius = Q12(0.0f);
+                        player->collision.cylinder.radius = Q12(0.0f);
                     }
 
                     if (player->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
@@ -1862,11 +1862,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                                 break;
                         }
 
-                        playerChara.cylinder.radius  = Q12(0.3f);
-                        playerChara.shapeOffsets.cylinder.vz = Q12(0.0f);
-                        playerChara.shapeOffsets.cylinder.vx = Q12(0.0f);
-                        playerChara.shapeOffsets.box.vz = Q12(0.0f);
-                        playerChara.shapeOffsets.box.vx = Q12(0.0f);
+                        playerChara.collision.cylinder.radius  = Q12(0.3f);
+                        playerChara.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+                        playerChara.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+                        playerChara.collision.shapeOffsets.box.vz = Q12(0.0f);
+                        playerChara.collision.shapeOffsets.box.vx = Q12(0.0f);
 
                         player->attackReceived = NO_VALUE;
                     }
@@ -1890,12 +1890,12 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
                         Player_ExtraStateSet(player, extra, PlayerState_None);
 
-                        player->cylinder.radius = Q12(0.3f);
+                        player->collision.cylinder.radius = Q12(0.3f);
 
-                        playerChara.shapeOffsets.cylinder.vz = Q12(0.0f);
-                        playerChara.shapeOffsets.cylinder.vx = Q12(0.0f);
-                        playerChara.shapeOffsets.box.vz = Q12(0.0f);
-                        playerChara.shapeOffsets.box.vx = Q12(0.0f);
+                        playerChara.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+                        playerChara.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+                        playerChara.collision.shapeOffsets.box.vz = Q12(0.0f);
+                        playerChara.collision.shapeOffsets.box.vx = Q12(0.0f);
                     }
                     break;
 
@@ -1926,8 +1926,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                         player->properties.player.field_10D = 0;
                         if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
                         {
-                            playerChara.box.field_0 = D_800AEEDC[player->model.anim.keyframeIdx - 379][0];
-                            playerChara.box.field_6 = D_800AEEDC[player->model.anim.keyframeIdx - 379][1];
+                            playerChara.collision.box.field_0 = D_800AEEDC[player->model.anim.keyframeIdx - 379][0];
+                            playerChara.collision.box.field_6 = D_800AEEDC[player->model.anim.keyframeIdx - 379][1];
                         }
 
                         if (player->model.anim.keyframeIdx == HARRY_BASE_ANIM_INFOS[45].endKeyframeIdx)
@@ -1941,11 +1941,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                                 Player_ExtraStateSet(player, extra, PlayerState_None);
                             }
 
-                            playerChara.box.field_0 = Q12(-1.6f);
-                            playerChara.box.field_2 = Q12(0.0f);
-                            playerChara.box.field_6 = Q12(-1.1f);
+                            playerChara.collision.box.field_0 = Q12(-1.6f);
+                            playerChara.collision.box.field_2 = Q12(0.0f);
+                            playerChara.collision.box.field_6 = Q12(-1.1f);
 
-                            player->cylinder.radius = Q12(0.3f);
+                            player->collision.cylinder.radius = Q12(0.3f);
                         }
                     }
                     else
@@ -1954,8 +1954,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
                         if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
                         {
-                            playerChara.box.field_0 = D_800AEF78[player->model.anim.keyframeIdx - 418][0];
-                            playerChara.box.field_6 = D_800AEF78[player->model.anim.keyframeIdx - 418][1];
+                            playerChara.collision.box.field_0 = D_800AEF78[player->model.anim.keyframeIdx - 418][0];
+                            playerChara.collision.box.field_6 = D_800AEF78[player->model.anim.keyframeIdx - 418][1];
                         }
 
                         if (player->model.anim.keyframeIdx == HARRY_BASE_ANIM_INFOS[47].endKeyframeIdx)
@@ -1969,11 +1969,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                                 Player_ExtraStateSet(player, extra, PlayerState_None);
                             }
 
-                            playerChara.box.field_0 = Q12(-1.6f);
-                            playerChara.box.field_2 = Q12(0.0f);
-                            playerChara.box.field_6 = Q12(-1.1f);
+                            playerChara.collision.box.field_0 = Q12(-1.6f);
+                            playerChara.collision.box.field_2 = Q12(0.0f);
+                            playerChara.collision.box.field_6 = Q12(-1.1f);
 
-                            player->cylinder.radius = Q12(0.3f);
+                            player->collision.cylinder.radius = Q12(0.3f);
                         }
                     }
                     break;
@@ -1989,7 +1989,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             {
                 Player_ExtraStateSet(player, extra, PlayerState_None);
 
-                player->cylinder.field_2 = Q12(0.23f);
+                player->collision.cylinder.field_2 = Q12(0.23f);
             }
             break;
 
@@ -2000,7 +2000,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             {
                 Player_ExtraStateSet(player, extra, PlayerState_None);
 
-                player->cylinder.field_2 = Q12(0.23f);
+                player->collision.cylinder.field_2 = Q12(0.23f);
             }
             break;
 
@@ -2039,7 +2039,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
         case PlayerState_Death:
             player->attackReceived = NO_VALUE;
             func_8007FB94(player, extra, ANIM_STATUS(101, false));
-            player->cylinder.field_2 = Q12(0.0f);
+            player->collision.cylinder.field_2 = Q12(0.0f);
 
             if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
             {
@@ -2064,11 +2064,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 }
 
                 dist0                                    = temp_a2 + Q12_MULT(var_v1_5 - temp_a2, Q12_FRACT(player->model.anim.time));
-                playerChara.shapeOffsets.box.vx = Q12(0.0f);
-                playerChara.shapeOffsets.box.vz = Q12(0.0f);
-                playerChara.shapeOffsets.cylinder.vx = Q12_MULT(dist0, Math_Sin(player->rotation.vy));
-                playerChara.shapeOffsets.cylinder.vz = Q12_MULT(dist0, Math_Cos(player->rotation.vy));
-                player->cylinder.radius                        = Q12(0.3f);
+                playerChara.collision.shapeOffsets.box.vx = Q12(0.0f);
+                playerChara.collision.shapeOffsets.box.vz = Q12(0.0f);
+                playerChara.collision.shapeOffsets.cylinder.vx = Q12_MULT(dist0, Math_Sin(player->rotation.vy));
+                playerChara.collision.shapeOffsets.cylinder.vz = Q12_MULT(dist0, Math_Cos(player->rotation.vy));
+                player->collision.cylinder.radius                        = Q12(0.3f);
             }
 
             if (player->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
@@ -2108,7 +2108,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             }
 
             func_8007FB94(player, extra, ANIM_STATUS(101, true));
-            player->cylinder.field_2 = Q12(0.0f);
+            player->collision.cylinder.field_2 = Q12(0.0f);
 
             if (player->model.anim.keyframeIdx == (g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6 - 25))
             {
@@ -2640,8 +2640,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             if (enemyAttackedIdx == g_SysWork.targetNpcIdx)
             {
-                player->angleToTarget = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].shapeOffsets.box.vx) - g_SysWork.playerWork.player.position.vx,
-                                                   (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].shapeOffsets.box.vz) - g_SysWork.playerWork.player.position.vz) +
+                player->angleToTarget = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vx) - g_SysWork.playerWork.player.position.vx,
+                                                   (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vz) - g_SysWork.playerWork.player.position.vz) +
                                             Q12_ANGLE(360.0f));
             }
             else
@@ -2670,8 +2670,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                 if (enemyAttackedIdx == g_SysWork.targetNpcIdx)
                 {
-                    temp_a1 = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].shapeOffsets.box.vx) - g_SysWork.playerWork.player.position.vx,
-                                               (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].shapeOffsets.box.vz) - g_SysWork.playerWork.player.position.vz) + Q12(1.0f));
+                    temp_a1 = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vx) - g_SysWork.playerWork.player.position.vx,
+                                               (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vz) - g_SysWork.playerWork.player.position.vz) + Q12(1.0f));
 
                     Math_ShortestAngleGet(player->rotation.vy, temp_a1, &ssp20);
                     D_800C454C = g_DeltaTime * 0xF;
@@ -3481,8 +3481,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                 if (enemyAttackedIdx == g_SysWork.targetNpcIdx && enemyAttackedIdx != NO_VALUE)
                 {
-                    player->angleToTarget = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].shapeOffsets.box.vx) - g_SysWork.playerWork.player.position.vx,
-                                                       (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].shapeOffsets.box.vz) - g_SysWork.playerWork.player.position.vz) +
+                    player->angleToTarget = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vx) - g_SysWork.playerWork.player.position.vx,
+                                                       (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vz) - g_SysWork.playerWork.player.position.vz) +
                                                 Q12_ANGLE(360.0f));
                 }
                 else
@@ -3666,8 +3666,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             if (!g_GameWork.config.optExtraAutoAiming_2C)
             {
-                temp_v0_3 = ratan2((g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx + g_SysWork.npcs[g_SysWork.targetNpcIdx].shapeOffsets.box.vx) - g_SysWork.playerWork.player.position.vx,
-                                   (g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz + g_SysWork.npcs[g_SysWork.targetNpcIdx].shapeOffsets.box.vz) - g_SysWork.playerWork.player.position.vz);
+                temp_v0_3 = ratan2((g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vx) - g_SysWork.playerWork.player.position.vx,
+                                   (g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vz) - g_SysWork.playerWork.player.position.vz);
 
                 temp_s1_2 = Q12_ANGLE_NORM_U(temp_v0_3 + Q12_ANGLE(360.0f));
 
@@ -3740,10 +3740,10 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             temp_v0_3 = ratan2((g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx +
-                                g_SysWork.npcs[g_SysWork.targetNpcIdx].shapeOffsets.box.vx) -
+                                g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vx) -
                                g_SysWork.playerWork.player.position.vx,
                                 (g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz +
-                                 g_SysWork.npcs[g_SysWork.targetNpcIdx].shapeOffsets.box.vz) -
+                                 g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vz) -
                                 g_SysWork.playerWork.player.position.vz);
 
             temp_s1_2 = Q12_ANGLE_NORM_U(temp_v0_3 + Q12_ANGLE(360.0f));
@@ -6813,7 +6813,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
             if (player->attackReceived == 47)
             {
-                g_SysWork.playerWork.player.cylinder.field_2 = Q12(0.0f);
+                g_SysWork.playerWork.player.collision.cylinder.field_2 = Q12(0.0f);
                 Player_ExtraStateSet(player, extra, PlayerState_InstantDeath);
                 return;
             }
@@ -6854,13 +6854,13 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             if (g_SysWork.playerWork.extra.state >= PlayerState_FallForward &&
                 g_SysWork.playerWork.extra.state <  PlayerState_Unk7)
             {
-                g_SysWork.playerWork.player.box.field_0   = Q12(-1.6f);
-                g_SysWork.playerWork.player.box.field_2   = Q12(0.0f);
-                g_SysWork.playerWork.player.box.field_6   = Q12(-1.1f);
-                g_SysWork.playerWork.player.shapeOffsets.cylinder.vz = Q12(0.0f);
-                g_SysWork.playerWork.player.shapeOffsets.cylinder.vx = Q12(0.0f);
-                g_SysWork.playerWork.player.shapeOffsets.box.vz = Q12(0.0f);
-                g_SysWork.playerWork.player.shapeOffsets.box.vx = Q12(0.0f);
+                g_SysWork.playerWork.player.collision.box.field_0   = Q12(-1.6f);
+                g_SysWork.playerWork.player.collision.box.field_2   = Q12(0.0f);
+                g_SysWork.playerWork.player.collision.box.field_6   = Q12(-1.1f);
+                g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+                g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+                g_SysWork.playerWork.player.collision.shapeOffsets.box.vz = Q12(0.0f);
+                g_SysWork.playerWork.player.collision.shapeOffsets.box.vx = Q12(0.0f);
             }
 
             enemyRotY = g_SysWork.npcs[player->field_40].rotation.vy;
@@ -6969,7 +6969,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
                 case 47:
                     player->health        = NO_VALUE;
-                    player->cylinder.field_2 = Q12(0.0f);
+                    player->collision.cylinder.field_2 = Q12(0.0f);
                     Player_ExtraStateSet(player, extra, PlayerState_InstantDeath);
                     return;
 
@@ -7523,8 +7523,8 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord) // 0x8007
         {
             if (playerExtra.state == PlayerState_Combat && g_Player_TargetNpcIdx != NO_VALUE)
             {
-                unkRot.vx = ratan2((g_SysWork.npcs[g_Player_TargetNpcIdx].position.vx + g_SysWork.npcs[g_Player_TargetNpcIdx].shapeOffsets.box.vx) - playerCombat.field_0.vx,
-                                 (g_SysWork.npcs[g_Player_TargetNpcIdx].position.vz + g_SysWork.npcs[g_Player_TargetNpcIdx].shapeOffsets.box.vz) - playerCombat.field_0.vz);
+                unkRot.vx = ratan2((g_SysWork.npcs[g_Player_TargetNpcIdx].position.vx + g_SysWork.npcs[g_Player_TargetNpcIdx].collision.shapeOffsets.box.vx) - playerCombat.field_0.vx,
+                                 (g_SysWork.npcs[g_Player_TargetNpcIdx].position.vz + g_SysWork.npcs[g_Player_TargetNpcIdx].collision.shapeOffsets.box.vz) - playerCombat.field_0.vz);
             }
             else
             {
@@ -7773,8 +7773,8 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
 
     g_SysWork.playerWork.player.model.charaId  = Chara_Harry;
     g_SysWork.playerWork.extra.model.charaId = Chara_Harry;
-    g_SysWork.playerWork.player.cylinder.radius  = Q12(0.3f);
-    g_SysWork.playerWork.player.cylinder.field_2   = Q12(0.23f);
+    g_SysWork.playerWork.player.collision.cylinder.radius  = Q12(0.3f);
+    g_SysWork.playerWork.player.collision.cylinder.field_2   = Q12(0.23f);
 
     extraModel = &g_SysWork.playerWork.player.model;
     model      = &g_SysWork.playerWork.extra.model;
@@ -7784,7 +7784,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     extraModel->anim.flags |= AnimFlag_Unlocked | AnimFlag_Visible;
     model->anim.flags      |= AnimFlag_Unlocked | AnimFlag_Visible;
 
-    g_SysWork.playerWork.player.collisionState = 3;
+    g_SysWork.playerWork.player.collision.state = 3;
     g_Inventory_EquippedItem                    = g_SavegamePtr->equippedWeapon_AA;
 
     itemGroupId = INVENTORY_ITEM_GROUP(g_SavegamePtr->equippedWeapon_AA);
@@ -7886,15 +7886,15 @@ void func_8007E8C0(void) // 0x8007E8C0
     }
 
     chara->properties.player.exhaustionTimer_FC      = Q12(0.0f);
-    g_SysWork.playerWork.player.box.field_0   = Q12(-1.6f);
-    g_SysWork.playerWork.player.box.field_2   = Q12(0.0f);
-    g_SysWork.playerWork.player.box.field_6   = Q12(-1.1f);
-    g_SysWork.playerWork.player.shapeOffsets.cylinder.vz = Q12(0.0f);
-    g_SysWork.playerWork.player.shapeOffsets.cylinder.vx = Q12(0.0f);
-    g_SysWork.playerWork.player.shapeOffsets.box.vz = Q12(0.0f);
-    g_SysWork.playerWork.player.shapeOffsets.box.vx = Q12(0.0f);
-    chara->cylinder.radius                            = Q12(0.3f);
-    chara->cylinder.field_2                             = Q12(0.23f);
+    g_SysWork.playerWork.player.collision.box.field_0   = Q12(-1.6f);
+    g_SysWork.playerWork.player.collision.box.field_2   = Q12(0.0f);
+    g_SysWork.playerWork.player.collision.box.field_6   = Q12(-1.1f);
+    g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+    g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+    g_SysWork.playerWork.player.collision.shapeOffsets.box.vz = Q12(0.0f);
+    g_SysWork.playerWork.player.collision.shapeOffsets.box.vx = Q12(0.0f);
+    chara->collision.cylinder.radius                            = Q12(0.3f);
+    chara->collision.cylinder.field_2                             = Q12(0.23f);
     g_GameWork.mapAnimIdx                           = NO_VALUE;
 
     func_8007E9C4();
@@ -7954,7 +7954,7 @@ void func_8007E9C4(void) // 0x8007E9C4
     g_SysWork.npcIdxs[2] = NO_VALUE;
     g_SysWork.npcIdxs[1] = NO_VALUE;
     g_SysWork.npcIdxs[0] = NO_VALUE;
-    chara->cylinder.field_2   = Q12(0.23f);
+    chara->collision.cylinder.field_2   = Q12(0.23f);
 
     g_Player_IsAiming            = false;
     g_Player_IsRunning           = false;
@@ -8005,7 +8005,7 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
             relAnimInfoIdx                                    = 30;
             relKeyframeIdx                                    = 15;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[1];
-            g_SysWork.playerWork.player.box.field_8 = -0x1030;
+            g_SysWork.playerWork.player.collision.box.field_8 = -0x1030;
             break;
 
         default:
@@ -8015,7 +8015,7 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
             relAnimInfoIdx                                    = 0;
             relKeyframeIdx                                    = 0;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[3];
-            g_SysWork.playerWork.player.box.field_8 = -0xFD0;
+            g_SysWork.playerWork.player.collision.box.field_8 = -0xFD0;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
@@ -8034,56 +8034,56 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
                     break;
             }
 
-            g_SysWork.playerWork.player.box.field_8 = -0xEC0;
+            g_SysWork.playerWork.player.collision.box.field_8 = -0xEC0;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
             relAnimInfoIdx                                    = 50;
             relKeyframeIdx                                    = 25;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[4];
-            g_SysWork.playerWork.player.box.field_8 = -0xE90;
+            g_SysWork.playerWork.player.collision.box.field_8 = -0xE90;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
             relAnimInfoIdx                                    = 64;
             relKeyframeIdx                                    = 32;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[5];
-            g_SysWork.playerWork.player.box.field_8 = -0x12E0;
+            g_SysWork.playerWork.player.collision.box.field_8 = -0x12E0;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Tap):
             relAnimInfoIdx                                    = 40;
             relKeyframeIdx                                    = 20;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[10];
-            g_SysWork.playerWork.player.box.field_8 = -0xF20;
+            g_SysWork.playerWork.player.collision.box.field_8 = -0xF20;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
             relAnimInfoIdx                                    = 78;
             relKeyframeIdx                                    = 39;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[6];
-            g_SysWork.playerWork.player.box.field_8 = -0x1600;
+            g_SysWork.playerWork.player.collision.box.field_8 = -0x1600;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
             relAnimInfoIdx                                    = 96;
             relKeyframeIdx                                    = 48;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[7];
-            g_SysWork.playerWork.player.box.field_8 = -0x1180;
+            g_SysWork.playerWork.player.collision.box.field_8 = -0x1180;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
             relAnimInfoIdx                                    = 114;
             relKeyframeIdx                                    = 57;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[8];
-            g_SysWork.playerWork.player.box.field_8 = -0x1600;
+            g_SysWork.playerWork.player.collision.box.field_8 = -0x1600;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
             relAnimInfoIdx                                    = 132;
             relKeyframeIdx                                    = 66;
             g_Player_EquippedWeaponInfo                       = D_800AFBF4[9];
-            g_SysWork.playerWork.player.box.field_8 = -0x1610;
+            g_SysWork.playerWork.player.collision.box.field_8 = -0x1610;
             break;
     }
 
@@ -8430,9 +8430,9 @@ bool func_8007F95C(void) // 0x8007F95C
                     }
                 }
 
-                pos1.vx = curNpc0->position.vx + curNpc0->shapeOffsets.box.vx;
+                pos1.vx = curNpc0->position.vx + curNpc0->collision.shapeOffsets.box.vx;
                 pos1.vy = curNpc0->position.vy;
-                pos1.vz = curNpc0->position.vz + curNpc0->shapeOffsets.box.vz;
+                pos1.vz = curNpc0->position.vz + curNpc0->collision.shapeOffsets.box.vz;
 
                 if (!Math_Distance2dCheck(&pos0, &pos1, radius) && ABS(pos1.vy - pos0.vy) < Q12(0.3f) &&
                     curNpc0->health > Q12(0.0f) && (curNpc0->flags & CharaFlag_Unk2))
@@ -8586,15 +8586,15 @@ void func_8007FD4C(bool cond) // 0x8007FD4C
 
     if (cond)
     {
-        g_SysWork.playerWork.player.cylinder.radius   = Q12(0.3f);
-        g_SysWork.playerWork.player.cylinder.field_2   = Q12(0.23f);
-        g_SysWork.playerWork.player.box.field_0   = Q12(-1.6f);
-        g_SysWork.playerWork.player.shapeOffsets.cylinder.vz = Q12(0.0f);
-        g_SysWork.playerWork.player.shapeOffsets.cylinder.vx = Q12(0.0f);
-        g_SysWork.playerWork.player.shapeOffsets.box.vz = Q12(0.0f);
-        g_SysWork.playerWork.player.shapeOffsets.box.vx = Q12(0.0f);
-        g_SysWork.playerWork.player.box.field_2   = Q12(0.0f);
-        g_SysWork.playerWork.player.box.field_6   = Q12(-1.1f);
+        g_SysWork.playerWork.player.collision.cylinder.radius   = Q12(0.3f);
+        g_SysWork.playerWork.player.collision.cylinder.field_2   = Q12(0.23f);
+        g_SysWork.playerWork.player.collision.box.field_0   = Q12(-1.6f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.box.vz = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.box.vx = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.box.field_2   = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.box.field_6   = Q12(-1.1f);
     }
 }
 

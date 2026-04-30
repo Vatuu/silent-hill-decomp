@@ -46,7 +46,7 @@ void Ai_SplitHead_Init(s_SubCharacter* splitHead)
     splitHead->model.anim.alpha = Q12(0.0f);
     splitHead->moveSpeed           = Q12(0.0f);
     splitHead->headingAngle        = splitHead->rotation.vy;
-    splitHead->collisionState             = 4;
+    splitHead->collision.state             = 4;
     Chara_PropertiesClear(splitHead);
 
     splitHead->model.controlState = SplitHeadControl_8;
@@ -1020,21 +1020,21 @@ void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead)
 
     sharedFunc_800D4408_1_s05(&pos, 2, Q8(0.0f), -57, 3);
 
-    splitHead->shapeOffsets.cylinder.vx = pos.vx - splitHead->position.vx;
-    splitHead->box.field_0   = pos.vy;
-    splitHead->shapeOffsets.cylinder.vz = pos.vz - splitHead->position.vz;
+    splitHead->collision.shapeOffsets.cylinder.vx = pos.vx - splitHead->position.vx;
+    splitHead->collision.box.field_0   = pos.vy;
+    splitHead->collision.shapeOffsets.cylinder.vz = pos.vz - splitHead->position.vz;
 
     if (ANIM_STATUS_IDX_GET(splitHead->model.anim.status) == SplitHeadAnim_2 ||
         ANIM_STATUS_IDX_GET(splitHead->model.anim.status) == SplitHeadAnim_14)
     {
-        splitHead->cylinder.radius = Q12(1.3f);
+        splitHead->collision.cylinder.radius = Q12(1.3f);
     }
     else
     {
-        splitHead->cylinder.radius = Q12(1.7f);
+        splitHead->collision.cylinder.radius = Q12(1.7f);
     }
 
-    splitHead->collisionState = 4;
+    splitHead->collision.state = 4;
 
     func_8005CB20(splitHead, &sp18, sharedData_800D8614_1_s05, sharedData_800D8616_1_s05);
 
@@ -1281,9 +1281,9 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
             if (ABS(sp98[1] - sp98[2]) >= 0x72)
             {
                 splitHeadProps.flags_E8 |= SplitHeadFlag_0;
-                splitHead->box.field_0                  = sp20[0].vy;
-                splitHead->box.field_4                  = sp50[0].vy;
-                splitHead->cylinder.field_2                  = Q12(0.6f);
+                splitHead->collision.box.field_0                  = sp20[0].vy;
+                splitHead->collision.box.field_4                  = sp50[0].vy;
+                splitHead->collision.cylinder.field_2                  = Q12(0.6f);
 
                 offsetX = (sp20[0].vx - splitHead->position.vx) * 3;
 
@@ -1291,7 +1291,7 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
                 {
                     offsetX += 3;
                 }
-                splitHead->shapeOffsets.box.vx = (offsetX >> 2);
+                splitHead->collision.shapeOffsets.box.vx = (offsetX >> 2);
 
                 offsetZ = (sp20[0].vz - splitHead->position.vz) * 3;
 
@@ -1300,7 +1300,7 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
                     offsetZ += 3;
                 }
 
-                splitHead->shapeOffsets.box.vz = offsetZ >> 2;
+                splitHead->collision.shapeOffsets.box.vz = offsetZ >> 2;
                 return;
             }
         }
@@ -1359,21 +1359,21 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
         sharedFunc_800D4408_1_s05(&sp50[3], 1, 0, 0x95, -0x13F);
     }
 
-    splitHead->box.field_0 = FP_FROM((sp20[0].vy * (Q12(1.0f) - sp90[unkIdx])) + (sp20[unkIdx].vy * sp90[unkIdx]), Q12_SHIFT);
-    splitHead->box.field_4 = FP_FROM((sp50[0].vy * (Q12(1.0f) - sp90[unkIdx])) + (sp20[unkIdx + 4].vy * sp90[unkIdx]), Q12_SHIFT);
-    splitHead->box.field_6 = (splitHead->box.field_0 + splitHead->box.field_4) >> 1;
+    splitHead->collision.box.field_0 = FP_FROM((sp20[0].vy * (Q12(1.0f) - sp90[unkIdx])) + (sp20[unkIdx].vy * sp90[unkIdx]), Q12_SHIFT);
+    splitHead->collision.box.field_4 = FP_FROM((sp50[0].vy * (Q12(1.0f) - sp90[unkIdx])) + (sp20[unkIdx + 4].vy * sp90[unkIdx]), Q12_SHIFT);
+    splitHead->collision.box.field_6 = (splitHead->collision.box.field_0 + splitHead->collision.box.field_4) >> 1;
 
     if (unkIdx == 3)
     {
-        splitHead->cylinder.field_2 = Q12(0.6f);
+        splitHead->collision.cylinder.field_2 = Q12(0.6f);
     }
     else
     {
-        splitHead->cylinder.field_2 = FP_FROM(((Q12(1.0f) - sp90[unkIdx]) * Q12(0.6f)) + (sp90[unkIdx] * Q12(0.35f)), Q12_SHIFT);
+        splitHead->collision.cylinder.field_2 = FP_FROM(((Q12(1.0f) - sp90[unkIdx]) * Q12(0.6f)) + (sp90[unkIdx] * Q12(0.35f)), Q12_SHIFT);
     }
 
-    splitHead->shapeOffsets.box.vx = FP_FROM((sp20[0].vx * (Q12(1.0f) - sp90[unkIdx])) + (sp20[unkIdx].vx * sp90[unkIdx]), Q12_SHIFT) - splitHead->position.vx;
-    splitHead->shapeOffsets.box.vz = FP_FROM((sp20[0].vz * (Q12(1.0f) - sp90[unkIdx])) + (sp20[unkIdx].vz * sp90[unkIdx]), Q12_SHIFT) - splitHead->position.vz;
+    splitHead->collision.shapeOffsets.box.vx = FP_FROM((sp20[0].vx * (Q12(1.0f) - sp90[unkIdx])) + (sp20[unkIdx].vx * sp90[unkIdx]), Q12_SHIFT) - splitHead->position.vx;
+    splitHead->collision.shapeOffsets.box.vz = FP_FROM((sp20[0].vz * (Q12(1.0f) - sp90[unkIdx])) + (sp20[unkIdx].vz * sp90[unkIdx]), Q12_SHIFT) - splitHead->position.vz;
 }
 
 void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_12* offsetZ)
@@ -1414,7 +1414,7 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
         sp28[i]         = sp38[k].field_D;
         sp38[k].field_E = i;
 
-        if (g_SysWork.playerWork.player.cylinder.radius >= sp38[k].field_0)
+        if (g_SysWork.playerWork.player.collision.cylinder.radius >= sp38[k].field_0)
         {
             k++;
         }
@@ -1445,7 +1445,7 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
                         ptr1->field_D = ptr0->field_D;
                         ptr1->field_E = ptr0->field_E;
 
-                        sp38[k].field_0 = g_SysWork.playerWork.player.cylinder.radius - sp38[k].field_0;
+                        sp38[k].field_0 = g_SysWork.playerWork.player.collision.cylinder.radius - sp38[k].field_0;
                         spC8[k]         = ratan2(newPosX - sp38[i].field_4, newPosZ - sp38[i].field_8);
 
                         k++;
@@ -1525,7 +1525,7 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
                         ptr1->field_D = ptr0->field_D;
                         ptr1->field_E = ptr0->field_E;
 
-                        sp38[k].field_0 = g_SysWork.playerWork.player.cylinder.radius + sp38[k].field_0;
+                        sp38[k].field_0 = g_SysWork.playerWork.player.collision.cylinder.radius + sp38[k].field_0;
                         spC8[k]         = ratan2(sp38[i].field_4 - newPosX, sp38[i].field_8 - newPosZ);
 
                         k++;
@@ -1541,7 +1541,7 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
         {
             for (i = 0; i < temp_s7; i++)
             {
-                sp38[i].field_0 = g_SysWork.playerWork.player.cylinder.radius + sp38[i].field_0;
+                sp38[i].field_0 = g_SysWork.playerWork.player.collision.cylinder.radius + sp38[i].field_0;
                 spC8[i]         = ratan2(sp38[i].field_4 - newPosX, sp38[i].field_8 - newPosZ);
             }
 
@@ -1592,12 +1592,12 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
     s32                         var_v1;
     q3_12                       var_v1_3;
 
-    splitHead->box.field_2   = 0;
-    splitHead->cylinder.radius  = Q12(0.0f);
-    splitHead->shapeOffsets.cylinder.vx = Q12(0.0f);
-    splitHead->shapeOffsets.cylinder.vz = Q12(0.0f);
-    splitHead->collisionState         = 0;
-    splitHead->collisionState         = 4;
+    splitHead->collision.box.field_2   = 0;
+    splitHead->collision.cylinder.radius  = Q12(0.0f);
+    splitHead->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+    splitHead->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+    splitHead->collision.state         = 0;
+    splitHead->collision.state         = 4;
 
     sharedFunc_800D4408_1_s05(&sharedData_800D8618_1_s05[0], 17, sharedData_800D5A90_1_s05[0].vx, sharedData_800D5A90_1_s05[0].vy, sharedData_800D5A90_1_s05[0].vz);
     sharedFunc_800D4408_1_s05(&sharedData_800D8618_1_s05[1], 21, (s16)((u16)sharedData_800D5A90_1_s05[0].vx * -1), sharedData_800D5A90_1_s05[0].vy, sharedData_800D5A90_1_s05[0].vz);
@@ -1671,7 +1671,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
             }
             else if (splitHead->model.anim.time < Q12(33.0f))
             {
-                var_v1_3 = FP_MULTIPLY_PRECISE(g_SysWork.playerWork.player.cylinder.radius,
+                var_v1_3 = FP_MULTIPLY_PRECISE(g_SysWork.playerWork.player.collision.cylinder.radius,
                                                splitHead->model.anim.time + Q12(-31.0f), Q12_SHIFT) >> 1;
             }
             else
@@ -1679,7 +1679,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
                 var_v1_3 = Q12(0.0f);
                 if (splitHead->model.anim.time < Q12(37.0f))
                 {
-                    var_v1_3 = g_SysWork.playerWork.player.cylinder.radius;
+                    var_v1_3 = g_SysWork.playerWork.player.collision.cylinder.radius;
                 }
             }
 

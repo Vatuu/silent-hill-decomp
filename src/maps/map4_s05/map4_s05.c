@@ -57,7 +57,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
 
     floatstinger->moveSpeed = Q12(0.0f);
     floatstinger->fallSpeed = Q12(0.0f);
-    floatstinger->collisionState   = 4;
+    floatstinger->collision.state   = 4;
     Chara_PropertiesClear(floatstinger);
 
     switch (floatstinger->model.stateStep)
@@ -449,14 +449,14 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                 temp_s0_3  = temp_s0_3 << 6;
                 temp_v0_14 = Q12_MULT_PRECISE(temp_s0_3, temp);
 
-                sp20[1].vx = g_SysWork.playerWork.player.position.vx + g_SysWork.playerWork.player.shapeOffsets.box.vx +
+                sp20[1].vx = g_SysWork.playerWork.player.position.vx + g_SysWork.playerWork.player.collision.shapeOffsets.box.vx +
                              Q12_MULT(temp_v0_14, Math_Sin(temp_s1));
-                sp20[1].vz = g_SysWork.playerWork.player.position.vz + g_SysWork.playerWork.player.shapeOffsets.box.vz +
+                sp20[1].vz = g_SysWork.playerWork.player.position.vz + g_SysWork.playerWork.player.collision.shapeOffsets.box.vz +
                              Q12_MULT(temp_v0_14, Math_Cos(temp_s1));
 
                 temp_v0_4 = Q12_MULT_PRECISE(g_SysWork.playerWork.player.position.vy - D_800DB8C8[7].vy, Rng_GenerateUInt(Q12(1.0f), Q12(2.0f) - 1));
 
-                temp_a2_2 = g_SysWork.playerWork.player.box.field_6;
+                temp_a2_2 = g_SysWork.playerWork.player.collision.box.field_6;
 
                 sp20[1].vy = MAX(g_SysWork.playerWork.player.position.vy + temp_v0_4, Q12(-1.0f)) <= Q12(2.0f) ? (temp_a2_2 + MAX(g_SysWork.playerWork.player.position.vy + temp_v0_4, Q12(-1.0f))) :
                                                                                                                          (temp_a2_2 + Q12(2.0f));
@@ -488,11 +488,11 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                         temp3      = Rng_GenerateUInt(Q12(-0.25f), Q12(0.25f) - 1);
                         temp_v1_12 = sp20[1].vy + temp3;
 
-                        temp2 = g_SysWork.playerWork.player.box.field_6;
+                        temp2 = g_SysWork.playerWork.player.collision.box.field_6;
 
-                        sp20[2].vy = g_SysWork.playerWork.player.box.field_6 < MAX(temp_v1_12, temp2 - Q12(3.0f)) ?
-                                                                                         g_SysWork.playerWork.player.box.field_6 :
-                                                                                         MAX(temp_v1_12, g_SysWork.playerWork.player.box.field_6 - Q12(3.0f));
+                        sp20[2].vy = g_SysWork.playerWork.player.collision.box.field_6 < MAX(temp_v1_12, temp2 - Q12(3.0f)) ?
+                                                                                         g_SysWork.playerWork.player.collision.box.field_6 :
+                                                                                         MAX(temp_v1_12, g_SysWork.playerWork.player.collision.box.field_6 - Q12(3.0f));
 
                         sharedFunc_800CB0A4_4_s03(&sp20[0], &sp20[2]);
                     }
@@ -857,39 +857,39 @@ void func_800D3AD4(s_SubCharacter* floatstinger) // 0x800D3AD4
 
     if ((g_SysWork.playerWork.player.position.vy - Q12(1.35f)) < ptr->field_50[0].vy)
     {
-        floatstinger->box.field_0   = ptr->field_50[1].vy - floatstinger->position.vy;
-        floatstinger->box.field_4   = ptr->field_50[0].vy - floatstinger->position.vy;
-        floatstinger->cylinder.radius  = Q12(0.4f);
-        floatstinger->cylinder.field_2   = Q12(0.4f);
-        floatstinger->shapeOffsets.box.vx = ((ptr->field_50[0].vx + ptr->field_50[1].vx) >> 1) - floatstinger->position.vx;
-        floatstinger->shapeOffsets.cylinder.vx = floatstinger->shapeOffsets.box.vx;
-        floatstinger->shapeOffsets.box.vz = (ptr->field_50[0].vz + ptr->field_50[1].vz >> 1) - floatstinger->position.vz;
-        floatstinger->shapeOffsets.cylinder.vz = floatstinger->shapeOffsets.box.vz;
+        floatstinger->collision.box.field_0   = ptr->field_50[1].vy - floatstinger->position.vy;
+        floatstinger->collision.box.field_4   = ptr->field_50[0].vy - floatstinger->position.vy;
+        floatstinger->collision.cylinder.radius  = Q12(0.4f);
+        floatstinger->collision.cylinder.field_2   = Q12(0.4f);
+        floatstinger->collision.shapeOffsets.box.vx = ((ptr->field_50[0].vx + ptr->field_50[1].vx) >> 1) - floatstinger->position.vx;
+        floatstinger->collision.shapeOffsets.cylinder.vx = floatstinger->collision.shapeOffsets.box.vx;
+        floatstinger->collision.shapeOffsets.box.vz = (ptr->field_50[0].vz + ptr->field_50[1].vz >> 1) - floatstinger->position.vz;
+        floatstinger->collision.shapeOffsets.cylinder.vz = floatstinger->collision.shapeOffsets.box.vz;
     }
     else
     {
-        floatstinger->box.field_0   = ptr->field_50[0].vy - floatstinger->position.vy;
-        floatstinger->box.field_4   = ptr->field_50[2].vy - floatstinger->position.vy;
-        floatstinger->cylinder.radius  = Q12(0.5f);
-        floatstinger->cylinder.field_2   = Q12(0.5f);
-        floatstinger->shapeOffsets.box.vx = ((ptr->field_50[0].vx + ptr->field_50[2].vx) >> 1) - floatstinger->position.vx;
-        floatstinger->shapeOffsets.cylinder.vx = floatstinger->shapeOffsets.box.vx;
-        floatstinger->shapeOffsets.box.vz = (ptr->field_50[0].vz + ptr->field_50[2].vz >> 1) - floatstinger->position.vz;
-        floatstinger->shapeOffsets.cylinder.vz = floatstinger->shapeOffsets.box.vz;
+        floatstinger->collision.box.field_0   = ptr->field_50[0].vy - floatstinger->position.vy;
+        floatstinger->collision.box.field_4   = ptr->field_50[2].vy - floatstinger->position.vy;
+        floatstinger->collision.cylinder.radius  = Q12(0.5f);
+        floatstinger->collision.cylinder.field_2   = Q12(0.5f);
+        floatstinger->collision.shapeOffsets.box.vx = ((ptr->field_50[0].vx + ptr->field_50[2].vx) >> 1) - floatstinger->position.vx;
+        floatstinger->collision.shapeOffsets.cylinder.vx = floatstinger->collision.shapeOffsets.box.vx;
+        floatstinger->collision.shapeOffsets.box.vz = (ptr->field_50[0].vz + ptr->field_50[2].vz >> 1) - floatstinger->position.vz;
+        floatstinger->collision.shapeOffsets.cylinder.vz = floatstinger->collision.shapeOffsets.box.vz;
     }
 
     if (((ptr->field_50[0].vy + ptr->field_50[1].vy) >> 1) > (g_SysWork.playerWork.player.position.vy - Q12(1.4f)))
     {
-        floatstinger->box.field_6 = ((ptr->field_50[0].vy + ptr->field_50[1].vy) >> 1) - floatstinger->position.vy;
+        floatstinger->collision.box.field_6 = ((ptr->field_50[0].vy + ptr->field_50[1].vy) >> 1) - floatstinger->position.vy;
     }
     else if (((ptr->field_50[0].vy + ptr->field_50[2].vy) >> 1) < (g_SysWork.playerWork.player.position.vy - Q12(1.4f)))
     {
-        floatstinger->box.field_6 = ((ptr->field_50[0].vy + ptr->field_50[2].vy) >> 1) - floatstinger->position.vy;
+        floatstinger->collision.box.field_6 = ((ptr->field_50[0].vy + ptr->field_50[2].vy) >> 1) - floatstinger->position.vy;
     }
     else
     {
         var_v1                 = floatstinger->position.vy + Q12(1.4f);
-        floatstinger->box.field_6 = g_SysWork.playerWork.player.position.vy - var_v1;
+        floatstinger->collision.box.field_6 = g_SysWork.playerWork.player.position.vy - var_v1;
     }
 
     if (floatstinger->model.anim.status == ANIM_STATUS(FloatstingerAnim_1, true))
@@ -897,27 +897,27 @@ void func_800D3AD4(s_SubCharacter* floatstinger) // 0x800D3AD4
         if (FP_FROM(floatstinger->model.anim.time, Q12_SHIFT) > 15 &&
             FP_FROM(floatstinger->model.anim.time, Q12_SHIFT) < 27)
         {
-            floatstinger->cylinder.radius = Q12_MULT_PRECISE(floatstinger->cylinder.radius, Q12(0.3f));
+            floatstinger->collision.cylinder.radius = Q12_MULT_PRECISE(floatstinger->collision.cylinder.radius, Q12(0.3f));
         }
         else if (FP_FROM(floatstinger->model.anim.time, Q12_SHIFT) > 11 &&
                  FP_FROM(floatstinger->model.anim.time, Q12_SHIFT) < 16)
         {
-            floatstinger->cylinder.radius = Q12_MULT_PRECISE(floatstinger->cylinder.radius, Q12(1.0f) - Q12_MULT_PRECISE((floatstinger->model.anim.time - Q12(12.0f)) >> 2, Q12(0.7f)));
+            floatstinger->collision.cylinder.radius = Q12_MULT_PRECISE(floatstinger->collision.cylinder.radius, Q12(1.0f) - Q12_MULT_PRECISE((floatstinger->model.anim.time - Q12(12.0f)) >> 2, Q12(0.7f)));
         }
         else if (FP_FROM(floatstinger->model.anim.time, Q12_SHIFT) > 26 &&
                  FP_FROM(floatstinger->model.anim.time, Q12_SHIFT) < 31)
         {
-            floatstinger->cylinder.radius = Q12_MULT_PRECISE(floatstinger->cylinder.radius, Q12_MULT_PRECISE((Q12(31.0f) - floatstinger->model.anim.time) >> 2, Q12(0.7f)) + Q12(0.3f));
+            floatstinger->collision.cylinder.radius = Q12_MULT_PRECISE(floatstinger->collision.cylinder.radius, Q12_MULT_PRECISE((Q12(31.0f) - floatstinger->model.anim.time) >> 2, Q12(0.7f)) + Q12(0.3f));
         }
     }
 
     if (g_SysWork.playerWork.player.health <= Q12(0.0f))
     {
-        floatstinger->box.field_2 = Q12(-2.0f);
+        floatstinger->collision.box.field_2 = Q12(-2.0f);
     }
     else
     {
-        floatstinger->box.field_2 = Q12(-1.46f);
+        floatstinger->collision.box.field_2 = Q12(-1.46f);
     }
 }
 
@@ -1039,7 +1039,7 @@ bool func_800D4458(s_SubCharacter* floatstinger, VECTOR3* arg1) // 0x800D4458
 
     for (i = 0; i < 3; i++)
     {
-        if (arg1->vy + floatstinger->box.field_2 >= D_800D780C[i].field_10)
+        if (arg1->vy + floatstinger->collision.box.field_2 >= D_800D780C[i].field_10)
         {
             break;
         }
@@ -1050,7 +1050,7 @@ bool func_800D4458(s_SubCharacter* floatstinger, VECTOR3* arg1) // 0x800D4458
         return false;
     }
 
-    D_800DB89A = D_800D780C[i].field_10 - (arg1->vy + floatstinger->box.field_2);
+    D_800DB89A = D_800D780C[i].field_10 - (arg1->vy + floatstinger->collision.box.field_2);
 
     if (D_800D780C[i].field_0[0] <= arg1->vx)
     {
@@ -1160,7 +1160,7 @@ q19_12 func_800D48A4(s_SubCharacter* floatstinger, q3_12 dist, q3_12 headingAngl
     count = !(count < 0x80);
 
     from.vx = floatstinger->position.vx;
-    from.vy = floatstinger->position.vy + floatstinger->box.field_2;
+    from.vy = floatstinger->position.vy + floatstinger->collision.box.field_2;
     from.vz = floatstinger->position.vz;
 
     for (i = count; i < (count + 8); i++)

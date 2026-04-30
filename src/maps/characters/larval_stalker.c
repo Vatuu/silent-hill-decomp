@@ -239,7 +239,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 g_SysWork.playerWork.player.moveSpeed <= ((larvalStalkerProps.field_EA * Q12(1.5f) )+ Q12(0.5f)))
             {
                 if (Q12_ANGLE(45.0f) > ABS(angleDeltaToPlayer) &&
-                    (distToTarget < ((larvalStalker->cylinder.radius + Q12(0.05f)) + g_SysWork.playerWork.player.cylinder.radius)))
+                    (distToTarget < ((larvalStalker->collision.cylinder.radius + Q12(0.05f)) + g_SysWork.playerWork.player.collision.cylinder.radius)))
                 {
                     if (!Rng_GenerateInt(0, 7)) // 1 in 8 chance.
                     {
@@ -375,25 +375,25 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                     larvalStalker->model.anim.status = ANIM_STATUS(LarvalStalkerAnim_StunBackToIdle, false);
                     larvalStalker->model.controlState = LarvalStalkerControl_Stun;
                     larvalStalkerProps.flags_E8 &= ~LarvalStalkerFlag_6;
-                    larvalStalker->collisionState = 3;
+                    larvalStalker->collision.state = 3;
                     larvalStalkerProps.keyframeIdx_F4 = 0;
 
                     func_8005DC1C(Sfx_Unk1429, &larvalStalker->position, Q8(0.5f), 0);
                 }
                 else
                 {
-                    larvalStalker->collisionState = 1;
+                    larvalStalker->collision.state = 1;
                 }
             }
             else
             {
-                if (distToTarget < ((larvalStalker->cylinder.radius + Q12(0.02f)) + g_SysWork.playerWork.player.cylinder.radius))
+                if (distToTarget < ((larvalStalker->collision.cylinder.radius + Q12(0.02f)) + g_SysWork.playerWork.player.collision.cylinder.radius))
                 {
                     Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f));
                 }
 
                 pos     = larvalStalker->position;
-                pos.vy += larvalStalker->box.field_8;
+                pos.vy += larvalStalker->collision.box.field_8;
 
                 if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk31, AttackInputType_Multitap), larvalStalker, &pos, &g_SysWork.playerWork.player, larvalStalker->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
                 {
@@ -715,7 +715,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             if (larvalStalker->health <= Q12(0.0f) && Chara_NpcIdxGet(larvalStalker) != g_SysWork.targetNpcIdx)
             {
                 larvalStalker->health = NO_VALUE;
-                larvalStalker->collisionState = 0;
+                larvalStalker->collision.state = 0;
             }
 
             // TODO: Weird property cast. Originally, maybe a wrong properties struct was mistakenly accessed?
@@ -855,7 +855,7 @@ void Ai_LarvalStalker_Init(s_SubCharacter* larvalStalker)
     larvalStalker->moveSpeed = Q12(0.0f);
 
     Chara_DamageClear(larvalStalker);
-    larvalStalker->collisionState      = 0;
+    larvalStalker->collision.state      = 0;
     larvalStalker->headingAngle = larvalStalker->rotation.vy;
 
     Chara_PropertiesClear(larvalStalker);
@@ -1381,21 +1381,21 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
 
         case ANIM_STATUS(LarvalStalkerAnim_GrabAttack, false):
         case ANIM_STATUS(LarvalStalkerAnim_GrabAttack, true):
-            larvalStalker->box.field_0   = Q12(-0.72f);
-            larvalStalker->box.field_4   = Q12(-0.2f);
-            larvalStalker->box.field_6   = Q12(-0.66f);
-            larvalStalker->cylinder.radius  = Q12(0.12f);
-            larvalStalker->shapeOffsets.box.vz = Q12(0.02f);
-            larvalStalker->cylinder.field_2   = Q12(0.11f);
-            larvalStalker->box.field_2   = Q12(0.0f);
-            larvalStalker->shapeOffsets.cylinder.vx = Q12(0.0f);
-            larvalStalker->shapeOffsets.cylinder.vz = Q12(0.0f);
-            larvalStalker->shapeOffsets.box.vx = Q12(0.0f);
-            larvalStalker->box.field_8   = Q12(-0.59f);
+            larvalStalker->collision.box.field_0   = Q12(-0.72f);
+            larvalStalker->collision.box.field_4   = Q12(-0.2f);
+            larvalStalker->collision.box.field_6   = Q12(-0.66f);
+            larvalStalker->collision.cylinder.radius  = Q12(0.12f);
+            larvalStalker->collision.shapeOffsets.box.vz = Q12(0.02f);
+            larvalStalker->collision.cylinder.field_2   = Q12(0.11f);
+            larvalStalker->collision.box.field_2   = Q12(0.0f);
+            larvalStalker->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+            larvalStalker->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+            larvalStalker->collision.shapeOffsets.box.vx = Q12(0.0f);
+            larvalStalker->collision.box.field_8   = Q12(-0.59f);
             break;
     }
 
-    func_8005C814(&larvalStalker->shapeOffsets, larvalStalker);
+    func_8005C814(&larvalStalker->collision.shapeOffsets, larvalStalker);
 }
 
 #undef larvalStalkerProps

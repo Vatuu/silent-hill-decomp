@@ -101,7 +101,7 @@ void Ai_Creeper_Init(s_SubCharacter* creeper)
     creeper->model.anim.alpha = Q12(0.0f);
     creeper->moveSpeed        = Q12(0.0f);
     creeper->headingAngle     = creeper->rotation.vy;
-    creeper->collisionState       = 2;
+    creeper->collision.state       = 2;
 
     Chara_PropertiesClear(creeper);
     Ai_Creeper_PropertiesUpdateFromStep(creeper);
@@ -582,11 +582,11 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
     if (ANIM_TIME_RANGE_CHECK(creeper->model.anim.time, 9, 10))
     {
         creeperPos     = creeper->position;
-        creeperPos.vy += creeper->box.field_8;
+        creeperPos.vy += creeper->collision.box.field_8;
 
         func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Multitap),
                       creeper, &creeperPos, &playerChara, creeper->rotation.vy,
-                      ratan2(Q12(0.4f), (playerChara.position.vy + playerChara.box.field_2) - (creeper->position.vy + creeper->box.field_2)));
+                      ratan2(Q12(0.4f), (playerChara.position.vy + playerChara.collision.box.field_2) - (creeper->position.vy + creeper->collision.box.field_2)));
 
         if (!(creeperProps.flags & CreeperFlag_HasAttacked))
         {
@@ -667,7 +667,7 @@ void Creeper_ControlDamage(s_SubCharacter* creeper)
     if (creeper->health == Q12(0.0f) && Chara_NpcIdxGet(creeper) != g_SysWork.targetNpcIdx)
     {
         creeper->health = NO_VALUE;
-        creeper->collisionState = 0;
+        creeper->collision.state = 0;
     }
 
     // TODO: Doesn't match?
@@ -769,7 +769,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
 
         case ANIM_STATUS(CreeperAnim_Attack, true):
             CopyDataAlt(creeper, sharedData_800E0FC8_1_s02);
-            creeper->box.field_8 = -655;
+            creeper->collision.box.field_8 = -655;
             break;
 
         case ANIM_STATUS(CreeperAnim_DeathStart, false):
@@ -886,7 +886,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
             break;
     }
 
-    func_8005C814(&creeper->shapeOffsets, creeper);
+    func_8005C814(&creeper->collision.shapeOffsets, creeper);
 }
 
 #undef creeperProps

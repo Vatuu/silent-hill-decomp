@@ -97,13 +97,13 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
 
         case StalkerStateStep_8:
             stalker->model.controlState = StalkerControl_4;
-            stalker->collisionState      = 3;
+            stalker->collision.state      = 3;
             break;
 
         case StalkerStateStep_7:
             stalker->model.controlState = StalkerControl_4;
             stalkerProps.flags   |= StalkerFlag_11;
-            stalker->collisionState      = 3;
+            stalker->collision.state      = 3;
             break;
 
         case StalkerStateStep_6:
@@ -111,13 +111,13 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             stalker->flags       |= CharaFlag_Unk3;
             stalkerProps.timer_F8    = Q12(1.0f);
             stalkerProps.flags   |= StalkerFlag_0 | StalkerFlag_1;
-            stalker->collisionState      = 3;
+            stalker->collision.state      = 3;
             stalker->flags       &= ~CharaFlag_Unk5;
             break;
 
         case StalkerStateStep_5:
             stalker->model.controlState = StalkerControl_1;
-            stalker->collisionState      = 0;
+            stalker->collision.state      = 0;
             stalker->flags       |= CharaFlag_Unk5;
             break;
 
@@ -128,7 +128,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             stalker->model.anim.time        = Q12(427.0f);
             stalker->model.anim.keyframeIdx = 427;
             stalkerProps.flags                |= StalkerFlag_0;
-            stalker->collisionState                   = 3;
+            stalker->collision.state                   = 3;
             break;
 
         case StalkerStateStep_10:
@@ -137,7 +137,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             stalker->model.anim.status      = ANIM_STATUS(StalkerAnim_28, true);
             stalker->model.anim.time        = Q12(443.0f);
             stalker->model.anim.keyframeIdx = 443;
-            stalker->collisionState                   = 3;
+            stalker->collision.state                   = 3;
             break;
 
         case StalkerStateStep_17:
@@ -146,7 +146,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             stalker->model.anim.status      = ANIM_STATUS(StalkerAnim_14, true);
             stalker->model.anim.time        = Q12(176.0f);
             stalker->model.anim.keyframeIdx = 176;
-            stalker->collisionState                   = 0;
+            stalker->collision.state                   = 0;
             break;
     }
 
@@ -1420,7 +1420,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
     s32     i;
     u32     animStatus;
 
-    stalker->collisionState = 3;
+    stalker->collision.state = 3;
     Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
 
     distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
@@ -1496,8 +1496,8 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
             stalker->model.controlState  = StalkerControl_9;
             stalker->model.anim.status = ANIM_STATUS(StalkerAnim_10, false);
             stalkerProps.keyframeIdx_FC      = animStatus;
-            stalker->collisionState              = 0;
-            stalker->collisionState              = 3;
+            stalker->collision.state              = 0;
+            stalker->collision.state              = 3;
 
             stalkerProps.flags |= StalkerFlag_6;
             stalkerProps.flags &= ~StalkerFlag_5;
@@ -1515,7 +1515,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
     else if (ANIM_TIME_RANGE_CHECK(stalker->model.anim.time, 472, 476))
     {
         vec0.vx = stalker->position.vx;
-        vec0.vy = stalker->position.vy + stalker->box.field_8;
+        vec0.vy = stalker->position.vy + stalker->collision.box.field_8;
         vec0.vz = stalker->position.vz;
 
         // TODO: What's weapon attack 49?
@@ -1553,7 +1553,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
 
         stalkerProps.flags |= StalkerFlag_6;
         stalker->model.anim.status = ANIM_STATUS(StalkerAnim_36, false);
-        stalker->collisionState = 3;
+        stalker->collision.state = 3;
     }
 
     if (g_DeltaTime != Q12(0.0f))
@@ -1872,7 +1872,7 @@ void Ai_Stalker_Control_10(s_SubCharacter* stalker)
         if (g_SysWork.targetNpcIdx != Chara_NpcIdxGet(stalker))
         {
             stalker->health  = NO_VALUE;
-            stalker->collisionState = 0;
+            stalker->collision.state = 0;
         }
     }
 
@@ -2197,7 +2197,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
         ptr->field_20.vz = Q8_TO_Q12(ptr->field_20.vz);
 
         ptr->position_38.vx = stalker->position.vx;
-        ptr->position_38.vy = stalker->position.vy + stalker->box.field_8;
+        ptr->position_38.vy = stalker->position.vy + stalker->collision.box.field_8;
         ptr->position_38.vz = stalker->position.vz;
 
         // TODO: What's weapon attack 48?
@@ -2205,7 +2205,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
                       ratan2(ptr->field_20.vx - stalker->position.vx, ptr->field_20.vz - stalker->position.vz),
                       ratan2(Math_Vector2MagCalc(stalker->position.vx - ptr->field_20.vx,
                                                  stalker->position.vz - ptr->field_20.vz),
-                             ptr->field_20.vy - (stalker->position.vy + stalker->box.field_8)));
+                             ptr->field_20.vy - (stalker->position.vy + stalker->collision.box.field_8)));
     }
 
     ptr->angle_44 = stalkerProps.angle_114;
@@ -2523,7 +2523,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 460);
             func_80070400(stalker, &sharedData_800DE440_0_s00[keyframeIdx0], &sharedData_800DE440_0_s00[keyframeIdx1]);
 
-            stalker->box.field_8 = stalker->box.field_6;
+            stalker->collision.box.field_8 = stalker->collision.box.field_6;
             break;
 
         case ANIM_STATUS(StalkerAnim_11, false):
@@ -2567,7 +2567,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 49);
             func_80070400(stalker, &sharedData_800DE580_0_s00[keyframeIdx0], &sharedData_800DE580_0_s00[keyframeIdx1]);
 
-            stalker->box.field_8                                      = Q12(-0.7f);
+            stalker->collision.box.field_8                                      = Q12(-0.7f);
             stalkerProps.keyframeIdx_FC = 15;
             break;
 
@@ -2676,7 +2676,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             break;
     }
 
-    func_8005C814(&stalker->shapeOffsets, stalker);
+    func_8005C814(&stalker->collision.shapeOffsets, stalker);
 }
 
 void sharedFunc_800D7BE8_0_s00(s_SubCharacter* stalker)
