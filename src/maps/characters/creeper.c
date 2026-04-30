@@ -28,7 +28,7 @@ void Ai_Creeper_Update(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINAT
 }
 
 // This inline allows getting rid of some ugly gotos, couldn't find a different way to handle it.
-static inline void Ai_Creeper_PropertiesUpdateFromStep(s_SubCharacter* creeper)
+static inline void Ai_Creeper_PropsUpdateFromStep(s_SubCharacter* creeper)
 {
     s32 stateStep;
 
@@ -97,14 +97,14 @@ void Ai_Creeper_Init(s_SubCharacter* creeper)
     }
 
     creeper->health           = Q12(200.0f);
-    creeperProps.flags     = CreeperFlag_None;
+    creeperProps.flags        = CreeperFlag_None;
     creeper->model.anim.alpha = Q12(0.0f);
     creeper->moveSpeed        = Q12(0.0f);
     creeper->headingAngle     = creeper->rotation.vy;
-    creeper->collision.state       = 2;
+    creeper->collision.state  = CharaCollisionState_2;
 
-    Chara_PropertiesClear(creeper);
-    Ai_Creeper_PropertiesUpdateFromStep(creeper);
+    Chara_PropsClear(creeper);
+    Ai_Creeper_PropsUpdateFromStep(creeper);
     ModelAnim_AnimInfoSet(&creeper->model.anim, CREEPER_ANIM_INFOS);
     Chara_DamageClear(creeper);
 
@@ -666,8 +666,8 @@ void Creeper_ControlDamage(s_SubCharacter* creeper)
 
     if (creeper->health == Q12(0.0f) && Chara_NpcIdxGet(creeper) != g_SysWork.targetNpcIdx)
     {
-        creeper->health = NO_VALUE;
-        creeper->collision.state = 0;
+        creeper->health          = NO_VALUE;
+        creeper->collision.state = CharaCollisionState_Ignore;
     }
 
     // TODO: Doesn't match?

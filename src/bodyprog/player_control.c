@@ -7784,7 +7784,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     extraModel->anim.flags |= AnimFlag_Unlocked | AnimFlag_Visible;
     model->anim.flags      |= AnimFlag_Unlocked | AnimFlag_Visible;
 
-    g_SysWork.playerWork.player.collision.state = 3;
+    g_SysWork.playerWork.player.collision.state = CharaCollisionState_Npc;
     g_Inventory_EquippedItem                    = g_SavegamePtr->equippedWeapon_AA;
 
     itemGroupId = INVENTORY_ITEM_GROUP(g_SavegamePtr->equippedWeapon_AA);

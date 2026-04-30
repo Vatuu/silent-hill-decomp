@@ -32,7 +32,7 @@ void Chara_BonesInit(s32 idx) // 0x80088D34
     Anim_BoneInit(g_CharaTypeAnimInfo[idx].animFile1_8, g_CharaTypeAnimInfo[idx].npcBoneCoords);
 }
 
-s32 Chara_Spawn(e_CharacterId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep) // 0x80088D78
+s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep) // 0x80088D78
 {
     s_Collision     coll;
     s32             i;
@@ -134,7 +134,7 @@ void Chara_ModelCharaIdClear(s_SubCharacter* chara, s32 unused0, s32 unuse1) // 
     chara->model.charaId = Chara_None;
 }
 
-void Chara_SpawnFlagsSet(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags) // 0x80088FF4
+void Chara_SpawnFlagsSet(e_CharaId charaId, s32 spawnIdx, s32 spawnFlags) // 0x80088FF4
 {
     s_SpawnInfo* spawnInfo;
 
@@ -142,7 +142,7 @@ void Chara_SpawnFlagsSet(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags) //
     spawnInfo->flags_6 = spawnFlags;
 }
 
-void Chara_SpawnPositionSet(e_CharacterId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ) // 0x80089034
+void Chara_SpawnPositionSet(e_CharaId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ) // 0x80089034
 {
     s_SpawnInfo* spawnInfo0;
     s_SpawnInfo* spawnInfo1;

@@ -426,8 +426,9 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
     static s_SubCharacter** curActiveChara; /** Array of active characters. */
 
     if (excludedChara != NULL &&
-        (excludedChara->model.charaId == Chara_None || excludedChara->collision.state == 0 ||
-        (excludedChara->collision.state == 1 && includePlayer == true)))
+        (excludedChara->model.charaId == Chara_None ||
+         excludedChara->collision.state == CharaCollisionState_Ignore ||
+        (excludedChara->collision.state == CharaCollisionState_Player && includePlayer == true)))
     {
         *charaCount = 0;
         return &activeCharas;
@@ -440,10 +441,11 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
     {
         if (curChara->model.charaId != Chara_None)
         {
-            if (curChara->collision.state != 0 &&
-                (curChara->collision.state != 1 || includePlayer != true) &&
+            if (curChara->collision.state != CharaCollisionState_Ignore &&
+                (curChara->collision.state != CharaCollisionState_Player || includePlayer != true) &&
                 curChara != excludedChara &&
-                (includePlayer != true || excludedChara == NULL || excludedChara->collision.state != 4 ||
+                (includePlayer != true || excludedChara == NULL ||
+                 excludedChara->collision.state != CharaCollisionState_4 ||
                  curChara->collision.state >= excludedChara->collision.state))
             {
                 *charaCount += 1;
@@ -457,10 +459,12 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
     curChara = &g_SysWork.playerWork.player;
     if (curChara->model.charaId != Chara_None)
     {
-        if (curChara->collision.state != 0 &&
-            (curChara->collision.state != 1 || includePlayer != true) &&
+        if (curChara->collision.state != CharaCollisionState_Ignore &&
+            (curChara->collision.state != CharaCollisionState_Player || includePlayer != true) &&
             curChara != excludedChara &&
-            (includePlayer != true || excludedChara == NULL || excludedChara->collision.state != 4 || curChara->collision.state >= excludedChara->collision.state))
+            (includePlayer != true || excludedChara == NULL ||
+             excludedChara->collision.state != CharaCollisionState_4 ||
+             curChara->collision.state >= excludedChara->collision.state))
         {
             *charaCount += 1;
             *curActiveChara = curChara;
@@ -676,7 +680,9 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
     for (i = 0; i < charaCount; i++)
     {
         curChara = charas[i];
-        if (!curChara->collision.state || curChara->collision.state == (1 << 0) || curChara->collision.state >= collQuery->field_12)
+        if (curChara->collision.state == CharaCollisionState_Ignore ||
+            curChara->collision.state == CharaCollisionState_Player ||
+            curChara->collision.state >= collQuery->field_12)
         {
             continue;
         }

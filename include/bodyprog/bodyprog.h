@@ -482,12 +482,12 @@ typedef struct
 {
     VECTOR3  position; // Q19.12
     SVECTOR3 rotation; // Q3.12 TODO: Not a rotation? Y position is added to this.
-    s8       field_12;
+    s8       field_12; /** `e_CharaCollisionState` */
 } s_CollisionQuery;
 
 typedef struct
 {
-    s32        field_0;
+    s32        field_0; /** `e_CharaCollisionState` */
     bool       field_4;
     q19_12     distance_8;
     SVECTOR    offset_C; // Q23.8
@@ -1091,8 +1091,8 @@ typedef struct
 // or `s_AnimMetadata`?
 typedef struct _CharaAnimDataInfo
 {
-    /* 0x0  */ s8             charaId0_0;  /** `e_CharacterId` */
-    /* 0x1  */ s8             charaId1_1;  /** `e_CharacterId` */
+    /* 0x0  */ s8             charaId0_0;  /** `e_CharaId` */
+    /* 0x1  */ s8             charaId1_1;  /** `e_CharaId` */
                // 2 bytes of padding.
     /* 0x4  */ s32            animFile0_4; // s_AnmHeader* animFile0_4; // TODO: Needs to be a pointer.
     /* 0x8  */ s_AnmHeader*   animFile1_8;
@@ -1111,7 +1111,7 @@ typedef struct
     /* 0x6  */ s8    field_6; // Accessed by `func_8008BF84` as `u16`
     /* 0x7  */ s8    unk_7;
     /* 0x8  */ u8    field_8;   // Accessed by `func_8008BF84` as `u16`
-    /* 0x9  */ u8    charaId_9; /** `e_CharacterId` */
+    /* 0x9  */ u8    charaId_9; /** `e_CharaId` */
     /* 0xA  */ u8    field_A;   // Accessed by `func_8008BF84` as `u16`
     /* 0xB  */ u8    field_B;
     /* 0xC  */ q4_12 field_C;
@@ -1168,7 +1168,7 @@ typedef struct _WaterZone
 /** @brief Character model. */
 typedef struct _CharaModel
 {
-    /* 0x0  */ u8            charaId;  /** `e_CharacterId` */
+    /* 0x0  */ u8            charaId;  /** `e_CharaId` */
     /* 0x1  */ u8            isLoaded; /** `bool` */
                // 2 bytes of padding.
     /* 0x4  */ s32           queueIdx;
@@ -1403,7 +1403,7 @@ typedef struct
 } s_800C44F0; // Probable size: 8 bytes.
 
 /** @brief Character file info.
- * Holds file IDs of anim/model/texture for each `e_CharacterId` along with some data used in VC camera code.
+ * Holds file IDs of anim/model/texture for each `e_CharaId` along with some data used in VC camera code.
  */
 typedef struct _CharaFileInfo
 {
@@ -1477,7 +1477,7 @@ STATIC_ASSERT_SIZEOF(s_MapPoint2d, 12);
 typedef struct _SpawnInfo
 {
     /* 0x0   */ q19_12 positionX;
-    /* 0x4   */ s8     characterId; /** `e_CharacterId` */
+    /* 0x4   */ s8     characterId; /** `e_CharaId` */
     /* 0x5   */ q0_8   rotationY;
     /* 0x6   */ s8     flags_6;               /** `e_SpawnFlags` | Copied to `stateStep` in `s_Model`, with `controlState = 0`. */
     /* 0x7+0 */ s32    gameDifficultyMin : 4; /** `e_GameDifficulty` | Minimum difficulty required for successful spawn. */
@@ -1684,8 +1684,8 @@ typedef struct _MapOverlayHeader
     s32*                   windSpeedZ_188;
     s32*                   data_18C;
     s32*                   data_190;
-    void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `Game_NpcUpdate`. */
-    s8                     charaGroupIds_248[CHARA_GROUP_COUNT]; /** `e_CharacterId` values where if `s_SpawnInfo::characterId == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
+    void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); /** Guessed params. Funcptrs for each `e_CharaId`, set to 0 for IDs not included in the map overlay. Called by `Game_NpcUpdate`. */
+    s8                     charaGroupIds_248[CHARA_GROUP_COUNT]; /** `e_CharaId` values where if `s_SpawnInfo::characterId == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_SpawnInfo            charaSpawns_24C[2][16];               /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
     VC_ROAD_DATA           cameraPaths_3CC[100];
     s_TriggerZone          triggerZones_D2C[200];
@@ -2184,7 +2184,7 @@ extern s_FsImageDesc D_800A9094;
 
 extern s_FsImageDesc g_Font24AtlasImg; // 0x800A909C
 
-/** Array containg file IDs used for each `e_CharacterId`, used in `Fs_QueueStartReadAnm`. */
+/** Array containg file IDs used for each `e_CharaId`, used in `Fs_QueueStartReadAnm`. */
 extern s_CharaFileInfo CHARA_FILE_INFOS[Chara_Count]; // 0x800A90FC
 
 extern s_MapEffectsInfo MAP_EFFECTS_INFOS[21];
@@ -2717,17 +2717,17 @@ void func_8003D03C(void);
 /** Loads the model of an item held by the player? */
 void WorldGfx_HeldItemDraw(void);
 
-bool WorldGfx_IsCharaModelPresent(e_CharacterId charaId);
+bool WorldGfx_IsCharaModelPresent(e_CharaId charaId);
 
 /** @brief Sets the material for a character model.
  *
  * @param charaId ID of the character whose model to update.
  * @param blendMode Material blend mode to set (`e_BlendMode`).
  */
-void WorldGfx_CharaModelMaterialSet(e_CharacterId charaId, s32 blendMode);
+void WorldGfx_CharaModelMaterialSet(e_CharaId charaId, s32 blendMode);
 
 /** @brief Makes a character transparent. */
-void WorldGfx_CharaModelTransparentSet(e_CharacterId charaId, bool enableTransparency);
+void WorldGfx_CharaModelTransparentSet(e_CharaId charaId, bool enableTransparency);
 
 void WorldGfx_CharaFree(s_CharaModel* model);
 
@@ -2742,10 +2742,10 @@ s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHeader* mapHdr);
 
 void WorldGfx_CharaLmBufferAssign(s8 forceFree);
 
-s32 func_8003DD74(e_CharacterId charaId, s32 arg1);
+s32 func_8003DD74(e_CharaId charaId, s32 arg1);
 
 /** `arg1` is packed data. Each byte is a separate value. */
-void WorldGfx_HeldItemAttach(e_CharacterId charaId, s32 arg1); // Called by some chara init funcs.
+void WorldGfx_HeldItemAttach(e_CharaId charaId, s32 arg1); // Called by some chara init funcs.
 
 s32 func_800868F4(s32 arg0, s32 arg1, s32 idx);
 
@@ -2753,7 +2753,7 @@ void func_80040004(s_MapOverlayHeader* overlayHdr);
 
 void func_80040014(void);
 
-bool func_80040B74(e_CharacterId charaId);
+bool func_80040B74(e_CharaId charaId);
 
 /** Related to the screen. */
 void func_80040BAC(void);
@@ -3528,11 +3528,11 @@ bool Chara_ProcessLoads(void);
 
 void Chara_BonesInit(s32 idx);
 
-s32 Chara_Spawn(e_CharacterId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep);
+s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep);
 
 void Chara_ModelCharaIdClear(s_SubCharacter* chara, s32 unused0, s32 unused1);
 
-void Chara_SpawnFlagsSet(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags);
+void Chara_SpawnFlagsSet(e_CharaId charaId, s32 spawnIdx, s32 spawnFlags);
 
 // ========================
 
@@ -4184,10 +4184,10 @@ void MainMenu_SelectedOptionIdxReset(void);
 
 /** @brief Gets the bones of a registered character model.
  *
- * @param charaId ID of the character for which to get the skeleton bones (`e_CharacterId`).
+ * @param charaId ID of the character for which to get the skeleton bones (`e_CharaId`).
  * @return Character model bones or `NULL` if the character model is unregistered.
  */
-s_LinkedBone* WorldGfx_CharaModelBonesGet(e_CharacterId charaId);
+s_LinkedBone* WorldGfx_CharaModelBonesGet(e_CharaId charaId);
 
 void GameFs_BgEtcGfxLoad(void);
 
@@ -4255,32 +4255,32 @@ void func_8003CC7C(s_WorldObjectModel* model, MATRIX* arg1, MATRIX* arg2);
 /** @brief Advanced a character model LM buffer.
  *
  * @param buf Buffer to advance.
- * @param charaID  ID of the character whose model to use (`e_CharacterId`).
+ * @param charaID  ID of the character whose model to use (`e_CharaId`).
  */
-void WorldGfx_CharaLmBufferAdvance(u8** buf, e_CharacterId charaId);
+void WorldGfx_CharaLmBufferAdvance(u8** buf, e_CharaId charaId);
 
 /** UV setup for character textures. */
 void Chara_FsImageCalc(s_FsImageDesc* image, s32 groupIds, s32 modelIdx);
 
 /** @brief Loads a character model, setting the LM header and texture UVs as a prerequisite.
  *
- * @param charaId ID of the character whose model to load (`e_CharacterId`).
+ * @param charaId ID of the character whose model to load (`e_CharaId`).
  * @param modelIdx Slot index of the model array to load into.
  * @param lmHdr LM header.
  * @param tex Model texture.
  * @return Model or texture queue index.
  */
-void WorldGfx_CharaLoad(e_CharacterId charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+void WorldGfx_CharaLoad(e_CharaId charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 /** @brief Loads a character model.
  *
- * @param charaId ID of the character whose model to load (`e_CharacterId`).
+ * @param charaId ID of the character whose model to load (`e_CharaId`).
  * @param modelIdx Slot index of the model array to load into.
  * @param lmHdr LM header.
  * @param tex Model texture.
  * @return Model or texture queue index.
  */
-s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+s32 WorldGfx_CharaModelLoad(e_CharaId charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 /** Something related to animations. */
 void WorldGfx_PlayerModelProcessLoad(void);
@@ -4289,7 +4289,7 @@ void WorldGfx_CharaModelProcessAllLoads(void);
 
 void WorldGfx_CharaModelProcessLoad(s_CharaModel* model);
 
-void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12 timer, s32 arg4);
+void func_8003DA9C(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12 timer, s32 arg4);
 
 /** Something for Harry. `arg` is a packed value. */
 void func_8003DE60(s_Skeleton* skel, s32 arg1);
@@ -4481,7 +4481,7 @@ void GameState_LoadMapScreen_Update(void);
 void GameState_Unk15_Update(void);
 
 /** Handles character spawn? */
-void Chara_SpawnPositionSet(e_CharacterId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ);
+void Chara_SpawnPositionSet(e_CharaId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ);
 
 /* Does the map zoom in, red lines? Argument types guessed based on f`unc_800E83C0` in MAP2_S00. */
 void Map_BoxOutlineDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, s16 arg8);

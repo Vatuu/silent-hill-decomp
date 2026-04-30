@@ -59,7 +59,7 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
 
     s32 i;
 
-    Chara_PropertiesClear(groaner);
+    Chara_PropsClear(groaner);
     groanerProps.flags.val16[0]  = 0;
     groaner->model.anim.alpha = Q12(0.0f);
 
@@ -76,9 +76,9 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
         groaner->health *= 2;
     }
 
-    groaner->moveSpeed    = Q12(0.0f);
-    groaner->collision.state      = 3;
-    groaner->headingAngle = groaner->rotation.vy;
+    groaner->moveSpeed       = Q12(0.0f);
+    groaner->collision.state = CharaCollisionState_Npc;
+    groaner->headingAngle    = groaner->rotation.vy;
 
     groanerProps.field_114 = Rng_GenerateUInt(Q12(0.9375f), Q12(1.0625f) - 1);
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
@@ -1008,8 +1008,8 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner)
     {
         if (g_SysWork.targetNpcIdx != Chara_NpcIdxGet(groaner))
         {
-            groaner->health  = NO_VALUE;
-            groaner->collision.state = 0;
+            groaner->health          = NO_VALUE;
+            groaner->collision.state = CharaCollisionState_Ignore;
         }
     }
 

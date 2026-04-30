@@ -41,13 +41,13 @@ void Ai_SplitHead_Init(s_SubCharacter* splitHead)
 {
     s32 i;
 
-    splitHead->health              = 25500; // TODO: Split Head health isn't stored as Q12?
-    splitHeadProps.flags_E8           = SplitHeadFlag_None;
+    splitHead->health           = 25500; // TODO: Split Head health isn't stored as Q12?
+    splitHeadProps.flags_E8     = SplitHeadFlag_None;
     splitHead->model.anim.alpha = Q12(0.0f);
-    splitHead->moveSpeed           = Q12(0.0f);
-    splitHead->headingAngle        = splitHead->rotation.vy;
-    splitHead->collision.state             = 4;
-    Chara_PropertiesClear(splitHead);
+    splitHead->moveSpeed        = Q12(0.0f);
+    splitHead->headingAngle     = splitHead->rotation.vy;
+    splitHead->collision.state  = CharaCollisionState_4;
+    Chara_PropsClear(splitHead);
 
     splitHead->model.controlState = SplitHeadControl_8;
     Character_AnimSet(splitHead, ANIM_STATUS(SplitHeadAnim_10, true), 162);
@@ -1034,7 +1034,7 @@ void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead)
         splitHead->collision.cylinder.radius = Q12(1.7f);
     }
 
-    splitHead->collision.state = 4;
+    splitHead->collision.state = CharaCollisionState_4;
 
     func_8005CB20(splitHead, &sp18, sharedData_800D8614_1_s05, sharedData_800D8616_1_s05);
 
@@ -1592,12 +1592,12 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
     s32                         var_v1;
     q3_12                       var_v1_3;
 
-    splitHead->collision.box.field_2   = 0;
-    splitHead->collision.cylinder.radius  = Q12(0.0f);
+    splitHead->collision.box.field_2              = 0;
+    splitHead->collision.cylinder.radius          = Q12(0.0f);
     splitHead->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
     splitHead->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-    splitHead->collision.state         = 0;
-    splitHead->collision.state         = 4;
+    splitHead->collision.state                    = CharaCollisionState_Ignore;
+    splitHead->collision.state                    = CharaCollisionState_4;
 
     sharedFunc_800D4408_1_s05(&sharedData_800D8618_1_s05[0], 17, sharedData_800D5A90_1_s05[0].vx, sharedData_800D5A90_1_s05[0].vy, sharedData_800D5A90_1_s05[0].vz);
     sharedFunc_800D4408_1_s05(&sharedData_800D8618_1_s05[1], 21, (s16)((u16)sharedData_800D5A90_1_s05[0].vx * -1), sharedData_800D5A90_1_s05[0].vy, sharedData_800D5A90_1_s05[0].vz);

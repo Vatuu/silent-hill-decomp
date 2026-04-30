@@ -4389,13 +4389,13 @@ bool Ai_Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDA
         incubus->health = Q12(40000.0f);
     }
 
-    incubus->moveSpeed       = Q12(0.0f);
-    incubus->headingAngle    = incubus->rotation.vy;
-    incubus->collision.cylinder.radius   = Q12(0.3f);
-    incubus->collision.state         = 4;
+    incubus->moveSpeed                          = Q12(0.0f);
+    incubus->headingAngle                       = incubus->rotation.vy;
+    incubus->collision.cylinder.radius          = Q12(0.3f);
+    incubus->collision.state                    = CharaCollisionState_4;
     incubus->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
     incubus->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-    incubus->flags          |= CharaFlag_Unk3;
+    incubus->flags                             |= CharaFlag_Unk3;
 
     localIncubus->properties.dummy.properties_E8[2].val32 = 0;
     localIncubus->properties.dummy.properties_E8[1].val32 = 0;
@@ -5797,13 +5797,13 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
         chara->health = Q12(30000.0f);
     }
 
-    chara->moveSpeed        = Q12(0.0f);
-    chara->collision.cylinder.radius  = Q12(0.3f);
+    chara->moveSpeed                          = Q12(0.0f);
+    chara->collision.cylinder.radius          = Q12(0.3f);
     chara->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
     chara->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-    chara->collision.state         = 4;
-    chara->headingAngle     = chara->rotation.vy;
-    chara->flags           |= CharaFlag_Unk3;
+    chara->collision.state                    = CharaCollisionState_4;
+    chara->headingAngle                       = chara->rotation.vy;
+    chara->flags                             |= CharaFlag_Unk3;
 
     localChara->properties.player.field_F0 = 0;
 
@@ -9959,7 +9959,7 @@ void func_800E8D20(void) // 0x800E8D20
     }
 }
 
-void func_800E9260(e_CharacterId charaId, s32 arg1) // 0x800E9260
+void func_800E9260(e_CharaId charaId, s32 arg1) // 0x800E9260
 {
     // TODO: Setup buffer defines for these (or maybe they're included in existing buffer?)
 
@@ -10004,7 +10004,7 @@ void func_800E941C(void) // 0x800E941C
     WorldGfx_CharaModelProcessAllLoads();
 }
 
-void func_800E9444(e_CharacterId charaId, s_SubCharacter* chara) // 0x800E9444
+void func_800E9444(e_CharaId charaId, s_SubCharacter* chara) // 0x800E9444
 {
     bzero(chara, sizeof(s_SubCharacter));
 

@@ -879,11 +879,11 @@ void func_800E86BC(void);
 
 void func_800E8D20(void);
 
-void func_800E9260(e_CharacterId charaId, s32 arg1);
+void func_800E9260(e_CharaId charaId, s32 arg1);
 
 void func_800E941C(void);
 
-void func_800E9444(e_CharacterId charaId, s_SubCharacter* chara);
+void func_800E9444(e_CharaId charaId, s_SubCharacter* chara);
 
 void func_800E9490(s_SubCharacter* chara);
 

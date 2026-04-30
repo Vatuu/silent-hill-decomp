@@ -1761,7 +1761,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
             chara1 == chara ||
             chara1->model.charaId == Chara_None ||
             chara1->health < Q12(0.0f) ||
-            !chara1->collision.state)
+            chara1->collision.state == CharaCollisionState_Ignore)
         {
             continue;
         }

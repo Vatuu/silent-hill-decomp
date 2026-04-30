@@ -55,10 +55,10 @@ void Ai_Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
     {
     }
 
-    floatstinger->moveSpeed = Q12(0.0f);
-    floatstinger->fallSpeed = Q12(0.0f);
-    floatstinger->collision.state   = 4;
-    Chara_PropertiesClear(floatstinger);
+    floatstinger->moveSpeed       = Q12(0.0f);
+    floatstinger->fallSpeed       = Q12(0.0f);
+    floatstinger->collision.state = CharaCollisionState_4;
+    Chara_PropsClear(floatstinger);
 
     switch (floatstinger->model.stateStep)
     {

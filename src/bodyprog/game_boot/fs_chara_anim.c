@@ -71,7 +71,7 @@ bool Fs_CharaAnimDataSizeCheck(s32 charaDataAnimInfoIdx0, s32 charaDataAnimInfoI
     return true;
 }
 
-s32 Fs_CharaAnimDataInfoIdxGet(e_CharacterId charaId) // 0x800352F8
+s32 Fs_CharaAnimDataInfoIdxGet(e_CharaId charaId) // 0x800352F8
 {
     s32 i;
 
@@ -86,7 +86,7 @@ s32 Fs_CharaAnimDataInfoIdxGet(e_CharacterId charaId) // 0x800352F8
     return 0;
 }
 
-void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* boneCoords) // 0x80035338
+void Fs_CharaAnimDataAlloc(s32 idx, e_CharaId charaId, s_AnmHeader* animFile, GsCOORDINATE2* boneCoords) // 0x80035338
 {
     s32                  i;
     s_AnmHeader*         localAnimFile; // Local pointer required for match.
@@ -161,7 +161,7 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
     }
 }
 
-void Fs_CharaAnimInfoUpdate(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* boneCoords) // 0x80035560
+void Fs_CharaAnimInfoUpdate(s32 idx, e_CharaId charaId, s_AnmHeader* animFile, GsCOORDINATE2* boneCoords) // 0x80035560
 {
     s32                  idx0;
     GsCOORDINATE2*       localBoneCoords;

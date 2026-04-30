@@ -238,16 +238,16 @@ void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isPuppetDoctor)
 
     chara2 = nurse; // TODO: Not sure why this is needed, possibly an inline here somewhere?
 
-    nurse->moveSpeed                = Q12(0.0f);
-    nurse->collision.state                  = 3;
-    nurse->headingAngle             = nurse->rotation.vy;
-    nurseProps.position_E8             = nurse->position;
-    nurse->collision.cylinder.radius           = Q12(0.3f);
+    nurse->moveSpeed                 = Q12(0.0f);
+    nurse->collision.state           = CharaCollisionState_Npc;
+    nurse->headingAngle              = nurse->rotation.vy;
+    nurseProps.position_E8           = nurse->position;
+    nurse->collision.cylinder.radius = Q12(0.3f);
     nurseProps.damage_F4.position.vx = Q12(0.0f);
     nurseProps.damage_F4.position.vy = Q12(0.0f);
     nurseProps.damage_F4.position.vz = Q12(0.0f);
-    nurseProps.field_114               = 0;
-    nurseProps.field_118               = 0;
+    nurseProps.field_114             = 0;
+    nurseProps.field_118             = 0;
 
     Chara_DamageClear(nurse);
 
@@ -587,8 +587,8 @@ void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor)
         Ai_PuppetNurse_SfxPlay(nurse, 2);
 
         nurse->model.anim.status = g_PuppetNurse_AnimStatus0[isDoctor];
-        nurse->collision.state              = 4;
-        nurse->flags               |= CharaFlag_Unk2;
+        nurse->collision.state   = CharaCollisionState_4;
+        nurse->flags            |= CharaFlag_Unk2;
         nurse->model.stateStep++;
     }
 
@@ -598,8 +598,8 @@ void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor)
     {
         if (Chara_NpcIdxGet(nurse) != g_SysWork.targetNpcIdx && nurse->health == Q12(0.0f))
         {
-            nurse->health  = NO_VALUE;
-            nurse->collision.state = 0;
+            nurse->health          = NO_VALUE;
+            nurse->collision.state = CharaCollisionState_Ignore;
             func_800622B8(3, nurse, g_PuppetNurse_AnimStatus1[isDoctor], 11);
 
             localNurse->properties.puppetNurse.flags_122 |= PuppetNurseFlag_1;

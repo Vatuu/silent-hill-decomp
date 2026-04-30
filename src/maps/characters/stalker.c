@@ -64,7 +64,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
     s32 i;
 
     stalkerProps.flags = StalkerFlag_None;
-    Chara_PropertiesClear(stalker);
+    Chara_PropsClear(stalker);
     stalker->health = sharedData_800E3A20_0_s00;
 
 #ifdef MAP6_S03
@@ -92,61 +92,61 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             stalkerProps.flags |= StalkerFlag_2;
 
         case StalkerStateStep_3:
-            stalkerProps.timer_F8  = Q12(2.5f);
-            stalkerProps.flags |= StalkerFlag_0;
+            stalkerProps.timer_F8 = Q12(2.5f);
+            stalkerProps.flags   |= StalkerFlag_0;
 
         case StalkerStateStep_8:
             stalker->model.controlState = StalkerControl_4;
-            stalker->collision.state      = 3;
+            stalker->collision.state    = CharaCollisionState_Npc;
             break;
 
         case StalkerStateStep_7:
             stalker->model.controlState = StalkerControl_4;
-            stalkerProps.flags   |= StalkerFlag_11;
-            stalker->collision.state      = 3;
+            stalkerProps.flags         |= StalkerFlag_11;
+            stalker->collision.state    = CharaCollisionState_Npc;
             break;
 
         case StalkerStateStep_6:
             stalker->model.controlState = StalkerControl_2;
-            stalker->flags       |= CharaFlag_Unk3;
-            stalkerProps.timer_F8    = Q12(1.0f);
-            stalkerProps.flags   |= StalkerFlag_0 | StalkerFlag_1;
-            stalker->collision.state      = 3;
-            stalker->flags       &= ~CharaFlag_Unk5;
+            stalker->flags             |= CharaFlag_Unk3;
+            stalkerProps.timer_F8       = Q12(1.0f);
+            stalkerProps.flags         |= StalkerFlag_0 | StalkerFlag_1;
+            stalker->collision.state    = CharaCollisionState_Npc;
+            stalker->flags             &= ~CharaFlag_Unk5;
             break;
 
         case StalkerStateStep_5:
             stalker->model.controlState = StalkerControl_1;
-            stalker->collision.state      = 0;
-            stalker->flags       |= CharaFlag_Unk5;
+            stalker->collision.state    = CharaCollisionState_Ignore;
+            stalker->flags             |= CharaFlag_Unk5;
             break;
 
         case StalkerStateStep_9:
-            stalker->model.controlState              = StalkerControl_12;
+            stalker->model.controlState = StalkerControl_12;
             //Character_AnimSet(stalker, ANIM_STATUS(StalkerAnim_27, true), 427); // TODO: Doesn't match?
             stalker->model.anim.status      = ANIM_STATUS(StalkerAnim_27, true);
             stalker->model.anim.time        = Q12(427.0f);
             stalker->model.anim.keyframeIdx = 427;
-            stalkerProps.flags                |= StalkerFlag_0;
-            stalker->collision.state                   = 3;
+            stalkerProps.flags             |= StalkerFlag_0;
+            stalker->collision.state        = CharaCollisionState_Npc;
             break;
 
         case StalkerStateStep_10:
-            stalker->model.controlState              = StalkerControl_11;
+            stalker->model.controlState = StalkerControl_11;
             //Character_AnimSet(stalker, ANIM_STATUS(StalkerAnim_28, true), 442); // TODO: Doesn't match?
             stalker->model.anim.status      = ANIM_STATUS(StalkerAnim_28, true);
             stalker->model.anim.time        = Q12(443.0f);
             stalker->model.anim.keyframeIdx = 443;
-            stalker->collision.state                   = 3;
+            stalker->collision.state        = 3;
             break;
 
         case StalkerStateStep_17:
-            stalker->model.controlState              = StalkerControl_13;
+            stalker->model.controlState = StalkerControl_13;
             //Character_AnimSet(stalker, ANIM_STATUS(StalkerAnim_14, true), 176); // TODO: Doesn't match?
             stalker->model.anim.status      = ANIM_STATUS(StalkerAnim_14, true);
             stalker->model.anim.time        = Q12(176.0f);
             stalker->model.anim.keyframeIdx = 176;
-            stalker->collision.state                   = 0;
+            stalker->collision.state        = CharaCollisionState_Ignore;
             break;
     }
 
@@ -1420,7 +1420,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
     s32     i;
     u32     animStatus;
 
-    stalker->collision.state = 3;
+    stalker->collision.state = CharaCollisionState_Npc;
     Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
 
     distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
@@ -1491,13 +1491,13 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
 
         if (g_SysWork.playerWork.player.attackReceived == NO_VALUE)
         {
-            g_SysWork.charaGroupFlags[3]         &= ~CharaGroupFlag_0;
-            animStatus                       = stalker->model.anim.status;
-            stalker->model.controlState  = StalkerControl_9;
-            stalker->model.anim.status = ANIM_STATUS(StalkerAnim_10, false);
-            stalkerProps.keyframeIdx_FC      = animStatus;
-            stalker->collision.state              = 0;
-            stalker->collision.state              = 3;
+            g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_0;
+            animStatus                    = stalker->model.anim.status;
+            stalker->model.controlState   = StalkerControl_9;
+            stalker->model.anim.status    = ANIM_STATUS(StalkerAnim_10, false);
+            stalkerProps.keyframeIdx_FC   = animStatus;
+            stalker->collision.state      = CharaCollisionState_Ignore;
+            stalker->collision.state      = CharaCollisionState_Npc;
 
             stalkerProps.flags |= StalkerFlag_6;
             stalkerProps.flags &= ~StalkerFlag_5;
@@ -1551,9 +1551,9 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
             stalkerProps.keyframeIdx_FC = stalker->model.anim.status;
         }
 
-        stalkerProps.flags |= StalkerFlag_6;
+        stalkerProps.flags        |= StalkerFlag_6;
         stalker->model.anim.status = ANIM_STATUS(StalkerAnim_36, false);
-        stalker->collision.state = 3;
+        stalker->collision.state   = CharaCollisionState_Npc;
     }
 
     if (g_DeltaTime != Q12(0.0f))
@@ -1871,8 +1871,8 @@ void Ai_Stalker_Control_10(s_SubCharacter* stalker)
 
         if (g_SysWork.targetNpcIdx != Chara_NpcIdxGet(stalker))
         {
-            stalker->health  = NO_VALUE;
-            stalker->collision.state = 0;
+            stalker->health          = NO_VALUE;
+            stalker->collision.state = CharaCollisionState_Ignore;
         }
     }
 

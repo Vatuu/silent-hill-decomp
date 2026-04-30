@@ -19,7 +19,7 @@
 // CHARACTERS
 // ========================================
 
-bool func_80040B74(e_CharacterId charaId) // 0x80040B74
+bool func_80040B74(e_CharaId charaId) // 0x80040B74
 {
     s32 i;
 

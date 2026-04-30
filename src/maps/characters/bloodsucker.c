@@ -166,9 +166,9 @@ void Ai_Bloodsucker_Init(s_SubCharacter* bloodsucker)
 {
     s32 i;
 
-    Chara_PropertiesClear(bloodsucker);
-    bloodsucker->collision.state      = 4;
-    bloodsucker->headingAngle = bloodsucker->rotation.vy;
+    Chara_PropsClear(bloodsucker);
+    bloodsucker->collision.state = CharaCollisionState_4;
+    bloodsucker->headingAngle    = bloodsucker->rotation.vy;
 
     Ai_Bloodsucker_AnimUpdateFromStep(bloodsucker);
     ModelAnim_AnimInfoSet(&bloodsucker->model.anim, BLOODSUCKER_ANIM_INFOS);

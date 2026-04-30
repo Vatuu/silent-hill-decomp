@@ -1651,7 +1651,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
         Character_AnimSet(twinfeeler, ANIM_STATUS(TwinfeelerAnim_WalkForward, true), 163);
         twinfeeler->health           = 1;
         twinfeeler->model.anim.alpha = Q12(0.0f);
-        twinfeeler->collision.state       = 3;
+        twinfeeler->collision.state  = CharaCollisionState_Npc;
         twinfeeler->model.stateStep -= 18;
         twinfeeler->rotation.vx      = D_800DB1E8[twinfeeler->model.stateStep];
         twinfeeler->rotation.vy      = D_800DB1F0[twinfeeler->model.stateStep];
@@ -1710,8 +1710,8 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
         {
             if (Chara_NpcIdxGet(twinfeeler) != g_SysWork.targetNpcIdx)
             {
-                twinfeeler->health  = NO_VALUE;
-                twinfeeler->collision.state = 0;
+                twinfeeler->health          = NO_VALUE;
+                twinfeeler->collision.state = CharaCollisionState_Ignore;
                 Savegame_EnemyStateUpdate(twinfeeler);
             }
         }
@@ -1854,10 +1854,10 @@ bool Twinfeeler_Init(s_SubCharacter* twinfeeler) // 0x800D3CD4
     localTwinfeeler->properties.twinfeeler.field_120 = NO_VALUE;
 
     twinfeeler->collision.cylinder.radius = Q12(0.3f);
-    twinfeeler->model.anim.alpha = Q12(0.0f);
-    twinfeeler->moveSpeed        = Q12(0.0f);
-    twinfeeler->headingAngle     = twinfeeler->rotation.vy;
-    twinfeeler->collision.state      = 4;
+    twinfeeler->model.anim.alpha          = Q12(0.0f);
+    twinfeeler->moveSpeed                 = Q12(0.0f);
+    twinfeeler->headingAngle              = twinfeeler->rotation.vy;
+    twinfeeler->collision.state           = CharaCollisionState_4;
 
     localTwinfeeler->properties.twinfeeler.damage.position.vx = Q12(0.0f);
     localTwinfeeler->properties.twinfeeler.damage.position.vy = Q12(0.0f);

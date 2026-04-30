@@ -324,7 +324,8 @@ typedef enum _CharaCollisionState
     CharaCollisionState_Player = 1,
     CharaCollisionState_2      = 2,
     CharaCollisionState_Npc    = 3,
-    CharaCollisionState_4      = 4
+    CharaCollisionState_4      = 4,
+    CharaCollisionState_5      = 5
 } e_CharaCollisionState;
 
 /** @brief Sync modes used by `DrawSync` and `VSync`. */
@@ -899,7 +900,7 @@ typedef enum _PlayerFlags
 } e_PlayerFlags;
 
 /** @brief Character IDs. The `CHARA_FILE_INFOS` array associates each character ID with asset files. */
-typedef enum _CharacterId
+typedef enum _CharaId
 {
     Chara_None             = 0,
     Chara_Harry            = 1,
@@ -950,7 +951,7 @@ typedef enum _CharacterId
     Chara_Count,
 
     Chara_Hack = NO_VALUE, // @hack Force enum to be treated as `s32`.
-} e_CharacterId;
+} e_CharaId;
 
 /** @brief Game difficulties. */
 typedef enum _GameDifficulty
@@ -1249,7 +1250,7 @@ STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 /** @brief Character model. */
 typedef struct _Model
 {
-    /* 0x0 */ s8          charaId;      /** `e_CharacterId` */
+    /* 0x0 */ s8          charaId;      /** `e_CharaId` */
     /* 0x1 */ u8          paletteIdx;   /** Changes the texture palette index for this model. */
     /* 0x2 */ u8          controlState; /** Active character control state. */
     /* 0x3 */ u8          stateStep;    // Step number or temp data for the current `controlState`? In `s_PlayerExtra` always 1, set to 0 for 1 tick when anim state appears to change.
@@ -1306,12 +1307,12 @@ typedef union
 typedef struct _SubCharPropertiesDummy
 {
     u_Property properties_E8[16];
-} s_PropertiesDummy;
-STATIC_ASSERT_SIZEOF(s_PropertiesDummy, 64);
+} s_PropsDummy;
+STATIC_ASSERT_SIZEOF(s_PropsDummy, 64);
 
-// TODO: Re-offset `s_PropertiesPlayer` / `s_PropertiesNpc`.
+// TODO: Re-offset `s_PropsPlayer` / `s_PropsNpc`.
 // Probably easier to do that after it's merged with rest of code.
-typedef struct _PropertiesPlayer
+typedef struct _PropsPlayer
 {
     q19_12        afkTimer_E8; // Increments every tick for 10 seconds before AFK anim starts.
     q19_12        positionY_EC;
@@ -1334,11 +1335,11 @@ typedef struct _PropertiesPlayer
     q3_12         field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
     q3_12         headingAngle_124;
     q3_12         moveDistance_126; // Used to indicate how much the player should move foward. Seems to be squared.
-} s_PropertiesPlayer;
-STATIC_ASSERT_SIZEOF(s_PropertiesPlayer, 64);
+} s_PropsPlayer;
+STATIC_ASSERT_SIZEOF(s_PropsPlayer, 64);
 
 // TODO: This may be a puppet doctor/nurse specific struct, need to compare with other NPCs.
-typedef struct _PropertiesNpc
+typedef struct _PropsNpc
 {
     VECTOR3     position_E8; /** Q19.12 */
     s32         field_F4;
@@ -1357,11 +1358,11 @@ typedef struct _PropertiesNpc
     s16         field_120;
     s16         field_122;
     s_800D5710* field_124;
-} s_PropertiesNpc;
-STATIC_ASSERT_SIZEOF(s_PropertiesNpc, 64);
+} s_PropsNpc;
+STATIC_ASSERT_SIZEOF(s_PropsNpc, 64);
 
 /** @brief Air Screamer or Night Flutter character properties. */
-typedef struct _PropertiesAirScreamer
+typedef struct _PropsAirScreamer
 {
     u32     field_E8_0 : 4;
     u32     field_E8_4 : 4; /** `bool` */
@@ -1377,10 +1378,10 @@ typedef struct _PropertiesAirScreamer
     s32     flags; /** `e_AirScreamerFlags` */
     q19_12  timer_120;
     q19_12  groundHeight_124;
-} s_PropertiesAirScreamer;
+} s_PropsAirScreamer;
 
-/** @brief Alessa character properties. TODO: Copy of `s_PropertiesDahlia`. Fields not marked "correct" are filler. */
-typedef struct _PropertiesAlessa
+/** @brief Alessa character properties. TODO: Copy of `s_PropsDahlia`. Fields not marked "correct" are filler. */
+typedef struct _PropsAlessa
 {
     s32        stateIdx0;
     u_Property properties_EC;
@@ -1397,10 +1398,10 @@ typedef struct _PropertiesAlessa
     u_Property properties_120;
     s16        field_124;
     q3_12      moveSpeed_126; // Correct
-} s_PropertiesAlessa;
+} s_PropsAlessa;
 
 /** @brief Bloodsucker character properties. */
-typedef struct _PropertiesBloodsucker
+typedef struct _PropsBloodsucker
 {
     q19_12 timer_E8;
     q19_12 timer_EC;
@@ -1408,12 +1409,12 @@ typedef struct _PropertiesBloodsucker
     q19_12 timer_F4;
     s8     unused_F8[36]; /** @unused */
     s32    flags;         /** `e_BloodsuckerFlags` */
-} s_PropertiesBloodsucker;
+} s_PropsBloodsucker;
 
 
 /** @brief Cheryl character properties. */
 // TODO: Needs revision. Copy of Dahlia properties.
-typedef struct _PropertiesCheryl
+typedef struct _PropsCheryl
 {
     /* 0xE8 */  s32        controlState; /** `e_CherylControl` */
                 u_Property properties_EC;
@@ -1430,11 +1431,11 @@ typedef struct _PropertiesCheryl
                 u_Property properties_120;
                 q3_12      moveDistance_124;
                 q3_12      moveDistance_126;
-} s_PropertiesCheryl;
-STATIC_ASSERT_SIZEOF(s_PropertiesCheryl, 64);
+} s_PropsCheryl;
+STATIC_ASSERT_SIZEOF(s_PropsCheryl, 64);
 
 /** @brief Creeper character properties. */
-typedef struct _PropertiesCreeper
+typedef struct _PropsCreeper
 {
     /* 0xE8  */ u16    flags; /** `e_CreeperFlags` */
     /* 0xEA  */ s8     __pad_EA[2];
@@ -1449,11 +1450,11 @@ typedef struct _PropertiesCreeper
     /* 0x108 */ q3_12  angleToTarget;
     /* 0x10A */ s16    animStatus_10A; // TODO: Purpose unclear.
     /* 0x10C */ q4_12  moveSpeed;
-} s_PropertiesCreeper;
-STATIC_ASSERT_SIZEOF(s_PropertiesCreeper, 40);
+} s_PropsCreeper;
+STATIC_ASSERT_SIZEOF(s_PropsCreeper, 40);
 
 /** @brief Dahlia character properties. */
-typedef struct _PropertiesDahlia
+typedef struct _PropsDahlia
 {
     s32        stateIdx0;
     u_Property properties_EC;
@@ -1470,11 +1471,11 @@ typedef struct _PropertiesDahlia
     u_Property properties_120;
     s16        field_124;
     q3_12      moveDistance_126;
-} s_PropertiesDahlia;
-STATIC_ASSERT_SIZEOF(s_PropertiesDahlia, 64);
+} s_PropsDahlia;
+STATIC_ASSERT_SIZEOF(s_PropsDahlia, 64);
 
 /** @brief Floatstinger character properties. */
-typedef struct _PropertiesFloatstinger
+typedef struct _PropsFloatstinger
 {
     s16        flags_E8;
     s8         unk_EA[4];
@@ -1494,11 +1495,11 @@ typedef struct _PropertiesFloatstinger
     s16        field_10C;
     q3_12      field_10E;
     u_Property properties_110[6];
-} s_PropertiesFloatstinger;
-STATIC_ASSERT_SIZEOF(s_PropertiesFloatstinger, 64);
+} s_PropsFloatstinger;
+STATIC_ASSERT_SIZEOF(s_PropsFloatstinger, 64);
 
 /** @brief Groaner character properties. */
-typedef struct _PropertiesGroaner
+typedef struct _PropsGroaner
 {
     /* 0xE8  */ u_Property flags; /** `e_GroanerFlags` TODO: One weird exception where it's accessed as `s32`. */
     /* 0xEC  */ q3_12      angle_EC; // Target heading angle?
@@ -1520,10 +1521,10 @@ typedef struct _PropertiesGroaner
     /* 0x111 */ u8         field_111; /** `bool` | Play SFX. */
     /* 0x112 */ s8         __pad_112[2];
     /* 0x114 */ q3_12      field_114; // Move speed coefficient?
-} e_PropertiesGroaner;
+} e_PropsGroaner;
 
 /** @brief Hanged Scratcher character properties. */
-typedef struct _PropertiesHangedScratcher
+typedef struct _PropsHangedScratcher
 {
     s16    flags_E8; /** `e_HangedScratcherFlags` */
     q4_12  timer_EA;
@@ -1544,20 +1545,20 @@ typedef struct _PropertiesHangedScratcher
     s8     unk_10A[2];
     q4_12  radiusMax_10C; // } Used as `Chara_MoveSpeedUpdate` limit param, TODO: rename?
     q4_12  radiusMin_10E; // }
-} s_PropertiesHangedScratcher;
+} s_PropsHangedScratcher;
 
 /** @brief Incubus or Incubator character properties. TODO: Check which one. */
-typedef struct _PropertiesIncubus
+typedef struct _PropsIncubus
 {
     q19_12 timer_E8;
     s32    field_EC;
     s32    someState_F0;
     q19_12 bossFightTimer_F4;
     s8     __pad_F8[48];
-} s_PropertiesIncubus;
+} s_PropsIncubus;
 
 /** @brief Kaufmann character properties. TODO: Largely a copy of Dahlia's for now. */
-typedef struct _PropertiesKaufmann
+typedef struct _PropsKaufmann
 {
     /* 0x0   */ s32        controlState; /** `e_KaufmannControl` */
     /* 0xEC  */ u_Property properties_EC;
@@ -1574,11 +1575,11 @@ typedef struct _PropertiesKaufmann
     /* 0x120 */ s32        field_120;
     /* 0x124 */ s16        field_124;
     /* 0x126 */ q3_12      moveSpeed;
-} s_PropertiesKaufmann;
-STATIC_ASSERT_SIZEOF(s_PropertiesKaufmann, 64);
+} s_PropsKaufmann;
+STATIC_ASSERT_SIZEOF(s_PropsKaufmann, 64);
 
 /** @brief Larval Stalker character properties. */
-typedef struct _PropertiesLarvalStalker
+typedef struct _PropsLarvalStalker
 {
     /* 0x */ u16        flags_E8; /** `e_LarvalStalkerFlags` */
     /* 0x */ u8         field_EA;
@@ -1600,11 +1601,11 @@ typedef struct _PropertiesLarvalStalker
     /* 0x */ u_Property field_120;
     /* 0x */ s16        field_124;
     /* 0x */ q3_12      moveDistance_126;
-} s_PropertiesLarvalStalker;
-STATIC_ASSERT_SIZEOF(s_PropertiesLarvalStalker, 64);
+} s_PropsLarvalStalker;
+STATIC_ASSERT_SIZEOF(s_PropsLarvalStalker, 64);
 
 /** @brief Monster Cybil character properties. */
-typedef struct _PropertiesMonsterCybil
+typedef struct _PropsMonsterCybil
 {
     s32    field_E8;
     s16    field_EC;
@@ -1632,11 +1633,11 @@ typedef struct _PropertiesMonsterCybil
     s16    field_122;
     s8     unk_124[2];
     s16    field_126;
-} s_PropertiesMonsterCybil;
-STATIC_ASSERT_SIZEOF(s_PropertiesMonsterCybil, 64);
+} s_PropsMonsterCybil;
+STATIC_ASSERT_SIZEOF(s_PropsMonsterCybil, 64);
 
 /** @brief Puppet Nurse or Puppet Doctor character properties. */
-typedef struct _PropertiesPuppetNurse
+typedef struct _PropsPuppetNurse
 {
     VECTOR3       position_E8; /** Q19.12 */
     s_CharaDamage damage_F4;
@@ -1653,11 +1654,11 @@ typedef struct _PropertiesPuppetNurse
     s16           field_120;
     u16           flags_122; /** `e_PuppetNurseFlags` */
     s_800D5710*   field_124;
-} s_PropertiesPuppetNurse;
-STATIC_ASSERT_SIZEOF(s_PropertiesPuppetNurse, 64);
+} s_PropsPuppetNurse;
+STATIC_ASSERT_SIZEOF(s_PropsPuppetNurse, 64);
 
 /** @brief Romper character properties. */
-typedef struct _PropertiesRomper
+typedef struct _PropsRomper
 {
     /* 0xE8 */ s32    flags; /** `e_RomperFlags` */
                q3_12  angle_EC; // Target heading angle?
@@ -1685,10 +1686,10 @@ typedef struct _PropertiesRomper
                s8     unk_11E[2];
                q19_12 distance_120;
                q19_12 field_124; // Move speed step?
-} s_PropertiesRomper;
+} s_PropsRomper;
 
 /** @brief Split Head character properties. */
-typedef struct _PropertiesSplitHead
+typedef struct _PropsSplitHead
 {
     u16     flags_E8; /** `e_SplitHeadFlags` */
     u8      field_EA;
@@ -1710,11 +1711,11 @@ typedef struct _PropertiesSplitHead
     s8      unk_120[4];
     s16     field_124;
     q3_12   moveDistance_126;
-} s_PropertiesSplitHead;
-STATIC_ASSERT_SIZEOF(s_PropertiesSplitHead, 64);
+} s_PropsSplitHead;
+STATIC_ASSERT_SIZEOF(s_PropsSplitHead, 64);
 
 /** @brief Stalker character properties. */
-typedef struct _PropertiesStalker
+typedef struct _PropsStalker
 {
     /* 0xE8  */ s16    flags; /** `e_StalkerFlags` */
     /* 0xEA  */ s8     __pad_EA[2];
@@ -1735,10 +1736,10 @@ typedef struct _PropertiesStalker
     /* 0x110 */ q19_12 health_110;
     /* 0x114 */ q3_12  angle_114;
     /* 0x116 */ q4_12  timer_116;
-} s_PropertiesStalker;
+} s_PropsStalker;
 
 /** @brief Twinfeeler character properties. */
-typedef struct _PropertiesTwinfeeler
+typedef struct _PropsTwinfeeler
 {
     // TODO: Weird `field_E8` access.
     /* 0xE8  */ u_Property    field_E8;
@@ -1757,8 +1758,8 @@ typedef struct _PropertiesTwinfeeler
     /* 0x11C */ s8            __pad_11C[2]; // TODO: Should be `s32 prevHealth`.
     /* 0x120 */ s32           field_120; /** @unused */
     /* 0x124 */ s8            __pad_124[8];
-} s_PropertiesTwinfeeler;
-STATIC_ASSERT_SIZEOF(s_PropertiesTwinfeeler, 64);
+} s_PropsTwinfeeler;
+STATIC_ASSERT_SIZEOF(s_PropsTwinfeeler, 64);
 
 typedef struct
 {
@@ -1843,31 +1844,30 @@ typedef struct _SubCharacter
     /* 0xC4 */ u16               deathTimer;     // Part of `shBattleInfo` struct in SH2, may use something similar here.
     /* 0xC6 */ q3_12             timer_C6;       // Some sort of timer. Written to by `Ai_LarvalStalker_Update`.
     /* 0xC8 */ s_CharaCollision  collision;
-
                union
                {
-                   s_PropertiesDummy           dummy;
-                   s_PropertiesPlayer          player;
-                   s_PropertiesNpc             npc;
+                   s_PropsDummy           dummy;
+                   s_PropsPlayer          player;
+                   s_PropsNpc             npc;
                
-                   s_PropertiesAirScreamer     airScreamer;
-                   s_PropertiesAlessa          alessa;
-                   s_PropertiesBloodsucker     bloodsucker;
-                   s_PropertiesCheryl          cheryl;
-                   s_PropertiesCreeper         creeper;
-                   s_PropertiesDahlia          dahlia;
-                   s_PropertiesFloatstinger    floatstinger;
-                   e_PropertiesGroaner         groaner;
-                   s_PropertiesHangedScratcher hangedScratcher;
-                   s_PropertiesIncubus         incubus;
-                   s_PropertiesKaufmann        kaufmann;
-                   s_PropertiesLarvalStalker   larvalStalker;
-                   s_PropertiesMonsterCybil    monsterCybil;
-                   s_PropertiesPuppetNurse     puppetNurse;
-                   s_PropertiesRomper          romper;
-                   s_PropertiesSplitHead       splitHead;
-                   s_PropertiesStalker         stalker;
-                   s_PropertiesTwinfeeler      twinfeeler;
+                   s_PropsAirScreamer     airScreamer;
+                   s_PropsAlessa          alessa;
+                   s_PropsBloodsucker     bloodsucker;
+                   s_PropsCheryl          cheryl;
+                   s_PropsCreeper         creeper;
+                   s_PropsDahlia          dahlia;
+                   s_PropsFloatstinger    floatstinger;
+                   e_PropsGroaner         groaner;
+                   s_PropsHangedScratcher hangedScratcher;
+                   s_PropsIncubus         incubus;
+                   s_PropsKaufmann        kaufmann;
+                   s_PropsLarvalStalker   larvalStalker;
+                   s_PropsMonsterCybil    monsterCybil;
+                   s_PropsPuppetNurse     puppetNurse;
+                   s_PropsRomper          romper;
+                   s_PropsSplitHead       splitHead;
+                   s_PropsStalker         stalker;
+                   s_PropsTwinfeeler      twinfeeler;
     /* 0xE8 */ } properties;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
@@ -2396,7 +2396,7 @@ static inline void Character_AnimStateReset(s_SubCharacter* chara)
  *
  * @param chara Character to update.
  */
-#define Chara_PropertiesClear(chara)                           \
+#define Chara_PropsClear(chara)                           \
     for (i = 0; i < 16; i++)                                   \
     {                                                          \
         chara->properties.dummy.properties_E8[i].val32 = 0; \

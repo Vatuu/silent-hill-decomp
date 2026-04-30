@@ -22,7 +22,7 @@ const s32 pad_rodata_80025524 = 0;
 // MAP GRAPHIC INITALIZATION
 // ========================================
 
-s_LinkedBone* WorldGfx_CharaModelBonesGet(e_CharacterId charaId) // 0x8003BE50
+s_LinkedBone* WorldGfx_CharaModelBonesGet(e_CharaId charaId) // 0x8003BE50
 {
     return g_WorldGfxWork.registeredCharaModels[charaId]->skeleton.bones_C;
 }
@@ -885,7 +885,7 @@ s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHeader* mapHdr) // 0x8003D21C
     return queueIdx;
 }
 
-void WorldGfx_CharaLmBufferAdvance(u8** buf, e_CharacterId charaId) // 0x8003D354
+void WorldGfx_CharaLmBufferAdvance(u8** buf, e_CharaId charaId) // 0x8003D354
 {
     s16 modelFileIdx;
     s32 fileSize;
@@ -949,14 +949,14 @@ void Chara_FsImageCalc(s_FsImageDesc* image, s32 charaId, s32 modelIdx) // 0x800
     image->clutY    = clutY;
 }
 
-bool WorldGfx_IsCharaModelPresent(e_CharacterId charaId) // 0x8003D444
+bool WorldGfx_IsCharaModelPresent(e_CharaId charaId) // 0x8003D444
 {
     return g_WorldGfxWork.registeredCharaModels[charaId] != NULL;
 }
 
 void func_8003D460(void) {} // 0x8003D460
 
-void WorldGfx_CharaModelTransparentSet(e_CharacterId charaId, bool enableTransparency) // 0x8003D468
+void WorldGfx_CharaModelTransparentSet(e_CharaId charaId, bool enableTransparency) // 0x8003D468
 {
     s16           data[256];
     RECT          rect;
@@ -1046,7 +1046,7 @@ void WorldGfx_CharaFree(s_CharaModel* model) // 0x8003D6A4
     }
 }
 
-void WorldGfx_CharaLoad(e_CharacterId charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x8003D6E0
+void WorldGfx_CharaLoad(e_CharaId charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x8003D6E0
 {
     s_FsImageDesc image;
     s_LmHeader*   lmHdrBuf;
@@ -1079,10 +1079,10 @@ void WorldGfx_CharaLoad(e_CharacterId charaId, s32 modeIdx, s_LmHeader* lmHdr, s
     WorldGfx_CharaModelLoad(charaId, modeIdx, lmHdrBuf, &image);
 }
 
-s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x8003D7D4
+s32 WorldGfx_CharaModelLoad(e_CharaId charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x8003D7D4
 {
     s32            queueIdx;
-    s32            modelCharaId; // `e_CharacterId`
+    s32            modelCharaId; // `e_CharaId`
     s_CharaModel*  model;
     s_FsImageDesc* modelTex;
 
@@ -1172,7 +1172,7 @@ void WorldGfx_CharaModelProcessLoad(s_CharaModel* model) // 0x8003D9C8
     }
 }
 
-void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12 timer, s32 arg4) // 0x8003DA9C
+void func_8003DA9C(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12 timer, s32 arg4) // 0x8003DA9C
 {
     CVECTOR tintColor = { 0 };
     s16     ret;
@@ -1213,7 +1213,7 @@ void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q
     }
 }
 
-s32 func_8003DD74(e_CharacterId charaId, s32 arg1) // 0x8003DD74
+s32 func_8003DD74(e_CharaId charaId, s32 arg1) // 0x8003DD74
 {
     return ((s32)arg1 << 10) & 0xFC00;
 }
@@ -1222,7 +1222,7 @@ s32 func_8003DD74(e_CharacterId charaId, s32 arg1) // 0x8003DD74
 // ITEM ATTACHMENT
 // ========================================
 
-void WorldGfx_HeldItemAttach(e_CharacterId charaId, s32 arg1) // 0x8003DD80
+void WorldGfx_HeldItemAttach(e_CharaId charaId, s32 arg1) // 0x8003DD80
 {
     s_CharaModel* model;
 

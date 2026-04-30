@@ -34,7 +34,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
     if (!Savegame_EventFlagGet(EventFlag_105))
     {
         chara->model.anim.flags &= ~AnimFlag_Visible;
-        chara->collision.state              = 0;
+        chara->collision.state   = CharaCollisionState_Ignore;
         return;
     }
 
@@ -47,12 +47,12 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
             chara->model.anim.status = ANIM_STATUS(LockerDeadBodyAnim_1, true);
         }
 
-        chara->collision.state = 0;
+        chara->collision.state = CharaCollisionState_Ignore;
     }
     else
     {
         Character_AnimSet(chara, ANIM_STATUS(LockerDeadBodyAnim_3, true), 16);
-        chara->collision.state = 3;
+        chara->collision.state = CharaCollisionState_Npc;
     }
 
     Math_MatrixTransform(&chara->position, &chara->rotation, coords);

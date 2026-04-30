@@ -9102,7 +9102,7 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
 {
     bool     hasLosHit;
     s32      temp_v1;
-    s32      temp_s0;
+    s32      prevCollState;
     q19_12   groundHeight;
     q19_12   groundOffset;
     q19_12   offsetX;
@@ -9149,13 +9149,13 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
         sharedData_800DE1A0_0_s01.vy = i;
     }
 
-    temp_s0 = g_SysWork.playerWork.player.collision.state;
+    prevCollState = g_SysWork.playerWork.player.collision.state;
 
-    g_SysWork.playerWork.player.collision.state = 0;
+    g_SysWork.playerWork.player.collision.state = CharaCollisionState_Ignore;
 
     hasLosHit = Ray_LosHitCheck(&sharedData_800E2330_0_s01, var_s0, &sharedData_800DE1A0_0_s01, airScreamer);
 
-    g_SysWork.playerWork.player.collision.state = temp_s0;
+    g_SysWork.playerWork.player.collision.state = prevCollState;
     offsetX                                     = sharedData_800E2330_0_s01.target.vx - posX;
     offsetZ                                     = sharedData_800E2330_0_s01.target.vz - posZ;
 
@@ -12241,7 +12241,7 @@ s32 sharedFunc_800D6A60_0_s01(VECTOR3* offset, VECTOR3* vec1, s_SubCharacter* ai
     sharedData_800E21D0_0_s01.field_114 = groundHeight;
     retCode1                            = 1;
 
-    if (!(airScreamer->collision.state))
+    if (airScreamer->collision.state == CharaCollisionState_Ignore)
     {
         newVec2Y = Q12(0.0f);
         newVec1Y = Q12(0.0f);
@@ -13240,8 +13240,8 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
         new_var  = sharedData_800CAA98_0_s01.field_D70[sp10][0];
         radius1 = sharedData_800CAA98_0_s01.field_D70[sp10][1];
 
-        airScreamer->collision.state        = 3;
-        airScreamer->collision.box.field_2  = new_var;
+        airScreamer->collision.state           = CharaCollisionState_Npc;
+        airScreamer->collision.box.field_2     = new_var;
         airScreamer->collision.cylinder.radius = radius1;
     }
     else
@@ -13257,7 +13257,7 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
         airScreamer->collision.box.field_6 = Q12(0.0f);
         airScreamer->collision.box.field_8 = Q12(0.0f);
         airScreamer->collision.box.field_2 = new_var3;
-        airScreamer->collision.state       = 0;
+        airScreamer->collision.state       = CharaCollisionState_Ignore;
     }
 
     if (airScreamerProps.field_E8_0 == 3)

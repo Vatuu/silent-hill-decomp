@@ -31,7 +31,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
     q19_12 radiusMin;
 
     scratcherProps.flags_E8 = 0;
-    Chara_PropertiesClear(scratcher);
+    Chara_PropsClear(scratcher);
 
     scratcher->health = Q12(350.0f);
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
@@ -910,10 +910,10 @@ void Ai_HangedScratcher_Control_13(s_SubCharacter* scratcher)
     {
         if (g_SysWork.targetNpcIdx != Chara_NpcIdxGet(scratcher))
         {
-            scratcher->health     = NO_VALUE;
-            scratcher->flags     &= ~CharaFlag_Unk2;
-            scratcher->collision.state    = 0;
-            scratcherProps.flags_E8 |= HangedScratcherFlag_9;
+            scratcher->health          = NO_VALUE;
+            scratcher->flags          &= ~CharaFlag_Unk2;
+            scratcher->collision.state = CharaCollisionState_Ignore;
+            scratcherProps.flags_E8   |= HangedScratcherFlag_9;
         }
     }
 
@@ -1571,11 +1571,11 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
         if (!(scratcher->flags & (1 << 1)) && scratcher->health > Q12(0.0f) &&
             (scratcherProps.flags_E8 & HangedScratcherFlag_1) && (scratcherProps.flags_E8 & HangedScratcherFlag_0))
         {
-            scratcher->collision.state = 4;
+            scratcher->collision.state = CharaCollisionState_4;
         }
         else
         {
-            scratcher->collision.state = 2;
+            scratcher->collision.state = CharaCollisionState_2;
         }
     }
 

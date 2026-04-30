@@ -199,10 +199,10 @@ void func_800D5C98(void) // 0x800D5C98
 
         case 2:
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(20.4f);
-            g_SysWork.playerWork.player.position.vz = Q12(-20.0f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
-            g_SysWork.playerWork.player.collision.state     = 5;
+            g_SysWork.playerWork.player.position.vx     = Q12(20.4f);
+            g_SysWork.playerWork.player.position.vz     = Q12(-20.0f);
+            g_SysWork.playerWork.player.rotation.vy     = Q12_ANGLE(90.0f);
+            g_SysWork.playerWork.player.collision.state = CharaCollisionState_5;
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(18.29f), Q12(-0.92f), Q12(-19.71f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -260,7 +260,7 @@ void func_800D5C98(void) // 0x800D5C98
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
 
             func_80086470(3U, InvItemId_Lighter, 1, false);
-            g_SysWork.playerWork.player.collision.state = 3;
+            g_SysWork.playerWork.player.collision.state = CharaCollisionState_Npc;
 
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
@@ -445,11 +445,11 @@ void func_800D64E0(void) // 0x800D64E0
 
         case 2:
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(20.65f);
-            g_SysWork.playerWork.player.position.vz = Q12(-20.0f);
-            g_SysWork.playerWork.player.rotation.vy = Q12(0.25f);
-            g_SysWork.playerWork.player.collision.state = 0;
-            g_SysWork.playerWork.player.collision.state = 5;
+            g_SysWork.playerWork.player.position.vx     = Q12(20.65f);
+            g_SysWork.playerWork.player.position.vz     = Q12(-20.0f);
+            g_SysWork.playerWork.player.rotation.vy     = Q12(0.25f);
+            g_SysWork.playerWork.player.collision.state = CharaCollisionState_Ignore;
+            g_SysWork.playerWork.player.collision.state = CharaCollisionState_5;
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(17.15f), Q12(-1.32f), Q12(-18.71f), 0, 0, 0, 0, true);
@@ -578,8 +578,8 @@ void func_800D64E0(void) // 0x800D64E0
 
             SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
 
-            g_SysWork.playerWork.player.collision.state = 0;
-            g_SysWork.playerWork.player.collision.state = 3;
+            g_SysWork.playerWork.player.collision.state = CharaCollisionState_Ignore;
+            g_SysWork.playerWork.player.collision.state = CharaCollisionState_Npc;
 
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();

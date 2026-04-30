@@ -264,10 +264,10 @@ void Player_ControlFreeze(void)
 
     sharedData_800E39D8_0_s00 = 0;
 
-    playerChara->collision.cylinder.field_2                               = Q12(0.0f);
+    playerChara->collision.cylinder.field_2                  = Q12(0.0f);
     g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
     playerChara->flags                                      |= CharaFlag_Unk4;
-    playerChara->collision.state                                     = 4;
+    playerChara->collision.state                             = CharaCollisionState_4;
 
     if (g_SysWork.playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
     {
@@ -344,8 +344,8 @@ void Player_ControlUnfreeze(bool setIdle)
                                                                     PlayerFlag_DamageReceived |
                                                                     PlayerFlag_Moving);
 
-    player->flags  &= ~CharaFlag_Unk4;
-    player->collision.state = 3;
+    player->flags          &= ~CharaFlag_Unk4;
+    player->collision.state = CharaCollisionState_Npc;
 
     Player_AnimFlagsSet(AnimFlag_Unlocked);
 
@@ -878,26 +878,26 @@ bool sharedFunc_800D2E94_0_s00(void)
 
         if (npcChara->model.controlState == 0 || npcChara->model.stateStep == 0)
         {
-            npcChara->health = Q12(400.0f);
+            npcChara->health                             = Q12(400.0f);
             npcChara->model.controlState++;
-            npcChara->collision.box.field_0   = Q12(-0.2f);
-            npcChara->collision.box.field_2   = Q12(0.2f);
-            npcChara->collision.cylinder.radius   = Q12(0.05f);
-            npcChara->collision.cylinder.field_2   = Q12(0.5f);
-            npcChara->field_40           = 0;
-            npcChara->collision.box.field_6   = 0;
-            npcChara->collision.box.field_8   = 0;
+            npcChara->collision.box.field_0              = Q12(-0.2f);
+            npcChara->collision.box.field_2              = Q12(0.2f);
+            npcChara->collision.cylinder.radius          = Q12(0.05f);
+            npcChara->collision.cylinder.field_2         = Q12(0.5f);
+            npcChara->field_40                           = 0;
+            npcChara->collision.box.field_6              = 0;
+            npcChara->collision.box.field_8              = 0;
             npcChara->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
             npcChara->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-            npcChara->collision.shapeOffsets.box.vz = Q12(0.0f);
-            npcChara->collision.shapeOffsets.box.vx = Q12(0.0f);
-            npcChara->position.vx     = Q12(-262.0f);
-            npcChara->position.vy     = Q12(-1.1f);
-            npcChara->position.vz     = Q12(-104.0f);
-            npcChara->collision.state         = 3;
+            npcChara->collision.shapeOffsets.box.vz      = Q12(0.0f);
+            npcChara->collision.shapeOffsets.box.vx      = Q12(0.0f);
+            npcChara->position.vx                        = Q12(-262.0f);
+            npcChara->position.vy                        = Q12(-1.1f);
+            npcChara->position.vz                        = Q12(-104.0f);
+            npcChara->collision.state                    = CharaCollisionState_Npc;
             npcChara->model.stateStep++;
-            npcChara->flags               |= CharaFlag_Unk3;
-            npcChara->model.anim.flags &= ~(AnimFlag_Visible | AnimFlag_Unlocked);
+            npcChara->flags                             |= CharaFlag_Unk3;
+            npcChara->model.anim.flags                  &= ~(AnimFlag_Visible | AnimFlag_Unlocked);
         }
 
         // TODO: `else` branch is duplicated here, is there some way to merge them? Decompiler used `goto`.

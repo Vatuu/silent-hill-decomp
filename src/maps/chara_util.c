@@ -694,7 +694,7 @@ void sharedFunc_800D923C_0_s00(s_SubCharacter* chara)
 
     chara->model.controlState++;
 
-    chara->collision.state = 3;
+    chara->collision.state = CharaCollisionState_Npc;
 }
 
 #undef CHARA_CASE

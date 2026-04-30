@@ -371,18 +371,18 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
                 if (Chara_AttackReceivedGet(&g_SysWork.playerWork.player) == NO_VALUE)
                 {
-                    g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_0;
-                    larvalStalker->model.anim.status = ANIM_STATUS(LarvalStalkerAnim_StunBackToIdle, false);
+                    g_SysWork.charaGroupFlags[3]     &= ~CharaGroupFlag_0;
+                    larvalStalker->model.anim.status  = ANIM_STATUS(LarvalStalkerAnim_StunBackToIdle, false);
                     larvalStalker->model.controlState = LarvalStalkerControl_Stun;
-                    larvalStalkerProps.flags_E8 &= ~LarvalStalkerFlag_6;
-                    larvalStalker->collision.state = 3;
+                    larvalStalkerProps.flags_E8      &= ~LarvalStalkerFlag_6;
+                    larvalStalker->collision.state    = CharaCollisionState_Npc;
                     larvalStalkerProps.keyframeIdx_F4 = 0;
 
                     func_8005DC1C(Sfx_Unk1429, &larvalStalker->position, Q8(0.5f), 0);
                 }
                 else
                 {
-                    larvalStalker->collision.state = 1;
+                    larvalStalker->collision.state = CharaCollisionState_Player;
                 }
             }
             else
@@ -714,8 +714,8 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
             if (larvalStalker->health <= Q12(0.0f) && Chara_NpcIdxGet(larvalStalker) != g_SysWork.targetNpcIdx)
             {
-                larvalStalker->health = NO_VALUE;
-                larvalStalker->collision.state = 0;
+                larvalStalker->health          = NO_VALUE;
+                larvalStalker->collision.state = CharaCollisionState_Ignore;
             }
 
             // TODO: Weird property cast. Originally, maybe a wrong properties struct was mistakenly accessed?
@@ -855,10 +855,10 @@ void Ai_LarvalStalker_Init(s_SubCharacter* larvalStalker)
     larvalStalker->moveSpeed = Q12(0.0f);
 
     Chara_DamageClear(larvalStalker);
-    larvalStalker->collision.state      = 0;
-    larvalStalker->headingAngle = larvalStalker->rotation.vy;
+    larvalStalker->collision.state = CharaCollisionState_Ignore;
+    larvalStalker->headingAngle    = larvalStalker->rotation.vy;
 
-    Chara_PropertiesClear(larvalStalker);
+    Chara_PropsClear(larvalStalker);
     larvalStalkerProps.targetPositionX = g_SysWork.playerWork.player.position.vx;
     larvalStalkerProps.targetPositionZ = g_SysWork.playerWork.player.position.vz;
 }

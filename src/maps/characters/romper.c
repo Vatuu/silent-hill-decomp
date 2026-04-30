@@ -62,10 +62,10 @@ void Ai_Romper_Init(s_SubCharacter* romper)
         }
     }
 
-    romper->moveSpeed    = Q12(0.0f);
-    romper->collision.state      = 3;
-    romper->headingAngle = romper->rotation.vy;
-    Chara_PropertiesClear(romper);
+    romper->moveSpeed       = Q12(0.0f);
+    romper->collision.state = CharaCollisionState_Npc;
+    romper->headingAngle    = romper->rotation.vy;
+    Chara_PropsClear(romper);
 
     romper->model.controlState = RomperControl_WalkForward;
     Character_AnimSet(romper, ANIM_STATUS(RomperAnim_WalkForward, true), 147);
@@ -1062,8 +1062,8 @@ void Ai_Romper_Control_8(s_SubCharacter* romper)
     {
         if (g_SysWork.targetNpcIdx != Chara_NpcIdxGet(romper))
         {
-            romper->health  = NO_VALUE;
-            romper->collision.state = 0;
+            romper->health          = NO_VALUE;
+            romper->collision.state = CharaCollisionState_Ignore;
         }
     }
 
@@ -1098,7 +1098,7 @@ void Ai_Romper_Control_10(s_SubCharacter* romper)
         romper->moveSpeed = MAX(romper->moveSpeed - Q12_MULT_PRECISE(g_DeltaTime, romperProps.field_124), Q12(0.0f));
     }
 
-    romper->collision.state = 0;
+    romper->collision.state = CharaCollisionState_Ignore;
     if (romper->model.anim.status == ANIM_STATUS(RomperAnim_JumpToIdleEnd, true))
     {
         romperProps.field_104 = romper->model.anim.time - Q12(20.0f);
@@ -1114,8 +1114,8 @@ void Ai_Romper_Control_10(s_SubCharacter* romper)
     {
         romper->model.anim.status  = ANIM_STATUS(RomperAnim_9, false);
         romper->model.controlState = RomperControl_GrabAttack;
-        romper->collision.state         = 0;
-        romper->collision.state         = 3;
+        romper->collision.state    = CharaCollisionState_Ignore;
+        romper->collision.state    = CharaCollisionState_Npc;
     }
     else if (romper->model.anim.time < Q12(24.0f))
     {
