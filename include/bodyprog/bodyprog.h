@@ -470,35 +470,35 @@ STATIC_ASSERT_SIZEOF(s_MapHdr_field_4C, 20);
 
 typedef struct _Collision
 {
-    q19_12 groundHeight_0;
-    q3_12  field_4;  // } Angles??
-    q3_12  field_6;  // }
-    s8     field_8;  // Count of something, maybe valid ground at probed points around center? Set to 0, 7, or 12.
+    /* 0x0 */ q19_12 groundHeight_0;
+    /* 0x4 */ q3_12  field_4;  // } Angles??
+    /* 0x6 */ q3_12  field_6;  // }
+    /* 0x8 */ s8     field_8;  // Count of something, maybe valid ground at probed points around center? Set to 0, 7, or 12.
     // 3 bytes of padding.
 } s_Collision;
 STATIC_ASSERT_SIZEOF(s_Collision, 12);
 
-typedef struct
+typedef struct _CollisionQuery
 {
-    VECTOR3  position; // Q19.12
-    SVECTOR3 rotation; // Q3.12 TODO: Not a rotation? Y position is added to this.
-    s8       field_12; /** `e_CharaCollisionState` */
+    /* 0x0 */ VECTOR3  position;       // Q19.12
+    /* 0xC */ SVECTOR3 rotation;       // Q3.12 TODO: Not a rotation? Y position is added to this.
+    /* 0xE */ s8       collisionState; /** `e_CharaCollisionState` */
 } s_CollisionQuery;
 
 typedef struct
 {
-    s32        field_0; /** `e_CharaCollisionState` */
-    bool       field_4;
-    q19_12     distance_8;
-    SVECTOR    offset_C; // Q23.8
-    DVECTOR_XZ direction_14;
-    q23_8      positionX_18;
-    q23_8      positionZ_1C;
-    q23_8      newPositionX_20;
-    q23_8      newPositionZ_24;
-    s16        field_28;      // } `SVECTOR3`, packed rotation? Probably not.
-    s16        angleToTarget; // }
-    s16        field_2C;      // }
+    /* 0x0  */ s32        collisionState; /** `e_CharaCollisionState` */
+    /* 0x4  */ bool       field_4;
+    /* 0x8  */ q19_12     distance_8;
+    /* 0xC  */ SVECTOR    offset_C; // Q23.8
+    /* 0x14 */ DVECTOR_XZ direction_14;
+    /* 0x18 */ q23_8      positionX_18;
+    /* 0x1C */ q23_8      positionZ_1C;
+    /* 0x20 */ q23_8      newPositionX_20;
+    /* 0x24 */ q23_8      newPositionZ_24;
+    /* 0x28 */ s16        field_28;      // } `SVECTOR3`, packed rotation? Probably not.
+    /* 0x2A */ s16        angleToTarget; // }
+    /* 0x2C */ s16        field_2C;      // }
 } s_func_8006ABC0;
 
 typedef struct
@@ -597,7 +597,7 @@ typedef struct _BoundingBox
     /* 0x6 */ q3_12 offsetY;
 } s_BoundingBox;
 
-/** @brief ? */
+/** @brief Character keyframe collision info. */
 typedef struct _Keyframe
 {
     /* 0x0  */ s_BoundingBox box;
@@ -608,10 +608,6 @@ typedef struct _Keyframe
     /* 0x10 */ q3_12         collisionCenterX;
     /* 0x12 */ q3_12         collisionCenterZ;
 } s_Keyframe;
-
-// ========
-// STRUCTS
-// ========
 
 typedef struct _Normal
 {
@@ -699,16 +695,15 @@ STATIC_ASSERT_SIZEOF(s_Primitive, 20);
 
 typedef struct _MeshHeader
 {
-    u8 primitiveCount_0;
-    u8 vertexCount_1;
-    u8 normalCount_2;
-    u8 unkCount_3;
-
-    s_Primitive* primitives_4;
-    DVECTOR*     verticesXy_8;
-    s16*         verticesZ_C;
-    s_Normal*    normals_10;
-    u8*          unkPtr_14;
+    /* 0x0  */ u8           primitiveCount;
+    /* 0x1  */ u8           vertexCount;
+    /* 0x2  */ u8           normalCount;
+    /* 0x3  */ u8           unkCount_3;
+    /* 0x4  */ s_Primitive* primitives;
+    /* 0x8  */ DVECTOR*     verticesXy;
+    /* 0xC  */ s16*         verticesZ;
+    /* 0x10 */ s_Normal*    normals;
+    /* 0x14 */ u8*          unkPtr_14;
 } s_MeshHeader;
 STATIC_ASSERT_SIZEOF(s_MeshHeader, 24);
 
@@ -726,12 +721,13 @@ typedef struct _ModelHeader
 } s_ModelHeader;
 STATIC_ASSERT_SIZEOF(s_ModelHeader, 16);
 
+/** @brief Model texture. */
 typedef struct _Texture
 {
-    s_FsImageDesc imageDesc_0;
-    u_Filename    name_8;
-    u32           queueIdx_10;
-    s8            refCount_14;
+    /* 0x0  */ s_FsImageDesc imageDesc;
+    /* 0x8  */ u_Filename    name;
+    /* 0x10 */ u32           queueIdx;
+    /* 0x14 */ s8            refCount;
 } s_Texture;
 
 typedef struct _Material
@@ -1017,7 +1013,7 @@ typedef struct
             q7_8 field_0;
             q7_8 field_2;
             s16  field_4;
-            u8   field_6;
+            u8   collisionState; /** `e_CharaCollisionState` */
             u8*  field_8;
             s8   unk_C[28];
         } s_1;

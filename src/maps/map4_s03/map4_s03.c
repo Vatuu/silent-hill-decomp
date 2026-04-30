@@ -33,9 +33,9 @@ void func_800D078C(void) // 0x800D078C
     s_Texture* tex;
 
     tex    = Texture_InfoGet(D_800CA77C);
-    tpage1 = tex->imageDesc_0.tPage[1];
-    x      = tex->imageDesc_0.clutX;
-    y      = tex->imageDesc_0.clutY;
+    tpage1 = tex->imageDesc.tPage[1];
+    x      = tex->imageDesc.clutX;
+    y      = tex->imageDesc.clutY;
 
     D_800DF554 = tpage1;
     D_800DF558 = tpage1 | 0x20;
@@ -3255,13 +3255,13 @@ void func_800D5E30(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
         newPosY = Q8_TO_Q12(sp10.t[1]);
         newPosZ = Q8_TO_Q12(sp10.t[2]);
 
-        ptr->field_10      = Q12(0.45f);
-        ptr->field_E       = newPosY - Q12(0.3f);
-        ptr->field_C       = posY;
-        ptr->position.vx = newPosX;
-        ptr->position.vy = newPosY;
-        ptr->position.vz = newPosZ;
-        ptr->field_12      = 3;
+        ptr->field_10       = Q12(0.45f);
+        ptr->field_E        = newPosY - Q12(0.3f);
+        ptr->field_C        = posY;
+        ptr->position.vx    = newPosX;
+        ptr->position.vy    = newPosY;
+        ptr->position.vz    = newPosZ;
+        ptr->collisionState = CharaCollisionState_Npc;
     }
 }
 

@@ -713,10 +713,10 @@ void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr) // 0x800
 
     for (curMeshHdr = &modelHdr->meshHdrs_C[0]; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
     {
-        curMeshHdr->primitives_4 = (u8*)curMeshHdr->primitives_4 + (u32)lmHdr;
-        curMeshHdr->verticesXy_8 = (u8*)curMeshHdr->verticesXy_8 + (u32)lmHdr;
-        curMeshHdr->verticesZ_C  = (u8*)curMeshHdr->verticesZ_C  + (u32)lmHdr;
-        curMeshHdr->normals_10   = (u8*)curMeshHdr->normals_10   + (u32)lmHdr;
+        curMeshHdr->primitives = (u8*)curMeshHdr->primitives + (u32)lmHdr;
+        curMeshHdr->verticesXy = (u8*)curMeshHdr->verticesXy + (u32)lmHdr;
+        curMeshHdr->verticesZ  = (u8*)curMeshHdr->verticesZ  + (u32)lmHdr;
+        curMeshHdr->normals   = (u8*)curMeshHdr->normals   + (u32)lmHdr;
         curMeshHdr->unkPtr_14    = (u8*)curMeshHdr->unkPtr_14    + (u32)lmHdr;
     }
 }
@@ -734,7 +734,7 @@ void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool transparency) // 0x80056244
     {
         for (curMeshHdr = &curModelHdr->meshHdrs_C[0]; curMeshHdr < &curModelHdr->meshHdrs_C[curModelHdr->meshCount_8]; curMeshHdr++)
         {
-            for (prim = &curMeshHdr->primitives_4[0]; prim < &curMeshHdr->primitives_4[curMeshHdr->primitiveCount_0]; prim++)
+            for (prim = &curMeshHdr->primitives[0]; prim < &curMeshHdr->primitives[curMeshHdr->primitiveCount]; prim++)
             {
                 prim->field_6.bits.field_6_15 = transparency;
             }
@@ -894,7 +894,7 @@ void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs,
             curMat->texture_8 = Texture_Get(curMat, activeTexs, FS_BUFFER_9, fileIdx, blendMode);
             if (curMat->texture_8 != NULL)
             {
-                Material_FsImageApply(curMat, &curMat->texture_8->imageDesc_0, blendMode);
+                Material_FsImageApply(curMat, &curMat->texture_8->imageDesc, blendMode);
             }
         }
     }
@@ -921,7 +921,7 @@ bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr) // 0x80056888
             return false;
         }
 
-        if (!Fs_QueueIsEntryLoaded(curMat->texture_8->queueIdx_10))
+        if (!Fs_QueueIsEntryLoaded(curMat->texture_8->queueIdx))
         {
             return false;
         }
@@ -979,7 +979,7 @@ void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat
     for (curMeshHdr = modelHdr->meshHdrs_C; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
     {
         // Run through primitives.
-        for (curPrim = curMeshHdr->primitives_4; curPrim < &curMeshHdr->primitives_4[curMeshHdr->primitiveCount_0]; curPrim++)
+        for (curPrim = curMeshHdr->primitives; curPrim < &curMeshHdr->primitives[curMeshHdr->primitiveCount]; curPrim++)
         {
             // No material(?).
             if (curPrim->field_6.bits.field_6_8 == NO_VALUE)
@@ -1023,10 +1023,10 @@ void Lm_MaterialRefCountDec(s_LmHeader* lmHdr) // 0x80056BF8
         tex = curMat->texture_8;
         if (tex != NULL)
         {
-            tex->refCount_14--;
-            if (tex->refCount_14 < 0)
+            tex->refCount--;
+            if (tex->refCount < 0)
             {
-                tex->refCount_14 = 0;
+                tex->refCount = 0;
             }
 
             curMat->texture_8 = NULL;
@@ -1339,10 +1339,10 @@ void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData) // 0x80
 
     screenXy = &scratchData->screenXy_0[0];
     var_a2   = &scratchData->field_18C[0]; // `screenZ`? There's already an earlier struct field though.
-    vertexXy = &meshHdr->verticesXy_8[0];
-    vertexZ  = &meshHdr->verticesZ_C[0];
+    vertexXy = &meshHdr->verticesXy[0];
+    vertexZ  = &meshHdr->verticesZ[0];
 
-    while (var_a2 < &scratchData->field_18C[meshHdr->vertexCount_1])
+    while (var_a2 < &scratchData->field_18C[meshHdr->vertexCount])
     {
         *(u32*)screenXy++ = *(u32*)vertexXy++;
 
@@ -1351,7 +1351,7 @@ void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData) // 0x80
         var_a2 += 2;
     }
 
-    while (screenXy < &scratchData->screenXy_0[meshHdr->vertexCount_1])
+    while (screenXy < &scratchData->screenXy_0[meshHdr->vertexCount])
     {
         *(u32*)screenXy++ = *(u32*)vertexXy++;
     }
@@ -1379,9 +1379,9 @@ void func_8005759C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 ver
     // Should be loop? Tried but no luck.
     screenXyPtr  = &scratchData->screenXy_0[vertOffset];
     field_18CPtr = &scratchData->field_18C[vertOffset];
-    vertexXyPtr  = meshHdr->verticesXy_8;
-    vertexZPtr   = meshHdr->verticesZ_C;
-    while (vertexXyPtr < &meshHdr->verticesXy_8[meshHdr->vertexCount_1])
+    vertexXyPtr  = meshHdr->verticesXy;
+    vertexZPtr   = meshHdr->verticesZ;
+    while (vertexXyPtr < &meshHdr->verticesXy[meshHdr->vertexCount])
     {
         *screenXyPtr++  = *vertexXyPtr++;
         *field_18CPtr++ = *vertexZPtr++;
@@ -1432,7 +1432,7 @@ void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     var_t0 = &scratchData->field_2B8[offset];
     mat    = &scratchData->field_380.field_0;
 
-    for (curNormal = meshHdr->normals_10; curNormal < &meshHdr->normals_10[meshHdr->normalCount_2]; curNormal++)
+    for (curNormal = meshHdr->normals; curNormal < &meshHdr->normals[meshHdr->normalCount]; curNormal++)
     {
         temp_t8   = &scratchData->field_380.field_0.m[2][0];
         screenPos = &scratchData->screenPos_3A4;
@@ -1545,7 +1545,7 @@ void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     var_a3  = &scratchData->field_2B8[offset];
     temp_t2 = g_WorldEnvWork.field_20;
 
-    for (normal = meshHdr->normals_10; normal < &meshHdr->normals_10[meshHdr->normalCount_2]; normal++)
+    for (normal = meshHdr->normals; normal < &meshHdr->normals[meshHdr->normalCount]; normal++)
     {
         *(u32*)&scratchData->field_3A0 = *(u32*)normal;
 
@@ -1615,7 +1615,7 @@ void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     if (g_WorldEnvWork.isFogEnabled_1)
     {
         for (;
-             screenXy < &scratchData->screenXy_0[meshHdr->vertexCount_1 + offset];
+             screenXy < &scratchData->screenXy_0[meshHdr->vertexCount + offset];
              screenXy += 3, temp_a2 += 3, var_t1 += 3)
         {
             *(s32*)&scratchData->field_380.field_0.m[0][0] = *(s32*)&screenXy[0];
@@ -1647,7 +1647,7 @@ void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     }
     else
     {
-        for (; screenXy < &scratchData->screenXy_0[meshHdr->vertexCount_1 + offset]; screenXy += 3, temp_a2 += 3)
+        for (; screenXy < &scratchData->screenXy_0[meshHdr->vertexCount + offset]; screenXy += 3, temp_a2 += 3)
         {
             *(s32*)&scratchData->field_380.field_0.m[0][0] = *(s32*)&screenXy[0];
             *(s32*)&scratchData->field_380.field_0.m[1][1] = *(s32*)&screenXy[1];
@@ -1758,7 +1758,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
 
     SetBackColor(0, 0, 0);
 
-    prim = meshHdr->primitives_4;
+    prim = meshHdr->primitives;
 
     if (g_WorldEnvWork.field_0 != 0)
     {
@@ -1769,7 +1769,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                 poly3 = GsOUT_PACKET_P;
                 poly1  = poly3 + 1;
 
-                for (; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
+                for (; prim < &meshHdr->primitives[meshHdr->primitiveCount]; prim++)
                 {
                     *(s32*)&scratchData->field_380.s_0.field_10 = *(s32*)&prim->field_C;
 
@@ -1958,7 +1958,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
 
             poly3 = GsOUT_PACKET_P;
 
-            for (; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
+            for (; prim < &meshHdr->primitives[meshHdr->primitiveCount]; prim++)
             {
                 *(s32*)&scratchData->field_380.s_0.field_10 = *(s32*)&prim->field_C;
 
@@ -2081,7 +2081,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
         poly3  = GsOUT_PACKET_P;
         poly2 = poly3 + 1;
 
-        for (; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
+        for (; prim < &meshHdr->primitives[meshHdr->primitiveCount]; prim++)
         {
             *(s32*)&scratchData->field_380.s_0.field_10 = *(s32*)&prim->field_C;
 
@@ -2269,7 +2269,7 @@ __block1530:
 {
     poly0 = GsOUT_PACKET_P;
 
-    for (; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
+    for (; prim < &meshHdr->primitives[meshHdr->primitiveCount]; prim++)
     {
         *(s32*)&scratchData->field_380.s_0.field_10 = *(s32*)&prim->field_C;
 
@@ -2409,7 +2409,7 @@ __block19CC:
     scratchData->field_380.s_0.field_8.cd = 0x2C;
     poly4                       = GsOUT_PACKET_P;
 
-    for (prim = meshHdr->primitives_4; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
+    for (prim = meshHdr->primitives; prim < &meshHdr->primitives[meshHdr->primitiveCount]; prim++)
     {
         *(s32*)&scratchData->field_380.s_0.field_10 = *(s32*)&prim->field_C;
         scratchData->field_380.s_0.field_18         = scratchData->field_18C[scratchData->field_380.s_0.field_10];
@@ -2561,7 +2561,7 @@ void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchDat
     poly                        = (POLY_FT4*)GsOUT_PACKET_P;
     scratchData->field_380.s_0.field_0 = g_GameWork.gsScreenWidth >> 1;
 
-    for (prim = meshHdr->primitives_4; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
+    for (prim = meshHdr->primitives; prim < &meshHdr->primitives[meshHdr->primitiveCount]; prim++)
     {
         *(s32*)&scratchData->field_380.s_0.field_10 = *(s32*)&prim->field_C;
 
@@ -2875,7 +2875,7 @@ void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     DVECTOR* outXy; // Projected XY output buffer
     u16*     outZ;  // Projected Z output buffer
 
-    if (meshHdr->vertexCount_1 == 0)
+    if (meshHdr->vertexCount == 0)
     {
         return;
     }
@@ -2886,10 +2886,10 @@ void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     outXy = &scratchData->screenXy_0[offset];
     outZ  = &scratchData->screenZ_168[offset];
 
-    inXy = meshHdr->verticesXy_8;
-    inZ  = meshHdr->verticesZ_C;
+    inXy = meshHdr->verticesXy;
+    inZ  = meshHdr->verticesZ;
 
-    while (outXy < &scratchData->screenXy_0[meshHdr->vertexCount_1 + offset])
+    while (outXy < &scratchData->screenXy_0[meshHdr->vertexCount + offset])
     {
         // Nearly same as `gte_RotTransPers3`, processes 3 vertices per iteration.
         gte_LoadVector0_1_2_XYZ(inXy, inZ);
@@ -2919,7 +2919,7 @@ u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData
     s_Normal* var_a3;
     VECTOR3*  var_t0;
 
-    if (meshHdr->normalCount_2 == 0)
+    if (meshHdr->normalCount == 0)
     {
         return;
     }
@@ -2927,7 +2927,7 @@ u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData
     sp0.cd = 0;
     gte_ldrgb(&sp0);
 
-    var_a3 = meshHdr->normals_10;
+    var_a3 = meshHdr->normals;
     *(u32*)&scratchData->u.normal.field_3DC = *(u32*)&var_a3[0];
     scratchData->u.normal.field_3E0[0].vx = scratchData->u.normal.field_3DC.nx << 5;
     scratchData->u.normal.field_3E0[0].vy = scratchData->u.normal.field_3DC.ny << 5;
@@ -2949,7 +2949,7 @@ u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData
     gte_ldv3c(scratchData->u.normal.field_3E0);
     gte_nct();
 
-    while(var_a3 < &meshHdr->normals_10[meshHdr->normalCount_2])
+    while(var_a3 < &meshHdr->normals[meshHdr->normalCount])
     {
         *(u32*)&scratchData->u.normal.field_3DC = *(u32*)&var_a3[0];
         scratchData->u.normal.field_3E0[0].vx = scratchData->u.normal.field_3DC.nx << 5;
@@ -3008,7 +3008,7 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
     temp_a0 = 0x79C << (arg3 + 2);
     var_t9  = g_WorldEnvWork.isFogEnabled_1 ? MIN(temp_a0, g_WorldEnvWork.fogFarDistance_10) : temp_a0;
 
-    for (prim = meshHdr->primitives_4, poly.packet = GsOUT_PACKET_P; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
+    for (prim = meshHdr->primitives, poly.packet = GsOUT_PACKET_P; prim < &meshHdr->primitives[meshHdr->primitiveCount]; prim++)
     {
         *(s32*)&scratchData->u.s_1.field_0 = *(s32*)&prim->field_C;
         *(s32*)&scratchData->u.s_1.field_4 = *(s32*)&prim->field_10;
@@ -3127,17 +3127,17 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
 
 void Texture_Init(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY) // 0x8005B1A0
 {
-    tex->imageDesc_0.tPage[0] = tPage0;
-    tex->imageDesc_0.tPage[1] = tPage1;
-    tex->imageDesc_0.u        = u;
-    tex->imageDesc_0.v        = v;
-    tex->imageDesc_0.clutX    = clutX;
-    tex->imageDesc_0.clutY    = clutY;
+    tex->imageDesc.tPage[0] = tPage0;
+    tex->imageDesc.tPage[1] = tPage1;
+    tex->imageDesc.u        = u;
+    tex->imageDesc.v        = v;
+    tex->imageDesc.clutX    = clutX;
+    tex->imageDesc.clutY    = clutY;
 
-    StringCopy(tex->name_8.str, texName);
+    StringCopy(tex->name.str, texName);
 
-    tex->refCount_14 = 0;
-    tex->queueIdx_10 = NO_VALUE;
+    tex->refCount = 0;
+    tex->queueIdx = NO_VALUE;
 }
 
 s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBuffer9, e_FsFile fileIdx, s32 arg4)
@@ -3159,15 +3159,15 @@ s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBu
     {
         curTex = activeTexs->textures_4[i];
 
-        if (!COMPARE_FILENAMES(&mat->name_0, &curTex->name_8))
+        if (!COMPARE_FILENAMES(&mat->name_0, &curTex->name))
         {
             mat->texture_8 = curTex;
-            curTex->refCount_14++;
+            curTex->refCount++;
             return curTex;
         }
 
-        queueIdx = curTex->queueIdx_10;
-        if ((s32)queueIdx < smallestQueueIdx && curTex->refCount_14 == 0)
+        queueIdx = curTex->queueIdx;
+        if ((s32)queueIdx < smallestQueueIdx && curTex->refCount == 0)
         {
             smallestQueueIdx = queueIdx;
             foundTex       = curTex;
@@ -3194,32 +3194,32 @@ s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBu
 #endif
     }
 
-    foundTex->queueIdx_10 = Fs_QueueStartReadTim(fileId, fsBuffer9, &foundTex->imageDesc_0);
-    foundTex->refCount_14++;
-    foundTex->name_8 = mat->name_0;
+    foundTex->queueIdx = Fs_QueueStartReadTim(fileId, fsBuffer9, &foundTex->imageDesc);
+    foundTex->refCount++;
+    foundTex->name = mat->name_0;
 
     return foundTex;
 }
 
 void Texture_RefCountReset(s_Texture* tex) // 0x8005B370
 {
-    tex->refCount_14 = 0;
+    tex->refCount = 0;
 }
 
 void func_8005B378(s_Texture* tex, char* arg1) // 0x8005B378
 {
-    tex->refCount_14 = 1;
-    tex->queueIdx_10 = 0;
-    StringCopy(tex->name_8.str, arg1);
+    tex->refCount = 1;
+    tex->queueIdx = 0;
+    StringCopy(tex->name.str, arg1);
 }
 
 void Texture_RefClear(s_Texture* tex) // 0x8005B3A4
 {
-    tex->name_8.u32[1] = 0;
-    tex->name_8.u32[0] = 0;
+    tex->name.u32[1] = 0;
+    tex->name.u32[0] = 0;
 
-    tex->refCount_14 = 0;
-    tex->queueIdx_10 = NO_VALUE;
+    tex->refCount = 0;
+    tex->queueIdx = NO_VALUE;
 }
 
 void Material_TimFileNameGet(char* filename, s_Material* mat) // 0x8005B3BC
@@ -3285,7 +3285,7 @@ s_Texture* Textures_ActiveTex_FindTexture(char* texName, s_ActiveTextures* activ
     for (i = 0; i < activeTexs->count_0; i++)
     {
         curTex = activeTexs->textures_4[i];
-        if (curTex->queueIdx_10 != NO_VALUE && !COMPARE_FILENAMES(prevTexName, &curTex->name_8))
+        if (curTex->queueIdx != NO_VALUE && !COMPARE_FILENAMES(prevTexName, &curTex->name))
         {
             return curTex;
         }

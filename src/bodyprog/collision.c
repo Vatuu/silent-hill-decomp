@@ -381,10 +381,10 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset
         return 1;
     }
 
-    collQuery.rotation.vy = chara->collision.box.field_0;
-    collQuery.rotation.vx = chara->collision.box.field_2;
-    collQuery.rotation.vz = chara->collision.cylinder.radius;
-    collQuery.field_12 = chara->collision.state;
+    collQuery.rotation.vy    = chara->collision.box.field_0;
+    collQuery.rotation.vx    = chara->collision.box.field_2;
+    collQuery.rotation.vz    = chara->collision.cylinder.radius;
+    collQuery.collisionState = chara->collision.state;
 
     offsetCpy = *offset;
 
@@ -522,7 +522,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
 
     cond = false;
 
-    if (collQuery->field_12 == 5)
+    if (collQuery->collisionState == CharaCollisionState_5)
     {
         Collision_DefaultResultSet(collResult, offset->vx, offset->vy, offset->vz, collQuery->position.vy);
         return 0;
@@ -576,7 +576,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
             chara  = *curChara;
             var_a0 = (chara->collision.cylinder.radius >> 4) + collState.field_4.field_28;
 
-            if (chara->collision.state < (u32)collState.field_4.field_0)
+            if (chara->collision.state < (u32)collState.field_4.collisionState)
             {
                 var_a0 -= 15;
             }
@@ -587,7 +587,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
             collState.field_A0.s_1.field_0 = Q12_TO_Q8(chara->collision.box.field_0 + chara->position.vy);
             collState.field_A0.s_1.field_2 = Q12_TO_Q8(chara->collision.box.field_2 + chara->position.vy);
             collState.field_A0.s_1.field_4 = var_a0;
-            collState.field_A0.s_1.field_6 = chara->collision.state;
+            collState.field_A0.s_1.collisionState = chara->collision.state;
             collState.field_A0.s_1.field_8 = &chara->collision.field_E0;
 
             if (collState.field_0_0 == 0)
@@ -682,7 +682,7 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
         curChara = charas[i];
         if (curChara->collision.state == CharaCollisionState_Ignore ||
             curChara->collision.state == CharaCollisionState_Player ||
-            curChara->collision.state >= collQuery->field_12)
+            curChara->collision.state >= collQuery->collisionState)
         {
             continue;
         }
@@ -783,9 +783,9 @@ void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* pos, c
     result->positionZ_1C    = Q12_TO_Q8(collQuery->position.vz);
     result->newPositionX_20 = result->positionX_18 + result->offset_C.vx;
     result->newPositionZ_24 = result->positionZ_1C + result->offset_C.vz;
-    result->angleToTarget        = FP_FROM(collQuery->rotation.vy + collQuery->position.vy, Q4_SHIFT); // TODO: Position + rotation? Seems wrong.
+    result->angleToTarget   = FP_FROM(collQuery->rotation.vy + collQuery->position.vy, Q4_SHIFT); // TODO: Position + rotation? Seems wrong.
     result->field_2C        = FP_FROM(collQuery->rotation.vx + collQuery->position.vy, Q4_SHIFT);
-    result->field_0         = collQuery->field_12;
+    result->collisionState  = collQuery->collisionState;
 }
 
 void func_8006AD44(s_CollisionState* collState, s_IpdCollisionData* collData) // 0x8006AD44
@@ -1907,7 +1907,8 @@ void func_8006CC9C(s_CollisionState* state) // 0x8006CC9C
     s32    temp4;
     s32    temp5;
 
-    if (state->field_A0.s_1.field_6 < 2 || *state->field_A0.s_1.field_8 != 0)
+    if (state->field_A0.s_1.collisionState < CharaCollisionState_2 ||
+        *state->field_A0.s_1.field_8 != 0)
     {
         return;
     }
@@ -1979,7 +1980,7 @@ void func_8006CF18(s_CollisionState* state, s_func_8006CF18* arg1, s32 idx) // 0
     for (curArg1 = arg1; curArg1 < &arg1[idx]; curArg1++)
     {
         var_a1 = (curArg1->field_10 >> 4) + state->field_4.field_28;
-        if (curArg1->field_12 < (u32)state->field_4.field_0)
+        if (curArg1->collisionState < (u32)state->field_4.collisionState)
         {
             var_a1 -= 15;
         }
@@ -1990,7 +1991,7 @@ void func_8006CF18(s_CollisionState* state, s_func_8006CF18* arg1, s32 idx) // 0
         state->field_A0.s_1.field_0 = (curArg1->field_E + curArg1->position.vy) >> 4;
         state->field_A0.s_1.field_2 = (curArg1->field_C + curArg1->position.vy) >> 4;
         state->field_A0.s_1.field_4 = var_a1;
-        state->field_A0.s_1.field_6 = curArg1->field_12;
+        state->field_A0.s_1.collisionState = curArg1->collisionState;
         state->field_A0.s_1.field_8 = &curArg1->field_13;
 
         if (state->field_0_0 == 0)

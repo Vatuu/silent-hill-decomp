@@ -1285,7 +1285,7 @@ typedef struct
     s16     field_C;
     s16     field_E;
     s16     field_10;
-    s8      field_12;
+    s8      collisionState; /** `e_CharaCollisionState` */
     u8      field_13;
 } s_func_8006CF18;
 
@@ -1304,7 +1304,7 @@ typedef union
 } u_Property;
 
 /** @brief Temporary struct. */
-typedef struct _SubCharPropertiesDummy
+typedef struct _PropsDummy
 {
     u_Property properties_E8[16];
 } s_PropsDummy;
@@ -1325,11 +1325,11 @@ typedef struct _PropsPlayer
     q19_12        runTimer_108;
     u8            field_10C;    // Player SFX pitch?
     u8            field_10D;
-    s8            unk_10E[2];
+    s8            __pad_10E[2];
     q19_12        timer_110; // Increases when `flags & CharaFlag_Unk4` is set, reset when reaches `D_800C45EC`.
     q19_12        gasWeaponPowerTimer_114; // Timer for the rock drill and chainsaw power.
     s16           field_118; // q3_12?
-    s8            unk_11A[2];
+    s8            __pad_11A[2];
     e_PlayerFlags flags_11C;
     q3_12         quickTurnHeadingAngle_120; /** Target quick turn heading angle. */
     q3_12         field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
@@ -1364,20 +1364,20 @@ STATIC_ASSERT_SIZEOF(s_PropsNpc, 64);
 /** @brief Air Screamer or Night Flutter character properties. */
 typedef struct _PropsAirScreamer
 {
-    u32     field_E8_0 : 4;
-    u32     field_E8_4 : 4; /** `bool` */
-    u32     field_E8_8 : 4;
-    u32     unk_E8_C   : 20;
-    s32     field_EC;
-    s16     field_F0; // } Maybe 2D offset like in Creeper properties? Must check.
-    s16     field_F2; // }
-    s32     field_F4;
-    VECTOR3 targetPosition_F8; /** Q19.12 */
-    VECTOR3 position_104;      /** Q19.12 | Set to either Air Screamer position with slight offset toward player or player position. */
-    VECTOR3 position_110;
-    s32     flags; /** `e_AirScreamerFlags` */
-    q19_12  timer_120;
-    q19_12  groundHeight_124;
+    /* 0xE8+0  */ u32     field_E8_0  : 4;
+    /* 0xE8+4  */ u32     field_E8_4  : 4; /** `bool` */
+    /* 0xE8+8  */ u32     field_E8_8  : 4;
+    /* 0xE8+12 */ u32     __pad_E8_12 : 20;
+    /* 0xEC    */ s32     field_EC;
+    /* 0xF0    */ s16     field_F0; // } Maybe 2D offset like in Creeper properties? Must check.
+    /* 0xF2    */ s16     field_F2; // }
+    /* 0xF4    */ s32     field_F4;
+    /* 0xF8    */ VECTOR3 targetPosition_F8; /** Q19.12 */
+    /* 0x104   */ VECTOR3 position_104;      /** Q19.12 | Set to either Air Screamer position with slight offset toward player or player position. */
+    /* 0x110   */ VECTOR3 position_110;
+    /* 0x11C   */ s32     flags; /** `e_AirScreamerFlags` */
+    /* 0x120   */ q19_12  timer_120;
+    /* 0x124   */ q19_12  groundHeight_124;
 } s_PropsAirScreamer;
 
 /** @brief Alessa character properties. TODO: Copy of `s_PropsDahlia`. Fields not marked "correct" are filler. */

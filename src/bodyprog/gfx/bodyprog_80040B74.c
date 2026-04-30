@@ -590,7 +590,7 @@ void Ipd_TexturesRefClear(void) // 0x8004201C
     curTex = &g_Map.ipdTextures_430.fullPageTextures_58[0];
     while (curTex < (&g_Map.ipdTextures_430.fullPageTextures_58[8]))
     {
-        if (curTex->refCount_14 == 0)
+        if (curTex->refCount == 0)
         {
             Texture_RefClear(curTex);
         }
@@ -601,7 +601,7 @@ void Ipd_TexturesRefClear(void) // 0x8004201C
     curTex = &g_Map.ipdTextures_430.halfPageTextures_118[0];
     while (curTex < (&g_Map.ipdTextures_430.halfPageTextures_118[2]))
     {
-        if (curTex->refCount_14 == 0)
+        if (curTex->refCount == 0)
         {
             Texture_RefClear(curTex);
         }
