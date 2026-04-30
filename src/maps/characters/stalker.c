@@ -2523,7 +2523,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 460);
             Collision_CharaAnimShapesSet(stalker, &sharedData_800DE440_0_s00[keyframeIdx0], &sharedData_800DE440_0_s00[keyframeIdx1]);
 
-            stalker->collision.box.field_8 = stalker->collision.box.field_6;
+            stalker->collision.box.field_8 = stalker->collision.box.offsetY;
             break;
 
         case ANIM_STATUS(StalkerAnim_11, false):

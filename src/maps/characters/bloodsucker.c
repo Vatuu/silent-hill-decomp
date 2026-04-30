@@ -273,10 +273,10 @@ void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr,
     scratchData->field_28.vy = Q8_TO_Q12(scratchData->field_28.vy);
     scratchData->field_28.vz = Q8_TO_Q12(scratchData->field_28.vz);
 
-    bloodsucker->collision.box.field_0   = scratchData->field_28.vy - Q12(0.05f);
-    bloodsucker->collision.box.field_2   = scratchData->field_28.vy + Q12(0.05f);
-    bloodsucker->collision.box.field_4   = scratchData->field_28.vy + Q12(0.05f);
-    bloodsucker->collision.box.field_6   = scratchData->field_28.vy;
+    bloodsucker->collision.box.top   = scratchData->field_28.vy - Q12(0.05f);
+    bloodsucker->collision.box.bottom      = scratchData->field_28.vy + Q12(0.05f);
+    bloodsucker->collision.box.height   = scratchData->field_28.vy + Q12(0.05f);
+    bloodsucker->collision.box.offsetY   = scratchData->field_28.vy;
     bloodsucker->collision.shapeOffsets.box.vx = scratchData->field_28.vx - bloodsucker->position.vx;
     bloodsucker->collision.shapeOffsets.box.vz = scratchData->field_28.vz - bloodsucker->position.vz;
     bloodsucker->collision.cylinder.field_2   = Q12(0.05f);

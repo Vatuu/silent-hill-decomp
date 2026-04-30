@@ -676,15 +676,15 @@ void sharedFunc_800D923C_0_s00(s_SubCharacter* chara)
 {
     chara->model.stateStep = 0;
 
-    chara->collision.box.field_0   = Q12(0.0f);
-    chara->collision.box.field_2   = Q12(0.0f);
-    chara->collision.box.field_6   = Q12(0.0f);
-    chara->collision.cylinder.radius  = Q12(0.0f);
-    chara->collision.cylinder.field_2   = Q12(0.0f);
+    chara->collision.box.top               = Q12(0.0f);
+    chara->collision.box.bottom                  = Q12(0.0f);
+    chara->collision.box.offsetY              = Q12(0.0f);
+    chara->collision.cylinder.radius          = Q12(0.0f);
+    chara->collision.cylinder.field_2         = Q12(0.0f);
     chara->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
     chara->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-    chara->collision.shapeOffsets.box.vz = Q12(0.0f);
-    chara->collision.shapeOffsets.box.vx = Q12(0.0f);
+    chara->collision.shapeOffsets.box.vz      = Q12(0.0f);
+    chara->collision.shapeOffsets.box.vx      = Q12(0.0f);
 
     chara->properties.player.positionY_EC = Q12(0.0f);
     chara->properties.player.afkTimer_E8  = Q12(0.0f);

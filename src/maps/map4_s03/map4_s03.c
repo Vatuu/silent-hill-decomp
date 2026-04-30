@@ -1725,8 +1725,8 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
     temp_s0 = D_800DB1D8[twinfeeler->model.stateStep];
     func_800705E4(boneCoords, 0, temp_s0, temp_s0, temp_s0);
 
-    twinfeeler->collision.box.field_4   = Q12(0.0f);
-    twinfeeler->collision.box.field_2   = Q12(0.0f);
+    twinfeeler->collision.box.height   = Q12(0.0f);
+    twinfeeler->collision.box.bottom   = Q12(0.0f);
     twinfeeler->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
     twinfeeler->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
     twinfeeler->collision.cylinder.radius  = Q12(0.0f);
@@ -1743,8 +1743,8 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
     gte_rt();
     gte_stlvnl(&ptr->field_28);
 
-    twinfeeler->collision.box.field_0   = Q12_MULT_PRECISE(Q8_TO_Q12(ptr->field_28.vy), temp_s0);
-    twinfeeler->collision.box.field_6   = twinfeeler->collision.box.field_0 + 122;
+    twinfeeler->collision.box.top   = Q12_MULT_PRECISE(Q8_TO_Q12(ptr->field_28.vy), temp_s0);
+    twinfeeler->collision.box.offsetY   = twinfeeler->collision.box.top + Q12(0.03f);
     twinfeeler->collision.shapeOffsets.box.vx = Q12_MULT_PRECISE(twinfeeler->position.vx - Q8_TO_Q12(ptr->field_28.vx), temp_s0);
     twinfeeler->collision.shapeOffsets.box.vz = Q12_MULT_PRECISE(twinfeeler->position.vz - Q8_TO_Q12(ptr->field_28.vz), temp_s0);
     twinfeeler->collision.cylinder.field_2   = Q12(0.05f);
@@ -3011,19 +3011,19 @@ void func_800D5904(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
 
     unkBasePosY = Q8_TO_Q12(transformMat.t[1]) - posY;
     unkPosY = unkBasePosY - Q12(0.25f);
-    twinfeeler->collision.box.field_0 = unkPosY;
+    twinfeeler->collision.box.top = unkPosY;
     if (unkPosY >= posY)
     {
-        twinfeeler->collision.box.field_2 = posY;
+        twinfeeler->collision.box.bottom = posY;
     }
     else
     {
-        twinfeeler->collision.box.field_2 = unkPosY;
+        twinfeeler->collision.box.bottom = unkPosY;
     }
 
-    twinfeeler->collision.box.field_4 = unkBasePosY + Q12(0.25f);
+    twinfeeler->collision.box.height = unkBasePosY + Q12(0.25f);
     twinfeeler->collision.cylinder.radius = Q12(0.5f);
-    twinfeeler->collision.box.field_6 = unkBasePosY;
+    twinfeeler->collision.box.offsetY = unkBasePosY;
     twinfeeler->collision.cylinder.field_2 = Q12(0.4f);
     sharedFunc_800CD920_3_s03(twinfeeler, posX, posZ);
 
@@ -3120,10 +3120,10 @@ void func_800D5B6C(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
     }
 
     posY            = twinfeeler->position.vy;
-    twinfeeler->collision.box.field_2 = posY;
-    twinfeeler->collision.box.field_4 = posY;
-    twinfeeler->collision.box.field_0 = posY - Q12(1.0f);
-    twinfeeler->collision.box.field_6 = posY - Q12(0.5f);
+    twinfeeler->collision.box.bottom = posY;
+    twinfeeler->collision.box.height = posY;
+    twinfeeler->collision.box.top = posY - Q12(1.0f);
+    twinfeeler->collision.box.offsetY = posY - Q12(0.5f);
 }
 
 void func_800D5BC8(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x800D5BC8

@@ -481,7 +481,7 @@ STATIC_ASSERT_SIZEOF(s_Collision, 12);
 typedef struct _CollisionQuery
 {
     /* 0x0 */ VECTOR3  position;       // Q19.12
-    /* 0xC */ SVECTOR3 rotation;       // Q3.12 TODO: Not a rotation? Y position is added to this.
+    /* 0xC */ SVECTOR3 rotation;       // Q3.12 | TODO: NOT A ROTATION! Actually position offsets. Bottom, top, cylinder radius.
     /* 0xE */ s8       collisionState; /** `e_CharaCollisionState` */
 } s_CollisionQuery;
 
@@ -588,33 +588,12 @@ typedef struct
     s_func_8006E490_20 field_20[2];
 } s_func_8006E490;
 
-/** @brief Axis-aligned bounding box. TODO: Maybe not a separate struct? */
-typedef struct _BoundingBox
-{
-    /* 0x0 */ q3_12 bottom; /** Y+ is down. */
-    /* 0x2 */ q3_12 top;    /** Y- is up. */
-    /* 0x4 */ q3_12 height;
-    /* 0x6 */ q3_12 offsetY;
-} s_BoundingBox;
-
 /** @brief Character keyframe collision info. */
 typedef struct _Keyframe
 {
-    /* 0x0  */ s_BoundingBox box;
-    /* 0x8  */ q3_12         field_8; // Character collision radius?
-    /* 0xA  */ q3_12         field_A; // Something similar to character collision radius?
-    /* 0xC  */ DVECTOR_XZ    boxCenter;
-    /* 0x10 */ DVECTOR_XZ    cylinderCenter;
+    /* 0x0 */ s_CharaBox          box;
+    /* 0xC */ s_CharaShapeOffsets shapeOffsets;
 } s_Keyframe;
-
-typedef struct _Normal
-{
-    s8 nx;
-    s8 ny;
-    s8 nz;
-    u8 count;
-} s_Normal;
-STATIC_ASSERT_SIZEOF(s_Normal, 4);
 
 /** @brief 8-character string usually used for filenames. Can be compared via the `u32` field. */
 typedef union _Filename
@@ -1008,8 +987,8 @@ typedef struct
         } s_0;
         struct
         {
-            q7_8 field_0;
-            q7_8 field_2;
+            q7_8 field_0; // Set to absolute character bottom height.
+            q7_8 field_2; // Set to absolute character top height.
             s16  field_4;
             u8   collisionState; /** `e_CharaCollisionState` */
             u8*  field_8;
@@ -1917,9 +1896,9 @@ typedef struct
 {
     u8  field_0;
     u8  field_1;
-    s16 field_2;
-    s32 field_4;
-    s32 field_8;
+    s16 field_2; // XYZ? X and Y swapped?
+    s32 field_4; //
+    s32 field_8; //
 } s_800C42E8;
 
 typedef struct
@@ -2596,57 +2575,57 @@ extern const s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
 extern s16 SQRT[100];
 
 // Copies `s_Keyframe`.
-#define CopyData(arg0, data)                            \
+#define CopyData(chara, keyframe)                            \
 {                                                       \
     s32 __temp;                                         \
                                                         \
-    arg0->collision.box.field_0   = data.box.bottom;         \
+    chara->collision.box.top   = keyframe.box.top;         \
                                                         \
-    __temp                   = data.box.top;            \
-    arg0->collision.box.field_2   = __temp;                  \
-    arg0->collision.box.field_4   = data.box.height;         \
+    __temp                   = keyframe.box.bottom;            \
+    chara->collision.box.bottom   = __temp;                  \
+    chara->collision.box.height   = keyframe.box.height;         \
                                                         \
-    __temp                   = data.box.offsetY;        \
-    arg0->collision.box.field_6   = __temp;                  \
-    arg0->collision.shapeOffsets.cylinder.vx = data.cylinderCenter.vx;   \
+    __temp                   = keyframe.box.offsetY;        \
+    chara->collision.box.offsetY   = __temp;                  \
+    chara->collision.shapeOffsets.cylinder.vx = keyframe.shapeOffsets.cylinder.vx;   \
                                                         \
-    __temp                   = data.cylinderCenter.vz;   \
-    arg0->collision.shapeOffsets.cylinder.vz = __temp;                  \
-    arg0->collision.cylinder.radius  = data.field_8;            \
-    arg0->collision.shapeOffsets.box.vx = data.boxCenter.vx;      \
+    __temp                   = keyframe.shapeOffsets.cylinder.vz;   \
+    chara->collision.shapeOffsets.cylinder.vz = __temp;                  \
+    chara->collision.cylinder.radius  = keyframe.box.field_8;            \
+    chara->collision.shapeOffsets.box.vx = keyframe.shapeOffsets.box.vx;      \
                                                         \
-    __temp                   = data.boxCenter.vz;      \
-    arg0->collision.shapeOffsets.box.vz = __temp;                  \
+    __temp                   = keyframe.shapeOffsets.box.vz;      \
+    chara->collision.shapeOffsets.box.vz = __temp;                  \
                                                         \
-    __temp                   = data.field_A;            \
-    arg0->collision.cylinder.field_2   = __temp;                  \
+    __temp                   = keyframe.box.field_A;            \
+    chara->collision.cylinder.field_2   = __temp;                  \
 }
 
-#define CopyDataAlt(arg0, data)                            \
+#define CopyDataAlt(chara, keyframe)                            \
 {                                                       \
     s32 __temp;                                         \
     s32 __temp2;                                        \
                                                         \
-    arg0->collision.box.field_0   = data.box.bottom;         \
+    chara->collision.box.top   = keyframe.box.top;         \
                                                         \
-    __temp                   = data.box.top;            \
-    arg0->collision.box.field_2   = __temp;                  \
-    arg0->collision.box.field_4   = data.box.height;         \
+    __temp                   = keyframe.box.bottom;            \
+    chara->collision.box.bottom   = __temp;                  \
+    chara->collision.box.height   = keyframe.box.height;         \
                                                         \
-    __temp                   = data.box.offsetY;        \
-    arg0->collision.box.field_6   = __temp;                  \
-    arg0->collision.shapeOffsets.cylinder.vx = data.cylinderCenter.vx;   \
+    __temp                   = keyframe.box.offsetY;        \
+    chara->collision.box.offsetY   = __temp;                  \
+    chara->collision.shapeOffsets.cylinder.vx = keyframe.shapeOffsets.cylinder.vx;   \
                                                         \
-    __temp                   = data.cylinderCenter.vz;   \
-    arg0->collision.shapeOffsets.cylinder.vz = __temp;                  \
-    arg0->collision.cylinder.radius  = data.field_8;            \
-    arg0->collision.shapeOffsets.box.vx = data.boxCenter.vx;      \
+    __temp                   = keyframe.shapeOffsets.cylinder.vz;   \
+    chara->collision.shapeOffsets.cylinder.vz = __temp;                  \
+    chara->collision.cylinder.radius  = keyframe.box.field_8;            \
+    chara->collision.shapeOffsets.box.vx = keyframe.shapeOffsets.box.vx;      \
                                                         \
-    __temp                   = data.boxCenter.vz;      \
-    arg0->collision.shapeOffsets.box.vz = __temp;                  \
+    __temp                   = keyframe.shapeOffsets.box.vz;      \
+    chara->collision.shapeOffsets.box.vz = __temp;                  \
                                                         \
-    __temp2                  = data.field_A;            \
-    arg0->collision.cylinder.field_2   = __temp2;                 \
+    __temp2                  = keyframe.box.field_A;            \
+    chara->collision.cylinder.field_2   = __temp2;                 \
 }
 
 // ==========

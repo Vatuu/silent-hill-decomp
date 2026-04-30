@@ -1747,7 +1747,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
     posZ = chara->position.vz;
 
     posY  = chara->position.vy;
-    posY += chara->collision.box.field_0;
+    posY += chara->collision.box.top;
 
     D_800C47C8[0].vx = posX;
     D_800C47C8[0].vy = posY;
@@ -1782,7 +1782,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
 
         temp_s1 += temp_s0;
 
-        var_v1  += chara1->collision.box.field_0;
+        var_v1  += chara1->collision.box.top;
         temp_s2 += temp_s3;
 
         D_800C47C8[1].vy = var_v1;
@@ -1822,8 +1822,8 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
         temp_v0_8 = temp_t5 - coundZ;
 
         sp58    = chara1->position.vy;
-        temp_s6 = chara1->collision.box.field_4;
-        temp_s5 = chara1->collision.box.field_0;
+        temp_s6 = chara1->collision.box.height;
+        temp_s5 = chara1->collision.box.top;
 
         j   = sp58 - countY;
         temp_t2   = Q12_MULT_PRECISE(var_v1, cosAngle) - Q12_MULT_PRECISE(temp_v0_8, sinAngle);

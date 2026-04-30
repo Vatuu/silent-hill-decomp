@@ -60,12 +60,12 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
     animInfo = &LOCKER_DEAD_BODY_ANIM_INFOS[chara->model.anim.status];
     animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
 
-    chara->collision.box.field_0   = Q12(-0.3f);
+    chara->collision.box.top   = Q12(-0.3f);
     chara->collision.shapeOffsets.cylinder.vx = Q12(0.06f);
     chara->collision.shapeOffsets.cylinder.vz = Q12(0.93f);
-    chara->collision.box.field_2   = Q12(0.0f);
-    chara->collision.box.field_4   = Q12(0.0f);
-    chara->collision.box.field_6   = Q12(0.0f);
+    chara->collision.box.bottom   = Q12(0.0f);
+    chara->collision.box.height   = Q12(0.0f);
+    chara->collision.box.offsetY   = Q12(0.0f);
     chara->collision.shapeOffsets.box.vx = Q12(0.0f);
     chara->collision.shapeOffsets.box.vz = Q12(0.0f);
     chara->collision.cylinder.field_2   = Q12(0.0f);

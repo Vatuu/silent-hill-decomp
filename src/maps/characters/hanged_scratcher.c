@@ -539,7 +539,7 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
             scratcherProps.flags_E8 |= HangedScratcherFlag_5;
 
             func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk44, AttackInputType_Tap), scratcher, &attackPos, &g_SysWork.playerWork.player, scratcher->rotation.vy,
-                          ratan2(distToPlayer, (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.field_6) - attackPos.vy));
+                          ratan2(distToPlayer, (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.offsetY) - attackPos.vy));
         }
         else if (ANIM_STATUS_IDX_GET(scratcher->model.anim.status) == HangedScratcherAnim_14)
         {

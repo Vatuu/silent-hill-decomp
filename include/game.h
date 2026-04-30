@@ -1310,31 +1310,30 @@ typedef struct _PropsDummy
 } s_PropsDummy;
 STATIC_ASSERT_SIZEOF(s_PropsDummy, 64);
 
-// TODO: Re-offset `s_PropsPlayer` / `s_PropsNpc`.
-// Probably easier to do that after it's merged with rest of code.
+/** @brief Player character properties. */
 typedef struct _PropsPlayer
 {
-    q19_12        afkTimer_E8; // Increments every tick for 10 seconds before AFK anim starts.
-    q19_12        positionY_EC;
-    q19_12        field_F0;
-    q19_12        field_F4; // Angle related to X axis flex rotation.
-    q19_12        runTimer_F8;
-    q19_12        exhaustionTimer_FC;
-    q19_12        field_100;    // Angle?
-    q19_12        field_104;    // Distance?
-    q19_12        runTimer_108;
-    u8            field_10C;    // Player SFX pitch?
-    u8            field_10D;
-    s8            __pad_10E[2];
-    q19_12        timer_110; // Increases when `flags & CharaFlag_Unk4` is set, reset when reaches `D_800C45EC`.
-    q19_12        gasWeaponPowerTimer_114; // Timer for the rock drill and chainsaw power.
-    s16           field_118; // q3_12?
-    s8            __pad_11A[2];
-    e_PlayerFlags flags_11C;
-    q3_12         quickTurnHeadingAngle_120; /** Target quick turn heading angle. */
-    q3_12         field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
-    q3_12         headingAngle_124;
-    q3_12         moveDistance_126; // Used to indicate how much the player should move foward. Seems to be squared.
+    /* 0xE8  */ q19_12        afkTimer_E8; // Increments every tick for 10 seconds before AFK anim starts.
+    /* 0xEC  */ q19_12        positionY_EC;
+    /* 0xF0  */ q19_12        field_F0;
+    /* 0xF4  */ q19_12        field_F4; // Angle related to X axis flex rotation.
+    /* 0xF8  */ q19_12        runTimer_F8;
+    /* 0xFC  */ q19_12        exhaustionTimer_FC;
+    /* 0x100 */ q19_12        field_100;    // Angle?
+    /* 0x104 */ q19_12        field_104;    // Distance?
+    /* 0x108 */ q19_12        runTimer_108;
+    /* 0x10C */ u8            field_10C;    // Player SFX pitch?
+    /* 0x10D */ u8            field_10D;
+    /* 0x10E */ s8            __pad_10E[2];
+    /* 0x110 */ q19_12        timer_110; // Increases when `flags & CharaFlag_Unk4` is set, reset when reaches `D_800C45EC`.
+    /* 0x114 */ q19_12        gasWeaponPowerTimer_114; // Timer for the rock drill and chainsaw power.
+    /* 0x118 */ s16           field_118; // q3_12?
+    /* 0x11A */ s8            __pad_11A[2];
+    /* 0x11C */ e_PlayerFlags flags_11C;
+    /* 0x120 */ q3_12         quickTurnHeadingAngle_120; /** Target quick turn heading angle. */
+    /* 0x122 */ q3_12         field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
+    /* 0x124 */ q3_12         headingAngle_124;
+    /* 0x126 */ q3_12         moveDistance_126; // Used to indicate how much the player should move foward. Seems to be squared.
 } s_PropsPlayer;
 STATIC_ASSERT_SIZEOF(s_PropsPlayer, 64);
 
@@ -1781,23 +1780,23 @@ typedef struct
     VECTOR3 field_48[3];
 } s_SubCharacter_44;
 
-/** @brief Character collision box for the active animation frame. */
+/** @brief Character collision box. */
 typedef struct _CharaBox
 {
-    /* 0x0 */ q3_12 field_0; // Top abs height? Set to player head position in `sharedFunc_800D0828_3_s03`.
-    /* 0x2 */ q3_12 field_2; // Bottom abs height? Computed as Y offsets in `sharedFunc_800D0828_3_s03`.
-    /* 0x4 */ q3_12 field_4; // Height from top to bottom?
-    /* 0x6 */ q3_12 field_6; // Some kind of Y offset.
-    /* 0x8 */ s16   field_8; // Q3.12? Maybe weapon range?
-    /* 0xA */ s16   field_A;
+    /* 0x0 */ q3_12 top;
+    /* 0x2 */ q3_12 bottom;
+    /* 0x4 */ q3_12 height;
+    /* 0x6 */ q3_12 offsetY;
+    /* 0x8 */ q3_12 field_8; // X extent?
+    /* 0xA */ q3_12 field_A; // Z extent?
 } s_CharaBox;
 STATIC_ASSERT_SIZEOF(s_CharaBox, 12);
 
-/** @brief Character collision cylinder for the active animation frame. */
+/** @brief Character collision cylinder. */
 typedef struct _CharaCylinder
 {
     /* 0x0 */ q3_12 radius;
-    /* 0x2 */ q3_12 field_2;
+    /* 0x2 */ q3_12 field_2; // Height??
 } s_CharaCylinder;
 STATIC_ASSERT_SIZEOF(s_CharaCylinder, 4);
 

@@ -1614,22 +1614,22 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords)
     posY                     = localNurse->position.vy;
     rightShinPosY            = Q8_TO_Q12(boneMats[BoneMatIdx_RightShin].t[1]);
     leftShinPosY             = Q8_TO_Q12(boneMats[BoneMatIdx_LeftShin].t[1]);
-    nurse->collision.box.field_0  = Q8_TO_Q12(boneMats[BoneMatIdx_Head].t[1]);
+    nurse->collision.box.top  = Q8_TO_Q12(boneMats[BoneMatIdx_Head].t[1]);
     offsetPosY               = posY + Q12(0.25f);
-    nurse->collision.box.field_0 -= offsetPosY;
-    nurse->collision.box.field_2  = posY;
+    nurse->collision.box.top -= offsetPosY;
+    nurse->collision.box.bottom  = posY;
 
     if (rightShinPosY >= leftShinPosY)
     {
-        nurse->collision.box.field_4 = leftShinPosY - nurse->collision.box.field_2;
+        nurse->collision.box.height = leftShinPosY - nurse->collision.box.bottom;
     }
     else
     {
-        nurse->collision.box.field_4 = rightShinPosY - nurse->collision.box.field_2;
+        nurse->collision.box.height = rightShinPosY - nurse->collision.box.bottom;
     }
 
     // `((torsoPosY - headPosY) / 2) - posY`
-    nurse->collision.box.field_6 = ((Q8_TO_Q12(boneMats[BoneMatIdx_Head].t[1]) + Q8_TO_Q12(boneMats[BoneMatIdx_Torso].t[1])) / 2) - posY;
+    nurse->collision.box.offsetY = ((Q8_TO_Q12(boneMats[BoneMatIdx_Head].t[1]) + Q8_TO_Q12(boneMats[BoneMatIdx_Torso].t[1])) / 2) - posY;
 
     unkQ12 = sharedFunc_800CD6B0_3_s03(boneMats, ARRAY_SIZE(boneMats), &unkPos);
     deltaX = unkPos.vx - nurse->position.vx;
@@ -1661,8 +1661,8 @@ void sharedFunc_800D0968_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords)
 
     posY = nurse->position.vy;
 
-    nurse->collision.box.field_2 = posY;
-    nurse->collision.box.field_4 = posY;
-    nurse->collision.box.field_0 = posY - Q12(1.7f);
-    nurse->collision.box.field_6 = posY - Q12(1.0f);
+    nurse->collision.box.bottom = posY;
+    nurse->collision.box.height = posY;
+    nurse->collision.box.top = posY - Q12(1.7f);
+    nurse->collision.box.offsetY = posY - Q12(1.0f);
 }

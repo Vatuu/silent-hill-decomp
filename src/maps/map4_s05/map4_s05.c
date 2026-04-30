@@ -456,7 +456,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
 
                 temp_v0_4 = Q12_MULT_PRECISE(g_SysWork.playerWork.player.position.vy - D_800DB8C8[7].vy, Rng_GenerateUInt(Q12(1.0f), Q12(2.0f) - 1));
 
-                temp_a2_2 = g_SysWork.playerWork.player.collision.box.field_6;
+                temp_a2_2 = g_SysWork.playerWork.player.collision.box.offsetY;
 
                 sp20[1].vy = MAX(g_SysWork.playerWork.player.position.vy + temp_v0_4, Q12(-1.0f)) <= Q12(2.0f) ? (temp_a2_2 + MAX(g_SysWork.playerWork.player.position.vy + temp_v0_4, Q12(-1.0f))) :
                                                                                                                          (temp_a2_2 + Q12(2.0f));
@@ -488,11 +488,11 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                         temp3      = Rng_GenerateUInt(Q12(-0.25f), Q12(0.25f) - 1);
                         temp_v1_12 = sp20[1].vy + temp3;
 
-                        temp2 = g_SysWork.playerWork.player.collision.box.field_6;
+                        temp2 = g_SysWork.playerWork.player.collision.box.offsetY;
 
-                        sp20[2].vy = g_SysWork.playerWork.player.collision.box.field_6 < MAX(temp_v1_12, temp2 - Q12(3.0f)) ?
-                                                                                         g_SysWork.playerWork.player.collision.box.field_6 :
-                                                                                         MAX(temp_v1_12, g_SysWork.playerWork.player.collision.box.field_6 - Q12(3.0f));
+                        sp20[2].vy = g_SysWork.playerWork.player.collision.box.offsetY < MAX(temp_v1_12, temp2 - Q12(3.0f)) ?
+                                                                                         g_SysWork.playerWork.player.collision.box.offsetY :
+                                                                                         MAX(temp_v1_12, g_SysWork.playerWork.player.collision.box.offsetY - Q12(3.0f));
 
                         sharedFunc_800CB0A4_4_s03(&sp20[0], &sp20[2]);
                     }
@@ -857,8 +857,8 @@ void func_800D3AD4(s_SubCharacter* floatstinger) // 0x800D3AD4
 
     if ((g_SysWork.playerWork.player.position.vy - Q12(1.35f)) < ptr->field_50[0].vy)
     {
-        floatstinger->collision.box.field_0   = ptr->field_50[1].vy - floatstinger->position.vy;
-        floatstinger->collision.box.field_4   = ptr->field_50[0].vy - floatstinger->position.vy;
+        floatstinger->collision.box.top   = ptr->field_50[1].vy - floatstinger->position.vy;
+        floatstinger->collision.box.height   = ptr->field_50[0].vy - floatstinger->position.vy;
         floatstinger->collision.cylinder.radius  = Q12(0.4f);
         floatstinger->collision.cylinder.field_2   = Q12(0.4f);
         floatstinger->collision.shapeOffsets.box.vx = ((ptr->field_50[0].vx + ptr->field_50[1].vx) >> 1) - floatstinger->position.vx;
@@ -868,8 +868,8 @@ void func_800D3AD4(s_SubCharacter* floatstinger) // 0x800D3AD4
     }
     else
     {
-        floatstinger->collision.box.field_0   = ptr->field_50[0].vy - floatstinger->position.vy;
-        floatstinger->collision.box.field_4   = ptr->field_50[2].vy - floatstinger->position.vy;
+        floatstinger->collision.box.top   = ptr->field_50[0].vy - floatstinger->position.vy;
+        floatstinger->collision.box.height   = ptr->field_50[2].vy - floatstinger->position.vy;
         floatstinger->collision.cylinder.radius  = Q12(0.5f);
         floatstinger->collision.cylinder.field_2   = Q12(0.5f);
         floatstinger->collision.shapeOffsets.box.vx = ((ptr->field_50[0].vx + ptr->field_50[2].vx) >> 1) - floatstinger->position.vx;
@@ -880,16 +880,16 @@ void func_800D3AD4(s_SubCharacter* floatstinger) // 0x800D3AD4
 
     if (((ptr->field_50[0].vy + ptr->field_50[1].vy) >> 1) > (g_SysWork.playerWork.player.position.vy - Q12(1.4f)))
     {
-        floatstinger->collision.box.field_6 = ((ptr->field_50[0].vy + ptr->field_50[1].vy) >> 1) - floatstinger->position.vy;
+        floatstinger->collision.box.offsetY = ((ptr->field_50[0].vy + ptr->field_50[1].vy) >> 1) - floatstinger->position.vy;
     }
     else if (((ptr->field_50[0].vy + ptr->field_50[2].vy) >> 1) < (g_SysWork.playerWork.player.position.vy - Q12(1.4f)))
     {
-        floatstinger->collision.box.field_6 = ((ptr->field_50[0].vy + ptr->field_50[2].vy) >> 1) - floatstinger->position.vy;
+        floatstinger->collision.box.offsetY = ((ptr->field_50[0].vy + ptr->field_50[2].vy) >> 1) - floatstinger->position.vy;
     }
     else
     {
         var_v1                 = floatstinger->position.vy + Q12(1.4f);
-        floatstinger->collision.box.field_6 = g_SysWork.playerWork.player.position.vy - var_v1;
+        floatstinger->collision.box.offsetY = g_SysWork.playerWork.player.position.vy - var_v1;
     }
 
     if (floatstinger->model.anim.status == ANIM_STATUS(FloatstingerAnim_1, true))
@@ -913,11 +913,11 @@ void func_800D3AD4(s_SubCharacter* floatstinger) // 0x800D3AD4
 
     if (g_SysWork.playerWork.player.health <= Q12(0.0f))
     {
-        floatstinger->collision.box.field_2 = Q12(-2.0f);
+        floatstinger->collision.box.bottom = Q12(-2.0f);
     }
     else
     {
-        floatstinger->collision.box.field_2 = Q12(-1.46f);
+        floatstinger->collision.box.bottom = Q12(-1.46f);
     }
 }
 
@@ -1039,7 +1039,7 @@ bool func_800D4458(s_SubCharacter* floatstinger, VECTOR3* arg1) // 0x800D4458
 
     for (i = 0; i < 3; i++)
     {
-        if (arg1->vy + floatstinger->collision.box.field_2 >= D_800D780C[i].field_10)
+        if (arg1->vy + floatstinger->collision.box.bottom >= D_800D780C[i].field_10)
         {
             break;
         }
@@ -1050,7 +1050,7 @@ bool func_800D4458(s_SubCharacter* floatstinger, VECTOR3* arg1) // 0x800D4458
         return false;
     }
 
-    D_800DB89A = D_800D780C[i].field_10 - (arg1->vy + floatstinger->collision.box.field_2);
+    D_800DB89A = D_800D780C[i].field_10 - (arg1->vy + floatstinger->collision.box.bottom);
 
     if (D_800D780C[i].field_0[0] <= arg1->vx)
     {
@@ -1160,7 +1160,7 @@ q19_12 func_800D48A4(s_SubCharacter* floatstinger, q3_12 dist, q3_12 headingAngl
     count = !(count < 0x80);
 
     from.vx = floatstinger->position.vx;
-    from.vy = floatstinger->position.vy + floatstinger->collision.box.field_2;
+    from.vy = floatstinger->position.vy + floatstinger->collision.box.bottom;
     from.vz = floatstinger->position.vz;
 
     for (i = count; i < (count + 8); i++)

@@ -444,8 +444,8 @@ void func_8005E89C(void) // 0x8005E89C
                                             -Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)),
                                              Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)));
 
-            ptr->field_64[i] = CLAMP_CUSTOM((chara->position.vy + chara->collision.box.field_6) - D_800C42E8[i].field_2,
-                                            (chara->position.vy + chara->collision.box.field_6) - curPtr->field_2,
+            ptr->field_64[i] = CLAMP_CUSTOM((chara->position.vy + chara->collision.box.offsetY) - D_800C42E8[i].field_2,
+                                            (chara->position.vy + chara->collision.box.offsetY) - curPtr->field_2,
                                             -Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)) >> 4,
                                             Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)));
 
@@ -803,7 +803,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
             D_800C42E8[i].field_0 = 1;
             D_800C42E8[i].field_1 = Chara_NpcIdxGet(chara);
             D_800C42E8[i].field_4 = chara->position.vx + chara->collision.shapeOffsets.box.vx;
-            D_800C42E8[i].field_2 = chara->position.vy + chara->collision.box.field_6;
+            D_800C42E8[i].field_2 = chara->position.vy + chara->collision.box.offsetY;
             D_800C42E8[i].field_8 = chara->position.vz + chara->collision.shapeOffsets.box.vz;
         }
     }

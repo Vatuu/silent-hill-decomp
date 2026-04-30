@@ -70,4 +70,13 @@ typedef struct
     SVECTOR3 rotation; /** Q19.12 */
 } s_Pose;
 
+/** @brief Polygon normal. */
+typedef struct _Normal
+{
+    s8 nx;
+    s8 ny;
+    s8 nz;
+    u8 count;
+} s_Normal;
+
 #endif

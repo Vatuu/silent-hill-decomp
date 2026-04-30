@@ -381,8 +381,8 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset
         return 1;
     }
 
-    collQuery.rotation.vy    = chara->collision.box.field_0;
-    collQuery.rotation.vx    = chara->collision.box.field_2;
+    collQuery.rotation.vy    = chara->collision.box.top;
+    collQuery.rotation.vx    = chara->collision.box.bottom;
     collQuery.rotation.vz    = chara->collision.cylinder.radius;
     collQuery.collisionState = chara->collision.state;
 
@@ -584,8 +584,8 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
             collState.field_98.field_0 = Q12_TO_Q8(chara->position.vx + chara->collision.shapeOffsets.cylinder.vx);
             collState.field_9C.field_0 = Q12_TO_Q8(chara->position.vz + chara->collision.shapeOffsets.cylinder.vz);
 
-            collState.field_A0.s_1.field_0 = Q12_TO_Q8(chara->collision.box.field_0 + chara->position.vy);
-            collState.field_A0.s_1.field_2 = Q12_TO_Q8(chara->collision.box.field_2 + chara->position.vy);
+            collState.field_A0.s_1.field_0 = Q12_TO_Q8(chara->collision.box.top + chara->position.vy);
+            collState.field_A0.s_1.field_2 = Q12_TO_Q8(chara->collision.box.bottom + chara->position.vy);
             collState.field_A0.s_1.field_4 = var_a0;
             collState.field_A0.s_1.collisionState = chara->collision.state;
             collState.field_A0.s_1.field_8 = &chara->collision.field_E0;
@@ -668,8 +668,8 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
     q19_12          var_s4;
     q19_12          var_v0;
     s32             mag;
-    q19_12          temp3;
-    q19_12          temp4;
+    q19_12          bottom;
+    q19_12          top;
     q19_12          temp5;
     q19_12          temp6;
     s_SubCharacter* curChara;
@@ -687,13 +687,13 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
             continue;
         }
 
-        temp3 = curChara->collision.box.field_0 + curChara->position.vy;
-        temp4 = curChara->collision.box.field_2 + curChara->position.vy;
+        bottom = curChara->collision.box.top + curChara->position.vy;
+        top    = curChara->collision.box.bottom    + curChara->position.vy;
 
         // TODO: Rotation + position? Seems wrong.
         temp6 = collQuery->rotation.vy + collQuery->position.vy;
         temp5 = collQuery->rotation.vx + collQuery->position.vy;
-        if (temp3 > temp5 || temp4 < temp6)
+        if (bottom > temp5 || top < temp6)
         {
             continue;
         }
@@ -3025,20 +3025,20 @@ void func_8006EE0C(s_RayState_6C* arg0, s32 arg1, s_SubCharacter* chara) // 0x80
         arg0->field_C = Q12_TO_Q8(chara->collision.cylinder.radius);
         offsetX       = chara->collision.shapeOffsets.cylinder.vx;
         offsetZ       = chara->collision.shapeOffsets.cylinder.vz;
-        unkY          = chara->position.vy + chara->collision.box.field_2;
+        unkY          = chara->position.vy + chara->collision.box.bottom;
     }
     else
     {
         arg0->field_C = Q12_TO_Q8(chara->collision.cylinder.field_2);
         offsetX       = chara->collision.shapeOffsets.box.vx;
         offsetZ       = chara->collision.shapeOffsets.box.vz;
-        unkY          = chara->position.vy + chara->collision.box.field_4;
+        unkY          = chara->position.vy + chara->collision.box.height;
     }
 
     arg0->field_A = Q12_TO_Q8(unkY);
     arg0->field_0 = Q12_TO_Q8(chara->position.vx + offsetX);
     arg0->field_4 = Q12_TO_Q8(chara->position.vz + offsetZ);
-    arg0->field_8 = Q12_TO_Q8(chara->position.vy + chara->collision.box.field_0);
+    arg0->field_8 = Q12_TO_Q8(chara->position.vy + chara->collision.box.top);
 }
 
 void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
@@ -3628,13 +3628,13 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
     if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
     {
         offset.vy = Q12(0.0f);
-        pos.vy = g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.field_0;
+        pos.vy = g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.top;
     }
     else
     {
-        pos.vy = chara->position.vy + chara->collision.box.field_6;
-        offset.vy = (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.field_6) -
-                    (chara->position.vy - chara->collision.box.field_6);
+        pos.vy = chara->position.vy + chara->collision.box.offsetY;
+        offset.vy = (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.offsetY) -
+                    (chara->position.vy - chara->collision.box.offsetY);
     }
 
     // Maybe `sp10` is not `VECTOR3`. Might need to rewrite this whole function if its `s_RayTrace`?
@@ -3794,16 +3794,16 @@ void Collision_CharaAnimShapesSet(s_SubCharacter* chara, s_Keyframe* keyframe0, 
     invAlpha = Q12(1.0f) - alpha;
 
     // Set interpolated collision shapes for active frame.
-    chara->collision.box.field_0              = FP_FROM((keyframe0->box.bottom  * invAlpha) + (keyframe1->box.bottom  * alpha), Q12_SHIFT);
-    chara->collision.box.field_2              = FP_FROM((keyframe0->box.top     * invAlpha) + (keyframe1->box.top     * alpha), Q12_SHIFT);
-    chara->collision.box.field_4              = FP_FROM((keyframe0->box.height  * invAlpha) + (keyframe1->box.height  * alpha), Q12_SHIFT);
-    chara->collision.box.field_6              = FP_FROM((keyframe0->box.offsetY * invAlpha) + (keyframe1->box.offsetY * alpha), Q12_SHIFT);
-    chara->collision.shapeOffsets.cylinder.vx = FP_FROM((keyframe0->cylinderCenter.vx * invAlpha) + (keyframe1->cylinderCenter.vx * alpha), Q12_SHIFT);
-    chara->collision.shapeOffsets.cylinder.vz = FP_FROM((keyframe0->cylinderCenter.vz * invAlpha) + (keyframe1->cylinderCenter.vz * alpha), Q12_SHIFT);
-    chara->collision.cylinder.radius          = FP_FROM((keyframe0->field_8 * invAlpha) + (keyframe1->field_8 * alpha), Q12_SHIFT);
-    chara->collision.shapeOffsets.box.vx      = FP_FROM((keyframe0->boxCenter.vx * invAlpha) + (keyframe1->boxCenter.vx * alpha), Q12_SHIFT);
-    chara->collision.shapeOffsets.box.vz      = FP_FROM((keyframe0->boxCenter.vz * invAlpha) + (keyframe1->boxCenter.vz * alpha), Q12_SHIFT);
-    chara->collision.cylinder.field_2         = FP_FROM((keyframe0->field_A * invAlpha) + (keyframe1->field_A * alpha), Q12_SHIFT);
+    chara->collision.box.top               = FP_FROM((keyframe0->box.top  * invAlpha) + (keyframe1->box.top  * alpha), Q12_SHIFT);
+    chara->collision.box.bottom                  = FP_FROM((keyframe0->box.bottom     * invAlpha) + (keyframe1->box.bottom     * alpha), Q12_SHIFT);
+    chara->collision.box.height               = FP_FROM((keyframe0->box.height  * invAlpha) + (keyframe1->box.height  * alpha), Q12_SHIFT);
+    chara->collision.box.offsetY              = FP_FROM((keyframe0->box.offsetY * invAlpha) + (keyframe1->box.offsetY * alpha), Q12_SHIFT);
+    chara->collision.shapeOffsets.cylinder.vx = FP_FROM((keyframe0->shapeOffsets.cylinder.vx * invAlpha) + (keyframe1->shapeOffsets.cylinder.vx * alpha), Q12_SHIFT);
+    chara->collision.shapeOffsets.cylinder.vz = FP_FROM((keyframe0->shapeOffsets.cylinder.vz * invAlpha) + (keyframe1->shapeOffsets.cylinder.vz * alpha), Q12_SHIFT);
+    chara->collision.cylinder.radius          = FP_FROM((keyframe0->box.field_8 * invAlpha) + (keyframe1->box.field_8 * alpha), Q12_SHIFT);
+    chara->collision.shapeOffsets.box.vx      = FP_FROM((keyframe0->shapeOffsets.box.vx * invAlpha) + (keyframe1->shapeOffsets.box.vx * alpha), Q12_SHIFT);
+    chara->collision.shapeOffsets.box.vz      = FP_FROM((keyframe0->shapeOffsets.box.vz * invAlpha) + (keyframe1->shapeOffsets.box.vz * alpha), Q12_SHIFT);
+    chara->collision.cylinder.field_2         = FP_FROM((keyframe0->box.field_A * invAlpha) + (keyframe1->box.field_A * alpha), Q12_SHIFT);
 }
 
 void func_800705E4(GsCOORDINATE2* coord, s32 idx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ) // 0x800705E4

@@ -331,18 +331,18 @@ void Player_ControlUnfreeze(bool setIdle)
 
     g_SysWork.playerCombat.isAiming = false;
 
-    player->collision.cylinder.field_2                                    = Q12(0.23f);
-    g_SysWork.playerWork.player.collision.box.field_0                = Q12(-1.6f);
-    g_SysWork.playerWork.player.collision.box.field_6                = Q12(-1.1f);
-    g_SysWork.playerWork.player.collision.box.field_2                = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz              = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx              = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.box.vz              = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.box.vx              = Q12(0.0f);
-    g_SysWork.playerWork.player.properties.player.flags_11C &= ~(PlayerFlag_Unk2 |
-                                                                    PlayerFlag_SfxActive |
-                                                                    PlayerFlag_DamageReceived |
-                                                                    PlayerFlag_Moving);
+    player->collision.cylinder.field_2                             = Q12(0.23f);
+    g_SysWork.playerWork.player.collision.box.top               = Q12(-1.6f);
+    g_SysWork.playerWork.player.collision.box.offsetY              = Q12(-1.1f);
+    g_SysWork.playerWork.player.collision.box.bottom                  = Q12(0.0f);
+    g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+    g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+    g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = Q12(0.0f);
+    g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      = Q12(0.0f);
+    g_SysWork.playerWork.player.properties.player.flags_11C           &= ~(PlayerFlag_Unk2 |
+                                                                           PlayerFlag_SfxActive |
+                                                                           PlayerFlag_DamageReceived |
+                                                                           PlayerFlag_Moving);
 
     player->flags          &= ~CharaFlag_Unk4;
     player->collision.state = CharaCollisionState_Npc;
@@ -880,12 +880,12 @@ bool sharedFunc_800D2E94_0_s00(void)
         {
             npcChara->health                             = Q12(400.0f);
             npcChara->model.controlState++;
-            npcChara->collision.box.field_0              = Q12(-0.2f);
-            npcChara->collision.box.field_2              = Q12(0.2f);
+            npcChara->collision.box.top              = Q12(-0.2f);
+            npcChara->collision.box.bottom              = Q12(0.2f);
             npcChara->collision.cylinder.radius          = Q12(0.05f);
             npcChara->collision.cylinder.field_2         = Q12(0.5f);
             npcChara->field_40                           = 0;
-            npcChara->collision.box.field_6              = 0;
+            npcChara->collision.box.offsetY              = Q12(0.0f);
             npcChara->collision.box.field_8              = 0;
             npcChara->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
             npcChara->collision.shapeOffsets.cylinder.vx = Q12(0.0f);

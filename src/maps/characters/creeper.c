@@ -586,7 +586,7 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
 
         func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Multitap),
                       creeper, &creeperPos, &playerChara, creeper->rotation.vy,
-                      ratan2(Q12(0.4f), (playerChara.position.vy + playerChara.collision.box.field_2) - (creeper->position.vy + creeper->collision.box.field_2)));
+                      ratan2(Q12(0.4f), (playerChara.position.vy + playerChara.collision.box.bottom) - (creeper->position.vy + creeper->collision.box.bottom)));
 
         if (!(creeperProps.flags & CreeperFlag_HasAttacked))
         {

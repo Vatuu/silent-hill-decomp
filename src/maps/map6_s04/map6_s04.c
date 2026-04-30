@@ -128,12 +128,12 @@ void func_800D8A90(s_SubCharacter* chara) // 0x800D8A90
 {
     chara->collision.cylinder.radius = Q12(0.3f);
     chara->collision.cylinder.field_2 = Q12(0.23f);
-    chara->collision.box.field_0 = Q12(-1.6f);
-    chara->collision.box.field_6 = Q12(-1.05f);
+    chara->collision.box.top = Q12(-1.6f);
+    chara->collision.box.offsetY = Q12(-1.05f);
     chara->collision.box.field_8 = Q12(-1.45f);
     chara->health = Q12(4000.0f);
-    chara->collision.box.field_2 = 0;
-    chara->collision.box.field_4 = 0;
+    chara->collision.box.bottom = 0;
+    chara->collision.box.height = 0;
 
     chara->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
     chara->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
@@ -1653,7 +1653,7 @@ void func_800DB4CC(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coord) 
             // TODO: Use macro.
             angle = ratan2(SquareRoot0(SQUARE((g_SysWork.playerWork.player.position.vx - D_800ED570.vx) >> 4) +
                                      SQUARE((g_SysWork.playerWork.player.position.vz - D_800ED570.vz) >> 4)),
-                         (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.field_6 -
+                         (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.offsetY -
                           D_800ED570.vy) >>
                              4);
 

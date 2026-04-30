@@ -1381,13 +1381,13 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
 
         case ANIM_STATUS(LarvalStalkerAnim_GrabAttack, false):
         case ANIM_STATUS(LarvalStalkerAnim_GrabAttack, true):
-            larvalStalker->collision.box.field_0   = Q12(-0.72f);
-            larvalStalker->collision.box.field_4   = Q12(-0.2f);
-            larvalStalker->collision.box.field_6   = Q12(-0.66f);
+            larvalStalker->collision.box.top   = Q12(-0.72f);
+            larvalStalker->collision.box.height   = Q12(-0.2f);
+            larvalStalker->collision.box.offsetY   = Q12(-0.66f);
             larvalStalker->collision.cylinder.radius  = Q12(0.12f);
             larvalStalker->collision.shapeOffsets.box.vz = Q12(0.02f);
             larvalStalker->collision.cylinder.field_2   = Q12(0.11f);
-            larvalStalker->collision.box.field_2   = Q12(0.0f);
+            larvalStalker->collision.box.bottom   = Q12(0.0f);
             larvalStalker->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
             larvalStalker->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
             larvalStalker->collision.shapeOffsets.box.vx = Q12(0.0f);

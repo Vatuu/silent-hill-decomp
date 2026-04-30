@@ -5292,10 +5292,10 @@ void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEF50
 
     incubus->collision.cylinder.radius = Q12(0.5f);
     incubus->collision.cylinder.field_2  = Q12(0.5f);
-    incubus->collision.box.field_0  = offsetY - Q12(0.25f);
-    incubus->collision.box.field_2  = offsetY;
-    incubus->collision.box.field_4  = offsetY + Q12(0.25f);
-    incubus->collision.box.field_6  = offsetY;
+    incubus->collision.box.top  = offsetY - Q12(0.25f);
+    incubus->collision.box.bottom  = offsetY;
+    incubus->collision.box.height  = offsetY + Q12(0.25f);
+    incubus->collision.box.offsetY  = offsetY;
 
     sharedFunc_800CD920_3_s03(incubus, offsetX, offsetZ);
 
@@ -5315,10 +5315,10 @@ void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEFE8
 
     posY = incubus->position.vy;
 
-    incubus->collision.box.field_2 = posY;
-    incubus->collision.box.field_4 = posY;
-    incubus->collision.box.field_0 = posY - Q12(1.0f);
-    incubus->collision.box.field_6 = posY - Q12(0.5f);
+    incubus->collision.box.bottom = posY;
+    incubus->collision.box.height = posY;
+    incubus->collision.box.top = posY - Q12(1.0f);
+    incubus->collision.box.offsetY = posY - Q12(0.5f);
 }
 
 void func_800DF044(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DF044
@@ -6288,10 +6288,10 @@ void func_800E07F0(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E07F0
 
     chara->collision.cylinder.radius = Q12(0.5f);
     chara->collision.cylinder.field_2  = Q12(0.5f);
-    chara->collision.box.field_0  = posY - Q12(0.25f);
-    chara->collision.box.field_2  = posY;
-    chara->collision.box.field_4  = posY + Q12(0.25f);
-    chara->collision.box.field_6  = posY;
+    chara->collision.box.top  = posY - Q12(0.25f);
+    chara->collision.box.bottom  = posY;
+    chara->collision.box.height  = posY + Q12(0.25f);
+    chara->collision.box.offsetY  = posY;
 
     sharedFunc_800CD920_3_s03(chara, posX, posZ);
 
@@ -6310,10 +6310,10 @@ void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E0888
     }
 
     posY            = chara->position.vy;
-    chara->collision.box.field_2 = posY;
-    chara->collision.box.field_4 = posY;
-    chara->collision.box.field_0 = posY - Q12(1.0f);
-    chara->collision.box.field_6 = posY - Q12(0.5f);
+    chara->collision.box.bottom = posY;
+    chara->collision.box.height = posY;
+    chara->collision.box.top = posY - Q12(1.0f);
+    chara->collision.box.offsetY = posY - Q12(0.5f);
 }
 
 void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E08E4
