@@ -101,7 +101,7 @@ void Ai_Creeper_Init(s_SubCharacter* creeper)
     creeper->model.anim.alpha = Q12(0.0f);
     creeper->moveSpeed        = Q12(0.0f);
     creeper->headingAngle     = creeper->rotation.vy;
-    creeper->field_E1_0       = 2;
+    creeper->collisionState       = 2;
 
     Chara_PropertiesClear(creeper);
     Ai_Creeper_PropertiesUpdateFromStep(creeper);
@@ -667,7 +667,7 @@ void Creeper_ControlDamage(s_SubCharacter* creeper)
     if (creeper->health == Q12(0.0f) && Chara_NpcIdxGet(creeper) != g_SysWork.targetNpcIdx)
     {
         creeper->health = NO_VALUE;
-        creeper->field_E1_0 = 0;
+        creeper->collisionState = 0;
     }
 
     // TODO: Doesn't match?
@@ -886,7 +886,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
             break;
     }
 
-    func_8005C814(&creeper->field_D8, creeper);
+    func_8005C814(&creeper->shapeOffsets, creeper);
 }
 
 #undef creeperProps

@@ -375,14 +375,14 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                     larvalStalker->model.anim.status = ANIM_STATUS(LarvalStalkerAnim_StunBackToIdle, false);
                     larvalStalker->model.controlState = LarvalStalkerControl_Stun;
                     larvalStalkerProps.flags_E8 &= ~LarvalStalkerFlag_6;
-                    larvalStalker->field_E1_0 = 3;
+                    larvalStalker->collisionState = 3;
                     larvalStalkerProps.keyframeIdx_F4 = 0;
 
                     func_8005DC1C(Sfx_Unk1429, &larvalStalker->position, Q8(0.5f), 0);
                 }
                 else
                 {
-                    larvalStalker->field_E1_0 = 1;
+                    larvalStalker->collisionState = 1;
                 }
             }
             else
@@ -715,7 +715,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             if (larvalStalker->health <= Q12(0.0f) && Chara_NpcIdxGet(larvalStalker) != g_SysWork.targetNpcIdx)
             {
                 larvalStalker->health = NO_VALUE;
-                larvalStalker->field_E1_0 = 0;
+                larvalStalker->collisionState = 0;
             }
 
             // TODO: Weird property cast. Originally, maybe a wrong properties struct was mistakenly accessed?
@@ -855,7 +855,7 @@ void Ai_LarvalStalker_Init(s_SubCharacter* larvalStalker)
     larvalStalker->moveSpeed = Q12(0.0f);
 
     Chara_DamageClear(larvalStalker);
-    larvalStalker->field_E1_0      = 0;
+    larvalStalker->collisionState      = 0;
     larvalStalker->headingAngle = larvalStalker->rotation.vy;
 
     Chara_PropertiesClear(larvalStalker);
@@ -1385,17 +1385,17 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
             larvalStalker->box.field_4   = Q12(-0.2f);
             larvalStalker->box.field_6   = Q12(-0.66f);
             larvalStalker->cylinder.radius  = Q12(0.12f);
-            larvalStalker->field_D8.offsetZ_2 = Q12(0.02f);
+            larvalStalker->shapeOffsets.box.vz = Q12(0.02f);
             larvalStalker->cylinder.field_2   = Q12(0.11f);
             larvalStalker->box.field_2   = Q12(0.0f);
-            larvalStalker->field_D8.offsetX_4 = Q12(0.0f);
-            larvalStalker->field_D8.offsetZ_6 = Q12(0.0f);
-            larvalStalker->field_D8.offsetX_0 = Q12(0.0f);
+            larvalStalker->shapeOffsets.cylinder.vx = Q12(0.0f);
+            larvalStalker->shapeOffsets.cylinder.vz = Q12(0.0f);
+            larvalStalker->shapeOffsets.box.vx = Q12(0.0f);
             larvalStalker->box.field_8   = Q12(-0.59f);
             break;
     }
 
-    func_8005C814(&larvalStalker->field_D8, larvalStalker);
+    func_8005C814(&larvalStalker->shapeOffsets, larvalStalker);
 }
 
 #undef larvalStalkerProps

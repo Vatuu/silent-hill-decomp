@@ -9,8 +9,8 @@ void sharedFunc_800CD7F8_3_s03(s_SubCharacter* chara, q19_12 offsetX, q19_12 off
     q19_12 scaledExtraOffsetZ;
 
     // Compute extra offset.
-    extraOffsetX = chara->field_D8.offsetX_4 - offsetX;
-    extraOffsetZ = chara->field_D8.offsetZ_6 - offsetZ;
+    extraOffsetX = chara->shapeOffsets.cylinder.vx - offsetX;
+    extraOffsetZ = chara->shapeOffsets.cylinder.vz - offsetZ;
 
     // Apply extra offset if its distance exceeds a threshold.
     extraDistSqr = Q12_SQUARE_PRECISE(extraOffsetX) +
@@ -43,6 +43,6 @@ void sharedFunc_800CD7F8_3_s03(s_SubCharacter* chara, q19_12 offsetX, q19_12 off
     }
 
     // Set translation offset.
-    chara->field_D8.offsetX_4 = offsetX;
-    chara->field_D8.offsetZ_6 = offsetZ;
+    chara->shapeOffsets.cylinder.vx = offsetX;
+    chara->shapeOffsets.cylinder.vz = offsetZ;
 }

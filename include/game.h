@@ -317,6 +317,16 @@ typedef enum _CharaGroupFlags
     CharaGroupFlag_1    = 1 << 1
 } e_CharaGroupFlags;
 
+/** @brief Character collision states. */
+typedef enum _CharacterCollisionState
+{
+    CharaCollisionState_Ignore = 0,
+    CharaCollisionState_Player = 1,
+    CharaCollisionState_2      = 2,
+    CharaCollisionState_Npc    = 3,
+    CharaCollisionState_4      = 4
+} e_CharacterCollisionState;
+
 /** @brief Sync modes used by `DrawSync` and `VSync`. */
 typedef enum _SyncMode
 {
@@ -1267,6 +1277,7 @@ typedef struct
 } s_800D5710;
 STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
 
+// Collision-related.
 typedef struct
 {
     VECTOR3 position;
@@ -1749,16 +1760,6 @@ typedef struct _PropertiesTwinfeeler
 } s_PropertiesTwinfeeler;
 STATIC_ASSERT_SIZEOF(s_PropertiesTwinfeeler, 64);
 
-/** Offsets for translation? */
-typedef struct
-{
-    q3_12 offsetX_0;
-    q3_12 offsetZ_2;
-    q3_12 offsetX_4;
-    q3_12 offsetZ_6;
-} s_SubCharacter_D8;
-STATIC_ASSERT_SIZEOF(s_SubCharacter_D8, 8);
-
 typedef struct
 {
     s16     field_0; // Something dependent on `CharaFlag_Unk8`.
@@ -1782,22 +1783,31 @@ typedef struct
 /** @brief Character collision box for current animation frame. */
 typedef struct _CharacterBox
 {
-    q3_12 field_0; // Top abs height? Set to player head position in `sharedFunc_800D0828_3_s03`.
-    q3_12 field_2; // Bottom abs height? Computed as Y offsets in `sharedFunc_800D0828_3_s03`.
-    q3_12 field_4; // Height from top to bottom?
-    q3_12 field_6; // Some kind of Y offset.
-    s16   field_8; // Q3.12? Maybe weapon range?
-    s16   field_A;
+    /* 0x0 */ q3_12 field_0; // Top abs height? Set to player head position in `sharedFunc_800D0828_3_s03`.
+    /* 0x2 */ q3_12 field_2; // Bottom abs height? Computed as Y offsets in `sharedFunc_800D0828_3_s03`.
+    /* 0x4 */ q3_12 field_4; // Height from top to bottom?
+    /* 0x6 */ q3_12 field_6; // Some kind of Y offset.
+    /* 0x8 */ s16   field_8; // Q3.12? Maybe weapon range?
+    /* 0xA */ s16   field_A;
 } s_CharacterBox;
 STATIC_ASSERT_SIZEOF(s_CharacterBox, 12);
 
 /** @brief Character collision cylinder for current animation frame. */
 typedef struct _CharacterCylinder
 {
-    q3_12 radius;
-    q3_12 field_2;
+    /* 0x0 */ q3_12 radius;
+    /* 0x2 */ q3_12 field_2;
 } s_CharacterCylinder;
 STATIC_ASSERT_SIZEOF(s_CharacterCylinder, 4);
+
+/* @brief Character shape offsets for `s_CharacterBox` and `s_CharacterCylinder`. */
+/** Offsets for translation? */
+typedef struct _CharacterShapeOffsets
+{
+    /* 0x0 */ DVECTOR_XZ box;
+    /* 0x4 */ DVECTOR_XZ cylinder;
+} s_CharacterShapeOffsets;
+STATIC_ASSERT_SIZEOF(s_CharacterShapeOffsets, 8);
 
 /** @brief Character info. */
 typedef struct _SubCharacter
@@ -1822,14 +1832,14 @@ typedef struct _SubCharacter
     /* 0xC4 */ u16               deathTimer;     // Part of `shBattleInfo` struct in SH2, may use something similar here.
     /* 0xC6 */ q3_12             timer_C6;       // Some sort of timer. Written to by `Ai_LarvalStalker_Update`.
 
-    // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
-    /* 0xC8 */ s_CharacterBox      box;
-    /* 0xD4 */ s_CharacterCylinder cylinder;
-    /* 0xD8 */ s_SubCharacter_D8   field_D8;       // Translation data?
-    /* 0xE0 */ u8                  field_E0;       // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.
-    /* 0xE1 */ s8                  field_E1_0 : 4; // State.
-    /* 0xE1 */ u8                  field_E1_4 : 4; // Index for array of `s_func_8006CF18`.
-    /* 0xE4 */ s_func_8006CF18*    field_E4;
+    // Collision-related fields. TODO: Move to specialised struct?
+    /* 0xC8   */ s_CharacterBox          box;
+    /* 0xD4   */ s_CharacterCylinder     cylinder;
+    /* 0xD8   */ s_CharacterShapeOffsets shapeOffsets;       // Translation data?
+    /* 0xE0+0 */ u8                      field_E0;           // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.
+    /* 0xE1+4 */ s8                      collisionState : 4; /** `e_CharacterCollisionState` */
+    /* 0xE1   */ u8                      field_E1_4     : 4; // Index for array of `s_func_8006CF18`.
+    /* 0xE4   */ s_func_8006CF18*        field_E4;
 
                union
                {

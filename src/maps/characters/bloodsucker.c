@@ -167,7 +167,7 @@ void Ai_Bloodsucker_Init(s_SubCharacter* bloodsucker)
     s32 i;
 
     Chara_PropertiesClear(bloodsucker);
-    bloodsucker->field_E1_0      = 4;
+    bloodsucker->collisionState      = 4;
     bloodsucker->headingAngle = bloodsucker->rotation.vy;
 
     Ai_Bloodsucker_AnimUpdateFromStep(bloodsucker);
@@ -277,11 +277,11 @@ void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr,
     bloodsucker->box.field_2   = scratchData->field_28.vy + Q12(0.05f);
     bloodsucker->box.field_4   = scratchData->field_28.vy + Q12(0.05f);
     bloodsucker->box.field_6   = scratchData->field_28.vy;
-    bloodsucker->field_D8.offsetX_0 = scratchData->field_28.vx - bloodsucker->position.vx;
-    bloodsucker->field_D8.offsetZ_2 = scratchData->field_28.vz - bloodsucker->position.vz;
+    bloodsucker->shapeOffsets.box.vx = scratchData->field_28.vx - bloodsucker->position.vx;
+    bloodsucker->shapeOffsets.box.vz = scratchData->field_28.vz - bloodsucker->position.vz;
     bloodsucker->cylinder.field_2   = Q12(0.05f);
-    bloodsucker->field_D8.offsetX_4 = scratchData->field_28.vx - bloodsucker->position.vx;
-    bloodsucker->field_D8.offsetZ_6 = scratchData->field_28.vz - bloodsucker->position.vz;
+    bloodsucker->shapeOffsets.cylinder.vx = scratchData->field_28.vx - bloodsucker->position.vx;
+    bloodsucker->shapeOffsets.cylinder.vz = scratchData->field_28.vz - bloodsucker->position.vz;
     bloodsucker->cylinder.radius   = Q12(0.05f);
     Math_SetSVectorFast(&scratchData->field_20, 0, -22, 0);
 

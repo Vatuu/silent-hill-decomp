@@ -4392,9 +4392,9 @@ bool Ai_Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDA
     incubus->moveSpeed       = Q12(0.0f);
     incubus->headingAngle    = incubus->rotation.vy;
     incubus->cylinder.radius   = Q12(0.3f);
-    incubus->field_E1_0         = 4;
-    incubus->field_D8.offsetX_4 = Q12(0.0f);
-    incubus->field_D8.offsetZ_6 = Q12(0.0f);
+    incubus->collisionState         = 4;
+    incubus->shapeOffsets.cylinder.vx = Q12(0.0f);
+    incubus->shapeOffsets.cylinder.vz = Q12(0.0f);
     incubus->flags          |= CharaFlag_Unk3;
 
     localIncubus->properties.dummy.properties_E8[2].val32 = 0;
@@ -5299,8 +5299,8 @@ void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEF50
 
     sharedFunc_800CD920_3_s03(incubus, offsetX, offsetZ);
 
-    incubus->field_D8.offsetX_0 = incubus->field_D8.offsetX_4;
-    incubus->field_D8.offsetZ_2 = incubus->field_D8.offsetZ_6;
+    incubus->shapeOffsets.box.vx = incubus->shapeOffsets.cylinder.vx;
+    incubus->shapeOffsets.box.vz = incubus->shapeOffsets.cylinder.vz;
 }
 
 void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEFE8
@@ -5799,9 +5799,9 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
 
     chara->moveSpeed        = Q12(0.0f);
     chara->cylinder.radius  = Q12(0.3f);
-    chara->field_D8.offsetX_4 = Q12(0.0f);
-    chara->field_D8.offsetZ_6 = Q12(0.0f);
-    chara->field_E1_0         = 4;
+    chara->shapeOffsets.cylinder.vx = Q12(0.0f);
+    chara->shapeOffsets.cylinder.vz = Q12(0.0f);
+    chara->collisionState         = 4;
     chara->headingAngle     = chara->rotation.vy;
     chara->flags           |= CharaFlag_Unk3;
 
@@ -6295,8 +6295,8 @@ void func_800E07F0(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E07F0
 
     sharedFunc_800CD920_3_s03(chara, posX, posZ);
 
-    chara->field_D8.offsetX_0 = chara->field_D8.offsetX_4;
-    chara->field_D8.offsetZ_2 = chara->field_D8.offsetZ_6;
+    chara->shapeOffsets.box.vx = chara->shapeOffsets.cylinder.vx;
+    chara->shapeOffsets.box.vz = chara->shapeOffsets.cylinder.vz;
 }
 
 void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E0888

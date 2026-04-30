@@ -912,7 +912,7 @@ void Ai_HangedScratcher_Control_13(s_SubCharacter* scratcher)
         {
             scratcher->health     = NO_VALUE;
             scratcher->flags     &= ~CharaFlag_Unk2;
-            scratcher->field_E1_0    = 0;
+            scratcher->collisionState    = 0;
             scratcherProps.flags_E8 |= HangedScratcherFlag_9;
         }
     }
@@ -1564,18 +1564,18 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
             break;
     }
 
-    func_8005C814(&scratcher->field_D8, scratcher);
+    func_8005C814(&scratcher->shapeOffsets, scratcher);
 
     if (!(scratcherProps.flags_E8 & HangedScratcherFlag_9))
     {
         if (!(scratcher->flags & (1 << 1)) && scratcher->health > Q12(0.0f) &&
             (scratcherProps.flags_E8 & HangedScratcherFlag_1) && (scratcherProps.flags_E8 & HangedScratcherFlag_0))
         {
-            scratcher->field_E1_0 = 4;
+            scratcher->collisionState = 4;
         }
         else
         {
-            scratcher->field_E1_0 = 2;
+            scratcher->collisionState = 2;
         }
     }
 

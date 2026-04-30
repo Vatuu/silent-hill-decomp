@@ -2614,15 +2614,15 @@ extern s16 SQRT[100];
                                                         \
     __temp                   = data.box.offsetY;        \
     arg0->box.field_6   = __temp;                  \
-    arg0->field_D8.offsetX_4 = data.collisionCenterX;   \
+    arg0->shapeOffsets.cylinder.vx = data.collisionCenterX;   \
                                                         \
     __temp                   = data.collisionCenterZ;   \
-    arg0->field_D8.offsetZ_6 = __temp;                  \
+    arg0->shapeOffsets.cylinder.vz = __temp;                  \
     arg0->cylinder.radius  = data.field_8;            \
-    arg0->field_D8.offsetX_0 = data.hitboxCenterX;      \
+    arg0->shapeOffsets.box.vx = data.hitboxCenterX;      \
                                                         \
     __temp                   = data.hitboxCenterZ;      \
-    arg0->field_D8.offsetZ_2 = __temp;                  \
+    arg0->shapeOffsets.box.vz = __temp;                  \
                                                         \
     __temp                   = data.field_A;            \
     arg0->cylinder.field_2   = __temp;                  \
@@ -2641,15 +2641,15 @@ extern s16 SQRT[100];
                                                         \
     __temp                   = data.box.offsetY;        \
     arg0->box.field_6   = __temp;                  \
-    arg0->field_D8.offsetX_4 = data.collisionCenterX;   \
+    arg0->shapeOffsets.cylinder.vx = data.collisionCenterX;   \
                                                         \
     __temp                   = data.collisionCenterZ;   \
-    arg0->field_D8.offsetZ_6 = __temp;                  \
+    arg0->shapeOffsets.cylinder.vz = __temp;                  \
     arg0->cylinder.radius  = data.field_8;            \
-    arg0->field_D8.offsetX_0 = data.hitboxCenterX;      \
+    arg0->shapeOffsets.box.vx = data.hitboxCenterX;      \
                                                         \
     __temp                   = data.hitboxCenterZ;      \
-    arg0->field_D8.offsetZ_2 = __temp;                  \
+    arg0->shapeOffsets.box.vz = __temp;                  \
                                                         \
     __temp2                  = data.field_A;            \
     arg0->cylinder.field_2   = __temp2;                 \
@@ -3271,7 +3271,7 @@ u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2);
 
 s32 Chara_NpcIdxGet(s_SubCharacter* chara);
 
-void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara);
+void func_8005C814(s_CharacterShapeOffsets* offsets, s_SubCharacter* chara);
 
 s32 func_8005C944(s_SubCharacter* chara, s_CollisionResult* collResult);
 

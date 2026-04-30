@@ -128,7 +128,7 @@ typedef struct
     s8                unk_10[0x84];
     s_CharacterBox field_9C;
     s_CharacterCylinder field_A8;
-    s_SubCharacter_D8 field_AC;
+    s_CharacterShapeOffsets field_AC;
     s32               field_B4[6][4]; // [*][3] is angle.
     s32               field_114;
     s32               field_118;

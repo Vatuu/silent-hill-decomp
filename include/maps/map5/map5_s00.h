@@ -41,9 +41,9 @@ typedef struct
     u8                  field_5D[81 * 41];
     s8                  field_D56[41];
     s8                  field_D7F[5];
-    s32                 field_D84;
-    s32                 field_D88;
-    s32                 field_D8C;
+    s32                 shapeOffsets4;
+    s32                 shapeOffsets8;
+    s32                 shapeOffsetsC;
     s32                 field_D90;
     s_func_800D5B00_D94 field_D94[200];
 } s_func_800D5B00;

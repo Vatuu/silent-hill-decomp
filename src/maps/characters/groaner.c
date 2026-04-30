@@ -77,7 +77,7 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
     }
 
     groaner->moveSpeed    = Q12(0.0f);
-    groaner->field_E1_0      = 3;
+    groaner->collisionState      = 3;
     groaner->headingAngle = groaner->rotation.vy;
 
     groanerProps.field_114 = Rng_GenerateUInt(Q12(0.9375f), Q12(1.0625f) - 1);
@@ -713,9 +713,9 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
 
     if ((ANIM_TIME_REL_KEYFRAME_IDX_GET(groaner->model.anim.time, 222)) < 2u)
     {
-        newPos.vx = groaner->position.vx + groaner->field_D8.offsetX_4;
+        newPos.vx = groaner->position.vx + groaner->shapeOffsets.cylinder.vx;
         newPos.vy = groaner->position.vy - Q12(0.8f);
-        newPos.vz = groaner->position.vz + groaner->field_D8.offsetZ_6;
+        newPos.vz = groaner->position.vz + groaner->shapeOffsets.cylinder.vz;
         func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Hold), groaner, &newPos, &g_SysWork.playerWork.player, groaner->rotation.vy, Q12_ANGLE(90.0f));
     }
 
@@ -1009,7 +1009,7 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner)
         if (g_SysWork.targetNpcIdx != Chara_NpcIdxGet(groaner))
         {
             groaner->health  = NO_VALUE;
-            groaner->field_E1_0 = 0;
+            groaner->collisionState = 0;
         }
     }
 
@@ -1881,7 +1881,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
     }
 
-    func_8005C814(&groaner->field_D8, groaner);
+    func_8005C814(&groaner->shapeOffsets, groaner);
 }
 
 void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)

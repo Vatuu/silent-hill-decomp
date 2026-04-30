@@ -97,13 +97,13 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
 
         case StalkerStateStep_8:
             stalker->model.controlState = StalkerControl_4;
-            stalker->field_E1_0      = 3;
+            stalker->collisionState      = 3;
             break;
 
         case StalkerStateStep_7:
             stalker->model.controlState = StalkerControl_4;
             stalkerProps.flags   |= StalkerFlag_11;
-            stalker->field_E1_0      = 3;
+            stalker->collisionState      = 3;
             break;
 
         case StalkerStateStep_6:
@@ -111,13 +111,13 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             stalker->flags       |= CharaFlag_Unk3;
             stalkerProps.timer_F8    = Q12(1.0f);
             stalkerProps.flags   |= StalkerFlag_0 | StalkerFlag_1;
-            stalker->field_E1_0      = 3;
+            stalker->collisionState      = 3;
             stalker->flags       &= ~CharaFlag_Unk5;
             break;
 
         case StalkerStateStep_5:
             stalker->model.controlState = StalkerControl_1;
-            stalker->field_E1_0      = 0;
+            stalker->collisionState      = 0;
             stalker->flags       |= CharaFlag_Unk5;
             break;
 
@@ -128,7 +128,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             stalker->model.anim.time        = Q12(427.0f);
             stalker->model.anim.keyframeIdx = 427;
             stalkerProps.flags                |= StalkerFlag_0;
-            stalker->field_E1_0                   = 3;
+            stalker->collisionState                   = 3;
             break;
 
         case StalkerStateStep_10:
@@ -137,7 +137,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             stalker->model.anim.status      = ANIM_STATUS(StalkerAnim_28, true);
             stalker->model.anim.time        = Q12(443.0f);
             stalker->model.anim.keyframeIdx = 443;
-            stalker->field_E1_0                   = 3;
+            stalker->collisionState                   = 3;
             break;
 
         case StalkerStateStep_17:
@@ -146,7 +146,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             stalker->model.anim.status      = ANIM_STATUS(StalkerAnim_14, true);
             stalker->model.anim.time        = Q12(176.0f);
             stalker->model.anim.keyframeIdx = 176;
-            stalker->field_E1_0                   = 0;
+            stalker->collisionState                   = 0;
             break;
     }
 
@@ -1420,7 +1420,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
     s32     i;
     u32     animStatus;
 
-    stalker->field_E1_0 = 3;
+    stalker->collisionState = 3;
     Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
 
     distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
@@ -1496,8 +1496,8 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
             stalker->model.controlState  = StalkerControl_9;
             stalker->model.anim.status = ANIM_STATUS(StalkerAnim_10, false);
             stalkerProps.keyframeIdx_FC      = animStatus;
-            stalker->field_E1_0              = 0;
-            stalker->field_E1_0              = 3;
+            stalker->collisionState              = 0;
+            stalker->collisionState              = 3;
 
             stalkerProps.flags |= StalkerFlag_6;
             stalkerProps.flags &= ~StalkerFlag_5;
@@ -1553,7 +1553,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
 
         stalkerProps.flags |= StalkerFlag_6;
         stalker->model.anim.status = ANIM_STATUS(StalkerAnim_36, false);
-        stalker->field_E1_0 = 3;
+        stalker->collisionState = 3;
     }
 
     if (g_DeltaTime != Q12(0.0f))
@@ -1872,7 +1872,7 @@ void Ai_Stalker_Control_10(s_SubCharacter* stalker)
         if (g_SysWork.targetNpcIdx != Chara_NpcIdxGet(stalker))
         {
             stalker->health  = NO_VALUE;
-            stalker->field_E1_0 = 0;
+            stalker->collisionState = 0;
         }
     }
 
@@ -2676,7 +2676,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             break;
     }
 
-    func_8005C814(&stalker->field_D8, stalker);
+    func_8005C814(&stalker->shapeOffsets, stalker);
 }
 
 void sharedFunc_800D7BE8_0_s00(s_SubCharacter* stalker)

@@ -1651,7 +1651,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
         Character_AnimSet(twinfeeler, ANIM_STATUS(TwinfeelerAnim_WalkForward, true), 163);
         twinfeeler->health           = 1;
         twinfeeler->model.anim.alpha = Q12(0.0f);
-        twinfeeler->field_E1_0       = 3;
+        twinfeeler->collisionState       = 3;
         twinfeeler->model.stateStep -= 18;
         twinfeeler->rotation.vx      = D_800DB1E8[twinfeeler->model.stateStep];
         twinfeeler->rotation.vy      = D_800DB1F0[twinfeeler->model.stateStep];
@@ -1711,7 +1711,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
             if (Chara_NpcIdxGet(twinfeeler) != g_SysWork.targetNpcIdx)
             {
                 twinfeeler->health  = NO_VALUE;
-                twinfeeler->field_E1_0 = 0;
+                twinfeeler->collisionState = 0;
                 Savegame_EnemyStateUpdate(twinfeeler);
             }
         }
@@ -1727,8 +1727,8 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
 
     twinfeeler->box.field_4   = Q12(0.0f);
     twinfeeler->box.field_2   = Q12(0.0f);
-    twinfeeler->field_D8.offsetZ_6 = Q12(0.0f);
-    twinfeeler->field_D8.offsetX_4 = Q12(0.0f);
+    twinfeeler->shapeOffsets.cylinder.vz = Q12(0.0f);
+    twinfeeler->shapeOffsets.cylinder.vx = Q12(0.0f);
     twinfeeler->cylinder.radius  = Q12(0.0f);
 
     ptr = PSX_SCRATCH;
@@ -1745,8 +1745,8 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
 
     twinfeeler->box.field_0   = Q12_MULT_PRECISE(Q8_TO_Q12(ptr->field_28.vy), temp_s0);
     twinfeeler->box.field_6   = twinfeeler->box.field_0 + 122;
-    twinfeeler->field_D8.offsetX_0 = Q12_MULT_PRECISE(twinfeeler->position.vx - Q8_TO_Q12(ptr->field_28.vx), temp_s0);
-    twinfeeler->field_D8.offsetZ_2 = Q12_MULT_PRECISE(twinfeeler->position.vz - Q8_TO_Q12(ptr->field_28.vz), temp_s0);
+    twinfeeler->shapeOffsets.box.vx = Q12_MULT_PRECISE(twinfeeler->position.vx - Q8_TO_Q12(ptr->field_28.vx), temp_s0);
+    twinfeeler->shapeOffsets.box.vz = Q12_MULT_PRECISE(twinfeeler->position.vz - Q8_TO_Q12(ptr->field_28.vz), temp_s0);
     twinfeeler->cylinder.field_2   = Q12(0.05f);
 
     #undef twinfeelerProps
@@ -1857,7 +1857,7 @@ bool Twinfeeler_Init(s_SubCharacter* twinfeeler) // 0x800D3CD4
     twinfeeler->model.anim.alpha = Q12(0.0f);
     twinfeeler->moveSpeed        = Q12(0.0f);
     twinfeeler->headingAngle     = twinfeeler->rotation.vy;
-    twinfeeler->field_E1_0      = 4;
+    twinfeeler->collisionState      = 4;
 
     localTwinfeeler->properties.twinfeeler.damage.position.vx = Q12(0.0f);
     localTwinfeeler->properties.twinfeeler.damage.position.vy = Q12(0.0f);
@@ -1870,8 +1870,8 @@ bool Twinfeeler_Init(s_SubCharacter* twinfeeler) // 0x800D3CD4
 
     Twinfeeler_UndergroundSet(twinfeeler);
 
-    twinfeeler->field_D8.offsetX_4 = Q12(0.0f);
-    twinfeeler->field_D8.offsetZ_6 = Q12(0.0f);
+    twinfeeler->shapeOffsets.cylinder.vx = Q12(0.0f);
+    twinfeeler->shapeOffsets.cylinder.vz = Q12(0.0f);
     twinfeeler->flags          |= CharaFlag_Unk3;
 
     if (twinfeeler->model.stateStep != 0)
@@ -3027,8 +3027,8 @@ void func_800D5904(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
     twinfeeler->cylinder.field_2 = Q12(0.4f);
     sharedFunc_800CD920_3_s03(twinfeeler, posX, posZ);
 
-    twinfeeler->field_D8.offsetX_0 = twinfeeler->field_D8.offsetX_4;
-    twinfeeler->field_D8.offsetZ_2 = twinfeeler->field_D8.offsetZ_6;
+    twinfeeler->shapeOffsets.box.vx = twinfeeler->shapeOffsets.cylinder.vx;
+    twinfeeler->shapeOffsets.box.vz = twinfeeler->shapeOffsets.cylinder.vz;
 }
 
 void func_800D59C0(s_LinkedBone* bone) // 0x800D59C0

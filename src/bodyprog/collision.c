@@ -371,9 +371,9 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset
     s32              charaCount;
     bool             cond;
 
-    collQuery.position.vx = chara->position.vx + chara->field_D8.offsetX_4;
+    collQuery.position.vx = chara->position.vx + chara->shapeOffsets.cylinder.vx;
     collQuery.position.vy = chara->position.vy - Q12(0.02f);
-    collQuery.position.vz = chara->position.vz + chara->field_D8.offsetZ_6;
+    collQuery.position.vz = chara->position.vz + chara->shapeOffsets.cylinder.vz;
 
     if (func_800426E4(chara->position.vx, chara->position.vz) == NULL)
     {
@@ -384,7 +384,7 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset
     collQuery.rotation.vy = chara->box.field_0;
     collQuery.rotation.vx = chara->box.field_2;
     collQuery.rotation.vz = chara->cylinder.radius;
-    collQuery.field_12 = chara->field_E1_0;
+    collQuery.field_12 = chara->collisionState;
 
     offsetCpy = *offset;
 
@@ -426,8 +426,8 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
     static s_SubCharacter** curActiveChara; /** Array of active characters. */
 
     if (excludedChara != NULL &&
-        (excludedChara->model.charaId == Chara_None || excludedChara->field_E1_0 == 0 ||
-        (excludedChara->field_E1_0 == 1 && includePlayer == true)))
+        (excludedChara->model.charaId == Chara_None || excludedChara->collisionState == 0 ||
+        (excludedChara->collisionState == 1 && includePlayer == true)))
     {
         *charaCount = 0;
         return &activeCharas;
@@ -440,11 +440,11 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
     {
         if (curChara->model.charaId != Chara_None)
         {
-            if (curChara->field_E1_0 != 0 &&
-                (curChara->field_E1_0 != 1 || includePlayer != true) &&
+            if (curChara->collisionState != 0 &&
+                (curChara->collisionState != 1 || includePlayer != true) &&
                 curChara != excludedChara &&
-                (includePlayer != true || excludedChara == NULL || excludedChara->field_E1_0 != 4 ||
-                 curChara->field_E1_0 >= excludedChara->field_E1_0))
+                (includePlayer != true || excludedChara == NULL || excludedChara->collisionState != 4 ||
+                 curChara->collisionState >= excludedChara->collisionState))
             {
                 *charaCount += 1;
                 *curActiveChara = curChara;
@@ -457,10 +457,10 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
     curChara = &g_SysWork.playerWork.player;
     if (curChara->model.charaId != Chara_None)
     {
-        if (curChara->field_E1_0 != 0 &&
-            (curChara->field_E1_0 != 1 || includePlayer != true) &&
+        if (curChara->collisionState != 0 &&
+            (curChara->collisionState != 1 || includePlayer != true) &&
             curChara != excludedChara &&
-            (includePlayer != true || excludedChara == NULL || excludedChara->field_E1_0 != 4 || curChara->field_E1_0 >= excludedChara->field_E1_0))
+            (includePlayer != true || excludedChara == NULL || excludedChara->collisionState != 4 || curChara->collisionState >= excludedChara->collisionState))
         {
             *charaCount += 1;
             *curActiveChara = curChara;
@@ -572,18 +572,18 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
             chara  = *curChara;
             var_a0 = (chara->cylinder.radius >> 4) + collState.field_4.field_28;
 
-            if (chara->field_E1_0 < (u32)collState.field_4.field_0)
+            if (chara->collisionState < (u32)collState.field_4.field_0)
             {
                 var_a0 -= 15;
             }
 
-            collState.field_98.field_0 = Q12_TO_Q8(chara->position.vx + chara->field_D8.offsetX_4);
-            collState.field_9C.field_0 = Q12_TO_Q8(chara->position.vz + chara->field_D8.offsetZ_6);
+            collState.field_98.field_0 = Q12_TO_Q8(chara->position.vx + chara->shapeOffsets.cylinder.vx);
+            collState.field_9C.field_0 = Q12_TO_Q8(chara->position.vz + chara->shapeOffsets.cylinder.vz);
 
             collState.field_A0.s_1.field_0 = Q12_TO_Q8(chara->box.field_0 + chara->position.vy);
             collState.field_A0.s_1.field_2 = Q12_TO_Q8(chara->box.field_2 + chara->position.vy);
             collState.field_A0.s_1.field_4 = var_a0;
-            collState.field_A0.s_1.field_6 = chara->field_E1_0;
+            collState.field_A0.s_1.field_6 = chara->collisionState;
             collState.field_A0.s_1.field_8 = &chara->field_E0;
 
             if (collState.field_0_0 == 0)
@@ -676,7 +676,7 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
     for (i = 0; i < charaCount; i++)
     {
         curChara = charas[i];
-        if (!curChara->field_E1_0 || curChara->field_E1_0 == (1 << 0) || curChara->field_E1_0 >= collQuery->field_12)
+        if (!curChara->collisionState || curChara->collisionState == (1 << 0) || curChara->collisionState >= collQuery->field_12)
         {
             continue;
         }
@@ -692,8 +692,8 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
             continue;
         }
 
-        posX = (curChara->position.vx + curChara->field_D8.offsetX_4) - collQuery->position.vx;
-        posZ = (curChara->position.vz + curChara->field_D8.offsetZ_6) - collQuery->position.vz;
+        posX = (curChara->position.vx + curChara->shapeOffsets.cylinder.vx) - collQuery->position.vx;
+        posZ = (curChara->position.vz + curChara->shapeOffsets.cylinder.vz) - collQuery->position.vz;
 
         mag = Vc_VectorMagnitudeCalc(posX, Q12(0.0f), posZ);
         if (((curChara->cylinder.radius + collQuery->rotation.vz) + Q12_ANGLE(36.0f)) < mag)
@@ -3016,15 +3016,15 @@ void func_8006EE0C(s_RayState_6C* arg0, s32 arg1, s_SubCharacter* chara) // 0x80
     if (arg1 == 1)
     {
         arg0->field_C = Q12_TO_Q8(chara->cylinder.radius);
-        offsetX       = chara->field_D8.offsetX_4;
-        offsetZ       = chara->field_D8.offsetZ_6;
+        offsetX       = chara->shapeOffsets.cylinder.vx;
+        offsetZ       = chara->shapeOffsets.cylinder.vz;
         unkY          = chara->position.vy + chara->box.field_2;
     }
     else
     {
         arg0->field_C = Q12_TO_Q8(chara->cylinder.field_2);
-        offsetX       = chara->field_D8.offsetX_0;
-        offsetZ       = chara->field_D8.offsetZ_2;
+        offsetX       = chara->shapeOffsets.box.vx;
+        offsetZ       = chara->shapeOffsets.box.vz;
         unkY          = chara->position.vy + chara->box.field_4;
     }
 
@@ -3792,11 +3792,11 @@ void func_80070400(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* key
     chara->box.field_2   = FP_FROM((keyframe0->box.top * invAlpha) + (keyframe1->box.top * alpha), Q12_SHIFT);
     chara->box.field_4   = FP_FROM((keyframe0->box.height * invAlpha) + (keyframe1->box.height * alpha), Q12_SHIFT);
     chara->box.field_6   = FP_FROM((keyframe0->box.offsetY * invAlpha) + (keyframe1->box.offsetY * alpha), Q12_SHIFT);
-    chara->field_D8.offsetX_4 = FP_FROM((keyframe0->collisionCenterX * invAlpha) + (keyframe1->collisionCenterX * alpha), Q12_SHIFT);
-    chara->field_D8.offsetZ_6 = FP_FROM((keyframe0->collisionCenterZ * invAlpha) + (keyframe1->collisionCenterZ * alpha), Q12_SHIFT);
+    chara->shapeOffsets.cylinder.vx = FP_FROM((keyframe0->collisionCenterX * invAlpha) + (keyframe1->collisionCenterX * alpha), Q12_SHIFT);
+    chara->shapeOffsets.cylinder.vz = FP_FROM((keyframe0->collisionCenterZ * invAlpha) + (keyframe1->collisionCenterZ * alpha), Q12_SHIFT);
     chara->cylinder.radius  = FP_FROM((keyframe0->field_8 * invAlpha) + (keyframe1->field_8 * alpha), Q12_SHIFT);
-    chara->field_D8.offsetX_0 = FP_FROM((keyframe0->hitboxCenterX * invAlpha) + (keyframe1->hitboxCenterX * alpha), Q12_SHIFT);
-    chara->field_D8.offsetZ_2 = FP_FROM((keyframe0->hitboxCenterZ * invAlpha) + (keyframe1->hitboxCenterZ * alpha), Q12_SHIFT);
+    chara->shapeOffsets.box.vx = FP_FROM((keyframe0->hitboxCenterX * invAlpha) + (keyframe1->hitboxCenterX * alpha), Q12_SHIFT);
+    chara->shapeOffsets.box.vz = FP_FROM((keyframe0->hitboxCenterZ * invAlpha) + (keyframe1->hitboxCenterZ * alpha), Q12_SHIFT);
     chara->cylinder.field_2   = FP_FROM((keyframe0->field_A * invAlpha) + (keyframe1->field_A * alpha), Q12_SHIFT);
 }
 

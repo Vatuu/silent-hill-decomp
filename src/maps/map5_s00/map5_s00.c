@@ -69,8 +69,8 @@ void func_800D5CC4(s32 x, s32 y, s32 val) // 0x800D5CC4
 
     ptr = FS_BUFFER_1;
 
-    offsetX = ptr->field_D84 & 0xFFFF;
-    offsetY = ptr->field_D84 >> 16;
+    offsetX = ptr->shapeOffsets4 & 0xFFFF;
+    offsetY = ptr->shapeOffsets4 >> 16;
 
     col = (x + 41) - offsetX;
     row = (y + 81) - offsetY;
@@ -159,12 +159,12 @@ void func_800D5EE8(void) // 0x800D5EE8
     packet = GsOUT_PACKET_P;
     poly   = packet;
 
-    x = (ptr->field_D84 & 0xFFFF) - 41;
-    y = ((u32)ptr->field_D84 >> 16) - 81;
+    x = (ptr->shapeOffsets4 & 0xFFFF) - 41;
+    y = ((u32)ptr->shapeOffsets4 >> 16) - 81;
 
     idx = g_ActiveBufferIdx;
     ot    = g_OrderingTable0[idx].org;
-    ot    = &ot[ptr->field_D88 >> 1];
+    ot    = &ot[ptr->shapeOffsets8 >> 1];
 
     col  = 0x3A000000;
     code = 0x3A;
@@ -355,8 +355,8 @@ void func_800D6414(void) // 0x800D6414
         return;
     }
 
-    func_800D631C(&buf->field_4, buf->field_D8C);
-    buf->field_D88 = func_800D63DC(&buf->field_D84);
+    func_800D631C(&buf->field_4, buf->shapeOffsetsC);
+    buf->shapeOffsets8 = func_800D63DC(&buf->shapeOffsets4);
 
     func_800D5D90();
     func_800D61D4();
@@ -367,7 +367,7 @@ void func_800D6490(VECTOR3* arg0) // 0x800D6490
 {
     s_func_800D5B00* buf = FS_BUFFER_1;
 
-    buf->field_D8C  = 0;
+    buf->shapeOffsetsC  = 0;
     buf->field_D90  = 9830;
     buf->field_4.vx = Q12_TO_Q8(arg0->vx);
     buf->field_4.vy = Q12_TO_Q8(arg0->vy);

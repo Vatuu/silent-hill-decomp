@@ -44,7 +44,7 @@ s32 Chara_NpcIdxGet(s_SubCharacter* chara) // 0x8005C7D0
     return NO_VALUE;
 }
 
-void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara) // 0x8005C814
+void func_8005C814(s_CharacterShapeOffsets* offsets, s_SubCharacter* chara) // 0x8005C814
 {
     q3_12 sinRotY;
     q3_12 cosRotY;
@@ -53,18 +53,18 @@ void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara) // 0x8005C814
     q3_12 offsetZ0;
     q3_12 offsetZ1;
 
-    offsetX0 = arg0->offsetX_0;
-    offsetZ0 = arg0->offsetZ_2;
-    offsetX1 = arg0->offsetX_4;
-    offsetZ1 = arg0->offsetZ_6;
+    offsetX0 = offsets->box.vx;
+    offsetZ0 = offsets->box.vz;
+    offsetX1 = offsets->cylinder.vx;
+    offsetZ1 = offsets->cylinder.vz;
 
     cosRotY = Math_Cos(chara->rotation.vy);
     sinRotY = Math_Sin(chara->rotation.vy);
 
-    chara->field_D8.offsetX_0 = FP_FROM(( offsetX0 * cosRotY) + (offsetZ0 * sinRotY), Q12_SHIFT);
-    chara->field_D8.offsetZ_2 = FP_FROM((-offsetX0 * sinRotY) + (offsetZ0 * cosRotY), Q12_SHIFT);
-    chara->field_D8.offsetX_4 = FP_FROM(( offsetX1 * cosRotY) + (offsetZ1 * sinRotY), Q12_SHIFT);
-    chara->field_D8.offsetZ_6 = FP_FROM((-offsetX1 * sinRotY) + (offsetZ1 * cosRotY), Q12_SHIFT);
+    chara->shapeOffsets.box.vx = FP_FROM(( offsetX0 * cosRotY) + (offsetZ0 * sinRotY), Q12_SHIFT);
+    chara->shapeOffsets.box.vz = FP_FROM((-offsetX0 * sinRotY) + (offsetZ0 * cosRotY), Q12_SHIFT);
+    chara->shapeOffsets.cylinder.vx = FP_FROM(( offsetX1 * cosRotY) + (offsetZ1 * sinRotY), Q12_SHIFT);
+    chara->shapeOffsets.cylinder.vz = FP_FROM((-offsetX1 * sinRotY) + (offsetZ1 * cosRotY), Q12_SHIFT);
 }
 
 s32 func_8005C944(s_SubCharacter* chara, s_CollisionResult* collResult) // 0x8005C944
@@ -188,9 +188,9 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
         return false;
     }
 
-    unkPos.vx = (npc.position.vx + npc.field_D8.offsetX_0) - from->vx;
+    unkPos.vx = (npc.position.vx + npc.shapeOffsets.box.vx) - from->vx;
     unkPos.vy = (npc.position.vy + npc.box.field_6) - from->vy;
-    unkPos.vz = (npc.position.vz + npc.field_D8.offsetZ_2) - from->vz;
+    unkPos.vz = (npc.position.vz + npc.shapeOffsets.box.vz) - from->vz;
 
     mag0 = Math_Vector2MagCalc(unkPos.vx, unkPos.vz);
     angle0 = ratan2(unkPos.vx, unkPos.vz);
@@ -212,9 +212,9 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
             continue;
         }
 
-        unkPos.vx = (curNpc.position.vx + curNpc.field_D8.offsetX_0) - from->vx;
+        unkPos.vx = (curNpc.position.vx + curNpc.shapeOffsets.box.vx) - from->vx;
         unkPos.vy = (curNpc.position.vy + curNpc.box.field_6) - from->vy;
-        unkPos.vz = (curNpc.position.vz + curNpc.field_D8.offsetZ_2) - from->vz;
+        unkPos.vz = (curNpc.position.vz + curNpc.shapeOffsets.box.vz) - from->vz;
 
         angle2 = ratan2(unkPos.vx, unkPos.vz);
         if (angleConstraint < ABS(Math_AngleNormalizeSigned(angle0 - angle2)))

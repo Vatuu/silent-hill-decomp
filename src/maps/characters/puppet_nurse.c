@@ -84,8 +84,8 @@ void sharedFunc_800CD7F8_3_s03(s_SubCharacter* chara, q19_12 offsetX, q19_12 off
     q19_12 scaledExtraOffsetZ;
 
     // Compute extra offset.
-    extraOffsetX = chara->field_D8.offsetX_4 - offsetX;
-    extraOffsetZ = chara->field_D8.offsetZ_6 - offsetZ;
+    extraOffsetX = chara->shapeOffsets.cylinder.vx - offsetX;
+    extraOffsetZ = chara->shapeOffsets.cylinder.vz - offsetZ;
 
     // Apply extra offset if its distance exceeds a threshold.
     extraDistSqr = Q12_SQUARE_PRECISE(extraOffsetX) +
@@ -118,8 +118,8 @@ void sharedFunc_800CD7F8_3_s03(s_SubCharacter* chara, q19_12 offsetX, q19_12 off
     }
 
     // Set translation offset.
-    chara->field_D8.offsetX_4 = offsetX;
-    chara->field_D8.offsetZ_6 = offsetZ;
+    chara->shapeOffsets.cylinder.vx = offsetX;
+    chara->shapeOffsets.cylinder.vz = offsetZ;
 }
 
 void sharedFunc_800CD920_3_s03(s_SubCharacter* chara, q19_12 offsetX, q19_12 offsetZ)
@@ -239,7 +239,7 @@ void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isPuppetDoctor)
     chara2 = nurse; // TODO: Not sure why this is needed, possibly an inline here somewhere?
 
     nurse->moveSpeed                = Q12(0.0f);
-    nurse->field_E1_0                  = 3;
+    nurse->collisionState                  = 3;
     nurse->headingAngle             = nurse->rotation.vy;
     nurseProps.position_E8             = nurse->position;
     nurse->cylinder.radius           = Q12(0.3f);
@@ -587,7 +587,7 @@ void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor)
         Ai_PuppetNurse_SfxPlay(nurse, 2);
 
         nurse->model.anim.status = g_PuppetNurse_AnimStatus0[isDoctor];
-        nurse->field_E1_0              = 4;
+        nurse->collisionState              = 4;
         nurse->flags               |= CharaFlag_Unk2;
         nurse->model.stateStep++;
     }
@@ -599,7 +599,7 @@ void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor)
         if (Chara_NpcIdxGet(nurse) != g_SysWork.targetNpcIdx && nurse->health == Q12(0.0f))
         {
             nurse->health  = NO_VALUE;
-            nurse->field_E1_0 = 0;
+            nurse->collisionState = 0;
             func_800622B8(3, nurse, g_PuppetNurse_AnimStatus1[isDoctor], 11);
 
             localNurse->properties.puppetNurse.flags_122 |= PuppetNurseFlag_1;
@@ -1638,8 +1638,8 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords)
     unkQ12                    = sharedFunc_800CD940_3_s03(unkQ12 + Q12(0.05f), nurse->cylinder.radius);
     nurse->cylinder.field_2   = unkQ12 - Q12(0.05f);
     nurse->cylinder.radius  = unkQ12;
-    nurse->field_D8.offsetX_0 = deltaX;
-    nurse->field_D8.offsetZ_2 = deltaY;
+    nurse->shapeOffsets.box.vx = deltaX;
+    nurse->shapeOffsets.box.vz = deltaY;
 
     sharedFunc_800CD920_3_s03(nurse, deltaX, deltaY);
 

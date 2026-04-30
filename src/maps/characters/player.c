@@ -267,7 +267,7 @@ void Player_ControlFreeze(void)
     playerChara->cylinder.field_2                               = Q12(0.0f);
     g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
     playerChara->flags                                      |= CharaFlag_Unk4;
-    playerChara->field_E1_0                                     = 4;
+    playerChara->collisionState                                     = 4;
 
     if (g_SysWork.playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
     {
@@ -335,17 +335,17 @@ void Player_ControlUnfreeze(bool setIdle)
     g_SysWork.playerWork.player.box.field_0                = Q12(-1.6f);
     g_SysWork.playerWork.player.box.field_6                = Q12(-1.1f);
     g_SysWork.playerWork.player.box.field_2                = Q12(0.0f);
-    g_SysWork.playerWork.player.field_D8.offsetZ_6              = Q12(0.0f);
-    g_SysWork.playerWork.player.field_D8.offsetX_4              = Q12(0.0f);
-    g_SysWork.playerWork.player.field_D8.offsetZ_2              = Q12(0.0f);
-    g_SysWork.playerWork.player.field_D8.offsetX_0              = Q12(0.0f);
+    g_SysWork.playerWork.player.shapeOffsets.cylinder.vz              = Q12(0.0f);
+    g_SysWork.playerWork.player.shapeOffsets.cylinder.vx              = Q12(0.0f);
+    g_SysWork.playerWork.player.shapeOffsets.box.vz              = Q12(0.0f);
+    g_SysWork.playerWork.player.shapeOffsets.box.vx              = Q12(0.0f);
     g_SysWork.playerWork.player.properties.player.flags_11C &= ~(PlayerFlag_Unk2 |
                                                                     PlayerFlag_SfxActive |
                                                                     PlayerFlag_DamageReceived |
                                                                     PlayerFlag_Moving);
 
     player->flags  &= ~CharaFlag_Unk4;
-    player->field_E1_0 = 3;
+    player->collisionState = 3;
 
     Player_AnimFlagsSet(AnimFlag_Unlocked);
 
@@ -887,14 +887,14 @@ bool sharedFunc_800D2E94_0_s00(void)
             npcChara->field_40           = 0;
             npcChara->box.field_6   = 0;
             npcChara->box.field_8   = 0;
-            npcChara->field_D8.offsetZ_6 = Q12(0.0f);
-            npcChara->field_D8.offsetX_4 = Q12(0.0f);
-            npcChara->field_D8.offsetZ_2 = Q12(0.0f);
-            npcChara->field_D8.offsetX_0 = Q12(0.0f);
+            npcChara->shapeOffsets.cylinder.vz = Q12(0.0f);
+            npcChara->shapeOffsets.cylinder.vx = Q12(0.0f);
+            npcChara->shapeOffsets.box.vz = Q12(0.0f);
+            npcChara->shapeOffsets.box.vx = Q12(0.0f);
             npcChara->position.vx     = Q12(-262.0f);
             npcChara->position.vy     = Q12(-1.1f);
             npcChara->position.vz     = Q12(-104.0f);
-            npcChara->field_E1_0         = 3;
+            npcChara->collisionState         = 3;
             npcChara->model.stateStep++;
             npcChara->flags               |= CharaFlag_Unk3;
             npcChara->model.anim.flags &= ~(AnimFlag_Visible | AnimFlag_Unlocked);

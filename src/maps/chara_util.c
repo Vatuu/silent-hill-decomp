@@ -681,10 +681,10 @@ void sharedFunc_800D923C_0_s00(s_SubCharacter* chara)
     chara->box.field_6   = Q12(0.0f);
     chara->cylinder.radius  = Q12(0.0f);
     chara->cylinder.field_2   = Q12(0.0f);
-    chara->field_D8.offsetZ_6 = Q12(0.0f);
-    chara->field_D8.offsetX_4 = Q12(0.0f);
-    chara->field_D8.offsetZ_2 = Q12(0.0f);
-    chara->field_D8.offsetX_0 = Q12(0.0f);
+    chara->shapeOffsets.cylinder.vz = Q12(0.0f);
+    chara->shapeOffsets.cylinder.vx = Q12(0.0f);
+    chara->shapeOffsets.box.vz = Q12(0.0f);
+    chara->shapeOffsets.box.vx = Q12(0.0f);
 
     chara->properties.player.positionY_EC = Q12(0.0f);
     chara->properties.player.afkTimer_E8  = Q12(0.0f);
@@ -694,7 +694,7 @@ void sharedFunc_800D923C_0_s00(s_SubCharacter* chara)
 
     chara->model.controlState++;
 
-    chara->field_E1_0 = 3;
+    chara->collisionState = 3;
 }
 
 #undef CHARA_CASE

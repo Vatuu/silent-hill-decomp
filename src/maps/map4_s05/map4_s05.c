@@ -57,7 +57,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
 
     floatstinger->moveSpeed = Q12(0.0f);
     floatstinger->fallSpeed = Q12(0.0f);
-    floatstinger->field_E1_0   = 4;
+    floatstinger->collisionState   = 4;
     Chara_PropertiesClear(floatstinger);
 
     switch (floatstinger->model.stateStep)
@@ -449,9 +449,9 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                 temp_s0_3  = temp_s0_3 << 6;
                 temp_v0_14 = Q12_MULT_PRECISE(temp_s0_3, temp);
 
-                sp20[1].vx = g_SysWork.playerWork.player.position.vx + g_SysWork.playerWork.player.field_D8.offsetX_0 +
+                sp20[1].vx = g_SysWork.playerWork.player.position.vx + g_SysWork.playerWork.player.shapeOffsets.box.vx +
                              Q12_MULT(temp_v0_14, Math_Sin(temp_s1));
-                sp20[1].vz = g_SysWork.playerWork.player.position.vz + g_SysWork.playerWork.player.field_D8.offsetZ_2 +
+                sp20[1].vz = g_SysWork.playerWork.player.position.vz + g_SysWork.playerWork.player.shapeOffsets.box.vz +
                              Q12_MULT(temp_v0_14, Math_Cos(temp_s1));
 
                 temp_v0_4 = Q12_MULT_PRECISE(g_SysWork.playerWork.player.position.vy - D_800DB8C8[7].vy, Rng_GenerateUInt(Q12(1.0f), Q12(2.0f) - 1));
@@ -861,10 +861,10 @@ void func_800D3AD4(s_SubCharacter* floatstinger) // 0x800D3AD4
         floatstinger->box.field_4   = ptr->field_50[0].vy - floatstinger->position.vy;
         floatstinger->cylinder.radius  = Q12(0.4f);
         floatstinger->cylinder.field_2   = Q12(0.4f);
-        floatstinger->field_D8.offsetX_0 = ((ptr->field_50[0].vx + ptr->field_50[1].vx) >> 1) - floatstinger->position.vx;
-        floatstinger->field_D8.offsetX_4 = floatstinger->field_D8.offsetX_0;
-        floatstinger->field_D8.offsetZ_2 = (ptr->field_50[0].vz + ptr->field_50[1].vz >> 1) - floatstinger->position.vz;
-        floatstinger->field_D8.offsetZ_6 = floatstinger->field_D8.offsetZ_2;
+        floatstinger->shapeOffsets.box.vx = ((ptr->field_50[0].vx + ptr->field_50[1].vx) >> 1) - floatstinger->position.vx;
+        floatstinger->shapeOffsets.cylinder.vx = floatstinger->shapeOffsets.box.vx;
+        floatstinger->shapeOffsets.box.vz = (ptr->field_50[0].vz + ptr->field_50[1].vz >> 1) - floatstinger->position.vz;
+        floatstinger->shapeOffsets.cylinder.vz = floatstinger->shapeOffsets.box.vz;
     }
     else
     {
@@ -872,10 +872,10 @@ void func_800D3AD4(s_SubCharacter* floatstinger) // 0x800D3AD4
         floatstinger->box.field_4   = ptr->field_50[2].vy - floatstinger->position.vy;
         floatstinger->cylinder.radius  = Q12(0.5f);
         floatstinger->cylinder.field_2   = Q12(0.5f);
-        floatstinger->field_D8.offsetX_0 = ((ptr->field_50[0].vx + ptr->field_50[2].vx) >> 1) - floatstinger->position.vx;
-        floatstinger->field_D8.offsetX_4 = floatstinger->field_D8.offsetX_0;
-        floatstinger->field_D8.offsetZ_2 = (ptr->field_50[0].vz + ptr->field_50[2].vz >> 1) - floatstinger->position.vz;
-        floatstinger->field_D8.offsetZ_6 = floatstinger->field_D8.offsetZ_2;
+        floatstinger->shapeOffsets.box.vx = ((ptr->field_50[0].vx + ptr->field_50[2].vx) >> 1) - floatstinger->position.vx;
+        floatstinger->shapeOffsets.cylinder.vx = floatstinger->shapeOffsets.box.vx;
+        floatstinger->shapeOffsets.box.vz = (ptr->field_50[0].vz + ptr->field_50[2].vz >> 1) - floatstinger->position.vz;
+        floatstinger->shapeOffsets.cylinder.vz = floatstinger->shapeOffsets.box.vz;
     }
 
     if (((ptr->field_50[0].vy + ptr->field_50[1].vy) >> 1) > (g_SysWork.playerWork.player.position.vy - Q12(1.4f)))

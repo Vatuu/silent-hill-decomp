@@ -439,8 +439,8 @@ void func_8005E89C(void) // 0x8005E89C
                 chara = &g_SysWork.npcs[D_800C42E8[i].field_1];
             }
 
-            ptr->field_34[i] = CLAMP_CUSTOM((chara->position.vx + chara->field_D8.offsetX_0) - D_800C42E8[i].field_4,
-                                            (chara->position.vx + chara->field_D8.offsetX_0) - curPtr->field_4,
+            ptr->field_34[i] = CLAMP_CUSTOM((chara->position.vx + chara->shapeOffsets.box.vx) - D_800C42E8[i].field_4,
+                                            (chara->position.vx + chara->shapeOffsets.box.vx) - curPtr->field_4,
                                             -Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)),
                                              Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)));
 
@@ -449,8 +449,8 @@ void func_8005E89C(void) // 0x8005E89C
                                             -Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)) >> 4,
                                             Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)));
 
-            ptr->field_94[i] = CLAMP_CUSTOM((chara->position.vz + chara->field_D8.offsetZ_2) - D_800C42E8[i].field_8,
-                                            (chara->position.vz + chara->field_D8.offsetZ_2) - curPtr->field_8,
+            ptr->field_94[i] = CLAMP_CUSTOM((chara->position.vz + chara->shapeOffsets.box.vz) - D_800C42E8[i].field_8,
+                                            (chara->position.vz + chara->shapeOffsets.box.vz) - curPtr->field_8,
                                             -Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)),
                                              Q12_MULT_PRECISE(g_DeltaTime, Q12(1.25f)));
 
@@ -802,9 +802,9 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
         {
             D_800C42E8[i].field_0 = 1;
             D_800C42E8[i].field_1 = Chara_NpcIdxGet(chara);
-            D_800C42E8[i].field_4 = chara->position.vx + chara->field_D8.offsetX_0;
+            D_800C42E8[i].field_4 = chara->position.vx + chara->shapeOffsets.box.vx;
             D_800C42E8[i].field_2 = chara->position.vy + chara->box.field_6;
-            D_800C42E8[i].field_8 = chara->position.vz + chara->field_D8.offsetZ_2;
+            D_800C42E8[i].field_8 = chara->position.vz + chara->shapeOffsets.box.vz;
         }
     }
     else
