@@ -155,4 +155,6 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner);
     { Anim_PlaybackOnce, ANIM_STATUS(23, true), false, ANIM_STATUS(14, false), { Q12(12) }, 244, 264 }
 };*/
 
+extern s_AnimInfo GROANER_ANIM_INFOS[];
+
 #endif

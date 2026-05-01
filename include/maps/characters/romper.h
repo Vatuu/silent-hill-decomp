@@ -62,6 +62,8 @@ typedef enum _RomperControl
     RomperControl_GrabAttack  = 11
 } e_RomperControl;
 
+extern s_AnimInfo ROMPER_ANIM_INFOS[];
+
 void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void Ai_Romper_Init(s_SubCharacter* romper);

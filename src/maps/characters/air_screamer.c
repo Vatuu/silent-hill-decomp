@@ -13125,15 +13125,15 @@ bool sharedFunc_800D81B0_0_s01(s_SubCharacter* airScreamer)
 
 void sharedFunc_800D81D0_0_s01(s_SubCharacter* airScreamer)
 {
-    sharedData_800E21D0_0_s01.field_9C = airScreamer->collision.box;
-    sharedData_800E21D0_0_s01.cylinder = airScreamer->collision.cylinder;
+    sharedData_800E21D0_0_s01.box          = airScreamer->collision.box;
+    sharedData_800E21D0_0_s01.cylinder     = airScreamer->collision.cylinder;
     sharedData_800E21D0_0_s01.shapeOffsets = airScreamer->collision.shapeOffsets;
 }
 
 void sharedFunc_800D8244_0_s01(s_SubCharacter* airScreamer)
 {
-    airScreamer->collision.box = sharedData_800E21D0_0_s01.field_9C;
-    airScreamer->collision.cylinder = sharedData_800E21D0_0_s01.cylinder;
+    airScreamer->collision.box          = sharedData_800E21D0_0_s01.box;
+    airScreamer->collision.cylinder     = sharedData_800E21D0_0_s01.cylinder;
     airScreamer->collision.shapeOffsets = sharedData_800E21D0_0_s01.shapeOffsets;
 }
 void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)

@@ -9,18 +9,7 @@
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
 
-// BIG TODO: Move tables below to wherever they belong when data migration is performed. I've split these into alphabetised player and NPC sections
-// to make them easier to sort through. -- Sezz
-//
-// Noteworthy things:
-// - The player has one base Harry anim info table plus several unique tables per map, wherea NPCs share single tables across maps.
-// - Cybil's table is near-identical bewteen the two maps in which it's used, with minor differences in frame ranges for three of its entires.
-// - Harry's tables tend to have a zeroed out anim info as their last entry.
-// - Anim 0 of each character is a still frame, possibly used as a "home" pose.
-
-// ===========
-// NPC TABLES
-// ===========
+// TODO: Reference tables. Need proper data migration.
 
 /*s_AnimInfo BLOODY_INCUBATOR_ANIM_INFOS[] = {
     { Anim_BlendLinear, ANIM_STATUS(0,  false), false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
@@ -107,35 +96,35 @@ typedef struct _SfxVolume
 
 typedef struct
 {
-    s_AnimInfo  animInfo_0[56];
-    s32         field_380[301][2]; // Unknown size, biggest constant index used is 35. Associated with anims.
-    s_SfxVolume sfxVolumes_CE8[11];
-    u_Property  properties_D14[4];
-    u16         field_D24[2][3][2];
-    u8          field_D3C[2][6];
-    SVECTOR*    ptr_D48[5];
-    s16         field_D5C[4][2]; // Related to animations. Move offset distances?
-    s8          unk_D6C[4];
-    s16         field_D70[2][2];
+    /* 0x0   */ s_AnimInfo  animInfo_0[56];
+    /* 0x380 */ s32         field_380[301][2]; // Unknown size, biggest constant index used is 35. Associated with anims.
+    /* 0xCE8 */ s_SfxVolume sfxVolumes_CE8[11];
+    /* 0xD14 */ u_Property  properties_D14[4];
+    /* 0xD24 */ u16         field_D24[2][3][2];
+    /* 0xD3C */ u8          field_D3C[2][6];
+    /* 0xD48 */ SVECTOR*    ptr_D48[5];
+    /* 0xD5C */ s16         field_D5C[4][2]; // Related to animations. Move offset distances?
+    /* 0xD6C */ s8          unk_D6C[4];
+    /* 0xD70 */ s16         field_D70[2][2];
 } s_func_800D2E04;
 
 typedef struct
 {
-    s32                 flags_0;
-    s_AnmHeader*        anmHdr_4;
-    GsCOORDINATE2*      coords_8;
-    VECTOR3             matrices_C[1]; // Unknown size.
-    s8                  unk_10[132];
-    s_CharaBox          field_9C;
-    s_CharaCylinder     cylinder;
-    s_CharaShapeOffsets shapeOffsets;
-    s32                 field_B4[6][4]; // [*][3] is angle.
-    s32                 field_114;
-    s32                 field_118;
-    VECTOR3             field_11C; // Q19.12
-    VECTOR3             field_128;
-    VECTOR3             field_134;
-    VECTOR3             field_140;
+    /* 0x0   */ s32                 flags_0;
+    /* 0x4   */ s_AnmHeader*        anmHdr_4;
+    /* 0x8   */ GsCOORDINATE2*      coords_8;
+    /* 0xC   */ VECTOR3             matrices_C[1]; // Unknown size.
+    /* 0x10  */ s8                  unk_10[132];
+    /* 0x94  */ s_CharaBox          box;
+    /* 0xA0  */ s_CharaCylinder     cylinder;
+    /* 0xA4  */ s_CharaShapeOffsets shapeOffsets;
+    /* 0xAC  */ s32                 field_B4[6][4]; // [*][3] is angle.
+    /* 0x114 */ s32                 field_114;
+    /* 0x118 */ s32                 field_118;
+    /* 0x11C */ VECTOR3             field_11C; // Q19.12
+    /* 0x128 */ VECTOR3             field_128;
+    /* 0x134 */ VECTOR3             field_134;
+    /* 0x140 */ VECTOR3             field_140;
     union
     {
         struct
@@ -244,26 +233,14 @@ extern u16 sharedData_800E3A0C_0_s00[];  // Angles?
 extern q19_12 sharedData_800E3A18_0_s00; // Player X position?
 extern q19_12 sharedData_800E3A1C_0_s00; // Player Z position?
 
-extern s_AnimInfo LARVAL_STALKER_ANIM_INFOS[]; // Used by `Ai_LarvalStalker_Init`.
-
-extern s_AnimInfo STALKER_ANIM_INFOS[]; // Used by `Ai_Stalker_Init`.
-
 // Two variables used by `Ai_Creeper_Init`.
-extern s_AnimInfo CREEPER_ANIM_INFOS[];
 extern s8 sharedData_800E57CC_1_s02;
 
 extern s_sharedData_800E21D0_0_s01 sharedData_800E21D0_0_s01;
 
 extern s_func_800D2E04 const sharedData_800CAA98_0_s01; // Used by `Ai_AirScreamer_Init` / `sharedFunc_800D2BF4_0_s01`
 
-extern s_AnimInfo ROPMER_ANIM_INFOS[];
-
-extern s_AnimInfo GROANER_ANIM_INFOS[];
-
-extern s_AnimInfo HANGED_SCRATCHER_ANIM_INFOS[];
-
 // Three variables used by `Ai_SplitHead_Init`.
-extern s_AnimInfo SPLIT_HEAD_ANIM_INFOS[];
 extern q3_12 sharedData_800D8614_1_s05; // Offset X.
 extern q3_12 sharedData_800D8616_1_s05; // Offset Z.
 
@@ -283,8 +260,6 @@ extern s_sharedData_800D5AB0_1_s05 sharedData_800D5AB0_1_s05[];
 extern s16                         sharedData_800D5BE0_1_s05[6][3];
 
 extern u8  sharedData_800D16E4_2_s01;
-
-extern s_AnimInfo BLOODSUCKER_ANIM_INFOS[];
 
 extern u8 sharedData_800DD591_0_s00;
 extern u8 sharedData_800DD584_0_s00;
@@ -464,19 +439,12 @@ extern SVECTOR sharedData_800DE220_0_s01;
 extern MATRIX sharedData_800DE230_0_s01;
 
 extern s32 g_PuppetNurseHurtSfxIdxs[4];
-
 extern s_SfxPair g_NursePuppetSfxs[18];
-
 extern u8 g_NursePuppet_AnimSfxs[580];
-
 extern s32 g_PuppetNurse_AnimStatus0[2];
-
 extern s32 g_PuppetNurse_AnimStatus1[2];
-
 extern u8  g_PuppetNurse_AnimStatus2[2];
-
 extern u8  g_PuppetNurse_AnimStatus3[4];
-
 extern u8  g_PuppetNurse_AnimStatus4[4];
 
 extern u8      sharedData_800D4CD4_3_s01[][2];

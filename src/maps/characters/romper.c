@@ -74,7 +74,7 @@ void Ai_Romper_Init(s_SubCharacter* romper)
     romperProps.rotationY_F2 = romper->rotation.vy;
     romper->moveSpeed = Q12(0.02175f);
 
-    ModelAnim_AnimInfoSet(&romper->model.anim, ROPMER_ANIM_INFOS);
+    ModelAnim_AnimInfoSet(&romper->model.anim, ROMPER_ANIM_INFOS);
     Chara_DamageClear(romper);
 
     romperProps.targetPositionX_FC = romperProps.positionZ_110 = romper->position.vx;
@@ -1277,7 +1277,7 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCO
         case ANIM_STATUS(RomperAnim_RunForwardLoop, true):
         case ANIM_STATUS(RomperAnim_WalkToRunForwardRightStart, true):
         case ANIM_STATUS(RomperAnim_WalkToRunForwardLeftStart, true):
-            ROPMER_ANIM_INFOS[romper->model.anim.status].duration.constant = sharedData_800EC950_2_s02;
+            ROMPER_ANIM_INFOS[romper->model.anim.status].duration.constant = sharedData_800EC950_2_s02;
             break;
 
         case ANIM_STATUS(RomperAnim_CreepForward, false):
@@ -1285,9 +1285,9 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCO
             break;
 
         case ANIM_STATUS(RomperAnim_CreepForward, true):
-            ROPMER_ANIM_INFOS[29].startKeyframeIdx = romperProps.field_10C + 131;
+            ROMPER_ANIM_INFOS[29].startKeyframeIdx = romperProps.field_10C + 131;
             romperProps.field_10C                  = 0;
-            ROPMER_ANIM_INFOS[romper->model.anim.status].duration.constant = Q12_MULT_PRECISE(MAX(romper->moveSpeed, Q12(1.5f)), Q12(8.32f));
+            ROMPER_ANIM_INFOS[romper->model.anim.status].duration.constant = Q12_MULT_PRECISE(MAX(romper->moveSpeed, Q12(1.5f)), Q12(8.32f));
             break;
 
         case ANIM_STATUS(RomperAnim_RunForwardStart, false):
@@ -1301,7 +1301,7 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCO
 
     Math_MatrixTransform(&romper->position, (SVECTOR*)&romper->rotation, boneCoords);
 
-    animInfo = &ROPMER_ANIM_INFOS[romper->model.anim.status];
+    animInfo = &ROMPER_ANIM_INFOS[romper->model.anim.status];
     animInfo->playbackFunc(&romper->model, anmHdr, boneCoords, animInfo);
 
     switch (romper->model.anim.status)

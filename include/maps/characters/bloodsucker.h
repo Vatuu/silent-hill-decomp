@@ -32,6 +32,8 @@ typedef enum _BloodsuckerControl
     BloodsuckerControl_4    = 4
 } e_BloodsuckerControl;
 
+extern s_AnimInfo BLOODSUCKER_ANIM_INFOS[];
+
 void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void Ai_Bloodsucker_Init(s_SubCharacter* bloodsucker);

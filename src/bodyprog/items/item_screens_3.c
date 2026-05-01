@@ -770,7 +770,7 @@ u8 D_800AE740[][2] = {
 
 bool D_800AE770 = false; // Used by `GameState_MapScreen_Update`.
 
-// `D_800AE774`. `D_800AE7E4`, `D_800AE820` are used by `func_80067914`.
+// `D_800AE774`. `D_800AE7E4`, `D_800AE820` are used by `func_80067914`. TODO: Use `DVECTOR` for these?
 s8 D_800AE774[8][7][2] = {
     { { 0, 0 }, { 0, 0 }, { -43, 90 }, { -48, 72 }, { -51, 42 }, { -48, -32 }, { -47, 68 } },
     { { 0, 0 }, { 0, 0 }, { -1, 82 }, { -33, -2 }, { -8, -80 }, { 64, -80 }, { 0, 0 } },

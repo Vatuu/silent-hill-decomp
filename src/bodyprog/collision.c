@@ -1978,17 +1978,17 @@ void func_8006CF18(s_CollisionState* state, s_func_8006CF18* arg1, s32 idx) // 0
 
     for (curArg1 = arg1; curArg1 < &arg1[idx]; curArg1++)
     {
-        var_a1 = (curArg1->field_10 >> 4) + state->field_4.field_28;
+        var_a1 = Q12_TO_Q8(curArg1->field_10) + state->field_4.field_28;
         if (curArg1->collisionState < (u32)state->field_4.collisionState)
         {
             var_a1 -= 15;
         }
 
-        state->field_98.field_0 = curArg1->position.vx >> 4;
-        state->field_9C.field_0 = curArg1->position.vz >> 4;
+        state->field_98.field_0 = Q12_TO_Q8(curArg1->position.vx);
+        state->field_9C.field_0 = Q12_TO_Q8(curArg1->position.vz);
 
-        state->field_A0.s_1.field_0 = (curArg1->field_E + curArg1->position.vy) >> 4;
-        state->field_A0.s_1.field_2 = (curArg1->field_C + curArg1->position.vy) >> 4;
+        state->field_A0.s_1.field_0 = Q12_TO_Q8(curArg1->field_E + curArg1->position.vy);
+        state->field_A0.s_1.field_2 = Q12_TO_Q8(curArg1->field_C + curArg1->position.vy);
         state->field_A0.s_1.field_4 = var_a1;
         state->field_A0.s_1.collisionState = curArg1->collisionState;
         state->field_A0.s_1.field_8 = &curArg1->field_13;

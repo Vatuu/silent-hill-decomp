@@ -154,6 +154,8 @@ typedef enum _HangedScratcherStateStep
     { Anim_PlaybackLoop, ANIM_STATUS(26, true), false, NO_VALUE, { Q12(0) }, 97, 98 }
 };*/
 
+extern s_AnimInfo HANGED_SCRATCHER_ANIM_INFOS[];
+
 extern q19_12 sharedData_800DE28C_5_s00;
 
 void Ai_HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);

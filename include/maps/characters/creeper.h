@@ -50,6 +50,8 @@ typedef enum _CreeperControl
     CreeperControl_Damage      = 5
 } e_CreeperControl;
 
+extern s_AnimInfo CREEPER_ANIM_INFOS[];
+
 void Ai_Creeper_Update(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void Ai_Creeper_Init(s_SubCharacter* creeper); // `map5_s00` version has extra code at end of func.
