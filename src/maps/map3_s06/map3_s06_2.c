@@ -98,7 +98,7 @@ void func_800D0C14(void) // 0x800D0C14
     {
         case 0:
             Player_ControlFreeze();
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 

@@ -166,7 +166,7 @@ void func_800D13D8(void) // 0x800D13D8
         case 0:
             Player_ControlFreeze();
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
@@ -541,7 +541,7 @@ void func_800D236C(void) // 0x800D236C
             Player_ControlFreeze();
             g_Cutscene_MapMsgAudioIdx1 = 0;
             ScreenFade_ResetTimestep();
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
 
             g_SysWork.playerWork.player.position.vx = Q12(-20.98);
             g_SysWork.playerWork.player.position.vz = Q12(58.67f);

@@ -571,7 +571,7 @@ void func_800D6B00(void) // 0x800D6B00
                 Chara_Spawn(Chara_HangedScratcher, 14, Q12(-94.3f), Q12(-5.5f), Q12_ANGLE(0.0f), 7U);
             }
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
 
             Sd_PlaySfx(Sfx_Unk1575, 0, Q8(0.5f));
             SysWork_StateStepIncrement(0);

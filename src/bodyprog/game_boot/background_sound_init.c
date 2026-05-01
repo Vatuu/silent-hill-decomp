@@ -40,6 +40,10 @@ static u16 g_AmbientVabTaskLoadCmds[40] = {
     196, 197, 198, 199, 200, 201, 202, 203
 };
 
+// ========================================
+// MUSIC INIT & SET
+// ========================================
+
 bool Bgm_Init(void) // 0x80035780
 {
     if (Sd_AudioStreamingCheck() != 0)

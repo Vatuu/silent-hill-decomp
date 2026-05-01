@@ -75,7 +75,7 @@ void func_800D49AC(void) // 0x800D49AC
             Player_ControlFreeze();
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
-            g_SysWork.field_30   = 20;
+            g_SysWork.cutsceneBorderState   = 20;
             g_SysWork.pointLightIntensity = 0;
 
             // Warp camera.

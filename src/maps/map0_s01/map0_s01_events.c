@@ -97,7 +97,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
         case 0:
             Player_ControlFreeze();
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
             g_SysWork.flags_22A4              |= UnkSysFlag_3;
             g_SavegamePtr->itemToggleFlags_AC &= ~ItemToggleFlag_RadioOn;

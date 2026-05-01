@@ -49,9 +49,13 @@ typedef struct
     /* 0x1 */ u8 positionIdx;
 } s_800C38B0;
 
-// ========
-// GLOBALS
-// ========
+// ====================
+// GLOBALS (BSS; Hack; text_draw.c)
+// ====================
+// To match the order of the BSS segment, extern declarations
+// are required in a predetermined order.
+// This is done until a way to replicate `common`
+// segment behavior is found.
 
 /** String position. */
 extern DVECTOR g_StringPosition; // 0x800C38A8

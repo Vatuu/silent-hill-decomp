@@ -120,7 +120,7 @@ void func_800D4B58(void) // 0x800D4B58
 
         case 3:
             func_80085EB8(0u, &g_SysWork.playerWork.player, 66, false);
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(135.17f), Q12(-3.3f), Q12(61.09f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -449,7 +449,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             Player_ControlFreeze();
             D_800DA6E8 = 0;
             ScreenFade_ResetTimestep();
-            g_SysWork.field_30    = 20;
+            g_SysWork.cutsceneBorderState    = 20;
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             func_8008D438();

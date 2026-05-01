@@ -2731,7 +2731,7 @@ g_Screen_BackgroundImgGamma                  = 0x800AB1F4;
 //-------------------------------------------------------------------------
 D_800A8E5C                                   = 0x800AB1F8;
 D_800A8E74                                   = 0x800AB210;
-g_ScreenFadeProgress                         = 0x800AB230;
+g_Screen_FadeProgress                        = 0x800AB230;
 
 //-----------------------------------------------------------------------------
 //--- PA: 0x0866D4   VA: 0x800AB234   subsegment: .data, screen/cutscene_border

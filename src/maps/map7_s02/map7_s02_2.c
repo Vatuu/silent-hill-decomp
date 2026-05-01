@@ -245,7 +245,7 @@ void func_800DA248(void) // 0x800DA248
 
             ScreenFade_ResetTimestep();
 
-            g_SysWork.field_30    = 20;
+            g_SysWork.cutsceneBorderState    = 20;
             g_SysWork.pointLightIntensity  = Q12(0.8f);
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
@@ -771,7 +771,7 @@ void func_800DBB34(void) // 0x800DBB34
             Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_GhostChildAlessa, &g_SysWork.npcBoneCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
 
             ScreenFade_ResetTimestep();
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
@@ -941,7 +941,7 @@ void func_800DC14C(void) // 0x800DC14C
 
         case 8:
             Savegame_EventFlagSet(EventFlag_556);
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             func_80085EB8(0, &g_SysWork.playerWork.player, 143, false);
 
             // Warp player.
@@ -1362,7 +1362,7 @@ void func_800DD2D4(void) // 0x800DD2D4
 
         case 3:
             Dms_HeaderFixOffsets(FS_BUFFER_11);
-            g_SysWork.field_30    = 20;
+            g_SysWork.cutsceneBorderState    = 20;
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             Anim_CharaTypeAnimInfoClear();
@@ -1505,7 +1505,7 @@ void func_800DD9E8(void) // 0x800DD9E8
             Player_ControlFreeze();
             D_800E9EDA = 0;
             Savegame_EventFlagSet(EventFlag_557);
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1712,7 +1712,7 @@ void func_800DE1FC(void) // 0x800DE1FC
             Chara_Spawn(Chara_GhostDoctor, 1, Q12(140.0f), Q12(-60.0f), 0, 3);
             ScreenFade_ResetTimestep();
 
-            g_SysWork.field_30    = 20;
+            g_SysWork.cutsceneBorderState    = 20;
             g_SysWork.flags_22A4 |= 1 << 3;
 
             func_8008D438();
@@ -1987,7 +1987,7 @@ void func_800DF21C(void) // 0x800DF21C
             Player_ControlFreeze();
             D_800EB6B0 = 0;
             Game_TurnFlashlightOn();
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
             func_8003D03C();
@@ -2477,7 +2477,7 @@ void func_800DFDDC(void) // 0x800DFDDC
             break;
 
         case 11:
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             D_800EA492         = 0;
 
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
@@ -2623,7 +2623,7 @@ void func_800E0CB4(void) // 0x800E0CB4
         case 0:
             Player_ControlFreeze();
 
-            g_SysWork.field_30    = 20;
+            g_SysWork.cutsceneBorderState    = 20;
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             Fs_QueueStartRead(FILE_ANIM_DRIVR_DMS, (void*)FS_BUFFER_11);

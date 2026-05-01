@@ -69,7 +69,7 @@ void func_800D5614(void) // 0x800D5614
             Player_ControlFreeze();
             Gfx_MapInitMapEffectsUpdate(19, 4);
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             D_800D7760         = 0;
 
             // Warp player.
@@ -292,7 +292,7 @@ void func_800D5DD8(void) // 0x800D5DD8
             Player_ControlFreeze();
             ScreenFade_ResetTimestep();
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             g_SysWork.playerWork.player.position.vx = Q12(109.2f);
             g_SysWork.playerWork.player.position.vz = Q12(43.2f);
             g_SysWork.playerWork.player.rotation.vy = Q12(0.4553f);

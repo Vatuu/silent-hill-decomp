@@ -9,13 +9,15 @@
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
-const s32 rodataPad_80024CA0 = 0;
+#ifndef PAD_HACK_IGNORE
+    const s32 rodataPad_80024CA0 = 0;
+#endif
 
 // ========================================
 // STATIC VARIABLES
 // ========================================
 
-static q19_12 g_PrevScreenFadeProgress;
+static q19_12 g_Screen_FadePrevProgressState;
 
 static DR_MODE D_800A8E5C[] = {
     { 0x3000000, { 0xE1000240, 0x0 } },
@@ -27,7 +29,11 @@ static TILE D_800A8E74[] = {
     { 0x3000000, 255, 0, 0, 0x62, -SCREEN_WIDTH, -SCREEN_HEIGHT, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2 }
 };
 
-static q19_12 g_ScreenFadeProgress = Q12(0.0f);
+static q19_12 g_Screen_FadeProgress = Q12(0.0f);
+
+// ========================================
+// SCREEN FADE
+// ========================================
 
 void Screen_FadeDrawModeSet(DR_MODE* drMode) // 0x800325A4
 {
@@ -43,7 +49,7 @@ void Screen_FadeDrawModeSet(DR_MODE* drMode) // 0x800325A4
 
 q19_12 Screen_FadeInProgressGet(void) // 0x800325F8
 {
-    return Q12(1.0f) - g_PrevScreenFadeProgress;
+    return Q12(1.0f) - g_Screen_FadePrevProgressState;
 }
 
 void Screen_FadeUpdate(void) // 0x8003260C
@@ -54,15 +60,15 @@ void Screen_FadeUpdate(void) // 0x8003260C
     TILE*    tile;
     DR_MODE* drMode;
 
-    drMode                   = &D_800A8E5C[g_ActiveBufferIdx];
-    tile                     = &D_800A8E74[g_ActiveBufferIdx];
-    g_PrevScreenFadeProgress = g_ScreenFadeProgress;
+    drMode                         = &D_800A8E5C[g_ActiveBufferIdx];
+    tile                           = &D_800A8E74[g_ActiveBufferIdx];
+    g_Screen_FadePrevProgressState = g_Screen_FadeProgress;
 
     switch (g_Screen_FadeStatus)
     {
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, true):
-            g_ScreenFadeProgress = Q12(0.0f);
+            g_Screen_FadeProgress = Q12(0.0f);
             g_Screen_FadeStatus++;
 
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false):
@@ -79,16 +85,16 @@ void Screen_FadeUpdate(void) // 0x8003260C
                 timestep = Q12(3.0f) / (queueLength + 1);
             }
 
-            g_ScreenFadeProgress += Q12_MULT_PRECISE(timestep, g_DeltaTimeRaw);
-            if (g_ScreenFadeProgress >= Q12_CLAMPED(1.0f))
+            g_Screen_FadeProgress += Q12_MULT_PRECISE(timestep, g_DeltaTimeRaw);
+            if (g_Screen_FadeProgress >= Q12_CLAMPED(1.0f))
             {
-                g_ScreenFadeProgress = Q12_CLAMPED(1.0f);
+                g_Screen_FadeProgress = Q12_CLAMPED(1.0f);
                 g_Screen_FadeStatus++;
             }
 
-            tile->r0 = Q12_TO_Q8(g_ScreenFadeProgress);
-            tile->g0 = Q12_TO_Q8(g_ScreenFadeProgress);
-            tile->b0 = Q12_TO_Q8(g_ScreenFadeProgress);
+            tile->r0 = Q12_TO_Q8(g_Screen_FadeProgress);
+            tile->g0 = Q12_TO_Q8(g_Screen_FadeProgress);
+            tile->b0 = Q12_TO_Q8(g_Screen_FadeProgress);
             break;
 
         case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep, false):
@@ -97,15 +103,15 @@ void Screen_FadeUpdate(void) // 0x8003260C
 
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, true):
-            g_ScreenFadeProgress = Q12_CLAMPED(1.0f);
+            g_Screen_FadeProgress = Q12_CLAMPED(1.0f);
             g_Screen_FadeStatus++;
 
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
             Screen_FadeDrawModeSet(drMode);
-            tile->r0 = Q12_TO_Q8(g_ScreenFadeProgress);
-            tile->g0 = Q12_TO_Q8(g_ScreenFadeProgress);
-            tile->b0 = Q12_TO_Q8(g_ScreenFadeProgress);
+            tile->r0 = Q12_TO_Q8(g_Screen_FadeProgress);
+            tile->g0 = Q12_TO_Q8(g_Screen_FadeProgress);
+            tile->b0 = Q12_TO_Q8(g_Screen_FadeProgress);
             break;
 
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false):
@@ -121,23 +127,23 @@ void Screen_FadeUpdate(void) // 0x8003260C
                 timestep = Q12(3.0f);
             }
 
-            g_ScreenFadeProgress -= Q12_MULT_PRECISE(timestep, g_DeltaTimeRaw);
+            g_Screen_FadeProgress -= Q12_MULT_PRECISE(timestep, g_DeltaTimeRaw);
 
-            if (g_ScreenFadeProgress <= Q12(0.0f))
+            if (g_Screen_FadeProgress <= Q12(0.0f))
             {
-                g_ScreenFadeProgress = Q12(0.0f);
+                g_Screen_FadeProgress = Q12(0.0f);
                 ScreenFade_Reset();
                 return;
             }
 
-            tile->r0 = Q12_TO_Q8(g_ScreenFadeProgress);
-            tile->g0 = Q12_TO_Q8(g_ScreenFadeProgress);
-            tile->b0 = Q12_TO_Q8(g_ScreenFadeProgress);
+            tile->r0 = Q12_TO_Q8(g_Screen_FadeProgress);
+            tile->g0 = Q12_TO_Q8(g_Screen_FadeProgress);
+            tile->b0 = Q12_TO_Q8(g_Screen_FadeProgress);
             break;
 
         case SCREEN_FADE_STATUS(ScreenFadeState_Reset, false):
             g_ScreenFadeTimestep = Q12(0.0f);
-            g_ScreenFadeProgress = Q12(0.0f);
+            g_Screen_FadeProgress = Q12(0.0f);
             g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_None, false);
             return;
 

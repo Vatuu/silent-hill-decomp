@@ -112,7 +112,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             Chara_Spawn(Chara_Kaufmann, 0, Q12(100.0f), Q12(100.0f), 0, 3);
             sharedFunc_800D88AC_0_s00(&g_SysWork.npcs[0]);
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             g_Cutscene_Timer = Q12(0.0f);
             D_800D256C = 0;
             g_SysWork.flags_22A4 |= UnkSysFlag_3;

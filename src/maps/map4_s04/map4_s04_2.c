@@ -254,7 +254,7 @@ void func_800D1910(void) // 0x800D1910
 
             func_8008D438();
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
@@ -408,7 +408,7 @@ void func_800D23E4(void) // 0x800D23E4
 
             func_8008D438();
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
 
             D_800D37C1            = 0;

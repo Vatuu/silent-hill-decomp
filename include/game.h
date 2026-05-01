@@ -1982,7 +1982,7 @@ typedef struct _SysWork
     /* 0x1C     */ s32              counters_1C[3];
     /* 0x28     */ q19_12           field_28; // Multi-purpose? Used as alpha to fade between images in `Screen_BackgroundImgTransition`.
     /* 0x2C     */ q19_12           timer_2C; // Cutscene message timer?
-    /* 0x30     */ s32              field_30;
+    /* 0x30     */ s32              cutsceneBorderState;
     /* 0x34     */ s8               unused_34[4]; /** @unused */
     /* 0x38     */ s_PlayerCombat   playerCombat;
     /* 0x4C     */ s_PlayerWork     playerWork;

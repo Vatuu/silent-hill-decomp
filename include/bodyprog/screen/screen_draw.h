@@ -9,7 +9,7 @@
 // ========
 
 /** @note This is defined in `screen_draw.c` because inbetween this and
- * the previous variable (`g_PrevScreenFadeProgress`) there is garbage
+ * the previous variable (`g_Screen_FadePrevProgressState`) there is garbage
  * data. It suggests this variable was defined in a file separate from
  * `screen_fade.c`.
  */

@@ -15,6 +15,13 @@
 #include "bodyprog/sys/joy.h"
 #include "main/rng.h"
 
+
+#define playerProps g_SysWork.playerWork.player.properties.player
+
+// ========================================
+// GLOBAL VARIABLES
+// ========================================
+
 s_800C44F0 D_800C44F0[10];
 VECTOR3    g_TargetEnemyPosition;
 q19_12     D_800C454C;
@@ -59,7 +66,9 @@ q19_12     g_Player_HeadingAngle;
 s32        __pad_bss_800C460C;
 VECTOR3    D_800C4610;
 
-#define playerProps g_SysWork.playerWork.player.properties.player
+// ========================================
+// 
+// ========================================
 
 q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
 {

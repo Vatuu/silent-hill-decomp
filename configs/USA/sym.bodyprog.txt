@@ -2287,7 +2287,7 @@ g_Screen_BackgroundImgGamma                  = 0x800A8E58;
 //-------------------------------------------------------------------------
 //--- PA: 0x0842FC   VA: 0x800A8E5C   subsegment: .data, screen/screen_fade
 //-------------------------------------------------------------------------
-g_ScreenFadeProgress                         = 0x800A8E94; // type:s32
+g_Screen_FadeProgress                        = 0x800A8E94; // type:s32
 
 //-----------------------------------------------------------------------------
 //--- PA: 0x084338   VA: 0x800A8E98   subsegment: .data, screen/cutscene_border
@@ -2791,7 +2791,7 @@ g_Text_Debug_PositionSet1                    = 0x800B5C24; // type:DVECTOR size:
 //------------------------------------------------------------------------
 //--- PA: 0x0910C8   VA: 0x800B5C28   subsegment: .bss, screen/screen_fade
 //------------------------------------------------------------------------
-g_PrevScreenFadeProgress                     = 0x800B5C28; // type:s32
+g_Screen_FadePrevProgressState               = 0x800B5C28; // type:s32
 
 //------------------------------------------------------------------------
 //--- PA: 0x0910D0   VA: 0x800B5C30   subsegment: .bss, screen/screen_draw

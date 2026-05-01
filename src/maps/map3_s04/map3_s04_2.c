@@ -230,7 +230,7 @@ void func_800D2668(void) // 0x800D2668
             sharedFunc_800D88AC_0_s00(&g_SysWork.npcs[0]);
             Dms_HeaderFixOffsets(FS_BUFFER_11);
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
             Game_TurnFlashlightOn();

@@ -182,7 +182,7 @@ void func_800D725C(void) // 0x800D725C
 
             ScreenFade_ResetTimestep();
 
-            g_SysWork.field_30    = 20;
+            g_SysWork.cutsceneBorderState    = 20;
             g_SysWork.pointLightIntensity  = Q12(0.8f);
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
@@ -838,7 +838,7 @@ void func_800D8FF8(void) // 0x800D8FF8
         case 0:
             Player_ControlFreeze();
             ScreenFade_ResetTimestep();
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
 
             Fs_QueueStartReadTim(FILE_TIM_GLASS_TIM, FS_BUFFER_1, &D_800A908C);
             Savegame_EventFlagSet(EventFlag_563);
@@ -1406,7 +1406,7 @@ void func_800D9C9C(void) // 0x800D9C9C
             break;
 
         case 11:
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             D_800E168E         = 0;
 
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
@@ -1610,7 +1610,7 @@ void func_800DAE00(void) // 0x800DAE00
         case 0:
             Player_ControlFreeze();
 
-            g_SysWork.field_30    = 20;
+            g_SysWork.cutsceneBorderState    = 20;
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             Fs_QueueStartRead(FILE_ANIM_DRIVR_DMS, (void*)FS_BUFFER_11);
@@ -1953,7 +1953,7 @@ void func_800DCE20(void) // 0x800DCE20
         case 0:
             Player_ControlFreeze();
             ScreenFade_ResetTimestep();
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             SysWork_StateStepIncrement(0);
             break;
 

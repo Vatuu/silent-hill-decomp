@@ -88,7 +88,7 @@ void func_800CCA2C(void) // 0x800CCA2C
     {
         case 0:
             Player_ControlFreeze();
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             SysWork_StateStepIncrement(0);
 
         case 1:

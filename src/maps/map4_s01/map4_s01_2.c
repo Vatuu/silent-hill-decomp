@@ -271,7 +271,7 @@ void func_800D2408(void) // 0x800D2408
 
             func_80085EB8(0, playerChara, 51, false);
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             func_8008D438();
@@ -532,7 +532,7 @@ void func_800D2408(void) // 0x800D2408
 
             g_SysWork.pointLightIntensity = Q12(1.0f);
             Savegame_EventFlagClear(EventFlag_313);
-            g_SysWork.field_30 = 0;
+            g_SysWork.cutsceneBorderState = 0;
             break;
     }
 
@@ -583,7 +583,7 @@ void func_800D2F74(void) // 0x800D2F74
             Fs_QueueWaitForEmpty();
             Dms_HeaderFixOffsets(FS_BUFFER_11);
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
 
             ScreenFade_ResetTimestep();
 
@@ -597,7 +597,7 @@ void func_800D2F74(void) // 0x800D2F74
             func_8003D03C();
             SysWork_StateStepIncrement(0);
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
             break;
 
@@ -714,7 +714,7 @@ void func_800D3420(void) // 0x800D3420
         case 0:
             Player_ControlFreeze();
             D_800D5B06         = false;
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             g_Cutscene_Timer3         = Q12(96.0f);
 
             sharedData_800D8568_1_s05.field_1  = 3;
@@ -1051,7 +1051,7 @@ void func_800D4410(void) // 0x800D4410
         case 0:
             Player_ControlFreeze();
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 

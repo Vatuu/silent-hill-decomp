@@ -520,7 +520,7 @@ void func_800DB058(void) // 0x800DB058
             Player_ControlFreeze();
             Player_MoveDistanceClear();
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
 
             // Warp player.
             g_SysWork.playerWork.player.position.vx = Q12(56.5f);
@@ -782,7 +782,7 @@ void func_800DB368(void) // 0x800DB368
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-90.0f);
 
             Fs_QueueWaitForEmpty();
-            g_SysWork.field_30 = 0;
+            g_SysWork.cutsceneBorderState = 0;
             SysWork_StateStepIncrement(0);
             break;
 

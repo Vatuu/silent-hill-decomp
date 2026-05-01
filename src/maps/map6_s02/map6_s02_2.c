@@ -141,7 +141,7 @@ void func_800CF0B8(void) // 0x800CF0B8
         case 0:
             Player_ControlFreeze();
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
 
             func_8003D03C();

@@ -1451,7 +1451,7 @@ void func_800D61AC(void) // 0x800D61AC
             g_SysWork.playerWork.player.position.vx = Q12(-115.5f);
             g_SysWork.playerWork.player.position.vz = Q12(106.65f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
-            g_SysWork.field_30                              = 20;
+            g_SysWork.cutsceneBorderState                              = 20;
 
             func_800865FC(true, 0, 0, 0, Q12(-115.5f), Q12(110.0f));
             func_800865FC(true, 0, 1, 0, Q12(-115.6f), Q12(110.1f));
@@ -1560,7 +1560,7 @@ void func_800D6800(void) // 0x800D6800
             break;
 
         case 2:
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
 
             MAP_POINTS[14].positionX = g_SysWork.playerWork.player.position.vx;
             MAP_POINTS[14].positionZ = g_SysWork.playerWork.player.position.vz;

@@ -6,37 +6,45 @@
 #include "bodyprog/memcard.h"
 #include "screens/saveload.h"
 
-s16 g_MemCard_SavegameCount;
+#ifndef PAD_HACK_IGNORE
+    s16 __pad_bss_800BCD2A;
+    s16 __pad_bss_800BCD32;
+    s8  __pad_bss_800BCD39;
+#endif
 
-s16 __pad_bss_800BCD2A;
+// ========================================
+// GLOBAL VARIABLES
+// ========================================
 
+s16                  g_MemCard_SavegameCount;
 s_SaveScreenElement* g_MemCard_ActiveSavegameEntry;
-
-u8  g_Savegame_ElementCount0[MEMCARD_SLOT_COUNT_MAX];
-
-s16 __pad_bss_800BCD32;
-
-u32 g_MemCard_AllMemCardsStatus;
-
-s8  g_SaveScreen_SaveScreenState;
-
-s8  __pad_bss_800BCD39;
-
-s16 g_MemCard_TotalElementsCount;
-
-u8  g_Savegame_ElementCount1[MEMCARD_SLOT_COUNT_MAX];
-
-u8  g_Savegame_SelectedElementIdx;
-
-s8  g_SelectedFileIdx;
-
-s8  g_SelectedDeviceId;
+u8                   g_Savegame_ElementCount0[MEMCARD_SLOT_COUNT_MAX];
+u32                  g_MemCard_AllMemCardsStatus;
+s8                   g_SaveScreen_SaveScreenState;
+s16                  g_MemCard_TotalElementsCount;
+u8                   g_Savegame_ElementCount1[MEMCARD_SLOT_COUNT_MAX];
+u8                   g_Savegame_SelectedElementIdx;
+s8                   g_SelectedFileIdx;
+s8                   g_SelectedDeviceId;
 
 u8 g_SlotElementSelectedIdx[MEMCARD_SLOT_COUNT_MAX] = { 0, 0 };
-s8 g_SelectedSaveSlotIdx = 0;
-u8 D_800A97D7 = 0;
-s8 D_800A97D8 = 0xFF;
-s8 D_800A97D9 = 0;
+s8 g_SelectedSaveSlotIdx                            = 0;
+u8 D_800A97D7                                       = 0;
+s8 D_800A97D8                                       = 0xFF;
+s8 D_800A97D9                                       = 0;
+
+// ========================================
+// INLINE FUNCTIONS
+// ========================================
+
+static inline s32 WrapIdx(s32 idx)
+{
+    return (idx < 0) ? (idx + 3) : idx;
+}
+
+// ========================================
+// MEMORY CARD - CARD CHECKS
+// ========================================
 
 bool MemCard_FilesAreNotUsedCheck(s32 idx) // 0x800334D8
 {
@@ -65,11 +73,6 @@ bool MemCard_FilesAreNotUsedCheck(s32 idx) // 0x800334D8
     return res;
 }
 
-static inline s32 WrapIdx(s32 idx)
-{
-    return (idx < 0) ? (idx + 3) : idx;
-}
-
 bool func_80033548(void) // 0x80033548
 {
     u32                         sp10[MEMCARD_SLOT_COUNT_MAX]; // Boolean.
@@ -87,8 +90,8 @@ bool func_80033548(void) // 0x80033548
     s32                         k;
     u32                         memCardStatus;
     s_MemCard_SaveMetadata*     saveMetadata;
-    static s32                  D_800BCD18[2];
-    static s32                  D_800BCD20[2];
+    static s32                  D_800BCD18[MEMCARD_SLOT_COUNT_MAX];
+    static s32                  D_800BCD20[MEMCARD_SLOT_COUNT_MAX];
     static s32                  D_800A97DC = 0; /** `e_SavegameEntryType` */
     static s8                   D_800A97E0 = NO_VALUE;
     static u32                  allFileStatus[MEMCARD_DEVICE_COUNT_MAX] = { };
@@ -163,7 +166,7 @@ bool func_80033548(void) // 0x80033548
                 case MemCardResult_Success:
                     g_MemCard_ActiveSavegameEntry->type_4 = SavegameEntryType_NoMemCard;
 
-#if VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix?
+#if VERSION_EQUAL_OR_NEWER(JAP1) // @note Bugfix?
                     if (g_SelectedSaveSlotIdx == (WrapIdx(i) >> 2))
                     {
                         g_SelectedSaveSlotIdx = g_SelectedSaveSlotIdx == 0;
@@ -399,7 +402,7 @@ bool func_80033548(void) // 0x80033548
 
     if (D_800A97D9 == 0 && (sp10[0] || sp10[1]))
     {
-        for (j = 0; j < 2; j++)
+        for (j = 0; j < MEMCARD_SLOT_COUNT_MAX; j++)
         {
             g_MemCard_ActiveSavegameEntry = MemCard_ActiveSavegameEntryGet(j);
             D_800BCD18[j]       = 0;

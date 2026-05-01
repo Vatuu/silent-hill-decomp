@@ -1850,7 +1850,7 @@ void func_800E1D50(void) // 0x800E1D50
             Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_MonsterCybil, g_SysWork.npcBoneCoords, -1, NULL, NULL);
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
@@ -2192,7 +2192,7 @@ void func_800E2950(void) // 0x800E2950
             func_8007FD4C(true);
             sharedFunc_800D88AC_0_s00(&g_SysWork.npcs[0]);
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
 
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             Game_TurnFlashlightOn();
@@ -2453,7 +2453,7 @@ void func_800E3244(void) // 0x800E3244
 
             Chara_Load(1, Chara_Parasite, &g_SysWork.npcBoneCoords[30], 0, NULL, NULL);
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             func_8003D03C();
@@ -2746,7 +2746,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             D_800EBB60 = false;
             D_800EBB61 = 0;
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
@@ -3283,7 +3283,7 @@ void func_800E558C(void) // 0x800E558C
             Dms_HeaderFixOffsets(FS_BUFFER_14);
             ScreenFade_ResetTimestep();
 
-            g_SysWork.field_30    = 20;
+            g_SysWork.cutsceneBorderState    = 20;
             g_Cutscene_Timer            = NO_VALUE;
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 

@@ -184,7 +184,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
             Player_ControlFreeze();
             Fs_QueueStartRead(FILE_ANIM_OPEN_DMS, FS_BUFFER_16);
 
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
 
             g_SysWork.flags_22A4 |= UnkSysFlag_3;

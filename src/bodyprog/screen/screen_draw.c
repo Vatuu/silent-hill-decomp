@@ -14,6 +14,10 @@
 
 q19_12 g_ScreenFadeTimestep;
 
+// ========================================
+// SCREEN DRAW
+// ========================================
+
 void Screen_RectInterlacedClear(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b) // 0x80032358
 {
     setRECT((RECT*)PSX_SCRATCH, x, y, w, h);
@@ -65,4 +69,7 @@ void Screen_DisplayEnvXySet(DISPENV* displayEnv, s32 x, s32 y) // 0x80032524
 
     displayEnv->screen.x = g_GameWorkConst->config.optScreenPosX_1C;
     displayEnv->screen.y = g_GameWorkConst->config.optScreenPosY_1D + RANGE_Y;
+    
+    #undef RANGE_X
+    #undef RANGE_Y
 }

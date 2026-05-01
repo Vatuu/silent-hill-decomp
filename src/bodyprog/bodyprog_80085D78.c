@@ -199,7 +199,7 @@ void SysWork_StateStepIncrementAfterFade(s32 stateStep, bool cond, s32 fadeType,
         FadeType_White = 1,
         FadeType_Unk2  = 2, // TODO: Investigate. Some state machine flow logic when this is used.
         FadeType_Unk3  = 3  // TODO: Investigate.
-    } s_FadeType;
+    } e_FadeType;
 
     s32 activeStateStep;
 
@@ -233,7 +233,7 @@ void SysWork_StateStepIncrementAfterFade(s32 stateStep, bool cond, s32 fadeType,
                 }
                 else
                 {
-                    g_SysWork.field_30 = 18;
+                    g_SysWork.cutsceneBorderState = 18;
 
                     if (fadeType == FadeType_Unk3)
                     {
@@ -251,7 +251,7 @@ void SysWork_StateStepIncrementAfterFade(s32 stateStep, bool cond, s32 fadeType,
             }
             else
             {
-                g_SysWork.field_30 = 22;
+                g_SysWork.cutsceneBorderState = 22;
             }
 
             if (stateStep != 0)
@@ -272,7 +272,7 @@ void SysWork_StateStepIncrementAfterFade(s32 stateStep, bool cond, s32 fadeType,
                     break;
                 }
             }
-            else if ((cond || g_SysWork.field_30 != activeStateStep) && !(cond == activeStateStep && g_SysWork.field_30 == 21))
+            else if ((cond || g_SysWork.cutsceneBorderState != activeStateStep) && !(cond == activeStateStep && g_SysWork.cutsceneBorderState == 21))
             {
                 break;
             }

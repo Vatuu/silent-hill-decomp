@@ -7315,7 +7315,7 @@ void func_800E3390(void) // 0x800E3390
             WorldGfx_CharaLmBufferAssign(CHARA_FORCE_FREE_ALL);
 
             ScreenFade_ResetTimestep();
-            g_SysWork.field_30    = 20;
+            g_SysWork.cutsceneBorderState    = 20;
             g_SysWork.flags_22A4 |= UnkSysFlag_3;
 
             func_800E0A34();
@@ -7553,7 +7553,7 @@ void func_800E3B6C(void) // 0x800E3B6C
         case 0:
             Player_ControlFreeze();
 
-            g_SysWork.field_30          = 20;
+            g_SysWork.cutsceneBorderState          = 20;
             g_SysWork.sysStateSteps[0] = 0;
             g_SysWork.flags_22A4       |= UnkSysFlag_3;
 
@@ -7615,7 +7615,7 @@ void func_800E3D18(void) // 0x800E3D18
             Player_ControlFreeze();
 
             g_SysWork.playerWork.player.health = Q12(100.0f);
-            g_SysWork.field_30                    = 20;
+            g_SysWork.cutsceneBorderState                    = 20;
             g_SysWork.sysStateSteps[0]           = 0;
             g_SysWork.flags_22A4                 |= UnkSysFlag_3;
 
@@ -7661,7 +7661,7 @@ void func_800E3E84(void) // 0x800E3E84
     switch (D_800F4805)
     {
         case 0:
-            g_SysWork.field_30          = 20;
+            g_SysWork.cutsceneBorderState          = 20;
             g_SysWork.sysStateSteps[0] = 0;
             D_800F4805                  = 1;
             g_SysWork.flags_22A4       |= UnkSysFlag_3;

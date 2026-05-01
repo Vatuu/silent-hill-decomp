@@ -3456,7 +3456,7 @@ void func_800D6774(void) // 0x800D6774
             }
 
             Collision_Get(&coll, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
-            g_SysWork.field_30 = 20;
+            g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
 
             g_SysWork.playerWork.player.position.vy = coll.groundHeight_0;
