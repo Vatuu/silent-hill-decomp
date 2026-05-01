@@ -2372,7 +2372,7 @@ extern u8 D_800AE700[];
 /** `[1]` contains relative paper map file indices. */
 extern u8 D_800AE740[][2];
 
-extern s32 D_800AE770;
+extern bool D_800AE770;
 
 extern q3_12 g_Player_FlexRotationY;
 
@@ -2522,7 +2522,7 @@ extern s8 __pad_bss_800C4415[3];
 
 extern s_800C4418 D_800C4418;
 
-extern s16 D_800C4454;
+extern q3_12 D_800C4454;
 
 // emoose: Also works: `extern u16 D_800C4478[];`, `arg0->field_4 = D_800C4478[0];`.
 // Didn't see any array accesses in Ghidra though, struct might be more likely.

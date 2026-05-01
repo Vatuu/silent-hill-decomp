@@ -22,22 +22,22 @@
 
 void GameState_MapScreen_Update(void) // 0x80066EB0
 {
-    s32        temp_s0_2;
-    s32        temp_s4;
-    s8         temp_a0_4;
-    u16        var_s5;
-    u16        var_s6;
-    u32        temp_a0;
-    u32        temp;
-    u32        temp2;
-    u32        temp3;
-    u32        temp4;
-    static u8  D_800C4448;
-    static u8  D_800C4449; /** Index into `g_PaperMapFileIdxs`. */
-    static s8  D_800C444A;
-    static s8  __pad_bss_800C444B;
-    static s32 D_800C444C;
-    static s32 D_800C4450;
+    s32           temp_s0_2;
+    s32           temp_s4;
+    s8            markingFileIdx;
+    u16           var_s5;
+    u16           var_s6;
+    u32           temp_a0;
+    u32           temp;
+    u32           temp2;
+    u32           temp3;
+    u32           temp4;
+    static u8     paperMapIdx;
+    static u8     markingIdx;
+    static s8     activeMarkingFileIdx;
+    static s8     __pad_bss_800C444B;
+    static q19_12 screenPosX;
+    static q19_12 screenPosY;
 
     func_800363D0();
     Game_TimerUpdate();
@@ -47,16 +47,16 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
         case 0:
             Screen_Refresh(SCREEN_WIDTH, true);
 
-            D_800C444A = g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx];
-            D_800C4448 = g_SavegamePtr->paperMapIdx;
-            D_800C444C = NO_VALUE;
+            activeMarkingFileIdx = g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx];
+            paperMapIdx = g_SavegamePtr->paperMapIdx;
+            screenPosX = NO_VALUE;
             D_800C4454 = Q12(1.0f);
-            D_800AE770 = 0;
+            D_800AE770 = false;
 
             Game_RadioSoundStop();
             SD_Call(Sfx_MenuMap);
             func_80066E40();
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[D_800C4448], FS_BUFFER_2, &g_PaperMapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[paperMapIdx], FS_BUFFER_2, &g_PaperMapImg);
             Fs_QueueWaitForEmpty();
 
             g_IntervalVBlanks = 1;
@@ -69,30 +69,30 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
             break;
 
         case 2:
-            if (D_800C444C < 0)
+            if (screenPosX < Q12(0.0f))
             {
                 var_s5 = 0;
                 var_s6 = 0;
             }
             else
             {
-                temp   = D_800C444C - Q12_MULT_PRECISE(D_800C4454, D_800C444C);
+                temp   = screenPosX - Q12_MULT_PRECISE(D_800C4454, screenPosX);
                 var_s6 = FP_FROM(temp, Q12_SHIFT);
 
-                temp2  = D_800C4450 - Q12_MULT_PRECISE(D_800C4454, D_800C4450);
+                temp2  = screenPosY - Q12_MULT_PRECISE(D_800C4454, screenPosY);
                 var_s5 = FP_FROM(temp2, Q12_SHIFT);
             }
 
-            temp_s4 = (D_800C4454 >> 1) + 0x800;
+            temp_s4 = (D_800C4454 >> 1) + Q12(0.5f);
 
-            temp_s0_2 = func_80067914(D_800C4448, var_s6, var_s5, temp_s4);
-            func_80068E0C(1, D_800C4448, 0, 0, var_s6, var_s5, temp_s4);
+            temp_s0_2 = func_80067914(paperMapIdx, var_s6, var_s5, temp_s4);
+            func_80068E0C(1, paperMapIdx, 0, 0, var_s6, var_s5, temp_s4);
 
             if (ScreenFade_IsNone())
             {
-                if (D_800AE770 == 0 && D_800C4454 == Q12(1.0f))
+                if (!D_800AE770 && D_800C4454 == Q12(1.0f))
                 {
-                    func_80068CC0(D_800C4448);
+                    func_80068CC0(paperMapIdx);
                 }
             }
 
@@ -100,7 +100,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
 
             if ((g_GameWork.gameStatePrev == GameState_InventoryScreen && g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel) ||
                 (g_GameWork.gameStatePrev != GameState_InventoryScreen && g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.cancel |
-                                                                                                               g_GameWorkPtr->config.controllerConfig.map)))
+                                                                                                           g_GameWorkPtr->config.controllerConfig.map)))
             {
                 SD_Call(Sfx_MenuMap);
 
@@ -128,36 +128,36 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
             {
-                if (D_800AE770 != 0)
+                if (D_800AE770)
                 {
-                    D_800AE770 = 0;
+                    D_800AE770 = false;
                 }
                 else
                 {
-                    D_800AE770 = 1;
+                    D_800AE770 = true;
 
-                    if (D_800C444C < 0)
+                    if (screenPosX < Q12(0.0f))
                     {
-                        D_800C444C = Q12(CLAMP_LOW_THEN_MIN((s16)temp_s0_2 + 80, 0, 160));
-                        D_800C4450 = Q12(CLAMP_LOW_THEN_MIN((temp_s0_2 >> 16) + 60, 0, 120));
+                        screenPosX = Q12(CLAMP_LOW_THEN_MIN((s16)temp_s0_2 + 80, 0, 160));
+                        screenPosY = Q12(CLAMP_LOW_THEN_MIN((temp_s0_2 >> 16) + 60, 0, 120));
                     }
                 }
             }
 
-            if (D_800AE770 == 0)
+            if (!D_800AE770)
             {
                 if (D_800C4454 == Q12(1.0f))
                 {
                     if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp)
                     {
-                        if (HAS_MAP(D_800AE740[D_800C4448][0]))
+                        if (HAS_MAP(D_800AE740[paperMapIdx][0]))
                         {
-                            D_800C4449 = D_800AE740[D_800C4448][0];
+                            markingIdx = D_800AE740[paperMapIdx][0];
 
-                            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[D_800C4449]);
+                            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[markingIdx]);
                             ScreenFade_Start(true, false, false);
 
-                            D_800C444C                      = NO_VALUE;
+                            screenPosX                      = NO_VALUE;
                             g_GameWork.gameStateSteps[0] = 3;
                             g_SysWork.counters_1C[1]              = 0;
                             g_GameWork.gameStateSteps[1] = 0;
@@ -168,14 +168,14 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
 
                     if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown)
                     {
-                        if (HAS_MAP(D_800AE740[D_800C4448][1]))
+                        if (HAS_MAP(D_800AE740[paperMapIdx][1]))
                         {
-                            D_800C4449 = D_800AE740[D_800C4448][1];
+                            markingIdx = D_800AE740[paperMapIdx][1];
 
-                            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[D_800C4449]);
+                            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[markingIdx]);
                             ScreenFade_Start(true, false, false);
 
-                            D_800C444C = NO_VALUE;
+                            screenPosX = NO_VALUE;
                             g_GameWork.gameStateSteps[0] = 3;
                             g_SysWork.counters_1C[1]              = 0;
                             g_GameWork.gameStateSteps[1] = 0;
@@ -191,16 +191,16 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
             }
 
             D_800C4454  = CLAMP_LOW(D_800C4454 - 196, 0);
-            D_800C444C += (g_Controller0->sticks_24.sticks_0.leftX * 16384) / 75;
-            D_800C444C  = CLAMP_RANGE(D_800C444C, 0, 0xA0000);
-            D_800C4450 += (g_Controller0->sticks_24.sticks_0.leftY * 16384) / 75;
-            D_800C4450  = CLAMP_RANGE(D_800C4450, 0, 0x78000);
+            screenPosX += (g_Controller0->sticks_24.sticks_0.leftX * ((SHRT_MAX / 2) + 1)) / 75;
+            screenPosX  = CLAMP_RANGE(screenPosX, Q12(0.0f), Q12(SCREEN_WIDTH / 2));
+            screenPosY += (g_Controller0->sticks_24.sticks_0.leftY * ((SHRT_MAX / 2) + 1)) / 75;
+            screenPosY  = CLAMP_RANGE(screenPosY, Q12(0.0f), Q12(SCREEN_HEIGHT / 2));
             break;
 
         case 3:
             if (ScreenFade_IsFinished())
             {
-                D_800C4448 = D_800C4449;
+                paperMapIdx = markingIdx;
 
                 SD_Call(Sfx_MenuMap);
 
@@ -211,19 +211,19 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
                 break;
             }
 
-            func_80067914(D_800C4448, 0, 0, Q12(1.0f));
-            func_80068E0C(1, D_800C4448, 0, 0, 0, 0, Q12(1.0f));
+            func_80067914(paperMapIdx, 0, 0, Q12(1.0f));
+            func_80068E0C(1, paperMapIdx, 0, 0, 0, 0, Q12(1.0f));
             func_800692A4(0, 0, Q12(1.0f));
             break;
 
         case 1:
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[D_800C4448], FS_BUFFER_2, &g_PaperMapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[paperMapIdx], FS_BUFFER_2, &g_PaperMapImg);
 
-            temp_a0_4 = g_PaperMapMarkingFileIdxs[D_800C4448];
-            if (temp_a0_4 != D_800C444A && temp_a0_4 != NO_VALUE)
+            markingFileIdx = g_PaperMapMarkingFileIdxs[paperMapIdx];
+            if (markingFileIdx != activeMarkingFileIdx && markingFileIdx != NO_VALUE)
             {
-                D_800C444A = g_PaperMapMarkingFileIdxs[D_800C4448];
-                Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_PaperMapMarkingFileIdxs[D_800C4448], FS_BUFFER_1, &g_PaperMapMarkingAtlasImg);
+                activeMarkingFileIdx = g_PaperMapMarkingFileIdxs[paperMapIdx];
+                Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_PaperMapMarkingFileIdxs[paperMapIdx], FS_BUFFER_1, &g_PaperMapMarkingAtlasImg);
             }
 
             Fs_QueueWaitForEmpty();
@@ -236,14 +236,14 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
             break;
 
         case 4:
-            temp3   = D_800C444C - Q12_MULT_PRECISE(D_800C4454, D_800C444C);
+            temp3   = screenPosX - Q12_MULT_PRECISE(D_800C4454, screenPosX);
             var_s6  = FP_FROM(temp3, Q12_SHIFT);
-            temp4   = D_800C4450 - Q12_MULT_PRECISE(D_800C4454, D_800C4450);
-            temp_s4 = (D_800C4454 >> 1) + 0x800;
+            temp4   = screenPosY - Q12_MULT_PRECISE(D_800C4454, screenPosY);
+            temp_s4 = (D_800C4454 >> 1) + Q12(0.5f);
             var_s5  = FP_FROM(temp4, Q12_SHIFT);
 
-            func_80067914(D_800C4448, var_s6, var_s5, temp_s4);
-            func_80068E0C(1, D_800C4448, 0, 0, var_s6, var_s5, temp_s4);
+            func_80067914(paperMapIdx, var_s6, var_s5, temp_s4);
+            func_80068E0C(1, paperMapIdx, 0, 0, var_s6, var_s5, temp_s4);
             func_800692A4(var_s6, var_s5, temp_s4);
 
             if (ScreenFade_IsFinished())
@@ -273,6 +273,7 @@ static inline s32 MapCoordIdxGet(q19_12 coord, s32 bias, s32 shift, s32 offset)
 
 s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
 {
+    // TODO: Work out hex values in switches below.
     #define MAP_OFFSET(coord) \
         ((coord) + (((coord) < 0) ? 20 : 21))
 
@@ -345,47 +346,47 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
 
                     switch (MAP_IDX(cellX, cellZ))
                     {
-                        case 1530:
+                        case MAP_IDX(-5, 9):
                             mapCoordIdxX = 43;
                             mapCoordIdxZ = -34;
                             break;
 
-                        case 1528:
-                        case 1726:
-                        case 1727:
+                        case MAP_IDX(-5, 7):
+                        case MAP_IDX(-3, 5):
+                        case MAP_IDX(-3, 6):
                             mapCoordIdxX = -11;
                             mapCoordIdxZ = -19;
                             break;
 
-                        case 2230:
+                        case MAP_IDX(1, 9):
                             mapCoordIdxX = -63;
                             mapCoordIdxZ = 73;
                             break;
 
-                        case 0x97E:
+                        case MAP_IDX(3, 9):
                             mapCoordIdxX = -63;
                             mapCoordIdxZ = -28;
                             break;
 
-                        case 0x918:
-                        case 0x97C:
+                        case MAP_IDX(2, 7):
+                        case MAP_IDX(3, 7):
                             mapCoordIdxX = -58;
                             mapCoordIdxZ = 73;
                             break;
 
-                        case 0x916:
-                        case 0x97A:
+                        case MAP_IDX(2, 5):
+                        case MAP_IDX(3, 5):
                             mapCoordIdxX = -58;
                             mapCoordIdxZ = -28;
                             break;
 
-                        case 0xA42:
+                        case MAP_IDX(5, 5):
                             mapCoordIdxX = -112;
                             mapCoordIdxZ = 51;
                             break;
 
-                        case 0x725:
-                        case 0xA45:
+                        case MAP_IDX(-2, 8):
+                        case MAP_IDX(5, 8):
                             mapCoordIdxX = 116;
                             mapCoordIdxZ = 47;
                             break;
@@ -395,25 +396,25 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                 case MapIdx_MAP0_S02:
                     switch (MAP_IDX(cellX, cellZ))
                     {
-                        case 0x6B9:
+                        case MAP_IDX(-3, 0):
                             mapCoordIdxX = -103;
                             mapCoordIdxZ = 103;
                             break;
 
-                        case 0x655:
+                        case MAP_IDX(-4, 0):
                             mapCoordIdxX = 36;
                             mapCoordIdxZ = -76;
                             angle       += Q12_ANGLE(90.0f);
                             break;
 
-                        case 0x5F1:
+                        case MAP_IDX(-5, 0):
                             mapCoordIdxX = 62;
                             mapCoordIdxZ = 50;
                             angle       += Q12_ANGLE(180.0f);
                             break;
 
 #if VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix
-                        case 0x656:
+                        case MAP_IDX(-4, 1):
                             mapCoordIdxX = -58;
                             mapCoordIdxZ = -28;
                             break;
@@ -481,10 +482,10 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
             switch (g_SavegamePtr->mapIdx)
             {
                 case MapIdx_MAP5_S01:
-                    mapCoordIdxX = MapCoordIdxGet(g_SysWork.playerWork.player.position.vx, 0x1FFF, 13, 0x3C);
-                    mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.playerWork.player.position.vz, 0x1FFF, 13, -0x55);
+                    mapCoordIdxX = MapCoordIdxGet(g_SysWork.playerWork.player.position.vx, 0x1FFF, 13, 60);
+                    mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.playerWork.player.position.vz, 0x1FFF, 13, -85);
 
-                    temp_v1_7 = g_SysWork.playerWork.player.position.vx / 163840;
+                    temp_v1_7 = g_SysWork.playerWork.player.position.vx / CHUNK_CELL_SIZE;
                     if ((g_SysWork.playerWork.player.position.vx > 0 && (temp_v1_7 + 1) == -4) ||
                         (g_SysWork.playerWork.player.position.vx <= 0 && (temp_v1_7 - 1) == -4))
                     // if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4)) // TODO: Causing mismatch.
@@ -523,23 +524,23 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                 case MapIdx_MAP5_S03:
                     switch (MAP_IDX(cellX, cellZ))
                     {
-                        case 0x912:
+                        case MAP_IDX(2, 1):
                             mapCoordIdxX = 69;
                             mapCoordIdxZ = -19;
                             break;
 
-                        case 0x911:
+                        case MAP_IDX(2, 0):
                             mapCoordIdxX = 74;
                             mapCoordIdxZ = -12;
                             angle       -= Q12_ANGLE(90.0f);
                             break;
 
-                        case 0x8AD:
+                        case MAP_IDX(1, 0):
                             mapCoordIdxX = 74;
                             mapCoordIdxZ = -14;
                             break;
 
-                        case 0x8AE:
+                        case MAP_IDX(1, 1):
                             mapCoordIdxX = 73;
                             mapCoordIdxZ = -14;
                             break;
@@ -560,6 +561,7 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                     {
                         mapCoordIdxZ = 46;
                     }
+
                     mapCoordIdxX = -77;
                     break;
 
@@ -588,25 +590,25 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                 case MapIdx_MAP4_S05:
                     switch (MAP_IDX(cellX, cellZ))
                     {
-                        case 0x58F:
+                        case MAP_IDX(-6, 2):
                             mapCoordIdxX = 94;
                             mapCoordIdxZ = -103;
                             break;
 
-                        case 0x6BB:
-                        case 0x657:
+                        case MAP_IDX(-3, 2):
+                        case MAP_IDX(-4, 2):
                             mapCoordIdxX = -12;
                             mapCoordIdxZ = 63;
                             angle       += Q12_ANGLE(180.0f);
                             break;
 
-                        case 0x973:
+                        case MAP_IDX(3, -1):
                             mapCoordIdxX = -16;
                             mapCoordIdxZ = 91;
                             break;
 
-                        case 0x6BD:
-                        case 0x6BE:
+                        case MAP_IDX(-3, 4):
+                        case MAP_IDX(-3, 5):
                             mapCoordIdxX = MapCoordIdxGet(g_SysWork.playerWork.player.position.vx, 0xFFF, 12, 80);
                             mapCoordIdxZ = MapCoordIdxGet(Q12(280.0f) - g_SysWork.playerWork.player.position.vz, 0xFFF, 12, 0);
                             break;
@@ -626,26 +628,26 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                 case MapIdx_MAP4_S03:
                     switch (MAP_IDX(cellX, cellZ))
                     {
-                        case 0x976:
-                        case 0x9DA:
+                        case MAP_IDX(3, 1):
+                        case MAP_IDX(4, 1):
                             mapCoordIdxX = 100;
                             mapCoordIdxZ = -61;
                             break;
 
-                        case 0x90D:
-                        case 0x971:
+                        case MAP_IDX(2, -3):
+                        case MAP_IDX(3, -3):
                             mapCoordIdxX = 115;
                             mapCoordIdxZ = -61;
                             break;
 
-                        case 0xA3B:
-                            mapCoordIdxX  = 115;
-                            mapCoordIdxZ  = -63;
-                            angle += Q12_ANGLE(90.0f);
+                        case MAP_IDX(5, -1):
+                            mapCoordIdxX = 115;
+                            mapCoordIdxZ = -63;
+                            angle       += Q12_ANGLE(90.0f);
                             break;
 
-                        case 0x914:
-                        case 0x978:
+                        case MAP_IDX(2, 3):
+                        case MAP_IDX(3, 3):
                             mapCoordIdxX = 125;
                             mapCoordIdxZ = -60;
                             break;
@@ -672,17 +674,17 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                     switch (var_v0_16 + cellZ)
                     // switch (MAP_IDX(temp_t3, temp_t4)) // TODO: Causing mismatch.
                     {
-                        case 0x6BA:
+                        case MAP_IDX(-3, 1):
                             mapCoordIdxX = -19;
                             mapCoordIdxZ = -14;
                             break;
 
-                        case 0x781:
+                        case MAP_IDX(-1, 0):
                             mapCoordIdxX = -19;
                             mapCoordIdxZ = -14;
                             break;
 
-                        case 0x71D:
+                        case MAP_IDX(-2, 0):
                             mapCoordIdxX = -21;
                             mapCoordIdxZ = -14;
                             break;
