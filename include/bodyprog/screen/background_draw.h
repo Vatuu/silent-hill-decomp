@@ -22,8 +22,8 @@ void Screen_BackgroundImgTransition(s_FsImageDesc* image0, s_FsImageDesc* image1
 
 /** @brief Draws a background image.
  *
- * @note Only applies to background images of notes or puzzles images. Possibly meant to be used
- * in cases where the image can be switched, most of the code is shared with
+ * @note Only applies to background images of notes or puzzles images. Possibly used
+ * when the image image can be switched. Most of the code is shared with
  * `Screen_BackgroundImgTransition` code.
  */
 void Screen_BackgroundImgDrawAlt(s_FsImageDesc* image);

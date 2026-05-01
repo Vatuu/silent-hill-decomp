@@ -452,7 +452,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             break;
 
         case LarvalStalkerControl_Idle:
-            if (Ray_NpcToPlayerLosCheck(larvalStalker, &g_SysWork.playerWork.player) || (distStep * 2) < distToTarget)
+            if (Ray_NpcToPlayerLosHitCheck(larvalStalker, &g_SysWork.playerWork.player) || (distStep * 2) < distToTarget)
             {
                 larvalStalker->model.controlState = LarvalStalkerControl_3;
 

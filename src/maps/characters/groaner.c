@@ -459,7 +459,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
     distToPlayer    = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
                                           g_SysWork.playerWork.player.position.vz - groaner->position.vz);
     distToPlayerMax = Rng_GenerateInt(Q12(4.0f), Q12(8.0f) - 1);
-    hasLosToPlayer  = Ray_NpcToPlayerLosCheck(groaner, &g_SysWork.playerWork.player);
+    hasLosToPlayer  = Ray_NpcToPlayerLosHitCheck(groaner, &g_SysWork.playerWork.player);
     if (distToPlayer < distToPlayerMax && !hasLosToPlayer)
     {
         groanerProps.angleToTarget = Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork.player.position);

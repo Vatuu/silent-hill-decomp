@@ -41,7 +41,7 @@ static u16 g_AmbientVabTaskLoadCmds[40] = {
 };
 
 // ========================================
-// MUSIC INIT & SET
+// MUSIC INIT AND SET
 // ========================================
 
 bool Bgm_Init(void) // 0x80035780

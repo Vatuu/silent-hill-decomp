@@ -5,8 +5,8 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "main/fsqueue.h"
 #include "bodyprog/text/text_draw.h"
+#include "main/fsqueue.h"
 
 void GameFs_TitleGfxSeek(void) // 0x80032BD0
 {
@@ -48,11 +48,6 @@ void GameFs_SaveLoadBinLoad(void) // 0x80032CA8
     Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
 }
 
-/** @unused Loading screen text.
- * Just like in earlier builds of Silent Hill 2 the game
- * was intended to show a black screen with a
- * "Now loading" text in middle of the screen.
- */
 void func_80032CE8(void) // 0x80032CE8
 {
     Gfx_StringSetPosition(SCREEN_POSITION_X(33.75f), SCREEN_POSITION_Y(43.5f));

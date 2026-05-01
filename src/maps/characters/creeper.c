@@ -398,7 +398,7 @@ void Creeper_ControlWalkForward(s_SubCharacter* creeper)
                                        creeperProps.targetPositionZ - creeper->position.vz);
 
     if (distToTarget < Q12(1.2f) && !(creeperProps.flags & CreeperFlag_HasAttacked) &&
-        !Ray_NpcToPlayerLosCheck(creeper, &playerChara))
+        !Ray_NpcToPlayerLosHitCheck(creeper, &playerChara))
     {
         if (distToPlayer > Q12(1.2f))
         {
@@ -510,7 +510,7 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
 
     #define playerChara g_SysWork.playerWork.player
 
-    if (Ray_NpcToPlayerLosCheck(creeper, &playerChara))
+    if (Ray_NpcToPlayerLosHitCheck(creeper, &playerChara))
     {
         g_SysWork.charaGroupFlags[3]         &= ~CharaGroupFlag_1;
         creeper->model.controlState = CreeperControl_WalkForward;

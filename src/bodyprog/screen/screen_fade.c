@@ -17,7 +17,7 @@
 // STATIC VARIABLES
 // ========================================
 
-static q19_12 g_Screen_FadePrevProgressState;
+static q19_12 g_Screen_PrevFadeProgressState;
 
 static DR_MODE D_800A8E5C[] = {
     { 0x3000000, { 0xE1000240, 0x0 } },
@@ -49,7 +49,7 @@ void Screen_FadeDrawModeSet(DR_MODE* drMode) // 0x800325A4
 
 q19_12 Screen_FadeInProgressGet(void) // 0x800325F8
 {
-    return Q12(1.0f) - g_Screen_FadePrevProgressState;
+    return Q12(1.0f) - g_Screen_PrevFadeProgressState;
 }
 
 void Screen_FadeUpdate(void) // 0x8003260C
@@ -62,7 +62,7 @@ void Screen_FadeUpdate(void) // 0x8003260C
 
     drMode                         = &D_800A8E5C[g_ActiveBufferIdx];
     tile                           = &D_800A8E74[g_ActiveBufferIdx];
-    g_Screen_FadePrevProgressState = g_Screen_FadeProgress;
+    g_Screen_PrevFadeProgressState = g_Screen_FadeProgress;
 
     switch (g_Screen_FadeStatus)
     {

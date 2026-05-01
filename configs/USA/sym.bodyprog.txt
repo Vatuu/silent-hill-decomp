@@ -776,9 +776,11 @@ Ray_LosHitCheck                              = 0x8006DB3C; // type:func
 Ray_TraceSetup                               = 0x8006DCE0; // type:func
 Ray_TraceRun                                 = 0x8006DEB0; // type:func
 Chara_HeadingAngleGet                        = 0x8006FAFC; // type:func
+Ray_CharaToTargetLosHitCheck                 = 0x80070030; // type:func
 Ray_CharaToCharaTargetLosCheck               = 0x80070084; // type:func
-Ray_NpcToPlayerLosCheck                      = 0x800700F8; // type:func
+Ray_NpcToPlayerLosHitCheck                   = 0x800700F8; // type:func
 Ray_CharaToCharaDistLosCheck                 = 0x80070184; // type:func
+Ray_CharaToCharaFrontLosHitCheck             = 0x80070208; // type:func
 Ray_CharaLosHitCheck                         = 0x8007029C; // type:func
 Collision_CharaAnimShapesSet                 = 0x80070400; // type:func
 
@@ -2791,7 +2793,7 @@ g_Text_Debug_PositionSet1                    = 0x800B5C24; // type:DVECTOR size:
 //------------------------------------------------------------------------
 //--- PA: 0x0910C8   VA: 0x800B5C28   subsegment: .bss, screen/screen_fade
 //------------------------------------------------------------------------
-g_Screen_FadePrevProgressState               = 0x800B5C28; // type:s32
+g_Screen_PrevFadeProgressState               = 0x800B5C28; // type:s32
 
 //------------------------------------------------------------------------
 //--- PA: 0x0910D0   VA: 0x800B5C30   subsegment: .bss, screen/screen_draw

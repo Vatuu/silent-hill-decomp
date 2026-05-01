@@ -597,7 +597,7 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
     distToTarget = Math_Vector2MagCalc(romper->position.vx - romperProps.targetPositionX_FC,
                                        romper->position.vz - romperProps.targetPositionZ_100);
 
-    cond = Ray_NpcToPlayerLosCheck(romper, &g_SysWork.playerWork.player);
+    cond = Ray_NpcToPlayerLosHitCheck(romper, &g_SysWork.playerWork.player);
 
     if (!(romperProps.flags & RomperFlag_3))
     {

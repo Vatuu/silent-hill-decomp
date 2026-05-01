@@ -2431,7 +2431,7 @@ extern s_FsImageDesc D_800A90A4;
 
 extern s_FsImageDesc D_800A90B4;
 
-extern s_SubCharacter D_800BA00C; // Often passed to `Ray_NpcToPlayerLosCheck`, might not be full `s_SubCharacter`?
+extern s_SubCharacter D_800BA00C; // Often passed to `Ray_NpcToPlayerLosHitCheck`, might not be full `s_SubCharacter`?
 
 extern u8 D_800BC74F;
 
@@ -2636,8 +2636,11 @@ extern s16 SQRT[100];
 // FUNCTIONS
 // ==========
 
-/** @unused Possibly a leftover from when the save menu was part of `BODYPROG.BIN`.
- * Draws some string in display space.
+/** @brief @unused Loading screen text.
+ *
+ * Just like in earlier builds of Silent Hill 2, the game
+ * was intended to show a black screen with
+ * "Now loading" text in middle of the screen.
  */
 void func_80032CE8(void);
 
@@ -3986,7 +3989,17 @@ q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 targetPo
 
 bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 distStep);
 
-bool func_80070030(s_SubCharacter* chara, q19_12 posX, q19_12 posY, q19_12 posZ);
+/** @brief Checks if there's an obstructed target-based line of sight between a character and a target position.
+ *
+ * @note `fromChara` is excluded.
+ *
+ * @param fromChara Origin character.
+ * @param toX Target X position.
+ * @param toY Target Y position.
+ * @param toZ Target Z position.
+ * @return `true` if there's an obstruction, `false` otherwise.
+ */
+bool Ray_CharaToTargetLosHitCheck(s_SubCharacter* fromChara, q19_12 toX, q19_12 toY, q19_12 toZ);
 
 /** @brief Checks if there's an unobstructed target-based line of sight between a character and any other character.
  *
@@ -4006,7 +4019,7 @@ bool Ray_CharaToCharaTargetLosCheck(s_SubCharacter* fromChara, q19_12 toX, q19_1
  * @param toPlayer Target player character.
  * @return `true` if there's no obstruction, `false` otherwise.
  */
-bool Ray_NpcToPlayerLosCheck(s_SubCharacter* fromNpc, s_SubCharacter* toPlayer);
+bool Ray_NpcToPlayerLosHitCheck(s_SubCharacter* fromNpc, s_SubCharacter* toPlayer);
 
 /** @brief Checks if there's an unobstructed distance-based line of sight between a character and any other character.
  *
@@ -4019,22 +4032,16 @@ bool Ray_NpcToPlayerLosCheck(s_SubCharacter* fromNpc, s_SubCharacter* toPlayer);
  */
 bool Ray_CharaToCharaDistLosCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle);
 
-bool func_80070320(void);
-
-/** TODO: Return type uncertain. */
-q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2);
-
-/** @brief Sets a character's interpolated animation pose for the current tick.
- * TODO: Not really the pose, but frame-derived data. Need to deobfuscate more of
- * the structs to name an ddocument this properly.
+/** @brief @unused Checks if there's another character obstructing the distance-based line of sight in front of a
+ * character.
  *
- * @param chara Character to update.
- * @param keyframe0 First keyframe.
- * @param keyframe1 Second keyframe.
+ * @note `fromChara` is excluded.
+ *
+ * @param fromChara Origin character.
+ * @param dist Ray distance.
+ * @return `true` if there's another character in front, `false` otherwise.
  */
-void Collision_CharaAnimShapesSet(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1);
-
-bool func_80070208(s_SubCharacter* chara, q19_12 dist);
+bool Ray_CharaToCharaFrontLosHitCheck(s_SubCharacter* fromChara, q19_12 dist);
 
 /** @brief Checks if there's an obstructed distance-based line of sight from a character.
  *
@@ -4046,6 +4053,19 @@ bool func_80070208(s_SubCharacter* chara, q19_12 dist);
  * @return `true` if there's an obstruction, `false` otherwise.
  */
 bool Ray_CharaLosHitCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle);
+
+bool func_80070320(void);
+
+/** TODO: Return type uncertain. */
+q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2);
+
+/** @brief Sets a character's interpolated collision shapes for the active animation frame.
+ *
+ * @param chara Character to update.
+ * @param keyframe0 First keyframe.
+ * @param keyframe1 Second keyframe.
+ */
+void Collision_CharaAnimShapesSet(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1);
 
 void func_800705E4(GsCOORDINATE2* coord, s32 idx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ);
 

@@ -14,7 +14,7 @@ q0_8 g_Screen_BackgroundImgGamma = Q8(0.5f);
 s16  D_800A8E5A                  = 3; // @unused.
 
 // ========================================
-// 2D BACKGROUND IMAGES DRAW
+// 2D BACKGROUND IMAGE DRAWING
 // ========================================
 
 void Screen_BackgroundImgDraw(s_FsImageDesc* image) // 0x800314EC
