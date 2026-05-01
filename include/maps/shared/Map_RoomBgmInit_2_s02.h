@@ -4,7 +4,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800CC99C
 
     flags = 1 << 1;
 
-    switch (g_SavegamePtr->mapRoomIdx_A5)
+    switch (g_SavegamePtr->mapRoomIdx)
     {
         case 17:
             if (Savegame_EventFlagGet(EventFlag_295) && !Savegame_EventFlagGet(EventFlag_352))

@@ -71,25 +71,25 @@ void Game_TimerUpdate(void) // 0x8004C8DC
 {
     #define TIME_290_HOURS        Q12((290.0f * 60.0f) * 60.0f)
     #define TIME_130_HOURS        Q12((130.0f * 60.0f) * 60.0f)
-    #define TIME_290_OVERFLOW_MAX 3 // `add290Hours_25C_1` has max value of 3.
+    #define TIME_290_OVERFLOW_MAX 3 // `add290Hours` has max value of 3.
 
-    g_SavegamePtr->gameplayTimer_250 += g_DeltaTimeRaw;
-    if (g_SavegamePtr->gameplayTimer_250 >= TIME_290_HOURS)
+    g_SavegamePtr->gameplayTimer += g_DeltaTimeRaw;
+    if (g_SavegamePtr->gameplayTimer >= TIME_290_HOURS)
     {
-        if (g_SavegamePtr->add290Hours_25C_1 < TIME_290_OVERFLOW_MAX)
+        if (g_SavegamePtr->add290Hours < TIME_290_OVERFLOW_MAX)
         {
-            g_SavegamePtr->add290Hours_25C_1++;
-            g_SavegamePtr->gameplayTimer_250 += (UINT_MAX - TIME_290_HOURS) + 1; // Wrap timer to 0 using unsigned overflow.
+            g_SavegamePtr->add290Hours++;
+            g_SavegamePtr->gameplayTimer += (UINT_MAX - TIME_290_HOURS) + 1; // Wrap timer to 0 using unsigned overflow.
         }
         else
         {
-            g_SavegamePtr->gameplayTimer_250 = TIME_290_HOURS - 1;
+            g_SavegamePtr->gameplayTimer = TIME_290_HOURS - 1;
         }
     }
 
-    if (g_SavegamePtr->add290Hours_25C_1 == TIME_290_OVERFLOW_MAX)
+    if (g_SavegamePtr->add290Hours == TIME_290_OVERFLOW_MAX)
     {
-        g_SavegamePtr->gameplayTimer_250 = CLAMP(g_SavegamePtr->gameplayTimer_250, 1, TIME_130_HOURS);
+        g_SavegamePtr->gameplayTimer = CLAMP(g_SavegamePtr->gameplayTimer, 1, TIME_130_HOURS);
     }
 
     #undef TIME_290_HOURS
@@ -284,7 +284,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
                 Screen_Refresh(320, 0);
                 Inventory_ExitAnimFixes();
 
-                g_SavegamePtr->inventorySlotCount_AB = func_8004F190(g_SavegamePtr);
+                g_SavegamePtr->inventorySlotCount = func_8004F190(g_SavegamePtr);
 
                 WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
                 func_8003D01C();
@@ -316,13 +316,13 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             Gfx_Items_DrawInit();
             func_8008F94C();
 
-            g_Inventory_GameDifficulty = g_SavegamePtr->gameDifficulty_260;
-            if (g_SavegamePtr->gameDifficulty_260 <= GameDifficulty_Normal)
+            g_Inventory_GameDifficulty = g_SavegamePtr->gameDifficulty;
+            if (g_SavegamePtr->gameDifficulty <= GameDifficulty_Normal)
             {
-                g_SavegamePtr->gameDifficulty_260++;
+                g_SavegamePtr->gameDifficulty++;
             }
 
-            GameBoot_SavegameInitialize(0, g_SavegamePtr->gameDifficulty_260);
+            GameBoot_SavegameInitialize(0, g_SavegamePtr->gameDifficulty);
             func_800904F4();
 
 #if VERSION_REGION_IS(NTSCJ)
@@ -609,9 +609,9 @@ void Inventory_Logic(void) // 0x8004D518
                 g_Inventory_CmdSelectedIdx       = 0;
                 Sd_PlaySfx(Sfx_MenuMove, -64, 64);
 
-                g_SysWork.invItemSelectedIdx = ((g_SysWork.invItemSelectedIdx + g_SavegamePtr->inventorySlotCount_AB) - 1) % g_SavegamePtr->inventorySlotCount_AB;
-                temp                                    = g_SavegamePtr->inventorySlotCount_AB - 3;
-                func_800539A4(0, (g_SysWork.invItemSelectedIdx + temp) % g_SavegamePtr->inventorySlotCount_AB);
+                g_SysWork.invItemSelectedIdx = ((g_SysWork.invItemSelectedIdx + g_SavegamePtr->inventorySlotCount) - 1) % g_SavegamePtr->inventorySlotCount;
+                temp                                    = g_SavegamePtr->inventorySlotCount - 3;
+                func_800539A4(0, (g_SysWork.invItemSelectedIdx + temp) % g_SavegamePtr->inventorySlotCount);
             }
             else if (((g_Inventory_IsRightClicked || g_Inventory_IsRightPulsed) && g_Inventory_SelectionBordersDraw == 8) ||
                      (g_Inventory_IsRightHeld && (g_Inventory_IsScrolling || g_Inventory_SelectionBordersDraw == 8)))
@@ -626,8 +626,8 @@ void Inventory_Logic(void) // 0x8004D518
                 g_Inventory_CmdSelectedIdx           = 0;
                 Sd_PlaySfx(Sfx_MenuMove, 64, 64);
 
-                g_SysWork.invItemSelectedIdx = (g_SysWork.invItemSelectedIdx + 1) % g_SavegamePtr->inventorySlotCount_AB;
-                func_800539A4(1, (g_SysWork.invItemSelectedIdx + 3) % g_SavegamePtr->inventorySlotCount_AB);
+                g_SysWork.invItemSelectedIdx = (g_SysWork.invItemSelectedIdx + 1) % g_SavegamePtr->inventorySlotCount;
+                func_800539A4(1, (g_SysWork.invItemSelectedIdx + 3) % g_SavegamePtr->inventorySlotCount);
             }
             else if (g_Inventory_IsUpClicked != InventorySelectionId_Item && g_Inventory_SelectionBordersDraw == 8)
             {
@@ -659,13 +659,13 @@ void Inventory_Logic(void) // 0x8004D518
             else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter &&
                      g_Inventory_SelectionBordersDraw >= 8)
             {
-                if (g_SavegamePtr->items_0[g_SysWork.invItemSelectedIdx].id_0 == InvItemId_Flauros ||
+                if (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0 == InvItemId_Flauros ||
                     (g_SysWork.field_2388.isFlashlightUnavailable_16 &&
-                     g_SavegamePtr->items_0[g_SysWork.invItemSelectedIdx].id_0 == InvItemId_Flashlight))
+                     g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0 == InvItemId_Flashlight))
                 {
                     Sd_PlaySfx(Sfx_MenuError, 64, 64);
                 }
-                else if (g_SavegamePtr->items_0[g_SysWork.invItemSelectedIdx].command_2 == InvCmdId_Unk10)
+                else if (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].command_2 == InvCmdId_Unk10)
                 {
                     g_GameWork.gameStateSteps[1] = 12;
                     g_GameWork.gameStateSteps[2] = 0;
@@ -676,7 +676,7 @@ void Inventory_Logic(void) // 0x8004D518
                     g_Inventory_SelectionBordersDraw = 1;
                     g_Inventory_CmdSelectedIdx           = 0;
 
-                    if (g_SavegamePtr->items_0[g_SysWork.invItemSelectedIdx].command_2 != InvCmdId_Unk11)
+                    if (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].command_2 != InvCmdId_Unk11)
                     {
                         g_Inventory_SelectionId = InventorySelectionId_ItemCmd;
                         Sd_PlaySfx(Sfx_MenuConfirm, 64, 64);
@@ -713,7 +713,7 @@ void Inventory_Logic(void) // 0x8004D518
                 g_Inventory_SelectionBordersDraw = 1;
                 g_Inventory_CmdSelectedIdx           = 0;
 
-                if (g_SavegamePtr->items_0[g_SysWork.playerCombat.weaponInventoryIdx].command_2 != InvCmdId_Unk11)
+                if (g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx].command_2 != InvCmdId_Unk11)
                 {
                     g_Inventory_SelectionId = InventorySelectionId_EquippedItemCmd;
                     Sd_PlaySfx(Sfx_MenuConfirm, 0, 64);
@@ -852,15 +852,15 @@ void Inventory_Logic(void) // 0x8004D518
                      g_SysWork.field_2388.isFlashlightOn_15 ||
                      (!(g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) &&
                       !(g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))) &&
-                    HAS_MAP(g_SavegamePtr->paperMapIdx_A9))
+                    HAS_MAP(g_SavegamePtr->paperMapIdx))
                 {
                     Sd_PlaySfx(Sfx_MenuConfirm, 64, 64);
 
-                    if (g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx_A9] != NO_VALUE)
+                    if (g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx] != NO_VALUE)
                     {
-                        Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx_A9], FS_BUFFER_1, &g_PaperMapMarkingAtlasImg);
+                        Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx], FS_BUFFER_1, &g_PaperMapMarkingAtlasImg);
                     }
-                    Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[g_SavegamePtr->paperMapIdx_A9]);
+                    Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[g_SavegamePtr->paperMapIdx]);
 
                     ScreenFade_Start(true, false, false);
                     g_GameWork.gameStateSteps[1] = 19;
@@ -884,7 +884,7 @@ void Inventory_Logic(void) // 0x8004D518
                 g_GameWork.gameStateSteps[2] = step;
             }
 
-            if (!HAS_MAP(g_SavegamePtr->paperMapIdx_A9))
+            if (!HAS_MAP(g_SavegamePtr->paperMapIdx))
             {
                 Gfx_Inventory_UnavailableMapText(1);
             }
@@ -908,7 +908,7 @@ void Inventory_Logic(void) // 0x8004D518
                 curItemIdx = g_SysWork.playerCombat.weaponInventoryIdx;
             }
 
-            switch (g_SavegamePtr->items_0[curItemIdx].command_2)
+            switch (g_SavegamePtr->items[curItemIdx].command_2)
             {
                 case InvCmdId_UseHealth:
                 case InvCmdId_Use:
@@ -953,7 +953,7 @@ void Inventory_Logic(void) // 0x8004D518
             {
                 g_Inventory_SelectionBordersDraw = 1;
 
-                switch (g_SavegamePtr->items_0[curItemIdx].command_2)
+                switch (g_SavegamePtr->items[curItemIdx].command_2)
                 {
                     case InvCmdId_OnOff:
                         g_Inventory_SelectionBordersDraw = 1;
@@ -961,27 +961,27 @@ void Inventory_Logic(void) // 0x8004D518
 
                         if (g_Inventory_CmdSelectedIdx == 0)
                         {
-                            switch (g_SavegamePtr->items_0[curItemIdx].id_0)
+                            switch (g_SavegamePtr->items[curItemIdx].id_0)
                             {
                                 case InvItemId_Flashlight:
                                     Game_TurnFlashlightOn();
                                     break;
 
                                 case InvItemId_PocketRadio:
-                                    g_SavegamePtr->itemToggleFlags_AC |= ItemToggleFlag_RadioOn;
+                                    g_SavegamePtr->itemToggleFlags |= ItemToggleFlag_RadioOn;
                                     break;
                             }
                         }
                         else
                         {
-                            switch (g_SavegamePtr->items_0[curItemIdx].id_0)
+                            switch (g_SavegamePtr->items[curItemIdx].id_0)
                             {
                                 case InvItemId_Flashlight:
                                     Game_TurnFlashlightOff();
                                     break;
 
                                 case InvItemId_PocketRadio:
-                                    g_SavegamePtr->itemToggleFlags_AC &= ~ItemToggleFlag_RadioOn;
+                                    g_SavegamePtr->itemToggleFlags &= ~ItemToggleFlag_RadioOn;
                                     break;
                             }
                         }
@@ -1003,7 +1003,7 @@ void Inventory_Logic(void) // 0x8004D518
                                 g_GameWork.gameStateSteps[1]      = 13;
                                 g_GameWork.gameStateSteps[2]      = 0;
 
-                                switch (g_SavegamePtr->items_0[curItemIdx].id_0)
+                                switch (g_SavegamePtr->items[curItemIdx].id_0)
                                 {
                                     case InvItemId_KeyOfLion:
                                         Fs_QueueStartReadTim(FILE_TIM_LION_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
@@ -1082,7 +1082,7 @@ void Inventory_Logic(void) // 0x8004D518
                             g_GameWork.gameStateSteps[1]      = 13;
                             g_GameWork.gameStateSteps[2]      = 0;
 
-                            switch (g_SavegamePtr->items_0[curItemIdx].id_0)
+                            switch (g_SavegamePtr->items[curItemIdx].id_0)
                             {
                                 case InvItemId_NoteToSchool:
                                     Fs_QueueStartReadTim(FILE_TIM_TOSCHOOL_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
@@ -1232,12 +1232,12 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
     g_GameWork.gameStateSteps[1] = 12;
     g_GameWork.gameStateSteps[2] = 0;
 
-    if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP6_S04)
+    if (g_SavegamePtr->mapIdx == MapIdx_MAP6_S04)
     {
         if ((CHARA_ID_CHECK && !Math_Distance2dCheck(&playerChara.position, &g_SysWork.npcs[0].position, Q12(0.7f))) &&
             ABS(playerChara.position.vy - g_SysWork.npcs[0].position.vy) < Q12(0.3f) &&
             playerExtra.state == PlayerState_None &&
-            g_SavegamePtr->items_0[inventoryItemIdx].id_0 == InvItemId_UnknownLiquid)
+            g_SavegamePtr->items[inventoryItemIdx].id_0 == InvItemId_UnknownLiquid)
         {
             g_Inventory_SelectionBordersDraw = 1;
             g_Inventory_SelectionId              = InventorySelectionId_Item;
@@ -1254,7 +1254,7 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
         // `Event_Update` to make use of it.
         for (i = 0; g_ItemTriggerItemIds[i] != NO_VALUE; i++)
         {
-            if (g_ItemTriggerItemIds[i] == g_SavegamePtr->items_0[inventoryItemIdx].id_0)
+            if (g_ItemTriggerItemIds[i] == g_SavegamePtr->items[inventoryItemIdx].id_0)
             {
                 g_Inventory_SelectionBordersDraw = 1;
                 g_Inventory_SelectionId              = InventorySelectionId_Item;
@@ -1315,11 +1315,11 @@ void Gfx_Inventory_CmdOptionsDraw(void) // 0x8004E864
         idx = g_SysWork.playerCombat.weaponInventoryIdx;
     }
 
-    switch (g_SavegamePtr->items_0[idx].command_2)
+    switch (g_SavegamePtr->items[idx].command_2)
     {
         case InvCmdId_OnOff:
             if (!g_SysWork.field_2388.isFlashlightUnavailable_16 ||
-                g_SavegamePtr->items_0[idx].id_0 != InvItemId_Flashlight)
+                g_SavegamePtr->items[idx].id_0 != InvItemId_Flashlight)
             {
                 Gfx_StringSetPosition(222, -42);
                 Gfx_StringDraw(STRS[5], 10);
@@ -1383,7 +1383,7 @@ void Gfx_Inventory_CmdOptionsDraw(void) // 0x8004E864
     if (g_Inventory_SelectionId >= InventorySelectionId_ItemCmd &&
         g_Inventory_SelectionId <= InventorySelectionId_EquippedItemCmd)
     {
-        switch (g_SavegamePtr->items_0[idx].command_2)
+        switch (g_SavegamePtr->items[idx].command_2)
         {
             case 4:
             case 5:
@@ -1490,9 +1490,9 @@ bool Player_ItemRemove(u8 itemId, u8 count) // 0x8004EE94
 {
     s32 i;
 
-    for (i = 0; i < g_SavegamePtr->inventorySlotCount_AB; i++)
+    for (i = 0; i < g_SavegamePtr->inventorySlotCount; i++)
     {
-        if (itemId != g_SavegamePtr->items_0[i].id_0)
+        if (itemId != g_SavegamePtr->items[i].id_0)
         {
             continue;
         }
@@ -1503,11 +1503,11 @@ bool Player_ItemRemove(u8 itemId, u8 count) // 0x8004EE94
                 break;
 
             case 1:
-                g_SavegamePtr->items_0[i].count_1--;
-                if (g_SavegamePtr->items_0[i].count_1 == 0)
+                g_SavegamePtr->items[i].count_1--;
+                if (g_SavegamePtr->items[i].count_1 == 0)
                 {
-                    g_SavegamePtr->items_0[i].id_0       = InvItemId_Empty;
-                    g_SavegamePtr->inventorySlotCount_AB = func_8004F190(g_SavegamePtr);
+                    g_SavegamePtr->items[i].id_0       = InvItemId_Empty;
+                    g_SavegamePtr->inventorySlotCount = func_8004F190(g_SavegamePtr);
                 }
                 break;
         }
@@ -1536,15 +1536,15 @@ void func_8004EF48(void) // 0x8004EF48
 
     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
     {
-        inventoryItemId = g_SavegamePtr->items_0[i].id_0;
+        inventoryItemId = g_SavegamePtr->items[i].id_0;
 
         if (inventoryItemId == (u8)InvItemId_Empty)
         {
-            g_SavegamePtr->items_0[i].command_2 = InvCmdId_Unk11;
+            g_SavegamePtr->items[i].command_2 = InvCmdId_Unk11;
         }
         else if (inventoryItemId >= InvItemId_HealthDrink && inventoryItemId < InvItemId_LobbyKey)
         {
-            g_SavegamePtr->items_0[i].command_2 = InvCmdId_UseHealth;
+            g_SavegamePtr->items[i].command_2 = InvCmdId_UseHealth;
         }
         else if (inventoryItemId >= InvItemId_KitchenKnife && inventoryItemId < InvItemId_Flashlight)
         {
@@ -1553,11 +1553,11 @@ void func_8004EF48(void) // 0x8004EF48
                 itemIdGroup = INVENTORY_ITEM_GROUP(inventoryItemId);
                 if (itemIdGroup == InvItemGroup_MeleeWeapons || inventoryItemId == InvItemId_HyperBlaster)
                 {
-                    g_SavegamePtr->items_0[i].command_2 = InvCmdId_Unequip;
+                    g_SavegamePtr->items[i].command_2 = InvCmdId_Unequip;
                 }
                 else
                 {
-                    g_SavegamePtr->items_0[i].command_2 = InvCmdId_UnequipReload;
+                    g_SavegamePtr->items[i].command_2 = InvCmdId_UnequipReload;
                 }
             }
             else
@@ -1565,19 +1565,19 @@ void func_8004EF48(void) // 0x8004EF48
                 itemIdGroup = INVENTORY_ITEM_GROUP(inventoryItemId);
                 if (itemIdGroup == InvItemGroup_GunAmmo)
                 {
-                    g_SavegamePtr->items_0[i].command_2 = InvCmdId_Reload;
+                    g_SavegamePtr->items[i].command_2 = InvCmdId_Reload;
                     if (INVENTORY_WEAPON_AMMO_ID(equippedItemId))
                     {
-                        g_SavegamePtr->items_0[i].command_2 = InvCmdId_Reload;
+                        g_SavegamePtr->items[i].command_2 = InvCmdId_Reload;
                     }
                 }
                 else if (itemIdGroup == InvItemGroup_GunWeapons && inventoryItemId != InvItemId_HyperBlaster)
                 {
-                    g_SavegamePtr->items_0[i].command_2 = InvCmdId_EquipReload;
+                    g_SavegamePtr->items[i].command_2 = InvCmdId_EquipReload;
                 }
                 else
                 {
-                    g_SavegamePtr->items_0[i].command_2 = InvCmdId_Equip;
+                    g_SavegamePtr->items[i].command_2 = InvCmdId_Equip;
                 }
             }
         }
@@ -1586,25 +1586,25 @@ void func_8004EF48(void) // 0x8004EF48
             switch (inventoryItemId)
             {
                 case InvItemId_Flashlight:
-                    g_SavegamePtr->items_0[i].command_2 = InvCmdId_OnOff;
+                    g_SavegamePtr->items[i].command_2 = InvCmdId_OnOff;
                     break;
 
                 case InvItemId_PocketRadio:
-                    if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP5_S00 ||
-                        g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP6_S03)
+                    if (g_SavegamePtr->mapIdx == MapIdx_MAP5_S00 ||
+                        g_SavegamePtr->mapIdx == MapIdx_MAP6_S03)
                     {
-                        g_SavegamePtr->items_0[i].command_2 = InvCmdId_Unk10;
+                        g_SavegamePtr->items[i].command_2 = InvCmdId_Unk10;
                     }
                     else
                     {
-                        g_SavegamePtr->items_0[i].command_2 = InvCmdId_OnOff;
+                        g_SavegamePtr->items[i].command_2 = InvCmdId_OnOff;
                     }
                     break;
 
                 case InvItemId_NoteToSchool:
                 case InvItemId_NoteDoghouse:
                 case InvItemId_Receipt:
-                    g_SavegamePtr->items_0[i].command_2 = InvCmdId_Look;
+                    g_SavegamePtr->items[i].command_2 = InvCmdId_Look;
                     break;
 
                 case InvItemId_KeyOfLion:
@@ -1619,16 +1619,16 @@ void func_8004EF48(void) // 0x8004EF48
                 case InvItemId_KeyOfBethor:
                 case InvItemId_KeyOfAratron:
                 case InvItemId_KaufmannKey:
-                    g_SavegamePtr->items_0[i].command_2 = InvCmdId_UseLook;
+                    g_SavegamePtr->items[i].command_2 = InvCmdId_UseLook;
                     break;
 
                 case InvItemId_Flauros:
-                    g_SavegamePtr->items_0[i].command_2 = InvCmdId_Unk10;
+                    g_SavegamePtr->items[i].command_2 = InvCmdId_Unk10;
                     break;
 
                 case InvItemId_GasolineTank:
                 default:
-                    g_SavegamePtr->items_0[i].command_2 = InvCmdId_Use;
+                    g_SavegamePtr->items[i].command_2 = InvCmdId_Use;
                     break;
             }
         }
@@ -1639,11 +1639,11 @@ void func_8004F10C(s32* arg0) // 0x8004F10C
 {
     s32 i;
 
-    g_SavegamePtr->inventorySlotCount_AB = func_8004F190(g_SavegamePtr);
+    g_SavegamePtr->inventorySlotCount = func_8004F190(g_SavegamePtr);
 
     for (i = *arg0; i >= 0; i--)
     {
-        if (g_SavegamePtr->items_0[i].id_0 != (u8)InvItemId_Empty)
+        if (g_SavegamePtr->items[i].id_0 != (u8)InvItemId_Empty)
         {
             *arg0 = i;
             return;
@@ -1667,32 +1667,32 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
 
     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
     {
-        if (savePtr->items_0[i].count_1 == 0 && INVENTORY_ITEM_GROUP(savePtr->items_0[i].id_0) != InvItemGroup_GunWeapons)
+        if (savePtr->items[i].count_1 == 0 && INVENTORY_ITEM_GROUP(savePtr->items[i].id_0) != InvItemGroup_GunWeapons)
         {
-            savePtr->items_0[i].id_0 = 0xFF;
+            savePtr->items[i].id_0 = 0xFF;
         }
     }
 
     for (i = 0; i < (INVENTORY_ITEM_COUNT_MAX - 1); i++)
     {
-        savePtr->items_0[i].field_3 = D_80025EB0[savePtr->items_0[i].id_0 - InvItemId_HealthDrink];
+        savePtr->items[i].field_3 = D_80025EB0[savePtr->items[i].id_0 - InvItemId_HealthDrink];
     }
 
     for (i = 0; i < (INVENTORY_ITEM_COUNT_MAX - 1); i++)
     {
         for (j = i + 1; j < INVENTORY_ITEM_COUNT_MAX; j++)
         {
-            if (savePtr->items_0[i].field_3 > savePtr->items_0[j].field_3)
+            if (savePtr->items[i].field_3 > savePtr->items[j].field_3)
             {
-                *(s32*)&tempItem                 = savePtr->items_0[i].id_0 +
-                                                   (savePtr->items_0[i].count_1 << 8) +
-                                                   (savePtr->items_0[i].command_2 << 16) +
-                                                   (savePtr->items_0[i].field_3 << 24);
-                *(s32*)&savePtr->items_0[i].id_0 = savePtr->items_0[j].id_0 +
-                                                   (savePtr->items_0[j].count_1 << 8) +
-                                                   (savePtr->items_0[j].command_2 << 16) +
-                                                   (savePtr->items_0[j].field_3 << 24);
-                *(s32*)&savePtr->items_0[j].id_0 = tempItem.id_0 +
+                *(s32*)&tempItem                 = savePtr->items[i].id_0 +
+                                                   (savePtr->items[i].count_1 << 8) +
+                                                   (savePtr->items[i].command_2 << 16) +
+                                                   (savePtr->items[i].field_3 << 24);
+                *(s32*)&savePtr->items[i].id_0 = savePtr->items[j].id_0 +
+                                                   (savePtr->items[j].count_1 << 8) +
+                                                   (savePtr->items[j].command_2 << 16) +
+                                                   (savePtr->items[j].field_3 << 24);
+                *(s32*)&savePtr->items[j].id_0 = tempItem.id_0 +
                                                    (tempItem.count_1 << 8) +
                                                    (tempItem.command_2 << 16) +
                                                    (tempItem.field_3 << 24);
@@ -1702,16 +1702,16 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
 
     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
     {
-        item = &savePtr->items_0[0];
+        item = &savePtr->items[0];
 
         if (item[i].id_0 != (u8)InvItemId_Empty)
         {
             if (i != 0)
             {
-                savePtr->items_0[0].id_0    = savePtr->items_0[i].id_0;
-                savePtr->items_0[0].count_1 = savePtr->items_0[i].count_1;
-                savePtr->items_0[i].id_0    = InvItemId_Empty;
-                savePtr->items_0[i].count_1 = 0;
+                savePtr->items[0].id_0    = savePtr->items[i].id_0;
+                savePtr->items[0].count_1 = savePtr->items[i].count_1;
+                savePtr->items[i].id_0    = InvItemId_Empty;
+                savePtr->items[i].count_1 = 0;
             }
 
             i = 0xFF;
@@ -1727,69 +1727,69 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
     {
         for (j = 0; j < i; j++)
         {
-            if (savePtr->items_0[i].id_0 == (u8)InvItemId_Empty)
+            if (savePtr->items[i].id_0 == (u8)InvItemId_Empty)
             {
                 j = i;
             }
             else
             {
-                item = &savePtr->items_0[0];
+                item = &savePtr->items[0];
                 id = item[j].id_0;
 
-                if (savePtr->items_0[j].id_0 == savePtr->items_0[i].id_0)
+                if (savePtr->items[j].id_0 == savePtr->items[i].id_0)
                 {
                     if (INVENTORY_ITEM_GROUP(id) == InvItemGroup_GunAmmo)
                     {
-                        if ((savePtr->items_0[j].count_1 + savePtr->items_0[i].count_1) > 200)
+                        if ((savePtr->items[j].count_1 + savePtr->items[i].count_1) > 200)
                         {
-                            savePtr->items_0[j].count_1 = 200;
+                            savePtr->items[j].count_1 = 200;
                         }
                         else
                         {
-                            savePtr->items_0[j].count_1 += savePtr->items_0[i].count_1;
+                            savePtr->items[j].count_1 += savePtr->items[i].count_1;
                         }
                     }
                     else if (INVENTORY_ITEM_GROUP(id) == InvItemGroup_HealthItems)
                     {
-                        if ((savePtr->items_0[j].count_1 + savePtr->items_0[i].count_1) <= 100)
+                        if ((savePtr->items[j].count_1 + savePtr->items[i].count_1) <= 100)
                         {
-                            savePtr->items_0[j].count_1 += savePtr->items_0[i].count_1;
+                            savePtr->items[j].count_1 += savePtr->items[i].count_1;
                         }
                         else
                         {
-                            savePtr->items_0[j].count_1 = 100;
+                            savePtr->items[j].count_1 = 100;
                         }
                     }
 
-                    savePtr->items_0[i].id_0    = 0xFF;
-                    savePtr->items_0[i].count_1 = 0;
+                    savePtr->items[i].id_0    = 0xFF;
+                    savePtr->items[i].count_1 = 0;
                 }
                 else if (id == (u8)InvItemId_Empty)
                 {
-                    savePtr->items_0[j].id_0    = savePtr->items_0[i].id_0;
-                    savePtr->items_0[j].count_1 = savePtr->items_0[i].count_1;
-                    savePtr->items_0[i].id_0    = id;
-                    savePtr->items_0[i].count_1 = 0;
+                    savePtr->items[j].id_0    = savePtr->items[i].id_0;
+                    savePtr->items[j].count_1 = savePtr->items[i].count_1;
+                    savePtr->items[i].id_0    = id;
+                    savePtr->items[i].count_1 = 0;
                 }
             }
         }
     }
 
-    if (g_SavegamePtr->equippedWeapon_AA != InvItemId_Unequipped)
+    if (g_SavegamePtr->equippedWeapon != InvItemId_Unequipped)
     {
         for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
         {
-            if (g_SavegamePtr->items_0[i].id_0 == g_SavegamePtr->equippedWeapon_AA)
+            if (g_SavegamePtr->items[i].id_0 == g_SavegamePtr->equippedWeapon)
             {
                 g_SysWork.playerCombat.weaponInventoryIdx = i;
 
-                if (g_SavegamePtr->equippedWeapon_AA >= InvItemId_Handgun)
+                if (g_SavegamePtr->equippedWeapon >= InvItemId_Handgun)
                 {
                     for (j = 0; j < INVENTORY_ITEM_COUNT_MAX; j++)
                     {
-                        if (g_SavegamePtr->items_0[j].id_0 == INVENTORY_WEAPON_AMMO_ID(g_SavegamePtr->items_0[i].id_0))
+                        if (g_SavegamePtr->items[j].id_0 == INVENTORY_WEAPON_AMMO_ID(g_SavegamePtr->items[i].id_0))
                         {
-                            g_SysWork.playerCombat.totalWeaponAmmo = g_SavegamePtr->items_0[j].count_1;
+                            g_SysWork.playerCombat.totalWeaponAmmo = g_SavegamePtr->items[j].count_1;
 
                             j = INVENTORY_ITEM_COUNT_MAX + 1;
                         }
@@ -1808,7 +1808,7 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
 
     for (j = 0, i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
     {
-        if (g_SavegamePtr->items_0[i].id_0 != (u8)InvItemId_Empty)
+        if (g_SavegamePtr->items[i].id_0 != (u8)InvItemId_Empty)
         {
             j++;
         }

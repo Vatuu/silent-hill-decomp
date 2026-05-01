@@ -1985,11 +1985,11 @@ void Map_WorldObjectsInit(void) // 0x800EB908
         g_SavegamePtr->ovlEnemyStates[10] &= 0xF3FFFEFF;
     }
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         g_SysWork.npcFlagsId = 2;
     }
-    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+    else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal)
     {
         g_SysWork.npcFlagsId = 3;
     }

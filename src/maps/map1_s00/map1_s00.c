@@ -22,7 +22,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800D77F8
 {
     u16 flags;
 
-    if (g_SavegamePtr->mapRoomIdx_A5 == 23)
+    if (g_SavegamePtr->mapRoomIdx == 23)
     {
         flags = 1 << 5;
         if (Savegame_EventFlagGet(EventFlag_71) && Savegame_EventFlagGet(EventFlag_72))
@@ -32,7 +32,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800D77F8
     }
     else
     {
-        flags = D_800DCC54[g_SavegamePtr->mapRoomIdx_A5];
+        flags = D_800DCC54[g_SavegamePtr->mapRoomIdx];
     }
 
     Bgm_Update(flags, Q12(0.1f), &D_800DCC4C);
@@ -757,13 +757,13 @@ void Map_WorldObjectsInit(void)
     Player_ItemRemove(InvItemId_NoteToSchool, 1);
     Savegame_EventFlagSet(EventFlag_147);
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         Chara_SpawnFlagsSet(Chara_GreyChild, 3, SpawnFlag_None);
         Chara_SpawnFlagsSet(Chara_GreyChild, 9, SpawnFlag_None);
     }
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         Chara_SpawnFlagsSet(Chara_GreyChild, 10, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
         Chara_SpawnFlagsSet(Chara_GreyChild, 11, SpawnFlag_0 | SpawnFlag_1);

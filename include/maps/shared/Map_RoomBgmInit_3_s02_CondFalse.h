@@ -9,7 +9,7 @@ void Map_RoomBgmInit_CondFalse(void)
     s32           roomIdx;
 
     dataPtr = sharedData_800D1D14_3_s02;
-    roomIdx = g_SavegamePtr->mapRoomIdx_A5;
+    roomIdx = g_SavegamePtr->mapRoomIdx;
 
     if (g_GameWork.bgmIdx == BgmTrackIdx_8)
     {

@@ -108,7 +108,7 @@ void Map_RoomBgmInit_CondFalse(void)
         dist    = Q12(0.0f);
         dataPtr = &sharedData_800EB748_6_s04;
 
-        switch (g_SavegamePtr->mapRoomIdx_A5)
+        switch (g_SavegamePtr->mapRoomIdx)
         {
             case 3:
                 flags = 4;

@@ -64,9 +64,9 @@ bool sharedFunc_800CBF74_1_s05(POLY_FT4** poly, s32 idx)
 
     Collision_Get(&ptr->collision, sharedData_800DFB7C_0_s00[idx].field_0.vx_0, sharedData_800DFB7C_0_s00[idx].field_4.vz_4);
 
-    if (ptr->collision.groundHeight_0 < sharedData_800DFB7C_0_s00[idx].vy_8 || sharedData_800DFB7C_0_s00[idx].vy_8 > Q12(0.0f))
+    if (ptr->collision.groundHeight < sharedData_800DFB7C_0_s00[idx].vy_8 || sharedData_800DFB7C_0_s00[idx].vy_8 > Q12(0.0f))
     {
-        sharedData_800DFB7C_0_s00[idx].vy_8                = MIN(ptr->collision.groundHeight_0, 0);
+        sharedData_800DFB7C_0_s00[idx].vy_8                = MIN(ptr->collision.groundHeight, 0);
         sharedData_800DFB7C_0_s00[idx].field_B             = 1;
         sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = Q12_ANGLE(0.0f);
 

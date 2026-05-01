@@ -4,7 +4,7 @@ void Map_RoomBgmInit(bool arg0)
     s32       flags;
     s32       mapRoomIdx;
 
-    mapRoomIdx = g_SavegamePtr->mapRoomIdx_A5;
+    mapRoomIdx = g_SavegamePtr->mapRoomIdx;
     flags      = (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) ? (1 << 2) : (1 << 1);
 
     switch (mapRoomIdx)

@@ -1383,7 +1383,7 @@ void Map_WorldObjectsInit(void) // 0x800DD3AC
 
     WorldObjectInit(&g_WorldObject7, "KEY_HIDE", -60.3184f, -0.00732422f, 20.23f, 0.0f, 53.2f, 5.3f);
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         Chara_SpawnFlagsSet(Chara_GreyChild, 1, SpawnFlag_None);
         Chara_SpawnFlagsSet(Chara_GreyChild, 5, SpawnFlag_None);
@@ -1617,7 +1617,7 @@ void func_800DE624(void) // 0x800DE624
 {
     q19_12 playerHealth;
 
-    if (Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey) && g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
+    if (Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey) && g_SavegamePtr->gameDifficulty != GameDifficulty_Easy)
     {
         Chara_SpawnFlagsSet(Chara_GreyChild, 9, SpawnFlag_0 | SpawnFlag_1);
         Chara_SpawnFlagsSet(Chara_GreyChild, 10, SpawnFlag_0 | SpawnFlag_1);
@@ -1625,12 +1625,12 @@ void func_800DE624(void) // 0x800DE624
 
     if (Savegame_EventFlagGet(EventFlag_M1S03_PickupLibraryReserveKey))
     {
-        if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
+        if (g_SavegamePtr->gameDifficulty != GameDifficulty_Easy)
         {
             Chara_SpawnFlagsSet(Chara_GreyChild, 12, SpawnFlag_0 | SpawnFlag_1);
         }
 
-        if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+        if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
         {
             Chara_SpawnFlagsSet(Chara_GreyChild, 13, SpawnFlag_0 | SpawnFlag_1);
             Chara_SpawnFlagsSet(Chara_GreyChild, 11, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_2);
@@ -1641,12 +1641,12 @@ void func_800DE624(void) // 0x800DE624
     }
 
     playerHealth = g_SysWork.playerWork.player.health;
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         playerHealth -= Q12(50.0f);
     }
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal)
     {
         playerHealth -= Q12(25.0f);
     }

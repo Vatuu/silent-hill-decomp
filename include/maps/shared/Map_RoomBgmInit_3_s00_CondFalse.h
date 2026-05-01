@@ -4,7 +4,7 @@ void Map_RoomBgmInit_CondFalse(void)
     q19_12 var;
     s32    mapRoomIdx;
 
-    mapRoomIdx = g_SavegamePtr->mapRoomIdx_A5;
+    mapRoomIdx = g_SavegamePtr->mapRoomIdx;
     var        = Q12(0.15f);
 
     switch (g_GameWork.bgmIdx)

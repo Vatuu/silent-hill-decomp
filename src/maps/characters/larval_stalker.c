@@ -36,7 +36,7 @@ void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr,
     }
 
     // TODO: Weird hack, or a drunk developer.
-    mapOverlayPtr = &g_SavegamePtr->mapOverlayId_A4;
+    mapOverlayPtr = &g_SavegamePtr->mapIdx;
 
     larvalStalker->timer_C6               = Q12(1.0f);
     larvalStalker->model.controlState = LarvalStalkerControl_1;

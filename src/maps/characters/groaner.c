@@ -64,13 +64,13 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
     groaner->model.anim.alpha = Q12(0.0f);
 
     groaner->health = HEALTH_BASE + (Rng_Rand16() % HEALTH_BONUS_MAX);
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal &&
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal &&
         Rng_GenerateInt(0, 7) == 0) // 1 in 8 chance.
     {
         groaner->health *= 2;
     }
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard &&
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard &&
         Rng_GenerateInt(0, 3) == 0)// 1 in 4 chance.
     {
         groaner->health *= 2;
@@ -81,11 +81,11 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
     groaner->headingAngle    = groaner->rotation.vy;
 
     groanerProps.field_114 = Rng_GenerateUInt(Q12(0.9375f), Q12(1.0625f) - 1);
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         groanerProps.field_114 += (u32)groanerProps.field_114 / 8;
     }
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         groanerProps.field_114 -= ((s32)((u16)groanerProps.field_114 << 16) >> 20); // (value * Q12(16.0f)) / Q12(256.0f)
     }
@@ -106,7 +106,7 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
     groanerProps.targetPositionZ = groaner->position.vz;
 
 #ifdef MAP2_S00
-    if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty != GameDifficulty_Hard)
     {
         if (!Savegame_EventFlagGet(EventFlag_134))
         {

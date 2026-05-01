@@ -31,11 +31,11 @@ void Chara_PositionSet(s_MapPoint2d* mapPoint) // 0x800371E8
 
     if (mapPoint->mapIdx_4_0 == 24) // TODO: Demagic 24.
     {
-        g_SavegamePtr->paperMapIdx_A9 = PaperMapIdx_OtherPlaces;
+        g_SavegamePtr->paperMapIdx = PaperMapIdx_OtherPlaces;
     }
     else if (mapPoint->mapIdx_4_0 != PaperMapIdx_OtherPlaces)
     {
-        g_SavegamePtr->paperMapIdx_A9 = mapPoint->mapIdx_4_0;
+        g_SavegamePtr->paperMapIdx = mapPoint->mapIdx_4_0;
     }
 
     g_SysWork.cameraAngleY = rotY;
@@ -56,5 +56,5 @@ void Game_PlayerHeightUpdate(void) // 0x80037334
     }
 
     Collision_Get(&coll, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
-    g_SysWork.playerWork.player.position.vy = coll.groundHeight_0;
+    g_SysWork.playerWork.player.position.vy = coll.groundHeight;
 }

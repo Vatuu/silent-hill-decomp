@@ -167,7 +167,7 @@ void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0
 
     if (!(flagsCpy & BgmFlag_KeepAlive) &&
         g_RadioPitchState > 0 &&
-        (g_SavegamePtr->itemToggleFlags_AC & ItemToggleFlag_RadioOn))
+        (g_SavegamePtr->itemToggleFlags & ItemToggleFlag_RadioOn))
     {
         g_SysWork.bgmStatusFlags |= BgmStatusFlag_RadioActive;
     }
@@ -388,17 +388,17 @@ void Savegame_MapRoomIdxUpdate(void) // 0x80036420
     {
         newMapRoomIdx = g_MapOverlayHeader.getMapRoomIdxFunc_4(x, z);
     }
-    g_SavegamePtr->mapRoomIdx_A5 = newMapRoomIdx;
+    g_SavegamePtr->mapRoomIdx = newMapRoomIdx;
 }
 
 s32 func_8003647C(void) // 0x8003647C
 {
-    return g_SavegamePtr->mapRoomIdx_A5 > g_MapOverlayHeader.field_8;
+    return g_SavegamePtr->mapRoomIdx > g_MapOverlayHeader.field_8;
 }
 
 s32 func_80036498(void) // 80036498
 {
-    return !(g_SavegamePtr->mapRoomIdx_A5 > g_MapOverlayHeader.field_8);
+    return !(g_SavegamePtr->mapRoomIdx > g_MapOverlayHeader.field_8);
 }
 
 // ========================================

@@ -31,9 +31,9 @@ void func_800EB6B0(void) // 0x800EB6B0
 
     posX  = g_SysWork.playerWork.player.position.vx;
     posZ  = g_SysWork.playerWork.player.position.vz;
-    temp_s1 = D_800EFC80[g_SavegamePtr->mapRoomIdx_A5];
+    temp_s1 = D_800EFC80[g_SavegamePtr->mapRoomIdx];
 
-    if (g_SavegamePtr->mapRoomIdx_A5 == 10)
+    if (g_SavegamePtr->mapRoomIdx == 10)
     {
         posX += Q12(150.0f);
         posZ  = Q12(-25.0f) - posZ;
@@ -681,11 +681,11 @@ void Map_WorldObjectsInit(void) // 0x800ECB58
 
     WorldObjectInit(&g_WorldObject1, "FOOK_HID", 52.15f, -1.359f, -57.925f, 0.0f, 0.0f, 5.8f);
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         g_SysWork.npcFlagsId = 3;
     }
-    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+    else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal)
     {
         g_SysWork.npcFlagsId = 4;
     }

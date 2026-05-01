@@ -1757,7 +1757,7 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
                 // Otherwise, use ground height.
                 else
                 {
-                    watch_y = coll.groundHeight_0 + ofs_y;
+                    watch_y = coll.groundHeight + ofs_y;
                 }
                 break;
 

@@ -236,7 +236,7 @@ typedef struct _Savegame_Metadata
     u8  locationId_A;
     u8  isNextFearMode_B             : 1;
     u8  add290Hours_B_1              : 2;
-    u8  pickedUpSpecialItemCount_B_3 : 5; /** See `pickedUpSpecialItemCount_25C_3` comment in `s_Savegame`. */
+    u8  pickedUpSpecialItemCount_B_3 : 5; /** See `pickedUpSpecialItemCount` comment in `s_Savegame`. */
 } s_MemCard_SaveMetadata;
 STATIC_ASSERT_SIZEOF(s_MemCard_SaveMetadata, 12);
 

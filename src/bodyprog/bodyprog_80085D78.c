@@ -1016,7 +1016,7 @@ void Event_CommonItemTake(u32 pickupType, e_EventFlag eventFlagIdx) // 0x800879F
 
     // Compute ammo count multiplier.
     ammoCountMult = g_GameWork.config.optExtraBulletAdjust_2D + 1;
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         ammoCountMult = CLAMP(ammoCountMult, EASY_DIFFICULTY_AMMO_COUNT_MULT_MIN, ammoCountMult);
     }
@@ -1099,32 +1099,32 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
 
         case 4:
             mapFlagIdxCpy                                            = mapFlagIdx >> 5;
-            ((s32*)&g_SavegamePtr->hasMapsFlags_164)[mapFlagIdxCpy] |= 1 << (mapFlagIdx & 0x1F); // Maybe union?
+            ((s32*)&g_SavegamePtr->hasMapsFlags)[mapFlagIdxCpy] |= 1 << (mapFlagIdx & 0x1F); // Maybe union?
 
             switch (mapFlagIdx)
             {
                 case 6:
-                    g_SavegamePtr->hasMapsFlags_164 |= 0x1FA0;
+                    g_SavegamePtr->hasMapsFlags |= 0x1FA0;
                     break;
 
                 case 17:
-                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 18;
-                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 19;
-                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 21;
-                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 22;
-                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 23;
+                    g_SavegamePtr->hasMapsFlags |= 1 << 18;
+                    g_SavegamePtr->hasMapsFlags |= 1 << 19;
+                    g_SavegamePtr->hasMapsFlags |= 1 << 21;
+                    g_SavegamePtr->hasMapsFlags |= 1 << 22;
+                    g_SavegamePtr->hasMapsFlags |= 1 << 23;
                     break;
 
                 case 16:
-                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 20;
+                    g_SavegamePtr->hasMapsFlags |= 1 << 20;
                     break;
 
                 case 13:
-                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 14;
+                    g_SavegamePtr->hasMapsFlags |= 1 << 14;
                     break;
 
                 case 2:
-                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 3;
+                    g_SavegamePtr->hasMapsFlags |= 1 << 3;
                     break;
             }
 

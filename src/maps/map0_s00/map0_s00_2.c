@@ -30,7 +30,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800D94F8
     u32    saveByte;
 
     // @hack Not used directly, but gets merged with  `Savegame_EventFlagGet` macros below.
-    saveByte = g_SavegamePtr->eventFlags_168[0];
+    saveByte = g_SavegamePtr->eventFlags[0];
     var1     = Q12(0.1f);
     flags    = 1 << 8;
 
@@ -577,7 +577,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             break;
 
         case 1:
-            Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, 0);
+            Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
             SysWork_StateStepIncrement(0);
 
         case 2:

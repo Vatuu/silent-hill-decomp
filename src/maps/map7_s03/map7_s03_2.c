@@ -2307,9 +2307,9 @@ s_800F3D48_0* func_800D9DF8(s_800F3D48* arg0) // 0x800D9DF8
                               arg0->field_4.field_18.vz + ptr->field_0.vz);
                 PopMatrix();
 
-                if (coll.groundHeight_0 < groundHeight)
+                if (coll.groundHeight < groundHeight)
                 {
-                    arg0->field_4.field_18.vy = coll.groundHeight_0;
+                    arg0->field_4.field_18.vy = coll.groundHeight;
                     arg0->field_4.field_48    = NULL;
                     arg0->field_4.field_10    = Q12(5.0f);
                     arg0->field_4.field_C++;
@@ -2932,7 +2932,7 @@ void func_800DB608(void) // 0x800DB608
 
     if (g_DeltaTime != Q12(0.0f))
     {
-        speed = (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy) ? Q12(0.2f) : Q12(0.7f);
+        speed = (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy) ? Q12(0.2f) : Q12(0.7f);
 
         // Velocity value based on previously saved player position?
         ptr->velocityX_3C      = ((g_SysWork.playerWork.player.position.vx - ptr->playerPosition_30.vx) * speed) / g_DeltaTime;
@@ -4380,7 +4380,7 @@ bool Ai_Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDA
     localIncubus                    = incubus;
 
     // Set starting health.
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         incubus->health = Q12(30000.0f);
     }
@@ -4400,7 +4400,7 @@ bool Ai_Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDA
     localIncubus->properties.dummy.properties_E8[2].val32 = 0;
     localIncubus->properties.dummy.properties_E8[1].val32 = 0;
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         localIncubus->properties.dummy.properties_E8[3].val32 = Q12(300.0f);
     }
@@ -4783,7 +4783,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
 
                 if (localIncubus->properties.incubus.timer_E8 < Q12(0.0f))
                 {
-                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
                     {
                         localIncubus->properties.incubus.timer_E8 = Q12(1.0f);
                     }
@@ -4860,7 +4860,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
                 {
                     incubus->model.stateStep++;
 
-                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
                     {
                         localIncubus->properties.incubus.timer_E8 = Q12(3.0f);
                     }
@@ -5080,7 +5080,7 @@ q19_12 func_800DEA90(void) // 0x800DEA90
 {
     q19_12 result;
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         result = Q12(2.0f);
     }
@@ -5788,7 +5788,7 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
 
     chara->model.anim.alpha = Q12(0.0f);
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         chara->health = Q12(17995.605f); // TODO: Some percentage taken from 30000?
     }
@@ -5823,7 +5823,7 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
 
     Chara_DamageClear(chara);
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         localChara->properties.player.field_F4 = Q12(300.0f);
     }
@@ -5988,7 +5988,7 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
 
                 if (localChara->properties.incubus.timer_E8 < Q12(0.0f))
                 {
-                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
                     {
                         localChara->properties.incubus.timer_E8 = Q12(2.0f);
                     }
@@ -6098,7 +6098,7 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
                 {
                     chara->model.stateStep++;
 
-                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
                     {
                         localChara->properties.incubus.timer_E8 = Q12(2.5f);
                     }
@@ -6161,7 +6161,7 @@ q19_12 func_800E04C4(void) // 0x800E04C4
 {
     q19_12 base;
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         base = Q12(2.0f);
     }
@@ -6391,7 +6391,7 @@ void func_800E0B90(void) // 0x800E0B90
 {
     s32 bgmIdx; // `e_BgmTrackIdx`
 
-    if (g_SavegamePtr->mapRoomIdx_A5 == 3)
+    if (g_SavegamePtr->mapRoomIdx == 3)
     {
         bgmIdx = BgmTrackIdx_15;
     }
@@ -9231,7 +9231,7 @@ void func_800E787C(void) // 0x800E787C
 
     if (g_SysWork.sysStateSteps[0] >= 31)
     {
-        Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, g_SysWork.sysStateSteps[0] != 31);
+        Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, g_SysWork.sysStateSteps[0] != 31);
     }
 
     if (g_SysWork.sysStateSteps[0] >= 1 && g_SysWork.sysStateSteps[0] < 14)
@@ -9624,7 +9624,7 @@ void func_800E86BC(void) // 0x800E86BC
 
     if (g_SysWork.sysStateSteps[0] >= 8)
     {
-        Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, g_SysWork.sysStateSteps[0] != 8);
+        Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, g_SysWork.sysStateSteps[0] != 8);
     }
 
     if (g_SysWork.sysStateSteps[0] >= 1 && g_SysWork.sysStateSteps[0] < 6)
@@ -10306,16 +10306,16 @@ void func_800E9C28(void) // 0x800E9C28
             break;
 
         case 2:
-            g_SavegamePtr->isNextFearMode_25C = true;
+            g_SavegamePtr->isNextFearMode = true;
 
-            g_SavegamePtr->clearGameCount_24A++;
-            g_SavegamePtr->clearGameCount_24A = CLAMP(g_SavegamePtr->clearGameCount_24A, 1, 99);
+            g_SavegamePtr->clearGameCount++;
+            g_SavegamePtr->clearGameCount = CLAMP(g_SavegamePtr->clearGameCount, 1, 99);
 
             g_SavegamePtr->field_27A                             = 1 << (D_800F481C - 1);
-            g_SavegamePtr->clearGameEndings_24B                 |= 1 << (D_800F481C - 1);
+            g_SavegamePtr->clearGameEndings                 |= 1 << (D_800F481C - 1);
             g_GameWorkConst->config.optExtraOptionsEnabled_27 |= 1 << (D_800F481C - 1);
 
-            g_SavegamePtr->locationId_A8 = SaveLocationId_NextFear;
+            g_SavegamePtr->locationId = SaveLocationId_NextFear;
 
             SysWork_StateSetNext(SysState_StatusMenu);
             break;

@@ -160,7 +160,7 @@ bool Sd_AmbientSfxInit(void) // 0x8003599C
     switch (g_GameWork.gameStateSteps[1])
     {
         case 0:
-            if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP2_S00)
+            if (g_SavegamePtr->mapIdx == MapIdx_MAP2_S00)
             {
                 if (Savegame_EventFlagGet(EventFlag_133) || Savegame_EventFlagGet(EventFlag_181))
                 {

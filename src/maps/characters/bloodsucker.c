@@ -148,7 +148,7 @@ static inline void Ai_Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
     chara->model.stateStep = stateStep;
 
     // TODO: `Savegame_EventFlagGet(EventFlag_250)`
-    if (!(save->eventFlags_168[7] & (1 << 26)))
+    if (!(save->eventFlags[7] & (1 << 26)))
     {
         chara->model.anim.status = (stateStep * 2) + 23;
     }

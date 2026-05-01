@@ -17,9 +17,9 @@
 
 void Savegame_EnemyStateUpdate(s_SubCharacter* chara) // 0x80037DC4
 {
-    if (g_SavegamePtr->gameDifficulty_260 <= GameDifficulty_Normal || Rng_RandQ12() >= Q12_ANGLE(108.0f))
+    if (g_SavegamePtr->gameDifficulty <= GameDifficulty_Normal || Rng_RandQ12() >= Q12_ANGLE(108.0f))
     {
-        g_SavegamePtr->ovlEnemyStates[g_SavegamePtr->mapOverlayId_A4] &= ~(1 << chara->field_40);
+        g_SavegamePtr->ovlEnemyStates[g_SavegamePtr->mapIdx] &= ~(1 << chara->field_40);
     }
 }
 
@@ -68,7 +68,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
 
     npcIdx             = 0;
     curCharaSpawn      = g_MapOverlayHeader.charaSpawns_24C[0];
-    ovlEnemiesStatePtr = &g_SavegamePtr->ovlEnemyStates[g_SavegamePtr->mapOverlayId_A4];
+    ovlEnemiesStatePtr = &g_SavegamePtr->ovlEnemyStates[g_SavegamePtr->mapIdx];
 
     if (cond == false)
     {
@@ -95,7 +95,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
         if (!(g_SysWork.flags_22A4 & UnkSysFlag_4) &&
             HAS_FLAG(ovlEnemiesStatePtr, i) && !HAS_FLAG(g_SysWork.field_228C, i) &&
             curCharaSpawn->flags_6 != 0 &&
-            g_SavegamePtr->gameDifficulty_260 >= curCharaSpawn->gameDifficultyMin &&
+            g_SavegamePtr->gameDifficulty >= curCharaSpawn->gameDifficultyMin &&
             func_8008F914(curCharaSpawn->positionX, curCharaSpawn->positionZ) &&
             !Math_Distance2dCheck(&g_SysWork.playerWork.player.position, pos, Q12(22.0f)) &&
             (!cond || Math_Distance2dCheck(&g_SysWork.playerWork.player.position, pos, Q12(20.0f))))
@@ -124,7 +124,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
 
             Collision_Get(&coll, curCharaSpawn->positionX, curCharaSpawn->positionZ);
 
-            g_SysWork.npcs[npcIdx].position.vy = coll.groundHeight_0;
+            g_SysWork.npcs[npcIdx].position.vy = coll.groundHeight;
             g_SysWork.npcs[npcIdx].rotation.vy = Q8_TO_Q12(curCharaSpawn->rotationY);
 
             SET_FLAG(&g_SysWork.npcFlags, npcIdx);
@@ -336,7 +336,7 @@ void Game_NpcUpdate(void) // 0x80038354
 
     g_RadioPitchState = k + 1;
 
-    if (!(g_SavegamePtr->itemToggleFlags_AC & ItemToggleFlag_RadioOn))
+    if (!(g_SavegamePtr->itemToggleFlags & ItemToggleFlag_RadioOn))
     {
         return;
     }

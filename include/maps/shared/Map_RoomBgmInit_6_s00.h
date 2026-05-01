@@ -7,7 +7,7 @@ void Map_RoomBgmInit(bool arg0)
     u16 flags;
 
     var_s3  = sharedData_800EFCFC_6_s00;
-    temp_a2 = g_SavegamePtr->mapRoomIdx_A5;
+    temp_a2 = g_SavegamePtr->mapRoomIdx;
     var_s1  = Q12(0.2f);
 
     switch (g_GameWork.bgmIdx)

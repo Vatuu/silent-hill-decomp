@@ -106,7 +106,7 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
         g_SysWork.npcs[i].position.vx        = posX;
 
         Collision_Get(&coll, posX, posZ);
-        g_SysWork.npcs[i].position.vy = coll.groundHeight_0;
+        g_SysWork.npcs[i].position.vy = coll.groundHeight;
         g_SysWork.npcs[i].position.vz = posZ;
         g_SysWork.npcs[i].rotation.vy = rotY;
 

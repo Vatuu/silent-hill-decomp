@@ -1761,12 +1761,12 @@ void func_800D32D0(void) // 0x800D32D0
             break;
 
         case 2:
-            g_SavegamePtr->clearGameCount_24A++;
-            g_SavegamePtr->clearGameCount_24A                    = CLAMP(g_SavegamePtr->clearGameCount_24A, 1, 99);
+            g_SavegamePtr->clearGameCount++;
+            g_SavegamePtr->clearGameCount                    = CLAMP(g_SavegamePtr->clearGameCount, 1, 99);
             g_SavegamePtr->field_27A                             = 1 << 4;
-            g_SavegamePtr->clearGameEndings_24B                 |= 1 << 4;
+            g_SavegamePtr->clearGameEndings                 |= 1 << 4;
             g_GameWorkConst->config.optExtraOptionsEnabled_27 |= 1 << 4;
-            g_SavegamePtr->locationId_A8                         = SaveLocationId_NextFear;
+            g_SavegamePtr->locationId                         = SaveLocationId_NextFear;
 
             SysWork_StateSetNext(SysState_StatusMenu);
             break;

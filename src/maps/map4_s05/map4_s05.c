@@ -47,7 +47,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
 
     // Set health.
     floatstinger->health = Q12(4000.0f);
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         floatstinger->health = Q12(6000.0f);
     }
@@ -98,12 +98,12 @@ void Ai_Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
 
     D_800D7858 = 0;
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         D_800D785C = Q12(2.4f);
         floatstinger->properties.dummy.properties_E8[0].val16[0] |= 1 << 0;
     }
-    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         D_800D785C = Q12(4.0f);
     }
@@ -126,7 +126,7 @@ void func_800D1968(s_SubCharacter* floatstinger) // 0x800D1968
 
     if (floatstinger->damage.amount > Q12(0.0f))
     {
-        if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+        if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
         {
             var_a1 = Q12(500.0f);
         }
@@ -408,7 +408,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
             func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk59, AttackInputType_Tap), floatstinger, &sp20[0], &g_SysWork.playerWork.player, ratan2(sp20[1].vx - sp20[0].vx, sp20[1].vz - sp20[0].vz),
                           ratan2(Math_Vector2MagCalc(sp20[1].vx - sp20[0].vx, sp20[1].vz - sp20[0].vz), sp20[1].vy - sp20[0].vy));
 
-            if (g_SavegamePtr->gameDifficulty_260 != 1 && floatstingerProps.field_100 == 0)
+            if (g_SavegamePtr->gameDifficulty != 1 && floatstingerProps.field_100 == 0)
             {
                 floatstingerProps.flags_E8 &= ~FloatstingerFlag_0;
             }
@@ -501,7 +501,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                 floatstingerProps.field_FC  = Q12_MULT_PRECISE(D_800D785C, Rng_GenerateUInt(Q12(0.75f), Q12_CLAMPED(1.0f)));
                 floatstingerProps.flags_E8 |= FloatstingerFlag_3;
 
-                if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Hard && floatstingerProps.field_100 == 0)
+                if (g_SavegamePtr->gameDifficulty != GameDifficulty_Hard && floatstingerProps.field_100 == 0)
                 {
                     floatstingerProps.flags_E8 &= ~FloatstingerFlag_0;
                 }
@@ -665,7 +665,7 @@ void func_800D3564(s_SubCharacter* floatstinger) // 0x800D3564
     floatstingerProps.field_EE = 0;
     floatstinger->moveSpeed                        = 0;
 
-    if ((floatstinger->model.anim.status >> 1) != FloatstingerAnim_5 && (s32)g_SavegamePtr->eventFlags_168[10] < 0)
+    if ((floatstinger->model.anim.status >> 1) != FloatstingerAnim_5 && (s32)g_SavegamePtr->eventFlags[10] < 0)
     {
         floatstinger->model.anim.status = ANIM_STATUS(FloatstingerAnim_5, false);
         sp10.vx                       = floatstinger->position.vx;
@@ -756,11 +756,11 @@ void func_800D37E8(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr) // 0x800D3
                 floatstingerProps.flags_E8 &= ~FloatstingerFlag_4;
             }
 
-            if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+            if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
             {
                 FLOATSTINGER_ANIM_INFOS[floatstinger->model.anim.status].duration.constant = Q12(26.0f);
             }
-            else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+            else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
             {
                 FLOATSTINGER_ANIM_INFOS[floatstinger->model.anim.status].duration.constant = Q12(38.0f);
             }
@@ -1820,7 +1820,7 @@ void Map_WorldObjectsInit(void) // 0x800D723C
 
     WorldObjectPlacementInit(&g_WorldObject_Kidn05, "KIDN05_H", -114.89f, 5.0f, 108.36f);
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         D_800C4418.field_0 = Q12(5.5f);
     }

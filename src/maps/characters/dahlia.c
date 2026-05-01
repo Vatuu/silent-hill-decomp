@@ -387,7 +387,7 @@ void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords
             break;
 
         case 10:
-            if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP2_S01)
+            if (g_SavegamePtr->mapIdx == MapIdx_MAP2_S01)
             {
                 sharedFunc_800D9188_0_s00(dahlia->model.anim.status, dahlia, 193, Sfx_Unk1488);
             }

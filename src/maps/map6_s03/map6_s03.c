@@ -61,7 +61,7 @@ void func_800D7F98(void) // 0x800D7F98
     s32    roomIdx;
     s32    flags;
 
-    roomIdx = g_SavegamePtr->mapRoomIdx_A5;
+    roomIdx = g_SavegamePtr->mapRoomIdx;
     fArg1 = 0x400;
 
     if (Savegame_EventFlagGet(EventFlag_435))
@@ -329,7 +329,7 @@ void Map_WorldObjectsInit(void) // 0x800D8818
 
     WorldObjectPlacementInit(&g_WorldObject2, "MP_DRNBK", -22.0f, 0.0f, 26.4f);
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         g_SysWork.npcFlagsId = 3;
     }
@@ -383,7 +383,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
             }
         }
 
-        temp_s0 = (g_SavegamePtr->eventFlags_168[13] >> 19) & 0x1;
+        temp_s0 = (g_SavegamePtr->eventFlags[13] >> 19) & 0x1;
         WorldGfx_ObjectAdd(&g_WorldObject0[temp_s0], &g_WorldObjectPos0, &D_800CB258);
         if (temp_s0 != 0)
         {

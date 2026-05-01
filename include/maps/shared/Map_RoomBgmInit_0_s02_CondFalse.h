@@ -7,7 +7,7 @@ void Map_RoomBgmInit_CondFalse(void)
     fadeSpeed   = Q12(0.1f);
     layerLimits = sharedData_800CFB14_0_s02;
 
-    switch (g_SavegamePtr->mapRoomIdx_A5)
+    switch (g_SavegamePtr->mapRoomIdx)
     {
         case 1:
             fadeSpeed = Q12(240.0f);

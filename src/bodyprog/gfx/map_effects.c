@@ -298,13 +298,13 @@ void Gfx_MapEffectsAssign(s_MapOverlayHeader* mapHdr) // 0x8003EBF4
 void Game_TurnFlashlightOn(void) // 0x8003ECBC
 {
     g_SysWork.field_2388.isFlashlightOn_15 = true;
-    g_SavegamePtr->itemToggleFlags_AC     &= ~ItemToggleFlag_FlashlightOff;
+    g_SavegamePtr->itemToggleFlags     &= ~ItemToggleFlag_FlashlightOff;
 }
 
 void Game_TurnFlashlightOff(void) // 0x8003ECE4
 {
     g_SysWork.field_2388.isFlashlightOn_15 = false;
-    g_SavegamePtr->itemToggleFlags_AC     |= ItemToggleFlag_FlashlightOff;
+    g_SavegamePtr->itemToggleFlags     |= ItemToggleFlag_FlashlightOff;
 }
 
 void Game_FlashlightToggle(void) // 0x8003ED08
@@ -313,11 +313,11 @@ void Game_FlashlightToggle(void) // 0x8003ED08
     g_SysWork.field_2388.isFlashlightOn_15 ^= true;
     if (g_SysWork.field_2388.isFlashlightOn_15 == true)
     {
-        g_SavegamePtr->itemToggleFlags_AC &= ~ItemToggleFlag_FlashlightOff;
+        g_SavegamePtr->itemToggleFlags &= ~ItemToggleFlag_FlashlightOff;
     }
     else
     {
-        g_SavegamePtr->itemToggleFlags_AC |= ItemToggleFlag_FlashlightOff;
+        g_SavegamePtr->itemToggleFlags |= ItemToggleFlag_FlashlightOff;
     }
 }
 

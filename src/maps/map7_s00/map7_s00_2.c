@@ -30,7 +30,7 @@ void func_800D0050(void) // 0x800D0050
     s32 bgmIdx; // `e_BgmTrackIdx`
     u32 temp_v1;
 
-    if (g_SavegamePtr->mapRoomIdx_A5 == 3)
+    if (g_SavegamePtr->mapRoomIdx == 3)
     {
         bgmIdx = BgmTrackIdx_15;
     }

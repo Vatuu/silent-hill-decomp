@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Converts `g_SavegamePtr->eventFlags_168[X]` expressions to `Savegame_EventFlagGet(Z)` / `Savegame_EventFlagSet` / `Savegame_EventFlagClear`
+# Converts `g_SavegamePtr->eventFlags[X]` expressions to `Savegame_EventFlagGet(Z)` / `Savegame_EventFlagSet` / `Savegame_EventFlagClear`
 # Also converts Q format integers (0x7CCC, -0x1444, 0xFFFE0DDD, 4096) into float equivalents
 # Q12 is used by default, but can be specified by including it in the line (`4096 Q8` or `Q8(0x1337)` to convert to Q8)
 # May need to round the result afterward
@@ -120,7 +120,7 @@ def convert_pose(line):
 
 def convert_flag_expression(expr):
     """
-    Convert eventFlags_168 bit ops into Savegame_EventFlag* calls.
+    Convert eventFlags bit ops into Savegame_EventFlag* calls.
     Rules:
       - '|='  -> Savegame_EventFlagSet(...)
       - '&'   -> Savegame_EventFlagGet(...) (if mask has multiple bits -> OR-combined gets)
@@ -129,7 +129,7 @@ def convert_flag_expression(expr):
                 * if written as '&= mask'  -> mask is already negated: bits to clear = ~mask & 0xFFFFFFFF
     Returns a string (single call or multiple calls joined).
     """
-    arr_pat = r'.*?(?:eventFlags_168|mapMarkingFlags_1D4)\[(0x[0-9a-fA-F]+|\d+)\]'
+    arr_pat = r'.*?(?:eventFlags|mapMarkingFlags_1D4)\[(0x[0-9a-fA-F]+|\d+)\]'
     mask_pat  = r'(0x[0-9a-fA-F]+(?:[uUlL]*)|\d+)'
     shift_pat = r'\(?\s*1\s*<<\s*(\d+)\s*\)?'
 
@@ -137,7 +137,7 @@ def convert_flag_expression(expr):
 
     flag_macro_name = "Savegame_EventFlag" if not isMapMarking else "Savegame_MapMarking"
 
-    # `(eventFlags_168 & xx) == xx` -> Get and possibly !Get
+    # `(eventFlags & xx) == xx` -> Get and possibly !Get
     m = re.search(arr_pat + r'\s*\(?\s*&\s*' + mask_pat + r'\s*\)?\s*==\s*' + mask_pat, expr)
     if m:
         array_idx = int(m.group(1), 0)
@@ -332,7 +332,7 @@ if __name__ == "__main__":
             pyperclip.copy(result)
         sys.exit(0)
 
-    print("Enter expressions like 'g_SavegamePtr->eventFlags_168[2] & 8' or 'g_SavegamePtr->eventFlags_168[2] |= (1 << 3))'.")
+    print("Enter expressions like 'g_SavegamePtr->eventFlags[2] & 8' or 'g_SavegamePtr->eventFlags[2] |= (1 << 3))'.")
     print("Or enter a line containing decimal/hexadecimal Q12 numbers (0x7CCC, -0x1444, 4096, 0xFFFE0DDD) to convert to float")
     print("(change to other Q** formats by including Q format in the text, 'chara.field_48 = Q8(-0x1999)'")
     print()

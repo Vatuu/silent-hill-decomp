@@ -115,7 +115,7 @@ s32 Demo_PlayFileBufferSetup(void) // 0x8008F0BC
     s32 playFileSize;
 
     // Get map overlay size used in demo.
-    mapOverlaySize = Fs_GetFileSize(FILE_VIN_MAP0_S00_BIN + DEMO_WORK()->savegame_100.mapOverlayId_A4);
+    mapOverlaySize = Fs_GetFileSize(FILE_VIN_MAP0_S00_BIN + DEMO_WORK()->savegame_100.mapIdx);
 
     // Get play file size, rounded up to next 0x800-byte boundary.
     playFileSize = ALIGN(Fs_GetFileSize(g_Demo_PlayFileIdx), 0x800);

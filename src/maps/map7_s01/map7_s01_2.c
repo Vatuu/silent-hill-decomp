@@ -33,7 +33,7 @@ void func_800D6878(void) // 0x800D6878
 {
     s32 bgmIdx; // `e_BgmTrackIdx`
 
-    if (g_SavegamePtr->mapRoomIdx_A5 == 3)
+    if (g_SavegamePtr->mapRoomIdx == 3)
     {
         bgmIdx = BgmTrackIdx_15;
     }
@@ -461,7 +461,7 @@ void func_800D7A60(void) // 0x800D7A60
             break;
 
         case 19:
-            GameFs_PlayerMapAnimLoad(g_SavegamePtr->mapOverlayId_A4);
+            GameFs_PlayerMapAnimLoad(g_SavegamePtr->mapIdx);
             Fs_QueueWaitForEmpty();
             SysWork_StateStepIncrement(0);
 
@@ -2124,12 +2124,12 @@ void Map_WorldObjectsInit(void) // 0x800DD368
         WorldObjectPlacementInit(&g_WorldObject_Dr[5], "DR2R_HID", -20.9f, 0.0f, -20.9f);
     }
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         func_800DD348(16, 8, 0);
     }
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         func_800DD348(16, 9, 27);
         func_800DD348(16, 11, 23);
@@ -2563,7 +2563,7 @@ void func_800DEDA4(void) // 0x800DEDA4
 
     if (Savegame_EventFlagGet(EventFlag_M7S01_PickupStoneOfTime))
     {
-        if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
+        if (g_SavegamePtr->gameDifficulty != GameDifficulty_Easy)
         {
             Chara_SpawnFlagsSet(16, 2, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3 | SpawnFlag_4);
         }
@@ -2576,7 +2576,7 @@ void func_800DEDA4(void) // 0x800DEDA4
         Chara_SpawnFlagsSet(16, 1, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_4);
     }
 
-    if (Savegame_EventFlagGet(EventFlag_525) && g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
+    if (Savegame_EventFlagGet(EventFlag_525) && g_SavegamePtr->gameDifficulty != GameDifficulty_Easy)
     {
         Chara_SpawnFlagsSet(16, 12, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_4);
         Chara_SpawnFlagsSet(16, 13, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_2 | SpawnFlag_4);

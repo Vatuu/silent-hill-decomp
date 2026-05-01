@@ -127,7 +127,7 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
     ipdCollData = Ipd_CollisionDataGet(posX, posZ);
     if (ipdCollData == NULL)
     {
-        coll->groundHeight_0 = Q12(8.0f);
+        coll->groundHeight = Q12(8.0f);
         coll->field_6        = 0;
         coll->field_4        = 0;
         coll->field_8        = 0;
@@ -150,12 +150,12 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
     if (state.field_90 == 1)
     {
         coll->field_8        = 0;
-        coll->groundHeight_0 = Q12(8.0f);
+        coll->groundHeight = Q12(8.0f);
     }
     else
     {
         coll->field_8        = state.field_94;
-        coll->groundHeight_0 = Q8_TO_Q12(Ipd_GroundHeightGet(state.field_4.positionX_18, state.field_4.positionZ_1C, &state));
+        coll->groundHeight = Q8_TO_Q12(Ipd_GroundHeightGet(state.field_4.positionX_18, state.field_4.positionZ_1C, &state));
     }
 
     coll->field_4 = state.field_88;
@@ -239,7 +239,7 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset,
                 switch (collType)
                 {
                     case CollisionType_Wall:
-                        if (coll.groundHeight_0 < wallHeightBound)
+                        if (coll.groundHeight < wallHeightBound)
                         {
                             wallCount++;
                         }
@@ -249,7 +249,7 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset,
                         if (coll.field_8 != 12)
                         {
                             var_s6 = coll.field_8;
-                            groundHeight = coll.groundHeight_0;
+                            groundHeight = coll.groundHeight;
                         }
                         break;
                 }
@@ -321,17 +321,17 @@ void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* p
         Collision_Get(&coll,
                       pos->vx + Math_Sin((startHeadingAngle & 0xF) + (i * ANGLE_STEP)),
                       pos->vz + Math_Cos((startHeadingAngle & 0xF) + (i * ANGLE_STEP)));
-        groundHeights[i] = coll.groundHeight_0;
+        groundHeights[i] = coll.groundHeight;
 
-        if (groundHeightMin < coll.groundHeight_0)
+        if (groundHeightMin < coll.groundHeight)
         {
-            groundHeightMin       = coll.groundHeight_0;
+            groundHeightMin       = coll.groundHeight;
             lowestGroundHeightIdx = i;
         }
 
-        if (coll.groundHeight_0 < groundHeightMax)
+        if (coll.groundHeight < groundHeightMax)
         {
-            groundHeightMax = coll.groundHeight_0;
+            groundHeightMax = coll.groundHeight;
         }
     }
 
@@ -834,7 +834,7 @@ void Ipd_GridCollisionQuery(s_CollisionState* collState, s_IpdCollisionData* col
     }
 }
 
-bool func_8006AEAC(s_CollisionState* collState, s_IpdCollisionData* collData) // 0x8006AEAC
+bool func_8006AEAC(s_CollisionState* collState, const s_IpdCollisionData* collData) // 0x8006AEAC
 {
     s_CollisionState_A8* curUnk;
 
@@ -869,7 +869,7 @@ bool func_8006AEAC(s_CollisionState* collState, s_IpdCollisionData* collData) //
     return true;
 }
 
-bool func_8006B004(s_CollisionState* collState, s_IpdCollisionData* collData) // 0x8006B004
+bool func_8006B004(s_CollisionState* collState, const s_IpdCollisionData* collData) // 0x8006B004
 {
     s32 var_a0;
     s32 var_a3;
@@ -974,7 +974,7 @@ void func_8006B1C8(s_CollisionState* collState, s_IpdCollisionData* collData, s_
     }
 }
 
-bool func_8006B318(s_CollisionState* collState, s_IpdCollisionData* collData, s32 idx) // 0x8006B318
+bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collData, s32 idx) // 0x8006B318
 {
     s32                    temp_a0_5;
     s32                    temp_s0;
@@ -3511,28 +3511,30 @@ q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 
     return Q12_ANGLE(360.0f);
 }
 
-q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 targetPosX, q19_12 targetPosZ, q3_12 spanAngle, bool isClockwise) // 0x8006FAFC
+q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 toX, q19_12 toZ, q3_12 spanAngle, bool isClockwise) // 0x8006FAFC
 {
-    s16    spanAngleDiv3;
+    #define SPAN_STEP_COUNT 3
+
+    s16    spanAngleStep;
     q3_12  curAngle;
-    q19_12 curPosZ;
-    q19_12 curPosX;
+    q19_12 curToZ;
+    q19_12 curToX;
     q25_6  curOffsetX;
     q25_6  curOffsetZ;
     q25_6  curDist;
     s32    i;
-    q19_12 distMinOrMax;
+    q19_12 shortestOrLongestDist;
     s32    stepCount;
     q3_12  unkAngle;
 
     // Define if distance should track minimum or maximum.
-    distMinOrMax = Q12(0.0f);
+    shortestOrLongestDist = Q12(0.0f);
     if (isClockwise)
     {
-        distMinOrMax = INT_MAX;
+        shortestOrLongestDist = INT_MAX;
     }
 
-    spanAngleDiv3 = spanAngle / 3;
+    spanAngleStep = spanAngle / SPAN_STEP_COUNT;
     unkAngle = Q12_ANGLE(-360.0f);
 
     // Define step count.
@@ -3547,26 +3549,30 @@ q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 targetPo
     {
         if (spanAngle == Q12_ANGLE(360.0f))
         {
-            curAngle = Q12(((i * 30) + (Rng_Rand16() % 30))) / 360;
+            curAngle = Q12((i * 30) + (Rng_Rand16() % 30)) / 360;
         }
         else
         {
-            curAngle = (chara->rotation.vy + ((i - 3) * spanAngleDiv3) + ((Rng_Rand16() % spanAngleDiv3) >> 1)) - (spanAngleDiv3 >> 2);
+            curAngle = (chara->rotation.vy +
+                        ((i - SPAN_STEP_COUNT) * spanAngleStep) +
+                        ((Rng_Rand16() % spanAngleStep) >> 1)) -
+                       (spanAngleStep >> 2);
         }
 
-        curPosX = chara->position.vx + Q12_MULT(dist, Math_Sin(curAngle));
-        curPosZ = chara->position.vz + Q12_MULT(dist, Math_Cos(curAngle));
+        curToX = chara->position.vx + Q12_MULT(dist, Math_Sin(curAngle));
+        curToZ = chara->position.vz + Q12_MULT(dist, Math_Cos(curAngle));
 
-        if (!Ray_CharaToTargetLosHitCheck(chara, curPosX, chara->position.vy, curPosZ))
+        if (!Ray_CharaToTargetLosHitCheck(chara, curToX, chara->position.vy, curToZ))
         {
-            curOffsetX = Q12_TO_Q6(targetPosX - curPosX);
-            curOffsetZ = Q12_TO_Q6(targetPosZ - curPosZ);
+            curOffsetX = Q12_TO_Q6(toX - curToX);
+            curOffsetZ = Q12_TO_Q6(toZ - curToZ);
             curDist    = SQUARE(curOffsetX) + SQUARE(curOffsetZ);
-            if ((!isClockwise && (distMinOrMax < curDist)) ||
-                ( isClockwise && (curDist      < distMinOrMax)))
+
+            if ((!isClockwise && (shortestOrLongestDist < curDist)) ||
+                ( isClockwise && (curDist               < shortestOrLongestDist)))
             {
-                distMinOrMax = curDist;
-                unkAngle     = curAngle;
+                shortestOrLongestDist = curDist;
+                unkAngle              = curAngle;
             }
         }
     }
@@ -3575,8 +3581,9 @@ q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 targetPo
     {
         return Math_AngleNormalizeSigned(unkAngle);
     }
-
     return Q12_ANGLE(360.0f);
+
+    #undef SPAN_STEP_COUNT
 }
 
 bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 distStep) // 0x8006FD90

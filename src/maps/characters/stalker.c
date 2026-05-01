@@ -10,14 +10,14 @@
 
 void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal)
     {
         sharedData_800E3A20_0_s00 = Q12(350.0f);
         sharedData_800E3A24_0_s00 = Q12(100.0f);
         sharedData_800E3A28_0_s00 = Q12(3.0f);
         sharedData_800E3A2C_0_s00 = Q12(50.0f);
     }
-    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         sharedData_800E3A20_0_s00 = Q12(350.0f);
         sharedData_800E3A24_0_s00 = Q12(100.0f);
@@ -69,7 +69,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
 
 #ifdef MAP6_S03
     // Set health to 1.5x when not on easy difficulty.
-    if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty != GameDifficulty_Easy)
     {
         stalker->health = Q12_MULT_FLOAT_PRECISE(sharedData_800E3A20_0_s00, 1.5f);
     }

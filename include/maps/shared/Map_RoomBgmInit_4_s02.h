@@ -5,7 +5,7 @@ void Map_RoomBgmInit(bool arg0)
     s32 mapRoomIdx;
     u8* var_a2;
 
-    mapRoomIdx = g_SavegamePtr->mapRoomIdx_A5;
+    mapRoomIdx = g_SavegamePtr->mapRoomIdx;
     var_a1  = Q12(0.1f);
 
     if (g_GameWork.bgmIdx == 13)

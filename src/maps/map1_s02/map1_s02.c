@@ -211,7 +211,7 @@ void func_800DA384(void) // 0x800DA384
             Player_ControlFreeze();
             Game_TurnFlashlightOn();
             sharedFunc_800D08B8_0_s00(6, 127);
-            Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, 0);
+            Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
 
             g_SysWork.playerWork.player.position.vx = Q12(-13.3f);
             g_SysWork.playerWork.player.position.vz = Q12(-68.1f);
@@ -1307,7 +1307,7 @@ void func_800DD420(void) // 0x800DD420
 {
     sharedFunc_800D08B8_0_s00(6, 127);
 
-    Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, 0);
+    Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
 
     Savegame_EventFlagClear(EventFlag_225);
 
@@ -1352,14 +1352,14 @@ void Map_WorldObjectsInit(void) // 0x800DD494
 
     WorldObjectInit(&g_WorldObjectB, D_800A99E4[1], 60.14f, -0.902f, 141.763f, 0.0f, 92.4f, 0.0f);
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         Chara_SpawnFlagsSet(Chara_GreyChild, 1, SpawnFlag_None);
         Chara_SpawnFlagsSet(Chara_GreyChild, 3, SpawnFlag_None);
         Chara_SpawnFlagsSet(Chara_GreyChild, 8, SpawnFlag_None);
         Chara_SpawnFlagsSet(Chara_Creeper, 1, SpawnFlag_None);
     }
-    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         Chara_SpawnFlagsSet(Chara_GreyChild, 11, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
         Chara_SpawnFlagsSet(Chara_GreyChild, 13, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
@@ -1662,7 +1662,7 @@ void func_800DEC88(void) // 0x800DEC88
 {
     if (Savegame_EventFlagGet(EventFlag_MapMark_AltSchool1F_ReceptionArrows))
     {
-        if (g_SavegamePtr->gameDifficulty_260 == 1)
+        if (g_SavegamePtr->gameDifficulty == 1)
         {
             Chara_SpawnPositionSet(Chara_GreyChild, 12, Q12(134.1f), Q12(21.3f));
         }
@@ -1676,7 +1676,7 @@ void func_800DEC88(void) // 0x800DEC88
     {
         Chara_SpawnFlagsSet(Chara_Creeper, 7, SpawnFlag_2 | SpawnFlag_3);
         Chara_SpawnFlagsSet(Chara_Creeper, 8, SpawnFlag_2 | SpawnFlag_3);
-        if (g_SavegamePtr->gameDifficulty_260 == 1)
+        if (g_SavegamePtr->gameDifficulty == 1)
         {
             Chara_SpawnFlagsSet(Chara_Creeper, 9, SpawnFlag_2 | SpawnFlag_3);
         }

@@ -34,7 +34,7 @@ void func_800D9864(void) // 0x800D9864
 {
     s32 bgmIdx; // `e_BgmTrackIdx`
 
-    if (g_SavegamePtr->mapRoomIdx_A5 == 3)
+    if (g_SavegamePtr->mapRoomIdx == 3)
     {
         bgmIdx = BgmTrackIdx_15;
     }
@@ -522,7 +522,7 @@ void func_800DAA4C(void) // 0x800DAA4C
             break;
 
         case 19:
-            GameFs_PlayerMapAnimLoad(g_SavegamePtr->mapOverlayId_A4);
+            GameFs_PlayerMapAnimLoad(g_SavegamePtr->mapIdx);
             Fs_QueueWaitForEmpty();
             SysWork_StateStepIncrement(0);
 
@@ -3352,13 +3352,13 @@ void Map_WorldObjectsInit(void) // 0x800E3804
     WorldObjectInit(&g_WorldObject_Window, "WINDOW_H", -16.666f, -1.235f, -61.503f, 0.0f, 90.0f, 0.0f);
     WorldObjectPlacementInit(&g_WorldObject_Kubomi, "KUBOMI_H", -139.5f, 0.0f, -138.1f);
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         Chara_SpawnFlagsSet(Chara_Stalker, 5, SpawnFlag_None);
         Chara_SpawnFlagsSet(Chara_Stalker, 7, SpawnFlag_None);
         Chara_SpawnFlagsSet(Chara_Stalker, 8, SpawnFlag_None);
     }
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         Chara_SpawnFlagsSet(Chara_Stalker, 9, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
         Chara_SpawnFlagsSet(Chara_Stalker, 12, SpawnFlag_0 | SpawnFlag_1);
@@ -3747,7 +3747,7 @@ void func_800E5628(void) // 0x800E5628
     {
         Chara_SpawnFlagsSet(Chara_Stalker, 3, SpawnFlag_0 | SpawnFlag_1);
 
-        if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+        if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
         {
             Chara_SpawnFlagsSet(Chara_Stalker, 10, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
             Chara_SpawnFlagsSet(Chara_Stalker, 10, SpawnFlag_0 | SpawnFlag_1);

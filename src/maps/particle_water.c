@@ -464,7 +464,7 @@ void sharedFunc_800CCE60_1_s02(void)
     s32              temp_v1_3;
     s32              var_fp;
     s32              var_s2;
-    s32              var_s3;
+    s32              i;
     s32              var_s4;
     s32              var_t2_2;
     s32              var_t3_2;
@@ -477,8 +477,8 @@ void sharedFunc_800CCE60_1_s02(void)
 
     poly = (POLY_GT4*)GsOUT_PACKET_P;
 
-    ptr->field_260 = 0x4E;
-    ptr->field_262 = 0x2D;
+    ptr->field_260 = 78;
+    ptr->field_262 = 45;
 
     for (sp20 = 0; sp20 < sharedData_800E30C8_1_s02.field_78; sp20++)
     {
@@ -530,7 +530,10 @@ void sharedFunc_800CCE60_1_s02(void)
                     }
                     else
                     {
-                        ptr->field_26C = sharedData_800E30C8_1_s02.field_10[sp20] + ((sharedData_800E30C8_1_s02.field_10[sp20 + 1] - sharedData_800E30C8_1_s02.field_10[sp20]) * var_s4) / sharedData_800E30C8_1_s02.field_28[sp20];
+                        ptr->field_26C = sharedData_800E30C8_1_s02.field_10[sp20] +
+                                         (((sharedData_800E30C8_1_s02.field_10[sp20 + 1] -
+                                            sharedData_800E30C8_1_s02.field_10[sp20]) * var_s4) /
+                                          sharedData_800E30C8_1_s02.field_28[sp20]);
                     }
                 }
 
@@ -548,22 +551,22 @@ void sharedFunc_800CCE60_1_s02(void)
                 }
             }
 
-            for (var_s3 = 0; var_s3 < 2; var_s3++)
+            for (i = 0; i < 2; i++)
             {
                 if (sharedData_800E30C8_1_s02.field_30[sp20] == 0)
                 {
-                    var_fp = sharedData_800E30C8_1_s02.field_0[sp20] + ptr->field_264[0][var_s3] + Q12_MULT(var_s4, ptr->field_25C);
+                    var_fp = sharedData_800E30C8_1_s02.field_0[sp20] + ptr->field_264[0][i] + Q12_MULT(var_s4, ptr->field_25C);
                     sp18   = ptr->field_26C;
-                    sp1C   = sharedData_800E30C8_1_s02.field_18[sp20] + ptr->field_264[1][var_s3] + Q12_MULT(var_s4, ptr->field_25E);
+                    sp1C   = sharedData_800E30C8_1_s02.field_18[sp20] + ptr->field_264[1][i] + Q12_MULT(var_s4, ptr->field_25E);
                 }
                 else
                 {
-                    var_fp = sharedData_800E30C8_1_s02.field_0[sp20] + ptr->field_264[0][var_s3];
+                    var_fp = sharedData_800E30C8_1_s02.field_0[sp20] + ptr->field_264[0][i];
                     sp18   = sharedData_800E30C8_1_s02.field_10[sp20] + var_s4;
-                    sp1C   = sharedData_800E30C8_1_s02.field_18[sp20] + ptr->field_264[1][var_s3];
+                    sp1C   = sharedData_800E30C8_1_s02.field_18[sp20] + ptr->field_264[1][i];
                 }
 
-                ptr->field_23C[var_t5][var_s3] = Q12_MULT_PRECISE(Math_Cos(var_s2 >> 2), func_80055D78(var_fp, sp18, sp1C));
+                ptr->field_23C[var_t5][i] = Q12_MULT_PRECISE(Math_Cos(var_s2 >> 2), func_80055D78(var_fp, sp18, sp1C));
 
                 if (sp20 < (sharedData_800E30C8_1_s02.field_78 - 1) && sharedData_800E30C8_1_s02.field_30[sp20] == 0)
                 {
@@ -574,7 +577,7 @@ void sharedFunc_800CCE60_1_s02(void)
                         temp_v0_8 = Math_Sin(sharedData_800E30C8_1_s02.field_34[sp20] - sharedData_800E30C8_1_s02.field_34[sp20 + 1]);
                         var_s2    = Q12_MULT(sharedData_800E30C8_1_s02.field_5C[sp20 + 1], temp_v0_8);
 
-                        if (var_s3 == 0)
+                        if (i == 0)
                         {
                             var_s2 = -var_s2;
                         }
@@ -583,7 +586,7 @@ void sharedFunc_800CCE60_1_s02(void)
 
                         if (temp_v1_3 < var_s2)
                         {
-                            ptr->field_23C[var_t5][var_s3] = Q12_MULT_PRECISE(temp_v1_3 >= 0 ? Q12(temp_v1_3) / var_s2 : temp_s0 / var_s2, ptr->field_23C[var_t5][var_s3]);
+                            ptr->field_23C[var_t5][i] = Q12_MULT_PRECISE(temp_v1_3 >= 0 ? Q12(temp_v1_3) / var_s2 : temp_s0 / var_s2, ptr->field_23C[var_t5][i]);
                         }
                     }
                 }
@@ -595,14 +598,14 @@ void sharedFunc_800CCE60_1_s02(void)
                         var_s2 = FP_MULTIPLY(sharedData_800E30C8_1_s02.field_5C[sp20 - 1],
                                              Math_Sin(sharedData_800E30C8_1_s02.field_34[sp20 - 1] - sharedData_800E30C8_1_s02.field_34[sp20]), Q12_SHIFT);
 
-                        if (var_s3 == 0)
+                        if (i == 0)
                         {
                             var_s2 = -var_s2;
                         }
 
                         if (var_s4 < var_s2)
                         {
-                            ptr->field_23C[var_t5][var_s3] = Q12_MULT_PRECISE(Q12(var_s4) / var_s2, ptr->field_23C[var_t5][var_s3]);
+                            ptr->field_23C[var_t5][i] = Q12_MULT_PRECISE(Q12(var_s4) / var_s2, ptr->field_23C[var_t5][i]);
                         }
                     }
                 }
@@ -612,8 +615,8 @@ void sharedFunc_800CCE60_1_s02(void)
 
                 gte_ldv0(&ptr->field_12C);
                 gte_rtps();
-                gte_stsxy(&ptr->field_13C[var_t5][var_s3]);
-                gte_stsz(&ptr->field_1BC[var_t5][var_s3]);
+                gte_stsxy(&ptr->field_13C[var_t5][i]);
+                gte_stsz(&ptr->field_1BC[var_t5][i]);
             }
 
             if (var_s4 != sharedData_800E30C8_1_s02.field_28[sp20])
@@ -641,9 +644,9 @@ void sharedFunc_800CCE60_1_s02(void)
             }
         }
 
-        for (var_s3 = 0; var_s3 < var_t5; var_s3++)
+        for (i = 0; i < var_t5; i++)
         {
-            if (var_s3 == 0)
+            if (i == 0)
             {
                 temp_lo_3 = (sharedData_800E30C8_1_s02.field_54[sp20] << 6) / sharedData_800E30C8_1_s02.field_44[sp20];
                 var_t2_2  = temp_lo_3;
@@ -653,7 +656,7 @@ void sharedFunc_800CCE60_1_s02(void)
             else
             {
                 var_t2_2 = 0x40;
-                if ((var_s3 + 1) == var_t5)
+                if ((i + 1) == var_t5)
                 {
                     var_t3_2 = (sp14 << 6) / sharedData_800E30C8_1_s02.field_44[sp20];
                 }
@@ -665,24 +668,24 @@ void sharedFunc_800CCE60_1_s02(void)
 
             setPolyGT4(poly);
 
-            setXY0Fast(poly, ptr->field_13C[var_s3][0].vx, ptr->field_13C[var_s3][0].vy);
-            setXY1Fast(poly, ptr->field_13C[var_s3][1].vx, ptr->field_13C[var_s3][1].vy);
-            setXY2Fast(poly, ptr->field_13C[var_s3 + 1][0].vx, ptr->field_13C[var_s3 + 1][0].vy);
-            setXY3Fast(poly, ptr->field_13C[var_s3 + 1][1].vx, ptr->field_13C[var_s3 + 1][1].vy);
+            setXY0Fast(poly, ptr->field_13C[i][0].vx, ptr->field_13C[i][0].vy);
+            setXY1Fast(poly, ptr->field_13C[i][1].vx, ptr->field_13C[i][1].vy);
+            setXY2Fast(poly, ptr->field_13C[i + 1][0].vx, ptr->field_13C[i + 1][0].vy);
+            setXY3Fast(poly, ptr->field_13C[i + 1][1].vx, ptr->field_13C[i + 1][1].vy);
 
             setSemiTrans(poly, 1);
 
-            setRGB0Fast(poly, ptr->field_23C[var_s3][0], ptr->field_23C[var_s3][0], ptr->field_23C[var_s3][0]);
-            setRGB1Fast(poly, ptr->field_23C[var_s3][1], ptr->field_23C[var_s3][1], ptr->field_23C[var_s3][1]);
-            setRGB2Fast(poly, ptr->field_23C[var_s3 + 1][0], ptr->field_23C[var_s3 + 1][0], ptr->field_23C[var_s3 + 1][0]);
-            setRGB3Fast(poly, ptr->field_23C[var_s3 + 1][1], ptr->field_23C[var_s3 + 1][1], ptr->field_23C[var_s3 + 1][1]);
+            setRGB0Fast(poly, ptr->field_23C[i][0], ptr->field_23C[i][0], ptr->field_23C[i][0]);
+            setRGB1Fast(poly, ptr->field_23C[i][1], ptr->field_23C[i][1], ptr->field_23C[i][1]);
+            setRGB2Fast(poly, ptr->field_23C[i + 1][0], ptr->field_23C[i + 1][0], ptr->field_23C[i + 1][0]);
+            setRGB3Fast(poly, ptr->field_23C[i + 1][1], ptr->field_23C[i + 1][1], ptr->field_23C[i + 1][1]);
 
-            *(s32*)&poly->u0 = (var_t2_2 << 8) + 0x40 + (ptr->field_260 << 16);
-            *(s32*)&poly->u1 = (var_t2_2 << 8) + 0x5F + (ptr->field_262 << 16);
-            *(u16*)&poly->u2 = ((var_t2_2 + var_t3_2) << 8) + 0x40;
-            *(u16*)&poly->u3 = ((var_t2_2 + var_t3_2) << 8) + 0x5F;
+            *(s32*)&poly->u0 = ((var_t2_2 << 8) + 64) + (ptr->field_260 << 16);
+            *(s32*)&poly->u1 = ((var_t2_2 << 8) + 95) + (ptr->field_262 << 16);
+            *(u16*)&poly->u2 = ((var_t2_2 + var_t3_2) << 8) + 64;
+            *(u16*)&poly->u3 = ((var_t2_2 + var_t3_2) << 8) + 95;
 
-            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(((ptr->field_1BC[var_s3][0] + ptr->field_1BC[var_s3][1] + ptr->field_1BC[var_s3 + 1][0] + ptr->field_1BC[var_s3 + 1][1]) >> 2) + 0x100) >> 3], poly);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(((ptr->field_1BC[i][0] + ptr->field_1BC[i][1] + ptr->field_1BC[i + 1][0] + ptr->field_1BC[i + 1][1]) >> 2) + 0x100) >> 3], poly);
             poly++;
         }
 

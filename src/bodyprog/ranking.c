@@ -87,20 +87,20 @@ void func_8008F94C() // 0x8008F94C
     s8* temp3;
 
     D_800C48B5 = 0;
-    D_800C48D0 = g_SavegamePtr->gameDifficulty_260;
-    D_800C48A0 = g_SavegamePtr->savegameCount_A6;
+    D_800C48D0 = g_SavegamePtr->gameDifficulty;
+    D_800C48A0 = g_SavegamePtr->savegameCount;
     D_800C48A0 = CLAMP(D_800C48A0, 0, 999);
-    D_800C48D1 = g_SavegamePtr->continueCount_27B;
-    D_800C48A2 = g_SavegamePtr->add290Hours_25C_1 * 24 + FP_FROM(g_SavegamePtr->gameplayTimer_250, Q12_SHIFT) / 3600;
-    D_800C48A4 = FP_FROM(g_SavegamePtr->walkDistance_258, Q12_SHIFT) / 1000;
-    D_800C48A6 = FP_FROM(g_SavegamePtr->walkDistance_258, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->walkDistance_258, Q12_SHIFT) / 1000) * 1000;
-    D_800C48A8 = FP_FROM(g_SavegamePtr->runDistance_254, Q12_SHIFT) / 1000;
-    D_800C48AA = FP_FROM(g_SavegamePtr->runDistance_254, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->runDistance_254, Q12_SHIFT) / 1000) * 1000;
-    D_800C48AC = g_SavegamePtr->pickedUpItemCount_23C;
-    D_800C48AE = (FP_FROM(g_SavegamePtr->gameplayTimer_250, Q12_SHIFT) / 60) % 60;
-    D_800C48AF = FP_FROM(g_SavegamePtr->gameplayTimer_250, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->gameplayTimer_250, Q12_SHIFT) / 60) * 60;
-    D_800C48B0 = g_SavegamePtr->clearGameCount_24A;
-    D_800C48B1 = g_SavegamePtr->clearGameEndings_24B;
+    D_800C48D1 = g_SavegamePtr->continueCount;
+    D_800C48A2 = g_SavegamePtr->add290Hours * 24 + FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) / 3600;
+    D_800C48A4 = FP_FROM(g_SavegamePtr->walkDistance, Q12_SHIFT) / 1000;
+    D_800C48A6 = FP_FROM(g_SavegamePtr->walkDistance, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->walkDistance, Q12_SHIFT) / 1000) * 1000;
+    D_800C48A8 = FP_FROM(g_SavegamePtr->runDistance, Q12_SHIFT) / 1000;
+    D_800C48AA = FP_FROM(g_SavegamePtr->runDistance, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->runDistance, Q12_SHIFT) / 1000) * 1000;
+    D_800C48AC = g_SavegamePtr->pickedUpItemCount;
+    D_800C48AE = (FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) / 60) % 60;
+    D_800C48AF = FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) / 60) * 60;
+    D_800C48B0 = g_SavegamePtr->clearGameCount;
+    D_800C48B1 = g_SavegamePtr->clearGameEndings;
     D_800C48B2 = g_SavegamePtr->field_27A;
     D_800C48B6 = Savegame_EventFlagGetAlt(EventFlag_61);
     D_800C48B4 = 0;
@@ -108,14 +108,14 @@ void func_8008F94C() // 0x8008F94C
     D_800C48B8 = func_8009146C(1);
     D_800C48BA = func_8009146C(0);
 
-    firedShotCount = g_SavegamePtr->firedShotCount_264;
+    firedShotCount = g_SavegamePtr->firedShotCount;
     D_800C48BC     = firedShotCount != 0;
 
     if (D_800C48BC)
     {
-        D_800C48C0 = g_SavegamePtr->closeRangeShotCount_266;
-        D_800C48C4 = g_SavegamePtr->midRangeShotCount_268;
-        D_800C48C8 = g_SavegamePtr->longRangeShotCount_26A;
+        D_800C48C0 = g_SavegamePtr->closeRangeShotCount;
+        D_800C48C4 = g_SavegamePtr->midRangeShotCount;
+        D_800C48C8 = g_SavegamePtr->longRangeShotCount;
         D_800C48C4 = D_800C48C4 + g_SavegamePtr->field_26C;
         D_800C48C0 = D_800C48C0 * 100 / firedShotCount;
         D_800C48C4 = D_800C48C4 * 100 / firedShotCount;
@@ -143,14 +143,14 @@ void func_8008F94C() // 0x8008F94C
 
     // @bugfix Pre-JAP1 accidentally included unlocked Hyper Blaster colors in the picked up item count.
     // JAP1 onwards fix this by ignoring the top-most bit.
-    // See `pickedUpSpecialItemCount_25C_3` field comment for more info.
+    // See `pickedUpSpecialItemCount` field comment for more info.
 #if VERSION_EQUAL_OR_NEWER(JAP1)
-    D_800C48B4 = g_SavegamePtr->pickedUpSpecialItemCount_25C_3 & 0x7;
+    D_800C48B4 = g_SavegamePtr->pickedUpSpecialItemCount & 0x7;
 #else
-    D_800C48B4 = g_SavegamePtr->pickedUpSpecialItemCount_25C_3 & 0xF;
+    D_800C48B4 = g_SavegamePtr->pickedUpSpecialItemCount & 0xF;
 #endif
 
-    D_800C48B3 = g_SavegamePtr->locationId_A8;
+    D_800C48B3 = g_SavegamePtr->locationId;
     D_800C3E40 = 7;
     temp_a0_2  = g_GameWork.config.optExtraOptionsEnabled_27;
 
@@ -410,12 +410,12 @@ void func_800904F4() // 0x800904F4
 {
     u8 extraOptions;
 
-    g_SavegamePtr->locationId_A8        = D_800C48B3;
-    g_SavegamePtr->clearGameCount_24A   = D_800C48B0;
-    g_SavegamePtr->clearGameEndings_24B = D_800C48B1;
+    g_SavegamePtr->locationId        = D_800C48B3;
+    g_SavegamePtr->clearGameCount   = D_800C48B0;
+    g_SavegamePtr->clearGameEndings = D_800C48B1;
     g_SavegamePtr->field_27A            = ((D_800C48B2 & 0x10) * 8) + 64;
-    g_SavegamePtr->isNextFearMode_25C   = 1;
-    g_SavegamePtr->mapOverlayId_A4      = MapIdx_MAP0_S01;
+    g_SavegamePtr->isNextFearMode   = 1;
+    g_SavegamePtr->mapIdx      = MapIdx_MAP0_S01;
 
     if (D_800C48B6 != 0)
     {
@@ -443,11 +443,11 @@ void func_800904F4() // 0x800904F4
 
     if (D_800C48B5 >= 80)
     {
-        g_SavegamePtr->pickedUpSpecialItemCount_25C_3 = 1 << 3;
+        g_SavegamePtr->pickedUpSpecialItemCount = 1 << 3;
         if (D_800C48B5 == 100)
         {
             g_SavegamePtr->field_27A                     |= 1 << 5;
-            g_SavegamePtr->pickedUpSpecialItemCount_25C_3 = 1 << 4;
+            g_SavegamePtr->pickedUpSpecialItemCount = 1 << 4;
         }
     }
 }
@@ -869,13 +869,13 @@ u32 func_8009146C(s32 arg0) // 0x8009146C
 
     if (arg0 == 0)
     {
-        var_v1_2 = g_SavegamePtr->meleeKillCount_25D;
-        var_v0   = (g_SavegamePtr->meleeKillCountB_25E & 0xF) << 8;
+        var_v1_2 = g_SavegamePtr->meleeKillCount;
+        var_v0   = (g_SavegamePtr->meleeKillCountB & 0xF) << 8;
     }
     else
     {
-        var_v1_2 = g_SavegamePtr->rangedKillCount_25F;
-        var_v0 = (g_SavegamePtr->meleeKillCountB_25E & 0xF0) * 16;
+        var_v1_2 = g_SavegamePtr->rangedKillCount;
+        var_v0 = (g_SavegamePtr->meleeKillCountB & 0xF0) * 16;
     }
 
     res = var_v1_2 + var_v0;
@@ -895,13 +895,13 @@ void func_800914C4(s32 arg0, u32 val) // 0x800914C4
 
     if (arg0 == 0)
     {
-        g_SavegamePtr->meleeKillCount_25D  = val;
-        g_SavegamePtr->meleeKillCountB_25E = (g_SavegamePtr->meleeKillCountB_25E & 0xF0) | ((val >> 8) & 0x0F);
+        g_SavegamePtr->meleeKillCount  = val;
+        g_SavegamePtr->meleeKillCountB = (g_SavegamePtr->meleeKillCountB & 0xF0) | ((val >> 8) & 0x0F);
     }
     else
     {
-        g_SavegamePtr->rangedKillCount_25F = val;
-        g_SavegamePtr->meleeKillCountB_25E = (g_SavegamePtr->meleeKillCountB_25E & 0x0F) | ((val >> 4) & 0xF0);
+        g_SavegamePtr->rangedKillCount = val;
+        g_SavegamePtr->meleeKillCountB = (g_SavegamePtr->meleeKillCountB & 0x0F) | ((val >> 4) & 0xF0);
     }
 }
 
@@ -914,14 +914,15 @@ void func_8009151C(u32 arg0, s32 arg1, s32 arg2)
             {
                 g_SavegamePtr->field_278++;
             }
+
         case 0:
         case 1:
         case 2:
         case 3:
         case 5:
-            if (g_SavegamePtr->firedShotCount_264 < 50000)
+            if (g_SavegamePtr->firedShotCount < 50000)
             {
-                g_SavegamePtr->firedShotCount_264++;
+                g_SavegamePtr->firedShotCount++;
 
                 if (arg0 != 5)
                 {
@@ -929,24 +930,26 @@ void func_8009151C(u32 arg0, s32 arg1, s32 arg2)
                     {
                         arg2 = 0x8000;
                     }
+
                     g_SavegamePtr->field_260 += arg2 >> 4;
                 }
 
                 switch (arg0)
                 {
                     case 0:
-                        if (g_SavegamePtr->closeRangeShotCount_266 < 50000)
+                        if (g_SavegamePtr->closeRangeShotCount < 50000)
                         {
-                            g_SavegamePtr->closeRangeShotCount_266++;
+                            g_SavegamePtr->closeRangeShotCount++;
                             return;
                         }
                         break;
 
                     case 1:
-                        if (g_SavegamePtr->midRangeShotCount_268 < 50000)
+                        if (g_SavegamePtr->midRangeShotCount < 50000)
                         {
-                            g_SavegamePtr->midRangeShotCount_268++;
+                            g_SavegamePtr->midRangeShotCount++;
                         }
+
                         if (arg1 != 0)
                         {
                             if (g_SavegamePtr->field_26E < 50000)
@@ -958,10 +961,11 @@ void func_8009151C(u32 arg0, s32 arg1, s32 arg2)
                         break;
 
                     case 2:
-                        if (g_SavegamePtr->longRangeShotCount_26A < 50000)
+                        if (g_SavegamePtr->longRangeShotCount < 50000)
                         {
-                            g_SavegamePtr->longRangeShotCount_26A++;
+                            g_SavegamePtr->longRangeShotCount++;
                         }
+
                         if (arg1 != 0)
                         {
                             if (g_SavegamePtr->field_270 < 50000)
@@ -977,6 +981,7 @@ void func_8009151C(u32 arg0, s32 arg1, s32 arg2)
                         {
                             g_SavegamePtr->field_26C++;
                         }
+
                         if (arg1 != 0)
                         {
                             if (g_SavegamePtr->field_272 < 50000)

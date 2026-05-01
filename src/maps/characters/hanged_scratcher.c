@@ -34,7 +34,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
     Chara_PropsClear(scratcher);
 
     scratcher->health = Q12(350.0f);
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         scratcher->health = Q12_MULT_PRECISE(scratcher->health, Q12(1.35f)); // 472.44873f
     }
@@ -117,12 +117,12 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
     scratcherProps.positionX_F4 = scratcher->position.vx;
     scratcherProps.positionZ_F8 = scratcher->position.vz;
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         radiusMax = Q12(2.7f);
         radiusMin = Q12(2.4f);
     }
-    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+    else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal)
     {
         radiusMax = Q12(3.0f);
         radiusMin = Q12(2.8f);
@@ -1177,11 +1177,11 @@ void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, G
     switch (scratcher->model.anim.status)
     {
         case ANIM_STATUS(HangedScratcherAnim_4, true):
-            if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+            if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal)
             {
                 curAnimInfo.duration.constant = Q12(19.5f);
             }
-            else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+            else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
             {
                 curAnimInfo.duration.constant = Q12(19.5f);
             }
@@ -1192,11 +1192,11 @@ void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, G
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_5, false):
-            if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+            if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal)
             {
                 curAnimInfo.duration.constant = Q12(12.0f);
             }
-            else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+            else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
             {
                 curAnimInfo.duration.constant = Q12(8.0f);
             }
@@ -1207,11 +1207,11 @@ void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, G
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_5, true):
-            if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+            if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal)
             {
                 curAnimInfo.duration.constant = Q12(23.0f);
             }
-            else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+            else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
             {
                 curAnimInfo.duration.constant = Q12(15.0f);
             }

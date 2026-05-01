@@ -1550,7 +1550,7 @@ s_800E0930* func_800D344C(s_SubCharacter* twinfeeler, void (*funcptr)(s_800E0930
 
             curPtr->chara       = twinfeeler;
             curPtr->position.vx = twinfeeler->position.vx;
-            curPtr->position.vy = coll.groundHeight_0;
+            curPtr->position.vy = coll.groundHeight;
             curPtr->position.vz = twinfeeler->position.vz;
             curPtr->funcptr_18  = funcptr;
             curPtr->timer       = Q12(0.0f);
@@ -1800,7 +1800,7 @@ void Twinfeeler_GroundSet(s_SubCharacter* twinfeeler) // 0x800D3B98
     // Snap to ground.
     Collision_Get(&coll, twinfeeler->position.vx + dist,
                   Q12_MULT_PRECISE(Math_Cos(headingAngle), Q12(1.0f)) + twinfeeler->position.vz);
-    twinfeeler->position.vy = coll.groundHeight_0;
+    twinfeeler->position.vy = coll.groundHeight;
 
     // Fallback snap.
     if (twinfeeler->position.vy < Q12(-1.0f))
@@ -1809,14 +1809,14 @@ void Twinfeeler_GroundSet(s_SubCharacter* twinfeeler) // 0x800D3B98
         posZ = twinfeeler->position.vz;
         Collision_Get(&coll, posX, posZ);
 
-        twinfeeler->position.vy = coll.groundHeight_0;
+        twinfeeler->position.vy = coll.groundHeight;
         if (twinfeeler->position.vy < Q12(-1.0f))
         {
             twinfeeler->position.vx = Q12(118.5f);
             twinfeeler->position.vz = Q12(137.9f);
 
             Collision_Get(&coll, posX, posZ);
-            twinfeeler->position.vy = coll.groundHeight_0;
+            twinfeeler->position.vy = coll.groundHeight;
         }
     }
 
@@ -3459,7 +3459,7 @@ void func_800D6774(void) // 0x800D6774
             g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
 
-            g_SysWork.playerWork.player.position.vy = coll.groundHeight_0;
+            g_SysWork.playerWork.player.position.vy = coll.groundHeight;
 
             func_8005DC1C(Sfx_Unk1556, &QVECTOR3(119.5f, 0.0f, 141.5f), Q8(0.5f), 0);
             func_80089470();
@@ -4914,7 +4914,7 @@ void Map_WorldObjectsInit(void) // 0x800D991C
 
     WorldObjectInit(&g_WorldObject_SavePad, D_800A99E4[1], 217.15f, -1.25f, -22.9f, 0.0f, -173.0f, 0.0f);
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         D_800C4418.field_0 = Q12(5.0f);
     }

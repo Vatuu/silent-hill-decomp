@@ -160,9 +160,9 @@ void GameState_InGame_Update(void) // 0x80038BD4
         Demo_DemoRandSeedRestore();
         Gfx_FlashlightUpdate();
 
-        if (g_SavegamePtr->mapOverlayId_A4 != MapIdx_MAP7_S03)
+        if (g_SavegamePtr->mapIdx != MapIdx_MAP7_S03)
         {
-            g_MapOverlayHeader.particlesUpdate_168(0, g_SavegamePtr->mapOverlayId_A4, 1);
+            g_MapOverlayHeader.particlesUpdate_168(0, g_SavegamePtr->mapIdx, 1);
         }
 
         Demo_DemoRandSeedRestore();
@@ -383,7 +383,7 @@ void func_8003943C(void) // 0x8003943C
         }
     }
 
-    switch (g_SavegamePtr->mapOverlayId_A4)
+    switch (g_SavegamePtr->mapIdx)
     {
         case MapIdx_MAP0_S01:
         case MapIdx_MAP0_S02:
@@ -478,8 +478,8 @@ void GameState_LoadStatusScreen_Update(void) // 0x800395C0
         }
 
         save = g_SavegamePtr;
-        func_800540A4(save->mapOverlayId_A4);
-        GameFs_MapItemsTextureLoad(save->mapOverlayId_A4);
+        func_800540A4(save->mapIdx);
+        GameFs_MapItemsTextureLoad(save->mapIdx);
 
         g_GameWork.gameStateSteps[0]++;
     }
@@ -494,7 +494,7 @@ void GameState_LoadStatusScreen_Update(void) // 0x800395C0
 
 void SysState_MapScreen_Update(void) // 0x800396D4
 {
-    if (!HAS_MAP(g_SavegamePtr->paperMapIdx_A9))
+    if (!HAS_MAP(g_SavegamePtr->paperMapIdx))
     {
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.map ||
             Gfx_MapMsg_Draw(MapMsgIdx_NoMap) > MapMsgState_Idle)
@@ -516,12 +516,12 @@ void SysState_MapScreen_Update(void) // 0x800396D4
     {
         if (g_SysWork.sysStateSteps[0] == 0)
         {
-            if (g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx_A9] != NO_VALUE)
+            if (g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx] != NO_VALUE)
             {
-                Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx_A9], FS_BUFFER_1, &g_PaperMapMarkingAtlasImg);
+                Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx], FS_BUFFER_1, &g_PaperMapMarkingAtlasImg);
             }
 
-            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[g_SavegamePtr->paperMapIdx_A9]);
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[g_SavegamePtr->paperMapIdx]);
 
             ScreenFade_Start(true, false, false);
             g_ScreenFadeTimestep = Q12(0.0f);
@@ -545,12 +545,12 @@ void GameState_LoadMapScreen_Update(void) // 0x8003991C
         func_8003943C();
         func_80066E40();
 
-        if (g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx_A9] != NO_VALUE)
+        if (g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx] != NO_VALUE)
         {
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx_A9], FS_BUFFER_1, &g_PaperMapMarkingAtlasImg);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx], FS_BUFFER_1, &g_PaperMapMarkingAtlasImg);
         }
 
-        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[g_SavegamePtr->paperMapIdx_A9], FS_BUFFER_2, &g_PaperMapImg);
+        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[g_SavegamePtr->paperMapIdx], FS_BUFFER_2, &g_PaperMapImg);
         g_GameWork.gameStateSteps[0]++;
     }
 
@@ -652,8 +652,8 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     if (g_SysWork.sysState == SysState_LoadOverlay)
     {
         g_SysWork.processFlags    = ProcessFlag_OverlayTransition;
-        g_SavegamePtr->mapOverlayId_A4 = g_MapEventData->mapIdx;
-        GameBoot_MapLoad(g_SavegamePtr->mapOverlayId_A4);
+        g_SavegamePtr->mapIdx = g_MapEventData->mapIdx;
+        GameBoot_MapLoad(g_SavegamePtr->mapIdx);
     }
     else
     {
@@ -764,11 +764,11 @@ void SysWork_SavegameUpdatePlayer(void) // 0x8003A120
 
     save = g_SavegamePtr;
 
-    save->locationId_A8       = g_MapEventParam;
-    save->playerPositionX_244 = g_SysWork.playerWork.player.position.vx;
-    save->playerPositionZ_24C = g_SysWork.playerWork.player.position.vz;
-    save->playerRotationY_248 = g_SysWork.playerWork.player.rotation.vy;
-    save->playerHealth_240    = g_SysWork.playerWork.player.health;
+    save->locationId       = g_MapEventParam;
+    save->playerPositionX = g_SysWork.playerWork.player.position.vx;
+    save->playerPositionZ = g_SysWork.playerWork.player.position.vz;
+    save->playerRotationY = g_SysWork.playerWork.player.rotation.vy;
+    save->playerHealth    = g_SysWork.playerWork.player.health;
 }
 
 void func_8003A16C(void) // 0x8003A16C
@@ -784,10 +784,10 @@ void func_8003A16C(void) // 0x8003A16C
 
 void SysWork_SavegameReadPlayer(void) // 0x8003A1F4
 {
-    g_SysWork.playerWork.player.position.vx = g_SavegamePtr->playerPositionX_244;
-    g_SysWork.playerWork.player.position.vz = g_SavegamePtr->playerPositionZ_24C;
-    g_SysWork.playerWork.player.rotation.vy = g_SavegamePtr->playerRotationY_248;
-    g_SysWork.playerWork.player.health      = g_SavegamePtr->playerHealth_240;
+    g_SysWork.playerWork.player.position.vx = g_SavegamePtr->playerPositionX;
+    g_SysWork.playerWork.player.position.vz = g_SavegamePtr->playerPositionZ;
+    g_SysWork.playerWork.player.rotation.vy = g_SavegamePtr->playerRotationY;
+    g_SysWork.playerWork.player.health      = g_SavegamePtr->playerHealth;
 }
 
 void SysState_SaveMenu_Update(void) // 0x8003A230
@@ -802,7 +802,7 @@ void SysState_SaveMenu_Update(void) // 0x8003A230
             SysWork_SavegameUpdatePlayer();
 
             if (Savegame_EventFlagGet(EventFlag_SeenSaveScreen) ||
-                g_SavegamePtr->locationId_A8 == SaveLocationId_NextFear || g_MapEventParam == 0)
+                g_SavegamePtr->locationId == SaveLocationId_NextFear || g_MapEventParam == 0)
             {
                 GameFs_SaveLoadBinLoad();
 
@@ -891,9 +891,9 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             g_MapOverlayHeader.playerControlFreeze_C8();
             g_SysWork.field_28 = Q12(0.0f);
 
-            if (g_GameWork.autosave.continueCount_27B < 99)
+            if (g_GameWork.autosave.continueCount < 99)
             {
-                g_GameWork.autosave.continueCount_27B++;
+                g_GameWork.autosave.continueCount++;
             }
 
             MainMenu_SelectedOptionIdxReset();
@@ -991,7 +991,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             break;
 
         case 5:
-            if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+            if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
             {
                 SysWork_StateStepReset();
                 break;

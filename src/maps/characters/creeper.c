@@ -111,11 +111,11 @@ void Ai_Creeper_Init(s_SubCharacter* creeper)
     creeperProps.targetPositionX = creeper->position.vx;
     creeperProps.targetPositionZ = creeper->position.vz;
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         creeperProps.moveSpeed = Q12_MULT_FLOAT_PRECISE((Q12(BASE_EASY_VAL) + (Rng_Rand16() % Q12(RAND_EASY_MAX))), 2.0f);
     }
-    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+    else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal)
     {
         creeperProps.moveSpeed = Q12_MULT_FLOAT_PRECISE((Q12(BASE_NORMAL_VAL) + (Rng_Rand16() % Q12(RAND_NORMAL_MAX))), 2.0f);
     }
@@ -466,12 +466,10 @@ void Creeper_ControlWalkForward(s_SubCharacter* creeper)
                 creeperProps.flags &= ~CreeperFlag_HasAttacked;
             }
 
-            creeperProps.angleToTarget = Chara_HeadingAngleGet(creeper,
-                                                               Q12(1.2f),
+            creeperProps.angleToTarget = Chara_HeadingAngleGet(creeper, Q12(1.2f),
                                                                creeperProps.targetPositionX,
                                                                creeperProps.targetPositionZ,
-                                                               Q12(1.0f),
-                                                               true);
+                                                               Q12_ANGLE(360.0f), true);
             if (creeperProps.angleToTarget == Q12_ANGLE(360.0f))
             {
                 creeperProps.angleToTarget = creeper->rotation.vy;

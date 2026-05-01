@@ -190,7 +190,7 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
 
     damageAmount = FP_FROM(splitHead->damage.amount, Q12_SHIFT);
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         damageAmount >>= 1;
     }
@@ -202,7 +202,7 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
 
     if (splitHeadProps.flags_E8 & SplitHeadFlag_0)
     {
-        if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Hard &&
+        if (g_SavegamePtr->gameDifficulty != GameDifficulty_Hard &&
             g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap))
         {
             damageAmount <<= 5;
@@ -1179,11 +1179,11 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
             break;
 
         case ANIM_STATUS(SplitHeadAnim_2, true):
-            if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+            if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal)
             {
                 SPLIT_HEAD_ANIM_INFOS[5].duration.constant = Q12(12.0f);
             }
-            else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+            else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
             {
                 SPLIT_HEAD_ANIM_INFOS[5].duration.constant = Q12(8.0f);
             }

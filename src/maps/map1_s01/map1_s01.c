@@ -92,7 +92,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800D6FE4
 {
     u16 flags;
 
-    if (g_SavegamePtr->mapRoomIdx_A5 == 23)
+    if (g_SavegamePtr->mapRoomIdx == 23)
     {
         flags = (1<<5);
         if (Savegame_EventFlagGet(EventFlag_71) && Savegame_EventFlagGet(EventFlag_72))
@@ -102,7 +102,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800D6FE4
     }
     else
     {
-        flags = D_800DCA04[g_SavegamePtr->mapRoomIdx_A5];
+        flags = D_800DCA04[g_SavegamePtr->mapRoomIdx];
     }
 
     Bgm_Update(flags, Q12(0.1f), &D_800DC9FC);
@@ -1050,11 +1050,11 @@ void Map_WorldObjectsInit(void) // 0x800D91EC
         WorldObjectInit(&g_WorldObject0, "SILVER_H", -98.8f, 0.0f, 22.8f, -90.0f, 28.5f, 0);
     }
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         Chara_SpawnFlagsSet(Chara_GreyChild, 10, SpawnFlag_None);
     }
-    else if (g_SavegamePtr->gameDifficulty_260 == 1)
+    else if (g_SavegamePtr->gameDifficulty == 1)
     {
         Chara_SpawnFlagsSet(Chara_GreyChild, 0, SpawnFlag_0 | SpawnFlag_1);
         Chara_SpawnFlagsSet(Chara_GreyChild, 1, SpawnFlag_0 | SpawnFlag_1);
@@ -1177,7 +1177,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9514
 
 void func_800D9DDC(void) // 0x800D9DDC
 {
-    if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty != GameDifficulty_Hard)
     {
         if (Savegame_EventFlagGet(EventFlag_M1S01_PickupChemical))
         {
@@ -1188,7 +1188,7 @@ void func_800D9DDC(void) // 0x800D9DDC
         {
             Chara_SpawnFlagsSet(Chara_GreyChild, 1, SpawnFlag_0 | SpawnFlag_1);
 
-            if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+            if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal)
             {
                 Chara_SpawnFlagsSet(Chara_GreyChild, 2, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_2);
             }
@@ -1199,7 +1199,7 @@ void func_800D9DDC(void) // 0x800D9DDC
     {
         Chara_SpawnFlagsSet(Chara_GreyChild, 3, SpawnFlag_0 | SpawnFlag_1);
 
-        if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+        if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
         {
             Chara_SpawnFlagsSet(Chara_GreyChild, 7, SpawnFlag_None);
         }

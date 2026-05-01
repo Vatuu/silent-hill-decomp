@@ -198,7 +198,7 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 idx)
     {
         sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 = CLAMP_LOW(sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 - (g_DeltaTime << 2), 0);
     }
-    else if (trace.hasHit || coll.groundHeight_0 < sharedData_800DFB7C_0_s00[idx].vy_8)
+    else if (trace.hasHit || coll.groundHeight < sharedData_800DFB7C_0_s00[idx].vy_8)
     {
         sharedData_800DFB7C_0_s00[idx].field_B++;
 

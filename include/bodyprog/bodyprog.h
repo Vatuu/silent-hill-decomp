@@ -470,9 +470,9 @@ STATIC_ASSERT_SIZEOF(s_MapHdr_field_4C, 20);
 
 typedef struct _Collision
 {
-    /* 0x0 */ q19_12 groundHeight_0;
-    /* 0x4 */ q3_12  field_4;  // } Angles??
-    /* 0x6 */ q3_12  field_6;  // }
+    /* 0x0 */ q19_12 groundHeight;
+    /* 0x4 */ q3_12  field_4;  // X
+    /* 0x6 */ q3_12  field_6;  // Z
     /* 0x8 */ s8     field_8;  // Count of something, maybe valid ground at probed points around center? Set to 0, 7, or 12.
     // 3 bytes of padding.
 } s_Collision;
@@ -3863,13 +3863,13 @@ void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* offset
 
 void Ipd_GridCollisionQuery(s_CollisionState* collState, s_IpdCollisionData* collData);
 
-bool func_8006AEAC(s_CollisionState* collState, s_IpdCollisionData* collData);
+bool func_8006AEAC(s_CollisionState* collState, const s_IpdCollisionData* collData);
 
-bool func_8006B004(s_CollisionState* collState, s_IpdCollisionData* collData);
+bool func_8006B004(s_CollisionState* collState, const s_IpdCollisionData* collData);
 
 void func_8006B1C8(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCollisionData_20* arg2);
 
-bool func_8006B318(s_CollisionState* collState, s_IpdCollisionData* collData, s32 idx);
+bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collData, s32 idx);
 
 /** `arg1` is unused, but `func_8006B1C8` passes second arg to this. */
 void func_8006B6E8(s_CollisionState* collState, s_IpdCollisionData_20* arg1);
@@ -3985,7 +3985,7 @@ q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle);
 /** Angle getter. Something to do with the direction from a character to a target position, probably for NPC AI.
  * Unsure if `spanAngle` is an angle.
  */
-q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 targetPosX, q19_12 targetPosZ, q3_12 spanAngle, bool cond);
+q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 toX, q19_12 toZ, q3_12 spanAngle, bool cond);
 
 bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 distStep);
 

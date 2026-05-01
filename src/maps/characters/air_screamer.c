@@ -391,7 +391,7 @@ bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer)
     }
 
     // Set health according to game difficulty.
-    switch (g_SavegamePtr->gameDifficulty_260)
+    switch (g_SavegamePtr->gameDifficulty)
     {
         case GameDifficulty_Easy:
             airScreamer->health += Rng_RandQ12() * RAND_MAX_HEALTH_BONUS_EASY;
@@ -670,7 +670,7 @@ bool sharedFunc_800D2FB4_0_s01(s_SubCharacter* airScreamer, VECTOR3* playerPos, 
     var_s1  = sharedData_800CAA98_0_s01.field_D24[0][idx][0];
     dist = sharedData_800CAA98_0_s01.field_D24[0][idx][1];
 
-    switch (g_SavegamePtr->gameDifficulty_260)
+    switch (g_SavegamePtr->gameDifficulty)
     {
         case GameDifficulty_Easy:
             break;
@@ -715,7 +715,7 @@ bool sharedFunc_800D31D0_0_s01(s_SubCharacter* airScreamer, const VECTOR3* pos, 
     var_s1     = sharedData_800CAA98_0_s01.field_D24[1][idx][0];
     offsetDist = sharedData_800CAA98_0_s01.field_D24[1][idx][1];
 
-    switch (g_SavegamePtr->gameDifficulty_260)
+    switch (g_SavegamePtr->gameDifficulty)
     {
         case GameDifficulty_Easy:
             break;
@@ -1098,7 +1098,7 @@ void Ai_AirScreamer_Control_0(s_SubCharacter* airScreamer)
         case AirScreamerStateStep_13:
             animStatus = ANIM_STATUS(AirScreamerAnim_HoverVariable, true);
 
-            if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP0_S01)
+            if (g_SavegamePtr->mapIdx == MapIdx_MAP0_S01)
             {
                 var0 = 2;
                 var1 = true;
@@ -8870,7 +8870,7 @@ bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* airScreamer, q19_12 moveSpeedMult
 bool sharedFunc_800DC200_2_s00(s_SubCharacter* airScreamer)
 {
     if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 0x1) &&
-        (g_SavegamePtr->gameDifficulty_260 <= GameDifficulty_Normal || airScreamer->model.charaId == Chara_AirScreamer))
+        (g_SavegamePtr->gameDifficulty <= GameDifficulty_Normal || airScreamer->model.charaId == Chara_AirScreamer))
     {
         return false;
     }
@@ -8922,7 +8922,7 @@ s32 sharedFunc_800DC438_2_s00(s_SubCharacter* airScreamer)
 
     if (!(airScreamerProps.flags & AirScreamerFlag_29) &&
         (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) ||
-         (g_SavegamePtr->gameDifficulty_260 > GameDifficulty_Normal && airScreamer->model.charaId != Chara_AirScreamer)))
+         (g_SavegamePtr->gameDifficulty > GameDifficulty_Normal && airScreamer->model.charaId != Chara_AirScreamer)))
     {
         if (sharedFunc_800DC3BC_2_s00(airScreamer) && (sharedFunc_800DC0A8_2_s00(airScreamer) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(2.0f))))
         {

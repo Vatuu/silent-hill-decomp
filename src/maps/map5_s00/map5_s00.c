@@ -383,7 +383,7 @@ void func_800D6490(VECTOR3* arg0) // 0x800D6490
 
 void func_800D6790(void) // 0x800D6790
 {
-    u32 flags = D_800DA578[g_SavegamePtr->mapRoomIdx_A5];
+    u32 flags = D_800DA578[g_SavegamePtr->mapRoomIdx];
 
     if (Savegame_EventFlagGet(EventFlag_354))
     {
@@ -566,7 +566,7 @@ void func_800D6B00(void) // 0x800D6B00
                 D_800DAB7C[i] = Chara_Spawn(Chara_HangedScratcher, i, Q12(-93.3f), Q12(7.1f), Q12_ANGLE(180.0f), 18 + i);
             }
 
-            if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
+            if (g_SavegamePtr->gameDifficulty != GameDifficulty_Easy)
             {
                 Chara_Spawn(Chara_HangedScratcher, 14, Q12(-94.3f), Q12(-5.5f), Q12_ANGLE(0.0f), 7U);
             }
@@ -1012,7 +1012,7 @@ void Map_WorldObjectsInit(void) // 0x800D82A8
     WorldObjectInit(&g_WorldObject_SavePad0, D_800A99E4[1], 40.503f, -0.709f, -48.7925f, 0.0f, 5.7f, 0.0f);
     WorldObjectInit(&g_WorldObject_SavePad1, D_800A99E4[1], -86.469f, -1.041f, -103.4905f, 0.0f, 206.3f, 0.0f);
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         Chara_SpawnFlagsSet(Chara_Creeper, 0, SpawnFlag_None);
         Chara_SpawnFlagsSet(Chara_Creeper, 1, SpawnFlag_None);
@@ -1022,7 +1022,7 @@ void Map_WorldObjectsInit(void) // 0x800D82A8
 
         g_SysWork.npcFlagsId = 3;
     }
-    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         Chara_SpawnFlagsSet(Chara_Creeper, 5, SpawnFlag_2 | SpawnFlag_3);
         Chara_SpawnFlagsSet(Chara_Creeper, 6, SpawnFlag_2 | SpawnFlag_3);
@@ -1155,7 +1155,7 @@ void func_800D8DFC(void) // 0x800D8DFC
         Chara_SpawnFlagsSet(Chara_HangedScratcher, 1, SpawnFlag_1 | SpawnFlag_2);
         Chara_SpawnFlagsSet(Chara_HangedScratcher, 2, SpawnFlag_1 | SpawnFlag_2);
 
-        if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
+        if (g_SavegamePtr->gameDifficulty != GameDifficulty_Easy)
         {
             Chara_SpawnFlagsSet(Chara_HangedScratcher, 11, SpawnFlag_1 | SpawnFlag_2);
         }

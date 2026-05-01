@@ -242,7 +242,7 @@ bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx)
 
         Collision_Get(&ptr->field_12C, sharedData_800DFB7C_0_s00[idx].field_0.s_0.field_0, sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_0);
 
-        if (((ptr->field_12C.field_8 == 0) && (sharedData_800DFB7C_0_s00[idx].vy_8 > 0)) || (ptr->field_12C.groundHeight_0 < sharedData_800DFB7C_0_s00[idx].vy_8))
+        if (((ptr->field_12C.field_8 == 0) && (sharedData_800DFB7C_0_s00[idx].vy_8 > 0)) || (ptr->field_12C.groundHeight < sharedData_800DFB7C_0_s00[idx].vy_8))
         {
             sharedData_800DFB7C_0_s00[idx].field_A = 0;
         }

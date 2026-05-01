@@ -159,7 +159,7 @@ void func_800EB11C(void) // 0x800EB11C
             Game_TurnFlashlightOn();
 
             sharedFunc_800D08B8_0_s00(2, 127);
-            Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, 0);
+            Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
             sharedFunc_800D0B18_0_s00(6);
 
             SD_Call(Sfx_Unk1522);
@@ -211,7 +211,7 @@ void func_800EB11C(void) // 0x800EB11C
             func_80085EB8(0, &g_SysWork.playerWork.player, 114, false);
             Savegame_EventFlagSet(EventFlag_402);
             sharedFunc_800D08B8_0_s00(6, 127);
-            Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, 0);
+            Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
             Savegame_EventFlagSet(EventFlag_414);
             D_800F0044 = Q12(3.4f);
             SysWork_StateStepIncrement(0);
@@ -278,7 +278,7 @@ void func_800EB11C(void) // 0x800EB11C
             Sd_SfxStop(Sfx_Unk1522);
             Sd_SfxStop(Sfx_Unk1599);
             sharedFunc_800D08B8_0_s00(6, 127);
-            Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, 0);
+            Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
             break;
     }
 
@@ -365,7 +365,7 @@ void Map_WorldObjectsInit(void) // 0x800EBCE8
 
     g_SysWork.pointLightIntensity = Q12(1.0f);
 
-    switch (g_SavegamePtr->gameDifficulty_260)
+    switch (g_SavegamePtr->gameDifficulty)
     {
         case GameDifficulty_Normal:
             g_SysWork.npcFlagsId = 4;

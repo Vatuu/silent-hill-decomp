@@ -148,7 +148,7 @@ bool func_8004C328(bool unused) // 0x8004C328
     hasHuntingRifle = false;
     hasShotgun      = false;
 
-    for (; (itemId = g_SavegamePtr->items_0[itemIdx].id_0) != InvItemId_Unequipped; itemIdx++)
+    for (; (itemId = g_SavegamePtr->items[itemIdx].id_0) != InvItemId_Unequipped; itemIdx++)
     {
         if (itemId == InvItemId_HuntingRifle)
         {
@@ -174,7 +174,7 @@ bool func_8004C328(bool unused) // 0x8004C328
 
         if (itemId == InvItemId_Handgun || itemId == InvItemId_HandgunBullets)
         {
-            if (g_SavegamePtr->items_0[itemIdx].count_1 != 0)
+            if (g_SavegamePtr->items[itemIdx].count_1 != 0)
             {
                 return true;
             }
@@ -186,7 +186,7 @@ bool func_8004C328(bool unused) // 0x8004C328
         {
             case InvItemId_HuntingRifle:
             case InvItemId_Shotgun:
-                if (g_SavegamePtr->items_0[itemIdx].count_1 != 0)
+                if (g_SavegamePtr->items[itemIdx].count_1 != 0)
                 {
                     return true;
                 }
@@ -195,7 +195,7 @@ bool func_8004C328(bool unused) // 0x8004C328
             case InvItemId_RifleShells:
                 if (hasHuntingRifle)
                 {
-                    if (g_SavegamePtr->items_0[itemIdx].count_1 != 0)
+                    if (g_SavegamePtr->items[itemIdx].count_1 != 0)
                     {
                         return true;
                     }
@@ -205,7 +205,7 @@ bool func_8004C328(bool unused) // 0x8004C328
             case InvItemId_ShotgunShells:
                 if (hasShotgun)
                 {
-                    if (g_SavegamePtr->items_0[itemIdx].count_1 != 0)
+                    if (g_SavegamePtr->items[itemIdx].count_1 != 0)
                     {
                         return true;
                     }
@@ -224,13 +224,13 @@ s32 Inventory_HyperBlasterUnlockTest(void) // 0x8004C45C
     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
     {
         // Already in inventory, can't add new one.
-        if (g_SavegamePtr->items_0[i].id_0 == InvItemId_HyperBlaster)
+        if (g_SavegamePtr->items[i].id_0 == InvItemId_HyperBlaster)
         {
             return NO_VALUE;
         }
     }
 
-    if (g_SavegamePtr->mapOverlayId_A4 > MapIdx_MAP0_S00)
+    if (g_SavegamePtr->mapIdx > MapIdx_MAP0_S00)
     {
         // Konami gun controller connected.
         if (g_GameWork.controllers[1].analogController_0.status         == 0 &&
@@ -241,7 +241,7 @@ s32 Inventory_HyperBlasterUnlockTest(void) // 0x8004C45C
         }
 
         // Game completed with some condition met?
-        if (g_SavegamePtr->clearGameCount_24A != 0 && (g_SavegamePtr->clearGameEndings_24B & GameEndingFlag_Ufo))
+        if (g_SavegamePtr->clearGameCount != 0 && (g_SavegamePtr->clearGameEndings & GameEndingFlag_Ufo))
         {
             return 1;
         }
@@ -252,9 +252,9 @@ s32 Inventory_HyperBlasterUnlockTest(void) // 0x8004C45C
 
 s32 Inventory_HyperBlasterFunctionalTest(void) // 0x8004C4F8
 {
-    if (g_SavegamePtr->mapOverlayId_A4 > MapIdx_MAP0_S00)
+    if (g_SavegamePtr->mapIdx > MapIdx_MAP0_S00)
     {
-        if ((g_SavegamePtr->clearGameEndings_24B & GameEndingFlag_Ufo) != 0)
+        if ((g_SavegamePtr->clearGameEndings & GameEndingFlag_Ufo) != 0)
         {
             // Game completed with Ufo ending.
             return 2;
@@ -272,7 +272,7 @@ s32 Inventory_HyperBlasterFunctionalTest(void) // 0x8004C4F8
 
 s32 Game_HyperBlasterBeamColorGet(void) // 0x8004C54C
 {
-    return g_SavegamePtr->pickedUpSpecialItemCount_25C_3 >> 3;
+    return g_SavegamePtr->pickedUpSpecialItemCount >> 3;
 }
 
 void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
@@ -282,7 +282,7 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
     switch (weaponAttack)
     {
         case -1:
-            D_800C3960 = g_SavegamePtr->mapOverlayId_A4;
+            D_800C3960 = g_SavegamePtr->mapIdx;
             D_800C3962 = 0;
             D_800C3963 = 0;
             D_800C3961 = 32;
@@ -293,7 +293,7 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
             break;
 
         case 0:
-            D_800C3960 = g_SavegamePtr->mapOverlayId_A4;
+            D_800C3960 = g_SavegamePtr->mapIdx;
             D_800C3962 = 0;
             D_800C3961 = 32;
 
@@ -359,9 +359,9 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
             break;
 
         case 4:
-            if (g_SavegamePtr->mapOverlayId_A4 != D_800C3960)
+            if (g_SavegamePtr->mapIdx != D_800C3960)
             {
-                D_800C3960 = g_SavegamePtr->mapOverlayId_A4;
+                D_800C3960 = g_SavegamePtr->mapIdx;
                 D_800C3963 = 0;
                 D_800C3962 = 0;
                 D_800C3961 = 32;

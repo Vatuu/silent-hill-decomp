@@ -38,13 +38,13 @@ void Ai_Romper_Init(s_SubCharacter* romper)
     romperProps.flags           = RomperFlag_None;
     romper->model.anim.alpha = Q12(0.0f);
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         romper->health = HEALTH_BASE - ((s32)Rng_Rand16() % HEALTH_BONUS_MAX);
     }
     else
     {
-        if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+        if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal)
         {
             romper->health = HEALTH_BASE + ((s32)Rng_Rand16() % HEALTH_BONUS_MAX);
         }
@@ -281,7 +281,7 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
     romper->health = MAX(romper->health - romper->damage.amount, Q12(0.0f));
     romperProps.flags |= RomperFlag_7;
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         unkHealth = Q12(400.0f);
     }
@@ -426,7 +426,7 @@ void Ai_Romper_Control_1(s_SubCharacter* romper)
         var = func_8006FD90(romper, 1, Q12(1.0f), Q12(1.0f));
     }
 
-    if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty != GameDifficulty_Easy)
     {
         var += func_80070360(romper, Q12(0.0f), Q12(0.4f));
     }
@@ -507,7 +507,7 @@ void Romper_ControlWalkForward(s_SubCharacter* romper)
         startRunning = func_8006FD90(romper, 1, Q12(1.0f), Q12(1.0f));
     }
 
-    if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty != GameDifficulty_Easy)
     {
         startRunning += func_80070360(romper, Q12(0.0f), Q12(0.15f));
     }
@@ -561,7 +561,7 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
         var_s0 = func_8006FD90(romper, 0, Q12(0.8f), Q12(2.0f));
     }
 
-    if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty != GameDifficulty_Easy)
     {
         var_s0 |= func_80070360(romper, 0, Q12(0.2f));
     }
@@ -769,7 +769,7 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
         var_s0 = func_8006FD90(romper, 0, Q12(0.8f), Q12(2.0f));
     }
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         var_s0 |= func_80070360(romper, 0, Q12(0.2f));
     }
@@ -965,7 +965,7 @@ void Romper_ControlJump(s_SubCharacter* romper)
             var_a0_2             = CLAMP_LOW(temp_v1_5, Q12(0.3f));
             romper->moveSpeed = var_a0_2 << 1;
             Collision_Get(&coll, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
-            temp                                   = coll.groundHeight_0 - Q12(0.8f);
+            temp                                   = coll.groundHeight - Q12(0.8f);
             romper->fallSpeed                   = (temp << 1) - Q12(2.45f);
             romperProps.flags &= ~RomperFlag_9;
         }

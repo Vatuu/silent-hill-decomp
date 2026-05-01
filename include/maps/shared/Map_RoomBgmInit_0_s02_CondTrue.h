@@ -1,6 +1,6 @@
 void Map_RoomBgmInit_CondTrue(void)
 {
-    switch (g_SavegamePtr->mapRoomIdx_A5)
+    switch (g_SavegamePtr->mapRoomIdx)
     {
         case 5:
             Bgm_TrackChange(BgmTrackIdx_6);

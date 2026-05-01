@@ -1988,24 +1988,24 @@ void SaveScreen_SaveGame(void) // 0x801E6B18
             g_SaveScreen_State = SaveScreenState_Save;
             saveEntry          = MemCard_SaveMetadataGet(g_SelectedDeviceId, g_SelectedFileIdx, g_Savegame_SelectedElementIdx);
 
-            if (g_SavegamePtr->locationId_A8 == SaveLocationId_NextFear)
+            if (g_SavegamePtr->locationId == SaveLocationId_NextFear)
             {
                 saveEntry->savegameCount_8 = 0;
             }
             else
             {
-                g_SavegamePtr->savegameCount_A6++;
-                saveEntry->savegameCount_8 = g_SavegamePtr->savegameCount_A6;
+                g_SavegamePtr->savegameCount++;
+                saveEntry->savegameCount_8 = g_SavegamePtr->savegameCount;
             }
 
-            saveEntry->locationId_A    = g_SavegamePtr->locationId_A8;
-            saveEntry->gameplayTimer_4 = g_SavegamePtr->gameplayTimer_250;
+            saveEntry->locationId_A    = g_SavegamePtr->locationId;
+            saveEntry->gameplayTimer_4 = g_SavegamePtr->gameplayTimer;
 
             g_SaveScreen_IsNextFearMode = saveEntry->isNextFearMode_B;
 
-            saveEntry->isNextFearMode_B             = g_SavegamePtr->isNextFearMode_25C;
-            saveEntry->add290Hours_B_1              = g_SavegamePtr->add290Hours_25C_1;
-            saveEntry->pickedUpSpecialItemCount_B_3 = g_SavegamePtr->pickedUpSpecialItemCount_25C_3;
+            saveEntry->isNextFearMode_B             = g_SavegamePtr->isNextFearMode;
+            saveEntry->add290Hours_B_1              = g_SavegamePtr->add290Hours;
+            saveEntry->pickedUpSpecialItemCount_B_3 = g_SavegamePtr->pickedUpSpecialItemCount;
 
             MemCard_ProcessSet(MemCardProcess_Save_5, g_SelectedDeviceId, g_SelectedFileIdx, g_Savegame_SelectedElementIdx);
             g_GameWork.gameStateSteps[1]++;
@@ -2135,7 +2135,7 @@ void SaveScreen_Continue(void) // 0x801E6F38
 
             g_SysWork.processFlags = ProcessFlag_LoadSave;
 
-            GameBoot_MapLoad(g_SavegamePtr->mapOverlayId_A4);
+            GameBoot_MapLoad(g_SavegamePtr->mapIdx);
 
             ScreenFade_Start(true, false, false);
             g_GameWork.gameStateSteps[1]++;

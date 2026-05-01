@@ -157,7 +157,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapOverlayId, s32 arg3)
             sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-0.30f);
             sharedData_800E326C_0_s00.corners_0[1].vz = Q12(265.0f);
 #elif defined(MAP1_S06)
-            switch (g_SavegamePtr->mapRoomIdx_A5)
+            switch (g_SavegamePtr->mapRoomIdx)
             {
                 case 12:
                     sharedData_800DD591_0_s00             = 1;
@@ -192,7 +192,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapOverlayId, s32 arg3)
                     break;
             }
 #elif defined(MAP2_S00)
-            switch (g_SavegamePtr->mapRoomIdx_A5)
+            switch (g_SavegamePtr->mapRoomIdx)
             {
                 case 38:
                     sharedData_800DD591_0_s00                 = 10;
@@ -269,7 +269,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapOverlayId, s32 arg3)
             sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-25.5f);
             sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-8.0f);
 #elif defined(MAP3_S00) || defined(MAP3_S01) || defined(MAP3_S06)
-            switch (g_SavegamePtr->mapRoomIdx_A5)
+            switch (g_SavegamePtr->mapRoomIdx)
             {
                 case 3:
                     sharedData_800DD591_0_s00                 = 2;
@@ -320,7 +320,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapOverlayId, s32 arg3)
                     break;
             }
 #elif defined(MAP4_S03)
-            if (g_SavegamePtr->mapRoomIdx_A5 == 20)
+            if (g_SavegamePtr->mapRoomIdx == 20)
             {
                 sharedData_800DD591_0_s00                 = 1;
                 sharedData_800E326C_0_s00.corners_0[0].vx = Q12(133.0f);
@@ -918,7 +918,7 @@ bool Particle_Update(s_Particle* partHead)
     g_ParticleSpawnCount = 0;
 
 #if defined(MAP0_S00)
-    if (g_SavegamePtr->mapRoomIdx_A5 == 3 && g_SysWork.playerWork.player.position.vz > Q12(200.0f))
+    if (g_SavegamePtr->mapRoomIdx == 3 && g_SysWork.playerWork.player.position.vz > Q12(200.0f))
     {
         sharedData_800DD591_0_s00 = 1;
     }
@@ -930,7 +930,7 @@ bool Particle_Update(s_Particle* partHead)
 #elif defined(MAP0_S02)
     sharedData_800DD591_0_s00 = 2;
 
-    switch (g_SavegamePtr->mapRoomIdx_A5)
+    switch (g_SavegamePtr->mapRoomIdx)
     {
         case 2:
             sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-101.5f);
@@ -967,7 +967,7 @@ bool Particle_Update(s_Particle* partHead)
     }
 
 #elif defined(MAP1_S06)
-    switch (g_SavegamePtr->mapRoomIdx_A5)
+    switch (g_SavegamePtr->mapRoomIdx)
     {
         case 9:
         case 12:
@@ -980,7 +980,7 @@ bool Particle_Update(s_Particle* partHead)
     }
 
 #elif defined(MAP2_S00)
-    switch (g_SavegamePtr->mapRoomIdx_A5)
+    switch (g_SavegamePtr->mapRoomIdx)
     {
         case 3:
             if (g_SysWork.playerWork.player.position.vz > Q12(200.0f))
@@ -1134,7 +1134,7 @@ bool Particle_Update(s_Particle* partHead)
     }
 
 #elif defined(MAP2_S02)
-    if (g_SavegamePtr->mapRoomIdx_A5 == 17)
+    if (g_SavegamePtr->mapRoomIdx == 17)
     {
         return false;
     }
@@ -1142,7 +1142,7 @@ bool Particle_Update(s_Particle* partHead)
     sharedData_800DD591_0_s00 = 0;
 
 #elif defined(MAP3_S00)
-    switch (g_SavegamePtr->mapRoomIdx_A5)
+    switch (g_SavegamePtr->mapRoomIdx)
     {
         case 3:
         case 5:
@@ -1156,7 +1156,7 @@ bool Particle_Update(s_Particle* partHead)
     }
 
 #elif defined(MAP3_S01)
-    switch (g_SavegamePtr->mapRoomIdx_A5)
+    switch (g_SavegamePtr->mapRoomIdx)
     {
         case 3:
         case 5:
@@ -1170,7 +1170,7 @@ bool Particle_Update(s_Particle* partHead)
     }
 
 #elif defined(MAP3_S06)
-    switch (g_SavegamePtr->mapRoomIdx_A5)
+    switch (g_SavegamePtr->mapRoomIdx)
     {
         case 3:
         case 5:
@@ -1184,13 +1184,13 @@ bool Particle_Update(s_Particle* partHead)
     }
 
 #elif defined(MAP4_S02)
-    if (g_SavegamePtr->mapRoomIdx_A5 == 17)
+    if (g_SavegamePtr->mapRoomIdx == 17)
     {
         return false;
     }
 
 #elif defined(MAP4_S03)
-    if (g_SavegamePtr->mapRoomIdx_A5 != 20)
+    if (g_SavegamePtr->mapRoomIdx != 20)
     {
         return false;
     }
@@ -1242,7 +1242,7 @@ bool Particle_Update(s_Particle* partHead)
 #elif defined(MAP5_S03)
     sharedData_800DD591_0_s00 = 2;
 
-    switch (g_SavegamePtr->mapRoomIdx_A5)
+    switch (g_SavegamePtr->mapRoomIdx)
     {
         case 7:
             sharedData_800E326C_0_s00.corners_0[0].vx = Q12(55.5f);
@@ -2478,7 +2478,7 @@ void Particle_SnowDraw(s_Particle* part)
 #if defined(HAS_PARTICLE_CASE_2)
                 PARTICLE_CASE(2):
                     Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
-                    if (g_SavegamePtr->mapRoomIdx_A5 == 5)
+                    if (g_SavegamePtr->mapRoomIdx == 5)
                     {
                         Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 0);
                     }
@@ -3230,13 +3230,13 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
                 Collision_Get(&coll, localPart->position0_0.vx + g_Particle_Position.vx, localPart->position0_0.vz + g_Particle_Position.vz);
                 PopMatrix();
 
-                if (localPart->position0_0.vy >= coll.groundHeight_0)
+                if (localPart->position0_0.vy >= coll.groundHeight)
                 {
 #if defined(MAP1_S06)
                     localPart->stateStep_1E = 0;
 #else
-                    localPart->position0_0.vy = coll.groundHeight_0;
-                    if (coll.groundHeight_0 < Q12(0.0f) && coll.groundHeight_0 > Q12(-0.2))
+                    localPart->position0_0.vy = coll.groundHeight;
+                    if (coll.groundHeight < Q12(0.0f) && coll.groundHeight > Q12(-0.2))
                     {
                         localPart->position0_0.vy = Q12(0.0f);
                     }
@@ -3309,7 +3309,7 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
                 Collision_Get(&coll, localPart->position0_0.vx + g_Particle_Position.vx, localPart->position0_0.vz + g_Particle_Position.vz);
                 PopMatrix();
 
-                localPart->position0_0.vy = coll.groundHeight_0;
+                localPart->position0_0.vy = coll.groundHeight;
                 localPart->movement_18.vx = coll.field_8;
 
                 if (coll.field_8 == 11)
@@ -3949,7 +3949,7 @@ void Particle_SoundUpdate(void)
 {
     u8 unkValDiv4;
 
-    switch (g_SavegamePtr->mapOverlayId_A4)
+    switch (g_SavegamePtr->mapIdx)
     {
         case MapIdx_MAP0_S00:
         case MapIdx_MAP0_S01: // @unused Checks for `MAP0_S01`, but map itself doesn't contain this func?

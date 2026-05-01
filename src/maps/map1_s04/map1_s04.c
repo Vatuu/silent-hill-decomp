@@ -21,7 +21,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800CC8C8
     s32 mapRoomIdx;
     s32 var_a3;
 
-    mapRoomIdx = g_SavegamePtr->mapRoomIdx_A5;
+    mapRoomIdx = g_SavegamePtr->mapRoomIdx;
     var_a3     = D_800CCF5C[mapRoomIdx];
     var_a1     = Q12(0.1f);
 

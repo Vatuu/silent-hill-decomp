@@ -10,7 +10,7 @@ void sharedFunc_800D0110_7_s00(void)
 
     flags            = 1 << 0;
     var_s2           = Q12(0.1f);
-    mapRoomIdx       = g_SavegamePtr->mapRoomIdx_A5;
+    mapRoomIdx       = g_SavegamePtr->mapRoomIdx;
     bgmLayerLimit = NULL;
 
     switch (g_GameWork.bgmIdx)

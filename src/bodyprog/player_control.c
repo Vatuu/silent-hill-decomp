@@ -83,7 +83,7 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
     {
         case PlayerState_EnemyGrabPinnedFront:
         case PlayerState_EnemyGrabPinnedBack:
-            switch (g_SavegamePtr->mapOverlayId_A4)
+            switch (g_SavegamePtr->mapIdx)
             {
                 case MapIdx_MAP2_S00:
                 case MapIdx_MAP2_S02:
@@ -116,7 +116,7 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
 
         case PlayerState_OnFloorFront:
         case PlayerState_OnFloorBehind:
-            if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP6_S04)
+            if (g_SavegamePtr->mapIdx == MapIdx_MAP6_S04)
             {
                 if (g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(132, true) ||
                     g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(133, false))
@@ -371,7 +371,7 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttac
         g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
         g_SysWork.playerWork.player.collision.shapeOffsets.box.vz = Q12(0.0f);
         g_SysWork.playerWork.player.collision.shapeOffsets.box.vx = Q12(0.0f);
-        g_SysWork.playerCombat.weaponAttack            = (g_SavegamePtr->equippedWeapon_AA == InvItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA + InvItemId_KitchenKnife);
+        g_SysWork.playerCombat.weaponAttack            = (g_SavegamePtr->equippedWeapon == InvItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon + InvItemId_KitchenKnife);
         g_SysWork.targetNpcIdx                         = NO_VALUE;
         g_SysWork.playerCombat.isAiming               = false;
     }
@@ -1073,16 +1073,16 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
         func_8004C564(g_SysWork.playerCombat.weaponAttack, (playerProps.gasWeaponPowerTimer_114 != 0) ? 4 : 2);
     }
 
-    g_SavegamePtr->healthSaturation_238 -= g_DeltaTime;
-    g_SavegamePtr->healthSaturation_238 = CLAMP(g_SavegamePtr->healthSaturation_238, Q12(0.0f), Q12(300.0f));
+    g_SavegamePtr->healthSaturation -= g_DeltaTime;
+    g_SavegamePtr->healthSaturation = CLAMP(g_SavegamePtr->healthSaturation, Q12(0.0f), Q12(300.0f));
 
-    if (g_SavegamePtr->healthSaturation_238 != Q12(0.0f))
+    if (g_SavegamePtr->healthSaturation != Q12(0.0f))
     {
         playerChara.health += g_DeltaTime;
         playerChara.health  = CLAMP(playerChara.health, Q12(0.0f), Q12(100.0f));
     }
 
-    if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP2_S00)
+    if (g_SavegamePtr->mapIdx == MapIdx_MAP2_S00)
     {
         g_MapOverlayHeader.func_108();
     }
@@ -1349,11 +1349,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             {
                 case PlayerState_OnFloorFront:
                 case PlayerState_OnFloorBehind:
-                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
                     {
                         grabFreeInputCount = 1600;
                     }
-                    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
                     {
                         grabFreeInputCount = 4800;
                     }
@@ -1401,11 +1401,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     switch (playerExtra.state)
                     {
                         case PlayerState_EnemyGrabPinnedFront:
-                            if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                            if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
                             {
                                 grabFreeInputCount = 800;
                             }
-                            else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                            else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
                             {
                                 grabFreeInputCount = 2400;
                             }
@@ -1419,11 +1419,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                             break;
 
                         case PlayerState_EnemyGrabPinnedBack:
-                            if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                            if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
                             {
                                 grabFreeInputCount = 1200;
                             }
-                            else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                            else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
                             {
                                 grabFreeInputCount = 3600;
                             }
@@ -1490,11 +1490,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 case PlayerState_EnemyGrabTorsoFront:
                     unkDistThreshold = Q12(1.0f);
 
-                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
                     {
                         grabFreeInputCount = 800;
                     }
-                    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
                     {
                         grabFreeInputCount = 2400;
                     }
@@ -1513,11 +1513,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 case PlayerState_EnemyGrabTorsoBack:
                     unkDistThreshold = Q12(1.0f);
 
-                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
                     {
                         grabFreeInputCount = 1000;
                     }
-                    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
                     {
                         grabFreeInputCount = 3000;
                     }
@@ -1533,11 +1533,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 case PlayerState_EnemyGrabLegsFront:
                     unkDistThreshold = Q12(0.8f);
 
-                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
                     {
                         grabFreeInputCount = 700;
                     }
-                    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
                     {
                         grabFreeInputCount = 2100;
                     }
@@ -1553,11 +1553,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 case PlayerState_EnemyGrabLegsBack:
                     unkDistThreshold = Q12(0.8f);
 
-                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
                     {
                         grabFreeInputCount = 800;
                     }
-                    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
                     {
                         grabFreeInputCount = 2400;
                     }
@@ -1573,11 +1573,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 case PlayerState_EnemyGrabNeckFront:
                     unkDistThreshold = Q12(1.5f);
 
-                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
                     {
                         grabFreeInputCount = 3600;
                     }
-                    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
                     {
                         grabFreeInputCount = 10800;
                     }
@@ -1593,11 +1593,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 case PlayerState_EnemyGrabNeckBack:
                     unkDistThreshold = Q12(1.5f);
 
-                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                    if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
                     {
                         grabFreeInputCount = 3600;
                     }
-                    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
                     {
                         grabFreeInputCount = 10800;
                     }
@@ -2082,7 +2082,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
             if (player->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
-                if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP0_S00)
+                if (g_SavegamePtr->mapIdx == MapIdx_MAP0_S00)
                 {
                     g_MapOverlayHeader.playerAnimLock_DC();
                     Savegame_EventFlagSet(EventFlag_25);
@@ -2818,7 +2818,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     if (g_SysWork.playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
                     {
                         g_SysWork.playerCombat.currentWeaponAmmo--;
-                        g_SavegamePtr->items_0[g_SysWork.playerCombat.weaponInventoryIdx].count_1--;
+                        g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx].count_1--;
 
                         func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &player->position, Q8(0.5f), 0);
                     }
@@ -3909,13 +3909,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
                     {
-                        if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InvItemId_KitchenKnife))
+                        if (g_SavegamePtr->items[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InvItemId_KitchenKnife))
                         {
-                            g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombat.currentWeaponAmmo;
+                            g_SavegamePtr->items[i].count_1 = g_SysWork.playerCombat.currentWeaponAmmo;
                         }
-                        if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InvItemId_Handgun))
+                        if (g_SavegamePtr->items[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InvItemId_Handgun))
                         {
-                            g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombat.totalWeaponAmmo;
+                            g_SavegamePtr->items[i].count_1 = g_SysWork.playerCombat.totalWeaponAmmo;
                         }
                     }
                 }
@@ -4021,13 +4021,13 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                     {
                         for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
                         {
-                            if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InvItemId_KitchenKnife))
+                            if (g_SavegamePtr->items[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InvItemId_KitchenKnife))
                             {
-                                g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombat.currentWeaponAmmo;
+                                g_SavegamePtr->items[i].count_1 = g_SysWork.playerCombat.currentWeaponAmmo;
                             }
-                            if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InvItemId_Handgun))
+                            if (g_SavegamePtr->items[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InvItemId_Handgun))
                             {
-                                g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombat.totalWeaponAmmo;
+                                g_SavegamePtr->items[i].count_1 = g_SysWork.playerCombat.totalWeaponAmmo;
                             }
                         }
                     }
@@ -4245,7 +4245,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                 if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
                     if (g_SysWork.playerCombat.currentWeaponAmmo == 0 &&
-                        INVENTORY_ITEM_GROUP(g_SavegamePtr->equippedWeapon_AA) == InvItemGroup_GunWeapons &&
+                        INVENTORY_ITEM_GROUP(g_SavegamePtr->equippedWeapon) == InvItemGroup_GunWeapons &&
                         g_SysWork.playerCombat.totalWeaponAmmo != 0)
                     {
                         g_SysWork.playerWork.extra.upperBodyState              = PlayerUpperBodyState_Reload;
@@ -4383,13 +4383,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
         case PlayerLowerBodyState_AimWalkBackward:
         case PlayerLowerBodyState_AimSidestepRight:
         case PlayerLowerBodyState_AimSidestepLeft:
-            g_SavegamePtr->walkDistance_258 += travelDistStep;
-            g_SavegamePtr->walkDistance_258  = CLAMP(g_SavegamePtr->walkDistance_258, MOVE_DIST_MIN, MOVE_DIST_MAX);
+            g_SavegamePtr->walkDistance += travelDistStep;
+            g_SavegamePtr->walkDistance  = CLAMP(g_SavegamePtr->walkDistance, MOVE_DIST_MIN, MOVE_DIST_MAX);
             break;
 
         default:
-            g_SavegamePtr->runDistance_254 += travelDistStep;
-            g_SavegamePtr->runDistance_254  = CLAMP(g_SavegamePtr->runDistance_254, MOVE_DIST_MIN, MOVE_DIST_MAX);
+            g_SavegamePtr->runDistance += travelDistStep;
+            g_SavegamePtr->runDistance  = CLAMP(g_SavegamePtr->runDistance, MOVE_DIST_MIN, MOVE_DIST_MAX);
             break;
     }
 
@@ -6620,7 +6620,7 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
 
     offset.vy = Q12_MULT_PRECISE(player->fallSpeed, g_DeltaTime);
 
-    if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP1_S05)
+    if (g_SavegamePtr->mapIdx == MapIdx_MAP1_S05)
     {
         offset.vx = offset.vx + D_800C45B0.vx;
         sp30.vx = offset.vx;
@@ -6630,7 +6630,7 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
 
     Collision_WallDetect(&D_800C4590, &offset, player);
 
-    if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP1_S05)
+    if (g_SavegamePtr->mapIdx == MapIdx_MAP1_S05)
     {
         if (D_800C45B0.vx != 0 && (DIFF_SIGN(sp30.vx, D_800C4590.offset_0.vx) || abs(sp30.vx) >= ABS(D_800C4590.offset_0.vx)))
         {
@@ -6670,7 +6670,7 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
         player->properties.player.runTimer_108 = 0;
     }
 
-    if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP1_S00 && g_SavegamePtr->mapRoomIdx_A5 == 13)
+    if (g_SavegamePtr->mapIdx == MapIdx_MAP1_S00 && g_SavegamePtr->mapRoomIdx == 13)
     {
         D_800C4590.field_C = 0;
     }
@@ -6853,7 +6853,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             }
 
             g_SysWork.targetNpcIdx                  = NO_VALUE;
-            g_SysWork.playerCombat.weaponAttack = (g_SavegamePtr->equippedWeapon_AA == InvItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA - InvItemId_KitchenKnife);
+            g_SysWork.playerCombat.weaponAttack = (g_SavegamePtr->equippedWeapon == InvItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon - InvItemId_KitchenKnife);
 
             if (g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
@@ -7075,13 +7075,13 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             player->properties.player.field_10C = 0x40;
         }
 
-        if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP0_S00)
+        if (g_SavegamePtr->mapIdx == MapIdx_MAP0_S00)
         {
             player->health -= player->damage.amount * 2;
         }
         else
         {
-            switch (g_SavegamePtr->gameDifficulty_260)
+            switch (g_SavegamePtr->gameDifficulty)
             {
                 case GameDifficulty_Easy:
                     player->damage.amount = (player->damage.amount * 3) >> 2; // `/ 4`.
@@ -7111,7 +7111,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
         g_SysWork.playerWork.extra.state != PlayerState_OnFloorBehind && !g_Player_IsInWalkToRunTransition)
     {
         player->field_40                     = NO_VALUE;
-        g_SavegamePtr->healthSaturation_238 = Q12(0.0f);
+        g_SavegamePtr->healthSaturation = Q12(0.0f);
 
         for (i = 0; i < 4; i++)
         {
@@ -7517,7 +7517,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord) // 0x8007
         if (playerProps.moveDistance_126 >= Q12(3.1739f) ||
             (g_SysWork.timer_2C & (1 << 0)))
         {
-            func_8006342C(g_SavegamePtr->equippedWeapon_AA - InvItemId_KitchenKnife,
+            func_8006342C(g_SavegamePtr->equippedWeapon - InvItemId_KitchenKnife,
                           Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), coord);
         }
     }
@@ -7749,24 +7749,24 @@ void Game_SavegameResetPlayer(void) // 0x8007E530
 
     s32 i;
 
-    g_SavegamePtr->inventorySlotCount_AB = DEFAULT_INV_SLOT_COUNT;
+    g_SavegamePtr->inventorySlotCount = DEFAULT_INV_SLOT_COUNT;
 
     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
     {
-        g_SavegamePtr->items_0[i].id_0    = NO_VALUE;
-        g_SavegamePtr->items_0[i].count_1 = 0;
+        g_SavegamePtr->items[i].id_0    = NO_VALUE;
+        g_SavegamePtr->items[i].count_1 = 0;
     }
 
-    g_SavegamePtr->playerHealth_240      = Q12(100.0f);
+    g_SavegamePtr->playerHealth      = Q12(100.0f);
     g_SavegamePtr->field_A0              = 0;
-    g_SavegamePtr->equippedWeapon_AA     = InvItemId_Unequipped;
-    g_SavegamePtr->healthSaturation_238  = Q12(0.0f);
-    g_SavegamePtr->gameplayTimer_250     = Q12(0.0f);
-    g_SavegamePtr->runDistance_254       = Q12(0.0f);
-    g_SavegamePtr->walkDistance_258      = Q12(0.0f);
-    g_SavegamePtr->pickedUpItemCount_23C = 0;
-    g_SavegamePtr->clearGameCount_24A    = 0;
-    g_SavegamePtr->add290Hours_25C_1     = 0;
+    g_SavegamePtr->equippedWeapon     = InvItemId_Unequipped;
+    g_SavegamePtr->healthSaturation  = Q12(0.0f);
+    g_SavegamePtr->gameplayTimer     = Q12(0.0f);
+    g_SavegamePtr->runDistance       = Q12(0.0f);
+    g_SavegamePtr->walkDistance      = Q12(0.0f);
+    g_SavegamePtr->pickedUpItemCount = 0;
+    g_SavegamePtr->clearGameCount    = 0;
+    g_SavegamePtr->add290Hours     = 0;
 
     #undef DEFAULT_INV_SLOT_COUNT
 }
@@ -7794,17 +7794,17 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     model->anim.flags      |= AnimFlag_Unlocked | AnimFlag_Visible;
 
     g_SysWork.playerWork.player.collision.state = CharaCollisionState_Npc;
-    g_Inventory_EquippedItem                    = g_SavegamePtr->equippedWeapon_AA;
+    g_Inventory_EquippedItem                    = g_SavegamePtr->equippedWeapon;
 
-    itemGroupId = INVENTORY_ITEM_GROUP(g_SavegamePtr->equippedWeapon_AA);
+    itemGroupId = INVENTORY_ITEM_GROUP(g_SavegamePtr->equippedWeapon);
 
     // Assign weapon that the player was holding when saving.
     if (itemGroupId == InvItemGroup_MeleeWeapons || itemGroupId == InvItemGroup_GunWeapons)
     {
-        for (i = 0; g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA && i < INVENTORY_ITEM_COUNT_MAX; i++);
+        for (i = 0; g_SavegamePtr->items[i].id_0 != g_SavegamePtr->equippedWeapon && i < INVENTORY_ITEM_COUNT_MAX; i++);
 
-        g_SysWork.playerCombat.weaponAttack        = g_SavegamePtr->equippedWeapon_AA + InvItemId_KitchenKnife;
-        g_SysWork.playerCombat.currentWeaponAmmo  = g_SavegamePtr->items_0[i].count_1;
+        g_SysWork.playerCombat.weaponAttack        = g_SavegamePtr->equippedWeapon + InvItemId_KitchenKnife;
+        g_SysWork.playerCombat.currentWeaponAmmo  = g_SavegamePtr->items[i].count_1;
         g_SysWork.playerCombat.weaponInventoryIdx = i;
 
         if (itemGroupId == InvItemGroup_MeleeWeapons)
@@ -7814,7 +7814,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
         else
         {
             for (i = 0;
-                 g_SavegamePtr->items_0[i].id_0 != (g_SavegamePtr->equippedWeapon_AA + InvItemId_HealthDrink) && i < INVENTORY_ITEM_COUNT_MAX;
+                 g_SavegamePtr->items[i].id_0 != (g_SavegamePtr->equippedWeapon + InvItemId_HealthDrink) && i < INVENTORY_ITEM_COUNT_MAX;
                  i++);
 
             if (i == INVENTORY_ITEM_COUNT_MAX)
@@ -7823,7 +7823,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
             }
             else
             {
-                g_SysWork.playerCombat.totalWeaponAmmo = (s8)g_SavegamePtr->items_0[i].count_1;
+                g_SysWork.playerCombat.totalWeaponAmmo = (s8)g_SavegamePtr->items[i].count_1;
             }
         }
     }
@@ -7841,7 +7841,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     D_800C457C                            = 0;
     g_Player_DisableControl               = false;
 
-    switch (g_SavegamePtr->gameDifficulty_260)
+    switch (g_SavegamePtr->gameDifficulty)
     {
         case GameDifficulty_Easy:
             D_800C45EC = Q12(5.0f);
@@ -7859,7 +7859,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     g_Player_LastWeaponSelected = NO_VALUE;
     g_GameWork.mapAnimIdx   = NO_VALUE;
 
-    g_SavegamePtr->inventorySlotCount_AB       = CLAMP(g_SavegamePtr->inventorySlotCount_AB, INVENTORY_ITEM_COUNT_MAX / 5, INVENTORY_ITEM_COUNT_MAX);
+    g_SavegamePtr->inventorySlotCount       = CLAMP(g_SavegamePtr->inventorySlotCount, INVENTORY_ITEM_COUNT_MAX / 5, INVENTORY_ITEM_COUNT_MAX);
     g_SysWork.playerWork.player.health = CLAMP(g_SysWork.playerWork.player.health, 1, Q12(100.0f));
 }
 
@@ -7889,7 +7889,7 @@ void func_8007E8C0(void) // 0x8007E8C0
         HARRY_BASE_ANIM_INFOS[i] = g_MapOverlayHeader.harryMapAnimInfos_34[i - 76];
     }
 
-    if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP0_S01)
+    if (g_SavegamePtr->mapIdx == MapIdx_MAP0_S01)
     {
         g_SysWork.enablePlayerMatchAnim = false;
     }
@@ -8615,11 +8615,11 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE
     switch (arg0)
     {
         case 8:
-            mapOverlayId = g_SavegamePtr->mapOverlayId_A4;
+            mapOverlayId = g_SavegamePtr->mapIdx;
             *sfxId       = Sfx_Unk1330;
 
-            // @hack Odd redundant load of `mapOverlayId_A4`, likely there was some optimized-out code above that left side-effects?
-            // This just sets `mapOverlayId` to `g_SavegamePtr->mapOverlayId_A4` (again).
+            // @hack Odd redundant load of `mapIdx`, likely there was some optimized-out code above that left side-effects?
+            // This just sets `mapOverlayId` to `g_SavegamePtr->mapIdx` (again).
             asm volatile(
                 "lui   $2, %%hi(g_SavegamePtr)\n"
                 "lw    $2, %%lo(g_SavegamePtr)($2)\n"
@@ -8648,7 +8648,7 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE
             break;
 
         case 5:
-            if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP4_S02)
+            if (g_SavegamePtr->mapIdx == MapIdx_MAP4_S02)
             {
                 *sfxId = Sfx_Unk1543;
             }
@@ -8665,7 +8665,7 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE
             break;
 
         case 9:
-            if (g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP0_S02)
+            if (g_SavegamePtr->mapIdx == MapIdx_MAP0_S02)
             {
                 *sfxId = Sfx_Unk1388;
             }
@@ -8687,10 +8687,10 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE
             break;
     }
 
-    switch (g_SavegamePtr->mapOverlayId_A4)
+    switch (g_SavegamePtr->mapIdx)
     {
         case MapIdx_MAP6_S02:
-            switch (g_SavegamePtr->mapRoomIdx_A5)
+            switch (g_SavegamePtr->mapRoomIdx)
             {
                 case 20:
                     if (g_SysWork.playerWork.player.position.vy > Q12(0.0f))
@@ -8734,7 +8734,7 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE
             break;
 
         case MapIdx_MAP6_S01:
-            if (g_SavegamePtr->mapRoomIdx_A5 == 18)
+            if (g_SavegamePtr->mapRoomIdx == 18)
             {
                 *sfxId = Sfx_Unk1608;
             }
@@ -8928,7 +8928,7 @@ bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
 
     Collision_Get(&D_800C4620, arg1, arg3);
 
-    result = arg2 < D_800C4620.groundHeight_0;
+    result = arg2 < D_800C4620.groundHeight;
     if (result)
     {
         result = D_800C4620.field_8 != NO_VALUE;
@@ -8973,7 +8973,7 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
     {
         case 0:
             groundHeight = Q12(8.0f);
-            switch (g_SavegamePtr->mapOverlayId_A4)
+            switch (g_SavegamePtr->mapIdx)
             {
                 case MapIdx_MAP5_S01:
 #if VERSION_EQUAL_OR_NEWER(USA)
@@ -9002,7 +9002,7 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
 
         case 12:
             groundHeight = Q12(8.0f);
-            switch (g_SavegamePtr->mapOverlayId_A4)
+            switch (g_SavegamePtr->mapIdx)
             {
                 case MapIdx_MAP6_S00:
                     groundHeight = Q12(4.0f);
@@ -9016,7 +9016,7 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
             break;
 
         default:
-            groundHeight = coll->groundHeight_0;
+            groundHeight = coll->groundHeight;
             break;
     }
 

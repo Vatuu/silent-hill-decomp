@@ -4,7 +4,7 @@ void Map_RoomBgmInit(bool arg0)
     s32 roomIdx;
     s32 flags;
 
-    roomIdx = g_SavegamePtr->mapRoomIdx_A5;
+    roomIdx = g_SavegamePtr->mapRoomIdx;
     flags = sharedData_800E1210_1_s02[roomIdx];
     fArg1 = Q12(0.1f);
 

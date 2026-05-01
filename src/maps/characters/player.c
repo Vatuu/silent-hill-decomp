@@ -41,7 +41,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 #if defined(MAP0_S00)
     else if (g_SysWork.playerWork.extra.state == PlayerState_Unk74)
     {
-        cond = g_SavegamePtr->mapOverlayId_A4 == MapIdx_MAP1_S02;
+        cond = g_SavegamePtr->mapIdx == MapIdx_MAP1_S02;
     }
 
 #elif defined(MAP1_S01) || defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP1_S06) || \
@@ -98,7 +98,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 
 #ifdef HAS_PlayerState_Unk74
             case PlayerState_Unk74:
-                cond = (g_SavegamePtr->mapOverlayId_A4 == 5);
+                cond = (g_SavegamePtr->mapIdx == 5);
                 break;
 #endif
 
@@ -214,7 +214,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 void sharedFunc_800D209C_0_s00(void)
 {
     g_SysWork.playerCombat.weaponAttack = NO_VALUE;
-    g_SavegamePtr->equippedWeapon_AA         = InvItemId_Unequipped;
+    g_SavegamePtr->equippedWeapon         = InvItemId_Unequipped;
 
     Player_ControlFreeze();
     sharedFunc_800D2C7C_0_s00(PlayerState_Unk84);

@@ -115,7 +115,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
             g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Start) | (1 << MainMenuEntry_Option);
 
-            if (g_GameWork.autosave.playerHealth_240 > Q12(0.0f))
+            if (g_GameWork.autosave.playerHealth > Q12(0.0f))
             {
                 g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Continue) | (1 << MainMenuEntry_Start) | (1 << MainMenuEntry_Option);
             }
@@ -192,7 +192,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 switch (g_MainMenu_SelectedEntry)
                 {
                     case MainMenuEntry_Continue:
-                        if (g_GameWork.autosave.playerHealth_240 > Q12(0.0f))
+                        if (g_GameWork.autosave.playerHealth > Q12(0.0f))
                         {
                             g_GameWork.savegame = g_GameWork.autosave;
                         }
@@ -203,7 +203,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
                         GameBoot_PlayerInit();
                         g_SysWork.processFlags = ProcessFlag_Continue;
-                        GameBoot_MapLoad(g_SavegamePtr->mapOverlayId_A4);
+                        GameBoot_MapLoad(g_SavegamePtr->mapIdx);
                         break;
 
                     case MainMenuEntry_Load:
@@ -314,7 +314,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 Screen_Refresh(SCREEN_WIDTH, 0);
                 Fs_QueueWaitForEmpty();
 
-                if (g_GameWork.autosave.playerHealth_240 > Q12(0.0f))
+                if (g_GameWork.autosave.playerHealth > Q12(0.0f))
                 {
                     NEXT_GAME_STATES[1] = GameState_MainLoadScreen;
                 }

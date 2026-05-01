@@ -512,7 +512,7 @@ void Ai_PuppetNurse_Control1(s_SubCharacter* nurse)
         }
         else
         {
-            if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+            if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
             {
                 nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_1, false);
             }
@@ -824,7 +824,7 @@ void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
 
             if (nurse->model.anim.status == ANIM_STATUS(18, false))
             {
-                if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
                 {
                     controlState = PuppetNurseControl_9;
                 }

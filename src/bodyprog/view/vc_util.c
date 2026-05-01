@@ -120,7 +120,7 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
             else
             {
                 Collision_Get(&coll, hr_p->position.vx, hr_p->position.vz);
-                grnd_y = coll.groundHeight_0;
+                grnd_y = coll.groundHeight;
 
                 vcMakeHeroHeadPos(&hr_head_pos);
             }

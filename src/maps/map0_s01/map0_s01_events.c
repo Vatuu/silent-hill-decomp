@@ -100,7 +100,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
             g_SysWork.flags_22A4              |= UnkSysFlag_3;
-            g_SavegamePtr->itemToggleFlags_AC &= ~ItemToggleFlag_RadioOn;
+            g_SavegamePtr->itemToggleFlags &= ~ItemToggleFlag_RadioOn;
             g_SysWork.flags_22A4              |= UnkSysFlag_5 | UnkSysFlag_9;
             g_Cutscene_MapMsgAudioIdx                   = 0;
             D_800DE250                         = 0;
@@ -703,7 +703,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 void MapEvent_PocketRadioItemTake(void) // 0x800DC34C
 {
     Event_ItemTake(InvItemId_PocketRadio, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S01_PickupPocketRadio, 64);
-    g_SavegamePtr->itemToggleFlags_AC |= ItemToggleFlag_RadioOn;
+    g_SavegamePtr->itemToggleFlags |= ItemToggleFlag_RadioOn;
 }
 
 void MapEvent_FlashlightItemTake(void) // 0x800DC394
@@ -760,7 +760,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             break;
 
         case 6:
-            g_SavegamePtr->hasMapsFlags_164 |= 1 << 1;
+            g_SavegamePtr->hasMapsFlags |= 1 << 1;
 
             Fs_QueueStartRead(FILE_ANIM_CAFE2_DMS, FS_BUFFER_11);
             SysWork_StateStepIncrement(0);
