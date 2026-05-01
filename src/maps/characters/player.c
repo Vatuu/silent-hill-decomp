@@ -880,13 +880,13 @@ bool sharedFunc_800D2E94_0_s00(void)
         {
             npcChara->health                             = Q12(400.0f);
             npcChara->model.controlState++;
-            npcChara->collision.box.top              = Q12(-0.2f);
-            npcChara->collision.box.bottom              = Q12(0.2f);
+            npcChara->collision.box.top                  = Q12(-0.2f);
+            npcChara->collision.box.bottom               = Q12(0.2f);
             npcChara->collision.cylinder.radius          = Q12(0.05f);
             npcChara->collision.cylinder.field_2         = Q12(0.5f);
             npcChara->field_40                           = 0;
             npcChara->collision.box.offsetY              = Q12(0.0f);
-            npcChara->collision.box.field_8              = 0;
+            npcChara->collision.box.field_8              = Q12(0.0f);
             npcChara->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
             npcChara->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
             npcChara->collision.shapeOffsets.box.vz      = Q12(0.0f);

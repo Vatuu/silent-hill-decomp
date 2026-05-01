@@ -186,7 +186,7 @@ STATIC_ASSERT_SIZEOF(s_FsImageDesc, 8);
 typedef struct _FsAnmDesc
 {
     u32            field_0; // Unknown index.
-    u32            characterId;
+    u32            charaId;
     GsCOORDINATE2* coords_8;
 } s_FsAnmDesc;
 STATIC_ASSERT_SIZEOF(s_FsAnmDesc, 12);

@@ -480,11 +480,15 @@ STATIC_ASSERT_SIZEOF(s_Collision, 12);
 
 typedef struct _CollisionQuery
 {
-    /* 0x0 */ VECTOR3  position;       // Q19.12
-    /* 0xC */ SVECTOR3 rotation;       // Q3.12 | TODO: NOT A ROTATION! Actually position offsets. Bottom, top, cylinder radius.
-    /* 0xE */ s8       collisionState; /** `e_CharaCollisionState` */
+    /* 0x0  */ VECTOR3 position; /** Q19.12 */
+    /* 0xC  */ q3_12   bottom;
+    /* 0xE  */ q3_12   top;
+    /* 0x10 */ q3_12   radius;         // Unsure. Set to cylinder radius.
+    /* 0x14 */ s8      collisionState; /** `e_CharaCollisionState` */
 } s_CollisionQuery;
+STATIC_ASSERT_SIZEOF(s_CollisionQuery, 20);
 
+// Collision-related.
 typedef struct
 {
     /* 0x0  */ s32        collisionState; /** `e_CharaCollisionState` */
@@ -496,9 +500,9 @@ typedef struct
     /* 0x1C */ q23_8      positionZ_1C;
     /* 0x20 */ q23_8      newPositionX_20;
     /* 0x24 */ q23_8      newPositionZ_24;
-    /* 0x28 */ s16        field_28;      // } `SVECTOR3`, packed rotation? Probably not.
-    /* 0x2A */ s16        angleToTarget; // }
-    /* 0x2C */ s16        field_2C;      // }
+    /* 0x28 */ q7_8       field_28;      // Radius.
+    /* 0x2A */ q7_8       angleToTarget; // Wrong name. Top.
+    /* 0x2C */ q7_8       field_2C;      // Bottom.
 } s_func_8006ABC0;
 
 typedef struct
@@ -1450,7 +1454,7 @@ STATIC_ASSERT_SIZEOF(s_MapPoint2d, 12);
 typedef struct _SpawnInfo
 {
     /* 0x0   */ q19_12 positionX;
-    /* 0x4   */ s8     characterId; /** `e_CharaId` */
+    /* 0x4   */ s8     charaId; /** `e_CharaId` */
     /* 0x5   */ q0_8   rotationY;
     /* 0x6   */ s8     flags_6;               /** `e_SpawnFlags` | Copied to `stateStep` in `s_Model`, with `controlState = 0`. */
     /* 0x7+0 */ s32    gameDifficultyMin : 4; /** `e_GameDifficulty` | Minimum difficulty required for successful spawn. */
@@ -1658,7 +1662,7 @@ typedef struct _MapOverlayHeader
     s32*                   data_18C;
     s32*                   data_190;
     void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); /** Guessed params. Funcptrs for each `e_CharaId`, set to 0 for IDs not included in the map overlay. Called by `Game_NpcUpdate`. */
-    s8                     charaGroupIds_248[CHARA_GROUP_COUNT]; /** `e_CharaId` values where if `s_SpawnInfo::characterId == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
+    s8                     charaGroupIds_248[CHARA_GROUP_COUNT]; /** `e_CharaId` values where if `s_SpawnInfo::charaId == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_SpawnInfo            charaSpawns_24C[2][16];               /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
     VC_ROAD_DATA           cameraPaths_3CC[100];
     s_TriggerZone          triggerZones_D2C[200];

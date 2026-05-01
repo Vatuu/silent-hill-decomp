@@ -769,7 +769,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
 
         case ANIM_STATUS(CreeperAnim_Attack, true):
             CopyDataAlt(creeper, sharedData_800E0FC8_1_s02);
-            creeper->collision.box.field_8 = -655;
+            creeper->collision.box.field_8 = Q12(-0.16f);
             break;
 
         case ANIM_STATUS(CreeperAnim_DeathStart, false):

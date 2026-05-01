@@ -7885,17 +7885,17 @@ void func_8007E8C0(void) // 0x8007E8C0
         g_SysWork.enablePlayerMatchAnim = false;
     }
 
-    chara->properties.player.exhaustionTimer_FC      = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.box.top   = Q12(-1.6f);
-    g_SysWork.playerWork.player.collision.box.bottom   = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.box.offsetY   = Q12(-1.1f);
+    chara->properties.player.exhaustionTimer_FC                    = Q12(0.0f);
+    g_SysWork.playerWork.player.collision.box.top                  = Q12(-1.6f);
+    g_SysWork.playerWork.player.collision.box.bottom               = Q12(0.0f);
+    g_SysWork.playerWork.player.collision.box.offsetY              = Q12(-1.1f);
     g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
     g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.box.vz = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.box.vx = Q12(0.0f);
-    chara->collision.cylinder.radius                            = Q12(0.3f);
-    chara->collision.cylinder.field_2                             = Q12(0.23f);
-    g_GameWork.mapAnimIdx                           = NO_VALUE;
+    g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = Q12(0.0f);
+    g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      = Q12(0.0f);
+    chara->collision.cylinder.radius                               = Q12(0.3f);
+    chara->collision.cylinder.field_2                              = Q12(0.23f);
+    g_GameWork.mapAnimIdx                                          = NO_VALUE;
 
     func_8007E9C4();
 }
@@ -7906,24 +7906,24 @@ void func_8007E9C4(void) // 0x8007E9C4
 
     chara = &g_SysWork.playerWork.player;
 
-    g_Player_IsInWalkToRunTransition                         = false;
-    g_SysWork.playerWork.extra.state               = PlayerState_None;
-    g_SysWork.playerWork.extra.upperBodyState      = PlayerUpperBodyState_None;
-    g_SysWork.playerWork.extra.lowerBodyState      = PlayerLowerBodyState_None;
+    g_Player_IsInWalkToRunTransition              = false;
+    g_SysWork.playerWork.extra.state              = PlayerState_None;
+    g_SysWork.playerWork.extra.upperBodyState     = PlayerUpperBodyState_None;
+    g_SysWork.playerWork.extra.lowerBodyState     = PlayerLowerBodyState_None;
     g_SysWork.playerWork.extra.model.stateStep    = 0;
     g_SysWork.playerWork.extra.model.controlState = 0;
 
-    chara->model.stateStep            = 0;
-    chara->model.controlState         = 0;
-    g_SysWork.playerStopFlags        = PlayerStopFlag_None;
-    g_Player_FlexRotationY                = Q12_ANGLE(0.0f);
-    g_Player_FlexRotationX                = Q12_ANGLE(0.0f);
-    D_800C4560                            = NO_VALUE;
+    chara->model.stateStep          = 0;
+    chara->model.controlState       = 0;
+    g_SysWork.playerStopFlags       = PlayerStopFlag_None;
+    g_Player_FlexRotationY          = Q12_ANGLE(0.0f);
+    g_Player_FlexRotationX          = Q12_ANGLE(0.0f);
+    D_800C4560                      = NO_VALUE;
     g_SysWork.playerCombat.isAiming = false;
 
     func_8004C564(0, NO_VALUE);
 
-    chara->angleToTarget         = Q12_ANGLE(90.0f);
+    chara->angleToTarget    = Q12_ANGLE(90.0f);
     g_Player_IsDead         = false;
     g_Player_DisableDamage  = false;
     g_Player_HasActionInput = false;

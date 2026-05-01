@@ -1787,8 +1787,8 @@ typedef struct _CharaBox
     /* 0x2 */ q3_12 bottom;
     /* 0x4 */ q3_12 height;
     /* 0x6 */ q3_12 offsetY;
-    /* 0x8 */ q3_12 field_8; // X extent?
-    /* 0xA */ q3_12 field_A; // Z extent?
+    /* 0x8 */ q3_12 field_8; // X extent?? Always negative, but why?
+    /* 0xA */ q3_12 field_A; // Z extent??
 } s_CharaBox;
 STATIC_ASSERT_SIZEOF(s_CharaBox, 12);
 

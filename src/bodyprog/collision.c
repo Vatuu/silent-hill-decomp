@@ -137,9 +137,9 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
     collQuery.position.vx = posX;
     collQuery.position.vy = Q12(0.0f);
     collQuery.position.vz = posZ;
-    collQuery.rotation.vx = Q12_ANGLE(0.0f);
-    collQuery.rotation.vy = Q12_ANGLE(0.0f);
-    collQuery.rotation.vz = Q12_ANGLE(0.0f);
+    collQuery.bottom      = Q12(0.0f);
+    collQuery.top         = Q12(0.0f);
+    collQuery.radius      = Q12(0.0f);
     Collision_QueryInit(&state, &pos, &collQuery, false);
 
     state.field_0_8  = 0;
@@ -381,9 +381,9 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset
         return 1;
     }
 
-    collQuery.rotation.vy    = chara->collision.box.top;
-    collQuery.rotation.vx    = chara->collision.box.bottom;
-    collQuery.rotation.vz    = chara->collision.cylinder.radius;
+    collQuery.top            = chara->collision.box.top;
+    collQuery.bottom         = chara->collision.box.bottom;
+    collQuery.radius         = chara->collision.cylinder.radius;
     collQuery.collisionState = chara->collision.state;
 
     offsetCpy = *offset;
@@ -532,7 +532,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
 
     offsetCpy = *offset;
 
-    collResult->field_18 = func_8006F620(&offsetCpy, collQuery, collQuery->rotation.vz, collQuery->rotation.vy);
+    collResult->field_18 = func_8006F620(&offsetCpy, collQuery, collQuery->radius, collQuery->top);
 
     Collision_QueryInit(&collState, &offsetCpy, collQuery, arg3);
 
@@ -668,8 +668,8 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
     q19_12          var_s4;
     q19_12          var_v0;
     s32             mag;
-    q19_12          bottom;
     q19_12          top;
+    q19_12          bottom;
     q19_12          temp5;
     q19_12          temp6;
     s_SubCharacter* curChara;
@@ -687,13 +687,13 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
             continue;
         }
 
-        bottom = curChara->collision.box.top + curChara->position.vy;
-        top    = curChara->collision.box.bottom    + curChara->position.vy;
+        top    = curChara->collision.box.top    + curChara->position.vy;
+        bottom = curChara->collision.box.bottom + curChara->position.vy;
 
         // TODO: Rotation + position? Seems wrong.
-        temp6 = collQuery->rotation.vy + collQuery->position.vy;
-        temp5 = collQuery->rotation.vx + collQuery->position.vy;
-        if (bottom > temp5 || top < temp6)
+        temp6 = collQuery->top + collQuery->position.vy;
+        temp5 = collQuery->bottom + collQuery->position.vy;
+        if (top > temp5 || bottom < temp6)
         {
             continue;
         }
@@ -702,7 +702,7 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
         posZ = (curChara->position.vz + curChara->collision.shapeOffsets.cylinder.vz) - collQuery->position.vz;
 
         mag = Vc_VectorMagnitudeCalc(posX, Q12(0.0f), posZ);
-        if (((curChara->collision.cylinder.radius + collQuery->rotation.vz) + Q12_ANGLE(36.0f)) < mag)
+        if (((curChara->collision.cylinder.radius + collQuery->radius) + Q12_ANGLE(36.0f)) < mag)
         {
             continue;
         }
@@ -761,7 +761,6 @@ void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* pos, c
     result->offset_C.vz = Q12_TO_Q8(pos->vz);
 
     result->distance_8 = SquareRoot0(SQUARE(result->offset_C.vx) + SQUARE(result->offset_C.vz));
-
     if (result->distance_8 != Q12(0.0f))
     {
         // @unused
@@ -778,13 +777,13 @@ void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* pos, c
         result->direction_14.vz = Q12(0.0f);
     }
 
-    result->field_28        = FP_FROM(collQuery->rotation.vz, Q4_SHIFT); // TODO: Q8 angle?
+    result->field_28        = Q12_TO_Q8(collQuery->radius);
     result->positionX_18    = Q12_TO_Q8(collQuery->position.vx);
     result->positionZ_1C    = Q12_TO_Q8(collQuery->position.vz);
     result->newPositionX_20 = result->positionX_18 + result->offset_C.vx;
     result->newPositionZ_24 = result->positionZ_1C + result->offset_C.vz;
-    result->angleToTarget   = FP_FROM(collQuery->rotation.vy + collQuery->position.vy, Q4_SHIFT); // TODO: Position + rotation? Seems wrong.
-    result->field_2C        = FP_FROM(collQuery->rotation.vx + collQuery->position.vy, Q4_SHIFT);
+    result->angleToTarget   = Q12_TO_Q8(collQuery->top + collQuery->position.vy);
+    result->field_2C        = Q12_TO_Q8(collQuery->bottom + collQuery->position.vy);
     result->collisionState  = collQuery->collisionState;
 }
 
@@ -3794,8 +3793,8 @@ void Collision_CharaAnimShapesSet(s_SubCharacter* chara, s_Keyframe* keyframe0, 
     invAlpha = Q12(1.0f) - alpha;
 
     // Set interpolated collision shapes for active frame.
-    chara->collision.box.top               = FP_FROM((keyframe0->box.top  * invAlpha) + (keyframe1->box.top  * alpha), Q12_SHIFT);
-    chara->collision.box.bottom                  = FP_FROM((keyframe0->box.bottom     * invAlpha) + (keyframe1->box.bottom     * alpha), Q12_SHIFT);
+    chara->collision.box.top                  = FP_FROM((keyframe0->box.top     * invAlpha) + (keyframe1->box.top     * alpha), Q12_SHIFT);
+    chara->collision.box.bottom               = FP_FROM((keyframe0->box.bottom  * invAlpha) + (keyframe1->box.bottom  * alpha), Q12_SHIFT);
     chara->collision.box.height               = FP_FROM((keyframe0->box.height  * invAlpha) + (keyframe1->box.height  * alpha), Q12_SHIFT);
     chara->collision.box.offsetY              = FP_FROM((keyframe0->box.offsetY * invAlpha) + (keyframe1->box.offsetY * alpha), Q12_SHIFT);
     chara->collision.shapeOffsets.cylinder.vx = FP_FROM((keyframe0->shapeOffsets.cylinder.vx * invAlpha) + (keyframe1->shapeOffsets.cylinder.vx * alpha), Q12_SHIFT);

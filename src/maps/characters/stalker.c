@@ -2567,7 +2567,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             keyframeIdx1 = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 49);
             Collision_CharaAnimShapesSet(stalker, &sharedData_800DE580_0_s00[keyframeIdx0], &sharedData_800DE580_0_s00[keyframeIdx1]);
 
-            stalker->collision.box.field_8                                      = Q12(-0.7f);
+            stalker->collision.box.field_8 = Q12(-0.7f);
             stalkerProps.keyframeIdx_FC = 15;
             break;
 

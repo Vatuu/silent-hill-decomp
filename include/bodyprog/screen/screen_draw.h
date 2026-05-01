@@ -8,9 +8,9 @@
 // GLOBALS
 // ========
 
-/** @note This is defined in `screen_draw.c` as in between this and
- * the previous variable (g_PrevScreenFadeProgress) there is garbage
- * data it may hint that this variable was defined in a file apart of
+/** @note This is defined in `screen_draw.c` because inbetween this and
+ * the previous variable (`g_PrevScreenFadeProgress`) there is garbage
+ * data. It suggests this variable was defined in a file separate from
  * `screen_fade.c`.
  */
 extern q19_12 g_ScreenFadeTimestep;

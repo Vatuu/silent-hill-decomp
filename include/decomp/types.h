@@ -4,7 +4,7 @@
 #include "psyq/sys/types.h"
 
 #ifndef NULL
-#define NULL 0
+    #define NULL 0
 #endif
 
 typedef signed char        byte;
@@ -35,7 +35,7 @@ typedef unsigned int       q20_12; // Q20.12 fixed-point.
 typedef unsigned long long q52_12; // Q52.12 fixed-point.
 
 #ifndef __cplusplus
-typedef enum { false, true } bool;
+    typedef enum { false, true } bool;
 #endif
 
 #define NO_VALUE -1

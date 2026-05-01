@@ -107,9 +107,9 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
 
             bzero(&g_SysWork.npcs[npcIdx], sizeof(s_SubCharacter));
 
-            if (curCharaSpawn->characterId > Chara_None)
+            if (curCharaSpawn->charaId > Chara_None)
             {
-                g_SysWork.npcs[npcIdx].model.charaId = curCharaSpawn->characterId;
+                g_SysWork.npcs[npcIdx].model.charaId = curCharaSpawn->charaId;
             }
             else
             {
