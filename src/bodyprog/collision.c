@@ -739,7 +739,7 @@ void Collision_QueryInit(s_CollisionState* collState, VECTOR3* pos, s_CollisionQ
 
     Collision_QueryDirectionCalc(&collState->field_4, pos, collQuery);
 
-    collState->field_7C = 0x1E00;
+    collState->field_7C = Q8(30.0f);
     collState->field_34 = 0;
     collState->field_44.field_0.field_0  = 0;
     collState->field_44.field_6          = 0;
@@ -1687,10 +1687,10 @@ void func_8006C45C(s_CollisionState* collState) // 0x8006C45C
     dist   = SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ));
 
     if (dist < collState->field_CC.field_C.field_0 && collState->field_CC.field_5 != 1 &&
-        (collState->field_C8 == 0xFF || collState->field_CC.field_6.vy < collState->field_CA))
+        (collState->field_C8 == 0xFF || collState->field_CC.field_6.vy < collState->groundHeight))
     {
         collState->field_C8 = collState->field_CC.field_4;
-        collState->field_CA = collState->field_CC.field_6.vy;
+        collState->groundHeight = collState->field_CC.field_6.vy;
     }
 
     if (!collState->field_0_8 && !collState->field_0_9 || dist < collState->field_CC.field_C.field_0)
@@ -1769,10 +1769,10 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) //
 
     if (collState->field_C8 != 0xFF)
     {
-        if (collState->field_CA < collState->field_7C)
+        if (collState->groundHeight < collState->field_7C)
         {
             temp_a0        = &collData->ptr_18[collState->field_C8 - collData->field_8_16];
-            collState->field_7C = collState->field_CA;
+            collState->field_7C = collState->groundHeight;
             collState->field_80 = collState->field_98.vec_0.vx + collData->positionX;
             collState->field_84 = collState->field_98.vec_0.vz + collData->positionZ_4;
             collState->field_88 = 0;
@@ -1792,12 +1792,12 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) //
 
             if (temp_a1->field_8 != 0)
             {
-                var_a0 += FP_FROM(temp_a1->field_8 * (collState->field_98.vec_0.vx - temp_a1->field_0), Q12_SHIFT);
+                var_a0 += Q12_MULT(temp_a1->field_8, collState->field_98.vec_0.vx - temp_a1->field_0);
             }
 
             if (temp_a1->field_A != 0)
             {
-                var_a0 += FP_FROM(temp_a1->field_A * (collState->field_98.vec_0.vz - temp_a1->field_4), Q12_SHIFT);
+                var_a0 += Q12_MULT(temp_a1->field_A, collState->field_98.vec_0.vz - temp_a1->field_4);
             }
 
             if (var_a0 < collState->field_7C)
@@ -1818,7 +1818,7 @@ void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_
 {
     s32                    startIdx;
     s32                    endIdx;
-    s32                    var_a2;
+    q23_8                  var_a2;
     u8*                    curUnk;
     s_IpdCollisionData_10* ptr;
 
@@ -1840,12 +1840,12 @@ void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_
 
             if (ptr->field_8 != 0)
             {
-                var_a2 += FP_FROM(ptr->field_8 * (collState->field_98.vec_0.vx - ptr->field_0), Q12_SHIFT);
+                var_a2 += Q12_MULT(ptr->field_8, collState->field_98.vec_0.vx - ptr->field_0);
             }
 
             if (ptr->field_A != 0)
             {
-                var_a2 += FP_FROM(ptr->field_A * (collState->field_98.vec_0.vz - ptr->field_4), Q12_SHIFT);
+                var_a2 += Q12_MULT(ptr->field_A, collState->field_98.vec_0.vz - ptr->field_4);
             }
 
             if (var_a2 < collState->field_7C)
@@ -1862,11 +1862,11 @@ void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_
     }
 }
 
-s16 Collision_OffsetAlphaGet(s_CollisionState* collState) // 0x8006CB90
+q3_12 Collision_OffsetAlphaGet(s_CollisionState* collState) // 0x8006CB90
 {
     q23_8 groundHeight;
 
-    if (collState->field_7C == 0x1E00)
+    if (collState->field_7C == Q8(30.0f))
     {
         return Q12(1.0f);
     }
@@ -1878,8 +1878,8 @@ s16 Collision_OffsetAlphaGet(s_CollisionState* collState) // 0x8006CB90
         return Q12(1.0f);
     }
 
-    return FP_TO(collState->field_4.distance_8, Q12_SHIFT) / SquareRoot0(SQUARE(collState->field_4.distance_8) +
-                                                                         SQUARE(groundHeight - collState->field_4.field_2C));
+    return Q12_DIV(collState->field_4.distance_8, SquareRoot0(SQUARE(collState->field_4.distance_8) +
+                                                              SQUARE(groundHeight - collState->field_4.field_2C)));
 }
 
 q23_8 Ipd_GroundHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionState* collState) // 0x8006CC44

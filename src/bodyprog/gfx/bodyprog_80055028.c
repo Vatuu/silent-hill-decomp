@@ -534,7 +534,7 @@ void func_80055C3C(CVECTOR* result, CVECTOR* color, s32 arg2, s32 arg3, s32 arg4
 
 u8 func_80055D78(q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80055D78
 {
-    q23_8    pos[3];
+    q23_8    pos[3]; // XYZ
     s32      temp_v1;
     q23_8    tempX;
     s32      var_a3;
@@ -2738,14 +2738,13 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A478
     s32 var_s0;
     s32 var_t1;
     s32 var_v1;
-
     s32 temp_s0_neg;
     s32 temp_s1_neg;
     s32 temp_s2_neg;
 
     ReadGeomOffset(&geomOffsetX, &geomOffsetY);
     geomScreen = ReadGeomScreen();
-    SetGeomOffset(-1024, -1024);
+    SetGeomOffset(Q8(-4.0f), Q8(-4.0f));
     SetGeomScreen(16);
 
     temp_s0 = g_WorldEnvWork.field_7C.vx;
@@ -2780,7 +2779,7 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A478
     gte_stsxy(&scratchData->screenPos_3DC);
     gte_stdp(&scratchData->depthP_3E0);
 
-    scratchData->screenPos_3DC.vx += 1024;
+    scratchData->screenPos_3DC.vx += 1024; // TODO: Q8?
     scratchData->screenPos_3DC.vy += 1024;
 
     var_s0  = (scratchData->screenPos_3DC.vx * scratchData->screenPos_3DC.vy) + (scratchData->screenPos_3DC.vy * (scratchData->depthP_3E0 >> 4));

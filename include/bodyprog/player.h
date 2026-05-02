@@ -306,15 +306,15 @@ typedef enum _PlayerLowerBodyState
  */
 typedef struct _800AFBF4
 {
-    s16 attackSfx_0;
-    s16 reloadSfx_2;
-    s16 outOfAmmoSfx_4;
-    u8  animStopAiming_6; /** Packed anim status. See `s_ModelAnim::status`. */
-    u8  animAttack_7;     /** Packed anim status. See `s_ModelAnim::status`. */
-    u8  animAttackHold_8;
-    u8  field_9;
-    u8  field_A; // Attack type?
-    u8  unk_B;
+    /* 0x0 */ s16 attackSfx;
+    /* 0x2 */ s16 reloadSfx;
+    /* 0x4 */ s16 outOfAmmoSfx;
+    /* 0x6 */ u8  animStopAiming; /** Packed anim status. See `s_ModelAnim::status`. */
+    /* 0x7 */ u8  animAttack;     /** Packed anim status. See `s_ModelAnim::status`. */
+    /* 0x8 */ u8  animAttackHold;
+    /* 0x9 */ u8  field_9;
+    /* 0xA */ u8  field_A; // Attack type?
+    /* 0xB */ u8  __pad_B;
 } s_800AFBF4;
 STATIC_ASSERT_SIZEOF(s_800AFBF4, 12);
 

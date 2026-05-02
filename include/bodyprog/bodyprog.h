@@ -751,7 +751,7 @@ typedef struct _LmHeader
 typedef struct _IpdCollisionData_10
 {
     s16 field_0;
-    s16 field_2;
+    s16 field_2; // Q8? Related to ground height?
     s16 field_4;
     u16 field_6_0  : 5; // TODO: Might be using `s_IpdCollisionData_18` substruct here? Won't fit though.
     u16 field_6_5  : 3;
@@ -932,7 +932,7 @@ typedef struct
     s_IpdCollisionData*   ipdCollisionData_0;
     u8                    field_4; // Index.
     u8                    field_5;
-    SVECTOR3              field_6;
+    SVECTOR3              field_6; // Q7.8 | Probe position?
     s_CollisionState_CC_C  field_C;
     u8                    field_E;
     u8                    field_F;
@@ -945,7 +945,7 @@ typedef struct
 } s_CollisionState_CC;
 STATIC_ASSERT_SIZEOF(s_CollisionState_CC, 56);
 
-typedef struct
+typedef struct _CollisionState
 {
     u8                 field_0_0  : 8;
     s8                 field_0_8  : 1; // Something to do with collision. `bool` flag that states if there's a displacement?
@@ -961,7 +961,7 @@ typedef struct
     s16                field_3E; // Z?
     s8*                field_40;
     s_CollisionState_44 field_44;
-    s32                field_7C;
+    q23_8              field_7C; // Related to ground height?
     s32                field_80; // X
     s32                field_84; // Z
     s32                field_88; // X
@@ -1001,9 +1001,9 @@ typedef struct
     } field_A0;
     u8                 field_C8;
     u8                 unk_C9[1];
-    s16                field_CA;
+    /* 0xCA */ q7_8               groundHeight;
     s_CollisionState_CC field_CC;
-    // TODO: May be incomplete. Maybe not, added the final padding based on `Collision_Get`.
+    // TODO: Maybe incomplete. Maybe not, added the final padding based on `Collision_Get`.
 } s_CollisionState;
 
 /** @brief Global LM model. */
@@ -1103,11 +1103,11 @@ typedef struct
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
 /** @brief Collision point data. */
-typedef struct
+typedef struct _CollisionPoint
 {
-    VECTOR3     position; // Q19.12
-    s_Collision collision_C;
-    s32         field_18; // Count of points in circle?
+    /* 0x0  */ VECTOR3     position; /** Q19.12 */
+    /* 0xC  */ s_Collision collision;
+    /* 0x18 */ s32         field_18; // Count of points in circle?
 } s_CollisionPoint;
 
 typedef struct
@@ -3909,7 +3909,7 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData);
 
 void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_func_8006CA18* arg2);
 
-s16 Collision_OffsetAlphaGet(s_CollisionState* collState);
+q3_12 Collision_OffsetAlphaGet(s_CollisionState* collState);
 
 q23_8 Ipd_GroundHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionState* collState);
 

@@ -146,7 +146,7 @@ bool func_80033548(void) // 0x80033548
         g_Savegame_ElementCount1[slotIdx >> 2]                 = 0;
         g_Savegame_ElementCount0[slotIdx >> 2]                 = 0;
         sp18[i]                                                = false;
-        g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = NO_VALUE;
+        g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount = NO_VALUE;
         g_MemCard_ActiveMemCardSlotSaves->deviceId_5           = i;
         g_MemCard_ActiveMemCardSlotSaves->fileIdx_6            = 0;
         g_MemCard_ActiveMemCardSlotSaves->elementIdx_7         = 0;
@@ -195,7 +195,7 @@ bool func_80033548(void) // 0x80033548
                 case MemCardResult_LoadError:
                     if (g_SaveScreen_SaveScreenState == SaveScreenState_Save)
                     {
-                        g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = 31600;
+                        g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount = 31600;
                         slotIdx                                                 = WrapIdx(i);
                         g_Savegame_ElementCount0[slotIdx >> 2]++;
                     }
@@ -228,7 +228,7 @@ bool func_80033548(void) // 0x80033548
             }
             else
             {
-                g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = 31700;
+                g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount = 31700;
                 g_MemCard_ActiveMemCardSlotSaves->type_4               = SavegameEntryType_NewFile;
 
                 slotIdx = WrapIdx(i);
@@ -261,7 +261,7 @@ bool func_80033548(void) // 0x80033548
 
                 if (fileStatus == FileState_Damaged)
                 {
-                    g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = 0;
+                    g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount = 0;
                     g_MemCard_ActiveMemCardSlotSaves->deviceId_5           = i;
                     g_MemCard_ActiveMemCardSlotSaves->fileIdx_6            = j;
                     g_MemCard_ActiveMemCardSlotSaves->elementIdx_7         = 0;
@@ -281,15 +281,15 @@ bool func_80033548(void) // 0x80033548
                     {
                         saveMetadata = MemCard_SaveMetadataGet(i, j, k);
 
-                        g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = saveMetadata->totalSavegameCount_0;
+                        g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount = saveMetadata->totalSavegameCount;
                         g_MemCard_ActiveMemCardSlotSaves->deviceId_5           = i;
                         g_MemCard_ActiveMemCardSlotSaves->fileIdx_6            = j;
                         g_MemCard_ActiveMemCardSlotSaves->elementIdx_7         = k;
-                        g_MemCard_ActiveMemCardSlotSaves->savegameCount_2      = saveMetadata->savegameCount_8;
-                        g_MemCard_ActiveMemCardSlotSaves->locationId_8         = saveMetadata->locationId_A;
+                        g_MemCard_ActiveMemCardSlotSaves->savegameCount_2      = saveMetadata->savegameCount;
+                        g_MemCard_ActiveMemCardSlotSaves->locationId_8         = saveMetadata->locationId;
                         g_MemCard_ActiveMemCardSlotSaves->saveMetadata_C       = saveMetadata;
 
-                        if (saveMetadata->totalSavegameCount_0 > 0)
+                        if (saveMetadata->totalSavegameCount > 0)
                         {
                             g_MemCard_ActiveMemCardSlotSaves->type_4 = SavegameEntryType_Save;
 
@@ -303,7 +303,7 @@ bool func_80033548(void) // 0x80033548
                         {
                             sp18[i]                                                = true;
                             g_MemCard_ActiveMemCardSlotSaves->type_4               = SavegameEntryType_NewSave;
-                            g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = 31900;
+                            g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount = 31900;
 
                             slotIdx = WrapIdx(i);
                             g_Savegame_ElementCount0[slotIdx >> 2]++;
@@ -319,7 +319,7 @@ bool func_80033548(void) // 0x80033548
                 g_MemCard_ActiveMemCardSlotSaves->savegameCount_2      = 0;
                 g_MemCard_ActiveMemCardSlotSaves->saveMetadata_C       = NULL;
                 sp18[i]                                                = true;
-                g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = 31800;
+                g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount = 31800;
                 memCardStatus0                                         = allFileStatus[i];
                 memCardStatus1                                         = memCardStatus0 & 0x3;
 
@@ -394,7 +394,7 @@ bool func_80033548(void) // 0x80033548
     {
         g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(D_800A97E0 == 0);
 
-        g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = NO_VALUE;
+        g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount = NO_VALUE;
         g_MemCard_ActiveMemCardSlotSaves->deviceId_5           = 0;
         g_MemCard_ActiveMemCardSlotSaves->fileIdx_6            = 0;
         g_MemCard_ActiveMemCardSlotSaves->elementIdx_7         = 0;
@@ -407,7 +407,7 @@ bool func_80033548(void) // 0x80033548
             g_MemCard_ActiveMemCardSlotSaves->type_4 == SavegameEntryType_NewSave ||
             g_MemCard_ActiveMemCardSlotSaves->type_4 == SavegameEntryType_NewFile)
         {
-            g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = NO_VALUE;
+            g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount = NO_VALUE;
             g_MemCard_ActiveMemCardSlotSaves->deviceId_5           = 0;
             g_MemCard_ActiveMemCardSlotSaves->fileIdx_6            = 0;
             g_MemCard_ActiveMemCardSlotSaves->elementIdx_7         = 0;
@@ -428,9 +428,9 @@ bool func_80033548(void) // 0x80033548
 
             for (i = 0; i < g_Savegame_ElementCount1[j]; i++)
             {
-                if (biggestTotalSaveCountInSlot[j] < g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0)
+                if (biggestTotalSaveCountInSlot[j] < g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount)
                 {
-                    biggestTotalSaveCountInSlot[j] = g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0;
+                    biggestTotalSaveCountInSlot[j] = g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount;
                     lastSavegameInSlotIdx[j]       = i;
                 }
 

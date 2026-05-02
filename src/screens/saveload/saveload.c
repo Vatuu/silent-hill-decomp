@@ -317,7 +317,7 @@ void SaveScreen_FileIdxDraw(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryType)
 
 bool SaveScreen_NextFearModeSave(s_MemCard_SaveMetadata* saveEntry) // 0x801E3078
 {
-    if (saveEntry != NULL && saveEntry->isNextFearMode_B)
+    if (saveEntry != NULL && saveEntry->isNextFearMode)
     {
         Gfx_StringSetColor(StringColorId_Gold);
         return true;
@@ -1577,12 +1577,12 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
 
         ptr = g_MemCard_ActiveMemCardSlotSaves[selectedSaveIdx].saveMetadata_C;
 
-        timeInSec = FP_FROM(ptr->gameplayTimer_4, Q12_SHIFT);
+        timeInSec = FP_FROM(ptr->gameplayTimer, Q12_SHIFT);
 
-        offset = ptr->add290Hours_B_1;
+        offset = ptr->add290Hours;
         hours  = (timeInSec / 3600) + offset * 290;
 
-        hyperBlasterBeamColor = ptr->pickedUpSpecialItemCount_B_3;
+        hyperBlasterBeamColor = ptr->pickedUpSpecialItemCount;
 
         mins = (timeInSec / 60) % 60;
         sec  = timeInSec % 60;
@@ -1791,7 +1791,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 // Show "Yes/No" option.
                 if (g_SaveScreen_SaveScreenState == SaveScreenState_Save)
                 {
-                    if (saveEntry->totalSavegameCount_0 == 31600)
+                    if (saveEntry->totalSavegameCount == 31600)
                     {
                         g_SaveScreen_IsFormatting = true;
                     }
@@ -1799,7 +1799,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                     // Defines if the selected element is the `New Save` option.
                     // @bug While an edge case, reaching the maximum makes it
                     // impossible to select or overwrite files.
-                    if ((u16)(saveEntry->totalSavegameCount_0 - 1) < 31099)
+                    if ((u16)(saveEntry->totalSavegameCount - 1) < 31099)
                     {
                         g_SaveScreen_IsNewSaveSelected = true;
                     }
@@ -1990,22 +1990,22 @@ void SaveScreen_SaveGame(void) // 0x801E6B18
 
             if (g_SavegamePtr->locationId == SaveLocationId_NextFear)
             {
-                saveEntry->savegameCount_8 = 0;
+                saveEntry->savegameCount = 0;
             }
             else
             {
                 g_SavegamePtr->savegameCount++;
-                saveEntry->savegameCount_8 = g_SavegamePtr->savegameCount;
+                saveEntry->savegameCount = g_SavegamePtr->savegameCount;
             }
 
-            saveEntry->locationId_A    = g_SavegamePtr->locationId;
-            saveEntry->gameplayTimer_4 = g_SavegamePtr->gameplayTimer;
+            saveEntry->locationId    = g_SavegamePtr->locationId;
+            saveEntry->gameplayTimer = g_SavegamePtr->gameplayTimer;
 
-            g_SaveScreen_IsNextFearMode = saveEntry->isNextFearMode_B;
+            g_SaveScreen_IsNextFearMode = saveEntry->isNextFearMode;
 
-            saveEntry->isNextFearMode_B             = g_SavegamePtr->isNextFearMode;
-            saveEntry->add290Hours_B_1              = g_SavegamePtr->add290Hours;
-            saveEntry->pickedUpSpecialItemCount_B_3 = g_SavegamePtr->pickedUpSpecialItemCount;
+            saveEntry->isNextFearMode             = g_SavegamePtr->isNextFearMode;
+            saveEntry->add290Hours              = g_SavegamePtr->add290Hours;
+            saveEntry->pickedUpSpecialItemCount = g_SavegamePtr->pickedUpSpecialItemCount;
 
             MemCard_ProcessSet(MemCardProcess_Save_5, g_SelectedDeviceId, g_SelectedFileIdx, g_Savegame_SelectedElementIdx);
             g_GameWork.gameStateSteps[1]++;
@@ -2179,7 +2179,7 @@ void SaveScreen_ScreenDraw(void) // 0x801E70C8
         // Run through savegame entries.
         for (j = 0; j < (s32)g_Savegame_ElementCount1[i]; j++)
         {
-            if (g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 >= 0)
+            if (g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount >= 0)
             {
                 SaveScreen_FileIdxDraw(j, i, g_MemCard_ActiveMemCardSlotSaves->fileIdx_6 + 1, g_MemCard_ActiveMemCardSlotSaves->type_4);
             }

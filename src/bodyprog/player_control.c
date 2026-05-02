@@ -2573,13 +2573,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 g_Player_MeleeAttackType = 0;
-                g_Player_AttackAnimIdx   = g_Player_EquippedWeaponInfo.animAttackHold_8;
+                g_Player_AttackAnimIdx   = g_Player_EquippedWeaponInfo.animAttackHold;
                 D_800AF220                  = g_Player_EquippedWeaponInfo.field_A >> 4;
             }
             else if (g_Player_IsAttacking && g_SysWork.playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 g_Player_MeleeAttackType = 1;
-                g_Player_AttackAnimIdx   = g_Player_EquippedWeaponInfo.animAttackHold_8 - 4;
+                g_Player_AttackAnimIdx   = g_Player_EquippedWeaponInfo.animAttackHold - 4;
                 D_800AF220               = (g_Player_EquippedWeaponInfo.field_A >> 4) - 2;
             }
             else
@@ -2590,17 +2590,17 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 if (g_SysWork.playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) ||
                     g_Player_RockDrill_DirectionAttack == 0)
                 {
-                    g_Player_AttackAnimIdx = g_Player_EquippedWeaponInfo.animAttackHold_8;
+                    g_Player_AttackAnimIdx = g_Player_EquippedWeaponInfo.animAttackHold;
                     D_800AF220             = g_Player_EquippedWeaponInfo.field_A >> 4;
                 }
                 else if (g_Player_RockDrill_DirectionAttack == NO_VALUE)
                 {
-                    g_Player_AttackAnimIdx = g_Player_EquippedWeaponInfo.animAttackHold_8 + 4;
+                    g_Player_AttackAnimIdx = g_Player_EquippedWeaponInfo.animAttackHold + 4;
                     D_800AF220                  = (g_Player_EquippedWeaponInfo.field_A >> 4) + 2;
                 }
                 else
                 {
-                    g_Player_AttackAnimIdx = g_Player_EquippedWeaponInfo.animAttackHold_8 + 2;
+                    g_Player_AttackAnimIdx = g_Player_EquippedWeaponInfo.animAttackHold + 2;
                     D_800AF220                  = (g_Player_EquippedWeaponInfo.field_A >> 4) + 1;
                 }
             }
@@ -2713,7 +2713,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 {
                     if (extra->model.stateStep == 0)
                     {
-                        extra->model.anim.status = g_Player_EquippedWeaponInfo.animAttack_7 - 12;
+                        extra->model.anim.status = g_Player_EquippedWeaponInfo.animAttack - 12;
                         extra->model.stateStep++;
                     }
                 }
@@ -2721,7 +2721,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 {
                     if (extra->model.stateStep == 0)
                     {
-                        extra->model.anim.status = g_Player_EquippedWeaponInfo.animAttack_7;
+                        extra->model.anim.status = g_Player_EquippedWeaponInfo.animAttack;
                         extra->model.stateStep++;
                     }
                 }
@@ -2730,7 +2730,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             {
                 if (extra->model.stateStep == 0)
                 {
-                    extra->model.anim.status = g_Player_EquippedWeaponInfo.animAttack_7 - 4;
+                    extra->model.anim.status = g_Player_EquippedWeaponInfo.animAttack - 4;
                     extra->model.stateStep++;
                 }
             }
@@ -2739,7 +2739,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             {
                 if (extra->model.stateStep == 0)
                 {
-                    extra->model.anim.status = g_Player_EquippedWeaponInfo.animAttack_7;
+                    extra->model.anim.status = g_Player_EquippedWeaponInfo.animAttack;
                     extra->model.stateStep++;
                 }
             }
@@ -2747,7 +2747,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             {
                 if (extra->model.stateStep == 0)
                 {
-                    extra->model.anim.status = g_Player_EquippedWeaponInfo.animAttack_7 + 4;
+                    extra->model.anim.status = g_Player_EquippedWeaponInfo.animAttack + 4;
                     extra->model.stateStep++;
                 }
             }
@@ -2755,7 +2755,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             {
                 if (extra->model.stateStep == 0)
                 {
-                    extra->model.anim.status = g_Player_EquippedWeaponInfo.animAttack_7 + 2;
+                    extra->model.anim.status = g_Player_EquippedWeaponInfo.animAttack + 2;
                     extra->model.stateStep++;
                 }
             }
@@ -2774,7 +2774,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     {
                         player->field_44.field_0 = 1;
 
-                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &player->position, Q8(0.5f), 0);
+                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx, &player->position, Q8(0.5f), 0);
 
                         player->properties.player.field_10C                       = 0x40;
                         playerProps.flags_11C |= PlayerFlag_Unk2;
@@ -2820,18 +2820,18 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                         g_SysWork.playerCombat.currentWeaponAmmo--;
                         g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx].count_1--;
 
-                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &player->position, Q8(0.5f), 0);
+                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx, &player->position, Q8(0.5f), 0);
                     }
                     else
                     {
-                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &player->position, Q8_CLAMPED(0.19f), 0);
+                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx, &player->position, Q8_CLAMPED(0.19f), 0);
                     }
 
                     player->properties.player.field_10C = 0xC8;
                 }
                 else
                 {
-                    func_8005DC1C(g_Player_EquippedWeaponInfo.outOfAmmoSfx_4, &player->position, Q8(0.5f), 0);
+                    func_8005DC1C(g_Player_EquippedWeaponInfo.outOfAmmoSfx, &player->position, Q8(0.5f), 0);
 
                     player->properties.player.field_10C = 32;
                     extra->model.anim.keyframeIdx  = D_800C44F0[D_800AF220].field_6 - 3;
@@ -2965,14 +2965,14 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     player->model.stateStep = 0;
                 }
 
-                g_Player_AttackAnimIdx                       = g_Player_EquippedWeaponInfo.animAttackHold_8 - 2;
+                g_Player_AttackAnimIdx                       = g_Player_EquippedWeaponInfo.animAttackHold - 2;
                 D_800AF220                                   = (g_Player_EquippedWeaponInfo.field_A >> 4) - 1;
                 g_Player_MeleeAttackType                     = 2;
                 g_SysWork.playerCombat.weaponAttack = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(weaponAttack), AttackInputType_Multitap);
 
                 if (extra->model.stateStep == 0)
                 {
-                    extra->model.anim.status = g_Player_EquippedWeaponInfo.animAttack_7 - 2;
+                    extra->model.anim.status = g_Player_EquippedWeaponInfo.animAttack - 2;
                     extra->model.stateStep++;
                 }
 
@@ -3818,7 +3818,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             if (extra->model.stateStep == 0)
             {
-                extra->model.anim.status = g_Player_EquippedWeaponInfo.animStopAiming_6;
+                extra->model.anim.status = g_Player_EquippedWeaponInfo.animStopAiming;
                 extra->model.stateStep++;
             }
 
@@ -3875,7 +3875,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             if ((D_800AF624 + g_Player_EquippedWeaponInfo.field_9) <= extra->model.anim.keyframeIdx &&
                 !(playerProps.flags_11C & PlayerFlag_Unk2))
             {
-                func_8005DC1C(g_Player_EquippedWeaponInfo.reloadSfx_2, &player->position, Q8(0.5f), 0);
+                func_8005DC1C(g_Player_EquippedWeaponInfo.reloadSfx, &player->position, Q8(0.5f), 0);
 
                 player->properties.player.field_10C                       = 0x20;
                 playerProps.flags_11C |= PlayerFlag_Unk2;
@@ -4431,7 +4431,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 {
                     if (!g_SysWork.playerCombat.isAiming && player->model.stateStep == 0)
                     {
-                        player->model.anim.status = g_Player_EquippedWeaponInfo.animStopAiming_6;
+                        player->model.anim.status = g_Player_EquippedWeaponInfo.animStopAiming;
                         player->model.stateStep++;
                     }
                 }
@@ -4456,7 +4456,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 {
                     if (!g_SysWork.playerCombat.isAiming && player->model.stateStep == 0)
                     {
-                        player->model.anim.status = g_Player_EquippedWeaponInfo.animStopAiming_6;
+                        player->model.anim.status = g_Player_EquippedWeaponInfo.animStopAiming;
                         player->model.stateStep++;
                     }
                 }
@@ -6102,7 +6102,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     {
                         if (player->model.stateStep == 0)
                         {
-                            player->model.anim.status = g_Player_EquippedWeaponInfo.animAttack_7 - 12;
+                            player->model.anim.status = g_Player_EquippedWeaponInfo.animAttack - 12;
                             player->model.stateStep++;
                         }
                     }
@@ -6110,7 +6110,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     {
                         if (player->model.stateStep == 0)
                         {
-                            player->model.anim.status = g_Player_EquippedWeaponInfo.animAttack_7;
+                            player->model.anim.status = g_Player_EquippedWeaponInfo.animAttack;
                             player->model.stateStep++;
                         }
                     }
@@ -6122,7 +6122,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     {
                         if (player->model.stateStep == 0)
                         {
-                            player->model.anim.status = g_Player_EquippedWeaponInfo.animAttack_7;
+                            player->model.anim.status = g_Player_EquippedWeaponInfo.animAttack;
                             player->model.stateStep++;
                         }
                     }
@@ -6146,7 +6146,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     {
                         if (player->model.stateStep == 0)
                         {
-                            player->model.anim.status = g_Player_EquippedWeaponInfo.animAttack_7 + 2;
+                            player->model.anim.status = g_Player_EquippedWeaponInfo.animAttack + 2;
                             player->model.stateStep++;
                         }
                     }
@@ -6154,7 +6154,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     {
                         if (player->model.stateStep == 0)
                         {
-                            player->model.anim.status = g_Player_EquippedWeaponInfo.animAttack_7 + 4;
+                            player->model.anim.status = g_Player_EquippedWeaponInfo.animAttack + 4;
                             player->model.stateStep++;
                         }
                     }
@@ -6162,7 +6162,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     {
                         if (player->model.stateStep == 0)
                         {
-                            player->model.anim.status = g_Player_EquippedWeaponInfo.animAttack_7;
+                            player->model.anim.status = g_Player_EquippedWeaponInfo.animAttack;
                             player->model.stateStep++;
                         }
                     }
@@ -6180,7 +6180,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     {
                         if (player->model.stateStep == 0)
                         {
-                            player->model.anim.status = g_Player_EquippedWeaponInfo.animAttack_7 - 4;
+                            player->model.anim.status = g_Player_EquippedWeaponInfo.animAttack - 4;
                             player->model.stateStep++;
                         }
                     }
@@ -6188,7 +6188,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     {
                         if (player->model.stateStep == 0)
                         {
-                            player->model.anim.status = g_Player_EquippedWeaponInfo.animAttack_7;
+                            player->model.anim.status = g_Player_EquippedWeaponInfo.animAttack;
                             player->model.stateStep++;
                         }
                     }
@@ -6196,7 +6196,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
             else if (player->model.stateStep == 0)
             {
-                player->model.anim.status = g_Player_EquippedWeaponInfo.animAttackHold_8 - 1;
+                player->model.anim.status = g_Player_EquippedWeaponInfo.animAttackHold - 1;
                 player->model.stateStep++;
             }
 
@@ -8955,7 +8955,7 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
     q19_12       collZ;
     s_Collision* coll;
 
-    coll = &g_CollisionPointCache.collision_C;
+    coll = &g_CollisionPointCache.collision;
 
     collX = g_CollisionPointCache.position.vx;
     collZ = g_CollisionPointCache.position.vz;
