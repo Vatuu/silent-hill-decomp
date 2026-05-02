@@ -2035,7 +2035,9 @@ typedef struct _SysWork
     /* 0x2388   */ s_SysWork_2388   field_2388;
     /* 0x2510   */ s32              field_2510;
     /* 0x2514   */ s_SysWork_2514   field_2514;
-    /* 0x254C   */ s8               unused_254C[508]; /** @unused Debug data? */
+    /* 0x254C   */ s8               unused_254C[508]; /** @note Not unused. Used through indirect pointer calls.
+                                                       * Tied to `lib_unk`.
+                                                       */
     /* 0x2748   */ q3_12            bgmLayerVolumes[BGM_LAYER_COUNT];
                    // 2 bytes of padding.
     /* 0x275C   */ q19_12           field_275C;

@@ -244,8 +244,8 @@ MemCard_SysInit                              = 0x8002E3BC; // type:func
 MemCard_RamClear                             = 0x8002E470; // type:func
 MemCard_FileStatusClear                      = 0x8002E4BC; // type:func
 MemCard_AreAllFilesUsed                      = 0x8002E4F8; // type:func
-MemCard_SysInit2                             = 0x8002E548; // type:func
-MemCard_Disable                              = 0x8002E5BC; // type:func
+MemCard_SysEnable                             = 0x8002E548; // type:func
+MemCard_SysDisable                              = 0x8002E5BC; // type:func
 MemCard_InitStatus                           = 0x8002E5E8; // type:func
 MemCard_StatusInitNotConnected               = 0x8002E5F8; // type:func
 MemCard_AllMemCardsStatusGet                 = 0x8002E624; // type:func
@@ -3313,10 +3313,10 @@ g_Screen_FadeStatus                          = 0x800BF364;
 //-------------------------------------------------------------------
 //--- PA: 0x09A810   VA: 0x800BF370   subsegment: .bss, sys/memcard_2
 //-------------------------------------------------------------------
-D_800BCD18                                   = 0x800BF370;
-D_800BCD20                                   = 0x800BF378;
+biggestTotalSaveCountInSlot                                   = 0x800BF370;
+lastSavegameInSlotIdx                                   = 0x800BF378; // allow_duplicated:True
 g_MemCard_SavegameCount                      = 0x800BF380;
-g_MemCard_ActiveSavegameEntry                = 0x800BF384;
+g_MemCard_ActiveMemCardSlotSaves                = 0x800BF384;
 g_Savegame_ElementCount0                     = 0x800BF388;
 g_MemCard_AllMemCardsStatus                  = 0x800BF38C;
 g_SaveScreen_SaveScreenState                 = 0x800BF390;

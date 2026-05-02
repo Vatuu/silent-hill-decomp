@@ -49,7 +49,7 @@ typedef struct _s_SysWork_2514_18
     u_SysWork_2514_C_0         key_8;
     s32                        field_C;
     u8                         unk_10[8];
-    u8                         unk_18[4];
+    struct _s_SysWork_2514_18* unk_18;
     u16                        field_1C;
     u16                        field_1E;
 } s_SysWork_2514_18;

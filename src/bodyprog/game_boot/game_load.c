@@ -229,7 +229,7 @@ void GameBoot_GameStartup(void) // 0x80034964
                     AreaLoad_TransitionSound();
                 }
 
-                MemCard_Disable();
+                MemCard_SysDisable();
                 g_GameWork.gameStateSteps[0]++;
             }
             break;

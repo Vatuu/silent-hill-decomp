@@ -17,7 +17,7 @@
 // ========================================
 
 s16                  g_MemCard_SavegameCount;
-s_SaveScreenElement* g_MemCard_ActiveSavegameEntry;
+s_SaveScreenElement* g_MemCard_ActiveMemCardSlotSaves;
 u8                   g_Savegame_ElementCount0[MEMCARD_SLOT_COUNT_MAX];
 u32                  g_MemCard_AllMemCardsStatus;
 s8                   g_SaveScreen_SaveScreenState;
@@ -31,7 +31,7 @@ u8 g_SlotElementSelectedIdx[MEMCARD_SLOT_COUNT_MAX] = { 0, 0 };
 s8 g_SelectedSaveSlotIdx                            = 0;
 u8 D_800A97D7                                       = 0;
 s8 D_800A97D8                                       = 0xFF;
-s8 D_800A97D9                                       = 0;
+s8 D_800A97D9                                       = 0; // @unused Dead code. Only used for a check which ask if this is 0.
 
 // ========================================
 // INLINE FUNCTIONS
@@ -75,31 +75,49 @@ bool MemCard_FilesAreNotUsedCheck(s32 idx) // 0x800334D8
 
 bool func_80033548(void) // 0x80033548
 {
-    u32                         sp10[MEMCARD_SLOT_COUNT_MAX]; // Boolean.
+    u32                         sp10[MEMCARD_SLOT_COUNT_MAX];   // Boolean. Player can interact with a memory slot?
     s32                         sp18[MEMCARD_DEVICE_COUNT_MAX]; // Boolean. Used to generate `Create New File` and `New Save`.
     u32                         prevStatusCpy;
-    s32                         sp3C;
-    s32                         preMemCardStatus;
+    s32                         memCardStatus3; /** @brief Strange data.
+                                       * This variable contains `e_MemCardState`. This variable is first defined with the value `1`
+                                       * then get multiplied by the status value of the memory card state (`e_MemCardState`), additionally
+                                       * if the memory card is not loaded then the value is set to 0.
+                                       *
+                                       * The strange side of this variable comes at the bottom of this function. At the bottom of this
+                                       * function there is a switch which not only check for the states from 1 to 5 (skipping 2) but also
+                                       * checks for states impossible to get. Considering the unnecesary multiplication it is possible
+                                       * that at some point the variable could have been assigned a number different to `1` likely going from
+                                       * 3 to 5 as all the unreachable cases are multiples of the states, as noted in the comment on the
+                                       * switch statement.
+                                       */
+    s32                         prevMemCardStatus;
     s32                         fileStatus;
     u32                         memCardStatus1;
     s32                         memCardStatus2;
     u32                         memCardStatus0;
-    s32                         memSaveDataIdx;
+    s32                         slotIdx;
     s32                         i;
     s32                         j;
     s32                         k;
-    u32                         memCardStatus;
+    s32                         memCardStatus;
     s_MemCard_SaveMetadata*     saveMetadata;
-    static s32                  D_800BCD18[MEMCARD_SLOT_COUNT_MAX];
-    static s32                  D_800BCD20[MEMCARD_SLOT_COUNT_MAX];
-    static s32                  D_800A97DC = 0; /** `e_SavegameEntryType` */
+    static s32                  biggestTotalSaveCountInSlot[MEMCARD_SLOT_COUNT_MAX];
+    static s32                  lastSavegameInSlotIdx[MEMCARD_SLOT_COUNT_MAX];
+    static u32                  D_800A97DC = 0; /** @brief Timer for check.
+                                                 * @bug This variable is constantly updated. It can happen
+                                                 * that it will reach to the point where the conditional where
+                                                 * it is used can be triggered. In case of not having a memory card
+                                                 * connected nothing will happen, however, if it is connected and
+                                                 * there are save games it will push the selected save game down
+                                                 * to the lastest element in the selected slot.
+                                                 */
     static s8                   D_800A97E0 = NO_VALUE;
     static u32                  allFileStatus[MEMCARD_DEVICE_COUNT_MAX] = { };
 
-    sp3C = 1;
+    memCardStatus3 = 1;
 
-    memset(&sp10, 0, 8);
-    MemCard_SysInit2();
+    memset(&sp10, 0, sizeof(sp10));
+    MemCard_SysEnable();
     MemCard_InitStatus();
 
     if (g_GameWork.gameState == GameState_SaveScreen ||
@@ -119,52 +137,52 @@ bool func_80033548(void) // 0x80033548
 
     for (i = 0; i < MEMCARD_DEVICE_COUNT_MAX; i += 4)
     {
-        memCardStatus    = MemCard_StatusGet(g_MemCard_AllMemCardsStatus, i);
-        sp3C            *= memCardStatus;
-        preMemCardStatus = MemCard_StatusGet(prevStatusCpy, i);
-        memSaveDataIdx   = WrapIdx(i);
+        memCardStatus     = MemCard_StatusGet(g_MemCard_AllMemCardsStatus, i);
+        memCardStatus3   *= memCardStatus;
+        prevMemCardStatus = MemCard_StatusGet(prevStatusCpy, i);
+        slotIdx           = WrapIdx(i);
 
-        g_MemCard_ActiveSavegameEntry                       = MemCard_ActiveSavegameEntryGet(memSaveDataIdx >> 2);
-        g_Savegame_ElementCount1[memSaveDataIdx >> 2]       = 0;
-        g_Savegame_ElementCount0[memSaveDataIdx >> 2]       = 0;
-        sp18[i]                                             = false;
-        g_MemCard_ActiveSavegameEntry->totalSavegameCount_0 = NO_VALUE;
-        g_MemCard_ActiveSavegameEntry->deviceId_5           = i;
-        g_MemCard_ActiveSavegameEntry->fileIdx_6            = 0;
-        g_MemCard_ActiveSavegameEntry->elementIdx_7         = 0;
-        g_MemCard_ActiveSavegameEntry->saveMetadata_C       = NULL;
+        g_MemCard_ActiveMemCardSlotSaves                       = MemCard_ActiveMemCardSlotGet(slotIdx >> 2);
+        g_Savegame_ElementCount1[slotIdx >> 2]                 = 0;
+        g_Savegame_ElementCount0[slotIdx >> 2]                 = 0;
+        sp18[i]                                                = false;
+        g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = NO_VALUE;
+        g_MemCard_ActiveMemCardSlotSaves->deviceId_5           = i;
+        g_MemCard_ActiveMemCardSlotSaves->fileIdx_6            = 0;
+        g_MemCard_ActiveMemCardSlotSaves->elementIdx_7         = 0;
+        g_MemCard_ActiveMemCardSlotSaves->saveMetadata_C       = NULL;
 
-        if (preMemCardStatus == MemCardResult_InitComplete)
+        if (prevMemCardStatus == MemCardState_Available)
         {
-            if (memCardStatus != MemCardResult_InitComplete)
+            if (memCardStatus != MemCardState_Available)
             {
-                sp10[memSaveDataIdx >> 2] = true;
+                sp10[slotIdx >> 2] = true;
             }
         }
-        else if (memCardStatus == MemCardResult_InitComplete)
+        else if (memCardStatus == MemCardState_Available)
         {
-            sp10[memSaveDataIdx >> 2] = true;
+            sp10[slotIdx >> 2] = true;
         }
 
         if (g_SaveScreen_SaveScreenState == SaveScreenState_Save)
         {
-            if (preMemCardStatus == MemCardResult_LoadError && memCardStatus != preMemCardStatus)
+            if (prevMemCardStatus == MemCardState_Format && memCardStatus != prevMemCardStatus)
             {
                 sp10[WrapIdx(i) >> 2] = true;
             }
 
-            if (preMemCardStatus != MemCardResult_LoadError && memCardStatus == MemCardResult_LoadError)
+            if (prevMemCardStatus != MemCardState_Format && memCardStatus == MemCardState_Format)
             {
                 sp10[WrapIdx(i) >> 2] = true;
             }
         }
 
-        if (memCardStatus != MemCardResult_InitComplete)
+        if (memCardStatus != MemCardState_Available)
         {
             switch (memCardStatus)
             {
                 case MemCardResult_Success:
-                    g_MemCard_ActiveSavegameEntry->type_4 = SavegameEntryType_NoMemCard;
+                    g_MemCard_ActiveMemCardSlotSaves->type_4 = SavegameEntryType_NoMemCard;
 
 #if VERSION_EQUAL_OR_NEWER(JAP1) // @note Bugfix?
                     if (g_SelectedSaveSlotIdx == (WrapIdx(i) >> 2))
@@ -177,56 +195,56 @@ bool func_80033548(void) // 0x80033548
                 case MemCardResult_LoadError:
                     if (g_SaveScreen_SaveScreenState == SaveScreenState_Save)
                     {
-                        g_MemCard_ActiveSavegameEntry->totalSavegameCount_0 = 31600;
-                        memSaveDataIdx                                      = WrapIdx(i);
-                        g_Savegame_ElementCount0[memSaveDataIdx >> 2]++;
+                        g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = 31600;
+                        slotIdx                                                 = WrapIdx(i);
+                        g_Savegame_ElementCount0[slotIdx >> 2]++;
                     }
 
-                    g_MemCard_ActiveSavegameEntry->type_4 = SavegameEntryType_UnformattedMemCard;
+                    g_MemCard_ActiveMemCardSlotSaves->type_4 = SavegameEntryType_UnformattedMemCard;
                     break;
 
                 case MemCardResult_NewDevice:
-                    g_MemCard_ActiveSavegameEntry->type_4 = SavegameEntryType_CorruptedMemCard;
+                    g_MemCard_ActiveMemCardSlotSaves->type_4 = SavegameEntryType_CorruptedMemCard;
                     break;
 
                 case MemCardResult_NotConnected:
                 case MemCardResult_InitError:
-                    g_MemCard_ActiveSavegameEntry->type_4 = SavegameEntryType_LoadMemCard;
+                    g_MemCard_ActiveMemCardSlotSaves->type_4 = SavegameEntryType_LoadMemCard;
                     break;
             }
 
             g_Savegame_ElementCount1[WrapIdx(i) >> 2]++;
-            g_MemCard_ActiveSavegameEntry++;
+            g_MemCard_ActiveMemCardSlotSaves++;
         }
         else if (MemCard_UsedFileCount(i) == 0)
         {
             if (g_SaveScreen_SaveScreenState == SaveScreenState_Load)
             {
-                g_MemCard_ActiveSavegameEntry->type_4 = SavegameEntryType_NoDataInMemCard;
+                g_MemCard_ActiveMemCardSlotSaves->type_4 = SavegameEntryType_NoDataInMemCard;
             }
             else if (MemCard_FreeFilesCount(i) == 0)
             {
-                g_MemCard_ActiveSavegameEntry->type_4 = SavegameEntryType_OutOfBlocks;
+                g_MemCard_ActiveMemCardSlotSaves->type_4 = SavegameEntryType_OutOfBlocks;
             }
             else
             {
-                g_MemCard_ActiveSavegameEntry->totalSavegameCount_0 = 31700;
-                g_MemCard_ActiveSavegameEntry->type_4               = SavegameEntryType_NewFile;
+                g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = 31700;
+                g_MemCard_ActiveMemCardSlotSaves->type_4               = SavegameEntryType_NewFile;
 
-                memSaveDataIdx = WrapIdx(i);
-                g_Savegame_ElementCount0[memSaveDataIdx >> 2]++;
+                slotIdx = WrapIdx(i);
+                g_Savegame_ElementCount0[slotIdx >> 2]++;
             }
 
             g_Savegame_ElementCount1[WrapIdx(i) >> 2]++;
-            g_MemCard_ActiveSavegameEntry++;
+            g_MemCard_ActiveMemCardSlotSaves++;
         }
         else if (g_SaveScreen_SaveScreenState == SaveScreenState_Load && MemCard_FilesAreNotUsedCheck(i) != false)
         {
-            g_MemCard_ActiveSavegameEntry->type_4 = SavegameEntryType_CorruptedSave;
+            g_MemCard_ActiveMemCardSlotSaves->type_4 = SavegameEntryType_CorruptedSave;
 
-            memSaveDataIdx = WrapIdx(i);
-            g_Savegame_ElementCount1[memSaveDataIdx >> 2]++;
-            g_MemCard_ActiveSavegameEntry++;
+            slotIdx = WrapIdx(i);
+            g_Savegame_ElementCount1[slotIdx >> 2]++;
+            g_MemCard_ActiveMemCardSlotSaves++;
         }
         else
         {
@@ -243,19 +261,19 @@ bool func_80033548(void) // 0x80033548
 
                 if (fileStatus == FileState_Damaged)
                 {
-                    g_MemCard_ActiveSavegameEntry->totalSavegameCount_0 = 0;
-                    g_MemCard_ActiveSavegameEntry->deviceId_5           = i;
-                    g_MemCard_ActiveSavegameEntry->fileIdx_6            = j;
-                    g_MemCard_ActiveSavegameEntry->elementIdx_7         = 0;
-                    g_MemCard_ActiveSavegameEntry->type_4               = SavegameEntryType_CorruptedSave;
+                    g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = 0;
+                    g_MemCard_ActiveMemCardSlotSaves->deviceId_5           = i;
+                    g_MemCard_ActiveMemCardSlotSaves->fileIdx_6            = j;
+                    g_MemCard_ActiveMemCardSlotSaves->elementIdx_7         = 0;
+                    g_MemCard_ActiveMemCardSlotSaves->type_4               = SavegameEntryType_CorruptedSave;
 
-                    memSaveDataIdx = WrapIdx(i);
+                    slotIdx = WrapIdx(i);
 
-                    g_Savegame_ElementCount0[memSaveDataIdx >> 2]++;
+                    g_Savegame_ElementCount0[slotIdx >> 2]++;
                     g_MemCard_SavegameCount--;
-                    g_Savegame_ElementCount1[memSaveDataIdx >> 2]++;
+                    g_Savegame_ElementCount1[slotIdx >> 2]++;
 
-                    g_MemCard_ActiveSavegameEntry++;
+                    g_MemCard_ActiveMemCardSlotSaves++;
                 }
                 else
                 {
@@ -263,34 +281,34 @@ bool func_80033548(void) // 0x80033548
                     {
                         saveMetadata = MemCard_SaveMetadataGet(i, j, k);
 
-                        g_MemCard_ActiveSavegameEntry->totalSavegameCount_0 = saveMetadata->totalSavegameCount_0;
-                        g_MemCard_ActiveSavegameEntry->deviceId_5           = i;
-                        g_MemCard_ActiveSavegameEntry->fileIdx_6            = j;
-                        g_MemCard_ActiveSavegameEntry->elementIdx_7         = k;
-                        g_MemCard_ActiveSavegameEntry->savegameCount_2      = saveMetadata->savegameCount_8;
-                        g_MemCard_ActiveSavegameEntry->locationId_8         = saveMetadata->locationId_A;
-                        g_MemCard_ActiveSavegameEntry->saveMetadata_C       = saveMetadata;
+                        g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = saveMetadata->totalSavegameCount_0;
+                        g_MemCard_ActiveMemCardSlotSaves->deviceId_5           = i;
+                        g_MemCard_ActiveMemCardSlotSaves->fileIdx_6            = j;
+                        g_MemCard_ActiveMemCardSlotSaves->elementIdx_7         = k;
+                        g_MemCard_ActiveMemCardSlotSaves->savegameCount_2      = saveMetadata->savegameCount_8;
+                        g_MemCard_ActiveMemCardSlotSaves->locationId_8         = saveMetadata->locationId_A;
+                        g_MemCard_ActiveMemCardSlotSaves->saveMetadata_C       = saveMetadata;
 
                         if (saveMetadata->totalSavegameCount_0 > 0)
                         {
-                            g_MemCard_ActiveSavegameEntry->type_4 = SavegameEntryType_Save;
+                            g_MemCard_ActiveMemCardSlotSaves->type_4 = SavegameEntryType_Save;
 
-                            memSaveDataIdx = WrapIdx(i);
+                            slotIdx = WrapIdx(i);
 
-                            g_Savegame_ElementCount0[memSaveDataIdx >> 2]++;
-                            g_Savegame_ElementCount1[memSaveDataIdx >> 2]++;
-                            g_MemCard_ActiveSavegameEntry++;
+                            g_Savegame_ElementCount0[slotIdx >> 2]++;
+                            g_Savegame_ElementCount1[slotIdx >> 2]++;
+                            g_MemCard_ActiveMemCardSlotSaves++;
                         }
                         else if (g_SaveScreen_SaveScreenState == SaveScreenState_Save && sp18[i] == false)
                         {
-                            sp18[i]                                             = true;
-                            g_MemCard_ActiveSavegameEntry->type_4               = SavegameEntryType_NewSave;
-                            g_MemCard_ActiveSavegameEntry->totalSavegameCount_0 = 31900;
+                            sp18[i]                                                = true;
+                            g_MemCard_ActiveMemCardSlotSaves->type_4               = SavegameEntryType_NewSave;
+                            g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = 31900;
 
-                            memSaveDataIdx = WrapIdx(i);
-                            g_Savegame_ElementCount0[memSaveDataIdx >> 2]++;
-                            g_Savegame_ElementCount1[memSaveDataIdx >> 2]++;
-                            g_MemCard_ActiveSavegameEntry++;
+                            slotIdx = WrapIdx(i);
+                            g_Savegame_ElementCount0[slotIdx >> 2]++;
+                            g_Savegame_ElementCount1[slotIdx >> 2]++;
+                            g_MemCard_ActiveMemCardSlotSaves++;
                         }
                     }
                 }
@@ -298,12 +316,12 @@ bool func_80033548(void) // 0x80033548
 
             if (g_SaveScreen_SaveScreenState == SaveScreenState_Save && sp18[i] == false && MemCard_FreeFilesCount(i) > 0)
             {
-                g_MemCard_ActiveSavegameEntry->savegameCount_2      = 0;
-                g_MemCard_ActiveSavegameEntry->saveMetadata_C       = NULL;
-                sp18[i]                                             = true;
-                g_MemCard_ActiveSavegameEntry->totalSavegameCount_0 = 31800;
-                memCardStatus0                                      = allFileStatus[i];
-                memCardStatus1                                      = memCardStatus0 & 0x3;
+                g_MemCard_ActiveMemCardSlotSaves->savegameCount_2      = 0;
+                g_MemCard_ActiveMemCardSlotSaves->saveMetadata_C       = NULL;
+                sp18[i]                                                = true;
+                g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = 31800;
+                memCardStatus0                                         = allFileStatus[i];
+                memCardStatus1                                         = memCardStatus0 & 0x3;
 
                 for (j = 0; memCardStatus1 == FileState_Damaged || memCardStatus1 == FileState_Used; j++)
                 {
@@ -312,19 +330,19 @@ bool func_80033548(void) // 0x80033548
                     j--;
                 }
 
-                g_MemCard_ActiveSavegameEntry->deviceId_5   = i;
-                g_MemCard_ActiveSavegameEntry->fileIdx_6    = j;
-                g_MemCard_ActiveSavegameEntry->elementIdx_7 = 0;
-                g_MemCard_ActiveSavegameEntry->type_4       = SavegameEntryType_NewFile;
+                g_MemCard_ActiveMemCardSlotSaves->deviceId_5   = i;
+                g_MemCard_ActiveMemCardSlotSaves->fileIdx_6    = j;
+                g_MemCard_ActiveMemCardSlotSaves->elementIdx_7 = 0;
+                g_MemCard_ActiveMemCardSlotSaves->type_4       = SavegameEntryType_NewFile;
 
-                memSaveDataIdx = WrapIdx(i);
+                slotIdx = WrapIdx(i);
 
-                g_Savegame_ElementCount0[memSaveDataIdx >> 2]++;
+                g_Savegame_ElementCount0[slotIdx >> 2]++;
 
                 fileStatus = MemCard_FileStatusGet(allFileStatus[i], j); // @hack Fixes stack order.
 
-                g_Savegame_ElementCount1[memSaveDataIdx >> 2]++;
-                g_MemCard_ActiveSavegameEntry++;
+                g_Savegame_ElementCount1[slotIdx >> 2]++;
+                g_MemCard_ActiveMemCardSlotSaves++;
             }
         }
 
@@ -338,14 +356,14 @@ bool func_80033548(void) // 0x80033548
         memCardStatus2 = MemCard_StatusGet(g_MemCard_AllMemCardsStatus, i);
         if (memCardStatus2 == FileState_Unused || memCardStatus2 == FileState_Unk2)
         {
-            D_800A97E0          = (WrapIdx(i) >> 2) == 0;
-            g_MemCard_ActiveSavegameEntry = MemCard_ActiveSavegameEntryGet(D_800A97E0);
+            D_800A97E0                       = (WrapIdx(i) >> 2) == 0;
+            g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(D_800A97E0);
 
-            if (g_MemCard_ActiveSavegameEntry->type_4 == SavegameEntryType_NoMemCard)
+            if (g_MemCard_ActiveMemCardSlotSaves->type_4 == SavegameEntryType_NoMemCard)
             {
                 D_800A97DC = 24;
             }
-            else if (g_MemCard_ActiveSavegameEntry->type_4 == SavegameEntryType_UnformattedMemCard)
+            else if (g_MemCard_ActiveMemCardSlotSaves->type_4 == SavegameEntryType_UnformattedMemCard)
             {
                 if (g_SaveScreen_SaveScreenState == SaveScreenState_Save)
                 {
@@ -353,7 +371,7 @@ bool func_80033548(void) // 0x80033548
                 }
                 else
                 {
-                    D_800A97DC = g_MemCard_ActiveSavegameEntry->type_4;
+                    D_800A97DC = g_MemCard_ActiveMemCardSlotSaves->type_4;
                 }
             }
             else
@@ -374,58 +392,58 @@ bool func_80033548(void) // 0x80033548
 
     if (D_800A97E0 >= 0)
     {
-        g_MemCard_ActiveSavegameEntry = MemCard_ActiveSavegameEntryGet(D_800A97E0 == 0);
+        g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(D_800A97E0 == 0);
 
-        g_MemCard_ActiveSavegameEntry->totalSavegameCount_0 = NO_VALUE;
-        g_MemCard_ActiveSavegameEntry->deviceId_5           = 0;
-        g_MemCard_ActiveSavegameEntry->fileIdx_6            = 0;
-        g_MemCard_ActiveSavegameEntry->elementIdx_7         = 0;
-        g_MemCard_ActiveSavegameEntry->type_4               = SavegameEntryType_LoadMemCard;
-        g_Savegame_ElementCount1[D_800A97E0 == 0]           = 1;
-        g_MemCard_ActiveSavegameEntry                       = MemCard_ActiveSavegameEntryGet(D_800A97E0);
+        g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = NO_VALUE;
+        g_MemCard_ActiveMemCardSlotSaves->deviceId_5           = 0;
+        g_MemCard_ActiveMemCardSlotSaves->fileIdx_6            = 0;
+        g_MemCard_ActiveMemCardSlotSaves->elementIdx_7         = 0;
+        g_MemCard_ActiveMemCardSlotSaves->type_4               = SavegameEntryType_LoadMemCard;
+        g_Savegame_ElementCount1[D_800A97E0 == 0]              = 1;
+        g_MemCard_ActiveMemCardSlotSaves                       = MemCard_ActiveMemCardSlotGet(D_800A97E0);
 
-        if ((g_MemCard_ActiveSavegameEntry->type_4 == SavegameEntryType_UnformattedMemCard && g_SaveScreen_SaveScreenState == SaveScreenState_Save) ||
-            g_MemCard_ActiveSavegameEntry->type_4 == SavegameEntryType_Save ||
-            g_MemCard_ActiveSavegameEntry->type_4 == SavegameEntryType_NewSave ||
-            g_MemCard_ActiveSavegameEntry->type_4 == SavegameEntryType_NewFile)
+        if ((g_MemCard_ActiveMemCardSlotSaves->type_4 == SavegameEntryType_UnformattedMemCard && g_SaveScreen_SaveScreenState == SaveScreenState_Save) ||
+            g_MemCard_ActiveMemCardSlotSaves->type_4 == SavegameEntryType_Save ||
+            g_MemCard_ActiveMemCardSlotSaves->type_4 == SavegameEntryType_NewSave ||
+            g_MemCard_ActiveMemCardSlotSaves->type_4 == SavegameEntryType_NewFile)
         {
-            g_MemCard_ActiveSavegameEntry->totalSavegameCount_0 = NO_VALUE;
-            g_MemCard_ActiveSavegameEntry->deviceId_5           = 0;
-            g_MemCard_ActiveSavegameEntry->fileIdx_6            = 0;
-            g_MemCard_ActiveSavegameEntry->elementIdx_7         = 0;
-            g_MemCard_ActiveSavegameEntry->type_4               = SavegameEntryType_LoadMemCard;
-            g_Savegame_ElementCount1[D_800A97E0]                = 1;
+            g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0 = NO_VALUE;
+            g_MemCard_ActiveMemCardSlotSaves->deviceId_5           = 0;
+            g_MemCard_ActiveMemCardSlotSaves->fileIdx_6            = 0;
+            g_MemCard_ActiveMemCardSlotSaves->elementIdx_7         = 0;
+            g_MemCard_ActiveMemCardSlotSaves->type_4               = SavegameEntryType_LoadMemCard;
+            g_Savegame_ElementCount1[D_800A97E0]                   = 1;
         }
 
-        sp3C = 0;
+        memCardStatus3 = MemCardState_Null;
     }
 
     if (D_800A97D9 == 0 && (sp10[0] || sp10[1]))
     {
         for (j = 0; j < MEMCARD_SLOT_COUNT_MAX; j++)
         {
-            g_MemCard_ActiveSavegameEntry = MemCard_ActiveSavegameEntryGet(j);
-            D_800BCD18[j]       = 0;
-            D_800BCD20[j]       = 0;
+            g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(j);
+            biggestTotalSaveCountInSlot[j]   = 0;
+            lastSavegameInSlotIdx[j]         = 0;
 
             for (i = 0; i < g_Savegame_ElementCount1[j]; i++)
             {
-                if (D_800BCD18[j] < g_MemCard_ActiveSavegameEntry->totalSavegameCount_0)
+                if (biggestTotalSaveCountInSlot[j] < g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0)
                 {
-                    D_800BCD18[j] = g_MemCard_ActiveSavegameEntry->totalSavegameCount_0;
-                    D_800BCD20[j] = i;
+                    biggestTotalSaveCountInSlot[j] = g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount_0;
+                    lastSavegameInSlotIdx[j]       = i;
                 }
 
-                g_MemCard_ActiveSavegameEntry++;
+                g_MemCard_ActiveMemCardSlotSaves++;
             }
 
             if (sp10[j])
             {
-                g_SlotElementSelectedIdx[j] = D_800BCD20[j];
+                g_SlotElementSelectedIdx[j] = lastSavegameInSlotIdx[j];
             }
         }
 
-        if (D_800BCD18[1] > D_800BCD18[0])
+        if (biggestTotalSaveCountInSlot[1] > biggestTotalSaveCountInSlot[0])
         {
             g_SelectedSaveSlotIdx = 1;
         }
@@ -437,19 +455,20 @@ bool func_80033548(void) // 0x80033548
         g_GameWork.gameStateSteps[1] = 0;
         g_GameWork.gameStateSteps[2] = 0;
     }
-
-    switch (sp3C)
+    
+    switch (memCardStatus3)
     {
-        case 1:
-        case 3:
-        case 4:
-        case 5:
-        case 9:
-        case 12:
-        case 15:
-        case 16:
-        case 20:
-        case 25:
+        case MemCardState_Unavailable:
+        case MemCardState_Available:
+        case MemCardState_Format:
+        case MemCardState_Broken:
+        
+        case 9:  // MemCardState_Available * 3
+        case 12: // MemCardState_Format    * 3 | MemCardState_Available * 4
+        case 15: // MemCardState_Broken    * 3 | MemCardState_Available * 5
+        case 16: // MemCardState_Format    * 4
+        case 20: // MemCardState_Broken    * 4 | MemCardState_Format    * 5
+        case 25: // MemCardState_Broken    * 5
             return true;
 
         default:

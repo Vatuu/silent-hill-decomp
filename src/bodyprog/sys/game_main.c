@@ -162,7 +162,7 @@ void MainLoop(void) // 0x80032EE0
     // Initialize engine.
     GsInitVcount();
     MemCard_SysInit();
-    MemCard_SysInit2();
+    MemCard_SysEnable();
     MemCard_InitStatus();
     Joy_Init();
     VSyncCallback(&Screen_VSyncCallback);

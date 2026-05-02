@@ -25,7 +25,7 @@
 // HELPER MACROS
 // ==============
 
-#define MemCard_ActiveSavegameEntryGet(slotIdx) \
+#define MemCard_ActiveMemCardSlotGet(slotIdx) \
     ((s_SaveScreenElement*)&SAVEGAME_ENTRY_BUFFER_0[2640 * (slotIdx)])
 
 #define MemCard_StatusGet(status, deviceIdx) \
@@ -101,15 +101,15 @@ typedef enum _MemCardProcess
     MemCardProcess_Format        = 6
 } e_MemCardProcess;
 
-typedef enum _UnkMemCardState1
+typedef enum _MemCardState
 {
-    UnkMemCardState1_0  = 0,
-    UnkMemCardState1_1  = 1,
-    UnkMemCardState1_2  = 2,
-    UnkMemCardState1_3  = 3,
-    UnkMemCardState1_4  = 4,
-    UnkMemCardState1_5  = 5
-} e_UnkMemCardState1;
+    MemCardState_Null        = 0, // Null state.
+    MemCardState_Unavailable = 1, // Not connected.
+    MemCardState_Loading     = 2, // Loading the memory card.
+    MemCardState_Available   = 3,
+    MemCardState_Format      = 4, // Format required.
+    MemCardState_Broken      = 5
+} e_MemCardState;
 
 typedef enum _FileState
 {
@@ -119,17 +119,18 @@ typedef enum _FileState
     FileState_Damaged = 3
 } e_FileState;
 
-typedef enum _MemCardCardState
+/** @brief Current process being carry on the memory card. */
+typedef enum _MemCardWorkState
 {
-    MemCardCardState_Idle          = 0,
-    MemCardCardState_Init          = 1,
-    MemCardCardState_Check         = 2,
-    MemCardCardState_Load          = 3,
-    MemCardCardState_DirRead       = 4,
-    MemCardCardState_FileCreate    = 5,
-    MemCardCardState_FileOpen      = 6,
-    MemCardCardState_FileReadWrite = 7
-} e_MemCardCardState;
+    MemCardWorkState_Idle          = 0,
+    MemCardWorkState_Init          = 1,
+    MemCardWorkState_Check         = 2,
+    MemCardWorkState_Load          = 3,
+    MemCardWorkState_DirRead       = 4,
+    MemCardWorkState_FileCreate    = 5,
+    MemCardWorkState_FileOpen      = 6,
+    MemCardWorkState_FileReadWrite = 7
+} e_MemCardWorkState;
 
 typedef enum _MemCardIoMode
 {
@@ -313,7 +314,7 @@ STATIC_ASSERT_SIZEOF(s_MemCard_SaveHeader, 256);
 
 typedef struct
 {
-    s32                   status;
+    s32                   status;        /** `e_UnkMemCardState1`. */
     s8                    fileState_4[MEMCARD_FILE_COUNT_MAX];
     s_MemCard_SaveHeader* saveHeader_14; /** Slots saves information. */
     s32                   fileLimit_18;  /** Max count of files allowed in the memory card. */
@@ -413,15 +414,16 @@ extern s16 g_MemCard_SavegameCount;
 
 extern s16 __pad_bss_800BCD2A;
 
-extern s_SaveScreenElement* g_MemCard_ActiveSavegameEntry;
+extern s_SaveScreenElement* g_MemCard_ActiveMemCardSlotSaves;
 
 /** @brief Amount of elements in each memory card. */
 extern u8  g_Savegame_ElementCount0[MEMCARD_SLOT_COUNT_MAX];
 
 extern s16 __pad_bss_800BCD32;
-/** @brief Stores all memory cards/devices status. */
 
+/** @brief Stores all memory cards/devices status. */
 extern u32 g_MemCard_AllMemCardsStatus;
+
 /** @brief Some determinator for the state of the save screen.
  * 2 - Saving, 3 - Loading.
  */
@@ -462,10 +464,10 @@ void MemCard_FileStatusClear(s32 deviceId);
 
 bool MemCard_AreAllFilesUsed(s32 deviceId);
 
-void MemCard_SysInit2(void);
+void MemCard_SysEnable(void);
 
 /** @brief Disables memory card. */
-void MemCard_Disable(void);
+void MemCard_SysDisable(void);
 
 void MemCard_InitStatus(void);
 
