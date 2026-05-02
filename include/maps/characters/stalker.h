@@ -215,7 +215,7 @@ typedef enum _StalkerStateStep
     { Anim_PlaybackLoop, ANIM_STATUS(47, true), false, ANIM_STATUS(15, false), { Q12(0) }, 294, 295 }
 };*/
 
-extern s_AnimInfo STALKER_ANIM_INFOS[]; // Used by `Ai_Stalker_Init`.
+extern s_AnimInfo STALKER_ANIM_INFOS[];
 
 void Ai_Stalker_Control_2(s_SubCharacter* stalker);
 

@@ -310,8 +310,10 @@ extern VECTOR3 sharedData_800DE1E0_0_s01;
 
 extern VECTOR3 sharedData_800DE1F0_0_s01; // Q19.12
 
+// Cached collision result for Air Screamer?
 extern s_CollisionResult sharedData_800E2350_0_s01;
 
+// Cached collision result for Cheryl, Dahlia, and the player?
 extern s_CollisionResult sharedData_800E39BC_0_s00;
 
 extern s32 sharedData_800DD5A0_0_s00;
@@ -799,7 +801,7 @@ void Ai_PuppetNurse_UpdateMain(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOO
 
 void func_800CDB5C(s_SubCharacter* nurse, s32);
 
-void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isPuppetDoctor);
+void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isDoctor);
 
 void Ai_PuppetNurse_Update(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 

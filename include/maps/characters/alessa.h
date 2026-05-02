@@ -45,7 +45,7 @@ extern s_AnimInfo ALESSA_ANIM_INFOS[];
     { Anim_PlaybackLoop, ANIM_STATUS(AlessaAnim_Kneel,                  true),  false, NO_VALUE,                                              { Q12(3.0f)  }, 326,      341 }
 };*/
 
-extern s32 sharedData_800D3150_3_s02; // Used by `Ai_Alessa_Init`.
+extern s32 sharedData_800D3150_3_s02;
 
 void Ai_Alessa_Update(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 

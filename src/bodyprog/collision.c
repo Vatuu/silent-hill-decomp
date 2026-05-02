@@ -220,7 +220,7 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset,
                     break;
 
                 default:
-                    collType = (collResult->field_C < wallHeightBound) ? CollisionType_Wall : CollisionType_None;
+                    collType = (collResult->groundHeight < wallHeightBound) ? CollisionType_Wall : CollisionType_None;
                     break;
             }
 
@@ -260,14 +260,14 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset,
                 case 1:
                     if (wallCount < WALL_COUNT_THRESHOLD)
                     {
-                        collResult->field_C = chara->position.vy;
+                        collResult->groundHeight = chara->position.vy;
                     }
                     break;
 
                 case 2:
                     if (var_s6 != 12)
                     {
-                        collResult->field_C  = groundHeight;
+                        collResult->groundHeight = groundHeight;
                         collResult->field_14 = 12;
                     }
                     break;
@@ -416,7 +416,7 @@ void Collision_DefaultResultSet(s_CollisionResult* collResult, q19_12 offsetX, q
     collResult->field_10    = 0;
     collResult->field_14    = 0;
     collResult->field_18    = 0xFFFF0000;
-    collResult->field_C     = groundHeight;
+    collResult->groundHeight = groundHeight;
 }
 
 s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubCharacter* excludedChara, bool includePlayer) // 0x8006A1A4
@@ -646,7 +646,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
         groundHeight         = Ipd_GroundHeightGet(collState.field_4.positionX_18 + Q12_TO_Q8(sp120.vx), collState.field_4.positionZ_1C + Q12_TO_Q8(sp120.vz), &collState) * 16;
     }
 
-    collResult->field_C  = groundHeight;
+    collResult->groundHeight = groundHeight;
     collResult->field_10 = collState.field_88;
     collResult->field_12 = collState.field_8C;
 

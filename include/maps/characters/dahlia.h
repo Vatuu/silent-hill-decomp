@@ -90,12 +90,12 @@ extern s_AnimInfo DAHLIA_ANIM_INFOS[];
     { Anim_PlaybackOnce, ANIM_STATUS(DahliaAnim_25, true), false, ANIM_STATUS(DahliaAnim_24, true), { Q12(0.0f) }, 260, 296 }
 };*/
 
-extern s32 sharedData_800D16E0_2_s01; // Used by `Ai_Dahlia_Init`.
+extern s32 sharedData_800D16E0_2_s01;
 
-void Ai_Dahlia_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-void Ai_Dahlia_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-void Ai_Dahlia_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
+void Ai_Dahlia_Update(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Ai_Dahlia_AnimUpdate(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Ai_Dahlia_MovementUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords);
 void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords);
-void Ai_Dahlia_Init(s_SubCharacter* chara);
+void Ai_Dahlia_Init(s_SubCharacter* dahlia);
 
 #endif

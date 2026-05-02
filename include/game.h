@@ -1352,7 +1352,7 @@ typedef struct _PropsNpc
     s8          unk_110[4];
     s32         field_114;
     s8          field_118;
-    u8          modelVariation_119;
+    u8          modelVariantIdx;
     s16         field_11A;
     s32         field_11C;
     s16         field_120;
@@ -1383,7 +1383,7 @@ typedef struct _PropsAirScreamer
 /** @brief Alessa character properties. TODO: Copy of `s_PropsDahlia`. Fields not marked "correct" are filler. */
 typedef struct _PropsAlessa
 {
-    s32        stateIdx0;
+    s32        stateIdx0; // Control state?
     u_Property properties_EC;
     s32        field_F0; // Correct
     u_Property properties_F4;
@@ -1456,7 +1456,7 @@ STATIC_ASSERT_SIZEOF(s_PropsCreeper, 40);
 /** @brief Dahlia character properties. */
 typedef struct _PropsDahlia
 {
-    s32        stateIdx0;
+    s32        stateIdx0; // Control state?
     u_Property properties_EC;
     u_Property properties_F0;
     u_Property properties_F4;
@@ -1639,21 +1639,21 @@ STATIC_ASSERT_SIZEOF(s_PropsMonsterCybil, 64);
 /** @brief Puppet Nurse or Puppet Doctor character properties. */
 typedef struct _PropsPuppetNurse
 {
-    VECTOR3       position_E8; /** Q19.12 */
-    s_CharaDamage damage_F4;
-    q19_12        field_104;
-    s32           field_108;
-    s32           field_10C;
-    q19_12        moveSpeed_110;
-    s32           field_114;
-    u8            field_118;
-    u8            modelVariation_119;
-    u16           field_11A;
-    q3_12         field_11C; // Angle.
-    s16           field_11E;
-    s16           field_120;
-    u16           flags_122; /** `e_PuppetNurseFlags` */
-    s_800D5710*   field_124;
+    /* 0xE8  */ VECTOR3       position_E8; /** Q19.12 */
+    /* 0xF4  */ s_CharaDamage damage;
+    /* 0x104 */ q19_12        field_104;
+    /* 0x108 */ s32           field_108;
+    /* 0x10C */ s32           field_10C;
+    /* 0x110 */ q19_12        moveSpeed;
+    /* 0x114 */ s32           field_114;
+    /* 0x118 */ u8            field_118;
+    /* 0x119 */ u8            modelVariantIdx;
+    /* 0x11A */ u16           field_11A;
+    /* 0x11C */ q3_12         field_11C; // Angle.
+    /* 0x11E */ s16           field_11E;
+    /* 0x120 */ s16           field_120;
+    /* 0x122 */ u16           flags_122; /** `e_PuppetNurseFlags` */
+    /* 0x124 */ s_800D5710*   field_124;
 } s_PropsPuppetNurse;
 STATIC_ASSERT_SIZEOF(s_PropsPuppetNurse, 64);
 
@@ -2035,9 +2035,7 @@ typedef struct _SysWork
     /* 0x2388   */ s_SysWork_2388   field_2388;
     /* 0x2510   */ s32              field_2510;
     /* 0x2514   */ s_SysWork_2514   field_2514;
-    /* 0x254C   */ s8               unused_254C[508]; /** @note Not unused. Used through indirect pointer calls.
-                                                       * Tied to `lib_unk`.
-                                                       */
+    /* 0x254C   */ s8               field_254C[508]; /** Used through indirect pointer calls. Tied to `lib_unk`.*/
     /* 0x2748   */ q3_12            bgmLayerVolumes[BGM_LAYER_COUNT];
                    // 2 bytes of padding.
     /* 0x275C   */ q19_12           field_275C;

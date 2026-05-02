@@ -1756,13 +1756,13 @@ typedef struct _RayTrace
 
 typedef struct _CollisionResult
 {
-    VECTOR3 offset_0; // Q19.12
-    q19_12  field_C;  // Absolute ground height? Might be using `s_Collision` substruct?
-    s16     field_10;
-    s16     field_12;
-    s8      field_14; // Count of something? 12 is significant.
-    s8      __pad_15[3];
-    q19_12  field_18;
+    /* 0x0  */ VECTOR3 offset_0; /** Q19.12 */
+    /* 0xC  */ q19_12  groundHeight;
+    /* 0x10 */ s16     field_10;
+    /* 0x12 */ s16     field_12;
+    /* 0x14 */ s8      field_14; // Count of something? 12 is significant.
+    /* 0x15 */ s8      __pad_15[3];
+    /* 0x18 */ q19_12  field_18;
 } s_CollisionResult;
 
 typedef struct
@@ -4350,9 +4350,9 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model);
 /** Special player SFX handler for heavy breath and damage. */
 bool func_80071620(u32 animStatus, s_SubCharacter* player, s32 keyframeIdx, e_SfxId sfxId);
 
-void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* coords);
+void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords);
 
-void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* coords);
+void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords);
 
 void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord);
 

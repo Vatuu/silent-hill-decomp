@@ -57,7 +57,7 @@ typedef enum _LarvalStalkerControl
     LarvalStalkerControl_Death       = 13
 } e_LarvalStalkerControl;
 
-extern s_AnimInfo LARVAL_STALKER_ANIM_INFOS[]; // Used by `Ai_LarvalStalker_Init`.
+extern s_AnimInfo LARVAL_STALKER_ANIM_INFOS[];
 
 void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 

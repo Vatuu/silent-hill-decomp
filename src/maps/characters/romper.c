@@ -1194,7 +1194,7 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
 
         if (romperProps.flags & RomperFlag_10)
         {
-            if (romper->model.controlState != RomperControl_10 && romper->position.vy <= collResult.field_C)
+            if (romper->model.controlState != RomperControl_10 && romper->position.vy <= collResult.groundHeight)
             {
                 romperProps.flags &= ~RomperFlag_10;
             }
@@ -1214,18 +1214,18 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
                 {
                     romper->position.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.15f));
                     romper->fallSpeed    = Q12(0.0f);
-                    if (collResult.field_C >= romper->position.vy)
+                    if (collResult.groundHeight >= romper->position.vy)
                     {
-                        romper->position.vy = collResult.field_C;
+                        romper->position.vy = collResult.groundHeight;
                     }
                 }
             }
             else
             {
                 romper->position.vy += collResult.offset_0.vy;
-                if (collResult.field_C < romper->position.vy)
+                if (collResult.groundHeight < romper->position.vy)
                 {
-                    romper->position.vy = collResult.field_C;
+                    romper->position.vy = collResult.groundHeight;
                     romper->fallSpeed   = Q12(0.0f);
                 }
             }
@@ -1233,9 +1233,9 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
         else
         {
             romper->position.vy += collResult.offset_0.vy;
-            if (collResult.field_C < romper->position.vy)
+            if (collResult.groundHeight < romper->position.vy)
             {
-                romper->position.vy = collResult.field_C;
+                romper->position.vy = collResult.groundHeight;
                 romper->fallSpeed   = Q12(0.0f);
             }
         }

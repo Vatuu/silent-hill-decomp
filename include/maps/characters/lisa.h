@@ -66,7 +66,7 @@ extern s_AnimInfo LISA_ANIM_INFOS[];
     { Anim_PlaybackLoop, ANIM_STATUS(LisaAnim_17, true),  false, NO_VALUE,               { Q12(5.0f)    }, 603,      618 }
 };*/
 
-extern s32 sharedData_800D6BB8_3_s04; // Used by `Ai_Lisa_Init`.
+extern s32 sharedData_800D6BB8_3_s04;
 
 void Ai_Lisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 void Ai_Lisa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);

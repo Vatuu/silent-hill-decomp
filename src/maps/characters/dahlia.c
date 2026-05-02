@@ -24,16 +24,16 @@
  * MAP7_S02: 0x800D6ED4
  * MAP7_S03: 0x800D2368
  */
-void Ai_Dahlia_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void Ai_Dahlia_Update(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
-    if (chara->model.controlState == 0)
+    if (dahlia->model.controlState == 0)
     {
-        Ai_Dahlia_Init(chara);
+        Ai_Dahlia_Init(dahlia);
     }
 
-    Ai_Dahlia_AnimStateUpdate(chara, boneCoords);
-    Ai_Dahlia_MovementUpdate(chara, boneCoords);
-    Ai_Dahlia_AnimUpdate(chara, anmHdr, boneCoords);
+    Ai_Dahlia_AnimStateUpdate(dahlia, boneCoords);
+    Ai_Dahlia_MovementUpdate(dahlia, boneCoords);
+    Ai_Dahlia_AnimUpdate(dahlia, anmHdr, boneCoords);
 }
 
 /** Addresses
@@ -44,14 +44,14 @@ void Ai_Dahlia_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2*
  * MAP7_S02: 0x800D6F48
  * MAP7_S03: 0x800D23DC
  */
-void Ai_Dahlia_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void Ai_Dahlia_AnimUpdate(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     s_AnimInfo* animInfo;
 
-    if (!chara->properties.player.field_F0)
+    if (!dahlia->properties.player.field_F0)
     {
-        animInfo = &DAHLIA_ANIM_INFOS[chara->model.anim.status];
-        animInfo->playbackFunc(&chara->model, anmHdr, boneCoords, animInfo);
+        animInfo = &DAHLIA_ANIM_INFOS[dahlia->model.anim.status];
+        animInfo->playbackFunc(&dahlia->model, anmHdr, boneCoords, animInfo);
     }
 }
 
@@ -63,9 +63,9 @@ void Ai_Dahlia_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINA
  * MAP7_S02: 0x800D6F90
  * MAP7_S03: 0x800D2424
  */
-void Ai_Dahlia_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
+void Ai_Dahlia_MovementUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
 {
-    VECTOR3 unused;
+    VECTOR3 pos; // @unused
     VECTOR3 offset;
     q19_12  moveSpeed;
     q3_12   headingAngle;
@@ -73,33 +73,37 @@ void Ai_Dahlia_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 
-    unused       = chara->position;
-    moveSpeed    = chara->moveSpeed;
-    headingAngle = chara->headingAngle;
-    moveDist      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
+    pos          = dahlia->position;
+    moveSpeed    = dahlia->moveSpeed;
+    headingAngle = dahlia->headingAngle;
+    moveDist     = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveDist);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
+    // Compute movement offset.
     offset.vx = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed, g_DeltaTime);
+    offset.vy = Q12_MULT_PRECISE(dahlia->fallSpeed, g_DeltaTime);
 
-    Collision_WallDetect(&sharedData_800E39BC_0_s00, &offset, chara);
+    Collision_WallDetect(&sharedData_800E39BC_0_s00, &offset, dahlia);
 
-    chara->position.vx += offset.vx;
-    chara->position.vy  = Q12(0.0f);
-    chara->position.vz += offset.vz;
+    // Update position.
+    dahlia->position.vx += offset.vx;
+    dahlia->position.vy  = Q12(0.0f);
+    dahlia->position.vz += offset.vz;
 
-    if (chara->position.vy > sharedData_800E39BC_0_s00.field_C)
+    // Warp to ground.
+    if (dahlia->position.vy > sharedData_800E39BC_0_s00.groundHeight)
     {
-        chara->position.vy = sharedData_800E39BC_0_s00.field_C;
-        chara->fallSpeed   = Q12(0.0f);
+        dahlia->position.vy = sharedData_800E39BC_0_s00.groundHeight;
+        dahlia->fallSpeed   = Q12(0.0f);
     }
 
-    boneCoords->coord.t[0] = Q12_TO_Q8(chara->position.vx);
-    boneCoords->coord.t[1] = Q12_TO_Q8(chara->position.vy);
-    boneCoords->coord.t[2] = Q12_TO_Q8(chara->position.vz);
+    // Update root coord.
+    boneCoords->coord.t[0] = Q12_TO_Q8(dahlia->position.vx);
+    boneCoords->coord.t[1] = Q12_TO_Q8(dahlia->position.vy);
+    boneCoords->coord.t[2] = Q12_TO_Q8(dahlia->position.vz);
 }
 
 /** Addresses
@@ -428,6 +432,8 @@ void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords
 
     boneCoords->flg = false;
     Math_RotMatrixZxyNegGte(&dahlia->rotation, &boneCoords->coord);
+
+    #undef dahliaProps
 }
 
 /** Addresses
@@ -438,9 +444,9 @@ void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords
  * MAP7_S02: 0x800D7A20
  * MAP7_S03: 0x800D2ECC
  */
-void Ai_Dahlia_Init(s_SubCharacter* chara)
+void Ai_Dahlia_Init(s_SubCharacter* dahlia)
 {
-    sharedFunc_800D923C_0_s00(chara);
+    sharedFunc_800D923C_0_s00(dahlia);
 
     sharedData_800D16E0_2_s01 = 0;
     sharedData_800D16E4_2_s01 = 0;

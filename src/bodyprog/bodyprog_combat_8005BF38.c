@@ -99,9 +99,9 @@ s32 func_8005C944(s_SubCharacter* chara, s_CollisionResult* collResult) // 0x800
     chara->position.vy += collResult0.offset_0.vy;
     chara->position.vz += collResult0.offset_0.vz;
 
-    if (chara->position.vy > collResult0.field_C)
+    if (chara->position.vy > collResult0.groundHeight)
     {
-        chara->position.vy = collResult0.field_C;
+        chara->position.vy = collResult0.groundHeight;
         chara->fallSpeed   = Q12(0.0f);
     }
 
@@ -113,19 +113,19 @@ s32 func_8005C944(s_SubCharacter* chara, s_CollisionResult* collResult) // 0x800
     return wallResponse;
 }
 
-s32 func_8005CB20(s_SubCharacter* chara, s_CollisionResult* arg1, q3_12 offsetX, q3_12 offsetZ) // 0x8005CB20
+s32 func_8005CB20(s_SubCharacter* chara, s_CollisionResult* collResult, q3_12 offsetX, q3_12 offsetZ) // 0x8005CB20
 {
-    s_CollisionResult sp10;
-    VECTOR3    offset; // Q19.12
-    q19_12     headingAngle;
-    s32        temp_s0;
-    s32        temp_s0_2;
-    s32        temp_s2;
-    s32        temp_s3;
-    s32        temp_v0_2;
-    s32        temp_v0_4;
-    q19_12     sinHeadingAngle;
-    s32        ret;
+    s_CollisionResult collResult0;
+    VECTOR3           offset; // Q19.12
+    q19_12            headingAngle;
+    s32               temp_s0;
+    s32               temp_s0_2;
+    s32               temp_s2;
+    s32               temp_s3;
+    s32               temp_v0_2;
+    s32               temp_v0_4;
+    q19_12            sinHeadingAngle;
+    s32               ret;
 
     headingAngle = chara->headingAngle;
     temp_s0 = Q12_MULT_PRECISE(g_DeltaTime, chara->moveSpeed);
@@ -145,21 +145,21 @@ s32 func_8005CB20(s_SubCharacter* chara, s_CollisionResult* arg1, q3_12 offsetX,
     offset.vy  = Q12_MULT_PRECISE(g_DeltaTime, sinHeadingAngle);
     offset.vz += offsetZ;
 
-    ret = Collision_WallDetect(&sp10, &offset, chara);
+    ret = Collision_WallDetect(&collResult0, &offset, chara);
 
-    chara->position.vx += sp10.offset_0.vx;
-    chara->position.vy += sp10.offset_0.vy;
-    chara->position.vz += sp10.offset_0.vz;
+    chara->position.vx += collResult0.offset_0.vx;
+    chara->position.vy += collResult0.offset_0.vy;
+    chara->position.vz += collResult0.offset_0.vz;
 
-    if (chara->position.vy > sp10.field_C)
+    if (chara->position.vy > collResult0.groundHeight)
     {
-        chara->position.vy = sp10.field_C;
+        chara->position.vy = collResult0.groundHeight;
         chara->fallSpeed   = Q12(0.0f);
     }
 
-    if (arg1 != NULL)
+    if (collResult != NULL)
     {
-        *arg1 = sp10;
+        *collResult = collResult0;
     }
 
     return ret;

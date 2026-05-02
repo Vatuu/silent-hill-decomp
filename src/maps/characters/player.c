@@ -174,12 +174,12 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 
         if (UnkStruct.field_14 == 0)
         {
-            UnkStruct.field_C = chara->properties.player.positionY_EC;
+            UnkStruct.groundHeight = chara->properties.player.positionY_EC;
         }
 
-        if (chara->position.vy > UnkStruct.field_C)
+        if (chara->position.vy > UnkStruct.groundHeight)
         {
-            chara->position.vy = UnkStruct.field_C;
+            chara->position.vy = UnkStruct.groundHeight;
             chara->fallSpeed   = Q12(0.0f);
         }
     }

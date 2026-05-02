@@ -1,11 +1,6 @@
 #ifndef _MEMCARD_H
 #define _MEMCARD_H
 
-/** @brief This header is used to declare any variable, struct, or
- * function part of `BODYPROG.BIN` identified to be related
- * to the memory card system (not from PSY-Q SDK).
- */
-
 // ==========
 // CONSTANTS
 // ==========
@@ -101,13 +96,14 @@ typedef enum _MemCardProcess
     MemCardProcess_Format        = 6
 } e_MemCardProcess;
 
+/** @brief Memory card states */
 typedef enum _MemCardState
 {
-    MemCardState_Null        = 0, // Null state.
-    MemCardState_Unavailable = 1, // Not connected.
-    MemCardState_Loading     = 2, // Loading the memory card.
+    MemCardState_Null        = 0, /** Null state. */
+    MemCardState_Unavailable = 1, /** Not connected. */
+    MemCardState_Loading     = 2, /** Loading the memory card. */
     MemCardState_Available   = 3,
-    MemCardState_Format      = 4, // Format required.
+    MemCardState_Format      = 4, /** Format required. */
     MemCardState_Broken      = 5
 } e_MemCardState;
 
@@ -115,11 +111,11 @@ typedef enum _FileState
 {
     FileState_Unused  = 0,
     FileState_Used    = 1,
-    FileState_Unk2    = 2, // @unused See `func_80033548`.
+    FileState_Unk2    = 2, /** @unused See `func_80033548`. */
     FileState_Damaged = 3
 } e_FileState;
 
-/** @brief Current process being carry on the memory card. */
+/** @brief Memory card process states. */
 typedef enum _MemCardWorkState
 {
     MemCardWorkState_Idle          = 0,
@@ -166,13 +162,13 @@ typedef enum _MemCardResult
 /** @note Oddly fortunate event in the OPM16 build there
  * are some strings related to this split which indicate
  * the name of 6 structs. Those split names being:
- * * MCM_FUNC_WORK
- * * MC_FILE
- * * SCE_HEADER
- * * MC_HEADER
- * * MC_CONFIG
- * * MC_PROGRESS
-*/
+ *  MCM_FUNC_WORK
+ *  MC_FILE
+ *  SCE_HEADER
+ *  MC_HEADER
+ *  MC_CONFIG
+ *  MC_PROGRESS
+ */
 
 // https://github.com/Sparagas/Silent-Hill/blob/1f24eb097a4b99129bc7c9793d23c82244848a27/010%20Editor%20-%20Binary%20Templates/ps1_memory_card.bt#L122C8-L122C17
 typedef struct
@@ -314,7 +310,7 @@ STATIC_ASSERT_SIZEOF(s_MemCard_SaveHeader, 256);
 
 typedef struct
 {
-    s32                   status;        /** `e_UnkMemCardState1`. */
+    s32                   status;        /** `e_MemCardState`. */
     s8                    fileState_4[MEMCARD_FILE_COUNT_MAX];
     s_MemCard_SaveHeader* saveHeader_14; /** Slots saves information. */
     s32                   fileLimit_18;  /** Max count of files allowed in the memory card. */
@@ -421,7 +417,7 @@ extern u8  g_Savegame_ElementCount0[MEMCARD_SLOT_COUNT_MAX];
 
 extern s16 __pad_bss_800BCD32;
 
-/** @brief Stores all memory cards/devices status. */
+/** @brief Stores statuses of all memory cards/devices. */
 extern u32 g_MemCard_AllMemCardsStatus;
 
 /** @brief Some determinator for the state of the save screen.

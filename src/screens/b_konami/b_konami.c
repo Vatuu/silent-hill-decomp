@@ -87,8 +87,8 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
 
 s32 GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
 {
-    s32 saveEntryTypeSlot_1;
-    s32 saveEntryTypeSlot_2;
+    s32 saveEntryTypeSlot1;
+    s32 saveEntryTypeSlot2;
 
     // Memory cards not ready yet, rerun this on next frame.
     if (func_80033548() == false)
@@ -97,25 +97,25 @@ s32 GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
     }
 
     g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(0);
-    saveEntryTypeSlot_1              = g_MemCard_ActiveMemCardSlotSaves->type_4;
+    saveEntryTypeSlot1               = g_MemCard_ActiveMemCardSlotSaves->type_4;
 
     g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(1);
-    saveEntryTypeSlot_2              = g_MemCard_ActiveMemCardSlotSaves->type_4;
+    saveEntryTypeSlot2               = g_MemCard_ActiveMemCardSlotSaves->type_4;
 
     // No memory cards.
-    if (saveEntryTypeSlot_1 == SavegameEntryType_NoMemCard && saveEntryTypeSlot_2 == SavegameEntryType_NoMemCard)
+    if (saveEntryTypeSlot1 == SavegameEntryType_NoMemCard && saveEntryTypeSlot2 == SavegameEntryType_NoMemCard)
     {
         return KcetLogoStateStep_NoMemCard;
     }
 
     // No free space on any card.
-    if ((saveEntryTypeSlot_1 == SavegameEntryType_OutOfBlocks && (saveEntryTypeSlot_2 == SavegameEntryType_OutOfBlocks || saveEntryTypeSlot_2 == SavegameEntryType_NoMemCard)) ||
-        (saveEntryTypeSlot_1 == SavegameEntryType_NoMemCard && saveEntryTypeSlot_2 == SavegameEntryType_OutOfBlocks))
+    if ((saveEntryTypeSlot1 == SavegameEntryType_OutOfBlocks && (saveEntryTypeSlot2 == SavegameEntryType_OutOfBlocks || saveEntryTypeSlot2 == SavegameEntryType_NoMemCard)) ||
+        (saveEntryTypeSlot1 == SavegameEntryType_NoMemCard && saveEntryTypeSlot2 == SavegameEntryType_OutOfBlocks))
     {
         return KcetLogoStateStep_NoMemCardFreeSpace;
     }
 
-    if (saveEntryTypeSlot_1 == SavegameEntryType_Save || saveEntryTypeSlot_2 == SavegameEntryType_Save)
+    if (saveEntryTypeSlot1 == SavegameEntryType_Save || saveEntryTypeSlot2 == SavegameEntryType_Save)
     {
         g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(g_SelectedSaveSlotIdx);
         g_MemCard_ActiveMemCardSlotSaves = &g_MemCard_ActiveMemCardSlotSaves[g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx]];

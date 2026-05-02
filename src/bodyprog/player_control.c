@@ -6554,7 +6554,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 playerProps.flags_11C &= ~PlayerFlag_Unk5;
             }
 
-            if (player->position.vy == D_800C4590.field_C)
+            if (player->position.vy == D_800C4590.groundHeight)
             {
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_JumpBackward, true), player, 243, 245, sfxId, pitch1);
             }
@@ -6564,7 +6564,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
     }
 }
 
-void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* coords) // 0x8007C0D8
+void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords) // 0x8007C0D8
 {
     s_Collision coll;
     VECTOR3     offset;
@@ -6672,17 +6672,17 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
 
     if (g_SavegamePtr->mapIdx == MapIdx_MAP1_S00 && g_SavegamePtr->mapRoomIdx == 13)
     {
-        D_800C4590.field_C = 0;
+        D_800C4590.groundHeight = Q12(0.0f);
     }
 
     if (D_800C4590.field_14 == 0)
     {
-        D_800C4590.field_C = player->properties.player.positionY_EC;
+        D_800C4590.groundHeight = player->properties.player.positionY_EC;
     }
 
-    if (player->position.vy > D_800C4590.field_C)
+    if (player->position.vy > D_800C4590.groundHeight)
     {
-        player->position.vy = D_800C4590.field_C;
+        player->position.vy = D_800C4590.groundHeight;
         player->fallSpeed   = Q12(0.0f);
     }
 
@@ -6693,7 +6693,7 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
         if (!g_Player_IsInWalkToRunTransition)
         {
             posY = player->position.vy;
-            if ((D_800C4590.field_C - posY) >= Q12(0.65f))
+            if ((D_800C4590.groundHeight - posY) >= Q12(0.65f))
             {
                 if (ABS_DIFF(player->rotation.vy, someAngle) >= Q12_ANGLE(90.0f) &&
                     ABS_DIFF(player->rotation.vy, someAngle) <  Q12_ANGLE(270.0f))
@@ -6713,10 +6713,10 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
         }
     }
 
-    player->properties.player.positionY_EC = D_800C4590.field_C;
-    coords->coord.t[0]                        = Q12_TO_Q8(player->position.vx);
-    coords->coord.t[1]                        = Q12_TO_Q8(player->position.vy);
-    coords->coord.t[2]                        = Q12_TO_Q8(player->position.vz);
+    player->properties.player.positionY_EC = D_800C4590.groundHeight;
+    boneCoords->coord.t[0]                 = Q12_TO_Q8(player->position.vx);
+    boneCoords->coord.t[1]                 = Q12_TO_Q8(player->position.vy);
+    boneCoords->coord.t[2]                 = Q12_TO_Q8(player->position.vz);
 }
 
 void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007C800
@@ -7129,7 +7129,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
     }
 }
 
-void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* coords) // 0x8007D090
+void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords) // 0x8007D090
 {
     #define FLEX_ROT_X_RANGE Q12_ANGLE(56.25f)
     #define FLEX_ROT_Y_RANGE Q12_ANGLE(33.75f)
@@ -7283,9 +7283,9 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
                 g_Player_FlexRotationY = CLAMP(g_Player_FlexRotationY, -FLEX_ROT_Y_RANGE, FLEX_ROT_Y_RANGE);
 
                 // Apply flex rotation to torso and arms.
-                func_80044F14(&coords[HarryBone_Torso], Q12_ANGLE(0.0f), g_Player_FlexRotationX >> 1, g_Player_FlexRotationY);
-                Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_LeftUpperArm].coord);
-                Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_RightUpperArm].coord);
+                func_80044F14(&boneCoords[HarryBone_Torso], Q12_ANGLE(0.0f), g_Player_FlexRotationX >> 1, g_Player_FlexRotationY);
+                Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &boneCoords[HarryBone_LeftUpperArm].coord);
+                Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &boneCoords[HarryBone_RightUpperArm].coord);
             }
             break;
 
@@ -7339,16 +7339,16 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
             }
 
             // Apply flex rotation to torso and arms.
-            func_80044F14(&coords[HarryBone_Torso], Q12_ANGLE(0.0f), g_Player_FlexRotationX >> 1, g_Player_FlexRotationY);
-            Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_LeftUpperArm].coord);
-            Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_RightUpperArm].coord);
+            func_80044F14(&boneCoords[HarryBone_Torso], Q12_ANGLE(0.0f), g_Player_FlexRotationX >> 1, g_Player_FlexRotationY);
+            Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &boneCoords[HarryBone_LeftUpperArm].coord);
+            Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &boneCoords[HarryBone_RightUpperArm].coord);
             break;
 
         case PlayerState_Unk180:
             if (g_Player_FlexRotationY != Q12_ANGLE(0.0f))
             {
-                func_80044F14(&coords[HarryBone_Torso], Q12_ANGLE(0.0f), Q12_ANGLE(0.0f),  Q12_ANGLE(16.9f));
-                func_80044F14(&coords[HarryBone_Head],  Q12_ANGLE(0.0f), Q12_ANGLE(28.2f), Q12_ANGLE(19.7f));
+                func_80044F14(&boneCoords[HarryBone_Torso], Q12_ANGLE(0.0f), Q12_ANGLE(0.0f),  Q12_ANGLE(16.9f));
+                func_80044F14(&boneCoords[HarryBone_Head],  Q12_ANGLE(0.0f), Q12_ANGLE(28.2f), Q12_ANGLE(19.7f));
             }
             break;
 
@@ -7356,7 +7356,7 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
             if (g_SysWork.playerWork.extra.state >= PlayerState_Unk52 &&
                 g_SysWork.playerWork.extra.state <  PlayerState_Unk59)
             {
-                func_80044F14(&coords[HarryBone_Head], Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), g_Player_FlexRotationY);
+                func_80044F14(&boneCoords[HarryBone_Head], Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), g_Player_FlexRotationY);
             }
             else
             {

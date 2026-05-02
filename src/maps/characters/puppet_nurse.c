@@ -225,27 +225,27 @@ void Ai_PuppetNurse_UpdateMain(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOO
     }
 }
 
-void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isPuppetDoctor)
+void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isDoctor)
 {
     extern s_800D5710 sharedData_800D5710_3_s03[4]; // Likely static.
 
     s32             charaState;
     s32             charStatIdx;
     s32             charPalette;
-    s32             modelVariation;
+    s32             modelVariantIdx;
     s32             stateStepDiv3;
-    s_SubCharacter* chara2;
+    s_SubCharacter* localNurse;
 
-    chara2 = nurse; // TODO: Not sure why this is needed, possibly an inline here somewhere?
+    localNurse = nurse; // TODO: Not sure why this is needed, possibly an inline here somewhere?
 
     nurse->moveSpeed                 = Q12(0.0f);
     nurse->collision.state           = CharaCollisionState_Npc;
     nurse->headingAngle              = nurse->rotation.vy;
     nurseProps.position_E8           = nurse->position;
     nurse->collision.cylinder.radius = Q12(0.3f);
-    nurseProps.damage_F4.position.vx = Q12(0.0f);
-    nurseProps.damage_F4.position.vy = Q12(0.0f);
-    nurseProps.damage_F4.position.vz = Q12(0.0f);
+    nurseProps.damage.position.vx = Q12(0.0f);
+    nurseProps.damage.position.vy = Q12(0.0f);
+    nurseProps.damage.position.vz = Q12(0.0f);
     nurseProps.field_114             = 0;
     nurseProps.field_118             = 0;
 
@@ -257,27 +257,27 @@ void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isPuppetDoctor)
 
     charPalette    = (nurse->model.stateStep - 1) % 3;
     stateStepDiv3  = (nurse->model.stateStep - 1) / 3;
-    modelVariation = stateStepDiv3 % 3;
+    modelVariantIdx = stateStepDiv3 % 3;
     charaState     = stateStepDiv3 / 3;
 
     nurseProps.field_11A = 0;
     nurse->flags     |= CharaFlag_Unk3;
 
-    if (!isPuppetDoctor)
+    if (!isDoctor)
     {
         charStatIdx                   = charPalette + 1; // Skip doctor stat at beginning.
-        nurseProps.modelVariation_119 = modelVariation + 1;
+        nurseProps.modelVariantIdx = modelVariantIdx + 1;
     }
     else
     {
-        nurseProps.modelVariation_119 = 1;
+        nurseProps.modelVariantIdx = 1;
         charPalette                   = 0;
         charStatIdx                   = 0;
     }
 
-    chara2->properties.puppetNurse.field_124 = &sharedData_800D5710_3_s03[charStatIdx];
+    localNurse->properties.puppetNurse.field_124 = &sharedData_800D5710_3_s03[charStatIdx];
 
-    nurse->health            = chara2->properties.puppetNurse.field_124->health_0;
+    nurse->health            = localNurse->properties.puppetNurse.field_124->health_0;
     nurse->model.paletteIdx = charPalette;
 
     switch (charaState)
@@ -304,11 +304,11 @@ void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isPuppetDoctor)
             break;
     }
 
-    ModelAnim_AnimInfoSet(&nurse->model.anim, chara2->properties.puppetNurse.field_124->animInfo_24);
+    ModelAnim_AnimInfoSet(&nurse->model.anim, localNurse->properties.puppetNurse.field_124->animInfo_24);
 
     nurse->model.anim.status              = ANIM_STATUS(PuppetNurseAnim_17, false);
     nurse->model.anim.alpha               = Q12(0.0f);
-    chara2->properties.puppetNurse.field_120 = Q12(1.0f);
+    localNurse->properties.puppetNurse.field_120 = Q12(1.0f);
 }
 
 void Ai_PuppetNurse_Update(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
@@ -371,7 +371,7 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
         switch (nurse->properties.puppetNurse.field_118)
         {
             case 0:
-                nurse->properties.puppetNurse.damage_F4  = nurse->damage;
+                nurse->properties.puppetNurse.damage  = nurse->damage;
                 nurse->properties.puppetNurse.field_114 += nurse->damage.amount;
 
                 newHealth = nurse->health - nurse->damage.amount;
@@ -1487,12 +1487,12 @@ void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse)
 
     temp_s1 = nurse->properties.puppetNurse.field_124->field_2C;
 
-    damagePos.vx = nurse->properties.puppetNurse.damage_F4.position.vx;
-    damagePos.vz = nurse->properties.puppetNurse.damage_F4.position.vz;
-    damagePos.vy = nurse->properties.puppetNurse.damage_F4.position.vy;
+    damagePos.vx = nurse->properties.puppetNurse.damage.position.vx;
+    damagePos.vz = nurse->properties.puppetNurse.damage.position.vz;
+    damagePos.vy = nurse->properties.puppetNurse.damage.position.vy;
 
     moveSpeed                                      = nurse->moveSpeed;
-    nurse->properties.puppetNurse.moveSpeed_110 = moveSpeed;
+    nurse->properties.puppetNurse.moveSpeed = moveSpeed;
 
     dir.vx = Math_Sin(nurse->rotation.vy);
     dir.vz = Math_Cos(nurse->rotation.vy);
@@ -1512,29 +1512,29 @@ void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse)
 
     func_8005C944(nurse, &sp10);
 
-    damagePosComp                                            = nurse->properties.puppetNurse.damage_F4.position.vx;
-    nurse->moveSpeed                                      = nurse->properties.puppetNurse.moveSpeed_110;
-    nurse->properties.puppetNurse.damage_F4.position.vx = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
+    damagePosComp                                            = nurse->properties.puppetNurse.damage.position.vx;
+    nurse->moveSpeed                                      = nurse->properties.puppetNurse.moveSpeed;
+    nurse->properties.puppetNurse.damage.position.vx = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
 
     if (damagePosComp <= Q12(0.0f))
     {
-        nurse->properties.puppetNurse.damage_F4.position.vx = -nurse->properties.puppetNurse.damage_F4.position.vx;
+        nurse->properties.puppetNurse.damage.position.vx = -nurse->properties.puppetNurse.damage.position.vx;
     }
 
-    damagePosComp                                            = nurse->properties.puppetNurse.damage_F4.position.vy;
-    nurse->properties.puppetNurse.damage_F4.position.vy = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
+    damagePosComp                                            = nurse->properties.puppetNurse.damage.position.vy;
+    nurse->properties.puppetNurse.damage.position.vy = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
 
     if (damagePosComp <= Q12(0.0f))
     {
-        nurse->properties.puppetNurse.damage_F4.position.vy = -nurse->properties.puppetNurse.damage_F4.position.vy;
+        nurse->properties.puppetNurse.damage.position.vy = -nurse->properties.puppetNurse.damage.position.vy;
     }
 
-    damagePosComp = nurse->properties.puppetNurse.damage_F4.position.vz;
+    damagePosComp = nurse->properties.puppetNurse.damage.position.vz;
 
-    nurse->properties.puppetNurse.damage_F4.position.vz = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
+    nurse->properties.puppetNurse.damage.position.vz = SquareRoot12(Q12_MULT_PRECISE(damagePosComp, damagePosComp) >> g_VBlanks);
     if (damagePosComp <= Q12(0.0f))
     {
-        nurse->properties.puppetNurse.damage_F4.position.vz = -nurse->properties.puppetNurse.damage_F4.position.vz;
+        nurse->properties.puppetNurse.damage.position.vz = -nurse->properties.puppetNurse.damage.position.vz;
     }
 
     nurse->rotation.vy = Math_AngleNormalizeSigned(nurse->rotation.vy);
@@ -1553,7 +1553,7 @@ void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOO
     animInfoBase = nurseProps.field_124->animInfo_24;
     sfxIdx0      = Ai_PuppetNurse_AnimSfxGet(FP_FROM(nurse->model.anim.time, Q12_SHIFT));
 
-    WorldGfx_HeldItemAttach(nurse->model.charaId, nurseProps.modelVariation_119);
+    WorldGfx_HeldItemAttach(nurse->model.charaId, nurseProps.modelVariantIdx);
     Math_MatrixTransform(&nurse->position, &nurse->rotation, coord);
 
     if (nurse->model.anim.status != ANIM_STATUS(0, false))
@@ -1591,9 +1591,9 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords)
 
     MATRIX          boneMats[BoneMatIdx_Count];
     VECTOR3         unkPos;
-    q19_12          deltaX;
-    q19_12          deltaY;
-    q19_12          unkQ12;
+    q19_12          boxOffsetX;
+    q19_12          boxOffsetZ;
+    q19_12          cylinderRadius;
     q19_12          posY;
     q19_12          offsetPosY;
     q19_12          torsoPosY;
@@ -1605,7 +1605,7 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords)
 
     localNurse = nurse;
 
-    // Get torso, head, right shin, and left shin bone matrices.
+    // Get torso, head, right shin, and left shin bone matrices. TODO: Not Harry.
     Vw_CoordHierarchyMatrixCompute(&boneCoords[HarryBone_Torso], &boneMats[BoneMatIdx_Torso]);
     Vw_CoordHierarchyMatrixCompute(&boneCoords[HarryBone_Head], &boneMats[BoneMatIdx_Head]);
     Vw_CoordHierarchyMatrixCompute(&boneCoords[HarryBone_RightShin], &boneMats[BoneMatIdx_RightShin]);
@@ -1614,10 +1614,11 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords)
     posY                     = localNurse->position.vy;
     rightShinPosY            = Q8_TO_Q12(boneMats[BoneMatIdx_RightShin].t[1]);
     leftShinPosY             = Q8_TO_Q12(boneMats[BoneMatIdx_LeftShin].t[1]);
-    nurse->collision.box.top  = Q8_TO_Q12(boneMats[BoneMatIdx_Head].t[1]);
-    offsetPosY               = posY + Q12(0.25f);
-    nurse->collision.box.top -= offsetPosY;
-    nurse->collision.box.bottom  = posY;
+    nurse->collision.box.top = Q8_TO_Q12(boneMats[BoneMatIdx_Head].t[1]);
+
+    offsetPosY                  = posY + Q12(0.25f);
+    nurse->collision.box.top   -= offsetPosY;
+    nurse->collision.box.bottom = posY;
 
     if (rightShinPosY >= leftShinPosY)
     {
@@ -1631,17 +1632,17 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords)
     // `((torsoPosY - headPosY) / 2) - posY`
     nurse->collision.box.offsetY = ((Q8_TO_Q12(boneMats[BoneMatIdx_Head].t[1]) + Q8_TO_Q12(boneMats[BoneMatIdx_Torso].t[1])) / 2) - posY;
 
-    unkQ12 = sharedFunc_800CD6B0_3_s03(boneMats, ARRAY_SIZE(boneMats), &unkPos);
-    deltaX = unkPos.vx - nurse->position.vx;
-    deltaY = unkPos.vz - nurse->position.vz;
+    cylinderRadius = sharedFunc_800CD6B0_3_s03(boneMats, ARRAY_SIZE(boneMats), &unkPos);
+    boxOffsetX     = unkPos.vx - nurse->position.vx;
+    boxOffsetZ     = unkPos.vz - nurse->position.vz;
 
-    unkQ12                    = sharedFunc_800CD940_3_s03(unkQ12 + Q12(0.05f), nurse->collision.cylinder.radius);
-    nurse->collision.cylinder.field_2   = unkQ12 - Q12(0.05f);
-    nurse->collision.cylinder.radius  = unkQ12;
-    nurse->collision.shapeOffsets.box.vx = deltaX;
-    nurse->collision.shapeOffsets.box.vz = deltaY;
+    cylinderRadius                       = sharedFunc_800CD940_3_s03(cylinderRadius + Q12(0.05f), nurse->collision.cylinder.radius);
+    nurse->collision.cylinder.field_2    = cylinderRadius - Q12(0.05f);
+    nurse->collision.cylinder.radius     = cylinderRadius;
+    nurse->collision.shapeOffsets.box.vx = boxOffsetX;
+    nurse->collision.shapeOffsets.box.vz = boxOffsetZ;
 
-    sharedFunc_800CD920_3_s03(nurse, deltaX, deltaY);
+    sharedFunc_800CD920_3_s03(nurse, boxOffsetX, boxOffsetZ);
 
     tempPosComp                                  = nurse->position.vx;
     localNurse->properties.npc.position_E8.vx = tempPosComp;
@@ -1661,8 +1662,9 @@ void sharedFunc_800D0968_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords)
 
     posY = nurse->position.vy;
 
-    nurse->collision.box.bottom = posY;
-    nurse->collision.box.height = posY;
-    nurse->collision.box.top = posY - Q12(1.7f);
+    // Update collision box.
+    nurse->collision.box.bottom  = posY;
+    nurse->collision.box.height  = posY;
+    nurse->collision.box.top     = posY - Q12(1.7f);
     nurse->collision.box.offsetY = posY - Q12(1.0f);
 }

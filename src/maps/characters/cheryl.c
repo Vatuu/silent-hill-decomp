@@ -90,9 +90,9 @@ void Cheryl_MovementUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) //
     cheryl->position.vy += sharedData_800E39BC_0_s00.offset_0.vy;
     cheryl->position.vz += offset.vz;
 
-    if (cheryl->position.vy > sharedData_800E39BC_0_s00.field_C)
+    if (cheryl->position.vy > sharedData_800E39BC_0_s00.groundHeight)
     {
-        cheryl->position.vy = sharedData_800E39BC_0_s00.field_C;
+        cheryl->position.vy = sharedData_800E39BC_0_s00.groundHeight;
         cheryl->fallSpeed   = Q12(0.0f);
     }
 

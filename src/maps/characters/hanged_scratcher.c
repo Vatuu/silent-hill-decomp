@@ -1101,13 +1101,14 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
 
 void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
 {
-    s_CollisionResult  sp10;
-    s_Collision coll;
-    u8          flag1Val;
+    s_CollisionResult collResult;
+    s_Collision       coll;
+    u8                flag1Val;
 
     scratcher->rotation.vy  = Math_AngleNormalizeSigned(scratcher->rotation.vy);
     scratcher->headingAngle = scratcher->rotation.vy;
 
+    // Fall.
     switch (scratcher->model.controlState)
     {
         case HangedScratcherControl_5:
@@ -1120,14 +1121,14 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
             break;
     }
 
-    func_8005CB20(scratcher, &sp10, scratcherProps.offsetX_F0, scratcherProps.offsetZ_F2);
+    func_8005CB20(scratcher, &collResult, scratcherProps.offsetX_F0, scratcherProps.offsetZ_F2);
 
     scratcherProps.offsetZ_F2 = Q12(0.0f);
     scratcherProps.offsetX_F0 = Q12(0.0f);
 
     flag1Val = scratcherProps.flags_E8 & HangedScratcherFlag_0;
 
-    if (scratcher->position.vy == sp10.field_C)
+    if (scratcher->position.vy == collResult.groundHeight)
     {
         scratcherProps.flags_E8 &= ~HangedScratcherFlag_0;
 
@@ -1136,6 +1137,7 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
             if (scratcher->model.anim.status == ANIM_STATUS(HangedScratcherAnim_10, true))
             {
                 Collision_Get(&coll, scratcher->position.vx, scratcher->position.vz);
+
                 if (coll.field_8 == 11)
                 {
                     func_8005DC1C(Sfx_Unk1582, &scratcher->position, Q8(0.5f), 0);
@@ -1148,6 +1150,7 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
             else if (scratcher->model.anim.status == ANIM_STATUS(HangedScratcherAnim_16, true))
             {
                 Collision_Get(&coll, scratcher->position.vx, scratcher->position.vz);
+
                 if (coll.field_8 == 11)
                 {
                     func_8005DC1C(Sfx_Unk1582, &scratcher->position, Q8(0.25f), 0);
