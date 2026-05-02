@@ -230,7 +230,7 @@ void func_800D0CA0(q19_12 rotY, SVECTOR* pos) // 0x800D0CA0
     SetMulRotMatrix(&mat);
 }
 
-void func_800D0D6C(MATRIX* out, SVECTOR* pos, q19_12 rotY) // 0x800D0D6C
+void func_800D0D6C(MATRIX* worldMat, SVECTOR* pos, q19_12 rotY) // 0x800D0D6C
 {
     SVECTOR     rot; // Q3.12
     s_800E0988* ptr;
@@ -240,11 +240,11 @@ void func_800D0D6C(MATRIX* out, SVECTOR* pos, q19_12 rotY) // 0x800D0D6C
     rot.vx = Q12_ANGLE(0.0f);
     rot.vy = rotY;
     rot.vz = Q12_ANGLE(0.0f);
-    Math_RotMatrixXyz(&rot, out);
+    Math_RotMatrixXyz(&rot, worldMat);
 
-    out->t[0] = Q12_TO_Q8(ptr->x_0) + pos->vx;
-    out->t[1] = Q12_TO_Q8(Q12(0.0f));
-    out->t[2] = Q12_TO_Q8(ptr->z_4) + pos->vz;
+    worldMat->t[0] = Q12_TO_Q8(ptr->x_0) + pos->vx;
+    worldMat->t[1] = Q12_TO_Q8(Q12(0.0f));
+    worldMat->t[2] = Q12_TO_Q8(ptr->z_4) + pos->vz;
 }
 
 void func_800D0DE4(SVECTOR* out, VECTOR* in, q19_12 headingAngle, q19_12 dist) // 0x800D0DE4
@@ -527,9 +527,9 @@ void func_800D1604(GsOT_TAG* ot, int arg1) // 0x800D1604
         if (tick)
         {
             func_800D1478(&iter->field_14, iter->field_8, arg1, iter->field_4, &iter->field_C);
-            func_800D0D6C(&iter->field_1C, &iter->field_14, Q12_ANGLE(0.0f));
+            func_800D0D6C(&iter->worldMat, &iter->field_14, Q12_ANGLE(0.0f));
 
-            temp_s4 = func_80055F08(&sp30, &sp28, &iter->field_1C);
+            temp_s4 = func_80055F08(&sp30, &sp28, &iter->worldMat);
 
             func_800D0CA0(0, &iter->field_14);
 
@@ -539,7 +539,7 @@ void func_800D1604(GsOT_TAG* ot, int arg1) // 0x800D1604
                 func_800D0EC0(&iter->field_40[1], 12, 11);
             }
 
-            func_800D0FD4(ot, &iter->field_14, &iter->field_40[1], &iter->field_1C,
+            func_800D0FD4(ot, &iter->field_14, &iter->field_40[1], &iter->worldMat,
                           FP_MULTIPLY_PRECISE(temp_s4, iter->field_CC, 12), 11, 9, 12, iter->field_3C);
             iter->field_8 -= g_DeltaTime;
         }
@@ -723,7 +723,7 @@ void func_800D1C48(void) // 0x800D1C48
     }
 }
 
-void func_800D1D3C(GsOT_TAG* tag, SVECTOR3* arg1, MATRIX* arg2, s32 arg3) // 0x800D1D3C
+void func_800D1D3C(GsOT_TAG* tag, SVECTOR3* arg1, MATRIX* worldMat, s32 arg3) // 0x800D1D3C
 {
     SVECTOR   sp28;
     SVECTOR   sp30;
@@ -750,7 +750,7 @@ void func_800D1D3C(GsOT_TAG* tag, SVECTOR3* arg1, MATRIX* arg2, s32 arg3) // 0x8
     POLY_FT4* poly2;
 
     PushMatrix();
-    temp_v0 = func_80055F08(arg1, &D_800DAE58, arg2) & 0xFF;
+    temp_v0 = func_80055F08(arg1, &D_800DAE58, worldMat) & 0xFF;
     temp_a2 = Q12_MULT_PRECISE(temp_v0, arg3);
     if (temp_a2 < 0x100)
     {
@@ -844,14 +844,14 @@ void func_800D1D3C(GsOT_TAG* tag, SVECTOR3* arg1, MATRIX* arg2, s32 arg3) // 0x8
 void func_800D1FF4(GsOT_TAG* arg0) // 0x800D1FF4
 {
     SVECTOR     sp10 = { 0 };
-    MATRIX      sp18;
+    MATRIX      worldMat;
     s32         i;
     s_800E0300* ptr1;
     s_800E0988* ptr0;
 
     ptr1 = D_800E0300;
 
-    func_800D0D6C(&sp18, &sp10, 0);
+    func_800D0D6C(&worldMat, &sp10, 0);
 
     ptr0 = &D_800E0988;
 
@@ -872,7 +872,7 @@ void func_800D1FF4(GsOT_TAG* arg0) // 0x800D1FF4
                 ptr1->field_4  = MAX(ptr1->field_4, Q12(0.0f));
             }
 
-            func_800D1D3C(arg0, &ptr1->field_8, &sp18, ptr1->field_4);
+            func_800D1D3C(arg0, &ptr1->field_8, &worldMat, ptr1->field_4);
             ptr1->timer_0 -= g_DeltaTime;
         }
     }
@@ -904,7 +904,7 @@ void func_800D2150(VECTOR* arg0, s32 arg1) // 0x800D2150
     }
 }
 
-void func_800D21AC(GsOT_TAG* ot, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D21AC
+void func_800D21AC(GsOT_TAG* ot, MATRIX* worldMat, s32 arg2, s32 arg3) // 0x800D21AC
 {
     SVECTOR   sp20[9];
     DVECTOR   sp68[9];
@@ -955,7 +955,7 @@ void func_800D21AC(GsOT_TAG* ot, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D21AC
 
     for (j = 0; j < 9; j++)
     {
-        temp_v0_2 = func_80055F08(var_s0, &D_800DAE60, arg1);
+        temp_v0_2 = func_80055F08(var_s0, &D_800DAE60, worldMat);
 
         func_80055E90(var_s1_2, Q12_MULT_PRECISE(temp_v0_2, arg2));
         var_s1_2++;
@@ -1096,7 +1096,7 @@ void func_800D26FC(VECTOR* pos, q19_12 headingAngle) // 0x800D26FC
     func_800D2684(pos, headingAngle);
 }
 
-void func_800D2790(GsOT_TAG* ot, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D2790
+void func_800D2790(GsOT_TAG* ot, MATRIX* worldMat, s32 arg2, s32 arg3) // 0x800D2790
 {
     SVECTOR   sp20[9];
     DVECTOR   sp68[9];
@@ -1151,7 +1151,7 @@ void func_800D2790(GsOT_TAG* ot, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D2790
 
     for (l = 0; l < 9; l++)
     {
-        temp_v0_2 = func_80055F08(var_s0, &D_800DAE78, arg1);
+        temp_v0_2 = func_80055F08(var_s0, &D_800DAE78, worldMat);
         var_a1_2  = CLAMP_HIGH(Q12_MULT_PRECISE(temp_v0_2, arg2), 0xFF);
 
         func_80055E90(var_s1_2, var_a1_2);
@@ -1302,7 +1302,7 @@ void func_800D2CEC(void) // 0x800D2CEC
 
 void func_800D2D28(GsOT_TAG* arg0)
 {
-    MATRIX      sp10;
+    MATRIX      worldMat;
     SVECTOR     sp30;
     s32         temp_s4;
     s32         var_a0;
@@ -1338,9 +1338,9 @@ void func_800D2D28(GsOT_TAG* arg0)
                 ptr->field_C  = MAX(ptr->field_C, 0);
             }
 
-            func_800D0D6C(&sp10, &ptr->field_4, temp_s4);
+            func_800D0D6C(&worldMat, &ptr->field_4, temp_s4);
             func_800D0CA0(temp_s4, &ptr->field_4);
-            func_800D2790(arg0, &sp10, ptr->field_C, ptr->field_10);
+            func_800D2790(arg0, &worldMat, ptr->field_C, ptr->field_10);
             ptr->field_0 -= g_DeltaTime;
         }
     }
@@ -1348,7 +1348,7 @@ void func_800D2D28(GsOT_TAG* arg0)
 
 void func_800D2ED0(GsOT_TAG* arg0) // 0x800D2ED0
 {
-    MATRIX      sp10;
+    MATRIX      worldMat;
     s32         i;
     s_800E0440* ptr;
 
@@ -1358,21 +1358,22 @@ void func_800D2ED0(GsOT_TAG* arg0) // 0x800D2ED0
     {
         if (ptr->field_0 > 0)
         {
-            ptr->field_10 += Q12_MULT_PRECISE(g_DeltaTime, 0x800);
-            ptr->field_10  = MIN(0x1000, ptr->field_10);
+            ptr->field_10 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.5f));
+            ptr->field_10  = MIN(Q12(1.0f), ptr->field_10);
 
-            if (ptr->field_0 > 0x2B33)
+            if (ptr->field_0 > Q12(2.7f))
             {
-                ptr->field_C = 0x1000;
+                ptr->field_C = Q12(1.0f);
             }
             else
             {
-                ptr->field_C -= Q12_MULT_PRECISE(g_DeltaTime, 0x666);
+                ptr->field_C -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.4f));
                 ptr->field_C  = MAX(ptr->field_C, 0);
             }
-            func_800D0D6C(&sp10, &ptr->field_4, 0);
+
+            func_800D0D6C(&worldMat, &ptr->field_4, 0);
             func_800D0CA0(0, &ptr->field_4);
-            func_800D21AC(arg0, &sp10, ptr->field_C, ptr->field_10);
+            func_800D21AC(arg0, &worldMat, ptr->field_C, ptr->field_10);
 
             ptr->field_0 -= g_DeltaTime;
         }

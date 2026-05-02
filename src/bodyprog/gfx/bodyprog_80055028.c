@@ -597,12 +597,12 @@ void func_80055E90(CVECTOR* color, u8 fadeAmount) // 0x80055E90
     color->cd = prev_cd;
 }
 
-void func_80055ECC(CVECTOR* color, SVECTOR3* arg1, SVECTOR3* arg2, MATRIX* mat) // 0x80055ECC
+void func_80055ECC(CVECTOR* color, SVECTOR3* arg1, SVECTOR3* arg2, MATRIX* worldMat) // 0x80055ECC
 {
-    func_80055E90(color, func_80055F08(arg1, arg2, mat));
+    func_80055E90(color, func_80055F08(arg1, arg2, worldMat));
 }
 
-u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat) // 0x80055F08
+u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* worldMat) // 0x80055F08
 {
     MATRIX  rotMat;
     DVECTOR screenPos;
@@ -615,7 +615,7 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat) // 0x80055F08
     u8      field_3;
     s32     field_20;
 
-    WorldEnv_LightTransform(mat, g_WorldEnvWork.lightIntensity, &g_WorldEnvWork.lightRotation, &g_WorldEnvWork.lightPosition);
+    WorldEnv_LightTransform(worldMat, g_WorldEnvWork.lightIntensity, &g_WorldEnvWork.lightRotation, &g_WorldEnvWork.lightPosition);
 
     gte_lddqa(g_WorldEnvWork.field_4C);
     gte_lddqb_0();
@@ -721,7 +721,7 @@ void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr) // 0x800
     }
 }
 
-void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool transparency) // 0x80056244
+void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool isTransparent) // 0x80056244
 {
     s_ModelHeader* modelHdrs;
     s_ModelHeader* curModelHdr;
@@ -736,7 +736,7 @@ void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool transparency) // 0x80056244
         {
             for (prim = &curMeshHdr->primitives[0]; prim < &curMeshHdr->primitives[curMeshHdr->primitiveCount]; prim++)
             {
-                prim->field_6.bits.field_6_15 = transparency;
+                prim->field_6.bits.isTransparent = isTransparent;
             }
         }
     }
@@ -1257,13 +1257,13 @@ s32 func_800571D0(u32 arg0) // 0x800571D0
     }
 }
 
-void WorldEnv_LightTransform(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80057228
+void WorldEnv_LightTransform(MATRIX* worldMat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80057228
 {
     q23_8 posX;
     q23_8 posY;
     q23_8 posZ;
 
-    gte_SetRotMatrix_custom(mat);
+    gte_SetRotMatrix_custom(worldMat);
 
     gte_ldv0(arg2);
     gte_rtv0();
@@ -1272,9 +1272,9 @@ void WorldEnv_LightTransform(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg
     gte_stsv(&g_WorldEnvWork.field_74);
 
     // Divide `arg3` by 16 and subtract matrix translation.
-    posX = Q12_TO_Q8(arg3->vx) - mat->t[0];
-    posY = Q12_TO_Q8(arg3->vy) - mat->t[1];
-    posZ = Q12_TO_Q8(arg3->vz) - mat->t[2];
+    posX = Q12_TO_Q8(arg3->vx) - worldMat->t[0];
+    posY = Q12_TO_Q8(arg3->vy) - worldMat->t[1];
+    posZ = Q12_TO_Q8(arg3->vz) - worldMat->t[2];
 
     gte_LoadVector0_XYZ(posX, posY, posZ);
     gte_rtv0();
@@ -2648,7 +2648,7 @@ void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchDat
     GsOUT_PACKET_P = (PACKET*)poly;
 }
 
-void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* mat) // 0x8005A21C
+void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* viewMat) // 0x8005A21C
 {
     s16               var_v1;
     u32               normalOffset;
@@ -2661,9 +2661,9 @@ void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* 
 
     if (g_WorldEnvWork.isFogEnabled_1)
     {
-        if (mat->t[2] < (1 << g_WorldEnvWork.fogDepthShift_14))
+        if (viewMat->t[2] < (1 << g_WorldEnvWork.fogDepthShift_14))
         {
-            var_v1 = Q12(1.0f) - (g_WorldEnvWork.fogRamp_CC[(s32)(mat->t[2] << 7) >> g_WorldEnvWork.fogDepthShift_14] << 4);
+            var_v1 = Q12(1.0f) - (g_WorldEnvWork.fogRamp_CC[(s32)(viewMat->t[2] << 7) >> g_WorldEnvWork.fogDepthShift_14] << 4);
         }
         else
         {
@@ -2702,7 +2702,7 @@ void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* 
 
     for (curMeshHdr = modelHdr->meshHdrs_C; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
     {
-        func_8005A900(curMeshHdr, vertOffset, scratchData, mat);
+        func_8005A900(curMeshHdr, vertOffset, scratchData, viewMat);
 
         if (g_WorldEnvWork.field_0 != 0)
         {
@@ -2867,7 +2867,7 @@ void func_8005A838(s_GteScratchData* scratchData, s32 scale) // 0x8005A838
                  Q12_MULT(g_WorldEnvWork.field_26, scale));
 }
 
-void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat) // 0x8005A900
+void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* viewMat) // 0x8005A900
 {
     DVECTOR* inXy;  // Model-space XY input
     u16*     inZ;   // Model-space Z input
@@ -2879,8 +2879,8 @@ void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
         return;
     }
 
-    SetRotMatrix(mat);
-    SetTransMatrix(mat);
+    SetRotMatrix(viewMat);
+    SetTransMatrix(viewMat);
 
     outXy = &scratchData->screenXy_0[offset];
     outZ  = &scratchData->screenZ_168[offset];
@@ -3312,7 +3312,8 @@ void func_8005B55C(GsCOORDINATE2* viewCoord) // 0x8005B55C
 
 void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_arg4, s32 arg5) // 0x8005B62C
 {
-    MATRIX            matrix_sp18[2];
+    MATRIX            worldToScreenMat;
+    MATRIX            worldMat;
     CVECTOR           sp58[5];
     MATRIX            sp70;
     s_GteScratchData2 sp90;
@@ -3354,7 +3355,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
 
     temp_v1 = 0x79C << (arg5 + 2);
     sp494   = g_WorldEnvWork.isFogEnabled_1 ? MIN(temp_v1, g_WorldEnvWork.fogFarDistance_10) : temp_v1;
-    Vw_WorldScreenMatrixAtPositionGet(&matrix_sp18[0], posX, posY, posZ);
+    Vw_WorldScreenMatrixAtPositionGet(&worldToScreenMat, posX, posY, posZ);
 
     // @hack Pointer needed for match, is there a way to remove this?
     // `Gfx_FogOverlayQuadDraw` `Gfx_MeshDraw` `func_8005AC50` all seem to do similar thing without needing pointer?
@@ -3365,7 +3366,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
     }
     else
     {
-        var_s1 = Q12(1.0f) - Q8_TO_Q12(MIN(func_80055A50(Q8_TO_Q12(matrix_sp18[0].t[2])), Q12(1.0f)));
+        var_s1 = Q12(1.0f) - Q8_TO_Q12(MIN(func_80055A50(Q8_TO_Q12(worldToScreenMat.t[2])), Q12(1.0f)));
     }
 
     // @hack Make sure compiler doesn't optimize out `new_var` pointer.
@@ -3394,13 +3395,13 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
     }
     else
     {
-        Vw_CoordHierarchyMatrixCompute(D_800C42B8, &matrix_sp18[1]);
+        Vw_CoordHierarchyMatrixCompute(D_800C42B8, &worldMat);
 
-        matrix_sp18[1].t[0] = Q12_TO_Q8(posX);
-        matrix_sp18[1].t[1] = Q12_TO_Q8(posY) + temp_fp->field_6;
-        matrix_sp18[1].t[2] = Q12_TO_Q8(posZ);
+        worldMat.t[0] = Q12_TO_Q8(posX);
+        worldMat.t[1] = Q12_TO_Q8(posY) + temp_fp->field_6;
+        worldMat.t[2] = Q12_TO_Q8(posZ);
 
-        WorldEnv_LightTransform(&matrix_sp18[1], g_WorldEnvWork.lightIntensity, &g_WorldEnvWork.lightRotation, &g_WorldEnvWork.lightPosition);
+        WorldEnv_LightTransform(&worldMat, g_WorldEnvWork.lightIntensity, &g_WorldEnvWork.lightRotation, &g_WorldEnvWork.lightPosition);
 
         switch (g_WorldEnvWork.field_0)
         {
@@ -3474,8 +3475,8 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
     // @hack Needed to get right reg order for `poly_gt4`.
     worldEngWork1 = &g_WorldEnvWork;
 
-    SetRotMatrix(&matrix_sp18[0]);
-    SetTransMatrix(&matrix_sp18[0]);
+    SetRotMatrix(&worldToScreenMat);
+    SetTransMatrix(&worldToScreenMat);
 
     for (curPtr = temp_fp->ptr_0, poly_gt4 = GsOUT_PACKET_P;
          curPtr < &temp_fp->ptr_0[temp_fp->count_4]; curPtr++)

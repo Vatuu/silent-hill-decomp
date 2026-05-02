@@ -662,10 +662,10 @@ typedef struct _Primitive
         {
             u8 field_6_0  : 8;
             s8 field_6_8  : 7;
-            u8 field_6_15 : 1; // `bool`
+            u8 isTransparent : 1; /** `bool` */
         } bits;
 
-        u16 flags; // @hack `func_8005AC50` accesses `field_6_15` above with some weird shifts, haven't found how to make it work with bitfield yet.
+        u16 flags; // @hack `func_8005AC50` accesses `isTransparent` above with some weird shifts, haven't found how to make it work with bitfield yet.
     } field_6;
     u16 field_8;
     u16 field_A;
@@ -2707,7 +2707,7 @@ bool WorldGfx_IsCharaModelPresent(e_CharaId charaId);
 void WorldGfx_CharaModelMaterialSet(e_CharaId charaId, s32 blendMode);
 
 /** @brief Makes a character transparent. */
-void WorldGfx_CharaModelTransparentSet(e_CharaId charaId, bool enableTransparency);
+void WorldGfx_CharaModelTransparentSet(e_CharaId charaId, bool isTransparent);
 
 void WorldGfx_CharaFree(s_CharaModel* model);
 
@@ -2724,8 +2724,7 @@ void WorldGfx_CharaLmBufferAssign(s8 forceFree);
 
 s32 func_8003DD74(e_CharaId charaId, s32 arg1);
 
-/** `arg1` is packed data. Each byte is a separate value. */
-void WorldGfx_HeldItemAttach(e_CharaId charaId, s32 arg1); // Called by some chara init funcs.
+void WorldGfx_HeldItemAttach(e_CharaId charaId, s32 modelBone); // Called by some chara init funcs.
 
 s32 func_800868F4(s32 arg0, s32 arg1, s32 idx);
 
@@ -3132,15 +3131,15 @@ u8 func_80055D78(q19_12 posX, q19_12 posY, q19_12 posZ);
 
 void func_80055E90(CVECTOR* color, u8 fadeAmount);
 
-void func_80055ECC(CVECTOR* color, SVECTOR3* arg1, SVECTOR3* arg2, MATRIX* mat);
+void func_80055ECC(CVECTOR* color, SVECTOR3* arg1, SVECTOR3* arg2, MATRIX* worldMat);
 
-u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat);
+u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* worldMat);
 
 void LmHeader_FixOffsets(s_LmHeader* lmHdr);
 
 void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr);
 
-void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool transparency);
+void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool isTransparent);
 
 s32 Lm_MaterialCountGet(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr);
 
@@ -3150,7 +3149,7 @@ void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, s32 arg3, GsOT
 void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 arg3, GsOT_TAG* tag);
 
 /** TODO: Unknown `arg2` type. */
-void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
+void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* viewMat);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
@@ -3162,7 +3161,7 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha);
 /** `scratchData` is unused? */
 void func_8005A838(s_GteScratchData* scratchData, s32 scale);
 
-void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
+void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* viewMat);
 
 u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData);
 
@@ -3221,7 +3220,7 @@ void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 arg2, MATRIX* viewMa
 
 s32 func_800571D0(u32 arg0);
 
-void WorldEnv_LightTransform(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
+void WorldEnv_LightTransform(MATRIX* worldMat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
 /** TODO: Unknown `arg2` type. */
 void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
@@ -4247,7 +4246,7 @@ void Gfx_WorldObjectsDraw(s_WorldGfxWork* worldGfxWork);
  */
 void Gfx_WorldObjectDraw(s_WorldObject* obj);
 
-void func_8003CC7C(s_WorldObjectModel* model, MATRIX* arg1, MATRIX* arg2);
+void func_8003CC7C(s_WorldObjectModel* model, MATRIX* viewMat, MATRIX* worldMat);
 
 /** @brief Advanced a character model LM buffer.
  *
@@ -4289,31 +4288,31 @@ void WorldGfx_CharaModelProcessLoad(s_CharaModel* model);
 void func_8003DA9C(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12 timer, s32 arg4);
 
 /** Something for Harry. `arg` is a packed value. */
-void func_8003DE60(s_Skeleton* skel, s32 arg1);
+void func_8003DE60(s_Skeleton* skel, s32 modelBone);
 
 /** Something for Cybil. */
-void func_8003DF84(s_Skeleton* skel, s32 arg1);
+void func_8003DF84(s_Skeleton* skel, s32 modelBone);
 
 /** Something for Monster Cybil. */
-void func_8003E08C(s_Skeleton* skel, s32 arg1);
+void func_8003E08C(s_Skeleton* skel, s32 modelBone);
 
 /** Something for Dahlia. */
-void func_8003E194(s_Skeleton* skel, s32 arg1);
+void func_8003E194(s_Skeleton* skel, s32 modelBone);
 
 /** Something for Kaufmann. */
-void func_8003E238(s_Skeleton* skel, s32 arg1);
+void func_8003E238(s_Skeleton* skel, s32 modelBone);
 
 /** Something for Stalker. */
-void func_8003E388(s_Skeleton* skel, s32 arg1);
+void func_8003E388(s_Skeleton* skel, s32 modelBone);
 
 /** Something for Split Head. */
-void func_8003E414(s_Skeleton* skel, s32 arg1);
+void func_8003E414(s_Skeleton* skel, s32 modelBone);
 
 /** Something for Puppet Nurse. */
-void func_8003E4A0(s_Skeleton* skel, s32 arg1);
+void func_8003E4A0(s_Skeleton* skel, s32 modelBone);
 
 /** Something for Puppet Doctor. */
-void func_8003E544(s_Skeleton* skel, s32 arg1);
+void func_8003E544(s_Skeleton* skel, s32 modelBone);
 
 void func_8003ECBC(void);
 

@@ -81,21 +81,21 @@ typedef struct
 
 typedef struct
 {
-    s32     field_0;
-    s32     field_4;
-    q19_12  field_8;
-    s16     field_C;
-    s16     field_E;
-    s16     field_10;
-    s8      unk_12[2];
-    SVECTOR field_14;
-    MATRIX  field_1C;
-    s32     field_3C;
-    u8      field_40[133]; // Type assumed.
-    s32     (*field_C8)(struct s_800DF580*);
-    q19_12  field_CC;
-    s32     field_D0;
-    s32     field_D4;
+    /* 0x0  */ s32     field_0;
+    /* 0x4  */ s32     field_4;
+    /* 0x8  */ q19_12  field_8;
+    /* 0xC  */ s16     field_C;
+    /* 0xE  */ s16     field_E;
+    /* 0x10 */ s16     field_10;
+    /* 0x12 */ s8      unk_12[2];
+    /* 0x14 */ SVECTOR field_14;
+    /* 0x1C */ MATRIX  worldMat;
+    /* 0x3C */ s32     field_3C;
+    /* 0x40 */ u8      field_40[133]; // Type assumed.
+    /* 0xC8 */ s32     (*field_C8)(struct s_800DF580*);
+    /* 0xCC */ q19_12  field_CC;
+    /* 0xD0 */ s32     field_D0;
+    /* 0xD4 */ s32     field_D4;
 } s_800DF580;
 
 typedef struct
@@ -268,7 +268,7 @@ void func_800D0C50(SVECTOR* rot, MATRIX* mat);
 void func_800D0CA0(q19_12 rotY, SVECTOR* pos);
 
 // TODO: Could be `SVECTOR3`, need to check callers.
-void func_800D0D6C(MATRIX* out, SVECTOR* pos, q19_12 rotY);
+void func_800D0D6C(MATRIX* worldMat, SVECTOR* pos, q19_12 rotY);
 
 // TODO: Could be `SVECTOR3`/VECTOR3`, need to check callers.
 void func_800D0DE4(SVECTOR* out, VECTOR* in, q19_12 headingAngle, q19_12 dist);
@@ -298,13 +298,13 @@ void func_800D1AFC(void);
 
 void func_800D1C48(void);
 
-void func_800D1D3C(GsOT_TAG* tag, SVECTOR3* arg1, MATRIX* arg2, s32 arg3);
+void func_800D1D3C(GsOT_TAG* tag, SVECTOR3* arg1, MATRIX* worldMat, s32 arg3);
 
 void func_800D1FF4(GsOT_TAG* tag);
 
 void func_800D2150(VECTOR* arg0, s32 arg1);
 
-void func_800D21AC(GsOT_TAG* ot, MATRIX* arg1, s32 arg2, s32 arg3);
+void func_800D21AC(GsOT_TAG* ot, MATRIX* worldMat, s32 arg2, s32 arg3);
 
 void func_800D35DC(SVECTOR* rot);
 
@@ -320,7 +320,7 @@ void func_800D2684(VECTOR* pos, q19_12 headingAngle);
 
 void func_800D26FC(VECTOR* pos, q19_12 headingAngle);
 
-void func_800D2790(GsOT_TAG* ot, MATRIX* arg1, s32 arg2, s32 arg3);
+void func_800D2790(GsOT_TAG* ot, MATRIX* worldMat, s32 arg2, s32 arg3);
 
 void func_800D2CC8(void);
 
