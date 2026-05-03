@@ -325,7 +325,7 @@ func_800334D0                                = 0x800331A0; // type:func
 //----------------------------------------------------------------
 //--- PA: 0x00E648   VA: 0x800331A8   subsegment: c, sys/memcard_2
 //----------------------------------------------------------------
-MemCard_FilesAreNotUsedCheck                 = 0x800331A8; // type:func
+MemCard_FilesAreDamageCheck                  = 0x800331A8; // type:func
 func_80033548                                = 0x80033218; // type:func
 
 //----------------------------------------------------------------
@@ -2789,7 +2789,7 @@ g_SlotElementSelectedIdx                     = 0x800ABB70;
 g_SelectedSaveSlotIdx                        = 0x800ABB72;
 D_800A97D9                                   = 0x800ABB75;
 D_800A97DC                                   = 0x800ABB78;
-D_800A97E0                                   = 0x800ABB7C;
+unailableMemCardSlotIdx                      = 0x800ABB7C;
 allFileStatus                                = 0x800ABB80;
 
 //--------------------------------------------------------------------------------------
@@ -3295,6 +3295,8 @@ g_Screen_FadeStatus                          = 0x800BF23C;
 //-------------------------------------------------------------------
 //--- PA: 0x09A6E8   VA: 0x800BF248   subsegment: .bss, sys/memcard_2
 //-------------------------------------------------------------------
+biggestTotalSaveCountInSlot                  = 0x800BF248;
+totalElementsCountInSlot                     = 0x800BF250; // allow_duplicated:True
 g_MemCard_SavegameCount                      = 0x800BF258;
 g_MemCard_ActiveMemCardSlotSaves             = 0x800BF25C;
 g_Savegame_ElementCount0                     = 0x800BF260;

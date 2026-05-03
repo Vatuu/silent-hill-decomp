@@ -111,7 +111,7 @@ typedef enum _FileState
 {
     FileState_Unused  = 0,
     FileState_Used    = 1,
-    FileState_Unk2    = 2, /** @unused See `func_80033548`. */
+    FileState_Unk2    = 2,
     FileState_Damaged = 3
 } e_FileState;
 
@@ -371,7 +371,7 @@ extern s8 D_800A97D9;
 
 extern s32 D_800A97DC; // `e_SavegameEntryType`
 
-extern s8 D_800A97E0;
+extern s8 unailableMemCardSlotIdx;
 
 extern u32 allFileStatus[];
 
@@ -506,6 +506,7 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr);
 // NOT SURE
 s32 MemCard_FileLimitUpdate(s32 deviceId, s_MemCard_Directory* dir);
 
+/** @brief Load save game from Memory Card. */
 void MemCard_Process_Load(s_MemCard_Process* statusPtr);
 
 void MemCard_Process_Save(s_MemCard_Process* statusPtr);
@@ -608,10 +609,5 @@ s32 MemCard_State_FileOpen(void);
 s32 MemCard_State_FileReadWrite(void);
 
 void MemCard_DevicePathGenerate(s32 deviceId, char* res);
-
-/** @brief Checks if any file is corrupted, unused or used.
- * If any file is used then it return false.
- */
-bool MemCard_FilesAreNotUsedCheck(s32 idx);
 
 #endif
