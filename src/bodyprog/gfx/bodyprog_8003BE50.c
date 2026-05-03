@@ -379,7 +379,7 @@ void Gfx_InGameDraw(bool arg0) // 0x8003C878
 
 void WorldObject_ModelNameSet(s_WorldObjectModel* model, char* newStr) // 0x8003C8F8
 {
-    model->metadata.lmIdx_9 = 0;
+    model->metadata.lmIdx_9 = WorldModelLocation_None;
     model->modelInfo.field_0  = 0;
 
     StringCopy(model->metadata.name_0.str, newStr);
@@ -396,18 +396,18 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* model, const VECTOR3* pos, const SVE
     q19_12         geomRotY;
     q21_10         geomRotZ;
     s32            i;
-    s32            lmIdx;
+    s32            modelLoc;
     s_WorldObject* obj;
 
     // Check if array of world objects to draw is full.
     if (g_WorldGfxWork.objectCount < ARRAY_SIZE(g_WorldGfxWork.objects))
     {
-        if (model->metadata.lmIdx_9 == 0)
+        if (model->metadata.lmIdx_9 == WorldModelLocation_None)
         {
             func_8003BED0();
 
-            lmIdx = func_8004287C(model, &model->metadata, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
-            if (lmIdx == 0)
+            modelLoc = Map_WorldObjectModelLocationGet(model, &model->metadata, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
+            if (modelLoc == WorldModelLocation_None)
             {
                 if (!Lm_ModelFind(model, &g_WorldGfxWork.itemLmHdr, &model->metadata))
                 {
@@ -415,11 +415,11 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* model, const VECTOR3* pos, const SVE
                 }
                 else
                 {
-                    lmIdx = 1;
+                    modelLoc = WorldModelLocation_Global;
                 }
             }
 
-            model->metadata.lmIdx_9 = lmIdx;
+            model->metadata.lmIdx_9 = modelLoc;
         }
 
         // Compute geometry position and rotation.
@@ -451,7 +451,9 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* model, const VECTOR3* pos, const SVE
         obj = &g_WorldGfxWork.objects[g_WorldGfxWork.objectCount];
         obj->rotationX = geomRotX;
         obj->rotationY = geomRotZ;
+
         if (obj->positionZ) {} // @hack Required for match.
+
         obj->rotationZ = geomRotY;
         obj->model     = model;
         obj->positionX = geomPosX;
@@ -524,13 +526,13 @@ void func_8003CC7C(s_WorldObjectModel* model, MATRIX* viewMat, MATRIX* worldMat)
     {
         if (!IpdHeader_IsLoaded(lmIdx - 3))
         {
-            model->metadata.lmIdx_9 = 0;
+            model->metadata.lmIdx_9 = WorldModelLocation_None;
         }
     }
 
     if (COMPARE_FILENAMES(&objMetaCpy->name_0, &modelHdr->name_0))
     {
-        model->metadata.lmIdx_9 = 0;
+        model->metadata.lmIdx_9 = WorldModelLocation_None;
         return;
     }
 

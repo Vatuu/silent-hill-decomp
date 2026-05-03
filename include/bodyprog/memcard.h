@@ -111,7 +111,6 @@ typedef enum _FileState
 {
     FileState_Unused  = 0,
     FileState_Used    = 1,
-    FileState_Unk2    = 2,
     FileState_Damaged = 3
 } e_FileState;
 

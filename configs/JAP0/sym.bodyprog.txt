@@ -628,7 +628,7 @@ func_80040B6C                                = 0x800408A0; // type:func
 //------------------------------------------------------------------------
 //--- PA: 0x01BD48   VA: 0x800408A8   subsegment: c, gfx/bodyprog_80040B74
 //------------------------------------------------------------------------
-func_80040B74                                = 0x800408A8; // type:func
+Chara_ModelLoadedCheck                       = 0x800408A8; // type:func
 func_80040BAC                                = 0x800408E0; // type:func
 func_80040E7C                                = 0x80040BB0; // type:func
 func_80041074                                = 0x80040DA8; // type:func
@@ -655,9 +655,9 @@ Ipd_MapFileInfoSet                           = 0x80041F0C; // type:func
 Ipd_ActiveChunksClear                        = 0x80042034; // type:func
 Map_MakeIpdGrid                              = 0x80042128; // type:func
 ConvertHexToS8                               = 0x80042290; // type:func
-func_800425D8                                = 0x8004230C; // type:func
+Ipd_ActiveChunksCollisionDataGet             = 0x8004230C; // type:func
 Ipd_CollisionDataGet                         = 0x80042418; // type:func
-func_8004287C                                = 0x800425B0; // type:func
+Map_WorldObjectModelLocationGet              = 0x800425B0; // type:func
 IpdHeader_IsLoaded                           = 0x80042938; // type:func
 Ipd_ChunkInit                                = 0x80042970; // type:func
 Ipd_PaddedDistanceToEdgeGet                  = 0x80042B1C; // type:func
@@ -666,7 +666,7 @@ Map_ChunkLoad                                = 0x80042BF0; // type:func
 Ipd_ActiveChunksSample                       = 0x80042F18; // type:func
 Ipd_DistanceToEdgeCalc                       = 0x8004306C; // type:func
 Ipd_ChunkMaterialsApply                      = 0x800430EC; // type:func
-Map_IpdIdxGet                                = 0x80043288; // type:func
+Map_IpdChunkFileIdxGet                       = 0x80043288; // type:func
 Map_IsIpdPresent                             = 0x800432AC; // type:func
 Ipd_FreeChunkFind                            = 0x80043318; // type:func
 Ipd_LoadStart                                = 0x8004340C; // type:func
@@ -3358,8 +3358,8 @@ g_WorldGfxWork                               = 0x800BF348;
 //---------------------------------------------------------------------------
 //--- PA: 0x09D5C0   VA: 0x800C2120   subsegment: .bss, gfx/bodyprog_80040B74
 //---------------------------------------------------------------------------
-D_800BFBF0                                   = 0x800C2120;
-D_800C1010                                   = 0x800C3540;
+g_Map_GfxPackets                             = 0x800C2120;
+g_Map_ActiveChunksCollisionData              = 0x800C3540;
 g_Map                                        = 0x800C3550;
 
 //--------------------------------------------------------------------------------

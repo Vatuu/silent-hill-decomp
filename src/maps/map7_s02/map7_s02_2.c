@@ -3736,7 +3736,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
 
 void func_800E5628(void) // 0x800E5628
 {
-    if (D_800A9945 != 7 || !func_80040B74(Chara_Stalker))
+    if (D_800A9945 != 7 || !Chara_ModelLoadedCheck(Chara_Stalker))
     {
         Anim_CharaTypeAnimInfoClear();
         Chara_Load(0, 7, g_SysWork.npcBoneCoords, NO_VALUE, NULL, NULL);

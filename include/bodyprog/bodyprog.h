@@ -47,6 +47,16 @@
 // ENUMS
 // ======
 
+typedef enum _WorldModelLocation
+{
+    WorldModelLocation_None   = 0,
+    WorldModelLocation_Global = 1,
+    WorldModelLocation_Chunk1 = 2,
+    WorldModelLocation_Chunk2 = 3,
+    WorldModelLocation_Chunk3 = 4,
+    WorldModelLocation_Chunk4 = 5
+} e_WorldModelLocation;
+
 /** @brief Character spawn flags. */
 typedef enum _SpawnFlags
 {
@@ -2419,8 +2429,6 @@ extern SVECTOR D_800AFDB0;
 
 extern s32 D_800AFDEC;
 
-extern PACKET D_800BFBF0[2][0xA10];
-
 extern u8 g_Items_GunsMaxLoadAmmo[36]; // Max loaded ammo that a weapon can hold. 0x800AD4A0
 
 extern const char* INVENTORY_ITEM_NAMES[];
@@ -2475,10 +2483,6 @@ extern s16 D_800BCDE8[8];
 extern u16 g_CollisionFlags;
 
 extern s_WorldGfxWork g_WorldGfxWork;
-
-extern s_IpdCollisionData* D_800C1010[4];
-
-extern s_Map g_Map;
 
 extern s8* D_800C15B0;
 
@@ -2731,9 +2735,9 @@ void func_80040004(s_MapOverlayHeader* overlayHdr);
 
 void func_80040014(void);
 
-bool func_80040B74(e_CharaId charaId);
+bool Chara_ModelLoadedCheck(e_CharaId charaId);
 
-/** Related to the screen. */
+/** Related to the screen. Called by `WorldEnv_Init`. */
 void func_80040BAC(void);
 
 void func_80040E7C(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5);
@@ -2814,15 +2818,29 @@ void Map_MakeIpdGrid(s_Map* map, char* mapTag, e_FsFile fileIdxStart);
  */
 bool ConvertHexToS8(s32* out, char hex0, char hex1);
 
-s_IpdCollisionData** func_800425D8(s32* collDataIdx);
+s_IpdCollisionData** Ipd_ActiveChunksCollisionDataGet(s32* collDataIdx);
 
+/** @brief Gets the collision data at a given position.
+ *
+ * @param posX X position.
+ * @param posZ Z position.
+ * @return Collision data.
+ */
 s_IpdCollisionData* Ipd_CollisionDataGet(q19_12 posX, q19_12 posZ);
 
-s32 func_8004287C(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q19_12 posX, q19_12 posZ);
-
-/** @brief Gets the load state of an LM file.
+/** @brief Gets the location of a nearby world object model.
  *
- * @param
+ * @param model Model to find.
+ * @param metadata TODO
+ * @param posX Search X position.
+ * @param posZ Search Z position.
+ * @return World object model location (`e_WorldModelLocation`).
+ */
+s32 Map_WorldObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q19_12 posX, q19_12 posZ);
+
+/** @brief Gets the load state of a global LM file.
+ *
+ * @param globalLm Global LM file to check.
  * @return LM file load state `(e_StaticModelLoadState`).
  */
 u32 LmHeader_LoadStateGet(s_GlobalLm* globalLm);
@@ -2873,12 +2891,23 @@ s32 Map_ChunkLoad(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
 
 void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
+/** @brief Computes the distance from a position to the nearest edge of a chunk.
+ *
+ * @param chunk Chunk to check.
+ * @param TODO
+ */
 void Ipd_DistanceToEdgeCalc(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 /** Sets materials for active chunks? */
 void Ipd_ChunkMaterialsApply(s_Map* map);
 
-s32 Map_IpdIdxGet(s32 cellX, s32 cellZ);
+/** @brief Gets the IPD chunk file index from cell coordinates.
+ *
+ * @param cellX X cell coordinate.
+ * @param cellZ Z cell coordinate.
+ * @return IPD chunk file index.
+ */
+s32 Map_IpdChunkFileIdxGet(s32 cellX, s32 cellZ);
 
 bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 cellX, s32 cellZ);
 

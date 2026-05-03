@@ -403,7 +403,7 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset
     }
 
     return func_8006A4A8(collResult, &offsetCpy, &collQuery, cond,
-                         func_800425D8(&collDataIdx), collDataIdx, NULL, 0,
+                         Ipd_ActiveChunksCollisionDataGet(&collDataIdx), collDataIdx, NULL, 0,
                          Collision_ActiveCharactersGet(&charaCount, chara, true), charaCount);
 }
 
@@ -501,7 +501,7 @@ s32 func_8006A42C(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
     offsetCpy = *offset;
 
     return func_8006A4A8(collResult, &offsetCpy, collQuery, false,
-                         func_800425D8(&collDataIdx), collDataIdx, NULL, 0, NULL, 0);
+                         Ipd_ActiveChunksCollisionDataGet(&collDataIdx), collDataIdx, NULL, 0, NULL, 0);
 }
 
 s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQuery* collQuery, bool arg3,
@@ -2550,7 +2550,7 @@ bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state) // 0x8006DEB0
     s_RayState_8C*       curUnk;
 
     // Run through IPD collision data.
-    collDataPtrs = func_800425D8(&collDataIdx);
+    collDataPtrs = Ipd_ActiveChunksCollisionDataGet(&collDataIdx);
     for (curCollData = collDataPtrs; curCollData < &collDataPtrs[collDataIdx]; curCollData++)
     {
         collData = *curCollData;
