@@ -471,14 +471,14 @@ u32 LmHeader_LoadStateGet(s_GlobalLm* globalLm) // 0x80041BA0
 void Map_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x80041C24
 {
     bzero(&g_Map, sizeof(s_Map));
-    Lm_Init(&g_Map.globalLm_138, lmHdr);
+    Lm_Init(&g_Map.globalLm, lmHdr);
 
-    g_Map.ipdBuffer_150     = ipdBuf;
-    g_Map.ipdBufferSize_154 = ipdBufSize;
-    g_Map.ipdActiveSize_158 = 0;
-    g_Map.isExterior_588    = true;
+    g_Map.ipdBuffer     = ipdBuf;
+    g_Map.ipdBufferSize = ipdBufSize;
+    g_Map.ipdActiveSize = 0;
+    g_Map.isExterior    = true;
 
-    Ipd_ActiveChunksQueueIdxClear(g_Map.ipdActive_15C, 4);
+    Ipd_ActiveChunksQueueIdxClear(g_Map.ipdActive, 4);
     Ipd_TexturesInit();
     Map_IpdCollisionDataInit();
 }
@@ -525,29 +525,29 @@ void Ipd_TexturesInit(void) // 0x80041D48
             y = 21;
         }
 
-        Texture_Init(&g_Map.ipdTextures_430.fullPageTextures_58[i], 0, 0, y, 0, 0, x, j);
+        Texture_Init(&g_Map.ipdTextures.fullPageTextures_58[i], 0, 0, y, 0, 0, x, j);
     }
 
-    Textures_ActiveTex_CountReset(&g_Map.ipdTextures_430.fullPage_0);
-    Textures_ActiveTex_PutTextures(&g_Map.ipdTextures_430.fullPage_0, g_Map.ipdTextures_430.fullPageTextures_58, 8);
+    Textures_ActiveTex_CountReset(&g_Map.ipdTextures.fullPage_0);
+    Textures_ActiveTex_PutTextures(&g_Map.ipdTextures.fullPage_0, g_Map.ipdTextures.fullPageTextures_58, 8);
 
     for (i = 0, y = 26, j = 0; i < 2; i++, x += 16)
     {
-        Texture_Init(&g_Map.ipdTextures_430.halfPageTextures_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
+        Texture_Init(&g_Map.ipdTextures.halfPageTextures_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
         if (i & 0x1)
         {
             y++;
         }
     }
 
-    Textures_ActiveTex_CountReset(&g_Map.ipdTextures_430.halfPage_2C);
-    Textures_ActiveTex_PutTextures(&g_Map.ipdTextures_430.halfPage_2C, g_Map.ipdTextures_430.halfPageTextures_118, 2);
+    Textures_ActiveTex_CountReset(&g_Map.ipdTextures.halfPage_2C);
+    Textures_ActiveTex_PutTextures(&g_Map.ipdTextures.halfPage_2C, g_Map.ipdTextures.halfPageTextures_118, 2);
 }
 
 void Map_IpdCollisionDataInit(void) // 0x80041E98
 {
-    bzero(&g_Map.collisionData_0, sizeof(s_IpdCollisionData));
-    g_Map.collisionData_0.field_1C = 512;
+    bzero(&g_Map.collisionData, sizeof(s_IpdCollisionData));
+    g_Map.collisionData.field_1C = 512;
 }
 
 void Map_PlaceIpdAtCell(s16 ipdFileIdx, s32 cellX, s32 cellZ) // 0x80041ED0
@@ -555,9 +555,9 @@ void Map_PlaceIpdAtCell(s16 ipdFileIdx, s32 cellX, s32 cellZ) // 0x80041ED0
     s_IpdChunk*  curChunk;
     s_IpdHeader* ipdHdr;
 
-    ((s16*)&g_Map.ipdGridCenter_42C[cellZ])[cellX] = ipdFileIdx;
+    ((s16*)&g_Map.ipdGridCenter[cellZ])[cellX] = ipdFileIdx;
 
-    for (curChunk = g_Map.ipdActive_15C; curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158]; curChunk++)
+    for (curChunk = g_Map.ipdActive; curChunk < &g_Map.ipdActive[g_Map.ipdActiveSize]; curChunk++)
     {
         if (curChunk->cellX != cellX || curChunk->cellZ != cellZ)
         {
@@ -579,7 +579,7 @@ void Map_PlaceIpdAtCell(s16 ipdFileIdx, s32 cellX, s32 cellZ) // 0x80041ED0
 
 void Ipd_ActiveMapChunksClear(void) // 0x80041FF0
 {
-    Ipd_ActiveChunksClear(&g_Map, g_Map.ipdActiveSize_158);
+    Ipd_ActiveChunksClear(&g_Map, g_Map.ipdActiveSize);
 }
 
 void Ipd_TexturesRefClear(void) // 0x8004201C
@@ -587,8 +587,8 @@ void Ipd_TexturesRefClear(void) // 0x8004201C
     s_Texture* curTex;
 
     // TODO: Will these match as for loops?
-    curTex = &g_Map.ipdTextures_430.fullPageTextures_58[0];
-    while (curTex < (&g_Map.ipdTextures_430.fullPageTextures_58[8]))
+    curTex = &g_Map.ipdTextures.fullPageTextures_58[0];
+    while (curTex < (&g_Map.ipdTextures.fullPageTextures_58[8]))
     {
         if (curTex->refCount == 0)
         {
@@ -598,8 +598,8 @@ void Ipd_TexturesRefClear(void) // 0x8004201C
         curTex++;
     }
 
-    curTex = &g_Map.ipdTextures_430.halfPageTextures_118[0];
-    while (curTex < (&g_Map.ipdTextures_430.halfPageTextures_118[2]))
+    curTex = &g_Map.ipdTextures.halfPageTextures_118[0];
+    while (curTex < (&g_Map.ipdTextures.halfPageTextures_118[2]))
     {
         if (curTex->refCount == 0)
         {
@@ -613,7 +613,7 @@ void Ipd_TexturesRefClear(void) // 0x8004201C
 void Map_WorldClearReset(void) // 0x800420C0
 {
     Map_GlobalLmFree();
-    Ipd_ActiveChunksClear(&g_Map, g_Map.ipdActiveSize_158);
+    Ipd_ActiveChunksClear(&g_Map, g_Map.ipdActiveSize);
     Ipd_TexturesInit();
 }
 
@@ -621,28 +621,28 @@ void Map_GlobalLmFree(void) // 0x800420FC
 {
     s_GlobalLm* globalLm;
 
-    globalLm = &g_Map.globalLm_138;
+    globalLm = &g_Map.globalLm;
 
     if (Fs_QueueEntryLoadStatusGet(globalLm->queueIdx) >= FsQueueEntryLoadStatus_Loaded &&
         globalLm->lmHdr->isLoaded)
     {
-        Lm_MaterialRefCountDec(g_Map.globalLm_138.lmHdr);
+        Lm_MaterialRefCountDec(g_Map.globalLm.lmHdr);
     }
 
-    Lm_Init(&g_Map.globalLm_138, g_Map.globalLm_138.lmHdr);
+    Lm_Init(&g_Map.globalLm, g_Map.globalLm.lmHdr);
 }
 
 s_Texture* Texture_InfoGet(char* texName) // 0x80042178
 {
     s_Texture* tex;
 
-    tex = Textures_ActiveTex_FindTexture(texName, &g_Map.ipdTextures_430.fullPage_0);
+    tex = Textures_ActiveTex_FindTexture(texName, &g_Map.ipdTextures.fullPage_0);
     if (tex != NULL)
     {
         return tex;
     }
 
-    tex = Textures_ActiveTex_FindTexture(texName, &g_Map.ipdTextures_430.halfPage_2C);
+    tex = Textures_ActiveTex_FindTexture(texName, &g_Map.ipdTextures.halfPage_2C);
     if (tex != NULL)
     {
         return tex;
@@ -653,33 +653,33 @@ s_Texture* Texture_InfoGet(char* texName) // 0x80042178
 
 void Ipd_MapFileInfoSet(char* mapTag, e_FsFile plmIdx, s32 activeIpdCount, bool isExterior, e_FsFile ipdFileIdx, e_FsFile texFileIdx) // 0x800421D8
 {
-    g_Map.isExterior_588 = isExterior;
-    g_Map.texFileIdx_134 = texFileIdx;
+    g_Map.isExterior = isExterior;
+    g_Map.texFileIdx = texFileIdx;
 
     if (plmIdx != NO_VALUE)
     {
-        if (plmIdx != g_Map.globalLm_138.fileIdx)
+        if (plmIdx != g_Map.globalLm.fileIdx)
         {
-            if (Fs_QueueEntryLoadStatusGet(g_Map.globalLm_138.queueIdx) >= FsQueueEntryLoadStatus_Loaded &&
-                g_Map.globalLm_138.lmHdr->isLoaded)
+            if (Fs_QueueEntryLoadStatusGet(g_Map.globalLm.queueIdx) >= FsQueueEntryLoadStatus_Loaded &&
+                g_Map.globalLm.lmHdr->isLoaded)
             {
-                Lm_MaterialRefCountDec(g_Map.globalLm_138.lmHdr);
+                Lm_MaterialRefCountDec(g_Map.globalLm.lmHdr);
             }
 
-            g_Map.globalLm_138.fileIdx  = plmIdx;
-            g_Map.globalLm_138.queueIdx = NO_VALUE;
+            g_Map.globalLm.fileIdx  = plmIdx;
+            g_Map.globalLm.queueIdx = NO_VALUE;
         }
     }
 
-    if (g_Map.ipdActiveSize_158 != activeIpdCount || strcmp(mapTag, g_Map.mapTag_144) != 0)
+    if (g_Map.ipdActiveSize != activeIpdCount || strcmp(mapTag, g_Map.mapTag) != 0)
     {
         Ipd_ActiveChunksClear(&g_Map, activeIpdCount);
 
-        g_Map.ipdActiveSize_158 = activeIpdCount;
-        g_Map.ipdFileIdx_14C    = ipdFileIdx;
-        strcpy(g_Map.mapTag_144, mapTag);
+        g_Map.ipdActiveSize = activeIpdCount;
+        g_Map.ipdFileIdx    = ipdFileIdx;
+        strcpy(g_Map.mapTag, mapTag);
 
-        g_Map.mapTagSize_148 = strlen(mapTag);
+        g_Map.mapTagSize = strlen(mapTag);
         Map_MakeIpdGrid(&g_Map, mapTag, ipdFileIdx);
     }
 }
@@ -692,12 +692,12 @@ void Ipd_ActiveChunksClear(s_Map* map, s32 arg1) // 0x80042300
     s_IpdHeader* ipdHdr0;
     s_IpdHeader* ipdHdr1;
 
-    ipdHdr0 = map->ipdBuffer_150;
-    step    = (map->ipdBufferSize_154 / arg1) & ~0x3;
+    ipdHdr0 = map->ipdBuffer;
+    step    = (map->ipdBufferSize / arg1) & ~0x3;
 
     for (i = 0; i < 4; i++, *(u8**)&ipdHdr0 += step)
     {
-        curChunk = &map->ipdActive_15C[i];
+        curChunk = &map->ipdActive[i];
 
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx) >= FsQueueEntryLoadStatus_Loaded)
         {
@@ -732,13 +732,13 @@ void Map_MakeIpdGrid(s_Map* map, char* mapTag, e_FsFile fileIdxStart) // 0x80042
     char*           filenameSuffix;
     s_IpdColumn*    col;
 
-    map->ipdGridCenter_42C = (s_IpdColumn*)(&map->ipdGrid_1CC[8].idx[8]);
+    map->ipdGridCenter = (s_IpdColumn*)(&map->ipdGrid[8].idx[8]);
 
     for (z = -8; z < 11; z++)
     {
         for (x = -8; x < 8; x++)
         {
-            ((s16*)&map->ipdGridCenter_42C[z])[x] = NO_VALUE;
+            ((s16*)&map->ipdGridCenter[z])[x] = NO_VALUE;
         }
     }
 
@@ -749,13 +749,13 @@ void Map_MakeIpdGrid(s_Map* map, char* mapTag, e_FsFile fileIdxStart) // 0x80042
         {
             Fs_GetFileName(sp10, i);
 
-            if (strncmp(sp10, map->mapTag_144, map->mapTagSize_148) == 0)
+            if (strncmp(sp10, map->mapTag, map->mapTagSize) == 0)
             {
-                filenameSuffix = &sp10[map->mapTagSize_148];
+                filenameSuffix = &sp10[map->mapTagSize];
                 if (ConvertHexToS8(&x, filenameSuffix[0], filenameSuffix[1]) &&
                     ConvertHexToS8(&z, filenameSuffix[2], filenameSuffix[3]))
                 {
-                    col         = &map->ipdGridCenter_42C[z];
+                    col         = &map->ipdGridCenter[z];
                     col->idx[x] = i;
                 }
             }
@@ -814,10 +814,10 @@ s_IpdCollisionData** func_800425D8(s32* collDataIdx) // 0x800425D8
     s_IpdCollisionData* collData;
     s_IpdHeader*        ipdHdr;
 
-    ptr          = g_Map.ipdActive_15C;
+    ptr          = g_Map.ipdActive;
     *collDataIdx = 0;
 
-    while (ptr < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158])
+    while (ptr < &g_Map.ipdActive[g_Map.ipdActiveSize])
     {
         if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx) >= FsQueueEntryLoadStatus_Loaded)
         {
@@ -856,7 +856,7 @@ s_IpdCollisionData* Ipd_CollisionDataGet(q19_12 posX, q19_12 posZ) // 0x800426E4
     cellZ = FLOOR_TO_STEP(geomZ, Q12_TO_Q8(CHUNK_CELL_SIZE));
 
     // Run through active chunks.
-    for (curChunk = g_Map.ipdActive_15C; curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158]; curChunk++)
+    for (curChunk = g_Map.ipdActive; curChunk < &g_Map.ipdActive[g_Map.ipdActiveSize]; curChunk++)
     {
         // Check if chunk is loaded.
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx) < FsQueueEntryLoadStatus_Loaded)
@@ -874,13 +874,13 @@ s_IpdCollisionData* Ipd_CollisionDataGet(q19_12 posX, q19_12 posZ) // 0x800426E4
     }
 
     // Fallback.
-    if (((s16*)(&g_Map.ipdGridCenter_42C[cellZ]))[cellX] != NO_VALUE)
+    if (((s16*)(&g_Map.ipdGridCenter[cellZ]))[cellX] != NO_VALUE)
     {
         return NULL;
     }
     else
     {
-        return &g_Map.collisionData_0;
+        return &g_Map.collisionData;
     }
 }
 
@@ -900,7 +900,7 @@ s32 func_8004287C(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q1
     s_IpdChunk* curChunk;
     s_GlobalLm* globalLm;
 
-    globalLm = &g_Map.globalLm_138;
+    globalLm = &g_Map.globalLm;
 
     // Convert position to geometry space.
     geomX = Q12_TO_Q8(posX);
@@ -908,7 +908,7 @@ s32 func_8004287C(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q1
 
     if (Fs_QueueEntryLoadStatusGet(globalLm->queueIdx) >= FsQueueEntryLoadStatus_Loaded &&
         globalLm->lmHdr->isLoaded &&
-        Lm_ModelFind(model, g_Map.globalLm_138.lmHdr, metadata))
+        Lm_ModelFind(model, g_Map.globalLm.lmHdr, metadata))
     {
         return 2;
     }
@@ -916,8 +916,8 @@ s32 func_8004287C(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q1
     cellX = FLOOR_TO_STEP(geomX, Q12_TO_Q8(CHUNK_CELL_SIZE));
     cellZ = FLOOR_TO_STEP(geomZ, Q12_TO_Q8(CHUNK_CELL_SIZE));
 
-    for (curChunk = g_Map.ipdActive_15C, chunkIdx = 0;
-         curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158];
+    for (curChunk = g_Map.ipdActive, chunkIdx = 0;
+         curChunk < &g_Map.ipdActive[g_Map.ipdActiveSize];
          curChunk++)
     {
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx) < FsQueueEntryLoadStatus_Loaded)
@@ -930,7 +930,7 @@ s32 func_8004287C(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q1
             continue;
         }
 
-        if (!g_Map.isExterior_588)
+        if (!g_Map.isExterior)
         {
             if (curChunk->cellX == cellX && curChunk->cellZ == cellZ)
             {
@@ -971,7 +971,7 @@ s32 func_8004287C(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q1
         curChunk = chunks[k];
         if (Lm_ModelFind(model, curChunk->ipdHdr->lmHdr, metadata))
         {
-            return (curChunk - g_Map.ipdActive_15C) + 3;
+            return (curChunk - g_Map.ipdActive) + 3;
         }
     }
 
@@ -980,7 +980,7 @@ s32 func_8004287C(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q1
 
 bool IpdHeader_IsLoaded(s32 ipdIdx) // 0x80042C04
 {
-    return IpdHeader_LoadStateGet(&g_Map.ipdActive_15C[ipdIdx]) >= StaticModelLoadState_Loaded;
+    return IpdHeader_LoadStateGet(&g_Map.ipdActive[ipdIdx]) >= StaticModelLoadState_Loaded;
 }
 
 void Ipd_ChunkInit(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x80042C3C
@@ -988,34 +988,34 @@ void Ipd_ChunkInit(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x
     s32         fullPageTexCount;
     s_IpdChunk* curChunk;
 
-    g_Map.positionX_578 = posX1;
-    g_Map.positionX_57C = posZ1;
+    g_Map.positionX = posX1;
+    g_Map.positionZ = posZ1;
 
-    if (g_Map.globalLm_138.queueIdx == NO_VALUE)
+    if (g_Map.globalLm.queueIdx == NO_VALUE)
     {
-        g_Map.globalLm_138.queueIdx = Fs_QueueStartRead(g_Map.globalLm_138.fileIdx, g_Map.globalLm_138.lmHdr);
+        g_Map.globalLm.queueIdx = Fs_QueueStartRead(g_Map.globalLm.fileIdx, g_Map.globalLm.lmHdr);
     }
 
     Map_ChunkLoad(&g_Map, posX0, posZ0, posX1, posZ1);
 
-    if (Fs_QueueEntryLoadStatusGet(g_Map.globalLm_138.queueIdx) >= FsQueueEntryLoadStatus_Loaded &&
-        !g_Map.globalLm_138.lmHdr->isLoaded)
+    if (Fs_QueueEntryLoadStatusGet(g_Map.globalLm.queueIdx) >= FsQueueEntryLoadStatus_Loaded &&
+        !g_Map.globalLm.lmHdr->isLoaded)
     {
-        fullPageTexCount                         = g_Map.ipdTextures_430.fullPage_0.count_0;
-        g_Map.ipdTextures_430.fullPage_0.count_0 = 4;
+        fullPageTexCount                         = g_Map.ipdTextures.fullPage_0.count_0;
+        g_Map.ipdTextures.fullPage_0.count_0 = 4;
 
-        LmHeader_FixOffsets(g_Map.globalLm_138.lmHdr);
-        Lm_MaterialsLoadWithFilter(g_Map.globalLm_138.lmHdr, &g_Map.ipdTextures_430.fullPage_0, NULL, g_Map.texFileIdx_134, BlendMode_Additive);
-        Lm_MaterialFlagsApply(g_Map.globalLm_138.lmHdr);
+        LmHeader_FixOffsets(g_Map.globalLm.lmHdr);
+        Lm_MaterialsLoadWithFilter(g_Map.globalLm.lmHdr, &g_Map.ipdTextures.fullPage_0, NULL, g_Map.texFileIdx, BlendMode_Additive);
+        Lm_MaterialFlagsApply(g_Map.globalLm.lmHdr);
 
-        g_Map.ipdTextures_430.fullPage_0.count_0 = fullPageTexCount;
+        g_Map.ipdTextures.fullPage_0.count_0 = fullPageTexCount;
     }
 
-    for (curChunk = g_Map.ipdActive_15C; curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158]; curChunk++)
+    for (curChunk = g_Map.ipdActive; curChunk < &g_Map.ipdActive[g_Map.ipdActiveSize]; curChunk++)
     {
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx) >= FsQueueEntryLoadStatus_Loaded)
         {
-            IpdHeader_FixOffsets(curChunk->ipdHdr, &g_Map.globalLm_138.lmHdr, 1, &g_Map.ipdTextures_430.fullPage_0, &g_Map.ipdTextures_430.halfPage_2C, g_Map.texFileIdx_134);
+            IpdHeader_FixOffsets(curChunk->ipdHdr, &g_Map.globalLm.lmHdr, 1, &g_Map.ipdTextures.fullPage_0, &g_Map.ipdTextures.halfPage_2C, g_Map.texFileIdx);
             func_80044044(curChunk->ipdHdr, curChunk->cellX, curChunk->cellZ);
         }
     }
@@ -1080,27 +1080,27 @@ s32 Map_ChunkLoad(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
     cellX1 = FLOOR_TO_STEP(Q12_TO_Q8(posX1), Q12_TO_Q8(CHUNK_CELL_SIZE));
     cellZ1 = FLOOR_TO_STEP(Q12_TO_Q8(posZ1), Q12_TO_Q8(CHUNK_CELL_SIZE));
 
-    map->cellX_580 = cellX1;
-    map->cellZ_584 = cellZ1;
+    map->cellX = cellX1;
+    map->cellZ = cellZ1;
 
-    Ipd_ActiveChunksSample(map, posX0, posZ0, posX1, posZ1, map->isExterior_588);
+    Ipd_ActiveChunksSample(map, posX0, posZ0, posX1, posZ1, map->isExterior);
     Ipd_ChunkMaterialsApply(map);
 
     for (z = -1; z <= 1; z++)
     {
         for (x = -1; x <= 1; x++)
         {
-            if (map->isExterior_588 || (x == 0 && z == 0))
+            if (map->isExterior || (x == 0 && z == 0))
             {
                 projCellZ = cellZ0 + z;
                 projCellX = cellX0 + x;
 
                 chunkIdx = Map_IpdIdxGet(projCellX, projCellZ);
                 if (chunkIdx != NO_VALUE &&
-                    Ipd_PaddedDistanceToEdgeGet(posX0, posZ0, projCellX, projCellZ, map->isExterior_588) <= Q12(0.0f) &&
-                    !Map_IsIpdPresent(map->ipdActive_15C, projCellX, projCellZ))
+                    Ipd_PaddedDistanceToEdgeGet(posX0, posZ0, projCellX, projCellZ, map->isExterior) <= Q12(0.0f) &&
+                    !Map_IsIpdPresent(map->ipdActive, projCellX, projCellZ))
                 {
-                    chunk = Ipd_FreeChunkFind(map->ipdActive_15C, map->isExterior_588);
+                    chunk = Ipd_FreeChunkFind(map->ipdActive, map->isExterior);
 
                     if (Fs_QueueEntryLoadStatusGet(chunk->queueIdx) >= FsQueueEntryLoadStatus_Loaded)
                     {
@@ -1111,7 +1111,7 @@ s32 Map_ChunkLoad(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
                         }
                     }
 
-                    curQueueIdx = Ipd_LoadStart(chunk, chunkIdx, projCellX, projCellZ, posX0, posZ0, posX1, posZ1, map->isExterior_588);
+                    curQueueIdx = Ipd_LoadStart(chunk, chunkIdx, projCellX, projCellZ, posX0, posZ0, posX1, posZ1, map->isExterior);
                     if (curQueueIdx != NO_VALUE)
                     {
                         queueIdx = curQueueIdx;
@@ -1129,7 +1129,7 @@ void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1
     s_IpdChunk* curChunk;
 
     // Run through active chunks.
-    for (curChunk = map->ipdActive_15C; curChunk < &map->ipdActive_15C[4]; curChunk++)
+    for (curChunk = map->ipdActive; curChunk < &map->ipdActive[4]; curChunk++)
     {
         if (curChunk->queueIdx == NO_VALUE)
         {
@@ -1171,7 +1171,7 @@ void Ipd_ChunkMaterialsApply(s_Map* map) // 0x800433B8
 {
     s_IpdChunk* curChunk;
 
-    for (curChunk = &map->ipdActive_15C[0]; curChunk < &map->ipdActive_15C[map->ipdActiveSize_158]; curChunk++)
+    for (curChunk = &map->ipdActive[0]; curChunk < &map->ipdActive[map->ipdActiveSize]; curChunk++)
     {
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx) >= FsQueueEntryLoadStatus_Loaded)
         {
@@ -1183,14 +1183,14 @@ void Ipd_ChunkMaterialsApply(s_Map* map) // 0x800433B8
         }
     }
 
-    for (curChunk = &map->ipdActive_15C[0]; curChunk < &map->ipdActive_15C[map->ipdActiveSize_158]; curChunk++)
+    for (curChunk = &map->ipdActive[0]; curChunk < &map->ipdActive[map->ipdActiveSize]; curChunk++)
     {
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx) >= FsQueueEntryLoadStatus_Loaded)
         {
             if (curChunk->ipdHdr->isLoaded &&
                 (curChunk->distance0 <= Q12(0.0f) || curChunk->distance1 <= Q12(0.0f)))
             {
-                Ipd_MaterialsLoad(curChunk->ipdHdr, &map->ipdTextures_430.fullPage_0, &map->ipdTextures_430.halfPage_2C, map->texFileIdx_134);
+                Ipd_MaterialsLoad(curChunk->ipdHdr, &map->ipdTextures.fullPage_0, &map->ipdTextures.halfPage_2C, map->texFileIdx);
                 Lm_MaterialFlagsApply(curChunk->ipdHdr->lmHdr);
             }
         }
@@ -1200,14 +1200,14 @@ void Ipd_ChunkMaterialsApply(s_Map* map) // 0x800433B8
 s32 Map_IpdIdxGet(s32 cellX, s32 cellZ) // 0x80043554
 {
     // @hack
-    return ((s16*)&g_Map.ipdGridCenter_42C[cellZ])[cellX];
+    return ((s16*)&g_Map.ipdGridCenter[cellZ])[cellX];
 }
 
 bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 cellX, s32 cellZ) // 0x80043578
 {
     s32 i;
 
-    for (i = 0; i < g_Map.ipdActiveSize_158; i++)
+    for (i = 0; i < g_Map.ipdActiveSize; i++)
     {
         if (chunks[i].queueIdx != NO_VALUE &&
             cellX == chunks[i].cellX && cellZ == chunks[i].cellZ)
@@ -1234,7 +1234,7 @@ s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior)
     largestMatCount     = 0;
     farthestDist        = Q12(0.0f);
 
-    for (curChunk = chunks; curChunk < &chunks[g_Map.ipdActiveSize_158]; curChunk++)
+    for (curChunk = chunks; curChunk < &chunks[g_Map.ipdActiveSize]; curChunk++)
     {
         if (!isExterior)
         {
@@ -1311,7 +1311,7 @@ bool Ipd_AreChunksLoaded(void) // 0x80043740
     s32         i;
     s_IpdChunk* curChunk;
 
-    switch (LmHeader_LoadStateGet(&g_Map.globalLm_138))
+    switch (LmHeader_LoadStateGet(&g_Map.globalLm))
     {
         case StaticModelLoadState_Invalid:
             break;
@@ -1323,8 +1323,8 @@ bool Ipd_AreChunksLoaded(void) // 0x80043740
             return false;
     }
 
-    for (curChunk = g_Map.ipdActive_15C, i = 0;
-         i < g_Map.ipdActiveSize_158;
+    for (curChunk = g_Map.ipdActive, i = 0;
+         i < g_Map.ipdActiveSize;
          i++, curChunk++)
     {
         switch (IpdHeader_LoadStateGet(curChunk))
@@ -1348,7 +1348,7 @@ bool func_80043830(void) // 0x80043830
     s32         loadState;
     s_IpdChunk* curChunk;
 
-    for (curChunk = &g_Map.ipdActive_15C[0]; curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158]; curChunk++)
+    for (curChunk = &g_Map.ipdActive[0]; curChunk < &g_Map.ipdActive[g_Map.ipdActiveSize]; curChunk++)
     {
         loadState = IpdHeader_LoadStateGet(curChunk);
         if (loadState == StaticModelLoadState_Invalid || loadState == StaticModelLoadState_Loaded ||
@@ -1362,7 +1362,7 @@ bool func_80043830(void) // 0x80043830
             continue;
         }
 
-        if (Ipd_DistanceToEdgeGet(Q12_TO_Q8(g_Map.positionX_578), Q12_TO_Q8(g_Map.positionX_57C), curChunk->cellX, curChunk->cellZ) <= Q8(4.5f))
+        if (Ipd_DistanceToEdgeGet(Q12_TO_Q8(g_Map.positionX), Q12_TO_Q8(g_Map.positionZ), curChunk->cellX, curChunk->cellZ) <= Q8(4.5f))
         {
             return true;
         }
@@ -1379,13 +1379,13 @@ bool func_8004393C(q19_12 posX, q19_12 posZ) // 0x8004393C
     cellX = FLOOR_TO_STEP(Q12_TO_Q8(posX), Q12_TO_Q8(CHUNK_CELL_SIZE));
     cellZ = FLOOR_TO_STEP(Q12_TO_Q8(posZ), Q12_TO_Q8(CHUNK_CELL_SIZE));
 
-    if (g_Map.isExterior_588)
+    if (g_Map.isExterior)
     {
-        return Ipd_DistanceToEdgeGet(Q12_TO_Q8(g_Map.positionX_578), Q12_TO_Q8(g_Map.positionX_57C), cellX, cellZ) <= Q8(4.5f);
+        return Ipd_DistanceToEdgeGet(Q12_TO_Q8(g_Map.positionX), Q12_TO_Q8(g_Map.positionZ), cellX, cellZ) <= Q8(4.5f);
     }
 
-    if (cellX == g_Map.cellX_580 &&
-        cellZ == g_Map.cellZ_584)
+    if (cellX == g_Map.cellX &&
+        cellZ == g_Map.cellZ)
     {
         return true;
     }
@@ -1393,12 +1393,12 @@ bool func_8004393C(q19_12 posX, q19_12 posZ) // 0x8004393C
     return false;
 }
 
-void Ipd_ChunkCheckDraw(GsOT* ot, s32 arg1) // 0x80043A24
+void Ipd_ChunksDraw(GsOT* ot, bool arg1) // 0x80043A24
 {
     s32         queueState;
     s_IpdChunk* curChunk;
 
-    queueState = Fs_QueueEntryLoadStatusGet(g_Map.globalLm_138.queueIdx);
+    queueState = Fs_QueueEntryLoadStatusGet(g_Map.globalLm.queueIdx);
 
     if (queueState == FsQueueEntryLoadStatus_Unloaded)
     {
@@ -1406,30 +1406,31 @@ void Ipd_ChunkCheckDraw(GsOT* ot, s32 arg1) // 0x80043A24
     }
 
     if (!(queueState == FsQueueEntryLoadStatus_Invalid ||
-          (queueState == FsQueueEntryLoadStatus_Loaded && g_Map.globalLm_138.lmHdr->isLoaded)))
+          (queueState == FsQueueEntryLoadStatus_Loaded && g_Map.globalLm.lmHdr->isLoaded)))
     {
         return;
     }
 
-    curChunk = &g_Map.ipdActive_15C[0];
-    for (; curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158]; curChunk++)
+    // Draw active chunks.
+    curChunk = &g_Map.ipdActive[0];
+    for (; curChunk < &g_Map.ipdActive[g_Map.ipdActiveSize]; curChunk++)
     {
         if (IpdHeader_LoadStateGet(curChunk) >= StaticModelLoadState_Loaded && Ipd_CellPositionMatchCheck(curChunk, &g_Map))
         {
-            Gfx_IpdChunkDraw(curChunk->ipdHdr, g_Map.positionX_578, g_Map.positionX_57C, ot, arg1);
+            Ipd_ChunkDraw(curChunk->ipdHdr, g_Map.positionX, g_Map.positionZ, ot, arg1);
         }
     }
 }
 
 bool Ipd_CellPositionMatchCheck(s_IpdChunk* chunk, s_Map* map)
 {
-    if (map->cellX_580 == chunk->cellX &&
-        map->cellZ_584 == chunk->cellZ)
+    if (map->cellX == chunk->cellX &&
+        map->cellZ == chunk->cellZ)
     {
         return true;
     }
 
-    return map->isExterior_588 != false;
+    return map->isExterior != false;
 }
 
 bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr) // 0x80043B70
@@ -1619,10 +1620,10 @@ void func_80044044(s_IpdHeader* ipd, s32 cellX, s32 cellZ) // 0x80044044
     ipd->cellX                       = cellX;
     ipd->cellZ                       = cellZ;
     ipd->collisionData.positionX += (cellX - prevCellX) * Q12_TO_Q8(CHUNK_CELL_SIZE);
-    ipd->collisionData.positionZ_4 += (cellZ - prevCellZ) * Q12_TO_Q8(CHUNK_CELL_SIZE);
+    ipd->collisionData.positionZ += (cellZ - prevCellZ) * Q12_TO_Q8(CHUNK_CELL_SIZE);
 }
 
-void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 arg4) // 0x80044090
+void Ipd_ChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, bool arg4) // 0x80044090
 {
     #define CHUNK_SUBCELL_SIZE Q8(8.0f)
 

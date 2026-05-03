@@ -46,22 +46,24 @@ static inline s32 WrapIdx(s32 idx)
 // MEMORY CARD - CARD CHECKS
 // ========================================
 
-/** @brief Checks if any file is corrupted, unused or used.
- * If any file is used then it return false.
+/** @brief Checks if any file is corrupted, unused, or used.
+ *
+ * @param deviceId Memory card dDevice ID.
+ * @return `true` if a file is damaged or used, `false` otherwise.
  */
-static bool MemCard_FilesAreDamageCheck(s32 idx) // 0x800334D8
+static bool MemCard_FilesDamagedCheck(s32 deviceId) // 0x800334D8
 {
     s32  i;
     bool res;
-    s32  allFilesStatus;
+    s32  fileStatuses;
     s32  fileStatus;
 
     res = false;
-    allFilesStatus = MemCard_AllFilesStatusGet(idx);
+    fileStatuses = MemCard_FileStatusesGet(deviceId);
 
     for (i = 0; i < MEMCARD_FILE_COUNT_MAX; i++)
     {
-        fileStatus = MemCard_FileStatusGet(allFilesStatus, i);
+        fileStatus = MemCard_FileStatusGet(fileStatuses, i);
         if (fileStatus == FileState_Used)
         {
             return false;
@@ -105,7 +107,7 @@ bool func_80033548(void) // 0x80033548
     s32                         memCardStatus;
     s_MemCard_SaveMetadata*     saveMetadata;
     static s32                  biggestTotalSaveCountInSlot[MEMCARD_SLOT_COUNT_MAX];
-    static s32                  totalElementsCountInSlot[MEMCARD_SLOT_COUNT_MAX];
+    static s32                  totalElementCountInSlot[MEMCARD_SLOT_COUNT_MAX];
     static u32                  D_800A97DC = 0; /** @brief Timer for check.
                                                  * @bug This variable is constantly updated. It can happen
                                                  * that it will reach to the point where the conditional where
@@ -114,8 +116,8 @@ bool func_80033548(void) // 0x80033548
                                                  * there are save games it will push the selected save game down
                                                  * to the lastest element in the selected slot.
                                                  */
-    static s8                   unailableMemCardSlotIdx = NO_VALUE;
-    static u32                  allFileStatus[MEMCARD_DEVICE_COUNT_MAX] = { };
+    static s8                   unavailableMemCardSlotIdx = NO_VALUE;
+    static u32                  fileStatuses[MEMCARD_DEVICE_COUNT_MAX] = { };
 
     memCardStatus3 = 1;
 
@@ -182,28 +184,21 @@ bool func_80033548(void) // 0x80033548
             }
         }
         
-        /** Multiple checks.
-         *
-         * First conditional: In case of the memory card not being available
-         * then sets the type for the first element of the slot (used to
-         * display the different states of the memory card) to the correspondent
-         * of the memory card state.
-         * 
-         * Second conditional: In case the memory card is available, but no
-         * file is used (essentially is empty) it will set to display the message
-         * of no save available in case of the save screen being in loading mode
-         * otherwise in case of for some reason detecting that the memory card
-         * have no files available it will show the "Out of Blocks" message
-         * and lastly if the save screen is in save mode then it will display
-         * the "Create new file" as first element.
-         *
-         * Third conditional: Checks if memory card, during the save screen in
-         * load save mode, have any damage file in order to assign the damaged
-         * file message.
-         *
-         * Last conditional (else): Reads and update all elements from a slot
-         * in memory.
-         */
+        // Performs multiple checks to initialize slot elements.
+        //
+        // 1. If the memory card is unavailable: 
+        //    Sets the first element to reflect the current memory card state.
+        //
+        // 2. If the memory card is available but contains no files:
+        //    - Displays "no save available" if the screen is in loading mode.
+        //    - Displays "out of blocks" if the card is detected as empty.
+        //    - Displays "create new file" if the screen is in save mode.
+        //
+        // 3. If the screen is in load mode and a damaged file is detected:
+        //    Assigns the damaged file message to the slot.
+        //
+        // 4. Otherwise:
+        //    Reads and updates all slot elements from memory.
         if (memCardStatus != MemCardState_Available)
         {
             switch (memCardStatus)
@@ -267,7 +262,7 @@ bool func_80033548(void) // 0x80033548
             g_Savegame_ElementCount1[WrapIdx(i) >> 2]++;
             g_MemCard_ActiveMemCardSlotSaves++;
         }
-        else if (g_SaveScreen_SaveScreenState == SaveScreenState_Load && MemCard_FilesAreDamageCheck(i))
+        else if (g_SaveScreen_SaveScreenState == SaveScreenState_Load && MemCard_FilesDamagedCheck(i))
         {
             g_MemCard_ActiveMemCardSlotSaves->type_4 = SavegameEntryType_CorruptedSave;
 
@@ -277,11 +272,11 @@ bool func_80033548(void) // 0x80033548
         }
         else
         {
-            allFileStatus[i] = MemCard_AllFilesStatusGet(i);
+            fileStatuses[i] = MemCard_FileStatusesGet(i);
 
             for (j = 0; j < MEMCARD_FILE_COUNT_MAX; j++)
             {
-                fileStatus = MemCard_FileStatusGet(allFileStatus[i], j);
+                fileStatus = MemCard_FileStatusGet(fileStatuses[i], j);
 
                 if (fileStatus == FileState_Unused)
                 {
@@ -349,7 +344,7 @@ bool func_80033548(void) // 0x80033548
                 g_MemCard_ActiveMemCardSlotSaves->saveMetadata_C     = NULL;
                 isWriteNewSaveAvailable[i]                           = true;
                 g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount = 31800;
-                memCardStatus0                                       = allFileStatus[i];
+                memCardStatus0                                       = fileStatuses[i];
                 memCardStatus1                                       = memCardStatus0 & 0x3;
 
                 for (j = 0; memCardStatus1 == FileState_Damaged || memCardStatus1 == FileState_Used; j++)
@@ -368,7 +363,7 @@ bool func_80033548(void) // 0x80033548
 
                 g_Savegame_ElementCount0[slotIdx >> 2]++;
 
-                fileStatus = MemCard_FileStatusGet(allFileStatus[i], j); // @hack Fixes stack order.
+                fileStatus = MemCard_FileStatusGet(fileStatuses[i], j); // @hack Fixes stack order.
 
                 g_Savegame_ElementCount1[slotIdx >> 2]++;
                 g_MemCard_ActiveMemCardSlotSaves++;
@@ -386,8 +381,8 @@ bool func_80033548(void) // 0x80033548
         memCardStatus2 = MemCard_StatusGet(g_MemCard_AllMemCardsStatus, i);
         if (memCardStatus2 == MemCardState_Null || memCardStatus2 == MemCardState_Loading)
         {
-            unailableMemCardSlotIdx          = (WrapIdx(i) >> 2) == 0;
-            g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(unailableMemCardSlotIdx);
+            unavailableMemCardSlotIdx          = (WrapIdx(i) >> 2) == 0;
+            g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(unavailableMemCardSlotIdx);
 
             if (g_MemCard_ActiveMemCardSlotSaves->type_4 == SavegameEntryType_NoMemCard)
             {
@@ -416,23 +411,23 @@ bool func_80033548(void) // 0x80033548
 
     if (D_800A97DC == 0)
     {
-        unavailableMemCardSlot[unailableMemCardSlotIdx == 0] = true;
-        unailableMemCardSlotIdx                              = NO_VALUE;
+        unavailableMemCardSlot[unavailableMemCardSlotIdx == 0] = true;
+        unavailableMemCardSlotIdx                              = NO_VALUE;
     }
 
     // Set loading memory card status (visually).
-    // @note Could this be the reason why whenever one memory card get connected both are set to be "loaded"?
-    if (unailableMemCardSlotIdx >= 0)
+    // @note Could this be the reason why whenever one memory card is connected, both are marked as "loaded"?
+    if (unavailableMemCardSlotIdx >= 0)
     {
-        g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(unailableMemCardSlotIdx == 0);
+        g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(unavailableMemCardSlotIdx == 0);
 
         g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount   = NO_VALUE;
         g_MemCard_ActiveMemCardSlotSaves->deviceId_5           = 0;
         g_MemCard_ActiveMemCardSlotSaves->fileIdx_6            = 0;
         g_MemCard_ActiveMemCardSlotSaves->elementIdx_7         = 0;
         g_MemCard_ActiveMemCardSlotSaves->type_4               = SavegameEntryType_LoadMemCard;
-        g_Savegame_ElementCount1[unailableMemCardSlotIdx == 0] = 1;
-        g_MemCard_ActiveMemCardSlotSaves                       = MemCard_ActiveMemCardSlotGet(unailableMemCardSlotIdx);
+        g_Savegame_ElementCount1[unavailableMemCardSlotIdx == 0] = 1;
+        g_MemCard_ActiveMemCardSlotSaves                       = MemCard_ActiveMemCardSlotGet(unavailableMemCardSlotIdx);
 
         if ((g_MemCard_ActiveMemCardSlotSaves->type_4 == SavegameEntryType_UnformattedMemCard && g_SaveScreen_SaveScreenState == SaveScreenState_Save) ||
             g_MemCard_ActiveMemCardSlotSaves->type_4 == SavegameEntryType_Save ||
@@ -444,28 +439,27 @@ bool func_80033548(void) // 0x80033548
             g_MemCard_ActiveMemCardSlotSaves->fileIdx_6          = 0;
             g_MemCard_ActiveMemCardSlotSaves->elementIdx_7       = 0;
             g_MemCard_ActiveMemCardSlotSaves->type_4             = SavegameEntryType_LoadMemCard;
-            g_Savegame_ElementCount1[unailableMemCardSlotIdx]    = 1;
+            g_Savegame_ElementCount1[unavailableMemCardSlotIdx]    = 1;
         }
 
         memCardStatus3 = MemCardState_Null;
     }
     
-    // Update user navigation information for switching automatically between slots in case of any
-    // of the memory cards becomes unavailable.
+    // Update user navigation information to switch automatically between slots if a memory card becomes unavailable.
     if (D_800A97D9 == 0 && (unavailableMemCardSlot[0] || unavailableMemCardSlot[1]))
     {
         for (j = 0; j < MEMCARD_SLOT_COUNT_MAX; j++)
         {
             g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(j);
             biggestTotalSaveCountInSlot[j]   = 0;
-            totalElementsCountInSlot[j]      = 0;
+            totalElementCountInSlot[j]       = 0;
 
             for (i = 0; i < g_Savegame_ElementCount1[j]; i++)
             {
                 if (biggestTotalSaveCountInSlot[j] < g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount)
                 {
                     biggestTotalSaveCountInSlot[j] = g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount;
-                    totalElementsCountInSlot[j]    = i;
+                    totalElementCountInSlot[j]    = i;
                 }
 
                 g_MemCard_ActiveMemCardSlotSaves++;
@@ -473,7 +467,7 @@ bool func_80033548(void) // 0x80033548
 
             if (unavailableMemCardSlot[j])
             {
-                g_SlotElementSelectedIdx[j] = totalElementsCountInSlot[j];
+                g_SlotElementSelectedIdx[j] = totalElementCountInSlot[j];
             }
         }
 

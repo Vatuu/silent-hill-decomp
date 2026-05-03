@@ -799,7 +799,7 @@ STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
 typedef struct _IpdCollisionData
 {
     s32                    positionX;
-    s32                    positionZ_4;
+    s32                    positionZ;
     u32                    field_8_0  : 8;
     u32                    field_8_8  : 8;
     u32                    field_8_16 : 8;
@@ -1171,7 +1171,7 @@ typedef struct _WorldObjectMetadata
 {
     /* 0x0 */ u_Filename name_0;
     /* 0x8 */ s8         field_8;
-    /* 0x9 */ s8         lmIdx_9; /** Set to 2 when found in `g_Map.globalLm_138.lmHdr` and 3-6 if found in `g_Map.ipdActive_15C[i] (i + 3)`. */
+    /* 0x9 */ s8         lmIdx_9; /** Set to 2 when found in `g_Map.globalLm.lmHdr` and 3-6 if found in `g_Map.ipdActive[i] (i + 3)`. */
 } s_WorldObjectMetadata;
 
 // Rough name.
@@ -1284,25 +1284,25 @@ STATIC_ASSERT_SIZEOF(s_IpdTextures, 328);
 
 typedef struct _Map
 {
-    s_IpdCollisionData collisionData_0; // Default chunk collision data?
-    s32                texFileIdx_134;
-    s_GlobalLm         globalLm_138;
-    char               mapTag_144[4];
-    s32                mapTagSize_148;
-    s32                ipdFileIdx_14C;
-    s_IpdHeader*       ipdBuffer_150;
-    s32                ipdBufferSize_154;
-    s32                ipdActiveSize_158;
-    s_IpdChunk         ipdActive_15C[4];
-    s_IpdColumn        ipdGrid_1CC[18];
-    s8                 unk_40C[32];     // Could be one extra row in table above.
-    s_IpdColumn*       ipdGridCenter_42C;
-    s_IpdTextures      ipdTextures_430;
-    q19_12             positionX_578;
-    q19_12             positionX_57C;
-    s32                cellX_580;
-    s32                cellZ_584;
-    bool               isExterior_588;
+    /* 0x0   */ s_IpdCollisionData collisionData; // Default chunk collision data?
+    /* 0x134 */ s32                texFileIdx;
+    /* 0x138 */ s_GlobalLm         globalLm;
+    /* 0x144 */ char               mapTag[4];
+    /* 0x148 */ s32                mapTagSize;
+    /* 0x14C */ s32                ipdFileIdx;
+    /* 0x150 */ s_IpdHeader*       ipdBuffer;
+    /* 0x154 */ s32                ipdBufferSize;
+    /* 0x158 */ s32                ipdActiveSize;
+    /* 0x15C */ s_IpdChunk         ipdActive[4];
+    /* 0x1CC */ s_IpdColumn        ipdGrid[18];
+    /* 0x40C */ s8                 unk_40C[32]; // Could be one extra row in table above.
+    /* 0x42C */ s_IpdColumn*       ipdGridCenter;
+    /* 0x430 */ s_IpdTextures      ipdTextures;
+    /* 0x578 */ q19_12             positionX;
+    /* 0x57C */ q19_12             positionZ;
+    /* 0x580 */ s32                cellX;
+    /* 0x584 */ s32                cellZ;
+    /* 0x588 */ bool               isExterior;
 } s_Map;
 STATIC_ASSERT_SIZEOF(s_Map, 1420);
 
@@ -2670,8 +2670,7 @@ void Ipd_PlayerChunkInit(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerP
  */
 bool Ipd_ChunkInitCheck(void);
 
-/** `arg0` should be `void*`? */
-void Gfx_InGameDraw(s32 arg0);
+void Gfx_InGameDraw(bool arg0);
 
 void WorldObject_ModelNameSet(s_WorldObjectModel* model, char* newStr);
 
@@ -2803,7 +2802,7 @@ void Ipd_ActiveChunksClear(s_Map* map, s32 arg1);
  *
  * Example:
  * Map type THR.
- * `file 1100` is `THR0205.IPD`, `ipdGridCenter_42C[2][5] = 1100`.
+ * `file 1100` is `THR0205.IPD`, `ipdGridCenter[2][5] = 1100`.
  */
 void Map_MakeIpdGrid(s_Map* map, char* mapTag, e_FsFile fileIdxStart);
 
@@ -2895,7 +2894,7 @@ bool func_80043830(void);
 /** Checks if a position is within the current map chunk. */
 bool func_8004393C(q19_12 posX, q19_12 posZ);
 
-void Ipd_ChunkCheckDraw(GsOT* ot, s32 arg1);
+void Ipd_ChunksDraw(GsOT* ot, bool arg1);
 
 bool Ipd_CellPositionMatchCheck(s_IpdChunk* chunk, s_Map* map);
 
@@ -2938,7 +2937,7 @@ void func_80044044(s_IpdHeader* ipd, s32 cellX, s32 cellZ);
  * @param ot Ordering table.
  * @param arg4 TODO
  */
-void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 arg4);
+void Ipd_ChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, bool arg4);
 
 /** @brief Checks if an IPD chunk subcell is visible.
  *
@@ -3144,12 +3143,11 @@ void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool isTransparent);
 s32 Lm_MaterialCountGet(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr);
 
 /** TODO: Unknown `arg3` type. */
-void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, s32 arg3, GsOT_TAG* tag);
+void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* viewMat, bool arg3, GsOT_TAG* tag);
 
 void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 arg3, GsOT_TAG* tag);
 
-/** TODO: Unknown `arg2` type. */
-void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* viewMat);
+void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* viewMat);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
@@ -3165,7 +3163,7 @@ void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 
 u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData);
 
-void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_TAG* ot, s32 arg3);
+void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_TAG* ot, bool arg3);
 
 void Texture_Init(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
 
@@ -3222,8 +3220,7 @@ s32 func_800571D0(u32 arg0);
 
 void WorldEnv_LightTransform(MATRIX* worldMat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
-/** TODO: Unknown `arg2` type. */
-void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
+void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* mat);
 
 void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData);
 
@@ -3236,7 +3233,7 @@ void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
 
 /** Main quad drawing func? */
-void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, s32 arg3);
+void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, bool arg3);
 
 /** `arg4` unused. */
 s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBuf9, e_FsFile fileIdx, s32 arg4);

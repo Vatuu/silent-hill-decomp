@@ -371,10 +371,6 @@ extern s8 D_800A97D9;
 
 extern s32 D_800A97DC; // `e_SavegameEntryType`
 
-extern s8 unailableMemCardSlotIdx;
-
-extern u32 allFileStatus[];
-
 extern s8 D_800BCD39; // Boolean.
 
 // ====================
@@ -484,7 +480,7 @@ bool MemCard_ProcessSet(s32 arg0, s32 deviceId, s32 fileIdx, s32 saveIdx);
  */
 s32 MemCard_LastMemCardResultGet(void);
 
-s32 MemCard_AllFilesStatusGet(s32 deviceId);
+s32 MemCard_FileStatusesGet(s32 deviceId);
 
 s_MemCard_SaveMetadata* MemCard_SaveMetadataGet(s32 deviceId, s32 fileIdx, s32 saveIdx);
 
@@ -506,7 +502,7 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr);
 // NOT SURE
 s32 MemCard_FileLimitUpdate(s32 deviceId, s_MemCard_Directory* dir);
 
-/** @brief Load save game from Memory Card. */
+/** @brief Loads a savegame from a memory card. */
 void MemCard_Process_Load(s_MemCard_Process* statusPtr);
 
 void MemCard_Process_Save(s_MemCard_Process* statusPtr);

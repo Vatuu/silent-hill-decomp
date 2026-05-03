@@ -76,7 +76,7 @@ func_8002E8D4                                = 0x8002E8D4;
 MemCard_StatusInitSuccess                    = 0x8002E8E4;
 MemCard_ProcessSet                           = 0x8002E94C;
 MemCard_LastMemCardResultGet                 = 0x8002E990;
-MemCard_AllFilesStatusGet                    = 0x8002E9A0; // type:func
+MemCard_FileStatusesGet                      = 0x8002E9A0; // type:func
 MemCard_SaveMetadataGet                      = 0x8002E9EC; // type:func
 MemCard_UsedFileCount                        = 0x8002EA28; // type:func
 MemCard_FreeFilesCount                       = 0x8002EA78; // type:func
@@ -203,7 +203,7 @@ nullsub_800334C8                             = 0x800334C8; // type:func
 //----------------------------------------------------------------
 //--- PA: 0x00E978   VA: 0x800334D8   subsegment: c, sys/memcard_2
 //----------------------------------------------------------------
-MemCard_FilesAreDamageCheck                  = 0x800334D8;
+MemCard_FilesDamagedCheck                    = 0x800334D8;
 
 //----------------------------------------------------------------
 //--- PA: 0x00F580   VA: 0x800340E0   subsegment: c, sys/warm_boot
@@ -488,7 +488,7 @@ Ipd_FreeChunkFind                            = 0x800435E4; // type:func
 Ipd_LoadStart                                = 0x800436D8; // type:func
 Ipd_AreChunksLoaded                          = 0x80043740; // type:func
 func_80043830                                = 0x80043830; // type:func
-Ipd_ChunkCheckDraw                           = 0x80043A24;
+Ipd_ChunksDraw                               = 0x80043A24;
 Ipd_CellPositionMatchCheck                   = 0x80043B34; // type:func
 IpdHeader_IsTextureLoaded                    = 0x80043B70; // type:func
 IpdHeader_CollisionDataGet                   = 0x80043BA4; // type:func
@@ -501,7 +501,7 @@ IpdHeader_FixHeaderOffsets                   = 0x80043DA4; // type:func
 IpdHeader_ModelLinkObjectLists               = 0x80043E50; // type:func
 LmHeader_ModelHeaderSearch                   = 0x80043F2C; // type:func
 IpdHeader_ModelBufferLinkObjectLists         = 0x80043F88; // type:func
-Gfx_IpdChunkDraw                             = 0x80044090; // type:func
+Ipd_ChunkDraw                                = 0x80044090; // type:func
 Gfx_ChunkSubcellVisibleCheck                 = 0x80044420; // type:func
 
 //-----------------------------------------------------------------------------
@@ -2348,8 +2348,8 @@ g_GameStateUpdateFuncs                       = 0x800A977C;
 g_SlotElementSelectedIdx                     = 0x800A97D4;
 g_SelectedSaveSlotIdx                        = 0x800A97D6;
 D_800A97DC                                   = 0x800A97DC;
-unailableMemCardSlotIdx                      = 0x800A97E0;
-allFileStatus                                = 0x800A97E4;
+unavailableMemCardSlotIdx                    = 0x800A97E0;
+fileStatuses                                 = 0x800A97E4;
 
 //------------------------------------------------------------------------------
 //--- PA: 0x084CA4   VA: 0x800A9804   subsegment: .data, game_boot/fs_chara_anim
@@ -2834,7 +2834,7 @@ g_Screen_FadeStatus                          = 0x800BCD0C;
 //--- PA: 0x0981B8   VA: 0x800BCD18   subsegment: .bss, sys/memcard_2
 //-------------------------------------------------------------------
 biggestTotalSaveCountInSlot                  = 0x800BCD18;
-totalElementsCountInSlot                     = 0x800BCD20; // allow_duplicated:True
+totalElementCountInSlot                      = 0x800BCD20; // allow_duplicated:True
 g_MemCard_SavegameCount                      = 0x800BCD28;
 g_MemCard_ActiveMemCardSlotSaves             = 0x800BCD2C;
 g_Savegame_ElementCount0                     = 0x800BCD30;

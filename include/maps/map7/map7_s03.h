@@ -145,7 +145,7 @@ STATIC_ASSERT_SIZEOF(s_800F3DAC, 0x4F8);
 typedef struct
 {
     q19_12          positionX;
-    q19_12          positionZ_4;
+    q19_12          positionZ;
     MATRIX          mat_8;
     s_SubCharacter* field_28;
     GsCOORDINATE2*  coords_2C;

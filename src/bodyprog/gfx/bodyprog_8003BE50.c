@@ -359,7 +359,7 @@ bool Ipd_ChunkInitCheck(void) // 0x8003C850
     return Ipd_AreChunksLoaded();
 }
 
-void Gfx_InGameDraw(s32 arg0) // 0x8003C878
+void Gfx_InGameDraw(bool arg0) // 0x8003C878
 {
     Gfx_WorldObjectsDraw(&g_WorldGfxWork);
 
@@ -369,7 +369,7 @@ void Gfx_InGameDraw(s32 arg0) // 0x8003C878
         Fs_QueueWaitForEmpty();
     }
 
-    Ipd_ChunkCheckDraw(&g_OrderingTable0[g_ActiveBufferIdx], arg0);
+    Ipd_ChunksDraw(&g_OrderingTable0[g_ActiveBufferIdx], arg0);
     Gfx_2dEffectsDraw();
 }
 

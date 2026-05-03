@@ -1281,7 +1281,7 @@ void WorldEnv_LightTransform(MATRIX* worldMat, s32 alpha, SVECTOR* arg2, VECTOR3
     gte_stsv(&g_WorldEnvWork.field_7C);
 }
 
-void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* mat) // 0x80057344
+void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* mat) // 0x80057344
 {
     u32               normalOffset;
     u32               vertOffset;
@@ -1669,7 +1669,7 @@ void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     }
 }
 
-void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, s32 arg3) // 0x8005801C
+void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, bool arg3) // 0x8005801C
 {
     s32          sp10;
     s32          sp14;
@@ -1743,18 +1743,18 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
     scratchData->field_380.s_0.field_0    = g_GameWork.gsScreenWidth >> 1;
     scratchData->field_380.s_0.field_4    = g_WorldEnvWork.fogIntensity_18;
     scratchData->field_380.s_0.field_8    = g_WorldEnvWork.worldTintColor_28;
-    scratchData->field_380.s_0.field_8.cd = 0x3C;
+    scratchData->field_380.s_0.field_8.cd = 60;
 
     if (g_WorldEnvWork.field_0 == 0)
     {
-        gte_lddp(0x1000 - g_WorldEnvWork.field_20);
+        gte_lddp(Q12(1.0f) - g_WorldEnvWork.field_20);
         gte_ldrgb(&scratchData->field_380.s_0.field_8);
         gte_dpcs();
         gte_strgb(&scratchData->field_380.s_0.field_8);
     }
 
     scratchData->field_380.s_0.field_C    = g_WorldEnvWork.fogColor_1C;
-    scratchData->field_380.s_0.field_C.cd = 0x38;
+    scratchData->field_380.s_0.field_C.cd = 56;
 
     SetBackColor(0, 0, 0);
 
@@ -1774,17 +1774,14 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                     *(s32*)&scratchData->field_380.s_0.field_10 = *(s32*)&prim->field_C;
 
                     scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_10];
-
                     if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_11])
                     {
                         scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_11];
                     }
-
                     if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_12])
                     {
                         scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_12];
                     }
-
                     if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_13])
                     {
                         scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_13];
@@ -1844,7 +1841,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
 
                         *(s32*)&scratchData->field_380.s_0.field_14 = *(s32*)&prim->field_10;
 
-                        var_t3  = 0x1000 - scratchData->field_252[scratchData->field_380.s_0.field_10] * 16;
+                        var_t3  = Q12(1.0f) - scratchData->field_252[scratchData->field_380.s_0.field_10] * 16;
                         var_t3 -= scratchData->field_380.s_0.field_4;
                         if (var_t3 < 0)
                         {
@@ -1861,7 +1858,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                         gte_dpcl();
                         gte_strgb(&poly3->r0);
 
-                        var_t3  = 0x1000 - scratchData->field_252[scratchData->field_380.s_0.field_11] * 16;
+                        var_t3  = Q12(1.0f) - scratchData->field_252[scratchData->field_380.s_0.field_11] * 16;
                         var_t3 -= scratchData->field_380.s_0.field_4;
                         if (var_t3 < 0)
                         {
@@ -1878,7 +1875,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                         gte_dpcl();
                         gte_strgb(&poly3->r1);
 
-                        var_t3  = 0x1000 - scratchData->field_252[scratchData->field_380.s_0.field_12] * 0x10;
+                        var_t3  = Q12(1.0f) - scratchData->field_252[scratchData->field_380.s_0.field_12] * 0x10;
                         var_t3 -= scratchData->field_380.s_0.field_4;
                         if (var_t3 < 0)
                         {
@@ -1895,7 +1892,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                         gte_dpcl();
                         gte_strgb(&poly3->r2);
 
-                        var_t3  = 0x1000 - scratchData->field_252[scratchData->field_380.s_0.field_13] * 0x10;
+                        var_t3  = Q12(1.0f) - scratchData->field_252[scratchData->field_380.s_0.field_13] * 0x10;
                         var_t3 -= scratchData->field_380.s_0.field_4;
                         if (var_t3 < 0)
                         {
@@ -1920,7 +1917,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                         setlen(poly3, 12);
                         setlen(poly1, 8);
 
-                        if (prim->field_6.flags & 0x8000)
+                        if (prim->field_6.flags & (1 << 15))
                         {
                             packet1 = poly1 + 1;
 
@@ -1930,13 +1927,13 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                             setSemiTrans(poly1, 1);
                             addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly1);
 
-                            packet1 = (PACKET*)(poly1 + 1) + 0xC;
+                            packet1 = (PACKET*)(poly1 + 1) + 12;
                             SetPriority(packet1, 1, 1);
                             addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], packet1);
 
                             addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly3);
 
-                            poly3 = (PACKET*)(poly1 + 1) + 0xC + 0xC;
+                            poly3 = (PACKET*)(poly1 + 1) + 12 + 12;
                             poly1  = poly3 + 1;
                         }
                         else
@@ -2107,9 +2104,9 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                 continue;
             }
 
-            if (scratchData->field_380.s_0.field_18 < 0x21)
+            if (scratchData->field_380.s_0.field_18 <= 32)
             {
-                scratchData->field_380.s_0.field_18 = 0x20;
+                scratchData->field_380.s_0.field_18 = 32;
             }
 
             if (scratchData->field_380.s_0.field_18 > scratchData->field_380.s_0.field_1C)
@@ -2156,7 +2153,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                 *(s32*)&poly3->x3  = temp_v1_21;
                 *(s32*)&poly2->x3 = temp_v1_21;
 
-                temp4    = 0x1000 - scratchData->field_252[scratchData->field_380.s_0.field_10] * 0x10;
+                temp4    = Q12(1.0f) - scratchData->field_252[scratchData->field_380.s_0.field_10] * 16;
                 var_t3_2 = temp4 - scratchData->field_380.s_0.field_4;
                 if (var_t3_2 < 0)
                 {
@@ -2167,12 +2164,12 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                 gte_ldrgb(&scratchData->field_380.s_0.field_C);
                 gte_dpcs();
                 gte_strgb(&poly2->r0);
-                gte_lddp(0x1000 - var_t3_2);
+                gte_lddp(Q12(1.0f) - var_t3_2);
                 gte_ldrgb(&scratchData->field_380.s_0.field_8);
                 gte_dpcs();
                 gte_strgb(&poly3->r0);
 
-                temp4    = 0x1000 - scratchData->field_252[scratchData->field_380.s_0.field_11] * 0x10;
+                temp4    = Q12(1.0f) - scratchData->field_252[scratchData->field_380.s_0.field_11] * 16;
                 var_t3_2 = temp4 - scratchData->field_380.s_0.field_4;
                 if (var_t3_2 < 0)
                 {
@@ -2183,12 +2180,12 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                 gte_ldrgb(&scratchData->field_380.s_0.field_C);
                 gte_dpcs();
                 gte_strgb(&poly2->r1);
-                gte_lddp(0x1000 - var_t3_2);
+                gte_lddp(Q12(1.0f) - var_t3_2);
                 gte_ldrgb(&scratchData->field_380.s_0.field_8);
                 gte_dpcs();
                 gte_strgb(&poly3->r1);
 
-                temp4    = 0x1000 - scratchData->field_252[scratchData->field_380.s_0.field_12] * 0x10;
+                temp4    = Q12(1.0f) - scratchData->field_252[scratchData->field_380.s_0.field_12] * 16;
                 var_t3_2 = temp4 - scratchData->field_380.s_0.field_4;
                 if (var_t3_2 < 0)
                 {
@@ -2199,12 +2196,12 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                 gte_ldrgb(&scratchData->field_380.s_0.field_C);
                 gte_dpcs();
                 gte_strgb(&poly2->r2);
-                gte_lddp(0x1000 - var_t3_2);
+                gte_lddp(Q12(1.0f) - var_t3_2);
                 gte_ldrgb(&scratchData->field_380.s_0.field_8);
                 gte_dpcs();
                 gte_strgb(&poly3->r2);
 
-                temp4    = 0x1000 - scratchData->field_252[scratchData->field_380.s_0.field_13] * 0x10;
+                temp4    = Q12(1.0f) - scratchData->field_252[scratchData->field_380.s_0.field_13] * 16;
                 var_t3_2 = temp4 - scratchData->field_380.s_0.field_4;
                 if (var_t3_2 < 0)
                 {
@@ -2215,7 +2212,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                 gte_ldrgb(&scratchData->field_380.s_0.field_C);
                 gte_dpcs();
                 gte_strgb(&poly2->r3);
-                gte_lddp(0x1000 - var_t3_2);
+                gte_lddp(Q12(1.0f) - var_t3_2);
                 gte_ldrgb(&scratchData->field_380.s_0.field_8);
                 gte_dpcs();
                 gte_strgb(&poly3->r3);
@@ -2228,7 +2225,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                 setlen(poly3, 12);
                 setlen(poly2, 8);
 
-                if (prim->field_6.flags & 0x8000)
+                if (prim->field_6.flags & (1 << 15))
                 {
                     packet0 = poly2 + 1;
 
@@ -2238,12 +2235,12 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                     setSemiTrans(poly2, 1);
                     addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly2);
 
-                    packet0 = (PACKET*)(poly2 + 1) + 0xC;
+                    packet0 = (PACKET*)(poly2 + 1) + 12;
                     SetPriority(packet0, 1, 1);
                     addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], packet0);
                     addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly3);
 
-                    poly3  = (PACKET*)(poly2 + 1) + 0xC + 0xC;
+                    poly3  = (PACKET*)(poly2 + 1) + 12 + 12;
                     poly2 = poly3 + 1;
                 }
                 else
@@ -2257,6 +2254,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                 }
             }
         }
+
         GsOUT_PACKET_P = poly2; // @bug? Should be `poly_gt4`
         return;
     }
@@ -2356,7 +2354,7 @@ __block1530:
 
             if (scratchData->field_2B8[scratchData->field_380.s_0.field_15] >= 8)
             {
-                gte_lddp(0x1000 - (scratchData->field_2B8[scratchData->field_380.s_0.field_15] << 5));
+                gte_lddp(Q12(1.0f) - (scratchData->field_2B8[scratchData->field_380.s_0.field_15] << 5));
                 gte_ldrgb(&scratchData->field_380.s_0.field_8);
                 gte_dpcs();
                 gte_strgb(&poly0->r1);
@@ -2401,12 +2399,13 @@ __block1530:
             poly0++;
         }
     }
+
     GsOUT_PACKET_P = poly0;
     return;
 }
 
 __block19CC:
-    scratchData->field_380.s_0.field_8.cd = 0x2C;
+    scratchData->field_380.s_0.field_8.cd = 44;
     poly4                       = GsOUT_PACKET_P;
 
     for (prim = meshHdr->primitives; prim < &meshHdr->primitives[meshHdr->primitiveCount]; prim++)
@@ -2434,9 +2433,9 @@ __block19CC:
             continue;
         }
 
-        if (scratchData->field_380.s_0.field_18 < 0x21)
+        if (scratchData->field_380.s_0.field_18 <= 32)
         {
-            scratchData->field_380.s_0.field_18 = 0x20;
+            scratchData->field_380.s_0.field_18 = 32;
         }
 
         if (scratchData->field_380.s_0.field_18 > scratchData->field_380.s_0.field_1C)
@@ -2497,7 +2496,7 @@ __block19CC:
     GsOUT_PACKET_P = poly4;
 }
 
-void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, s32 arg3, GsOT_TAG* tag) // 0x80059D50
+void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* viewMat, bool arg3, GsOT_TAG* tag) // 0x80059D50
 {
     s_GteScratchData* scratchData;
     s_MeshHeader*     curMeshHdr;
@@ -2510,7 +2509,7 @@ void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, s32 arg3, GsOT
     for (curMeshHdr = &modelHdr->meshHdrs_C[0]; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
     {
         func_800574D4(curMeshHdr, scratchData);
-        func_80057B7C(curMeshHdr, 0, scratchData, mat);
+        func_80057B7C(curMeshHdr, 0, scratchData, viewMat);
         func_80059E34(arg0, curMeshHdr, scratchData, arg3, tag);
     }
 }
@@ -2648,7 +2647,7 @@ void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchDat
     GsOUT_PACKET_P = (PACKET*)poly;
 }
 
-void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* viewMat) // 0x8005A21C
+void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* viewMat) // 0x8005A21C
 {
     s16               var_v1;
     u32               normalOffset;
@@ -2975,7 +2974,7 @@ u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData
     gte_strgb3(&var_t0->vx, &var_t0->vy, &var_t0->vz); // Store result from final `gte_nct`.
 }
 
-void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_TAG* ot, s32 arg3) // 0x8005AC50
+void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_TAG* ot, bool arg3) // 0x8005AC50
 {
     typedef union
     {
@@ -3521,14 +3520,14 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
             {
                 packet = poly_gt4 + 1;
                 SetPriority(packet, 0, 0);
-                packet2 = packet + 0xC; // TODO: `sizeof`?
+                packet2 = packet + 12; // TODO: `sizeof`?
                 SetPriority(packet2, 1, 1);
 
-                poly_g4 = packet2 + 0xC;
+                poly_g4 = packet2 + 12;
 
                 temp = (func_80055A50(temp_v0_2 << 6) * 16) + worldEngWork1->fogIntensity_18;
 
-                gte_lddp(0x1000 - MIN(temp, 0x1000));
+                gte_lddp(Q12(1.0f) - MIN(temp, Q12(1.0f)));
                 gte_ldrgb(&g_WorldEnvWork.fogColor_1C);
                 gte_dpcs();
                 gte_strgb((CVECTOR*)&poly_g4->r0);

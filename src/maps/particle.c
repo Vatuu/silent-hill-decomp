@@ -2287,7 +2287,8 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
                 {
                     arg2->field_11 = Rng_GenerateUInt(3, 4);
                     arg2->field_12 = 0;
-                    rng0 = Rng_GenerateInt(0, 0xfff);
+
+                    rng0 = Rng_GenerateInt(0, 0xFFF);
                     arg2->field_C = (u32)(Math_Sin(rng0) * 3) / 0x100;
                     arg2->field_E = (u32)(Math_Cos(rng0) * 3) / 0x100;
                 }
@@ -2340,8 +2341,9 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
             case 5:
                 if (arg2->field_12 == 0)
                 {
-                    vecCpy.vx = (arg2->field_0.vx - g_SysWork.playerWork.player.position.vx) >> 4;
-                    vecCpy.vz = (arg2->field_0.vz - g_SysWork.playerWork.player.position.vz) >> 4;
+                    vecCpy.vx = Q12_TO_Q8(arg2->field_0.vx - g_SysWork.playerWork.player.position.vx);
+                    vecCpy.vz = Q12_TO_Q8(arg2->field_0.vz - g_SysWork.playerWork.player.position.vz);
+
                     angle = ratan2(vecCpy.vx, vecCpy.vz);
                     arg2->field_C = (u32)(Math_Sin(angle) * 3) / 0x10;
                     arg2->field_E = (u32)(Math_Cos(angle) * 3) / 0x10;
@@ -2895,12 +2897,12 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
 
             sp28.vx = sp20.vx;
             sp28.vy = sp20.vy;
-            sp28.vz = (localPart->position0_0.vz + colorComp) >> 4;
+            sp28.vz = Q12_TO_Q8(localPart->position0_0.vz + colorComp);
 
             gte_stsxy(&poly->x0);
             gte_stszotz(&depth);
 
-            sp30.vx = (localPart->position0_0.vx + colorComp) >> 4;
+            sp30.vx = Q12_TO_Q8(localPart->position0_0.vx + colorComp);
             sp30.vy = sp20.vy;
             sp30.vz = sp20.vz;
 
@@ -2918,7 +2920,7 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
             {
                 color = localPart->stateStep_1E;
 
-                if (color >= 9U)
+                if (color >= 9u)
                 {
                     r = 0x40 - ((color - 8) * 4);
                 }
@@ -2991,7 +2993,7 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
 #if defined(MAP0_S00)
                 if (g_SysWork.enablePlayerMatchAnim != 0)
                 {
-                    setRGB0(poly, r + 0xA, g, b);
+                    setRGB0(poly, r + 10, g, b);
                 }
                 else
                 {
@@ -3191,8 +3193,8 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
             {
                 s32 localRand2 = Rng_Rand16();
                 s32 temp       = 12;
-
-                localPart->movement_18.vy += ((temp - g_Particle_PrevPosition.vy) - (g_Particle_PrevPosition.vy << 1) - (g_ParticlesAddedCount[0] >> 4)) + Rng_GenerateIntFromInput(localRand2, -2, 2);
+                localPart->movement_18.vy += ((temp - g_Particle_PrevPosition.vy) - (g_Particle_PrevPosition.vy << 1) - (g_ParticlesAddedCount[0] >> 4)) +
+                                             Rng_GenerateIntFromInput(localRand2, -2, 2);
 
                 limitRange(localPart->movement_18.vy, 5, 1000);
             }
@@ -3790,11 +3792,11 @@ void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1)
 
     if (var_s1 == 0)
     {
-        sharedData_800E0CB0_0_s00 = var_s0 * 0x1000;
+        sharedData_800E0CB0_0_s00 = var_s0 * Q12(1.0f);
     }
     else
     {
-        sharedData_800E0CB0_0_s00 = (var_s1 * 0x4000) | (var_s0 * 0x1000);
+        sharedData_800E0CB0_0_s00 = (var_s1 * Q12(4.0f)) | (var_s0 * Q12(1.0f));
 
         temp_a1  = var_s0 + 4;
         shiftAmount = (2 - var_s1) * 6;
@@ -3994,26 +3996,26 @@ void Particle_SoundStop(void)
 void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
 {
 #if !defined(MAP0_S00)
-    SVECTOR           startRelPos;
-    SVECTOR           endRelPos;
-    MATRIX            worldMat; // @unused
-    MATRIX            viewMat;
-    s_RayTrace        trace;
-    VECTOR3           beamStart;
-    VECTOR3           beamOffset;
-    SVECTOR           polyFt3Pos;
-    s32               zScreenStart;
-    s32               zScreenEnd;
-    s32               beamDirX;
-    s32               beamDirY;
-    s32               beamDirZ;
-    bool              hasHit;
-    s32               i;
-    s32               polyVCoord;
-    s32               primCount;
-    GsOT*             ot;
-    POLY_GT4*         polyGt4;
-    POLY_FT3*         polyFt3;
+    SVECTOR    startRelPos;
+    SVECTOR    endRelPos;
+    MATRIX     worldMat; // @unused
+    MATRIX     viewMat;
+    s_RayTrace trace;
+    VECTOR3    beamStart;
+    VECTOR3    beamOffset;
+    SVECTOR    polyFt3Pos;
+    s32        zScreenStart;
+    s32        zScreenEnd;
+    s32        beamDirX;
+    s32        beamDirY;
+    s32        beamDirZ;
+    bool       hasHit;
+    s32        i;
+    s32        polyVCoord;
+    s32        primCount;
+    GsOT*      ot;
+    POLY_GT4*  polyGt4;
+    POLY_FT3*  polyFt3;
 
     ot = &g_OrderingTable0[g_ActiveBufferIdx];
     GsInitCoordinate2(NULL, &g_SysWork.coord_22F8);
