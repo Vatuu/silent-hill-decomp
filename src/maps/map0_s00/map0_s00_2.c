@@ -1200,7 +1200,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
         case EventState_Initialize:
             Player_ControlFreeze();
 
-            Map_PlaceIpdAtCell(FILE_BG_THRF908_IPD, -7, 6);
+            Map_ChunkPlace(FILE_BG_THRF908_IPD, -7, 6);
             Sd_SfxStop(Sfx_Unk1358);
             Sd_PlaySfx(Sfx_Unk1359, 0, 208);
             func_800865FC(true, 0, 0, Q12_ANGLE(180.0f), Q12(-252.0f), Q12(219.0f));

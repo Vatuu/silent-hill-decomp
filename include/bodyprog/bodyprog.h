@@ -47,6 +47,17 @@
 // ENUMS
 // ======
 
+/** @brief IPD chunk load states.
+ *
+ * See `Map_ChunkLoadStateGet`.
+ */
+typedef enum _ChunkLoadState
+{
+    ChunkLoadState_Invalid  = 0, /** Entry index is `NO_VALUE`. */
+    ChunkLoadState_Unloaded = 1, /** Not currently loaded. */
+    ChunkLoadState_Loaded   = 2  /** Currently loaded. */
+} e_ChunkLoadState;
+
 typedef enum _WorldModelLocation
 {
     WorldModelLocation_None   = 0,
@@ -1302,7 +1313,7 @@ typedef struct _Map
     /* 0x14C */ s32                ipdFileIdx;
     /* 0x150 */ s_IpdHeader*       ipdBuffer;
     /* 0x154 */ s32                ipdBufferSize;
-    /* 0x158 */ s32                ipdActiveSize;
+    /* 0x158 */ s32                ipdActiveCount;
     /* 0x15C */ s_IpdChunk         ipdActive[4];
     /* 0x1CC */ s_IpdColumn        ipdGrid[18];
     /* 0x40C */ s8                 unk_40C[32]; // Could be one extra row in table above.
@@ -2763,10 +2774,16 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 an
 /** @brief Gets the load status of a queue entry by utilizing `Fs_QueueIsEntryLoaded`.
  *
  * @param queueIdx Index of the queue entry to check.
- * @return Queue entry load status (`e_FsQueueEntryLoadStatus`).
+ * @return Queue entry load status (`e_ChunkLoadState`).
  */
-u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx);
+u32 Map_ChunkLoadStateGet(s32 queueIdx);
 
+/** @brief Initializes map data and chunks.
+ *
+ * @param lmHdr LM header.
+ * @param ipdBuf IPD chunk buffer.
+ * @param ipdBufSize IPD chunk buffer size.
+ */
 void Map_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize);
 
 void Lm_Init(s_GlobalLm* globalLm, s_LmHeader* lmHdr);
@@ -2774,19 +2791,19 @@ void Lm_Init(s_GlobalLm* globalLm, s_LmHeader* lmHdr);
 void LmHeader_Init(s_LmHeader* lmHdr);
 
 /** @brief Clears `queueIdx` in array of `s_IpdChunk` */
-void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* chunks, s32 chunkCount);
+void Map_ChunkQueueIdxsClear(s_IpdChunk* chunks, s32 chunkCount);
 
 void Ipd_TexturesInit(void);
 
-void Map_IpdCollisionDataInit(void);
+void Map_CollisionDataInit(void);
 
-/** @brief Places an IPD chunk at given XZ chunk cell coordinates.
+/** @brief Places an chunk at given XZ chunk cell coordinates.
  *
  * @param ipdFileIdx Index of the IPD chunk file to place.
  * @param cellX X cell coordinate.
  * @param cellZ Z cell coordinate.
  */
-void Map_PlaceIpdAtCell(s16 ipdFileIdx, s32 cellX, s32 cellZ);
+void Map_ChunkPlace(s16 ipdFileIdx, s32 cellX, s32 cellZ);
 
 void Ipd_ActiveMapChunksClear(void);
 
@@ -2873,7 +2890,7 @@ void Ipd_ChunkInit(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
  * @param isExterior `true` for padded exterior, `false` for non-padded interior.
  * @return Padded distance from the XZ position to the XZ chunk cell.
  */
-q19_12 Ipd_PaddedDistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cellZ, bool isExterior);
+q19_12 Map_PaddedDistanceToChunkEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cellZ, bool isExterior);
 
 /** @brief Computes the distance from an XZ position to the edge of an XZ chunk cell boundary.
  * If the position resides inside the chunk cell, the distance is `Q12(0.0f)`.
@@ -2884,7 +2901,7 @@ q19_12 Ipd_PaddedDistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cell
  * @param cellZ Z cell coordinate.
  * @return Distance from the XZ position to the XZ chunk cell boundary.
  */
-q19_12 Ipd_DistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cellZ);
+q19_12 Map_DistanceToChunkEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cellZ);
 
 /** Loads geometry, sets materials and properly assigns the position of the map when loading a new room/map? */
 s32 Map_ChunkLoad(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
@@ -2909,16 +2926,20 @@ void Ipd_ChunkMaterialsApply(s_Map* map);
  */
 s32 Map_IpdChunkFileIdxGet(s32 cellX, s32 cellZ);
 
-bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 cellX, s32 cellZ);
+bool Map_IsIpdPresentCheck(const s_IpdChunk* activeChunks, s32 cellX, s32 cellZ);
 
-s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior);
+s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* activeChunks, bool isExterior);
 
 s32 Ipd_LoadStart(s_IpdChunk* chunk, e_FsFile fileIdx, s32 cellX, s32 cellZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 /** Checks if currently loaded chunks have been loaded properly. */
-bool Ipd_AreChunksLoaded(void);
+bool Ipd_ChunksLoadedCheck(void);
 
-bool func_80043830(void);
+/** @brief Checks if the player is in close proximity to an unloaded ahead which should be loaded.
+ *
+ * @return `true` if a new chunk needs to be loaded, `false` otherwise.
+ */
+bool Ipd_NextChunkLoadCheck(void);
 
 /** Checks if a position is within the current map chunk. */
 bool func_8004393C(q19_12 posX, q19_12 posZ);

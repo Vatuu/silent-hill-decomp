@@ -197,7 +197,7 @@ void Ipd_PlayerChunkInit(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerP
 
     if (mapHdr->mapInfo == &MAP_INFOS[MapType_THR])
     {
-        Map_PlaceIpdAtCell(FILE_BG_THR05FD_IPD, -1, 8);
+        Map_ChunkPlace(FILE_BG_THR05FD_IPD, -1, 8);
     }
 
     Ipd_ChunkInit(playerPosX, playerPosZ, playerPosX, playerPosZ);
@@ -236,7 +236,7 @@ void WorldGfx_IpdSamplePointReset(void) // 0x8003C3A0
 
 void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
 {
-    VECTOR3         pos0; // Draw distance?
+    VECTOR3         samplePos; // Draw distance?
                           // Setting as `pos0.vz = Q12(200.0f)` makes the world not draw. In the void, the player becomes immovable.
                           //
                           // Most of the time, X and Z share the same value as
@@ -260,31 +260,32 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
     s32             var_a0;
     s32             var_a1;
     s32             var_s1;
-    u8              flagsCpy;
-    s_SubCharacter* chara;
+    u8              mapFlags;
+    s_SubCharacter* player;
 
-    chara = &g_SysWork.playerWork.player;
+    player = &g_SysWork.playerWork.player;
 
     if (g_WorldGfxWork.useStoredPoint)
     {
-        pos0 = g_WorldGfxWork.ipdSamplePoint;
+        samplePos = g_WorldGfxWork.ipdSamplePoint;
     }
     else
     {
-        pos0 = chara->position;
+        samplePos = player->position;
     }
 
-    moveDist = (chara->moveSpeed * Q12(5.5f)) / 16015; // TODO: `Q12(3.91f)`? What's this doing?
-    moveDist = CLAMP(moveDist, Q12(0.0f), Q12(5.5f));
+    // Offset sample position.
+    moveDist      = (player->moveSpeed * Q12(5.5f)) / Q12(3.91f);
+    moveDist      = CLAMP(moveDist, Q12(0.0f), Q12(5.5f));
+    samplePos.vx += Q12_MULT_PRECISE(moveDist, Math_Sin(player->headingAngle));
+    samplePos.vz += Q12_MULT_PRECISE(moveDist, Math_Cos(player->headingAngle));
 
-    pos0.vx += Q12_MULT_PRECISE(moveDist, Math_Sin(chara->headingAngle));
-    pos0.vz += Q12_MULT_PRECISE(moveDist, Math_Cos(chara->headingAngle));
-
+    // Special case for THR map.
     if (g_WorldGfxWork.mapInfo == &MAP_INFOS[MapType_THR] &&
-        chara->position.vx >= Q12(-40.0f) && chara->position.vx <= Q12(40.0f) &&
-        chara->position.vz >= Q12(200.0f) && chara->position.vz <= Q12(240.0f))
+        player->position.vx >= Q12(-40.0f) && player->position.vx <= Q12(40.0f) &&
+        player->position.vz >= Q12(200.0f) && player->position.vz <= Q12(240.0f))
     {
-        pos0.vz = Q12(200.0f);
+        samplePos.vz = Q12(200.0f);
     }
 
     if (g_WorldEnvWork.isFogEnabled_1)
@@ -292,8 +293,8 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
         vwGetViewPosition(&pos1);
         vwGetViewAngle(&rot);
 
-        flagsCpy = g_WorldGfxWork.mapInfo->flags_6;
-        if (!(flagsCpy & MapFlag_Interior) || !(flagsCpy & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
+        mapFlags = g_WorldGfxWork.mapInfo->flags_6;
+        if (!(mapFlags & MapFlag_Interior) || !(mapFlags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
         {
             var_s1 = Q12_MULT(Math_Cos(rot.vx), Q12(9.0f));
         }
@@ -311,65 +312,69 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
         pos1.vx += temp_s0_2;
         pos1.vz += temp_v1_4;
 
-        if (Vc_VectorMagnitudeCalc(pos1.vx - chara->position.vx, Q12(0.0f), pos1.vz - chara->position.vz) > Q12(16.0f))
+        if (Vc_VectorMagnitudeCalc(pos1.vx - player->position.vx, Q12(0.0f), pos1.vz - player->position.vz) > Q12(16.0f))
         {
             var_s1  = Q12(14.0f);
-            pos1.vx = chara->position.vx + Q12_MULT(Math_Sin(rot.vy), var_s1);
-            pos1.vz = chara->position.vz + Q12_MULT(Math_Cos(rot.vy), var_s1);
+            pos1.vx = player->position.vx + Q12_MULT(Math_Sin(rot.vy), var_s1);
+            pos1.vz = player->position.vz + Q12_MULT(Math_Cos(rot.vy), var_s1);
         }
     }
     else
     {
-        pos1     = chara->position;
-        pos1.vx += FP_FROM(Q12(Math_Sin(chara->rotation.vy)), Q12_SHIFT);
-        pos1.vz += FP_FROM(Q12(Math_Cos(chara->rotation.vy)), Q12_SHIFT);
+        pos1     = player->position;
+        pos1.vx += FP_FROM(Q12(Math_Sin(player->rotation.vy)), Q12_SHIFT);
+        pos1.vz += FP_FROM(Q12(Math_Cos(player->rotation.vy)), Q12_SHIFT);
     }
 
-    flagsCpy = g_WorldGfxWork.mapInfo->flags_6;
-    if ((flagsCpy & MapFlag_Interior) && (flagsCpy & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
+    mapFlags = g_WorldGfxWork.mapInfo->flags_6;
+    if ((mapFlags & MapFlag_Interior) && (mapFlags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
     {
-        var_a1 = chara->position.vx / Q12(2.5f);
-        if (chara->position.vx < Q12(0.0f))
+        var_a1 = player->position.vx / Q12(2.5f);
+        if (player->position.vx < Q12(0.0f))
         {
             var_a1--;
         }
 
-        var_a0  = chara->position.vz / Q12(2.5f);
+        var_a0  = player->position.vz / Q12(2.5f);
         temp_a1 = var_a1 * Q12(2.5f);
 
-        if (chara->position.vz < Q12(0.0f))
+        if (player->position.vz < Q12(0.0f))
         {
             var_a0--;
         }
 
         temp_a2 = var_a0 * Q12(2.5f);
 
-        pos0.vx = CLAMP(pos0.vx, temp_a1 + 1, temp_a1 + (Q12(2.5f) - 1));
-        pos0.vz = CLAMP(pos0.vz, temp_a2 + 1, temp_a2 + (Q12(2.5f) - 1));
+        samplePos.vx = CLAMP(samplePos.vx, temp_a1 + 1, temp_a1 + (Q12(2.5f) - 1));
+        samplePos.vz = CLAMP(samplePos.vz, temp_a2 + 1, temp_a2 + (Q12(2.5f) - 1));
         pos1.vx = CLAMP(pos1.vx, temp_a1 + 1, temp_a1 + (Q12(2.5f) - 1));
         pos1.vz = CLAMP(pos1.vz, temp_a2 + 1, temp_a2 + (Q12(2.5f) - 1));
     }
 
-    Ipd_ChunkInit(pos0.vx, pos0.vz, pos1.vx, pos1.vz);
+    Ipd_ChunkInit(samplePos.vx, samplePos.vz, pos1.vx, pos1.vz);
 }
 
 bool Ipd_ChunkInitCheck(void) // 0x8003C850
 {
     Ipd_CloseRangeChunksInit();
-    return Ipd_AreChunksLoaded();
+    return Ipd_ChunksLoadedCheck();
 }
 
 void Gfx_InGameDraw(bool arg0) // 0x8003C878
 {
+    // Draw world objects.
     Gfx_WorldObjectsDraw(&g_WorldGfxWork);
 
-    while (func_80043830())
+    // Load active chunks.
+    while (Ipd_NextChunkLoadCheck())
     {
         Ipd_CloseRangeChunksInit();
         Fs_QueueWaitForEmpty();
     }
 
+    // Draw active chunks.
     Ipd_ChunksDraw(&g_OrderingTable0[g_ActiveBufferIdx], arg0);
+
     Gfx_2dEffectsDraw();
 }
 
