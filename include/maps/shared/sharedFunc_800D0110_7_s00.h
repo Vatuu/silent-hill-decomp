@@ -8,14 +8,14 @@ void sharedFunc_800D0110_7_s00(void)
     s32           bgmFlags;
     s_BgmLayerLimits* bgmLayerLimit;
 
-    bgmFlags            = 1 << 0;
-    fadeSpeed           = Q12(0.1f);
-    mapRoomIdx       = g_SavegamePtr->mapRoomIdx;
+    bgmFlags      = 1 << 0;
+    fadeSpeed     = Q12(0.1f);
+    mapRoomIdx    = g_SavegamePtr->mapRoomIdx;
     bgmLayerLimit = NULL;
 
     switch (g_GameWork.bgmIdx)
     {
-        case 5:
+        case BgmTrackIdx_5:
             g_SysWork.bgmStatusFlags &= ~BgmStatusFlag_Duck;
 
             switch (g_GameWork.gameState)
@@ -67,7 +67,7 @@ void sharedFunc_800D0110_7_s00(void)
             }
             break;
 
-        case 4:
+        case BgmTrackIdx_4:
             bgmLayerLimit = &sharedData_800D2F18_7_s00;
 
             switch (mapRoomIdx)
@@ -121,13 +121,13 @@ void sharedFunc_800D0110_7_s00(void)
                     break;
 
                 default:
-                    bgmFlags = (1 << 0) | (1 << 9);
+                    bgmFlags = BgmFlag_Layer0 | BgmFlag_MuteAll;
                     break;
             }
             break;
 
-        case 10:
-        case 15:
+        case BgmTrackIdx_10:
+        case BgmTrackIdx_15:
             bgmLayerLimit = &sharedData_800D2F20_7_s00;
 
             switch (mapRoomIdx)
@@ -178,10 +178,10 @@ void sharedFunc_800D0110_7_s00(void)
             }
             break;
 
-        case 14:
-        case 22:
+        case BgmTrackIdx_14:
+        case BgmTrackIdx_22:
             bgmLayerLimit = &sharedData_800D2F74_7_s00;
-            bgmFlags            = sharedData_800D2F28_7_s00[mapRoomIdx];
+            bgmFlags      = sharedData_800D2F28_7_s00[mapRoomIdx];
 
             switch (mapRoomIdx)
             {
@@ -336,7 +336,7 @@ void sharedFunc_800D0110_7_s00(void)
             }
             break;
 
-        case 35:
+        case BgmTrackIdx_35:
             if (Savegame_EventFlagGet(EventFlag_582))
             {
                 bgmFlags = (1 << 0) | (1 << 8) | (1 << 9);
@@ -406,9 +406,9 @@ void sharedFunc_800D0110_7_s00(void)
             }
             break;
 
-        case 29:
+        case BgmTrackIdx_29:
             bgmLayerLimit = &sharedData_800D2F7C_7_s00;
-            fadeSpeed           = Q12(240.0f);
+            fadeSpeed     = Q12(240.0f);
 
             if (!Savegame_EventFlagGet(EventFlag_576))
             {
@@ -420,11 +420,12 @@ void sharedFunc_800D0110_7_s00(void)
                 {
                     g_SysWork.bgmStatusFlags |= BgmStatusFlag_RadioActive;
                 }
+
                 bgmFlags = BgmFlag_KeepAlive;
             }
             break;
 
-        case 40:
+        case BgmTrackIdx_40:
             bgmLayerLimit = &sharedData_800D2F84_7_s00;
             if (Savegame_EventFlagGet(EventFlag_575))
             {

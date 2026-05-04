@@ -492,7 +492,6 @@ extern s32 sharedData_800EFD04_6_s00;
 extern u16 sharedData_800EFD08_6_s00[];
 extern u16 sharedData_800EFD34_6_s00[];
 
-
 extern u8 sharedData_800ED418_4_s02[8];
 extern s32 sharedData_800ED420_4_s02;   // `e_BgmFlags`
 extern u8 sharedData_800ED424_4_s02[8];
@@ -503,7 +502,7 @@ extern void (*g_Romper_ControlFuncs[])(s_SubCharacter* romper);
 
 extern s_BgmLayerLimits sharedData_800D2F18_7_s00;
 extern s_BgmLayerLimits sharedData_800D2F20_7_s00;
-extern u16          sharedData_800D2F28_7_s00[38]; // Flags array.
+extern u16          sharedData_800D2F28_7_s00[38]; // `e_BgmFlags`
 extern s_BgmLayerLimits sharedData_800D2F74_7_s00;
 extern s_BgmLayerLimits sharedData_800D2F7C_7_s00;
 extern s_BgmLayerLimits sharedData_800D2F84_7_s00;
@@ -546,196 +545,6 @@ void sharedFunc_800CCE2C_1_s05(s32 arg0, s32 arg1,
 void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, q23_8 posX, q23_8 posY, q23_8 posZ);
 
 q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* chara);
-
-/* TODO: This function is almost identical to `sharedFunc_800D57C8_0_s01`.
- * Both are used in map0_s01 so ifdefs cannot be used based on the map name.
- * Sections under `#if 0` are what is missing compared to `sharedFunc_800D57C8_0_s01`.
- */
-void sharedFunc_800D598C_0_s01(s_SubCharacter* airScreamer);
-
-// Probably all Air Screamer section below. Unsure about functions above.
-
-/* TODO: This function is almost identical to `sharedFunc_800D57C8_0_s01`.
- * Also look at `sharedFunc_800D598C_0_s01`.
- */
-void sharedFunc_800D5B10_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D5C90_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D5D80_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D5E14_0_s01(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_2(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_3(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_5(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_6(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_7(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3);
-
-void Ai_AirScreamer_Control_8(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_9(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_11(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_12(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_13(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_14(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_15(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_16(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_17(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_18(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_19(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_20(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_21(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_22(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_23(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_24(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_25(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_26(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_27(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_28(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_30(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_31(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_32(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_33(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_34(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_36(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_37(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_40(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_41(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_42(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_43(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_44(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_Control_45(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800DBF88_2_s00(s_SubCharacter* airScreamer, s32 arg1);
-
-/** Checks if an Air Screamer is below the ground with a slight height intolerance. */
-bool sharedFunc_800DC0A8_2_s00(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* airScreamer, q19_12 moveSpeedMult);
-
-bool sharedFunc_800DC200_2_s00(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800DC30C_2_s00(s_SubCharacter* airScreamer);
-
-/** Checks if an Air Screamer is near the ground? */
-bool sharedFunc_800DC3BC_2_s00(s_SubCharacter* airScreamer);
-
-/** State step getter. */
-s32 sharedFunc_800DC438_2_s00(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800DC50C_2_s00(s_SubCharacter* airScreamer);
-
-s32 sharedFunc_800DC598_2_s00(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800DC67C_2_s00(s_SubCharacter* airScreamer);
-
-/** Chance getter? */
-q19_12 sharedFunc_800DC6E4_2_s00(s_SubCharacter* airScreamer, q19_12 arg1);
-
-/** Chance getter? */
-q19_12 sharedFunc_800DC894_2_s00(s_SubCharacter* airScreamer, q19_12 dist);
-
-void sharedFunc_800DD13C_2_s00(s_SubCharacter* airScreamer, s32 npcSlot, q19_12 spawnChance);
-
-void sharedFunc_800DD2C4_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2);
-
-void sharedFunc_800DD4A4_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800DD4EC_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800DD534_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800DD588_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800DD834_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800DDA80_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800DDE14_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800DDF74_2_s00(s_SubCharacter* airScreamer, q19_12 dist, q19_12 headingAngle);
-
-void sharedFunc_800DE034_2_s00(s_SubCharacter* airScreamer, VECTOR3* vec, q19_12 dist);
-
-void sharedFunc_800DE11C_2_s00(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800DE250_2_s00(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800DE578_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800DE6A8_2_s00(s_SubCharacter* airScreamer, VECTOR3* vec, q19_12 dist);
-
-void sharedFunc_800DE7E0_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800DEBCC_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800DECC4_2_s00(s_SubCharacter* airScreamer);
-
-q19_12 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800DF358_2_s00(s_SubCharacter* airScreamer);
-
-/** Condition is probably to differentiate between an Air Screamer and Night Flutter. */
-void sharedFunc_800DF448_2_s00(s_SubCharacter* airScreamer, bool cond);
-
-void sharedFunc_800DF60C_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800DF710_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800DF80C_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800DF8A0_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800E012C_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800E021C_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2);
-
-void sharedFunc_800E041C_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800E04B0_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800E0514_2_s00(s_SubCharacter* airScreamer);
-
-/** Air Screamer state step getter. `const` is required for match. */
-bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer);
 
 /** Among other things, sets the players's anim to anim 3 (which might actually be flags if the field packs more data).
  * Maybe not player but another character?
@@ -867,19 +676,8 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords);
 
 void sharedFunc_800D0968_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords);
 
-bool sharedFunc_800D3508_0_s01(s_SubCharacter* airScreamer, q19_12* dist);
-
-bool sharedFunc_800D3630_0_s01(s_SubCharacter* airScreamer, q19_12* dist);
-
-/** Returns flags? Specific to Air Screamer? */
-s32 sharedFunc_800D3758_0_s01(s_SubCharacter* airScreamer, q19_12* outDist, q19_12* outAngle, q19_12 dist, s32* arg4);
-
 /** Set to Split Head bone coords. */
 extern GsCOORDINATE2* sharedData_800D8610_1_s05;
-
-/** Unclear, but funcs past here may be specific to Air Screamer. */
-
-void sharedFunc_800D8804_0_s01(void);
 
 s32 sharedFunc_800D929C_0_s00(void);
 
@@ -893,29 +691,6 @@ bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
 
 void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7);
 
-s32 sharedFunc_800D569C_0_s01(s_SubCharacter* airScreamer, q19_12 posY, q19_12 dist);
-
-void sharedFunc_800D57C8_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D5E78_0_s01(s_SubCharacter* airScreamer, q19_12 angle);
-
-s32 sharedFunc_800D6A60_0_s01(VECTOR3* offset, VECTOR3* vec1, s_SubCharacter* airScreamer, s32 arg3, VECTOR3* vec2);
-
-void sharedFunc_800D6C7C_0_s01(VECTOR* arg0, s_SubCharacter* airScreamer, s32 arg2, VECTOR3* arg3);
-
-/** Plays SFX. */
-void sharedFunc_800D2364_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D5638_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800DF2D0_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D529C_0_s01(s_SubCharacter* airScreamer, q19_12 radius, q19_12 headingAngle);
-
-void sharedFunc_800D53AC_0_s01(s_SubCharacter* airScreamer);
-
 void sharedFunc_800CD7F8_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ, q19_12 range);
 
 void sharedFunc_800CD920_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ);
@@ -926,10 +701,6 @@ s32 sharedFunc_800CD980_3_s03(s_SubCharacter* chara);
 
 q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mat, s32 matCount, VECTOR3* center);
 
-void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D7B14_0_s01(s_SubCharacter*, GsCOORDINATE2*);
-
 void sharedFunc_800CE5D4_1_s03(VECTOR3* arg0, u16 arg1, u16 arg2, u32 arg3);
 
 void sharedFunc_800CBA4C_1_s02(s32 idx, s32 arg1, s32 arg2);
@@ -937,24 +708,6 @@ void sharedFunc_800CBA4C_1_s02(s32 idx, s32 arg1, s32 arg2);
 void sharedFunc_800CBC98_1_s02(void);
 
 void sharedFunc_800CBD58_1_s02(void);
-
-void sharedFunc_800DE1F8_2_s00(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800DEC64_2_s00(s_SubCharacter* airScreamer);
-
-void sharedFunc_800DEC84_2_s00(s_SubCharacter* airScreamer, q19_12 radius, q19_12 angle);
-
-void sharedFunc_800DECA4_2_s00(s_SubCharacter* airScreamer, VECTOR3* vec, q19_12 dist);
-
-void sharedFunc_800DF22C_2_s00(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800DF24C_2_s00(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800D2FB4_0_s01(s_SubCharacter* airScreamer, VECTOR3* playerPos, s32 playerField10C);
-
-void sharedFunc_800D72E8_0_s01(s_SubCharacter* airScreamer, q19_12 angle0, q19_12 rotSpeedY);
-
-void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer);
 
 /** @brief Handles the jammed door event. */
 void MapEvent_DoorJammed(void);
@@ -1034,17 +787,17 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectPlacement, 40);
                    Q12_ANGLE(rotX), Q12_ANGLE(rotY), Q12_ANGLE(rotZ))
 #define WorldObjectSet(objPose, name, posX, posY, posZ, rotX, rotY, rotZ) \
 {                                                                         \
-    Math_Vector3Set(&(objPose)->position, posX, posY, posZ);         \
-    Math_SetSVectorFast(&(objPose)->rotation, rotX, rotY, rotZ);     \
-    WorldObject_ModelNameSet(&(objPose)->object, (name));               \
+    Math_Vector3Set(&(objPose)->position, posX, posY, posZ);     \
+    Math_SetSVectorFast(&(objPose)->rotation, rotX, rotY, rotZ); \
+    WorldObject_ModelNameSet(&(objPose)->object, (name));        \
 }
 
 #define WorldObjectPosePositionInit(objPose, name, posX, posY, posZ) \
     WorldObject_PosePositionSet(objPose, name, Q12(posX), Q12(posY), Q12(posZ))
 #define WorldObject_PosePositionSet(objPose, name, posX, posY, posZ) \
 {                                                                    \
-    Math_Vector3Set(&(objPose)->position, posX, posY, posZ);    \
-    WorldObject_ModelNameSet(&(objPose)->object, (name));          \
+    Math_Vector3Set(&(objPose)->position, posX, posY, posZ);         \
+    WorldObject_ModelNameSet(&(objPose)->object, (name));            \
 }
 
 #define WorldObjectPlacementInit(objPlacement, name, posX, posY, posZ) \
@@ -1052,7 +805,7 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectPlacement, 40);
 #define WorldObject_PlacementSet(objPose, name, posX, posY, posZ) \
 {                                                                 \
     Math_Vector3Set(&(objPose)->position, posX, posY, posZ);      \
-    WorldObject_ModelNameSet(&(objPose)->object, (name));       \
+    WorldObject_ModelNameSet(&(objPose)->object, (name));         \
 }
 
 #define APPROACH(current, target, step) \

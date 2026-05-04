@@ -141,7 +141,7 @@ void Map_RoomBgmInit_CondFalse(void)
                         if (!Savegame_EventFlagGet(EventFlag_294))
                         {
                             fadeSpeed = Q12(0.5f);
-                            bgmFlags = (1 << 0) | (1 << 9);
+                            bgmFlags = BgmFlag_Layer0 | BgmFlag_MuteAll;
                         }
                         else
                         {
@@ -151,7 +151,7 @@ void Map_RoomBgmInit_CondFalse(void)
                 }
                 else
                 {
-                    bgmFlags = (1 << 0) | (1 << 9);
+                    bgmFlags = BgmFlag_Layer0 | BgmFlag_MuteAll;
                 }
                 break;
 
