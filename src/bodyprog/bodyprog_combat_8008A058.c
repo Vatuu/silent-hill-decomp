@@ -121,7 +121,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
     if (chara == &g_SysWork.playerWork.player)
     {
         baseAnimInfos = D_800297B8;
-        mapAnimInfos  = g_MapOverlayHeader.harryMapAnimInfos_34;
+        mapAnimInfos  = g_MapOverlayHeader.harryMapAnimInfos;
 
         modelAnim->baseAnimInfos      = baseAnimInfos;
         modelAnim->mapAnimStatusStart = ANIM_STATUS(38, false); // TODO: 38 is the first anim after base anims. Make a constant?

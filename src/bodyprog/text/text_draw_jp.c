@@ -514,7 +514,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
         D_800C5E30[i] = 0;
     }
 
-    mapMsg = g_MapOverlayHeader.mapMessages_30[mapMsgIdx];
+    mapMsg = g_MapOverlayHeader.mapMessages[mapMsgIdx];
 
     for (j = 0; j < FONT_12X16_LINE_COUNT_MAX;)
     {
@@ -573,7 +573,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
         }
     }
 
-    mapMsg = g_MapOverlayHeader.mapMessages_30[mapMsgIdx];
+    mapMsg = g_MapOverlayHeader.mapMessages[mapMsgIdx];
 
     for (j = 0; j < FONT_12X16_LINE_COUNT_MAX; j++)
     {
@@ -703,7 +703,7 @@ void func_8004B45C(s32 mapMsgBaseIdx, s32 arg1) // 0x8004B45C
 
     for (i = 0; i < arg1; i++)
     {
-        mapMsg = g_MapOverlayHeader.mapMessages_30[mapMsgBaseIdx + i];
+        mapMsg = g_MapOverlayHeader.mapMessages[mapMsgBaseIdx + i];
 
         for (j = 0; j < 21;)
         {
@@ -729,7 +729,7 @@ void func_8004B45C(s32 mapMsgBaseIdx, s32 arg1) // 0x8004B45C
 
     for (i = 0; i < arg1; i++)
     {
-        mapMsg = g_MapOverlayHeader.mapMessages_30[mapMsgBaseIdx + i];
+        mapMsg = g_MapOverlayHeader.mapMessages[mapMsgBaseIdx + i];
 
         setRECT(&rect, 0, 0, 0, 0);
 

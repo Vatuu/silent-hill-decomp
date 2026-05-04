@@ -10020,12 +10020,12 @@ void func_800E9490(s_SubCharacter* chara) // 0x800E9490
 
 void func_800E9498(void) // 0x800E9498
 {
-    g_MapOverlayHeader.charaUpdateFuncs_194[Chara_Incubator] = Ai_Unknown23_Update;
+    g_MapOverlayHeader.charaUpdateFuncs[Chara_Incubator] = Ai_Unknown23_Update;
 }
 
 void func_800E94AC(void) // 0x800E94AC
 {
-    g_MapOverlayHeader.charaUpdateFuncs_194[Chara_Incubator] = Ai_Incubator_Update;
+    g_MapOverlayHeader.charaUpdateFuncs[Chara_Incubator] = Ai_Incubator_Update;
 }
 
 void func_800E94C0(void) // 0x800E94C0

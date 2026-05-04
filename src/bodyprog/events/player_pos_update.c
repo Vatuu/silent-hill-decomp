@@ -50,9 +50,9 @@ void Game_PlayerHeightUpdate(void) // 0x80037334
 {
     s_Collision coll;
 
-    if (g_MapOverlayHeader.worldObjectsUpdate_40 != NULL)
+    if (g_MapOverlayHeader.updateWorldObjects != NULL)
     {
-        g_MapOverlayHeader.worldObjectsUpdate_40();
+        g_MapOverlayHeader.updateWorldObjects();
     }
 
     Collision_Get(&coll, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);

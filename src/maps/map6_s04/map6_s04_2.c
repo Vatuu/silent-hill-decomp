@@ -1787,7 +1787,7 @@ void func_800E1CA0(void) // 0x800E1CA0
 
     for (i = 0; i < 8; i++)
     {
-        g_MapOverlayHeader.harryMapAnimInfos_34[i + 16] = D_800CC424[i];
+        g_MapOverlayHeader.harryMapAnimInfos[i + 16] = D_800CC424[i];
     }
 
     for (i = 0; i < 4; i++)

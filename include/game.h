@@ -1150,11 +1150,11 @@ typedef struct _EventData
     /* 0x2    */ s16 disabledEventFlag;
     /* 0x4+0  */ s8  triggerType    : 4; /** `e_TriggerType` */
     /* 0x4+4  */ u8  activationType : 4; /** `e_TriggerActivationType` */
-    /* 0x5    */ u8  pointOfInterestIdx; /** Index into `g_MapOverlayHeader.mapPointsOfInterest_1C`. */
+    /* 0x5    */ u8  pointOfInterestIdx; /** Index into `g_MapOverlayHeader.mapPoints`. */
     /* 0x6    */ u8  requiredItemId;     /** `e_InvItemId` that player must use from item screen. */
     /* 0x7    */ u8  __pad_7;
     /* 0x8+0  */ u32 sysState        : 5; /** `e_SysState` used by the event. */
-    /* 0x8+5  */ u32 eventParam      : 8; /** Can be an ID of a `MapMsg`, sound effect, index into `mapEventFuncs_20`, or index into `mapPointsOfInterest_1C` for `areaLoad` events. */
+    /* 0x8+5  */ u32 eventParam      : 8; /** Can be an ID of a `MapMsg`, sound effect, index into `mapEventFuncs`, or index into `mapPoints` for `areaLoad` events. */
     /* 0x8+8  */ u32 flags_8_13      : 6; /** `e_EventDataUnkState` */
     /* 0x8+13 */ u32 sfxPairIdx_8_19 : 5; /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
     /* 0x8+19 */ u32 field_8_24      : 1;

@@ -29,7 +29,7 @@ static void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coor
 void Gfx_MapEffectsSet(s32 unused) // 0x80035B58
 {
     Gfx_MapEffectsAssign(&g_MapOverlayHeader);
-    g_MapOverlayHeader.enviromentSet_16C(g_MapOverlayHeader.field_17, g_MapOverlayHeader.field_16);
+    g_MapOverlayHeader.enviromentSet(g_MapOverlayHeader.field_17, g_MapOverlayHeader.field_16);
 }
 
 void func_80035B98(void) // 0x80035B98

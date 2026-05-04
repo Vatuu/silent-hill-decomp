@@ -644,7 +644,7 @@ s32 sharedFunc_800D2DAC_0_s00(void)
 
     // NOTE: There are 37 base anims for Harry. 38 and beyond are map-specific.
     model    = &g_SysWork.playerWork.player.model;
-    animInfo = &g_MapOverlayHeader.harryMapAnimInfos_34[model->anim.status - ANIM_STATUS(38, false)];
+    animInfo = &g_MapOverlayHeader.harryMapAnimInfos[model->anim.status - ANIM_STATUS(38, false)];
 
     if (animInfo->playbackFunc == Anim_PlaybackOnce)
     {
@@ -777,10 +777,10 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
             {
                 if (g_SysWork.playerWork.extra.state >= 23 && g_SysWork.playerWork.extra.state < 27)
                 {
-                    playerChara->model.stateStep = 0;
-                    playerChara->model.controlState     = 0;
-                    playerExtra->model.stateStep = 0;
-                    playerExtra->model.controlState     = 0;
+                    playerChara->model.stateStep    = 0;
+                    playerChara->model.controlState = 0;
+                    playerExtra->model.stateStep    = 0;
+                    playerExtra->model.controlState = 0;
                 }
 
                 if (angle >= Q12_ANGLE(90.0f) && angle < Q12_ANGLE(270.0f))
@@ -864,10 +864,10 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
 bool sharedFunc_800D2E94_0_s00(void)
 {
 #if defined(MAP2_S00)
-    s_SubCharacter* npcChara;
-    s32             playerDist;
+    s_SubCharacter* npc;
+    q19_12          playerDist;
 
-    npcChara = &g_SysWork.npcs[5];
+    npc = &g_SysWork.npcs[5];
 
     if (g_SysWork.playerWork.player.position.vx < Q12(-255.0f) &&
         g_SysWork.playerWork.player.position.vz > Q12(-110.0f) &&
@@ -876,90 +876,90 @@ bool sharedFunc_800D2E94_0_s00(void)
         playerDist = SquareRoot0(SQUARE(Q12(-262.0f) - g_SysWork.playerWork.player.position.vx) +
                                  SQUARE(Q12(-104.0f) - g_SysWork.playerWork.player.position.vz));
 
-        if (npcChara->model.controlState == 0 || npcChara->model.stateStep == 0)
+        if (npc->model.controlState == 0 || npc->model.stateStep == 0)
         {
-            npcChara->health                             = Q12(400.0f);
-            npcChara->model.controlState++;
-            npcChara->collision.box.top                  = Q12(-0.2f);
-            npcChara->collision.box.bottom               = Q12(0.2f);
-            npcChara->collision.cylinder.radius          = Q12(0.05f);
-            npcChara->collision.cylinder.field_2         = Q12(0.5f);
-            npcChara->field_40                           = 0;
-            npcChara->collision.box.offsetY              = Q12(0.0f);
-            npcChara->collision.box.field_8              = Q12(0.0f);
-            npcChara->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-            npcChara->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-            npcChara->collision.shapeOffsets.box.vz      = Q12(0.0f);
-            npcChara->collision.shapeOffsets.box.vx      = Q12(0.0f);
-            npcChara->position.vx                        = Q12(-262.0f);
-            npcChara->position.vy                        = Q12(-1.1f);
-            npcChara->position.vz                        = Q12(-104.0f);
-            npcChara->collision.state                    = CharaCollisionState_Npc;
-            npcChara->model.stateStep++;
-            npcChara->flags                             |= CharaFlag_Unk3;
-            npcChara->model.anim.flags                  &= ~(AnimFlag_Visible | AnimFlag_Unlocked);
+            npc->health                             = Q12(400.0f);
+            npc->model.controlState++;
+            npc->collision.box.top                  = Q12(-0.2f);
+            npc->collision.box.bottom               = Q12(0.2f);
+            npc->collision.cylinder.radius          = Q12(0.05f);
+            npc->collision.cylinder.field_2         = Q12(0.5f);
+            npc->field_40                           = 0;
+            npc->collision.box.offsetY              = Q12(0.0f);
+            npc->collision.box.field_8              = Q12(0.0f);
+            npc->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+            npc->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+            npc->collision.shapeOffsets.box.vz      = Q12(0.0f);
+            npc->collision.shapeOffsets.box.vx      = Q12(0.0f);
+            npc->position.vx                        = Q12(-262.0f);
+            npc->position.vy                        = Q12(-1.1f);
+            npc->position.vz                        = Q12(-104.0f);
+            npc->collision.state                    = CharaCollisionState_Npc;
+            npc->model.stateStep++;
+            npc->flags                             |= CharaFlag_Unk3;
+            npc->model.anim.flags                  &= ~(AnimFlag_Visible | AnimFlag_Unlocked);
         }
 
         // TODO: `else` branch is duplicated here, is there some way to merge them? Decompiler used `goto`.
-        if (npcChara->health > Q12(0.0f))
+        if (npc->health > Q12(0.0f))
         {
             if (playerDist < Q12(2.0f) &&
                 Savegame_EventFlagGet(EventFlag_167) && !Savegame_EventFlagGet(EventFlag_168) &&
                 g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap))
             {
-                npcChara->model.charaId = Chara_Padlock;
+                npc->model.charaId = Chara_Padlock;
             }
             else
             {
-                if (npcChara->health <= Q12(0.0f))
+                if (npc->health <= Q12(0.0f))
                 {
-                    if (Savegame_EventFlagGet(EventFlag_167) && npcChara->model.charaId == Chara_Padlock)
+                    if (Savegame_EventFlagGet(EventFlag_167) && npc->model.charaId == Chara_Padlock)
                     {
-                        npcChara->flags |= CharaFlag_Unk1;
+                        npc->flags |= CharaFlag_Unk1;
                         Savegame_EventFlagSet(EventFlag_168);
                     }
                 }
 
-                npcChara->model.charaId = Chara_None;
+                npc->model.charaId = Chara_None;
             }
         }
         else
         {
-            if (Savegame_EventFlagGet(EventFlag_167) && npcChara->model.charaId == Chara_Padlock)
+            if (Savegame_EventFlagGet(EventFlag_167) && npc->model.charaId == Chara_Padlock)
             {
-                npcChara->flags |= CharaFlag_Unk1;
+                npc->flags |= CharaFlag_Unk1;
                 Savegame_EventFlagSet(EventFlag_168);
             }
-            npcChara->model.charaId = Chara_None;
+            npc->model.charaId = Chara_None;
         }
 
-        if (npcChara->damage.amount != Q12(0.0f))
+        if (npc->damage.amount != Q12(0.0f))
         {
             if (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat.weaponAttack) == EquippedWeaponId_KitchenKnife)
             {
-                npcChara->damage.amount >>= 1;
+                npc->damage.amount >>= 1;
             }
 
             // Apply `damageReceived` to character health.
             if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                npcChara->health = NO_VALUE;
+                npc->health = NO_VALUE;
             }
             else
             {
-                npcChara->health -= npcChara->damage.amount;
+                npc->health -= npc->damage.amount;
             }
 
-            npcChara->damage.amount = Q12(0.0f);
+            npc->damage.amount = Q12(0.0f);
         }
 
         return true;
     }
 
-    npcChara->model.controlState     = 0;
-    npcChara->model.stateStep = 0;
-    npcChara->model.charaId   = Chara_None;
-    npcChara->health           = Q12(0.0f);
+    npc->model.controlState     = 0;
+    npc->model.stateStep = 0;
+    npc->model.charaId   = Chara_None;
+    npc->health           = Q12(0.0f);
 #endif
     return false;
 }

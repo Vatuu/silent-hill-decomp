@@ -6,7 +6,7 @@
 
 // Keyframe indexes used for each state
 // Maps can override these by defining the keyframe beforehand, only indexes that change in certain maps are included here.
-// (most likely whatever tool they used to create the `g_MapOverlayHeader.harryMapAnimInfos_34` data also output a header defining these for each map)
+// (most likely whatever tool they used to create the `g_MapOverlayHeader.harryMapAnimInfos` data also output a header defining these for each map)
 #ifndef KEYFRAME_PlayerState_Unk59
 #define KEYFRAME_PlayerState_Unk59 927
 #endif
@@ -1392,8 +1392,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             if (playerChara->model.anim.status & 1 << 0)
             {
                 s_SubCharacter* new_var; // @hack Permuter find, maybe an inline here?
-                extra->model.anim.time       = Q12(g_MapOverlayHeader.harryMapAnimInfos_34[playerChara->model.anim.status - 76].startKeyframeIdx) + (new_var = g_SysWork.npcs)[0].model.anim.time - Q12(261.0f);
-                playerChara->model.anim.time = Q12(g_MapOverlayHeader.harryMapAnimInfos_34[playerChara->model.anim.status - 76].startKeyframeIdx) + new_var[0].model.anim.time - Q12(261.0f);
+                extra->model.anim.time       = Q12(g_MapOverlayHeader.harryMapAnimInfos[playerChara->model.anim.status - 76].startKeyframeIdx) + (new_var = g_SysWork.npcs)[0].model.anim.time - Q12(261.0f);
+                playerChara->model.anim.time = Q12(g_MapOverlayHeader.harryMapAnimInfos[playerChara->model.anim.status - 76].startKeyframeIdx) + new_var[0].model.anim.time - Q12(261.0f);
 
                 if (D_800C4606)
                 {

@@ -67,21 +67,21 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
     VECTOR3*        pos;
 
     npcIdx             = 0;
-    curCharaSpawn      = g_MapOverlayHeader.charaSpawns_24C[0];
+    curCharaSpawn      = g_MapOverlayHeader.charaSpawns[0];
     ovlEnemiesStatePtr = &g_SavegamePtr->ovlEnemyStates[g_SavegamePtr->mapIdx];
 
     if (cond == false)
     {
         func_80037154();
 
-        if (g_MapOverlayHeader.npcSpawnEvent_48 != NULL)
+        if (g_MapOverlayHeader.npcSpawnEvent != NULL)
         {
-            g_MapOverlayHeader.npcSpawnEvent_48();
+            g_MapOverlayHeader.npcSpawnEvent();
         }
     }
 
-    groupCharaId0 = g_MapOverlayHeader.charaGroupIds_248[0];
-    groupCharaId1 = g_MapOverlayHeader.charaGroupIds_248[1];
+    groupCharaId0 = g_MapOverlayHeader.charaGroupIds[0];
+    groupCharaId1 = g_MapOverlayHeader.charaGroupIds[1];
 
     for (i = 0; i < 32 && g_VBlanks < 4; i++, curCharaSpawn++)
     {
@@ -313,7 +313,7 @@ void Game_NpcUpdate(void) // 0x80038354
             Chara_DamagedFlagUpdate(npc);
             func_8003BD48(npc);
 
-            g_MapOverlayHeader.charaUpdateFuncs_194[npc->model.charaId](npc, g_CharaTypeAnimInfo[animDataInfoIdx].animFile1_8, boneCoords);
+            g_MapOverlayHeader.charaUpdateFuncs[npc->model.charaId](npc, g_CharaTypeAnimInfo[animDataInfoIdx].animFile1_8, boneCoords);
 
             func_8003BE28();
             func_80037E78(npc);

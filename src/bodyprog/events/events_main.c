@@ -53,7 +53,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
 
     g_MapEventLastUsedItem = InvItemId_Unequipped;
 
-    mapEvent = &g_MapOverlayHeader.mapEvents_24[-1];
+    mapEvent = &g_MapOverlayHeader.mapEvents[-1];
 
     while (true)
     {
@@ -107,7 +107,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
             continue;
         }
 
-        mapPoint = &g_MapOverlayHeader.mapPointsOfInterest_1C[mapEvent->pointOfInterestIdx];
+        mapPoint = &g_MapOverlayHeader.mapPoints[mapEvent->pointOfInterestIdx];
 
         switch (mapEvent->triggerType)
         {

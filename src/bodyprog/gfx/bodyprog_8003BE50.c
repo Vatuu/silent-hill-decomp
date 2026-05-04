@@ -863,7 +863,7 @@ s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHeader* mapHdr) // 0x8003D21C
          i < CHARA_GROUP_COUNT;
          i++)
     {
-        curCharaId = mapHdr->charaGroupIds_248[i];
+        curCharaId = mapHdr->charaGroupIds[i];
         curModel   = &g_WorldGfxWork.charaModels[i];
 
         if (curCharaId != Chara_None)

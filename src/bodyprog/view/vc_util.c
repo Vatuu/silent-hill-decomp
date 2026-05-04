@@ -18,7 +18,7 @@ void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, const VECTOR3* chr_
     vcSetCameraUseWarp(chr_pos, g_SysWork.cameraAngleY);
     SetGeomScreen(g_GameWork.gsScreenHeight);
     vwInitViewInfo();
-    vcInitVCSystem(map_overlay_ptr->cameraPaths_3CC);
+    vcInitVCSystem(map_overlay_ptr->cameraPaths);
     vcStartCameraSystem();
 
     g_SysWork.cameraAngleZ   = Q12_ANGLE(0.0f);

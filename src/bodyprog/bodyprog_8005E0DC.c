@@ -210,18 +210,18 @@ void func_8005E650(s32 mapId) // 0x8005E650
         g_MapOverlayHeader.unkTable1_4C[i].field_A = 0;
     }
 
-    count = g_MapOverlayHeader.bloodSplatCount_58;
+    count = g_MapOverlayHeader.bloodSplatCount;
     for (i = 0; i < count; i++)
     {
-        g_MapOverlayHeader.bloodSplats_54[i].field_0 = NO_VALUE;
+        g_MapOverlayHeader.bloodSplats[i].field_0 = NO_VALUE;
     }
 
     D_800C4408 = 0;
     D_800C4414 = 0;
 
-    if (g_MapOverlayHeader.worldObjectsInit_3C != NULL)
+    if (g_MapOverlayHeader.initWorldObjects != NULL)
     {
-        g_MapOverlayHeader.worldObjectsInit_3C();
+        g_MapOverlayHeader.initWorldObjects();
     }
 }
 
@@ -251,10 +251,10 @@ void func_8005E70C(void) // 0x8005E70C
         }
     }
 
-    count = g_MapOverlayHeader.bloodSplatCount_58;
+    count = g_MapOverlayHeader.bloodSplatCount;
     for (i = 0; i < count; i++)
     {
-        g_MapOverlayHeader.bloodSplats_54[i].field_0 = NO_VALUE;
+        g_MapOverlayHeader.bloodSplats[i].field_0 = NO_VALUE;
     }
 
     D_800C4414 = 0;
@@ -567,12 +567,12 @@ void func_8005E89C(void) // 0x8005E89C
 
     GsOUT_PACKET_P = (PACKET*)poly;
 
-    for (i = 0; i < g_MapOverlayHeader.bloodSplatCount_58; i++)
+    for (i = 0; i < g_MapOverlayHeader.bloodSplatCount; i++)
     {
-        if (g_MapOverlayHeader.bloodSplats_54[i].field_0 != NO_VALUE &&
-            g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[i].field_0].field_A == 0)
+        if (g_MapOverlayHeader.bloodSplats[i].field_0 != NO_VALUE &&
+            g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats[i].field_0].field_A == 0)
         {
-            g_MapOverlayHeader.bloodSplats_54[i].field_0 = NO_VALUE;
+            g_MapOverlayHeader.bloodSplats[i].field_0 = NO_VALUE;
         }
     }
 
@@ -875,29 +875,29 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
     camPos.vx += camCoord->coord.m[0][2] * 2;
     camPos.vz += camCoord->coord.m[2][2] * 2;
 
-    for (j = 0; j < g_MapOverlayHeader.bloodSplatCount_58; j++)
+    for (j = 0; j < g_MapOverlayHeader.bloodSplatCount; j++)
     {
-        if (g_MapOverlayHeader.bloodSplats_54[j].field_0 == NO_VALUE)
+        if (g_MapOverlayHeader.bloodSplats[j].field_0 == NO_VALUE)
         {
             dists[j] = INT_MAX;
         }
         else
         {
-            if (g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_B != 2)
+            if (g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats[j].field_0].field_B != 2)
             {
                 dists[j] = Q12(0.0f);
             }
             else
             {
-                newPosX = ABS(camPos.vx - g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_0.vx_0);
-                newPosZ = ABS(camPos.vz - g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_4.vz_4);
+                newPosX = ABS(camPos.vx - g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats[j].field_0].field_0.vx_0);
+                newPosZ = ABS(camPos.vz - g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats[j].field_0].field_4.vz_4);
 
                 dists[j] = MAX(newPosX, newPosZ) + (CLAMP_HIGH(newPosX, newPosZ) >> 1);
 
                 if (dists[j] > Q12(80.0f))
                 {
-                    g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_A = 0;
-                    g_MapOverlayHeader.bloodSplats_54[j].field_0                                          = NO_VALUE;
+                    g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats[j].field_0].field_A = 0;
+                    g_MapOverlayHeader.bloodSplats[j].field_0                                          = NO_VALUE;
                     dists[j]                                                                              = INT_MAX;
                 }
                 else
@@ -912,7 +912,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
     {
         if (dists[j] != INT_MAX)
         {
-            for (k = j + 1; k < g_MapOverlayHeader.bloodSplatCount_58; k++)
+            for (k = j + 1; k < g_MapOverlayHeader.bloodSplatCount; k++)
             {
                 curDist = dists[j];
                 if (dists[k] <= curDist)
@@ -923,9 +923,9 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
                 dists[j] = dists[k];
                 dists[k] = curDist;
 
-                unkCount                                       = g_MapOverlayHeader.bloodSplats_54[j].field_0;
-                g_MapOverlayHeader.bloodSplats_54[j].field_0 = g_MapOverlayHeader.bloodSplats_54[k].field_0;
-                g_MapOverlayHeader.bloodSplats_54[k].field_0 = unkCount;
+                unkCount                                       = g_MapOverlayHeader.bloodSplats[j].field_0;
+                g_MapOverlayHeader.bloodSplats[j].field_0 = g_MapOverlayHeader.bloodSplats[k].field_0;
+                g_MapOverlayHeader.bloodSplats[k].field_0 = unkCount;
 
                 if (dists[j] == INT_MAX)
                 {
@@ -945,11 +945,11 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
 
     for (j = 0; j < count; j++)
     {
-        if (g_MapOverlayHeader.bloodSplats_54[j].field_0 != NO_VALUE)
+        if (g_MapOverlayHeader.bloodSplats[j].field_0 != NO_VALUE)
         {
-            g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_B          = 3;
-            g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_10.field_0 = 0;
-            g_MapOverlayHeader.bloodSplats_54[j].field_0                                                   = NO_VALUE;
+            g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats[j].field_0].field_B          = 3;
+            g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats[j].field_0].field_10.field_0 = 0;
+            g_MapOverlayHeader.bloodSplats[j].field_0                                                   = NO_VALUE;
         }
 
         idx = func_8005E7E0(2);
@@ -982,7 +982,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
                 g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0  = Rng_GenerateUInt(0, 15);
                 g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_2  = arg3;
                 g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1  = Rng_GenerateUInt(6, 21);
-                g_MapOverlayHeader.bloodSplats_54[j].field_0              = idx;
+                g_MapOverlayHeader.bloodSplats[j].field_0              = idx;
                 unkCount++;
             }
         }
@@ -2358,8 +2358,8 @@ bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
 
     ptr->field_15A = g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2;
 
-    temp_v0_2 = *g_MapOverlayHeader.windSpeedX_184 >> 6;
-    temp_v0_3 = *g_MapOverlayHeader.windSpeedZ_188 >> 6;
+    temp_v0_2 = *g_MapOverlayHeader.windSpeedX >> 6;
+    temp_v0_3 = *g_MapOverlayHeader.windSpeedZ >> 6;
 
     g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2 += temp_s4 + (((SquareRoot0((temp_v0_2 * temp_v0_2) + (temp_v0_3 * temp_v0_3)) << 6) * temp_s4) >> 10);
 
@@ -2461,18 +2461,18 @@ bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
 
         if (*g_MapOverlayHeader.data_190 != 0)
         {
-            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHeader.windSpeedX_184) >> 2;
-            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHeader.windSpeedZ_188) >> 2;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHeader.windSpeedX) >> 2;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHeader.windSpeedZ) >> 2;
         }
         else if (*g_MapOverlayHeader.data_18C != 0)
         {
-            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHeader.windSpeedX_184) >> 1;
-            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHeader.windSpeedZ_188) >> 1;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHeader.windSpeedX) >> 1;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHeader.windSpeedZ) >> 1;
         }
         else
         {
-            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += (TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHeader.windSpeedX_184) * 2) / 3;
-            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += (TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHeader.windSpeedZ_188) * 2) / 3;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += (TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHeader.windSpeedX) * 2) / 3;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += (TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHeader.windSpeedZ) * 2) / 3;
         }
     }
 

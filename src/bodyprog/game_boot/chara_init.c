@@ -38,8 +38,8 @@ void GameBoot_NpcInit(void) // 0x80034F18
 
     if (g_SysWork.field_234A)
     {
-        g_MapOverlayHeader.enviromentSet_16C(g_SysWork.field_2349, 127);
-        g_MapOverlayHeader.particlesUpdate_168(0, g_SavegamePtr->mapIdx, 0);
+        g_MapOverlayHeader.enviromentSet(g_SysWork.field_2349, 127);
+        g_MapOverlayHeader.particlesUpdate(0, g_SavegamePtr->mapIdx, 0);
     }
 
     GameBoot_NpcClear();
@@ -61,7 +61,7 @@ void GameBoot_InGameInit(void) // 0x80034FB8
     WorldGfx_CharaModelProcessAllLoads();
     Game_FlashlightAttributesFix();
 
-    g_MapOverlayHeader.particlesUpdate_168(0, mapOvlId, NO_VALUE);
+    g_MapOverlayHeader.particlesUpdate(0, mapOvlId, NO_VALUE);
 
     GameBoot_NpcClear();
 

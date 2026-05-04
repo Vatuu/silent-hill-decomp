@@ -4899,7 +4899,7 @@ void Map_WorldObjectsInit(void) // 0x800D991C
 
     if (!Savegame_EventFlagGet(EventFlag_324))
     {
-        g_MapOverlayHeader.charaUpdateFuncs_194[Chara_Twinfeeler] = func_800D3694;
+        g_MapOverlayHeader.charaUpdateFuncs[Chara_Twinfeeler] = func_800D3694;
         func_800D7408();
         Fs_QueueWaitForEmpty();
     }
@@ -5118,7 +5118,7 @@ void func_800DA718(void) // 0x800DA718
 
     if (Savegame_EventFlagGet(EventFlag_323) && !Savegame_EventFlagGet(EventFlag_325))
     {
-        addr  = &g_MapOverlayHeader.charaUpdateFuncs_194[Chara_Twinfeeler];
+        addr  = &g_MapOverlayHeader.charaUpdateFuncs[Chara_Twinfeeler];
         *addr = Twinfeeler_Update;
 
         Savegame_EventFlagSet(EventFlag_325);

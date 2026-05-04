@@ -756,14 +756,14 @@ def MapHeader_Read(filepath: str) -> MapHeader:
 
 def MapHeader_Print(map_header: MapHeader):
     if map_header.update_funcs:
-        print("charaUpdateFuncs_194:")
+        print("charaUpdateFuncs:")
         for index, funcAddr in enumerate(map_header.update_funcs):
             if funcAddr != 0:
                 print(f"  {charaName(index)} = 0x{funcAddr:08X}")
         print()
 
     if map_header.group_charas:
-        print("charaGroupIds_248:")
+        print("charaGroupIds:")
         for index, charaId in enumerate(map_header.group_charas):
             if index == 0:
                 group_str = "  0 - 15: "
@@ -780,7 +780,7 @@ def MapHeader_Print(map_header: MapHeader):
         print()
 
     if map_header.chara_spawns:
-        print("charaSpawns_24C:")
+        print("charaSpawns:")
         for index, spawn in enumerate(map_header.chara_spawns):
             if spawn.anim_unchanged_flag != 0 or spawn.positionX != 0 or spawn.positionZ != 0 or spawn.rotationY != 0:
 

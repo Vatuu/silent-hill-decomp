@@ -1288,8 +1288,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     playerExtra.state <  PlayerState_EnemyGrabPinnedFront)
                 {
                     temp = Q12(-8.0f);
-                    extra->model.anim.time = (Q12(g_MapOverlayHeader.harryMapAnimInfos_34[player->model.anim.status - 76].startKeyframeIdx) + model->anim.time) + temp;
-                    player->model.anim.time = (Q12(g_MapOverlayHeader.harryMapAnimInfos_34[player->model.anim.status - 76].startKeyframeIdx) + model->anim.time) + temp;
+                    extra->model.anim.time = (Q12(g_MapOverlayHeader.harryMapAnimInfos[player->model.anim.status - 76].startKeyframeIdx) + model->anim.time) + temp;
+                    player->model.anim.time = (Q12(g_MapOverlayHeader.harryMapAnimInfos[player->model.anim.status - 76].startKeyframeIdx) + model->anim.time) + temp;
                     player->model.anim.keyframeIdx = FP_FROM(player->model.anim.time, Q12_SHIFT);
                     extra->model.anim.keyframeIdx = FP_FROM(extra->model.anim.time, Q12_SHIFT);
                 }
@@ -1385,7 +1385,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
                     if (player->health <= Q12(0.0f) && player->properties.player.afkTimer_E8 <= Q12(0.0f))
                     {
-                        g_MapOverlayHeader.playerAnimLock_DC();
+                        g_MapOverlayHeader.playerAnimLock();
                         SysWork_StateSetNext(SysState_GameOver);
 
                         player->health                  = Q12(100.0f);
@@ -1477,7 +1477,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
                     if (player->health <= Q12(0.0f) && player->properties.player.afkTimer_E8 <= Q12(0.0f))
                     {
-                        g_MapOverlayHeader.playerAnimLock_DC();
+                        g_MapOverlayHeader.playerAnimLock();
 
                         SysWork_StateSetNext(SysState_GameOver);
 
@@ -2031,7 +2031,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
             if (player->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
-                g_MapOverlayHeader.playerAnimLock_DC();
+                g_MapOverlayHeader.playerAnimLock();
 
                 SysWork_StateSetNext(SysState_GameOver);
 
@@ -2084,7 +2084,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             {
                 if (g_SavegamePtr->mapIdx == MapIdx_MAP0_S00)
                 {
-                    g_MapOverlayHeader.playerAnimLock_DC();
+                    g_MapOverlayHeader.playerAnimLock();
                     Savegame_EventFlagSet(EventFlag_25);
 
                     func_8007E9C4();
@@ -2096,7 +2096,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     return;
                 }
 
-                g_MapOverlayHeader.playerAnimLock_DC();
+                g_MapOverlayHeader.playerAnimLock();
 
                 SysWork_StateSetNext(SysState_GameOver);
 
@@ -2121,7 +2121,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
             if (player->model.anim.keyframeIdx == (g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6 - 25))
             {
-                g_MapOverlayHeader.playerAnimLock_DC();
+                g_MapOverlayHeader.playerAnimLock();
 
                 SysWork_StateSetNext(SysState_GameOver);
 
@@ -7676,7 +7676,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord) // 0x8007
                     unkRot.vx = player->angleToTarget;
                 }
 
-                g_MapOverlayHeader.particleHyperBlasterBeamDraw_178(&sp20, &unkRot.vx, &unkRot.vy);
+                g_MapOverlayHeader.particleHyperBlasterBeamDraw(&sp20, &unkRot.vx, &unkRot.vy);
             }
         }
 
@@ -7710,7 +7710,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord) // 0x8007
                 sp40.vx = Q8_TO_Q12(sp80.vx);
                 sp40.vy = Q8_TO_Q12(sp80.vy);
                 sp40.vz = Q8_TO_Q12(sp80.vz);
-                g_MapOverlayHeader.particleBeamDraw_17C(&sp30, &sp40);
+                g_MapOverlayHeader.particleBeamDraw(&sp30, &sp40);
             }
         }
 
@@ -7871,7 +7871,7 @@ void func_8007E860(void) // 0x8007E860
     for (i = 0; i < 8; i++)
     {
         startIdx                            = 92;
-        HARRY_BASE_ANIM_INFOS[startIdx + i] = g_MapOverlayHeader.harryMapAnimInfos_34[i + 16];
+        HARRY_BASE_ANIM_INFOS[startIdx + i] = g_MapOverlayHeader.harryMapAnimInfos[i + 16];
     }
 }
 
@@ -7882,11 +7882,11 @@ void func_8007E8C0(void) // 0x8007E8C0
     s_SubCharacter* chara;
 
     chara     = &g_SysWork.playerWork.player;
-    animInfos = g_MapOverlayHeader.harryMapAnimInfos_34;
+    animInfos = g_MapOverlayHeader.harryMapAnimInfos;
 
     for (i = 76; animInfos->playbackFunc != NULL; i++, animInfos++)
     {
-        HARRY_BASE_ANIM_INFOS[i] = g_MapOverlayHeader.harryMapAnimInfos_34[i - 76];
+        HARRY_BASE_ANIM_INFOS[i] = g_MapOverlayHeader.harryMapAnimInfos[i - 76];
     }
 
     if (g_SavegamePtr->mapIdx == MapIdx_MAP0_S01)
@@ -8793,8 +8793,8 @@ void func_800803FC(VECTOR3* pos, s32 idx) // 0x800803FC
     q19_12 posX;
     q19_12 posZ;
 
-    posX = g_MapOverlayHeader.charaSpawns_24C[0][idx].positionX;
-    posZ = g_MapOverlayHeader.charaSpawns_24C[0][idx].positionZ;
+    posX = g_MapOverlayHeader.charaSpawns[0][idx].positionX;
+    posZ = g_MapOverlayHeader.charaSpawns[0][idx].positionZ;
 
     pos->vx = posX;
     pos->vy = Collision_GroundHeightGet(posX, posZ);

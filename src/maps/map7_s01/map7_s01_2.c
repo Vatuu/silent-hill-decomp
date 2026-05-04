@@ -2027,7 +2027,7 @@ void func_800DD348(void* unused, s32 idx, u8 spawnFlags) // 0x800DD348
 {
     u8* curSpawnFlags;
 
-    curSpawnFlags  = &g_MapOverlayHeader.charaSpawns_24C[0][idx].flags_6;
+    curSpawnFlags  = &g_MapOverlayHeader.charaSpawns[0][idx].flags_6;
     *curSpawnFlags = spawnFlags;
 }
 
@@ -2545,7 +2545,7 @@ void func_800DEDA4(void) // 0x800DEDA4
     {
         if (!Chara_ModelLoadedCheck(Chara_PuppetNurse))
         {
-            g_MapOverlayHeader.charaGroupIds_248[0] = Chara_PuppetNurse;
+            g_MapOverlayHeader.charaGroupIds[0] = Chara_PuppetNurse;
 
             Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcBoneCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
@@ -2554,7 +2554,7 @@ void func_800DEDA4(void) // 0x800DEDA4
     }
     else
     {
-        g_MapOverlayHeader.charaGroupIds_248[0] = Chara_PuppetNurse;
+        g_MapOverlayHeader.charaGroupIds[0] = Chara_PuppetNurse;
 
         Anim_CharaTypeAnimInfoClear();
         Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcBoneCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);

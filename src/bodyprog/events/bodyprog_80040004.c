@@ -20,7 +20,7 @@
 
 void func_80040004(s_MapOverlayHeader* overlayHeader) // 0x80040004
 {
-    g_WorldGfxWork.triggerZone = &overlayHeader->triggerZones_D2C[0];
+    g_WorldGfxWork.triggerZone = &overlayHeader->triggerZones[0];
 }
 
 void func_80040014(void) // 0x80040014
