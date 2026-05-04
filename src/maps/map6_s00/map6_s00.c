@@ -421,7 +421,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EBEE0
     {
         if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) || PLAYER_IN_MAP_CHUNK(vx, 1, -5, -1, -5))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Window.object_0, &g_WorldObject_Window.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject_Window.object, &g_WorldObject_Window.position, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 
@@ -431,14 +431,14 @@ void Map_WorldObjectsUpdate(void) // 0x800EBEE0
         {
             if (Savegame_EventFlagGet(EventFlag_424))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_DrOpen1.object_0, &g_WorldObject_DrOpen1.position, &(SVECTOR3){ 0, 0, 0 });
-                WorldGfx_ObjectAdd(&g_WorldObject_DrOpen2.object_0, &g_WorldObject_DrOpen2.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_DrOpen1.object, &g_WorldObject_DrOpen1.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_DrOpen2.object, &g_WorldObject_DrOpen2.position, &(SVECTOR3){ 0, 0, 0 });
 
                 collFlags |= CollisionFlag_1;
             }
             else
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_DrClose.object_0, &g_WorldObject_DrClose.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_DrClose.object, &g_WorldObject_DrClose.position, &(SVECTOR3){ 0, 0, 0 });
             }
         }
     }

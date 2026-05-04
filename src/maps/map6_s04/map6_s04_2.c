@@ -2740,7 +2740,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             Fs_QueueStartRead(FILE_ANIM_AMUSE2_DMS, FS_BUFFER_14);
             Fs_QueueWaitForEmpty();
             Dms_HeaderFixOffsets(FS_BUFFER_14);
-            WorldObject_ModelNameSet(&g_WorldObject_SFlauros.object_0, "SFLAU_HI");
+            WorldObject_ModelNameSet(&g_WorldObject_SFlauros.object, "SFLAU_HI");
 
             g_Cutscene_Timer = Q12(0.0f);
             D_800EBB60 = false;
@@ -3503,7 +3503,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
             break;
 
         case CELL_XZ(15, 15):
-            WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position, &g_WorldObject9.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject9.object, &g_WorldObject9.position, &g_WorldObject9.rotation);
 
         default:
             if (!Savegame_EventFlagGet(EventFlag_452) &&
@@ -3525,7 +3525,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
 
             if (Savegame_EventFlagGet(EventFlag_454))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_SFlauros.object_0, &g_WorldObject_SFlauros.position, &g_WorldObject_SFlauros.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject_SFlauros.object, &g_WorldObject_SFlauros.position, &g_WorldObject_SFlauros.rotation);
             }
 
             if (!D_800ED840)

@@ -1004,7 +1004,7 @@ static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo
 /** @brief World object description with a pose. */
 typedef struct _WorldObjectPose
 {
-    /* 0x0  */ s_WorldObjectModel object_0;
+    /* 0x0  */ s_WorldObjectModel object;
     /* 0x1C */ VECTOR3            position; /** Q19.12 */
     /* 0x28 */ SVECTOR3           rotation; /** Q19.12 */
 } s_WorldObjectPose;
@@ -1013,7 +1013,7 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectPose, 48);
 /** @brief World object description with a position. */
 typedef struct _WorldObjectPlacement
 {
-    /* 0x0  */ s_WorldObjectModel object_0;
+    /* 0x0  */ s_WorldObjectModel object;
     /* 0x1C */ VECTOR3            position; /** Q19.12 */
 } s_WorldObjectPlacement;
 STATIC_ASSERT_SIZEOF(s_WorldObjectPlacement, 40);
@@ -1036,7 +1036,7 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectPlacement, 40);
 {                                                                         \
     Math_Vector3Set(&(objPose)->position, posX, posY, posZ);         \
     Math_SetSVectorFast(&(objPose)->rotation, rotX, rotY, rotZ);     \
-    WorldObject_ModelNameSet(&(objPose)->object_0, (name));               \
+    WorldObject_ModelNameSet(&(objPose)->object, (name));               \
 }
 
 #define WorldObjectPosePositionInit(objPose, name, posX, posY, posZ) \
@@ -1044,7 +1044,7 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectPlacement, 40);
 #define WorldObject_PosePositionSet(objPose, name, posX, posY, posZ) \
 {                                                                    \
     Math_Vector3Set(&(objPose)->position, posX, posY, posZ);    \
-    WorldObject_ModelNameSet(&(objPose)->object_0, (name));          \
+    WorldObject_ModelNameSet(&(objPose)->object, (name));          \
 }
 
 #define WorldObjectPlacementInit(objPlacement, name, posX, posY, posZ) \
@@ -1052,7 +1052,7 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectPlacement, 40);
 #define WorldObject_PlacementSet(objPose, name, posX, posY, posZ) \
 {                                                                 \
     Math_Vector3Set(&(objPose)->position, posX, posY, posZ);      \
-    WorldObject_ModelNameSet(&(objPose)->object_0, (name));       \
+    WorldObject_ModelNameSet(&(objPose)->object, (name));       \
 }
 
 #define APPROACH(current, target, step) \

@@ -39,8 +39,8 @@ void WorldEnv_Init(void) // 0x80055028
     g_WorldEnvWork.fogColor_1C.g = 255;
     g_WorldEnvWork.fogColor_1C.b = 255;
 
-    g_WorldEnvWork.field_4C      = 0;
-    g_WorldEnvWork.lensFlareIntensity = Q12(0.0f);
+    g_WorldEnvWork.light.field_4C      = 0;
+    g_WorldEnvWork.light.lensFlareIntensity = Q12(0.0f);
     g_WorldEnvWork.waterZones_4         = NULL;
     g_WorldEnvWork.fogIntensity_18       = 0;
 
@@ -63,12 +63,12 @@ void Gfx_2dEffectsDraw(void) // 0x800550D0
 
     if (g_WorldEnvWork.field_2 != 0)
     {
-        func_80041074(ot, g_WorldEnvWork.lightIntensity, &g_WorldEnvWork.lightRotation, &g_WorldEnvWork.lightPosition);
+        func_80041074(ot, g_WorldEnvWork.light.intensity, &g_WorldEnvWork.light.direction, &g_WorldEnvWork.light.position);
     }
 
-    if (g_WorldEnvWork.field_0 == 1 && g_WorldEnvWork.lensFlareIntensity != Q12(0.0f))
+    if (g_WorldEnvWork.field_0 == 1 && g_WorldEnvWork.light.lensFlareIntensity != Q12(0.0f))
     {
-        func_8008D470(g_WorldEnvWork.lensFlareIntensity, &g_WorldEnvWork.lightRotation, &g_WorldEnvWork.lightPosition, g_WorldEnvWork.waterZones_4);
+        func_8008D470(g_WorldEnvWork.light.lensFlareIntensity, &g_WorldEnvWork.light.direction, &g_WorldEnvWork.light.position, g_WorldEnvWork.waterZones_4);
     }
 
     if (g_WorldEnvWork.screenBrightness_8 > 0)
@@ -138,18 +138,18 @@ void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, 
     g_WorldEnvWork.field_20            = arg1;
     g_WorldEnvWork.field_3             = arg2;
     g_WorldEnvWork.worldTintColor_28.r = tintR >> 5;
-    g_WorldEnvWork.field_2C.m[0][2]    = tintR;
-    g_WorldEnvWork.field_2C.m[0][1]    = tintR;
-    g_WorldEnvWork.field_2C.m[0][0]    = tintR;
+    g_WorldEnvWork.colorMat.m[0][2]    = tintR;
+    g_WorldEnvWork.colorMat.m[0][1]    = tintR;
+    g_WorldEnvWork.colorMat.m[0][0]    = tintR;
     g_WorldEnvWork.worldTintColor_28.g = tintG >> 5;
     g_WorldEnvWork.screenBrightness_8  = brightness;
     g_WorldEnvWork.worldTintColor_28.b = tintB >> 5;
-    g_WorldEnvWork.field_2C.m[1][2]    = (s16)tintG;
-    g_WorldEnvWork.field_2C.m[1][1]    = (s16)tintG;
-    g_WorldEnvWork.field_2C.m[1][0]    = (s16)tintG;
-    g_WorldEnvWork.field_2C.m[2][2]    = (s16)tintB;
-    g_WorldEnvWork.field_2C.m[2][1]    = (s16)tintB;
-    g_WorldEnvWork.field_2C.m[2][0]    = (s16)tintB;
+    g_WorldEnvWork.colorMat.m[1][2]    = (s16)tintG;
+    g_WorldEnvWork.colorMat.m[1][1]    = (s16)tintG;
+    g_WorldEnvWork.colorMat.m[1][0]    = (s16)tintG;
+    g_WorldEnvWork.colorMat.m[2][2]    = (s16)tintB;
+    g_WorldEnvWork.colorMat.m[2][1]    = (s16)tintB;
+    g_WorldEnvWork.colorMat.m[2][0]    = (s16)tintB;
     g_WorldEnvWork.field_24            = (tintR * arg1) >> 17;
     g_WorldEnvWork.field_25            = (tintG * arg1) >> 17;
     g_WorldEnvWork.field_26            = (tintB * arg1) >> 17;
@@ -173,21 +173,21 @@ void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg
     }
 }
 
-void func_80055434(VECTOR3* vec) // 0x80055434
+void WorldEnv_LightPositionGet(VECTOR3* pos) // 0x80055434
 {
-    *vec = g_WorldEnvWork.lightPosition;
+    *pos = g_WorldEnvWork.light.position;
 }
 
-s32 func_8005545C(SVECTOR* vec) // 0x8005545C
+s32 WorldEnv_LightRotationAndIntensityGet(SVECTOR* rot) // 0x8005545C
 {
-    *vec = g_WorldEnvWork.field_6C;
-    return g_WorldEnvWork.lightIntensity;
+    *rot = g_WorldEnvWork.light.rotation;
+    return g_WorldEnvWork.light.intensity;
 }
 
-s32 func_80055490(SVECTOR* rot) // 0x80055490
+s32 WorldEnv_LightDirectionAndIntensityGet(SVECTOR* dir) // 0x80055490
 {
-    *rot = g_WorldEnvWork.lightRotation;
-    return g_WorldEnvWork.lightIntensity;
+    *dir = g_WorldEnvWork.light.direction;
+    return g_WorldEnvWork.light.intensity;
 }
 
 void func_800554C4(q19_12 lightIntensity, q3_12 lensFlareIntensity, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1,
@@ -199,23 +199,23 @@ void func_800554C4(q19_12 lightIntensity, q3_12 lensFlareIntensity, GsCOORDINATE
     VECTOR3* lightPos;            // Q19.12
     VECTOR3* transformedLightPos; // Q19.12
 
-    g_WorldEnvWork.lightIntensity     = lightIntensity;
-    g_WorldEnvWork.lensFlareIntensity = lensFlareIntensity;
+    g_WorldEnvWork.light.intensity     = lightIntensity;
+    g_WorldEnvWork.light.lensFlareIntensity = lensFlareIntensity;
     g_WorldEnvWork.waterZones_4       = waterZones;
 
     if (coord0 == NULL)
     {
-        g_WorldEnvWork.lightRotation = *rot;
+        g_WorldEnvWork.light.direction = *rot;
     }
     else
     {
         Vw_CoordHierarchyMatrixCompute(coord0, &mat);
-        ApplyMatrixSV(&mat, rot, &g_WorldEnvWork.lightRotation);
+        ApplyMatrixSV(&mat, rot, &g_WorldEnvWork.light.direction);
     }
 
     if (coord1 == NULL)
     {
-        lightPos     = &g_WorldEnvWork.lightPosition;
+        lightPos     = &g_WorldEnvWork.light.position;
         lightPos->vx = posX;
         lightPos->vy = posY;
         lightPos->vz = posZ;
@@ -230,18 +230,18 @@ void func_800554C4(q19_12 lightIntensity, q3_12 lensFlareIntensity, GsCOORDINATE
 
         ApplyMatrix(&mat, &tempSvec, &vec);
 
-        transformedLightPos     = &g_WorldEnvWork.lightPosition;
+        transformedLightPos     = &g_WorldEnvWork.light.position;
         transformedLightPos->vx = Q8_TO_Q12(vec.vx + mat.t[0]);
         transformedLightPos->vy = Q8_TO_Q12(vec.vy + mat.t[1]);
         transformedLightPos->vz = Q8_TO_Q12(vec.vz + mat.t[2]);
     }
 
-    vwVectorToAngle(&g_WorldEnvWork.field_6C, &g_WorldEnvWork.lightRotation);
-    g_WorldEnvWork.field_4C = lightIntensity >> 8;
-    func_80055648(lightIntensity, &g_WorldEnvWork.lightRotation);
+    vwVectorToAngle(&g_WorldEnvWork.light.rotation, &g_WorldEnvWork.light.direction);
+    g_WorldEnvWork.light.field_4C = lightIntensity >> 8;
+    func_80055648(lightIntensity, &g_WorldEnvWork.light.direction);
 }
 
-void func_80055648(s32 arg0, SVECTOR* arg1) // 0x80055648
+void func_80055648(s32 intensity, const SVECTOR* dir) // 0x80055648
 {
     s32            var_a2;
     s32            temp_lo;
@@ -250,26 +250,28 @@ void func_80055648(s32 arg0, SVECTOR* arg1) // 0x80055648
     s32            temp_v1;
     s32            j;
     s32            i;
-    s_WorldEnvWork_84* ptr;
+    s_WorldEnvWork_84* curPtr;
 
-    for (i = 0, ptr = g_WorldEnvWork.field_84; i < 3; i++, ptr++)
+    for (i = 0, curPtr = g_WorldEnvWork.light.field_84;
+         i < 3;
+         i++, curPtr++)
     {
         switch (i)
         {
             case 0:
-                var_a2 = arg1->vx;
+                var_a2 = dir->vx;
                 break;
 
             case 1:
-                var_a2 = arg1->vy;
+                var_a2 = dir->vy;
                 break;
 
             case 2:
-                var_a2 = arg1->vz;
+                var_a2 = dir->vz;
                 break;
 
             default:
-                var_a2 = 0;
+                var_a2 = Q12(0.0f);
                 break;
         }
 
@@ -280,11 +282,12 @@ void func_80055648(s32 arg0, SVECTOR* arg1) // 0x80055648
 
         for (j = 0; j < ARRAY_SIZE(D_800AE1B4); j++)
         {
-            ptr->field_0[0][j].vy = ptr->field_0[1][j].vy = Q12_MULT(D_800AE1B4[j].vy, arg0);
-            ptr->field_0[0][j].vx                         = Q12_MULT(D_800AE1B4[j].vx, temp_t1);
-            ptr->field_0[1][j].vx                         = Q12_MULT(D_800AE1B4[j].vx, temp_v1);
-            ptr->field_0[0][j].vz                         = Q12_MULT(FP_MULTIPLY(D_800AE1B4[j].vz, temp_v0, Q12_SHIFT - 2), arg0);
-            ptr->field_0[1][j].vz                         = Q12_MULT(FP_MULTIPLY(D_800AE1B4[j].vz, temp_lo, Q12_SHIFT - 2), arg0);
+            curPtr->field_0[0][j].vy =
+            curPtr->field_0[1][j].vy = Q12_MULT(D_800AE1B4[j].vy, intensity);
+            curPtr->field_0[0][j].vx = Q12_MULT(D_800AE1B4[j].vx, temp_t1);
+            curPtr->field_0[1][j].vx = Q12_MULT(D_800AE1B4[j].vx, temp_v1);
+            curPtr->field_0[0][j].vz = Q12_MULT(FP_MULTIPLY(D_800AE1B4[j].vz, temp_v0, Q12_SHIFT - 2), intensity);
+            curPtr->field_0[1][j].vz = Q12_MULT(FP_MULTIPLY(D_800AE1B4[j].vz, temp_lo, Q12_SHIFT - 2), intensity);
         }
     }
 }
@@ -293,7 +296,7 @@ s32 func_800557DC(void) // 0x800557DC
 {
     MATRIX mat;
 
-    Vw_WorldScreenMatrixAtPositionGet(&mat, g_WorldEnvWork.lightPosition.vx, g_WorldEnvWork.lightPosition.vy, g_WorldEnvWork.lightPosition.vz);
+    Vw_WorldScreenMatrixAtPositionGet(&mat, g_WorldEnvWork.light.position.vx, g_WorldEnvWork.light.position.vy, g_WorldEnvWork.light.position.vz);
     return Q8_TO_Q12(mat.t[2]);
 }
 
@@ -542,13 +545,13 @@ u8 func_80055D78(q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80055D78
     VECTOR3* ptr0;
     VECTOR3* ptr1;
 
-    pos[0] = Q12_TO_Q8(posX) - Q12_TO_Q8(g_WorldEnvWork.lightPosition.vx);
-    pos[1] = Q12_TO_Q8(posY) - Q12_TO_Q8(g_WorldEnvWork.lightPosition.vy);
-    pos[2] = Q12_TO_Q8(posZ) - Q12_TO_Q8(g_WorldEnvWork.lightPosition.vz);
+    pos[0] = Q12_TO_Q8(posX) - Q12_TO_Q8(g_WorldEnvWork.light.position.vx);
+    pos[1] = Q12_TO_Q8(posY) - Q12_TO_Q8(g_WorldEnvWork.light.position.vy);
+    pos[2] = Q12_TO_Q8(posZ) - Q12_TO_Q8(g_WorldEnvWork.light.position.vz);
 
     if (g_WorldEnvWork.field_0 != 0)
     {
-        ptr1 = &g_WorldEnvWork.field_84;
+        ptr1 = &g_WorldEnvWork.light.field_84;
         for (i = 0, ptr0 = ptr1, var_a3 = 0xFF;
              i < ARRAY_SIZE(pos);
              i++, ptr0 += 2)
@@ -615,9 +618,9 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* worldMat) // 0x80055F08
     u8      field_3;
     s32     field_20;
 
-    WorldEnv_LightTransform(worldMat, g_WorldEnvWork.lightIntensity, &g_WorldEnvWork.lightRotation, &g_WorldEnvWork.lightPosition);
+    WorldEnv_LightTransform(worldMat, g_WorldEnvWork.light.intensity, &g_WorldEnvWork.light.direction, &g_WorldEnvWork.light.position);
 
-    gte_lddqa(g_WorldEnvWork.field_4C);
+    gte_lddqa(g_WorldEnvWork.light.field_4C);
     gte_lddqb_0();
     gte_ldtr_0();
 
@@ -626,15 +629,15 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* worldMat) // 0x80055F08
     SetGeomOffset(-1024, -1024);
     SetGeomScreen(16);
 
-    rotMat.m[0][0] = g_WorldEnvWork.field_74.vx;
-    rotMat.m[0][1] = g_WorldEnvWork.field_74.vy;
-    rotMat.m[0][2] = g_WorldEnvWork.field_74.vz;
+    rotMat.m[0][0] = g_WorldEnvWork.light.field_74.vx;
+    rotMat.m[0][1] = g_WorldEnvWork.light.field_74.vy;
+    rotMat.m[0][2] = g_WorldEnvWork.light.field_74.vz;
     rotMat.m[1][0] = -arg1->vx;
     rotMat.m[1][1] = -arg1->vy;
     rotMat.m[1][2] = -arg1->vz;
-    rotMat.m[2][0] = arg0->vx - g_WorldEnvWork.field_7C.vx;
-    rotMat.m[2][1] = arg0->vy - g_WorldEnvWork.field_7C.vy;
-    rotMat.m[2][2] = arg0->vz - g_WorldEnvWork.field_7C.vz;
+    rotMat.m[2][0] = arg0->vx - g_WorldEnvWork.light.field_7C.vx;
+    rotMat.m[2][1] = arg0->vy - g_WorldEnvWork.light.field_7C.vy;
+    rotMat.m[2][2] = arg0->vz - g_WorldEnvWork.light.field_7C.vz;
 
     field_3  = g_WorldEnvWork.field_3;
     field_20 = g_WorldEnvWork.field_20 >> 5;
@@ -1217,7 +1220,7 @@ void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 arg2, MATRIX* viewMat
     {
         if (worldMat != NULL && g_WorldEnvWork.field_0 != 0)
         {
-            WorldEnv_LightTransform(worldMat, g_WorldEnvWork.lightIntensity, &g_WorldEnvWork.lightRotation, &g_WorldEnvWork.lightPosition);
+            WorldEnv_LightTransform(worldMat, g_WorldEnvWork.light.intensity, &g_WorldEnvWork.light.direction, &g_WorldEnvWork.light.position);
         }
 
         if (modelHdr->field_B_0)
@@ -1269,7 +1272,7 @@ void WorldEnv_LightTransform(MATRIX* worldMat, s32 alpha, SVECTOR* arg2, VECTOR3
     gte_rtv0();
     gte_lddp(alpha);
     gte_gpf12();
-    gte_stsv(&g_WorldEnvWork.field_74);
+    gte_stsv(&g_WorldEnvWork.light.field_74);
 
     // Divide `arg3` by 16 and subtract matrix translation.
     posX = Q12_TO_Q8(arg3->vx) - worldMat->t[0];
@@ -1278,7 +1281,7 @@ void WorldEnv_LightTransform(MATRIX* worldMat, s32 alpha, SVECTOR* arg2, VECTOR3
 
     gte_LoadVector0_XYZ(posX, posY, posZ);
     gte_rtv0();
-    gte_stsv(&g_WorldEnvWork.field_7C);
+    gte_stsv(&g_WorldEnvWork.light.field_7C);
 }
 
 void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* mat) // 0x80057344
@@ -1295,7 +1298,7 @@ void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* m
     vertOffset   = modelHdr->vertexOffset_9;
     normalOffset = modelHdr->normalOffset_A;
 
-    gte_lddqa(g_WorldEnvWork.field_4C);
+    gte_lddqa(g_WorldEnvWork.light.field_4C);
     gte_lddqb_0();
 
     for (curMeshHdr = modelHdr->meshHdrs_C; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
@@ -1315,11 +1318,11 @@ void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* m
                 break;
 
             case 1:
-                func_80057658(curMeshHdr, normalOffset, scratchData, &g_WorldEnvWork.field_74, &g_WorldEnvWork.field_7C);
+                func_80057658(curMeshHdr, normalOffset, scratchData, &g_WorldEnvWork.light.field_74, &g_WorldEnvWork.light.field_7C);
                 break;
 
             case 2:
-                func_80057A3C(curMeshHdr, normalOffset, scratchData, &g_WorldEnvWork.field_74);
+                func_80057A3C(curMeshHdr, normalOffset, scratchData, &g_WorldEnvWork.light.field_74);
                 break;
         }
 
@@ -2682,15 +2685,15 @@ void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* v
 
         case 1:
             func_8005A478(scratchData, var_v1);
-            SetColorMatrix(&g_WorldEnvWork.field_2C);
-            gte_lddqa(g_WorldEnvWork.field_4C);
+            SetColorMatrix(&g_WorldEnvWork.colorMat);
+            gte_lddqa(g_WorldEnvWork.light.field_4C);
             gte_lddqb_0();
             break;
 
         case 2:
             func_8005A838(scratchData, var_v1);
-            SetColorMatrix(&g_WorldEnvWork.field_2C);
-            gte_lddqa(g_WorldEnvWork.field_4C);
+            SetColorMatrix(&g_WorldEnvWork.colorMat);
+            gte_lddqa(g_WorldEnvWork.light.field_4C);
             gte_lddqb_0();
             break;
     }
@@ -2746,9 +2749,9 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A478
     SetGeomOffset(Q8(-4.0f), Q8(-4.0f));
     SetGeomScreen(16);
 
-    temp_s0 = g_WorldEnvWork.field_7C.vx;
-    temp_s1 = g_WorldEnvWork.field_7C.vy;
-    temp_s2 = g_WorldEnvWork.field_7C.vz;
+    temp_s0 = g_WorldEnvWork.light.field_7C.vx;
+    temp_s1 = g_WorldEnvWork.light.field_7C.vy;
+    temp_s2 = g_WorldEnvWork.light.field_7C.vz;
 
     var_t1 = SquareRoot0(SQUARE(temp_s0) + SQUARE(temp_s1) + SQUARE(temp_s2));
     if (var_t1 == 0)
@@ -2760,8 +2763,8 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A478
     temp_s1_neg = -temp_s1;
     temp_s2_neg = -temp_s2;
 
-    *(u32*)&scratchData->rotMatrix_3E4[0][0] = *(u32*)&g_WorldEnvWork.field_74;
-    scratchData->rotMatrix_3E4[0][2]         = g_WorldEnvWork.field_74.vz;
+    *(u32*)&scratchData->rotMatrix_3E4[0][0] = *(u32*)&g_WorldEnvWork.light.field_74;
+    scratchData->rotMatrix_3E4[0][2]         = g_WorldEnvWork.light.field_74.vz;
 
     scratchData->rotMatrix_3E4[1][0] = Q12(temp_s0_neg) / var_t1;
     scratchData->rotMatrix_3E4[1][1] = Q12(temp_s1_neg) / var_t1;
@@ -2855,9 +2858,9 @@ void func_8005A838(s_GteScratchData* scratchData, s32 scale) // 0x8005A838
 {
     SVECTOR3 vec;
 
-    vec.vx = Q12_MULT(g_WorldEnvWork.field_74.vx, scale) >> 1;
-    vec.vy = Q12_MULT(g_WorldEnvWork.field_74.vy, scale) >> 1;
-    vec.vz = Q12_MULT(g_WorldEnvWork.field_74.vz, scale) >> 1;
+    vec.vx = Q12_MULT(g_WorldEnvWork.light.field_74.vx, scale) >> 1;
+    vec.vy = Q12_MULT(g_WorldEnvWork.light.field_74.vy, scale) >> 1;
+    vec.vz = Q12_MULT(g_WorldEnvWork.light.field_74.vz, scale) >> 1;
 
     gte_SetLightSVector(&vec);
 
@@ -3153,9 +3156,9 @@ s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBu
     mat->texture_8 = NULL;
     foundTex = NULL;
 
-    for (i = 0; i < activeTexs->count_0; i++)
+    for (i = 0; i < activeTexs->count; i++)
     {
-        curTex = activeTexs->textures_4[i];
+        curTex = activeTexs->textures[i];
 
         if (!COMPARE_FILENAMES(&mat->name_0, &curTex->name))
         {
@@ -3256,7 +3259,7 @@ void func_8005B424(VECTOR3* vec0, const VECTOR3* vec1) // 0x8005B424
 
 void Textures_ActiveTex_CountReset(s_ActiveTextures* activeTexs) // 0x8005B46C
 {
-    activeTexs->count_0 = 0;
+    activeTexs->count = 0;
 }
 
 void Textures_ActiveTex_PutTextures(s_ActiveTextures* activeTexs, s_Texture* texs, s32 texIdx) // 0x8005B474
@@ -3264,11 +3267,11 @@ void Textures_ActiveTex_PutTextures(s_ActiveTextures* activeTexs, s_Texture* tex
     s_Texture*  curTex;
     s_Texture** texEntries;
 
-    texEntries = activeTexs->textures_4;
+    texEntries = activeTexs->textures;
     for (curTex = &texs[0]; curTex < &texs[texIdx];)
     {
         *texEntries++ = curTex++;
-        activeTexs->count_0++;
+        activeTexs->count++;
     }
 }
 
@@ -3280,9 +3283,9 @@ s_Texture* Textures_ActiveTex_FindTexture(char* texName, s_ActiveTextures* activ
 
     StringCopy(prevTexName, texName);
 
-    for (i = 0; i < activeTexs->count_0; i++)
+    for (i = 0; i < activeTexs->count; i++)
     {
-        curTex = activeTexs->textures_4[i];
+        curTex = activeTexs->textures[i];
         if (curTex->queueIdx != NO_VALUE && !COMPARE_FILENAMES(prevTexName, &curTex->name))
         {
             return curTex;
@@ -3400,21 +3403,21 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
         worldMat.t[1] = Q12_TO_Q8(posY) + temp_fp->field_6;
         worldMat.t[2] = Q12_TO_Q8(posZ);
 
-        WorldEnv_LightTransform(&worldMat, g_WorldEnvWork.lightIntensity, &g_WorldEnvWork.lightRotation, &g_WorldEnvWork.lightPosition);
+        WorldEnv_LightTransform(&worldMat, g_WorldEnvWork.light.intensity, &g_WorldEnvWork.light.direction, &g_WorldEnvWork.light.position);
 
         switch (g_WorldEnvWork.field_0)
         {
             case 0:
             case 1:
                 func_8005A478(&sp90, var_s1);
-                SetColorMatrix(&g_WorldEnvWork.field_2C);
-                gte_lddqa(g_WorldEnvWork.field_4C);
+                SetColorMatrix(&g_WorldEnvWork.colorMat);
+                gte_lddqa(g_WorldEnvWork.light.field_4C);
                 gte_lddqb_0();
                 break;
 
             case 2:
                 func_8005A838(&sp90, var_s1);
-                SetColorMatrix(&g_WorldEnvWork.field_2C);
+                SetColorMatrix(&g_WorldEnvWork.colorMat);
                 break;
         }
 

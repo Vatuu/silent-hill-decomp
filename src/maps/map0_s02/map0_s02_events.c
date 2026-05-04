@@ -151,7 +151,7 @@ void Map_WorldObjectsUpdate(void)
         WorldGfx_ObjectAdd(&g_WorldObject_SavePad, &g_WorldObjectPose_SavePad1.position, &g_WorldObjectPose_SavePad1.rotation);
         if (!Savegame_EventFlagGet(EventFlag_M0S02_PickupGasolineTank) && Savegame_EventFlagGet(EventFlag_62))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Gas.object_0, &g_WorldObject_Gas.position, &g_WorldObject_Gas.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject_Gas.object, &g_WorldObject_Gas.position, &g_WorldObject_Gas.rotation);
         }
     }
 
@@ -161,7 +161,7 @@ void Map_WorldObjectsUpdate(void)
         WorldGfx_ObjectAdd(&g_WorldObject_SavePad, &g_WorldObjectPose_SavePad2.position, &g_WorldObjectPose_SavePad2.rotation);
         if (Savegame_EventFlagGet(EventFlag_58) && !Savegame_EventFlagGet(EventFlag_M0S02_PickupChannelingStone))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Cosmo.object_0, &g_WorldObject_Cosmo.position, &g_WorldObject_Cosmo.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject_Cosmo.object, &g_WorldObject_Cosmo.position, &g_WorldObject_Cosmo.rotation);
         }
     }
 
@@ -177,7 +177,7 @@ void Map_WorldObjectsUpdate(void)
         }
         if (!Savegame_EventFlagGet(EventFlag_M0S02_PickupKatana))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Katana.object_0, &g_WorldObject_Katana.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject_Katana.object, &g_WorldObject_Katana.position, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 

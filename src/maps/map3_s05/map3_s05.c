@@ -957,16 +957,16 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
 
     if (projCellX == 2 && projCellZ == -3 && !Savegame_EventFlagGet(EventFlag_M3S05_PickupVideoTape))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position, &g_WorldObject2.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject2.object, &g_WorldObject2.position, &g_WorldObject2.rotation);
     }
 
     if (projCellX == 1 && projCellZ == -3)
     {
-        WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position, &g_WorldObject3.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject3.object, &g_WorldObject3.position, &g_WorldObject3.rotation);
 
         if (!Savegame_EventFlagGet(EventFlag_M3S05_PickupExaminationRoomKey))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position, &g_WorldObject4.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject4.object, &g_WorldObject4.position, &g_WorldObject4.rotation);
         }
     }
 
@@ -983,7 +983,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
             Savegame_EventFlagClear(EventFlag_288);
         }
 
-        WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position, &g_WorldObject0.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &g_WorldObject0.rotation);
     }
 
     if (projCellX == 1 && projCellZ == -1)
@@ -1003,7 +1003,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S05_PickupHammer))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position, &g_WorldObject7.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject7.object, &g_WorldObject7.position, &g_WorldObject7.rotation);
         }
 
         if (D_800DD528 == 0)
@@ -1052,7 +1052,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
 
         for (i = 0; i < ARRAY_SIZE(g_WorldObject_Dr); i++)
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object_0, &g_WorldObject_Dr[i].position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object, &g_WorldObject_Dr[i].position, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 

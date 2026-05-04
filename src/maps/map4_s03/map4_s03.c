@@ -4953,7 +4953,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 6, -1, 6) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
     }
 
     if ((PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) || PLAYER_IN_MAP_CHUNK(vx, 1, 5, -1, 5)) && PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
@@ -5002,14 +5002,14 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
             Collision_FlagBitsSet(2);
         }
 
-        WorldGfx_ObjectAdd(&g_WorldObject_Fence.object_0, &g_WorldObject_Fence.position, &g_WorldObject_Fence.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject_Fence.object, &g_WorldObject_Fence.position, &g_WorldObject_Fence.rotation);
     }
 
     if ((PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) || PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4)) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S03_PickupHuntingRifle))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Mal5_21.object_0, &g_WorldObject_Mal5_21.position, &g_WorldObject_Mal5_21.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject_Mal5_21.object, &g_WorldObject_Mal5_21.position, &g_WorldObject_Mal5_21.rotation);
         }
 
         if (!Savegame_EventFlagGet(EventFlag_327))

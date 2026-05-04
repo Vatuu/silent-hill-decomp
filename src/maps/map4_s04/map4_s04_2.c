@@ -614,14 +614,14 @@ void Map_WorldObjectsUpdate(void) // 0x800D2DF4
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
-        WorldGfx_ObjectAdd(&g_WorldObjectSavepad.object_0, &g_WorldObjectSavepad.position, &g_WorldObjectSavepad.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObjectSavepad.object, &g_WorldObjectSavepad.position, &g_WorldObjectSavepad.rotation);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
         if (Savegame_EventFlagGet(EventFlag_337) && !Savegame_EventFlagGet(EventFlag_338))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 }

@@ -684,7 +684,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
             collFlags = CollisionFlag_1;
         }
 
-        WorldGfx_ObjectAdd(&g_WorldObject_Movaches.object_0, &g_WorldObject_Movaches.position, &(SVECTOR3){ 0, 0, 0 });
+        WorldGfx_ObjectAdd(&g_WorldObject_Movaches.object, &g_WorldObject_Movaches.position, &(SVECTOR3){ 0, 0, 0 });
     }
     else
     {
@@ -702,7 +702,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
 
         if (!Savegame_EventFlagGet(EventFlag_M5S03_PickupMagnet))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Mag.object_0, &g_WorldObject_Mag.position, &g_WorldObject_Mag.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject_Mag.object, &g_WorldObject_Mag.position, &g_WorldObject_Mag.rotation);
         }
     }
 

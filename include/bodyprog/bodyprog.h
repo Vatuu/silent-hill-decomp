@@ -1290,16 +1290,16 @@ STATIC_ASSERT_SIZEOF(s_IpdColumn, 32);
 
 typedef struct _ActiveTextures
 {
-    s32        count_0;
-    s_Texture* textures_4[10];
+    /* 0x0 */ s32        count;
+    /* 0x4 */ s_Texture* textures[10];
 } s_ActiveTextures;
 
 typedef struct _IpdTextures
 {
-    s_ActiveTextures fullPage_0;
-    s_ActiveTextures halfPage_2C;
-    s_Texture        fullPageTextures_58[8];
-    s_Texture        halfPageTextures_118[2];
+    /* 0x0   */ s_ActiveTextures fullPage;
+    /* 0x2C  */ s_ActiveTextures halfPage;
+    /* 0x58  */ s_Texture        fullPageTextures[8];
+    /* 0x118 */ s_Texture        halfPageTextures[2];
 } s_IpdTextures;
 STATIC_ASSERT_SIZEOF(s_IpdTextures, 328);
 
@@ -1327,10 +1327,25 @@ typedef struct _Map
 } s_Map;
 STATIC_ASSERT_SIZEOF(s_Map, 1420);
 
+// Related to point `s_PointLight`.
 typedef struct
 {
     VECTOR3 field_0[2][1];
 } s_WorldEnvWork_84;
+
+/** @brief Dynamic point light. */
+typedef struct _PointLight
+{
+    /* 0x0  */ s32               field_4C; // Light intensity in Q4?
+    /* 0x4  */ q3_12             lensFlareIntensity;
+    /* 0x8  */ q19_12            intensity;
+    /* 0xC  */ SVECTOR           direction; /** Q3.12 */
+    /* 0x14 */ VECTOR3           position;  /** Q19.12 */
+    /* 0x20 */ SVECTOR           rotation;
+    /* 0x28 */ SVECTOR           field_74; // Q8 light position for matrix?
+    /* 0x30 */ SVECTOR           field_7C; // Light offset?
+    /* 0x38 */ s_WorldEnvWork_84 field_84[3];
+} s_PointLight;
 
 /** @brief World environment workspace.
  * Holds fog distances and ramps, lighting and color parameters,
@@ -1339,35 +1354,27 @@ typedef struct
  */
 typedef struct _WorldEnvWork
 {
-    /* 0x0   */ u8            field_0;        // `bool`?
-    /* 0x1   */ u8            isFogEnabled_1; /** `bool` */
-    /* 0x2   */ u8            field_2;
-    /* 0x3   */ u8            field_3;        // Enviroment lighting.
-    /* 0x4   */ s_WaterZone*  waterZones_4;
-    /* 0x8   */ s32           screenBrightness_8;
-    /* 0xC   */ s32           fogNearDistance_C;
-    /* 0x10  */ q23_8         fogFarDistance_10; // "DrawDistanmce" in SHME, "has no effect when fog is disabled".
-    /* 0x14  */ s32           fogDepthShift_14;  // "FogThing1" from SHME. Affects the distance where fog begins.
-    /* 0x18  */ s32           fogIntensity_18;   // "FogThing2" from SHME. Affects the distance where fog begins.
-    /* 0x1C  */ CVECTOR       fogColor_1C;
-    /* 0x20  */ s32           field_20; // Map lighting.
-    /* 0x24  */ u8            field_24; // } RGB. Character color lighting.
-    /* 0x25  */ u8            field_25; // }
-    /* 0x26  */ u8            field_26; // }
-    /* 0x27  */ s8            unk_27;
-    /* 0x28  */ CVECTOR       worldTintColor_28;
-    /* 0x2C  */ MATRIX        field_2C;
-    /* 0x4C  */ s32           field_4C; // Light intensity in Q4?
-    /* 0x50  */ q3_12         lensFlareIntensity;
-    /* 0x54  */ q19_12        lightIntensity;
-    /* 0x58  */ SVECTOR       lightRotation; /** Q3.12 */
-    /* 0x60  */ VECTOR3       lightPosition; /** Q19.12 */
-    /* 0x6C  */ SVECTOR       field_6C;      // Player current angles related to light?
-    /* 0x74  */ SVECTOR       field_74;
-    /* 0x7C  */ SVECTOR       field_7C;
-    /* 0x84  */ s_WorldEnvWork_84 field_84[3];
-    /* 0xCC  */ u8            fogRamp_CC[128]; // Fog-related values based on `fogNearDistance_C`/`fogFarDistance_10`.
-    /* 0x14C */ u16           field_14C;
+    /* 0x0   */ u8           field_0;        // `bool`?
+    /* 0x1   */ u8           isFogEnabled_1; /** `bool` */
+    /* 0x2   */ u8           field_2;
+    /* 0x3   */ u8           field_3; // Enviroment lighting.
+    /* 0x4   */ s_WaterZone* waterZones_4;
+    /* 0x8   */ s32          screenBrightness_8;
+    /* 0xC   */ s32          fogNearDistance_C;
+    /* 0x10  */ q23_8        fogFarDistance_10; // "DrawDistanmce" in SHME, "has no effect when fog is disabled".
+    /* 0x14  */ s32          fogDepthShift_14;  // "FogThing1" from SHME. Affects the distance where fog begins.
+    /* 0x18  */ s32          fogIntensity_18;   // "FogThing2" from SHME. Affects the distance where fog begins.
+    /* 0x1C  */ CVECTOR      fogColor_1C;
+    /* 0x20  */ s32          field_20; // Map lighting.
+    /* 0x24  */ u8           field_24; // } RGB. Character color lighting.
+    /* 0x25  */ u8           field_25; // }
+    /* 0x26  */ u8           field_26; // }
+    /* 0x27  */ s8           __pad_27;
+    /* 0x28  */ CVECTOR      worldTintColor_28;
+    /* 0x2C  */ MATRIX       colorMat;
+    /* 0x50  */ s_PointLight light;
+    /* 0xCC  */ u8           fogRamp_CC[128]; // Fog-related values based on `fogNearDistance_C`/`fogFarDistance_10`.
+    /* 0x14C */ u16          field_14C;
 } s_WorldEnvWork;
 
 typedef struct
@@ -3142,19 +3149,32 @@ void WorldEnv_FogParamsSet(u8 isFogEnabled, u8 fogColorR, u8 fogColorG, u8 fogCo
 
 void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6);
 
-/** Gets the point light position. */
-void func_80055434(VECTOR3* pos);
+/** @brief Gets the point light position.
+ *
+ * @param pos Output light position.
+ */
+void WorldEnv_LightPositionGet(VECTOR3* pos);
 
-s32 func_8005545C(SVECTOR* vec);
+/** @brief Gets the point light rotation and intensity.
+ *
+ * @param rot Output light rotation.
+ * @return Light intensity.
+ */
+s32 WorldEnv_LightRotationAndIntensityGet(SVECTOR* rot);
 
-/** Outputs point light rotation and returns light intensity. */
-s32 func_80055490(SVECTOR* rot);
+/** @brief Gets the point light direction and intensity.
+ *
+ * @param rot Output light direction.
+ * @return Light intensity.
+ */
+s32 WorldEnv_LightDirectionAndIntensityGet(SVECTOR* dir);
 
 /** Light function. */
 void func_800554C4(q19_12 lightIntensity, q3_12 lensFlareIntensity, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1,
                    SVECTOR* rot, q19_12 posX, q19_12 posY, q19_12 posZ, s_WaterZone* waterZones);
 
-void func_80055648(s32 arg0, SVECTOR* arg1);
+/** Light function. */
+void func_80055648(s32 lightIntensity, const SVECTOR* dir);
 
 s32 func_800557DC(void);
 

@@ -923,7 +923,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
 
             for (i = 0; i < ARRAY_SIZE(g_WorldObject_Dr); i++)
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object_0, &g_WorldObject_Dr[i].position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object, &g_WorldObject_Dr[i].position, &(SVECTOR3){ 0, 0, 0 });
             }
             break;
 
@@ -1047,12 +1047,12 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
 
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfHatter))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Plate0.object_0, &g_WorldObject_Plate0.position, &g_WorldObject_Plate0.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject_Plate0.object, &g_WorldObject_Plate0.position, &g_WorldObject_Plate0.rotation);
             }
 
             if (Savegame_EventFlagGet(EventFlag_250))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Blood2.object_0, &g_WorldObject_Blood2.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Blood2.object, &g_WorldObject_Blood2.position, &(SVECTOR3){ 0, 0, 0 });
             }
 
             if (!D_800D8428)
@@ -1073,14 +1073,14 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
         case CELL_XZ(15, 15):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfCat))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Plate1.object_0, &g_WorldObject_Plate1.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Plate1.object, &g_WorldObject_Plate1.position, &(SVECTOR3){ 0, 0, 0 });
             }
             break;
 
         case CELL_XZ(12, 15):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfTurtle))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Panel.object_0, &g_WorldObject_Panel.position, &g_WorldObject_Panel.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject_Panel.object, &g_WorldObject_Panel.position, &g_WorldObject_Panel.rotation);
             }
 
             if (!Savegame_EventFlagGet(EventFlag_239) &&
@@ -1095,33 +1095,33 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
         case CELL_XZ(13, 18):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupLighter))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Lighter.object_0, &g_WorldObject_Lighter.position, &g_WorldObject_Lighter.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject_Lighter.object, &g_WorldObject_Lighter.position, &g_WorldObject_Lighter.rotation);
             }
             break;
 
         case CELL_XZ(14, 17):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupDisinfectingAlcohol))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Alcohol.object_0, &g_WorldObject_Alcohol.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Alcohol.object, &g_WorldObject_Alcohol.position, &(SVECTOR3){ 0, 0, 0 });
             }
             break;
 
         case CELL_XZ(13, 17):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupBasementStoreroomKey))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Key.object_0, &g_WorldObject_Key.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Key.object, &g_WorldObject_Key.position, &(SVECTOR3){ 0, 0, 0 });
             }
             break;
 
         case CELL_XZ(14, 15):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupBloodPack))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Blood0.object_0, &g_WorldObject_Blood0.position, &g_WorldObject_Blood0.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject_Blood0.object, &g_WorldObject_Blood0.position, &g_WorldObject_Blood0.rotation);
             }
             break;
 
         case CELL_XZ(14, 14):
-            WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
             break;
     }
 

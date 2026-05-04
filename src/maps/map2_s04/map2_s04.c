@@ -144,11 +144,11 @@ void Map_WorldObjectsUpdate(void)
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_SavePad0.object_0, &g_WorldObject_SavePad0.position, &g_WorldObject_SavePad0.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject_SavePad0.object, &g_WorldObject_SavePad0.position, &g_WorldObject_SavePad0.rotation);
 
         if (!Savegame_EventFlagGet(EventFlag_M1S02_PickupShotgun))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Shotgun.object_0, &g_WorldObject_Shotgun.position, &g_WorldObject_Shotgun.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject_Shotgun.object, &g_WorldObject_Shotgun.position, &g_WorldObject_Shotgun.rotation);
         }
     }
 
@@ -156,7 +156,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupMap))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Map.object_0, &g_WorldObject_Map.position, &g_WorldObject_Map.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject_Map.object, &g_WorldObject_Map.position, &g_WorldObject_Map.rotation);
         }
     }
 
@@ -168,7 +168,7 @@ void Map_WorldObjectsUpdate(void)
             D_800CF280++;
         }
 
-        WorldGfx_ObjectAdd(&g_WorldObject_SavePad1.object_0, &g_WorldObject_SavePad1.position, &g_WorldObject_SavePad1.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject_SavePad1.object, &g_WorldObject_SavePad1.position, &g_WorldObject_SavePad1.rotation);
     }
     else
     {

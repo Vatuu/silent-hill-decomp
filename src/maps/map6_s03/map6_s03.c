@@ -466,14 +466,14 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
 
         D_800DFEF2                    = MAX(0, D_800DFEF2);
         g_WorldObject1.position.vz = D_800DFEF2 + Q12(19.7f);
-        WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position, &g_WorldObject1.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject1.object, &g_WorldObject1.position, &g_WorldObject1.rotation);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M6S03_PickupMap))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position, &D_800CB258);
+            WorldGfx_ObjectAdd(&g_WorldObject2.object, &g_WorldObject2.position, &D_800CB258);
         }
     }
 

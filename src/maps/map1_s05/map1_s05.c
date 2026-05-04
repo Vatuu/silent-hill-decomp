@@ -317,10 +317,10 @@ void Map_WorldObjectsUpdate(void) // 0x800D5400
     }
 
     g_WorldObject0.rotation.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(-90.0f));
-    WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position, &g_WorldObject0.rotation);
+    WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &g_WorldObject0.rotation);
 
     g_WorldObject1.rotation.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(15.0f));
-    WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position, &g_WorldObject1.rotation);
+    WorldGfx_ObjectAdd(&g_WorldObject1.object, &g_WorldObject1.position, &g_WorldObject1.rotation);
 
     i = 0;
     while (1)

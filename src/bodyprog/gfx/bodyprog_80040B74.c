@@ -523,24 +523,24 @@ void Ipd_TexturesInit(void) // 0x80041D48
             y = 21;
         }
 
-        Texture_Init(&g_Map.ipdTextures.fullPageTextures_58[i], NULL, 0, y, 0, 0, x, j);
+        Texture_Init(&g_Map.ipdTextures.fullPageTextures[i], NULL, 0, y, 0, 0, x, j);
     }
 
-    Textures_ActiveTex_CountReset(&g_Map.ipdTextures.fullPage_0);
-    Textures_ActiveTex_PutTextures(&g_Map.ipdTextures.fullPage_0, g_Map.ipdTextures.fullPageTextures_58, 8);
+    Textures_ActiveTex_CountReset(&g_Map.ipdTextures.fullPage);
+    Textures_ActiveTex_PutTextures(&g_Map.ipdTextures.fullPage, g_Map.ipdTextures.fullPageTextures, 8);
 
     // Run through texture pages.
     for (i = 0, y = 26, j = 0; i < 2; i++, x += 16)
     {
-        Texture_Init(&g_Map.ipdTextures.halfPageTextures_118[i], NULL, 0, y, (i & 0x1) * 32, 0, x, j);
+        Texture_Init(&g_Map.ipdTextures.halfPageTextures[i], NULL, 0, y, (i & 0x1) * 32, 0, x, j);
         if (i & 0x1)
         {
             y++;
         }
     }
 
-    Textures_ActiveTex_CountReset(&g_Map.ipdTextures.halfPage_2C);
-    Textures_ActiveTex_PutTextures(&g_Map.ipdTextures.halfPage_2C, g_Map.ipdTextures.halfPageTextures_118, 2);
+    Textures_ActiveTex_CountReset(&g_Map.ipdTextures.halfPage);
+    Textures_ActiveTex_PutTextures(&g_Map.ipdTextures.halfPage, g_Map.ipdTextures.halfPageTextures, 2);
 }
 
 void Map_CollisionDataInit(void) // 0x80041E98
@@ -589,8 +589,8 @@ void Ipd_TexturesRefClear(void) // 0x8004201C
     s_Texture* curTex;
 
     // TODO: Will these match as for loops?
-    curTex = &g_Map.ipdTextures.fullPageTextures_58[0];
-    while (curTex < (&g_Map.ipdTextures.fullPageTextures_58[8]))
+    curTex = &g_Map.ipdTextures.fullPageTextures[0];
+    while (curTex < (&g_Map.ipdTextures.fullPageTextures[8]))
     {
         if (curTex->refCount == 0)
         {
@@ -600,8 +600,8 @@ void Ipd_TexturesRefClear(void) // 0x8004201C
         curTex++;
     }
 
-    curTex = &g_Map.ipdTextures.halfPageTextures_118[0];
-    while (curTex < (&g_Map.ipdTextures.halfPageTextures_118[2]))
+    curTex = &g_Map.ipdTextures.halfPageTextures[0];
+    while (curTex < (&g_Map.ipdTextures.halfPageTextures[2]))
     {
         if (curTex->refCount == 0)
         {
@@ -638,13 +638,13 @@ s_Texture* Texture_InfoGet(char* texName) // 0x80042178
 {
     s_Texture* tex;
 
-    tex = Textures_ActiveTex_FindTexture(texName, &g_Map.ipdTextures.fullPage_0);
+    tex = Textures_ActiveTex_FindTexture(texName, &g_Map.ipdTextures.fullPage);
     if (tex != NULL)
     {
         return tex;
     }
 
-    tex = Textures_ActiveTex_FindTexture(texName, &g_Map.ipdTextures.halfPage_2C);
+    tex = Textures_ActiveTex_FindTexture(texName, &g_Map.ipdTextures.halfPage);
     if (tex != NULL)
     {
         return tex;
@@ -727,12 +727,12 @@ void Ipd_ActiveChunksClear(s_Map* map, s32 arg1) // 0x80042300
 
 void Map_MakeIpdGrid(s_Map* map, char* mapTag, e_FsFile fileIdxStart) // 0x800423F4
 {
-    char            sp10[256];
-    s32             x;
-    s32             z;
-    s32             i;
-    char*           filenameSuffix;
-    s_IpdColumn*    col;
+    char         filename[256];
+    s32          x;
+    s32          z;
+    s32          i;
+    char*        filenameSuffix;
+    s_IpdColumn* col;
 
     map->ipdGridCenter = (s_IpdColumn*)(&map->ipdGrid[8].idx[8]);
 
@@ -749,11 +749,11 @@ void Map_MakeIpdGrid(s_Map* map, char* mapTag, e_FsFile fileIdxStart) // 0x80042
     {
         if (g_FileTable[i].type == FileType_Ipd)
         {
-            Fs_GetFileName(sp10, i);
+            Fs_GetFileName(filename, i);
 
-            if (strncmp(sp10, map->mapTag, map->mapTagSize) == 0)
+            if (strncmp(filename, map->mapTag, map->mapTagSize) == 0)
             {
-                filenameSuffix = &sp10[map->mapTagSize];
+                filenameSuffix = &filename[map->mapTagSize];
                 if (ConvertHexToS8(&x, filenameSuffix[0], filenameSuffix[1]) &&
                     ConvertHexToS8(&z, filenameSuffix[2], filenameSuffix[3]))
                 {
@@ -1014,21 +1014,21 @@ void Ipd_ChunkInit(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x
     if (Map_ChunkLoadStateGet(g_Map.globalLm.queueIdx) >= ChunkLoadState_Loaded &&
         !g_Map.globalLm.lmHdr->isLoaded)
     {
-        fullPageTexCount                         = g_Map.ipdTextures.fullPage_0.count_0;
-        g_Map.ipdTextures.fullPage_0.count_0 = 4;
+        fullPageTexCount                         = g_Map.ipdTextures.fullPage.count;
+        g_Map.ipdTextures.fullPage.count = 4;
 
         LmHeader_FixOffsets(g_Map.globalLm.lmHdr);
-        Lm_MaterialsLoadWithFilter(g_Map.globalLm.lmHdr, &g_Map.ipdTextures.fullPage_0, NULL, g_Map.texFileIdx, BlendMode_Additive);
+        Lm_MaterialsLoadWithFilter(g_Map.globalLm.lmHdr, &g_Map.ipdTextures.fullPage, NULL, g_Map.texFileIdx, BlendMode_Additive);
         Lm_MaterialFlagsApply(g_Map.globalLm.lmHdr);
 
-        g_Map.ipdTextures.fullPage_0.count_0 = fullPageTexCount;
+        g_Map.ipdTextures.fullPage.count = fullPageTexCount;
     }
 
     for (curChunk = g_Map.ipdActive; curChunk < &g_Map.ipdActive[g_Map.ipdActiveCount]; curChunk++)
     {
         if (Map_ChunkLoadStateGet(curChunk->queueIdx) >= ChunkLoadState_Loaded)
         {
-            IpdHeader_FixOffsets(curChunk->ipdHdr, &g_Map.globalLm.lmHdr, 1, &g_Map.ipdTextures.fullPage_0, &g_Map.ipdTextures.halfPage_2C, g_Map.texFileIdx);
+            IpdHeader_FixOffsets(curChunk->ipdHdr, &g_Map.globalLm.lmHdr, 1, &g_Map.ipdTextures.fullPage, &g_Map.ipdTextures.halfPage, g_Map.texFileIdx);
             func_80044044(curChunk->ipdHdr, curChunk->cellX, curChunk->cellZ);
         }
     }
@@ -1210,7 +1210,7 @@ void Ipd_ChunkMaterialsApply(s_Map* map) // 0x800433B8
             if (curChunk->ipdHdr->isLoaded &&
                 (curChunk->distance0 <= Q12(0.0f) || curChunk->distance1 <= Q12(0.0f)))
             {
-                Ipd_MaterialsLoad(curChunk->ipdHdr, &map->ipdTextures.fullPage_0, &map->ipdTextures.halfPage_2C, map->texFileIdx);
+                Ipd_MaterialsLoad(curChunk->ipdHdr, &map->ipdTextures.fullPage, &map->ipdTextures.halfPage, map->texFileIdx);
                 Lm_MaterialFlagsApply(curChunk->ipdHdr->lmHdr);
             }
         }

@@ -503,10 +503,10 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
         case CELL_XZ(19, 18):
             if (!Savegame_EventFlagGet(EventFlag_M3S04_PickupPlateOfQueen))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Plate.object_0, &g_WorldObject_Plate.position, &D_800CB35C);
+                WorldGfx_ObjectAdd(&g_WorldObject_Plate.object, &g_WorldObject_Plate.position, &D_800CB35C);
             }
 
-            WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
             break;
 
         case CELL_XZ(17, 18):
@@ -522,7 +522,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
 
             for (i = 0; i < ARRAY_SIZE(g_WorldObject_Dr); i++)
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object_0, &g_WorldObject_Dr[i].position, &D_800CB35C);
+                WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object, &g_WorldObject_Dr[i].position, &D_800CB35C);
             }
             break;
     }

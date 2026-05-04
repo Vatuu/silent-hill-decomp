@@ -1437,7 +1437,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
 
         if (Savegame_EventFlagGet(EventFlag_M1S03_KeyDownTheDrain) && !Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position, &g_WorldObject2.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject2.object, &g_WorldObject2.position, &g_WorldObject2.rotation);
         }
     }
     else
@@ -1482,7 +1482,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_PickupRubberBall))
         {
-            WorldGfx_ObjectAdd(&g_WorldObjectD.object_0, &g_WorldObjectD.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObjectD.object, &g_WorldObjectD.position, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 
@@ -1490,7 +1490,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_PickupShotgun))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position, &g_WorldObject3.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject3.object, &g_WorldObject3.position, &g_WorldObject3.rotation);
         }
 
         if (Savegame_EventFlagGet(EventFlag_96))
@@ -1502,16 +1502,16 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
             collFlags = CollisionFlag_1;
         }
 
-        WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position, &g_WorldObject1.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject1.object, &g_WorldObject1.position, &g_WorldObject1.rotation);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position, &g_WorldObject4.rotation);
-        WorldGfx_ObjectAdd(&g_WorldObject5.object_0, &g_WorldObject5.position, &g_WorldObject5.rotation);
-        WorldGfx_ObjectAdd(&g_WorldObject6.object_0, &g_WorldObject6.position, &g_WorldObject6.rotation);
-        WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position, &g_WorldObject7.rotation);
-        WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position, &(SVECTOR3){ 0, 0, 0 });
+        WorldGfx_ObjectAdd(&g_WorldObject4.object, &g_WorldObject4.position, &g_WorldObject4.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject5.object, &g_WorldObject5.position, &g_WorldObject5.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject6.object, &g_WorldObject6.position, &g_WorldObject6.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject7.object, &g_WorldObject7.position, &g_WorldObject7.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &(SVECTOR3){ 0, 0, 0 });
 
         if (g_WorldObject6.rotation.vy != Q12_ANGLE(180.0f) ||
             g_WorldObject7.rotation.vy != g_WorldObject6.rotation.vy)
@@ -1544,7 +1544,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_PickupPictureCard))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject8.object_0, &g_WorldObject8.position, &g_WorldObject8.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject8.object, &g_WorldObject8.position, &g_WorldObject8.rotation);
         }
     }
 
@@ -1552,14 +1552,14 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_99))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position, &g_WorldObject9.rotation);
-            WorldGfx_ObjectAdd(&g_WorldObjectA.object_0, &g_WorldObjectA.position, &g_WorldObjectA.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject9.object, &g_WorldObject9.position, &g_WorldObject9.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObjectA.object, &g_WorldObjectA.position, &g_WorldObjectA.rotation);
         }
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
-        WorldGfx_ObjectAdd(&g_WorldObjectB.object_0, &g_WorldObjectB.position, &g_WorldObjectB.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObjectB.object, &g_WorldObjectB.position, &g_WorldObjectB.rotation);
     }
 
     func_80069844(CollisionFlag_All);

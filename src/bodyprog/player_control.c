@@ -1096,7 +1096,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
     {
         case PlayerState_Idle:
             playerProps.moveDistance_126 = Q12(0.0f);
-            func_8005545C(&playerAngles);
+            WorldEnv_LightRotationAndIntensityGet(&playerAngles);
             playerProps.quickTurnHeadingAngle_120 = playerAngles.vy;
 
             if (extra->model.stateStep == 0)

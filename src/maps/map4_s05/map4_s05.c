@@ -1858,12 +1858,12 @@ void Map_WorldObjectsUpdate(void) // 0x800D7360
 
         if (Savegame_EventFlagGet(EventFlag_348))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Kidn05.object_0, &g_WorldObject_Kidn05.position, &(SVECTOR3){ Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f) });
+            WorldGfx_ObjectAdd(&g_WorldObject_Kidn05.object, &g_WorldObject_Kidn05.position, &(SVECTOR3){ Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f) });
             Collision_FlagBitsSet(4);
         }
         else
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object_0, &g_WorldObject_Kidn04.position, &(SVECTOR3){ Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f) });
+            WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object, &g_WorldObject_Kidn04.position, &(SVECTOR3){ Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f) });
             Collision_FlagBitsSet(2);
         }
     }

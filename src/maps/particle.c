@@ -56,8 +56,8 @@ void Particle_SystemUpdate(s32 unused, e_MapIdx mapOverlayId, s32 arg3)
 {
     s32 temp_s0;
 
-    func_80055434(&g_ParticleVectors0.vector_0);
-    g_ParticleVectors0.field_28 = func_8005545C(&g_ParticleVectors0.svec_18);
+    WorldEnv_LightPositionGet(&g_ParticleVectors0.vector_0);
+    g_ParticleVectors0.field_28 = WorldEnv_LightRotationAndIntensityGet(&g_ParticleVectors0.svec_18);
 
     vwGetViewPosition(&g_ParticleVectors0.viewPosition_C);
     vwGetViewAngle(&g_ParticleVectors0.viewRotation_20);
@@ -125,8 +125,8 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapOverlayId, s32 arg3)
     Particle_SoundUpdate();
 #endif
 
-    func_80055434(&g_ParticleVectors0.vector_0);
-    g_ParticleVectors0.field_28 = func_8005545C(&g_ParticleVectors0.svec_18);
+    WorldEnv_LightPositionGet(&g_ParticleVectors0.vector_0);
+    g_ParticleVectors0.field_28 = WorldEnv_LightRotationAndIntensityGet(&g_ParticleVectors0.svec_18);
 
     vwGetViewPosition(&g_ParticleVectors0.viewPosition_C);
     vwGetViewAngle(&g_ParticleVectors0.viewRotation_20);

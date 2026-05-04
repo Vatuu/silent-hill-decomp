@@ -756,7 +756,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
     if (g_SysWork.sysStateSteps[0] < 27)
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_06LBag.object_0, &g_WorldObject_06LBag.position, &g_WorldObject_06LBag.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject_06LBag.object, &g_WorldObject_06LBag.position, &g_WorldObject_06LBag.rotation);
     }
 
     if (g_Cutscene_Timer >= Q12(0.0f))
@@ -847,7 +847,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
 
             if (!Savegame_EventFlagGet(EventFlag_M5S02_PickupSafeKey))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Key.object_0, &g_WorldObject_Key.position, &g_WorldObject_Key.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject_Key.object, &g_WorldObject_Key.position, &g_WorldObject_Key.rotation);
             }
 
             Collision_FlagBitsSet(CollisionFlag_1);
@@ -860,8 +860,8 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
             WorldGfx_ObjectAdd(&g_WorldObject_Drug, &g_WorldObject_UnkPose1[2].position, &g_WorldObject_UnkPose1[2].rotation);
         }
 
-        WorldGfx_ObjectAdd(&g_WorldObject_BDoor1.object_0, &g_WorldObject_BDoor1.position, &g_WorldObject_BDoor1.rotation);
-        WorldGfx_ObjectAdd(&g_WorldObject_Daly.object_0, &g_WorldObject_Daly.position, &g_WorldObject_Daly.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject_BDoor1.object, &g_WorldObject_BDoor1.position, &g_WorldObject_BDoor1.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject_Daly.object, &g_WorldObject_Daly.position, &g_WorldObject_Daly.rotation);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
@@ -870,7 +870,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
 
         if (!Savegame_EventFlagGet(EventFlag_380))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Obj00.object_0, &g_WorldObject_Obj00.position, &g_WorldObject_Obj00.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject_Obj00.object, &g_WorldObject_Obj00.position, &g_WorldObject_Obj00.rotation);
         }
     }
 

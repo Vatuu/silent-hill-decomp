@@ -1197,7 +1197,7 @@ void Map_WorldObjectsInit(void) // 0x800D49C4
         WorldObject_D_800D7FF0.position.vz = Q12(62.7466f);
     }
 
-    WorldObject_ModelNameSet(&WorldObject_D_800D8050.object_0, D_800A99E4[1]);
+    WorldObject_ModelNameSet(&WorldObject_D_800D8050.object, D_800A99E4[1]);
 
     WorldObjectPoseInit(&WorldObject_D_800D8070, 183.3833f, -1.2673f, 60.951f, 0.0f, 66.01, 0.0f);
     WorldObjectPoseInit(&WorldObject_D_800D8090, 23.4f, -0.91f, 60.8f, 0.0f, 90.4f, 0.0f);
@@ -1223,15 +1223,15 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
             Collision_FlagBitsSet(CollisionFlag_1);
         }
 
-        WorldGfx_ObjectAdd(&WorldObject_D_800D7FF0.object_0, &WorldObject_D_800D7FF0.position, &(SVECTOR3){ 0, 0, 0 });
-        WorldGfx_ObjectAdd(&WorldObject_D_800D8050.object_0, &WorldObject_D_800D8070.position, &WorldObject_D_800D8070.rotation);
+        WorldGfx_ObjectAdd(&WorldObject_D_800D7FF0.object, &WorldObject_D_800D7FF0.position, &(SVECTOR3){ 0, 0, 0 });
+        WorldGfx_ObjectAdd(&WorldObject_D_800D8050.object, &WorldObject_D_800D8070.position, &WorldObject_D_800D8070.rotation);
 
         if (Savegame_EventFlagGet(EventFlag_313))
         {
-            WorldGfx_ObjectAdd(&WorldObject_D_800D80B0.object_0, &WorldObject_D_800D80B0.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&WorldObject_D_800D80B0.object, &WorldObject_D_800D80B0.position, &(SVECTOR3){ 0, 0, 0 });
         }
 
-        WorldGfx_ObjectAdd(&WorldObject_D_800D80E0[D_800D8018].object_0, &WorldObject_D_800D80E0[D_800D8018].position, &(SVECTOR3){ 0, 0, 0 });
+        WorldGfx_ObjectAdd(&WorldObject_D_800D80E0[D_800D8018].object, &WorldObject_D_800D80E0[D_800D8018].position, &(SVECTOR3){ 0, 0, 0 });
     }
     else
     {
@@ -1242,12 +1242,12 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S01_PickupAxe))
         {
-            WorldGfx_ObjectAdd(&WorldObject_D_800D8020.object_0, &WorldObject_D_800D8020.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&WorldObject_D_800D8020.object, &WorldObject_D_800D8020.position, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
     {
-        WorldGfx_ObjectAdd(&WorldObject_D_800D8050.object_0, &WorldObject_D_800D8090.position, &WorldObject_D_800D8090.rotation);
+        WorldGfx_ObjectAdd(&WorldObject_D_800D8050.object, &WorldObject_D_800D8090.position, &WorldObject_D_800D8090.rotation);
     }
 }

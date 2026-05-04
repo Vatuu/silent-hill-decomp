@@ -814,13 +814,13 @@ void Map_WorldObjectsUpdate(void) // 0x800D30DC
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
     {
-        WorldGfx_ObjectAdd(&D_800D5374.object_0, &D_800D5374.position, &D_800D5374.rotation);
+        WorldGfx_ObjectAdd(&D_800D5374.object, &D_800D5374.position, &D_800D5374.rotation);
 
         if (!D_800D5345)
         {
             for (i = 0; i < ARRAY_SIZE(D_800D53A4); i++)
             {
-                WorldGfx_ObjectAdd(&D_800D53A4[i].object_0, &D_800D53A4[i].position, &D_800D53A4[i].rotation);
+                WorldGfx_ObjectAdd(&D_800D53A4[i].object, &D_800D53A4[i].position, &D_800D53A4[i].rotation);
             }
         }
     }

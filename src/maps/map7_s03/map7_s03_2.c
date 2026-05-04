@@ -10131,18 +10131,18 @@ void Map_WorldObjectsUpdate(void) // 0x800E972C
         *(s32*)&(g_WorldObject_Bin.rotation.vx) = (u16)D_800F482C;
         *(s16*)&(g_WorldObject_Bin.rotation.vz) = 0;
 
-        WorldGfx_ObjectAdd(&g_WorldObject_Bin.object_0, &g_WorldObject_Bin.position, &g_WorldObject_Bin.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject_Bin.object, &g_WorldObject_Bin.position, &g_WorldObject_Bin.rotation);
         D_800F482C -= (FP_TO(g_DeltaTime, Q12_SHIFT) / Q12(3.6f));
     }
 
     if (D_800F4811)
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_Nu.object_0, &g_WorldObject_Nu.position, &g_WorldObject_Nu.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject_Nu.object, &g_WorldObject_Nu.position, &g_WorldObject_Nu.rotation);
     }
 
     if (g_Cutscene_UpdateBaby)
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_Baby.object_0, &g_WorldObject_Baby.position, &g_WorldObject_Baby.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject_Baby.object, &g_WorldObject_Baby.position, &g_WorldObject_Baby.rotation);
     }
 
     if (Savegame_EventFlagGet(EventFlag_577) && !Savegame_EventFlagGet(EventFlag_578) && !Savegame_EventFlagGet(EventFlag_582))

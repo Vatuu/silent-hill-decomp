@@ -711,7 +711,7 @@ void Map_WorldObjectsUpdate(void) // 0x800ECC8C
     {
             if (!Savegame_EventFlagGet(EventFlag_M5S01_PickupMap))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &(SVECTOR3){ 0, 0, 0 });
             }
     }
 
@@ -719,7 +719,7 @@ void Map_WorldObjectsUpdate(void) // 0x800ECC8C
     {
             if (!Savegame_EventFlagGet(EventFlag_371))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position, &g_WorldObject1.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject1.object, &g_WorldObject1.position, &g_WorldObject1.rotation);
             }
     }
 

@@ -445,28 +445,28 @@ void Map_WorldObjectsUpdate(void) // 0x800D1A98
     {
         if (!Savegame_EventFlagGet(EventFlag_198))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position, &EMPTY_ROT);
+            WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &EMPTY_ROT);
         }
-        WorldGfx_ObjectAdd(&g_WorldObject1[0].object_0, &g_WorldObject1[0].position, &EMPTY_ROT);
-        WorldGfx_ObjectAdd(&g_WorldObject1[1].object_0, &g_WorldObject1[1].position, &EMPTY_ROT);
+        WorldGfx_ObjectAdd(&g_WorldObject1[0].object, &g_WorldObject1[0].position, &EMPTY_ROT);
+        WorldGfx_ObjectAdd(&g_WorldObject1[1].object, &g_WorldObject1[1].position, &EMPTY_ROT);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position, &g_WorldObject2.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject2.object, &g_WorldObject2.position, &g_WorldObject2.rotation);
 
         if (Savegame_EventFlagGet(EventFlag_M3S00_PickupMap))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position, &g_WorldObject4.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject4.object, &g_WorldObject4.position, &g_WorldObject4.rotation);
         }
         else
         {
-            WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position, &g_WorldObject3.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject3.object, &g_WorldObject3.position, &g_WorldObject3.rotation);
         }
 
         if (!Savegame_EventFlagGet(EventFlag_M3S00_FirstAidKit))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject5.object_0, &g_WorldObject5.position, &g_WorldObject5.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject5.object, &g_WorldObject5.position, &g_WorldObject5.rotation);
         }
 
         if (!Savegame_EventFlagGet(EventFlag_200) && (g_SysWork.playerWork.player.position.vx < Q12(24.0f)))

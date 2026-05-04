@@ -1092,7 +1092,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9514
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S01_PickupChemical))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject7.object, &g_WorldObject7.position, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 
@@ -1105,16 +1105,16 @@ void Map_WorldObjectsUpdate(void) // 0x800D9514
     {
         if (Savegame_EventFlagGet(EventFlag_71))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject8.object_0, &g_WorldObject8.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject8.object, &g_WorldObject8.position, &(SVECTOR3){ 0, 0, 0 });
         }
         else
         {
-            WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject9.object, &g_WorldObject9.position, &(SVECTOR3){ 0, 0, 0 });
         }
 
         if (!Savegame_EventFlagGet(EventFlag_M1S01_PickupSilverMedallion))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position, &g_WorldObject0.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &g_WorldObject0.rotation);
         }
     }
 
@@ -1257,14 +1257,14 @@ void func_800D9EC4(void) // 0x800D9EC4
     }
     else if (!Savegame_EventFlagGet(EventFlag_77))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position, &(SVECTOR3){ 0, 0, 0 });
+        WorldGfx_ObjectAdd(&g_WorldObject3.object, &g_WorldObject3.position, &(SVECTOR3){ 0, 0, 0 });
     }
     else
     {
         g_WorldObject1.rotation.vy = Q12_ANGLE(-2.9f);
     }
 
-    WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position, &g_WorldObject1.rotation);
+    WorldGfx_ObjectAdd(&g_WorldObject1.object, &g_WorldObject1.position, &g_WorldObject1.rotation);
     g_WorldObject2.rotation.vy = g_WorldObject1.rotation.vy;
-    WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position, &g_WorldObject2.rotation);
+    WorldGfx_ObjectAdd(&g_WorldObject2.object, &g_WorldObject2.position, &g_WorldObject2.rotation);
 }

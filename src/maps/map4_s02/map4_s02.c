@@ -67,7 +67,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA3F0
     if ((PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3)) ||
         (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3)))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object_0, &g_WorldObject_Kidn04.position, &(SVECTOR3){ 0, 0, 0 });
+        WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object, &g_WorldObject_Kidn04.position, &(SVECTOR3){ 0, 0, 0 });
         Collision_FlagBitsSet(2);
     }
 

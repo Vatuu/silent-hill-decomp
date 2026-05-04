@@ -390,20 +390,20 @@ void Map_WorldObjectsUpdate(void) // 0x800D197C
     {
         if (PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
 
             if (!(Savegame_EventFlagGet(EventFlag_M3S00_PickupMap)))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Map.object_0, &g_WorldObject_Map.position, &g_WorldObject_Map.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject_Map.object, &g_WorldObject_Map.position, &g_WorldObject_Map.rotation);
             }
             else
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Map2.object_0, &g_WorldObject_Map2.position, &g_WorldObject_Map2.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject_Map2.object, &g_WorldObject_Map2.position, &g_WorldObject_Map2.rotation);
             }
 
             if (!(Savegame_EventFlagGet(EventFlag_M3S00_FirstAidKit)))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_FirstAidKit.object_0, &g_WorldObject_FirstAidKit.position, &g_WorldObject_FirstAidKit.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject_FirstAidKit.object, &g_WorldObject_FirstAidKit.position, &g_WorldObject_FirstAidKit.rotation);
             }
         }
     }
@@ -414,7 +414,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D197C
         {
             if (!Savegame_EventFlagGet(EventFlag_M3S06_PickupAntiqueShopKey) && Savegame_EventFlagGet(EventFlag_297))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Key.object_0, &g_WorldObject_Key.position, &g_WorldObject_Key.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject_Key.object, &g_WorldObject_Key.position, &g_WorldObject_Key.rotation);
             }
         }
     }

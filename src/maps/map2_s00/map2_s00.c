@@ -2054,12 +2054,12 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
         case CELL_XZ(11, 24):
             if (!Savegame_EventFlagGet(EventFlag_147))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position, &g_WorldObject1.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject1.object, &g_WorldObject1.position, &g_WorldObject1.rotation);
             }
 
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupSteelPipe))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_IronPipe.object_0, &g_WorldObject_IronPipe.position, &g_WorldObject_IronPipe.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject_IronPipe.object, &g_WorldObject_IronPipe.position, &g_WorldObject_IronPipe.rotation);
             }
             break;
 
@@ -2067,8 +2067,8 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
         case CELL_XZ(12, 15):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_DogHouseNoteFound))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position, &g_WorldObject2.rotation);
-                WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position, &g_WorldObject3.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject2.object, &g_WorldObject2.position, &g_WorldObject2.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject3.object, &g_WorldObject3.position, &g_WorldObject3.rotation);
             }
             break;
 
@@ -2078,7 +2078,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
 
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupMap))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject8.object_0, &g_WorldObject8.position, &g_WorldObject8.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject8.object, &g_WorldObject8.position, &g_WorldObject8.rotation);
             }
 
             WorldGfx_ObjectAdd(&D_800F56EC, &D_800F574C.position, &D_800F574C.rotation);
@@ -2146,17 +2146,17 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
         case CELL_XZ(20, 22):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_LockOfLionOpen))
             {
-                WorldGfx_ObjectAdd(&g_WorldObjectB->object_0, &g_WorldObjectB->position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObjectB->object, &g_WorldObjectB->position, &(SVECTOR3){ 0, 0, 0 });
             }
 
             if (!Savegame_EventFlagGet(EventFlag_M2S00_LockOfWoodmanOpen))
             {
-                WorldGfx_ObjectAdd(&g_WorldObjectB[1].object_0, &g_WorldObjectB[1].position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObjectB[1].object, &g_WorldObjectB[1].position, &(SVECTOR3){ 0, 0, 0 });
             }
 
             if (!Savegame_EventFlagGet(EventFlag_M2S00_LockOfScarecrowOpen))
             {
-                WorldGfx_ObjectAdd(&g_WorldObjectB[2].object_0, &g_WorldObjectB[2].position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObjectB[2].object, &g_WorldObjectB[2].position, &(SVECTOR3){ 0, 0, 0 });
             }
 
             WorldGfx_ObjectAdd(&D_800F56EC, &D_800F570C.position, &D_800F570C.rotation);
@@ -2165,21 +2165,21 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
         case CELL_XZ(21, 19):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfLion))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject4[0].object_0, &g_WorldObject4[0].position, &g_WorldObject4[0].rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject4[0].object, &g_WorldObject4[0].position, &g_WorldObject4[0].rotation);
             }
             break;
 
         case CELL_XZ(11, 26):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfWoodman))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject4[1].object_0, &g_WorldObject4[1].position, &g_WorldObject4[1].rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject4[1].object, &g_WorldObject4[1].position, &g_WorldObject4[1].rotation);
             }
             break;
 
         case CELL_XZ(19, 15):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfScarecrow))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject4[2].object_0, &g_WorldObject4[2].position, &g_WorldObject4[2].rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject4[2].object, &g_WorldObject4[2].position, &g_WorldObject4[2].rotation);
             }
             break;
 
@@ -2252,7 +2252,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
 
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupRockDrill))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_RockDrill.object_0, &g_WorldObject_RockDrill.position, &g_WorldObject_RockDrill.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject_RockDrill.object, &g_WorldObject_RockDrill.position, &g_WorldObject_RockDrill.rotation);
                 Savegame_EventFlagSet(EventFlag_66);
             }
             else
@@ -2335,7 +2335,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
         case CELL_XZ(14, 13):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupChainsaw))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Chainsaw.object_0, &g_WorldObject_Chainsaw.position, &g_WorldObject_Chainsaw.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject_Chainsaw.object, &g_WorldObject_Chainsaw.position, &g_WorldObject_Chainsaw.rotation);
                 Savegame_EventFlagSet(EventFlag_65);
             }
             else

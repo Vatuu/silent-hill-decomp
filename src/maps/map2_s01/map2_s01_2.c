@@ -475,12 +475,12 @@ void Map_WorldObjectsUpdate(void) // 0x800CF938
     {
             if (Savegame_EventFlagGet(EventFlag_176) && !Savegame_EventFlagGet(EventFlag_M2S01_PickupFlauros))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Item.object_0, &g_WorldObject_Item.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Item.object, &g_WorldObject_Item.position, &(SVECTOR3){ 0, 0, 0 });
             }
 
             if (!Savegame_EventFlagGet(EventFlag_M2S01_PickupDrawbridgeKey))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Key.object_0, &g_WorldObject_Key.position, &g_WorldObject_Key.rotation);
+                WorldGfx_ObjectAdd(&g_WorldObject_Key.object, &g_WorldObject_Key.position, &g_WorldObject_Key.rotation);
                 Savegame_EventFlagClear(EventFlag_MapMark_OldTown_BalkanChurchCheck);
             }
             else
@@ -488,7 +488,7 @@ void Map_WorldObjectsUpdate(void) // 0x800CF938
                 Savegame_EventFlagSet(EventFlag_MapMark_OldTown_BalkanChurchCheck);
             }
 
-            WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
     }
 
     if (D_800D177C == 0)

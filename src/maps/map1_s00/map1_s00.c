@@ -614,7 +614,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
             D_800DD718 += g_DeltaTime;
             if ((D_800DD718 % Q12(0.8499f)) < Q12(0.45f))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &(SVECTOR3){ 0, 0, 0 });
             }
 
             if (D_800DD718 > Q12(3.5f))
@@ -794,20 +794,20 @@ void Map_WorldObjectsUpdate(void)
     {
         if (Savegame_EventFlagGet(EventFlag_71))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject2.object, &g_WorldObject2.position, &(SVECTOR3){ 0, 0, 0 });
         }
         else
         {
-            WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject4.object, &g_WorldObject4.position, &(SVECTOR3){ 0, 0, 0 });
         }
 
         if (Savegame_EventFlagGet(EventFlag_72))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject3.object, &g_WorldObject3.position, &(SVECTOR3){ 0, 0, 0 });
         }
         else
         {
-            WorldGfx_ObjectAdd(&g_WorldObject5.object_0, &g_WorldObject5.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject5.object, &g_WorldObject5.position, &(SVECTOR3){ 0, 0, 0 });
         }
 
     }
@@ -832,24 +832,24 @@ void Map_WorldObjectsUpdate(void)
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position, &g_WorldObject7.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject7.object, &g_WorldObject7.position, &g_WorldObject7.rotation);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {
         if (Savegame_EventFlagGet(EventFlag_72))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject6[1].object_0, &g_WorldObject6[1].position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject6[1].object, &g_WorldObject6[1].position, &(SVECTOR3){ 0, 0, 0 });
             func_80064F04(&QVECTOR3(20.58f, -1.14f, -17.41f), 0, 0x385);
         }
         else
         {
-            WorldGfx_ObjectAdd(&g_WorldObject6[0].object_0, &g_WorldObject6[0].position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject6[0].object, &g_WorldObject6[0].position, &(SVECTOR3){ 0, 0, 0 });
         }
 
         if (Savegame_EventFlagGet(EventFlag_73))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &(SVECTOR3){ 0, 0, 0 });
         }
 
         if (Savegame_EventFlagGet(EventFlag_72))
@@ -908,11 +908,11 @@ void Map_WorldObjectsUpdate(void)
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position, &g_WorldObject9.rotation);
+        WorldGfx_ObjectAdd(&g_WorldObject9.object, &g_WorldObject9.position, &g_WorldObject9.rotation);
 
         for (i = 0; i < 6; i++)
         {
-            WorldGfx_ObjectAdd(&g_WorldObject1[i].object_0, &g_WorldObject1[i].position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject1[i].object, &g_WorldObject1[i].position, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 
@@ -920,7 +920,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S00_PickupMap))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject8.object_0, &g_WorldObject8.position, &g_WorldObject8.rotation);
+            WorldGfx_ObjectAdd(&g_WorldObject8.object, &g_WorldObject8.position, &g_WorldObject8.rotation);
         }
     }
 
