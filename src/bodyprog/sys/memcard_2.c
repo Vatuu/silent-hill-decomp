@@ -78,28 +78,28 @@ static bool MemCard_FilesDamagedCheck(s32 deviceId) // 0x800334D8
     return res;
 }
 
-bool func_80033548(void) // 0x80033548
+bool MemCard_ElementsUpdate(void) // 0x80033548
 {
     u32                         unavailableMemCardSlot[MEMCARD_SLOT_COUNT_MAX]; // Boolean.
     s32                         isWriteNewSaveAvailable[MEMCARD_DEVICE_COUNT_MAX]; // Boolean. Used to generate `Create New File` and `New Save`.
     u32                         prevStatusCpy;
-    s32                         memCardStatus3; /** @brief Strange data.
-                                                 * This variable contains `e_MemCardState`. This variable is first defined with the value `1`
+    s32                         memCardStatus3; /** @brief Memory cards status.
+                                                 * This variable is based upon `e_MemCardState`. This variable is first defined with the value `1`
                                                  * then get multiplied by the status value of the memory card state (`e_MemCardState`), additionally
                                                  * if the memory card is not loaded then the value is set to 0.
                                                  *
-                                                 * The strange side of this variable comes at the bottom of this function. At the bottom of this
-                                                 * function there is a switch which not only check for the states from 1 to 5 (skipping 2) but also
-                                                 * checks for states impossible to get. Considering the unnecesary multiplication it is possible
-                                                 * that at some point the variable could have been assigned a number different to `1` likely going from
-                                                 * 3 to 5 as all the unreachable cases are multiples of the states, as noted in the comment on the
-                                                 * switch statement.
+                                                 * This variable stores the status of both memory cards in an strange way.
+                                                 * The way both status are save is by multiplying each of them so for example:
+                                                 * If one memory card is available, but the second is on format required state then both
+                                                 * enum values (3 for `MemCardState_Available` and 4 for `MemCardState_Format`) will be multiplied
+                                                 * then giving as result `12` stating that a memory card is available, but the other not. This is
+                                                 * the switch at the bottom of the function.
                                                  */
     s32                         prevMemCardStatus;
     s32                         fileStatus;
-    u32                         memCardStatus1;
-    s32                         memCardStatus2;
-    u32                         memCardStatus0;
+    u32                         firstFileStatus;
+    s32                         memCardStatusCpy;
+    u32                         slotFilesStatus;
     s32                         slotIdx;
     s32                         i;
     s32                         j;
@@ -344,13 +344,13 @@ bool func_80033548(void) // 0x80033548
                 g_MemCard_ActiveMemCardSlotSaves->saveMetadata_C     = NULL;
                 isWriteNewSaveAvailable[i]                           = true;
                 g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount = 31800;
-                memCardStatus0                                       = fileStatuses[i];
-                memCardStatus1                                       = memCardStatus0 & 0x3;
+                slotFilesStatus                                      = fileStatuses[i];
+                firstFileStatus                                      = slotFilesStatus & 0x3;
 
-                for (j = 0; memCardStatus1 == FileState_Damaged || memCardStatus1 == FileState_Used; j++)
+                for (j = 0; firstFileStatus == FileState_Damaged || firstFileStatus == FileState_Used; j++)
                 {
                     j++;
-                    memCardStatus1 = MemCard_FileStatusGet(memCardStatus0, j);
+                    firstFileStatus = MemCard_FileStatusGet(slotFilesStatus, j);
                     j--;
                 }
 
@@ -378,8 +378,8 @@ bool func_80033548(void) // 0x80033548
     // Checks if any of the memory cards is disconected, unformatted, or loading.
     for (i = 0; i < MEMCARD_DEVICE_COUNT_MAX; i += 4)
     {
-        memCardStatus2 = MemCard_StatusGet(g_MemCard_AllMemCardsStatus, i);
-        if (memCardStatus2 == MemCardState_Null || memCardStatus2 == MemCardState_Loading)
+        memCardStatusCpy = MemCard_StatusGet(g_MemCard_AllMemCardsStatus, i);
+        if (memCardStatusCpy == MemCardState_Null || memCardStatusCpy == MemCardState_Loading)
         {
             unavailableMemCardSlotIdx          = (WrapIdx(i) >> 2) == 0;
             g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(unavailableMemCardSlotIdx);
@@ -491,12 +491,12 @@ bool func_80033548(void) // 0x80033548
         case MemCardState_Format:
         case MemCardState_Broken:
         
-        case 9:  // MemCardState_Available * 3
-        case 12: // MemCardState_Format    * 3 | MemCardState_Available * 4
-        case 15: // MemCardState_Broken    * 3 | MemCardState_Available * 5
-        case 16: // MemCardState_Format    * 4
-        case 20: // MemCardState_Broken    * 4 | MemCardState_Format    * 5
-        case 25: // MemCardState_Broken    * 5
+        case 9:  // 2 Memory Cards available.                                    (MemCardState_Available * MemCardState_Available)
+        case 12: // 1 Memory Card available, 1 Memory Card requiring formatting. (MemCardState_Available * MemCardState_Format)
+        case 15: // 1 Memory Card available, 1 Memory Card broken.               (MemCardState_Available * MemCardState_Broken)
+        case 16: // 2 Memory Cards requiring formatting.                         (MemCardState_Format * MemCardState_Format)
+        case 20: // 1 Memory Card requiring formatting, 1 Memory Card broken.    (MemCardState_Format * MemCardState_Broken)
+        case 25: // 2 Memory Cards broken.                                       (MemCardState_Broken * MemCardState_Broken)
             return true;
 
         default:

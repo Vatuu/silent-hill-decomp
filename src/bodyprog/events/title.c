@@ -61,7 +61,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
     static s32  newGameSelectedDifficultyIdx = 1;
     static s32  prevSavegameCount            = 0;
 
-    func_80033548();
+    MemCard_ElementsUpdate();
 
     // After staying idle in the title screen for some time, this checks if the intro FMV or a
     // demo gameplay segment should be played. If the next value from `g_Demo_ReproducedCount`

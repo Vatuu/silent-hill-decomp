@@ -205,6 +205,7 @@ nullsub_800334C8                             = 0x800334C8; // type:func
 //--- PA: 0x00E978   VA: 0x800334D8   subsegment: c, sys/memcard_2
 //----------------------------------------------------------------
 MemCard_FilesDamagedCheck                    = 0x800334D8;
+MemCard_ElementsUpdate                       = 0x80033548;
 
 //----------------------------------------------------------------
 //--- PA: 0x00F580   VA: 0x800340E0   subsegment: c, sys/warm_boot

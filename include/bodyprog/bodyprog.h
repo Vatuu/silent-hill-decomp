@@ -4129,8 +4129,6 @@ void Settings_RestoreControlDefaults(s32 configIdx);
 
 void nullsub_800334C8(void);
 
-bool func_80033548(void);
-
 /** @brief Updates the savegame buffer with current player info (position, rotation, health, event index). */
 void SysWork_SavegameUpdatePlayer(void);
 

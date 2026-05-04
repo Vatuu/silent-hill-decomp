@@ -605,4 +605,9 @@ s32 MemCard_State_FileReadWrite(void);
 
 void MemCard_DevicePathGenerate(s32 deviceId, char* res);
 
+/** @brief Updates memory card elements in memory.
+ * @return Status of memory cards.
+ */
+bool MemCard_ElementsUpdate(void);
+
 #endif

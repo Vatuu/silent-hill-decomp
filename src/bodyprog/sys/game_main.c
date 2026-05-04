@@ -137,7 +137,7 @@ void GameState_Boot_Update(void) // 0x80032D1C
             break;
     }
 
-    func_80033548();
+    MemCard_ElementsUpdate();
     Screen_BackgroundImgDraw(&g_MainImg0);
     func_80089090(1);
 }

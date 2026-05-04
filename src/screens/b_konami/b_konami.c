@@ -71,7 +71,7 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
         Screen_FadeUpdate();
         Fs_QueueUpdate();
         MemCard_Update();
-        func_80033548();
+        MemCard_ElementsUpdate();
         nullsub_800334C8();
         VSync(SyncMode_Wait);
         GsSwapDispBuff();
@@ -91,7 +91,7 @@ s32 GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
     s32 saveEntryTypeSlot2;
 
     // Memory cards not ready yet, rerun this on next frame.
-    if (func_80033548() == false)
+    if (MemCard_ElementsUpdate() == false)
     {
         return KcetLogoStateStep_CheckMemCards;
     }
@@ -291,7 +291,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                             break;
                     }
 
-                    func_80033548();
+                    MemCard_ElementsUpdate();
                     MemCard_Update();
                     VSync(SyncMode_Wait);
                 }
@@ -364,7 +364,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
         Screen_FadeUpdate();
         Fs_QueueUpdate();
         MemCard_Update();
-        func_80033548();
+        MemCard_ElementsUpdate();
         nullsub_800334C8();
         VSync(SyncMode_Wait);
         GsSwapDispBuff();

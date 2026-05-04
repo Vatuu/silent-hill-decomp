@@ -166,6 +166,7 @@ MapEvent_KeyOfOphielUse             = 0x800D8668; // type:func
 MapEvent_KeyOfHagithUse             = 0x800D8724; // type:func
 MapEvent_KeyOfPhalegUse             = 0x800D87E0; // type:func
 MapEvent_BirdCageKeyUse             = 0x800D8984; // type:func
+MapEvent_CutsceneCherylRedirect3    = 0x800DADD4; // type:func
 sharedFunc_800DB60C_7_s01           = 0x800DB60C; // type:func
 sharedFunc_800D15F0_3_s01           = 0x800DC0AC; // type:func
 Map_WorldObjectsInit                = 0x800DD368; // type:func

@@ -326,7 +326,7 @@ func_800334D0                                = 0x800331A0; // type:func
 //--- PA: 0x00E648   VA: 0x800331A8   subsegment: c, sys/memcard_2
 //----------------------------------------------------------------
 MemCard_FilesDamagedCheck                    = 0x800331A8; // type:func
-func_80033548                                = 0x80033218; // type:func
+MemCard_ElementsUpdate                       = 0x80033218; // type:func
 
 //----------------------------------------------------------------
 //--- PA: 0x00F250   VA: 0x80033DB0   subsegment: c, sys/warm_boot

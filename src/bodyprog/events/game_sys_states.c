@@ -794,7 +794,7 @@ void SysState_SaveMenu_Update(void) // 0x8003A230
 {
     s32 gameState;
 
-    func_80033548();
+    MemCard_ElementsUpdate();
 
     switch (g_SysWork.sysStateSteps[0])
     {

@@ -1742,7 +1742,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
     switch (gameStateSteps)
     {
         case 0:
-            if (func_80033548() == false)
+            if (MemCard_ElementsUpdate() == false)
             {
                 break;
             }
@@ -1758,7 +1758,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
             // A memory card is inserted.
             if (g_MemCard_TotalElementsCount > 0)
             {
-                g_SaveScreen_IsFormatting     = false;
+                g_SaveScreen_IsFormatting        = false;
                 g_SaveScreen_IsNewSaveSelected   = false;
                 g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(g_SelectedSaveSlotIdx);
 
@@ -1782,11 +1782,11 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                     }
                 }
 
-                saveEntry                     = &g_MemCard_ActiveMemCardSlotSaves[g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx]];
+                saveEntry                        = &g_MemCard_ActiveMemCardSlotSaves[g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx]];
                 g_MemCard_ActiveMemCardSlotSaves = saveEntry;
-                g_SelectedDeviceId            = saveEntry->deviceId_5;
-                g_SelectedFileIdx             = saveEntry->fileIdx_6;
-                g_Savegame_SelectedElementIdx = saveEntry->elementIdx_7;
+                g_SelectedDeviceId               = saveEntry->deviceId_5;
+                g_SelectedFileIdx                = saveEntry->fileIdx_6;
+                g_Savegame_SelectedElementIdx    = saveEntry->elementIdx_7;
 
                 // Show "Yes/No" option.
                 if (g_SaveScreen_SaveScreenState == SaveScreenState_Save)
@@ -1810,13 +1810,13 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 {
                     if (g_SaveScreen_IsFormatting | g_SaveScreen_IsNewSaveSelected)
                     {
-                        isSaveWriteOptionSelected       = false;
+                        isSaveWriteOptionSelected    = false;
                         g_GameWork.gameStateSteps[2] = 0;
                         g_GameWork.gameStateSteps[1]++;
                     }
                     else
                     {
-                        g_SysWork.counters_1C[1]               = 0;
+                        g_SysWork.counters_1C[1]      = 0;
                         g_GameWork.gameStateSteps[1]  = 0;
                         g_GameWork.gameStateSteps[2]  = 0;
                         g_GameWork.gameStateSteps[0] += g_SaveScreen_SaveScreenState;
@@ -1845,7 +1845,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
             break;
 
         case 1:
-            if (func_80033548() == false)
+            if (MemCard_ElementsUpdate() == false)
             {
                 break;
             }
@@ -1869,13 +1869,13 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 if (!isSaveWriteOptionSelected)
                 {
                     g_GameWork.gameStateSteps[0] = gameStateSteps;
-                    g_SysWork.counters_1C[1]              = 0;
+                    g_SysWork.counters_1C[1]     = 0;
                     g_GameWork.gameStateSteps[1] = 0;
                     g_GameWork.gameStateSteps[2] = 0;
                 }
                 else
                 {
-                    g_SysWork.counters_1C[1]              = 0;
+                    g_SysWork.counters_1C[1]     = 0;
                     g_GameWork.gameStateSteps[1] = 0;
                     g_GameWork.gameStateSteps[2] = 0;
                     g_GameWork.gameStateSteps[0] = g_SaveScreen_IsNewSaveSelected + 2;
@@ -1938,8 +1938,8 @@ void SaveScreen_FormatCard(void) // 0x801E69E8
         case 0:
             g_SaveScreen_State                 = SaveScreenState_Format;
             g_SaveScreen_MemCardStateTextTimer = STR_TIMER_MAX;
-            g_GameWork.gameStateSteps[1]    = 1;
-            g_GameWork.gameStateSteps[2]    = 0;
+            g_GameWork.gameStateSteps[1]       = 1;
+            g_GameWork.gameStateSteps[2]       = 0;
 
         case 1:
             g_GameWork.gameStateSteps[1]++;
@@ -1958,14 +1958,14 @@ void SaveScreen_FormatCard(void) // 0x801E69E8
             {
                 case MemCardResult_FileIoError:
                     g_SaveScreen_MemCardStateTextTimer = STR_TIMER_MAX;
-                    g_GameWork.gameStateSteps[0]    = 1;
-                    g_SysWork.counters_1C[1]                 = 0;
-                    g_GameWork.gameStateSteps[1]    = 0;
-                    g_GameWork.gameStateSteps[2]    = 0;
+                    g_GameWork.gameStateSteps[0] = 1;
+                    g_SysWork.counters_1C[1]     = 0;
+                    g_GameWork.gameStateSteps[1] = 0;
+                    g_GameWork.gameStateSteps[2] = 0;
                     break;
 
                 case MemCardResult_FileIoComplete:
-                    g_SysWork.counters_1C[1]              = 0;
+                    g_SysWork.counters_1C[1]     = 0;
                     g_GameWork.gameStateSteps[0]++;
                     g_GameWork.gameStateSteps[1] = 0;
                     g_GameWork.gameStateSteps[2] = 0;
@@ -2003,7 +2003,7 @@ void SaveScreen_SaveGame(void) // 0x801E6B18
 
             g_SaveScreen_IsNextFearMode = saveEntry->isNextFearMode;
 
-            saveEntry->isNextFearMode             = g_SavegamePtr->isNextFearMode;
+            saveEntry->isNextFearMode           = g_SavegamePtr->isNextFearMode;
             saveEntry->add290Hours              = g_SavegamePtr->add290Hours;
             saveEntry->pickedUpSpecialItemCount = g_SavegamePtr->pickedUpSpecialItemCount;
 
@@ -2016,7 +2016,7 @@ void SaveScreen_SaveGame(void) // 0x801E6B18
             {
                 default:
                     g_GameWork.gameStateSteps[0] = 1;
-                    g_SysWork.counters_1C[1]              = 0;
+                    g_SysWork.counters_1C[1]     = 0;
                     g_GameWork.gameStateSteps[1] = 0;
                     g_GameWork.gameStateSteps[2] = 0;
                     break;
@@ -2045,7 +2045,7 @@ void SaveScreen_SaveGame(void) // 0x801E6B18
 
                 default:
                     g_GameWork.gameStateSteps[0] = 1;
-                    g_SysWork.counters_1C[1]              = 0;
+                    g_SysWork.counters_1C[1]]    = 0;
                     g_GameWork.gameStateSteps[1] = 0;
                     g_GameWork.gameStateSteps[2] = 0;
                     break;
@@ -2075,9 +2075,9 @@ void SaveScreen_LoadSave(void) // 0x801E6DB0
             {
                 if (memCardStateResult != MemCardResult_FileIoComplete)
                 {
-                    D_800BCD39                      = true;
+                    D_800BCD39                   = true;
                     g_GameWork.gameStateSteps[0] = 1;
-                    g_SysWork.counters_1C[1]              = 0;
+                    g_SysWork.counters_1C[1]]    = 0;
                     g_GameWork.gameStateSteps[1] = 0;
                     g_GameWork.gameStateSteps[2] = 0;
                     break;
@@ -2103,19 +2103,19 @@ void SaveScreen_LoadSave(void) // 0x801E6DB0
 
             if (memCardStateResult != MemCardResult_FileIoComplete)
             {
-                D_800BCD39                      = true;
+                D_800BCD39                   = true;
                 g_GameWork.gameStateSteps[0] = 1;
-                g_SysWork.counters_1C[1]              = 0;
+                g_SysWork.counters_1C[1]     = 0;
                 g_GameWork.gameStateSteps[1] = 0;
                 g_GameWork.gameStateSteps[2] = 0;
                 break;
             }
 
             g_SaveScreen_MemCardStateTextTimer = 300;
-            g_SysWork.counters_1C[1]      = 0;
+            g_SysWork.counters_1C[1]           = 0;
             g_GameWork.gameStateSteps[0]++;
-            g_GameWork.gameStateSteps[1] = 0;
-            g_GameWork.gameStateSteps[2] = 0;
+            g_GameWork.gameStateSteps[1]       = 0;
+            g_GameWork.gameStateSteps[2]       = 0;
             break;
     }
 }
@@ -2260,12 +2260,12 @@ void GameState_AutoLoadSavegame_Update(void) // 0x801E72FC
 
 void func_801E737C(void) // 0x801E737C
 {
-    if (func_80033548() == false)
+    if (MemCard_ElementsUpdate() == false)
     {
         return;
     }
 
-    if (g_MemCard_SavegameCount == 0 || D_800BCD39 || func_80033548() == false)
+    if (g_MemCard_SavegameCount == 0 || D_800BCD39 || MemCard_ElementsUpdate() == false)
     {
         g_GameWork.gameState = GameState_LoadSavegameScreen;
 
@@ -2289,7 +2289,7 @@ void func_801E737C(void) // 0x801E737C
     g_Savegame_SelectedElementIdx    = g_MemCard_ActiveMemCardSlotSaves->elementIdx_7;
 
     g_GameWork.gameStateSteps[0]++;
-    g_SysWork.counters_1C[1]              = 0;
+    g_SysWork.counters_1C[1]     = 0;
     g_GameWork.gameStateSteps[1] = 0;
     g_GameWork.gameStateSteps[2] = 0;
 }
