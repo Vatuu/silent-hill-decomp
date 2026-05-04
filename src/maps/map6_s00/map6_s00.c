@@ -355,10 +355,10 @@ void Map_WorldObjectsInit(void) // 0x800EBCE8
         Fs_QueueStartReadTim(FILE_TIM_GROUND_TIM, IMAGE_BUFFER_4, &g_LoadingScreenImg);
     }
 
-    WorldObjectPlacementInit(&g_WorldObject_Window, "WINDOW_H", -155.0f, 3.0f, 20.0f);
-    WorldObjectPlacementInit(&g_WorldObject_DrOpen1, "DROPEN1_", -190.5f, 0.0f, 132.5f);
-    WorldObjectPlacementInit(&g_WorldObject_DrOpen2, "DROPEN2_", -190.5f, -0.05f, 132.214f);
-    WorldObjectPlacementInit(&g_WorldObject_DrClose, "DRCLOSE_", -189.5f, 0.0f, 132.5f);
+    WorldObject_PlacementInit(&g_WorldObject_Window, "WINDOW_H", -155.0f, 3.0f, 20.0f);
+    WorldObject_PlacementInit(&g_WorldObject_DrOpen1, "DROPEN1_", -190.5f, 0.0f, 132.5f);
+    WorldObject_PlacementInit(&g_WorldObject_DrOpen2, "DROPEN2_", -190.5f, -0.05f, 132.214f);
+    WorldObject_PlacementInit(&g_WorldObject_DrClose, "DRCLOSE_", -189.5f, 0.0f, 132.5f);
 
     func_8008D448();
     Game_FlashlightAttributesFix();

@@ -433,16 +433,16 @@ void MapEvent_MapTake(void) // 0x800D63B0
 
 void Map_WorldObjectsInit(void) // 0x800D63D8
 {
-    WorldObjectPosePositionInit(&D_800DAF84, "REDX_HID", 20.4568f, -0.8345f, -17.97f);
-    WorldObjectInit(&D_800DAFB4, "KEY_HIDE", 20.9021f, -0.002f, -17.26f, 0.0f, -37.45f, 0.0f);
+    WorldObject_PosePositionInit(&D_800DAF84, "REDX_HID", 20.4568f, -0.8345f, -17.97f);
+    WorldObject_Init(&D_800DAFB4, "KEY_HIDE", 20.9021f, -0.002f, -17.26f, 0.0f, -37.45f, 0.0f);
 
     D_800D7761 = 0;
     D_800DAFE4 = 0;
     D_800DAF78 = 0;
 
-    WorldObjectInit(&D_800DAFF4, D_800A99E4[1], 61.8531f, -0.805f, 140.61f, 0, 92.9f, 0.0f);
-    WorldObjectInit(&D_800DB024, "PICT00_H", 133.294f, -0.8614f, 19.04f, 0.0f, 162.6f, 0.0f);
-    WorldObjectInit(&D_800DB064, "MAP_HIDE", 96.9405f, -0.3365f, 21.092f, 0.0f, 66.8f, 0.0f);
+    WorldObject_Init(&D_800DAFF4, D_800A99E4[1], 61.8531f, -0.805f, 140.61f, 0, 92.9f, 0.0f);
+    WorldObject_Init(&D_800DB024, "PICT00_H", 133.294f, -0.8614f, 19.04f, 0.0f, 162.6f, 0.0f);
+    WorldObject_Init(&D_800DB064, "MAP_HIDE", 96.9405f, -0.3365f, 21.092f, 0.0f, 66.8f, 0.0f);
 
     if (!Savegame_EventFlagGet(EventFlag_143))
     {

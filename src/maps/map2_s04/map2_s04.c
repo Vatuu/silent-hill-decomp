@@ -122,13 +122,13 @@ void Map_WorldObjectsInit(void)
 {
     D_800CF280 = 0;
 
-    WorldObjectInit(&g_WorldObject_SavePad0, D_800A99E4[1], -60.9976f, -0.8289f, 20.1067f, 0.0f, -100.7f, 0.0f);
+    WorldObject_Init(&g_WorldObject_SavePad0, D_800A99E4[1], -60.9976f, -0.8289f, 20.1067f, 0.0f, -100.7f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject_Map, "MAP_HIDE", -20.0f, 0.0f, 20.45f, 0, 180.0f, 0);
+    WorldObject_Init(&g_WorldObject_Map, "MAP_HIDE", -20.0f, 0.0f, 20.45f, 0, 180.0f, 0);
 
-    WorldObjectInit(&g_WorldObject_SavePad1, D_800A99E4[1], -102.8699f, -1.25f, 57.15f, 0, -117.55f, 0);
+    WorldObject_Init(&g_WorldObject_SavePad1, D_800A99E4[1], -102.8699f, -1.25f, 57.15f, 0, -117.55f, 0);
 
-    WorldObjectInit(&g_WorldObject_Shotgun, "SHOTGUN_", -59.484f, -0.8443f, 18.1517f, 0, -23.3f, 0);
+    WorldObject_Init(&g_WorldObject_Shotgun, "SHOTGUN_", -59.484f, -0.8443f, 18.1517f, 0, -23.3f, 0);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);

@@ -2037,12 +2037,12 @@ void Map_WorldObjectsInit(void) // 0x800DD368
     D_800E33A0 = Rng_GenerateInt(0, Q12(4.0f) - 1);
     D_800E33A4 = 0;
 
-    WorldObjectInit(&g_WorldObject_Diary, "DIARY_HI", -180.0f, 0.0f, -140.755f, 0.0f, 180.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Diary, "DIARY_HI", -180.0f, 0.0f, -140.755f, 0.0f, 180.0f, 0.0f);
     ;
 
     WorldObject_ModelNameSet(&g_WorldObject_SavePad, D_800A99E4[1]);
 
-    WorldObjectPoseInit(&g_WorldObject_UnkPose0, -16.6226f, -1.2396f, -59.0691f, 0.0f, 105.21f, 0.0f);
+    WorldObject_PoseInit(&g_WorldObject_UnkPose0, -16.6226f, -1.2396f, -59.0691f, 0.0f, 105.21f, 0.0f);
 
     WorldObject_ModelNameSet(&g_WorldObject_KaigaR[0], "KAIGAR_H");
     WorldObject_ModelNameSet(&g_WorldObject_KaigaR[1], "KAIGAR2_");
@@ -2055,38 +2055,38 @@ void Map_WorldObjectsInit(void) // 0x800DD368
     Math_Vector3Set(&g_WorldObject_UnkPos1, Q12(56.0f), Q12(-1.9f), Q12(-21.45f));
     Math_SetSVectorFast(&g_WorldObject_UnkRot0, Q12_ANGLE(0.0f), Q12_ANGLE(180.0f), Q12_ANGLE(0.0f));
 
-    WorldObjectInit(&g_WorldObject_Key0, "KEY_HIDE", -181.05f, 0.0f, -20.0f, 0.0f, 180.0f, 0.0f);
-    WorldObjectPlacementInit(&g_WorldObject_Gofu, "GOFU_HID", 17.072f, -1.6f, -19.2f);
-    WorldObjectPlacementInit(&g_WorldObject_Key1, "KEY_HIDE", 141.811f, -0.4f, -21.4512f);
-    WorldObjectPlacementInit(&g_WorldObject_Penchi, "PENCHI_H", -19.2f, 0.0f, -97.45f);
-    WorldObjectPlacementInit(&g_WorldObject_Driver, "DRIVER_H", -19.2f, 0.0f, -97.45f);
-    WorldObjectPlacementInit(&g_WorldObject_Zukan, "ZUKAN_HI", 99.8f, 0.0f, -20.0f);
-    WorldObjectPlacementInit(&g_WorldObject_Scrap, "SCRAP_HI", 100.0f, 0.0f, -20.0f);
+    WorldObject_Init(&g_WorldObject_Key0, "KEY_HIDE", -181.05f, 0.0f, -20.0f, 0.0f, 180.0f, 0.0f);
+    WorldObject_PlacementInit(&g_WorldObject_Gofu, "GOFU_HID", 17.072f, -1.6f, -19.2f);
+    WorldObject_PlacementInit(&g_WorldObject_Key1, "KEY_HIDE", 141.811f, -0.4f, -21.4512f);
+    WorldObject_PlacementInit(&g_WorldObject_Penchi, "PENCHI_H", -19.2f, 0.0f, -97.45f);
+    WorldObject_PlacementInit(&g_WorldObject_Driver, "DRIVER_H", -19.2f, 0.0f, -97.45f);
+    WorldObject_PlacementInit(&g_WorldObject_Zukan, "ZUKAN_HI", 99.8f, 0.0f, -20.0f);
+    WorldObject_PlacementInit(&g_WorldObject_Scrap, "SCRAP_HI", 100.0f, 0.0f, -20.0f);
 
     WorldObject_ModelNameSet(&g_WorldObject_Key2, "KEY_HIDE");
     WorldObject_ModelNameSet(&g_WorldObject_Futa[0], "FUTA1_HI");
     WorldObject_ModelNameSet(&g_WorldObject_Futa[1], "FUTA2_HI");
 
-    WorldObjectPoseInit(&g_WorldObject_UnkPose1, -60.0f, 0.0f, -140.8f, 0.0f, 180.0f, 0.0f);
+    WorldObject_PoseInit(&g_WorldObject_UnkPose1, -60.0f, 0.0f, -140.8f, 0.0f, 180.0f, 0.0f);
 
     WorldObject_ModelNameSet(&g_WorldObject_Key1_2[0], "KEY1_HID");
     WorldObject_ModelNameSet(&g_WorldObject_Key1_2[1], "KEY2_HID");
 
-    WorldObjectPoseInit(&g_WorldObject_UnkPose2, -140.0f, 0.0f, -20.0f, 0.0f, 90.0f, 0.0f);
-    WorldObjectInit(&g_WorldObject_Camera, "CAMERA_H", -19.6f, -0.8f, -142.2f, 0.0f, 126.7f, 0.0f);
+    WorldObject_PoseInit(&g_WorldObject_UnkPose2, -140.0f, 0.0f, -20.0f, 0.0f, 90.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Camera, "CAMERA_H", -19.6f, -0.8f, -142.2f, 0.0f, 126.7f, 0.0f);
 
     if (Savegame_EventFlagGet(EventFlag_487))
     {
-        WorldObjectInit(&g_WorldObject_Stone0, "STONE3_H", -139.5f, -0.05f, -140.0f, 0.0f, 90.0f, -90.0f);
+        WorldObject_Init(&g_WorldObject_Stone0, "STONE3_H", -139.5f, -0.05f, -140.0f, 0.0f, 90.0f, -90.0f);
     }
     else
     {
-        WorldObjectInit(&g_WorldObject_Stone0, "STONE1_H", -139.5f, -1.35f, -140.6f, 0.0f, 90.0f, 0.0f);
+        WorldObject_Init(&g_WorldObject_Stone0, "STONE1_H", -139.5f, -1.35f, -140.6f, 0.0f, 90.0f, 0.0f);
     }
 
-    WorldObjectInit(&g_WorldObject_Door, "DOOR_HID", 182.5247f, 0.0f, -106.064f, 0.0f, 0.0f, 0.0f);
-    WorldObjectInit(&g_WorldObject_Ring, "RING_NEA", -178.381f, -0.5716f, -98.846f, 0.0f, 0.0f, -32.5f);
-    WorldObjectInit(&g_WorldObject_Gofu_B, "GOFU_B_H", -181.9f, -0.57f, -101.2f, 0.0f, 59.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Door, "DOOR_HID", 182.5247f, 0.0f, -106.064f, 0.0f, 0.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Ring, "RING_NEA", -178.381f, -0.5716f, -98.846f, 0.0f, 0.0f, -32.5f);
+    WorldObject_Init(&g_WorldObject_Gofu_B, "GOFU_B_H", -181.9f, -0.57f, -101.2f, 0.0f, 59.0f, 0.0f);
 
     Math_Vector3Set(&g_WorldObject_UnkPos2, Q12(-16.6692f), Q12(-1.23f), Q12(-61.6f));
 
@@ -2100,28 +2100,28 @@ void Map_WorldObjectsInit(void) // 0x800DD368
     Math_SetSVectorFast(&g_WorldObject_UnkRot3, Q12_ANGLE(126.8f), Q12_ANGLE(90.0f), Q12_ANGLE(0.0f));
     Math_SetSVectorFast(&g_WorldObject_UnkRot4, Q12_ANGLE(90.9f), Q12_ANGLE(90.0f), Q12_ANGLE(0.0f));
 
-    WorldObjectInit(&g_WorldObject_Ana, "ANA_HIDE", -16.6661f, -0.7271f, -61.6368f, 0.0f, 90.0f, 0.0f);
-    WorldObjectInit(&g_WorldObject_Stone1, "STONE_HI", -16.6692f, -0.71f, -61.533f, 0.0f, 90.0f, 0.0f);
-    WorldObjectInit(&g_WorldObject_Window, "WINDOW_H", -16.666f, -1.235f, -61.503f, 0.0f, 90.0f, 0.0f);
-    WorldObjectPlacementInit(&g_WorldObject_Kubomi, "KUBOMI_H", -139.5f, 0.0f, -138.1f);
+    WorldObject_Init(&g_WorldObject_Ana, "ANA_HIDE", -16.6661f, -0.7271f, -61.6368f, 0.0f, 90.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Stone1, "STONE_HI", -16.6692f, -0.71f, -61.533f, 0.0f, 90.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Window, "WINDOW_H", -16.666f, -1.235f, -61.503f, 0.0f, 90.0f, 0.0f);
+    WorldObject_PlacementInit(&g_WorldObject_Kubomi, "KUBOMI_H", -139.5f, 0.0f, -138.1f);
 
     if (Savegame_EventFlagGet(EventFlag_479))
     {
-        WorldObjectPlacementInit(&g_WorldObject_Dr[0], "DR1L_HID", -100.9f, 0.0f, -60.9f);
-        WorldObjectPlacementInit(&g_WorldObject_Dr[1], "DR1R_HID", -100.9f, 0.0f, -60.9f);
-        WorldObjectPlacementInit(&g_WorldObject_Dr[2], "DR3L_HID", -100.9f, 0.0f, -60.9f);
-        WorldObjectPlacementInit(&g_WorldObject_Dr[3], "DR3R_HID", -100.9f, 0.0f, -60.9f);
-        WorldObjectPlacementInit(&g_WorldObject_Dr[4], "DR2L_HID", -100.9f, 0.0f, -60.9f);
-        WorldObjectPlacementInit(&g_WorldObject_Dr[5], "DR2R_HID", -100.9f, 0.0f, -60.9f);
+        WorldObject_PlacementInit(&g_WorldObject_Dr[0], "DR1L_HID", -100.9f, 0.0f, -60.9f);
+        WorldObject_PlacementInit(&g_WorldObject_Dr[1], "DR1R_HID", -100.9f, 0.0f, -60.9f);
+        WorldObject_PlacementInit(&g_WorldObject_Dr[2], "DR3L_HID", -100.9f, 0.0f, -60.9f);
+        WorldObject_PlacementInit(&g_WorldObject_Dr[3], "DR3R_HID", -100.9f, 0.0f, -60.9f);
+        WorldObject_PlacementInit(&g_WorldObject_Dr[4], "DR2L_HID", -100.9f, 0.0f, -60.9f);
+        WorldObject_PlacementInit(&g_WorldObject_Dr[5], "DR2R_HID", -100.9f, 0.0f, -60.9f);
     }
     else
     {
-        WorldObjectPlacementInit(&g_WorldObject_Dr[0], "DR1L_HID", -20.9f, 0.0f, -20.9f);
-        WorldObjectPlacementInit(&g_WorldObject_Dr[1], "DR1R_HID", -20.9f, 0.0f, -20.9f);
-        WorldObjectPlacementInit(&g_WorldObject_Dr[2], "DR3L_HID", -20.9f, 0.0f, -20.9f);
-        WorldObjectPlacementInit(&g_WorldObject_Dr[3], "DR3R_HID", -20.9f, 0.0f, -20.9f);
-        WorldObjectPlacementInit(&g_WorldObject_Dr[4], "DR2L_HID", -20.9f, 0.0f, -20.9f);
-        WorldObjectPlacementInit(&g_WorldObject_Dr[5], "DR2R_HID", -20.9f, 0.0f, -20.9f);
+        WorldObject_PlacementInit(&g_WorldObject_Dr[0], "DR1L_HID", -20.9f, 0.0f, -20.9f);
+        WorldObject_PlacementInit(&g_WorldObject_Dr[1], "DR1R_HID", -20.9f, 0.0f, -20.9f);
+        WorldObject_PlacementInit(&g_WorldObject_Dr[2], "DR3L_HID", -20.9f, 0.0f, -20.9f);
+        WorldObject_PlacementInit(&g_WorldObject_Dr[3], "DR3R_HID", -20.9f, 0.0f, -20.9f);
+        WorldObject_PlacementInit(&g_WorldObject_Dr[4], "DR2L_HID", -20.9f, 0.0f, -20.9f);
+        WorldObject_PlacementInit(&g_WorldObject_Dr[5], "DR2R_HID", -20.9f, 0.0f, -20.9f);
     }
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)

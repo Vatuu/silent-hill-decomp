@@ -371,15 +371,15 @@ void func_800D17D8(void) // 0x800D17D8
 
 void Map_WorldObjectsInit(void) // 0x800D1804
 {
-    WorldObjectInit(&g_WorldObject_SavePad, D_800A99E4[1], 26.0f, -1.02f, 144.55f, 0.0f, 163.8f, 0.0f);
+    WorldObject_Init(&g_WorldObject_SavePad, D_800A99E4[1], 26.0f, -1.02f, 144.55f, 0.0f, 163.8f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject_Map, "MAP_HIDE", 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Map, "MAP_HIDE", 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject_Map2, "MAP2_HID", 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Map2, "MAP2_HID", 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject_Key, "KEY_HIDE", 95.734f, -0.8062f, 99.8885f, 0.0f, -35.9f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Key, "KEY_HIDE", 95.734f, -0.8062f, 99.8885f, 0.0f, -35.9f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject_FirstAidKit, D_800A99E4[2], 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_FirstAidKit, D_800A99E4[2], 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800D197C

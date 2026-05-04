@@ -63,7 +63,7 @@ def pose_no_rot(line):
 
 def convert_pose(line):
     norot = False
-    pattern = r"WorldObjectSet\(([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^\,\)]+)\)"
+    pattern = r"WorldObject_Set\(([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^\,\)]+)\)"
     m = re.search(pattern, line)
     if not m:
         m = pose_no_rot(line)
@@ -110,11 +110,11 @@ def convert_pose(line):
 
     if norot is False:
         return (
-            f"WorldObjectInit({obj}, {name}, "
+            f"WorldObject_Init({obj}, {name}, "
             f"{f1}, {f2}, {f3}, {f4}, {f5}, {f6});"
         )
     else:
-        return f"WorldObjectPlacementInit({obj}, {name}, {f1}, {f2}, {f3});"
+        return f"WorldObject_PlacementInit({obj}, {name}, {f1}, {f2}, {f3});"
 
 
 

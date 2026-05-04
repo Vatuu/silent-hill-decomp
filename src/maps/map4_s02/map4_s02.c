@@ -30,7 +30,7 @@ void Map_WorldObjectsInit(void) // 0x800EA340
 {
     D_800F13AC = 0;
 
-    WorldObjectPlacementInit(&g_WorldObject_Kidn04, "KIDN04_H", -119.8019f, 5.0f, 107.861f);
+    WorldObject_PlacementInit(&g_WorldObject_Kidn04, "KIDN04_H", -119.8019f, 5.0f, 107.861f);
 
     WorldObject_ModelNameSet(&g_WorldObject_Fan0, "FAN0_HID");
 

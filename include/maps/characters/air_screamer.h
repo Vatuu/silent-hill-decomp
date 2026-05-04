@@ -69,7 +69,8 @@ typedef enum _AirScreamerAnim
     AirScreamerAnim_StandIdleToGlide       = 24,
     AirScreamerAnim_WalkForward            = 25,
     AirScreamerAnim_Stun                   = 26,
-    AirScreamerAnim_HoverConstant          = 27
+    AirScreamerAnim_HoverConstant          = 27,
+    AirScreamerAnim_28                     = 28
 } e_AirScreamerAnim;
 
 /** @brief Air Screamer or Night Flutter character control states. */
@@ -249,6 +250,9 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D76A0_0_s01(s_SubCharacter* airScreamer);
 
+// Unused speed getter?
+q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* airScreamer);
+
 q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D7AB0_0_s01(s_SubCharacter* airScreamer);
@@ -382,10 +386,14 @@ void Ai_AirScreamer_Control_44(s_SubCharacter* airScreamer);
 
 void Ai_AirScreamer_Control_45(s_SubCharacter* airScreamer);
 
-bool sharedFunc_800DBF88_2_s00(s_SubCharacter* airScreamer, s32 arg1);
+bool sharedFunc_800DBF88_2_s00(s_SubCharacter* airScreamer, q19_12 arg1);
 
-/** Checks if an Air Screamer is below the ground with a slight height intolerance. */
-bool sharedFunc_800DC0A8_2_s00(s_SubCharacter* airScreamer);
+/** @brief Checks if an Air Screamer is within a thredhold of 2 meters above the ground.
+ *
+ * @param airScreamer Air Screamer character to check.
+ * @param `true` if the character is grounded, `false` otherwise.
+ */
+bool AirScreamer_IsGroundedCheck(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* airScreamer, q19_12 moveSpeedMult);
 
@@ -399,7 +407,7 @@ bool sharedFunc_800DC3BC_2_s00(s_SubCharacter* airScreamer);
 /** State step getter. */
 s32 sharedFunc_800DC438_2_s00(s_SubCharacter* airScreamer);
 
-bool sharedFunc_800DC50C_2_s00(s_SubCharacter* airScreamer);
+bool AirScreamer_HasLandedCheck(s_SubCharacter* airScreamer);
 
 s32 sharedFunc_800DC598_2_s00(s_SubCharacter* airScreamer);
 

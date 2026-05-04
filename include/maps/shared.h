@@ -285,7 +285,7 @@ extern CVECTOR sharedData_800E3258_0_s00;
 
 extern CVECTOR sharedData_800E325C_0_s00;
 
-extern s32 sharedData_800E2370_0_s01[2];
+extern q19_12 sharedData_800E2370_0_s01[2]; // Air Screamer ground collision heights?
 
 // Each of these holds 8 bytes, passed to `Bgm_Update` which loops through each byte.
 // TODO: Should use `s_BgmLayerLimits`?
@@ -544,8 +544,6 @@ void sharedFunc_800CCE2C_1_s05(s32 arg0, s32 arg1,
 
 void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, q23_8 posX, q23_8 posY, q23_8 posZ);
 
-q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* chara);
-
 /** Among other things, sets the players's anim to anim 3 (which might actually be flags if the field packs more data).
  * Maybe not player but another character?
  */
@@ -771,28 +769,28 @@ typedef struct _WorldObjectPlacement
 } s_WorldObjectPlacement;
 STATIC_ASSERT_SIZEOF(s_WorldObjectPlacement, 40);
 
-#define WorldObjectPoseInit(objPose, posX, posY, posZ, rotX, rotY, rotZ) \
-    WorldObjectPoseSet(objPose,                                          \
-                       Q12(posX), Q12(posY), Q12(posZ),                  \
-                       Q12_ANGLE(rotX), Q12_ANGLE(rotY), Q12_ANGLE(rotZ))
-#define WorldObjectPoseSet(objPose, posX, posY, posZ, rotX, rotY, rotZ) \
-{                                                                       \
-    Math_Vector3Set(&(objPose)->position, posX, posY, posZ);            \
-    Math_SetSVectorFast(&(objPose)->rotation, rotX, rotY, rotZ);        \
+#define WorldObject_PoseInit(objPose, posX, posY, posZ, rotX, rotY, rotZ) \
+    WorldObject_PoseSet(objPose,                                          \
+                        Q12(posX), Q12(posY), Q12(posZ),                  \
+                        Q12_ANGLE(rotX), Q12_ANGLE(rotY), Q12_ANGLE(rotZ))
+#define WorldObject_PoseSet(objPose, posX, posY, posZ, rotX, rotY, rotZ) \
+{                                                                        \
+    Math_Vector3Set(&(objPose)->position, posX, posY, posZ);             \
+    Math_SetSVectorFast(&(objPose)->rotation, rotX, rotY, rotZ);         \
 }
 
-#define WorldObjectInit(objPose, name, posX, posY, posZ, rotX, rotY, rotZ) \
-    WorldObjectSet(objPose, name,                                          \
-                   Q12(posX), Q12(posY), Q12(posZ),                        \
-                   Q12_ANGLE(rotX), Q12_ANGLE(rotY), Q12_ANGLE(rotZ))
-#define WorldObjectSet(objPose, name, posX, posY, posZ, rotX, rotY, rotZ) \
-{                                                                         \
+#define WorldObject_Init(objPose, name, posX, posY, posZ, rotX, rotY, rotZ) \
+    WorldObject_Set(objPose, name,                                          \
+                    Q12(posX), Q12(posY), Q12(posZ),                        \
+                    Q12_ANGLE(rotX), Q12_ANGLE(rotY), Q12_ANGLE(rotZ))
+#define WorldObject_Set(objPose, name, posX, posY, posZ, rotX, rotY, rotZ) \
+{                                                                          \
     Math_Vector3Set(&(objPose)->position, posX, posY, posZ);     \
     Math_SetSVectorFast(&(objPose)->rotation, rotX, rotY, rotZ); \
     WorldObject_ModelNameSet(&(objPose)->object, (name));        \
 }
 
-#define WorldObjectPosePositionInit(objPose, name, posX, posY, posZ) \
+#define WorldObject_PosePositionInit(objPose, name, posX, posY, posZ) \
     WorldObject_PosePositionSet(objPose, name, Q12(posX), Q12(posY), Q12(posZ))
 #define WorldObject_PosePositionSet(objPose, name, posX, posY, posZ) \
 {                                                                    \
@@ -800,7 +798,7 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectPlacement, 40);
     WorldObject_ModelNameSet(&(objPose)->object, (name));            \
 }
 
-#define WorldObjectPlacementInit(objPlacement, name, posX, posY, posZ) \
+#define WorldObject_PlacementInit(objPlacement, name, posX, posY, posZ) \
     WorldObject_PlacementSet(objPlacement, name, Q12(posX), Q12(posY), Q12(posZ))
 #define WorldObject_PlacementSet(objPose, name, posX, posY, posZ) \
 {                                                                 \

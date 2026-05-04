@@ -1189,8 +1189,8 @@ void func_800D4998(void) // 0x800D4998
 
 void Map_WorldObjectsInit(void) // 0x800D49C4
 {
-    WorldObjectPlacementInit(&WorldObject_D_800D7FF0, "MOV1_HID", 178.2681f, -0.387f, 63.6814f);
-    WorldObjectPlacementInit(&WorldObject_D_800D8020, "MOV1_HID", 174.81f, -1.4197f, 21.3344f);
+    WorldObject_PlacementInit(&WorldObject_D_800D7FF0, "MOV1_HID", 178.2681f, -0.387f, 63.6814f);
+    WorldObject_PlacementInit(&WorldObject_D_800D8020, "MOV1_HID", 174.81f, -1.4197f, 21.3344f);
 
     if (!Savegame_EventFlagGet(EventFlag_302))
     {
@@ -1199,11 +1199,11 @@ void Map_WorldObjectsInit(void) // 0x800D49C4
 
     WorldObject_ModelNameSet(&WorldObject_D_800D8050.object, D_800A99E4[1]);
 
-    WorldObjectPoseInit(&WorldObject_D_800D8070, 183.3833f, -1.2673f, 60.951f, 0.0f, 66.01, 0.0f);
-    WorldObjectPoseInit(&WorldObject_D_800D8090, 23.4f, -0.91f, 60.8f, 0.0f, 90.4f, 0.0f);
-    WorldObjectPlacementInit(&WorldObject_D_800D80B0, "WALLX_HI", 181.22f, 0.0f, 61.2015f);
-    WorldObjectPlacementInit(&WorldObject_D_800D80E0[0], "CUBE90_H", 180.5647f, -0.502f, 63.8853f);
-    WorldObjectPlacementInit(&WorldObject_D_800D80E0[1], "CUBE9_HI", 180.5647f, -0.502f, 63.8853f);
+    WorldObject_PoseInit(&WorldObject_D_800D8070, 183.3833f, -1.2673f, 60.951f, 0.0f, 66.01, 0.0f);
+    WorldObject_PoseInit(&WorldObject_D_800D8090, 23.4f, -0.91f, 60.8f, 0.0f, 90.4f, 0.0f);
+    WorldObject_PlacementInit(&WorldObject_D_800D80B0, "WALLX_HI", 181.22f, 0.0f, 61.2015f);
+    WorldObject_PlacementInit(&WorldObject_D_800D80E0[0], "CUBE90_H", 180.5647f, -0.502f, 63.8853f);
+    WorldObject_PlacementInit(&WorldObject_D_800D80E0[1], "CUBE9_HI", 180.5647f, -0.502f, 63.8853f);
 
     D_800D8018 = 0;
 }

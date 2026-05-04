@@ -603,9 +603,9 @@ void func_800D23E4(void) // 0x800D23E4
 
 void Map_WorldObjectsInit(void) // 0x800D2D6C
 {
-    WorldObjectInit(&g_WorldObjectSavepad, D_800A99E4[1], 106.687f, -1.02f, 144.601f, 0.0f, 163.0f, 0.0f);
+    WorldObject_Init(&g_WorldObjectSavepad, D_800A99E4[1], 106.687f, -1.02f, 144.601f, 0.0f, 163.0f, 0.0f);
 
-    WorldObjectPlacementInit(&g_WorldObject0, "ISU_HIDE", 57.8f, 0.0f, 0.0f);
+    WorldObject_PlacementInit(&g_WorldObject0, "ISU_HIDE", 57.8f, 0.0f, 0.0f);
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800D2DF4

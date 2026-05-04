@@ -267,9 +267,9 @@ void Map_WorldObjectsInit(void) // 0x800D525C
     }
 
     sharedFunc_800CAAD0_1_s05();
-    WorldObjectInit(&g_WorldObject0, "SPHERE_H", 19.7f, 1.58f, -19.1f, 0.0f, 0.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject0, "SPHERE_H", 19.7f, 1.58f, -19.1f, 0.0f, 0.0f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject1, "WHEEL_HI", 19.7f, -0.06f, -19.1f, 0.0f, 0.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject1, "WHEEL_HI", 19.7f, -0.06f, -19.1f, 0.0f, 0.0f, 0.0f);
 
     g_SysWork.field_235C = NULL;
     g_SysWork.pointLightPosition.vx = Q12(19.7f);

@@ -896,15 +896,15 @@ void Map_WorldObjectsInit(void) // 0x800D8424
     D_800DD528 = 0;
     D_800DD52A = 0;
 
-    WorldObjectInit(&g_WorldObject7, "HAMMER_H", 140.4485f, -0.5f, -18.9f, -87.05f, -73.2f, 0.0f);
+    WorldObject_Init(&g_WorldObject7, "HAMMER_H", 140.4485f, -0.5f, -18.9f, -87.05f, -73.2f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject2, "TAPE_HID", 59.64f, -0.85f, -100.27f, 0.0f, 7.5f, 0.0f);
+    WorldObject_Init(&g_WorldObject2, "TAPE_HID", 59.64f, -0.85f, -100.27f, 0.0f, 7.5f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject3, "BED3_HID", 19.6f, 0.0f, -99.6f, 0.0f, 90.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject3, "BED3_HID", 19.6f, 0.0f, -99.6f, 0.0f, 90.0f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject4, "KEY_HIDE", 20.6587f, -0.81055f, -98.93555f, 0.0f, -31.7f, 0.0f);
+    WorldObject_Init(&g_WorldObject4, "KEY_HIDE", 20.6587f, -0.81055f, -98.93555f, 0.0f, -31.7f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject0, "TANA_HID", 60.0f, 0.0f, -21.6f, 0.0f, 180.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject0, "TANA_HID", 60.0f, 0.0f, -21.6f, 0.0f, 180.0f, 0.0f);
 
     if (Savegame_EventFlagGet(EventFlag_M3S05_CabinetPushed))
     {
@@ -919,12 +919,12 @@ void Map_WorldObjectsInit(void) // 0x800D8424
     Math_SetSVectorFast(&D_800DD440, Q12_ANGLE(0.0f), Q12_ANGLE(180.0f), Q12_ANGLE(0.0f));
     Math_SetSVectorFast(&D_800DD448, Q12_ANGLE(58.05f), Q12_ANGLE(180.0f), Q12_ANGLE(0.0f));
 
-    WorldObjectPlacementInit(&g_WorldObject_Dr[0], "DR1L_HID", 19.1f, 0.0f, 59.1f);
-    WorldObjectPlacementInit(&g_WorldObject_Dr[1], "DR1R_HID", 19.1f, 0.0f, 59.1f);
-    WorldObjectPlacementInit(&g_WorldObject_Dr[2], "DR3L_HID", 19.1f, 0.0f, 59.1f);
-    WorldObjectPlacementInit(&g_WorldObject_Dr[3], "DR3R_HID", 19.1f, 0.0f, 59.1f);
-    WorldObjectPlacementInit(&g_WorldObject_Dr[4], "DR2L_HID", 19.1f, 0.0f, 59.1f);
-    WorldObjectPlacementInit(&g_WorldObject_Dr[5], "DR2R_HID", 19.1f, 0.0f, 59.1f);
+    WorldObject_PlacementInit(&g_WorldObject_Dr[0], "DR1L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObject_PlacementInit(&g_WorldObject_Dr[1], "DR1R_HID", 19.1f, 0.0f, 59.1f);
+    WorldObject_PlacementInit(&g_WorldObject_Dr[2], "DR3L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObject_PlacementInit(&g_WorldObject_Dr[3], "DR3R_HID", 19.1f, 0.0f, 59.1f);
+    WorldObject_PlacementInit(&g_WorldObject_Dr[4], "DR2L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObject_PlacementInit(&g_WorldObject_Dr[5], "DR2R_HID", 19.1f, 0.0f, 59.1f);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);

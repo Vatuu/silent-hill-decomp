@@ -1367,21 +1367,21 @@ void Map_WorldObjectsInit(void) // 0x800DD3AC
     D_800E62D0 = 0;
     D_800E638C = 0;
 
-    WorldObjectPlacementInit(&g_WorldObject6, "BALL_HID", -10.25f, 0.2f, -17.75f);
+    WorldObject_PlacementInit(&g_WorldObject6, "BALL_HID", -10.25f, 0.2f, -17.75f);
 
-    WorldObjectInit(&g_WorldObject5, "VALVE_HI", -10.49f, -0.7f, -12.92f, 0.0f, 0.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject5, "VALVE_HI", -10.49f, -0.7f, -12.92f, 0.0f, 0.0f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject0, "TOBIRA00", -58.81f, -1.4f, 18.02f, 0.0f, 0.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject0, "TOBIRA00", -58.81f, -1.4f, 18.02f, 0.0f, 0.0f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject1, "TOBIRA01", -58.81f, -1.4f, 18.02f, 0.0f, 0.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject1, "TOBIRA01", -58.81f, -1.4f, 18.02f, 0.0f, 0.0f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject2, "TOBIRA2_", -61.0f, -1.05f, 20.97f, 0.0f, 0.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject2, "TOBIRA2_", -61.0f, -1.05f, 20.97f, 0.0f, 0.0f, 0.0f);
 
-    WorldObjectPlacementInit(&g_WorldObject3, "HAKO1_HI", -58.81f, -1.4f, 18.02f);
+    WorldObject_PlacementInit(&g_WorldObject3, "HAKO1_HI", -58.81f, -1.4f, 18.02f);
 
-    WorldObjectPlacementInit(&g_WorldObject4, "HAKO2_HI", -61.0f, -0.9f, 20.97f);
+    WorldObject_PlacementInit(&g_WorldObject4, "HAKO2_HI", -61.0f, -0.9f, 20.97f);
 
-    WorldObjectInit(&g_WorldObject7, "KEY_HIDE", -60.3184f, -0.00732422f, 20.23f, 0.0f, 53.2f, 5.3f);
+    WorldObject_Init(&g_WorldObject7, "KEY_HIDE", -60.3184f, -0.00732422f, 20.23f, 0.0f, 53.2f, 5.3f);
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {

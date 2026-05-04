@@ -445,14 +445,14 @@ INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04_2", sharedData_800CB094_3_s0
 
 void Map_WorldObjectsInit(void) // 0x800D3BD0
 {
-    WorldObjectPlacementInit(&g_WorldObject_Plate, "PLATE_NE", 100.0f, 0.0f, 60.0f);
-    WorldObjectInit(&g_WorldObject_SavePad, D_800A99E4[1], 102.5972f, -0.8191f, 58.7896f, 0.0f, 86.0f, 0.0f);
-    WorldObjectPlacementInit(&g_WorldObject_Dr[0], "DR1L_HID", 19.1f, 0.0f, 59.1f);
-    WorldObjectPlacementInit(&g_WorldObject_Dr[1], "DR1R_HID", 19.1f, 0.0f, 59.1f);
-    WorldObjectPlacementInit(&g_WorldObject_Dr[2], "DR3L_HID", 19.1f, 0.0f, 59.1f);
-    WorldObjectPlacementInit(&g_WorldObject_Dr[3], "DR3R_HID", 19.1f, 0.0f, 59.1f);
-    WorldObjectPlacementInit(&g_WorldObject_Dr[4], "DR2L_HID", 19.1f, 0.0f, 59.1f);
-    WorldObjectPlacementInit(&g_WorldObject_Dr[5], "DR2R_HID", 19.1f, 0.0f, 59.1f);
+    WorldObject_PlacementInit(&g_WorldObject_Plate, "PLATE_NE", 100.0f, 0.0f, 60.0f);
+    WorldObject_Init(&g_WorldObject_SavePad, D_800A99E4[1], 102.5972f, -0.8191f, 58.7896f, 0.0f, 86.0f, 0.0f);
+    WorldObject_PlacementInit(&g_WorldObject_Dr[0], "DR1L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObject_PlacementInit(&g_WorldObject_Dr[1], "DR1R_HID", 19.1f, 0.0f, 59.1f);
+    WorldObject_PlacementInit(&g_WorldObject_Dr[2], "DR3L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObject_PlacementInit(&g_WorldObject_Dr[3], "DR3R_HID", 19.1f, 0.0f, 59.1f);
+    WorldObject_PlacementInit(&g_WorldObject_Dr[4], "DR2L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObject_PlacementInit(&g_WorldObject_Dr[5], "DR2R_HID", 19.1f, 0.0f, 59.1f);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);

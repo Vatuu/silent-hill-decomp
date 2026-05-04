@@ -421,13 +421,13 @@ void func_800D0CF8(void) // 0x800D0CF8
 
 void Map_WorldObjectsInit(void) // 0x800D18DC
 {
-    WorldObjectPlacementInit(&g_WorldObject0, "TRUNK_HI", 97.2496f, 0.0f, 100.3428f);
-    WorldObjectPlacementInit(&g_WorldObject1[0], "BIRD_HID", 98.4512f, 0.0f, 101.087f);
-    WorldObjectPlacementInit(&g_WorldObject1[1], "BIRD2_HI", 98.4512f, 0.0f, 101.087f);
-    WorldObjectInit(&g_WorldObject2, D_800A99E4[1], 26.0f, -1.0198f, 144.5498f, 0.0f, 163.8f, 0.0f);
-    WorldObjectInit(&g_WorldObject3, "MAP_HIDE", 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
-    WorldObjectInit(&g_WorldObject4, "MAP2_HID", 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
-    WorldObjectInit(&g_WorldObject5, D_800A99E4[2], 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
+    WorldObject_PlacementInit(&g_WorldObject0, "TRUNK_HI", 97.2496f, 0.0f, 100.3428f);
+    WorldObject_PlacementInit(&g_WorldObject1[0], "BIRD_HID", 98.4512f, 0.0f, 101.087f);
+    WorldObject_PlacementInit(&g_WorldObject1[1], "BIRD2_HI", 98.4512f, 0.0f, 101.087f);
+    WorldObject_Init(&g_WorldObject2, D_800A99E4[1], 26.0f, -1.0198f, 144.5498f, 0.0f, 163.8f, 0.0f);
+    WorldObject_Init(&g_WorldObject3, "MAP_HIDE", 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject4, "MAP2_HID", 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject5, D_800A99E4[2], 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800D1A98

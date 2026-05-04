@@ -114,12 +114,12 @@ void Map_WorldObjectsInit(void)
     Math_Vector3Set(&g_WorldObjectPose_Winr, Q12(-100.0f), Q12(0.0f), Q12(20.0f));
     WorldObject_ModelNameSet(&g_WorldObject_SavePad, D_800A99E4[1]);
 
-    WorldObjectPoseInit(&g_WorldObjectPose_SavePad0, -100.47f, -1.575f, 22.22f, 0.0f, -75.8f, 0.0f);
-    WorldObjectPoseInit(&g_WorldObjectPose_SavePad1, -178.08f, -0.705f, 22.0298f, 0.0f, 12.1f, 0.0f);
-    WorldObjectPoseInit(&g_WorldObjectPose_SavePad2, -146.4248f, -0.911f, 21.325f, 0.0f, 8.0f, 0.0f);
-    WorldObjectInit(&g_WorldObject_Gas, "GAS_HIDE", -177.2998f, -1.2522f, 21.125f, 0.0f, -145.55f, 0.0f);
-    WorldObjectPosePositionInit(&g_WorldObject_Katana, "KATANA1_", -140.8628f, -0.5511f, 62.3404f);
-    WorldObjectInit(&g_WorldObject_Cosmo, "COSMO_HI", -145.75f, -0.92f, 18.3274f, 0.0f, -55.1f, 0.0f);
+    WorldObject_PoseInit(&g_WorldObjectPose_SavePad0, -100.47f, -1.575f, 22.22f, 0.0f, -75.8f, 0.0f);
+    WorldObject_PoseInit(&g_WorldObjectPose_SavePad1, -178.08f, -0.705f, 22.0298f, 0.0f, 12.1f, 0.0f);
+    WorldObject_PoseInit(&g_WorldObjectPose_SavePad2, -146.4248f, -0.911f, 21.325f, 0.0f, 8.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Gas, "GAS_HIDE", -177.2998f, -1.2522f, 21.125f, 0.0f, -145.55f, 0.0f);
+    WorldObject_PosePositionInit(&g_WorldObject_Katana, "KATANA1_", -140.8628f, -0.5511f, 62.3404f);
+    WorldObject_Init(&g_WorldObject_Cosmo, "COSMO_HI", -145.75f, -0.92f, 18.3274f, 0.0f, -55.1f, 0.0f);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);

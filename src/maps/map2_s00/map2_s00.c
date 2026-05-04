@@ -1908,18 +1908,18 @@ void Map_WorldObjectsInit(void) // 0x800EB908
 {
     D_800F534C = 0;
 
-    WorldObjectInit(&g_WorldObject_RockDrill, "DRILL_NE", 236.7151f, -0.281f, 345.046f, 2.8f, 7.5f, -180.5f);
-    WorldObjectInit(&g_WorldObject_Chainsaw, "CHAINSAW", -82.3f, -0.7f, -91.6f, -17.0f, 18.1f, -7.22f);
-    WorldObjectInit(&g_WorldObject_IronPipe, "IRONPIPE", -187.591f, -0.093f, 300.271f, 4.4f, 36.8f, 2.9f);
-    WorldObjectInit(&g_WorldObject1, "SKB2_NEA", -186.68f, -0.483f, 300.829f, 4.1f, -74.05f, -9.5f);
-    WorldObjectInit(&g_WorldObject2, "PPR1_NEA", -154.56f, 0.0f, 1.78f, 0.0f, -51.7f, 0.0f);
-    WorldObjectInit(&g_WorldObject3, "PPR2_NEA", -154.6f, 0.0f, 2.22f, 0.0f, 74.3f, 0.0f);
-    WorldObjectPlacementInit(&g_WorldObjectB[0], "JO0A_HID", 111.94f, -0.81f, 216.25f);
-    WorldObjectPlacementInit(&g_WorldObjectB[1], "JO0B_HID", 111.94f, -0.57f, 216.25f);
-    WorldObjectPlacementInit(&g_WorldObjectB[2], "JO0C_HID", 111.94f, -0.32f, 216.25f);
-    WorldObjectInit(&g_WorldObject4[0], "KEY_HIDE", 185.76f, -0.59f, 116.12f, 0.0f, 0.0f, 0.0f);
-    WorldObjectInit(&g_WorldObject4[1], "KEY_NEAR", -190.42f, 0.0f, 376.63f, 0.0f, 58.5f, 0.0f);
-    WorldObjectInit(&g_WorldObject4[2], "KEY_NEAR", 99.4f, -0.35f, -33.26f, 1.6f, 0.0f, 0.9f);
+    WorldObject_Init(&g_WorldObject_RockDrill, "DRILL_NE", 236.7151f, -0.281f, 345.046f, 2.8f, 7.5f, -180.5f);
+    WorldObject_Init(&g_WorldObject_Chainsaw, "CHAINSAW", -82.3f, -0.7f, -91.6f, -17.0f, 18.1f, -7.22f);
+    WorldObject_Init(&g_WorldObject_IronPipe, "IRONPIPE", -187.591f, -0.093f, 300.271f, 4.4f, 36.8f, 2.9f);
+    WorldObject_Init(&g_WorldObject1, "SKB2_NEA", -186.68f, -0.483f, 300.829f, 4.1f, -74.05f, -9.5f);
+    WorldObject_Init(&g_WorldObject2, "PPR1_NEA", -154.56f, 0.0f, 1.78f, 0.0f, -51.7f, 0.0f);
+    WorldObject_Init(&g_WorldObject3, "PPR2_NEA", -154.6f, 0.0f, 2.22f, 0.0f, 74.3f, 0.0f);
+    WorldObject_PlacementInit(&g_WorldObjectB[0], "JO0A_HID", 111.94f, -0.81f, 216.25f);
+    WorldObject_PlacementInit(&g_WorldObjectB[1], "JO0B_HID", 111.94f, -0.57f, 216.25f);
+    WorldObject_PlacementInit(&g_WorldObjectB[2], "JO0C_HID", 111.94f, -0.32f, 216.25f);
+    WorldObject_Init(&g_WorldObject4[0], "KEY_HIDE", 185.76f, -0.59f, 116.12f, 0.0f, 0.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject4[1], "KEY_NEAR", -190.42f, 0.0f, 376.63f, 0.0f, 58.5f, 0.0f);
+    WorldObject_Init(&g_WorldObject4[2], "KEY_NEAR", 99.4f, -0.35f, -33.26f, 1.6f, 0.0f, 0.9f);
 
     WorldObject_ModelNameSet(&g_WorldObject5[0], "AXIS1_HI");
     WorldObject_ModelNameSet(&g_WorldObject5[1], "AXIS2_BA");
@@ -1948,11 +1948,11 @@ void Map_WorldObjectsInit(void) // 0x800EB908
     Math_SetSVectorFast(&D_800F538C, 0, 0, 0);
     WorldObject_ModelNameSet(&D_800F56EC, D_800A99E4[1]);
 
-    WorldObjectPoseInit(&D_800F570C, 117.681641f, -1.01f, 216.263f, 0.0f, 193.51f, 0.0f);
-    WorldObjectPoseInit(&D_800F572C, 116.3013f, -0.905f, 299.1139f, 0.0f, 84.56f, 0.0f);
-    WorldObjectPoseInit(&D_800F574C, -44.234f, -3.453f, 345.2f, 0.0f, 180.0f, 0.0f);
+    WorldObject_PoseInit(&D_800F570C, 117.681641f, -1.01f, 216.263f, 0.0f, 193.51f, 0.0f);
+    WorldObject_PoseInit(&D_800F572C, 116.3013f, -0.905f, 299.1139f, 0.0f, 84.56f, 0.0f);
+    WorldObject_PoseInit(&D_800F574C, -44.234f, -3.453f, 345.2f, 0.0f, 180.0f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject8, "MAP_NEAR", -43.694f, -3.1824f, 345.764f, 6.7f, 6.1f, 0.0f);
+    WorldObject_Init(&g_WorldObject8, "MAP_NEAR", -43.694f, -3.1824f, 345.764f, 6.7f, 6.1f, 0.0f);
 
     D_800F56E4 = 0;
 

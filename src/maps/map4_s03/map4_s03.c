@@ -4904,8 +4904,8 @@ void Map_WorldObjectsInit(void) // 0x800D991C
         Fs_QueueWaitForEmpty();
     }
 
-    WorldObjectInit(&g_WorldObject_Fence, "FENCE_HI", 130.5f, 0.0f, -93.0f, 0.0f, 0.0f, 0.0f);
-    WorldObjectInit(&g_WorldObject_Mal5_21, "MAL5_21_", 117.2464f, -0.685f, 145.896f, -36.0f, 243.0f, 60.21f);
+    WorldObject_Init(&g_WorldObject_Fence, "FENCE_HI", 130.5f, 0.0f, -93.0f, 0.0f, 0.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Mal5_21, "MAL5_21_", 117.2464f, -0.685f, 145.896f, -36.0f, 243.0f, 60.21f);
 
     WorldObject_ModelNameSet(&g_WorldObject_Mal6[0], "MAL6_27_");
     WorldObject_ModelNameSet(&g_WorldObject_Mal6[1], "MAL6_28_");
@@ -4913,7 +4913,7 @@ void Map_WorldObjectsInit(void) // 0x800D991C
     Math_Vector3Set(&g_WorldObject_UnkPos, Q12(132.0f), Q12(-0.75f), Q12(140.0f));
     Math_SetSVectorFast(&g_WorldObject_UnkRot, Q12_ANGLE(90.0f), Q12_ANGLE(90.0f), Q12_ANGLE(0.0f));
 
-    WorldObjectInit(&g_WorldObject_SavePad, D_800A99E4[1], 217.15f, -1.25f, -22.9f, 0.0f, -173.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_SavePad, D_800A99E4[1], 217.15f, -1.25f, -22.9f, 0.0f, -173.0f, 0.0f);
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {

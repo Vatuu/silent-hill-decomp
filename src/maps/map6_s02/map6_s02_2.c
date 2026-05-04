@@ -1045,7 +1045,7 @@ void func_800D1330(s16 arg0) // 0x800D1330
 
 void Map_WorldObjectsInit(void) // 0x800D1658
 {
-    WorldObjectInit(&g_WorldObject_SavePad, D_800A99E4[1], -18.85f, 3.06f, -21.16f, 0.0f, 111.6f, 0.0f);
+    WorldObject_Init(&g_WorldObject_SavePad, D_800A99E4[1], -18.85f, 3.06f, -21.16f, 0.0f, 111.6f, 0.0f);
 
     D_800D4E09 = 0;
     D_800D4E6C = 0;

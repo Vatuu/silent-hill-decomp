@@ -744,22 +744,22 @@ void Map_WorldObjectsInit(void)
     D_800E1180 = 0;
     D_800E1182 = 0;
 
-    WorldObjectInit(&g_WorldObject9, "PICT00_H", 133.294f, -0.8614f, 19.04f, 0.0f, 162.6f, 0.0f);
-    WorldObjectPlacementInit(&g_WorldObject1[0], "PAPER1_H", 133.63f, -0.816f, 17.089f);
-    WorldObjectPlacementInit(&g_WorldObject1[1], "NOTE_HID", 133.991f, -0.8f, 16.307f);
-    WorldObjectPlacementInit(&g_WorldObject1[2], "TINORI1_", 133.6f, -1.7f, 16.0f);
-    WorldObjectPlacementInit(&g_WorldObject1[3], "TINORI2_", 133.6f, -1.19f, 18.2f);
-    WorldObjectPlacementInit(&g_WorldObject1[4], "TINORI3_", 134.486f, -1.19f, 18.2f);
-    WorldObjectPlacementInit(&g_WorldObject1[5], "GRID2_HI", 134.4f, -0.91f, 17.9568f);
-    WorldObjectPlacementInit(&g_WorldObject2, "GOLD_HID", -12.2f, -1.0999f, -67.88f);
-    WorldObjectPlacementInit(&g_WorldObject3, "SILVER_H", -13.5198f, -1.0999f, -69.0999f);
-    WorldObjectPlacementInit(&g_WorldObject4, "ANA3_HID", -12.72f, -1.0f, -68.5999f);
-    WorldObjectPlacementInit(&g_WorldObject5, "ANA2_HID", -12.7898f, -1.0f, -69.6199f);
-    WorldObjectPlacementInit(&g_WorldObject6[0], "REDX_HID", 20.4568f, -0.8345f, -17.97f);
-    WorldObjectPlacementInit(&g_WorldObject6[1], "R_HIDE_I", 19.5799f, 0.0f, -18.3f);
-    WorldObjectPlacementInit(&g_WorldObject0, "G_HIDE_I", 19.5799f, 0.0f, -18.3f);
-    WorldObjectInit(&g_WorldObject7, D_800A99E4[1], 61.8531f, -0.805f, 140.6099f, 0.0f, 92.9f, 0.0f);
-    WorldObjectInit(&g_WorldObject8, "MAP_HIDE", 96.9405f, -0.3365f, 21.0918f, 0.0f, 66.8f, 0.0f);
+    WorldObject_Init(&g_WorldObject9, "PICT00_H", 133.294f, -0.8614f, 19.04f, 0.0f, 162.6f, 0.0f);
+    WorldObject_PlacementInit(&g_WorldObject1[0], "PAPER1_H", 133.63f, -0.816f, 17.089f);
+    WorldObject_PlacementInit(&g_WorldObject1[1], "NOTE_HID", 133.991f, -0.8f, 16.307f);
+    WorldObject_PlacementInit(&g_WorldObject1[2], "TINORI1_", 133.6f, -1.7f, 16.0f);
+    WorldObject_PlacementInit(&g_WorldObject1[3], "TINORI2_", 133.6f, -1.19f, 18.2f);
+    WorldObject_PlacementInit(&g_WorldObject1[4], "TINORI3_", 134.486f, -1.19f, 18.2f);
+    WorldObject_PlacementInit(&g_WorldObject1[5], "GRID2_HI", 134.4f, -0.91f, 17.9568f);
+    WorldObject_PlacementInit(&g_WorldObject2, "GOLD_HID", -12.2f, -1.0999f, -67.88f);
+    WorldObject_PlacementInit(&g_WorldObject3, "SILVER_H", -13.5198f, -1.0999f, -69.0999f);
+    WorldObject_PlacementInit(&g_WorldObject4, "ANA3_HID", -12.72f, -1.0f, -68.5999f);
+    WorldObject_PlacementInit(&g_WorldObject5, "ANA2_HID", -12.7898f, -1.0f, -69.6199f);
+    WorldObject_PlacementInit(&g_WorldObject6[0], "REDX_HID", 20.4568f, -0.8345f, -17.97f);
+    WorldObject_PlacementInit(&g_WorldObject6[1], "R_HIDE_I", 19.5799f, 0.0f, -18.3f);
+    WorldObject_PlacementInit(&g_WorldObject0, "G_HIDE_I", 19.5799f, 0.0f, -18.3f);
+    WorldObject_Init(&g_WorldObject7, D_800A99E4[1], 61.8531f, -0.805f, 140.6099f, 0.0f, 92.9f, 0.0f);
+    WorldObject_Init(&g_WorldObject8, "MAP_HIDE", 96.9405f, -0.3365f, 21.0918f, 0.0f, 66.8f, 0.0f);
 
     Player_ItemRemove(InvItemId_NoteToSchool, 1);
     Savegame_EventFlagSet(EventFlag_147);

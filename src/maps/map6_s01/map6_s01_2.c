@@ -788,14 +788,14 @@ void Map_WorldObjectsInit(void) // 0x800D2E6C
 {
     D_800D5345 = false;
 
-    WorldObjectInit(&D_800D5374, D_800A99E4[1], -19.237060546875f, -0.90576171875f, 60.533f, 0.0f, 78.93f, 0.0f);
-    WorldObjectInit(&D_800D53A4[0], "DOOR2_HI", -21.38f, -0.95f, 58.7f, 0.0, 180.0f, 0.0f);
-    WorldObjectInit(&D_800D53A4[1], "BRI3_HID", -21.29f, -1.434814453125f, 60.31f, 0.0, 180.0f, 0.0f);
-    WorldObjectInit(&D_800D53A4[2], "BAR1_HID", -21.31f, -1.71f, 59.87f, 0.0, 180.0f, 0.0f);
-    WorldObjectInit(&D_800D53A4[3], "WID1_HID", -21.38f, -0.95f, 57.8f, 0.0, 180.0f, 0.0f);
-    WorldObjectInit(&D_800D53A4[4], "WID2_HID", -21.38f, -0.95f, 60.05f, 0.0, 180.0f, 0.0f);
-    WorldObjectInit(&D_800D53A4[5], "GLAS2_HI", -21.4f, -1.4208984375f, 58.77f, 0.0, 180.0f, 0.0f);
-    WorldObjectInit(&D_800D53A4[6], "RIGHT_HI", -19.6f, -0.825f, 59.4f, 0.0, 180.0f, 0.0f);
+    WorldObject_Init(&D_800D5374, D_800A99E4[1], -19.237060546875f, -0.90576171875f, 60.533f, 0.0f, 78.93f, 0.0f);
+    WorldObject_Init(&D_800D53A4[0], "DOOR2_HI", -21.38f, -0.95f, 58.7f, 0.0, 180.0f, 0.0f);
+    WorldObject_Init(&D_800D53A4[1], "BRI3_HID", -21.29f, -1.434814453125f, 60.31f, 0.0, 180.0f, 0.0f);
+    WorldObject_Init(&D_800D53A4[2], "BAR1_HID", -21.31f, -1.71f, 59.87f, 0.0, 180.0f, 0.0f);
+    WorldObject_Init(&D_800D53A4[3], "WID1_HID", -21.38f, -0.95f, 57.8f, 0.0, 180.0f, 0.0f);
+    WorldObject_Init(&D_800D53A4[4], "WID2_HID", -21.38f, -0.95f, 60.05f, 0.0, 180.0f, 0.0f);
+    WorldObject_Init(&D_800D53A4[5], "GLAS2_HI", -21.4f, -1.4208984375f, 58.77f, 0.0, 180.0f, 0.0f);
+    WorldObject_Init(&D_800D53A4[6], "RIGHT_HI", -19.6f, -0.825f, 59.4f, 0.0, 180.0f, 0.0f);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);

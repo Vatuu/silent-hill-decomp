@@ -1029,9 +1029,9 @@ void func_800D87C0(void) // 0x800D87C0
 
 void Map_WorldObjectsInit(void) // 0x800D91EC
 {
-    WorldObjectInit(&g_WorldObject1, "TOBIRA00", -58.81f, -1.3f, 18.0198f, 0.0f, 0.0f, 0.0f);
-    WorldObjectInit(&g_WorldObject2, "TOBIRA01", -58.81f, -1.3f, 18.0198f, 0.0f, 0.0f, 0.0f);
-    WorldObjectPosePositionInit(&g_WorldObject3, "HAKO_HID", -58.81f, -1.4f, 18.0198f);
+    WorldObject_Init(&g_WorldObject1, "TOBIRA00", -58.81f, -1.3f, 18.0198f, 0.0f, 0.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject2, "TOBIRA01", -58.81f, -1.3f, 18.0198f, 0.0f, 0.0f, 0.0f);
+    WorldObject_PosePositionInit(&g_WorldObject3, "HAKO_HID", -58.81f, -1.4f, 18.0198f);
 
     WorldObject_ModelNameSet(&g_WorldObject4, "HAND_HID");
     WorldObject_ModelNameSet(&g_WorldObject5, "HAND2_HI");
@@ -1039,17 +1039,17 @@ void Map_WorldObjectsInit(void) // 0x800D91EC
 
     Math_Vector3Set(&D_800DF080, Q12(-59.2f), Q12(-1.0f), Q12(99.5f));
 
-    WorldObjectPosePositionInit(&g_WorldObject7, "ACID_HID", -101.2f, -1.3f, 100.3f);
-    WorldObjectPosePositionInit(&g_WorldObject8, "FUTA1_HI", -98.2798f, -0.58f, 19.93f);
-    WorldObjectPosePositionInit(&g_WorldObject9, "FUTA2_HI", -99.44f, -0.85f, 19.93f);
+    WorldObject_PosePositionInit(&g_WorldObject7, "ACID_HID", -101.2f, -1.3f, 100.3f);
+    WorldObject_PosePositionInit(&g_WorldObject8, "FUTA1_HI", -98.2798f, -0.58f, 19.93f);
+    WorldObject_PosePositionInit(&g_WorldObject9, "FUTA2_HI", -99.44f, -0.85f, 19.93f);
 
     if (!Savegame_EventFlagGet(EventFlag_M1S01_PianoPuzzleSolved))
     {
-        WorldObjectInit(&g_WorldObject0, "SILVER_H", -99.0f, -2.68f, 23.73f, 0.0f, 0.0f, 0.0f);
+        WorldObject_Init(&g_WorldObject0, "SILVER_H", -99.0f, -2.68f, 23.73f, 0.0f, 0.0f, 0.0f);
     }
     else
     {
-        WorldObjectInit(&g_WorldObject0, "SILVER_H", -98.8f, 0.0f, 22.8f, -90.0f, 28.5f, 0);
+        WorldObject_Init(&g_WorldObject0, "SILVER_H", -98.8f, 0.0f, 22.8f, -90.0f, 28.5f, 0);
     }
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)

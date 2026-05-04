@@ -4039,7 +4039,7 @@ void func_8006EE0C(s_RayState_6C* arg0, s32 arg1, s_SubCharacter* chara);
 
 void func_8006EEB8(s_RayState* state, s_SubCharacter* chara);
 
-void func_8006F250(s32* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ);
+void func_8006F250(q19_12* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ);
 
 void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ);
 
