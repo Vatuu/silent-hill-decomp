@@ -192,7 +192,7 @@ elif sys.platform == "win32":
     LD                = f"{CROSS}-ld.exe"
     OBJCOPY           = f"{CROSS}-objcopy.exe"
     OBJDUMP           = f"{CROSS}-objdump.exe"
-    CPP               = f"{TOOLS_DIR}/win-build/mcpp/mcpp.exe"
+    CPP               = f"{TOOLS_DIR}/win-build/gcc-win/bin/gcc.exe"
     CC                = f"{TOOLS_DIR}/win-build/gcc-psx/cc1psx.exe"
     CC272             = f"{TOOLS_DIR}/win-build/gcc-2.7.2-win/cc1psx.exe"
     OBJDIFF           = f"{OBJDIFF_DIR}\\objdiff.exe"
@@ -210,11 +210,11 @@ DL_OVL_FLAGS    = "-G0"
 
 # Compilation flags (Tool specific)
 # Note - MASPSX: Some of the files from SD library modifies the parameters, see `ninja_setup_list_add_source`
+CPP_FLAGS = f"{INCLUDE_FLAGS} -D_LANGUAGE_C -DUSE_INCLUDE_ASM -P -MMD -MP -undef -Wall -lang-c -nostdinc"
 if sys.platform == "linux" or sys.platform == "linux2":
-    CPP_FLAGS = f"{INCLUDE_FLAGS} -D_LANGUAGE_C -DUSE_INCLUDE_ASM -P -MMD -MP -undef -Wall -lang-c -nostdinc"
     ICONV_FLAGS = f"-f UTF-8 -t SHIFT-JIS $in -o $out"
 elif sys.platform == "win32":
-    CPP_FLAGS = f"{INCLUDE_FLAGS} -D_LANGUAGE_C -DUSE_INCLUDE_ASM -P -MMD -MP -N -Wall -I-"
+    CPP_FLAGS = f"{CPP_FLAGS} -E"
     ICONV_FLAGS = f"$in $out"
 MASPSX_FLAGS  = f"--gnu-as-path {AS} --run-assembler"
 CC_FLAGS      = f"{OPT_FLAGS} -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet"
@@ -499,13 +499,14 @@ def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_c
                             ninjaFile.build(outputs=target_path, rule="as", inputs=source_path, variables={ "DLFLAG": DL_EXE_FLAGS } )
                         else:
                             ninjaFile.build(outputs=target_path, rule="as", inputs=source_path, variables={ "DLFLAG": DL_OVL_FLAGS } )
-                            
+                        
                     case "c":
                         target_path_no_ext = target_path.removesuffix(".c.o")
                         ninja_setup_list_add_source(target_path_no_ext, source_path, ninjaFile, None, non_matching, game_version_idx)
                         
                         if objdiff_mode:
-                            objdiffConfigRequirements.append(ninja_setup_list_add_source(target_path_no_ext, source_path, ninjaNonmatchingFile, ninjaDiffFile, True, game_version_idx))
+                            temp = ninja_setup_list_add_source(target_path_no_ext, source_path, ninjaNonmatchingFile, ninjaDiffFile, True, game_version_idx)
+                            if temp != None: objdiffConfigRequirements.append(temp)
                     case "bin":
                         ninjaFile.build(outputs=target_path, rule="ld", inputs=source_path)
                     case "lib" | "o":
@@ -563,12 +564,8 @@ def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_c
             checksumBuildRequirements.append(output)
     
     if objdiff_mode:
-        if sys.platform == "linux" or sys.platform == "linux2":
-            ninjaDiffFile.build(outputs=f"{EXPECTED_DIR}/{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}/objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}/config-retail.yaml",
-            variables={ "version": GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR }, implicit=objdiffConfigRequirements)
-        elif sys.platform == "win32":
-            ninjaDiffFile.build(outputs=f"{EXPECTED_DIR}\\{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}\\objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}\\config-retail.yaml",
-            variables={ "version": GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR }, implicit=objdiffConfigRequirements)
+        ninjaDiffFile.build(outputs=f"{EXPECTED_DIR}/{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}/objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}/config-retail.yaml",
+        variables={ "version": GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR }, implicit=objdiffConfigRequirements)
     
     if skip_checksum != True:
         if sys.platform == "linux" or sys.platform == "linux2":
@@ -626,9 +623,9 @@ def extract_files(version: int):
 
 def splat_generate(yaml_path: str, generate_everything: bool):
     if generate_everything:
-        subprocess.call([PYTHON, "-m", "splat", "split", "--disassemble-all", "--make-full-disasm-for-code", yaml_path])
+        subprocess.call(["splat", "split", "--disassemble-all", "--make-full-disasm-for-code", yaml_path])
     else:
-        subprocess.call([PYTHON, "-m", "splat", "split", "--disassemble-all", yaml_path])
+        subprocess.call(["splat", "split", "--disassemble-all", yaml_path])
 
 def main():
     parser = argparse.ArgumentParser(description="Configure the project")

@@ -59,3 +59,6 @@ D_800CD768_tbl = 0x800CD768;
 
 # @hack Referenced in some HARRY_MXSXX_ANIM_INFOS tables.
 Player_VariableAnimDurationGet = 0x800706E4;
+
+# @hack For Windows compilation as for some reason Splat doesn't recognize this symbol
+D_801E5E40 = 0x801E5E40;
