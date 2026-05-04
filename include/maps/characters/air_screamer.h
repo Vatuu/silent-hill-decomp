@@ -159,11 +159,11 @@ typedef enum _AirScreamerStateStep
 /** @brief Air Screamer or Night Flutter character damage types. */
 typedef enum _AirScreamerDamage
 {
-    AirScreamerDamage_None = 0,
-    AirScreamerDamage_1    = 1,
-    AirScreamerDamage_2    = 2,
-    AirScreamerDamage_3    = 3,
-    AirScreamerDamage_4    = 4
+    AirScreamerDamage_None   = 0,
+    AirScreamerDamage_Recoil = 1,
+    AirScreamerDamage_Rear   = 2,
+    AirScreamerDamage_Stun   = 3,
+    AirScreamerDamage_Kill   = 4
 } e_AirScreamerDamage;
 
 /** @brief Updates an active Air Screamer or Night Flutter character.
@@ -172,7 +172,7 @@ typedef enum _AirScreamerDamage
  * @param animHdr Animation header.
  * @param boneCoords Model bone coordinates.
  */
-void Ai_AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 bool sharedFunc_800D21E4_0_s01(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
@@ -189,7 +189,7 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer);
  *
  * @param airScreamer Air Screamer or Night Flutter character to initialize.
  */
-bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer);
+bool AirScreamer_Init(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D2B00_0_s01(s_SubCharacter* airScreamer);
 
@@ -203,15 +203,15 @@ void sharedFunc_800D2B4C_0_s01(s_SubCharacter* airScreamer);
  *
  * @param airScreamer Air Screamer or Night Flutter character to warp.
  */
-void Ai_AirScreamer_GroundWarp(s_SubCharacter* airScreamer);
+void AirScreamer_GroundWarp(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D2BE4_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D2BF4_0_s01(s_SubCharacter* airScreamer);
 
-s32 Ai_AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult);
+s32 AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult);
 
-bool sharedFunc_800D2E04_0_s01(s_SubCharacter* airScreamer, VECTOR3* inVec, s32* outDist, s32* outAngle);
+bool sharedFunc_800D2E04_0_s01(s_SubCharacter* airScreamer, VECTOR3* inVec, q19_12* outDist, q19_12* outAngle);
 
 bool sharedFunc_800D3430_0_s01(s_SubCharacter* airScreamer, q19_12* dist, q19_12* angle);
 
@@ -220,11 +220,11 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D31D0_0_s01(s_SubCharacter* airScreamer, const VECTOR3* pos, s32 arg2);
 
-bool Ai_AirScreamer_Control(s_SubCharacter* airScreamer);
+bool AirScreamer_ControlUpdate(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_0(s_SubCharacter* airScreamer);
+void AirScreamer_Control_0(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_1(s_SubCharacter* airScreamer);
+void AirScreamer_Control_1(s_SubCharacter* airScreamer);
 
 /** Probability query. */
 void sharedFunc_800D3DFC_0_s01(s_SubCharacter* airScreamer);
@@ -308,83 +308,83 @@ void sharedFunc_800D5D80_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D5E14_0_s01(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_2(s_SubCharacter* airScreamer);
+void AirScreamer_Control_2(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_3(s_SubCharacter* airScreamer);
+void AirScreamer_Control_3(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_5(s_SubCharacter* airScreamer);
+void AirScreamer_Control_5(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_6(s_SubCharacter* airScreamer);
+void AirScreamer_Control_6(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_7(s_SubCharacter* airScreamer);
+void AirScreamer_Control_7(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3);
 
-void Ai_AirScreamer_Control_8(s_SubCharacter* airScreamer);
+void AirScreamer_Control_8(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_9(s_SubCharacter* airScreamer);
+void AirScreamer_Control_9(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_11(s_SubCharacter* airScreamer);
+void AirScreamer_Control_11(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_12(s_SubCharacter* airScreamer);
+void AirScreamer_Control_12(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_13(s_SubCharacter* airScreamer);
+void AirScreamer_Control_13(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_14(s_SubCharacter* airScreamer);
+void AirScreamer_Control_14(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_15(s_SubCharacter* airScreamer);
+void AirScreamer_Control_15(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_16(s_SubCharacter* airScreamer);
+void AirScreamer_Control_16(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_17(s_SubCharacter* airScreamer);
+void AirScreamer_Control_17(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_18(s_SubCharacter* airScreamer);
+void AirScreamer_Control_18(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_19(s_SubCharacter* airScreamer);
+void AirScreamer_Control_19(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_20(s_SubCharacter* airScreamer);
+void AirScreamer_Control_20(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_21(s_SubCharacter* airScreamer);
+void AirScreamer_Control_21(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_22(s_SubCharacter* airScreamer);
+void AirScreamer_Control_22(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_23(s_SubCharacter* airScreamer);
+void AirScreamer_Control_23(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_24(s_SubCharacter* airScreamer);
+void AirScreamer_Control_24(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_25(s_SubCharacter* airScreamer);
+void AirScreamer_Control_25(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_26(s_SubCharacter* airScreamer);
+void AirScreamer_Control_26(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_27(s_SubCharacter* airScreamer);
+void AirScreamer_Control_27(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_28(s_SubCharacter* airScreamer);
+void AirScreamer_Control_28(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_30(s_SubCharacter* airScreamer);
+void AirScreamer_Control_30(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_31(s_SubCharacter* airScreamer);
+void AirScreamer_Control_31(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_32(s_SubCharacter* airScreamer);
+void AirScreamer_Control_32(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_33(s_SubCharacter* airScreamer);
+void AirScreamer_Control_33(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_34(s_SubCharacter* airScreamer);
+void AirScreamer_Control_34(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_36(s_SubCharacter* airScreamer);
+void AirScreamer_Control_36(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_37(s_SubCharacter* airScreamer);
+void AirScreamer_Control_37(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_40(s_SubCharacter* airScreamer);
+void AirScreamer_Control_40(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_41(s_SubCharacter* airScreamer);
+void AirScreamer_Control_41(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_42(s_SubCharacter* airScreamer);
+void AirScreamer_Control_42(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_43(s_SubCharacter* airScreamer);
+void AirScreamer_Control_43(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_44(s_SubCharacter* airScreamer);
+void AirScreamer_Control_44(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamer_Control_45(s_SubCharacter* airScreamer);
+void AirScreamer_Control_45(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800DBF88_2_s00(s_SubCharacter* airScreamer, q19_12 arg1);
 

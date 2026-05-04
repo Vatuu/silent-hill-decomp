@@ -7,7 +7,7 @@
 #include "maps/characters/air_screamer.h"
 
 // NOTES:
-// - M0S01 includes some extra functions missing from other maps, but also removes the body of most `Ai_AirScreamer_Control_X` functions.
+// - M0S01 includes some extra functions missing from other maps, but also removes the body of most `AirScreamer_Control_X` functions.
 //  (also seems to remove the funcs that those removed control funcs would have called into)
 //  See `#ifdef MAP0_S01` and `#ifndef MAP0_S01` blocks below.
 //
@@ -17,16 +17,16 @@
 
 #define airScreamerProps airScreamer->properties.airScreamer
 
-void Ai_AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     sharedFunc_800D21E4_0_s01(anmHdr, boneCoords);
     sharedFunc_800D2200_0_s01(airScreamer);
 
-    Ai_AirScreamer_Init(airScreamer);
+    AirScreamer_Init(airScreamer);
 
     sharedFunc_800D2274_0_s01(airScreamer);
     sharedFunc_800D2390_0_s01(airScreamer);
-    Ai_AirScreamer_Control(airScreamer);
+    AirScreamer_ControlUpdate(airScreamer);
     sharedFunc_800D62D8_0_s01(airScreamer);
     sharedFunc_800D7AB0_0_s01(airScreamer);
     sharedFunc_800D7EBC_0_s01(airScreamer);
@@ -366,7 +366,7 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer)
     return true;
 }
 
-bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer)
+bool AirScreamer_Init(s_SubCharacter* airScreamer)
 {
     #define BASE_HEALTH                 Q12(380.0f)
     #define AIR_SCREAMER_RAND_MAX       100
@@ -406,14 +406,14 @@ bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer)
     }
 
     sharedFunc_800D2BF4_0_s01(airScreamer);
-    Ai_AirScreamer_Control_0(airScreamer);
+    AirScreamer_Control_0(airScreamer);
     sharedFunc_800D2390_0_s01(airScreamer);
     sharedFunc_800D2390_0_s01(airScreamer);
     sharedFunc_800D2B00_0_s01(airScreamer);
     sharedFunc_800D2B10_0_s01(airScreamer);
     sharedFunc_800D2B28_0_s01(airScreamer);
     sharedFunc_800D2B4C_0_s01(airScreamer);
-    Ai_AirScreamer_GroundWarp(airScreamer);
+    AirScreamer_GroundWarp(airScreamer);
     sharedFunc_800D2BE4_0_s01(airScreamer);
 
     return true;
@@ -471,7 +471,7 @@ void sharedFunc_800D2B4C_0_s01(s_SubCharacter* airScreamer)
     sharedFunc_800D82B8_0_s01(airScreamer);
 }
 
-void Ai_AirScreamer_GroundWarp(s_SubCharacter* airScreamer)
+void AirScreamer_GroundWarp(s_SubCharacter* airScreamer)
 {
     airScreamer->position.vy = Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz);
 }
@@ -488,7 +488,7 @@ void sharedFunc_800D2BF4_0_s01(s_SubCharacter* airScreamer)
     ModelAnim_AnimInfoSet(&airScreamer->model.anim, &sharedData_800CAA98_0_s01.animInfo_0);
 }
 
-s32 Ai_AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
+s32 AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
 {
     q19_12 damage0;
     q19_12 damage1;
@@ -498,10 +498,10 @@ s32 Ai_AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
     u8     temp_a1;
     q19_12 angle;
 
-    damage0     = airScreamer->damage.amount;
+    damage0    = airScreamer->damage.amount;
     animStatus = airScreamer->model.anim.status;
     attack     = airScreamer->attackReceived;
-    damageType        = AirScreamerDamage_None;
+    damageType = AirScreamerDamage_None;
 
     if (airScreamerProps.field_E8_0 == 3)
     {
@@ -564,29 +564,29 @@ s32 Ai_AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
         {
             if (damage0 > Q12(5.0f))
             {
-                damageType = AirScreamerDamage_4;
+                damageType = AirScreamerDamage_Kill;
             }
             else
             {
-                damageType = AirScreamerDamage_3;
+                damageType = AirScreamerDamage_Stun;
             }
         }
         else if (airScreamerProps.field_E8_0 != 3 && temp_a1 == 2 && Math_CheckSignedRange(angle, Q12_ANGLE(120.0f)))
         {
-            damageType = AirScreamerDamage_2;
+            damageType = AirScreamerDamage_Rear;
         }
         else if (airScreamerProps.field_E8_0 == 3)
         {
             if (damage0 > Q12(45.0f) || temp_a1 == 1)
             {
-                damageType = AirScreamerDamage_1;
+                damageType = AirScreamerDamage_Recoil;
             }
         }
         else
         {
             if (damage0 > Q12(20.0f) || temp_a1 == 1)
             {
-                damageType = AirScreamerDamage_1;
+                damageType = AirScreamerDamage_Recoil;
             }
         }
     }
@@ -954,7 +954,7 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* airScreamer)
     return dist;
 }
 
-bool Ai_AirScreamer_Control(s_SubCharacter* airScreamer)
+bool AirScreamer_ControlUpdate(s_SubCharacter* airScreamer)
 {
     q20_12 someTime;
     q19_12 deltaTime;
@@ -988,7 +988,7 @@ bool Ai_AirScreamer_Control(s_SubCharacter* airScreamer)
     }
 
     // Handle control state.
-    controlFunc = g_Ai_AirScreamer_ControlFuncs[airScreamer->model.controlState];
+    controlFunc = g_AirScreamer_ControlFuncs[airScreamer->model.controlState];
     if (controlFunc)
     {
         controlFunc(airScreamer);
@@ -1016,7 +1016,7 @@ void func_800D3A3C(s_SubCharacter* airScreamer) // 0x800D3A3C
     s32    idx;
 
     idx = g_CharaAnimInfoIdxs[airScreamer->model.charaId];
-    Ai_AirScreamer_Update(airScreamer, (&g_CharaTypeAnimInfo[idx])->animFile1_8, (&g_CharaTypeAnimInfo[idx])->npcBoneCoords);
+    AirScreamer_Update(airScreamer, (&g_CharaTypeAnimInfo[idx])->animFile1_8, (&g_CharaTypeAnimInfo[idx])->npcBoneCoords);
 
     airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_Glide, true);
     animTime = func_80044918(&airScreamer->model.anim)->startKeyframeIdx;
@@ -1042,7 +1042,7 @@ void func_800D3AC0(s_SubCharacter* airScreamer) // 0x800D3AC0
 }
 #endif
 
-void Ai_AirScreamer_Control_0(s_SubCharacter* airScreamer)
+void AirScreamer_Control_0(s_SubCharacter* airScreamer)
 {
     s32  keyframeIdx;
     s32  var0;
@@ -1224,7 +1224,7 @@ void Ai_AirScreamer_Control_0(s_SubCharacter* airScreamer)
     }
 }
 
-void Ai_AirScreamer_Control_1(s_SubCharacter* airScreamer)
+void AirScreamer_Control_1(s_SubCharacter* airScreamer)
 {
     u32  keyframeIdx;
     bool setAnim;
@@ -1272,11 +1272,11 @@ void Ai_AirScreamer_Control_1(s_SubCharacter* airScreamer)
         case AirScreamerStateStep_7:
             airScreamer->model.controlState = AirScreamerControl_None;
             airScreamer->model.stateStep    = AirScreamerStateStep_13;
-            Ai_AirScreamer_Control_0(airScreamer);
+            AirScreamer_Control_0(airScreamer);
             break;
     }
 
-    Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
+    AirScreamer_DamageTake(airScreamer, Q12(0.0f));
 
     if (setAnim)
     {
@@ -1323,7 +1323,7 @@ void sharedFunc_800D3DFC_0_s01(s_SubCharacter* airScreamer)
     }
 }
 
-void Ai_AirScreamer_Control_2(s_SubCharacter* airScreamer)
+void AirScreamer_Control_2(s_SubCharacter* airScreamer)
 {
     q19_12 damage;
     bool   cond1;
@@ -1355,7 +1355,7 @@ void Ai_AirScreamer_Control_2(s_SubCharacter* airScreamer)
 
             if (cond1)
             {
-                Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
+                AirScreamer_DamageTake(airScreamer, Q12(0.0f));
 
                 airScreamer->position.vx = g_SysWork.playerWork.player.position.vx + Q12(100.0f);
                 airScreamer->position.vz = g_SysWork.playerWork.player.position.vz + Q12(100.0f);
@@ -1366,7 +1366,7 @@ void Ai_AirScreamer_Control_2(s_SubCharacter* airScreamer)
 
             if (isBelowGround)
             {
-                Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
+                AirScreamer_DamageTake(airScreamer, Q12(0.0f));
                 sharedFunc_800D2364_0_s01(airScreamer);
 
                 airScreamer->position.vx = g_SysWork.playerWork.player.position.vx + Q12(100.0f);
@@ -1378,7 +1378,7 @@ void Ai_AirScreamer_Control_2(s_SubCharacter* airScreamer)
 
             if (airScreamer->health <= Q12(0.0f))
             {
-                Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
+                AirScreamer_DamageTake(airScreamer, Q12(0.0f));
 
                 if (animStatus == ANIM_STATUS(AirScreamerAnim_Stun, true) && temp_s3 == true)
                 {
@@ -1396,7 +1396,7 @@ void Ai_AirScreamer_Control_2(s_SubCharacter* airScreamer)
             {
                 airScreamer->flags |= CharaFlag_Unk2;
 
-                if (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)) == AirScreamerDamage_4)
+                if (AirScreamer_DamageTake(airScreamer, Q12(1.0f)) == AirScreamerDamage_Kill)
                 {
                     if (airScreamer->health <= Q12(0.0f))
                     {
@@ -1425,11 +1425,11 @@ void Ai_AirScreamer_Control_2(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_1:
-            Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
+            AirScreamer_DamageTake(airScreamer, Q12(0.0f));
             break;
 
         case AirScreamerStateStep_2:
-            Ai_AirScreamer_DamageTake(airScreamer, Q12(0.5f));
+            AirScreamer_DamageTake(airScreamer, Q12(0.5f));
 
             if (activeAnimStatus != animStatus12)
             {
@@ -1439,7 +1439,7 @@ void Ai_AirScreamer_Control_2(s_SubCharacter* airScreamer)
     }
 }
 
-void Ai_AirScreamer_Control_3(s_SubCharacter* airScreamer)
+void AirScreamer_Control_3(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool cond;
@@ -1452,7 +1452,7 @@ void Ai_AirScreamer_Control_3(s_SubCharacter* airScreamer)
 
     sharedFunc_800DF2D0_2_s00(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case AirScreamerDamage_None:
             if (sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2)
@@ -1484,15 +1484,15 @@ void Ai_AirScreamer_Control_3(s_SubCharacter* airScreamer)
             }
             break;
 
-        case AirScreamerDamage_1:
-        case AirScreamerDamage_2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_16;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case AirScreamerDamage_3:
-        case AirScreamerDamage_4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_17;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -1508,8 +1508,8 @@ void Ai_AirScreamer_Control_3(s_SubCharacter* airScreamer)
     }
 #endif
 }
-// Similar to `Ai_AirScreamer_Control_5`
-void Ai_AirScreamer_Control_4(s_SubCharacter* airScreamer)
+// Similar to `AirScreamer_Control_5`
+void AirScreamer_Control_4(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    temp_fp;
@@ -1632,7 +1632,7 @@ void Ai_AirScreamer_Control_4(s_SubCharacter* airScreamer)
 
     sharedFunc_800DF448_2_s00(airScreamer, false);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case AirScreamerDamage_None:
             switch (var_s3)
@@ -1679,15 +1679,15 @@ void Ai_AirScreamer_Control_4(s_SubCharacter* airScreamer)
             }
             break;
 
-        case AirScreamerDamage_1:
-        case AirScreamerDamage_2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_16;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case AirScreamerDamage_3:
-        case AirScreamerDamage_4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_17;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -1704,7 +1704,7 @@ void Ai_AirScreamer_Control_4(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_5(s_SubCharacter* airScreamer)
+void AirScreamer_Control_5(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -1819,9 +1819,9 @@ void Ai_AirScreamer_Control_5(s_SubCharacter* airScreamer)
 
     sharedFunc_800DF448_2_s00(airScreamer, false);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (switchCond)
             {
                 case 0:
@@ -1865,15 +1865,15 @@ void Ai_AirScreamer_Control_5(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
-        case 2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_16;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_17;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -1890,10 +1890,10 @@ void Ai_AirScreamer_Control_5(s_SubCharacter* airScreamer)
 #endif
 }
 
-// Note: Very close match to `Ai_AirScreamer_Control_7` other than some checks being removed.
+// Note: Very close match to `AirScreamer_Control_7` other than some checks being removed.
 // Changes here should be copied over there.
 
-void Ai_AirScreamer_Control_6(s_SubCharacter* airScreamer)
+void AirScreamer_Control_6(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32  animStatus;
@@ -2035,9 +2035,9 @@ void Ai_AirScreamer_Control_6(s_SubCharacter* airScreamer)
     sharedFunc_800DF448_2_s00(airScreamer, false);
 
     // Handle damage.
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (switchCond)
             {
                 case 0:
@@ -2083,18 +2083,18 @@ void Ai_AirScreamer_Control_6(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
-        case 2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_16;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_17;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
-            if (airScreamer->health <= 0)
+            if (airScreamer->health <= Q12(0.0f))
             {
                 airScreamerProps.flags |= AirScreamerFlag_6;
             }
@@ -2107,9 +2107,9 @@ void Ai_AirScreamer_Control_6(s_SubCharacter* airScreamer)
 #endif
 }
 
-// Note: Very close match to `Ai_AirScreamer_Control_6` other than some checks being removed.
+// Note: Very close match to `AirScreamer_Control_6` other than some checks being removed.
 // Changes here should be copied over there.
-void Ai_AirScreamer_Control_7(s_SubCharacter* airScreamer)
+void AirScreamer_Control_7(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32  animStatus;
@@ -2246,7 +2246,7 @@ void Ai_AirScreamer_Control_7(s_SubCharacter* airScreamer)
 
     sharedFunc_800DF448_2_s00(airScreamer, false);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case AirScreamerDamage_None:
             switch (switchCond)
@@ -2310,15 +2310,15 @@ void Ai_AirScreamer_Control_7(s_SubCharacter* airScreamer)
             }
             break;
 
-        case AirScreamerDamage_1:
-        case AirScreamerDamage_2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_16;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case AirScreamerDamage_3:
-        case AirScreamerDamage_4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_17;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -2335,7 +2335,7 @@ void Ai_AirScreamer_Control_7(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_8(s_SubCharacter* airScreamer)
+void AirScreamer_Control_8(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -2465,7 +2465,7 @@ void Ai_AirScreamer_Control_8(s_SubCharacter* airScreamer)
             break;
     }
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case AirScreamerDamage_None:
             switch (switchCond1)
@@ -2511,15 +2511,15 @@ void Ai_AirScreamer_Control_8(s_SubCharacter* airScreamer)
             }
             break;
 
-        case AirScreamerDamage_1:
-        case AirScreamerDamage_2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_16;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case AirScreamerDamage_3:
-        case AirScreamerDamage_4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_17;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -2536,7 +2536,7 @@ void Ai_AirScreamer_Control_8(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_9(s_SubCharacter* airScreamer)
+void AirScreamer_Control_9(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool cond0;
@@ -2598,9 +2598,9 @@ void Ai_AirScreamer_Control_9(s_SubCharacter* airScreamer)
 
     sharedFunc_800DF2D0_2_s00(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (cond0)
             {
                 case 0:
@@ -2648,15 +2648,15 @@ void Ai_AirScreamer_Control_9(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
-        case 2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_16;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             return;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_17;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -2673,7 +2673,7 @@ void Ai_AirScreamer_Control_9(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_10(s_SubCharacter* airScreamer)
+void AirScreamer_Control_10(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -2800,9 +2800,9 @@ void Ai_AirScreamer_Control_10(s_SubCharacter* airScreamer)
     sharedFunc_800DF448_2_s00(airScreamer, 1);
 
     // Handle damage.
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (switchCond)
             {
                 case 0:
@@ -2858,15 +2858,15 @@ void Ai_AirScreamer_Control_10(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
-        case 2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_16;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_17;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -2883,7 +2883,7 @@ void Ai_AirScreamer_Control_10(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_11(s_SubCharacter* airScreamer)
+void AirScreamer_Control_11(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32 bit3;
@@ -2943,9 +2943,9 @@ void Ai_AirScreamer_Control_11(s_SubCharacter* airScreamer)
     sharedFunc_800DE1F8_2_s00(airScreamer);
     sharedFunc_800DF710_2_s00(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (switch2Idx)
             {
                 case 0:
@@ -2985,15 +2985,15 @@ void Ai_AirScreamer_Control_11(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
-        case 2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_16;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             return;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_17;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -3010,7 +3010,7 @@ void Ai_AirScreamer_Control_11(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_12(s_SubCharacter* airScreamer)
+void AirScreamer_Control_12(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool cond0;
@@ -3070,9 +3070,9 @@ void Ai_AirScreamer_Control_12(s_SubCharacter* airScreamer)
 
     sharedFunc_800DF358_2_s00(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.2f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.2f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             if (cond0)
             {
                 if (airScreamerProps.field_E8_8 == 3)
@@ -3108,15 +3108,15 @@ void Ai_AirScreamer_Control_12(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
-        case 2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_16;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_17;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -3133,7 +3133,7 @@ void Ai_AirScreamer_Control_12(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_13(s_SubCharacter* airScreamer)
+void AirScreamer_Control_13(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool field14C_2;
@@ -3206,9 +3206,9 @@ void Ai_AirScreamer_Control_13(s_SubCharacter* airScreamer)
 
     sharedFunc_800DF448_2_s00(airScreamer, false);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (switchCond)
             {
                 case 0:
@@ -3253,15 +3253,15 @@ void Ai_AirScreamer_Control_13(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
-        case 2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_16;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_17;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -3278,7 +3278,7 @@ void Ai_AirScreamer_Control_13(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_14(s_SubCharacter* airScreamer)
+void AirScreamer_Control_14(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -3383,9 +3383,9 @@ void Ai_AirScreamer_Control_14(s_SubCharacter* airScreamer)
 
     sharedFunc_800DF448_2_s00(airScreamer, true);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (switchCond)
             {
                 case 0:
@@ -3423,15 +3423,15 @@ void Ai_AirScreamer_Control_14(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
-        case 2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_16;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_17;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -3448,7 +3448,7 @@ void Ai_AirScreamer_Control_14(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_15(s_SubCharacter* airScreamer)
+void AirScreamer_Control_15(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     sharedFunc_800DDF74_2_s00(airScreamer, Q12(0.5f), airScreamer->rotation.vy);
@@ -3456,9 +3456,9 @@ void Ai_AirScreamer_Control_15(s_SubCharacter* airScreamer)
     airScreamer->flags &= ~CharaFlag_Unk3;
 
     // Handle damage.
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch ((u32)airScreamerProps.field_E8_0)
             {
                 case 0:
@@ -3478,15 +3478,15 @@ void Ai_AirScreamer_Control_15(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
-        case 2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_16;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_17;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -3503,8 +3503,8 @@ void Ai_AirScreamer_Control_15(s_SubCharacter* airScreamer)
 #endif
 }
 
-// Very similar to `Ai_AirScreamer_Control_44`, changes here should be copied there.
-void Ai_AirScreamer_Control_16(s_SubCharacter* airScreamer)
+// Very similar to `AirScreamer_Control_44`, changes here should be copied there.
+void AirScreamer_Control_16(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -3562,11 +3562,11 @@ void Ai_AirScreamer_Control_16(s_SubCharacter* airScreamer)
 
     sharedFunc_800DF80C_2_s00(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(0.6f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(0.6f)))
     {
-        case 0:
-        case 1:
-        case 2:
+        case AirScreamerDamage_None:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             if (!cond)
             {
                 break;
@@ -3703,8 +3703,8 @@ void Ai_AirScreamer_Control_16(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_17;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -3721,7 +3721,7 @@ void Ai_AirScreamer_Control_16(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_17(s_SubCharacter* airScreamer)
+void AirScreamer_Control_17(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool cond;
@@ -3762,7 +3762,7 @@ void Ai_AirScreamer_Control_17(s_SubCharacter* airScreamer)
     }
 
     sharedFunc_800DF8A0_2_s00(airScreamer);
-    Ai_AirScreamer_DamageTake(airScreamer, Q12(0.6f));
+    AirScreamer_DamageTake(airScreamer, Q12(0.6f));
 
     if (cond)
     {
@@ -3773,7 +3773,7 @@ void Ai_AirScreamer_Control_17(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_18(s_SubCharacter* airScreamer)
+void AirScreamer_Control_18(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -3887,9 +3887,9 @@ void Ai_AirScreamer_Control_18(s_SubCharacter* airScreamer)
 
     sharedFunc_800D57C8_0_s01(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (switchCond)
             {
                 case 0:
@@ -3941,20 +3941,20 @@ void Ai_AirScreamer_Control_18(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
+        case AirScreamerDamage_Recoil:
             airScreamer->model.controlState = AirScreamerControl_29;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 2:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_30;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_32;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -3971,7 +3971,7 @@ void Ai_AirScreamer_Control_18(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_19(s_SubCharacter* airScreamer)
+void AirScreamer_Control_19(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -4079,9 +4079,9 @@ void Ai_AirScreamer_Control_19(s_SubCharacter* airScreamer)
 
     sharedFunc_800D57C8_0_s01(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (switchCond)
             {
                 case 0:
@@ -4131,20 +4131,20 @@ void Ai_AirScreamer_Control_19(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
+        case AirScreamerDamage_Recoil:
             airScreamer->model.controlState = AirScreamerControl_29;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 2:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_30;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_32;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -4161,7 +4161,7 @@ void Ai_AirScreamer_Control_19(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_20(s_SubCharacter* airScreamer)
+void AirScreamer_Control_20(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -4303,7 +4303,7 @@ void Ai_AirScreamer_Control_20(s_SubCharacter* airScreamer)
 
     sharedFunc_800D57C8_0_s01(airScreamer);
 
-    damageType = Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f));
+    damageType = AirScreamer_DamageTake(airScreamer, Q12(1.0f));
     switch (damageType)
     {
         case 0:
@@ -4395,7 +4395,7 @@ void Ai_AirScreamer_Control_20(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_21(s_SubCharacter* airScreamer)
+void AirScreamer_Control_21(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    switch3;
@@ -4537,9 +4537,9 @@ void Ai_AirScreamer_Control_21(s_SubCharacter* airScreamer)
     sharedFunc_800D57C8_0_s01(airScreamer);
 
     // Handle damage.
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (switch3)
             {
                 case 0:
@@ -4614,20 +4614,20 @@ void Ai_AirScreamer_Control_21(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
+        case AirScreamerDamage_Recoil:
             airScreamer->model.controlState = AirScreamerControl_29;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 2:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_30;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_32;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -4644,7 +4644,7 @@ void Ai_AirScreamer_Control_21(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_22(s_SubCharacter* airScreamer)
+void AirScreamer_Control_22(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    switchCond;
@@ -4760,9 +4760,9 @@ void Ai_AirScreamer_Control_22(s_SubCharacter* airScreamer)
         sharedFunc_800D598C_0_s01(airScreamer);
     }
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (switchCond)
             {
                 case 0:
@@ -4810,20 +4810,20 @@ void Ai_AirScreamer_Control_22(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
+        case AirScreamerDamage_Recoil:
             airScreamer->model.controlState = AirScreamerControl_29;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 2:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_30;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_32;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -4840,7 +4840,7 @@ void Ai_AirScreamer_Control_22(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_23(s_SubCharacter* airScreamer)
+void AirScreamer_Control_23(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    temp_fp;
@@ -4946,9 +4946,9 @@ void Ai_AirScreamer_Control_23(s_SubCharacter* airScreamer)
 
     sharedFunc_800D57C8_0_s01(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (switchCond)
             {
                 case 0:
@@ -5009,20 +5009,20 @@ void Ai_AirScreamer_Control_23(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
+        case AirScreamerDamage_Recoil:
             airScreamer->model.controlState = AirScreamerControl_29;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 2:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_30;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_32;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -5039,7 +5039,7 @@ void Ai_AirScreamer_Control_23(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_24(s_SubCharacter* airScreamer)
+void AirScreamer_Control_24(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool temp_a0;
@@ -5132,9 +5132,9 @@ void Ai_AirScreamer_Control_24(s_SubCharacter* airScreamer)
         sharedFunc_800D5B10_0_s01(airScreamer);
     }
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (switchCond)
             {
                 case 0:
@@ -5187,20 +5187,20 @@ void Ai_AirScreamer_Control_24(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
+        case AirScreamerDamage_Recoil:
             airScreamer->model.controlState = AirScreamerControl_29;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 2:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_30;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_32;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -5217,7 +5217,7 @@ void Ai_AirScreamer_Control_24(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_25(s_SubCharacter* airScreamer)
+void AirScreamer_Control_25(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool var_s1;
@@ -5275,9 +5275,9 @@ void Ai_AirScreamer_Control_25(s_SubCharacter* airScreamer)
     sharedFunc_800D53AC_0_s01(airScreamer);
     sharedFunc_800D5C90_0_s01(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.2f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.2f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             if (var_s1)
             {
                 if (airScreamerProps.field_E8_8 == 3)
@@ -5312,20 +5312,20 @@ void Ai_AirScreamer_Control_25(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
+        case AirScreamerDamage_Recoil:
             airScreamer->model.controlState = AirScreamerControl_29;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= 1 << 3;
             break;
 
-        case 2:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_30;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= 1 << 3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_32;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             if (airScreamer->health <= 0)
@@ -5341,7 +5341,7 @@ void Ai_AirScreamer_Control_25(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_26(s_SubCharacter* airScreamer)
+void AirScreamer_Control_26(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32  animStatus;
@@ -5406,9 +5406,9 @@ void Ai_AirScreamer_Control_26(s_SubCharacter* airScreamer)
     sharedFunc_800D57C8_0_s01(airScreamer);
 
     // Handle damage.
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (switchCond)
             {
                 case false:
@@ -5459,20 +5459,20 @@ void Ai_AirScreamer_Control_26(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
+        case AirScreamerDamage_Recoil:
             airScreamer->model.controlState = AirScreamerControl_29;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 2:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_30;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_32;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -5489,7 +5489,7 @@ void Ai_AirScreamer_Control_26(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_27(s_SubCharacter* airScreamer)
+void AirScreamer_Control_27(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -5582,7 +5582,7 @@ void Ai_AirScreamer_Control_27(s_SubCharacter* airScreamer)
     sharedFunc_800D57C8_0_s01(airScreamer);
 
     // Handle damage.
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case AirScreamerDamage_None:
             switch (switchCond)
@@ -5624,20 +5624,20 @@ void Ai_AirScreamer_Control_27(s_SubCharacter* airScreamer)
             }
             break;
 
-        case AirScreamerDamage_1:
+        case AirScreamerDamage_Recoil:
             airScreamer->model.controlState = AirScreamerControl_29;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case AirScreamerDamage_2:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_30;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case AirScreamerDamage_3:
-        case AirScreamerDamage_4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_32;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -5654,16 +5654,16 @@ void Ai_AirScreamer_Control_27(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_28(s_SubCharacter* airScreamer)
+void AirScreamer_Control_28(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     sharedFunc_800D529C_0_s01(airScreamer, Q12(0.5f), airScreamer->rotation.vy);
     sharedFunc_800D598C_0_s01(airScreamer);
     airScreamer->flags &= ~CharaFlag_Unk3;
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             // @hack Explicit `u32` cast needed for match.
             switch ((u32)airScreamerProps.field_E8_0)
             {
@@ -5680,20 +5680,20 @@ void Ai_AirScreamer_Control_28(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
+        case AirScreamerDamage_Recoil:
             airScreamer->model.controlState = AirScreamerControl_29;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             return;
 
-        case 2:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_30;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_32;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -5710,7 +5710,7 @@ void Ai_AirScreamer_Control_28(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_29(s_SubCharacter* airScreamer)
+void AirScreamer_Control_29(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32  temp_s2;
@@ -5758,10 +5758,10 @@ void Ai_AirScreamer_Control_29(s_SubCharacter* airScreamer)
     sharedFunc_800D5D80_0_s01(airScreamer);
 
     // Handle damage.
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(0.6f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(0.6f)))
     {
         case AirScreamerDamage_None:
-        case AirScreamerDamage_1:
+        case AirScreamerDamage_Recoil:
             if (var_s1 != 0)
             {
                 var_s1_2 = Q12(0.0f);
@@ -5899,14 +5899,14 @@ void Ai_AirScreamer_Control_29(s_SubCharacter* airScreamer)
             }
             break;
 
-        case AirScreamerDamage_2:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_30;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case AirScreamerDamage_3:
-        case AirScreamerDamage_4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_32;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -5923,7 +5923,7 @@ void Ai_AirScreamer_Control_29(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_30(s_SubCharacter* airScreamer)
+void AirScreamer_Control_30(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool cond;
@@ -5961,11 +5961,11 @@ void Ai_AirScreamer_Control_30(s_SubCharacter* airScreamer)
 
     sharedFunc_800D5E14_0_s01(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(0.6f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(0.6f)))
     {
-        case 0:
-        case 1:
-        case 2:
+        case AirScreamerDamage_None:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             if (cond)
             {
                 airScreamer->model.controlState = AirScreamerControl_31;
@@ -5973,8 +5973,8 @@ void Ai_AirScreamer_Control_30(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_32;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -5991,7 +5991,7 @@ void Ai_AirScreamer_Control_30(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_31(s_SubCharacter* airScreamer)
+void AirScreamer_Control_31(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     switch (airScreamer->model.stateStep)
@@ -6017,18 +6017,18 @@ void Ai_AirScreamer_Control_31(s_SubCharacter* airScreamer)
 
     sharedFunc_800E012C_2_s00(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(0.6f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(0.6f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             break;
 
-        case 1:
-        case 2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamerProps.flags |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_32;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             if (airScreamer->health <= Q12(0.0f))
@@ -6044,7 +6044,7 @@ void Ai_AirScreamer_Control_31(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_32(s_SubCharacter* airScreamer)
+void AirScreamer_Control_32(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool cond;
@@ -6093,7 +6093,7 @@ void Ai_AirScreamer_Control_32(s_SubCharacter* airScreamer)
     }
 
     sharedFunc_800D5E14_0_s01(airScreamer);
-    Ai_AirScreamer_DamageTake(airScreamer, Q12(0.6f));
+    AirScreamer_DamageTake(airScreamer, Q12(0.6f));
 
     if (cond)
     {
@@ -6105,7 +6105,7 @@ void Ai_AirScreamer_Control_32(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_33(s_SubCharacter* airScreamer)
+void AirScreamer_Control_33(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32  animStatus;
@@ -6119,8 +6119,8 @@ void Ai_AirScreamer_Control_33(s_SubCharacter* airScreamer)
     bool field14C_1_tmp;
     bool field14C_2_tmp;
     s32  temp_s4;
-    s32  distFieldF8;
-    s32  angleDiff;
+    s32  distToTarget;
+    s32  angleDeltaToTarget;
 
     animStatus = airScreamer->model.anim.status;
     switchCond = 0;
@@ -6154,8 +6154,8 @@ void Ai_AirScreamer_Control_33(s_SubCharacter* airScreamer)
             airScreamer->model.stateStep = AirScreamerStateStep_1;
 
         case 1:
-            distFieldF8 = Math_Distance2dGet(&airScreamer->position, &airScreamerProps.targetPosition_F8);
-            angleDiff   = Q12_ANGLE_NORM_S(func_80080478(&airScreamer->position, &airScreamerProps.targetPosition_F8) - airScreamer->rotation.vy);
+            distToTarget       = Math_Distance2dGet(&airScreamer->position, &airScreamerProps.targetPosition_F8);
+            angleDeltaToTarget = Q12_ANGLE_NORM_S(func_80080478(&airScreamer->position, &airScreamerProps.targetPosition_F8) - airScreamer->rotation.vy);
 
             if (temp_s4 == 2)
             {
@@ -6164,19 +6164,19 @@ void Ai_AirScreamer_Control_33(s_SubCharacter* airScreamer)
             else if (temp_s4 == 1 || (sharedFunc_800DC30C_2_s00(airScreamer) &&
                                       cond == true &&
                                       airScreamerProps.flags & AirScreamerFlag_31 &&
-                                      (distFieldF8 < Q12(2.0f) || Math_CheckSignedRange(angleDiff, Q12_ANGLE(60.0f)))))
+                                      (distToTarget < Q12(2.0f) || Math_CheckSignedRange(angleDeltaToTarget, Q12_ANGLE(60.0f)))))
             {
                 airScreamer->model.stateStep = AirScreamerStateStep_4;
             }
             else if (sharedFunc_800DC3BC_2_s00(airScreamer) &&
                      cond == true &&
-                     distFieldF8 < Q12(4.0f) &&
-                     (angleDiff >= Q12_ANGLE(-30.0f) && angleDiff <= Q12_ANGLE(30.0f)) &&
+                     distToTarget < Q12(4.0f) &&
+                     (angleDeltaToTarget >= Q12_ANGLE(-30.0f) && angleDeltaToTarget <= Q12_ANGLE(30.0f)) &&
                      Rng_TestProbability(Q12(0.7f)))
             {
                 airScreamer->model.stateStep = AirScreamerStateStep_2;
             }
-            else if (airScreamerProps.timer_120 == Q12(0.0f) || distFieldF8 < Q12(3.0f))
+            else if (airScreamerProps.timer_120 == Q12(0.0f) || distToTarget < Q12(3.0f))
             {
                 airScreamer->model.stateStep = AirScreamerStateStep_0;
             }
@@ -6227,9 +6227,9 @@ void Ai_AirScreamer_Control_33(s_SubCharacter* airScreamer)
 
     sharedFunc_800E021C_2_s00(airScreamer, 0, 1);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (switchCond)
             {
                 case 0:
@@ -6274,17 +6274,18 @@ void Ai_AirScreamer_Control_33(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
-        case 2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_44;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_45;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
+
             if (airScreamer->health <= Q12(0.0f))
             {
                 airScreamerProps.flags |= AirScreamerFlag_6;
@@ -6298,7 +6299,7 @@ void Ai_AirScreamer_Control_33(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_34(s_SubCharacter* airScreamer)
+void AirScreamer_Control_34(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -6388,9 +6389,9 @@ void Ai_AirScreamer_Control_34(s_SubCharacter* airScreamer)
     }
 
     sharedFunc_800E021C_2_s00(airScreamer, 0, 1);
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (switchCond)
             {
                 case 0:
@@ -6419,15 +6420,15 @@ void Ai_AirScreamer_Control_34(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
-        case 2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_44;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_45;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -6444,7 +6445,7 @@ void Ai_AirScreamer_Control_34(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_35(s_SubCharacter* airScreamer)
+void AirScreamer_Control_35(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32  temp_a0;
@@ -6641,9 +6642,9 @@ void Ai_AirScreamer_Control_35(s_SubCharacter* airScreamer)
 
     sharedFunc_800E021C_2_s00(airScreamer, 0, 2);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (var_s1)
             {
                 case 0:
@@ -6711,15 +6712,15 @@ void Ai_AirScreamer_Control_35(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
-        case 2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_44;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_45;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -6736,7 +6737,7 @@ void Ai_AirScreamer_Control_35(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_36(s_SubCharacter* airScreamer)
+void AirScreamer_Control_36(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32  animStatus;
@@ -6922,7 +6923,7 @@ void Ai_AirScreamer_Control_36(s_SubCharacter* airScreamer)
     sharedFunc_800E021C_2_s00(airScreamer, 1, 1);
 
     // Handle damage.
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case AirScreamerDamage_None:
             switch (switchCond)
@@ -7018,15 +7019,15 @@ void Ai_AirScreamer_Control_36(s_SubCharacter* airScreamer)
             }
             break;
 
-        case AirScreamerDamage_1:
-        case AirScreamerDamage_2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_44;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case AirScreamerDamage_3:
-        case AirScreamerDamage_4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_45;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -7043,7 +7044,7 @@ void Ai_AirScreamer_Control_36(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_37(s_SubCharacter* airScreamer)
+void AirScreamer_Control_37(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    temp_a0;
@@ -7128,7 +7129,7 @@ void Ai_AirScreamer_Control_37(s_SubCharacter* airScreamer)
     sharedFunc_800E021C_2_s00(airScreamer, 2, 0);
 
     // Handle damage.
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case AirScreamerDamage_None:
             switch (switchCond)
@@ -7189,15 +7190,15 @@ void Ai_AirScreamer_Control_37(s_SubCharacter* airScreamer)
             }
             break;
 
-        case AirScreamerDamage_1:
-        case AirScreamerDamage_2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_44;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case AirScreamerDamage_3:
-        case AirScreamerDamage_4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_45;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -7214,7 +7215,7 @@ void Ai_AirScreamer_Control_37(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_38(s_SubCharacter* airScreamer)
+void AirScreamer_Control_38(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32           sp10;
@@ -7321,9 +7322,9 @@ void Ai_AirScreamer_Control_38(s_SubCharacter* airScreamer)
 
     sharedFunc_800E021C_2_s00(airScreamer, 2, 0);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (var_s4)
             {
                 case 0:
@@ -7379,15 +7380,15 @@ void Ai_AirScreamer_Control_38(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
-        case 2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_44;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_45;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             if (airScreamer->health <= Q12(0.0f))
@@ -7403,7 +7404,7 @@ void Ai_AirScreamer_Control_38(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_39(s_SubCharacter* airScreamer)
+void AirScreamer_Control_39(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32  sp10;
@@ -7503,9 +7504,9 @@ void Ai_AirScreamer_Control_39(s_SubCharacter* airScreamer)
 
     sharedFunc_800E021C_2_s00(airScreamer, 2, 0);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (var_s4)
             {
                 case 0:
@@ -7548,15 +7549,16 @@ void Ai_AirScreamer_Control_39(s_SubCharacter* airScreamer)
                     break;
             }
             break;
-        case 1:
-        case 2:
+
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_44;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_45;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -7573,7 +7575,7 @@ void Ai_AirScreamer_Control_39(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_40(s_SubCharacter* airScreamer)
+void AirScreamer_Control_40(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool cond0;
@@ -7633,7 +7635,7 @@ void Ai_AirScreamer_Control_40(s_SubCharacter* airScreamer)
     sharedFunc_800E0514_2_s00(airScreamer);
 
     // Handle damage.
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.2f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.2f)))
     {
         case AirScreamerDamage_None:
             if (cond0)
@@ -7652,15 +7654,15 @@ void Ai_AirScreamer_Control_40(s_SubCharacter* airScreamer)
             }
             break;
 
-        case AirScreamerDamage_1:
-        case AirScreamerDamage_2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_44;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case AirScreamerDamage_3:
-        case AirScreamerDamage_4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_45;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -7677,7 +7679,7 @@ void Ai_AirScreamer_Control_40(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_41(s_SubCharacter* airScreamer)
+void AirScreamer_Control_41(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -7775,14 +7777,14 @@ void Ai_AirScreamer_Control_41(s_SubCharacter* airScreamer)
 
     sharedFunc_800E021C_2_s00(airScreamer, 1, 0);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case AirScreamerDamage_None:
             switch (switchCond)
             {
                 case AirScreamerDamage_None:
-                case AirScreamerDamage_1:
-                case AirScreamerDamage_2:
+                case AirScreamerDamage_Recoil:
+                case AirScreamerDamage_Rear:
                     if (sharedFunc_800DC67C_2_s00(airScreamer))
                     {
                         airScreamer->model.controlState = AirScreamerControl_42;
@@ -7807,7 +7809,7 @@ void Ai_AirScreamer_Control_41(s_SubCharacter* airScreamer)
                     airScreamer->model.stateStep = AirScreamerStateStep_0;
                     break;
 
-                case AirScreamerDamage_3:
+                case AirScreamerDamage_Stun:
                     if (temp_s6 == 1)
                     {
                         if (!field14C_2)
@@ -7822,7 +7824,7 @@ void Ai_AirScreamer_Control_41(s_SubCharacter* airScreamer)
                     }
                     break;
 
-                case AirScreamerDamage_4:
+                case AirScreamerDamage_Kill:
                     if (temp_s6 == 2)
                     {
                         if (field14C_2)
@@ -7839,15 +7841,15 @@ void Ai_AirScreamer_Control_41(s_SubCharacter* airScreamer)
             }
             break;
 
-        case AirScreamerDamage_1:
-        case AirScreamerDamage_2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_44;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case AirScreamerDamage_3:
-        case AirScreamerDamage_4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_45;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -7864,7 +7866,7 @@ void Ai_AirScreamer_Control_41(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_42(s_SubCharacter* airScreamer)
+void AirScreamer_Control_42(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    temp_a0;
@@ -7957,7 +7959,7 @@ void Ai_AirScreamer_Control_42(s_SubCharacter* airScreamer)
     sharedFunc_800E021C_2_s00(airScreamer, 2, 0);
 
     // Handle damage.
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case AirScreamerDamage_None:
             switch (switchCond)
@@ -7995,15 +7997,15 @@ void Ai_AirScreamer_Control_42(s_SubCharacter* airScreamer)
             }
             break;
 
-        case AirScreamerDamage_1:
-        case AirScreamerDamage_2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_44;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case AirScreamerDamage_3:
-        case AirScreamerDamage_4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_45;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -8020,7 +8022,7 @@ void Ai_AirScreamer_Control_42(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_43(s_SubCharacter* airScreamer)
+void AirScreamer_Control_43(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     sharedFunc_800DEC84_2_s00(airScreamer, Q12(0.5f), airScreamer->rotation.vy);
@@ -8028,7 +8030,7 @@ void Ai_AirScreamer_Control_43(s_SubCharacter* airScreamer)
     airScreamer->flags &= ~CharaFlag_Unk3;
 
     // Handle damage.
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case AirScreamerDamage_None:
             // @hack Explicit `u32` cast needed for match.
@@ -8047,15 +8049,15 @@ void Ai_AirScreamer_Control_43(s_SubCharacter* airScreamer)
             }
             break;
 
-        case AirScreamerDamage_1:
-        case AirScreamerDamage_2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_44;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case AirScreamerDamage_3:
-        case AirScreamerDamage_4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_45;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -8072,8 +8074,8 @@ void Ai_AirScreamer_Control_43(s_SubCharacter* airScreamer)
 #endif
 }
 
-// Very similar to `Ai_AirScreamer_Control_16`, changes here should be copied there.
-void Ai_AirScreamer_Control_44(s_SubCharacter* airScreamer)
+// Very similar to `AirScreamer_Control_16`, changes here should be copied there.
+void AirScreamer_Control_44(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -8119,11 +8121,11 @@ void Ai_AirScreamer_Control_44(s_SubCharacter* airScreamer)
     sharedFunc_800E041C_2_s00(airScreamer);
 
     // Handle damage.
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(0.6f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(0.6f)))
     {
         case AirScreamerDamage_None:
-        case AirScreamerDamage_1:
-        case AirScreamerDamage_2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             if (!cond)
             {
                 break;
@@ -8260,8 +8262,8 @@ void Ai_AirScreamer_Control_44(s_SubCharacter* airScreamer)
             }
             break;
 
-        case AirScreamerDamage_3:
-        case AirScreamerDamage_4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_45;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -8278,7 +8280,7 @@ void Ai_AirScreamer_Control_44(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_45(s_SubCharacter* airScreamer)
+void AirScreamer_Control_45(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool cond;
@@ -8327,7 +8329,7 @@ void Ai_AirScreamer_Control_45(s_SubCharacter* airScreamer)
         sharedFunc_800D5638_0_s01(airScreamer);
     }
 
-    Ai_AirScreamer_DamageTake(airScreamer, Q12(0.6f));
+    AirScreamer_DamageTake(airScreamer, Q12(0.6f));
 
     if (cond)
     {
@@ -8340,7 +8342,7 @@ void Ai_AirScreamer_Control_45(s_SubCharacter* airScreamer)
 
 // Control 46+ are only included in MAP0_S01
 
-void Ai_AirScreamer_Control_46(s_SubCharacter* airScreamer)
+void AirScreamer_Control_46(s_SubCharacter* airScreamer)
 {
 #ifdef MAP0_S01
     s32 animStatus;
@@ -8368,7 +8370,7 @@ void Ai_AirScreamer_Control_46(s_SubCharacter* airScreamer)
     sharedFunc_800D529C_0_s01(airScreamer, Q12(1.0f), func_80080478(&airScreamer->position, &g_SysWork.playerWork.player.position));
     sharedFunc_800D598C_0_s01(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case AirScreamerDamage_None:
             if (airScreamerProps.timer_120 == Q12(0.0f) ||
@@ -8384,15 +8386,15 @@ void Ai_AirScreamer_Control_46(s_SubCharacter* airScreamer)
         default:
             break;
 
-        case AirScreamerDamage_1:
-        case AirScreamerDamage_2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_50;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case AirScreamerDamage_3:
-        case AirScreamerDamage_4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_51;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -8409,7 +8411,7 @@ void Ai_AirScreamer_Control_46(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_47(s_SubCharacter* airScreamer)
+void AirScreamer_Control_47(s_SubCharacter* airScreamer)
 {
 #ifdef MAP0_S01
     q19_12 dist0;
@@ -8436,7 +8438,7 @@ void Ai_AirScreamer_Control_47(s_SubCharacter* airScreamer)
     sharedFunc_800D53AC_0_s01(airScreamer);
     sharedFunc_800D57C8_0_s01(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case AirScreamerDamage_None:
             dist0  = NO_VALUE;
@@ -8458,15 +8460,15 @@ void Ai_AirScreamer_Control_47(s_SubCharacter* airScreamer)
             }
             break;
 
-        case AirScreamerDamage_1:
-        case AirScreamerDamage_2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_50;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= PlayerFlag_WallStopRight;
             break;
 
-        case AirScreamerDamage_3:
-        case AirScreamerDamage_4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_51;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -8483,7 +8485,7 @@ void Ai_AirScreamer_Control_47(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_48(s_SubCharacter* airScreamer)
+void AirScreamer_Control_48(s_SubCharacter* airScreamer)
 {
 #ifdef MAP0_S01
     if (!airScreamer->model.stateStep)
@@ -8495,7 +8497,7 @@ void Ai_AirScreamer_Control_48(s_SubCharacter* airScreamer)
     sharedFunc_800D53AC_0_s01(airScreamer);
     sharedFunc_800D5B10_0_s01(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case AirScreamerDamage_None:
             if (airScreamerProps.timer_120 == Q12(0.0f) ||
@@ -8509,15 +8511,15 @@ void Ai_AirScreamer_Control_48(s_SubCharacter* airScreamer)
         default:
             break;
 
-        case AirScreamerDamage_1:
-        case AirScreamerDamage_2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_50;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= PlayerFlag_WallStopRight;
             break;
 
-        case AirScreamerDamage_3:
-        case AirScreamerDamage_4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_51;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -8534,7 +8536,7 @@ void Ai_AirScreamer_Control_48(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_49(s_SubCharacter* airScreamer)
+void AirScreamer_Control_49(s_SubCharacter* airScreamer)
 {
 #ifdef MAP0_S01
     bool cond0;
@@ -8592,7 +8594,7 @@ void Ai_AirScreamer_Control_49(s_SubCharacter* airScreamer)
     sharedFunc_800D53AC_0_s01(airScreamer);
     sharedFunc_800D5C90_0_s01(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.2f)))
+    switch (AirScreamer_DamageTake(airScreamer, Q12(1.2f)))
     {
         case AirScreamerDamage_None:
             if (cond0)
@@ -8620,15 +8622,15 @@ void Ai_AirScreamer_Control_49(s_SubCharacter* airScreamer)
         default:
             break;
 
-        case AirScreamerDamage_1:
-        case AirScreamerDamage_2:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             airScreamer->model.controlState = AirScreamerControl_50;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
             airScreamerProps.flags         |= AirScreamerFlag_3;
             break;
 
-        case AirScreamerDamage_3:
-        case AirScreamerDamage_4:
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_51;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -8645,7 +8647,7 @@ void Ai_AirScreamer_Control_49(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamer_Control_50(s_SubCharacter* airScreamer)
+void AirScreamer_Control_50(s_SubCharacter* airScreamer)
 {
 #ifdef MAP0_S01
     s32  damageType;
@@ -8686,21 +8688,21 @@ void Ai_AirScreamer_Control_50(s_SubCharacter* airScreamer)
 
     sharedFunc_800D5D80_0_s01(airScreamer);
 
-    // TODO: Switch?
-    damageType = Ai_AirScreamer_DamageTake(airScreamer, Q12(0.6f));
-    if (damageType >= 0)
+    switch (AirScreamer_DamageTake(airScreamer, Q12(0.6f)))
     {
-        if (damageType < 3)
-        {
+        case AirScreamerDamage_None:
+        case AirScreamerDamage_Recoil:
+        case AirScreamerDamage_Rear:
             if (cond)
             {
                 airScreamer->model.controlState = AirScreamerControl_47;
                 airScreamer->model.stateStep    = AirScreamerStateStep_0;
                 airScreamerProps.field_E8_8         = 3;
             }
-        }
-        else if (damageType < 5)
-        {
+            break;
+
+        case AirScreamerDamage_Stun:
+        case AirScreamerDamage_Kill:
             airScreamer->model.controlState = AirScreamerControl_51;
             airScreamer->model.stateStep    = AirScreamerStateStep_0;
 
@@ -8712,12 +8714,12 @@ void Ai_AirScreamer_Control_50(s_SubCharacter* airScreamer)
             {
                 airScreamerProps.flags |= AirScreamerFlag_3;
             }
-        }
+            break;
     }
 #endif
 }
 
-void Ai_AirScreamer_Control_51(s_SubCharacter* airScreamer)
+void AirScreamer_Control_51(s_SubCharacter* airScreamer)
 {
 #ifdef MAP0_S01
     s32  animStatus;
@@ -8756,7 +8758,7 @@ void Ai_AirScreamer_Control_51(s_SubCharacter* airScreamer)
     }
 
     sharedFunc_800D5E14_0_s01(airScreamer);
-    Ai_AirScreamer_DamageTake(airScreamer, Q12(0.6f));
+    AirScreamer_DamageTake(airScreamer, Q12(0.6f));
 
     if (cond)
     {
@@ -12010,7 +12012,7 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
     return false;
 }
 
-// Returns index. Called in `Ai_AirScreamer_Update`.
+// Returns index. Called in `AirScreamer_Update`.
 bool sharedFunc_800D62D8_0_s01(s_SubCharacter* airScreamer)
 {
     if (sharedFunc_800D4A80_0_s01(airScreamer) != 0 && !(sharedData_800E21D0_0_s01.flags & (1 << 29)))
@@ -12707,16 +12709,16 @@ void sharedFunc_800D76A0_0_s01(s_SubCharacter* airScreamer)
 
 q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* airScreamer)
 {
-    bool   cond;
+    bool   isNotControlState1;
     q19_12 ret;
 
-    cond = airScreamer->model.controlState != AirScreamerControl_1;
+    isNotControlState1 = airScreamer->model.controlState != AirScreamerControl_1;
 
     switch (airScreamer->model.anim.status)
     {
         case ANIM_STATUS(AirScreamerAnim_StandIdle, true):
             ret = Q12(30.0f);
-            if (!cond)
+            if (!isNotControlState1)
             {
                 ret = Q12(15.0f);
             }
@@ -12724,7 +12726,7 @@ q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* airScreamer)
 
         case ANIM_STATUS(AirScreamerAnim_HoverVariable, false):
             ret = Q12(24.0f);
-            if (!cond)
+            if (!isNotControlState1)
             {
                 ret = Q12(30.0f);
             }
@@ -12732,7 +12734,7 @@ q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* airScreamer)
 
         case ANIM_STATUS(AirScreamerAnim_Glide, false):
             ret = Q12(40.0f);
-            if (!cond)
+            if (!isNotControlState1)
             {
                 ret = Q12(60.0f);
             }
@@ -12740,7 +12742,7 @@ q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* airScreamer)
 
         case ANIM_STATUS(AirScreamerAnim_StandIdleToGlide, false):
             ret = Q12(72.0f);
-            if (!cond)
+            if (!isNotControlState1)
             {
                 ret = Q12(30.0f);
             }
@@ -12748,7 +12750,7 @@ q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* airScreamer)
 
         case ANIM_STATUS(AirScreamerAnim_StandIdleToGlide, true):
             ret = Q12(40.0f);
-            if (!cond)
+            if (!isNotControlState1)
             {
                 ret = Q12(30.0f);
             }
@@ -12756,7 +12758,7 @@ q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* airScreamer)
 
         case ANIM_STATUS(AirScreamerAnim_GlideToHover, false):
             ret = Q12(72.0f);
-            if (!cond)
+            if (!isNotControlState1)
             {
                 ret = Q12(30.0f);
             }
@@ -12764,7 +12766,7 @@ q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* airScreamer)
 
         case ANIM_STATUS(AirScreamerAnim_GlideToHover, true):
             ret = Q12(18.0f);
-            if (!cond)
+            if (!isNotControlState1)
             {
                 ret = Q12(20.0f);
             }
@@ -12779,7 +12781,7 @@ q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* airScreamer)
 
 q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
 {
-    q19_12 temp_a0;
+    q19_12 fallSpeed;
     bool   isNotControlState1;
     q19_12 rot;
     q19_12 moveSpeed;
@@ -12879,19 +12881,20 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
                 return Q12(40.0f);
             }
 
-            temp_a0 = airScreamer->fallSpeed;
+            fallSpeed = airScreamer->fallSpeed;
             var_v1  = airScreamer->moveSpeed - Q12(4.0f);
 
             ret  = Q12(20.0f);
             ret += Q12_MULT_PRECISE(ABS(var_v1), Q12(1.5f));
-            ret += Q12_MULT_PRECISE(temp_a0, Q12(-1.5f));
+            ret += Q12_MULT_PRECISE(fallSpeed, Q12(-1.5f));
             return ret;
 
         case ANIM_STATUS(AirScreamerAnim_HoverInjuredBiteAttack, true):
         case ANIM_STATUS(AirScreamerAnim_HoverToStun, true):
         case ANIM_STATUS(AirScreamerAnim_GlideToStun, true):
         case ANIM_STATUS(AirScreamerAnim_GlideToWalkForward, true):
-            distToGround = Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz) - airScreamer->position.vy;
+            distToGround = Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz) -
+                           airScreamer->position.vy;
             speed1       = Q12(20.0f);
 
             if (distToGround > Q12(0.0f))

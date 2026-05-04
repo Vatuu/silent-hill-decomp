@@ -186,7 +186,7 @@ extern s_MapOverlayHeader_94 sharedData_800E30C8_1_s02;
 #endif
 
 /** Air Screamer or Night Flutter control functions. Indexed using `e_AirScreamerControl`. */
-extern void (*g_Ai_AirScreamer_ControlFuncs[52])(s_SubCharacter* airScreamer); // TODO: Use `AirScreamerControl_Count`.
+extern void (*g_AirScreamer_ControlFuncs[52])(s_SubCharacter* airScreamer); // TODO: Use `AirScreamerControl_Count`.
 
 extern s_MapPoint2d MAP_POINTS[];
 extern s_EventData  MAP_EVENTS[];
@@ -238,7 +238,7 @@ extern s8 sharedData_800E57CC_1_s02;
 
 extern s_sharedData_800E21D0_0_s01 sharedData_800E21D0_0_s01;
 
-extern s_func_800D2E04 const sharedData_800CAA98_0_s01; // Used by `Ai_AirScreamer_Init` / `sharedFunc_800D2BF4_0_s01`
+extern s_func_800D2E04 const sharedData_800CAA98_0_s01; // Used by `AirScreamer_Init` / `sharedFunc_800D2BF4_0_s01`
 
 // Three variables used by `Ai_SplitHead_Init`.
 extern q3_12 sharedData_800D8614_1_s05; // Offset X.

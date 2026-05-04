@@ -160,8 +160,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .charaUpdateFuncs             = {
         NULL,
         NULL,
-        Ai_AirScreamer_Update,
-        Ai_AirScreamer_Update,
+        AirScreamer_Update,
+        AirScreamer_Update,
         Ai_Groaner_Update,
         Ai_Groaner_Update,
     },
