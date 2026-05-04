@@ -489,7 +489,7 @@ void func_800D64E0(void) // 0x800D64E0
 
         case 10:
             sharedData_800D8568_1_s05.field_1  = 3;
-            sharedData_800D8568_1_s05.flags_0  = 0x18;
+            sharedData_800D8568_1_s05.flags  = 0x18;
             sharedData_800D8568_1_s05.field_C  = 0x12C;
             sharedData_800D8568_1_s05.field_12 = Q12(-0.2f);
             sharedData_800D8568_1_s05.field_14 = Q12(0.05f);

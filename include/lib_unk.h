@@ -38,7 +38,7 @@ typedef union
 
 typedef struct
 {
-    s_SysWork_2514_C_0 flags_0;
+    s_SysWork_2514_C_0 flags;
     s32                data_4;
 } s_SysWork_2514_C;
 

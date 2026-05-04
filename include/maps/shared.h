@@ -110,7 +110,7 @@ typedef struct
 
 typedef struct
 {
-    /* 0x0   */ s32                 flags_0;
+    /* 0x0   */ s32                 flags;
     /* 0x4   */ s_AnmHeader*        anmHdr_4;
     /* 0x8   */ GsCOORDINATE2*      coords_8;
     /* 0xC   */ VECTOR3             matrices_C[1]; // Unknown size.
@@ -369,7 +369,7 @@ STATIC_ASSERT_SIZEOF(s_D_800D5A8C, 12);
 
 typedef struct _MapHeader_field_5C
 {
-    u8    flags_0;
+    u8    flags;
     u8    field_1;
     u8    field_2;
     u8    field_3;

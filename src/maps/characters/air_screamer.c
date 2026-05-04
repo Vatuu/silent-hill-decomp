@@ -37,7 +37,7 @@ bool sharedFunc_800D21E4_0_s01(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     sharedData_800E21D0_0_s01.anmHdr_4 = anmHdr;
     sharedData_800E21D0_0_s01.coords_8 = boneCoords;
-    sharedData_800E21D0_0_s01.flags_0  = false;
+    sharedData_800E21D0_0_s01.flags  = false;
     return true;
 }
 
@@ -1229,7 +1229,7 @@ void Ai_AirScreamer_Control_1(s_SubCharacter* airScreamer)
     u32  keyframeIdx;
     bool setAnim;
 
-    sharedData_800E21D0_0_s01.flags_0 |= 1 << 31;
+    sharedData_800E21D0_0_s01.flags |= 1 << 31;
     setAnim                            = false;
 
     // Handle state step.
@@ -8753,7 +8753,7 @@ s32 sharedFunc_800D4A80_0_s01(s_SubCharacter* airScreamer)
 
     flags  = airScreamerProps.flags;
     result = 0;
-    if (sharedData_800E21D0_0_s01.flags_0 >= 0 && airScreamer->health >= Q12(0.0f))
+    if (sharedData_800E21D0_0_s01.flags >= 0 && airScreamer->health >= Q12(0.0f))
     {
         result = 4;
         if (!(flags & PlayerFlag_Unk17))
@@ -8791,7 +8791,7 @@ bool sharedFunc_800DBF88_2_s00(s_SubCharacter* airScreamer, s32 arg1)
     s32      unkPosY;
     VECTOR3* unkVec;
 
-    if (sharedData_800E21D0_0_s01.flags_0 & (1 << 27))
+    if (sharedData_800E21D0_0_s01.flags & (1 << 27))
     {
         unkVec = &airScreamerProps.position_110;
     }
@@ -9282,7 +9282,7 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
         return;
     }
 
-    sharedData_800E21D0_0_s01.flags_0 |= (1 << 27);
+    sharedData_800E21D0_0_s01.flags |= (1 << 27);
 
     if (angleDeltaToTarget > Q12_ANGLE(-11.34f) && angleDeltaToTarget < Q12_ANGLE(11.34f))
     {
@@ -11955,7 +11955,7 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
         return true;
     }
 
-    sharedData_800E21D0_0_s01.flags_0 |= 0x20000000;
+    sharedData_800E21D0_0_s01.flags |= 0x20000000;
     var_s4                             = Q12_MULT_PRECISE(g_DeltaTime, Q12(0.5f));
 
     sharedData_800DE1D0_0_s01.vx = Q12_MULT_PRECISE(var_s4, Math_Sin(var_s3));
@@ -11988,7 +11988,7 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
 // Returns index. Called in `Ai_AirScreamer_Update`.
 bool sharedFunc_800D62D8_0_s01(s_SubCharacter* airScreamer)
 {
-    if (sharedFunc_800D4A80_0_s01(airScreamer) != 0 && !(sharedData_800E21D0_0_s01.flags_0 & (1 << 29)))
+    if (sharedFunc_800D4A80_0_s01(airScreamer) != 0 && !(sharedData_800E21D0_0_s01.flags & (1 << 29)))
     {
         sharedFunc_800D63A4_0_s01(airScreamer);
         sharedFunc_800D6600_0_s01(airScreamer);
@@ -12333,7 +12333,7 @@ void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer)
     s32    element2;
     q19_12 rotSpeedCpy;
 
-    sharedData_800E21D0_0_s01.flags_0 &= ~0x2B; // TODO: What flags are these?
+    sharedData_800E21D0_0_s01.flags &= ~0x2B; // TODO: What flags are these?
 
     rotSpeedZ  = sharedData_800E21D0_0_s01.field_B4[0][1];
     element2  = sharedData_800E21D0_0_s01.field_B4[0][2];
@@ -12642,7 +12642,7 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* airScreamer)
 
     headingAngle = rot->vy;
     offsetZ      = Q12(0.0f);
-    if (sharedData_800E21D0_0_s01.flags_0 < 0)
+    if (sharedData_800E21D0_0_s01.flags < 0)
     {
         offsetX = Q12(0.0f);
     }

@@ -876,7 +876,7 @@ s32 func_8003FEC0(const s_MapEffectsInfo* arg0) // 0x8003FEC0
         Q12(15.0f)
     };
 
-    if (g_WorldEnvWork.isFogEnabled_1)
+    if (g_WorldEnvWork.isFogEnabled)
     {
         return arg0->fogDistance_10;
     }

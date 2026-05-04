@@ -23,7 +23,7 @@ void sharedFunc_800CAAD0_1_s05(void) // 0x800CC19C
     s32 i;
     s32 counterC;
 
-    if (sharedData_800D8568_1_s05.flags_0 & (1 << 0))
+    if (sharedData_800D8568_1_s05.flags & (1 << 0))
     {
         sharedData_800D8568_1_s05.field_1A = sharedData_800D8568_1_s05.field_1C * 2;
         sharedData_800D8568_1_s05.field_18 = sharedData_800D8568_1_s05.field_1A;
@@ -83,7 +83,7 @@ void sharedFunc_800CABF8_1_s05(s32 idx, bool arg1)
         return;
     }
 
-    if ((sharedData_800D8568_1_s05.flags_0 & (1 << 4)) &&
+    if ((sharedData_800D8568_1_s05.flags & (1 << 4)) &&
         Rng_GenerateUInt(0, 3) == 0) // 1 in 4 chance.
     {
         sharedData_800DFB7C_0_s00[idx].field_A = 12;
@@ -93,7 +93,7 @@ void sharedFunc_800CABF8_1_s05(s32 idx, bool arg1)
     rand      = Rng_GenerateInt(0, (s16)sharedData_800D8568_1_s05.field_1C - 1);
     randAngle = Rng_GenerateUInt(0, Q12_ANGLE(360.0f) - 1);
 
-    if ((sharedData_800D8568_1_s05.flags_0 & (1 << 2)) &&
+    if ((sharedData_800D8568_1_s05.flags & (1 << 2)) &&
         Rng_GenerateUInt(0, 63) == 0) // 1 in 64 chance.
     {
         sharedData_800DFB7C_0_s00[idx].field_A = 10;
@@ -112,7 +112,7 @@ void sharedFunc_800CABF8_1_s05(s32 idx, bool arg1)
         sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 = Rng_GenerateUInt(0, 4095);
     }
 
-    if (sharedData_800D8568_1_s05.flags_0 & (1 << 4))
+    if (sharedData_800D8568_1_s05.flags & (1 << 4))
     {
         sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = MIN((((sharedData_800D8568_1_s05.field_3 << 4) * rand) / (s16)sharedData_800D8568_1_s05.field_1C) +
                                                                  (u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 +
@@ -133,7 +133,7 @@ void sharedFunc_800CABF8_1_s05(s32 idx, bool arg1)
 
     sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 = Rng_GenerateUInt(0, 4095);
 
-    if (sharedData_800D8568_1_s05.flags_0 & (1 << 0))
+    if (sharedData_800D8568_1_s05.flags & (1 << 0))
     {
         sharedData_800DFB7C_0_s00[idx].field_0.vx_0 = FP_FROM(rand * Math_Cos(randAngle), Q12_SHIFT);
         sharedData_800DFB7C_0_s00[idx].field_4.vz_4 = FP_FROM(rand * Math_Sin(randAngle), Q12_SHIFT);
@@ -244,10 +244,10 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
 
     if ((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 >= Q12_ANGLE(360.0f))
     {
-        if (sharedData_800D8568_1_s05.flags_0 & (1 << 1) && sharedData_800DFB7C_0_s00[idx].field_A == 8)
+        if (sharedData_800D8568_1_s05.flags & (1 << 1) && sharedData_800DFB7C_0_s00[idx].field_A == 8)
         {
             sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = (u16)sharedData_800D8568_1_s05.field_10 + Rng_GenerateUInt(0, 0xFFF);
-            if ((sharedData_800D8568_1_s05.flags_0 & (1 << 3)) &&
+            if ((sharedData_800D8568_1_s05.flags & (1 << 3)) &&
                 Rng_GenerateUInt(0, 15) == 0) // 1 in 16 chance.
             {
                 sharedData_800DFB7C_0_s00[idx].field_A = 11;
@@ -259,7 +259,7 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
         }
         else
         {
-            if (sharedData_800D8568_1_s05.flags_0 & (1 << 3) &&
+            if (sharedData_800D8568_1_s05.flags & (1 << 3) &&
                 Rng_GenerateUInt(0, 15) == 0) // 1 in 16 chance.
             {
                 s32 randVal                                        = Rng_GenerateUInt(Q12(0.5f), Q12_CLAMPED(1.0f));

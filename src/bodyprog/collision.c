@@ -23,27 +23,27 @@ s_800C4478 D_800C4478;
 void Collision_Init(void) // 0x800697EC
 {
     Collision_FlagsSet(CollisionFlag_0);
-    D_800C4478.triggerZoneCount_2 = 0;
+    D_800C4478.triggerZoneCount = 0;
 }
 
 u16 Collision_FlagsGet(void) // 0x80069810
 {
-    return D_800C4478.flags_0;
+    return D_800C4478.flags;
 }
 
 void Collision_FlagsSet(u16 collFlags) // 0x80069820
 {
-    D_800C4478.flags_0 = collFlags;
+    D_800C4478.flags = collFlags;
 }
 
 void Collision_FlagBitsSet(u16 collFlags) // 0x8006982C
 {
-    D_800C4478.flags_0 |= collFlags;
+    D_800C4478.flags |= collFlags;
 }
 
 void func_80069844(s32 collFlags) // 0x80069844
 {
-    D_800C4478.flags_0 = (D_800C4478.flags_0 & ~collFlags) | CollisionFlag_0;
+    D_800C4478.flags = (D_800C4478.flags & ~collFlags) | CollisionFlag_0;
 }
 
 void Collision_TriggerZonesUpdate(q19_12 posX, q19_12 posZ, s_TriggerZone* zones) // 0x80069860
@@ -54,7 +54,7 @@ void Collision_TriggerZonesUpdate(q19_12 posX, q19_12 posZ, s_TriggerZone* zones
     q19_12         minZ;
     q19_12         maxZ;
 
-    D_800C4478.triggerZoneCount_2 = 0;
+    D_800C4478.triggerZoneCount = 0;
     for (curZone = zones; !curZone->isEndOfArray; curZone++)
     {
         minX = FP_TO(curZone->positionX, Q12_SHIFT);
@@ -70,8 +70,8 @@ void Collision_TriggerZonesUpdate(q19_12 posX, q19_12 posZ, s_TriggerZone* zones
         if (posX >= minX && maxX >= posX &&
             posZ >= minZ && maxZ >= posZ)
         {
-            D_800C4478.triggerZones_4[D_800C4478.triggerZoneCount_2] = curZone;
-            D_800C4478.triggerZoneCount_2++;
+            D_800C4478.triggerZones[D_800C4478.triggerZoneCount] = curZone;
+            D_800C4478.triggerZoneCount++;
         }
     }
 }
@@ -734,7 +734,7 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
 void Collision_QueryInit(s_CollisionState* collState, VECTOR3* pos, s_CollisionQuery* collQuery, bool arg3) // 0x8006AB50
 {
     collState->field_0_0       = 0;
-    collState->field_2         = D_800C4478.flags_0;
+    collState->field_2         = D_800C4478.flags;
     collState->field_4.field_4 = arg3;
 
     Collision_QueryDirectionCalc(&collState->field_4, pos, collQuery);
@@ -2492,7 +2492,7 @@ bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, const VECTOR3* from, 
     }
 
     state->field_0  = arg1;
-    state->field_4  = D_800C4478.flags_0; // Struct could begin some point earlier.
+    state->field_4  = D_800C4478.flags; // Struct could begin some point earlier.
     state->field_6  = arg2;
     state->field_8  = SHRT_MAX;
     state->field_20 = 0;
@@ -3162,9 +3162,9 @@ void func_8006F250(s32* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12
 
     func_8006F338(scratch, posX, posZ, posDeltaX, posDeltaZ);
 
-    for (i = 0; i < D_800C4478.triggerZoneCount_2; i++)
+    for (i = 0; i < D_800C4478.triggerZoneCount; i++)
     {
-        if (func_8006F3C4(scratch, D_800C4478.triggerZones_4[i]))
+        if (func_8006F3C4(scratch, D_800C4478.triggerZones[i]))
         {
             break;
         }
@@ -3339,9 +3339,9 @@ q19_12 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 dist, q19
     collOffsetY = collQuery->position.vy + offsetY;
     posY        = collOffsetY + pos->vy;
 
-    for (i = 0; i < D_800C4478.triggerZoneCount_2; i++)
+    for (i = 0; i < D_800C4478.triggerZoneCount; i++)
     {
-        curZone = D_800C4478.triggerZones_4[i];
+        curZone = D_800C4478.triggerZones[i];
 
         // Check height.
         zoneHeight = (-Q12(curZone->height) >> 1) - Q12(1.5f);

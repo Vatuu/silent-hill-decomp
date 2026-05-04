@@ -718,7 +718,7 @@ void func_800D3420(void) // 0x800D3420
             g_Cutscene_Timer3         = Q12(96.0f);
 
             sharedData_800D8568_1_s05.field_1  = 3;
-            sharedData_800D8568_1_s05.flags_0  = (1 << 4) | (1 << 0);
+            sharedData_800D8568_1_s05.flags  = (1 << 4) | (1 << 0);
             sharedData_800D8568_1_s05.field_C  = 0xFA;
             sharedData_800D8568_1_s05.field_12 = -0x2333;
             sharedData_800D8568_1_s05.field_14 = -0x1333;

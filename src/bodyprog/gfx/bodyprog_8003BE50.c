@@ -245,7 +245,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
                           // In Old Silent Hill (after Cafe 5to2) while standing still, this value is
                           // the same as `g_SysWork.playerWork.player.position`.
     VECTOR3         pos1; // Draw distance?
-                          // If the conditional `if (g_WorldEnvWork.isFogEnabled_1)` is reversed
+                          // If the conditional `if (g_WorldEnvWork.isFogEnabled)` is reversed
                           // to run the `else` block, when fog is enabled, the draw distance
                           // is slightly reduced.
                           //
@@ -288,7 +288,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
         samplePos.vz = Q12(200.0f);
     }
 
-    if (g_WorldEnvWork.isFogEnabled_1)
+    if (g_WorldEnvWork.isFogEnabled)
     {
         vwGetViewPosition(&pos1);
         vwGetViewAngle(&rot);
@@ -1203,12 +1203,12 @@ void func_8003DA9C(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12
 
     if (timer != Q12(0.0f))
     {
-        tintColor = g_WorldEnvWork.worldTintColor_28;
+        tintColor = g_WorldEnvWork.worldTintColor;
         func_80055330(g_WorldEnvWork.field_0, g_WorldEnvWork.field_20, g_WorldEnvWork.field_3,
-                      Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvWork.worldTintColor_28.r) << 5,
-                      Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvWork.worldTintColor_28.g) << 5,
-                      Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvWork.worldTintColor_28.b) << 5,
-                      g_WorldEnvWork.screenBrightness_8);
+                      Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvWork.worldTintColor.r) << 5,
+                      Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvWork.worldTintColor.g) << 5,
+                      Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvWork.worldTintColor.b) << 5,
+                      g_WorldEnvWork.screenBrightness);
     }
 
     func_80045534(&g_WorldGfxWork.registeredCharaModels[charaId]->skeleton, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
@@ -1220,7 +1220,7 @@ void func_8003DA9C(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12
                       tintColor.r << 5,
                       tintColor.g << 5,
                       tintColor.b << 5,
-                      g_WorldEnvWork.screenBrightness_8);
+                      g_WorldEnvWork.screenBrightness);
     }
 }
 

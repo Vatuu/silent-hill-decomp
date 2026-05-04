@@ -362,7 +362,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* boneCoor
 
             func_80057090(&curBone->bone.modelInfo, ot, arg2, &viewMat, &worldMat, arg5);
 
-            if (g_WorldEnvWork.isFogEnabled_1)
+            if (g_WorldEnvWork.isFogEnabled)
             {
                 gte_SetRotMatrix(&viewMat);
                 gte_SetTransMatrix(&viewMat);
@@ -405,7 +405,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* boneCoor
         }
     }
 
-    if (g_WorldEnvWork.isFogEnabled_1)
+    if (g_WorldEnvWork.isFogEnabled)
     {
         temp_s1_2 = g_SysWork.playerBoneCoords[1].coord.t[1];
         temp_s1_2 = CLAMP(temp_s1_2, Q8(-2.0f), Q8(0.0f));

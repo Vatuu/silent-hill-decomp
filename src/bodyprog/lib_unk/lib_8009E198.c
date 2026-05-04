@@ -164,7 +164,7 @@ s32 func_8009E310(s_SysWork_2514* arg0, s_SysWork_2514_C* arg1, s32 arg2) // 0x8
             tmp.bits_0_24 = 0;
             tmp.bits_0_27 = 0;
             arg2--;
-            arg1->flags_0 = tmp;
+            arg1->flags = tmp;
             arg1->data_4  = 0;
             arg1++;
         }
@@ -378,7 +378,7 @@ bool func_8009E718(s_SysWork_2514* arg0) // 0x8009E718
     {
         // Contains up to 4 actuator data bytes packed into a `u32`, even though there are only two actuators max.
         packedVal = in->data_4;
-        outLen    = in->flags_0.bits_0_24;
+        outLen    = in->flags.bits_0_24;
 
         // Scale original actuator values by `[0.0f, 1.0f]` (`[0, 128]`). However, scale seems to only ever be 1.0f, so this is useless?
         tmp = ((u64)packedVal * scale) >> 7;
@@ -392,7 +392,7 @@ bool func_8009E718(s_SysWork_2514* arg0) // 0x8009E718
             packedVal = tmp;
         }
 
-        outIdx = in->flags_0.bits_0_16;
+        outIdx = in->flags.bits_0_16;
 
         // Ensure there's data for at least 1 actuator.
         if (outLen == 0)
@@ -574,7 +574,7 @@ bool func_8009E9D0(s_SysWork_2514* work, s32 padState, s_SysWork_2514_C* arg2, s
             tmp.flags.bits_0_24 = 0;
             tmp.flags.bits_0_19 = 1;
             tmp.flags.bits_0_27 = 2;
-            arg2->flags_0       = tmp.flags;
+            arg2->flags       = tmp.flags;
             field_0_19          = 1;
         }
 
@@ -588,7 +588,7 @@ bool func_8009E9D0(s_SysWork_2514* work, s32 padState, s_SysWork_2514_C* arg2, s
             tmp.flags.bits_0_19 = 1;
             tmp.flags.bits_0_27 = 1;
             arg2++;
-            arg2->flags_0 = tmp.flags;
+            arg2->flags = tmp.flags;
 
             field_0_19 = 2;
             i          = 2;

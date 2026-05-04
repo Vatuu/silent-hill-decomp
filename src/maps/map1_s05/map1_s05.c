@@ -242,7 +242,7 @@ void Map_WorldObjectsInit(void) // 0x800D525C
     D_800D86F8[1] = 0;
     D_800D86FC[0] = 0x40;
     D_800D86FC[1] = 0x40;
-    sharedData_800D8568_1_s05.flags_0 = (1 << 3) | (1 << 0);
+    sharedData_800D8568_1_s05.flags = (1 << 3) | (1 << 0);
     sharedData_800D8568_1_s05.field_C = 0x12C;
     sharedData_800D8568_1_s05.field_12 = -0x2CCCu;
     sharedData_800D8568_1_s05.field_14 = -0x800;
