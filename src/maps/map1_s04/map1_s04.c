@@ -17,24 +17,24 @@
 
 void Map_RoomBgmInit(bool arg0) // 0x800CC8C8
 {
-    s32 var_a1;
+    s32 fadeSpeed;
     s32 mapRoomIdx;
-    s32 var_a3;
+    s32 bgmFlags;
 
     mapRoomIdx = g_SavegamePtr->mapRoomIdx;
-    var_a3     = D_800CCF5C[mapRoomIdx];
-    var_a1     = Q12(0.1f);
+    bgmFlags     = D_800CCF5C[mapRoomIdx];
+    fadeSpeed     = Q12(0.1f);
 
     switch (mapRoomIdx)
     {
         case 23:
-            var_a3 = 1;
+            bgmFlags = 1;
             if (Savegame_EventFlagGet(EventFlag_MapMark_AltSchool1F_CourtyardQuestion))
             {
-                var_a3 = 0x1FE;
+                bgmFlags = 0x1FE;
                 if (Savegame_EventFlagGet(EventFlag_MapMark_308) || Savegame_EventFlagGet(EventFlag_MapMark_AltSchool1F_CourtyardTopArrows))
                 {
-                    var_a3 = 0x10;
+                    bgmFlags = 0x10;
                 }
             }
             break;
@@ -42,22 +42,22 @@ void Map_RoomBgmInit(bool arg0) // 0x800CC8C8
         case 38:
             if (Savegame_EventFlagGet(EventFlag_100) && !Savegame_EventFlagGet(EventFlag_107))
             {
-                var_a3 = 1;
-                var_a1 = Q12(0.3f);
+                bgmFlags = 1;
+                fadeSpeed = Q12(0.3f);
             }
             break;
 
         case 5:
             if (Savegame_EventFlagGet(EventFlag_121))
             {
-                var_a1 = Q12(240.0f);
+                fadeSpeed = Q12(240.0f);
                 if (Savegame_EventFlagGet(EventFlag_96))
                 {
-                    var_a3 |= 8;
+                    bgmFlags |= 8;
                 }
                 else
                 {
-                    var_a3 = 1;
+                    bgmFlags = 1;
                 }
             }
             break;
@@ -69,13 +69,13 @@ void Map_RoomBgmInit(bool arg0) // 0x800CC8C8
         case 7:
             if (!Savegame_EventFlagGet(EventFlag_98) && Savegame_EventFlagGet(EventFlag_122))
             {
-                var_a1 = Q12(240.0f);
-                var_a3 = 1;
+                fadeSpeed = Q12(240.0f);
+                bgmFlags = 1;
             }
             break;
     }
 
-    Bgm_Update(var_a3, var_a1, &D_800CCF54);
+    Bgm_Update(bgmFlags, fadeSpeed, &D_800CCF54);
 }
 
 void GameBoot_LoadScreen_StageString(void) {} // 0x800CCA24

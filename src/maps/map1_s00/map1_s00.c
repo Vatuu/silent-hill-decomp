@@ -20,22 +20,29 @@
 
 void Map_RoomBgmInit(bool arg0) // 0x800D77F8
 {
-    u16 flags;
+    u16 bgmFlags;
 
     if (g_SavegamePtr->mapRoomIdx == 23)
     {
-        flags = 1 << 5;
+        bgmFlags = BgmFlag_Layer5;
         if (Savegame_EventFlagGet(EventFlag_71) && Savegame_EventFlagGet(EventFlag_72))
         {
-            flags = 0x1FE;
+            bgmFlags = BgmFlag_Layer1 |
+                    BgmFlag_Layer2 |
+                    BgmFlag_Layer3 |
+                    BgmFlag_Layer4 |
+                    BgmFlag_Layer5 |
+                    BgmFlag_Layer6 |
+                    BgmFlag_Layer7 |
+                    BgmFlag_KeepAlive;
         }
     }
     else
     {
-        flags = D_800DCC54[g_SavegamePtr->mapRoomIdx];
+        bgmFlags = D_800DCC54[g_SavegamePtr->mapRoomIdx];
     }
 
-    Bgm_Update(flags, Q12(0.1f), &D_800DCC4C);
+    Bgm_Update(bgmFlags, Q12(0.1f), &D_800DCC4C);
 }
 
 void GameBoot_LoadScreen_StageString(void) {}

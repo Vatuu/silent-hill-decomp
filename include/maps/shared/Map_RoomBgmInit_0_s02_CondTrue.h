@@ -7,7 +7,7 @@ void Map_RoomBgmInit_CondTrue(void)
             break;
 
         case 18:
-            Bgm_TrackChange(!Savegame_EventFlagGet(EventFlag_379) ? 29 : 7);
+            Bgm_TrackChange(!Savegame_EventFlagGet(EventFlag_379) ? BgmTrackIdx_29 : BgmTrackIdx_7);
             break;
 
         case 17:

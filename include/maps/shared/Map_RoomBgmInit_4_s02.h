@@ -1,43 +1,43 @@
 void Map_RoomBgmInit(bool arg0)
 {
-    s32 flags;
-    s32 var_a1;
+    s32 bgmFlags;
+    s32 fadeSpeed;
     s32 mapRoomIdx;
     u8* var_a2;
 
     mapRoomIdx = g_SavegamePtr->mapRoomIdx;
-    var_a1  = Q12(0.1f);
+    fadeSpeed  = Q12(0.1f);
 
-    if (g_GameWork.bgmIdx == 13)
+    if (g_GameWork.bgmIdx == BgmTrackIdx_13)
     {
         var_a2 = sharedData_800ED418_4_s02;
 
         switch (mapRoomIdx)
         {
             case 15:
-                flags = 1 << 2;
+                bgmFlags = BgmFlag_Layer2;
                 break;
 
             case 16:
-                flags = (1 << 1) | (1 << 2);
+                bgmFlags = (1 << 1) | (1 << 2);
                 break;
 
             case 14:
                 if (Savegame_EventFlagGet(EventFlag_352))
                 {
-                    var_a1 = Q12(10.0f);
-                    flags = (1 << 0) | (1 << 8);
+                    fadeSpeed = Q12(10.0f);
+                    bgmFlags = (1 << 0) | (1 << 8);
                 }
                 else if (Savegame_EventFlagGet(EventFlag_350))
                 {
-                    var_a1 = Q12(0.25f / 2.0f);
-                    flags = (1 << 0) | (1 << 8);
+                    fadeSpeed = Q12(0.25f / 2.0f);
+                    bgmFlags = (1 << 0) | (1 << 8);
                 }
                 else if (Savegame_EventFlagGet(EventFlag_348))
                 {
                     if (g_SysWork.npcs[0].health < Q12(1000.0f))
                     {
-                        flags = 0x1FE; // TODO: Demagic.
+                        bgmFlags = 0x1FE; // TODO: Demagic.
                     }
                     else
                     {
@@ -49,27 +49,27 @@ void Map_RoomBgmInit(bool arg0)
                         {
                             sharedData_800ED420_4_s02 = (1 << 1) | (1 << 4) | (1 << 8);
                         }
-                        flags = sharedData_800ED420_4_s02;
+                        bgmFlags = sharedData_800ED420_4_s02;
 
                         if (g_SysWork.npcs[0].health < Q12(2000.0f))
                         {
-                            flags |= (1 << 2) | (1 << 5);
+                            bgmFlags |= (1 << 2) | (1 << 5);
                         }
                         else if (g_SysWork.npcs[0].health < Q12(3000.0f))
                         {
-                            flags |= 1 << 2;
+                            bgmFlags |= 1 << 2;
                         }
                     }
                 }
                 else
                 {
-                    var_a1 = Q12(1.0f);
-                    flags = (1 << 0) | (1 << 8);
+                    fadeSpeed = Q12(1.0f);
+                    bgmFlags = (1 << 0) | (1 << 8);
                 }
                 break;
 
             default:
-                flags = 1 << 0;
+                bgmFlags = BgmFlag_Layer0;
                 break;
         }
     }
@@ -82,18 +82,18 @@ void Map_RoomBgmInit(bool arg0)
             case 18:
                 if (Savegame_EventFlagGet(EventFlag_334) || !Savegame_EventFlagGet(EventFlag_333))
                 {
-                    flags = 1 << 1;
+                    bgmFlags = BgmFlag_Layer1;
                 }
                 else
                 {
                     if (Savegame_EventFlagGet(EventFlag_330))
                     {
-                        flags = (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4);
-                        var_a1 = CHUNK_CELL_SIZE;
+                        bgmFlags = (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4);
+                        fadeSpeed = CHUNK_CELL_SIZE;
                     }
                     else
                     {
-                        flags = (1 << 1) | (1 << 2) | (1 << 3);
+                        bgmFlags = (1 << 1) | (1 << 2) | (1 << 3);
                     }
                 }
                 break;
@@ -103,45 +103,45 @@ void Map_RoomBgmInit(bool arg0)
 
                 if (Savegame_EventFlagGet(EventFlag_320))
                 {
-                    flags = (1 << 0) | (1 << 8);
+                    bgmFlags = (1 << 0) | (1 << 8);
                 }
                 else
                 {
-                    flags = (1 << 2) | (1 << 8);
+                    bgmFlags = (1 << 2) | (1 << 8);
                 }
                 break;
 
             case 21:
-                flags = 8;
+                bgmFlags = 8;
                 break;
 
             case 20:
                 if (Savegame_EventFlagGet(EventFlag_327))
                 {
-                    flags = (1 << 4) | (1 << 8);
+                    bgmFlags = (1 << 4) | (1 << 8);
                 }
                 else if (Savegame_EventFlagGet(EventFlag_324) || Savegame_EventFlagGet(EventFlag_329))
                 {
-                    var_a1 = Q12(0.5f);
+                    fadeSpeed = Q12(0.5f);
 
                     if (g_SysWork.npcs[0].health > Q12(0.0f) &&
                         g_SysWork.npcs[0].position.vy < Q12(1.0f))
                     {
-                        flags = (1 << 5) | (1 << 6) | (1 << 8);
+                        bgmFlags = (1 << 5) | (1 << 6) | (1 << 8);
                     }
                     else
                     {
-                        flags = (1 << 5) | (1 << 8);
+                        bgmFlags = (1 << 5) | (1 << 8);
                     }
                 }
                 else
                 {
-                    flags = (1 << 4) | (1 << 8);
+                    bgmFlags = (1 << 4) | (1 << 8);
                 }
                 break;
 
             default:
-                flags = (1 << 0) | (1 << 8);
+                bgmFlags = (1 << 0) | (1 << 8);
                 break;
         }
     }
@@ -156,13 +156,13 @@ void Map_RoomBgmInit(bool arg0)
                 Savegame_EventFlagSet(EventFlag_314);
             }
 
-            flags = 1 << 1;
+            bgmFlags = BgmFlag_Layer1;
         }
         else
         {
-            flags = sharedData_800ED42C_4_s02[mapRoomIdx];
+            bgmFlags = sharedData_800ED42C_4_s02[mapRoomIdx];
         }
     }
 
-    Bgm_Update(flags, var_a1, var_a2);
+    Bgm_Update(bgmFlags, fadeSpeed, var_a2);
 }

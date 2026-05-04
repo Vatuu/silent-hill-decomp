@@ -127,7 +127,7 @@ void Bgm_GlobalLayerVariablesUpdate(void) // 0x80035ED0
     g_SysWork.bgmLayerVolumes[ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1] = Q12(0.0f);
 }
 
-void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0x80035F4C
+void Bgm_Update(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0x80035F4C
 {
     s16       temp_v0;
     s32       ducking;
@@ -147,7 +147,7 @@ void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0
     static s8 bgmLayerVols[8];
 
     // Setup.
-    flagsCpy       = flags;
+    flagsCpy       = bgmFlags;
     layerLimitsCpy = layerLimits;
     layerVols      = g_SysWork.bgmLayerVolumes;
 

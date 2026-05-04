@@ -25,14 +25,14 @@
 void Map_RoomBgmInit(bool arg0) // 0x800D94F8
 {
     s32    i;
-    q19_12 var1;
-    s32    flags;
+    q19_12 fadeSpeed;
+    s32    bgmFlags;
     u32    saveByte;
 
     // @hack Not used directly, but gets merged with  `Savegame_EventFlagGet` macros below.
     saveByte = g_SavegamePtr->eventFlags[0];
-    var1     = Q12(0.1f);
-    flags    = 1 << 8;
+    fadeSpeed     = Q12(0.1f);
+    bgmFlags    = 1 << 8;
 
     if (g_SysWork.playerWork.player.health > 0 && (!(Savegame_EventFlagGet(EventFlag_23) && !Savegame_EventFlagGet(EventFlag_20))))
     {
@@ -40,17 +40,17 @@ void Map_RoomBgmInit(bool arg0) // 0x800D94F8
         {
             if (Savegame_EventFlagGet(D_800DF300[i]))
             {
-                flags |= 1 << i;
+                bgmFlags |= 1 << i;
             }
         }
     }
     else
     {
         Savegame_EventFlagClear(EventFlag_20);
-        var1 = Q12(0.3f);
+        fadeSpeed = Q12(0.3f);
     }
 
-    Bgm_Update(flags, var1, &D_800DF2F8);
+    Bgm_Update(bgmFlags, fadeSpeed, &D_800DF2F8);
 }
 
 void GameBoot_LoadScreen_StageString(void) // 0x800D95D4

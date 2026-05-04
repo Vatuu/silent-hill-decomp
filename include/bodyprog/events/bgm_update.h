@@ -25,11 +25,11 @@ void Bgm_GlobalLayerVariablesUpdate(void);
 
 /** @brief Undates background music.
  *
- * @param flags BGM layer flags.
+ * @param bgmFlags BGM layer flags.
  * @param fadeSpeed Volume fade speed.
  * @param layerLimits BGM layer limits.
  */
-void Bgm_Update(s32 flags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits);
+void Bgm_Update(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits);
 
 /** @brief Updates the track index and disables radio effects. */
 void func_800363D0(void);

@@ -2,8 +2,8 @@ void Map_RoomBgmInit_CondFalse(void)
 {
     const static s_BgmLayerLimits D_800CA70C = { { 0x80, 0x70, 0x80, 0x80, 0x00, 0x00, 0x00, 0x00 } };
 
-    u16           flags;
-    q19_12        fArg1;
+    u16           bgmFlags;
+    q19_12        fadeSpeed;
     s_BgmLayerLimits* dataPtr;
     s_BgmLayerLimits  data;
     s32           roomIdx;
@@ -13,33 +13,33 @@ void Map_RoomBgmInit_CondFalse(void)
 
     if (g_GameWork.bgmIdx == BgmTrackIdx_8)
     {
-        fArg1 = Q12(240.0f);
-        flags = 0xFE;
+        fadeSpeed = Q12(240.0f);
+        bgmFlags = 0xFE;
     }
     else if (g_GameWork.bgmIdx == BgmTrackIdx_32)
     {
-        fArg1 = Q12(0.15f);
+        fadeSpeed = Q12(0.15f);
         if (Savegame_EventFlagGet(EventFlag_338))
         {
-            flags = 4;
+            bgmFlags = 4;
             if (!Savegame_EventFlagGet(EventFlag_340))
             {
-                flags = 2;
+                bgmFlags = 2;
                 if (Savegame_EventFlagGet(EventFlag_339))
                 {
-                    flags = 0xE;
+                    bgmFlags = 0xE;
                 }
             }
         }
         else
         {
-            flags = 1;
+            bgmFlags = 1;
         }
     }
     else
     {
-        flags = sharedData_800D1D1C_3_s02[roomIdx];
-        fArg1 = Q12(0.15f);
+        bgmFlags = sharedData_800D1D1C_3_s02[roomIdx];
+        fadeSpeed = Q12(0.15f);
 
         switch (roomIdx)
         {
@@ -49,7 +49,7 @@ void Map_RoomBgmInit_CondFalse(void)
             case 45:
                 if (!(Savegame_EventFlagGet(EventFlag_285) || Savegame_EventFlagGet(EventFlag_286)))
                 {
-                    flags = 0x1E;
+                    bgmFlags = 0x1E;
                 }
                 else if (Savegame_EventFlagGet(EventFlag_285))
                 {
@@ -68,11 +68,11 @@ void Map_RoomBgmInit_CondFalse(void)
 
                 if (!Savegame_EventFlagGet(EventFlag_285))
                 {
-                    flags = 0x1FE;
+                    bgmFlags = 0x1FE;
                 }
                 else if (!Savegame_EventFlagGet(EventFlag_286))
                 {
-                    flags = 0x13E;
+                    bgmFlags = 0x13E;
                 }
 
                 break;
@@ -80,7 +80,7 @@ void Map_RoomBgmInit_CondFalse(void)
             case 4:
                 if (!Player_ItemRemove(InvItemId_ExaminationRoomKey, 0))
                 {
-                    flags = 1 << 0;
+                    bgmFlags = BgmFlag_Layer0;
                 }
 
             case 6:
@@ -122,47 +122,47 @@ void Map_RoomBgmInit_CondFalse(void)
 
                     if (!Savegame_EventFlagGet(EventFlag_293))
                     {
-                        fArg1 = Q12(240.0f);
-                        flags = 1 << 2;
+                        fadeSpeed = Q12(240.0f);
+                        bgmFlags = BgmFlag_Layer2;
                     }
                     else if (!Savegame_EventFlagGet(EventFlag_298))
                     {
-                        fArg1 = Q12(0.25f);
-                        flags = 1 << 1;
+                        fadeSpeed = Q12(0.25f);
+                        bgmFlags = BgmFlag_Layer1;
                     }
                     else if (!Savegame_EventFlagGet(EventFlag_299))
                     {
-                        fArg1 = Q12(0.125f);
-                        flags = 1 << 3;
+                        fadeSpeed = Q12(0.125f);
+                        bgmFlags = BgmFlag_Layer3;
                     }
                     else
                     {
-                        fArg1 = Q12(240.0f);
+                        fadeSpeed = Q12(240.0f);
                         if (!Savegame_EventFlagGet(EventFlag_294))
                         {
-                            fArg1 = Q12(0.5f);
-                            flags = (1 << 0) | (1 << 9);
+                            fadeSpeed = Q12(0.5f);
+                            bgmFlags = (1 << 0) | (1 << 9);
                         }
                         else
                         {
-                            flags = 1 << 0;
+                            bgmFlags = BgmFlag_Layer0;
                         }
                     }
                 }
                 else
                 {
-                    flags = (1 << 0) | (1 << 9);
+                    bgmFlags = (1 << 0) | (1 << 9);
                 }
                 break;
 
             case 58:
                 if (!Savegame_EventFlagGet(EventFlag_260))
                 {
-                    flags = 1 << 0;
+                    bgmFlags = BgmFlag_Layer0;
                 }
                 break;
         }
     }
 
-    Bgm_Update(flags, fArg1, dataPtr);
+    Bgm_Update(bgmFlags, fadeSpeed, dataPtr);
 }

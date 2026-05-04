@@ -57,23 +57,23 @@ void func_800D7F98(void) // 0x800D7F98
     q19_12 dist0;
     q19_12 dist1;
     q19_12 dist2;
-    s32    fArg1;
+    s32    fadeSpeed;
     s32    roomIdx;
-    s32    flags;
+    s32    bgmFlags;
 
     roomIdx = g_SavegamePtr->mapRoomIdx;
-    fArg1 = 0x400;
+    fadeSpeed = 0x400;
 
     if (Savegame_EventFlagGet(EventFlag_435))
     {
-        flags = 1 << 0;
+        bgmFlags = BgmFlag_Layer0;
         if (Savegame_EventFlagGet(EventFlag_437))
         {
-            fArg1 = 0x547;
+            fadeSpeed = 0x547;
         }
         else
         {
-            flags = D_800DBCE4[roomIdx];
+            bgmFlags = D_800DBCE4[roomIdx];
 
             switch (roomIdx)
             {
@@ -147,15 +147,15 @@ void func_800D7F98(void) // 0x800D7F98
     }
     else
     {
-        flags = (1 << 1) | (1 << 2);
+        bgmFlags = (1 << 1) | (1 << 2);
         if (!Savegame_EventFlagGet(EventFlag_431))
         {
-            fArg1 = 0x547;
-            flags = 1 << 1;
+            fadeSpeed = 0x547;
+            bgmFlags = BgmFlag_Layer1;
         }
     }
 
-    Bgm_Update(flags, fArg1, &D_800DBCDC);
+    Bgm_Update(bgmFlags, fadeSpeed, &D_800DBCDC);
 }
 
 void GameBoot_LoadScreen_StageString(void) {}

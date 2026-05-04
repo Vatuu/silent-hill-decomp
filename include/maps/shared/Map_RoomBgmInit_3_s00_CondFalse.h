@@ -1,16 +1,16 @@
 void Map_RoomBgmInit_CondFalse(void)
 {
-    s32    flags;
-    q19_12 var;
+    s32    bgmFlags;
+    q19_12 fadeSpeed;
     s32    mapRoomIdx;
 
     mapRoomIdx = g_SavegamePtr->mapRoomIdx;
-    var        = Q12(0.15f);
+    fadeSpeed        = Q12(0.15f);
 
     switch (g_GameWork.bgmIdx)
     {
         case 16:
-            flags = sharedData_800D21E8_3_s00[mapRoomIdx];
+            bgmFlags = sharedData_800D21E8_3_s00[mapRoomIdx];
 
             // Check a few specific room indices.
             switch (mapRoomIdx)
@@ -21,11 +21,11 @@ void Map_RoomBgmInit_CondFalse(void)
                         // Test player Z position against specific value.
                         if (g_SysWork.playerWork.player.position.vz > Q12(143.2f))
                         {
-                            flags = 0x6;
+                            bgmFlags = 0x6;
                         }
                         else
                         {
-                            flags = 0xE;
+                            bgmFlags = 0xE;
                         }
                     }
                     break;
@@ -34,7 +34,7 @@ void Map_RoomBgmInit_CondFalse(void)
                 case 20:
                     if (Savegame_EventFlagGet(EventFlag_M3S01_GeneratorOn))
                     {
-                        flags |= 0x40;
+                        bgmFlags |= 0x40;
                     }
                     break;
             }
@@ -42,45 +42,45 @@ void Map_RoomBgmInit_CondFalse(void)
             if (Savegame_EventFlagGet(EventFlag_MapMark_AltHospital2F_OperatingPrepRoomArrow) &&
                 Savegame_EventFlagGet(EventFlag_MapMark_AltHospital2F_CorridorMidArrows))
             {
-                flags |= 0x11E;
+                bgmFlags |= 0x11E;
             }
             break;
 
         case 34:
             if (!Savegame_EventFlagGet(EventFlag_MapMark_FogHospital1F_StairsLocked))
             {
-                var   = Q12(240.0f);
-                flags = 0x201;
+                fadeSpeed   = Q12(240.0f);
+                bgmFlags = 0x201;
             }
             else if (Savegame_EventFlagGet(EventFlag_197))
             {
-                var   = Q12(0.2f);
-                flags = 0x201;
+                fadeSpeed   = Q12(0.2f);
+                bgmFlags = 0x201;
             }
             else
             {
-                var   = Q12(240.0f);
-                flags = 0x1FE;
+                fadeSpeed   = Q12(240.0f);
+                bgmFlags = 0x1FE;
             }
             break;
 
         case 25:
             if (!Savegame_EventFlagGet(EventFlag_295))
             {
-                var   = Q12(240.0f);
-                flags = 0x1FE;
+                fadeSpeed   = Q12(240.0f);
+                bgmFlags = 0x1FE;
             }
             else
             {
-                var   = Q12(0.2f);
-                flags = 0x301;
+                fadeSpeed   = Q12(0.2f);
+                bgmFlags = 0x301;
             }
             break;
 
         default:
-            flags = 1;
+            bgmFlags = BgmFlag_Layer0;
             break;
     }
 
-    Bgm_Update(flags, var, NULL);
+    Bgm_Update(bgmFlags, fadeSpeed, NULL);
 }

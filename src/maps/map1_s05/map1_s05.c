@@ -20,19 +20,19 @@
 
 void Map_RoomBgmInit(bool arg0) // 0x800D494C
 {
-    s32 var_a0;
+    s32 bgmFlags;
 
-    var_a0 = 1;
+    bgmFlags = 1;
     if (g_SysWork.npcs[0].health > 0)
     {
-        var_a0 = 2;
+        bgmFlags = 2;
         if (g_SysWork.npcs[0].properties.dummy.properties_E8[0].val16[0] & 0x10)
         {
-            var_a0 = 6;
+            bgmFlags = 6;
         }
     }
 
-    Bgm_Update(var_a0, Q12(0.1f), &D_800D5C3C);
+    Bgm_Update(bgmFlags, Q12(0.1f), &D_800D5C3C);
 }
 
 void GameBoot_LoadScreen_StageString(void) {}

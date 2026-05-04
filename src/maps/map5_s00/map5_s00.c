@@ -383,14 +383,14 @@ void func_800D6490(VECTOR3* arg0) // 0x800D6490
 
 void func_800D6790(void) // 0x800D6790
 {
-    u32 flags = D_800DA578[g_SavegamePtr->mapRoomIdx];
+    u32 bgmFlags = D_800DA578[g_SavegamePtr->mapRoomIdx];
 
     if (Savegame_EventFlagGet(EventFlag_354))
     {
-        flags |= (1 << 5) | (1 << 3) | (1 << 1);
+        bgmFlags |= BgmFlag_Layer5 | BgmFlag_Layer3 | BgmFlag_Layer1;
     }
 
-    Bgm_Update(flags, Q12(0.25f), &D_800DA570);
+    Bgm_Update(bgmFlags, Q12(0.25f), &D_800DA570);
 }
 
 void GameBoot_LoadScreen_StageString(void) {}

@@ -27,11 +27,11 @@ void func_800EB6B0(void) // 0x800EB6B0
     q19_12 posZ;
     q19_12 newPosComp;
     s32    var_v1;
-    s32    temp_s1;
+    s32    bgmFlags;
 
     posX  = g_SysWork.playerWork.player.position.vx;
     posZ  = g_SysWork.playerWork.player.position.vz;
-    temp_s1 = D_800EFC80[g_SavegamePtr->mapRoomIdx];
+    bgmFlags = D_800EFC80[g_SavegamePtr->mapRoomIdx];
 
     if (g_SavegamePtr->mapRoomIdx == 10)
     {
@@ -101,7 +101,7 @@ void func_800EB6B0(void) // 0x800EB6B0
     var_v1  = Q12_MULT_PRECISE(newPosComp, temp_v0);
 
     D_800EFC74.limits[4] = var_v1 / Q12(0.5f);
-    Bgm_Update(temp_s1, Q12(0.2f), &D_800EFC74);
+    Bgm_Update(bgmFlags, Q12(0.2f), &D_800EFC74);
 }
 
 void GameBoot_LoadScreen_StageString(void) {}

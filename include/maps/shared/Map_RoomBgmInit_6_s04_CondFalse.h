@@ -1,30 +1,30 @@
 void Map_RoomBgmInit_CondFalse(void)
 {
     q19_12 dist0;
-    s32    flags;
-    s32    fArg1;
+    s32    bgmFlags;
+    s32    fadeSpeed;
     s32    soundCmd;
     q19_12 dist;
     u8*    dataPtr;
 
-    fArg1    = Q12(0.2f);
+    fadeSpeed    = Q12(0.2f);
     soundCmd = g_GameWork.bgmIdx;
     if (soundCmd == 36)
     {
         dataPtr = &sharedData_800EB738_6_s04;
-        fArg1   = Q12(0.1f);
+        fadeSpeed   = Q12(0.1f);
         if (Savegame_EventFlagGet(EventFlag_465))
         {
-            flags = 0x20;
+            bgmFlags = 0x20;
         }
         else if (!Savegame_EventFlagGet(EventFlag_464))
         {
-            fArg1 = Q12(240.0f);
-            flags = 2;
+            fadeSpeed = Q12(240.0f);
+            bgmFlags = 2;
         }
         else
         {
-            flags = 0x10;
+            bgmFlags = 0x10;
         }
     }
     else if (soundCmd == 39)
@@ -35,41 +35,41 @@ void Map_RoomBgmInit_CondFalse(void)
         {
             if (Savegame_EventFlagGet(EventFlag_448))
             {
-                flags = 0x100;
+                bgmFlags = 0x100;
                 if (Savegame_EventFlagGet(EventFlag_462))
                 {
-                    flags = 0x110;
+                    bgmFlags = 0x110;
                 }
             }
             else if (Savegame_EventFlagGet(EventFlag_470))
             {
                 sharedData_800EB740_6_s04[1] = 0x80;
-                fArg1                        = Q12(0.5f);
+                fadeSpeed                        = Q12(0.5f);
 
                 if (!Savegame_EventFlagGet(EventFlag_447))
                 {
-                    flags = 0x102;
+                    bgmFlags = 0x102;
                     if (Savegame_EventFlagGet(EventFlag_463))
                     {
-                        flags = 0x101;
+                        bgmFlags = 0x101;
                     }
                 }
                 else
                 {
-                    fArg1 = Q12(240.0f);
-                    flags = 0x101;
+                    fadeSpeed = Q12(240.0f);
+                    bgmFlags = 0x101;
                 }
             }
             else if (Savegame_EventFlagGet(EventFlag_446))
             {
                 sharedData_800EB740_6_s04[1] = 0;
-                fArg1                        = Q12(240.0f);
-                flags                        = 0x101;
+                fadeSpeed                        = Q12(240.0f);
+                bgmFlags                        = 0x101;
             }
             else
             {
                 sharedData_800EB740_6_s04[1] = 0x60;
-                flags                        = 0x10A;
+                bgmFlags                        = 0x10A;
             }
         }
         else
@@ -78,27 +78,27 @@ void Map_RoomBgmInit_CondFalse(void)
 
             if (Savegame_EventFlagGet(EventFlag_443))
             {
-                flags = 0x108;
+                bgmFlags = 0x108;
                 if (!Savegame_EventFlagGet(EventFlag_444))
                 {
                     if (Savegame_EventFlagGet(EventFlag_455))
                     {
-                        flags = 0x10A;
+                        bgmFlags = 0x10A;
                     }
                 }
                 else
                 {
-                    flags = 0x10A;
+                    bgmFlags = 0x10A;
                 }
             }
             else
             {
-                fArg1 = Q12(240.0f);
+                fadeSpeed = Q12(240.0f);
 
-                flags = 0x301;
+                bgmFlags = 0x301;
                 if (Savegame_EventFlagGet(EventFlag_461))
                 {
-                    flags = 0x104;
+                    bgmFlags = 0x104;
                 }
             }
         }
@@ -111,7 +111,7 @@ void Map_RoomBgmInit_CondFalse(void)
         switch (g_SavegamePtr->mapRoomIdx)
         {
             case 3:
-                flags = 4;
+                bgmFlags = 4;
 
                 dist = Math_Distance2dGet(&g_SysWork.playerWork.player.position, &sharedData_800EB750_6_s04);
                 if (dist < Q12(10.0f))
@@ -132,16 +132,16 @@ void Map_RoomBgmInit_CondFalse(void)
             case 2:
             case 4:
             case 5:
-                flags = 2;
+                bgmFlags = 2;
                 break;
 
             default:
-                flags = 1;
+                bgmFlags = 1;
                 break;
         }
 
         sharedData_800EB74A_6_s04 = dist;
     }
 
-    Bgm_Update(flags, fArg1, dataPtr);
+    Bgm_Update(bgmFlags, fadeSpeed, dataPtr);
 }

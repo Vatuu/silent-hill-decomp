@@ -38,25 +38,26 @@ void Map_RoomBgmInit_CondTrue(void) // 0x800DA7AC
 
 void Map_RoomBgmInit_CondFalse(void) // 0x800DA7FC
 {
-    s32    flags;
-    q19_12 var1;
+    s32    bgmFlags;
+    q19_12 fadeSpeed;
 
-    var1 = Q12(0.333f);
+    fadeSpeed = Q12(0.333f);
     if (!Savegame_EventFlagGet(EventFlag_146))
     {
         // Air Screamer isn't dead or the Cybil and Harry cutscene has started.
         if (!(Savegame_EventFlagGet(EventFlag_M0S01_AirScreamerDied) || Savegame_EventFlagGet(EventFlag_49)))
         {
-            var1 = Q12(240.0f);
+            fadeSpeed = Q12(240.0f);
 
             // FMV has just played and unknown.
-            if (Savegame_EventFlagGet(EventFlag_M0S01_FmvStarted) && g_GameWork.bgmIdx == 9)
+            if (Savegame_EventFlagGet(EventFlag_M0S01_FmvStarted) &&
+                g_GameWork.bgmIdx == BgmTrackIdx_9)
             {
-                flags = BgmFlag_Layer1;
+                bgmFlags = BgmFlag_Layer1;
             }
             else
             {
-                flags = BgmFlag_Layer0 | BgmFlag_MuteAll;
+                bgmFlags = BgmFlag_Layer0 | BgmFlag_MuteAll;
             }
         }
         // Air Screamer cutscene finished.
@@ -64,26 +65,26 @@ void Map_RoomBgmInit_CondFalse(void) // 0x800DA7FC
         {
             if (!Savegame_EventFlagGet(EventFlag_M0S01_AirScreamerDied))
             {
-                var1  = Q12(240.0f);
-                flags = BgmFlag_KeepAlive;
+                fadeSpeed = Q12(240.0f);
+                bgmFlags = BgmFlag_KeepAlive;
             }
             else
             {
-                var1  = Q12(0.125f);
-                flags = BgmFlag_Layer0 | BgmFlag_MuteAll;
+                fadeSpeed = Q12(0.125f);
+                bgmFlags  = BgmFlag_Layer0 | BgmFlag_MuteAll;
             }
         }
         else
         {
-            flags = BgmFlag_Layer0;
+            bgmFlags = BgmFlag_Layer0;
         }
     }
     else
     {
-        flags = BgmFlag_Layer0;
+        bgmFlags = BgmFlag_Layer0;
     }
 
-    Bgm_Update(flags, var1, NULL);
+    Bgm_Update(bgmFlags, fadeSpeed, NULL);
 }
 
 void GameBoot_LoadScreen_StageString(void) // 0x800DA8A4
