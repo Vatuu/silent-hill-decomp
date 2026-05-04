@@ -2045,7 +2045,7 @@ void SaveScreen_SaveGame(void) // 0x801E6B18
 
                 default:
                     g_GameWork.gameStateSteps[0] = 1;
-                    g_SysWork.counters_1C[1]]    = 0;
+                    g_SysWork.counters_1C[1]     = 0;
                     g_GameWork.gameStateSteps[1] = 0;
                     g_GameWork.gameStateSteps[2] = 0;
                     break;
@@ -2077,7 +2077,7 @@ void SaveScreen_LoadSave(void) // 0x801E6DB0
                 {
                     D_800BCD39                   = true;
                     g_GameWork.gameStateSteps[0] = 1;
-                    g_SysWork.counters_1C[1]]    = 0;
+                    g_SysWork.counters_1C[1]     = 0;
                     g_GameWork.gameStateSteps[1] = 0;
                     g_GameWork.gameStateSteps[2] = 0;
                     break;
