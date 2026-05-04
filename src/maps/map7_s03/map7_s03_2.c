@@ -4395,7 +4395,7 @@ bool Ai_Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDA
     incubus->collision.state                    = CharaCollisionState_4;
     incubus->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
     incubus->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-    incubus->flags                             |= CharaFlag_Unk3;
+    incubus->flags                             |= CharaFlag_Hit;
 
     localIncubus->properties.dummy.properties_E8[2].val32 = 0;
     localIncubus->properties.dummy.properties_E8[1].val32 = 0;
@@ -4462,7 +4462,7 @@ void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
             incubusProps.bossFightTimer_F4 -= g_DeltaTime;
         }
 
-        if (!(incubus->flags & CharaFlag_Unk3))
+        if (!(incubus->flags & CharaFlag_Hit))
         {
             incubus->damage.amount *= 10;
         }
@@ -4756,7 +4756,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
     if (incubus->model.stateStep == 0)
     {
         incubusProps.timer_E8 = Q12(1.5f);
-        incubus->flags                      &= ~CharaFlag_Unk3;
+        incubus->flags                      &= ~CharaFlag_Hit;
         incubus->model.stateStep++;
         return;
     }
@@ -4904,7 +4904,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
         case 5:
             incubus->model.controlState = IncubusControl_11;
             incubus->model.stateStep    = IncubusStateStep_0;
-            incubus->flags              |= CharaFlag_Unk3;
+            incubus->flags              |= CharaFlag_Hit;
             break;
     }
 }
@@ -5803,7 +5803,7 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
     chara->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
     chara->collision.state                    = CharaCollisionState_4;
     chara->headingAngle                       = chara->rotation.vy;
-    chara->flags                             |= CharaFlag_Unk3;
+    chara->flags                             |= CharaFlag_Hit;
 
     localChara->properties.player.field_F0 = 0;
 
@@ -5855,7 +5855,7 @@ void func_800DFCE4(s_SubCharacter* chara) // 0x800DFCE4
             chara->properties.dummy.properties_E8[3].val32 -= g_DeltaTime;
         }
 
-        if (!(chara->flags & CharaFlag_Unk3))
+        if (!(chara->flags & CharaFlag_Hit))
         {
             chara->damage.amount *= 10;
         }
@@ -5952,7 +5952,7 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
     {
         chara->model.stateStep++;
         chara->properties.incubus.timer_E8 = Q12(1.5f);
-        chara->flags                      &= ~CharaFlag_Unk3;
+        chara->flags                      &= ~CharaFlag_Hit;
         return;
     }
 
@@ -6152,7 +6152,7 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
         case 5:
             chara->model.controlState = 2;
             chara->model.stateStep    = 0;
-            chara->flags              |= CharaFlag_Unk3;
+            chara->flags              |= CharaFlag_Hit;
             break;
     }
 }

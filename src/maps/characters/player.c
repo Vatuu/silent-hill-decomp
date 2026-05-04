@@ -896,7 +896,7 @@ bool sharedFunc_800D2E94_0_s00(void)
             npc->position.vz                        = Q12(-104.0f);
             npc->collision.state                    = CharaCollisionState_Npc;
             npc->model.stateStep++;
-            npc->flags                             |= CharaFlag_Unk3;
+            npc->flags                             |= CharaFlag_Hit;
             npc->model.anim.flags                  &= ~(AnimFlag_Visible | AnimFlag_Unlocked);
         }
 
@@ -915,7 +915,7 @@ bool sharedFunc_800D2E94_0_s00(void)
                 {
                     if (Savegame_EventFlagGet(EventFlag_167) && npc->model.charaId == Chara_Padlock)
                     {
-                        npc->flags |= CharaFlag_Unk1;
+                        npc->flags |= CharaFlag_PadlockBroken;
                         Savegame_EventFlagSet(EventFlag_168);
                     }
                 }
@@ -927,9 +927,10 @@ bool sharedFunc_800D2E94_0_s00(void)
         {
             if (Savegame_EventFlagGet(EventFlag_167) && npc->model.charaId == Chara_Padlock)
             {
-                npc->flags |= CharaFlag_Unk1;
+                npc->flags |= CharaFlag_PadlockBroken;
                 Savegame_EventFlagSet(EventFlag_168);
             }
+
             npc->model.charaId = Chara_None;
         }
 

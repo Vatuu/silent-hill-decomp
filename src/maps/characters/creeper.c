@@ -287,7 +287,7 @@ void Creeper_ControlIdle(s_SubCharacter* creeper)
     cond |= func_80070360(creeper, Q12(0.0f), Q12(0.5f));
     if (cond)
     {
-        creeper->flags |= CharaFlag_Unk3;
+        creeper->flags |= CharaFlag_Hit;
 
         if (Rng_GenerateUInt(0, 7) == 0 && // 1 in 8 chance.
             creeper->model.anim.status == ANIM_STATUS(CreeperAnim_Idle, true))

@@ -1873,7 +1873,7 @@ bool Twinfeeler_Init(s_SubCharacter* twinfeeler) // 0x800D3CD4
 
     twinfeeler->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
     twinfeeler->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-    twinfeeler->flags          |= CharaFlag_Unk3;
+    twinfeeler->flags          |= CharaFlag_Hit;
 
     if (twinfeeler->model.stateStep != 0)
     {

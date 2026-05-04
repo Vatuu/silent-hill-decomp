@@ -572,16 +572,16 @@ typedef enum _ControllerFlags
 /** @brief Character flags. Used by `s_SubCharacter::flags`. */
 typedef enum _CharaFlags
 {
-    CharaFlag_None    = 0,
-    CharaFlag_Unk1    = 1 << 0, // Specific to padlock. Maybe used for special handling.
-    CharaFlag_Unk2    = 1 << 1, // Related to being damaged. Maybe to recoil or notify of danger?
-    CharaFlag_Unk3    = 1 << 2,
-    CharaFlag_Unk4    = 1 << 3,
-    CharaFlag_Unk5    = 1 << 4, // Camera-related.
-    CharaFlag_Damaged = 1 << 5,
-    CharaFlag_Dead    = 1 << 6, // Unure.
-    CharaFlag_Unk8    = 1 << 7,
-    CharaFlag_Unk9    = 1 << 8  // Only set for bosses and NPCs in special scenarios.
+    CharaFlag_None          = 0,
+    CharaFlag_PadlockBroken = 1 << 0, /** Only used by Padlock character. */
+    CharaFlag_Unk2          = 1 << 1, // Targeted by player?
+    CharaFlag_Hit           = 1 << 2, // Associated with recoil-causing hit?
+    CharaFlag_Unk4          = 1 << 3,
+    CharaFlag_Unk5          = 1 << 4, // Camera-related. Only used by Stalker? Maybe only for alley scenario?
+    CharaFlag_Damaged       = 1 << 5,
+    CharaFlag_Dead          = 1 << 6, // Unure.
+    CharaFlag_Unk8          = 1 << 7,
+    CharaFlag_Unk9          = 1 << 8  // Only set for bosses and NPCs in special scenarios.
 } e_CharaFlags;
 
 /** @brief Character animation flags. */

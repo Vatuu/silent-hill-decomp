@@ -1384,7 +1384,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
             break;
 
         default:
-            if (target != &g_SysWork.playerWork.player && !(target->flags & CharaFlag_Unk3))
+            if (target != &g_SysWork.playerWork.player && !(target->flags & CharaFlag_Hit))
             {
                 damageAmount *= 4;
             }
@@ -1545,7 +1545,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
                 case Chara_Incubus:
                 case Chara_Unknown23:
                 case Chara_Incubator:
-                    if (!(target->flags & CharaFlag_Unk3))
+                    if (!(target->flags & CharaFlag_Hit))
                     {
                         if (weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap))
                         {

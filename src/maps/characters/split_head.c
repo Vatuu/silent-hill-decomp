@@ -59,7 +59,7 @@ void Ai_SplitHead_Init(s_SubCharacter* splitHead)
     Chara_DamageClear(splitHead);
 
     splitHeadProps.field_EA = 196;
-    splitHead->flags    |= CharaFlag_Unk9 | CharaFlag_Unk3;
+    splitHead->flags    |= CharaFlag_Unk9 | CharaFlag_Hit;
 }
 
 void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead)

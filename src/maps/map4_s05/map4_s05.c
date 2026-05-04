@@ -94,7 +94,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
     }
 
     floatstinger->properties.dummy.properties_E8[1].val16[0] = floatstinger->rotation.vy;
-    floatstinger->flags |= CharaFlag_Unk9 | CharaFlag_Unk3;
+    floatstinger->flags |= CharaFlag_Unk9 | CharaFlag_Hit;
 
     D_800D7858 = 0;
 

@@ -105,7 +105,7 @@ void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D8
     chara->collision.state = CharaCollisionState_Npc;
     g_SysWork.npcs[0].properties.dummy.properties_E8[12].val16[1] = Q12_ANGLE(90.0f);
     chara->model.anim.flags |= AnimFlag_Visible | AnimFlag_Unlocked;
-    chara->flags |= CharaFlag_Unk9 | CharaFlag_Unk3;
+    chara->flags |= CharaFlag_Unk9 | CharaFlag_Hit;
 
     sharedData_800D16E4_2_s01 = 0;
     extraModel->anim.flags |= AnimFlag_Visible | AnimFlag_Unlocked;

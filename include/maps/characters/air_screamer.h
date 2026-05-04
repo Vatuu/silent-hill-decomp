@@ -35,6 +35,7 @@ typedef enum _AirScreamerFlags
     AirScreamerFlag_27   = 1 << 27,
     AirScreamerFlag_28   = 1 << 28,
     AirScreamerFlag_29   = 1 << 29,
+    AirScreamerFlag_30   = 1 << 30,
 
     AirScreamerFlag_31   = 1 << 31
 } e_AirScreamerFlags;
@@ -76,95 +77,71 @@ typedef enum _AirScreamerAnim
 /** @brief Air Screamer or Night Flutter character control states. */
 typedef enum _AirScreamerControl
 {
-    AirScreamerControl_None  = 0,
-    AirScreamerControl_1     = 1,
-    AirScreamerControl_2     = 2,
-    AirScreamerControl_3     = 3,
-    AirScreamerControl_4     = 4, // } Walk
-    AirScreamerControl_5     = 5, // }
-    AirScreamerControl_6     = 6,
-    AirScreamerControl_7     = 7,
-    AirScreamerControl_8     = 8,
-    AirScreamerControl_9     = 9,
-    AirScreamerControl_10    = 10,
-    AirScreamerControl_11    = 11,
-    AirScreamerControl_12    = 12,
-    AirScreamerControl_13    = 13,
-    AirScreamerControl_14    = 14,
-    AirScreamerControl_15    = 15,
-    AirScreamerControl_16    = 16,
-    AirScreamerControl_17    = 17,
-    AirScreamerControl_18    = 18, // } Variable duration hover?
-    AirScreamerControl_19    = 19, // }
-    AirScreamerControl_20    = 20,
-    AirScreamerControl_21    = 21,
-    AirScreamerControl_22    = 22,
-    AirScreamerControl_23    = 23,
-    AirScreamerControl_24    = 24,
-    AirScreamerControl_25    = 25,
-    AirScreamerControl_26    = 26,
-    AirScreamerControl_27    = 27,
-    AirScreamerControl_28    = 28,
-    AirScreamerControl_29    = 29,
-    AirScreamerControl_30    = 30,
-    AirScreamerControl_31    = 31,
-    AirScreamerControl_32    = 32,
-    AirScreamerControl_33    = 33,
-    AirScreamerControl_34    = 34,
-    AirScreamerControl_35    = 35,
-    AirScreamerControl_36    = 36,
-    AirScreamerControl_37    = 37,
-    AirScreamerControl_38    = 38,
-    AirScreamerControl_39    = 39,
-    AirScreamerControl_40    = 40,
-    AirScreamerControl_41    = 41,
-    AirScreamerControl_42    = 42,
-    AirScreamerControl_43    = 43,
-    AirScreamerControl_44    = 44,
-    AirScreamerControl_45    = 45,
-    AirScreamerControl_46    = 46,
-    AirScreamerControl_47    = 47,
-    AirScreamerControl_48    = 48,
-    AirScreamerControl_49    = 49,
-    AirScreamerControl_50    = 50,
-    AirScreamerControl_51    = 51,
+    AirScreamerControl_None      = 0,
+    AirScreamerControl_1         = 1,
+    AirScreamerControl_2         = 2,
+    AirScreamerControl_StandIdle = 3,
+    AirScreamerControl_4         = 4, // } Walk
+    AirScreamerControl_5         = 5, // }
+    AirScreamerControl_6         = 6,
+    AirScreamerControl_7         = 7,
+    AirScreamerControl_8         = 8,
+    AirScreamerControl_9         = 9,
+    AirScreamerControl_10        = 10,
+    AirScreamerControl_11        = 11,
+    AirScreamerControl_12        = 12,
+    AirScreamerControl_13        = 13,
+    AirScreamerControl_14        = 14,
+    AirScreamerControl_15        = 15,
+    AirScreamerControl_Recoil    = 16,
+    AirScreamerControl_Stun      = 17,
+    AirScreamerControl_18        = 18, // } Variable duration hover?
+    AirScreamerControl_19        = 19, // }
+    AirScreamerControl_20        = 20,
+    AirScreamerControl_21        = 21,
+    AirScreamerControl_22        = 22,
+    AirScreamerControl_23        = 23,
+    AirScreamerControl_24        = 24,
+    AirScreamerControl_25        = 25,
+    AirScreamerControl_26        = 26,
+    AirScreamerControl_27        = 27,
+    AirScreamerControl_28        = 28,
+    AirScreamerControl_29        = 29,
+    AirScreamerControl_30        = 30,
+    AirScreamerControl_31        = 31,
+    AirScreamerControl_32        = 32,
+    AirScreamerControl_Glide     = 33,
+    AirScreamerControl_34        = 34,
+    AirScreamerControl_35        = 35,
+    AirScreamerControl_36        = 36,
+    AirScreamerControl_37        = 37,
+    AirScreamerControl_38        = 38,
+    AirScreamerControl_39        = 39,
+    AirScreamerControl_40        = 40,
+    AirScreamerControl_41        = 41,
+    AirScreamerControl_42        = 42,
+    AirScreamerControl_43        = 43,
+    AirScreamerControl_44        = 44,
+    AirScreamerControl_45        = 45,
+    AirScreamerControl_46        = 46,
+    AirScreamerControl_47        = 47,
+    AirScreamerControl_48        = 48,
+    AirScreamerControl_49        = 49,
+    AirScreamerControl_50        = 50,
+    AirScreamerControl_51        = 51,
 
     AirScreamerControl_Count = 52
 } e_AirScreamerControl;
 
-/** @brief Air Screamer or Night Flutter character state steps. */
-typedef enum _AirScreamerStateStep
+/** @brief Air Screamer or Night Flutter character hit types. */
+typedef enum _AirScreamerHit
 {
-    AirScreamerStateStep_0  = 0,
-    AirScreamerStateStep_1  = 1,
-    AirScreamerStateStep_2  = 2,
-    AirScreamerStateStep_3  = 3,
-    AirScreamerStateStep_4  = 4,
-    AirScreamerStateStep_5  = 5,
-    AirScreamerStateStep_6  = 6,
-    AirScreamerStateStep_7  = 7,
-    AirScreamerStateStep_8  = 8,
-    AirScreamerStateStep_9  = 9,
-    AirScreamerStateStep_10 = 10,
-    AirScreamerStateStep_11 = 11,
-    AirScreamerStateStep_12 = 12,
-    AirScreamerStateStep_13 = 13,
-
-    AirScreamerStateStep_64 = 64,
-    AirScreamerStateStep_65 = 65,
-    AirScreamerStateStep_66 = 66,
-    AirScreamerStateStep_67 = 67
-} e_AirScreamerStateStep;
-
-/** @brief Air Screamer or Night Flutter character damage types. */
-typedef enum _AirScreamerDamage
-{
-    AirScreamerDamage_None   = 0,
-    AirScreamerDamage_Recoil = 1,
-    AirScreamerDamage_Rear   = 2,
-    AirScreamerDamage_Stun   = 3,
-    AirScreamerDamage_Kill   = 4
-} e_AirScreamerDamage;
+    AirScreamerHit_None   = 0,
+    AirScreamerHit_Recoil = 1,
+    AirScreamerHit_Rear   = 2,
+    AirScreamerHit_Stun   = 3,
+    AirScreamerHit_Kill   = 4
+} e_AirScreamerHit;
 
 /** @brief Updates an active Air Screamer or Night Flutter character.
  *
@@ -209,6 +186,12 @@ void sharedFunc_800D2BE4_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D2BF4_0_s01(s_SubCharacter* airScreamer);
 
+/** @brief Applies damage to an Air Screamer character and returns a hit type coresponding to the damage context..
+ *
+ * @param airScreamer Air Screamer character to damage.
+ * @param mult Damage multiplier.
+ * @return Hit type (`e_AirScreamerHit`).
+ */
 s32 AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult);
 
 bool sharedFunc_800D2E04_0_s01(s_SubCharacter* airScreamer, VECTOR3* inVec, q19_12* outDist, q19_12* outAngle);
@@ -310,7 +293,9 @@ void sharedFunc_800D5E14_0_s01(s_SubCharacter* airScreamer);
 
 void AirScreamer_Control_2(s_SubCharacter* airScreamer);
 
-void AirScreamer_Control_3(s_SubCharacter* airScreamer);
+void AirScreamer_ControlStandIdle(s_SubCharacter* airScreamer);
+
+void AirScreamer_Control_4(s_SubCharacter* airScreamer);
 
 void AirScreamer_Control_5(s_SubCharacter* airScreamer);
 
@@ -334,9 +319,10 @@ void AirScreamer_Control_14(s_SubCharacter* airScreamer);
 
 void AirScreamer_Control_15(s_SubCharacter* airScreamer);
 
-void AirScreamer_Control_16(s_SubCharacter* airScreamer);
+// Very similar to `AirScreamer_Control_44`, changes here should be copied there.
+void AirScreamer_ControlRecoil(s_SubCharacter* airScreamer);
 
-void AirScreamer_Control_17(s_SubCharacter* airScreamer);
+void AirScreamer_ControlStun(s_SubCharacter* airScreamer);
 
 void AirScreamer_Control_18(s_SubCharacter* airScreamer);
 
@@ -366,7 +352,7 @@ void AirScreamer_Control_31(s_SubCharacter* airScreamer);
 
 void AirScreamer_Control_32(s_SubCharacter* airScreamer);
 
-void AirScreamer_Control_33(s_SubCharacter* airScreamer);
+void AirScreamer_ControlGlide(s_SubCharacter* airScreamer);
 
 void AirScreamer_Control_34(s_SubCharacter* airScreamer);
 
@@ -382,6 +368,7 @@ void AirScreamer_Control_42(s_SubCharacter* airScreamer);
 
 void AirScreamer_Control_43(s_SubCharacter* airScreamer);
 
+// Very similar to `AirScreamer_ControlRecoil`, changes here should be copied there.
 void AirScreamer_Control_44(s_SubCharacter* airScreamer);
 
 void AirScreamer_Control_45(s_SubCharacter* airScreamer);

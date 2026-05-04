@@ -261,7 +261,7 @@ void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isDoctor)
     charaState     = stateStepDiv3 / 3;
 
     nurseProps.field_11A = 0;
-    nurse->flags     |= CharaFlag_Unk3;
+    nurse->flags     |= CharaFlag_Hit;
 
     if (!isDoctor)
     {

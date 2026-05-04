@@ -47,7 +47,7 @@ void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINAT
 
         if (groanerProps.flags.val16[0] & GroanerFlag_7)
         {
-            groaner->flags |= CharaFlag_Unk3;
+            groaner->flags |= CharaFlag_Hit;
         }
     }
 }

@@ -108,7 +108,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
 
         case StalkerStateStep_6:
             stalker->model.controlState = StalkerControl_2;
-            stalker->flags             |= CharaFlag_Unk3;
+            stalker->flags             |= CharaFlag_Hit;
             stalkerProps.timer_F8       = Q12(1.0f);
             stalkerProps.flags         |= StalkerFlag_0 | StalkerFlag_1;
             stalker->collision.state    = CharaCollisionState_Npc;
@@ -518,7 +518,7 @@ void Ai_Stalker_ControlUpdate(s_SubCharacter* stalker)
 
     if (stalkerProps.flags & StalkerFlag_10)
     {
-        stalker->flags |= CharaFlag_Unk3;
+        stalker->flags |= CharaFlag_Hit;
     }
 
     if (stalker->model.anim.status != ANIM_STATUS(StalkerAnim_34, true))
