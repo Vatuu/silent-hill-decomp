@@ -1456,7 +1456,6 @@ STATIC_ASSERT_SIZEOF(s_PropsCreeper, 40);
 /** @brief Dahlia character properties. */
 typedef struct _PropsDahlia
 {
-    u_Property properties_F0;
     /* 0x0   */ s32        controlState; /** `e_DahliaControl` */
     /* 0xEC  */ u_Property properties_EC; // Unused?
     /* 0xF0  */ u_Property properties_F0; // Unused?
