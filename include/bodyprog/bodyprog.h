@@ -118,7 +118,7 @@ typedef enum _SfxPairIdx
     SfxPairIdx_24 = 24
 } e_SfxPairIdx;
 
-// @brief Animation playback states. Returned by `Chara_AnimPlaybackStateGet`.
+/** @brief Animation playback states. Returned by `Chara_AnimPlaybackStateGet`. */
 typedef enum _AnimPlaybackState
 {
     AnimPlaybackState_Blend   = -2,

@@ -674,12 +674,13 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords);
 
 void sharedFunc_800D0968_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords);
 
-/** Set to Split Head bone coords. */
-extern GsCOORDINATE2* sharedData_800D8610_1_s05;
-
 s32 sharedFunc_800D929C_0_s00(void);
 
-/** NPC anim func. Checks if the active keyframe is at the start or end of the anim's range. */
+/** @brief Gets the playback state of a character's active animation.
+ *
+ * @param chara Character to check.
+ * @return Playback state (`e_AnimPlaybackState`);
+ */
 s32 Chara_AnimPlaybackStateGet(s_SubCharacter* chara);
 
 bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfxId);

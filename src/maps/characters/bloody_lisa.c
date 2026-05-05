@@ -20,7 +20,7 @@
   */
 void BloodyLisa_Update(s_SubCharacter* bloodyLisa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
-    if (bloodyLisa->model.controlState == 0)
+    if (bloodyLisa->model.controlState == BloodyLisaControl_None)
     {
         BloodyLisa_Init(bloodyLisa);
     }
@@ -98,10 +98,10 @@ void BloodyLisa_AnimStateUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneC
 
     switch (dahliaProps.controlState)
     {
-        case 0:
+        case BloodyLisaControl_None:
             break;
 
-        case 6:
+        case BloodyLisaControl_6:
             Model_AnimStatusSet(&bloodyLisa->model, BloodyLisaAnim_Walk, false);
             Chara_AnimStateReset(bloodyLisa);
             break;
@@ -112,7 +112,7 @@ void BloodyLisa_AnimStateUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneC
 
     switch (dahliaProps.controlState)
     {
-        case 6:
+        case BloodyLisaControl_6:
             if (bloodyLisa->model.anim.keyframeIdx <= 12)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(BloodyLisaAnim_Walk, true), bloodyLisa, 12, 27, sfx, pitch0);

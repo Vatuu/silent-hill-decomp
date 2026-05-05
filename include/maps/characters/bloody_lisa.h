@@ -8,6 +8,18 @@ typedef enum _BloodyLisaAnim
     BloodyLisaAnim_Walk  = 1
 } e_BloodyLisaAnim;
 
+/** @brief Bloody Lisa character control states. */
+typedef enum _BloodyLisaControl
+{
+    BloodyLisaControl_None = 0,
+    BloodyLisaControl_1    = 1,
+    BloodyLisaControl_2    = 2,
+    BloodyLisaControl_3    = 3,
+    BloodyLisaControl_4    = 4,
+    BloodyLisaControl_5    = 5,
+    BloodyLisaControl_6    = 6
+} e_BloodyLisaControl;
+
 /*s_AnimInfo BLOODY_LISA_ANIM_INFOS[] = {
     { Anim_BlendLinear, ANIM_STATUS(BloodyLisaAnim_Still, false), false, ANIM_STATUS(BloodyLisaAnim_Still, false), { Q12(0.0f)  }, NO_VALUE, 0   },
     { Anim_PlaybackLoop, ANIM_STATUS(BloodyLisaAnim_Still, true),  false, NO_VALUE,                                 { Q12(30.0f) }, NO_VALUE, 1   },

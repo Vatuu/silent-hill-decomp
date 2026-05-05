@@ -206,10 +206,10 @@ s32 Chara_AnimPlaybackStateGet(s_SubCharacter* chara)
 
     if (animInfo->playbackFunc == Anim_BlendLinear)
     {
-        return -2;
+        return AnimPlaybackState_Blend;
     }
 
-    return -1;
+    return AnimPlaybackState_Invalid;
 }
 
 bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, q19_12 angleIn, s32 arg4)
