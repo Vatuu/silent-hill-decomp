@@ -20,16 +20,16 @@
  * MAP6_S01: 0x800CE4FC
  * MAP7_S03: 0x800D1098
  */
-void Ai_Cybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void Cybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     if (chara->model.controlState == 0)
     {
-        Ai_Cybil_Init(chara);
+        Cybil_Init(chara);
     }
 
-    Ai_Cybil_AnimStateUpdate(chara, boneCoords);
-    Ai_Cybil_MovementUpdate(chara, boneCoords);
-    Ai_Cybil_AnimUpdate(chara, anmHdr, boneCoords);
+    Cybil_AnimStateUpdate(chara, boneCoords);
+    Cybil_MovementUpdate(chara, boneCoords);
+    Cybil_AnimUpdate(chara, anmHdr, boneCoords);
 }
 
 /** Addresses
@@ -38,7 +38,7 @@ void Ai_Cybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* 
  * MAP6_S01: 0x800CE570
  * MAP7_S03: 0x800D110C
  */
-void Ai_Cybil_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINATE2* boneCoords)
+void Cybil_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINATE2* boneCoords)
 {
     s_AnimInfo* animInfo;
 
@@ -55,7 +55,7 @@ void Ai_Cybil_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINA
  * MAP6_S01: 0x800CE5B8
  * MAP7_S03: 0x800D1154
  */
-void Ai_Cybil_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
+void Cybil_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 {
     VECTOR3 unused;
     VECTOR3 offset;
@@ -92,7 +92,7 @@ void Ai_Cybil_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
  * MAP6_S01:
  * MAP7_S03:
  */
-void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
+void Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 {
     s_Collision coll;
     e_SfxId     sfx;
@@ -536,7 +536,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
  * MAP6_S01: 0x800CF794
  * MAP7_S03: 0x800D232C
  */
-void Ai_Cybil_Init(s_SubCharacter* chara)
+void Cybil_Init(s_SubCharacter* chara)
 {
     sharedFunc_800D923C_0_s00(chara);
     sharedData_800E2378_0_s01 = 0;

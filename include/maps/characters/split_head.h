@@ -97,21 +97,21 @@ typedef struct
 
 extern s_AnimInfo SPLIT_HEAD_ANIM_INFOS[];
 
-void Ai_SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-void Ai_SplitHead_Init(s_SubCharacter* splitHead);
+void SplitHead_Init(s_SubCharacter* splitHead);
 
 void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead);
 
-void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead);
+void SplitHead_DamageTake(s_SubCharacter* splitHead);
 
-void Ai_SplitHead_ControlUpdate(s_SubCharacter* splitHead);
+void SplitHead_ControlUpdate(s_SubCharacter* splitHead);
 
-void Ai_SplitHead_Control_1(s_SubCharacter* splitHead);
+void SplitHead_Control_1(s_SubCharacter* splitHead);
 
-void Ai_SplitHead_Control_2(s_SubCharacter* splitHead);
+void SplitHead_Control_2(s_SubCharacter* splitHead);
 
-void Ai_SplitHead_Control_3(s_SubCharacter* splitHead);
+void SplitHead_Control_3(s_SubCharacter* splitHead);
 
 void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead);
 
@@ -121,15 +121,15 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead);
 
 void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_12* offsetZ);
 
-void Ai_SplitHead_Control_4(s_SubCharacter* splitHead);
+void SplitHead_Control_4(s_SubCharacter* splitHead);
 
-void Ai_SplitHead_Control_5(s_SubCharacter* splitHead);
+void SplitHead_Control_5(s_SubCharacter* splitHead);
 
-void Ai_SplitHead_Control_6(s_SubCharacter* splitHead);
+void SplitHead_Control_6(s_SubCharacter* splitHead);
 
-void Ai_SplitHead_Control_7(s_SubCharacter* splitHead);
+void SplitHead_Control_7(s_SubCharacter* splitHead);
 
-void Ai_SplitHead_Control_8(s_SubCharacter* splitHead);
+void SplitHead_Control_8(s_SubCharacter* splitHead);
 
 void sharedFunc_800D3AFC_1_s05(s_SubCharacter* splitHead);
 

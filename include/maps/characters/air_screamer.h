@@ -186,7 +186,7 @@ void sharedFunc_800D2BE4_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D2BF4_0_s01(s_SubCharacter* airScreamer);
 
-/** @brief Applies damage to an Air Screamer character and returns a hit type coresponding to the damage context..
+/** @brief Applies damage to an Air Screamer character and returns a hit type corresponding to the damage context.
  *
  * @param airScreamer Air Screamer character to damage.
  * @param mult Damage multiplier.

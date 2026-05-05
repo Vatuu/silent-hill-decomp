@@ -23,7 +23,7 @@
 
 #include "../src/maps/chara_util.c" // 0x800D5040
 
-void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5BC8
+void LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5BC8
 {
     s32         temp_s0;
     s32         var_a2;
@@ -4371,7 +4371,7 @@ void func_800DD9F8(s_SubCharacter* chara) // 0x800DD9F8
     }
 }
 
-bool Ai_Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDA1C
+bool Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDA1C
 {
     u8              activeStateStep;
     s_SubCharacter* localIncubus; // TODO: Not sure why this is needed here, could be an inline in this func and others.
@@ -5345,9 +5345,9 @@ void func_800DF074(s_SubCharacter* incubus) // 0x800DF074
     }
 }
 
-void Ai_Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DF0D8
+void Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DF0D8
 {
-    if ((incubus->model.controlState != IncubusControl_0 || Ai_Incubus_Init(incubus, coords)) &&
+    if ((incubus->model.controlState != IncubusControl_0 || Incubus_Init(incubus, coords)) &&
         incubus->model.controlState != IncubusControl_1)
     {
         if (g_DeltaTime != Q12(0.0f))
@@ -5780,7 +5780,7 @@ void func_800DFB74(s_SubCharacter* chara) // 0x800DFB74
     }
 }
 
-bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB98
+bool Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB98
 {
     s_SubCharacter* localChara; // TODO: Not sure why this is needed here, might be an inline in this func.
 
@@ -6330,11 +6330,11 @@ void func_800E0914(s_SubCharacter* chara) // 0x800E0914
     func_800DF944();
 }
 
-void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800E093C
+void Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800E093C
 {
     if (chara->model.controlState == 0)
     {
-        Ai_Unknown23_Init(chara, coords);
+        Unknown23_Init(chara, coords);
     }
 
     if (chara->model.controlState != 1)
@@ -10020,12 +10020,12 @@ void func_800E9490(s_SubCharacter* chara) // 0x800E9490
 
 void func_800E9498(void) // 0x800E9498
 {
-    g_MapOverlayHeader.charaUpdateFuncs[Chara_Incubator] = Ai_Unknown23_Update;
+    g_MapOverlayHeader.charaUpdateFuncs[Chara_Incubator] = Unknown23_Update;
 }
 
 void func_800E94AC(void) // 0x800E94AC
 {
-    g_MapOverlayHeader.charaUpdateFuncs[Chara_Incubator] = Ai_Incubator_Update;
+    g_MapOverlayHeader.charaUpdateFuncs[Chara_Incubator] = Incubator_Update;
 }
 
 void func_800E94C0(void) // 0x800E94C0

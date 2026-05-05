@@ -153,7 +153,7 @@ extern q19_12 g_Cutscene_Timer;
 
 extern q3_12 D_800ED5B6; // Angle.
 
-extern s_Model g_Ai_MonsterCybil_ExtraModel; // Some kind of attachment or another `s_SubCharacter` instance?
+extern s_Model g_MonsterCybil_ExtraModel; // Some kind of attachment or another `s_SubCharacter` instance?
 
 extern s32 D_800ED588;
 extern s32 D_800ED58C;
@@ -275,9 +275,9 @@ void func_800D8848(s_Model* model);
 
 s32 func_800D8898(s_AnimInfo* animInfo);
 
-void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel);
+void MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel);
 
 void func_800D8A90(s_SubCharacter* chara);
 
@@ -313,9 +313,9 @@ void func_800DB748(s_SubCharacter* chara);
 
 void func_800DC018(s_SubCharacter* chara);
 
-void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800DE26C(void);
 

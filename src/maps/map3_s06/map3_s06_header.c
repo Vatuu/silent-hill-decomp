@@ -138,7 +138,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, Ai_Dahlia_Update, Ai_Dahlia_Update },
+        NULL, NULL, NULL, NULL, NULL, NULL, Dahlia_Update, Dahlia_Update },
     .charaGroupIds = {},
     .charaSpawns   = {
 #include "chara_spawns.h"

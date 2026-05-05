@@ -94,13 +94,13 @@ extern s32 D_800D7860;
 
 extern s16 D_800D7A38[];
 
-void Ai_Floatstinger_Update(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Floatstinger_Update(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void Ai_Floatstinger_Init(s_SubCharacter* floatstinger);
+void Floatstinger_Init(s_SubCharacter* floatstinger);
 
 void func_800D1968(s_SubCharacter* floatstinger);
 
-void Ai_Floatstinger_ControlUpdate(s_SubCharacter* floatstinger);
+void Floatstinger_ControlUpdate(s_SubCharacter* floatstinger);
 
 void func_800D1BF8(s_SubCharacter* floatstinger);
 

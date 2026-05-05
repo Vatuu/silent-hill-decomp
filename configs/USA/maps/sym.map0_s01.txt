@@ -206,11 +206,11 @@ sharedFunc_800D8804_0_s01           = 0x800D8804; // type:func
 //--------------------------------------------------------------
 //--- PA: 0x00F29C   VA: 0x800D8814   subsegment: c, Chara_Cybil
 //--------------------------------------------------------------
-Ai_Cybil_Update                     = 0x800D8814; // type:func
-Ai_Cybil_AnimUpdate                 = 0x800D8888; // type:func
-Ai_Cybil_MovementUpdate             = 0x800D88D0; // type:func
-Ai_Cybil_AnimStateUpdate            = 0x800D8A68; // type:func
-Ai_Cybil_Init                       = 0x800D9AD0; // type:func
+Cybil_Update                        = 0x800D8814; // type:func
+Cybil_AnimUpdate                    = 0x800D8888; // type:func
+Cybil_MovementUpdate                = 0x800D88D0; // type:func
+Cybil_AnimStateUpdate               = 0x800D8A68; // type:func
+Cybil_Init                          = 0x800D9AD0; // type:func
 
 //-------------------------------------------------------------
 //--- PA: 0x010594   VA: 0x800D9B0C   subsegment: c, map0_s01_2

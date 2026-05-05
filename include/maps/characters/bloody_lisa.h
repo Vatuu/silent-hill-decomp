@@ -20,10 +20,10 @@ extern s_AnimInfo BLOODY_LISA_ANIM_INFOS[];
 
 extern s32 sharedData_800E2C38_7_s01;
 
-void Ai_BloodyLisa_Update(s_SubCharacter* bloodyLisa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-void Ai_BloodyLisa_AnimUpdate(s_SubCharacter* bloodyLisa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-void Ai_BloodyLisa_MovementUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneCoords);
-void Ai_BloodyLisa_AnimStateUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneCoords);
-void Ai_BloodyLisa_Init(s_SubCharacter* bloodyLisa);
+void BloodyLisa_Update(s_SubCharacter* bloodyLisa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void BloodyLisa_AnimUpdate(s_SubCharacter* bloodyLisa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void BloodyLisa_MovementUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneCoords);
+void BloodyLisa_AnimStateUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneCoords);
+void BloodyLisa_Init(s_SubCharacter* bloodyLisa);
 
 #endif

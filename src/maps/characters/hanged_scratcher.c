@@ -8,23 +8,23 @@
 
 #define scratcherProps scratcher->properties.hangedScratcher
 
-void Ai_HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     // Initialize.
     if (scratcher->model.controlState == HangedScratcherControl_None)
     {
-        Ai_HangedScratcher_Init(scratcher);
+        HangedScratcher_Init(scratcher);
     }
 
     sharedFunc_800CFF74_5_s00(scratcher);
-    Ai_HangedScratcher_ControlUpdate(scratcher);
+    HangedScratcher_ControlUpdate(scratcher);
     sharedFunc_800D26D8_5_s00(scratcher);
     sharedFunc_800D2844_5_s00(scratcher, anmHdr, boneCoords);
     sharedFunc_800D2C18_5_s00(scratcher);
     sharedFunc_800D3300_5_s00(scratcher);
 }
 
-void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
+void HangedScratcher_Init(s_SubCharacter* scratcher)
 {
     s32    i;
     q19_12 radiusMax;
@@ -238,7 +238,7 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
     Chara_DamageClear(scratcher);
 }
 
-void Ai_HangedScratcher_ControlUpdate(s_SubCharacter* scratcher)
+void HangedScratcher_ControlUpdate(s_SubCharacter* scratcher)
 {
     s32 animStatus;
 
@@ -256,72 +256,72 @@ void Ai_HangedScratcher_ControlUpdate(s_SubCharacter* scratcher)
             break;
 
         case HangedScratcherControl_1:
-            Ai_HangedScratcher_Control_1(scratcher);
+            HangedScratcher_Control_1(scratcher);
             break;
 
         case HangedScratcherControl_2:
-            Ai_HangedScratcher_Control_2(scratcher);
+            HangedScratcher_Control_2(scratcher);
             break;
 
         case HangedScratcherControl_3:
-            Ai_HangedScratcher_Control_3(scratcher);
+            HangedScratcher_Control_3(scratcher);
             break;
 
         case HangedScratcherControl_4:
-            Ai_HangedScratcher_Control_4(scratcher);
+            HangedScratcher_Control_4(scratcher);
             break;
 
         case HangedScratcherControl_5:
-            Ai_HangedScratcher_Control_5(scratcher);
+            HangedScratcher_Control_5(scratcher);
             break;
 
         case HangedScratcherControl_6:
-            Ai_HangedScratcher_Control_6(scratcher);
+            HangedScratcher_Control_6(scratcher);
             break;
 
         case HangedScratcherControl_7:
-            Ai_HangedScratcher_Control_7(scratcher);
+            HangedScratcher_Control_7(scratcher);
             break;
 
         case HangedScratcherControl_8:
-            Ai_HangedScratcher_Control_8(scratcher);
+            HangedScratcher_Control_8(scratcher);
             break;
 
         case HangedScratcherControl_9:
-            Ai_HangedScratcher_Control_9(scratcher);
+            HangedScratcher_Control_9(scratcher);
             break;
 
         case HangedScratcherControl_10:
-            Ai_HangedScratcher_Control_10(scratcher);
+            HangedScratcher_Control_10(scratcher);
             break;
 
         case HangedScratcherControl_11:
-            Ai_HangedScratcher_Control_11(scratcher);
+            HangedScratcher_Control_11(scratcher);
             break;
 
         case HangedScratcherControl_12:
-            Ai_HangedScratcher_Control_12(scratcher);
+            HangedScratcher_Control_12(scratcher);
             break;
 
         case HangedScratcherControl_13:
-            Ai_HangedScratcher_Control_13(scratcher);
+            HangedScratcher_Control_13(scratcher);
             break;
 
         case HangedScratcherControl_14:
-            Ai_HangedScratcher_Control_14(scratcher);
+            HangedScratcher_Control_14(scratcher);
             break;
 
         case HangedScratcherControl_15:
-            Ai_HangedScratcher_Control_15(scratcher);
+            HangedScratcher_Control_15(scratcher);
             break;
 
         case HangedScratcherControl_16:
-            Ai_HangedScratcher_Control_16(scratcher);
+            HangedScratcher_Control_16(scratcher);
             break;
     }
 }
 
-void Ai_HangedScratcher_Control_16(s_SubCharacter* scratcher)
+void HangedScratcher_Control_16(s_SubCharacter* scratcher)
 {
     if (scratcherProps.field_104 != 0)
     {
@@ -330,7 +330,7 @@ void Ai_HangedScratcher_Control_16(s_SubCharacter* scratcher)
     }
 }
 
-void Ai_HangedScratcher_Control_1(s_SubCharacter* scratcher)
+void HangedScratcher_Control_1(s_SubCharacter* scratcher)
 {
     q19_12 distToPlayer;
 
@@ -350,7 +350,7 @@ void Ai_HangedScratcher_Control_1(s_SubCharacter* scratcher)
     }
 }
 
-void Ai_HangedScratcher_Control_2(s_SubCharacter* chara)
+void HangedScratcher_Control_2(s_SubCharacter* chara)
 {
     q19_12 distToPlayer;
 
@@ -366,7 +366,7 @@ void Ai_HangedScratcher_Control_2(s_SubCharacter* chara)
     }
 }
 
-void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
+void HangedScratcher_Control_3(s_SubCharacter* scratcher)
 {
     q19_12 distToPlayer;
     q3_12  angleDeltaToPlayer;
@@ -489,7 +489,7 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
     }
 }
 
-void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
+void HangedScratcher_Control_4(s_SubCharacter* scratcher)
 {
     VECTOR3 attackPos; // Q19.12
     q19_12  distToPlayer;
@@ -565,7 +565,7 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
     }
 }
 
-void Ai_HangedScratcher_Control_5(s_SubCharacter* scratcher)
+void HangedScratcher_Control_5(s_SubCharacter* scratcher)
 {
     if (Vw_AabbVisibleInScreenCheck(MIN_OFFSET(scratcher->position.vx, Q12(0.5f), Q12(0.5f)),
                                     MAX_OFFSET(scratcher->position.vx, Q12(0.5f), Q12(0.5f)),
@@ -591,7 +591,7 @@ void Ai_HangedScratcher_Control_5(s_SubCharacter* scratcher)
     }
 }
 
-void Ai_HangedScratcher_Control_6(s_SubCharacter* scratcher)
+void HangedScratcher_Control_6(s_SubCharacter* scratcher)
 {
     q19_12 distToPlayer;
     u16    temp_v1;
@@ -627,7 +627,7 @@ void Ai_HangedScratcher_Control_6(s_SubCharacter* scratcher)
     scratcherProps.timer_EA = MAX(Q12(0.0f), temp_v1 - g_DeltaTime);
 }
 
-void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
+void HangedScratcher_Control_7(s_SubCharacter* scratcher)
 {
     q19_12 distToPlayer;
     q3_12  angleDeltaToPlayer;
@@ -737,7 +737,7 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
     }
 }
 
-void Ai_HangedScratcher_Control_8(s_SubCharacter* scratcher)
+void HangedScratcher_Control_8(s_SubCharacter* scratcher)
 {
     if (scratcherProps.flags_E8 & HangedScratcherFlag_0)
     {
@@ -780,7 +780,7 @@ void Ai_HangedScratcher_Control_8(s_SubCharacter* scratcher)
     }
 }
 
-void Ai_HangedScratcher_Control_9(s_SubCharacter* scratcher)
+void HangedScratcher_Control_9(s_SubCharacter* scratcher)
 {
     s_Collision coll;
 
@@ -811,7 +811,7 @@ void Ai_HangedScratcher_Control_9(s_SubCharacter* scratcher)
     }
 }
 
-void Ai_HangedScratcher_Control_10(s_SubCharacter* scratcher)
+void HangedScratcher_Control_10(s_SubCharacter* scratcher)
 {
     Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
 
@@ -824,7 +824,7 @@ void Ai_HangedScratcher_Control_10(s_SubCharacter* scratcher)
     }
 }
 
-void Ai_HangedScratcher_Control_11(s_SubCharacter* scratcher)
+void HangedScratcher_Control_11(s_SubCharacter* scratcher)
 {
     if (scratcherProps.flags_E8 & HangedScratcherFlag_0)
     {
@@ -874,7 +874,7 @@ void Ai_HangedScratcher_Control_11(s_SubCharacter* scratcher)
     }
 }
 
-void Ai_HangedScratcher_Control_12(s_SubCharacter* scratcher)
+void HangedScratcher_Control_12(s_SubCharacter* scratcher)
 {
     q19_12 duration;
     q19_12 durationScaled;
@@ -902,7 +902,7 @@ void Ai_HangedScratcher_Control_12(s_SubCharacter* scratcher)
     }
 }
 
-void Ai_HangedScratcher_Control_13(s_SubCharacter* scratcher)
+void HangedScratcher_Control_13(s_SubCharacter* scratcher)
 {
     Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
 
@@ -927,7 +927,7 @@ void Ai_HangedScratcher_Control_13(s_SubCharacter* scratcher)
     }
 }
 
-void Ai_HangedScratcher_Control_14(s_SubCharacter* scratcher)
+void HangedScratcher_Control_14(s_SubCharacter* scratcher)
 {
     s_Collision coll;
     VECTOR3     sfxPos;
@@ -1019,7 +1019,7 @@ void Ai_HangedScratcher_Control_14(s_SubCharacter* scratcher)
     }
 }
 
-void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
+void HangedScratcher_Control_15(s_SubCharacter* scratcher)
 {
     VECTOR3 attackPos;
     q19_12  distToPlayer;

@@ -9,7 +9,7 @@
 #include "maps/shared.h"
 #include "maps/characters/bloodsucker.h"
 
-void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     u32 animStatusDiv2;
     s32 stateStepMul2;
@@ -17,26 +17,26 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
     // Initialize.
     if (bloodsucker->model.controlState == BloodsuckerControl_None)
     {
-        Ai_Bloodsucker_Init(bloodsucker);
+        Bloodsucker_Init(bloodsucker);
     }
 
     // Handle control state.
     switch (bloodsucker->model.controlState)
     {
         case BloodsuckerControl_1:
-            Ai_Bloodsucker_Control_1(bloodsucker);
+            Bloodsucker_Control_1(bloodsucker);
             break;
 
         case BloodsuckerControl_2:
-            Ai_Bloodsucker_Control_2(bloodsucker);
+            Bloodsucker_Control_2(bloodsucker);
             break;
 
         case BloodsuckerControl_3:
-            Ai_Bloodsucker_Control_3(bloodsucker);
+            Bloodsucker_Control_3(bloodsucker);
             break;
 
         case BloodsuckerControl_4:
-            Ai_Bloodsucker_Control_4(bloodsucker);
+            Bloodsucker_Control_4(bloodsucker);
             break;
     }
 
@@ -111,7 +111,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
     }
 }
 
-static inline void Ai_Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
+static inline void Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
 {
     u32         stateStep;
     s_Savegame* save;
@@ -162,7 +162,7 @@ static inline void Ai_Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
 #endif
 }
 
-void Ai_Bloodsucker_Init(s_SubCharacter* bloodsucker)
+void Bloodsucker_Init(s_SubCharacter* bloodsucker)
 {
     s32 i;
 
@@ -170,12 +170,12 @@ void Ai_Bloodsucker_Init(s_SubCharacter* bloodsucker)
     bloodsucker->collision.state = CharaCollisionState_4;
     bloodsucker->headingAngle    = bloodsucker->rotation.vy;
 
-    Ai_Bloodsucker_AnimUpdateFromStep(bloodsucker);
+    Bloodsucker_AnimUpdateFromStep(bloodsucker);
     ModelAnim_AnimInfoSet(&bloodsucker->model.anim, BLOODSUCKER_ANIM_INFOS);
     Chara_DamageClear(bloodsucker);
 }
 
-void Ai_Bloodsucker_Control_1(s_SubCharacter* bloodsucker)
+void Bloodsucker_Control_1(s_SubCharacter* bloodsucker)
 {
     #define bloodsuckerProps bloodsucker->properties.bloodsucker
 
@@ -184,7 +184,7 @@ void Ai_Bloodsucker_Control_1(s_SubCharacter* bloodsucker)
     #undef bloodsuckerProps
 }
 
-void Ai_Bloodsucker_Control_2(s_SubCharacter* bloodsucker)
+void Bloodsucker_Control_2(s_SubCharacter* bloodsucker)
 {
 #ifdef MAP3_S03
     if (bloodsucker->model.anim.status == ((bloodsucker->model.stateStep * 2) + 9))
@@ -201,7 +201,7 @@ void Ai_Bloodsucker_Control_2(s_SubCharacter* bloodsucker)
 #endif
 }
 
-void Ai_Bloodsucker_Control_3(s_SubCharacter* bloodsucker)
+void Bloodsucker_Control_3(s_SubCharacter* bloodsucker)
 {
     if (bloodsucker->model.anim.status == ((bloodsucker->model.stateStep * 2) + 23))
     {
@@ -216,7 +216,7 @@ void Ai_Bloodsucker_Control_3(s_SubCharacter* bloodsucker)
     bloodsucker->properties.bloodsucker.timer_F0 = Q12(1.0f);
 }
 
-void Ai_Bloodsucker_Control_4(s_SubCharacter* bloodsucker)
+void Bloodsucker_Control_4(s_SubCharacter* bloodsucker)
 {
 #ifdef MAP3_S03
     if (bloodsucker->model.anim.status != ((bloodsucker->model.stateStep * 2) + 2) &&

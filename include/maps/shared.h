@@ -218,13 +218,13 @@ extern s16 sharedData_800DF1FA_0_s00;
 /** Something related to rotation. */
 extern s32 sharedData_800E39D8_0_s00;
 
-// Next 4 set by `Ai_Stalker_Update`.
+// Next 4 set by `Stalker_Update`.
 extern q19_12 sharedData_800E3A20_0_s00; // Health.
 extern q19_12 sharedData_800E3A24_0_s00; // Health.
 extern q19_12 sharedData_800E3A28_0_s00;
 extern q19_12 sharedData_800E3A2C_0_s00;
 
-// Used by `Ai_Stalker`/`Ai_LarvalStalker`.
+// Used by `Stalker`/`LarvalStalker`.
 extern u8  sharedData_800DD5A6_0_s00;
 extern s32 sharedData_800E39E4_0_s00;
 extern s32 sharedData_800E39E8_0_s00;
@@ -233,14 +233,14 @@ extern u16 sharedData_800E3A0C_0_s00[];  // Angles?
 extern q19_12 sharedData_800E3A18_0_s00; // Player X position?
 extern q19_12 sharedData_800E3A1C_0_s00; // Player Z position?
 
-// Two variables used by `Ai_Creeper_Init`.
+// Two variables used by `Creeper_Init`.
 extern s8 sharedData_800E57CC_1_s02;
 
 extern s_sharedData_800E21D0_0_s01 sharedData_800E21D0_0_s01;
 
 extern s_func_800D2E04 const sharedData_800CAA98_0_s01; // Used by `AirScreamer_Init` / `sharedFunc_800D2BF4_0_s01`
 
-// Three variables used by `Ai_SplitHead_Init`.
+// Three variables used by `SplitHead_Init`.
 extern q3_12 sharedData_800D8614_1_s05; // Offset X.
 extern q3_12 sharedData_800D8616_1_s05; // Offset Z.
 
@@ -604,49 +604,49 @@ void sharedFunc_800D88AC_0_s00(s_SubCharacter* stalker);
 
 void sharedFunc_800CDA88_3_s03(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_UpdateMain(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void PuppetNurse_UpdateMain(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800CDB5C(s_SubCharacter* nurse, s32);
 
-void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isDoctor);
+void PuppetNurse_Init(s_SubCharacter* nurse, bool isDoctor);
 
-void Ai_PuppetNurse_Update(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void PuppetNurse_Update(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void Ai_PuppetDoctor_Update(s_SubCharacter* doctor, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void PuppetDoctor_Update(s_SubCharacter* doctor, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse);
+void PuppetNurse_DamageHandle(s_SubCharacter* nurse);
 
 s32 PuppetNurse_HurtSfxIdGet(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_SfxPlay(s_SubCharacter* nurse, s32 idx);
+void PuppetNurse_SfxPlay(s_SubCharacter* nurse, s32 idx);
 
-s32 Ai_PuppetNurse_AnimSfxGet(s32 idx);
+s32 PuppetNurse_AnimSfxGet(s32 idx);
 
 /** Checks damage angle. */
-bool Ai_PuppetNurse_SomeAngleCheck(s_SubCharacter* nurse);
+bool PuppetNurse_SomeAngleCheck(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Move(s_SubCharacter* nurse);
+void PuppetNurse_Move(s_SubCharacter* nurse);
 
 /** Checks if some special animation is set. */
 bool sharedFunc_800CE398_3_s03(s32 animStatus);
 
-void Ai_PuppetNurse_Control1(s_SubCharacter* nurse);
+void PuppetNurse_Control1(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Control2(s_SubCharacter* nurse);
+void PuppetNurse_Control2(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor);
+void PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor);
 
 bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Control5(s_SubCharacter* nurse);
+void PuppetNurse_Control5(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Control6_7(s_SubCharacter* nurse, bool isDoctor);
+void PuppetNurse_Control6_7(s_SubCharacter* nurse, bool isDoctor);
 
-void Ai_PuppetNurse_Control8(s_SubCharacter* nurse);
+void PuppetNurse_Control8(s_SubCharacter* nurse);
 
 s32 sharedFunc_800CEEAC_3_s03(void);
 
-void Ai_PuppetNurse_Control9(s_SubCharacter* nurse);
+void PuppetNurse_Control9(s_SubCharacter* nurse);
 
 s32 sharedFunc_800CF600_3_s03(s_SubCharacter* nurse);
 
@@ -654,21 +654,21 @@ void sharedFunc_800CF7F4_3_s03(s_SubCharacter* nurse);
 
 bool sharedFunc_800CF90C_3_s03(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Control12(s_SubCharacter* nurse);
+void PuppetNurse_Control12(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Control10(s_SubCharacter* nurse);
+void PuppetNurse_Control10(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Control11(s_SubCharacter* nurse);
+void PuppetNurse_Control11(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Control13(s_SubCharacter* nurse);
+void PuppetNurse_Control13(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Control(s_SubCharacter* nurse);
+void PuppetNurse_Control(s_SubCharacter* nurse);
 
 void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords);
 
 void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords);
 

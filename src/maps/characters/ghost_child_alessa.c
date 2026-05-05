@@ -14,23 +14,23 @@
  * MAP7_S01: 0x800D49B8
  * MAP7_S02: 0x800D7A68
  */
-void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void GhostChildAlessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     if (chara->model.charaId != Chara_GhostChildAlessa)
     {
-        Ai_GhostChildAlessa_Init(chara);
+        GhostChildAlessa_Init(chara);
     }
 
-    Ai_GhostChildAlessa_AnimStateUpdate(chara, boneCoords);
-    Ai_GhostChildAlessa_MovementUpdate(chara, boneCoords);
-    Ai_GhostChildAlessa_AnimUpdate(chara, anmHdr, boneCoords);
+    GhostChildAlessa_AnimStateUpdate(chara, boneCoords);
+    GhostChildAlessa_MovementUpdate(chara, boneCoords);
+    GhostChildAlessa_AnimUpdate(chara, anmHdr, boneCoords);
 }
 
 /** Addresses
  * MAP7_S01: 0x800D4A2C
  * MAP7_S02: 0x800D7ADC
  */
-void Ai_GhostChildAlessa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void GhostChildAlessa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     s_AnimInfo* animInfo;
 
@@ -47,7 +47,7 @@ void Ai_GhostChildAlessa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, 
  * MAP7_S01: 0x800D4A74
  * MAP7_S02: 0x800D7B24
  */
-void Ai_GhostChildAlessa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
+void GhostChildAlessa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 {
     VECTOR3 unused;
     VECTOR3 offset;
@@ -82,7 +82,7 @@ void Ai_GhostChildAlessa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* bo
  * MAP7_S01: 0x800D4C0C
  * MAP7_S02: 0x800D7CBC
  */
-void Ai_GhostChildAlessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
+void GhostChildAlessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 {
     #define dahliaProps (chara->properties.dahlia)
 
@@ -151,7 +151,7 @@ void Ai_GhostChildAlessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* b
  * MAP7_S01: 0x800D4DD8
  * MAP7_S02: 0x800D7E88
  */
-void Ai_GhostChildAlessa_Init(s_SubCharacter* chara)
+void GhostChildAlessa_Init(s_SubCharacter* chara)
 {
     sharedFunc_800D923C_0_s00(chara);
     sharedData_800E39D8_0_s00 = 0;

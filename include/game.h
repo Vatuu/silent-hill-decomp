@@ -1254,7 +1254,8 @@ typedef struct _Model
     /* 0x0 */ s8          charaId;      /** `e_CharaId` */
     /* 0x1 */ u8          paletteIdx;   /** Changes the texture palette index for this model. */
     /* 0x2 */ u8          controlState; /** Active character control state. */
-    /* 0x3 */ u8          stateStep;    // Step number or temp data for the current `controlState`? In `s_PlayerExtra` always 1, set to 0 for 1 tick when anim state appears to change.
+    /* 0x3 */ u8          stateStep;    /** Step for the current `controlState`. */ 
+                                        // In `s_PlayerExtra` always 1, set to 0 for 1 tick when anim state appears to change.
                                         // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
                                         // Sometimes holds actual anim index?
     /* 0x4 */ s_ModelAnim anim;
@@ -1364,7 +1365,7 @@ STATIC_ASSERT_SIZEOF(s_PropsNpc, 64);
 /** @brief Air Screamer or Night Flutter character properties. */
 typedef struct _PropsAirScreamer
 {
-    /* 0xE8+0  */ u32     field_E8_0  : 4;
+    /* 0xE8+0  */ u32     field_E8_0  : 4; // `AirScreamerHit_None` step.
     /* 0xE8+4  */ u32     field_E8_4  : 4; /** `bool` */
     /* 0xE8+8  */ u32     field_E8_8  : 4;
     /* 0xE8+12 */ u32     __pad_E8_12 : 20;
@@ -1842,7 +1843,7 @@ typedef struct _SubCharacter
     /* 0xB0 */ q19_12            health;
     /* 0xB4 */ s_CharaDamage     damage;
     /* 0xC4 */ u16               deathTimer;     // Part of `shBattleInfo` struct in SH2, may use something similar here.
-    /* 0xC6 */ q3_12             timer_C6;       // Some sort of timer. Written to by `Ai_LarvalStalker_Update`.
+    /* 0xC6 */ q3_12             timer_C6;       // Some sort of timer. Written to by `LarvalStalker_Update`.
     /* 0xC8 */ s_CharaCollision  collision;
                union
                {

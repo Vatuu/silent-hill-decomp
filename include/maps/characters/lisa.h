@@ -68,10 +68,10 @@ extern s_AnimInfo LISA_ANIM_INFOS[];
 
 extern s32 sharedData_800D6BB8_3_s04;
 
-void Ai_Lisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-void Ai_Lisa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-void Ai_Lisa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
-void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
-void Ai_Lisa_Init(s_SubCharacter* chara);
+void Lisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Lisa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Lisa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
+void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
+void Lisa_Init(s_SubCharacter* chara);
 
 #endif

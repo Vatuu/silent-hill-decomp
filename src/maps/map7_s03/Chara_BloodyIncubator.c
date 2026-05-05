@@ -6,19 +6,19 @@
 
 // TODO: Move to src/maps/characters/ once matched.
 
-void Ai_BloodyIncubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D3684
+void BloodyIncubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D3684
 {
     if (chara->model.charaId != Chara_BloodyIncubator)
     {
-        Ai_BloodyIncubator_Init(chara);
+        BloodyIncubator_Init(chara);
     }
 
     func_800D38D8(chara, coords);
     func_800D3740(chara, coords);
-    Ai_BloodyIncubator_AnimUpdate(chara, anmHdr, coords);
+    BloodyIncubator_AnimUpdate(chara, anmHdr, coords);
 }
 
-void Ai_BloodyIncubator_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D36F8
+void BloodyIncubator_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D36F8
 {
     s_AnimInfo* animInfo;
 
@@ -133,7 +133,7 @@ void func_800D38D8(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* coords) // 0x
     Math_RotMatrixZxyNegGte(&bloodyIncubator->rotation, &coords->coord);
 }
 
-void Ai_BloodyIncubator_Init(s_SubCharacter* chara) // 0x800D3BA4
+void BloodyIncubator_Init(s_SubCharacter* chara) // 0x800D3BA4
 {
     sharedFunc_800D923C_0_s00(chara);
 }

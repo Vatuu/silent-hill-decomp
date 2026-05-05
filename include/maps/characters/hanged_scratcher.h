@@ -158,45 +158,45 @@ extern s_AnimInfo HANGED_SCRATCHER_ANIM_INFOS[];
 
 extern q19_12 sharedData_800DE28C_5_s00;
 
-void Ai_HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-void Ai_HangedScratcher_Init(s_SubCharacter* scratcher);
+void HangedScratcher_Init(s_SubCharacter* scratcher);
 
 void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher);
 
-void Ai_HangedScratcher_ControlUpdate(s_SubCharacter* scratcher);
+void HangedScratcher_ControlUpdate(s_SubCharacter* scratcher);
 
-void Ai_HangedScratcher_Control_16(s_SubCharacter* scratcher);
+void HangedScratcher_Control_16(s_SubCharacter* scratcher);
 
-void Ai_HangedScratcher_Control_1(s_SubCharacter* scratcher);
+void HangedScratcher_Control_1(s_SubCharacter* scratcher);
 
-void Ai_HangedScratcher_Control_2(s_SubCharacter* scratcher);
+void HangedScratcher_Control_2(s_SubCharacter* scratcher);
 
-void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher);
+void HangedScratcher_Control_3(s_SubCharacter* scratcher);
 
-void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher);
+void HangedScratcher_Control_4(s_SubCharacter* scratcher);
 
-void Ai_HangedScratcher_Control_5(s_SubCharacter* scratcher);
+void HangedScratcher_Control_5(s_SubCharacter* scratcher);
 
-void Ai_HangedScratcher_Control_6(s_SubCharacter* scratcher);
+void HangedScratcher_Control_6(s_SubCharacter* scratcher);
 
-void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher);
+void HangedScratcher_Control_7(s_SubCharacter* scratcher);
 
-void Ai_HangedScratcher_Control_8(s_SubCharacter* scratcher);
+void HangedScratcher_Control_8(s_SubCharacter* scratcher);
 
-void Ai_HangedScratcher_Control_9(s_SubCharacter* scratcher);
+void HangedScratcher_Control_9(s_SubCharacter* scratcher);
 
-void Ai_HangedScratcher_Control_10(s_SubCharacter* scratcher);
+void HangedScratcher_Control_10(s_SubCharacter* scratcher);
 
-void Ai_HangedScratcher_Control_11(s_SubCharacter* scratcher);
+void HangedScratcher_Control_11(s_SubCharacter* scratcher);
 
-void Ai_HangedScratcher_Control_12(s_SubCharacter* scratcher);
+void HangedScratcher_Control_12(s_SubCharacter* scratcher);
 
-void Ai_HangedScratcher_Control_13(s_SubCharacter* scratcher);
+void HangedScratcher_Control_13(s_SubCharacter* scratcher);
 
-void Ai_HangedScratcher_Control_14(s_SubCharacter* scratcher);
+void HangedScratcher_Control_14(s_SubCharacter* scratcher);
 
-void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher);
+void HangedScratcher_Control_15(s_SubCharacter* scratcher);
 
 void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher);
 

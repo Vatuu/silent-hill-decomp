@@ -153,9 +153,9 @@ extern RECT          D_800E9D0C[];
 extern u16           D_800E9D24[];
 extern u16           D_800E9D2C;
 
-void Ai_GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void Ai_GhostDoctor_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void GhostDoctor_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 /** @brief Updates the transform of the `coord` matrix to the character's position, converting
  * from world-space to geometry space.
@@ -165,7 +165,7 @@ void Ai_GhostDoctor_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOO
  */
 void Character_CoordTransformUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord);
 
-void Ai_GhostDoctor_Init(s_SubCharacter* chara);
+void GhostDoctor_Init(s_SubCharacter* chara);
 
 /** Likely takes Harry character based on property usage. */
 void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord);

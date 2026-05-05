@@ -24,16 +24,16 @@
  * MAP7_S02: 0x800D6ED4
  * MAP7_S03: 0x800D2368
  */
-void Ai_Dahlia_Update(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void Dahlia_Update(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     if (dahlia->model.controlState == 0)
     {
-        Ai_Dahlia_Init(dahlia);
+        Dahlia_Init(dahlia);
     }
 
-    Ai_Dahlia_AnimStateUpdate(dahlia, boneCoords);
-    Ai_Dahlia_MovementUpdate(dahlia, boneCoords);
-    Ai_Dahlia_AnimUpdate(dahlia, anmHdr, boneCoords);
+    Dahlia_AnimStateUpdate(dahlia, boneCoords);
+    Dahlia_MovementUpdate(dahlia, boneCoords);
+    Dahlia_AnimUpdate(dahlia, anmHdr, boneCoords);
 }
 
 /** Addresses
@@ -44,7 +44,7 @@ void Ai_Dahlia_Update(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE2
  * MAP7_S02: 0x800D6F48
  * MAP7_S03: 0x800D23DC
  */
-void Ai_Dahlia_AnimUpdate(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void Dahlia_AnimUpdate(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     s_AnimInfo* animInfo;
 
@@ -63,7 +63,7 @@ void Ai_Dahlia_AnimUpdate(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDIN
  * MAP7_S02: 0x800D6F90
  * MAP7_S03: 0x800D2424
  */
-void Ai_Dahlia_MovementUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
+void Dahlia_MovementUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
 {
     VECTOR3 pos; // @unused
     VECTOR3 offset;
@@ -114,7 +114,7 @@ void Ai_Dahlia_MovementUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
  * MAP7_S02: 0x800D7168
  * MAP7_S03: 0x800D25FC
  */
-void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
+void Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
 {
     s_Collision coll;
     e_SfxId     sfx;
@@ -444,7 +444,7 @@ void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords
  * MAP7_S02: 0x800D7A20
  * MAP7_S03: 0x800D2ECC
  */
-void Ai_Dahlia_Init(s_SubCharacter* dahlia)
+void Dahlia_Init(s_SubCharacter* dahlia)
 {
     sharedFunc_800D923C_0_s00(dahlia);
 
@@ -452,7 +452,7 @@ void Ai_Dahlia_Init(s_SubCharacter* dahlia)
     sharedData_800D16E4_2_s01 = 0;
 
 #ifdef MAP7_S03
-    WorldGfx_HeldItemAttach(Chara_EndingDahlia, MODEL_BONE(1, 0)); // TODO: MAP7_S03 Ai_Dahlia funcs could be Ai_EndingDahlia instead, if other Ai_Dahlia funcs don't match other overlays.
+    WorldGfx_HeldItemAttach(Chara_EndingDahlia, MODEL_BONE(1, 0)); // TODO: MAP7_S03 Dahlia funcs could be EndingDahlia instead, if other Dahlia funcs don't match other overlays.
 #else
     WorldGfx_HeldItemAttach(Chara_Dahlia, MODEL_BONE(1, 0));
 #endif

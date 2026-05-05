@@ -8,27 +8,27 @@
 
 #define creeperProps creeper->properties.creeper
 
-void Ai_Creeper_Update(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void Creeper_Update(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     // Initialize.
     if (creeper->model.controlState == CreeperControl_None)
     {
-        Ai_Creeper_Init(creeper);
+        Creeper_Init(creeper);
     }
 
     if (g_DeltaTime != Q12(0.0f))
     {
         sharedFunc_800D7EE8_1_s02(creeper);
-        Ai_Creeper_ControlUpdate(creeper);
+        Creeper_ControlUpdate(creeper);
         sharedFunc_800D983C_1_s02(creeper);
     }
 
-    sharedFunc_800D9960_1_s02(creeper, anmHdr, boneCoords);
+    Creeper_AnimUpdate(creeper, anmHdr, boneCoords);
     sharedFunc_800D99D0_1_s02(creeper);
 }
 
 // This inline allows getting rid of some ugly gotos, couldn't find a different way to handle it.
-static inline void Ai_Creeper_PropsUpdateFromStep(s_SubCharacter* creeper)
+static inline void Creeper_PropsUpdateFromStep(s_SubCharacter* creeper)
 {
     s32 stateStep;
 
@@ -64,7 +64,7 @@ static inline void Ai_Creeper_PropsUpdateFromStep(s_SubCharacter* creeper)
     Character_AnimSet(creeper, ANIM_STATUS(CreeperAnim_Idle, true), 94);
 }
 
-void Ai_Creeper_Init(s_SubCharacter* creeper)
+void Creeper_Init(s_SubCharacter* creeper)
 {
     // TODO: Values used in the `Rng_Rand16` calls at the end. TODO: Not sure of the actual purpose yet.
     #define BASE_EASY_VAL   0.7f
@@ -104,7 +104,7 @@ void Ai_Creeper_Init(s_SubCharacter* creeper)
     creeper->collision.state  = CharaCollisionState_2;
 
     Chara_PropsClear(creeper);
-    Ai_Creeper_PropsUpdateFromStep(creeper);
+    Creeper_PropsUpdateFromStep(creeper);
     ModelAnim_AnimInfoSet(&creeper->model.anim, CREEPER_ANIM_INFOS);
     Chara_DamageClear(creeper);
 
@@ -187,7 +187,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
                 creeper->model.anim.status = ANIM_STATUS(CreeperAnim_RunForwardStunStart, false);
             }
         }
-        else if (ANIM_STATUS_IDX_GET(creeper->model.anim.status) == CreeperAnim_Stunned)
+        else if (ANIM_STATUS_IDX_GET(creeper->model.anim.status) == CreeperAnim_Stun)
         {
             creeper->health             = Q12(0.0f);
             creeper->model.anim.status  = ANIM_STATUS(CreeperAnim_DeathStart, false);
@@ -233,7 +233,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
     #undef playerChara
 }
 
-void Ai_Creeper_ControlUpdate(s_SubCharacter* creeper)
+void Creeper_ControlUpdate(s_SubCharacter* creeper)
 {
     // Handle control state.
     switch (creeper->model.controlState)
@@ -294,8 +294,8 @@ void Creeper_ControlIdle(s_SubCharacter* creeper)
         {
             creeper->model.controlState = CreeperControl_WalkForward;
             creeper->model.anim.status  = ANIM_STATUS(CreeperAnim_WalkForward, false);
-            creeperProps.attackTimer            = Q12(0.5f);
-            creeperProps.chirpTimer           = Q12(0.0f);
+            creeperProps.attackTimer    = Q12(0.5f);
+            creeperProps.chirpTimer     = Q12(0.0f);
             return;
         }
     }
@@ -305,8 +305,8 @@ void Creeper_ControlIdle(s_SubCharacter* creeper)
     {
         creeper->model.controlState = CreeperControl_WalkForward;
         creeper->model.anim.status  = ANIM_STATUS(CreeperAnim_WalkForward, false);
-        creeperProps.attackTimer  = Q12(0.5f);
-        creeperProps.chirpTimer = Q12(0.0f);
+        creeperProps.attackTimer    = Q12(0.5f);
+        creeperProps.chirpTimer     = Q12(0.0f);
     }
     else if (creeperProps.flags & CreeperFlag_6)
     {
@@ -510,9 +510,9 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
 
     if (Ray_NpcToPlayerLosHitCheck(creeper, &playerChara))
     {
-        g_SysWork.charaGroupFlags[3]         &= ~CharaGroupFlag_1;
-        creeper->model.controlState = CreeperControl_WalkForward;
-        creeper->model.anim.status  = ANIM_STATUS(CreeperAnim_WalkForward, false);
+        g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_1;
+        creeper->model.controlState   = CreeperControl_WalkForward;
+        creeper->model.anim.status    = ANIM_STATUS(CreeperAnim_WalkForward, false);
         return;
     }
 
@@ -607,7 +607,7 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
     {
         g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_1;
         creeper->model.controlState   = CreeperControl_WalkForward;
-        creeperProps.attackTimer         = Q12(0.0f);
+        creeperProps.attackTimer      = Q12(0.0f);
         creeperProps.angleToTarget    = Chara_HeadingAngleGet(creeper, Q12(4.8f),
                                                               playerChara.position.vx, playerChara.position.vz,
                                                               Q12_ANGLE(360.0f), false);
@@ -649,9 +649,9 @@ void Creeper_ControlStun(s_SubCharacter* creeper)
         creeperProps.collisionOffsetZ = Q12_MULT(dist, Math_Cos(creeper->rotation.vy + Q12_ANGLE(180.0f)));
     }
 
-    if (ANIM_STATUS_IDX_GET(creeper->model.anim.status) == CreeperAnim_DeathStart              ||
+    if (ANIM_STATUS_IDX_GET(creeper->model.anim.status) == CreeperAnim_DeathStart         ||
         ANIM_STATUS_IDX_GET(creeper->model.anim.status) == CreeperAnim_RunForwardStunCont ||
-        ANIM_STATUS_IDX_GET(creeper->model.anim.status) == CreeperAnim_DeathEnd               ||
+        ANIM_STATUS_IDX_GET(creeper->model.anim.status) == CreeperAnim_DeathEnd           ||
         ANIM_STATUS_IDX_GET(creeper->model.anim.status) == CreeperAnim_RunForwardStunEnd)
     {
         creeper->model.controlState = CreeperControl_Damage;
@@ -717,7 +717,7 @@ void sharedFunc_800D983C_1_s02(s_SubCharacter* creeper)
     creeper->rotation.vy = Math_AngleNormalizeSigned(creeper->rotation.vy);
 }
 
-void sharedFunc_800D9960_1_s02(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void Creeper_AnimUpdate(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     s_AnimInfo* animInfo;
 
@@ -831,11 +831,11 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
             Collision_CharaAnimShapesSet(creeper, &sharedData_800E10E0_1_s02[keyframeIdx0], &sharedData_800E10E0_1_s02[keyframeIdx1]);
             break;
 
-        case ANIM_STATUS(CreeperAnim_Stunned, false):
+        case ANIM_STATUS(CreeperAnim_Stun, false):
             Collision_CharaAnimShapesSet(creeper, &sharedData_800E10CC_1_s02, &sharedData_800E116C_1_s02);
             break;
 
-        case ANIM_STATUS(CreeperAnim_Stunned, true):
+        case ANIM_STATUS(CreeperAnim_Stun, true):
             CopyDataAlt(creeper, sharedData_800E116C_1_s02);
             break;
 

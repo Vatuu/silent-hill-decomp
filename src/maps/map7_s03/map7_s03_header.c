@@ -143,10 +143,10 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .charaUpdateFuncs             = {
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, Ai_Incubus_Update, Ai_Unknown23_Update,
-        NULL, NULL, Ai_Cybil_Update, Ai_Cybil_Update, NULL, NULL, Ai_Dahlia_Update, Ai_Dahlia_Update,
-        NULL, Ai_BloodyLisa_Update, Ai_Alessa_Update, NULL, Ai_Incubator_Update, Ai_BloodyIncubator_Update, Kaufmann_Update, Kaufmann_Update,
-        NULL, Ai_LittleIncubus_Update },
+        NULL, NULL, NULL, NULL, NULL, NULL, Incubus_Update, Unknown23_Update,
+        NULL, NULL, Cybil_Update, Cybil_Update, NULL, NULL, Dahlia_Update, Dahlia_Update,
+        NULL, BloodyLisa_Update, Alessa_Update, NULL, Incubator_Update, BloodyIncubator_Update, Kaufmann_Update, Kaufmann_Update,
+        NULL, LittleIncubus_Update },
     .charaGroupIds = {},
     .charaSpawns   = {
 #include "chara_spawns.h"

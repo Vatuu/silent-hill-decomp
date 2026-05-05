@@ -6,7 +6,7 @@
 
 #include "../src/maps/characters/alessa.c"
 
-// TODO: Splitting Dahlia to separate file causes alignment issue inside `Ai_Dahlia_AnimStateUpdate` rodata
+// TODO: Splitting Dahlia to separate file causes alignment issue inside `Dahlia_AnimStateUpdate` rodata
 // (4 bytes inserted between VECTOR3 and jtbl both used in that func)
 // Including her here seems to let it work for now.
 

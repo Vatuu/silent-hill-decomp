@@ -165,8 +165,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
         NULL,
         NULL,
         NULL,
-        Ai_Dahlia_Update,
-        Ai_Dahlia_Update,
+        Dahlia_Update,
+        Dahlia_Update,
     },
     .charaGroupIds = {},
     .charaSpawns   = {

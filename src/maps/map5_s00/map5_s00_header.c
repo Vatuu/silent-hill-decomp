@@ -141,7 +141,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .data_190                         = &sharedData_800DFB70_0_s00,
     .charaUpdateFuncs             = {
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, Ai_HangedScratcher_Update, Ai_Creeper_Update },
+        NULL, NULL, HangedScratcher_Update, Creeper_Update },
     .charaGroupIds = { Chara_HangedScratcher, Chara_Creeper },
     .charaSpawns   = {
 #include "chara_spawns.h"

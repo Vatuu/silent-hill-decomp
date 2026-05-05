@@ -71,33 +71,33 @@ sharedFunc_800D2EF4_0_s00       = 0x800CF03C; // type:func
 //----------------------------------------------------------------------
 //--- PA: 0x005AD8   VA: 0x800CF050   subsegment: c, Chara_LarvalStalker
 //----------------------------------------------------------------------
-Ai_LarvalStalker_Update         = 0x800CF050; // type:func
-Ai_LarvalStalker_ControlUpdate  = 0x800CF168; // type:func
+LarvalStalker_Update            = 0x800CF050; // type:func
+LarvalStalker_ControlUpdate     = 0x800CF168; // type:func
 sharedFunc_800D140C_1_s00       = 0x800D140C; // type:func
 sharedFunc_800D1524_1_s00       = 0x800D1524; // type:func
-Ai_LarvalStalker_Init           = 0x800D16FC; // type:func
+LarvalStalker_Init              = 0x800D16FC; // type:func
 sharedFunc_800D17BC_1_s00       = 0x800D17BC; // type:func
 sharedFunc_800D1DBC_1_s00       = 0x800D1DBC; // type:func
 
 //----------------------------------------------------------------
 //--- PA: 0x008F80   VA: 0x800D24F8   subsegment: c, Chara_Stalker
 //----------------------------------------------------------------
-Ai_Stalker_Update               = 0x800D24F8; // type:func
-Ai_Stalker_Init                 = 0x800D268C; // type:func
+Stalker_Update                  = 0x800D24F8; // type:func
+Stalker_Init                    = 0x800D268C; // type:func
 sharedFunc_800D3308_0_s00       = 0x800D28F8; // type:func
-Ai_Stalker_ControlUpdate        = 0x800D3134; // type:func
-Ai_Stalker_Control_2            = 0x800D34E4; // type:func
-Ai_Stalker_Control_3            = 0x800D34EC; // type:func
-Ai_Stalker_Control_4            = 0x800D40BC; // type:func
-Ai_Stalker_Control_5            = 0x800D4828; // type:func
-Ai_Stalker_Control_6            = 0x800D4C38; // type:func
-Ai_Stalker_Control_7            = 0x800D52D8; // type:func
-Ai_Stalker_Control_8            = 0x800D53F4; // type:func
-Ai_Stalker_Control_9            = 0x800D575C; // type:func
-Ai_Stalker_Control_10           = 0x800D5B60; // type:func
-Ai_Stalker_Control_11           = 0x800D5CDC; // type:func
-Ai_Stalker_Control_12           = 0x800D5CE4; // type:func
-Ai_Stalker_Control_13           = 0x800D5E9C; // type:func
+Stalker_ControlUpdate           = 0x800D3134; // type:func
+Stalker_Control_2               = 0x800D34E4; // type:func
+Stalker_Control_3               = 0x800D34EC; // type:func
+Stalker_Control_4               = 0x800D40BC; // type:func
+Stalker_Control_5               = 0x800D4828; // type:func
+Stalker_Control_6               = 0x800D4C38; // type:func
+Stalker_Control_7               = 0x800D52D8; // type:func
+Stalker_Control_8               = 0x800D53F4; // type:func
+Stalker_Control_9               = 0x800D575C; // type:func
+Stalker_Control_10              = 0x800D5B60; // type:func
+Stalker_Control_11              = 0x800D5CDC; // type:func
+Stalker_Control_12              = 0x800D5CE4; // type:func
+Stalker_Control_13              = 0x800D5E9C; // type:func
 sharedFunc_800D67FC_0_s00       = 0x800D5F8C; // type:func
 sharedFunc_800D6970_0_s00       = 0x800D6100; // type:func
 sharedFunc_800D70C4_0_s00       = 0x800D6854; // type:func

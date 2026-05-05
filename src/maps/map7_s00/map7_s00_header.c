@@ -136,7 +136,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        Ai_Lisa_Update },
+        Lisa_Update },
     .charaGroupIds = { Chara_Lisa },
     .charaSpawns   = {
 #include "chara_spawns.h"

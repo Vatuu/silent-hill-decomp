@@ -162,8 +162,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
         NULL,
         AirScreamer_Update,
         AirScreamer_Update,
-        Ai_Groaner_Update,
-        Ai_Groaner_Update,
+        Groaner_Update,
+        Groaner_Update,
     },
     .charaGroupIds = { Chara_AirScreamer, Chara_Groaner },
     .charaSpawns   = {

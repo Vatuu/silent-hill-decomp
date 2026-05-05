@@ -61,24 +61,24 @@ SymbolMatchedFuncs = [
     "sharedFunc_800CDA88_3_s03",
     "sharedFunc_800D08FC_3_s04",
     "sharedFunc_800D0944_3_s04",
-    "Ai_Lisa_Init",
-    "Ai_Lisa_Update",
-    "Ai_BloodyLisa_Update",
+    "Lisa_Init",
+    "Lisa_Update",
+    "BloodyLisa_Update",
     "sharedFunc_800D595C_7_s01",
     "sharedFunc_800D59A4_7_s01",
     "sharedFunc_800D5B3C_7_s01",
-    "Ai_BloodyLisa_Init",
+    "BloodyLisa_Init",
     "sharedFunc_800D4A2C_7_s01",
     "sharedFunc_800D4A74_7_s01",
     "sharedFunc_800D4C0C_7_s01",
-    "Ai_GhostChildAlessa_Init",
+    "GhostChildAlessa_Init",
     "Cheryl_Init",
-    "Ai_Alessa_Init",
-    "Ai_Dahlia_Update",
+    "Alessa_Init",
+    "Dahlia_Update",
     "sharedFunc_800CD280_2_s01",
     "sharedFunc_800CD2C8_2_s01",
     "sharedSymbol_800CD4A0_2_s01",
-    "Ai_Dahlia_Init"
+    "Dahlia_Init"
 ]
 
 e_ShCharacterId = [
@@ -361,8 +361,8 @@ def clean_file(content, funcName):
     # Remove .size directive
     content = re.sub(r'^\s*\.size.*$\n?', '', content, flags=re.MULTILINE)
 
-    # Strip AI func refs (Ai_xxxx)
-    content = re.sub(r'(Ai_[a-zA-Z_]+)(?=(,)?(\s|$))', 'func', content)
+    # Strip AI func refs (xxxx)
+    content = re.sub(r'([a-zA-Z_]+)(?=(,)?(\s|$))', 'func', content)
 
     # Remove jlabel text, so we can compare properly against matched C versions that are missing it
     content = content.replace("jlabel ", "")
@@ -510,7 +510,7 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
 
             # If file2 funcname begins with sharedFunc and name + status (matching/nonmatching) matches with file1, skip this func
             # (most likely was already sym-shared but not yet code-matched, no point in us comparing them until they've been matched)
-            if (funcname_file2.startswith("sharedFunc_") or funcname_file2.startswith("Ai_")) and status_file1 == status_file2 and funcname_file1 == funcname_file2:
+            if (funcname_file2.startswith("sharedFunc_") or funcname_file2.startswith("")) and status_file1 == status_file2 and funcname_file1 == funcname_file2:
                 continue
             
             # Read and clean the contents
@@ -542,7 +542,7 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
 
 
                     # If first dir func is named sharedFunc, print symbol names/includes for user to add to second map
-                    if "sharedFunc" in name_file1 or "Ai_" in name_file1 or "Event_" in name_file1:
+                    if "sharedFunc" in name_file1 or "" in name_file1 or "Event_" in name_file1:
                         addr = 0
 
                         # Try searching file2_syms for the addr of this func, in case this func had been renamed already

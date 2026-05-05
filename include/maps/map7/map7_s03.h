@@ -553,19 +553,19 @@ extern SVECTOR3 D_800F47E8;
 
 extern VECTOR D_800EC798[];
 
-void Ai_BloodyIncubator_Update(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void Ai_BloodyIncubator_AnimUpdate(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void BloodyIncubator_Update(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void BloodyIncubator_AnimUpdate(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void func_800D3740(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* coords);
 void func_800D38D8(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* coords);
-void Ai_BloodyIncubator_Init(s_SubCharacter* bloodyIncubator);
+void BloodyIncubator_Init(s_SubCharacter* bloodyIncubator);
 
-void Ai_Incubator_Update(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void Ai_Incubator_AnimUpdate(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Incubator_Update(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Incubator_AnimUpdate(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* coords);
 void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* coords);
-void Ai_Incubator_Init(s_SubCharacter* incubator);
+void Incubator_Init(s_SubCharacter* incubator);
 
-void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800D663C(void);
 
@@ -740,7 +740,7 @@ void func_800DD98C(bool disableDamage);
 void func_800DD9B0(s_SubCharacter* chara);
 void func_800DD9D4(s_SubCharacter* chara);
 void func_800DD9F8(s_SubCharacter* chara);
-bool Ai_Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* coords);
+bool Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* coords);
 
 void func_800DDB3C(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
@@ -773,7 +773,7 @@ void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* coords);
 void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* coords);
 void func_800DF044(s_SubCharacter* incubus, GsCOORDINATE2* coords);
 void func_800DF074(s_SubCharacter* incubus);
-void Ai_Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800DF1D4(void);
 void func_800DF750(void);
@@ -788,7 +788,7 @@ s32  func_800DFB04(void);
 void func_800DFB2C(bool disableDamage);
 void func_800DFB50(s_SubCharacter* chara);
 void func_800DFB74(s_SubCharacter* chara);
-bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
+bool Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800DFCE4(s_SubCharacter* chara);
 void func_800DFE10(s_SubCharacter* chara);
 void func_800DFEF0(s_SubCharacter* chara);
@@ -805,7 +805,7 @@ void func_800E07F0(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800E0914(s_SubCharacter* chara);
-void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800E0A34(void);
 void func_800E0B28(s32 arg0);

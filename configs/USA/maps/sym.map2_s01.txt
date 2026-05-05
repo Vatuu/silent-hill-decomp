@@ -49,11 +49,11 @@ sharedFunc_800D2EF4_0_s00       = 0x800CD1F8; // type:func
 //---------------------------------------------------------------
 //--- PA: 0x003C94   VA: 0x800CD20C   subsegment: c, Chara_Dahlia
 //---------------------------------------------------------------
-Ai_Dahlia_Update                = 0x800CD20C; // type:func
-Ai_Dahlia_AnimUpdate            = 0x800CD280; // type:func
-Ai_Dahlia_MovementUpdate        = 0x800CD2C8; // type:func
-Ai_Dahlia_AnimStateUpdate       = 0x800CD4A0; // type:func
-Ai_Dahlia_Init                  = 0x800CDD64; // type:func
+Dahlia_Update                   = 0x800CD20C; // type:func
+Dahlia_AnimUpdate               = 0x800CD280; // type:func
+Dahlia_MovementUpdate           = 0x800CD2C8; // type:func
+Dahlia_AnimStateUpdate          = 0x800CD4A0; // type:func
+Dahlia_Init                     = 0x800CDD64; // type:func
 
 //-------------------------------------------------------------
 //--- PA: 0x004828   VA: 0x800CDDA0   subsegment: c, map2_s01_2

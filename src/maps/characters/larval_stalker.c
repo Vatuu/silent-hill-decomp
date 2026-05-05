@@ -8,18 +8,18 @@
 
 #define larvalStalkerProps larvalStalker->properties.larvalStalker
 
-void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     s8* mapOverlayPtr;
 
     // Initialize.
     if (larvalStalker->model.controlState == LarvalStalkerControl_None)
     {
-        Ai_LarvalStalker_Init(larvalStalker);
+        LarvalStalker_Init(larvalStalker);
     }
 
     sharedFunc_800D17BC_1_s00(larvalStalker);
-    Ai_LarvalStalker_ControlUpdate(larvalStalker);
+    LarvalStalker_ControlUpdate(larvalStalker);
     sharedFunc_800D140C_1_s00(larvalStalker, boneCoords);
     sharedFunc_800D1524_1_s00(larvalStalker, anmHdr, boneCoords);
     sharedFunc_800D1DBC_1_s00(larvalStalker);
@@ -81,7 +81,7 @@ void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr,
     larvalStalkerProps.angle_100 = FP_FROM(temp * Math_Sin(larvalStalker->rotation.vy), Q12_SHIFT);                            \
     larvalStalkerProps.angle_102 = FP_FROM(temp * Math_Cos(larvalStalker->rotation.vy), Q12_SHIFT);
 
-void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
+void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 {
     s32     temp;
     VECTOR3 pos;
@@ -837,7 +837,7 @@ void sharedFunc_800D1524_1_s00(s_SubCharacter* larvalStalker, s_AnmHeader* anmHd
     #undef activeAnimInfo
 }
 
-void Ai_LarvalStalker_Init(s_SubCharacter* larvalStalker)
+void LarvalStalker_Init(s_SubCharacter* larvalStalker)
 {
     s32 i;
 

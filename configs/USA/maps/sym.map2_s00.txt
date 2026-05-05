@@ -243,10 +243,10 @@ sharedFunc_800D8804_0_s01       = 0x800E2F68; // type:func
 //----------------------------------------------------------------
 //--- PA: 0x019A00   VA: 0x800E2F78   subsegment: c, Chara_Groaner
 //----------------------------------------------------------------
-Ai_Groaner_Update               = 0x800E2F78; // type:func
-Ai_Groaner_Init                 = 0x800E3074; // type:func - `map2_s00` includes extra block at end of function compared to other maps.
+Groaner_Update                  = 0x800E2F78; // type:func
+Groaner_Init                    = 0x800E3074; // type:func - `map2_s00` includes extra block at end of function compared to other maps.
 sharedFunc_800E33DC_2_s00       = 0x800E33DC; // type:func
-sharedFunc_800E384C_2_s00       = 0x800E384C; // type:func - `map2_s00` version differs to the 4 other maps which share `Ai_Groaner_Update`.
+sharedFunc_800E384C_2_s00       = 0x800E384C; // type:func - `map2_s00` version differs to the 4 other maps which share `Groaner_Update`.
 sharedFunc_800E39D8_2_s00       = 0x800E39D8; // type:func
 sharedFunc_800E3E94_2_s00       = 0x800E3E94; // type:func
 sharedFunc_800E4830_2_s00       = 0x800E4830; // type:func

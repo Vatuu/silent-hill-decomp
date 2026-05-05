@@ -438,7 +438,7 @@ void Kaufmann_Init(s_SubCharacter* kaufmann)
     sharedData_800D5CF4_3_s00 = 0;
 
 #ifdef MAP7_S03
-    WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(0, 1)); // TODO: MAP7_S03 `Ai_Kaufmann` funcs could be `Ai_EndingKaufmann` instead, if other `Ai_Kaufmann` funcs don't match other overlays.
+    WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(0, 1)); // TODO: MAP7_S03 `Kaufmann` funcs could be `EndingKaufmann` instead, if other `Kaufmann` funcs don't match other overlays.
 #else
     WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(0, 1));
 #endif

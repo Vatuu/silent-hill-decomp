@@ -143,10 +143,10 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .data_18C                         = &sharedData_800DFB6C_0_s00,
     .data_190                         = &sharedData_800DFB70_0_s00,
     .charaUpdateFuncs             = {
-        NULL, NULL, NULL, NULL, NULL, NULL, Ai_LarvalStalker_Update, Ai_Stalker_Update,
-        Ai_Stalker_Update, Ai_Stalker_Update, NULL, NULL, NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL, NULL, NULL, LarvalStalker_Update, Stalker_Update,
+        Stalker_Update, Stalker_Update, NULL, NULL, NULL, NULL, NULL, NULL,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, Ai_Cat_Update },
+        NULL, NULL, NULL, NULL, NULL, Cat_Update },
     .charaGroupIds = { Chara_GreyChild, Chara_LarvalStalker },
     .charaSpawns   = {
         #include "chara_spawns.h"

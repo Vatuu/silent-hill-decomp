@@ -19,7 +19,7 @@
 #include "maps/characters/stalker.h"
 
 
-void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DA284
+void LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DA284
 {
     s_AnimInfo* animInfo;
 

@@ -69,33 +69,33 @@ sharedFunc_800D2EF4_0_s00           = 0x800D00A4; // type:func
 //----------------------------------------------------------------------
 //--- PA: 0x006B40   VA: 0x800D00B8   subsegment: c, Chara_LarvalStalker
 //----------------------------------------------------------------------
-Ai_LarvalStalker_Update             = 0x800D00B8; // type:func
-Ai_LarvalStalker_ControlUpdate      = 0x800D01D0; // type:func
+LarvalStalker_Update                = 0x800D00B8; // type:func
+LarvalStalker_ControlUpdate         = 0x800D01D0; // type:func
 sharedFunc_800D140C_1_s00           = 0x800D2474; // type:func
 sharedFunc_800D1524_1_s00           = 0x800D258C; // type:func
-Ai_LarvalStalker_Init               = 0x800D2764; // type:func
+LarvalStalker_Init                  = 0x800D2764; // type:func
 sharedFunc_800D17BC_1_s00           = 0x800D2824; // type:func
 sharedFunc_800D1DBC_1_s00           = 0x800D2E24; // type:func
 
 //----------------------------------------------------------------
 //--- PA: 0x009FE8   VA: 0x800D3560   subsegment: c, Chara_Stalker
 //----------------------------------------------------------------
-Ai_Stalker_Update                   = 0x800D3560; // type:func
-Ai_Stalker_Init                     = 0x800D36F4; // type:func
+Stalker_Update                      = 0x800D3560; // type:func
+Stalker_Init                        = 0x800D36F4; // type:func
 sharedFunc_800D3308_0_s00           = 0x800D3960; // type:func
-Ai_Stalker_ControlUpdate            = 0x800D419C; // type:func
-Ai_Stalker_Control_2                = 0x800D454C; // type:func
-Ai_Stalker_Control_3                = 0x800D4554; // type:func
-Ai_Stalker_Control_4                = 0x800D5124; // type:func
-Ai_Stalker_Control_5                = 0x800D5890; // type:func
-Ai_Stalker_Control_6                = 0x800D5CA0; // type:func
-Ai_Stalker_Control_7                = 0x800D6340; // type:func
-Ai_Stalker_Control_8                = 0x800D645C; // type:func
-Ai_Stalker_Control_9                = 0x800D67C4; // type:func
-Ai_Stalker_Control_10               = 0x800D6BC8; // type:func
-Ai_Stalker_Control_11               = 0x800D6D44; // type:func
-Ai_Stalker_Control_12               = 0x800D6D4C; // type:func
-Ai_Stalker_Control_13               = 0x800D6F04; // type:func
+Stalker_ControlUpdate               = 0x800D419C; // type:func
+Stalker_Control_2                   = 0x800D454C; // type:func
+Stalker_Control_3                   = 0x800D4554; // type:func
+Stalker_Control_4                   = 0x800D5124; // type:func
+Stalker_Control_5                   = 0x800D5890; // type:func
+Stalker_Control_6                   = 0x800D5CA0; // type:func
+Stalker_Control_7                   = 0x800D6340; // type:func
+Stalker_Control_8                   = 0x800D645C; // type:func
+Stalker_Control_9                   = 0x800D67C4; // type:func
+Stalker_Control_10                  = 0x800D6BC8; // type:func
+Stalker_Control_11                  = 0x800D6D44; // type:func
+Stalker_Control_12                  = 0x800D6D4C; // type:func
+Stalker_Control_13                  = 0x800D6F04; // type:func
 sharedFunc_800D67FC_0_s00           = 0x800D6FF4; // type:func
 sharedFunc_800D6970_0_s00           = 0x800D7168; // type:func
 sharedFunc_800D70C4_0_s00           = 0x800D78BC; // type:func
@@ -105,22 +105,22 @@ sharedFunc_800D7E04_0_s00           = 0x800D85FC; // type:func
 //-----------------------------------------------------------
 //--- PA: 0x00F238   VA: 0x800D87B0   subsegment: c, map6_s04
 //-----------------------------------------------------------
-Ai_MonsterCybil_Update              = 0x800D8908; // type:func
-Ai_MonsterCybil_Init                = 0x800D89CC; // type:func
+MonsterCybil_Update                 = 0x800D8908; // type:func
+MonsterCybil_Init                   = 0x800D89CC; // type:func
 
 //---------------------------------------------------------------------
 //--- PA: 0x012D3C   VA: 0x800DC2B4   subsegment: c, Chara_AlessaDahlia
 //---------------------------------------------------------------------
-Ai_Alessa_Update                    = 0x800DC2B4; // type:func
-Ai_Alessa_AnimUpdate                = 0x800DC328; // type:func
-Ai_Alessa_MovementUpdate            = 0x800DC370; // type:func
-Ai_Alessa_AnimStateUpdate           = 0x800DC508; // type:func
-Ai_Alessa_Init                      = 0x800DCA0C; // type:func
-Ai_Dahlia_Update                    = 0x800DCA30; // type:func
-Ai_Dahlia_AnimUpdate                = 0x800DCAA4; // type:func
-Ai_Dahlia_MovementUpdate            = 0x800DCAEC; // type:func
-Ai_Dahlia_AnimStateUpdate           = 0x800DCCC4; // type:func
-Ai_Dahlia_Init                      = 0x800DD57C; // type:func
+Alessa_Update                       = 0x800DC2B4; // type:func
+Alessa_AnimUpdate                   = 0x800DC328; // type:func
+Alessa_MovementUpdate               = 0x800DC370; // type:func
+Alessa_AnimStateUpdate              = 0x800DC508; // type:func
+Alessa_Init                         = 0x800DCA0C; // type:func
+Dahlia_Update                       = 0x800DCA30; // type:func
+Dahlia_AnimUpdate                   = 0x800DCAA4; // type:func
+Dahlia_MovementUpdate               = 0x800DCAEC; // type:func
+Dahlia_AnimStateUpdate              = 0x800DCCC4; // type:func
+Dahlia_Init                         = 0x800DD57C; // type:func
 
 //-------------------------------------------------------------
 //--- PA: 0x014040   VA: 0x800DD5B8   subsegment: c, map6_s04_2
@@ -140,8 +140,8 @@ sharedFunc_800D908C_0_s00           = 0x800DDDF0; // type:func
 sharedFunc_800D9188_0_s00           = 0x800DDEEC; // type:func
 Chara_AnimStartKeyframeIdxGet       = 0x800DDFEC; // type:func
 sharedFunc_800D923C_0_s00           = 0x800DE064; // type:func
-Ai_Flauros_Update                   = 0x800DE0C4; // type:func
-Ai_Parasite_Update                  = 0x800DE1CC; // type:func
+Flauros_Update                      = 0x800DE0C4; // type:func
+Parasite_Update                     = 0x800DE1CC; // type:func
 sharedFunc_800D929C_0_s00           = 0x800E1104; // type:func
 Map_RoomIdxGet                      = 0x800E1114; // type:func
 Map_RoomBgmInit                     = 0x800E1258; // type:func
@@ -280,7 +280,7 @@ sharedData_800E3A20_0_s00           = 0x800ED524; // type:s32
 sharedData_800E3A24_0_s00           = 0x800ED528; // type:s32
 sharedData_800E3A28_0_s00           = 0x800ED52C; // type:s32
 sharedData_800E3A2C_0_s00           = 0x800ED530; // type:s32
-g_Ai_MonsterCybil_ExtraModel        = 0x800ED540; // type:Model
+g_MonsterCybil_ExtraModel           = 0x800ED540; // type:Model
 sharedData_800D16E4_2_s01           = 0x800ED57C; // type:s8
 sharedData_800D3150_3_s02           = 0x800ED580; // type:s32
 sharedData_800D16E0_2_s01           = 0x800ED584; // type:s32

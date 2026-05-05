@@ -73,9 +73,9 @@ typedef enum _GroanerStateStep
     GroanerStateStep_3 = 3
 } e_GroanerStateStep;
 
-void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-void Ai_Groaner_Init(s_SubCharacter* groaner); // `map2_s00` has extra block at end of func compared to other maps.
+void Groaner_Init(s_SubCharacter* groaner); // `map2_s00` has extra block at end of func compared to other maps.
 
 void sharedFunc_800E554C_2_s00(s_SubCharacter* groaner);
 

@@ -6,19 +6,19 @@
 
 // TODO: Move to src/maps/characters/ once matched.
 
-void Ai_Incubator_Update(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D3BC4
+void Incubator_Update(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D3BC4
 {
     if (incubator->model.charaId != Chara_Incubator)
     {
-        Ai_Incubator_Init(incubator);
+        Incubator_Init(incubator);
     }
 
     func_800D3E18(incubator, coords);
     func_800D3C80(incubator, coords);
-    Ai_Incubator_AnimUpdate(incubator, anmHdr, coords);
+    Incubator_AnimUpdate(incubator, anmHdr, coords);
 }
 
-void Ai_Incubator_AnimUpdate(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D3C38
+void Incubator_AnimUpdate(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D3C38
 {
     s_AnimInfo* animInfo;
 
@@ -110,7 +110,7 @@ void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* coords) // 0x800D3E
     Math_RotMatrixZxyNegGte(&incubator->rotation, &coords->coord);
 }
 
-void Ai_Incubator_Init(s_SubCharacter* incubator) // 0x800D3F38
+void Incubator_Init(s_SubCharacter* incubator) // 0x800D3F38
 {
     sharedFunc_800D923C_0_s00(incubator);
 }

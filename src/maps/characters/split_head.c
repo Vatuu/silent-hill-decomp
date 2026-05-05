@@ -7,20 +7,20 @@
 
 #define splitHeadProps splitHead->properties.splitHead
 
-void Ai_SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     sharedData_800D8610_1_s05 = boneCoords;
 
     // Initialize.
     if (splitHead->model.controlState == SplitHeadControl_None)
     {
-        Ai_SplitHead_Init(splitHead);
+        SplitHead_Init(splitHead);
     }
 
     if (g_DeltaTime != Q12(0.0f))
     {
-        Ai_SplitHead_DamageTake(splitHead);
-        Ai_SplitHead_ControlUpdate(splitHead);
+        SplitHead_DamageTake(splitHead);
+        SplitHead_ControlUpdate(splitHead);
         sharedFunc_800D267C_1_s05(splitHead);
         sharedFunc_800D3AFC_1_s05(splitHead);
     }
@@ -37,7 +37,7 @@ void Ai_SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORD
     sharedFunc_800CF990_1_s05(splitHead);
 }
 
-void Ai_SplitHead_Init(s_SubCharacter* splitHead)
+void SplitHead_Init(s_SubCharacter* splitHead)
 {
     s32 i;
 
@@ -170,7 +170,7 @@ void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead)
     splitHeadProps.flags_E8 &= ~(SplitHeadFlag_8 | SplitHeadFlag_7);
 }
 
-void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
+void SplitHead_DamageTake(s_SubCharacter* splitHead)
 {
     u8  isPlayerDead;
     s32 damageAmount;
@@ -259,13 +259,13 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
     Player_DisableDamage(&isPlayerDead, splitHead->health == Q12(0.0f));
 }
 
-void Ai_SplitHead_ControlUpdate(s_SubCharacter* splitHead)
+void SplitHead_ControlUpdate(s_SubCharacter* splitHead)
 {
-    extern void (*g_Ai_SplitHead_ControlFuncs[])(s_SubCharacter* splitHead); // TODO: Add func table to this func.
+    extern void (*g_SplitHead_ControlFuncs[])(s_SubCharacter* splitHead); // TODO: Add func table to this func.
 
     // Handle control state.
     splitHeadProps.flags_E8 &= ~SplitHeadFlag_3;
-    g_Ai_SplitHead_ControlFuncs[splitHead->model.controlState](splitHead);
+    g_SplitHead_ControlFuncs[splitHead->model.controlState](splitHead);
 
     if (splitHead->model.anim.status == ANIM_STATUS(SplitHeadAnim_11, true))
     {
@@ -277,7 +277,7 @@ void Ai_SplitHead_ControlUpdate(s_SubCharacter* splitHead)
     }
 }
 
-void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
+void SplitHead_Control_1(s_SubCharacter* splitHead)
 {
     VECTOR unkPos;
     q3_12  angleDeltaToPlayer;
@@ -419,7 +419,7 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
     }
 }
 
-void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
+void SplitHead_Control_2(s_SubCharacter* splitHead)
 {
     s_RayTrace trace;
     VECTOR3    dir; // Q19.12
@@ -590,7 +590,7 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
     }
 }
 
-void Ai_SplitHead_Control_3(s_SubCharacter* splitHead)
+void SplitHead_Control_3(s_SubCharacter* splitHead)
 {
     q3_12  angleDeltaToPlayer;
     q19_12 distToPlayer;
@@ -686,7 +686,7 @@ void Ai_SplitHead_Control_3(s_SubCharacter* splitHead)
     }
 }
 
-void Ai_SplitHead_Control_4(s_SubCharacter* splitHead)
+void SplitHead_Control_4(s_SubCharacter* splitHead)
 {
     s32 vol;
     s32 timer0;
@@ -747,7 +747,7 @@ void Ai_SplitHead_Control_4(s_SubCharacter* splitHead)
     }
 }
 
-void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
+void SplitHead_Control_5(s_SubCharacter* splitHead)
 {
     s_RayTrace trace;
     VECTOR3    dir; // Q19.12
@@ -923,7 +923,7 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
     }
 }
 
-void Ai_SplitHead_Control_6(s_SubCharacter* splitHead)
+void SplitHead_Control_6(s_SubCharacter* splitHead)
 {
     switch (splitHead->model.anim.status)
     {
@@ -967,7 +967,7 @@ void Ai_SplitHead_Control_6(s_SubCharacter* splitHead)
     }
 }
 
-void Ai_SplitHead_Control_7(s_SubCharacter* splitHead)
+void SplitHead_Control_7(s_SubCharacter* splitHead)
 {
     q3_12 angleDeltaToPlayer;
 
@@ -999,7 +999,7 @@ void Ai_SplitHead_Control_7(s_SubCharacter* splitHead)
     }
 }
 
-void Ai_SplitHead_Control_8(s_SubCharacter* splitHead)
+void SplitHead_Control_8(s_SubCharacter* splitHead)
 {
     if (!Savegame_EventFlagGet(EventFlag_130))
     {

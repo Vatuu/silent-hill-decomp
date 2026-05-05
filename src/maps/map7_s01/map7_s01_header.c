@@ -179,9 +179,9 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .charaUpdateFuncs             = {
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        Ai_PuppetNurse_Update, Ai_PuppetNurse_Update, Ai_PuppetDoctor_Update, Ai_PuppetDoctor_Update, NULL, NULL, NULL, NULL,
+        PuppetNurse_Update, PuppetNurse_Update, PuppetDoctor_Update, PuppetDoctor_Update, NULL, NULL, NULL, NULL,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        Ai_Lisa_Update, Ai_BloodyLisa_Update, NULL, Ai_GhostChildAlessa_Update },
+        Lisa_Update, BloodyLisa_Update, NULL, GhostChildAlessa_Update },
     .charaGroupIds = {},
     .charaSpawns   = {
 #include "chara_spawns.h"

@@ -16,19 +16,19 @@
 
 #define floatstingerProps floatstinger->properties.floatstinger
 
-void Ai_Floatstinger_Update(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D16FC
+void Floatstinger_Update(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D16FC
 {
     D_800DB928 = coords;
 
     if (floatstinger->model.controlState == 0)
     {
-        Ai_Floatstinger_Init(floatstinger);
+        Floatstinger_Init(floatstinger);
     }
 
     if (g_DeltaTime != Q12(0.0f))
     {
         func_800D1968(floatstinger);
-        Ai_Floatstinger_ControlUpdate(floatstinger);
+        Floatstinger_ControlUpdate(floatstinger);
         func_800D35F0(floatstinger);
     }
 
@@ -38,7 +38,7 @@ void Ai_Floatstinger_Update(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr, G
     floatstinger->properties.dummy.properties_E8[1].val16[0] = floatstinger->rotation.vy;
 }
 
-void Ai_Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
+void Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
 {
     s32 i;
 
@@ -198,7 +198,7 @@ void func_800D1968(s_SubCharacter* floatstinger) // 0x800D1968
     Player_DisableDamage(&sp20, floatstinger->health == Q12(0.0f));
 }
 
-void Ai_Floatstinger_ControlUpdate(s_SubCharacter* floatstinger) // 0x800D1B98
+void Floatstinger_ControlUpdate(s_SubCharacter* floatstinger) // 0x800D1B98
 {
     if (floatstinger->model.anim.status != ANIM_STATUS(FloatstingerAnim_1, true))
     {

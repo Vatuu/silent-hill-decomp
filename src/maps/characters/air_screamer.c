@@ -490,15 +490,15 @@ void sharedFunc_800D2BF4_0_s01(s_SubCharacter* airScreamer)
 
 s32 AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
 {
-    q19_12 damage0;
-    q19_12 damage1;
+    q19_12 damage;
+    q19_12 injuredDamage;
     s32    animStatus;
     s32    attack;
     u32    damageType;
     u8     temp_a1;
     q19_12 angle;
 
-    damage0    = airScreamer->damage.amount;
+    damage     = airScreamer->damage.amount;
     animStatus = airScreamer->model.anim.status;
     attack     = airScreamer->attackReceived;
     damageType = AirScreamerHit_None;
@@ -509,12 +509,12 @@ s32 AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
         {
             case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Hammer,    AttackInputType_Tap):
-                damage0 += damage0 / 2;
+                damage += damage / 2;
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
-                damage0 /= 2;
+                damage /= 2;
                 break;
 
             default:
@@ -526,10 +526,10 @@ s32 AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
     {
         if (animStatus == ANIM_STATUS(AirScreamerAnim_HoverInjured, true))
         {
-            damage1 = Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 10.0f);
-            if (damage1 < airScreamer->health)
+            injuredDamage = Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 10.0f);
+            if (injuredDamage < airScreamer->health)
             {
-                airScreamer->health -= damage1;
+                airScreamer->health -= injuredDamage;
             }
             else
             {
@@ -538,12 +538,12 @@ s32 AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
         }
 
         airScreamer->damage.amount = Q12(0.0f);
-        angle                      = mult; // @hack
 
-        damage0 = Q12_MULT_PRECISE(damage0, angle);
-        if (damage0 < airScreamer->health)
+        angle  = mult; // @hack
+        damage = Q12_MULT_PRECISE(damage, angle);
+        if (damage < airScreamer->health)
         {
-            airScreamer->health -= damage0;
+            airScreamer->health -= damage;
         }
         else
         {
@@ -551,7 +551,7 @@ s32 AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
         }
     }
 
-    if (damage0 > Q12(0.0f) || airScreamer->health <= Q12(0.0f))
+    if (damage > Q12(0.0f) || airScreamer->health <= Q12(0.0f))
     {
         temp_a1 = D_800AD4C8[attack].field_10;
         angle   = Q12_ANGLE_NORM_S(g_SysWork.playerWork.player.rotation.vy - airScreamer->rotation.vy);
@@ -562,7 +562,7 @@ s32 AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
         if (airScreamer->health <= Q12(120.0f))
 #endif
         {
-            if (damage0 > Q12(5.0f))
+            if (damage > Q12(5.0f))
             {
                 damageType = AirScreamerHit_Kill;
             }
@@ -577,14 +577,14 @@ s32 AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
         }
         else if (airScreamerProps.field_E8_0 == 3)
         {
-            if (damage0 > Q12(45.0f) || temp_a1 == 1)
+            if (damage > Q12(45.0f) || temp_a1 == 1)
             {
                 damageType = AirScreamerHit_Recoil;
             }
         }
         else
         {
-            if (damage0 > Q12(20.0f) || temp_a1 == 1)
+            if (damage > Q12(20.0f) || temp_a1 == 1)
             {
                 damageType = AirScreamerHit_Recoil;
             }
@@ -2590,7 +2590,7 @@ void AirScreamer_Control_9(s_SubCharacter* airScreamer)
                 }
                 else
                 {
-                    airScreamerProps.timer_120 = 0;
+                    airScreamerProps.timer_120 = Q12(0.0f);
                 }
 
                 airScreamer->model.stateStep = ((u32)airScreamerProps.timer_120 / Q12(8.0f)) + 1;
@@ -2951,7 +2951,7 @@ void AirScreamer_Control_11(s_SubCharacter* airScreamer)
             switch (switch2Idx)
             {
                 case 0:
-                    if (airScreamerProps.timer_120 == Q12(0.0f) || f150 > 0x2000)
+                    if (airScreamerProps.timer_120 == Q12(0.0f) || f150 > Q12(2.0f))
                     {
                         if (bit3 == 0)
                         {
@@ -4400,7 +4400,7 @@ void AirScreamer_Control_21(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    switch3;
-    s32    condModelStateIs2;
+    bool   condModelStateIs2;
     s32    animStatus;
     q19_12 angle0;
     bool   field14C_0;
@@ -4415,7 +4415,7 @@ void AirScreamer_Control_21(s_SubCharacter* airScreamer)
     q19_12 angle1;
 
     switch3           = 0;
-    condModelStateIs2 = 0;
+    condModelStateIs2 = false;
     animStatus        = airScreamer->model.anim.status;
     angle0            = sharedData_800E21D0_0_s01.field_15C;
 
@@ -4447,7 +4447,7 @@ void AirScreamer_Control_21(s_SubCharacter* airScreamer)
             break;
 
         case 2:
-            condModelStateIs2 = 1;
+            condModelStateIs2 = true;
 
         case 3:
             if (temp_a0)
@@ -4465,7 +4465,7 @@ void AirScreamer_Control_21(s_SubCharacter* airScreamer)
 
                 airScreamer->model.stateStep = 1;
             }
-            else if (!airScreamerProps.timer_120)
+            else if (airScreamerProps.timer_120 == Q12(0.0f))
             {
                 airScreamer->model.stateStep = 0;
             }
@@ -4702,7 +4702,7 @@ void AirScreamer_Control_22(s_SubCharacter* airScreamer)
 
             if (!temp_s3)
             {
-                if (airScreamerProps.timer_120 != 0)
+                if (airScreamerProps.timer_120 != Q12(0.0f))
                 {
                     if (Math_Distance2dGet(&airScreamer->position, &airScreamerProps.targetPosition_F8) < Q12(1.0f))
                     {
@@ -5059,6 +5059,7 @@ void AirScreamer_Control_24(s_SubCharacter* airScreamer)
     {
         case 0:
             airScreamerProps.timer_120 = Q12(2.0f);
+
             if (Rng_TestProbability(Q12(0.7f)))
             {
                 switchCond = 2;
@@ -5765,11 +5766,7 @@ void AirScreamer_Control_29(s_SubCharacter* airScreamer)
         case AirScreamerHit_Recoil:
             if (var_s1 != 0)
             {
-                var_s1_2 = Q12(0.0f);
-                if (airScreamerProps.field_E8_4)
-                {
-                    var_s1_2 = Q12(0.1f);
-                }
+                var_s1_2 = airScreamerProps.field_E8_4 ? Q12(0.1f) : Q12(0.0f);
 
                 if (airScreamerProps.field_E8_0 == 3)
                 {
@@ -7287,7 +7284,7 @@ void AirScreamer_Control_38(s_SubCharacter* airScreamer)
                 {
                     var_s4 = 2;
                 }
-                else if (airScreamerProps.timer_120 == 0)
+                else if (airScreamerProps.timer_120 == Q12(0.0f))
                 {
                     airScreamer->model.stateStep = 0;
                 }
@@ -9022,11 +9019,7 @@ q19_12 sharedFunc_800DC6E4_2_s00(s_SubCharacter* airScreamer, q19_12 arg1)
     q19_12 chance;
     q19_12 mult;
 
-    mult = Q12(0.0f);
-    if (airScreamerProps.field_E8_4)
-    {
-        mult = Q12(0.1f);
-    }
+    mult = airScreamerProps.field_E8_4 ? Q12(0.1f) : Q12(0.0f);
 
     chance = Q12(0.0f);
     switch ((u32)airScreamerProps.field_E8_8)
@@ -9384,7 +9377,6 @@ q19_12 sharedFunc_800D5274_0_s01(void)
 }
 
 #ifndef MAP0_S01
-
 void sharedFunc_800DD13C_2_s00(s_SubCharacter* airScreamer, s32 npcSlot, q19_12 spawnChance)
 {
     u32 flags;

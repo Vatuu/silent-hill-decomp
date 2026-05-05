@@ -92,10 +92,10 @@ extern s_AnimInfo DAHLIA_ANIM_INFOS[];
 
 extern s32 sharedData_800D16E0_2_s01;
 
-void Ai_Dahlia_Update(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-void Ai_Dahlia_AnimUpdate(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-void Ai_Dahlia_MovementUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords);
-void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords);
-void Ai_Dahlia_Init(s_SubCharacter* dahlia);
+void Dahlia_Update(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Dahlia_AnimUpdate(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Dahlia_MovementUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords);
+void Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords);
+void Dahlia_Init(s_SubCharacter* dahlia);
 
 #endif

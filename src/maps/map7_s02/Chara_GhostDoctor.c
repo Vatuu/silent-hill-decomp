@@ -6,19 +6,19 @@
 
 // TODO: Move to src/maps/characters/ once matched.
 
-void Ai_GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D8AF0
+void GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D8AF0
 {
     if (chara->model.charaId != Chara_GhostDoctor)
     {
-        Ai_GhostDoctor_Init(chara);
+        GhostDoctor_Init(chara);
     }
 
     func_800D8C00(chara, coords);
     Character_CoordTransformUpdate(chara, coords);
-    Ai_GhostDoctor_AnimUpdate(chara, anmHdr, coords);
+    GhostDoctor_AnimUpdate(chara, anmHdr, coords);
 }
 
-void Ai_GhostDoctor_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D8B64
+void GhostDoctor_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D8B64
 {
     s_AnimInfo* animInfo;
 
@@ -37,7 +37,7 @@ void Character_CoordTransformUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord)
     coord->coord.t[2] = Q12_TO_Q8(chara->position.vz);
 }
 
-void Ai_GhostDoctor_Init(s_SubCharacter* chara) // 0x800D8BE0
+void GhostDoctor_Init(s_SubCharacter* chara) // 0x800D8BE0
 {
     sharedFunc_800D923C_0_s00(chara);
 }

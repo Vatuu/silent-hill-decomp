@@ -60,7 +60,7 @@ extern s_WorldObjectPose g_WorldObject8; // 0x800DF0C0
 extern s_WorldObjectPose g_WorldObject9; // 0x800DF0F0
 extern s_WorldObjectModel   g_CommonWorldObjects[6]; // 0x800DF120
 
-void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void MapEvent_DoorJammed(void);
 

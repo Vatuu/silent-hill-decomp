@@ -217,41 +217,41 @@ typedef enum _StalkerStateStep
 
 extern s_AnimInfo STALKER_ANIM_INFOS[];
 
-void Ai_Stalker_Control_2(s_SubCharacter* stalker);
+void Stalker_Control_2(s_SubCharacter* stalker);
 
-void Ai_Stalker_Control_3(s_SubCharacter* stalker);
+void Stalker_Control_3(s_SubCharacter* stalker);
 
-void Ai_Stalker_Control_4(s_SubCharacter* stalker);
+void Stalker_Control_4(s_SubCharacter* stalker);
 
-void Ai_Stalker_Control_5(s_SubCharacter* stalker);
+void Stalker_Control_5(s_SubCharacter* stalker);
 
-void Ai_Stalker_Control_6(s_SubCharacter* stalker);
+void Stalker_Control_6(s_SubCharacter* stalker);
 
-void Ai_Stalker_Control_7(s_SubCharacter* stalker);
+void Stalker_Control_7(s_SubCharacter* stalker);
 
-void Ai_Stalker_Control_8(s_SubCharacter* stalker);
+void Stalker_Control_8(s_SubCharacter* stalker);
 
-void Ai_Stalker_Control_9(s_SubCharacter* stalker);
+void Stalker_Control_9(s_SubCharacter* stalker);
 
-void Ai_Stalker_Control_10(s_SubCharacter* stalker);
+void Stalker_Control_10(s_SubCharacter* stalker);
 
-void Ai_Stalker_Control_11(s_SubCharacter* stalker);
+void Stalker_Control_11(s_SubCharacter* stalker);
 
-void Ai_Stalker_Control_12(s_SubCharacter* stalker);
+void Stalker_Control_12(s_SubCharacter* stalker);
 
-void Ai_Stalker_Control_13(s_SubCharacter* stalker);
+void Stalker_Control_13(s_SubCharacter* stalker);
 
 void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker);
 
 void sharedFunc_800D7E04_0_s00(s_SubCharacter* stalker, s32 sfxId);
 
-void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-void Ai_Stalker_Init(s_SubCharacter* stalker); // Matches across all maps except `map6_s03`.
+void Stalker_Init(s_SubCharacter* stalker); // Matches across all maps except `map6_s03`.
 
 void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker);
 
-void Ai_Stalker_ControlUpdate(s_SubCharacter* stalker);
+void Stalker_ControlUpdate(s_SubCharacter* stalker);
 
 void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, GsCOORDINATE2* boneCoords);
 

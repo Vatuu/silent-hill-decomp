@@ -18,16 +18,16 @@
   * MAP7_S02: 0x800D6484
   * MAP7_S03: 0x800D4C50
   */
-void Ai_BloodyLisa_Update(s_SubCharacter* bloodyLisa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void BloodyLisa_Update(s_SubCharacter* bloodyLisa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     if (bloodyLisa->model.controlState == 0)
     {
-        Ai_BloodyLisa_Init(bloodyLisa);
+        BloodyLisa_Init(bloodyLisa);
     }
 
-    Ai_BloodyLisa_AnimStateUpdate(bloodyLisa, boneCoords);
-    Ai_BloodyLisa_MovementUpdate(bloodyLisa, boneCoords);
-    Ai_BloodyLisa_AnimUpdate(bloodyLisa, anmHdr, boneCoords);
+    BloodyLisa_AnimStateUpdate(bloodyLisa, boneCoords);
+    BloodyLisa_MovementUpdate(bloodyLisa, boneCoords);
+    BloodyLisa_AnimUpdate(bloodyLisa, anmHdr, boneCoords);
 }
 
  /** Addresses
@@ -35,7 +35,7 @@ void Ai_BloodyLisa_Update(s_SubCharacter* bloodyLisa, s_AnmHeader* anmHdr, GsCOO
   * MAP7_S02: 0x800D64F8
   * MAP7_S03: 0x800D4CC4
   */
-void Ai_BloodyLisa_AnimUpdate(s_SubCharacter* bloodyLisa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void BloodyLisa_AnimUpdate(s_SubCharacter* bloodyLisa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     s_AnimInfo* animInfo;
 
@@ -51,7 +51,7 @@ void Ai_BloodyLisa_AnimUpdate(s_SubCharacter* bloodyLisa, s_AnmHeader* anmHdr, G
   * MAP7_S02: 0x800D6540
   * MAP7_S03: 0x800D4D0C
   */
-void Ai_BloodyLisa_MovementUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneCoords)
+void BloodyLisa_MovementUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneCoords)
 {
     VECTOR3 unused;
     VECTOR3 offset;
@@ -87,7 +87,7 @@ void Ai_BloodyLisa_MovementUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* bon
   * MAP7_S02: 0x800D66D8
   * MAP7_S03: 0x800D4EA4
   */
-void Ai_BloodyLisa_AnimStateUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneCoords)
+void BloodyLisa_AnimStateUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneCoords)
 {
     s_Collision coll;
     e_SfxId     sfx;
@@ -142,7 +142,7 @@ void Ai_BloodyLisa_AnimStateUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* bo
   * MAP7_S02: 0x800D6850
   * MAP7_S03: 0x800D501C
   */
-void Ai_BloodyLisa_Init(s_SubCharacter* bloodyLisa)
+void BloodyLisa_Init(s_SubCharacter* bloodyLisa)
 {
     sharedFunc_800D923C_0_s00(bloodyLisa);
     sharedData_800E2C38_7_s01 = 0;

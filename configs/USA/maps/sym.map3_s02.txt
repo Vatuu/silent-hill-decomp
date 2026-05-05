@@ -49,27 +49,27 @@ sharedFunc_800D2EF4_0_s00           = 0x800CCA00; // type:func
 //----------------------------------------------------------------
 //--- PA: 0x00349C   VA: 0x800CCA14   subsegment: c, Chara_Creeper
 //----------------------------------------------------------------
-Ai_Creeper_Update                   = 0x800CCA14; // type:func
-Ai_Creeper_Init                     = 0x800CCAA4; // type:func
+Creeper_Update                      = 0x800CCA14; // type:func
+Creeper_Init                        = 0x800CCAA4; // type:func
 sharedFunc_800D7EE8_1_s02           = 0x800CCD64; // type:func
-Ai_Creeper_ControlUpdate            = 0x800CD0C0; // type:func
+Creeper_ControlUpdate               = 0x800CD0C0; // type:func
 Creeper_ControlIdle                 = 0x800CD16C; // type:func
 Creeper_ControlWalkForward          = 0x800CD500; // type:func
 Creeper_ControlAttack               = 0x800CDDAC; // type:func
 Creeper_ControlStun                 = 0x800CE3A4; // type:func
 Creeper_ControlDamage               = 0x800CE5F0; // type:func
 sharedFunc_800D983C_1_s02           = 0x800CE6B8; // type:func
-sharedFunc_800D9960_1_s02           = 0x800CE7DC; // type:func
+Creeper_AnimUpdate                  = 0x800CE7DC; // type:func
 sharedFunc_800D99D0_1_s02           = 0x800CE84C; // type:func
 
 //---------------------------------------------------------------
 //--- PA: 0x005710   VA: 0x800CEC88   subsegment: c, Chara_Alessa
 //---------------------------------------------------------------
-Ai_Alessa_Update                    = 0x800CEC88; // type:func
-Ai_Alessa_AnimUpdate                = 0x800CECFC; // type:func
-Ai_Alessa_MovementUpdate            = 0x800CED44; // type:func
-Ai_Alessa_AnimStateUpdate           = 0x800CEEDC; // type:func
-Ai_Alessa_Init                      = 0x800CF3E0; // type:func
+Alessa_Update                       = 0x800CEC88; // type:func
+Alessa_AnimUpdate                   = 0x800CECFC; // type:func
+Alessa_MovementUpdate               = 0x800CED44; // type:func
+Alessa_AnimStateUpdate              = 0x800CEEDC; // type:func
+Alessa_Init                         = 0x800CF3E0; // type:func
 
 //-------------------------------------------------------------
 //--- PA: 0x005E8C   VA: 0x800CF404   subsegment: c, map3_s02_2

@@ -8,16 +8,16 @@
 
 #define romperProps romper->properties.romper
 
-void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     if (romper->model.controlState == 0)
     {
-        Ai_Romper_Init(romper);
+        Romper_Init(romper);
     }
     else if (g_DeltaTime != Q12(0.0f))
     {
         sharedFunc_800E6420_2_s02(romper);
-        Ai_Romper_ControlUpdate(romper);
+        Romper_ControlUpdate(romper);
         sharedFunc_800E8730_2_s02(romper);
         sharedFunc_800E8DFC_2_s02(romper);
     }
@@ -26,7 +26,7 @@ void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2
     sharedFunc_800E60FC_2_s02(romper);
 }
 
-void Ai_Romper_Init(s_SubCharacter* romper)
+void Romper_Init(s_SubCharacter* romper)
 {
     #define HEALTH_BASE      Q12(450.0f)
     #define HEALTH_BONUS_MAX Q12(112.5f)
@@ -388,7 +388,7 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
     }
 }
 
-void Ai_Romper_ControlUpdate(s_SubCharacter* romper)
+void Romper_ControlUpdate(s_SubCharacter* romper)
 {
     u8 controlState;
 
@@ -406,7 +406,7 @@ void Ai_Romper_ControlUpdate(s_SubCharacter* romper)
     }
 }
 
-void Ai_Romper_Control_1(s_SubCharacter* romper)
+void Romper_Control_1(s_SubCharacter* romper)
 {
     s32    flags;
     q19_12 newMoveSpeed;
@@ -530,7 +530,7 @@ void Romper_ControlWalkForward(s_SubCharacter* romper)
     }
 }
 
-void Ai_Romper_Control_3(s_SubCharacter* romper)
+void Romper_Control_3(s_SubCharacter* romper)
 {
     q3_12           angleDeltaToTarget;
     s32             temp_s0;
@@ -746,7 +746,7 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
     }
 }
 
-void Ai_Romper_Control_4(s_SubCharacter* romper)
+void Romper_Control_4(s_SubCharacter* romper)
 {
     q19_12 angle0;
     s32    temp_s0;
@@ -1005,7 +1005,7 @@ void Romper_ControlJump(s_SubCharacter* romper)
     }
 }
 
-void Ai_Romper_Control_6(s_SubCharacter* romper)
+void Romper_Control_6(s_SubCharacter* romper)
 {
     q3_12 moveDist;
 
@@ -1020,7 +1020,7 @@ void Ai_Romper_Control_6(s_SubCharacter* romper)
     }
 }
 
-void Ai_Romper_Control_7(s_SubCharacter* romper)
+void Romper_Control_7(s_SubCharacter* romper)
 {
     q3_12 moveDist;
 
@@ -1056,7 +1056,7 @@ void Ai_Romper_Control_7(s_SubCharacter* romper)
     }
 }
 
-void Ai_Romper_Control_8(s_SubCharacter* romper)
+void Romper_Control_8(s_SubCharacter* romper)
 {
     if (romper->health == Q12(0.0f))
     {
@@ -1075,9 +1075,9 @@ void Ai_Romper_Control_8(s_SubCharacter* romper)
     }
 }
 
-void Ai_Romper_Control_9(s_SubCharacter* romper) {}
+void Romper_Control_9(s_SubCharacter* romper) {}
 
-void Ai_Romper_Control_10(s_SubCharacter* romper)
+void Romper_Control_10(s_SubCharacter* romper)
 {
     VECTOR          sp10;
     s_SubCharacter* player;

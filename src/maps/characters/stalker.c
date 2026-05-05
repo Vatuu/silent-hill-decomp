@@ -8,7 +8,7 @@
 
 #define stalkerProps stalker->properties.stalker
 
-void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal)
     {
@@ -35,7 +35,7 @@ void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINAT
     // Initialize.
     if (stalker->model.controlState == StalkerControl_None)
     {
-        Ai_Stalker_Init(stalker);
+        Stalker_Init(stalker);
     }
 
     if (stalker->model.controlState != StalkerControl_1)
@@ -43,7 +43,7 @@ void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINAT
         if (g_DeltaTime != Q12(0.0f))
         {
             sharedFunc_800D3308_0_s00(stalker);
-            Ai_Stalker_ControlUpdate(stalker);
+            Stalker_ControlUpdate(stalker);
             sharedFunc_800D67FC_0_s00(stalker);
         }
 
@@ -59,7 +59,7 @@ void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINAT
     }
 }
 
-void Ai_Stalker_Init(s_SubCharacter* stalker)
+void Stalker_Init(s_SubCharacter* stalker)
 {
     s32 i;
 
@@ -505,7 +505,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
     Chara_DamageClear(stalker);
 }
 
-void Ai_Stalker_ControlUpdate(s_SubCharacter* stalker)
+void Stalker_ControlUpdate(s_SubCharacter* stalker)
 {
     q3_12 angle;
     s32   temp_s1;
@@ -595,56 +595,56 @@ void Ai_Stalker_ControlUpdate(s_SubCharacter* stalker)
             break;
 
         case StalkerControl_2:
-            Ai_Stalker_Control_2(stalker);
+            Stalker_Control_2(stalker);
             break;
 
         case StalkerControl_3:
-            Ai_Stalker_Control_3(stalker);
+            Stalker_Control_3(stalker);
             break;
 
         case StalkerControl_8:
-            Ai_Stalker_Control_8(stalker);
+            Stalker_Control_8(stalker);
             break;
 
         case StalkerControl_4:
-            Ai_Stalker_Control_4(stalker);
+            Stalker_Control_4(stalker);
             break;
 
         case StalkerControl_5:
-            Ai_Stalker_Control_5(stalker);
+            Stalker_Control_5(stalker);
             break;
 
         case StalkerControl_6:
-            Ai_Stalker_Control_6(stalker);
+            Stalker_Control_6(stalker);
             break;
 
         case StalkerControl_7:
-            Ai_Stalker_Control_7(stalker);
+            Stalker_Control_7(stalker);
             break;
 
         case StalkerControl_9:
-            Ai_Stalker_Control_9(stalker);
+            Stalker_Control_9(stalker);
             break;
 
         case StalkerControl_10:
-            Ai_Stalker_Control_10(stalker);
+            Stalker_Control_10(stalker);
             break;
 
         case StalkerControl_11:
-            Ai_Stalker_Control_11(stalker);
+            Stalker_Control_11(stalker);
             break;
 
         case StalkerControl_12:
-            Ai_Stalker_Control_12(stalker);
+            Stalker_Control_12(stalker);
             break;
 
         case StalkerControl_13:
-            Ai_Stalker_Control_13(stalker);
+            Stalker_Control_13(stalker);
             break;
     }
 }
 
-void Ai_Stalker_Control_2(s_SubCharacter* stalker)
+void Stalker_Control_2(s_SubCharacter* stalker)
 {
 #if defined(MAP0_S00)
     q3_12  angleDeltaToTargetHeading;
@@ -848,7 +848,7 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
 #endif
 }
 
-void Ai_Stalker_Control_3(s_SubCharacter* stalker)
+void Stalker_Control_3(s_SubCharacter* stalker)
 {
 #if !defined(MAP0_S00)
     q3_12  grabAngleDelta;
@@ -1118,7 +1118,7 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
 #endif
 }
 
-void Ai_Stalker_Control_4(s_SubCharacter* stalker)
+void Stalker_Control_4(s_SubCharacter* stalker)
 {
     q3_12  angle;
     q19_12 offsetX;
@@ -1305,7 +1305,7 @@ void Ai_Stalker_Control_4(s_SubCharacter* stalker)
     }
 }
 
-void Ai_Stalker_Control_5(s_SubCharacter* stalker)
+void Stalker_Control_5(s_SubCharacter* stalker)
 {
     #define DIST_TO_PLAYER_MAX Q12(0.9f)
     #define MOVE_SPEED_MAX     Q12(0.7f)
@@ -1411,7 +1411,7 @@ void Ai_Stalker_Control_5(s_SubCharacter* stalker)
     }
 }
 
-void Ai_Stalker_Control_6(s_SubCharacter* stalker)
+void Stalker_Control_6(s_SubCharacter* stalker)
 {
     VECTOR3 vec0;
     q3_12   angleDeltaToPlayer;
@@ -1563,7 +1563,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
     }
 }
 
-void Ai_Stalker_Control_7(s_SubCharacter* stalker)
+void Stalker_Control_7(s_SubCharacter* stalker)
 {
     u16 flags;
 
@@ -1586,7 +1586,7 @@ void Ai_Stalker_Control_7(s_SubCharacter* stalker)
     }
 }
 
-void Ai_Stalker_Control_8(s_SubCharacter* stalker)
+void Stalker_Control_8(s_SubCharacter* stalker)
 {
 #if defined(MAP1_S00) || defined(MAP1_S01)
     #define BASE_DIST_MAX Q12(6.0f)
@@ -1694,7 +1694,7 @@ void Ai_Stalker_Control_8(s_SubCharacter* stalker)
     #undef BASE_DIST_MAX
 }
 
-void Ai_Stalker_Control_9(s_SubCharacter* stalker)
+void Stalker_Control_9(s_SubCharacter* stalker)
 {
     #define FRICTION_PER_FRAME 1.5f // TODO: Or is it per tick?
 
@@ -1836,7 +1836,7 @@ void Ai_Stalker_Control_9(s_SubCharacter* stalker)
     }
 }
 
-void Ai_Stalker_Control_10(s_SubCharacter* stalker)
+void Stalker_Control_10(s_SubCharacter* stalker)
 {
     q19_12 curMoveSpeed;
     q19_12 newMoveSpeed;
@@ -1913,9 +1913,9 @@ void Ai_Stalker_Control_10(s_SubCharacter* stalker)
 #endif
 }
 
-void Ai_Stalker_Control_11(s_SubCharacter* stalker) {}
+void Stalker_Control_11(s_SubCharacter* stalker) {}
 
-void Ai_Stalker_Control_12(s_SubCharacter* stalker)
+void Stalker_Control_12(s_SubCharacter* stalker)
 {
 #if defined(MAP1_S00) || defined(MAP1_S01)
     #define BASE_DIST_MAX Q12(12.0f)
@@ -1977,7 +1977,7 @@ void Ai_Stalker_Control_12(s_SubCharacter* stalker)
     #undef BASE_DIST_MAX
 }
 
-void Ai_Stalker_Control_13(s_SubCharacter* stalker)
+void Stalker_Control_13(s_SubCharacter* stalker)
 {
     if (stalker->model.stateStep == 1)
     {

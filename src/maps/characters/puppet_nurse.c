@@ -179,7 +179,7 @@ s32 PuppetNurse_HurtSfxIdGet(s_SubCharacter* nurse)
     return NO_VALUE;
 }
 
-void Ai_PuppetNurse_SfxPlay(s_SubCharacter* nurse, s32 idx)
+void PuppetNurse_SfxPlay(s_SubCharacter* nurse, s32 idx)
 {
     s32        idx0;
     s_SfxPair* sfxPair;
@@ -189,7 +189,7 @@ void Ai_PuppetNurse_SfxPlay(s_SubCharacter* nurse, s32 idx)
     func_8005DC1C(sfxPair[idx0].sfxId, &nurse->position, sfxPair[idx0].vol, 0);
 }
 
-s32 Ai_PuppetNurse_AnimSfxGet(s32 animFrame)
+s32 PuppetNurse_AnimSfxGet(s32 animFrame)
 {
     u8 idx;
     u8 sfxOffsets[4] = { 9, 6, 7, 8 };
@@ -202,30 +202,30 @@ void sharedFunc_800CDA88_3_s03(s_SubCharacter* nurse)
 {
     if (nurse->model.stateStep == 0)
     {
-        Ai_PuppetNurse_Control(nurse);
+        PuppetNurse_Control(nurse);
     }
 }
 
-void Ai_PuppetNurse_UpdateMain(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void PuppetNurse_UpdateMain(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     if (g_DeltaTime != Q12(0.0f))
     {
-        Ai_PuppetNurse_DamageHandle(nurse);
-        Ai_PuppetNurse_Control(nurse);
+        PuppetNurse_DamageHandle(nurse);
+        PuppetNurse_Control(nurse);
         sharedFunc_800CDA88_3_s03(nurse);
         sharedFunc_800D03E4_3_s03(nurse);
-        Ai_PuppetNurse_AnimUpdate(nurse, anmHdr, boneCoords);
+        PuppetNurse_AnimUpdate(nurse, anmHdr, boneCoords);
         sharedFunc_800D0968_3_s03(nurse, boneCoords);
         sharedFunc_800D02E4_3_s03(nurse, boneCoords);
         return;
     }
     else
     {
-        Ai_PuppetNurse_AnimUpdate(nurse, anmHdr, boneCoords);
+        PuppetNurse_AnimUpdate(nurse, anmHdr, boneCoords);
     }
 }
 
-void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isDoctor)
+void PuppetNurse_Init(s_SubCharacter* nurse, bool isDoctor)
 {
     extern s_800D5710 sharedData_800D5710_3_s03[4]; // Likely static.
 
@@ -311,29 +311,29 @@ void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isDoctor)
     localNurse->properties.puppetNurse.field_120 = Q12(1.0f);
 }
 
-void Ai_PuppetNurse_Update(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void PuppetNurse_Update(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     // Initialize.
     if (nurse->model.controlState == 0)
     {
-        Ai_PuppetNurse_Init(nurse, false);
+        PuppetNurse_Init(nurse, false);
     }
 
-    Ai_PuppetNurse_UpdateMain(nurse, anmHdr, boneCoords);
+    PuppetNurse_UpdateMain(nurse, anmHdr, boneCoords);
 }
 
-void Ai_PuppetDoctor_Update(s_SubCharacter* doctor, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void PuppetDoctor_Update(s_SubCharacter* doctor, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     // Initialize.
     if (doctor->model.controlState == 0)
     {
-        Ai_PuppetNurse_Init(doctor, true);
+        PuppetNurse_Init(doctor, true);
     }
 
-    Ai_PuppetNurse_UpdateMain(doctor, anmHdr, boneCoords);
+    PuppetNurse_UpdateMain(doctor, anmHdr, boneCoords);
 }
 
-bool Ai_PuppetNurse_SomeAngleCheck(s_SubCharacter* nurse)
+bool PuppetNurse_SomeAngleCheck(s_SubCharacter* nurse)
 {
     q19_12 sumSqr;
     q19_12 damageAngle;
@@ -352,7 +352,7 @@ bool Ai_PuppetNurse_SomeAngleCheck(s_SubCharacter* nurse)
     return false;
 }
 
-void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
+void PuppetNurse_DamageHandle(s_SubCharacter* nurse)
 {
     q19_12          newHealth;
     s32             sfxIdx;
@@ -365,7 +365,7 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
         sfxIdx = PuppetNurse_HurtSfxIdGet(nurse);
         if (sfxIdx != NO_VALUE)
         {
-            Ai_PuppetNurse_SfxPlay(nurse, sfxIdx);
+            PuppetNurse_SfxPlay(nurse, sfxIdx);
         }
 
         switch (nurse->properties.puppetNurse.field_118)
@@ -385,7 +385,7 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
                 {
                     nurse->properties.puppetNurse.field_118++;
 
-                    if (!Ai_PuppetNurse_SomeAngleCheck(nurse))
+                    if (!PuppetNurse_SomeAngleCheck(nurse))
                     {
                         nurse->model.controlState = PuppetNurseControl_4;
                         nurse->model.stateStep    = 0;
@@ -417,7 +417,7 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
             case 1:
                 if (nurse->health)
                 {
-                    Ai_PuppetNurse_SfxPlay(nurse, 1);
+                    PuppetNurse_SfxPlay(nurse, 1);
                     nurse->health = Q12(0.0f);
                     Savegame_EnemyStateUpdate(nurse);
 
@@ -437,7 +437,7 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
     Chara_DamageClear(nurse);
 }
 
-void Ai_PuppetNurse_Move(s_SubCharacter* nurse)
+void PuppetNurse_Move(s_SubCharacter* nurse)
 {
     q3_12  angleDeltaToPlayer;
     q3_12  tmpAngle;
@@ -498,7 +498,7 @@ bool sharedFunc_800CE398_3_s03(s32 animStatus)
            animStatus == ANIM_STATUS(PuppetNurseAnim_17, true);
 }
 
-void Ai_PuppetNurse_Control1(s_SubCharacter* nurse)
+void PuppetNurse_Control1(s_SubCharacter* nurse)
 {
     s_SubCharacter* localNurse;
 
@@ -531,7 +531,7 @@ void Ai_PuppetNurse_Control1(s_SubCharacter* nurse)
     if (nurse->properties.puppetNurse.field_104 < Q12(0.0f) && (nurse->properties.puppetNurse.flags_122 & PuppetNurseFlag_0))
     {
         nurse->properties.puppetNurse.field_104 = Q12(100.0f);
-        Ai_PuppetNurse_SfxPlay(nurse, 0);
+        PuppetNurse_SfxPlay(nurse, 0);
     }
 
     if (localNurse->model.anim.status == ANIM_STATUS(PuppetNurseAnim_18, false))
@@ -547,17 +547,17 @@ void Ai_PuppetNurse_Control1(s_SubCharacter* nurse)
         return;
     }
 
-    Ai_PuppetNurse_Move(localNurse);
+    PuppetNurse_Move(localNurse);
     nurse->properties.puppetNurse.field_104 -= g_DeltaTime;
 }
 
-void Ai_PuppetNurse_Control2(s_SubCharacter* nurse)
+void PuppetNurse_Control2(s_SubCharacter* nurse)
 {
     s32 moveSpeed;
 
     if (!nurse->model.stateStep)
     {
-        Ai_PuppetNurse_SfxPlay(nurse, 2);
+        PuppetNurse_SfxPlay(nurse, 2);
         nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_2, false);
         nurse->model.stateStep++;
     }
@@ -570,7 +570,7 @@ void Ai_PuppetNurse_Control2(s_SubCharacter* nurse)
     Chara_MoveSpeedUpdate(nurse, Q12(4.0f));
 }
 
-void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor)
+void PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor)
 {
     s32             animStatus;
     s_SubCharacter* localNurse;
@@ -584,7 +584,7 @@ void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor)
             return;
         }
 
-        Ai_PuppetNurse_SfxPlay(nurse, 2);
+        PuppetNurse_SfxPlay(nurse, 2);
 
         nurse->model.anim.status = g_PuppetNurse_AnimStatus0[isDoctor];
         nurse->collision.state   = CharaCollisionState_4;
@@ -695,7 +695,7 @@ bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse)
     return true;
 }
 
-void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
+void PuppetNurse_Control5(s_SubCharacter* nurse)
 {
     s32 controlState;
 
@@ -754,11 +754,11 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
     nurse->properties.puppetNurse.field_104 += g_DeltaTime;
 }
 
-void Ai_PuppetNurse_Control6_7(s_SubCharacter* nurse, bool isDoctor)
+void PuppetNurse_Control6_7(s_SubCharacter* nurse, bool isDoctor)
 {
     if (!nurse->model.stateStep)
     {
-        Ai_PuppetNurse_SfxPlay(nurse, isDoctor + 1);
+        PuppetNurse_SfxPlay(nurse, isDoctor + 1);
 
         if (isDoctor)
         {
@@ -781,7 +781,7 @@ void Ai_PuppetNurse_Control6_7(s_SubCharacter* nurse, bool isDoctor)
     Chara_MoveSpeedUpdate(nurse, Q12(4.0f));
 }
 
-void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
+void PuppetNurse_Control8(s_SubCharacter* nurse)
 {
     s32    controlState;
     q19_12 speed;
@@ -962,7 +962,7 @@ bool sharedFunc_800CF294_3_s03(s_SubCharacter* nurse, q19_12 dist)
     return ret;
 }
 
-void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
+void PuppetNurse_Control9(s_SubCharacter* nurse)
 {
     bool            cond;
     q19_12          dist;
@@ -1131,7 +1131,7 @@ bool sharedFunc_800CF90C_3_s03(s_SubCharacter* nurse)
     return false;
 }
 
-void Ai_PuppetNurse_Control12(s_SubCharacter* nurse)
+void PuppetNurse_Control12(s_SubCharacter* nurse)
 {
     s32             angleDeltaToPlayer;
     s16             angleDeltaAbs;
@@ -1232,7 +1232,7 @@ void Ai_PuppetNurse_Control12(s_SubCharacter* nurse)
     }
 }
 
-void Ai_PuppetNurse_Control10(s_SubCharacter* nurse)
+void PuppetNurse_Control10(s_SubCharacter* nurse)
 {
     u8     animStatus;
     q19_12 deltaX;
@@ -1268,7 +1268,7 @@ void Ai_PuppetNurse_Control10(s_SubCharacter* nurse)
     }
 }
 
-void Ai_PuppetNurse_Control11(s_SubCharacter* nurse)
+void PuppetNurse_Control11(s_SubCharacter* nurse)
 {
     u8              controlState;
     q19_12          deltaX;
@@ -1353,7 +1353,7 @@ void Ai_PuppetNurse_Control11(s_SubCharacter* nurse)
 #undef localNurseProps
 }
 
-void Ai_PuppetNurse_Control13(s_SubCharacter* nurse)
+void PuppetNurse_Control13(s_SubCharacter* nurse)
 {
     if (nurse->model.stateStep == 0)
     {
@@ -1370,61 +1370,61 @@ void Ai_PuppetNurse_Control13(s_SubCharacter* nurse)
     Chara_MoveSpeedUpdate3(nurse, Q12(4.0f), Q12(0.0f));
 }
 
-void Ai_PuppetNurse_Control(s_SubCharacter* nurse)
+void PuppetNurse_Control(s_SubCharacter* nurse)
 {
     // Handle control state.
     switch (nurse->model.controlState)
     {
         case PuppetNurseControl_1:
-            Ai_PuppetNurse_Control1(nurse);
+            PuppetNurse_Control1(nurse);
             break;
 
         case PuppetNurseControl_2:
-            Ai_PuppetNurse_Control2(nurse);
+            PuppetNurse_Control2(nurse);
             break;
 
         case PuppetNurseControl_3:
-            Ai_PuppetNurse_Control3_4(nurse, true);
+            PuppetNurse_Control3_4(nurse, true);
             break;
 
         case PuppetNurseControl_4:
-            Ai_PuppetNurse_Control3_4(nurse, false);
+            PuppetNurse_Control3_4(nurse, false);
             break;
 
         case PuppetNurseControl_5:
-            Ai_PuppetNurse_Control5(nurse);
+            PuppetNurse_Control5(nurse);
             break;
 
         case PuppetNurseControl_6:
-            Ai_PuppetNurse_Control6_7(nurse, false);
+            PuppetNurse_Control6_7(nurse, false);
             break;
 
         case PuppetNurseControl_7:
-            Ai_PuppetNurse_Control6_7(nurse, true);
+            PuppetNurse_Control6_7(nurse, true);
             break;
 
         case PuppetNurseControl_8:
-            Ai_PuppetNurse_Control8(nurse);
+            PuppetNurse_Control8(nurse);
             break;
 
         case PuppetNurseControl_9:
-            Ai_PuppetNurse_Control9(nurse);
+            PuppetNurse_Control9(nurse);
             break;
 
         case PuppetNurseControl_10:
-            Ai_PuppetNurse_Control10(nurse);
+            PuppetNurse_Control10(nurse);
             break;
 
         case PuppetNurseControl_11:
-            Ai_PuppetNurse_Control11(nurse);
+            PuppetNurse_Control11(nurse);
             break;
 
         case PuppetNurseControl_12:
-            Ai_PuppetNurse_Control12(nurse);
+            PuppetNurse_Control12(nurse);
             break;
 
         case PuppetNurseControl_13:
-            Ai_PuppetNurse_Control13(nurse);
+            PuppetNurse_Control13(nurse);
             break;
     }
 }
@@ -1540,7 +1540,7 @@ void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse)
     nurse->rotation.vy = Math_AngleNormalizeSigned(nurse->rotation.vy);
 }
 
-void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coord)
+void PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coord)
 {
     s32         sfxIdx0;
     s32         sfxIdx1;
@@ -1551,7 +1551,7 @@ void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOO
     s_AnimInfo* animInfoBase;
 
     animInfoBase = nurseProps.field_124->animInfo_24;
-    sfxIdx0      = Ai_PuppetNurse_AnimSfxGet(FP_FROM(nurse->model.anim.time, Q12_SHIFT));
+    sfxIdx0      = PuppetNurse_AnimSfxGet(FP_FROM(nurse->model.anim.time, Q12_SHIFT));
 
     WorldGfx_HeldItemAttach(nurse->model.charaId, nurseProps.modelVariantIdx);
     Math_MatrixTransform(&nurse->position, &nurse->rotation, coord);
@@ -1570,10 +1570,10 @@ void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOO
         }
     }
 
-    sfxIdx1 = Ai_PuppetNurse_AnimSfxGet(FP_FROM(nurse->model.anim.time, Q12_SHIFT));
+    sfxIdx1 = PuppetNurse_AnimSfxGet(FP_FROM(nurse->model.anim.time, Q12_SHIFT));
     if (sfxIdx1 != sfxIdx0 && sfxIdx1 != 9)
     {
-        Ai_PuppetNurse_SfxPlay(nurse, sfxIdx1);
+        PuppetNurse_SfxPlay(nurse, sfxIdx1);
     }
 }
 

@@ -15,7 +15,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
-void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D6D40
+void Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D6D40
 {
     s_AnimInfo* animInfo;
     bool        cond;

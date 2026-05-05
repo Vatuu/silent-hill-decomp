@@ -249,8 +249,8 @@ sharedFunc_800D8804_0_s01           = 0x800E3284; // type:func
 //----------------------------------------------------------------
 //--- PA: 0x019D1C   VA: 0x800E3294   subsegment: c, Chara_Groaner
 //----------------------------------------------------------------
-Ai_Groaner_Update                   = 0x800E3294; // type:func
-Ai_Groaner_Init                     = 0x800E3390; // type:func
+Groaner_Update                      = 0x800E3294; // type:func
+Groaner_Init                        = 0x800E3390; // type:func
 sharedFunc_800E33DC_2_s00           = 0x800E3590; // type:func
 sharedFunc_800E384C_2_s00           = 0x800E3A00; // type:func
 sharedFunc_800E39D8_2_s00           = 0x800E3B8C; // type:func
@@ -268,22 +268,22 @@ sharedFunc_800E71E8_2_s00           = 0x800E739C; // type:func
 //-----------------------------------------------------------
 //--- PA: 0x01E2F4   VA: 0x800E786C   subsegment: c, map5_s01
 //-----------------------------------------------------------
-Ai_Romper_Update                    = 0x800E786C; // type:func
-Ai_Romper_Init                      = 0x800E790C; // type:func
+Romper_Update                       = 0x800E786C; // type:func
+Romper_Init                         = 0x800E790C; // type:func
 Romper_FootstepSfxPlay              = 0x800E7AFC; // type:func
 sharedFunc_800E60FC_2_s02           = 0x800E7C30; // type:func
 sharedFunc_800E6420_2_s02           = 0x800E7F54; // type:func
-Ai_Romper_ControlUpdate             = 0x800E821C; // type:func
-Ai_Romper_Control_1                 = 0x800E828C; // type:func
+Romper_ControlUpdate                = 0x800E821C; // type:func
+Romper_Control_1                    = 0x800E828C; // type:func
 Romper_ControlWalkForward           = 0x800E83AC; // type:func
-Ai_Romper_Control_3                 = 0x800E8774; // type:func
-Ai_Romper_Control_4                 = 0x800E9074; // type:func
+Romper_Control_3                    = 0x800E8774; // type:func
+Romper_Control_4                    = 0x800E9074; // type:func
 Romper_ControlJump                  = 0x800E950C; // type:func
-Ai_Romper_Control_6                 = 0x800E9B70; // type:func
-Ai_Romper_Control_7                 = 0x800E9C8C; // type:func
-Ai_Romper_Control_8                 = 0x800E9F08; // type:func
-Ai_Romper_Control_9                 = 0x800E9FAC; // type:func
-Ai_Romper_Control_10                = 0x800E9FB4; // type:func
+Romper_Control_6                    = 0x800E9B70; // type:func
+Romper_Control_7                    = 0x800E9C8C; // type:func
+Romper_Control_8                    = 0x800E9F08; // type:func
+Romper_Control_9                    = 0x800E9FAC; // type:func
+Romper_Control_10                   = 0x800E9FB4; // type:func
 Romper_ControlGrabAttack            = 0x800EA1F4; // type:func
 sharedFunc_800E8730_2_s02           = 0x800EA264; // type:func
 sharedFunc_800E8A40_2_s02           = 0x800EA574; // type:func

@@ -21,16 +21,16 @@
  * MAP6_S04: 0x800DC2B4
  * MAP7_S03: 0x800D2F08
  */
-void Ai_Alessa_Update(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void Alessa_Update(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     if (alessa->model.controlState == 0)
     {
-        Ai_Alessa_Init(alessa);
+        Alessa_Init(alessa);
     }
 
-    Ai_Alessa_AnimStateUpdate(alessa, boneCoords);
-    Ai_Alessa_MovementUpdate(alessa, boneCoords);
-    Ai_Alessa_AnimUpdate(alessa, anmHdr, boneCoords);
+    Alessa_AnimStateUpdate(alessa, boneCoords);
+    Alessa_MovementUpdate(alessa, boneCoords);
+    Alessa_AnimUpdate(alessa, anmHdr, boneCoords);
 }
 
 /** Addresses
@@ -39,7 +39,7 @@ void Ai_Alessa_Update(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2
  * MAP6_S04: 0x800DC328
  * MAP7_S03: 0x800D2F7C
  */
-void Ai_Alessa_AnimUpdate(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void Alessa_AnimUpdate(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     s_AnimInfo* animInfo;
 
@@ -56,7 +56,7 @@ void Ai_Alessa_AnimUpdate(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDIN
  * MAP6_S04: 0x800DC370
  * MAP7_S03: 0x800D2FC4
  */
-void Ai_Alessa_MovementUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
+void Alessa_MovementUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
 {
     VECTOR3 unused;
     VECTOR3 offset;
@@ -93,7 +93,7 @@ void Ai_Alessa_MovementUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
  * MAP6_S04: 0x800DC508
  * MAP7_S03: 0x800D315C
  */
-void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
+void Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
 {
     s_Collision coll;
     e_SfxId     sfx;
@@ -250,7 +250,7 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords
  * MAP6_S04: 0x800DCA0C
  * MAP7_S03: 0x800D3660
  */
-void Ai_Alessa_Init(s_SubCharacter* alessa)
+void Alessa_Init(s_SubCharacter* alessa)
 {
     sharedFunc_800D923C_0_s00(alessa);
     sharedData_800D3150_3_s02 = 0;

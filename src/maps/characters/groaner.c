@@ -14,14 +14,14 @@
 #define Rng_GenerateIntFromInput(rand, low, high) \
     (s32)((rand) % (((high) - (low)) + 1)) + (low)
 
-void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     u8 prevControlState;
 
     // Initialize.
     if (groaner->model.controlState == GroanerControl_0)
     {
-        Ai_Groaner_Init(groaner);
+        Groaner_Init(groaner);
     }
 
     prevControlState = groaner->model.controlState;
@@ -52,7 +52,7 @@ void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINAT
     }
 }
 
-void Ai_Groaner_Init(s_SubCharacter* groaner)
+void Groaner_Init(s_SubCharacter* groaner)
 {
     #define HEALTH_BASE      Q12(210.0f)
     #define HEALTH_BONUS_MAX Q12(70.0f)

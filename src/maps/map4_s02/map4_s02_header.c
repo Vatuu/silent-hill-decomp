@@ -132,8 +132,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .data_18C                         = &sharedData_800DFB6C_0_s00,
     .data_190                         = &sharedData_800DFB70_0_s00,
     .charaUpdateFuncs             = {
-        NULL, NULL, AirScreamer_Update, AirScreamer_Update, Ai_Groaner_Update, Ai_Groaner_Update, NULL, NULL,
-        NULL, NULL, NULL, NULL, Ai_Romper_Update },
+        NULL, NULL, AirScreamer_Update, AirScreamer_Update, Groaner_Update, Groaner_Update, NULL, NULL,
+        NULL, NULL, NULL, NULL, Romper_Update },
     .charaGroupIds = { Chara_NightFlutter, Chara_Romper, Chara_Wormhead },
     .charaSpawns   = {
 #include "chara_spawns.h"

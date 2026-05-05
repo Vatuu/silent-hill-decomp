@@ -59,15 +59,15 @@ typedef enum _LarvalStalkerControl
 
 extern s_AnimInfo LARVAL_STALKER_ANIM_INFOS[];
 
-void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker);
+void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker);
 
 void sharedFunc_800D140C_1_s00(s_SubCharacter* larvalStalker, GsCOORDINATE2* boneCoords);
 
 void sharedFunc_800D1524_1_s00(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-void Ai_LarvalStalker_Init(s_SubCharacter* larvalStalker);
+void LarvalStalker_Init(s_SubCharacter* larvalStalker);
 
 void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker);
 

@@ -73,15 +73,15 @@ s32 func_800D8898(s_AnimInfo* animInfo) // 0x800D8898
     return 0;
 }
 
-void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D8908
+void MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D8908
 {
     s_Model* extraModel;
 
-    extraModel = &g_Ai_MonsterCybil_ExtraModel;
+    extraModel = &g_MonsterCybil_ExtraModel;
 
     if (chara->model.controlState == 0)
     {
-        Ai_MonsterCybil_Init(chara, extraModel);
+        MonsterCybil_Init(chara, extraModel);
     }
 
     if (g_DeltaTime != Q12(0.0f))
@@ -95,7 +95,7 @@ void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDI
     }
 }
 
-void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D89CC
+void MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D89CC
 {
     chara->model.controlState++;
     extraModel->controlState++;
