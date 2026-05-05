@@ -3803,7 +3803,7 @@ void AirScreamer_Control_18(s_SubCharacter* airScreamer)
     field14C_1     = field14C_1_tmp;
     field14C_2     = field14C_2_tmp;
 
-    temp_s5 = sharedFunc_800DC50C_2_s00(airScreamer);
+    temp_s5 = AirScreamer_HasLandedCheck(airScreamer);
 
     switch (airScreamer->model.stateStep)
     {
@@ -3918,7 +3918,7 @@ void AirScreamer_Control_18(s_SubCharacter* airScreamer)
                         break;
                     }
 
-                    if (sharedFunc_800DC0A8_2_s00(airScreamer) != false)
+                    if (AirScreamer_IsGroundedCheck(airScreamer) != false)
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -4004,7 +4004,7 @@ void AirScreamer_Control_19(s_SubCharacter* airScreamer)
     field14C_1 = new_var2;
     field14C_2 = new_var3;
 
-    temp_s5 = sharedFunc_800DC50C_2_s00(airScreamer);
+    temp_s5 = AirScreamer_HasLandedCheck(airScreamer);
 
     switch (airScreamer->model.stateStep)
     {
@@ -4108,7 +4108,7 @@ void AirScreamer_Control_19(s_SubCharacter* airScreamer)
 
                         airScreamer->model.stateStep = 0;
                     }
-                    else if (sharedFunc_800DC0A8_2_s00(airScreamer))
+                    else if (AirScreamer_IsGroundedCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -4190,7 +4190,7 @@ void AirScreamer_Control_20(s_SubCharacter* airScreamer)
     field14C_0        = field14C_0_tmp;
     field14C_1        = field14C_1_tmp;
     field14C_2        = field14C_2_tmp;
-    temp_a0           = sharedFunc_800DC50C_2_s00(airScreamer);
+    temp_a0           = AirScreamer_HasLandedCheck(airScreamer);
     condModelStateIs2 = switchCond = 0;
 
     switch (airScreamer->model.stateStep)
@@ -4345,7 +4345,7 @@ void AirScreamer_Control_20(s_SubCharacter* airScreamer)
                         airScreamer->model.controlState = AirScreamerControl_6;
                         airScreamer->model.stateStep    = 0;
                     }
-                    else if (sharedFunc_800DC0A8_2_s00(airScreamer))
+                    else if (AirScreamer_IsGroundedCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -4358,7 +4358,7 @@ void AirScreamer_Control_20(s_SubCharacter* airScreamer)
                         airScreamer->model.controlState = AirScreamerControl_7;
                         airScreamer->model.stateStep    = 0;
                     }
-                    else if (sharedFunc_800DC0A8_2_s00(airScreamer))
+                    else if (AirScreamer_IsGroundedCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -4425,7 +4425,7 @@ void AirScreamer_Control_21(s_SubCharacter* airScreamer)
     field14C_0     = field14C_0_tmp;
     field14C_1     = field14C_1_tmp;
     field14C_2     = field14C_2_tmp;
-    temp_a0        = sharedFunc_800DC50C_2_s00(airScreamer);
+    temp_a0        = AirScreamer_HasLandedCheck(airScreamer);
 
     // Handle state step.
     switch (airScreamer->model.stateStep)
@@ -4586,7 +4586,7 @@ void AirScreamer_Control_21(s_SubCharacter* airScreamer)
 
                         airScreamer->model.stateStep = 0;
                     }
-                    else if (sharedFunc_800DC0A8_2_s00(airScreamer))
+                    else if (AirScreamer_IsGroundedCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -4607,7 +4607,7 @@ void AirScreamer_Control_21(s_SubCharacter* airScreamer)
 
                         airScreamer->model.stateStep = 0;
                     }
-                    else if (sharedFunc_800DC0A8_2_s00(airScreamer))
+                    else if (AirScreamer_IsGroundedCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -4671,7 +4671,7 @@ void AirScreamer_Control_22(s_SubCharacter* airScreamer)
         angleAdd = Q12(0.1f);
     }
 
-    temp_s3 = sharedFunc_800DC50C_2_s00(airScreamer);
+    temp_s3 = AirScreamer_HasLandedCheck(airScreamer);
     var_s5  = 0;
 
     // Handle state step.
@@ -4781,7 +4781,7 @@ void AirScreamer_Control_22(s_SubCharacter* airScreamer)
                         airScreamer->model.controlState = AirScreamerControl_8;
                         airScreamer->model.stateStep    = 0;
                     }
-                    else if (sharedFunc_800DC0A8_2_s00(airScreamer))
+                    else if (AirScreamer_IsGroundedCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -4864,7 +4864,7 @@ void AirScreamer_Control_23(s_SubCharacter* airScreamer)
     field14C_2_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
     temp_fp        = temp_fp_tmp;
     field14C_2     = field14C_2_tmp;
-    temp_s6        = sharedFunc_800DC50C_2_s00(airScreamer);
+    temp_s6        = AirScreamer_HasLandedCheck(airScreamer);
 
     sharedFunc_800D53AC_0_s01(airScreamer);
     switch (airScreamer->model.stateStep)
@@ -4994,7 +4994,7 @@ void AirScreamer_Control_23(s_SubCharacter* airScreamer)
                         airScreamer->model.controlState = AirScreamerControl_10;
                         airScreamer->model.stateStep    = 0;
                     }
-                    else if (sharedFunc_800DC0A8_2_s00(airScreamer))
+                    else if (AirScreamer_IsGroundedCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -5053,7 +5053,7 @@ void AirScreamer_Control_24(s_SubCharacter* airScreamer)
     animStatus  = airScreamer->model.anim.status;
     unkField150 = sharedData_800E21D0_0_s01.distance_150;
     unkField14C = sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2;
-    temp_a0     = sharedFunc_800DC50C_2_s00(airScreamer);
+    temp_a0     = AirScreamer_HasLandedCheck(airScreamer);
 
     switch (airScreamer->model.stateStep)
     {
@@ -5170,7 +5170,7 @@ void AirScreamer_Control_24(s_SubCharacter* airScreamer)
 
                         airScreamer->model.stateStep = 0;
                     }
-                    else if (sharedFunc_800DC0A8_2_s00(airScreamer))
+                    else if (AirScreamer_IsGroundedCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -5362,7 +5362,7 @@ void AirScreamer_Control_26(s_SubCharacter* airScreamer)
     field14C_1 = new_var;
     field14C_2 = new_var2;
 
-    temp_a0 = sharedFunc_800DC50C_2_s00(airScreamer);
+    temp_a0 = AirScreamer_HasLandedCheck(airScreamer);
 
     // Handle state step.
     switch (airScreamer->model.stateStep)
@@ -5453,7 +5453,7 @@ void AirScreamer_Control_26(s_SubCharacter* airScreamer)
 
                         airScreamer->model.stateStep = 0;
                     }
-                    else if (sharedFunc_800DC0A8_2_s00(airScreamer))
+                    else if (AirScreamer_IsGroundedCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -5516,7 +5516,7 @@ void AirScreamer_Control_27(s_SubCharacter* airScreamer)
 
     distFieldF8 = Math_Distance2dGet(&airScreamer->position, &airScreamerProps.targetPosition_F8);
     var_s6      = 0;
-    cond        = sharedFunc_800DC50C_2_s00(airScreamer);
+    cond        = AirScreamer_HasLandedCheck(airScreamer);
 
     // Handle state step.
     switch (airScreamer->model.stateStep)
@@ -5610,7 +5610,7 @@ void AirScreamer_Control_27(s_SubCharacter* airScreamer)
                         airScreamer->model.controlState = AirScreamerControl_14;
                         airScreamer->model.stateStep    = 0;
                     }
-                    else if (sharedFunc_800DC0A8_2_s00(airScreamer))
+                    else if (AirScreamer_IsGroundedCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -8855,7 +8855,7 @@ bool sharedFunc_800DBF88_2_s00(s_SubCharacter* airScreamer, q19_12 arg1)
     return false;
 }
 
-bool sharedFunc_800DC0A8_2_s00(s_SubCharacter* airScreamer)
+bool AirScreamer_IsGroundedCheck(s_SubCharacter* airScreamer)
 {
     return (Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz) - Q12(0.2f)) < airScreamer->position.vy;
 }
@@ -8944,7 +8944,7 @@ s32 sharedFunc_800DC438_2_s00(s_SubCharacter* airScreamer)
         (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) ||
          (g_SavegamePtr->gameDifficulty > GameDifficulty_Normal && airScreamer->model.charaId != Chara_AirScreamer)))
     {
-        if (sharedFunc_800DC3BC_2_s00(airScreamer) && (sharedFunc_800DC0A8_2_s00(airScreamer) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(2.0f))))
+        if (sharedFunc_800DC3BC_2_s00(airScreamer) && (AirScreamer_IsGroundedCheck(airScreamer) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(2.0f))))
         {
             if (sharedFunc_800DC0E4_2_s00(airScreamer, Q12(1.0f)))
             {
@@ -8964,11 +8964,11 @@ s32 sharedFunc_800DC438_2_s00(s_SubCharacter* airScreamer)
     return stateStep;
 }
 
-bool sharedFunc_800DC50C_2_s00(s_SubCharacter* airScreamer)
+bool AirScreamer_HasLandedCheck(s_SubCharacter* airScreamer)
 {
     return (airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_HoverVariable, true) || airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_HoverConstant, true)) &&
            sharedFunc_800DC3BC_2_s00(airScreamer) &&
-           ((airScreamer->fallSpeed >= 0 && sharedFunc_800DC0A8_2_s00(airScreamer)) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(1.0f)));
+           ((airScreamer->fallSpeed >= 0 && AirScreamer_IsGroundedCheck(airScreamer)) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(1.0f)));
 }
 
 s32 sharedFunc_800DC598_2_s00(s_SubCharacter* airScreamer)
