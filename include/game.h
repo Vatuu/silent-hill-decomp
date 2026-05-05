@@ -1517,8 +1517,8 @@ typedef struct _PropsGroaner
     /* 0x10C */ q3_12      timer_10C; // SFX timer?
     /* 0x10E */ u8         field_10E; // } Sound states?
     /* 0x10F */ u8         field_10F; // }
-    /* 0x110 */ u8         field_110; /** `bool` | Play SFX. */
-    /* 0x111 */ u8         field_111; /** `bool` | Play SFX. */
+    /* 0x110 */ u8         playFootstepSfxLeft;  /** `bool` */
+    /* 0x111 */ u8         playFootstepSfxRight; /** `bool` | Play SFX. */
     /* 0x112 */ s8         __pad_112[2];
     /* 0x114 */ q3_12      field_114; // Move speed coefficient?
 } e_PropsGroaner;

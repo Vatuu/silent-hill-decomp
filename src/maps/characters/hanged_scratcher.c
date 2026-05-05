@@ -1366,7 +1366,7 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
             }
             else
             {
-                CopyData(scratcher, sharedData_800D9668_5_s00);
+                Chara_CollisionSet(scratcher, sharedData_800D9668_5_s00);
             }
             break;
 
@@ -1379,11 +1379,11 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
         case ANIM_STATUS(HangedScratcherAnim_19, false):
         case ANIM_STATUS(HangedScratcherAnim_19, true):
         case ANIM_STATUS(HangedScratcherAnim_21, false):
-            CopyData(scratcher, sharedData_800D9668_5_s00);
+            Chara_CollisionSet(scratcher, sharedData_800D9668_5_s00);
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_8, false):
-            CopyData(scratcher, sharedData_800D967C_5_s00[0]);
+            Chara_CollisionSet(scratcher, sharedData_800D967C_5_s00[0]);
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_8, true):
@@ -1438,7 +1438,7 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
             }
             else
             {
-                CopyData(scratcher, sharedData_800D980C_5_s00);
+                Chara_CollisionSet(scratcher, sharedData_800D980C_5_s00);
             }
             break;
 
@@ -1447,7 +1447,7 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
 
         case ANIM_STATUS(HangedScratcherAnim_14, true):
         case ANIM_STATUS(HangedScratcherAnim_17, false):
-            CopyData(scratcher, sharedData_800D980C_5_s00);
+            Chara_CollisionSet(scratcher, sharedData_800D980C_5_s00);
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_16, false):
@@ -1468,7 +1468,7 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
             }
             else
             {
-                CopyData(scratcher, sharedData_800D99EC_5_s00);
+                Chara_CollisionSet(scratcher, sharedData_800D99EC_5_s00);
             }
             break;
 
@@ -1481,12 +1481,12 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
         case ANIM_STATUS(HangedScratcherAnim_20, false):
         case ANIM_STATUS(HangedScratcherAnim_20, true):
         case ANIM_STATUS(HangedScratcherAnim_22, false):
-            CopyData(scratcher, sharedData_800D99EC_5_s00);
+            Chara_CollisionSet(scratcher, sharedData_800D99EC_5_s00);
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_9, false):
         case ANIM_STATUS(HangedScratcherAnim_23, false):
-            CopyData(scratcher, sharedData_800D9A00_5_s00[0]);
+            Chara_CollisionSet(scratcher, sharedData_800D9A00_5_s00[0]);
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_9, true):
@@ -1532,14 +1532,14 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
             }
             else
             {
-                CopyData(scratcher, sharedData_800D9B04_5_s00);
+                Chara_CollisionSet(scratcher, sharedData_800D9B04_5_s00);
             }
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_15, true):
         case ANIM_STATUS(HangedScratcherAnim_18, false):
         case ANIM_STATUS(HangedScratcherAnim_18, true):
-            CopyData(scratcher, sharedData_800D9B04_5_s00);
+            Chara_CollisionSet(scratcher, sharedData_800D9B04_5_s00);
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_1, false):
@@ -1554,11 +1554,11 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
         case ANIM_STATUS(HangedScratcherAnim_25, true):
         case ANIM_STATUS(HangedScratcherAnim_26, false):
         case ANIM_STATUS(HangedScratcherAnim_26, true):
-            CopyData(scratcher, sharedData_800D9B18_5_s00);
+            Chara_CollisionSet(scratcher, sharedData_800D9B18_5_s00);
             break;
 
         case ANIM_STATUS(5, false):
-            CopyData(scratcher, sharedData_800D9B2C_5_s00[0]);
+            Chara_CollisionSet(scratcher, sharedData_800D9B2C_5_s00[0]);
             break;
 
         case ANIM_STATUS(HangedScratcherAnim_5, true):

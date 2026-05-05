@@ -1150,7 +1150,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
                 break;
             }
 
-            CopyData(larvalStalker, sharedData_800DA928_1_s00[1]);
+            Chara_CollisionSet(larvalStalker, sharedData_800DA928_1_s00[1]);
             break;
 
         case ANIM_STATUS(LarvalStalkerAnim_DeathBackStart, true):
@@ -1165,7 +1165,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
         case ANIM_STATUS(LarvalStalkerAnim_DeathBackCont, false):
         case ANIM_STATUS(LarvalStalkerAnim_DeathBackCont, true):
         case ANIM_STATUS(LarvalStalkerAnim_StunBackRecoil, false):
-            CopyData(larvalStalker, sharedData_800DA928_1_s00[1]);
+            Chara_CollisionSet(larvalStalker, sharedData_800DA928_1_s00[1]);
             break;
 
         case ANIM_STATUS(LarvalStalkerAnim_DeathFrontStart, false):
@@ -1175,14 +1175,14 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
         case ANIM_STATUS(LarvalStalkerAnim_DeathFrontStart, true):
         case ANIM_STATUS(LarvalStalkerAnim_DeathFrontEnd, false):
         case ANIM_STATUS(LarvalStalkerAnim_DeathFrontEnd, true):
-            CopyData(larvalStalker, sharedData_800DA950_1_s00);
+            Chara_CollisionSet(larvalStalker, sharedData_800DA950_1_s00);
             break;
 
         case ANIM_STATUS(LarvalStalkerAnim_StunBackToIdle, false):
             keyframeIdx3 = larvalStalkerProps.keyframeIdx_F4;
             if (keyframeIdx3 == 0)
             {
-                CopyData(larvalStalker, sharedData_800DA964_1_s00[0]);
+                Chara_CollisionSet(larvalStalker, sharedData_800DA964_1_s00[0]);
                 break;
             }
 
@@ -1236,7 +1236,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
             keyframeIdx2 = larvalStalkerProps.keyframeIdx_F4;
             if (keyframeIdx2 == 0)
             {
-                CopyData(larvalStalker, sharedData_800DAC34_1_s00[0]);
+                Chara_CollisionSet(larvalStalker, sharedData_800DAC34_1_s00[0]);
                 break;
             }
 
@@ -1266,7 +1266,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
         case ANIM_STATUS(LarvalStalkerAnim_StunBackStart, false):
             if (larvalStalkerProps.keyframeIdx_F4 == 0)
             {
-                CopyData(larvalStalker, sharedData_800DAE28_1_s00[0]);
+                Chara_CollisionSet(larvalStalker, sharedData_800DAE28_1_s00[0]);
                 break;
             }
 
@@ -1307,7 +1307,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
         case ANIM_STATUS(LarvalStalkerAnim_StunFrontStart, false):
             if (larvalStalkerProps.keyframeIdx_F4 == 0)
             {
-                CopyData(larvalStalker, sharedData_800DAF68_1_s00[0]);
+                Chara_CollisionSet(larvalStalker, sharedData_800DAF68_1_s00[0]);
                 break;
             }
 
@@ -1339,7 +1339,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
             keyframeIdx1 = larvalStalkerProps.keyframeIdx_F8;
             if (keyframeIdx1 == -1)
             {
-                CopyData(larvalStalker, sharedData_800DB008_1_s00);
+                Chara_CollisionSet(larvalStalker, sharedData_800DB008_1_s00);
                 break;
             }
             if (keyframeIdx1 == -2)
@@ -1364,19 +1364,19 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
         case ANIM_STATUS(LarvalStalkerAnim_StunFrontEnd, true):
         case ANIM_STATUS(LarvalStalkerAnim_StunFrontCont, false):
         case ANIM_STATUS(LarvalStalkerAnim_StunFrontCont, true):
-            CopyData(larvalStalker, sharedData_800DB008_1_s00);
+            Chara_CollisionSet(larvalStalker, sharedData_800DB008_1_s00);
             break;
 
         case ANIM_STATUS(LarvalStalkerAnim_Idle, false):
         case ANIM_STATUS(LarvalStalkerAnim_Idle, true):
-            CopyData(larvalStalker, sharedData_800DB01C_1_s00);
+            Chara_CollisionSet(larvalStalker, sharedData_800DB01C_1_s00);
             break;
 
         case ANIM_STATUS(LarvalStalkerAnim_WalkForward, false):
         case ANIM_STATUS(LarvalStalkerAnim_WalkForward, true):
         case ANIM_STATUS(LarvalStalkerAnim_WalkForwardAlt, false):
         case ANIM_STATUS(LarvalStalkerAnim_WalkForwardAlt, true):
-            CopyData(larvalStalker, sharedData_800DB030_1_s00);
+            Chara_CollisionSet(larvalStalker, sharedData_800DB030_1_s00);
             break;
 
         case ANIM_STATUS(LarvalStalkerAnim_GrabAttack, false):

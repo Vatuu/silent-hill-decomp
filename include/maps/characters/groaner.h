@@ -4,20 +4,20 @@
 /** @brief Groaner character flags. */
 typedef enum _GroanerFlags
 {
-    GroanerFlag_None = 0,
-    GroanerFlag_0    = 1 << 0,
-    GroanerFlag_1    = 1 << 1,
-    GroanerFlag_2    = 1 << 2,
-    GroanerFlag_3    = 1 << 3,
-    GroanerFlag_4    = 1 << 4,
-    GroanerFlag_5    = 1 << 5,
-    GroanerFlag_6    = 1 << 6,
-    GroanerFlag_7    = 1 << 7,
-    GroanerFlag_8    = 1 << 8,
-    GroanerFlag_9    = 1 << 9,
-    GroanerFlag_10   = 1 << 10,
-    GroanerFlag_11   = 1 << 11,
-    GroanerFlag_12   = 1 << 12
+    GroanerFlag_None     = 0,
+    GroanerFlag_0        = 1 << 0,
+    GroanerFlag_1        = 1 << 1,
+    GroanerFlag_Airborne = 1 << 2, // Unsure.
+    GroanerFlag_3        = 1 << 3,
+    GroanerFlag_4        = 1 << 4,
+    GroanerFlag_5        = 1 << 5,
+    GroanerFlag_6        = 1 << 6,
+    GroanerFlag_7        = 1 << 7,
+    GroanerFlag_8        = 1 << 8,
+    GroanerFlag_9        = 1 << 9,
+    GroanerFlag_10       = 1 << 10,
+    GroanerFlag_11       = 1 << 11,
+    GroanerFlag_12       = 1 << 12
 } e_GroanerFlags;
 
 /** @brief Groaner character animation indices. */
@@ -46,7 +46,7 @@ typedef enum _GroanerAnim
     GroanerAnim_StunFromStandLeftDeathEnd   = 20,
     GroanerAnim_StunFromJumpRecoil          = 21,
     GroanerAnim_StunFromStandRightRecoil    = 22,
-    StunFromStandLeftRecoil                 = 23
+    GroanerAnim_StunFromStandLeftRecoil     = 23
 } e_GroanerAnim;
 
 /** @brief Groaner character control states. */
@@ -56,7 +56,7 @@ typedef enum _GroanerControl
     GroanerControl_WalkForward        = 1,
     GroanerControl_RunForward         = 2,
     GroanerControl_JumpAttack         = 3,
-    GroanerControl_4                  = 4, // TODO: Not sure. Related to run forward?
+    GroanerControl_4                  = 4, // TODO: Unsure. Related to run forward?
     GroanerControl_StandRecoil        = 5,
     GroanerControl_StunFromJump       = 6,
     GroanerControl_StunFromStandRight = 7,
@@ -64,14 +64,32 @@ typedef enum _GroanerControl
     GroanerControl_Death              = 9
 } e_GroanerControl;
 
-/** @brief Groaner character state steps. */
-typedef enum _GroanerStateStep
-{
-    GroanerStateStep_0 = 0,
-    GroanerStateStep_1 = 1,
-    GroanerStateStep_2 = 2,
-    GroanerStateStep_3 = 3
-} e_GroanerStateStep;
+extern s_AnimInfo GROANER_ANIM_INFOS[];
+
+extern s_Keyframe sharedData_800EEE54_2_s00[];
+extern s_Keyframe sharedData_800EF0AC_2_s00[];
+extern s_Keyframe sharedData_800EF19C_2_s00;
+extern s_Keyframe sharedData_800EF1B0_2_s00[];
+extern s_Keyframe sharedData_800EF250_2_s00[];
+extern s_Keyframe sharedData_800EF28C_2_s00[];
+extern s_Keyframe sharedData_800EF368_2_s00[];
+extern s_Keyframe sharedData_800EF4BC_2_s00;
+extern s_Keyframe sharedData_800EF4D0_2_s00[];
+extern s_Keyframe sharedData_800EF624_2_s00;
+extern s_Keyframe sharedData_800EF638_2_s00[];
+extern s_Keyframe sharedData_800EF7A0_2_s00;
+extern s_Keyframe sharedData_800EF7B4_2_s00[];
+extern s_Keyframe sharedData_800EFA84_2_s00[];
+extern s_Keyframe sharedData_800EFCDC_2_s00[];
+extern s_Keyframe sharedData_800EFF48_2_s00[];
+extern s_Keyframe sharedData_800F0038_2_s00[];
+extern s_Keyframe sharedData_800F00EC_2_s00[];
+extern s_Keyframe sharedData_800F0268_2_s00[];
+extern s_Keyframe sharedData_800F03A8_2_s00[];
+extern s_Keyframe sharedData_800F04C0_2_s00[];
+
+#define ANIM_INDEX_FROM_KEYFRAME(offset, keyframe, max, count) \
+    ((offset) - ((keyframe) > (count)) < (max) ? ((offset) - ((keyframe) > (count))) : ((max) - 1))
 
 void Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
@@ -154,7 +172,5 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner);
     { Anim_BlendLinear, ANIM_STATUS(23, false), false, ANIM_STATUS(23, true), { Q12(16) }, NO_VALUE, 244 },
     { Anim_PlaybackOnce, ANIM_STATUS(23, true), false, ANIM_STATUS(14, false), { Q12(12) }, 244, 264 }
 };*/
-
-extern s_AnimInfo GROANER_ANIM_INFOS[];
 
 #endif

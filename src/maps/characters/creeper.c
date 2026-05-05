@@ -766,7 +766,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
             break;
 
         case ANIM_STATUS(CreeperAnim_Attack, true):
-            CopyDataAlt(creeper, sharedData_800E0FC8_1_s02);
+            Chara_CollisionSetAlt(creeper, sharedData_800E0FC8_1_s02);
             creeper->collision.box.field_8 = Q12(-0.16f);
             break;
 
@@ -784,7 +784,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
         case ANIM_STATUS(CreeperAnim_DeathStart, true):
         case ANIM_STATUS(CreeperAnim_DeathEnd,  false):
         case ANIM_STATUS(CreeperAnim_DeathEnd,  true):
-            CopyDataAlt(creeper, sharedData_800E0FDC_1_s02);
+            Chara_CollisionSetAlt(creeper, sharedData_800E0FDC_1_s02);
             break;
 
         case ANIM_STATUS(CreeperAnim_RunForwardStunCont, false):
@@ -801,12 +801,12 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
         case ANIM_STATUS(CreeperAnim_RunForwardStunCont, true):
         case ANIM_STATUS(CreeperAnim_RunForwardStunEnd, false):
         case ANIM_STATUS(CreeperAnim_RunForwardStunEnd, true):
-            CopyDataAlt(creeper, sharedData_800E0FF0_1_s02);
+            Chara_CollisionSetAlt(creeper, sharedData_800E0FF0_1_s02);
             break;
 
         case ANIM_STATUS(CreeperAnim_StunLoop, false):
         case ANIM_STATUS(CreeperAnim_StunOnce, false):
-            CopyDataAlt(creeper, sharedData_800E1004_1_s02[0]);
+            Chara_CollisionSetAlt(creeper, sharedData_800E1004_1_s02[0]);
             break;
 
         case ANIM_STATUS(CreeperAnim_StunLoop, true):
@@ -821,7 +821,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
 
         case ANIM_STATUS(CreeperAnim_IdleToRunForward, false):
         case ANIM_STATUS(CreeperAnim_RunForwardStunStart, false):
-            CopyDataAlt(creeper, sharedData_800E10E0_1_s02[0]);
+            Chara_CollisionSetAlt(creeper, sharedData_800E10E0_1_s02[0]);
             break;
 
         case ANIM_STATUS(CreeperAnim_IdleToRunForward, true):
@@ -836,7 +836,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
             break;
 
         case ANIM_STATUS(CreeperAnim_Stun, true):
-            CopyDataAlt(creeper, sharedData_800E116C_1_s02);
+            Chara_CollisionSetAlt(creeper, sharedData_800E116C_1_s02);
             break;
 
         case ANIM_STATUS(CreeperAnim_RunForward, false):
@@ -844,7 +844,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
             break;
 
         case ANIM_STATUS(CreeperAnim_RunForward, true):
-            CopyDataAlt(creeper, sharedData_800E1180_1_s02);
+            Chara_CollisionSetAlt(creeper, sharedData_800E1180_1_s02);
             break;
 
         case ANIM_STATUS(CreeperAnim_Idle, false):
@@ -853,7 +853,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
 
         case ANIM_STATUS(CreeperAnim_Idle, true):
             creeper->properties.creeper.animStatus_10A = ANIM_STATUS(CreeperAnim_Idle, true);
-            CopyDataAlt(creeper, sharedData_800E1194_1_s02);
+            Chara_CollisionSetAlt(creeper, sharedData_800E1194_1_s02);
             break;
 
         case ANIM_STATUS(CreeperAnim_AttackStart, false):
@@ -861,7 +861,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
             break;
 
         case ANIM_STATUS(CreeperAnim_AttackStart, true):
-            CopyDataAlt(creeper, sharedData_800E11A8_1_s02);
+            Chara_CollisionSetAlt(creeper, sharedData_800E11A8_1_s02);
             break;
 
         case ANIM_STATUS(CreeperAnim_WalkForward, false):
@@ -875,12 +875,12 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
             }
             else
             {
-                CopyDataAlt(creeper, sharedData_800E11BC_1_s02);
+                Chara_CollisionSetAlt(creeper, sharedData_800E11BC_1_s02);
             }
             break;
 
         case ANIM_STATUS(CreeperAnim_WalkForward, true):
-            CopyDataAlt(creeper, sharedData_800E11BC_1_s02);
+            Chara_CollisionSetAlt(creeper, sharedData_800E11BC_1_s02);
             break;
     }
 

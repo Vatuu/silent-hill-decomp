@@ -1428,7 +1428,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
         case ANIM_STATUS(RomperAnim_JumpToIdleStart, true):
         case ANIM_STATUS(RomperAnim_JumpToIdleEnd, false):
         case ANIM_STATUS(RomperAnim_JumpToIdleEnd, true):
-            CopyData(romper, sharedData_800ECCBC_2_s02);
+            Chara_CollisionSet(romper, sharedData_800ECCBC_2_s02);
             break;
 
         case ANIM_STATUS(RomperAnim_JumpToRunForward, true):
@@ -1470,11 +1470,11 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
         case ANIM_STATUS(RomperAnim_JumpStunEnd, true):
         case ANIM_STATUS(RomperAnim_StunToIdleEnd, false):
         case ANIM_STATUS(RomperAnim_StunToIdleEnd, true):
-            CopyData(romper, sharedData_800ECF00_2_s02[4]);
+            Chara_CollisionSet(romper, sharedData_800ECF00_2_s02[4]);
             break;
 
         case ANIM_STATUS(RomperAnim_JumpStunStart, false):
-            CopyData(romper, sharedData_800ECF00_2_s02[0]);
+            Chara_CollisionSet(romper, sharedData_800ECF00_2_s02[0]);
             break;
 
         case ANIM_STATUS(RomperAnim_JumpStunStart, true):
@@ -1511,7 +1511,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
             break;
 
         case ANIM_STATUS(RomperAnim_CreepForward, true):
-            CopyData(romper, sharedData_800ED2C0_2_s02);
+            Chara_CollisionSet(romper, sharedData_800ED2C0_2_s02);
             break;
 
         case ANIM_STATUS(RomperAnim_WalkForward, true):
@@ -1526,12 +1526,12 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
             break;
 
         case ANIM_STATUS(RomperAnim_9, true):
-            CopyData(romper, sharedData_800ECD34_2_s02);
+            Chara_CollisionSet(romper, sharedData_800ECD34_2_s02);
             romper->collision.cylinder.radius = (romper->model.anim.time - Q12(61.0f)) / 100;
             break;
 
         default:
-            CopyData(romper, sharedData_800ECC44_2_s02);
+            Chara_CollisionSet(romper, sharedData_800ECC44_2_s02);
             break;
     }
 

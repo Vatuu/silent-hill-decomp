@@ -2308,7 +2308,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
 
         case ANIM_STATUS(StalkerAnim_8, true):
         case ANIM_STATUS(StalkerAnim_9, true):
-            CopyData(stalker, sharedData_800DDBA8_0_s00);
+            Chara_CollisionSet(stalker, sharedData_800DDBA8_0_s00);
             break;
 
         case ANIM_STATUS(StalkerAnim_38, false):
@@ -2335,7 +2335,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
 
         case ANIM_STATUS(StalkerAnim_31, false):
         case ANIM_STATUS(StalkerAnim_31, true):
-            CopyData(stalker, sharedData_800DDBBC_0_s00[8]);
+            Chara_CollisionSet(stalker, sharedData_800DDBBC_0_s00[8]);
             break;
 
         case ANIM_STATUS(StalkerAnim_19, false):
@@ -2362,7 +2362,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
 
         case ANIM_STATUS(StalkerAnim_32, false):
         case ANIM_STATUS(StalkerAnim_32, true):
-            CopyData(stalker, sharedData_800DDC70_0_s00[0]);
+            Chara_CollisionSet(stalker, sharedData_800DDC70_0_s00[0]);
             break;
 
         case ANIM_STATUS(StalkerAnim_20, false):
@@ -2389,11 +2389,11 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
 
         case ANIM_STATUS(StalkerAnim_33, false):
         case ANIM_STATUS(StalkerAnim_33, true):
-            CopyData(stalker, sharedData_800DDCFC_0_s00[6]);
+            Chara_CollisionSet(stalker, sharedData_800DDCFC_0_s00[6]);
             break;
 
         case ANIM_STATUS(StalkerAnim_22, false):
-            CopyData(stalker, sharedData_800DDD88_0_s00[0]);
+            Chara_CollisionSet(stalker, sharedData_800DDD88_0_s00[0]);
             break;
 
         case ANIM_STATUS(StalkerAnim_22, true):
@@ -2404,7 +2404,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
 
         case ANIM_STATUS(StalkerAnim_23, false):
         case ANIM_STATUS(StalkerAnim_41, false):
-            CopyData(stalker, sharedData_800DDEC8_0_s00[0]);
+            Chara_CollisionSet(stalker, sharedData_800DDEC8_0_s00[0]);
             break;
 
         case ANIM_STATUS(StalkerAnim_23, true):
@@ -2438,7 +2438,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             }
             else
             {
-                CopyData(stalker, sharedData_800DE0E4_0_s00[0]);
+                Chara_CollisionSet(stalker, sharedData_800DE0E4_0_s00[0]);
             }
             break;
 
@@ -2479,21 +2479,21 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
 
         case ANIM_STATUS(StalkerAnim_26, false):
         case ANIM_STATUS(StalkerAnim_26, true):
-            CopyData(stalker, sharedData_800DE2C4_0_s00);
+            Chara_CollisionSet(stalker, sharedData_800DE2C4_0_s00);
             break;
 
         case ANIM_STATUS(StalkerAnim_17, false):
         case ANIM_STATUS(StalkerAnim_17, true):
-            CopyData(stalker, sharedData_800DE2D8_0_s00);
+            Chara_CollisionSet(stalker, sharedData_800DE2D8_0_s00);
             break;
 
         case ANIM_STATUS(StalkerAnim_18, false):
         case ANIM_STATUS(StalkerAnim_18, true):
-            CopyData(stalker, sharedData_800DE2EC_0_s00);
+            Chara_CollisionSet(stalker, sharedData_800DE2EC_0_s00);
             break;
 
         case ANIM_STATUS(StalkerAnim_27, false):
-            CopyData(stalker, sharedData_800DE300_0_s00[0]);
+            Chara_CollisionSet(stalker, sharedData_800DE300_0_s00[0]);
             break;
 
         case ANIM_STATUS(StalkerAnim_27, true):
@@ -2635,7 +2635,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             }
             else
             {
-                CopyData(stalker, sharedData_800DEE68_0_s00[0]);
+                Chara_CollisionSet(stalker, sharedData_800DEE68_0_s00[0]);
             }
             break;
 

@@ -2604,58 +2604,63 @@ extern const s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
 
 extern s16 SQRT[100];
 
-// Copies `s_Keyframe`.
-#define CopyData(chara, keyframe)                            \
-{                                                       \
-    s32 __temp;                                         \
-                                                        \
-    chara->collision.box.top   = keyframe.box.top;         \
-                                                        \
-    __temp                   = keyframe.box.bottom;            \
-    chara->collision.box.bottom   = __temp;                  \
-    chara->collision.box.height   = keyframe.box.height;         \
-                                                        \
-    __temp                   = keyframe.box.offsetY;        \
-    chara->collision.box.offsetY   = __temp;                  \
-    chara->collision.shapeOffsets.cylinder.vx = keyframe.shapeOffsets.cylinder.vx;   \
-                                                        \
-    __temp                   = keyframe.shapeOffsets.cylinder.vz;   \
-    chara->collision.shapeOffsets.cylinder.vz = __temp;                  \
-    chara->collision.cylinder.radius  = keyframe.box.field_8;            \
-    chara->collision.shapeOffsets.box.vx = keyframe.shapeOffsets.box.vx;      \
-                                                        \
-    __temp                   = keyframe.shapeOffsets.box.vz;      \
-    chara->collision.shapeOffsets.box.vz = __temp;                  \
-                                                        \
-    __temp                   = keyframe.box.field_A;            \
-    chara->collision.cylinder.field_2   = __temp;                  \
+/** @brief Sets the collision shapes of a character from keyframe collision data.
+ *
+ * @param chara Character to update.
+ * @param keyframe Keyframe collision data.
+ */
+#define Chara_CollisionSet(chara, keyframe)                                         \
+{                                                                                   \
+    s32 __temp;                                                                     \
+                                                                                    \
+    chara->collision.box.top = keyframe.box.top;                                    \
+                                                                                    \
+    __temp                      = keyframe.box.bottom;                              \
+    chara->collision.box.bottom = __temp;                                           \
+    chara->collision.box.height = keyframe.box.height;                              \
+                                                                                    \
+    __temp                                    = keyframe.box.offsetY;               \
+    chara->collision.box.offsetY              = __temp;                             \
+    chara->collision.shapeOffsets.cylinder.vx = keyframe.shapeOffsets.cylinder.vx;  \
+                                                                                    \
+    __temp                                    = keyframe.shapeOffsets.cylinder.vz;  \
+    chara->collision.shapeOffsets.cylinder.vz = __temp;                             \
+    chara->collision.cylinder.radius          = keyframe.box.field_8;               \
+    chara->collision.shapeOffsets.box.vx      = keyframe.shapeOffsets.box.vx;       \
+                                                                                    \
+    __temp                               = keyframe.shapeOffsets.box.vz;            \
+    chara->collision.shapeOffsets.box.vz = __temp;                                  \
+                                                                                    \
+    __temp                            = keyframe.box.field_A;                       \
+    chara->collision.cylinder.field_2 = __temp;                                     \
 }
 
-#define CopyDataAlt(chara, keyframe)                            \
-{                                                       \
-    s32 __temp;                                         \
-    s32 __temp2;                                        \
-                                                        \
-    chara->collision.box.top   = keyframe.box.top;         \
-                                                        \
-    __temp                   = keyframe.box.bottom;            \
-    chara->collision.box.bottom   = __temp;                  \
-    chara->collision.box.height   = keyframe.box.height;         \
-                                                        \
-    __temp                   = keyframe.box.offsetY;        \
-    chara->collision.box.offsetY   = __temp;                  \
-    chara->collision.shapeOffsets.cylinder.vx = keyframe.shapeOffsets.cylinder.vx;   \
-                                                        \
-    __temp                   = keyframe.shapeOffsets.cylinder.vz;   \
-    chara->collision.shapeOffsets.cylinder.vz = __temp;                  \
-    chara->collision.cylinder.radius  = keyframe.box.field_8;            \
-    chara->collision.shapeOffsets.box.vx = keyframe.shapeOffsets.box.vx;      \
-                                                        \
-    __temp                   = keyframe.shapeOffsets.box.vz;      \
-    chara->collision.shapeOffsets.box.vz = __temp;                  \
-                                                        \
-    __temp2                  = keyframe.box.field_A;            \
-    chara->collision.cylinder.field_2   = __temp2;                 \
+/** @brief Alternative to `Chara_CollisionSet`. TODO: Can they be merged into one? */
+#define Chara_CollisionSetAlt(chara, keyframe)                                     \
+{                                                                                  \
+    s32 __temp;                                                                    \
+    s32 __temp2;                                                                   \
+                                                                                   \
+    chara->collision.box.top = keyframe.box.top;                                   \
+                                                                                   \
+    __temp                      = keyframe.box.bottom;                             \
+    chara->collision.box.bottom = __temp;                                          \
+    chara->collision.box.height = keyframe.box.height;                             \
+                                                                                   \
+    __temp                       = keyframe.box.offsetY;                           \
+    chara->collision.box.offsetY = __temp;                                         \
+    chara->collision.shapeOffsets.cylinder.vx = keyframe.shapeOffsets.cylinder.vx; \
+                                                                                   \
+    __temp                                    = keyframe.shapeOffsets.cylinder.vz; \
+    chara->collision.shapeOffsets.cylinder.vz = __temp;                            \
+    chara->collision.cylinder.radius          = keyframe.box.field_8;              \
+    chara->collision.shapeOffsets.box.vx      = keyframe.shapeOffsets.box.vx;      \
+                                                                                   \
+    __temp                               = keyframe.shapeOffsets.box.vz;           \
+    chara->collision.shapeOffsets.box.vz = __temp;                                 \
+                                                                                   \
+    __temp2                           = keyframe.box.field_A;                      \
+    chara->collision.cylinder.field_2 = __temp2;                                   \
 }
 
 // ==========

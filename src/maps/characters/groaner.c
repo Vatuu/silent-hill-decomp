@@ -93,14 +93,14 @@ void Groaner_Init(s_SubCharacter* groaner)
     ModelAnim_AnimInfoSet(&groaner->model.anim, GROANER_ANIM_INFOS);
     Chara_DamageClear(groaner);
 
-    if (groaner->model.stateStep == GroanerStateStep_3)
+    if (groaner->model.stateStep == 3)
     {
         groaner->model.controlState = GroanerControl_WalkForward;
         Character_AnimSet(groaner, ANIM_STATUS(GroanerAnim_WalkForward, true), 371);
         groanerProps.flags.val16[0] |= GroanerFlag_5;
     }
 
-    groaner->model.stateStep = GroanerStateStep_0;
+    groaner->model.stateStep = 0;
 
     groanerProps.targetPositionX = groaner->position.vx;
     groanerProps.targetPositionZ = groaner->position.vz;
@@ -235,7 +235,7 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
                     groanerProps.relKeyframeIdx_100 = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 319;
                 }
 
-                groaner->model.anim.status = ANIM_STATUS(StunFromStandLeftRecoil, false);
+                groaner->model.anim.status = ANIM_STATUS(GroanerAnim_StunFromStandLeftRecoil, false);
             }
         }
     }
@@ -432,7 +432,7 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
 
 void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
 {
-    s16    temp_v0_10;
+    q3_12  speedLimit;
     q3_12  angle0;
     q3_12  angleDeltaToTarget;
     q19_12 headingAngle;
@@ -547,8 +547,8 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
     }
     else
     {
-        temp_v0_10 = Q12(1.0f) - (((angleDeltaToTarget - Q12_ANGLE(20.0f)) * 3) >> 1);
-        Chara_MoveSpeedUpdate4(groaner, Q12(9.5f), Q12_MULT_PRECISE(Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f)), temp_v0_10));
+        speedLimit = Q12(1.0f) - (((angleDeltaToTarget - Q12_ANGLE(20.0f)) * 3) >> 1);
+        Chara_MoveSpeedUpdate4(groaner, Q12(9.5f), Q12_MULT_PRECISE(Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f)), speedLimit));
     }
 
     if (distToPlayer > Q12(3.0f))
@@ -569,7 +569,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
         if (!Chara_HasFlag(&g_SysWork.playerWork.player, CharaFlag_Unk4) &&
             !(g_SysWork.charaGroupFlags[3] & CharaGroupFlag_1) &&
             g_SysWork.playerWork.player.health > Q12(0.0f) &&
-            g_SysWork.sysState == 0 &&
+            g_SysWork.sysState == SysState_Gameplay &&
             (groaner->position.vy - g_SysWork.playerWork.player.position.vy) > Q12(-0.8f))
         {
             if (groaner->position.vy - g_SysWork.playerWork.player.position.vy < Q12(0.8f))
@@ -592,7 +592,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
         if (Chara_HasFlag(&g_SysWork.playerWork.player, CharaFlag_Unk4) ||
             (g_SysWork.charaGroupFlags[3] & CharaGroupFlag_1) ||
             g_SysWork.playerWork.player.health <= Q12(0.0f) ||
-            g_SysWork.sysState != 0 ||
+            g_SysWork.sysState != SysState_Gameplay ||
             !Rng_GenerateInt(0, 15)) // 1 in 16 chance.
         {
             groaner->model.controlState = GroanerControl_4;
@@ -894,7 +894,7 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
         Chara_MoveSpeedUpdate(groaner, Q12(1.8f));
     }
 
-    if (!(groanerProps.flags.val16[0] & GroanerFlag_2))
+    if (!(groanerProps.flags.val16[0] & GroanerFlag_Airborne))
     {
         groanerProps.flags.val16[0] &= ~GroanerFlag_4;
     }
@@ -970,7 +970,7 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
         }
     }
 
-    if (!(groanerProps.flags.val16[0] & GroanerFlag_2) && groaner->health == Q12(0.0f))
+    if (!(groanerProps.flags.val16[0] & GroanerFlag_Airborne) && groaner->health == Q12(0.0f))
     {
         animIdx        = ANIM_STATUS_IDX_GET(groaner->model.anim.status);
         newAnimStatus  = ANIM_STATUS((animIdx == GroanerAnim_StunFromJump) ? GroanerAnim_StunFromJumpDeathStart : GroanerAnim_Still, false);
@@ -1013,7 +1013,7 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner)
         }
     }
 
-    if (!(groanerProps.flags.val32 & (GroanerFlag_2 | GroanerFlag_6)) &&
+    if (!(groanerProps.flags.val32 & (GroanerFlag_Airborne | GroanerFlag_6)) &&
         groaner->moveSpeed == Q12(0.0f))
     {
         animStatus    = ANIM_STATUS_IDX_GET(groaner->model.anim.status);
@@ -1055,7 +1055,7 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
 
     if (groanerProps.flags.val16[0] & GroanerFlag_1)
     {
-        if (!(groanerProps.flags.val16[0] & GroanerFlag_2))
+        if (!(groanerProps.flags.val16[0] & GroanerFlag_Airborne))
         {
             if (groaner->model.anim.status == ANIM_STATUS(GroanerAnim_RunForward, true))
             {
@@ -1126,11 +1126,11 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
 
     if (groaner->position.vy == collResult.groundHeight)
     {
-        groanerProps.flags.val16[0] &= ~GroanerFlag_2;
+        groanerProps.flags.val16[0] &= ~GroanerFlag_Airborne;
     }
     else
     {
-        groanerProps.flags.val16[0] |= GroanerFlag_2;
+        groanerProps.flags.val16[0] |= GroanerFlag_Airborne;
     }
 }
 
@@ -1280,31 +1280,6 @@ void Groaner_AnimUpdate(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINA
     groanerProps.angle_EC = groaner->rotation.vy;
 }
 
-extern s_Keyframe sharedData_800EEE54_2_s00[];
-extern s_Keyframe sharedData_800EF0AC_2_s00[];
-extern s_Keyframe sharedData_800EF19C_2_s00;
-extern s_Keyframe sharedData_800EF1B0_2_s00[];
-extern s_Keyframe sharedData_800EF250_2_s00[];
-extern s_Keyframe sharedData_800EF28C_2_s00[];
-extern s_Keyframe sharedData_800EF368_2_s00[];
-extern s_Keyframe sharedData_800EF4BC_2_s00;
-extern s_Keyframe sharedData_800EF4D0_2_s00[];
-extern s_Keyframe sharedData_800EF624_2_s00;
-extern s_Keyframe sharedData_800EF638_2_s00[];
-extern s_Keyframe sharedData_800EF7A0_2_s00;
-extern s_Keyframe sharedData_800EF7B4_2_s00[];
-extern s_Keyframe sharedData_800EFA84_2_s00[];
-extern s_Keyframe sharedData_800EFCDC_2_s00[];
-extern s_Keyframe sharedData_800EFF48_2_s00[];
-extern s_Keyframe sharedData_800F0038_2_s00[];
-extern s_Keyframe sharedData_800F00EC_2_s00[];
-extern s_Keyframe sharedData_800F0268_2_s00[];
-extern s_Keyframe sharedData_800F03A8_2_s00[];
-extern s_Keyframe sharedData_800F04C0_2_s00[];
-
-#define ANIM_INDEX_FROM_KEYFRAME(offset, keyframe, max, count) \
-    ((offset) - ((keyframe) > (count)) < (max) ? ((offset) - ((keyframe) > (count))) : ((max) - 1))
-
 void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
 {
     s32 keyframeIdx2;
@@ -1346,13 +1321,13 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
         case ANIM_STATUS(GroanerAnim_WalkForward, false):
             if (groanerProps.relKeyframeIdx_100 != 100)
             {
-                keyframeIdx2      = groanerProps.relKeyframeIdx_100;
+                keyframeIdx2 = groanerProps.relKeyframeIdx_100;
                 keyframeIdx0 = !(keyframeIdx2 < 5) + !(keyframeIdx2 < 12);
                 Collision_CharaAnimShapesSet(groaner, &sharedData_800EF250_2_s00[keyframeIdx0], &sharedData_800EF28C_2_s00[0]);
             }
             else
             {
-                CopyData(groaner, sharedData_800EF28C_2_s00[0]);
+                Chara_CollisionSet(groaner, sharedData_800EF28C_2_s00[0]);
             }
             break;
 
@@ -1435,7 +1410,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StandRecoilFront, false):
-            CopyData(groaner, sharedData_800EF368_2_s00[2]);
+            Chara_CollisionSet(groaner, sharedData_800EF368_2_s00[2]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StandRecoilFront, true):
@@ -1448,7 +1423,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StandRecoilRight, false):
-            CopyData(groaner, sharedData_800EF4D0_2_s00[2]);
+            Chara_CollisionSet(groaner, sharedData_800EF4D0_2_s00[2]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StandRecoilRight, true):
@@ -1461,7 +1436,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StandRecoilLeft, false):
-            CopyData(groaner, sharedData_800EF638_2_s00[3]);
+            Chara_CollisionSet(groaner, sharedData_800EF638_2_s00[3]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StandRecoilLeft, true):
@@ -1474,7 +1449,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_JumpToStun, false):
-            CopyData(groaner, sharedData_800EF7B4_2_s00[0]);
+            Chara_CollisionSet(groaner, sharedData_800EF7B4_2_s00[0]);
             break;
 
         case ANIM_STATUS(GroanerAnim_JumpToStun, true):
@@ -1485,7 +1460,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StandToStunRight, false):
-            CopyData(groaner, sharedData_800EFA84_2_s00[0]);
+            Chara_CollisionSet(groaner, sharedData_800EFA84_2_s00[0]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StandToStunRight, true):
@@ -1496,7 +1471,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StandToStunLeft, false):
-            CopyData(groaner, sharedData_800EFCDC_2_s00[0]);
+            Chara_CollisionSet(groaner, sharedData_800EFCDC_2_s00[0]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StandToStunLeft, true):
@@ -1507,7 +1482,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromJump, false):
-            CopyData(groaner, sharedData_800EFF48_2_s00[0]);
+            Chara_CollisionSet(groaner, sharedData_800EFF48_2_s00[0]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromJump, true):
@@ -1567,7 +1542,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromStandRight, false):
-            CopyData(groaner, sharedData_800F0038_2_s00[0]);
+            Chara_CollisionSet(groaner, sharedData_800F0038_2_s00[0]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromStandRight, true):
@@ -1651,7 +1626,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromStandLeft, false):
-            CopyData(groaner, sharedData_800F00EC_2_s00[0]);
+            Chara_CollisionSet(groaner, sharedData_800F00EC_2_s00[0]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromStandLeft, true):
@@ -1727,7 +1702,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
 
         case ANIM_STATUS(GroanerAnim_StunFromJumpDeathEnd, false):
         case ANIM_STATUS(GroanerAnim_StunFromJumpDeathEnd, true):
-            CopyData(groaner, sharedData_800F0268_2_s00[15]);
+            Chara_CollisionSet(groaner, sharedData_800F0268_2_s00[15]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromStandRightDeath, false):
@@ -1781,11 +1756,11 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
 
         case ANIM_STATUS(GroanerAnim_StunFromStandRightRecover, false):
         case ANIM_STATUS(GroanerAnim_StunFromStandRightRecover, true):
-            CopyData(groaner, sharedData_800F03A8_2_s00[13]);
+            Chara_CollisionSet(groaner, sharedData_800F03A8_2_s00[13]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromStandLeftDeathStart, false):
-        case ANIM_STATUS(StunFromStandLeftRecoil, false):
+        case ANIM_STATUS(GroanerAnim_StunFromStandLeftRecoil, false):
             keyframeIdx2      = groanerProps.relKeyframeIdx_100;
             keyframeIdx0 = keyframeIdx2 >> 1;
             if (keyframeIdx2 >= 7)
@@ -1804,7 +1779,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromStandLeftDeathStart, true):
-        case ANIM_STATUS(StunFromStandLeftRecoil, true):
+        case ANIM_STATUS(GroanerAnim_StunFromStandLeftRecoil, true):
             keyframeIdx2 = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 244;
             if (keyframeIdx2 < 12)
             {
@@ -1845,11 +1820,11 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
 
         case ANIM_STATUS(GroanerAnim_StunFromStandLeftDeathEnd, false):
         case ANIM_STATUS(GroanerAnim_StunFromStandLeftDeathEnd, true):
-            CopyData(groaner, sharedData_800F04C0_2_s00[13]);
+            Chara_CollisionSet(groaner, sharedData_800F04C0_2_s00[13]);
             break;
 
         case ANIM_STATUS(GroanerAnim_RunForward, false):
-            CopyData(groaner, sharedData_800EF1B0_2_s00[0]);
+            Chara_CollisionSet(groaner, sharedData_800EF1B0_2_s00[0]);
             break;
 
         case ANIM_STATUS(GroanerAnim_RunForward, true):
@@ -1858,7 +1833,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StandToJumpAttack, false):
-            CopyData(groaner, sharedData_800EF0AC_2_s00[0]);
+            Chara_CollisionSet(groaner, sharedData_800EF0AC_2_s00[0]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StandToJumpAttack, true):
@@ -1970,29 +1945,29 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)
     if ((keyframeIdx > 365 && keyframeIdx < 370) ||
         (keyframeIdx > 374 && keyframeIdx < 382))
     {
-        if (groanerProps.field_110 == 0)
+        if (!groanerProps.playFootstepSfxLeft)
         {
-            func_8005DD44(Sfx_Unk1413, &groaner->position, sfxVol, sfxPitch);
-            groanerProps.field_110++;
+            func_8005DD44(Sfx_GroanerFootstep, &groaner->position, sfxVol, sfxPitch);
+            groanerProps.playFootstepSfxLeft++;
         }
     }
     else
     {
-        groanerProps.field_110 = 0;
+        groanerProps.playFootstepSfxLeft = false;
     }
 
     if ((keyframeIdx > 367 && keyframeIdx < 373) ||
         (keyframeIdx > 390 && keyframeIdx < 397))
     {
-        if (!groanerProps.field_111)
+        if (!groanerProps.playFootstepSfxRight)
         {
-            func_8005DD44(Sfx_Unk1413, &groaner->position, sfxVol, sfxPitch);
-            groanerProps.field_111++;
+            func_8005DD44(Sfx_GroanerFootstep, &groaner->position, sfxVol, sfxPitch);
+            groanerProps.playFootstepSfxRight++;
         }
     }
     else
     {
-        groanerProps.field_111 = false;
+        groanerProps.playFootstepSfxRight = false;
     }
 }
 
