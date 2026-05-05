@@ -52,16 +52,16 @@ typedef enum _GroanerAnim
 /** @brief Groaner character control states. */
 typedef enum _GroanerControl
 {
-    GroanerControl_0 = 0,
-    GroanerControl_1 = 1,
-    GroanerControl_2 = 2,
-    GroanerControl_3 = 3,
-    GroanerControl_4 = 4,
-    GroanerControl_5 = 5,
-    GroanerControl_6 = 6,
-    GroanerControl_7 = 7,
-    GroanerControl_8 = 8,
-    GroanerControl_9 = 9
+    GroanerControl_None               = 0,
+    GroanerControl_WalkForward        = 1,
+    GroanerControl_RunForward         = 2,
+    GroanerControl_JumpAttack         = 3,
+    GroanerControl_4                  = 4, // TODO: Not sure. Related to run forward?
+    GroanerControl_StandRecoil        = 5,
+    GroanerControl_StunFromJump       = 6,
+    GroanerControl_StunFromStandRight = 7,
+    GroanerControl_StunFromStandLeft  = 8,
+    GroanerControl_Death              = 9
 } e_GroanerControl;
 
 /** @brief Groaner character state steps. */

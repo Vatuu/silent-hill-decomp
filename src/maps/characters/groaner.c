@@ -19,7 +19,7 @@ void Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2*
     u8 prevControlState;
 
     // Initialize.
-    if (groaner->model.controlState == GroanerControl_0)
+    if (groaner->model.controlState == GroanerControl_None)
     {
         Groaner_Init(groaner);
     }
@@ -95,7 +95,7 @@ void Groaner_Init(s_SubCharacter* groaner)
 
     if (groaner->model.stateStep == GroanerStateStep_3)
     {
-        groaner->model.controlState = GroanerControl_1;
+        groaner->model.controlState = GroanerControl_WalkForward;
         Character_AnimSet(groaner, ANIM_STATUS(GroanerAnim_WalkForward, true), 371);
         groanerProps.flags.val16[0] |= GroanerFlag_5;
     }
@@ -265,7 +265,7 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
                 }
             }
 
-            groaner->model.controlState = GroanerControl_5;
+            groaner->model.controlState = GroanerControl_StandRecoil;
         }
     }
     else
@@ -278,21 +278,21 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
         if (ABS(unkAngle) < Q12_ANGLE(45.0f))
         {
             groaner->model.anim.status  = ANIM_STATUS(GroanerAnim_JumpToStun, false);
-            groaner->model.controlState = GroanerControl_6;
+            groaner->model.controlState = GroanerControl_StunFromJump;
         }
         else if (unkAngle > Q12_ANGLE(0.0f))
         {
             groaner->model.anim.status  = ANIM_STATUS(GroanerAnim_StandToStunRight, false);
-            groaner->model.controlState = GroanerControl_7;
+            groaner->model.controlState = GroanerControl_StunFromStandRight;
         }
         else
         {
             groaner->model.anim.status  = ANIM_STATUS(GroanerAnim_StandToStunLeft, false);
-            groaner->model.controlState = GroanerControl_8;
+            groaner->model.controlState = GroanerControl_StunFromStandLeft;
         }
     }
 
-    if (prevControlState != groaner->model.controlState && prevControlState == GroanerControl_3)
+    if (prevControlState != groaner->model.controlState && prevControlState == GroanerControl_JumpAttack)
     {
         g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_1;
     }
@@ -423,7 +423,7 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
     if (groaner->model.anim.status == ANIM_STATUS(GroanerAnim_WalkForward, true) &&
         (groanerProps.flags.val32 & (GroanerFlag_5 | GroanerFlag_7)) == (GroanerFlag_5 | GroanerFlag_7))
     {
-        groaner->model.controlState = GroanerControl_2;
+        groaner->model.controlState = GroanerControl_RunForward;
         groaner->model.anim.status  = ANIM_STATUS(GroanerAnim_RunForward, false);
         groanerProps.flags.val16[0] &= ~GroanerFlag_0;
         groanerProps.flags.val16[0] |= GroanerFlag_10;
@@ -579,7 +579,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
                                                   groaner->rotation.vy)) < Q12_ANGLE(30.0f))
                 {
                     g_SysWork.charaGroupFlags[3] |= CharaGroupFlag_1;
-                    groaner->model.controlState   = GroanerControl_3;
+                    groaner->model.controlState   = GroanerControl_JumpAttack;
                     groaner->model.anim.status    = ANIM_STATUS(GroanerAnim_StandToJumpAttack, false);
                     return;
                 }
@@ -603,7 +603,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
     if (!(groanerProps.flags.val16[0] & GroanerFlag_7) &&
         (distToPlayer > Q12(12.0f) || (!Rng_GenerateUInt(0, 127) && distToPlayer > Q12(6.0f))))
     {
-        groaner->model.controlState = GroanerControl_1;
+        groaner->model.controlState = GroanerControl_WalkForward;
         groaner->model.anim.status  = ANIM_STATUS(GroanerAnim_WalkForward, false);
         groanerProps.relKeyframeIdx_100 = 100;
         groanerProps.flags.val16[0] &= ~GroanerFlag_10;
@@ -867,7 +867,7 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
 
     if (Rng_GenerateUInt(0, Q12_CLAMPED(1.0f)) < var_s0_2)
     {
-        groaner->model.controlState = GroanerControl_2;
+        groaner->model.controlState = GroanerControl_RunForward;
     }
 }
 
@@ -877,7 +877,7 @@ void sharedFunc_800E554C_2_s00(s_SubCharacter* groaner)
         groaner->model.anim.status == ANIM_STATUS(GroanerAnim_StandIdle, true) &&
         !Rng_GenerateInt(0, 7)) // 1 in 8 chance.
     {
-        groaner->model.controlState = GroanerControl_1;
+        groaner->model.controlState = GroanerControl_WalkForward;
         groaner->model.anim.status  = ANIM_STATUS(GroanerAnim_WalkForward, false);
     }
 }
@@ -899,7 +899,7 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
         groanerProps.flags.val16[0] &= ~GroanerFlag_4;
     }
 
-    if (groaner->model.controlState == GroanerControl_6)
+    if (groaner->model.controlState == GroanerControl_StunFromJump)
     {
         if (ANIM_TIME_RANGE_CHECK(groaner->model.anim.time, 39, 48))
         {
@@ -908,7 +908,7 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
 
         if (groanerProps.flags.val16[0] & GroanerFlag_4)
         {
-            // TODO: Uncleanr float.
+            // TODO: Unclean floats.
             if (groanerProps.flags.val16[0] & GroanerFlag_5)
             {
                 timeScaled = Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 5.3333f);
@@ -947,7 +947,7 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
                 timeScaled = Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.9781f);
             }
 
-            if (groaner->model.controlState == GroanerControl_7)
+            if (groaner->model.controlState == GroanerControl_StunFromStandRight)
             {
                 groanerProps.field_F0 = Q12_MULT(timeScaled, Math_Sin(groaner->rotation.vy - Q12_ANGLE(90.0f)));
                 groanerProps.field_F2 = Q12_MULT(timeScaled, Math_Cos(groaner->rotation.vy - Q12_ANGLE(90.0f)));
@@ -989,7 +989,7 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
         {
             groanerProps.relKeyframeIdx_100 = 0;
             groaner->model.anim.status  = newAnimStatus;
-            groaner->model.controlState = GroanerControl_9;
+            groaner->model.controlState = GroanerControl_Death;
         }
     }
 }
