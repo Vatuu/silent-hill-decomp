@@ -23,30 +23,30 @@ typedef enum _GroanerFlags
 /** @brief Groaner character animation indices. */
 typedef enum _GroanerAnim
 {
-    GroanerAnim_Still                       = 0,
-    GroanerAnim_StunFromJumpDeathStart      = 1,
-    GroanerAnim_StandRecoilFront            = 2,
-    GroanerAnim_JumpToStun                  = 3,
-    GroanerAnim_StunFromJump                = 4,
-    GroanerAnim_StunFromStandRightDeath     = 5,
-    GroanerAnim_StandRecoilRight            = 6,
-    GroanerAnim_StandToStunRight            = 7,
-    GroanerAnim_StunFromStandRight          = 8,
-    GroanerAnim_StandIdle                   = 9,
-    GroanerAnim_JumpAttack                  = 10,
-    GroanerAnim_StunFromStandLeftDeathStart = 11,
-    GroanerAnim_StandRecoilLeft             = 12,
-    GroanerAnim_StandToStunLeft             = 13,
-    GroanerAnim_StunFromStandLeft           = 14,
-    GroanerAnim_StandToJumpAttack           = 15,
-    GroanerAnim_RunForward                  = 16,
-    GroanerAnim_WalkForward                 = 17,
-    GroanerAnim_StunFromJumpDeathEnd        = 18,
-    GroanerAnim_StunFromStandRightRecover   = 19, /** @unused? */
-    GroanerAnim_StunFromStandLeftDeathEnd   = 20,
-    GroanerAnim_StunFromJumpRecoil          = 21,
-    GroanerAnim_StunFromStandRightRecoil    = 22,
-    GroanerAnim_StunFromStandLeftRecoil     = 23
+    GroanerAnim_Still                        = 0,
+    GroanerAnim_StunFromJumpDeathStart       = 1,
+    GroanerAnim_StandRecoilFront             = 2,
+    GroanerAnim_JumpToStun                   = 3,
+    GroanerAnim_StunFromJump                 = 4,
+    GroanerAnim_StunFromStandRightDeathStart = 5,
+    GroanerAnim_StandRecoilRight             = 6,
+    GroanerAnim_StandToStunRight             = 7,
+    GroanerAnim_StunFromStandRight           = 8,
+    GroanerAnim_StandIdle                    = 9,
+    GroanerAnim_JumpAttack                   = 10,
+    GroanerAnim_StunFromStandLeftDeathStart  = 11,
+    GroanerAnim_StandRecoilLeft              = 12,
+    GroanerAnim_StandToStunLeft              = 13,
+    GroanerAnim_StunFromStandLeft            = 14,
+    GroanerAnim_StandToJumpAttack            = 15,
+    GroanerAnim_RunForward                   = 16,
+    GroanerAnim_WalkForward                  = 17,
+    GroanerAnim_StunFromJumpDeathEnd         = 18,
+    GroanerAnim_StunFromStandRightDeathEnd   = 19,
+    GroanerAnim_StunFromStandLeftDeathEnd    = 20,
+    GroanerAnim_StunFromJumpRecoil           = 21,
+    GroanerAnim_StunFromStandRightRecoil     = 22,
+    GroanerAnim_StunFromStandLeftRecoil      = 23
 } e_GroanerAnim;
 
 /** @brief Groaner character control states. */
@@ -63,6 +63,14 @@ typedef enum _GroanerControl
     GroanerControl_StunFromStandLeft  = 8,
     GroanerControl_Death              = 9
 } e_GroanerControl;
+
+/** @brief Groaner character model bone indices. */
+typedef enum _GroanerBone
+{
+    GroanerBone_Hips = 1,
+    GroanerBone_Head = 3,
+    GroanerBone_Jaw  = 4
+} e_GroanerBone;
 
 extern s_AnimInfo GROANER_ANIM_INFOS[];
 
@@ -88,30 +96,31 @@ extern s_Keyframe sharedData_800F0268_2_s00[];
 extern s_Keyframe sharedData_800F03A8_2_s00[];
 extern s_Keyframe sharedData_800F04C0_2_s00[];
 
-#define ANIM_INDEX_FROM_KEYFRAME(offset, keyframe, max, count) \
-    ((offset) - ((keyframe) > (count)) < (max) ? ((offset) - ((keyframe) > (count))) : ((max) - 1))
+#define ANIM_INDEX_FROM_KEYFRAME(offset, keyframe, max, count)                             \
+    ((((offset) - ((keyframe) > (count))) < (max)) ? ((offset) - ((keyframe) > (count))) : \
+                                                     ((max) - 1))
 
 void Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void Groaner_Init(s_SubCharacter* groaner); // `map2_s00` has extra block at end of func compared to other maps.
 
-void sharedFunc_800E554C_2_s00(s_SubCharacter* groaner);
+void Groaner_ControlStandRecoil(s_SubCharacter* groaner);
 
-void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner);
+void Groaner_ControlStun(s_SubCharacter* groaner);
 
 void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner);
 
 void sharedFunc_800E384C_2_s00(s_SubCharacter* groaner);
 
-void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner);
+void Groaner_ControlWalkForward(s_SubCharacter* groaner);
 
-void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner);
+void Groaner_ControlRunForward(s_SubCharacter* groaner);
 
-void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner);
+void Groaner_ControlJumpAttack(s_SubCharacter* groaner);
 
-void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner);
+void Groaner_Control4(s_SubCharacter* groaner);
 
-void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner);
+void Groaner_ControlDeath(s_SubCharacter* groaner);
 
 void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner);
 

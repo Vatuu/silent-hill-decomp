@@ -153,7 +153,7 @@ void AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsCOOR
 
 bool sharedFunc_800D21E4_0_s01(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-/** Probes collision and sets `airScreamerProps.groundHeight_124`. */
+/** Probes collision and sets `airScreamerProps.groundHeight`. */
 void sharedFunc_800D2200_0_s01(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer);

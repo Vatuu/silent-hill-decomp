@@ -203,12 +203,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
     sharedData_800E39D8_0_s00 = 0;
 
     playerChara->properties.player.field_10C                            >>= 1;
-    g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 = 0;
+    g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer = 0;
 
     func_8004C564(0, -1);
 
-    playerChara->properties.player.afkTimer_E8        = Q12(0.0f);
-    playerChara->properties.player.exhaustionTimer_FC = Q12(0.0f);
+    playerChara->properties.player.afkTimer        = Q12(0.0f);
+    playerChara->properties.player.exhaustionTimer = Q12(0.0f);
 
     switch (g_SysWork.playerWork.extra.state)
     {
@@ -250,7 +250,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 D_800C4606 = 0;
             }
 
-            headingAngle = g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            headingAngle = g_SysWork.playerWork.player.properties.player.headingAngle = Q12_ANGLE(0.0f);
             break;
 #endif
 
@@ -291,7 +291,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 D_800C4606 = 0;
             }
 
-            headingAngle = g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            headingAngle = g_SysWork.playerWork.player.properties.player.headingAngle = Q12_ANGLE(0.0f);
             break;
 #endif
 
@@ -334,7 +334,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 D_800C4606 = 0;
             }
 
-            headingAngle = g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            headingAngle = g_SysWork.playerWork.player.properties.player.headingAngle = Q12_ANGLE(0.0f);
             break;
 #endif
 
@@ -391,7 +391,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 D_800C4606 = 0;
             }
 
-            headingAngle = g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            headingAngle = g_SysWork.playerWork.player.properties.player.headingAngle = Q12_ANGLE(0.0f);
             break;
 #endif
 
@@ -444,7 +444,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             }
 
             headingAngle =
-            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            g_SysWork.playerWork.player.properties.player.headingAngle = Q12_ANGLE(0.0f);
             break;
 #endif
 
@@ -466,7 +466,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 D_800C4606 = 0;
             }
 
-            headingAngle = g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(180.0f);
+            headingAngle = g_SysWork.playerWork.player.properties.player.headingAngle = Q12_ANGLE(180.0f);
             break;
 #endif
 
@@ -514,7 +514,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             }
 
             headingAngle =
-            g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            g_SysWork.playerWork.player.properties.player.headingAngle = Q12_ANGLE(0.0f);
 
             g_Player_FlexRotationY = Q12_ANGLE(-28.2f);
             break;
@@ -563,7 +563,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 D_800C4606 = 0;
             }
 
-            headingAngle = g_SysWork.playerWork.player.properties.player.headingAngle_124 = Q12_ANGLE(0.0f);
+            headingAngle = g_SysWork.playerWork.player.properties.player.headingAngle = Q12_ANGLE(0.0f);
 
             g_Player_FlexRotationY = Q12_ANGLE(28.2f);
             break;

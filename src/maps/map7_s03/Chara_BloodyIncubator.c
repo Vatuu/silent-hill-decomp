@@ -63,7 +63,7 @@ void func_800D3740(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800D37
 
 void func_800D38D8(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* boneCoords) // 0x800D38D8
 {
-    switch (bloodyIncubator->properties.player.afkTimer_E8)
+    switch (bloodyIncubator->properties.player.afkTimer)
     {
         case 0:
             break;

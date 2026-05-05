@@ -2057,7 +2057,7 @@ void func_800E219C(void) // 0x800E219C
             g_SysWork.npcs[0].rotation.vy = Q12_ANGLE(157.5f);
 
             // TODO: Wrong properties union field.
-            g_SysWork.npcs[0].properties.player.afkTimer_E8                      = Q12(0.0f);
+            g_SysWork.npcs[0].properties.player.afkTimer                      = Q12(0.0f);
             g_SysWork.npcs[0].properties.dummy.properties_E8[1].val16[0] = 1;
             g_SysWork.npcs[0].properties.dummy.properties_E8[1].val16[1] = 1;
 
@@ -2158,7 +2158,7 @@ void func_800E2724(void) // 0x800E2724
             curStateStep = g_SysWork.sysStateSteps[0];
 
             // TODO: `Chara_MonsterCybil` properties
-            g_SysWork.npcs[0].properties.player.afkTimer_E8                      = Q12(0.0f);
+            g_SysWork.npcs[0].properties.player.afkTimer                      = Q12(0.0f);
             g_SysWork.npcs[0].properties.dummy.properties_E8[1].val16[0] = curStateStep;
             g_SysWork.npcs[0].properties.dummy.properties_E8[1].val16[1] = curStateStep;
             func_800D8A90(&g_SysWork.npcs[0]);

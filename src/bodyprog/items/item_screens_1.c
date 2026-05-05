@@ -54,7 +54,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
         {
         Inventory_ExitAnimEquippedItemUpdate_block:
             g_SysWork.playerWork.player.field_44.field_0                             = 0;
-            g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
+            g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer = Q12(0.0f);
         }
 
         switch (g_SysWork.playerWork.extra.lowerBodyState)
@@ -110,7 +110,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
                 }
 
                 g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
-                g_SysWork.playerWork.player.properties.player.afkTimer_E8            = Q12(0.0f);
+                g_SysWork.playerWork.player.properties.player.afkTimer            = Q12(0.0f);
         }
     }
 
@@ -289,7 +289,7 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
 
             func_8008B398();
 
-            g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
+            g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer = Q12(0.0f);
             break;
 
         case 0:
@@ -338,7 +338,7 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
                     func_8008B398();
                     D_800C3963                                                                    = 0;
                     D_800C3962                                                                    = 0;
-                    g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
+                    g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer = Q12(0.0f);
                     g_SysWork.playerWork.player.field_44.field_0                             = 0;
                 }
             }
@@ -352,7 +352,7 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
                     func_8008B438(0, 0, 0);
                     func_8008B3E4(Q8(0.0f));
 
-                    g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer_114 = Q12(0.0f);
+                    g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer = Q12(0.0f);
                     D_800C3963                                                              -= 2;
                 }
             }

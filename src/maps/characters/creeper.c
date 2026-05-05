@@ -404,7 +404,7 @@ void Creeper_ControlWalkForward(s_SubCharacter* creeper)
         {
             // TODO: Doesn't match?
             //if ((*(s32*)creeperProps.flags & (CreeperFlag_Leader | CreeperFlag_TargetPlayer)) == CreeperFlag_Leader)
-            if ((creeper->properties.player.afkTimer_E8 & (CreeperFlag_Leader | CreeperFlag_TargetPlayer)) == CreeperFlag_Leader)
+            if ((creeper->properties.player.afkTimer & (CreeperFlag_Leader | CreeperFlag_TargetPlayer)) == CreeperFlag_Leader)
             {
                 creeperProps.flags          |= CreeperFlag_TargetPlayer;
                 creeperProps.targetPositionX = creeperProps.homePositionX;
@@ -670,7 +670,7 @@ void Creeper_ControlDamage(s_SubCharacter* creeper)
 
     // TODO: Doesn't match?
     //if (creeper->moveSpeed == Q12(0.0f) && !(*(s32*)creeper->properties.creeper.flags & (CreeperFlag_Falling | CreeperFlag_3)))
-    if (creeper->moveSpeed == Q12(0.0f) && !(creeper->properties.player.afkTimer_E8 & (CreeperFlag_Falling | CreeperFlag_3)))
+    if (creeper->moveSpeed == Q12(0.0f) && !(creeper->properties.player.afkTimer & (CreeperFlag_Falling | CreeperFlag_3)))
     {
         creeper->properties.creeper.flags |= CreeperFlag_3;
         Savegame_EnemyStateUpdate(creeper);

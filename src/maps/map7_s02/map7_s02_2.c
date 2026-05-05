@@ -1464,7 +1464,7 @@ void func_800DD2D4(void) // 0x800DD2D4
 
     if (g_SysWork.sysStateSteps[0] >= 6)
     {
-        g_SysWork.npcs[0].properties.player.afkTimer_E8 = g_SysWork.playerWork.player.model.anim.time - Q12(Player_AnimGetSomething());
+        g_SysWork.npcs[0].properties.player.afkTimer = g_SysWork.playerWork.player.model.anim.time - Q12(Player_AnimGetSomething());
     }
 
     if (g_Cutscene_Timer >= Q12(0.0f))

@@ -96,11 +96,11 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
                     {
                         if (playerChara.health <= Q12(0.0f))
                         {
-                            playerProps.afkTimer_E8 -= g_DeltaTime;
-                            if (playerProps.afkTimer_E8 >= Q12(0.0f))
+                            playerProps.afkTimer -= g_DeltaTime;
+                            if (playerProps.afkTimer >= Q12(0.0f))
                             {
-                                playerProps.afkTimer_E8 -= g_DeltaTime;
-                                duration = playerProps.afkTimer_E8;
+                                playerProps.afkTimer -= g_DeltaTime;
+                                duration = playerProps.afkTimer;
                             }
                             else
                             {
@@ -123,12 +123,12 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
                 {
                     if (playerChara.health <= Q12(0.0f))
                     {
-                        playerProps.afkTimer_E8 -= g_DeltaTime * 2;
-                        if (playerProps.afkTimer_E8 >= Q12(0.0f))
+                        playerProps.afkTimer -= g_DeltaTime * 2;
+                        if (playerProps.afkTimer >= Q12(0.0f))
                         {
-                            playerProps.afkTimer_E8 -= g_DeltaTime * 2;
+                            playerProps.afkTimer -= g_DeltaTime * 2;
 
-                            duration = playerProps.afkTimer_E8;
+                            duration = playerProps.afkTimer;
                         }
                         else
                         {
@@ -205,7 +205,7 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
                     }
                     else
                     {
-                        duration = Q12(FP_FROM(playerProps.exhaustionTimer_FC, Q12_SHIFT));
+                        duration = Q12(FP_FROM(playerProps.exhaustionTimer, Q12_SHIFT));
                     }
                     break;
             }
@@ -458,7 +458,7 @@ void Player_MovementStateReset(s_SubCharacter* player, e_PlayerLowerBodyState lo
         player->model.stateStep              = 0;
         player->model.controlState           = 0;
         player->properties.player.runTimer_F8 = Q12(0.0f);
-        player->properties.player.afkTimer_E8 = Q12(0.0f);
+        player->properties.player.afkTimer = Q12(0.0f);
         g_SysWork.playerStopFlags          = PlayerStopFlag_None;
     }
 }
@@ -1060,17 +1060,17 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
         player->flags &= ~CharaFlag_Unk4;
     }
 
-    if (playerProps.gasWeaponPowerTimer_114 != Q12(0.0f))
+    if (playerProps.gasWeaponPowerTimer != Q12(0.0f))
     {
-        playerProps.gasWeaponPowerTimer_114 -= g_DeltaTime;
+        playerProps.gasWeaponPowerTimer -= g_DeltaTime;
     }
 
-    playerProps.gasWeaponPowerTimer_114 = CLAMP(playerProps.gasWeaponPowerTimer_114, Q12(0.0f), Q12(60.0f));
+    playerProps.gasWeaponPowerTimer = CLAMP(playerProps.gasWeaponPowerTimer, Q12(0.0f), Q12(60.0f));
 
     if (g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
         g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
     {
-        func_8004C564(g_SysWork.playerCombat.weaponAttack, (playerProps.gasWeaponPowerTimer_114 != 0) ? 4 : 2);
+        func_8004C564(g_SysWork.playerCombat.weaponAttack, (playerProps.gasWeaponPowerTimer != 0) ? 4 : 2);
     }
 
     g_SavegamePtr->healthSaturation -= g_DeltaTime;
@@ -1097,7 +1097,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
         case PlayerState_Idle:
             playerProps.moveDistance_126 = Q12(0.0f);
             WorldEnv_LightRotationAndIntensityGet(&playerAngles);
-            playerProps.quickTurnHeadingAngle_120 = playerAngles.vy;
+            playerProps.quickTurnHeadingAngle = playerAngles.vy;
 
             if (extra->model.stateStep == 0)
             {
@@ -1187,7 +1187,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             if (player->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
                 Player_ExtraStateSet(player, extra, thrownState);
-                player->properties.player.afkTimer_E8 = Q12(10.0f);
+                player->properties.player.afkTimer = Q12(10.0f);
             }
 
             if (playerProps.moveDistance_126 != 0)
@@ -1279,7 +1279,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             if (player->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
                 Player_ExtraStateSet(player, extra, romperAttackState);
-                player->properties.player.afkTimer_E8 = Q12(15.0f);
+                player->properties.player.afkTimer = Q12(15.0f);
             }
 
             if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
@@ -1383,13 +1383,13 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     player->collision.box.top = CLAMP(player->collision.box.top, Q12(-1.6f), Q12(-0.4));
                     player->collision.box.offsetY = CLAMP(player->collision.box.offsetY, Q12(-1.1f), Q12(-0.2f));
 
-                    if (player->health <= Q12(0.0f) && player->properties.player.afkTimer_E8 <= Q12(0.0f))
+                    if (player->health <= Q12(0.0f) && player->properties.player.afkTimer <= Q12(0.0f))
                     {
                         g_MapOverlayHeader.playerAnimLock();
                         SysWork_StateSetNext(SysState_GameOver);
 
                         player->health                  = Q12(100.0f);
-                        playerProps.gasWeaponPowerTimer_114 = Q12(0.0f);
+                        playerProps.gasWeaponPowerTimer = Q12(0.0f);
                         return;
                     }
                     break;
@@ -1475,14 +1475,14 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                         }
                     }
 
-                    if (player->health <= Q12(0.0f) && player->properties.player.afkTimer_E8 <= Q12(0.0f))
+                    if (player->health <= Q12(0.0f) && player->properties.player.afkTimer <= Q12(0.0f))
                     {
                         g_MapOverlayHeader.playerAnimLock();
 
                         SysWork_StateSetNext(SysState_GameOver);
 
                         player->health                  = Q12(100.0f);
-                        playerProps.gasWeaponPowerTimer_114 = Q12(0.0f);
+                        playerProps.gasWeaponPowerTimer = Q12(0.0f);
                         return;
                     }
                     break;
@@ -1816,7 +1816,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 case PlayerState_GetUpFront:
                 case PlayerState_GetUpBack:
                     player->damage.amount                  = Q12(0.0f);
-                    player->properties.player.afkTimer_E8 = Q12(0.0f);
+                    player->properties.player.afkTimer = Q12(0.0f);
 
                     if (player->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
                     {
@@ -1842,7 +1842,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
                 case PlayerState_EnemyReleasePinnedFront:
                 case PlayerState_EnemyReleasePinnedBack:
-                    player->properties.player.afkTimer_E8             = Q12(0.0f);
+                    player->properties.player.afkTimer             = Q12(0.0f);
                     playerChara.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
                     playerChara.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
                     playerChara.collision.shapeOffsets.box.vz      = Q12(0.0f);
@@ -2040,7 +2040,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 extra->model.controlState++;
                 player->health = Q12(100.0f);
                 player->model.controlState++;
-                playerProps.gasWeaponPowerTimer_114 = Q12(0.0f);
+                playerProps.gasWeaponPowerTimer = Q12(0.0f);
                 return;
             }
             break;
@@ -2092,7 +2092,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     extra->model.controlState++;
                     player->health = Q12(100.0f);
                     player->model.controlState++;
-                    playerProps.gasWeaponPowerTimer_114 = Q12(0.0f);
+                    playerProps.gasWeaponPowerTimer = Q12(0.0f);
                     return;
                 }
 
@@ -2105,7 +2105,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 extra->model.controlState++;
                 player->health = Q12(100.0f);
                 player->model.controlState++;
-                playerProps.gasWeaponPowerTimer_114 = Q12(0.0f);
+                playerProps.gasWeaponPowerTimer = Q12(0.0f);
                 return;
             }
             break;
@@ -2785,7 +2785,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     playerProps.flags_11C &= ~PlayerFlag_Unk2;
                 }
             }
-            else if (playerProps.gasWeaponPowerTimer_114 == Q12(0.0f))
+            else if (playerProps.gasWeaponPowerTimer == Q12(0.0f))
             {
                 if (extra->model.anim.keyframeIdx >= D_800C44D0 && D_800C44D4 >= extra->model.anim.keyframeIdx &&
                     !(playerProps.flags_11C & PlayerFlag_Unk2))
@@ -3006,7 +3006,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             // Set idle animation.
-            if (player->properties.player.exhaustionTimer_FC < Q12(10.0f) && player->health >= Q12(30.0f))
+            if (player->properties.player.exhaustionTimer < Q12(10.0f) && player->health >= Q12(30.0f))
             {
                 if (extra->model.stateStep == 0)
                 {
@@ -3018,7 +3018,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
             else
             {
-                player->properties.player.afkTimer_E8 = Q12(0.0f);
+                player->properties.player.afkTimer = Q12(0.0f);
 
                 // If not normal idle anim, set it and update `upperBodyState`.
                 if (extra->model.anim.status != ANIM_STATUS(HarryAnim_Idle, true))
@@ -3044,20 +3044,20 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_None)
             {
-                player->properties.player.afkTimer_E8 = Q12(0.0f);
+                player->properties.player.afkTimer = Q12(0.0f);
             }
 
             player->angleToTarget = player->rotation.vy;
 
             if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_None)
             {
-                player->properties.player.afkTimer_E8++;
+                player->properties.player.afkTimer++;
 
-                if (player->properties.player.afkTimer_E8 >= 300)
+                if (player->properties.player.afkTimer >= 300)
                 {
                     if (player->health >= Q12(60.0f))
                     {
-                        player->properties.player.afkTimer_E8             = Q12(0.0f);
+                        player->properties.player.afkTimer             = Q12(0.0f);
                         // TODO: `Player_ExtraStateSet` doesn't match?
                         g_SysWork.playerWork.extra.state              = PlayerState_Idle;
                         player->model.controlState = player->model.stateStep = 0;
@@ -3338,7 +3338,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             if (g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
                 g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
-                if (playerProps.gasWeaponPowerTimer_114 != Q12(0.0f))
+                if (playerProps.gasWeaponPowerTimer != Q12(0.0f))
                 {
                     if (player->field_44.field_0 <= 0)
                     {
@@ -3518,7 +3518,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             if (g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
                 g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
-                if (playerProps.gasWeaponPowerTimer_114 != Q12(0.0f))
+                if (playerProps.gasWeaponPowerTimer != Q12(0.0f))
                 {
                     if (extra->model.stateStep == 0)
                     {
@@ -3540,7 +3540,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                       extra->model.anim.keyframeIdx >= (D_800C44F0[0].field_4 + 9))) &&
                     !(playerProps.flags_11C & PlayerFlag_Unk2))
                 {
-                    playerProps.gasWeaponPowerTimer_114 = Q12(60.0f);
+                    playerProps.gasWeaponPowerTimer = Q12(60.0f);
 
                     func_8004C564(g_SysWork.playerCombat.weaponAttack, 0);
 
@@ -3580,7 +3580,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     extra->model.controlState                                      = extra->model.stateStep = 0;
                     playerProps.flags_11C &= ~PlayerFlag_Unk2;
 
-                    if (playerProps.gasWeaponPowerTimer_114 != Q12(0.0f))
+                    if (playerProps.gasWeaponPowerTimer != Q12(0.0f))
                     {
                         player->field_44.field_0 = 1;
                     }
@@ -4319,13 +4319,13 @@ void Player_StepWallStop_MovementCancel(s_SubCharacter* player, s32 animStatus0,
 
     if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_None)
     {
-        playerProps.headingAngle_124 = Q12_ANGLE(0.0f);
+        playerProps.headingAngle = Q12_ANGLE(0.0f);
         g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
     }
     else
     {
         headingAngleCpy                                                   = headingAngle;
-        playerProps.headingAngle_124 = headingAngleCpy;
+        playerProps.headingAngle = headingAngleCpy;
         g_Player_HeadingAngle                                             = headingAngleCpy;
     }
 }
@@ -4436,7 +4436,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     }
                 }
                 // Check if player has >= 30% or < 10% health to determine level of exertion.
-                else if (player->properties.player.exhaustionTimer_FC < Q12(10.0f) && player->health >= Q12(30.0f))
+                else if (player->properties.player.exhaustionTimer < Q12(10.0f) && player->health >= Q12(30.0f))
                 {
                     if (player->model.stateStep == 0)
                     {
@@ -4465,7 +4465,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 {
                     if ((g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
                          g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap)) &&
-                        playerProps.gasWeaponPowerTimer_114 != Q12(0.0f))
+                        playerProps.gasWeaponPowerTimer != Q12(0.0f))
                     {
                         if (player->model.stateStep == 0)
                         {
@@ -4669,14 +4669,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         // Restart timer for idle animation.
                         if (D_800C454C != Q12(0.0f))
                         {
-                            player->properties.player.afkTimer_E8 = Q12(0.0f);
+                            player->properties.player.afkTimer = Q12(0.0f);
                         }
                     }
                 }
                 // Move without aiming.
                 else if (D_800C454C != Q12(0.0f))
                 {
-                    player->properties.player.afkTimer_E8 = Q12(0.0f);
+                    player->properties.player.afkTimer = Q12(0.0f);
                 }
 
                 // Turn if idle.
@@ -4707,7 +4707,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             if (playerProps.moveDistance_126 == Q12(0.0f) ||
                  g_Player_IsTurningLeft || g_Player_IsTurningRight)
             {
-                playerProps.headingAngle_124 = Q12_ANGLE(0.0f);
+                playerProps.headingAngle = Q12_ANGLE(0.0f);
                 g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
             }
             break;
@@ -4872,7 +4872,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 Player_CharaRotate(5);
             }
 
-            playerProps.headingAngle_124 = Q12_ANGLE(0.0f);
+            playerProps.headingAngle = Q12_ANGLE(0.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
 
             if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_RunForward)
@@ -4884,7 +4884,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             break;
 
         case PlayerLowerBodyState_RunForward:
-            player->properties.player.exhaustionTimer_FC += g_DeltaTime;
+            player->properties.player.exhaustionTimer += g_DeltaTime;
 
             if (g_Controller0->sticks_20.sticks_0.leftY <= -STICK_THRESHOLD)
             {
@@ -5080,7 +5080,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             Player_CharaRotate(4);
 
             g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
-            playerProps.headingAngle_124 = Q12_ANGLE(0.0f);
+            playerProps.headingAngle = Q12_ANGLE(0.0f);
 
             if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_WalkForward)
             {
@@ -5282,7 +5282,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 Player_CharaRotate(4);
             }
 
-            playerProps.headingAngle_124 = Q12_ANGLE(180.0f);
+            playerProps.headingAngle = Q12_ANGLE(180.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(180.0f);
             break;
 
@@ -5364,7 +5364,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             Player_MovementStateReset(player, aimState + PlayerLowerBodyState_SidestepRight);
             Player_CharaRotate(3);
 
-            playerProps.headingAngle_124 = Q12_ANGLE(90.0f);
+            playerProps.headingAngle = Q12_ANGLE(90.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(90.0f);
             break;
 
@@ -5445,12 +5445,12 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             Player_MovementStateReset(player, aimState + PlayerLowerBodyState_SidestepLeft);
             Player_CharaRotate(3);
 
-            playerProps.headingAngle_124 = Q12_ANGLE(-90.0f);
+            playerProps.headingAngle = Q12_ANGLE(-90.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(-90.0f);
             break;
 
         case PlayerLowerBodyState_RunRight:
-            player->properties.player.exhaustionTimer_FC += g_DeltaTime;
+            player->properties.player.exhaustionTimer += g_DeltaTime;
             if (playerProps.moveDistance_126 > Q12(3.1739f))
             {
                 playerProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
@@ -5536,12 +5536,12 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             Player_MovementStateReset(player, PlayerLowerBodyState_RunRight);
             Player_CharaRotate(4);
 
-            playerProps.headingAngle_124 = Q12_ANGLE(90.0f);
+            playerProps.headingAngle = Q12_ANGLE(90.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(90.0f);
             break;
 
         case PlayerLowerBodyState_RunLeft:
-            player->properties.player.exhaustionTimer_FC += g_DeltaTime;
+            player->properties.player.exhaustionTimer += g_DeltaTime;
             if (playerProps.moveDistance_126 > Q12(3.1739f))
             {
                 playerProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
@@ -5625,7 +5625,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             Player_MovementStateReset(player, PlayerLowerBodyState_RunLeft);
             Player_CharaRotate(4);
 
-            playerProps.headingAngle_124 = Q12_ANGLE(-90.0f);
+            playerProps.headingAngle = Q12_ANGLE(-90.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(-90.0f);
             break;
 
@@ -5644,7 +5644,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
             if (player->model.controlState == 0)
             {
-                playerProps.quickTurnHeadingAngle_120 = player->rotation.vy;
+                playerProps.quickTurnHeadingAngle = player->rotation.vy;
             }
 
             if (player->model.stateStep == 0)
@@ -5667,11 +5667,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 D_800C454C = Q12(0.0f);
             }
 
-            if (ABS_DIFF(playerProps.quickTurnHeadingAngle_120, player->rotation.vy) > (Q12_ANGLE(180.0f) - ((s32)(g_DeltaTime * 24) >> 4)))
+            if (ABS_DIFF(playerProps.quickTurnHeadingAngle, player->rotation.vy) > (Q12_ANGLE(180.0f) - ((s32)(g_DeltaTime * 24) >> 4)))
             {
-                if (ABS_DIFF(playerProps.quickTurnHeadingAngle_120, player->rotation.vy) < (((g_DeltaTime * 24) >> 4) + Q12_ANGLE(180.0f)))
+                if (ABS_DIFF(playerProps.quickTurnHeadingAngle, player->rotation.vy) < (((g_DeltaTime * 24) >> 4) + Q12_ANGLE(180.0f)))
                 {
-                    player->rotation.vy                                                   = playerProps.quickTurnHeadingAngle_120 + Q12_ANGLE(180.0f);
+                    player->rotation.vy                                                   = playerProps.quickTurnHeadingAngle + Q12_ANGLE(180.0f);
                     playerProps.moveDistance_126 = Q12(1.4f);
                     D_800C454C                                                              = Q12(0.0f);
 
@@ -5748,7 +5748,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 }
             }
 
-            playerProps.headingAngle_124 = Q12_ANGLE(0.0f);
+            playerProps.headingAngle = Q12_ANGLE(0.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
             break;
 
@@ -5767,7 +5767,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
             if (player->model.controlState == 0)
             {
-                playerProps.quickTurnHeadingAngle_120 = player->rotation.vy;
+                playerProps.quickTurnHeadingAngle = player->rotation.vy;
             }
 
             if (player->model.stateStep == 0)
@@ -5790,11 +5790,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 D_800C454C = Q12(0.0f);
             }
 
-            if (ABS_DIFF(playerProps.quickTurnHeadingAngle_120, player->rotation.vy) > (Q12_ANGLE(180.0f) - ((g_DeltaTime * 24) >> 4)))
+            if (ABS_DIFF(playerProps.quickTurnHeadingAngle, player->rotation.vy) > (Q12_ANGLE(180.0f) - ((g_DeltaTime * 24) >> 4)))
             {
-                if (ABS_DIFF(playerProps.quickTurnHeadingAngle_120, player->rotation.vy) < (((g_DeltaTime * 24) >> 4) + Q12_ANGLE(180.0f)))
+                if (ABS_DIFF(playerProps.quickTurnHeadingAngle, player->rotation.vy) < (((g_DeltaTime * 24) >> 4) + Q12_ANGLE(180.0f)))
                 {
-                    player->rotation.vy                                                   = playerProps.quickTurnHeadingAngle_120 + Q12_ANGLE(180.0f);
+                    player->rotation.vy                                                   = playerProps.quickTurnHeadingAngle + Q12_ANGLE(180.0f);
                     playerProps.moveDistance_126 = Q12(1.4f);
                     D_800C454C                                                              = Q12(0.0f);
 
@@ -5871,7 +5871,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 }
             }
 
-            playerProps.headingAngle_124 = Q12_ANGLE(0.0f);
+            playerProps.headingAngle = Q12_ANGLE(0.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
             break;
 
@@ -5927,7 +5927,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 }
             }
 
-            playerProps.headingAngle_124 = Q12_ANGLE(180.0f);
+            playerProps.headingAngle = Q12_ANGLE(180.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(180.0f);
             break;
 
@@ -6001,12 +6001,12 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
             if (g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_None)
             {
-                playerProps.headingAngle_124 = Q12_ANGLE(-90.0f);
+                playerProps.headingAngle = Q12_ANGLE(-90.0f);
                 g_Player_HeadingAngle                                             = Q12_ANGLE(-90.0f);
                 break;
             }
 
-            playerProps.headingAngle_124 = Q12_ANGLE(0.0f);
+            playerProps.headingAngle = Q12_ANGLE(0.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
             break;
 
@@ -6039,12 +6039,12 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
             if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_None)
             {
-                playerProps.headingAngle_124 = Q12_ANGLE(0.0f);
+                playerProps.headingAngle = Q12_ANGLE(0.0f);
                 g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
                 break;
             }
 
-            playerProps.headingAngle_124 = Q12_ANGLE(90.0f);
+            playerProps.headingAngle = Q12_ANGLE(90.0f);
             g_Player_HeadingAngle                                             = Q12_ANGLE(90.0f);
             break;
 
@@ -6313,7 +6313,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
         case PlayerLowerBodyState_RunLeft:
             if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status) && player->model.anim.status >= ANIM_STATUS(HarryAnim_RunForward, true))
             {
-                player->properties.player.exhaustionTimer_FC += g_DeltaTime;
+                player->properties.player.exhaustionTimer += g_DeltaTime;
             }
             break;
 
@@ -6323,20 +6323,20 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
         case PlayerLowerBodyState_RunLeftStumble:
         case PlayerLowerBodyState_RunRightStumble:
         case PlayerLowerBodyState_Aim:
-            player->properties.player.exhaustionTimer_FC -= g_DeltaTime * 2;
+            player->properties.player.exhaustionTimer -= g_DeltaTime * 2;
             break;
 
         default:
-            player->properties.player.exhaustionTimer_FC -= g_DeltaTime;
+            player->properties.player.exhaustionTimer -= g_DeltaTime;
             break;
     }
 
-    player->properties.player.exhaustionTimer_FC = CLAMP(player->properties.player.exhaustionTimer_FC, Q12(0.0f), Q12(35.0f));
+    player->properties.player.exhaustionTimer = CLAMP(player->properties.player.exhaustionTimer, Q12(0.0f), Q12(35.0f));
 
     // Check if player has >=30% or <10% of health to determine exertion level.
     if (player->model.anim.status == ANIM_STATUS(HarryAnim_IdleExhausted, true))
     {
-        if (player->properties.player.exhaustionTimer_FC < Q12(10.0f) &&
+        if (player->properties.player.exhaustionTimer < Q12(10.0f) &&
             player->health >= Q12(30.0f))
         {
             player->model.stateStep = 0;
@@ -7049,7 +7049,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
             if ((u32)g_SysWork.playerWork.extra.state >= PlayerState_FallForward)
             {
-                player->properties.player.afkTimer_E8                     = Q12(0.0f);
+                player->properties.player.afkTimer                     = Q12(0.0f);
                 player->properties.player.field_F4                        = 0;
                 playerProps.flags_11C &= ~PlayerFlag_Unk12;
                 g_SysWork.playerCombat.isAiming                   = false;
@@ -7510,7 +7510,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord) // 0x8007
         }
     }
 
-    if (playerProps.gasWeaponPowerTimer_114 != Q12(0.0f))
+    if (playerProps.gasWeaponPowerTimer != Q12(0.0f))
     {
         g_SysWork.timer_2C++;
 
@@ -7894,7 +7894,7 @@ void func_8007E8C0(void) // 0x8007E8C0
         g_SysWork.enablePlayerMatchAnim = false;
     }
 
-    chara->properties.player.exhaustionTimer_FC                    = Q12(0.0f);
+    chara->properties.player.exhaustionTimer                    = Q12(0.0f);
     g_SysWork.playerWork.player.collision.box.top                  = Q12(-1.6f);
     g_SysWork.playerWork.player.collision.box.bottom               = Q12(0.0f);
     g_SysWork.playerWork.player.collision.box.offsetY              = Q12(-1.1f);
@@ -7940,7 +7940,7 @@ void func_8007E9C4(void) // 0x8007E9C4
     g_Player_IsShooting     = false;
     g_Player_IsAttacking    = false;
 
-    chara->properties.player.afkTimer_E8      = Q12(0.0f);
+    chara->properties.player.afkTimer      = Q12(0.0f);
     chara->properties.player.field_F4         = 0;
     chara->properties.player.runTimer_F8      = Q12(0.0f);
     chara->properties.player.field_100        = 0;
@@ -8573,7 +8573,7 @@ s32 func_8007FD2C(void) // 0x8007FD2C
 
 q19_12 Game_GasWeaponPowerTimerValue(void) // 0x8007FD3C
 {
-    return playerProps.gasWeaponPowerTimer_114;
+    return playerProps.gasWeaponPowerTimer;
 }
 
 void func_8007FD4C(bool cond) // 0x8007FD4C

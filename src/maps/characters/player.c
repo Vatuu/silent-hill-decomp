@@ -242,9 +242,9 @@ void Player_ControlFreeze(void)
 
     D_800AF216 = 0;
 
-    playerChara->properties.player.afkTimer_E8        = Q12(0.0f);
+    playerChara->properties.player.afkTimer        = Q12(0.0f);
     playerChara->properties.player.runTimer_F8        = Q12(0.0f);
-    playerChara->properties.player.exhaustionTimer_FC = Q12(0.0f);
+    playerChara->properties.player.exhaustionTimer = Q12(0.0f);
 
     Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Unk52);
 
@@ -701,7 +701,7 @@ void Player_FallBackward(void)
     playerExtra = &g_SysWork.playerWork.extra;
 
     g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(2.3f);
-    g_SysWork.playerWork.player.properties.player.headingAngle_124       = Q12_ANGLE(180.0f);
+    g_SysWork.playerWork.player.properties.player.headingAngle       = Q12_ANGLE(180.0f);
     g_Player_HeadingAngle                                                   = Q12_ANGLE(180.0f);
 
     Player_ExtraStateSet(playerChara, playerExtra, PlayerState_FallBackward);
@@ -821,7 +821,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
 
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk12;
 
-            playerChara->properties.player.afkTimer_E8 = Q12(0.0f);
+            playerChara->properties.player.afkTimer = Q12(0.0f);
             playerChara->properties.player.field_F4    = 0;
             g_SysWork.playerCombat.isAiming     = false;
             playerChara->field_44.field_0                 = NO_VALUE;

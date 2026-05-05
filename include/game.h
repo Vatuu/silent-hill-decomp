@@ -1315,12 +1315,12 @@ STATIC_ASSERT_SIZEOF(s_PropsDummy, 64);
 /** @brief Player character properties. */
 typedef struct _PropsPlayer
 {
-    /* 0xE8  */ q19_12        afkTimer_E8; // Increments every tick for 10 seconds before AFK anim starts.
+    /* 0xE8  */ q19_12        afkTimer; // Increments every tick for 10 seconds before AFK anim starts.
     /* 0xEC  */ q19_12        positionY_EC;
     /* 0xF0  */ q19_12        field_F0;
     /* 0xF4  */ q19_12        field_F4; // Angle related to X axis flex rotation.
     /* 0xF8  */ q19_12        runTimer_F8;
-    /* 0xFC  */ q19_12        exhaustionTimer_FC;
+    /* 0xFC  */ q19_12        exhaustionTimer;
     /* 0x100 */ q19_12        field_100;    // Angle?
     /* 0x104 */ q19_12        field_104;    // Distance?
     /* 0x108 */ q19_12        runTimer_108;
@@ -1328,13 +1328,13 @@ typedef struct _PropsPlayer
     /* 0x10D */ u8            field_10D;
     /* 0x10E */ s8            __pad_10E[2];
     /* 0x110 */ q19_12        timer_110; // Increases when `flags & CharaFlag_Unk4` is set, reset when reaches `D_800C45EC`.
-    /* 0x114 */ q19_12        gasWeaponPowerTimer_114; // Timer for the rock drill and chainsaw power.
+    /* 0x114 */ q19_12        gasWeaponPowerTimer; // Timer for the rock drill and chainsaw power.
     /* 0x118 */ s16           field_118; // q3_12?
     /* 0x11A */ s8            __pad_11A[2];
     /* 0x11C */ e_PlayerFlags flags_11C;
-    /* 0x120 */ q3_12         quickTurnHeadingAngle_120; /** Target quick turn heading angle. */
+    /* 0x120 */ q3_12         quickTurnHeadingAngle; /** Target quick turn heading angle. */
     /* 0x122 */ q3_12         field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
-    /* 0x124 */ q3_12         headingAngle_124;
+    /* 0x124 */ q3_12         headingAngle;
     /* 0x126 */ q3_12         moveDistance_126; // Used to indicate how much the player should move foward. Seems to be squared.
 } s_PropsPlayer;
 STATIC_ASSERT_SIZEOF(s_PropsPlayer, 64);
@@ -1373,12 +1373,12 @@ typedef struct _PropsAirScreamer
     /* 0xF0    */ s16     field_F0; // } Maybe 2D offset like in Creeper properties? Must check.
     /* 0xF2    */ s16     field_F2; // }
     /* 0xF4    */ s32     field_F4;
-    /* 0xF8    */ VECTOR3 targetPosition_F8; /** Q19.12 */
-    /* 0x104   */ VECTOR3 position_104;      /** Q19.12 | Set to either Air Screamer position with slight offset toward player or player position. */
+    /* 0xF8    */ VECTOR3 targetPosition; /** Q19.12 */
+    /* 0x104   */ VECTOR3 position_104;   /** Q19.12 | Set to either Air Screamer position with slight offset toward player or player position. */
     /* 0x110   */ VECTOR3 position_110;
     /* 0x11C   */ s32     flags; /** `e_AirScreamerFlags` */
     /* 0x120   */ q19_12  timer_120;
-    /* 0x124   */ q19_12  groundHeight_124;
+    /* 0x124   */ q19_12  groundHeight;
 } s_PropsAirScreamer;
 
 /** @brief Alessa character properties. */
@@ -1502,8 +1502,8 @@ STATIC_ASSERT_SIZEOF(s_PropsFloatstinger, 64);
 typedef struct _PropsGroaner
 {
     /* 0xE8  */ u_Property flags; /** `e_GroanerFlags` TODO: One weird exception where it's accessed as `s32`. */
-    /* 0xEC  */ q3_12      angle_EC; // Target heading angle?
-    /* 0xEE  */ q3_12      field_EE; // Angle?
+    /* 0xEC  */ q3_12      targetHeadingAngle;
+    /* 0xEE  */ q3_12      flexAngle;
     /* 0xF0  */ q3_12      field_F0;
     /* 0xF2  */ q3_12      field_F2;
     /* 0xF4  */ q19_12     targetPositionX;
@@ -1517,8 +1517,8 @@ typedef struct _PropsGroaner
     /* 0x10C */ q3_12      timer_10C; // SFX timer?
     /* 0x10E */ u8         field_10E; // } Sound states?
     /* 0x10F */ u8         field_10F; // }
-    /* 0x110 */ u8         playFootstepSfxLeft;  /** `bool` */
-    /* 0x111 */ u8         playFootstepSfxRight; /** `bool` | Play SFX. */
+    /* 0x110 */ u8         playLeftFootstepSfx;  /** `bool` */
+    /* 0x111 */ u8         playRightFootstepSfx; /** `bool` */
     /* 0x112 */ s8         __pad_112[2];
     /* 0x114 */ q3_12      field_114; // Move speed coefficient?
 } e_PropsGroaner;

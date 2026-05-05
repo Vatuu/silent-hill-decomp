@@ -44,7 +44,7 @@ void GhostDoctor_Init(s_SubCharacter* chara) // 0x800D8BE0
 
 void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8C00
 {
-    if (chara->properties.player.afkTimer_E8 == Q12(0.0f))
+    if (chara->properties.player.afkTimer == Q12(0.0f))
     {
         if (chara->model.stateStep == 0)
         {
@@ -54,7 +54,7 @@ void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8C00
 
         if (chara->properties.player.runTimer_F8 != Q12(0.0f))
         {
-            chara->properties.player.afkTimer_E8 = Q12(0.0f);
+            chara->properties.player.afkTimer = Q12(0.0f);
             chara->model.stateStep              = 0;
             chara->properties.player.runTimer_F8 = Q12(0.0f);
         }

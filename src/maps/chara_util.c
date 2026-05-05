@@ -48,7 +48,7 @@ void sharedFunc_800D88C0_0_s00(s_SubCharacter* player, bool cond)
     }
     else
     {
-        player->properties.player.afkTimer_E8 = Q12(0.0f);
+        player->properties.player.afkTimer = Q12(0.0f);
         player->model.stateStep              = 0;
     }
 
@@ -60,7 +60,7 @@ void sharedFunc_800D8904_0_s00(s_SubCharacter* player, q19_12 afkTime)
     player->properties.player.moveDistance_126 = Q12(0.0f);
     player->properties.player.runTimer_F8      = Q12(0.0f);
     player->properties.player.field_F0         = Q12(0.0f);
-    player->properties.player.afkTimer_E8      = afkTime;
+    player->properties.player.afkTimer      = afkTime;
     player->model.stateStep                   = 0;
 }
 
@@ -687,7 +687,7 @@ void Chara_CollisionReset(s_SubCharacter* chara)
     chara->collision.shapeOffsets.box.vx      = Q12(0.0f);
 
     chara->properties.player.positionY_EC = Q12(0.0f);
-    chara->properties.player.afkTimer_E8  = Q12(0.0f);
+    chara->properties.player.afkTimer  = Q12(0.0f);
     chara->properties.player.positionY_EC = Q12(0.0f);
     chara->properties.player.field_F0     = 0;
     chara->properties.player.field_F4     = Q12_ANGLE(0.0f);

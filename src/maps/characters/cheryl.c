@@ -162,7 +162,7 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
             Model_AnimStatusSet(&cheryl->model, CherylAnim_WalkForward, false);
             Chara_AnimStateReset(cheryl);
 
-            playerProps.headingAngle_124 = Q12_ANGLE(0.0f);
+            playerProps.headingAngle = Q12_ANGLE(0.0f);
             cherylProps.moveDistance_124 = Q12(0.0f);
             break;
 
@@ -181,7 +181,7 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
             Model_AnimStatusSet(&cheryl->model, CherylAnim_WalkForward, false);
             Chara_AnimStateReset(cheryl);
 
-            playerProps.headingAngle_124 = Q12_ANGLE(0.0f);
+            playerProps.headingAngle = Q12_ANGLE(0.0f);
             cherylProps.moveDistance_124 = Q12(0.0f);
             break;
     }
