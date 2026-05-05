@@ -575,7 +575,7 @@ void Chara_InvisibleSet(s_SubCharacter* chara);
 s32 Chara_AnimStartKeyframeIdxGet(s_SubCharacter* chara);
 
 /** Humanoid init function? */
-void sharedFunc_800D923C_0_s00(s_SubCharacter* chara);
+void Chara_CollisionReset(s_SubCharacter* chara);
 
 void SysWork_StateStepIncrementAfterTime(q19_12* timer, q19_12 inc, q19_12 timeMin, q19_12 timeMax, bool setTimerToMax, bool incStateStep);
 

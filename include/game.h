@@ -1381,24 +1381,24 @@ typedef struct _PropsAirScreamer
     /* 0x124   */ q19_12  groundHeight_124;
 } s_PropsAirScreamer;
 
-/** @brief Alessa character properties. TODO: Copy of `s_PropsDahlia`. Fields not marked "correct" are filler. */
+/** @brief Alessa character properties. */
 typedef struct _PropsAlessa
 {
-    s32        stateIdx0; // Control state?
-    u_Property properties_EC;
-    s32        field_F0; // Correct
-    u_Property properties_F4;
-    s32        resetStateIdx0_F8;
-    s32        field_FC;
-    s32        field_100;
-    u_Property properties_104;
-    u_Property properties_108;
-    u_Property properties_10C;
-    VECTOR3    field_110;
-    s32        flags_11C;
-    u_Property properties_120;
-    s16        field_124;
-    q3_12      moveSpeed_126; // Correct
+    /* 0xE8  */ s32        controlState; /** `e_AlessaControl` */
+    /* 0xEC  */ u_Property properties_EC; // Unused?
+    /* 0xF0  */ s32        field_F0;      // `bool`? If `false`, animation gets updated.
+    /* 0xF4  */ u_Property properties_F4; // Unused?
+    /* 0xF8  */ bool       resetControlState;
+    /* 0xFC  */ s32        field_FC;
+    /* 0x100 */ s32        field_100;
+    /* 0x104 */ u_Property properties_104;
+    /* 0x108 */ u_Property properties_108;
+    /* 0x10C */ u_Property properties_10C;
+    /* 0x110 */ VECTOR3    field_110;
+    /* 0x11C */ s32        flags_11C;
+    /* 0x120 */ u_Property properties_120;
+    /* 0x124 */ q3_12      field_124;
+    /* 0x126 */ q3_12      moveSpeed_126;
 } s_PropsAlessa;
 
 /** @brief Bloodsucker character properties. */
@@ -1414,24 +1414,23 @@ typedef struct _PropsBloodsucker
 
 
 /** @brief Cheryl character properties. */
-// TODO: Needs revision. Copy of Dahlia properties.
 typedef struct _PropsCheryl
 {
-    /* 0xE8 */  s32        controlState; /** `e_CherylControl` */
-                u_Property properties_EC;
-                u_Property properties_F0;
-                u_Property properties_F4;
-                s32        resetStateIdx0_F8;
-                s32        field_FC;
-                s32        field_100;
-                u_Property properties_104;
-                u_Property properties_108;
-                u_Property properties_10C;
-                VECTOR3    field_110;
+    /* 0xE8  */ s32        controlState; /** `e_CherylControl` */
+    /* 0xEC  */ u_Property properties_EC; // Unused?
+    /* 0xF0  */ s32        field_F0;
+    /* 0xF4  */ u_Property properties_F4; // Unused?
+    /* 0xF8  */ bool       resetControlState;
+    /* 0xFC  */ s32        field_FC;
+    /* 0x100 */ s32        field_100;
+    /* 0x104 */ u_Property properties_104;
+    /* 0x108 */ u_Property properties_108;
+    /* 0x10C */ u_Property properties_10C;
+    /* 0x110 */ VECTOR3    field_110;
     /* 0x11C */ s32        flags; /** `e_CherylFlags` */
-                u_Property properties_120;
-                q3_12      moveDistance_124;
-                q3_12      moveDistance_126;
+    /* 0x120 */ u_Property properties_120;
+    /* 0x124 */ q3_12      moveDistance_124;
+    /* 0x126 */ q3_12      moveDistance_126;
 } s_PropsCheryl;
 STATIC_ASSERT_SIZEOF(s_PropsCheryl, 64);
 
@@ -1457,21 +1456,22 @@ STATIC_ASSERT_SIZEOF(s_PropsCreeper, 40);
 /** @brief Dahlia character properties. */
 typedef struct _PropsDahlia
 {
-    s32        stateIdx0; // Control state?
-    u_Property properties_EC;
     u_Property properties_F0;
-    u_Property properties_F4;
-    s32        resetStateIdx0_F8;
-    s32        field_FC;
-    s32        field_100;
-    u_Property properties_104;
-    u_Property properties_108;
-    u_Property properties_10C;
-    VECTOR3    field_110;
-    s32        flags_11C;
-    u_Property properties_120;
-    s16        field_124;
-    q3_12      moveDistance_126;
+    /* 0x0   */ s32        controlState; /** `e_DahliaControl` */
+    /* 0xEC  */ u_Property properties_EC; // Unused?
+    /* 0xF0  */ u_Property properties_F0; // Unused?
+    /* 0xF4  */ u_Property properties_F4; // Unused?
+    /* 0xF8  */ bool       resetControlState;
+    /* 0xFC  */ s32        field_FC;
+    /* 0x100 */ s32        field_100;
+    /* 0x104 */ u_Property properties_104;
+    /* 0x108 */ u_Property properties_108;
+    /* 0x10C */ u_Property properties_10C;
+    /* 0x110 */ VECTOR3    field_110;
+    /* 0x11C */ s32        flags_11C;
+    /* 0x120 */ u_Property properties_120;
+    /* 0x124 */ q3_12      field_124;
+    /* 0x126 */ q3_12      moveDistance_126;
 } s_PropsDahlia;
 STATIC_ASSERT_SIZEOF(s_PropsDahlia, 64);
 
@@ -1562,10 +1562,10 @@ typedef struct _PropsIncubus
 typedef struct _PropsKaufmann
 {
     /* 0x0   */ s32        controlState; /** `e_KaufmannControl` */
-    /* 0xEC  */ u_Property properties_EC;
-    /* 0xF0  */ u_Property properties_F0;
-    /* 0xF4  */ u_Property properties_F4;
-    /* 0xF8  */ s32        resetStateIdx0_F8;
+    /* 0xEC  */ u_Property properties_EC; // Unused?
+    /* 0xF0  */ u_Property properties_F0; // Unused?
+    /* 0xF4  */ u_Property properties_F4; // Unused?
+    /* 0xF8  */ bool       resetControlState;
     /* 0xFC  */ s32        field_FC;
     /* 0x100 */ s32        field_100;
     /* 0x104 */ u_Property properties_104;
@@ -1574,7 +1574,7 @@ typedef struct _PropsKaufmann
     /* 0x110 */ VECTOR3    field_110;
     /* 0x11C */ s32        flags_11C;
     /* 0x120 */ s32        field_120;
-    /* 0x124 */ s16        field_124;
+    /* 0x124 */ q3_12      field_124;
     /* 0x126 */ q3_12      moveSpeed;
 } s_PropsKaufmann;
 STATIC_ASSERT_SIZEOF(s_PropsKaufmann, 64);
@@ -2369,27 +2369,28 @@ static inline void ModelAnim_StatusDecrement(s_ModelAnim* anim)
  * @param animInfosOffset Anim infos offset.
  */
 #define Model_AnimStatusKeyframeSet(model, animIdx, isActive, animInfos, animInfosOffset)                                       \
-    if ((model).stateStep == 0)                                                                                               \
-    {                                                                                                                           \
-        (model).anim.status = ANIM_STATUS(animIdx, isActive);                                                               \
-        (model).stateStep++;                                                                                                  \
+    if ((model).stateStep == 0)                                                                                           \
+    {                                                                                                                     \
+        (model).anim.status = ANIM_STATUS(animIdx, isActive);                                                             \
+        (model).stateStep++;                                                                                              \
         (model).anim.time        = Q12((animInfos)[ANIM_STATUS(animIdx, isActive) + (animInfosOffset)].startKeyframeIdx); \
         (model).anim.keyframeIdx = (animInfos)[ANIM_STATUS(animIdx, (isActive) + (animInfosOffset))].startKeyframeIdx;    \
     }
 
-/** @brief Attempts to reset a humanoid NPC's anim state index to 0.
+/** @brief Resets a humanoid character's control state to `*_None` if the control subsystem was flagged for a reset.
+ *
+ * TODO: This uses `dahlia` part of union, but is most likely either a `human` part shared with all humanoid characters
+ * or humanoids only share a small struct early in the union.
  *
  * @param chara Character to update.
  */
-static inline void Character_AnimStateReset(s_SubCharacter* chara)
+static inline void Chara_AnimStateReset(s_SubCharacter* chara)
 {
-    // TODO: This uses `dahlia` part of union, but is most likely either a `human` part shared with all humanoid characters
-    // or humanoids only share a small portion early in the union.
-    if (chara->properties.dahlia.resetStateIdx0_F8)
+    if (chara->properties.dahlia.resetControlState)
     {
-        chara->properties.dahlia.stateIdx0         = 0;
-        chara->model.stateStep                    = 0;
-        chara->properties.dahlia.resetStateIdx0_F8 = 0;
+        chara->properties.dahlia.controlState      = 0;
+        chara->model.stateStep                     = 0;
+        chara->properties.dahlia.resetControlState = false;
     }
 }
 
@@ -2397,9 +2398,9 @@ static inline void Character_AnimStateReset(s_SubCharacter* chara)
  *
  * @param chara Character to update.
  */
-#define Chara_PropsClear(chara)                           \
-    for (i = 0; i < 16; i++)                                   \
-    {                                                          \
+#define Chara_PropsClear(chara)                             \
+    for (i = 0; i < 16; i++)                                \
+    {                                                       \
         chara->properties.dummy.properties_E8[i].val32 = 0; \
     }
 
@@ -2407,7 +2408,7 @@ static inline void Character_AnimStateReset(s_SubCharacter* chara)
  *
  * @param chara Character to update.
  */
-#define Chara_DamageClear(chara)                  \
+#define Chara_DamageClear(chara)             \
     (chara)->damage.amount      = Q12(0.0f); \
     (chara)->damage.position.vz = Q12(0.0f); \
     (chara)->damage.position.vy = Q12(0.0f); \

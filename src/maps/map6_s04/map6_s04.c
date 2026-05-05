@@ -343,7 +343,7 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             if (chara->properties.npc.field_F8)
             {
-                chara->properties.dahlia.stateIdx0 = 0;
+                chara->properties.dahlia.controlState = 0;
                 chara->model.stateStep            = 0;
                 chara->properties.npc.field_F8     = 0;
             }
@@ -361,7 +361,7 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
             g_SysWork.npcs[0].properties.monsterCybil.field_126 = 0;
             if (chara->properties.npc.field_F8)
             {
-                chara->properties.dahlia.stateIdx0 = 0;
+                chara->properties.dahlia.controlState = 0;
                 chara->model.stateStep            = 0;
                 chara->properties.npc.field_F8     = 0;
             }
@@ -381,7 +381,7 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             if (chara->properties.npc.field_F8)
             {
-                chara->properties.dahlia.stateIdx0 = 0;
+                chara->properties.dahlia.controlState = 0;
                 chara->model.stateStep            = 0;
                 chara->properties.npc.field_F8     = 0;
             }
@@ -399,7 +399,7 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             if (chara->properties.npc.field_F8)
             {
-                chara->properties.dahlia.stateIdx0 = 0;
+                chara->properties.dahlia.controlState = 0;
                 chara->model.stateStep            = 0;
                 chara->properties.npc.field_F8     = 0;
             }
@@ -425,7 +425,7 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             if (chara->properties.npc.field_F8)
             {
-                chara->properties.dahlia.stateIdx0 = 0;
+                chara->properties.dahlia.controlState = 0;
                 chara->model.stateStep            = 0;
                 chara->properties.npc.field_F8     = 0;
             }
@@ -443,7 +443,7 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             if (chara->properties.npc.field_F8)
             {
-                chara->properties.dahlia.stateIdx0 = 0;
+                chara->properties.dahlia.controlState = 0;
                 chara->model.stateStep            = 0;
                 chara->properties.npc.field_F8     = 0;
             }

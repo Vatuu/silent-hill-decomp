@@ -96,21 +96,21 @@ void BloodyLisa_AnimStateUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneC
 
     #define dahliaProps (bloodyLisa->properties.dahlia)
 
-    switch (dahliaProps.stateIdx0)
+    switch (dahliaProps.controlState)
     {
         case 0:
             break;
 
         case 6:
             Model_AnimStatusSet(&bloodyLisa->model, BloodyLisaAnim_Walk, false);
-            Character_AnimStateReset(bloodyLisa);
+            Chara_AnimStateReset(bloodyLisa);
             break;
     }
 
     Collision_Get(&coll, bloodyLisa->position.vx, bloodyLisa->position.vz);
     func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
 
-    switch (dahliaProps.stateIdx0)
+    switch (dahliaProps.controlState)
     {
         case 6:
             if (bloodyLisa->model.anim.keyframeIdx <= 12)
@@ -144,6 +144,6 @@ void BloodyLisa_AnimStateUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneC
   */
 void BloodyLisa_Init(s_SubCharacter* bloodyLisa)
 {
-    sharedFunc_800D923C_0_s00(bloodyLisa);
+    Chara_CollisionReset(bloodyLisa);
     sharedData_800E2C38_7_s01 = 0;
 }

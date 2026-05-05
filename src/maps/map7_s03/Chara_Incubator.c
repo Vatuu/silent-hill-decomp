@@ -6,19 +6,19 @@
 
 // TODO: Move to src/maps/characters/ once matched.
 
-void Incubator_Update(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D3BC4
+void Incubator_Update(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D3BC4
 {
     if (incubator->model.charaId != Chara_Incubator)
     {
         Incubator_Init(incubator);
     }
 
-    func_800D3E18(incubator, coords);
-    func_800D3C80(incubator, coords);
-    Incubator_AnimUpdate(incubator, anmHdr, coords);
+    func_800D3E18(incubator, boneCoords);
+    func_800D3C80(incubator, boneCoords);
+    Incubator_AnimUpdate(incubator, anmHdr, boneCoords);
 }
 
-void Incubator_AnimUpdate(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D3C38
+void Incubator_AnimUpdate(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D3C38
 {
     s_AnimInfo* animInfo;
 
@@ -26,11 +26,11 @@ void Incubator_AnimUpdate(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOOR
     if (incubator->properties.player.field_F0 == 0)
     {
         animInfo = &INCUBATOR_ANIM_INFOS[incubator->model.anim.status];
-        animInfo->playbackFunc(&incubator->model, anmHdr, coords, animInfo);
+        animInfo->playbackFunc(&incubator->model, anmHdr, boneCoords, animInfo);
     }
 }
 
-void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* coords)
+void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords)
 {
     VECTOR3 unused;
     VECTOR3 offset;
@@ -56,61 +56,44 @@ void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* coords)
     incubator->position.vy  = Q12(0.0f);
     incubator->position.vz += offset.vz;
 
-    coords->coord.t[0] = Q12_TO_Q8(incubator->position.vx);
-    coords->coord.t[1] = Q12_TO_Q8(incubator->position.vy);
-    coords->coord.t[2] = Q12_TO_Q8(incubator->position.vz);
+    boneCoords->coord.t[0] = Q12_TO_Q8(incubator->position.vx);
+    boneCoords->coord.t[1] = Q12_TO_Q8(incubator->position.vy);
+    boneCoords->coord.t[2] = Q12_TO_Q8(incubator->position.vz);
 }
 
-void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* coords) // 0x800D3E18
+void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords) // 0x800D3E18
 {
-    switch (incubator->properties.dahlia.stateIdx0)
+    // Handle control state.
+    switch (incubator->properties.dahlia.controlState)
     {
         case 0:
             break;
 
         case 1:
             Model_AnimStatusSet(&incubator->model, 2, false);
-
-            if (incubator->properties.dahlia.resetStateIdx0_F8 != 0)
-            {
-                incubator->properties.dahlia.stateIdx0 = 0;
-                incubator->model.stateStep = 0;
-                incubator->properties.dahlia.resetStateIdx0_F8 = 0;
-            }
+            Chara_AnimStateReset(incubator);
             break;
 
         case 2:
             Model_AnimStatusKeyframeSet(incubator->model, 3, true, INCUBATOR_ANIM_INFOS, 0);
-
-            if (incubator->properties.dahlia.resetStateIdx0_F8)
-            {
-                incubator->properties.dahlia.stateIdx0 = 0;
-                incubator->model.stateStep = 0;
-                incubator->properties.dahlia.resetStateIdx0_F8 = 0;
-            }
+            Chara_AnimStateReset(incubator);
             break;
 
         case 3:
             Model_AnimStatusSet(&incubator->model, 1, false);
-
-            if (incubator->properties.dahlia.resetStateIdx0_F8)
-            {
-                incubator->properties.dahlia.stateIdx0 = 0;
-                incubator->model.stateStep = 0;
-                incubator->properties.dahlia.resetStateIdx0_F8 = 0;
-            }
+            Chara_AnimStateReset(incubator);
             break;
     }
 
     incubator->headingAngle = incubator->rotation.vy;
-    incubator->moveSpeed = incubator->properties.splitHead.moveDistance_126;
+    incubator->moveSpeed    = incubator->properties.splitHead.moveDistance_126;
     incubator->fallSpeed   += g_GravitySpeed;
 
-    coords->flg = false;
-    Math_RotMatrixZxyNegGte(&incubator->rotation, &coords->coord);
+    boneCoords->flg = false;
+    Math_RotMatrixZxyNegGte(&incubator->rotation, &boneCoords->coord);
 }
 
 void Incubator_Init(s_SubCharacter* incubator) // 0x800D3F38
 {
-    sharedFunc_800D923C_0_s00(incubator);
+    Chara_CollisionReset(incubator);
 }

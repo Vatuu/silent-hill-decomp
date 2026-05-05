@@ -97,7 +97,7 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner);
 
 void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner);
 
-void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Groaner_AnimUpdate(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner);
 

@@ -24,6 +24,33 @@ typedef enum _LisaAnim
     LisaAnim_17    = 17
 } e_LisaAnim;
 
+/** @brief Lisa character control states. */
+typedef enum _LisaControl
+{
+    LisaControl_None = 0,
+    LisaControl_1    = 1,
+    LisaControl_2    = 2,
+    LisaControl_3    = 3,
+    LisaControl_4    = 4,
+    LisaControl_5    = 5,
+    LisaControl_6    = 6,
+    LisaControl_7    = 7,
+    LisaControl_8    = 8,
+    LisaControl_9    = 9,
+    LisaControl_10   = 10,
+    LisaControl_11   = 11,
+    LisaControl_12   = 12,
+    LisaControl_13   = 13,
+    LisaControl_14   = 14,
+    LisaControl_15   = 15,
+    LisaControl_16   = 16,
+    LisaControl_17   = 17,
+    LisaControl_18   = 18,
+    LisaControl_19   = 19,
+    LisaControl_20   = 20,
+    LisaControl_21   = 21
+} e_LisaControl;
+
 /** @brief Lisa character anim infos. */
 extern s_AnimInfo LISA_ANIM_INFOS[];
 

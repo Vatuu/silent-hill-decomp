@@ -52,7 +52,7 @@ sharedFunc_800D2EF4_0_s00       = 0x800CD1F8; // type:func
 Dahlia_Update                   = 0x800CD20C; // type:func
 Dahlia_AnimUpdate               = 0x800CD280; // type:func
 Dahlia_MovementUpdate           = 0x800CD2C8; // type:func
-Dahlia_AnimStateUpdate          = 0x800CD4A0; // type:func
+Dahlia_ControlUpdate            = 0x800CD4A0; // type:func
 Dahlia_Init                     = 0x800CDD64; // type:func
 
 //-------------------------------------------------------------
@@ -72,7 +72,7 @@ Chara_InvisibleSet              = 0x800CE56C; // type:func
 sharedFunc_800D908C_0_s00       = 0x800CE580; // type:func
 sharedFunc_800D9188_0_s00       = 0x800CE67C; // type:func
 Chara_AnimStartKeyframeIdxGet   = 0x800CE730; // type:func
-sharedFunc_800D923C_0_s00       = 0x800CE750; // type:func
+Chara_CollisionReset            = 0x800CE750; // type:func
 sharedFunc_800D929C_0_s00       = 0x800CE7B0; // type:func
 Map_RoomIdxGet                  = 0x800CE7C0; // type:func
 Map_RoomBgmInit                 = 0x800CE858; // type:func

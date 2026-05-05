@@ -108,12 +108,12 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 
     #define dahliaProps (chara->properties.dahlia)
 
-    switch (dahliaProps.stateIdx0)
+    switch (dahliaProps.controlState)
     {
-        case 0:
+        case LisaControl_None:
             break;
 
-        case 1:
+        case LisaControl_1:
             if (dahliaProps.moveDistance_126 > Q12(1.25f))
             {
                 dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
@@ -129,11 +129,11 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
             }
 
             Model_AnimStatusSet(&chara->model, LisaAnim_2, false);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
-        case 5:
-        case 20:
+        case LisaControl_5:
+        case LisaControl_20:
             if (dahliaProps.moveDistance_126)
             {
                 dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
@@ -143,7 +143,7 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
                 }
             }
 
-            if (dahliaProps.stateIdx0 == 5)
+            if (dahliaProps.controlState == 5)
             {
                 Model_AnimStatusKeyframeSet(chara->model, LisaAnim_1, true, LISA_ANIM_INFOS, 0);
             }
@@ -152,85 +152,85 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
                 Model_AnimStatusSet(&chara->model, LisaAnim_1, true);
             }
 
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
-        case 6:
+        case LisaControl_6:
             Model_AnimStatusSet(&chara->model, LisaAnim_3, false);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
-        case 7:
+        case LisaControl_7:
             Model_AnimStatusSet(&chara->model, LisaAnim_4, false);
 
             if (chara->model.anim.keyframeIdx == 72)
             {
-                dahliaProps.stateIdx0 = 20;
+                dahliaProps.controlState = 20;
                 chara->model.stateStep = 0;
             }
             break;
 
-        case 8:
+        case LisaControl_8:
             Model_AnimStatusSet(&chara->model, LisaAnim_5, false);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
-        case 9:
+        case LisaControl_9:
             Model_AnimStatusKeyframeSet(chara->model, LisaAnim_6, true, LISA_ANIM_INFOS, 0);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
-        case 10:
+        case LisaControl_10:
             Model_AnimStatusSet(&chara->model, LisaAnim_7, false);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
-        case 11:
+        case LisaControl_11:
             Model_AnimStatusKeyframeSet(chara->model, LisaAnim_8, true, LISA_ANIM_INFOS, 0);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
-        case 12:
+        case LisaControl_12:
             Model_AnimStatusKeyframeSet(chara->model, LisaAnim_9, true, LISA_ANIM_INFOS, 0);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
-        case 13:
+        case LisaControl_13:
             Model_AnimStatusSet(&chara->model, LisaAnim_10, false);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
-        case 14:
+        case LisaControl_14:
             Model_AnimStatusKeyframeSet(chara->model, LisaAnim_11, true, LISA_ANIM_INFOS, 0);
             break;
 
-        case 15:
+        case LisaControl_15:
             Model_AnimStatusSet(&chara->model, LisaAnim_12, false);
             break;
 
-        case 16:
+        case LisaControl_16:
             Model_AnimStatusSet(&chara->model, LisaAnim_13, false);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
-        case 17:
+        case LisaControl_17:
             Model_AnimStatusKeyframeSet(chara->model, LisaAnim_14, true, LISA_ANIM_INFOS, 0);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
-        case 18:
+        case LisaControl_18:
             Model_AnimStatusKeyframeSet(chara->model, LisaAnim_15, true, LISA_ANIM_INFOS, 0);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
-        case 19:
+        case LisaControl_19:
             Model_AnimStatusSet(&chara->model, LisaAnim_16, false);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
-        case 21:
+        case LisaControl_21:
             Model_AnimStatusSet(&chara->model, LisaAnim_17, false);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
     }
 
@@ -239,13 +239,13 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
     func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
     sfx = Sfx_Unk1529;
 
-    switch (dahliaProps.stateIdx0)
+    switch (dahliaProps.controlState)
     {
-        case 1:
+        case LisaControl_1:
             sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_2, true), chara, 14, 31, sfx, pitch0);
             break;
 
-        case 8:
+        case LisaControl_8:
             if (chara->model.anim.keyframeIdx <= 125)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_5, true), chara, 125, 138, sfx, pitch0);
@@ -260,7 +260,7 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
             }
             break;
 
-        case 12:
+        case LisaControl_12:
             if (chara->model.anim.keyframeIdx <= 258)
             {
                 // @bug From the other `keyframeIdx` checks here, should this be 258 instead of 263?
@@ -272,7 +272,7 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
             }
             break;
 
-        case 13:
+        case LisaControl_13:
             if (chara->model.anim.keyframeIdx <= 332)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_10, true), chara, 332, 337, sfx, pitch0);
@@ -287,18 +287,18 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
             }
             break;
 
-        case 11:
+        case LisaControl_11:
             sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_8, true), chara, 240, 240, sfx, pitch0);
             break;
 
-        case 15:
+        case LisaControl_15:
 #if defined(MAP7_S00)
             sharedFunc_800D9188_0_s00(ANIM_STATUS(LisaAnim_12, true), chara, 408, Sfx_Unk1639);
 #endif
             sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_12, true), chara, 406, 406, sfx, pitch0);
             break;
 
-        case 16:
+        case LisaControl_16:
             if (chara->model.anim.keyframeIdx <= 423)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_13, true), chara, 423, 425, sfx, pitch0);
@@ -313,7 +313,7 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
             }
             break;
 
-        case 17:
+        case LisaControl_17:
             if (chara->model.anim.keyframeIdx <= 460)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_14, true), chara, 460, 477, sfx, pitch0);
@@ -328,7 +328,7 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
             }
             break;
 
-        case 18:
+        case LisaControl_18:
             if (chara->model.anim.keyframeIdx <= 551)
             {
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_15, true), chara, 551, 555, sfx, pitch0);
@@ -362,6 +362,6 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
  */
 void Lisa_Init(s_SubCharacter* chara)
 {
-    sharedFunc_800D923C_0_s00(chara);
+    Chara_CollisionReset(chara);
     sharedData_800D6BB8_3_s04 = 0;
 }

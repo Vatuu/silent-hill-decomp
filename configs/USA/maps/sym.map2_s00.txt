@@ -255,7 +255,7 @@ sharedFunc_800E554C_2_s00       = 0x800E554C; // type:func
 sharedFunc_800E55B0_2_s00       = 0x800E55B0; // type:func
 sharedFunc_800E5930_2_s00       = 0x800E5930; // type:func
 sharedFunc_800E5AA4_2_s00       = 0x800E5AA4; // type:func
-sharedFunc_800E5EC4_2_s00       = 0x800E5EC4; // type:func
+Groaner_AnimUpdate              = 0x800E5EC4; // type:func
 sharedFunc_800E6338_2_s00       = 0x800E6338; // type:func
 sharedFunc_800E71E8_2_s00       = 0x800E71E8; // type:func
 

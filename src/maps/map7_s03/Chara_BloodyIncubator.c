@@ -6,19 +6,19 @@
 
 // TODO: Move to src/maps/characters/ once matched.
 
-void BloodyIncubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D3684
+void BloodyIncubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D3684
 {
     if (chara->model.charaId != Chara_BloodyIncubator)
     {
         BloodyIncubator_Init(chara);
     }
 
-    func_800D38D8(chara, coords);
-    func_800D3740(chara, coords);
-    BloodyIncubator_AnimUpdate(chara, anmHdr, coords);
+    func_800D38D8(chara, boneCoords);
+    func_800D3740(chara, boneCoords);
+    BloodyIncubator_AnimUpdate(chara, anmHdr, boneCoords);
 }
 
-void BloodyIncubator_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D36F8
+void BloodyIncubator_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D36F8
 {
     s_AnimInfo* animInfo;
 
@@ -26,11 +26,11 @@ void BloodyIncubator_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCO
     if (chara->properties.player.field_F0 == 0)
     {
         animInfo = &BLOODY_INCUBATOR_ANIM_INFOS[chara->model.anim.status];
-        animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
+        animInfo->playbackFunc(&chara->model, anmHdr, boneCoords, animInfo);
     }
 }
 
-void func_800D3740(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D3740
+void func_800D3740(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800D3740
 {
     VECTOR3 unused;
     VECTOR3 offset;
@@ -43,7 +43,7 @@ void func_800D3740(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D3740
     unused       = chara->position;
     moveSpeed    = chara->moveSpeed;
     headingAngle = chara->headingAngle;
-    moveDist      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
+    moveDist     = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveDist);
     scaleReduceShift  = scaleRestoreShift >> 1;
@@ -56,12 +56,12 @@ void func_800D3740(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D3740
     chara->position.vy  = Q12(0.0f);
     chara->position.vz += offset.vz;
 
-    coords->coord.t[0] = Q12_TO_Q8(chara->position.vx);
-    coords->coord.t[1] = Q12_TO_Q8(chara->position.vy);
-    coords->coord.t[2] = Q12_TO_Q8(chara->position.vz);
+    boneCoords->coord.t[0] = Q12_TO_Q8(chara->position.vx);
+    boneCoords->coord.t[1] = Q12_TO_Q8(chara->position.vy);
+    boneCoords->coord.t[2] = Q12_TO_Q8(chara->position.vz);
 }
 
-void func_800D38D8(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* coords) // 0x800D38D8
+void func_800D38D8(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* boneCoords) // 0x800D38D8
 {
     switch (bloodyIncubator->properties.player.afkTimer_E8)
     {
@@ -70,57 +70,57 @@ void func_800D38D8(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* coords) // 0x
 
         case 1:
             Model_AnimStatusKeyframeSet(bloodyIncubator->model, 9, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
-            Character_AnimStateReset(bloodyIncubator);
+            Chara_AnimStateReset(bloodyIncubator);
             break;
 
         case 2:
             Model_AnimStatusKeyframeSet(bloodyIncubator->model, 1, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
-            Character_AnimStateReset(bloodyIncubator);
+            Chara_AnimStateReset(bloodyIncubator);
             break;
 
         case 3:
             Model_AnimStatusKeyframeSet(bloodyIncubator->model, 2, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
-            Character_AnimStateReset(bloodyIncubator);
+            Chara_AnimStateReset(bloodyIncubator);
             break;
 
         case 4:
             Model_AnimStatusKeyframeSet(bloodyIncubator->model, 3, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
-            Character_AnimStateReset(bloodyIncubator);
+            Chara_AnimStateReset(bloodyIncubator);
             break;
 
         case 5:
             Model_AnimStatusSet(&bloodyIncubator->model, 10, false);
-            Character_AnimStateReset(bloodyIncubator);
+            Chara_AnimStateReset(bloodyIncubator);
             break;
 
         case 6:
             Model_AnimStatusSet(&bloodyIncubator->model, 4, false);
-            Character_AnimStateReset(bloodyIncubator);
+            Chara_AnimStateReset(bloodyIncubator);
             break;
 
         case 7:
             Model_AnimStatusSet(&bloodyIncubator->model, 5, false);
-            Character_AnimStateReset(bloodyIncubator);
+            Chara_AnimStateReset(bloodyIncubator);
             break;
 
         case 8:
             Model_AnimStatusKeyframeSet(bloodyIncubator->model, 6, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
-            Character_AnimStateReset(bloodyIncubator);
+            Chara_AnimStateReset(bloodyIncubator);
             break;
 
         case 9:
             Model_AnimStatusSet(&bloodyIncubator->model, 7, false);
-            Character_AnimStateReset(bloodyIncubator);
+            Chara_AnimStateReset(bloodyIncubator);
             break;
 
         case 10:
             Model_AnimStatusSet(&bloodyIncubator->model, 8, false);
-            Character_AnimStateReset(bloodyIncubator);
+            Chara_AnimStateReset(bloodyIncubator);
             break;
 
         case 11:
             Model_AnimStatusKeyframeSet(bloodyIncubator->model, 11, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
-            Character_AnimStateReset(bloodyIncubator);
+            Chara_AnimStateReset(bloodyIncubator);
             break;
 
     }
@@ -128,12 +128,12 @@ void func_800D38D8(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* coords) // 0x
     bloodyIncubator->headingAngle = bloodyIncubator->rotation.vy;
     bloodyIncubator->moveSpeed    = bloodyIncubator->properties.dahlia.moveDistance_126;
     bloodyIncubator->fallSpeed   += g_GravitySpeed;
-    coords->flg                      = false;
+    boneCoords->flg               = false;
 
-    Math_RotMatrixZxyNegGte(&bloodyIncubator->rotation, &coords->coord);
+    Math_RotMatrixZxyNegGte(&bloodyIncubator->rotation, &boneCoords->coord);
 }
 
 void BloodyIncubator_Init(s_SubCharacter* chara) // 0x800D3BA4
 {
-    sharedFunc_800D923C_0_s00(chara);
+    Chara_CollisionReset(chara);
 }

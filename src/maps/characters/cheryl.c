@@ -54,7 +54,7 @@ void Cheryl_AnimUpdate(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE
         animInfo[ANIM_STATUS(CherylAnim_RunForward, true)].duration.constant = duration;
     }
 
-    if (cherylProps.properties_F0.val32 == 0)
+    if (cherylProps.field_F0 == 0)
     {
         CHERYL_ANIM_INFOS[cheryl->model.anim.status].playbackFunc(&cheryl->model, anmHdr, boneCoords, &CHERYL_ANIM_INFOS[cheryl->model.anim.status]);
     }
@@ -128,7 +128,7 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
             }
 
             Model_AnimStatusSet(&cheryl->model, CherylAnim_Idle, false);
-            Character_AnimStateReset(cheryl);
+            Chara_AnimStateReset(cheryl);
 
             cherylProps.moveDistance_124 = Q12(0.0f);
             break;
@@ -137,14 +137,14 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
             cherylProps.moveDistance_126 = cherylProps.moveDistance_124;
 
             Model_AnimStatusSet(&cheryl->model, CherylAnim_WalkForward, false);
-            Character_AnimStateReset(cheryl);
+            Chara_AnimStateReset(cheryl);
             break;
 
         case CherylControl_RunForward:
             cherylProps.moveDistance_126 = cherylProps.moveDistance_124;
 
             Model_AnimStatusSet(&cheryl->model, CherylAnim_RunForward, false);
-            Character_AnimStateReset(cheryl);
+            Chara_AnimStateReset(cheryl);
             break;
 
         case CherylControl_3:
@@ -160,7 +160,7 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
             D_800E3A30 = g_DeltaTime * 7;
 
             Model_AnimStatusSet(&cheryl->model, CherylAnim_WalkForward, false);
-            Character_AnimStateReset(cheryl);
+            Chara_AnimStateReset(cheryl);
 
             playerProps.headingAngle_124 = Q12_ANGLE(0.0f);
             cherylProps.moveDistance_124 = Q12(0.0f);
@@ -179,7 +179,7 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
             D_800E3A30 = g_DeltaTime * -7;
 
             Model_AnimStatusSet(&cheryl->model, CherylAnim_WalkForward, false);
-            Character_AnimStateReset(cheryl);
+            Chara_AnimStateReset(cheryl);
 
             playerProps.headingAngle_124 = Q12_ANGLE(0.0f);
             cherylProps.moveDistance_124 = Q12(0.0f);
@@ -294,6 +294,6 @@ bool Cheryl_FootstepSfxPlay(s32 animStatus, s_SubCharacter* cheryl,
 
 void Cheryl_Init(s_SubCharacter* cheryl) // 0x800D8888
 {
-    sharedFunc_800D923C_0_s00(cheryl);
+    Chara_CollisionReset(cheryl);
     D_800E3A30 = Q12(0.0f);
 }

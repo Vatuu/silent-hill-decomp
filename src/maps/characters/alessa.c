@@ -100,7 +100,7 @@ void Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
     s8          pitch0;
     s8          pitch1;
 
-    switch (alessaProps.stateIdx0)
+    switch (alessaProps.controlState)
     {
         case 0:
             break;
@@ -121,7 +121,7 @@ void Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
             }
 
             Model_AnimStatusSet(&alessa->model, AlessaAnim_WalkForward, false);
-            Character_AnimStateReset(alessa);
+            Chara_AnimStateReset(alessa);
             break;
 
         case 1:
@@ -135,54 +135,54 @@ void Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
             }
 
             Model_AnimStatusKeyframeSet(alessa->model, AlessaAnim_StandIdle, true, ALESSA_ANIM_INFOS, 0);
-            Character_AnimStateReset(alessa);
+            Chara_AnimStateReset(alessa);
             break;
 
         case 4:
             Model_AnimStatusSet(&alessa->model, AlessaAnim_ForcePush, false);
-            Character_AnimStateReset(alessa);
+            Chara_AnimStateReset(alessa);
             break;
 
         case 3:
             Model_AnimStatusSet(&alessa->model, AlessaAnim_WalkForwardTurnStumble, false);
-            Character_AnimStateReset(alessa);
+            Chara_AnimStateReset(alessa);
             break;
 
         case 5:
             Model_AnimStatusSet(&alessa->model, AlessaAnim_StumbleForwardCrumple, false);
-            Character_AnimStateReset(alessa);
+            Chara_AnimStateReset(alessa);
             break;
 
         case 6:
             Model_AnimStatusSet(&alessa->model, AlessaAnim_CrumpleLookUp, false);
-            Character_AnimStateReset(alessa);
+            Chara_AnimStateReset(alessa);
             break;
 
         case 7:
             Model_AnimStatusSet(&alessa->model, AlessaAnim_CrumpleShakeHead, false);
-            Character_AnimStateReset(alessa);
+            Chara_AnimStateReset(alessa);
             break;
 
         case 8:
             Model_AnimStatusSet(&alessa->model, AlessaAnim_StandLookRight, false);
-            Character_AnimStateReset(alessa);
+            Chara_AnimStateReset(alessa);
             break;
 
         case 9:
             Model_AnimStatusSet(&alessa->model, AlessaAnim_CrumpleIdle, false);
-            Character_AnimStateReset(alessa);
+            Chara_AnimStateReset(alessa);
             break;
 
         case 10:
             Model_AnimStatusSet(&alessa->model, AlessaAnim_Kneel, false);
-            Character_AnimStateReset(alessa);
+            Chara_AnimStateReset(alessa);
             break;
     }
 
     Collision_Get(&coll, alessa->position.vx, alessa->position.vz);
     func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
 
-    switch (alessaProps.stateIdx0)
+    switch (alessaProps.controlState)
     {
         case 2:
             sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_WalkForward, true), alessa, 24, 37, sfx, pitch0);
@@ -252,7 +252,7 @@ void Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
  */
 void Alessa_Init(s_SubCharacter* alessa)
 {
-    sharedFunc_800D923C_0_s00(alessa);
+    Chara_CollisionReset(alessa);
     sharedData_800D3150_3_s02 = 0;
 }
 

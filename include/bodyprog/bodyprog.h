@@ -1675,9 +1675,9 @@ typedef struct _MapOverlayHeader
     /* 0x140 */ void                   (*charaVisibleSet)(s_SubCharacter* chara);
     /* 0x144 */ void                   (*charaInvisibleSet)(s_SubCharacter* chara);
     /* 0x148 */ bool                   (*func_148)(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfxId, s32 pitch);
-    /* 0x14C */ bool                   (*func_14C)(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfxId);
+    /* 0x14C */ bool                   (*func_14C)(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfxId); // Play SFX?
     /* 0x150 */ s32                    (*charaAnimStartKeyframeIdxGet)(s_SubCharacter* chara);
-    /* 0x154 */ void                   (*func_154)(s_SubCharacter* chara);
+    /* 0x154 */ void                   (*charaCollisionReset)(s_SubCharacter* chara);
     /* 0x158 */ void                   (*func_158)(q19_12 x, q19_12 z); // Only map1_s05, map1_s06.
     /* 0x15C */ void                   (*func_15C)();                   // Only map5_s01.
     /* 0x160 */ void                   (*func_160)();                   // Only map5_s01.

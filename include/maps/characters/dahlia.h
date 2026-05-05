@@ -32,6 +32,40 @@ typedef enum _DahliaAnim
     DahliaAnim_25    = 25
 } e_DahliaAnim;
 
+/** @brief Dahlia character control states. */
+typedef enum _DahliaControl
+{
+    DahliaControl_None = 0,
+    DahliaControl_1    = 1,
+    DahliaControl_2    = 2,
+    DahliaControl_3    = 3,
+    DahliaControl_4    = 4,
+    DahliaControl_5    = 5,
+    DahliaControl_6    = 6,
+    DahliaControl_7    = 7,
+    DahliaControl_8    = 8,
+    DahliaControl_9    = 9,
+    DahliaControl_10   = 10,
+    DahliaControl_11   = 11,
+    DahliaControl_12   = 12,
+    DahliaControl_13   = 13,
+    DahliaControl_14   = 14,
+    DahliaControl_15   = 15,
+    DahliaControl_16   = 16,
+    DahliaControl_17   = 17,
+    DahliaControl_18   = 18,
+    DahliaControl_19   = 19,
+    DahliaControl_20   = 20,
+    DahliaControl_21   = 21,
+    DahliaControl_22   = 22,
+    DahliaControl_23   = 23,
+    DahliaControl_24   = 24,
+    DahliaControl_25   = 25,
+    DahliaControl_26   = 26,
+    DahliaControl_27   = 27,
+    DahliaControl_28   = 28
+} e_DahliaControl;
+
 /** @brief Dahlia character anim infos. */
 extern s_AnimInfo DAHLIA_ANIM_INFOS[];
 
@@ -95,7 +129,7 @@ extern s32 sharedData_800D16E0_2_s01;
 void Dahlia_Update(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 void Dahlia_AnimUpdate(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 void Dahlia_MovementUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords);
-void Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords);
+void Dahlia_ControlUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords);
 void Dahlia_Init(s_SubCharacter* dahlia);
 
 #endif

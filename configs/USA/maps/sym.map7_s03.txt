@@ -71,7 +71,7 @@ Cybil_Init                          = 0x800D232C; // type:func
 Dahlia_Update                       = 0x800D2368; // type:func
 Dahlia_AnimUpdate                   = 0x800D23DC; // type:func
 Dahlia_MovementUpdate               = 0x800D2424; // type:func
-Dahlia_AnimStateUpdate              = 0x800D25FC; // type:func
+Dahlia_ControlUpdate                = 0x800D25FC; // type:func
 Dahlia_Init                         = 0x800D2ECC; // type:func
 
 //---------------------------------------------------------------
@@ -132,7 +132,7 @@ Chara_InvisibleSet                  = 0x800D58AC; // type:func
 sharedFunc_800D908C_0_s00           = 0x800D58C0; // type:func
 sharedFunc_800D9188_0_s00           = 0x800D59BC; // type:func
 Chara_AnimStartKeyframeIdxGet       = 0x800D5AA8; // type:func
-sharedFunc_800D923C_0_s00           = 0x800D5B68; // type:func
+Chara_CollisionReset                = 0x800D5B68; // type:func
 LittleIncubus_Update                = 0x800D5BC8; // type:func
 sharedFunc_800CD6B0_3_s03           = 0x800DB338; // type:func
 sharedFunc_800CD7F8_3_s03           = 0x800DB480; // type:func

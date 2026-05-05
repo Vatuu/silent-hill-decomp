@@ -86,7 +86,7 @@ void GhostChildAlessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* bone
 {
     #define dahliaProps (chara->properties.dahlia)
 
-    switch (dahliaProps.stateIdx0)
+    switch (dahliaProps.controlState)
     {
         case 0:
             break;
@@ -94,47 +94,47 @@ void GhostChildAlessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* bone
         case 1:
             dahliaProps.moveDistance_126 = dahliaProps.field_124;
             Model_AnimStatusSet(&chara->model, GhostChildAlessaAnim_1, false);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
         case 2:
             dahliaProps.moveDistance_126 = dahliaProps.field_124;
             Model_AnimStatusSet(&chara->model, GhostChildAlessaAnim_2, false);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
         case 6:
             Model_AnimStatusSet(&chara->model, GhostChildAlessaAnim_3, false);
             if (chara->model.anim.keyframeIdx == 63)
             {
-                dahliaProps.stateIdx0 = 7;
+                dahliaProps.controlState = 7;
                 chara->model.stateStep = 0;
             }
             break;
 
         case 7:
             Model_AnimStatusSet(&chara->model, GhostChildAlessaAnim_4, false);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
         case 8:
             Model_AnimStatusSet(&chara->model, GhostChildAlessaAnim_5, false);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
         case 9:
             Model_AnimStatusSet(&chara->model, GhostChildAlessaAnim_6, false);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
         case 10:
             Model_AnimStatusSet(&chara->model, GhostChildAlessaAnim_7, false);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
 
         case 11:
             Model_AnimStatusSet(&chara->model, GhostChildAlessaAnim_8, false);
-            Character_AnimStateReset(chara);
+            Chara_AnimStateReset(chara);
             break;
     }
 
@@ -153,6 +153,6 @@ void GhostChildAlessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* bone
  */
 void GhostChildAlessa_Init(s_SubCharacter* chara)
 {
-    sharedFunc_800D923C_0_s00(chara);
+    Chara_CollisionReset(chara);
     sharedData_800E39D8_0_s00 = 0;
 }

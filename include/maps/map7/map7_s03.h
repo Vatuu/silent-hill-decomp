@@ -148,7 +148,7 @@ typedef struct
     q19_12          positionZ;
     MATRIX          mat_8;
     s_SubCharacter* field_28;
-    GsCOORDINATE2*  coords_2C;
+    GsCOORDINATE2*  coords_2C; // Bone coords.
     VECTOR3         playerPosition_30;
     q19_12          velocityX_3C; // } Some kind of velocity based on `playerChara.position` - `this.playerPosition_30`
     q19_12          velocityZ_40; // }
@@ -553,16 +553,16 @@ extern SVECTOR3 D_800F47E8;
 
 extern VECTOR D_800EC798[];
 
-void BloodyIncubator_Update(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void BloodyIncubator_AnimUpdate(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void func_800D3740(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* coords);
-void func_800D38D8(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* coords);
+void BloodyIncubator_Update(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void BloodyIncubator_AnimUpdate(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void func_800D3740(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* boneCoords);
+void func_800D38D8(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* boneCoords);
 void BloodyIncubator_Init(s_SubCharacter* bloodyIncubator);
 
-void Incubator_Update(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void Incubator_AnimUpdate(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* coords);
-void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* coords);
+void Incubator_Update(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Incubator_AnimUpdate(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords);
+void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords);
 void Incubator_Init(s_SubCharacter* incubator);
 
 void LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);

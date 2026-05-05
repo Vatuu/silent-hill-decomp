@@ -33,7 +33,7 @@ void Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2*
         sharedFunc_800E5AA4_2_s00(groaner);
     }
 
-    sharedFunc_800E5EC4_2_s00(groaner, anmHdr, boneCoords);
+    Groaner_AnimUpdate(groaner, anmHdr, boneCoords);
 
     if (g_DeltaTime != Q12(0.0f))
     {
@@ -159,9 +159,9 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
         groanerProps.field_10F = 4;
     }
 
-    groanerProps.targetPositionX     = g_SysWork.playerWork.player.position.vx;
-    groanerProps.targetPositionZ     = g_SysWork.playerWork.player.position.vz;
-    groanerProps.flags.val16[0]     |= GroanerFlag_7;
+    groanerProps.targetPositionX = g_SysWork.playerWork.player.position.vx;
+    groanerProps.targetPositionZ = g_SysWork.playerWork.player.position.vz;
+    groanerProps.flags.val16[0] |= GroanerFlag_7;
 
     groaner->health = MAX(groaner->health - groaner->damage.amount, Q12(0.0f));
     unkDist         = Math_Vector2MagCalc(groaner->damage.position.vx, groaner->damage.position.vz);
@@ -272,8 +272,8 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
     {
         Savegame_EnemyStateUpdate(groaner);
 
-        groaner->flags                                      |= CharaFlag_Unk2;
-        groanerProps.flags.val16[0]                         |= GroanerFlag_3 | GroanerFlag_12;
+        groaner->flags              |= CharaFlag_Unk2;
+        groanerProps.flags.val16[0] |= GroanerFlag_3 | GroanerFlag_12;
 
         if (ABS(unkAngle) < Q12_ANGLE(45.0f))
         {
@@ -405,10 +405,10 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
                 if (ABS(Math_AngleNormalizeSigned(groaner->rotation.vy - ratan2(groaner->position.vx - groanerProps.targetPositionX,
                                                                                 groaner->position.vz - groanerProps.targetPositionZ))) < (Rng_GenerateUInt(Q12_ANGLE(45.0f), Q12_ANGLE(50.7f) - 1)))
                 {
-                    randTargetPosX        = groanerProps.targetPositionX + Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1);
+                    randTargetPosX             = groanerProps.targetPositionX + Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1);
                     groanerProps.angleToTarget = Chara_HeadingAngleGet(groaner, Q12_ANGLE(306.0f),
-                                                                  randTargetPosX, groanerProps.targetPositionZ + Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1),
-                                                                  Q12_ANGLE(360.0f), true);
+                                                                       randTargetPosX, groanerProps.targetPositionZ + Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1),
+                                                                       Q12_ANGLE(360.0f), true);
                     if (groanerProps.angleToTarget == Q12_ANGLE(360.0f))
                     {
                         groanerProps.angleToTarget = -groaner->rotation.vy;
@@ -471,7 +471,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
 
         if ((groanerProps.timer_104 >= Q12(0.0f) && ((hasLosHit && (hasLosToPlayer || distToPlayer < losDist)) ||
              groanerProps.timer_104 == Q12(0.0f))) ||
-            !Rng_GenerateUInt(0, 31))
+            !Rng_GenerateUInt(0, 31)) // 1 in 32 chance.
         {
             if (hasLosHit)
             {
@@ -1134,20 +1134,20 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
     }
 }
 
-void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void Groaner_AnimUpdate(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     typedef struct
     {
         SVECTOR field_0;
         MATRIX  field_8;
-    } s_sharedFunc_800E5EC4_2_s00;
+    } s_Groaner_AnimUpdate;
 
-    q3_12                        angle1;
-    q3_12                        angleDeltaToTarget;
-    q3_12                        angle0;
-    q19_12                       constantDur;
-    s_AnimInfo*                  animInfo;
-    s_sharedFunc_800E5EC4_2_s00* ptr;
+    q3_12                 angle1;
+    q3_12                 angleDeltaToTarget;
+    q3_12                 angle0;
+    q19_12                constantDur;
+    s_AnimInfo*           animInfo;
+    s_Groaner_AnimUpdate* ptr;
 
     switch (groaner->model.anim.status)
     {

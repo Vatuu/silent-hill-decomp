@@ -117,7 +117,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             }
 
             Model_AnimStatusSet(&kaufmann->model, 1, false);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
             break;
 
         case KaufmannControl_1:
@@ -136,7 +136,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             }
 
             Model_AnimStatusSet(&kaufmann->model, 3, false);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
 #if defined(MAP5_S03)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(4, 3));
 #endif
@@ -144,13 +144,13 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
         case KaufmannControl_5:
             Model_AnimStatusKeyframeSet(kaufmann->model, 1, true, KAUFMANN_ANIM_INFOS, 0);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 0));
             break;
 
         case KaufmannControl_24:
             Model_AnimStatusKeyframeSet(kaufmann->model, 20, true, KAUFMANN_ANIM_INFOS, 0);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
 #if defined(MAP5_S03)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(4, 3));
 #else
@@ -160,7 +160,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
         case KaufmannControl_6:
             Model_AnimStatusKeyframeSet(kaufmann->model, 4, true, KAUFMANN_ANIM_INFOS, 0);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
 #if defined(MAP3_S00)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(3, 1));
 #endif
@@ -174,7 +174,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             }
 
             Model_AnimStatusSet(&kaufmann->model, 5, false);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
 #if defined(MAP3_S00)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(3, 1));
 #endif
@@ -182,7 +182,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
         case KaufmannControl_8:
             Model_AnimStatusSet(&kaufmann->model, 6, false);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
 #if defined(MAP3_S00)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(3, 1));
 #endif
@@ -190,7 +190,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
         case KaufmannControl_9:
             Model_AnimStatusSet(&kaufmann->model, 7, false);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
 
             if (kaufmann->model.anim.keyframeIdx < 139 || !ANIM_STATUS_IS_ACTIVE(kaufmann->model.anim.status))
             {
@@ -205,12 +205,12 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
         case KaufmannControl_10:
             Model_AnimStatusSet(&kaufmann->model, 8, false);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
             break;
 
         case KaufmannControl_11:
             Model_AnimStatusKeyframeSet(kaufmann->model, 9, true, KAUFMANN_ANIM_INFOS, 0);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
 #if defined(MAP5_S02)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 1));
 #endif
@@ -218,7 +218,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
         case KaufmannControl_12:
             Model_AnimStatusKeyframeSet(kaufmann->model, 22, true, KAUFMANN_ANIM_INFOS, 0);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
 #if defined(MAP5_S02)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 1));
 #endif
@@ -226,7 +226,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
         case KaufmannControl_13:
             Model_AnimStatusSet(&kaufmann->model, 10, false);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
 #if defined(MAP5_S02)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 1));
 #endif
@@ -234,7 +234,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
         case KaufmannControl_14:
             Model_AnimStatusSet(&kaufmann->model, 11, false);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
 #if defined(MAP5_S02)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 1));
 #endif
@@ -242,7 +242,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
         case KaufmannControl_15:
             Model_AnimStatusSet(&kaufmann->model, 12, false);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
 
             if (kaufmann->model.anim.keyframeIdx >= 364 && ANIM_STATUS_IS_ACTIVE(kaufmann->model.anim.status))
             {
@@ -252,7 +252,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
         case KaufmannControl_16:
             Model_AnimStatusSet(&kaufmann->model, 2, false);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
 #if defined(MAP5_S03)
             WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 3));
 #endif
@@ -260,18 +260,18 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
         case KaufmannControl_25:
             Model_AnimStatusSet(&kaufmann->model, 21, false);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
             WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(3, 3));
             break;
 
         case KaufmannControl_17:
             Model_AnimStatusSet(&kaufmann->model, 13, false);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
             break;
 
         case KaufmannControl_18:
             Model_AnimStatusSet(&kaufmann->model, 16, false);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
 
 #if defined(MAP7_S03)
             // TODO: Invert like case 15? can't find how to match.
@@ -288,7 +288,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
         case KaufmannControl_19:
             Model_AnimStatusSet(&kaufmann->model, 17, false);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
 #if defined(MAP7_S03)
             WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(4, 3));
 #endif
@@ -296,7 +296,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
         case KaufmannControl_20:
             Model_AnimStatusKeyframeSet(kaufmann->model, 18, true, KAUFMANN_ANIM_INFOS, 0);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
 
 #if defined(MAP7_S03)
             if (kaufmann->model.anim.keyframeIdx < 141)
@@ -312,7 +312,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
         case KaufmannControl_21:
             Model_AnimStatusSet(&kaufmann->model, 15, false);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
 
 #if defined(MAP7_S03)
             WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(1, 1));
@@ -321,7 +321,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
         case KaufmannControl_22:
             Model_AnimStatusKeyframeSet(kaufmann->model, 19, true, KAUFMANN_ANIM_INFOS, 0);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
 #if defined(MAP7_S03)
             WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(1, 3));
 #endif
@@ -329,7 +329,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
         case KaufmannControl_23:
             Model_AnimStatusSet(&kaufmann->model, 14, false);
-            Character_AnimStateReset(kaufmann);
+            Chara_AnimStateReset(kaufmann);
             break;
     }
 
@@ -431,7 +431,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
  */
 void Kaufmann_Init(s_SubCharacter* kaufmann)
 {
-    sharedFunc_800D923C_0_s00(kaufmann);
+    Chara_CollisionReset(kaufmann);
 
     g_SysWork.npcs[0].properties.dummy.properties_E8[14].val32 = 0; // TODO: field_120?
 

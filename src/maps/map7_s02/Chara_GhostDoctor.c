@@ -39,7 +39,7 @@ void Character_CoordTransformUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord)
 
 void GhostDoctor_Init(s_SubCharacter* chara) // 0x800D8BE0
 {
-    sharedFunc_800D923C_0_s00(chara);
+    Chara_CollisionReset(chara);
 }
 
 void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8C00

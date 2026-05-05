@@ -38,6 +38,42 @@ typedef enum _CybilAnim
     CybilAnim_31    = 31
 } e_CybilAnim;
 
+/** @brief Cybil character control states. */
+typedef enum _CybilControl
+{
+    CybilControl_None = 0,
+    CybilControl_1    = 1,
+    CybilControl_2    = 2,
+    CybilControl_3    = 3,
+    CybilControl_4    = 4,
+    CybilControl_5    = 5,
+    CybilControl_6    = 6,
+    CybilControl_7    = 7,
+    CybilControl_8    = 8,
+    CybilControl_9    = 9,
+    CybilControl_10   = 10,
+    CybilControl_11   = 11,
+    CybilControl_12   = 12,
+    CybilControl_13   = 13,
+    CybilControl_14   = 14,
+    CybilControl_15   = 15,
+    CybilControl_16   = 16,
+    CybilControl_17   = 17,
+    CybilControl_18   = 18,
+    CybilControl_19   = 19,
+    CybilControl_20   = 20,
+    CybilControl_21   = 21,
+    CybilControl_22   = 22,
+    CybilControl_23   = 23,
+    CybilControl_24   = 24,
+    CybilControl_25   = 25,
+    CybilControl_26   = 26,
+    CybilControl_27   = 27,
+    CybilControl_28   = 28,
+    CybilControl_29   = 29,
+    CybilControl_30   = 30
+} e_CybilControl;
+
 /** @brief Cybil character anim infos. */
 extern s_AnimInfo CYBIL_ANIM_INFOS[];
 

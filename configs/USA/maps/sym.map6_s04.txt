@@ -119,7 +119,7 @@ Alessa_Init                         = 0x800DCA0C; // type:func
 Dahlia_Update                       = 0x800DCA30; // type:func
 Dahlia_AnimUpdate                   = 0x800DCAA4; // type:func
 Dahlia_MovementUpdate               = 0x800DCAEC; // type:func
-Dahlia_AnimStateUpdate              = 0x800DCCC4; // type:func
+Dahlia_ControlUpdate                = 0x800DCCC4; // type:func
 Dahlia_Init                         = 0x800DD57C; // type:func
 
 //-------------------------------------------------------------
@@ -139,7 +139,7 @@ Chara_InvisibleSet                  = 0x800DDDDC; // type:func
 sharedFunc_800D908C_0_s00           = 0x800DDDF0; // type:func
 sharedFunc_800D9188_0_s00           = 0x800DDEEC; // type:func
 Chara_AnimStartKeyframeIdxGet       = 0x800DDFEC; // type:func
-sharedFunc_800D923C_0_s00           = 0x800DE064; // type:func
+Chara_CollisionReset                = 0x800DE064; // type:func
 Flauros_Update                      = 0x800DE0C4; // type:func
 Parasite_Update                     = 0x800DE1CC; // type:func
 sharedFunc_800D929C_0_s00           = 0x800E1104; // type:func

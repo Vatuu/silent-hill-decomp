@@ -672,12 +672,12 @@ s32 Chara_AnimStartKeyframeIdxGet(s_SubCharacter* chara)
     return animInfo->startKeyframeIdx;
 }
 
-void sharedFunc_800D923C_0_s00(s_SubCharacter* chara)
+void Chara_CollisionReset(s_SubCharacter* chara)
 {
     chara->model.stateStep = 0;
 
-    chara->collision.box.top               = Q12(0.0f);
-    chara->collision.box.bottom                  = Q12(0.0f);
+    chara->collision.box.top                  = Q12(0.0f);
+    chara->collision.box.bottom               = Q12(0.0f);
     chara->collision.box.offsetY              = Q12(0.0f);
     chara->collision.cylinder.radius          = Q12(0.0f);
     chara->collision.cylinder.field_2         = Q12(0.0f);
@@ -693,7 +693,6 @@ void sharedFunc_800D923C_0_s00(s_SubCharacter* chara)
     chara->properties.player.field_F4     = Q12_ANGLE(0.0f);
 
     chara->model.controlState++;
-
     chara->collision.state = CharaCollisionState_Npc;
 }
 
