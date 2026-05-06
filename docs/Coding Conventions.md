@@ -286,7 +286,7 @@ s32 Math_MyFunc(s32 dist) // 0xXXXXXXXX
         return 0;
     }
 
-    do {} while(0) // Hack.
+    do {} while (false) // Hack.
 
     // Value might be enum entry from `e_MyEnum`, but it's unclear right now.
     return 0x10;

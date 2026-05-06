@@ -4577,7 +4577,7 @@ void func_800D88C8(s_800E06A0* arg0, u8 arg1) // 0x800D88C8
             *(s32*)&poly->x0 = *(s32*)&sp10[0];
             *(s32*)&poly->x1 = *(s32*)&sp10[1];
 
-            do {} while (0); // @hack
+            do {} while (false); // @hack
 
             *(s32*)&poly->x2 = *(s32*)&sp10[2];
             *(s32*)&poly->x3 = *(s32*)&sp10[3];

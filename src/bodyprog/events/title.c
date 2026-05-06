@@ -28,7 +28,8 @@
 
 static s32 g_MainMenuState              = 0;
 static s32 g_MainMenu_SelectedEntry     = MainMenuEntry_Start;
-static u32 g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Start) | (1 << MainMenuEntry_Option);
+static u32 g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Start) |
+                                          (1 << MainMenuEntry_Option);
 
 // ========================================
 // GLOBAL VARIABLES
@@ -113,17 +114,21 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 }
             }
 
-            g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Start) | (1 << MainMenuEntry_Option);
+            g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Start) |
+                                           (1 << MainMenuEntry_Option);
 
             if (g_GameWork.autosave.playerHealth > Q12(0.0f))
             {
-                g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Continue) | (1 << MainMenuEntry_Start) | (1 << MainMenuEntry_Option);
+                g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Continue) |
+                                               (1 << MainMenuEntry_Start)    |
+                                               (1 << MainMenuEntry_Option);
             }
 
             // Memory card present and savegames exist.
             if (g_MemCard_SavegameCount > 0)
             {
-                g_MainMenu_VisibleEntryFlags |= (1 << MainMenuEntry_Load) | (1 << MainMenuEntry_Continue);
+                g_MainMenu_VisibleEntryFlags |= (1 << MainMenuEntry_Load) |
+                                                (1 << MainMenuEntry_Continue);
 
                 if (prevSavegameCount < g_MemCard_SavegameCount && g_MainMenu_SelectedEntry != MainMenuEntry_Load)
                 {
@@ -133,7 +138,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             // No savegames exist, but did previously (e.g. memory card removed before player death).
             else if (prevSavegameCount > 0)
             {
-                while(!(g_MainMenu_VisibleEntryFlags & (1 << g_MainMenu_SelectedEntry)))
+                while (!(g_MainMenu_VisibleEntryFlags & (1 << g_MainMenu_SelectedEntry)))
                 {
                     g_MainMenu_SelectedEntry++;
                 }
@@ -156,12 +161,12 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
             {
                 g_MainMenu_SelectedEntry += MainMenuEntry_Count;
-                while(!(g_MainMenu_VisibleEntryFlags & (1 << --g_MainMenu_SelectedEntry)));
+                while (!(g_MainMenu_VisibleEntryFlags & (1 << --g_MainMenu_SelectedEntry)));
             }
 
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
             {
-                while(!(g_MainMenu_VisibleEntryFlags & (1 << ++g_MainMenu_SelectedEntry)));
+                while (!(g_MainMenu_VisibleEntryFlags & (1 << ++g_MainMenu_SelectedEntry)));
             }
 
             // Wrap selection.
@@ -426,7 +431,7 @@ static void MainMenu_MainTextDraw(void) // 0x8003B568
     // Draw selection strings.
     for (i = 0; i < MainMenuEntry_Count; i++)
     {
-        // Check entry visibility flag.
+        // Check if entry is visible.
         if (!(g_MainMenu_VisibleEntryFlags & (1 << i)))
         {
             continue;

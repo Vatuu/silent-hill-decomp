@@ -3182,7 +3182,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 g_GameWork.gameStateSteps[1]   = 1;
                 ptr3                              = &D_800C3BA8;
 
-                do {} while (0); // @hack
+                do {} while (false); // @hack
 
                 g_GameWork.gameStateSteps[2]      = 0;
                 *ptr3                                = temp2;

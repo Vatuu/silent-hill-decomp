@@ -2171,9 +2171,9 @@ static inline void Game_StateSetNext_ClearStateSteps(e_GameState gameState)
 
     prevState = g_GameWork.gameState;
 
-    g_GameWork.gameState        = gameState;
-    g_SysWork.counters_1C[0]              = 0;
-    g_SysWork.counters_1C[1]              = 0;
+    g_GameWork.gameState         = gameState;
+    g_SysWork.counters_1C[0]        = 0;
+    g_SysWork.counters_1C[1]        = 0;
     g_GameWork.gameStateSteps[1] = 0;
     g_GameWork.gameStateSteps[2] = 0;
 
@@ -2182,7 +2182,7 @@ static inline void Game_StateSetNext_ClearStateSteps(e_GameState gameState)
     g_GameWork.gameStateSteps[1] = 0;
     g_GameWork.gameStateSteps[2] = 0;
     g_GameWork.gameStateSteps[0] = prevState;
-    g_GameWork.gameStatePrev    = prevState;
+    g_GameWork.gameStatePrev     = prevState;
     g_GameWork.gameStateSteps[0] = 0;
 }
 
@@ -2195,16 +2195,16 @@ static inline void Game_StateSetNext(e_GameState gameState)
 
     prevState = g_GameWork.gameState;
 
-    g_GameWork.gameState        = gameState;
-    g_SysWork.counters_1C[0]              = 0;
-    g_SysWork.counters_1C[1]              = 0;
+    g_GameWork.gameState         = gameState;
+    g_SysWork.counters_1C[0]        = 0;
+    g_SysWork.counters_1C[1]        = 0;
     g_GameWork.gameStateSteps[1] = 0;
     g_GameWork.gameStateSteps[2] = 0;
 
     SysWork_StateSetNext(SysState_Gameplay);
 
     g_GameWork.gameStateSteps[0] = prevState;
-    g_GameWork.gameStatePrev    = prevState;
+    g_GameWork.gameStatePrev     = prevState;
     g_GameWork.gameStateSteps[0] = 0;
 }
 
@@ -2217,16 +2217,16 @@ static inline void Game_StateSetPrevious()
 
     prevState = g_GameWork.gameState;
 
-    g_SysWork.counters_1C[0]              = 0;
-    g_SysWork.counters_1C[1]              = 0;
+    g_SysWork.counters_1C[0]        = 0;
+    g_SysWork.counters_1C[1]        = 0;
     g_GameWork.gameStateSteps[1] = 0;
     g_GameWork.gameStateSteps[2] = 0;
 
     SysWork_StateSetNext(SysState_Gameplay);
 
     g_GameWork.gameStateSteps[0] = prevState;
-    g_GameWork.gameState        = g_GameWork.gameStatePrev;
-    g_GameWork.gameStatePrev    = prevState;
+    g_GameWork.gameState         = g_GameWork.gameStatePrev;
+    g_GameWork.gameStatePrev     = prevState;
     g_GameWork.gameStateSteps[0] = 0;
 }
 
@@ -2311,7 +2311,7 @@ static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 
 
 /** @brief Sets given animation flags for a model.
  *
- * @param model `s_Model` to update.
+ * @param model Model to update (`s_Model`).
  * @param flag Flags to set.
  */
 #define Model_AnimFlagsSet(model, setFlags) \
@@ -2319,7 +2319,7 @@ static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 
 
 /** @brief Clears given animation flags for a model.
  *
- * @param model `s_Model` to update.
+ * @param model Model to update (`s_Model`).
  * @param clearFlags Flags to clear.
  */
 #define Model_AnimFlagsClear(model, clearFlags) \
@@ -2367,7 +2367,7 @@ static inline void ModelAnim_StatusDecrement(s_ModelAnim* anim)
  * @param animInfos Reference anim infos.
  * @param animInfosOffset Anim infos offset.
  */
-#define Model_AnimStatusKeyframeSet(model, animIdx, isActive, animInfos, animInfosOffset)                                       \
+#define Model_AnimStatusKeyframeSet(model, animIdx, isActive, animInfos, animInfosOffset)                                 \
     if ((model).stateStep == 0)                                                                                           \
     {                                                                                                                     \
         (model).anim.status = ANIM_STATUS(animIdx, isActive);                                                             \

@@ -2949,7 +2949,7 @@ u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData
     gte_ldv3c(scratchData->u.normal.field_3E0);
     gte_nct();
 
-    while(var_a3 < &meshHdr->normals[meshHdr->normalCount])
+    while (var_a3 < &meshHdr->normals[meshHdr->normalCount])
     {
         *(u32*)&scratchData->u.normal.field_3DC = *(u32*)&var_a3[0];
         scratchData->u.normal.field_3E0[0].vx = scratchData->u.normal.field_3DC.nx << 5;
@@ -3497,7 +3497,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
             *(s32*)&poly_gt4->r2 = *(s32*)&sp58[2];
             temp_a0              = *(s32*)&sp58[3];
 
-            do {} while (0); // @hack
+            do {} while (false); // @hack
 
             setPolyGT4(poly_gt4);
 

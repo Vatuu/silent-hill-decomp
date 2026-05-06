@@ -1137,18 +1137,18 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
 
 void Groaner_AnimUpdate(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
-    typedef struct _HeadFlex
+    typedef struct _Flex
     {
         /* 0x0 */ SVECTOR rotation;
         /* 0x8 */ MATRIX  rotationMat;
-    } s_HeadFlex;
+    } s_Flex;
 
     q3_12       angle1;
     q3_12       angleDeltaToTarget;
     q3_12       angle0;
     q19_12      constantDur;
     s_AnimInfo* animInfo;
-    s_HeadFlex* headFlex;
+    s_Flex*     flex;
 
     switch (groaner->model.anim.status)
     {
@@ -1219,7 +1219,7 @@ void Groaner_AnimUpdate(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINA
     animInfo = &GROANER_ANIM_INFOS[groaner->model.anim.status];
     animInfo->playbackFunc(&groaner->model, anmHdr, boneCoords, animInfo);
 
-    headFlex = PSX_SCRATCH;
+    flex = PSX_SCRATCH;
 
     switch (groaner->model.anim.status)
     {
@@ -1255,7 +1255,7 @@ void Groaner_AnimUpdate(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINA
         angle0 = -angle0;
     }
 
-    // Set flex angle.
+    // Update flex angle.
     if (groanerProps.flexAngle > angle0)
     {
         groanerProps.flexAngle = MAX(angle0, groanerProps.flexAngle - angle1);
@@ -1266,15 +1266,15 @@ void Groaner_AnimUpdate(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINA
     }
 
     // Apply head flex rotation.
-    Math_SetSVectorFast(&headFlex->rotation, Q12_ANGLE(0.0f), groanerProps.flexAngle >> 2, Q12_ANGLE(0.0f));
-    Math_RotMatrixZxyNegGte(&headFlex->rotation, &headFlex->rotationMat);
-    MulMatrix(&boneCoords[GroanerBone_Head].coord, &headFlex->rotationMat);
-    MulMatrix(&boneCoords[GroanerBone_Jaw].coord,  &headFlex->rotationMat);
+    Math_SetSVectorFast(&flex->rotation, Q12_ANGLE(0.0f), groanerProps.flexAngle >> 2, Q12_ANGLE(0.0f));
+    Math_RotMatrixZxyNegGte(&flex->rotation, &flex->rotationMat);
+    MulMatrix(&boneCoords[GroanerBone_Head].coord, &flex->rotationMat);
+    MulMatrix(&boneCoords[GroanerBone_Jaw].coord,  &flex->rotationMat);
 
     // Apply hips flex rotation.
-    Math_SetSVectorFast(&headFlex->rotation, Q12_ANGLE(0.0f), groanerProps.flexAngle, Q12_ANGLE(0.0f));
-    Math_RotMatrixZxyNegGte(&headFlex->rotation, &headFlex->rotationMat);
-    MulMatrix(&boneCoords[GroanerBone_Hips].coord, &headFlex->rotationMat);
+    Math_SetSVectorFast(&flex->rotation, Q12_ANGLE(0.0f), groanerProps.flexAngle, Q12_ANGLE(0.0f));
+    Math_RotMatrixZxyNegGte(&flex->rotation, &flex->rotationMat);
+    MulMatrix(&boneCoords[GroanerBone_Hips].coord, &flex->rotationMat);
 
     // Update character rotation.
     groaner->rotation.vy            = Math_AngleNormalizeSigned(groaner->rotation.vy);

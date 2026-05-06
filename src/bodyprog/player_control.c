@@ -1266,7 +1266,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
             model = &g_SysWork.npcs[npcIdx].model;
 
-            do {} while(false); // @hack Required for match.
+            do {} while (false); // @hack Required for match.
 
             g_Player_HeadingAngle =
             temp                  = headingAngle0;
