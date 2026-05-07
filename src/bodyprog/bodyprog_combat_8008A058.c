@@ -1632,13 +1632,13 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
     q19_12           posY;
     s32              temp4;
     s_SubCharacter*  chara0;
-    static VECTOR3 D_800C4788[4];
-    static VECTOR3 D_800C47B8;
-    static s32 __pad_bss_800C47C4;
-    static VECTOR3 D_800C47C8[2];
-    static s32 __pad_bss_800C4E0[2];
-    static VECTOR3 D_800C47E8;
-    static s32 __pad_bss_800C4F4;
+    static VECTOR3    D_800C4788[4];
+    static VECTOR3    D_800C47B8;
+    static s32        __pad_bss_800C47C4;
+    static VECTOR3    D_800C47C8[2];
+    static s32        __pad_bss_800C4E0[2];
+    static VECTOR3    D_800C47E8;
+    static s32        __pad_bss_800C4F4;
     static s_RayTrace D_800C47F8;
 
     countX = chara->field_44.field_24[0].vx;

@@ -60,7 +60,7 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
         }
 
         vcInitCamera(&g_MapOverlayHeader, &g_SysWork.playerWork.player.position);
-        func_80040004(&g_MapOverlayHeader);
+        Collision_OvlTriggerZonesPtrSet(&g_MapOverlayHeader);
 
         camLookAt.vy = Q12(-0.6f);
         camLookAt.vx = g_SysWork.playerWork.player.position.vx;

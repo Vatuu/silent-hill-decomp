@@ -15,12 +15,12 @@
 #include "screens/stream/stream.h"
 
 // ========================================
-// UNKNOWN
+// TRIGGERS COLLISION INIT
 // ========================================
 
-void func_80040004(s_MapOverlayHeader* overlayHeader) // 0x80040004
+void Collision_OvlTriggerZonesPtrSet(s_MapOverlayHeader* overlayHeader) // 0x80040004
 {
-    g_WorldGfxWork.triggerZone = &overlayHeader->triggerZones[0];
+    g_WorldGfxWork.triggerZone = &overlayHeader->triggerZones;
 }
 
 void func_80040014(void) // 0x80040014

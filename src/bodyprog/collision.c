@@ -6,6 +6,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/collision.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/player.h"
@@ -17,7 +18,7 @@
 s_800C4478 D_800C4478;
 
 // ========================================
-// COLLISION FLAGS AND TRIGGER ZONES
+// COLLISION HANDLING
 // ========================================
 
 void Collision_Init(void) // 0x800697EC
@@ -76,10 +77,6 @@ void Collision_TriggerZonesUpdate(q19_12 posX, q19_12 posZ, s_TriggerZone* zones
     }
 }
 
-// ========================================
-// COLLISION HANDLING
-// ========================================
-
 void IpdCollData_FixOffsets(s_IpdCollisionData* collData) // 0x8006993C
 {
     collData->ptr_C  = (u8*)collData->ptr_C + (u32)collData;
@@ -128,9 +125,9 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
     if (ipdCollData == NULL)
     {
         coll->groundHeight = Q12(8.0f);
-        coll->field_6        = 0;
-        coll->field_4        = 0;
-        coll->field_8        = 0;
+        coll->field_6      = 0;
+        coll->field_4      = 0;
+        coll->field_8      = 0;
         return;
     }
 
@@ -149,12 +146,12 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
 
     if (state.field_90 == 1)
     {
-        coll->field_8        = 0;
+        coll->field_8      = 0;
         coll->groundHeight = Q12(8.0f);
     }
     else
     {
-        coll->field_8        = state.field_94;
+        coll->field_8      = state.field_94;
         coll->groundHeight = Q8_TO_Q12(Ipd_GroundHeightGet(state.field_4.positionX_18, state.field_4.positionZ_1C, &state));
     }
 
@@ -215,7 +212,7 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset,
 
             switch (collResult->field_14)
             {
-                case 12:
+                case FloorType_12:
                     collType = CollisionType_Unk2;
                     break;
 
@@ -257,18 +254,18 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset,
 
             switch (collType)
             {
-                case 1:
+                case CollisionType_Wall:
                     if (wallCount < WALL_COUNT_THRESHOLD)
                     {
                         collResult->groundHeight = chara->position.vy;
                     }
                     break;
 
-                case 2:
+                case CollisionType_Unk2:
                     if (var_s6 != 12)
                     {
                         collResult->groundHeight = groundHeight;
-                        collResult->field_14 = 12;
+                        collResult->field_14     = FloorType_12;
                     }
                     break;
             }
@@ -734,18 +731,20 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
 void Collision_QueryInit(s_CollisionState* collState, VECTOR3* pos, s_CollisionQuery* collQuery, bool arg3) // 0x8006AB50
 {
     collState->field_0_0       = 0;
-    collState->field_2         = D_800C4478.flags;
+    collState->flags_2         = D_800C4478.flags;
     collState->field_4.field_4 = arg3;
 
     Collision_QueryDirectionCalc(&collState->field_4, pos, collQuery);
 
     collState->field_7C = Q8(30.0f);
     collState->field_34 = 0;
+    
     collState->field_44.field_0.field_0  = 0;
     collState->field_44.field_6          = 0;
     collState->field_44.field_8.field_0  = 0;
     collState->field_44.field_36         = 0;
     collState->field_44.field_30.field_0 = 0;
+    
     collState->field_8C = 0;
     collState->field_88 = 0;
     collState->field_90 = 1;
@@ -782,7 +781,7 @@ void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* pos, c
     result->positionZ_1C    = Q12_TO_Q8(collQuery->position.vz);
     result->newPositionX_20 = result->positionX_18 + result->offset_C.vx;
     result->newPositionZ_24 = result->positionZ_1C + result->offset_C.vz;
-    result->angleToTarget   = Q12_TO_Q8(collQuery->top + collQuery->position.vy);
+    result->field_2A        = Q12_TO_Q8(collQuery->top + collQuery->position.vy);
     result->field_2C        = Q12_TO_Q8(collQuery->bottom + collQuery->position.vy);
     result->collisionState  = collQuery->collisionState;
 }
@@ -984,7 +983,7 @@ bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collDa
 
     temp_a3 = &collData->ptr_14[idx];
 
-    if (!((collState->field_2 >> (temp_a3->field_0_14 * 4 | temp_a3->field_2_14)) & (1 << 0)))
+    if (!((collState->flags_2 >> (temp_a3->field_0_14 * 4 | temp_a3->field_2_14)) & (1 << 0)))
     {
         return false;
     }
@@ -1629,7 +1628,7 @@ bool func_8006C3D4(s_CollisionState* collState, s_IpdCollisionData* collData, s3
     collState->field_CC.field_4 = idx;
     temp_a1 = &collData->ptr_18[idx - collData->field_8_16];
 
-    if (!((collState->field_2 >> temp_a1->field_0_8) & (1 << 0)))
+    if (!((collState->flags_2 >> temp_a1->field_0_8) & (1 << 0)))
     {
         return false;
     }
@@ -1834,7 +1833,7 @@ void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_
     {
         ptr = &collData->ptr_10[*curUnk];
 
-        if (((collState->field_2 >> ptr->field_6_11) & (1 << 0)) && ptr->field_6_5 != 1)
+        if (((collState->flags_2 >> ptr->field_6_11) & (1 << 0)) && ptr->field_6_5 != 1)
         {
             var_a2 = ptr->field_2;
 
@@ -1920,7 +1919,7 @@ void func_8006CC9C(s_CollisionState* state) // 0x8006CC9C
 
     if (state->field_9C.field_0 + (state->field_A0.s_1.field_4 + state->field_4.distance_8) < state->field_4.positionZ_1C ||
         state->field_4.newPositionZ_24 < state->field_9C.field_0 - (state->field_A0.s_1.field_4 + state->field_4.distance_8) ||
-        state->field_4.angleToTarget > state->field_A0.s_1.field_2)
+        state->field_4.field_2A > state->field_A0.s_1.field_2)
     {
         return;
     }

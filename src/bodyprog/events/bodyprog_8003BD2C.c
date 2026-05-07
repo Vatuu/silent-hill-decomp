@@ -9,6 +9,10 @@
 // ========================================
 // NPC COLISIONS FLAGS UPDATE?
 // ========================================
+/** TODO - Remove later
+ * This code looks weird. By testing in game it seems like collision flags are shared
+ * between player and the NPCs so it could be possible that this code execute arbitrarily.
+ */
 
 s32 Map_TypeGet(void) // 0x8003BD2C
 {
@@ -24,7 +28,7 @@ void func_8003BD48(const s_SubCharacter* chara) // 0x8003BD48
 
     switch (Map_TypeGet())
     {
-        case 0:
+        case MapType_THR:
             if (chara->position.vx >= Q12(191.6f) && chara->position.vx <= Q12(198.8f) &&
                 chara->position.vz >= Q12(-96.0f) && chara->position.vz <= Q12(-90.3f))
             {
@@ -32,8 +36,8 @@ void func_8003BD48(const s_SubCharacter* chara) // 0x8003BD48
             }
             break;
 
-        case 3:
-        case 4:
+        case MapType_SPR:
+        case MapType_SPU:
             if (chara->position.vx >= Q12(-100.0f) && chara->position.vx <= Q12(-94.5f) &&
                 chara->position.vz >= Q12(-70.3f)  && chara->position.vz <= Q12(-62.0f))
             {

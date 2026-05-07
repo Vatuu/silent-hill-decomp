@@ -8607,14 +8607,13 @@ void func_8007FD4C(bool cond) // 0x8007FD4C
     }
 }
 
-void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE0
+void func_8007FDE0(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE0
 {
-    // `arg0` usually comes from `s_Collision::field_8`, maybe floor type?
     s32 mapOverlayId;
 
-    switch (arg0)
+    switch (floorType)
     {
-        case 8:
+        case FloorType_8:
             mapOverlayId = g_SavegamePtr->mapIdx;
             *sfxId       = Sfx_Unk1330;
 
@@ -8639,15 +8638,15 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE
             }
             break;
 
-        case 3:
+        case FloorType_Grass:
             *sfxId = Sfx_FootstepGrass;
             break;
 
-        case 4:
+        case FloorType_4:
             *sfxId = Sfx_Unk1313;
             break;
 
-        case 5:
+        case FloorType_5:
             if (g_SavegamePtr->mapIdx == MapIdx_MAP4_S02)
             {
                 *sfxId = Sfx_Unk1543;
@@ -8658,13 +8657,13 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE
             }
             break;
 
-        case 6:
-        case 10:
-        case 11:
+        case FloorType_6:
+        case FloorType_10:
+        case FloorType_11:
             *sfxId = Sfx_FootstepMetal;
             break;
 
-        case 9:
+        case FloorType_9:
             if (g_SavegamePtr->mapIdx == MapIdx_MAP0_S02)
             {
                 *sfxId = Sfx_Unk1388;
@@ -8675,14 +8674,14 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE
             }
             break;
 
-        case 2:
+        case FloorType_2:
             *sfxId = Sfx_Unk1389;
             break;
 
         default:
-        case 0:
-        case 1:
-        case 7:
+        case FloorType_0:
+        case FloorType_1:
+        case FloorType_7:
             *sfxId = Sfx_FootstepConcrete;
             break;
     }
@@ -8700,7 +8699,7 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE
                     break;
 
                 case 21:
-                    if (arg0 != 1)
+                    if (floorType != 1)
                     {
                         *sfxId = Sfx_Unk1346;
                     }
@@ -8746,12 +8745,12 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE
     }
 
     // TODO: Use range-based rand macro.
-    switch (arg0)
+    switch (floorType)
     {
-        case 5:
-        case 6:
-        case 10:
-        case 11:
+        case FloorType_5:
+        case FloorType_6:
+        case FloorType_10:
+        case FloorType_11:
             *pitch0 = (Rng_Rand16() % 8) - 4;
             *pitch1 = (Rng_Rand16() % 16) + 56;
             break;

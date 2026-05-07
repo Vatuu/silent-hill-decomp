@@ -224,23 +224,15 @@ Joy_ControllerDataUpdate                     = 0x80034494; // type:func
 ControllerData_AnalogToDigital               = 0x80034670; // type:func
 
 //----------------------------------------------------------------------
-//--- PA: 0x00FD60   VA: 0x800348C0   subsegment: c, game_boot/game_load
+//--- PA: 0x00FD60   VA: 0x800348C0   subsegment: c, game_boot/game_boot
 //----------------------------------------------------------------------
 Anim_CharaTypeAnimInfoClear                  = 0x800348C0; // type:func
 GameState_LoadScreen_Update                  = 0x800348E8; // type:func
 GameBoot_GameStartup                         = 0x80034964; // type:func
 GameBoot_LoadingScreen                       = 0x80034E58; // type:func
-
-//-----------------------------------------------------------------------
-//--- PA: 0x010368   VA: 0x80034EC8   subsegment: c, game_boot/chara_init
-//-----------------------------------------------------------------------
 GameBoot_NpcClear                            = 0x80034EC8; // type:func
 GameBoot_NpcInit                             = 0x80034F18; // type:func
 GameBoot_InGameInit                          = 0x80034FB8; // type:func
-
-//----------------------------------------------------------------------
-//--- PA: 0x01055C   VA: 0x800350BC   subsegment: c, game_boot/game_boot
-//----------------------------------------------------------------------
 GameBoot_SavegameInitialize                  = 0x800350BC; // type:func
 GameBoot_PlayerInit                          = 0x80035178; // type:func
 GameBoot_MapLoad                             = 0x8003521C; // type:func
@@ -435,6 +427,11 @@ Gfx_FogParametersSet                         = 0x8003F08C; // type:func
 Gfx_FlashlightUpdate                         = 0x8003F170; // type:func
 Gfx_ProgressAlphaGet                         = 0x8003F6F0;
 Math_WeightedAverageGet                      = 0x8003F7E4; // type:func
+
+//-----------------------------------------------------------------------
+//--- PA: 0x01B4A4   VA: 0x80040004   subsegment: c, events/triggers_init
+//-----------------------------------------------------------------------
+Collision_OvlTriggerZonesPtrSet              = 0x80040004;
 
 //---------------------------------------------------------------
 //--- PA: 0x01B4EC   VA: 0x8004004C   subsegment: c, view/vc_util
@@ -762,6 +759,7 @@ Collision_Init                               = 0x800697EC; // type:func
 Collision_FlagsGet                           = 0x80069810; // type:func
 Collision_FlagsSet                           = 0x80069820; // type:func
 Collision_FlagBitsSet                        = 0x8006982C; // type:func
+func_80069844                                = 0x80069844;
 Collision_TriggerZonesUpdate                 = 0x80069860; // type:func
 IpdCollData_FixOffsets                       = 0x8006993C; // type:func
 Collision_Get                                = 0x800699F8; // type:func
@@ -2855,7 +2853,7 @@ g_SelectedFileIdx                            = 0x800BCD3F;
 g_SelectedDeviceId                           = 0x800BCD40; // size:1
 
 //-------------------------------------------------------------------------
-//--- PA: 0x0981E8   VA: 0x800BCD48   subsegment: .bss, game_boot/game_load
+//--- PA: 0x0981E8   VA: 0x800BCD48   subsegment: .bss, game_boot/game_boot
 //-------------------------------------------------------------------------
 demoLoadAttempCount                          = 0x800BCD48;
 

@@ -68,7 +68,7 @@ segments:
       - [0x5A8, .rodata, sys/settings_reset]
       - [0x604, .rodata, sys/memcard_2]
       - [0x680, rodata] # Garbage padding
-      - [0x68C, .rodata, game_boot/game_load]
+      - [0x68C, .rodata, game_boot/game_boot]
       - [0x6C0, .rodata, events/bgm_update]
       - [0x6E8, rodata] # Garbage padding
       - [0x6EC, .rodata, events/map_msg_display]
@@ -137,9 +137,7 @@ segments:
       - [0xE648, c, sys/memcard_2]
       - [0xF250, c, sys/warm_boot]
       - [0xF58C, c, sys/joy]
-      - [0xFA30, c, game_boot/game_load]
-      - [0x10038, c, game_boot/chara_init]
-      - [0x1022C, c, game_boot/game_boot]
+      - [0xFA30, c, game_boot/game_boot]
       - [0x103FC, c, game_boot/fs_chara_anim]
       - [0x108F0, c, game_boot/background_sound_init]
       - [0x10C74, c, game_boot/load_screen]
@@ -154,7 +152,7 @@ segments:
       - [0x16F00, c, events/bodyprog_8003BD2C]
       - [0x17024, c, gfx/bodyprog_8003BE50]
       - [0x197BC, c, gfx/map_effects]
-      - [0x1B1D8, c, events/bodyprog_80040004]
+      - [0x1B1D8, c, events/triggers_init]
       - [0x1B220, c, view/vc_util]
       - [0x1BD48, c, gfx/bodyprog_80040B74]
       - [0x1F778, c, gfx/bodyprog_anim_800445A4]
@@ -449,7 +447,7 @@ segments:
       - [0x9A6E4, pad] # Garbage
       - [0x9A6E8, .bss, sys/memcard_2]
       - [0x9A714, pad] # Garbage
-      - [0x9A718, .bss, game_boot/game_load]
+      - [0x9A718, .bss, game_boot/game_boot]
       - [0x9A71C, pad] # Garbage
       - [0x9A720, .bss, events/bgm_update]
       - [0x9A730, .bss, events/map_msg_display]

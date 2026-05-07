@@ -189,13 +189,16 @@ typedef enum _BgmTrackIdx
     BgmTrackIdx_41   = 41
 } e_BgmTrackIds;
 
+/** @brief Global collision flags.
+ * Applies for both NPCs and the player.
+ */
 typedef enum _CollisionFlags
 {
     CollisionFlag_None = 0,
-    CollisionFlag_0    = 1 << 0,
-    CollisionFlag_1    = 1 << 1,
-    CollisionFlag_2    = 1 << 2,
-    CollisionFlag_3    = 1 << 3,
+    CollisionFlag_0    = 1 << 0, // Enables map collisions.
+    CollisionFlag_1    = 1 << 1, // Enables objects collisions.
+    CollisionFlag_2    = 1 << 2, // Enables alternative objects collisions?
+    CollisionFlag_3    = 1 << 3, // @unused Only ever call in `MAP6_S05`.
     CollisionFlag_All  = 0xFFFF
 } e_CollisionFlags;
 
@@ -312,6 +315,23 @@ typedef enum _StaticModelLoadState
     StaticModelLoadState_Corrupted = 2, // Maybe wrong name for this.
     StaticModelLoadState_Loaded    = 3
 } e_StaticModelLoadState;
+
+typedef enum _FloorType
+{
+    FloorType_0     = 0,
+    FloorType_1     = 1,
+    FloorType_2     = 2,
+    FloorType_Grass = 3,
+    FloorType_4     = 4,
+    FloorType_5     = 5,
+    FloorType_6     = 6,
+    FloorType_7     = 7,
+    FloorType_8     = 8,
+    FloorType_9     = 9,
+    FloorType_10    = 10,
+    FloorType_11    = 11,
+    FloorType_12    = 12
+} e_FloorType;
 
 // ================
 // UNKNOWN STRUCTS
@@ -521,9 +541,9 @@ typedef struct
     /* 0x1C */ q23_8      positionZ_1C;
     /* 0x20 */ q23_8      newPositionX_20;
     /* 0x24 */ q23_8      newPositionZ_24;
-    /* 0x28 */ q7_8       field_28;      // Radius.
-    /* 0x2A */ q7_8       angleToTarget; // Wrong name. Top.
-    /* 0x2C */ q7_8       field_2C;      // Bottom.
+    /* 0x28 */ q7_8       field_28; // Radius.
+    /* 0x2A */ q7_8       field_2A; // Wrong name. Top.
+    /* 0x2C */ q7_8       field_2C; // Bottom.
 } s_func_8006ABC0;
 
 typedef struct
@@ -968,12 +988,12 @@ STATIC_ASSERT_SIZEOF(s_CollisionState_CC, 56);
 
 typedef struct _CollisionState
 {
-    u8                 field_0_0  : 8;
+    u8                 field_0_0  : 8; // Boolean? Code only assigns 1.
     s8                 field_0_8  : 1; // Something to do with collision. `bool` flag that states if there's a displacement?
     s8                 field_0_9  : 1;
     s8                 field_0_10 : 1;
     s8                 field_0_11 : 5;
-    u16                field_2    : 16; // Collision flags.
+    u16                flags_2    : 16; /** `e_CollisionFlags` */
     s_func_8006ABC0    field_4;
     s32                field_34;
     s16                field_38;
@@ -1245,6 +1265,8 @@ STATIC_ASSERT_SIZEOF(s_HeldItem, 44);
  * TODO: Could be `s_RendererWork`? Will depend on where other data resides.
  * Will: `s_WorldModelWork` fits better, this is mainly responsible for handling model data.
  * `s_WorldEnvWork` should have this name as it is used for general GFX.
+ * Will (2): Maybe isn't supposed to be something exclusively graphic related, but rather
+ * general in-game world struct, as it also contains triggers and camera information.
  */
 typedef struct _WorldGfxWork
 {
@@ -1379,15 +1401,6 @@ typedef struct _WorldEnvWork
     /* 0xCC  */ u8           fogRamp[128]; // Fog-related values based on `fog.nearDistance`/`fog.farDistance`.
     /* 0x14C */ u16          field_14C;
 } s_WorldEnvWork;
-
-// Related to collision?
-typedef struct
-{
-    /* 0x0 */ u16            flags; /** `e_CollisionFlags` */
-    /* 0x2 */ u8             triggerZoneCount;
-    /* 0x3 */ u8             __pad_3;
-    /* 0x4 */ s_TriggerZone* triggerZones[20]; // Guessed size.
-} s_800C4478;
 
 typedef struct
 {
@@ -1792,8 +1805,7 @@ typedef struct _CollisionResult
     /* 0xC  */ q19_12  groundHeight;
     /* 0x10 */ s16     field_10;
     /* 0x12 */ s16     field_12;
-    /* 0x14 */ s8      field_14; // Count of something? 12 is significant.
-    /* 0x15 */ s8      __pad_15[3];
+    /* 0x14 */ s8      field_14; /** `e_FloorType` */
     /* 0x18 */ q19_12  field_18;
 } s_CollisionResult;
 
@@ -2550,10 +2562,6 @@ extern s_800C4418 D_800C4418;
 
 extern q3_12 D_800C4454;
 
-// emoose: Also works: `extern u16 D_800C4478[];`, `arg0->field_4 = D_800C4478[0];`.
-// Didn't see any array accesses in Ghidra though, struct might be more likely.
-extern s_800C4478 D_800C4478;
-
 extern s8 D_800C447A;
 
 extern s16 D_800AEEDC[][2]; // Type assumed.
@@ -2758,7 +2766,7 @@ void WorldGfx_HeldItemAttach(e_CharaId charaId, s32 modelBone); // Called by som
 
 s32 func_800868F4(s32 arg0, s32 arg1, s32 idx);
 
-void func_80040004(s_MapOverlayHeader* overlayHdr);
+void Collision_OvlTriggerZonesPtrSet(s_MapOverlayHeader* overlayHdr);
 
 void func_80040014(void);
 
@@ -4484,8 +4492,8 @@ q19_12 Game_GasWeaponPowerTimerValue(void);
 
 void func_8007FD4C(bool cond);
 
-/** Returns footstep sound effect ID and random pitches? `arg0` usually comes from `s_Collision` */
-void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1);
+/** @brief Determine the step sound and pitch of the step sound. */
+void func_8007FDE0(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1);
 
 /** Presumably, returns a heading angle from `from` to `to`. If so, rename to `Math_AngleBetweenPositionsGet`. */
 q19_12 func_80080478(const VECTOR3* from, const VECTOR3* to);
