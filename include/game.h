@@ -1691,7 +1691,7 @@ typedef struct _PropsRomper
 /** @brief Split Head character properties. */
 typedef struct _PropsSplitHead
 {
-    u16     flags_E8; /** `e_SplitHeadFlags` */
+    u16     flags; /** `e_SplitHeadFlags` */
     u8      field_EA;
     s8      unk_EB;
     q3_12   angle_EC;

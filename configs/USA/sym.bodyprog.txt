@@ -431,7 +431,7 @@ Math_WeightedAverageGet                      = 0x8003F7E4; // type:func
 //-----------------------------------------------------------------------
 //--- PA: 0x01B4A4   VA: 0x80040004   subsegment: c, events/triggers_init
 //-----------------------------------------------------------------------
-Collision_OvlTriggerZonesPtrSet              = 0x80040004;
+Collision_MapTriggerZonesSet                 = 0x80040004;
 
 //---------------------------------------------------------------
 //--- PA: 0x01B4EC   VA: 0x8004004C   subsegment: c, view/vc_util
@@ -788,7 +788,7 @@ Ray_NpcToPlayerLosHitCheck                   = 0x800700F8; // type:func
 Ray_CharaToCharaDistLosCheck                 = 0x80070184; // type:func
 Ray_CharaToCharaFrontLosHitCheck             = 0x80070208; // type:func
 Ray_CharaLosHitCheck                         = 0x8007029C; // type:func
-Collision_CharaAnimShapesSet                 = 0x80070400; // type:func
+Collision_CharaCollisionSet                  = 0x80070400; // type:func
 
 //-----------------------------------------------------------------
 //--- PA: 0x04BB84   VA: 0x800706E4   subsegment: c, player_control

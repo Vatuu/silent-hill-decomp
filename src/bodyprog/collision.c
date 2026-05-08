@@ -212,7 +212,7 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset,
 
             switch (collResult->field_14)
             {
-                case FloorType_12:
+                case GroundType_12:
                     collType = CollisionType_Unk2;
                     break;
 
@@ -265,7 +265,7 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset,
                     if (var_s6 != 12)
                     {
                         collResult->groundHeight = groundHeight;
-                        collResult->field_14     = FloorType_12;
+                        collResult->field_14     = GroundType_12;
                     }
                     break;
             }
@@ -3783,7 +3783,7 @@ q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2) // 0x80
     return result;
 }
 
-void Collision_CharaAnimShapesSet(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1) // 0x80070400
+void Collision_CharaCollisionSet(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1) // 0x80070400
 {
     q19_12 alpha;
     q19_12 invAlpha;

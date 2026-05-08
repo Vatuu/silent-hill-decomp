@@ -8607,13 +8607,13 @@ void func_8007FD4C(bool cond) // 0x8007FD4C
     }
 }
 
-void func_8007FDE0(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE0
+void func_8007FDE0(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE0
 {
     s32 mapOverlayId;
 
-    switch (floorType)
+    switch (groundType)
     {
-        case FloorType_8:
+        case GroundType_8:
             mapOverlayId = g_SavegamePtr->mapIdx;
             *sfxId       = Sfx_Unk1330;
 
@@ -8638,15 +8638,15 @@ void func_8007FDE0(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x80
             }
             break;
 
-        case FloorType_Grass:
+        case GroundType_Grass:
             *sfxId = Sfx_FootstepGrass;
             break;
 
-        case FloorType_4:
+        case GroundType_4:
             *sfxId = Sfx_Unk1313;
             break;
 
-        case FloorType_5:
+        case GroundType_5:
             if (g_SavegamePtr->mapIdx == MapIdx_MAP4_S02)
             {
                 *sfxId = Sfx_Unk1543;
@@ -8657,13 +8657,13 @@ void func_8007FDE0(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x80
             }
             break;
 
-        case FloorType_6:
-        case FloorType_10:
-        case FloorType_11:
+        case GroundType_6:
+        case GroundType_10:
+        case GroundType_11:
             *sfxId = Sfx_FootstepMetal;
             break;
 
-        case FloorType_9:
+        case GroundType_9:
             if (g_SavegamePtr->mapIdx == MapIdx_MAP0_S02)
             {
                 *sfxId = Sfx_Unk1388;
@@ -8674,14 +8674,14 @@ void func_8007FDE0(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x80
             }
             break;
 
-        case FloorType_2:
+        case GroundType_2:
             *sfxId = Sfx_Unk1389;
             break;
 
         default:
-        case FloorType_0:
-        case FloorType_1:
-        case FloorType_7:
+        case GroundType_0:
+        case GroundType_1:
+        case GroundType_7:
             *sfxId = Sfx_FootstepConcrete;
             break;
     }
@@ -8699,7 +8699,7 @@ void func_8007FDE0(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x80
                     break;
 
                 case 21:
-                    if (floorType != 1)
+                    if (groundType != GroundType_1)
                     {
                         *sfxId = Sfx_Unk1346;
                     }
@@ -8745,12 +8745,12 @@ void func_8007FDE0(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x80
     }
 
     // TODO: Use range-based rand macro.
-    switch (floorType)
+    switch (groundType)
     {
-        case FloorType_5:
-        case FloorType_6:
-        case FloorType_10:
-        case FloorType_11:
+        case GroundType_5:
+        case GroundType_6:
+        case GroundType_10:
+        case GroundType_11:
             *pitch0 = (Rng_Rand16() % 8) - 4;
             *pitch1 = (Rng_Rand16() % 16) + 56;
             break;

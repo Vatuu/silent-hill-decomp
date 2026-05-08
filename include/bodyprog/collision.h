@@ -1,7 +1,6 @@
 #ifndef _COLLISION_H
 #define _COLLISION_H
 
-
 // Related to collision?
 typedef struct
 {
@@ -14,6 +13,5 @@ typedef struct
 // emoose: Also works: `extern u16 D_800C4478[];`, `arg0->field_4 = D_800C4478[0];`.
 // Didn't see any array accesses in Ghidra though, struct might be more likely.
 extern s_800C4478 D_800C4478;
-
 
 #endif

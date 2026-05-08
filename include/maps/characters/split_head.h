@@ -20,21 +20,21 @@ typedef enum _SplitHeadFlags
 /** @brief Split Head character animation indices. */
 typedef enum _SplitHeadAnim
 {
-    SplitHeadAnim_Still = 0,
-    SplitHeadAnim_1     = 1,
-    SplitHeadAnim_2     = 2,
-    SplitHeadAnim_3     = 3,
-    SplitHeadAnim_4     = 4,
-    SplitHeadAnim_5     = 5,
-    SplitHeadAnim_6     = 6,
-    SplitHeadAnim_7     = 7,
-    SplitHeadAnim_8     = 8,
-    SplitHeadAnim_9     = 9,
-    SplitHeadAnim_10    = 10,
-    SplitHeadAnim_11    = 11,
-    SplitHeadAnim_12    = 12,
-    SplitHeadAnim_13    = 13,
-    SplitHeadAnim_14    = 14
+    SplitHeadAnim_Still       = 0,
+    SplitHeadAnim_1           = 1,
+    SplitHeadAnim_BiteAttack  = 2,
+    SplitHeadAnim_3           = 3, // something to idle.
+    SplitHeadAnim_4           = 4, // something to idle.
+    SplitHeadAnim_5           = 5, // hit left?
+    SplitHeadAnim_6           = 6, // hit right?
+    SplitHeadAnim_7           = 7, // die
+    SplitHeadAnim_8           = 8, // splayed? to 13
+    SplitHeadAnim_9           = 9, // walk forward, head shaking?
+    SplitHeadAnim_StandIdle   = 10,
+    SplitHeadAnim_WalkForward = 11,
+    SplitHeadAnim_12          = 12, // laying down
+    SplitHeadAnim_13          = 13, // splayed to idle?
+    SplitHeadAnim_14          = 14  // something idle?
 } e_SplitHeadAnim;
 
 /** @brief Split Head character control states. */
@@ -53,13 +53,13 @@ typedef enum _SplitHeadControl
 
 typedef struct
 {
-    s32  field_0; // Distance/Magnitude?
-    s32  field_4; // X
-    s32  field_8; // Z
-    u8   field_C; // 0 / 1 / 2
-    u8   field_D; // `bool`
-    u8   field_E;
-    s8   unk_F;
+    s32 field_0; // Distance/Magnitude?
+    s32 field_4; // X
+    s32 field_8; // Z
+    u8  field_C; // 0 / 1 / 2
+    u8  field_D; // `bool`
+    u8  field_E;
+    s8  unk_F;
 } s_sharedFunc_800D4594_1_s05;
 
 /*s_AnimInfo SPLIT_HEAD_ANIM_INFOS[] = {
@@ -99,6 +99,9 @@ extern s_AnimInfo SPLIT_HEAD_ANIM_INFOS[];
 
 /** Set to Split Head bone coords. */
 extern GsCOORDINATE2* sharedData_800D8610_1_s05;
+
+extern q19_12 sharedData_800D8684_1_s05; // Offset X.
+extern q19_12 sharedData_800D8688_1_s05; // Offset Z.
 
 void SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 

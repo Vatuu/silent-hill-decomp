@@ -316,22 +316,22 @@ typedef enum _StaticModelLoadState
     StaticModelLoadState_Loaded    = 3
 } e_StaticModelLoadState;
 
-typedef enum _FloorType
+typedef enum _GroundType
 {
-    FloorType_0     = 0,
-    FloorType_1     = 1,
-    FloorType_2     = 2,
-    FloorType_Grass = 3,
-    FloorType_4     = 4,
-    FloorType_5     = 5,
-    FloorType_6     = 6,
-    FloorType_7     = 7,
-    FloorType_8     = 8,
-    FloorType_9     = 9,
-    FloorType_10    = 10,
-    FloorType_11    = 11,
-    FloorType_12    = 12
-} e_FloorType;
+    GroundType_0     = 0,
+    GroundType_1     = 1,
+    GroundType_2     = 2,
+    GroundType_Grass = 3,
+    GroundType_4     = 4,
+    GroundType_5     = 5,
+    GroundType_6     = 6,
+    GroundType_7     = 7,
+    GroundType_8     = 8,
+    GroundType_9     = 9,
+    GroundType_10    = 10,
+    GroundType_11    = 11,
+    GroundType_12    = 12
+} e_GroundType;
 
 // ================
 // UNKNOWN STRUCTS
@@ -542,7 +542,7 @@ typedef struct
     /* 0x20 */ q23_8      newPositionX_20;
     /* 0x24 */ q23_8      newPositionZ_24;
     /* 0x28 */ q7_8       field_28; // Radius.
-    /* 0x2A */ q7_8       field_2A; // Wrong name. Top.
+    /* 0x2A */ q7_8       field_2A; // Top.
     /* 0x2C */ q7_8       field_2C; // Bottom.
 } s_func_8006ABC0;
 
@@ -1265,7 +1265,7 @@ STATIC_ASSERT_SIZEOF(s_HeldItem, 44);
  * TODO: Could be `s_RendererWork`? Will depend on where other data resides.
  * Will: `s_WorldModelWork` fits better, this is mainly responsible for handling model data.
  * `s_WorldEnvWork` should have this name as it is used for general GFX.
- * Will (2): Maybe isn't supposed to be something exclusively graphic related, but rather
+ * Will (2): Maybe isn't supposed to be something exclusively graphics-related, but rather a
  * general in-game world struct, as it also contains triggers and camera information.
  */
 typedef struct _WorldGfxWork
@@ -1805,7 +1805,7 @@ typedef struct _CollisionResult
     /* 0xC  */ q19_12  groundHeight;
     /* 0x10 */ s16     field_10;
     /* 0x12 */ s16     field_12;
-    /* 0x14 */ s8      field_14; /** `e_FloorType` */
+    /* 0x14 */ s8      field_14; /** `e_GroundType` */
     /* 0x18 */ q19_12  field_18;
 } s_CollisionResult;
 
@@ -2766,7 +2766,7 @@ void WorldGfx_HeldItemAttach(e_CharaId charaId, s32 modelBone); // Called by som
 
 s32 func_800868F4(s32 arg0, s32 arg1, s32 idx);
 
-void Collision_OvlTriggerZonesPtrSet(s_MapOverlayHeader* overlayHdr);
+void Collision_MapTriggerZonesSet(s_MapOverlayHeader* overlayHdr);
 
 void func_80040014(void);
 
@@ -4148,7 +4148,7 @@ q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2);
  * @param keyframe0 First keyframe.
  * @param keyframe1 Second keyframe.
  */
-void Collision_CharaAnimShapesSet(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1);
+void Collision_CharaCollisionSet(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1);
 
 void func_800705E4(GsCOORDINATE2* coord, s32 idx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ);
 
@@ -4492,8 +4492,8 @@ q19_12 Game_GasWeaponPowerTimerValue(void);
 
 void func_8007FD4C(bool cond);
 
-/** @brief Determine the step sound and pitch of the step sound. */
-void func_8007FDE0(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1);
+/** @brief Determines the step SFX and its pitch. */
+void func_8007FDE0(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1);
 
 /** Presumably, returns a heading angle from `from` to `to`. If so, rename to `Math_AngleBetweenPositionsGet`. */
 q19_12 func_80080478(const VECTOR3* from, const VECTOR3* to);

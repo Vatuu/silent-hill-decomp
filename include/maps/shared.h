@@ -321,9 +321,6 @@ extern s16 sharedData_800DD5A4_0_s00; // Used as index into array of vectors.
 extern s16 sharedData_800E39E0_0_s00;
 extern s16 sharedData_800E39E2_0_s00;
 
-extern q19_12 sharedData_800D8684_1_s05; // Offset X. Used by Split Head.
-extern q19_12 sharedData_800D8688_1_s05; // Offset Z. Used by Split Head.
-
 extern u8      sharedData_800EB738_6_s04;
 extern u8      sharedData_800EB740_6_s04[2];
 extern u8      sharedData_800EB748_6_s04;

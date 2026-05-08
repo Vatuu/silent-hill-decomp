@@ -10,8 +10,8 @@
 // NPC COLISIONS FLAGS UPDATE?
 // ========================================
 /** TODO - Remove later
- * This code looks weird. By testing in game it seems like collision flags are shared
- * between player and the NPCs so it could be possible that this code execute arbitrarily.
+ * This code looks weird. Testing in-game, it seems like collision flags are shared
+ * between the player and the NPCs, so it's possible this is executed arbitrarily.
  */
 
 s32 Map_TypeGet(void) // 0x8003BD2C

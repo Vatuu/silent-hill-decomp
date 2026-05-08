@@ -1139,7 +1139,7 @@ void Groaner_AnimUpdate(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINA
 {
     typedef struct _Flex
     {
-        /* 0x0 */ SVECTOR rotation;
+        /* 0x0 */ SVECTOR rotation; /** Q3.12 */
         /* 0x8 */ MATRIX  rotationMat;
     } s_Flex;
 
@@ -1150,6 +1150,7 @@ void Groaner_AnimUpdate(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINA
     s_AnimInfo* animInfo;
     s_Flex*     flex;
 
+    // Update constant anim duration.
     switch (groaner->model.anim.status)
     {
         case ANIM_STATUS(GroanerAnim_JumpAttack, true):
@@ -1219,7 +1220,7 @@ void Groaner_AnimUpdate(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINA
     animInfo = &GROANER_ANIM_INFOS[groaner->model.anim.status];
     animInfo->playbackFunc(&groaner->model, anmHdr, boneCoords, animInfo);
 
-    flex = PSX_SCRATCH;
+    flex = (s_Flex*)PSX_SCRATCH;
 
     switch (groaner->model.anim.status)
     {
@@ -1283,7 +1284,7 @@ void Groaner_AnimUpdate(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINA
 
 void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
 {
-    s32 keyframeIdx2;
+    s32 refKeyframeIdx;
     s32 keyframeIdx1;
     s32 keyframeIdx0;
     s32 temp;
@@ -1293,38 +1294,38 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
         case ANIM_STATUS(GroanerAnim_StandIdle, false):
             if (groanerProps.relKeyframeIdx_100 == 5)
             {
-                Collision_CharaAnimShapesSet(groaner, &sharedData_800EF4BC_2_s00, &sharedData_800EF250_2_s00[0]);
+                Collision_CharaCollisionSet(groaner, &sharedData_800EF4BC_2_s00, &sharedData_800EF250_2_s00[0]);
             }
             else if (groanerProps.relKeyframeIdx_100 == 13)
             {
-                Collision_CharaAnimShapesSet(groaner, &sharedData_800EF624_2_s00, &sharedData_800EF250_2_s00[0]);
+                Collision_CharaCollisionSet(groaner, &sharedData_800EF624_2_s00, &sharedData_800EF250_2_s00[0]);
             }
             else if (groanerProps.relKeyframeIdx_100 == 25)
             {
-                Collision_CharaAnimShapesSet(groaner, &sharedData_800EF7A0_2_s00, &sharedData_800EF250_2_s00[0]);
+                Collision_CharaCollisionSet(groaner, &sharedData_800EF7A0_2_s00, &sharedData_800EF250_2_s00[0]);
             }
             break;
 
         case ANIM_STATUS(GroanerAnim_StandIdle, true):
-            keyframeIdx2      = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 191;
-            keyframeIdx0 = !(keyframeIdx2 < 5) + !(keyframeIdx2 < 12);
-            keyframeIdx1 = !(keyframeIdx2 < 4) + !(keyframeIdx2 < 11);
+            refKeyframeIdx = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 191;
+            keyframeIdx0   = !(refKeyframeIdx < 5) + !(refKeyframeIdx < 12);
+            keyframeIdx1   = !(refKeyframeIdx < 4) + !(refKeyframeIdx < 11);
 
-            if (keyframeIdx2 == 15)
+            if (refKeyframeIdx == 15)
             {
                 keyframeIdx1 -= 2;
             }
 
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800EF250_2_s00[keyframeIdx0], &sharedData_800EF250_2_s00[keyframeIdx1]);
-            groanerProps.relKeyframeIdx_100 = keyframeIdx2;
+            Collision_CharaCollisionSet(groaner, &sharedData_800EF250_2_s00[keyframeIdx0], &sharedData_800EF250_2_s00[keyframeIdx1]);
+            groanerProps.relKeyframeIdx_100 = refKeyframeIdx;
             break;
 
         case ANIM_STATUS(GroanerAnim_WalkForward, false):
             if (groanerProps.relKeyframeIdx_100 != 100)
             {
-                keyframeIdx2 = groanerProps.relKeyframeIdx_100;
-                keyframeIdx0 = !(keyframeIdx2 < 5) + !(keyframeIdx2 < 12);
-                Collision_CharaAnimShapesSet(groaner, &sharedData_800EF250_2_s00[keyframeIdx0], &sharedData_800EF28C_2_s00[0]);
+                refKeyframeIdx = groanerProps.relKeyframeIdx_100;
+                keyframeIdx0   = !(refKeyframeIdx < 5) + !(refKeyframeIdx < 12);
+                Collision_CharaCollisionSet(groaner, &sharedData_800EF250_2_s00[keyframeIdx0], &sharedData_800EF28C_2_s00[0]);
             }
             else
             {
@@ -1333,15 +1334,14 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_WalkForward, true):
-            keyframeIdx2 = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 371;
-
-            if (keyframeIdx2 < 12)
+            refKeyframeIdx = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 371;
+            if (refKeyframeIdx < 12)
             {
-                if (keyframeIdx2 < 9)
+                if (refKeyframeIdx < 9)
                 {
-                    if (keyframeIdx2 < 4)
+                    if (refKeyframeIdx < 4)
                     {
-                        keyframeIdx0 = keyframeIdx2;
+                        keyframeIdx0 = refKeyframeIdx;
                     }
                     else
                     {
@@ -1353,11 +1353,11 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                     keyframeIdx0 = 4;
                 }
             }
-            else if (keyframeIdx2 < 22)
+            else if (refKeyframeIdx < 22)
             {
-                if (((keyframeIdx2 >> 1) - 1) < 8)
+                if (((refKeyframeIdx >> 1) - 1) < 8)
                 {
-                    keyframeIdx0 = (keyframeIdx2 >> 1) - 1;
+                    keyframeIdx0 = (refKeyframeIdx >> 1) - 1;
                 }
                 else
                 {
@@ -1366,16 +1366,16 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             }
             else
             {
-                keyframeIdx0 = (keyframeIdx2 - 14) - !(keyframeIdx2 < 24);
+                keyframeIdx0 = (refKeyframeIdx - 14) - !(refKeyframeIdx < 24);
             }
 
-            if (keyframeIdx2 < 11)
+            if (refKeyframeIdx < 11)
             {
-                if (keyframeIdx2 < 8)
+                if (refKeyframeIdx < 8)
                 {
-                    if ((keyframeIdx2 + 1) < 4)
+                    if ((refKeyframeIdx + 1) < 4)
                     {
-                        keyframeIdx1 = keyframeIdx2 + 1;
+                        keyframeIdx1 = refKeyframeIdx + 1;
                     }
                     else
                     {
@@ -1387,27 +1387,27 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                     keyframeIdx1 = 4;
                 }
             }
-            else if (keyframeIdx2 < 21)
+            else if (refKeyframeIdx < 21)
             {
-                if (((keyframeIdx2 - 1) >> 1) < 8)
+                if (((refKeyframeIdx - 1) >> 1) < 8)
                 {
-                    keyframeIdx1 = (keyframeIdx2 - 1) >> 1;
+                    keyframeIdx1 = (refKeyframeIdx - 1) >> 1;
                 }
                 else
                 {
                     keyframeIdx1 = 7;
                 }
             }
-            else if (keyframeIdx2 != 25)
+            else if (refKeyframeIdx != 25)
             {
-                keyframeIdx1 = (keyframeIdx2 - 13) - !(keyframeIdx2 < 23);
+                keyframeIdx1 = (refKeyframeIdx - 13) - !(refKeyframeIdx < 23);
             }
             else
             {
                 keyframeIdx1 = 0;
             }
 
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800EF28C_2_s00[keyframeIdx0], &sharedData_800EF28C_2_s00[keyframeIdx1]);
+            Collision_CharaCollisionSet(groaner, &sharedData_800EF28C_2_s00[keyframeIdx0], &sharedData_800EF28C_2_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StandRecoilFront, false):
@@ -1415,10 +1415,10 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StandRecoilFront, true):
-            keyframeIdx2      = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 16;
-            keyframeIdx0 = (keyframeIdx2 - (keyframeIdx2 > 0)) - !(keyframeIdx2 < 10);
-            keyframeIdx1 = (keyframeIdx2 - !(keyframeIdx2 < 9)) - !(keyframeIdx2 < 19);
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800EF368_2_s00[keyframeIdx0], &sharedData_800EF368_2_s00[keyframeIdx1]);
+            refKeyframeIdx = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 16;
+            keyframeIdx0   = (refKeyframeIdx - (refKeyframeIdx > 0)) - !(refKeyframeIdx < 10);
+            keyframeIdx1   = (refKeyframeIdx - !(refKeyframeIdx < 9)) - !(refKeyframeIdx < 19);
+            Collision_CharaCollisionSet(groaner, &sharedData_800EF368_2_s00[keyframeIdx0], &sharedData_800EF368_2_s00[keyframeIdx1]);
 
             groanerProps.relKeyframeIdx_100 = 5;
             break;
@@ -1428,10 +1428,10 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StandRecoilRight, true):
-            keyframeIdx2      = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 111;
-            keyframeIdx0 = (keyframeIdx2 - (keyframeIdx2 > 0)) - !(keyframeIdx2 < 11);
-            keyframeIdx1 = keyframeIdx2 - !(keyframeIdx2 < 10);
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800EF4D0_2_s00[keyframeIdx0], &sharedData_800EF4D0_2_s00[keyframeIdx1]);
+            refKeyframeIdx = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 111;
+            keyframeIdx0   = (refKeyframeIdx - (refKeyframeIdx > 0)) - !(refKeyframeIdx < 11);
+            keyframeIdx1   = refKeyframeIdx - !(refKeyframeIdx < 10);
+            Collision_CharaCollisionSet(groaner, &sharedData_800EF4D0_2_s00[keyframeIdx0], &sharedData_800EF4D0_2_s00[keyframeIdx1]);
 
             groanerProps.relKeyframeIdx_100 = 13;
             break;
@@ -1441,10 +1441,10 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StandRecoilLeft, true):
-            keyframeIdx2      = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 265;
-            keyframeIdx0 = (keyframeIdx2 - !(keyframeIdx2 < 9));
-            keyframeIdx1 = (FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 264) - !(keyframeIdx2 < 8);
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800EF638_2_s00[keyframeIdx0], &sharedData_800EF638_2_s00[keyframeIdx1]);
+            refKeyframeIdx = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 265;
+            keyframeIdx0   = (refKeyframeIdx - !(refKeyframeIdx < 9));
+            keyframeIdx1   = (FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 264) - !(refKeyframeIdx < 8);
+            Collision_CharaCollisionSet(groaner, &sharedData_800EF638_2_s00[keyframeIdx0], &sharedData_800EF638_2_s00[keyframeIdx1]);
 
             groanerProps.relKeyframeIdx_100 = 25;
             break;
@@ -1454,10 +1454,10 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_JumpToStun, true):
-            keyframeIdx2      = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 37;
-            keyframeIdx0 = ((FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 39) - !(keyframeIdx2 < 17)) - !(keyframeIdx2 < 38);
-            keyframeIdx1 = (((FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 38) - !(keyframeIdx2 < 16)) - !(keyframeIdx2 < 37)) - !(keyframeIdx2 < 39);
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800EF7B4_2_s00[keyframeIdx0], &sharedData_800EF7B4_2_s00[keyframeIdx1]);
+            refKeyframeIdx = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 37;
+            keyframeIdx0   = ((FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 39) - !(refKeyframeIdx < 17)) - !(refKeyframeIdx < 38);
+            keyframeIdx1   = (((FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 38) - !(refKeyframeIdx < 16)) - !(refKeyframeIdx < 37)) - !(refKeyframeIdx < 39);
+            Collision_CharaCollisionSet(groaner, &sharedData_800EF7B4_2_s00[keyframeIdx0], &sharedData_800EF7B4_2_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StandToStunRight, false):
@@ -1465,10 +1465,10 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StandToStunRight, true):
-            keyframeIdx2      = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 131;
-            keyframeIdx0 = (FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 134) - !(keyframeIdx2 < 31);
-            keyframeIdx1 = (FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 133) - !(keyframeIdx2 < 30);
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800EFA84_2_s00[keyframeIdx0], &sharedData_800EFA84_2_s00[keyframeIdx1]);
+            refKeyframeIdx = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 131;
+            keyframeIdx0   = (FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 134) - !(refKeyframeIdx < 31);
+            keyframeIdx1   = (FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 133) - !(refKeyframeIdx < 30);
+            Collision_CharaCollisionSet(groaner, &sharedData_800EFA84_2_s00[keyframeIdx0], &sharedData_800EFA84_2_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StandToStunLeft, false):
@@ -1476,10 +1476,10 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StandToStunLeft, true):
-            keyframeIdx2 = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 285;
-            keyframeIdx0 = (keyframeIdx2 - (keyframeIdx2 > 0)) - !(keyframeIdx2 < 31);
-            keyframeIdx1 = (keyframeIdx2 - !(keyframeIdx2 < 30)) - !(keyframeIdx2 < 32);
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800EFCDC_2_s00[keyframeIdx0], &sharedData_800EFCDC_2_s00[keyframeIdx1]);
+            refKeyframeIdx = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 285;
+            keyframeIdx0   = (refKeyframeIdx - (refKeyframeIdx > 0)) - !(refKeyframeIdx < 31);
+            keyframeIdx1   = (refKeyframeIdx - !(refKeyframeIdx < 30)) - !(refKeyframeIdx < 32);
+            Collision_CharaCollisionSet(groaner, &sharedData_800EFCDC_2_s00[keyframeIdx0], &sharedData_800EFCDC_2_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromJump, false):
@@ -1487,16 +1487,16 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromJump, true):
-            keyframeIdx2 = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 78;
-            keyframeIdx0 = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 82;
+            refKeyframeIdx = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 78;
+            keyframeIdx0   = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 82;
 
-            if (keyframeIdx2 < 9)
+            if (refKeyframeIdx < 9)
             {
-                if (keyframeIdx2 <= 0)
+                if (refKeyframeIdx <= 0)
                 {
-                    if (keyframeIdx2 < 6)
+                    if (refKeyframeIdx < 6)
                     {
-                        keyframeIdx0 = keyframeIdx2 - (keyframeIdx2 > 0);
+                        keyframeIdx0 = refKeyframeIdx - (refKeyframeIdx > 0);
                     }
                     else
                     {
@@ -1505,9 +1505,9 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 }
                 else
                 {
-                    if ((keyframeIdx2 - 1) < 6)
+                    if ((refKeyframeIdx - 1) < 6)
                     {
-                        keyframeIdx0 = keyframeIdx2 - (keyframeIdx2 > 0);
+                        keyframeIdx0 = refKeyframeIdx - (refKeyframeIdx > 0);
                     }
                     else
                     {
@@ -1516,13 +1516,13 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 }
             }
 
-            if (keyframeIdx2 != 15)
+            if (refKeyframeIdx != 15)
             {
-                if (keyframeIdx2 < 8)
+                if (refKeyframeIdx < 8)
                 {
-                    if (keyframeIdx2 < 6)
+                    if (refKeyframeIdx < 6)
                     {
-                        keyframeIdx1 = keyframeIdx2;
+                        keyframeIdx1 = refKeyframeIdx;
                     }
                     else
                     {
@@ -1531,7 +1531,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 }
                 else
                 {
-                    keyframeIdx1 = keyframeIdx2 - 3;
+                    keyframeIdx1 = refKeyframeIdx - 3;
                 }
             }
             else
@@ -1539,7 +1539,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 keyframeIdx1 = 0;
             }
 
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800EFF48_2_s00[keyframeIdx0], &sharedData_800EFF48_2_s00[keyframeIdx1]);
+            Collision_CharaCollisionSet(groaner, &sharedData_800EFF48_2_s00[keyframeIdx0], &sharedData_800EFF48_2_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromStandRight, false):
@@ -1547,13 +1547,13 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromStandRight, true):
-            keyframeIdx2 = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 165;
-            if (keyframeIdx2 < 10)
+            refKeyframeIdx = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 165;
+            if (refKeyframeIdx < 10)
             {
-                if (keyframeIdx2 < 6)
+                if (refKeyframeIdx < 6)
                 {
                     keyframeIdx0 = 1;
-                    keyframeIdx1 = keyframeIdx2 >> 1;
+                    keyframeIdx1 = refKeyframeIdx >> 1;
                     if (keyframeIdx1 < 2)
                     {
                         keyframeIdx0 = keyframeIdx1;
@@ -1562,7 +1562,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 else
                 {
                     keyframeIdx0 = 4;
-                    keyframeIdx1 = keyframeIdx2 - 4;
+                    keyframeIdx1 = refKeyframeIdx - 4;
                     if (keyframeIdx1 < 5)
                     {
                         keyframeIdx0 = keyframeIdx1;
@@ -1571,10 +1571,10 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             }
             else
             {
-                if (keyframeIdx2 >= 18)
+                if (refKeyframeIdx >= 18)
                 {
                     keyframeIdx0 = 8;
-                    keyframeIdx1 = (keyframeIdx2 >> 1) - 3;
+                    keyframeIdx1 = (refKeyframeIdx >> 1) - 3;
                     if (keyframeIdx1 < 9)
                     {
                         keyframeIdx0 = keyframeIdx1;
@@ -1586,13 +1586,13 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 }
             }
 
-            if (keyframeIdx2 < 17)
+            if (refKeyframeIdx < 17)
             {
-                if (keyframeIdx2 < 5)
+                if (refKeyframeIdx < 5)
                 {
-                    if (keyframeIdx2 < 2)
+                    if (refKeyframeIdx < 2)
                     {
-                        keyframeIdx1 = keyframeIdx2;
+                        keyframeIdx1 = refKeyframeIdx;
                     }
                     else
                     {
@@ -1601,16 +1601,16 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 }
                 else
                 {
-                    keyframeIdx1 = ANIM_INDEX_FROM_KEYFRAME(keyframeIdx2 - 3, keyframeIdx2, 6, 7);
+                    keyframeIdx1 = ANIM_INDEX_FROM_KEYFRAME(refKeyframeIdx - 3, refKeyframeIdx, 6, 7);
                 }
             }
             else
             {
-                if (keyframeIdx2 != 25)
+                if (refKeyframeIdx != 25)
                 {
-                    if ((((keyframeIdx2 - 1) >> 1) - 2) < 9)
+                    if ((((refKeyframeIdx - 1) >> 1) - 2) < 9)
                     {
-                        keyframeIdx1 = ((keyframeIdx2 - 1) >> 1) - 2;
+                        keyframeIdx1 = ((refKeyframeIdx - 1) >> 1) - 2;
                     }
                     else
                     {
@@ -1623,7 +1623,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 }
             }
 
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800F0038_2_s00[keyframeIdx0], &sharedData_800F0038_2_s00[keyframeIdx1]);
+            Collision_CharaCollisionSet(groaner, &sharedData_800F0038_2_s00[keyframeIdx0], &sharedData_800F0038_2_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromStandLeft, false):
@@ -1631,32 +1631,32 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromStandLeft, true):
-            keyframeIdx2      = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 319;
-            keyframeIdx0 = keyframeIdx2 >> 1;
+            refKeyframeIdx = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 319;
+            keyframeIdx0   = refKeyframeIdx >> 1;
 
-            if (keyframeIdx2 >= 7)
+            if (refKeyframeIdx >= 7)
             {
-                if (keyframeIdx2 < 16)
+                if (refKeyframeIdx < 16)
                 {
-                    keyframeIdx0 = ANIM_INDEX_FROM_KEYFRAME(keyframeIdx2 - 3, keyframeIdx2, 9, 9);
+                    keyframeIdx0 = ANIM_INDEX_FROM_KEYFRAME(refKeyframeIdx - 3, refKeyframeIdx, 9, 9);
                 }
                 else
                 {
-                    keyframeIdx0 = (keyframeIdx2 - 7) - !(keyframeIdx2 < 20);
+                    keyframeIdx0 = (refKeyframeIdx - 7) - !(refKeyframeIdx < 20);
                 }
             }
 
-            if (keyframeIdx2 < 9)
+            if (refKeyframeIdx < 9)
             {
-                keyframeIdx1 = keyframeIdx2 - !(keyframeIdx2 < 2) - !(keyframeIdx2 < 4);
+                keyframeIdx1 = refKeyframeIdx - !(refKeyframeIdx < 2) - !(refKeyframeIdx < 4);
             }
             else
             {
-                if (keyframeIdx2 < 15)
+                if (refKeyframeIdx < 15)
                 {
-                    if ((keyframeIdx2 - 5) < 9)
+                    if ((refKeyframeIdx - 5) < 9)
                     {
-                        keyframeIdx1 = keyframeIdx2 - 5;
+                        keyframeIdx1 = refKeyframeIdx - 5;
                     }
                     else
                     {
@@ -1665,9 +1665,9 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 }
                 else
                 {
-                    if (keyframeIdx2 != 26)
+                    if (refKeyframeIdx != 26)
                     {
-                        keyframeIdx1 = (keyframeIdx2 - 6) - !(keyframeIdx2 < 19);
+                        keyframeIdx1 = (refKeyframeIdx - 6) - !(refKeyframeIdx < 19);
                     }
                     else
                     {
@@ -1676,29 +1676,29 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 }
             }
 
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800F00EC_2_s00[keyframeIdx0], &sharedData_800F00EC_2_s00[keyframeIdx1]);
+            Collision_CharaCollisionSet(groaner, &sharedData_800F00EC_2_s00[keyframeIdx0], &sharedData_800F00EC_2_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromJumpDeathStart, false):
         case ANIM_STATUS(GroanerAnim_StunFromJumpRecoil, false):
-            keyframeIdx2 = groanerProps.relKeyframeIdx_100;
-            if (keyframeIdx2 < 9)
+            refKeyframeIdx = groanerProps.relKeyframeIdx_100;
+            if (refKeyframeIdx < 9)
             {
-                keyframeIdx0 = ANIM_INDEX_FROM_KEYFRAME(keyframeIdx2, keyframeIdx2, 6, 0);
+                keyframeIdx0 = ANIM_INDEX_FROM_KEYFRAME(refKeyframeIdx, refKeyframeIdx, 6, 0);
             }
             else
             {
-                keyframeIdx0 = keyframeIdx2 - 4;
+                keyframeIdx0 = refKeyframeIdx - 4;
             }
 
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800EFF48_2_s00[keyframeIdx0], &sharedData_800F0268_2_s00[0]);
+            Collision_CharaCollisionSet(groaner, &sharedData_800EFF48_2_s00[keyframeIdx0], &sharedData_800F0268_2_s00[0]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromJumpDeathStart, true):
         case ANIM_STATUS(GroanerAnim_StunFromJumpRecoil, true):
             keyframeIdx0 = FP_FROM(groaner->model.anim.time, Q12_SHIFT);
             keyframeIdx1 = keyframeIdx0 + 1;
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800F0268_2_s00[keyframeIdx0], &sharedData_800F0268_2_s00[keyframeIdx1]);
+            Collision_CharaCollisionSet(groaner, &sharedData_800F0268_2_s00[keyframeIdx0], &sharedData_800F0268_2_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromJumpDeathEnd, false):
@@ -1708,13 +1708,13 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
 
         case ANIM_STATUS(GroanerAnim_StunFromStandRightDeathStart, false):
         case ANIM_STATUS(GroanerAnim_StunFromStandRightRecoil, false):
-            keyframeIdx2 = groanerProps.relKeyframeIdx_100;
-            if (keyframeIdx2 < 10)
+            refKeyframeIdx = groanerProps.relKeyframeIdx_100;
+            if (refKeyframeIdx < 10)
             {
-                if (keyframeIdx2 < 6)
+                if (refKeyframeIdx < 6)
                 {
                     keyframeIdx0 = 1;
-                    keyframeIdx1 = keyframeIdx2 >> 1;
+                    keyframeIdx1 = refKeyframeIdx >> 1;
                     if (keyframeIdx1 < 2)
                     {
                         keyframeIdx0 = keyframeIdx1;
@@ -1723,17 +1723,17 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 else
                 {
                     keyframeIdx0 = 4;
-                    keyframeIdx1 = keyframeIdx2 - 4;
+                    keyframeIdx1 = refKeyframeIdx - 4;
                     if (keyframeIdx1 < 5)
                     {
                         keyframeIdx0 = keyframeIdx1;
                     }
                 }
             }
-            else if (keyframeIdx2 >= 18)
+            else if (refKeyframeIdx >= 18)
             {
                 keyframeIdx0 = 8;
-                keyframeIdx1 = (keyframeIdx2 >> 1) - 3;
+                keyframeIdx1 = (refKeyframeIdx >> 1) - 3;
                 if (keyframeIdx1 < 9)
                 {
                     keyframeIdx0 = keyframeIdx1;
@@ -1744,15 +1744,15 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 keyframeIdx0 = 5;
             }
 
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800F0038_2_s00[keyframeIdx0], &sharedData_800F03A8_2_s00[0]);
+            Collision_CharaCollisionSet(groaner, &sharedData_800F0038_2_s00[keyframeIdx0], &sharedData_800F03A8_2_s00[0]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromStandRightDeathStart, true):
         case ANIM_STATUS(GroanerAnim_StunFromStandRightRecoil, true):
-            keyframeIdx2      = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 94;
-            keyframeIdx0 = (keyframeIdx2 - !(keyframeIdx2 < 13)) - !(keyframeIdx2 < 15);
-            keyframeIdx1 = (((FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 93) - !(keyframeIdx2 < 12)) - !(keyframeIdx2 < 14)) - !(keyframeIdx2 < 15);
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800F03A8_2_s00[keyframeIdx0], &sharedData_800F03A8_2_s00[keyframeIdx1]);
+            refKeyframeIdx = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 94;
+            keyframeIdx0   = (refKeyframeIdx - !(refKeyframeIdx < 13)) - !(refKeyframeIdx < 15);
+            keyframeIdx1   = (((FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 93) - !(refKeyframeIdx < 12)) - !(refKeyframeIdx < 14)) - !(refKeyframeIdx < 15);
+            Collision_CharaCollisionSet(groaner, &sharedData_800F03A8_2_s00[keyframeIdx0], &sharedData_800F03A8_2_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromStandRightDeathEnd, false):
@@ -1762,34 +1762,34 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
 
         case ANIM_STATUS(GroanerAnim_StunFromStandLeftDeathStart, false):
         case ANIM_STATUS(GroanerAnim_StunFromStandLeftRecoil, false):
-            keyframeIdx2      = groanerProps.relKeyframeIdx_100;
-            keyframeIdx0 = keyframeIdx2 >> 1;
-            if (keyframeIdx2 >= 7)
+            refKeyframeIdx = groanerProps.relKeyframeIdx_100;
+            keyframeIdx0   = refKeyframeIdx >> 1;
+            if (refKeyframeIdx >= 7)
             {
-                if (keyframeIdx2 < 16)
+                if (refKeyframeIdx < 16)
                 {
-                    keyframeIdx0 = ANIM_INDEX_FROM_KEYFRAME(keyframeIdx2 - 3, keyframeIdx2, 9, 9);
+                    keyframeIdx0 = ANIM_INDEX_FROM_KEYFRAME(refKeyframeIdx - 3, refKeyframeIdx, 9, 9);
                 }
                 else
                 {
-                    keyframeIdx0 = (keyframeIdx2 - 7) - !(keyframeIdx2 < 20);
+                    keyframeIdx0 = (refKeyframeIdx - 7) - !(refKeyframeIdx < 20);
                 }
             }
 
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800F00EC_2_s00[keyframeIdx0], &sharedData_800F04C0_2_s00[0]);
+            Collision_CharaCollisionSet(groaner, &sharedData_800F00EC_2_s00[keyframeIdx0], &sharedData_800F04C0_2_s00[0]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromStandLeftDeathStart, true):
         case ANIM_STATUS(GroanerAnim_StunFromStandLeftRecoil, true):
-            keyframeIdx2 = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 244;
-            if (keyframeIdx2 < 12)
+            refKeyframeIdx = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 244;
+            if (refKeyframeIdx < 12)
             {
-                keyframeIdx0 = (keyframeIdx2 - (keyframeIdx2 > 0)) - !(keyframeIdx2 < 9);
+                keyframeIdx0 = (refKeyframeIdx - (refKeyframeIdx > 0)) - !(refKeyframeIdx < 9);
             }
             else
             {
-                temp = keyframeIdx2 >> 1;
-                if (keyframeIdx2 >= 16)
+                temp = refKeyframeIdx >> 1;
+                if (refKeyframeIdx >= 16)
                 {
                     keyframeIdx0 = temp + 3;
                 }
@@ -1799,14 +1799,14 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 }
             }
 
-            if (keyframeIdx2 < 12)
+            if (refKeyframeIdx < 12)
             {
-                keyframeIdx1 = keyframeIdx2 - !(keyframeIdx2 < 8);
+                keyframeIdx1 = refKeyframeIdx - !(refKeyframeIdx < 8);
             }
             else
             {
-                temp = (keyframeIdx2 - 1) >> 1;
-                if (keyframeIdx2 >= 15)
+                temp = (refKeyframeIdx - 1) >> 1;
+                if (refKeyframeIdx >= 15)
                 {
                     keyframeIdx1 = temp + 4;
                 }
@@ -1816,7 +1816,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 }
             }
 
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800F04C0_2_s00[keyframeIdx0], &sharedData_800F04C0_2_s00[keyframeIdx1]);
+            Collision_CharaCollisionSet(groaner, &sharedData_800F04C0_2_s00[keyframeIdx0], &sharedData_800F04C0_2_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StunFromStandLeftDeathEnd, false):
@@ -1830,7 +1830,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
 
         case ANIM_STATUS(GroanerAnim_RunForward, true):
             keyframeIdx0 = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 363;
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800EF1B0_2_s00[keyframeIdx0], &sharedData_800EF1B0_2_s00[(FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 362) & 0x7]);
+            Collision_CharaCollisionSet(groaner, &sharedData_800EF1B0_2_s00[keyframeIdx0], &sharedData_800EF1B0_2_s00[(FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 362) & 0x7]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StandToJumpAttack, false):
@@ -1838,20 +1838,20 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case ANIM_STATUS(GroanerAnim_StandToJumpAttack, true):
-            keyframeIdx2      = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 346;
-            keyframeIdx0 = (((keyframeIdx2 - !(keyframeIdx2 < 3)) - !(keyframeIdx2 < 9)) - !(keyframeIdx2 < 12)) - !(keyframeIdx2 < 13);
-            keyframeIdx1 = ((((FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 345) - !(keyframeIdx2 < 2)) - !(keyframeIdx2 < 8)) - !(keyframeIdx2 < 11)) - !(keyframeIdx2 < 12);
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800EF0AC_2_s00[keyframeIdx0], &sharedData_800EF0AC_2_s00[keyframeIdx1]);
+            refKeyframeIdx = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 346;
+            keyframeIdx0   = (((refKeyframeIdx - !(refKeyframeIdx < 3)) - !(refKeyframeIdx < 9)) - !(refKeyframeIdx < 12)) - !(refKeyframeIdx < 13);
+            keyframeIdx1   = ((((FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 345) - !(refKeyframeIdx < 2)) - !(refKeyframeIdx < 8)) - !(refKeyframeIdx < 11)) - !(refKeyframeIdx < 12);
+            Collision_CharaCollisionSet(groaner, &sharedData_800EF0AC_2_s00[keyframeIdx0], &sharedData_800EF0AC_2_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(GroanerAnim_JumpAttack, false):
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800EF19C_2_s00, &sharedData_800EEE54_2_s00[0]);
+            Collision_CharaCollisionSet(groaner, &sharedData_800EF19C_2_s00, &sharedData_800EEE54_2_s00[0]);
             break;
 
         case ANIM_STATUS(GroanerAnim_JumpAttack, true):
             keyframeIdx0 = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 214;
             keyframeIdx1 = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 213;
-            Collision_CharaAnimShapesSet(groaner, &sharedData_800EEE54_2_s00[keyframeIdx0], &sharedData_800EEE54_2_s00[keyframeIdx1]);
+            Collision_CharaCollisionSet(groaner, &sharedData_800EEE54_2_s00[keyframeIdx0], &sharedData_800EEE54_2_s00[keyframeIdx1]);
 
             groaner->collision.box.field_8 = Q12(-0.8f);
             break;

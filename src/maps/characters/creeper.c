@@ -751,18 +751,18 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
     switch (creeper->model.anim.status)
     {
         case ANIM_STATUS(CreeperAnim_AttackToWalkForward, false):
-            Collision_CharaAnimShapesSet(creeper, &sharedData_800E0FC8_1_s02, &sharedData_800E0F78_1_s02[0]);
+            Collision_CharaCollisionSet(creeper, &sharedData_800E0FC8_1_s02, &sharedData_800E0F78_1_s02[0]);
             break;
 
         case ANIM_STATUS(CreeperAnim_AttackToWalkForward, true):
             creeper->properties.creeper.animStatus_10A = ANIM_STATUS(CreeperAnim_AttackToWalkForward, true);
             keyframeIdx0 = FP_FROM(creeper->model.anim.time, Q12_SHIFT);
             keyframeIdx1 = keyframeIdx0 + 1;
-            Collision_CharaAnimShapesSet(creeper, &sharedData_800E0F78_1_s02[keyframeIdx0], &sharedData_800E0F78_1_s02[keyframeIdx1]);
+            Collision_CharaCollisionSet(creeper, &sharedData_800E0F78_1_s02[keyframeIdx0], &sharedData_800E0F78_1_s02[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(CreeperAnim_Attack, false):
-            Collision_CharaAnimShapesSet(creeper, &sharedData_800E11A8_1_s02, &sharedData_800E0FC8_1_s02);
+            Collision_CharaCollisionSet(creeper, &sharedData_800E11A8_1_s02, &sharedData_800E0FC8_1_s02);
             break;
 
         case ANIM_STATUS(CreeperAnim_Attack, true):
@@ -773,11 +773,11 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
         case ANIM_STATUS(CreeperAnim_DeathStart, false):
             if (creeper->properties.creeper.animStatus_10A == ANIM_STATUS(CreeperAnim_StunOnce, true))
             {
-                Collision_CharaAnimShapesSet(creeper, &sharedData_800E10CC_1_s02, &sharedData_800E0FDC_1_s02);
+                Collision_CharaCollisionSet(creeper, &sharedData_800E10CC_1_s02, &sharedData_800E0FDC_1_s02);
             }
             else
             {
-                Collision_CharaAnimShapesSet(creeper, &sharedData_800E116C_1_s02, &sharedData_800E0FDC_1_s02);
+                Collision_CharaCollisionSet(creeper, &sharedData_800E116C_1_s02, &sharedData_800E0FDC_1_s02);
             }
             break;
 
@@ -790,11 +790,11 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
         case ANIM_STATUS(CreeperAnim_RunForwardStunCont, false):
             if (creeper->properties.creeper.animStatus_10A == ANIM_STATUS(CreeperAnim_RunForwardStunStart, true))
             {
-                Collision_CharaAnimShapesSet(creeper, &sharedData_800E1158_1_s02, &sharedData_800E0FF0_1_s02);
+                Collision_CharaCollisionSet(creeper, &sharedData_800E1158_1_s02, &sharedData_800E0FF0_1_s02);
             }
             else
             {
-                Collision_CharaAnimShapesSet(creeper, &sharedData_800E1180_1_s02, &sharedData_800E0FF0_1_s02);
+                Collision_CharaCollisionSet(creeper, &sharedData_800E1180_1_s02, &sharedData_800E0FF0_1_s02);
             }
             break;
 
@@ -816,7 +816,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
 
             keyframeIdx0 = keyframeIdx3 - !(keyframeIdx2 < 12);
             keyframeIdx1 = (keyframeIdx2 + 1) - !(keyframeIdx2 < 9) - !(keyframeIdx2 < 10) - !(keyframeIdx2 < 11);
-            Collision_CharaAnimShapesSet(creeper, &sharedData_800E1004_1_s02[keyframeIdx0], &sharedData_800E1004_1_s02[keyframeIdx1]);
+            Collision_CharaCollisionSet(creeper, &sharedData_800E1004_1_s02[keyframeIdx0], &sharedData_800E1004_1_s02[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(CreeperAnim_IdleToRunForward, false):
@@ -828,11 +828,11 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
         case ANIM_STATUS(CreeperAnim_RunForwardStunStart, true):
             keyframeIdx0 = FP_FROM(creeper->model.anim.time, Q12_SHIFT) - 64;
             keyframeIdx1 = keyframeIdx0 + 1;
-            Collision_CharaAnimShapesSet(creeper, &sharedData_800E10E0_1_s02[keyframeIdx0], &sharedData_800E10E0_1_s02[keyframeIdx1]);
+            Collision_CharaCollisionSet(creeper, &sharedData_800E10E0_1_s02[keyframeIdx0], &sharedData_800E10E0_1_s02[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(CreeperAnim_Stun, false):
-            Collision_CharaAnimShapesSet(creeper, &sharedData_800E10CC_1_s02, &sharedData_800E116C_1_s02);
+            Collision_CharaCollisionSet(creeper, &sharedData_800E10CC_1_s02, &sharedData_800E116C_1_s02);
             break;
 
         case ANIM_STATUS(CreeperAnim_Stun, true):
@@ -840,7 +840,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
             break;
 
         case ANIM_STATUS(CreeperAnim_RunForward, false):
-            Collision_CharaAnimShapesSet(creeper, &sharedData_800E1158_1_s02, &sharedData_800E1180_1_s02);
+            Collision_CharaCollisionSet(creeper, &sharedData_800E1158_1_s02, &sharedData_800E1180_1_s02);
             break;
 
         case ANIM_STATUS(CreeperAnim_RunForward, true):
@@ -848,7 +848,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
             break;
 
         case ANIM_STATUS(CreeperAnim_Idle, false):
-            Collision_CharaAnimShapesSet(creeper, &sharedData_800E11BC_1_s02, &sharedData_800E1194_1_s02);
+            Collision_CharaCollisionSet(creeper, &sharedData_800E11BC_1_s02, &sharedData_800E1194_1_s02);
             break;
 
         case ANIM_STATUS(CreeperAnim_Idle, true):
@@ -857,7 +857,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
             break;
 
         case ANIM_STATUS(CreeperAnim_AttackStart, false):
-            Collision_CharaAnimShapesSet(creeper, &sharedData_800E11BC_1_s02, &sharedData_800E11A8_1_s02);
+            Collision_CharaCollisionSet(creeper, &sharedData_800E11BC_1_s02, &sharedData_800E11A8_1_s02);
             break;
 
         case ANIM_STATUS(CreeperAnim_AttackStart, true):
@@ -867,11 +867,11 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper)
         case ANIM_STATUS(CreeperAnim_WalkForward, false):
             if (creeper->properties.creeper.animStatus_10A == ANIM_STATUS(CreeperAnim_Idle, true))
             {
-                Collision_CharaAnimShapesSet(creeper, &sharedData_800E1194_1_s02, &sharedData_800E11BC_1_s02);
+                Collision_CharaCollisionSet(creeper, &sharedData_800E1194_1_s02, &sharedData_800E11BC_1_s02);
             }
             else if (creeper->properties.creeper.animStatus_10A == ANIM_STATUS(CreeperAnim_AttackToWalkForward, true))
             {
-                Collision_CharaAnimShapesSet(creeper, &sharedData_800E0F78_1_s02[0], &sharedData_800E11BC_1_s02);
+                Collision_CharaCollisionSet(creeper, &sharedData_800E0F78_1_s02[0], &sharedData_800E11BC_1_s02);
             }
             else
             {

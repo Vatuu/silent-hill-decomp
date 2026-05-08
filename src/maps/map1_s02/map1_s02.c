@@ -1497,9 +1497,10 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
         {
             g_WorldObject1.rotation.vy = Q12_ANGLE(-112.5f);
         }
+        // Activate collisions for door blocking corpse in bathroom with shotgun.
         else
         {
-            collFlags = CollisionFlag_1; // Activate collisions for door blocking the corpse in the bathroom with the shotgun.
+            collFlags = CollisionFlag_1;
         }
 
         WorldGfx_ObjectAdd(&g_WorldObject1.object, &g_WorldObject1.position, &g_WorldObject1.rotation);
@@ -1513,10 +1514,11 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
         WorldGfx_ObjectAdd(&g_WorldObject7.object, &g_WorldObject7.position, &g_WorldObject7.rotation);
         WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &(SVECTOR3){ 0, 0, 0 });
 
+        // Activate collisions for door locking boss entrance.
         if (g_WorldObject6.rotation.vy != Q12_ANGLE(180.0f) ||
             g_WorldObject7.rotation.vy != g_WorldObject6.rotation.vy)
         {
-            collFlags |= CollisionFlag_2; // Activate collisions for the door locking the entrance to the boss.
+            collFlags |= CollisionFlag_2;
             Savegame_EventFlagClear(EventFlag_362);
         }
         else

@@ -18,7 +18,7 @@
 // TRIGGERS COLLISION INIT
 // ========================================
 
-void Collision_OvlTriggerZonesPtrSet(s_MapOverlayHeader* overlayHeader) // 0x80040004
+void Collision_MapTriggerZonesSet(s_MapOverlayHeader* overlayHeader) // 0x80040004
 {
     g_WorldGfxWork.triggerZone = &overlayHeader->triggerZones;
 }

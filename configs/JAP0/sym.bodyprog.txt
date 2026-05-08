@@ -597,7 +597,7 @@ func_8003FF2C                                = 0x8003FC60; // type:func
 //-----------------------------------------------------------------------
 //--- PA: 0x01B1D8   VA: 0x8003FD38   subsegment: c, events/triggers_init
 //-----------------------------------------------------------------------
-Collision_OvlTriggerZonesPtrSet              = 0x8003FD38; // type:func
+Collision_MapTriggerZonesSet                 = 0x8003FD38; // type:func
 func_80040014                                = 0x8003FD48; // type:func
 
 //---------------------------------------------------------------
@@ -1148,7 +1148,7 @@ Ray_CharaToCharaFrontLosHitCheck             = 0x80071C5C; // type:func
 Ray_CharaLosHitCheck                         = 0x80071CF0; // type:func
 func_80070320                                = 0x80071D74; // type:func
 func_80070360                                = 0x80071DB4; // type:func
-Collision_CharaAnimShapesSet                 = 0x80071E54; // type:func
+Collision_CharaCollisionSet                  = 0x80071E54; // type:func
 func_800705E4                                = 0x80072038; // type:func
 
 //-----------------------------------------------------------------
