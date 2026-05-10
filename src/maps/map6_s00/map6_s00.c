@@ -110,7 +110,7 @@ void func_800EB11C(void) // 0x800EB11C
         scratchData->sprt_0             = (SPRT*)GsOUT_PACKET_P;
         for (i = 0; i < 2; i++)
         {
-            setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
+            setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, COLOR(128, 128, 128, 0));
             setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
             scratchData->sprt_0->u0 = 0;
             scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) ? 32 : 0;
@@ -421,7 +421,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EBEE0
     {
         if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) || PLAYER_IN_MAP_CHUNK(vx, 1, -5, -1, -5))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Window.object, &g_WorldObject_Window.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject_Window.object, &g_WorldObject_Window.position, &SVECTOR3_ZERO);
         }
     }
 
@@ -431,14 +431,14 @@ void Map_WorldObjectsUpdate(void) // 0x800EBEE0
         {
             if (Savegame_EventFlagGet(EventFlag_424))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_DrOpen1.object, &g_WorldObject_DrOpen1.position, &(SVECTOR3){ 0, 0, 0 });
-                WorldGfx_ObjectAdd(&g_WorldObject_DrOpen2.object, &g_WorldObject_DrOpen2.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_DrOpen1.object, &g_WorldObject_DrOpen1.position, &SVECTOR3_ZERO);
+                WorldGfx_ObjectAdd(&g_WorldObject_DrOpen2.object, &g_WorldObject_DrOpen2.position, &SVECTOR3_ZERO);
 
                 collFlags |= CollisionFlag_1;
             }
             else
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_DrClose.object, &g_WorldObject_DrClose.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_DrClose.object, &g_WorldObject_DrClose.position, &SVECTOR3_ZERO);
             }
         }
     }

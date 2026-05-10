@@ -28,14 +28,14 @@ static const u8 FONT_12X16_GLYPH_WIDTHS[FONT_12X16_GLYPH_COUNT] = {
 
 /** @brief See `e_StringColorId`. */
 static const u32 STRING_COLORS[StringColorId_Count] = {
-    PACKED_COLOR(160, 128, 64,  0x64),
-    PACKED_COLOR(32,  32,  32,  0x64),
-    PACKED_COLOR(24,  128, 40,  0x64),
-    PACKED_COLOR(8,   184, 96,  0x64),
-    PACKED_COLOR(128, 0,   0,   0x64),
-    PACKED_COLOR(24,  128, 40,  0x64),
-    PACKED_COLOR(100, 100, 100, 0x64),
-    PACKED_COLOR(128, 128, 128, 0x64)
+    COLOR(160, 128, 64,  0x64),
+    COLOR(32,  32,  32,  0x64),
+    COLOR(24,  128, 40,  0x64),
+    COLOR(8,   184, 96,  0x64),
+    COLOR(128, 0,   0,   0x64),
+    COLOR(24,  128, 40,  0x64),
+    COLOR(100, 100, 100, 0x64),
+    COLOR(128, 128, 128, 0x64)
 };
 
 /** `e_ColorId` */

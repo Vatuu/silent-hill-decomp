@@ -1002,7 +1002,7 @@ void func_800D3420(void) // 0x800D3420
         scratchData->sprt_0             = (SPRT*)GsOUT_PACKET_P;
         for (i = 0; i < 2; i++)
         {
-            setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
+            setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, COLOR(128, 128, 128, 0));
             setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
             scratchData->sprt_0->u0 = 0;
             scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) ? 32 : 0;
@@ -1223,15 +1223,15 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
             Collision_FlagBitsSet(CollisionFlag_1);
         }
 
-        WorldGfx_ObjectAdd(&WorldObject_D_800D7FF0.object, &WorldObject_D_800D7FF0.position, &(SVECTOR3){ 0, 0, 0 });
+        WorldGfx_ObjectAdd(&WorldObject_D_800D7FF0.object, &WorldObject_D_800D7FF0.position, &SVECTOR3_ZERO);
         WorldGfx_ObjectAdd(&WorldObject_D_800D8050.object, &WorldObject_D_800D8070.position, &WorldObject_D_800D8070.rotation);
 
         if (Savegame_EventFlagGet(EventFlag_313))
         {
-            WorldGfx_ObjectAdd(&WorldObject_D_800D80B0.object, &WorldObject_D_800D80B0.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&WorldObject_D_800D80B0.object, &WorldObject_D_800D80B0.position, &SVECTOR3_ZERO);
         }
 
-        WorldGfx_ObjectAdd(&WorldObject_D_800D80E0[D_800D8018].object, &WorldObject_D_800D80E0[D_800D8018].position, &(SVECTOR3){ 0, 0, 0 });
+        WorldGfx_ObjectAdd(&WorldObject_D_800D80E0[D_800D8018].object, &WorldObject_D_800D80E0[D_800D8018].position, &SVECTOR3_ZERO);
     }
     else
     {
@@ -1242,7 +1242,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S01_PickupAxe))
         {
-            WorldGfx_ObjectAdd(&WorldObject_D_800D8020.object, &WorldObject_D_800D8020.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&WorldObject_D_800D8020.object, &WorldObject_D_800D8020.position, &SVECTOR3_ZERO);
         }
     }
 

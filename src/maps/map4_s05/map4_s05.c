@@ -1743,7 +1743,7 @@ void func_800D6BC0(void) // 0x800D6BC0
             break;
 
         case 8:
-            func_80080B58(&g_SysWork.playerBoneCoords[HarryBone_Head], &(SVECTOR3){ 0, 0, 0 }, &QVECTOR3(154.31f, -15.5f, 24.07f));
+            func_80080B58(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_ZERO, &QVECTOR3(154.31f, -15.5f, 24.07f));
             sharedFunc_800CE5D4_1_s03(&D_800D7D88, Q12(1.0f), Q12(0.2f), 1);
             SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
             break;

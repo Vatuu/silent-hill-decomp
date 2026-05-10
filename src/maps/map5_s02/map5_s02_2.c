@@ -837,13 +837,13 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
     {
         if (!Savegame_EventFlagGet(EventFlag_375))
         {
-            WorldGfx_ObjectAdd(g_WorldObject_Box, g_WorldObject_UnkPos, &(SVECTOR3){ 0, 0, 0 });
-            WorldGfx_ObjectAdd(&g_WorldObject_Box[1], g_WorldObject_UnkPos, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(g_WorldObject_Box, g_WorldObject_UnkPos, &SVECTOR3_ZERO);
+            WorldGfx_ObjectAdd(&g_WorldObject_Box[1], g_WorldObject_UnkPos, &SVECTOR3_ZERO);
         }
         else
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Box[2], &g_WorldObject_UnkPos[1], &(SVECTOR3){ 0, 0, 0 });
-            WorldGfx_ObjectAdd(&(&g_WorldObject_Box[2])[1], &g_WorldObject_UnkPos[1], &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject_Box[2], &g_WorldObject_UnkPos[1], &SVECTOR3_ZERO);
+            WorldGfx_ObjectAdd(&(&g_WorldObject_Box[2])[1], &g_WorldObject_UnkPos[1], &SVECTOR3_ZERO);
 
             if (!Savegame_EventFlagGet(EventFlag_M5S02_PickupSafeKey))
             {

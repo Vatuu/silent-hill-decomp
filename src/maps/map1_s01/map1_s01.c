@@ -1080,13 +1080,13 @@ void Map_WorldObjectsUpdate(void) // 0x800D9514
         {
             if (!Savegame_EventFlagGet(EventFlag_M1S01_PickupGoldMedallion))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject6, &D_800DF080, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject6, &D_800DF080, &SVECTOR3_ZERO);
             }
-            WorldGfx_ObjectAdd(&g_WorldObject5, &D_800DF080, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject5, &D_800DF080, &SVECTOR3_ZERO);
         }
         else
         {
-            WorldGfx_ObjectAdd(&g_WorldObject4, &D_800DF080, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject4, &D_800DF080, &SVECTOR3_ZERO);
         }
     }
 
@@ -1094,7 +1094,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9514
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S01_PickupChemical))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject7.object, &g_WorldObject7.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject7.object, &g_WorldObject7.position, &SVECTOR3_ZERO);
         }
     }
 
@@ -1107,11 +1107,11 @@ void Map_WorldObjectsUpdate(void) // 0x800D9514
     {
         if (Savegame_EventFlagGet(EventFlag_71))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject8.object, &g_WorldObject8.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject8.object, &g_WorldObject8.position, &SVECTOR3_ZERO);
         }
         else
         {
-            WorldGfx_ObjectAdd(&g_WorldObject9.object, &g_WorldObject9.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject9.object, &g_WorldObject9.position, &SVECTOR3_ZERO);
         }
 
         if (!Savegame_EventFlagGet(EventFlag_M1S01_PickupSilverMedallion))
@@ -1259,7 +1259,7 @@ void func_800D9EC4(void) // 0x800D9EC4
     }
     else if (!Savegame_EventFlagGet(EventFlag_77))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject3.object, &g_WorldObject3.position, &(SVECTOR3){ 0, 0, 0 });
+        WorldGfx_ObjectAdd(&g_WorldObject3.object, &g_WorldObject3.position, &SVECTOR3_ZERO);
     }
     else
     {

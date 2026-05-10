@@ -1198,7 +1198,7 @@ void func_800D9C9C(void) // 0x800D9C9C
         if ((g_SysWork.sysStateSteps[0] >= 8 && g_SysWork.sysStateSteps[0] <= 10) || g_SysWork.sysStateSteps[0] == 15)
         {
             sprt = (SPRT*)GsOUT_PACKET_P;
-            setCodeWord(sprt, PRIM_RECT | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
+            setCodeWord(sprt, PRIM_RECT | RECT_TEXTURE, COLOR(128, 128, 128, 0));
             setXY0Fast(sprt, (((D_800E156E - 1) % 3) * 35) - 42, (((D_800E156E - 1) / 3) * 35) - 32);
             setUV0(sprt, 64, 16);
             setWH(sprt, 14, 14);

@@ -69,7 +69,7 @@ bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
 
         for (i = 0; i < 2; i++)
         {
-            setCodeWord(scratchData->sprt_12C, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
+            setCodeWord(scratchData->sprt_12C, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, COLOR(128, 128, 128, 0));
             setXY0Fast(scratchData->sprt_12C, ((i << 8) - 160), -112);
             scratchData->sprt_12C->u0 = 0;
             scratchData->sprt_12C->v0 = (scratchData->field_148.u8[1] == 0) ? 32 : 0;

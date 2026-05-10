@@ -142,7 +142,7 @@ void Map_WorldObjectsUpdate(void)
         idx = !idx;
         for (i = 0; i < 4; i++)
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Winr[i][idx], &g_WorldObjectPose_Winr, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject_Winr[i][idx], &g_WorldObjectPose_Winr, &SVECTOR3_ZERO);
         }
     }
 
@@ -177,7 +177,7 @@ void Map_WorldObjectsUpdate(void)
         }
         if (!Savegame_EventFlagGet(EventFlag_M0S02_PickupKatana))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Katana.object, &g_WorldObject_Katana.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject_Katana.object, &g_WorldObject_Katana.position, &SVECTOR3_ZERO);
         }
     }
 

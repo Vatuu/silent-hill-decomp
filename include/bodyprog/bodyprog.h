@@ -514,7 +514,7 @@ typedef struct _Collision
     /* 0x0 */ q19_12 groundHeight;
     /* 0x4 */ q3_12  field_4;  // X
     /* 0x6 */ q3_12  field_6;  // Z
-    /* 0x8 */ s8     field_8;  // Count of something, maybe valid ground at probed points around center? Set to 0, 7, or 12.
+    /* 0x8 */ s8     field_8;  // Ground type? Set to 0, 7, or 12.
     // 3 bytes of padding.
 } s_Collision;
 STATIC_ASSERT_SIZEOF(s_Collision, 12);

@@ -621,7 +621,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2DF4
     {
         if (Savegame_EventFlagGet(EventFlag_337) && !Savegame_EventFlagGet(EventFlag_338))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &SVECTOR3_ZERO);
         }
     }
 }

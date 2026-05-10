@@ -471,7 +471,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {
-        WorldGfx_ObjectAdd(&D_800DAF84.object, &D_800DAF84.position, &(SVECTOR3){ 0, 0, 0 });
+        WorldGfx_ObjectAdd(&D_800DAF84.object, &D_800DAF84.position, &SVECTOR3_ZERO);
 
         if (!Savegame_EventFlagGet(EventFlag_M1S06_PickupKGordonKey))
         {

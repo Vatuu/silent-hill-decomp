@@ -1700,7 +1700,7 @@ void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
         line = (LINE_F2*)GsOUT_PACKET_P;
 
         setLineF2(line);
-        setCodeWord(line, 0x40, (i < 2) ? PACKED_COLOR(240, 240, 240, 0) : PACKED_COLOR(128, 128, 128, 0));
+        setCodeWord(line, 0x40, (i < 2) ? COLOR(240, 240, 240, 0) : COLOR(128, 128, 128, 0));
 
         setXY0Fast(line, (u16)(LINE_BASES[i].vx             - g_GameWorkConst->config.optScreenPosX_1C), LINE_BASES[i].vy             - g_GameWorkConst->config.optScreenPosY_1D);
         setXY1Fast(line, (u16)(LINE_BASES[(i + 1) & 0x3].vx - g_GameWorkConst->config.optScreenPosX_1C), LINE_BASES[(i + 1) & 0x3].vy - g_GameWorkConst->config.optScreenPosY_1D);
@@ -2006,9 +2006,9 @@ void Options_Selection_ArrowDraw(const s_Triangle2d* arrow, bool isFlashing, boo
     if (isFlashing)
     {
         // Base color is blue. `* 0x700` Shifts green component into place.
-        *((u32*)&arrowPoly->r0) = (colorEnd   * 0x700) + PACKED_COLOR(0, 0, 255, 0x30);
-        *((u32*)&arrowPoly->r1) = (colorStart * 0x700) + PACKED_COLOR(0, 0, 255, 0x30);
-        *((u32*)&arrowPoly->r2) = (colorStart * 0x700) + PACKED_COLOR(0, 0, 255, 0x30);
+        *((u32*)&arrowPoly->r0) = (colorEnd   * 0x700) + COLOR(0, 0, 255, 0x30);
+        *((u32*)&arrowPoly->r1) = (colorStart * 0x700) + COLOR(0, 0, 255, 0x30);
+        *((u32*)&arrowPoly->r2) = (colorStart * 0x700) + COLOR(0, 0, 255, 0x30);
     }
     // Set solid cyan color.
     else
@@ -2583,7 +2583,7 @@ void Options_ControllerMenu_ButtonIconsDraw(s32 baseX, s32 baseY, u16 config) //
 
         prim = (SPRT*)packet;
         addPrimFast(ot, prim, 4);
-        setCodeWord(prim, PRIM_RECT | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
+        setCodeWord(prim, PRIM_RECT | RECT_TEXTURE, COLOR(128, 128, 128, 0));
         setWH(prim, ICON_SIZE_X, ICON_SIZE_Y);
 
         clutY = image->clutY;

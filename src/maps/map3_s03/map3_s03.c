@@ -923,7 +923,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
 
             for (i = 0; i < ARRAY_SIZE(g_WorldObject_Dr); i++)
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object, &g_WorldObject_Dr[i].position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object, &g_WorldObject_Dr[i].position, &SVECTOR3_ZERO);
             }
             break;
 
@@ -953,7 +953,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
                     colorsPos.vy = Q12(0.4f);
                 }
 
-                WorldGfx_ObjectAdd(&g_WorldObject_Colors[0], &colorsPos, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Colors[0], &colorsPos, &SVECTOR3_ZERO);
             }
 
             if (Savegame_EventFlagGet(EventFlag_269) ||
@@ -979,7 +979,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
                     colorsPos.vy = Q12(-0.4f);
                 }
 
-                WorldGfx_ObjectAdd(&g_WorldObject_Colors[1], &colorsPos, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Colors[1], &colorsPos, &SVECTOR3_ZERO);
             }
 
             if (Savegame_EventFlagGet(EventFlag_273) ||
@@ -1005,7 +1005,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
                     colorsPos.vy = Q12(-0.4f);
                 }
 
-                WorldGfx_ObjectAdd(&g_WorldObject_Colors[2], &colorsPos, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Colors[2], &colorsPos, &SVECTOR3_ZERO);
             }
 
             if (Savegame_EventFlagGet(EventFlag_277) ||
@@ -1031,7 +1031,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
                     colorsPos.vy = Q12(0.4f);
                 }
 
-                WorldGfx_ObjectAdd(&g_WorldObject_Colors[3], &colorsPos, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Colors[3], &colorsPos, &SVECTOR3_ZERO);
             }
             break;
 
@@ -1052,7 +1052,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
 
             if (Savegame_EventFlagGet(EventFlag_250))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Blood2.object, &g_WorldObject_Blood2.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Blood2.object, &g_WorldObject_Blood2.position, &SVECTOR3_ZERO);
             }
 
             if (!D_800D8428)
@@ -1073,7 +1073,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
         case CELL_XZ(15, 15):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfCat))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Plate1.object, &g_WorldObject_Plate1.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Plate1.object, &g_WorldObject_Plate1.position, &SVECTOR3_ZERO);
             }
             break;
 
@@ -1102,14 +1102,14 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
         case CELL_XZ(14, 17):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupDisinfectingAlcohol))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Alcohol.object, &g_WorldObject_Alcohol.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Alcohol.object, &g_WorldObject_Alcohol.position, &SVECTOR3_ZERO);
             }
             break;
 
         case CELL_XZ(13, 17):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupBasementStoreroomKey))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Key.object, &g_WorldObject_Key.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Key.object, &g_WorldObject_Key.position, &SVECTOR3_ZERO);
             }
             break;
 

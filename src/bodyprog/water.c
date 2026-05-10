@@ -828,8 +828,8 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
 
         *(s32*)&poly->g4[1].r0 = 0x40804;
         *(s32*)&poly->g4[1].r1 = 0x40804;
-        *(s32*)&poly->g4[1].r3 = PACKED_COLOR(0, 0, 0, 0x0);
-        *(s32*)&poly->g4[1].r2 = PACKED_COLOR(0, 0, 0, 0x0);
+        *(s32*)&poly->g4[1].r3 = COLOR(0, 0, 0, 0x0);
+        *(s32*)&poly->g4[1].r2 = COLOR(0, 0, 0, 0x0);
 
         *(s32*)&poly->g3[1].r0 = 0x40808;
         *(s32*)&poly->g3[1].r2 = 0x40804;

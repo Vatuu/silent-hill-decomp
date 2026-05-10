@@ -2127,17 +2127,17 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
                 // Chain 1.
                 if (!Savegame_EventFlagGet(EventFlag_169))
                 {
-                    WorldGfx_ObjectAdd(&g_WorldObject6[0], &D_800F56CC[0], &(SVECTOR3){ 0, 0, 0 });
-                    WorldGfx_ObjectAdd(&g_WorldObject6[1], &D_800F56CC[0], &(SVECTOR3){ 0, 0, 0 });
-                    WorldGfx_ObjectAdd(&g_WorldObject6[2], &D_800F56CC[0], &(SVECTOR3){ 0, 0, 0 });
+                    WorldGfx_ObjectAdd(&g_WorldObject6[0], &D_800F56CC[0], &SVECTOR3_ZERO);
+                    WorldGfx_ObjectAdd(&g_WorldObject6[1], &D_800F56CC[0], &SVECTOR3_ZERO);
+                    WorldGfx_ObjectAdd(&g_WorldObject6[2], &D_800F56CC[0], &SVECTOR3_ZERO);
                 }
                 // Chain 2.
                 else
                 {
                     WorldGfx_ObjectAdd(&g_WorldObject7[0], &D_800F56CC[1], &D_800F538C);
                     WorldGfx_ObjectAdd(&g_WorldObject7[1], &D_800F56CC[1], &D_800F538C);
-                    WorldGfx_ObjectAdd(&g_WorldObject7[2], &D_800F56CC[0], &(SVECTOR3){ 0, 0, 0 });
-                    WorldGfx_ObjectAdd(&g_WorldObject7[3], &D_800F56CC[0], &(SVECTOR3){ 0, 0, 0 });
+                    WorldGfx_ObjectAdd(&g_WorldObject7[2], &D_800F56CC[0], &SVECTOR3_ZERO);
+                    WorldGfx_ObjectAdd(&g_WorldObject7[3], &D_800F56CC[0], &SVECTOR3_ZERO);
                 }
             }
             break;
@@ -2146,17 +2146,17 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
         case CELL_XZ(20, 22):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_LockOfLionOpen))
             {
-                WorldGfx_ObjectAdd(&g_WorldObjectB->object, &g_WorldObjectB->position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObjectB->object, &g_WorldObjectB->position, &SVECTOR3_ZERO);
             }
 
             if (!Savegame_EventFlagGet(EventFlag_M2S00_LockOfWoodmanOpen))
             {
-                WorldGfx_ObjectAdd(&g_WorldObjectB[1].object, &g_WorldObjectB[1].position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObjectB[1].object, &g_WorldObjectB[1].position, &SVECTOR3_ZERO);
             }
 
             if (!Savegame_EventFlagGet(EventFlag_M2S00_LockOfScarecrowOpen))
             {
-                WorldGfx_ObjectAdd(&g_WorldObjectB[2].object, &g_WorldObjectB[2].position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObjectB[2].object, &g_WorldObjectB[2].position, &SVECTOR3_ZERO);
             }
 
             WorldGfx_ObjectAdd(&D_800F56EC, &D_800F570C.position, &D_800F570C.rotation);

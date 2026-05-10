@@ -4729,7 +4729,7 @@ void func_800D8FC0(void) // 0x800D8FC0
             scratchData->sprt_0            = (SPRT*)GsOUT_PACKET_P;
             for (i = 0; i < 2; i++)
             {
-                setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
+                setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, COLOR(128, 128, 128, 0));
                 setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
                 scratchData->sprt_0->u0 = 0;
                 scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_C == 0) ? 32 : 0;

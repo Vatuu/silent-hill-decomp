@@ -1405,7 +1405,7 @@ void func_800DD2D4(void) // 0x800DD2D4
             scratchData->sprt_0             = (SPRT*)GsOUT_PACKET_P;
             for (i = 0; i < 2; i++)
             {
-                setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
+                setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, COLOR(128, 128, 128, 0));
                 setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
                 scratchData->sprt_0->u0 = 0;
                 scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) ? 32 : 0;
@@ -1738,16 +1738,16 @@ void func_800DE1FC(void) // 0x800DE1FC
 
         case 2:
             SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
-            WorldGfx_ObjectAdd(&g_WorldObject_Cover.object, &g_WorldObject_Cover.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject_Cover.object, &g_WorldObject_Cover.position, &SVECTOR3_ZERO);
             break;
 
         case 3:
             Map_MessageWithAudio(47, &D_800EB6B0, &D_800E9D30);
-            WorldGfx_ObjectAdd(&g_WorldObject_Cover.object, &g_WorldObject_Cover.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject_Cover.object, &g_WorldObject_Cover.position, &SVECTOR3_ZERO);
             break;
 
         case 4:
-            WorldGfx_ObjectAdd(&g_WorldObject_Cover.object, &g_WorldObject_Cover.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject_Cover.object, &g_WorldObject_Cover.position, &SVECTOR3_ZERO);
 
             scratch             = PSX_SCRATCH;
             scratch->drawArea_8 = (DR_AREA*)GsOUT_PACKET_P;
@@ -1770,7 +1770,7 @@ void func_800DE1FC(void) // 0x800DE1FC
 
             for (i = 0; i < 2; i++)
             {
-                setCodeWord(scratch->sprt_0, PRIM_RECT | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
+                setCodeWord(scratch->sprt_0, PRIM_RECT | RECT_TEXTURE, COLOR(128, 128, 128, 0));
                 setXY0Fast(scratch->sprt_0, ((i << 8) - 160), -112);
 
                 scratch->sprt_0->u0 = 0;
@@ -2270,7 +2270,7 @@ void func_800DFDDC(void) // 0x800DFDDC
         if ((g_SysWork.sysStateSteps[0] >= 8 && g_SysWork.sysStateSteps[0] <= 10) || g_SysWork.sysStateSteps[0] == 15)
         {
             sprt = (SPRT*)GsOUT_PACKET_P;
-            setCodeWord(sprt, PRIM_RECT | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
+            setCodeWord(sprt, PRIM_RECT | RECT_TEXTURE, COLOR(128, 128, 128, 0));
             setXY0Fast(sprt, (((D_800E9D8E - 1) % 3) * 35) - 42, (((D_800E9D8E - 1) / 3) * 35) - 32);
             setUV0(sprt, 64, 16);
             setWH(sprt, 14, 14);
@@ -3435,7 +3435,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
                 WorldGfx_ObjectAdd(&g_WorldObject_Bed3.object, &g_WorldObject_Bed3.position, &g_WorldObject_Bed3.rotation);
                 if (!Savegame_EventFlagGet(EventFlag_M7S02_PickupDiskOfOuroboros))
                 {
-                    WorldGfx_ObjectAdd(&g_WorldObject_Key2.object, &g_WorldObject_Key2.position, &(SVECTOR3){ 0, 0, 0 });
+                    WorldGfx_ObjectAdd(&g_WorldObject_Key2.object, &g_WorldObject_Key2.position, &SVECTOR3_ZERO);
                 }
             }
             break;
@@ -3443,14 +3443,14 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
         case CELL_XZ(17, 13):
             if (!Savegame_EventFlagGet(EventFlag_M7S02_PickupAnkh))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Ank.object, &g_WorldObject_Ank.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Ank.object, &g_WorldObject_Ank.position, &SVECTOR3_ZERO);
             }
             break;
 
         case CELL_XZ(17, 14):
             if (Savegame_EventFlagGet(EventFlag_557))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Ref[1].object, &g_WorldObject_Ref[1].position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Ref[1].object, &g_WorldObject_Ref[1].position, &SVECTOR3_ZERO);
                 for (i = 0; i < 4; i++)
                 {
                     WorldGfx_ObjectAdd(&g_WorldObject_Dor[i].object, &g_WorldObject_Dor[i].position, &g_WorldObject_Dor[i].rotation);
@@ -3458,20 +3458,20 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
             }
             else
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Ref->object, &g_WorldObject_Ref->position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Ref->object, &g_WorldObject_Ref->position, &SVECTOR3_ZERO);
                 if (!Savegame_EventFlagGet(EventFlag_M7S02_PickupDaggerOfMelchior))
                 {
-                    WorldGfx_ObjectAdd(&g_WorldObject_Sword.object, &g_WorldObject_Sword.position, &(SVECTOR3){ 0, 0, 0 });
+                    WorldGfx_ObjectAdd(&g_WorldObject_Sword.object, &g_WorldObject_Sword.position, &SVECTOR3_ZERO);
                 }
             }
 
             if (Savegame_EventFlagGet(EventFlag_552))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Chain1[1].object, &g_WorldObject_Chain1[1].position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Chain1[1].object, &g_WorldObject_Chain1[1].position, &SVECTOR3_ZERO);
             }
             else
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Chain1[0].object, &g_WorldObject_Chain1[0].position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Chain1[0].object, &g_WorldObject_Chain1[0].position, &SVECTOR3_ZERO);
             }
 
             if (Savegame_EventFlagGet(EventFlag_M7S02_PickupDaggerOfMelchior))
@@ -3508,30 +3508,30 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
         case CELL_XZ(19, 13):
             if (Savegame_EventFlagGet(EventFlag_560))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Wall9.object, &g_WorldObject_Wall9.position, &(SVECTOR3){ 0, 0, 0 });
-                WorldGfx_ObjectAdd(&g_WorldObject_Door9.object, &g_WorldObject_Door9.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Wall9.object, &g_WorldObject_Wall9.position, &SVECTOR3_ZERO);
+                WorldGfx_ObjectAdd(&g_WorldObject_Door9.object, &g_WorldObject_Door9.position, &SVECTOR3_ZERO);
             }
             break;
 
         case CELL_XZ(17, 15):
             if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupAmuletOfSolomon))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Gofu.object, &g_WorldObject_Gofu.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Gofu.object, &g_WorldObject_Gofu.position, &SVECTOR3_ZERO);
             }
             break;
 
         case CELL_XZ(15, 13):
             if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupScrewdriver))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Driver.object, &g_WorldObject_Driver.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Driver.object, &g_WorldObject_Driver.position, &SVECTOR3_ZERO);
             }
             break;
 
         case CELL_XZ(19, 15):
-            WorldGfx_ObjectAdd(&g_WorldObject_Zukan.object, &g_WorldObject_Zukan.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject_Zukan.object, &g_WorldObject_Zukan.position, &SVECTOR3_ZERO);
             if (Savegame_EventFlagGet(EventFlag_M5S03_SeenSecondNewspaper))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Scrap.object, &g_WorldObject_Scrap.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Scrap.object, &g_WorldObject_Scrap.position, &SVECTOR3_ZERO);
             }
             break;
 
@@ -3568,7 +3568,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
             break;
 
         case CELL_XZ(12, 12):
-            WorldGfx_ObjectAdd(&g_WorldObject_Kubomi.object, &g_WorldObject_Kubomi.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject_Kubomi.object, &g_WorldObject_Kubomi.position, &SVECTOR3_ZERO);
             break;
 
         case CELL_XZ(15, 12):
@@ -3586,7 +3586,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
         case CELL_XZ(13, 14):
             for (i = 0; i < 6; i++)
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object, &g_WorldObject_Dr[i].position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object, &g_WorldObject_Dr[i].position, &SVECTOR3_ZERO);
             }
             break;
 

@@ -1482,7 +1482,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_PickupRubberBall))
         {
-            WorldGfx_ObjectAdd(&g_WorldObjectD.object, &g_WorldObjectD.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObjectD.object, &g_WorldObjectD.position, &SVECTOR3_ZERO);
         }
     }
 
@@ -1512,7 +1512,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
         WorldGfx_ObjectAdd(&g_WorldObject5.object, &g_WorldObject5.position, &g_WorldObject5.rotation);
         WorldGfx_ObjectAdd(&g_WorldObject6.object, &g_WorldObject6.position, &g_WorldObject6.rotation);
         WorldGfx_ObjectAdd(&g_WorldObject7.object, &g_WorldObject7.position, &g_WorldObject7.rotation);
-        WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &(SVECTOR3){ 0, 0, 0 });
+        WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &SVECTOR3_ZERO);
 
         // Activate collisions for door locking boss entrance.
         if (g_WorldObject6.rotation.vy != Q12_ANGLE(180.0f) ||

@@ -621,7 +621,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
             D_800DD718 += g_DeltaTime;
             if ((D_800DD718 % Q12(0.8499f)) < Q12(0.45f))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &SVECTOR3_ZERO);
             }
 
             if (D_800DD718 > Q12(3.5f))
@@ -801,20 +801,20 @@ void Map_WorldObjectsUpdate(void)
     {
         if (Savegame_EventFlagGet(EventFlag_71))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject2.object, &g_WorldObject2.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject2.object, &g_WorldObject2.position, &SVECTOR3_ZERO);
         }
         else
         {
-            WorldGfx_ObjectAdd(&g_WorldObject4.object, &g_WorldObject4.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject4.object, &g_WorldObject4.position, &SVECTOR3_ZERO);
         }
 
         if (Savegame_EventFlagGet(EventFlag_72))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject3.object, &g_WorldObject3.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject3.object, &g_WorldObject3.position, &SVECTOR3_ZERO);
         }
         else
         {
-            WorldGfx_ObjectAdd(&g_WorldObject5.object, &g_WorldObject5.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject5.object, &g_WorldObject5.position, &SVECTOR3_ZERO);
         }
 
     }
@@ -846,17 +846,17 @@ void Map_WorldObjectsUpdate(void)
     {
         if (Savegame_EventFlagGet(EventFlag_72))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject6[1].object, &g_WorldObject6[1].position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject6[1].object, &g_WorldObject6[1].position, &SVECTOR3_ZERO);
             func_80064F04(&QVECTOR3(20.58f, -1.14f, -17.41f), 0, 0x385);
         }
         else
         {
-            WorldGfx_ObjectAdd(&g_WorldObject6[0].object, &g_WorldObject6[0].position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject6[0].object, &g_WorldObject6[0].position, &SVECTOR3_ZERO);
         }
 
         if (Savegame_EventFlagGet(EventFlag_73))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &SVECTOR3_ZERO);
         }
 
         if (Savegame_EventFlagGet(EventFlag_72))
@@ -919,7 +919,7 @@ void Map_WorldObjectsUpdate(void)
 
         for (i = 0; i < 6; i++)
         {
-            WorldGfx_ObjectAdd(&g_WorldObject1[i].object, &g_WorldObject1[i].position, &(SVECTOR3){ 0, 0, 0 });
+            WorldGfx_ObjectAdd(&g_WorldObject1[i].object, &g_WorldObject1[i].position, &SVECTOR3_ZERO);
         }
     }
 
