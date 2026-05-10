@@ -1637,8 +1637,8 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
         VECTOR  field_28; // Q23.8
     } s_func_800D3694;
 
-    enum _SfxId      var_a0;
-    s32              temp_s0;
+    enum _SfxId      sfxId;
+    q19_12           scale;
     s_AnimInfo*      anim;
     s_func_800D3694* ptr;
 
@@ -1686,14 +1686,14 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
     {
         if (Rng_GenerateUInt(0, 3)) // 1 in 4 chance.
         {
-            var_a0 = Sfx_Unk1553;
+            sfxId = Sfx_Unk1553;
         }
         else
         {
-            var_a0 = Sfx_Unk1552;
+            sfxId = Sfx_Unk1552;
         }
 
-        func_8005DC1C(var_a0, &twinfeeler->position, Q8(0.5f), 0);
+        func_8005DC1C(sfxId, &twinfeeler->position, Q8(0.5f), 0);
         twinfeelerProps.field_E8.val32 = Rng_GenerateInt(Q12(1.0f), Q12(1.8f) - 1);
     }
     else
@@ -1723,14 +1723,14 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
     anim = &TWINFEELER_ANIM_INFOS[twinfeeler->model.anim.status];
     anim->playbackFunc(&twinfeeler->model, anmHdr, boneCoords, anim);
 
-    temp_s0 = D_800DB1D8[twinfeeler->model.stateStep];
-    func_800705E4(boneCoords, 0, temp_s0, temp_s0, temp_s0);
+    scale = D_800DB1D8[twinfeeler->model.stateStep];
+    func_800705E4(boneCoords, 0, scale, scale, scale);
 
-    twinfeeler->collision.box.height   = Q12(0.0f);
-    twinfeeler->collision.box.bottom   = Q12(0.0f);
+    twinfeeler->collision.box.height               = Q12(0.0f);
+    twinfeeler->collision.box.bottom               = Q12(0.0f);
     twinfeeler->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
     twinfeeler->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-    twinfeeler->collision.cylinder.radius  = Q12(0.0f);
+    twinfeeler->collision.cylinder.radius          = Q12(0.0f);
 
     ptr = PSX_SCRATCH;
 
@@ -1744,10 +1744,10 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
     gte_rt();
     gte_stlvnl(&ptr->field_28);
 
-    twinfeeler->collision.box.top   = Q12_MULT_PRECISE(Q8_TO_Q12(ptr->field_28.vy), temp_s0);
+    twinfeeler->collision.box.top   = Q12_MULT_PRECISE(Q8_TO_Q12(ptr->field_28.vy), scale);
     twinfeeler->collision.box.offsetY   = twinfeeler->collision.box.top + Q12(0.03f);
-    twinfeeler->collision.shapeOffsets.box.vx = Q12_MULT_PRECISE(twinfeeler->position.vx - Q8_TO_Q12(ptr->field_28.vx), temp_s0);
-    twinfeeler->collision.shapeOffsets.box.vz = Q12_MULT_PRECISE(twinfeeler->position.vz - Q8_TO_Q12(ptr->field_28.vz), temp_s0);
+    twinfeeler->collision.shapeOffsets.box.vx = Q12_MULT_PRECISE(twinfeeler->position.vx - Q8_TO_Q12(ptr->field_28.vx), scale);
+    twinfeeler->collision.shapeOffsets.box.vz = Q12_MULT_PRECISE(twinfeeler->position.vz - Q8_TO_Q12(ptr->field_28.vz), scale);
     twinfeeler->collision.cylinder.field_2   = Q12(0.05f);
 
     #undef twinfeelerProps

@@ -17,10 +17,10 @@
 
 #include "../src/maps/chara_util.c" // 0x800DD5B8
 
-void Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DE0C4
+void Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800DE0C4
 {
     s32         i;
-    s32         var_s1;
+    q19_12      scale;
     s_AnimInfo* animInfo;
 
     if (chara->model.controlState == 0)
@@ -35,45 +35,45 @@ void Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* c
     {
         if (chara->model.anim.time > Q12(13.0f))
         {
-            var_s1 = (chara->model.anim.time - Q12(13.0f)) >> 3;
+            scale = (chara->model.anim.time - Q12(13.0f)) >> 3;
         }
         else
         {
-            var_s1 = 0;
+            scale = Q12(0.0f);
         }
     }
     else
     {
-        var_s1 = Q12(1.0f);
+        scale = Q12(1.0f);
     }
 
-    Math_MatrixTransform(&chara->position, &chara->rotation, coords);
+    Math_MatrixTransform(&chara->position, &chara->rotation, boneCoords);
 
     animInfo = &FLAUROS_ANIM_INFOS[chara->model.anim.status];
-    animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
+    animInfo->playbackFunc(&chara->model, anmHdr, boneCoords, animInfo);
 
     for (i = 6; i < 11; i++)
     {
-        func_800705E4(coords, i, var_s1, var_s1, var_s1);
+        func_800705E4(boneCoords, i, scale, scale, scale);
     }
 }
 
-void Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DE1CC
+void Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800DE1CC
 {
     s_AnimInfo* animInfo;
 
     if (chara->model.controlState == 0)
     {
-        chara->model.anim.alpha = Q12(0.0f);
-        chara->model.controlState        = 1;
+        chara->model.anim.alpha   = Q12(0.0f);
+        chara->model.controlState = 1;
         chara->model.stateStep    = 0;
         Character_AnimSet(chara, ANIM_STATUS(1, true), 0);
     }
 
-    Math_MatrixTransform(&chara->position, &chara->rotation, coords);
+    Math_MatrixTransform(&chara->position, &chara->rotation, boneCoords);
 
     animInfo = &PARASITE_ANIM_INFOS[chara->model.anim.status];
-    animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
+    animInfo->playbackFunc(&chara->model, anmHdr, boneCoords, animInfo);
 }
 
 void func_800DE26C(void) {}

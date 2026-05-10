@@ -3021,13 +3021,13 @@ void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1) // 0x8006EB8C
     }
 }
 
-void func_8006EE0C(s_RayState_6C* arg0, s32 arg1, s_SubCharacter* chara) // 0x8006EE0C
+void func_8006EE0C(s_RayState_6C* arg0, bool useCylinder, const s_SubCharacter* chara) // 0x8006EE0C
 {
     q19_12 offsetZ;
     q19_12 offsetX;
     q19_12 unkY;
 
-    if (arg1 == 1)
+    if (useCylinder == true)
     {
         arg0->field_C = Q12_TO_Q8(chara->collision.cylinder.radius);
         offsetX       = chara->collision.shapeOffsets.cylinder.vx;
@@ -3083,7 +3083,8 @@ void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
     }
 
     bound = state->field_6C.field_C;
-    if ((state->field_6C.field_0 + bound) < x0 || z0 < (state->field_6C.field_0 - bound))
+    if ((state->field_6C.field_0 + bound) < x0 ||
+         z0 < (state->field_6C.field_0 - bound))
     {
         return;
     }
@@ -3233,15 +3234,15 @@ void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDe
 
 bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone) // 0x8006F3C4
 {
-    s32    temp_s1;
-    s32    var_v1;
+    q19_12 temp_s1;
+    q19_12 var_v1;
     q19_12 minX;
     q19_12 maxX;
     q19_12 minZ;
     q19_12 maxZ;
-    s32    var_s1;
-    s32    var_v0;
-    s32    var_v0_2;
+    q19_12 var_s1;
+    q19_12 var_v0;
+    q19_12 var_v0_2;
 
     minX = Q12(zone->positionX);
     maxX = Q12(zone->positionX + zone->sizeX);
@@ -3488,7 +3489,7 @@ q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 
         {
             curAngleOffset = Rng_GenerateUInt(-32, 31);
         }
-        else if (i & 1)
+        else if (i & 0x1)
         {
             curAngleOffset = (256 << ((i + 1) >> 1)) + Rng_GenerateUInt(0, 63);
         }
@@ -3821,28 +3822,30 @@ void Collision_CharaCollisionSet(s_SubCharacter* chara, s_Keyframe* keyframe0, s
     chara->collision.cylinder.field_2         = FP_FROM((keyframe0->box.field_A * invAlpha) + (keyframe1->box.field_A * alpha), Q12_SHIFT);
 }
 
-void func_800705E4(GsCOORDINATE2* coord, s32 idx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ) // 0x800705E4
+void func_800705E4(GsCOORDINATE2* boneCoords, s32 idx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ) // 0x800705E4
 {
-    q3_12 scales[3];
-    s32   row;
-    s32   col;
+    q3_12 scale[3];
+    s32   j;
+    s32   i;
 
-    scales[0] = scaleX;
-    scales[1] = scaleY;
-    scales[2] = scaleZ;
+    scale[0] = scaleX;
+    scale[1] = scaleY;
+    scale[2] = scaleZ;
 
-    for (col = 0; col < ARRAY_SIZE(scales); col++)
+    for (i = 0; i < ARRAY_SIZE(scale); i++)
     {
-        if (scales[col] != Q12(1.0f))
+        if (scale[i] == Q12(1.0f))
         {
-            for (row = 0; row < 3; row++)
-            {
-                coord[idx].coord.m[row][col] = Q12_MULT_PRECISE(scales[col], coord[idx].coord.m[row][col]);
-            }
+            continue;
+        }
+
+        for (j = 0; j < 3; j++)
+        {
+            boneCoords[idx].coord.m[j][i] = Q12_MULT_PRECISE(scale[i], boneCoords[idx].coord.m[j][i]);
         }
     }
 
-    coord->flg = false;
+    boneCoords->flg = false;
 }
 
 // Used to overwrite `HARRY_BASE_ANIM_INFOS[56:76]` with weapon-specific animations.

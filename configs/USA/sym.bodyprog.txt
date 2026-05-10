@@ -16,6 +16,7 @@ g_SavegamePtr                                = 0x80024D48; // type:u32
 g_Controller0                                = 0x80024D4C; // type:u32
 g_Controller1                                = 0x80024D50; // type:u32
 g_GameWorkPtr                                = 0x80024D54; // type:u32
+Player_LowerBodyMoveStateGet = 0x8007D6F0; // type::func
 
 //---------------------------------------------------------------------
 //--- PA: 0x0001FC   VA: 0x80024D5C   subsegment: .rodata, sys/map_info

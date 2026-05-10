@@ -1797,7 +1797,7 @@ typedef struct _RayTrace
     /* 0x4  */ VECTOR3         target; /** Q19.12 */
     /* 0x10 */ s_SubCharacter* character;
     /* 0x14 */ q19_12          hitDistance;
-    /* 0x18 */ q19_12          field_18; // Hit distance Z? Or Y??
+    /* 0x18 */ q19_12          field_18; // Hit distance Z? Or Y?? Maybe actually ground height.
     /* 0x1C */ q3_12           field_1C; // Angle.
 } s_RayTrace;
 
@@ -4049,8 +4049,8 @@ void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg
 
 void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1);
 
-// Fils ray hit data?
-void func_8006EE0C(s_RayState_6C* arg0, s32 arg1, s_SubCharacter* chara);
+// Fills ray hit data?
+void func_8006EE0C(s_RayState_6C* arg0, bool useCylinder, const s_SubCharacter* chara);
 
 void func_8006EEB8(s_RayState* state, s_SubCharacter* chara);
 
@@ -4152,7 +4152,7 @@ q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2);
  */
 void Collision_CharaCollisionSet(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1);
 
-void func_800705E4(GsCOORDINATE2* coord, s32 idx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ);
+void func_800705E4(GsCOORDINATE2* boneCoords, s32 idx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ);
 
 // ======================================
 

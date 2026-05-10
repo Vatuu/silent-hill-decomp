@@ -4358,7 +4358,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
     }
 
     // Compute move distance step.
-    temp_s3        = func_8007D6F0(player, &D_800C45C8);
+    temp_s3        = Player_LowerBodyMoveStateGet(player, &D_800C45C8);
     speedZoneType  = Map_SpeedZoneTypeGet(player->position.vx, player->position.vz);
     speedX         = SQUARE(player->position.vx - g_Player_PrevPosition.vx);
     speedZ         = SQUARE(player->position.vz - g_Player_PrevPosition.vz);
@@ -4566,7 +4566,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         else if (g_Player_IsSteppingRightHold)
                         {
                             player->headingAngle = player->headingAngle + Q12_ANGLE(90.0f);
-                            temp_s3                = func_8007D6F0(player, &D_800C45C8);
+                            temp_s3                = Player_LowerBodyMoveStateGet(player, &D_800C45C8);
 
                             if (g_Player_IsRunning && aimState == 0 && temp_s3 == PlayerLowerBodyState_None)
                             {
@@ -4580,7 +4580,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         else if (g_Player_IsSteppingLeftHold)
                         {
                             player->headingAngle -= Q12_ANGLE(90.0f);
-                            temp_s3                 = func_8007D6F0(player, &D_800C45C8);
+                            temp_s3                 = Player_LowerBodyMoveStateGet(player, &D_800C45C8);
 
                             if (g_Player_IsRunning && aimState == 0 && temp_s3 == PlayerLowerBodyState_None)
                             {
@@ -4960,7 +4960,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock &&
                 player->model.anim.status == ANIM_STATUS(HarryAnim_RunForward, true))
             {
-                // TODO: What does `func_8007D6F0` do?
+                // TODO: What does `Player_LowerBodyMoveStateGet` do?
                 switch (temp_s3)
                 {
                     case PlayerLowerBodyState_WalkForward:
@@ -7374,7 +7374,7 @@ void Player_FlexRotationYReset(void) // 0x8007D6E0
     g_Player_FlexRotationY = Q12_ANGLE(0.1f);
 }
 
-s32 func_8007D6F0(s_SubCharacter* player, s_800C45C8* arg1) // 0x8007D6F0
+s32 Player_LowerBodyMoveStateGet(s_SubCharacter* player, s_800C45C8* arg1) // 0x8007D6F0
 {
     s_RayTrace traces[2];
     VECTOR3    vecs[4];
@@ -7393,8 +7393,8 @@ s32 func_8007D6F0(s_SubCharacter* player, s_800C45C8* arg1) // 0x8007D6F0
     temp_s1  = Q12(-0.6f);
     temp_s1 -= playerProps.moveDistance_126 >> 4;
 
-    temp_s4 = Q12_MULT(Math_Cos(player->headingAngle), Q12(0.2f)); // Maybe meters?
-    temp_s3 = Q12_MULT(Math_Sin(player->headingAngle), Q12(0.2f)); // Maybe meters?
+    temp_s4 = Q12_MULT(Math_Cos(player->headingAngle), Q12(0.2f));
+    temp_s3 = Q12_MULT(Math_Sin(player->headingAngle), Q12(0.2f));
     temp_s5 = Q12_MULT(temp_s0, Math_Sin(player->headingAngle));
     temp_lo = Q12_MULT(temp_s0, Math_Cos(player->headingAngle));
 

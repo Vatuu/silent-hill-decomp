@@ -28,7 +28,7 @@ typedef enum _PlayerStopFlags
     PlayerStopFlag_StopRunning = 1 << 1
 } e_PlayerStopFlags;
 
-/** @brief Player states. */
+/** @brief Player states. Used by `s_PlayerExtra::state`. */
 typedef enum _PlayerState
 {
     PlayerState_None                      = 0,
@@ -223,7 +223,7 @@ typedef enum _PlayerState
     PlayerState_Unk189                    = 189
 } e_PlayerState;
 
-/** @brief Upper body player states. */
+/** @brief Upper body player states. Used by `s_PlayerExtra::upperBodyState`. */
 typedef enum _PlayerUpperBodyState
 {
     PlayerUpperBodyState_None                 = 0,
@@ -255,7 +255,7 @@ typedef enum _PlayerUpperBodyState
     PlayerUpperBodyState_Reload               = 26
 } e_PlayerUpperBodyState;
 
-/** @brief Lower body player states. */
+/** @brief Lower body player states. Used by `s_PlayerExtra::lowerBodyState`. */
 typedef enum _PlayerLowerBodyState
 {
     PlayerLowerBodyState_None               = 0,
@@ -598,8 +598,8 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra);
  */
 void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra);
 
-// Removing this function makes it impossible to run.
-s32 func_8007D6F0(s_SubCharacter* player, s_800C45C8* arg1);
+// Returns player lower body state.
+s32 Player_LowerBodyMoveStateGet(s_SubCharacter* player, s_800C45C8* arg1);
 
 void GameFs_WeaponInfoUpdate(void);
 

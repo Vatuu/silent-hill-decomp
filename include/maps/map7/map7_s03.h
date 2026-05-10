@@ -565,7 +565,7 @@ void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords);
 void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords);
 void Incubator_Init(s_SubCharacter* incubator);
 
-void LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void func_800D663C(void);
 
@@ -573,7 +573,7 @@ s32 func_800D6750(s32* sxy);
 
 void func_800D6788(void); // Assumed return type.
 
-void func_800D6804(VECTOR3*, VECTOR3*); // Assumed args/return type.
+void func_800D6804(const VECTOR3* from, const VECTOR3* to);
 
 void func_800D6FA0(void);
 
@@ -933,8 +933,6 @@ void func_800D6548(void);
 void func_800D6690(VECTOR* arg0, q19_12 rotY);
 
 void func_800D6788(void);
-
-void func_800D6804(VECTOR3* arg0, VECTOR3* arg1);
 
 void func_800D68C4(void);
 

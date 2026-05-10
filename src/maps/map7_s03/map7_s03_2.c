@@ -23,16 +23,16 @@
 
 #include "../src/maps/chara_util.c" // 0x800D5040
 
-void LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5BC8
+void LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D5BC8
 {
-    s32         temp_s0;
+    q19_12      scale;
     s32         var_a2;
     s_AnimInfo* animInfo;
 
     if (incubus->model.controlState == 0)
     {
-        incubus->model.anim.alpha = Q12(0.0f);
-        incubus->model.controlState        = 1;
+        incubus->model.anim.alpha   = Q12(0.0f);
+        incubus->model.controlState = 1;
         incubus->model.stateStep    = 0;
         Character_AnimSet(incubus, ANIM_STATUS(1, true), 0);
 
@@ -42,22 +42,22 @@ void LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDI
     D_800EDA00 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 10.0f);
     var_a2 = FP_TO(D_800EDA00, Q12_SHIFT) / Q12(80.0f);
 
-    temp_s0 = var_a2;
+    scale = var_a2;
 
     if (var_a2 > Q12(1.0f))
     {
         var_a2 = Q12(1.0f);
     }
 
-    temp_s0 = Math_Sin(var_a2 >> 2);
+    scale = Math_Sin(var_a2 >> 2);
 
-    Math_MatrixTransform(&incubus->position, &incubus->rotation, coords);
+    Math_MatrixTransform(&incubus->position, &incubus->rotation, boneCoords);
 
     animInfo = &LITTLE_INCUBUS_ANIM_INFOS[incubus->model.anim.status];
-    animInfo->playbackFunc(&incubus->model, anmHdr, coords, animInfo);
+    animInfo->playbackFunc(&incubus->model, anmHdr, boneCoords, animInfo);
 
-    func_800705E4(coords, 1, temp_s0, temp_s0, temp_s0);
-    func_800705E4(coords, 7, temp_s0, temp_s0, temp_s0);
+    func_800705E4(boneCoords, 1, scale, scale, scale);
+    func_800705E4(boneCoords, 7, scale, scale, scale);
 }
 
 void func_800D5D24(void) // 0x800D5D24
@@ -476,7 +476,7 @@ void func_800D6788(void) // 0x800D6788
     func_800D625C();
 }
 
-void func_800D6804(VECTOR3* arg0, VECTOR3* arg1) // 0x800D6804
+void func_800D6804(const VECTOR3* from, const VECTOR3* to) // 0x800D6804
 {
     q19_12           x0;
     q19_12           z0;
@@ -486,8 +486,8 @@ void func_800D6804(VECTOR3* arg0, VECTOR3* arg1) // 0x800D6804
 
     buf = FS_BUFFER_1;
 
-    x0 = arg1->vx - arg0->vx;
-    z0 = arg1->vz - arg0->vz;
+    x0 = to->vx - from->vx;
+    z0 = to->vz - from->vz;
 
     buf->field_A58 = ratan2(x0, z0);
 
@@ -500,7 +500,7 @@ void func_800D6804(VECTOR3* arg0, VECTOR3* arg1) // 0x800D6804
         x1 = x0;
     }
 
-    x0 = arg0->vx + (x1 >> 2);
+    x0 = from->vx + (x1 >> 2);
 
     if (z0 < Q12(0.0f))
     {
@@ -511,7 +511,7 @@ void func_800D6804(VECTOR3* arg0, VECTOR3* arg1) // 0x800D6804
         z1 = z0;
     }
 
-    z0 = (arg0->vz + (z1 >> 2));
+    z0 = (from->vz + (z1 >> 2));
 
     buf->field_4.vx = Q12_TO_Q8(x0);
     buf->field_4.vy = Q8(-1.0f);
