@@ -331,18 +331,12 @@ void Player_ControlUnfreeze(bool setIdle)
 
     g_SysWork.playerCombat.isAiming = false;
 
-    player->collision.cylinder.field_2                             = Q12(0.23f);
-    g_SysWork.playerWork.player.collision.box.top                  = Q12(-1.6f);
-    g_SysWork.playerWork.player.collision.box.offsetY              = Q12(-1.1f);
-    g_SysWork.playerWork.player.collision.box.bottom               = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      = Q12(0.0f);
-    g_SysWork.playerWork.player.properties.player.flags_11C       &= ~(PlayerFlag_Unk2 |
-                                                                       PlayerFlag_SfxActive |
-                                                                       PlayerFlag_DamageReceived |
-                                                                       PlayerFlag_Moving);
+    player->collision.cylinder.field_2 = Q12(0.23f);
+    Player_CollisionReset();
+    g_SysWork.playerWork.player.properties.player.flags_11C &= ~(PlayerFlag_Unk2 |
+                                                                 PlayerFlag_SfxActive |
+                                                                 PlayerFlag_DamageReceived |
+                                                                 PlayerFlag_Moving);
 
     player->flags          &= ~CharaFlag_Unk4;
     player->collision.state = CharaCollisionState_Npc;

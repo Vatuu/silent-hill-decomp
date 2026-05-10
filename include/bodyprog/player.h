@@ -637,6 +637,17 @@ static inline void Player_AnimFlagsSet(u32 flags)
     chara->model.anim.flags |= flags;
 }
 
+static inline void Player_CollisionReset()
+{
+    g_SysWork.playerWork.player.collision.box.top                  = Q12(-1.6f);
+    g_SysWork.playerWork.player.collision.box.bottom               = Q12(0.0f);
+    g_SysWork.playerWork.player.collision.box.offsetY              = Q12(-1.1f);
+    g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+    g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+    g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = Q12(0.0f);
+    g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      = Q12(0.0f);
+}
+
 /** @brief Clears the given animation flags for both the player character data and extra player data.
  *
  * @param clearFlags Animation flags to clear.

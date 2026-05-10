@@ -15,7 +15,6 @@
 #include "bodyprog/sys/joy.h"
 #include "main/rng.h"
 
-
 #define playerProps g_SysWork.playerWork.player.properties.player
 
 // ========================================
@@ -6664,7 +6663,7 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
     }
     else
     {
-        player->properties.player.runTimer_108 = 0;
+        player->properties.player.runTimer_108 = Q12(0.0f);
     }
 
     if (g_SavegamePtr->mapIdx == MapIdx_MAP1_S00 && g_SavegamePtr->mapRoomIdx == 13)
@@ -6863,13 +6862,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             if (g_SysWork.playerWork.extra.state >= PlayerState_FallForward &&
                 g_SysWork.playerWork.extra.state <  PlayerState_Unk7)
             {
-                g_SysWork.playerWork.player.collision.box.top                  = Q12(-1.6f);
-                g_SysWork.playerWork.player.collision.box.bottom               = Q12(0.0f);
-                g_SysWork.playerWork.player.collision.box.offsetY              = Q12(-1.1f);
-                g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-                g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-                g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = Q12(0.0f);
-                g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      = Q12(0.0f);
+                Player_CollisionReset();
             }
 
             enemyRotY = g_SysWork.npcs[player->field_40].rotation.vy;
@@ -7917,16 +7910,7 @@ void func_8007E8C0(void) // 0x8007E8C0
     }
 
     player->properties.player.exhaustionTimer = Q12(0.0f);
-
-    // TODO: Maybe an inline?
-    g_SysWork.playerWork.player.collision.box.top                  = Q12(-1.6f);
-    g_SysWork.playerWork.player.collision.box.bottom               = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.box.offsetY              = Q12(-1.1f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      = Q12(0.0f);
-
+    Player_CollisionReset();
     player->collision.cylinder.radius  = Q12(0.3f);
     player->collision.cylinder.field_2 = Q12(0.23f);
     g_GameWork.mapAnimIdx              = NO_VALUE;
@@ -8601,15 +8585,15 @@ q19_12 Game_GasWeaponPowerTimerValue(void) // 0x8007FD3C
     return playerProps.gasWeaponPowerTimer;
 }
 
-void func_8007FD4C(bool cond) // 0x8007FD4C
+void func_8007FD4C(bool resetColl) // 0x8007FD4C
 {
     s32             i;
-    s_SubCharacter* chara;
+    s_SubCharacter* player;
 
-    chara = &g_SysWork.playerWork.player;
+    player = &g_SysWork.playerWork.player;
 
     g_Player_GrabReleaseInputTimer = Q12(0.0f);
-    chara->field_40                = NO_VALUE;
+    player->field_40               = NO_VALUE;
 
     playerProps.flags_11C &= ~PlayerFlag_DamageReceived;
 
@@ -8618,10 +8602,13 @@ void func_8007FD4C(bool cond) // 0x8007FD4C
         g_SysWork.npcIdxs[i] = NO_VALUE;
     }
 
-    if (cond)
+    if (resetColl)
     {
-        g_SysWork.playerWork.player.collision.cylinder.radius          = Q12(0.3f);
-        g_SysWork.playerWork.player.collision.cylinder.field_2         = Q12(0.23f);
+        g_SysWork.playerWork.player.collision.cylinder.radius  = Q12(0.3f);
+        g_SysWork.playerWork.player.collision.cylinder.field_2 = Q12(0.23f);
+
+        // TODO: Doesn't match?
+        //Player_CollisionReset();
         g_SysWork.playerWork.player.collision.box.top                  = Q12(-1.6f);
         g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
         g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
