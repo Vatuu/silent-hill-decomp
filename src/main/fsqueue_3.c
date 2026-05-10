@@ -137,10 +137,8 @@ bool Fs_QueueTickReadPcDrv(s_FsQueueEntry* entry)
 
     result = false;
 
-    strcpy(pathBuf, "sim:.\\DATA");
-    strcat(pathBuf, g_FilePaths[file->pathIdx]);
     Fs_GetFileInfoName(nameBuf, file);
-    strcat(pathBuf, nameBuf);
+    snprintf(pathBuf, sizeof(pathBuf), "sim:.\\DATA%s%s", g_FilePaths[file->pathIdx], nameBuf);
 
     for (retry = 0; retry <= 2; retry++)
     {
