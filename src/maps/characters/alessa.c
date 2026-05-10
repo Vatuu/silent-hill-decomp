@@ -180,7 +180,7 @@ void Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
     }
 
     Collision_Get(&coll, alessa->position.vx, alessa->position.vz);
-    func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
+    func_8007FDE0(coll.groundType, &sfx, &pitch0, &pitch1);
 
     switch (alessaProps.controlState)
     {

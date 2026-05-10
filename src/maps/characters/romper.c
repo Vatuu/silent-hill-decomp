@@ -261,7 +261,7 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
     {
         Collision_Get(&coll, romper->position.vx, romper->position.vz);
 
-        if (coll.field_8 == 12)
+        if (coll.groundType == GroundType_12)
         {
             if (Rng_GenerateInt(Q12(4.0f), Q12(8.0f) - 1) < romper->position.vy)
             {

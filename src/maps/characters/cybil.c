@@ -377,7 +377,7 @@ void Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
     }
 
     Collision_Get(&coll, chara->position.vx, chara->position.vz);
-    func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
+    func_8007FDE0(coll.groundType, &sfx, &pitch0, &pitch1);
 
 #if defined(MAP6_S01)
     sfx = Sfx_Unk1607;

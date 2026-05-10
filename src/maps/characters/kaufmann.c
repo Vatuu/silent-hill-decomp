@@ -334,7 +334,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
     }
 
     Collision_Get(&coll, kaufmann->position.vx, kaufmann->position.vz);
-    func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
+    func_8007FDE0(coll.groundType, &sfx, &pitch0, &pitch1);
 
     switch (kaufmannProps.controlState)
     {

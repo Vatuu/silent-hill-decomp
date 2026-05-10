@@ -675,17 +675,20 @@ s32 func_8005F55C(s32 arg0) // 0x8005F55C
 
 bool func_8005F680(s_Collision* coll) // 0x8005F680
 {
-    bool cond;
-    s8   temp_v1;
+    bool isSomeGroundGroup;
+    s8   groundType;
 
-    temp_v1 = coll->field_8;
+    groundType = coll->groundType;
 
-    cond = false;
-    if (temp_v1 == 0 || temp_v1 == 12 || temp_v1 == 7)
+    isSomeGroundGroup = false;
+    if (groundType == GroundType_0 ||
+        groundType == GroundType_12 ||
+        groundType == GroundType_7)
     {
-        cond = true;
+        isSomeGroundGroup = true;
     }
-    return cond;
+
+    return isSomeGroundGroup;
 }
 
 void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x8005F6B0

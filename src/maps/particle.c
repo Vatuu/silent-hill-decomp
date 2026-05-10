@@ -3312,9 +3312,9 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
                 PopMatrix();
 
                 localPart->position0_0.vy = coll.groundHeight;
-                localPart->movement_18.vx = coll.field_8;
+                localPart->movement_18.vx = coll.groundType;
 
-                if (coll.field_8 == 11)
+                if (coll.groundType == GroundType_11)
                 {
                     localPart->type_1F        = SnowType_HeavyWindy;
                     localPart->position1_C.vx = localPart->position0_0.vx;

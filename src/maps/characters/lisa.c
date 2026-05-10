@@ -236,7 +236,7 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 
     Collision_Get(&coll, chara->position.vx, chara->position.vz);
 
-    func_8007FDE0(coll.field_8, &sfxId, &pitch0, &pitch1);
+    func_8007FDE0(coll.groundType, &sfxId, &pitch0, &pitch1);
     sfxId = Sfx_Unk1529;
 
     switch (dahliaProps.controlState)

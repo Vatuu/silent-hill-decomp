@@ -26,7 +26,7 @@ typedef enum _SfxId
     Sfx_DoorClose0       = Sfx_Base + 0x1E, // 1310
     Sfx_FootstepConcrete = Sfx_Base + 0x1F, // 1311
     Sfx_FootstepGrass    = Sfx_Base + 0x20, // 1312
-    Sfx_Unk1313          = 1313,
+    Sfx_Unk1313          = 1313, // Harry footstep for unknown material.
     Sfx_Stumble0         = Sfx_Base + 0x22, // 1314
 
     Sfx_Unk1316               = 1316,
@@ -44,8 +44,8 @@ typedef enum _SfxId
     Sfx_Unk1328               = 1328,
     Sfx_Unk1329               = 1329,
 
-    Sfx_Unk1330       = 1330,
-    Sfx_Unk1331       = 1331,
+    Sfx_Unk1330       = 1330, // Harry footstep for unknown material.
+    Sfx_Unk1331       = 1331, // Harry footstep for unknown material.
     Sfx_FootstepMetal = Sfx_Base + 0x34, // 1332
     Sfx_Stumble1      = Sfx_Base + 0x35, // 1333
     Sfx_DoorJammed    = Sfx_Base + 0x36, // 1334
@@ -93,7 +93,7 @@ typedef enum _SfxId
     Sfx_Unk1385 = 1385,
     Sfx_Unk1386 = 1386,
     Sfx_Unk1387 = 1387,
-    Sfx_Unk1388 = 1388,
+    Sfx_Unk1388 = 1388, // Harry footstep for unknown material.
     Sfx_Unk1389 = 1389,
 
     Sfx_Unk1390 = 1390,
@@ -236,14 +236,14 @@ typedef enum _SfxId
     Sfx_Unk1540 = 1540,
     Sfx_Unk1541 = 1541, // Door jammed alt.
     Sfx_Unk1542 = 1542,
-    Sfx_Unk1543 = 1543,
+    Sfx_Unk1543 = 1543, // Harry footstep for unknown material.
 
     Sfx_Unk1552 = 1552,
     Sfx_Unk1553 = 1553,
     Sfx_Unk1554 = 1554,
     Sfx_Unk1555 = 1555,
     Sfx_Unk1556 = 1556,
-    Sfx_Unk1557 = 1557,
+    Sfx_Unk1557 = 1557, // Harry footstep for unknown material.
 
     Sfx_Unk1559 = 1559,
 

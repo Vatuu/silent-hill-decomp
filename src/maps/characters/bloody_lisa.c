@@ -108,7 +108,7 @@ void BloodyLisa_AnimStateUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneC
     }
 
     Collision_Get(&coll, bloodyLisa->position.vx, bloodyLisa->position.vz);
-    func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
+    func_8007FDE0(coll.groundType, &sfx, &pitch0, &pitch1);
 
     switch (dahliaProps.controlState)
     {

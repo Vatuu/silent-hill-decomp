@@ -2439,7 +2439,7 @@ void Player_UpperBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
         return;
     }
 
-    stumbleSfxId = (D_800C45C8.field_1 == 10) ? Sfx_Stumble1 : Sfx_Stumble0;
+    stumbleSfxId = (D_800C45C8.groundType == GroundType_10) ? Sfx_Stumble1 : Sfx_Stumble0;
 
     switch (g_SysWork.playerWork.extra.upperBodyState)
     {
@@ -2827,20 +2827,20 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                         func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx, &player->position, Q8_CLAMPED(0.19f), 0);
                     }
 
-                    player->properties.player.field_10C = 0xC8;
+                    player->properties.player.field_10C = 200;
                 }
                 else
                 {
                     func_8005DC1C(g_Player_EquippedWeaponInfo.outOfAmmoSfx, &player->position, Q8(0.5f), 0);
 
                     player->properties.player.field_10C = 32;
-                    extra->model.anim.keyframeIdx  = D_800C44F0[D_800AF220].field_6 - 3;
-                    extra->model.anim.time          = Q12(D_800C44F0[D_800AF220].field_6 - 3);
+                    extra->model.anim.keyframeIdx = D_800C44F0[D_800AF220].field_6 - 3;
+                    extra->model.anim.time        = Q12(D_800C44F0[D_800AF220].field_6 - 3);
 
                     if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Aim)
                     {
                         player->model.anim.keyframeIdx = D_800C44F0[D_800AF220].field_6 - 3;
-                        player->model.anim.time         = Q12(D_800C44F0[D_800AF220].field_6 - 3);
+                        player->model.anim.time        = Q12(D_800C44F0[D_800AF220].field_6 - 3);
                     }
                 }
             }
@@ -6297,7 +6297,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
     s8      pitch0;
     s8      pitch1;
 
-    func_8007FDE0(D_800C4590.field_14, &sfxId, &pitch0, &pitch1);
+    func_8007FDE0(D_800C4590.groundType, &sfxId, &pitch0, &pitch1);
 
     // This entire conditional is the reason why movement stop working when removing this function call.
     if (g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_JumpBackward &&
@@ -6675,7 +6675,7 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
         D_800C4590.groundHeight = Q12(0.0f);
     }
 
-    if (D_800C4590.field_14 == 0)
+    if (D_800C4590.groundType == GroundType_0)
     {
         D_800C4590.groundHeight = player->properties.player.positionY_EC;
     }
@@ -7428,15 +7428,17 @@ s32 func_8007D6F0(s_SubCharacter* player, s_800C45C8* arg1) // 0x8007D6F0
 
         if (ret[1])
         {
-            arg1->field_14 = (traces[0].field_14 + traces[1].field_14) >> 1;
-            arg1->field_1  = traces[0].field_1;
+            arg1->field_14   = (traces[0].field_14 + traces[1].field_14) >> 1;
+            arg1->groundType = traces[0].groundType;
 
             angle      = Q12_ANGLE_NORM_U(((traces[0].field_1C + traces[1].field_1C) >> 1) + Q12_ANGLE(360.0f));
             angleDelta = ABS_DIFF(angle, player->headingAngle);
 
             if (angleDelta > Q12_ANGLE(160.0f) && angleDelta < Q12_ANGLE(200.0f))
             {
-                if ((player->position.vy - Q12(1.3f)) < traces[0].field_18 || traces[0].field_1 == 0 || traces[0].field_1 == 12)
+                if ((player->position.vy - Q12(1.3f)) < traces[0].field_18 ||
+                    traces[0].groundType == GroundType_0 ||
+                    traces[0].groundType == GroundType_12)
                 {
                     if ((player->position.vy - Q12(0.3f)) >= traces[0].field_18)
                     {
@@ -8751,7 +8753,7 @@ void func_8007FDE0(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8
         case GroundType_6:
         case GroundType_10:
         case GroundType_11:
-            *pitch0 = (Rng_Rand16() % 8) - 4;
+            *pitch0 = (Rng_Rand16() % 8)  - 4;
             *pitch1 = (Rng_Rand16() % 16) + 56;
             break;
 
@@ -8930,10 +8932,10 @@ bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
     result = arg2 < D_800C4620.groundHeight;
     if (result)
     {
-        result = D_800C4620.field_8 != NO_VALUE;
+        result = D_800C4620.groundType != NO_VALUE;
         if (result)
         {
-            result = (arg0 & (1 << D_800C4620.field_8));
+            result = (arg0 & (1 << D_800C4620.groundType));
             return result != false;
         }
     }
@@ -8949,7 +8951,7 @@ bool func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8008074C
 void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
 {
     q19_12       groundHeight;
-    s32          count;
+    s32          groundType; // `e_GroundType`
     q19_12       collX;
     q19_12       collZ;
     s_Collision* coll;
@@ -8958,7 +8960,9 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
 
     collX = g_CollisionPointCache.position.vx;
     collZ = g_CollisionPointCache.position.vz;
-    if (g_CollisionPointCache.field_18 != NO_VALUE && collX == posX && collZ == posZ)
+    if (g_CollisionPointCache.groundType != NO_VALUE &&
+        collX == posX &&
+        collZ == posZ)
     {
         return;
     }
@@ -8967,11 +8971,12 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
     g_CollisionPointCache.position.vx = posX;
     g_CollisionPointCache.position.vz = posZ;
 
-    count = coll->field_8;
-    switch (coll->field_8)
+    groundType = coll->groundType;
+    switch (coll->groundType)
     {
-        case 0:
+        case GroundType_0:
             groundHeight = Q12(8.0f);
+
             switch (g_SavegamePtr->mapIdx)
             {
                 case MapIdx_MAP5_S01:
@@ -8981,9 +8986,9 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
                     {
                         groundHeight = Q12(4.0f);
 #if VERSION_EQUAL_OR_NEWER(USA)
-                        count = 7;
+                        groundType = GroundType_7;
 #else
-                        coll->field_8 = 7;
+                        coll->groundType = GroundType_7;
 #endif
                     }
                     break;
@@ -8991,24 +8996,25 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
                 case MapIdx_MAP6_S00:
                     groundHeight = Q12(4.0f);
 #if VERSION_EQUAL_OR_NEWER(USA)
-                    count = 7;
+                    groundType = GroundType_7;
 #else
-                    coll->field_8 = 7;
+                    coll->groundType = GroundType_7;
 #endif
                     break;
             }
             break;
 
-        case 12:
+        case GroundType_12:
             groundHeight = Q12(8.0f);
+
             switch (g_SavegamePtr->mapIdx)
             {
                 case MapIdx_MAP6_S00:
                     groundHeight = Q12(4.0f);
 #if VERSION_EQUAL_OR_NEWER(USA)
-                    count = 7;
+                    groundType = GroundType_7;
 #else
-                    coll->field_8 = 7;
+                    coll->groundType = GroundType_7;
 #endif
                     break;
             }
@@ -9020,7 +9026,7 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
     }
 
     g_CollisionPointCache.position.vy = groundHeight;
-    g_CollisionPointCache.field_18      = count;
+    g_CollisionPointCache.groundType  = groundType;
 }
 
 q19_12 Collision_GroundHeightGet(q19_12 posX, q19_12 posZ) // 0x80080884
@@ -9032,7 +9038,7 @@ q19_12 Collision_GroundHeightGet(q19_12 posX, q19_12 posZ) // 0x80080884
 s32 func_800808AC(q19_12 posX, q19_12 posZ) // 0x800808AC
 {
     Collision_Fill(posX, posZ);
-    return g_CollisionPointCache.field_18;
+    return g_CollisionPointCache.groundType;
 }
 
 s32 Math_MulFixed(s32 val0, s32 val1, s32 shift) // 0x800808D4

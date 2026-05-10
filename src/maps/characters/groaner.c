@@ -136,7 +136,7 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
     {
         Collision_Get(&coll, groaner->position.vx, groaner->position.vz);
 
-        if (coll.field_8 == 12 && Rng_GenerateInt(Q12(4.0f), Q12(7.0f) - 1) < groaner->position.vy)
+        if (coll.groundType == 12 && Rng_GenerateInt(Q12(4.0f), Q12(7.0f) - 1) < groaner->position.vy)
         {
             groaner->damage.amount = Q12(1000.0f);
         }

@@ -242,7 +242,8 @@ bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx)
 
         Collision_Get(&ptr->field_12C, sharedData_800DFB7C_0_s00[idx].field_0.s_0.field_0, sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_0);
 
-        if (((ptr->field_12C.field_8 == 0) && (sharedData_800DFB7C_0_s00[idx].vy_8 > 0)) || (ptr->field_12C.groundHeight < sharedData_800DFB7C_0_s00[idx].vy_8))
+        if ((ptr->field_12C.groundType == GroundType_0 &&
+            sharedData_800DFB7C_0_s00[idx].vy_8 > 0) || ptr->field_12C.groundHeight < sharedData_800DFB7C_0_s00[idx].vy_8)
         {
             sharedData_800DFB7C_0_s00[idx].field_A = 0;
         }
@@ -251,13 +252,13 @@ bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx)
     temp_v1_4           = sharedData_800DFB7C_0_s00[idx].field_B;
     *(s32*)&(*poly)->u0 = ((temp_v1_4 & 3) << 4) + ((temp_v1_4 << 0xA) & 0x3000) + 0xE0000;
     temp_v0_23          = sharedData_800DFB7C_0_s00[idx].field_B;
-    *(s32*)&(*poly)->u1 = ((temp_v0_23 & 3) << 4) + 0xF + (((temp_v0_23 << 0xA) & 0x3000)) + 0x2D0000;
+    *(s32*)&(*poly)->u1 = ((temp_v0_23 & 3) << 4) + 15 + (((temp_v0_23 << 0xA) & 0x3000)) + 0x2D0000;
     temp_v0_24          = sharedData_800DFB7C_0_s00[idx].field_B;
-    *(u16*)&(*poly)->u2 = ((temp_v0_24 & 3) << 4) + ((((temp_v0_24 * 4) & 0x30) + 0xF) << 8);
+    *(u16*)&(*poly)->u2 = ((temp_v0_24 & 3) << 4) + ((((temp_v0_24 * 4) & 0x30) + 15) << 8);
     temp_v0_25          = sharedData_800DFB7C_0_s00[idx].field_B;
-    *(u16*)&(*poly)->u3 = ((temp_v0_25 & 3) << 4) + 0xF + ((((temp_v0_25 * 4) & 0x30) + 0xF) << 8);
+    *(u16*)&(*poly)->u3 = ((temp_v0_25 & 3) << 4) + 15 + ((((temp_v0_25 * 4) & 0x30) + 15) << 8);
 
-    temp_s1_3 = sharedData_800DFB7C_0_s00[idx].field_A - 0x17;
+    temp_s1_3 = sharedData_800DFB7C_0_s00[idx].field_A - 23;
 
     *(s32*)&ptr->field_158[0].vx = (u16)sharedData_800DFB7C_0_s00[idx].field_0.s_0.field_2 + (sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_2 << 16);
     ptr->field_158[0].vz         = 0;
@@ -336,7 +337,7 @@ bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx)
     *(s32*)&(*poly)->r0 = (ptr->field_1BC.r + (ptr->field_1BC.g << 8) + (ptr->field_1BC.b << 16) + 0x2E000000);
     *(s32*)&(*poly)->x3 = *(s32*)&ptr->field_1D4.vx;
 
-    addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_1C4 - 0x1800 >= 0 ? (ptr->field_1C4 - 0x1800) >> 3 : 0], *poly, 9);
+    addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[((ptr->field_1C4 - Q12(1.5f)) >= Q12(0.0f)) ? (ptr->field_1C4 - Q12(1.5f)) >> 3 : 0], *poly, 9);
 
     *poly += 1;
 

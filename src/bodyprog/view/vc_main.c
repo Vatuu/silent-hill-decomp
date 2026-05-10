@@ -1750,7 +1750,7 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
                 Collision_Get(&coll, sc_p->position.vx, sc_p->position.vz);
 
                 // If no valid ground, fall back on character Y position.
-                if (coll.field_8 == 0)
+                if (coll.groundType == GroundType_0)
                 {
                     watch_y = sc_p->position.vy + ofs_y;
                 }

@@ -316,6 +316,7 @@ typedef enum _StaticModelLoadState
     StaticModelLoadState_Loaded    = 3
 } e_StaticModelLoadState;
 
+/** @brief Ground collision types. */
 typedef enum _GroundType
 {
     GroundType_0     = 0,
@@ -418,10 +419,10 @@ typedef struct
 
 typedef struct
 {
-    u8  unk_0;
-    u8  field_1;
-    u8  unk_2[18];
-    s32 field_14;
+    /* 0x0  */ u8  unk_0;
+    /* 0x1  */ u8  groundType; /** `e_GroundType` */
+    /* 0x2  */ u8  unk_2[18];
+    /* 0x14 */ s32 field_14;
 } s_800C45C8;
 
 typedef struct
@@ -512,9 +513,9 @@ STATIC_ASSERT_SIZEOF(s_MapHdr_field_4C, 20);
 typedef struct _Collision
 {
     /* 0x0 */ q19_12 groundHeight;
-    /* 0x4 */ q3_12  field_4;  // X
-    /* 0x6 */ q3_12  field_6;  // Z
-    /* 0x8 */ s8     field_8;  // Ground type? Set to 0, 7, or 12.
+    /* 0x4 */ q3_12  field_4;    // X
+    /* 0x6 */ q3_12  field_6;    // Z
+    /* 0x8 */ s8     groundType; /** `e_GroundType` */
     // 3 bytes of padding.
 } s_Collision;
 STATIC_ASSERT_SIZEOF(s_Collision, 12);
@@ -791,16 +792,16 @@ typedef struct _LmHeader
 
 typedef struct _IpdCollisionData_10
 {
-    s16 field_0;
-    s16 field_2; // Q8? Related to ground height?
-    s16 field_4;
-    u16 field_6_0  : 5; // TODO: Might be using `s_IpdCollisionData_18` substruct here? Won't fit though.
-    u16 field_6_5  : 3;
-    u16 field_6_8  : 3;
-    u16 field_6_11 : 4;
-    u16 field_6_15 : 1;
-    s16 field_8;
-    s16 field_A;
+    /* 0x0    */ s16 field_0;
+    /* 0x2    */ s16 field_2; // Q8? Related to ground height?
+    /* 0x4    */ s16 field_4;
+    /* 0x6+0  */ u16 groundType : 5; /** `e_GroundType` */ // TODO: Might be using `s_IpdCollisionData_18` substruct here? Won't fit though.
+    /* 0x6+5  */ u16 field_6_5  : 3;
+    /* 0x6+8  */ u16 field_6_8  : 3;
+    /* 0x6+11 */ u16 field_6_11 : 4;
+    /* 0x6+15 */ u16 field_6_15 : 1;
+    /* 0x8    */ s16 field_8;
+    /* 0xA    */ s16 field_A;
 } s_IpdCollisionData_10;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_10, 12);
 
@@ -827,13 +828,13 @@ STATIC_ASSERT_SIZEOF(s_IpdCollisionData_20, 4);
 
 typedef struct _IpdCollisionData_18
 {
-    u16      field_0_0  : 5;
-    u16      field_0_5  : 3;
-    u16      field_0_8  : 4;
-    u16      field_0_12 : 3;
-    u16      field_0_15 : 1;
-    SVECTOR3 vec_2;
-    s16      field_8;
+    /* 0x0+0  */ u16      groundType : 5; /** `e_GroundType` */
+    /* 0x0+5  */ u16      field_0_5  : 3;
+    /* 0x0+8  */ u16      field_0_8  : 4;
+    /* 0x0+12 */ u16      field_0_12 : 3;
+    /* 0x0+15 */ u16      field_0_15 : 1;
+    /* 0x2    */ SVECTOR3 vec_2;
+    /* 0x8    */ s16      field_8;
 } s_IpdCollisionData_18;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
 
@@ -1008,7 +1009,7 @@ typedef struct _CollisionState
     s32                field_88; // X
     s32                field_8C; // Z
     s32                field_90; // `bool`?
-    s32                field_94;
+    s32                groundType; /** `e_GroundType` */
     union
     {
         DVECTOR_XZ vec_0;
@@ -1148,7 +1149,7 @@ typedef struct _CollisionPoint
 {
     /* 0x0  */ VECTOR3     position; /** Q19.12 */
     /* 0xC  */ s_Collision collision;
-    /* 0x18 */ s32         field_18; // Count of points in circle?
+    /* 0x18 */ s32         groundType; /** `e_GroundType` */
 } s_CollisionPoint;
 
 typedef struct
@@ -1745,52 +1746,52 @@ typedef struct
 /** @brief State for an in-progress ray trace. Contains pointers to active characters among other things. */
 typedef struct
 {
-    s32              field_0;
-    s16              field_4; // Collision flags.
-    s16              field_6;
-    q7_8             field_8; // Hit distance? `SHRT_MAX` if no valid hit.
-    s8               unk_A[2];
-    q19_12           field_C;  // } Q19.12 `VECTOR3`
-    q19_12           field_10; // }
-    q19_12           field_14; // }
-    s8               unk_18[4];
-    q7_8             field_1C; // Distance Z?
-    s8               unk_1E[2];
-    s_SubCharacter*  field_20;
-    q3_12            field_24; // X
-    q3_12            field_26; // Z
-    s32              field_28;
-    VECTOR3          field_2C; // Q23.8
-    s8               unk_38[4];
-    s32              field_3C; // X  } Q23.8 `VECTOR3`?
-    s32              field_40; // Y? }
-    s32              field_44; // Z  }
-    s8               unk_48[4];
-    q7_8             field_4C; // X?
-    q7_8             field_4E; // Z?
-    SVECTOR          field_50; // Q23.8
-    u16              field_58;
-    s16              field_5A;
-    s16              field_5C; // 
-    s16              field_5E;
-    s16              field_60;
-    s8               unk_62[2];
-    s_SubCharacter** characters_64; // Active characters?
-    s32              characterCount_68;
-    s_RayState_6C    field_6C;
-    s32              field_7C;
-    s32              field_80;
-    u16              field_84;
-    u8               unk_86[2];
-    s32              field_88;
-    s_RayState_8C    field_8C[1]; // Unknown size.
+    /* 0x0  */ s32              field_0;
+    /* 0x4  */ s16              field_4; // Collision flags.
+    /* 0x6  */ s16              field_6;
+    /* 0x8  */ q7_8             field_8; // Hit distance? `SHRT_MAX` if no valid hit.
+    /* 0xA  */ s8               __pad_A[2];
+    /* 0xC  */ q19_12           field_C;  // } Q19.12 `VECTOR3`
+    /* 0x10 */ q19_12           field_10; // }
+    /* 0x14 */ q19_12           field_14; // }
+    /* 0x18 */ s8               unk_18[4];
+    /* 0x1C */ q7_8             field_1C; // Distance Z?
+    /* 0x1E */ s8               __pad_1E[2];
+    /* 0x20 */ s_SubCharacter*  field_20;
+    /* 0x24 */ q3_12            field_24; // X
+    /* 0x26 */ q3_12            field_26; // Z
+    /* 0x28 */ s32              groundType; /** `e_GroundType` */
+    /* 0x2C */ VECTOR3          field_2C; // Q23.8
+    /* 0x38 */ s8               unk_38[4];
+    /* 0x3C */ s32              field_3C; // X  } Q23.8 `VECTOR3`?
+    /* 0x40 */ s32              field_40; // Y? }
+    /* 0x44 */ s32              field_44; // Z  }
+    /* 0x48 */ s8               unk_48[4];
+    /* 0x4C */ q7_8             field_4C; // X?
+    /* 0x4E */ q7_8             field_4E; // Z?
+    /* 0x50 */ SVECTOR          field_50; // Q23.8
+    /* 0x58 */ u16              field_58;
+    /* 0x5A */ s16              field_5A;
+    /* 0x5C */ s16              field_5C; // 
+    /* 0x5E */ s16              field_5E;
+    /* 0x60 */ s16              field_60;
+    /* 0x62 */ s8               __pad_62[2];
+    /* 0x64 */ s_SubCharacter** characters; // Active characters?
+    /* 0x68 */ s32              characterCount;
+    /* 0x6C */ s_RayState_6C    field_6C;
+    /* 0x7C */ s32              field_7C;
+    /* 0x80 */ s32              field_80;
+    /* 0x84 */ u16              field_84;
+    /* 0x86 */ u8               __pad_86[2];
+    /* 0x88 */ s32              field_88;
+    /* 0x8C */ s_RayState_8C    field_8C[1]; // Unknown size.
 } s_RayState;
 
 /** @brief Ray trace line of sight info. */
 typedef struct _RayTrace
 {
-    /* 0x0  */ s8              hasHit; /** `bool` */
-    /* 0x1  */ u8              field_1;
+    /* 0x0  */ s8              hasHit;     /** `bool` */
+    /* 0x1  */ u8              groundType; /** `e_GroundType` */
     /* 0x2  */ s8              __pad_2[2];
     /* 0x4  */ VECTOR3         target; /** Q19.12 */
     /* 0x10 */ s_SubCharacter* character;
@@ -1805,7 +1806,7 @@ typedef struct _CollisionResult
     /* 0xC  */ q19_12  groundHeight;
     /* 0x10 */ s16     field_10;
     /* 0x12 */ s16     field_12;
-    /* 0x14 */ s8      field_14; /** `e_GroundType` */
+    /* 0x14 */ s8      groundType; /** `e_GroundType` */
     /* 0x18 */ q19_12  field_18;
 } s_CollisionResult;
 
@@ -2614,8 +2615,8 @@ extern s16 SQRT[100];
 
 /** @brief Sets the collision shapes of a character from keyframe collision data.
  *
- * @param chara Character to update.
- * @param keyframe Keyframe collision data.
+ * @param chara Character to update (`s_SubCharacter`).
+ * @param keyframe Keyframe collision data (`s_Keyframe`).
  */
 #define Chara_CollisionSet(chara, keyframe)                                         \
 {                                                                                   \
@@ -3354,7 +3355,7 @@ void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType, 
 /** Spatial SFX func? */
 void func_8005DD44(e_SfxId sfxId, VECTOR3* pos, q23_8 vol, s8 pitch); // Types assumed.
 
-/** Checks `field_8` in collision struct. */
+/** Checks `groundType` in collision struct. */
 bool func_8005F680(s_Collision* coll);
 
 /** Related to camera collision? */
@@ -4531,7 +4532,7 @@ void Collision_Fill(q19_12 posX, q19_12 posZ);
  */
 q19_12 Collision_GroundHeightGet(q19_12 posX, q19_12 posZ);
 
-/** Getter for collision circle point count? */
+/** Gets ground type from cached point collision. */
 s32 func_800808AC(q19_12 posX, q19_12 posZ);
 
 /** Returns a Q shift based on a magnitude. */

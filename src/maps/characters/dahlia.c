@@ -344,7 +344,7 @@ void Dahlia_ControlUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
 
     Collision_Get(&coll, dahlia->position.vx, dahlia->position.vz);
 
-    func_8007FDE0(coll.field_8, &sfxId, &pitch0, &pitch1);
+    func_8007FDE0(coll.groundType, &sfxId, &pitch0, &pitch1);
 #if defined(MAP6_S01)
     sfxId = Sfx_Unk1606;
 #else

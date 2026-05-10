@@ -188,7 +188,7 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_PlayerExtra* extra)
 void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra, GsCOORDINATE2* coord)
 {
     s_Collision coll;
-    e_SfxId     sfx;
+    e_SfxId     sfxId;
     s8          pitch0;
     s8          pitch1;
     s32         newMoveSpeed;
@@ -2228,7 +2228,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
     }
 
     Collision_Get(&coll, playerChara->position.vx, playerChara->position.vz);
-    func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
+    func_8007FDE0(coll.groundType, &sfxId, &pitch0, &pitch1);
 
     switch (g_SysWork.playerWork.extra.state)
     {
@@ -2238,7 +2238,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             {
                 if (playerChara->model.anim.status == ANIM_STATUS(HarryAnim_Idle, false))
                 {
-                    func_8005DD44(sfx, &playerChara->position, 64, pitch0);
+                    func_8005DD44(sfxId, &playerChara->position, 64, pitch0);
                     playerChara->properties.player.field_10C                 = pitch0 + 16;
                     g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
                 }
@@ -2248,14 +2248,14 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk53
         case PlayerState_Unk53:
-            Player_FootstepSfxPlay(5, playerChara, 18, 6, sfx, pitch0);
+            Player_FootstepSfxPlay(5, playerChara, 18, 6, sfxId, pitch0);
             g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk54
         case PlayerState_Unk54:
-            if (Player_FootstepSfxPlay(7, playerChara, 31, 41, sfx, pitch1) != false)
+            if (Player_FootstepSfxPlay(7, playerChara, 31, 41, sfxId, pitch1) != false)
             {
                 playerChara->properties.player.runTimer_F8++;
             }
@@ -2266,27 +2266,27 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk56
         case PlayerState_Unk56:
-            Player_FootstepSfxPlay(27, playerChara, 204, 200, sfx, pitch0);
+            Player_FootstepSfxPlay(27, playerChara, 204, 200, sfxId, pitch0);
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk57
         case PlayerState_Unk57:
-            Player_FootstepSfxPlay(25, playerChara, 187, 191, sfx, pitch0);
+            Player_FootstepSfxPlay(25, playerChara, 187, 191, sfxId, pitch0);
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk59
         case PlayerState_Unk59:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, 0, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, 0, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk60
         case PlayerState_Unk60:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 7, 0, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 7, 0, sfxId, pitch0);
             break;
 #endif
 
@@ -2310,11 +2310,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk81:
             if ((keyframeIdx + 19) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 31, keyframeIdx + 19, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 31, keyframeIdx + 19, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 31, keyframeIdx + 40, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 31, keyframeIdx + 40, sfxId, pitch0);
             }
 
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
@@ -2337,14 +2337,14 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk91
         case PlayerState_Unk91:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 6, keyframeIdx + 6, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 6, keyframeIdx + 6, sfxId, pitch0);
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk92
         case PlayerState_Unk92:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 9, keyframeIdx + 9, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 9, keyframeIdx + 9, sfxId, pitch0);
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
@@ -2354,7 +2354,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             if (ANIM_STATUS_IS_ACTIVE(playerChara->model.anim.status))
             {
                 func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 6, Sfx_Unk1385);
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 18, 0, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 18, 0, sfxId, pitch0);
                 g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             }
             break;
@@ -2364,11 +2364,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk89:
             if ((keyframeIdx + 5) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 16, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 16, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 74, keyframeIdx + 77, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 74, keyframeIdx + 77, sfxId, pitch0);
             }
 
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
@@ -2379,11 +2379,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk97:
             if ((keyframeIdx + 4) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 10, keyframeIdx + 4, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 10, keyframeIdx + 4, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 10, keyframeIdx + 13, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 10, keyframeIdx + 13, sfxId, pitch0);
             }
 
             func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 26, Sfx_Unk1456);
@@ -2392,7 +2392,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk105
         case PlayerState_Unk105:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 12, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 12, sfxId, pitch0);
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
@@ -2401,11 +2401,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk113:
             if ((keyframeIdx + 5) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 5, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 5, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 21, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 21, sfxId, pitch0);
             }
 
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
@@ -2416,7 +2416,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk111:
             if (ANIM_STATUS_IS_ACTIVE(playerChara->model.anim.status))
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 11, keyframeIdx + 21, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 11, keyframeIdx + 21, sfxId, pitch0);
             }
 
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
@@ -2427,11 +2427,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk114:
             if ((keyframeIdx + 8) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 13, keyframeIdx + 8, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 13, keyframeIdx + 8, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 13, keyframeIdx + 18, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 13, keyframeIdx + 18, sfxId, pitch0);
             }
 
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
@@ -2442,17 +2442,17 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk115:
             if ((keyframeIdx + 9) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 9, keyframeIdx + 33, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 9, keyframeIdx + 33, sfxId, pitch0);
             }
             else
             {
                 if (keyframeIdx + 39 >= playerChara->model.anim.keyframeIdx)
                 {
-                    Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 39, keyframeIdx + 33, sfx, pitch0);
+                    Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 39, keyframeIdx + 33, sfxId, pitch0);
                 }
                 else
                 {
-                    Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 46, keyframeIdx + 42, sfx, pitch0);
+                    Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 46, keyframeIdx + 42, sfxId, pitch0);
                 }
             }
             break;
@@ -2460,7 +2460,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk117
         case PlayerState_Unk117:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 34, 0, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 34, 0, sfxId, pitch0);
             break;
 #endif
 
@@ -2468,11 +2468,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk118:
             if ((keyframeIdx + 8) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 12, keyframeIdx + 8, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 12, keyframeIdx + 8, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 12, keyframeIdx + 16, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 12, keyframeIdx + 16, sfxId, pitch0);
             }
 
             if (ANIM_STATUS_IS_ACTIVE(playerChara->model.anim.status))
@@ -2486,11 +2486,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk120:
             if ((keyframeIdx + 5) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 17, keyframeIdx + 5, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 17, keyframeIdx + 5, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 17, keyframeIdx + 25, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 17, keyframeIdx + 25, sfxId, pitch0);
             }
             break;
 #endif
@@ -2499,15 +2499,15 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk121:
             if ((keyframeIdx + 5) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 12, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 12, sfxId, pitch0);
             }
             else if ((keyframeIdx + 23) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 23, keyframeIdx + 12, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 23, keyframeIdx + 12, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 29, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 29, sfxId, pitch0);
             }
             break;
 #endif
@@ -2516,11 +2516,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk122:
             if ((keyframeIdx + 9) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 9, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 9, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 19, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 19, sfxId, pitch0);
             }
             break;
 #endif
@@ -2529,18 +2529,18 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk123:
             if ((keyframeIdx + 9) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 9, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 9, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 19, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 19, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk124
         case PlayerState_Unk124:
-            if (Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, 80, 87, sfx, pitch1))
+            if (Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, 80, 87, sfxId, pitch1))
             {
                 playerChara->properties.player.runTimer_F8++;
             }
@@ -2551,11 +2551,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk126:
             if ((keyframeIdx + 9) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 16, keyframeIdx + 9, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 16, keyframeIdx + 9, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 16, keyframeIdx + 22, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 16, keyframeIdx + 22, sfxId, pitch0);
             }
             break;
 #endif
@@ -2564,18 +2564,18 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk127:
             if ((keyframeIdx + 5) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 17, keyframeIdx + 5, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 17, keyframeIdx + 5, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 17, keyframeIdx + 26, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 17, keyframeIdx + 26, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk133
         case PlayerState_Unk133:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 5, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 5, sfxId, pitch0);
             break;
 #endif
 
@@ -2583,44 +2583,44 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk138:
             if (ANIM_STATUS_IS_ACTIVE(playerChara->model.anim.status))
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 18, keyframeIdx + 14, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 18, keyframeIdx + 14, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk140
         case PlayerState_Unk140:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 25, keyframeIdx + 25, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 25, keyframeIdx + 25, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk141
         case PlayerState_Unk141:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 46, keyframeIdx + 5, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 46, keyframeIdx + 5, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk142
         case PlayerState_Unk142:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 10, keyframeIdx + 10, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 10, keyframeIdx + 10, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk130
         case PlayerState_Unk130:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 14, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 14, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk146
         case PlayerState_Unk146:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 16, keyframeIdx + 10, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 16, keyframeIdx + 10, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk147
         case PlayerState_Unk147:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 11, keyframeIdx + 11, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 11, keyframeIdx + 11, sfxId, pitch0);
             break;
 #endif
 
@@ -2654,11 +2654,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
             if ((keyframeIdx + 43) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 55, keyframeIdx + 43, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 55, keyframeIdx + 43, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 55, keyframeIdx + 59, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 55, keyframeIdx + 59, sfxId, pitch0);
             }
             break;
 #endif
@@ -2672,15 +2672,15 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
             if (keyframeIdx + 8 >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 8, keyframeIdx + 11, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 8, keyframeIdx + 11, sfxId, pitch0);
             }
             else if ((keyframeIdx + 14) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 11, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 11, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 8, keyframeIdx + 16, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 8, keyframeIdx + 16, sfxId, pitch0);
             }
 
             break;
@@ -2699,20 +2699,20 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                     func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 11, Sfx_Unk1619);
                 }
 
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 16, keyframeIdx + 16, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 16, keyframeIdx + 16, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk153
         case PlayerState_Unk153:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 12, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 12, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk154
         case PlayerState_Unk154:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 7, keyframeIdx + 21, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 7, keyframeIdx + 21, sfxId, pitch0);
             break;
 #endif
 
@@ -2722,27 +2722,27 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             {
                 if (keyframeIdx + 10 >= playerChara->model.anim.keyframeIdx)
                 {
-                    Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 10, keyframeIdx + 16, sfx, pitch0);
+                    Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 10, keyframeIdx + 16, sfxId, pitch0);
                 }
                 else
                 {
                     if (keyframeIdx + 21 >= playerChara->model.anim.keyframeIdx)
                     {
-                        Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 21, keyframeIdx + 16, sfx, pitch0);
+                        Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 21, keyframeIdx + 16, sfxId, pitch0);
                     }
                     else
                     {
-                        Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 28, keyframeIdx + 25, sfx, pitch0);
+                        Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 28, keyframeIdx + 25, sfxId, pitch0);
                     }
                 }
             }
             else if ((keyframeIdx + 16) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 34, keyframeIdx + 38, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 34, keyframeIdx + 38, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 42, keyframeIdx + 46, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 42, keyframeIdx + 46, sfxId, pitch0);
             }
             break;
 #endif
@@ -2753,42 +2753,42 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             {
                 if ((keyframeIdx + 9) >= playerChara->model.anim.keyframeIdx)
                 {
-                    Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 9, keyframeIdx + 22, sfx, pitch0);
+                    Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 9, keyframeIdx + 22, sfxId, pitch0);
                 }
                 else
                 {
                     if ((keyframeIdx + 30) >= playerChara->model.anim.keyframeIdx)
                     {
-                        Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 30, keyframeIdx + 22, sfx, pitch0);
+                        Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 30, keyframeIdx + 22, sfxId, pitch0);
                     }
                     else
                     {
-                        Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 52, keyframeIdx + 42, sfx, pitch0);
+                        Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 52, keyframeIdx + 42, sfxId, pitch0);
                     }
                 }
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 59, keyframeIdx + 59, sfx, pitch1);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 59, keyframeIdx + 59, sfxId, pitch1);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk157
         case PlayerState_Unk157:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 33, keyframeIdx + 25, sfx, pitch1);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 33, keyframeIdx + 25, sfxId, pitch1);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk158
         case PlayerState_Unk158:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 12, keyframeIdx + 5, sfx, pitch1);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 12, keyframeIdx + 5, sfxId, pitch1);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk159
         case PlayerState_Unk159:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 11, 0, sfx, pitch1);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 11, 0, sfxId, pitch1);
             break;
 #endif
 
@@ -2796,30 +2796,30 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk160:
             if ((keyframeIdx + 33) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 42, keyframeIdx + 33, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 42, keyframeIdx + 33, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 42, keyframeIdx + 55, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 42, keyframeIdx + 55, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk161
         case PlayerState_Unk161:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 24, keyframeIdx + 22, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 24, keyframeIdx + 22, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk175
         case PlayerState_Unk175:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, 18, 6, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, 18, 6, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk186
         case PlayerState_Unk186:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, 0, keyframeIdx + 12, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, 0, keyframeIdx + 12, sfxId, pitch0);
             g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Moving;
             break;
 #endif
@@ -2839,7 +2839,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk163
         case PlayerState_Unk163:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 6, 0, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 6, 0, sfxId, pitch0);
             break;
 #endif
 
@@ -2851,31 +2851,31 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk167
         case PlayerState_Unk167:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 10, 0, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 10, 0, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk168
         case PlayerState_Unk168:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 38, keyframeIdx + 22, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 38, keyframeIdx + 22, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk172
         case PlayerState_Unk172:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 29, 0, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 29, 0, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk176
         case PlayerState_Unk176:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 8, keyframeIdx + 19, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 8, keyframeIdx + 19, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk179
         case PlayerState_Unk179:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 8, keyframeIdx + 44, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 8, keyframeIdx + 44, sfxId, pitch0);
             break;
 #endif
 
@@ -2883,24 +2883,24 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk183:
             if ((keyframeIdx + 11) >= playerChara->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 28, keyframeIdx + 11, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 28, keyframeIdx + 11, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 28, keyframeIdx + 55, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 28, keyframeIdx + 55, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk171
         case PlayerState_Unk171:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 9, keyframeIdx + 14, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 9, keyframeIdx + 14, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk185
         case PlayerState_Unk185:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 38, keyframeIdx + 22, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 38, keyframeIdx + 22, sfxId, pitch0);
             break;
 #endif
 
