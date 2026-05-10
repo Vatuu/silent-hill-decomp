@@ -2387,7 +2387,7 @@ bool Ray_TraceQuery(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* to) /
 
     if (!trace->hasHit)
     {
-        Ray_MissSet(trace, from, &offset, state->field_5C);
+        Ray_MissSet(trace, from, &offset, state->rayDistance);
     }
 
     return trace->hasHit;
@@ -2415,26 +2415,26 @@ bool Ray_CharaTraceQuery(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_Su
 
     if (!trace->hasHit)
     {
-        Ray_MissSet(trace, from, offset, state->field_5C);
+        Ray_MissSet(trace, from, offset, state->rayDistance);
     }
 
     return trace->hasHit;
 }
 
-void Ray_MissSet(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, q23_8 arg3) // 0x8006DAE4
+void Ray_MissSet(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, q23_8 dist) // 0x8006DAE4
 {
-    trace->hasHit     = false;
-    trace->groundType = GroundType_Default;
-    trace->target.vx  = from->vx + offset->vx;
-    trace->target.vy  = from->vy + offset->vy;
-    trace->target.vz  = from->vz + offset->vz;
-    trace->character  = NULL;
-    trace->field_14   = Q8_TO_Q12(arg3);
-    trace->field_18   = Q12(1.875f);
-    trace->field_1C   = Q12_ANGLE(0.0f);
+    trace->hasHit      = false;
+    trace->groundType  = GroundType_Default;
+    trace->target.vx   = from->vx + offset->vx;
+    trace->target.vy   = from->vy + offset->vy;
+    trace->target.vz   = from->vz + offset->vz;
+    trace->character   = NULL;
+    trace->hitDistance = Q8_TO_Q12(dist);
+    trace->field_18    = Q12(1.875f);
+    trace->field_1C    = Q12_ANGLE(0.0f);
 }
 
-bool Ray_LosHitCheck(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCharacter* excludedChara) // 0x8006DB3C
+bool Ray_LosHitCheck(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, s_SubCharacter* excludedChara) // 0x8006DB3C
 {
     s32              collCharaCount;
     s32              prevScratchAddr;
@@ -2456,13 +2456,13 @@ bool Ray_LosHitCheck(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCha
 
     if (!trace->hasHit)
     {
-        Ray_MissSet(trace, from, offset, state->field_5C);
+        Ray_MissSet(trace, from, offset, state->rayDistance);
     }
 
     return trace->hasHit;
 }
 
-bool func_8006DC18(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset) // 0x8006DC18
+bool func_8006DC18(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset) // 0x8006DC18
 {
     s32         prevScratchAddr;
     s_RayState* state;
@@ -2480,13 +2480,13 @@ bool func_8006DC18(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset) // 0x8006D
 
     if (!trace->hasHit)
     {
-        Ray_MissSet(trace, from, offset, state->field_5C);
+        Ray_MissSet(trace, from, offset, state->rayDistance);
     }
 
     return trace->hasHit;
 }
 
-bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, const VECTOR3* from, const VECTOR3* offset, s32 arg5, s32 arg6,
+bool Ray_TraceSetup(s_RayState* state, bool useCylinder, q7_8 arg2, const VECTOR3* from, const VECTOR3* offset, q19_12 arg5, q19_12 arg6,
                     s_SubCharacter** collCharas, s32 collCharaCount)
 {
     if (offset->vx == Q12(0.0f) && offset->vz == Q12(0.0f))
@@ -2494,45 +2494,45 @@ bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, const VECTOR3* from, 
         return false;
     }
 
-    state->field_0  = arg1;
+    state->field_0  = useCylinder;
     state->field_4  = D_800C4478.flags; // Struct could begin some point earlier.
     state->field_6  = arg2;
     state->field_8  = SHRT_MAX;
     state->field_20 = 0;
 
-    state->field_2C.vx = Q12_TO_Q8(from->vx);
-    state->field_2C.vy = Q12_TO_Q8(from->vy);
-    state->field_2C.vz = Q12_TO_Q8(from->vz);
+    state->from.vx = Q12_TO_Q8(from->vx);
+    state->from.vy = Q12_TO_Q8(from->vy);
+    state->from.vz = Q12_TO_Q8(from->vz);
 
-    state->field_50.vx = Q12_TO_Q8(offset->vx);
-    state->field_50.vy = Q12_TO_Q8(offset->vy);
-    state->field_50.vz = Q12_TO_Q8(offset->vz);
+    state->offset.vx = Q12_TO_Q8(offset->vx);
+    state->offset.vy = Q12_TO_Q8(offset->vy);
+    state->offset.vz = Q12_TO_Q8(offset->vz);
 
-    state->field_3C = state->field_2C.vx + state->field_50.vx;
+    state->field_3C = state->from.vx + state->offset.vx;
 
     state->field_4C = Q12_TO_Q8(arg5);
     state->field_4E = Q12_TO_Q8(arg6);
 
-    state->field_40 = state->field_2C.vy + state->field_50.vy;
-    state->field_44 = state->field_2C.vz + state->field_50.vz;
+    state->field_40 = state->from.vy + state->offset.vy;
+    state->field_44 = state->from.vz + state->offset.vz;
 
-    state->field_5C = SquareRoot0(SQUARE(state->field_50.vx) + SQUARE(state->field_50.vz));
-    if (state->field_5C == Q8(0.0f))
+    state->rayDistance = SquareRoot0(SQUARE(state->offset.vx) + SQUARE(state->offset.vz));
+    if (state->rayDistance == Q8(0.0f))
     {
         return false;
     }
 
-    state->field_58 = (state->field_50.vx << Q12_SHIFT) / state->field_5C;
-    state->field_5A = (state->field_50.vz << Q12_SHIFT) / state->field_5C;
+    state->field_58 = (state->offset.vx << Q12_SHIFT) / state->rayDistance;
+    state->field_5A = (state->offset.vz << Q12_SHIFT) / state->rayDistance;
 
-    if (state->field_50.vy < 0)
+    if (state->offset.vy < 0)
     {
-        state->field_5E = state->field_2C.vy + state->field_4E;
+        state->field_5E = state->from.vy + state->field_4E;
         state->field_60 = state->field_40 + state->field_4E;
     }
     else
     {
-        state->field_60 = state->field_2C.vy + state->field_4E;
+        state->field_60 = state->from.vy + state->field_4E;
         state->field_5E = state->field_40 + state->field_4E;
     }
 
@@ -2582,14 +2582,14 @@ bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state) // 0x8006DEB0
 
     if (state->field_8 != SHRT_MAX)
     {
-        trace->target.vx  = Q8_TO_Q12(state->field_C);
-        trace->target.vy  = Q8_TO_Q12(state->field_10);
-        trace->target.vz  = Q8_TO_Q12(state->field_14);
-        trace->character  = state->field_20;
-        trace->field_14   = Q8_TO_Q12(state->field_8);
-        trace->field_18   = Q8_TO_Q12(state->field_1C);
-        trace->field_1C   = ratan2(state->field_24, state->field_26);
-        trace->groundType = state->groundType;
+        trace->target.vx   = Q8_TO_Q12(state->field_C);
+        trace->target.vy   = Q8_TO_Q12(state->field_10);
+        trace->target.vz   = Q8_TO_Q12(state->field_14);
+        trace->character   = state->field_20;
+        trace->hitDistance = Q8_TO_Q12(state->field_8);
+        trace->field_18    = Q8_TO_Q12(state->field_1C);
+        trace->field_1C    = ratan2(state->field_24, state->field_26);
+        trace->groundType  = state->groundType;
         return true;
     }
 
@@ -2601,15 +2601,15 @@ void func_8006E0AC(s_RayState* state, s_IpdCollisionData* arg1) // 0x8006E0AC
     // `state` type might be wrong.
     state->field_6C.field_0 = arg1->positionX;
     state->field_6C.field_4 = arg1->positionZ;
-    state->field_6C.field_8 = state->field_2C.vx - state->field_6C.field_0;
-    state->field_6C.field_A = state->field_2C.vz - state->field_6C.field_4;
-    state->field_6C.field_C = state->field_6C.field_8 + state->field_50.vx;
-    state->field_6C.field_E = state->field_6C.field_A + state->field_50.vz;
+    state->field_6C.field_8 = state->from.vx - state->field_6C.field_0;
+    state->field_6C.field_A = state->from.vz - state->field_6C.field_4;
+    state->field_6C.field_C = state->field_6C.field_8 + state->offset.vx;
+    state->field_6C.field_E = state->field_6C.field_A + state->offset.vz;
     state->field_7C = arg1->field_1E;
     state->field_80 = arg1->field_1F;
     state->field_84 = arg1->field_1C;
 
-    func_8006E150(&state->field_6C, ((DVECTOR*)&state->field_50)[0], ((DVECTOR*)&state->field_50)[1]);
+    func_8006E150(&state->field_6C, ((DVECTOR*)&state->offset)[0], ((DVECTOR*)&state->offset)[1]);
 }
 
 void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E150
@@ -2805,7 +2805,7 @@ void func_8006E53C(s_RayState* state, s_IpdCollisionData_20* arg1, s_IpdCollisio
 
                     cond0 = temp_a0_3 != 0xFF && temp_a2 != 0xFF;
 
-                    if (state->field_0 == 1)
+                    if (state->field_0 == true)
                     {
                         if (cond0)
                         {
@@ -2844,7 +2844,7 @@ void func_8006E53C(s_RayState* state, s_IpdCollisionData_20* arg1, s_IpdCollisio
                 temp_v0_2 = (u16)state->field_4 >> temp_a1_2->field_0_8;
 
                 if ((temp_v0_2 & (1 << 0)) &&
-                    (state->field_0 == 1 ||
+                    (state->field_0 == true ||
                      (temp_a1_2->groundType != GroundType_Default &&
                       temp_a1_2->groundType != GroundType_12)) &&
                     temp_a1_2->field_8 >= state->field_6)
@@ -2902,7 +2902,7 @@ void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg
 
         if ((sp0.vy & 0x8000) != (sp8.vy & 0x8000))
         {
-            if (state->field_0 == 1)
+            if (state->field_0 == true)
             {
                 gte_ldsxy3(0, *(s32*)&sp0.vx, *(s32*)&sp8.vx);
                 gte_nclip();
@@ -2927,7 +2927,7 @@ void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg
             {
                 var_v1 = ((sp0.vy << 12) / (sp0.vy - sp8.vy));
                 var_a3 = (((sp8.vx - sp0.vx) * var_v1) >> 12) + sp0.vx;
-                if (var_a3 >= 0 && state->field_5C >= var_a3)
+                if (var_a3 >= 0 && state->rayDistance >= var_a3)
                 {
                     gte_lddp(var_v1);
                     gte_ldsv3_(temp_t2->vx - temp_t1->vx, temp_t2->vy - temp_t1->vy, temp_t2->vz - temp_t1->vz);
@@ -2938,17 +2938,17 @@ void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg
                     sp10.vy += temp_t1->vy;
                     sp10.vz += temp_t1->vz;
 
-                    var_a2 = state->field_2C.vy + state->field_4E;
-                    if (state->field_50.vy != 0)
+                    var_a2 = state->from.vy + state->field_4E;
+                    if (state->offset.vy != 0)
                     {
-                        var_a2 += (state->field_50.vy * var_a3) / state->field_5C;
+                        var_a2 += (state->offset.vy * var_a3) / state->rayDistance;
                     }
 
                     if (var_a2 >= sp10.vy && var_a3 < state->field_8)
                     {
                         var_a1 = arg1->field_2_0;
                         var_t1 = -arg1->field_0_0;
-                        if (state->field_0 != 1 && arg4 != 0 && (sp8.vy - sp0.vy) > 0)
+                        if (state->field_0 != true && arg4 != 0 && (sp8.vy - sp0.vy) > 0)
                         {
                             var_a1 = -var_a1;
                             var_t1 = arg1->field_0_0;
@@ -2993,23 +2993,23 @@ void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1) // 0x8006EB8C
     gte_rtv0();
     gte_stMAC12(&sp10);
 
-    if (-temp_a1 < sp10.vx && sp10.vx < (state->field_5C + temp_a1) && -temp_a1 < sp10.vy && sp10.vy < temp_a1)
+    if (-temp_a1 < sp10.vx && sp10.vx < (state->rayDistance + temp_a1) && -temp_a1 < sp10.vy && sp10.vy < temp_a1)
     {
         temp_v0   = SquareRoot0((temp_a1 * temp_a1) - (sp10.vy * sp10.vy));
         temp_a1_3 = sp10.vx - temp_v0;
 
-        if (temp_a1_3 >= -temp_v0 && state->field_5C >= temp_a1_3 && temp_a1_3 < state->field_8)
+        if (temp_a1_3 >= -temp_v0 && state->rayDistance >= temp_a1_3 && temp_a1_3 < state->field_8)
         {
-            gte_lddp(((temp_a1_3 << 12) / state->field_5C));
-            gte_ldsv3_(state->field_50.vx, state->field_50.vy, state->field_50.vz);
+            gte_lddp(((temp_a1_3 << 12) / state->rayDistance));
+            gte_ldsv3_(state->offset.vx, state->offset.vy, state->offset.vz);
             gte_gpf12();
             gte_stsv(&sp18);
 
-            if ((sp18.vy + state->field_2C.vy + state->field_4E) >= arg1->vec_2.vy)
+            if ((sp18.vy + state->from.vy + state->field_4E) >= arg1->vec_2.vy)
             {
                 state->field_8  = temp_a1_3;
                 state->field_C  = sp18.vx + state->field_6C.field_8 + state->field_6C.field_0;
-                state->field_10 = sp18.vy + state->field_2C.vy;
+                state->field_10 = sp18.vy + state->from.vy;
                 state->field_14 = sp18.vz + state->field_6C.field_A + state->field_6C.field_4;
                 state->field_1C = arg1->vec_2.vy;
                 state->field_24 = (sp18.vx + state->field_6C.field_8) - arg1->vec_2.vx;
@@ -3060,26 +3060,26 @@ void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
     q23_8   z0;
     q19_12  var_v1;
 
-    if (state->field_2C.vx <= state->field_3C)
+    if (state->from.vx <= state->field_3C)
     {
-        x0 = state->field_2C.vx;
+        x0 = state->from.vx;
         z0 = state->field_3C;
     }
     else
     {
         x0 = state->field_3C;
-        z0 = state->field_2C.vx;
+        z0 = state->from.vx;
     }
 
-    if (state->field_2C.vz <= state->field_44)
+    if (state->from.vz <= state->field_44)
     {
-        z1 = state->field_2C.vz;
+        z1 = state->from.vz;
         x1 = state->field_44;
     }
     else
     {
         z1 = state->field_44;
-        x1 = state->field_2C.vz;
+        x1 = state->from.vz;
     }
 
     bound = state->field_6C.field_C;
@@ -3089,38 +3089,38 @@ void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
     }
 
     if ((state->field_6C.field_4 + bound) < z1 || x1 < (state->field_6C.field_4 - bound) ||
-        ((state->field_2C.vy + state->field_4E) < state->field_6C.field_8 && (state->field_40 + state->field_4E) < state->field_6C.field_8) ||
-        ((state->field_2C.vy + state->field_4C) > state->field_6C.field_A && state->field_6C.field_A < (state->field_40 + state->field_4C)))
+        ((state->from.vy + state->field_4E) < state->field_6C.field_8 && (state->field_40 + state->field_4E) < state->field_6C.field_8) ||
+        ((state->from.vy + state->field_4C) > state->field_6C.field_A && state->field_6C.field_A < (state->field_40 + state->field_4C)))
     {
         return;
     }
 
-    temp_v0 = func_8006C248(*(s32*)&state->field_58, state->field_5C,
-                            state->field_6C.field_0 - state->field_2C.vx,
-                            state->field_6C.field_4 - state->field_2C.vz,
+    temp_v0 = func_8006C248(*(s32*)&state->field_58, state->rayDistance,
+                            state->field_6C.field_0 - state->from.vx,
+                            state->field_6C.field_4 - state->from.vz,
                             bound);
     if (temp_v0 == NO_VALUE)
     {
         return;
     }
 
-    temp_v0_2 = Q12_MULT(state->field_5C, temp_v0);
+    temp_v0_2 = Q12_MULT(state->rayDistance, temp_v0);
     if (temp_v0_2 >= state->field_8)
     {
         return;
     }
 
-    pos.vy = state->field_2C.vy + (Q12_MULT(state->field_50.vy, temp_v0));
+    pos.vy = state->from.vy + (Q12_MULT(state->offset.vy, temp_v0));
     if (((pos.vy + state->field_4E) < state->field_6C.field_8) || (state->field_6C.field_A < (pos.vy + state->field_4C)))
     {
-        if (state->field_50.vy == 0)
+        if (state->offset.vy == 0)
         {
             return;
         }
 
         if ((pos.vy + state->field_4E) < state->field_6C.field_8)
         {
-            var_v1 = Q12(state->field_6C.field_8 - (state->field_2C.vy + state->field_4E)) / state->field_50.vy;
+            var_v1 = Q12(state->field_6C.field_8 - (state->from.vy + state->field_4E)) / state->offset.vy;
             if (var_v1 > Q12(1.0f))
             {
                 return;
@@ -3129,7 +3129,7 @@ void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
         }
         else
         {
-            var_v1 = Q12(state->field_6C.field_A - (state->field_2C.vy + state->field_4C)) / state->field_50.vy;
+            var_v1 = Q12(state->field_6C.field_A - (state->from.vy + state->field_4C)) / state->offset.vy;
             if (var_v1 > Q12(1.0f))
             {
                 return;
@@ -3137,8 +3137,8 @@ void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
             pos.vy = state->field_6C.field_A - state->field_4C;
         }
 
-        pos.vx = state->field_2C.vx + Q12_MULT(state->field_50.vx, var_v1);
-        pos.vz = state->field_2C.vz + Q12_MULT(state->field_50.vz, var_v1);
+        pos.vx = state->from.vx + Q12_MULT(state->offset.vx, var_v1);
+        pos.vz = state->from.vz + Q12_MULT(state->offset.vz, var_v1);
         if ((SQUARE(state->field_6C.field_0 - pos.vx) + SQUARE(state->field_6C.field_4 - pos.vz)) >= SQUARE(state->field_6C.field_C))
         {
             return;
@@ -3146,8 +3146,8 @@ void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
     }
     else
     {
-        pos.vx = state->field_2C.vx + Q12_MULT(state->field_50.vx, temp_v0);
-        pos.vz = state->field_2C.vz + Q12_MULT(state->field_50.vz, temp_v0);
+        pos.vx = state->from.vx + Q12_MULT(state->offset.vx, temp_v0);
+        pos.vz = state->from.vz + Q12_MULT(state->offset.vz, temp_v0);
     }
 
     state->field_8  = temp_v0_2;

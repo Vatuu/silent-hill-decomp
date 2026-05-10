@@ -2994,6 +2994,7 @@ D_800C44F0                                   = 0x800C44F0; // size:0x50
 g_TargetEnemyPosition                        = 0x800C4540; 
 g_Player_HasMoveInput                        = 0x800C4558; 
 g_Player_HasActionInput                      = 0x800C455C; 
+g_Player_PrevAttackReceived                  = 0x800C4560;
 g_Player_IsDead                              = 0x800C4561; 
 g_Player_DisableDamage                       = 0x800C4562; 
 g_Player_EquippedWeaponInfo                  = 0x800C4570; // size:12

@@ -392,7 +392,7 @@ extern s32 g_Player_HasMoveInput;
 /** @brief Used to cancel the idle state if the Action or Run button is tapped. */
 extern s32 g_Player_HasActionInput;
 
-extern s8 D_800C4560;
+extern s8 g_Player_PrevAttackReceived;
 
 extern u8 g_Player_IsDead;
 

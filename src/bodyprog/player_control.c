@@ -29,7 +29,7 @@ s16        D_800C4554;
 s16        D_800C4556;
 s32        g_Player_HasMoveInput;
 s32        g_Player_HasActionInput;
-s8         D_800C4560;
+s8         g_Player_PrevAttackReceived;
 u8         g_Player_IsDead;
 u8         g_Player_DisableDamage;
 u8         __pad_bss_800C4563[13];
@@ -6836,14 +6836,14 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
         default:
             if (g_Player_IsInWalkToRunTransition)
             {
-                D_800C4560 = player->attackReceived;
+                g_Player_PrevAttackReceived = player->attackReceived;
                 return;
             }
 
-            if (D_800C4560 != NO_VALUE)
+            if (g_Player_PrevAttackReceived != NO_VALUE)
             {
-                player->attackReceived = D_800C4560;
-                D_800C4560 = NO_VALUE;
+                player->attackReceived = g_Player_PrevAttackReceived;
+                g_Player_PrevAttackReceived = NO_VALUE;
             }
 
             if (player->attackReceived <= 0)
@@ -7423,7 +7423,7 @@ s32 func_8007D6F0(s_SubCharacter* player, s_800C45C8* arg1) // 0x8007D6F0
 
         if (traceHits[1])
         {
-            arg1->field_14   = (traces[0].field_14 + traces[1].field_14) >> 1;
+            arg1->field_14   = (traces[0].hitDistance + traces[1].hitDistance) >> 1;
             arg1->groundType = traces[0].groundType;
 
             angle      = Q12_ANGLE_NORM_U(((traces[0].field_1C + traces[1].field_1C) >> 1) + Q12_ANGLE(360.0f));
@@ -7454,10 +7454,10 @@ s32 func_8007D6F0(s_SubCharacter* player, s_800C45C8* arg1) // 0x8007D6F0
 void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0x8007D970
 {
     VECTOR                blasterBeamFrom; // Q19.12
-    VECTOR                partBeamFrom; // Q19.12
-    VECTOR                partBeamTo; // Q19.12
+    VECTOR                partBeamFrom;    // Q19.12
+    VECTOR                partBeamTo;      // Q19.12
     MATRIX                handTransformMat;
-    VECTOR                handPos; // Q23.8
+    VECTOR                handPos;      // Q23.8
     VECTOR                partBeamToQ8; // Q23.8
     SVECTOR               localHandPos;
     DVECTOR               rotToAttackPos;
@@ -7534,7 +7534,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
             if (playerExtra.state == PlayerState_Combat && g_Player_TargetNpcIdx != NO_VALUE)
             {
                 rotToAttackPos.vx = ratan2((targetNpc.position.vx + targetNpc.collision.shapeOffsets.box.vx) - playerCombat.attackPosition.vx,
-                                             (targetNpc.position.vz + targetNpc.collision.shapeOffsets.box.vz) - playerCombat.attackPosition.vz);
+                                           (targetNpc.position.vz + targetNpc.collision.shapeOffsets.box.vz) - playerCombat.attackPosition.vz);
             }
             else
             {
@@ -7936,7 +7936,7 @@ void func_8007E9C4(void) // 0x8007E9C4
     g_SysWork.playerStopFlags       = PlayerStopFlag_None;
     g_Player_FlexRotationY          = Q12_ANGLE(0.0f);
     g_Player_FlexRotationX          = Q12_ANGLE(0.0f);
-    D_800C4560                      = NO_VALUE;
+    g_Player_PrevAttackReceived                      = NO_VALUE;
     g_SysWork.playerCombat.isAiming = false;
 
     func_8004C564(0, NO_VALUE);

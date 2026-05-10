@@ -2205,23 +2205,23 @@ q19_12 func_800D4488(VECTOR3* arg0, s32 arg1) // 0x800D4488
     return angle;
 }
 
-s32 func_800D4558(q19_12 angle, s32 arg1, s32 arg2) // 0x800D4558
+q19_12 func_800D4558(q19_12 headingAngle, q19_12 fromX, q19_12 fromZ) // 0x800D4558
 {
     s_RayTrace trace;
-    VECTOR3    dir;  // Q19.12
-    VECTOR3    from; // Q19.12
+    VECTOR3    offset; // Q19.12
+    VECTOR3    from;   // Q19.12
 
-    from.vx = arg1;
+    from.vx = fromX;
     from.vy = Q12(-0.3f);
-    from.vz = arg2;
+    from.vz = fromZ;
 
-    dir.vx = Math_Sin(angle);
-    dir.vy = Q12(0.0f);
-    dir.vz = Math_Cos(angle);
+    offset.vx = Math_Sin(headingAngle);
+    offset.vy = Q12(0.0f);
+    offset.vz = Math_Cos(headingAngle);
 
-    if (func_8006DC18(&trace, &from, &dir))
+    if (func_8006DC18(&trace, &from, &offset))
     {
-        return trace.field_14;
+        return trace.hitDistance;
     }
     else
     {

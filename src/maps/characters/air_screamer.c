@@ -9192,26 +9192,26 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
     {
         temp = sharedData_800E2370_0_s01[0];
 
-        if (temp < sharedData_800E2330_0_s01.field_14)
+        if (temp < sharedData_800E2330_0_s01.hitDistance)
         {
-            if (sharedData_800E2330_0_s01.field_14 == 0)
+            if (sharedData_800E2330_0_s01.hitDistance == Q12(0.0f))
             {
                 var_v1 = 0;
             }
             else
             {
-                var_v1 = FP_TO(temp, Q12_SHIFT) / sharedData_800E2330_0_s01.field_14;
+                var_v1 = FP_TO(temp, Q12_SHIFT) / sharedData_800E2330_0_s01.hitDistance;
             }
 
             hasLosHit  = true;
             temp3 = Q12_MULT_PRECISE(offsetX, var_v1);
             temp2 = Q12_MULT_PRECISE(i, var_v1);
 
-            sharedData_800E2330_0_s01.field_14   = temp;
-            sharedData_800E2330_0_s01.hasHit   = hasHit;
-            sharedData_800E2330_0_s01.target.vx = temp3 + posX;
-            sharedData_800E2330_0_s01.target.vy = temp2 + posY;
-            sharedData_800E2330_0_s01.field_18   = sharedData_800E2330_0_s01.target.vy;
+            sharedData_800E2330_0_s01.hitDistance = temp;
+            sharedData_800E2330_0_s01.hasHit      = hasHit;
+            sharedData_800E2330_0_s01.target.vx   = temp3 + posX;
+            sharedData_800E2330_0_s01.target.vy   = temp2 + posY;
+            sharedData_800E2330_0_s01.field_18    = sharedData_800E2330_0_s01.target.vy;
 
             temp2                                 = Q12_MULT_PRECISE(offsetZ, var_v1);
             sharedData_800E2330_0_s01.target.vz  = temp2 + posZ;
@@ -13304,8 +13304,8 @@ void sharedFunc_800D8714_0_s01(s_SubCharacter* airScreamer, q19_12 moveSpeed, q1
     q19_12           moveDist;
     q19_12           moveDistBase;
     s32              idx;
-    q19_12           offsetX;
-    q19_12           offsetZ;
+    q19_12           cylinderOffsetX;
+    q19_12           cylinderOffsetZ;
     s_func_800D2E04* base;
 
     adjHeadingAngle               = headingAngle;
@@ -13333,11 +13333,11 @@ void sharedFunc_800D8714_0_s01(s_SubCharacter* airScreamer, q19_12 moveSpeed, q1
         adjHeadingAngle ^= Q12_ANGLE(180.0f);
     }
 
-    offsetX = Q12_MULT_PRECISE(moveDist, Math_Sin(adjHeadingAngle));
-    offsetZ = Q12_MULT_PRECISE(moveDist, Math_Cos(adjHeadingAngle));
+    cylinderOffsetX = Q12_MULT_PRECISE(moveDist, Math_Sin(adjHeadingAngle));
+    cylinderOffsetZ = Q12_MULT_PRECISE(moveDist, Math_Cos(adjHeadingAngle));
 
-    airScreamer->collision.shapeOffsets.cylinder.vx = offsetX;
-    airScreamer->collision.shapeOffsets.cylinder.vz = offsetZ;
+    airScreamer->collision.shapeOffsets.cylinder.vx = cylinderOffsetX;
+    airScreamer->collision.shapeOffsets.cylinder.vz = cylinderOffsetZ;
     airScreamer->collision.cylinder.radius          = Q12(0.4f);
 }
 

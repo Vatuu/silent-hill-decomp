@@ -437,7 +437,7 @@ void Twinfeeler_ControlUpdate(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoo
 
 void func_800D54B4(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
-s32 func_800D4558(q19_12 angle, s32 arg1, s32 arg2);
+q19_12 func_800D4558(q19_12 headingAngle, q19_12 fromX, q19_12 fromZ);
 
 void Twinfeeler_Control_5(s_SubCharacter* twinfeeler);
 

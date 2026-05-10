@@ -4044,7 +4044,7 @@ void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
     hasHit = Ray_CharaTraceQuery(&trace, &beamStart, &beamOffset, &g_SysWork.playerWork.player);
     PopMatrix();
 
-    primCount = hasHit ? (FP_FROM(trace.field_14, Q12_SHIFT) + 1) : 16;
+    primCount = hasHit ? (FP_FROM(trace.hitDistance, Q12_SHIFT) + 1) : 16;
 
     for (i = 0; i < primCount; i++)
     {

@@ -423,7 +423,7 @@ typedef struct
     /* 0x0  */ u8  unk_0;
     /* 0x1  */ u8  groundType; /** `e_GroundType` */
     /* 0x2  */ u8  unk_2[18];
-    /* 0x14 */ s32 field_14;
+    /* 0x14 */ q19_12 field_14; // Related to hit distance
 } s_800C45C8;
 
 typedef struct
@@ -835,7 +835,7 @@ typedef struct _IpdCollisionData_18
     /* 0x0+12 */ u16      field_0_12 : 3;
     /* 0x0+15 */ u16      field_0_15 : 1;
     /* 0x2    */ SVECTOR3 vec_2;
-    /* 0x8    */ s16      field_8;
+    /* 0x8    */ q7_8     field_8;
 } s_IpdCollisionData_18;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
 
@@ -1734,7 +1734,7 @@ typedef struct
     q23_8 field_4; // Z position.                }
     q7_8  field_8; // Y position, but why `s16`? }
     q7_8  field_A; // Y??
-    q7_8  field_C; // Some kind of bound or threshold or radius?
+    q7_8  field_C; // Collision cylinder radius?
     s16   field_E;
 } s_RayState_6C;
 
@@ -1747,9 +1747,9 @@ typedef struct
 /** @brief State for an in-progress ray trace. Contains pointers to active characters among other things. */
 typedef struct
 {
-    /* 0x0  */ s32              field_0;
+    /* 0x0  */ bool             field_0; // "Use cylinder"?
     /* 0x4  */ s16              field_4; // Collision flags.
-    /* 0x6  */ s16              field_6;
+    /* 0x6  */ q7_8             field_6;
     /* 0x8  */ q7_8             field_8; // Hit distance? `SHRT_MAX` if no valid hit.
     /* 0xA  */ s8               __pad_A[2];
     /* 0xC  */ q19_12           field_C;  // } Q19.12 `VECTOR3`
@@ -1762,7 +1762,7 @@ typedef struct
     /* 0x24 */ q3_12            field_24; // X
     /* 0x26 */ q3_12            field_26; // Z
     /* 0x28 */ s32              groundType; /** `e_GroundType` */
-    /* 0x2C */ VECTOR3          field_2C; // Q23.8
+    /* 0x2C */ VECTOR3          from; // Q23.8
     /* 0x38 */ s8               unk_38[4];
     /* 0x3C */ s32              field_3C; // X  } Q23.8 `VECTOR3`?
     /* 0x40 */ s32              field_40; // Y? }
@@ -1770,10 +1770,10 @@ typedef struct
     /* 0x48 */ s8               unk_48[4];
     /* 0x4C */ q7_8             field_4C; // X?
     /* 0x4E */ q7_8             field_4E; // Z?
-    /* 0x50 */ SVECTOR          field_50; // Q23.8
+    /* 0x50 */ SVECTOR          offset; // Q23.8
     /* 0x58 */ u16              field_58;
     /* 0x5A */ s16              field_5A;
-    /* 0x5C */ s16              field_5C; // 
+    /* 0x5C */ q7_8             rayDistance;
     /* 0x5E */ s16              field_5E;
     /* 0x60 */ s16              field_60;
     /* 0x62 */ s8               __pad_62[2];
@@ -1796,7 +1796,7 @@ typedef struct _RayTrace
     /* 0x2  */ s8              __pad_2[2];
     /* 0x4  */ VECTOR3         target; /** Q19.12 */
     /* 0x10 */ s_SubCharacter* character;
-    /* 0x14 */ q19_12          field_14; // Hit distance X?
+    /* 0x14 */ q19_12          hitDistance;
     /* 0x18 */ q19_12          field_18; // Hit distance Z? Or Y??
     /* 0x1C */ q3_12           field_1C; // Angle.
 } s_RayTrace;
@@ -4017,7 +4017,7 @@ bool Ray_TraceQuery(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* to);
 /** Ray function. */
 bool Ray_CharaTraceQuery(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCharacter* excludedChara);
 
-void Ray_MissSet(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, q23_8 arg3);
+void Ray_MissSet(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, q23_8 dist);
 
 /** @brief Checks if an obstruction in a ray's line of sight has been hit, ignoring a specified character.
  *
@@ -4027,11 +4027,11 @@ void Ray_MissSet(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, 
  * @param excludedChara Character to exclude.
  * @return `true` if there is an obstruction, `false` otherwise.
  */
-bool Ray_LosHitCheck(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCharacter* excludedChara);
+bool Ray_LosHitCheck(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, s_SubCharacter* excludedChara);
 
-bool func_8006DC18(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset);
+bool func_8006DC18(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset);
 
-bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, const VECTOR3* from, const VECTOR3* offset, s32 arg5, s32 arg6,
+bool Ray_TraceSetup(s_RayState* state, bool useCylinder, q7_8 arg2, const VECTOR3* from, const VECTOR3* offset, q19_12 arg5, q19_12 arg6,
                     s_SubCharacter** collCharas, s32 collCharaCount);
 
 bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state);
@@ -4492,7 +4492,7 @@ s32 func_8007FD2C(void);
  */
 q19_12 Game_GasWeaponPowerTimerValue(void);
 
-void func_8007FD4C(bool cond);
+void func_8007FD4C(bool resetColl);
 
 /** @brief Determines the step SFX and its pitch. */
 void func_8007FDE0(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1);
