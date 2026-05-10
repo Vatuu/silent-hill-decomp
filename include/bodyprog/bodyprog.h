@@ -316,22 +316,22 @@ typedef enum _StaticModelLoadState
     StaticModelLoadState_Loaded    = 3
 } e_StaticModelLoadState;
 
-/** @brief Ground collision types. */
+/** @brief Ground material types. */
 typedef enum _GroundType
 {
-    GroundType_0     = 0,
-    GroundType_1     = 1,
-    GroundType_2     = 2,
-    GroundType_Grass = 3,
-    GroundType_4     = 4,
-    GroundType_5     = 5,
-    GroundType_6     = 6,
-    GroundType_7     = 7,
-    GroundType_8     = 8,
-    GroundType_9     = 9,
-    GroundType_10    = 10,
-    GroundType_11    = 11,
-    GroundType_12    = 12
+    GroundType_Default = 0,
+    GroundType_1       = 1,
+    GroundType_2       = 2,
+    GroundType_Grass   = 3,
+    GroundType_4       = 4,
+    GroundType_5       = 5,
+    GroundType_6       = 6,
+    GroundType_7       = 7,
+    GroundType_8       = 8,
+    GroundType_9       = 9,
+    GroundType_10      = 10,
+    GroundType_11      = 11,
+    GroundType_12      = 12
 } e_GroundType;
 
 // ================
@@ -417,6 +417,7 @@ typedef struct
     /* 0xC */ struct TMD_STRUCT models[1];
 } s_TmdFile;
 
+// Used in player lower body state handling.
 typedef struct
 {
     /* 0x0  */ u8  unk_0;
@@ -1776,8 +1777,8 @@ typedef struct
     /* 0x5E */ s16              field_5E;
     /* 0x60 */ s16              field_60;
     /* 0x62 */ s8               __pad_62[2];
-    /* 0x64 */ s_SubCharacter** characters; // Active characters?
-    /* 0x68 */ s32              characterCount;
+    /* 0x64 */ s_SubCharacter** collCharas;
+    /* 0x68 */ s32              collCharaCount;
     /* 0x6C */ s_RayState_6C    field_6C;
     /* 0x7C */ s32              field_7C;
     /* 0x80 */ s32              field_80;
@@ -1796,8 +1797,8 @@ typedef struct _RayTrace
     /* 0x4  */ VECTOR3         target; /** Q19.12 */
     /* 0x10 */ s_SubCharacter* character;
     /* 0x14 */ q19_12          field_14; // Hit distance X?
-    /* 0x18 */ q19_12          field_18; // Hit distance Z?
-    /* 0x1C */ q3_12           field_1C; // Angle? Counter??
+    /* 0x18 */ q19_12          field_18; // Hit distance Z? Or Y??
+    /* 0x1C */ q3_12           field_1C; // Angle.
 } s_RayTrace;
 
 typedef struct _CollisionResult
@@ -2132,19 +2133,19 @@ typedef struct
 
 typedef struct
 {
-    s_func_8005E89C field_0;
-    s_Collision     field_12C;
-    MATRIX          field_138;
-    SVECTOR         field_158[4];
-    VECTOR          field_178[4];
-    CVECTOR         field_1B8;
-    CVECTOR         field_1BC;
-    s32             field_1C0;
-    s32             field_1C4;
-    s32             field_1C8;
-    s32             field_1CC;
-    s32             field_1D0;
-    DVECTOR         field_1D4;
+    /* 0x0   */ s_func_8005E89C field_0;
+    /* 0x12C */ s_Collision     collision;
+    /* 0x138 */ MATRIX          field_138;
+    /* 0x158 */ SVECTOR         field_158[4];
+    /* 0x178 */ VECTOR          field_178[4];
+    /* 0x1B8 */ CVECTOR         field_1B8;
+    /* 0x1BC */ CVECTOR         field_1BC;
+    /* 0x1C0 */ s32             field_1C0;
+    /* 0x1C4 */ s32             field_1C4;
+    /* 0x1C8 */ s32             field_1C8;
+    /* 0x1CC */ s32             field_1CC;
+    /* 0x1D0 */ s32             field_1D0;
+    /* 0x1D4 */ DVECTOR         field_1D4;
 } s_func_800CD1F8;
 
 typedef struct
@@ -3902,14 +3903,14 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset
  */
 void Collision_DefaultResultSet(s_CollisionResult* collResult, q19_12 offsetX, q19_12 offsetY, q19_12 offsetZ, q19_12 groundHeight);
 
-/** @brief Gets an array of active characters for collision testing.
+/** @brief Gets an array of collidable characters for collision testing.
  *
- * @param charaCount Output number of characters found.
+ * @param collCharaCount Output number of collidable characters.
  * @param excludedChara Character to exclude, typically the one being tested.
  * @param includePlayer Filter out the player.
- * @return Active characters.
+ * @return Collidable characters.
  */
-s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubCharacter* excludedChara, bool includePlayer);
+s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubCharacter* excludedChara, bool includePlayer);
 
 /** @brief Checks a movement offset against a collision result.
  *
@@ -4015,7 +4016,7 @@ void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2);
 bool Ray_TraceQuery(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* to);
 
 /** Ray function. */
-bool Ray_CharaTraceQuery(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCharacter* chara);
+bool Ray_CharaTraceQuery(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCharacter* excludedChara);
 
 void Ray_MissSet(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, q23_8 arg3);
 
@@ -4031,7 +4032,8 @@ bool Ray_LosHitCheck(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCha
 
 bool func_8006DC18(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset);
 
-bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, const VECTOR3* from, const VECTOR3* offset, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount);
+bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, const VECTOR3* from, const VECTOR3* offset, s32 arg5, s32 arg6,
+                    s_SubCharacter** collCharas, s32 collCharaCount);
 
 bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state);
 
@@ -4042,7 +4044,7 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2);
 
 void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ);
 
-void func_8006E53C(s_RayState* state, s_IpdCollisionData_20* arg1, s_IpdCollisionData* arg2);
+void func_8006E53C(s_RayState* state, s_IpdCollisionData_20* arg1, s_IpdCollisionData* ipdColl);
 
 void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg2, s_IpdCollisionData_10* arg3, s32 arg4);
 

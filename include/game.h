@@ -1797,7 +1797,7 @@ STATIC_ASSERT_SIZEOF(s_CharaBox, 12);
 typedef struct _CharaCylinder
 {
     /* 0x0 */ q3_12 radius;
-    /* 0x2 */ q3_12 field_2; // Height??
+    /* 0x2 */ q3_12 field_2; // Secondary radius?
 } s_CharaCylinder;
 STATIC_ASSERT_SIZEOF(s_CharaCylinder, 4);
 
@@ -1898,7 +1898,7 @@ STATIC_ASSERT_SIZEOF(s_PlayerWork, 340);
 /** @brief Player combat info. */
 typedef struct _PlayerCombat
 {
-    /* 0x0  */ VECTOR3 field_0;            // Q19.12 position offset?
+    /* 0x0  */ VECTOR3 field_0;            // Q19.12 | Melee weapon attack position.
     /* 0xC  */ s8      __pad_C[3];
     /* 0xF  */ s8      weaponAttack;       /** Packed weapon attack. See `WEAPON_ATTACK`. */
     /* 0x10 */ u8      currentWeaponAmmo;

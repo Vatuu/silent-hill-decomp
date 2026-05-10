@@ -681,7 +681,7 @@ bool func_8005F680(s_Collision* coll) // 0x8005F680
     groundType = coll->groundType;
 
     isSomeGroundGroup = false;
-    if (groundType == GroundType_0 ||
+    if (groundType == GroundType_Default ||
         groundType == GroundType_12 ||
         groundType == GroundType_7)
     {

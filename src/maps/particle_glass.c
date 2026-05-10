@@ -195,7 +195,7 @@ bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx)
         temp_v0_6      = ratan2(sharedData_800DFB7C_0_s00[idx].field_0.s_0.field_0, sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_0);
         ptr->field_1C0 = SQUARE(sharedData_800DFB7C_0_s00[idx].field_B >> 4);
 
-        temp_s2_2 = ((ptr->field_1C0 + 7) * 0x1800) / 28;
+        temp_s2_2 = ((ptr->field_1C0 + 7) * Q12(1.5f)) / 28;
 
         if (sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 > 0)
         {
@@ -240,10 +240,11 @@ bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx)
             sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_2 -= FP_MULTIPLY_PRECISE(g_DeltaTime, (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 >> 1) & 0x3F80, 0xC);
         }
 
-        Collision_Get(&ptr->field_12C, sharedData_800DFB7C_0_s00[idx].field_0.s_0.field_0, sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_0);
+        Collision_Get(&ptr->collision, sharedData_800DFB7C_0_s00[idx].field_0.s_0.field_0, sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_0);
 
-        if ((ptr->field_12C.groundType == GroundType_0 &&
-            sharedData_800DFB7C_0_s00[idx].vy_8 > 0) || ptr->field_12C.groundHeight < sharedData_800DFB7C_0_s00[idx].vy_8)
+        if ((ptr->collision.groundType == GroundType_Default &&
+             sharedData_800DFB7C_0_s00[idx].vy_8 > 0) ||
+            ptr->collision.groundHeight < sharedData_800DFB7C_0_s00[idx].vy_8)
         {
             sharedData_800DFB7C_0_s00[idx].field_A = 0;
         }

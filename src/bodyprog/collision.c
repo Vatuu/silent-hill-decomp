@@ -127,7 +127,7 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
         coll->groundHeight = Q12(8.0f);
         coll->field_6      = 0;
         coll->field_4      = 0;
-        coll->groundType   = GroundType_0;
+        coll->groundType   = GroundType_Default;
         return;
     }
 
@@ -146,7 +146,7 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
 
     if (state.field_90 == 1)
     {
-        coll->groundType   = GroundType_0;
+        coll->groundType   = GroundType_Default;
         coll->groundHeight = Q12(8.0f);
     }
     else
@@ -401,7 +401,7 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset
 
     return func_8006A4A8(collResult, &offsetCpy, &collQuery, cond,
                          Ipd_ActiveChunksCollisionDataGet(&collDataIdx), collDataIdx, NULL, 0,
-                         Collision_ActiveCharactersGet(&charaCount, chara, true), charaCount);
+                         Collision_CollidableCharasGet(&charaCount, chara, true), charaCount);
 }
 
 void Collision_DefaultResultSet(s_CollisionResult* collResult, q19_12 offsetX, q19_12 offsetY, q19_12 offsetZ, q19_12 groundHeight) // 0x8006A178
@@ -411,29 +411,31 @@ void Collision_DefaultResultSet(s_CollisionResult* collResult, q19_12 offsetX, q
     collResult->offset_0.vz  = offsetZ;
     collResult->field_12     = 0;
     collResult->field_10     = 0;
-    collResult->groundType   = GroundType_0;
+    collResult->groundType   = GroundType_Default;
     collResult->field_18     = 0xFFFF0000;
     collResult->groundHeight = groundHeight;
 }
 
-s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubCharacter* excludedChara, bool includePlayer) // 0x8006A1A4
+s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubCharacter* excludedChara, bool includePlayer) // 0x8006A1A4
 {
     s_SubCharacter*         curChara;
-    static s_SubCharacter*  activeCharas[7];
-    static s_SubCharacter** curActiveChara; /** Array of active characters. */
+    static s_SubCharacter*  collCharas[7];
+    static s_SubCharacter** curCollChara; /** Array of active characters. */
 
+    // Filder invalid case.
     if (excludedChara != NULL &&
         (excludedChara->model.charaId == Chara_None ||
          excludedChara->collision.state == CharaCollisionState_Ignore ||
         (excludedChara->collision.state == CharaCollisionState_Player && includePlayer == true)))
     {
-        *charaCount = 0;
-        return &activeCharas;
+        *collCharaCount = 0;
+        return &collCharas;
     }
 
-    *charaCount    = 0;
-    curActiveChara = &activeCharas;
+    *collCharaCount = 0;
+    curCollChara    = &collCharas;
 
+    // Collect collidable NPCs.
     for (curChara = &g_SysWork.npcs[0]; curChara < &g_SysWork.npcs[ARRAY_SIZE(g_SysWork.npcs)]; curChara++)
     {
         if (curChara->model.charaId != Chara_None)
@@ -445,14 +447,15 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
                  excludedChara->collision.state != CharaCollisionState_4 ||
                  curChara->collision.state >= excludedChara->collision.state))
             {
-                *charaCount += 1;
-                *curActiveChara = curChara;
-                curActiveChara++;
+                *collCharaCount += 1;
+                *curCollChara    = curChara;
+                curCollChara++;
                 curChara->collision.field_E0 = 0;
             }
         }
     }
 
+    // Collect collidable player.
     curChara = &g_SysWork.playerWork.player;
     if (curChara->model.charaId != Chara_None)
     {
@@ -463,14 +466,14 @@ s_SubCharacter** Collision_ActiveCharactersGet(s32* charaCount, const s_SubChara
              excludedChara->collision.state != CharaCollisionState_4 ||
              curChara->collision.state >= excludedChara->collision.state))
         {
-            *charaCount += 1;
-            *curActiveChara = curChara;
-            curActiveChara++;
+            *collCharaCount += 1;
+            *curCollChara    = curChara;
+            curCollChara++;
             curChara->collision.field_E0 = 0;
         }
     }
 
-    return &activeCharas;
+    return &collCharas;
 }
 
 s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, s_CollisionQuery* collQuery) // 0x8006A3B4
@@ -635,7 +638,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
     if (collState.field_90 == 1)
     {
         groundHeight           = Q12(8.0f);
-        collResult->groundType = GroundType_0;
+        collResult->groundType = GroundType_Default;
     }
     else
     {
@@ -748,7 +751,7 @@ void Collision_QueryInit(s_CollisionState* collState, VECTOR3* pos, s_CollisionQ
     collState->field_8C = 0;
     collState->field_88 = 0;
     collState->field_90 = 1;
-    collState->groundType = GroundType_0;
+    collState->groundType = GroundType_Default;
 }
 
 void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* pos, const s_CollisionQuery* collQuery) // 0x8006ABC0
@@ -2390,17 +2393,17 @@ bool Ray_TraceQuery(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* to) /
     return trace->hasHit;
 }
 
-bool Ray_CharaTraceQuery(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCharacter* chara) // 0x8006DA08
+bool Ray_CharaTraceQuery(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCharacter* excludedChara) // 0x8006DA08
 {
-    s32              sp28;
+    s32              collCharaCount;
     s32              prevScratch;
     s_RayState*      state;
-    s_SubCharacter** charas;
+    s_SubCharacter** collCharas;
 
-    charas = Collision_ActiveCharactersGet(&sp28, chara, false);
+    collCharas = Collision_CollidableCharasGet(&collCharaCount, excludedChara, false);
 
     trace->hasHit = false;
-    if (Ray_TraceSetup((s_RayState*)PSX_SCRATCH, 0, 0, from, offset, 0, 0, charas, sp28))
+    if (Ray_TraceSetup((s_RayState*)PSX_SCRATCH, 0, 0, from, offset, 0, 0, collCharas, collCharaCount))
     {
         prevScratch   = SetSp((s32)PSX_SCRATCH_ADDR(0x3D8));
 
@@ -2421,7 +2424,7 @@ bool Ray_CharaTraceQuery(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_Su
 void Ray_MissSet(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, q23_8 arg3) // 0x8006DAE4
 {
     trace->hasHit     = false;
-    trace->groundType = GroundType_0;
+    trace->groundType = GroundType_Default;
     trace->target.vx  = from->vx + offset->vx;
     trace->target.vy  = from->vy + offset->vy;
     trace->target.vz  = from->vz + offset->vz;
@@ -2433,15 +2436,15 @@ void Ray_MissSet(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, 
 
 bool Ray_LosHitCheck(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCharacter* excludedChara) // 0x8006DB3C
 {
-    s32              charaCount;
+    s32              collCharaCount;
     s32              prevScratchAddr;
     s_RayState*      state;
-    s_SubCharacter** charas;
+    s_SubCharacter** collCharas;
 
-    charas        = Collision_ActiveCharactersGet(&charaCount, excludedChara, true);
-    trace->hasHit = false;
+    collCharas = Collision_CollidableCharasGet(&collCharaCount, excludedChara, true);
+    trace->hasHit    = false;
 
-    if (Ray_TraceSetup((s_RayState*)PSX_SCRATCH, 1, 0, from, offset, 0, 0, charas, charaCount))
+    if (Ray_TraceSetup((s_RayState*)PSX_SCRATCH, 1, 0, from, offset, 0, 0, collCharas, collCharaCount))
     {
         prevScratchAddr = SetSp((s32)PSX_SCRATCH_ADDR(984));
 
@@ -2483,7 +2486,8 @@ bool func_8006DC18(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset) // 0x8006D
     return trace->hasHit;
 }
 
-bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, const VECTOR3* from, const VECTOR3* offset, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount)
+bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, const VECTOR3* from, const VECTOR3* offset, s32 arg5, s32 arg6,
+                    s_SubCharacter** collCharas, s32 collCharaCount)
 {
     if (offset->vx == Q12(0.0f) && offset->vz == Q12(0.0f))
     {
@@ -2532,8 +2536,8 @@ bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, const VECTOR3* from, 
         state->field_5E = state->field_40 + state->field_4E;
     }
 
-    state->characters     = charas;
-    state->characterCount = charaCount;
+    state->collCharas     = collCharas;
+    state->collCharaCount = collCharaCount;
 
     return true;
 }
@@ -2543,7 +2547,7 @@ bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state) // 0x8006DEB0
     s32                  collDataIdx;
     s32                  temp_lo;
     s_IpdCollisionData*  collData;
-    s_SubCharacter**     curChara;
+    s_SubCharacter**     curCollChara;
     s_IpdCollisionData** collDataPtrs;
     s_IpdCollisionData** curCollData;
     s_RayState_8C*       curUnk;
@@ -2567,11 +2571,13 @@ bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state) // 0x8006DEB0
         }
     }
 
-    // Run through characters.
-    for (curChara = state->characters; curChara < &state->characters[state->characterCount]; curChara++)
+    // Run through collidable characters.
+    for (curCollChara = state->collCharas;
+         curCollChara < &state->collCharas[state->collCharaCount];
+         curCollChara++)
     {
-        func_8006EE0C(&state->field_6C, state->field_0, *curChara);
-        func_8006EEB8(state, *curChara);
+        func_8006EE0C(&state->field_6C, state->field_0, *curCollChara);
+        func_8006EEB8(state, *curCollChara);
     }
 
     if (state->field_8 != SHRT_MAX)
@@ -2811,13 +2817,13 @@ void func_8006E53C(s_RayState* state, s_IpdCollisionData_20* arg1, s_IpdCollisio
                         cond1 = false;
                         cond2 = false;
 
-                        if (temp_a0_3 == 0xFF || ipdColl->ptr_10[temp_a0_3].groundType == GroundType_0 ||
+                        if (temp_a0_3 == 0xFF || ipdColl->ptr_10[temp_a0_3].groundType == GroundType_Default ||
                             ipdColl->ptr_10[temp_a0_3].groundType == GroundType_12)
                         {
                             cond1 = true;
                         }
 
-                        if (temp_a2 == 0xFF || ipdColl->ptr_10[temp_a2].groundType == GroundType_0 ||
+                        if (temp_a2 == 0xFF || ipdColl->ptr_10[temp_a2].groundType == GroundType_Default ||
                             ipdColl->ptr_10[temp_a2].groundType == GroundType_12)
                         {
                             cond2 = true;
@@ -2839,7 +2845,7 @@ void func_8006E53C(s_RayState* state, s_IpdCollisionData_20* arg1, s_IpdCollisio
 
                 if ((temp_v0_2 & (1 << 0)) &&
                     (state->field_0 == 1 ||
-                     (temp_a1_2->groundType != GroundType_0 &&
+                     (temp_a1_2->groundType != GroundType_Default &&
                       temp_a1_2->groundType != GroundType_12)) &&
                     temp_a1_2->field_8 >= state->field_6)
                 {
@@ -2866,7 +2872,7 @@ void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg
     s32       temp_v1;
     s32       var_v1;
 
-    groundType = GroundType_0;
+    groundType = GroundType_Default;
     temp_t1 = &arg2[arg1->field_7];
     temp_t2 = &arg2[arg1->field_6];
 
@@ -3152,7 +3158,7 @@ void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
     state->field_24 = pos.vx - state->field_6C.field_0;
     state->field_26 = pos.vz - state->field_6C.field_4;
     state->field_20 = chara;
-    state->groundType = GroundType_0;
+    state->groundType = GroundType_Default;
 }
 
 void func_8006F250(q19_12* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ) // 0x8006F250

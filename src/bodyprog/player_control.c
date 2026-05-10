@@ -1997,7 +1997,6 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             if (player->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
                 Player_ExtraStateSet(player, extra, PlayerState_None);
-
                 player->collision.cylinder.field_2 = Q12(0.23f);
             }
             break;
@@ -2008,7 +2007,6 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             if (player->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
                 Player_ExtraStateSet(player, extra, PlayerState_None);
-
                 player->collision.cylinder.field_2 = Q12(0.23f);
             }
             break;
@@ -2034,7 +2032,6 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 g_MapOverlayHeader.playerAnimLock();
 
                 SysWork_StateSetNext(SysState_GameOver);
-
                 func_8007E9C4();
 
                 extra->model.controlState++;
@@ -2072,12 +2069,12 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     var_v1_5 = temp_a2;
                 }
 
-                dist0                                    = temp_a2 + Q12_MULT(var_v1_5 - temp_a2, Q12_FRACT(player->model.anim.time));
-                playerChara.collision.shapeOffsets.box.vx = Q12(0.0f);
-                playerChara.collision.shapeOffsets.box.vz = Q12(0.0f);
+                dist0                                          = temp_a2 + Q12_MULT(var_v1_5 - temp_a2, Q12_FRACT(player->model.anim.time));
+                playerChara.collision.shapeOffsets.box.vx      = Q12(0.0f);
+                playerChara.collision.shapeOffsets.box.vz      = Q12(0.0f);
                 playerChara.collision.shapeOffsets.cylinder.vx = Q12_MULT(dist0, Math_Sin(player->rotation.vy));
                 playerChara.collision.shapeOffsets.cylinder.vz = Q12_MULT(dist0, Math_Cos(player->rotation.vy));
-                player->collision.cylinder.radius                        = Q12(0.3f);
+                player->collision.cylinder.radius              = Q12(0.3f);
             }
 
             if (player->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
@@ -2228,15 +2225,15 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
             if (!(player->attackReceived >= 68 && player->attackReceived < 70)) // TODO: Demagic.
             {
-                g_Player_HeadingAngle                                                   = ratan2(player->damage.position.vx, player->damage.position.vz) - player->rotation.vy;
+                g_Player_HeadingAngle        = ratan2(player->damage.position.vx, player->damage.position.vz) - player->rotation.vy;
                 playerProps.moveDistance_126 = SQUARE(player->damage.position.vx) + SQUARE(player->damage.position.vz) + SQUARE(player->damage.position.vy);
             }
 
             if (extra->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
-                player->attackReceived                                    = NO_VALUE;
-                g_SysWork.targetNpcIdx                                   = NO_VALUE;
-                playerProps.flags_11C &= ~PlayerFlag_DamageReceived;
+                player->attackReceived = NO_VALUE;
+                g_SysWork.targetNpcIdx = NO_VALUE;
+                playerProps.flags_11C     &= ~PlayerFlag_DamageReceived;
 
                 Player_ExtraStateSet(player, extra, PlayerState_None);
 
@@ -2261,7 +2258,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
     player->moveSpeed        = D_800C4550;
     player->fallSpeed       += g_GravitySpeed;
     player->rotationSpeed.vy = (D_800C454C << 8) / g_DeltaTime;
-    coords->flg             = false;
+    coords->flg              = false;
 
     Math_RotMatrixZxyNegGte(&player->rotation, &coords->coord);
 
@@ -6675,7 +6672,7 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
         D_800C4590.groundHeight = Q12(0.0f);
     }
 
-    if (D_800C4590.groundType == GroundType_0)
+    if (D_800C4590.groundType == GroundType_Default)
     {
         D_800C4590.groundHeight = player->properties.player.positionY_EC;
     }
@@ -7383,7 +7380,7 @@ s32 func_8007D6F0(s_SubCharacter* player, s_800C45C8* arg1) // 0x8007D6F0
 {
     s_RayTrace traces[2];
     VECTOR3    vecs[4];
-    bool       ret[2];
+    bool       traceHits[2];
     s32        temp_lo;
     s32        temp_s0;
     s32        temp_s1;
@@ -7413,9 +7410,9 @@ s32 func_8007D6F0(s_SubCharacter* player, s_800C45C8* arg1) // 0x8007D6F0
     vecs[2].vx = player->position.vx + temp_s4;
     vecs[2].vz = player->position.vz - temp_s3;
 
-    ret[0] = Ray_TraceQuery(&traces[0], &vecs[2], &vecs[0]);
+    traceHits[0] = Ray_TraceQuery(&traces[0], &vecs[2], &vecs[0]);
 
-    if (ret[0])
+    if (traceHits[0])
     {
         vecs[1].vy = vecs[0].vy;
         vecs[1].vx = (player->position.vx - temp_s4) + temp_s5;
@@ -7424,9 +7421,9 @@ s32 func_8007D6F0(s_SubCharacter* player, s_800C45C8* arg1) // 0x8007D6F0
         vecs[3].vx = player->position.vx - temp_s4;
         vecs[3].vz = player->position.vz + temp_s3;
 
-        ret[1] = Ray_TraceQuery(&traces[1], &vecs[3], &vecs[1]);
+        traceHits[1] = Ray_TraceQuery(&traces[1], &vecs[3], &vecs[1]);
 
-        if (ret[1])
+        if (traceHits[1])
         {
             arg1->field_14   = (traces[0].field_14 + traces[1].field_14) >> 1;
             arg1->groundType = traces[0].groundType;
@@ -7437,7 +7434,7 @@ s32 func_8007D6F0(s_SubCharacter* player, s_800C45C8* arg1) // 0x8007D6F0
             if (angleDelta > Q12_ANGLE(160.0f) && angleDelta < Q12_ANGLE(200.0f))
             {
                 if ((player->position.vy - Q12(1.3f)) < traces[0].field_18 ||
-                    traces[0].groundType == GroundType_0 ||
+                    traces[0].groundType == GroundType_Default ||
                     traces[0].groundType == GroundType_12)
                 {
                     if ((player->position.vy - Q12(0.3f)) >= traces[0].field_18)
@@ -7495,8 +7492,8 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord) // 0x8007
         switch (playerCombat.weaponAttack)
         {
             case NO_VALUE:
-            case 8:
-            case 9:
+            case WEAPON_ATTACK(EquippedWeaponId_Kick, AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Tap):
                 vec2     = &playerCombat.field_0;
                 vec2->vx = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[0]);
                 vec2->vy = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[1]);
@@ -8681,7 +8678,7 @@ void func_8007FDE0(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8
             break;
 
         default:
-        case GroundType_0:
+        case GroundType_Default:
         case GroundType_1:
         case GroundType_7:
             *sfxId = Sfx_FootstepConcrete;
@@ -8974,7 +8971,7 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
     groundType = coll->groundType;
     switch (coll->groundType)
     {
-        case GroundType_0:
+        case GroundType_Default:
             groundHeight = Q12(8.0f);
 
             switch (g_SavegamePtr->mapIdx)

@@ -172,7 +172,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
         chara->position.vy += UnkStruct.offset_0.vy;
         chara->position.vz += UnkStruct.offset_0.vz;
 
-        if (UnkStruct.groundType == GroundType_0)
+        if (UnkStruct.groundType == GroundType_Default)
         {
             UnkStruct.groundHeight = chara->properties.player.positionY_EC;
         }

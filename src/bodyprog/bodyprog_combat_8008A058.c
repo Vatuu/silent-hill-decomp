@@ -1586,7 +1586,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
     q19_12           cosAngle;
     s32              countX;
     s32              countY;
-    s32              coundZ;
+    s32              countZ;
     s32              sp34;
     s32              sp38;
     s32              sp3C;
@@ -1643,7 +1643,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
 
     countX = chara->field_44.field_24[0].vx;
     countY = chara->field_44.field_24[0].vy;
-    coundZ = chara->field_44.field_24[0].vz;
+    countZ = chara->field_44.field_24[0].vz;
 
     sinAngle = Math_Sin(angle);
     cosAngle = Math_Cos(angle);
@@ -1819,7 +1819,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
         temp_t5  = chara1->position.vz;
         temp_t5 += chara1->collision.shapeOffsets.box.vz;
 
-        temp_v0_8 = temp_t5 - coundZ;
+        temp_v0_8 = temp_t5 - countZ;
 
         sp58    = chara1->position.vy;
         temp_s6 = chara1->collision.box.height;
@@ -1909,7 +1909,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
 
         sp34   += countX;
         var_s7 += countY;
-        var_fp += coundZ;
+        var_fp += countZ;
 
         sp5C = (temp_s5 + temp_s6) / 2;
 
