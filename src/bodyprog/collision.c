@@ -2423,15 +2423,15 @@ bool Ray_CharaTraceQuery(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_Su
 
 void Ray_MissSet(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, q23_8 dist) // 0x8006DAE4
 {
-    trace->hasHit      = false;
-    trace->groundType  = GroundType_Default;
-    trace->target.vx   = from->vx + offset->vx;
-    trace->target.vy   = from->vy + offset->vy;
-    trace->target.vz   = from->vz + offset->vz;
-    trace->character   = NULL;
-    trace->hitDistance = Q8_TO_Q12(dist);
-    trace->field_18    = Q12(1.875f);
-    trace->field_1C    = Q12_ANGLE(0.0f);
+    trace->hasHit       = false;
+    trace->groundType   = GroundType_Default;
+    trace->target.vx    = from->vx + offset->vx;
+    trace->target.vy    = from->vy + offset->vy;
+    trace->target.vz    = from->vz + offset->vz;
+    trace->character    = NULL;
+    trace->hitDistance  = Q8_TO_Q12(dist);
+    trace->groundHeight = Q12(1.875f); // @bug? Awkward value suggests `Q8(30.0f)` may have been typed by mistake.
+    trace->field_1C     = Q12_ANGLE(0.0f);
 }
 
 bool Ray_LosHitCheck(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, s_SubCharacter* excludedChara) // 0x8006DB3C
@@ -2582,14 +2582,14 @@ bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state) // 0x8006DEB0
 
     if (state->field_8 != SHRT_MAX)
     {
-        trace->target.vx   = Q8_TO_Q12(state->field_C);
-        trace->target.vy   = Q8_TO_Q12(state->field_10);
-        trace->target.vz   = Q8_TO_Q12(state->field_14);
-        trace->character   = state->field_20;
-        trace->hitDistance = Q8_TO_Q12(state->field_8);
-        trace->field_18    = Q8_TO_Q12(state->field_1C);
-        trace->field_1C    = ratan2(state->field_24, state->field_26);
-        trace->groundType  = state->groundType;
+        trace->target.vx    = Q8_TO_Q12(state->field_C);
+        trace->target.vy    = Q8_TO_Q12(state->field_10);
+        trace->target.vz    = Q8_TO_Q12(state->field_14);
+        trace->character    = state->field_20;
+        trace->hitDistance  = Q8_TO_Q12(state->field_8);
+        trace->groundHeight = Q8_TO_Q12(state->groundHeight);
+        trace->field_1C     = ratan2(state->field_24, state->field_26);
+        trace->groundType   = state->groundType;
         return true;
     }
 
@@ -2616,7 +2616,7 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
 {
     DVECTOR subroutine_arg4;
     VECTOR  sp18;
-    VECTOR  sp28;
+    VECTOR  pos;
     s16     temp_lo;
     s16     temp_lo_2;
     s32     temp_a0_3;
@@ -2697,29 +2697,29 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
         sp18.vx = Q12(subroutine_arg4.vx + arg1.vx) / arg0->field_18;
     }
 
-    sp28.vx = Q12(subroutine_arg4.vx) / arg0->field_18;
-    sp28.vy = Q12(subroutine_arg4.vy) / arg0->field_18;
-    sp28.vz = Q12(1.0f);
+    pos.vx = Q12(subroutine_arg4.vx) / arg0->field_18;
+    pos.vy = Q12(subroutine_arg4.vy) / arg0->field_18;
+    pos.vz = Q12(1.0f);
 
-    sp28.pad  = Q12(arg2.vx) / arg1.vx;
-    temp_lo_4 = Q12_MULT(sp28.pad, Q12_FRACT(sp28.vx));
+    pos.pad  = Q12(arg2.vx) / arg1.vx;
+    temp_lo_4 = Q12_MULT(pos.pad, Q12_FRACT(pos.vx));
 
-    if (FP_FROM(sp18.vx, Q12_SHIFT) < FP_FROM(sp28.vx, Q12_SHIFT))
+    if (FP_FROM(sp18.vx, Q12_SHIFT) < FP_FROM(pos.vx, Q12_SHIFT))
     {
         return;
     }
 
     do
     {
-        func_8006E490(arg0, flags, sp28.vx, sp28.vy);
+        func_8006E490(arg0, flags, pos.vx, pos.vy);
 
-        temp_t0 = sp28.vy;
-        temp_t1 = sp28.vx;
-        var_a3  = temp_t0 + sp28.pad;
+        temp_t0 = pos.vy;
+        temp_t1 = pos.vx;
+        var_a3  = temp_t0 + pos.pad;
         var_a2  = temp_t1 + Q12(1.0f);
 
-        sp28.vy = var_a3;
-        sp28.vx = var_a2;
+        pos.vy = var_a3;
+        pos.vx = var_a2;
 
         if (FP_FROM(temp_t0, Q12_SHIFT) < FP_FROM(var_a3, Q12_SHIFT))
         {
@@ -2733,7 +2733,7 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
             }
         }
     }
-    while (arg0->field_1C < Q8(0.08f) && FP_FROM(sp28.vx, Q12_SHIFT) <= FP_FROM(sp18.vx, Q12_SHIFT));
+    while (arg0->field_1C < Q8(0.08f) && FP_FROM(pos.vx, Q12_SHIFT) <= FP_FROM(sp18.vx, Q12_SHIFT));
 }
 
 void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ) // 0x8006E490
@@ -2863,9 +2863,9 @@ void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg
 
     SVECTOR3  sp10;
     s32       var_a3;
-    s32       var_a1;
+    q19_12    unkX;
+    q19_12    unkZ;
     s32       var_a2;
-    s32       var_t1;
     s32       groundType; // `e_GroundType`
     SVECTOR3* temp_t1;
     SVECTOR3* temp_t2;
@@ -2946,21 +2946,21 @@ void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg
 
                     if (var_a2 >= sp10.vy && var_a3 < state->field_8)
                     {
-                        var_a1 = arg1->field_2_0;
-                        var_t1 = -arg1->field_0_0;
+                        unkX = arg1->field_2_0;
+                        unkZ = -arg1->field_0_0;
                         if (state->field_0 != true && arg4 != 0 && (sp8.vy - sp0.vy) > 0)
                         {
-                            var_a1 = -var_a1;
-                            var_t1 = arg1->field_0_0;
+                            unkX = -unkX;
+                            unkZ = arg1->field_0_0;
                         }
 
                         state->field_8  = var_a3;
                         state->field_C  = (sp10.vx + state->field_6C.field_0);
                         state->field_10 = (var_a2 - state->field_4E);
                         state->field_14 = (sp10.vz + state->field_6C.field_4);
-                        state->field_1C = sp10.vy;
-                        state->field_24 = var_a1;
-                        state->field_26 = var_t1;
+                        state->groundHeight = sp10.vy;
+                        state->field_24 = unkX;
+                        state->field_26 = unkZ;
                         state->field_20 = 0;
                         state->groundType = groundType;
                     }
@@ -3011,7 +3011,7 @@ void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1) // 0x8006EB8C
                 state->field_C  = sp18.vx + state->field_6C.field_8 + state->field_6C.field_0;
                 state->field_10 = sp18.vy + state->from.vy;
                 state->field_14 = sp18.vz + state->field_6C.field_A + state->field_6C.field_4;
-                state->field_1C = arg1->vec_2.vy;
+                state->groundHeight = arg1->vec_2.vy;
                 state->field_24 = (sp18.vx + state->field_6C.field_8) - arg1->vec_2.vx;
                 state->field_26 = (sp18.vz + state->field_6C.field_A) - arg1->vec_2.vz;
                 state->field_20 = 0;
@@ -3155,7 +3155,7 @@ void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
     state->field_C  = pos.vx;
     state->field_10 = pos.vy;
     state->field_14 = pos.vz;
-    state->field_1C = state->field_6C.field_8;
+    state->groundHeight = state->field_6C.field_8;
     state->field_24 = pos.vx - state->field_6C.field_0;
     state->field_26 = pos.vz - state->field_6C.field_4;
     state->field_20 = chara;

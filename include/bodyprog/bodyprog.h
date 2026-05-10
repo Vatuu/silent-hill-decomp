@@ -808,15 +808,15 @@ STATIC_ASSERT_SIZEOF(s_IpdCollisionData_10, 12);
 
 typedef struct
 {
-    s16 field_0_0  : 14;
-    u16 field_0_14 : 2;
-    s16 field_2_0  : 14;
-    u16 field_2_14 : 2;
-    s16 field_4;
-    u8  field_6;
-    u8  field_7;
-    u8  field_8;
-    u8  field_9;
+    /* 0x0+0  */ q3_12 field_0_0  : 14;
+    /* 0x0+14 */ u16   field_0_14 : 2;
+    /* 0x2+0  */ s16   field_2_0  : 14;
+    /* 0x2+14 */ u16   field_2_14 : 2;
+    /* 0x4    */ s16   field_4;
+    /* 0x6    */ u8    field_6;
+    /* 0x7    */ u8    field_7;
+    /* 0x8    */ u8    field_8;
+    /* 0x9    */ u8    field_9;
 } s_IpdCollisionData_14;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_14, 10);
 
@@ -1756,7 +1756,7 @@ typedef struct
     /* 0x10 */ q19_12           field_10; // }
     /* 0x14 */ q19_12           field_14; // }
     /* 0x18 */ s8               unk_18[4];
-    /* 0x1C */ q7_8             field_1C; // Distance Z?
+    /* 0x1C */ q7_8             groundHeight;
     /* 0x1E */ s8               __pad_1E[2];
     /* 0x20 */ s_SubCharacter*  field_20;
     /* 0x24 */ q3_12            field_24; // X
@@ -1797,7 +1797,7 @@ typedef struct _RayTrace
     /* 0x4  */ VECTOR3         target; /** Q19.12 */
     /* 0x10 */ s_SubCharacter* character;
     /* 0x14 */ q19_12          hitDistance;
-    /* 0x18 */ q19_12          field_18; // Hit distance Z? Or Y?? Maybe actually ground height.
+    /* 0x18 */ q19_12          groundHeight;
     /* 0x1C */ q3_12           field_1C; // Angle.
 } s_RayTrace;
 

@@ -9207,11 +9207,11 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
             temp3 = Q12_MULT_PRECISE(offsetX, var_v1);
             temp2 = Q12_MULT_PRECISE(i, var_v1);
 
-            sharedData_800E2330_0_s01.hitDistance = temp;
-            sharedData_800E2330_0_s01.hasHit      = hasHit;
-            sharedData_800E2330_0_s01.target.vx   = temp3 + posX;
-            sharedData_800E2330_0_s01.target.vy   = temp2 + posY;
-            sharedData_800E2330_0_s01.field_18    = sharedData_800E2330_0_s01.target.vy;
+            sharedData_800E2330_0_s01.hitDistance  = temp;
+            sharedData_800E2330_0_s01.hasHit       = hasHit;
+            sharedData_800E2330_0_s01.target.vx    = temp3 + posX;
+            sharedData_800E2330_0_s01.target.vy    = temp2 + posY;
+            sharedData_800E2330_0_s01.groundHeight = sharedData_800E2330_0_s01.target.vy;
 
             temp2                                 = Q12_MULT_PRECISE(offsetZ, var_v1);
             sharedData_800E2330_0_s01.target.vz  = temp2 + posZ;
@@ -9225,10 +9225,10 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
 
         if (hasLosHit)
         {
-            if (sharedFunc_800D5274_0_s01() < sharedData_800E2330_0_s01.field_18)
+            if (sharedFunc_800D5274_0_s01() < sharedData_800E2330_0_s01.groundHeight)
             {
                 groundOffset                         = (Rng_RandQ12() / 2) + Q12(1.5f);
-                sharedData_800E2330_0_s01.target.vy = sharedData_800E2330_0_s01.field_18 - groundOffset;
+                sharedData_800E2330_0_s01.target.vy = sharedData_800E2330_0_s01.groundHeight - groundOffset;
             }
             else
             {
@@ -9306,10 +9306,11 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
         sharedData_800DE1C0_0_s01.vy = Q12(0.0f);
         sharedData_800DE1C0_0_s01.vz = Math_Cos(rotY) * 2;
 
-        if (Ray_LosHitCheck(&sharedData_800E2330_0_s01, pos, &sharedData_800DE1C0_0_s01, airScreamer) && sharedFunc_800D5274_0_s01() < sharedData_800E2330_0_s01.field_18)
+        if (Ray_LosHitCheck(&sharedData_800E2330_0_s01, pos, &sharedData_800DE1C0_0_s01, airScreamer) &&
+            sharedFunc_800D5274_0_s01() < sharedData_800E2330_0_s01.groundHeight)
         {
             airScreamerProps.position_110.vx = sharedData_800E2330_0_s01.target.vx;
-            airScreamerProps.position_110.vy = sharedData_800E2330_0_s01.field_18 - Q12(1.5f);
+            airScreamerProps.position_110.vy = sharedData_800E2330_0_s01.groundHeight - Q12(1.5f);
             airScreamerProps.position_110.vz = sharedData_800E2330_0_s01.target.vz;
             return;
         }

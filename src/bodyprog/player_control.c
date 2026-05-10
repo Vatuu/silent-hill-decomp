@@ -7431,11 +7431,11 @@ s32 Player_LowerBodyMoveStateGet(s_SubCharacter* player, s_800C45C8* arg1) // 0x
 
             if (angleDelta > Q12_ANGLE(160.0f) && angleDelta < Q12_ANGLE(200.0f))
             {
-                if ((player->position.vy - Q12(1.3f)) < traces[0].field_18 ||
+                if ((player->position.vy - Q12(1.3f)) < traces[0].groundHeight ||
                     traces[0].groundType == GroundType_Default ||
                     traces[0].groundType == GroundType_12)
                 {
-                    if ((player->position.vy - Q12(0.3f)) >= traces[0].field_18)
+                    if ((player->position.vy - Q12(0.3f)) >= traces[0].groundHeight)
                     {
                         return PlayerLowerBodyState_RunForward;
                     }
@@ -7544,7 +7544,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
                 rotToAttackPos.vx = player->angleToTarget;
             }
 
-            rotToAttackPos.vy  = playerProps.field_122;
+            rotToAttackPos.vy   = playerProps.field_122;
             angleDeltaToTargetY = rotToAttackPos.vy;
             if (angleDeltaToTargetY >= Q12_ANGLE(33.75f))
             {
