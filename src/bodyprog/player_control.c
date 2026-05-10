@@ -314,8 +314,8 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttac
         player->model.stateStep++;
     }
 
-    angleTo = Q12_FRACT(ratan2((g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vx) - g_SysWork.playerCombat.field_0.vx,
-                               (g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vz) - g_SysWork.playerCombat.field_0.vz) +
+    angleTo = Q12_FRACT(ratan2((g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vx) - g_SysWork.playerCombat.attackPosition.vx,
+                               (g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vz) - g_SysWork.playerCombat.attackPosition.vz) +
                           Q12_ANGLE(360.0f));
     player->angleToTarget = angleTo;
     Math_ShortestAngleGet(player->rotation.vy, angleTo, &shortestAngle);
@@ -1922,7 +1922,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                         player->model.stateStep++;
                     }
 
-                    if (extra->model.controlState == 0 && player->position.vy >= player->properties.player.positionY_EC)
+                    if (extra->model.controlState == 0 && player->position.vy >= player->properties.player.groundHeight)
                     {
                         extra->model.controlState++;
                         func_8005DC1C(Sfx_Unk1317, &player->position, Q8(1.0f / 8.0f), 0);
@@ -4952,7 +4952,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
 
             if ((player->model.anim.keyframeIdx == 43 || player->model.anim.keyframeIdx == 33) &&
-                player->position.vy == player->properties.player.positionY_EC)
+                player->position.vy == player->properties.player.groundHeight)
             {
                 player->fallSpeed = Q12(-1.25f);
             }
@@ -5472,7 +5472,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
             if ((player->model.anim.keyframeIdx == 139 ||
                  player->model.anim.keyframeIdx == 145) &&
-                player->position.vy == player->properties.player.positionY_EC)
+                player->position.vy == player->properties.player.groundHeight)
             {
                 player->fallSpeed = Q12(-1.0f);
             }
@@ -5562,7 +5562,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
 
             if ((player->model.anim.keyframeIdx == 125 || player->model.anim.keyframeIdx == 132) &&
-                player->position.vy == player->properties.player.positionY_EC)
+                player->position.vy == player->properties.player.groundHeight)
             {
                 player->fallSpeed = Q12(-1.0f);
             }
@@ -5909,7 +5909,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
             if (player->model.anim.status == ANIM_STATUS(HarryAnim_JumpBackward, true) && player->model.anim.keyframeIdx == 246)
             {
-                if (player->position.vy < player->properties.player.positionY_EC)
+                if (player->position.vy < player->properties.player.groundHeight)
                 {
                     Player_ExtraStateSet(player, extra, PlayerState_FallBackward);
 
@@ -6674,7 +6674,7 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
 
     if (D_800C4590.groundType == GroundType_Default)
     {
-        D_800C4590.groundHeight = player->properties.player.positionY_EC;
+        D_800C4590.groundHeight = player->properties.player.groundHeight;
     }
 
     if (player->position.vy > D_800C4590.groundHeight)
@@ -6710,10 +6710,11 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
         }
     }
 
-    player->properties.player.positionY_EC = D_800C4590.groundHeight;
-    boneCoords->coord.t[0]                 = Q12_TO_Q8(player->position.vx);
-    boneCoords->coord.t[1]                 = Q12_TO_Q8(player->position.vy);
-    boneCoords->coord.t[2]                 = Q12_TO_Q8(player->position.vz);
+    // Set model position.
+    player->properties.player.groundHeight = D_800C4590.groundHeight;
+    boneCoords[HarryBone_Root].coord.t[0]  = Q12_TO_Q8(player->position.vx);
+    boneCoords[HarryBone_Root].coord.t[1]  = Q12_TO_Q8(player->position.vy);
+    boneCoords[HarryBone_Root].coord.t[2]  = Q12_TO_Q8(player->position.vz);
 }
 
 void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007C800
@@ -6723,6 +6724,8 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
     s32   i;
     s32   sfxId;
     s32   angleState;
+
+    #define attacker g_SysWork.npcs[0]
 
     // Set damage SFX according to something.
     sfxId = Sfx_Unk1326;
@@ -6849,7 +6852,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                 break;
             }
 
-            g_SysWork.targetNpcIdx                  = NO_VALUE;
+            g_SysWork.targetNpcIdx              = NO_VALUE;
             g_SysWork.playerCombat.weaponAttack = (g_SavegamePtr->equippedWeapon == InvItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon - InvItemId_KitchenKnife);
 
             if (g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
@@ -6860,13 +6863,13 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             if (g_SysWork.playerWork.extra.state >= PlayerState_FallForward &&
                 g_SysWork.playerWork.extra.state <  PlayerState_Unk7)
             {
-                g_SysWork.playerWork.player.collision.box.top   = Q12(-1.6f);
-                g_SysWork.playerWork.player.collision.box.bottom   = Q12(0.0f);
-                g_SysWork.playerWork.player.collision.box.offsetY   = Q12(-1.1f);
+                g_SysWork.playerWork.player.collision.box.top                  = Q12(-1.6f);
+                g_SysWork.playerWork.player.collision.box.bottom               = Q12(0.0f);
+                g_SysWork.playerWork.player.collision.box.offsetY              = Q12(-1.1f);
                 g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
                 g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-                g_SysWork.playerWork.player.collision.shapeOffsets.box.vz = Q12(0.0f);
-                g_SysWork.playerWork.player.collision.shapeOffsets.box.vx = Q12(0.0f);
+                g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = Q12(0.0f);
+                g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      = Q12(0.0f);
             }
 
             enemyRotY = g_SysWork.npcs[player->field_40].rotation.vy;
@@ -6893,7 +6896,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
                 case 63:
                     playerProps.moveDistance_126 = Q12(1.5f);
-                    Math_ShortestAngleGet(player->rotation.vy, g_SysWork.npcs[0].rotation.vy, &headingAngle);
+                    Math_ShortestAngleGet(player->rotation.vy, attacker.rotation.vy, &headingAngle);
                     g_Player_HeadingAngle = headingAngle;
 
                     if (enemyRotY >= Q12_ANGLE(90.0f) && enemyRotY < Q12_ANGLE(270.0f))
@@ -7124,6 +7127,8 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             Player_ExtraStateSet(player, extra, PlayerState_Death);
         }
     }
+
+    #undef attacker
 }
 
 void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords) // 0x8007D090
@@ -7453,58 +7458,62 @@ s32 func_8007D6F0(s_SubCharacter* player, s_800C45C8* arg1) // 0x8007D6F0
     return PlayerLowerBodyState_None;
 }
 
-void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord) // 0x8007D970
+void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0x8007D970
 {
-    VECTOR                sp20; // Q19.12
-    VECTOR                sp30; // Q19.12
-    VECTOR                sp40; // Q19.12
-    MATRIX                sp50;
-    VECTOR                sp70; // Q23.8
-    VECTOR                sp80; // Q23.8
-    SVECTOR               sp90;
-    DVECTOR               unkRot;
-    s32                   temp_s0;
-    q23_8                 temp_v0_5;
-    q23_8                 temp_v0_6;
-    q3_12                 unkAngle;
-    VECTOR*               vec;  // Q19.12
-    VECTOR*               vec2; // Q19.12
-    VECTOR*               vec3; // Q19.12
+    VECTOR                blasterBeamFrom; // Q19.12
+    VECTOR                partBeamFrom; // Q19.12
+    VECTOR                partBeamTo; // Q19.12
+    MATRIX                handTransformMat;
+    VECTOR                handPos; // Q23.8
+    VECTOR                partBeamToQ8; // Q23.8
+    SVECTOR               localHandPos;
+    DVECTOR               rotToAttackPos;
+    s32                   distToAttackPosSqr;
+    q23_8                 offsetToAttackPosX;
+    q23_8                 offsetToAttackPosZ;
+    q3_12                 angleDeltaToTargetY;
+    VECTOR*               attackPos0; // Q19.12
+    VECTOR*               attackPos1; // Q19.12
+    VECTOR*               attackPos2; // Q19.12
     s_Model*              model;
     static s32            __pad_bss_800C44D8[2];
-    static VECTOR3        D_800C44E0;
+    static VECTOR3        attackPos;
     static s32            __pad_bss_800C44EC;
 
     #define playerExtra  g_SysWork.playerWork.extra
     #define playerCombat g_SysWork.playerCombat
+    #define targetNpc    g_SysWork.npcs[g_Player_TargetNpcIdx]
+    #define unused       g_SysWork.npcs[0]
 
     model = &playerExtra.model;
 
+    // Ranged attack.
     if (playerExtra.lowerBodyState < PlayerLowerBodyState_Aim)
     {
-        vec     = &playerCombat.field_0;
-        vec->vx = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[0]);
-        vec->vy = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[1]);
-        vec->vz = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[2]);
+        attackPos0     = &playerCombat.attackPosition;
+        attackPos0->vx = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[0]);
+        attackPos0->vy = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[1]);
+        attackPos0->vz = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[2]);
     }
+    // Melee attack.
     else
     {
         switch (playerCombat.weaponAttack)
         {
             case NO_VALUE:
-            case WEAPON_ATTACK(EquippedWeaponId_Kick, AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Kick,  AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Tap):
-                vec2     = &playerCombat.field_0;
-                vec2->vx = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[0]);
-                vec2->vy = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[1]);
-                vec2->vz = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[2]);
+                attackPos1     = &playerCombat.attackPosition;
+                attackPos1->vx = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[0]);
+                attackPos1->vy = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[1]);
+                attackPos1->vz = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[2]);
                 break;
 
             default:
-                vec3     = &playerCombat.field_0;
-                vec3->vx = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightHand].workm.t[0]);
-                vec3->vy = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightHand].workm.t[1]);
-                vec3->vz = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightHand].workm.t[2]);
+                attackPos2     = &playerCombat.attackPosition;
+                attackPos2->vx = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightHand].workm.t[0]);
+                attackPos2->vy = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightHand].workm.t[1]);
+                attackPos2->vz = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightHand].workm.t[2]);
                 break;
         }
     }
@@ -7517,48 +7526,48 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord) // 0x8007
             (g_SysWork.timer_2C & (1 << 0)))
         {
             func_8006342C(g_SavegamePtr->equippedWeapon - InvItemId_KitchenKnife,
-                          Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), coord);
+                          Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), boneCoords);
         }
     }
 
     if (!(playerExtra.state >= PlayerState_Unk7 && playerExtra.state < PlayerState_Unk51) &&
         ((playerExtra.state >= PlayerState_None && playerExtra.state < PlayerState_Idle) ||
-        playerExtra.state == PlayerState_KickEnemy ||
-        playerExtra.state == PlayerState_StompEnemy))
+         playerExtra.state == PlayerState_KickEnemy ||
+         playerExtra.state == PlayerState_StompEnemy))
     {
         if (playerCombat.weaponAttack >= EquippedWeaponId_Handgun &&
             playerExtra.lowerBodyState >= PlayerLowerBodyState_Aim)
         {
             if (playerExtra.state == PlayerState_Combat && g_Player_TargetNpcIdx != NO_VALUE)
             {
-                unkRot.vx = ratan2((g_SysWork.npcs[g_Player_TargetNpcIdx].position.vx + g_SysWork.npcs[g_Player_TargetNpcIdx].collision.shapeOffsets.box.vx) - playerCombat.field_0.vx,
-                                 (g_SysWork.npcs[g_Player_TargetNpcIdx].position.vz + g_SysWork.npcs[g_Player_TargetNpcIdx].collision.shapeOffsets.box.vz) - playerCombat.field_0.vz);
+                rotToAttackPos.vx = ratan2((targetNpc.position.vx + targetNpc.collision.shapeOffsets.box.vx) - playerCombat.attackPosition.vx,
+                                             (targetNpc.position.vz + targetNpc.collision.shapeOffsets.box.vz) - playerCombat.attackPosition.vz);
             }
             else
             {
                 // @hack Required for match.
                 do { player->angleToTarget = player->rotation.vy; } while (false);
 
-                unkRot.vx = player->angleToTarget;
+                rotToAttackPos.vx = player->angleToTarget;
             }
 
-            unkRot.vy  = playerProps.field_122;
-            unkAngle = unkRot.vy;
-            if (unkAngle >= Q12_ANGLE(33.75f))
+            rotToAttackPos.vy  = playerProps.field_122;
+            angleDeltaToTargetY = rotToAttackPos.vy;
+            if (angleDeltaToTargetY >= Q12_ANGLE(33.75f))
             {
-                if (unkAngle > Q12_ANGLE(146.25f))
+                if (angleDeltaToTargetY > Q12_ANGLE(146.25f))
                 {
-                    unkAngle = Q12_ANGLE(146.25f);
+                    angleDeltaToTargetY = Q12_ANGLE(146.25f);
                 }
             }
             else
             {
-                unkAngle = Q12_ANGLE(33.75f);
+                angleDeltaToTargetY = Q12_ANGLE(33.75f);
             }
 
             if (player->field_44.field_0 > 0)
             {
-                func_8006342C(playerCombat.weaponAttack, unkAngle, unkRot.vx, coord);
+                func_8006342C(playerCombat.weaponAttack, angleDeltaToTargetY, rotToAttackPos.vx, boneCoords);
             }
         }
         else
@@ -7568,86 +7577,93 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord) // 0x8007
                 case NO_VALUE:
                 case EquippedWeaponId_Kick:
                 case EquippedWeaponId_Stomp:
-                    Math_SetSVectorFast(&sp90, 0, 60, 134);
-                    Vw_CoordHierarchyMatrixCompute(&coord[17], &sp50);
+                    // Compute transformation matrix for right foot.
+                    Math_SetSVectorFast(&localHandPos, 0, 60, 134);
+                    Vw_CoordHierarchyMatrixCompute(&boneCoords[HarryBone_RightFoot], &handTransformMat);
                     break;
 
                 default:
                     if (playerExtra.lowerBodyState < PlayerLowerBodyState_Aim)
                     {
-                        Math_SetSVectorFast(&sp90, 0, 60, 134);
-                        Vw_CoordHierarchyMatrixCompute(&coord[17], &sp50);
+                        // Compute transformation matrix for right foot.
+                        Math_SetSVectorFast(&localHandPos, 0, 60, 134);
+                        Vw_CoordHierarchyMatrixCompute(&boneCoords[HarryBone_RightFoot], &handTransformMat);
                     }
                     else
                     {
                         switch (WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack))
                         {
                             case EquippedWeaponId_KitchenKnife:
-                                Math_SetSVectorFastSum(&sp90, Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF),
-                                                        -FP_MULTIPLY(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x4B, Q12_SHIFT - 1),
-                                                         Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x4B) >> 1);
+                                Math_SetSVectorFastSum(&localHandPos, Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF),
+                                                       -FP_MULTIPLY(D_800AD4C8[playerCombat.weaponAttack].field_0, Q12(0.0185f), Q12_SHIFT - 1),
+                                                        Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, Q12(0.0185f)) >> 1);
                                 break;
 
                             case EquippedWeaponId_SteelPipe:
-                                Math_SetSVectorFastSum(&sp90, Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF),
-                                                        -(Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xE1) >> 1),
-                                                         FP_MULTIPLY(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x2D, Q12_SHIFT - 2));
+                                Math_SetSVectorFastSum(&localHandPos, Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF),
+                                                       -(Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, Q12(0.055f)) >> 1),
+                                                        FP_MULTIPLY(D_800AD4C8[playerCombat.weaponAttack].field_0, Q12(0.011f), Q12_SHIFT - 2));
                                 break;
 
                             case EquippedWeaponId_Chainsaw:
-                                Math_SetSVectorFastSum(&sp90, Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF) >> 1,
-                                                        -(Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x87) >> 1),
-                                                         (Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x1EF) >> 1));
+                                Math_SetSVectorFastSum(&localHandPos,
+                                                        Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF) >> 1,
+                                                       -(Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, Q12(0.033f)) >> 1),
+                                                        (Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, Q12(0.121f)) >> 1));
                                 break;
 
                             case EquippedWeaponId_RockDrill:
-                                Math_SetSVectorFastSum(&sp90, 0,
-                                                        -(Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x2D)),
-                                                         FP_MULTIPLY(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x2D, Q12_SHIFT - 2));
+                                Math_SetSVectorFastSum(&localHandPos,
+                                                        Q12(0.0f),
+                                                       -(Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, Q12(0.011f))),
+                                                        FP_MULTIPLY(D_800AD4C8[playerCombat.weaponAttack].field_0, Q12(0.011f), Q12_SHIFT - 2));
                                 break;
 
                             case EquippedWeaponId_Axe:
-                                Math_SetSVectorFastSum(&sp90, 0,
+                                Math_SetSVectorFastSum(&localHandPos,
+                                                         Q12(0.0f),
                                                         -(Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x2C1) >> 1),
                                                          Q12_MULT((u32)D_800AD4C8[playerCombat.weaponAttack].field_0, 0xC3));
                                 break;
 
                             case EquippedWeaponId_Hammer:
-                                Math_SetSVectorFastSum(&sp90, (Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF) >> 1),
-                                                        -(Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x69)),
-                                                         Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x13B) >> 1);
+                                Math_SetSVectorFastSum(&localHandPos, (Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF) >> 1),
+                                                       -(Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x69)),
+                                                        Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x13B) >> 1);
                                 break;
 
                             case EquippedWeaponId_Katana:
-                                Math_SetSVectorFastSum(&sp90, (Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF) >> 1),
-                                                        -(Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x13B) >> 1),
-                                                         Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF));
+                                Math_SetSVectorFastSum(&localHandPos, (Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF) >> 1),
+                                                       -(Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x13B) >> 1),
+                                                        Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF));
                                 break;
                         }
 
-                        Vw_CoordHierarchyMatrixCompute(&coord[10], &sp50);
+                        // Compute transformation matrix for right hand.
+                        Vw_CoordHierarchyMatrixCompute(&boneCoords[HarryBone_RightHand], &handTransformMat);
                     }
                     break;
             }
 
-            gte_SetRotMatrix(&sp50);
-            gte_SetTransMatrix(&sp50);
-            gte_ldv0(&sp90);
+            // Compute rotation from hand to attack position.
+            gte_SetRotMatrix(&handTransformMat);
+            gte_SetTransMatrix(&handTransformMat);
+            gte_ldv0(&localHandPos);
             gte_rt();
-            gte_stlvnl(&sp70);
-
-            temp_v0_5 = Q12_TO_Q8(playerCombat.field_0.vx) - sp70.vx;
-            temp_v0_6 = Q12_TO_Q8(playerCombat.field_0.vz) - sp70.vz;
-            temp_s0   = SquareRoot0(SQUARE(temp_v0_5) + SQUARE(temp_v0_6));
-
-            unkRot.vx = ratan2(sp70.vx - Q12_TO_Q8(playerCombat.field_0.vx),
-                               sp70.vz - Q12_TO_Q8(playerCombat.field_0.vz));
-            unkRot.vy = ratan2(temp_s0, sp70.vy - Q12_TO_Q8(playerCombat.field_0.vy));
+            gte_stlvnl(&handPos);
+            offsetToAttackPosX = Q12_TO_Q8(playerCombat.attackPosition.vx) - handPos.vx;
+            offsetToAttackPosZ = Q12_TO_Q8(playerCombat.attackPosition.vz) - handPos.vz;
+            distToAttackPosSqr = SquareRoot0(SQUARE(offsetToAttackPosX) + SQUARE(offsetToAttackPosZ));
+            rotToAttackPos.vx  = ratan2(handPos.vx - Q12_TO_Q8(playerCombat.attackPosition.vx),
+                                        handPos.vz - Q12_TO_Q8(playerCombat.attackPosition.vz));
+            rotToAttackPos.vy  = ratan2(distToAttackPosSqr, handPos.vy - Q12_TO_Q8(playerCombat.attackPosition.vy));
         }
 
+        // Draw Hyper Blaster beam.
         if (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap) &&
             playerCombat.isAiming &&
-            model->anim.status >= ANIM_STATUS(HarryAnim_HandgunAim, true) && model->anim.keyframeIdx >= 574)
+            model->anim.status >= ANIM_STATUS(HarryAnim_HandgunAim, true) &&
+            model->anim.keyframeIdx >= 574)
         {
             if (playerExtra.state < PlayerState_Idle)
             {
@@ -7656,29 +7672,32 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord) // 0x8007
                     g_SysWork.targetNpcIdx = NO_VALUE;
                 }
 
-                Math_SetSVectorFast(&sp90, 0, -39, 87);
-                sp90.vz = 87;
+                Math_SetSVectorFast(&localHandPos, Q8(0.0f), Q8(-0.156f), Q8(0.34f));
+                localHandPos.vz = Q8(0.34f);
 
-                Vw_CoordHierarchyMatrixCompute(&coord[10], &sp50);
-                gte_SetRotMatrix(&sp50);
-                gte_SetTransMatrix(&sp50);
-                gte_ldv0(&sp90);
+                // Compute beam start position.
+                Vw_CoordHierarchyMatrixCompute(&boneCoords[HarryBone_RightHand], &handTransformMat);
+                gte_SetRotMatrix(&handTransformMat);
+                gte_SetTransMatrix(&handTransformMat);
+                gte_ldv0(&localHandPos);
                 gte_rt();
-                gte_stlvnl(&sp80);
+                gte_stlvnl(&partBeamToQ8);
+                blasterBeamFrom.vx = Q8_TO_Q12(partBeamToQ8.vx);
+                blasterBeamFrom.vy = Q8_TO_Q12(partBeamToQ8.vy);
+                blasterBeamFrom.vz = Q8_TO_Q12(partBeamToQ8.vz);
 
-                sp20.vx = Q8_TO_Q12(sp80.vx);
-                sp20.vy = Q8_TO_Q12(sp80.vy);
-                sp20.vz = Q8_TO_Q12(sp80.vz);
-
+                // Set beam rotation.
                 if (g_GameWork.config.optExtraAutoAiming_2C)
                 {
-                    unkRot.vx = player->angleToTarget;
+                    rotToAttackPos.vx = player->angleToTarget;
                 }
 
-                g_MapOverlayHeader.particleHyperBlasterBeamDraw(&sp20, &unkRot.vx, &unkRot.vy);
+                // Draw beam.
+                g_MapOverlayHeader.particleHyperBlasterBeamDraw(&blasterBeamFrom, &rotToAttackPos.vx, &rotToAttackPos.vy);
             }
         }
 
+        // Draw particle beam.
         if (playerExtra.state < PlayerState_Idle)
         {
             if ((playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
@@ -7686,30 +7705,32 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord) // 0x8007
                 (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
                  player->model.anim.keyframeIdx >= 577 && model->anim.keyframeIdx < 583))
             {
-                Math_SetSVectorFast(&sp90, 0, 0, 0);
-                Vw_CoordHierarchyMatrixCompute(&coord[10], &sp50);
-                gte_SetRotMatrix(&sp50);
-                gte_SetTransMatrix(&sp50);
-                gte_ldv0(&sp90);
+                // Compute beam start position.
+                Math_SetSVectorFast(&localHandPos, Q8(0.0f), Q8(0.0f), Q8(0.0f));
+                Vw_CoordHierarchyMatrixCompute(&boneCoords[HarryBone_RightHand], &handTransformMat);
+                gte_SetRotMatrix(&handTransformMat);
+                gte_SetTransMatrix(&handTransformMat);
+                gte_ldv0(&localHandPos);
                 gte_rt();
-                gte_stlvnl(&sp80);
+                gte_stlvnl(&partBeamToQ8);
+                Math_SetSVectorFast(&localHandPos, Q8(0.0f), Q8(0.0f), Q8(0.0f));
+                partBeamFrom.vx = Q8_TO_Q12(partBeamToQ8.vx);
+                partBeamFrom.vy = Q8_TO_Q12(partBeamToQ8.vy);
+                partBeamFrom.vz = Q8_TO_Q12(partBeamToQ8.vz);
 
-                Math_SetSVectorFast(&sp90, 0, 0, 0);
-                sp30.vx = Q8_TO_Q12(sp80.vx);
-                sp30.vy = Q8_TO_Q12(sp80.vy);
-                sp30.vz = Q8_TO_Q12(sp80.vz);
-
-                Vw_CoordHierarchyMatrixCompute(&coord[6], &sp50);
-                gte_SetRotMatrix(&sp50);
-                gte_SetTransMatrix(&sp50);
-                gte_ldv0(&sp90);
+                // Compute beam end position.
+                Vw_CoordHierarchyMatrixCompute(&boneCoords[HarryBone_LeftHand], &handTransformMat);
+                gte_SetRotMatrix(&handTransformMat);
+                gte_SetTransMatrix(&handTransformMat);
+                gte_ldv0(&localHandPos);
                 gte_rt();
-                gte_stlvnl(&sp80);
+                gte_stlvnl(&partBeamToQ8);
+                partBeamTo.vx = Q8_TO_Q12(partBeamToQ8.vx);
+                partBeamTo.vy = Q8_TO_Q12(partBeamToQ8.vy);
+                partBeamTo.vz = Q8_TO_Q12(partBeamToQ8.vz);
 
-                sp40.vx = Q8_TO_Q12(sp80.vx);
-                sp40.vy = Q8_TO_Q12(sp80.vy);
-                sp40.vz = Q8_TO_Q12(sp80.vz);
-                g_MapOverlayHeader.particleBeamDraw(&sp30, &sp40);
+                // Draw beam.
+                g_MapOverlayHeader.particleBeamDraw(&partBeamFrom, &partBeamTo);
             }
         }
 
@@ -7719,27 +7740,29 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord) // 0x8007
             {
                 if (D_800C4554 != NO_VALUE || D_800C4556 != D_800C4554)
                 {
-                    func_8008A0E4(player->field_44.field_0, playerCombat.weaponAttack, player, &D_800C44E0, &g_SysWork.npcs[0], D_800C4556, D_800C4554);
+                    func_8008A0E4(player->field_44.field_0, playerCombat.weaponAttack, player, &attackPos, &unused, D_800C4556, D_800C4554);
                 }
                 else
                 {
-                    func_8008A0E4(player->field_44.field_0, playerCombat.weaponAttack, player, &D_800C44E0, &g_SysWork.npcs[0], unkRot.vx, unkRot.vy);
+                    func_8008A0E4(player->field_44.field_0, playerCombat.weaponAttack, player, &attackPos, &unused, rotToAttackPos.vx, rotToAttackPos.vy);
                 }
             }
             else
             {
-                func_8008A0E4(player->field_44.field_0, playerCombat.weaponAttack, player, &playerCombat.field_0, &g_SysWork.npcs[0], unkRot.vx, unkRot.vy);
+                func_8008A0E4(player->field_44.field_0, playerCombat.weaponAttack, player, &playerCombat.attackPosition, &unused, rotToAttackPos.vx, rotToAttackPos.vy);
             }
 
-            D_800C42D2 = unkRot.vx;
-            D_800C42D0 = unkRot.vy;
+            g_Player_RotationDeltaToTargetX = rotToAttackPos.vx;
+            g_Player_RotationDeltaToTargetY = rotToAttackPos.vy;
         }
     }
 
-    D_800C44E0 = playerCombat.field_0;
+    attackPos = playerCombat.attackPosition;
 
     #undef playerExtra
     #undef playerCombat
+    #undef targetNpc
+    #undef unused
 }
 
 void Game_SavegameResetPlayer(void) // 0x8007E530
@@ -7757,15 +7780,15 @@ void Game_SavegameResetPlayer(void) // 0x8007E530
     }
 
     g_SavegamePtr->playerHealth      = Q12(100.0f);
-    g_SavegamePtr->field_A0              = 0;
-    g_SavegamePtr->equippedWeapon     = InvItemId_Unequipped;
+    g_SavegamePtr->field_A0          = 0;
+    g_SavegamePtr->equippedWeapon    = InvItemId_Unequipped;
     g_SavegamePtr->healthSaturation  = Q12(0.0f);
     g_SavegamePtr->gameplayTimer     = Q12(0.0f);
     g_SavegamePtr->runDistance       = Q12(0.0f);
     g_SavegamePtr->walkDistance      = Q12(0.0f);
     g_SavegamePtr->pickedUpItemCount = 0;
     g_SavegamePtr->clearGameCount    = 0;
-    g_SavegamePtr->add290Hours     = 0;
+    g_SavegamePtr->add290Hours       = 0;
 
     #undef DEFAULT_INV_SLOT_COUNT
 }
@@ -7779,10 +7802,10 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
 
     SysWork_SavegameReadPlayer();
 
-    g_SysWork.playerWork.player.model.charaId  = Chara_Harry;
-    g_SysWork.playerWork.extra.model.charaId = Chara_Harry;
+    g_SysWork.playerWork.player.model.charaId              = Chara_Harry;
+    g_SysWork.playerWork.extra.model.charaId               = Chara_Harry;
     g_SysWork.playerWork.player.collision.cylinder.radius  = Q12(0.3f);
-    g_SysWork.playerWork.player.collision.cylinder.field_2   = Q12(0.23f);
+    g_SysWork.playerWork.player.collision.cylinder.field_2 = Q12(0.23f);
 
     extraModel = &g_SysWork.playerWork.player.model;
     model      = &g_SysWork.playerWork.extra.model;
@@ -7828,17 +7851,17 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     }
     else
     {
-        g_SysWork.playerCombat.weaponAttack        = NO_VALUE;
+        g_SysWork.playerCombat.weaponAttack       = NO_VALUE;
         g_SysWork.playerCombat.currentWeaponAmmo  = 0;
         g_SysWork.playerCombat.totalWeaponAmmo    = 0;
         g_SysWork.playerCombat.weaponInventoryIdx = NO_VALUE;
     }
 
     g_SysWork.playerCombat.isAiming = false;
-    g_Player_GrabReleaseInputTimer        = Q12(0.0f);
-    D_800C4588                            = 0;
-    D_800C457C                            = 0;
-    g_Player_DisableControl               = false;
+    g_Player_GrabReleaseInputTimer  = Q12(0.0f);
+    D_800C4588                      = 0;
+    D_800C457C                      = 0;
+    g_Player_DisableControl         = false;
 
     switch (g_SavegamePtr->gameDifficulty)
     {
@@ -7856,9 +7879,9 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     }
 
     g_Player_LastWeaponSelected = NO_VALUE;
-    g_GameWork.mapAnimIdx   = NO_VALUE;
+    g_GameWork.mapAnimIdx       = NO_VALUE;
 
-    g_SavegamePtr->inventorySlotCount       = CLAMP(g_SavegamePtr->inventorySlotCount, INVENTORY_ITEM_COUNT_MAX / 5, INVENTORY_ITEM_COUNT_MAX);
+    g_SavegamePtr->inventorySlotCount  = CLAMP(g_SavegamePtr->inventorySlotCount, INVENTORY_ITEM_COUNT_MAX / 5, INVENTORY_ITEM_COUNT_MAX);
     g_SysWork.playerWork.player.health = CLAMP(g_SysWork.playerWork.player.health, 1, Q12(100.0f));
 }
 
@@ -7878,9 +7901,9 @@ void func_8007E8C0(void) // 0x8007E8C0
 {
     s32             i;
     s_AnimInfo*     animInfos;
-    s_SubCharacter* chara;
+    s_SubCharacter* player;
 
-    chara     = &g_SysWork.playerWork.player;
+    player    = &g_SysWork.playerWork.player;
     animInfos = g_MapOverlayHeader.harryMapAnimInfos;
 
     for (i = 76; animInfos->playbackFunc != NULL; i++, animInfos++)
@@ -7893,7 +7916,9 @@ void func_8007E8C0(void) // 0x8007E8C0
         g_SysWork.enablePlayerMatchAnim = false;
     }
 
-    chara->properties.player.exhaustionTimer                    = Q12(0.0f);
+    player->properties.player.exhaustionTimer = Q12(0.0f);
+
+    // TODO: Maybe an inline?
     g_SysWork.playerWork.player.collision.box.top                  = Q12(-1.6f);
     g_SysWork.playerWork.player.collision.box.bottom               = Q12(0.0f);
     g_SysWork.playerWork.player.collision.box.offsetY              = Q12(-1.1f);
@@ -7901,9 +7926,10 @@ void func_8007E8C0(void) // 0x8007E8C0
     g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
     g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = Q12(0.0f);
     g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      = Q12(0.0f);
-    chara->collision.cylinder.radius                               = Q12(0.3f);
-    chara->collision.cylinder.field_2                              = Q12(0.23f);
-    g_GameWork.mapAnimIdx                                          = NO_VALUE;
+
+    player->collision.cylinder.radius  = Q12(0.3f);
+    player->collision.cylinder.field_2 = Q12(0.23f);
+    g_GameWork.mapAnimIdx              = NO_VALUE;
 
     func_8007E9C4();
 }
@@ -8594,15 +8620,15 @@ void func_8007FD4C(bool cond) // 0x8007FD4C
 
     if (cond)
     {
-        g_SysWork.playerWork.player.collision.cylinder.radius   = Q12(0.3f);
-        g_SysWork.playerWork.player.collision.cylinder.field_2   = Q12(0.23f);
-        g_SysWork.playerWork.player.collision.box.top   = Q12(-1.6f);
+        g_SysWork.playerWork.player.collision.cylinder.radius          = Q12(0.3f);
+        g_SysWork.playerWork.player.collision.cylinder.field_2         = Q12(0.23f);
+        g_SysWork.playerWork.player.collision.box.top                  = Q12(-1.6f);
         g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
         g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-        g_SysWork.playerWork.player.collision.shapeOffsets.box.vz = Q12(0.0f);
-        g_SysWork.playerWork.player.collision.shapeOffsets.box.vx = Q12(0.0f);
-        g_SysWork.playerWork.player.collision.box.bottom   = Q12(0.0f);
-        g_SysWork.playerWork.player.collision.box.offsetY   = Q12(-1.1f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.box.bottom               = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.box.offsetY              = Q12(-1.1f);
     }
 }
 

@@ -2541,9 +2541,8 @@ extern VECTOR3 D_800C42C0;
 
 extern VECTOR3* D_800C42CC;
 
-extern u16 D_800C42D0;
-
-extern u16 D_800C42D2;
+extern q4_12 g_Player_RotationDeltaToTargetY;
+extern q4_12 g_Player_RotationDeltaToTargetX;
 
 extern s_800C42E8 D_800C42E8[24];
 
@@ -3660,7 +3659,7 @@ s32 func_8008A0CC(void); /** Returns 0. */
 s64 func_8008A0D4(void); /** Returns 0. */
 
 /** Anim infos setup for character. */
-s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s_SubCharacter* chara2, q3_12 angle0, q3_12 angle1);
+s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* attackPos, s_SubCharacter* unused, q3_12 angle0, q3_12 angle1);
 
 u32 func_8008A270(s32 idx);
 
@@ -4438,7 +4437,7 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
 
 void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords);
 
-void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* coord);
+void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords);
 
 /** Player func. */
 void func_8007E9C4(void);

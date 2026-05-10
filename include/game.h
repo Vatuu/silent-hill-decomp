@@ -1316,7 +1316,7 @@ STATIC_ASSERT_SIZEOF(s_PropsDummy, 64);
 typedef struct _PropsPlayer
 {
     /* 0xE8  */ q19_12        afkTimer; // Increments every tick for 10 seconds before AFK anim starts.
-    /* 0xEC  */ q19_12        positionY_EC;
+    /* 0xEC  */ q19_12        groundHeight;
     /* 0xF0  */ q19_12        field_F0;
     /* 0xF4  */ q19_12        field_F4; // Angle related to X axis flex rotation.
     /* 0xF8  */ q19_12        runTimer_F8;
@@ -1333,7 +1333,7 @@ typedef struct _PropsPlayer
     /* 0x11A */ s8            __pad_11A[2];
     /* 0x11C */ e_PlayerFlags flags_11C;
     /* 0x120 */ q3_12         quickTurnHeadingAngle; /** Target quick turn heading angle. */
-    /* 0x122 */ q3_12         field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
+    /* 0x122 */ q3_12         field_122; // Specially used when aiming an enemy. Y angle delta to target? 
     /* 0x124 */ q3_12         headingAngle;
     /* 0x126 */ q3_12         moveDistance_126; // Used to indicate how much the player should move foward. Seems to be squared.
 } s_PropsPlayer;
@@ -1776,7 +1776,7 @@ typedef struct
     s16     field_10; // }
     s16     field_12; // }
     s32     field_14; // }
-    VECTOR3 field_18;
+    VECTOR3 field_18; // Q19.12 | Set to player attack position.
     VECTOR3 field_24[3];
     VECTOR3 field_48[3];
 } s_SubCharacter_44;
@@ -1898,9 +1898,9 @@ STATIC_ASSERT_SIZEOF(s_PlayerWork, 340);
 /** @brief Player combat info. */
 typedef struct _PlayerCombat
 {
-    /* 0x0  */ VECTOR3 field_0;            // Q19.12 | Melee weapon attack position.
+    /* 0x0  */ VECTOR3 attackPosition; /** Q19.12 */
     /* 0xC  */ s8      __pad_C[3];
-    /* 0xF  */ s8      weaponAttack;       /** Packed weapon attack. See `WEAPON_ATTACK`. */
+    /* 0xF  */ s8      weaponAttack; /** Packed weapon attack. See `WEAPON_ATTACK`. */
     /* 0x10 */ u8      currentWeaponAmmo;
     /* 0x11 */ u8      totalWeaponAmmo;
     /* 0x12 */ s8      weaponInventoryIdx; /** Index of the currently equipped weapon in the inventory. */

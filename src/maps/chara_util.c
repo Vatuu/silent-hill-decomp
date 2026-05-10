@@ -31,7 +31,7 @@ void sharedFunc_800D88AC_0_s00(s_SubCharacter* stalker)
     // TODO: Not stalker? Properties don't fit.
     stalker->properties.player.field_F4         = Q12_ANGLE(0.0f);
     stalker->properties.player.field_F0         = Q12(0.0f);
-    stalker->properties.player.positionY_EC     = Q12(0.0f);
+    stalker->properties.player.groundHeight     = Q12(0.0f);
     stalker->properties.player.moveDistance_126 = Q12(0.0f);
 }
 
@@ -686,9 +686,9 @@ void Chara_CollisionReset(s_SubCharacter* chara)
     chara->collision.shapeOffsets.box.vz      = Q12(0.0f);
     chara->collision.shapeOffsets.box.vx      = Q12(0.0f);
 
-    chara->properties.player.positionY_EC = Q12(0.0f);
+    chara->properties.player.groundHeight = Q12(0.0f);
     chara->properties.player.afkTimer  = Q12(0.0f);
-    chara->properties.player.positionY_EC = Q12(0.0f);
+    chara->properties.player.groundHeight = Q12(0.0f);
     chara->properties.player.field_F0     = 0;
     chara->properties.player.field_F4     = Q12_ANGLE(0.0f);
 

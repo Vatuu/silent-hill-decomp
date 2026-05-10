@@ -5073,7 +5073,7 @@ void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEA54
 
     incubus->model.controlState             = IncubusControl_11;
     incubus->model.stateStep                = IncubusStateStep_0;
-    incubus->properties.player.positionY_EC |= 1 << 2;
+    incubus->properties.player.groundHeight |= 1 << 2;
 }
 
 q19_12 func_800DEA90(void) // 0x800DEA90
@@ -5339,7 +5339,7 @@ void func_800DF074(s_SubCharacter* incubus) // 0x800DF074
         controlState != IncubusControl_13 &&
         controlState != IncubusControl_3 &&
         controlState != IncubusControl_5 &&
-        (incubus->properties.player.positionY_EC & (1 << 2)))
+        (incubus->properties.player.groundHeight & (1 << 2)))
     {
         func_800DD6CC();
     }

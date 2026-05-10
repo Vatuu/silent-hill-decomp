@@ -98,7 +98,7 @@ s64 func_8008A0D4(void) // 0x8008A0D4
     return 0;
 }
 
-s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s_SubCharacter* chara2, q3_12 angle0, q3_12 angle1) // 0x8008A0E4
+s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* attackPos, s_SubCharacter* unused, q3_12 angle0, q3_12 angle1) // 0x8008A0E4
 {
     s32          var_t1;
     s32          temp_a1;
@@ -124,12 +124,12 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
         mapAnimInfos  = g_MapOverlayHeader.harryMapAnimInfos;
 
         modelAnim->baseAnimInfos      = baseAnimInfos;
-        modelAnim->mapAnimStatusStart = ANIM_STATUS(38, false); // TODO: 38 is the first anim after base anims. Make a constant?
-        modelAnim->mapAnimInfos      = mapAnimInfos;
+        modelAnim->mapAnimStatusStart = ANIM_STATUS(38, false);  // TODO: 38 is the first anim after base anims. Make a constant?
+        modelAnim->mapAnimInfos       = mapAnimInfos;
 
-        modelAnim                       = &g_SysWork.playerWork.extra.model.anim;
+        modelAnim                     = &g_SysWork.playerWork.extra.model.anim;
         modelAnim->baseAnimInfos      = baseAnimInfos;
-        modelAnim->mapAnimInfos      = mapAnimInfos;
+        modelAnim->mapAnimInfos       = mapAnimInfos;
         modelAnim->mapAnimStatusStart = ANIM_STATUS(38, false);
     }
 
@@ -154,7 +154,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
     chara->field_44.field_3  = 100;
     chara->field_44.field_C  = angle0;
     chara->field_44.field_E  = angle1;
-    chara->field_44.field_18 = *pos;
+    chara->field_44.field_18 = *attackPos;
     temp_a1         = func_8008A3E0(chara);
     ret             = NO_VALUE;
 
