@@ -1385,9 +1385,9 @@ typedef struct _PropsAirScreamer
 typedef struct _PropsAlessa
 {
     /* 0xE8  */ s32        controlState; /** `e_AlessaControl` */
-    /* 0xEC  */ u_Property properties_EC; // Unused?
-    /* 0xF0  */ s32        field_F0;      // `bool`? If `false`, animation gets updated.
-    /* 0xF4  */ u_Property properties_F4; // Unused?
+    /* 0xEC  */ u_Property properties_EC; // Unused.
+    /* 0xF0  */ bool       freeze;
+    /* 0xF4  */ u_Property properties_F4; // Unused.
     /* 0xF8  */ bool       resetControlState;
     /* 0xFC  */ s32        field_FC;
     /* 0x100 */ s32        field_100;
@@ -1398,7 +1398,7 @@ typedef struct _PropsAlessa
     /* 0x11C */ s32        flags_11C;
     /* 0x120 */ u_Property properties_120;
     /* 0x124 */ q3_12      field_124;
-    /* 0x126 */ q3_12      moveSpeed_126;
+    /* 0x126 */ q3_12      moveSpeed;
 } s_PropsAlessa;
 
 /** @brief Bloodsucker character properties. */

@@ -682,7 +682,7 @@ s32 Chara_AnimPlaybackStateGet(s_SubCharacter* chara);
 
 bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfxId);
 
-/** Character SFX func? */
+/** Character SFX func. Suggests there's a shared property struct for humanoid NPCs. */
 bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfxId, s32 pitch);
 
 void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7);
@@ -750,7 +750,7 @@ static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo
     anim->mapAnimInfos  = NULL;
 }
 
-/** @brief World object description with a pose. */
+/** @brief World object description with a pose (position and rotation). */
 typedef struct _WorldObjectPose
 {
     /* 0x0  */ s_WorldObjectModel object;

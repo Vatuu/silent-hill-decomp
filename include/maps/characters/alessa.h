@@ -17,6 +17,22 @@ typedef enum _AlessaAnim
     AlessaAnim_Kneel                  = 10
 } e_AlessaAnim;
 
+/** @brief Alessa character control states. */
+typedef enum _AlessaControl
+{
+    AlessaControl_None = 0,
+    AlessaControl_1    = 1,
+    AlessaControl_2    = 2,
+    AlessaControl_3    = 3,
+    AlessaControl_4    = 4,
+    AlessaControl_5    = 5,
+    AlessaControl_6    = 6,
+    AlessaControl_7    = 7,
+    AlessaControl_8    = 8,
+    AlessaControl_9    = 9,
+    AlessaControl_10   = 10
+} e_AlessaControl;
+
 /** @brief Alessa character anim infos. */
 extern s_AnimInfo ALESSA_ANIM_INFOS[];
 

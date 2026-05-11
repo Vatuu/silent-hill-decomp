@@ -1209,7 +1209,7 @@ typedef struct _MapGfxInfo
     /* 0xC */ const s_SpeedZone* speedZones_C;
 } s_MapInfo;
 
-// Rough name.
+/** @brief World object metadata. */
 typedef struct _WorldObjectMetadata
 {
     /* 0x0 */ u_Filename name_0;
@@ -1217,7 +1217,7 @@ typedef struct _WorldObjectMetadata
     /* 0x9 */ s8         lmIdx_9; /** Set to 2 when found in `g_Map.globalLm.lmHdr` and 3-6 if found in `g_Map.ipdActive[i] (i + 3)`. */
 } s_WorldObjectMetadata;
 
-// Rough name.
+/** @brief World object model. TODO: Rename to "static object"? Conceptually it's what this is in modern terms. */
 typedef struct _WorldObjectModel
 {
     /* 0x0  */ s_ModelInfo           modelInfo;
