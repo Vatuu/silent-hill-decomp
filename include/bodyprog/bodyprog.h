@@ -1730,12 +1730,12 @@ typedef struct _MapEffectsPresetIdxs
 
 typedef struct
 {
-    q23_8 field_0; // X position.                } Offset ray hit position?
-    q23_8 field_4; // Z position.                }
-    q7_8  field_8; // Y position, but why `s16`? }
-    q7_8  field_A; // Y??
-    q7_8  field_C; // Collision cylinder radius?
-    s16   field_E;
+    /* 0x0 */ q23_8 field_0; // X position.
+    /* 0x4 */ q23_8 field_4; // Z position.
+    /* 0x8 */ q7_8  groundHeight;
+    /* 0xA */ q7_8  field_A; // Y??
+    /* 0xC */ q7_8  field_C; // Collision cylinder radius?
+    /* 0xE */ s16   field_E;
 } s_RayState_6C;
 
 typedef struct
@@ -1769,7 +1769,7 @@ typedef struct
     /* 0x44 */ s32              field_44; // Z  }
     /* 0x48 */ s8               unk_48[4];
     /* 0x4C */ q7_8             field_4C; // X?
-    /* 0x4E */ q7_8             field_4E; // Z?
+    /* 0x4E */ q7_8             field_4E; // Height offset.
     /* 0x50 */ SVECTOR          offset; // Q23.8
     /* 0x58 */ u16              field_58;
     /* 0x5A */ s16              field_5A;
@@ -3981,7 +3981,7 @@ void func_8006C0C8(s_CollisionState* collState, s16 arg1, s16 arg2);
 
 bool func_8006C1B8(u32 arg0, s16 arg1, s_CollisionState* collState);
 
-s16 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4);
+q3_12 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4);
 
 bool func_8006C3D4(s_CollisionState* collState, s_IpdCollisionData* collData, s32 idx);
 

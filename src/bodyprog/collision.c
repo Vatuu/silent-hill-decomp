@@ -1571,12 +1571,12 @@ bool func_8006C1B8(u32 arg0, s16 arg1, s_CollisionState* collState) // 0x8006C1B
     return var < collState->field_3A;
 }
 
-s16 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4) // 0x8006C248
+q3_12 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4) // 0x8006C248
 {
     DVECTOR sp10;
     s16     temp_v0;
-    s16     var_v1;
-    s16     temp_lo;
+    s16     dist;
+    q3_12   alpha;
 
     gte_ldR11R12(packedDir);
     gte_ldR13R21(packedDir);
@@ -1587,40 +1587,40 @@ s16 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4)
 
     if (sp10.vx < 0)
     {
-        var_v1 = SquareRoot0(SQUARE(sp10.vx) + SQUARE(sp10.vy));
+        dist = SquareRoot0(SQUARE(sp10.vx) + SQUARE(sp10.vy));
     }
     else if (arg1 < sp10.vx)
     {
         temp_v0 = sp10.vx - arg1;
-        var_v1  = SquareRoot0(SQUARE(temp_v0) + SQUARE(sp10.vy));
+        dist  = SquareRoot0(SQUARE(temp_v0) + SQUARE(sp10.vy));
     }
     else
     {
-        var_v1 = ABS(sp10.vy);
+        dist = ABS(sp10.vy);
     }
 
     if (arg1 == 0)
     {
-        temp_lo = NO_VALUE;
-        if (var_v1 >= arg4)
+        alpha = NO_VALUE;
+        if (dist >= arg4)
         {
-            return temp_lo;
+            return alpha;
         }
         else
         {
-            return 0;
+            return Q12(0.0f);
         }
     }
 
-    if (var_v1 >= arg4)
+    if (dist >= arg4)
     {
         return NO_VALUE;
     }
 
-    temp_lo = FP_TO(sp10.vx - SquareRoot0(SQUARE(arg4) - SQUARE(sp10.vy)), Q12_SHIFT) / arg1;
-    temp_lo = CLAMP(temp_lo, Q12(0.0f), Q12(1.0f));
+    alpha = FP_TO(sp10.vx - SquareRoot0(SQUARE(arg4) - SQUARE(sp10.vy)), Q12_SHIFT) / arg1;
+    alpha = CLAMP(alpha, Q12(0.0f), Q12(1.0f));
 
-    return temp_lo;
+    return alpha;
 }
 
 bool func_8006C3D4(s_CollisionState* collState, s_IpdCollisionData* collData, s32 idx) // 0x8006C3D4
@@ -2601,9 +2601,9 @@ void func_8006E0AC(s_RayState* state, s_IpdCollisionData* arg1) // 0x8006E0AC
     // `state` type might be wrong.
     state->field_6C.field_0 = arg1->positionX;
     state->field_6C.field_4 = arg1->positionZ;
-    state->field_6C.field_8 = state->from.vx - state->field_6C.field_0;
+    state->field_6C.groundHeight = state->from.vx - state->field_6C.field_0;
     state->field_6C.field_A = state->from.vz - state->field_6C.field_4;
-    state->field_6C.field_C = state->field_6C.field_8 + state->offset.vx;
+    state->field_6C.field_C = state->field_6C.groundHeight + state->offset.vx;
     state->field_6C.field_E = state->field_6C.field_A + state->offset.vz;
     state->field_7C = arg1->field_1E;
     state->field_80 = arg1->field_1F;
@@ -2776,11 +2776,11 @@ void func_8006E53C(s_RayState* state, s_IpdCollisionData_20* arg1, s_IpdCollisio
     bool                   cond0;
     bool                   cond1;
     bool                   cond2;
-    s_IpdCollisionData_18* temp_a1_2;
     u8                     temp_a0;
     s32                    temp_a0_3;
     s32                    temp_a2;
     s32                    idx;
+    s_IpdCollisionData_18* temp_a1_2;
     s_IpdCollisionData_14* temp_a1;
 
     for (i = arg1[0].field_0; i < arg1[1].field_0; i++)
@@ -2890,12 +2890,12 @@ void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg
         temp_v1 = state->field_58 + (state->field_5A << 16);
         gte_ldR11R12(temp_v1);
         gte_ldR13R21(temp_v1);
-        gte_ldvxy0(((temp_t1->vx - state->field_6C.field_8) & 0xFFFF) + ((temp_t1->vz - state->field_6C.field_A) << 16));
+        gte_ldvxy0(((temp_t1->vx - state->field_6C.groundHeight) & 0xFFFF) + ((temp_t1->vz - state->field_6C.field_A) << 16));
         gte_gte_ldvz0();
         gte_rtv0();
         gte_stMAC12(&sp0);
 
-        gte_ldvxy0(((temp_t2->vx - state->field_6C.field_8) & 0xFFFF) + ((temp_t2->vz - state->field_6C.field_A) << 16));
+        gte_ldvxy0(((temp_t2->vx - state->field_6C.groundHeight) & 0xFFFF) + ((temp_t2->vz - state->field_6C.field_A) << 16));
         gte_gte_ldvz0();
         gte_rtv0();
         gte_stMAC12(&sp8);
@@ -2988,7 +2988,7 @@ void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1) // 0x8006EB8C
     temp_v1 = state->field_58 + (state->field_5A << 16);
     gte_ldR11R12(temp_v1);
     gte_ldR13R21(temp_v1);
-    gte_ldvxy0(((arg1->vec_2.vx - state->field_6C.field_8) & 0xFFFF) + ((arg1->vec_2.vz - state->field_6C.field_A) << 16));
+    gte_ldvxy0(((arg1->vec_2.vx - state->field_6C.groundHeight) & 0xFFFF) + ((arg1->vec_2.vz - state->field_6C.field_A) << 16));
     gte_gte_ldvz0();
     gte_rtv0();
     gte_stMAC12(&sp10);
@@ -3008,11 +3008,11 @@ void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1) // 0x8006EB8C
             if ((sp18.vy + state->from.vy + state->field_4E) >= arg1->vec_2.vy)
             {
                 state->field_8  = temp_a1_3;
-                state->field_C  = sp18.vx + state->field_6C.field_8 + state->field_6C.field_0;
+                state->field_C  = sp18.vx + state->field_6C.groundHeight + state->field_6C.field_0;
                 state->field_10 = sp18.vy + state->from.vy;
                 state->field_14 = sp18.vz + state->field_6C.field_A + state->field_6C.field_4;
                 state->groundHeight = arg1->vec_2.vy;
-                state->field_24 = (sp18.vx + state->field_6C.field_8) - arg1->vec_2.vx;
+                state->field_24 = (sp18.vx + state->field_6C.groundHeight) - arg1->vec_2.vx;
                 state->field_26 = (sp18.vz + state->field_6C.field_A) - arg1->vec_2.vz;
                 state->field_20 = 0;
                 state->groundType = arg1->groundType;
@@ -3045,15 +3045,15 @@ void func_8006EE0C(s_RayState_6C* arg0, bool useCylinder, const s_SubCharacter* 
     arg0->field_A = Q12_TO_Q8(unkY);
     arg0->field_0 = Q12_TO_Q8(chara->position.vx + offsetX);
     arg0->field_4 = Q12_TO_Q8(chara->position.vz + offsetZ);
-    arg0->field_8 = Q12_TO_Q8(chara->position.vy + chara->collision.box.top);
+    arg0->groundHeight = Q12_TO_Q8(chara->position.vy + chara->collision.box.top);
 }
 
 void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
 {
     VECTOR3 pos; // Q19.12
     s32     bound;
-    s16     temp_v0;
-    s16     temp_v0_2;
+    q3_12   alpha;
+    q3_12   clampedRayDist;
     q23_8   x1;
     q23_8   z1;
     q23_8   x0;
@@ -3090,43 +3090,44 @@ void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
     }
 
     if ((state->field_6C.field_4 + bound) < z1 || x1 < (state->field_6C.field_4 - bound) ||
-        ((state->from.vy + state->field_4E) < state->field_6C.field_8 && (state->field_40 + state->field_4E) < state->field_6C.field_8) ||
+        ((state->from.vy + state->field_4E) < state->field_6C.groundHeight && (state->field_40 + state->field_4E) < state->field_6C.groundHeight) ||
         ((state->from.vy + state->field_4C) > state->field_6C.field_A && state->field_6C.field_A < (state->field_40 + state->field_4C)))
     {
         return;
     }
 
-    temp_v0 = func_8006C248(*(s32*)&state->field_58, state->rayDistance,
-                            state->field_6C.field_0 - state->from.vx,
-                            state->field_6C.field_4 - state->from.vz,
-                            bound);
-    if (temp_v0 == NO_VALUE)
+    alpha = func_8006C248(*(s32*)&state->field_58, state->rayDistance,
+                          state->field_6C.field_0 - state->from.vx,
+                          state->field_6C.field_4 - state->from.vz,
+                          bound);
+    if (alpha == NO_VALUE)
     {
         return;
     }
 
-    temp_v0_2 = Q12_MULT(state->rayDistance, temp_v0);
-    if (temp_v0_2 >= state->field_8)
+    clampedRayDist = Q12_MULT(state->rayDistance, alpha);
+    if (clampedRayDist >= state->field_8)
     {
         return;
     }
 
-    pos.vy = state->from.vy + (Q12_MULT(state->offset.vy, temp_v0));
-    if (((pos.vy + state->field_4E) < state->field_6C.field_8) || (state->field_6C.field_A < (pos.vy + state->field_4C)))
+    pos.vy = state->from.vy + (Q12_MULT(state->offset.vy, alpha));
+    if ((pos.vy + state->field_4E) < state->field_6C.groundHeight ||
+        state->field_6C.field_A < (pos.vy + state->field_4C))
     {
         if (state->offset.vy == 0)
         {
             return;
         }
 
-        if ((pos.vy + state->field_4E) < state->field_6C.field_8)
+        if ((pos.vy + state->field_4E) < state->field_6C.groundHeight)
         {
-            var_v1 = Q12(state->field_6C.field_8 - (state->from.vy + state->field_4E)) / state->offset.vy;
+            var_v1 = Q12(state->field_6C.groundHeight - (state->from.vy + state->field_4E)) / state->offset.vy;
             if (var_v1 > Q12(1.0f))
             {
                 return;
             }
-            pos.vy = state->field_6C.field_8 - state->field_4E;
+            pos.vy = state->field_6C.groundHeight - state->field_4E;
         }
         else
         {
@@ -3147,15 +3148,15 @@ void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
     }
     else
     {
-        pos.vx = state->from.vx + Q12_MULT(state->offset.vx, temp_v0);
-        pos.vz = state->from.vz + Q12_MULT(state->offset.vz, temp_v0);
+        pos.vx = state->from.vx + Q12_MULT(state->offset.vx, alpha);
+        pos.vz = state->from.vz + Q12_MULT(state->offset.vz, alpha);
     }
 
-    state->field_8  = temp_v0_2;
+    state->field_8  = clampedRayDist;
     state->field_C  = pos.vx;
     state->field_10 = pos.vy;
     state->field_14 = pos.vz;
-    state->groundHeight = state->field_6C.field_8;
+    state->groundHeight = state->field_6C.groundHeight;
     state->field_24 = pos.vx - state->field_6C.field_0;
     state->field_26 = pos.vz - state->field_6C.field_4;
     state->field_20 = chara;
