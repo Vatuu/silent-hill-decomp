@@ -15,6 +15,13 @@
 #include "bodyprog/sound_system.h"
 #include "main/rng.h"
 
+// Note - Will: I added a bunch of poorly written comments among the code
+// to have a better follow up of a code comprehension, some may be
+// misleading as I'm mostly based on code functionallity with barely any
+// in-game test.
+// Please delete them or rewrite them properly after properly recognizing
+// the function purpose.
+
 s_800C4478 D_800C4478;
 
 // ========================================
@@ -139,9 +146,9 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
     collQuery.radius      = Q12(0.0f);
     Collision_QueryInit(&state, &pos, &collQuery, false);
 
-    state.field_0_8  = 0;
-    state.field_0_9  = 0;
-    state.field_0_10 = 1;
+    state.field_0_8  = false;
+    state.field_0_9  = false;
+    state.field_0_10 = true;
     Ipd_GridCollisionQuery(&state, ipdCollData);
 
     if (state.field_90 == 1)
@@ -419,7 +426,7 @@ void Collision_DefaultResultSet(s_CollisionResult* collResult, q19_12 offsetX, q
 s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubCharacter* excludedChara, bool includePlayer) // 0x8006A1A4
 {
     s_SubCharacter*         curChara;
-    static s_SubCharacter*  collCharas[7];
+    static s_SubCharacter*  collCharas[NPC_COUNT_MAX + 1]; // NPCs + Player?
     static s_SubCharacter** curCollChara; /** Array of active characters. */
 
     // Filder invalid case.
@@ -505,7 +512,8 @@ s32 func_8006A42C(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
 }
 
 s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQuery* collQuery, bool arg3,
-                  s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** charas, s32 charaCount) // 0x8006A4A8
+                  s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7,
+                  s_SubCharacter** charas, s32 charaCount) // 0x8006A4A8
 {
     s_CollisionState     collState;
     VECTOR3              sp120; // Q19.12
@@ -519,7 +527,10 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
     s_SubCharacter**     curChara;
     s_IpdCollisionData** curCollData;
     s_SubCharacter*      chara;
-
+    
+    // Note: Seems like `collQuery` is meant to represent the colision box and the central point
+    // from the character which collision information is being analysed/setup.
+    
     cond = false;
 
     if (collQuery->collisionState == CharaCollisionState_5)
@@ -528,10 +539,14 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
         return 0;
     }
 
+    // This does some check related to the target character and NPCs collisions and in case of
+    // passing all checks then it modifies `offset` values.
     func_8006A940(offset, collQuery, charas, charaCount);
 
     offsetCpy = *offset;
-
+    
+    // This specifically reads some of the triggers information and in some cases modifies `offsetCpy`
+    // values again and returns a value seemly related to height.
     collResult->field_18 = func_8006F620(&offsetCpy, collQuery, collQuery->radius, collQuery->top);
 
     Collision_QueryInit(&collState, &offsetCpy, collQuery, arg3);
@@ -544,17 +559,17 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
 
     while (true)
     {
-        if (collState.field_0_0 != 0)
+        if (collState.field_0_0)
         {
             collState.field_0_8  = collState.field_4.distance_8 != Q12(0.0f);
-            collState.field_0_9  = 0;
-            collState.field_0_10 = 0;
+            collState.field_0_9  = false;
+            collState.field_0_10 = false;
         }
         else
         {
             collState.field_0_8  = collState.field_4.distance_8 != Q12(0.0f);
-            collState.field_0_9  = 1;
-            collState.field_0_10 = 1;
+            collState.field_0_9  = true;
+            collState.field_0_10 = true;
         }
 
         // Run through collision data.
@@ -668,15 +683,24 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
     q19_12          var_s4;
     q19_12          var_v0;
     s32             mag;
-    q19_12          top;
-    q19_12          bottom;
-    q19_12          temp5;
-    q19_12          temp6;
+    q19_12          curCharaTop;
+    q19_12          curCharaBottom;
+    q19_12          tarCharaBottom;
+    q19_12          tarCharaTop;
     s_SubCharacter* curChara;
 
     var_s4 = Q12(1.0f);
     angle  = ratan2(offset->vx, offset->vz);
 
+    /* Will - 1: This loop seems to not being used for the most part.
+       The only purpose seems is modify `var_s4` value by reducing it.
+       
+       Nvm, as the code at the end implied this code is used in the
+       gigant sewer rats- I mean the hanged scratchers.
+       
+       Will - 2: Possibly this code is meant to be used for moving far away
+       characters automatically closer to the player?
+    */
     for (i = 0; i < charaCount; i++)
     {
         curChara = charas[i];
@@ -687,20 +711,45 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
             continue;
         }
 
-        top    = curChara->collision.box.top    + curChara->position.vy;
-        bottom = curChara->collision.box.bottom + curChara->position.vy;
+        curCharaTop    = curChara->collision.box.top    + curChara->position.vy;
+        curCharaBottom = curChara->collision.box.bottom + curChara->position.vy;
 
-        // TODO: Rotation + position? Seems wrong.
-        temp6 = collQuery->top + collQuery->position.vy;
-        temp5 = collQuery->bottom + collQuery->position.vy;
-        if (top > temp5 || bottom < temp6)
+        /* TODO: Rotation + position? Seems wrong.
+           Will - 1: unsure, but this seems to check if the character is within a
+           margin compared to their current position as in `Collision_CharaCollisionSetup`
+           case `position.vy` value is set with `chara->position.vy - Q12(0.02f)`
+           meaning that the code would expect the player to be within the same margin
+           constantly. Unless if hitbox size get modified?
+           
+           Will - 2: after the big brain moment I got in the message below I realized
+           this checks if the currently analysed target character is within the same height
+           range of the target character. Other way to explain it: if an enemy is at the same
+           heigh of the player, if it fails then it goes foward.
+        */
+        tarCharaTop    = collQuery->top    + collQuery->position.vy;
+        tarCharaBottom = collQuery->bottom + collQuery->position.vy;
+        if (curCharaTop > tarCharaBottom || curCharaBottom < tarCharaTop)
         {
             continue;
         }
 
+        /* Will - 1: in `Collision_CharaCollisionSetup` `collQuery->position.vx` and `collQuery->position.vz`
+           values are set as:
+           chara->position.vx + chara->collision.shapeOffsets.cylinder.vx
+           chara->position.vz + chara->collision.shapeOffsets.cylinder.vz
+           
+           This would look like it would run into 0, but remember we are search through all characters
+           loaded in memory (excepting the one being tested/analysed or the player due a flag stated at the
+           and `collQuery` contains position information of the ignored character so in theory it would
+           be something like:
+            
+           (mumbler->position.vx + mumbler->collision.shapeOffsets.cylinder.vx) - (player->position.vx + player->collision.shapeOffsets.cylinder.vx)
+           
+           This imply this is some sort of check for collisions between characters
+        */
         posX = (curChara->position.vx + curChara->collision.shapeOffsets.cylinder.vx) - collQuery->position.vx;
         posZ = (curChara->position.vz + curChara->collision.shapeOffsets.cylinder.vz) - collQuery->position.vz;
-
+        
         mag = Vc_VectorMagnitudeCalc(posX, Q12(0.0f), posZ);
         if (((curChara->collision.cylinder.radius + collQuery->radius) + Q12_ANGLE(36.0f)) < mag)
         {
@@ -748,9 +797,9 @@ void Collision_QueryInit(s_CollisionState* collState, VECTOR3* pos, s_CollisionQ
     collState->field_44.field_36         = 0;
     collState->field_44.field_30.field_0 = 0;
     
-    collState->field_8C = 0;
-    collState->field_88 = 0;
-    collState->field_90 = 1;
+    collState->field_8C   = 0;
+    collState->field_88   = 0;
+    collState->field_90   = 1;
     collState->groundType = GroundType_Default;
 }
 
@@ -802,7 +851,9 @@ void Ipd_GridCollisionQuery(s_CollisionState* collState, s_IpdCollisionData* col
     {
         return;
     }
-
+    
+    // Inverting this conditional triggers only when the player is colliding with a wall, however,
+    // normally testing this still triggering when the player is colliding with the wall.
     if (collState->field_0_0 == 0)
     {
         func_80069994(collData);
@@ -1906,7 +1957,7 @@ void func_8006CC9C(s_CollisionState* state) // 0x8006CC9C
     s32    temp2;
     s32    temp3;
     s32    temp4;
-    s32    temp5;
+    s32    tarCharaBottom;
 
     if (state->field_A0.s_1.collisionState < CharaCollisionState_2 ||
         *state->field_A0.s_1.field_8 != 0)
@@ -1957,7 +2008,7 @@ void func_8006CC9C(s_CollisionState* state) // 0x8006CC9C
     else if (state->field_0_8 && state->field_44.field_0.field_0 == 0 && func_8006C1B8(1, temp_v0, state))
     {
         temp2 = (state->field_4.positionZ_1C - state->field_9C.field_0);
-        temp5 = Q12_MULT(temp_v0, state->field_4.offset_C.vz);
+        tarCharaBottom = Q12_MULT(temp_v0, state->field_4.offset_C.vz);
 
         state->field_40 = state->field_A0.s_1.field_8;
         state->field_38 = temp_v0;
@@ -1969,7 +2020,7 @@ void func_8006CC9C(s_CollisionState* state) // 0x8006CC9C
 
         state->field_3A = (state->field_4.distance_8 * temp_v0) >> 8; // TODO: Conversion to Q4?
         state->field_3C = temp + temp4;
-        state->field_3E = temp2 + temp5;
+        state->field_3E = temp2 + tarCharaBottom;
     }
 }
 

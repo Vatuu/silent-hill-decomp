@@ -1143,7 +1143,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
             if (!(player->attackReceived >= 68 && player->attackReceived < 70))
             {
-                g_Player_HeadingAngle                                                  = ratan2(player->damage.position.vx, player->damage.position.vz) - player->rotation.vy;
+                g_Player_HeadingAngle        = ratan2(player->damage.position.vx, player->damage.position.vz) - player->rotation.vy;
                 playerProps.moveDistance_126 = SQUARE(player->damage.position.vx) + SQUARE(player->damage.position.vz) + SQUARE(player->damage.position.vy);
             }
 
@@ -1159,7 +1159,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 playerProps.moveDistance_126 = Q12(0.0f);
             }
 
-            D_800C4550               = playerProps.moveDistance_126;
+            D_800C4550             = playerProps.moveDistance_126;
             player->flags         |= CharaFlag_Unk4;
             player->attackReceived = NO_VALUE;
             break;
@@ -1934,7 +1934,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                         player->properties.player.field_10D = 0;
                         if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
                         {
-                            playerChara.collision.box.top = D_800AEEDC[player->model.anim.keyframeIdx - 379][0];
+                            playerChara.collision.box.top     = D_800AEEDC[player->model.anim.keyframeIdx - 379][0];
                             playerChara.collision.box.offsetY = D_800AEEDC[player->model.anim.keyframeIdx - 379][1];
                         }
 
@@ -1949,8 +1949,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                                 Player_ExtraStateSet(player, extra, PlayerState_None);
                             }
 
-                            playerChara.collision.box.top  = Q12(-1.6f);
-                            playerChara.collision.box.bottom     = Q12(0.0f);
+                            playerChara.collision.box.top     = Q12(-1.6f);
+                            playerChara.collision.box.bottom  = Q12(0.0f);
                             playerChara.collision.box.offsetY = Q12(-1.1f);
 
                             player->collision.cylinder.radius = Q12(0.3f);
@@ -1962,7 +1962,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
                         if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
                         {
-                            playerChara.collision.box.top = D_800AEF78[player->model.anim.keyframeIdx - 418][0];
+                            playerChara.collision.box.top     = D_800AEF78[player->model.anim.keyframeIdx - 418][0];
                             playerChara.collision.box.offsetY = D_800AEF78[player->model.anim.keyframeIdx - 418][1];
                         }
 
@@ -1977,8 +1977,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                                 Player_ExtraStateSet(player, extra, PlayerState_None);
                             }
 
-                            playerChara.collision.box.top  = Q12(-1.6f);
-                            playerChara.collision.box.bottom     = Q12(0.0f);
+                            playerChara.collision.box.top     = Q12(-1.6f);
+                            playerChara.collision.box.bottom  = Q12(0.0f);
                             playerChara.collision.box.offsetY = Q12(-1.1f);
 
                             player->collision.cylinder.radius = Q12(0.3f);
