@@ -402,7 +402,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 }
                 else if (distToTarget > Q12(0.5f))
                 {
-                    larvalStalker->model.anim.status = ANIM_STATUS(LarvalStalkerAnim_WalkForward, false);
+                    larvalStalker->model.anim.status  = ANIM_STATUS(LarvalStalkerAnim_WalkForward, false);
                     larvalStalker->model.controlState = LarvalStalkerControl_WalkForward;
                 }
 
@@ -440,7 +440,8 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             }
             else
             {
-                if ((Q12(4.8f) - (larvalStalkerProps.field_EA * Q12(1.2f))) < distToTarget && !Rng_GenerateInt(0, 31)) // 1 in 32 chance.
+                if ((Q12(4.8f) - (larvalStalkerProps.field_EA * Q12(1.2f))) < distToTarget &&
+                    !Rng_GenerateInt(0, 31)) // 1 in 32 chance.
                 {
                     larvalStalker->model.controlState = LarvalStalkerControl_Idle;
                     larvalStalker->model.anim.status = ANIM_STATUS(LarvalStalkerAnim_Idle, false);
@@ -494,7 +495,8 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
                 larvalStalkerProps.timer_EC += g_DeltaTime;
 
-                if (!(g_SysWork.charaGroupFlags[3] & CharaGroupFlag_0) && (Q12(5.0f) - FP_TO(larvalStalkerProps.field_EA, Q12_SHIFT)) < larvalStalkerProps.timer_EC)
+                if (!(g_SysWork.charaGroupFlags[3] & CharaGroupFlag_0) &&
+                    (Q12(5.0f) - FP_TO(larvalStalkerProps.field_EA, Q12_SHIFT)) < larvalStalkerProps.timer_EC)
                 {
                     larvalStalker->model.controlState = LarvalStalkerControl_WalkForward;
                     larvalStalker->model.anim.status  = ANIM_STATUS(LarvalStalkerAnim_WalkForward, false);
@@ -534,7 +536,12 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
             if (larvalStalkerProps.timer_EC == Q12(0.0f))
             {
-                larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(larvalStalker, Q12(1.5f), larvalStalkerProps.targetPositionX, larvalStalkerProps.targetPositionZ, Q12(1.0f), false);
+                larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(larvalStalker,
+                                                                     Q12(1.5f),
+                                                                     larvalStalkerProps.targetPositionX,
+                                                                     larvalStalkerProps.targetPositionZ,
+                                                                     Q12(1.0f),
+                                                                     false);
                 if (larvalStalkerProps.angle_108 == Q12(1.0f))
                 {
                     larvalStalkerProps.angle_108 = Rng_Rand16() & 0xFFF;

@@ -82,9 +82,9 @@ void Alessa_MovementUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
     alessa->position.vy =  Q12(0.0f);
     alessa->position.vz += offset.vz;
 
-    boneCoords[0].coord.t[0] = Q12_TO_Q8(alessa->position.vx);
-    boneCoords[0].coord.t[1] = Q12_TO_Q8(alessa->position.vy);
-    boneCoords[0].coord.t[2] = Q12_TO_Q8(alessa->position.vz);
+    boneCoords[AlessaBone_Root].coord.t[0] = Q12_TO_Q8(alessa->position.vx);
+    boneCoords[AlessaBone_Root].coord.t[1] = Q12_TO_Q8(alessa->position.vy);
+    boneCoords[AlessaBone_Root].coord.t[2] = Q12_TO_Q8(alessa->position.vz);
 }
 
 /** Addresses
@@ -241,7 +241,7 @@ void Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
     alessa->fallSpeed   += g_GravitySpeed;
 
     boneCoords->flg = false;
-    Math_RotMatrixZxyNegGte(&alessa->rotation, &boneCoords->coord);
+    Math_RotMatrixZxyNegGte(&alessa->rotation, &boneCoords[AlessaBone_Root].coord);
 }
 
 /** Addresses

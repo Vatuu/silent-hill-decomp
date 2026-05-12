@@ -74,6 +74,12 @@ typedef enum _CybilControl
     CybilControl_30   = 30
 } e_CybilControl;
 
+/** @brief Cybil character bone indices. */
+typedef enum _CybilBone
+{
+    CybilBone_Root = 0
+} e_CybilBone;
+
 /** @brief Cybil character anim infos. */
 extern s_AnimInfo CYBIL_ANIM_INFOS[];
 
@@ -154,10 +160,10 @@ extern s_AnimInfo CYBIL_ANIM_INFOS[];
 extern s32 sharedData_800E2378_0_s01;
 extern s32 sharedData_800E237C_0_s01;
 
-void Cybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-void Cybil_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINATE2* boneCoords);
-void Cybil_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
-void Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
-void Cybil_Init(s_SubCharacter* chara);
+void Cybil_Update(s_SubCharacter* cybil, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Cybil_AnimUpdate(s_SubCharacter* cybil, s_AnmHeader* animHdr, GsCOORDINATE2* boneCoords);
+void Cybil_MovementUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords);
+void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords);
+void Cybil_Init(s_SubCharacter* cybil);
 
 #endif

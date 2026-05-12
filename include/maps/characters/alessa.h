@@ -33,6 +33,12 @@ typedef enum _AlessaControl
     AlessaControl_10   = 10
 } e_AlessaControl;
 
+/** @brief Alessa character bone indices. */
+typedef enum _AlessaBone
+{
+    AlessaBone_Root = 0
+} e_AlessaBone;
+
 /** @brief Alessa character anim infos. */
 extern s_AnimInfo ALESSA_ANIM_INFOS[];
 
