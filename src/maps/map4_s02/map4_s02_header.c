@@ -135,7 +135,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
         NULL, NULL, AirScreamer_Update, AirScreamer_Update, Groaner_Update, Groaner_Update, NULL, NULL,
         NULL, NULL, NULL, NULL, Romper_Update },
     .charaGroupIds = { Chara_NightFlutter, Chara_Romper, Chara_Wormhead },
-    .charaSpawns   = {
+    .charaSpawnInfos   = {
 #include "chara_spawns.h"
     },
     .cameraPaths = {

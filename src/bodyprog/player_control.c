@@ -8804,8 +8804,8 @@ void func_800803FC(VECTOR3* pos, s32 idx) // 0x800803FC
     q19_12 posX;
     q19_12 posZ;
 
-    posX = g_MapOverlayHeader.charaSpawns[0][idx].positionX;
-    posZ = g_MapOverlayHeader.charaSpawns[0][idx].positionZ;
+    posX = g_MapOverlayHeader.charaSpawnInfos[0][idx].positionX;
+    posZ = g_MapOverlayHeader.charaSpawnInfos[0][idx].positionZ;
 
     pos->vx = posX;
     pos->vy = Collision_GroundHeightGet(posX, posZ);

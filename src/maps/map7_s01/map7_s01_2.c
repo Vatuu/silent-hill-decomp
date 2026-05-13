@@ -2027,7 +2027,7 @@ void func_800DD348(void* unused, s32 idx, u8 spawnFlags) // 0x800DD348
 {
     u8* curSpawnFlags;
 
-    curSpawnFlags  = &g_MapOverlayHeader.charaSpawns[0][idx].flags_6;
+    curSpawnFlags  = &g_MapOverlayHeader.charaSpawnInfos[0][idx].flags_6;
     *curSpawnFlags = spawnFlags;
 }
 

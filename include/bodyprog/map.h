@@ -333,14 +333,14 @@ typedef struct _MapOverlayHeader
     /* 0xD4  */ s32                    (*func_D4)(s32 playerExtraState); // Points to `sharedFunc_800D2C7C_0_s00` which has `void` return type, but changing this funcptr causes mismatch in `func_80085EB8`
     /* 0xD8  */ void                   (*func_D8)();                     // Assumed return type.
     /* 0xDC  */ void                   (*playerAnimLock)(void);
-    /* 0xE0  */ void                   (*isPlayerAnimLocked)();
-    /* 0xE4  */ s32                    (*playerAnimUnlock)(s_SubCharacter*, s32); // Assumed return type.
-    /* 0xE8  */ s64                    (*func_E8)(s_SubCharacter*);               // Is it really `s64`???
-    /* 0xEC  */ bool                   (*playerMoveDistIsZero)();
-    /* 0xF0  */ void                   (*playerMoveDistClear)();
-    /* 0xF4  */ void                   (*playerFallBackward)();
+    /* 0xE0  */ void                   (*isPlayerAnimLocked)(void);
+    /* 0xE4  */ void                   (*playerAnimUnlock)(void);
+    /* 0xE8  */ s32                    (*func_E8)(void);
+    /* 0xEC  */ bool                   (*playerMoveDistIsZero)(void);
+    /* 0xF0  */ void                   (*playerMoveDistClear)(void);
+    /* 0xF4  */ void                   (*playerFallBackward)(void);
     /* 0xF8  */ void                   (*func_F8)();
-    /* 0xFC  */ void                   (*playerDamageFeetFront)();
+    /* 0xFC  */ void                   (*playerDamageFeetFront)(void);
     /* 0x100 */ void                   (*func_100)();
     /* 0x104 */ void                   (*func_104)();
     /* 0x108 */ s32                    (*func_108)();
@@ -350,7 +350,7 @@ typedef struct _MapOverlayHeader
     /* 0x118 */ void                   (*func_118)();
     /* 0x11C */ void                   (*func_11C)();
     /* 0x120 */ void                   (*func_120)();
-    /* 0x124 */ void                   (*func_124)(s_SubCharacter*); // Assumed return type.
+    /* 0x124 */ void                   (*func_124)(s_SubCharacter* player, q19_12 afkTime);
     /* 0x128 */ s32                    (*playerRunTimerReset)(s_SubCharacter* player);
     /* 0x12C */ s32                    (*charaLock)(s_SubCharacter* chara);
     /* 0x130 */ void                   (*charaIsLockedCheck)(s_SubCharacter* chara);
@@ -374,13 +374,13 @@ typedef struct _MapOverlayHeader
     /* 0x178 */ void                   (*particleHyperBlasterBeamDraw)(VECTOR3* vec0, q19_12* rotX, q19_12* rotY);
     /* 0x17C */ void                   (*particleBeamDraw)(const VECTOR3* from, const VECTOR3* to);
     /* 0x180 */ void                   (*particleSoundStop)();
-    /* 0x184 */ s32*                   windSpeedX;
-    /* 0x188 */ s32*                   windSpeedZ;
+    /* 0x184 */ q19_12*                windSpeedX;
+    /* 0x188 */ q19_12*                windSpeedZ;
     /* 0x18C */ s32*                   data_18C;
     /* 0x190 */ s32*                   data_190;
     /* 0x194 */ void                   (*charaUpdateFuncs[Chara_Count])(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); /** Guessed params. Funcptrs for each `e_CharaId`, set to 0 for IDs not included in the map overlay. Called by `Game_NpcUpdate`. */
-    /* 0x248 */ s8                     charaGroupIds[CHARA_GROUP_COUNT]; /** `e_CharaId` values where if `s_SpawnInfo::charaId == Chara_None`, `charaGroupIds[0]` is used for `charaSpawns[0]` and `charaGroupIds[1]` for `charaSpawns[1]`. */
-    /* 0x24C */ s_SpawnInfo            charaSpawns[2][16];               /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
+    /* 0x248 */ s8                     charaGroupIds[CHARA_GROUP_COUNT]; /** `e_CharaId` values where if `s_SpawnInfo::charaId == Chara_None`, `charaGroupIds[0]` is used for `charaSpawnInfos[0]` and `charaGroupIds[1]` for `charaSpawnInfos[1]`. */
+    /* 0x24C */ s_SpawnInfo            charaSpawnInfos[2][16];           /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
     /* 0x3CC */ VC_ROAD_DATA           cameraPaths[100];
     /* 0xD2C */ s_TriggerZone          triggerZones[200];
 } s_MapOverlayHeader;

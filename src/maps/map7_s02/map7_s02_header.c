@@ -186,7 +186,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
         Lisa_Update, BloodyLisa_Update, NULL, GhostChildAlessa_Update, NULL, NULL, Kaufmann_Update, Kaufmann_Update,
         NULL, NULL, GhostDoctor_Update },
     .charaGroupIds = { Chara_Stalker },
-    .charaSpawns   = {
+    .charaSpawnInfos   = {
 #include "chara_spawns.h"
     },
     .cameraPaths = {

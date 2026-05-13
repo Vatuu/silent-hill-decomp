@@ -2687,7 +2687,7 @@ void func_800EE5D0(void) // 0x800EE5D0
     s32 idx;
 
     idx = func_800EE518();
-    memcpy(g_MapOverlayHeader.charaSpawns, D_800F1CAC[idx], sizeof(D_800F1CAC[idx]));
+    memcpy(g_MapOverlayHeader.charaSpawnInfos, D_800F1CAC[idx], sizeof(D_800F1CAC[idx]));
     g_SavegamePtr->ovlEnemyStates[10] = g_SavegamePtr->ovlEnemyStates[idx];
 }
 

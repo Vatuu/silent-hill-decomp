@@ -134,7 +134,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .data_190                         = &sharedData_800DFB70_0_s00,
     .charaUpdateFuncs             = {},
     .charaGroupIds                = {},
-    .charaSpawns                  = {
+    .charaSpawnInfos                  = {
 #include "chara_spawns.h"
     },
     .cameraPaths = {

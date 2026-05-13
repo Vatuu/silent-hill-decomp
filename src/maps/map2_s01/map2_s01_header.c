@@ -169,7 +169,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
         Dahlia_Update,
     },
     .charaGroupIds = {},
-    .charaSpawns   = {
+    .charaSpawnInfos   = {
 #include "chara_spawns.h"
     },
     .cameraPaths = {

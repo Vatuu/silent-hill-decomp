@@ -149,7 +149,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
         NULL, NULL, NULL, Creeper_Update, NULL, NULL, NULL, NULL,
         PuppetNurse_Update, PuppetNurse_Update, PuppetDoctor_Update, PuppetDoctor_Update },
     .charaGroupIds = { Chara_PuppetNurse, Chara_DummyNurse, Chara_Creeper },
-    .charaSpawns   = {
+    .charaSpawnInfos   = {
 #include "chara_spawns.h"
     },
     .cameraPaths = {

@@ -67,7 +67,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
     VECTOR3*        pos;
 
     npcIdx             = 0;
-    curCharaSpawn      = g_MapOverlayHeader.charaSpawns[0];
+    curCharaSpawn      = g_MapOverlayHeader.charaSpawnInfos[0];
     ovlEnemiesStatePtr = &g_SavegamePtr->ovlEnemyStates[g_SavegamePtr->mapIdx];
 
     if (cond == false)

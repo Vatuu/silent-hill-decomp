@@ -90,14 +90,14 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
             }
             else
             {
-                g_MapOverlayHeader.func_124(chara);
+                g_MapOverlayHeader.func_124(chara, arg2);
             }
             break;
 
         case 1:
             if (chara == &g_SysWork.playerWork.player)
             {
-                keyframeState = g_MapOverlayHeader.func_E8(chara);
+                keyframeState = g_MapOverlayHeader.func_E8();
                 if (keyframeState == 1)
                 {
                     func_80085D78(reset);
@@ -127,7 +127,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
         case 3:
             if (chara == &g_SysWork.playerWork.player)
             {
-                g_MapOverlayHeader.playerAnimUnlock(chara, arg2);
+                g_MapOverlayHeader.playerAnimUnlock();
             }
             else
             {
@@ -138,7 +138,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
         case 4:
             if (chara == &g_SysWork.playerWork.player)
             {
-                g_MapOverlayHeader.playerAnimUnlock(chara, arg2);
+                g_MapOverlayHeader.playerAnimUnlock();
                 g_MapOverlayHeader.func_D8();
             }
             else

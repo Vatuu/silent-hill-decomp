@@ -166,7 +166,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
         Groaner_Update,
     },
     .charaGroupIds = { Chara_AirScreamer, Chara_Groaner },
-    .charaSpawns   = {
+    .charaSpawnInfos   = {
 #include "chara_spawns.h"
     },
     .cameraPaths = {

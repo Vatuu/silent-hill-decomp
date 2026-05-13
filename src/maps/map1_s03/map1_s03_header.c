@@ -151,7 +151,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
         NULL, LockerDeadBody_Update },
     .charaGroupIds = { Chara_GreyChild, Chara_Creeper, Chara_LockerDeadBody },
-    .charaSpawns   = {
+    .charaSpawnInfos   = {
         #include "chara_spawns.h"
     },
     .cameraPaths = {

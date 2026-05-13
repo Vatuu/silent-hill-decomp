@@ -146,7 +146,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
         NULL, NULL, Cybil_Update, Cybil_Update },
     .charaGroupIds = {},
-    .charaSpawns   = {
+    .charaSpawnInfos   = {
         #include "chara_spawns.h"
     },
     .cameraPaths = {

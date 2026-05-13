@@ -182,7 +182,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
         Kaufmann_Update,
     },
     .charaGroupIds = {},
-    .charaSpawns   = {
+    .charaSpawnInfos   = {
 #include "chara_spawns.h"
     },
     .cameraPaths = {
