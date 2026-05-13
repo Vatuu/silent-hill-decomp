@@ -558,6 +558,13 @@ typedef struct _CharaShapeOffsets
 } s_CharaShapeOffsets;
 STATIC_ASSERT_SIZEOF(s_CharaShapeOffsets, 8);
 
+/** @brief Character keyframe collision info. */
+typedef struct _Keyframe
+{
+    /* 0x0 */ s_CharaBox          box;
+    /* 0xC */ s_CharaShapeOffsets shapeOffsets;
+} s_Keyframe;
+
 /** @brief Character collision info for the active animation frame. */
 typedef struct _CharaCollision
 {
@@ -621,6 +628,65 @@ typedef struct _SubCharacter
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
+/** @brief Sets the collision shapes of a character from keyframe collision data.
+ *
+ * @param chara Character to update (`s_SubCharacter`).
+ * @param keyframe Keyframe collision data (`s_Keyframe`).
+ */
+#define Chara_CollisionSet(chara, keyframe)                                         \
+{                                                                                   \
+    s32 __temp;                                                                     \
+                                                                                    \
+    chara->collision.box.top = keyframe.box.top;                                    \
+                                                                                    \
+    __temp                      = keyframe.box.bottom;                              \
+    chara->collision.box.bottom = __temp;                                           \
+    chara->collision.box.height = keyframe.box.height;                              \
+                                                                                    \
+    __temp                                    = keyframe.box.offsetY;               \
+    chara->collision.box.offsetY              = __temp;                             \
+    chara->collision.shapeOffsets.cylinder.vx = keyframe.shapeOffsets.cylinder.vx;  \
+                                                                                    \
+    __temp                                    = keyframe.shapeOffsets.cylinder.vz;  \
+    chara->collision.shapeOffsets.cylinder.vz = __temp;                             \
+    chara->collision.cylinder.radius          = keyframe.box.field_8;               \
+    chara->collision.shapeOffsets.box.vx      = keyframe.shapeOffsets.box.vx;       \
+                                                                                    \
+    __temp                               = keyframe.shapeOffsets.box.vz;            \
+    chara->collision.shapeOffsets.box.vz = __temp;                                  \
+                                                                                    \
+    __temp                            = keyframe.box.field_A;                       \
+    chara->collision.cylinder.field_2 = __temp;                                     \
+}
+
+/** @brief Alternative to `Chara_CollisionSet`. TODO: Can they be merged into one? */
+#define Chara_CollisionSetAlt(chara, keyframe)                                     \
+{                                                                                  \
+    s32 __temp;                                                                    \
+    s32 __temp2;                                                                   \
+                                                                                   \
+    chara->collision.box.top = keyframe.box.top;                                   \
+                                                                                   \
+    __temp                      = keyframe.box.bottom;                             \
+    chara->collision.box.bottom = __temp;                                          \
+    chara->collision.box.height = keyframe.box.height;                             \
+                                                                                   \
+    __temp                       = keyframe.box.offsetY;                           \
+    chara->collision.box.offsetY = __temp;                                         \
+    chara->collision.shapeOffsets.cylinder.vx = keyframe.shapeOffsets.cylinder.vx; \
+                                                                                   \
+    __temp                                    = keyframe.shapeOffsets.cylinder.vz; \
+    chara->collision.shapeOffsets.cylinder.vz = __temp;                            \
+    chara->collision.cylinder.radius          = keyframe.box.field_8;              \
+    chara->collision.shapeOffsets.box.vx      = keyframe.shapeOffsets.box.vx;      \
+                                                                                   \
+    __temp                               = keyframe.shapeOffsets.box.vz;           \
+    chara->collision.shapeOffsets.box.vz = __temp;                                 \
+                                                                                   \
+    __temp2                           = keyframe.box.field_A;                      \
+    chara->collision.cylinder.field_2 = __temp2;                                   \
+}
+
 /** @brief Checks if the `s_SubCharacter*` has the given `flags` value set. */
 #define Chara_HasFlag(chara, flag) \
     ((chara)->flags & (flag))
@@ -669,7 +735,7 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
  * @param animStatus Packed anim status. See `s_ModelAnim::status`.
  * @param keyframeIdx Active keyframe index.
  */
-static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 keyframeIdx)
+static inline void Chara_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 keyframeIdx)
 {
     chara->model.anim.status      = animStatus;
     chara->model.anim.time        = Q12(keyframeIdx);

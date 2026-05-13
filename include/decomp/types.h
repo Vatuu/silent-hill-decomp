@@ -79,4 +79,11 @@ typedef struct _Normal
     u8 count;
 } s_Normal;
 
+/** @brief 8-character string usually used for filenames. Can be compared via the `u32` field. */
+typedef union _Filename
+{
+    char str[8];
+    u32  u32[2];
+} u_Filename;
+
 #endif

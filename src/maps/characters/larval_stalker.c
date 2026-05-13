@@ -850,7 +850,7 @@ void LarvalStalker_Init(s_SubCharacter* larvalStalker)
 
     larvalStalker->model.controlState = LarvalStalkerControl_3;
     larvalStalker->model.anim.time    = Q12(0.0f);
-    Character_AnimSet(larvalStalker, ANIM_STATUS(LarvalStalkerAnim_Idle, false), 162);
+    Chara_AnimSet(larvalStalker, ANIM_STATUS(LarvalStalkerAnim_Idle, false), 162);
 
     larvalStalkerProps.flags_E8 = LarvalStalkerFlag_None;
     larvalStalker->model.anim.alpha = Q12(0.0f);

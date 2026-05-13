@@ -28,7 +28,7 @@ void Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* b
         chara->model.anim.alpha = Q12(0.0f);
         chara->model.controlState        = 1;
         chara->model.stateStep    = 0;
-        Character_AnimSet(chara, ANIM_STATUS(1, true), 0);
+        Chara_AnimSet(chara, ANIM_STATUS(1, true), 0);
     }
 
     if (chara->model.anim.time <= Q12(21.0f))
@@ -67,7 +67,7 @@ void Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* 
         chara->model.anim.alpha   = Q12(0.0f);
         chara->model.controlState = 1;
         chara->model.stateStep    = 0;
-        Character_AnimSet(chara, ANIM_STATUS(1, true), 0);
+        Chara_AnimSet(chara, ANIM_STATUS(1, true), 0);
     }
 
     Math_MatrixTransform(&chara->position, &chara->rotation, boneCoords);

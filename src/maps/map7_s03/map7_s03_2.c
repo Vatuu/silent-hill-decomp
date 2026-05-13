@@ -34,7 +34,7 @@ void LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDI
         incubus->model.anim.alpha   = Q12(0.0f);
         incubus->model.controlState = 1;
         incubus->model.stateStep    = 0;
-        Character_AnimSet(incubus, ANIM_STATUS(1, true), 0);
+        Chara_AnimSet(incubus, ANIM_STATUS(1, true), 0);
 
         D_800EDA00 = 0;
     }
@@ -4421,7 +4421,7 @@ bool Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDA1C
         incubus->model.stateStep = IncubusStateStep_0;
     }
 
-    Character_AnimSet(incubus, ANIM_STATUS(IncubusAnim_3, false), 338);
+    Chara_AnimSet(incubus, ANIM_STATUS(IncubusAnim_3, false), 338);
     ModelAnim_AnimInfoSet(&incubus->model.anim, INCUBUS_ANIM_INFOS);
 
     Chara_DamageClear(incubus);
@@ -5818,7 +5818,7 @@ bool Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB98
         chara->model.stateStep    = 0;
     }
 
-    Character_AnimSet(chara, ANIM_STATUS(2, false), 115);
+    Chara_AnimSet(chara, ANIM_STATUS(2, false), 115);
     ModelAnim_AnimInfoSet(&chara->model.anim, UNKKOWN_23_ANIM_INFOS);
 
     Chara_DamageClear(chara);

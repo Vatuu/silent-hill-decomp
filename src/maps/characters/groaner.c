@@ -96,7 +96,7 @@ void Groaner_Init(s_SubCharacter* groaner)
     if (groaner->model.stateStep == 3)
     {
         groaner->model.controlState = GroanerControl_WalkForward;
-        Character_AnimSet(groaner, ANIM_STATUS(GroanerAnim_WalkForward, true), 371);
+        Chara_AnimSet(groaner, ANIM_STATUS(GroanerAnim_WalkForward, true), 371);
         groanerProps.flags.val16[0] |= GroanerFlag_5;
     }
 
@@ -738,7 +738,7 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
         groanerProps.targetHeadingAngle += Q12(0.125f);
         g_SysWork.charaGroupFlags[3]    &= ~CharaGroupFlag_1;
 
-        Character_AnimSet(groaner, ANIM_STATUS(GroanerAnim_RunForward, true), 363);
+        Chara_AnimSet(groaner, ANIM_STATUS(GroanerAnim_RunForward, true), 363);
         groanerProps.flags.val16[0] &= ~GroanerFlag_9;
     }
 }

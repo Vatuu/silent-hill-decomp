@@ -1649,7 +1649,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
     if (twinfeeler->model.controlState == TwinfeelerControl_None)
     {
         twinfeeler->model.controlState = TwinfeelerControl_WalkForward;
-        Character_AnimSet(twinfeeler, ANIM_STATUS(TwinfeelerAnim_WalkForward, true), 163);
+        Chara_AnimSet(twinfeeler, ANIM_STATUS(TwinfeelerAnim_WalkForward, true), 163);
         twinfeeler->health           = 1;
         twinfeeler->model.anim.alpha = Q12(0.0f);
         twinfeeler->collision.state  = CharaCollisionState_Npc;
@@ -1890,7 +1890,7 @@ bool Twinfeeler_Init(s_SubCharacter* twinfeeler) // 0x800D3CD4
 
     func_800D3B74(twinfeeler);
 
-    Character_AnimSet(twinfeeler, ANIM_STATUS(TwinfeelerAnim_InchForward, false), 258);
+    Chara_AnimSet(twinfeeler, ANIM_STATUS(TwinfeelerAnim_InchForward, false), 258);
     ModelAnim_AnimInfoSet(&twinfeeler->model.anim, TWINFEELER_ANIM_INFOS);
 
     Chara_DamageClear(twinfeeler);

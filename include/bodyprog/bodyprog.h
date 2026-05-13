@@ -635,20 +635,6 @@ typedef struct
     s_func_8006E490_20 field_20[2];
 } s_func_8006E490;
 
-/** @brief Character keyframe collision info. */
-typedef struct _Keyframe
-{
-    /* 0x0 */ s_CharaBox          box;
-    /* 0xC */ s_CharaShapeOffsets shapeOffsets;
-} s_Keyframe;
-
-/** @brief 8-character string usually used for filenames. Can be compared via the `u32` field. */
-typedef union _Filename
-{
-    char str[8];
-    u32  u32[2];
-} u_Filename;
-
 /** @brief Struct used by many functions involved with GTE. Kept at `PSX_SCRATCH_ADDR` (possibly only temporarily). */
 typedef struct _GteScratchData
 {
@@ -658,7 +644,7 @@ typedef struct _GteScratchData
     s16 field_18C[99]; // The size changed from 150 due to the addition of `field_252`. Not sure if this is correct.
     u8  field_252[102];
 
-    u8      field_2B8[200]; // Size likely incorrect.
+    u8 field_2B8[200]; // Size likely incorrect.
 
     union
     {
@@ -2584,65 +2570,6 @@ extern s_800AD4C8 D_800AD4C8[70];
 extern const s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
 
 extern s16 SQRT[100];
-
-/** @brief Sets the collision shapes of a character from keyframe collision data.
- *
- * @param chara Character to update (`s_SubCharacter`).
- * @param keyframe Keyframe collision data (`s_Keyframe`).
- */
-#define Chara_CollisionSet(chara, keyframe)                                         \
-{                                                                                   \
-    s32 __temp;                                                                     \
-                                                                                    \
-    chara->collision.box.top = keyframe.box.top;                                    \
-                                                                                    \
-    __temp                      = keyframe.box.bottom;                              \
-    chara->collision.box.bottom = __temp;                                           \
-    chara->collision.box.height = keyframe.box.height;                              \
-                                                                                    \
-    __temp                                    = keyframe.box.offsetY;               \
-    chara->collision.box.offsetY              = __temp;                             \
-    chara->collision.shapeOffsets.cylinder.vx = keyframe.shapeOffsets.cylinder.vx;  \
-                                                                                    \
-    __temp                                    = keyframe.shapeOffsets.cylinder.vz;  \
-    chara->collision.shapeOffsets.cylinder.vz = __temp;                             \
-    chara->collision.cylinder.radius          = keyframe.box.field_8;               \
-    chara->collision.shapeOffsets.box.vx      = keyframe.shapeOffsets.box.vx;       \
-                                                                                    \
-    __temp                               = keyframe.shapeOffsets.box.vz;            \
-    chara->collision.shapeOffsets.box.vz = __temp;                                  \
-                                                                                    \
-    __temp                            = keyframe.box.field_A;                       \
-    chara->collision.cylinder.field_2 = __temp;                                     \
-}
-
-/** @brief Alternative to `Chara_CollisionSet`. TODO: Can they be merged into one? */
-#define Chara_CollisionSetAlt(chara, keyframe)                                     \
-{                                                                                  \
-    s32 __temp;                                                                    \
-    s32 __temp2;                                                                   \
-                                                                                   \
-    chara->collision.box.top = keyframe.box.top;                                   \
-                                                                                   \
-    __temp                      = keyframe.box.bottom;                             \
-    chara->collision.box.bottom = __temp;                                          \
-    chara->collision.box.height = keyframe.box.height;                             \
-                                                                                   \
-    __temp                       = keyframe.box.offsetY;                           \
-    chara->collision.box.offsetY = __temp;                                         \
-    chara->collision.shapeOffsets.cylinder.vx = keyframe.shapeOffsets.cylinder.vx; \
-                                                                                   \
-    __temp                                    = keyframe.shapeOffsets.cylinder.vz; \
-    chara->collision.shapeOffsets.cylinder.vz = __temp;                            \
-    chara->collision.cylinder.radius          = keyframe.box.field_8;              \
-    chara->collision.shapeOffsets.box.vx      = keyframe.shapeOffsets.box.vx;      \
-                                                                                   \
-    __temp                               = keyframe.shapeOffsets.box.vz;           \
-    chara->collision.shapeOffsets.box.vz = __temp;                                 \
-                                                                                   \
-    __temp2                           = keyframe.box.field_A;                      \
-    chara->collision.cylinder.field_2 = __temp2;                                   \
-}
 
 // ==========
 // FUNCTIONS

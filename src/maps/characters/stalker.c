@@ -79,7 +79,7 @@ void Stalker_Init(s_SubCharacter* stalker)
     stalker->fallSpeed   = Q12(0.0f);
     stalker->rotation.vz = Q12_ANGLE(0.0f);
     stalker->rotation.vx = Q12_ANGLE(0.0f);
-    //Character_AnimSet(stalker, ANIM_STATUS(StalkerAnim_30, true), 447); // TODO: Doesn't match?
+    //Chara_AnimSet(stalker, ANIM_STATUS(StalkerAnim_30, true), 447); // TODO: Doesn't match?
     stalker->model.anim.status      = ANIM_STATUS(StalkerAnim_30, true);
     stalker->model.anim.time        = Q12(477.0f);
     stalker->model.anim.keyframeIdx = 477;
@@ -123,7 +123,7 @@ void Stalker_Init(s_SubCharacter* stalker)
 
         case StalkerStateStep_9:
             stalker->model.controlState = StalkerControl_12;
-            //Character_AnimSet(stalker, ANIM_STATUS(StalkerAnim_27, true), 427); // TODO: Doesn't match?
+            //Chara_AnimSet(stalker, ANIM_STATUS(StalkerAnim_27, true), 427); // TODO: Doesn't match?
             stalker->model.anim.status      = ANIM_STATUS(StalkerAnim_27, true);
             stalker->model.anim.time        = Q12(427.0f);
             stalker->model.anim.keyframeIdx = 427;
@@ -133,7 +133,7 @@ void Stalker_Init(s_SubCharacter* stalker)
 
         case StalkerStateStep_10:
             stalker->model.controlState = StalkerControl_11;
-            //Character_AnimSet(stalker, ANIM_STATUS(StalkerAnim_28, true), 442); // TODO: Doesn't match?
+            //Chara_AnimSet(stalker, ANIM_STATUS(StalkerAnim_28, true), 442); // TODO: Doesn't match?
             stalker->model.anim.status      = ANIM_STATUS(StalkerAnim_28, true);
             stalker->model.anim.time        = Q12(443.0f);
             stalker->model.anim.keyframeIdx = 443;
@@ -142,7 +142,7 @@ void Stalker_Init(s_SubCharacter* stalker)
 
         case StalkerStateStep_17:
             stalker->model.controlState = StalkerControl_13;
-            //Character_AnimSet(stalker, ANIM_STATUS(StalkerAnim_14, true), 176); // TODO: Doesn't match?
+            //Chara_AnimSet(stalker, ANIM_STATUS(StalkerAnim_14, true), 176); // TODO: Doesn't match?
             stalker->model.anim.status      = ANIM_STATUS(StalkerAnim_14, true);
             stalker->model.anim.time        = Q12(176.0f);
             stalker->model.anim.keyframeIdx = 176;
@@ -1997,7 +1997,7 @@ void Stalker_Control_13(s_SubCharacter* stalker)
     if (stalker->model.stateStep == 3)
     {
         stalker->model.stateStep++;
-        Character_AnimSet(stalker, ANIM_STATUS(StalkerAnim_47, true), 294);
+        Chara_AnimSet(stalker, ANIM_STATUS(StalkerAnim_47, true), 294);
 
         if (stalker->health != NO_VALUE)
         {

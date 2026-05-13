@@ -291,7 +291,7 @@ void Player_ControlUnfreeze(bool setIdle)
         g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_None;
         g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
 
-        // TODO: Will `Character_AnimSet` work here?
+        // TODO: Will `Chara_AnimSet` work here?
         player->model.anim.status      = ANIM_STATUS(HarryAnim_Idle, true);
         player->model.anim.keyframeIdx = 503;
         extra->model.anim.status       = ANIM_STATUS(HarryAnim_Idle, true);

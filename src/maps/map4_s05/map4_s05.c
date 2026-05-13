@@ -64,7 +64,7 @@ void Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
     {
         case 3:
             floatstinger->model.controlState = FloatstingerControl_5;
-            Character_AnimSet(floatstinger, ANIM_STATUS(FloatstingerAnim_9, true), 191);
+            Chara_AnimSet(floatstinger, ANIM_STATUS(FloatstingerAnim_9, true), 191);
 
             floatstinger->properties.dummy.properties_E8[7].val16[1] = -0x90; // Could be `Q12_ANGLE(-12.7f)`?
             break;
@@ -75,7 +75,7 @@ void Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
             floatstinger->position.vz = Q12(108.0f);
 
             floatstinger->model.controlState = FloatstingerControl_2;
-            Character_AnimSet(floatstinger, ANIM_STATUS(FloatstingerAnim_9, true), 191);
+            Chara_AnimSet(floatstinger, ANIM_STATUS(FloatstingerAnim_9, true), 191);
             floatstinger->rotation.vy = Q12_ANGLE(-90.0f);
             break;
     }

@@ -50,7 +50,7 @@ void SplitHead_Init(s_SubCharacter* splitHead)
     Chara_PropsClear(splitHead);
 
     splitHead->model.controlState = SplitHeadControl_8;
-    Character_AnimSet(splitHead, ANIM_STATUS(SplitHeadAnim_StandIdle, true), 162);
+    Chara_AnimSet(splitHead, ANIM_STATUS(SplitHeadAnim_StandIdle, true), 162);
     ModelAnim_AnimInfoSet(&splitHead->model.anim, SPLIT_HEAD_ANIM_INFOS);
 
     sharedData_800D8614_1_s05 = Q12(0.0f);

@@ -1002,7 +1002,7 @@ void func_800D39F4(s_SubCharacter* airScreamer) // 0x800D39F4
 {
     q19_12 animTime;
 
-    // TODO: `Character_AnimSet` doesn't match?
+    // TODO: `Chara_AnimSet` doesn't match?
     airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_HoverVariable, true);
     animTime = func_80044918(&airScreamer->model.anim)->startKeyframeIdx;
     airScreamer->model.stateStep = 7;

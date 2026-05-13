@@ -65,7 +65,7 @@ void HangedScratcher_Init(s_SubCharacter* scratcher)
                 scratcher->model.controlState = HangedScratcherControl_1;
             }
 
-            Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_14, true), 222);
+            Chara_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_14, true), 222);
             scratcher->position.vy = Q12(-3.6f);
             scratcher->rotation.vz = Q12_ANGLE(180.0f);
 
@@ -75,7 +75,7 @@ void HangedScratcher_Init(s_SubCharacter* scratcher)
         case HangedScratcherStateStep_7:
         case HangedScratcherStateStep_14:
             scratcher->model.controlState = HangedScratcherControl_5;
-            Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_15, true), 232);
+            Chara_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_15, true), 232);
             scratcher->position.vy = Q12(0.0f);
             scratcher->rotation.vz = Q12_ANGLE(0.0f);
             break;
@@ -85,7 +85,7 @@ void HangedScratcher_Init(s_SubCharacter* scratcher)
 
         case HangedScratcherStateStep_6:
             scratcher->model.controlState = HangedScratcherControl_6;
-            Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_15, true), 232);
+            Chara_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_15, true), 232);
             scratcher->position.vy = Q12(0.0f);
             scratcher->rotation.vz = Q12_ANGLE(0.0f);
             break;
@@ -100,15 +100,15 @@ void HangedScratcher_Init(s_SubCharacter* scratcher)
             switch (scratcher->model.stateStep)
             {
                 case HangedScratcherStateStep_18:
-                    Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_1, true), 0);
+                    Chara_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_1, true), 0);
                     break;
 
                 case HangedScratcherStateStep_19:
-                    Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_2, true), 51);
+                    Chara_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_2, true), 51);
                     break;
 
                 case HangedScratcherStateStep_20:
-                    Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_3, true), 87);
+                    Chara_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_3, true), 87);
                     break;
             }
             break;
@@ -857,7 +857,7 @@ void HangedScratcher_Control_11(s_SubCharacter* scratcher)
 
     if (ANIM_TIME_RANGE_CHECK(scratcher->model.anim.time, 191, 193))
     {
-        Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_12, true), 202);
+        Chara_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_12, true), 202);
         scratcher->rotation.vz = Q12_ANGLE(0.0f);
         return;
     }

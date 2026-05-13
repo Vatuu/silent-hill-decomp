@@ -121,7 +121,7 @@ static inline void Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
         case 17:
             chara->model.controlState     = 1;
             chara->model.stateStep = 0;
-            Character_AnimSet(chara, ANIM_STATUS(BloodsuckerAnim_7, true), 81);
+            Chara_AnimSet(chara, ANIM_STATUS(BloodsuckerAnim_7, true), 81);
             return;
 
 #ifdef MAP7_S02 // MAP7_S02 skips rest of function.

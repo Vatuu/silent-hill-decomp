@@ -61,7 +61,7 @@ static inline void Creeper_PropsUpdateFromStep(s_SubCharacter* creeper)
     }
 
     creeper->model.controlState = 1;
-    Character_AnimSet(creeper, ANIM_STATUS(CreeperAnim_Idle, true), 94);
+    Chara_AnimSet(creeper, ANIM_STATUS(CreeperAnim_Idle, true), 94);
 }
 
 void Creeper_Init(s_SubCharacter* creeper)

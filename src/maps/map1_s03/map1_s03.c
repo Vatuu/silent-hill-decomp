@@ -26,7 +26,7 @@ void LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDIN
     if (chara->model.controlState == 0)
     {
         chara->model.anim.alpha = Q12(0.0f);
-        Character_AnimSet(chara, ANIM_STATUS(LockerDeadBodyAnim_2, true), 0);
+        Chara_AnimSet(chara, ANIM_STATUS(LockerDeadBodyAnim_2, true), 0);
         chara->model.controlState++;
         chara->position.vy = Q12(0.0f);
     }
@@ -51,7 +51,7 @@ void LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDIN
     }
     else
     {
-        Character_AnimSet(chara, ANIM_STATUS(LockerDeadBodyAnim_3, true), 16);
+        Chara_AnimSet(chara, ANIM_STATUS(LockerDeadBodyAnim_3, true), 16);
         chara->collision.state = CharaCollisionState_Npc;
     }
 

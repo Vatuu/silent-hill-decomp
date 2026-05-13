@@ -68,7 +68,7 @@ void Romper_Init(s_SubCharacter* romper)
     Chara_PropsClear(romper);
 
     romper->model.controlState = RomperControl_WalkForward;
-    Character_AnimSet(romper, ANIM_STATUS(RomperAnim_WalkForward, true), 147);
+    Chara_AnimSet(romper, ANIM_STATUS(RomperAnim_WalkForward, true), 147);
 
     romperProps.field_F0     = 6;
     romperProps.rotationY_F2 = romper->rotation.vy;

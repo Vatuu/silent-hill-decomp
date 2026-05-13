@@ -1,0 +1,4 @@
+#ifndef _BODYPROG_SAVEGAME_H
+#define _BODYPROG_SAVEGAME_H
+
+#endif
