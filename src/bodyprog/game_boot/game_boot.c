@@ -8,6 +8,7 @@
 #include "bodyprog/demo.h"
 #include "bodyprog/events/bgm_update.h"
 #include "bodyprog/events/radio.h"
+#include "bodyprog/game_boot/fs_chara_anim.h"
 #include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"

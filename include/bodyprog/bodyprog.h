@@ -3,10 +3,12 @@
 
 #include "game.h"
 #include "bodyprog/collision/collision.h"
+#include "bodyprog/chara_model.h"
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/formats/lm.h"
 #include "bodyprog/formats/model.h"
 #include "bodyprog/formats/texture.h"
+#include "bodyprog/formats/tmd.h"
 #include "bodyprog/map/map.h"
 #include "bodyprog/map/terrain.h"
 #include "bodyprog/sound_effects.h"
@@ -48,27 +50,6 @@
 // ENUMS
 // ======
 
-typedef enum _WorldModelLocation
-{
-    WorldModelLocation_None   = 0,
-    WorldModelLocation_Global = 1,
-    WorldModelLocation_Chunk1 = 2,
-    WorldModelLocation_Chunk2 = 3,
-    WorldModelLocation_Chunk3 = 4,
-    WorldModelLocation_Chunk4 = 5
-} e_WorldModelLocation;
-
-/** @brief Character spawn flags. */
-typedef enum _SpawnFlags
-{
-    SpawnFlag_None = 0,
-    SpawnFlag_0    = 1 << 0,
-    SpawnFlag_1    = 1 << 1,
-    SpawnFlag_2    = 1 << 2,
-    SpawnFlag_3    = 1 << 3,
-    SpawnFlag_4    = 1 << 4
-} e_SpawnFlags;
-
 // Used by `func_8006E490` and `func_8006E150`.
 typedef enum _OrientationFlags
 {
@@ -107,15 +88,6 @@ typedef enum _SfxPairIdx
     SfxPairIdx_23 = 23,
     SfxPairIdx_24 = 24
 } e_SfxPairIdx;
-
-/** @brief Animation playback states. Returned by `Chara_AnimPlaybackStateGet`. */
-typedef enum _AnimPlaybackState
-{
-    AnimPlaybackState_Blend   = -2,
-    AnimPlaybackState_Invalid = -1, // Unsure.
-    AnimPlaybackState_Active  = 0,
-    AnimPlaybackState_End     = 1
-} e_AnimPlaybackState;
 
 /** @brief Background music flags. */
 typedef enum _BgmFlags
@@ -337,14 +309,6 @@ typedef struct _s_8002AC04
 } s_8002AC04;
 STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
 
-typedef struct
-{
-    /* 0x0 */ s32               id;
-    /* 0x4 */ s32               flags;
-    /* 0x8 */ s32               modelCount;
-    /* 0xC */ struct TMD_STRUCT models[1];
-} s_TmdFile;
-
 // Used in player lower body state handling.
 typedef struct
 {
@@ -457,43 +421,6 @@ typedef struct _GteScratchData
     s16      rotMatrix_3E4[3][3]; // Truncated `MATRIX` without the `long t[3];` transfer vector?
 } s_GteScratchData;
 
-typedef struct _ModelInfo
-{
-    /* 0x0 */ s32            field_0; // Bone flags?
-    /* 0x4 */ GsCOORDINATE2* coord;
-    /* 0x8 */ s_ModelHeader* modelHdr;
-    /* 0xC */ s32            modelIdx;
-} s_ModelInfo;
-
-/** @brief IPD skeleton model bone. */
-typedef struct _Bone
-{
-    /* 0x0  */ s_ModelInfo modelInfo;
-    /* 0x10 */ s8          idx;
-               // 3 bytes of padding.
-} s_Bone;
-STATIC_ASSERT_SIZEOF(s_Bone, 20);
-
-/** @brief IPD skeleton model bone node. */
-typedef struct _LinkedBone
-{
-    /* 0x0  */ s_Bone              bone;
-    /* 0x14 */ struct _LinkedBone* next;
-} s_LinkedBone;
-STATIC_ASSERT_SIZEOF(s_LinkedBone, 24);
-
-typedef struct
-{
-    /* 0x0 */ u8            boneCount;
-    /* 0x1 */ u8            boneIdx;
-    /* 0x2 */ u8            field_2;
-    /* 0x3 */ s8            field_3;
-    /* 0x4 */ s_LinkedBone* bones_4;
-    /* 0x8 */ s_LinkedBone* bones_8;
-    /* 0xC */ s_LinkedBone  bones_C[56];
-} s_Skeleton;
-STATIC_ASSERT_SIZEOF(s_Skeleton, 1356);
-
 typedef struct
 {
     s8  field_0;
@@ -507,20 +434,6 @@ typedef struct
 {
     s16 field_0; // Flags?
 } s_8008D850;
-
-// or `s_AnimMetadata`?
-typedef struct _CharaAnimDataInfo
-{
-    /* 0x0  */ s8             charaId0_0;  /** `e_CharaId` */
-    /* 0x1  */ s8             charaId1_1;  /** `e_CharaId` */
-               // 2 bytes of padding.
-    /* 0x4  */ s32            animFile0_4; // s_AnmHeader* animFile0_4; // TODO: Needs to be a pointer.
-    /* 0x8  */ s_AnmHeader*   animFile1_8;
-    /* 0xC  */ s32            animBufferSize1_C;
-    /* 0x10 */ s32            animBufferSize2_10;
-    /* 0x14 */ GsCOORDINATE2* npcBoneCoords;
-} s_CharaAnimDataInfo;
-STATIC_ASSERT_SIZEOF(s_CharaAnimDataInfo, 24);
 
 /** Related to weapon attacks. Stats, SFX IDs, damange values, etc.? */
 typedef struct
@@ -554,19 +467,6 @@ typedef struct
 } s_800BCDA8;
 STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
-/** @brief Character model. */
-typedef struct _CharaModel
-{
-    /* 0x0  */ u8            charaId;  /** `e_CharaId` */
-    /* 0x1  */ u8            isLoaded; /** `bool` */
-               // 2 bytes of padding.
-    /* 0x4  */ s32           queueIdx;
-    /* 0x8  */ s_LmHeader*   lmHdr;
-    /* 0xC  */ s_FsImageDesc texture;
-    /* 0x14 */ s_Skeleton    skeleton;
-} s_CharaModel;
-STATIC_ASSERT_SIZEOF(s_CharaModel, 1376);
-
 /** @brief World object metadata. */
 typedef struct _WorldObjectMetadata
 {
@@ -578,7 +478,7 @@ typedef struct _WorldObjectMetadata
 /** @brief World object model. TODO: Rename to "static object"? Conceptually it's what this is in modern terms. */
 typedef struct _WorldObjectModel
 {
-    /* 0x0  */ s_ModelInfo           modelInfo;
+    /* 0x0  */ s_BoneModel           modelInfo;
     /* 0x10 */ s_WorldObjectMetadata metadata;
 } s_WorldObjectModel;
 STATIC_ASSERT_SIZEOF(s_WorldObjectModel, 28);
@@ -1179,9 +1079,6 @@ extern s_FsImageDesc D_800A9EB4;
 extern s_FsImageDesc D_800A9EBC;
 
 extern s_FsImageDesc D_800A9EC4;
-
-/** @brief Stores a loaded character's animation data information. */
-extern s_CharaAnimDataInfo g_CharaTypeAnimInfo[];
 
 extern s32 D_800A9938;
 
@@ -2119,11 +2016,11 @@ void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool isTransparent);
 s32 Lm_MaterialCountGet(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr);
 
 /** TODO: Unknown `arg3` type. */
-void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* viewMat, bool arg3, GsOT_TAG* tag);
+void func_80059D50(s32 arg0, s_BoneModel* modelInfo, MATRIX* viewMat, bool arg3, GsOT_TAG* tag);
 
 void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 arg3, GsOT_TAG* tag);
 
-void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* viewMat);
+void func_8005A21C(s_BoneModel* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* viewMat);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
@@ -2190,13 +2087,13 @@ void StringCopy(char* prevStr, char* newStr);
 void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, GsOT* ot, s32 arg7);
 
 /** Crucial 3D drawing function. */
-void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 arg2, MATRIX* viewMat, MATRIX* worldMat, u16 arg5);
+void func_80057090(s_BoneModel* modelInfo, GsOT* otTag, s32 arg2, MATRIX* viewMat, MATRIX* worldMat, u16 arg5);
 
 s32 func_800571D0(u32 arg0);
 
 void WorldEnv_LightTransform(MATRIX* worldMat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
-void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* mat);
+void func_80057344(s_BoneModel* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* mat);
 
 void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData);
 

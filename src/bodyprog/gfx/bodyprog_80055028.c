@@ -1197,7 +1197,7 @@ void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s3
     }
 }
 
-void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 arg2, MATRIX* viewMat, MATRIX* worldMat, u16 arg5) // 0x80057090
+void func_80057090(s_BoneModel* modelInfo, GsOT* arg1, s32 arg2, MATRIX* viewMat, MATRIX* worldMat, u16 arg5) // 0x80057090
 {
     s32            temp_a0;
     GsOT_TAG*      otTag;
@@ -1284,7 +1284,7 @@ void WorldEnv_LightTransform(MATRIX* worldMat, s32 alpha, SVECTOR* arg2, VECTOR3
     gte_stsv(&g_WorldEnvWork.light.field_30);
 }
 
-void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* mat) // 0x80057344
+void func_80057344(s_BoneModel* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* mat) // 0x80057344
 {
     u32               normalOffset;
     u32               vertOffset;
@@ -2499,7 +2499,7 @@ __block19CC:
     GsOUT_PACKET_P = poly4;
 }
 
-void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* viewMat, bool arg3, GsOT_TAG* tag) // 0x80059D50
+void func_80059D50(s32 arg0, s_BoneModel* modelInfo, MATRIX* viewMat, bool arg3, GsOT_TAG* tag) // 0x80059D50
 {
     s_GteScratchData* scratchData;
     s_MeshHeader*     curMeshHdr;
@@ -2650,7 +2650,7 @@ void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchDat
     GsOUT_PACKET_P = (PACKET*)poly;
 }
 
-void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* viewMat) // 0x8005A21C
+void func_8005A21C(s_BoneModel* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* viewMat) // 0x8005A21C
 {
     s16               var_v1;
     u32               normalOffset;

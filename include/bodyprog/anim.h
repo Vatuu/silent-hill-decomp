@@ -3,6 +3,15 @@
 
 #include "bodyprog/formats/anm.h"
 
+/** @brief Animation playback states. Returned by `Chara_AnimPlaybackStateGet`. */
+typedef enum _AnimPlaybackState
+{
+    AnimPlaybackState_Blend   = -2,
+    AnimPlaybackState_Invalid = -1, // Unsure.
+    AnimPlaybackState_Active  = 0,
+    AnimPlaybackState_End     = 1
+} e_AnimPlaybackState;
+
 /** @brief Constant character animation info passed to `Anim_Update` functions. */
 typedef struct _AnimInfo
 {

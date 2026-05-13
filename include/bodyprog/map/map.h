@@ -16,6 +16,17 @@ typedef enum _MapFlags
     MapFlag_Unk3             = 1 << 3  /** @unused Unused map type `XXX` has this flag. */
 } e_MapFlags;
 
+/** @brief Character spawn flags. */
+typedef enum _SpawnFlags
+{
+    SpawnFlag_None = 0,
+    SpawnFlag_0    = 1 << 0,
+    SpawnFlag_1    = 1 << 1,
+    SpawnFlag_2    = 1 << 2,
+    SpawnFlag_3    = 1 << 3,
+    SpawnFlag_4    = 1 << 4
+} e_SpawnFlags;
+
 /** @brief Used as index into `MAP_INFOS` array.
  * TODO: Add descriptions for which areas are included in each type?
 */
@@ -47,6 +58,16 @@ typedef enum _SpeedZoneType
     SpeedZoneType_Normal = 1,
     SpeedZoneType_Fast   = 2
 } e_SpeedZoneType;
+
+typedef enum _WorldModelLocation
+{
+    WorldModelLocation_None   = 0,
+    WorldModelLocation_Global = 1,
+    WorldModelLocation_Chunk1 = 2,
+    WorldModelLocation_Chunk2 = 3,
+    WorldModelLocation_Chunk3 = 4,
+    WorldModelLocation_Chunk4 = 5
+} e_WorldModelLocation;
 
 // Something related to enemies attacks.
 typedef struct

@@ -4,8 +4,9 @@
 #include <psyq/libpad.h>
 #include <psyq/strings.h>
 
-#include "main/fsqueue.h"
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/game_boot/fs_chara_anim.h"
+#include "main/fsqueue.h"
 #include "bodyprog/demo.h"
 #include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/screen/screen_draw.h"

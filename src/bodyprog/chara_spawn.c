@@ -5,9 +5,10 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/game_boot/fs_chara_anim.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/sound_system.h"
 #include "main/fsqueue.h"
 
