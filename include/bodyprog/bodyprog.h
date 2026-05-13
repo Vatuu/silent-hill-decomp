@@ -179,41 +179,6 @@ typedef enum _BgmTrackIdx
     BgmTrackIdx_41   = 41
 } e_BgmTrackIds;
 
-/** @brief Map flags. */
-typedef enum _MapFlags
-{
-    MapFlag_FourActiveChunks = 0,      /** Used by exterior maps. */
-    MapFlag_OneActiveChunk   = 1 << 0,
-    MapFlag_TwoActiveChunks  = 1 << 1,
-    MapFlag_Interior         = 1 << 2,
-    MapFlag_Unk3             = 1 << 3  /** @unused Unused map type `XXX` has this flag. */
-} e_MapFlags;
-
-/** @brief Used as index into `MAP_INFOS` array.
- * TODO: Add descriptions for which areas are included in each type?
-*/
-typedef enum _MapType
-{
-    MapType_THR = 0,
-    MapType_SC  = 1,
-    MapType_SU  = 2,
-    MapType_SPR = 3,
-    MapType_SPU = 4,
-    MapType_RSR = 5,
-    MapType_RSU = 6,
-    MapType_APR = 7, /** @unused */
-    MapType_APU = 8,
-    MapType_ER  = 9,
-    MapType_ER2 = 10,
-    MapType_DR  = 11,
-    MapType_DRU = 12,
-    MapType_HP  = 13,
-    MapType_HU  = 14,
-    MapType_XXX = 15, /** @unused */
-
-    MapType_Count
-} e_MapType;
-
 typedef enum _BoneHierarchy
 {
     BoneHierarchy_MultiModel = -3,
@@ -231,13 +196,6 @@ typedef enum _EffectTextureFlags
     EffectTextureFlag_Blood        = 1 << 6,
     EffectTextureFlag_WarmTest     = 1 << 7  /** @unused Test lens flare? */
 } e_EffectTextureFlags;
-
-typedef enum _SpeedZoneType
-{
-    SpeedZoneType_Slow   = 0,
-    SpeedZoneType_Normal = 1,
-    SpeedZoneType_Fast   = 2
-} e_SpeedZoneType;
 
 typedef enum _MainMenuEntry
 {
@@ -631,7 +589,7 @@ typedef struct _WorldObject
     /* 0x0    */ s_WorldObjectModel* model;
     /* 0x4+0  */ s32                 positionX  : 18;
     /* 0x4+18 */ s32                 positionY  : 14;
-    /* 0x8+0  */ s32                 positionZ : 18;
+    /* 0x8+0  */ s32                 positionZ  : 18;
     /* 0x8+18 */ s32                 __pad_8_18 : 14;
     /* 0xC+0  */ s32                 rotationX  : 10;
     /* 0xC+10 */ s32                 rotationY  : 12;
@@ -1157,8 +1115,6 @@ typedef struct
 // ========
 
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to `main/` headers?
-
-extern const s_MapInfo MAP_INFOS[MapType_Count];
 
 extern char D_80028544[16];
 

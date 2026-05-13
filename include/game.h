@@ -919,8 +919,7 @@ typedef struct _MapEffectsInfo
     CVECTOR screenTint_1D; // Subtractive screen tint.
     CVECTOR field_21;      // Particle effect related. Only the first value affects snow transparency.
     CVECTOR field_25;
-    u8      unk_29; // } Padding?
-    s16     unk_2A; // }
+    s8      __pad_29[3];
 } s_MapEffectsInfo;
 STATIC_ASSERT_SIZEOF(s_MapEffectsInfo, 44);
 

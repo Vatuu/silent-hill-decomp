@@ -17,9 +17,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 64, 64, 64, 0 },
-        .field_25       = { 12, 12, 28, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0
+        .field_25       = { 12, 12, 28, 0 }
     },
     {
         .field_0        = { .field_0 = 0xFF00 },
@@ -35,9 +33,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 48, 48, 48, 0 },
-        .field_25       = { 14, 14, 30, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0
+        .field_25       = { 14, 14, 30, 0 }
     },
     {
         .field_0        = { .field_0 = 0x2FF00 },
@@ -53,9 +49,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 48, 48, 48, 0 },
-        .field_25       = { 13, 13, 29, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0
+        .field_25       = { 13, 13, 29, 0 }
     },
     {
         .field_0        = { .field_0 = 0x1FF16 },
@@ -71,9 +65,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 48, 48, 48, 0 },
-        .field_25       = { 12, 12, 12, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0
+        .field_25       = { 12, 12, 12, 0 }
     },
     {
         .field_0        = { .field_0 = 0x1FF16 },
@@ -89,9 +81,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 48, 48, 48, 0 },
-        .field_25       = { 12, 12, 12, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0
+        .field_25       = { 12, 12, 12, 0 }
     },
     {
         .field_0        = { .field_0 = 0x1FF16 },
@@ -107,9 +97,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 24, 16, 32, 0 },
         .screenTint_1D  = { 85, 75, 75, 0 },
         .field_21       = { 32, 32, 40, 0 },
-        .field_25       = { 12, 12, 28, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0
+        .field_25       = { 12, 12, 28, 0 }
     },
     {
         .field_0        = { .field_0 = 0xFF07 },
@@ -125,9 +113,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 16, 16, 24, 0 },
-        .field_25       = { 8, 8, 20, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0
+        .field_25       = { 8, 8, 20, 0 }
     },
     {
         .field_0        = { .field_0 = 0xFF07 },
@@ -143,9 +129,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 16, 16, 24, 0 },
-        .field_25       = { 8, 8, 20, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0
+        .field_25       = { 8, 8, 20, 0 }
     },
     {
         .field_0        = { .field_0 = 0x15006 },
@@ -161,9 +145,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 64, 64, 64, 0 },
-        .field_25       = { 12, 12, 12, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0
+        .field_25       = { 12, 12, 12, 0 }
     },
     {
         .field_0        = { .field_0 = 130822 },
@@ -179,9 +161,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 64, 32, 16, 0 },
-        .field_25       = { 24, 12, 12, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0,
+        .field_25       = { 24, 12, 12, 0 }
     },
     {
         .field_0        = { .field_0 = 102926 },
@@ -197,9 +177,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 32, 24, 16, 0 },
-        .field_25       = { 18, 8, 8, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0,
+        .field_25       = { 18, 8, 8, 0 }
     },
     {
         .field_0        =  { .field_0 = 130822 },
@@ -215,9 +193,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 64, 32, 16, 0 },
-        .field_25       = { 24, 12, 12, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0,
+        .field_25       = { 24, 12, 12, 0 }
     },
     {
         .field_0        = { .field_0 = 130838 },
@@ -233,9 +209,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 48, 48, 48, 0 },
-        .field_25       = { 12, 12, 12, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0,
+        .field_25       = { 12, 12, 12, 0 }
     },
     {
         .field_0        = { .field_0 = 65280 },
@@ -251,9 +225,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 16, 16, 24, 0 },
-        .field_25       = { 8, 8, 20, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0,
+        .field_25       = { 8, 8, 20, 0 }
     },
     {
         .field_0        = { .field_0 = 79894 },
@@ -269,9 +241,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 48, 48, 48, 0 },
-        .field_25       = { 12, 12, 12, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0,
+        .field_25       = { 12, 12, 12, 0 }
     },
     {
         .field_0        = { .field_0 = 115718 },
@@ -287,9 +257,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 64, 32, 16, 0 },
-        .field_25       = { 24, 12, 12, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0,
+        .field_25       = { 24, 12, 12, 0 }
     },
     {
         .field_0        = { .field_0 = 130822 },
@@ -305,9 +273,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 64, 32, 16, 0 },
-        .field_25       = { 24, 12, 12, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0,
+        .field_25       = { 24, 12, 12, 0 }
     },
     {
         .field_0        = { .field_0 = 65280 },
@@ -323,9 +289,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 48, 48, 48, 0 },
-        .field_25       = { 14, 14, 30, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0,
+        .field_25       = { 14, 14, 30, 0 }
     },
     {
         .field_0        = { .field_0 = 130838 },
@@ -341,9 +305,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 64, 32, 16, 0 },
-        .field_25       = { 24, 12, 12, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0,
+        .field_25       = { 24, 12, 12, 0 }
     },
     {
         .field_0        = { .field_0 = 65287 },
@@ -359,9 +321,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 16, 16, 24, 0 },
-        .field_25       = { 8, 8, 20, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0,
+        .field_25       = { 8, 8, 20, 0 }
     },
     {
         .field_0        = { .field_0 = 130838 },
@@ -377,9 +337,7 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_19       = { 0, 0, 0, 0 },
         .screenTint_1D  = { 0, 0, 0, 0 },
         .field_21       = { 48, 48, 48, 0 },
-        .field_25       = { 12, 12, 12, 0 },
-        .unk_29         = 0,
-        .unk_2A         = 0,
+        .field_25       = { 12, 12, 12, 0 }
     }
 };
 

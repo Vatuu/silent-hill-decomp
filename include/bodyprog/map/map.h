@@ -6,6 +6,48 @@
 #include "bodyprog/formats/anm.h"
 #include "bodyprog/view/structs.h"
 
+/** @brief Map flags. */
+typedef enum _MapFlags
+{
+    MapFlag_FourActiveChunks = 0,      /** Used by exterior maps. */
+    MapFlag_OneActiveChunk   = 1 << 0,
+    MapFlag_TwoActiveChunks  = 1 << 1,
+    MapFlag_Interior         = 1 << 2,
+    MapFlag_Unk3             = 1 << 3  /** @unused Unused map type `XXX` has this flag. */
+} e_MapFlags;
+
+/** @brief Used as index into `MAP_INFOS` array.
+ * TODO: Add descriptions for which areas are included in each type?
+*/
+typedef enum _MapType
+{
+    MapType_THR = 0,
+    MapType_SC  = 1,
+    MapType_SU  = 2,
+    MapType_SPR = 3,
+    MapType_SPU = 4,
+    MapType_RSR = 5,
+    MapType_RSU = 6,
+    MapType_APR = 7, /** @unused */
+    MapType_APU = 8,
+    MapType_ER  = 9,
+    MapType_ER2 = 10,
+    MapType_DR  = 11,
+    MapType_DRU = 12,
+    MapType_HP  = 13,
+    MapType_HU  = 14,
+    MapType_XXX = 15, /** @unused */
+
+    MapType_Count
+} e_MapType;
+
+typedef enum _SpeedZoneType
+{
+    SpeedZoneType_Slow   = 0,
+    SpeedZoneType_Normal = 1,
+    SpeedZoneType_Fast   = 2
+} e_SpeedZoneType;
+
 // Something related to enemies attacks.
 typedef struct
 {
@@ -385,5 +427,7 @@ typedef struct _MapOverlayHeader
     /* 0xD2C */ s_TriggerZone          triggerZones[200];
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 4172);
+
+extern const s_MapInfo MAP_INFOS[MapType_Count];
 
 #endif
