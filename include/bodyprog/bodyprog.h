@@ -2439,7 +2439,7 @@ extern s32 D_800AFDEC;
 
 extern u8 g_Items_GunsMaxLoadAmmo[36]; // Max loaded ammo that a weapon can hold. 0x800AD4A0
 
-extern const char* INVENTORY_ITEM_NAMES[];
+extern const char* INV_ITEM_NAMES[];
 
 extern const char* g_ItemDescriptions[];
 

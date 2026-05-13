@@ -221,7 +221,7 @@ s32 Inventory_HyperBlasterUnlockTest(void) // 0x8004C45C
 {
     s32 i;
 
-    for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
+    for (i = 0; i < INV_ITEM_COUNT_MAX; i++)
     {
         // Already in inventory, can't add new one.
         if (g_SavegamePtr->items[i].id_0 == InvItemId_HyperBlaster)

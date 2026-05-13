@@ -3903,7 +3903,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     g_SysWork.playerCombat.currentWeaponAmmo = currentAmmoVar;
                     g_SysWork.playerCombat.totalWeaponAmmo   = totalAmmoVar;
 
-                    for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
+                    for (i = 0; i < INV_ITEM_COUNT_MAX; i++)
                     {
                         if (g_SavegamePtr->items[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InvItemId_KitchenKnife))
                         {
@@ -4015,7 +4015,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
 
                     if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                     {
-                        for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
+                        for (i = 0; i < INV_ITEM_COUNT_MAX; i++)
                         {
                             if (g_SavegamePtr->items[i].id_0 == (g_SysWork.playerCombat.weaponAttack + InvItemId_KitchenKnife))
                             {
@@ -4241,7 +4241,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                 if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
                     if (g_SysWork.playerCombat.currentWeaponAmmo == 0 &&
-                        INVENTORY_ITEM_GROUP(g_SavegamePtr->equippedWeapon) == InvItemGroup_GunWeapons &&
+                        INV_ITEM_GROUP(g_SavegamePtr->equippedWeapon) == InvItemGroup_GunWeapons &&
                         g_SysWork.playerCombat.totalWeaponAmmo != 0)
                     {
                         g_SysWork.playerWork.extra.upperBodyState              = PlayerUpperBodyState_Reload;
@@ -7766,7 +7766,7 @@ void Game_SavegameResetPlayer(void) // 0x8007E530
 
     g_SavegamePtr->inventorySlotCount = DEFAULT_INV_SLOT_COUNT;
 
-    for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
+    for (i = 0; i < INV_ITEM_COUNT_MAX; i++)
     {
         g_SavegamePtr->items[i].id_0    = NO_VALUE;
         g_SavegamePtr->items[i].count_1 = 0;
@@ -7811,12 +7811,12 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     g_SysWork.playerWork.player.collision.state = CharaCollisionState_Npc;
     g_Inventory_EquippedItem                    = g_SavegamePtr->equippedWeapon;
 
-    itemGroupId = INVENTORY_ITEM_GROUP(g_SavegamePtr->equippedWeapon);
+    itemGroupId = INV_ITEM_GROUP(g_SavegamePtr->equippedWeapon);
 
     // Assign weapon that the player was holding when saving.
     if (itemGroupId == InvItemGroup_MeleeWeapons || itemGroupId == InvItemGroup_GunWeapons)
     {
-        for (i = 0; g_SavegamePtr->items[i].id_0 != g_SavegamePtr->equippedWeapon && i < INVENTORY_ITEM_COUNT_MAX; i++);
+        for (i = 0; g_SavegamePtr->items[i].id_0 != g_SavegamePtr->equippedWeapon && i < INV_ITEM_COUNT_MAX; i++);
 
         g_SysWork.playerCombat.weaponAttack        = g_SavegamePtr->equippedWeapon + InvItemId_KitchenKnife;
         g_SysWork.playerCombat.currentWeaponAmmo  = g_SavegamePtr->items[i].count_1;
@@ -7829,10 +7829,10 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
         else
         {
             for (i = 0;
-                 g_SavegamePtr->items[i].id_0 != (g_SavegamePtr->equippedWeapon + InvItemId_HealthDrink) && i < INVENTORY_ITEM_COUNT_MAX;
+                 g_SavegamePtr->items[i].id_0 != (g_SavegamePtr->equippedWeapon + InvItemId_HealthDrink) && i < INV_ITEM_COUNT_MAX;
                  i++);
 
-            if (i == INVENTORY_ITEM_COUNT_MAX)
+            if (i == INV_ITEM_COUNT_MAX)
             {
                 g_SysWork.playerCombat.totalWeaponAmmo = 0;
             }
@@ -7874,7 +7874,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     g_Player_LastWeaponSelected = NO_VALUE;
     g_GameWork.mapAnimIdx       = NO_VALUE;
 
-    g_SavegamePtr->inventorySlotCount  = CLAMP(g_SavegamePtr->inventorySlotCount, INVENTORY_ITEM_COUNT_MAX / 5, INVENTORY_ITEM_COUNT_MAX);
+    g_SavegamePtr->inventorySlotCount  = CLAMP(g_SavegamePtr->inventorySlotCount, INV_ITEM_COUNT_MAX / 5, INV_ITEM_COUNT_MAX);
     g_SysWork.playerWork.player.health = CLAMP(g_SysWork.playerWork.player.health, 1, Q12(100.0f));
 }
 

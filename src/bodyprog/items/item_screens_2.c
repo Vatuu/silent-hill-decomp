@@ -1534,7 +1534,7 @@ void func_8004EF48(void) // 0x8004EF48
     reloadCmd      = InvCmdId_Reload;
     equippedItemId = g_Inventory_EquippedItem;
 
-    for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
+    for (i = 0; i < INV_ITEM_COUNT_MAX; i++)
     {
         inventoryItemId = g_SavegamePtr->items[i].id_0;
 
@@ -1550,7 +1550,7 @@ void func_8004EF48(void) // 0x8004EF48
         {
             if (inventoryItemId == equippedItemId)
             {
-                itemIdGroup = INVENTORY_ITEM_GROUP(inventoryItemId);
+                itemIdGroup = INV_ITEM_GROUP(inventoryItemId);
                 if (itemIdGroup == InvItemGroup_MeleeWeapons || inventoryItemId == InvItemId_HyperBlaster)
                 {
                     g_SavegamePtr->items[i].command_2 = InvCmdId_Unequip;
@@ -1562,11 +1562,11 @@ void func_8004EF48(void) // 0x8004EF48
             }
             else
             {
-                itemIdGroup = INVENTORY_ITEM_GROUP(inventoryItemId);
+                itemIdGroup = INV_ITEM_GROUP(inventoryItemId);
                 if (itemIdGroup == InvItemGroup_GunAmmo)
                 {
                     g_SavegamePtr->items[i].command_2 = InvCmdId_Reload;
-                    if (INVENTORY_WEAPON_AMMO_ID(equippedItemId))
+                    if (INV_WEAPON_AMMO_ID(equippedItemId))
                     {
                         g_SavegamePtr->items[i].command_2 = InvCmdId_Reload;
                     }
@@ -1665,22 +1665,22 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
 
     savePtr = save;
 
-    for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
+    for (i = 0; i < INV_ITEM_COUNT_MAX; i++)
     {
-        if (savePtr->items[i].count_1 == 0 && INVENTORY_ITEM_GROUP(savePtr->items[i].id_0) != InvItemGroup_GunWeapons)
+        if (savePtr->items[i].count_1 == 0 && INV_ITEM_GROUP(savePtr->items[i].id_0) != InvItemGroup_GunWeapons)
         {
             savePtr->items[i].id_0 = 0xFF;
         }
     }
 
-    for (i = 0; i < (INVENTORY_ITEM_COUNT_MAX - 1); i++)
+    for (i = 0; i < (INV_ITEM_COUNT_MAX - 1); i++)
     {
         savePtr->items[i].field_3 = D_80025EB0[savePtr->items[i].id_0 - InvItemId_HealthDrink];
     }
 
-    for (i = 0; i < (INVENTORY_ITEM_COUNT_MAX - 1); i++)
+    for (i = 0; i < (INV_ITEM_COUNT_MAX - 1); i++)
     {
-        for (j = i + 1; j < INVENTORY_ITEM_COUNT_MAX; j++)
+        for (j = i + 1; j < INV_ITEM_COUNT_MAX; j++)
         {
             if (savePtr->items[i].field_3 > savePtr->items[j].field_3)
             {
@@ -1700,7 +1700,7 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
         }
     }
 
-    for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
+    for (i = 0; i < INV_ITEM_COUNT_MAX; i++)
     {
         item = &savePtr->items[0];
 
@@ -1723,7 +1723,7 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
         return 8;
     }
 
-    for (i = 1; i < INVENTORY_ITEM_COUNT_MAX; i++)
+    for (i = 1; i < INV_ITEM_COUNT_MAX; i++)
     {
         for (j = 0; j < i; j++)
         {
@@ -1738,7 +1738,7 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
 
                 if (savePtr->items[j].id_0 == savePtr->items[i].id_0)
                 {
-                    if (INVENTORY_ITEM_GROUP(id) == InvItemGroup_GunAmmo)
+                    if (INV_ITEM_GROUP(id) == InvItemGroup_GunAmmo)
                     {
                         if ((savePtr->items[j].count_1 + savePtr->items[i].count_1) > 200)
                         {
@@ -1749,7 +1749,7 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
                             savePtr->items[j].count_1 += savePtr->items[i].count_1;
                         }
                     }
-                    else if (INVENTORY_ITEM_GROUP(id) == InvItemGroup_HealthItems)
+                    else if (INV_ITEM_GROUP(id) == InvItemGroup_HealthItems)
                     {
                         if ((savePtr->items[j].count_1 + savePtr->items[i].count_1) <= 100)
                         {
@@ -1777,7 +1777,7 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
 
     if (g_SavegamePtr->equippedWeapon != InvItemId_Unequipped)
     {
-        for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
+        for (i = 0; i < INV_ITEM_COUNT_MAX; i++)
         {
             if (g_SavegamePtr->items[i].id_0 == g_SavegamePtr->equippedWeapon)
             {
@@ -1785,28 +1785,28 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
 
                 if (g_SavegamePtr->equippedWeapon >= InvItemId_Handgun)
                 {
-                    for (j = 0; j < INVENTORY_ITEM_COUNT_MAX; j++)
+                    for (j = 0; j < INV_ITEM_COUNT_MAX; j++)
                     {
-                        if (g_SavegamePtr->items[j].id_0 == INVENTORY_WEAPON_AMMO_ID(g_SavegamePtr->items[i].id_0))
+                        if (g_SavegamePtr->items[j].id_0 == INV_WEAPON_AMMO_ID(g_SavegamePtr->items[i].id_0))
                         {
                             g_SysWork.playerCombat.totalWeaponAmmo = g_SavegamePtr->items[j].count_1;
 
-                            j = INVENTORY_ITEM_COUNT_MAX + 1;
+                            j = INV_ITEM_COUNT_MAX + 1;
                         }
                     }
 
-                    if (j == INVENTORY_ITEM_COUNT_MAX)
+                    if (j == INV_ITEM_COUNT_MAX)
                     {
                         g_SysWork.playerCombat.totalWeaponAmmo = 0;
                     }
                 }
 
-                i = INVENTORY_ITEM_COUNT_MAX;
+                i = INV_ITEM_COUNT_MAX;
             }
         }
     }
 
-    for (j = 0, i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
+    for (j = 0, i = 0; i < INV_ITEM_COUNT_MAX; i++)
     {
         if (g_SavegamePtr->items[i].id_0 != (u8)InvItemId_Empty)
         {
@@ -1818,13 +1818,13 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
     {
         count = 8;
     }
-    else if (j < (INVENTORY_ITEM_COUNT_MAX + 1))
+    else if (j < (INV_ITEM_COUNT_MAX + 1))
     {
         count = j;
     }
     else
     {
-        count = INVENTORY_ITEM_COUNT_MAX;
+        count = INV_ITEM_COUNT_MAX;
     }
 
     j = count;
