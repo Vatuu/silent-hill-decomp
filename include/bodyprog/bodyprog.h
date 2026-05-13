@@ -632,7 +632,7 @@ typedef struct _WorldObjectMetadata
 {
     /* 0x0 */ u_Filename name_0;
     /* 0x8 */ s8         field_8;
-    /* 0x9 */ s8         lmIdx_9; /** Set to 2 when found in `g_Map.globalLm.lmHdr` and 3-6 if found in `g_Map.ipdActive[i] (i + 3)`. */
+    /* 0x9 */ s8         lmIdx_9; /** Set to 2 when found in `g_MapTerrain.globalLm.lmHdr` and 3-6 if found in `g_MapTerrain.ipdActive[i] (i + 3)`. */
 } s_WorldObjectMetadata;
 
 /** @brief World object model. TODO: Rename to "static object"? Conceptually it's what this is in modern terms. */
@@ -733,7 +733,8 @@ typedef struct _IpdTextures
 } s_IpdTextures;
 STATIC_ASSERT_SIZEOF(s_IpdTextures, 328);
 
-typedef struct _Map
+/** @brief Map terrain layout. */
+typedef struct _MapTerrain
 {
     /* 0x0   */ s_IpdCollisionData collisionData; // Default chunk collision data?
     /* 0x134 */ s32                texFileIdx;
@@ -754,8 +755,8 @@ typedef struct _Map
     /* 0x580 */ s32                cellX;
     /* 0x584 */ s32                cellZ;
     /* 0x588 */ bool               isExterior;
-} s_Map;
-STATIC_ASSERT_SIZEOF(s_Map, 1420);
+} s_MapTerrain;
+STATIC_ASSERT_SIZEOF(s_MapTerrain, 1420);
 
 /** @brief World fog info. */
 typedef struct _Fog
@@ -831,23 +832,6 @@ typedef struct
     s16 field_4;
     s16 field_6; // Keyframe index or time.
 } s_800C44F0; // Probable size: 8 bytes.
-
-/** @brief Character file info.
- * Holds file IDs of anim/model/texture for each `e_CharaId` along with some data used in VC camera code.
- */
-typedef struct _CharaFileInfo
-{
-    /* 0x0    */ s16            animFileIdx;
-    /* 0x2    */ s16            modelFileIdx;
-    /* 0x4+0  */ s16            textureFileIdx    : 16;
-    /* 0x4+16 */ q8_8           field_6           : 10;
-    /* 0x4+26 */ u16            materialBlendMode : 6; /** `e_BlendMode` */
-    /* 0x8    */ s_FsImageDesc* field_8;               // TODO: Extra texture pointer? Usually `NULL` in `CHARA_FILE_INFOS`.
-    /* 0xC+0  */ u16            cameraAnchor  : 2;     /** `e_CameraAnchor` */
-    /* 0xC+2  */ q19_12         cameraOffsetY : 14;
-                 // 2 bytes of padding.
-} s_CharaFileInfo;
-STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
 
 /** @brief Used for normal credits screen. */
 typedef struct
@@ -1295,9 +1279,6 @@ extern s_FsImageDesc D_800A908C;
 extern s_FsImageDesc D_800A9094;
 
 extern s_FsImageDesc g_Font24AtlasImg; // 0x800A909C
-
-/** Array containg file IDs used for each `e_CharaId`, used in `Fs_QueueStartReadAnm`. */
-extern s_CharaFileInfo CHARA_FILE_INFOS[Chara_Count]; // 0x800A90FC
 
 extern s_MapEffectsInfo MAP_EFFECTS_INFOS[21];
 
@@ -1872,7 +1853,7 @@ s_Texture* Texture_InfoGet(char* texName);
 
 void Ipd_MapFileInfoSet(char* mapTag, e_FsFile plmIdx, s32 activeIpdCount, bool isExterior, e_FsFile ipdFileIdx, e_FsFile texFileIdx);
 
-void Ipd_ActiveChunksClear(s_Map* map, s32 arg1);
+void Ipd_ActiveChunksClear(s_MapTerrain* map, s32 arg1);
 
 /** @brief Locates all IPD files for a given map type.
  *
@@ -1880,7 +1861,7 @@ void Ipd_ActiveChunksClear(s_Map* map, s32 arg1);
  * Map type THR.
  * `file 1100` is `THR0205.IPD`, `ipdGridCenter[2][5] = 1100`.
  */
-void Map_MakeIpdGrid(s_Map* map, char* mapTag, e_FsFile fileIdxStart);
+void Map_MakeIpdGrid(s_MapTerrain* map, char* mapTag, e_FsFile fileIdxStart);
 
 /** @brief Converts two hex `char`s to an integer hex value.
  *
@@ -1959,9 +1940,9 @@ q19_12 Map_PaddedDistanceToChunkEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32
 q19_12 Map_DistanceToChunkEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cellZ);
 
 /** Loads geometry, sets materials and properly assigns the position of the map when loading a new room/map? */
-s32 Map_ChunkLoad(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
+s32 Map_ChunkLoad(s_MapTerrain* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
-void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
+void Ipd_ActiveChunksSample(s_MapTerrain* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 /** @brief Computes the distance from a position to the nearest edge of a chunk.
  *
@@ -1971,7 +1952,7 @@ void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1
 void Ipd_DistanceToEdgeCalc(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 /** Sets materials for active chunks? */
-void Ipd_ChunkMaterialsApply(s_Map* map);
+void Ipd_ChunkMaterialsApply(s_MapTerrain* map);
 
 /** @brief Gets the IPD chunk file index from cell coordinates.
  *
@@ -2001,7 +1982,7 @@ bool func_8004393C(q19_12 posX, q19_12 posZ);
 
 void Ipd_ChunksDraw(GsOT* ot, bool arg1);
 
-bool Ipd_CellPositionMatchCheck(s_IpdChunk* chunk, s_Map* map);
+bool Ipd_CellPositionMatchCheck(s_IpdChunk* chunk, s_MapTerrain* map);
 
 /** Checks if PLM texture is loaded? */
 bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr);

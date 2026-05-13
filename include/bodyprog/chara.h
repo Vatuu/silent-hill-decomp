@@ -4,6 +4,7 @@
 #include "bodyprog/anim.h"
 #include "bodyprog/model.h"
 #include "bodyprog/math/math.h"
+#include "main/fsqueue.h"
 
 #define NPC_COUNT_MAX        6
 #define NPC_BONE_COUNT_MAX   10 * NPC_COUNT_MAX
@@ -11,6 +12,60 @@
                                 * types (including the player) can be loaded at a time.
                                 */
 #define CHARA_FORCE_FREE_ALL 0xFF /** `Chara_Load` can force free already loaded models to make room for new ones. */
+
+/** @brief Character IDs. The `CHARA_FILE_INFOS` array associates each character ID with asset files. */
+typedef enum _CharaId
+{
+    Chara_None             = 0,
+    Chara_Harry            = 1,
+    Chara_AirScreamer      = 2,
+    Chara_NightFlutter     = 3,
+    Chara_Groaner          = 4,
+    Chara_Wormhead         = 5,
+    Chara_LarvalStalker    = 6,
+    Chara_Stalker          = 7,
+    Chara_GreyChild        = 8,
+    Chara_Mumbler          = 9,
+    Chara_HangedScratcher  = 10,
+    Chara_Creeper          = 11,
+    Chara_Romper           = 12,
+    Chara_Chicken          = 13, /** @unused */
+    Chara_SplitHead        = 14,
+    Chara_Floatstinger     = 15,
+    Chara_PuppetNurse      = 16,
+    Chara_DummyNurse       = 17, /** Uses dummy anim file without model/texture, but the same update funcptr as `Chara_PuppetNurse`. */
+    Chara_PuppetDoctor     = 18,
+    Chara_DummyDoctor      = 19, /** Uses dummy anim file without model/texture, but the same update funcptr as `Chara_PuppetDoctor`. */
+    Chara_Twinfeeler       = 20,
+    Chara_Bloodsucker      = 21,
+    Chara_Incubus          = 22,
+    Chara_Unknown23        = 23,
+    Chara_MonsterCybil     = 24,
+    Chara_LockerDeadBody   = 25,
+    Chara_Cybil            = 26,
+    Chara_EndingCybil      = 27,
+    Chara_Cheryl           = 28,
+    Chara_Cat              = 29,
+    Chara_Dahlia           = 30,
+    Chara_EndingDahlia     = 31,
+    Chara_Lisa             = 32,
+    Chara_BloodyLisa       = 33,
+    Chara_Alessa           = 34,
+    Chara_GhostChildAlessa = 35,
+    Chara_Incubator        = 36,
+    Chara_BloodyIncubator  = 37,
+    Chara_Kaufmann         = 38,
+    Chara_EndingKaufmann   = 39,
+    Chara_Flauros          = 40,
+    Chara_LittleIncubus    = 41,
+    Chara_GhostDoctor      = 42,
+    Chara_Parasite         = 43,
+    Chara_Padlock          = 44,
+
+    Chara_Count,
+
+    Chara_Hack = NO_VALUE, // @hack Force enum to be treated as `s32`.
+} e_CharaId;
 
 // Collision-related.
 typedef struct
@@ -628,6 +683,26 @@ typedef struct _SubCharacter
     /* 0xE8 */ } properties;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
+
+/** @brief Character file info.
+ * Holds file IDs of anim/model/texture for each `e_CharaId` along with some data used in VC camera code.
+ */
+typedef struct _CharaFileInfo
+{
+    /* 0x0    */ s16            animFileIdx;
+    /* 0x2    */ s16            modelFileIdx;
+    /* 0x4+0  */ s16            textureFileIdx    : 16;
+    /* 0x4+16 */ q8_8           field_6           : 10;
+    /* 0x4+26 */ u16            materialBlendMode : 6; /** `e_BlendMode` */
+    /* 0x8    */ s_FsImageDesc* field_8;               // TODO: Extra texture pointer? Usually `NULL` in `CHARA_FILE_INFOS`.
+    /* 0xC+0  */ u16            cameraAnchor  : 2;     /** `e_CameraAnchor` */
+    /* 0xC+2  */ q19_12         cameraOffsetY : 14;
+                 // 2 bytes of padding.
+} s_CharaFileInfo;
+STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
+
+/** Array containg file IDs used for each `e_CharaId`, used in `Fs_QueueStartReadAnm`. */
+extern s_CharaFileInfo CHARA_FILE_INFOS[Chara_Count]; // 0x800A90FC
 
 /** @brief Sets the collision shapes of a character from keyframe collision data.
  *
