@@ -3696,17 +3696,17 @@ void func_800D7408(void) // 0x800D7408
 
 void func_800D7450(void) // 0x800D7450
 {
-    e_FsFile texFileIdx;
+    e_FsFile textureFileIdx;
     s32      i;
 
-    texFileIdx = NO_VALUE;
+    textureFileIdx = NO_VALUE;
 
     for (i = 0; i < 3; i++)
     {
         switch (i)
         {
             case 0:
-                texFileIdx          = FILE_TIM_TV1_TIM;
+                textureFileIdx          = FILE_TIM_TV1_TIM;
                 D_800DB91C.tPage[1] = 29;
                 D_800DB91C.u        = 0;
                 D_800DB91C.v        = 0;
@@ -3714,7 +3714,7 @@ void func_800D7450(void) // 0x800D7450
                 break;
 
             case 1:
-                texFileIdx          = FILE_TIM_TV2_TIM;
+                textureFileIdx          = FILE_TIM_TV2_TIM;
                 D_800DB91C.tPage[1] = 12;
                 D_800DB91C.u        = 32;
                 D_800DB91C.v        = 0;
@@ -3722,7 +3722,7 @@ void func_800D7450(void) // 0x800D7450
                 break;
 
             case 2:
-                texFileIdx          = FILE_TIM_TV3_TIM;
+                textureFileIdx          = FILE_TIM_TV3_TIM;
                 D_800DB91C.tPage[1] = 28;
                 D_800DB91C.v        = 128;
                 D_800DB91C.u        = 0;
@@ -3730,7 +3730,7 @@ void func_800D7450(void) // 0x800D7450
                 break;
         }
 
-        Fs_QueueStartReadTim(texFileIdx, FS_BUFFER_1, &D_800DB91C);
+        Fs_QueueStartReadTim(textureFileIdx, FS_BUFFER_1, &D_800DB91C);
     }
 }
 

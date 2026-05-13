@@ -333,7 +333,7 @@ void SysState_OptionsMenu_Update(void) // 0x80039344
             g_SysWork.sysStateSteps[0] = 1;
 
         case 1:
-            if (Ipd_ChunkInitCheck() != 0)
+            if (Ipd_ChunkInitCheck())
             {
                 SD_Call(19);
                 GameFs_OptionBinLoad();
@@ -576,7 +576,7 @@ void SysState_Fmv_Update(void) // 0x80039A58
             g_SysWork.sysStateSteps[0] = 1;
 
         case 1:
-            if (Ipd_ChunkInitCheck() != 0)
+            if (Ipd_ChunkInitCheck())
             {
                 GameFs_StreamBinLoad();
                 g_SysWork.sysStateSteps[0]++;

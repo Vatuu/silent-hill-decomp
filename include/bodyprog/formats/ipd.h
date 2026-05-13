@@ -131,7 +131,7 @@ typedef struct _IpdHeader
     /* 0x1C */ u8                 textureCount; // Should it be `u32`?
                                                 // "`u8` - Relative pointer to textures list"
                                                 // "`u32` - Relative pointer to object order"
-    /* 0x1D */ s8                 unk_1D[51];
+    /* 0x1D */ s8                 unk_1D[51];   // TODO: Actual texture data array?
     /* 0x50 */ u8*                modelOrderList;
     /* 0x54 */ s_IpdCollisionData collisionData;
 } s_IpdHeader;

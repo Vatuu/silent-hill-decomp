@@ -189,7 +189,7 @@ void GameBoot_GameStartup(void) // 0x80034964
             g_GameWork.gameStateSteps[0]++;
 
         case 8:
-            if (Ipd_ChunkInitCheck() != false)
+            if (Ipd_ChunkInitCheck())
             {
                 Game_StateStepIncrement();
             }

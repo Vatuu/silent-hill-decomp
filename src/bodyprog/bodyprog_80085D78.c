@@ -801,7 +801,7 @@ void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) // 0x8008
     }
 }
 
-void func_8008716C(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x8008716C
+void func_8008716C(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x8008716C
 {
     switch (g_SysWork.sysStateSteps[1])
     {
@@ -811,7 +811,7 @@ void func_8008716C(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimeste
             SysWork_StateStepIncrement(1);
 
         case 1:
-            func_800862F8(7, texFileIdx, true);
+            func_800862F8(7, textureFileIdx, true);
             break;
 
         case 2:
@@ -846,7 +846,7 @@ void func_8008716C(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimeste
     }
 }
 
-void MapMsg_DisplayWithTexture(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx) // 0x80087360
+void MapMsg_DisplayWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx) // 0x80087360
 {
     switch (g_SysWork.sysStateSteps[1])
     {
@@ -856,7 +856,7 @@ void MapMsg_DisplayWithTexture(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12
             SysWork_StateStepIncrement(1);
 
         case 1:
-            func_800862F8(7, texFileIdx, true);
+            func_800862F8(7, textureFileIdx, true);
             break;
 
         case 2:
@@ -886,7 +886,7 @@ void MapMsg_DisplayWithTexture(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12
     }
 }
 
-void MapMsg_DisplayWithTexture1(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
+void MapMsg_DisplayWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
 {
     switch (g_SysWork.sysStateSteps[1])
     {
@@ -896,7 +896,7 @@ void MapMsg_DisplayWithTexture1(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_1
             SysWork_StateStepIncrement(1);
 
         case 1:
-            func_800862F8(7, texFileIdx, true);
+            func_800862F8(7, textureFileIdx, true);
             break;
 
         case 2:

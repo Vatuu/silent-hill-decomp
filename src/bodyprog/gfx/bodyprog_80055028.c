@@ -885,7 +885,7 @@ void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 star
     }
 }
 
-void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs, bool (*filterFunc)(s_Material* mat), e_FsFile fileIdx, s32 blendMode) // 0x80056774
+void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveChunkTextures* activeTexs, bool (*filterFunc)(s_Material* mat), e_FsFile fileIdx, s32 blendMode) // 0x80056774
 {
     s_Material* curMat;
 
@@ -3140,7 +3140,7 @@ void Texture_Init(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s3
     tex->queueIdx = NO_VALUE;
 }
 
-s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBuffer9, e_FsFile fileIdx, s32 arg4)
+s_Texture* Texture_Get(s_Material* mat, s_ActiveChunkTextures* activeTexs, void* fsBuffer9, e_FsFile fileIdx, s32 arg4)
 {
     s8         filename[12];
     s8         debugStr[12];
@@ -3256,12 +3256,12 @@ void func_8005B424(VECTOR3* vec0, const VECTOR3* vec1) // 0x8005B424
     *((s_func_8005B424*)vec0) = *((s_func_8005B424*)vec1);
 }
 
-void Textures_ActiveTex_CountReset(s_ActiveTextures* activeTexs) // 0x8005B46C
+void Textures_ActiveTex_CountReset(s_ActiveChunkTextures* activeTexs) // 0x8005B46C
 {
     activeTexs->count = 0;
 }
 
-void Textures_ActiveTex_PutTextures(s_ActiveTextures* activeTexs, s_Texture* texs, s32 texIdx) // 0x8005B474
+void Textures_ActiveTex_PutTextures(s_ActiveChunkTextures* activeTexs, s_Texture* texs, s32 texIdx) // 0x8005B474
 {
     s_Texture*  curTex;
     s_Texture** texEntries;
@@ -3274,7 +3274,7 @@ void Textures_ActiveTex_PutTextures(s_ActiveTextures* activeTexs, s_Texture* tex
     }
 }
 
-s_Texture* Textures_ActiveTex_FindTexture(char* texName, s_ActiveTextures* activeTexs) // 0x8005B4BC
+s_Texture* Textures_ActiveTex_FindTexture(char* texName, s_ActiveChunkTextures* activeTexs) // 0x8005B4BC
 {
     char       prevTexName[8];
     s32        i;

@@ -48,17 +48,6 @@
 // ENUMS
 // ======
 
-/** @brief IPD chunk load states.
- *
- * See `Map_ChunkLoadStateGet`.
- */
-typedef enum _ChunkLoadState
-{
-    ChunkLoadState_Invalid  = 0, /** Entry index is `NO_VALUE`. */
-    ChunkLoadState_Unloaded = 1, /** Not currently loaded. */
-    ChunkLoadState_Loaded   = 2  /** Currently loaded. */
-} e_ChunkLoadState;
-
 typedef enum _WorldModelLocation
 {
     WorldModelLocation_None   = 0,
@@ -625,7 +614,7 @@ typedef struct _WorldObjectMetadata
 {
     /* 0x0 */ u_Filename name_0;
     /* 0x8 */ s8         field_8;
-    /* 0x9 */ s8         lmIdx_9; /** Set to 2 when found in `g_MapTerrain.globalLm.lmHdr` and 3-6 if found in `g_MapTerrain.ipdActive[i] (i + 3)`. */
+    /* 0x9 */ s8         lmIdx_9; /** Set to 2 when found in `g_MapTerrain.globalLm.lmHdr` and 3-6 if found in `g_MapTerrain.activeChunks[i] (i + 3)`. */
 } s_WorldObjectMetadata;
 
 /** @brief World object model. TODO: Rename to "static object"? Conceptually it's what this is in modern terms. */
@@ -1758,8 +1747,8 @@ void Lm_Init(s_GlobalLm* globalLm, s_LmHeader* lmHdr);
 
 void LmHeader_Init(s_LmHeader* lmHdr);
 
-/** @brief Clears `queueIdx` in array of `s_IpdChunk` */
-void Map_ChunkQueueIdxsClear(s_IpdChunk* chunks, s32 chunkCount);
+/** @brief Clears `queueIdx` in an array of chunks. */
+void Map_ChunkQueueIdxsClear(s_Chunk* chunks, s32 chunkCount);
 
 void Ipd_TexturesInit(void);
 
@@ -1785,15 +1774,15 @@ s_Texture* Texture_InfoGet(char* texName);
 
 void Ipd_MapFileInfoSet(char* mapTag, e_FsFile plmIdx, s32 activeIpdCount, bool isExterior, e_FsFile ipdFileIdx, e_FsFile texFileIdx);
 
-void Ipd_ActiveChunksClear(s_MapTerrain* map, s32 arg1);
+void Ipd_ActiveChunksClear(s_MapTerrain* terrain, s32 arg1);
 
 /** @brief Locates all IPD files for a given map type.
  *
  * Example:
  * Map type THR.
- * `file 1100` is `THR0205.IPD`, `ipdGridCenter[2][5] = 1100`.
+ * `file 1100` is `THR0205.IPD`, `chunkGridCenter[2][5] = 1100`.
  */
-void Map_MakeIpdGrid(s_MapTerrain* map, char* mapTag, e_FsFile fileIdxStart);
+void Map_MakeIpdGrid(s_MapTerrain* terrain, char* mapTag, e_FsFile fileIdxStart);
 
 /** @brief Converts two hex `char`s to an integer hex value.
  *
@@ -1835,7 +1824,7 @@ u32 LmHeader_LoadStateGet(s_GlobalLm* globalLm);
  * @param
  * @return IPD file load state `(e_StaticModelLoadState`).
  */
-u32 IpdHeader_LoadStateGet(s_IpdChunk* chunk);
+u32 IpdHeader_LoadStateGet(s_Chunk* chunk);
 
 /** @brief Checks if an IPD file is loaded.
  *
@@ -1872,19 +1861,19 @@ q19_12 Map_PaddedDistanceToChunkEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32
 q19_12 Map_DistanceToChunkEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cellZ);
 
 /** Loads geometry, sets materials and properly assigns the position of the map when loading a new room/map? */
-s32 Map_ChunkLoad(s_MapTerrain* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
+s32 Map_ChunkLoad(s_MapTerrain* terrain, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
-void Ipd_ActiveChunksSample(s_MapTerrain* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
+void Ipd_ActiveChunksSample(s_MapTerrain* terrain, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 /** @brief Computes the distance from a position to the nearest edge of a chunk.
  *
  * @param chunk Chunk to check.
  * @param TODO
  */
-void Ipd_DistanceToEdgeCalc(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
+void Ipd_DistanceToEdgeCalc(s_Chunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 /** Sets materials for active chunks? */
-void Ipd_ChunkMaterialsApply(s_MapTerrain* map);
+void Ipd_ChunkMaterialsApply(s_MapTerrain* terrain);
 
 /** @brief Gets the IPD chunk file index from cell coordinates.
  *
@@ -1892,13 +1881,13 @@ void Ipd_ChunkMaterialsApply(s_MapTerrain* map);
  * @param cellZ Z cell coordinate.
  * @return IPD chunk file index.
  */
-s32 Map_IpdChunkFileIdxGet(s32 cellX, s32 cellZ);
+s32 Map_MapChunkFileIdxGet(s32 cellX, s32 cellZ);
 
-bool Map_IsIpdPresentCheck(const s_IpdChunk* activeChunks, s32 cellX, s32 cellZ);
+bool Map_IsIpdPresentCheck(const s_Chunk* activeChunks, s32 cellX, s32 cellZ);
 
-s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* activeChunks, bool isExterior);
+s_Chunk* Ipd_FreeChunkFind(s_Chunk* activeChunks, bool isExterior);
 
-s32 Ipd_LoadStart(s_IpdChunk* chunk, e_FsFile fileIdx, s32 cellX, s32 cellZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
+s32 Ipd_LoadStart(s_Chunk* chunk, e_FsFile fileIdx, s32 cellX, s32 cellZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 /** Checks if currently loaded chunks have been loaded properly. */
 bool Ipd_ChunksLoadedCheck(void);
@@ -1914,16 +1903,16 @@ bool func_8004393C(q19_12 posX, q19_12 posZ);
 
 void Ipd_ChunksDraw(GsOT* ot, bool arg1);
 
-bool Ipd_CellPositionMatchCheck(s_IpdChunk* chunk, s_MapTerrain* map);
+bool Ipd_CellPositionMatchCheck(s_Chunk* chunk, s_MapTerrain* terrain);
 
 /** Checks if PLM texture is loaded? */
 bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr);
 
 s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr);
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveTextures* fullPageActiveTexs, s_ActiveTextures* halfPageActiveTexs, e_FsFile fileIdx);
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs, e_FsFile fileIdx);
 
-void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* fullPageActiveTexs, s_ActiveTextures* halfPageActiveTexs, e_FsFile fileIdx);
+void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs, e_FsFile fileIdx);
 
 /** Checks if IPD is loaded before returning texture count? */
 s32 Ipd_HalfPageMaterialCountGet(s_IpdHeader* ipdHdr);
@@ -2222,7 +2211,7 @@ void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 blendMode)
 
 void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 blendMode);
 
-void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs, bool (*filterFunc)(s_Material* mat), e_FsFile fileIdx, s32 blendMode);
+void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveChunkTextures* activeTexs, bool (*filterFunc)(s_Material* mat), e_FsFile fileIdx, s32 blendMode);
 
 /** Checks if LM textures are loaded? */
 bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr);
@@ -2267,7 +2256,7 @@ void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, bool arg3);
 
 /** `arg4` unused. */
-s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBuf9, e_FsFile fileIdx, s32 arg4);
+s_Texture* Texture_Get(s_Material* mat, s_ActiveChunkTextures* activeTexs, void* fsBuf9, e_FsFile fileIdx, s32 arg4);
 
 /** Initializes values in `D_800AE204` array. */
 void func_8005B55C(GsCOORDINATE2* viewCoord);
@@ -2483,12 +2472,12 @@ void func_80086F44(s32 fadeTimestep0, q19_12 fadeTimestep1);
  */
 void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos);
 
-void func_8008716C(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
+void func_8008716C(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
-void MapMsg_DisplayWithTexture(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx);
+void MapMsg_DisplayWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx);
 
 /** @brief Displays a message with a background texture that is darken after reading the first sentence. */
-void MapMsg_DisplayWithTexture1(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
+void MapMsg_DisplayWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
 void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx, s32 mapMsgIdx);
 
@@ -2673,11 +2662,11 @@ void GameFs_Tim00TIMLoad(void);
 
 void GameFs_MapItemsModelLoad(u32 mapId);
 
-void Textures_ActiveTex_CountReset(s_ActiveTextures* activeTexs);
+void Textures_ActiveTex_CountReset(s_ActiveChunkTextures* activeTexs);
 
-void Textures_ActiveTex_PutTextures(s_ActiveTextures* activeTexs, s_Texture* texs, s32 texIdx);
+void Textures_ActiveTex_PutTextures(s_ActiveChunkTextures* activeTexs, s_Texture* texs, s32 texIdx);
 
-s_Texture* Textures_ActiveTex_FindTexture(char* texName, s_ActiveTextures* activeTexs);
+s_Texture* Textures_ActiveTex_FindTexture(char* texName, s_ActiveChunkTextures* activeTexs);
 
 /** @brief Sets the debug string position.
  *
