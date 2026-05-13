@@ -6,7 +6,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/collision.h"
+#include "bodyprog/collision/collision.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/player.h"

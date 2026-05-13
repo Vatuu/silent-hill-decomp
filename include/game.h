@@ -13,12 +13,9 @@
 #include "bodyprog/model.h"
 #include "maps/characters/harry.h"
 
-struct _AnmHeader;
-struct _Model;
-
-#define TICKS_PER_SECOND 60                                        /** Game has a variable timestep with 60 ticks max. */
-#define TIMESTEP_30_FPS  Q12(1.0f / (float)(TICKS_PER_SECOND / 2)) /** Timestep at 30 FPS. */
-#define TIMESTEP_60_FPS  Q12(1.0f / (float)(TICKS_PER_SECOND))     /** Timestep at 60 FPS. */
+#define TICKS_PER_SECOND 60 /** Game has a variable timestep with 60 ticks max. */
+#define TIMESTEP_30_FPS  Q12(1.0f / (float)(TICKS_PER_SECOND / 2))
+#define TIMESTEP_60_FPS  Q12(1.0f / (float)(TICKS_PER_SECOND))
 
 #define SCREEN_WIDTH                   320
 #define SCREEN_HEIGHT                  240
@@ -35,13 +32,13 @@ struct _Model;
 #define SHOTGUN_AMMO_PICKUP_ITEM_COUNT 6
 #define RIFLE_AMMO_PICKUP_ITEM_COUNT   6
 
-#define DEFAULT_MAP_MESSAGE_LENGTH     99
-#define GLYPH_TABLE_ASCII_OFFSET       '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
+#define DEFAULT_MAP_MESSAGE_LENGTH 99
+#define GLYPH_TABLE_ASCII_OFFSET   '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
 
 #if VERSION_REGION_IS(NTSC)
-#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400 /** Long string length is used to display a whole message instantly without a rollout. */
+    #define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400 /** Long string length is used to display a whole message instantly without a rollout. */
 #elif VERSION_REGION_IS(NTSCJ)
-#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 200 /** Long string length is used to display a whole message instantly without a rollout. */
+    #define MAP_MESSAGE_DISPLAY_ALL_LENGTH 200 /** Long string length is used to display a whole message instantly without a rollout. */
 #endif
 
 #define CHUNK_CELL_SIZE Q12(40.0f)
@@ -856,26 +853,6 @@ typedef struct _Savegame
     /* 0x27B    */ u8              continueCount;
 } s_Savegame;
 STATIC_ASSERT_SIZEOF(s_Savegame, 636);
-
-/** TODO: Known as `Trigger` in SilentHillMapExaminer: https://github.com/ItEndsWithTens/SilentHillMapExaminer/blob/master/src/SHME.ExternalTool.Guts/Trigger.cs */
-typedef struct _EventData
-{
-    /* 0x0    */ s16 requiredEventFlag;
-    /* 0x2    */ s16 disabledEventFlag;
-    /* 0x4+0  */ s8  triggerType    : 4; /** `e_TriggerType` */
-    /* 0x4+4  */ u8  activationType : 4; /** `e_TriggerActivationType` */
-    /* 0x5    */ u8  pointOfInterestIdx; /** Index into `g_MapOverlayHeader.mapPoints`. */
-    /* 0x6    */ u8  requiredItemId;     /** `e_InvItemId` that player must use from item screen. */
-    /* 0x7    */ u8  __pad_7;
-    /* 0x8+0  */ u32 sysState        : 5; /** `e_SysState` used by the event. */
-    /* 0x8+5  */ u32 eventParam      : 8; /** Can be an ID of a `MapMsg`, sound effect, index into `mapEventFuncs`, or index into `mapPoints` for `areaLoad` events. */
-    /* 0x8+8  */ u32 flags_8_13      : 6; /** `e_EventDataUnkState` */
-    /* 0x8+13 */ u32 sfxPairIdx_8_19 : 5; /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
-    /* 0x8+19 */ u32 field_8_24      : 1;
-    /* 0x8+24 */ u32 mapIdx          : 6;
-    /* 0x8+25 */ u32 field_8_31      : 1;
-} s_EventData;
-STATIC_ASSERT_SIZEOF(s_EventData, 12);
 
 /** @brief User options configuration. */
 typedef struct _SaveUserConfig

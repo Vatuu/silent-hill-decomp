@@ -1,5 +1,5 @@
-#ifndef _COLLISION_H
-#define _COLLISION_H
+#ifndef _BODYPROG_COLLISION_COLLISION_H
+#define _BODYPROG_COLLISION_COLLISION_H
 
 // Related to collision?
 typedef struct
