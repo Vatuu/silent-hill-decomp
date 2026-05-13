@@ -44,4 +44,12 @@ typedef struct _LmHeader
     /* 0x10 */ u8*            modelOrder;
 } s_LmHeader;
 
+/** @brief Global LM model. */
+typedef struct _GlobalLm
+{
+    /* 0x0 */ s_LmHeader* lmHdr;
+    /* 0x4 */ s32         fileIdx;
+    /* 0x8 */ s32         queueIdx;
+} s_GlobalLm;
+
 #endif

@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_MAP_H
-#define _BODYPROG_MAP_H
+#ifndef _BODYPROG_MAP_MAP_H
+#define _BODYPROG_MAP_MAP_H
 
 #include "bodyprog/anim.h"
 #include "bodyprog/chara.h"
