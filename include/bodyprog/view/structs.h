@@ -20,7 +20,7 @@ typedef struct _VC_CAMERA_INTINFO
 {
     /* 0x0 */ u32   mode;        /** Mode state step. */
     /* 0x4 */ u8    mv_smooth;   /** `VC_CAM_MV_TYPE` */
-    // 1 byte of padding.
+              // 1 byte of padding.
     /* 0x6 */ q3_12 ev_cam_rate; /** Camera elevation rate. */
 } VC_CAMERA_INTINFO;
 STATIC_ASSERT_SIZEOF(VC_CAMERA_INTINFO, 8);
@@ -73,10 +73,10 @@ STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 24);
 typedef struct _VC_THROUGH_DOOR_CAM_PARAM
 {
     /* 0x0  */ u8      active_f;               /** `bool` | Active flag. */
-    // 3 bytes of padding.
+               // 3 bytes of padding.
     /* 0x4  */ q19_12  timer;
     /* 0x8  */ q3_12   rail_ang_y;             /** Rail Y angle. */
-    // 2 bytes of padding.
+               // 2 bytes of padding.
     /* 0xC  */ VECTOR3 rail_sta_pos;           /** Rail start position. */
     /* 0x18 */ q19_12  rail_sta_to_chara_dist; /** Distance from rail start position to locked-on character position. */
 } VC_THROUGH_DOOR_CAM_PARAM;
@@ -88,7 +88,7 @@ typedef struct _VC_NEAR_ROAD_DATA
     /* 0x0 */  VC_ROAD_DATA* road_p;              /** Path associated with the collision. */
     /* 0x4 */  u8            rd_dir_type;         /** `VC_ROAD_DIR_TYPE` */
     /* 0x5 */  u8            use_priority;        /** Usage priority in case of overlap. Higher values take precedence. */
-    // 2 bytes of padding.
+               // 2 bytes of padding.
     /* 0x8 */  q19_12        chara2road_sum_dist; /** Character to path distance. */
     /* 0xC */  q19_12        chara2road_vec_x;    /** Character to path distance on X axis. */
     /* 0x10 */ q19_12        chara2road_vec_z;    /** Character to path distance on Z axis. */
@@ -100,43 +100,43 @@ STATIC_ASSERT_SIZEOF(VC_NEAR_ROAD_DATA, 36);
 /** @brief Camera workspace. */
 typedef struct _VC_WORK
 {
-    /* 0x0   */ u8                        view_cam_active_f;            /** `bool` */
-    /* 0x4   */ VC_ROAD_DATA*             vc_road_ary_list;             /** Camera paths for the active map. */
-    /* 0x8   */ u32                       flags;                        /** `VC_FLAGS` */
-    /* 0xC   */ u8                        through_door_activate_init_f; /** `bool` */
-    // 3 bytes of padding.
-    /* 0x10  */ VC_THROUGH_DOOR_CAM_PARAM through_door;                 /** Active rail camera data? */
+    /* 0x0   */ u8                        view_cam_active_f;                         /** `bool` */
+    /* 0x4   */ VC_ROAD_DATA*             vc_road_ary_list;                          /** Camera paths for the active map. */
+    /* 0x8   */ u32                       flags;                                     /** `VC_FLAGS` */
+    /* 0xC   */ u8                        through_door_activate_init_f;              /** `bool` */
+                // 3 bytes of padding.
+    /* 0x10  */ VC_THROUGH_DOOR_CAM_PARAM through_door;                              /** Active rail camera data? */
     /* 0x1C  */ q3_12                     scr_half_ang_wy;
     /* 0x2E  */ q3_12                     scr_half_ang_wx;
-    /* 0x30  */ s16                       geom_screen_dist;             /** Related to `GsSetProjection`/`g_GameSys.gs_y_res_58A`. */
-    // 2 bytes of padding.
-    /* 0x34  */ VC_CAM_MV_PARAM           user_cam_mv_prm;              /** Look parameters? */
-    /* 0x44  */ VECTOR3                   cam_tgt_pos;                  /** Target camera position. */
-    /* 0x50  */ VECTOR3                   cam_pos;                      /** Q19.12 | Camera position. */
-    /* 0x5C  */ q3_12                     cam_mv_ang_y;                 /** Angular velocity on the Y axis. */
-    // 2 bytes of padding.
-    /* 0x60  */ VECTOR3                   cam_velo;                     /** Q19.12 | Camera velocity. */
-    /* 0x6C  */ q19_12                    old_cam_excl_area_r;          /** Previous exclusion area radius. */
+    /* 0x30  */ s16                       geom_screen_dist;                          /** Related to `GsSetProjection`/`g_GameSys.gs_y_res_58A`. */
+                // 2 bytes of padding.
+    /* 0x34  */ VC_CAM_MV_PARAM           user_cam_mv_prm;                           /** Look parameters? */
+    /* 0x44  */ VECTOR3                   cam_tgt_pos;                               /** Target camera position. */
+    /* 0x50  */ VECTOR3                   cam_pos;                                   /** Q19.12 | Camera position. */
+    /* 0x5C  */ q3_12                     cam_mv_ang_y;                              /** Angular velocity on the Y axis. */
+                // 2 bytes of padding.
+    /* 0x60  */ VECTOR3                   cam_velo;                                  /** Q19.12 | Camera velocity. */
+    /* 0x6C  */ q19_12                    old_cam_excl_area_r;                       /** Previous exclusion area radius. */
     /* 0x70  */ VC_WATCH_MV_PARAM         user_watch_mv_prm;
-    /* 0x7C  */ VECTOR3                   watch_tgt_pos;                /** Q19.12 | Target look-at position. */
-    /* 0x88  */ q19_12                    watch_tgt_max_y;              /** Max look-at Y offset. */
-    /* 0x8C  */ q3_12                     watch_tgt_ang_z;              /** Target look-at Z angle. */
-    /* 0x8E  */ SVECTOR                   cam_mat_ang;                  /** Matrix rotation. */
-    // 2 bytes of padding.
-    /* 0x98  */ MATRIX                    cam_mat;                      /** Matrix. */
-    /* 0xB8  */ SVECTOR                   ofs_cam_ang;                  /** Offset rotation. */
-    /* 0xC0  */ SVECTOR                   ofs_cam_ang_spd;              /** Offset rotational speed. */
-    /* 0xC8  */ SVECTOR                   base_cam_ang;                 /** Base rotation. */
-    /* 0xD0  */ s8                        unk_D0[8];                    // TODO: Possibly unused or debug data?
-    /* 0xD8  */ u8                        updateLookAtPoint;            /** `bool` */
-    // 3 bytes of padding.
+    /* 0x7C  */ VECTOR3                   watch_tgt_pos;                             /** Q19.12 | Target look-at position. */
+    /* 0x88  */ q19_12                    watch_tgt_max_y;                           /** Max look-at Y offset. */
+    /* 0x8C  */ q3_12                     watch_tgt_ang_z;                           /** Target look-at Z angle. */
+    /* 0x8E  */ SVECTOR                   cam_mat_ang;                               /** Matrix rotation. */
+                // 2 bytes of padding.
+    /* 0x98  */ MATRIX                    cam_mat;                                   /** Matrix. */
+    /* 0xB8  */ SVECTOR                   ofs_cam_ang;                               /** Offset rotation. */
+    /* 0xC0  */ SVECTOR                   ofs_cam_ang_spd;                           /** Offset rotational speed. */
+    /* 0xC8  */ SVECTOR                   base_cam_ang;                              /** Base rotation. */
+    /* 0xD0  */ s8                        unk_D0[8];                                 // TODO: Possibly unused or debug data?
+    /* 0xD8  */ u8                        updateLookAtPoint;                         /** `bool` */
+                // 3 bytes of padding.
     /* 0xDC  */ MATRIX                    lookAtMat;
-    /* 0xFC  */ u8                        updateLookAtMat;              /** `bool` */
-    // 1 byte of padding.
+    /* 0xFC  */ u8                        updateLookAtMat;                           /** `bool` */
+                // 1 byte of padding.
     /* 0xFE  */ q3_12                     cam_chara2ideal_ang_y;
-    /* 0x100 */ VECTOR3                   cam_tgt_velo;                 /** Target velocity. */
-    /* 0x10C */ q3_12                     cam_tgt_mv_ang_y;             /** Target Y angles. */
-    // 2 bytes of padding.
+    /* 0x100 */ VECTOR3                   cam_tgt_velo;                              /** Target velocity. */
+    /* 0x10C */ q3_12                     cam_tgt_mv_ang_y;                          /** Target Y angles. */
+                // 2 bytes of padding.
     /* 0x110 */ q19_12                    cam_tgt_spd;                               /** Target speed. */
     /* 0x114 */ VECTOR3                   chara_pos;                                 /** Locked-on character position. */
     /* 0x120 */ q19_12                    chara_bottom_y;                            /** Locked-on character bottom height. */

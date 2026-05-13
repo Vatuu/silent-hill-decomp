@@ -710,7 +710,7 @@ s_800F3DAC* func_800DD090(void);
 
 void func_800DD0EC(const VECTOR3* pos, s32 coordIdx);
 
-void func_800DD240(const VECTOR3* vec);
+void func_800DD240(const VECTOR3* pos);
 
 void func_800DD260(const VECTOR3* arg0, const VECTOR3* arg1);
 
@@ -724,11 +724,11 @@ void func_800DD464(const VECTOR3* arg0);
 
 void func_800DD4CC(s_800F3DAC* arg0);
 
-void func_800DD594(const VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords, s32 arg3);
+void func_800DD594(const VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* boneCoords, s32 arg3);
 
-void func_800DD62C(const VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800DD62C(const VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
 
-void func_800DD67C(const VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800DD67C(const VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
 
 void func_800DD6CC(void);
 void func_800DD738(const VECTOR3* pos0, const VECTOR3* pos1, q19_12 rotZ, q19_12 timer);
@@ -740,9 +740,9 @@ void func_800DD98C(bool disableDamage);
 void func_800DD9B0(s_SubCharacter* chara);
 void func_800DD9D4(s_SubCharacter* chara);
 void func_800DD9F8(s_SubCharacter* chara);
-bool Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* coords);
+bool Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
 
-void func_800DDB3C(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800DDB3C(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
 
 void func_800DDB68(s_SubCharacter* chara, s32 soundIdx);
 
@@ -755,25 +755,25 @@ void func_800DDDB0(s_SubCharacter* incubus);
 void func_800DDDD8(s_SubCharacter* incubus);
 void func_800DDEEC(s_SubCharacter* incubus);
 void func_800DDF14(s_SubCharacter* incubus);
-void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* coords);
-void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords);
-void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords);
-void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* coords);
+void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
+void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
+void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
+void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
 
 q19_12 func_800DEA90(void);
 
 void func_800DEAF4(s_SubCharacter* incubus);
 void func_800DEBA8(s_SubCharacter* incubus);
 void func_800DEC38(s_SubCharacter* incubus);
-void func_800DEC74(s_SubCharacter* incubus, GsCOORDINATE2* coords);
-void func_800DED68(s_SubCharacter* incubus, GsCOORDINATE2* coords);
+void func_800DEC74(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
+void func_800DED68(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
 void func_800DEE44(s_SubCharacter* incubus);
-void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* coords);
-void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* coords);
-void func_800DF044(s_SubCharacter* incubus, GsCOORDINATE2* coords);
+void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
+void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
+void func_800DF044(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
 void func_800DF074(s_SubCharacter* incubus);
-void Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void func_800DF1D4(void);
 void func_800DF750(void);
@@ -788,24 +788,24 @@ s32  func_800DFB04(void);
 void func_800DFB2C(bool disableDamage);
 void func_800DFB50(s_SubCharacter* chara);
 void func_800DFB74(s_SubCharacter* chara);
-bool Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
+bool Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
 void func_800DFCE4(s_SubCharacter* chara);
 void func_800DFE10(s_SubCharacter* chara);
 void func_800DFEF0(s_SubCharacter* chara);
 void func_800DFF28(s_SubCharacter* chara);
 void func_800DFF44(s_SubCharacter* chara);
-void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
 q19_12 func_800E04C4(void);
 void func_800E0528(s_SubCharacter* chara);
-void func_800E05DC(s_SubCharacter* chara, GsCOORDINATE2* coords);
-void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800E05DC(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
+void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
 void func_800E0728(s_SubCharacter* chara);
-void func_800E0774(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void func_800E07F0(s_SubCharacter* chara, GsCOORDINATE2* coords);
-void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords);
-void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800E0774(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void func_800E07F0(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
+void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
+void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
 void func_800E0914(s_SubCharacter* chara);
-void Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void func_800E0A34(void);
 void func_800E0B28(s32 arg0);
@@ -1022,7 +1022,7 @@ s_func_800DAD54* func_800DAD90(void);
 void func_800DADE0(s_func_800DAD54* arg0, s_800F3D48_0_0* arg1);
 
 // Does something wth character bones. Likely Harry-specific.
-void func_800DB154(GsCOORDINATE2* coords);
+void func_800DB154(GsCOORDINATE2* boneCoords);
 
 void func_800DB288(void);
 
