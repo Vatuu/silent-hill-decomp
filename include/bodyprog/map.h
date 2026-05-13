@@ -384,6 +384,6 @@ typedef struct _MapOverlayHeader
     /* 0x3CC */ VC_ROAD_DATA           cameraPaths[100];
     /* 0xD2C */ s_TriggerZone          triggerZones[200];
 } s_MapOverlayHeader;
-STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 0x104C);
+STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 4172);
 
 #endif

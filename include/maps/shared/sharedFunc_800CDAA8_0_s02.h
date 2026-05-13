@@ -185,7 +185,7 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_PlayerExtra* extra)
     }
 }
 
-void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra, GsCOORDINATE2* coord)
+void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords)
 {
     s_Collision coll;
     e_SfxId     sfxId;
@@ -202,13 +202,13 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
     sharedData_800D32A0_0_s02 = 0;
     sharedData_800E39D8_0_s00 = 0;
 
-    playerChara->properties.player.field_10C                            >>= 1;
+    player->properties.player.field_10C                            >>= 1;
     g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer = 0;
 
     func_8004C564(0, -1);
 
-    playerChara->properties.player.afkTimer        = Q12(0.0f);
-    playerChara->properties.player.exhaustionTimer = Q12(0.0f);
+    player->properties.player.afkTimer        = Q12(0.0f);
+    player->properties.player.exhaustionTimer = Q12(0.0f);
 
     switch (g_SysWork.playerWork.extra.state)
     {
@@ -226,7 +226,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             sharedData_800E39D8_0_s00 = 0;
             sharedData_800D32A0_0_s02 = g_SysWork.playerWork.player.properties.player.moveDistance_126;
 
-            func_8007FC48(playerChara, extra, 400);
+            func_8007FC48(player, extra, ANIM_STATUS(200, false));
 
             if (extra->model.controlState == 0)
             {
@@ -236,17 +236,17 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             switch (D_800C457C)
             {
                 case 3:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk56);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk56);
                     break;
 
                 case 4:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk57);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk57);
                     break;
             }
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -267,7 +267,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
             sharedData_800E39D8_0_s00 = 0;
             sharedData_800D32A0_0_s02 = g_SysWork.playerWork.player.properties.player.moveDistance_126;
-            func_8007FB94(playerChara, extra, 400);
+            func_8007FB94(player, extra, ANIM_STATUS(200, false));
 
             if (extra->model.controlState == 0)
             {
@@ -277,17 +277,17 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             switch (D_800C457C)
             {
                 case 3:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk56);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk56);
                     break;
 
                 case 4:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk57);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk57);
                     break;
             }
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -310,7 +310,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             sharedData_800D32A0_0_s02 = g_SysWork.playerWork.player.properties.player.moveDistance_126;
 
             Model_AnimStatusSet(&extra->model, HarryAnim_Idle, false);
-            Model_AnimStatusSet(&playerChara->model, HarryAnim_Idle, false);
+            Model_AnimStatusSet(&player->model, HarryAnim_Idle, false);
 
             if (extra->model.controlState == 0)
             {
@@ -320,17 +320,17 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             switch (D_800C457C)
             {
                 case 3:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk56);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk56);
                     break;
 
                 case 4:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk57);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk57);
                     break;
             }
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -350,7 +350,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             }
             else if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < Q12(1.4f))
             {
-                if (playerChara->model.anim.keyframeIdx >= 2)
+                if (player->model.anim.keyframeIdx >= 2)
                 {
                     g_SysWork.playerWork.player.properties.player.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                 }
@@ -363,7 +363,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             sharedData_800D32A0_0_s02 = g_SysWork.playerWork.player.properties.player.moveDistance_126;
 
             Model_AnimStatusSet(&extra->model, HarryAnim_WalkForward, false);
-            Model_AnimStatusSet(&playerChara->model, HarryAnim_WalkForward, false);
+            Model_AnimStatusSet(&player->model, HarryAnim_WalkForward, false);
 
             if (extra->model.controlState == 0)
             {
@@ -373,21 +373,21 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             switch (D_800C457C)
             {
                 case 0:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk54);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk54);
                     break;
 
                 case 3:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk56);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk56);
                     break;
 
                 case 4:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk57);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk57);
                     break;
             }
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -415,7 +415,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             sharedData_800D32A0_0_s02 = g_SysWork.playerWork.player.properties.player.moveDistance_126;
 
             Model_AnimStatusSet(&extra->model, HarryAnim_RunForward, false);
-            Model_AnimStatusSet(&playerChara->model, HarryAnim_RunForward, false);
+            Model_AnimStatusSet(&player->model, HarryAnim_RunForward, false);
 
             if (extra->model.controlState == 0)
             {
@@ -425,21 +425,21 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             switch (D_800C457C)
             {
                 case 1:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk53);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk53);
                     break;
 
                 case 3:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk56);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk56);
                     break;
 
                 case 4:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk57);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk57);
                     break;
             }
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -453,7 +453,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             sharedData_800D32A0_0_s02 = g_SysWork.playerWork.player.properties.player.moveDistance_126;
 
             Model_AnimStatusSet(&extra->model, HarryAnim_WalkBackward, false);
-            Model_AnimStatusSet(&playerChara->model, HarryAnim_WalkBackward, false);
+            Model_AnimStatusSet(&player->model, HarryAnim_WalkBackward, false);
 
             if (extra->model.controlState == 0)
             {
@@ -462,7 +462,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -485,7 +485,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             sharedData_800E39D8_0_s00 = g_DeltaTime * 7;
 
             Model_AnimStatusSet(&extra->model, HarryAnim_TurnRight, false);
-            Model_AnimStatusSet(&playerChara->model, HarryAnim_TurnRight, false);
+            Model_AnimStatusSet(&player->model, HarryAnim_TurnRight, false);
 
             if (extra->model.controlState == 0)
             {
@@ -495,21 +495,21 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             switch (D_800C457C)
             {
                 case 0:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk54);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk54);
                     break;
 
                 case 1:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk53);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk53);
                     break;
 
                 case 4:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk57);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk57);
                     break;
             }
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -535,7 +535,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             sharedData_800E39D8_0_s00 = g_DeltaTime * -7;
 
             Model_AnimStatusSet(&extra->model, HarryAnim_TurnLeft, false);
-            Model_AnimStatusSet(&playerChara->model, HarryAnim_TurnLeft, false);
+            Model_AnimStatusSet(&player->model, HarryAnim_TurnLeft, false);
 
             if (extra->model.controlState == 0)
             {
@@ -545,21 +545,21 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             switch (D_800C457C)
             {
                 case 0:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk54);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk54);
                     break;
 
                 case 1:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk53);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk53);
                     break;
 
                 case 3:
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk56);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk56);
                     break;
             }
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -571,12 +571,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk59
         case PlayerState_Unk59:
-            func_8007FB94(playerChara, extra, 0x12C);
+            func_8007FB94(player, extra, ANIM_STATUS(150, false));
             keyframeIdx = KEYFRAME_PlayerState_Unk59;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -584,12 +584,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk60
         case PlayerState_Unk60:
-            func_8007FB94(playerChara, extra, 0x12D);
+            func_8007FB94(player, extra, ANIM_STATUS(150, true));
             keyframeIdx = KEYFRAME_PlayerState_Unk60;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -597,11 +597,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk66
         case PlayerState_Unk66:
-            func_8007FB94(playerChara, extra, 0x138);
+            func_8007FB94(player, extra, ANIM_STATUS(156, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -611,11 +611,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk70
         case PlayerState_Unk70:
-            func_8007FB94(playerChara, extra, 342);
+            func_8007FB94(player, extra, ANIM_STATUS(171, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 #ifdef MAP0_S01
@@ -626,11 +626,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk71
         case PlayerState_Unk71:
-            func_8007FC48(playerChara, extra, 0x157);
+            func_8007FC48(player, extra, ANIM_STATUS(171, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -638,11 +638,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk73
         case PlayerState_Unk73:
-            func_8007FB94(playerChara, extra, 0x155);
+            func_8007FB94(player, extra, ANIM_STATUS(170, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -650,11 +650,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk74
         case PlayerState_Unk74:
-            func_8007FB94(playerChara, extra, 0x15E);
+            func_8007FB94(player, extra, ANIM_STATUS(175, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -662,11 +662,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk83
         case PlayerState_Unk83:
-            func_8007FB94(playerChara, extra, 0x163);
+            func_8007FB94(player, extra, ANIM_STATUS(177, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -677,16 +677,16 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 #ifdef HAS_PlayerState_Unk84
         case PlayerState_Unk84:
             keyframeIdxMax = 983; // TODO: Should probably be `keyframeIdx` instead like other cases, but doesn't match with that?
-            func_8007FB94(playerChara, extra, 0x164);
+            func_8007FB94(player, extra, ANIM_STATUS(178, false));
             g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
 
             if (sharedFunc_800D2DAC_0_s00() == 1 && g_SysWork.enablePlayerMatchAnim == false)
             {
                 g_SysWork.enablePlayerMatchAnim = true;
-                func_8005DC1C(Sfx_Unk1356, &playerChara->position, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1356, &player->position, Q8(0.5f), 0);
             }
 
-            if (playerChara->model.anim.keyframeIdx >= keyframeIdxMax)
+            if (player->model.anim.keyframeIdx >= keyframeIdxMax)
             {
                 func_8003D03C();
             }
@@ -695,7 +695,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk85
         case PlayerState_Unk85:
-            func_8007FB94(playerChara, extra, 0x169);
+            func_8007FB94(player, extra, ANIM_STATUS(180, true));
 #ifdef MAP1_S03
             func_8003D03C();
             WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(HarryHandMesh_1, 1));
@@ -705,7 +705,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 #endif
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -713,11 +713,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk86
         case PlayerState_Unk86:
-            func_8007FB94(playerChara, extra, 0x16A);
+            func_8007FB94(player, extra, ANIM_STATUS(181, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -727,12 +727,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk87
         case PlayerState_Unk87:
-            func_8007FC48(playerChara, extra, 0x166);
+            func_8007FC48(player, extra, ANIM_STATUS(179, false));
             keyframeIdx = KEYFRAME_PlayerState_Unk87;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -742,12 +742,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk88
         case PlayerState_Unk88:
-            func_8007FC48(playerChara, extra, 0x167);
+            func_8007FC48(player, extra, ANIM_STATUS(179, true));
             keyframeIdx = KEYFRAME_PlayerState_Unk88;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -757,11 +757,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk94
         case PlayerState_Unk94:
-            func_8007FB94(playerChara, extra, 0x164);
+            func_8007FB94(player, extra, ANIM_STATUS(178, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -771,11 +771,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk95
         case PlayerState_Unk95:
-            func_8007FB94(playerChara, extra, 0x170);
+            func_8007FB94(player, extra, ANIM_STATUS(184, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -785,12 +785,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk97
         case PlayerState_Unk97:
-            if (playerChara->model.anim.keyframeIdx >= 1065)
+            if (player->model.anim.keyframeIdx >= 1065)
             {
                 Savegame_EventFlagSet(EventFlag_99);
             }
 
-            if (playerChara->model.anim.keyframeIdx < 1090)
+            if (player->model.anim.keyframeIdx < 1090)
             {
                 func_8003D03C();
             }
@@ -799,11 +799,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 func_8003D01C();
             }
 
-            func_8007FB94(playerChara, extra, 0x172);
+            func_8007FB94(player, extra, ANIM_STATUS(185, false));
             keyframeIdx = 1062;
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -811,16 +811,16 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk98
         case PlayerState_Unk98:
-            func_8007FB94(playerChara, extra, 0x173);
+            func_8007FB94(player, extra, ANIM_STATUS(185, true));
             keyframeIdx = 1062;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
-            if (playerChara->model.anim.keyframeIdx >= 1147)
+            if (player->model.anim.keyframeIdx >= 1147)
             {
                 Savegame_EventFlagClear(EventFlag_99);
             }
@@ -829,11 +829,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk99
         case PlayerState_Unk99:
-            func_8007FB94(playerChara, extra, 0x175);
+            func_8007FB94(player, extra, ANIM_STATUS(186, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -843,11 +843,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk100
         case PlayerState_Unk100:
-            func_8007FB94(playerChara, extra, 0x174);
+            func_8007FB94(player, extra, ANIM_STATUS(186, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -857,12 +857,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 #if defined(HAS_PlayerState_Unk69) || defined(HAS_PlayerState_Unk105)
         case PlayerState_Unk69:
         case PlayerState_Unk105:
-            func_8007FC48(playerChara, extra, 0x14B);
+            func_8007FC48(player, extra, 0x14B);
 
             keyframeIdx = KEYFRAME_PlayerState_Unk69;
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -872,11 +872,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk72
         case PlayerState_Unk72:
-            func_8007FB94(playerChara, extra, 0x154);
+            func_8007FB94(player, extra, ANIM_STATUS(170, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -885,9 +885,9 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 #ifdef HAS_PlayerState_Unk81
         case PlayerState_Unk81:
             keyframeIdx = 998;
-            if (playerChara->model.anim.keyframeIdx >= (keyframeIdx + 3))
+            if (player->model.anim.keyframeIdx >= (keyframeIdx + 3))
             {
-                if (playerChara->model.anim.keyframeIdx <= (keyframeIdx + 24))
+                if (player->model.anim.keyframeIdx <= (keyframeIdx + 24))
                 {
                     if (g_SysWork.playerWork.player.properties.player.moveDistance_126 > Q12(0.2875f))
                     {
@@ -899,7 +899,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                     }
                     else if (g_SysWork.playerWork.player.properties.player.moveDistance_126 < Q12(0.2875f))
                     {
-                        if (playerChara->model.anim.keyframeIdx > 998)
+                        if (player->model.anim.keyframeIdx > 998)
                         {
                             g_SysWork.playerWork.player.properties.player.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                         }
@@ -919,12 +919,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             }
 
             sharedData_800D32A0_0_s02 = (s32)g_SysWork.playerWork.player.properties.player.moveDistance_126;
-            func_8007FC48(playerChara, extra, 0x168);
+            func_8007FC48(player, extra, ANIM_STATUS(180, false));
             headingAngle = Q12_ANGLE(180.0f);
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -932,11 +932,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk106
         case PlayerState_Unk106:
-            func_8007FB94(playerChara, extra, 0x17E);
+            func_8007FB94(player, extra, ANIM_STATUS(191, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -944,11 +944,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk107
         case PlayerState_Unk107:
-            func_8007FB94(playerChara, extra, 0x180);
+            func_8007FB94(player, extra, ANIM_STATUS(192, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -958,11 +958,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk108
         case PlayerState_Unk108:
-            func_8007FB94(playerChara, extra, 0x17F);
+            func_8007FB94(player, extra, ANIM_STATUS(191, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -972,11 +972,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk109
         case PlayerState_Unk109:
-            func_8007FB94(playerChara, extra, 0x181);
+            func_8007FB94(player, extra, ANIM_STATUS(192, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -984,12 +984,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk114
         case PlayerState_Unk114:
-            func_8007FB94(playerChara, extra, 0x186);
+            func_8007FB94(player, extra, ANIM_STATUS(195, false));
             keyframeIdx = KEYFRAME_PlayerState_Unk114;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -997,12 +997,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk115
         case PlayerState_Unk115:
-            func_8007FB94(playerChara, extra, 0x187);
+            func_8007FB94(player, extra, ANIM_STATUS(195, true));
             keyframeIdx = 699;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1010,11 +1010,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk116
         case PlayerState_Unk116:
-            func_8007FC48(playerChara, extra, 0x188);
+            func_8007FC48(player, extra, ANIM_STATUS(196, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1022,12 +1022,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk118
         case PlayerState_Unk118:
-            func_8007FB94(playerChara, extra, 0x18A);
+            func_8007FB94(player, extra, ANIM_STATUS(197, false));
             keyframeIdx = 750;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1035,11 +1035,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk119
         case PlayerState_Unk119:
-            func_8007FB94(playerChara, extra, 0x18B);
+            func_8007FB94(player, extra, ANIM_STATUS(197, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1047,12 +1047,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk120
         case PlayerState_Unk120:
-            func_8007FB94(playerChara, extra, 0x18C);
+            func_8007FB94(player, extra, ANIM_STATUS(198, false));
             keyframeIdx = 779;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1060,12 +1060,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk121
         case PlayerState_Unk121:
-            func_8007FB94(playerChara, extra, 0x18D);
+            func_8007FB94(player, extra, ANIM_STATUS(198, true));
             keyframeIdx = 807;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1074,15 +1074,15 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 #ifdef HAS_PlayerState_Unk122
         case PlayerState_Unk122:
 #ifdef MAP1_S03
-            func_8007FB94(playerChara, extra, 0x18E);
+            func_8007FB94(player, extra, ANIM_STATUS(199, false));
 #else
-            func_8007FC48(playerChara, extra, 0x18E);
+            func_8007FC48(player, extra, ANIM_STATUS(199, false));
 #endif
             keyframeIdx = KEYFRAME_PlayerState_Unk122;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1090,12 +1090,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk124
         case PlayerState_Unk124:
-            func_8007FC48(playerChara, extra, 0x191);
+            func_8007FC48(player, extra, ANIM_STATUS(200, true));
             keyframeIdx = 846;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1103,11 +1103,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk125
         case PlayerState_Unk125:
-            func_8007FC48(playerChara, extra, 0x192);
+            func_8007FC48(player, extra, ANIM_STATUS(201, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1115,12 +1115,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk126
         case PlayerState_Unk126:
-            func_8007FC48(playerChara, extra, 0x193);
+            func_8007FC48(player, extra, ANIM_STATUS(201, true));
             keyframeIdx = 980;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1128,12 +1128,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk127
         case PlayerState_Unk127:
-            func_8007FC48(playerChara, extra, 0x194);
+            func_8007FC48(player, extra, ANIM_STATUS(202, false));
             keyframeIdx = 1002;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1141,12 +1141,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk130
         case PlayerState_Unk130:
-            func_8007FC48(playerChara, extra, 0x197);
+            func_8007FC48(player, extra, ANIM_STATUS(203, true));
             keyframeIdx = 967;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1154,11 +1154,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk132
         case PlayerState_Unk132:
-            func_8007FB94(playerChara, extra, 343);
+            func_8007FB94(player, extra, 343);
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1166,17 +1166,17 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk76
         case PlayerState_Unk76:
-            func_8007FC48(playerChara, extra, 351);
+            func_8007FC48(player, extra, 351);
             keyframeIdx = 827;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
-            if (playerChara->model.anim.keyframeIdx > (keyframeIdx + 33) &&
-                playerChara->model.anim.keyframeIdx < (keyframeIdx + 46))
+            if (player->model.anim.keyframeIdx > (keyframeIdx + 33) &&
+                player->model.anim.keyframeIdx < (keyframeIdx + 46))
             {
                 func_8003D03C();
             }
@@ -1189,11 +1189,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk77
         case PlayerState_Unk77:
-            func_8007FC48(playerChara, extra, 352);
+            func_8007FC48(player, extra, 352);
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1201,11 +1201,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk78
         case PlayerState_Unk78:
-            func_8007FC48(playerChara, extra, 353);
+            func_8007FC48(player, extra, 353);
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1213,12 +1213,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk89
         case PlayerState_Unk89:
-            func_8007FC48(playerChara, extra, 363);
+            func_8007FC48(player, extra, 363);
             keyframeIdx = 948;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1226,11 +1226,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk90
         case PlayerState_Unk90:
-            func_8007FC48(playerChara, extra, 344);
+            func_8007FC48(player, extra, 344);
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1240,12 +1240,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk91
         case PlayerState_Unk91:
-            func_8007FB94(playerChara, extra, 365);
+            func_8007FB94(player, extra, 365);
             keyframeIdx = 1027;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1253,11 +1253,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk92
         case PlayerState_Unk92:
-            func_8007FB94(playerChara, extra, 366);
+            func_8007FB94(player, extra, 366);
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1265,12 +1265,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk93
         case PlayerState_Unk93:
-            func_8007FB94(playerChara, extra, 367);
+            func_8007FB94(player, extra, 367);
             keyframeIdx = 1055;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1278,11 +1278,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk110
         case PlayerState_Unk110:
-            func_8007FB94(playerChara, extra, 386);
+            func_8007FB94(player, extra, 386);
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1290,12 +1290,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk111
         case PlayerState_Unk111:
-            func_8007FB94(playerChara, extra, 0x183);
+            func_8007FB94(player, extra, ANIM_STATUS(193, true));
             keyframeIdx = KEYFRAME_PlayerState_Unk111;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1303,12 +1303,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk113
         case PlayerState_Unk113:
-            func_8007FB94(playerChara, extra, 0x185);
+            func_8007FB94(player, extra, ANIM_STATUS(194, true));
             keyframeIdx = KEYFRAME_PlayerState_Unk113;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1316,12 +1316,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk117
         case PlayerState_Unk117:
-            func_8007FC48(playerChara, extra, 0x189);
+            func_8007FC48(player, extra, ANIM_STATUS(196, true));
             keyframeIdx = KEYFRAME_PlayerState_Unk117;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1329,12 +1329,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk123
         case PlayerState_Unk123:
-            func_8007FB94(playerChara, extra, 0x18F);
+            func_8007FB94(player, extra, ANIM_STATUS(199, true));
             keyframeIdx = KEYFRAME_PlayerState_Unk123;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1342,11 +1342,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk128
         case PlayerState_Unk128:
-            func_8007FC48(playerChara, extra, 0x195);
+            func_8007FC48(player, extra, ANIM_STATUS(202, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1354,11 +1354,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk129
         case PlayerState_Unk129:
-            func_8007FC48(playerChara, extra, 0x196);
+            func_8007FC48(player, extra, ANIM_STATUS(203, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1366,12 +1366,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk133
         case PlayerState_Unk133:
-            func_8007FB94(playerChara, extra, 0x198);
+            func_8007FB94(player, extra, ANIM_STATUS(204, false));
             keyframeIdx = 1039;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1379,29 +1379,29 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk134
         case PlayerState_Unk134:
-            func_8007FB94(playerChara, extra, 0x199);
+            func_8007FB94(player, extra, ANIM_STATUS(204, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
             sharedFunc_800CDAA8_0_s02_Switch();
 
-            if (playerChara->model.anim.status & 1 << 0)
+            if (player->model.anim.status & 1 << 0)
             {
                 s_SubCharacter* new_var; // @hack Permuter find, maybe an inline here?
-                extra->model.anim.time       = Q12(g_MapOverlayHeader.harryMapAnimInfos[playerChara->model.anim.status - 76].startKeyframeIdx) + (new_var = g_SysWork.npcs)[0].model.anim.time - Q12(261.0f);
-                playerChara->model.anim.time = Q12(g_MapOverlayHeader.harryMapAnimInfos[playerChara->model.anim.status - 76].startKeyframeIdx) + new_var[0].model.anim.time - Q12(261.0f);
+                extra->model.anim.time       = Q12(g_MapOverlayHeader.harryMapAnimInfos[player->model.anim.status - 76].startKeyframeIdx) + (new_var = g_SysWork.npcs)[0].model.anim.time - Q12(261.0f);
+                player->model.anim.time = Q12(g_MapOverlayHeader.harryMapAnimInfos[player->model.anim.status - 76].startKeyframeIdx) + new_var[0].model.anim.time - Q12(261.0f);
 
                 if (D_800C4606)
                 {
-                    Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                    Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                     D_800C4606 = 0;
                 }
 
-                playerChara->model.anim.keyframeIdx = FP_FROM(playerChara->model.anim.time, Q12_SHIFT);
+                player->model.anim.keyframeIdx = FP_FROM(player->model.anim.time, Q12_SHIFT);
                 extra->model.anim.keyframeIdx       = FP_FROM(extra->model.anim.time, Q12_SHIFT);
             }
             break;
@@ -1409,11 +1409,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk135
         case PlayerState_Unk135:
-            func_8007FC48(playerChara, extra, 0x19A);
+            func_8007FC48(player, extra, ANIM_STATUS(205, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1423,11 +1423,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk136
         case PlayerState_Unk136:
-            func_8007FB94(playerChara, extra, 0x19B);
+            func_8007FB94(player, extra, ANIM_STATUS(205, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1437,11 +1437,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk137
         case PlayerState_Unk137:
-            func_8007FB94(playerChara, extra, 0x19C);
+            func_8007FB94(player, extra, ANIM_STATUS(206, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1451,12 +1451,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk138
         case PlayerState_Unk138:
-            func_8007FB94(playerChara, extra, 0x19D);
+            func_8007FB94(player, extra, ANIM_STATUS(206, true));
             keyframeIdx = 728;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1466,11 +1466,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk139
         case PlayerState_Unk139:
-            func_8007FC48(playerChara, extra, 0x19E);
+            func_8007FC48(player, extra, ANIM_STATUS(207, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1480,12 +1480,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk140
         case PlayerState_Unk140:
-            func_8007FC48(playerChara, extra, 0x19F);
+            func_8007FC48(player, extra, ANIM_STATUS(207, true));
             keyframeIdx = 982;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1493,12 +1493,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk141
         case PlayerState_Unk141:
-            func_8007FB94(playerChara, extra, 0x1A0);
+            func_8007FB94(player, extra, ANIM_STATUS(208, false));
             keyframeIdx = 1066;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1508,12 +1508,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk142
         case PlayerState_Unk142:
-            func_8007FB94(playerChara, extra, 0x1A1);
+            func_8007FB94(player, extra, ANIM_STATUS(208, true));
             keyframeIdx = 1016;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1523,11 +1523,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk143
         case PlayerState_Unk143:
-            func_8007FB94(playerChara, extra, 0x1A2);
+            func_8007FB94(player, extra, ANIM_STATUS(209, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1538,10 +1538,10 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk144
         case PlayerState_Unk144:
-            func_8007FC48(playerChara, extra, 0x1A3);
+            func_8007FC48(player, extra, ANIM_STATUS(209, true));
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1551,11 +1551,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk145
         case PlayerState_Unk145:
-            func_8007FC48(playerChara, extra, 0x1A4);
+            func_8007FC48(player, extra, ANIM_STATUS(210, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1565,12 +1565,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk146
         case PlayerState_Unk146:
-            func_8007FB94(playerChara, extra, 0x1A5);
+            func_8007FB94(player, extra, ANIM_STATUS(210, true));
             keyframeIdx = KEYFRAME_PlayerState_Unk146;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1580,12 +1580,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk147
         case PlayerState_Unk147:
-            func_8007FC48(playerChara, extra, 0x1A6);
+            func_8007FC48(player, extra, ANIM_STATUS(211, false));
             keyframeIdx = KEYFRAME_PlayerState_Unk147;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1593,11 +1593,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk148
         case PlayerState_Unk148:
-            func_8007FB94(playerChara, extra, 0x1A7);
+            func_8007FB94(player, extra, ANIM_STATUS(211, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1607,12 +1607,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk149
         case PlayerState_Unk149:
-            func_8007FB94(playerChara, extra, 0x1A8);
+            func_8007FB94(player, extra, ANIM_STATUS(212, false));
             keyframeIdx = 728;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1620,12 +1620,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk150
         case PlayerState_Unk150:
-            func_8007FC48(playerChara, extra, 0x1A9);
+            func_8007FC48(player, extra, ANIM_STATUS(212, true));
             keyframeIdx = 793;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1637,8 +1637,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk151:
             keyframeIdx = 1106;
 
-            if (playerChara->model.anim.keyframeIdx == (keyframeIdx + 11) ||
-                playerChara->model.anim.keyframeIdx == (keyframeIdx + 7))
+            if (player->model.anim.keyframeIdx == (keyframeIdx + 11) ||
+                player->model.anim.keyframeIdx == (keyframeIdx + 7))
             {
                 if (!(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk6))
                 {
@@ -1647,17 +1647,17 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 }
             }
 
-            if (playerChara->model.anim.keyframeIdx == (keyframeIdx + 8) ||
-                playerChara->model.anim.keyframeIdx == (keyframeIdx + 19))
+            if (player->model.anim.keyframeIdx == (keyframeIdx + 8) ||
+                player->model.anim.keyframeIdx == (keyframeIdx + 19))
             {
                 g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk6;
             }
 
-            func_8007FB94(playerChara, extra, 0x1AA);
+            func_8007FB94(player, extra, ANIM_STATUS(213, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1665,11 +1665,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk152
         case PlayerState_Unk152:
-            func_8007FC48(playerChara, extra, 0x1AB);
+            func_8007FC48(player, extra, ANIM_STATUS(213, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1679,12 +1679,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk153
         case PlayerState_Unk153:
-            func_8007FB94(playerChara, extra, 0x1AC);
+            func_8007FB94(player, extra, ANIM_STATUS(214, false));
             keyframeIdx = KEYFRAME_PlayerState_Unk153;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1694,7 +1694,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk154:
             keyframeIdx = 1006;
 
-            if (playerChara->model.anim.keyframeIdx > keyframeIdx + 72)
+            if (player->model.anim.keyframeIdx > keyframeIdx + 72)
             {
                 func_8003D03C();
             }
@@ -1703,11 +1703,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 func_8003D01C();
             }
 
-            func_8007FB94(playerChara, extra, 0x1AD);
+            func_8007FB94(player, extra, ANIM_STATUS(214, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1715,12 +1715,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk155
         case PlayerState_Unk155:
-            func_8007FB94(playerChara, extra, 0x1AE);
+            func_8007FB94(player, extra, ANIM_STATUS(215, false));
             keyframeIdx = 678;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1730,12 +1730,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk156
         case PlayerState_Unk156:
-            func_8007FB94(playerChara, extra, 0x1AF);
+            func_8007FB94(player, extra, ANIM_STATUS(215, true));
             keyframeIdx = 733;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1745,12 +1745,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk157
         case PlayerState_Unk157:
-            func_8007FB94(playerChara, extra, 0x1B0);
+            func_8007FB94(player, extra, ANIM_STATUS(216, false));
             keyframeIdx = 793;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1760,12 +1760,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk158
         case PlayerState_Unk158:
-            func_8007FB94(playerChara, extra, 0x1B1);
+            func_8007FB94(player, extra, ANIM_STATUS(216, true));
             keyframeIdx = 834;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1775,12 +1775,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk159
         case PlayerState_Unk159:
-            func_8007FC48(playerChara, extra, 0x1B2);
+            func_8007FC48(player, extra, ANIM_STATUS(217, false));
             keyframeIdx = 170;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1788,12 +1788,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk160
         case PlayerState_Unk160:
-            func_8007FC48(playerChara, extra, 0x1B3);
+            func_8007FC48(player, extra, ANIM_STATUS(217, true));
             keyframeIdx = 1126;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1801,18 +1801,18 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk161
         case PlayerState_Unk161:
-            func_8007FC48(playerChara, extra, 0x1B4);
+            func_8007FC48(player, extra, ANIM_STATUS(218, false));
             keyframeIdx = 1207;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
-            if (playerChara->model.anim.keyframeIdx == 1236)
+            if (player->model.anim.keyframeIdx == 1236)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk189);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk189);
             }
             break;
 #endif
@@ -1821,7 +1821,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk169:
             keyframeIdx = 864;
 
-            if (playerChara->model.anim.keyframeIdx <= keyframeIdx + 19)
+            if (player->model.anim.keyframeIdx <= keyframeIdx + 19)
             {
                 func_8003D01C();
             }
@@ -1830,11 +1830,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 func_8003D03C();
             }
 
-            func_8007FB94(playerChara, extra, 0x1BC);
+            func_8007FB94(player, extra, ANIM_STATUS(222, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1842,11 +1842,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk175
         case PlayerState_Unk175:
-            func_8007FB94(playerChara, extra, 0x1C2);
+            func_8007FB94(player, extra, ANIM_STATUS(225, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1854,13 +1854,13 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk186
         case PlayerState_Unk186:
-            func_8007FB94(playerChara, extra, 0x1CD);
+            func_8007FB94(player, extra, ANIM_STATUS(230, true));
 #ifdef MAP5_S02
             keyframeIdx = 889;
 #endif
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1868,11 +1868,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk164
         case PlayerState_Unk164:
-            func_8007FC48(playerChara, extra, 0x1B7);
+            func_8007FC48(player, extra, ANIM_STATUS(219, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1882,27 +1882,27 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk165:
             keyframeIdx = 953;
 
-            if (playerChara->model.anim.keyframeIdx == keyframeIdx + 5)
+            if (player->model.anim.keyframeIdx == keyframeIdx + 5)
             {
                 if (!(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk6))
                 {
                     // TODO: `0x340` is `Q12_ANGLE(73.2f)`?
-                    func_8006342C(EquippedWeaponId_Handgun, 0x340, playerChara->rotation.vy, coord);
+                    func_8006342C(EquippedWeaponId_Handgun, 0x340, player->rotation.vy, boneCoords);
                     func_8005F6B0(&g_SysWork.npcs[1], &(VECTOR3){ Q12(140.39f), Q12(-0.55f), Q12(22.76f) }, 3, 3);
                     g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk6;
                 }
             }
 
-            if (playerChara->model.anim.keyframeIdx == (keyframeIdx + 22))
+            if (player->model.anim.keyframeIdx == (keyframeIdx + 22))
             {
                 g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk6;
             }
 
-            func_8007FC48(playerChara, extra, 0x1B8); // TODO: Demagic
+            func_8007FC48(player, extra, ANIM_STATUS(220, false)); // TODO: Demagic
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1910,11 +1910,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk166
         case PlayerState_Unk166:
-            func_8007FB94(playerChara, extra, 0x1B9);
+            func_8007FB94(player, extra, ANIM_STATUS(220, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1922,11 +1922,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk187
         case PlayerState_Unk187:
-            func_8007FB94(playerChara, extra, 0x1CE);
+            func_8007FB94(player, extra, ANIM_STATUS(231, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1936,11 +1936,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk189
         case PlayerState_Unk189:
-            func_8007FC48(playerChara, extra, 0x1D0);
+            func_8007FC48(player, extra, ANIM_STATUS(232, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1948,12 +1948,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk162
         case PlayerState_Unk162:
-            func_8007FB94(playerChara, extra, 0x1B5);
+            func_8007FB94(player, extra, ANIM_STATUS(218, true));
             keyframeIdx = KEYFRAME_PlayerState_Unk162;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -1963,11 +1963,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk163
         case PlayerState_Unk163:
-            func_8007FC48(playerChara, extra, 0x1B6);
+            func_8007FC48(player, extra, ANIM_STATUS(219, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1975,12 +1975,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk167
         case PlayerState_Unk167:
-            func_8007FB94(playerChara, extra, 0x1BA);
+            func_8007FB94(player, extra, ANIM_STATUS(221, false));
             keyframeIdx = KEYFRAME_PlayerState_Unk167;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -1988,12 +1988,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk168
         case PlayerState_Unk168:
-            func_8007FB94(playerChara, extra, 0x1BB);
+            func_8007FB94(player, extra, ANIM_STATUS(221, true));
             keyframeIdx = 1363;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -2001,12 +2001,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk171
         case PlayerState_Unk171:
-            func_8007FB94(playerChara, extra, 0x1BE);
+            func_8007FB94(player, extra, ANIM_STATUS(223, false));
             keyframeIdx = 937;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -2014,12 +2014,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk172
         case PlayerState_Unk172:
-            func_8007FC48(playerChara, extra, 0x1BF);
+            func_8007FC48(player, extra, ANIM_STATUS(223, true));
             keyframeIdx = 961;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -2027,11 +2027,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk173
         case PlayerState_Unk173:
-            func_8007FC48(playerChara, extra, 0x1C0);
+            func_8007FC48(player, extra, ANIM_STATUS(224, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -2039,11 +2039,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk174
         case PlayerState_Unk174:
-            func_8007FC48(playerChara, extra, 0x1C1);
+            func_8007FC48(player, extra, ANIM_STATUS(224, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -2053,11 +2053,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk176:
             keyframeIdx = 1087;
             func_8003D01C();
-            func_8007FB94(playerChara, extra, 0x1C3);
+            func_8007FB94(player, extra, ANIM_STATUS(225, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -2066,11 +2066,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 #ifdef HAS_PlayerState_Unk177
         case PlayerState_Unk177:
             func_8003D01C();
-            func_8007FB94(playerChara, extra, 0x1C4);
+            func_8007FB94(player, extra, ANIM_STATUS(226, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -2079,11 +2079,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 #ifdef HAS_PlayerState_Unk184
         case PlayerState_Unk184:
             func_8003D01C();
-            func_8007FB94(playerChara, extra, 0x1CB);
+            func_8007FB94(player, extra, ANIM_STATUS(229, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -2092,11 +2092,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 #ifdef HAS_PlayerState_Unk178
         case PlayerState_Unk178:
             func_8003D01C();
-            func_8007FB94(playerChara, extra, 0x1C5);
+            func_8007FB94(player, extra, ANIM_STATUS(226, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -2106,7 +2106,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk179:
             keyframeIdx = 1198;
 
-            if (playerChara->model.anim.keyframeIdx >= keyframeIdx + 23)
+            if (player->model.anim.keyframeIdx >= keyframeIdx + 23)
             {
                 func_8003D01C();
             }
@@ -2115,11 +2115,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                 func_8003D03C();
             }
 
-            func_8007FB94(playerChara, extra, 0x1C6);
+            func_8007FB94(player, extra, ANIM_STATUS(227, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -2128,11 +2128,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 #ifdef HAS_PlayerState_Unk180
         case PlayerState_Unk180:
             func_8003D01C();
-            func_8007FB94(playerChara, extra, 0x1C7);
+            func_8007FB94(player, extra, ANIM_STATUS(227, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -2141,11 +2141,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 #ifdef HAS_PlayerState_Unk181
         case PlayerState_Unk181:
             func_8003D01C();
-            func_8007FC48(playerChara, extra, 0x1C8);
+            func_8007FC48(player, extra, ANIM_STATUS(228, false));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -2153,11 +2153,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk182
         case PlayerState_Unk182:
-            func_8007FC48(playerChara, extra, 0x1C9);
+            func_8007FC48(player, extra, ANIM_STATUS(228, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -2165,12 +2165,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk183
         case PlayerState_Unk183:
-            func_8007FC48(playerChara, extra, 0x1CA);
+            func_8007FC48(player, extra, ANIM_STATUS(229, false));
             keyframeIdx = 1358;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -2178,12 +2178,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk185
         case PlayerState_Unk185:
-            func_8007FC48(playerChara, extra, 0x1CC);
+            func_8007FC48(player, extra, ANIM_STATUS(230, false));
             keyframeIdx = 1363;
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
             break;
@@ -2191,17 +2191,17 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk170
         case PlayerState_Unk170:
-            func_8007FB94(playerChara, extra, 0x1BD);
+            func_8007FB94(player, extra, ANIM_STATUS(222, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
             keyframeIdx = 1411;
 
-            if (playerChara->model.anim.keyframeIdx < 1417)
+            if (player->model.anim.keyframeIdx < 1417)
             {
                 func_8003D01C();
             }
@@ -2214,11 +2214,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk188
         case PlayerState_Unk188:
-            func_8007FB94(playerChara, extra, 0x1CF);
+            func_8007FB94(player, extra, ANIM_STATUS(231, true));
 
             if (D_800C4606)
             {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                Player_ExtraStateSet(player, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
 
@@ -2227,7 +2227,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 #endif
     }
 
-    Collision_Get(&coll, playerChara->position.vx, playerChara->position.vz);
+    Collision_Get(&coll, player->position.vx, player->position.vz);
     func_8007FDE0(coll.groundType, &sfxId, &pitch0, &pitch1);
 
     switch (g_SysWork.playerWork.extra.state)
@@ -2236,10 +2236,10 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk52:
             if (g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Moving)
             {
-                if (playerChara->model.anim.status == ANIM_STATUS(HarryAnim_Idle, false))
+                if (player->model.anim.status == ANIM_STATUS(HarryAnim_Idle, false))
                 {
-                    func_8005DD44(sfxId, &playerChara->position, 64, pitch0);
-                    playerChara->properties.player.field_10C                 = pitch0 + 16;
+                    func_8005DD44(sfxId, &player->position, 64, pitch0);
+                    player->properties.player.field_10C                 = pitch0 + 16;
                     g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
                 }
             }
@@ -2248,16 +2248,16 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk53
         case PlayerState_Unk53:
-            Player_FootstepSfxPlay(5, playerChara, 18, 6, sfxId, pitch0);
+            Player_FootstepSfxPlay(5, player, 18, 6, sfxId, pitch0);
             g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk54
         case PlayerState_Unk54:
-            if (Player_FootstepSfxPlay(7, playerChara, 31, 41, sfxId, pitch1) != false)
+            if (Player_FootstepSfxPlay(7, player, 31, 41, sfxId, pitch1) != false)
             {
-                playerChara->properties.player.runTimer_F8++;
+                player->properties.player.runTimer_F8++;
             }
 
             g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Moving;
@@ -2266,41 +2266,41 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk56
         case PlayerState_Unk56:
-            Player_FootstepSfxPlay(27, playerChara, 204, 200, sfxId, pitch0);
+            Player_FootstepSfxPlay(27, player, 204, 200, sfxId, pitch0);
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk57
         case PlayerState_Unk57:
-            Player_FootstepSfxPlay(25, playerChara, 187, 191, sfxId, pitch0);
+            Player_FootstepSfxPlay(25, player, 187, 191, sfxId, pitch0);
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk59
         case PlayerState_Unk59:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, 0, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 5, 0, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk60
         case PlayerState_Unk60:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 7, 0, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 7, 0, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk76
         case PlayerState_Unk76:
-            if (ANIM_STATUS_IS_ACTIVE(playerChara->model.anim.status))
+            if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
             {
-                if (playerChara->model.anim.keyframeIdx < (keyframeIdx + 31))
+                if (player->model.anim.keyframeIdx < (keyframeIdx + 31))
                 {
-                    func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 1, Sfx_Unk1386);
+                    func_80071620(player->model.anim.status, player, keyframeIdx + 1, Sfx_Unk1386);
                 }
                 else
                 {
-                    func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 33, Sfx_Unk1369);
+                    func_80071620(player->model.anim.status, player, keyframeIdx + 33, Sfx_Unk1369);
                 }
             }
             break;
@@ -2308,13 +2308,13 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk81
         case PlayerState_Unk81:
-            if ((keyframeIdx + 19) >= playerChara->model.anim.keyframeIdx)
+            if ((keyframeIdx + 19) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 31, keyframeIdx + 19, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 31, keyframeIdx + 19, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 31, keyframeIdx + 40, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 31, keyframeIdx + 40, sfxId, pitch0);
             }
 
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
@@ -2323,38 +2323,38 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk87
         case PlayerState_Unk87:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 35, keyframeIdx + 17, Sfx_Unk1423, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 35, keyframeIdx + 17, Sfx_Unk1423, pitch0);
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk88
         case PlayerState_Unk88:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 15, keyframeIdx + 31, Sfx_Unk1423, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 15, keyframeIdx + 31, Sfx_Unk1423, pitch0);
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk91
         case PlayerState_Unk91:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 6, keyframeIdx + 6, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 6, keyframeIdx + 6, sfxId, pitch0);
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk92
         case PlayerState_Unk92:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 9, keyframeIdx + 9, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 9, keyframeIdx + 9, sfxId, pitch0);
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk93
         case PlayerState_Unk93:
-            if (ANIM_STATUS_IS_ACTIVE(playerChara->model.anim.status))
+            if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
             {
-                func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 6, Sfx_Unk1385);
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 18, 0, sfxId, pitch0);
+                func_80071620(player->model.anim.status, player, keyframeIdx + 6, Sfx_Unk1385);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 18, 0, sfxId, pitch0);
                 g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             }
             break;
@@ -2362,13 +2362,13 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk89
         case PlayerState_Unk89:
-            if ((keyframeIdx + 5) >= playerChara->model.anim.keyframeIdx)
+            if ((keyframeIdx + 5) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 16, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 5, keyframeIdx + 16, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 74, keyframeIdx + 77, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 74, keyframeIdx + 77, sfxId, pitch0);
             }
 
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
@@ -2377,35 +2377,35 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk97
         case PlayerState_Unk97:
-            if ((keyframeIdx + 4) >= playerChara->model.anim.keyframeIdx)
+            if ((keyframeIdx + 4) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 10, keyframeIdx + 4, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 10, keyframeIdx + 4, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 10, keyframeIdx + 13, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 10, keyframeIdx + 13, sfxId, pitch0);
             }
 
-            func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 26, Sfx_Unk1456);
+            func_80071620(player->model.anim.status, player, keyframeIdx + 26, Sfx_Unk1456);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk105
         case PlayerState_Unk105:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 12, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 5, keyframeIdx + 12, sfxId, pitch0);
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk113
         case PlayerState_Unk113:
-            if ((keyframeIdx + 5) >= playerChara->model.anim.keyframeIdx)
+            if ((keyframeIdx + 5) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 5, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 14, keyframeIdx + 5, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 21, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 14, keyframeIdx + 21, sfxId, pitch0);
             }
 
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
@@ -2414,9 +2414,9 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk111
         case PlayerState_Unk111:
-            if (ANIM_STATUS_IS_ACTIVE(playerChara->model.anim.status))
+            if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 11, keyframeIdx + 21, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 11, keyframeIdx + 21, sfxId, pitch0);
             }
 
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
@@ -2425,13 +2425,13 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk114
         case PlayerState_Unk114:
-            if ((keyframeIdx + 8) >= playerChara->model.anim.keyframeIdx)
+            if ((keyframeIdx + 8) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 13, keyframeIdx + 8, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 13, keyframeIdx + 8, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 13, keyframeIdx + 18, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 13, keyframeIdx + 18, sfxId, pitch0);
             }
 
             g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
@@ -2440,19 +2440,19 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk115
         case PlayerState_Unk115:
-            if ((keyframeIdx + 9) >= playerChara->model.anim.keyframeIdx)
+            if ((keyframeIdx + 9) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 9, keyframeIdx + 33, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 9, keyframeIdx + 33, sfxId, pitch0);
             }
             else
             {
-                if (keyframeIdx + 39 >= playerChara->model.anim.keyframeIdx)
+                if (keyframeIdx + 39 >= player->model.anim.keyframeIdx)
                 {
-                    Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 39, keyframeIdx + 33, sfxId, pitch0);
+                    Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 39, keyframeIdx + 33, sfxId, pitch0);
                 }
                 else
                 {
-                    Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 46, keyframeIdx + 42, sfxId, pitch0);
+                    Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 46, keyframeIdx + 42, sfxId, pitch0);
                 }
             }
             break;
@@ -2460,227 +2460,227 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk117
         case PlayerState_Unk117:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 34, 0, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 34, 0, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk118
         case PlayerState_Unk118:
-            if ((keyframeIdx + 8) >= playerChara->model.anim.keyframeIdx)
+            if ((keyframeIdx + 8) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 12, keyframeIdx + 8, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 12, keyframeIdx + 8, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 12, keyframeIdx + 16, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 12, keyframeIdx + 16, sfxId, pitch0);
             }
 
-            if (ANIM_STATUS_IS_ACTIVE(playerChara->model.anim.status))
+            if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
             {
-                func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 9, Sfx_Unk1539);
+                func_80071620(player->model.anim.status, player, keyframeIdx + 9, Sfx_Unk1539);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk120
         case PlayerState_Unk120:
-            if ((keyframeIdx + 5) >= playerChara->model.anim.keyframeIdx)
+            if ((keyframeIdx + 5) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 17, keyframeIdx + 5, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 17, keyframeIdx + 5, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 17, keyframeIdx + 25, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 17, keyframeIdx + 25, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk121
         case PlayerState_Unk121:
-            if ((keyframeIdx + 5) >= playerChara->model.anim.keyframeIdx)
+            if ((keyframeIdx + 5) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 12, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 5, keyframeIdx + 12, sfxId, pitch0);
             }
-            else if ((keyframeIdx + 23) >= playerChara->model.anim.keyframeIdx)
+            else if ((keyframeIdx + 23) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 23, keyframeIdx + 12, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 23, keyframeIdx + 12, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 29, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 5, keyframeIdx + 29, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk122
         case PlayerState_Unk122:
-            if ((keyframeIdx + 9) >= playerChara->model.anim.keyframeIdx)
+            if ((keyframeIdx + 9) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 9, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 14, keyframeIdx + 9, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 19, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 14, keyframeIdx + 19, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk123
         case PlayerState_Unk123:
-            if ((keyframeIdx + 9) >= playerChara->model.anim.keyframeIdx)
+            if ((keyframeIdx + 9) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 9, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 14, keyframeIdx + 9, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 19, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 14, keyframeIdx + 19, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk124
         case PlayerState_Unk124:
-            if (Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, 80, 87, sfxId, pitch1))
+            if (Player_FootstepSfxPlay(player->model.anim.status, player, 80, 87, sfxId, pitch1))
             {
-                playerChara->properties.player.runTimer_F8++;
+                player->properties.player.runTimer_F8++;
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk126
         case PlayerState_Unk126:
-            if ((keyframeIdx + 9) >= playerChara->model.anim.keyframeIdx)
+            if ((keyframeIdx + 9) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 16, keyframeIdx + 9, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 16, keyframeIdx + 9, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 16, keyframeIdx + 22, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 16, keyframeIdx + 22, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk127
         case PlayerState_Unk127:
-            if ((keyframeIdx + 5) >= playerChara->model.anim.keyframeIdx)
+            if ((keyframeIdx + 5) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 17, keyframeIdx + 5, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 17, keyframeIdx + 5, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 17, keyframeIdx + 26, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 17, keyframeIdx + 26, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk133
         case PlayerState_Unk133:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 5, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 5, keyframeIdx + 5, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk138
         case PlayerState_Unk138:
-            if (ANIM_STATUS_IS_ACTIVE(playerChara->model.anim.status))
+            if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 18, keyframeIdx + 14, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 18, keyframeIdx + 14, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk140
         case PlayerState_Unk140:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 25, keyframeIdx + 25, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 25, keyframeIdx + 25, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk141
         case PlayerState_Unk141:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 46, keyframeIdx + 5, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 46, keyframeIdx + 5, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk142
         case PlayerState_Unk142:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 10, keyframeIdx + 10, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 10, keyframeIdx + 10, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk130
         case PlayerState_Unk130:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 14, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 14, keyframeIdx + 14, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk146
         case PlayerState_Unk146:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 16, keyframeIdx + 10, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 16, keyframeIdx + 10, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk147
         case PlayerState_Unk147:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 11, keyframeIdx + 11, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 11, keyframeIdx + 11, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk149
         case PlayerState_Unk149:
-            if (playerChara->model.anim.keyframeIdx < (keyframeIdx + 2))
+            if (player->model.anim.keyframeIdx < (keyframeIdx + 2))
             {
-                func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx, Sfx_Unk1626);
+                func_80071620(player->model.anim.status, player, keyframeIdx, Sfx_Unk1626);
             }
             else
             {
-                if (playerChara->model.anim.keyframeIdx < (keyframeIdx + 8))
+                if (player->model.anim.keyframeIdx < (keyframeIdx + 8))
                 {
-                    if (func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 6, Q12(0.4f)) != false)
+                    if (func_80071620(player->model.anim.status, player, keyframeIdx + 6, Q12(0.4f)) != false)
                     {
                         func_800892DC(8, 0x30); // Hex?
                     }
                 }
                 else
                 {
-                    if (playerChara->model.anim.keyframeIdx < (keyframeIdx + 41))
+                    if (player->model.anim.keyframeIdx < (keyframeIdx + 41))
                     {
-                        func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 3, Sfx_Unk1627);
+                        func_80071620(player->model.anim.status, player, keyframeIdx + 3, Sfx_Unk1627);
                     }
                     else
                     {
-                        func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 42, Sfx_Unk1628);
+                        func_80071620(player->model.anim.status, player, keyframeIdx + 42, Sfx_Unk1628);
                     }
                 }
             }
 
-            if ((keyframeIdx + 43) >= playerChara->model.anim.keyframeIdx)
+            if ((keyframeIdx + 43) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 55, keyframeIdx + 43, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 55, keyframeIdx + 43, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 55, keyframeIdx + 59, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 55, keyframeIdx + 59, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk150
         case PlayerState_Unk150:
-            if (func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 21, Q12(0.4f)) != false)
+            if (func_80071620(player->model.anim.status, player, keyframeIdx + 21, Q12(0.4f)) != false)
             {
                 func_800892DC(8, 0x30); // Hex?
             }
 
-            if (keyframeIdx + 8 >= playerChara->model.anim.keyframeIdx)
+            if (keyframeIdx + 8 >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 8, keyframeIdx + 11, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 8, keyframeIdx + 11, sfxId, pitch0);
             }
-            else if ((keyframeIdx + 14) >= playerChara->model.anim.keyframeIdx)
+            else if ((keyframeIdx + 14) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 14, keyframeIdx + 11, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 14, keyframeIdx + 11, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 8, keyframeIdx + 16, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 8, keyframeIdx + 16, sfxId, pitch0);
             }
 
             break;
@@ -2688,150 +2688,150 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk151
         case PlayerState_Unk151:
-            if (ANIM_STATUS_IS_ACTIVE(playerChara->model.anim.status))
+            if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
             {
-                if ((keyframeIdx + 7) >= playerChara->model.anim.keyframeIdx)
+                if ((keyframeIdx + 7) >= player->model.anim.keyframeIdx)
                 {
-                    func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 7, Sfx_Unk1619);
+                    func_80071620(player->model.anim.status, player, keyframeIdx + 7, Sfx_Unk1619);
                 }
                 else
                 {
-                    func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 11, Sfx_Unk1619);
+                    func_80071620(player->model.anim.status, player, keyframeIdx + 11, Sfx_Unk1619);
                 }
 
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 16, keyframeIdx + 16, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 16, keyframeIdx + 16, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk153
         case PlayerState_Unk153:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 5, keyframeIdx + 12, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 5, keyframeIdx + 12, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk154
         case PlayerState_Unk154:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 7, keyframeIdx + 21, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 7, keyframeIdx + 21, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk155
         case PlayerState_Unk155:
-            if (playerChara->model.anim.keyframeIdx < 34)
+            if (player->model.anim.keyframeIdx < 34)
             {
-                if (keyframeIdx + 10 >= playerChara->model.anim.keyframeIdx)
+                if (keyframeIdx + 10 >= player->model.anim.keyframeIdx)
                 {
-                    Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 10, keyframeIdx + 16, sfxId, pitch0);
+                    Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 10, keyframeIdx + 16, sfxId, pitch0);
                 }
                 else
                 {
-                    if (keyframeIdx + 21 >= playerChara->model.anim.keyframeIdx)
+                    if (keyframeIdx + 21 >= player->model.anim.keyframeIdx)
                     {
-                        Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 21, keyframeIdx + 16, sfxId, pitch0);
+                        Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 21, keyframeIdx + 16, sfxId, pitch0);
                     }
                     else
                     {
-                        Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 28, keyframeIdx + 25, sfxId, pitch0);
+                        Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 28, keyframeIdx + 25, sfxId, pitch0);
                     }
                 }
             }
-            else if ((keyframeIdx + 16) >= playerChara->model.anim.keyframeIdx)
+            else if ((keyframeIdx + 16) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 34, keyframeIdx + 38, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 34, keyframeIdx + 38, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 42, keyframeIdx + 46, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 42, keyframeIdx + 46, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk156
         case PlayerState_Unk156:
-            if (playerChara->model.anim.keyframeIdx < 59)
+            if (player->model.anim.keyframeIdx < 59)
             {
-                if ((keyframeIdx + 9) >= playerChara->model.anim.keyframeIdx)
+                if ((keyframeIdx + 9) >= player->model.anim.keyframeIdx)
                 {
-                    Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 9, keyframeIdx + 22, sfxId, pitch0);
+                    Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 9, keyframeIdx + 22, sfxId, pitch0);
                 }
                 else
                 {
-                    if ((keyframeIdx + 30) >= playerChara->model.anim.keyframeIdx)
+                    if ((keyframeIdx + 30) >= player->model.anim.keyframeIdx)
                     {
-                        Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 30, keyframeIdx + 22, sfxId, pitch0);
+                        Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 30, keyframeIdx + 22, sfxId, pitch0);
                     }
                     else
                     {
-                        Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 52, keyframeIdx + 42, sfxId, pitch0);
+                        Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 52, keyframeIdx + 42, sfxId, pitch0);
                     }
                 }
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 59, keyframeIdx + 59, sfxId, pitch1);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 59, keyframeIdx + 59, sfxId, pitch1);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk157
         case PlayerState_Unk157:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 33, keyframeIdx + 25, sfxId, pitch1);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 33, keyframeIdx + 25, sfxId, pitch1);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk158
         case PlayerState_Unk158:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 12, keyframeIdx + 5, sfxId, pitch1);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 12, keyframeIdx + 5, sfxId, pitch1);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk159
         case PlayerState_Unk159:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 11, 0, sfxId, pitch1);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 11, 0, sfxId, pitch1);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk160
         case PlayerState_Unk160:
-            if ((keyframeIdx + 33) >= playerChara->model.anim.keyframeIdx)
+            if ((keyframeIdx + 33) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 42, keyframeIdx + 33, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 42, keyframeIdx + 33, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 42, keyframeIdx + 55, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 42, keyframeIdx + 55, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk161
         case PlayerState_Unk161:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 24, keyframeIdx + 22, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 24, keyframeIdx + 22, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk175
         case PlayerState_Unk175:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, 18, 6, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, 18, 6, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk186
         case PlayerState_Unk186:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, 0, keyframeIdx + 12, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, 0, keyframeIdx + 12, sfxId, pitch0);
             g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk162
         case PlayerState_Unk162:
-            if (ANIM_STATUS_IS_ACTIVE(playerChara->model.anim.status))
+            if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
             {
 #ifdef MAP7_S03
-                func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 60, Sfx_Unk1671);
+                func_80071620(player->model.anim.status, player, keyframeIdx + 60, Sfx_Unk1671);
 #else
-                func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 60, Sfx_Unk1623);
+                func_80071620(player->model.anim.status, player, keyframeIdx + 60, Sfx_Unk1623);
 #endif
             }
             break;
@@ -2839,74 +2839,74 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk163
         case PlayerState_Unk163:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 6, 0, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 6, 0, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk165
         case PlayerState_Unk165:
-            func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 5, Sfx_Unk1283);
+            func_80071620(player->model.anim.status, player, keyframeIdx + 5, Sfx_Unk1283);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk167
         case PlayerState_Unk167:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 10, 0, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 10, 0, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk168
         case PlayerState_Unk168:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 38, keyframeIdx + 22, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 38, keyframeIdx + 22, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk172
         case PlayerState_Unk172:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 29, 0, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 29, 0, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk176
         case PlayerState_Unk176:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 8, keyframeIdx + 19, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 8, keyframeIdx + 19, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk179
         case PlayerState_Unk179:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 8, keyframeIdx + 44, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 8, keyframeIdx + 44, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk183
         case PlayerState_Unk183:
-            if ((keyframeIdx + 11) >= playerChara->model.anim.keyframeIdx)
+            if ((keyframeIdx + 11) >= player->model.anim.keyframeIdx)
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 28, keyframeIdx + 11, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 28, keyframeIdx + 11, sfxId, pitch0);
             }
             else
             {
-                Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 28, keyframeIdx + 55, sfxId, pitch0);
+                Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 28, keyframeIdx + 55, sfxId, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk171
         case PlayerState_Unk171:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 9, keyframeIdx + 14, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 9, keyframeIdx + 14, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk185
         case PlayerState_Unk185:
-            Player_FootstepSfxPlay(playerChara->model.anim.status, playerChara, keyframeIdx + 38, keyframeIdx + 22, sfxId, pitch0);
+            Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 38, keyframeIdx + 22, sfxId, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk170
         case PlayerState_Unk170:
-            func_80071620(playerChara->model.anim.status, playerChara, keyframeIdx + 7, Sfx_Unk1629);
+            func_80071620(player->model.anim.status, player, keyframeIdx + 7, Sfx_Unk1629);
             break;
 #endif
         default:
@@ -2916,11 +2916,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
     newMoveSpeed = sharedData_800D32A0_0_s02;
 
-    playerChara->rotation.vy  = Q12_ANGLE_NORM_U((playerChara->rotation.vy + (sharedData_800E39D8_0_s00 >> 4)) + Q12_ANGLE(360.0f));
-    playerChara->headingAngle = Q12_ANGLE_NORM_U(playerChara->rotation.vy + headingAngle);
-    playerChara->moveSpeed    = newMoveSpeed;
-    playerChara->fallSpeed   += g_GravitySpeed;
+    player->rotation.vy  = Q12_ANGLE_NORM_U((player->rotation.vy + (sharedData_800E39D8_0_s00 >> 4)) + Q12_ANGLE(360.0f));
+    player->headingAngle = Q12_ANGLE_NORM_U(player->rotation.vy + headingAngle);
+    player->moveSpeed    = newMoveSpeed;
+    player->fallSpeed   += g_GravitySpeed;
 
-    coord->flg = false;
-    Math_RotMatrixZxyNegGte(&playerChara->rotation, &coord->coord);
+    boneCoords->flg = false;
+    Math_RotMatrixZxyNegGte(&player->rotation, &boneCoords->coord);
 }
