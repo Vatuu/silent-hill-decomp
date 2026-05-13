@@ -6,6 +6,9 @@
 #include "types.h"
 #include "lib_unk.h"
 
+#include "bodyprog/anim.h"
+#include "bodyprog/formats/anm.h"
+#include "bodyprog/model.h"
 #include "maps/characters/harry.h"
 
 struct _AnmHeader;
@@ -59,34 +62,6 @@ struct _Model;
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
-// TODO: Name might be wrong, but these have something to do with held item meshes.
-// First index is the mesh variant, second is the container of meshes (not bone index in skeleton)?
-// Data addresses are hardcoded.
-/** @brief Packs a model bone containing a mesh variant index and ??? in a single value.
- *
- * @param variantIdx Mesh variant index.
- * @param idx1 ???
- * @return Packed model bone containing a mesh variant index and ???
- */
-#define MODEL_BONE(variantIdx, idx1) \
-    (s16)((variantIdx) | ((idx1) << 4))
-
-/** @brief Retrieves the bone mesh variant index from a packed model bone.
- *
- * @param modelBone Packed model bone containing  a mesh variant index and ???
- * @return Bone mesh variant index.
- */
-#define MODEL_BONE_MESH_VARIANT_IDX_GET(modelBone) \
-    ((modelBone) & 0xF)
-
-/** @brief Retrieves ???
- *
- * @param modelBone Packed model bone containing a mesh variant index and ???
- * @return Unknown second index.
- */
-#define MODEL_BONE_IDX_1_GET(modelBone) \
-    ((modelBone) & 0xF0)
-
 /** @brief Packs a weapon attack containing a weapon ID and attack input type.
  *
  * @param weaponId Weapon ID.
@@ -103,51 +78,6 @@ struct _Model;
  */
 #define WEAPON_ATTACK_ID_GET(weaponAttack) \
     ((weaponAttack) % 10)
-
-/** @brief Packs an animation status containing an animation index and active flag.
- * `isActive` is `false` in the blend phase and `true` in the playback phase.
- *
- * @param animIdx Animation index.
- * @param isActive Active status. (`bool`).
- * @return Packed animation status containing the animation index and active flag.
- */
-#define ANIM_STATUS(animIdx, isActive) \
-    (((animIdx) << 1) | ((isActive) ? (1 << 0) : 0))
-
-/** @brief Retrieves the animation index from a packed animation status.
- *
- * @param animStatus Packed animation status containing an animation index and active flag.
- * @return Anim index.
- */
-#define ANIM_STATUS_IDX_GET(animStatus) \
-    ((animStatus) >> 1)
-
-/** @brief Checks if an animation is active.
- *
- * @param animStatus Packed animation status containing an animation index and active flag.
- * @return `true` if active, `false` otherwise.
- */
-#define ANIM_STATUS_IS_ACTIVE(animStatus) \
-    ((animStatus) & (1 << 0))
-
-/** @brief Checks if an animation time is within the keyframe index range `[low, high]`.
- *
- * @param animTime Animation time to check (Q*.12).
- * @param low Low keyframe index.
- * @param high High keyframe index.
- * @return `true` if the animation time is within the keyframe index range, `false` otherwise.
- */
-#define ANIM_TIME_RANGE_CHECK(animTime, low, high) \
-    (FP_FROM(animTime, Q12_SHIFT) >= (low) && FP_FROM(animTime, Q12_SHIFT) <= (high))
-
-/** @brief Gets the relative keyframe index of an animation time with a base offset.
- *
- * @param animTime Animation time (Q*.12).
- * @param baseOffset Base keyframe index offset.
- * @return Relative keyframe index.
- */
-#define ANIM_TIME_REL_KEYFRAME_IDX_GET(animTime, baseOffset) \
-    (FP_FROM(animTime, Q12_SHIFT) - (baseOffset))
 
 /** @brief Creates a bitmask with a contiguous range of bits set.
  * For use with `s_PlayerExtra::disabledAnimBones`.
@@ -1216,52 +1146,6 @@ typedef struct _GameWork
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 
-/** @brief Constant character animation info passed to `Anim_Update` functions. */
-typedef struct _AnimInfo
-{
-    /* 0x0 */ void (*playbackFunc)(struct _Model* model, struct _AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, struct _AnimInfo* animInfo);
-    /* 0x4 */ u8 status;                        /** Packed anim status. Init base? See `s_ModelAnimData::status`. */
-    /* 0x5 */ s8 hasVariableDuration;           /** `bool` | Use `duration.variableFunc`: `true`, Use `duration.constant`: `false`. */
-    /* 0x6 */ u8 linkStatus;                    /** Packed anim status link target. See `s_ModelAnim::status`. */
-              // 1 byte of padding.
-              union
-              {
-                  q19_12 constant;              /** Constant duration at 30 FPS. */
-                  q19_12 (*variableFunc)(void); /** Variable duration at 30 FPS via a function. Allows animations to be sped up or slowed down. */
-    /* 0x8 */ } duration;
-    /* 0xC */ s16 startKeyframeIdx;             /** Start keyframe index. Sometimes `NO_VALUE`, unknown why. */
-    /* 0xE */ s16 endKeyframeIdx;               /** End keyframe index. */
-} s_AnimInfo;
-STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
-
-/** @brief Character model animation. */
-typedef struct _ModelAnim
-{
-    /* 0x0  */ u8          status;             /** Is active: bit 0, Anim index: bits 1-7. */
-    /* 0x1  */ u8          mapAnimStatusStart; /** Start anim status of map-specific anim infos. Only used for Harry. */
-    /* 0x2  */ u16         flags;              /** `e_AnimFlags` */
-    /* 0x4  */ q19_12      time;               /** Time on timeline. */
-    /* 0x8  */ s16         keyframeIdx;        /** Active keyframe index. */
-    /* 0xA  */ q3_12       alpha;              /** Keyframe progress alpha. */
-    /* 0xC  */ s_AnimInfo* baseAnimInfos;      /** Anim infos. For Harry, used for base anims. */
-    /* 0x10 */ s_AnimInfo* mapAnimInfos;       /** Map-specific anim infos. Only used for Harry. */
-} s_ModelAnim;
-STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
-
-/** @brief Character model. */
-typedef struct _Model
-{
-    /* 0x0 */ s8          charaId;      /** `e_CharaId` */
-    /* 0x1 */ u8          paletteIdx;   /** Changes the texture palette index for this model. */
-    /* 0x2 */ u8          controlState; /** Active character control state. */
-    /* 0x3 */ u8          stateStep;    /** Step for the current `controlState`. */ 
-                                        // In `s_PlayerExtra` always 1, set to 0 for 1 tick when anim state appears to change.
-                                        // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
-                                        // Sometimes holds actual anim index?
-    /* 0x4 */ s_ModelAnim anim;
-} s_Model;
-STATIC_ASSERT_SIZEOF(s_Model, 24);
-
 // TODO: Unsure if this struct is puppet doctor specific or shared with all characterss. Pointer gets set at puppetDoc+0x124.
 typedef struct
 {
@@ -1278,7 +1162,7 @@ typedef struct
     q19_12      field_2C;
     s8          unk_30[4];
 } s_800D5710;
-STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
+STATIC_ASSERT_SIZEOF(s_800D5710, 52);
 
 // Collision-related.
 typedef struct
@@ -2308,73 +2192,6 @@ static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 
 /** @brief Checks if the `s_SubCharacter*` has the given `flags` value set. */
 #define Chara_HasFlag(chara, flag) \
     ((chara)->flags & (flag))
-
-/** @brief Sets given animation flags for a model.
- *
- * @param model Model to update (`s_Model`).
- * @param flag Flags to set.
- */
-#define Model_AnimFlagsSet(model, setFlags) \
-    (model)->anim.flags |= (setFlags)
-
-/** @brief Clears given animation flags for a model.
- *
- * @param model Model to update (`s_Model`).
- * @param clearFlags Flags to clear.
- */
-#define Model_AnimFlagsClear(model, clearFlags) \
-    (model)->anim.flags &= ~(clearFlags)
-
-/** @brief Updates a model anim if `model->stateStep` is 0.
- *
- * @param model Model to update.
- * @param animIdx Anim index to set.
- * @param isActive Active status to set.
- */
-static inline void Model_AnimStatusSet(s_Model* model, s32 animIdx, bool isActive)
-{
-    if (model->stateStep == 0)
-    {
-        model->anim.status = ANIM_STATUS(animIdx, isActive);
-        model->stateStep++;
-    }
-}
-
-/** @brief Increments the anim status of a model anim.
- *
- * @param anim Anim to update.
- */
-static inline void ModelAnim_StatusIncrement(s_ModelAnim* anim)
-{
-    anim->status++;
-}
-
-/** @brief Decrements the anim status of a model anim.
- *
- * @param anim Anim to update.
- */
-static inline void ModelAnim_StatusDecrement(s_ModelAnim* anim)
-{
-    anim->status--;
-}
-
-/** @brief Similar to `Model_AnimStatusSet`, but also sets `anim.time` and `anim.keyframeIdx`
- * from the `animInfos` `s_AnimInfo` array.
- *
- * @param model Model to update.
- * @param animIdx Anim index to set.
- * @param isActive Active status to set.
- * @param animInfos Reference anim infos.
- * @param animInfosOffset Anim infos offset.
- */
-#define Model_AnimStatusKeyframeSet(model, animIdx, isActive, animInfos, animInfosOffset)                                 \
-    if ((model).stateStep == 0)                                                                                           \
-    {                                                                                                                     \
-        (model).anim.status = ANIM_STATUS(animIdx, isActive);                                                             \
-        (model).stateStep++;                                                                                              \
-        (model).anim.time        = Q12((animInfos)[ANIM_STATUS(animIdx, isActive) + (animInfosOffset)].startKeyframeIdx); \
-        (model).anim.keyframeIdx = (animInfos)[ANIM_STATUS(animIdx, (isActive) + (animInfosOffset))].startKeyframeIdx;    \
-    }
 
 /** @brief Resets a humanoid character's control state to `*_None` if the control subsystem was flagged for a reset.
  *
