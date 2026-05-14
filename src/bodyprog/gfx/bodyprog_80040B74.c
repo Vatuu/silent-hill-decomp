@@ -1662,7 +1662,7 @@ void Ipd_ChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, bool
 {
     #define CHUNK_SUBCELL_SIZE Q8(8.0f)
 
-    s_BoneModel         modelInfo;
+    s_ModelInfo         modelInfo;
     GsCOORDINATE2       modelCoord;
     MATRIX              viewMat;
     MATRIX              worldMat;

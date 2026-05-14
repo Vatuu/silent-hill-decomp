@@ -478,7 +478,7 @@ typedef struct _WorldObjectMetadata
 /** @brief World object model. TODO: Rename to "static object"? Conceptually it's what this is in modern terms. */
 typedef struct _WorldObjectModel
 {
-    /* 0x0  */ s_BoneModel           modelInfo;
+    /* 0x0  */ s_ModelInfo           modelInfo;
     /* 0x10 */ s_WorldObjectMetadata metadata;
 } s_WorldObjectModel;
 STATIC_ASSERT_SIZEOF(s_WorldObjectModel, 28);
@@ -1890,7 +1890,7 @@ void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr);
 void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3);
 
 /** Anim func. */
-void Skeleton_BoneModelAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2);
+void Skeleton_ModelInfoAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2);
 
 /** Anim func. Param names are rough. */
 void func_80045258(s_LinkedBone** boneOrd, s_LinkedBone* bones, s32 boneIdx, s_LmHeader* lmHdr);
@@ -2016,11 +2016,11 @@ void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool isTransparent);
 s32 Lm_MaterialCountGet(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr);
 
 /** TODO: Unknown `arg3` type. */
-void func_80059D50(s32 arg0, s_BoneModel* modelInfo, MATRIX* viewMat, bool arg3, GsOT_TAG* tag);
+void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* viewMat, bool arg3, GsOT_TAG* tag);
 
 void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 arg3, GsOT_TAG* tag);
 
-void func_8005A21C(s_BoneModel* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* viewMat);
+void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* viewMat);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
@@ -2087,13 +2087,13 @@ void StringCopy(char* prevStr, char* newStr);
 void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, GsOT* ot, s32 arg7);
 
 /** Crucial 3D drawing function. */
-void func_80057090(s_BoneModel* modelInfo, GsOT* otTag, s32 arg2, MATRIX* viewMat, MATRIX* worldMat, u16 arg5);
+void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 arg2, MATRIX* viewMat, MATRIX* worldMat, u16 arg5);
 
 s32 func_800571D0(u32 arg0);
 
 void WorldEnv_LightTransform(MATRIX* worldMat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
-void func_80057344(s_BoneModel* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* mat);
+void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* mat);
 
 void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData);
 

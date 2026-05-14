@@ -13,6 +13,40 @@
                                 */
 #define CHARA_FORCE_FREE_ALL 0xFF /** `Chara_Load` can force free already loaded models to make room for new ones. */
 
+/** @brief Character flags. Used by `s_SubCharacter::flags`. */
+typedef enum _CharaFlags
+{
+    CharaFlag_None          = 0,
+    CharaFlag_PadlockBroken = 1 << 0, /** Only used by Padlock character. */
+    CharaFlag_Unk2          = 1 << 1, // Targeted by player?
+    CharaFlag_Hit           = 1 << 2, // Associated with recoil-causing hit?
+    CharaFlag_Unk4          = 1 << 3,
+    CharaFlag_Unk5          = 1 << 4, // Camera-related. Only used by Stalker? Maybe only for alley scenario?
+    CharaFlag_Damaged       = 1 << 5,
+    CharaFlag_Dead          = 1 << 6, // Unure.
+    CharaFlag_Unk8          = 1 << 7,
+    CharaFlag_Unk9          = 1 << 8  // Only set for bosses and NPCs in special scenarios.
+} e_CharaFlags;
+
+/** @brief Character group flags. Used by `s_SysWork::charaGroupFlags`. */
+typedef enum _CharaGroupFlags
+{
+    CharaGroupFlag_None = 0,
+    CharaGroupFlag_0    = 1 << 0,
+    CharaGroupFlag_1    = 1 << 1
+} e_CharaGroupFlags;
+
+/** @brief Character collision states. */
+typedef enum _CharaCollisionState
+{
+    CharaCollisionState_Ignore = 0,
+    CharaCollisionState_Player = 1,
+    CharaCollisionState_2      = 2,
+    CharaCollisionState_Npc    = 3,
+    CharaCollisionState_4      = 4,
+    CharaCollisionState_5      = 5
+} e_CharaCollisionState;
+
 /** @brief Character IDs. The `CHARA_FILE_INFOS` array associates each character ID with asset files. */
 typedef enum _CharaId
 {
@@ -118,7 +152,7 @@ typedef struct _PropsPlayer
     /* 0x114 */ q19_12        gasWeaponPowerTimer; // Timer for the rock drill and chainsaw power.
     /* 0x118 */ s16           field_118; // q3_12?
     /* 0x11A */ s8            __pad_11A[2];
-    /* 0x11C */ s32 flags_11C; /** `e_PlayerFlags` */
+    /* 0x11C */ s32           flags_11C; /** `e_PlayerFlags` */
     /* 0x120 */ q3_12         quickTurnHeadingAngle; /** Target quick turn heading angle. */
     /* 0x122 */ q3_12         field_122; // Specially used when aiming an enemy. Y angle delta to target? 
     /* 0x124 */ q3_12         headingAngle;

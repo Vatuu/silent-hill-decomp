@@ -5,18 +5,10 @@
 #include "bodyprog/formats/model.h"
 #include "main/fsqueue.h"
 
-typedef struct _BoneModel
-{
-    /* 0x0 */ s32            field_0; // Bone flags?
-    /* 0x4 */ GsCOORDINATE2* coord;
-    /* 0x8 */ s_ModelHeader* modelHdr;
-    /* 0xC */ s32            modelIdx;
-} s_BoneModel;
-
 /** @brief IPD skeleton model bone. */
 typedef struct _Bone
 {
-    /* 0x0  */ s_BoneModel modelInfo;
+    /* 0x0  */ s_ModelInfo modelInfo;
     /* 0x10 */ s8          idx;
                // 3 bytes of padding.
 } s_Bone;

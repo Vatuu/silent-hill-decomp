@@ -39,7 +39,7 @@ typedef struct _MeshHeader
 } s_MeshHeader;
 STATIC_ASSERT_SIZEOF(s_MeshHeader, 24);
 
-/** @brief Model data headder. */
+/** @brief Model data header. */
 typedef struct _ModelHeader
 {
     /* 0x0   */ u_Filename    name_0;
@@ -53,5 +53,13 @@ typedef struct _ModelHeader
     /* 0xC   */ s_MeshHeader* meshHdrs_C;
 } s_ModelHeader;
 STATIC_ASSERT_SIZEOF(s_ModelHeader, 16);
+
+typedef struct _ModelInfo
+{
+    /* 0x0 */ s32            field_0; // Bone flags?
+    /* 0x4 */ GsCOORDINATE2* coord;
+    /* 0x8 */ s_ModelHeader* modelHdr;
+    /* 0xC */ s32            modelIdx;
+} s_ModelInfo;
 
 #endif

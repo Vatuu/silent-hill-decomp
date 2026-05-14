@@ -59,6 +59,35 @@ typedef enum _SpeedZoneType
     SpeedZoneType_Fast   = 2
 } e_SpeedZoneType;
 
+/** @brief Event triger activation types. */
+typedef enum _TriggerActivationType
+{
+    TriggerActivationType_None      = 0, /** No activation conditions other than event flag/trigger checks. */
+    TriggerActivationType_Exclusive = 1, /** Prevents other events from being triggered while the event is active. */
+    TriggerActivationType_Button    = 2, /** Requires a button press. */
+    TriggerActivationType_Item      = 3, /** Requires an inventory item. */
+} e_TriggerActivationType;
+
+/** @brief Event trigger types. */
+typedef enum _TriggerType
+{
+    TriggerType_EndOfArray     = NO_VALUE,
+    TriggerType_None           = 0, /** Skips trigger/activation type checks. Always activates if required event flags are set and skips processing later events until flags deactivate it. */
+    TriggerType_TouchAabb      = 1, /** Player has collided with an AABB. */
+    TriggerType_TouchFacing    = 2, /** Player collided with a trigger is facing toward it. */
+    TriggerType_TouchObbFacing = 3, /** Player collided with an OBB and is facing toward it. */
+    TriggerType_TouchObb       = 4, /** Player collided with an OBB. No facing requirement. */
+} e_TriggerType;
+
+/** Some events indicate specific cutscenes behavior via flags. */
+typedef enum _EventDataUnkState
+{
+    EventParamUnkState_None = 0,
+    EventParamUnkState_0    = 1 << 0, /** Possible name: `EventParamUnkState_UnfreezeWorld`. Used to freeze/unfreeze the game world. */
+    EventParamUnkState_1    = 1 << 1, /** Triggers cutscenes that go to the in-game mode. */
+    EventParamUnkState_2    = 1 << 2
+} e_EventDataUnkState;
+
 typedef enum _WorldModelLocation
 {
     WorldModelLocation_None   = 0,

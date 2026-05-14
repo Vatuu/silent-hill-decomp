@@ -199,25 +199,6 @@
 #define CLEAR_FLAG(ptr, idx) \
     ((((u32*)ptr)[(idx) >> 5] &= ~((1 << 0) << ((idx) & 0x1F))))
 
-/** @brief Character group flags. Used by `s_SysWork::charaGroupFlags`. */
-typedef enum _CharaGroupFlags
-{
-    CharaGroupFlag_None = 0,
-    CharaGroupFlag_0    = 1 << 0,
-    CharaGroupFlag_1    = 1 << 1
-} e_CharaGroupFlags;
-
-/** @brief Character collision states. */
-typedef enum _CharaCollisionState
-{
-    CharaCollisionState_Ignore = 0,
-    CharaCollisionState_Player = 1,
-    CharaCollisionState_2      = 2,
-    CharaCollisionState_Npc    = 3,
-    CharaCollisionState_4      = 4,
-    CharaCollisionState_5      = 5
-} e_CharaCollisionState;
-
 /** @brief Sync modes used by `DrawSync` and `VSync`. */
 typedef enum _SyncMode
 {
@@ -459,21 +440,6 @@ typedef enum _ControllerFlags
     ControllerFlag_LStickLeft   = 1 << 27  // 0x8000000
 } e_ControllerFlags;
 
-/** @brief Character flags. Used by `s_SubCharacter::flags`. */
-typedef enum _CharaFlags
-{
-    CharaFlag_None          = 0,
-    CharaFlag_PadlockBroken = 1 << 0, /** Only used by Padlock character. */
-    CharaFlag_Unk2          = 1 << 1, // Targeted by player?
-    CharaFlag_Hit           = 1 << 2, // Associated with recoil-causing hit?
-    CharaFlag_Unk4          = 1 << 3,
-    CharaFlag_Unk5          = 1 << 4, // Camera-related. Only used by Stalker? Maybe only for alley scenario?
-    CharaFlag_Damaged       = 1 << 5,
-    CharaFlag_Dead          = 1 << 6, // Unure.
-    CharaFlag_Unk8          = 1 << 7,
-    CharaFlag_Unk9          = 1 << 8  // Only set for bosses and NPCs in special scenarios.
-} e_CharaFlags;
-
 /** @brief Character animation flags. */
 typedef enum _AnimFlags
 {
@@ -595,38 +561,6 @@ typedef enum _EquippedWeaponId
     EquippedWeaponId_GasolineTank   = 98
 } e_EquippedWeaponId;
 
-/** @brief Player control flags. */
-typedef enum _PlayerFlags
-{
-    PlayerFlag_None           = 0,
-    PlayerFlag_Unk0           = 1 << 0,
-    PlayerFlag_Shooting       = 1 << 1,
-    PlayerFlag_Unk2           = 1 << 2,
-    PlayerFlag_WallStopRight  = 1 << 3, /** Use right leg for wall stop. */
-    PlayerFlag_Unk4           = 1 << 4,
-    PlayerFlag_Unk5           = 1 << 5, // `PlayerFlag_MoveBackward`?
-    PlayerFlag_Unk6           = 1 << 6,
-    PlayerFlag_Unk7           = 1 << 7,
-    PlayerFlag_Unk8           = 1 << 8,
-    PlayerFlag_Unk9           = 1 << 9,
-    PlayerFlag_Unk10          = 1 << 10, // `PlayerFlag_MeleeAttack`?
-    PlayerFlag_Unk11          = 1 << 11, // `PlayerFlag_GunAttack`?
-    PlayerFlag_Unk12          = 1 << 12,
-    PlayerFlag_SfxActive      = 1 << 13,
-    PlayerFlag_DamageReceived = 1 << 14,
-    PlayerFlag_Moving         = 1 << 15,
-    PlayerFlag_Unk16          = 1 << 16,
-    PlayerFlag_Unk17          = 1 << 17,
-    PlayerFlag_Unk18          = 1 << 18,
-    PlayerFlag_Unk19          = 1 << 19,
-    PlayerFlag_Unk20          = 1 << 20,
-
-    PlayerFlag_Unk28          = 1 << 28,
-    PlayerFlag_Unk29          = 1 << 29,
-    PlayerFlag_Unk30          = 1 << 30,
-    PlayerFlag_Unk31          = 1 << 31
-} e_PlayerFlags;
-
 /** @brief Game difficulties. */
 typedef enum _GameDifficulty
 {
@@ -634,35 +568,6 @@ typedef enum _GameDifficulty
     GameDifficulty_Normal = 0,
     GameDifficulty_Hard   = 1
 } e_GameDifficulty;
-
-/** @brief Event trigger types. */
-typedef enum _TriggerType
-{
-    TriggerType_EndOfArray     = NO_VALUE,
-    TriggerType_None           = 0, /** Skips trigger/activation type checks. Always activates if required event flags are set and skips processing later events until flags deactivate it. */
-    TriggerType_TouchAabb      = 1, /** Player has collided with an AABB. */
-    TriggerType_TouchFacing    = 2, /** Player collided with a trigger is facing toward it. */
-    TriggerType_TouchObbFacing = 3, /** Player collided with an OBB and is facing toward it. */
-    TriggerType_TouchObb       = 4, /** Player collided with an OBB. No facing requirement. */
-} e_TriggerType;
-
-/** @brief Event triger activation types. */
-typedef enum _TriggerActivationType
-{
-    TriggerActivationType_None      = 0, /** No activation conditions other than event flag/trigger checks. */
-    TriggerActivationType_Exclusive = 1, /** Prevents other events from being triggered while the event is active. */
-    TriggerActivationType_Button    = 2, /** Requires a button press. */
-    TriggerActivationType_Item      = 3, /** Requires an inventory item. */
-} e_TriggerActivationType;
-
-/** Some events indicate specific cutscenes behavior via flags. */
-typedef enum _EventDataUnkState
-{
-    EventParamUnkState_None = 0,
-    EventParamUnkState_0    = 1 << 0, /** Possible name: `EventParamUnkState_UnfreezeWorld`. Used to freeze/unfreeze the game world. */
-    EventParamUnkState_1    = 1 << 1, /** Triggers cutscenes that go to the in-game mode. */
-    EventParamUnkState_2    = 1 << 2
-} e_EventDataUnkState;
 
 typedef union
 {

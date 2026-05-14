@@ -21,6 +21,38 @@
 // ENUMS
 // ======
 
+/** @brief Player control flags. */
+typedef enum _PlayerFlags
+{
+    PlayerFlag_None           = 0,
+    PlayerFlag_Unk0           = 1 << 0,
+    PlayerFlag_Shooting       = 1 << 1,
+    PlayerFlag_Unk2           = 1 << 2,
+    PlayerFlag_WallStopRight  = 1 << 3, /** Use right leg for wall stop. */
+    PlayerFlag_Unk4           = 1 << 4,
+    PlayerFlag_Unk5           = 1 << 5, // `PlayerFlag_MoveBackward`?
+    PlayerFlag_Unk6           = 1 << 6,
+    PlayerFlag_Unk7           = 1 << 7,
+    PlayerFlag_Unk8           = 1 << 8,
+    PlayerFlag_Unk9           = 1 << 9,
+    PlayerFlag_Unk10          = 1 << 10, // `PlayerFlag_MeleeAttack`?
+    PlayerFlag_Unk11          = 1 << 11, // `PlayerFlag_GunAttack`?
+    PlayerFlag_Unk12          = 1 << 12,
+    PlayerFlag_SfxActive      = 1 << 13,
+    PlayerFlag_DamageReceived = 1 << 14,
+    PlayerFlag_Moving         = 1 << 15,
+    PlayerFlag_Unk16          = 1 << 16,
+    PlayerFlag_Unk17          = 1 << 17,
+    PlayerFlag_Unk18          = 1 << 18,
+    PlayerFlag_Unk19          = 1 << 19,
+    PlayerFlag_Unk20          = 1 << 20,
+
+    PlayerFlag_Unk28          = 1 << 28,
+    PlayerFlag_Unk29          = 1 << 29,
+    PlayerFlag_Unk30          = 1 << 30,
+    PlayerFlag_Unk31          = 1 << 31
+} e_PlayerFlags;
+
 typedef enum _PlayerStopFlags
 {
     PlayerStopFlag_None        = 0,

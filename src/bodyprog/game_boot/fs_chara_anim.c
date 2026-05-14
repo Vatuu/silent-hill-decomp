@@ -26,7 +26,8 @@ s8 g_CharaAnimInfoIdxs[Chara_Count] = {
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 3 0x00 padding.
+    0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+    // 3 bytes of padding.
 };
 
 s_CharaAnimDataInfo g_CharaTypeAnimInfo[CHARA_GROUP_COUNT] = {
@@ -37,8 +38,11 @@ s_CharaAnimDataInfo g_CharaTypeAnimInfo[CHARA_GROUP_COUNT] = {
         .animFile1_8        = (s_AnmHeader*)FS_BUFFER_0,
         .animBufferSize1_C  = 0x2E630,
         .animBufferSize2_10 = 0x2E630,
-        .npcBoneCoords       = NULL
-    }, {}, {}, {}
+        .npcBoneCoords      = NULL
+    },
+    {},
+    {},
+    {}
 };
 
 s_AnimInfo D_800A998C = {
