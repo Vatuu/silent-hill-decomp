@@ -1,6 +1,22 @@
 #ifndef _BODYPROG_SOUND_SOUND_H
 #define _BODYPROG_SOUND_SOUND_H
 
+#define BGM_LAYER_COUNT 9
+
+/** @brief Background music status flags. */
+typedef enum _BgmStatusFlags
+{
+    BgmStatusFlag_None        = 0,
+    BgmStatusFlag_Pause       = 1 << 0,
+    BgmStatusFlag_ApplyMute   = 1 << 1,
+    BgmStatusFlag_RadioActive = 1 << 2,
+    BgmStatusFlag_Duck        = 1 << 3,
+    BgmStatusFlag_4           = 1 << 4,
+    BgmStatusFlag_VoiceDialog = 1 << 5,
+    BgmStatusFlag_6           = 1 << 6, // Something to do with the radio?
+    BgmStatusFlag_RequestMute = 1 << 7
+} e_BgmStatusFlags;
+
 /** @brief SFX pair indices. Used for `SFX_PAIRS`. */
 typedef enum _SfxPairIdx
 {

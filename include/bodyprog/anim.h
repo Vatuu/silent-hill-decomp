@@ -3,6 +3,14 @@
 
 #include "bodyprog/formats/anm.h"
 
+/** @brief Character animation flags. */
+typedef enum _AnimFlags
+{
+    AnimFlag_None     = 0,
+    AnimFlag_Unlocked = 1 << 0,
+    AnimFlag_Visible  = 1 << 1
+} e_AnimFlags;
+
 /** @brief Animation playback states. Returned by `Chara_AnimPlaybackStateGet`. */
 typedef enum _AnimPlaybackState
 {

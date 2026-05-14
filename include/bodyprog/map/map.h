@@ -27,6 +27,56 @@ typedef enum _SpawnFlags
     SpawnFlag_4    = 1 << 4
 } e_SpawnFlags;
 
+/** @brief Playable map indices. Used for binary overlays. */
+typedef enum _MapIdx
+{
+    MapIdx_MAP0_S00 = 0,
+    MapIdx_MAP0_S01 = 1,
+    MapIdx_MAP0_S02 = 2,
+    MapIdx_MAP1_S00 = 3,
+    MapIdx_MAP1_S01 = 4,
+    MapIdx_MAP1_S02 = 5,
+    MapIdx_MAP1_S03 = 6,
+    MapIdx_MAP1_S04 = 7,
+    MapIdx_MAP1_S05 = 8,
+    MapIdx_MAP1_S06 = 9,
+    MapIdx_MAP2_S00 = 10,
+    MapIdx_MAP2_S01 = 11,
+    MapIdx_MAP2_S02 = 12,
+    MapIdx_MAP2_S03 = 13,
+    MapIdx_MAP2_S04 = 14,
+    MapIdx_MAP3_S00 = 15,
+    MapIdx_MAP3_S01 = 16,
+    MapIdx_MAP3_S02 = 17,
+    MapIdx_MAP3_S03 = 18,
+    MapIdx_MAP3_S04 = 19,
+    MapIdx_MAP3_S05 = 20,
+    MapIdx_MAP3_S06 = 21,
+    MapIdx_MAP4_S00 = 22,
+    MapIdx_MAP4_S01 = 23,
+    MapIdx_MAP4_S02 = 24,
+    MapIdx_MAP4_S03 = 25,
+    MapIdx_MAP4_S04 = 26,
+    MapIdx_MAP4_S05 = 27,
+    MapIdx_MAP4_S06 = 28,
+    MapIdx_MAP5_S00 = 29,
+    MapIdx_MAP5_S01 = 30,
+    MapIdx_MAP5_S02 = 31,
+    MapIdx_MAP5_S03 = 32,
+    MapIdx_MAP6_S00 = 33,
+    MapIdx_MAP6_S01 = 34,
+    MapIdx_MAP6_S02 = 35,
+    MapIdx_MAP6_S03 = 36,
+    MapIdx_MAP6_S04 = 37,
+    MapIdx_MAP6_S05 = 38,
+    MapIdx_MAP7_S00 = 39,
+    MapIdx_MAP7_S01 = 40,
+    MapIdx_MAP7_S02 = 41,
+    MapIdx_MAP7_S03 = 42,
+    MapIdx_MAPT_S00 = 43, // } @unused Empty test maps. Only some code references remain and `HB_MTS00.ANM`/`HB_MTX00.ANM` anim files.
+    MapIdx_MAPX_S00 = 44  // }
+} e_MapIdx;
+
 /** @brief Used as index into `MAP_INFOS` array.
  * TODO: Add descriptions for which areas are included in each type?
 */
@@ -479,5 +529,9 @@ typedef struct _MapOverlayHeader
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 4172);
 
 extern const s_MapInfo MAP_INFOS[MapType_Count];
+
+/** @brief Checks if a specified map has been collected. */
+#define HAS_MAP(mapIdx) \
+    ((((u32*)&g_SavegamePtr->hasMapsFlags)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
 #endif

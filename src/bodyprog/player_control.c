@@ -8621,16 +8621,16 @@ void func_8007FD4C(bool resetColl) // 0x8007FD4C
 
 void func_8007FDE0(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE0
 {
-    s32 mapOverlayId;
+    s32 mapIdx;
 
     switch (groundType)
     {
         case GroundType_8:
-            mapOverlayId = g_SavegamePtr->mapIdx;
-            *sfxId       = Sfx_Unk1330;
+            mapIdx = g_SavegamePtr->mapIdx;
+            *sfxId = Sfx_Unk1330;
 
             // @hack Odd redundant load of `mapIdx`, likely there was some optimized-out code above that left side-effects?
-            // This just sets `mapOverlayId` to `g_SavegamePtr->mapIdx` (again).
+            // This just sets `mapIdx` to `g_SavegamePtr->mapIdx` (again).
             asm volatile(
                 "lui   $2, %%hi(g_SavegamePtr)\n"
                 "lw    $2, %%lo(g_SavegamePtr)($2)\n"
@@ -8640,7 +8640,7 @@ void func_8007FDE0(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8
                 :
                 : "memory");
 
-            if (mapOverlayId == MapIdx_MAP2_S00)
+            if (mapIdx == MapIdx_MAP2_S00)
             {
                 if (g_SysWork.playerWork.player.position.vx >= Q12(95.0f)  && g_SysWork.playerWork.player.position.vx <= Q12(105.0f) &&
                     g_SysWork.playerWork.player.position.vz >= Q12(-33.0f) && g_SysWork.playerWork.player.position.vz <= Q12(-28.0f))

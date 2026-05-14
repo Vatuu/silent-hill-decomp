@@ -11,6 +11,8 @@
 #include "bodyprog/formats/anm.h"
 #include "bodyprog/items.h"
 #include "bodyprog/model.h"
+#include "bodyprog/sound/sound.h"
+#include "bodyprog/sys/joy.h"
 #include "maps/characters/harry.h"
 
 #define TICKS_PER_SECOND 60 /** Game has a variable timestep with 60 ticks max. */
@@ -23,15 +25,6 @@
 #define FRAMEBUFFER_HEIGHT_INTERLACED  (FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2)
 #define ORDERING_TABLE_SIZE            2048
 
-#define INV_ITEM_COUNT_MAX   40
-#define INPUT_ACTION_COUNT   14
-#define CONTROLLER_COUNT_MAX 2
-
-#define DEFAULT_PICKUP_ITEM_COUNT      1
-#define HANDGUN_AMMO_PICKUP_ITEM_COUNT 15
-#define SHOTGUN_AMMO_PICKUP_ITEM_COUNT 6
-#define RIFLE_AMMO_PICKUP_ITEM_COUNT   6
-
 #define DEFAULT_MAP_MESSAGE_LENGTH 99
 #define GLYPH_TABLE_ASCII_OFFSET   '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
 
@@ -43,8 +36,6 @@
 
 #define CHUNK_CELL_SIZE Q12(40.0f)
 
-#define BGM_LAYER_COUNT 9
-
 /** @brief Converts a floating-point X screen position in percent to a fixed-point X screen coodinate. */
 #define SCREEN_POSITION_X(percent) \
     (s32)(SCREEN_WIDTH * ((percent) / 100.0f))
@@ -52,10 +43,6 @@
 /** @brief Converts a floating-point Y screen position in percent to a fixed-point Y screen coodinate. */
 #define SCREEN_POSITION_Y(percent) \
     (s32)(SCREEN_HEIGHT * ((percent) / 100.0f))
-
-/** @brief Checks if a specified map has been collected. */
-#define HAS_MAP(mapIdx) \
-    ((((u32*)&g_SavegamePtr->hasMapsFlags)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
 /** @brief Packs a weapon attack containing a weapon ID and attack input type.
  *
@@ -285,56 +272,6 @@ typedef enum _MapMsgAudioLoadBlock
                                    // `J2` cutscenes use single audio file for all lines (e.g. video tape cutscene).
 } e_MapMsgAudioLoadBlock;
 
-/** @brief Playable map indices. Used for binary overlays. */
-typedef enum _MapIdx
-{
-    MapIdx_MAP0_S00 = 0,
-    MapIdx_MAP0_S01 = 1,
-    MapIdx_MAP0_S02 = 2,
-    MapIdx_MAP1_S00 = 3,
-    MapIdx_MAP1_S01 = 4,
-    MapIdx_MAP1_S02 = 5,
-    MapIdx_MAP1_S03 = 6,
-    MapIdx_MAP1_S04 = 7,
-    MapIdx_MAP1_S05 = 8,
-    MapIdx_MAP1_S06 = 9,
-    MapIdx_MAP2_S00 = 10,
-    MapIdx_MAP2_S01 = 11,
-    MapIdx_MAP2_S02 = 12,
-    MapIdx_MAP2_S03 = 13,
-    MapIdx_MAP2_S04 = 14,
-    MapIdx_MAP3_S00 = 15,
-    MapIdx_MAP3_S01 = 16,
-    MapIdx_MAP3_S02 = 17,
-    MapIdx_MAP3_S03 = 18,
-    MapIdx_MAP3_S04 = 19,
-    MapIdx_MAP3_S05 = 20,
-    MapIdx_MAP3_S06 = 21,
-    MapIdx_MAP4_S00 = 22,
-    MapIdx_MAP4_S01 = 23,
-    MapIdx_MAP4_S02 = 24,
-    MapIdx_MAP4_S03 = 25,
-    MapIdx_MAP4_S04 = 26,
-    MapIdx_MAP4_S05 = 27,
-    MapIdx_MAP4_S06 = 28,
-    MapIdx_MAP5_S00 = 29,
-    MapIdx_MAP5_S01 = 30,
-    MapIdx_MAP5_S02 = 31,
-    MapIdx_MAP5_S03 = 32,
-    MapIdx_MAP6_S00 = 33,
-    MapIdx_MAP6_S01 = 34,
-    MapIdx_MAP6_S02 = 35,
-    MapIdx_MAP6_S03 = 36,
-    MapIdx_MAP6_S04 = 37,
-    MapIdx_MAP6_S05 = 38,
-    MapIdx_MAP7_S00 = 39,
-    MapIdx_MAP7_S01 = 40,
-    MapIdx_MAP7_S02 = 41,
-    MapIdx_MAP7_S03 = 42,
-    MapIdx_MAPT_S00 = 43, // } @unused Empty test maps. Only some code references remain and `HB_MTS00.ANM`/`HB_MTX00.ANM` anim files.
-    MapIdx_MAPX_S00 = 44  // }
-} e_MapIdx;
-
 /** @brief Paper map indices. Used for the navigation map screen. */
 typedef enum _PaperMapIdx
 {
@@ -364,20 +301,6 @@ typedef enum _PaperMapIdx
     PaperMapIdx_AltHospital3F  = 23
 } e_PaperMapIdx;
 
-/** @brief Background music status flags. */
-typedef enum _BgmStatusFlags
-{
-    BgmStatusFlag_None        = 0,
-    BgmStatusFlag_Pause       = 1 << 0,
-    BgmStatusFlag_ApplyMute   = 1 << 1,
-    BgmStatusFlag_RadioActive = 1 << 2,
-    BgmStatusFlag_Duck        = 1 << 3,
-    BgmStatusFlag_4           = 1 << 4,
-    BgmStatusFlag_VoiceDialog = 1 << 5,
-    BgmStatusFlag_6           = 1 << 6, // Something to do with the radio?
-    BgmStatusFlag_RequestMute = 1 << 7
-} e_BgmStatusFlags;
-
 // Temp name.
 typedef enum _UnkSysFlags
 {
@@ -406,47 +329,6 @@ typedef enum _ProcessFlags
     ProcessFlag_Continue          = 1 << 4,
     ProcessFlag_BootDemo          = 1 << 5
 } e_ProcessFlags;
-
-typedef enum _ControllerFlags
-{
-    ControllerFlag_None         = 0,
-    ControllerFlag_Select       = 1 << 0,  // 0x1
-    ControllerFlag_L3           = 1 << 1,  // 0x2
-    ControllerFlag_R3           = 1 << 2,  // 0x4
-    ControllerFlag_Start        = 1 << 3,  // 0x8
-    ControllerFlag_DpadUp       = 1 << 4,  // 0x10
-    ControllerFlag_DpadRight    = 1 << 5,  // 0x20
-    ControllerFlag_DpadDown     = 1 << 6,  // 0x40
-    ControllerFlag_DpadLeft     = 1 << 7,  // 0x80
-    ControllerFlag_L2           = 1 << 8,  // 0x100
-    ControllerFlag_R2           = 1 << 9,  // 0x200
-    ControllerFlag_L1           = 1 << 10, // 0x400
-    ControllerFlag_R1           = 1 << 11, // 0x800
-    ControllerFlag_Triangle     = 1 << 12, // 0x1000
-    ControllerFlag_Circle       = 1 << 13, // 0x2000
-    ControllerFlag_Cross        = 1 << 14, // 0x4000
-    ControllerFlag_Square       = 1 << 15, // 0x8000
-    ControllerFlag_LStickUp2    = 1 << 16, // 0x10000
-    ControllerFlag_LStickRight2 = 1 << 17, // 0x20000
-    ControllerFlag_LStickDown2  = 1 << 18, // 0x40000
-    ControllerFlag_LStickLeft2  = 1 << 19, // 0x80000
-    ControllerFlag_RStickUp     = 1 << 20, // 0x100000
-    ControllerFlag_RStickRight  = 1 << 21, // 0x200000
-    ControllerFlag_RStickDown   = 1 << 22, // 0x400000
-    ControllerFlag_RStickLeft   = 1 << 23, // 0x800000
-    ControllerFlag_LStickUp     = 1 << 24, // 0x1000000
-    ControllerFlag_LStickRight  = 1 << 25, // 0x2000000
-    ControllerFlag_LStickDown   = 1 << 26, // 0x4000000
-    ControllerFlag_LStickLeft   = 1 << 27  // 0x8000000
-} e_ControllerFlags;
-
-/** @brief Character animation flags. */
-typedef enum _AnimFlags
-{
-    AnimFlag_None     = 0,
-    AnimFlag_Unlocked = 1 << 0,
-    AnimFlag_Visible  = 1 << 1
-} e_AnimFlags;
 
 /** @brief State IDs used by the main game loop. The values are used as indices into the `g_GameStateUpdateFuncs` function array. */
 typedef enum _GameState
@@ -568,69 +450,6 @@ typedef enum _GameDifficulty
     GameDifficulty_Normal = 0,
     GameDifficulty_Hard   = 1
 } e_GameDifficulty;
-
-typedef union
-{
-    u32 rawData_0;
-    struct
-    {
-        s8 rightX;
-        s8 rightY;
-        s8 leftX;
-        s8 leftY;
-    } sticks_0; // Normalized range: `[-128, 127]`.
-} s_AnalogSticks;
-
-typedef struct _AnalogController
-{
-    u8  status;
-    u8  received_bytes : 4; /** Number of bytes received / 2. */
-    u8  terminal_type  : 4; /** `e_PadTerminalType` */
-    u16 digitalButtons;
-    u8  rightX;
-    u8  rightY;
-    u8  leftX;
-    u8  leftY;
-} s_AnalogController;
-STATIC_ASSERT_SIZEOF(s_AnalogController, 8);
-
-typedef struct _ControllerData
-{
-    s_AnalogController analogController_0;
-    s32                pulseTicks_8;
-    e_ControllerFlags  btnsHeld_C;
-    e_ControllerFlags  btnsClicked_10;
-    e_ControllerFlags  btnsReleased_14;
-    e_ControllerFlags  btnsPulsed_18;
-    e_ControllerFlags  btnsPulsedGui_1C;
-    s_AnalogSticks     sticks_20;
-    s_AnalogSticks     sticks_24;
-    s32                field_28;
-} s_ControllerData;
-STATIC_ASSERT_SIZEOF(s_ControllerData, 44);
-
-/** @brief Controller key bindings for input actions. Contains bitfield of button presses assigned to each action.
- *
- * Bitfields only contain buttons. Analog directions and D-Pad aren't included.
- */
-typedef struct _ControllerConfig
-{
-    /* 0x0  */ u16 enter;
-    /* 0x2  */ u16 cancel;
-    /* 0x4  */ u16 skip;
-    /* 0x6  */ u16 action;
-    /* 0x8  */ u16 aim;
-    /* 0xA  */ u16 light;
-    /* 0xC  */ u16 run;
-    /* 0xE  */ u16 view;
-    /* 0x10 */ u16 stepLeft;
-    /* 0x12 */ u16 stepRight;
-    /* 0x14 */ u16 pause;
-    /* 0x16 */ u16 item;
-    /* 0x18 */ u16 map;
-    /* 0x1A */ u16 option;
-} s_ControllerConfig;
-STATIC_ASSERT_SIZEOF(s_ControllerConfig, 28);
 
 /** @brief Savegame data. */
 typedef struct _Savegame
@@ -932,13 +751,11 @@ STATIC_ASSERT_SIZEOF(s_SysWork, 10088);
 extern void* g_OvlBodyprog;
 extern void* g_OvlDynamic;
 
-extern s_SysWork               g_SysWork;
-extern s_GameWork              g_GameWork;
-extern s_GameWork* const       g_GameWorkConst;
-extern s_GameWork* const       g_GameWorkPtr;
-extern s_Savegame* const       g_SavegamePtr;
-extern s_ControllerData* const g_Controller0;
-extern s_ControllerData* const g_Controller1;
+extern s_SysWork         g_SysWork;
+extern s_GameWork        g_GameWork;
+extern s_GameWork* const g_GameWorkConst;
+extern s_GameWork* const g_GameWorkPtr;
+extern s_Savegame* const g_SavegamePtr;
 
 /** @brief Sets `sysState` in `g_SysWork` for the next tick.
  *

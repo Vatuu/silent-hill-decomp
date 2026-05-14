@@ -1,7 +1,13 @@
-#ifndef _BODYPROG_ITEM_H
-#define _BODYPROG_ITEM_H
+#ifndef _BODYPROG_ITEMS_H
+#define _BODYPROG_ITEMS_H
 
+#define INV_ITEM_COUNT_MAX  40
 #define INV_ITEM_GROUP_SIZE 32 /** Number of `e_InvItemId`s per `e_InvItemGroup`. */
+
+#define DEFAULT_PICKUP_ITEM_COUNT      1
+#define HANDGUN_AMMO_PICKUP_ITEM_COUNT 15
+#define SHOTGUN_AMMO_PICKUP_ITEM_COUNT 6
+#define RIFLE_AMMO_PICKUP_ITEM_COUNT   6
 
 /** @brief Inventory item model load flags. */
 typedef enum _InvItemLoadFlags
