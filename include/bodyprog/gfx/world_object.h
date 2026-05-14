@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_GFX_WORLDOBJECT_H
 #define _BODYPROG_GFX_WORLDOBJECT_H
 
-#include "bodyprog/chara_model.h"
+#include "bodyprog/chara/chara_model.h"
 #include "bodyprog/formats/model.h"
 #include "main/fsqueue.h"
 

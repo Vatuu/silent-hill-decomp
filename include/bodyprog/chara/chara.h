@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_CHARA_H
-#define _BODYPROG_CHARA_H
+#ifndef _BODYPROG_CHARA_CHARA_H
+#define _BODYPROG_CHARA_CHARA_H
 
 #include "bodyprog/anim.h"
 #include "bodyprog/model.h"
@@ -693,7 +693,7 @@ typedef struct _SubCharacter
     /* 0x38 */ q19_12            moveSpeed;
     /* 0x3C */ q3_12             headingAngle;
     /* 0x3E */ s16               flags;          /** `e_CharaFlags` */
-    /* 0x40 */ s8                field_40;       // In player: Index of the NPC attacking the player.
+    /* 0x40 */ s8                field_40;       // In player: Index of the NPC attacking the player. Spawn index for Air Screamer?
                                                  // In NPCs: Unknown. `Game_NpcRoomInitSpawn` sugests it indicates the NPC index in `s_Savegame::ovlEnemyStates`.
     /* 0x41 */ s8                attackReceived; // Packed weapon attack indicating what attack has been performed to the character. See `WEAPON_ATTACK`.
                // 2 bytes of padding.

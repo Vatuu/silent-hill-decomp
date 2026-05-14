@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_GFX_WORLD_H
 #define _BODYPROG_GFX_WORLD_H
 
-#include "bodyprog/chara_model.h"
+#include "bodyprog/chara/chara_model.h"
 #include "bodyprog/formats/lm.h"
 #include "bodyprog/formats/model.h"
 #include "bodyprog/gfx/world_object.h"

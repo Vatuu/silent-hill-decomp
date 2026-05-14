@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_CHARAMODEL_H
-#define _BODYPROG_CHARAMODEL_H
+#ifndef _BODYPROG_CHARA_CHARAMODEL_H
+#define _BODYPROG_CHARA_CHARAMODEL_H
 
 #include "bodyprog/formats/lm.h"
 #include "bodyprog/formats/model.h"
@@ -22,7 +22,7 @@ typedef struct _LinkedBone
 } s_LinkedBone;
 STATIC_ASSERT_SIZEOF(s_LinkedBone, 24);
 
-typedef struct
+typedef struct _Skeleton
 {
     /* 0x0 */ u8            boneCount;
     /* 0x1 */ u8            boneIdx;

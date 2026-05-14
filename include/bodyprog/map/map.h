@@ -2,7 +2,7 @@
 #define _BODYPROG_MAP_MAP_H
 
 #include "bodyprog/anim.h"
-#include "bodyprog/chara.h"
+#include "bodyprog/chara/chara.h"
 #include "bodyprog/formats/anm.h"
 #include "bodyprog/view/structs.h"
 

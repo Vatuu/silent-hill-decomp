@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_COLLISION_COLLISION_H
 #define _BODYPROG_COLLISION_COLLISION_H
 
-#include "bodyprog/chara.h"
+#include "bodyprog/chara/chara.h"
 #include "bodyprog/map/map.h"
 
 struct _IpdCollisionData;

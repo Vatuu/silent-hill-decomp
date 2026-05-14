@@ -3,7 +3,8 @@
 
 #include "game.h"
 #include "bodyprog/collision/collision.h"
-#include "bodyprog/chara_model.h"
+#include "bodyprog/chara/chara_model.h"
+#include "bodyprog/chara/spawn.h"
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/formats/lm.h"
 #include "bodyprog/formats/model.h"
@@ -17,12 +18,6 @@
 #include "bodyprog/sound/sound_effects.h"
 #include "bodyprog/view/vw_system.h"
 #include "main/fsqueue.h"
-
-/** @brief This header is used to declare any variable, struct, or
- * function of `BODYPROG.BIN` that has not been identified to
- * be related to a currently recognized and separated section of
- * the engine (like player logic, save game, or item screens).
- */
 
 // ==========
 // CONSTANTS
@@ -1654,7 +1649,7 @@ void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr);
 void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3);
 
 /** Anim func. */
-void Skeleton_ModelInfoAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2);
+void Skeleton_BoneModelAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2);
 
 /** Anim func. Param names are rough. */
 void func_80045258(s_LinkedBone** boneOrd, s_LinkedBone* bones, s32 boneIdx, s_LmHeader* lmHdr);
@@ -2130,24 +2125,6 @@ void func_800880F0(bool bool);
 // ========================
 
 void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB);
-
-// ========================
-// `bodyprog/chara_spawn.c`
-// ========================
-
-bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 forceFree, s_LmHeader* lmHdr, s_FsImageDesc* tex);
-
-bool Chara_ProcessLoads(void);
-
-void Chara_BonesInit(s32 idx);
-
-s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep);
-
-void Chara_ModelCharaIdClear(s_SubCharacter* chara, s32 unused0, s32 unused1);
-
-void Chara_SpawnFlagsSet(e_CharaId charaId, s32 spawnIdx, s32 spawnFlags);
-
-// ========================
 
 /** Might retrun `bool`. */
 void func_80089090(s32 arg0);

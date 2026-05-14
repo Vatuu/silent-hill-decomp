@@ -7,7 +7,7 @@
 #include "lib_unk.h"
 
 #include "bodyprog/anim.h"
-#include "bodyprog/chara.h"
+#include "bodyprog/chara/chara.h"
 #include "bodyprog/formats/anm.h"
 #include "bodyprog/items.h"
 #include "bodyprog/model.h"

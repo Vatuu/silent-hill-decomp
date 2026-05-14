@@ -122,7 +122,7 @@ void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3) // 0
     }
 
     boneIdx = skel->boneIdx;
-    Skeleton_ModelInfoAssign(skel, lmHdr, arg2);
+    Skeleton_BoneModelAssign(skel, lmHdr, arg2);
 
     curBoneOrd = &skel->bones_4;
     while (*curBoneOrd != NULL)
@@ -131,12 +131,12 @@ void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3) // 0
         curBoneOrd = &curBone->next;
     }
 
-    // `Skeleton_ModelInfoAssign` increments `boneIdx`.
+    // `Skeleton_BoneModelAssign` increments `boneIdx`.
     func_80045258(curBoneOrd, &skel->bones_8[boneIdx], skel->boneIdx - boneIdx, lmHdr);
     func_800453E8(skel, false);
 }
 
-void Skeleton_ModelInfoAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2) // 0x800451B0
+void Skeleton_BoneModelAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2) // 0x800451B0
 {
     s32 modelIdx;
 
