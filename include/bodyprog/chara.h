@@ -58,6 +58,8 @@ typedef enum _CharaId
 
     Chara_Harry            = 1,
 
+    /** Enemy characters. */
+
     Chara_AirScreamer      = 2,
     Chara_NightFlutter     = 3,
     Chara_Groaner          = 4,
