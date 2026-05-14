@@ -272,7 +272,7 @@ void func_800D2408(void) // 0x800D2408
             func_80085EB8(0, playerChara, 51, false);
 
             g_SysWork.cutsceneBorderState = 20;
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             func_8008D438();
 
@@ -589,7 +589,7 @@ void func_800D2F74(void) // 0x800D2F74
 
             g_Cutscene_MapMsgAudioIdx0 = 0;
             g_Cutscene_Timer1 = Q12(0.0f);
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             func_80085EB8(0, playerChara, 121, false);
             Game_TurnFlashlightOn();
@@ -598,7 +598,7 @@ void func_800D2F74(void) // 0x800D2F74
             SysWork_StateStepIncrement(0);
 
             g_SysWork.cutsceneBorderState = 20;
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
             break;
 
         case 1:
@@ -734,7 +734,7 @@ void func_800D3420(void) // 0x800D3420
             sharedData_800D8568_1_s05.field_A  = 0x1000;
             sharedData_800D8568_1_s05.field_2  = 8;
 
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             sharedFunc_800CAAD0_1_s05();
 
@@ -1053,7 +1053,7 @@ void func_800D4410(void) // 0x800D4410
 
             g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Fs_QueueStartRead(FILE_ANIM_SQSU_DMS, FS_BUFFER_11);
             Fs_QueueWaitForEmpty();

@@ -237,7 +237,7 @@ void SysWork_StateStepIncrementAfterFade(s32 stateStep, bool cond, s32 fadeType,
 
                     if (fadeType == FadeType_Unk3)
                     {
-                        g_SysWork.flags_22A4 |= UnkSysFlag_3;
+                        g_SysWork.sysFlags |= SysFlag_CutsceneActive;
                     }
                 }
             }
@@ -760,7 +760,7 @@ void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) // 0x8008
 {
     s32 i;
 
-    if (!(g_SysWork.flags_22A4 & UnkSysFlag_5))
+    if (!(g_SysWork.sysFlags & SysFlag_5))
     {
         // Run through NPCs.
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
@@ -950,7 +950,7 @@ void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx,
     s32 i            = itemId;
     s32 mapMsgIdxCpy = mapMsgIdx;
 
-    if (!(g_SysWork.flags_22A4 & UnkSysFlag_5))
+    if (!(g_SysWork.sysFlags & SysFlag_5))
     {
         // Run through NPCs.
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)

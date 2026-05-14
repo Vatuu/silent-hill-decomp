@@ -115,7 +115,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             g_SysWork.cutsceneBorderState = 20;
             g_Cutscene_Timer = Q12(0.0f);
             D_800D256C = 0;
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             func_800625F4(&QVECTOR3(95.8f, 0.0f, 101.27f), 0x48, 2, 1);
             func_800625F4(&QVECTOR3(96.05f, 0.0f, 101.07f), 0x48, 2, 1);

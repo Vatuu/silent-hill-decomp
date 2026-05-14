@@ -384,7 +384,7 @@ typedef struct _SpawnInfo
     /* 0x0   */ q19_12 positionX;
     /* 0x4   */ s8     charaId; /** `e_CharaId` */
     /* 0x5   */ q0_8   rotationY;
-    /* 0x6   */ s8     flags_6;               /** `e_SpawnFlags` | Copied to `stateStep` in `s_Model`, with `controlState = 0`. */
+    /* 0x6   */ s8     flags;                 /** `e_SpawnFlags` | Copied to `stateStep` in `s_Model`, with `controlState = 0`. */
     /* 0x7+0 */ s32    gameDifficultyMin : 4; /** `e_GameDifficulty` | Minimum difficulty required for successful spawn. */
     /* 0x8   */ q19_12 positionZ;
 } s_SpawnInfo;
@@ -522,7 +522,7 @@ typedef struct _MapOverlayHeader
     /* 0x190 */ s32*                   data_190;
     /* 0x194 */ void                   (*charaUpdateFuncs[Chara_Count])(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); /** Guessed params. Funcptrs for each `e_CharaId`, set to 0 for IDs not included in the map overlay. Called by `Game_NpcUpdate`. */
     /* 0x248 */ s8                     charaGroupIds[CHARA_GROUP_COUNT]; /** `e_CharaId` values where if `s_SpawnInfo::charaId == Chara_None`, `charaGroupIds[0]` is used for `charaSpawnInfos[0]` and `charaGroupIds[1]` for `charaSpawnInfos[1]`. */
-    /* 0x24C */ s_SpawnInfo            charaSpawnInfos[2][16];           /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
+    /* 0x24C */ s_SpawnInfo            charaSpawnInfos[2][16];           /** Array of character type/position/flags. `flags == SpawnFlags_None` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
     /* 0x3CC */ VC_ROAD_DATA           cameraPaths[100];
     /* 0xD2C */ s_TriggerZone          triggerZones[200];
 } s_MapOverlayHeader;

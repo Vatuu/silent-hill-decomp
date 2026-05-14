@@ -232,7 +232,7 @@ void func_800D2668(void) // 0x800D2668
 
             g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
             Game_TurnFlashlightOn();
 
             g_SysWork.field_235C = NULL;

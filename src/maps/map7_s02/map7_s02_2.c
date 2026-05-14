@@ -247,7 +247,7 @@ void func_800DA248(void) // 0x800DA248
 
             g_SysWork.cutsceneBorderState    = 20;
             g_SysWork.pointLightIntensity  = Q12(0.8f);
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Game_TurnFlashlightOn();
             D_800E9ECC = 0;
@@ -1363,7 +1363,7 @@ void func_800DD2D4(void) // 0x800DD2D4
         case 3:
             Dms_HeaderFixOffsets(FS_BUFFER_11);
             g_SysWork.cutsceneBorderState    = 20;
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_Bloodsucker, &g_SysWork.npcBoneCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
@@ -1713,7 +1713,7 @@ void func_800DE1FC(void) // 0x800DE1FC
             ScreenFade_ResetTimestep();
 
             g_SysWork.cutsceneBorderState    = 20;
-            g_SysWork.flags_22A4 |= 1 << 3;
+            g_SysWork.sysFlags |= 1 << 3;
 
             func_8008D438();
 
@@ -1989,7 +1989,7 @@ void func_800DF21C(void) // 0x800DF21C
             Game_TurnFlashlightOn();
             g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
 
@@ -2624,7 +2624,7 @@ void func_800E0CB4(void) // 0x800E0CB4
             Player_ControlFreeze();
 
             g_SysWork.cutsceneBorderState    = 20;
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Fs_QueueStartRead(FILE_ANIM_DRIVR_DMS, (void*)FS_BUFFER_11);
             Fs_QueueWaitForEmpty();

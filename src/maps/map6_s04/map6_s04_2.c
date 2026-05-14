@@ -1830,7 +1830,7 @@ void func_800E1D50(void) // 0x800E1D50
 
             D_800ED5AC = 0;
             g_Cutscene_Timer = Q12(0.0f);
-            g_SysWork.flags_22A4 |= UnkSysFlag_4;
+            g_SysWork.sysFlags |= SysFlag_NoEnemySpawn;
 
             Game_TurnFlashlightOn();
             func_800E1CA0();
@@ -1851,7 +1851,7 @@ void func_800E1D50(void) // 0x800E1D50
             Chara_Load(0, Chara_MonsterCybil, g_SysWork.npcBoneCoords, -1, NULL, NULL);
 
             g_SysWork.cutsceneBorderState = 20;
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
@@ -2122,7 +2122,7 @@ void func_800E2724(void) // 0x800E2724
         case 0:
             Player_ControlFreeze();
             ScreenFade_ResetTimestep();
-            g_SysWork.flags_22A4 |= UnkSysFlag_4;
+            g_SysWork.sysFlags |= SysFlag_NoEnemySpawn;
 
             func_800E1CA0();
             func_8007E860();
@@ -2454,7 +2454,7 @@ void func_800E3244(void) // 0x800E3244
             Chara_Load(1, Chara_Parasite, &g_SysWork.npcBoneCoords[30], 0, NULL, NULL);
 
             g_SysWork.cutsceneBorderState = 20;
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -2748,7 +2748,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
             g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             func_8008D438();
 
@@ -3151,7 +3151,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             Game_FlashlightAttributesFix();
 
             g_SysWork.pointLightIntensity  = Q12(1.0f);
-            g_SysWork.flags_22A4 &= ~UnkSysFlag_4;
+            g_SysWork.sysFlags &= ~SysFlag_NoEnemySpawn;
             break;
     }
 
@@ -3285,7 +3285,7 @@ void func_800E558C(void) // 0x800E558C
 
             g_SysWork.cutsceneBorderState    = 20;
             g_Cutscene_Timer            = NO_VALUE;
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();

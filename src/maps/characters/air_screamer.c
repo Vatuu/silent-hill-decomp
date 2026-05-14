@@ -1290,25 +1290,25 @@ void AirScreamer_Control_1(s_SubCharacter* airScreamer)
 void sharedFunc_800D3DFC_0_s01(s_SubCharacter* airScreamer)
 {
     q19_12 chance;
-    s32    flags;
+    s32    spawnFlags; // `e_SpawnFlags`
 
     if (airScreamer->field_40 < 32)
     {
-        flags = g_MapOverlayHeader.charaSpawnInfos[0][airScreamer->field_40].flags_6;
-        switch (flags)
+        spawnFlags = g_MapOverlayHeader.charaSpawnInfos[0][airScreamer->field_40].flags;
+        switch (spawnFlags)
         {
-            case 1:
-            case 8:
-            case 9:
+            case SpawnFlag_0:
+            case SpawnFlag_3:
+            case SpawnFlag_0 | SpawnFlag_3:
                 chance = Q12(0.0f);
                 break;
 
-            case 10:
+            case SpawnFlag_1 | SpawnFlag_3:
                 chance = Q12(1.0f);
                 break;
 
-            case 2:
-            case 3:
+            case SpawnFlag_1:
+            case SpawnFlag_0 | SpawnFlag_1:
                 chance = Q12(0.3f);
                 break;
 

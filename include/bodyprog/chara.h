@@ -47,11 +47,17 @@ typedef enum _CharaCollisionState
     CharaCollisionState_5      = 5
 } e_CharaCollisionState;
 
-/** @brief Character IDs. The `CHARA_FILE_INFOS` array associates each character ID with asset files. */
+/** @brief Character IDs.
+ *
+ * @note The `CHARA_FILE_INFOS` array associates each character ID with asset files. */
 typedef enum _CharaId
 {
     Chara_None             = 0,
+
+    /** Player characters. */
+
     Chara_Harry            = 1,
+
     Chara_AirScreamer      = 2,
     Chara_NightFlutter     = 3,
     Chara_Groaner          = 4,
@@ -75,6 +81,9 @@ typedef enum _CharaId
     Chara_Incubus          = 22,
     Chara_Unknown23        = 23,
     Chara_MonsterCybil     = 24,
+
+    /** Cutscene characters. */
+
     Chara_LockerDeadBody   = 25,
     Chara_Cybil            = 26,
     Chara_EndingCybil      = 27,
@@ -94,10 +103,12 @@ typedef enum _CharaId
     Chara_LittleIncubus    = 41,
     Chara_GhostDoctor      = 42,
     Chara_Parasite         = 43,
+
+    /** Special characters. */
+
     Chara_Padlock          = 44,
 
     Chara_Count,
-
     Chara_Hack = NO_VALUE, // @hack Force enum to be treated as `s32`.
 } e_CharaId;
 

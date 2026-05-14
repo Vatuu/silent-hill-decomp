@@ -369,7 +369,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_M2S00_WaterWorksCutscene);
 
-            g_SysWork.flags_22A4 &= ~UnkSysFlag_4;
+            g_SysWork.sysFlags &= ~SysFlag_NoEnemySpawn;
             break;
     }
 }
@@ -616,7 +616,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             vcReturnPreAutoCamWork(false);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
-            g_SysWork.flags_22A4 &= ~UnkSysFlag_4;
+            g_SysWork.sysFlags &= ~SysFlag_NoEnemySpawn;
 
             func_8003A16C();
             break;
@@ -1337,7 +1337,7 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
             g_SysWork.playerWork.player.position.vz = Q12(376.5f);
             g_SysWork.playerWork.player.rotation.vy = Q12(-0.25f);
             g_SysWork.cutsceneBorderState = 20;
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
@@ -1959,7 +1959,7 @@ void Map_WorldObjectsInit(void) // 0x800EB908
     if (!Savegame_EventFlagGet(EventFlag_146) ||
         (Savegame_EventFlagGet(EventFlag_193) &&  !Savegame_EventFlagGet(EventFlag_M2S00_WaterWorksCutscene)))
     {
-        g_SysWork.flags_22A4 |= UnkSysFlag_4;
+        g_SysWork.sysFlags |= SysFlag_NoEnemySpawn;
     }
 
     if (Savegame_EventFlagGet(EventFlag_159))

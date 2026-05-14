@@ -93,9 +93,9 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
 
         pos = (VECTOR3*)curCharaSpawn;
 
-        if (!(g_SysWork.flags_22A4 & UnkSysFlag_4) &&
+        if (!(g_SysWork.sysFlags & SysFlag_NoEnemySpawn) &&
             HAS_FLAG(ovlEnemiesStatePtr, i) && !HAS_FLAG(g_SysWork.field_228C, i) &&
-            curCharaSpawn->flags_6 != 0 &&
+            curCharaSpawn->flags != SpawnFlag_None &&
             g_SavegamePtr->gameDifficulty >= curCharaSpawn->gameDifficultyMin &&
             func_8008F914(curCharaSpawn->positionX, curCharaSpawn->positionZ) &&
             !Math_Distance2dCheck(&g_SysWork.playerWork.player.position, pos, Q12(22.0f)) &&
@@ -119,7 +119,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
 
             g_SysWork.npcs[npcIdx].field_40           = i;
             g_SysWork.npcs[npcIdx].model.controlState = 0;
-            g_SysWork.npcs[npcIdx].model.stateStep    = curCharaSpawn->flags_6;
+            g_SysWork.npcs[npcIdx].model.stateStep    = curCharaSpawn->flags;
             g_SysWork.npcs[npcIdx].position.vx        = curCharaSpawn->positionX;
             g_SysWork.npcs[npcIdx].position.vz        = curCharaSpawn->positionZ;
 

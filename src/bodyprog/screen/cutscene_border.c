@@ -161,7 +161,7 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
         case 0:
             g_BlackBorderShade    = Q12(0.0f);
             g_SysWork.cutsceneBorderState    = 1;
-            g_SysWork.flags_22A4 &= ~UnkSysFlag_3;
+            g_SysWork.sysFlags &= ~SysFlag_CutsceneActive;
             return;
 
         case 1:
@@ -173,7 +173,7 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
     AddPrim(ot, &poly[2]);
     AddPrim(ot, drMode);
 
-    if (!(g_SysWork.flags_22A4 & UnkSysFlag_3))
+    if (!(g_SysWork.sysFlags & SysFlag_CutsceneActive))
     {
         vcChangeProjectionValue(g_GameWork.gsScreenHeight + Q12_MULT(377 - g_GameWork.gsScreenHeight, g_BlackBorderShade));
     }

@@ -139,8 +139,8 @@ void Chara_SpawnFlagsSet(e_CharaId charaId, s32 spawnIdx, s32 spawnFlags) // 0x8
 {
     s_SpawnInfo* spawnInfo;
 
-    spawnInfo          = &g_MapOverlayHeader.charaSpawnInfos[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
-    spawnInfo->flags_6 = spawnFlags;
+    spawnInfo        = &g_MapOverlayHeader.charaSpawnInfos[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
+    spawnInfo->flags = spawnFlags;
 }
 
 void Chara_SpawnPositionSet(e_CharaId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ) // 0x80089034
@@ -148,9 +148,9 @@ void Chara_SpawnPositionSet(e_CharaId charaId, s32 spawnIdx, q19_12 posX, q19_12
     s_SpawnInfo* spawnInfo0;
     s_SpawnInfo* spawnInfo1;
 
-    spawnInfo0              = &g_MapOverlayHeader.charaSpawnInfos[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
+    spawnInfo0            = &g_MapOverlayHeader.charaSpawnInfos[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
     spawnInfo0->positionX = posX;
 
-    spawnInfo1              = &g_MapOverlayHeader.charaSpawnInfos[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
+    spawnInfo1            = &g_MapOverlayHeader.charaSpawnInfos[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
     spawnInfo1->positionZ = posZ;
 }

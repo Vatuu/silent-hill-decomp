@@ -154,7 +154,7 @@ void func_800D0B64(void) // 0x800D0B64
 
             ScreenFade_ResetTimestep();
 
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Chara_Spawn(Chara_Lisa, 0, Q12(17.4f), Q12(139.1f), 0, 3);
             SysWork_StateStepIncrement(0);

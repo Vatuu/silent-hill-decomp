@@ -240,7 +240,7 @@ void MainLoop(void) // 0x80032EE0
         DrawSync(SyncMode_Wait);
 
         // Handle V sync.
-        if (g_SysWork.flags_22A4 & UnkSysFlag_1)
+        if (g_SysWork.sysFlags & SysFlag_DemoActive)
         {
             vBlanks   = VSync(SyncMode_Count);
             g_VBlanks = vBlanks - g_PrevVBlanks;

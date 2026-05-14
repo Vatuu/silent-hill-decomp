@@ -251,7 +251,7 @@ void func_800D0608(void) // 0x800D0608
             ScreenFade_ResetTimestep();
 
             g_SysWork.cutsceneBorderState    = 20;
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Fs_QueueStartRead(FILE_ANIM_DWSTWY_DMS, FS_BUFFER_24);
             Fs_QueueWaitForEmpty();

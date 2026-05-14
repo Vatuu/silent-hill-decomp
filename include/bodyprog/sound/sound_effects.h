@@ -206,8 +206,8 @@ typedef enum _SfxId
     Sfx_Unk1498 = 1498,
     Sfx_Unk1499 = 1499,
     Sfx_Unk1500 = 1500,
-    Sfx_Unk1501 = 1501,
-    Sfx_Unk1502 = 1502,
+    Sfx_Unk1501 = 1501, // } Played when opening the load screen.
+    Sfx_Unk1502 = 1502, // }
     Sfx_Unk1503 = 1503,
     Sfx_Unk1504 = 1504, // } Pair.
     Sfx_Unk1505 = 1505, // }

@@ -263,11 +263,11 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
         g_SysWork.sysState == SysState_StatusMenu ||
         g_SysWork.sysState == SysState_MapScreen)
     {
-        g_SysWork.flags_22A4 |= UnkSysFlag_MenuOpen;
+        g_SysWork.sysFlags |= SysFlag_MenuActive;
     }
     else if (ScreenFade_IsNone())
     {
-        g_SysWork.flags_22A4 &= ~UnkSysFlag_MenuOpen;
+        g_SysWork.sysFlags &= ~SysFlag_MenuActive;
     }
 }
 
@@ -636,7 +636,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     if (g_SysWork.sfxPairIdx_2283 == SfxPairIdx_7)
     {
         D_800BCDD4            = 0;
-        g_SysWork.flags_22A4 |= UnkSysFlag_10;
+        g_SysWork.sysFlags |= SysFlag_LoadActive;
     }
 
     D_800BCDB0 = g_MapOverlayHeader.mapPoints[g_MapEventData->eventParam];
@@ -670,11 +670,11 @@ void SysState_LoadArea_Update(void) // 0x80039C40
 
     if (g_MapEventData->field_8_24)
     {
-        g_SysWork.flags_22A4 |= UnkSysFlag_6;
+        g_SysWork.sysFlags |= SysFlag_OnCameraRail;
     }
     else
     {
-        g_SysWork.flags_22A4 &= ~UnkSysFlag_6;
+        g_SysWork.sysFlags &= ~SysFlag_OnCameraRail;
     }
 
     g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
@@ -712,7 +712,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
     // - A specific event related flag is disenabled.
     // - A specific camera related flag is disenabled.
     // - There is no alive enemy.
-    if (!(g_MapEventData->flags_8_13 & EventParamUnkState_0) && !(g_SysWork.flags_22A4 & UnkSysFlag_5))
+    if (!(g_MapEventData->flags_8_13 & EventParamUnkState_0) && !(g_SysWork.sysFlags & SysFlag_5))
     {
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
         {
@@ -773,7 +773,7 @@ void SysWork_SavegameUpdatePlayer(void) // 0x8003A120
 
 void func_8003A16C(void) // 0x8003A16C
 {
-    if (!(g_SysWork.flags_22A4 & UnkSysFlag_1))
+    if (!(g_SysWork.sysFlags & SysFlag_DemoActive))
     {
         // Update `savegame` with player info.
         SysWork_SavegameUpdatePlayer();

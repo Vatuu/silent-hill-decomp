@@ -301,22 +301,22 @@ typedef enum _PaperMapIdx
     PaperMapIdx_AltHospital3F  = 23
 } e_PaperMapIdx;
 
-// Temp name.
-typedef enum _UnkSysFlags
+/** @brief System flags. TODO: Give this a more specific name. */
+typedef enum _SysFlags
 {
-    UnkSysFlag_None     = 0,
-    UnkSysFlag_0        = 1 << 0,
-    UnkSysFlag_1        = 1 << 1, // Demo in progress?
-
-    UnkSysFlag_3        = 1 << 3,
-    UnkSysFlag_4        = 1 << 4,
-    UnkSysFlag_5        = 1 << 5, /** Related to camera. */
-    UnkSysFlag_6        = 1 << 6,
-    UnkSysFlag_MenuOpen = 1 << 7, /** Set by `SysState_Gameplay_Update` when opening the menu and cleared when returning to `SysState_Gameplay` once screen fade has completed. */
-    UnkSysFlag_8        = 1 << 8,
-    UnkSysFlag_9        = 1 << 9,
-    UnkSysFlag_10       = 1 << 10
-} e_UnkSysFlags;
+    SysFlag_None           = 0,
+    SysFlag_0              = 1 << 0, /** @unused */
+    SysFlag_DemoActive     = 1 << 1,
+    SysFlag_2              = 1 << 2, /** @unused */
+    SysFlag_CutsceneActive = 1 << 3,
+    SysFlag_NoEnemySpawn   = 1 << 4,
+    SysFlag_5              = 1 << 5, // Set during cafe cutscene. Something to prevent cutscene softlocks when an enemy is around??
+    SysFlag_OnCameraRail   = 1 << 6,
+    SysFlag_MenuActive     = 1 << 7,
+    SysFlag_DoWarmReset    = 1 << 8,
+    SysFlag_9              = 1 << 9, // @unused? Set during cafe cutscene along with `SysFlag_5` and never checked.
+    SysFlag_LoadActive     = 1 << 10
+} e_SysFlags;
 
 /** @brief System process flags. */
 typedef enum _ProcessFlags
@@ -707,7 +707,7 @@ typedef struct _SysWork
     /* 0x2298   */ e_ProcessFlags   processFlags;
     /* 0x229C   */ s32              field_229C; /** Dead code. Set to `NO_VALUE` when the player has been initalized and set to 0 when the player changes areas. Beyond that, this variable is unused. */
     /* 0x22A0   */ e_BgmStatusFlags bgmStatusFlags;
-    /* 0x22A4   */ e_UnkSysFlags    flags_22A4;       // `UnkSysFlag_6` passed as "use through door cam" flag in `vcSetFirstCamWork`.
+    /* 0x22A4   */ e_SysFlags       sysFlags;         // `SysFlag_OnCameraRail` passed as "use through door cam" flag in `vcSetFirstCamWork`.
     /* 0x22A8   */ GsCOORDINATE2    coord_22A8;       // For particles only?
     /* 0x22F8   */ GsCOORDINATE2    coord_22F8;       // Likely related to above.
     /* 0x2348+0 */ s8               field_2348   : 8; // Related to particles.

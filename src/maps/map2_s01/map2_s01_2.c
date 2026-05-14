@@ -143,7 +143,7 @@ void func_800CED88(void) // 0x800CED88
 
             g_Cutscene_Timer = Q12(0.0f);
             g_SysWork.cutsceneBorderState = 20;
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             func_80085EB8(0, playerChara, 51, false);
             func_80085EB8(0, dahliaChara, 0, false);

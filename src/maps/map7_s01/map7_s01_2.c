@@ -184,7 +184,7 @@ void func_800D725C(void) // 0x800D725C
 
             g_SysWork.cutsceneBorderState    = 20;
             g_SysWork.pointLightIntensity  = Q12(0.8f);
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Game_TurnFlashlightOn();
             D_800E1670 = 0;
@@ -1611,7 +1611,7 @@ void func_800DAE00(void) // 0x800DAE00
             Player_ControlFreeze();
 
             g_SysWork.cutsceneBorderState    = 20;
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Fs_QueueStartRead(FILE_ANIM_DRIVR_DMS, (void*)FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
@@ -2027,7 +2027,7 @@ void func_800DD348(void* unused, s32 idx, u8 spawnFlags) // 0x800DD348
 {
     u8* curSpawnFlags;
 
-    curSpawnFlags  = &g_MapOverlayHeader.charaSpawnInfos[0][idx].flags_6;
+    curSpawnFlags  = &g_MapOverlayHeader.charaSpawnInfos[0][idx].flags;
     *curSpawnFlags = spawnFlags;
 }
 

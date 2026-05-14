@@ -450,7 +450,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             D_800DA6E8 = 0;
             ScreenFade_ResetTimestep();
             g_SysWork.cutsceneBorderState    = 20;
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             func_8008D438();
 

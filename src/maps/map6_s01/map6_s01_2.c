@@ -168,7 +168,7 @@ void func_800D13D8(void) // 0x800D13D8
 
             g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
-            g_SysWork.flags_22A4 |= UnkSysFlag_3;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Chara_Load(0, Chara_Cybil, &g_SysWork.npcBoneCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Fs_QueueStartRead(FILE_ANIM_SIP_DMS, FS_BUFFER_15);

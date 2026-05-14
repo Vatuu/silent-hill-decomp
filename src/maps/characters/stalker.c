@@ -662,7 +662,7 @@ void Stalker_Control_2(s_SubCharacter* stalker)
                                               sharedData_800E3A1C_0_s00 - stalker->position.vz) -
                                        stalker->rotation.vy);
 
-    if (distToPlayer > Q12(8.0f) && (stalkerProps.flags & StalkerFlag_0) && !(g_SysWork.flags_22A4 & UnkSysFlag_MenuOpen))
+    if (distToPlayer > Q12(8.0f) && (stalkerProps.flags & StalkerFlag_0) && !(g_SysWork.sysFlags & SysFlag_MenuActive))
     {
         if (!Vw_AabbVisibleInScreenCheck(stalker->position.vx - Q12(1.0f), stalker->position.vx + Q12(1.0f),
                                          stalker->position.vy - Q12(1.8f), stalker->position.vy,
@@ -925,7 +925,7 @@ void Stalker_Control_3(s_SubCharacter* stalker)
     {
         if ((stalkerProps.flags & StalkerFlag_0) &&
             (stalkerProps.flags & StalkerFlag_10) &&
-            !(g_SysWork.flags_22A4 & UnkSysFlag_MenuOpen))
+            !(g_SysWork.sysFlags & SysFlag_MenuActive))
         {
             if (!Vw_AabbVisibleInScreenCheck(stalker->position.vx - Q12(1.0f), stalker->position.vx + Q12(1.0f),
                                              stalker->position.vy - Q12(1.8f), stalker->position.vy,
