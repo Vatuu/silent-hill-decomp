@@ -11,7 +11,7 @@
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/player.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 
 void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3) // 0x800652F4

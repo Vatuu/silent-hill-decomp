@@ -9,7 +9,7 @@
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 #include "main/fsqueue.h"
 
 void Dms_HeaderFixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0

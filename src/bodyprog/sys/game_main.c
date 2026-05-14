@@ -12,7 +12,7 @@
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 #include "screens/b_konami/b_konami.h"
 
 #include "bodyprog/memcard.h"

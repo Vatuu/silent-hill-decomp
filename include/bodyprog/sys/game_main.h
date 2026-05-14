@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_GAMEMAIN_H
-#define _BODYPROG_GAMEMAIN_H
+#ifndef _BODYPROG_SYS_GAMEMAIN_H
+#define _BODYPROG_SYS_GAMEMAIN_H
 
 // ======
 // ENUMS

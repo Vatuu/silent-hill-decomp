@@ -11,7 +11,7 @@
 #include "bodyprog/screen/background_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 #include "main/fsqueue.h"
 
 VECTOR3 D_800C4640[2][8];

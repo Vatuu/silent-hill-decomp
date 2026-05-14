@@ -9,7 +9,7 @@
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/sys/game_main.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 
 void SysWork_Clear(void) // 0x800340E0
 {

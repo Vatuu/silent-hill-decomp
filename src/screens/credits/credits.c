@@ -7,7 +7,7 @@
 #include "bodyprog/ranking.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "screens/credits/credits.h"
 

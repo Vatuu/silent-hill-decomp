@@ -8,7 +8,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 
 VECTOR3 D_800C42C0;
 VECTOR3* D_800C42CC;

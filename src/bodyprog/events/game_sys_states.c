@@ -19,7 +19,7 @@
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/player.h"
 #include "bodyprog/ranking.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 #include "main/fsqueue.h"
 #include "main/rng.h"
 

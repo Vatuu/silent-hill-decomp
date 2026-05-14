@@ -12,7 +12,7 @@
 #include "bodyprog/player.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 
 // Note - Will: I added a bunch of poorly written comments among the code

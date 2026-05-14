@@ -6,7 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/events/radio.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 
 void func_80037154(void) // 0x80037154
 {

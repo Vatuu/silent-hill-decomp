@@ -1,5 +1,5 @@
 #include "common.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 
 u8* g_Sd_VabBuffers[4] = {
     (u8*)0x801FE460,

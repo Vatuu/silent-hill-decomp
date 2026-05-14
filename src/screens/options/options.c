@@ -10,7 +10,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 #include "bodyprog/text/text_debug_draw.h"
 #include "bodyprog/text/text_draw.h"
 #include "screens/options.h"

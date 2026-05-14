@@ -6,7 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/game_boot/game_boot.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 
 // ========================================
 // STATIC VARIABLES

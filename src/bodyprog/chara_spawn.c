@@ -9,7 +9,7 @@
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 #include "main/fsqueue.h"
 
 bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 forceFree, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C

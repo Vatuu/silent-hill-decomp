@@ -14,7 +14,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player.h"
 #include "bodyprog/ranking.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 
 // ========================================
 // GLOBAL VARIABLES

@@ -9,9 +9,12 @@
 #include "bodyprog/formats/model.h"
 #include "bodyprog/formats/texture.h"
 #include "bodyprog/formats/tmd.h"
+#include "bodyprog/gfx/world.h"
+#include "bodyprog/gfx/world_object.h"
 #include "bodyprog/map/map.h"
 #include "bodyprog/map/terrain.h"
-#include "bodyprog/sound_effects.h"
+#include "bodyprog/sound/sound.h"
+#include "bodyprog/sound/sound_effects.h"
 #include "bodyprog/view/vw_system.h"
 #include "main/fsqueue.h"
 
@@ -25,26 +28,10 @@
 // CONSTANTS
 // ==========
 
-#define WORLD_OBJECT_COUNT_MAX 29
-
 #define OPT_SOUND_VOLUME_MIN   0
 #define OPT_SOUND_VOLUME_MAX   128
 #define OPT_VIBRATION_DISABLED 0
 #define OPT_VIBRATION_ENABLED  128
-
-// ==============
-// HELPER MACROS
-// ==============
-
-/** @brief Compares 8-character filenames using `u32`. Similar to `strcmp`.
- *
- * @param a First filename.
- * @param b Second filename.
- * @return `true` if the filenames aren't equal, `false` otherwise.
- */
-#define COMPARE_FILENAMES(a, b)                                  \
-    (((u_Filename*)(a))->u32[0] != ((u_Filename*)(b))->u32[0] || \
-     ((u_Filename*)(a))->u32[1] != ((u_Filename*)(b))->u32[1])
 
 // ======
 // ENUMS
@@ -58,98 +45,6 @@ typedef enum _OrientationFlags
     OrientationFlags_InvertZ = 1 << 1,
     OrientationFlags_SwapXz  = 1 << 2
 } e_OrientationFlags;
-
-/** @brief SFX pair indices. Used for `SFX_PAIRS`. */
-typedef enum _SfxPairIdx
-{
-    SfxPairIdx_0  = 0,
-    SfxPairIdx_1  = 1,
-    SfxPairIdx_2  = 2,
-    SfxPairIdx_3  = 3,
-    SfxPairIdx_4  = 4,
-    SfxPairIdx_5  = 5,
-    SfxPairIdx_6  = 6,
-    SfxPairIdx_7  = 7,
-    SfxPairIdx_8  = 8,
-    SfxPairIdx_9  = 9,
-    SfxPairIdx_10 = 10,
-    SfxPairIdx_11 = 11,
-    SfxPairIdx_12 = 12,
-    SfxPairIdx_13 = 13,
-    SfxPairIdx_14 = 14,
-    SfxPairIdx_15 = 15,
-    SfxPairIdx_16 = 16,
-    SfxPairIdx_17 = 17,
-    SfxPairIdx_18 = 18,
-    SfxPairIdx_19 = 19,
-    SfxPairIdx_20 = 20,
-    SfxPairIdx_21 = 21,
-    SfxPairIdx_22 = 22,
-    SfxPairIdx_23 = 23,
-    SfxPairIdx_24 = 24
-} e_SfxPairIdx;
-
-/** @brief Background music flags. */
-typedef enum _BgmFlags
-{
-    BgmFlag_Layer0    = 1 << 0,
-    BgmFlag_Layer1    = 1 << 1,
-    BgmFlag_Layer2    = 1 << 2,
-    BgmFlag_Layer3    = 1 << 3,
-    BgmFlag_Layer4    = 1 << 4,
-    BgmFlag_Layer5    = 1 << 5,
-    BgmFlag_Layer6    = 1 << 6,
-    BgmFlag_Layer7    = 1 << 7,
-    BgmFlag_KeepAlive = 1 << 8,
-    BgmFlag_MuteAll   = 1 << 9
-} e_BgmFlags;
-
-/** @brief Background music track indices. */
-typedef enum _BgmTrackIdx
-{
-    BgmTrackIdx_None = 0,
-    BgmTrackIdx_1    = 1,
-    BgmTrackIdx_2    = 2,
-    BgmTrackIdx_3    = 3,
-    BgmTrackIdx_4    = 4,
-    BgmTrackIdx_5    = 5,
-    BgmTrackIdx_6    = 6,
-    BgmTrackIdx_7    = 7,
-    BgmTrackIdx_8    = 8,
-    BgmTrackIdx_9    = 9,
-    BgmTrackIdx_10   = 10,
-    BgmTrackIdx_11   = 11,
-    BgmTrackIdx_12   = 12,
-    BgmTrackIdx_13   = 13,
-    BgmTrackIdx_14   = 14,
-    BgmTrackIdx_15   = 15,
-    BgmTrackIdx_16   = 16,
-    BgmTrackIdx_17   = 17,
-    BgmTrackIdx_18   = 18,
-    BgmTrackIdx_19   = 19,
-    BgmTrackIdx_20   = 20,
-    BgmTrackIdx_21   = 21,
-    BgmTrackIdx_22   = 22,
-    BgmTrackIdx_23   = 23,
-    BgmTrackIdx_24   = 24,
-    BgmTrackIdx_25   = 25,
-    BgmTrackIdx_26   = 26,
-    BgmTrackIdx_27   = 27,
-    BgmTrackIdx_28   = 28,
-    BgmTrackIdx_29   = 29,
-    BgmTrackIdx_30   = 30,
-    BgmTrackIdx_31   = 31,
-    BgmTrackIdx_32   = 32,
-    BgmTrackIdx_33   = 33,
-    BgmTrackIdx_34   = 34,
-    BgmTrackIdx_35   = 35,
-    BgmTrackIdx_36   = 36,
-    BgmTrackIdx_37   = 37,
-    BgmTrackIdx_38   = 38,
-    BgmTrackIdx_39   = 39,
-    BgmTrackIdx_40   = 40,
-    BgmTrackIdx_41   = 41
-} e_BgmTrackIds;
 
 typedef enum _BoneHierarchy
 {
@@ -237,15 +132,7 @@ typedef enum _GroundType
 // ================
 // UNKNOWN STRUCTS
 // ================
-
-/* Structs called by functions that haven't been identified. */
-
-/** SFX pair used for area loading (e.g. door opening and closing). */
-typedef struct
-{
-    u16 sfx_0;
-    u16 sfx_2;
-} s_AreaLoadSfx;
+// TODO: Deobfuscate these and move where they belong afterwardd.
 
 // Exception, as one of the unidentified structs uses this.
 typedef struct _s_8002AC04
@@ -466,129 +353,6 @@ typedef struct
     s8 field_3;
 } s_800BCDA8;
 STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
-
-/** @brief World object metadata. */
-typedef struct _WorldObjectMetadata
-{
-    /* 0x0 */ u_Filename name_0;
-    /* 0x8 */ s8         field_8;
-    /* 0x9 */ s8         lmIdx_9; /** Set to 2 when found in `g_MapTerrain.globalLm.lmHdr` and 3-6 if found in `g_MapTerrain.activeChunks[i] (i + 3)`. */
-} s_WorldObjectMetadata;
-
-/** @brief World object model. TODO: Rename to "static object"? Conceptually it's what this is in modern terms. */
-typedef struct _WorldObjectModel
-{
-    /* 0x0  */ s_ModelInfo           modelInfo;
-    /* 0x10 */ s_WorldObjectMetadata metadata;
-} s_WorldObjectModel;
-STATIC_ASSERT_SIZEOF(s_WorldObjectModel, 28);
-
-/** @brief Geometry-space world object to draw. */
-typedef struct _WorldObject
-{
-    /* 0x0    */ s_WorldObjectModel* model;
-    /* 0x4+0  */ s32                 positionX  : 18;
-    /* 0x4+18 */ s32                 positionY  : 14;
-    /* 0x8+0  */ s32                 positionZ  : 18;
-    /* 0x8+18 */ s32                 __pad_8_18 : 14;
-    /* 0xC+0  */ s32                 rotationX  : 10;
-    /* 0xC+10 */ s32                 rotationY  : 12;
-    /* 0xC+22 */ s32                 rotationZ  : 10;
-} s_WorldObject;
-STATIC_ASSERT_SIZEOF(s_WorldObject, 16);
-
-/** @brief Hand-held player item. */
-typedef struct _HeldItem
-{
-    /* 0x0  */ s32           itemId; /** `e_InvItemId` */
-    /* 0x4  */ s32           queueIdx;
-    /* 0x8  */ char*         textureName;
-    /* 0xC  */ s_FsImageDesc imageDesc;
-    /* 0x14 */ s_LmHeader*   lmHdr;
-    /* 0x18 */ s_Bone        bone;
-} s_HeldItem;
-STATIC_ASSERT_SIZEOF(s_HeldItem, 44);
-
-/** @brief World GFX workspace.
- * TODO: Could be `s_RendererWork`? Will depend on where other data resides.
- * Will: `s_WorldModelWork` fits better, this is mainly responsible for handling model data.
- * `s_WorldEnvWork` should have this name as it is used for general GFX.
- * Will (2): Maybe isn't supposed to be something exclusively graphics-related, but rather a
- * general in-game world struct, as it also contains triggers and camera information.
- */
-typedef struct _WorldGfxWork
-{
-    /* 0x0    */ s_MapInfo*        mapInfo;
-    /* 0x4    */ u8                useStoredPoint; /** `bool` */
-    /* 0x5    */ s8                __pad_5[3];
-    /* 0x8    */ VECTOR3           ipdSamplePoint; /** Used by IPD logic to sample which chunks to load or unload. */
-    /* 0x14   */ u8*               charaLmBuffer;
-    /* 0x18   */ s_CharaModel*     registeredCharaModels[Chara_Count];
-    /* 0xCC   */ s_CharaModel      charaModels[CHARA_GROUP_COUNT];
-    /* 0x164C */ s_CharaModel      harryModel;
-    /* 0x1BAC */ s_HeldItem        heldItem; /** Item held by the player. */
-    /* 0x1BD8 */ s_TriggerZone*    triggerZone;
-    /* 0x1BDC */ VC_CAMERA_INTINFO vcCameraInternalInfo; /** Debug camera info. */
-    /* 0x1BE4 */ s_LmHeader        itemLmHdr;
-    /* 0x1BF4 */ u8                itemLmData[4096 - sizeof(s_LmHeader)]; // 4kb allocated for 2.75kb game files.
-    /* 0x2BE4 */ s32               itemLmQueueIdx;
-    /* 0x2BE8 */ s32               objectCount;                     /** `objects` size. */
-    /* 0x2BEC */ s_WorldObject     objects[WORLD_OBJECT_COUNT_MAX]; /** World objects to draw. */
-} s_WorldGfxWork;
-STATIC_ASSERT_SIZEOF(s_WorldGfxWork, 11708);
-
-/** @brief World fog info. */
-typedef struct _Fog
-{
-    /* 0x0  */ s32     nearDistance;
-    /* 0x4  */ q23_8   farDistance; // "DrawDistanmce" in SHME, "has no effect when fog is disabled".
-    /* 0x8  */ s32     depthShift;  // "FogThing1" from SHME. Affects the distance where fog begins.
-    /* 0xC  */ s32     intensity;   // "FogThing2" from SHME. Affects the distance where fog begins.
-    /* 0x10 */ CVECTOR color;
-} s_Fog;
-
-// Related to `s_PointLight`.
-typedef struct
-{
-    VECTOR3 field_0[2][1];
-} s_WorldEnvWork_84;
-
-/** @brief Dynamic point light. */
-typedef struct _PointLight
-{
-    /* 0x0  */ s32               field_0; // Light intensity in Q4?
-    /* 0x4  */ q3_12             lensFlareIntensity;
-    /* 0x8  */ q19_12            intensity;
-    /* 0xC  */ SVECTOR           direction; /** Q3.12 */
-    /* 0x14 */ VECTOR3           position;  /** Q19.12 */
-    /* 0x20 */ SVECTOR           rotation;  /** Q3.12 */
-    /* 0x28 */ SVECTOR           field_28;  // Q8 light position for matrix?
-    /* 0x30 */ SVECTOR           field_30;  // Light offset?
-    /* 0x38 */ s_WorldEnvWork_84 field_38[3];
-} s_PointLight;
-
-/** @brief World environment workspace.
- *
- * Holds fog distances and ramps, lighting and color parameters, water zone references, and other per-map environmental
- * data used for world drawing.
- */
-typedef struct _WorldEnvWork
-{
-    /* 0x0   */ u8           field_0;      // `bool`?
-    /* 0x1   */ u8           isFogEnabled; /** `bool` */
-    /* 0x2   */ u8           field_2;
-    /* 0x3   */ u8           field_3; // Enviroment lighting.
-    /* 0x4   */ s_WaterZone* waterZones;
-    /* 0x8   */ s32          screenBrightness;
-    /* 0xC   */ s_Fog        fog;
-    /* 0x20  */ s32          field_20; // Map lighting.
-    /* 0x24  */ CVECTOR      field_24; // Character color lighting.
-    /* 0x28  */ CVECTOR      worldTintColor;
-    /* 0x2C  */ MATRIX       colorMat;
-    /* 0x50  */ s_PointLight light;
-    /* 0xCC  */ u8           fogRamp[128]; // Fog-related values based on `fog.nearDistance`/`fog.farDistance`.
-    /* 0x14C */ u16          field_14C;
-} s_WorldEnvWork;
 
 typedef struct
 {

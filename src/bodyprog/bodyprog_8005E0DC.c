@@ -12,7 +12,7 @@
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/player.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 
 s_800C42E8     D_800C42E8[24];

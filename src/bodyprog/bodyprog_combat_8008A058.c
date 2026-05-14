@@ -9,7 +9,7 @@
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 #include "main/fsqueue.h"
 
 s16 D_800AFD1C[] = // Used by `func_8008A3E0`.

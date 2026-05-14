@@ -1,14 +1,8 @@
-#ifndef _BODYPROG_SOUNDSYSTEM_H
-#define _BODYPROG_SOUNDSYSTEM_H
+#ifndef _BODYPROG_SOUND_SOUNDSYSTEM_H
+#define _BODYPROG_SOUND_SOUNDSYSTEM_H
 
-/** @brief This header is used to declare any variable, struct, or
- * function part of `BODYPROG.BIN` that has been identified to be
- * related the audio system of the game, but haven't been recognized
- * to be a function from the Konami's LIBSD system.
- *
- * This code is game-specific and not part of the library itself.
- * This code specifically handle file streaming and some general
- * sound game effects.
+/** @brief Game-specific sound system and not part of the sound library itself.
+ * Specifically, handles file streaming and some general sound effects.
  *
  * @note Name deobfuscation:
  * `Tokimeki Memorial ~Forever With You~` and `Konami International Rally Championship` symbols

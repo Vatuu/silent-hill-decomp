@@ -86,4 +86,14 @@ typedef union _Filename
     u32  u32[2];
 } u_Filename;
 
+/** @brief Compares 8-character filenames using `u32`. Similar to `strcmp`.
+ *
+ * @param a First filename.
+ * @param b Second filename.
+ * @return `true` if the filenames aren't equal, `false` otherwise.
+ */
+#define COMPARE_FILENAMES(a, b)                                  \
+    (((u_Filename*)(a))->u32[0] != ((u_Filename*)(b))->u32[0] || \
+     ((u_Filename*)(a))->u32[1] != ((u_Filename*)(b))->u32[1])
+
 #endif

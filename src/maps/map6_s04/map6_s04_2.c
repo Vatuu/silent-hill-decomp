@@ -9,7 +9,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/player.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "maps/map6/map6_s04.h"
 #include "maps/characters/alessa.h"

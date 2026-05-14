@@ -7,7 +7,7 @@
 #include "main/rng.h"
 #include "maps/map3/map3_s04.h"
 #include "maps/characters/lisa.h"
-#include "bodyprog/sound_system.h"
+#include "bodyprog/sound/sound_system.h"
 
 #include "../src/maps/chara_util.c" // 0x800D1374
 
