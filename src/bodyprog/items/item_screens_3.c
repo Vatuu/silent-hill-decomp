@@ -663,7 +663,7 @@ s16 D_800AE5CC[18] =
     0x22, 0x0
 };
 
-// https://decomp.me/scratch/HNL4n Referenced under `if (g_GameWork.config.optExtraBloodColor_24 != 0xE)`
+// https://decomp.me/scratch/HNL4n Referenced under `if (g_GameWork.config.extraBloodColor != 0xE)`
 // Similar access pattern to the table above.
 s16 D_800AE5F0[136] = {
     0x0001, 0x0000, 0x0001, 0x0000,

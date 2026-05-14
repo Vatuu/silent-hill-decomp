@@ -6436,9 +6436,9 @@ void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warp
                                player->position.vz - otherChara->position.vz);
 
     vcPrsFViewFlag = (vcWork.flags & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
-    if (((g_GameWorkConst->config.optExtraViewCtrl_28 && (vcPrsFViewFlag ^ 1) != 0) ||
-         (!g_GameWorkConst->config.optExtraViewCtrl_28 && vcPrsFViewFlag)) &&
-        (g_GameWorkConst->config.optExtraViewMode_29 == 0))
+    if (((g_GameWorkConst->config.extraViewCtrl && (vcPrsFViewFlag ^ 1) != 0) ||
+         (!g_GameWorkConst->config.extraViewCtrl && vcPrsFViewFlag)) &&
+        (g_GameWorkConst->config.extraViewMode == 0))
     {
         isCamUpdated = true;
 
@@ -10312,7 +10312,7 @@ void func_800E9C28(void) // 0x800E9C28
 
             g_SavegamePtr->field_27A                             = 1 << (D_800F481C - 1);
             g_SavegamePtr->clearGameEndings                 |= 1 << (D_800F481C - 1);
-            g_GameWorkConst->config.optExtraOptionsEnabled_27 |= 1 << (D_800F481C - 1);
+            g_GameWorkConst->config.extraOptionsEnabled |= 1 << (D_800F481C - 1);
 
             g_SavegamePtr->locationId = SaveLocationId_NextFear;
 

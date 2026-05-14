@@ -254,14 +254,14 @@ typedef struct _SaveScreenElement
                                                            * @bug This counter is used to determine if the "New Save" element has
                                                            * been selected, which causes overwrites to not show the "Yes/No" message.
                                                            */
-    /* 0x2 */ s16                     savegameCount_2;
-    /* 0x4 */ s8                      type_4; /** `e_SavegameEntryType` */
-    /* 0x5 */ s8                      deviceId_5;
-    /* 0x6 */ s8                      fileIdx_6;
-    /* 0x7 */ s8                      elementIdx_7;
-    /* 0x8 */ s8                      locationId_8;
-    /* 0x9 */ s8                      pad_9[3];
-    /* 0xC */ s_MemCard_SaveMetadata* saveMetadata_C;
+    /* 0x2 */ s16                     savegameCount;
+    /* 0x4 */ s8                      type; /** `e_SavegameEntryType` */
+    /* 0x5 */ s8                      deviceId;
+    /* 0x6 */ s8                      fileIdx;
+    /* 0x7 */ s8                      elementIdx;
+    /* 0x8 */ s8                      locationId;
+    /* 0x9 */ s8                      __pad_9[3];
+    /* 0xC */ s_MemCard_SaveMetadata* saveMetadata;
 } s_SaveScreenElement;
 STATIC_ASSERT_SIZEOF(s_SaveScreenElement, 16);
 
@@ -270,26 +270,26 @@ STATIC_ASSERT_SIZEOF(s_SaveScreenElement, 16);
  */
 typedef struct _Savegame_Footer
 {
-    /* 0x0 */ u8  checksum_0[2];
-    /* 0x2 */ u16 magic_2;
+    /* 0x0 */ u8  checksum[2];
+    /* 0x2 */ u16 magic;
 } s_Savegame_Footer;
 STATIC_ASSERT_SIZEOF(s_Savegame_Footer, 4);
 
 /** @brief Contains `s_Savegame` data with the footer appended to the end containing the checksum + magic. */
 typedef struct _Savegame_Container
 {
-    /* 0x0   */ s_Savegame        savegame_0;
-    /* 0x27C */ s_Savegame_Footer footer_27C;
+    /* 0x0   */ s_Savegame        savegame;
+    /* 0x27C */ s_Savegame_Footer footer;
 } s_Savegame_Container;
 STATIC_ASSERT_SIZEOF(s_Savegame_Container, 640);
 
-/** @brief Contains `s_SaveUserConfig` data padded to 128 bytes with a footer at the end containing checksum + magic. */
-typedef struct _Savegame_UserConfigs
+/** @brief Contains `s_OptionsConfig` data padded to 128 bytes with a footer at the end containing checksum + magic. */
+typedef struct _Savegame_OptionsConfig
 {
-    /* 0x0  */ s_SaveUserConfig  config;
-    /* 0x38 */ u8                pad_38[68];
+    /* 0x0  */ s_OptionsConfig   config;
+    /* 0x38 */ u8                __pad_38[68];
     /* 0x7C */ s_Savegame_Footer footer_7C;
-} s_Savegame_UserConfigs;
+} s_Savegame_OptionsConfig;
 
 typedef struct _MemCard_TotalSavesInfo
 {
@@ -301,7 +301,7 @@ typedef struct _MemCard_TotalSavesInfo
 typedef struct _MemCard_SaveHeader
 {
     /* 0x0  */ s32                    unk_0;
-    /* 0x4  */ s_MemCard_SaveMetadata saveMetadata_4[MEMCARD_SAVES_COUNT_MAX];
+    /* 0x4  */ s_MemCard_SaveMetadata saveMetadata[MEMCARD_SAVES_COUNT_MAX];
     /* 0x88 */ s8                     unk_88[116];
     /* 0xFC */ s_Savegame_Footer      footer_FC;
 } s_MemCard_SaveHeader;
@@ -310,9 +310,9 @@ STATIC_ASSERT_SIZEOF(s_MemCard_SaveHeader, 256);
 typedef struct _MemCard_DeviceInfo
 {
     /* 0x0  */ s32                   status; /** `e_MemCardState`. */
-    /* 0x4  */ s8                    fileState_4[MEMCARD_FILE_COUNT_MAX];
-    /* 0x14 */ s_MemCard_SaveHeader* saveHeader_14; /** Slots saves information. */
-    /* 0x18 */ s32                   fileLimit_18;  /** Max count of files allowed in the memory card. */
+    /* 0x4  */ s8                    fileState[MEMCARD_FILE_COUNT_MAX];
+    /* 0x14 */ s_MemCard_SaveHeader* saveHeader; /** Slots saves information. */
+    /* 0x18 */ s32                   fileLimit;  /** Max count of files allowed in the memory card. */
 } s_MemCard_DeviceInfo;
 STATIC_ASSERT_SIZEOF(s_MemCard_DeviceInfo, 28);
 
@@ -321,26 +321,26 @@ STATIC_ASSERT_SIZEOF(s_MemCard_DeviceInfo, 28);
  */
 typedef struct _MemCard_Process
 {
-    /* 0x0  */ s32 processId_0;          /** e_MemCardProcess. */
-    /* 0x4  */ s32 deviceId_4;
-    /* 0x8  */ s32 fileIdx_8;
-    /* 0xC  */ s32 saveIdx_C;            /** Index of the save in a determined file. */
-    /* 0x10 */ s32 processState_10;      /** States related to specific memory card events. */
-    /* 0x14 */ s32 lastMemCardResult_14; /** `e_MemCardResult` */
+    /* 0x0  */ s32 processId;         /** e_MemCardProcess. */
+    /* 0x4  */ s32 deviceId;
+    /* 0x8  */ s32 fileIdx;
+    /* 0xC  */ s32 saveIdx;           /** Index of the save in a determined file. */
+    /* 0x10 */ s32 processState;      /** States related to specific memory card events. */
+    /* 0x14 */ s32 lastMemCardResult; /** `e_MemCardResult` */
 } s_MemCard_Process;
 STATIC_ASSERT_SIZEOF(s_MemCard_Process, 24);
 
 // OPM16 has `MCM_FUNC_WORK` struct with size 0x6D8, close to this 0x718.
 typedef struct _MemCard_SaveWork
 {
-    /* 0x0   */ s_MemCard_DeviceInfo   devices_0[MEMCARD_DEVICE_COUNT_MAX];
-    /* 0xE0  */ s_MemCard_Process      saveWork_E0[2]; // This seems to be used mainly for processes. Element 0 is used for general processes while 1 is exclusively used for
-    /* 0x110 */ s32                    memCardInitalized_110;
-    /* 0x114 */ s32                    unused_114; /** @unused */
-    /* 0x118 */ s_PsxSaveBlock         saveBlock_118;
-    /* 0x318 */ s_MemCard_SaveHeader   saveInfo_318;
-    /* 0x418 */ s_Savegame_UserConfigs userConfig_418;
-    /* 0x498 */ s_Savegame_Container   saveGame_498;
+    /* 0x0   */ s_MemCard_DeviceInfo     devices[MEMCARD_DEVICE_COUNT_MAX];
+    /* 0xE0  */ s_MemCard_Process        saveWork[2];       // This seems to be used mainly for processes. Element 0 is used for general processes while 1 is exclusively used for
+    /* 0x110 */ s32                      memCardInitalized; /** `bool` */
+    /* 0x114 */ s32                      unused_114;        /** @unused */
+    /* 0x118 */ s_PsxSaveBlock           saveBlock;
+    /* 0x318 */ s_MemCard_SaveHeader     saveInfo;
+    /* 0x418 */ s_Savegame_OptionsConfig optionsConfig;
+    /* 0x498 */ s_Savegame_Container     savegame;
 } s_MemCard_SaveWork;
 STATIC_ASSERT_SIZEOF(s_MemCard_SaveWork, 1816);
 
@@ -508,8 +508,8 @@ void MemCard_Process_Save(s_MemCard_Process* statusPtr);
 
 void MemCard_SaveInfoClear(s_MemCard_SaveHeader* saveInfo);
 
-/** Copies user config into an `s_Savegame_UserConfigs` and calculates footer checksum. */
-void MemCard_UserConfigCopy(s_Savegame_UserConfigs* dest, s_SaveUserConfig* src);
+/** Copies user config into an `s_Savegame_OptionsConfig` and calculates footer checksum. */
+void MemCard_UserConfigCopy(s_Savegame_OptionsConfig* dest, s_OptionsConfig* src);
 
 s32 MemCard_BiggestTotalSavegameCountGet(s32 deviceId);
 

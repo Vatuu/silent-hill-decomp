@@ -313,7 +313,7 @@ s32 vcExecCamera(void) // 0x80080FBC
     cur_rd_area_size = vcWork.cur_near_road.road_p->area_size_type;
     cur_cam_mv_type  = vcRetCurCamMvType(&vcWork);
 
-    far_watch_rate     = vcRetFarWatchRate(CHECK_FLAG(vcWork.flags, VC_PRS_F_VIEW_F, !g_GameWorkConst->config.optExtraViewCtrl_28), cur_cam_mv_type, &vcWork);
+    far_watch_rate     = vcRetFarWatchRate(CHECK_FLAG(vcWork.flags, VC_PRS_F_VIEW_F, !g_GameWorkConst->config.extraViewCtrl), cur_cam_mv_type, &vcWork);
     self_view_eff_rate = vcRetSelfViewEffectRate(cur_cam_mv_type, far_watch_rate, &vcWork);
 
     if (!(vcWork.flags & (VC_USER_CAM_F | VC_USER_WATCH_F)))
@@ -441,13 +441,13 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
 {
     bool hasViewFlag;
 
-    if (g_GameWorkConst->config.optExtraViewMode_29)
+    if (g_GameWorkConst->config.extraViewMode)
     {
         hasViewFlag = (vcWork.flags & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
 
         // TODO: Can this weird XOR be removed? (XOR 1) should be same as `!hasViewFlag`?
-        if ((g_GameWorkConst->config.optExtraViewCtrl_28 && (hasViewFlag ^ 1) != 0) ||
-            (!g_GameWorkConst->config.optExtraViewCtrl_28 && hasViewFlag))
+        if ((g_GameWorkConst->config.extraViewCtrl && (hasViewFlag ^ 1) != 0) ||
+            (!g_GameWorkConst->config.extraViewCtrl && hasViewFlag))
         {
             if (!(w_p->flags & (VC_USER_CAM_F | VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)) &&
                 !func_8008150C(w_p->chara_pos.vx, w_p->chara_pos.vz))
@@ -619,14 +619,14 @@ q19_12 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_t
         }
     }
 
-    if (g_GameWorkConst->config.optExtraViewMode_29)
+    if (g_GameWorkConst->config.extraViewMode)
     {
         // Awkward `VC_PRS_F_VIEW_F` flag check. TODO: Use `CHECK_FLAG`? It's possible this was originally typed manually.
         prsFViewFlag = vcWork.flags >> 9;
         prsFViewFlag = prsFViewFlag & (1 << 0);
 
-        if ((g_GameWorkConst->config.optExtraViewCtrl_28 && (prsFViewFlag ^ 1) != 0) ||
-            (!g_GameWorkConst->config.optExtraViewCtrl_28 && prsFViewFlag))
+        if ((g_GameWorkConst->config.extraViewCtrl && (prsFViewFlag ^ 1) != 0) ||
+            (!g_GameWorkConst->config.extraViewCtrl && prsFViewFlag))
         {
             if (!(w_p->flags & (VC_USER_CAM_F | VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)) &&
                 func_8008150C(w_p->chara_pos.vx, w_p->chara_pos.vz))
@@ -758,8 +758,8 @@ void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, s32 far_watch_rate, bool 
 
         // `optExtraViewCtrl && !vcPrsFViewFlag` ||
         // `!optExtraViewCtrl && vcPrsFViewFlag`
-        if ((g_GameWorkConst->config.optExtraViewCtrl_28 && (vcPrsFViewFlag ^ 1) != 0) ||
-            (!g_GameWorkConst->config.optExtraViewCtrl_28 && vcPrsFViewFlag))
+        if ((g_GameWorkConst->config.extraViewCtrl && (vcPrsFViewFlag ^ 1) != 0) ||
+            (!g_GameWorkConst->config.extraViewCtrl && vcPrsFViewFlag))
         {
             // Awkward `VC_OLD_PRS_F_VIEW_F` flag check.
             vcOldPrsFViewFlag = vcWork.flags >> 10;
@@ -767,10 +767,10 @@ void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, s32 far_watch_rate, bool 
 
             // `!(optExtraViewCtrl && !vcOldPrsFViewFlag)` &&
             // `!(!optExtraViewCtrl && vcOldPrsFViewFlag)`
-            if (!(g_GameWorkConst->config.optExtraViewCtrl_28 && (vcOldPrsFViewFlag ^ 1) != 0) &&
-                !(!g_GameWorkConst->config.optExtraViewCtrl_28 && vcOldPrsFViewFlag))
+            if (!(g_GameWorkConst->config.extraViewCtrl && (vcOldPrsFViewFlag ^ 1) != 0) &&
+                !(!g_GameWorkConst->config.extraViewCtrl && vcOldPrsFViewFlag))
             {
-                if (g_GameWorkConst->config.optExtraViewMode_29)
+                if (g_GameWorkConst->config.extraViewMode)
                 {
                     Vc_FlagSet(VC_WARP_WATCH_F);
                 }
@@ -1926,7 +1926,7 @@ void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_T
         return;
     }
 
-    if (g_GameWorkConst->config.optExtraViewMode_29)
+    if (g_GameWorkConst->config.extraViewMode)
     {
         chara2cam_ang_y = w_p->chara_eye_ang_y   + Q12_ANGLE(140.0f);
         ideal_pos->vy   = w_p->chara_head_pos.vy + Q12(0.07f);

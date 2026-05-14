@@ -414,7 +414,7 @@ void Player_CharaTurn_1(s_SubCharacter* player, e_PlayerLowerBodyState curState)
 
 void Player_CharaRotate(s32 speed) // 0x80071284
 {
-    if (g_GameWork.config.optExtraRetreatTurn_2A)
+    if (g_GameWork.config.extraRetreatTurn)
     {
         if (g_Player_IsTurningRight)
         {
@@ -2537,7 +2537,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
         {
             playerProps.field_104 += g_DeltaTime;
 
-            if (!g_GameWork.config.optExtraWeaponCtrl_23)
+            if (!g_GameWork.config.extraWeaponCtrl)
             {
                 g_Player_HasActionInput      = false;
                 g_Player_HasMoveInput        = false;
@@ -2619,7 +2619,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
         if (g_SysWork.targetNpcIdx != NO_VALUE &&
             g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
-            if (!g_GameWork.config.optExtraAutoAiming_2C)
+            if (!g_GameWork.config.extraAutoAiming)
             {
                 if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 0x1))
                 {
@@ -2662,7 +2662,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
         }
         else
         {
-            if (g_SysWork.targetNpcIdx != NO_VALUE && !g_GameWork.config.optExtraAutoAiming_2C)
+            if (g_SysWork.targetNpcIdx != NO_VALUE && !g_GameWork.config.extraAutoAiming)
             {
                 if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))
                 {
@@ -3598,7 +3598,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
             {
-                if (g_GameWork.config.optExtraAutoAiming_2C)
+                if (g_GameWork.config.extraAutoAiming)
                 {
                     if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))
                     {
@@ -3624,7 +3624,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             D_800AF220 = 1;
             player->properties.player.field_100++;
 
-            if (!g_GameWork.config.optExtraWeaponCtrl_23)
+            if (!g_GameWork.config.extraWeaponCtrl)
             {
                 g_Player_HasActionInput      = false;
                 g_Player_HasMoveInput        = false;
@@ -3669,7 +3669,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 break;
             }
 
-            if (!g_GameWork.config.optExtraAutoAiming_2C)
+            if (!g_GameWork.config.extraAutoAiming)
             {
                 temp_v0_3 = ratan2((g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vx) - g_SysWork.playerWork.player.position.vx,
                                    (g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vz) - g_SysWork.playerWork.player.position.vz);
@@ -3951,7 +3951,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                     }
                     else
                     {
-                        if (g_GameWork.config.optExtraAutoAiming_2C)
+                        if (g_GameWork.config.extraAutoAiming)
                         {
                             if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 1))
                             {
@@ -4066,8 +4066,8 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
         case PlayerUpperBodyState_Aim:
         case PlayerUpperBodyState_AimTargetLock:
             // Stop aiming.
-            if (( g_GameWork.config.optExtraWeaponCtrl_23 && !g_Player_IsAiming) ||
-                (!g_GameWork.config.optExtraWeaponCtrl_23 &&  g_Player_IsAiming))
+            if (( g_GameWork.config.extraWeaponCtrl && !g_Player_IsAiming) ||
+                (!g_GameWork.config.extraWeaponCtrl &&  g_Player_IsAiming))
             {
                 player->properties.player.field_F4                        = 0;
                 g_SysWork.playerWork.extra.upperBodyState             = PlayerUpperBodyState_AimStop;
@@ -4548,8 +4548,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         {
                             // Restrict aiming when going from idle to run.
                             if ((g_Player_IsRunning && temp_s3 == PlayerLowerBodyState_None) &&
-                                (aimState == 0 || (( g_GameWork.config.optExtraWeaponCtrl_23 && !g_Player_IsAiming) ||
-                                                   (!g_GameWork.config.optExtraWeaponCtrl_23 &&  g_Player_IsAiming)) &&
+                                (aimState == 0 || (( g_GameWork.config.extraWeaponCtrl && !g_Player_IsAiming) ||
+                                                   (!g_GameWork.config.extraWeaponCtrl &&  g_Player_IsAiming)) &&
                                  WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat.weaponAttack) == EquippedWeaponId_SteelPipe))
                             {
                                 g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForward;
@@ -4594,8 +4594,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                         if (aimState == 0 && !g_SysWork.playerCombat.isAiming)
                         {
-                            if (( g_GameWork.config.optExtraWalkRunCtrl_2B && !g_Player_IsRunning) ||
-                                (!g_GameWork.config.optExtraWalkRunCtrl_2B &&  g_Player_IsRunning))
+                            if (( g_GameWork.config.extraWalkRunCtrl && !g_Player_IsRunning) ||
+                                (!g_GameWork.config.extraWalkRunCtrl &&  g_Player_IsRunning))
                             {
                                 if (g_Player_IsMovingBackward)
                                 {
@@ -5223,8 +5223,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                          player->model.anim.keyframeIdx == 47) &&
                         aimState == 0 && g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop)
                     {
-                        if (( g_GameWork.config.optExtraWalkRunCtrl_2B && !g_Player_IsRunning) ||
-                            (!g_GameWork.config.optExtraWalkRunCtrl_2B &&  g_Player_IsRunning))
+                        if (( g_GameWork.config.extraWalkRunCtrl && !g_Player_IsRunning) ||
+                            (!g_GameWork.config.extraWalkRunCtrl &&  g_Player_IsRunning))
                         {
                             if (g_Player_IsMovingBackward)
                             {
@@ -7680,7 +7680,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
                 blasterBeamFrom.vz = Q8_TO_Q12(partBeamToQ8.vz);
 
                 // Set beam rotation.
-                if (g_GameWork.config.optExtraAutoAiming_2C)
+                if (g_GameWork.config.extraAutoAiming)
                 {
                     rotToAttackPos.vx = player->angleToTarget;
                 }
@@ -8301,7 +8301,7 @@ void Player_Controller(void) // 0x8007F32C
     g_Player_IsSteppingLeftTap  |= (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.stepLeft)  != 0;
     g_Player_IsSteppingRightTap |= (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.stepRight) != 0;
 
-    if (g_GameWork.config.optExtraWalkRunCtrl_2B)
+    if (g_GameWork.config.extraWalkRunCtrl)
     {
         g_Player_IsRunning = !(g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.run);
     }
@@ -8310,7 +8310,7 @@ void Player_Controller(void) // 0x8007F32C
         g_Player_IsRunning = g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.run;
     }
 
-    if (g_GameWork.config.optExtraWeaponCtrl_23)
+    if (g_GameWork.config.extraWeaponCtrl)
     {
         g_Player_IsAiming = g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.aim;
     }

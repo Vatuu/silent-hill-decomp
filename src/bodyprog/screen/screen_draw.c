@@ -46,7 +46,7 @@ void Screen_Init(s32 screenWidth, bool isInterlaced) // 0x80032428
     GsDRAWENV.clip.h   = FRAMEBUFFER_HEIGHT_PROGRESSIVE;
 
     GsInit3D();
-    Screen_XyPositionSet(g_GameWorkConst->config.optScreenPosX_1C, g_GameWorkConst->config.optScreenPosY_1D);
+    Screen_XyPositionSet(g_GameWorkConst->config.screenPositionX, g_GameWorkConst->config.screenPositionY);
     GsSwapDispBuff();
     GsSwapDispBuff();
 }
@@ -64,11 +64,11 @@ void Screen_DisplayEnvXySet(DISPENV* displayEnv, s32 x, s32 y) // 0x80032524
     x = CLAMP(x, -RANGE_X, RANGE_X);
     y = CLAMP(y, -RANGE_Y, RANGE_Y);
 
-    g_GameWorkConst->config.optScreenPosX_1C = x;
-    g_GameWorkConst->config.optScreenPosY_1D = y;
+    g_GameWorkConst->config.screenPositionX = x;
+    g_GameWorkConst->config.screenPositionY = y;
 
-    displayEnv->screen.x = g_GameWorkConst->config.optScreenPosX_1C;
-    displayEnv->screen.y = g_GameWorkConst->config.optScreenPosY_1D + RANGE_Y;
+    displayEnv->screen.x = g_GameWorkConst->config.screenPositionX;
+    displayEnv->screen.y = g_GameWorkConst->config.screenPositionY + RANGE_Y;
     
     #undef RANGE_X
     #undef RANGE_Y

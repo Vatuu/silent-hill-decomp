@@ -62,7 +62,7 @@ void GameState_MovieIntro_Update(void) // 0x801E279C
     }
 #endif
 
-    open_main((g_GameWorkConst->config.optExtraOptionsEnabled_27 & (1 << 0)) ? FILE_XA_C2_20670 : FILE_XA_C1_20670, 0);
+    open_main((g_GameWorkConst->config.extraOptionsEnabled & (1 << 0)) ? FILE_XA_C2_20670 : FILE_XA_C1_20670, 0);
     Game_StateSetNext(GameState_MainMenu);
 
     g_ScreenFadeTimestep = Q12(1.0f);
@@ -208,8 +208,8 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
     do
     {
         disp.disp.y   = 256 - (m->dec.rectid * SCREEN_HEIGHT);
-        disp.screen.x = g_GameWorkConst->config.optScreenPosX_1C;
-        disp.screen.y = (8 + ((224 - m->height) / 2)) + g_GameWorkConst->config.optScreenPosY_1D;
+        disp.screen.x = g_GameWorkConst->config.screenPositionX;
+        disp.screen.y = (8 + ((224 - m->height) / 2)) + g_GameWorkConst->config.screenPositionY;
         disp.disp.y   = (disp.disp.y   <  16) ? 16 : ((disp.disp.y > 256)   ? 256 : disp.disp.y);
         disp.screen.h = (disp.screen.h <= 0)  ? 1  : ((disp.screen.h > 208) ? 208 : disp.screen.h);
 

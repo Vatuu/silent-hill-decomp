@@ -60,19 +60,19 @@ void func_800CED74(s_SubCharacter* chara, bool arg1) // 0x800CED74
     // With the same odd XOR pattern, and `VC_PRS_F_VIEW_F` check followed by `VC_OLD_PRS_F_VIEW_F`.
     // Inlines have been seen to change condition checks into XOR before, but no luck making an inline for this check yet though.
     vcPrsFViewFlag = (vcWork.flags & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
-    if (((g_GameWorkConst->config.optExtraViewCtrl_28 && (vcPrsFViewFlag ^ 1) != 0) ||
-         (!g_GameWorkConst->config.optExtraViewCtrl_28 && vcPrsFViewFlag)) &&
-        (g_GameWorkConst->config.optExtraViewMode_29 != 0))
+    if (((g_GameWorkConst->config.extraViewCtrl && (vcPrsFViewFlag ^ 1) != 0) ||
+         (!g_GameWorkConst->config.extraViewCtrl && vcPrsFViewFlag)) &&
+        (g_GameWorkConst->config.extraViewMode != 0))
     {
         vcPrsFViewFlag2 = (vcWork.flags & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
 
-        if ((g_GameWorkConst->config.optExtraViewCtrl_28 && (vcPrsFViewFlag2 ^ 1) != 0) ||
-            (!g_GameWorkConst->config.optExtraViewCtrl_28 && vcPrsFViewFlag2))
+        if ((g_GameWorkConst->config.extraViewCtrl && (vcPrsFViewFlag2 ^ 1) != 0) ||
+            (!g_GameWorkConst->config.extraViewCtrl && vcPrsFViewFlag2))
         {
             vcOldPrsFViewFlag = (vcWork.flags & VC_OLD_PRS_F_VIEW_F) == VC_OLD_PRS_F_VIEW_F;
 
-            if ((g_GameWorkConst->config.optExtraViewCtrl_28 && (vcOldPrsFViewFlag ^ 1) == 0) ||
-                (!g_GameWorkConst->config.optExtraViewCtrl_28 && !vcOldPrsFViewFlag))
+            if ((g_GameWorkConst->config.extraViewCtrl && (vcOldPrsFViewFlag ^ 1) == 0) ||
+                (!g_GameWorkConst->config.extraViewCtrl && !vcOldPrsFViewFlag))
             {
                 vcReturnPreAutoCamWork(true);
             }
@@ -1502,7 +1502,7 @@ void func_800D2364(void) // 0x800D2364
     gte_ReadGeomScreen(&ptr->field_64);
 
     ptr->field_68 = g_ActiveBufferIdx;
-    temp          = Q12_MULT_PRECISE((g_GameWork.config.optBrightness_22 * 8) + 4, Screen_FadeInProgressGet());
+    temp          = Q12_MULT_PRECISE((g_GameWork.config.brightness * 8) + 4, Screen_FadeInProgressGet());
 
     ptr->field_4 = GsOUT_PACKET_P;
 
@@ -1765,7 +1765,7 @@ void func_800D32D0(void) // 0x800D32D0
             g_SavegamePtr->clearGameCount                    = CLAMP(g_SavegamePtr->clearGameCount, 1, 99);
             g_SavegamePtr->field_27A                             = 1 << 4;
             g_SavegamePtr->clearGameEndings                 |= 1 << 4;
-            g_GameWorkConst->config.optExtraOptionsEnabled_27 |= 1 << 4;
+            g_GameWorkConst->config.extraOptionsEnabled |= 1 << 4;
             g_SavegamePtr->locationId                         = SaveLocationId_NextFear;
 
             SysWork_StateSetNext(SysState_StatusMenu);

@@ -366,7 +366,7 @@ s8 Vc_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
     s32     balance;
 
     // If monoural sound type, default to balance of 0.
-    if (g_GameWork.config.optSoundType_1E)
+    if (g_GameWork.config.soundType)
     {
         return 0;
     }

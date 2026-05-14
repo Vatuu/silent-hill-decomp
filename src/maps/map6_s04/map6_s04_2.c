@@ -1646,7 +1646,7 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
     temp3   = vcWork.flags;
     temp3   = temp3 >> 9;
     temp3   = temp3 & 1;
-    temp_s5 = temp3 ^ (g_GameWorkConst->config.optExtraViewCtrl_28 != false);
+    temp_s5 = temp3 ^ (g_GameWorkConst->config.extraViewCtrl != false);
 
     Vc_VectorMagnitudeCalc(player->position.vx - npc->position.vx, Q12(0.0f), player->position.vz - npc->position.vz);
     angle2 = ratan2(player->position.vx - Q12(20.0f), player->position.vz - Q12(100.0f));
@@ -1754,19 +1754,19 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
 
     sp18.vy = -Math_Sin(Q12_ANGLE(-20.0f)) * Q12(3.0f) / Math_Cos(Q12_ANGLE(-20.0f)) - Q12(2.4f);
 
-    if (temp_s5 != 0 && g_GameWorkConst->config.optExtraViewMode_29)
+    if (temp_s5 != 0 && g_GameWorkConst->config.extraViewMode)
     {
         temp_v1_2 = vcWork.flags >> 9;
         temp_v1_2 = temp_v1_2 & 1;
 
-        if (( g_GameWorkConst->config.optExtraViewCtrl_28 && (temp_v1_2 ^ 1) != 0) ||
-            (!g_GameWorkConst->config.optExtraViewCtrl_28 && temp_v1_2 != 0))
+        if (( g_GameWorkConst->config.extraViewCtrl && (temp_v1_2 ^ 1) != 0) ||
+            (!g_GameWorkConst->config.extraViewCtrl && temp_v1_2 != 0))
         {
             temp_a0_2 = vcWork.flags >> 10;
             temp_a0_2 = temp_a0_2 & 0x1;
 
-            if (( g_GameWorkConst->config.optExtraViewCtrl_28 && (temp_a0_2 ^ 1) == 0) ||
-                (!g_GameWorkConst->config.optExtraViewCtrl_28 && temp_a0_2 == 0))
+            if (( g_GameWorkConst->config.extraViewCtrl && (temp_a0_2 ^ 1) == 0) ||
+                (!g_GameWorkConst->config.extraViewCtrl && temp_a0_2 == 0))
             {
                 vcReturnPreAutoCamWork(true);
                 return;

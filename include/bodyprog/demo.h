@@ -25,12 +25,12 @@ typedef enum _DemoState
 /** @brief Initial demo game state data, stored inside `MISC/DEMO****.DAT` files. */
 typedef struct _DemoWork
 {
-    s_SaveUserConfig config;
-    u8               unk_38[200];
-    s_Savegame       savegame_100;
-    u8               unk_37C[1148];
-    u32              frameCount_7F8;
-    u16              randSeed_7FC;
+    s_OptionsConfig config;
+    u8              unk_38[200];
+    s_Savegame      savegame_100;
+    u8              unk_37C[1148];
+    u32             frameCount_7F8;
+    u16             randSeed_7FC;
 } s_DemoWork;
 STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
 
@@ -68,32 +68,32 @@ extern char D_8002B2D8[]; // "STEP ERROR:[H:"
 extern char D_8002B2E8[]; // "]/[M:"
 extern char D_8002B2F0[]; // "]"
 
-extern s_DemoFrameData* g_Demo_PlayFileBufferPtr; // 0x800AFDC0
+extern s_DemoFrameData* g_Demo_PlayFileBufferPtr;
 
-extern s32 g_Demo_DemoId; // 0x800AFDB8
+extern s32 g_Demo_DemoId;
 
-extern u16 g_Demo_RandSeed; // 0x800AFDBC
+extern u16 g_Demo_RandSeed;
 
 extern s32 D_800AFDF0;
 
-extern s32 g_Demo_DemoFileIdx; // 0x800C4840
+extern s32 g_Demo_DemoFileIdx;
 
-extern s32 g_Demo_PlayFileIdx; // 0x800C4844
+extern s32 g_Demo_PlayFileIdx;
 
 extern s32 __pad_bss_800C4848[2];
 
-extern s_SaveUserConfig g_Demo_UserConfigBackup; // 0x800C4850
+extern s_OptionsConfig g_Demo_OptionsConfigBackup;
 
-extern u32 g_Demo_PrevRandSeed; // 0x800C4888
+extern u32 g_Demo_PrevRandSeed;
 
-extern u32 g_Demo_RandSeedBackup; // 0x800C488C
+extern u32 g_Demo_RandSeedBackup;
 
 // Current packet/frame in buffer.
-extern s_DemoFrameData* g_Demo_CurFrameData; // 0x800C4890
+extern s_DemoFrameData* g_Demo_CurFrameData;
 
-extern s32 g_Demo_DemoStep; // 0x800C4894
+extern s32 g_Demo_DemoStep;
 
-extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
+extern s32 g_Demo_VideoPresentInterval;
 
 /** Something for demo handling. Set in `Fs_QueueChunksLoad`. */
 extern bool D_800C489C;

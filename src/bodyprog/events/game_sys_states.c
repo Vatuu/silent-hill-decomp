@@ -899,14 +899,14 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             MainMenu_SelectedOptionIdxReset();
 
             // If every game over tip has been seen, reset flag bits.
-            if (g_GameWork.config.seenGameOverTips_2E[0] == SHRT_MAX)
+            if (g_GameWork.config.seenGameOverTips[0] == SHRT_MAX)
             {
-                g_GameWork.config.seenGameOverTips_2E[0] = 0;
+                g_GameWork.config.seenGameOverTips[0] = 0;
             }
 
             randTipVal = 0;
 
-            seenTipIdxs[0] = g_GameWork.config.seenGameOverTips_2E[0];
+            seenTipIdxs[0] = g_GameWork.config.seenGameOverTips[0];
             for (tipIdx = 0; tipIdx < TIP_COUNT; tipIdx++)
             {
                 if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
@@ -953,7 +953,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
                 }
             }
 
-            // Store current shown `tipIdx`, later `sysStateSteps == 7` will set it inside `seenGameOverTips_2E`.
+            // Store current shown `tipIdx`, later `sysStateSteps == 7` will set it inside `seenGameOverTips`.
             prevTipIdx = tipIdx;
 
 #if VERSION_REGION_IS(NTSC)
@@ -1023,7 +1023,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             }
 
             // TODO: some inline FlagSet func? couldn't get matching ver, but pretty sure temp_a0 can be removed somehow
-            temp_a0 = &g_GameWork.config.seenGameOverTips_2E[(prevTipIdx >> 5)];
+            temp_a0 = &g_GameWork.config.seenGameOverTips[(prevTipIdx >> 5)];
             *temp_a0 |= (1 << 0) << (prevTipIdx & 0x1F);
 
             SysWork_StateStepIncrement(0);

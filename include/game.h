@@ -706,37 +706,37 @@ typedef struct _Savegame
 STATIC_ASSERT_SIZEOF(s_Savegame, 636);
 
 /** @brief User options configuration. */
-typedef struct _SaveUserConfig
+typedef struct _OptionsConfig
 {
-    s_ControllerConfig controllerConfig;
-    s8                 optScreenPosX_1C;          /** Range: [-11, 11], default: 0. */
-    s8                 optScreenPosY_1D;          /** Range: [-8, 8], default: 0. */
-    u8                 optSoundType_1E;           /** `bool` | Stereo: `false`, Monaural: `true`, default: Stereo. */
-    u8                 optVolumeBgm_1F;           /** Range: [0, 128] with steps of 8, default: 16. */
-    u8                 optVolumeSe_20;            /** Range: [0, 128] with steps of 8, default: 16. */
-    u8                 optVibrationEnabled_21;    /** `bool` | Off: 0, On: 128, default: On. */
-    u8                 optBrightness_22;          /** Range: [0, 7], default: 3. */
-    u8                 optExtraWeaponCtrl_23;     /** `bool` | Switch: `false`, Press: `true`, default: Press. */
-    u8                 optExtraBloodColor_24;     /** `e_BloodColor` | Default: Normal. */
-    s8                 optAutoLoad_25;            /** `bool` | Off: `false`, On: `true`, default: Off. */
-    u8                 __pad_26;
-    u8                 optExtraOptionsEnabled_27; /** Holds unlocked option flags. */
-    s8                 optExtraViewCtrl_28;       /** `bool` | Normal: `false`, Reverse: `true`, default: Normal. */
-    s8                 optExtraViewMode_29;       /** `bool` | Normal: `false`, Self View: `true`, default: Normal. */
-    s8                 optExtraRetreatTurn_2A;    /** `bool` | Normal: `false`, Reverse: `true`, default: Normal. */
-    s8                 optExtraWalkRunCtrl_2B;    /** `bool` | Normal: `false`, Reverse: `true`, default: Normal. */
-    s8                 optExtraAutoAiming_2C;     /** `bool` | On: `false`, Off: `true`, default: On. */
-    s8                 optExtraBulletAdjust_2D;   /** x1-x6: Range [0, 5], default: x1. */
-    u16                seenGameOverTips_2E[1];    /** Bitfield tracking seen game-over tips. Each bit corresponds to a tip index (0–14), set bits indicate seen tips. Resets after picking all 15. */
-    s8                 unk_30[4];
-    u32                palLanguageId_34;
-} s_SaveUserConfig;
-STATIC_ASSERT_SIZEOF(s_SaveUserConfig, 56);
+    /* 0x0  */ s_ControllerConfig controllerConfig;
+    /* 0x1C */ s8                 screenPositionX;     /** Range: [-11, 11], default: 0. */
+    /* 0x1D */ s8                 screenPositionY;     /** Range: [-8, 8], default: 0. */
+    /* 0x1E */ u8                 soundType;           /** `bool` | Stereo: `false`, Monaural: `true`, default: Stereo. */
+    /* 0x1F */ u8                 volumeBgm;           /** Range: [0, 128] with steps of 8, default: 16. */
+    /* 0x20 */ u8                 volumeSe;            /** Range: [0, 128] with steps of 8, default: 16. */
+    /* 0x21 */ u8                 vibrationEnabled;    /** `bool` | Off: 0, On: 128, default: On. */
+    /* 0x22 */ u8                 brightness;          /** Range: [0, 7], default: 3. */
+    /* 0x23 */ u8                 extraWeaponCtrl;     /** `bool` | Switch: `false`, Press: `true`, default: Press. */
+    /* 0x24 */ u8                 extraBloodColor;     /** `e_BloodColor` | Default: Normal. */
+    /* 0x25 */ s8                 autoLoad;            /** `bool` | Off: `false`, On: `true`, default: Off. */
+    /* 0x26 */ s8                 unused_26;           /** @unused */
+    /* 0x27 */ u8                 extraOptionsEnabled; /** Holds unlocked option flags. */
+    /* 0x28 */ s8                 extraViewCtrl;       /** `bool` | Normal: `false`, Reverse: `true`, default: Normal. */
+    /* 0x29 */ s8                 extraViewMode;       /** `bool` | Normal: `false`, Self View: `true`, default: Normal. */
+    /* 0x2A */ s8                 extraRetreatTurn;    /** `bool` | Normal: `false`, Reverse: `true`, default: Normal. */
+    /* 0x2B */ s8                 extraWalkRunCtrl;    /** `bool` | Normal: `false`, Reverse: `true`, default: Normal. */
+    /* 0x2C */ s8                 extraAutoAiming;     /** `bool` | On: `false`, Off: `true`, default: On. */
+    /* 0x2D */ s8                 extraBulletAdjust;   /** x1-x6: Range [0, 5], default: x1. */
+    /* 0x2E */ u16                seenGameOverTips[1]; /** Bitfield tracking seen game-over tips. Each bit corresponds to a tip index (0–14), set bits indicate seen tips. Resets after picking all 15. */
+    /* 0x30 */ s8                 unk_30[4];
+    /* 0x34 */ u32                palLanguageId;
+} s_OptionsConfig;
+STATIC_ASSERT_SIZEOF(s_OptionsConfig, 56);
 
 /** @brief Game workspace. Stores miscellaneous gameplay-related data. */
 typedef struct _GameWork
 {
-    /* 0x0   */ s_SaveUserConfig   config;
+    /* 0x0   */ s_OptionsConfig    config;
     /* 0x38  */ s_ControllerData   controllers[CONTROLLER_COUNT_MAX];
     /* 0x90  */ s_Savegame         autosave;
     /* 0x30C */ s_Savegame         savegame;
@@ -746,7 +746,7 @@ typedef struct _GameWork
     /* 0x590 */ e_GameState        gameStatePrev;
     /* 0x594 */ e_GameState        gameState;
     /* 0x598 */ s32                gameStateSteps[3]; /** Sub-state steps used by the current `gameState`. Can be other state IDs or data. */
-    /* 0x5A4 */ s8                 unk_5A4[4];        // Padding?
+    /* 0x5A4 */ s8                 unk_5A4[4];        // @unused?
     /* 0x5A8 */ s32                field_5A8;
     /* 0x5AC */ s32                field_5AC;
     /* 0x5B0 */ s8                 __pad_5B0;
@@ -886,7 +886,7 @@ typedef struct _SysWork
     /* 0x2290   */ s32              npcFlags;       // Flags related to NPCs. Each bit corresponds to an `npcs` array entry.
     /* 0x2294   */ s8               unused_2294[4]; /** @unused */
     /* 0x2298   */ e_ProcessFlags   processFlags;
-    /* 0x229C   */ s32              field_229C; /** Dead code. Set to -1 when the player has been initalized and set to 0 when the player changes areas. Beyond that, this variable is unused. */
+    /* 0x229C   */ s32              field_229C; /** Dead code. Set to `NO_VALUE` when the player has been initalized and set to 0 when the player changes areas. Beyond that, this variable is unused. */
     /* 0x22A0   */ e_BgmStatusFlags bgmStatusFlags;
     /* 0x22A4   */ e_UnkSysFlags    flags_22A4;       // `UnkSysFlag_6` passed as "use through door cam" flag in `vcSetFirstCamWork`.
     /* 0x22A8   */ GsCOORDINATE2    coord_22A8;       // For particles only?

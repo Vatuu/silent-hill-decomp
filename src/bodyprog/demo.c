@@ -12,7 +12,7 @@ s32 g_Demo_PlayFileIdx;
 
 s32 __pad_bss_800C4848[2];
 
-s_SaveUserConfig g_Demo_UserConfigBackup;
+s_OptionsConfig g_Demo_OptionsConfigBackup;
 
 u32 g_Demo_PrevRandSeed;
 
@@ -136,7 +136,7 @@ void Demo_DemoFileSavegameUpdate(void) // 0x8008F13C
 void Demo_GameGlobalsUpdate(void) // 0x8008F1A0
 {
     // Backup current user config.
-    g_Demo_UserConfigBackup = g_GameWork.config;
+    g_Demo_OptionsConfigBackup = g_GameWork.config;
 
     // Update `Demo_RandSeed`.
     g_Demo_RandSeed = DEMO_WORK()->randSeed_7FC;
@@ -145,22 +145,22 @@ void Demo_GameGlobalsUpdate(void) // 0x8008F1A0
     g_GameWork.config = DEMO_WORK()->config;
 
     // Restore user system settings over demo values.
-    g_GameWork.config.optScreenPosX_1C       = g_Demo_UserConfigBackup.optScreenPosX_1C;
-    g_GameWork.config.optScreenPosY_1D       = g_Demo_UserConfigBackup.optScreenPosY_1D;
-    g_GameWork.config.optSoundType_1E        = g_Demo_UserConfigBackup.optSoundType_1E;
-    g_GameWork.config.optVolumeBgm_1F        = OPT_SOUND_VOLUME_MIN; // Disable BGM during demo.
-    g_GameWork.config.optVolumeSe_20         = g_Demo_UserConfigBackup.optVolumeSe_20;
-    g_GameWork.config.optVibrationEnabled_21 = OPT_VIBRATION_DISABLED; // Disable vibration during demo.
-    g_GameWork.config.optBrightness_22       = g_Demo_UserConfigBackup.optBrightness_22;
+    g_GameWork.config.screenPositionX       = g_Demo_OptionsConfigBackup.screenPositionX;
+    g_GameWork.config.screenPositionY       = g_Demo_OptionsConfigBackup.screenPositionY;
+    g_GameWork.config.soundType        = g_Demo_OptionsConfigBackup.soundType;
+    g_GameWork.config.volumeBgm        = OPT_SOUND_VOLUME_MIN; // Disable BGM during demo.
+    g_GameWork.config.volumeSe         = g_Demo_OptionsConfigBackup.volumeSe;
+    g_GameWork.config.vibrationEnabled = OPT_VIBRATION_DISABLED; // Disable vibration during demo.
+    g_GameWork.config.brightness       = g_Demo_OptionsConfigBackup.brightness;
 
-    Sd_SetVolume(OPT_SOUND_VOLUME_MIN, OPT_SOUND_VOLUME_MIN, g_GameWork.config.optVolumeSe_20);
+    Sd_SetVolume(OPT_SOUND_VOLUME_MIN, OPT_SOUND_VOLUME_MIN, g_GameWork.config.volumeSe);
 }
 
 void Demo_GameGlobalsRestore(void) // 0x8008F2BC
 {
-    g_GameWork.config = g_Demo_UserConfigBackup;
+    g_GameWork.config = g_Demo_OptionsConfigBackup;
 
-    Sd_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.config.optVolumeBgm_1F, g_GameWork.config.optVolumeSe_20);
+    Sd_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.config.volumeBgm, g_GameWork.config.volumeSe);
 }
 
 void Demo_GameRandSeedUpdate(void) // 0x8008F33C

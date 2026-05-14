@@ -53,7 +53,7 @@ s32 func_80089128(void) // 0x80089128
         func_800890B8();
     }
 
-    if (g_GameWork.config.optVibrationEnabled_21)
+    if (g_GameWork.config.vibrationEnabled)
     {
         func_8009E2A0(var_s2);
         var_s2->field_0.field_0_8 = 1 << 7;

@@ -396,7 +396,7 @@ void func_800D1604(void) // 0x800D1604
     if (g_SysWork.sysStateSteps[0] >= 7)
     {
         temp_v0 = Screen_FadeInProgressGet();
-        temp_v1 = (g_GameWork.config.optBrightness_22 * 8) + 4;
+        temp_v1 = (g_GameWork.config.brightness * 8) + 4;
 
         ptr->field_14 = GsOUT_PACKET_P;
 

@@ -3646,7 +3646,7 @@ D_800C4818                                   = 0x800C6E70;
 //----------------------------------------------------------
 g_Demo_DemoFileIdx                           = 0x800C6E98;
 g_Demo_PlayFileIdx                           = 0x800C6E9C;
-g_Demo_UserConfigBackup                      = 0x800C6EA8;
+g_Demo_OptionsConfigBackup                   = 0x800C6EA8;
 g_Demo_PrevRandSeed                          = 0x800C6EE0;
 g_Demo_RandSeedBackup                        = 0x800C6EE4;
 g_Demo_CurFrameData                          = 0x800C6EE8;

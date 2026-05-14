@@ -3038,7 +3038,7 @@ D_800C4818                                   = 0x800C4818; // size:0x24
 //----------------------------------------------------------
 g_Demo_DemoFileIdx                           = 0x800C4840; // type:s32
 g_Demo_PlayFileIdx                           = 0x800C4844; // type:s32
-g_Demo_UserConfigBackup                      = 0x800C4850; // type:ShSaveUserConfig size:0x38
+g_Demo_OptionsConfigBackup                   = 0x800C4850; // type:ShSaveUserConfig size:0x38
 g_Demo_PrevRandSeed                          = 0x800C4888;
 g_Demo_RandSeedBackup                        = 0x800C488C;
 g_Demo_CurFrameData                          = 0x800C4890;

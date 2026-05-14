@@ -1015,7 +1015,7 @@ void Event_CommonItemTake(u32 pickupType, e_EventFlag eventFlagIdx) // 0x800879F
     s32 ammoCountMult;
 
     // Compute ammo count multiplier.
-    ammoCountMult = g_GameWork.config.optExtraBulletAdjust_2D + 1;
+    ammoCountMult = g_GameWork.config.extraBulletAdjust + 1;
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         ammoCountMult = CLAMP(ammoCountMult, EASY_DIFFICULTY_AMMO_COUNT_MULT_MIN, ammoCountMult);
