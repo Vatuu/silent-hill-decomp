@@ -62,12 +62,12 @@ static s32 g_DeltaTimeCpy;
 // GLOBAL VARIABLES
 // ========================================
 
-s_EventData* g_ItemTriggerEvents[];
-s_800BCDA8   D_800BCDA8[2];
-s_MapPoint2d D_800BCDB0;
-s32          g_ItemTriggerItemIds[5];
-u8           D_800BCDD4;
-s_EventData* g_MapEventData;
+s_EventData*   g_ItemTriggerEvents[];
+s_RadioNpcInfo g_RadioNpcInfos[2];
+s_MapPoint2d   D_800BCDB0;
+s32            g_ItemTriggerItemIds[5];
+u8             D_800BCDD4;
+s_EventData*   g_MapEventData;
 
 void GameState_InGame_Update(void) // 0x80038BD4
 {
@@ -626,33 +626,32 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     u32           offsetZ;
     s_MapPoint2d* mapPoint;
 
-    g_SysWork.field_229C            = 0;
+    g_SysWork.unused_229C       = 0;
     g_SysWork.loadingScreenIdx = D_800BCDB0.loadingScreenId;
-    g_SysWork.sfxPairIdx_2283       = g_MapEventData->sfxPairIdx_8_19;
-    g_SysWork.field_2282            = g_MapEventData->flags_8_13;
+    g_SysWork.sfxPairIdx_2283  = g_MapEventData->sfxPairIdx_8_19;
+    g_SysWork.field_2282       = g_MapEventData->flags_8_13;
 
     SD_Call(SFX_PAIRS[g_SysWork.sfxPairIdx_2283].sfx_0);
 
     if (g_SysWork.sfxPairIdx_2283 == SfxPairIdx_7)
     {
-        D_800BCDD4            = 0;
+        D_800BCDD4          = 0;
         g_SysWork.sysFlags |= SysFlag_LoadActive;
     }
 
     D_800BCDB0 = g_MapOverlayHeader.mapPoints[g_MapEventData->eventParam];
-
     if (D_800BCDB0.triggerParam1 == 1)
     {
-        mapPoint                = &g_MapOverlayHeader.mapPoints[g_MapEventData->pointOfInterestIdx];
-        offsetZ                 = g_SysWork.playerWork.player.position.vz - mapPoint->positionZ;
+        mapPoint              = &g_MapOverlayHeader.mapPoints[g_MapEventData->pointOfInterestIdx];
+        offsetZ               = g_SysWork.playerWork.player.position.vz - mapPoint->positionZ;
         D_800BCDB0.positionX += g_SysWork.playerWork.player.position.vx - mapPoint->positionX;
         D_800BCDB0.positionZ += offsetZ;
     }
 
     if (g_SysWork.sysState == SysState_LoadOverlay)
     {
-        g_SysWork.processFlags    = ProcessFlag_OverlayTransition;
-        g_SavegamePtr->mapIdx = g_MapEventData->mapIdx;
+        g_SysWork.processFlags = ProcessFlag_OverlayTransition;
+        g_SavegamePtr->mapIdx  = g_MapEventData->mapIdx;
         GameBoot_MapLoad(g_SavegamePtr->mapIdx);
     }
     else
@@ -699,7 +698,7 @@ s8 func_80039F90(void) // 0x80039F90
         return g_SysWork.field_2282;
     }
 
-    return 0;
+    return EventParamUnkState_None;
 }
 
 void SysState_ReadMessage_Update(void) // 0x80039FB8

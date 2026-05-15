@@ -210,10 +210,10 @@ void Ipd_ActiveMapChunksClear0(void) // 0x8003C2EC
 
 void Map_WorldClear(void) // 0x8003C30C
 {
-    u8 flags;
+    u8 mapFlags;
 
-    flags = g_WorldGfxWork.mapInfo->flags;
-    if ((flags & MapFlag_Interior) && (flags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
+    mapFlags = g_WorldGfxWork.mapInfo->flags;
+    if ((mapFlags & MapFlag_Interior) && (mapFlags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
     {
         Map_WorldClearReset();
         return;
@@ -237,13 +237,13 @@ void WorldGfx_IpdSamplePointReset(void) // 0x8003C3A0
 void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
 {
     VECTOR3         samplePos; // Draw distance?
-                          // Setting as `pos0.vz = Q12(200.0f)` makes the world not draw. In the void, the player becomes immovable.
-                          //
-                          // Most of the time, X and Z share the same value as
-                          // the player player position or a position slightly ahead computed from the heading angle.
-                          //
-                          // In Old Silent Hill (after Cafe 5to2) while standing still, this value is
-                          // the same as `g_SysWork.playerWork.player.position`.
+                               // Setting as `pos0.vz = Q12(200.0f)` makes the world not draw. In the void, the player becomes immovable.
+                               //
+                               // Most of the time, X and Z share the same value as
+                               // the player player position or a position slightly ahead computed from the heading angle.
+                               //
+                               // In Old Silent Hill (after Cafe 5to2) while standing still, this value is
+                               // the same as `g_SysWork.playerWork.player.position`.
     VECTOR3         pos1; // Draw distance?
                           // If the conditional `if (g_WorldEnvWork.isFogEnabled)` is reversed
                           // to run the `else` block, when fog is enabled, the draw distance
@@ -251,7 +251,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
                           //
                           // Similarly to `pos0`, when fog is disabled, it uses the player position.
                           // Otherwise it's based the camera position, using its rotation to then make some extra calculations.
-    SVECTOR         rot;
+    SVECTOR         rot;  // Q19.12
     s32             temp_a1;
     s32             temp_a2;
     q19_12          moveDist;

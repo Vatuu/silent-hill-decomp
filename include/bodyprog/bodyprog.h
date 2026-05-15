@@ -340,14 +340,14 @@ typedef struct
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
-typedef struct
+typedef struct _RadioNpcInfo
 {
-    s8 field_0;
-    s8 field_1;
-    s8 field_2;
-    s8 field_3;
-} s_800BCDA8;
-STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
+    /* 0x0 */ s8 prevIdx;
+    /* 0x1 */ s8 idx;
+    /* 0x2 */ s8 closeNpcInfoIdx;
+    /* 0x3 */ s8 field_3;
+} s_RadioNpcInfo;
+STATIC_ASSERT_SIZEOF(s_RadioNpcInfo, 4);
 
 typedef struct
 {
@@ -979,7 +979,7 @@ extern s_EventData* g_ItemTriggerEvents[];
 extern s32 __pad_bss_800BCD94[5];
 
 /** Radio SFX data. */
-extern s_800BCDA8 D_800BCDA8[2];
+extern s_RadioNpcInfo g_RadioNpcInfos[2];
 
 extern s_MapPoint2d D_800BCDB0;
 

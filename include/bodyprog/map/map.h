@@ -353,7 +353,7 @@ typedef struct _EventData
     /* 0x8+5  */ u32 eventParam      : 8; /** Can be an ID of a `MapMsg`, sound effect, index into `mapEventFuncs`, or index into `mapPoints` for `areaLoad` events. */
     /* 0x8+8  */ u32 flags_8_13      : 6; /** `e_EventDataUnkState` */
     /* 0x8+13 */ u32 sfxPairIdx_8_19 : 5; /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
-    /* 0x8+19 */ u32 field_8_24      : 1;
+    /* 0x8+19 */ u32 field_8_24      : 1; // `bool` | "Is on camera rail?"
     /* 0x8+24 */ u32 mapIdx          : 6;
     /* 0x8+25 */ u32 field_8_31      : 1;
 } s_EventData;

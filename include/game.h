@@ -705,7 +705,7 @@ typedef struct _SysWork
     /* 0x2290   */ s32              npcFlags;       // Flags related to NPCs. Each bit corresponds to an `npcs` array entry.
     /* 0x2294   */ s8               unused_2294[4]; /** @unused */
     /* 0x2298   */ e_ProcessFlags   processFlags;
-    /* 0x229C   */ s32              field_229C; /** Dead code. Set to `NO_VALUE` when the player has been initalized and set to 0 when the player changes areas. Beyond that, this variable is unused. */
+    /* 0x229C   */ s32              unused_229C; /** @unused Set to `NO_VALUE` when the player has been initalized and 0 when the player changes areas. Beyond that it's dead code. */
     /* 0x22A0   */ e_BgmStatusFlags bgmStatusFlags;
     /* 0x22A4   */ e_SysFlags       sysFlags;         // `SysFlag_OnCameraRail` passed as "use through door cam" flag in `vcSetFirstCamWork`.
     /* 0x22A8   */ GsCOORDINATE2    coord_22A8;       // For particles only?

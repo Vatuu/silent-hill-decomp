@@ -69,6 +69,8 @@ void GameBoot_GameStartup(void) // 0x80034964
     // should be triggered.
     static s32 demoLoadAttempCount;
 
+    #define playerChara g_SysWork.playerWork.player
+
     // Handle boot startup step.
     switch (g_GameWork.gameStateSteps[0])
     {
@@ -181,7 +183,7 @@ void GameBoot_GameStartup(void) // 0x80034964
                 Map_WorldClear();
             }
 
-            Ipd_PlayerChunkInit(&g_MapOverlayHeader, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
+            Ipd_PlayerChunkInit(&g_MapOverlayHeader, playerChara.position.vx, playerChara.position.vz);
             if (g_SysWork.processFlags == ProcessFlag_OverlayTransition)
             {
                 Game_RadioSoundStop();
@@ -255,6 +257,8 @@ void GameBoot_GameStartup(void) // 0x80034964
         default:
             break;
     }
+
+    #undef playerChara
 }
 
 /** @brief Initalizes drawing of a loading screen. */
@@ -291,7 +295,9 @@ static void GameBoot_NpcClear(void) // 0x80034EC8
 
 static void GameBoot_NpcInit(void) // 0x80034F18
 {
-    vcSetCameraUseWarp(&g_SysWork.playerWork.player.position, g_SysWork.cameraAngleY);
+    #define playerChara g_SysWork.playerWork.player
+
+    vcSetCameraUseWarp(&playerChara.position, g_SysWork.cameraAngleY);
     func_8005E70C();
 
     if (g_SysWork.field_234A)
@@ -303,6 +309,8 @@ static void GameBoot_NpcInit(void) // 0x80034F18
     GameBoot_NpcClear();
     Game_NpcRoomInitSpawn(false);
     Game_PlayerHeightUpdate();
+
+    #undef playerChara
 }
 
 // ========================================
@@ -313,11 +321,13 @@ void GameBoot_InGameInit(void) // 0x80034FB8
 {
     s32 mapOvlId;
 
+    #define playerChara g_SysWork.playerWork.player
+
     mapOvlId = g_SavegamePtr->mapIdx;
 
-    vcInitCamera(&g_MapOverlayHeader, &g_SysWork.playerWork.player.position);
+    vcInitCamera(&g_MapOverlayHeader, &playerChara.position);
 
-    vcSetCameraUseWarp(&g_SysWork.playerWork.player.position, g_SysWork.cameraAngleY);
+    vcSetCameraUseWarp(&playerChara.position, g_SysWork.cameraAngleY);
     Collision_MapTriggerZonesSet(&g_MapOverlayHeader);
     Gfx_MapEffectsSet(0);
     WorldGfx_CharaModelProcessAllLoads();
@@ -339,6 +349,8 @@ void GameBoot_InGameInit(void) // 0x80034FB8
     GameFs_Tim00TIMLoad();
     Fs_QueueWaitForEmpty();
     GameFs_MapItemsModelLoad(mapOvlId);
+
+    #undef playerChara
 }
 
 void GameBoot_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
@@ -376,7 +388,7 @@ void GameBoot_PlayerInit(void) // 0x80035178
     Anim_BoneInit(FS_BUFFER_0, g_SysWork.playerBoneCoords); // Load player anim file?
     WorldGfx_PlayerModelProcessLoad();
 
-    g_SysWork.field_229C = NO_VALUE;
+    g_SysWork.unused_229C = NO_VALUE;
 
     if ((g_SavegamePtr->itemToggleFlags >> 1) & (1 << 0)) // `& ItemToggleFlag_FlashlightOff`
     {
@@ -402,8 +414,10 @@ void GameBoot_MapLoad(s32 mapIdx) // 0x8003521C
     // or because the player saved the game with a weapon equipped), this and the next function
     // make it appear and allocate its data.
     // @note This code has some special functionallity if the player spawns without an equipped weapon.
-    if (g_SysWork.processFlags & (ProcessFlag_NewGame | ProcessFlag_LoadSave |
-                                   ProcessFlag_Continue | ProcessFlag_BootDemo))
+    if (g_SysWork.processFlags & (ProcessFlag_NewGame  |
+                                  ProcessFlag_LoadSave |
+                                  ProcessFlag_Continue |
+                                  ProcessFlag_BootDemo))
     {
         WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
     }
