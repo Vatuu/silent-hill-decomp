@@ -241,9 +241,9 @@ GameBoot_MapLoad                             = 0x8003521C; // type:func
 //--- PA: 0x01072C   VA: 0x8003528C   subsegment: c, game_boot/fs_chara_anim
 //--------------------------------------------------------------------------
 Fs_CharaAnimDataSizeCheck                    = 0x8003528C; // type:func
-Fs_CharaAnimDataInfoIdxGet                   = 0x800352F8; // type:func
+Fs_CharaAnimMetadataIdxGet                   = 0x800352F8; // type:func
 Fs_CharaAnimDataAlloc                        = 0x80035338; // type:func
-Fs_CharaAnimInfoUpdate                       = 0x80035560; // type:func
+Fs_CharaAnimDataUpdate                       = 0x80035560; // type:func
 Fs_CharaAnimBoneInfoUpdate                   = 0x8003569C; // type:func
 
 //----------------------------------------------------------------------------------
@@ -2364,12 +2364,12 @@ fileStatuses                                 = 0x800A97E4;
 g_BgmTaskLoadCmds                            = 0x800A9804; // type:u16 size:0x54
 g_BgmChannelSetTaskCmds                      = 0x800A9858; // type:u16 size:0x54
 g_AmbientVabTaskLoadCmds                     = 0x800A98AC; // type:u16 size:0x50
-g_CharaAnimInfoIdxs                          = 0x800A98FC;
+g_CharaAnimMetadataIdxs                      = 0x800A98FC;
 
 //------------------------------------------------------------------------
 //--- PA: 0x084DCC   VA: 0x800A992C   subsegment: .data, events/bgm_update
 //------------------------------------------------------------------------
-g_CharaTypeAnimInfo                          = 0x800A992C;
+g_CharaTypeAnimMetadata                      = 0x800A992C;
 D_800A998C                                   = 0x800A998C; // type:AnimInfo size:0x10
 D_800A99A0                                   = 0x800A99A0;
 g_Bgm_LayerLimits                            = 0x800A99A4;

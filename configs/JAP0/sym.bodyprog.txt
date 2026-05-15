@@ -363,9 +363,9 @@ GameBoot_MapLoad                             = 0x80034EEC; // type:func
 //--- PA: 0x0103FC   VA: 0x80034F5C   subsegment: c, game_boot/fs_chara_anim
 //--------------------------------------------------------------------------
 Fs_CharaAnimDataSizeCheck                    = 0x80034F5C; // type:func
-Fs_CharaAnimDataInfoIdxGet                   = 0x80034FC8; // type:func
+Fs_CharaAnimMetadataIdxGet                   = 0x80034FC8; // type:func
 Fs_CharaAnimDataAlloc                        = 0x80035008; // type:func
-Fs_CharaAnimInfoUpdate                       = 0x80035230; // type:func
+Fs_CharaAnimDataUpdate                       = 0x80035230; // type:func
 Fs_CharaAnimBoneInfoUpdate                   = 0x8003536C; // type:func
 
 //----------------------------------------------------------------------------------
@@ -2794,8 +2794,8 @@ g_AmbientVabTaskLoadCmds                     = 0x800ABC48; // type:u16 size:0x50
 //------------------------------------------------------------------------------
 //--- PA: 0x087138   VA: 0x800ABC98   subsegment: .data, game_boot/fs_chara_anim
 //------------------------------------------------------------------------------
-g_CharaAnimInfoIdxs                          = 0x800ABC98;
-g_CharaTypeAnimInfo                          = 0x800ABCC8;
+g_CharaAnimMetadataIdxs                      = 0x800ABC98;
+g_CharaTypeAnimMetadata                      = 0x800ABCC8;
 D_800A9944                                   = 0x800ABCE0;
 D_800A998C                                   = 0x800ABD28;
 

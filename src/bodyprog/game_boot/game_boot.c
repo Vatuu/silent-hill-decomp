@@ -40,7 +40,7 @@ static inline void Game_StateStepIncrement(void) // TODO: Move to header?
 
 void Anim_CharaTypeAnimInfoClear(void) // 0x800348C0
 {
-    bzero(&g_CharaTypeAnimInfo[1], 72);
+    bzero(&g_CharaTypeAnimMetadata[1], 72);
 }
 
 void GameState_LoadScreen_Update(void) // 0x800348E8
@@ -387,8 +387,8 @@ void GameBoot_PlayerInit(void) // 0x80035178
         Game_TurnFlashlightOn();
     }
 
-    g_CharaTypeAnimInfo[0].animBufferSize2_10 = 0x2E630;
-    g_CharaTypeAnimInfo[0].animBufferSize1_C  = 0x2E630;
+    g_CharaTypeAnimMetadata[0].animBufferSize2_10 = 0x2E630;
+    g_CharaTypeAnimMetadata[0].animBufferSize1_C  = 0x2E630;
     Game_PlayerInfoInit();
 }
 

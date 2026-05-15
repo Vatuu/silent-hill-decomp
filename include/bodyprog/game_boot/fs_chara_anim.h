@@ -4,7 +4,7 @@
 #include "bodyprog/formats/anm.h"
 
 // or `s_CharaAnimMetadata`?
-typedef struct _CharaAnimDataInfo
+typedef struct _CharaAnimMetadata
 {
     /* 0x0  */ s8             charaId0_0;  /** `e_CharaId` */
     /* 0x1  */ s8             charaId1_1;  /** `e_CharaId` */
@@ -13,32 +13,33 @@ typedef struct _CharaAnimDataInfo
     /* 0x8  */ s_AnmHeader*   animFile1_8;
     /* 0xC  */ s32            animBufferSize1_C;
     /* 0x10 */ s32            animBufferSize2_10;
-    /* 0x14 */ GsCOORDINATE2* npcBoneCoords;
-} s_CharaAnimDataInfo;
-STATIC_ASSERT_SIZEOF(s_CharaAnimDataInfo, 24);
+    /* 0x14 */ GsCOORDINATE2* boneCoords;
+} s_CharaAnimMetadata;
+STATIC_ASSERT_SIZEOF(s_CharaAnimMetadata, 24);
 
-/** @brief Stores a loaded character's animation data information. */
-extern s_CharaAnimDataInfo g_CharaTypeAnimInfo[];
+/** @brief Stores a loaded character's animation metadata. */
+extern s_CharaAnimMetadata g_CharaTypeAnimMetadata[];
 
-/** @brief Checks if the pointers of `g_CharaTypeAnimInfo` overlap each other.
- * Returns `false` if the compared pointers don't overlap.
+/** @brief Checks if the pointers of `g_CharaTypeAnimMetadata` overlap each other.
+ *
+ * @return `true` if the pointers overlap, `false` otherwise.
  */
-bool Fs_CharaAnimDataSizeCheck(s32 idx0, s32 idx1);
+bool Fs_CharaAnimDataSizeCheck(s32 animMetadataIdx0, s32 animMetadataIdx1);
 
-/** @brief Finds for the index of the character animation data in `g_CharaTypeAnimInfo`.
+/** @brief Finds for the index of the character animation data in `g_CharaTypeAnimMetadata`.
  *
  * @param charaId ID of the character for which to find the animation data.
  * @return Animation data index.
  */
-s32 Fs_CharaAnimDataInfoIdxGet(e_CharaId charaId);
+s32 Fs_CharaAnimMetadataIdxGet(e_CharaId charaId);
 
-/** Allocates and adjust where is animation data allocated. */
-void Fs_CharaAnimDataAlloc(s32 idx, e_CharaId charaId, s_AnmHeader* animFile, GsCOORDINATE2* boneCoords);
+/** Allocates and adjusts where animation data is allocated. */
+void Fs_CharaAnimDataAlloc(s32 animMetadataIdx, e_CharaId charaId, s_AnmHeader* animFile, GsCOORDINATE2* boneCoords);
 
-/** Called by `Fs_QueuePostLoadAnm`. Assigns information about animation data to `g_CharaTypeAnimInfo`
+/** Called by `Fs_QueuePostLoadAnm`. Assigns information about animation data to `g_CharaTypeAnimMetadata`
  * and initializes NPC bones.
  */
-void Fs_CharaAnimInfoUpdate(s32 idx, e_CharaId charaId, s_AnmHeader* animFile, GsCOORDINATE2* boneCoords);
+void Fs_CharaAnimDataUpdate(s32 idx, e_CharaId charaId, s_AnmHeader* animFile, GsCOORDINATE2* boneCoords);
 
 /** @brief Updates character type bone initialization coordinates and reinitializes them. */
 void Fs_CharaAnimBoneInfoUpdate(void);

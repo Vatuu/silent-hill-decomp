@@ -828,8 +828,8 @@ extern s32 D_800A9A24;
 /** Z. */
 extern s32 D_800A9A28;
 
-/** Loaded NPC types in memory and their `g_CharaTypeAnimInfo` indices. */
-extern s8 g_CharaAnimInfoIdxs[Chara_Count];
+/** Loaded NPC types in memory and their `g_CharaTypeAnimMetadata` indices. */
+extern s8 g_CharaAnimMetadataIdxs[Chara_Count];
 
 extern s32 D_800A9EB0;
 

@@ -1407,7 +1407,7 @@ void func_800D9C9C(void) // 0x800D9C9C
 
         case 11:
             g_SysWork.cutsceneBorderState = 20;
-            D_800E168E         = 0;
+            D_800E168E         = Q12(0.0f);
 
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
             func_8008D438();
@@ -1455,7 +1455,7 @@ void func_800D9C9C(void) // 0x800D9C9C
 
                             SysWork_StateStepIncrement(1);
                             g_SysWork.field_28 = Q12(0.0f);
-                            D_800E168E         = 0;
+                            D_800E168E         = Q12(0.0f);
 
                             func_8005DC1C(Sfx_Unk1648, &g_WorldObject_Stone0.position, Q8(0.5f), 0);
                         }
@@ -1467,7 +1467,7 @@ void func_800D9C9C(void) // 0x800D9C9C
                     g_WorldObject_Stone0.position.vy  = Q12_MULT(Math_Cos(g_WorldObject_Stone0.rotation.vz), Q12(0.15f)) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
                     g_WorldObject_Stone0.position.vz  = Q12_MULT(Math_Sin(g_WorldObject_Stone0.rotation.vz), Q12(-0.15f)) - Q12(140.5f);
 
-                    g_SysWork.field_28                   += g_DeltaTime;
+                    g_SysWork.field_28 += g_DeltaTime;
                     if (g_SysWork.field_28 > Q12(0.5f))
                     {
                         SysWork_StateStepIncrement(1);
@@ -1481,7 +1481,7 @@ void func_800D9C9C(void) // 0x800D9C9C
                     g_WorldObject_Stone0.position.vy += Q12_MULT_PRECISE(D_800E168E, g_DeltaTime);
                     g_WorldObject_Stone0.position.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
 
-                    if (g_WorldObject_Stone0.position.vy > 0)
+                    if (g_WorldObject_Stone0.position.vy > Q12(0.0f))
                     {
                         SysWork_StateStepIncrement(1);
                     }

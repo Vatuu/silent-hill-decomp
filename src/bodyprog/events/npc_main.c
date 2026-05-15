@@ -175,7 +175,6 @@ void Game_NpcUpdate(void) // 0x80038354
     s_SubCharacter*    npc;
     s_func_800382EC_0* temp_s0_3;
 
-    // GCC extension funcs.
     s32 func_800382B0(s32 arg0)
     {
         s32 i;
@@ -307,14 +306,14 @@ void Game_NpcUpdate(void) // 0x80038354
 
             npc->model.anim.flags |= AnimFlag_Unlocked;
 
-            animDataInfoIdx = g_CharaAnimInfoIdxs[npc->model.charaId];
-            boneCoords      = g_CharaTypeAnimInfo[animDataInfoIdx].npcBoneCoords;
+            animDataInfoIdx = g_CharaAnimMetadataIdxs[npc->model.charaId];
+            boneCoords      = g_CharaTypeAnimMetadata[animDataInfoIdx].boneCoords;
 
             Chara_Flag8Clear(npc);
             Chara_DamagedFlagUpdate(npc);
             func_8003BD48(npc);
 
-            g_MapOverlayHeader.charaUpdateFuncs[npc->model.charaId](npc, g_CharaTypeAnimInfo[animDataInfoIdx].animFile1_8, boneCoords);
+            g_MapOverlayHeader.charaUpdateFuncs[npc->model.charaId](npc, g_CharaTypeAnimMetadata[animDataInfoIdx].animFile1_8, boneCoords);
 
             func_8003BE28();
             func_80037E78(npc);

@@ -1014,16 +1014,16 @@ void func_800D39F4(s_SubCharacter* airScreamer) // 0x800D39F4
 void func_800D3A3C(s_SubCharacter* airScreamer) // 0x800D3A3C
 {
     q19_12 animTime;
-    s32    idx;
+    s32    animMetadataIdx;
 
-    idx = g_CharaAnimInfoIdxs[airScreamer->model.charaId];
-    AirScreamer_Update(airScreamer, (&g_CharaTypeAnimInfo[idx])->animFile1_8, (&g_CharaTypeAnimInfo[idx])->npcBoneCoords);
+    animMetadataIdx = g_CharaAnimMetadataIdxs[airScreamer->model.charaId];
+    AirScreamer_Update(airScreamer, (&g_CharaTypeAnimMetadata[animMetadataIdx])->animFile1_8, (&g_CharaTypeAnimMetadata[animMetadataIdx])->boneCoords);
 
-    airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_Glide, true);
-    animTime = func_80044918(&airScreamer->model.anim)->startKeyframeIdx;
-    airScreamer->model.stateStep = 3;
+    airScreamer->model.anim.status      = ANIM_STATUS(AirScreamerAnim_Glide, true);
+    animTime                            = func_80044918(&airScreamer->model.anim)->startKeyframeIdx;
+    airScreamer->model.stateStep        = 3;
     airScreamer->model.anim.keyframeIdx = animTime;
-    airScreamer->model.anim.time = FP_TO(animTime, Q12_SHIFT);
+    airScreamer->model.anim.time        = FP_TO(animTime, Q12_SHIFT);
 }
 
 void func_800D3AC0(s_SubCharacter* airScreamer) // 0x800D3AC0

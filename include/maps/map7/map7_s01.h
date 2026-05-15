@@ -75,7 +75,8 @@ extern u8  D_800E1680;
 /** Index into `D_800E154C`. */
 extern u8 D_800E168D;
 
-extern u16 D_800E168E;
+// Fallng stone Y position?
+extern q4_12 D_800E168E;
 
 extern s_800E1690 D_800E1690;
 
