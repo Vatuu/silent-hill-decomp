@@ -170,7 +170,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             if (kaufmann->model.anim.keyframeIdx >= 95 && g_SysWork.npcs[0].properties.kaufmann.field_120 == 0)
             {
                 g_SysWork.npcs[0].properties.kaufmann.field_120 = 1;
-                func_8006342C(EquippedWeaponId_Unk70, Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), &g_SysWork.npcBoneCoords[0]);
+                func_8006342C(EquippedWeaponId_Unk70, Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), &g_SysWork.npcBoneCoordBuffer[0]);
             }
 
             Model_AnimStatusSet(&kaufmann->model, 5, false);

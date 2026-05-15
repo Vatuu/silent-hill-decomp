@@ -6700,9 +6700,9 @@ void func_800E1854(void) // 0x800E1854
             break;
 
         case 7:
-            D_800F4B30.vx = Q8_TO_Q12(g_SysWork.npcBoneCoords[1].workm.t[0]);
-            D_800F4B30.vy = Q8_TO_Q12(g_SysWork.npcBoneCoords[1].workm.t[1]);
-            D_800F4B30.vz = Q8_TO_Q12(g_SysWork.npcBoneCoords[1].workm.t[2]);
+            D_800F4B30.vx = Q8_TO_Q12(g_SysWork.npcBoneCoordBuffer[1].workm.t[0]);
+            D_800F4B30.vy = Q8_TO_Q12(g_SysWork.npcBoneCoordBuffer[1].workm.t[1]);
+            D_800F4B30.vz = Q8_TO_Q12(g_SysWork.npcBoneCoordBuffer[1].workm.t[2]);
 
             if (D_800F4B40.field_4 == 0)
             {
@@ -6712,9 +6712,9 @@ void func_800E1854(void) // 0x800E1854
             break;
 
         case 8:
-            D_800F4B30.vx = Q8_TO_Q12(g_SysWork.npcBoneCoords[1].workm.t[0]);
-            D_800F4B30.vy = Q8_TO_Q12(g_SysWork.npcBoneCoords[1].workm.t[1]);
-            D_800F4B30.vz = Q8_TO_Q12(g_SysWork.npcBoneCoords[1].workm.t[2]);
+            D_800F4B30.vx = Q8_TO_Q12(g_SysWork.npcBoneCoordBuffer[1].workm.t[0]);
+            D_800F4B30.vy = Q8_TO_Q12(g_SysWork.npcBoneCoordBuffer[1].workm.t[1]);
+            D_800F4B30.vz = Q8_TO_Q12(g_SysWork.npcBoneCoordBuffer[1].workm.t[2]);
 
             if (D_800F4B40.field_4 == 0 && D_800F4B40.timer > Q12(0.5f))
             {
@@ -9967,12 +9967,12 @@ void func_800E9260(e_CharaId charaId, s32 arg1) // 0x800E9260
     switch (arg1)
     {
         case 1:
-            Fs_CharaAnimDataAlloc(arg1, charaId, (s_AnmHeader*)FS_BUFFER_29, &g_SysWork.npcBoneCoords[0]);
+            Fs_CharaAnimDataAlloc(arg1, charaId, (s_AnmHeader*)FS_BUFFER_29, &g_SysWork.npcBoneCoordBuffer[0]);
             WorldGfx_CharaLoad(charaId, 0, (s_LmHeader*)FS_BUFFER_31, &D_800ED218);
             break;
 
         case 2:
-            Fs_CharaAnimDataAlloc(arg1, charaId, (s_AnmHeader*)FS_BUFFER_30, &g_SysWork.npcBoneCoords[30]);
+            Fs_CharaAnimDataAlloc(arg1, charaId, (s_AnmHeader*)FS_BUFFER_30, &g_SysWork.npcBoneCoordBuffer[30]);
             WorldGfx_CharaLoad(charaId, 1, LM_BUFFER_2, &D_800ED220);
             break;
 
@@ -9983,14 +9983,14 @@ void func_800E9260(e_CharaId charaId, s32 arg1) // 0x800E9260
 
         case 4:
             func_800E94C0();
-            Fs_CharaAnimDataAlloc(arg1 - 3, charaId, (s_AnmHeader*)FS_BUFFER_29, &g_SysWork.npcBoneCoords[0]);
+            Fs_CharaAnimDataAlloc(arg1 - 3, charaId, (s_AnmHeader*)FS_BUFFER_29, &g_SysWork.npcBoneCoordBuffer[0]);
             WorldGfx_CharaLoad(charaId, 0, (s_LmHeader*)FS_BUFFER_31, &D_800ED218);
             func_800E94F4();
             break;
 
         case 5:
             func_800E94C0();
-            Fs_CharaAnimDataAlloc(arg1 - 3, charaId, (s_AnmHeader*)FS_BUFFER_33, &g_SysWork.npcBoneCoords[30]);
+            Fs_CharaAnimDataAlloc(arg1 - 3, charaId, (s_AnmHeader*)FS_BUFFER_33, &g_SysWork.npcBoneCoordBuffer[30]);
             WorldGfx_CharaLoad(charaId, 1, (s_LmHeader*)FS_BUFFER_34, &D_800ED220);
             func_800E94F4();
             break;

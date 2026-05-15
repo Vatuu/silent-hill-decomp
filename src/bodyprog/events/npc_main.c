@@ -306,14 +306,14 @@ void Game_NpcUpdate(void) // 0x80038354
 
             npc->model.anim.flags |= AnimFlag_Unlocked;
 
-            animDataInfoIdx = g_CharaAnimMetadataIdxs[npc->model.charaId];
-            boneCoords      = g_CharaTypeAnimMetadata[animDataInfoIdx].boneCoords;
+            animDataInfoIdx = g_CharaAnimDataIdxs[npc->model.charaId];
+            boneCoords      = g_CharaModelAnimsData[animDataInfoIdx].boneCoords;
 
             Chara_Flag8Clear(npc);
             Chara_DamagedFlagUpdate(npc);
             func_8003BD48(npc);
 
-            g_MapOverlayHeader.charaUpdateFuncs[npc->model.charaId](npc, g_CharaTypeAnimMetadata[animDataInfoIdx].animFile1_8, boneCoords);
+            g_MapOverlayHeader.charaUpdateFuncs[npc->model.charaId](npc, g_CharaModelAnimsData[animDataInfoIdx].activeAnmHdr, boneCoords);
 
             func_8003BE28();
             func_80037E78(npc);

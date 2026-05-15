@@ -1848,7 +1848,7 @@ void func_800E1D50(void) // 0x800E1D50
             g_SysWork.pointLightIntensity = Q12(1.0f);
 
             Anim_CharaTypeAnimInfoClear();
-            Chara_Load(0, Chara_MonsterCybil, g_SysWork.npcBoneCoords, -1, NULL, NULL);
+            Chara_Load(0, Chara_MonsterCybil, g_SysWork.npcBoneCoordBuffer, -1, NULL, NULL);
 
             g_SysWork.cutsceneBorderState = 20;
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
@@ -2133,7 +2133,7 @@ void func_800E2724(void) // 0x800E2724
             Anim_CharaTypeAnimInfoClear();
 
             // Load Monster Cybil character.
-            Chara_Load(0, Chara_MonsterCybil, &g_SysWork.npcBoneCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_MonsterCybil, &g_SysWork.npcBoneCoordBuffer[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_MonsterCybil, 0, Q12(26.5f), Q12(108.5f), Q12_ANGLE(11.3f), 3);
 
@@ -2451,7 +2451,7 @@ void func_800E3244(void) // 0x800E3244
             g_SysWork.field_236C = NULL;
             g_SysWork.pointLightIntensity = Q12(0.5f);
 
-            Chara_Load(1, Chara_Parasite, &g_SysWork.npcBoneCoords[30], 0, NULL, NULL);
+            Chara_Load(1, Chara_Parasite, &g_SysWork.npcBoneCoordBuffer[30], 0, NULL, NULL);
 
             g_SysWork.cutsceneBorderState = 20;
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
@@ -2808,7 +2808,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             break;
 
         case 10:
-            Chara_Load(1, Chara_Flauros, &g_SysWork.npcBoneCoords[30], 0, NULL, NULL);
+            Chara_Load(1, Chara_Flauros, &g_SysWork.npcBoneCoordBuffer[30], 0, NULL, NULL);
             D_800EBAA8 = false;
             SysWork_StateStepIncrement(0);
 
@@ -2896,7 +2896,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
             func_8005DC1C(Sfx_Unk1636, NULL, Q8_CLAMPED(1.0f), 3);
             func_800DED30();
-            func_800DEF50(&g_SysWork.npcs[1].position, &g_SysWork.npcBoneCoords[30], &g_Cutscene_Timer);
+            func_800DEF50(&g_SysWork.npcs[1].position, &g_SysWork.npcBoneCoordBuffer[30], &g_Cutscene_Timer);
             Chara_Spawn(Chara_Flauros, 0, playerChara.position.vx + Q12(1.0f), playerChara.position.vz, Q8(0.5f), 3);
 
             D_800EBB61 = 2;
@@ -3000,7 +3000,7 @@ void func_800E3EF4(void) // 0x800E3EF4
                 g_Cutscene_Timer = NO_VALUE;
 
                 Chara_FsImageCalc(&sp30, Chara_Dahlia, 2);
-                Chara_Load(1, Chara_Dahlia, &g_SysWork.npcBoneCoords[30], 2, NULL, &sp30);
+                Chara_Load(1, Chara_Dahlia, &g_SysWork.npcBoneCoordBuffer[30], 2, NULL, &sp30);
                 Fs_QueueStartRead(FILE_ANIM_AMUSE2B_DMS, FS_BUFFER_14);
                 SysWork_StateStepIncrement(0);
             }
@@ -3290,7 +3290,7 @@ void func_800E558C(void) // 0x800E558C
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             Anim_CharaTypeAnimInfoClear();
-            Chara_Load(0, Chara_Alessa, &g_SysWork.npcBoneCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_Alessa, &g_SysWork.npcBoneCoordBuffer[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
 
             D_800ED5AD = 2;
 
@@ -4015,12 +4015,12 @@ void func_800E7944(u32 arg0) // 0x800E7944
         if (D_800EBB7C != 0)
         {
             Math_SetSVectorFastSum(&ptr->field_20, 0, 0xFFF2, 20);
-            Vw_CoordHierarchyMatrixCompute(&g_SysWork.npcBoneCoords[0x1F], &ptr->field_0);
+            Vw_CoordHierarchyMatrixCompute(&g_SysWork.npcBoneCoordBuffer[0x1F], &ptr->field_0);
         }
         else
         {
             Math_SetSVectorFastSum(&ptr->field_20, 0, 0xFFD7, -21);
-            Vw_CoordHierarchyMatrixCompute(&g_SysWork.npcBoneCoords[1], &ptr->field_0);
+            Vw_CoordHierarchyMatrixCompute(&g_SysWork.npcBoneCoordBuffer[1], &ptr->field_0);
         }
 
         gte_SetRotMatrix(&ptr->field_0);

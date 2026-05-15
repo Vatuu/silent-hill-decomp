@@ -693,9 +693,9 @@ typedef struct _SysWork
     /* 0x4C     */ s_PlayerWork     playerWork;
     /* 0x1A0    */ s_SubCharacter   npcs[NPC_COUNT_MAX];
     /* 0x890    */ GsCOORDINATE2    playerBoneCoords[HarryBone_Count];
-    /* 0xE30    */ GsCOORDINATE2    unkCoords_E30[5];                  // Might be part of previous array for 5 extra coords which go unused.
-    /* 0xFC0    */ GsCOORDINATE2    npcBoneCoords[NPC_BONE_COUNT_MAX]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
-    /* 0x2280   */ s8               npcFlagsId;                        // 1-based NPC ID for `npcFlags`.
+    /* 0xE30    */ GsCOORDINATE2    unkCoords_E30[5];                       // Might be part of previous array for 5 extra coords which go unused.
+    /* 0xFC0    */ GsCOORDINATE2    npcBoneCoordBuffer[NPC_BONE_COUNT_MAX]; /** Contiguous NPC bone coord buffer. */
+    /* 0x2280   */ s8               npcFlagsId;                             // 1-based NPC ID for `npcFlags`.
     /* 0x2281   */ s8               loadingScreenIdx;
     /* 0x2282   */ s8               field_2282;                         /** `e_EventDataUnkState` */
     /* 0x2283   */ s8               sfxPairIdx_2283;                    /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */

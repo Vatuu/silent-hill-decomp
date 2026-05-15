@@ -33,7 +33,7 @@ bool Chara_ProcessLoads(void) // 0x80088D0C
 void Chara_BonesInit(s32 idx) // 0x80088D34
 {
     idx++;
-    Anim_BoneInit(g_CharaTypeAnimMetadata[idx].animFile1_8, g_CharaTypeAnimMetadata[idx].boneCoords);
+    Anim_BoneInit(g_CharaModelAnimsData[idx].activeAnmHdr, g_CharaModelAnimsData[idx].boneCoords);
 }
 
 s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep) // 0x80088D78
@@ -143,7 +143,7 @@ void Chara_SpawnFlagsSet(e_CharaId charaId, s32 spawnIdx, s32 spawnFlags) // 0x8
 {
     s_SpawnInfo* spawnInfo;
 
-    spawnInfo        = &g_MapOverlayHeader.charaSpawnInfos[g_CharaAnimMetadataIdxs[charaId] - 1][spawnIdx];
+    spawnInfo        = &g_MapOverlayHeader.charaSpawnInfos[g_CharaAnimDataIdxs[charaId] - 1][spawnIdx];
     spawnInfo->flags = spawnFlags;
 }
 
@@ -152,9 +152,9 @@ void Chara_SpawnPositionSet(e_CharaId charaId, s32 spawnIdx, q19_12 posX, q19_12
     s_SpawnInfo* spawnInfo0;
     s_SpawnInfo* spawnInfo1;
 
-    spawnInfo0            = &g_MapOverlayHeader.charaSpawnInfos[g_CharaAnimMetadataIdxs[charaId] - 1][spawnIdx];
+    spawnInfo0            = &g_MapOverlayHeader.charaSpawnInfos[g_CharaAnimDataIdxs[charaId] - 1][spawnIdx];
     spawnInfo0->positionX = posX;
 
-    spawnInfo1            = &g_MapOverlayHeader.charaSpawnInfos[g_CharaAnimMetadataIdxs[charaId] - 1][spawnIdx];
+    spawnInfo1            = &g_MapOverlayHeader.charaSpawnInfos[g_CharaAnimDataIdxs[charaId] - 1][spawnIdx];
     spawnInfo1->positionZ = posZ;
 }

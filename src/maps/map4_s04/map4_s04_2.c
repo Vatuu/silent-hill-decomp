@@ -234,7 +234,7 @@ void func_800D1910(void) // 0x800D1910
 
             g_Cutscene_Timer = Q12(0.0f);
 
-            Chara_Load(0, Chara_Lisa, &g_SysWork.npcBoneCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_Lisa, &g_SysWork.npcBoneCoordBuffer[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Lisa, 0, Q12(70.0f), Q12(150.0f), 0, 3);
             func_8003D03C();
@@ -393,7 +393,7 @@ void func_800D23E4(void) // 0x800D23E4
             g_Cutscene_Timer = Q12(0.0f);
 
             // Load Lisa character.
-            Chara_Load(0, Chara_Lisa, &g_SysWork.npcBoneCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_Lisa, &g_SysWork.npcBoneCoordBuffer[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Lisa, 0, Q12(60.0f), Q12(140.0f), Q12_ANGLE(0.0f), 3);
 

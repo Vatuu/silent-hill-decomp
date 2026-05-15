@@ -427,7 +427,9 @@ typedef struct _MapOverlayHeader
     /* 0x1C  */ s_MapPoint2d*          mapPoints;
     /* 0x20  */ void                   (**mapEventFuncs)(); /** Points to array of event functions. */
     /* 0x24  */ s_EventData*           mapEvents;
-    /* 0x28  */ GsCOORDINATE2*         unkBoneCoords_28; // Bone coords of some kind.
+    /* 0x28  */ GsCOORDINATE2*         npcBoneCoordBuffer; /** Dynamic NPC bone coord buffer used as backup for `s_SysWork::npcBoneCoordBuffer`.
+                                                            * In practice, this is always set to `g_SysWork.npcBoneCoordBuffer`,
+                                                            * effectively forming a ring buffer. */
     /* 0x2C  */ u8*                    loadableItems;
     /* 0x30  */ const char**           mapMessages;
     /* 0x34  */ s_AnimInfo*            harryMapAnimInfos; /** Map-specific anim infos for Harry (for anims 38+). */

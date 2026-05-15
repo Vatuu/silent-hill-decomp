@@ -178,7 +178,7 @@ void func_800D725C(void) // 0x800D725C
             g_Cutscene_Timer = Q12(0.0f);
             Anim_CharaTypeAnimInfoClear();
 
-            Chara_Load(0, Chara_Lisa, g_SysWork.npcBoneCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_Lisa, g_SysWork.npcBoneCoordBuffer, CHARA_FORCE_FREE_ALL, NULL, NULL);
 
             ScreenFade_ResetTimestep();
 
@@ -279,7 +279,7 @@ void func_800D725C(void) // 0x800D725C
 
         case 19:
             Chara_FsImageCalc(&charaTex, Chara_BloodyLisa, 2);
-            Chara_Load(1, Chara_BloodyLisa, &g_SysWork.npcBoneCoords[30], 0, LM_BUFFER_2, &charaTex);
+            Chara_Load(1, Chara_BloodyLisa, &g_SysWork.npcBoneCoordBuffer[30], 0, LM_BUFFER_2, &charaTex);
 
             g_SysWork.playerWork.player.position.vx = Q12(180.0f);
             g_SysWork.playerWork.player.position.vz = Q12(-100.0f);
@@ -309,7 +309,7 @@ void func_800D725C(void) // 0x800D725C
 
             Ipd_CloseRangeChunksInit();
             Chara_FsImageCalc(&charaTex, Chara_BloodyLisa, 2);
-            Chara_Load(1, Chara_BloodyLisa, &g_SysWork.npcBoneCoords[30], 0, LM_BUFFER_2, &charaTex);
+            Chara_Load(1, Chara_BloodyLisa, &g_SysWork.npcBoneCoordBuffer[30], 0, LM_BUFFER_2, &charaTex);
             Chara_ProcessLoads();
             SysWork_StateStepIncrement(0);
 
@@ -1434,9 +1434,7 @@ void func_800D9C9C(void) // 0x800D9C9C
                         g_SysWork.field_28 = Q12(2.0f);
 
                         WorldObject_ModelNameSet(&g_WorldObject_Stone0.object, "STONE3_H");
-
                         SysWork_StateStepIncrement(1);
-
                         Sd_SfxStop(Sfx_Unk1647);
                     }
 
@@ -1448,7 +1446,7 @@ void func_800D9C9C(void) // 0x800D9C9C
 
                     if (g_WorldObject_Stone0.position.vy < Q12(-1.05f))
                     {
-                        g_WorldObject_Stone0.position.vy += FP_MULTIPLY_PRECISE(g_DeltaTime, D_800E168E, 12);
+                        g_WorldObject_Stone0.position.vy += Q12_MULT_PRECISE(g_DeltaTime, D_800E168E);
                         if (g_WorldObject_Stone0.position.vy > Q12(-1.05f))
                         {
                             g_WorldObject_Stone0.position.vy = Q12(-1.05f);
@@ -1463,8 +1461,8 @@ void func_800D9C9C(void) // 0x800D9C9C
                     break;
 
                 case 3:
-                    g_WorldObject_Stone0.rotation.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.0694f));
-                    g_WorldObject_Stone0.position.vy  = Q12_MULT(Math_Cos(g_WorldObject_Stone0.rotation.vz), Q12(0.15f)) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
+                    g_WorldObject_Stone0.rotation.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(-25.0f));
+                    g_WorldObject_Stone0.position.vy  = Q12_MULT(Math_Cos(g_WorldObject_Stone0.rotation.vz), Q12(0.15f)) - (Q12(1.2f) - 1);
                     g_WorldObject_Stone0.position.vz  = Q12_MULT(Math_Sin(g_WorldObject_Stone0.rotation.vz), Q12(-0.15f)) - Q12(140.5f);
 
                     g_SysWork.field_28 += g_DeltaTime;
@@ -1477,7 +1475,7 @@ void func_800D9C9C(void) // 0x800D9C9C
 
                 case 4:
                     D_800E168E                          += g_GravitySpeed;
-                    g_WorldObject_Stone0.rotation.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3333f));
+                    g_WorldObject_Stone0.rotation.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(-120.0f));
                     g_WorldObject_Stone0.position.vy += Q12_MULT_PRECISE(D_800E168E, g_DeltaTime);
                     g_WorldObject_Stone0.position.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
 
@@ -1724,7 +1722,7 @@ void func_800DB1F0(void) // 0x800DB1F0
         case 0:
             Player_ControlFreeze();
             ScreenFade_ResetTimestep();
-            Chara_Load(0, Chara_GhostChildAlessa, g_SysWork.npcBoneCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_GhostChildAlessa, g_SysWork.npcBoneCoordBuffer, CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_GhostChildAlessa, 0, Q12(57.2f), Q12(-20.4f), Q12(-0.25f), 3);
             SysWork_StateStepIncrement(0);
@@ -2289,7 +2287,6 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
             if (g_SysWork.npcs[0].model.charaId == Chara_GhostChildAlessa)
             {
                 g_SysWork.npcs[0].timer_C6 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.2f));
-
                 if (g_SysWork.npcs[0].timer_C6 > Q12(1.0f))
                 {
                     Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
@@ -2537,7 +2534,7 @@ void func_800DEDA4(void) // 0x800DEDA4
         if (D_800A9945 != Chara_GhostChildAlessa || !Chara_ModelLoadedCheck(Chara_GhostChildAlessa))
         {
             Anim_CharaTypeAnimInfoClear();
-            Chara_Load(0, Chara_GhostChildAlessa, g_SysWork.npcBoneCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_GhostChildAlessa, g_SysWork.npcBoneCoordBuffer, CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
         }
     }
@@ -2548,7 +2545,7 @@ void func_800DEDA4(void) // 0x800DEDA4
             g_MapOverlayHeader.charaGroupIds[0] = Chara_PuppetNurse;
 
             Anim_CharaTypeAnimInfoClear();
-            Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcBoneCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcBoneCoordBuffer, CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
         }
     }
@@ -2557,7 +2554,7 @@ void func_800DEDA4(void) // 0x800DEDA4
         g_MapOverlayHeader.charaGroupIds[0] = Chara_PuppetNurse;
 
         Anim_CharaTypeAnimInfoClear();
-        Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcBoneCoords, CHARA_FORCE_FREE_ALL, NULL, NULL);
+        Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcBoneCoordBuffer, CHARA_FORCE_FREE_ALL, NULL, NULL);
         Chara_ProcessLoads();
     }
 

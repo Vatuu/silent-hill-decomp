@@ -223,7 +223,7 @@ void func_800D2668(void) // 0x800D2668
             D_800D5A3C = 0;
 
             Fs_QueueStartRead(FILE_ANIM_HSPTL3_DMS, FS_BUFFER_11);
-            Chara_Load(0, Chara_Lisa, &g_SysWork.npcBoneCoords[0], -1, NULL, NULL);
+            Chara_Load(0, Chara_Lisa, &g_SysWork.npcBoneCoordBuffer[0], -1, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Lisa, 0, Q12(4.4f), Q12(269.9f), 0, 3);
 

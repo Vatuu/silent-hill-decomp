@@ -170,7 +170,7 @@ void func_800D13D8(void) // 0x800D13D8
             ScreenFade_ResetTimestep();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
-            Chara_Load(0, Chara_Cybil, &g_SysWork.npcBoneCoords[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_Load(0, Chara_Cybil, &g_SysWork.npcBoneCoordBuffer[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Fs_QueueStartRead(FILE_ANIM_SIP_DMS, FS_BUFFER_15);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Cybil, 0, Q12(-19.0f), Q12(58.0f), Q12_ANGLE(0.0f), 3);
@@ -242,7 +242,7 @@ void func_800D13D8(void) // 0x800D13D8
 
         case 11:
             Chara_FsImageCalc(&charaTex, Chara_Dahlia, 2);
-            Chara_Load(1, Chara_Dahlia, &g_SysWork.npcBoneCoords[30], 0, LM_BUFFER_2, &charaTex);
+            Chara_Load(1, Chara_Dahlia, &g_SysWork.npcBoneCoordBuffer[30], 0, LM_BUFFER_2, &charaTex);
             SysWork_StateStepIncrement(0);
 
         case 12:

@@ -204,7 +204,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
         case EventState_2:
             // Load Cheryl character.
             Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_16);
-            Chara_Load(0, Chara_Cheryl, g_SysWork.npcBoneCoords, 0, NULL, NULL);
+            Chara_Load(0, Chara_Cheryl, g_SysWork.npcBoneCoordBuffer, 0, NULL, NULL);
 
             SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(3.0f), false);
             g_Cutscene_Timer = Q12(0.0f);
@@ -1006,7 +1006,7 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
             if (Fs_QueueChunksLoad())
             {
                 D_800DFB60++;
-                Chara_Load(1, ENEMY_CHARA_ID, &g_SysWork.npcBoneCoords[0], 0, NULL, NULL);
+                Chara_Load(1, ENEMY_CHARA_ID, &g_SysWork.npcBoneCoordBuffer[0], 0, NULL, NULL);
             }
 
         case 7:
@@ -1052,7 +1052,7 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
         if (Fs_QueueChunksLoad())
         {
             D_800DFB60++;
-            Chara_Load(1, ENEMY_CHARA_ID, &g_SysWork.npcBoneCoords[0], 0, NULL, NULL);
+            Chara_Load(1, ENEMY_CHARA_ID, &g_SysWork.npcBoneCoordBuffer[0], 0, NULL, NULL);
         }
     }
 }
