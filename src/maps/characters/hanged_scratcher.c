@@ -136,7 +136,7 @@ void HangedScratcher_Init(s_SubCharacter* scratcher)
     // TODO: Use `Rng_GenerateInt`.
     scratcherProps.radiusMax_10C = (Rng_Rand16() % (radiusMax >> 2)) + ((radiusMax * 3) >> 2);
     scratcherProps.radiusMin_10E = (Rng_Rand16() % (radiusMin >> 2)) + ((radiusMin * 3) >> 2);
-    scratcher->flags         |= CharaFlag_Unk9 | CharaFlag_Hit;
+    scratcher->flags         |= CharaFlag_NoRadioStatic | CharaFlag_Hit;
 }
 
 void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)

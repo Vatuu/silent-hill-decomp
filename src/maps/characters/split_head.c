@@ -59,7 +59,7 @@ void SplitHead_Init(s_SubCharacter* splitHead)
     Chara_DamageClear(splitHead);
 
     splitHeadProps.field_EA = 196;
-    splitHead->flags    |= CharaFlag_Unk9 | CharaFlag_Hit;
+    splitHead->flags    |= CharaFlag_NoRadioStatic | CharaFlag_Hit;
 }
 
 void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead)

@@ -1896,7 +1896,7 @@ bool Twinfeeler_Init(s_SubCharacter* twinfeeler) // 0x800D3CD4
     Chara_DamageClear(twinfeeler);
 
     func_800D354C(&twinfeeler->position);
-    twinfeeler->flags |= CharaFlag_Unk9;
+    twinfeeler->flags |= CharaFlag_NoRadioStatic;
     return true;
 }
 

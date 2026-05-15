@@ -160,7 +160,7 @@ void Stalker_Init(s_SubCharacter* stalker)
     Chara_DamageClear(stalker);
 
 #ifdef MAP6_S03
-    stalker->flags |= CharaFlag_Unk9;
+    stalker->flags |= CharaFlag_NoRadioStatic;
 #endif
 }
 

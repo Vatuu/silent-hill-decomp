@@ -125,7 +125,7 @@ void Creeper_Init(s_SubCharacter* creeper)
     }
 
 #ifdef MAP5_S00
-    creeper->flags |= CharaFlag_Unk9;
+    creeper->flags |= CharaFlag_NoRadioStatic;
 #endif
 
     #undef BASE_EASY_VAL

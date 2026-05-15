@@ -29,7 +29,7 @@ extern s_CharaAnimData g_CharaModelAnimsData[CHARA_GROUP_COUNT];
  */
 bool Fs_CharaAnimDataOverlapCheck(s32 animDataIdx0, s32 animDataIdx1);
 
-/** @brief Finds the character animation data index in `g_CharaModelAnimsData`.
+/** @brief Finds the character animation data slot index.
  * If not found, it returns index 0.
  *
  * @param charaId ID of the character for which to find the animation data.
@@ -54,7 +54,7 @@ s32 Fs_CharaAnimDataIdxGet(e_CharaId charaId);
  */
 void Fs_CharaAnimDataAlloc(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-/** @brief Assigns character animation data in `g_CharaModelAnimsData` and initializes character model bones.
+/** @brief Assigns character animation data to a free slot and initializes character model bones.
  * Called by `Fs_QueuePostLoadAnm`.
  *
  * @param animDataIdx Index of the animation data to update.

@@ -203,7 +203,7 @@ void Game_NpcUpdate(void) // 0x80038354
 
             if ((field_40 & (1 << field_0[i].bitIdx_0)) == 0)
             {
-                field_40 |= (1 << field_0[i].bitIdx_0);
+                field_40 |= 1 << field_0[i].bitIdx_0;
                 return i;
             }
         }
@@ -224,105 +224,110 @@ void Game_NpcUpdate(void) // 0x80038354
         field_0[j].field_8.vy = 0;
     }
 
-    for (k = 0, npc = g_SysWork.npcs; k < ARRAY_SIZE(g_SysWork.npcs); k++, npc++)
+    // Run through NPCs.
+    for (k = 0, npc = g_SysWork.npcs;
+         k < ARRAY_SIZE(g_SysWork.npcs);
+         k++, npc++)
     {
-        if (npc->model.charaId != Chara_None && npc->model.charaId != Chara_Padlock)
+        if (npc->model.charaId == Chara_None || npc->model.charaId == Chara_Padlock)
         {
-            if (npc->model.charaId <= Chara_MonsterCybil)
-            {
-                temp_t3 = Q12_SQUARE_PRECISE(Q12_TO_Q6(npc->position.vx) - posXShift6) +
-                          Q12_SQUARE_PRECISE(Q12_TO_Q6(npc->position.vz) - posZShift6);
-                var_t5 = 0;
+            continue;
+        }
 
-                if (g_MapOverlayHeader.mapInfo->flags_6 & MapFlag_Interior)
+        if (npc->model.charaId <= Chara_MonsterCybil)
+        {
+            temp_t3 = Q12_SQUARE_PRECISE(Q12_TO_Q6(npc->position.vx) - posXShift6) +
+                        Q12_SQUARE_PRECISE(Q12_TO_Q6(npc->position.vz) - posZShift6);
+            var_t5 = 0;
+
+            if (g_MapOverlayHeader.mapInfo->flags_6 & MapFlag_Interior)
+            {
+                var_t5 = (g_MapOverlayHeader.mapInfo->flags_6 & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)) > 0;
+            }
+
+            for (j = 0; j < 3; j++)
+            {
+                if (npc->health <= Q12(0.0f) || npc->flags & CharaFlag_NoRadioStatic || temp_t3 >= field_0[j].field_4)
                 {
-                    var_t5 = (g_MapOverlayHeader.mapInfo->flags_6 & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)) > 0;
+                    continue;
                 }
 
-                for (j = 0; j < 3; j++)
+                if (var_t5 != 0)
                 {
-                    if (npc->health <= Q12(0.0f) || npc->flags & CharaFlag_Unk9 || temp_t3 >= field_0[j].field_4)
+                    s32 playerCell = (g_SysWork.playerWork.player.position.vx + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
+                    s32 npcCell    = (npc->position.vx                        + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
+                    if (npcCell != playerCell)
                     {
                         continue;
                     }
 
-                    if (var_t5 != 0)
+                    // TODO: Unique vars for these.
+                    playerCell = (g_SysWork.playerWork.player.position.vz + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
+                    npcCell    = (npc->position.vz                        + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
+                    if (npcCell != playerCell)
                     {
-                        s32 playerCell = (g_SysWork.playerWork.player.position.vx + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
-                        s32 npcCell    = (npc->position.vx                        + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
-                        if (npcCell != playerCell)
-                        {
-                            continue;
-                        }
-
-                        // TODO: Unique vars for these.
-                        playerCell = (g_SysWork.playerWork.player.position.vz + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
-                        npcCell    = (npc->position.vz                        + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
-                        if (npcCell != playerCell)
-                        {
-                            continue;
-                        }
+                        continue;
                     }
-
-                    for (m = 2; j < m; m--)
-                    {
-                        field_0[m].bitIdx_0   = field_0[m - 1].bitIdx_0;
-                        field_0[m].field_4    = field_0[m - 1].field_4;
-                        field_0[m].field_8.vx = field_0[m - 1].field_8.vx;
-                        field_0[m].field_8.vz = field_0[m - 1].field_8.vz;
-                    }
-
-                    temp_t1 = (u32)npc - (u32)g_SysWork.npcs;
-                    temp2   = ((((temp_t1 * 0x7E8) - (temp_t1 * 0xFD)) * 4) + temp_t1) * -0x3FFFF;
-
-                    field_0[j].bitIdx_0   = temp2 >> 3;
-                    field_0[j].field_4    = temp_t3;
-                    field_0[j].field_8.vx = npc->position.vx;
-                    field_0[j].field_8.vz = npc->position.vz;
-                    break;
                 }
 
-                new_var = temp_t3;
-                if (new_var > ((var_t5 == 0 && npc->health < Q12(0.0f)) ? SQUARE(24) : SQUARE(40)))
+                for (m = 2; j < m; m--)
                 {
-                    npc->model.charaId = Chara_None;
-                    SysWork_NpcFlagClear(k);
-                    CLEAR_FLAG(g_SysWork.field_228C, npc->field_40);
-                    continue;
+                    field_0[m].bitIdx_0   = field_0[m - 1].bitIdx_0;
+                    field_0[m].field_4    = field_0[m - 1].field_4;
+                    field_0[m].field_8.vx = field_0[m - 1].field_8.vx;
+                    field_0[m].field_8.vz = field_0[m - 1].field_8.vz;
                 }
 
-                if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 0x2 && temp_t3 > SQUARE(15)) ||
-                    (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 0x2) &&
-                     Camera_Distance2dGet(&npc->position) > SQUARE(15)))
-                {
-                    npc->model.anim.flags &= ~AnimFlag_Visible;
-                }
-                else
-                {
+                temp_t1 = (u32)npc - (u32)g_SysWork.npcs;
+                temp2   = ((((temp_t1 * 0x7E8) - (temp_t1 * 0xFD)) * 4) + temp_t1) * -0x3FFFF;
 
-                    npc->model.anim.flags |= AnimFlag_Visible;
-                }
+                field_0[j].bitIdx_0   = temp2 >> 3;
+                field_0[j].field_4    = temp_t3;
+                field_0[j].field_8.vx = npc->position.vx;
+                field_0[j].field_8.vz = npc->position.vz;
+                break;
             }
 
-            npc->model.anim.flags |= AnimFlag_Unlocked;
-
-            animDataInfoIdx = g_CharaAnimDataIdxs[npc->model.charaId];
-            boneCoords      = g_CharaModelAnimsData[animDataInfoIdx].boneCoords;
-
-            Chara_Flag8Clear(npc);
-            Chara_DamagedFlagUpdate(npc);
-            func_8003BD48(npc);
-
-            g_MapOverlayHeader.charaUpdateFuncs[npc->model.charaId](npc, g_CharaModelAnimsData[animDataInfoIdx].activeAnmHdr, boneCoords);
-
-            func_8003BE28();
-            func_80037E78(npc);
-            func_8008A3AC(npc);
-
-            if (npc->model.anim.flags & AnimFlag_Visible)
+            new_var = temp_t3;
+            if (new_var > ((var_t5 == 0 && npc->health < Q12(0.0f)) ? SQUARE(24) : SQUARE(40)))
             {
-                func_8003DA9C(npc->model.charaId, boneCoords, 1, npc->timer_C6, (s8)npc->model.paletteIdx);
+                npc->model.charaId = Chara_None;
+                SysWork_NpcFlagClear(k);
+                CLEAR_FLAG(g_SysWork.field_228C, npc->field_40);
+                continue;
             }
+
+            if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 0x2 && temp_t3 > SQUARE(15)) ||
+                (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 0x2) &&
+                    Camera_Distance2dGet(&npc->position) > SQUARE(15)))
+            {
+                npc->model.anim.flags &= ~AnimFlag_Visible;
+            }
+            else
+            {
+
+                npc->model.anim.flags |= AnimFlag_Visible;
+            }
+        }
+
+        npc->model.anim.flags |= AnimFlag_Unlocked;
+
+        animDataInfoIdx = g_CharaAnimDataIdxs[npc->model.charaId];
+        boneCoords      = g_CharaModelAnimsData[animDataInfoIdx].boneCoords;
+
+        Chara_Flag8Clear(npc);
+        Chara_DamagedFlagUpdate(npc);
+        func_8003BD48(npc);
+
+        g_MapOverlayHeader.charaUpdateFuncs[npc->model.charaId](npc, g_CharaModelAnimsData[animDataInfoIdx].activeAnmHdr, boneCoords);
+
+        func_8003BE28();
+        func_80037E78(npc);
+        func_8008A3AC(npc);
+
+        if (npc->model.anim.flags & AnimFlag_Visible)
+        {
+            func_8003DA9C(npc->model.charaId, boneCoords, 1, npc->timer_C6, (s8)npc->model.paletteIdx);
         }
     }
 

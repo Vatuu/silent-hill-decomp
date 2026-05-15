@@ -25,7 +25,7 @@ typedef enum _CharaFlags
     CharaFlag_Damaged       = 1 << 5,
     CharaFlag_Dead          = 1 << 6, // Unure.
     CharaFlag_Unk8          = 1 << 7,
-    CharaFlag_Unk9          = 1 << 8  // Only set for bosses and NPCs in special scenarios.
+    CharaFlag_NoRadioStatic = 1 << 8
 } e_CharaFlags;
 
 /** @brief Character group flags. Used by `s_SysWork::charaGroupFlags`. */

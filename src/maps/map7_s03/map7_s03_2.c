@@ -4425,7 +4425,7 @@ bool Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800DD
     ModelAnim_AnimInfoSet(&incubus->model.anim, INCUBUS_ANIM_INFOS);
 
     Chara_DamageClear(incubus);
-    incubus->flags |= CharaFlag_Unk9;
+    incubus->flags |= CharaFlag_NoRadioStatic;
 
     return true;
 }
@@ -5835,7 +5835,7 @@ bool Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DF
     func_800DD67C(&chara->position, chara, boneCoords);
     func_800DFA14();
 
-    chara->flags |= CharaFlag_Unk9;
+    chara->flags |= CharaFlag_NoRadioStatic;
     return true;
 }
 
