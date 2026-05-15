@@ -622,7 +622,7 @@ typedef struct
     u8      field_3;
     u8      field_4;
     s8      __pad_5[3];
-    s32     field_8;  // } Fields used by `func_8008A3E0`. Types guessed for now.
+    s32     field_8;  // } `bool`? | Fields used by `func_8008A3E0`.
     s16     field_C;  // } Angle?
     s16     field_E;  // } Angle?
     s16     field_10; // }

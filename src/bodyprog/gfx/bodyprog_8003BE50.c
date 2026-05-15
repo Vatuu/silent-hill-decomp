@@ -84,9 +84,9 @@ s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ) // 0x8003BF60
         return SpeedZoneType_Normal;
     }
 
-    if (g_WorldGfxWork.mapInfo->speedZones_C != NULL)
+    if (g_WorldGfxWork.mapInfo->speedZones != NULL)
     {
-        curZone = g_WorldGfxWork.mapInfo->speedZones_C;
+        curZone = g_WorldGfxWork.mapInfo->speedZones;
         while (curZone->type != NO_VALUE)
         {
             if (posX >= Q4_TO_Q12(curZone->minX) && Q4_TO_Q12(curZone->maxX) >= posX &&
@@ -178,7 +178,7 @@ void Ipd_PlayerChunkInit(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerP
 
     g_WorldGfxWork.mapInfo = mapHdr->mapInfo;
 
-    flags = mapHdr->mapInfo->flags_6;
+    flags = mapHdr->mapInfo->flags;
     if (flags & MapFlag_OneActiveChunk)
     {
         activeIpdCount = 1;
@@ -193,7 +193,7 @@ void Ipd_PlayerChunkInit(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerP
     }
 
     mapInfo = mapHdr->mapInfo;
-    Ipd_MapFileInfoSet(mapInfo->tag_2, mapInfo->plmFileIdx_0, activeIpdCount, CHECK_FLAG(mapInfo->flags_6, MapFlag_Interior, false), 0, 0);
+    Ipd_MapFileInfoSet(mapInfo->tag, mapInfo->plmFileIdx, activeIpdCount, CHECK_FLAG(mapInfo->flags, MapFlag_Interior, false), 0, 0);
 
     if (mapHdr->mapInfo == &MAP_INFOS[MapType_THR])
     {
@@ -212,7 +212,7 @@ void Map_WorldClear(void) // 0x8003C30C
 {
     u8 flags;
 
-    flags = g_WorldGfxWork.mapInfo->flags_6;
+    flags = g_WorldGfxWork.mapInfo->flags;
     if ((flags & MapFlag_Interior) && (flags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
     {
         Map_WorldClearReset();
@@ -293,7 +293,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
         vwGetViewPosition(&pos1);
         vwGetViewAngle(&rot);
 
-        mapFlags = g_WorldGfxWork.mapInfo->flags_6;
+        mapFlags = g_WorldGfxWork.mapInfo->flags;
         if (!(mapFlags & MapFlag_Interior) || !(mapFlags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
         {
             var_s1 = Q12_MULT(Math_Cos(rot.vx), Q12(9.0f));
@@ -326,7 +326,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
         pos1.vz += FP_FROM(Q12(Math_Cos(player->rotation.vy)), Q12_SHIFT);
     }
 
-    mapFlags = g_WorldGfxWork.mapInfo->flags_6;
+    mapFlags = g_WorldGfxWork.mapInfo->flags;
     if ((mapFlags & MapFlag_Interior) && (mapFlags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
     {
         var_a1 = player->position.vx / Q12(2.5f);

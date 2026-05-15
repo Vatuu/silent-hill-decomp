@@ -481,5 +481,5 @@ const s_MapInfo MAP_INFOS[MapType_Count] = {
     { FILE_BG_DRU_GLB_PLM, "DRU", MapFlag_FourActiveChunks,                   WATER_LIGHT_ZONES_1, SPEED_ZONES_DR  },
     { NO_VALUE,            "HP",  MapFlag_TwoActiveChunks | MapFlag_Interior, NULL,                SPEED_ZONES_HP  },
     { NO_VALUE,            "HU",  MapFlag_TwoActiveChunks | MapFlag_Interior, NULL,                SPEED_ZONES_HU  },
-    { NO_VALUE,            "XXX", MapFlag_Unk3,                               NULL,                SPEED_ZONES_XXX }
+    { NO_VALUE,            "XXX", MapFlag_3,                               NULL,                SPEED_ZONES_XXX }
 };

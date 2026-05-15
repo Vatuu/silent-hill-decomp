@@ -13,7 +13,7 @@ typedef enum _MapFlags
     MapFlag_OneActiveChunk   = 1 << 0,
     MapFlag_TwoActiveChunks  = 1 << 1,
     MapFlag_Interior         = 1 << 2,
-    MapFlag_Unk3             = 1 << 3  /** @unused Unused map type `XXX` has this flag. */
+    MapFlag_3                = 1 << 3  /** @unused Unused map type `XXX` has this flag. */
 } e_MapFlags;
 
 /** @brief Character spawn flags. */
@@ -254,12 +254,12 @@ typedef struct _WaterZone
 /** @brief Map GFX info. */
 typedef struct _MapGfxInfo
 {
-    /* 0x0 */ s16                plmFileIdx_0;
-    /* 0x2 */ char               tag_2[4];
-    /* 0x6 */ u8                 flags_6; /** `e_MapFlags` */
+    /* 0x0 */ s16                plmFileIdx;
+    /* 0x2 */ char               tag[4];
+    /* 0x6 */ u8                 flags; /** `e_MapFlags` */
               // 1 byte of padding.
-    /* 0x8 */ const s_WaterZone* waterZones_8;
-    /* 0xC */ const s_SpeedZone* speedZones_C;
+    /* 0x8 */ const s_WaterZone* waterZones;
+    /* 0xC */ const s_SpeedZone* speedZones;
 } s_MapInfo;
 
 typedef struct
@@ -445,6 +445,7 @@ typedef struct _MapOverlayHeader
     /* 0x58  */ s16                    bloodSplatCount;
                 // 2 bytes of padding.
     /* 0x5C  */ s_MapOverlayHeader_5C* field_5C;
+
     /* 0x60  */ void                   (*func_60)(s32 idx, bool arg1);
     /* 0x64  */ s32                    (*func_64)(POLY_FT4** poly, s32);
     /* 0x68  */ s32                    (*func_68)(POLY_FT4** poly, s32);
@@ -518,6 +519,7 @@ typedef struct _MapOverlayHeader
     /* 0x178 */ void                   (*particleHyperBlasterBeamDraw)(VECTOR3* vec0, q19_12* rotX, q19_12* rotY);
     /* 0x17C */ void                   (*particleBeamDraw)(const VECTOR3* from, const VECTOR3* to);
     /* 0x180 */ void                   (*particleSoundStop)();
+
     /* 0x184 */ q19_12*                windSpeedX;
     /* 0x188 */ q19_12*                windSpeedZ;
     /* 0x18C */ s32*                   data_18C;

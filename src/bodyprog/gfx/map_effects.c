@@ -252,7 +252,7 @@ void Gfx_MapEffectsAssign(s_MapOverlayHeader* mapHdr) // 0x8003EBF4
     u8                      flags;
     s_MapEffectsPresetIdxs* presetIdxPtr;
 
-    flags          = mapHdr->mapInfo->flags_6;
+    flags          = mapHdr->mapInfo->flags;
     hasActiveChunk = false;
     if (flags & MapFlag_Interior)
     {
@@ -504,7 +504,7 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
 
     func_800554C4(lightIntensity, ptr2->flashlightLensFlareIntensity_2C, coord, g_SysWork.field_235C, &rot,
                   g_SysWork.pointLightPosition.vx, g_SysWork.pointLightPosition.vy, g_SysWork.pointLightPosition.vz,
-                  g_WorldGfxWork.mapInfo->waterZones_8);
+                  g_WorldGfxWork.mapInfo->waterZones);
     func_80055814(ptr2->field_30);
 
     if (ptr->field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 3))
