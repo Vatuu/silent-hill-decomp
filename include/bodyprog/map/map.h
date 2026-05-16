@@ -332,7 +332,7 @@ typedef struct _MapPoint2d
     /* 0x4+0  */ u32    paperMapIdx     : 5; /** `e_PaperMapIdx` */
     /* 0x4+5  */ u32    field_4_5       : 4;
     /* 0x4+9  */ u32    loadingScreenId : 3; /** `e_LoadingScreenId` */
-    /* 0x4+12 */ u32    field_4_12      : 4;
+    /* 0x4+12 */ u32    unused_4_12     : 4; /** @unused Always set to 0. */
     /* 0x4+16 */ q24_8  triggerParam0   : 8; // Usually a `Q8_ANGLE`.
     /* 0x4+24 */ u32    triggerParam1   : 8;
     /* 0x8    */ q19_12 positionZ;
