@@ -2,7 +2,7 @@
         .positionX = Q12(0.0f),
         .paperMapIdx = PaperMapIdx_OtherPlaces,
         .field_4_5 = 0,
-        .loadingScreenId = 0,
+        .loadingScreenId = LoadingScreenId_None,
         .field_4_12 = 0,
         .triggerParam0 = 0,
         .triggerParam1 = 0,
