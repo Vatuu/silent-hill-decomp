@@ -95,13 +95,13 @@ s32 func_8005C944(s_SubCharacter* chara, s_CollisionResult* collResult) // 0x800
 
     wallResponse = Collision_WallDetect(&collResult0, &offset, chara);
 
-    chara->position.vx += collResult0.offset_0.vx;
-    chara->position.vy += collResult0.offset_0.vy;
-    chara->position.vz += collResult0.offset_0.vz;
+    chara->position.vx += collResult0.offset.vx;
+    chara->position.vy += collResult0.offset.vy;
+    chara->position.vz += collResult0.offset.vz;
 
-    if (chara->position.vy > collResult0.groundHeight)
+    if (chara->position.vy > collResult0.collision.groundHeight)
     {
-        chara->position.vy = collResult0.groundHeight;
+        chara->position.vy = collResult0.collision.groundHeight;
         chara->fallSpeed   = Q12(0.0f);
     }
 
@@ -147,13 +147,13 @@ s32 func_8005CB20(s_SubCharacter* chara, s_CollisionResult* collResult, q3_12 of
 
     ret = Collision_WallDetect(&collResult0, &offset, chara);
 
-    chara->position.vx += collResult0.offset_0.vx;
-    chara->position.vy += collResult0.offset_0.vy;
-    chara->position.vz += collResult0.offset_0.vz;
+    chara->position.vx += collResult0.offset.vx;
+    chara->position.vy += collResult0.offset.vy;
+    chara->position.vz += collResult0.offset.vz;
 
-    if (chara->position.vy > collResult0.groundHeight)
+    if (chara->position.vy > collResult0.collision.groundHeight)
     {
-        chara->position.vy = collResult0.groundHeight;
+        chara->position.vy = collResult0.collision.groundHeight;
         chara->fallSpeed   = Q12(0.0f);
     }
 

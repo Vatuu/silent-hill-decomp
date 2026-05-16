@@ -697,9 +697,9 @@ void func_800D35F0(s_SubCharacter* floatstinger) // 0x800D35F0
 
     Collision_WallDetect(&sp10, &sp30, floatstinger);
 
-    offsetY = sp10.offset_0.vy;
-    floatstinger->position.vx += sp10.offset_0.vx;
-    floatstinger->position.vz += sp10.offset_0.vz;
+    offsetY = sp10.offset.vy;
+    floatstinger->position.vx += sp10.offset.vx;
+    floatstinger->position.vz += sp10.offset.vz;
 
     func_800D4458(floatstinger, &floatstinger->position);
 
@@ -708,8 +708,8 @@ void func_800D35F0(s_SubCharacter* floatstinger) // 0x800D35F0
     sp30.vz = D_800DB89C;
 
     Collision_WallDetect(&sp10, &sp30, floatstinger);
-    floatstinger->position.vx += sp10.offset_0.vx;
-    floatstinger->position.vz += sp10.offset_0.vz;
+    floatstinger->position.vx += sp10.offset.vx;
+    floatstinger->position.vz += sp10.offset.vz;
 
     sp30.vx = floatstinger->position.vx;
     sp30.vy = floatstinger->position.vy + offsetY;

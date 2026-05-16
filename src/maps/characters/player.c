@@ -168,18 +168,18 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
     #define UnkStruct D_800C4590
 #endif
         Collision_WallDetect(&UnkStruct, &offset, chara);
-        chara->position.vx += UnkStruct.offset_0.vx;
-        chara->position.vy += UnkStruct.offset_0.vy;
-        chara->position.vz += UnkStruct.offset_0.vz;
+        chara->position.vx += UnkStruct.offset.vx;
+        chara->position.vy += UnkStruct.offset.vy;
+        chara->position.vz += UnkStruct.offset.vz;
 
-        if (UnkStruct.groundType == GroundType_Default)
+        if (UnkStruct.collision.groundType == GroundType_Default)
         {
-            UnkStruct.groundHeight = chara->properties.player.groundHeight;
+            UnkStruct.collision.groundHeight = chara->properties.player.groundHeight;
         }
 
-        if (chara->position.vy > UnkStruct.groundHeight)
+        if (chara->position.vy > UnkStruct.collision.groundHeight)
         {
-            chara->position.vy = UnkStruct.groundHeight;
+            chara->position.vy = UnkStruct.collision.groundHeight;
             chara->fallSpeed   = Q12(0.0f);
         }
     }
@@ -1009,8 +1009,8 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
 
     Collision_WallDetect(&D_800C4590, &vec, &g_SysWork.playerWork.player);
 
-    D_800C4610.vx = g_SysWork.playerWork.player.position.vx + D_800C4590.offset_0.vx;
-    D_800C4610.vz = g_SysWork.playerWork.player.position.vz + D_800C4590.offset_0.vz;
+    D_800C4610.vx = g_SysWork.playerWork.player.position.vx + D_800C4590.offset.vx;
+    D_800C4610.vz = g_SysWork.playerWork.player.position.vz + D_800C4590.offset.vz;
 
     // TODO: Convert hex to float or fraction.
     if (!isInFront)

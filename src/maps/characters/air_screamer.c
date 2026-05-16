@@ -10468,8 +10468,8 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
     if (g_DeltaTime != Q12(0.0f) &&
         Collision_WallDetect(&sharedData_800E2350_0_s01, &sharedData_800F21FC_2_s00, &g_SysWork.playerWork.player))
     {
-        playerOffsetX = sharedData_800E2350_0_s01.offset_0.vx;
-        playerOffsetZ = sharedData_800E2350_0_s01.offset_0.vz;
+        playerOffsetX = sharedData_800E2350_0_s01.offset.vx;
+        playerOffsetZ = sharedData_800E2350_0_s01.offset.vz;
 
         playerMoveSpeed    = SquareRoot12(Q12_SQUARE_PRECISE(playerOffsetX) +
                                           Q12_SQUARE_PRECISE(playerOffsetZ));
@@ -11991,9 +11991,9 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
 
     sharedFunc_800D8244_0_s01(airScreamer);
 
-    posX += sharedData_800E2350_0_s01.offset_0.vx;
-    posY += sharedData_800E2350_0_s01.offset_0.vy;
-    posZ += sharedData_800E2350_0_s01.offset_0.vz;
+    posX += sharedData_800E2350_0_s01.offset.vx;
+    posY += sharedData_800E2350_0_s01.offset.vy;
+    posZ += sharedData_800E2350_0_s01.offset.vz;
 
     groundHeight = Collision_GroundHeightGet(posX, posZ);
 
@@ -12058,7 +12058,7 @@ void sharedFunc_800D63A4_0_s01(s_SubCharacter* airScreamer)
     sharedData_800DE1E0_0_s01.vy = Q12_MULT_PRECISE(g_DeltaTime, sharedData_800DE1F0_0_s01.vy);
     sharedData_800DE1E0_0_s01.vz = Q12_MULT_PRECISE(g_DeltaTime, sharedData_800DE1F0_0_s01.vz);
 
-    temp_s0 = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01.offset_0,
+    temp_s0 = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01.offset,
                                         &sharedData_800DE1F0_0_s01,
                                         airScreamer,
                                         sharedFunc_800D7440_0_s01(&sharedData_800E2350_0_s01, &sharedData_800DE1E0_0_s01, airScreamer),
@@ -12162,7 +12162,7 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer)
     sharedData_800DE200_0_s01.vz = Q12_MULT_PRECISE(g_DeltaTime, posZ);
 
     temp = sharedFunc_800D7440_0_s01(&sharedData_800E2350_0_s01, &sharedData_800DE200_0_s01, airScreamer);
-    temp = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01.offset_0, &sharedData_800DE210_0_s01, airScreamer, temp, &sharedData_800E21D0_0_s01.field_128);
+    temp = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01.offset, &sharedData_800DE210_0_s01, airScreamer, temp, &sharedData_800E21D0_0_s01.field_128);
 
     sharedFunc_800D6C7C_0_s01(&sharedData_800DE200_0_s01, airScreamer, temp, &sharedData_800E21D0_0_s01.field_140);
 
@@ -12611,24 +12611,24 @@ s32 sharedFunc_800D7440_0_s01(s_CollisionResult* arg0, VECTOR* offset, s_SubChar
     result = Collision_WallDetect(localArg0C, offset, airScreamer);
 
     posY         = airScreamer->position.vy;
-    groundHeight = Collision_GroundHeightGet(airScreamer->position.vx + localArg0C->offset_0.vx, airScreamer->position.vz + localArg0C->offset_0.vz);
+    groundHeight = Collision_GroundHeightGet(airScreamer->position.vx + localArg0C->offset.vx, airScreamer->position.vz + localArg0C->offset.vz);
 
     if (sharedFunc_800D4A80_0_s01(airScreamer) != 4)
     {
         if (offset->vy > Q12(0.0f) && groundHeight < (posY - Q12(0.5f)))
         {
-            localArg0C->offset_0.vx = Q12(0.0f);
-            localArg0C->offset_0.vz = Q12(0.0f);
+            localArg0C->offset.vx = Q12(0.0f);
+            localArg0C->offset.vz = Q12(0.0f);
         }
     }
     else if (groundHeight < posY)
     {
-        localArg0C->offset_0.vx = Q12(0.0f);
-        localArg0C->offset_0.vz = Q12(0.0f);
+        localArg0C->offset.vx = Q12(0.0f);
+        localArg0C->offset.vz = Q12(0.0f);
     }
 
-    if ((FP_FROM(offset->vx, Q4_SHIFT) != FP_FROM(localArg0C->offset_0.vx, Q4_SHIFT)) ||
-        (FP_FROM(offset->vz, Q4_SHIFT) != FP_FROM(localArg0C->offset_0.vz, Q4_SHIFT)))
+    if ((FP_FROM(offset->vx, Q4_SHIFT) != FP_FROM(localArg0C->offset.vx, Q4_SHIFT)) ||
+        (FP_FROM(offset->vz, Q4_SHIFT) != FP_FROM(localArg0C->offset.vz, Q4_SHIFT)))
     {
         result = 1;
     }

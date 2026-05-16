@@ -94,9 +94,9 @@ void Dahlia_MovementUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
     dahlia->position.vz += offset.vz;
 
     // Warp to ground.
-    if (dahlia->position.vy > sharedData_800E39BC_0_s00.groundHeight)
+    if (dahlia->position.vy > sharedData_800E39BC_0_s00.collision.groundHeight)
     {
-        dahlia->position.vy = sharedData_800E39BC_0_s00.groundHeight;
+        dahlia->position.vy = sharedData_800E39BC_0_s00.collision.groundHeight;
         dahlia->fallSpeed   = Q12(0.0f);
     }
 

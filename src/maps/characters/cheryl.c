@@ -87,12 +87,12 @@ void Cheryl_MovementUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) //
     Collision_WallDetect(&sharedData_800E39BC_0_s00, &offset, cheryl);
 
     cheryl->position.vx += offset.vx;
-    cheryl->position.vy += sharedData_800E39BC_0_s00.offset_0.vy;
+    cheryl->position.vy += sharedData_800E39BC_0_s00.offset.vy;
     cheryl->position.vz += offset.vz;
 
-    if (cheryl->position.vy > sharedData_800E39BC_0_s00.groundHeight)
+    if (cheryl->position.vy > sharedData_800E39BC_0_s00.collision.groundHeight)
     {
-        cheryl->position.vy = sharedData_800E39BC_0_s00.groundHeight;
+        cheryl->position.vy = sharedData_800E39BC_0_s00.collision.groundHeight;
         cheryl->fallSpeed   = Q12(0.0f);
     }
 

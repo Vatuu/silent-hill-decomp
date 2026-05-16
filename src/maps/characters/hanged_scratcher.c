@@ -1128,7 +1128,7 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
 
     flag1Val = scratcherProps.flags_E8 & HangedScratcherFlag_0;
 
-    if (scratcher->position.vy == collResult.groundHeight)
+    if (scratcher->position.vy == collResult.collision.groundHeight)
     {
         scratcherProps.flags_E8 &= ~HangedScratcherFlag_0;
 

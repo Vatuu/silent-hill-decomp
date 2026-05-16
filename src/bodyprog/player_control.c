@@ -6293,7 +6293,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
     s8      pitch0;
     s8      pitch1;
 
-    func_8007FDE0(D_800C4590.groundType, &sfxId, &pitch0, &pitch1);
+    func_8007FDE0(D_800C4590.collision.groundType, &sfxId, &pitch0, &pitch1);
 
     // This entire conditional is the reason why movement stop working when removing this function call.
     if (g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_JumpBackward &&
@@ -6550,7 +6550,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 playerProps.flags_11C &= ~PlayerFlag_Unk5;
             }
 
-            if (player->position.vy == D_800C4590.groundHeight)
+            if (player->position.vy == D_800C4590.collision.groundHeight)
             {
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_JumpBackward, true), player, 243, 245, sfxId, pitch1);
             }
@@ -6628,18 +6628,18 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
 
     if (g_SavegamePtr->mapIdx == MapIdx_MAP1_S05)
     {
-        if (D_800C45B0.vx != 0 && (DIFF_SIGN(sp30.vx, D_800C4590.offset_0.vx) || abs(sp30.vx) >= ABS(D_800C4590.offset_0.vx)))
+        if (D_800C45B0.vx != 0 && (DIFF_SIGN(sp30.vx, D_800C4590.offset.vx) || abs(sp30.vx) >= ABS(D_800C4590.offset.vx)))
         {
-            sp40.vx = sp30.vx - D_800C4590.offset_0.vx;
+            sp40.vx = sp30.vx - D_800C4590.offset.vx;
         }
         else
         {
             sp40.vx = Q12(0.0f);
         }
 
-        if (D_800C45B0.vz != 0 && (DIFF_SIGN(sp30.vz, D_800C4590.offset_0.vz) || abs(sp30.vz) >= ABS(D_800C4590.offset_0.vz)))
+        if (D_800C45B0.vz != 0 && (DIFF_SIGN(sp30.vz, D_800C4590.offset.vz) || abs(sp30.vz) >= ABS(D_800C4590.offset.vz)))
         {
-            sp40.vz = sp30.vz - D_800C4590.offset_0.vz;
+            sp40.vz = sp30.vz - D_800C4590.offset.vz;
         }
         else
         {
@@ -6649,17 +6649,17 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
         g_MapOverlayHeader.func_158(-sp40.vx, -sp40.vz);
     }
 
-    player->position.vx += D_800C4590.offset_0.vx;
-    player->position.vy += D_800C4590.offset_0.vy;
-    player->position.vz += D_800C4590.offset_0.vz;
+    player->position.vx += D_800C4590.offset.vx;
+    player->position.vy += D_800C4590.offset.vy;
+    player->position.vz += D_800C4590.offset.vz;
 
     if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_RunForward ||
         g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_RunRight ||
         g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_RunLeft)
     {
-        player->properties.player.runTimer_108 += SquareRoot0(SQUARE(D_800C4590.offset_0.vx) +
-                                                                SQUARE(D_800C4590.offset_0.vy) +
-                                                                SQUARE(D_800C4590.offset_0.vz));
+        player->properties.player.runTimer_108 += SquareRoot0(SQUARE(D_800C4590.offset.vx) +
+                                                                SQUARE(D_800C4590.offset.vy) +
+                                                                SQUARE(D_800C4590.offset.vz));
     }
     else
     {
@@ -6668,17 +6668,17 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
 
     if (g_SavegamePtr->mapIdx == MapIdx_MAP1_S00 && g_SavegamePtr->mapRoomIdx == 13)
     {
-        D_800C4590.groundHeight = Q12(0.0f);
+        D_800C4590.collision.groundHeight = Q12(0.0f);
     }
 
-    if (D_800C4590.groundType == GroundType_Default)
+    if (D_800C4590.collision.groundType == GroundType_Default)
     {
-        D_800C4590.groundHeight = player->properties.player.groundHeight;
+        D_800C4590.collision.groundHeight = player->properties.player.groundHeight;
     }
 
-    if (player->position.vy > D_800C4590.groundHeight)
+    if (player->position.vy > D_800C4590.collision.groundHeight)
     {
-        player->position.vy = D_800C4590.groundHeight;
+        player->position.vy = D_800C4590.collision.groundHeight;
         player->fallSpeed   = Q12(0.0f);
     }
 
@@ -6689,7 +6689,7 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
         if (!g_Player_IsInWalkToRunTransition)
         {
             posY = player->position.vy;
-            if ((D_800C4590.groundHeight - posY) >= Q12(0.65f))
+            if ((D_800C4590.collision.groundHeight - posY) >= Q12(0.65f))
             {
                 if (ABS_DIFF(player->rotation.vy, someAngle) >= Q12_ANGLE(90.0f) &&
                     ABS_DIFF(player->rotation.vy, someAngle) <  Q12_ANGLE(270.0f))
@@ -6710,7 +6710,7 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
     }
 
     // Set model position.
-    player->properties.player.groundHeight = D_800C4590.groundHeight;
+    player->properties.player.groundHeight = D_800C4590.collision.groundHeight;
     boneCoords[HarryBone_Root].coord.t[0]  = Q12_TO_Q8(player->position.vx);
     boneCoords[HarryBone_Root].coord.t[1]  = Q12_TO_Q8(player->position.vy);
     boneCoords[HarryBone_Root].coord.t[2]  = Q12_TO_Q8(player->position.vz);
@@ -9076,20 +9076,16 @@ s32 Math_MulFixed(s32 val0, s32 val1, s32 shift) // 0x800808D4
 
 s32 Math_MagnitudeShiftGet(s32 mag) // 0x800808F8
 {
-    #define THRESHOLD_0 (1 << 14)
-    #define THRESHOLD_1 ((1 << 18) - 1)
-    #define THRESHOLD_2 ((1 << 22) - 1)
-
     s32 shift;
 
-    if (mag < THRESHOLD_0)
+    if (mag < Q12(4.0f))
     {
         return 0;
     }
 
-    if (mag > THRESHOLD_1)
+    if (mag > Q12(64.0f) - 1)
     {
-        if (mag > THRESHOLD_2)
+        if (mag > Q12(1024.0f) - 1)
         {
             return Q12_SHIFT;
         }

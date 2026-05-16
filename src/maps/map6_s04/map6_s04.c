@@ -591,8 +591,8 @@ void func_800D9790(s_SubCharacter* chara, s_Model* model) // 0x800D9790
 
             Collision_WallDetect(&sp10, &sp40, chara);
 
-            chara->position.vx += sp10.offset_0.vx;
-            chara->position.vz += sp10.offset_0.vz;
+            chara->position.vx += sp10.offset.vx;
+            chara->position.vz += sp10.offset.vz;
             chara->fallSpeed    = Q12(0.0f);
             break;
 
@@ -612,10 +612,10 @@ void func_800D9790(s_SubCharacter* chara, s_Model* model) // 0x800D9790
 
             Collision_WallDetect(&sp10, &sp40, chara);
 
-            chara->position.vx += sp10.offset_0.vx;
+            chara->position.vx += sp10.offset.vx;
             chara->position.vy  = Q12(0.0f);
             chara->fallSpeed    = Q12(0.0f);
-            chara->position.vz += sp10.offset_0.vz;
+            chara->position.vz += sp10.offset.vz;
             break;
     }
 }

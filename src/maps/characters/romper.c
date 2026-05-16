@@ -1189,12 +1189,12 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
 
         Collision_WallDetect(&collResult, &pos, romper);
 
-        romper->position.vx += collResult.offset_0.vx;
-        romper->position.vz += collResult.offset_0.vz;
+        romper->position.vx += collResult.offset.vx;
+        romper->position.vz += collResult.offset.vz;
 
         if (romperProps.flags & RomperFlag_10)
         {
-            if (romper->model.controlState != RomperControl_10 && romper->position.vy <= collResult.groundHeight)
+            if (romper->model.controlState != RomperControl_10 && romper->position.vy <= collResult.collision.groundHeight)
             {
                 romperProps.flags &= ~RomperFlag_10;
             }
@@ -1203,7 +1203,7 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
             {
                 if (romper->model.controlState == RomperControl_10)
                 {
-                    romper->position.vy += collResult.offset_0.vy;
+                    romper->position.vy += collResult.offset.vy;
                     if (g_SysWork.playerWork.player.position.vy < romper->position.vy)
                     {
                         romper->position.vy = g_SysWork.playerWork.player.position.vy;
@@ -1214,28 +1214,28 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
                 {
                     romper->position.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.15f));
                     romper->fallSpeed    = Q12(0.0f);
-                    if (collResult.groundHeight >= romper->position.vy)
+                    if (collResult.collision.groundHeight >= romper->position.vy)
                     {
-                        romper->position.vy = collResult.groundHeight;
+                        romper->position.vy = collResult.collision.groundHeight;
                     }
                 }
             }
             else
             {
-                romper->position.vy += collResult.offset_0.vy;
-                if (collResult.groundHeight < romper->position.vy)
+                romper->position.vy += collResult.offset.vy;
+                if (collResult.collision.groundHeight < romper->position.vy)
                 {
-                    romper->position.vy = collResult.groundHeight;
+                    romper->position.vy = collResult.collision.groundHeight;
                     romper->fallSpeed   = Q12(0.0f);
                 }
             }
         }
         else
         {
-            romper->position.vy += collResult.offset_0.vy;
-            if (collResult.groundHeight < romper->position.vy)
+            romper->position.vy += collResult.offset.vy;
+            if (collResult.collision.groundHeight < romper->position.vy)
             {
-                romper->position.vy = collResult.groundHeight;
+                romper->position.vy = collResult.collision.groundHeight;
                 romper->fallSpeed   = Q12(0.0f);
             }
         }

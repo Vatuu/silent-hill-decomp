@@ -29,8 +29,8 @@ typedef enum _CollisionType
 typedef struct _Collision
 {
     /* 0x0 */ q19_12 groundHeight;
-    /* 0x4 */ q3_12  field_4;    // X
-    /* 0x6 */ q3_12  field_6;    // Z
+    /* 0x4 */ q3_12  field_4;    // X } Causes some sort of slowdown.
+    /* 0x6 */ q3_12  field_6;    // Z }
     /* 0x8 */ s8     groundType; /** `e_GroundType` */
     // 3 bytes of padding.
 } s_Collision;
@@ -123,17 +123,18 @@ STATIC_ASSERT_SIZEOF(s_CollisionState_CC, 56);
 typedef struct
 {
     /* 0x0  */ s32        collisionState; /** `e_CharaCollisionState` */
-    /* 0x4  */ bool       field_4;
-    /* 0x8  */ q19_12     distance_8;
-    /* 0xC  */ SVECTOR    offset_C; // Q23.8
-    /* 0x14 */ DVECTOR_XZ direction_14;
-    /* 0x18 */ q23_8      positionX_18;
-    /* 0x1C */ q23_8      positionZ_1C;
-    /* 0x20 */ q23_8      newPositionX_20;
-    /* 0x24 */ q23_8      newPositionZ_24;
-    /* 0x28 */ q7_8       field_28; // Radius.
-    /* 0x2A */ q7_8       field_2A; // Top.
-    /* 0x2C */ q7_8       field_2C; // Bottom.
+    /* 0x4  */ bool       field_4; // Flag set when the character collisions being check is any of the ones being
+                                   // in the of `Collision_CharaCollisionSetup`.
+    /* 0x8  */ q19_12     distance_8; // probably inaccurate name.
+    /* 0xC  */ SVECTOR    offset; // Q23.8
+    /* 0x14 */ DVECTOR_XZ direction;
+    /* 0x18 */ q23_8      positionX;    // } This names are inaccurate. 
+    /* 0x1C */ q23_8      positionZ;    // }  
+    /* 0x20 */ q23_8      newPositionX; // }  
+    /* 0x24 */ q23_8      newPositionZ; // }  
+    /* 0x28 */ q7_8       radius;
+    /* 0x2A */ q7_8       topPos;
+    /* 0x2C */ q7_8       bottomPos;
 } s_func_8006ABC0;
 
 typedef struct
@@ -163,8 +164,8 @@ typedef struct _CollisionState
     q23_8              field_7C; // Related to ground height?
     s32                field_80; // X
     s32                field_84; // Z
-    s32                field_88; // X
-    s32                field_8C; // Z
+    s32                field_88; // X | Q12?
+    s32                field_8C; // Z | Q12?
     s32                field_90; // `bool`?
     s32                groundType; /** `e_GroundType` */
     union
@@ -280,12 +281,9 @@ typedef struct _RayTrace
 
 typedef struct _CollisionResult
 {
-    /* 0x0  */ VECTOR3 offset_0; /** Q19.12 */
-    /* 0xC  */ q19_12  groundHeight;
-    /* 0x10 */ s16     field_10;
-    /* 0x12 */ s16     field_12;
-    /* 0x14 */ s8      groundType; /** `e_GroundType` */
-    /* 0x18 */ q19_12  field_18;
+    /* 0x0  */ VECTOR3     offset; /** Q19.12 */
+    /* 0xC  */ s_Collision collision;
+    /* 0x18 */ q19_12      field_18; // Height related to a trigger point.
 } s_CollisionResult;
 
 // Related to collision?

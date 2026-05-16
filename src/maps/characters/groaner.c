@@ -1125,7 +1125,7 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
     groanerProps.field_F2 = Q12(0.0f);
     groanerProps.field_F0 = Q12(0.0f);
 
-    if (groaner->position.vy == collResult.groundHeight)
+    if (groaner->position.vy == collResult.collision.groundHeight)
     {
         groanerProps.flags.val16[0] &= ~GroanerFlag_Airborne;
     }

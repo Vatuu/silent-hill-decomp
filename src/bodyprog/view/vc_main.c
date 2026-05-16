@@ -2928,8 +2928,8 @@ q19_12 Vc_VectorMagnitudeCalc(q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80085B
     q19_12 mag;
     s32    shift;
 
-    mag   = MAX(MAX(ABS(posX), ABS(posY)), ABS(posZ));
-    shift = Math_MagnitudeShiftGet(mag);
+    mag      = MAX(MAX(ABS(posX), ABS(posY)), ABS(posZ));
+    shift    = Math_MagnitudeShiftGet(mag);
     posX   >>= shift;
     posY   >>= shift;
     posZ   >>= shift;

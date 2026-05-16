@@ -67,8 +67,10 @@ typedef struct _IpdCollisionData
     /* 0x14   */ s_IpdCollisionData_14* ptr_14;
     /* 0x18   */ s_IpdCollisionData_18* ptr_18;
     /* 0x1C   */ q7_8                   field_1C;
-    /* 0x1E   */ u8                     field_1E; // } Used as multipliers for `field_1C` in `func_8006B004`.
-    /* 0x1F   */ u8                     field_1F; // }
+    /* 0x1E   */ u8                     field_1E; // Used as multipliers for `field_1C` in `func_8006B004`.
+                                                  // Modify this may cause severe slowdowns.
+                                                  // Probably some sort of index.
+    /* 0x1F   */ u8                     field_1F;
     /* 0x20   */ s_IpdCollisionData_20* ptr_20;
     /* 0x24   */ u16                    field_24; // `field_24/``field_26` defined in ipd2obj but haven't seen used yet, might be size of `ptr_28`/`ptr_2C`.
     /* 0x26   */ u16                    field_26;

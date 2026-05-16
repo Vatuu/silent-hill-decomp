@@ -777,8 +777,8 @@ void sharedFunc_800D140C_1_s00(s_SubCharacter* larvalStalker, GsCOORDINATE2* bon
 
     if (larvalStalker->moveSpeed > Q12(0.0f))
     {
-        if (sp18.offset_0.vx == Q12(0.0f) &&
-            sp18.offset_0.vz == Q12(0.0f))
+        if (sp18.offset.vx == Q12(0.0f) &&
+            sp18.offset.vz == Q12(0.0f))
         {
             larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(larvalStalker,
                                                                           Q12(1.0f),

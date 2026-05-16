@@ -2587,9 +2587,10 @@ void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDe
 bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone);
 
 /** Translates something. Unsure on 3rd param's name. */
-q19_12 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 dist, q19_12 offsetY);
+q19_12 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 radius, q19_12 offsetY);
 
-void func_8006F8FC(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s_TriggerZone* zone);
+/** @brief Get local position of a point in a trigger zone. */
+void Collisions_PointTriggerPosGet(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s_TriggerZone* zone);
 
 q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle);
 
