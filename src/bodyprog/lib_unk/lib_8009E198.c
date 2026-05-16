@@ -50,7 +50,39 @@ s_SysWork_2510 D_800B142C = {
     .func_C  = func_8009E9D0,
 };
 
-INCLUDE_ASM("bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E198);
+s32 func_8009E198(s_SysWork_2514* arg0, s32 arg1) // 0x8009E198
+{
+    register s32 ret __asm__("$2");
+    register s_SysWork_2514_0 tmp __asm__("$3");
+    register s32 val __asm__("$6");
+    register s32 masked __asm__("$4");
+
+    val = arg1;
+    ret = arg0 != NULL;
+    if (ret == 0)
+    {
+        return ret;
+    }
+
+    tmp.padPort_0_0 = 0;
+    tmp.field_0_8 = 0x80;
+    tmp.field_0_16 = 1;
+    tmp.field_0_17 = 1;
+    tmp.field_0_18 = 1;
+    tmp.field_0_19 = 0;
+    tmp.field_0_22 = 0;
+    tmp.field_0_23 = 0;
+    tmp.field_0_24 = 0;
+    masked = val & 0x13;
+    tmp.padPort_0_0 = masked;
+    arg0->actuatorData_4 = 0;
+    *(s32*)&arg0->field_8 = 0;
+    arg0->field_C = NULL;
+    arg0->field_10 = NULL;
+    arg0->field_0 = tmp;
+
+    return ret;
+}
 
 s32 func_8009E230(s_SysWork_2514* arg0) // 0x8009E230
 {
