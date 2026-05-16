@@ -713,9 +713,9 @@ void Ipd_ActiveChunksClear(s_MapTerrain* terrain, s32 arg1) // 0x80042300
             }
         }
 
-        curChunk->queueIdx     = NO_VALUE;
-        curChunk->paddedDistanceToEdge1    = INT_MAX;
-        curChunk->outsideCount = 0;
+        curChunk->queueIdx              = NO_VALUE;
+        curChunk->paddedDistanceToEdge1 = INT_MAX;
+        curChunk->outsideCount          = 0;
 
         if (i < arg1)
         {

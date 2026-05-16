@@ -138,7 +138,7 @@ typedef struct _VC_WORK
     /* 0x10C */ q3_12                     cam_tgt_mv_ang_y;                          /** Target Y angles. */
                 // 2 bytes of padding.
     /* 0x110 */ q19_12                    cam_tgt_spd;                               /** Target speed. */
-    /* 0x114 */ VECTOR3                   chara_pos;                                 /** Locked-on character position. */
+    /* 0x114 */ VECTOR3                   chara_pos;                                 /** Q19.12 | Locked-on character position. */
     /* 0x120 */ q19_12                    chara_bottom_y;                            /** Locked-on character bottom height. */
     /* 0x124 */ q19_12                    chara_top_y;                               /** Locked-on character top height. */
     /* 0x128 */ q19_12                    chara_center_y;                            /** Locked-on character center height. */

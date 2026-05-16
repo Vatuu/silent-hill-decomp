@@ -2260,11 +2260,13 @@ void Gfx_DebugStringPositionSet(s16 unused, s16 posX, s16 posY);
  */
 q3_12 Math_AngleNormalizeSigned(q3_12 angle);
 
+/** @unused */
 bool func_8005BF58(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9);
 
+/** @unused */
 s32 func_8005C1CC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 
-s32 func_8005C7B0(s32 arg0);
+q19_12 func_8005C7B0(q19_12 angle);
 
 void func_800625F4(VECTOR3* arg0, q3_12 angle, s32 arg2, s32 arg3);
 
@@ -2294,8 +2296,10 @@ void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2);
 
 bool func_80064FC0(POLY_FT4** polys, s32 idx);
 
+/** @unused */
 void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3);
 
+/** @unused */
 void func_80065B94(VECTOR3* arg0, s16 arg1);
 
 void func_80066184(void);

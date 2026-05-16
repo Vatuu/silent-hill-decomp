@@ -78,7 +78,7 @@ typedef enum _MapIdx
 } e_MapIdx;
 
 /** @brief Used as index into `MAP_INFOS` array.
- * TODO: Add descriptions for which areas are included in each type?
+ * TODO: Add descriptions for which areas are included in each type.
 */
 typedef enum _MapType
 {
@@ -89,7 +89,7 @@ typedef enum _MapType
     MapType_SPU = 4,
     MapType_RSR = 5,
     MapType_RSU = 6,
-    MapType_APR = 7, /** @unused */
+    MapType_APR = 7,  /** @unused */
     MapType_APU = 8,
     MapType_ER  = 9,
     MapType_ER2 = 10,
@@ -102,6 +102,7 @@ typedef enum _MapType
     MapType_Count
 } e_MapType;
 
+/** @brief Speed zone types for player movement speed modulation. */
 typedef enum _SpeedZoneType
 {
     SpeedZoneType_Slow   = 0,
