@@ -5,6 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/events/map_msg.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
@@ -31,7 +32,7 @@ s8             g_MapMsg_SelectCancelIdx;
 // The normal funcs available are also used in JP, so can't be renamed.
 // For now override `Gfx_StringSetColor` calls in this file until those JP funcs get figured out.
 #if VERSION_REGION_IS(NTSCJ)
-#define Gfx_StringSetColor Gfx_StringSetColor_JP
+    #define Gfx_StringSetColor Gfx_StringSetColor_JP
 #endif
 
 s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8

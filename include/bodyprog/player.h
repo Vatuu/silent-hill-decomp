@@ -350,6 +350,15 @@ typedef struct _800AFBF4
 } s_800AFBF4;
 STATIC_ASSERT_SIZEOF(s_800AFBF4, 12);
 
+// Used in player lower body state handling.
+typedef struct
+{
+    /* 0x0  */ u8  unk_0;
+    /* 0x1  */ u8  groundType; /** `e_GroundType` */
+    /* 0x2  */ u8  unk_2[18];
+    /* 0x14 */ q19_12 field_14; // Related to hit distance
+} s_800C45C8;
+
 // ========
 // GLOBALS
 // ========

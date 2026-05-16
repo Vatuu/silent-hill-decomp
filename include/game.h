@@ -217,61 +217,6 @@ typedef enum _ScreenFadeState
     ScreenFadeState_FadeInSteps     = 7
 } e_ScreenFadeState;
 
-/** @brief Map message indices.
- *
- * @note Each map has its own messages, with the first 15 hardcoded to be the same.
- */
-typedef enum _MapMsgIdx
-{
-    MapMsgIdx_Yes               = 0,
-    MapMsgIdx_No                = 1,
-    MapMsgIdx_SaveGame          = 2, // "Someday, someone may experience..."
-    MapMsgIdx_NoMap             = 3,
-    MapMsgIdx_TooDarkForMap     = 4,
-    MapMsgIdx_FirstAidSelect    = 5,
-    MapMsgIdx_HealthDrinkSelect = 6,
-    MapMsgIdx_AmpouleSelect     = 7,
-    MapMsgIdx_HandgunAmmoSelect = 8,
-    MapMsgIdx_RifleAmmoSelect   = 9,
-    MapMsgIdx_ShotgunAmmoSelect = 10,
-    MapMsgIdx_DoorJammed        = 11,
-    MapMsgIdx_DoorLocked        = 12,
-    MapMsgIdx_DoorUnlocked      = 13,
-    MapMsgIdx_NowMaking         = 14 // @unused?
-} e_MapMsgIdx;
-
-typedef enum _MapMsgCode
-{
-    MapMsgCode_None        = 0,
-    MapMsgCode_Select2     = 2,
-    MapMsgCode_Select3     = 3,
-    MapMsgCode_Select4     = 4,
-    MapMsgCode_DisplayAll  = 20,
-    MapMsgCode_SetByT      = 88,
-    MapMsgCode_AlignCenter = 99
-} e_MapMsgCode;
-
-/** @brief Map message states.
- *
- * Return states used by `MapMsg_Draw`.
- */
-typedef enum _MapMsgState
-{
-    MapMsgState_Finish       = NO_VALUE, /** Initial setup complete, cutscene timer complete, or input to continue from user received. */
-    MapMsgState_Idle         = 0,        /** Continue displaying message. */
-    MapMsgState_SelectEntry0 = 1,        /** First entry selected in selection dialog. */
-    MapMsgState_SelectEntry1 = 2,        /** Second entry selected in selection dialog. */
-    MapMsgState_SelectEntry2 = 3         /** Third entry selected in selection dialog. */
-} e_MapMsgState;
-
-typedef enum _MapMsgAudioLoadBlock
-{
-    MapMsgAudioLoadBlock_None = 0, // TODO: Some code checks only for bit 0, so it should mean something.
-    MapMsgAudioLoadBlock_Unk1 = 1,
-    MapMsgAudioLoadBlock_J2   = 3  // `J2` map messages set this, causing voice audio to not load.
-                                   // `J2` cutscenes use single audio file for all lines (e.g. video tape cutscene).
-} e_MapMsgAudioLoadBlock;
-
 /** @brief Paper map indices. Used for the navigation map screen. */
 typedef enum _PaperMapIdx
 {
@@ -392,57 +337,6 @@ typedef enum _AttackInputType
     AttackInputType_Hold     = 1,
     AttackInputType_Multitap = 2
 } e_AttackInputType;
-
-/** @brief Equipped weapon IDs. Derivative of `e_InvItemId`.
- *
- * TODO: Maybe just "Weapon ID", "equipable item ID", "[something else] item ID"?
- */
-typedef enum _EquippedWeaponId
-{
-    EquippedWeaponId_KitchenKnife   = 0,
-    EquippedWeaponId_SteelPipe      = 1,
-    EquippedWeaponId_RockDrill      = 2,
-    EquippedWeaponId_Unk3           = 3,
-    EquippedWeaponId_Hammer         = 4,
-    EquippedWeaponId_Chainsaw       = 5,
-    EquippedWeaponId_Katana         = 6,
-    EquippedWeaponId_Axe            = 7,
-    EquippedWeaponId_Kick           = 8,
-    EquippedWeaponId_Stomp          = 9,
-
-    EquippedWeaponId_Unk31          = 31, // Larval Stalker attack.
-    EquippedWeaponId_Handgun        = 32,
-    EquippedWeaponId_HuntingRifle   = 33,
-    EquippedWeaponId_Shotgun        = 34,
-    EquippedWeaponId_HyperBlaster   = 35,
-
-    EquippedWeaponId_Unk37          = 37, // Split Head attack.
-
-    EquippedWeaponId_Unk44          = 44, // } HangedScratcher attack.
-    EquippedWeaponId_Unk45          = 45, // }
-
-    EquippedWeaponId_Unk48          = 48, // } Stalker attack.
-    EquippedWeaponId_Unk49          = 49, // }
-
-    EquippedWeaponId_Unk56          = 56, // Puppet Nurse attack.
-
-    EquippedWeaponId_Unk59          = 59, // Float Stinger attack.
-
-    EquippedWeaponId_Unk61          = 61, // Twinfeeler attack.
-
-    EquippedWeaponId_Unk63          = 63, // Cybil or Monster Cybil attack.
-
-    EquippedWeaponId_HandgunBullets = 64, // Monster Cybil attack?
-    EquippedWeaponId_RifleShells    = 65, // Monster Cybil attack?
-    EquippedWeaponId_ShotgunShells  = 66, // Monster Cybil attack?
-
-    EquippedWeaponId_Unk69          = 69, // Bloodsucker attack.
-    EquippedWeaponId_Unk70          = 70, // Kaufmann attack on Dahlia?
-
-    EquippedWeaponId_Flashlight     = 96,
-    EquippedWeaponId_PocketRadio    = 97,
-    EquippedWeaponId_GasolineTank   = 98
-} e_EquippedWeaponId;
 
 /** @brief Game difficulties. */
 typedef enum _GameDifficulty

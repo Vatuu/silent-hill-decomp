@@ -171,15 +171,56 @@ typedef enum _CommonPickupItemId
     CommonPickupItemId_ShotgunShells  = 5
 } e_CommonPickupItemId;
 
-/** @brief Inventory item entry. */
-typedef struct _InventoryItem
+/** @brief Equipped weapon IDs. Derivative of `e_InvItemId`.
+ *
+ * TODO: Maybe just "Weapon ID", "equipable item ID", "[something else] item ID"?
+ */
+typedef enum _EquippedWeaponId
 {
-    u8 id_0;      /** `InvItemId` */
-    u8 count_1;
-    u8 command_2; /** `InvCmdId` */
-    u8 field_3;   // Some sort of index?
-} s_InventoryItem;
-STATIC_ASSERT_SIZEOF(s_InventoryItem, 4);
+    EquippedWeaponId_KitchenKnife   = 0,
+    EquippedWeaponId_SteelPipe      = 1,
+    EquippedWeaponId_RockDrill      = 2,
+    EquippedWeaponId_Unk3           = 3,
+    EquippedWeaponId_Hammer         = 4,
+    EquippedWeaponId_Chainsaw       = 5,
+    EquippedWeaponId_Katana         = 6,
+    EquippedWeaponId_Axe            = 7,
+    EquippedWeaponId_Kick           = 8,
+    EquippedWeaponId_Stomp          = 9,
+
+    EquippedWeaponId_Unk31          = 31, // Larval Stalker attack.
+    EquippedWeaponId_Handgun        = 32,
+    EquippedWeaponId_HuntingRifle   = 33,
+    EquippedWeaponId_Shotgun        = 34,
+    EquippedWeaponId_HyperBlaster   = 35,
+
+    EquippedWeaponId_Unk37          = 37, // Split Head attack.
+
+    EquippedWeaponId_Unk44          = 44, // } HangedScratcher attack.
+    EquippedWeaponId_Unk45          = 45, // }
+
+    EquippedWeaponId_Unk48          = 48, // } Stalker attack.
+    EquippedWeaponId_Unk49          = 49, // }
+
+    EquippedWeaponId_Unk56          = 56, // Puppet Nurse attack.
+
+    EquippedWeaponId_Unk59          = 59, // Float Stinger attack.
+
+    EquippedWeaponId_Unk61          = 61, // Twinfeeler attack.
+
+    EquippedWeaponId_Unk63          = 63, // Cybil or Monster Cybil attack.
+
+    EquippedWeaponId_HandgunBullets = 64, // Monster Cybil attack?
+    EquippedWeaponId_RifleShells    = 65, // Monster Cybil attack?
+    EquippedWeaponId_ShotgunShells  = 66, // Monster Cybil attack?
+
+    EquippedWeaponId_Unk69          = 69, // Bloodsucker attack.
+    EquippedWeaponId_Unk70          = 70, // Kaufmann attack on Dahlia?
+
+    EquippedWeaponId_Flashlight     = 96,
+    EquippedWeaponId_PocketRadio    = 97,
+    EquippedWeaponId_GasolineTank   = 98
+} e_EquippedWeaponId;
 
 /** @brief Special inventory item toggle flags. */
 typedef enum _ItemToggleFlags
@@ -187,6 +228,16 @@ typedef enum _ItemToggleFlags
     ItemToggleFlag_RadioOn       = 1 << 0,
     ItemToggleFlag_FlashlightOff = 1 << 1
 } e_ItemToggleFlags;
+
+/** @brief Inventory item entry. */
+typedef struct _InventoryItem
+{
+    /* 0x0 */ u8 id_0;      /** `InvItemId` */
+    /* 0x1 */ u8 count_1;
+    /* 0x2 */ u8 command_2; /** `InvCmdId` */
+    /* 0x3 */ u8 field_3;   // Some sort of index?
+} s_InventoryItem;
+STATIC_ASSERT_SIZEOF(s_InventoryItem, 4);
 
 /** @brief Gets the `e_InvItemGroup` for an `e_InvItemId`.
  * Divides the item ID by 32 (`INV_ITEM_GROUP_SIZE`), using a bitwise shift to match.

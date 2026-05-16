@@ -5,6 +5,7 @@
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/chara/chara_model.h"
 #include "bodyprog/chara/spawn.h"
+#include "bodyprog/events/map_msg.h"
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/formats/lm.h"
 #include "bodyprog/formats/model.h"
@@ -190,15 +191,6 @@ typedef struct _s_8002AC04
     } field_4;
 } s_8002AC04;
 STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
-
-// Used in player lower body state handling.
-typedef struct
-{
-    /* 0x0  */ u8  unk_0;
-    /* 0x1  */ u8  groundType; /** `e_GroundType` */
-    /* 0x2  */ u8  unk_2[18];
-    /* 0x14 */ q19_12 field_14; // Related to hit distance
-} s_800C45C8;
 
 typedef struct
 {
@@ -409,12 +401,6 @@ typedef struct
     s32        field_50;
     s32        field_54;
 } s_800AFE24; // Size: 85
-
-typedef struct _MapMsgSelect
-{
-    /* 0x0 */ s8 maxIdx;
-    /* 0x1 */ u8 selectedEntryIdx;
-} s_MapMsgSelect;
 
 typedef struct _MapEffectsPresetIdxs
 {
@@ -1104,12 +1090,6 @@ extern u16 D_800BCCB2;
 extern s32 g_Screen_FadeStatus;
 
 extern s32 D_800BCD5C;
-
-extern s_MapMsgSelect g_MapMsg_Select;
-
-extern u8 g_MapMsg_AudioLoadBlock;
-
-extern s8 g_MapMsg_SelectCancelIdx;
 
 extern s32 D_800BCD84;
 
@@ -2703,17 +2683,6 @@ void SysWork_SavegameReadPlayer(void);
 
 /** @brief Handles a warm game reboot. */
 void Game_WarmBoot(void);
-
-s32 Gfx_MapMsg_Draw(s32 mapMsgIdx);
-
-s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1);
-
-/** @unused */
-void func_80036E48(u16* arg0, s16* arg1);
-
-void func_8003708C(s16* ptr0, u16* ptr1);
-
-void func_80037124(void);
 
 s32 func_800382B0(s32 arg0);
 
