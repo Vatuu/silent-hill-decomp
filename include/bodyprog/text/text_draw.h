@@ -1,10 +1,7 @@
 #ifndef _BODYPROG_TEXT_TEXTDRAW_H
 #define _BODYPROG_TEXT_TEXTDRAW_H
 
-/** @note Likely the true name for this system is `font` as both
- * SH2 and SH4 symbols indicate that the way TS referred to strings
- * or text was using `font`.
- */
+/** @note Likely the original name for this subsystem is `font` as indicated by SH2 and SH4 symbols. */
 
 #define MAP_MSG_CODE_MARKER        '~' /** Message code start. */
 #define MAP_MSG_CODE_COLOR         'C' /** Set color. */
@@ -24,6 +21,8 @@
 #define FONT_12X16_SPACE_SIZE         6
 #define FONT_12X16_LINE_COUNT_MAX     9
 #define FONT_12X16_ATLAS_COLUMN_COUNT (FONT_12X16_GLYPH_COUNT / 4)
+
+#define GLYPH_TABLE_ASCII_OFFSET '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
 
 /** @brief String color IDs for strings displayed in screen space.
  * Used as indices into `STRING_COLORS`.

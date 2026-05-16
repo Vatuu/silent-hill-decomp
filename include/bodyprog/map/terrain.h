@@ -22,8 +22,8 @@ typedef struct _MapChunk
     /* 0x4  */ s32          queueIdx;
     /* 0x8  */ s16          cellX;
     /* 0xA  */ s16          cellZ;
-    /* 0xC  */ q19_12       distance0;
-    /* 0x10 */ q19_12       distance1;
+    /* 0xC  */ q19_12       paddedDistanceToEdge0;
+    /* 0x10 */ q19_12       paddedDistanceToEdge1;
     /* 0x14 */ u8           materialCount;
     /* 0x15 */ s8           __pad_15[3];
     /* 0x18 */ s32          outsideCount;

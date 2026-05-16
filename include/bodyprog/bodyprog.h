@@ -1426,7 +1426,7 @@ u32 IpdHeader_LoadStateGet(s_Chunk* chunk);
 bool IpdHeader_IsLoaded(s32 ipdIdx);
 
 /** Starts the process of loading map geometry and assigns textures when the game is set in a loading screen mode? */
-void Ipd_ChunkInit(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
+void Ipd_ChunkInit(q19_12 curPosX, q19_12 curPosZ, q19_12 projPosX, q19_12 projPosZ);
 
 /** @brief Computes the distance from an XZ position to the edge of an XZ chunk cell boundary.
  * For exteriors, the cell boundary is expanded by `Q12(1.0f)`.

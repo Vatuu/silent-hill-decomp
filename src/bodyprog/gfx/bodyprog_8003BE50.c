@@ -236,30 +236,21 @@ void WorldGfx_IpdSamplePointReset(void) // 0x8003C3A0
 
 void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
 {
-    VECTOR3         samplePos; // Draw distance?
-                               // Setting as `pos0.vz = Q12(200.0f)` makes the world not draw. In the void, the player becomes immovable.
-                               //
-                               // Most of the time, X and Z share the same value as
-                               // the player player position or a position slightly ahead computed from the heading angle.
-                               //
-                               // In Old Silent Hill (after Cafe 5to2) while standing still, this value is
-                               // the same as `g_SysWork.playerWork.player.position`.
-    VECTOR3         pos1; // Draw distance?
-                          // If the conditional `if (g_WorldEnvWork.isFogEnabled)` is reversed
-                          // to run the `else` block, when fog is enabled, the draw distance
-                          // is slightly reduced.
-                          //
-                          // Similarly to `pos0`, when fog is disabled, it uses the player position.
-                          // Otherwise it's based the camera position, using its rotation to then make some extra calculations.
-    SVECTOR         rot;  // Q19.12
-    s32             temp_a1;
-    s32             temp_a2;
+    #define HALF_CELL_SIZE Q12(2.5f) // TODO: 5x5 subcell thing, check this.
+    #define PROJ_DIST_NEAR Q12(6.0f)
+    #define PROJ_DIST_FAR  Q12(14.0f)
+
+    VECTOR3         samplePos;
+    VECTOR3         projPos;
+    SVECTOR         camRot;  // Q19.12
+    s32             alignedPosX;
+    s32             alignedPosZ;
     q19_12          moveDist;
-    s32             temp_s0_2;
-    s32             temp_v1_4;
-    s32             var_a0;
-    s32             var_a1;
-    s32             var_s1;
+    q19_12          projOffsetX;
+    q19_12          projOffsetZ;
+    q19_12          stepsX;
+    q19_12          stepsZ;
+    q19_12          projDist;
     u8              mapFlags;
     s_SubCharacter* player;
 
@@ -290,68 +281,76 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
 
     if (g_WorldEnvWork.isFogEnabled)
     {
-        vwGetViewPosition(&pos1);
-        vwGetViewAngle(&rot);
+        vwGetViewPosition(&projPos);
+        vwGetViewAngle(&camRot);
 
+        // Compute base projected distance based on map visibility.
         mapFlags = g_WorldGfxWork.mapInfo->flags;
         if (!(mapFlags & MapFlag_Interior) || !(mapFlags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
         {
-            var_s1 = Q12_MULT(Math_Cos(rot.vx), Q12(9.0f));
+            projDist = Q12_MULT(Math_Cos(camRot.vx), Q12(9.0f));
         }
         else
         {
-            var_s1 = Q12(0.0f);
+            projDist = Q12(0.0f);
         }
 
-        temp_s0_2 = Q12_MULT(var_s1, Math_Sin(rot.vy));
-        temp_s0_2 = CLAMP(temp_s0_2, Q12(-6.0f), Q12(6.0f));
+        // Compute projected position.
+        projOffsetX = Q12_MULT(projDist, Math_Sin(camRot.vy));
+        projOffsetX = CLAMP(projOffsetX, -PROJ_DIST_NEAR, PROJ_DIST_NEAR);
+        projOffsetZ = Q12_MULT(projDist, Math_Cos(camRot.vy));
+        projOffsetZ = CLAMP(projOffsetZ, -PROJ_DIST_NEAR, PROJ_DIST_NEAR);
+        projPos.vx += projOffsetX;
+        projPos.vz += projOffsetZ;
 
-        temp_v1_4 = Q12_MULT(var_s1, Math_Cos(rot.vy));
-        temp_v1_4 = CLAMP(temp_v1_4, Q12(-6.0f), Q12(6.0f));
-
-        pos1.vx += temp_s0_2;
-        pos1.vz += temp_v1_4;
-
-        if (Vc_VectorMagnitudeCalc(pos1.vx - player->position.vx, Q12(0.0f), pos1.vz - player->position.vz) > Q12(16.0f))
+        // Limit projection if too far away.
+        if (Vc_VectorMagnitudeCalc(projPos.vx - player->position.vx,
+                                   Q12(0.0f),
+                                   projPos.vz - player->position.vz) > Q12(16.0f))
         {
-            var_s1  = Q12(14.0f);
-            pos1.vx = player->position.vx + Q12_MULT(Math_Sin(rot.vy), var_s1);
-            pos1.vz = player->position.vz + Q12_MULT(Math_Cos(rot.vy), var_s1);
+            projDist   = PROJ_DIST_FAR;
+            projPos.vx = player->position.vx + Q12_MULT(Math_Sin(camRot.vy), projDist);
+            projPos.vz = player->position.vz + Q12_MULT(Math_Cos(camRot.vy), projDist);
         }
     }
     else
     {
-        pos1     = player->position;
-        pos1.vx += FP_FROM(Q12(Math_Sin(player->rotation.vy)), Q12_SHIFT);
-        pos1.vz += FP_FROM(Q12(Math_Cos(player->rotation.vy)), Q12_SHIFT);
+        projPos     = player->position;
+        projPos.vx += FP_FROM(Q12(Math_Sin(player->rotation.vy)), Q12_SHIFT);
+        projPos.vz += FP_FROM(Q12(Math_Cos(player->rotation.vy)), Q12_SHIFT);
     }
 
     mapFlags = g_WorldGfxWork.mapInfo->flags;
     if ((mapFlags & MapFlag_Interior) && (mapFlags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
     {
-        var_a1 = player->position.vx / Q12(2.5f);
+        // Compute aligned X position.
+        stepsX = player->position.vx / HALF_CELL_SIZE;
         if (player->position.vx < Q12(0.0f))
         {
-            var_a1--;
+            stepsX--;
         }
 
-        var_a0  = player->position.vz / Q12(2.5f);
-        temp_a1 = var_a1 * Q12(2.5f);
-
+        // Compute aligned Z position.
+        stepsZ      = player->position.vz / HALF_CELL_SIZE;
+        alignedPosX = stepsX * HALF_CELL_SIZE;
         if (player->position.vz < Q12(0.0f))
         {
-            var_a0--;
+            stepsZ--;
         }
 
-        temp_a2 = var_a0 * Q12(2.5f);
+        alignedPosZ = stepsZ * HALF_CELL_SIZE;
 
-        samplePos.vx = CLAMP(samplePos.vx, temp_a1 + 1, temp_a1 + (Q12(2.5f) - 1));
-        samplePos.vz = CLAMP(samplePos.vz, temp_a2 + 1, temp_a2 + (Q12(2.5f) - 1));
-        pos1.vx = CLAMP(pos1.vx, temp_a1 + 1, temp_a1 + (Q12(2.5f) - 1));
-        pos1.vz = CLAMP(pos1.vz, temp_a2 + 1, temp_a2 + (Q12(2.5f) - 1));
+        samplePos.vx = CLAMP(samplePos.vx, alignedPosX + 1, alignedPosX + (HALF_CELL_SIZE - 1));
+        samplePos.vz = CLAMP(samplePos.vz, alignedPosZ + 1, alignedPosZ + (HALF_CELL_SIZE - 1));
+        projPos.vx   = CLAMP(projPos.vx,   alignedPosX + 1, alignedPosX + (HALF_CELL_SIZE - 1));
+        projPos.vz   = CLAMP(projPos.vz,   alignedPosZ + 1, alignedPosZ + (HALF_CELL_SIZE - 1));
     }
 
-    Ipd_ChunkInit(samplePos.vx, samplePos.vz, pos1.vx, pos1.vz);
+    Ipd_ChunkInit(samplePos.vx, samplePos.vz, projPos.vx, projPos.vz);
+
+    #undef HALF_CELL_SIZE
+    #undef PROJ_DIST_NEAR
+    #undef PROJ_DIST_FAR
 }
 
 bool Ipd_ChunkInitCheck(void) // 0x8003C850
