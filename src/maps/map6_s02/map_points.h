@@ -1,6 +1,6 @@
     {
         .positionX = Q12(61.6f),
-        .mapIdx_4_0 = 4,
+        .paperMapIdx = PaperMapIdx_ResortTown,
         .field_4_5 = 0,
         .loadingScreenId = 0,
         .field_4_12 = 0,
@@ -10,7 +10,7 @@
     },
     {
         .positionX = Q12(-107.0f),
-        .mapIdx_4_0 = 0,
+        .paperMapIdx = PaperMapIdx_OtherPlaces,
         .field_4_5 = 0,
         .loadingScreenId = 0,
         .field_4_12 = 0,
@@ -20,7 +20,7 @@
     },
     {
         .positionX = Q12(-20.0f),
-        .mapIdx_4_0 = 0,
+        .paperMapIdx = PaperMapIdx_OtherPlaces,
         .field_4_5 = 0,
         .loadingScreenId = 0,
         .field_4_12 = 0,
@@ -30,7 +30,7 @@
     },
     {
         .positionX = Q12(60.0f),
-        .mapIdx_4_0 = 0,
+        .paperMapIdx = PaperMapIdx_OtherPlaces,
         .field_4_5 = 0,
         .loadingScreenId = 0,
         .field_4_12 = 0,
@@ -40,7 +40,7 @@
     },
     {
         .positionX = Q12(-20.9f),
-        .mapIdx_4_0 = 0,
+        .paperMapIdx = PaperMapIdx_OtherPlaces,
         .field_4_5 = 0,
         .loadingScreenId = 0,
         .field_4_12 = 0,
@@ -50,7 +50,7 @@
     },
     {
         .positionX = Q12(-18.71f),
-        .mapIdx_4_0 = 0,
+        .paperMapIdx = PaperMapIdx_OtherPlaces,
         .field_4_5 = 0,
         .loadingScreenId = 0,
         .field_4_12 = 0,
@@ -60,7 +60,7 @@
     },
     {
         .positionX = Q12(-19.02f),
-        .mapIdx_4_0 = 0,
+        .paperMapIdx = PaperMapIdx_OtherPlaces,
         .field_4_5 = 0,
         .loadingScreenId = 0,
         .field_4_12 = 0,
@@ -70,7 +70,7 @@
     },
     {
         .positionX = Q12(-18.98f),
-        .mapIdx_4_0 = 0,
+        .paperMapIdx = PaperMapIdx_OtherPlaces,
         .field_4_5 = 0,
         .loadingScreenId = 0,
         .field_4_12 = 0,
@@ -80,7 +80,7 @@
     },
     {
         .positionX = Q12(60.0f),
-        .mapIdx_4_0 = 0,
+        .paperMapIdx = PaperMapIdx_OtherPlaces,
         .field_4_5 = 0,
         .loadingScreenId = 0,
         .field_4_12 = 0,

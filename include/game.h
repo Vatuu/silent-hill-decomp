@@ -298,7 +298,8 @@ typedef enum _PaperMapIdx
     PaperMapIdx_AltHospitalBF  = 20,
     PaperMapIdx_AltHospital1F  = 21,
     PaperMapIdx_AltHospital2F  = 22,
-    PaperMapIdx_AltHospital3F  = 23
+    PaperMapIdx_AltHospital3F  = 23,
+    PaperMapIdx_24             = 24
 } e_PaperMapIdx;
 
 /** @brief System flags. TODO: Give this a more specific name. */

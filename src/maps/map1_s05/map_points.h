@@ -1,6 +1,6 @@
     {
         .positionX = Q12(19.72f),
-        .mapIdx_4_0 = 0,
+        .paperMapIdx = PaperMapIdx_OtherPlaces,
         .field_4_5 = 0,
         .loadingScreenId = 0,
         .field_4_12 = 0,
@@ -10,7 +10,7 @@
     },
     {
         .positionX = Q12(22.0f),
-        .mapIdx_4_0 = 5,
+        .paperMapIdx = PaperMapIdx_FogSchoolBF,
         .field_4_5 = 0,
         .loadingScreenId = 0,
         .field_4_12 = 0,

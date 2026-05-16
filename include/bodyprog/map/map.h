@@ -329,7 +329,7 @@ typedef struct
 typedef struct _MapPoint2d
 {
     /* 0x0    */ q19_12 positionX;
-    /* 0x4+0  */ u32    mapIdx_4_0      : 5; /** `e_PaperMapIdx`? */
+    /* 0x4+0  */ u32    paperMapIdx     : 5; /** `e_PaperMapIdx` */
     /* 0x4+5  */ u32    field_4_5       : 4;
     /* 0x4+9  */ u32    loadingScreenId : 3; /** `e_LoadingScreenId` */
     /* 0x4+12 */ u32    field_4_12      : 4;
