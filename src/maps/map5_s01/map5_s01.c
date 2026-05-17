@@ -678,7 +678,6 @@ void func_800EC42C(void) // 0x800EC42C
 void Map_WorldObjectsInit(void) // 0x800ECB58
 {
     WorldObject_PlacementInit(&g_WorldObject0, "RSRMAP_H", -46.5f, 0.0f, 2.5f);
-
     WorldObject_Init(&g_WorldObject1, "FOOK_HID", 52.15f, -1.359f, -57.925f, 0.0f, 0.0f, 5.8f);
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)

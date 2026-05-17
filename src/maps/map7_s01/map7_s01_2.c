@@ -2036,12 +2036,8 @@ void Map_WorldObjectsInit(void) // 0x800DD368
     D_800E33A4 = 0;
 
     WorldObject_Init(&g_WorldObject_Diary, "DIARY_HI", -180.0f, 0.0f, -140.755f, 0.0f, 180.0f, 0.0f);
-    ;
-
     WorldObject_ModelNameSet(&g_WorldObject_SavePad, D_800A99E4[1]);
-
     WorldObject_PoseInit(&g_WorldObject_UnkPose0, -16.6226f, -1.2396f, -59.0691f, 0.0f, 105.21f, 0.0f);
-
     WorldObject_ModelNameSet(&g_WorldObject_KaigaR[0], "KAIGAR_H");
     WorldObject_ModelNameSet(&g_WorldObject_KaigaR[1], "KAIGAR2_");
 

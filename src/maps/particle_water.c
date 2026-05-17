@@ -7,9 +7,9 @@
 #include "main/rng.h"
 
 #if defined(MAP1_S02)
-#include "maps/map1/map1_s02.h" // For `sharedData_800DFB7C_0_s00` size.
+    #include "maps/map1/map1_s02.h" // For `sharedData_800DFB7C_0_s00` size.
 #elif defined(MAP1_S03)
-#include "maps/map1/map1_s03.h" // For `sharedData_800DFB7C_0_s00` size.
+    #include "maps/map1/map1_s03.h" // For `sharedData_800DFB7C_0_s00` size.
 #endif
 
 // Waterfall particle effect? Included in M1S02 and M1S03.
@@ -444,8 +444,8 @@ void sharedFunc_800CCE60_1_s02(void)
         DVECTOR         field_13C[16][2];
         s32             field_1BC[16][2];
         u8              field_23C[16][2];
-        s16             field_25C;
-        s16             field_25E;
+        q3_12           field_25C;
+        q3_12           field_25E;
         s16             field_260;
         s16             field_262;
         s16             field_264[2][2];

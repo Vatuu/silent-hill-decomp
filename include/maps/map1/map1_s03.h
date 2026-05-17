@@ -75,11 +75,11 @@ typedef struct
 {
     s32 vx_0;
     s32 vz_4;
-    u16 field_8;
+    q4_12 field_8; 
     s16 field_A;
-    s16 field_C;
-    s16 field_E;
-    s16 field_10;
+    q3_12 field_C;
+    q3_12 field_E;
+    q3_12 field_10;
     s16 field_12;
     u8  idx_14;
     u8  unk_15;

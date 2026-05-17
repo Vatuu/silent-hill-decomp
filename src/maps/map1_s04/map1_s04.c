@@ -237,6 +237,6 @@ void Map_WorldObjectsUpdate(void) // 0x800CCE38
 }
 
 const char* MAP_MESSAGES[] = {
-#include "maps/shared/map_msg_common.h"
+    #include "maps/shared/map_msg_common.h"
     /* 15 */ "\tNO_STAGE! ~E "
 };

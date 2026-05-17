@@ -3272,17 +3272,12 @@ void Map_WorldObjectsInit(void) // 0x800E3804
     D_800EBB94 = 0;
 
     WorldObject_Init(&g_WorldObject_Diary, "DIARY_HI", -180.0f, 0.0f, -140.755f, 0.0f, 180.0f, 0.0f);
-
     WorldObject_ModelNameSet(&g_WorldObject_SavePad, D_800A99E4[1]);
-
     WorldObject_PoseInit(&g_WorldObject_UnkPose0, -16.6226f, -1.2396f, -59.0691f, 0.0f, 105.21f, 0.0f);
     WorldObject_PoseInit(&g_WorldObject_UnkPose1, 58.9993f, -0.82f, -99.0521f, 0.0f, -86.1f, 0.0f);
-
     WorldObject_ModelNameSet(&g_WorldObject_KaigaR[0], "KAIGAR_H");
     WorldObject_ModelNameSet(&g_WorldObject_KaigaR[1], "KAIGAR2_");
-
     Math_Vector3Set(&g_WorldObject_UnkPos0, Q12(56.0f), Q12(-1.9f), Q12(-19.25f));
-
     WorldObject_ModelNameSet(&g_WorldObject_KaigaL[0], "KAIGAL_H");
     WorldObject_ModelNameSet(&g_WorldObject_KaigaL[1], "KAIGAL2_");
 

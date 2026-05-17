@@ -379,9 +379,20 @@ void func_800DABC4(void) // 0x800DABC4
     }
 }
 
-const VECTOR3 D_800CBAA4 = { 0xFFFF5800, 0xFFFFF800, 0xFFFF319A };
+// TODO: Unpack.
+const VECTOR3 D_800CBAA4 = {
+    0xFFFF5800,
+    0xFFFFF800,
+    0xFFFF319A
+};
 
-const VECTOR3 D_800CBAB0 = { 0xFFFF5CCD, 0x00000000, 0xFFFF2A67 };
+
+// TODO: Unpack.
+const VECTOR3 D_800CBAB0 = {
+    0xFFFF5CCD,
+    { 0, 0, 0 },
+    0xFFFF2A67
+};
 
 void func_800DAF18(void) // 0x800DAF18
 {
@@ -420,7 +431,7 @@ void func_800DAF18(void) // 0x800DAF18
             break;
 
         case 2:
-            MapMsg_DisplayAndHandleSelection(true, 0x28, 4, 3, 0, false);
+            MapMsg_DisplayAndHandleSelection(true, 40, 4, 3, 0, false);
             break;
 
         case 3:
@@ -431,91 +442,91 @@ void func_800DAF18(void) // 0x800DAF18
         case 4:
             SysWork_StateStepIncrementAfterFade(0, true, 2, 0, false);
 
-            sharedData_800E30C8_1_s02.field_0[0]  = -0xA333;
-            sharedData_800E30C8_1_s02.field_10[0] = -0x599;
-            sharedData_800E30C8_1_s02.field_18[0] = -0xD599;
-            sharedData_800E30C8_1_s02.field_28[0] = 0x733;
+            sharedData_800E30C8_1_s02.field_0[0]  = Q12(-10.2);
+            sharedData_800E30C8_1_s02.field_10[0] = Q12(-0.35f);
+            sharedData_800E30C8_1_s02.field_18[0] = Q12(-13.35f);
+            sharedData_800E30C8_1_s02.field_28[0] = Q12(0.45f);
             sharedData_800E30C8_1_s02.field_30[0] = 1;
-            sharedData_800E30C8_1_s02.field_3C[0] = 0x2E1;
-            sharedData_800E30C8_1_s02.field_44[0] = 0x400;
-            sharedData_800E30C8_1_s02.field_4C[0] = 0x1800;
-            sharedData_800E30C8_1_s02.field_5C[0] = 0x2E1;
-            sharedData_800E30C8_1_s02.field_64[0] = 0x400;
-            sharedData_800E30C8_1_s02.field_6c[0] = 0;
+            sharedData_800E30C8_1_s02.field_3C[0] = Q12(0.18f);
+            sharedData_800E30C8_1_s02.field_44[0] = Q12(0.25f);
+            sharedData_800E30C8_1_s02.field_4C[0] = Q12(1.5f);
+            sharedData_800E30C8_1_s02.field_5C[0] = Q12(0.18f);
+            sharedData_800E30C8_1_s02.field_64[0] = Q12(0.25f);
+            sharedData_800E30C8_1_s02.field_6c[0] = Q12(0.0f);
 
-            sharedData_800E30C8_1_s02.field_0[1]  = -0xA400;
-            sharedData_800E30C8_1_s02.field_10[1] = 0x199;
-            sharedData_800E30C8_1_s02.field_18[1] = -0xCFAE;
-            sharedData_800E30C8_1_s02.field_28[1] = 0x4EB8;
+            sharedData_800E30C8_1_s02.field_0[1]  = Q12(-10.25f);
+            sharedData_800E30C8_1_s02.field_10[1] = Q12(0.1f);
+            sharedData_800E30C8_1_s02.field_18[1] = Q12(-12.98f);
+            sharedData_800E30C8_1_s02.field_28[1] = Q12(4.92f);
             sharedData_800E30C8_1_s02.field_30[1] = 0;
-            sharedData_800E30C8_1_s02.field_34[1] = 0x800;
-            sharedData_800E30C8_1_s02.field_3C[1] = 0x4CC;
-            sharedData_800E30C8_1_s02.field_44[1] = 0x800;
-            sharedData_800E30C8_1_s02.field_4C[1] = 0x999;
-            sharedData_800E30C8_1_s02.field_5C[1] = 0x4CC;
-            sharedData_800E30C8_1_s02.field_64[1] = 0x800;
-            sharedData_800E30C8_1_s02.field_6c[1] = 0xCCC;
+            sharedData_800E30C8_1_s02.field_34[1] = Q12_ANGLE(180.0f);
+            sharedData_800E30C8_1_s02.field_3C[1] = Q12(0.3f);
+            sharedData_800E30C8_1_s02.field_44[1] = Q12(0.5f);
+            sharedData_800E30C8_1_s02.field_4C[1] = Q12(0.6f);
+            sharedData_800E30C8_1_s02.field_5C[1] = Q12(0.3f);
+            sharedData_800E30C8_1_s02.field_64[1] = Q12(0.5f);
+            sharedData_800E30C8_1_s02.field_6c[1] = Q12(0.8f);
 
-            D_800E3A40[0].vx_0     = -0xA333;
-            D_800E3A40[0].field_8  = 0x1EB;
-            D_800E3A40[0].field_C  = 0x147;
+            D_800E3A40[0].vx_0     = Q12(-10.2f);
+            D_800E3A40[0].field_8  = Q12(0.12f);
+            D_800E3A40[0].field_C  = Q12(0.08f);
             D_800E3A40[0].vz_4     = Q12(-13.35f);
             D_800E3A40[0].idx_14   = 2;
-            D_800E3A40[0].field_12 = 0x28;
-            D_800E3A40[0].field_E  = 0x400;
-            D_800E3A40[0].field_10 = 0x4CC;
+            D_800E3A40[0].field_12 = 40;
+            D_800E3A40[0].field_E  = Q12(0.25f);
+            D_800E3A40[0].field_10 = Q12(0.3f);
 
             D_800E3A40[1].vx_0     = Q12(-10.25f);
             D_800E3A40[1].vz_4     = Q12(-17.72f);
-            D_800E3A40[1].field_C  = 0xCC;
-            D_800E3A40[1].field_12 = 0x28;
+            D_800E3A40[1].field_C  = Q12(0.05f);
+            D_800E3A40[1].field_12 = 40;
 
             if (Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
             {
-                sharedData_800E30C8_1_s02.field_0[2]  = -0xA199;
-                sharedData_800E30C8_1_s02.field_10[2] = 0x214;
-                sharedData_800E30C8_1_s02.field_28[2] = 0x6D1E;
-                sharedData_800E30C8_1_s02.field_34[2] = 0xC00;
-                sharedData_800E30C8_1_s02.field_74    = 0x96;
+                sharedData_800E30C8_1_s02.field_0[2]  = Q12(-10.1f);
+                sharedData_800E30C8_1_s02.field_10[2] = Q12(0.13f);
+                sharedData_800E30C8_1_s02.field_28[2] = Q12(6.82f);
+                sharedData_800E30C8_1_s02.field_34[2] = Q12_ANGLE(270.0f);
+                sharedData_800E30C8_1_s02.field_74    = 150;
                 sharedData_800E30C8_1_s02.field_18[2] = Q12(-17.75f);
                 sharedData_800E30C8_1_s02.field_30[2] = 0;
-                sharedData_800E30C8_1_s02.field_3C[2] = 0x4CC;
-                sharedData_800E30C8_1_s02.field_44[2] = 0x800;
-                sharedData_800E30C8_1_s02.field_4C[2] = 0x999;
-                sharedData_800E30C8_1_s02.field_5C[2] = 0x4CC;
-                sharedData_800E30C8_1_s02.field_64[2] = 0x800;
-                sharedData_800E30C8_1_s02.field_6c[2] = 0xCCC;
+                sharedData_800E30C8_1_s02.field_3C[2] = Q12(0.3f);
+                sharedData_800E30C8_1_s02.field_44[2] = Q12(0.5f);
+                sharedData_800E30C8_1_s02.field_4C[2] = Q12(0.6f);
+                sharedData_800E30C8_1_s02.field_5C[2] = Q12(0.3f);
+                sharedData_800E30C8_1_s02.field_64[2] = Q12(0.5f);
+                sharedData_800E30C8_1_s02.field_6c[2] = Q12(0.8f);
                 sharedData_800E30C8_1_s02.field_78    = 3;
 
-                D_800E3A40[1].field_8  = 0x385;
+                D_800E3A40[1].field_8  = Q12(0.22f);
                 D_800E3A40[1].idx_14   = 4;
                 D_800E3A40[1].field_A  = 0;
-                D_800E3A40[1].field_E  = 0x333;
-                D_800E3A40[1].field_10 = 0x599;
-                D_800E3A40[2].field_C  = 0xF5;
+                D_800E3A40[1].field_E  = Q12(0.2f);
+                D_800E3A40[1].field_10 = Q12(0.35f);
+                D_800E3A40[2].field_C  = Q12(0.06f);
                 D_800E3A40[2].vx_0     = Q12(-16.86f);
                 D_800E3A40[2].vz_4     = Q12(-17.75f);
-                D_800E3A40[2].field_8  = 0x333;
+                D_800E3A40[2].field_8  = Q12(0.2f);
                 D_800E3A40[2].idx_14   = 3;
-                D_800E3A40[2].field_12 = 0x3C;
-                D_800E3A40[2].field_E  = 0x333;
-                D_800E3A40[2].field_10 = 0x333;
+                D_800E3A40[2].field_12 = 60;
+                D_800E3A40[2].field_E  = Q12(0.2f);
+                D_800E3A40[2].field_10 = Q12(0.2f);
             }
             else
             {
-                sharedData_800E30C8_1_s02.field_74 = 0x50;
+                sharedData_800E30C8_1_s02.field_74 = 80;
                 sharedData_800E30C8_1_s02.field_78 = 2;
-                D_800E3A40[1].field_8              = 0x333;
+                D_800E3A40[1].field_8              = Q12(0.2f);
                 D_800E3A40[1].idx_14               = 3;
-                D_800E3A40[1].field_E              = 0x266;
-                D_800E3A40[1].field_10             = 0x333;
+                D_800E3A40[1].field_E              = Q12(0.15f);
+                D_800E3A40[1].field_10             = Q12(0.2f);
             }
 
-            sharedData_800E30C8_1_s02.field_28[sharedData_800E30C8_1_s02.field_78] = 0x800;
-            sharedData_800E30C8_1_s02.field_10[sharedData_800E30C8_1_s02.field_78] = 0x28F;
-            sharedData_800E30C8_1_s02.field_3C[sharedData_800E30C8_1_s02.field_78] = 0x199;
-            sharedData_800E30C8_1_s02.field_5C[sharedData_800E30C8_1_s02.field_78] = 0x1EB;
-            sharedData_800E30C8_1_s02.field_64[sharedData_800E30C8_1_s02.field_78] = 0x4CC;
+            sharedData_800E30C8_1_s02.field_28[sharedData_800E30C8_1_s02.field_78] = Q12(0.5f);
+            sharedData_800E30C8_1_s02.field_10[sharedData_800E30C8_1_s02.field_78] = Q12(0.16f);
+            sharedData_800E30C8_1_s02.field_3C[sharedData_800E30C8_1_s02.field_78] = Q12(0.1f);
+            sharedData_800E30C8_1_s02.field_5C[sharedData_800E30C8_1_s02.field_78] = Q12(0.12f);
+            sharedData_800E30C8_1_s02.field_64[sharedData_800E30C8_1_s02.field_78] = Q12(0.3f);
 
             // Warp player.
             g_SysWork.playerWork.player.position.vx = Q12(-11.45f);
@@ -1398,19 +1409,12 @@ void Map_WorldObjectsInit(void) // 0x800DD3AC
     D_800E638C = 0;
 
     WorldObject_PlacementInit(&g_WorldObject6, "BALL_HID", -10.25f, 0.2f, -17.75f);
-
     WorldObject_Init(&g_WorldObject5, "VALVE_HI", -10.49f, -0.7f, -12.92f, 0.0f, 0.0f, 0.0f);
-
     WorldObject_Init(&g_WorldObject0, "TOBIRA00", -58.81f, -1.4f, 18.02f, 0.0f, 0.0f, 0.0f);
-
     WorldObject_Init(&g_WorldObject1, "TOBIRA01", -58.81f, -1.4f, 18.02f, 0.0f, 0.0f, 0.0f);
-
     WorldObject_Init(&g_WorldObject2, "TOBIRA2_", -61.0f, -1.05f, 20.97f, 0.0f, 0.0f, 0.0f);
-
     WorldObject_PlacementInit(&g_WorldObject3, "HAKO1_HI", -58.81f, -1.4f, 18.02f);
-
     WorldObject_PlacementInit(&g_WorldObject4, "HAKO2_HI", -61.0f, -0.9f, 20.97f);
-
     WorldObject_Init(&g_WorldObject7, "KEY_HIDE", -60.3184f, -0.00732422f, 20.23f, 0.0f, 53.2f, 5.3f);
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)

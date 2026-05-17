@@ -897,13 +897,9 @@ void Map_WorldObjectsInit(void) // 0x800D8424
     D_800DD52A = 0;
 
     WorldObject_Init(&g_WorldObject7, "HAMMER_H", 140.4485f, -0.5f, -18.9f, -87.05f, -73.2f, 0.0f);
-
     WorldObject_Init(&g_WorldObject2, "TAPE_HID", 59.64f, -0.85f, -100.27f, 0.0f, 7.5f, 0.0f);
-
     WorldObject_Init(&g_WorldObject3, "BED3_HID", 19.6f, 0.0f, -99.6f, 0.0f, 90.0f, 0.0f);
-
     WorldObject_Init(&g_WorldObject4, "KEY_HIDE", 20.6587f, -0.81055f, -98.93555f, 0.0f, -31.7f, 0.0f);
-
     WorldObject_Init(&g_WorldObject0, "TANA_HID", 60.0f, 0.0f, -21.6f, 0.0f, 180.0f, 0.0f);
 
     if (Savegame_EventFlagGet(EventFlag_M3S05_CabinetPushed))

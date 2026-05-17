@@ -326,7 +326,6 @@ void Map_WorldObjectsInit(void) // 0x800D8818
     Math_Vector3Set(&g_WorldObjectPos0, Q12(-20.0f), Q12(0.0f), Q12(34.0f));
 
     WorldObject_Init(&g_WorldObject1, "SITAI_NE", 75.0f, 0.5f, 19.7f, 0.0f, 180.0f, 0.0f);
-
     WorldObject_PlacementInit(&g_WorldObject2, "MP_DRNBK", -22.0f, 0.0f, 26.4f);
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)

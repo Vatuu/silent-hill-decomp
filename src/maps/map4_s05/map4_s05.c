@@ -1817,7 +1817,6 @@ void Map_WorldObjectsInit(void) // 0x800D723C
     D_800DB9B0 = 0;
 
     WorldObject_PlacementInit(&g_WorldObject_Kidn04, "KIDN04_H", -119.8019f, 5.0f, 107.861f);
-
     WorldObject_PlacementInit(&g_WorldObject_Kidn05, "KIDN05_H", -114.89f, 5.0f, 108.36f);
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)

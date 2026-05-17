@@ -305,24 +305,25 @@ typedef struct
 } s_MapOverlayHeader_7C;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader_7C, 32);
 
+// Related to water particles.
 typedef struct
 {
     s32    field_0[4];
-    s16    field_10[4];
+    q3_12  field_10[4];
     q19_12 field_18[4];
-    u16    field_28[4];
+    q4_12  field_28[4];
     u8     field_30[4];
     q3_12  field_34[4]; // Y angles.
-    u16    field_3C[4];
-    u16    field_44[4];
-    s16    field_4C[4];
+    q4_12  field_3C[4];
+    q4_12  field_44[4];
+    q3_12  field_4C[4];
     u16    field_54[4];
-    u16    field_5C[4];
+    q4_12  field_5C[4];
     q4_12  field_64[4];
-    s16    field_6c[4];
-    s16    field_74;
+    q3_12  field_6c[4];
+    s16    field_74; // Particle count?
     s8     __pad_76[2];
-    u8     field_78;
+    u8     field_78; // Active index for above arrays.
 } s_MapOverlayHeader_94;
 
 /** @brief Contains X/Z coordinates and optional 4 bytes of data.

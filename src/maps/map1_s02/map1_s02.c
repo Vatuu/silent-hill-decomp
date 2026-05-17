@@ -1327,29 +1327,17 @@ void Map_WorldObjectsInit(void) // 0x800DD494
     Math_Vector3Set(&g_ObjPosC[1], Q12(100.0f), Q12(-1.6f), Q12(145.25f)); // Set again?
 
     WorldObject_Init(&g_WorldObject1, "DOOR_HID", 18.37f, -0.8f, 59.51f, 0.0f, 0.0f, 0.0f);
-
     WorldObject_Init(&g_WorldObject3, "GUN_HIDE", 17.8643f, -0.04f, 59.5135f, 0.0f, -215.3f, 0.0f);
-
     WorldObject_Init(&g_WorldObject4, "RING1_HI", 60.5f, -1.04f, -61.0f, 0.0f, 0.0f, 0.0f);
-
     WorldObject_Init(&g_WorldObject5, "RING2_HI", 60.5f, -1.04f, -59.0f, 0.0f, 0.0f, 0.0f);
-
     WorldObject_Init(&g_WorldObject6, "DOOR2_HI", 58.4f, 0.0f, -60.4f, 0.0f, 0.0f, 0.0f);
-
     WorldObject_Init(&g_WorldObject7, "DOOR1_HI", 58.4f, 0.0f, -59.6f, 0.0f, 0.0f, 0.0f);
-
     WorldObject_PlacementInit(&g_WorldObject0, "BOX_HIDE", 54.47f, 0.0f, -60.0f);
-
     WorldObject_Init(&g_WorldObject8, "KEY_HIDE", 139.199f, -0.8753f, 99.3733f, 0.0f, 46.2f, 0.0f);
-
     WorldObject_Init(&g_WorldObject9, "PHONE3_H", 18.974f, -0.9f, 143.515f, 0.0f, -78.3f, 0.0f);
-
     WorldObject_Init(&g_WorldObjectA, "PHONE2_H", 18.974f, -0.9f, 143.515f, 0.0f, -78.3f, 0.0f);
-
     WorldObject_Init(&g_WorldObject2, "KEY_HIDE", -16.51f, -0.11f, -51.54f, 0.0f, -19.3f, 0.0f);
-
     WorldObject_PlacementInit(&g_WorldObjectD, "BOLL_HID", 100.124f, -1.08f, 101.166f);
-
     WorldObject_Init(&g_WorldObjectB, D_800A99E4[1], 60.14f, -0.902f, 141.763f, 0.0f, 92.4f, 0.0f);
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
@@ -1372,40 +1360,40 @@ void Map_WorldObjectsInit(void) // 0x800DD494
         Chara_SpawnFlagsSet(Chara_Creeper, 9, SpawnFlag_0 | SpawnFlag_1);
     }
 
-    sharedData_800E30C8_1_s02.field_0[0]  = -0x10666;
-    sharedData_800E30C8_1_s02.field_10[0] = 0x199;
-    sharedData_800E30C8_1_s02.field_18[0] = -0x33333;
-    sharedData_800E30C8_1_s02.field_28[0] = 0x1999;
-    sharedData_800E30C8_1_s02.field_34[0] = 0x400;
+    sharedData_800E30C8_1_s02.field_0[0]  = Q12(-16.4f);
+    sharedData_800E30C8_1_s02.field_10[0] = Q12(0.1f);
+    sharedData_800E30C8_1_s02.field_18[0] = Q12(-51.2f);
+    sharedData_800E30C8_1_s02.field_28[0] = Q12(1.6f);
+    sharedData_800E30C8_1_s02.field_34[0] = Q12_ANGLE(90.0f);
     sharedData_800E30C8_1_s02.field_30[0] = 0;
-    sharedData_800E30C8_1_s02.field_3C[0] = 0x666;
-    sharedData_800E30C8_1_s02.field_44[0] = 0x800;
-    sharedData_800E30C8_1_s02.field_4C[0] = 0xCC;
-    sharedData_800E30C8_1_s02.field_5C[0] = 0x666;
-    sharedData_800E30C8_1_s02.field_64[0] = 0x800;
-    sharedData_800E30C8_1_s02.field_6c[0] = 0xCC;
+    sharedData_800E30C8_1_s02.field_3C[0] = Q12(0.4f);
+    sharedData_800E30C8_1_s02.field_44[0] = Q12(0.5f);
+    sharedData_800E30C8_1_s02.field_4C[0] = Q12(0.05f);
+    sharedData_800E30C8_1_s02.field_5C[0] = Q12(0.4f);
+    sharedData_800E30C8_1_s02.field_64[0] = Q12(0.5f);
+    sharedData_800E30C8_1_s02.field_6c[0] = Q12(0.05f);
 
-    sharedData_800E30C8_1_s02.field_0[1]  = -0xECCC;
-    sharedData_800E30C8_1_s02.field_10[1] = 0x199;
-    sharedData_800E30C8_1_s02.field_18[1] = -0x33333;
-    sharedData_800E30C8_1_s02.field_34[1] = 0xC00;
-    sharedData_800E30C8_1_s02.field_28[1] = 0x1999;
+    sharedData_800E30C8_1_s02.field_0[1]  = Q12(-14.8f);
+    sharedData_800E30C8_1_s02.field_10[1] = Q12(0.1f);
+    sharedData_800E30C8_1_s02.field_18[1] = Q12(-51.2f);
+    sharedData_800E30C8_1_s02.field_34[1] = Q12_ANGLE(270.0f);
+    sharedData_800E30C8_1_s02.field_28[1] = Q12(1.6f);
     sharedData_800E30C8_1_s02.field_30[1] = 0;
-    sharedData_800E30C8_1_s02.field_3C[1] = 0x666;
-    sharedData_800E30C8_1_s02.field_44[1] = 0x800;
-    sharedData_800E30C8_1_s02.field_4C[1] = 0xCC;
-    sharedData_800E30C8_1_s02.field_5C[1] = 0x666;
+    sharedData_800E30C8_1_s02.field_3C[1] = Q12(0.4f);
+    sharedData_800E30C8_1_s02.field_44[1] = Q12(0.5f);
+    sharedData_800E30C8_1_s02.field_4C[1] = Q12(0.05f);
+    sharedData_800E30C8_1_s02.field_5C[1] = Q12(0.4f);
     sharedData_800E30C8_1_s02.field_74 = 10;
-    sharedData_800E30C8_1_s02.field_64[1] = 0x800;
-    sharedData_800E30C8_1_s02.field_6c[1] = 0xCC;
+    sharedData_800E30C8_1_s02.field_64[1] = Q12(0.5f);
+    sharedData_800E30C8_1_s02.field_6c[1] = Q12(0.05f);
     sharedData_800E30C8_1_s02.field_78 = 2;
 
     idx = 2;
-    sharedData_800E30C8_1_s02.field_28[idx] = 0;
-    sharedData_800E30C8_1_s02.field_10[idx] = 0x199;
-    sharedData_800E30C8_1_s02.field_3C[idx] = 0x666;
-    sharedData_800E30C8_1_s02.field_5C[idx] = 0x666;
-    sharedData_800E30C8_1_s02.field_64[idx] = 0x800;
+    sharedData_800E30C8_1_s02.field_28[idx] = Q12(0.0f);
+    sharedData_800E30C8_1_s02.field_10[idx] = Q12(0.1f);
+    sharedData_800E30C8_1_s02.field_3C[idx] = Q12(0.4f);
+    sharedData_800E30C8_1_s02.field_5C[idx] = Q12(0.4f);
+    sharedData_800E30C8_1_s02.field_64[idx] = Q12(0.5f);
 
     D_800E5A98 = 0;
     D_800E5A99 = 0;
@@ -1451,15 +1439,15 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
-        rng0 = -0x800 - (Rng_Rand16() & 0x1FF);
+        rng0 = Q12_ANGLE(-180.0f) - (Rng_Rand16() & 0x1FF);
         g_ObjRotC[0].vz += Q12_MULT_PRECISE(g_DeltaTime, rng0);
 
-        WorldGfx_ObjectAdd(&g_WorldObjectC, g_ObjPosC, (SVECTOR3* ) g_ObjRotC);
+        WorldGfx_ObjectAdd(&g_WorldObjectC, g_ObjPosC, (SVECTOR3*)g_ObjRotC);
 
-        rng1 = -0x91C - (Rng_Rand16() & 0x1FF);
+        rng1 = Q12_ANGLE(-205.0f) - (Rng_Rand16() & 0x1FF);
         g_ObjRotC[1].vz += Q12_MULT_PRECISE(g_DeltaTime, rng1);
 
-        WorldGfx_ObjectAdd(&g_WorldObjectC, &g_ObjPosC[1], (SVECTOR3* ) &g_ObjRotC[1]);
+        WorldGfx_ObjectAdd(&g_WorldObjectC, &g_ObjPosC[1], (SVECTOR3*)&g_ObjRotC[1]);
 
         if (!D_800E5A98)
         {
