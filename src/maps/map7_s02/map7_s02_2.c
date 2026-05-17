@@ -436,8 +436,8 @@ void func_800DAA4C(void) // 0x800DAA4C
         case 4:
             func_80085EB8(0, &g_SysWork.playerWork.player, 157, false);
 
-            g_SysWork.field_235C = NULL;
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             g_SysWork.pointLightIntensity = Q12(1.0f);
 
             func_8008D438();
@@ -1717,8 +1717,8 @@ void func_800DE1FC(void) // 0x800DE1FC
 
             func_8008D438();
 
-            g_SysWork.field_235C               = NULL;
-            g_SysWork.field_236C               = NULL;
+            g_SysWork.lightBoneCoord0     = NULL;
+            g_SysWork.lightBoneCoord1     = NULL;
             g_SysWork.pointLightIntensity = Q12(0.6f);
 
             Game_TurnFlashlightOn();
@@ -2007,8 +2007,8 @@ void func_800DF21C(void) // 0x800DF21C
             Chara_Spawn(Chara_GhostChildAlessa, 0, Q12(100.0f), Q12(-100.0f), 0, 3);
             Chara_Spawn(Chara_Dahlia, 0, Q12(100.0f), Q12(-100.0f), 0, 3);
 
-            g_SysWork.field_235C = NULL;
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             g_SysWork.pointLightIntensity = Q12(0.8f);
 
             Savegame_EventFlagSet(EventFlag_560);

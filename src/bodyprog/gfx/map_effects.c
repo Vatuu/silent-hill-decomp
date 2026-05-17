@@ -227,9 +227,8 @@ void func_8003E740(void) // 0x8003E740
 void Game_SpotlightLoadScreenAttribsFix(void) // 0x8003EB54
 {
     g_SysWork.pointLightIntensity = Q12(1.0f);
-
-    g_SysWork.field_235C = &g_SysWork.playerBoneCoords[HarryBone_Root];
-    g_SysWork.field_236C = &g_SysWork.playerBoneCoords[HarryBone_Root];
+    g_SysWork.lightBoneCoord0     = &g_SysWork.playerBoneCoords[HarryBone_Root];
+    g_SysWork.lightBoneCoord1     = &g_SysWork.playerBoneCoords[HarryBone_Root];
 
     Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(0.0f), Q12(-0.2f), Q12(-2.0f));
     Math_SVectorSet(&g_SysWork.pointLightRotation, Q12_ANGLE(10.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
@@ -238,9 +237,8 @@ void Game_SpotlightLoadScreenAttribsFix(void) // 0x8003EB54
 void Game_FlashlightAttributesFix(void) // 0x8003EBA0
 {
     g_SysWork.pointLightIntensity = Q12(1.0f);
-
-    g_SysWork.field_235C = &g_SysWork.playerBoneCoords[HarryBone_Torso];
-    g_SysWork.field_236C = &g_SysWork.playerBoneCoords[HarryBone_Root];
+    g_SysWork.lightBoneCoord0     = &g_SysWork.playerBoneCoords[HarryBone_Torso];
+    g_SysWork.lightBoneCoord1     = &g_SysWork.playerBoneCoords[HarryBone_Root];
 
     Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(-0.08f), Q12(-0.28f), Q12(0.12f));
     Math_SVectorSet(&g_SysWork.pointLightRotation, Q12_ANGLE(-15.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
@@ -430,13 +428,13 @@ void Gfx_FogParametersSet(s_StructUnk3* arg0, const s_MapEffectsInfo* effectsInf
 
 void Gfx_FlashlightUpdate(void) // 0x8003F170
 {
-    MATRIX          mat;
+    MATRIX          viewMat;
     VECTOR          sp48;
     SVECTOR         rot; // Q19.12
     q19_12          weight;
     u8              flags;
     q19_12          lightIntensity;
-    GsCOORDINATE2*  coord;
+    GsCOORDINATE2*  lightBoneCoord;
     s_StructUnk3*   ptr2;
     s_SysWork_2388* ptr;
 
@@ -455,9 +453,9 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
 
     if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].effectsInfo_0.field_E == 3)
     {
-        Vw_CoordToViewSpaceMatrix(g_SysWork.field_235C, &mat);
-        ApplyMatrixLV(&mat, (VECTOR*)&g_SysWork.pointLightPosition, &sp48); // Bug? `g_SysWork.pointLightPosition` is `VECTOR3`.
-        ptr->field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].field_30 = sp48.vz + (mat.t[2] * 16);
+        Vw_CoordToViewSpaceMatrix(g_SysWork.lightBoneCoord0, &viewMat);
+        ApplyMatrixLV(&viewMat, (VECTOR*)&g_SysWork.pointLightPosition, &sp48); // Bug? `g_SysWork.pointLightPosition` is `VECTOR3`.
+        ptr->field_84[g_SysWork.field_2388.flashlightIntensity_18 != Q12(0.0f)].field_30 = sp48.vz + Q8_TO_Q12(viewMat.t[2]);
     }
 
     if (ptr->primType_0 == PrimitiveType_None)
@@ -500,9 +498,9 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
     ptr->field_10 = func_8003FEC0(&ptr2->effectsInfo_0);
     func_8003FF2C(ptr2);
 
-    lightIntensity = Q12_MULT(func_8003F4DC(&coord, &rot, ptr2->effectsInfo_0.field_4, ptr2->effectsInfo_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.pointLightIntensity);
+    lightIntensity = Q12_MULT(func_8003F4DC(&lightBoneCoord, &rot, ptr2->effectsInfo_0.field_4, ptr2->effectsInfo_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.pointLightIntensity);
 
-    func_800554C4(lightIntensity, ptr2->flashlightLensFlareIntensity_2C, coord, g_SysWork.field_235C, &rot,
+    func_800554C4(lightIntensity, ptr2->flashlightLensFlareIntensity_2C, lightBoneCoord, g_SysWork.lightBoneCoord0, &rot,
                   g_SysWork.pointLightPosition.vx, g_SysWork.pointLightPosition.vy, g_SysWork.pointLightPosition.vz,
                   g_WorldGfxWork.mapInfo->waterZones);
     func_80055814(ptr2->field_30);
@@ -513,7 +511,7 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
     }
 }
 
-q19_12 func_8003F4DC(GsCOORDINATE2** coords, SVECTOR* rot, q19_12 alpha, s32 arg3, u32 arg4, s_SysWork* sysWork) // 0x8003F4DC
+q19_12 func_8003F4DC(GsCOORDINATE2** lightBoneCoord, SVECTOR* rot, q19_12 alpha, s32 arg3, u32 arg4, s_SysWork* sysWork) // 0x8003F4DC
 {
     s32     temp;
     q19_12  alphaCpy;
@@ -534,7 +532,7 @@ q19_12 func_8003F4DC(GsCOORDINATE2** coords, SVECTOR* rot, q19_12 alpha, s32 arg
     {
         default:
         case 1:
-            *coords = sysWork->field_236C;
+            *lightBoneCoord = sysWork->lightBoneCoord1;
             break;
 
         case 0:
@@ -542,7 +540,7 @@ q19_12 func_8003F4DC(GsCOORDINATE2** coords, SVECTOR* rot, q19_12 alpha, s32 arg
         case 3:
         case 4:
         case 5:
-            *coords = NULL;
+            *lightBoneCoord = NULL;
             break;
     }
 

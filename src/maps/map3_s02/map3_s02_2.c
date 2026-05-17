@@ -259,8 +259,8 @@ void func_800D0608(void) // 0x800D0608
 
             Chara_Spawn(Chara_Alessa, 0, Q12(80.0f), Q12(100.0f), Q12_ANGLE(0.0f), 3);
 
-            g_SysWork.field_235C = NULL;
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             g_SysWork.pointLightIntensity = Q12(0.7f);
 
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, 2);

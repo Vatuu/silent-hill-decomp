@@ -376,8 +376,8 @@ void func_800D7A60(void) // 0x800D7A60
         case 4:
             func_80085EB8(0, &g_SysWork.playerWork.player, 157, false);
 
-            g_SysWork.field_235C = NULL;
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             g_SysWork.pointLightIntensity = Q12(1.0f);
 
             func_8008D438();

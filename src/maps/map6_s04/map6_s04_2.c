@@ -1843,8 +1843,8 @@ void func_800E1D50(void) // 0x800E1D50
             Fs_QueueWaitForEmpty();
             Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_14);
 
-            g_SysWork.field_235C = NULL;
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             g_SysWork.pointLightIntensity = Q12(1.0f);
 
             Anim_CharaTypeAnimInfoClear();
@@ -2004,8 +2004,8 @@ void func_800E219C(void) // 0x800E219C
             SysWork_StateStepIncrement(0);
             SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
 
-            g_SysWork.field_235C = NULL;
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
 
         case 1:
             func_80085EB8(0, &playerChara, 168, false);
@@ -2214,13 +2214,13 @@ void func_800E2950(void) // 0x800E2950
             Camera_LookAtSet(&camLookAt, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             func_8008D438();
 
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
 
             g_SysWork.pointLightRotation.vx = -ratan2(camLookAt.vy - camPos.vy, Math_Vector2MagCalcSafe(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz));
             g_SysWork.pointLightRotation.vy = ratan2(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz);
             g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
 
-            g_SysWork.field_235C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
 
             g_SysWork.pointLightPosition.vx = camPos.vx;
             g_SysWork.pointLightPosition.vy = MAX(Q12(-1.5f), camPos.vy);
@@ -2293,8 +2293,8 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
 
             D_800ED5AC           = 0;
             g_Cutscene_Timer           = Q12(96.0f);
-            g_SysWork.field_235C = NULL;
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             g_SysWork.pointLightIntensity = Q12(1.0f);
 
             SysWork_StateStepIncrement(0);
@@ -2447,8 +2447,8 @@ void func_800E3244(void) // 0x800E3244
             Fs_QueueWaitForEmpty();
             Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_14);
 
-            g_SysWork.field_235C = NULL;
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             g_SysWork.pointLightIntensity = Q12(0.5f);
 
             Chara_Load(1, Chara_Parasite, &g_SysWork.npcBoneCoordBuffer[30], 0, NULL, NULL);
@@ -2752,8 +2752,8 @@ void func_800E3EF4(void) // 0x800E3EF4
 
             func_8008D438();
 
-            g_SysWork.field_235C = NULL;
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             g_SysWork.pointLightIntensity = Q12(1.0f);
 
             sharedFunc_800D2EB4_0_s00();

@@ -2950,7 +2950,7 @@ q19_12 Vc_VectorMagnitudeCalc(q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80085B
     posX   >>= shift;
     posY   >>= shift;
     posZ   >>= shift;
-    return SquareRoot0(SQUARE(posX) + SQUARE(posY) + SQUARE(posZ)) << shift;
+    return Math_Vector3MagCalc(posX, posY, posZ) << shift;
 }
 
 q19_12 vcGetXZSumDistFromLimArea(q19_12* out_vec_x_p, q19_12* out_vec_z_p, q19_12 chk_wld_x, q19_12 chk_wld_z,

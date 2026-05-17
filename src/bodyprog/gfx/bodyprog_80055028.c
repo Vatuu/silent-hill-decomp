@@ -2753,7 +2753,7 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A478
     temp_s1 = g_WorldEnvWork.light.field_30.vy;
     temp_s2 = g_WorldEnvWork.light.field_30.vz;
 
-    var_t1 = SquareRoot0(SQUARE(temp_s0) + SQUARE(temp_s1) + SQUARE(temp_s2));
+    var_t1 = Math_Vector3MagCalc(temp_s0, temp_s1, temp_s2);
     if (var_t1 == 0)
     {
         var_t1 = 1;
@@ -3435,7 +3435,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
             posZ0 = sp70.m[0][2];
         }
 
-        temp_v0 = SquareRoot0(SQUARE(posX0) + SQUARE(posY0) + SQUARE(posZ0));
+        temp_v0 = Math_Vector3MagCalc(posX0, posY0, posZ0);
 
         if (temp_v0 > Q12(0.25f))
         {

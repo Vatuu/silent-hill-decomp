@@ -1619,7 +1619,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 case PlayerState_EnemyGrabPinnedFront:
                     deltaPosX = player->position.vx - g_SysWork.npcs[g_SysWork.npcIdxs[0]].position.vx;
                     deltaPosZ = player->position.vz - g_SysWork.npcs[g_SysWork.npcIdxs[0]].position.vz;
-                    npcDist   = SquareRoot0(SQUARE(deltaPosX) + SQUARE(deltaPosZ));
+                    npcDist   = Math_Vector2MagCalc(deltaPosX, deltaPosZ);
                     Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs[g_SysWork.npcIdxs[0]].rotation.vy + Q12_ANGLE(180.0f)), &headingAngle1);
 
                     if (ABS(headingAngle1) < Q12_ANGLE(11.25f))
@@ -1645,7 +1645,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 case PlayerState_EnemyGrabPinnedBack:
                     temp_v1_12 = player->position.vx - g_SysWork.npcs[g_SysWork.npcIdxs[1]].position.vx;
                     temp_v1_13 = player->position.vz - g_SysWork.npcs[g_SysWork.npcIdxs[1]].position.vz;
-                    npcDist     = SquareRoot0(SQUARE(temp_v1_12) + SQUARE(temp_v1_13));
+                    npcDist     = Math_Vector2MagCalc(temp_v1_12, temp_v1_13);
                     Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs[g_SysWork.npcIdxs[1]].rotation.vy + Q12_ANGLE(360.0f)), &headingAngle1);
 
                     if (ABS(headingAngle1) < Q12_ANGLE(11.25f))
@@ -6575,7 +6575,7 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
     q19_12      adjMoveSpeed;
     s32         temp_s2_2;
     s32         temp_s3_2;
-    s32         temp_v0_3;
+    q19_12      headingAngle;
     s32         posY;
     u32         temp;
 
@@ -6604,18 +6604,17 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
     {
         player->moveSpeed = -Math_Vector2MagCalc(adjOffsetX, adjOffsetZ);
     }
-
     adjMoveSpeed = Q12_MULT_PRECISE(player->moveSpeed, g_DeltaTime);
 
-    temp_v0_3 = player->headingAngle;
+    headingAngle = player->headingAngle;
     temp      = adjMoveSpeed + SHRT_MAX;
     temp_s2_2 = (temp > (SHRT_MAX * 2)) * 4;
     temp_s3_2 = temp_s2_2 >> 1;
 
-    offset.vx = Q12_MULT_PRECISE((adjMoveSpeed >> temp_s3_2), Math_Sin(temp_v0_3) >> temp_s3_2);
+    offset.vx = Q12_MULT_PRECISE(adjMoveSpeed >> temp_s3_2, Math_Sin(headingAngle) >> temp_s3_2);
     offset.vx <<= temp_s2_2;
 
-    offset.vz = Q12_MULT_PRECISE((adjMoveSpeed >> temp_s3_2), Math_Cos(temp_v0_3) >> temp_s3_2);
+    offset.vz = Q12_MULT_PRECISE(adjMoveSpeed >> temp_s3_2, Math_Cos(headingAngle) >> temp_s3_2);
     offset.vz <<= temp_s2_2;
 
     offset.vy = Q12_MULT_PRECISE(player->fallSpeed, g_DeltaTime);
@@ -6661,16 +6660,17 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
         g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_RunRight ||
         g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_RunLeft)
     {
-        player->properties.player.runTimer_108 += SquareRoot0(SQUARE(D_800C4590.offset.vx) +
-                                                                SQUARE(D_800C4590.offset.vy) +
-                                                                SQUARE(D_800C4590.offset.vz));
+        player->properties.player.runTimer_108 += Math_Vector3MagCalc(D_800C4590.offset.vx,
+                                                                      D_800C4590.offset.vy,
+                                                                      D_800C4590.offset.vz);
     }
     else
     {
         player->properties.player.runTimer_108 = Q12(0.0f);
     }
 
-    if (g_SavegamePtr->mapIdx == MapIdx_MAP1_S00 && g_SavegamePtr->mapRoomIdx == 13)
+    if (g_SavegamePtr->mapIdx     == MapIdx_MAP1_S00 &&
+        g_SavegamePtr->mapRoomIdx == 13)
     {
         D_800C4590.collision.groundHeight = Q12(0.0f);
     }
@@ -6686,7 +6686,8 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
         player->fallSpeed   = Q12(0.0f);
     }
 
-    adjOffsetZ = Q12_ANGLE_NORM_U(ratan2(player->position.vx - g_Player_PrevPosition.vx, player->position.vz - g_Player_PrevPosition.vz) + Q12_ANGLE(360.0f));
+    adjOffsetZ = Q12_ANGLE_NORM_U(ratan2(player->position.vx - g_Player_PrevPosition.vx,
+                                         player->position.vz - g_Player_PrevPosition.vz) + Q12_ANGLE(360.0f));
 
     if (!(g_SysWork.playerWork.extra.state >= PlayerState_FallForward && g_SysWork.playerWork.extra.state < PlayerState_KickEnemy))
     {
@@ -7650,7 +7651,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
             gte_stlvnl(&handPos);
             offsetToAttackPosX = Q12_TO_Q8(playerCombat.attackPosition.vx) - handPos.vx;
             offsetToAttackPosZ = Q12_TO_Q8(playerCombat.attackPosition.vz) - handPos.vz;
-            distToAttackPosSqr = SquareRoot0(SQUARE(offsetToAttackPosX) + SQUARE(offsetToAttackPosZ));
+            distToAttackPosSqr = Math_Vector2MagCalc(offsetToAttackPosX, offsetToAttackPosZ);
             rotToAttackPos.vx  = ratan2(handPos.vx - Q12_TO_Q8(playerCombat.attackPosition.vx),
                                         handPos.vz - Q12_TO_Q8(playerCombat.attackPosition.vz));
             rotToAttackPos.vy  = ratan2(distToAttackPosSqr, handPos.vy - Q12_TO_Q8(playerCombat.attackPosition.vy));

@@ -119,9 +119,11 @@ s32 func_8005C1CC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, 
         return 0;
     }
 
-    temp_s2 = SquareRoot0(SQUARE((arg2 - arg5) >> 6) + SQUARE((arg3 - arg6) >> 6)) << 6;
+    temp_s2 = Math_Vector2MagCalcSafe(arg2 - arg5, arg3 - arg6);
 
-    if (arg4 < temp_s2 && (SQUARE((arg7 - arg5) >> 6) + SQUARE((arg8 - arg6) >> 6)) < SQUARE((temp_s2 - arg4) >> 6))
+    if (arg4 < temp_s2 &&
+        (Math_SqrMagCalcToQ6(arg7 - arg5) +
+         Math_SqrMagCalcToQ6(arg8 - arg6)) < Math_SqrMagCalcToQ6(temp_s2 - arg4))
     {
         return 0;
     }
@@ -146,7 +148,7 @@ s32 func_8005C1CC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, 
         else
         {
             temp_s0_2 = Math_Cos(temp_s0 - temp_v0_6);
-            temp_s0_3 = Q12_MULT(temp_s2, temp_s0_2) - (SquareRoot0(SQUARE(arg4 >> 6) - SQUARE(var_s0 >> 6)) << 6);
+            temp_s0_3 = Q12_MULT(temp_s2, temp_s0_2) - (SquareRoot0(SQUARE(arg4 >> 6) - SQUARE(var_s0 >> 6)) << 6); // TODO: Use `Math_Vector2MagCalcSafe`.
             *arg0     = arg5 + Q12_MULT(temp_s0_3, Math_Cos(temp_v0_6));
             *arg1     = arg6 + Q12_MULT(temp_s0_3, Math_Sin(temp_v0_6));
         }

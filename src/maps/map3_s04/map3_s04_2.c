@@ -235,8 +235,8 @@ void func_800D2668(void) // 0x800D2668
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
             Game_TurnFlashlightOn();
 
-            g_SysWork.field_235C = NULL;
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             g_SysWork.pointLightIntensity = Q12(0.7f);
             Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(58.34f), Q12(-1.93f), Q12(141.8f));
 

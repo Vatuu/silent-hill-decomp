@@ -139,11 +139,11 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 
     if (chara->moveSpeed >= 0)
     {
-        chara->moveSpeed = SquareRoot0(SQUARE(var_s0) + SQUARE(var_v1));
+        chara->moveSpeed = Math_Vector2MagCalc(var_s0, var_v1);
     }
     else
     {
-        chara->moveSpeed = -SquareRoot0(SQUARE(var_s0) + SQUARE(var_v1));
+        chara->moveSpeed = -Math_Vector2MagCalc(var_s0, var_v1);
     }
 
     moveSpeed    = chara->moveSpeed;

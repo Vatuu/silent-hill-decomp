@@ -276,8 +276,8 @@ void func_800D2408(void) // 0x800D2408
 
             func_8008D438();
 
-            g_SysWork.field_235C = NULL;
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             g_SysWork.pointLightIntensity = Q12(1.0f);
 
             SysWork_StateStepIncrement(0);
@@ -738,9 +738,9 @@ void func_800D3420(void) // 0x800D3420
 
             sharedFunc_800CAAD0_1_s05();
 
-            g_SysWork.field_235C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
             Math_Vector3Set(&g_SysWork.pointLightPosition, sharedData_800D8568_1_s05.field_20, Q12(-2.0f), sharedData_800D8568_1_s05.field_24 + Q12(1.5f));
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             Math_SetSVectorFast(&g_SysWork.pointLightRotation, Q12_ANGLE(-90.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
 
             Gfx_MapEffectsUpdate(11, 11, PrimitiveType_S32, &D_800D5B00, 0, Q12(100.0f));
@@ -835,8 +835,8 @@ void func_800D3420(void) // 0x800D3420
             g_Cutscene_Timer3 = Q12(140.0f);
             Gfx_MapInitMapEffectsUpdate(7, 4);
 
-            g_SysWork.field_235C = NULL;
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             g_SysWork.pointLightIntensity = Q12(1.0f);
             Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(178.8f), Q12(0.0f), Q12(62.8f));
             Math_SetSVectorFast(&g_SysWork.pointLightRotation, Q12_ANGLE(30.0f), Q12_ANGLE(-90.0f), Q12_ANGLE(0.0f));
@@ -1066,11 +1066,11 @@ void func_800D4410(void) // 0x800D4410
             func_80085EB8(2, playerChara, 0, false);
             func_8008D438();
 
-            g_SysWork.field_235C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
             g_SysWork.pointLightPosition.vx = Q12(19.6f);
             g_SysWork.pointLightPosition.vy = Q12(2.0f);
             g_SysWork.pointLightPosition.vz = Q12(62.0f);
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             g_SysWork.pointLightRotation.vx = Q12_ANGLE(90.0f);
             g_SysWork.pointLightRotation.vy = Q12_ANGLE(0.0f);
             g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);

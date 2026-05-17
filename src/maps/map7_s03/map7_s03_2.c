@@ -10084,14 +10084,14 @@ void Map_WorldObjectsInit(void) // 0x800E9528
 
     WorldObject_Init(&g_WorldObject_Baby, "BABY_HID", 140.0f, 0.0f, -100.0f, 0.0f, 0.0f, 0.0f);
 
-    g_SysWork.field_235C = NULL;
+    g_SysWork.lightBoneCoord0 = NULL;
 
     // Set light position.
     g_SysWork.pointLightPosition.vx = Q12(139.7f);
     g_SysWork.pointLightPosition.vy = Q12(-4.5f);
     g_SysWork.pointLightPosition.vz = Q12(-98.1f);
 
-    g_SysWork.field_236C = NULL;
+    g_SysWork.lightBoneCoord1 = NULL;
 
     // Set light rotation.
     g_SysWork.pointLightRotation.vx = Q12_ANGLE(-90.0f);

@@ -385,18 +385,18 @@ const VECTOR3 D_800CBAB0 = { 0xFFFF5CCD, 0x00000000, 0xFFFF2A67 };
 
 void func_800DAF18(void) // 0x800DAF18
 {
-    VECTOR3       sp28;
-    VECTOR3       sp38;
-    VECTOR3       sp48;
-    MATRIX        sp58;
-    VECTOR        sp78;
-    s32           temp_s0_2;
-    s32           temp_s2;
-    s32           temp_v1_9;
-    s32           i;
-    s32           var_v0;
-    s32           var_v0_2;
-    s32           var_v1;
+    VECTOR3 lightPos;  // Q19.12
+    VECTOR3 lookAtPos; // Q19.12
+    VECTOR3 sp48;
+    MATRIX  sp58;
+    VECTOR  sp78;
+    s32     balance;
+    s32     temp_s2;
+    s32     temp_v1_9;
+    s32     i;
+    s32     var_v0;
+    s32     vol;
+    s32     var_v1;
 
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -518,14 +518,22 @@ void func_800DAF18(void) // 0x800DAF18
             sharedData_800E30C8_1_s02.field_64[sharedData_800E30C8_1_s02.field_78] = 0x4CC;
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = -0xB733;
-            g_SysWork.playerWork.player.position.vz = -0xCF33;
-            g_SysWork.playerWork.player.rotation.vy = 0x400;
+            g_SysWork.playerWork.player.position.vx = Q12(-11.45f);
+            g_SysWork.playerWork.player.position.vz = Q12(-12.95f);
+            g_SysWork.playerWork.player.rotation.vy = Q12(0.25f);
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
-            Camera_PositionSet(NULL, -0xC614, -0x1333, -0xE11E, 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, -0x93D7, -0xC28, -0xBA14, 0, 0, 0, 0, true);
+
+            // Warp camera.
+            Camera_PositionSet(NULL,
+                               Q12(-12.38f), Q12(-1.2f), Q12(-14.07f),
+                               Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                               true);
+            Camera_LookAtSet(NULL,
+                             Q12(-9.24f), Q12(-0.76f), Q12(-11.63f),
+                             Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                             true);
 
             g_SysWork.field_28          = 0;
             g_SysWork.sysStateSteps[1] = 0;
@@ -563,8 +571,14 @@ void func_800DAF18(void) // 0x800DAF18
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
 
             func_8008D438();
-            Camera_PositionSet(NULL, D_800E1F88[0].vx, D_800E1F88[0].vy, D_800E1F88[0].vz, 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, D_800E1FC4[0].vx, D_800E1FC4[0].vy, D_800E1FC4[0].vz, 0, 0, 0, 0, true);
+            Camera_PositionSet(NULL,
+                               D_800E1F88[0].vx, D_800E1F88[0].vy, D_800E1F88[0].vz,
+                               Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                               true);
+            Camera_LookAtSet(NULL,
+                             D_800E1FC4[0].vx, D_800E1FC4[0].vy, D_800E1FC4[0].vz,
+                             Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                             true);
 
             D_800E20FA                  = 0;
             g_SysWork.field_28          = 0;
@@ -601,41 +615,48 @@ void func_800DAF18(void) // 0x800DAF18
                     var_v1 += 2;
                 }
 
-                if (i & 1)
+                if (i & 0x1)
                 {
-                    sp28.vx = D_800E1F88[var_v1].vx;
-                    sp28.vy = D_800E1F88[var_v1].vy;
-                    sp28.vz = D_800E1F88[var_v1].vz;
+                    lightPos.vx = D_800E1F88[var_v1].vx;
+                    lightPos.vy = D_800E1F88[var_v1].vy;
+                    lightPos.vz = D_800E1F88[var_v1].vz;
 
-                    sp38.vx = D_800E1FC4[var_v1].vx;
-                    sp38.vy = D_800E1FC4[var_v1].vy;
-                    sp38.vz = D_800E1FC4[var_v1].vz;
+                    lookAtPos.vx = D_800E1FC4[var_v1].vx;
+                    lookAtPos.vy = D_800E1FC4[var_v1].vy;
+                    lookAtPos.vz = D_800E1FC4[var_v1].vz;
                 }
                 else
                 {
-                    sp28.vx = D_800E1F88[var_v1 - 1].vx + (((D_800E1F88[var_v1].vx - D_800E1F88[var_v1 - 1].vx) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
-                    sp28.vy = D_800E1F88[var_v1 - 1].vy + (((D_800E1F88[var_v1].vy - D_800E1F88[var_v1 - 1].vy) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
-                    sp28.vz = D_800E1F88[var_v1 - 1].vz + (((D_800E1F88[var_v1].vz - D_800E1F88[var_v1 - 1].vz) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+                    lightPos.vx = D_800E1F88[var_v1 - 1].vx + (((D_800E1F88[var_v1].vx - D_800E1F88[var_v1 - 1].vx) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+                    lightPos.vy = D_800E1F88[var_v1 - 1].vy + (((D_800E1F88[var_v1].vy - D_800E1F88[var_v1 - 1].vy) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+                    lightPos.vz = D_800E1F88[var_v1 - 1].vz + (((D_800E1F88[var_v1].vz - D_800E1F88[var_v1 - 1].vz) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
 
-                    sp38.vx = D_800E1FC4[var_v1 - 1].vx + (((D_800E1FC4[var_v1].vx - D_800E1FC4[var_v1 - 1].vx) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
-                    sp38.vy = D_800E1FC4[var_v1 - 1].vy + (((D_800E1FC4[var_v1].vy - D_800E1FC4[var_v1 - 1].vy) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
-                    sp38.vz = D_800E1FC4[var_v1 - 1].vz + (((D_800E1FC4[var_v1].vz - D_800E1FC4[var_v1 - 1].vz) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+                    lookAtPos.vx = D_800E1FC4[var_v1 - 1].vx + (((D_800E1FC4[var_v1].vx - D_800E1FC4[var_v1 - 1].vx) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+                    lookAtPos.vy = D_800E1FC4[var_v1 - 1].vy + (((D_800E1FC4[var_v1].vy - D_800E1FC4[var_v1 - 1].vy) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+                    lookAtPos.vz = D_800E1FC4[var_v1 - 1].vz + (((D_800E1FC4[var_v1].vz - D_800E1FC4[var_v1 - 1].vz) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
                 }
 
                 // Warp camera.
-                Camera_PositionSet(&sp28, 0, 0, 0, 0, 0, 0, 0, true);
-                Camera_LookAtSet(&sp38, 0, 0, 0, 0, 0, 0, 0, true);
+                Camera_PositionSet(&lightPos,
+                                   Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                   Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                   true);
+                Camera_LookAtSet(&lookAtPos,
+                                 Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                 Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                 true);
 
-                g_SysWork.field_236C               = NULL;
-                g_SysWork.pointLightRotation.vx = -ratan2(sp38.vy - sp28.vy,
-                                                             SquareRoot0(SQUARE((sp38.vx - sp28.vx) >> 6) + SQUARE((sp38.vz - sp28.vz) >> 6)) << 6);
+                g_SysWork.lightBoneCoord1               = NULL;
+                g_SysWork.pointLightRotation.vx = -ratan2(lookAtPos.vy - lightPos.vy,
+                                                          Math_Vector2MagCalcSafe(lookAtPos.vx - lightPos.vx,
+                                                                                  lookAtPos.vz - lightPos.vz));
 
-                g_SysWork.pointLightRotation.vy = ratan2(sp38.vx - sp28.vx, sp38.vz - sp28.vz);
-                g_SysWork.pointLightRotation.vz = 0;
-                g_SysWork.field_235C               = NULL;
-                g_SysWork.pointLightPosition.vx = sp28.vx;
-                g_SysWork.pointLightPosition.vy = MAX(-0x1800, sp28.vy);
-                g_SysWork.pointLightPosition.vz = sp28.vz;
+                g_SysWork.pointLightRotation.vy = ratan2(lookAtPos.vx - lightPos.vx, lookAtPos.vz - lightPos.vz);
+                g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
+                g_SysWork.lightBoneCoord0               = NULL;
+                g_SysWork.pointLightPosition.vx = lightPos.vx;
+                g_SysWork.pointLightPosition.vy = MAX(Q12(-1.5f), lightPos.vy);
+                g_SysWork.pointLightPosition.vz = lightPos.vz;
             }
             break;
 
@@ -650,7 +671,7 @@ void func_800DAF18(void) // 0x800DAF18
             }
             else
             {
-                MapMsg_DisplayAndHandleSelection(false, 0x29, false, false, 0, false);
+                MapMsg_DisplayAndHandleSelection(false, 41, false, false, 0, false);
             }
             break;
 
@@ -659,8 +680,17 @@ void func_800DAF18(void) // 0x800DAF18
 
             func_8008D448();
             Game_FlashlightAttributesFix();
-            Camera_PositionSet(NULL, -0xC614, -0x1333, -0xE11E, 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, -0x93D7, -0xC28, -0xBA14, 0, 0, 0, 0, true);
+
+            // Warp camera.
+            Camera_PositionSet(NULL,
+                               Q12(-12.38f), Q12(-1.2f), Q12(-14.07f),
+                               Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                               true);
+            Camera_LookAtSet(NULL,
+                             Q12(-9.24f), Q12(-0.76f), Q12(-11.63f),
+                             Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                             true);
+
             sharedFunc_800CBD58_1_s02();
 
             if (Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
@@ -700,7 +730,7 @@ void func_800DAF18(void) // 0x800DAF18
         gte_rt();
         gte_stlvnl(&sp78);
 
-        temp_s2 = ratan2((sp78.vy * 0x10) + 0xB33, (sp78.vz * 0x10) + 0xCEB8);
+        temp_s2 = ratan2((sp78.vy * 16) + Q12(0.7f), (sp78.vz * 16) + Q12(12.92f));
         if (D_800E20FE > 2)
         {
             var_v0 = FP_FROM(g_SysWork.playerWork.player.model.anim.time, Q12_SHIFT) - Player_AnimGetSomething();
@@ -710,30 +740,30 @@ void func_800DAF18(void) // 0x800DAF18
             var_v0 = 0;
         }
 
-        if (var_v0 >= 6 && var_v0 < 0x25)
+        if (var_v0 >= 6 && var_v0 < 37)
         {
-            if ((g_SysWork.sysStateSteps[0] == 7 && Math_AngleNormalizeSigned(D_800E20F8 - temp_s2) < 0) ||
-                (g_SysWork.sysStateSteps[0] == 12 && Math_AngleNormalizeSigned(D_800E20F8 - temp_s2) > 0))
+            if ((g_SysWork.sysStateSteps[0] == 7 && Math_AngleNormalizeSigned(D_800E20F8 - temp_s2) < Q12_ANGLE(0.0f)) ||
+                (g_SysWork.sysStateSteps[0] == 12 && Math_AngleNormalizeSigned(D_800E20F8 - temp_s2) > Q12_ANGLE(0.0f)))
             {
                 if (D_800E2101 == 0)
                 {
-                    func_8005DC1C(0x5B7, &D_800CBAA4, 0x80, 0);
+                    func_8005DC1C(Sfx_Unk1463, &D_800CBAA4, Q8(0.5f), 0);
                     D_800E2101++;
                 }
-                else if (!(D_800E2101 & 1) && D_800E2101 < 8)
+                else if (!(D_800E2101 & 0x1) && D_800E2101 < 8)
                 {
-                    func_8005DC1C(0x5B6, &D_800CBAA4, 0x80, 0);
+                    func_8005DC1C(Sfx_Unk1462, &D_800CBAA4, Q8(0.5f), 0);
 
                     if (D_800E2101 == 2)
                     {
-                        if (g_SysWork.sysStateSteps[0] == 0xC)
+                        if (g_SysWork.sysStateSteps[0] == 12)
                         {
-                            Sd_SfxStop(0x5B9);
+                            Sd_SfxStop(Sfx_Unk1465);
                             D_800E2100 = 0;
                         }
                         else if (g_SysWork.sysStateSteps[0] == 7)
                         {
-                            SD_Call(0x5B9);
+                            SD_Call(Sfx_Unk1465);
                             D_800E2100 = 1;
                         }
                     }
@@ -769,32 +799,32 @@ void func_800DAF18(void) // 0x800DAF18
 
     if (D_800E2100 != 0)
     {
-        temp_s0_2 = Vc_StereoBalanceGet(&D_800CBAB0) >> 1;
+        balance = Vc_StereoBalanceGet(&D_800CBAB0) >> 1;
         vwGetViewPosition(&sp48);
 
-        temp_v1_9 = Math_Vector3MagCalcSafe((((g_SysWork.playerWork.player.position.vx + sp48.vx) >> 1) + 0xA333),
-                                        ((g_SysWork.playerWork.player.position.vy + sp48.vy) >> 1),
-                                        (((g_SysWork.playerWork.player.position.vz + sp48.vz) >> 1) + 0xD599));
+        temp_v1_9 = Math_Vector3MagCalcSafe((((g_SysWork.playerWork.player.position.vx + sp48.vx) >> 1) + Q12(10.2f)),
+                                            ((g_SysWork.playerWork.player.position.vy + sp48.vy) >> 1),
+                                            (((g_SysWork.playerWork.player.position.vz + sp48.vz) >> 1) + Q12(13.35f)));
 
-        if (temp_v1_9 < 0x1000)
+        if (temp_v1_9 < Q12(1.0f))
         {
-            var_v0_2 = D_800E20FC;
+            vol = D_800E20FC;
         }
         else
         {
-            var_v0_2 = temp_v1_9;
-            if (var_v0_2 > 0x11000)
+            vol = temp_v1_9;
+            if (vol > Q12(17.0f))
             {
-                var_v0_2 = 0;
+                vol = 0;
             }
             else
             {
-                var_v0_2 = Q12_MULT_PRECISE(D_800E20FC, 0x1000 - (FP_TO(var_v0_2 - 0x1000, Q12_SHIFT) / 0x10000));
+                vol = Q12_MULT_PRECISE(D_800E20FC, Q12(1.0f) - (FP_TO(vol - Q12(1.0f), Q12_SHIFT) / Q12(16.0f)));
             }
         }
 
-        var_v0_2 = ~(var_v0_2 >> 4);
-        Sd_SfxAttributesUpdate(1465, temp_s0_2, var_v0_2, 0);
+        vol = ~(vol >> 4);
+        Sd_SfxAttributesUpdate(Sfx_Unk1465, balance, vol, 0);
     }
 }
 

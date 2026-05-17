@@ -350,7 +350,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
 
         sys_p->cameraAngleY   = Math_AngleNormalize(cam_ang.vy + Q12_ANGLE(180.0f));
         sys_p->cameraY_2384        = Q8_TO_Q12(-refOffset.vy);
-        sys_p->cameraRadiusXz = Q8_TO_Q12(SquareRoot0(SQUARE(refOffset.vx) + SQUARE(refOffset.vz)));
+        sys_p->cameraRadiusXz = Q8_TO_Q12(Math_Vector2MagCalc(refOffset.vx, refOffset.vz));
     }
 
     #undef MOVE_DIST

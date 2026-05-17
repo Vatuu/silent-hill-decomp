@@ -271,12 +271,12 @@ void Map_WorldObjectsInit(void) // 0x800D525C
 
     WorldObject_Init(&g_WorldObject1, "WHEEL_HI", 19.7f, -0.06f, -19.1f, 0.0f, 0.0f, 0.0f);
 
-    g_SysWork.field_235C = NULL;
+    g_SysWork.lightBoneCoord0 = NULL;
     g_SysWork.pointLightPosition.vx = Q12(19.7f);
     g_SysWork.pointLightPosition.vy = Q12(-3.0f);
     g_SysWork.pointLightPosition.vz = Q12(-19.1f);
 
-    g_SysWork.field_236C = NULL;
+    g_SysWork.lightBoneCoord1 = NULL;
     g_SysWork.pointLightRotation.vx = Q12_ANGLE(-90.0f);
     g_SysWork.pointLightRotation.vy = Q12_ANGLE(0.0f);
     g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);

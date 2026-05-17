@@ -142,8 +142,8 @@ void func_800D0B64(void) // 0x800D0B64
             Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_11);
 
             g_Cutscene_Timer = Q12(0.0f);
-            g_SysWork.field_235C = NULL;
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             g_SysWork.pointLightIntensity = Q12(0.5f);
 
             Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(18.7f), Q12(-1.9f), Q12(-137.8f));

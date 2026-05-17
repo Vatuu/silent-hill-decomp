@@ -619,10 +619,10 @@ typedef struct _SysWork
     /* 0x2359   */ s8               unused_2359;           /** @unused */
     /* 0x235A   */ u8               playerStopFlags;       /** `e_PlayerStopFlags` */
                 // 1 byte of padding.
-    /* 0x235C   */ GsCOORDINATE2*   field_235C;         // Bone related to pocket light.
-    /* 0x2360   */ VECTOR3          pointLightPosition; //                               } Often gets set from DMS cutscene data.
-    /* 0x236C   */ GsCOORDINATE2*   field_236C;         // Bone related to pocket light. }
-    /* 0x2370   */ SVECTOR          pointLightRotation; //                               }
+    /* 0x235C   */ GsCOORDINATE2*   lightBoneCoord0;
+    /* 0x2360   */ VECTOR3          pointLightPosition; // } Often set to DMS cutscene data.
+    /* 0x236C   */ GsCOORDINATE2*   lightBoneCoord1;    // }
+    /* 0x2370   */ SVECTOR          pointLightRotation; // }
     /* 0x2378   */ s16              pointLightIntensity;
     /* 0x237A   */ q3_12            cameraAngleY;
     /* 0x237C   */ q3_12            cameraAngleZ;

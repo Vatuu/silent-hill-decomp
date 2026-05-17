@@ -53,7 +53,7 @@ void Vw_SetLookAtMatrix(const VECTOR3* pos, const VECTOR3* lookAt) // 0x80048AF4
     // Compute camera rotation.
     rot.vz = Q12_ANGLE(0.0f);
     rot.vy = ratan2(deltaX, deltaZ);
-    rot.vx = ratan2(-deltaY, SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
+    rot.vx = ratan2(-deltaY, Math_Vector2MagCalc(deltaX, deltaZ));
 
     // Compute view transform matrix and set global info.
     Math_RotMatrixZxyNeg(&rot, &viewMat);

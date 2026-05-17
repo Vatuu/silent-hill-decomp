@@ -454,8 +454,8 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
             func_8008D438();
 
-            g_SysWork.field_235C = NULL;
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             g_SysWork.pointLightIntensity = Q12(1.0f);
 
             Fs_QueueStartRead(FILE_ANIM_POOL1_DMS, FS_BUFFER_17);

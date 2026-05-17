@@ -177,13 +177,15 @@ bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx)
             mapHdrPtr->field_10.s_0.field_2 = temp_s2 |
                                               ((ratan2(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0, sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0) - sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_2) > 0 ? 0x8000 : 0);
 
-            temp_s2_2 = SquareRoot0(SQUARE(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 >> 6) + SQUARE(sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 >> 6)) << 6;
+            temp_s2_2 = Math_Vector2MagCalcSafe(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2,
+                                                sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0);
             temp_s1   = temp_s2_2 >> 2;
             temp_s3   = temp_s2_2 >> 3;
 
             sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 += CLAMP_HIGH(((temp_s2_2 + (Rng_Rand16() % temp_s1)) - temp_s3), 0x7FFF) / 256;
 
-            temp_s2_2 = SquareRoot0(SQUARE(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 >> 6) + SQUARE(sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 >> 6)) << 6;
+            temp_s2_2 = Math_Vector2MagCalcSafe(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0,
+                                                sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0);
             temp_s1_2 = temp_s2_2 >> 2;
             temp_s3   = temp_s2_2 >> 3;
 

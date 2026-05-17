@@ -185,8 +185,8 @@ void func_800D13D8(void) // 0x800D13D8
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
 
-            g_SysWork.field_235C = NULL;
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             g_SysWork.pointLightIntensity = Q12(0.6f);
 
             Gfx_MapInitMapEffectsUpdate(16, 16);

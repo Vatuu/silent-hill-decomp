@@ -1053,8 +1053,8 @@ void Map_WorldObjectsInit(void) // 0x800D1658
     D_800D4E6E = 0;
     D_800D4E70 = 0;
 
-    g_SysWork.field_235C = NULL;
-    g_SysWork.field_236C = NULL;
+    g_SysWork.lightBoneCoord0 = NULL;
+    g_SysWork.lightBoneCoord1 = NULL;
 
     func_8008D438();
     Gfx_MapInitMapEffectsUpdate(4, 4);

@@ -243,8 +243,8 @@ void func_800D1910(void) // 0x800D1910
             D_800D6EF8 = 0;
 
             // TODO: Find correct order. Looking at other functions, seems to be random.
-            g_SysWork.field_235C = NULL;
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             g_SysWork.pointLightIntensity = Q12(1.0f);
             Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(57.0f), Q12(-3.0f), Q12(141.8f));
 
@@ -402,8 +402,8 @@ void func_800D23E4(void) // 0x800D23E4
 
             D_800D6EF8 = 0;
 
-            g_SysWork.field_235C = NULL;
-            g_SysWork.field_236C = NULL;
+            g_SysWork.lightBoneCoord0 = NULL;
+            g_SysWork.lightBoneCoord1 = NULL;
             g_SysWork.pointLightIntensity = Q12(1.2f);
 
             func_8008D438();

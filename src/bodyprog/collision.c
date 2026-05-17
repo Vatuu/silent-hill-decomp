@@ -781,7 +781,7 @@ void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* pos, c
     result->offset.vy = Q12_TO_Q8(pos->vy);
     result->offset.vz = Q12_TO_Q8(pos->vz);
 
-    result->distance_8 = SquareRoot0(SQUARE(result->offset.vx) + SQUARE(result->offset.vz));
+    result->distance_8 = Math_Vector2MagCalc(result->offset.vx, result->offset.vz);
     if (result->distance_8 != Q12(0.0f))
     {
         // @unused
@@ -1079,13 +1079,13 @@ bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collDa
     if (temp_s0 < 0)
     {
         collState->field_CC.field_20.field_8  = 2;
-        collState->field_CC.field_20.field_C  = SquareRoot0(SQUARE(temp_s0) + SQUARE(temp_a0_5));
+        collState->field_CC.field_20.field_C  = Math_Vector2MagCalc(temp_s0, temp_a0_5);
         collState->field_CC.field_20.field_10 = -temp_s0;
     }
     else if (collState->field_CC.field_6.vz < temp_s0)
     {
         collState->field_CC.field_20.field_8  = 2;
-        collState->field_CC.field_20.field_C  = SquareRoot0(SQUARE(temp_s0 - collState->field_CC.field_6.vz) + SQUARE(temp_a0_5));
+        collState->field_CC.field_20.field_C  = Math_Vector2MagCalc(temp_s0 - collState->field_CC.field_6.vz, temp_a0_5);
         collState->field_CC.field_20.field_10 = temp_s0 - collState->field_CC.field_6.vz;
     }
     else
@@ -1612,12 +1612,12 @@ q3_12 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg
 
     if (sp10.vx < 0)
     {
-        dist = SquareRoot0(SQUARE(sp10.vx) + SQUARE(sp10.vy));
+        dist = Math_Vector2MagCalc(sp10.vx, sp10.vy);
     }
     else if (arg1 < sp10.vx)
     {
         temp_v0 = sp10.vx - arg1;
-        dist  = SquareRoot0(SQUARE(temp_v0) + SQUARE(sp10.vy));
+        dist  = Math_Vector2MagCalc(temp_v0, sp10.vy);
     }
     else
     {
@@ -1642,7 +1642,7 @@ q3_12 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg
         return NO_VALUE;
     }
 
-    alpha = FP_TO(sp10.vx - SquareRoot0(SQUARE(arg4) - SQUARE(sp10.vy)), Q12_SHIFT) / arg1;
+    alpha = FP_TO(sp10.vx - SquareRoot0(SQUARE(arg4) - SQUARE(sp10.vy)), Q12_SHIFT) / arg1; // TODO: Use `Math_Vector2MagCalc`.
     alpha = CLAMP(alpha, Q12(0.0f), Q12(1.0f));
 
     return alpha;
@@ -1711,7 +1711,7 @@ void func_8006C45C(s_CollisionState* collState) // 0x8006C45C
 
     deltaX = collState->field_98.vec_0.vx - collState->field_CC.field_6.vx;
     deltaZ = collState->field_98.vec_0.vz - collState->field_CC.field_6.vz;
-    dist   = SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ));
+    dist   = Math_Vector2MagCalc(deltaX, deltaZ);
 
     if (dist < collState->field_CC.field_C.field_0 && collState->field_CC.field_5 != 1 &&
         (collState->field_C8 == 0xFF || collState->field_CC.field_6.vy < collState->groundHeight))
@@ -1905,8 +1905,8 @@ q3_12 Collision_OffsetAlphaGet(s_CollisionState* collState) // 0x8006CB90
         return Q12(1.0f);
     }
 
-    return Q12_DIV(collState->field_4.distance_8, SquareRoot0(SQUARE(collState->field_4.distance_8) +
-                                                              SQUARE(groundHeight - collState->field_4.bottomPos)));
+    return Q12_DIV(collState->field_4.distance_8, Math_Vector2MagCalc(collState->field_4.distance_8,
+                                                                      groundHeight - collState->field_4.bottomPos));
 }
 
 q23_8 Ipd_GroundHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionState* collState) // 0x8006CC44
@@ -1960,7 +1960,7 @@ void func_8006CC9C(s_CollisionState* state) // 0x8006CC9C
     }
 
     deltaZ = state->field_4.positionZ - state->field_9C.field_0;
-    temp_s4 = SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ));
+    temp_s4 = Math_Vector2MagCalc(deltaX, deltaZ);
 
     temp_v0 = func_8006C248(*(s32*)&state->field_4.direction, state->field_4.distance_8,
                             state->field_98.field_0 - state->field_4.positionX,
@@ -2359,7 +2359,7 @@ void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2) // 0x800
 
     z                 = arg2->vy;
     arg0->offset.vz = arg2->vy;
-    dist              = SquareRoot0(SQUARE(arg0->offset.vx) + SQUARE(z));
+    dist              = Math_Vector2MagCalc(arg0->offset.vx, z);
 
     arg0->distance_8 = dist;
 
@@ -2541,7 +2541,7 @@ bool Ray_TraceSetup(s_RayState* state, bool useCylinder, q7_8 arg2, const VECTOR
     state->field_40 = state->from.vy + state->offset.vy;
     state->field_44 = state->from.vz + state->offset.vz;
 
-    state->rayDistance = SquareRoot0(SQUARE(state->offset.vx) + SQUARE(state->offset.vz));
+    state->rayDistance = Math_Vector2MagCalc(state->offset.vx, state->offset.vz);
     if (state->rayDistance == Q8(0.0f))
     {
         return false;
@@ -3811,7 +3811,7 @@ q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2) // 0x80
         deltaZ = g_SysWork.playerWork.player.position.vz - chara->position.vz;
         deltaZ = Q12_TO_Q6(deltaZ);
 
-        dist = SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ));
+        dist = Math_Vector2MagCalc(deltaX, deltaZ);
         dist = Q6_TO_Q12(dist);
     }
 
