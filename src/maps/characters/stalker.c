@@ -205,12 +205,12 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
 
             if (stalkerProps.flags & StalkerFlag_6)
             {
-                mag          = Math_Vector2MagCalc(stalker->damage.position.vx, stalker->damage.position.vz);
+                mag          = Math_Vector2MagCalcSafe(stalker->damage.position.vx, stalker->damage.position.vz);
                 stalker->moveSpeed = (mag << 12) / 0xC000;
             }
             else
             {
-                mag          = Math_Vector2MagCalc(stalker->damage.position.vx, stalker->damage.position.vz);
+                mag          = Math_Vector2MagCalcSafe(stalker->damage.position.vx, stalker->damage.position.vz);
                 stalker->moveSpeed = (mag << 12) / Q12(1.5f);
             }
 
@@ -552,7 +552,7 @@ void Stalker_ControlUpdate(s_SubCharacter* stalker)
             sharedData_800E3A0C_0_s00[i] = sharedData_800E3A0C_0_s00[i - 1];
         }
 
-        // TODO: Use `Math_Vector2MagCalc`.
+        // TODO: Use `Math_Vector2MagCalcSafe`.
         temp_v0                      = ((g_SysWork.playerWork.player.position.vx - sharedData_800E39E4_0_s00) >> 6);
         temp_v0_2                    = (g_SysWork.playerWork.player.position.vz - sharedData_800E39E8_0_s00) >> 6;
         sharedData_800E39EC_0_s00[0] = (FP_TO(SquareRoot0(SQUARE(temp_v0) + SQUARE(temp_v0_2)), Q12_SHIFT) << 6) / g_DeltaTime;
@@ -654,7 +654,7 @@ void Stalker_Control_2(s_SubCharacter* stalker)
     s32    i;
 
     // TODO: Doesn't match?
-    //distToPlayer  = Math_Vector2MagCalc(sharedData_800E3A18_0_s00 - stalker->position.vx,
+    //distToPlayer  = Math_Vector2MagCalcSafe(sharedData_800E3A18_0_s00 - stalker->position.vx,
     //                                 sharedData_800E3A1C_0_s00 - stalker->position.vz);
     distToPlayer   = SquareRoot0(SQUARE((sharedData_800E3A18_0_s00 - stalker->position.vx) >> 6) + SQUARE((sharedData_800E3A1C_0_s00 - stalker->position.vz) >> 6));
     distToPlayer <<= 6;
@@ -862,7 +862,7 @@ void Stalker_Control_3(s_SubCharacter* stalker)
     q25_6  temp;
     q19_12 temp2;
 
-    distToPlayer  = Math_Vector2MagCalc(sharedData_800E3A18_0_s00 - stalker->position.vx,
+    distToPlayer  = Math_Vector2MagCalcSafe(sharedData_800E3A18_0_s00 - stalker->position.vx,
                                         sharedData_800E3A1C_0_s00 - stalker->position.vz);
     angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(sharedData_800E3A18_0_s00 - stalker->position.vx,
                                               sharedData_800E3A1C_0_s00 - stalker->position.vz) -
@@ -1130,7 +1130,7 @@ void Stalker_Control_4(s_SubCharacter* stalker)
     q19_12 deltaX;
     q19_12 deltaZ;
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
+    distToPlayer = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
                                        g_SysWork.playerWork.player.position.vz - stalker->position.vz);
 
     if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))))
@@ -1330,7 +1330,7 @@ void Stalker_Control_5(s_SubCharacter* stalker)
     }
     else if (ANIM_TIME_RANGE_CHECK(stalker->model.anim.time, 50, 61))
     {
-        distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
+        distToPlayer = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
                                            g_SysWork.playerWork.player.position.vz - stalker->position.vz);
 
         for (i = 0; i < 6; i++)
@@ -1423,7 +1423,7 @@ void Stalker_Control_6(s_SubCharacter* stalker)
     stalker->collision.state = CharaCollisionState_Npc;
     Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
+    distToPlayer = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
                                g_SysWork.playerWork.player.position.vz - stalker->position.vz);
 
     moveSpeed = Q12(0.0f);
@@ -1927,7 +1927,7 @@ void Stalker_Control_12(s_SubCharacter* stalker)
     q3_12  angleDeltaToPlayer;
     s32    cond; // Not `bool`?
 
-    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
+    distToPlayer       = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
                                              g_SysWork.playerWork.player.position.vz - stalker->position.vz);
     angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position) -
                                        stalker->rotation.vy);
@@ -2203,7 +2203,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
         // TODO: What's weapon attack 48?
         func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk48, AttackInputType_Tap), stalker, &ptr->position_38, &g_SysWork.playerWork.player,
                       ratan2(ptr->field_20.vx - stalker->position.vx, ptr->field_20.vz - stalker->position.vz),
-                      ratan2(Math_Vector2MagCalc(stalker->position.vx - ptr->field_20.vx,
+                      ratan2(Math_Vector2MagCalcSafe(stalker->position.vx - ptr->field_20.vx,
                                                  stalker->position.vz - ptr->field_20.vz),
                              ptr->field_20.vy - (stalker->position.vy + stalker->collision.box.field_8)));
     }
@@ -2215,7 +2215,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
     {
         ptr->angle_46 = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position) -
                                       stalker->rotation.vy);
-        temp          = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
+        temp          = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
                                             g_SysWork.playerWork.player.position.vz - stalker->position.vz);
 
         if (temp < Q12(3.0f) && ABS(ptr->angle_46) < Q12_ANGLE(45.0f))

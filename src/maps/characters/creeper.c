@@ -392,9 +392,9 @@ void Creeper_ControlWalkForward(s_SubCharacter* creeper)
         creeperProps.flags          &= ~CreeperFlag_TargetPlayer;
     }
 
-    distToPlayer = Math_Vector2MagCalc(playerChara.position.vx - creeper->position.vx,
+    distToPlayer = Math_Vector2MagCalcSafe(playerChara.position.vx - creeper->position.vx,
                                        playerChara.position.vz - creeper->position.vz);
-    distToTarget = Math_Vector2MagCalc(creeperProps.targetPositionX - creeper->position.vx,
+    distToTarget = Math_Vector2MagCalcSafe(creeperProps.targetPositionX - creeper->position.vx,
                                        creeperProps.targetPositionZ - creeper->position.vz);
 
     if (distToTarget < Q12(1.2f) && !(creeperProps.flags & CreeperFlag_HasAttacked) &&
@@ -520,7 +520,7 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
         creeper->model.anim.status == ANIM_STATUS(CreeperAnim_Attack, false) ||
         ANIM_TIME_RANGE_CHECK(creeper->model.anim.time, 4, 7))
     {
-        distToPlayer = Math_Vector2MagCalc(playerChara.position.vx - creeper->position.vx,
+        distToPlayer = Math_Vector2MagCalcSafe(playerChara.position.vx - creeper->position.vx,
                                            playerChara.position.vz - creeper->position.vz);
         if (distToPlayer < Q12(0.4f))
         {

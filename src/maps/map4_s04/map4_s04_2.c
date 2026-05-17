@@ -595,7 +595,7 @@ void func_800D23E4(void) // 0x800D23E4
         Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", g_Cutscene_Timer, FS_BUFFER_15);
 
         // Set light rotation.
-        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
+        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafe(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
         g_SysWork.pointLightRotation.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
         g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
     }
@@ -621,7 +621,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2DF4
     {
         if (Savegame_EventFlagGet(EventFlag_337) && !Savegame_EventFlagGet(EventFlag_338))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &SVECTOR3_ZERO);
+            WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &SVECTOR3_Zero);
         }
     }
 }

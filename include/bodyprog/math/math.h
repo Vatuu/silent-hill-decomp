@@ -7,7 +7,8 @@
 #include "bodyprog/math/constants.h"
 #include "bodyprog/math/fixed_point.h"
 
-#define SVECTOR3_ZERO (SVECTOR3){ 0, 0, 0 }
+#define SVECTOR3_Zero (SVECTOR3){ 0, 0, 0 }
+#define VECTOR_Zero   (VECTOR){ 0, 0, 0, 0 }
 
 /** @brief Constructs a `VECTOR3` in a fixed-point Q19.12 format.
  *
@@ -118,23 +119,44 @@
     ratan2(to.vx - from.vx,                     \
            to.vz - from.vz)                     \
 
-/** @brief Computes the magnitude of a 2D vector in Q19.12, using intermediate components in Q25.6 to avoid overflow.
+/** @brief Computes the magnitude of a 2D vector in Q19.12.
  *
  * @param x X vector component (Q19.12).
  * @param z Z vector component (Q19.12).
  * @return 2D vector magnitude (Q19.12).
  */
 #define Math_Vector2MagCalc(x, z) \
+    SquareRoot0(SQUARE(x) + SQUARE(z))
+
+/** @brief Computes the magnitude of a 2D vector in Q19.12, using intermediate components in Q25.6 to safely
+ * avoid overflow.
+ *
+ * @param x X vector component (Q19.12).
+ * @param z Z vector component (Q19.12).
+ * @return 2D vector magnitude (Q19.12).
+ */
+#define Math_Vector2MagCalcSafe(x, z) \
     Q6_TO_Q12(SquareRoot0(SQUARE(Q12_TO_Q6(x)) + SQUARE(Q12_TO_Q6(z))))
 
-/** @brief Computes the magnitude of a 3D vector in Q19.12, using intermediate components in Q25.6 to avoid overflow.
+/** @brief Computes the magnitude of a 3D vector in Q19.12.
  *
  * @param x X vector component (Q19.12).
  * @param y Y vector component (Q19.12).
  * @param z Z vector component (Q19.12).
- * @return 2D vector magnitude (Q19.12).
+ * @return 3D vector magnitude (Q19.12).
  */
 #define Math_Vector3MagCalc(x, y, z) \
+    SquareRoot0(SQUARE(x) + SQUARE(z) + SQUARE(z))
+
+/** @brief Computes the magnitude of a 3D vector in Q19.12, using intermediate components in Q25.6 to safely
+ * avoid overflow.
+ *
+ * @param x X vector component (Q19.12).
+ * @param y Y vector component (Q19.12).
+ * @param z Z vector component (Q19.12).
+ * @return 3D vector magnitude (Q19.12).
+ */
+#define Math_Vector3MagCalcSafe(x, y, z) \
     Q6_TO_Q12(SquareRoot0(SQUARE(Q12_TO_Q6(x)) + SQUARE(Q12_TO_Q6(y)) + SQUARE(Q12_TO_Q6(z))))
 
 /** @brief Sets an `SVECTOR` using a fast bitwise method.

@@ -772,7 +772,7 @@ void func_800DAF18(void) // 0x800DAF18
         temp_s0_2 = Vc_StereoBalanceGet(&D_800CBAB0) >> 1;
         vwGetViewPosition(&sp48);
 
-        temp_v1_9 = Math_Vector3MagCalc((((g_SysWork.playerWork.player.position.vx + sp48.vx) >> 1) + 0xA333),
+        temp_v1_9 = Math_Vector3MagCalcSafe((((g_SysWork.playerWork.player.position.vx + sp48.vx) >> 1) + 0xA333),
                                         ((g_SysWork.playerWork.player.position.vy + sp48.vy) >> 1),
                                         (((g_SysWork.playerWork.player.position.vz + sp48.vz) >> 1) + 0xD599));
 
@@ -1310,7 +1310,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             break;
 
         case 8:
-            func_80080B58(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_ZERO, &QVECTOR3(-13.91f, -11.5f, 22.11f));
+            func_80080B58(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &QVECTOR3(-13.91f, -11.5f, 22.11f));
             sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
             SysWork_StateStepIncrementDelayed(0x2800, false);
             break;
@@ -1412,7 +1412,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
 
         if (Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject6.object, &g_WorldObject6.position, &SVECTOR3_ZERO);
+            WorldGfx_ObjectAdd(&g_WorldObject6.object, &g_WorldObject6.position, &SVECTOR3_Zero);
         }
     }
 
@@ -1694,12 +1694,12 @@ void func_800DE828(void) // 0x800DE828
     {
         if (Savegame_EventFlagGet(EventFlag_105))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject4.object, &g_WorldObject4.position, &SVECTOR3_ZERO);
+            WorldGfx_ObjectAdd(&g_WorldObject4.object, &g_WorldObject4.position, &SVECTOR3_Zero);
         }
 
         if (Savegame_EventFlagGet(EventFlag_101) && Savegame_EventFlagGet(EventFlag_102))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject3.object, &g_WorldObject3.position, &SVECTOR3_ZERO);
+            WorldGfx_ObjectAdd(&g_WorldObject3.object, &g_WorldObject3.position, &SVECTOR3_Zero);
         }
 
         WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &g_WorldObject0.rotation);
@@ -1748,12 +1748,12 @@ void func_800DE828(void) // 0x800DE828
                 Savegame_EventFlagSet(EventFlag_106);
             }
 
-            WorldGfx_ObjectAdd(&g_WorldObject4.object, &g_WorldObject4.position, &SVECTOR3_ZERO);
+            WorldGfx_ObjectAdd(&g_WorldObject4.object, &g_WorldObject4.position, &SVECTOR3_Zero);
         }
         else if (Savegame_EventFlagGet(EventFlag_106))
         {
             g_WorldObject2.rotation.vy = Q12_ANGLE(-157.4f);
-            WorldGfx_ObjectAdd(&g_WorldObject4.object, &g_WorldObject4.position, &SVECTOR3_ZERO);
+            WorldGfx_ObjectAdd(&g_WorldObject4.object, &g_WorldObject4.position, &SVECTOR3_Zero);
         }
 
         if (!Savegame_EventFlagGet(EventFlag_101) || !Savegame_EventFlagGet(EventFlag_102))
@@ -1863,7 +1863,7 @@ void func_800DE828(void) // 0x800DE828
                     D_800E20E8 = tmp0;
                     g_WorldObject1.rotation.vy += FP_FROM(tmp0, Q12_SHIFT);
 
-                    WorldGfx_ObjectAdd(&g_WorldObject3.object, &g_WorldObject3.position, &SVECTOR3_ZERO);
+                    WorldGfx_ObjectAdd(&g_WorldObject3.object, &g_WorldObject3.position, &SVECTOR3_Zero);
 
                     if (D_800E20EE == 4)
                     {
@@ -1893,7 +1893,7 @@ void func_800DE828(void) // 0x800DE828
         else
         {
             g_WorldObject1.rotation.vy = Q12_ANGLE(-157.5f);
-            WorldGfx_ObjectAdd(&g_WorldObject3.object, &g_WorldObject3.position, &SVECTOR3_ZERO);
+            WorldGfx_ObjectAdd(&g_WorldObject3.object, &g_WorldObject3.position, &SVECTOR3_Zero);
 
             if (!Savegame_EventFlagGet(EventFlag_105))
             {

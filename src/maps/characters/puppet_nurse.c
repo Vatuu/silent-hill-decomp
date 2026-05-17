@@ -447,7 +447,7 @@ void PuppetNurse_Move(s_SubCharacter* nurse)
     q19_12 distAbs;
     q19_12 limit;
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - nurse->position.vx,
+    distToPlayer = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - nurse->position.vx,
                                        g_SysWork.playerWork.player.position.vz - nurse->position.vz) -
                    Q12(0.76f);
     distAbs = ABS(distToPlayer);
@@ -1051,7 +1051,7 @@ s32 sharedFunc_800CF600_3_s03(s_SubCharacter* nurse)
     q19_12 absMag;
     q19_12 limit;
 
-    mag = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - nurse->position.vx,
+    mag = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - nurse->position.vx,
                                   g_SysWork.playerWork.player.position.vz - nurse->position.vz) -
               Q12(0.76f);
     absMag = ABS(mag);
@@ -1144,7 +1144,7 @@ void PuppetNurse_Control12(s_SubCharacter* nurse)
     angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position, g_SysWork.playerWork.player.position) - nurse->rotation.vy);
     angleDeltaAbs      = abs(angleDeltaToPlayer);
 
-    distToPlayer = Math_Vector2MagCalc((g_SysWork.playerWork.player.position.vx - nurse->position.vx),
+    distToPlayer = Math_Vector2MagCalcSafe((g_SysWork.playerWork.player.position.vx - nurse->position.vx),
                                        (g_SysWork.playerWork.player.position.vz - nurse->position.vz));
 
     distToPlayer = Q12_MULT_FLOAT_PRECISE(distToPlayer, 1.1f);

@@ -62,16 +62,15 @@ void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s
     ptr->field_48 = ratan2(ptr->field_0.vy, ptr->field_0.vz);
     ptr->field_4A = ratan2(ptr->field_0.vx, ptr->field_0.vz);
 
-    *(s32*)&ptr->field_2C = (u16)ptr->field_48 + (ptr->field_4A << 16);
-    ptr->field_2C.vz      = 0;
+    Math_SetSVectorFastSum(&ptr->field_2C, (u16)ptr->field_48, ptr->field_4A, 0);
 
     Math_RotMatrixZxyNegGte(&ptr->field_2C, &ptr->field_C);
-    TransMatrix(&ptr->field_C, &(VECTOR){ 0, 0, 0, 0 });
+    TransMatrix(&ptr->field_C, &VECTOR_Zero);
 
     gte_SetRotMatrix(&ptr->field_C);
     gte_SetTransMatrix(&ptr->field_C);
 
-    ptr->field_44 = Math_Vector2MagCalc(var_s1, arg4) + 1;
+    ptr->field_44 = Math_Vector2MagCalcSafe(var_s1, arg4) + 1;
 
     for (var_s7 = -arg4; arg4 >= var_s7;)
     {
@@ -92,14 +91,15 @@ void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s
             }
 
             temp_v0_8 = func_8005E7E0(arg7 + 0x17);
-            if (temp_v0_8 == -1)
+            if (temp_v0_8 == NO_VALUE)
             {
                 return;
             }
 
-            *(s32*)&ptr->field_2C = (((var_s7 + (Rng_Rand16() % (arg6 >> 1))) - (arg6 >> 2)) & 0xFFFF) +
-                                    (((var_s5 + (Rng_Rand16() % (arg6 >> 1))) - (arg6 >> 2)) << 0x10);
-            ptr->field_2C.vz = 0;
+            Math_SetSVectorFastSum(&ptr->field_2C,
+                                   (var_s7 + (Rng_Rand16() % (arg6 >> 1))) - (arg6 >> 2),
+                                   (var_s5 + (Rng_Rand16() % (arg6 >> 1))) - (arg6 >> 2),
+                                   0);
 
             gte_ldv0(&ptr->field_2C);
             gte_rt();
@@ -109,17 +109,17 @@ void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s
             sharedData_800DFB7C_0_s00[temp_v0_8].vy_8                = ptr->field_34.vy + arg0->vy;
             sharedData_800DFB7C_0_s00[temp_v0_8].field_4.s_0.field_0 = ptr->field_34.vz;
 
-            temp_s0_2 = SquareRoot0(SQUARE(ptr->field_34.vx >> 6) + SQUARE(ptr->field_34.vy >> 6) + SQUARE(ptr->field_34.vz >> 6)) << 6;
+            temp_s0_2 = Math_Vector3MagCalcSafe(ptr->field_34.vx, ptr->field_34.vy, ptr->field_34.vz);
 
-            sharedData_800DFB7C_0_s00[temp_v0_8].field_10.s_0.field_2 = MIN(temp_s0_2 / (arg2 >> 0xA), 0x1000);
+            sharedData_800DFB7C_0_s00[temp_v0_8].field_10.s_0.field_2 = MIN(temp_s0_2 / (arg2 >> 10), Q12(1.0f));
 
-            sharedData_800DFB7C_0_s00[temp_v0_8].field_B = ((Rng_Rand16() % MIN(((temp_s0_2 * 6) / ptr->field_44) + 3, 8)) * 0x10) - 0x80 + Rng_GenerateUInt(0, 15);
+            sharedData_800DFB7C_0_s00[temp_v0_8].field_B = ((Rng_Rand16() % MIN(((temp_s0_2 * 6) / ptr->field_44) + 3, 8)) * 16) - 0x80 + Rng_GenerateUInt(0, 15);
 
             ptr->field_34.vx += ptr->field_0.vx;
             ptr->field_34.vy += ptr->field_0.vy;
             ptr->field_34.vz += ptr->field_0.vz;
 
-            temp_s0_2 = SquareRoot0(SQUARE(ptr->field_34.vx >> 6) + SQUARE(ptr->field_34.vy >> 6) + SQUARE(ptr->field_34.vz >> 6)) << 6;
+            temp_s0_2 = Math_Vector3MagCalcSafe(ptr->field_34.vx, ptr->field_34.vy, ptr->field_34.vz);
 
             sharedData_800DFB7C_0_s00[temp_v0_8].field_C.s_0.field_0  = (arg2 * Rng_GenerateUInt(64, 191) >> 7) * ptr->field_34.vx / temp_s0_2;
             sharedData_800DFB7C_0_s00[temp_v0_8].field_C.s_0.field_2  = (arg2 * Rng_GenerateUInt(64, 191) >> 7) * ptr->field_34.vy / temp_s0_2;

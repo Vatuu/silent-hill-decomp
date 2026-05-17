@@ -778,7 +778,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
                 temp_s0 = ratan2(temp5, temp_s0_11);
 
-                D_800C4748[var_s2 - 1].vy = ratan2(SquareRoot0(SQUARE(temp5) + SQUARE(temp_s0_11)), temp4);
+                D_800C4748[var_s2 - 1].vy = ratan2(Math_Vector2MagCalc(temp5, temp_s0_11), temp4);
                 D_800C4748[var_s2 - 1].vx = temp_s0;
 
                 temp_a1 = var_s2 - 1;

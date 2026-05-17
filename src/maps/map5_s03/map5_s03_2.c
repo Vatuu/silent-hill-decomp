@@ -545,7 +545,7 @@ void func_800D1AF8(void) // 0x800D1AF8
         Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", g_Cutscene_Timer, FS_BUFFER_17);
 
         // Set light rotation.
-        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
+        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafe(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
         g_SysWork.pointLightRotation.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
         g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
     }
@@ -684,7 +684,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
             collFlags = CollisionFlag_1;
         }
 
-        WorldGfx_ObjectAdd(&g_WorldObject_Movaches.object, &g_WorldObject_Movaches.position, &SVECTOR3_ZERO);
+        WorldGfx_ObjectAdd(&g_WorldObject_Movaches.object, &g_WorldObject_Movaches.position, &SVECTOR3_Zero);
     }
     else
     {

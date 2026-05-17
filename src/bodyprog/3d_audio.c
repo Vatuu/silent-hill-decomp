@@ -232,7 +232,7 @@ static inline s32 AttenuationCalc(s32 volume, VECTOR3* pos, q19_12 falloff)
 {
     q19_12 dist;
 
-    dist = Math_Vector3MagCalc(g_SysWork.playerWork.player.position.vx - pos->vx,
+    dist = Math_Vector3MagCalcSafe(g_SysWork.playerWork.player.position.vx - pos->vx,
                                g_SysWork.playerWork.player.position.vy - pos->vy,
                                g_SysWork.playerWork.player.position.vz - pos->vz);
     return (volume * dist) / falloff;

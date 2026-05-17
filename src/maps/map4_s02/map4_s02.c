@@ -67,7 +67,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA3F0
     if ((PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3)) ||
         (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3)))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object, &g_WorldObject_Kidn04.position, &SVECTOR3_ZERO);
+        WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object, &g_WorldObject_Kidn04.position, &SVECTOR3_Zero);
         Collision_FlagBitsSet(2);
     }
 
@@ -151,8 +151,8 @@ void Map_WorldObjectsUpdate(void) // 0x800EA3F0
     }
     else
     {
-        dist0 = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - Q12(61.0f), g_SysWork.playerWork.player.position.vz - Q12(27.5f));
-        dist1 = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - Q12(61.0f), g_SysWork.playerWork.player.position.vz - Q12(17.5f));
+        dist0 = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - Q12(61.0f), g_SysWork.playerWork.player.position.vz - Q12(27.5f));
+        dist1 = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - Q12(61.0f), g_SysWork.playerWork.player.position.vz - Q12(17.5f));
         if (dist1 >= dist0)
         {
             tmp0 = dist0;

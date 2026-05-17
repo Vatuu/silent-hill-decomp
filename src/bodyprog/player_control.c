@@ -6566,16 +6566,16 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
     VECTOR3     offset;
     VECTOR3     sp30; // Q19.12
     VECTOR3     sp40; // Q19.12
-    s16         temp_v0;
-    q3_12       someAngle;
-    s16         temp_s0;
-    s32         temp_s0_2;
-    s32         temp_s2;
+    q19_12      offsetX;
+    q19_12      offsetZ;
+    q3_12       offsetAlphaX;
+    q3_12       offsetAlphaZ;
+    q3_12       adjOffsetX;
+    q3_12       adjOffsetZ;
+    q19_12      adjMoveSpeed;
     s32         temp_s2_2;
-    s32         temp_s3;
     s32         temp_s3_2;
     s32         temp_v0_3;
-    s16         temp_v1;
     s32         posY;
     u32         temp;
 
@@ -6583,35 +6583,39 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
 
     Collision_Get(&coll, player->position.vx, player->position.vz);
 
-    temp_s3 = Q12_MULT(player->moveSpeed, Math_Sin(player->headingAngle));
-    temp_s2 = Q12_MULT(player->moveSpeed, Math_Cos(player->headingAngle));
+    // Compute speed displacement.
+    offsetX = Q12_MULT(player->moveSpeed, Math_Sin(player->headingAngle));
+    offsetZ = Q12_MULT(player->moveSpeed, Math_Cos(player->headingAngle));
 
-    temp_s0 = Math_Cos(ABS(coll.field_4) >> 3);
-    temp_v0 = Math_Cos(ABS(coll.field_6) >> 3);
+    // Compute displacement alpha from ground slope.
+    offsetAlphaX = Math_Cos(ABS(coll.field_4) >> 3); // `/ 8`.
+    offsetAlphaZ = Math_Cos(ABS(coll.field_6) >> 3); // `/ 8`.
 
-    temp_v1 = Q12_MULT(Q12_MULT(temp_s3, temp_s0), temp_s0);
-    someAngle = Q12_MULT(Q12_MULT(temp_s2, temp_v0), temp_v0);
+    // Compute adjusted displacement.
+    adjOffsetX = Q12_MULT(Q12_MULT(offsetX, offsetAlphaX), offsetAlphaX);
+    adjOffsetZ = Q12_MULT(Q12_MULT(offsetZ, offsetAlphaZ), offsetAlphaZ);
 
+    // Adjust speed according to displacement.
     if (player->moveSpeed >= Q12(0.0f))
     {
-        player->moveSpeed = SquareRoot0(SQUARE(temp_v1) + SQUARE(someAngle));
+        player->moveSpeed = Math_Vector2MagCalc(adjOffsetX, adjOffsetZ);
     }
     else
     {
-        player->moveSpeed = -SquareRoot0(SQUARE(temp_v1) + SQUARE(someAngle));
+        player->moveSpeed = -Math_Vector2MagCalc(adjOffsetX, adjOffsetZ);
     }
 
-    temp_s0_2 = Q12_MULT_PRECISE(player->moveSpeed, g_DeltaTime);
+    adjMoveSpeed = Q12_MULT_PRECISE(player->moveSpeed, g_DeltaTime);
 
     temp_v0_3 = player->headingAngle;
-    temp      = temp_s0_2 + SHRT_MAX;
+    temp      = adjMoveSpeed + SHRT_MAX;
     temp_s2_2 = (temp > (SHRT_MAX * 2)) * 4;
     temp_s3_2 = temp_s2_2 >> 1;
 
-    offset.vx = Q12_MULT_PRECISE((temp_s0_2 >> temp_s3_2), Math_Sin(temp_v0_3) >> temp_s3_2);
+    offset.vx = Q12_MULT_PRECISE((adjMoveSpeed >> temp_s3_2), Math_Sin(temp_v0_3) >> temp_s3_2);
     offset.vx <<= temp_s2_2;
 
-    offset.vz = Q12_MULT_PRECISE((temp_s0_2 >> temp_s3_2), Math_Cos(temp_v0_3) >> temp_s3_2);
+    offset.vz = Q12_MULT_PRECISE((adjMoveSpeed >> temp_s3_2), Math_Cos(temp_v0_3) >> temp_s3_2);
     offset.vz <<= temp_s2_2;
 
     offset.vy = Q12_MULT_PRECISE(player->fallSpeed, g_DeltaTime);
@@ -6682,7 +6686,7 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
         player->fallSpeed   = Q12(0.0f);
     }
 
-    someAngle = Q12_ANGLE_NORM_U(ratan2(player->position.vx - g_Player_PrevPosition.vx, player->position.vz - g_Player_PrevPosition.vz) + Q12_ANGLE(360.0f));
+    adjOffsetZ = Q12_ANGLE_NORM_U(ratan2(player->position.vx - g_Player_PrevPosition.vx, player->position.vz - g_Player_PrevPosition.vz) + Q12_ANGLE(360.0f));
 
     if (!(g_SysWork.playerWork.extra.state >= PlayerState_FallForward && g_SysWork.playerWork.extra.state < PlayerState_KickEnemy))
     {
@@ -6691,8 +6695,8 @@ void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
             posY = player->position.vy;
             if ((D_800C4590.collision.groundHeight - posY) >= Q12(0.65f))
             {
-                if (ABS_DIFF(player->rotation.vy, someAngle) >= Q12_ANGLE(90.0f) &&
-                    ABS_DIFF(player->rotation.vy, someAngle) <  Q12_ANGLE(270.0f))
+                if (ABS_DIFF(player->rotation.vy, adjOffsetZ) >= Q12_ANGLE(90.0f) &&
+                    ABS_DIFF(player->rotation.vy, adjOffsetZ) <  Q12_ANGLE(270.0f))
                 {
                     if (g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_JumpBackward)
                     {

@@ -481,7 +481,7 @@ void Romper_ControlWalkForward(s_SubCharacter* romper)
         }
     }
 
-    if (Math_Vector2MagCalc(romper->position.vx - romperProps.targetPositionX_FC,
+    if (Math_Vector2MagCalcSafe(romper->position.vx - romperProps.targetPositionX_FC,
                             romper->position.vz - romperProps.targetPositionZ_100) < Q12(1.0f))
     {
         moveDist                        = Rng_GenerateInt(Q12(0.0f), Q12(5.0f) - 1);
@@ -594,7 +594,7 @@ void Romper_Control_3(s_SubCharacter* romper)
         return;
     }
 
-    distToTarget = Math_Vector2MagCalc(romper->position.vx - romperProps.targetPositionX_FC,
+    distToTarget = Math_Vector2MagCalcSafe(romper->position.vx - romperProps.targetPositionX_FC,
                                        romper->position.vz - romperProps.targetPositionZ_100);
 
     cond = Ray_NpcToPlayerLosHitCheck(romper, &g_SysWork.playerWork.player);
@@ -791,7 +791,7 @@ void Romper_Control_4(s_SubCharacter* romper)
     {
         romperProps.rotationY_F2 = Q12_ANGLE(0.0f);
 
-        if (Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - romper->position.vx,
+        if (Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - romper->position.vx,
                                 g_SysWork.playerWork.player.position.vz - romper->position.vz) >= Q12_ANGLE(180.0f))
         {
             romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, Q12(2.5f), romperProps.targetPositionX_FC,
@@ -959,7 +959,7 @@ void Romper_ControlJump(s_SubCharacter* romper)
 
         if (romper->model.anim.time == Q12(2.0f))
         {
-            temp_v1_5 = Math_Vector2MagCalc(romperProps.targetPositionX_FC - romper->position.vx,
+            temp_v1_5 = Math_Vector2MagCalcSafe(romperProps.targetPositionX_FC - romper->position.vx,
                                             romperProps.targetPositionZ_100 - romper->position.vz);
 
             var_a0_2             = CLAMP_LOW(temp_v1_5, Q12(0.3f));
@@ -1696,7 +1696,7 @@ void sharedFunc_800E9714_2_s02(s_SubCharacter* romper)
     headingAngle  = romper->rotation.vy;
     moveDist      = Q12_MULT_PRECISE(temp_v0_4, temp_v0);
 
-    if (moveDist >= Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - romper->position.vx,
+    if (moveDist >= Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - romper->position.vx,
                                         g_SysWork.playerWork.player.position.vz - romper->position.vz))
     {
         newPosX = romper->position.vx + Q12_MULT(moveDist, Math_Sin(headingAngle));
@@ -1710,7 +1710,7 @@ void sharedFunc_800E9714_2_s02(s_SubCharacter* romper)
 
     sharedFunc_800D2E9C_0_s00(&newPosX, &newPosZ, &headingAngle);
 
-    temp_v0 = (FP_TO(Math_Vector2MagCalc(newPosX - romper->position.vx, newPosZ - romper->position.vz), Q12_SHIFT) << 1) / moveSpeed;
+    temp_v0 = (FP_TO(Math_Vector2MagCalcSafe(newPosX - romper->position.vx, newPosZ - romper->position.vz), Q12_SHIFT) << 1) / moveSpeed;
     moveSpeedStep  = FP_TO(moveSpeed, Q12_SHIFT) / temp_v0;
 
     if (moveSpeedStep < Q12(0.0f))

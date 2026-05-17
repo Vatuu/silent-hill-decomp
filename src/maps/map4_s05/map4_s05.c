@@ -250,7 +250,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
         (g_SysWork.playerWork.player.position.vz > Q12(96.0f) && g_SysWork.playerWork.player.position.vz < Q12(103.0f)))
     {
         var_s5     = 0;
-        temp_v0_14 = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx + Q12(117.5f),
+        temp_v0_14 = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx + Q12(117.5f),
                                          g_SysWork.playerWork.player.position.vz - Q12(100.0f));
 
         angle = ratan2(g_SysWork.playerWork.player.position.vx + Q12(117.5f),
@@ -330,7 +330,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                        g_SysWork.playerWork.player.position.vz - floatstinger->position.vz);
 
         if (ABS(g_SysWork.playerWork.player.position.vy - floatstinger->position.vy) < Q12(0.05f) &&
-            Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - floatstinger->position.vx,
+            Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - floatstinger->position.vx,
                                 g_SysWork.playerWork.player.position.vz - floatstinger->position.vz) < Q12(1.5f) &&
             ((var_s5 == 0 && Rng_GenerateUInt(0, 3)) || (var_s5 == 2 && Rng_GenerateUInt(0, 3)))) // 1 in 4 chance.
         {
@@ -345,7 +345,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
             }
         }
         else if (!(floatstingerProps.flags_E8 & FloatstingerFlag_3) &&
-                 Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - floatstinger->position.vx,
+                 Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - floatstinger->position.vx,
                                      g_SysWork.playerWork.player.position.vz - floatstinger->position.vz) < Q12(6.5f))
         {
             if (ABS(Math_AngleNormalizeSigned(angle - floatstinger->headingAngle)) < Q12_ANGLE(90.0f) &&
@@ -406,7 +406,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
             }
 
             func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk59, AttackInputType_Tap), floatstinger, &sp20[0], &g_SysWork.playerWork.player, ratan2(sp20[1].vx - sp20[0].vx, sp20[1].vz - sp20[0].vz),
-                          ratan2(Math_Vector2MagCalc(sp20[1].vx - sp20[0].vx, sp20[1].vz - sp20[0].vz), sp20[1].vy - sp20[0].vy));
+                          ratan2(Math_Vector2MagCalcSafe(sp20[1].vx - sp20[0].vx, sp20[1].vz - sp20[0].vz), sp20[1].vy - sp20[0].vy));
 
             if (g_SavegamePtr->gameDifficulty != 1 && floatstingerProps.field_100 == 0)
             {
@@ -985,7 +985,7 @@ void func_800D41F0(s_SubCharacter* floatstinger) // 0x800D41F0
     temp_s0 = Q12_MULT(floatstinger->moveSpeed, Math_Sin(floatstinger->headingAngle));
     temp_s1 = floatstinger->fallSpeed;
     temp_v0 = Q12_MULT(floatstinger->moveSpeed, Math_Cos(floatstinger->headingAngle));
-    temp_v1 = Math_Vector3MagCalc(temp_s0, temp_s1, temp_v0);
+    temp_v1 = Math_Vector3MagCalcSafe(temp_s0, temp_s1, temp_v0);
     temp_t0 = (Q12_MULT_PRECISE(temp_v1, Q12(15.0f) - temp_v1) >> 1) + Q12(13.0f);
 
     if (floatstingerProps.field_EE == 0)
@@ -1086,7 +1086,7 @@ bool func_800D4458(s_SubCharacter* floatstinger, VECTOR3* arg1) // 0x800D4458
         case 2:
         case 6:
         case 8:
-            var_s3 = Math_Vector2MagCalc(arg1->vx - D_800D780C[i].field_0[(caseVar % 6) != 0],
+            var_s3 = Math_Vector2MagCalcSafe(arg1->vx - D_800D780C[i].field_0[(caseVar % 6) != 0],
                                          arg1->vz - D_800D780C[i].field_8[caseVar > 2]);
 
             angle0 = ratan2(arg1->vx - D_800D780C[i].field_0[(caseVar % 6) != 0],
@@ -1205,7 +1205,7 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 newRotY) //
     s32     var_v0_11;
     s32     var_v1_4;
 
-    dist = Math_Vector2MagCalc(pos->vx - floatstinger->position.vx, pos->vz - floatstinger->position.vz);
+    dist = Math_Vector2MagCalcSafe(pos->vx - floatstinger->position.vx, pos->vz - floatstinger->position.vz);
     unkAngle = ratan2(pos->vx - floatstinger->position.vx, pos->vz - floatstinger->position.vz);
 
     if (dist > Q12(6.5f))
@@ -1311,12 +1311,12 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 newRotY) //
 
     floatstinger->headingAngle = ratan2(var_s4, var_s3);
 
-    temp_v0_14 = Math_Vector2MagCalc(var_s4, var_s3);
+    temp_v0_14 = Math_Vector2MagCalcSafe(var_s4, var_s3);
 
     if (((floatstingerProps.flags_E8 & FloatstingerFlag_0) && temp_v0_14 > Q12(3.5f)) ||
         (!(floatstingerProps.flags_E8 & FloatstingerFlag_0) && temp_v0_14 > Q12(2.0f)))
     {
-        var_v1_4 = Math_Vector2MagCalc(var_s4, var_s3);
+        var_v1_4 = Math_Vector2MagCalcSafe(var_s4, var_s3);
     }
     else
     {
@@ -1743,7 +1743,7 @@ void func_800D6BC0(void) // 0x800D6BC0
             break;
 
         case 8:
-            func_80080B58(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_ZERO, &QVECTOR3(154.31f, -15.5f, 24.07f));
+            func_80080B58(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &QVECTOR3(154.31f, -15.5f, 24.07f));
             sharedFunc_800CE5D4_1_s03(&D_800D7D88, Q12(1.0f), Q12(0.2f), 1);
             SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
             break;

@@ -551,7 +551,7 @@ void func_800D2408(void) // 0x800D2408
 
         Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", g_Cutscene_Timer0, FS_BUFFER_11);
         Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", g_Cutscene_Timer0, FS_BUFFER_11);
-        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
+        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafe(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
         g_SysWork.pointLightRotation.vy = ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
         g_SysWork.pointLightRotation.vz = 0;
     }
@@ -990,7 +990,7 @@ void func_800D3420(void) // 0x800D3420
         {
             Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", g_Cutscene_Timer3, FS_BUFFER_11);
             Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", g_Cutscene_Timer3, FS_BUFFER_11);
-            g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
+            g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafe(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
             g_SysWork.pointLightRotation.vy = ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
             g_SysWork.pointLightRotation.vz = 0;
         }
@@ -1223,15 +1223,15 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
             Collision_FlagBitsSet(CollisionFlag_1);
         }
 
-        WorldGfx_ObjectAdd(&WorldObject_D_800D7FF0.object, &WorldObject_D_800D7FF0.position, &SVECTOR3_ZERO);
+        WorldGfx_ObjectAdd(&WorldObject_D_800D7FF0.object, &WorldObject_D_800D7FF0.position, &SVECTOR3_Zero);
         WorldGfx_ObjectAdd(&WorldObject_D_800D8050.object, &WorldObject_D_800D8070.position, &WorldObject_D_800D8070.rotation);
 
         if (Savegame_EventFlagGet(EventFlag_313))
         {
-            WorldGfx_ObjectAdd(&WorldObject_D_800D80B0.object, &WorldObject_D_800D80B0.position, &SVECTOR3_ZERO);
+            WorldGfx_ObjectAdd(&WorldObject_D_800D80B0.object, &WorldObject_D_800D80B0.position, &SVECTOR3_Zero);
         }
 
-        WorldGfx_ObjectAdd(&WorldObject_D_800D80E0[D_800D8018].object, &WorldObject_D_800D80E0[D_800D8018].position, &SVECTOR3_ZERO);
+        WorldGfx_ObjectAdd(&WorldObject_D_800D80E0[D_800D8018].object, &WorldObject_D_800D80E0[D_800D8018].position, &SVECTOR3_Zero);
     }
     else
     {
@@ -1242,7 +1242,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S01_PickupAxe))
         {
-            WorldGfx_ObjectAdd(&WorldObject_D_800D8020.object, &WorldObject_D_800D8020.position, &SVECTOR3_ZERO);
+            WorldGfx_ObjectAdd(&WorldObject_D_800D8020.object, &WorldObject_D_800D8020.position, &SVECTOR3_Zero);
         }
     }
 

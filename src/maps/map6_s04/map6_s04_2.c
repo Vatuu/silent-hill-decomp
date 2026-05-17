@@ -2103,7 +2103,7 @@ void func_800E219C(void) // 0x800E219C
         Dms_CharacterTransformGet(&lightIntPos, &unused, D_800CC4D4, g_Cutscene_Timer, FS_BUFFER_14);
 
         // Set light rotation.
-        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
+        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafe(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
         g_SysWork.pointLightRotation.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
         g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
     }
@@ -2216,7 +2216,7 @@ void func_800E2950(void) // 0x800E2950
 
             g_SysWork.field_236C = NULL;
 
-            g_SysWork.pointLightRotation.vx = -ratan2(camLookAt.vy - camPos.vy, Math_Vector2MagCalc(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz));
+            g_SysWork.pointLightRotation.vx = -ratan2(camLookAt.vy - camPos.vy, Math_Vector2MagCalcSafe(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz));
             g_SysWork.pointLightRotation.vy = ratan2(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz);
             g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
 
@@ -2393,7 +2393,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
         Dms_CharacterTransformGet(&lightIntPos, &unused, D_800CC4D4, g_Cutscene_Timer, FS_BUFFER_14);
 
         // Set light rotation.
-        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
+        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafe(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
         g_SysWork.pointLightRotation.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
         g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
     }
@@ -3198,7 +3198,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         // Set light rotation.
         g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy,
-                                                  Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition.vx,
+                                                  Math_Vector2MagCalcSafe(lightIntPos.vx - g_SysWork.pointLightPosition.vx,
                                                                       lightIntPos.vz - g_SysWork.pointLightPosition.vz));
         g_SysWork.pointLightRotation.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx,
                                                   lightIntPos.vz - g_SysWork.pointLightPosition.vz);
@@ -3987,7 +3987,7 @@ void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8
     max     = 0xFF;
     new_var = 1;
 
-    Sd_SfxAttributesUpdate(arg0, var_s0, CLAMP_CUSTOM((arg2 * Math_Vector3MagCalc(playerChara.position.vx - arg1->vx,
+    Sd_SfxAttributesUpdate(arg0, var_s0, CLAMP_CUSTOM((arg2 * Math_Vector3MagCalcSafe(playerChara.position.vx - arg1->vx,
                                                                                   playerChara.position.vy - arg1->vy,
                                                                                   playerChara.position.vz - arg1->vz)) /
                                                        arg3, arg2, 0, max, new_var), 0);

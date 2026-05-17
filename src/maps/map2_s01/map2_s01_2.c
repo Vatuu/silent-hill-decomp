@@ -475,7 +475,7 @@ void Map_WorldObjectsUpdate(void) // 0x800CF938
     {
             if (Savegame_EventFlagGet(EventFlag_176) && !Savegame_EventFlagGet(EventFlag_M2S01_PickupFlauros))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Item.object, &g_WorldObject_Item.position, &SVECTOR3_ZERO);
+                WorldGfx_ObjectAdd(&g_WorldObject_Item.object, &g_WorldObject_Item.position, &SVECTOR3_Zero);
             }
 
             if (!Savegame_EventFlagGet(EventFlag_M2S01_PickupDrawbridgeKey))

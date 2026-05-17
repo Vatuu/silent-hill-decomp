@@ -18,7 +18,7 @@ void sharedFunc_800CB0A4_4_s03(VECTOR3* from, VECTOR3* to)
         sharedData_800DFB7C_0_s00[idx].vy_8                 = from->vy;
         sharedData_800DFB7C_0_s00[idx].field_4.vz_4         = from->vz;
         sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0  = ratan2(to->vx - from->vx, to->vz - from->vz);
-        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2  = ratan2(to->vy - from->vy, Math_Vector2MagCalc(to->vx - from->vx, to->vz - from->vz));
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2  = ratan2(to->vy - from->vy, Math_Vector2MagCalcSafe(to->vx - from->vx, to->vz - from->vz));
         sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 = D_800C4418.field_8;
         sharedData_800DFB7C_0_s00[idx].field_B              = 0;
         sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 = Q12(1.0f);

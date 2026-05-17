@@ -164,7 +164,7 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
     groanerProps.flags.val16[0] |= GroanerFlag_7;
 
     groaner->health = MAX(groaner->health - groaner->damage.amount, Q12(0.0f));
-    unkDist         = Math_Vector2MagCalc(groaner->damage.position.vx, groaner->damage.position.vz);
+    unkDist         = Math_Vector2MagCalcSafe(groaner->damage.position.vx, groaner->damage.position.vz);
 
     // Set new heading angle.
     if (groaner->damage.position.vx != Q12(0.0f) ||
@@ -319,7 +319,7 @@ void sharedFunc_800E384C_2_s00(s_SubCharacter* groaner)
     #define getIndex() \
         ((((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 3) == 0) * 2) + ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3) == 2))
 
-    if (func_80070360(groaner, Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
+    if (func_80070360(groaner, Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
             g_SysWork.playerWork.player.position.vz - groaner->position.vz), UNK_VAL) != 0 ||
         func_8006FD90(groaner, 1, sharedData_800EEE3C_2_s00[getIndex()].field_0, sharedData_800EEE3C_2_s00[getIndex()].field_4))
     {
@@ -456,7 +456,7 @@ void Groaner_ControlRunForward(s_SubCharacter* groaner)
         groanerProps.flags.val16[0] |= GroanerFlag_8;
     }
 
-    distToPlayer    = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
+    distToPlayer    = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
                                           g_SysWork.playerWork.player.position.vz - groaner->position.vz);
     distToPlayerMax = Rng_GenerateInt(Q12(4.0f), Q12(8.0f) - 1);
     hasLosToPlayer  = Ray_NpcToPlayerLosHitCheck(groaner, &g_SysWork.playerWork.player);
@@ -851,7 +851,7 @@ void Groaner_Control4(s_SubCharacter* groaner)
         }
     }
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
+    distToPlayer = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
                                        g_SysWork.playerWork.player.position.vz - groaner->position.vz);
     if (distToPlayer > Q12(3.5f))
     {

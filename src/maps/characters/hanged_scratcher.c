@@ -152,7 +152,7 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
         scratcher->damage.position.vz += (scratcher->moveSpeed * Math_Cos(scratcher->headingAngle)) >> 14;
 
         prevMoveSpeed              = scratcher->moveSpeed;
-        scratcher->moveSpeed    = FP_TO(Math_Vector2MagCalc(scratcher->damage.position.vx, scratcher->damage.position.vz), Q12_SHIFT) / Q12(4.0f);
+        scratcher->moveSpeed    = FP_TO(Math_Vector2MagCalcSafe(scratcher->damage.position.vx, scratcher->damage.position.vz), Q12_SHIFT) / Q12(4.0f);
         prevHeadingAngle           = scratcher->headingAngle;
         scratcher->headingAngle = ratan2(scratcher->damage.position.vx, scratcher->damage.position.vz);
 
@@ -334,7 +334,7 @@ void HangedScratcher_Control_1(s_SubCharacter* scratcher)
 {
     q19_12 distToPlayer;
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+    distToPlayer = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
                                        g_SysWork.playerWork.player.position.vz - scratcher->position.vz);
 
     // TODO: Invert to return early instead?
@@ -354,7 +354,7 @@ void HangedScratcher_Control_2(s_SubCharacter* chara)
 {
     q19_12 distToPlayer;
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - chara->position.vx,
+    distToPlayer = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - chara->position.vx,
                                        g_SysWork.playerWork.player.position.vz - chara->position.vz);
 
     Chara_MoveSpeedUpdate(chara, Q12(4.0f));
@@ -373,7 +373,7 @@ void HangedScratcher_Control_3(s_SubCharacter* scratcher)
     q3_12  targetRotDelta;
     q19_12 playerPosYDelta;
 
-    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+    distToPlayer       = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
                                              g_SysWork.playerWork.player.position.vz - scratcher->position.vz);
     angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork.player.position) -
                                                    scratcher->rotation.vy);
@@ -496,7 +496,7 @@ void HangedScratcher_Control_4(s_SubCharacter* scratcher)
     q3_12   angleDeltaToPlayer;
     q3_12   angleDeltaToPlayerAbs;
 
-    distToPlayer          = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+    distToPlayer          = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
                                                 g_SysWork.playerWork.player.position.vz - scratcher->position.vz);
     angleDeltaToPlayer    = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork.player.position) -
                                           scratcher->rotation.vy);
@@ -573,7 +573,7 @@ void HangedScratcher_Control_5(s_SubCharacter* scratcher)
                                     MAX_OFFSET(scratcher->position.vy, Q12(1.0f), Q12(0.0f)),
                                     MIN_OFFSET(scratcher->position.vz, Q12(0.5f), Q12(0.5f)),
                                     MAX_OFFSET(scratcher->position.vz, Q12(0.5f), Q12(0.5f))) ||
-        Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+        Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
                             g_SysWork.playerWork.player.position.vz - scratcher->position.vz) < Q12(1.0f))
     {
         if (Ray_NpcToPlayerLosHitCheck(scratcher, &g_SysWork.playerWork.player))
@@ -596,7 +596,7 @@ void HangedScratcher_Control_6(s_SubCharacter* scratcher)
     q19_12 distToPlayer;
     u16    temp_v1;
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+    distToPlayer = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
                                        g_SysWork.playerWork.player.position.vz - scratcher->position.vz);
 
     Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
@@ -636,7 +636,7 @@ void HangedScratcher_Control_7(s_SubCharacter* scratcher)
     bool   hasLosToPlayer;
     q3_12  targetRotDelta;
 
-    distToPlayer          = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+    distToPlayer          = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
                                                 g_SysWork.playerWork.player.position.vz - scratcher->position.vz);
     angleDeltaToPlayer    = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork.player.position) -
                                                       scratcher->rotation.vy);
@@ -722,7 +722,7 @@ void HangedScratcher_Control_7(s_SubCharacter* scratcher)
         !(g_SysWork.playerWork.player.flags & CharaFlag_Unk4) &&
         g_SysWork.playerWork.player.health > Q12(0.0f))
     {
-        if (Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+        if (Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
                                 g_SysWork.playerWork.player.position.vz - scratcher->position.vz) < Q12(1.2f))
         {
             if (ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork.player.position) -
@@ -1025,7 +1025,7 @@ void HangedScratcher_Control_15(s_SubCharacter* scratcher)
     q19_12  distToPlayer;
     q3_12   angleDeltaToPlayer;
 
-    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+    distToPlayer       = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
                                              g_SysWork.playerWork.player.position.vz - scratcher->position.vz);
     angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(scratcher->position, g_SysWork.playerWork.player.position) -
                                        scratcher->rotation.vy);
@@ -1748,7 +1748,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
                 {
                     if (!Rng_GenerateInt(0, 511)) // 1 in 512 chance.
                     {
-                        if (Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+                        if (Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
                                                 g_SysWork.playerWork.player.position.vz - scratcher->position.vz) > Q12(6.5f))
                         {
                             scratcherProps.timer_108 = Rng_GenerateInt(Q12(3.5f), Q12(8.0f) - 1);
@@ -1775,7 +1775,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
                 {
                     if (!Rng_GenerateUInt(0, 255)) // 1 in 256 chance.
                     {
-                        if (Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
+                        if (Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
                                                 g_SysWork.playerWork.player.position.vz - scratcher->position.vz) > Q12(4.5f))
                         {
                             scratcherProps.timer_108 = Rng_GenerateInt(Q12(3.5f), Q12(7.5f) - 1);

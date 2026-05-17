@@ -283,7 +283,7 @@ void SplitHead_Control_1(s_SubCharacter* splitHead)
     q3_12  angleDeltaToPlayer;
     q19_12 distToPlayer;
 
-    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - splitHead->position.vx,
+    distToPlayer       = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - splitHead->position.vx,
                                              g_SysWork.playerWork.player.position.vz - splitHead->position.vz);
     angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork.player.position) -
                                        splitHead->rotation.vy);
@@ -435,7 +435,7 @@ void SplitHead_Control_2(s_SubCharacter* splitHead)
     s32        i;
     s32        angleMult;
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - splitHead->position.vx,
+    distToPlayer = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - splitHead->position.vx,
                                        g_SysWork.playerWork.player.position.vz - splitHead->position.vz);
 
     if (splitHeadProps.timer_F2 > Q12(0.6f))
@@ -596,7 +596,7 @@ void SplitHead_Control_3(s_SubCharacter* splitHead)
     q3_12  angleDeltaToPlayer;
     q19_12 distToPlayer;
 
-    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - splitHead->position.vx,
+    distToPlayer       = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - splitHead->position.vx,
                                              g_SysWork.playerWork.player.position.vz - splitHead->position.vz);
     angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position, g_SysWork.playerWork.player.position) -
                                        splitHead->rotation.vy);
@@ -763,7 +763,7 @@ void SplitHead_Control_5(s_SubCharacter* splitHead)
     s32        angleSign;
     q19_12     activeDistMax;
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork.player.position.vx - splitHead->position.vx,
+    distToPlayer = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - splitHead->position.vx,
                                        g_SysWork.playerWork.player.position.vz - splitHead->position.vz);
 
     if (splitHeadProps.timer_F2 > Q12(0.4f))
