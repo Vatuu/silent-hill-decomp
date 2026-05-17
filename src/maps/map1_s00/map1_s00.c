@@ -82,7 +82,7 @@ const char* MAP_MESSAGES[] = {
     /* 39 */ "\tNothing_inside. ~E "
 };
 
-void func_800D7A28(void) // 0x800D7A28
+void MapEvent_CommonItemTake(void) // 0x800D7A28
 {
     u32 pickupType;
     s32 eventFlagIdx;
@@ -214,7 +214,6 @@ void func_800D7B2C(void)
 
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-
             break;
     }
 }

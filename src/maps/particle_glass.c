@@ -70,7 +70,7 @@ void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s
     gte_SetRotMatrix(&ptr->field_C);
     gte_SetTransMatrix(&ptr->field_C);
 
-    ptr->field_44 = Math_Vector2MagCalcSafe(var_s1, arg4) + 1;
+    ptr->field_44 = Math_Vector2MagCalcSafeQ6(var_s1, arg4) + 1;
 
     for (var_s7 = -arg4; arg4 >= var_s7;)
     {
@@ -177,14 +177,14 @@ bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx)
             mapHdrPtr->field_10.s_0.field_2 = temp_s2 |
                                               ((ratan2(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0, sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0) - sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_2) > 0 ? 0x8000 : 0);
 
-            temp_s2_2 = Math_Vector2MagCalcSafe(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2,
+            temp_s2_2 = Math_Vector2MagCalcSafeQ6(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2,
                                                 sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0);
             temp_s1   = temp_s2_2 >> 2;
             temp_s3   = temp_s2_2 >> 3;
 
             sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 += CLAMP_HIGH(((temp_s2_2 + (Rng_Rand16() % temp_s1)) - temp_s3), 0x7FFF) / 256;
 
-            temp_s2_2 = Math_Vector2MagCalcSafe(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0,
+            temp_s2_2 = Math_Vector2MagCalcSafeQ6(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0,
                                                 sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0);
             temp_s1_2 = temp_s2_2 >> 2;
             temp_s3   = temp_s2_2 >> 3;

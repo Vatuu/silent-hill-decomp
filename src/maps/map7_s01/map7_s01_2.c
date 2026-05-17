@@ -387,7 +387,7 @@ void func_800D7A60(void) // 0x800D7A60
             SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(60.0f), Q12(76.0f), true, true);
             Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &rot, "LIGHT", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
             Dms_CharacterTransformGet(&pos, &rot, "L_INT", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
-            g_SysWork.pointLightRotation.vx = -ratan2(pos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafe(pos.vx - g_SysWork.pointLightPosition.vx, pos.vz - g_SysWork.pointLightPosition.vz));
+            g_SysWork.pointLightRotation.vx = -ratan2(pos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafeQ6(pos.vx - g_SysWork.pointLightPosition.vx, pos.vz - g_SysWork.pointLightPosition.vz));
             g_SysWork.pointLightRotation.vy = ratan2(pos.vx - g_SysWork.pointLightPosition.vx, pos.vz - g_SysWork.pointLightPosition.vz);
             g_SysWork.pointLightRotation.vz = 0;
             break;

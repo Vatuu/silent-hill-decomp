@@ -321,7 +321,7 @@ void func_800D0608(void) // 0x800D0608
         Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", D_800D1FEC, FS_BUFFER_24);
         Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", D_800D1FEC, FS_BUFFER_24);
 
-        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafe(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
+        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafeQ6(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
         g_SysWork.pointLightRotation.vy = ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
         g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
     }
@@ -380,7 +380,7 @@ s16 func_800D1354(void) // 0x800D1354
     s32 x6;
     s32 z6;
 
-    // TODO: Use `Math_Vector2MagCalcSafe`.
+    // TODO: Use `Math_Vector2MagCalcSafeQ6`.
     x = g_SysWork.playerWork.player.position.vx - Q12(95.2f);
     z = g_SysWork.playerWork.player.position.vz + Q12(140.0f);
     cos0 = Math_Cos(Math_AngleNormalizeSigned((ratan2(x, z) - ratan2(Q12(4.8f) + 1, Q12(12.8f) + 1))));

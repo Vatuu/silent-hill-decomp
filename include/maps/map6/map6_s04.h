@@ -275,47 +275,49 @@ void func_800D8848(s_Model* model);
 
 s32 func_800D8898(s_AnimInfo* animInfo);
 
-void MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+// All Monster Cybil below?
 
-void MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel);
+void MonsterCybil_Update(s_SubCharacter* monsterCybil, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-void func_800D8A90(s_SubCharacter* chara);
+void MonsterCybil_Init(s_SubCharacter* monsterCybil, s_Model* extraModel);
 
-void func_800D8B14(s_SubCharacter* chara, s_Model* model);
+void func_800D8A90(s_SubCharacter* monsterCybil);
 
-void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords);
+void func_800D8B14(s_SubCharacter* monsterCybil, s_Model* model);
 
-void func_800D9790(s_SubCharacter* chara, s_Model* model);
+void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* model, GsCOORDINATE2* boneCoords);
 
-void func_800D99E4(s_SubCharacter* chara, s_Model* modelUpper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void func_800D9790(s_SubCharacter* monsterCybil, s_Model* model);
 
-void func_800D9AAC(s_SubCharacter* chara, s_Model* model);
+void func_800D99E4(s_SubCharacter* monsterCybil, s_Model* modelUpper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords);
+void func_800D9AAC(s_SubCharacter* monsterCybil, s_Model* model);
 
-void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords);
+void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* model, GsCOORDINATE2* boneCoords);
 
-s32 func_800DBA48(s_SubCharacter* chara);
+void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* model, GsCOORDINATE2* boneCoords);
 
-s32 func_800DBD64(s_SubCharacter* chara);
+s32 func_800DBA48(s_SubCharacter* monsterCybil);
 
-void func_800DB4CC(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coord);
+s32 func_800DBD64(s_SubCharacter* monsterCybil);
 
-bool func_800DB81C(s_SubCharacter* chara);
+void func_800DB4CC(s_SubCharacter* monsterCybil, s_Model* model, GsCOORDINATE2* boneCoords);
+
+bool func_800DB81C(s_SubCharacter* monsterCybil);
 
 s32 func_800DB930(void);
 
-void func_800DB4CC(s_SubCharacter*, s_Model*, GsCOORDINATE2*);
+void func_800DB4CC(s_SubCharacter* monsterCybil, s_Model* model, GsCOORDINATE2* boneCoords);
 
 s32 func_800DB6FC(VECTOR3* pos);
 
-void func_800DB748(s_SubCharacter* chara);
+void func_800DB748(s_SubCharacter* monsterCybil);
 
-void func_800DC018(s_SubCharacter* chara);
+void func_800DC018(s_SubCharacter* monsterCybil);
 
-void Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Flauros_Update(s_SubCharacter* flauros, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-void Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Parasite_Update(s_SubCharacter* parasite, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void func_800DE26C(void);
 

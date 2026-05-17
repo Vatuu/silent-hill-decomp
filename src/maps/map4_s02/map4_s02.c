@@ -150,8 +150,8 @@ void Map_WorldObjectsUpdate(void) // 0x800EA3F0
     }
     else
     {
-        dist0 = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - Q12(61.0f), g_SysWork.playerWork.player.position.vz - Q12(27.5f));
-        dist1 = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - Q12(61.0f), g_SysWork.playerWork.player.position.vz - Q12(17.5f));
+        dist0 = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - Q12(61.0f), g_SysWork.playerWork.player.position.vz - Q12(27.5f));
+        dist1 = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - Q12(61.0f), g_SysWork.playerWork.player.position.vz - Q12(17.5f));
         if (dist1 >= dist0)
         {
             tmp0 = dist0;

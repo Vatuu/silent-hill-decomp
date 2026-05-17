@@ -23,7 +23,7 @@ void (*g_MapEventFuncs[])() = {
     MapEvent_DoorJammed,
     MapEvent_DoorLocked,
     MapEvent_DoorUnlocked,
-    func_800D7A28,
+    MapEvent_CommonItemTake,
     func_800D7AC4,
     func_800D7AF8,
     func_800D7B2C,

@@ -476,7 +476,7 @@ bool sharedFunc_800CCF30_1_s05(POLY_FT4** poly, s32 idx)
     ptr->field_148 = ratan2(ptr->field_140.vy - ptr->field_13C.vy, ptr->field_140.vx - ptr->field_13C.vx);
 
     ptr->field_14C = CLAMP_LOW(
-        FP_MULTIPLY_PRECISE(Q12(1.0f) - Math_Vector2MagCalcSafe(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 - sharedData_800DFB7C_0_s00[temp_s3].field_0.vx_0,
+        FP_MULTIPLY_PRECISE(Q12(1.0f) - Math_Vector2MagCalcSafeQ6(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 - sharedData_800DFB7C_0_s00[temp_s3].field_0.vx_0,
                                                             sharedData_800DFB7C_0_s00[idx].field_4.vz_4 - sharedData_800DFB7C_0_s00[temp_s3].field_4.vz_4),
                             24,
                             Q12_SHIFT) * ptr->field_0.field_2C / ptr->field_134,

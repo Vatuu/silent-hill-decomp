@@ -192,7 +192,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
     unkPos.vy = (npc.position.vy + npc.collision.box.offsetY) - from->vy;
     unkPos.vz = (npc.position.vz + npc.collision.shapeOffsets.box.vz) - from->vz;
 
-    mag0 = Math_Vector2MagCalcSafe(unkPos.vx, unkPos.vz);
+    mag0 = Math_Vector2MagCalcSafeQ6(unkPos.vx, unkPos.vz);
     angle0 = ratan2(unkPos.vx, unkPos.vz);
     angle1 = ratan2(mag0, unkPos.vy);
 
@@ -222,7 +222,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
             continue;
         }
 
-        mag1 = Math_Vector2MagCalcSafe(unkPos.vx, unkPos.vz);
+        mag1 = Math_Vector2MagCalcSafeQ6(unkPos.vx, unkPos.vz);
         if (mag0 < mag1)
         {
             continue;

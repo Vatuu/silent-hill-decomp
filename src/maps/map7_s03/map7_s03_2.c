@@ -6243,7 +6243,7 @@ void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800E06
         func_800DFF60(chara, boneCoords);
     }
 
-    dist = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - chara->position.vx,
+    dist = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - chara->position.vx,
                                g_SysWork.playerWork.player.position.vz - chara->position.vz);
     if (dist < Q12(2.5f) && func_800DFB04() == 0)
     {
@@ -7260,7 +7260,7 @@ void Map_CutsceneObjectsUpdate(void) // 0x800E2E90
 
         // Set light rotation.
         g_SysWork.pointLightRotation.vx = -ratan2(D_800F47D8.vy - g_SysWork.pointLightPosition.vy,
-                                                  Math_Vector2MagCalcSafe(D_800F47D8.vx - g_SysWork.pointLightPosition.vx,
+                                                  Math_Vector2MagCalcSafeQ6(D_800F47D8.vx - g_SysWork.pointLightPosition.vx,
                                                                       D_800F47D8.vz - g_SysWork.pointLightPosition.vz));
         g_SysWork.pointLightRotation.vy = ratan2(D_800F47D8.vx - g_SysWork.pointLightPosition.vx,
                                                  D_800F47D8.vz - g_SysWork.pointLightPosition.vz);

@@ -19,59 +19,59 @@
 #include "maps/characters/stalker.h"
 
 
-void LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DA284
+void LockerDeadBody_Update(s_SubCharacter* deadBody, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800DA284
 {
     s_AnimInfo* animInfo;
 
-    if (chara->model.controlState == 0)
+    if (deadBody->model.controlState == 0)
     {
-        chara->model.anim.alpha = Q12(0.0f);
-        Chara_AnimSet(chara, ANIM_STATUS(LockerDeadBodyAnim_2, true), 0);
-        chara->model.controlState++;
-        chara->position.vy = Q12(0.0f);
+        deadBody->model.anim.alpha = Q12(0.0f);
+        Chara_AnimSet(deadBody, ANIM_STATUS(LockerDeadBodyAnim_2, true), 0);
+        deadBody->model.controlState++;
+        deadBody->position.vy = Q12(0.0f);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_105))
     {
-        chara->model.anim.flags &= ~AnimFlag_Visible;
-        chara->collision.state   = CharaCollisionState_Ignore;
+        deadBody->model.anim.flags &= ~AnimFlag_Visible;
+        deadBody->collision.state   = CharaCollisionState_Ignore;
         return;
     }
 
-    chara->model.anim.flags |= AnimFlag_Visible;
+    deadBody->model.anim.flags |= AnimFlag_Visible;
 
     if (!Savegame_EventFlagGet(EventFlag_106))
     {
-        if (chara->model.anim.status == ANIM_STATUS(LockerDeadBodyAnim_2, true))
+        if (deadBody->model.anim.status == ANIM_STATUS(LockerDeadBodyAnim_2, true))
         {
-            chara->model.anim.status = ANIM_STATUS(LockerDeadBodyAnim_1, true);
+            deadBody->model.anim.status = ANIM_STATUS(LockerDeadBodyAnim_1, true);
         }
 
-        chara->collision.state = CharaCollisionState_Ignore;
+        deadBody->collision.state = CharaCollisionState_Ignore;
     }
     else
     {
-        Chara_AnimSet(chara, ANIM_STATUS(LockerDeadBodyAnim_3, true), 16);
-        chara->collision.state = CharaCollisionState_Npc;
+        Chara_AnimSet(deadBody, ANIM_STATUS(LockerDeadBodyAnim_3, true), 16);
+        deadBody->collision.state = CharaCollisionState_Npc;
     }
 
-    Math_MatrixTransform(&chara->position, &chara->rotation, coords);
+    Math_MatrixTransform(&deadBody->position, &deadBody->rotation, boneCoords);
 
-    animInfo = &LOCKER_DEAD_BODY_ANIM_INFOS[chara->model.anim.status];
-    animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
+    animInfo = &LOCKER_DEAD_BODY_ANIM_INFOS[deadBody->model.anim.status];
+    animInfo->playbackFunc(&deadBody->model, anmHdr, boneCoords, animInfo);
 
-    chara->collision.box.top   = Q12(-0.3f);
-    chara->collision.shapeOffsets.cylinder.vx = Q12(0.06f);
-    chara->collision.shapeOffsets.cylinder.vz = Q12(0.93f);
-    chara->collision.box.bottom   = Q12(0.0f);
-    chara->collision.box.height   = Q12(0.0f);
-    chara->collision.box.offsetY   = Q12(0.0f);
-    chara->collision.shapeOffsets.box.vx = Q12(0.0f);
-    chara->collision.shapeOffsets.box.vz = Q12(0.0f);
-    chara->collision.cylinder.field_2   = Q12(0.0f);
-    chara->collision.cylinder.radius   = Q12(0.33f);
+    deadBody->collision.box.top                  = Q12(-0.3f);
+    deadBody->collision.shapeOffsets.cylinder.vx = Q12(0.06f);
+    deadBody->collision.shapeOffsets.cylinder.vz = Q12(0.93f);
+    deadBody->collision.box.bottom               = Q12(0.0f);
+    deadBody->collision.box.height               = Q12(0.0f);
+    deadBody->collision.box.offsetY              = Q12(0.0f);
+    deadBody->collision.shapeOffsets.box.vx      = Q12(0.0f);
+    deadBody->collision.shapeOffsets.box.vz      = Q12(0.0f);
+    deadBody->collision.cylinder.field_2         = Q12(0.0f);
+    deadBody->collision.cylinder.radius          = Q12(0.33f);
 
-    func_8005C814(&chara->collision.shapeOffsets, chara);
+    func_8005C814(&deadBody->collision.shapeOffsets, deadBody);
 }
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800DA424
@@ -90,7 +90,11 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 void func_800DA7F4(void) // 0x800DA7F4
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
+    VECTOR3 sfxPos = {
+        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX,
+        Q12(-1.2f),
+        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ
+    };
 
     Player_ItemRemove(InvItemId_LibraryReserveKey, 1);
     Map_MessageWithSfx(37, Sfx_UseKey, &sfxPos); // "Used the Library reverse key."
@@ -99,7 +103,11 @@ void func_800DA7F4(void) // 0x800DA7F4
 
 void func_800DA8B0(void) // 0x800DA8B0
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
+    VECTOR3 sfxPos = {
+        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX,
+        Q12(-1.2f),
+        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ
+    };
 
     Player_ItemRemove(InvItemId_ClassroomKey, 1);
     Map_MessageWithSfx(38, Sfx_UseKey, &sfxPos); // "Used classroom key."
@@ -659,7 +667,7 @@ void func_800DAF18(void) // 0x800DAF18
 
                 g_SysWork.lightBoneCoord1               = NULL;
                 g_SysWork.pointLightRotation.vx = -ratan2(lookAtPos.vy - lightPos.vy,
-                                                          Math_Vector2MagCalcSafe(lookAtPos.vx - lightPos.vx,
+                                                          Math_Vector2MagCalcSafeQ6(lookAtPos.vx - lightPos.vx,
                                                                                   lookAtPos.vz - lightPos.vz));
 
                 g_SysWork.pointLightRotation.vy = ratan2(lookAtPos.vx - lightPos.vx, lookAtPos.vz - lightPos.vz);

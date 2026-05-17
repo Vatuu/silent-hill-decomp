@@ -70,20 +70,19 @@ extern s_WorldObjectModel   g_CommonWorldObjects[6]; // 0x800E62E0
 extern u8 D_800E6388;
 extern q19_12 D_800E638C; // Time?
 
-
 typedef struct
 {
-    s32 vx_0;
-    s32 vz_4;
+    s32   vx_0;
+    s32   vz_4;
     q4_12 field_8; 
-    s16 field_A;
+    s16   field_A;
     q3_12 field_C;
     q3_12 field_E;
     q3_12 field_10;
-    s16 field_12;
-    u8  idx_14;
-    u8  unk_15;
-    u8  unk_16;
+    s16   field_12;
+    u8    idx_14;
+    u8    unk_15;
+    u8    unk_16;
 } s_800E3A40;
 extern s_800E3A40 D_800E3A40[];
 
@@ -93,7 +92,7 @@ void func_800CE0CC(s32 arg0);
 
 bool func_800CE164(POLY_FT4** poly, s32 idx);
 
-void LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void LockerDeadBody_Update(s_SubCharacter* deadBody, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void func_800DA7F4(void);
 

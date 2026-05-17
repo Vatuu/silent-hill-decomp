@@ -7,7 +7,7 @@ s_EventData MAP_EVENTS[101] = {
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 94,
         .sysState         = SysState_EventCallback,
-        .eventParam       = 3, // `func_800D7A28`
+        .eventParam       = 3, // `MapEvent_CommonItemTake`
     },
     {
         .disabledEventFlag  = EventFlag_M1S00_HandgunBullets1,
@@ -15,7 +15,7 @@ s_EventData MAP_EVENTS[101] = {
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 95,
         .sysState         = SysState_EventCallback,
-        .eventParam       = 3, // `func_800D7A28`
+        .eventParam       = 3, // `MapEvent_CommonItemTake`
     },
     {
         .disabledEventFlag  = EventFlag_M1S00_HandgunBullets2,
@@ -23,7 +23,7 @@ s_EventData MAP_EVENTS[101] = {
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 96,
         .sysState         = SysState_EventCallback,
-        .eventParam       = 3, // `func_800D7A28`
+        .eventParam       = 3, // `MapEvent_CommonItemTake`
     },
     {
         .disabledEventFlag  = EventFlag_M1S00_HealthDrink,
@@ -31,7 +31,7 @@ s_EventData MAP_EVENTS[101] = {
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 97,
         .sysState         = SysState_EventCallback,
-        .eventParam       = 3, // `func_800D7A28`
+        .eventParam       = 3, // `MapEvent_CommonItemTake`
     },
     {
         .disabledEventFlag  = EventFlag_M1S00_FirstAidKit,
@@ -39,7 +39,7 @@ s_EventData MAP_EVENTS[101] = {
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 98,
         .sysState         = SysState_EventCallback,
-        .eventParam       = 3, // `func_800D7A28`
+        .eventParam       = 3, // `MapEvent_CommonItemTake`
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,

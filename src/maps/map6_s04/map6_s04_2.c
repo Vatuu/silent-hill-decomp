@@ -17,25 +17,25 @@
 
 #include "../src/maps/chara_util.c" // 0x800DD5B8
 
-void Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800DE0C4
+void Flauros_Update(s_SubCharacter* flauros, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800DE0C4
 {
     s32         i;
     q19_12      scale;
     s_AnimInfo* animInfo;
 
-    if (chara->model.controlState == 0)
+    if (flauros->model.controlState == 0)
     {
-        chara->model.anim.alpha = Q12(0.0f);
-        chara->model.controlState        = 1;
-        chara->model.stateStep    = 0;
-        Chara_AnimSet(chara, ANIM_STATUS(1, true), 0);
+        flauros->model.anim.alpha   = Q12(0.0f);
+        flauros->model.controlState = 1;
+        flauros->model.stateStep    = 0;
+        Chara_AnimSet(flauros, ANIM_STATUS(1, true), 0);
     }
 
-    if (chara->model.anim.time <= Q12(21.0f))
+    if (flauros->model.anim.time <= Q12(21.0f))
     {
-        if (chara->model.anim.time > Q12(13.0f))
+        if (flauros->model.anim.time > Q12(13.0f))
         {
-            scale = (chara->model.anim.time - Q12(13.0f)) >> 3;
+            scale = (flauros->model.anim.time - Q12(13.0f)) >> 3;
         }
         else
         {
@@ -47,10 +47,10 @@ void Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* b
         scale = Q12(1.0f);
     }
 
-    Math_MatrixTransform(&chara->position, &chara->rotation, boneCoords);
+    Math_MatrixTransform(&flauros->position, &flauros->rotation, boneCoords);
 
-    animInfo = &FLAUROS_ANIM_INFOS[chara->model.anim.status];
-    animInfo->playbackFunc(&chara->model, anmHdr, boneCoords, animInfo);
+    animInfo = &FLAUROS_ANIM_INFOS[flauros->model.anim.status];
+    animInfo->playbackFunc(&flauros->model, anmHdr, boneCoords, animInfo);
 
     for (i = 6; i < 11; i++)
     {
@@ -58,22 +58,22 @@ void Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* b
     }
 }
 
-void Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800DE1CC
+void Parasite_Update(s_SubCharacter* parasite, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800DE1CC
 {
     s_AnimInfo* animInfo;
 
-    if (chara->model.controlState == 0)
+    if (parasite->model.controlState == 0)
     {
-        chara->model.anim.alpha   = Q12(0.0f);
-        chara->model.controlState = 1;
-        chara->model.stateStep    = 0;
-        Chara_AnimSet(chara, ANIM_STATUS(1, true), 0);
+        parasite->model.anim.alpha   = Q12(0.0f);
+        parasite->model.controlState = 1;
+        parasite->model.stateStep    = 0;
+        Chara_AnimSet(parasite, ANIM_STATUS(1, true), 0);
     }
 
-    Math_MatrixTransform(&chara->position, &chara->rotation, boneCoords);
+    Math_MatrixTransform(&parasite->position, &parasite->rotation, boneCoords);
 
-    animInfo = &PARASITE_ANIM_INFOS[chara->model.anim.status];
-    animInfo->playbackFunc(&chara->model, anmHdr, boneCoords, animInfo);
+    animInfo = &PARASITE_ANIM_INFOS[parasite->model.anim.status];
+    animInfo->playbackFunc(&parasite->model, anmHdr, boneCoords, animInfo);
 }
 
 void func_800DE26C(void) {}
@@ -2103,7 +2103,7 @@ void func_800E219C(void) // 0x800E219C
         Dms_CharacterTransformGet(&lightIntPos, &unused, D_800CC4D4, g_Cutscene_Timer, FS_BUFFER_14);
 
         // Set light rotation.
-        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafe(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
+        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafeQ6(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
         g_SysWork.pointLightRotation.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
         g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
     }
@@ -2216,7 +2216,7 @@ void func_800E2950(void) // 0x800E2950
 
             g_SysWork.lightBoneCoord1 = NULL;
 
-            g_SysWork.pointLightRotation.vx = -ratan2(camLookAt.vy - camPos.vy, Math_Vector2MagCalcSafe(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz));
+            g_SysWork.pointLightRotation.vx = -ratan2(camLookAt.vy - camPos.vy, Math_Vector2MagCalcSafeQ6(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz));
             g_SysWork.pointLightRotation.vy = ratan2(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz);
             g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
 
@@ -2393,7 +2393,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
         Dms_CharacterTransformGet(&lightIntPos, &unused, D_800CC4D4, g_Cutscene_Timer, FS_BUFFER_14);
 
         // Set light rotation.
-        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafe(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
+        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafeQ6(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
         g_SysWork.pointLightRotation.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
         g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
     }
@@ -3198,7 +3198,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         // Set light rotation.
         g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy,
-                                                  Math_Vector2MagCalcSafe(lightIntPos.vx - g_SysWork.pointLightPosition.vx,
+                                                  Math_Vector2MagCalcSafeQ6(lightIntPos.vx - g_SysWork.pointLightPosition.vx,
                                                                       lightIntPos.vz - g_SysWork.pointLightPosition.vz));
         g_SysWork.pointLightRotation.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx,
                                                   lightIntPos.vz - g_SysWork.pointLightPosition.vz);

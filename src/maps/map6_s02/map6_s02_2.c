@@ -1083,7 +1083,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D1718
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {
-        mag = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - Q12(60.0f),
+        mag = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - Q12(60.0f),
                                   g_SysWork.playerWork.player.position.vz + Q12(20.0f));
         if (mag < Q12(1.4f))
         {

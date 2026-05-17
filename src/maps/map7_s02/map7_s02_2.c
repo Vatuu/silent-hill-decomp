@@ -448,7 +448,7 @@ void func_800DAA4C(void) // 0x800DAA4C
             Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &rot, "LIGHT", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
             Dms_CharacterTransformGet(&pos, &rot, "L_INT", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
 
-            g_SysWork.pointLightRotation.vx = -ratan2(pos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafe(pos.vx - g_SysWork.pointLightPosition.vx, pos.vz - g_SysWork.pointLightPosition.vz));
+            g_SysWork.pointLightRotation.vx = -ratan2(pos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafeQ6(pos.vx - g_SysWork.pointLightPosition.vx, pos.vz - g_SysWork.pointLightPosition.vz));
             g_SysWork.pointLightRotation.vy = ratan2(pos.vx - g_SysWork.pointLightPosition.vx, pos.vz - g_SysWork.pointLightPosition.vz);
             g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
             break;
@@ -1953,7 +1953,7 @@ void func_800DE1FC(void) // 0x800DE1FC
         Dms_CharacterTransformGet(&sp18, &sp28, "L_INT", g_Cutscene_Timer, FS_BUFFER_11);
 
         g_SysWork.pointLightRotation.vx = -ratan2(sp18.vy - g_SysWork.pointLightPosition.vy,
-                                                  Math_Vector2MagCalcSafe(sp18.vx - g_SysWork.pointLightPosition.vx,
+                                                  Math_Vector2MagCalcSafeQ6(sp18.vx - g_SysWork.pointLightPosition.vx,
                                                                       sp18.vz - g_SysWork.pointLightPosition.vz));
         g_SysWork.pointLightRotation.vy = ratan2(sp18.vx - g_SysWork.pointLightPosition.vx, sp18.vz - g_SysWork.pointLightPosition.vz);
         g_SysWork.pointLightRotation.vz = 0;
@@ -2123,7 +2123,7 @@ void func_800DF21C(void) // 0x800DF21C
         Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", g_Cutscene_Timer, FS_BUFFER_11);
         Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", g_Cutscene_Timer, FS_BUFFER_11);
 
-        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafe(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
+        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafeQ6(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
         g_SysWork.pointLightRotation.vy = ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
         g_SysWork.pointLightRotation.vz = 0;
 

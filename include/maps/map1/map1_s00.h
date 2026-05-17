@@ -51,7 +51,7 @@ extern s_WorldObjectPose g_WorldObject9; // 0x800E1190
 
 extern s_WorldObjectModel   g_CommonWorldObjects[6]; // 0x800E11C0
 
-void func_800D7A28(void);
+void MapEvent_CommonItemTake(void);
 
 void func_800D7AC4(void);
 

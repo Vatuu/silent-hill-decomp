@@ -127,6 +127,14 @@
 #define Math_SqrMagCalcToQ6(x) \
     SQUARE(Q12_TO_Q6(x))
 
+/** @brief Computes the square magnitude of a value in Q23.8, converting to Q23.8 to avoid overflow.
+ *
+ * @param x Magnitude (Q19.12).
+ * @return Square magnitude (Q23.8).
+ */
+#define Math_SqrMagCalcToQ8(x) \
+    SQUARE(Q12_TO_Q8(x))
+
 /** @brief Computes the magnitude of a 2D vector in Q19.12.
  *
  * @param x X vector component (Q19.12).
@@ -143,8 +151,18 @@
  * @param z Z vector component (Q19.12).
  * @return 2D vector magnitude (Q19.12).
  */
-#define Math_Vector2MagCalcSafe(x, z) \
+#define Math_Vector2MagCalcSafeQ6(x, z) \
     Q6_TO_Q12(SquareRoot0(Math_SqrMagCalcToQ6(x) + Math_SqrMagCalcToQ6(z)))
+
+/** @brief Computes the magnitude of a 2D vector in Q19.12, using intermediate components in Q23.8 to safely
+ * avoid overflow.
+ *
+ * @param x X vector component (Q19.12).
+ * @param z Z vector component (Q19.12).
+ * @return 2D vector magnitude (Q19.12).
+ */
+#define Math_Vector2MagCalcSafeQ8(x, z) \
+    Q8_TO_Q12(SquareRoot0(Math_SqrMagCalcToQ8(x) + Math_SqrMagCalcToQ8(z)))
 
 /** @brief Computes the magnitude of a 3D vector in Q19.12.
  *
@@ -166,6 +184,17 @@
  */
 #define Math_Vector3MagCalcSafe(x, y, z) \
     Q6_TO_Q12(SquareRoot0(Math_SqrMagCalcToQ6(x) + Math_SqrMagCalcToQ6(y) + Math_SqrMagCalcToQ6(z)))
+
+/** @brief Computes the magnitude of a 3D vector in Q19.12, using intermediate components in Q23.8 to safely
+ * avoid overflow.
+ *
+ * @param x X vector component (Q19.12).
+ * @param y Y vector component (Q19.12).
+ * @param z Z vector component (Q19.12).
+ * @return 3D vector magnitude (Q19.12).
+ */
+#define Math_Vector3MagCalcSafeToQ8(x, y, z) \
+    Q8_TO_Q12(SquareRoot0(Math_SqrMagCalcToQ8(x) + Math_SqrMagCalcToQ8(y) + Math_SqrMagCalcToQ8(z)))
 
 /** @brief Sets an `SVECTOR` using a fast bitwise method.
  *

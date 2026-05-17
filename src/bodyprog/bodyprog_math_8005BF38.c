@@ -119,7 +119,7 @@ s32 func_8005C1CC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, 
         return 0;
     }
 
-    temp_s2 = Math_Vector2MagCalcSafe(arg2 - arg5, arg3 - arg6);
+    temp_s2 = Math_Vector2MagCalcSafeQ6(arg2 - arg5, arg3 - arg6);
 
     if (arg4 < temp_s2 &&
         (Math_SqrMagCalcToQ6(arg7 - arg5) +
@@ -148,7 +148,7 @@ s32 func_8005C1CC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, 
         else
         {
             temp_s0_2 = Math_Cos(temp_s0 - temp_v0_6);
-            temp_s0_3 = Q12_MULT(temp_s2, temp_s0_2) - (SquareRoot0(SQUARE(arg4 >> 6) - SQUARE(var_s0 >> 6)) << 6); // TODO: Use `Math_Vector2MagCalcSafe`.
+            temp_s0_3 = Q12_MULT(temp_s2, temp_s0_2) - (SquareRoot0(SQUARE(arg4 >> 6) - SQUARE(var_s0 >> 6)) << 6); // TODO: Use `Math_Vector2MagCalcSafeQ6`.
             *arg0     = arg5 + Q12_MULT(temp_s0_3, Math_Cos(temp_v0_6));
             *arg1     = arg6 + Q12_MULT(temp_s0_3, Math_Sin(temp_v0_6));
         }
@@ -174,8 +174,8 @@ u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2) // 
     angle0 = Math_AngleNormalizeSigned(ratan2(x0 - x1, y0 - y1));
     angle1 = Math_AngleNormalizeSigned(ratan2(x0 - x2, y0 - y2));
     angle2 = Math_AngleNormalizeSigned(ratan2(x2 - x1, y2 - y1));
-    mag0   = Math_Vector2MagCalcSafe(x0 - x1, y0 - y1);
-    mag1   = Math_Vector2MagCalcSafe(x0 - x2, y0 - y2);
+    mag0   = Math_Vector2MagCalcSafeQ6(x0 - x1, y0 - y1);
+    mag1   = Math_Vector2MagCalcSafeQ6(x0 - x2, y0 - y2);
 
     if ((mag0 * Math_Sin(angle0 - angle2)) < 0)
     {

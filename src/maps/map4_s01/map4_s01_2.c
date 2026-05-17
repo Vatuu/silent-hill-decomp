@@ -551,7 +551,7 @@ void func_800D2408(void) // 0x800D2408
 
         Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", g_Cutscene_Timer0, FS_BUFFER_11);
         Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", g_Cutscene_Timer0, FS_BUFFER_11);
-        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafe(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
+        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafeQ6(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
         g_SysWork.pointLightRotation.vy = ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
         g_SysWork.pointLightRotation.vz = 0;
     }
@@ -990,7 +990,7 @@ void func_800D3420(void) // 0x800D3420
         {
             Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", g_Cutscene_Timer3, FS_BUFFER_11);
             Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", g_Cutscene_Timer3, FS_BUFFER_11);
-            g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafe(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
+            g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafeQ6(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
             g_SysWork.pointLightRotation.vy = ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
             g_SysWork.pointLightRotation.vz = 0;
         }

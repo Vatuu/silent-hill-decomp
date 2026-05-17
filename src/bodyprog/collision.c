@@ -3657,7 +3657,7 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
         distMult = Q12_MULT_PRECISE(distMult, i);
     }
 
-    dist = Math_Vector2MagCalcSafe(g_SysWork.playerWork.player.position.vx - chara->position.vx,
+    dist = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - chara->position.vx,
                                g_SysWork.playerWork.player.position.vz - chara->position.vz);
     distMax = baseDistMax + Q12_MULT_PRECISE(distStep, distMult);
     if (distMax < dist)

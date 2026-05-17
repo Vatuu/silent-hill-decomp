@@ -13,6 +13,8 @@
 
 void func_800D87B0(s_SubCharacter* chara) // 0x800D87B0
 {
+    #define monsterCybilChara g_SysWork.npcs[0]
+
     if (chara->properties.player.moveDistance_126 != Q12(0.0f))
     {
         chara->properties.player.moveDistance_126 -= Q12(0.4f);
@@ -24,20 +26,24 @@ void func_800D87B0(s_SubCharacter* chara) // 0x800D87B0
 
     if (chara->model.stateStep == 0)
     {
-        g_SysWork.npcs[0].properties.player.moveDistance_126 = Q12(1.5f);
+        monsterCybilChara.properties.player.moveDistance_126 = Q12(1.5f);
         Model_AnimStatusSet(&chara->model, 9, false);
     }
 
     if (chara->model.anim.keyframeIdx == D_800EA856)
     {
-        g_SysWork.npcs[0].properties.dummy.properties_E8[1].val16[0] = 1;
+        monsterCybilChara.properties.dummy.properties_E8[1].val16[0] = 1;
         chara->model.stateStep = 0;
-        g_SysWork.npcs[0].properties.player.field_122 = 0;
+        monsterCybilChara.properties.player.field_122 = 0;
     }
+
+    #undef monsterCybilChara
 }
 
 void func_800D8848(s_Model* model) // 0x800D8848
 {
+    #define monsterCybilChara g_SysWork.npcs[0]
+
     if (model->stateStep == 0)
     {
         model->anim.status = ANIM_STATUS(9, false);
@@ -46,21 +52,25 @@ void func_800D8848(s_Model* model) // 0x800D8848
 
     if (model->anim.keyframeIdx == D_800EA856)
     {
-        g_SysWork.npcs[0].properties.dummy.properties_E8[1].val16[1] = 1;
+        monsterCybilChara.properties.dummy.properties_E8[1].val16[1] = 1;
         model->stateStep                                                  = 0;
     }
+
+    #undef monsterCybilChara
 }
 
 s32 func_800D8898(s_AnimInfo* animInfo) // 0x800D8898
 {
+    #define monsterCybilChara g_SysWork.npcs[0]
+
     if (animInfo->status == ANIM_STATUS(1, true))
     {
-        if (g_SysWork.npcs[0].properties.monsterCybil.field_EC == 0)
+        if (monsterCybilChara.properties.monsterCybil.field_EC == 0)
         {
             return 0;
         }
 
-        if (g_SysWork.npcs[0].properties.monsterCybil.field_116 == 1)
+        if (monsterCybilChara.properties.monsterCybil.field_116 == 1)
         {
             return D_800CB118[animInfo->startKeyframeIdx];
         }
@@ -71,101 +81,117 @@ s32 func_800D8898(s_AnimInfo* animInfo) // 0x800D8898
     }
 
     return 0;
+
+    #undef monsterCybilChara
 }
 
-void MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D8908
+void MonsterCybil_Update(s_SubCharacter* monsterCybil, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D8908
 {
     s_Model* extraModel;
 
     extraModel = &g_MonsterCybil_ExtraModel;
 
-    if (chara->model.controlState == 0)
+    if (monsterCybil->model.controlState == 0)
     {
-        MonsterCybil_Init(chara, extraModel);
+        MonsterCybil_Init(monsterCybil, extraModel);
     }
 
     if (g_DeltaTime != Q12(0.0f))
     {
-        func_800D8B14(chara, extraModel);
-        func_800D8D7C(chara, extraModel, coords);
-        func_800D9790(chara, extraModel);
-        func_800D99E4(chara, extraModel, anmHdr, coords);
-        func_800DB4CC(chara, extraModel, coords);
-        func_800D9AAC(chara, extraModel);
+        func_800D8B14(monsterCybil, extraModel);
+        func_800D8D7C(monsterCybil, extraModel, boneCoords);
+        func_800D9790(monsterCybil, extraModel);
+        func_800D99E4(monsterCybil, extraModel, anmHdr, boneCoords);
+        func_800DB4CC(monsterCybil, extraModel, boneCoords);
+        func_800D9AAC(monsterCybil, extraModel);
     }
 }
 
-void MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D89CC
+void MonsterCybil_Init(s_SubCharacter* monsterCybil, s_Model* extraModel) // 0x800D89CC
 {
-    chara->model.controlState++;
-    extraModel->controlState++;
-    chara->model.stateStep = 0;
-    extraModel->stateStep    = 0;
+    #define monsterCybilChara g_SysWork.npcs[0]
 
-    chara->collision.state = CharaCollisionState_Npc;
-    g_SysWork.npcs[0].properties.dummy.properties_E8[12].val16[1] = Q12_ANGLE(90.0f);
-    chara->model.anim.flags |= AnimFlag_Visible | AnimFlag_Unlocked;
-    chara->flags |= CharaFlag_NoRadioStatic | CharaFlag_Hit;
+    monsterCybil->model.controlState++;
+    extraModel->controlState++;
+    monsterCybil->model.stateStep = 0;
+    extraModel->stateStep         = 0;
+
+    monsterCybil->collision.state = CharaCollisionState_Npc;
+    monsterCybilChara.properties.dummy.properties_E8[12].val16[1] = Q12_ANGLE(90.0f);
+    monsterCybil->model.anim.flags |= AnimFlag_Visible | AnimFlag_Unlocked;
+    monsterCybil->flags |= CharaFlag_NoRadioStatic | CharaFlag_Hit;
 
     sharedData_800D16E4_2_s01 = 0;
     extraModel->anim.flags |= AnimFlag_Visible | AnimFlag_Unlocked;
-    chara->health = Q12(4000.0f);
+    monsterCybil->health = Q12(4000.0f);
 
-    g_SysWork.npcs[0].properties.dummy.properties_E8[7].val16[0] = 10;
-    g_SysWork.npcs[0].properties.dummy.properties_E8[5].val16[1] = 0;
-    g_SysWork.npcs[0].properties.dummy.properties_E8[7].val16[1] = 0;
-    g_SysWork.npcs[0].properties.dummy.properties_E8[2].val32    = 0;
-    g_SysWork.npcs[0].properties.dummy.properties_E8[8].val32    = 0;
-    g_SysWork.npcs[0].properties.dummy.properties_E8[9].val32    = 0;
-    g_SysWork.npcs[0].properties.dummy.properties_E8[4].val32    = 0;
-    g_SysWork.npcs[0].properties.dummy.properties_E8[11].val8[2] = 0;
-    g_SysWork.npcs[0].properties.dummy.properties_E8[3].val32    = 0;
+    monsterCybilChara.properties.dummy.properties_E8[7].val16[0] = 10;
+    monsterCybilChara.properties.dummy.properties_E8[5].val16[1] = 0;
+    monsterCybilChara.properties.dummy.properties_E8[7].val16[1] = 0;
+    monsterCybilChara.properties.dummy.properties_E8[2].val32    = 0;
+    monsterCybilChara.properties.dummy.properties_E8[8].val32    = 0;
+    monsterCybilChara.properties.dummy.properties_E8[9].val32    = 0;
+    monsterCybilChara.properties.dummy.properties_E8[4].val32    = 0;
+    monsterCybilChara.properties.dummy.properties_E8[11].val8[2] = 0;
+    monsterCybilChara.properties.dummy.properties_E8[3].val32    = 0;
 
     WorldGfx_HeldItemAttach(Chara_MonsterCybil, MODEL_BONE(1, 1));
+
+    #undef monsterCybilChara
 }
 
-void func_800D8A90(s_SubCharacter* chara) // 0x800D8A90
+void func_800D8A90(s_SubCharacter* monsterCybil) // 0x800D8A90
 {
-    chara->collision.cylinder.radius = Q12(0.3f);
-    chara->collision.cylinder.field_2 = Q12(0.23f);
-    chara->collision.box.top = Q12(-1.6f);
-    chara->collision.box.offsetY = Q12(-1.05f);
-    chara->collision.box.field_8 = Q12(-1.45f);
-    chara->health = Q12(4000.0f);
-    chara->collision.box.bottom = 0;
-    chara->collision.box.height = 0;
+    #define monsterCybilChara g_SysWork.npcs[0]
 
-    chara->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-    chara->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-    chara->collision.shapeOffsets.box.vz = Q12(0.0f);
-    chara->collision.shapeOffsets.box.vx = Q12(0.0f);
+    monsterCybil->collision.cylinder.radius  = Q12(0.3f);
+    monsterCybil->collision.cylinder.field_2 = Q12(0.23f);
+    monsterCybil->collision.box.top          = Q12(-1.6f);
+    monsterCybil->collision.box.offsetY      = Q12(-1.05f);
+    monsterCybil->collision.box.field_8      = Q12(-1.45f);
 
-    chara->model.stateStep = 0;
+    monsterCybil->health = Q12(4000.0f);
+
+    monsterCybil->collision.box.bottom               = 0;
+    monsterCybil->collision.box.height               = 0;
+    monsterCybil->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+    monsterCybil->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+    monsterCybil->collision.shapeOffsets.box.vz      = Q12(0.0f);
+    monsterCybil->collision.shapeOffsets.box.vx      = Q12(0.0f);
+
+    monsterCybil->model.stateStep = 0;
 
     // TODO: Wrong union member used here.
 
-    g_SysWork.npcs[0].properties.dummy.properties_E8[11].val8[1] = 0;
-    D_800ED543                                                                   = 0;
-    g_SysWork.npcs[0].properties.dummy.properties_E8[7].val16[0]  = 10;
-    g_SysWork.npcs[0].properties.dummy.properties_E8[5].val16[1]  = 0;
-    g_SysWork.npcs[0].properties.dummy.properties_E8[7].val16[1]  = 0;
-    g_SysWork.npcs[0].properties.player.field_F0                          = 0;
-    g_SysWork.npcs[0].properties.player.runTimer_108                      = 0;
-    g_SysWork.npcs[0].properties.npc.field_10C                            = 0;
-    g_SysWork.npcs[0].properties.player.runTimer_F8                       = 0;
+    monsterCybilChara.properties.dummy.properties_E8[11].val8[1] = 0;
+
+    D_800ED543 = 0;
+
+    monsterCybilChara.properties.dummy.properties_E8[7].val16[0] = 10;
+    monsterCybilChara.properties.dummy.properties_E8[5].val16[1] = 0;
+    monsterCybilChara.properties.dummy.properties_E8[7].val16[1] = 0;
+    monsterCybilChara.properties.player.field_F0                 = 0;
+    monsterCybilChara.properties.player.runTimer_108             = 0;
+    monsterCybilChara.properties.npc.field_10C                   = 0;
+    monsterCybilChara.properties.player.runTimer_F8              = 0;
+
+    #undef monsterCybilChara
 }
 
-void func_800D8B14(s_SubCharacter* chara, s_Model* model) // 0x800D8B14
+void func_800D8B14(s_SubCharacter* monsterCybil, s_Model* model) // 0x800D8B14
 {
+    #define monsterCybilChara g_SysWork.npcs[0]
+    #define playerChara       g_SysWork.playerWork.player
+
     u8  sp10;
     s16 sp12;
 
-    if (g_SysWork.npcs[0].properties.monsterCybil.field_F8 != Q12(0.0f))
+    if (monsterCybilChara.properties.monsterCybil.field_F8 != Q12(0.0f))
     {
-        g_SysWork.npcs[0].properties.monsterCybil.field_F8 -= g_DeltaTime * 15;
+        monsterCybilChara.properties.monsterCybil.field_F8 -= g_DeltaTime * 15;
     }
 
-    g_SysWork.npcs[0].properties.monsterCybil.field_F8 = CLAMP(g_SysWork.npcs[0].properties.monsterCybil.field_F8, Q12(0.0f), INT_MAX);
+    monsterCybilChara.properties.monsterCybil.field_F8 = CLAMP(monsterCybilChara.properties.monsterCybil.field_F8, Q12(0.0f), INT_MAX);
 
     Player_DisableDamage(&sp10, false);
 
@@ -174,43 +200,43 @@ void func_800D8B14(s_SubCharacter* chara, s_Model* model) // 0x800D8B14
         return;
     }
 
-    if (g_SysWork.npcs[0].properties.monsterCybil.field_E8 < 13)
+    if (monsterCybilChara.properties.monsterCybil.field_E8 < 13)
     {
-        if (g_SysWork.npcs[0].properties.monsterCybil.field_E8 > 2)
+        if (monsterCybilChara.properties.monsterCybil.field_E8 > 2)
         {
             return;
         }
     }
 
-    if (g_SysWork.npcs[0].properties.monsterCybil.field_EE == 9 ||
-        g_SysWork.npcs[0].properties.monsterCybil.field_EE == 11)
+    if (monsterCybilChara.properties.monsterCybil.field_EE == 9 ||
+        monsterCybilChara.properties.monsterCybil.field_EE == 11)
     {
-        chara->damage.amount = Q12(0.0f);
+        monsterCybil->damage.amount = Q12(0.0f);
     }
     else
     {
-        if (g_SysWork.npcs[0].properties.monsterCybil.field_EE != 12)
+        if (monsterCybilChara.properties.monsterCybil.field_EE != 12)
         {
-            chara->damage.amount = chara->damage.amount >> 1;
+            monsterCybil->damage.amount = monsterCybil->damage.amount >> 1;
         }
 
-        if (chara->damage.amount != Q12(0.0f))
+        if (monsterCybil->damage.amount != Q12(0.0f))
         {
-            g_SysWork.npcs[0].properties.monsterCybil.field_F8 += chara->damage.amount;
+            monsterCybilChara.properties.monsterCybil.field_F8 += monsterCybil->damage.amount;
 
-            chara->health       -= chara->damage.amount;
-            chara->damage.amount = Q12(0.0f);
+            monsterCybil->health       -= monsterCybil->damage.amount;
+            monsterCybil->damage.amount = Q12(0.0f);
 
-            g_SysWork.npcs[0].properties.monsterCybil.field_122 = Q12_ANGLE_NORM_U(
-                ratan2(Q12_TO_Q8(chara->position.vx - g_SysWork.playerWork.player.position.vx),
-                       Q12_TO_Q8(chara->position.vz - g_SysWork.playerWork.player.position.vz)) +
+            monsterCybilChara.properties.monsterCybil.field_122 = Q12_ANGLE_NORM_U(
+                ratan2(Q12_TO_Q8(monsterCybil->position.vx - playerChara.position.vx),
+                       Q12_TO_Q8(monsterCybil->position.vz - playerChara.position.vz)) +
                 Q12(1.0f));
 
-            Math_ShortestAngleGet(chara->rotation.vy, g_SysWork.npcs[0].properties.monsterCybil.field_122, &sp12);
+            Math_ShortestAngleGet(monsterCybil->rotation.vy, monsterCybilChara.properties.monsterCybil.field_122, &sp12);
 
-            g_SysWork.npcs[0].properties.monsterCybil.field_122 = sp12;
+            monsterCybilChara.properties.monsterCybil.field_122 = sp12;
 
-            if (chara->health <= Q12(0.0f))
+            if (monsterCybil->health <= Q12(0.0f))
             {
                 Player_DisableDamage(&sp10, true);
                 Savegame_EventFlagSet(EventFlag_446);
@@ -218,28 +244,31 @@ void func_800D8B14(s_SubCharacter* chara, s_Model* model) // 0x800D8B14
             }
             else
             {
-                if (g_SysWork.npcs[0].properties.monsterCybil.field_F8 >= Q12(800.0f))
+                if (monsterCybilChara.properties.monsterCybil.field_F8 >= Q12(800.0f))
                 {
-                    if (g_SysWork.npcs[0].properties.monsterCybil.field_EC != 12)
+                    if (monsterCybilChara.properties.monsterCybil.field_EC != 12)
                     {
-                        g_SysWork.npcs[0].properties.monsterCybil.field_EC = 9;
-                        chara->model.stateStep                                 = 0;
+                        monsterCybilChara.properties.monsterCybil.field_EC = 9;
+                        monsterCybil->model.stateStep                                 = 0;
                     }
                 }
 
-                if (g_SysWork.npcs[0].properties.monsterCybil.field_F8 >= Q12(800.0f) ||
-                    g_SysWork.npcs[0].properties.monsterCybil.field_EE == 12)
+                if (monsterCybilChara.properties.monsterCybil.field_F8 >= Q12(800.0f) ||
+                    monsterCybilChara.properties.monsterCybil.field_EE == 12)
                 {
-                    g_SysWork.npcs[0].properties.monsterCybil.field_EE = 9;
+                    monsterCybilChara.properties.monsterCybil.field_EE = 9;
                     model->stateStep                                         = 0;
-                    g_SysWork.npcs[0].properties.monsterCybil.field_F8 = 0;
+                    monsterCybilChara.properties.monsterCybil.field_F8 = 0;
                 }
             }
 
-            g_SysWork.npcs[0].properties.monsterCybil.field_116 = 0;
-            g_SysWork.npcs[0].properties.monsterCybil.field_10C = 0;
+            monsterCybilChara.properties.monsterCybil.field_116 = 0;
+            monsterCybilChara.properties.monsterCybil.field_10C = 0;
         }
     }
+
+    #undef monsterCybilChara
+    #undef playerChara
 }
 
 INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800CB118);
@@ -268,7 +297,7 @@ INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800CB364);
 
 INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800CB3A4);
 
-void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords) // 0x800D8D7C
+void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* model, GsCOORDINATE2* boneCoords) // 0x800D8D7C
 {
     enum _SfxId sfxId;
     s8          pitch0;
@@ -276,39 +305,42 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
     q19_12      angle0;
     q19_12      moveSpeed;
 
-    g_SysWork.npcs[0].properties.monsterCybil.field_110 = Q8_TO_Q12(SquareRoot0(SQUARE(Q12_TO_Q8(g_SysWork.playerWork.player.position.vx - chara->position.vx)) +
-                                                                                       SQUARE(Q12_TO_Q8(g_SysWork.playerWork.player.position.vz - chara->position.vz))));
+    #define monsterCybilChara g_SysWork.npcs[0]
+    #define playerChara       g_SysWork.playerWork.player
 
-    g_SysWork.npcs[0].properties.monsterCybil.field_120 = func_800DB6FC(&chara->position);
+    monsterCybilChara.properties.monsterCybil.field_110 = Math_Vector2MagCalcSafeQ8(playerChara.position.vx - monsterCybil->position.vx,
+                                                                                    playerChara.position.vz - monsterCybil->position.vz);
 
-    if (g_SysWork.npcs[0].properties.monsterCybil.field_120)
+    monsterCybilChara.properties.monsterCybil.field_120 = func_800DB6FC(&monsterCybil->position);
+
+    if (monsterCybilChara.properties.monsterCybil.field_120)
     {
-        g_SysWork.npcs[0].properties.player.runTimer_108 += g_DeltaTime;
+        monsterCybilChara.properties.player.runTimer_108 += g_DeltaTime;
     }
     else
     {
-        g_SysWork.npcs[0].properties.player.runTimer_108 = Q12(0.0f);
+        monsterCybilChara.properties.player.runTimer_108 = Q12(0.0f);
     }
 
-    g_SysWork.npcs[0].properties.monsterCybil.field_106++;
+    monsterCybilChara.properties.monsterCybil.field_106++;
 
-    switch (g_SysWork.npcs[0].properties.monsterCybil.field_E8)
+    switch (monsterCybilChara.properties.monsterCybil.field_E8)
     {
         case 0:
-            func_800D9AB4(chara, model, coords);
+            func_800D9AB4(monsterCybil, model, boneCoords);
             break;
 
         case 1:
-            func_800DA9C8(chara, model, coords);
+            func_800DA9C8(monsterCybil, model, boneCoords);
             break;
 
         case 4:
-            g_SysWork.npcs[0].properties.monsterCybil.field_11A = Q12(0.25f);
+            monsterCybilChara.properties.monsterCybil.field_11A = Q12(0.25f);
 
-            Model_AnimStatusKeyframeSet(chara->model, 4, true, MONSTER_CYBIL_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(monsterCybil->model, 4, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             Model_AnimStatusKeyframeSet(*model, 4, true, MONSTER_CYBIL_ANIM_INFOS, 0);
 
-            if (chara->model.anim.keyframeIdx >= 66)
+            if (monsterCybil->model.anim.keyframeIdx >= 66)
             {
                 WorldGfx_HeldItemAttach(Chara_MonsterCybil, 1);
             }
@@ -317,99 +349,100 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                 WorldGfx_HeldItemAttach(Chara_MonsterCybil, 2);
             }
 
-            g_SysWork.npcs[0].properties.monsterCybil.field_126 = 0;
+            monsterCybilChara.properties.monsterCybil.field_126 = 0;
 
             if (Savegame_EventFlagGet(EventFlag_445))
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_F4 = 1;
-                g_SysWork.npcs[0].properties.monsterCybil.field_E8 = 1;
-                g_SysWork.npcs[0].properties.monsterCybil.field_EC = 1;
-                g_SysWork.npcs[0].properties.monsterCybil.field_EE = 1;
-                chara->model.stateStep                                = 0;
-                model->stateStep                                        = 0;
+                monsterCybilChara.properties.monsterCybil.field_F4 = 1;
+                monsterCybilChara.properties.monsterCybil.field_E8 = 1;
+                monsterCybilChara.properties.monsterCybil.field_EC = 1;
+                monsterCybilChara.properties.monsterCybil.field_EE = 1;
+
+                monsterCybil->model.stateStep = 0;
+                model->stateStep       = 0;
             }
             break;
 
         case 5:
-            if (chara->model.stateStep == 0)
+            if (monsterCybil->model.stateStep == 0)
             {
                 model->stateStep = 0;
-                Model_AnimStatusKeyframeSet(chara->model, 14, true, MONSTER_CYBIL_ANIM_INFOS, 0);
+                Model_AnimStatusKeyframeSet(monsterCybil->model, 14, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             }
 
             Model_AnimStatusKeyframeSet(*model, 14, true, MONSTER_CYBIL_ANIM_INFOS, 0);
 
-            g_SysWork.npcs[0].properties.monsterCybil.field_126 = 0;
+            monsterCybilChara.properties.monsterCybil.field_126 = 0;
 
-            if (chara->properties.npc.field_F8)
+            if (monsterCybil->properties.npc.field_F8)
             {
-                chara->properties.dahlia.controlState = 0;
-                chara->model.stateStep            = 0;
-                chara->properties.npc.field_F8     = 0;
+                monsterCybil->properties.dahlia.controlState = 0;
+                monsterCybil->model.stateStep            = 0;
+                monsterCybil->properties.npc.field_F8     = 0;
             }
             break;
 
         case 6:
-            if (!chara->model.stateStep)
+            if (!monsterCybil->model.stateStep)
             {
                 model->stateStep = 0;
-                Model_AnimStatusSet(&chara->model, 15, false);
+                Model_AnimStatusSet(&monsterCybil->model, 15, false);
             }
 
             Model_AnimStatusSet(model, 15, false);
 
-            g_SysWork.npcs[0].properties.monsterCybil.field_126 = 0;
-            if (chara->properties.npc.field_F8)
+            monsterCybilChara.properties.monsterCybil.field_126 = 0;
+            if (monsterCybil->properties.npc.field_F8)
             {
-                chara->properties.dahlia.controlState = 0;
-                chara->model.stateStep            = 0;
-                chara->properties.npc.field_F8     = 0;
+                monsterCybil->properties.dahlia.controlState = 0;
+                monsterCybil->model.stateStep            = 0;
+                monsterCybil->properties.npc.field_F8     = 0;
             }
 
-            if (chara->model.anim.keyframeIdx == 343)
+            if (monsterCybil->model.anim.keyframeIdx == 343)
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_E8 = 12;
-                chara->model.stateStep                                = 0;
-                model->stateStep                                         = 0;
+                monsterCybilChara.properties.monsterCybil.field_E8 = 12;
+                monsterCybil->model.stateStep = 0;
+                model->stateStep       = 0;
             }
             break;
 
         case 12:
-            Model_AnimStatusKeyframeSet(chara->model, 21, true, MONSTER_CYBIL_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(monsterCybil->model, 21, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             Model_AnimStatusKeyframeSet(*model, 21, true, MONSTER_CYBIL_ANIM_INFOS, 0);
-            g_SysWork.npcs[0].properties.monsterCybil.field_126 = 0;
+            monsterCybilChara.properties.monsterCybil.field_126 = 0;
 
-            if (chara->properties.npc.field_F8)
+            if (monsterCybil->properties.npc.field_F8)
             {
-                chara->properties.dahlia.controlState = 0;
-                chara->model.stateStep            = 0;
-                chara->properties.npc.field_F8     = 0;
+                monsterCybil->properties.dahlia.controlState = 0;
+                monsterCybil->model.stateStep                = 0;
+                monsterCybil->properties.npc.field_F8     = 0;
             }
             break;
 
         case 9:
-            if (!chara->model.stateStep)
+            if (!monsterCybil->model.stateStep)
             {
                 model->stateStep = 0;
-                Model_AnimStatusKeyframeSet(chara->model, 20, true, MONSTER_CYBIL_ANIM_INFOS, 0);
+                Model_AnimStatusKeyframeSet(monsterCybil->model, 20, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             }
 
             Model_AnimStatusKeyframeSet(*model, 20, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             WorldGfx_HeldItemAttach(Chara_MonsterCybil, 1);
 
-            if (chara->properties.npc.field_F8)
+            if (monsterCybil->properties.npc.field_F8)
             {
-                chara->properties.dahlia.controlState = 0;
-                chara->model.stateStep            = 0;
-                chara->properties.npc.field_F8     = 0;
+                monsterCybil->properties.dahlia.controlState = 0;
+                monsterCybil->model.stateStep                = 0;
+                monsterCybil->properties.npc.field_F8     = 0;
             }
             break;
 
         case 10:
-            if (!chara->model.stateStep)
+            if (!monsterCybil->model.stateStep)
             {
                 model->stateStep = 0;
-                Model_AnimStatusKeyframeSet(chara->model, 18, true, MONSTER_CYBIL_ANIM_INFOS, 0);
+                Model_AnimStatusKeyframeSet(monsterCybil->model, 18, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             }
 
             Model_AnimStatusKeyframeSet(*model, 18, true, MONSTER_CYBIL_ANIM_INFOS, 0);
@@ -423,106 +456,106 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                 WorldGfx_HeldItemAttach(Chara_MonsterCybil, 1);
             }
 
-            if (chara->properties.npc.field_F8)
+            if (monsterCybil->properties.npc.field_F8)
             {
-                chara->properties.dahlia.controlState = 0;
-                chara->model.stateStep            = 0;
-                chara->properties.npc.field_F8     = 0;
+                monsterCybil->properties.dahlia.controlState = 0;
+                monsterCybil->model.stateStep                = 0;
+                monsterCybil->properties.npc.field_F8        = 0;
             }
             break;
 
         case 11:
-            if (chara->model.stateStep == 0)
+            if (monsterCybil->model.stateStep == 0)
             {
                 model->stateStep = 0;
-                Model_AnimStatusKeyframeSet(chara->model, 19, true, MONSTER_CYBIL_ANIM_INFOS, 0);
+                Model_AnimStatusKeyframeSet(monsterCybil->model, 19, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             }
 
             Model_AnimStatusKeyframeSet(*model, 19, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             WorldGfx_HeldItemAttach(Chara_MonsterCybil, 2);
 
-            if (chara->properties.npc.field_F8)
+            if (monsterCybil->properties.npc.field_F8)
             {
-                chara->properties.dahlia.controlState = 0;
-                chara->model.stateStep            = 0;
-                chara->properties.npc.field_F8     = 0;
+                monsterCybil->properties.dahlia.controlState = 0;
+                monsterCybil->model.stateStep                = 0;
+                monsterCybil->properties.npc.field_F8        = 0;
             }
 
-            if (!chara->model.stateStep)
+            if (!monsterCybil->model.stateStep)
             {
                 model->stateStep = 0;
             }
             break;
 
         case 7:
-            if (!chara->model.stateStep)
+            if (!monsterCybil->model.stateStep)
             {
                 model->stateStep = 0;
-                Model_AnimStatusKeyframeSet(chara->model, 16, true, MONSTER_CYBIL_ANIM_INFOS, 0);
+                Model_AnimStatusKeyframeSet(monsterCybil->model, 16, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             }
 
             Model_AnimStatusKeyframeSet(*model, 16, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             break;
 
         case 8:
-            if (!chara->model.stateStep)
+            if (!monsterCybil->model.stateStep)
             {
                 model->stateStep = 0;
-                Model_AnimStatusKeyframeSet(chara->model, 17, true, MONSTER_CYBIL_ANIM_INFOS, 0);
+                Model_AnimStatusKeyframeSet(monsterCybil->model, 17, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             }
 
             Model_AnimStatusKeyframeSet(*model, 17, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             break;
     }
 
-    func_8007FDE0(0xB, &sfxId, &pitch0, &pitch1);
+    func_8007FDE0(11, &sfxId, &pitch0, &pitch1);
 
-    switch (g_SysWork.npcs[0].properties.monsterCybil.field_E8)
+    switch (monsterCybilChara.properties.monsterCybil.field_E8)
     {
         case 9:
-            sharedFunc_800D908C_0_s00(41, chara, 5, 16, sfxId, pitch0);
+            sharedFunc_800D908C_0_s00(41, monsterCybil, 5, 16, sfxId, pitch0);
             break;
 
         case 10:
-            sharedFunc_800D9188_0_s00(37, chara, 29, Sfx_Unk1620);
+            sharedFunc_800D9188_0_s00(37, monsterCybil, 29, Sfx_Unk1620);
             break;
 
         case 11:
-            if (chara->model.anim.keyframeIdx == 38)
+            if (monsterCybil->model.anim.keyframeIdx == 38)
             {
-                func_8006342C(EquippedWeaponId_Unk63, Q12_ANGLE(90.0f), chara->rotation.vy, g_SysWork.npcBoneCoordBuffer);
+                func_8006342C(EquippedWeaponId_Unk63, Q12_ANGLE(90.0f), monsterCybil->rotation.vy, g_SysWork.npcBoneCoordBuffer);
             }
 
-            sharedFunc_800D9188_0_s00(39, chara, 38, Sfx_Unk1622);
+            sharedFunc_800D9188_0_s00(39, monsterCybil, 38, Sfx_Unk1622);
             break;
 
         case 4:
-            sharedFunc_800D9188_0_s00(9, chara, 69, Sfx_Unk1621);
+            sharedFunc_800D9188_0_s00(9, monsterCybil, 69, Sfx_Unk1621);
             break;
 
         case 5:
-            if (chara->model.anim.keyframeIdx < 312)
+            if (monsterCybil->model.anim.keyframeIdx < 312)
             {
-                sharedFunc_800D9188_0_s00(29, chara, 289, Sfx_Unk1632);
+                sharedFunc_800D9188_0_s00(29, monsterCybil, 289, Sfx_Unk1632);
             }
             else
             {
-                sharedFunc_800D9188_0_s00(29, chara, 313, Sfx_Unk1631);
+                sharedFunc_800D9188_0_s00(29, monsterCybil, 313, Sfx_Unk1631);
             }
             break;
     }
 
-    if (g_SysWork.npcs[0].properties.monsterCybil.field_EC == 1)
+    if (monsterCybilChara.properties.monsterCybil.field_EC == 1)
     {
-        sharedFunc_800D908C_0_s00(3, chara, 5, 16, sfxId, pitch0);
+        sharedFunc_800D908C_0_s00(3, monsterCybil, 5, 16, sfxId, pitch0);
     }
 
-    switch (g_SysWork.npcs[0].properties.monsterCybil.field_EE)
+    switch (monsterCybilChara.properties.monsterCybil.field_EE)
     {
         case 2:
             if (ANIM_STATUS_IS_ACTIVE(model->anim.status) && model->anim.keyframeIdx >= 29 && !sharedData_800D16E4_2_s01)
             {
-                func_8005DC1C(Sfx_Unk1620, &chara->position, Q8(0.25f), 0);
+                func_8005DC1C(Sfx_Unk1620, &monsterCybil->position, Q8(0.25f), 0);
                 sharedData_800D16E4_2_s01 = 1;
             }
             else if (model->anim.keyframeIdx < 29)
@@ -534,7 +567,7 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
         case 3:
             if (ANIM_STATUS_IS_ACTIVE(model->anim.status) && model->anim.keyframeIdx >= 38 && !sharedData_800D16E4_2_s01)
             {
-                func_8005DC1C(Sfx_Unk1622, &chara->position, Q8(0.25f), 0);
+                func_8005DC1C(Sfx_Unk1622, &monsterCybil->position, Q8(0.25f), 0);
                 sharedData_800D16E4_2_s01 = 1;
             }
 
@@ -548,331 +581,342 @@ void func_800D8D7C(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
             break;
     }
 
-    moveSpeed              = g_SysWork.npcs[0].properties.monsterCybil.field_126;
-    angle0                 = g_SysWork.npcs[0].properties.monsterCybil.field_122;
-    chara->headingAngle = Q12_ANGLE_ABS(angle0 + chara->rotation.vy);
+    moveSpeed              = monsterCybilChara.properties.monsterCybil.field_126;
+    angle0                 = monsterCybilChara.properties.monsterCybil.field_122;
+    monsterCybil->headingAngle = Q12_ANGLE_ABS(angle0 + monsterCybil->rotation.vy);
 
-    chara->moveSpeed = moveSpeed;
-    chara->fallSpeed += g_GravitySpeed;
+    monsterCybil->moveSpeed = moveSpeed;
+    monsterCybil->fallSpeed += g_GravitySpeed;
 
-    coords->flg = false;
-    Math_RotMatrixZxyNegGte(&chara->rotation, &coords->coord);
+    boneCoords->flg = false;
+    Math_RotMatrixZxyNegGte(&monsterCybil->rotation, &boneCoords->coord);
+
+    #undef monsterCybilChara
+    #undef playerChara
 }
 
-void func_800D9790(s_SubCharacter* chara, s_Model* model) // 0x800D9790
+void func_800D9790(s_SubCharacter* monsterCybil, s_Model* model) // 0x800D9790
 {
-    s_CollisionResult sp10;
-    VECTOR3    sp30;
-    VECTOR3    sp40;
-    s32        temp_s4;
-    s32        temp_s0;
-    s32        temp_s2;
-    s32        temp_s3;
+    s_CollisionResult collResult;
+    VECTOR3           pos;
+    VECTOR3           sp40;
+    s32               temp_s4;
+    s32               temp_s0;
+    s32               temp_s2;
+    s32               temp_s3;
 
-    sp30 = chara->position;
+    #define monsterCybilChara g_SysWork.npcs[0]
 
-    temp_s4 = chara->headingAngle;
-    temp_s0 = Q12_MULT_PRECISE(chara->moveSpeed, g_DeltaTime);
+    pos = monsterCybil->position;
+
+    temp_s4 = monsterCybil->headingAngle;
+    temp_s0 = Q12_MULT_PRECISE(monsterCybil->moveSpeed, g_DeltaTime);
 
     temp_s2 = (temp_s0 < -0x7FFF || temp_s0 > 0x7FFF) * 4;
     temp_s3 = temp_s2 >> 1;
 
     sp40.vx = Q12_MULT_PRECISE(temp_s0 >> temp_s3, Math_Sin(temp_s4) >> temp_s3) << temp_s2;
     sp40.vz = Q12_MULT_PRECISE(temp_s0 >> temp_s3, Math_Cos(temp_s4) >> temp_s3) << temp_s2;
-    sp40.vy = Q12_MULT_PRECISE(chara->fallSpeed, g_DeltaTime);
+    sp40.vy = Q12_MULT_PRECISE(monsterCybil->fallSpeed, g_DeltaTime);
 
-    switch (g_SysWork.npcs[0].properties.monsterCybil.field_EC)
+    switch (monsterCybilChara.properties.monsterCybil.field_EC)
     {
         case 11:
-            if (chara->model.anim.status & 1)
+            if (monsterCybil->model.anim.status & 1)
             {
-                chara->collision.cylinder.radius = Q12(0.3f) - (((chara->model.anim.keyframeIdx - 216) * Q12(3.0f)) / 100);
+                monsterCybil->collision.cylinder.radius = Q12(0.3f) - (((monsterCybil->model.anim.keyframeIdx - 216) * Q12(3.0f)) / 100);
             }
 
-            Collision_WallDetect(&sp10, &sp40, chara);
+            Collision_WallDetect(&collResult, &sp40, monsterCybil);
 
-            chara->position.vx += sp10.offset.vx;
-            chara->position.vz += sp10.offset.vz;
-            chara->fallSpeed    = Q12(0.0f);
+            monsterCybil->position.vx += collResult.offset.vx;
+            monsterCybil->position.vz += collResult.offset.vz;
+            monsterCybil->fallSpeed    = Q12(0.0f);
             break;
 
         case 12:
-            chara->collision.cylinder.radius = Q12(0.0f);
-            chara->position.vx   += sp40.vx;
-            chara->position.vz   += sp40.vz;
-            chara->fallSpeed      = Q12(0.0f);
+            monsterCybil->collision.cylinder.radius  = Q12(0.0f);
+            monsterCybil->position.vx               += sp40.vx;
+            monsterCybil->position.vz               += sp40.vz;
+            monsterCybil->fallSpeed                  = Q12(0.0f);
             break;
 
         default:
-            chara->collision.cylinder.radius  = Q12(0.3f);
-            chara->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-            chara->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-            chara->collision.shapeOffsets.box.vz = Q12(0.0f);
-            chara->collision.shapeOffsets.box.vx = Q12(0.0f);
+            monsterCybil->collision.cylinder.radius          = Q12(0.3f);
+            monsterCybil->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+            monsterCybil->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+            monsterCybil->collision.shapeOffsets.box.vz      = Q12(0.0f);
+            monsterCybil->collision.shapeOffsets.box.vx      = Q12(0.0f);
 
-            Collision_WallDetect(&sp10, &sp40, chara);
+            Collision_WallDetect(&collResult, &sp40, monsterCybil);
 
-            chara->position.vx += sp10.offset.vx;
-            chara->position.vy  = Q12(0.0f);
-            chara->fallSpeed    = Q12(0.0f);
-            chara->position.vz += sp10.offset.vz;
+            monsterCybil->position.vx += collResult.offset.vx;
+            monsterCybil->position.vy  = Q12(0.0f);
+            monsterCybil->fallSpeed    = Q12(0.0f);
+            monsterCybil->position.vz += collResult.offset.vz;
             break;
     }
+
+    #undef monsterCybilChara
 }
 
-void func_800D99E4(s_SubCharacter* chara, s_Model* modelUpper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D99E4
+void func_800D99E4(s_SubCharacter* monsterCybil, s_Model* modelUpper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D99E4
 {
     s_AnimInfo* animInfo;
 
-    coords->coord.t[0] = Q12_TO_Q8(chara->position.vx);
-    coords->coord.t[1] = Q12_TO_Q8(chara->position.vy);
-    coords->coord.t[2] = Q12_TO_Q8(chara->position.vz);
+    boneCoords->coord.t[0] = Q12_TO_Q8(monsterCybil->position.vx);
+    boneCoords->coord.t[1] = Q12_TO_Q8(monsterCybil->position.vy);
+    boneCoords->coord.t[2] = Q12_TO_Q8(monsterCybil->position.vz);
 
+    // TODO: Cybil has same skeleton structure as Harry? Check and make separate mask macros just for Cybil.
     anmHdr->activeBones = HARRY_LOWER_BODY_BONE_MASK;
 
-    animInfo = &MONSTER_CYBIL_ANIM_INFOS[chara->model.anim.status];
-    animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
+    animInfo = &MONSTER_CYBIL_ANIM_INFOS[monsterCybil->model.anim.status];
+    animInfo->playbackFunc(&monsterCybil->model, anmHdr, boneCoords, animInfo);
 
     anmHdr->activeBones = HARRY_UPPER_BODY_BONE_MASK;
 
     animInfo = &MONSTER_CYBIL_ANIM_INFOS[modelUpper->anim.status];
-    animInfo->playbackFunc(modelUpper, anmHdr, coords, animInfo);
+    animInfo->playbackFunc(modelUpper, anmHdr, boneCoords, animInfo);
 }
 
-void func_800D9AAC(s_SubCharacter* chara, s_Model* model) {} // 0x800D9AAC
+void func_800D9AAC(s_SubCharacter* monsterCybil, s_Model* model) {} // 0x800D9AAC
 
-void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords) // 0x800D9AB4
+void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* model, GsCOORDINATE2* boneCoords) // 0x800D9AB4
 {
     s16 temp_v0;
 
-    switch (g_SysWork.npcs[0].properties.monsterCybil.field_EC)
+    #define monsterCybilChara g_SysWork.npcs[0]
+    #define playerChara       g_SysWork.playerWork.player
+
+    switch (monsterCybilChara.properties.monsterCybil.field_EC)
     {
         case 0:
             break;
 
         case 1:
-            if (chara->model.stateStep == 0)
+            if (monsterCybil->model.stateStep == 0)
             {
-                chara->model.anim.status = ANIM_STATUS(1, false);
-                chara->model.stateStep++;
+                monsterCybil->model.anim.status = ANIM_STATUS(1, false);
+                monsterCybil->model.stateStep++;
             }
 
-            func_800DC018(chara);
+            func_800DC018(monsterCybil);
 
-            if (g_SysWork.playerWork.player.health > 0 && g_SysWork.npcs[0].properties.monsterCybil.field_116 == 0)
+            if (playerChara.health > Q12(0.0f) && monsterCybilChara.properties.monsterCybil.field_116 == 0)
             {
-                if (g_SysWork.npcs[0].properties.monsterCybil.field_110 > Q12(0.6f))
+                if (monsterCybilChara.properties.monsterCybil.field_110 > Q12(0.6f))
                 {
-                    func_800DB748(chara);
+                    func_800DB748(monsterCybil);
                 }
 
-                g_SysWork.npcs[0].properties.monsterCybil.field_126 = 0;
+                monsterCybilChara.properties.monsterCybil.field_126 = 0;
 
-                if (chara->model.anim.status == 3)
+                if (monsterCybil->model.anim.status == 3)
                 {
-                    if ((u16)chara->model.anim.keyframeIdx < 24)
+                    if ((u16)monsterCybil->model.anim.keyframeIdx < 24)
                     {
-                        g_SysWork.npcs[0].properties.monsterCybil.field_126 = D_800CB208[chara->model.anim.keyframeIdx];
+                        monsterCybilChara.properties.monsterCybil.field_126 = D_800CB208[monsterCybil->model.anim.keyframeIdx];
                     }
                 }
 
-                if (g_SysWork.npcs[0].properties.monsterCybil.field_120 == 0)
+                if (monsterCybilChara.properties.monsterCybil.field_120 == 0)
                 {
-                    g_SysWork.npcs[0].properties.monsterCybil.field_126 <<= 1;
+                    monsterCybilChara.properties.monsterCybil.field_126 <<= 1;
 
-                    if (g_SysWork.npcs[0].properties.monsterCybil.field_106 > 60)
+                    if (monsterCybilChara.properties.monsterCybil.field_106 > 60)
                     {
-                        g_SysWork.npcs[0].properties.monsterCybil.field_106 = 0;
+                        monsterCybilChara.properties.monsterCybil.field_106 = 0;
 
-                        if ((Rng_Rand16() % 10) > 4 && g_SysWork.npcs[0].properties.monsterCybil.field_110 > Q12(4.0f))
+                        if ((Rng_Rand16() % 10) > 4 && monsterCybilChara.properties.monsterCybil.field_110 > Q12(4.0f))
                         {
-                            g_SysWork.npcs[0].properties.monsterCybil.field_FE = func_800DB930();
+                            monsterCybilChara.properties.monsterCybil.field_FE = func_800DB930();
 
-                            if (g_SysWork.npcs[0].properties.monsterCybil.field_FE != NO_VALUE)
+                            if (monsterCybilChara.properties.monsterCybil.field_FE != NO_VALUE)
                             {
-                                g_SysWork.npcs[0].properties.monsterCybil.field_EC = 12;
-                                g_SysWork.npcs[0].properties.monsterCybil.field_EE = 12;
-                                chara->model.stateStep                                 = 0;
+                                monsterCybilChara.properties.monsterCybil.field_EC = 12;
+                                monsterCybilChara.properties.monsterCybil.field_EE = 12;
+                                monsterCybil->model.stateStep                                 = 0;
                                 model->stateStep                                         = 0;
                             }
                         }
                         else
                         {
-                            func_800DBA48(chara);
+                            func_800DBA48(monsterCybil);
                         }
                     }
                 }
 
-                if (g_SysWork.npcs[0].properties.monsterCybil.field_104 <= 0 || chara->health < Q12(2000.0f))
+                if (monsterCybilChara.properties.monsterCybil.field_104 <= 0 || monsterCybil->health < Q12(2000.0f))
                 {
                     Savegame_EventFlagSet(EventFlag_444);
 
-                    g_SysWork.npcs[0].properties.monsterCybil.field_E8 = 3;
-                    chara->model.stateStep                                 = 0;
+                    monsterCybilChara.properties.monsterCybil.field_E8 = 3;
+                    monsterCybil->model.stateStep                                 = 0;
                     model->stateStep                                         = 0;
-                    g_SysWork.npcs[0].properties.monsterCybil.field_F4 = 0;
+                    monsterCybilChara.properties.monsterCybil.field_F4 = 0;
                     return;
                 }
             }
-            else if (g_SysWork.npcs[0].properties.monsterCybil.field_116 == 1)
+            else if (monsterCybilChara.properties.monsterCybil.field_116 == 1)
             {
-                func_800DBE5C(chara);
+                func_800DBE5C(monsterCybil);
 
-                if (g_SysWork.npcs[0].properties.monsterCybil.field_104 <= 0 || chara->health < Q12(2000.0f))
+                if (monsterCybilChara.properties.monsterCybil.field_104 <= 0 || monsterCybil->health < Q12(2000.0f))
                 {
                     Savegame_EventFlagSet(EventFlag_444);
 
-                    g_SysWork.npcs[0].properties.monsterCybil.field_E8 = 3;
-                    chara->model.stateStep                                 = 0;
+                    monsterCybilChara.properties.monsterCybil.field_E8 = 3;
+                    monsterCybil->model.stateStep                                 = 0;
                     model->stateStep                                         = 0;
-                    g_SysWork.npcs[0].properties.monsterCybil.field_F4 = 0;
+                    monsterCybilChara.properties.monsterCybil.field_F4 = 0;
                     return;
                 }
             }
             else
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_126 = 0;
-                if (chara->model.anim.status == 3)
+                monsterCybilChara.properties.monsterCybil.field_126 = 0;
+                if (monsterCybil->model.anim.status == 3)
                 {
-                    if ((u16)chara->model.anim.keyframeIdx < 24)
+                    if ((u16)monsterCybil->model.anim.keyframeIdx < 24)
                     {
-                        g_SysWork.npcs[0].properties.monsterCybil.field_126 = D_800CB208[chara->model.anim.keyframeIdx];
+                        monsterCybilChara.properties.monsterCybil.field_126 = D_800CB208[monsterCybil->model.anim.keyframeIdx];
                     }
                 }
             }
 
-            g_SysWork.npcs[0].properties.monsterCybil.field_122 = 0;
+            monsterCybilChara.properties.monsterCybil.field_122 = 0;
             break;
 
         case 2:
-            if (chara->model.stateStep == 0)
+            if (monsterCybil->model.stateStep == 0)
             {
-                chara->model.anim.status = 4;
-                chara->model.stateStep++;
+                monsterCybil->model.anim.status = 4;
+                monsterCybil->model.stateStep++;
             }
 
-            g_SysWork.npcs[0].properties.monsterCybil.field_126 = 0;
+            monsterCybilChara.properties.monsterCybil.field_126 = 0;
             break;
 
         case 3:
-            if (chara->model.stateStep == 0)
+            if (monsterCybil->model.stateStep == 0)
             {
-                chara->model.anim.status = 6;
-                chara->model.stateStep++;
+                monsterCybil->model.anim.status = 6;
+                monsterCybil->model.stateStep++;
             }
 
-            g_SysWork.npcs[0].properties.monsterCybil.field_126 = 0;
+            monsterCybilChara.properties.monsterCybil.field_126 = 0;
             break;
 
         case 8:
-            g_SysWork.npcs[0].properties.monsterCybil.field_126 = 0;
+            monsterCybilChara.properties.monsterCybil.field_126 = 0;
 
-            if (chara->model.stateStep == 0)
+            if (monsterCybil->model.stateStep == 0)
             {
-                chara->model.anim.status = 16;
-                chara->model.stateStep++;
+                monsterCybil->model.anim.status = 16;
+                monsterCybil->model.stateStep++;
             }
 
-            if (chara->model.anim.keyframeIdx == D_800EA836)
+            if (monsterCybil->model.anim.keyframeIdx == D_800EA836)
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_EC = 1;
-                chara->model.stateStep                                 = 0;
+                monsterCybilChara.properties.monsterCybil.field_EC = 1;
+                monsterCybil->model.stateStep                                 = 0;
             }
             break;
 
         case 9:
-            func_800D87B0(chara);
+            func_800D87B0(monsterCybil);
             break;
 
         case 10:
-            if (chara->model.stateStep == 0)
+            if (monsterCybil->model.stateStep == 0)
             {
-                chara->model.anim.status = 20;
-                chara->model.stateStep++;
+                monsterCybil->model.anim.status = 20;
+                monsterCybil->model.stateStep++;
             }
 
-            g_SysWork.npcs[0].properties.monsterCybil.field_126 = 0;
+            monsterCybilChara.properties.monsterCybil.field_126 = 0;
             break;
 
         case 11:
-            if (chara->model.stateStep == 0)
+            if (monsterCybil->model.stateStep == 0)
             {
-                chara->model.anim.status = 23;
-                chara->model.stateStep++;
-                chara->model.anim.time        = FP_TO(MONSTER_CYBIL_ANIM_INFOS[23].endKeyframeIdx, Q12_SHIFT);
-                chara->model.anim.keyframeIdx = MONSTER_CYBIL_ANIM_INFOS[23].endKeyframeIdx;
+                monsterCybil->model.anim.status = 23;
+                monsterCybil->model.stateStep++;
+                monsterCybil->model.anim.time        = FP_TO(MONSTER_CYBIL_ANIM_INFOS[23].endKeyframeIdx, Q12_SHIFT);
+                monsterCybil->model.anim.keyframeIdx = MONSTER_CYBIL_ANIM_INFOS[23].endKeyframeIdx;
             }
 
-            if (chara->properties.monsterCybil.field_126 != 0)
+            if (monsterCybil->properties.monsterCybil.field_126 != 0)
             {
-                chara->properties.monsterCybil.field_126 = chara->properties.monsterCybil.field_126 - 327;
-                if (chara->properties.monsterCybil.field_126 < 0)
+                monsterCybil->properties.monsterCybil.field_126 = monsterCybil->properties.monsterCybil.field_126 - 327;
+                if (monsterCybil->properties.monsterCybil.field_126 < 0)
                 {
-                    chara->properties.monsterCybil.field_126 = 0;
+                    monsterCybil->properties.monsterCybil.field_126 = 0;
                 }
             }
 
-            if (chara->model.anim.keyframeIdx == (D_800EA896 - 4) || chara->model.anim.keyframeIdx == (D_800EA896 - 5))
+            if (monsterCybil->model.anim.keyframeIdx == (D_800EA896 - 4) || monsterCybil->model.anim.keyframeIdx == (D_800EA896 - 5))
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_126 = Q12(0.6f);
+                monsterCybilChara.properties.monsterCybil.field_126 = Q12(0.6f);
             }
 
-            if (chara->model.anim.keyframeIdx <= (D_800EA896 - 7))
+            if (monsterCybil->model.anim.keyframeIdx <= (D_800EA896 - 7))
             {
-                chara->position.vy += g_GravitySpeed >> 2;
+                monsterCybil->position.vy += g_GravitySpeed >> 2;
             }
-            else if ((D_800EA896 - 4) >= chara->model.anim.keyframeIdx)
+            else if ((D_800EA896 - 4) >= monsterCybil->model.anim.keyframeIdx)
             {
-                chara->position.vy += g_GravitySpeed >> 4;
+                monsterCybil->position.vy += g_GravitySpeed >> 4;
             }
             else
             {
-                chara->position.vy = g_SysWork.npcs[0].properties.monsterCybil.field_100 - 1843;
+                monsterCybil->position.vy = monsterCybilChara.properties.monsterCybil.field_100 - 1843;
             }
 
-            if (chara->position.vy > Q12(0.0f))
+            if (monsterCybil->position.vy > Q12(0.0f))
             {
-                chara->position.vy = Q12(0.0f);
+                monsterCybil->position.vy = Q12(0.0f);
             }
 
-            chara->rotation.vy = (g_SysWork.npcs[0].properties.monsterCybil.field_FE < 6) ? (D_800CB2A0[g_SysWork.npcs[0].properties.monsterCybil.field_FE] - Q12_ANGLE(180.0f)) :
-                                                                                                      D_800CB2A0[g_SysWork.npcs[0].properties.monsterCybil.field_FE];
+            monsterCybil->rotation.vy = (monsterCybilChara.properties.monsterCybil.field_FE < 6) ? (D_800CB2A0[monsterCybilChara.properties.monsterCybil.field_FE] - Q12_ANGLE(180.0f)) :
+                                                                                                      D_800CB2A0[monsterCybilChara.properties.monsterCybil.field_FE];
 
             temp_v0 = 1;
 
-            if (chara->model.anim.keyframeIdx == D_800EA894)
+            if (monsterCybil->model.anim.keyframeIdx == D_800EA894)
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_EC = temp_v0;
-                chara->model.stateStep                                 = 0;
+                monsterCybilChara.properties.monsterCybil.field_EC = temp_v0;
+                monsterCybil->model.stateStep                                 = 0;
             }
             break;
 
         case 12:
-            chara->position.vx = D_800CB2B4[g_SysWork.npcs[0].properties.monsterCybil.field_FE] + Q12(20.0f);
-            chara->position.vy = g_SysWork.npcs[0].properties.monsterCybil.field_100 - Q12(0.45f);
-            chara->position.vz = D_800CB2DC[g_SysWork.npcs[0].properties.monsterCybil.field_FE] + Q12(100.0f);
+            monsterCybil->position.vx = D_800CB2B4[monsterCybilChara.properties.monsterCybil.field_FE] + Q12(20.0f);
+            monsterCybil->position.vy = monsterCybilChara.properties.monsterCybil.field_100 - Q12(0.45f);
+            monsterCybil->position.vz = D_800CB2DC[monsterCybilChara.properties.monsterCybil.field_FE] + Q12(100.0f);
 
-            chara->rotation.vy = (g_SysWork.npcs[0].properties.monsterCybil.field_FE < 6) ? (D_800CB2A0[g_SysWork.npcs[0].properties.monsterCybil.field_FE] - Q12_ANGLE(180.0f)) :
-                                                                                                      D_800CB2A0[g_SysWork.npcs[0].properties.monsterCybil.field_FE];
+            monsterCybil->rotation.vy = (monsterCybilChara.properties.monsterCybil.field_FE < 6) ? (D_800CB2A0[monsterCybilChara.properties.monsterCybil.field_FE] - Q12_ANGLE(180.0f)) :
+                                                                                                      D_800CB2A0[monsterCybilChara.properties.monsterCybil.field_FE];
 
-            if (chara->model.anim.keyframeIdx >= MONSTER_CYBIL_ANIM_INFOS[25].startKeyframeIdx &&
-                MONSTER_CYBIL_ANIM_INFOS[25].endKeyframeIdx >= chara->model.anim.keyframeIdx)
+            if (monsterCybil->model.anim.keyframeIdx >= MONSTER_CYBIL_ANIM_INFOS[25].startKeyframeIdx &&
+                MONSTER_CYBIL_ANIM_INFOS[25].endKeyframeIdx >= monsterCybil->model.anim.keyframeIdx)
             {
-                chara->collision.shapeOffsets.box.vx = Q12_MULT(Math_Sin(chara->rotation.vy), Q12(-0.46f));
-                chara->collision.shapeOffsets.box.vz = Q12_MULT(Math_Cos(chara->rotation.vy), Q12(-0.46f));
+                monsterCybil->collision.shapeOffsets.box.vx = Q12_MULT(Math_Sin(monsterCybil->rotation.vy), Q12(-0.46f));
+                monsterCybil->collision.shapeOffsets.box.vz = Q12_MULT(Math_Cos(monsterCybil->rotation.vy), Q12(-0.46f));
             }
 
-            if (chara->model.stateStep == 0)
+            if (monsterCybil->model.stateStep == 0)
             {
-                chara->model.anim.status = ANIM_STATUS(12, false);
-                chara->model.stateStep++;
+                monsterCybil->model.anim.status = ANIM_STATUS(12, false);
+                monsterCybil->model.stateStep++;
             }
 
-            g_SysWork.npcs[0].properties.monsterCybil.field_126 = 0;
+            monsterCybilChara.properties.monsterCybil.field_126 = 0;
             break;
     }
 
-    switch (g_SysWork.npcs[0].properties.monsterCybil.field_EE)
+    switch (monsterCybilChara.properties.monsterCybil.field_EE)
     {
         case 0:
             break;
@@ -886,34 +930,34 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             if (model->anim.status == ANIM_STATUS(1, true))
             {
-                model->anim.time        = chara->model.anim.time;
-                model->anim.keyframeIdx = chara->model.anim.keyframeIdx;
+                model->anim.time        = monsterCybil->model.anim.time;
+                model->anim.keyframeIdx = monsterCybil->model.anim.keyframeIdx;
             }
 
-            if (g_SysWork.playerWork.player.health > 0 && g_SysWork.npcs[0].properties.monsterCybil.field_116 == 0)
+            if (playerChara.health > 0 && monsterCybilChara.properties.monsterCybil.field_116 == 0)
             {
-                if (g_SysWork.npcs[0].properties.monsterCybil.field_110 < Q12(0.8f) &&
+                if (monsterCybilChara.properties.monsterCybil.field_110 < Q12(0.8f) &&
                     (g_SysWork.playerWork.extra.state > 50 || g_SysWork.playerWork.extra.state < 47))
                 {
-                    if (g_SysWork.npcs[0].properties.monsterCybil.field_EE == 1)
+                    if (monsterCybilChara.properties.monsterCybil.field_EE == 1)
                     {
-                        g_SysWork.npcs[0].properties.monsterCybil.field_EC = 8;
-                        g_SysWork.npcs[0].properties.monsterCybil.field_EE = 8;
-                        chara->model.stateStep                                 = 0;
+                        monsterCybilChara.properties.monsterCybil.field_EC = 8;
+                        monsterCybilChara.properties.monsterCybil.field_EE = 8;
+                        monsterCybil->model.stateStep                                 = 0;
                         model->stateStep                                         = 0;
                     }
                 }
-                else if (g_SysWork.npcs[0].properties.monsterCybil.field_108 >= Q12(3.0f) &&
-                         (!func_800DB81C(chara) || g_SysWork.playerWork.extra.state == 47 ||
+                else if (monsterCybilChara.properties.monsterCybil.field_108 >= Q12(3.0f) &&
+                         (!func_800DB81C(monsterCybil) || g_SysWork.playerWork.extra.state == 47 ||
                           g_SysWork.playerWork.extra.state == 48))
                 {
-                    if (g_SysWork.npcs[0].properties.monsterCybil.field_110 <= Q12(4.0f))
+                    if (monsterCybilChara.properties.monsterCybil.field_110 <= Q12(4.0f))
                     {
-                        g_SysWork.npcs[0].properties.monsterCybil.field_EC = 2;
-                        chara->model.stateStep                                 = 0;
+                        monsterCybilChara.properties.monsterCybil.field_EC = 2;
+                        monsterCybil->model.stateStep                                 = 0;
                     }
 
-                    g_SysWork.npcs[0].properties.monsterCybil.field_EE = 2;
+                    monsterCybilChara.properties.monsterCybil.field_EE = 2;
                     model->stateStep                                         = 0;
                 }
             }
@@ -922,7 +966,7 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
         case 2:
             if (model->stateStep == 0)
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_F0 = 0;
+                monsterCybilChara.properties.monsterCybil.field_F0 = 0;
                 D_800EBB48                                                = Rng_Rand16() % Q12(1.0f);
 
                 if (model->stateStep == 0)
@@ -932,43 +976,43 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                 }
             }
 
-            func_800DB748(chara);
+            func_800DB748(monsterCybil);
 
-            g_SysWork.npcs[0].properties.monsterCybil.field_F0 += g_DeltaTime;
+            monsterCybilChara.properties.monsterCybil.field_F0 += g_DeltaTime;
 
-            D_800ED570.vx = Q8_TO_Q12(coords[10].workm.t[0]);
-            D_800ED570.vy = Q8_TO_Q12(coords[10].workm.t[1]);
-            D_800ED570.vz = Q8_TO_Q12(coords[10].workm.t[2]);
+            D_800ED570.vx = Q8_TO_Q12(boneCoords[10].workm.t[0]);
+            D_800ED570.vy = Q8_TO_Q12(boneCoords[10].workm.t[1]);
+            D_800ED570.vz = Q8_TO_Q12(boneCoords[10].workm.t[2]);
 
             if (model->anim.keyframeIdx >= 29)
             {
                 WorldGfx_HeldItemAttach(Chara_MonsterCybil, 2);
             }
 
-            if (model->anim.keyframeIdx == D_800EA776 && D_800EBB48 < g_SysWork.npcs[0].properties.monsterCybil.field_F0)
+            if (model->anim.keyframeIdx == D_800EA776 && D_800EBB48 < monsterCybilChara.properties.monsterCybil.field_F0)
             {
-                if (g_SysWork.npcs[0].properties.monsterCybil.field_120 != 0 &&
-                    !(g_SysWork.playerWork.player.flags & (1 << 3)))
+                if (monsterCybilChara.properties.monsterCybil.field_120 != 0 &&
+                    !(playerChara.flags & (1 << 3)))
                 {
-                    g_SysWork.npcs[0].properties.monsterCybil.field_114 = 0;
-                    g_SysWork.npcs[0].properties.monsterCybil.field_EE  = 3;
+                    monsterCybilChara.properties.monsterCybil.field_114 = 0;
+                    monsterCybilChara.properties.monsterCybil.field_EE  = 3;
                     model->stateStep                                          = 0;
 
-                    if (g_SysWork.npcs[0].properties.monsterCybil.field_EC == 2)
+                    if (monsterCybilChara.properties.monsterCybil.field_EC == 2)
                     {
-                        g_SysWork.npcs[0].properties.monsterCybil.field_EC = 3;
-                        chara->model.stateStep                                 = 0;
+                        monsterCybilChara.properties.monsterCybil.field_EC = 3;
+                        monsterCybil->model.stateStep                                 = 0;
                     }
                 }
                 else
                 {
-                    g_SysWork.npcs[0].properties.monsterCybil.field_EE = 10;
+                    monsterCybilChara.properties.monsterCybil.field_EE = 10;
                     model->stateStep                                         = 0;
 
-                    if (g_SysWork.npcs[0].properties.monsterCybil.field_EC != 1)
+                    if (monsterCybilChara.properties.monsterCybil.field_EC != 1)
                     {
-                        g_SysWork.npcs[0].properties.monsterCybil.field_EC = 10;
-                        chara->model.stateStep                                 = 0;
+                        monsterCybilChara.properties.monsterCybil.field_EC = 10;
+                        monsterCybil->model.stateStep                                 = 0;
                     }
                 }
             }
@@ -977,51 +1021,51 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
         case 3:
             if (model->stateStep == 0)
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_F0  = 0;
-                g_SysWork.npcs[0].properties.monsterCybil.field_108 = 0;
-                g_SysWork.npcs[0].properties.monsterCybil.field_104--;
-                g_SysWork.npcs[0].properties.monsterCybil.field_114++;
+                monsterCybilChara.properties.monsterCybil.field_F0  = 0;
+                monsterCybilChara.properties.monsterCybil.field_108 = 0;
+                monsterCybilChara.properties.monsterCybil.field_104--;
+                monsterCybilChara.properties.monsterCybil.field_114++;
 
                 D_800EBB4A = Rng_Rand16() % Q12(1.0f);
             }
 
-            D_800ED570.vx = Q8_TO_Q12(coords[10].workm.t[0]);
-            D_800ED570.vy = Q8_TO_Q12(coords[10].workm.t[1]);
-            D_800ED570.vz = Q8_TO_Q12(coords[10].workm.t[2]);
+            D_800ED570.vx = Q8_TO_Q12(boneCoords[10].workm.t[0]);
+            D_800ED570.vy = Q8_TO_Q12(boneCoords[10].workm.t[1]);
+            D_800ED570.vz = Q8_TO_Q12(boneCoords[10].workm.t[2]);
 
             if (model->anim.keyframeIdx >= (MONSTER_CYBIL_ANIM_INFOS[7].startKeyframeIdx + 2) &&
                 (MONSTER_CYBIL_ANIM_INFOS[7].startKeyframeIdx + 4) >= model->anim.keyframeIdx &&
-                g_SysWork.npcs[0].properties.monsterCybil.field_115 == 0)
+                monsterCybilChara.properties.monsterCybil.field_115 == 0)
             {
-                chara->model.anim.baseAnimInfos = MONSTER_CYBIL_ANIM_INFOS;
-                chara->field_44.field_0          = 1;
+                monsterCybil->model.anim.baseAnimInfos = MONSTER_CYBIL_ANIM_INFOS;
+                monsterCybil->field_44.field_0          = 1;
 
                 // TODO: What's weapon attack 63?
-                func_8006342C(EquippedWeaponId_Unk63, g_SysWork.npcs[0].properties.monsterCybil.field_11A, chara->rotation.vy, g_SysWork.npcBoneCoordBuffer);
+                func_8006342C(EquippedWeaponId_Unk63, monsterCybilChara.properties.monsterCybil.field_11A, monsterCybil->rotation.vy, g_SysWork.npcBoneCoordBuffer);
 
-                if (func_8008A0E4(chara->field_44.field_0,
+                if (func_8008A0E4(monsterCybil->field_44.field_0,
                                   WEAPON_ATTACK(EquippedWeaponId_Unk63, AttackInputType_Tap),
-                                  chara,
+                                  monsterCybil,
                                   &D_800ED570,
-                                  &g_SysWork.playerWork.player,
-                                  chara->rotation.vy,
-                                  g_SysWork.npcs[0].properties.monsterCybil.field_11A) != NO_VALUE)
+                                  &playerChara,
+                                  monsterCybil->rotation.vy,
+                                  monsterCybilChara.properties.monsterCybil.field_11A) != NO_VALUE)
                 {
-                    g_SysWork.npcs[0].properties.monsterCybil.field_115 = 1;
-                    g_SysWork.npcs[0].properties.monsterCybil.field_116 = 1;
+                    monsterCybilChara.properties.monsterCybil.field_115 = 1;
+                    monsterCybilChara.properties.monsterCybil.field_116 = 1;
                 }
             }
             else
             {
-                chara->field_44.field_0 = 0;
+                monsterCybil->field_44.field_0 = 0;
             }
 
             if (model->anim.keyframeIdx >= (MONSTER_CYBIL_ANIM_INFOS[7].startKeyframeIdx + 4))
             {
-                func_800DB748(chara);
+                func_800DB748(monsterCybil);
             }
 
-            g_SysWork.npcs[0].properties.monsterCybil.field_F0 += g_DeltaTime;
+            monsterCybilChara.properties.monsterCybil.field_F0 += g_DeltaTime;
 
             if (model->stateStep == 0)
             {
@@ -1029,41 +1073,41 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                 model->stateStep++;
             }
 
-            if (ANIM_STATUS_IS_ACTIVE(chara->model.anim.status) && model->anim.keyframeIdx == MONSTER_CYBIL_ANIM_INFOS[7].endKeyframeIdx)
+            if (ANIM_STATUS_IS_ACTIVE(monsterCybil->model.anim.status) && model->anim.keyframeIdx == MONSTER_CYBIL_ANIM_INFOS[7].endKeyframeIdx)
             {
-                if (g_SysWork.npcs[0].properties.monsterCybil.field_120 == 0 || g_SysWork.npcs[0].properties.monsterCybil.field_104 == 0 ||
-                    g_SysWork.npcs[0].properties.monsterCybil.field_114 == 3 || g_SysWork.npcs[0].properties.monsterCybil.field_115 != 0 ||
-                    func_800DB81C(chara) == true)
+                if (monsterCybilChara.properties.monsterCybil.field_120 == 0 || monsterCybilChara.properties.monsterCybil.field_104 == 0 ||
+                    monsterCybilChara.properties.monsterCybil.field_114 == 3 || monsterCybilChara.properties.monsterCybil.field_115 != 0 ||
+                    func_800DB81C(monsterCybil) == true)
                 {
-                    g_SysWork.npcs[0].properties.monsterCybil.field_115 = 0;
-                    g_SysWork.npcs[0].properties.monsterCybil.field_EE  = 10;
+                    monsterCybilChara.properties.monsterCybil.field_115 = 0;
+                    monsterCybilChara.properties.monsterCybil.field_EE  = 10;
                     model->stateStep                                          = 0;
 
-                    if (g_SysWork.npcs[0].properties.monsterCybil.field_EC != 1)
+                    if (monsterCybilChara.properties.monsterCybil.field_EC != 1)
                     {
-                        g_SysWork.npcs[0].properties.monsterCybil.field_EC = 10;
-                        chara->model.stateStep                                 = 0;
+                        monsterCybilChara.properties.monsterCybil.field_EC = 10;
+                        monsterCybil->model.stateStep                                 = 0;
                     }
                 }
-                else if ((D_800EBB4A + Q12(1.5f)) < g_SysWork.npcs[0].properties.monsterCybil.field_F0)
+                else if ((D_800EBB4A + Q12(1.5f)) < monsterCybilChara.properties.monsterCybil.field_F0)
                 {
                     model->stateStep                                         = 0;
-                    g_SysWork.npcs[0].properties.monsterCybil.field_F0 = 0;
+                    monsterCybilChara.properties.monsterCybil.field_F0 = 0;
 
-                    if (g_SysWork.npcs[0].properties.monsterCybil.field_EC == 3)
+                    if (monsterCybilChara.properties.monsterCybil.field_EC == 3)
                     {
-                        chara->model.stateStep = 0;
+                        monsterCybil->model.stateStep = 0;
                     }
                 }
             }
             break;
 
         case 8:
-            func_800DB748(chara);
+            func_800DB748(monsterCybil);
 
-            D_800ED570.vx = Q8_TO_Q12(coords[10].workm.t[0]);
-            D_800ED570.vy = Q8_TO_Q12(coords[10].workm.t[1]);
-            D_800ED570.vz = Q8_TO_Q12(coords[10].workm.t[2]);
+            D_800ED570.vx = Q8_TO_Q12(boneCoords[10].workm.t[0]);
+            D_800ED570.vy = Q8_TO_Q12(boneCoords[10].workm.t[1]);
+            D_800ED570.vz = Q8_TO_Q12(boneCoords[10].workm.t[2]);
 
             if (model->stateStep == 0)
             {
@@ -1073,30 +1117,30 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             if (model->anim.keyframeIdx > 169 && model->anim.keyframeIdx < 173)
             {
-                chara->model.anim.baseAnimInfos = MONSTER_CYBIL_ANIM_INFOS;
-                chara->field_44.field_0          = 1;
+                monsterCybil->model.anim.baseAnimInfos = MONSTER_CYBIL_ANIM_INFOS;
+                monsterCybil->field_44.field_0          = 1;
             }
             else
             {
-                chara->field_44.field_0 = 0;
+                monsterCybil->field_44.field_0 = 0;
             }
 
-            if (func_8008A0E4(chara->field_44.field_0, WEAPON_ATTACK(EquippedWeaponId_HandgunBullets, AttackInputType_Tap), chara, &D_800ED570, &g_SysWork.playerWork.player, chara->rotation.vy, 0x400) != -1)
+            if (func_8008A0E4(monsterCybil->field_44.field_0, WEAPON_ATTACK(EquippedWeaponId_HandgunBullets, AttackInputType_Tap), monsterCybil, &D_800ED570, &playerChara, monsterCybil->rotation.vy, 0x400) != -1)
             {
-                g_SysWork.playerWork.player.damage.position.vz = Q12(1.0f);
+                playerChara.damage.position.vz = Q12(1.0f);
 
                 if (sharedData_800D16E4_2_s01 == 0)
                 {
-                    func_8005DC1C(Sfx_Unk1630, &chara->position, Q8(0.25f), 0);
+                    func_8005DC1C(Sfx_Unk1630, &monsterCybil->position, Q8(0.25f), 0);
                 }
 
                 sharedData_800D16E4_2_s01                                  = 1;
-                g_SysWork.npcs[0].properties.monsterCybil.field_116 = 1;
+                monsterCybilChara.properties.monsterCybil.field_116 = 1;
             }
 
             if (model->anim.keyframeIdx & 1 && model->anim.keyframeIdx == D_800EA836)
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_EE = 1;
+                monsterCybilChara.properties.monsterCybil.field_EE = 1;
                 model->stateStep                                         = 0;
                 sharedData_800D16E4_2_s01                                 = 0;
             }
@@ -1105,14 +1149,14 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
         case 9:
             func_800D8848(model);
 
-            if (model->anim.keyframeIdx == D_800EA856 && g_SysWork.npcs[0].properties.monsterCybil.field_EC == 12)
+            if (model->anim.keyframeIdx == D_800EA856 && monsterCybilChara.properties.monsterCybil.field_EC == 12)
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_EC = 11;
-                g_SysWork.npcs[0].properties.monsterCybil.field_EE = 11;
-                chara->model.stateStep                                 = 0;
+                monsterCybilChara.properties.monsterCybil.field_EC = 11;
+                monsterCybilChara.properties.monsterCybil.field_EE = 11;
+                monsterCybil->model.stateStep                                 = 0;
                 model->stateStep                                         = 0;
-                chara->collision.shapeOffsets.box.vz                                  = Q12(0.0f);
-                chara->collision.shapeOffsets.box.vx                                  = Q12(0.0f);
+                monsterCybil->collision.shapeOffsets.box.vz                                  = Q12(0.0f);
+                monsterCybil->collision.shapeOffsets.box.vx                                  = Q12(0.0f);
             }
             break;
 
@@ -1130,13 +1174,13 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             if (model->anim.keyframeIdx == MONSTER_CYBIL_ANIM_INFOS[model->anim.status].startKeyframeIdx)
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_EE = 1;
+                monsterCybilChara.properties.monsterCybil.field_EE = 1;
                 model->stateStep                                         = 0;
 
-                if (g_SysWork.npcs[0].properties.monsterCybil.field_EC == 10)
+                if (monsterCybilChara.properties.monsterCybil.field_EC == 10)
                 {
-                    g_SysWork.npcs[0].properties.monsterCybil.field_EC = 1;
-                    chara->model.stateStep                                 = 0;
+                    monsterCybilChara.properties.monsterCybil.field_EC = 1;
+                    monsterCybil->model.stateStep                                 = 0;
                 }
             }
             break;
@@ -1152,17 +1196,17 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             if (model->anim.keyframeIdx == D_800EA894)
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_EE = 1;
+                monsterCybilChara.properties.monsterCybil.field_EE = 1;
                 model->stateStep                                         = 0;
             }
             break;
 
         case 12:
-            g_SysWork.npcs[0].properties.monsterCybil.field_F0 += g_DeltaTime;
+            monsterCybilChara.properties.monsterCybil.field_F0 += g_DeltaTime;
 
-            if (chara->model.stateStep == 0)
+            if (monsterCybil->model.stateStep == 0)
             {
-                func_8005DC1C(Sfx_Unk1618, &chara->position, Q8(0.25f), 0);
+                func_8005DC1C(Sfx_Unk1618, &monsterCybil->position, Q8(0.25f), 0);
             }
 
             if (model->stateStep == 0)
@@ -1171,118 +1215,124 @@ void func_800D9AB4(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
                 model->stateStep++;
             }
 
-            if (g_SysWork.npcs[0].properties.monsterCybil.field_F0 >= Q12(10.0f) ||
-                g_SysWork.npcs[0].properties.monsterCybil.field_108 >= Q12(6.0f))
+            if (monsterCybilChara.properties.monsterCybil.field_F0 >= Q12(10.0f) ||
+                monsterCybilChara.properties.monsterCybil.field_108 >= Q12(6.0f))
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_EC = 11;
-                g_SysWork.npcs[0].properties.monsterCybil.field_EE = 11;
-                chara->model.stateStep                                 = 0;
+                monsterCybilChara.properties.monsterCybil.field_EC = 11;
+                monsterCybilChara.properties.monsterCybil.field_EE = 11;
+                monsterCybil->model.stateStep                                 = 0;
                 model->stateStep                                         = 0;
-                g_SysWork.npcs[0].properties.monsterCybil.field_F0 = 0;
+                monsterCybilChara.properties.monsterCybil.field_F0 = 0;
             }
             break;
     }
+
+    #undef monsterCybilChara
+    #undef playerChara
 }
 
-void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords) // 0x800DA9C8
+void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* model, GsCOORDINATE2* boneCoords) // 0x800DA9C8
 {
     q19_12 angle;
     s32    temp_v0_2;
     s32    var_a1;
     s32    var_s3;
 
-    switch (g_SysWork.npcs[0].properties.monsterCybil.field_EC)
+    #define monsterCybilChara g_SysWork.npcs[0]
+    #define playerChara       g_SysWork.playerWork.player
+
+    switch (monsterCybilChara.properties.monsterCybil.field_EC)
     {
         case 0:
             break;
 
         case 1:
-            if (chara->model.stateStep == 0)
+            if (monsterCybil->model.stateStep == 0)
             {
-                chara->model.anim.status = 3;
-                chara->model.stateStep++;
-                chara->model.anim.time        = MONSTER_CYBIL_ANIM_INFOS[3].startKeyframeIdx + Q12(3.0f);
-                chara->model.anim.keyframeIdx = MONSTER_CYBIL_ANIM_INFOS[3].startKeyframeIdx + 3;
+                monsterCybil->model.anim.status = 3;
+                monsterCybil->model.stateStep++;
+                monsterCybil->model.anim.time        = MONSTER_CYBIL_ANIM_INFOS[3].startKeyframeIdx + Q12(3.0f);
+                monsterCybil->model.anim.keyframeIdx = MONSTER_CYBIL_ANIM_INFOS[3].startKeyframeIdx + 3;
             }
 
-            func_800DC018(chara);
+            func_800DC018(monsterCybil);
 
-            if (g_SysWork.playerWork.player.health > Q12(0.0f) &&
-                g_SysWork.npcs[0].properties.monsterCybil.field_116 == 0)
+            if (playerChara.health > Q12(0.0f) &&
+                monsterCybilChara.properties.monsterCybil.field_116 == 0)
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_126 = 0;
+                monsterCybilChara.properties.monsterCybil.field_126 = 0;
 
-                if (g_SysWork.npcs[0].properties.monsterCybil.field_110 > Q12(0.6f))
+                if (monsterCybilChara.properties.monsterCybil.field_110 > Q12(0.6f))
                 {
-                    func_800DB748(chara);
+                    func_800DB748(monsterCybil);
                 }
 
-                if (chara->model.anim.status == 3)
+                if (monsterCybil->model.anim.status == 3)
                 {
-                    if ((u16)chara->model.anim.keyframeIdx < 24)
+                    if ((u16)monsterCybil->model.anim.keyframeIdx < 24)
                     {
-                        g_SysWork.npcs[0].properties.monsterCybil.field_126 = D_800CB208[chara->model.anim.keyframeIdx];
+                        monsterCybilChara.properties.monsterCybil.field_126 = D_800CB208[monsterCybil->model.anim.keyframeIdx];
                     }
                 }
 
-                if (g_SysWork.npcs[0].properties.monsterCybil.field_120 == 0)
+                if (monsterCybilChara.properties.monsterCybil.field_120 == 0)
                 {
-                    g_SysWork.npcs[0].properties.monsterCybil.field_126 <<= 1;
+                    monsterCybilChara.properties.monsterCybil.field_126 <<= 1;
 
-                    if (g_SysWork.npcs[0].properties.monsterCybil.field_106 > 60)
+                    if (monsterCybilChara.properties.monsterCybil.field_106 > 60)
                     {
-                        g_SysWork.npcs[0].properties.monsterCybil.field_106 = 0;
-                        func_800DBA48(chara);
+                        monsterCybilChara.properties.monsterCybil.field_106 = 0;
+                        func_800DBA48(monsterCybil);
                     }
                 }
 
-                if (func_800DBD64(chara) != 0)
+                if (func_800DBD64(monsterCybil) != 0)
                 {
-                    g_SysWork.npcs[0].properties.monsterCybil.field_10C += g_DeltaTime;
+                    monsterCybilChara.properties.monsterCybil.field_10C += g_DeltaTime;
                 }
                 else
                 {
-                    g_SysWork.npcs[0].properties.monsterCybil.field_10C = 0;
+                    monsterCybilChara.properties.monsterCybil.field_10C = 0;
                 }
 
-                if (g_SysWork.npcs[0].properties.monsterCybil.field_10C > Q12(3.0f))
+                if (monsterCybilChara.properties.monsterCybil.field_10C > Q12(3.0f))
                 {
-                    g_SysWork.npcs[0].properties.monsterCybil.field_116 = 1;
-                    g_SysWork.npcs[0].properties.monsterCybil.field_10C = 0;
+                    monsterCybilChara.properties.monsterCybil.field_116 = 1;
+                    monsterCybilChara.properties.monsterCybil.field_10C = 0;
                 }
             }
-            else if (g_SysWork.npcs[0].properties.monsterCybil.field_116 == 1)
+            else if (monsterCybilChara.properties.monsterCybil.field_116 == 1)
             {
-                func_800DBE5C(chara);
+                func_800DBE5C(monsterCybil);
             }
             else
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_126 = 0;
+                monsterCybilChara.properties.monsterCybil.field_126 = 0;
 
-                if (chara->model.anim.status == ANIM_STATUS(1, true))
+                if (monsterCybil->model.anim.status == ANIM_STATUS(1, true))
                 {
-                    if ((u16)chara->model.anim.keyframeIdx < 24)
+                    if ((u16)monsterCybil->model.anim.keyframeIdx < 24)
                     {
-                        g_SysWork.npcs[0].properties.monsterCybil.field_126 = D_800CB208[chara->model.anim.keyframeIdx];
+                        monsterCybilChara.properties.monsterCybil.field_126 = D_800CB208[monsterCybil->model.anim.keyframeIdx];
                     }
                 }
             }
 
-            g_SysWork.npcs[0].properties.monsterCybil.field_122 = 0;
+            monsterCybilChara.properties.monsterCybil.field_122 = 0;
             break;
 
         case 5:
-            if (chara->model.stateStep == 0)
+            if (monsterCybil->model.stateStep == 0)
             {
-                chara->model.anim.status = ANIM_STATUS(5, false);
-                chara->model.stateStep++;
+                monsterCybil->model.anim.status = ANIM_STATUS(5, false);
+                monsterCybil->model.stateStep++;
             }
 
-            func_800DB748(chara);
+            func_800DB748(monsterCybil);
 
-            if (chara->model.anim.keyframeIdx >= (D_800EA7D4 + 10))
+            if (monsterCybil->model.anim.keyframeIdx >= (D_800EA7D4 + 10))
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_126 = Q12(0.7f);
+                monsterCybilChara.properties.monsterCybil.field_126 = Q12(0.7f);
             }
             break;
 
@@ -1290,91 +1340,91 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
             var_s3 = 0;
             var_a1 = 0;
 
-            if (chara->model.stateStep == 0)
+            if (monsterCybil->model.stateStep == 0)
             {
-                chara->model.anim.status = ANIM_STATUS(6, false);
-                chara->model.stateStep++;
+                monsterCybil->model.anim.status = ANIM_STATUS(6, false);
+                monsterCybil->model.stateStep++;
             }
 
-            if (chara->model.anim.status & 1)
+            if (monsterCybil->model.anim.status & 1)
             {
-                chara->model.anim.time        = g_SysWork.playerWork.player.model.anim.time - Q12(832.0f);
-                chara->model.anim.keyframeIdx = g_SysWork.playerWork.player.model.anim.keyframeIdx - 832;
+                monsterCybil->model.anim.time        = playerChara.model.anim.time - Q12(832.0f);
+                monsterCybil->model.anim.keyframeIdx = playerChara.model.anim.keyframeIdx - 832;
             }
 
-            g_SysWork.npcs[0].properties.monsterCybil.field_126 = 0;
-            angle                                                    = Q12_FRACT((u16)chara->rotation.vy + Q12(1.5f));
+            monsterCybilChara.properties.monsterCybil.field_126 = 0;
+            angle                                                    = Q12_FRACT((u16)monsterCybil->rotation.vy + Q12(1.5f));
 
             switch (g_SysWork.playerWork.extra.state)
             {
                 case 32:
-                    var_s3 = g_SysWork.playerWork.player.position.vx + Q12_MULT(Math_Sin(angle), Q12(0.62f));
-                    var_a1 = g_SysWork.playerWork.player.position.vz + Q12_MULT(Math_Cos(angle), Q12(0.62f));
+                    var_s3 = playerChara.position.vx + Q12_MULT(Math_Sin(angle), Q12(0.62f));
+                    var_a1 = playerChara.position.vz + Q12_MULT(Math_Cos(angle), Q12(0.62f));
                     break;
 
                 case 33:
-                    var_s3 = g_SysWork.playerWork.player.position.vx + Q12_MULT(Math_Sin(angle), Q12(0.8f));
-                    var_a1 = g_SysWork.playerWork.player.position.vz + Q12_MULT(Math_Cos(angle), Q12(0.8f));
+                    var_s3 = playerChara.position.vx + Q12_MULT(Math_Sin(angle), Q12(0.8f));
+                    var_a1 = playerChara.position.vz + Q12_MULT(Math_Cos(angle), Q12(0.8f));
                     break;
             }
 
             if (g_SysWork.playerWork.extra.state > 31 &&
                 g_SysWork.playerWork.extra.state < 34)
             {
-                if (var_s3 < chara->position.vx)
+                if (var_s3 < monsterCybil->position.vx)
                 {
-                    chara->position.vx -= Q12(1.0f / 128.0f);
+                    monsterCybil->position.vx -= Q12(1.0f / 128.0f);
                 }
-                else if (chara->position.vx < var_s3)
+                else if (monsterCybil->position.vx < var_s3)
                 {
-                    chara->position.vx += Q12(1.0f / 128.0f);
+                    monsterCybil->position.vx += Q12(1.0f / 128.0f);
                 }
 
-                if (var_a1 < chara->position.vz)
+                if (var_a1 < monsterCybil->position.vz)
                 {
-                    chara->position.vz = chara->position.vz - Q12(1.0f / 128.0f);
+                    monsterCybil->position.vz = monsterCybil->position.vz - Q12(1.0f / 128.0f);
                 }
-                else if (chara->position.vz < var_a1)
+                else if (monsterCybil->position.vz < var_a1)
                 {
-                    chara->position.vz = chara->position.vz + Q12(1.0f / 128.0f);
+                    monsterCybil->position.vz = monsterCybil->position.vz + Q12(1.0f / 128.0f);
                 }
             }
             break;
 
         case 7:
-            if (chara->model.stateStep == 0)
+            if (monsterCybil->model.stateStep == 0)
             {
-                chara->model.anim.status = ANIM_STATUS(7, false);
-                chara->model.stateStep++;
+                monsterCybil->model.anim.status = ANIM_STATUS(7, false);
+                monsterCybil->model.stateStep++;
             }
 
-            if (chara->model.anim.keyframeIdx == D_800EA816)
+            if (monsterCybil->model.anim.keyframeIdx == D_800EA816)
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_EC = 1;
-                chara->model.stateStep                                 = 0;
-                chara->position.vx                                     += Q12_MULT(Math_Sin(chara->rotation.vy + Q12_ANGLE(33.75f)), Q12(0.1f));
-                chara->position.vz                                     += Q12_MULT(Math_Cos(chara->rotation.vy + Q12_ANGLE(33.75f)), Q12(0.1f));
+                monsterCybilChara.properties.monsterCybil.field_EC = 1;
+                monsterCybil->model.stateStep                                 = 0;
+                monsterCybil->position.vx                                     += Q12_MULT(Math_Sin(monsterCybil->rotation.vy + Q12_ANGLE(33.75f)), Q12(0.1f));
+                monsterCybil->position.vz                                     += Q12_MULT(Math_Cos(monsterCybil->rotation.vy + Q12_ANGLE(33.75f)), Q12(0.1f));
             }
             break;
 
         case 8:
-            g_SysWork.npcs[0].properties.monsterCybil.field_126 = 0;
-            if (chara->model.stateStep == 0)
+            monsterCybilChara.properties.monsterCybil.field_126 = 0;
+            if (monsterCybil->model.stateStep == 0)
             {
-                chara->model.anim.status = ANIM_STATUS(8, false);
-                chara->model.stateStep++;
+                monsterCybil->model.anim.status = ANIM_STATUS(8, false);
+                monsterCybil->model.stateStep++;
             }
             break;
 
         case 9:
-            func_800D87B0(chara);
+            func_800D87B0(monsterCybil);
             break;
 
         case 12:
             break;
     }
 
-    switch (g_SysWork.npcs[0].properties.monsterCybil.field_EE)
+    switch (monsterCybilChara.properties.monsterCybil.field_EE)
     {
         case 0:
             break;
@@ -1390,42 +1440,42 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             if (model->anim.status == ANIM_STATUS(1, true))
             {
-                model->anim.time        = chara->model.anim.time;
-                model->anim.keyframeIdx = chara->model.anim.keyframeIdx;
+                model->anim.time        = monsterCybil->model.anim.time;
+                model->anim.keyframeIdx = monsterCybil->model.anim.keyframeIdx;
             }
 
-            if (g_SysWork.playerWork.player.health > Q12(0.0f) &&
-                g_SysWork.npcs[0].properties.monsterCybil.field_116 == 0 &&
-                g_SysWork.npcs[0].properties.monsterCybil.field_110 < Q12(0.8f) &&
-                g_SysWork.npcs[0].properties.monsterCybil.field_106 > 30)
+            if (playerChara.health > Q12(0.0f) &&
+                monsterCybilChara.properties.monsterCybil.field_116 == 0 &&
+                monsterCybilChara.properties.monsterCybil.field_110 < Q12(0.8f) &&
+                monsterCybilChara.properties.monsterCybil.field_106 > 30)
             {
                 if ((Rng_Rand16() % 8) >= 5)
                 {
-                    if (g_SysWork.npcs[0].properties.monsterCybil.field_EE == 1)
+                    if (monsterCybilChara.properties.monsterCybil.field_EE == 1)
                     {
-                        g_SysWork.npcs[0].properties.monsterCybil.field_EC = 8;
-                        g_SysWork.npcs[0].properties.monsterCybil.field_EE = 8;
-                        chara->model.stateStep                                 = 0;
-                        model->stateStep                                         = 0;
+                        monsterCybilChara.properties.monsterCybil.field_EC = 8;
+                        monsterCybilChara.properties.monsterCybil.field_EE = 8;
+                        monsterCybil->model.stateStep = 0;
+                        model->stateStep              = 0;
                     }
                 }
                 else
                 {
-                    if (g_SysWork.npcs[0].properties.monsterCybil.field_EE == 1)
+                    if (monsterCybilChara.properties.monsterCybil.field_EE == 1)
                     {
-                        g_SysWork.npcs[0].properties.monsterCybil.field_EC = 5;
-                        g_SysWork.npcs[0].properties.monsterCybil.field_EE = 5;
-                        chara->model.stateStep                                 = 0;
-                        model->stateStep                                         = 0;
+                        monsterCybilChara.properties.monsterCybil.field_EC = 5;
+                        monsterCybilChara.properties.monsterCybil.field_EE = 5;
+                        monsterCybil->model.stateStep = 0;
+                        model->stateStep              = 0;
                     }
                 }
             }
             break;
 
         case 5:
-            D_800ED570.vx = Q8_TO_Q12(coords[10].workm.t[0]);
-            D_800ED570.vy = Q8_TO_Q12(coords[10].workm.t[1]);
-            D_800ED570.vz = Q8_TO_Q12(coords[10].workm.t[2]);
+            D_800ED570.vx = Q8_TO_Q12(boneCoords[10].workm.t[0]);
+            D_800ED570.vy = Q8_TO_Q12(boneCoords[10].workm.t[1]);
+            D_800ED570.vz = Q8_TO_Q12(boneCoords[10].workm.t[2]);
 
             if (model->stateStep == 0)
             {
@@ -1435,44 +1485,44 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             if (model->anim.keyframeIdx == MONSTER_CYBIL_ANIM_INFOS[11].endKeyframeIdx)
             {
-                chara->model.anim.baseAnimInfos = MONSTER_CYBIL_ANIM_INFOS;
-                chara->field_44.field_0          = 1;
+                monsterCybil->model.anim.baseAnimInfos = MONSTER_CYBIL_ANIM_INFOS;
+                monsterCybil->field_44.field_0          = 1;
             }
             else
             {
-                chara->field_44.field_0 = 0;
+                monsterCybil->field_44.field_0 = 0;
             }
 
-            temp_v0_2 = func_8008A0E4(chara->field_44.field_0,
+            temp_v0_2 = func_8008A0E4(monsterCybil->field_44.field_0,
                                       WEAPON_ATTACK(EquippedWeaponId_ShotgunShells, AttackInputType_Tap),
-                                      chara,
+                                      monsterCybil,
                                       &D_800ED570,
-                                      &g_SysWork.playerWork.player,
-                                      chara->rotation.vy,
+                                      &playerChara,
+                                      monsterCybil->rotation.vy,
                                       Q12_ANGLE(90.0f));
 
             if (temp_v0_2 != NO_VALUE)
             {
-                g_SysWork.playerWork.player.field_40 = chara->field_40;
+                playerChara.field_40 = monsterCybil->field_40;
             }
 
             if (model->anim.keyframeIdx == D_800EA7D6)
             {
                 if (temp_v0_2 !=NO_VALUE)
                 {
-                    g_SysWork.npcs[0].properties.monsterCybil.field_EE = 6;
-                    g_SysWork.npcs[0].properties.monsterCybil.field_EC = 6;
+                    monsterCybilChara.properties.monsterCybil.field_EE = 6;
+                    monsterCybilChara.properties.monsterCybil.field_EC = 6;
                 }
                 else
                 {
-                    g_SysWork.npcs[0].properties.monsterCybil.field_EE = 7;
-                    g_SysWork.npcs[0].properties.monsterCybil.field_EC = 7;
+                    monsterCybilChara.properties.monsterCybil.field_EE = 7;
+                    monsterCybilChara.properties.monsterCybil.field_EC = 7;
                 }
 
-                model->stateStep                                          = 0;
-                chara->model.stateStep                                  = 0;
-                g_SysWork.npcs[0].properties.monsterCybil.field_126 = 0;
-                g_SysWork.npcs[0].properties.monsterCybil.field_F0  = 0;
+                model->stateStep              = 0;
+                monsterCybil->model.stateStep = 0;
+                monsterCybilChara.properties.monsterCybil.field_126 = 0;
+                monsterCybilChara.properties.monsterCybil.field_F0  = 0;
             }
             break;
 
@@ -1485,32 +1535,32 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             if (ANIM_STATUS_IS_ACTIVE(model->anim.status))
             {
-                model->anim.time        = g_SysWork.playerWork.player.model.anim.time - Q12(832.0f);
-                model->anim.keyframeIdx = g_SysWork.playerWork.player.model.anim.keyframeIdx - 832;
+                model->anim.time        = playerChara.model.anim.time - Q12(832.0f);
+                model->anim.keyframeIdx = playerChara.model.anim.keyframeIdx - 832;
             }
 
-            g_SysWork.playerWork.player.damage.amount = g_DeltaTime * 4;
+            playerChara.damage.amount = g_DeltaTime * 4;
 
-            if (g_SysWork.playerWork.player.field_40 == NO_VALUE ||
-                g_SysWork.playerWork.player.health <= Q12(0.0f) ||
-                g_SysWork.playerWork.player.attackReceived == NO_VALUE)
+            if (playerChara.field_40 == NO_VALUE ||
+                playerChara.health <= Q12(0.0f) ||
+                playerChara.attackReceived == NO_VALUE)
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_EE = 7;
-                g_SysWork.npcs[0].properties.monsterCybil.field_EC = 7;
-                model->stateStep                                         = 0;
-                chara->model.stateStep                                 = 0;
-                g_SysWork.playerWork.player.damage.amount       = Q12(0.0f);
+                monsterCybilChara.properties.monsterCybil.field_EE = 7;
+                monsterCybilChara.properties.monsterCybil.field_EC = 7;
+                model->stateStep                          = 0;
+                monsterCybil->model.stateStep             = 0;
+                playerChara.damage.amount = Q12(0.0f);
             }
 
             if (ANIM_STATUS_IS_ACTIVE(model->anim.status))
             {
                 if (model->anim.keyframeIdx == 101)
                 {
-                    g_SysWork.npcs[0].properties.monsterCybil.field_118 = 0;
+                    monsterCybilChara.properties.monsterCybil.field_118 = 0;
                 }
                 else
                 {
-                    g_SysWork.npcs[0].properties.monsterCybil.field_118 = D_800CB238[model->anim.keyframeIdx - 91] +
+                    monsterCybilChara.properties.monsterCybil.field_118 = D_800CB238[model->anim.keyframeIdx - 91] +
                                                                                  (((D_800CB238[model->anim.keyframeIdx - 90] - D_800CB238[model->anim.keyframeIdx - 91]) * Q12_FRACT((u16)model->anim.time)) / Q12(1.0f));
                 }
             }
@@ -1525,19 +1575,19 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
 
             if (model->anim.keyframeIdx == D_800EA816)
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_EE  = 1;
+                monsterCybilChara.properties.monsterCybil.field_EE  = 1;
                 model->stateStep                                          = 0;
-                g_SysWork.npcs[0].properties.monsterCybil.field_106 = 0;
-                g_SysWork.npcs[0].properties.monsterCybil.field_116 = 1;
+                monsterCybilChara.properties.monsterCybil.field_106 = 0;
+                monsterCybilChara.properties.monsterCybil.field_116 = 1;
             }
             break;
 
         case 8:
-            func_800DB748(chara);
+            func_800DB748(monsterCybil);
 
-            D_800ED570.vx = Q8_TO_Q12(coords[10].workm.t[0]);
-            D_800ED570.vy = Q8_TO_Q12(coords[10].workm.t[1]);
-            D_800ED570.vz = Q8_TO_Q12(coords[10].workm.t[2]);
+            D_800ED570.vx = Q8_TO_Q12(boneCoords[10].workm.t[0]);
+            D_800ED570.vy = Q8_TO_Q12(boneCoords[10].workm.t[1]);
+            D_800ED570.vz = Q8_TO_Q12(boneCoords[10].workm.t[2]);
 
             if (model->stateStep == 0)
             {
@@ -1548,40 +1598,40 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
             if (model->anim.keyframeIdx > 169 &&
                 model->anim.keyframeIdx < 173)
             {
-                chara->model.anim.baseAnimInfos = MONSTER_CYBIL_ANIM_INFOS;
-                chara->field_44.field_0          = 1;
+                monsterCybil->model.anim.baseAnimInfos = MONSTER_CYBIL_ANIM_INFOS;
+                monsterCybil->field_44.field_0          = 1;
             }
             else
             {
-                chara->field_44.field_0 = 0;
+                monsterCybil->field_44.field_0 = 0;
             }
 
-            if (func_8008A0E4(chara->field_44.field_0,
+            if (func_8008A0E4(monsterCybil->field_44.field_0,
                               WEAPON_ATTACK(EquippedWeaponId_RifleShells, AttackInputType_Tap),
-                              chara,
+                              monsterCybil,
                               &D_800ED570,
-                              &g_SysWork.playerWork.player,
-                              chara->rotation.vy,
+                              &playerChara,
+                              monsterCybil->rotation.vy,
                               Q12_ANGLE(90.0f)) != NO_VALUE)
             {
-                g_SysWork.playerWork.player.damage.position.vz = Q12(1.0f);
+                playerChara.damage.position.vz = Q12(1.0f);
 
                 if (sharedData_800D16E4_2_s01 == 0)
                 {
-                    func_8005DC1C(Sfx_Unk1630, &chara->position, Q8(0.25f), 0);
+                    func_8005DC1C(Sfx_Unk1630, &monsterCybil->position, Q8(0.25f), 0);
                 }
 
                 sharedData_800D16E4_2_s01                                  = 1;
-                g_SysWork.npcs[0].properties.monsterCybil.field_116 = 1;
+                monsterCybilChara.properties.monsterCybil.field_116 = 1;
             }
 
             if (ANIM_STATUS_IS_ACTIVE(model->anim.keyframeIdx) && model->anim.keyframeIdx == D_800EA836)
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_EE = 1;
-                g_SysWork.npcs[0].properties.monsterCybil.field_EC = 1;
-                model->stateStep                                         = 0;
-                chara->model.stateStep                                 = 0;
-                sharedData_800D16E4_2_s01                                 = 0;
+                monsterCybilChara.properties.monsterCybil.field_EE = 1;
+                monsterCybilChara.properties.monsterCybil.field_EC = 1;
+                model->stateStep              = 0;
+                monsterCybil->model.stateStep = 0;
+                sharedData_800D16E4_2_s01     = 0;
             }
             break;
 
@@ -1597,82 +1647,90 @@ void func_800DA9C8(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coords)
             }
             break;
     }
+
+    #undef monsterCybilChara
+    #undef playerChara
 }
 
-void func_800DB4CC(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coord) // 0x800DB4CC
+void func_800DB4CC(s_SubCharacter* monsterCybil, s_Model* model, GsCOORDINATE2* boneCoords) // 0x800DB4CC
 {
     q3_12  angle;
     q19_12 range;
     q19_12 delta;
 
+    #define monsterCybilChara g_SysWork.npcs[0]
+    #define playerChara       g_SysWork.playerWork.player
+
     delta = (g_DeltaTime << 5) / 136;
 
-    switch (g_SysWork.npcs[0].properties.monsterCybil.field_EE)
+    switch (monsterCybilChara.properties.monsterCybil.field_EE)
     {
         case 9:
         case 11:
-            if (g_SysWork.npcs[0].properties.monsterCybil.field_EC == 12)
+            if (monsterCybilChara.properties.monsterCybil.field_EC == 12)
             {
                 D_800ED560.vy = -224;
                 D_800ED560.vz = -136;
-                TransMatrix(&coord[1].coord, &D_800ED560);
+                TransMatrix(&boneCoords[1].coord, &D_800ED560);
             }
 
-            if (g_SysWork.npcs[0].properties.monsterCybil.field_EC == 11 &&
+            if (monsterCybilChara.properties.monsterCybil.field_EC == 11 &&
                 model->anim.status == ANIM_STATUS(9, true))
             {
                 D_800ED560.vy = -224;
                 D_800ED560.vz = -136;
-                TransMatrix(&coord[1].coord, &D_800ED560);
+                TransMatrix(&boneCoords[1].coord, &D_800ED560);
             }
             break;
 
         case 10:
             range = delta >> 1;
-            if (range >= (g_SysWork.npcs[0].properties.monsterCybil.field_11A - Q12_ANGLE(90.0f)))
+            if (range >= (monsterCybilChara.properties.monsterCybil.field_11A - Q12_ANGLE(90.0f)))
             {
-                if ((g_SysWork.npcs[0].properties.monsterCybil.field_11A - Q12_ANGLE(90.0f)) >= -range)
+                if ((monsterCybilChara.properties.monsterCybil.field_11A - Q12_ANGLE(90.0f)) >= -range)
                 {
-                    g_SysWork.npcs[0].properties.monsterCybil.field_11A = Q12_ANGLE(90.0f);
+                    monsterCybilChara.properties.monsterCybil.field_11A = Q12_ANGLE(90.0f);
                 }
                 else
                 {
-                    g_SysWork.npcs[0].properties.monsterCybil.field_11A += range;
+                    monsterCybilChara.properties.monsterCybil.field_11A += range;
                 }
             }
             else
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_11A -= delta;
+                monsterCybilChara.properties.monsterCybil.field_11A -= delta;
             }
 
-            Math_RotMatrixZ(g_SysWork.npcs[0].properties.monsterCybil.field_11A - Q12_ANGLE(90.0f), &coord[8].coord);
+            Math_RotMatrixZ(monsterCybilChara.properties.monsterCybil.field_11A - Q12_ANGLE(90.0f), &boneCoords[8].coord);
             break;
 
         case 2:
         case 3:
             // TODO: Use macro.
-            angle = ratan2(SquareRoot0(SQUARE((g_SysWork.playerWork.player.position.vx - D_800ED570.vx) >> 4) +
-                                     SQUARE((g_SysWork.playerWork.player.position.vz - D_800ED570.vz) >> 4)),
-                         (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.offsetY -
-                          D_800ED570.vy) >>
-                             4);
+            angle = ratan2(SquareRoot0(SQUARE((playerChara.position.vx - D_800ED570.vx) >> 4) +
+                                       SQUARE((playerChara.position.vz - D_800ED570.vz) >> 4)),
+                           (playerChara.position.vy + playerChara.collision.box.offsetY -
+                            D_800ED570.vy) >> 4);
 
-            if ((angle + delta) < g_SysWork.npcs[0].properties.monsterCybil.field_11A)
+            if ((angle + delta) < monsterCybilChara.properties.monsterCybil.field_11A)
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_11A -= delta;
+                monsterCybilChara.properties.monsterCybil.field_11A -= delta;
             }
             else
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_11A = angle;
+                monsterCybilChara.properties.monsterCybil.field_11A = angle;
             }
 
-            Math_RotMatrixZ(g_SysWork.npcs[0].properties.monsterCybil.field_11A - Q12_ANGLE(90.0f), &coord[8].coord);
+            Math_RotMatrixZ(monsterCybilChara.properties.monsterCybil.field_11A - Q12_ANGLE(90.0f), &boneCoords[8].coord);
             break;
 
         case 6:
-            func_80044F14(&coord[1], 0, 0, -g_SysWork.npcs[0].properties.player.field_118);
+            func_80044F14(&boneCoords[1], 0, 0, -monsterCybilChara.properties.player.field_118);
             break;
     }
+
+    #undef monsterCybilChara
+    #undef playerChara
 }
 
 s32 func_800DB6FC(VECTOR3* pos) // 0x800DB6FC
@@ -1682,46 +1740,52 @@ s32 func_800DB6FC(VECTOR3* pos) // 0x800DB6FC
                                        pos->vz - Q12(0.5f), pos->vz + Q12(0.5f));
 }
 
-void func_800DB748(s_SubCharacter* chara) // 0x800DB748
+void func_800DB748(s_SubCharacter* monsterCybil) // 0x800DB748
 {
     q3_12 angleToPlayer;
     q3_12 shortestAngle;
 
-    // TODO: Not sure if `Q12_TO_Q8` makes sense here, maybe this was just a divide by 16 for some reason.
-    angleToPlayer = Q12_ANGLE_ABS(ratan2(Q12_TO_Q8(g_SysWork.playerWork.player.position.vx - chara->position.vx),
-                                        Q12_TO_Q8(g_SysWork.playerWork.player.position.vz - chara->position.vz)));
+    #define playerChara g_SysWork.playerWork.player
 
-    Math_ShortestAngleGet(chara->rotation.vy, angleToPlayer, &shortestAngle);
+    // TODO: Not sure if `Q12_TO_Q8` makes sense here, maybe this was just a divide by 16 for some reason.
+    angleToPlayer = Q12_ANGLE_ABS(ratan2(Q12_TO_Q8(playerChara.position.vx - monsterCybil->position.vx),
+                                         Q12_TO_Q8(playerChara.position.vz - monsterCybil->position.vz)));
+
+    Math_ShortestAngleGet(monsterCybil->rotation.vy, angleToPlayer, &shortestAngle);
 
     if (ABS(shortestAngle) < Q12_ANGLE(11.3f))
     {
-        chara->rotation.vy = angleToPlayer;
+        monsterCybil->rotation.vy = angleToPlayer;
     }
     else if (shortestAngle > Q12_ANGLE(0.0f))
     {
-        chara->rotation.vy += Q12_ANGLE(11.3f);
+        monsterCybil->rotation.vy += Q12_ANGLE(11.3f);
     }
     else
     {
-        chara->rotation.vy -= Q12_ANGLE(11.3f);
+        monsterCybil->rotation.vy -= Q12_ANGLE(11.3f);
     }
 }
 
-bool func_800DB81C(s_SubCharacter* chara) // 0x800DB81C
+bool func_800DB81C(s_SubCharacter* monsterCybil) // 0x800DB81C
 {
     s_RayTrace trace;
     VECTOR3    dir; // Q19.12
 
-    dir.vy = Q12_MULT(D_800AD4C8[63].field_0, Math_Cos(g_SysWork.npcs[0].properties.monsterCybil.field_11A));
-    dir.vx = Q12_MULT(Q12_MULT(D_800AD4C8[63].field_0, Math_Sin(g_SysWork.npcs[0].properties.monsterCybil.field_11A)), Math_Sin(chara->rotation.vy));
-    dir.vz = Q12_MULT(Q12_MULT(D_800AD4C8[63].field_0, Math_Sin(g_SysWork.npcs[0].properties.monsterCybil.field_11A)), Math_Cos(chara->rotation.vy));
+    #define monsterCybilChara g_SysWork.npcs[0]
 
-    if (Ray_CharaTraceQuery(&trace, &D_800ED570, &dir, chara) && trace.character == NULL)
+    dir.vy = Q12_MULT(D_800AD4C8[63].field_0, Math_Cos(monsterCybilChara.properties.monsterCybil.field_11A));
+    dir.vx = Q12_MULT(Q12_MULT(D_800AD4C8[63].field_0, Math_Sin(monsterCybilChara.properties.monsterCybil.field_11A)), Math_Sin(monsterCybil->rotation.vy));
+    dir.vz = Q12_MULT(Q12_MULT(D_800AD4C8[63].field_0, Math_Sin(monsterCybilChara.properties.monsterCybil.field_11A)), Math_Cos(monsterCybil->rotation.vy));
+
+    if (Ray_CharaTraceQuery(&trace, &D_800ED570, &dir, monsterCybil) && trace.character == NULL)
     {
         return true;
     }
 
     return false;
+
+    #undef monsterCybilChara
 }
 
 s32 func_800DB930(void) // 0x800DB930
@@ -1731,6 +1795,8 @@ s32 func_800DB930(void) // 0x800DB930
     q19_12  shortestDist;
     s32     foundIdx;
     s32     i;
+
+    #define playerChara g_SysWork.playerWork.player
 
     shortestDist   = Q12(20.0f);
     foundIdx = NO_VALUE;
@@ -1746,10 +1812,8 @@ s32 func_800DB930(void) // 0x800DB930
             continue;
         }
 
-        // TODO: Use macro.
-        dist = SquareRoot0(SQUARE((g_SysWork.playerWork.player.position.vx - sp10.vx) >> 4) +
-                          SQUARE((g_SysWork.playerWork.player.position.vz - sp10.vz) >> 4)) << 4;
-
+        dist = Math_Vector2MagCalcSafeQ8(playerChara.position.vx - sp10.vx,
+                                         playerChara.position.vz - sp10.vz);
         if (dist < shortestDist)
         {
             shortestDist = dist;
@@ -1760,7 +1824,7 @@ s32 func_800DB930(void) // 0x800DB930
     return foundIdx;
 }
 
-s32 func_800DBA48(s_SubCharacter* chara) // 0x800DBA48
+s32 func_800DBA48(s_SubCharacter* monsterCybil) // 0x800DBA48
 {
     // TODO: Decl order matters for some reason.
     VECTOR sp10;
@@ -1771,16 +1835,18 @@ s32 func_800DBA48(s_SubCharacter* chara) // 0x800DBA48
     s32    foundIdx;
     q19_12 distMax;
     s32    i;
-    q19_12 temp;
+    q19_12 dist0;
 
-    // TODO: Use macro.
-    temp = SquareRoot0(SQUARE((g_SysWork.playerWork.player.position.vx - Q12(20.0f)) >> 4) +
-                       SQUARE((g_SysWork.playerWork.player.position.vz - Q12(100.0f)) >> 4)) << 4;
-    if (temp > Q12(6.5f))
+    #define monsterCybilChara g_SysWork.npcs[0]
+    #define playerChara       g_SysWork.playerWork.player
+
+    dist0 = Math_Vector2MagCalcSafeQ8(playerChara.position.vx - Q12(20.0f),
+                                      playerChara.position.vz - Q12(100.0f));
+    if (dist0 > Q12(6.5f))
     {
         var_s0 = 0;
     }
-    else if (temp > Q12(3.2f))
+    else if (dist0 > Q12(3.2f))
     {
         var_s0 = 1;
     }
@@ -1793,7 +1859,7 @@ s32 func_800DBA48(s_SubCharacter* chara) // 0x800DBA48
     dist = Q12(20.0f);
 
     foundIdx = -1;
-    distMax   = g_SysWork.npcs[0].properties.monsterCybil.field_110;
+    distMax   = monsterCybilChara.properties.monsterCybil.field_110;
     count = (3 - var_s0) * 4;
 
     for (i = 0; i < count; i++)
@@ -1821,10 +1887,8 @@ s32 func_800DBA48(s_SubCharacter* chara) // 0x800DBA48
 
         if (!func_800DB6FC(&sp10))
         {
-            dist = SquareRoot0(SQUARE((g_SysWork.playerWork.player.position.vx - sp10.vx) >> 4) +
-                              SQUARE((g_SysWork.playerWork.player.position.vz - sp10.vz) >> 4))
-                  << 4;
-
+            dist = Math_Vector2MagCalcSafeQ8(playerChara.position.vx - sp10.vx,
+                                             playerChara.position.vz - sp10.vz);
             if (dist < shortestDist)
             {
                 foundIdx = i;
@@ -1857,16 +1921,19 @@ s32 func_800DBA48(s_SubCharacter* chara) // 0x800DBA48
                 break;
         }
 
-        chara->position.vx = sp10.vx;
-        chara->position.vz = sp10.vz;
-        func_800DB748(chara);
+        monsterCybil->position.vx = sp10.vx;
+        monsterCybil->position.vz = sp10.vz;
+        func_800DB748(monsterCybil);
         return 1;
     }
 
     return 2;
+
+    #undef monsterCybilChara
+    #undef playerChara
 }
 
-s32 func_800DBD64(s_SubCharacter* chara) // 0x800DBD64
+s32 func_800DBD64(s_SubCharacter* monsterCybil) // 0x800DBD64
 {
     q19_12 shortestDist;
     q19_12 dist;
@@ -1874,7 +1941,9 @@ s32 func_800DBD64(s_SubCharacter* chara) // 0x800DBD64
     q19_12 posZ;
     s32    i;
 
-    if (g_SysWork.npcs[0].properties.monsterCybil.field_110 > Q12(2.0f))
+    #define monsterCybilChara g_SysWork.npcs[0]
+
+    if (monsterCybilChara.properties.monsterCybil.field_110 > Q12(2.0f))
     {
         return 0;
     }
@@ -1883,27 +1952,29 @@ s32 func_800DBD64(s_SubCharacter* chara) // 0x800DBD64
 
     for (i = 0; i < 10; i++)
     {
-        posX = chara->position.vx - Q12(20.0f);
-        posZ = chara->position.vz - Q12(100.0f);
-
-        // TODO: Use macro.
-        dist = SquareRoot0(SQUARE((D_800CB250[i] - posX) >> 4) + SQUARE((D_800CB278[i] - posZ) >> 4)) << 4;
+        posX = monsterCybil->position.vx - Q12(20.0f);
+        posZ = monsterCybil->position.vz - Q12(100.0f);
+        dist = Math_Vector2MagCalcSafeQ8(D_800CB250[i] - posX, D_800CB278[i] - posZ);
         if (shortestDist > dist)
         {
             shortestDist = dist;
         }
     }
 
-    return shortestDist < g_SysWork.npcs[0].properties.monsterCybil.field_110;
+    return shortestDist < monsterCybilChara.properties.monsterCybil.field_110;
+
+    #undef monsterCybilChara
 }
 
-void func_800DBE5C(s_SubCharacter* chara)
+void func_800DBE5C(s_SubCharacter* monsterCybil)
 {
     q3_12  angle;
     q19_12 unkAngle1;
     q3_12  unkAngle0;
 
-    if (g_SysWork.npcs[0].properties.monsterCybil.field_E8 == 1)
+    #define monsterCybilChara g_SysWork.npcs[0]
+
+    if (monsterCybilChara.properties.monsterCybil.field_E8 == 1)
     {
         unkAngle1 = ((Rng_Rand16() & 0x1) * Q12_ANGLE(180.0f)) - Q12_ANGLE(90.0f);
     }
@@ -1913,104 +1984,110 @@ void func_800DBE5C(s_SubCharacter* chara)
     }
 
     // TODO: Use macro.
-    unkAngle0 = Q12_ANGLE_NORM_U(unkAngle1 + ratan2((chara->position.vx - Q12(20.0f)) >> 4, (chara->position.vz - Q12(100.0f)) >> 4) + Q12(1.0f));
+    unkAngle0 = Q12_ANGLE_NORM_U(unkAngle1 + ratan2((monsterCybil->position.vx - Q12(20.0f)) >> 4, (monsterCybil->position.vz - Q12(100.0f)) >> 4) + Q12(1.0f));
 
-    if (chara->model.anim.status == ANIM_STATUS(1, true))
+    if (monsterCybil->model.anim.status == ANIM_STATUS(1, true))
     {
-        if (chara->model.anim.keyframeIdx >= 0 &&
-            chara->model.anim.keyframeIdx <= 23)
+        if (monsterCybil->model.anim.keyframeIdx >= 0 &&
+            monsterCybil->model.anim.keyframeIdx <= 23)
         {
-            g_SysWork.npcs[0].properties.monsterCybil.field_126 = D_800CB1D8[chara->model.anim.keyframeIdx];
+            monsterCybilChara.properties.monsterCybil.field_126 = D_800CB1D8[monsterCybil->model.anim.keyframeIdx];
         }
     }
 
-    Math_ShortestAngleGet(chara->rotation.vy, unkAngle0, &angle);
+    Math_ShortestAngleGet(monsterCybil->rotation.vy, unkAngle0, &angle);
     if (ABS(angle) < Q12_ANGLE(5.625f))
     {
-        chara->rotation.vy = unkAngle0;
+        monsterCybil->rotation.vy = unkAngle0;
     }
     else if (angle > Q12_ANGLE(0.0f))
     {
-        chara->rotation.vy += Q12_ANGLE(5.625f);
+        monsterCybil->rotation.vy += Q12_ANGLE(5.625f);
     }
     else
     {
-        chara->rotation.vy -= Q12_ANGLE(5.625f);
+        monsterCybil->rotation.vy -= Q12_ANGLE(5.625f);
     }
 
-    chara->rotation.vy += (Rng_Rand16() % Q12_ANGLE(11.25f)) - Q12_ANGLE(5.625f);
+    monsterCybil->rotation.vy += (Rng_Rand16() % Q12_ANGLE(11.25f)) - Q12_ANGLE(5.625f);
 
-    g_SysWork.npcs[0].properties.monsterCybil.field_10C += g_DeltaTime;
-    if (g_SysWork.npcs[0].properties.monsterCybil.field_10C > Q12(5.0f))
+    monsterCybilChara.properties.monsterCybil.field_10C += g_DeltaTime;
+    if (monsterCybilChara.properties.monsterCybil.field_10C > Q12(5.0f))
     {
-        g_SysWork.npcs[0].properties.monsterCybil.field_116 = 0;
-        g_SysWork.npcs[0].properties.monsterCybil.field_10C = 0;
+        monsterCybilChara.properties.monsterCybil.field_116 = 0;
+        monsterCybilChara.properties.monsterCybil.field_10C = 0;
     }
+
+    #undef monsterCybilChara
 }
 
-void func_800DC018(s_SubCharacter* chara) // 0x800DC018
+void func_800DC018(s_SubCharacter* monsterCybil) // 0x800DC018
 {
     s_RayTrace trace;
     VECTOR3    from; // Q19.12
     VECTOR3    to;   // Q19.12
     q19_12     newRotY;
 
-    switch (g_SysWork.npcs[0].properties.monsterCybil.field_116)
+    #define monsterCybilChara g_SysWork.npcs[0]
+
+    switch (monsterCybilChara.properties.monsterCybil.field_116)
     {
         case 2:
-            g_SysWork.npcs[0].properties.monsterCybil.field_106 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12_ANGLE(11.25f / 4.0f));
-            g_SysWork.npcs[0].properties.monsterCybil.field_106 = CLAMP(g_SysWork.npcs[0].properties.monsterCybil.field_106,
+            monsterCybilChara.properties.monsterCybil.field_106 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12_ANGLE(11.25f / 4.0f));
+            monsterCybilChara.properties.monsterCybil.field_106 = CLAMP(monsterCybilChara.properties.monsterCybil.field_106,
                                                                                Q12_ANGLE(0.0f),
                                                                                Q12_ANGLE(135.0f));
 
-            newRotY = chara->rotation.vy;
-            if (g_SysWork.npcs[0].properties.monsterCybil.field_106 < Q12_ANGLE(90.0f))
+            newRotY = monsterCybil->rotation.vy;
+            if (monsterCybilChara.properties.monsterCybil.field_106 < Q12_ANGLE(90.0f))
             {
                 newRotY += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12_ANGLE(11.25f / 4.0f));
             }
-            chara->rotation.vy = newRotY;
+            monsterCybil->rotation.vy = newRotY;
 
-            if (g_SysWork.npcs[0].properties.monsterCybil.field_106 == Q12_ANGLE(135.0f))
+            if (monsterCybilChara.properties.monsterCybil.field_106 == Q12_ANGLE(135.0f))
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_106 = Q12_ANGLE(0.0f);
-                g_SysWork.npcs[0].properties.monsterCybil.field_116 = 0;
+                monsterCybilChara.properties.monsterCybil.field_106 = Q12_ANGLE(0.0f);
+                monsterCybilChara.properties.monsterCybil.field_116 = 0;
             }
             break;
 
         case 3:
-            g_SysWork.npcs[0].properties.monsterCybil.field_106 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12_ANGLE(11.25f / 4.0f));
-            g_SysWork.npcs[0].properties.monsterCybil.field_106 = CLAMP(g_SysWork.npcs[0].properties.monsterCybil.field_106,
+            monsterCybilChara.properties.monsterCybil.field_106 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12_ANGLE(11.25f / 4.0f));
+            monsterCybilChara.properties.monsterCybil.field_106 = CLAMP(monsterCybilChara.properties.monsterCybil.field_106,
                                                                                Q12_ANGLE(-135.0f),
                                                                                Q12_ANGLE(0.0f));
 
-            newRotY = chara->rotation.vy;
-            if (g_SysWork.npcs[0].properties.monsterCybil.field_106 > Q12_ANGLE(-90.0f))
+            newRotY = monsterCybil->rotation.vy;
+            if (monsterCybilChara.properties.monsterCybil.field_106 > Q12_ANGLE(-90.0f))
             {
                 newRotY -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12_ANGLE(11.25f / 4.0f));
             }
-            chara->rotation.vy = newRotY;
+            monsterCybil->rotation.vy = newRotY;
 
-            if (g_SysWork.npcs[0].properties.monsterCybil.field_106 == Q12_ANGLE(-135.0f))
+            if (monsterCybilChara.properties.monsterCybil.field_106 == Q12_ANGLE(-135.0f))
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_106 = Q12_ANGLE(0.0f);
-                g_SysWork.npcs[0].properties.monsterCybil.field_116 = 0;
+                monsterCybilChara.properties.monsterCybil.field_106 = Q12_ANGLE(0.0f);
+                monsterCybilChara.properties.monsterCybil.field_116 = 0;
             }
             break;
 
         default:
-            from.vx = chara->position.vx;
-            from.vy = chara->position.vy;
-            from.vz = chara->position.vz;
+            from.vx = monsterCybil->position.vx;
+            from.vy = monsterCybil->position.vy;
+            from.vz = monsterCybil->position.vz;
 
-            to.vx = chara->position.vx + Q12_MULT(Math_Sin(chara->rotation.vy), Q12(0.3f));
+            to.vx = monsterCybil->position.vx + Q12_MULT(Math_Sin(monsterCybil->rotation.vy), Q12(0.3f));
             to.vy = from.vy;
-            to.vz = chara->position.vz + Q12_MULT(Math_Cos(chara->rotation.vy), Q12(0.3f));
+            to.vz = monsterCybil->position.vz + Q12_MULT(Math_Cos(monsterCybil->rotation.vy), Q12(0.3f));
 
             if (Ray_TraceQuery(&trace, &from, &to))
             {
-                g_SysWork.npcs[0].properties.monsterCybil.field_116 = (Rng_Rand16() & 0x1) + 2;
-                g_SysWork.npcs[0].properties.monsterCybil.field_106 = Q12_ANGLE(0.0f);
+                monsterCybilChara.properties.monsterCybil.field_116 = (Rng_Rand16() & 0x1) + 2;
+                monsterCybilChara.properties.monsterCybil.field_106 = Q12_ANGLE(0.0f);
             }
             break;
     }
+
+    #undef monsterCybilChara
 }
