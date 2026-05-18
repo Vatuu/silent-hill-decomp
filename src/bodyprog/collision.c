@@ -674,26 +674,31 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* newOffset, s_Collision
 
 void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, s_CollisionQuery* charaCollInfo, s_SubCharacter** charas, s32 charaCount) // 0x8006A940
 {
-    q19_12          nextMovementAngle;
-    q19_12          charaDistDiffZ;
-    q19_12          charaDistDiffX;
+    #define CYLINDER_RADIUS_PAD Q12(0.1f)
+
+    q19_12          headingAngle;
+    q19_12          cylinderOffsetZ;
+    q19_12          cylinderOffsetX;
     q19_12          var_a0;
     s32             i;
-    q19_12          charaMoveAdjustPercent;
+    q19_12          offsetAlpha;
     q19_12          var_v0;
-    s32             mag;
+    s32             dist;
     q19_12          curCharaTop;
     q19_12          curCharaBottom;
-    q19_12          tarCharaBottom;
-    q19_12          tarCharaTop;
+    q19_12          otherCharaBottom;
+    q19_12          otherCharaTop;
     s_SubCharacter* curChara;
 
-    charaMoveAdjustPercent = Q12(1.0f);
-    nextMovementAngle      = ratan2(offset->vx, offset->vz);
+    offsetAlpha  = Q12(1.0f);
+    headingAngle = ratan2(offset->vx, offset->vz);
 
+    // Run through characters to collide.
     for (i = 0; i < charaCount; i++)
     {
         curChara = charas[i];
+
+        // Check if current character is collidable.
         if (curChara->collision.state == CharaCollisionState_Ignore ||
             curChara->collision.state == CharaCollisionState_Player ||
             curChara->collision.state >= charaCollInfo->collisionState)
@@ -701,34 +706,31 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, s_CollisionQuery* c
             continue;
         }
 
-        
-        // Checks if a loaded character is above or below the target character.
-        curCharaTop    = curChara->collision.box.top    + curChara->position.vy;
-        curCharaBottom = curChara->collision.box.bottom + curChara->position.vy;
-        tarCharaTop    = charaCollInfo->top             + charaCollInfo->position.vy;
-        tarCharaBottom = charaCollInfo->bottom          + charaCollInfo->position.vy;
-        
-        if (curCharaTop > tarCharaBottom || curCharaBottom < tarCharaTop)
+        // Check if cylinders collide on vertical axis using box top and bottom.
+        curCharaTop      = curChara->collision.box.top    + curChara->position.vy;
+        curCharaBottom   = curChara->collision.box.bottom + curChara->position.vy;
+        otherCharaTop    = charaCollInfo->top             + charaCollInfo->position.vy;
+        otherCharaBottom = charaCollInfo->bottom          + charaCollInfo->position.vy;
+        if (curCharaTop    > otherCharaBottom ||
+            curCharaBottom < otherCharaTop)
         {
             continue;
         }
 
-        // Checks if the difference of the distance between a loaded character
-        // and the target character is smaller than around 1 meter of distance.
-        charaDistDiffX = (curChara->position.vx + curChara->collision.shapeOffsets.cylinder.vx) - charaCollInfo->position.vx;
-        charaDistDiffZ = (curChara->position.vz + curChara->collision.shapeOffsets.cylinder.vz) - charaCollInfo->position.vz;
+        cylinderOffsetX = (curChara->position.vx + curChara->collision.shapeOffsets.cylinder.vx) - charaCollInfo->position.vx;
+        cylinderOffsetZ = (curChara->position.vz + curChara->collision.shapeOffsets.cylinder.vz) - charaCollInfo->position.vz;
         
-        mag = Vc_VectorMagnitudeCalc(charaDistDiffX, Q12(0.0f), charaDistDiffZ);
-        if (((curChara->collision.cylinder.radius + charaCollInfo->radius) + Q12(0.10f)) < mag)
+        // Check if cylinders collide on XZ plane.
+        dist = Vc_VectorMagnitudeCalc(cylinderOffsetX, Q12(0.0f), cylinderOffsetZ);
+        if (((curChara->collision.cylinder.radius + charaCollInfo->radius) + CYLINDER_RADIUS_PAD) < dist)
         {
             continue;
         }
 
-        var_a0 = Q12_MULT(Math_Cos(ratan2(charaDistDiffX, charaDistDiffZ) - nextMovementAngle), Q12(1.5f));
-
+        // TODO: Check what this is doing. Computes a slowdown alpha based on the angle at which the cylinders collided?
+        var_a0 = Q12_MULT(Math_Cos(ratan2(cylinderOffsetX, cylinderOffsetZ) - headingAngle), Q12(1.5f));
         var_v0 = MAX(var_a0, Q12(0.0f));
         var_a0 = var_v0;
-
         if (curChara->model.charaId == Chara_HangedScratcher)
         {
             var_a0 = MIN(var_a0, Q12(0.6f));
@@ -738,13 +740,13 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, s_CollisionQuery* c
             var_a0 = MIN(var_a0, Q12(0.4f));
         }
 
-        charaMoveAdjustPercent -= var_a0;
+        offsetAlpha -= var_a0;
     }
 
-    charaMoveAdjustPercent = MAX(charaMoveAdjustPercent, Q12(0.4f));
-
-    offset->vx = Q12_MULT(charaMoveAdjustPercent, offset->vx);
-    offset->vz = Q12_MULT(charaMoveAdjustPercent, offset->vz);
+    // Adjust displacement offset.
+    offsetAlpha = MAX(offsetAlpha, Q12(0.4f));
+    offset->vx  = Q12_MULT(offsetAlpha, offset->vx);
+    offset->vz  = Q12_MULT(offsetAlpha, offset->vz);
 }
 
 void Collision_QueryInit(s_CollisionState* collState, VECTOR3* pos, s_CollisionQuery* collQuery, bool arg3) // 0x8006AB50

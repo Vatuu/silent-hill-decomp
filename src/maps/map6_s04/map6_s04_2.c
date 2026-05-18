@@ -842,28 +842,28 @@ PACKET* func_800DF6C4(GsOT_TAG* ot, PACKET* packet, MATRIX* mat) // 0x800DF6C4
     return (PACKET*)(tPage + 2);
 }
 
-void func_800DFA38(MATRIX* mat) // 0x800DFA38
+void func_800DFA38(MATRIX* rotMat) // 0x800DFA38
 {
-    SVECTOR sp10;
+    SVECTOR rot;
     VECTOR  sp18;
 
-    sp10 = D_800EB328;
+    rot = D_800EB328;
 
     SetRotMatrix(&GsWSMATRIX);
     SetTransMatrix(&GsWSMATRIX);
-    ApplyRotMatrix(&sp10, &sp18);
+    ApplyRotMatrix(&rot, &sp18);
 
     sp18.vx += GsWSMATRIX.t[0];
     sp18.vy += GsWSMATRIX.t[1];
     sp18.vz += GsWSMATRIX.t[2];
 
-    TransMatrix(mat, &sp18);
-    SetTransMatrix(mat);
+    TransMatrix(rotMat, &sp18);
+    SetTransMatrix(rotMat);
 
-    sp10 = D_800EB330;
+    rot = D_800EB330;
 
-    Math_RotMatrixZxyNeg(&sp10, mat);
-    SetMulRotMatrix(mat);
+    Math_RotMatrixZxyNeg(&rot, rotMat);
+    SetMulRotMatrix(rotMat);
 }
 
 void func_800DFB44(void) // 0x800DFB44

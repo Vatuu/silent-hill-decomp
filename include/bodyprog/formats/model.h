@@ -42,15 +42,15 @@ STATIC_ASSERT_SIZEOF(s_MeshHeader, 24);
 /** @brief Model data header. */
 typedef struct _ModelHeader
 {
-    /* 0x0   */ u_Filename    name_0;
-    /* 0x8   */ u8            meshCount_8;
-    /* 0x9   */ u8            vertexOffset_9;
-    /* 0xA   */ u8            normalOffset_A;
+    /* 0x0   */ u_Filename    name;
+    /* 0x8   */ u8            meshCount;
+    /* 0x9   */ u8            vertexOffset;
+    /* 0xA   */ u8            normalOffset;
     /* 0xB+0 */ u8            field_B_0 : 1;
     /* 0xB+1 */ u8            field_B_1 : 3; // Value used in `func_800571D0` switch.
     /* 0xB+4 */ u8            field_B_4 : 2;
     /* 0xB+6 */ u8            unk_B_6   : 2;
-    /* 0xC   */ s_MeshHeader* meshHdrs_C;
+    /* 0xC   */ s_MeshHeader* meshHdrs;
 } s_ModelHeader;
 STATIC_ASSERT_SIZEOF(s_ModelHeader, 16);
 

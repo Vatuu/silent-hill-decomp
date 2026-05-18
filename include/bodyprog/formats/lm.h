@@ -9,8 +9,8 @@
 
 typedef struct _Material
 {
-    /* 0x0  */ u_Filename name_0;
-    /* 0x8  */ s_Texture* texture_8;
+    /* 0x0  */ u_Filename name;
+    /* 0x8  */ s_Texture* texture;
     /* 0xC  */ u8         field_C;
     /* 0xD  */ u8         unk_D[1];
     /* 0xE  */ u8         field_E;

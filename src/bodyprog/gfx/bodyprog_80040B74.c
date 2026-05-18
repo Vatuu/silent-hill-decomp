@@ -1546,7 +1546,7 @@ bool LmFilter_IsHalfPage(s_Material* mat) // 0x80043D64
 {
     char* charCode;
 
-    for (charCode = &mat->name_0.str[7]; charCode >= &mat->name_0.str[0]; charCode--)
+    for (charCode = &mat->name.str[7]; charCode >= &mat->name.str[0]; charCode--)
     {
         if (*charCode == '\0')
         {
@@ -1615,7 +1615,7 @@ s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmH
 
     for (i = 0; i < lmHdr->modelCount; i++, modelHeader++)
     {
-        if (!COMPARE_FILENAMES(modelName, &modelHeader->name_0))
+        if (!COMPARE_FILENAMES(modelName, &modelHeader->name))
         {
             return modelHeader;
         }

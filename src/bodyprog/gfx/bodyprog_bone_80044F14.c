@@ -182,8 +182,8 @@ void func_800452EC(s_Skeleton* skel) // 0x800452EC
     while (curBone != NULL)
     {
         modelHdr    = curBone->bone.modelInfo.modelHdr;
-        boneIdxOnes = modelHdr->name_0.str[1] - '0';
-        boneIdxTens = modelHdr->name_0.str[0] - '0';
+        boneIdxOnes = modelHdr->name.str[1] - '0';
+        boneIdxTens = modelHdr->name.str[0] - '0';
 
         if (boneIdxOnes < 10 && boneIdxTens >= 0 && boneIdxTens < 10)
         {

@@ -712,9 +712,9 @@ void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr) // 0x800
 {
     s_MeshHeader* curMeshHdr;
 
-    modelHdr->meshHdrs_C = (u8*)modelHdr->meshHdrs_C + (u32)lmHdr;
+    modelHdr->meshHdrs = (u8*)modelHdr->meshHdrs + (u32)lmHdr;
 
-    for (curMeshHdr = &modelHdr->meshHdrs_C[0]; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
+    for (curMeshHdr = &modelHdr->meshHdrs[0]; curMeshHdr < &modelHdr->meshHdrs[modelHdr->meshCount]; curMeshHdr++)
     {
         curMeshHdr->primitives = (u8*)curMeshHdr->primitives + (u32)lmHdr;
         curMeshHdr->verticesXy = (u8*)curMeshHdr->verticesXy + (u32)lmHdr;
@@ -735,7 +735,7 @@ void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool isTransparent) // 0x80056244
 
     for (curModelHdr = &modelHdrs[0]; curModelHdr < &modelHdrs[lmHdr->modelCount]; curModelHdr++)
     {
-        for (curMeshHdr = &curModelHdr->meshHdrs_C[0]; curMeshHdr < &curModelHdr->meshHdrs_C[curModelHdr->meshCount_8]; curMeshHdr++)
+        for (curMeshHdr = &curModelHdr->meshHdrs[0]; curMeshHdr < &curModelHdr->meshHdrs[curModelHdr->meshCount]; curMeshHdr++)
         {
             for (prim = &curMeshHdr->primitives[0]; prim < &curMeshHdr->primitives[curMeshHdr->primitiveCount]; prim++)
             {
@@ -824,7 +824,7 @@ bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* i
          curMat < &lmHdr->materials[lmHdr->materialCount];
          curMat++)
     {
-        if (!COMPARE_FILENAMES(&curMat->name_0, fileName))
+        if (!COMPARE_FILENAMES(&curMat->name, fileName))
         {
             curMat->field_C = 1;
             Material_FsImageApply(curMat, image, blendMode);
@@ -891,13 +891,13 @@ void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveChunkTextures* active
 
     for (curMat = &lmHdr->materials[0]; curMat < &lmHdr->materials[lmHdr->materialCount]; curMat++)
     {
-        if (curMat->field_C == 0 && curMat->texture_8 == NULL &&
+        if (curMat->field_C == 0 && curMat->texture == NULL &&
             (filterFunc == NULL || filterFunc(curMat)))
         {
-            curMat->texture_8 = Texture_Get(curMat, activeTexs, FS_BUFFER_9, fileIdx, blendMode);
-            if (curMat->texture_8 != NULL)
+            curMat->texture = Texture_Get(curMat, activeTexs, FS_BUFFER_9, fileIdx, blendMode);
+            if (curMat->texture != NULL)
             {
-                Material_FsImageApply(curMat, &curMat->texture_8->imageDesc, blendMode);
+                Material_FsImageApply(curMat, &curMat->texture->imageDesc, blendMode);
             }
         }
     }
@@ -919,12 +919,12 @@ bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr) // 0x80056888
             continue;
         }
 
-        if (curMat->texture_8 == NULL)
+        if (curMat->texture == NULL)
         {
             return false;
         }
 
-        if (!Fs_QueueIsEntryLoaded(curMat->texture_8->queueIdx))
+        if (!Fs_QueueIsEntryLoaded(curMat->texture->queueIdx))
         {
             return false;
         }
@@ -979,7 +979,7 @@ void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat
     s_Primitive*  curPrim;
 
     // Run through meshes.
-    for (curMeshHdr = modelHdr->meshHdrs_C; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
+    for (curMeshHdr = modelHdr->meshHdrs; curMeshHdr < &modelHdr->meshHdrs[modelHdr->meshCount]; curMeshHdr++)
     {
         // Run through primitives.
         for (curPrim = curMeshHdr->primitives; curPrim < &curMeshHdr->primitives[curMeshHdr->primitiveCount]; curPrim++)
@@ -1023,7 +1023,7 @@ void Lm_MaterialRefCountDec(s_LmHeader* lmHdr) // 0x80056BF8
     // Run through materials.
     for (curMat = &lmHdr->materials[0]; curMat < &lmHdr->materials[lmHdr->materialCount]; curMat++)
     {
-        tex = curMat->texture_8;
+        tex = curMat->texture;
         if (tex != NULL)
         {
             tex->refCount--;
@@ -1032,7 +1032,7 @@ void Lm_MaterialRefCountDec(s_LmHeader* lmHdr) // 0x80056BF8
                 tex->refCount = 0;
             }
 
-            curMat->texture_8 = NULL;
+            curMat->texture = NULL;
         }
     }
 }
@@ -1065,7 +1065,7 @@ bool Lm_ModelFind(s_WorldObjectModel* model, s_LmHeader* lmHdr, s_WorldObjectMet
 
     result = false;
 
-    StringCopy(sp10.str, metadata->name_0.str);
+    StringCopy(sp10.str, metadata->name.str);
 
     modelHdrCount = lmHdr->modelCount;
 
@@ -1073,7 +1073,7 @@ bool Lm_ModelFind(s_WorldObjectModel* model, s_LmHeader* lmHdr, s_WorldObjectMet
     {
         for (i = 0, modelHdr = &lmHdr->modelHdrs[i]; i < modelHdrCount; i++, modelHdr++)
         {
-            if (!COMPARE_FILENAMES(&modelHdr->name_0, &sp10))
+            if (!COMPARE_FILENAMES(&modelHdr->name, &sp10))
             {
                 result                       = true;
                 model->modelInfo.modelIdx = i;
@@ -1295,13 +1295,13 @@ void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* m
     scratchData = PSX_SCRATCH_ADDR(0);
 
     modelHdr     = modelInfo->modelHdr;
-    vertOffset   = modelHdr->vertexOffset_9;
-    normalOffset = modelHdr->normalOffset_A;
+    vertOffset   = modelHdr->vertexOffset;
+    normalOffset = modelHdr->normalOffset;
 
     gte_lddqa(g_WorldEnvWork.light.field_0);
     gte_lddqb_0();
 
-    for (curMeshHdr = modelHdr->meshHdrs_C; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
+    for (curMeshHdr = modelHdr->meshHdrs; curMeshHdr < &modelHdr->meshHdrs[modelHdr->meshCount]; curMeshHdr++)
     {
         if (vertOffset != 0 || normalOffset != 0)
         {
@@ -2509,7 +2509,7 @@ void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* viewMat, bool arg3,
 
     modelHdr = modelInfo->modelHdr;
 
-    for (curMeshHdr = &modelHdr->meshHdrs_C[0]; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
+    for (curMeshHdr = &modelHdr->meshHdrs[0]; curMeshHdr < &modelHdr->meshHdrs[modelHdr->meshCount]; curMeshHdr++)
     {
         func_800574D4(curMeshHdr, scratchData);
         func_80057B7C(curMeshHdr, 0, scratchData, viewMat);
@@ -2699,10 +2699,10 @@ void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* v
     }
 
     modelHdr     = modelInfo->modelHdr;
-    vertOffset   = modelHdr->vertexOffset_9;
-    normalOffset = modelHdr->normalOffset_A;
+    vertOffset   = modelHdr->vertexOffset;
+    normalOffset = modelHdr->normalOffset;
 
-    for (curMeshHdr = modelHdr->meshHdrs_C; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
+    for (curMeshHdr = modelHdr->meshHdrs; curMeshHdr < &modelHdr->meshHdrs[modelHdr->meshCount]; curMeshHdr++)
     {
         func_8005A900(curMeshHdr, vertOffset, scratchData, viewMat);
 
@@ -3152,16 +3152,16 @@ s_Texture* Texture_Get(s_Material* mat, s_ActiveChunkTextures* activeTexs, void*
     s_Texture* foundTex;
 
     smallestQueueIdx = INT_MAX;
-    mat->texture_8 = NULL;
+    mat->texture = NULL;
     foundTex = NULL;
 
     for (i = 0; i < activeTexs->count; i++)
     {
         curTex = activeTexs->textures[i];
 
-        if (!COMPARE_FILENAMES(&mat->name_0, &curTex->name))
+        if (!COMPARE_FILENAMES(&mat->name, &curTex->name))
         {
-            mat->texture_8 = curTex;
+            mat->texture = curTex;
             curTex->refCount++;
             return curTex;
         }
@@ -3196,7 +3196,7 @@ s_Texture* Texture_Get(s_Material* mat, s_ActiveChunkTextures* activeTexs, void*
 
     foundTex->queueIdx = Fs_QueueStartReadTim(fileId, fsBuffer9, &foundTex->imageDesc);
     foundTex->refCount++;
-    foundTex->name = mat->name_0;
+    foundTex->name = mat->name;
 
     return foundTex;
 }
@@ -3229,8 +3229,8 @@ void Material_TimFileNameGet(char* filename, s_Material* mat) // 0x8005B3BC
     // Some inline `memcpy`/`bcopy`/`strncpy`? those use `lwl`/`lwr`/`swl`/`swr` instead though
     // Example: casting `filename`/`arg1` to `u32*` and using `memcpy` does generate `lw`/`sw`,
     // but not in same order as this, guess it's some custom inline/macro instead.
-    *(u32*)&sp10[0] = *(u32*)&mat->name_0.str[0];
-    *(u32*)&sp10[4] = *(u32*)&mat->name_0.str[4];
+    *(u32*)&sp10[0] = *(u32*)&mat->name.str[0];
+    *(u32*)&sp10[4] = *(u32*)&mat->name.str[4];
     *(u32*)&sp10[8] = 0;
 
     strcat(sp10, D_80028544); // Copies `TIM` to end of `sp10` string.

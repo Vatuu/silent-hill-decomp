@@ -219,8 +219,8 @@ extern s32 D_800EAF20[];
 extern s32 D_800EB320;
 extern s32 D_800EB324;
 
-extern SVECTOR D_800EB328;
-extern SVECTOR D_800EB330;
+extern SVECTOR D_800EB328; // Q3.12 | Rotation.
+extern SVECTOR D_800EB330; // Q3.12 | Rotation.
 
 extern s32 D_800EBB4C;
 extern s32 D_800EBB50;
@@ -346,7 +346,7 @@ void func_800DEAA8(s32 arg0);
 
 s32 func_800DEB1C(s_800ED848* arg0);
 
-void func_800DEC3C(VECTOR3*, SVECTOR3*); // Assumed return type.
+void func_800DEC3C(VECTOR3* arg0, SVECTOR3* arg1);
 
 void func_800DED30(void);
 
@@ -354,7 +354,7 @@ void func_800DED50(MATRIX* arg0, GsCOORDINATE2* arg1, s32 arg2);
 
 bool func_800DEDEC(s_800ED848* arg0);
 
-void func_800DEF50(VECTOR3*, GsCOORDINATE2*, s32*); // Assumed return type.
+void func_800DEF50(VECTOR3* arg0, GsCOORDINATE2* arg1, s32* arg2);
 
 void func_800DF134(void);
 
@@ -364,7 +364,7 @@ void func_800DF2F0(MATRIX* arg0, VECTOR3* arg1, VECTOR3* arg2);
 
 bool func_800DF41C(s_800ED848* arg0);
 
-void func_800DF5B0(VECTOR3*, VECTOR3*); // Assumed return type.
+void func_800DF5B0(VECTOR3* arg0, VECTOR3* arg1);
 
 void func_800DF618(void);
 
@@ -397,7 +397,7 @@ void func_800E02E0(void);
 
 s_func_800E030C* func_800E030C(void);
 
-void func_800E0358(s_func_800E030C* arg0); // Unknown return type/args.
+void func_800E0358(s_func_800E030C* arg0);
 
 void func_800E03C4(const VECTOR3* from, const VECTOR3* to, q19_12 dist, s32 arg3);
 
@@ -444,17 +444,17 @@ void Map_WorldObjectsInit(void);
 
 void Map_WorldObjectsUpdate(void);
 
-void func_800E636C(void); // Assumed types.
+void func_800E636C(void);
 
 void func_800E6CB8(void);
 
-void func_800E7204(void); // Assumed types.
+void func_800E7204(void);
 
 void func_800E73B4(q19_12 arg0);
 
 void func_800E74C4(void);
 
-void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4); // Assumed types.
+void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_800E7944(u32 arg0);
 

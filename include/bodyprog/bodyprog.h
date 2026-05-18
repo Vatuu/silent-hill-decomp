@@ -2435,7 +2435,7 @@ s32 func_8006A42C(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
 s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* newOffset, s_CollisionQuery* charaCollInfo, bool arg3,
                   s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** charas, s32 charaCount);
 
-/** @brief Slowdown target character colliding with other. */
+/** @brief Slows down colliding characters according to relational cylinder collision. */
 void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, s_CollisionQuery* charaCollInfo, s_SubCharacter** charas, s32 charaCount);
 
 /** @brief Initializes a collision state for a new pass.

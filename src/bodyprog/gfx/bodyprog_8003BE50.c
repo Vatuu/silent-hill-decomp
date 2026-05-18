@@ -383,10 +383,10 @@ void Gfx_InGameDraw(bool arg0) // 0x8003C878
 
 void WorldObject_ModelNameSet(s_WorldObjectModel* model, char* newStr) // 0x8003C8F8
 {
-    model->metadata.lmIdx_9 = WorldModelLocation_None;
+    model->metadata.lmIdx = WorldModelLocation_None;
     model->modelInfo.field_0  = 0;
 
-    StringCopy(model->metadata.name_0.str, newStr);
+    StringCopy(model->metadata.name.str, newStr);
 
     model->metadata.field_8 = 0;
 }
@@ -406,7 +406,7 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* model, const VECTOR3* pos, const SVE
     // Check if array of world objects to draw is full.
     if (g_WorldGfxWork.objectCount < ARRAY_SIZE(g_WorldGfxWork.objects))
     {
-        if (model->metadata.lmIdx_9 == WorldModelLocation_None)
+        if (model->metadata.lmIdx == WorldModelLocation_None)
         {
             func_8003BED0();
 
@@ -423,7 +423,7 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* model, const VECTOR3* pos, const SVE
                 }
             }
 
-            model->metadata.lmIdx_9 = modelLoc;
+            model->metadata.lmIdx = modelLoc;
         }
 
         // Compute geometry position and rotation.
@@ -517,7 +517,7 @@ void func_8003CC7C(s_WorldObjectModel* model, MATRIX* viewMat, MATRIX* worldMat)
     s_WorldObjectMetadata* objMetaCpy;
     s_ModelHeader*         modelHdr;
 
-    lmIdx = model->metadata.lmIdx_9;
+    lmIdx = model->metadata.lmIdx;
     if (lmIdx == 0)
     {
         return;
@@ -530,13 +530,13 @@ void func_8003CC7C(s_WorldObjectModel* model, MATRIX* viewMat, MATRIX* worldMat)
     {
         if (!IpdHeader_IsLoaded(lmIdx - 3))
         {
-            model->metadata.lmIdx_9 = WorldModelLocation_None;
+            model->metadata.lmIdx = WorldModelLocation_None;
         }
     }
 
-    if (COMPARE_FILENAMES(&objMetaCpy->name_0, &modelHdr->name_0))
+    if (COMPARE_FILENAMES(&objMetaCpy->name, &modelHdr->name))
     {
-        model->metadata.lmIdx_9 = WorldModelLocation_None;
+        model->metadata.lmIdx = WorldModelLocation_None;
         return;
     }
 
