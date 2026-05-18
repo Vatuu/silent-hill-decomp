@@ -299,7 +299,7 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* model, GsCOORDINATE2* 
 
 s32 func_800DBA48(s_SubCharacter* monsterCybil);
 
-s32 func_800DBD64(s_SubCharacter* monsterCybil);
+bool func_800DBD64(s_SubCharacter* monsterCybil);
 
 void func_800DB4CC(s_SubCharacter* monsterCybil, s_Model* model, GsCOORDINATE2* boneCoords);
 
