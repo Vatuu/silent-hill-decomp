@@ -119,7 +119,7 @@ void func_800699E4(s_IpdCollisionData* collData) // 0x800699E4
 
 void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
 {
-    s_CollisionQuery    collQuery;
+    s_CollisionCylinder collCylinder;
     VECTOR3             pos;
     s_CollisionState    state;
     s_IpdCollisionData* ipdCollData;
@@ -132,19 +132,19 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
     if (ipdCollData == NULL)
     {
         coll->groundHeight = Q12(8.0f);
-        coll->field_6      = 0;
-        coll->field_4      = 0;
+        coll->tiltAngleZ   = Q12_ANGLE(0.0f);
+        coll->tiltAngleX   = Q12_ANGLE(0.0f);
         coll->groundType   = GroundType_Default;
         return;
     }
 
-    collQuery.position.vx = posX;
-    collQuery.position.vy = Q12(0.0f);
-    collQuery.position.vz = posZ;
-    collQuery.bottom      = Q12(0.0f);
-    collQuery.top         = Q12(0.0f);
-    collQuery.radius      = Q12(0.0f);
-    Collision_QueryInit(&state, &pos, &collQuery, false);
+    collCylinder.position.vx = posX;
+    collCylinder.position.vy = Q12(0.0f);
+    collCylinder.position.vz = posZ;
+    collCylinder.bottom      = Q12(0.0f);
+    collCylinder.top         = Q12(0.0f);
+    collCylinder.radius      = Q12(0.0f);
+    Collision_QueryInit(&state, &pos, &collCylinder, false);
 
     state.field_0_8  = false;
     state.field_0_9  = false;
@@ -162,8 +162,8 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
         coll->groundHeight = Q8_TO_Q12(Ipd_GroundHeightGet(state.field_4.positionX, state.field_4.positionZ, &state));
     }
 
-    coll->field_4 = state.field_88;
-    coll->field_6 = state.field_8C;
+    coll->tiltAngleX = state.tiltAngleX;
+    coll->tiltAngleZ = state.tiltAngleZ;
 }
 
 s32 Collision_WallDetect(s_CollisionResult* collResult, VECTOR3* newOffset, s_SubCharacter* chara) // 0x80069B24
@@ -289,13 +289,13 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* newOffs
 
 // Padding with garbage data.
 #if VERSION_IS(USA)
-    static const u8 unk_rdata[] = { 0x00, 0x42, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
+    static const u8 __unk_rdata[] = { 0x00, 0x42, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
 #elif VERSION_IS(JAP0)
-    static const u8 unk_rdata[] = { 0x00, 0x20, 0x3D, 0x20, 0x00, 0x00, 0x00, 0x00 };
+    static const u8 __unk_rdata[] = { 0x00, 0x20, 0x3D, 0x20, 0x00, 0x00, 0x00, 0x00 };
 #elif VERSION_IS(JAP1)
-    static const u8 unk_rdata[] = { 0x00, 0x5E, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
+    static const u8 __unk_rdata[] = { 0x00, 0x5E, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
 #elif VERSION_IS(JAP2)
-    static const u8 unk_rdata[] = { 0x00, 0x00, 0x42, 0x24, 0x00, 0x00, 0x00, 0x00 };
+    static const u8 __unk_rdata[] = { 0x00, 0x00, 0x42, 0x24, 0x00, 0x00, 0x00, 0x00 };
 #endif
 
 void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* pos,
@@ -367,28 +367,30 @@ void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* p
     #undef ANGLE_STEP
 }
 
-s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* newOffset, s_SubCharacter* chara) // 0x80069FFC
+bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* newOffset, s_SubCharacter* chara) // 0x80069FFC
 {
-    s_CollisionQuery charaCollInfo;
-    VECTOR3          offsetCpy;
-    s32              collDataIdx;
-    s32              charaCount;
-    bool             cond;
+    s_CollisionCylinder collCylinder;
+    VECTOR3             offsetCpy;
+    s32                 collDataIdx;
+    s32                 charaCount;
+    bool                cond;
 
-    charaCollInfo.position.vx = chara->position.vx + chara->collision.shapeOffsets.cylinder.vx;
-    charaCollInfo.position.vy = chara->position.vy - Q12(0.02f);
-    charaCollInfo.position.vz = chara->position.vz + chara->collision.shapeOffsets.cylinder.vz;
+    // Set collision cylinder position.
+    collCylinder.position.vx = chara->position.vx + chara->collision.shapeOffsets.cylinder.vx;
+    collCylinder.position.vy = chara->position.vy - Q12(0.02f);
+    collCylinder.position.vz = chara->position.vz + chara->collision.shapeOffsets.cylinder.vz;
 
     if (Ipd_CollisionDataGet(chara->position.vx, chara->position.vz) == NULL)
     {
         Collision_DefaultResultSet(collResult, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(8.0f));
-        return 1;
+        return true;
     }
 
-    charaCollInfo.top            = chara->collision.box.top;
-    charaCollInfo.bottom         = chara->collision.box.bottom;
-    charaCollInfo.radius         = chara->collision.cylinder.radius;
-    charaCollInfo.collisionState = chara->collision.state;
+    // Set collision cylinder state.
+    collCylinder.top            = chara->collision.box.top;
+    collCylinder.bottom         = chara->collision.box.bottom;
+    collCylinder.radius         = chara->collision.cylinder.radius;
+    collCylinder.collisionState = chara->collision.state;
 
     offsetCpy = *newOffset;
 
@@ -406,7 +408,7 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* newOff
             break;
     }
 
-    return func_8006A4A8(collResult, &offsetCpy, &charaCollInfo, cond,
+    return func_8006A4A8(collResult, &offsetCpy, &collCylinder, cond,
                          Ipd_ActiveChunksCollisionDataGet(&collDataIdx), collDataIdx, NULL, 0,
                          Collision_CollidableCharasGet(&charaCount, chara, true), charaCount);
 }
@@ -416,8 +418,8 @@ void Collision_DefaultResultSet(s_CollisionResult* collResult, q19_12 offsetX, q
     collResult->offset.vx              = offsetX;
     collResult->offset.vy              = offsetY;
     collResult->offset.vz              = offsetZ;
-    collResult->collision.field_6      = 0;
-    collResult->collision.field_4      = 0;
+    collResult->collision.tiltAngleZ   = Q12_ANGLE(0.0f);
+    collResult->collision.tiltAngleX   = Q12_ANGLE(0.0f);
     collResult->collision.groundType   = GroundType_Default;
     collResult->field_18               = Q12(-16.0f);
     collResult->collision.groundHeight = groundHeight;
@@ -483,13 +485,13 @@ s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubC
     return &collCharas;
 }
 
-s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, s_CollisionQuery* collQuery) // 0x8006A3B4
+s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, const s_CollisionCylinder* collCylinder) // 0x8006A3B4
 {
     s32 stackPtr;
     s32 var1;
 
     stackPtr = SetSp(0x1F8003D8);
-    var1 = func_8006A42C(collResult, offset, collQuery);
+    var1 = func_8006A42C(collResult, offset, collCylinder);
     SetSp(stackPtr);
 
     if (var1 == NO_VALUE)
@@ -500,20 +502,20 @@ s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, s_Colli
     return var1;
 }
 
-s32 func_8006A42C(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQuery* collQuery) // 0x8006A42C
+s32 func_8006A42C(s_CollisionResult* collResult, const VECTOR3* offset, const s_CollisionCylinder* collCylinder) // 0x8006A42C
 {
     VECTOR3 offsetCpy;
     s32     collDataIdx;
 
     offsetCpy = *offset;
 
-    return func_8006A4A8(collResult, &offsetCpy, collQuery, false,
+    return func_8006A4A8(collResult, &offsetCpy, collCylinder, false,
                          Ipd_ActiveChunksCollisionDataGet(&collDataIdx), collDataIdx, NULL, 0, NULL, 0);
 }
 
-s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* newOffset, s_CollisionQuery* charaCollInfo, bool arg3,
-                  s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7,
-                  s_SubCharacter** charas, s32 charaCount) // 0x8006A4A8
+bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* newOffset, const s_CollisionCylinder* collCylinder, bool arg3,
+                   s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7,
+                   s_SubCharacter** charas, s32 charaCount) // 0x8006A4A8
 {
     s_CollisionState     collState;
     VECTOR3              sp120; // Q19.12
@@ -522,33 +524,33 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* newOffset, s_Collision
     s32                  var_a0;
     s32                  i;
     bool                 cond;
-    q23_8                groundHeight;
+    q19_12               groundHeight;
     s32                  count;
     s_SubCharacter**     curChara;
     s_IpdCollisionData** curCollData;
     s_SubCharacter*      chara;
     
-    /* Will - 1: Seems like `charaCollInfo` is meant to represent the colision box and the central point
+    /* Will - 1: Seems like `collCylinder` is meant to represent the colision box and the central point
        from the character which collision information is being analysed/setup.
     */ 
     
     cond = false;
 
-    if (charaCollInfo->collisionState == CharaCollisionState_5)
+    if (collCylinder->collisionState == CharaCollisionState_5)
     {
-        Collision_DefaultResultSet(collResult, newOffset->vx, newOffset->vy, newOffset->vz, charaCollInfo->position.vy);
+        Collision_DefaultResultSet(collResult, newOffset->vx, newOffset->vy, newOffset->vz, collCylinder->position.vy);
         return false;
     }
 
-    Collision_TargetCharaCollidingSlowDown(newOffset, charaCollInfo, charas, charaCount);
+    Collision_TargetCharaCollidingSlowDown(newOffset, collCylinder, charas, charaCount);
 
     offsetCpy = *newOffset;
     
     // This specifically reads some of the triggers information and in some cases modifies `offsetCpy`
     // values again and returns a value related to height of trigger points.
-    collResult->field_18 = func_8006F620(&offsetCpy, charaCollInfo, charaCollInfo->radius, charaCollInfo->top);
+    collResult->field_18 = func_8006F620(&offsetCpy, collCylinder, collCylinder->radius, collCylinder->top);
 
-    Collision_QueryInit(&collState, &offsetCpy, charaCollInfo, arg3);
+    Collision_QueryInit(&collState, &offsetCpy, collCylinder, arg3);
 
     offset1 = offsetCpy;
 
@@ -657,12 +659,13 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* newOffset, s_Collision
     else
     {
         collResult->collision.groundType = collState.groundType;
-        groundHeight                     = Ipd_GroundHeightGet(collState.field_4.positionX + Q12_TO_Q8(sp120.vx), collState.field_4.positionZ + Q12_TO_Q8(sp120.vz), &collState) * 16;
+        groundHeight                     = Q8_TO_Q12(Ipd_GroundHeightGet(collState.field_4.positionX + Q12_TO_Q8(sp120.vx),
+                                                                         collState.field_4.positionZ + Q12_TO_Q8(sp120.vz), &collState));
     }
 
     collResult->collision.groundHeight = groundHeight;
-    collResult->collision.field_4      = collState.field_88;
-    collResult->collision.field_6      = collState.field_8C;
+    collResult->collision.tiltAngleX   = collState.tiltAngleX;
+    collResult->collision.tiltAngleZ   = collState.tiltAngleZ;
 
     if (cond)
     {
@@ -672,7 +675,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* newOffset, s_Collision
     return collState.field_0_0 != 0;
 }
 
-void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, s_CollisionQuery* charaCollInfo, s_SubCharacter** charas, s32 charaCount) // 0x8006A940
+void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCylinder* collCylinder, s_SubCharacter** charas, s32 charaCount) // 0x8006A940
 {
     #define CYLINDER_RADIUS_PAD Q12(0.1f)
 
@@ -701,7 +704,7 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, s_CollisionQuery* c
         // Check if current character is collidable.
         if (curChara->collision.state == CharaCollisionState_Ignore ||
             curChara->collision.state == CharaCollisionState_Player ||
-            curChara->collision.state >= charaCollInfo->collisionState)
+            curChara->collision.state >= collCylinder->collisionState)
         {
             continue;
         }
@@ -709,20 +712,20 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, s_CollisionQuery* c
         // Check if cylinders collide on vertical axis using box top and bottom.
         curCharaTop      = curChara->collision.box.top    + curChara->position.vy;
         curCharaBottom   = curChara->collision.box.bottom + curChara->position.vy;
-        otherCharaTop    = charaCollInfo->top             + charaCollInfo->position.vy;
-        otherCharaBottom = charaCollInfo->bottom          + charaCollInfo->position.vy;
+        otherCharaTop    = collCylinder->top             + collCylinder->position.vy;
+        otherCharaBottom = collCylinder->bottom          + collCylinder->position.vy;
         if (curCharaTop    > otherCharaBottom ||
             curCharaBottom < otherCharaTop)
         {
             continue;
         }
 
-        cylinderOffsetX = (curChara->position.vx + curChara->collision.shapeOffsets.cylinder.vx) - charaCollInfo->position.vx;
-        cylinderOffsetZ = (curChara->position.vz + curChara->collision.shapeOffsets.cylinder.vz) - charaCollInfo->position.vz;
+        cylinderOffsetX = (curChara->position.vx + curChara->collision.shapeOffsets.cylinder.vx) - collCylinder->position.vx;
+        cylinderOffsetZ = (curChara->position.vz + curChara->collision.shapeOffsets.cylinder.vz) - collCylinder->position.vz;
         
         // Check if cylinders collide on XZ plane.
         dist = Vc_VectorMagnitudeCalc(cylinderOffsetX, Q12(0.0f), cylinderOffsetZ);
-        if (((curChara->collision.cylinder.radius + charaCollInfo->radius) + CYLINDER_RADIUS_PAD) < dist)
+        if (((curChara->collision.cylinder.radius + collCylinder->radius) + CYLINDER_RADIUS_PAD) < dist)
         {
             continue;
         }
@@ -749,13 +752,13 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, s_CollisionQuery* c
     offset->vz  = Q12_MULT(offsetAlpha, offset->vz);
 }
 
-void Collision_QueryInit(s_CollisionState* collState, VECTOR3* pos, s_CollisionQuery* collQuery, bool arg3) // 0x8006AB50
+void Collision_QueryInit(s_CollisionState* collState, VECTOR3* pos, const s_CollisionCylinder* collCylinder, bool arg3) // 0x8006AB50
 {
     collState->field_0_0       = 0;
     collState->flags_2         = D_800C4478.flags;
     collState->field_4.field_4 = arg3;
 
-    Collision_QueryDirectionCalc(&collState->field_4, pos, collQuery);
+    Collision_QueryDirectionCalc(&collState->field_4, pos, collCylinder);
 
     collState->field_7C = Q8(30.0f);
     collState->field_34 = 0;
@@ -766,13 +769,13 @@ void Collision_QueryInit(s_CollisionState* collState, VECTOR3* pos, s_CollisionQ
     collState->field_44.field_36         = 0;
     collState->field_44.field_30.field_0 = 0;
     
-    collState->field_8C   = 0;
-    collState->field_88   = 0;
+    collState->tiltAngleZ = Q12_ANGLE(0.0f);
+    collState->tiltAngleX = Q12_ANGLE(0.0f);
     collState->field_90   = 1;
     collState->groundType = GroundType_Default;
 }
 
-void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* pos, const s_CollisionQuery* collQuery) // 0x8006ABC0
+void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* pos, const s_CollisionCylinder* collCylinder) // 0x8006ABC0
 {
     q3_12 headingAngle;
 
@@ -797,14 +800,14 @@ void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* pos, c
         result->direction.vz = Q12(0.0f);
     }
 
-    result->radius         = Q12_TO_Q8(collQuery->radius);
-    result->positionX      = Q12_TO_Q8(collQuery->position.vx);
-    result->positionZ      = Q12_TO_Q8(collQuery->position.vz);
+    result->radius         = Q12_TO_Q8(collCylinder->radius);
+    result->positionX      = Q12_TO_Q8(collCylinder->position.vx);
+    result->positionZ      = Q12_TO_Q8(collCylinder->position.vz);
     result->newPositionX   = result->positionX + result->offset.vx;
     result->newPositionZ   = result->positionZ + result->offset.vz;
-    result->topPos         = Q12_TO_Q8(collQuery->top + collQuery->position.vy);
-    result->bottomPos      = Q12_TO_Q8(collQuery->bottom + collQuery->position.vy);
-    result->collisionState = collQuery->collisionState;
+    result->topPos         = Q12_TO_Q8(collCylinder->top + collCylinder->position.vy);
+    result->bottomPos      = Q12_TO_Q8(collCylinder->bottom + collCylinder->position.vy);
+    result->collisionState = collCylinder->collisionState;
 }
 
 void Ipd_GridCollisionQuery(s_CollisionState* collState, s_IpdCollisionData* collData) // 0x8006AD44
@@ -1801,8 +1804,8 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) //
             collState->field_7C   = collState->groundHeight;
             collState->field_80   = collState->field_98.vec_0.vx + collData->positionX;
             collState->field_84   = collState->field_98.vec_0.vz + collData->positionZ;
-            collState->field_88   = 0;
-            collState->field_8C   = 0;
+            collState->tiltAngleX = Q12_ANGLE(0.0f);
+            collState->tiltAngleZ = Q12_ANGLE(0.0f);
             collState->field_90   = temp_a0->field_0_5;
             collState->groundType = temp_a0->groundType;
         }
@@ -1816,14 +1819,14 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) //
 
             var_a0 = temp_a1->field_2;
 
-            if (temp_a1->field_8 != 0)
+            if (temp_a1->tiltAngleX != Q12_ANGLE(0.0f))
             {
-                var_a0 += Q12_MULT(temp_a1->field_8, collState->field_98.vec_0.vx - temp_a1->field_0);
+                var_a0 += Q12_MULT(temp_a1->tiltAngleX, collState->field_98.vec_0.vx - temp_a1->field_0);
             }
 
-            if (temp_a1->field_A != 0)
+            if (temp_a1->tiltAngleZ != Q12_ANGLE(0.0f))
             {
-                var_a0 += Q12_MULT(temp_a1->field_A, collState->field_98.vec_0.vz - temp_a1->field_4);
+                var_a0 += Q12_MULT(temp_a1->tiltAngleZ, collState->field_98.vec_0.vz - temp_a1->field_4);
             }
 
             if (var_a0 < collState->field_7C)
@@ -1831,8 +1834,8 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) //
                 collState->field_7C   = var_a0;
                 collState->field_80   = collState->field_98.vec_0.vx + collData->positionX;
                 collState->field_84   = collState->field_98.vec_0.vz + collData->positionZ;
-                collState->field_88   = temp_a1->field_8;
-                collState->field_8C   = temp_a1->field_A;
+                collState->tiltAngleX = temp_a1->tiltAngleX;
+                collState->tiltAngleZ = temp_a1->tiltAngleZ;
                 collState->field_90   = temp_a1->field_6_5;
                 collState->groundType = temp_a1->groundType;
             }
@@ -1864,24 +1867,24 @@ void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_
         {
             var_a2 = ptr->field_2;
 
-            if (ptr->field_8 != 0)
+            if (ptr->tiltAngleX != Q12_ANGLE(0.0f))
             {
-                var_a2 += Q12_MULT(ptr->field_8, collState->field_98.vec_0.vx - ptr->field_0);
+                var_a2 += Q12_MULT(ptr->tiltAngleX, collState->field_98.vec_0.vx - ptr->field_0);
             }
 
-            if (ptr->field_A != 0)
+            if (ptr->tiltAngleZ != Q12_ANGLE(0.0f))
             {
-                var_a2 += Q12_MULT(ptr->field_A, collState->field_98.vec_0.vz - ptr->field_4);
+                var_a2 += Q12_MULT(ptr->tiltAngleZ, collState->field_98.vec_0.vz - ptr->field_4);
             }
 
             if (var_a2 < collState->field_7C)
             {
-                collState->field_7C = var_a2;
-                collState->field_80 = collState->field_98.vec_0.vx + collData->positionX;
-                collState->field_84 = collState->field_98.vec_0.vz + collData->positionZ;
-                collState->field_88 = ptr->field_8;
-                collState->field_8C = ptr->field_A;
-                collState->field_90 = ptr->field_6_5;
+                collState->field_7C   = var_a2;
+                collState->field_80   = collState->field_98.vec_0.vx + collData->positionX;
+                collState->field_84   = collState->field_98.vec_0.vz + collData->positionZ;
+                collState->tiltAngleX = ptr->tiltAngleX;
+                collState->tiltAngleZ = ptr->tiltAngleZ;
+                collState->field_90   = ptr->field_6_5;
                 collState->groundType = ptr->groundType;
             }
         }
@@ -1912,8 +1915,8 @@ q23_8 Ipd_GroundHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionState* collSt
 {
     if (collState->groundType != GroundType_12)
     {
-        return Q12_MULT(collState->field_88, posX - collState->field_80) +
-               Q12_MULT(collState->field_8C, posZ - collState->field_84) +
+        return Q12_MULT(collState->tiltAngleX, posX - collState->field_80) +
+               Q12_MULT(collState->tiltAngleZ, posZ - collState->field_84) +
                collState->field_7C;
     }
 
@@ -3339,7 +3342,7 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone) // 0x8006F3
     return arg0->field_28 == 0;
 }
 
-q19_12 func_8006F620(VECTOR3* nextOffset, s_CollisionQuery* collQuery, q19_12 radius, q19_12 charaTop) // 0x8006F620
+q19_12 func_8006F620(VECTOR3* nextOffset, s_CollisionCylinder* collCylinder, q19_12 radius, q19_12 charaTop) // 0x8006F620
 {
     q19_12         x0; // } Local position of character inside a trigger.
     q19_12         z0; // } 
@@ -3370,7 +3373,7 @@ q19_12 func_8006F620(VECTOR3* nextOffset, s_CollisionQuery* collQuery, q19_12 ra
     
     posX        = nextOffset->vx;
     posZ        = nextOffset->vz;
-    collOffsetY = collQuery->position.vy + charaTop;
+    collOffsetY = collCylinder->position.vy + charaTop;
     posY        = collOffsetY + nextOffset->vy;
 
     for (i = 0; i < D_800C4478.triggerZoneCount; i++)
@@ -3385,7 +3388,7 @@ q19_12 func_8006F620(VECTOR3* nextOffset, s_CollisionQuery* collQuery, q19_12 ra
             continue;
         }
 
-        Collisions_PointTriggerPosGet(&x0, &z0, collQuery->position.vx + posX, collQuery->position.vz + posZ, curZone);
+        Collisions_PointTriggerPosGet(&x0, &z0, collCylinder->position.vx + posX, collCylinder->position.vz + posZ, curZone);
         if (MAX(ABS(x0), ABS(z0)) >= radius)
         {
             continue;
@@ -3399,7 +3402,7 @@ q19_12 func_8006F620(VECTOR3* nextOffset, s_CollisionQuery* collQuery, q19_12 ra
 
         if (mag0 > Q12(0.0f))
         {
-            Collisions_PointTriggerPosGet(&x1, &z1, collQuery->position.vx, collQuery->position.vz, curZone);
+            Collisions_PointTriggerPosGet(&x1, &z1, collCylinder->position.vx, collCylinder->position.vz, curZone);
 
             var_s2 = Q12(0.1f);
             max1   = Vc_VectorMagnitudeCalc(x1, Q12(0.0f), z1);

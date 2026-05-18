@@ -8,16 +8,16 @@
 
 typedef struct _IpdCollisionData_10
 {
-    /* 0x0    */ s16 field_0;
-    /* 0x2    */ s16 field_2; // Q8? Related to ground height?
-    /* 0x4    */ s16 field_4;
-    /* 0x6+0  */ u16 groundType : 5; /** `e_GroundType` */ // TODO: Might be using `s_IpdCollisionData_18` substruct here? Won't fit though.
-    /* 0x6+5  */ u16 field_6_5  : 3;
-    /* 0x6+8  */ u16 field_6_8  : 3;
-    /* 0x6+11 */ u16 field_6_11 : 4;
-    /* 0x6+15 */ u16 field_6_15 : 1;
-    /* 0x8    */ s16 field_8;
-    /* 0xA    */ s16 field_A;
+    /* 0x0    */ s16   field_0;
+    /* 0x2    */ s16   field_2; // Q8? Related to ground height?
+    /* 0x4    */ s16   field_4;
+    /* 0x6+0  */ u16   groundType : 5; /** `e_GroundType` */ // TODO: Might be using `s_IpdCollisionData_18` substruct here? Won't fit though.
+    /* 0x6+5  */ u16   field_6_5  : 3; // `bool`?
+    /* 0x6+8  */ u16   field_6_8  : 3;
+    /* 0x6+11 */ u16   field_6_11 : 4;
+    /* 0x6+15 */ u16   field_6_15 : 1;
+    /* 0x8    */ q3_12 tiltAngleX;
+    /* 0xA    */ q3_12 tiltAngleZ;
 } s_IpdCollisionData_10;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_10, 12);
 

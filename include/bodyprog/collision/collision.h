@@ -29,8 +29,8 @@ typedef enum _CollisionType
 typedef struct _Collision
 {
     /* 0x0 */ q19_12 groundHeight;
-    /* 0x4 */ q3_12  field_4;    // X } Causes some sort of slowdown.
-    /* 0x6 */ q3_12  field_6;    // Z }
+    /* 0x4 */ q3_12  tiltAngleX;
+    /* 0x6 */ q3_12  tiltAngleZ;
     /* 0x8 */ s8     groundType; /** `e_GroundType` */
     // 3 bytes of padding.
 } s_Collision;
@@ -44,15 +44,16 @@ typedef struct _CollisionPoint
     /* 0x18 */ s32         groundType; /** `e_GroundType` */
 } s_CollisionPoint;
 
-typedef struct _CollisionQuery
+/** @brief Collision cylinder with a character collision state. */
+typedef struct _CollisionCylinder
 {
     /* 0x0  */ VECTOR3 position; /** Q19.12 */
     /* 0xC  */ q3_12   bottom;
     /* 0xE  */ q3_12   top;
-    /* 0x10 */ q3_12   radius;         // Unsure. Set to cylinder radius.
+    /* 0x10 */ q3_12   radius;
     /* 0x14 */ s8      collisionState; /** `e_CharaCollisionState` */
-} s_CollisionQuery;
-STATIC_ASSERT_SIZEOF(s_CollisionQuery, 20);
+} s_CollisionCylinder;
+STATIC_ASSERT_SIZEOF(s_CollisionCylinder, 20);
 
 typedef struct
 {
@@ -149,8 +150,8 @@ typedef struct _CollisionState
 {
     u8                 field_0_0  : 8; // Boolean? Code only assigns 1.
     s8                 field_0_8  : 1; // Something to do with collision. `bool` flag that states if there's a displacement?
-    s8                 field_0_9  : 1;
-    s8                 field_0_10 : 1;
+    s8                 field_0_9  : 1; /** `bool` */
+    s8                 field_0_10 : 1; /** `bool` */
     s8                 field_0_11 : 5;
     u16                flags_2    : 16; /** `e_CollisionFlags` */
     s_func_8006ABC0    field_4;
@@ -162,10 +163,10 @@ typedef struct _CollisionState
     s8*                field_40;
     s_CollisionState_44 field_44;
     q23_8              field_7C; // Related to ground height?
-    s32                field_80; // X
-    s32                field_84; // Z
-    s32                field_88; // X | Q12?
-    s32                field_8C; // Z | Q12?
+    q23_8              field_80; // X } Related to ground surface.
+    q23_8              field_84; // Z }
+    q19_12             tiltAngleX;
+    q19_12             tiltAngleZ;
     s32                field_90; // `bool`?
     s32                groundType; /** `e_GroundType` */
     union

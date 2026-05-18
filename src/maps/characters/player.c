@@ -125,8 +125,8 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
         temp_s0 = Math_Cos(chara->headingAngle);
         temp_s0 = Q12_MULT(chara->moveSpeed, temp_s0);
 
-        temp_s3 = Math_Cos(ABS(coll.field_4) >> 3); // `/ 8`.
-        temp_v0 = Math_Cos(ABS(coll.field_6) >> 3); // `/ 8`.
+        temp_s3 = Math_Cos(ABS(coll.tiltAngleX) >> 3); // `/ 8`.
+        temp_v0 = Math_Cos(ABS(coll.tiltAngleZ) >> 3); // `/ 8`.
 
         var_s0 = Q12_MULT(Q12_MULT(temp_s2, temp_s3), temp_s3);
         var_v1 = Q12_MULT(Q12_MULT(temp_s0, temp_v0), temp_v0);

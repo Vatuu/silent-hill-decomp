@@ -2400,7 +2400,7 @@ void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* p
  * @param chara Character performing movement.
  * @return Collision result response.
  */
-s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* newOffset, s_SubCharacter* chara);
+bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* newOffset, s_SubCharacter* chara);
 
 /** @brief Initializes a default collision result with a position and ground height.
  *
@@ -2428,32 +2428,33 @@ s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubC
  * @param query Collision query parameters.
  * @return `true` if movement is possible, `false` otherwise.
  */
-s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, s_CollisionQuery* collQuery);
+s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, const s_CollisionCylinder* collCylinder);
 
-s32 func_8006A42C(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQuery* collQuery);
+s32 func_8006A42C(s_CollisionResult* collResult, const VECTOR3* offset, const s_CollisionCylinder* collCylinder);
 
-s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* newOffset, s_CollisionQuery* charaCollInfo, bool arg3,
-                  s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** charas, s32 charaCount);
+bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* newOffset, const s_CollisionCylinder* collCylinder, bool arg3,
+                   s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7,
+                   s_SubCharacter** charas, s32 charaCount);
 
 /** @brief Slows down colliding characters according to relational cylinder collision. */
-void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, s_CollisionQuery* charaCollInfo, s_SubCharacter** charas, s32 charaCount);
+void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCylinder* collCylinder, s_SubCharacter** charas, s32 charaCount);
 
 /** @brief Initializes a collision state for a new pass.
  *
  * @param collState Collision state to initialize.
  * @param offset Movement offset.
- * @param collQuery Input collision query parameters.
+ * @param collCylinder Collision cylinder.
  * @param arg3 Configuration flag. TODO: What is it?
  */
-void Collision_QueryInit(s_CollisionState* collState, VECTOR3* offset, s_CollisionQuery* collQuery, bool arg3);
+void Collision_QueryInit(s_CollisionState* collState, VECTOR3* offset, const s_CollisionCylinder* collCylinder, bool arg3);
 
 /** @brief Calculates the movement direction vector and distance from a position offset.
  *
  * @param result Output movement direction and position data.
  * @param offset Movement offset.
- * @param collQuery Input collision query parameters.
+ * @param collCylinder Collision cylinder.
  */
-void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* offset, const s_CollisionQuery* collQuery);
+void Collision_QueryDirectionCalc(s_func_8006ABC0* result, const VECTOR3* offset, const s_CollisionCylinder* collCylinder);
 
 void Ipd_GridCollisionQuery(s_CollisionState* collState, s_IpdCollisionData* collData);
 
@@ -2571,7 +2572,7 @@ void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDe
 bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone);
 
 /** Translates something. Unsure on 3rd param's name. */
-q19_12 func_8006F620(VECTOR3* nextOffset, s_CollisionQuery* collQuery, q19_12 radius, q19_12 offsetY);
+q19_12 func_8006F620(VECTOR3* nextOffset, s_CollisionCylinder* collCylinder, q19_12 radius, q19_12 offsetY);
 
 /** @brief Get local position of a point in a trigger zone. */
 void Collisions_PointTriggerPosGet(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s_TriggerZone* zone);
