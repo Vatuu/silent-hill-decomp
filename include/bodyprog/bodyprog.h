@@ -2366,21 +2366,21 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ);
 /** @brief Detects a wall collision using the scratchpad for performance.
  *
  * @param collResult Output collision result.
- * @param offset Movement offset.
+ * @param newOffset Movement offset.
  * @param chara Character to check.
  * @return Wall response code.
  */
-s32 Collision_WallDetect(s_CollisionResult* collResult, VECTOR3* offset, s_SubCharacter* chara);
+s32 Collision_WallDetect(s_CollisionResult* collResult, VECTOR3* newOffset, s_SubCharacter* chara);
 
 /** @brief Handles a wall collision response by sampling the ground at 9 points around a character.
  *
  * @param collResult Output collision result.
- * @param offset Movement offset.
+ * @param newOffset Movement offset (unused).
  * @param chara Character to check.
  * @param response Initial collision pass response.
  * @return Wall response code.
  */
-s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset, s_SubCharacter* chara, s32 response);
+s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* newOffset, s_SubCharacter* chara, s32 response);
 
 /** @brief Probes ground heights at 16 radial points to determine the terrain slope direction.
  * Creates a terrain avoidance force to push away from illegal positions.
@@ -2396,11 +2396,11 @@ void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* p
 /** @brief Applies collision detection for a character's movement offset.
  *
  * @param collResult Output collision result.
- * @param offset Movement offset to test.
+ * @param newOffset Movement offset to test.
  * @param chara Character performing movement.
  * @return Collision result response.
  */
-s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset, s_SubCharacter* chara);
+s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* newOffset, s_SubCharacter* chara);
 
 /** @brief Initializes a default collision result with a position and ground height.
  *
@@ -2432,11 +2432,11 @@ s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, s_Colli
 
 s32 func_8006A42C(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQuery* collQuery);
 
-s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQuery* collQuery, bool arg3,
+s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* newOffset, s_CollisionQuery* charaCollInfo, bool arg3,
                   s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** charas, s32 charaCount);
 
-// Claude suggests `Collision_NpcMovementDampen`? Investigate.
-void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter** charas, s32 charaCount);
+/** @brief Slowdown target character colliding with other. */
+void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, s_CollisionQuery* charaCollInfo, s_SubCharacter** charas, s32 charaCount);
 
 /** @brief Initializes a collision state for a new pass.
  *
@@ -2571,7 +2571,7 @@ void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDe
 bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone);
 
 /** Translates something. Unsure on 3rd param's name. */
-q19_12 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 radius, q19_12 offsetY);
+q19_12 func_8006F620(VECTOR3* nextOffset, s_CollisionQuery* collQuery, q19_12 radius, q19_12 offsetY);
 
 /** @brief Get local position of a point in a trigger zone. */
 void Collisions_PointTriggerPosGet(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s_TriggerZone* zone);
@@ -2933,7 +2933,7 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model);
 /** Special player SFX handler for heavy breath and damage. */
 bool func_80071620(u32 animStatus, s_SubCharacter* player, s32 keyframeIdx, e_SfxId sfxId);
 
-void func_8007C0D8(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords);
+void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords);
 
 void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords);
 

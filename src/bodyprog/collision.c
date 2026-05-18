@@ -166,18 +166,18 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
     coll->field_6 = state.field_8C;
 }
 
-s32 Collision_WallDetect(s_CollisionResult* collResult, VECTOR3* offset, s_SubCharacter* chara) // 0x80069B24
+s32 Collision_WallDetect(s_CollisionResult* collResult, VECTOR3* newOffset, s_SubCharacter* chara) // 0x80069B24
 {
     s32 stackPtr;
     s32 response;
 
-    stackPtr = SetSp(0x1F8003D8);
-    response = Collision_WallResponse(collResult, offset, chara, Collision_CharaCollisionSetup(collResult, offset, chara));
+    stackPtr = SetSp(PSX_SCRATCH_ADDR(0x3D8));
+    response = Collision_WallResponse(collResult, newOffset, chara, Collision_CharaCollisionSetup(collResult, newOffset, chara));
     SetSp(stackPtr);
     return response;
 }
 
-s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset, s_SubCharacter* chara, s32 response) // 0x80069BA8
+s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* newOffset, s_SubCharacter* chara, s32 response) // 0x80069BA8
 {
     #define POINT_COUNT          9
     #define ANGLE_STEP           Q12_ANGLE(370.0f / POINT_COUNT) // @bug? Maybe `360.0f` was intended.
@@ -194,7 +194,7 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offset,
 
     if (response == NO_VALUE)
     {
-        response = 1;
+        response = true;
 
         if (chara == &g_SysWork.playerWork && chara->health > Q12(0.0f))
         {
@@ -367,17 +367,17 @@ void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* p
     #undef ANGLE_STEP
 }
 
-s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset, s_SubCharacter* chara) // 0x80069FFC
+s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* newOffset, s_SubCharacter* chara) // 0x80069FFC
 {
-    s_CollisionQuery collQuery;
+    s_CollisionQuery charaCollInfo;
     VECTOR3          offsetCpy;
     s32              collDataIdx;
     s32              charaCount;
     bool             cond;
 
-    collQuery.position.vx = chara->position.vx + chara->collision.shapeOffsets.cylinder.vx;
-    collQuery.position.vy = chara->position.vy - Q12(0.02f);
-    collQuery.position.vz = chara->position.vz + chara->collision.shapeOffsets.cylinder.vz;
+    charaCollInfo.position.vx = chara->position.vx + chara->collision.shapeOffsets.cylinder.vx;
+    charaCollInfo.position.vy = chara->position.vy - Q12(0.02f);
+    charaCollInfo.position.vz = chara->position.vz + chara->collision.shapeOffsets.cylinder.vz;
 
     if (Ipd_CollisionDataGet(chara->position.vx, chara->position.vz) == NULL)
     {
@@ -385,12 +385,12 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset
         return 1;
     }
 
-    collQuery.top            = chara->collision.box.top;
-    collQuery.bottom         = chara->collision.box.bottom;
-    collQuery.radius         = chara->collision.cylinder.radius;
-    collQuery.collisionState = chara->collision.state;
+    charaCollInfo.top            = chara->collision.box.top;
+    charaCollInfo.bottom         = chara->collision.box.bottom;
+    charaCollInfo.radius         = chara->collision.cylinder.radius;
+    charaCollInfo.collisionState = chara->collision.state;
 
-    offsetCpy = *offset;
+    offsetCpy = *newOffset;
 
     switch (chara->model.charaId)
     {
@@ -406,7 +406,7 @@ s32 Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offset
             break;
     }
 
-    return func_8006A4A8(collResult, &offsetCpy, &collQuery, cond,
+    return func_8006A4A8(collResult, &offsetCpy, &charaCollInfo, cond,
                          Ipd_ActiveChunksCollisionDataGet(&collDataIdx), collDataIdx, NULL, 0,
                          Collision_CollidableCharasGet(&charaCount, chara, true), charaCount);
 }
@@ -511,7 +511,7 @@ s32 func_8006A42C(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
                          Ipd_ActiveChunksCollisionDataGet(&collDataIdx), collDataIdx, NULL, 0, NULL, 0);
 }
 
-s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQuery* collQuery, bool arg3,
+s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* newOffset, s_CollisionQuery* charaCollInfo, bool arg3,
                   s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7,
                   s_SubCharacter** charas, s32 charaCount) // 0x8006A4A8
 {
@@ -528,31 +528,27 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
     s_IpdCollisionData** curCollData;
     s_SubCharacter*      chara;
     
-    /* Will - 1: Seems like `collQuery` is meant to represent the colision box and the central point
+    /* Will - 1: Seems like `charaCollInfo` is meant to represent the colision box and the central point
        from the character which collision information is being analysed/setup.
     */ 
     
     cond = false;
 
-    if (collQuery->collisionState == CharaCollisionState_5)
+    if (charaCollInfo->collisionState == CharaCollisionState_5)
     {
-        Collision_DefaultResultSet(collResult, offset->vx, offset->vy, offset->vz, collQuery->position.vy);
-        return 0;
+        Collision_DefaultResultSet(collResult, newOffset->vx, newOffset->vy, newOffset->vz, charaCollInfo->position.vy);
+        return false;
     }
 
-    /* Will - 1: This does some check related to distance between the target character and other characters,
-       in case of failing all checks (only two: if the character compared is above or below the target
-       one and if they are close enough) the then it modifies `offset` values with some multiplication.
-    */
-    func_8006A940(offset, collQuery, charas, charaCount);
+    Collision_TargetCharaCollidingSlowDown(newOffset, charaCollInfo, charas, charaCount);
 
-    offsetCpy = *offset;
+    offsetCpy = *newOffset;
     
     // This specifically reads some of the triggers information and in some cases modifies `offsetCpy`
     // values again and returns a value related to height of trigger points.
-    collResult->field_18 = func_8006F620(&offsetCpy, collQuery, collQuery->radius, collQuery->top);
+    collResult->field_18 = func_8006F620(&offsetCpy, charaCollInfo, charaCollInfo->radius, charaCollInfo->top);
 
-    Collision_QueryInit(&collState, &offsetCpy, collQuery, arg3);
+    Collision_QueryInit(&collState, &offsetCpy, charaCollInfo, arg3);
 
     offset1 = offsetCpy;
 
@@ -676,14 +672,14 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offset, s_CollisionQue
     return collState.field_0_0 != 0;
 }
 
-void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter** charas, s32 charaCount) // 0x8006A940
+void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, s_CollisionQuery* charaCollInfo, s_SubCharacter** charas, s32 charaCount) // 0x8006A940
 {
-    q19_12          angle;
+    q19_12          nextMovementAngle;
     q19_12          charaDistDiffZ;
     q19_12          charaDistDiffX;
     q19_12          var_a0;
     s32             i;
-    q19_12          var_s4;
+    q19_12          charaMoveAdjustPercent;
     q19_12          var_v0;
     s32             mag;
     q19_12          curCharaTop;
@@ -692,42 +688,43 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
     q19_12          tarCharaTop;
     s_SubCharacter* curChara;
 
-    var_s4 = Q12(1.0f);
-    angle  = ratan2(offset->vx, offset->vz);
+    charaMoveAdjustPercent = Q12(1.0f);
+    nextMovementAngle      = ratan2(offset->vx, offset->vz);
 
     for (i = 0; i < charaCount; i++)
     {
         curChara = charas[i];
         if (curChara->collision.state == CharaCollisionState_Ignore ||
             curChara->collision.state == CharaCollisionState_Player ||
-            curChara->collision.state >= collQuery->collisionState)
+            curChara->collision.state >= charaCollInfo->collisionState)
         {
             continue;
         }
 
-        curCharaTop    = curChara->collision.box.top    + curChara->position.vy;
-        curCharaBottom = curChara->collision.box.bottom + curChara->position.vy;
         
         // Checks if a loaded character is above or below the target character.
-        tarCharaTop    = collQuery->top    + collQuery->position.vy;
-        tarCharaBottom = collQuery->bottom + collQuery->position.vy;
+        curCharaTop    = curChara->collision.box.top    + curChara->position.vy;
+        curCharaBottom = curChara->collision.box.bottom + curChara->position.vy;
+        tarCharaTop    = charaCollInfo->top             + charaCollInfo->position.vy;
+        tarCharaBottom = charaCollInfo->bottom          + charaCollInfo->position.vy;
+        
         if (curCharaTop > tarCharaBottom || curCharaBottom < tarCharaTop)
         {
             continue;
         }
 
         // Checks if the difference of the distance between a loaded character
-        // and the target character is smaller than 36 meters of distance.
-        charaDistDiffX = (curChara->position.vx + curChara->collision.shapeOffsets.cylinder.vx) - collQuery->position.vx;
-        charaDistDiffZ = (curChara->position.vz + curChara->collision.shapeOffsets.cylinder.vz) - collQuery->position.vz;
+        // and the target character is smaller than around 1 meter of distance.
+        charaDistDiffX = (curChara->position.vx + curChara->collision.shapeOffsets.cylinder.vx) - charaCollInfo->position.vx;
+        charaDistDiffZ = (curChara->position.vz + curChara->collision.shapeOffsets.cylinder.vz) - charaCollInfo->position.vz;
         
         mag = Vc_VectorMagnitudeCalc(charaDistDiffX, Q12(0.0f), charaDistDiffZ);
-        if (((curChara->collision.cylinder.radius + collQuery->radius) + Q12_ANGLE(36.0f)) < mag)
+        if (((curChara->collision.cylinder.radius + charaCollInfo->radius) + Q12(0.10f)) < mag)
         {
             continue;
         }
 
-        var_a0 = Q12_MULT(Math_Cos(ratan2(charaDistDiffX, charaDistDiffZ) - angle), Q12(1.5f));
+        var_a0 = Q12_MULT(Math_Cos(ratan2(charaDistDiffX, charaDistDiffZ) - nextMovementAngle), Q12(1.5f));
 
         var_v0 = MAX(var_a0, Q12(0.0f));
         var_a0 = var_v0;
@@ -741,13 +738,13 @@ void func_8006A940(VECTOR3* offset, s_CollisionQuery* collQuery, s_SubCharacter*
             var_a0 = MIN(var_a0, Q12(0.4f));
         }
 
-        var_s4 -= var_a0;
+        charaMoveAdjustPercent -= var_a0;
     }
 
-    var_s4 = MAX(var_s4, Q12(0.4f));
+    charaMoveAdjustPercent = MAX(charaMoveAdjustPercent, Q12(0.4f));
 
-    offset->vx = Q12_MULT(var_s4, offset->vx);
-    offset->vz = Q12_MULT(var_s4, offset->vz);
+    offset->vx = Q12_MULT(charaMoveAdjustPercent, offset->vx);
+    offset->vz = Q12_MULT(charaMoveAdjustPercent, offset->vz);
 }
 
 void Collision_QueryInit(s_CollisionState* collState, VECTOR3* pos, s_CollisionQuery* collQuery, bool arg3) // 0x8006AB50
@@ -1798,13 +1795,13 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) //
     {
         if (collState->groundHeight < collState->field_7C)
         {
-            temp_a0        = &collData->ptr_18[collState->field_C8 - collData->field_8_16];
-            collState->field_7C = collState->groundHeight;
-            collState->field_80 = collState->field_98.vec_0.vx + collData->positionX;
-            collState->field_84 = collState->field_98.vec_0.vz + collData->positionZ;
-            collState->field_88 = 0;
-            collState->field_8C = 0;
-            collState->field_90 = temp_a0->field_0_5;
+            temp_a0               = &collData->ptr_18[collState->field_C8 - collData->field_8_16];
+            collState->field_7C   = collState->groundHeight;
+            collState->field_80   = collState->field_98.vec_0.vx + collData->positionX;
+            collState->field_84   = collState->field_98.vec_0.vz + collData->positionZ;
+            collState->field_88   = 0;
+            collState->field_8C   = 0;
+            collState->field_90   = temp_a0->field_0_5;
             collState->groundType = temp_a0->groundType;
         }
     }
@@ -1829,12 +1826,12 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) //
 
             if (var_a0 < collState->field_7C)
             {
-                collState->field_7C = var_a0;
-                collState->field_80 = collState->field_98.vec_0.vx + collData->positionX;
-                collState->field_84 = collState->field_98.vec_0.vz + collData->positionZ;
-                collState->field_88 = temp_a1->field_8;
-                collState->field_8C = temp_a1->field_A;
-                collState->field_90 = temp_a1->field_6_5;
+                collState->field_7C   = var_a0;
+                collState->field_80   = collState->field_98.vec_0.vx + collData->positionX;
+                collState->field_84   = collState->field_98.vec_0.vz + collData->positionZ;
+                collState->field_88   = temp_a1->field_8;
+                collState->field_8C   = temp_a1->field_A;
+                collState->field_90   = temp_a1->field_6_5;
                 collState->groundType = temp_a1->groundType;
             }
         }
@@ -3340,7 +3337,7 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone) // 0x8006F3
     return arg0->field_28 == 0;
 }
 
-q19_12 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 radius, q19_12 offsetY) // 0x8006F620
+q19_12 func_8006F620(VECTOR3* nextOffset, s_CollisionQuery* collQuery, q19_12 radius, q19_12 charaTop) // 0x8006F620
 {
     q19_12         x0; // } Local position of character inside a trigger.
     q19_12         z0; // } 
@@ -3369,14 +3366,10 @@ q19_12 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 radius, q
     distX = Q12(0.0f);
     distZ = Q12(0.0f);
     
-    /* Will - 1: Remember `collQuery` is meant to contain some information of the
-       target character which it's collisions are being analysed/setup.
-    */
-    
-    posX        = pos->vx;
-    posZ        = pos->vz;
-    collOffsetY = collQuery->position.vy + offsetY;
-    posY        = collOffsetY + pos->vy;
+    posX        = nextOffset->vx;
+    posZ        = nextOffset->vz;
+    collOffsetY = collQuery->position.vy + charaTop;
+    posY        = collOffsetY + nextOffset->vy;
 
     for (i = 0; i < D_800C4478.triggerZoneCount; i++)
     {
@@ -3429,8 +3422,8 @@ q19_12 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 radius, q
                 height = triggerHeight;
             }
 
-            posX = pos->vx;
-            posZ = pos->vz;
+            posX = nextOffset->vx;
+            posZ = nextOffset->vz;
             break;
         }
 
@@ -3438,8 +3431,8 @@ q19_12 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 radius, q
         posZ += distZ;
     }
 
-    pos->vx = posX;
-    pos->vz = posZ;
+    nextOffset->vx = posX;
+    nextOffset->vz = posZ;
 
     if (height != Q12(-16.0f))
     {
@@ -3451,9 +3444,9 @@ q19_12 func_8006F620(VECTOR3* pos, s_CollisionQuery* collQuery, q19_12 radius, q
             var_v1 = temp_a0;
         }
 
-        if (pos->vy < var_v1)
+        if (nextOffset->vy < var_v1)
         {
-            pos->vy = var_v1;
+            nextOffset->vy = var_v1;
         }
     }
 

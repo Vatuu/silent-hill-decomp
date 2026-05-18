@@ -159,13 +159,13 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 
     if (cond)
     {
-        // Most maps use `D_800C4590` from bodyprog, but some use struct from inside map overlay.
+        // Most maps use `g_Player_CollisionResult` from bodyprog, but some use struct from inside map overlay.
 #if defined(MAP0_S00) || defined(MAP2_S01) || defined(MAP3_S00) || defined(MAP3_S06) || \
     defined(MAP5_S02) || defined(MAP5_S03) || defined(MAP6_S01) || defined(MAP6_S04) || \
     defined(MAP7_S02) || defined(MAP7_S03)
     #define UnkStruct sharedData_800E39BC_0_s00
 #else
-    #define UnkStruct D_800C4590
+    #define UnkStruct g_Player_CollisionResult
 #endif
         Collision_WallDetect(&UnkStruct, &offset, chara);
         chara->position.vx += UnkStruct.offset.vx;
@@ -243,7 +243,7 @@ void Player_ControlFreeze(void)
     D_800AF216 = 0;
 
     playerChara->properties.player.afkTimer        = Q12(0.0f);
-    playerChara->properties.player.runTimer_F8        = Q12(0.0f);
+    playerChara->properties.player.runTimer_F8     = Q12(0.0f);
     playerChara->properties.player.exhaustionTimer = Q12(0.0f);
 
     Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Unk52);
@@ -1007,10 +1007,10 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
     vec.vz = D_800C4610.vz - g_SysWork.playerWork.player.position.vz;
     vec.vy = Q12_MULT_PRECISE(g_SysWork.playerWork.player.fallSpeed, g_DeltaTime);
 
-    Collision_WallDetect(&D_800C4590, &vec, &g_SysWork.playerWork.player);
+    Collision_WallDetect(&g_Player_CollisionResult, &vec, &g_SysWork.playerWork.player);
 
-    D_800C4610.vx = g_SysWork.playerWork.player.position.vx + D_800C4590.offset.vx;
-    D_800C4610.vz = g_SysWork.playerWork.player.position.vz + D_800C4590.offset.vz;
+    D_800C4610.vx = g_SysWork.playerWork.player.position.vx + g_Player_CollisionResult.offset.vx;
+    D_800C4610.vz = g_SysWork.playerWork.player.position.vz + g_Player_CollisionResult.offset.vz;
 
     // TODO: Convert hex to float or fraction.
     if (!isInFront)

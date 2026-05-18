@@ -492,7 +492,7 @@ extern u8 D_800C4588;
 extern s8 __pad_bss_800C4589[7];
 
 /** Player instance of this struct. */
-extern s_CollisionResult D_800C4590;
+extern s_CollisionResult g_Player_CollisionResult;
 
 /** `bool` */
 extern u16 g_Player_IsSteppingLeftHold;
