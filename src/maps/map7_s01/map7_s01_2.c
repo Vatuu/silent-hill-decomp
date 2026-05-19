@@ -2455,7 +2455,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
             break;
     }
 
-    func_80069844(CollisionFlag_All);
+    Collision_FlagBitsClear(CollisionFlag_All);
     Collision_FlagBitsSet(CollisionFlag_None);
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -5, -1, -5) && PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))

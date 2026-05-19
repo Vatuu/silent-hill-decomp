@@ -1099,8 +1099,6 @@ extern s8* D_800BCDE0; // Type assumed.
 /** Angles. */
 extern s16 D_800BCDE8[8];
 
-extern u16 g_CollisionFlags;
-
 extern s_WorldGfxWork g_WorldGfxWork;
 
 extern s8* D_800C15B0;
@@ -1291,9 +1289,9 @@ void WorldGfx_HeldItemAttach(e_CharaId charaId, s32 modelBone); // Called by som
 
 s32 func_800868F4(s32 arg0, s32 arg1, s32 idx);
 
-void Collision_MapTriggerZonesSet(s_MapOverlayHeader* overlayHdr);
+void World_TriggerZonesSet(s_MapOverlayHeader* overlayHdr);
 
-void func_80040014(void);
+void World_PlayerTriggerZonesGet(void);
 
 bool Chara_ModelLoadedCheck(e_CharaId charaId);
 
@@ -2339,15 +2337,15 @@ void Collision_FlagsSet(u16 collFlags);
  */
 void Collision_FlagBitsSet(u16 collFlags);
 
-void func_80069844(s32 collFlags);
+void Collision_FlagBitsClear(s32 collFlags);
 
 /** @brief Scans trigger zones and collects those containing the given XZ position.
  *
  * @param posX Query X position.
  * @param posZ Query Z position.
- * @param zones Array of trigger zone definitions.
+ * @param zones Array of trigger zones.
  */
-void Collision_TriggerZonesUpdate(q19_12 posX, q19_12 posZ, s_TriggerZone* zones);
+void Collision_TriggerZonesGet(q19_12 posX, q19_12 posZ, s_TriggerZone* zones);
 
 void IpdCollData_FixOffsets(s_IpdCollisionData* collData);
 
@@ -2575,7 +2573,7 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone);
 q19_12 func_8006F620(VECTOR3* nextOffset, s_CollisionCylinder* collCylinder, q19_12 radius, q19_12 offsetY);
 
 /** @brief Get local position of a point in a trigger zone. */
-void Collisions_PointTriggerPosGet(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s_TriggerZone* zone);
+void Collision_TriggerZonePositionGet(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s_TriggerZone* zone);
 
 q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle);
 

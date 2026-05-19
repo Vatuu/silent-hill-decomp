@@ -3539,7 +3539,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
             func_8005DE0C(Sfx_Unk1615, &D_800CC7CC, Q8(0.5f), Q12(32.0f), 0);
     }
 
-    func_80069844(CollisionFlag_All);
+    Collision_FlagBitsClear(CollisionFlag_All);
     Collision_FlagBitsSet(collFlags);
     func_800E0204();
 }

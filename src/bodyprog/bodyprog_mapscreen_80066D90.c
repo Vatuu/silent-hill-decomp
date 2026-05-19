@@ -150,7 +150,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
                 {
                     if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp)
                     {
-                        if (HAS_MAP(D_800AE740[paperMapIdx][0]))
+                        if (HAS_PAPER_MAP(D_800AE740[paperMapIdx][0]))
                         {
                             markingIdx = D_800AE740[paperMapIdx][0];
 
@@ -168,7 +168,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
 
                     if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown)
                     {
-                        if (HAS_MAP(D_800AE740[paperMapIdx][1]))
+                        if (HAS_PAPER_MAP(D_800AE740[paperMapIdx][1]))
                         {
                             markingIdx = D_800AE740[paperMapIdx][1];
 
@@ -786,7 +786,7 @@ bool func_80068CC0(s32 arg0) // 0x80068CC0
 
     for (i = 0; i < 2; i++)
     {
-        if (HAS_MAP(D_800AE740[arg0][i]))
+        if (HAS_PAPER_MAP(D_800AE740[arg0][i]))
         {
             poly = GsOUT_PACKET_P;
             setPolyG3(poly);

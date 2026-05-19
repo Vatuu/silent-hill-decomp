@@ -655,8 +655,8 @@ func_8003FF2C                                = 0x8003FD04; // type:func
 //-----------------------------------------------------------------------
 //--- PA: 0x01B27C   VA: 0x8003FDDC   subsegment: c, events/triggers_init
 //-----------------------------------------------------------------------
-Collision_MapTriggerZonesSet                 = 0x8003FDDC; // type:func
-func_80040014                                = 0x8003FDEC; // type:func
+World_TriggerZonesSet                        = 0x8003FDDC; // type:func
+World_PlayerTriggerZonesGet                  = 0x8003FDEC; // type:func
 
 //---------------------------------------------------------------
 //--- PA: 0x01B2C4   VA: 0x8003FE24   subsegment: c, view/vc_util
@@ -1137,8 +1137,8 @@ Collision_Init                               = 0x8006B2FC; // type:func
 Collision_FlagsGet                           = 0x8006B320; // type:func
 Collision_FlagsSet                           = 0x8006B330; // type:func
 Collision_FlagBitsSet                        = 0x8006B33C; // type:func
-func_80069844                                = 0x8006B354; // type:func
-Collision_TriggerZonesUpdate                 = 0x8006B370; // type:func
+Collision_FlagBitsClear                      = 0x8006B354; // type:func
+Collision_TriggerZonesGet                    = 0x8006B370; // type:func
 IpdCollData_FixOffsets                       = 0x8006B44C; // type:func
 func_80069994                                = 0x8006B4A4; // type:func
 func_800699E4                                = 0x8006B4F4; // type:func
@@ -1206,7 +1206,7 @@ func_8006F250                                = 0x80070D60; // type:func
 func_8006F338                                = 0x80070E48; // type:func
 func_8006F3C4                                = 0x80070ED4; // type:func
 func_8006F620                                = 0x80071130; // type:func
-Collisions_PointTriggerPosGet                = 0x8007140C; // type:func
+Collision_TriggerZonePositionGet             = 0x8007140C; // type:func
 func_8006F99C                                = 0x800714AC; // type:func
 Chara_HeadingAngleGet                        = 0x8007160C; // type:func
 func_8006FD90                                = 0x800718A0; // type:func
@@ -3558,7 +3558,7 @@ D_800C4454                                   = 0x800C6AAC;
 //---------------------------------------------------------------
 D_800C4458                                   = 0x800C6AB0;
 D_800C4474                                   = 0x800C6ACC;
-D_800C4478                                   = 0x800C6AD0;
+g_TriggerZoneCollisions                      = 0x800C6AD0;
 D_800C447A                                   = 0x800C6AD2;
 
 //--------------------------------------------------------------------

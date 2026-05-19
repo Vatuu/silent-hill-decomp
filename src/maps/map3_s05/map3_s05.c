@@ -949,7 +949,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
     projCellZ = (g_SysWork.playerWork.player.position.vz > Q12(0.0f)) ? (cellZ + 1) : (cellZ - 1);
 
     collFlags = CollisionFlag_None;
-    func_80069844(CollisionFlag_All);
+    Collision_FlagBitsClear(CollisionFlag_All);
 
     if (projCellX == 2 && projCellZ == -3 && !Savegame_EventFlagGet(EventFlag_M3S05_PickupVideoTape))
     {

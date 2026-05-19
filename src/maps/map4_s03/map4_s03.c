@@ -3234,35 +3234,35 @@ void func_800D5DF4(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
 
 void func_800D5E30(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x800D5E30
 {
-    MATRIX           sp10;
+    MATRIX           transformMat;
     s32              i;
     q19_12           posY;
     q19_12           newPosX;
     q19_12           newPosY;
     q19_12           newPosZ;
-    s_func_8006CF18* ptr;
+    s_func_8006CF18* ptrs;
 
-    ptr = &D_800E04A0;
+    ptrs = &D_800E04A0;
 
     twinfeeler->collision.field_E4   = &D_800E04A0;
     twinfeeler->collision.field_E1_4 = 4;
 
-    for (i = 0; i < 4; i++, ptr++)
+    for (i = 0; i < 4; i++, ptrs++)
     {
-        Vw_CoordHierarchyMatrixCompute(&boneCoords[D_800DB3A0[i]], &sp10);
+        Vw_CoordHierarchyMatrixCompute(&boneCoords[D_800DB3A0[i]], &transformMat);
 
         posY    = twinfeeler->position.vy;
-        newPosX = Q8_TO_Q12(sp10.t[0]);
-        newPosY = Q8_TO_Q12(sp10.t[1]);
-        newPosZ = Q8_TO_Q12(sp10.t[2]);
+        newPosX = Q8_TO_Q12(transformMat.t[0]);
+        newPosY = Q8_TO_Q12(transformMat.t[1]);
+        newPosZ = Q8_TO_Q12(transformMat.t[2]);
 
-        ptr->field_10       = Q12(0.45f);
-        ptr->field_E        = newPosY - Q12(0.3f);
-        ptr->field_C        = posY;
-        ptr->position.vx    = newPosX;
-        ptr->position.vy    = newPosY;
-        ptr->position.vz    = newPosZ;
-        ptr->collisionState = CharaCollisionState_Npc;
+        ptrs->field_10       = Q12(0.45f);
+        ptrs->field_E        = newPosY - Q12(0.3f);
+        ptrs->field_C        = posY;
+        ptrs->position.vx    = newPosX;
+        ptrs->position.vy    = newPosY;
+        ptrs->position.vz    = newPosZ;
+        ptrs->collisionState = CharaCollisionState_Npc;
     }
 }
 
@@ -4968,7 +4968,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
                 D_800E05AE += Q12(1.0f);
             }
 
-            func_80069844(CollisionFlag_1);
+            Collision_FlagBitsClear(CollisionFlag_1);
             D_800E05A8 += g_DeltaTime;
 
             if (D_800E05AC) {} // @hack
@@ -5019,7 +5019,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
         }
         else
         {
-            func_80069844(CollisionFlag_1);
+            Collision_FlagBitsClear(CollisionFlag_1);
             WorldGfx_ObjectAdd(&g_WorldObject_Mal6[1], &g_WorldObject_UnkPos, &g_WorldObject_UnkRot);
         }
     }

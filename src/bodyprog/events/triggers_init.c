@@ -14,17 +14,16 @@
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
-// ========================================
-// TRIGGERS COLLISION INIT
-// ========================================
-
-void Collision_MapTriggerZonesSet(s_MapOverlayHeader* overlayHeader) // 0x80040004
+void World_TriggerZonesSet(s_MapOverlayHeader* overlayHeader) // 0x80040004
 {
-    g_WorldGfxWork.triggerZone = &overlayHeader->triggerZones;
+    g_WorldGfxWork.triggerZones = &overlayHeader->triggerZones;
 }
 
-void func_80040014(void) // 0x80040014
+void World_PlayerTriggerZonesGet(void) // 0x80040014
 {
-    Collision_TriggerZonesUpdate(g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz, g_WorldGfxWork.triggerZone);
-};
+    #define playerChara g_SysWork.playerWork.player
 
+    Collision_TriggerZonesGet(playerChara.position.vx, playerChara.position.vz, g_WorldGfxWork.triggerZones);
+
+    #undef playerChara
+};

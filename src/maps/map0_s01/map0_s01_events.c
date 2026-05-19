@@ -760,7 +760,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             break;
 
         case 6:
-            g_SavegamePtr->hasMapsFlags |= 1 << 1;
+            g_SavegamePtr->paperMapFlags |= 1 << 1;
 
             Fs_QueueStartRead(FILE_ANIM_CAFE2_DMS, FS_BUFFER_11);
             SysWork_StateStepIncrement(0);

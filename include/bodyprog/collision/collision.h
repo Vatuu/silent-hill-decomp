@@ -287,17 +287,19 @@ typedef struct _CollisionResult
     /* 0x18 */ q19_12      field_18; // Height related to a trigger point.
 } s_CollisionResult;
 
-// Related to collision?
-typedef struct
+/** @brief Collection of collided trigger zones. */
+typedef struct _TriggerZoneCollisions
 {
     /* 0x0 */ u16            flags; /** `e_CollisionFlags` */
     /* 0x2 */ u8             triggerZoneCount;
     /* 0x3 */ u8             __pad_3;
     /* 0x4 */ s_TriggerZone* triggerZones[20]; // Guessed size.
-} s_800C4478;
+} s_TriggerZoneCollisions;
 
-// emoose: Also works: `extern u16 D_800C4478[];`, `arg0->field_4 = D_800C4478[0];`.
+// emoose: Also works: `extern u16 g_TriggerZoneCollisions[];`, `arg0->field_4 = g_TriggerZoneCollisions[0];`.
 // Didn't see any array accesses in Ghidra though, struct might be more likely.
-extern s_800C4478 D_800C4478;
+extern s_TriggerZoneCollisions g_TriggerZoneCollisions;
+
+extern u16 g_CollisionFlags;
 
 #endif

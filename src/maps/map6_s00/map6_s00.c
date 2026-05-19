@@ -443,7 +443,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EBEE0
         }
     }
 
-    func_80069844(CollisionFlag_All);
+    Collision_FlagBitsClear(CollisionFlag_All);
     Collision_FlagBitsSet(collFlags);
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))

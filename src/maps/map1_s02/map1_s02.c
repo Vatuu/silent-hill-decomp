@@ -1552,7 +1552,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
         WorldGfx_ObjectAdd(&g_WorldObjectB.object, &g_WorldObjectB.position, &g_WorldObjectB.rotation);
     }
 
-    func_80069844(CollisionFlag_All);
+    Collision_FlagBitsClear(CollisionFlag_All);
 
     if (collFlags != CollisionFlag_None)
     {

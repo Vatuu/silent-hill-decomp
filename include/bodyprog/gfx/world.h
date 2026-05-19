@@ -9,11 +9,7 @@
 #include "bodyprog/view/structs.h"
 
 /** @brief World GFX workspace.
- * TODO: Could be `s_RendererWork`? Will depend on where other data resides.
- * Will: `s_WorldModelWork` fits better, this is mainly responsible for handling model data.
- * `s_WorldEnvWork` should have this name as it is used for general GFX.
- * Will (2): Maybe isn't supposed to be something exclusively graphics-related, but rather a
- * general in-game world struct, as it also contains triggers and camera information.
+ * TODO: Could be `s_WorldWork`? Contains more than GFX data.
  */
 typedef struct _WorldGfxWork
 {
@@ -26,7 +22,7 @@ typedef struct _WorldGfxWork
     /* 0xCC   */ s_CharaModel      charaModels[CHARA_GROUP_COUNT];
     /* 0x164C */ s_CharaModel      harryModel;
     /* 0x1BAC */ s_HeldItem        heldItem; /** Item held by the player. */
-    /* 0x1BD8 */ s_TriggerZone*    triggerZone;
+    /* 0x1BD8 */ s_TriggerZone*    triggerZones;
     /* 0x1BDC */ VC_CAMERA_INTINFO vcCameraInternalInfo; /** Debug camera info. */
     /* 0x1BE4 */ s_LmHeader        itemLmHdr;
     /* 0x1BF4 */ u8                itemLmData[4096 - sizeof(s_LmHeader)]; // 4kb allocated for 2.75kb game files.

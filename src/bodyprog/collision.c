@@ -22,7 +22,7 @@
 // Please delete them or rewrite them properly after properly recognizing
 // the function purpose.
 
-s_800C4478 D_800C4478;
+s_TriggerZoneCollisions g_TriggerZoneCollisions;
 
 // ========================================
 // COLLISION HANDLING
@@ -31,30 +31,30 @@ s_800C4478 D_800C4478;
 void Collision_Init(void) // 0x800697EC
 {
     Collision_FlagsSet(CollisionFlag_0);
-    D_800C4478.triggerZoneCount = 0;
+    g_TriggerZoneCollisions.triggerZoneCount = 0;
 }
 
 u16 Collision_FlagsGet(void) // 0x80069810
 {
-    return D_800C4478.flags;
+    return g_TriggerZoneCollisions.flags;
 }
 
 void Collision_FlagsSet(u16 collFlags) // 0x80069820
 {
-    D_800C4478.flags = collFlags;
+    g_TriggerZoneCollisions.flags = collFlags;
 }
 
 void Collision_FlagBitsSet(u16 collFlags) // 0x8006982C
 {
-    D_800C4478.flags |= collFlags;
+    g_TriggerZoneCollisions.flags |= collFlags;
 }
 
-void func_80069844(s32 collFlags) // 0x80069844
+void Collision_FlagBitsClear(s32 collFlags) // 0x80069844
 {
-    D_800C4478.flags = (D_800C4478.flags & ~collFlags) | CollisionFlag_0;
+    g_TriggerZoneCollisions.flags = (g_TriggerZoneCollisions.flags & ~collFlags) | CollisionFlag_0;
 }
 
-void Collision_TriggerZonesUpdate(q19_12 posX, q19_12 posZ, s_TriggerZone* zones) // 0x80069860
+void Collision_TriggerZonesGet(q19_12 posX, q19_12 posZ, s_TriggerZone* zones) // 0x80069860
 {
     s_TriggerZone* curZone;
     q19_12         minX;
@@ -62,24 +62,29 @@ void Collision_TriggerZonesUpdate(q19_12 posX, q19_12 posZ, s_TriggerZone* zones
     q19_12         minZ;
     q19_12         maxZ;
 
-    D_800C4478.triggerZoneCount = 0;
+    g_TriggerZoneCollisions.triggerZoneCount = 0;
+
+    // Run through trigger zones.
     for (curZone = zones; !curZone->isEndOfArray; curZone++)
     {
+        // Define AABB bounds.
         minX = FP_TO(curZone->positionX, Q12_SHIFT);
         maxX = FP_TO(curZone->positionX + curZone->sizeX, Q12_SHIFT);
         minZ = FP_TO(curZone->positionZ, Q12_SHIFT);
         maxZ = FP_TO(curZone->positionZ + curZone->sizeZ, Q12_SHIFT);
 
+        // Expand AABB.
         minX -= Q12(16.0f);
         maxX += Q12(16.0f);
         minZ -= Q12(16.0f);
         maxZ += Q12(16.0f);
 
+        // Collect collided trigger zone.
         if (posX >= minX && maxX >= posX &&
             posZ >= minZ && maxZ >= posZ)
         {
-            D_800C4478.triggerZones[D_800C4478.triggerZoneCount] = curZone;
-            D_800C4478.triggerZoneCount++;
+            g_TriggerZoneCollisions.triggerZones[g_TriggerZoneCollisions.triggerZoneCount] = curZone;
+            g_TriggerZoneCollisions.triggerZoneCount++;
         }
     }
 }
@@ -529,11 +534,7 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* newOffset, const s_Co
     s_SubCharacter**     curChara;
     s_IpdCollisionData** curCollData;
     s_SubCharacter*      chara;
-    
-    /* Will - 1: Seems like `collCylinder` is meant to represent the colision box and the central point
-       from the character which collision information is being analysed/setup.
-    */ 
-    
+
     cond = false;
 
     if (collCylinder->collisionState == CharaCollisionState_5)
@@ -755,7 +756,7 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCy
 void Collision_QueryInit(s_CollisionState* collState, VECTOR3* pos, const s_CollisionCylinder* collCylinder, bool arg3) // 0x8006AB50
 {
     collState->field_0_0       = 0;
-    collState->flags_2         = D_800C4478.flags;
+    collState->flags_2         = g_TriggerZoneCollisions.flags;
     collState->field_4.field_4 = arg3;
 
     Collision_QueryDirectionCalc(&collState->field_4, pos, collCylinder);
@@ -2522,7 +2523,7 @@ bool Ray_TraceSetup(s_RayState* state, bool useCylinder, q7_8 arg2, const VECTOR
     }
 
     state->field_0  = useCylinder;
-    state->field_4  = D_800C4478.flags; // Struct could begin some point earlier.
+    state->field_4  = g_TriggerZoneCollisions.flags; // Struct could begin some point earlier.
     state->field_6  = arg2;
     state->field_8  = SHRT_MAX;
     state->field_20 = 0;
@@ -3199,9 +3200,10 @@ void func_8006F250(q19_12* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19
 
     func_8006F338(scratch, posX, posZ, posDeltaX, posDeltaZ);
 
-    for (i = 0; i < D_800C4478.triggerZoneCount; i++)
+    // Run through trigger zones.
+    for (i = 0; i < g_TriggerZoneCollisions.triggerZoneCount; i++)
     {
-        if (func_8006F3C4(scratch, D_800C4478.triggerZones[i]))
+        if (func_8006F3C4(scratch, g_TriggerZoneCollisions.triggerZones[i]))
         {
             break;
         }
@@ -3272,11 +3274,13 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone) // 0x8006F3
     q19_12 var_v0;
     q19_12 var_v0_2;
 
+    // Define AABB bounds.
     minX = Q12(zone->positionX);
     maxX = Q12(zone->positionX + zone->sizeX);
     minZ = Q12(zone->positionZ);
     maxZ = Q12(zone->positionZ + zone->sizeZ);
 
+    // Check for AABB intersection.
     if ((minX >= arg0->field_1C || arg0->field_18 >= maxX) &&
         (minZ >= arg0->field_24 || arg0->field_20 >= maxZ))
     {
@@ -3318,6 +3322,7 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone) // 0x8006F3
             }
         }
 
+        // TODO: What are these shifts? Converts up to Q24, then down to Q8??
         temp_s1 = Vw_LineSegmentIntersectionCheck(FP_TO(arg0->field_10, Q12_SHIFT) >> 16, FP_TO(arg0->field_14, Q12_SHIFT) >> 16, FP_TO(var_v0_2 - arg0->field_4, Q12_SHIFT) >> 16,
                                 FP_TO(minX - arg0->field_0, Q12_SHIFT) >> 16, FP_TO(maxX - arg0->field_0, Q12_SHIFT) >> 16);
         var_v0  = Vw_LineSegmentIntersectionCheck(FP_TO(arg0->field_14, Q12_SHIFT) >> 16, FP_TO(arg0->field_10, Q12_SHIFT) >> 16, FP_TO(var_s1 - arg0->field_0, Q12_SHIFT) >> 16,
@@ -3344,65 +3349,65 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone) // 0x8006F3
 
 q19_12 func_8006F620(VECTOR3* nextOffset, s_CollisionCylinder* collCylinder, q19_12 radius, q19_12 charaTop) // 0x8006F620
 {
-    q19_12         x0; // } Local position of character inside a trigger.
+    q19_12         x0; // } Local position of character inside a trigger zone.
     q19_12         z0; // } 
     q19_12         x1; // } 
     q19_12         z1; // } 
     q19_12         collOffsetY;
     q19_12         posY;
-    q19_12         distX;
-    q19_12         distZ;
-    q19_12         temp_a0;
-    q19_12         triggerHeight;
+    q19_12         offsetX;
+    q19_12         offsetZ;
+    q19_12         someRelHeight;
+    q19_12         zoneHeight;
     q19_12         max1;
-    q19_12         temp_s0_3;
-    q19_12         mag0;
+    q19_12         offsetDist;
+    q19_12         distToZone;
     q19_12         angle;
     q19_12         var_s2;
     s32            i;
     q19_12         posX;
     q19_12         posZ;
     s32            height;
-    s32            var_v1;
+    s32            someHeight;
     s_TriggerZone* curZone;
 
     height = Q12(-16.0f);
 
-    distX = Q12(0.0f);
-    distZ = Q12(0.0f);
+    offsetX = Q12(0.0f);
+    offsetZ = Q12(0.0f);
     
     posX        = nextOffset->vx;
     posZ        = nextOffset->vz;
     collOffsetY = collCylinder->position.vy + charaTop;
     posY        = collOffsetY + nextOffset->vy;
 
-    for (i = 0; i < D_800C4478.triggerZoneCount; i++)
+    // Run through trigger zones.
+    for (i = 0; i < g_TriggerZoneCollisions.triggerZoneCount; i++)
     {
-        curZone = D_800C4478.triggerZones[i];
+        curZone = g_TriggerZoneCollisions.triggerZones[i];
 
         // Check height.
-        // This shift is meant to represent that the number is being divided by 2.
-        triggerHeight = (-Q12(curZone->height) >> 1) - Q12(1.5f);
-        if ((posY - triggerHeight) >= Q12(0.0f))
+        zoneHeight = (-Q12(curZone->height) >> 1) - Q12(1.5f); // `>> 1` is `/ 2`.
+        if ((posY - zoneHeight) >= Q12(0.0f))
         {
             continue;
         }
 
-        Collisions_PointTriggerPosGet(&x0, &z0, collCylinder->position.vx + posX, collCylinder->position.vz + posZ, curZone);
+        Collision_TriggerZonePositionGet(&x0, &z0, collCylinder->position.vx + posX, collCylinder->position.vz + posZ, curZone);
         if (MAX(ABS(x0), ABS(z0)) >= radius)
         {
             continue;
         }
 
-        mag0 = Vc_VectorMagnitudeCalc(x0, Q12(0.0f), z0);
-        if (mag0 >= radius)
+        distToZone = Vc_VectorMagnitudeCalc(x0, Q12(0.0f), z0);
+        if (distToZone >= radius)
         {
             continue;
         }
 
-        if (mag0 > Q12(0.0f))
+        if (distToZone > Q12(0.0f))
         {
-            Collisions_PointTriggerPosGet(&x1, &z1, collCylinder->position.vx, collCylinder->position.vz, curZone);
+            Collision_TriggerZonePositionGet(&x1, &z1, collCylinder->position.vx, collCylinder->position.vz, curZone);
 
             var_s2 = Q12(0.1f);
             max1   = Vc_VectorMagnitudeCalc(x1, Q12(0.0f), z1);
@@ -3411,20 +3416,20 @@ q19_12 func_8006F620(VECTOR3* nextOffset, s_CollisionCylinder* collCylinder, q19
                 var_s2 = radius - max1;
             }
 
-            if ((mag0 - max1) < var_s2)
+            if ((distToZone - max1) < var_s2)
             {
                 angle = ratan2(x0, z0);
-                temp_s0_3 = var_s2 - (mag0 - max1);
+                offsetDist = var_s2 - (distToZone - max1);
 
-                distX = Math_MulFixed(temp_s0_3, Math_Sin(angle), Q12_SHIFT);
-                distZ = Math_MulFixed(temp_s0_3, Math_Cos(angle), Q12_SHIFT);
+                offsetX = Math_MulFixed(offsetDist, Math_Sin(angle), Q12_SHIFT);
+                offsetZ = Math_MulFixed(offsetDist, Math_Cos(angle), Q12_SHIFT);
             }
         }
         else
         {
-            if (triggerHeight < height)
+            if (zoneHeight < height)
             {
-                height = triggerHeight;
+                height = zoneHeight;
             }
 
             posX = nextOffset->vx;
@@ -3432,8 +3437,8 @@ q19_12 func_8006F620(VECTOR3* nextOffset, s_CollisionCylinder* collCylinder, q19
             break;
         }
 
-        posX += distX;
-        posZ += distZ;
+        posX += offsetX;
+        posZ += offsetZ;
     }
 
     nextOffset->vx = posX;
@@ -3441,64 +3446,64 @@ q19_12 func_8006F620(VECTOR3* nextOffset, s_CollisionCylinder* collCylinder, q19
 
     if (height != Q12(-16.0f))
     {
-        var_v1  = Q12(0.1f);
-        temp_a0 = height - collOffsetY;
+        someHeight  = Q12(0.1f);
 
-        if (temp_a0 < Q12(0.1f))
+        someRelHeight = height - collOffsetY;
+        if (someRelHeight < Q12(0.1f))
         {
-            var_v1 = temp_a0;
+            someHeight = someRelHeight;
         }
 
-        if (nextOffset->vy < var_v1)
+        if (nextOffset->vy < someHeight)
         {
-            nextOffset->vy = var_v1;
+            nextOffset->vy = someHeight;
         }
     }
 
     return height;
 }
 
-void Collisions_PointTriggerPosGet(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s_TriggerZone* zone) // 0x8006F8FC
+void Collision_TriggerZonePositionGet(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s_TriggerZone* zone) // 0x8006F8FC
 {
-    q19_12 triggerX1;
-    q19_12 triggerX2;
-    q19_12 triggerZ1;
-    q19_12 triggerZ2;
+    q19_12 minX;
+    q19_12 maxX;
+    q19_12 minZ;
+    q19_12 maxZ;
 
-    // TODO: Using `Q12` doesn't match? There's an identical block in `func_8006F3C4`.
-    triggerX1 = FP_TO(zone->positionX, Q12_SHIFT);
-    triggerX2 = FP_TO(zone->positionX + zone->sizeX, Q12_SHIFT);
-    triggerZ1 = FP_TO(zone->positionZ, Q12_SHIFT);
-    triggerZ2 = FP_TO(zone->positionZ + zone->sizeZ, Q12_SHIFT);
+    // Define AABB bounds.
+    minX = FP_TO(zone->positionX, Q12_SHIFT);
+    maxX = FP_TO(zone->positionX + zone->sizeX, Q12_SHIFT);
+    minZ = FP_TO(zone->positionZ, Q12_SHIFT);
+    maxZ = FP_TO(zone->positionZ + zone->sizeZ, Q12_SHIFT);
 
-    if (posX < triggerX1)
+    if (posX < minX)
     {
-        *outX = posX - triggerX1;
+        *outX = posX - minX;
     }
     else
     {
-        if (triggerX2 >= posX)
+        if (maxX >= posX)
         {
             *outX = Q12(0.0f);
         }
         else
         {
-            *outX = posX - triggerX2;
+            *outX = posX - maxX;
         }
     }
 
-    if (posZ < triggerZ1)
+    if (posZ < minZ)
     {
-        *outZ = posZ - triggerZ1;
+        *outZ = posZ - minZ;
         return;
     }
-    else if (triggerZ2 >= posZ)
+    else if (maxZ >= posZ)
     {
         *outZ = Q12(0.0f);
         return;
     }
 
-    *outZ = posZ - triggerZ2;
+    *outZ = posZ - maxZ;
 }
 
 // ========================================

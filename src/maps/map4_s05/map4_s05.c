@@ -1845,7 +1845,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D7360
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    func_80069844(CollisionFlag_All);
+    Collision_FlagBitsClear(CollisionFlag_All);
 
     if (PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
     {
@@ -1891,7 +1891,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D7360
             Savegame_EventFlagSet(EventFlag_MapMark_AltCentralTown_CrichtonKoontzBigCross);
         }
 
-        func_80069844(CollisionFlag_All);
+        Collision_FlagBitsClear(CollisionFlag_All);
     }
 }
 

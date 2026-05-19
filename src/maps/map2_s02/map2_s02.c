@@ -169,14 +169,14 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    func_80069844(CollisionFlag_All);
+    Collision_FlagBitsClear(CollisionFlag_All);
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
     {
         if (Savegame_EventFlagGet(EventFlag_346))
         {
             Collision_FlagBitsSet(CollisionFlag_2);
-            func_80069844(CollisionFlag_1);
+            Collision_FlagBitsClear(CollisionFlag_1);
 
             if (g_SysWork.playerWork.player.position.vz < Q12(-68.0f))
             {
@@ -185,7 +185,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
         }
         else
         {
-            func_80069844(CollisionFlag_2);
+            Collision_FlagBitsClear(CollisionFlag_2);
             Collision_FlagBitsSet(CollisionFlag_1);
         }
     }

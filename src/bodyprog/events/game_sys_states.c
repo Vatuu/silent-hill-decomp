@@ -144,7 +144,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
     if (!(g_SysWork.bgmStatusFlags & BgmStatusFlag_Pause))
     {
-        func_80040014();
+        World_PlayerTriggerZonesGet();
         vcMoveAndSetCamera(false, false, false, false, false, false, false, false);
 
         if (g_MapOverlayHeader.func_44 != NULL)
@@ -494,7 +494,7 @@ void GameState_LoadStatusScreen_Update(void) // 0x800395C0
 
 void SysState_MapScreen_Update(void) // 0x800396D4
 {
-    if (!HAS_MAP(g_SavegamePtr->paperMapIdx))
+    if (!HAS_PAPER_MAP(g_SavegamePtr->paperMapIdx))
     {
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.map ||
             Gfx_MapMsg_Draw(MapMsgIdx_NoMap) > MapMsgState_Idle)

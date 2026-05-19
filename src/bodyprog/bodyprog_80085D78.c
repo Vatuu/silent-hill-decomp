@@ -1052,23 +1052,23 @@ void Event_CommonItemTake(u32 pickupType, e_EventFlag eventFlagIdx) // 0x800879F
     #undef EASY_DIFFICULTY_AMMO_COUNT_MULT_MIN
 }
 
-void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0x80087AF4
+void Event_MapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0x80087AF4
 {
     static const RECT RECT = {
         SCREEN_POSITION_X(100.0f), 256,
         SCREEN_WIDTH / 2, SCREEN_HEIGHT
     };
 
-    s32 mapFlagIdxCpy;
+    s32 paperMapFlagIdxCpy;
 
-    g_DeltaTime   = Q12(0.0f);
-    mapFlagIdxCpy = mapFlagIdx;
+    g_DeltaTime        = Q12(0.0f);
+    paperMapFlagIdxCpy = paperMapFlagIdx;
 
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
             g_MapOverlayHeader.playerControlFreeze();
-            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[mapFlagIdx]);
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[paperMapFlagIdx]);
             SysWork_StateStepIncrement(1);
 
         case 1:
@@ -1079,7 +1079,7 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
             DrawSync(SyncMode_Wait);
             StoreImage(&RECT, IMAGE_BUFFER);
             DrawSync(SyncMode_Wait);
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[mapFlagIdx], FS_BUFFER_2, &g_PaperMapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[paperMapFlagIdx], FS_BUFFER_2, &g_PaperMapImg);
             Screen_Init(SCREEN_WIDTH, true);
 
             g_IntervalVBlanks = 1;
@@ -1098,33 +1098,33 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
             break;
 
         case 4:
-            mapFlagIdxCpy                                            = mapFlagIdx >> 5;
-            ((s32*)&g_SavegamePtr->hasMapsFlags)[mapFlagIdxCpy] |= 1 << (mapFlagIdx & 0x1F); // Maybe union?
+            paperMapFlagIdxCpy                                         = paperMapFlagIdx >> 5;
+            ((s32*)&g_SavegamePtr->paperMapFlags)[paperMapFlagIdxCpy] |= 1 << (paperMapFlagIdx & 0x1F); // TODO: Maybe union?
 
-            switch (mapFlagIdx)
+            switch (paperMapFlagIdx)
             {
                 case 6:
-                    g_SavegamePtr->hasMapsFlags |= 0x1FA0;
+                    g_SavegamePtr->paperMapFlags |= 0x1FA0;
                     break;
 
                 case 17:
-                    g_SavegamePtr->hasMapsFlags |= 1 << 18;
-                    g_SavegamePtr->hasMapsFlags |= 1 << 19;
-                    g_SavegamePtr->hasMapsFlags |= 1 << 21;
-                    g_SavegamePtr->hasMapsFlags |= 1 << 22;
-                    g_SavegamePtr->hasMapsFlags |= 1 << 23;
+                    g_SavegamePtr->paperMapFlags |= 1 << 18;
+                    g_SavegamePtr->paperMapFlags |= 1 << 19;
+                    g_SavegamePtr->paperMapFlags |= 1 << 21;
+                    g_SavegamePtr->paperMapFlags |= 1 << 22;
+                    g_SavegamePtr->paperMapFlags |= 1 << 23;
                     break;
 
                 case 16:
-                    g_SavegamePtr->hasMapsFlags |= 1 << 20;
+                    g_SavegamePtr->paperMapFlags |= 1 << 20;
                     break;
 
                 case 13:
-                    g_SavegamePtr->hasMapsFlags |= 1 << 14;
+                    g_SavegamePtr->paperMapFlags |= 1 << 14;
                     break;
 
                 case 2:
-                    g_SavegamePtr->hasMapsFlags |= 1 << 3;
+                    g_SavegamePtr->paperMapFlags |= 1 << 3;
                     break;
             }
 

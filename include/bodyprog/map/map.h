@@ -110,7 +110,7 @@ typedef enum _SpeedZoneType
     SpeedZoneType_Fast   = 2
 } e_SpeedZoneType;
 
-/** @brief Event triger activation types. */
+/** @brief Event trigger activation types. */
 typedef enum _TriggerActivationType
 {
     TriggerActivationType_None      = 0, /** No activation conditions other than event flag/trigger checks. */
@@ -536,8 +536,12 @@ STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 4172);
 
 extern const s_MapInfo MAP_INFOS[MapType_Count];
 
-/** @brief Checks if a specified map has been collected. */
-#define HAS_MAP(mapIdx) \
-    ((((u32*)&g_SavegamePtr->hasMapsFlags)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
+/** @brief Checks if a paper map has been collected.
+ *
+ * @param paperMapIdx Paper map index.
+ * @return `true` if the paper map has been collected, `false` otherwise.
+ */
+#define HAS_PAPER_MAP(paperMapIdx) \
+    ((((u32*)&g_SavegamePtr->paperMapFlags)[(paperMapIdx) / 32] >> ((paperMapIdx) % 32)) & (1 << 0))
 
 #endif

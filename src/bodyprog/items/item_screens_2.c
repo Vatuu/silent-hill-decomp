@@ -852,7 +852,7 @@ void Inventory_Logic(void) // 0x8004D518
                      g_SysWork.field_2388.isFlashlightOn_15 ||
                      (!(g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) &&
                       !(g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))) &&
-                    HAS_MAP(g_SavegamePtr->paperMapIdx))
+                    HAS_PAPER_MAP(g_SavegamePtr->paperMapIdx))
                 {
                     Sd_PlaySfx(Sfx_MenuConfirm, 64, 64);
 
@@ -884,7 +884,7 @@ void Inventory_Logic(void) // 0x8004D518
                 g_GameWork.gameStateSteps[2] = step;
             }
 
-            if (!HAS_MAP(g_SavegamePtr->paperMapIdx))
+            if (!HAS_PAPER_MAP(g_SavegamePtr->paperMapIdx))
             {
                 Gfx_Inventory_UnavailableMapText(1);
             }

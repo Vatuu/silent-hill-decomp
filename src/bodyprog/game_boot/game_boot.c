@@ -328,7 +328,7 @@ void GameBoot_InGameInit(void) // 0x80034FB8
     vcInitCamera(&g_MapOverlayHeader, &playerChara.position);
 
     vcSetCameraUseWarp(&playerChara.position, g_SysWork.cameraAngleY);
-    Collision_MapTriggerZonesSet(&g_MapOverlayHeader);
+    World_TriggerZonesSet(&g_MapOverlayHeader);
     Gfx_MapEffectsSet(0);
     WorldGfx_CharaModelProcessAllLoads();
     Game_FlashlightAttributesFix();

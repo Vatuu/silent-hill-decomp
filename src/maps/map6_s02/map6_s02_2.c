@@ -1134,7 +1134,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D1718
         Savegame_EventFlagClear(EventFlag_408);
     }
 
-    func_80069844(CollisionFlag_All);
+    Collision_FlagBitsClear(CollisionFlag_All);
     Collision_FlagBitsSet(flags);
 }
 

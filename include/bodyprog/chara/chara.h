@@ -117,12 +117,12 @@ typedef enum _CharaId
 // Collision-related.
 typedef struct
 {
-    VECTOR3 position;
-    s16     field_C;
-    s16     field_E;
-    s16     field_10;
-    s8      collisionState; /** `e_CharaCollisionState` */
-    u8      field_13;
+    /* 0x0  */ VECTOR3 position;
+    /* 0xC  */ q3_12   field_C; // Set to character Y position. Name it `height`?
+    /* 0xE  */ s16     field_E;
+    /* 0x10 */ s16     field_10;
+    /* 0x12 */ s8      collisionState; /** `e_CharaCollisionState` */
+    /* 0x13 */ u8      field_13;
 } s_func_8006CF18;
 
 /** @brief Character damage info. */
