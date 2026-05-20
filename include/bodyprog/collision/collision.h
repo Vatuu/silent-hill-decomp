@@ -126,17 +126,17 @@ typedef struct
     /* 0x0  */ s32        collisionState; /** `e_CharaCollisionState` */
     /* 0x4  */ bool       field_4; // Flag set when the character collisions being check is any of the ones being
                                    // in the of `Collision_CharaCollisionSetup`.
-    /* 0x8  */ q19_12     distance_8; // probably inaccurate name.
-    /* 0xC  */ SVECTOR    offset; // Q23.8
+    /* 0x8  */ q19_12     moveDistance;
+    /* 0xC  */ SVECTOR    offsetMove; // Q23.8
     /* 0x14 */ DVECTOR_XZ direction;
-    /* 0x18 */ q23_8      positionX;    // } This names are inaccurate. 
-    /* 0x1C */ q23_8      positionZ;    // }  
-    /* 0x20 */ q23_8      newPositionX; // }  
-    /* 0x24 */ q23_8      newPositionZ; // }  
+    /* 0x18 */ q23_8      positionX;
+    /* 0x1C */ q23_8      positionZ;
+    /* 0x20 */ q23_8      newPositionX;
+    /* 0x24 */ q23_8      newPositionZ;
     /* 0x28 */ q7_8       radius;
     /* 0x2A */ q7_8       topPos;
     /* 0x2C */ q7_8       bottomPos;
-} s_func_8006ABC0;
+} s_CollisionCharaMovement;
 
 typedef struct
 {
@@ -148,27 +148,27 @@ typedef struct
 
 typedef struct _CollisionState
 {
-    u8                 field_0_0  : 8; // Boolean? Code only assigns 1.
-    s8                 field_0_8  : 1; // Something to do with collision. `bool` flag that states if there's a displacement?
-    s8                 field_0_9  : 1; /** `bool` */
-    s8                 field_0_10 : 1; /** `bool` */
-    s8                 field_0_11 : 5;
-    u16                flags_2    : 16; /** `e_CollisionFlags` */
-    s_func_8006ABC0    field_4;
-    s32                field_34;
-    s16                field_38;
-    s16                field_3A;
-    s16                field_3C; // X?
-    s16                field_3E; // Z?
-    s8*                field_40;
-    s_CollisionState_44 field_44;
-    q23_8              field_7C; // Related to ground height?
-    q23_8              field_80; // X } Related to ground surface.
-    q23_8              field_84; // Z }
-    q19_12             tiltAngleX;
-    q19_12             tiltAngleZ;
-    s32                field_90; // `bool`?
-    s32                groundType; /** `e_GroundType` */
+    u8                       field_0_0         : 8; // Boolean? Code only assigns 1.
+    s8                       isCharaMoving_0_8 : 1; /** `bool` */
+    s8                       field_0_9         : 1; /** `bool` */
+    s8                       field_0_10        : 1; /** `bool` */
+    s8                       field_0_11        : 5;
+    u16                      flags_2           : 16; /** `e_CollisionFlags` */
+    s_CollisionCharaMovement charaMoveInfo;
+    s32                      field_34;
+    s16                      field_38;
+    s16                      field_3A;
+    s16                      field_3C; // X?
+    s16                      field_3E; // Z?
+    s8*                      field_40;
+    s_CollisionState_44      field_44;
+    q23_8                    field_7C; // Related to ground height?
+    q23_8                    field_80; // X } Related to ground surface.
+    q23_8                    field_84; // Z }
+    q19_12                   tiltAngleX;
+    q19_12                   tiltAngleZ;
+    s32                      field_90; // `bool`?
+    s32                      groundType; /** `e_GroundType` */
     union
     {
         DVECTOR_XZ vec_0;
