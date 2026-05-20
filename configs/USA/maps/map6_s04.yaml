@@ -61,7 +61,7 @@ segments:
       - [0x10A0, .rodata, player]
       - [0x1738, .rodata, Chara_LarvalStalker]
       - [0x1840, .rodata, Chara_Stalker]
-      - [0x1BA0, .rodata, map6_s04]
+      - [0x1BA0, .rodata, Chara_MonsterCybil]
       - [0x1FB0, .rodata, Chara_AlessaDahlia]
       - [0x20AC, rodata]
       - [0x20B0, .rodata, map6_s04_2]
@@ -76,7 +76,7 @@ segments:
       - [0x4FBC, c, player]
       - [0x6B40, c, Chara_LarvalStalker]
       - [0x9FE8, c, Chara_Stalker]
-      - [0xF238, c, map6_s04]
+      - [0xF238, c, Chara_MonsterCybil]
       - [0x12D3C, c, Chara_AlessaDahlia]
       - [0x14040, c, map6_s04_2]
 

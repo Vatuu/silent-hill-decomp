@@ -102,9 +102,9 @@ sharedFunc_800D70C4_0_s00           = 0x800D78BC; // type:func
 sharedFunc_800D7BE8_0_s00           = 0x800D83E0; // type:func
 sharedFunc_800D7E04_0_s00           = 0x800D85FC; // type:func
 
-//-----------------------------------------------------------
-//--- PA: 0x00F238   VA: 0x800D87B0   subsegment: c, map6_s04
-//-----------------------------------------------------------
+//---------------------------------------------------------------------
+//--- PA: 0x00F238   VA: 0x800D87B0   subsegment: c, Chara_MonsterCybil
+//---------------------------------------------------------------------
 MonsterCybil_Update                 = 0x800D8908; // type:func
 MonsterCybil_Init                   = 0x800D89CC; // type:func
 

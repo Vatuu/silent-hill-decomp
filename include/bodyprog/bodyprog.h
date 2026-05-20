@@ -15,6 +15,7 @@
 #include "bodyprog/gfx/world_object.h"
 #include "bodyprog/map/map.h"
 #include "bodyprog/map/terrain.h"
+#include "bodyprog/screen/screen_data.h"
 #include "bodyprog/sound/sound.h"
 #include "bodyprog/sound/sound_effects.h"
 #include "bodyprog/view/vw_system.h"

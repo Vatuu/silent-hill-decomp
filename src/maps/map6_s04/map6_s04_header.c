@@ -7,6 +7,7 @@
 #include "maps/characters/dahlia.h"
 #include "maps/characters/larval_stalker.h"
 #include "maps/characters/stalker.h"
+#include "maps/characters/monster_cybil.h"
 
 extern s_AnimInfo HARRY_M6S04_ANIM_INFOS[];
 

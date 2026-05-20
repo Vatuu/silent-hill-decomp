@@ -129,8 +129,6 @@ extern s_800ED848 D_800ED848[16];
 extern s_AnimInfo FLAUROS_ANIM_INFOS[];
 extern s_AnimInfo PARASITE_ANIM_INFOS[];
 
-extern s16 D_800EA856; // Keyframe index.
-
 extern s32 D_800EBA30;
 
 extern u16 D_800EBA64;
@@ -142,8 +140,6 @@ extern u8 D_800EBB61;
 
 extern VECTOR3 D_800EBB70;
 
-extern s8 D_800ED543;
-
 extern VECTOR3 g_Cutscene_CameraPositionTarget;
 extern VECTOR3 g_Cutscene_CameraLookAtTarget;
 
@@ -152,8 +148,6 @@ extern u8 D_800ED5AC; // g_Cutscene_MapMsgAudioIdx
 extern q19_12 g_Cutscene_Timer;
 
 extern q3_12 D_800ED5B6; // Angle.
-
-extern s_Model g_MonsterCybil_ExtraModel; // Some kind of attachment or another `s_SubCharacter` instance?
 
 extern s32 D_800ED588;
 extern s32 D_800ED58C;
@@ -182,37 +176,6 @@ extern u8 D_800ED840;
 extern s8 D_800ED841;
 extern u16 D_800EBA34[23]; // `g_Cutscene_MapMsgAudioCmds`
 extern s16 D_800ED5B4;
-extern s16 D_800EA856;
-
-extern s32 D_800CB118[];
-extern s32 D_800CB178[];
-
-extern s16       D_800CB208[];
-extern s16       D_800CB2A0[];
-extern const s32 D_800CB2B4[];
-extern const s32 D_800CB2DC[];
-extern s16       D_800EA776;
-extern s16       D_800EA836;
-extern s16       D_800EA894;
-extern s16       D_800EA896; // Relative keyframe?
-extern s16       D_800EBB48;
-extern s16       D_800EBB4A;
-extern VECTOR3   D_800ED570;
-
-extern s16 D_800CB238[];
-extern s16 D_800EA7D4;
-extern s16 D_800EA7D6;
-extern s16 D_800EA816;
-
-extern VECTOR D_800ED560;
-
-extern s32 D_800CB250[];
-extern s32 D_800CB278[];
-extern s16 D_800CB1D8[];
-
-extern const s32 D_800CB304[12][2];
-extern const s32 D_800CB364[12][2];
-extern const s32 D_800CB3A4[12][2];
 
 extern s32 D_800EAF20[];
 
@@ -269,52 +232,6 @@ void func_800E0DC4(s32 arg0, s32 arg1);
 
 void func_800E0FAC(s32 arg0);
 
-void func_800D87B0(s_SubCharacter* chara);
-
-void func_800D8848(s_Model* model);
-
-s32 func_800D8898(s_AnimInfo* animInfo);
-
-// All Monster Cybil below?
-
-void MonsterCybil_Update(s_SubCharacter* monsterCybil, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-
-void MonsterCybil_Init(s_SubCharacter* monsterCybil, s_Model* extraModel);
-
-void func_800D8A90(s_SubCharacter* monsterCybil);
-
-void func_800D8B14(s_SubCharacter* monsterCybil, s_Model* model);
-
-void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* model, GsCOORDINATE2* boneCoords);
-
-void func_800D9790(s_SubCharacter* monsterCybil, s_Model* model);
-
-void func_800D99E4(s_SubCharacter* monsterCybil, s_Model* modelUpper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-
-void func_800D9AAC(s_SubCharacter* monsterCybil, s_Model* model);
-
-void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* model, GsCOORDINATE2* boneCoords);
-
-void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* model, GsCOORDINATE2* boneCoords);
-
-s32 func_800DBA48(s_SubCharacter* monsterCybil);
-
-bool func_800DBD64(s_SubCharacter* monsterCybil);
-
-void func_800DB4CC(s_SubCharacter* monsterCybil, s_Model* model, GsCOORDINATE2* boneCoords);
-
-bool func_800DB81C(s_SubCharacter* monsterCybil);
-
-s32 func_800DB930(void);
-
-void func_800DB4CC(s_SubCharacter* monsterCybil, s_Model* model, GsCOORDINATE2* boneCoords);
-
-s32 func_800DB6FC(VECTOR3* pos);
-
-void func_800DB748(s_SubCharacter* monsterCybil);
-
-void func_800DC018(s_SubCharacter* monsterCybil);
-
 void Flauros_Update(s_SubCharacter* flauros, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void Parasite_Update(s_SubCharacter* parasite, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
@@ -322,8 +239,6 @@ void Parasite_Update(s_SubCharacter* parasite, s_AnmHeader* anmHdr, GsCOORDINATE
 void func_800DE26C(void);
 
 void func_800DE274(void);
-
-void func_800DBE5C(s_SubCharacter* chara);
 
 s32 func_800DE350(s32 arg0);
 

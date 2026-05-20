@@ -1,15 +1,10 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player.h"
-#include "inline_no_dmpsx.h"
-#include "main/rng.h"
-#include "maps/map6/map6_s04.h"
-#include "maps/particle.h"
+
+#include "maps/characters/monster_cybil.h"
 
 #include <psyq/gtemac.h>
-#include "maps/characters/larval_stalker.h"
-#include "maps/characters/player.h"
-#include "maps/characters/stalker.h"
 
 void func_800D87B0(s_SubCharacter* chara) // 0x800D87B0
 {
@@ -275,31 +270,31 @@ void func_800D8B14(s_SubCharacter* monsterCybil, s_Model* model) // 0x800D8B14
     #undef playerChara
 }
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800CB118);
+INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB118);
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800CB178);
+INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB178);
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800CB1D8);
+INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB1D8);
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800CB208);
+INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB208);
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800CB238);
+INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB238);
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800CB250);
+INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB250);
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800CB278);
+INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB278);
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800CB2A0);
+INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB2A0);
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800CB2B4);
+INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB2B4);
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800CB2DC);
+INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB2DC);
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800CB304);
+INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB304);
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800CB364);
+INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB364);
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800CB3A4);
+INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB3A4);
 
 void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* model, GsCOORDINATE2* boneCoords) // 0x800D8D7C
 {
