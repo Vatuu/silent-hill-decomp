@@ -27,12 +27,11 @@ extern s16     D_800EA894;
 extern s16     D_800EA896; // Relative keyframe?
 extern s16     D_800EBB48;
 extern s16     D_800EBB4A;
-extern s_Model g_MonsterCybil_ExtraModel; // 0x800ED540, Some kind of attachment or another `s_SubCharacter` instance?
-extern s8      D_800ED543; // TODO: Should be part of `g_MonsterCybil_ExtraModel` above?
+extern s_Model g_MonsterCybil_ExtraModel; // Some kind of attachment or another `s_SubCharacter` instance?
 extern VECTOR  D_800ED560;
 extern VECTOR3 D_800ED570;
 
-void func_800D87B0(s_SubCharacter* chara);
+void func_800D87B0(s_SubCharacter* monsterCybil);
 
 void func_800D8848(s_Model* model);
 
