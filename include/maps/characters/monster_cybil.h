@@ -43,7 +43,7 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
 void func_800DB4CC(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINATE2* boneCoords);
 
-s32 func_800DB6FC(VECTOR3* pos);
+bool func_800DB6FC(VECTOR3* pos);
 
 void func_800DB748(s_SubCharacter* monsterCybil);
 

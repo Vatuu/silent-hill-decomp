@@ -464,27 +464,27 @@ typedef struct _PropsMonsterCybil
     s16    field_EE; // Anim index?
     q19_12 field_F0; // Timer.
     s32    field_F4;
-    q19_12 field_F8; // Timer.
+    q19_12 field_F8; // Timer, gets reduced by damage?
     s8     __pad_FC[2];
-    q3_12  field_FE; // Angle?
+    s16    field_FE; // Index.
     q19_12 field_100;
     s16    field_104;
-    q3_12  field_106; // Angle.
-    s32    field_108;
+    q3_12  field_106; // Angle or counter (`func_800D8D7C`)? May change usage depending on state step?
+    q19_12 field_108; // Timer.
     q19_12 field_10C; // Timer.
     q19_12 field_110; // Distance?
     u8     field_114;
     u8     field_115;
     u8     field_116;
     s8     __pad_117;
-    s16    field_118;
+    q3_12  field_118; // Angle.
     q3_12  field_11A; // Angle.
     s16    field_11C;
     s16    field_11E;
-    s16    field_120;
-    s16    field_122;
+    s16    field_120; // `bool`.
+    q3_12  field_122; // Angle.
     s8     __pad_124[2];
-    s16    field_126;
+    q3_12  field_126; // Used as `s_SubCharacter::moveSpeed`.
 } s_PropsMonsterCybil;
 STATIC_ASSERT_SIZEOF(s_PropsMonsterCybil, 64);
 
