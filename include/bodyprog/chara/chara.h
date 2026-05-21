@@ -345,7 +345,7 @@ typedef struct _PropsFloatstinger
     s8         __pad_105;
     s16        field_106;
     q19_12     field_108; // Damage related.
-    q3_12      field_10C; // Angle, backup of `field_10C`?
+    q3_12      field_10C; // Angle, backup of `field_F4`?
     q3_12      field_10E; // Timer?
     s8         unk_110[24];
 } s_PropsFloatstinger;
