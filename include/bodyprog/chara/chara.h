@@ -499,17 +499,17 @@ typedef struct _PropsPuppetNurse
 {
     /* 0xE8  */ VECTOR3       position_E8; /** Q19.12 */
     /* 0xF4  */ s_CharaDamage damage;
-    /* 0x104 */ q19_12        field_104;
-    /* 0x108 */ s32           field_108;
-    /* 0x10C */ s32           field_10C;
+    /* 0x104 */ q19_12        field_104; // Timer.
+    /* 0x108 */ q19_12        field_108; // `vx` position?
+    /* 0x10C */ q19_12        field_10C; // `vz` position?
     /* 0x110 */ q19_12        moveSpeed;
-    /* 0x114 */ s32           field_114;
-    /* 0x118 */ u8            field_118;
+    /* 0x114 */ q19_12        field_114; // Damage related.
+    /* 0x118 */ u8            field_118; // Used in switch, values 0 - 2.
     /* 0x119 */ u8            modelVariantIdx;
-    /* 0x11A */ u16           field_11A;
-    /* 0x11C */ q3_12         field_11C; // Angle.
-    /* 0x11E */ s16           field_11E;
-    /* 0x120 */ s16           field_120;
+    /* 0x11A */ q3_12         field_11A; // Timer.
+    /* 0x11C */ q3_12         field_11C; // Heading angle.
+    /* 0x11E */ s16           field_11E; // `bool`.
+    /* 0x120 */ q3_12         field_120;
     /* 0x122 */ u16           flags_122; /** `e_PuppetNurseFlags` */
     /* 0x124 */ s_800D5710*   field_124;
 } s_PropsPuppetNurse;
