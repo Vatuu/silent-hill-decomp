@@ -1072,12 +1072,12 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
     {
-        if (!Savegame_EventFlagGet(368))
+        if (!Savegame_EventFlagGet(EventFlag_368))
         {
             if (Savegame_EventFlagGet(EventFlag_354) && (g_SysWork.playerWork.player.position.vz < Q12(-66.0f)))
             {
-                func_8005DC1C(1585, &D_800CB0CC, 0xFF, 2);
-                Savegame_EventFlagSet(368);
+                func_8005DC1C(Sfx_Unk1585, &D_800CB0CC, Q8_CLAMPED(1.0f), 2);
+                Savegame_EventFlagSet(EventFlag_368);
             }
         }
     }

@@ -363,6 +363,8 @@ typedef enum _EventFlag
     EventFlag_M5S00_PickupMap      = 361,
     EventFlag_362                  = 362,
 
+    EventFlag_368             = 368,
+
     EventFlag_M5S01_PickupMap = 370,
     EventFlag_371             = 371,
 
