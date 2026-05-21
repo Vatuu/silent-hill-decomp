@@ -1290,7 +1290,7 @@ void WorldGfx_HeldItemAttach(e_CharaId charaId, s32 modelBone); // Called by som
 
 s32 func_800868F4(s32 arg0, s32 arg1, s32 idx);
 
-void World_TriggerZonesSet(s_MapOverlayHeader* overlayHdr);
+void World_CollisionTriggersSet(s_MapOverlayHeader* overlayHdr);
 
 void World_PlayerTriggerZonesGet(void);
 
@@ -2340,13 +2340,13 @@ void Collision_FlagBitsSet(u16 collFlags);
 
 void Collision_FlagBitsClear(s32 collFlags);
 
-/** @brief Scans trigger zones and collects those containing the given XZ position.
+/** @brief Runs through collision triggers and collects those containing the given XZ position.
  *
  * @param posX Query X position.
  * @param posZ Query Z position.
- * @param zones Array of trigger zones.
+ * @param triggers Array of collision triggers.
  */
-void Collision_TriggerZonesGet(q19_12 posX, q19_12 posZ, s_TriggerZone* zones);
+void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, s_CollisionTrigger* triggers);
 
 void IpdCollData_FixOffsets(s_IpdCollisionData* collData);
 
@@ -2365,21 +2365,21 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ);
 /** @brief Detects a wall collision using the scratchpad for performance.
  *
  * @param collResult Output collision result.
- * @param offsetMove Movement offset.
+ * @param moveOffset Movement offset.
  * @param chara Character to check.
  * @return Wall response code.
  */
-s32 Collision_WallDetect(s_CollisionResult* collResult, VECTOR3* offsetMove, s_SubCharacter* chara);
+s32 Collision_WallDetect(s_CollisionResult* collResult, VECTOR3* moveOffset, s_SubCharacter* chara);
 
 /** @brief Handles a wall collision response by sampling the ground at 9 points around a character.
  *
  * @param collResult Output collision result.
- * @param offsetMove Movement offset (unused).
+ * @param moveOffset Movement offset (unused).
  * @param chara Character to check.
  * @param response Initial collision pass response.
  * @return Wall response code.
  */
-s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* offsetMove, s_SubCharacter* chara, s32 response);
+s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOffset, s_SubCharacter* chara, s32 response);
 
 /** @brief Probes ground heights at 16 radial points to determine the terrain slope direction.
  * Creates a terrain avoidance force to push away from illegal positions.
@@ -2395,11 +2395,11 @@ void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* p
 /** @brief Applies collision detection for a character's movement offset.
  *
  * @param collResult Output collision result.
- * @param offsetMove Movement offset to test.
+ * @param moveOffset Movement offset to test.
  * @param chara Character performing movement.
  * @return Collision result response.
  */
-bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* offsetMove, s_SubCharacter* chara);
+bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* moveOffset, s_SubCharacter* chara);
 
 /** @brief Initializes a default collision result with a position and ground height.
  *
@@ -2431,7 +2431,7 @@ s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, const s
 
 s32 func_8006A42C(s_CollisionResult* collResult, const VECTOR3* offset, const s_CollisionCylinder* collCylinder);
 
-bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* offsetMove, const s_CollisionCylinder* collCylinder, bool arg3,
+bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_CollisionCylinder* collCylinder, bool arg3,
                    s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7,
                    s_SubCharacter** charas, s32 charaCount);
 
@@ -2441,19 +2441,19 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCy
 /** @brief Initializes a collision state for a new pass.
  *
  * @param collState Collision state to initialize.
- * @param offsetMove Movement offset.
+ * @param moveOffset Movement offset.
  * @param collCylinder Collision cylinder.
  * @param arg3 Configuration flag. TODO: What is it?
  */
-void Collision_QueryInit(s_CollisionState* collState, VECTOR3* offsetMove, const s_CollisionCylinder* collCylinder, bool arg3);
+void Collision_QueryInit(s_CollisionState* collState, VECTOR3* moveOffset, const s_CollisionCylinder* collCylinder, bool arg3);
 
 /** @brief Calculates the movement direction vector and distance from a position offset.
  *
  * @param result Output movement direction and position data.
- * @param offsetMove Movement offset.
+ * @param moveOffset Movement offset.
  * @param collCylinder Collision cylinder.
  */
-void Collision_MoveDirectionCalc(s_CollisionCharaMovement* result, const VECTOR3* offsetMove, const s_CollisionCylinder* collCylinder);
+void Collision_MoveDirectionCalc(s_CollisionCharaMovement* result, const VECTOR3* moveOffset, const s_CollisionCylinder* collCylinder);
 
 void Ipd_GridCollisionQuery(s_CollisionState* collState, s_IpdCollisionData* collData);
 
@@ -2568,15 +2568,15 @@ void func_8006F250(q19_12* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19
 
 void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ);
 
-bool func_8006F3C4(s_func_8006F338* arg0, const s_TriggerZone* zone);
+bool func_8006F3C4(s_func_8006F338* arg0, const s_CollisionTrigger* trigger);
 
 /** Translates something. Unsure on 3rd param's name. */
-q19_12 func_8006F620(VECTOR3* offsetMove, s_CollisionCylinder* collCylinder, q19_12 radius, q19_12 offsetY);
+q19_12 func_8006F620(VECTOR3* moveOffset, s_CollisionCylinder* collCylinder, q19_12 radius, q19_12 offsetY);
 
-/** @brief Return the distance from a point and a trigger zone.
- * If the point is within the trigger zone it return 0.
+/** @brief Gets the offset from a world position to the edge of a collision trigger.
+ * If the position intersects with the trigger, the offset is (0, 0).
  */
-void Collision_TriggerDistGet(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s_TriggerZone* zone);
+void Collision_TriggerOffsetGet(q19_12* offsetX, q19_12* offsetZ, q19_12 posX, q19_12 posZ, const s_CollisionTrigger* trigger);
 
 q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle);
 

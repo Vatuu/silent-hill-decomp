@@ -362,7 +362,7 @@ typedef struct _Savegame
                                                                  * All set to 1 by default. As soon as they are killed (not just stunned),
                                                                  * set to 0 based on a currently unknown index value.
                                                                  */
-    /* 0x164    */ s32             paperMapFlags;                // See Sparagas' `HasMapsFlags` struct for details of every bit.
+    /* 0x164    */ s32             paperMapFlags;               // See Sparagas' `HasMapsFlags` struct for details of every bit.
     /* 0x168    */ u32             eventFlags[52];              // Can be accessed through `Savegame_EventFlagGet` / `Savegame_EventFlagSet`, only tested a few, but seems all are related to events and pick-up flags
                                                                 // grouped by location and not item types.
                                                                 // Also includes map marking flags - see Sparagas' `MapMarkingsFlags` struct for details of every bit.

@@ -1,10 +1,10 @@
+#include <psyq/gtemac.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player.h"
 
 #include "maps/characters/monster_cybil.h"
-
-#include <psyq/gtemac.h>
 
 // Weird access pattern using `npcs` array instead of function param.
 #define monsterCybilChara g_SysWork.npcs[0]
@@ -1026,7 +1026,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             if (monsterCybil->properties.monsterCybil.field_126 != 0)
             {
-                monsterCybil->properties.monsterCybil.field_126 = monsterCybil->properties.monsterCybil.field_126 - Q12(0.08);
+                monsterCybil->properties.monsterCybil.field_126 = monsterCybil->properties.monsterCybil.field_126 - Q12(0.08f);
                 if (monsterCybil->properties.monsterCybil.field_126 < 0)
                 {
                     monsterCybil->properties.monsterCybil.field_126 = 0;

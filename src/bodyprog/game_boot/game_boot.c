@@ -328,7 +328,7 @@ void GameBoot_InGameInit(void) // 0x80034FB8
     vcInitCamera(&g_MapOverlayHeader, &playerChara.position);
 
     vcSetCameraUseWarp(&playerChara.position, g_SysWork.cameraAngleY);
-    World_TriggerZonesSet(&g_MapOverlayHeader);
+    World_CollisionTriggersSet(&g_MapOverlayHeader);
     Gfx_MapEffectsSet(0);
     WorldGfx_CharaModelProcessAllLoads();
     Game_FlashlightAttributesFix();
@@ -382,10 +382,12 @@ void GameBoot_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 
 void GameBoot_PlayerInit(void) // 0x80035178
 {
+    #define ANIMS_DATA_BUFFER_SIZE 0x2E630
+
     WorldGfx_MapInit();
     CharaModel_AllModelsFree();
     Item_HeldItemModelFree();
-    Anim_BoneInit(FS_BUFFER_0, g_SysWork.playerBoneCoords); // Load player anim file?
+    Anim_BoneInit((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords);
     WorldGfx_PlayerModelProcessLoad();
 
     g_SysWork.unused_229C = NO_VALUE;
@@ -399,9 +401,12 @@ void GameBoot_PlayerInit(void) // 0x80035178
         Game_TurnFlashlightOn();
     }
 
-    g_CharaModelAnimsData[0].activeSize = 0x2E630;
-    g_CharaModelAnimsData[0].allocSize  = 0x2E630;
+    g_CharaModelAnimsData[0].activeSize = ANIMS_DATA_BUFFER_SIZE;
+    g_CharaModelAnimsData[0].allocSize  = ANIMS_DATA_BUFFER_SIZE;
+
     Game_PlayerInfoInit();
+
+    #undef ANIMS_DATA_BUFFER_SIZE
 }
 
 void GameBoot_MapLoad(s32 mapIdx) // 0x8003521C
@@ -410,10 +415,8 @@ void GameBoot_MapLoad(s32 mapIdx) // 0x8003521C
     Map_EffectTexturesLoad(mapIdx);
     GameFs_PlayerMapAnimLoad(mapIdx);
 
-    // If the player spawns in the map with a weapon equipped (either because it's a demo
-    // or because the player saved the game with a weapon equipped), this and the next function
-    // make it appear and allocate its data.
-    // @note This code has some special functionallity if the player spawns without an equipped weapon.
+    // If the player spawns in with a weapon equipped (either because it's a demo or because the user saved the game
+    // with a weapon equipped), this and the next function make it appear and allocate its data.
     if (g_SysWork.processFlags & (ProcessFlag_NewGame  |
                                   ProcessFlag_LoadSave |
                                   ProcessFlag_Continue |
@@ -421,6 +424,5 @@ void GameBoot_MapLoad(s32 mapIdx) // 0x8003521C
     {
         WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
     }
-
     Gfx_PlayerHeldItemAttach(g_SysWork.playerCombat.weaponAttack);
 }

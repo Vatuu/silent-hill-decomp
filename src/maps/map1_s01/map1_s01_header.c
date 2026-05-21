@@ -154,7 +154,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .cameraPaths = {
         #include "vc_road_data.h"
     },
-    .triggerZones = {
+    .collisionTriggers = {
         #include "header_field_D2C.h"
     },
 };

@@ -3661,8 +3661,8 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
         }
     }
 
-    Collision_FlagBitsClear(CollisionFlag_All);
-    Collision_FlagBitsSet(CollisionFlag_None);
+    Collision_FlagBitsClear(CollisionTriggerFlag_All);
+    Collision_FlagBitsSet(CollisionTriggerFlag_None);
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -5, -1, -5) && PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
     {

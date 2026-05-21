@@ -1134,7 +1134,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D1718
         Savegame_EventFlagClear(EventFlag_408);
     }
 
-    Collision_FlagBitsClear(CollisionFlag_All);
+    Collision_FlagBitsClear(CollisionTriggerFlag_All);
     Collision_FlagBitsSet(flags);
 }
 
@@ -1379,13 +1379,13 @@ void func_800D1EB8(s32 arg0, s32* arg1, s32* arg2) // 0x800D1EB8
 
 void func_800D2170(s32 arg0) // 0x800D2170
 {
-    TIM_IMAGE img;
-    s32*      buffers[2];
-    s32       temp_a0;
-    s32       rng15;
-    s32       rng0;
-    s32       i;
-    s32       j;
+    TIM_IMAGE       img;
+    s32*            buffers[2];
+    s32             temp_a0;
+    s32             rng15;
+    s32             rng0;
+    s32             i;
+    s32             j;
     u32*            ptr2;
     s_8019F8F8_908* ptr;
     s_8019F8F8*     base;

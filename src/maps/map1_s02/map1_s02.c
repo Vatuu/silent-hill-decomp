@@ -1413,7 +1413,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     s32 collFlags;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    collFlags = CollisionFlag_None;
+    collFlags = CollisionTriggerFlag_None;
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
     {
@@ -1488,7 +1488,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
         // Activate collisions for door blocking corpse in bathroom with shotgun.
         else
         {
-            collFlags = CollisionFlag_1;
+            collFlags = CollisionTriggerFlag_1;
         }
 
         WorldGfx_ObjectAdd(&g_WorldObject1.object, &g_WorldObject1.position, &g_WorldObject1.rotation);
@@ -1506,7 +1506,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
         if (g_WorldObject6.rotation.vy != Q12_ANGLE(180.0f) ||
             g_WorldObject7.rotation.vy != g_WorldObject6.rotation.vy)
         {
-            collFlags |= CollisionFlag_2;
+            collFlags |= CollisionTriggerFlag_2;
             Savegame_EventFlagClear(EventFlag_362);
         }
         else
@@ -1514,7 +1514,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
             Savegame_EventFlagSet(EventFlag_362);
         }
 
-        collFlags |= CollisionFlag_1;
+        collFlags |= CollisionTriggerFlag_1;
     }
     else
     {
@@ -1552,9 +1552,9 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
         WorldGfx_ObjectAdd(&g_WorldObjectB.object, &g_WorldObjectB.position, &g_WorldObjectB.rotation);
     }
 
-    Collision_FlagBitsClear(CollisionFlag_All);
+    Collision_FlagBitsClear(CollisionTriggerFlag_All);
 
-    if (collFlags != CollisionFlag_None)
+    if (collFlags != CollisionTriggerFlag_None)
     {
         Collision_FlagBitsSet(collFlags);
     }

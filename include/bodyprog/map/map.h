@@ -392,8 +392,8 @@ typedef struct _SpawnInfo
 } s_SpawnInfo;
 STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
 
-/** @brief World-space trigger zone. */
-typedef struct _TriggerZone
+/** @brief World-space collision trigger used to inform uneven terrain such as walls and stairs. */
+typedef struct _CollisionTrigger
 {
     /* 0x0+0  */ u8  isEndOfArray : 1;  /** `bool` | Marks last entry. */
     /* 0x0+1  */ s32 positionX    : 10; /** Meter steps. */
@@ -401,8 +401,8 @@ typedef struct _TriggerZone
     /* 0x0+21 */ u32 sizeX        : 4;  /** Meter steps. */
     /* 0x0+25 */ u32 sizeZ        : 4;  /** Meter steps. */
     /* 0x0+29 */ u32 height       : 3;  /** Half-meter steps. Used to set `s_func_8006F338::field_2C` which is then copied by `func_8006F250`. */
-} s_TriggerZone;
-STATIC_ASSERT_SIZEOF(s_TriggerZone, 4);
+} s_CollisionTrigger;
+STATIC_ASSERT_SIZEOF(s_CollisionTrigger, 4);
 
 /** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`.
  * If field has a comment that lists only certain map(s) it means all others set this field to 0.
@@ -530,7 +530,7 @@ typedef struct _MapOverlayHeader
     /* 0x248 */ s8                     charaGroupIds[CHARA_GROUP_COUNT]; /** `e_CharaId` values where if `s_SpawnInfo::charaId == Chara_None`, `charaGroupIds[0]` is used for `charaSpawnInfos[0]` and `charaGroupIds[1]` for `charaSpawnInfos[1]`. */
     /* 0x24C */ s_SpawnInfo            charaSpawnInfos[2][16];           /** Array of character type/position/flags. `flags == SpawnFlags_None` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
     /* 0x3CC */ VC_ROAD_DATA           cameraPaths[100];
-    /* 0xD2C */ s_TriggerZone          triggerZones[200];
+    /* 0xD2C */ s_CollisionTrigger          collisionTriggers[200];
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 4172);
 

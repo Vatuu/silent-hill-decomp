@@ -9,15 +9,15 @@ struct _IpdCollisionData;
 /** @brief Global collision flags.
  * Applies for both NPCs and the player.
  */
-typedef enum _CollisionFlags
+typedef enum _CollisionTriggerFlags
 {
-    CollisionFlag_None = 0,
-    CollisionFlag_0    = 1 << 0, // Enables map collisions.
-    CollisionFlag_1    = 1 << 1, // Enables objects collisions.
-    CollisionFlag_2    = 1 << 2, // Enables alternative objects collisions?
-    CollisionFlag_3    = 1 << 3, // @unused Only ever call in `MAP6_S05`.
-    CollisionFlag_All  = 0xFFFF
-} e_CollisionFlags;
+    CollisionTriggerFlag_None = 0,
+    CollisionTriggerFlag_0    = 1 << 0, // Enables map collisions.
+    CollisionTriggerFlag_1    = 1 << 1, // Enables objects collisions.
+    CollisionTriggerFlag_2    = 1 << 2, // Enables alternative objects collisions?
+    CollisionTriggerFlag_3    = 1 << 3, // @unused Only ever call in `MAP6_S05`.
+    CollisionTriggerFlag_All  = 0xFFFF
+} e_CollisionTriggerFlags;
 
 typedef enum _CollisionType
 {
@@ -120,14 +120,13 @@ typedef struct
 } s_CollisionState_CC;
 STATIC_ASSERT_SIZEOF(s_CollisionState_CC, 56);
 
-// Collision-related.
-typedef struct
+typedef struct _CollisionCharaMovement
 {
     /* 0x0  */ s32        collisionState; /** `e_CharaCollisionState` */
     /* 0x4  */ bool       field_4; // Flag set when the character collisions being check is any of the ones being
                                    // in the of `Collision_CharaCollisionSetup`.
-    /* 0x8  */ q19_12     moveDistance;
-    /* 0xC  */ SVECTOR    offsetMove; // Q23.8
+    /* 0x8  */ q19_12     moveDistance; // TODO: Just `distance`.
+    /* 0xC  */ SVECTOR    moveOffset; // Q23.8 | TODO: Just `offset`.
     /* 0x14 */ DVECTOR_XZ direction;
     /* 0x18 */ q23_8      positionX;
     /* 0x1C */ q23_8      positionZ;
@@ -148,62 +147,64 @@ typedef struct
 
 typedef struct _CollisionState
 {
-    u8                       field_0_0         : 8; // Boolean? Code only assigns 1.
-    s8                       isCharaMoving_0_8 : 1; /** `bool` */
-    s8                       field_0_9         : 1; /** `bool` */
-    s8                       field_0_10        : 1; /** `bool` */
-    s8                       field_0_11        : 5;
-    u16                      flags_2           : 16; /** `e_CollisionFlags` */
-    s_CollisionCharaMovement charaMoveInfo;
-    s32                      field_34;
-    s16                      field_38;
-    s16                      field_3A;
-    s16                      field_3C; // X?
-    s16                      field_3E; // Z?
-    s8*                      field_40;
-    s_CollisionState_44      field_44;
-    q23_8                    field_7C; // Related to ground height?
-    q23_8                    field_80; // X } Related to ground surface.
-    q23_8                    field_84; // Z }
-    q19_12                   tiltAngleX;
-    q19_12                   tiltAngleZ;
-    s32                      field_90; // `bool`?
-    s32                      groundType; /** `e_GroundType` */
-    union
-    {
-        DVECTOR_XZ vec_0;
-        s32        field_0;
-    } field_98;
-    union
-    {
-        DVECTOR_XZ vec_0;
-        s32        field_0;
-    } field_9C;
-    union
-    {
-        struct
-        {
-            u8                 field_0; // Start index for something.
-            u8                 field_1;
-            u8                 field_2;
-            u8                 field_3;
-            s_func_8006CA18*   field_4;
-            s_CollisionState_A8 field_8[4];
-        } s_0;
-        struct
-        {
-            q7_8 field_0; // Set to absolute character bottom height.
-            q7_8 field_2; // Set to absolute character top height.
-            s16  field_4;
-            u8   collisionState; /** `e_CharaCollisionState` */
-            u8*  field_8;
-            s8   unk_C[28];
-        } s_1;
-    } field_A0;
-    u8                 field_C8;
-    u8                 unk_C9[1];
-    /* 0xCA */ q7_8               groundHeight;
-    s_CollisionState_CC field_CC;
+    /* 0x0+0  */ u8                       field_0_0     : 8; // Boolean? Code only assigns 1.
+    /* 0x0+8  */ s8                       isCharaMoving : 1; /** `bool` */
+    /* 0x0+9  */ s8                       field_0_9     : 1; /** `bool` */
+    /* 0x0+10 */ s8                       field_0_10    : 1; /** `bool` */
+    /* 0x0+11 */ s8                       field_0_11    : 5;
+    /* 0x2    */ u16                      flags         : 16; /** `e_CollisionTriggerFlags` */
+    /* 0x4    */ s_CollisionCharaMovement charaMoveInfo;
+    /* 0x34   */ s32                      field_34;
+    /* 0x38   */ s16                      field_38;
+    /* 0x3A   */ s16                      field_3A;
+    /* 0x3C   */ s16                      field_3C; // X?
+    /* 0x3E   */ s16                      field_3E; // Z?
+    /* 0x40   */ s8*                      field_40;
+    /* 0x44   */ s_CollisionState_44      field_44;
+    /* 0x7C   */ q23_8                    field_7C; // Related to ground height?
+    /* 0x80   */ q23_8                    field_80; // X } Related to ground surface.
+    /* 0x84   */ q23_8                    field_84; // Z }
+    /* 0x88   */ q19_12                   tiltAngleX;
+    /* 0x8C   */ q19_12                   tiltAngleZ;
+    /* 0x90   */ s32                      field_90; // `bool`?
+    /* 0x94   */ s32                      groundType; /** `e_GroundType` */
+
+                 union
+                 {
+                     DVECTOR_XZ vec_0;
+                     s32        field_0;
+    /* 0x98   */ } field_98;
+                 union
+                 {
+                     DVECTOR_XZ vec_0;
+                     s32        field_0;
+    /* 0x9C   */ } field_9C;
+                 union
+                 {
+                     struct
+                     {
+                         /* 0x0 */ u8                  field_0; // Start index for something.
+                         /* 0x1 */ u8                  field_1;
+                         /* 0x2 */ u8                  field_2;
+                         /* 0x3 */ u8                  field_3;
+                         /* 0x4 */ s_func_8006CA18*    field_4;
+                         /* 0x8 */ s_CollisionState_A8 field_8[4];
+                     } s_0;
+                     struct
+                     {
+                         /* 0x0 */ q7_8 field_0; // Set to absolute character bottom height.
+                         /* 0x2 */ q7_8 field_2; // Set to absolute character top height.
+                         /* 0x4 */ s16  field_4;
+                         /* 0x6 */ u8   collisionState; /** `e_CharaCollisionState` */
+                         /* 0x8 */ u8*  field_8;
+                         /* 0xC */ s8   unk_C[28];
+                     } s_1;
+    /* 0xA0   */ } field_A0;
+
+    /* 0xC8   */ u8                  field_C8;
+    /* 0xC9   */ u8                  unk_C9[1];
+    /* 0xCA   */ q7_8                groundHeight;
+    /* 0xCC   */ s_CollisionState_CC field_CC;
     // TODO: Maybe incomplete. Maybe not, added the final padding based on `Collision_Get`.
 } s_CollisionState;
 
@@ -287,19 +288,19 @@ typedef struct _CollisionResult
     /* 0x18 */ q19_12      field_18; // Height related to a trigger point.
 } s_CollisionResult;
 
-/** @brief Collection of collided trigger zones. */
-typedef struct _TriggerZoneCollisions
+/** @brief Collection of nearby collision triggers. */
+typedef struct _ActiveCollisionTriggers
 {
-    /* 0x0 */ u16            flags; /** `e_CollisionFlags` */
-    /* 0x2 */ u8             triggerZoneCount;
+    /* 0x0 */ u16            flags; /** `e_CollisionTriggerFlags` */
+    /* 0x2 */ u8             collisionTriggerCount;
     /* 0x3 */ u8             __pad_3;
-    /* 0x4 */ s_TriggerZone* triggerZones[20]; // Guessed size.
-} s_TriggerZoneCollisions;
+    /* 0x4 */ s_CollisionTrigger* collisionTriggers[20]; // Guessed size.
+} s_ActiveCollisionTriggers;
 
-// emoose: Also works: `extern u16 g_TriggerZoneCollisions[];`, `arg0->field_4 = g_TriggerZoneCollisions[0];`.
+// emoose: Also works: `extern u16 g_ActiveCollisionTriggers[];`, `arg0->field_4 = g_ActiveCollisionTriggers[0];`.
 // Didn't see any array accesses in Ghidra though, struct might be more likely.
-extern s_TriggerZoneCollisions g_TriggerZoneCollisions;
+extern s_ActiveCollisionTriggers g_ActiveCollisionTriggers;
 
-extern u16 g_CollisionFlags;
+extern u16 g_CollisionTriggerFlags;
 
 #endif

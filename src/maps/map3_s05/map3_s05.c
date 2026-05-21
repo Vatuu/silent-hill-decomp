@@ -948,8 +948,8 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
     cellZ = g_SysWork.playerWork.player.position.vz / CHUNK_CELL_SIZE;
     projCellZ = (g_SysWork.playerWork.player.position.vz > Q12(0.0f)) ? (cellZ + 1) : (cellZ - 1);
 
-    collFlags = CollisionFlag_None;
-    Collision_FlagBitsClear(CollisionFlag_All);
+    collFlags = CollisionTriggerFlag_None;
+    Collision_FlagBitsClear(CollisionTriggerFlag_All);
 
     if (projCellX == 2 && projCellZ == -3 && !Savegame_EventFlagGet(EventFlag_M3S05_PickupVideoTape))
     {
@@ -970,12 +970,12 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S05_CabinetPushed))
         {
-            collFlags |= CollisionFlag_1;
+            collFlags |= CollisionTriggerFlag_1;
             Savegame_EventFlagSet(EventFlag_288);
         }
         else
         {
-            collFlags |= CollisionFlag_2;
+            collFlags |= CollisionTriggerFlag_2;
             Savegame_EventFlagClear(EventFlag_288);
         }
 

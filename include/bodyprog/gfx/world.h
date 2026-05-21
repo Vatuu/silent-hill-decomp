@@ -22,7 +22,7 @@ typedef struct _WorldGfxWork
     /* 0xCC   */ s_CharaModel      charaModels[CHARA_GROUP_COUNT];
     /* 0x164C */ s_CharaModel      harryModel;
     /* 0x1BAC */ s_HeldItem        heldItem; /** Item held by the player. */
-    /* 0x1BD8 */ s_TriggerZone*    triggerZones;
+    /* 0x1BD8 */ s_CollisionTrigger*    collisionTriggers;
     /* 0x1BDC */ VC_CAMERA_INTINFO vcCameraInternalInfo; /** Debug camera info. */
     /* 0x1BE4 */ s_LmHeader        itemLmHdr;
     /* 0x1BF4 */ u8                itemLmData[4096 - sizeof(s_LmHeader)]; // 4kb allocated for 2.75kb game files.

@@ -678,14 +678,14 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
         }
         else
         {
-            collFlags = CollisionFlag_1;
+            collFlags = CollisionTriggerFlag_1;
         }
 
         WorldGfx_ObjectAdd(&g_WorldObject_Movaches.object, &g_WorldObject_Movaches.position, &SVECTOR3_Zero);
     }
     else
     {
-        Collision_FlagBitsClear(CollisionFlag_All);
+        Collision_FlagBitsClear(CollisionTriggerFlag_All);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
@@ -727,6 +727,6 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
         }
     }
 
-    Collision_FlagBitsClear(CollisionFlag_All);
+    Collision_FlagBitsClear(CollisionTriggerFlag_All);
     Collision_FlagBitsSet(collFlags);
 }

@@ -468,7 +468,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D7360
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    Collision_FlagBitsClear(CollisionFlag_All);
+    Collision_FlagBitsClear(CollisionTriggerFlag_All);
 
     if (PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
     {
@@ -494,7 +494,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D7360
     {
         if (Savegame_EventFlagGet(EventFlag_346))
         {
-            Collision_FlagBitsSet(CollisionFlag_2);
+            Collision_FlagBitsSet(CollisionTriggerFlag_2);
 
             if (g_SysWork.playerWork.player.position.vz < Q12(212.0f))
             {
@@ -503,7 +503,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D7360
         }
         else
         {
-            Collision_FlagBitsSet(CollisionFlag_1);
+            Collision_FlagBitsSet(CollisionTriggerFlag_1);
         }
     }
     else
@@ -514,7 +514,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D7360
             Savegame_EventFlagSet(EventFlag_MapMark_AltCentralTown_CrichtonKoontzBigCross);
         }
 
-        Collision_FlagBitsClear(CollisionFlag_All);
+        Collision_FlagBitsClear(CollisionTriggerFlag_All);
     }
 }
 

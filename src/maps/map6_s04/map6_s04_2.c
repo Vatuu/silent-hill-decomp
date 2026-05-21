@@ -17,10 +17,10 @@
 
 #include "../src/maps/chara_util.c" // 0x800DD5B8
 
-// TODO: Move to separate flauros split.
+// TODO: Move to separate Flauros split.
 #include "../src/maps/characters/flauros.c" // 0x800DE0C4
 
-// TODO: Move to separate parasite split.
+// TODO: Move to separate Parasite split.
 #include "../src/maps/characters/parasite.c" // 0x800DE1CC
 
 void func_800DE26C(void) {}
@@ -3397,7 +3397,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
 
     #define playerChara g_SysWork.playerWork.player
 
-    collFlags = CollisionFlag_None;
+    collFlags = CollisionTriggerFlag_None;
 
     if (!Savegame_EventFlagGet(EventFlag_466))
     {
@@ -3433,7 +3433,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
 
             if (Savegame_EventFlagGet(EventFlag_443))
             {
-                collFlags = CollisionFlag_1;
+                collFlags = CollisionTriggerFlag_1;
 
                 if (g_SysWork.sysState != SysState_EventCallback)
                 {
@@ -3486,7 +3486,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
             func_8005DE0C(Sfx_Unk1615, &D_800CC7CC, Q8(0.5f), Q12(32.0f), 0);
     }
 
-    Collision_FlagBitsClear(CollisionFlag_All);
+    Collision_FlagBitsClear(CollisionTriggerFlag_All);
     Collision_FlagBitsSet(collFlags);
     func_800E0204();
 }
