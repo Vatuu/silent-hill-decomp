@@ -5,7 +5,9 @@
 #include "maps/characters/player.h"
 #include "maps/characters/alessa.h"
 #include "maps/characters/dahlia.h"
+#include "maps/characters/flauros.h"
 #include "maps/characters/larval_stalker.h"
+#include "maps/characters/parasite.h"
 #include "maps/characters/stalker.h"
 #include "maps/characters/monster_cybil.h"
 

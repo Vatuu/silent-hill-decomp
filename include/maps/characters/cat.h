@@ -27,4 +27,8 @@ typedef enum _CatAnim
     { Anim_PlaybackLoop, ANIM_STATUS(CatAnim_JumpToRun, true),   false, NO_VALUE,                              { Q12(0.0f)  }, 22,       23 }
 };*/
 
+extern s_AnimInfo CAT_ANIM_INFOS[]; // 0x800DC924
+
+void Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+
 #endif

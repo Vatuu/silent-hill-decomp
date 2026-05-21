@@ -126,9 +126,6 @@ extern s_800CB6AC D_800CB6AC[6];
 
 extern s_800ED848 D_800ED848[16];
 
-extern s_AnimInfo FLAUROS_ANIM_INFOS[];
-extern s_AnimInfo PARASITE_ANIM_INFOS[];
-
 extern s32 D_800EBA30;
 
 extern u16 D_800EBA64;
@@ -231,10 +228,6 @@ void func_800E0D8C(VECTOR3* arg0);
 void func_800E0DC4(s32 arg0, s32 arg1);
 
 void func_800E0FAC(s32 arg0);
-
-void Flauros_Update(s_SubCharacter* flauros, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-
-void Parasite_Update(s_SubCharacter* parasite, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void func_800DE26C(void);
 

@@ -17,64 +17,11 @@
 
 #include "../src/maps/chara_util.c" // 0x800DD5B8
 
-void Flauros_Update(s_SubCharacter* flauros, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800DE0C4
-{
-    s32         i;
-    q19_12      scale;
-    s_AnimInfo* animInfo;
+// TODO: Move to separate flauros split.
+#include "../src/maps/characters/flauros.c" // 0x800DE0C4
 
-    if (flauros->model.controlState == 0)
-    {
-        flauros->model.anim.alpha   = Q12(0.0f);
-        flauros->model.controlState = 1;
-        flauros->model.stateStep    = 0;
-        Chara_AnimSet(flauros, ANIM_STATUS(1, true), 0);
-    }
-
-    if (flauros->model.anim.time <= Q12(21.0f))
-    {
-        if (flauros->model.anim.time > Q12(13.0f))
-        {
-            scale = (flauros->model.anim.time - Q12(13.0f)) >> 3;
-        }
-        else
-        {
-            scale = Q12(0.0f);
-        }
-    }
-    else
-    {
-        scale = Q12(1.0f);
-    }
-
-    Math_MatrixTransform(&flauros->position, &flauros->rotation, boneCoords);
-
-    animInfo = &FLAUROS_ANIM_INFOS[flauros->model.anim.status];
-    animInfo->playbackFunc(&flauros->model, anmHdr, boneCoords, animInfo);
-
-    for (i = 6; i < 11; i++)
-    {
-        func_800705E4(boneCoords, i, scale, scale, scale);
-    }
-}
-
-void Parasite_Update(s_SubCharacter* parasite, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800DE1CC
-{
-    s_AnimInfo* animInfo;
-
-    if (parasite->model.controlState == 0)
-    {
-        parasite->model.anim.alpha   = Q12(0.0f);
-        parasite->model.controlState = 1;
-        parasite->model.stateStep    = 0;
-        Chara_AnimSet(parasite, ANIM_STATUS(1, true), 0);
-    }
-
-    Math_MatrixTransform(&parasite->position, &parasite->rotation, boneCoords);
-
-    animInfo = &PARASITE_ANIM_INFOS[parasite->model.anim.status];
-    animInfo->playbackFunc(&parasite->model, anmHdr, boneCoords, animInfo);
-}
+// TODO: Move to separate parasite split.
+#include "../src/maps/characters/parasite.c" // 0x800DE1CC
 
 void func_800DE26C(void) {}
 
