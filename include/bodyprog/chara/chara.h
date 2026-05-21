@@ -330,23 +330,24 @@ STATIC_ASSERT_SIZEOF(s_PropsDahlia, 64);
 typedef struct _PropsFloatstinger
 {
     s16        flags_E8;
-    s8         unk_EA[4];
+    s8         unk_EA[2];
+    q3_12      field_EC; // `vy` angle.
     q3_12      field_EE; // Angle.
-    q19_12     field_F0;
-    s16        field_F4;
+    q19_12     field_F0; // Timer.
+    q3_12      field_F4; // Angle.
     s8         __pad_F6[2];
     u16        field_F8;
     u16        field_FA;
-    u16        field_FC;
+    q4_12      field_FC; // Timer?
     s8         __pad_FE[2];
-    s32        field_100;
+    q19_12     field_100; // Timer.
     u8         field_104;
     s8         __pad_105;
     s16        field_106;
-    s32        field_108;
-    s16        field_10C;
-    q3_12      field_10E;
-    u_Property properties_110[6];
+    q19_12     field_108; // Damage related.
+    q3_12      field_10C; // Angle, backup of `field_10C`?
+    q3_12      field_10E; // Timer?
+    s8         unk_110[24];
 } s_PropsFloatstinger;
 STATIC_ASSERT_SIZEOF(s_PropsFloatstinger, 64);
 

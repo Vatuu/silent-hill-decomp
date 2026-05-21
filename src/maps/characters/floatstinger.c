@@ -23,14 +23,14 @@ void Floatstinger_Update(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr, GsCO
     func_800D37E8(floatstinger, anmHdr);
     func_800D3AD4(floatstinger);
 
-    floatstinger->properties.dummy.properties_E8[1].val16[0] = floatstinger->rotation.vy;
+    floatstingerProps.field_EC = floatstinger->rotation.vy;
 }
 
 void Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
 {
     s32 i;
 
-    floatstinger->properties.dummy.properties_E8[0].val16[0] = 0;
+    floatstingerProps.flags_E8     = 0;
     floatstinger->model.anim.alpha = Q12(0.0f);
 
     // Set health.
@@ -51,7 +51,7 @@ void Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
             floatstinger->model.controlState = FloatstingerControl_5;
             Chara_AnimSet(floatstinger, ANIM_STATUS(FloatstingerAnim_9, true), 191);
 
-            floatstinger->properties.dummy.properties_E8[7].val16[1] = -0x90; // Could be `Q12_ANGLE(-12.7f)`?
+            floatstingerProps.field_106 = -0x90; // Could be `Q12_ANGLE(-12.7f)`?
             break;
 
         case 4:
@@ -69,8 +69,8 @@ void Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
     ModelAnim_AnimInfoSet(&floatstinger->model.anim, FLOATSTINGER_ANIM_INFOS);
     Chara_DamageClear(floatstinger);
 
-    D_800DB89C = 0;
-    D_800DB898 = 0;
+    D_800DB89C                 = 0;
+    D_800DB898                 = 0;
     floatstinger->headingAngle = floatstinger->rotation.vy;
 
     for (i = 0; i < 15; i++)
@@ -78,15 +78,15 @@ void Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
         D_800DB8A8[i] = 0;
     }
 
-    floatstinger->properties.dummy.properties_E8[1].val16[0] = floatstinger->rotation.vy;
-    floatstinger->flags |= CharaFlag_NoRadioStatic | CharaFlag_Hit;
+    floatstingerProps.field_EC = floatstinger->rotation.vy;
+    floatstinger->flags       |= CharaFlag_NoRadioStatic | CharaFlag_Hit;
 
     D_800D7858 = 0;
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
-        D_800D785C = Q12(2.4f);
-        floatstinger->properties.dummy.properties_E8[0].val16[0] |= 1 << 0;
+        D_800D785C                  = Q12(2.4f);
+        floatstingerProps.flags_E8 |= FloatstingerFlag_0;
     }
     else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
@@ -125,7 +125,7 @@ void func_800D1968(s_SubCharacter* floatstinger) // 0x800D1968
         if (var_a1 < floatstingerProps.field_108)
         {
             floatstinger->damage.amount -= floatstingerProps.field_108 - var_a1;
-            floatstingerProps.field_108       = var_a1;
+            floatstingerProps.field_108  = var_a1;
             if (floatstinger->damage.amount < Q12(0.0f))
             {
                 floatstinger->damage.amount = Q12(0.0f);
@@ -158,8 +158,8 @@ void func_800D1968(s_SubCharacter* floatstinger) // 0x800D1968
              floatstinger->model.controlState == FloatstingerControl_2 &&
              floatstinger->model.anim.status == ANIM_STATUS(FloatstingerAnim_9, true)))
         {
-            floatstingerProps.field_F8 = 0;
-            floatstinger->model.controlState              = FloatstingerControl_3;
+            floatstingerProps.field_F8       = 0;
+            floatstinger->model.controlState = FloatstingerControl_3;
 
             if (floatstingerProps.field_FA > 1200)
             {
@@ -172,10 +172,10 @@ void func_800D1968(s_SubCharacter* floatstinger) // 0x800D1968
     if (floatstingerProps.field_FA > 1200 && floatstinger->model.controlState == 2 &&
         floatstinger->model.anim.status == ANIM_STATUS(FloatstingerAnim_9, true))
     {
-        floatstingerProps.field_F8  = 0;
-        floatstingerProps.field_FA  = 0;
-        floatstinger->model.controlState               = FloatstingerControl_3;
-        floatstingerProps.flags_E8 |= FloatstingerFlag_1;
+        floatstingerProps.field_F8       = 0;
+        floatstingerProps.field_FA       = 0;
+        floatstinger->model.controlState = FloatstingerControl_3;
+        floatstingerProps.flags_E8      |= FloatstingerFlag_1;
     }
 
     Chara_DamageClear(floatstinger);
@@ -187,8 +187,8 @@ void Floatstinger_ControlUpdate(s_SubCharacter* floatstinger) // 0x800D1B98
 {
     if (floatstinger->model.anim.status != ANIM_STATUS(FloatstingerAnim_1, true))
     {
-        floatstinger->field_44.field_0                     = 0;
-        floatstingerProps.flags_E8 &= ~FloatstingerFlag_2;
+        floatstinger->field_44.field_0 = 0;
+        floatstingerProps.flags_E8    &= ~FloatstingerFlag_2;
     }
 
     // Handle control state.
@@ -213,7 +213,6 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
     s16              temp_v0_4;
     s32              temp_v0_14;
     s32              var_v1;
-    s32              temp_v1_2;
     s32              temp_v1_12;
     q19_12           sinCosAngle;
     s32              temp_a1;
@@ -236,20 +235,19 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
     {
         var_s5     = 0;
         temp_v0_14 = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx + Q12(117.5f),
-                                         g_SysWork.playerWork.player.position.vz - Q12(100.0f));
+                                               g_SysWork.playerWork.player.position.vz - Q12(100.0f));
 
         angle = ratan2(g_SysWork.playerWork.player.position.vx + Q12(117.5f),
-                           g_SysWork.playerWork.player.position.vz - Q12(100.0f));
+                       g_SysWork.playerWork.player.position.vz - Q12(100.0f));
 
         sinCosAngle = Math_Sin(angle);
-        sp58.vx = (floatstinger->model.anim.status == ANIM_STATUS(FloatstingerAnim_1, true)) ? (Q12_MULT(temp_v0_14 + Q12(0.6f), sinCosAngle) - Q12(117.5f)) :
-                                                                                    (Q12_MULT(temp_v0_14 + Q12(1.2f), sinCosAngle) - Q12(117.5f));
-
-        sp58.vy = Q12(-1.0f);
+        sp58.vx     = (floatstinger->model.anim.status == ANIM_STATUS(FloatstingerAnim_1, true)) ? (Q12_MULT(temp_v0_14 + Q12(0.6f), sinCosAngle) - Q12(117.5f)) : 
+                                                                                                   (Q12_MULT(temp_v0_14 + Q12(1.2f), sinCosAngle) - Q12(117.5f));
+        sp58.vy     = Q12(-1.0f);
 
         sinCosAngle = Math_Cos(angle);
-        sp58.vz = (floatstinger->model.anim.status == ANIM_STATUS(FloatstingerAnim_1, true)) ? (Q12_MULT(temp_v0_14 + Q12(0.6f), sinCosAngle) + Q12(100.0f)) :
-                                                                                    (Q12_MULT(temp_v0_14 + Q12(1.2f), sinCosAngle) + Q12(100.0f));
+        sp58.vz     = (floatstinger->model.anim.status == ANIM_STATUS(FloatstingerAnim_1, true)) ? (Q12_MULT(temp_v0_14 + Q12(0.6f), sinCosAngle) + Q12(100.0f)) : 
+                                                                                                   (Q12_MULT(temp_v0_14 + Q12(1.2f), sinCosAngle) + Q12(100.0f));
     }
     else if (g_SysWork.playerWork.player.position.vx > Q12(-121.0f) && g_SysWork.playerWork.player.position.vx < Q12(-120.0f) &&
              (g_SysWork.playerWork.player.position.vz > Q12(96.0f) && g_SysWork.playerWork.player.position.vz < Q12(103.0f)))
@@ -261,23 +259,23 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
     }
     else
     {
-        var_s5    = 2;
-        angle = ratan2(floatstinger->position.vx - g_SysWork.playerWork.player.position.vx,
-                           floatstinger->position.vz - g_SysWork.playerWork.player.position.vz);
+        var_s5 = 2;
+        angle  = ratan2(floatstinger->position.vx - g_SysWork.playerWork.player.position.vx,
+                        floatstinger->position.vz - g_SysWork.playerWork.player.position.vz);
 
         sinCosAngle = Math_Sin(angle);
-        temp_a1 = g_SysWork.playerWork.player.position.vx;
+        temp_a1     = g_SysWork.playerWork.player.position.vx;
 
-        sp48.vx = (floatstinger->model.anim.status == ANIM_STATUS(FloatstingerAnim_1, true)) ? (temp_a1 + Q12_MULT(sinCosAngle * 39, 0x3F)) :
-                                                                                    (temp_a1 + Q12_MULT(sinCosAngle, Q12(1.2f)));
+        sp48.vx = (floatstinger->model.anim.status == ANIM_STATUS(FloatstingerAnim_1, true)) ? (temp_a1 + Q12_MULT(sinCosAngle * 39, 63)) :
+                                                                                               (temp_a1 + Q12_MULT(sinCosAngle, Q12(1.2f)));
 
         sp48.vy = Q12(2.0f);
 
         temp2   = Math_Cos(angle);
         temp_a2 = g_SysWork.playerWork.player.position.vz;
 
-        sp48.vz = (floatstinger->model.anim.status == ANIM_STATUS(FloatstingerAnim_1, true)) ? (temp_a2 + Q12_MULT(temp2 * 39, 0x3F)) :
-                                                                                    (temp_a2 + Q12_MULT(temp2, Q12(1.2f)));
+        sp48.vz = (floatstinger->model.anim.status == ANIM_STATUS(FloatstingerAnim_1, true)) ? (temp_a2 + Q12_MULT(temp2 * 39, 63)) :
+                                                                                               (temp_a2 + Q12_MULT(temp2, Q12(1.2f)));
 
         func_800D4458(floatstinger, &sp48);
 
@@ -301,11 +299,9 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
 
         if (floatstingerProps.flags_E8 & FloatstingerFlag_3)
         {
-            temp_v1_2 = floatstingerProps.field_FC;
+            floatstingerProps.field_FC = MAX(0, floatstingerProps.field_FC - g_DeltaTime);
 
-            floatstingerProps.field_FC = MAX(0, temp_v1_2 - g_DeltaTime);
-
-            if (!(floatstingerProps.field_FC & 0xFFFF))
+            if (!floatstingerProps.field_FC)
             {
                 floatstingerProps.flags_E8 &= ~FloatstingerFlag_3;
             }
@@ -316,7 +312,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
 
         if (ABS(g_SysWork.playerWork.player.position.vy - floatstinger->position.vy) < Q12(0.05f) &&
             Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - floatstinger->position.vx,
-                                g_SysWork.playerWork.player.position.vz - floatstinger->position.vz) < Q12(1.5f) &&
+                                      g_SysWork.playerWork.player.position.vz - floatstinger->position.vz) < Q12(1.5f) &&
             ((var_s5 == 0 && Rng_GenerateUInt(0, 3)) || (var_s5 == 2 && Rng_GenerateUInt(0, 3)))) // 1 in 4 chance.
         {
             if (g_SysWork.playerWork.player.health > Q12(0.0f) &&
@@ -325,13 +321,13 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                 !(g_SysWork.playerWork.player.flags & (1 << 3)) &&
                 !Rng_GenerateUInt(0, 7)) // 1 in 8 chance.
             {
-                floatstinger->model.anim.status              = ANIM_STATUS(FloatstingerAnim_1, false);
-                floatstingerProps.flags_E8 &= ~FloatstingerFlag_4;
+                floatstinger->model.anim.status = ANIM_STATUS(FloatstingerAnim_1, false);
+                floatstingerProps.flags_E8     &= ~FloatstingerFlag_4;
             }
         }
         else if (!(floatstingerProps.flags_E8 & FloatstingerFlag_3) &&
                  Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - floatstinger->position.vx,
-                                     g_SysWork.playerWork.player.position.vz - floatstinger->position.vz) < Q12(6.5f))
+                                           g_SysWork.playerWork.player.position.vz - floatstinger->position.vz) < Q12(6.5f))
         {
             if (ABS(Math_AngleNormalizeSigned(angle - floatstinger->headingAngle)) < Q12_ANGLE(90.0f) &&
                 ABS(Math_AngleNormalizeSigned(angle - floatstinger->rotation.vy)) < Q12_ANGLE(15.0f))
@@ -352,7 +348,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
             FP_FROM(floatstinger->model.anim.time, Q12_SHIFT) < 18)
         {
             func_800D4A3C(floatstinger, &sp58, temp_a2_2);
-            floatstingerProps.field_104 = 0;
+            floatstingerProps.field_104 = false;
         }
         else if (FP_FROM(floatstinger->model.anim.time, Q12_SHIFT) > 17 &&
                  FP_FROM(floatstinger->model.anim.time, Q12_SHIFT) < 25)
@@ -380,13 +376,13 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                 sp20[i].vz = Q8_TO_Q12(ptr->field_20[i].vz);
             }
 
-            if (floatstingerProps.field_104 == 0)
+            if (!floatstingerProps.field_104)
             {
                 sp68.vx = floatstinger->position.vx;
                 sp68.vy = floatstinger->position.vy - Q12(1.0f);
                 sp68.vz = floatstinger->position.vz;
 
-                func_8005DC1C(1571, &sp68, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1571, &sp68, Q8(0.5f), 0);
                 floatstingerProps.field_104++;
             }
 
@@ -443,8 +439,8 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
 
                 temp_a2_2 = g_SysWork.playerWork.player.collision.box.offsetY;
 
-                sp20[1].vy = MAX(g_SysWork.playerWork.player.position.vy + temp_v0_4, Q12(-1.0f)) <= Q12(2.0f) ? (temp_a2_2 + MAX(g_SysWork.playerWork.player.position.vy + temp_v0_4, Q12(-1.0f))) :
-                                                                                                                         (temp_a2_2 + Q12(2.0f));
+                sp20[1].vy = MAX(g_SysWork.playerWork.player.position.vy + temp_v0_4, Q12(-1.0f)) <= Q12(2.0f) ? (temp_a2_2 + MAX(g_SysWork.playerWork.player.position.vy + temp_v0_4, Q12(-1.0f))) : 
+                                                                                                                 (temp_a2_2 + Q12(2.0f));
 
                 sp68.vx = floatstinger->position.vx;
                 sp68.vy = floatstinger->position.vy - Q12(3.5f);
@@ -458,14 +454,14 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                     for (i = 0; i < 2; i++)
                     {
                         temp_s3_2 = Rng_GenerateUInt(0, Q12_ANGLE(180.0f) - 1);
-                        angle = Rng_GenerateUInt(0, Q12_ANGLE(360.0f) - 1);
+                        angle     = Rng_GenerateUInt(0, Q12_ANGLE(360.0f) - 1);
                         temp_s0_4 = Math_Sin(angle);
 
                         sp20[2].vx = sp20[1].vx + Q12_MULT(temp_s3_2, temp_s0_4) +
                                      Math_Sin(floatstinger->rotation.vy + ((i != 0) ? Q12_ANGLE(90.0f) : Q12_ANGLE(-90.0f)));
 
-                        sinCosAngle   = angle;
-                        temp_s0_4 = Math_Cos(sinCosAngle);
+                        sinCosAngle = angle;
+                        temp_s0_4   = Math_Cos(sinCosAngle);
 
                         sp20[2].vz = sp20[1].vz + Q12_MULT(temp_s3_2, temp_s0_4) +
                                      Math_Cos(floatstinger->rotation.vy + ((i != 0) ? Q12_ANGLE(90.0f) : Q12_ANGLE(-90.0f)));
@@ -521,8 +517,8 @@ void func_800D2B90(s_SubCharacter* floatstinger) // 0x800D2B90
     }
 
     D_800D7860 = Q12(13.0f);
-    var_a1 = (floatstingerProps.flags_E8 & FloatstingerFlag_1) ? Q12(0.6f) : Q12(0.4f);
-    temp_v0 = D_800D7858;
+    var_a1     = (floatstingerProps.flags_E8 & FloatstingerFlag_1) ? Q12(0.6f) : Q12(0.4f);
+    temp_v0    = D_800D7858;
 
     if (((floatstingerProps.flags_E8 & FloatstingerFlag_1) && (var_a1 + Q12(1.0f)) < temp_v0) ||
         (!(floatstingerProps.flags_E8 & FloatstingerFlag_1) && (var_a1 + Q12(0.7f)) < temp_v0))
@@ -605,19 +601,19 @@ void func_800D3424(s_SubCharacter* floatstinger) // 0x800D3424
         case 0:
             if (Savegame_EventFlagGet(EventFlag_349))
             {
-                floatstinger->position.vx                       = Q12(-114.5f);
-                floatstinger->position.vy                       = Q12(2.0f);
-                floatstinger->position.vz                       = Q12(108.0f);
-                floatstinger->model.stateStep                  = 4;
-                floatstinger->model.controlState               = FloatstingerControl_None;
-                floatstingerProps.field_106 = 64;
+                floatstinger->position.vx        = Q12(-114.5f);
+                floatstinger->position.vy        = Q12(2.0f);
+                floatstinger->position.vz        = Q12(108.0f);
+                floatstinger->model.stateStep    = 4;
+                floatstinger->model.controlState = FloatstingerControl_None;
+                floatstingerProps.field_106      = 64;
             }
             else
             {
-                floatstinger->position.vx          = Q12(-113.5f);
-                floatstinger->position.vy          = Q12(8.0f);
-                floatstinger->position.vz          = Q12(108.0f);
-                floatstinger->rotation.vy          = Q12_ANGLE(-90.0f);
+                floatstinger->position.vx       = Q12(-113.5f);
+                floatstinger->position.vy       = Q12(8.0f);
+                floatstinger->position.vz       = Q12(108.0f);
+                floatstinger->rotation.vy       = Q12_ANGLE(-90.0f);
                 floatstinger->model.anim.flags &= ~(1 << 1);
             }
             break;
@@ -628,9 +624,9 @@ void func_800D3424(s_SubCharacter* floatstinger) // 0x800D3424
 
         case 1:
             floatstinger->model.anim.flags |= 1 << 1;
-            sp10.vx                       = floatstinger->position.vx;
-            sp10.vy                       = Q12(2.0f);
-            sp10.vz                       = floatstinger->position.vz;
+            sp10.vx                         = floatstinger->position.vx;
+            sp10.vy                         = Q12(2.0f);
+            sp10.vz                         = floatstinger->position.vz;
             func_800D4A3C(floatstinger, &sp10, Q12_ANGLE(-90.0f));
             break;
     }
@@ -646,16 +642,16 @@ void func_800D3564(s_SubCharacter* floatstinger) // 0x800D3564
 {
     VECTOR3 sp10;
 
-    D_800D7860                                = Q12(13.0f);
+    D_800D7860                 = Q12(13.0f);
     floatstingerProps.field_EE = 0;
-    floatstinger->moveSpeed                        = 0;
+    floatstinger->moveSpeed    = 0;
 
     if ((floatstinger->model.anim.status >> 1) != FloatstingerAnim_5 && (s32)g_SavegamePtr->eventFlags[10] < 0)
     {
         floatstinger->model.anim.status = ANIM_STATUS(FloatstingerAnim_5, false);
-        sp10.vx                       = floatstinger->position.vx;
-        sp10.vy                       = floatstinger->position.vy - Q12(3.5f);
-        sp10.vz                       = floatstinger->position.vz;
+        sp10.vx                         = floatstinger->position.vx;
+        sp10.vy                         = floatstinger->position.vy - Q12(3.5f);
+        sp10.vz                         = floatstinger->position.vz;
 
         func_8005DC1C(Sfx_Unk1573, &sp10, Q8(0.5f), 0);
     }
@@ -664,17 +660,17 @@ void func_800D3564(s_SubCharacter* floatstinger) // 0x800D3564
 void func_800D35F0(s_SubCharacter* floatstinger) // 0x800D35F0
 {
     s_CollisionResult sp10;
-    VECTOR3    sp30;
-    q3_12      headingAngle;
-    s32        temp_s0;
-    s32        temp_s2;
-    s32        temp_s3;
-    q19_12     offsetY;
+    VECTOR3           sp30;
+    q3_12             headingAngle;
+    s32               temp_s0;
+    s32               temp_s2;
+    s32               temp_s3;
+    q19_12            offsetY;
 
     headingAngle = floatstinger->headingAngle;
-    temp_s0 = Q12_MULT_PRECISE(g_DeltaTime, floatstinger->moveSpeed);
-    temp_s2 = (temp_s0 <= Q12(-8.0f) || temp_s0 >= Q12(8.0f)) * 4;
-    temp_s3 = temp_s2 >> 1;
+    temp_s0      = Q12_MULT_PRECISE(g_DeltaTime, floatstinger->moveSpeed);
+    temp_s2      = (temp_s0 <= Q12(-8.0f) || temp_s0 >= Q12(8.0f)) * 4;
+    temp_s3      = temp_s2 >> 1;
 
     sp30.vx = Q12_MULT_PRECISE(temp_s0 >> temp_s3, Math_Sin(headingAngle) >> temp_s3) << temp_s2;
     sp30.vz = Q12_MULT_PRECISE(temp_s0 >> temp_s3, Math_Cos(headingAngle) >> temp_s3) << temp_s2;
@@ -682,7 +678,7 @@ void func_800D35F0(s_SubCharacter* floatstinger) // 0x800D35F0
 
     Collision_WallDetect(&sp10, &sp30, floatstinger);
 
-    offsetY = sp10.offset.vy;
+    offsetY                    = sp10.offset.vy;
     floatstinger->position.vx += sp10.offset.vx;
     floatstinger->position.vz += sp10.offset.vz;
 
@@ -771,7 +767,7 @@ void func_800D37E8(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr) // 0x800D3
                         vec.vy = floatstinger->position.vy - Q12(4.0f);
                         vec.vz = floatstinger->position.vz;
 
-                        func_8005DC1C(0x620, &vec, floatstingerProps.field_106 >> 1, 0);
+                        func_8005DC1C(Sfx_Unk1568, &vec, floatstingerProps.field_106 >> 1, 0);
                         floatstingerProps.flags_E8 |= FloatstingerFlag_4;
                     }
                 }
@@ -842,24 +838,24 @@ void func_800D3AD4(s_SubCharacter* floatstinger) // 0x800D3AD4
 
     if ((g_SysWork.playerWork.player.position.vy - Q12(1.35f)) < ptr->field_50[0].vy)
     {
-        floatstinger->collision.box.top   = ptr->field_50[1].vy - floatstinger->position.vy;
-        floatstinger->collision.box.height   = ptr->field_50[0].vy - floatstinger->position.vy;
-        floatstinger->collision.cylinder.radius  = Q12(0.4f);
-        floatstinger->collision.cylinder.field_2   = Q12(0.4f);
-        floatstinger->collision.shapeOffsets.box.vx = ((ptr->field_50[0].vx + ptr->field_50[1].vx) >> 1) - floatstinger->position.vx;
+        floatstinger->collision.box.top                  = ptr->field_50[1].vy - floatstinger->position.vy;
+        floatstinger->collision.box.height               = ptr->field_50[0].vy - floatstinger->position.vy;
+        floatstinger->collision.cylinder.radius          = Q12(0.4f);
+        floatstinger->collision.cylinder.field_2         = Q12(0.4f);
+        floatstinger->collision.shapeOffsets.box.vx      = ((ptr->field_50[0].vx + ptr->field_50[1].vx) >> 1) - floatstinger->position.vx;
         floatstinger->collision.shapeOffsets.cylinder.vx = floatstinger->collision.shapeOffsets.box.vx;
-        floatstinger->collision.shapeOffsets.box.vz = (ptr->field_50[0].vz + ptr->field_50[1].vz >> 1) - floatstinger->position.vz;
+        floatstinger->collision.shapeOffsets.box.vz      = (ptr->field_50[0].vz + ptr->field_50[1].vz >> 1) - floatstinger->position.vz;
         floatstinger->collision.shapeOffsets.cylinder.vz = floatstinger->collision.shapeOffsets.box.vz;
     }
     else
     {
-        floatstinger->collision.box.top   = ptr->field_50[0].vy - floatstinger->position.vy;
-        floatstinger->collision.box.height   = ptr->field_50[2].vy - floatstinger->position.vy;
-        floatstinger->collision.cylinder.radius  = Q12(0.5f);
-        floatstinger->collision.cylinder.field_2   = Q12(0.5f);
-        floatstinger->collision.shapeOffsets.box.vx = ((ptr->field_50[0].vx + ptr->field_50[2].vx) >> 1) - floatstinger->position.vx;
+        floatstinger->collision.box.top                  = ptr->field_50[0].vy - floatstinger->position.vy;
+        floatstinger->collision.box.height               = ptr->field_50[2].vy - floatstinger->position.vy;
+        floatstinger->collision.cylinder.radius          = Q12(0.5f);
+        floatstinger->collision.cylinder.field_2         = Q12(0.5f);
+        floatstinger->collision.shapeOffsets.box.vx      = ((ptr->field_50[0].vx + ptr->field_50[2].vx) >> 1) - floatstinger->position.vx;
         floatstinger->collision.shapeOffsets.cylinder.vx = floatstinger->collision.shapeOffsets.box.vx;
-        floatstinger->collision.shapeOffsets.box.vz = (ptr->field_50[0].vz + ptr->field_50[2].vz >> 1) - floatstinger->position.vz;
+        floatstinger->collision.shapeOffsets.box.vz      = (ptr->field_50[0].vz + ptr->field_50[2].vz >> 1) - floatstinger->position.vz;
         floatstinger->collision.shapeOffsets.cylinder.vz = floatstinger->collision.shapeOffsets.box.vz;
     }
 
@@ -873,7 +869,7 @@ void func_800D3AD4(s_SubCharacter* floatstinger) // 0x800D3AD4
     }
     else
     {
-        var_v1                 = floatstinger->position.vy + Q12(1.4f);
+        var_v1                              = floatstinger->position.vy + Q12(1.4f);
         floatstinger->collision.box.offsetY = g_SysWork.playerWork.player.position.vy - var_v1;
     }
 
@@ -1072,7 +1068,7 @@ bool func_800D4458(s_SubCharacter* floatstinger, VECTOR3* arg1) // 0x800D4458
         case 6:
         case 8:
             var_s3 = Math_Vector2MagCalcSafeQ6(arg1->vx - D_800D780C[i].field_0[(caseVar % 6) != 0],
-                                         arg1->vz - D_800D780C[i].field_8[caseVar > 2]);
+                                               arg1->vz - D_800D780C[i].field_8[caseVar > 2]);
 
             angle0 = ratan2(arg1->vx - D_800D780C[i].field_0[(caseVar % 6) != 0],
                             arg1->vz - D_800D780C[i].field_8[caseVar > 2]);
@@ -1098,7 +1094,6 @@ bool func_800D4458(s_SubCharacter* floatstinger, VECTOR3* arg1) // 0x800D4458
             var_s3 = arg1->vz - D_800D780C[i].field_8[1];
             break;
     }
-
 
     angle1 = ABS(Math_AngleNormalizeSigned(angle0 - floatstinger->rotation.vy));
     if ((Q12_ANGLE(90.0f) - angle1) < Q12_ANGLE(0.0f))
@@ -1190,7 +1185,7 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 newRotY) //
     s32     var_v0_11;
     s32     var_v1_4;
 
-    dist = Math_Vector2MagCalcSafeQ6(pos->vx - floatstinger->position.vx, pos->vz - floatstinger->position.vz);
+    dist     = Math_Vector2MagCalcSafeQ6(pos->vx - floatstinger->position.vx, pos->vz - floatstinger->position.vz);
     unkAngle = ratan2(pos->vx - floatstinger->position.vx, pos->vz - floatstinger->position.vz);
 
     if (dist > Q12(6.5f))
@@ -1224,7 +1219,7 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 newRotY) //
     }
     else
     {
-        floatstinger->rotation.vy                      = newRotY;
+        floatstinger->rotation.vy  = newRotY;
         floatstingerProps.field_EE = APPROACH_ALT2(floatstingerProps.field_EE, Q12_ANGLE(0.0f),
                                                    (floatstingerProps.flags_E8 & FloatstingerFlag_0) ? (Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(135.0f)) * 2) :
                                                                                                        (Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f)) * 2));
@@ -1344,7 +1339,7 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 newRotY) //
         if (ABS(temp_t2) > 81)
         {
             floatstinger->fallSpeed = MAX((floatstingerProps.flags_E8 & FloatstingerFlag_0) ? Q12(-5.0f) : Q12(-1.0f),
-                                             floatstinger->fallSpeed + Q12_MULT_PRECISE(g_DeltaTime, floatstingerProps.flags_E8 & 1 ? Q12(-3.0f) : Q12(-0.8f)));
+                                          floatstinger->fallSpeed + Q12_MULT_PRECISE(g_DeltaTime, floatstingerProps.flags_E8 & 1 ? Q12(-3.0f) : Q12(-0.8f)));
 
             if (ABS(temp_t2) < Q12(1.0f))
             {
@@ -1362,7 +1357,7 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 newRotY) //
         if (ABS(temp_t2) > 81)
         {
             floatstinger->fallSpeed = CLAMP_HIGH((floatstingerProps.flags_E8 & FloatstingerFlag_0) ? Q12(9.0f) : Q12(3.0f),
-                                                    floatstinger->fallSpeed + Q12_MULT_PRECISE(g_DeltaTime, floatstingerProps.flags_E8 & 1 ? 0x4800 : 0x1CCC));
+                                                 floatstinger->fallSpeed + Q12_MULT_PRECISE(g_DeltaTime, floatstingerProps.flags_E8 & 1 ? 0x4800 : 0x1CCC));
 
             if (ABS(temp_t2) < Q12(1.0f))
             {
