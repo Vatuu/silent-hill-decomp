@@ -14,40 +14,40 @@
  * MAP7_S01: 0x800D49B8
  * MAP7_S02: 0x800D7A68
  */
-void GhostChildAlessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void GhostChildAlessa_Update(s_SubCharacter* ghostAlessa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
-    if (chara->model.charaId != Chara_GhostChildAlessa)
+    if (ghostAlessa->model.charaId != Chara_GhostChildAlessa)
     {
-        GhostChildAlessa_Init(chara);
+        GhostChildAlessa_Init(ghostAlessa);
     }
 
-    GhostChildAlessa_AnimStateUpdate(chara, boneCoords);
-    GhostChildAlessa_MovementUpdate(chara, boneCoords);
-    GhostChildAlessa_AnimUpdate(chara, anmHdr, boneCoords);
+    GhostChildAlessa_AnimStateUpdate(ghostAlessa, boneCoords);
+    GhostChildAlessa_MovementUpdate(ghostAlessa, boneCoords);
+    GhostChildAlessa_AnimUpdate(ghostAlessa, anmHdr, boneCoords);
 }
 
 /** Addresses
  * MAP7_S01: 0x800D4A2C
  * MAP7_S02: 0x800D7ADC
  */
-void GhostChildAlessa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void GhostChildAlessa_AnimUpdate(s_SubCharacter* ghostAlessa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     s_AnimInfo* animInfo;
 
-    if (chara->properties.player.field_F0 != 0)
+    if (ghostAlessa->properties.player.field_F0 != 0)
     {
         return;
     }
 
-    animInfo = &GHOST_CHILD_ALESSA_ANIM_INFOS[chara->model.anim.status];
-    animInfo->playbackFunc(&chara->model, anmHdr, boneCoords, animInfo);
+    animInfo = &GHOST_CHILD_ALESSA_ANIM_INFOS[ghostAlessa->model.anim.status];
+    animInfo->playbackFunc(&ghostAlessa->model, anmHdr, boneCoords, animInfo);
 }
 
 /** Addresses
  * MAP7_S01: 0x800D4A74
  * MAP7_S02: 0x800D7B24
  */
-void GhostChildAlessa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
+void GhostChildAlessa_MovementUpdate(s_SubCharacter* ghostAlessa, GsCOORDINATE2* boneCoords)
 {
     VECTOR3 unused;
     VECTOR3 offset;
@@ -57,102 +57,102 @@ void GhostChildAlessa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneC
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 
-    unused       = chara->position;
-    moveSpeed    = chara->moveSpeed;
-    headingAngle = chara->headingAngle;
-    moveDist      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
+    unused       = ghostAlessa->position;
+    moveSpeed    = ghostAlessa->moveSpeed;
+    headingAngle = ghostAlessa->headingAngle;
+    moveDist     = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveDist);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
     offset.vx = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed, g_DeltaTime);
+    offset.vy = Q12_MULT_PRECISE(ghostAlessa->fallSpeed, g_DeltaTime);
 
-    chara->position.vx += offset.vx;
-    chara->position.vy  = Q12(0.0f);
-    chara->position.vz += offset.vz;
+    ghostAlessa->position.vx += offset.vx;
+    ghostAlessa->position.vy  = Q12(0.0f);
+    ghostAlessa->position.vz += offset.vz;
 
-    boneCoords[0].coord.t[0] = Q12_TO_Q8(chara->position.vx);
-    boneCoords[0].coord.t[1] = Q12_TO_Q8(chara->position.vy);
-    boneCoords[0].coord.t[2] = Q12_TO_Q8(chara->position.vz);
+    boneCoords[GhostChildAlessaBone_Root].coord.t[0] = Q12_TO_Q8(ghostAlessa->position.vx);
+    boneCoords[GhostChildAlessaBone_Root].coord.t[1] = Q12_TO_Q8(ghostAlessa->position.vy);
+    boneCoords[GhostChildAlessaBone_Root].coord.t[2] = Q12_TO_Q8(ghostAlessa->position.vz);
 }
 
 /** Addresses
  * MAP7_S01: 0x800D4C0C
  * MAP7_S02: 0x800D7CBC
  */
-void GhostChildAlessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
+void GhostChildAlessa_AnimStateUpdate(s_SubCharacter* ghostAlessa, GsCOORDINATE2* boneCoords)
 {
-    #define dahliaProps (chara->properties.dahlia)
+    #define dahliaProps (ghostAlessa->properties.dahlia)
 
     switch (dahliaProps.controlState)
     {
-        case 0:
+        case GhostChildAlessaControl_None:
             break;
 
-        case 1:
+        case GhostChildAlessaControl_1:
             dahliaProps.moveDistance_126 = dahliaProps.field_124;
-            Model_AnimStatusSet(&chara->model, GhostChildAlessaAnim_1, false);
-            Chara_AnimStateReset(chara);
+            Model_AnimStatusSet(&ghostAlessa->model, GhostChildAlessaAnim_1, false);
+            Chara_AnimStateReset(ghostAlessa);
             break;
 
-        case 2:
+        case GhostChildAlessaControl_2:
             dahliaProps.moveDistance_126 = dahliaProps.field_124;
-            Model_AnimStatusSet(&chara->model, GhostChildAlessaAnim_2, false);
-            Chara_AnimStateReset(chara);
+            Model_AnimStatusSet(&ghostAlessa->model, GhostChildAlessaAnim_2, false);
+            Chara_AnimStateReset(ghostAlessa);
             break;
 
-        case 6:
-            Model_AnimStatusSet(&chara->model, GhostChildAlessaAnim_3, false);
-            if (chara->model.anim.keyframeIdx == 63)
+        case GhostChildAlessaControl_6:
+            Model_AnimStatusSet(&ghostAlessa->model, GhostChildAlessaAnim_3, false);
+            if (ghostAlessa->model.anim.keyframeIdx == 63)
             {
-                dahliaProps.controlState = 7;
-                chara->model.stateStep = 0;
+                dahliaProps.controlState = GhostChildAlessaControl_7;
+                ghostAlessa->model.stateStep = 0;
             }
             break;
 
-        case 7:
-            Model_AnimStatusSet(&chara->model, GhostChildAlessaAnim_4, false);
-            Chara_AnimStateReset(chara);
+        case GhostChildAlessaControl_7:
+            Model_AnimStatusSet(&ghostAlessa->model, GhostChildAlessaAnim_4, false);
+            Chara_AnimStateReset(ghostAlessa);
             break;
 
-        case 8:
-            Model_AnimStatusSet(&chara->model, GhostChildAlessaAnim_5, false);
-            Chara_AnimStateReset(chara);
+        case GhostChildAlessaControl_8:
+            Model_AnimStatusSet(&ghostAlessa->model, GhostChildAlessaAnim_5, false);
+            Chara_AnimStateReset(ghostAlessa);
             break;
 
-        case 9:
-            Model_AnimStatusSet(&chara->model, GhostChildAlessaAnim_6, false);
-            Chara_AnimStateReset(chara);
+        case GhostChildAlessaControl_9:
+            Model_AnimStatusSet(&ghostAlessa->model, GhostChildAlessaAnim_6, false);
+            Chara_AnimStateReset(ghostAlessa);
             break;
 
-        case 10:
-            Model_AnimStatusSet(&chara->model, GhostChildAlessaAnim_7, false);
-            Chara_AnimStateReset(chara);
+        case GhostChildAlessaControl_10:
+            Model_AnimStatusSet(&ghostAlessa->model, GhostChildAlessaAnim_7, false);
+            Chara_AnimStateReset(ghostAlessa);
             break;
 
-        case 11:
-            Model_AnimStatusSet(&chara->model, GhostChildAlessaAnim_8, false);
-            Chara_AnimStateReset(chara);
+        case GhostChildAlessaControl_11:
+            Model_AnimStatusSet(&ghostAlessa->model, GhostChildAlessaAnim_8, false);
+            Chara_AnimStateReset(ghostAlessa);
             break;
     }
 
-    chara->rotation.vy  = Q12_ANGLE_ABS(chara->rotation.vy + Q8_TO_Q4(sharedData_800E39D8_0_s00));
-    chara->headingAngle = chara->rotation.vy;
-    chara->moveSpeed    = dahliaProps.moveDistance_126;
-    chara->fallSpeed   += g_GravitySpeed;
+    ghostAlessa->rotation.vy  = Q12_ANGLE_ABS(ghostAlessa->rotation.vy + Q8_TO_Q4(sharedData_800E39D8_0_s00));
+    ghostAlessa->headingAngle = ghostAlessa->rotation.vy;
+    ghostAlessa->moveSpeed    = dahliaProps.moveDistance_126;
+    ghostAlessa->fallSpeed   += g_GravitySpeed;
 
     boneCoords->flg = false;
-    Math_RotMatrixZxyNegGte(&chara->rotation, &boneCoords->coord);
+    Math_RotMatrixZxyNegGte(&ghostAlessa->rotation, &boneCoords->coord);
 }
 
 /** Addresses
  * MAP7_S01: 0x800D4DD8
  * MAP7_S02: 0x800D7E88
  */
-void GhostChildAlessa_Init(s_SubCharacter* chara)
+void GhostChildAlessa_Init(s_SubCharacter* ghostAlessa)
 {
-    Chara_CollisionReset(chara);
+    Chara_CollisionReset(ghostAlessa);
     sharedData_800E39D8_0_s00 = 0;
 }

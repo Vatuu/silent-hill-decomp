@@ -15,6 +15,29 @@ typedef enum _GhostChildAlessaAnim
     GhostChildAlessaAnim_8     = 8
 } e_GhostChildAlessaAnim;
 
+/** @brief Ghost Child Alessa character control states. */
+typedef enum _GhostChildAlessaControl
+{
+    GhostChildAlessaControl_None = 0,
+    GhostChildAlessaControl_1    = 1,
+    GhostChildAlessaControl_2    = 2,
+    GhostChildAlessaControl_3    = 3,
+    GhostChildAlessaControl_4    = 4,
+    GhostChildAlessaControl_5    = 5,
+    GhostChildAlessaControl_6    = 6,
+    GhostChildAlessaControl_7    = 7,
+    GhostChildAlessaControl_8    = 8,
+    GhostChildAlessaControl_9    = 9,
+    GhostChildAlessaControl_10   = 10,
+    GhostChildAlessaControl_11   = 11
+} e_GhostChildAlessaControl;
+
+/** @brief Ghost Child Alessa model bone indices. */
+typedef enum _GhostChildAlessaBone
+{
+    GhostChildAlessaBone_Root = 0
+} e_GhostChildAlessaBone;
+
 /** @brief Ghost Child Alessa character anim infos. */
 extern s_AnimInfo GHOST_CHILD_ALESSA_ANIM_INFOS[];
 
@@ -39,10 +62,10 @@ extern s_AnimInfo GHOST_CHILD_ALESSA_ANIM_INFOS[];
     { Anim_PlaybackLoop, ANIM_STATUS(GhostChildAlessaAnim_8, true), false, NO_VALUE, { Q12(5.0f) }, 128, 137 }
 };*/
 
-void GhostChildAlessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-void GhostChildAlessa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-void GhostChildAlessa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
-void GhostChildAlessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
-void GhostChildAlessa_Init(s_SubCharacter* chara);
+void GhostChildAlessa_Update(s_SubCharacter* ghostAlessa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void GhostChildAlessa_AnimUpdate(s_SubCharacter* ghostAlessa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void GhostChildAlessa_MovementUpdate(s_SubCharacter* ghostAlessa, GsCOORDINATE2* boneCoords);
+void GhostChildAlessa_AnimStateUpdate(s_SubCharacter* ghostAlessa, GsCOORDINATE2* boneCoords);
+void GhostChildAlessa_Init(s_SubCharacter* ghostAlessa);
 
 #endif
