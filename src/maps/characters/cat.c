@@ -2,6 +2,8 @@
 #include "bodyprog/math/math.h"
 #include "maps/characters/cat.h"
 
+#define catProps cat->properties.cat
+
 void Cat_Update(s_SubCharacter* cat, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D6D40
 {
     s_AnimInfo* animInfo;
@@ -9,14 +11,14 @@ void Cat_Update(s_SubCharacter* cat, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoo
 
     if (cat->model.controlState == CatControl_None)
     {
-        cat->model.controlState                        = CatControl_1;
-        cat->model.anim.status                         = ANIM_STATUS(CatAnim_IdleToJump, true);
-        cat->model.anim.time                           = Q12(7.0f);
-        cat->model.anim.alpha                          = Q12(0.0f);
-        cat->model.stateStep                           = 0;
-        cat->model.anim.keyframeIdx                    = 7;
-        cat->position.vy                               = Q12(0.0f);
-        cat->properties.dummy.properties_E8[0].val8[0] = 0;
+        cat->model.controlState     = CatControl_1;
+        cat->model.anim.status      = ANIM_STATUS(CatAnim_IdleToJump, true);
+        cat->model.anim.time        = Q12(7.0f);
+        cat->model.anim.alpha       = Q12(0.0f);
+        cat->model.stateStep        = 0;
+        cat->model.anim.keyframeIdx = 7;
+        cat->position.vy            = Q12(0.0f);
+        catProps.field_E8           = 0;
     }
 
     if (cat->model.stateStep == 0)
@@ -45,20 +47,17 @@ void Cat_Update(s_SubCharacter* cat, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoo
     cond = false;
     if (cat->model.anim.status == ANIM_STATUS(1, true))
     {
-        if (((u8)cat->properties.dummy.properties_E8[0].val8[0] == 0 &&
-             (FP_FROM(cat->model.anim.time, Q12_SHIFT) - 20) < 3u) ||
-            ((u8)cat->properties.dummy.properties_E8[0].val8[0] != 0 &&
-             (FP_FROM(cat->model.anim.time, Q12_SHIFT) - 25) < 3u))
+        // TODO: Change `N - X < Yu` into range checks.
+        if ((catProps.field_E8 == 0 && (FP_FROM(cat->model.anim.time, Q12_SHIFT) - 20) < 3u) ||
+            (catProps.field_E8 != 0 && (FP_FROM(cat->model.anim.time, Q12_SHIFT) - 25) < 3u))
         {
             cond = true;
         }
     }
     else
     {
-        if (((u8)cat->properties.dummy.properties_E8[0].val8[0] == 0 &&
-             (FP_FROM(cat->model.anim.time, Q12_SHIFT) - 29) < 3u) ||
-            ((u8)cat->properties.dummy.properties_E8[0].val8[0] != 0 &&
-             (FP_FROM(cat->model.anim.time, Q12_SHIFT) - 36) < 3u))
+        if ((catProps.field_E8 == 0 && (FP_FROM(cat->model.anim.time, Q12_SHIFT) - 29) < 3u) ||
+            (catProps.field_E8 != 0 && (FP_FROM(cat->model.anim.time, Q12_SHIFT) - 36) < 3u))
         {
             cond = true;
         }
@@ -66,7 +65,7 @@ void Cat_Update(s_SubCharacter* cat, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoo
 
     if (cond)
     {
-        func_8005DD44(1447, &cat->position, Q8(0.5f), Rng_GenerateUInt(-7, 8));
-        cat->properties.dummy.properties_E8[0].val8[0] ^= 1;
+        func_8005DD44(Sfx_CatMeow, &cat->position, Q8(0.5f), Rng_GenerateUInt(-7, 8));
+        catProps.field_E8 ^= 1;
     }
 }

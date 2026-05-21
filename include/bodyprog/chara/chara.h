@@ -264,6 +264,11 @@ typedef struct _PropsBloodsucker
     s32    flags;         /** `e_BloodsuckerFlags` */
 } s_PropsBloodsucker;
 
+/** @brief Cat character properties. */
+typedef struct _PropsCat
+{
+    /* 0xE8 */ u8 field_E8; // `bool`.
+} s_PropsCat;
 
 /** @brief Cheryl character properties. */
 typedef struct _PropsCheryl
@@ -713,6 +718,7 @@ typedef struct _SubCharacter
                    s_PropsAirScreamer     airScreamer;
                    s_PropsAlessa          alessa;
                    s_PropsBloodsucker     bloodsucker;
+                   s_PropsCat             cat;
                    s_PropsCheryl          cheryl;
                    s_PropsCreeper         creeper;
                    s_PropsDahlia          dahlia;

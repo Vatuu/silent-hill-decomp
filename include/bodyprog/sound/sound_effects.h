@@ -153,7 +153,7 @@ typedef enum _SfxId
     Sfx_Unk1444 = 1444, // }
     Sfx_Unk1445 = 1445, // }
     Sfx_Unk1446 = 1446,
-
+    Sfx_CatMeow = 1447,
     Sfx_Unk1448 = 1448,
     Sfx_Unk1449 = 1449,
 
