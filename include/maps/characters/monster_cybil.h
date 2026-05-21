@@ -1,22 +1,6 @@
 #ifndef _MAPS_CHARACTERS_MONSTERCYBIL_H
 #define _MAPS_CHARACTERS_MONSTERCYBIL_H
 
-// TODO: .rodata, can be migrated into monster_cybil.c.
-extern s32       D_800CB118[];
-extern s32       D_800CB178[];
-extern s16       D_800CB1D8[];
-extern s16       D_800CB208[];
-extern s16       D_800CB238[];
-extern s32       D_800CB250[];
-extern s32       D_800CB278[];
-extern s16       D_800CB2A0[];
-extern const s32 D_800CB2B4[];
-extern const s32 D_800CB2DC[];
-extern const s32 D_800CB304[12][2];
-extern const s32 D_800CB364[12][2];
-extern const s32 D_800CB3A4[12][2];
-
-// .data
 extern s16     D_800EA776;
 extern s16     D_800EA7D4;
 extern s16     D_800EA7D6;

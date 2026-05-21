@@ -10,6 +10,239 @@
 #define monsterCybilChara g_SysWork.npcs[0]
 #define monsterCybilProps monsterCybilChara.properties.monsterCybil
 
+const s32 D_800CB118[24] =
+{
+    Q12(18.0f),
+    Q12(18.0f),
+    Q12(18.0f),
+    Q12(18.0f),
+    Q12(18.0f),
+    Q12(16.0f),
+    Q12(16.0f),
+    Q12(17.0f),
+    Q12(17.0f),
+    Q12(18.0f),
+    Q12(18.0f),
+    Q12(18.0f),
+    Q12(18.0f),
+    Q12(18.0f),
+    Q12(18.0f),
+    Q12(18.0f),
+    Q12(16.0f),
+    Q12(16.0f),
+    Q12(17.0f),
+    Q12(17.0f),
+    Q12(18.0f),
+    Q12(18.0f),
+    Q12(18.0f),
+    Q12(18.0f)
+};
+
+const s32 D_800CB178[24] =
+{
+    Q12(28.0f),
+    Q12(28.0f),
+    Q12(28.0f),
+    Q12(28.0f),
+    Q12(28.0f),
+    Q12(24.0f),
+    Q12(24.0f),
+    Q12(26.0f),
+    Q12(26.0f),
+    Q12(28.0f),
+    Q12(28.0f),
+    Q12(28.0f),
+    Q12(28.0f),
+    Q12(28.0f),
+    Q12(28.0f),
+    Q12(28.0f),
+    Q12(24.0f),
+    Q12(24.0f),
+    Q12(26.0f),
+    Q12(26.0f),
+    Q12(28.0f),
+    Q12(28.0f),
+    Q12(28.0f),
+    Q12(28.0f)
+};
+
+const s16 D_800CB1D8[24] =
+{
+    Q12(0.8f),
+    Q12(0.7f),
+    Q12(0.6f),
+    Q12(0.5f),
+    Q12(0.5f),
+    Q12(0.7f),
+    Q12(0.7f),
+    Q12(0.7f),
+    Q12(0.7f),
+    Q12(0.7f),
+    Q12(0.7f),
+    Q12(0.7f),
+    Q12(0.6f),
+    Q12(0.6f),
+    Q12(0.5f),
+    Q12(0.5f),
+    Q12(0.8f),
+    Q12(0.7f),
+    Q12(0.7f),
+    Q12(0.8f),
+    Q12(0.8f),
+    Q12(0.8f),
+    Q12(0.8f),
+    Q12(0.8f)
+};
+
+const s16 D_800CB208[24] =
+{
+    Q12(1.2f),
+    Q12(1.0f),
+    Q12(0.8f),
+    Q12(0.6f),
+    Q12(0.6f),
+    Q12(1.0f),
+    Q12(1.0f),
+    Q12(1.0f),
+    Q12(1.0f),
+    Q12(1.0f),
+    Q12(1.0f),
+    Q12(1.0f),
+    Q12(0.8f),
+    Q12(0.8f),
+    Q12(0.6f),
+    Q12(0.6f),
+    Q12(1.2f),
+    Q12(1.0f),
+    Q12(1.0f),
+    Q12(1.2f),
+    Q12(1.2f),
+    Q12(1.2f),
+    Q12(1.2f),
+    Q12(1.2f)
+};
+
+const s16 D_800CB238[11] =
+{
+    Q12_ANGLE(0.0f),
+    Q12_ANGLE(-11.3f),
+    Q12_ANGLE(-14.1f),
+    Q12_ANGLE(-5.7f),
+    Q12_ANGLE(-2.11f),
+    Q12_ANGLE(-2.11f),
+    Q12_ANGLE(-2.11f),
+    Q12_ANGLE(-5.7f),
+    Q12_ANGLE(-4.3f),
+    Q12_ANGLE(0.0f),
+    Q12_ANGLE(0.0f)
+};
+
+const s32 D_800CB250[10] =
+{
+    Q12(4.0f),
+    Q12(6.5f),
+    Q12(2.5f),
+    Q12(-4.0f),
+    Q12(-6.5f),
+    Q12(-2.5f),
+    Q12(0.8f),
+    Q12(3.0f),
+    Q12(-0.8f),
+    Q12(-3.0f)
+};
+
+const s32 D_800CB278[10] =
+{
+    Q12(5.2f),
+    Q12(-0.85f),
+    Q12(-6.05f),
+    Q12(-5.2f),
+    Q12(0.85f),
+    Q12(6.05f),
+    Q12(3.05f),
+    Q12(-0.8f),
+    Q12(-3.05f),
+    Q12(0.8f)
+};
+
+const s16 D_800CB2A0[10] =
+{
+    Q12_ANGLE(37.6f),
+    Q12_ANGLE(97.5f),
+    Q12_ANGLE(157.5f),
+    Q12_ANGLE(217.6f),
+    Q12_ANGLE(277.5f),
+    Q12_ANGLE(337.5f),
+    Q12_ANGLE(15.1f),
+    Q12_ANGLE(105.1f),
+    Q12_ANGLE(195.1f),
+    Q12_ANGLE(285.1f)
+};
+
+const s32 D_800CB2B4[10] =
+{
+    Q12(3.7764f),
+    Q12(6.147f),
+    Q12(2.372f),
+    Q12(-3.7767f),
+    Q12(-6.1473f),
+    Q12(-2.3721f),
+    Q12(0.9075f),
+    Q12(3.3804f),
+    Q12(-0.9075f),
+    Q12(-3.3804f)
+};
+
+const s32 D_800CB2DC[10] =
+{
+    Q12(4.9163f),
+    Q12(-0.807f),
+    Q12(-5.728f),
+    Q12(-4.9166f),
+    Q12(0.8067f),
+    Q12(5.7276f),
+    Q12(3.3804f),
+    Q12(-0.9075f),
+    Q12(-3.3804f),
+    Q12(0.9075f)
+};
+
+const s32 D_800CB304[12][2] =
+{
+    { Q12(0.0f), Q12(7.0f) },
+    { Q12(4.0f), Q12(6.0f) },
+    { Q12(6.0f), Q12(4.0f) },
+    { Q12(7.0f), Q12(0.5f) },
+    { Q12(6.0f), Q12(-4.0f) },
+    { Q12(4.0f), Q12(-6.0f) },
+    { Q12(0.0f), Q12(-7.0f) },
+    { Q12(-4.0f), Q12(-6.0f) },
+    { Q12(-6.0f), Q12(-4.0f) },
+    { Q12(-7.0f), Q12(-0.5f) },
+    { Q12(-6.0f), Q12(4.0f) },
+    { Q12(-4.0f), Q12(6.0f) }
+};
+
+const s32 D_800CB364[8][2] =
+{
+    { Q12(0.0f), Q12(4.0f) },
+    { Q12(4.0f), Q12(4.0f) },
+    { Q12(4.0f), Q12(0.0f) },
+    { Q12(4.0f), Q12(-4.0f) },
+    { Q12(0.0f), Q12(-4.0f) },
+    { Q12(-4.0f), Q12(-4.0f) },
+    { Q12(-4.0f), Q12(0.0f) },
+    { Q12(-4.0f), Q12(4.0f) }
+};
+
+const s32 D_800CB3A4[4][2] =
+{
+    { Q12(0.0f), Q12(2.5f) },
+    { Q12(2.5f), Q12(0.0f) },
+    { Q12(0.0f), Q12(-2.5f) },
+    { Q12(-2.5f), Q12(0.0f) }
+};
+
 void func_800D87B0(s_SubCharacter* monsterCybil) // 0x800D87B0
 {
     if (monsterCybil->properties.player.moveDistance_126 != Q12(0.0f))
@@ -247,32 +480,6 @@ void func_800D8B14(s_SubCharacter* monsterCybil, s_Model* modelUpper) // 0x800D8
 
     #undef playerChara
 }
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB118);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB178);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB1D8);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB208);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB238);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB250);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB278);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB2A0);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB2B4);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB2DC);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB304);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB364);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/Chara_MonsterCybil", D_800CB3A4);
 
 void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINATE2* boneCoords) // 0x800D8D7C
 {
@@ -819,7 +1026,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             if (monsterCybil->properties.monsterCybil.field_126 != 0)
             {
-                monsterCybil->properties.monsterCybil.field_126 = monsterCybil->properties.monsterCybil.field_126 - 327;
+                monsterCybil->properties.monsterCybil.field_126 = monsterCybil->properties.monsterCybil.field_126 - Q12(0.08);
                 if (monsterCybil->properties.monsterCybil.field_126 < 0)
                 {
                     monsterCybil->properties.monsterCybil.field_126 = 0;
