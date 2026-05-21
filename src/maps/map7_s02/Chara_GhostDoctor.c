@@ -6,19 +6,19 @@
 
 // TODO: Move to src/maps/characters/ once matched.
 
-void GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D8AF0
+void GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D8AF0
 {
     if (chara->model.charaId != Chara_GhostDoctor)
     {
         GhostDoctor_Init(chara);
     }
 
-    func_800D8C00(chara, coords);
-    Character_CoordTransformUpdate(chara, coords);
-    GhostDoctor_AnimUpdate(chara, anmHdr, coords);
+    func_800D8C00(chara, boneCoords);
+    Character_CoordTransformUpdate(chara, boneCoords);
+    GhostDoctor_AnimUpdate(chara, anmHdr, boneCoords);
 }
 
-void GhostDoctor_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D8B64
+void GhostDoctor_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D8B64
 {
     s_AnimInfo* animInfo;
 
@@ -26,15 +26,15 @@ void GhostDoctor_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDI
     if (chara->properties.player.field_F0 == 0)
     {
         animInfo = &GHOST_DOCTOR_ANIM_INFOS[chara->model.anim.status];
-        animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
+        animInfo->playbackFunc(&chara->model, anmHdr, boneCoords, animInfo);
     }
 }
 
-void Character_CoordTransformUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8BAC
+void Character_CoordTransformUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800D8BAC
 {
-    coord->coord.t[0] = Q12_TO_Q8(chara->position.vx);
-    coord->coord.t[1] = Q12_TO_Q8(chara->position.vy);
-    coord->coord.t[2] = Q12_TO_Q8(chara->position.vz);
+    boneCoords[0].coord.t[0] = Q12_TO_Q8(chara->position.vx);
+    boneCoords[0].coord.t[1] = Q12_TO_Q8(chara->position.vy);
+    boneCoords[0].coord.t[2] = Q12_TO_Q8(chara->position.vz);
 }
 
 void GhostDoctor_Init(s_SubCharacter* chara) // 0x800D8BE0
@@ -42,7 +42,7 @@ void GhostDoctor_Init(s_SubCharacter* chara) // 0x800D8BE0
     Chara_CollisionReset(chara);
 }
 
-void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8C00
+void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800D8C00
 {
     if (chara->properties.player.afkTimer == Q12(0.0f))
     {
@@ -60,6 +60,6 @@ void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8C00
         }
     }
 
-    coord->flg = false;
-    Math_RotMatrixZxyNegGte(&chara->rotation, &coord->coord);
+    boneCoords->flg = false;
+    Math_RotMatrixZxyNegGte(&chara->rotation, &boneCoords->coord);
 }

@@ -595,10 +595,10 @@ func_8003FEC0                                = 0x8003FBF4; // type:func
 func_8003FF2C                                = 0x8003FC60; // type:func
 
 //-----------------------------------------------------------------------
-//--- PA: 0x01B1D8   VA: 0x8003FD38   subsegment: c, events/triggers_init
+//--- PA: 0x01B1D8   VA: 0x8003FD38   subsegment: c, events/collision_trigger
 //-----------------------------------------------------------------------
 World_CollisionTriggersSet                   = 0x8003FD38; // type:func
-World_PlayerTriggerZonesGet                  = 0x8003FD48; // type:func
+World_NearbyPlayerCollisionTriggersGet       = 0x8003FD48; // type:func
 
 //---------------------------------------------------------------
 //--- PA: 0x01B220   VA: 0x8003FD80   subsegment: c, view/vc_util

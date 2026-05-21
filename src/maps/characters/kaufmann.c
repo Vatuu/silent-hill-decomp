@@ -83,9 +83,9 @@ void Kaufmann_MovementUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords
     kaufmann->position.vy  = Q12(0.0f);
     kaufmann->position.vz += offset.vz;
 
-    boneCoords->coord.t[0] = Q12_TO_Q8(kaufmann->position.vx);
-    boneCoords->coord.t[1] = Q12_TO_Q8(kaufmann->position.vy);
-    boneCoords->coord.t[2] = Q12_TO_Q8(kaufmann->position.vz);
+    boneCoords[0].coord.t[0] = Q12_TO_Q8(kaufmann->position.vx);
+    boneCoords[0].coord.t[1] = Q12_TO_Q8(kaufmann->position.vy);
+    boneCoords[0].coord.t[2] = Q12_TO_Q8(kaufmann->position.vz);
 }
 
 /** Addresses

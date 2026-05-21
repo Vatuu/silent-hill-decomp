@@ -101,9 +101,9 @@ void Dahlia_MovementUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
     }
 
     // Update root coord.
-    boneCoords->coord.t[0] = Q12_TO_Q8(dahlia->position.vx);
-    boneCoords->coord.t[1] = Q12_TO_Q8(dahlia->position.vy);
-    boneCoords->coord.t[2] = Q12_TO_Q8(dahlia->position.vz);
+    boneCoords[0].coord.t[0] = Q12_TO_Q8(dahlia->position.vx);
+    boneCoords[0].coord.t[1] = Q12_TO_Q8(dahlia->position.vy);
+    boneCoords[0].coord.t[2] = Q12_TO_Q8(dahlia->position.vz);
 }
 
 /** Addresses

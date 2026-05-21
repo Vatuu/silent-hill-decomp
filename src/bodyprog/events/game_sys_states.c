@@ -6,6 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/events/bodyprog_data_800A99B4.h"
+#include "bodyprog/events/collision_trigger.h"
 #include "bodyprog/events/events_main.h"
 #include "bodyprog/events/npc_main.h"
 #include "bodyprog/events/radio.h"
@@ -144,7 +145,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
     if (!(g_SysWork.bgmStatusFlags & BgmStatusFlag_Pause))
     {
-        World_PlayerTriggerZonesGet();
+        World_NearbyPlayerCollisionTriggersGet();
         vcMoveAndSetCamera(false, false, false, false, false, false, false, false);
 
         if (g_MapOverlayHeader.func_44 != NULL)

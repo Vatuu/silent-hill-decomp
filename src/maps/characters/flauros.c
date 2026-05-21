@@ -8,12 +8,12 @@ void Flauros_Update(s_SubCharacter* flauros, s_AnmHeader* anmHdr, GsCOORDINATE2*
     q19_12      scale;
     s_AnimInfo* animInfo;
 
-    if (flauros->model.controlState == 0)
+    if (flauros->model.controlState == FlaurosControl_None)
     {
         flauros->model.anim.alpha   = Q12(0.0f);
-        flauros->model.controlState = 1;
+        flauros->model.controlState = FlaurosControl_1;
         flauros->model.stateStep    = 0;
-        Chara_AnimSet(flauros, ANIM_STATUS(1, true), 0);
+        Chara_AnimSet(flauros, ANIM_STATUS(FlaurosAnim_1, true), 0);
     }
 
     if (flauros->model.anim.time <= Q12(21.0f))
@@ -37,6 +37,7 @@ void Flauros_Update(s_SubCharacter* flauros, s_AnmHeader* anmHdr, GsCOORDINATE2*
     animInfo = &FLAUROS_ANIM_INFOS[flauros->model.anim.status];
     animInfo->playbackFunc(&flauros->model, anmHdr, boneCoords, animInfo);
 
+    // TODO: Are these the Flauros' light rays?
     for (i = 6; i < 11; i++)
     {
         func_800705E4(boneCoords, i, scale, scale, scale);

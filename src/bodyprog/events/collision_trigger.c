@@ -19,7 +19,7 @@ void World_CollisionTriggersSet(s_MapOverlayHeader* overlayHeader) // 0x80040004
     g_WorldGfxWork.collisionTriggers = &overlayHeader->collisionTriggers;
 }
 
-void World_PlayerTriggerZonesGet(void) // 0x80040014
+void World_NearbyPlayerCollisionTriggersGet(void) // 0x80040014
 {
     #define playerChara g_SysWork.playerWork.player
 

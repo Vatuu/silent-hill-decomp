@@ -77,9 +77,9 @@ void BloodyLisa_MovementUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneCo
     bloodyLisa->position.vy  = Q12(0.0f);
     bloodyLisa->position.vz += offset.vz;
 
-    boneCoords->coord.t[0] = Q12_TO_Q8(bloodyLisa->position.vx);
-    boneCoords->coord.t[1] = Q12_TO_Q8(bloodyLisa->position.vy);
-    boneCoords->coord.t[2] = Q12_TO_Q8(bloodyLisa->position.vz);
+    boneCoords[0].coord.t[0] = Q12_TO_Q8(bloodyLisa->position.vx);
+    boneCoords[0].coord.t[1] = Q12_TO_Q8(bloodyLisa->position.vy);
+    boneCoords[0].coord.t[2] = Q12_TO_Q8(bloodyLisa->position.vz);
 }
 
  /** Addresses

@@ -11,6 +11,15 @@ typedef enum _CatAnim
     CatAnim_JumpToRun  = 4
 } e_CatAnim;
 
+/** @brief Cat character control states. */
+typedef enum _CatControl
+{
+    CatControl_None = 0,
+    CatControl_1    = 1,
+    CatControl_2    = 2,
+    CatControl_3    = 3
+} e_CatControl;
+
 /** @brief Cat character anim infos.
  * @unused Frames `[1, 6]`.
  */
@@ -29,6 +38,6 @@ typedef enum _CatAnim
 
 extern s_AnimInfo CAT_ANIM_INFOS[]; // 0x800DC924
 
-void Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Cat_Update(s_SubCharacter* cat, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 #endif

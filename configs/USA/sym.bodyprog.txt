@@ -428,10 +428,10 @@ Gfx_ProgressAlphaGet                         = 0x8003F6F0;
 Math_WeightedAverageGet                      = 0x8003F7E4; // type:func
 
 //-----------------------------------------------------------------------
-//--- PA: 0x01B4A4   VA: 0x80040004   subsegment: c, events/triggers_init
+//--- PA: 0x01B4A4   VA: 0x80040004   subsegment: c, events/collision_trigger
 //-----------------------------------------------------------------------
 World_CollisionTriggersSet                   = 0x80040004;
-World_PlayerTriggerZonesGet                  = 0x80040014; // type:func
+World_NearbyPlayerCollisionTriggersGet       = 0x80040014; // type:func
 
 //---------------------------------------------------------------
 //--- PA: 0x01B4EC   VA: 0x8004004C   subsegment: c, view/vc_util

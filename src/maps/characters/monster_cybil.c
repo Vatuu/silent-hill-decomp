@@ -516,7 +516,7 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             break;
 
         case 4:
-            monsterCybilProps.field_11A = Q12(0.25f); // TODO: `Q12_ANGLE`
+            monsterCybilProps.field_11A = Q12_ANGLE(90.0f);
 
             Model_AnimStatusKeyframeSet(monsterCybil->model, 4, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             Model_AnimStatusKeyframeSet(*modelUpper, 4, true, MONSTER_CYBIL_ANIM_INFOS, 0);
@@ -840,9 +840,9 @@ void func_800D99E4(s_SubCharacter* monsterCybil, s_Model* modelUpper, s_AnmHeade
 {
     s_AnimInfo* animInfo;
 
-    boneCoords->coord.t[0] = Q12_TO_Q8(monsterCybil->position.vx);
-    boneCoords->coord.t[1] = Q12_TO_Q8(monsterCybil->position.vy);
-    boneCoords->coord.t[2] = Q12_TO_Q8(monsterCybil->position.vz);
+    boneCoords[0].coord.t[0] = Q12_TO_Q8(monsterCybil->position.vx);
+    boneCoords[0].coord.t[1] = Q12_TO_Q8(monsterCybil->position.vy);
+    boneCoords[0].coord.t[2] = Q12_TO_Q8(monsterCybil->position.vz);
 
     // TODO: Cybil has same skeleton structure as Harry? Check and make separate mask macros just for Cybil.
     anmHdr->activeBones = HARRY_LOWER_BODY_BONE_MASK;

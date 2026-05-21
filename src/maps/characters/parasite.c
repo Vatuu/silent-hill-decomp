@@ -6,10 +6,10 @@ void Parasite_Update(s_SubCharacter* parasite, s_AnmHeader* anmHdr, GsCOORDINATE
 {
     s_AnimInfo* animInfo;
 
-    if (parasite->model.controlState == 0)
+    if (parasite->model.controlState == ParasiteControl_None)
     {
         parasite->model.anim.alpha   = Q12(0.0f);
-        parasite->model.controlState = 1;
+        parasite->model.controlState = ParasiteControl_1;
         parasite->model.stateStep    = 0;
         Chara_AnimSet(parasite, ANIM_STATUS(1, true), 0);
     }

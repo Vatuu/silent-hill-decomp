@@ -6,6 +6,9 @@
 #include "bodyprog/formats/anm.h"
 #include "bodyprog/view/structs.h"
 
+#define CAMERA_PATH_COUNT_MAX       100
+#define COLLISION_TRIGGER_COUNT_MAX 200
+
 /** @brief Map flags. */
 typedef enum _MapFlags
 {
@@ -529,8 +532,8 @@ typedef struct _MapOverlayHeader
     /* 0x194 */ void                   (*charaUpdateFuncs[Chara_Count])(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); /** Guessed params. Funcptrs for each `e_CharaId`, set to 0 for IDs not included in the map overlay. Called by `Game_NpcUpdate`. */
     /* 0x248 */ s8                     charaGroupIds[CHARA_GROUP_COUNT]; /** `e_CharaId` values where if `s_SpawnInfo::charaId == Chara_None`, `charaGroupIds[0]` is used for `charaSpawnInfos[0]` and `charaGroupIds[1]` for `charaSpawnInfos[1]`. */
     /* 0x24C */ s_SpawnInfo            charaSpawnInfos[2][16];           /** Array of character type/position/flags. `flags == SpawnFlags_None` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
-    /* 0x3CC */ VC_ROAD_DATA           cameraPaths[100];
-    /* 0xD2C */ s_CollisionTrigger          collisionTriggers[200];
+    /* 0x3CC */ VC_ROAD_DATA           cameraPaths[CAMERA_PATH_COUNT_MAX];
+    /* 0xD2C */ s_CollisionTrigger     collisionTriggers[COLLISION_TRIGGER_COUNT_MAX];
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 4172);
 

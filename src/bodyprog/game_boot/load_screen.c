@@ -5,25 +5,28 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/events/collision_trigger.h"
 #include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/view/vc_main.h"
 #include "bodyprog/math/math.h"
+#include "maps/characters/harry.h"
 
-/** @brief Updates the translation and rotation of a matrix in a coordinate.
+/** @brief Updates the transformation of a character's root bone.
+ * Only used for the player.
  *
  * @param pos Translation to apply.
  * @param rot Rotation to apply.
- * @param coord Coordinate to update.
+ * @param boneCoords Character model bone coords.
  */
-static void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0x80035B04
+static void Math_MatrixTransform(const VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* boneCoords) // 0x80035B04
 {
-    coord->flg        = false;
-    coord->coord.t[0] = Q12_TO_Q8(pos->vx);
-    coord->coord.t[1] = Q12_TO_Q8(pos->vy);
-    coord->coord.t[2] = Q12_TO_Q8(pos->vz);
+    boneCoords[0].flg        = false;
+    boneCoords[0].coord.t[0] = Q12_TO_Q8(pos->vx);
+    boneCoords[0].coord.t[1] = Q12_TO_Q8(pos->vy);
+    boneCoords[0].coord.t[2] = Q12_TO_Q8(pos->vz);
 
-    Math_RotMatrixZxyNegGte(rot, (MATRIX*)&coord->coord);
+    Math_RotMatrixZxyNegGte(rot, &boneCoords[0].coord);
 }
 
 void Gfx_MapEffectsSet(s32 unused) // 0x80035B58
@@ -77,11 +80,11 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
         Game_SpotlightLoadScreenAttribsFix();
         Gfx_LoadScreenMapEffectsUpdate(0, 0);
 
-        model->anim.flags                                 |= AnimFlag_Visible;
+        model->anim.flags                           |= AnimFlag_Visible;
         g_SysWork.playerWork.extra.disabledAnimBones = 0;
-        model->anim.flags                                 |= AnimFlag_Unlocked | AnimFlag_Visible;
-        model->anim.time                                   = Q12(26.0f);
-        g_SysWork.playerWork.player.position.vy        = Q12(0.2f);
+        model->anim.flags                           |= AnimFlag_Unlocked | AnimFlag_Visible;
+        model->anim.time                             = Q12(26.0f);
+        g_SysWork.playerWork.player.position.vy      = Q12(0.2f);
 
         D_800A998C.status = model->anim.status;
 

@@ -1290,10 +1290,6 @@ void WorldGfx_HeldItemAttach(e_CharaId charaId, s32 modelBone); // Called by som
 
 s32 func_800868F4(s32 arg0, s32 arg1, s32 idx);
 
-void World_CollisionTriggersSet(s_MapOverlayHeader* overlayHdr);
-
-void World_PlayerTriggerZonesGet(void);
-
 bool Chara_ModelLoadedCheck(e_CharaId charaId);
 
 /** Related to the screen. Called by `WorldEnv_Init`. */

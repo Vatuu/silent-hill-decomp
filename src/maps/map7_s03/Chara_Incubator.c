@@ -56,9 +56,9 @@ void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords)
     incubator->position.vy  = Q12(0.0f);
     incubator->position.vz += offset.vz;
 
-    boneCoords->coord.t[0] = Q12_TO_Q8(incubator->position.vx);
-    boneCoords->coord.t[1] = Q12_TO_Q8(incubator->position.vy);
-    boneCoords->coord.t[2] = Q12_TO_Q8(incubator->position.vz);
+    boneCoords[0].coord.t[0] = Q12_TO_Q8(incubator->position.vx);
+    boneCoords[0].coord.t[1] = Q12_TO_Q8(incubator->position.vy);
+    boneCoords[0].coord.t[2] = Q12_TO_Q8(incubator->position.vz);
 }
 
 void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords) // 0x800D3E18

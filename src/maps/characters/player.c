@@ -15,7 +15,7 @@
 // NOTE: Huge PlayerState anim function, kept as separate file for now.
 #include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800CBAE4
 
-void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords)
+void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords)
 {
     s_Collision coll;
     VECTOR3     offset;
@@ -206,9 +206,9 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
         chara->rotationSpeed.vy = FP_TO(sharedData_800E39D8_0_s00, 8) / g_DeltaTime;
     }
 
-    coords->coord.t[0] = Q12_TO_Q8(chara->position.vx);
-    coords->coord.t[1] = Q12_TO_Q8(chara->position.vy);
-    coords->coord.t[2] = Q12_TO_Q8(chara->position.vz);
+    boneCoords[0].coord.t[0] = Q12_TO_Q8(chara->position.vx);
+    boneCoords[0].coord.t[1] = Q12_TO_Q8(chara->position.vy);
+    boneCoords[0].coord.t[2] = Q12_TO_Q8(chara->position.vz);
 }
 
 void sharedFunc_800D209C_0_s00(void)

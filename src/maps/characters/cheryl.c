@@ -96,9 +96,9 @@ void Cheryl_MovementUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) //
         cheryl->fallSpeed   = Q12(0.0f);
     }
 
-    boneCoords->coord.t[0] = Q12_TO_Q8(cheryl->position.vx);
-    boneCoords->coord.t[1] = Q12_TO_Q8(cheryl->position.vy);
-    boneCoords->coord.t[2] = Q12_TO_Q8(cheryl->position.vz);
+    boneCoords[0].coord.t[0] = Q12_TO_Q8(cheryl->position.vx);
+    boneCoords[0].coord.t[1] = Q12_TO_Q8(cheryl->position.vy);
+    boneCoords[0].coord.t[2] = Q12_TO_Q8(cheryl->position.vz);
 }
 
 void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 0x800D8310

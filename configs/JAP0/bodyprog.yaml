@@ -152,7 +152,7 @@ segments:
       - [0x16F00, c, events/bodyprog_8003BD2C]
       - [0x17024, c, gfx/bodyprog_8003BE50]
       - [0x197BC, c, gfx/map_effects]
-      - [0x1B1D8, c, events/triggers_init]
+      - [0x1B1D8, c, events/collision_trigger]
       - [0x1B220, c, view/vc_util]
       - [0x1BD48, c, gfx/bodyprog_80040B74]
       - [0x1F778, c, gfx/bodyprog_anim_800445A4]

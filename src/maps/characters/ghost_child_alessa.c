@@ -73,9 +73,9 @@ void GhostChildAlessa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneC
     chara->position.vy  = Q12(0.0f);
     chara->position.vz += offset.vz;
 
-    boneCoords->coord.t[0] = Q12_TO_Q8(chara->position.vx);
-    boneCoords->coord.t[1] = Q12_TO_Q8(chara->position.vy);
-    boneCoords->coord.t[2] = Q12_TO_Q8(chara->position.vz);
+    boneCoords[0].coord.t[0] = Q12_TO_Q8(chara->position.vx);
+    boneCoords[0].coord.t[1] = Q12_TO_Q8(chara->position.vy);
+    boneCoords[0].coord.t[2] = Q12_TO_Q8(chara->position.vz);
 }
 
 /** Addresses
