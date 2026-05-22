@@ -98,8 +98,8 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
 
             func_800692A4(var_s6, var_s5, temp_s4);
 
-            if ((g_GameWork.gameStatePrev == GameState_InventoryScreen && g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel) ||
-                (g_GameWork.gameStatePrev != GameState_InventoryScreen && g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.cancel |
+            if ((g_GameWork.gameStatePrev == GameState_InventoryScreen && g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.cancel) ||
+                (g_GameWork.gameStatePrev != GameState_InventoryScreen && g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.cancel |
                                                                                                            g_GameWorkPtr->config.controllerConfig.map)))
             {
                 SD_Call(Sfx_MenuMap);
@@ -126,7 +126,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
                 break;
             }
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
+            if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 if (D_800AE770)
                 {
@@ -148,7 +148,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
             {
                 if (D_800C4454 == Q12(1.0f))
                 {
-                    if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp)
+                    if (g_Controller0->clickedBtnFlags & ControllerFlag_LStickUp)
                     {
                         if (HAS_PAPER_MAP(D_800AE740[paperMapIdx][0]))
                         {
@@ -166,7 +166,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
                         }
                     }
 
-                    if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown)
+                    if (g_Controller0->clickedBtnFlags & ControllerFlag_LStickDown)
                     {
                         if (HAS_PAPER_MAP(D_800AE740[paperMapIdx][1]))
                         {
@@ -725,7 +725,7 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
     }
 
     temp_s4 = (mapCoordIdxZ << 16) + var_a3;
-    if (g_Controller0->btnsHeld_C & (ControllerFlag_L1 | ControllerFlag_R1))
+    if (g_Controller0->heldBtnFlags & (ControllerFlag_L1 | ControllerFlag_R1))
     {
         return temp_s4;
     }

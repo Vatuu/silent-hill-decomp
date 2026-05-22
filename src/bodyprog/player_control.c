@@ -4765,7 +4765,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                                                                                                         Q12(1.4f));
                     }
 
-                    if (g_Controller0->btnsHeld_C & ControllerFlag_LStickUp)
+                    if (g_Controller0->heldBtnFlags & ControllerFlag_LStickUp)
                     {
                         D_800AF216 = 0;
                     }
@@ -4938,7 +4938,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     }
                 }
 
-                if (g_Controller0->btnsHeld_C & ControllerFlag_LStickUp)
+                if (g_Controller0->heldBtnFlags & ControllerFlag_LStickUp)
                 {
                     D_800AF216 = 0;
                 }
@@ -5179,7 +5179,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                                                                                                     Q12(1.15f));
                 }
 
-                if (g_Controller0->btnsHeld_C & ControllerFlag_LStickDown)
+                if (g_Controller0->heldBtnFlags & ControllerFlag_LStickDown)
                 {
                     D_800AF216 = 0;
                 }
@@ -8284,57 +8284,57 @@ void Player_Controller(void) // 0x8007F32C
         g_Player_IsTurningRight   = g_Controller0->sticks_20.sticks_0.leftX >= STICK_THRESHOLD ? (g_Controller0->sticks_20.sticks_0.leftX - (STICK_THRESHOLD - 1)) : 0;
         g_Player_IsMovingForward |= g_Controller0->sticks_20.sticks_0.leftY < -STICK_THRESHOLD;
         g_Player_IsMovingBackward = g_Controller0->sticks_20.sticks_0.leftY >= STICK_THRESHOLD;
-        g_Player_HasMoveInput     = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.stepLeft |
+        g_Player_HasMoveInput     = g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.stepLeft |
                                                                               (ControllerFlag_LStickUp2 | ControllerFlag_LStickRight2 | ControllerFlag_LStickDown2 | ControllerFlag_LStickLeft2) |
                                                                               g_GameWorkPtr->config.controllerConfig.stepRight | g_GameWorkPtr->config.controllerConfig.aim);
     }
     else
     {
-        g_Player_IsTurningLeft    = ((g_Controller0->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == ControllerFlag_LStickLeft) << 6;
-        g_Player_IsTurningRight   = ((g_Controller0->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == ControllerFlag_LStickRight) << 6;
-        g_Player_IsMovingForward |= (g_Controller0->btnsHeld_C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == ControllerFlag_LStickUp;
-        g_Player_IsMovingBackward = (g_Controller0->btnsHeld_C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == ControllerFlag_LStickDown;
-        g_Player_HasMoveInput     = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.stepLeft |
+        g_Player_IsTurningLeft    = ((g_Controller0->heldBtnFlags & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == ControllerFlag_LStickLeft) << 6;
+        g_Player_IsTurningRight   = ((g_Controller0->heldBtnFlags & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == ControllerFlag_LStickRight) << 6;
+        g_Player_IsMovingForward |= (g_Controller0->heldBtnFlags & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == ControllerFlag_LStickUp;
+        g_Player_IsMovingBackward = (g_Controller0->heldBtnFlags & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == ControllerFlag_LStickDown;
+        g_Player_HasMoveInput     = g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.stepLeft |
                                                                               (ControllerFlag_LStickUp | ControllerFlag_LStickRight | ControllerFlag_LStickDown | ControllerFlag_LStickLeft) |
                                                                               g_GameWorkPtr->config.controllerConfig.stepRight | g_GameWorkPtr->config.controllerConfig.aim);
     }
 
-    g_Player_IsSteppingLeftHold  = (g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.stepLeft) &&
-                                  !(g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.stepRight);
+    g_Player_IsSteppingLeftHold  = (g_Controller0->heldBtnFlags & g_GameWorkPtr->config.controllerConfig.stepLeft) &&
+                                  !(g_Controller0->heldBtnFlags & g_GameWorkPtr->config.controllerConfig.stepRight);
 
-    g_Player_IsSteppingRightHold = (g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.stepRight) &&
-                                  !(g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.stepLeft);
+    g_Player_IsSteppingRightHold = (g_Controller0->heldBtnFlags & g_GameWorkPtr->config.controllerConfig.stepRight) &&
+                                  !(g_Controller0->heldBtnFlags & g_GameWorkPtr->config.controllerConfig.stepLeft);
 
-    g_Player_IsSteppingLeftTap  |= (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.stepLeft)  != 0;
-    g_Player_IsSteppingRightTap |= (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.stepRight) != 0;
+    g_Player_IsSteppingLeftTap  |= (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.stepLeft)  != 0;
+    g_Player_IsSteppingRightTap |= (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.stepRight) != 0;
 
     if (g_GameWork.config.extraWalkRunCtrl)
     {
-        g_Player_IsRunning = !(g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.run);
+        g_Player_IsRunning = !(g_Controller0->heldBtnFlags & g_GameWorkPtr->config.controllerConfig.run);
     }
     else
     {
-        g_Player_IsRunning = g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.run;
+        g_Player_IsRunning = g_Controller0->heldBtnFlags & g_GameWorkPtr->config.controllerConfig.run;
     }
 
     if (g_GameWork.config.extraWeaponCtrl)
     {
-        g_Player_IsAiming = g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.aim;
+        g_Player_IsAiming = g_Controller0->heldBtnFlags & g_GameWorkPtr->config.controllerConfig.aim;
     }
     else
     {
-        g_Player_IsAiming = g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.aim;
+        g_Player_IsAiming = g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.aim;
     }
 
     if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
         g_SysWork.playerWork.extra.lowerBodyState >= PlayerLowerBodyState_Aim)
     {
-        g_Player_IsShooting  = g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.action;
+        g_Player_IsShooting  = g_Controller0->heldBtnFlags & g_GameWorkPtr->config.controllerConfig.action;
         g_Player_IsAttacking = g_Player_IsShooting;
     }
     else
     {
-        attackBtnInput = g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.action;
+        attackBtnInput = g_Controller0->heldBtnFlags & g_GameWorkPtr->config.controllerConfig.action;
 
         g_Player_IsHoldAttack = (g_Player_IsHoldAttack * 2) & 0x1F;
         g_Player_IsAttacking  = (g_Player_IsAttacking * 2) & 0x3;
@@ -8351,7 +8351,7 @@ void Player_Controller(void) // 0x8007F32C
         }
     }
 
-    g_Player_HasActionInput = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.run | g_GameWorkPtr->config.controllerConfig.action);
+    g_Player_HasActionInput = g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.run | g_GameWorkPtr->config.controllerConfig.action);
 
     if (g_SysWork.sysState != SysState_Gameplay)
     {
@@ -8369,8 +8369,8 @@ void Player_Controller(void) // 0x8007F32C
                 break;
 
             case 1: // Konami gun controller.
-                g_Player_IsAiming    = g_Controller1->btnsHeld_C & ControllerFlag_Cross;
-                g_Player_IsShooting  = g_Controller1->btnsHeld_C & ControllerFlag_Square;
+                g_Player_IsAiming    = g_Controller1->heldBtnFlags & ControllerFlag_Cross;
+                g_Player_IsShooting  = g_Controller1->heldBtnFlags & ControllerFlag_Square;
                 g_Player_IsAttacking = g_Player_IsShooting;
                 break;
 
@@ -8821,7 +8821,7 @@ void func_800803FC(VECTOR3* pos, s32 idx) // 0x800803FC
 
 void Input_SelectClickSet(void) // 0x80080458
 {
-    g_Controller1->btnsClicked_10 |= ControllerFlag_Select;
+    g_Controller1->clickedBtnFlags |= ControllerFlag_Select;
 }
 
 q19_12 func_80080478(const VECTOR3* pos0, const VECTOR3* pos1) // 0x80080478

@@ -206,7 +206,7 @@ void func_800D2668(void) // 0x800D2668
     SVECTOR3* tmpSvec;
 
     // Skip.
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip &&
+    if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip &&
         g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < 23)
     {
         SysWork_StateStepSet(0, EventState_Skip);
@@ -565,7 +565,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
         }
     }
 
-    if (g_Controller0->btnsClicked_10 & ControllerFlag_R3)
+    if (g_Controller0->clickedBtnFlags & ControllerFlag_R3)
     {
         SD_Call(Sfx_Unk1529);
     }

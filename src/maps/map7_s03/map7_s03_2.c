@@ -7269,7 +7269,7 @@ void func_800E3390(void) // 0x800E3390
 {
     s32 i;
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
         D_800F4805 > 0 && D_800F4805 < 4)
     {
         D_800F4805 = 5;

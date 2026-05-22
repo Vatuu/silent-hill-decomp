@@ -13,13 +13,13 @@ s16 func_800CD20C(void) // 0x800CD20C
     {
         if (g_SysWork.sysStateSteps[0] == 5)
         {
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickDown)
             {
                 D_800ED5C8 += 3;
                 Sd_PlaySfx(Sfx_MenuMove, 0, 0x40);
             }
 
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickUp)
             {
                 D_800ED5C8 += 1;
                 Sd_PlaySfx(Sfx_MenuMove, 0, 0x40);
@@ -27,7 +27,7 @@ s16 func_800CD20C(void) // 0x800CD20C
 
             D_800ED5C8 &= 0x3;
 
-            if (g_Controller0->btnsHeld_C & ControllerFlag_LStickLeft)
+            if (g_Controller0->heldBtnFlags & ControllerFlag_LStickLeft)
             {
                 Sd_PlaySfx(Sfx_Unk1589, 0, 0x40);
 
@@ -38,7 +38,7 @@ s16 func_800CD20C(void) // 0x800CD20C
                 }
             }
 
-            if (g_Controller0->btnsHeld_C & ControllerFlag_LStickRight)
+            if (g_Controller0->heldBtnFlags & ControllerFlag_LStickRight)
             {
                 Sd_PlaySfx(Sfx_Unk1589, 0, 0x40);
 

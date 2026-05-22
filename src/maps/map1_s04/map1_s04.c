@@ -92,13 +92,13 @@ void func_800CCA2C(void) // 0x800CCA2C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            if (g_Controller0->btnsClicked_10 & ControllerFlag_R3)
+            if (g_Controller0->clickedBtnFlags & ControllerFlag_R3)
             {
                 D_800CD768 = 0;
                 D_800CD76C = 0;
             }
 
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickDown)
             {
                 if (D_800CD768 == 0)
                 {
@@ -107,7 +107,7 @@ void func_800CCA2C(void) // 0x800CCA2C
                 D_800CD768--;
             }
 
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickUp)
             {
                 D_800CD768++;
                 if (D_800CD768 == 23)
@@ -116,7 +116,7 @@ void func_800CCA2C(void) // 0x800CCA2C
                 }
             }
 
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickLeft)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickLeft)
             {
                 if (D_800CD76C != 0)
                 {
@@ -124,7 +124,7 @@ void func_800CCA2C(void) // 0x800CCA2C
                 }
             }
 
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickRight)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickRight)
             {
                 if (D_800CD76C != 39 && D_800CD038[D_800CD768][D_800CD76C + 1] != 0)
                 {
@@ -132,7 +132,7 @@ void func_800CCA2C(void) // 0x800CCA2C
                 }
             }
 
-            if (g_Controller0->btnsClicked_10 & ControllerFlag_Circle)
+            if (g_Controller0->clickedBtnFlags & ControllerFlag_Circle)
             {
                 SD_Call(D_800CD038[D_800CD768][D_800CD76C]);
                 D_800CD770 = 0;
@@ -149,7 +149,7 @@ void func_800CCA2C(void) // 0x800CCA2C
             {
                 D_800CD770 += g_DeltaTime;
 
-                if (g_Controller0->btnsClicked_10 & ControllerFlag_Cross)
+                if (g_Controller0->clickedBtnFlags & ControllerFlag_Cross)
                 {
                     D_800CD774 = 0;
                 }
@@ -178,24 +178,24 @@ void func_800CCA2C(void) // 0x800CCA2C
             }
 #endif
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip)
+            if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip)
             {
                 SysWork_StateStepIncrement(0);
             }
             break;
 
         case 2:
-            if (g_Controller0->btnsClicked_10 & ControllerFlag_Circle)
+            if (g_Controller0->clickedBtnFlags & ControllerFlag_Circle)
             {
                 SD_Call(D_800CD768_tbl[D_800CD768]);
             }
 
-            if (g_Controller0->btnsClicked_10 & ControllerFlag_Cross)
+            if (g_Controller0->clickedBtnFlags & ControllerFlag_Cross)
             {
                 Sd_SfxStop(D_800CD768_tbl[D_800CD768]);
             }
 
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickDown)
             {
                 if (D_800CD768 == 0)
                 {
@@ -204,7 +204,7 @@ void func_800CCA2C(void) // 0x800CCA2C
                 D_800CD768--;
             }
 
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickUp)
             {
                 D_800CD768++;
                 if (D_800CD768 == 4)
@@ -220,17 +220,17 @@ void Map_WorldObjectsInit(void) {} // 0x800CCE30
 
 void Map_WorldObjectsUpdate(void) // 0x800CCE38
 {
-    if (g_Controller0->btnsClicked_10 & ControllerFlag_R1)
+    if (g_Controller0->clickedBtnFlags & ControllerFlag_R1)
     {
         SD_Call(Sfx_UseKey);
     }
 
-    if (g_Controller0->btnsClicked_10 & ControllerFlag_R2)
+    if (g_Controller0->clickedBtnFlags & ControllerFlag_R2)
     {
         SD_Call(Sfx_DoorUnlocked);
     }
 
-    if (g_Controller0->btnsClicked_10 & ControllerFlag_R3)
+    if (g_Controller0->clickedBtnFlags & ControllerFlag_R3)
     {
         SD_Call(Sfx_Unk1343);
     }

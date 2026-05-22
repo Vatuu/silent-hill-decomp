@@ -146,7 +146,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
             g_MainMenu_VisibleEntryFlags |= g_MainMenu_VisibleEntryFlags << MainMenuEntry_Count;
 
-            if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
+            if (g_Controller0->pulsedBtnFlags & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
             {
                 SD_Call(Sfx_MenuMove);
                 g_GameWork.gameState = GameState_MainMenu;
@@ -158,13 +158,13 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 }
             }
 
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickUp)
             {
                 g_MainMenu_SelectedEntry += MainMenuEntry_Count;
                 while (!(g_MainMenu_VisibleEntryFlags & (1 << --g_MainMenu_SelectedEntry)));
             }
 
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickDown)
             {
                 while (!(g_MainMenu_VisibleEntryFlags & (1 << ++g_MainMenu_SelectedEntry)));
             }
@@ -172,7 +172,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             // Wrap selection.
             g_MainMenu_SelectedEntry %= MainMenuEntry_Count;
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
+            if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 g_GameWork.gameState = GameState_MainMenu;
 
@@ -250,8 +250,8 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 }
             }
 
-            if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown) ||
-                g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter |
+            if (g_Controller0->pulsedBtnFlags & (ControllerFlag_LStickUp | ControllerFlag_LStickDown) ||
+                g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                  g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 g_GameWork.gameState = GameState_MainMenu;
@@ -264,7 +264,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             }
 
             // Scroll game difficulty options.
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickUp)
             {
                 prevGameDifficultyIdx = 2;
                 if (newGameSelectedDifficultyIdx > 0)
@@ -273,7 +273,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 }
                 newGameSelectedDifficultyIdx = prevGameDifficultyIdx;
             }
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickDown)
             {
                 nextGameDifficultyIdx = 0;
                 if (newGameSelectedDifficultyIdx < 2)
@@ -284,13 +284,13 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             }
 
             // Play scroll sound.
-            if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
+            if (g_Controller0->pulsedBtnFlags & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
             {
                 SD_Call(Sfx_MenuMove);
             }
 
             // Select game difficulty.
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
+            if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 GameBoot_SavegameInitialize(0, newGameSelectedDifficultyIdx - 1);
                 GameBoot_PlayerInit();
@@ -305,7 +305,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 g_MainMenuState     = 4;
             }
             // Cancel.
-            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
+            else if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.cancel)
             {
                 SD_Call(Sfx_MenuCancel);
                 g_MainMenuState = 1;
@@ -346,7 +346,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             break;
     }
 
-    if (g_Controller0->btnsHeld_C != 0)
+    if (g_Controller0->heldBtnFlags != 0)
     {
         g_SysWork.counters_1C[1] = 0;
     }

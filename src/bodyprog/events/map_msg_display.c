@@ -54,9 +54,9 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
     // Check for user input.
     hasInput = false;
-    if ((g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter |
+    if ((g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                           g_GameWorkPtr->config.controllerConfig.cancel)) ||
-        (g_Controller0->btnsHeld_C & g_GameWorkPtr->config.controllerConfig.skip))
+        (g_Controller0->heldBtnFlags & g_GameWorkPtr->config.controllerConfig.skip))
     {
         hasInput = true;
     }
@@ -165,7 +165,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                             break;
                         }
                     }
-                    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
+                    else if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.cancel)
                     {
                         g_MapMsg_Select.maxIdx           = temp;
                         g_MapMsg_Select.selectedEntryIdx = g_MapMsg_SelectCancelIdx;
@@ -180,7 +180,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                         stateMachineIdx1 = FINISH_MAP_MSG;
                         break;
                     }
-                    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
+                    else if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter)
                     {
                         g_MapMsg_Select.maxIdx = temp;
 
@@ -371,7 +371,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                 }
             }
 
-            if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp &&
+            if (g_Controller0->clickedBtnFlags & ControllerFlag_LStickUp &&
                 g_MapMsg_Select.selectedEntryIdx != 0)
             {
                 g_MapMsg_SelectFlashTimer = Q12(0.0f);
@@ -380,7 +380,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                 Sd_PlaySfx(Sfx_MenuMove, 0, Q8(0.25f));
             }
 
-            if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown &&
+            if (g_Controller0->clickedBtnFlags & ControllerFlag_LStickDown &&
                 g_MapMsg_Select.selectedEntryIdx != (mapMsgCode - 1))
             {
                 g_MapMsg_SelectFlashTimer = Q12(0.0f);

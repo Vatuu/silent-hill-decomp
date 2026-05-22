@@ -25,32 +25,32 @@ typedef enum _DemoState
 /** @brief Initial demo game state data, stored inside `MISC/DEMO****.DAT` files. */
 typedef struct _DemoWork
 {
-    s_OptionsConfig config;
-    u8              unk_38[200];
-    s_Savegame      savegame_100;
-    u8              unk_37C[1148];
-    u32             frameCount_7F8;
-    u16             randSeed_7FC;
+    /* 0x0   */ s_OptionsConfig config;
+    /* 0x38  */ u8              unk_38[200];
+    /* 0x100 */ s_Savegame      savegame_100;
+    /* 0x37C */ u8              unk_37C[1148];
+    /* 0x7F8 */ u32             frameCount_7F8;
+    /* 0x7FC */ u16             randSeed_7FC;
 } s_DemoWork;
 STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
 
 /** @brief Per-frame demo data, stored inside `MISC/PLAY****.DAT` files. */
 typedef struct _DemoFrameData
 {
-    s_AnalogController analogController_0;
-    s8                 gameStateExpected_8; /** Expected value of `g_GameWork.gameState` before `analogController_0` is processed, if it doesn't match `Demo_Update` will display `STEP ERROR` and stop reading demo. */
-    u8                 videoPresentInterval_9;
-    s8                 unk_A[2];
-    u32                randSeed_C;
+    /* 0x0 */ s_AnalogController analogController;
+    /* 0x8 */ s8                 gameStateExpected_8; /** Expected value of `g_GameWork.gameState` before `analogController` is processed, if it doesn't match `Demo_Update` will display `STEP ERROR` and stop reading demo. */
+    /* 0x9 */ u8                 videoPresentInterval_9;
+    /* 0xA */ s8                 unk_A[2];
+    /* 0xC */ u32                randSeed_C;
 } s_DemoFrameData;
 STATIC_ASSERT_SIZEOF(s_DemoFrameData, 16);
 
 /** @brief Associates a demo number/ID with `PLAY****.DAT/DEMO****.DAT` file IDs. */
 typedef struct _DemoFileInfo
 {
-    s16 demoFileId_0;       /** `MISC/DEMO****.DAT`, initial gamestate for the demo and user config override. */
-    s16 playFileId_2;       /** `MISC/PLAY****.DAT`, data of button presses/randseed for each frame. */
-    s32 (*canPlayDemo_4)(void); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
+    /* 0x0 */ s16 demoFileId_0;       /** `MISC/DEMO****.DAT`, initial gamestate for the demo and user config override. */
+    /* 0x2 */ s16 playFileId_2;       /** `MISC/PLAY****.DAT`, data of button presses/randseed for each frame. */
+    /* 0x4 */ s32 (*canPlayDemo_4)(void); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
 } s_DemoFileInfo;
 STATIC_ASSERT_SIZEOF(s_DemoFileInfo, 8);
 

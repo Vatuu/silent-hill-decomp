@@ -517,25 +517,25 @@ const char* g_ItemDescriptions[] = {
 
 // TODO: `Items_` subsystem globals and funcs could be part of `Inventory_` instead, not sure yet.
 
-s32 D_800AE178 = 0;
-s32 g_Inventory_SelectedItemIdx = 0;
-s32 g_Items_DisplayedCount = 0;
-u8 g_Inventory_EquippedItem = 0;
-u8 D_800AE185 = 0;
-u8 D_800AE186 = 0;
-u8 D_800AE187 = InvItemId_Unequipped; // `e_InvItemId`
-u32 D_800AE188 = 0;
-u16 D_800AE18C = 0; // } Used by JAP0-only code.
-u16 D_800AE18E = 0; // }
-s32 D_800AE190 = 0;
-s16 g_Inventory_HealthStatusScanlineTimer = 0;
+s32 D_800AE178                                 = 0;
+s32 g_Inventory_SelectedItemIdx                = 0;
+s32 g_Items_DisplayedCount                     = 0;
+u8  g_Inventory_EquippedItem                   = 0;
+u8  D_800AE185                                 = 0;
+u8  D_800AE186                                 = 0;
+u8  D_800AE187                                 = InvItemId_Unequipped;  // `e_InvItemId`
+u32 D_800AE188                                 = 0;
+u16 D_800AE18C                                 = 0; // } Used by JAP0-only code.
+u16 D_800AE18E                                 = 0; // }
+s32 D_800AE190                                 = 0;
+s16 g_Inventory_HealthStatusScanlineTimer      = 0;
 s16 g_Inventory_HealthStatusColorGradientTimer = 0;
-s16 D_800AE198 = 0;
-s16 g_Inventory_HealthStatusScanlinePosition = -300;
-s32 g_Inventory_ItemNameTimer = 0;
-s32 g_Inventory_DescriptionRollTimer = 0;
-s32 g_Inventory_ScrollTransitionTimer = 0;
-s16 D_800AE1A8 = 0;
+s16 D_800AE198                                 = 0;
+s16 g_Inventory_HealthStatusScanlinePosition   = -300;
+s32 g_Inventory_ItemNameTimer                  = 0;
+s32 g_Inventory_DescriptionRollTimer           = 0;
+s32 g_Inventory_ScrollTransitionTimer          = 0;
+s16 D_800AE1A8                                 = 0;
 
 // 2 bytes of padding.
 
@@ -1090,74 +1090,74 @@ s32    g_Player_LastWeaponSelected        = NO_VALUE;
 
 // TODO: First element is modified at runtime. `func_8007E8C0` Suggests size is 76?
 s_AnimInfo HARRY_BASE_ANIM_INFOS[57] = {
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_Still,                   false), false, ANIM_STATUS(HarryAnim_Still,                   true), { Q12(10.0f)    }, NO_VALUE, 0   },
-    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_Still,                   true),  false, NO_VALUE,                                             { Q12(30.0f)    }, NO_VALUE, 1   },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_TransitionToStill,       false), false, ANIM_STATUS(HarryAnim_TransitionToStill,       true), { Q12(10.0f)    }, NO_VALUE, 0   },
-    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_TransitionToStill,       true),  false, NO_VALUE,                                             { Q12(0.0f)     }, 0,        0   },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_WalkForward,             false), false, ANIM_STATUS(HarryAnim_WalkForward,             true), { Q12(50.0f)    }, NO_VALUE, 1   },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_Still,                   false), false, ANIM_STATUS(HarryAnim_Still,                   true), { Q12(10.0f)                     }, NO_VALUE, 0   },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_Still,                   true),  false, NO_VALUE,                                             { Q12(30.0f)                     }, NO_VALUE, 1   },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_TransitionToStill,       false), false, ANIM_STATUS(HarryAnim_TransitionToStill,       true), { Q12(10.0f)                     }, NO_VALUE, 0   },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_TransitionToStill,       true),  false, NO_VALUE,                                             { Q12(0.0f)                      }, 0,        0   },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_WalkForward,             false), false, ANIM_STATUS(HarryAnim_WalkForward,             true), { Q12(50.0f)                     }, NO_VALUE, 1   },
     { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_WalkForward,             true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 1,        23  },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunForward,              false), false, ANIM_STATUS(HarryAnim_RunForward,              true), { Q12(20.0f)    }, NO_VALUE, 26  },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunForward,              false), false, ANIM_STATUS(HarryAnim_RunForward,              true), { Q12(20.0f)                     }, NO_VALUE, 26  },
     { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_RunForward,              true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 26,       45  },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_WalkBackward,            false), false, ANIM_STATUS(HarryAnim_WalkBackward,            true), { Q12(20.0f)    }, NO_VALUE, 46  },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_WalkBackward,            false), false, ANIM_STATUS(HarryAnim_WalkBackward,            true), { Q12(20.0f)                     }, NO_VALUE, 46  },
     { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_WalkBackward,            true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 46,       69  },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_SidestepLeft,            false), false, ANIM_STATUS(HarryAnim_SidestepLeft,            true), { Q12(50.0f)    }, NO_VALUE, 70  },
-    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_SidestepLeft,            true),  false, NO_VALUE,                                             { Q12(30.0f)    }, 70,       94  },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_SidestepRight,           false), false, ANIM_STATUS(HarryAnim_SidestepRight,           true), { Q12(50.0f)    }, NO_VALUE, 95  },
-    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_SidestepRight,           true),  false, NO_VALUE,                                             { Q12(30.0f)    }, 95,       119 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunLeft,                 false), false, ANIM_STATUS(HarryAnim_RunLeft,                 true), { Q12(20.0f)    }, NO_VALUE, 121 },
-    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_RunLeft,                 true),  false, NO_VALUE,                                             { Q12(20.0f)    }, 121,      133 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunRight,                false), false, ANIM_STATUS(HarryAnim_RunRight,                true), { Q12(20.0f)    }, NO_VALUE, 136 },
-    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_RunRight,                true),  false, NO_VALUE,                                             { Q12(20.0f)    }, 136,      148 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunForwardWallStopRight, false), false, ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true), { Q12(50.0f)    }, NO_VALUE, 150 },
-    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true),  false, ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true), { Q12(15.0f)    }, 150,      159 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  false), false, ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  true), { Q12(50.0f)    }, NO_VALUE, 160 },
-    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  true),  false, ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  true), { Q12(15.0f)    }, 160,      169 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunForwardStumble,       false), false, ANIM_STATUS(HarryAnim_RunForwardStumble,       true), { Q12(50.0f)    }, NO_VALUE, 170 },
-    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunForwardStumble,       true),  false, ANIM_STATUS(HarryAnim_RunForwardStumble,       true), { Q12(15.0f)    }, 170,      179 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_TurnLeft,                false), false, ANIM_STATUS(HarryAnim_TurnLeft,                true), { Q12(50.0f)    }, NO_VALUE, 180 },
-    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_TurnLeft,                true),  false, NO_VALUE,                                             { Q12(15.0f)    }, 180,      192 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_TurnRight,               false), false, ANIM_STATUS(HarryAnim_TurnRight,               true), { Q12(50.0f)    }, NO_VALUE, 193 },
-    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_TurnRight,               true),  false, NO_VALUE,                                             { Q12(15.0f)    }, 193,      205 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_QuickTurnRight,          false), false, ANIM_STATUS(HarryAnim_QuickTurnRight,          true), { Q12(50.0f)    }, NO_VALUE, 206 },
-    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_QuickTurnRight,          true),  false, ANIM_STATUS(HarryAnim_QuickTurnRight,          true), { Q12(28.0f)    }, 206,      217 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_QuickTurnLeft,           false), false, ANIM_STATUS(HarryAnim_QuickTurnLeft,           true), { Q12(50.0f)    }, NO_VALUE, 219 },
-    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_QuickTurnLeft,           true),  false, ANIM_STATUS(HarryAnim_QuickTurnLeft,           true), { Q12(28.0f)    }, 219,      230 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_JumpBackward,            false), false, ANIM_STATUS(HarryAnim_JumpBackward,            true), { Q12(10.0f)    }, NO_VALUE, 240 },
-    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_JumpBackward,            true),  false, ANIM_STATUS(HarryAnim_JumpBackward,            true), { Q12(10.0f)    }, 240,      247 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_LookAround,              false), false, ANIM_STATUS(HarryAnim_LookAround,              true), { Q12(50.0f)    }, NO_VALUE, 248 },
-    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_LookAround,              true),  false, NO_VALUE,                                             { Q12(7.0f)     }, 248,      320 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunLeftWallStop,         false), false, ANIM_STATUS(HarryAnim_RunLeftWallStop,         true), { Q12(50.0f)    }, NO_VALUE, 321 },
-    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunLeftWallStop,         true),  false, ANIM_STATUS(HarryAnim_RunLeftWallStop,         true), { Q12(20.0f)    }, 321,      336 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunLeftStumble,          false), false, ANIM_STATUS(HarryAnim_RunLeftStumble,          true), { Q12(50.0f)    }, NO_VALUE, 337 },
-    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunLeftStumble,          true),  false, ANIM_STATUS(HarryAnim_RunLeftStumble,          true), { Q12(15.0f)    }, 337,      349 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunRightWallStop,        false), false, ANIM_STATUS(HarryAnim_RunRightWallStop,        true), { Q12(50.0f)    }, NO_VALUE, 350 },
-    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunRightWallStop,        true),  false, ANIM_STATUS(HarryAnim_RunRightWallStop,        true), { Q12(20.0f)    }, 350,      365 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunRightStumble,         false), false, ANIM_STATUS(HarryAnim_RunRightStumble,         true), { Q12(50.0f)    }, NO_VALUE, 366 },
-    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunRightStumble,         true),  false, ANIM_STATUS(HarryAnim_RunRightStumble,         true), { Q12(15.0f)    }, 366,      378 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_FallForward,             false), false, ANIM_STATUS(HarryAnim_FallForward,             true), { Q12(30.0f)    }, NO_VALUE, 387 },
-    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_FallForward,             true),  false, ANIM_STATUS(HarryAnim_FallForward,             true), { Q12(20.0f)    }, 387,      417 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_FallBackward,            false), false, ANIM_STATUS(HarryAnim_FallBackward,            true), { Q12(30.0f)    }, NO_VALUE, 418 },
-    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_FallBackward,            true),  false, ANIM_STATUS(HarryAnim_FallBackward,            true), { Q12(20.0f)    }, 418,      456 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_Kick,                    false), false, ANIM_STATUS(HarryAnim_Kick,                    true), { Q12(5.0f)     }, NO_VALUE, 457 },
-    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_Kick,                    true),  false, ANIM_STATUS(HarryAnim_Kick,                    true), { Q12(20.0f)    }, 457,      484 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_Stomp,                   false), false, ANIM_STATUS(HarryAnim_Stomp,                   true), { Q12(5.0f)     }, NO_VALUE, 485 },
-    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_Stomp,                   true),  false, ANIM_STATUS(HarryAnim_Stomp,                   true), { Q12(20.0f)    }, 485,      502 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_Idle,                    false), false, ANIM_STATUS(HarryAnim_Idle,                    true), { Q12(5.0f)     }, NO_VALUE, 503 },
-    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_Idle,                    true),  false, NO_VALUE,                                             { Q12(10.0f)    }, 503,      542 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_IdleExhausted,           false), false, ANIM_STATUS(HarryAnim_IdleExhausted,           true), { Q12(5.0f)     }, NO_VALUE, 543 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_SidestepLeft,            false), false, ANIM_STATUS(HarryAnim_SidestepLeft,            true), { Q12(50.0f)                     }, NO_VALUE, 70  },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_SidestepLeft,            true),  false, NO_VALUE,                                             { Q12(30.0f)                     }, 70,       94  },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_SidestepRight,           false), false, ANIM_STATUS(HarryAnim_SidestepRight,           true), { Q12(50.0f)                     }, NO_VALUE, 95  },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_SidestepRight,           true),  false, NO_VALUE,                                             { Q12(30.0f)                     }, 95,       119 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunLeft,                 false), false, ANIM_STATUS(HarryAnim_RunLeft,                 true), { Q12(20.0f)                     }, NO_VALUE, 121 },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_RunLeft,                 true),  false, NO_VALUE,                                             { Q12(20.0f)                     }, 121,      133 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunRight,                false), false, ANIM_STATUS(HarryAnim_RunRight,                true), { Q12(20.0f)                     }, NO_VALUE, 136 },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_RunRight,                true),  false, NO_VALUE,                                             { Q12(20.0f)                     }, 136,      148 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunForwardWallStopRight, false), false, ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true), { Q12(50.0f)                     }, NO_VALUE, 150 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true),  false, ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true), { Q12(15.0f)                     }, 150,      159 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  false), false, ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  true), { Q12(50.0f)                     }, NO_VALUE, 160 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  true),  false, ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  true), { Q12(15.0f)                     }, 160,      169 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunForwardStumble,       false), false, ANIM_STATUS(HarryAnim_RunForwardStumble,       true), { Q12(50.0f)                     }, NO_VALUE, 170 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunForwardStumble,       true),  false, ANIM_STATUS(HarryAnim_RunForwardStumble,       true), { Q12(15.0f)                     }, 170,      179 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_TurnLeft,                false), false, ANIM_STATUS(HarryAnim_TurnLeft,                true), { Q12(50.0f)                     }, NO_VALUE, 180 },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_TurnLeft,                true),  false, NO_VALUE,                                             { Q12(15.0f)                     }, 180,      192 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_TurnRight,               false), false, ANIM_STATUS(HarryAnim_TurnRight,               true), { Q12(50.0f)                     }, NO_VALUE, 193 },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_TurnRight,               true),  false, NO_VALUE,                                             { Q12(15.0f)                     }, 193,      205 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_QuickTurnRight,          false), false, ANIM_STATUS(HarryAnim_QuickTurnRight,          true), { Q12(50.0f)                     }, NO_VALUE, 206 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_QuickTurnRight,          true),  false, ANIM_STATUS(HarryAnim_QuickTurnRight,          true), { Q12(28.0f)                     }, 206,      217 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_QuickTurnLeft,           false), false, ANIM_STATUS(HarryAnim_QuickTurnLeft,           true), { Q12(50.0f)                     }, NO_VALUE, 219 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_QuickTurnLeft,           true),  false, ANIM_STATUS(HarryAnim_QuickTurnLeft,           true), { Q12(28.0f)                     }, 219,      230 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_JumpBackward,            false), false, ANIM_STATUS(HarryAnim_JumpBackward,            true), { Q12(10.0f)                     }, NO_VALUE, 240 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_JumpBackward,            true),  false, ANIM_STATUS(HarryAnim_JumpBackward,            true), { Q12(10.0f)                     }, 240,      247 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_LookAround,              false), false, ANIM_STATUS(HarryAnim_LookAround,              true), { Q12(50.0f)                     }, NO_VALUE, 248 },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_LookAround,              true),  false, NO_VALUE,                                             { Q12(7.0f)                      }, 248,      320 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunLeftWallStop,         false), false, ANIM_STATUS(HarryAnim_RunLeftWallStop,         true), { Q12(50.0f)                     }, NO_VALUE, 321 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunLeftWallStop,         true),  false, ANIM_STATUS(HarryAnim_RunLeftWallStop,         true), { Q12(20.0f)                     }, 321,      336 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunLeftStumble,          false), false, ANIM_STATUS(HarryAnim_RunLeftStumble,          true), { Q12(50.0f)                     }, NO_VALUE, 337 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunLeftStumble,          true),  false, ANIM_STATUS(HarryAnim_RunLeftStumble,          true), { Q12(15.0f)                     }, 337,      349 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunRightWallStop,        false), false, ANIM_STATUS(HarryAnim_RunRightWallStop,        true), { Q12(50.0f)                     }, NO_VALUE, 350 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunRightWallStop,        true),  false, ANIM_STATUS(HarryAnim_RunRightWallStop,        true), { Q12(20.0f)                     }, 350,      365 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunRightStumble,         false), false, ANIM_STATUS(HarryAnim_RunRightStumble,         true), { Q12(50.0f)                     }, NO_VALUE, 366 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunRightStumble,         true),  false, ANIM_STATUS(HarryAnim_RunRightStumble,         true), { Q12(15.0f)                     }, 366,      378 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_FallForward,             false), false, ANIM_STATUS(HarryAnim_FallForward,             true), { Q12(30.0f)                     }, NO_VALUE, 387 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_FallForward,             true),  false, ANIM_STATUS(HarryAnim_FallForward,             true), { Q12(20.0f)                     }, 387,      417 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_FallBackward,            false), false, ANIM_STATUS(HarryAnim_FallBackward,            true), { Q12(30.0f)                     }, NO_VALUE, 418 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_FallBackward,            true),  false, ANIM_STATUS(HarryAnim_FallBackward,            true), { Q12(20.0f)                     }, 418,      456 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_Kick,                    false), false, ANIM_STATUS(HarryAnim_Kick,                    true), { Q12(5.0f)                      }, NO_VALUE, 457 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_Kick,                    true),  false, ANIM_STATUS(HarryAnim_Kick,                    true), { Q12(20.0f)                     }, 457,      484 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_Stomp,                   false), false, ANIM_STATUS(HarryAnim_Stomp,                   true), { Q12(5.0f)                      }, NO_VALUE, 485 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_Stomp,                   true),  false, ANIM_STATUS(HarryAnim_Stomp,                   true), { Q12(20.0f)                     }, 485,      502 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_Idle,                    false), false, ANIM_STATUS(HarryAnim_Idle,                    true), { Q12(5.0f)                      }, NO_VALUE, 503 },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_Idle,                    true),  false, NO_VALUE,                                             { Q12(10.0f)                     }, 503,      542 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_IdleExhausted,           false), false, ANIM_STATUS(HarryAnim_IdleExhausted,           true), { Q12(5.0f)                      }, NO_VALUE, 543 },
     { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_IdleExhausted,           true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 543,      567 },
     {}
 };
 // TODO: `func_8007EBBC` indicates there should be more.
 
-u8 __padding1[14] = {};
+u8  __padding1[14] = {};
 s16 D_800AF5C6 = 0;
 u32 D_800AF5C8[23] = {}; // Padding?
 s16 D_800AF624 = 0;
 s16 D_800AF626 = 0;
 u32 D_800AF628[368] = {};
-s32 g_Player_AttackAnimIdx = 0;
-s32 g_Player_MeleeAttackType = 0;
+s32 g_Player_AttackAnimIdx    = 0;
+s32 g_Player_MeleeAttackType  = 0;
 s32 g_Player_IsMultiTapAttack = 0;
 
 s_800AFBF4 D_800AFBF4[11] = {
@@ -1189,42 +1189,42 @@ void Inventory_DirectionalInputSet(void) // 0x8004F5DC
         g_Controller0->sticks_20.sticks_0.leftX >= STICK_THRESHOLD)
     {
         // Up.
-        g_Inventory_IsUpClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp2;
-        g_Inventory_IsUpPulsed  = g_Controller0->btnsPulsed_18  & ControllerFlag_LStickUp2;
+        g_Inventory_IsUpClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickUp2;
+        g_Inventory_IsUpPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickUp2;
 
         // Down.
-        g_Inventory_IsDownClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown2;
-        g_Inventory_IsDownPulsed  = g_Controller0->btnsPulsed_18  & ControllerFlag_LStickDown2;
+        g_Inventory_IsDownClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickDown2;
+        g_Inventory_IsDownPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickDown2;
 
         // Left.
-        g_Inventory_IsLeftClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft2;
-        g_Inventory_IsLeftHeld    = g_Controller0->btnsHeld_C     & ControllerFlag_LStickLeft2;
-        g_Inventory_IsLeftPulsed  = g_Controller0->btnsPulsed_18  & ControllerFlag_LStickLeft2;
+        g_Inventory_IsLeftClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickLeft2;
+        g_Inventory_IsLeftHeld    = g_Controller0->heldBtnFlags    & ControllerFlag_LStickLeft2;
+        g_Inventory_IsLeftPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickLeft2;
 
         // Right.
-        g_Inventory_IsRightClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickRight2;
-        g_Inventory_IsRightHeld    = g_Controller0->btnsHeld_C     & ControllerFlag_LStickRight2;
-        g_Inventory_IsRightPulsed  = g_Controller0->btnsPulsed_18  & ControllerFlag_LStickRight2;
+        g_Inventory_IsRightClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickRight2;
+        g_Inventory_IsRightHeld    = g_Controller0->heldBtnFlags    & ControllerFlag_LStickRight2;
+        g_Inventory_IsRightPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickRight2;
     }
     else
     {
         // Up.
-        g_Inventory_IsUpClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp;
-        g_Inventory_IsUpPulsed  = g_Controller0->btnsPulsed_18  & ControllerFlag_LStickUp;
+        g_Inventory_IsUpClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickUp;
+        g_Inventory_IsUpPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickUp;
 
         // Down.
-        g_Inventory_IsDownClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown;
-        g_Inventory_IsDownPulsed  = g_Controller0->btnsPulsed_18  & ControllerFlag_LStickDown;
+        g_Inventory_IsDownClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickDown;
+        g_Inventory_IsDownPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickDown;
 
         // Left.
-        g_Inventory_IsLeftClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft;
-        g_Inventory_IsLeftHeld    = g_Controller0->btnsHeld_C     & ControllerFlag_LStickLeft;
-        g_Inventory_IsLeftPulsed  = g_Controller0->btnsPulsed_18  & ControllerFlag_LStickLeft;
+        g_Inventory_IsLeftClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickLeft;
+        g_Inventory_IsLeftHeld    = g_Controller0->heldBtnFlags    & ControllerFlag_LStickLeft;
+        g_Inventory_IsLeftPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickLeft;
 
         // Right.
-        g_Inventory_IsRightClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickRight;
-        g_Inventory_IsRightHeld    = g_Controller0->btnsHeld_C     & ControllerFlag_LStickRight;
-        g_Inventory_IsRightPulsed  = g_Controller0->btnsPulsed_18  & ControllerFlag_LStickRight;
+        g_Inventory_IsRightClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickRight;
+        g_Inventory_IsRightHeld    = g_Controller0->heldBtnFlags    & ControllerFlag_LStickRight;
+        g_Inventory_IsRightPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickRight;
     }
 }
 
@@ -2690,17 +2690,17 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
             if (g_Inventory_ScrollTransitionTimer == 9)
             {
-                g_Inventory_EquippedItem                            = g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0;
-                g_SavegamePtr->equippedWeapon                    = g_Inventory_EquippedItem;
-                g_Inventory_ScrollTransitionTimer                   = 0;
-                g_SysWork.playerCombat.weaponAttack        = g_Inventory_EquippedItem + 0x80; // TODO: Use macro.
+                g_Inventory_EquippedItem                  = g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0;
+                g_SavegamePtr->equippedWeapon             = g_Inventory_EquippedItem;
+                g_Inventory_ScrollTransitionTimer         = 0;
+                g_SysWork.playerCombat.weaponAttack       = g_Inventory_EquippedItem + 0x80; // TODO: Use macro.
                 g_SysWork.playerCombat.weaponInventoryIdx = g_SysWork.invItemSelectedIdx;
 
-                *selectedItemId                 = 0;
-                temp3                           = g_GameWork.gameStateSteps[2];
-                D_800AE188                      = 0;
+                *selectedItemId              = 0;
+                temp3                        = g_GameWork.gameStateSteps[2];
+                D_800AE188                   = 0;
                 g_GameWork.gameStateSteps[1] = 1;
-                D_800C3BA8                      = temp3;
+                D_800C3BA8                   = temp3;
 
                 func_8004EF48();
                 func_8004C564(0, NO_VALUE);
@@ -2722,11 +2722,11 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
             if (g_Inventory_ScrollTransitionTimer == 9)
             {
-                g_Inventory_EquippedItem                        = InvItemId_Unequipped;
-                g_SavegamePtr->equippedWeapon                = InvItemId_Unequipped;
-                g_SysWork.playerCombat.weaponAttack        = NO_VALUE;
+                g_Inventory_EquippedItem                  = InvItemId_Unequipped;
+                g_SavegamePtr->equippedWeapon             = InvItemId_Unequipped;
+                g_SysWork.playerCombat.weaponAttack       = NO_VALUE;
                 g_SysWork.playerCombat.weaponInventoryIdx = NO_VALUE;
-                g_Inventory_ScrollTransitionTimer               = 0;
+                g_Inventory_ScrollTransitionTimer         = 0;
 
                 temp = g_SysWork.invItemSelectedIdx;
                 if (temp == NO_VALUE)
@@ -2734,11 +2734,11 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     D_800AE188 = 0;
                 }
 
-                *selectedItemId                 = 0;
-                temp3                           = g_GameWork.gameStateSteps[2];
-                v0                              = 1;
+                *selectedItemId              = 0;
+                temp3                        = g_GameWork.gameStateSteps[2];
+                v0                           = 1;
                 g_GameWork.gameStateSteps[1] = v0;
-                D_800C3BA8                      = temp3;
+                D_800C3BA8                   = temp3;
 
                 func_8004EF48();
                 func_8004C564(0, -1);
@@ -2764,8 +2764,8 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
                 Items_AmmoReloadCalculation(&sp10, &sp14, g_SysWork.playerCombat.weaponAttack);
 
-                g_SysWork.playerCombat.totalWeaponAmmo                                    = sp14;
-                g_SysWork.playerCombat.currentWeaponAmmo                                  = sp10;
+                g_SysWork.playerCombat.totalWeaponAmmo                                  = sp14;
+                g_SysWork.playerCombat.currentWeaponAmmo                                = sp10;
                 g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx].count_1 = sp10;
 
                 for (j = 0; j < g_SavegamePtr->inventorySlotCount; j++)
@@ -2793,9 +2793,9 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     do
                     {
                         g_Inventory_ScrollTransitionTimer = 0;
-                        temp4                             = ptr->gameStateSteps[2];
-                        g_GameWork.gameStateSteps[1]   = 1;
-                        D_800C3BA8                        = temp4;
+                        temp4                        = ptr->gameStateSteps[2];
+                        g_GameWork.gameStateSteps[1] = 1;
+                        D_800C3BA8                   = temp4;
                     }
                     while (0); // @hack
 
@@ -2823,16 +2823,15 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 if (g_Inventory_ScrollTransitionTimer == 9)
                 {
                     g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx + 1].id_0 = InvItemId_Empty;
-
                     g_Inventory_ScrollTransitionTimer = 0;
 
                     func_8004EF48();
 
-                    *selectedItemId                 = 0;
-                    D_800AE188                      = 0;
-                    temp5                           = g_GameWork.gameStateSteps[2];
+                    *selectedItemId              = 0;
+                    D_800AE188                   = 0;
+                    temp5                        = g_GameWork.gameStateSteps[2];
                     g_GameWork.gameStateSteps[1] = 1;
-                    D_800C3BA8                      = temp5;
+                    D_800C3BA8                   = temp5;
                 }
                 else
                 {
@@ -2858,7 +2857,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     *selectedItemId                   = 0;
                     D_800AE188                        = 0;
                     temp5                             = g_GameWork.gameStateSteps[2];
-                    g_GameWork.gameStateSteps[1]   = 1;
+                    g_GameWork.gameStateSteps[1]      = 1;
                     D_800C3BA8                        = temp5;
                 }
             }
@@ -2880,12 +2879,12 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
                             if (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1 >= temp_a0_8)
                             {
-                                g_SavegamePtr->items[l].count_1                                       += temp_a0_8;
+                                g_SavegamePtr->items[l].count_1                            += temp_a0_8;
                                 g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1 -= temp_a0_8;
                             }
                             else
                             {
-                                g_SavegamePtr->items[l].count_1                                      += g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1;
+                                g_SavegamePtr->items[l].count_1                           += g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1;
                                 g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1 = 0;
                             }
 
@@ -2910,13 +2909,13 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                             if (g_SavegamePtr->items[l].count_1 >= temp_a0_8)
                             {
                                 g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1 += temp_a0_8;
-                                g_SavegamePtr->items[l].count_1                                       -= temp_a0_8;
+                                g_SavegamePtr->items[l].count_1                            -= temp_a0_8;
                             }
                             else
                             {
-                                var_t3                                                                   = l;
+                                var_t3                                                      = l;
                                 g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1 += g_SavegamePtr->items[l].count_1;
-                                g_SavegamePtr->items[l].count_1                                        = 0;
+                                g_SavegamePtr->items[l].count_1                             = 0;
                             }
                         }
                     }
@@ -2933,13 +2932,13 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 if (g_Inventory_ScrollTransitionTimer == 9)
                 {
                     g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0 = InvItemId_Empty;
-                    ptr2                                                                 = &g_GameWork;
+                    ptr2                                                    = &g_GameWork;
 
                     do
                     {
                         g_Inventory_ScrollTransitionTimer = 0;
                         temp4                             = ptr2->gameStateSteps[2];
-                        g_GameWork.gameStateSteps[1]   = 1;
+                        g_GameWork.gameStateSteps[1]      = 1;
                         D_800C3BA8                        = temp4;
                     }
                     while (0); // @hack
@@ -2967,16 +2966,15 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 if (g_Inventory_ScrollTransitionTimer == 9)
                 {
                     g_SavegamePtr->items[g_SysWork.invItemSelectedIdx + 1].id_0 = InvItemId_Empty;
-
                     g_Inventory_ScrollTransitionTimer = 0;
 
                     func_8004EF48();
 
-                    *selectedItemId                 = 0;
-                    D_800AE188                      = 0;
-                    temp5                           = g_GameWork.gameStateSteps[2];
+                    *selectedItemId              = 0;
+                    D_800AE188                   = 0;
+                    temp5                        = g_GameWork.gameStateSteps[2];
                     g_GameWork.gameStateSteps[1] = 1;
-                    D_800C3BA8                      = temp5;
+                    D_800C3BA8                   = temp5;
                 }
                 else
                 {
@@ -3002,7 +3000,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     *selectedItemId                   = 0;
                     D_800AE188                        = 0;
                     temp5                             = g_GameWork.gameStateSteps[2];
-                    g_GameWork.gameStateSteps[1]   = 1;
+                    g_GameWork.gameStateSteps[1]      = 1;
                     D_800C3BA8                        = temp5;
                 }
             }
@@ -3028,7 +3026,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
                             case InvItemId_Ampoule:
                                 g_SysWork.playerWork.player.health += Q12(100.0f);
-                                g_SavegamePtr->healthSaturation    = Q12(300.0f);
+                                g_SavegamePtr->healthSaturation     = Q12(300.0f);
                                 break;
                         }
 
@@ -3090,7 +3088,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
         case 11:
             if (g_Inventory_ScrollTransitionTimer == 0 &&
                 ((g_SavegamePtr->items[(u8)g_SysWork.invItemSelectedIdx].id_0 >= InvItemId_LobbyKey &&
-                  g_SavegamePtr->items[(u8)g_SysWork.invItemSelectedIdx].id_0 < InvItemId_KitchenKnife) ||
+                  g_SavegamePtr->items[(u8)g_SysWork.invItemSelectedIdx].id_0 <  InvItemId_KitchenKnife) ||
                  g_SavegamePtr->items[(u8)g_SysWork.invItemSelectedIdx].id_0 == InvItemId_GasolineTank))
             {
                 g_SavegamePtr->items[(u8)g_SysWork.invItemSelectedIdx].count_1 = 0;
@@ -3103,13 +3101,13 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 if (g_Inventory_ScrollTransitionTimer == 9)
                 {
                     g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0 = 0xFF;
-                    g_Inventory_ScrollTransitionTimer                                    = 0;
-                    *selectedItemId                                                      = 0;
-                    D_800AE188                                                           = 0;
+                    g_Inventory_ScrollTransitionTimer                       = 0;
+                    *selectedItemId                                         = 0;
+                    D_800AE188                                              = 0;
 
-                    temp3                           = g_GameWork.gameStateSteps[2];
+                    temp3                        = g_GameWork.gameStateSteps[2];
                     g_GameWork.gameStateSteps[1] = 17;
-                    D_800C3BA8                      = temp3;
+                    D_800C3BA8                   = temp3;
 
                     for (i = 0; i < 7; i++)
                     {
@@ -3156,16 +3154,16 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
             D_800AE190++;
             D_800AE190 = CLAMP(D_800AE190, 0, 0x40);
 
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.action |
+            if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.action |
                                                  g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 if (D_800AE190 == 0x40)
                 {
-                    g_Inventory_ScrollTransitionTimer    = 0;
-                    g_Inventory_SelectionBordersDraw = 0;
+                    g_Inventory_ScrollTransitionTimer = 0;
+                    g_Inventory_SelectionBordersDraw  = 0;
                     g_GameWork.gameStateSteps[1]      = 15;
                     g_GameWork.gameStateSteps[2]      = 0;
-                    D_800AE190                           = 0;
+                    D_800AE190                        = 0;
                 }
             }
             break;
@@ -3179,16 +3177,16 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
             {
                 g_Inventory_ScrollTransitionTimer = 0;
                 temp2                             = g_GameWork.gameStateSteps[2];
-                g_GameWork.gameStateSteps[1]   = 1;
+                g_GameWork.gameStateSteps[1]      = 1;
                 ptr3                              = &D_800C3BA8;
 
                 do {} while (false); // @hack
 
-                g_GameWork.gameStateSteps[2]      = 0;
-                *ptr3                                = temp2;
-                *selectedItemId                      = 0;
-                D_800AE188                           = 0;
-                D_800AE190                           = 0;
+                g_GameWork.gameStateSteps[2]     = 0;
+                *ptr3                            = temp2;
+                *selectedItemId                  = 0;
+                D_800AE188                       = 0;
+                D_800AE190                       = 0;
                 g_Inventory_SelectionBordersDraw = 0;
             }
             break;

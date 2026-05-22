@@ -391,7 +391,7 @@ bool Demo_ControllerDataUpdate(void) // 0x8008F7CC
         return false;
     }
 
-    btns = g_Controller0->analogController_0.digitalButtons;
+    btns = g_Controller0->analogController.digitalButtons;
     if (btns != 0xFFFF)
     {
         Demo_ExitDemo();
@@ -402,13 +402,13 @@ bool Demo_ControllerDataUpdate(void) // 0x8008F7CC
 
     if (g_Demo_CurFrameData != NULL)
     {
-        g_Controller0->analogController_0 = g_Demo_CurFrameData->analogController_0;
+        g_Controller0->analogController = g_Demo_CurFrameData->analogController;
         return true;
     }
 
-    *(u16*)&g_Controller0->analogController_0.status = 0x7300;
-    g_Controller0->analogController_0.digitalButtons = btns;
-    *(u32*)&g_Controller0->analogController_0.rightX = 0x80808080;
+    *(u16*)&g_Controller0->analogController.status = 0x7300;
+    g_Controller0->analogController.digitalButtons = btns;
+    *(u32*)&g_Controller0->analogController.rightX = 0x80808080;
     return true;
 }
 

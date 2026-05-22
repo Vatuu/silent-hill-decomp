@@ -285,8 +285,8 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
 
         // Leave to gameplay (if options menu was accessed with `Option` input action).
         if (g_GameWork.gameStatePrev == GameState_InGame &&
-            !(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter) &&
-            (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.option))
+            !(g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter) &&
+            (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.option))
         {
             Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
 
@@ -298,14 +298,14 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
         }
 
         // Move selection cursor up/down.
-        if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
+        if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickUp)
         {
             s32 var = 1;
             Sd_PlaySfx(Sfx_MenuMove, 0, 64);
             g_ExtraOptionsMenu_SelectedEntry  = ((g_ExtraOptionsMenu_SelectedEntry - var) + g_ExtraOptionsMenu_EntryCount) % g_ExtraOptionsMenu_EntryCount;
             g_Options_SelectionHighlightTimer = 0;
         }
-        if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
+        if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickDown)
         {
             Sd_PlaySfx(Sfx_MenuMove, 0, 64);
             g_ExtraOptionsMenu_SelectedEntry++;
@@ -318,7 +318,7 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
         {
             case ExtraOptionsMenuEntry_WeaponCtrl:
                 // Scroll left/right.
-                if (g_Controller0->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
+                if (g_Controller0->clickedBtnFlags & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
                     Sd_PlaySfx(Sfx_MenuMove, 0, 64);
                     g_GameWork.config.extraWeaponCtrl = !g_GameWork.config.extraWeaponCtrl;
@@ -327,12 +327,12 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
 
             case ExtraOptionsMenuEntry_Blood:
                 // Scroll left/right.
-                if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickRight)
+                if (g_Controller0->clickedBtnFlags & ControllerFlag_LStickRight)
                 {
                     Sd_PlaySfx(Sfx_MenuMove, 0, 64);
                     g_ExtraOptionsMenu_SelectedBloodColorEntry++;
                 }
-                if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft)
+                if (g_Controller0->clickedBtnFlags & ControllerFlag_LStickLeft)
                 {
                     Sd_PlaySfx(Sfx_MenuMove, 0, 64);
                     g_ExtraOptionsMenu_SelectedBloodColorEntry += 3;
@@ -362,7 +362,7 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
 
             case ExtraOptionsMenuEntry_ViewCtrl:
                 // Scroll left/right.
-                if (g_Controller0->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
+                if (g_Controller0->clickedBtnFlags & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
                     Sd_PlaySfx(Sfx_MenuMove, 0, 64);
 
@@ -373,7 +373,7 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
 
             case ExtraOptionsMenuEntry_RetreatTurn:
                 // Scroll left/right.
-                if (g_Controller0->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
+                if (g_Controller0->clickedBtnFlags & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
                     Sd_PlaySfx(Sfx_MenuMove, 0, 64);
 
@@ -384,7 +384,7 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
 
             case ExtraOptionsMenuEntry_MovementCtrl:
                 // Scroll left/right.
-                if (g_Controller0->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
+                if (g_Controller0->clickedBtnFlags & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
                     Sd_PlaySfx(Sfx_MenuMove, 0, 64);
 
@@ -395,7 +395,7 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
 
             case ExtraOptionsMenuEntry_AutoAiming:
                 // Scroll left/right.
-                if (g_Controller0->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
+                if (g_Controller0->clickedBtnFlags & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
                     Sd_PlaySfx(Sfx_MenuMove, 0, 64);
 
@@ -406,7 +406,7 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
 
             case ExtraOptionsMenuEntry_ViewMode:
                 // Scroll left/right.
-                if (g_Controller0->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
+                if (g_Controller0->clickedBtnFlags & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
                     Sd_PlaySfx(Sfx_MenuMove, 0, 64);
 
@@ -417,14 +417,14 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
 
             case ExtraOptionsMenuEntry_BulletMult:
                 // Scroll left/right.
-                if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickRight)
+                if (g_Controller0->clickedBtnFlags & ControllerFlag_LStickRight)
                 {
                     Sd_PlaySfx(Sfx_MenuMove, 0, 64);
 
                     // Set config.
                     g_GameWork.config.extraBulletAdjust++;
                 }
-                if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft)
+                if (g_Controller0->clickedBtnFlags & ControllerFlag_LStickLeft)
                 {
                     Sd_PlaySfx(Sfx_MenuMove, 0, 64);
 
@@ -437,12 +437,12 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
     }
 
     // Leave menu.
-    if ((g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.cancel |
+    if ((g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.cancel |
                                           (ControllerFlag_L2 | ControllerFlag_R2 |
                                            ControllerFlag_L1 | ControllerFlag_R1))) &&
         g_GameWork.gameStateSteps[0] != OptionsMenuState_LeaveExtraOptions)
     {
-        if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
+        if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.cancel)
         {
             Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
         }
@@ -499,8 +499,8 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 
     // Leave to gameplay (if options menu was accessed with `Option` input action).
     if (g_GameWork.gameStatePrev == GameState_InGame &&
-        !(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter) &&
-        (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.option))
+        !(g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter) &&
+        (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.option))
     {
         Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
 
@@ -512,14 +512,14 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
     }
 
     // Move selection cursor up/down.
-    if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
+    if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickUp)
     {
         Sd_PlaySfx(Sfx_MenuMove, 0, 64);
 
         g_Options_SelectionHighlightTimer = 0;
         g_MainOptionsMenu_SelectedEntry   = (g_MainOptionsMenu_SelectedEntry + (MainOptionsMenuEntry_Count - 1)) % MainOptionsMenuEntry_Count;
     }
-    if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
+    if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickDown)
     {
         Sd_PlaySfx(Sfx_MenuMove, 0, 64);
 
@@ -532,7 +532,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
     {
         case MainOptionsMenuEntry_Exit:
             // Exit menu to gameplay.
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter |
+            if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                  g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
@@ -546,7 +546,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 
         case MainOptionsMenuEntry_Controller:
             // Enter controller screen.
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
+            if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 Sd_PlaySfx(Sfx_MenuConfirm, 0, 64);
                 Fs_QueueStartReadTim(FILE_TIM_OPTION2_TIM, IMAGE_BUFFER_3, &g_ControllerButtonAtlasImg);
@@ -561,7 +561,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 
         case MainOptionsMenuEntry_ScreenPosition:
             // Enter screen position screen.
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
+            if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 Sd_PlaySfx(Sfx_MenuConfirm, 0, 64);
 
@@ -574,7 +574,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
             break;
 
         case MainOptionsMenuEntry_Brightness:
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
+            if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 Sd_PlaySfx(Sfx_MenuConfirm, 0, 64);
                 if (g_GameWork.gameStatePrev == GameState_MainMenu)
@@ -595,7 +595,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
             break;
 
         case MainOptionsMenuEntry_Vibration:
-            if (g_Controller0->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
+            if (g_Controller0->clickedBtnFlags & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
             {
                 Sd_PlaySfx(Sfx_MenuMove, 0, 64);
                 g_GameWork.config.vibrationEnabled = !g_GameWork.config.vibrationEnabled << 7;
@@ -603,7 +603,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
             break;
 
         case MainOptionsMenuEntry_AutoLoad:
-            if (g_Controller0->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
+            if (g_Controller0->clickedBtnFlags & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
             {
                 Sd_PlaySfx(Sfx_MenuMove, 0, 64);
                 g_GameWork.config.autoLoad = (s8)g_GameWork.config.autoLoad == 0;
@@ -611,7 +611,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
             break;
 
         case MainOptionsMenuEntry_Sound:
-            if (g_Controller0->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
+            if (g_Controller0->clickedBtnFlags & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
             {
                 Sd_PlaySfx(Sfx_MenuMove, 0, 64);
 
@@ -629,23 +629,23 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
         case MainOptionsMenuEntry_BgmVolume:
             vol = g_GameWork.config.volumeBgm;
 
-            if ((vol < OPT_SOUND_VOLUME_MAX && (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickRight)) ||
-                (vol > 0                    && (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickLeft)))
+            if ((vol < OPT_SOUND_VOLUME_MAX && (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickRight)) ||
+                (vol > 0                    && (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickLeft)))
             {
                 SD_Call(Sfx_MenuMove);
             }
-            if ((vol == OPT_SOUND_VOLUME_MAX && (g_Controller0->btnsClicked_10 & ControllerFlag_LStickRight)) ||
-                (vol == 0                    && (g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft)))
+            if ((vol == OPT_SOUND_VOLUME_MAX && (g_Controller0->clickedBtnFlags & ControllerFlag_LStickRight)) ||
+                (vol == 0                    && (g_Controller0->clickedBtnFlags & ControllerFlag_LStickLeft)))
             {
                 SD_Call(Sfx_MenuError);
             }
 
             // Scroll left/right.
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickRight)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickRight)
             {
                 vol = vol + SOUND_VOL_STEP;
             }
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickLeft)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickLeft)
             {
                 vol = vol - SOUND_VOL_STEP;
             }
@@ -659,22 +659,22 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
         case MainOptionsMenuEntry_SfxVolume:
             vol = g_GameWork.config.volumeSe;
 
-            if ((vol < OPT_SOUND_VOLUME_MAX && (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickRight)) ||
-                (vol > 0                    && (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickLeft)))
+            if ((vol < OPT_SOUND_VOLUME_MAX && (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickRight)) ||
+                (vol > 0                    && (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickLeft)))
             {
                 SD_Call(Sfx_MenuMove);
             }
-            if ((vol == OPT_SOUND_VOLUME_MAX && (g_Controller0->btnsClicked_10 & ControllerFlag_LStickRight)) ||
-                (vol == 0                    && (g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft)))
+            if ((vol == OPT_SOUND_VOLUME_MAX && (g_Controller0->clickedBtnFlags & ControllerFlag_LStickRight)) ||
+                (vol == 0                    && (g_Controller0->clickedBtnFlags & ControllerFlag_LStickLeft)))
             {
                 SD_Call(Sfx_MenuError);
             }
 
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickRight)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickRight)
             {
                 vol = vol + SOUND_VOL_STEP;
             }
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickLeft)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickLeft)
             {
                 vol = vol - SOUND_VOL_STEP;
             }
@@ -691,7 +691,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 
     vol = 0;
 
-    if (g_Controller0->btnsClicked_10 & (ControllerFlag_L2 | ControllerFlag_R2 |
+    if (g_Controller0->clickedBtnFlags & (ControllerFlag_L2 | ControllerFlag_R2 |
                                          ControllerFlag_L1 | ControllerFlag_R1))
     {
         if (g_GameWork.gameStateSteps[0] == OptionsMenuState_EnterExtraOptions)
@@ -710,8 +710,8 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 
     // Reset selection cursor.
     if (((g_GameWork.gameStateSteps[0] != OptionsMenuState_EnterExtraOptions && g_MainOptionsMenu_SelectedEntry != MainOptionsMenuEntry_Exit) &&
-         !(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)) &&
-        (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel))
+         !(g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter)) &&
+        (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.cancel))
     {
         Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
 
@@ -1237,11 +1237,11 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
         }
 
         // Draw border to highlight flashing left/right arrow corresponding to direction of UI navigation.
-        if (g_Controller0->btnsHeld_C & ControllerFlag_LStickLeft)
+        if (g_Controller0->heldBtnFlags & ControllerFlag_LStickLeft)
         {
             Options_Selection_ArrowDraw(&BACK_ARROWS[g_ExtraOptionsMenu_SelectedEntry << 1], false, false);
         }
-        if (g_Controller0->btnsHeld_C & ControllerFlag_LStickRight)
+        if (g_Controller0->heldBtnFlags & ControllerFlag_LStickRight)
         {
             Options_Selection_ArrowDraw(&BACK_ARROWS[(g_ExtraOptionsMenu_SelectedEntry << 1) + 1], false, false);
         }
@@ -1374,11 +1374,11 @@ void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
         }
 
         // Draw border to highlight flashing left/right arrow corresponding to direction of UI navigation.
-        if (g_Controller0->btnsHeld_C & ControllerFlag_LStickLeft)
+        if (g_Controller0->heldBtnFlags & ControllerFlag_LStickLeft)
         {
             Options_Selection_ArrowDraw(&BACK_ARROWS[(g_MainOptionsMenu_SelectedEntry - 4) << 1], false, false);
         }
-        if (g_Controller0->btnsHeld_C & ControllerFlag_LStickRight)
+        if (g_Controller0->heldBtnFlags & ControllerFlag_LStickRight)
         {
             Options_Selection_ArrowDraw(&BACK_ARROWS[((g_MainOptionsMenu_SelectedEntry - 4) << 1) + 1], false, false);
         }
@@ -1457,19 +1457,19 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
 
         case ScreenPosMenuState_2:
             // Set config.
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickUp)
             {
                 g_GameWorkConst->config.screenPositionY--;
             }
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickDown)
             {
                 g_GameWorkConst->config.screenPositionY++;
             }
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickLeft)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickLeft)
             {
                 g_GameWorkConst->config.screenPositionX--;
             }
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickRight)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickRight)
             {
                 g_GameWorkConst->config.screenPositionX++;
             }
@@ -1484,7 +1484,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
             }
 
             // Start background color fade.
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
+            if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 if (screenPosMenu_BackgroundFade == 255)
                 {
@@ -1494,7 +1494,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
             }
 
             // Leave menu.
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
+            if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.cancel)
             {
                 Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
 
@@ -1643,23 +1643,23 @@ void Options_ScreenPosMenu_ArrowsDraw(void) // 0x801E5A08
         Options_Selection_ArrowDraw(&FRONT_ARROWS[i], true, false);
     }
 
-    if ((g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp) ||
-        (g_Controller0->btnsHeld_C     & ControllerFlag_LStickUp))
+    if ((g_Controller0->clickedBtnFlags & ControllerFlag_LStickUp) ||
+        (g_Controller0->heldBtnFlags     & ControllerFlag_LStickUp))
     {
         dirs[0] = true;
     }
-    if ((g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown) ||
-        (g_Controller0->btnsHeld_C     & ControllerFlag_LStickDown))
+    if ((g_Controller0->clickedBtnFlags & ControllerFlag_LStickDown) ||
+        (g_Controller0->heldBtnFlags     & ControllerFlag_LStickDown))
     {
         dirs[1] = true;
     }
-    if ((g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft) ||
-        (g_Controller0->btnsHeld_C     & ControllerFlag_LStickLeft))
+    if ((g_Controller0->clickedBtnFlags & ControllerFlag_LStickLeft) ||
+        (g_Controller0->heldBtnFlags     & ControllerFlag_LStickLeft))
     {
         dirs[2] = true;
     }
-    if ((g_Controller0->btnsClicked_10 & ControllerFlag_LStickRight) ||
-        (g_Controller0->btnsHeld_C     & ControllerFlag_LStickRight))
+    if ((g_Controller0->clickedBtnFlags & ControllerFlag_LStickRight) ||
+        (g_Controller0->heldBtnFlags     & ControllerFlag_LStickRight))
     {
         dirs[3] = true;
     }
@@ -1754,7 +1754,7 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
 
         case BrightnessMenuState_2:
             // Set config.
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickLeft)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickLeft)
             {
                 if (g_GameWork.config.brightness != 0)
                 {
@@ -1762,7 +1762,7 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
                     Sd_PlaySfx(Sfx_MenuMove, 0, Q8(0.25f));
                 }
             }
-            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickRight)
+            if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickRight)
             {
                 if (g_GameWork.config.brightness < 7)
                 {
@@ -1772,10 +1772,10 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
             }
 
             // Fade screen and leave menu.
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter |
+            if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                  g_GameWorkPtr->config.controllerConfig.cancel))
             {
-                if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
+                if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter)
                 {
                     Sd_PlaySfx(Sfx_MenuConfirm, 0, Q8(0.25f));
                 }
@@ -1849,7 +1849,7 @@ void Options_BrightnessMenu_ArrowsDraw(void) // 0x801E628C
     s32 dir;
 
     // Determine UI movement direction.
-    btnInput = g_Controller0->btnsHeld_C;
+    btnInput = g_Controller0->heldBtnFlags;
     if (btnInput & ControllerFlag_LStickLeft)
     {
         dir = 1;
@@ -2129,7 +2129,7 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
             selectedEntries.preset = ControllerMenuState_Exit;
 
             // Leave menu.
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter |
+            if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                  g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 SD_Call(Sfx_MenuCancel);
@@ -2141,18 +2141,18 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
             }
 
             // Move selection cursor up/down.
-            if (g_Controller0->btnsPulsedGui_1C & ControllerFlag_LStickUp)
+            if (g_Controller0->pulsedGuiBtnFlags & ControllerFlag_LStickUp)
             {
                 g_GameWork.gameStateSteps[1] = ControllerMenuState_Type3;
                 g_GameWork.gameStateSteps[2] = 0;
             }
-            else if (g_Controller0->btnsPulsedGui_1C & ControllerFlag_LStickDown)
+            else if (g_Controller0->pulsedGuiBtnFlags & ControllerFlag_LStickDown)
             {
                 g_GameWork.gameStateSteps[1] = ControllerMenuState_Type1;
                 g_GameWork.gameStateSteps[2] = 0;
             }
             // Move selection cursor left/right.
-            else if (g_Controller0->btnsPulsedGui_1C & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
+            else if (g_Controller0->pulsedGuiBtnFlags & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
             {
                 g_GameWork.gameStateSteps[1] = ControllerMenuState_Actions;
                 g_GameWork.gameStateSteps[2] = 0;
@@ -2165,13 +2165,13 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
             selectedEntries.preset = g_GameWork.gameStateSteps[1];
 
             // Set binding preset.
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.enter)
+            if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 SD_Call(Sfx_MenuConfirm);
                 Settings_RestoreControlDefaults(g_GameWork.gameStateSteps[1] - 1);
             }
             // Reset selection cursor.
-            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.cancel)
+            else if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.cancel)
             {
                 SD_Call(Sfx_MenuCancel);
                 g_GameWork.gameStateSteps[1] = ControllerMenuState_Exit;
@@ -2181,18 +2181,18 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
             else
             {
                 // Move selection cursor up/down.
-                if (g_Controller0->btnsPulsedGui_1C & ControllerFlag_LStickUp)
+                if (g_Controller0->pulsedGuiBtnFlags & ControllerFlag_LStickUp)
                 {
                     g_GameWork.gameStateSteps[1] = (g_GameWork.gameStateSteps[1] - 1) & 3;
                     g_GameWork.gameStateSteps[2] = 0;
                 }
-                else if (g_Controller0->btnsPulsedGui_1C & ControllerFlag_LStickDown)
+                else if (g_Controller0->pulsedGuiBtnFlags & ControllerFlag_LStickDown)
                 {
                     g_GameWork.gameStateSteps[1] = (g_GameWork.gameStateSteps[1] + 1) & 3;
                     g_GameWork.gameStateSteps[2] = 0;
                 }
                 // Move selection cursor left/right.
-                else if (g_Controller0->btnsPulsedGui_1C & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
+                else if (g_Controller0->pulsedGuiBtnFlags & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
                 {
                     g_GameWork.gameStateSteps[1] = ControllerMenuState_Actions;
                     g_GameWork.gameStateSteps[2] = 0;
@@ -2204,7 +2204,7 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
             actionIdx = selectedEntries.action;
 
             // Move selection cursor up/down.
-            if (g_Controller0->btnsPulsedGui_1C & ControllerFlag_LStickUp)
+            if (g_Controller0->pulsedGuiBtnFlags & ControllerFlag_LStickUp)
             {
                 if (actionIdx != InputAction_Enter)
                 {
@@ -2215,7 +2215,7 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
                     selectedEntries.action = InputAction_Option;
                 }
             }
-            else if (g_Controller0->btnsPulsedGui_1C & ControllerFlag_LStickDown)
+            else if (g_Controller0->pulsedGuiBtnFlags & ControllerFlag_LStickDown)
             {
                 if (actionIdx != InputAction_Option)
                 {
@@ -2227,7 +2227,7 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
                 }
             }
             // Move selection cursor left/right.
-            else if (g_Controller0->btnsPulsedGui_1C & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
+            else if (g_Controller0->pulsedGuiBtnFlags & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
             {
                 g_GameWork.gameStateSteps[2] = 0;
                 g_GameWork.gameStateSteps[1] = selectedEntries.preset;
@@ -2262,7 +2262,7 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
     }
 
     // Play cursor navigation SFX.
-    if (g_Controller0->btnsPulsedGui_1C & (ControllerFlag_LStickUp    |
+    if (g_Controller0->pulsedGuiBtnFlags & (ControllerFlag_LStickUp    |
                                            ControllerFlag_LStickRight |
                                            ControllerFlag_LStickDown  |
                                            ControllerFlag_LStickLeft))
@@ -2296,7 +2296,7 @@ s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx) // 0x801E6CF4
                         ControllerFlag_DpadRight |
                         ControllerFlag_DpadDown  |
                         ControllerFlag_DpadLeft)) ||
-            !(btnFlag & g_Controller0->btnsClicked_10))
+            !(btnFlag & g_Controller0->clickedBtnFlags))
         {
             continue;
         }

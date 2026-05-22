@@ -228,7 +228,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
         return;
     }
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.light &&
+    if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.light &&
         g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1))
     {
         Game_FlashlightToggle();
@@ -238,7 +238,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
     {
         SysWork_StateSetNext(g_MapEventSysState);
     }
-    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.pause)
+    else if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.pause)
     {
         SysWork_StateSetNext(SysState_GamePaused);
     }
@@ -246,16 +246,16 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
     {
         return;
     }
-    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.item)
+    else if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.item)
     {
         SysWork_StateSetNext(SysState_StatusMenu);
     }
-    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.map)
+    else if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.map)
     {
         SysWork_StateSetNext(SysState_MapScreen);
         g_SysWork.isMgsStringSet = false;
     }
-    else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.option)
+    else if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.option)
     {
         SysWork_StateSetNext(SysState_OptionsMenu);
     }
@@ -299,14 +299,14 @@ void SysState_GamePaused_Update(void) // 0x800391E8
 
     // Debug button combo to bring up save screen from pause screen.
     // DPad-Left + L2 + L1 + LS-Left + RS-Left + L3
-    if ((g_Controller0->btnsHeld_C == (ControllerFlag_L3 |
+    if ((g_Controller0->heldBtnFlags == (ControllerFlag_L3 |
                                        ControllerFlag_DpadLeft |
                                        ControllerFlag_L2 |
                                        ControllerFlag_L1 |
                                        ControllerFlag_LStickLeft2 |
                                        ControllerFlag_RStickLeft |
                                        ControllerFlag_LStickLeft)) &&
-        (g_Controller0->btnsClicked_10 & ControllerFlag_L3))
+        (g_Controller0->clickedBtnFlags & ControllerFlag_L3))
     {
         D_800A9A68 = 0;
         SD_Call(4);
@@ -315,7 +315,7 @@ void SysState_GamePaused_Update(void) // 0x800391E8
         return;
     }
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.pause)
+    if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.pause)
     {
         D_800A9A68 = 0;
 
@@ -497,7 +497,7 @@ void SysState_MapScreen_Update(void) // 0x800396D4
 {
     if (!HAS_PAPER_MAP(g_SavegamePtr->paperMapIdx))
     {
-        if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.map ||
+        if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.map ||
             Gfx_MapMsg_Draw(MapMsgIdx_NoMap) > MapMsgState_Idle)
         {
             SysWork_StateSetNext(SysState_Gameplay);
@@ -507,7 +507,7 @@ void SysState_MapScreen_Update(void) // 0x800396D4
              ((g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) ||
               (g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0))))
     {
-        if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.map ||
+        if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.map ||
             Gfx_MapMsg_Draw(MapMsgIdx_TooDarkForMap) > MapMsgState_Idle)
         {
             SysWork_StateSetNext(SysState_Gameplay);
@@ -976,7 +976,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             Gfx_StringDraw("\aGAME_OVER", DEFAULT_MAP_MESSAGE_LENGTH);
             g_SysWork.field_28++;
 
-            if ((g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter |
+            if ((g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                   g_GameWorkPtr->config.controllerConfig.cancel)) ||
                 g_SysWork.field_28 > Q12(1.0f / 17.0f))
             {
@@ -1013,7 +1013,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             g_SysWork.field_28++;
             Screen_BackgroundImgDraw(&g_DeathTipImg);
 
-            if (!(g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config.controllerConfig.enter |
+            if (!(g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                    g_GameWorkPtr->config.controllerConfig.cancel)))
             {
                 if (g_SysWork.field_28 <= 480)

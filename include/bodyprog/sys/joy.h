@@ -53,10 +53,10 @@ typedef union
     /* 0x0 */ u32 rawData_0;
               struct
               {
-                  s8 rightX;
-                  s8 rightY;
-                  s8 leftX;
-                  s8 leftY;
+                  /* 0x0 */ s8 rightX;
+                  /* 0x1 */ s8 rightY;
+                  /* 0x2 */ s8 leftX;
+                  /* 0x3 */ s8 leftY;
     /* 0x4 */ } sticks_0; // Normalized range: `[-128, 127]`.
 } s_AnalogSticks;
 
@@ -75,13 +75,13 @@ STATIC_ASSERT_SIZEOF(s_AnalogController, 8);
 
 typedef struct _ControllerData
 {
-    /* 0x0  */ s_AnalogController analogController_0;
-    /* 0x8  */ s32                pulseTicks_8;
-    /* 0xC  */ e_ControllerFlags  btnsHeld_C;
-    /* 0x10 */ e_ControllerFlags  btnsClicked_10;
-    /* 0x14 */ e_ControllerFlags  btnsReleased_14;
-    /* 0x18 */ e_ControllerFlags  btnsPulsed_18;
-    /* 0x1C */ e_ControllerFlags  btnsPulsedGui_1C;
+    /* 0x0  */ s_AnalogController analogController;
+    /* 0x8  */ s32                pulseTicks;
+    /* 0xC  */ e_ControllerFlags  heldBtnFlags;
+    /* 0x10 */ e_ControllerFlags  clickedBtnFlags;
+    /* 0x14 */ e_ControllerFlags  releasedBtnFlags;
+    /* 0x18 */ e_ControllerFlags  pulsedBtnFlags;
+    /* 0x1C */ e_ControllerFlags  pulsedGuiBtnFlags;
     /* 0x20 */ s_AnalogSticks     sticks_20;
     /* 0x24 */ s_AnalogSticks     sticks_24;
     /* 0x28 */ s32                field_28;

@@ -3384,7 +3384,7 @@ void func_800D6774(void) // 0x800D6774
     s32                i;
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 11)
     {
         SysWork_StateStepSet(0, 12);
@@ -3571,7 +3571,7 @@ void func_800D6F24(void) // 0x800D6F24
     void* var_s0;
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 9)
     {
         SysWork_StateStepSet(0, 9);
@@ -4694,7 +4694,7 @@ void func_800D8FC0(void) // 0x800D8FC0
     scratchData = PSX_SCRATCH_ADDR(0);
 
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 5)
     {
         SysWork_StateStepSet(0, 5);
@@ -4815,7 +4815,7 @@ void func_800D8FC0(void) // 0x800D8FC0
 void func_800D960C(void) // 0x800D960C
 {
     // Skip.
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < 4)
     {
         SysWork_StateStepReset();

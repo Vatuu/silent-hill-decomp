@@ -171,7 +171,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
 
     // Skip.
     skip = false;
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= EventState_3 &&
         g_SysWork.sysStateSteps[0] <  EventState_13)
     {

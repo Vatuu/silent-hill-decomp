@@ -57,7 +57,7 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
     }
 
     // Reset frame counter if reset buttons not held.
-    if ((g_Controller0->btnsHeld_C & WARM_BOOT_COMBO_HOLD) != WARM_BOOT_COMBO_HOLD)
+    if ((g_Controller0->heldBtnFlags & WARM_BOOT_COMBO_HOLD) != WARM_BOOT_COMBO_HOLD)
     {
         g_WarmBootTimer = 0;
     }
@@ -66,11 +66,11 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
     {
         return ResetType_WarmBoot;
     }
-    else if (g_Controller0->btnsHeld_C == WARM_BOOT_COMBO_PRESS && (g_Controller0->btnsClicked_10 & WARM_BOOT_COMBO_PRESS))
+    else if (g_Controller0->heldBtnFlags == WARM_BOOT_COMBO_PRESS && (g_Controller0->clickedBtnFlags & WARM_BOOT_COMBO_PRESS))
     {
         return ResetType_WarmBoot;
     }
-    else if (g_Controller0->btnsHeld_C == WARM_BOOT_COMBO_PRESS_ALT && (g_Controller0->btnsClicked_10 & ControllerFlag_Start))
+    else if (g_Controller0->heldBtnFlags == WARM_BOOT_COMBO_PRESS_ALT && (g_Controller0->clickedBtnFlags & ControllerFlag_Start))
     {
         return ResetType_WarmBoot;
     }

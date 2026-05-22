@@ -256,36 +256,36 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
 
     vwGetViewAngle(&cam_ang);
 
-    if (!(g_Controller1->btnsHeld_C & ControllerFlag_Circle))
+    if (!(g_Controller1->heldBtnFlags & ControllerFlag_Circle))
     {
-        if (g_Controller1->btnsHeld_C & ControllerFlag_LStickDown)
+        if (g_Controller1->heldBtnFlags & ControllerFlag_LStickDown)
         {
             cam_ang.vx = cam_ang.vx - (g_VBlanks * V_BLANKS_MULT);
         }
 
-        if (g_Controller1->btnsHeld_C & ControllerFlag_LStickUp)
+        if (g_Controller1->heldBtnFlags & ControllerFlag_LStickUp)
         {
             cam_ang.vx = cam_ang.vx + (g_VBlanks * V_BLANKS_MULT);
         }
 
-        if (g_Controller1->btnsHeld_C & ControllerFlag_LStickRight)
+        if (g_Controller1->heldBtnFlags & ControllerFlag_LStickRight)
         {
             cam_ang.vy = cam_ang.vy + (g_VBlanks * V_BLANKS_MULT);
         }
 
-        if (g_Controller1->btnsHeld_C & ControllerFlag_LStickLeft)
+        if (g_Controller1->heldBtnFlags & ControllerFlag_LStickLeft)
         {
             cam_ang.vy = cam_ang.vy - (g_VBlanks * V_BLANKS_MULT);
         }
 
-        if (g_Controller1->btnsHeld_C & (ControllerFlag_Triangle | ControllerFlag_Cross))
+        if (g_Controller1->heldBtnFlags & (ControllerFlag_Triangle | ControllerFlag_Cross))
         {
             moveStep = Q8(0.0f);
-            if (g_Controller1->btnsHeld_C & ControllerFlag_Triangle)
+            if (g_Controller1->heldBtnFlags & ControllerFlag_Triangle)
             {
                 moveStep = MOVE_DIST;
             }
-            if (g_Controller1->btnsHeld_C & ControllerFlag_Cross)
+            if (g_Controller1->heldBtnFlags & ControllerFlag_Cross)
             {
                 moveStep = -MOVE_DIST - 1; // TODO: `- 1` enforces a rounded down result, but `Q8` truncates toward 0.
             }
@@ -297,23 +297,23 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     }
     else
     {
-        if (g_Controller1->btnsHeld_C & ControllerFlag_LStickUp)
+        if (g_Controller1->heldBtnFlags & ControllerFlag_LStickUp)
         {
             newCamPos.vy -= MOVE_DIST;
         }
-        if (g_Controller1->btnsHeld_C & ControllerFlag_LStickDown)
+        if (g_Controller1->heldBtnFlags & ControllerFlag_LStickDown)
         {
             newCamPos.vy += MOVE_DIST;
         }
 
-        if (g_Controller1->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
+        if (g_Controller1->heldBtnFlags & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
         {
             moveStep = Q8(0.0f);
-            if (g_Controller1->btnsHeld_C & ControllerFlag_LStickRight)
+            if (g_Controller1->heldBtnFlags & ControllerFlag_LStickRight)
             {
                 moveStep = MOVE_DIST;
             }
-            if (g_Controller1->btnsHeld_C & ControllerFlag_LStickLeft)
+            if (g_Controller1->heldBtnFlags & ControllerFlag_LStickLeft)
             {
                 moveStep = -MOVE_DIST - 1; // TODO: `- 1` enforces a rounded down result, but `Q8` truncates toward 0.
             }
@@ -332,7 +332,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     lookAtMat.t[2] = newCamPos.vz;
     vwSetViewInfoDirectMatrix(NULL, &lookAtMat);
 
-    if (g_Controller1->btnsHeld_C & (ControllerFlag_LStickUp    |
+    if (g_Controller1->heldBtnFlags & (ControllerFlag_LStickUp    |
                                      ControllerFlag_LStickRight |
                                      ControllerFlag_LStickDown  |
                                      ControllerFlag_LStickLeft  |

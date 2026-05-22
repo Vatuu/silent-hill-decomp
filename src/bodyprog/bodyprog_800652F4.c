@@ -226,12 +226,12 @@ void func_80066184(void) // 0x80066184
     s_func_80066184* ptr;
     POLY_GT4*        poly;
 
-    if (g_Controller0->btnsClicked_10 & ControllerFlag_R3)
+    if (g_Controller0->clickedBtnFlags & ControllerFlag_R3)
     {
         D_800AE73C = Q12(2.0f);
     }
 
-    if (g_Controller0->btnsHeld_C & ControllerFlag_Cross)
+    if (g_Controller0->heldBtnFlags & ControllerFlag_Cross)
     {
         D_800AE73C = ((D_800AE73C - g_DeltaTime) < Q12(0.0f)) ? Q12(0.0f) : (D_800AE73C - g_DeltaTime);
     }
