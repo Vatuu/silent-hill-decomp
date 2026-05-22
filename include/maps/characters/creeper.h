@@ -74,6 +74,6 @@ void sharedFunc_800D983C_1_s02(s_SubCharacter* creeper);
 
 void Creeper_AnimUpdate(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper);
+void Creeper_CollisionUpdate(s_SubCharacter* creeper);
 
 #endif

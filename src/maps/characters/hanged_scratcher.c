@@ -1567,7 +1567,7 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
             break;
     }
 
-    func_8005C814(&scratcher->collision.shapeOffsets, scratcher);
+    Chara_CollisionShapeOffsetsUpdate(&scratcher->collision.shapeOffsets, scratcher);
 
     if (!(scratcherProps.flags & HangedScratcherFlag_9))
     {

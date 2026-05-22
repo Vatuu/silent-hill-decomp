@@ -27,7 +27,7 @@ void Incubator_AnimUpdate(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOOR
 
 void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords)
 {
-    VECTOR3 unused;
+    VECTOR3 pos;
     VECTOR3 offset;
     q19_12  moveSpeed;
     q3_12   headingAngle;
@@ -35,10 +35,10 @@ void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords)
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 
-    unused       = incubator->position;
+    pos          = incubator->position;
     moveSpeed    = incubator->moveSpeed;
     headingAngle = incubator->headingAngle;
-    moveDist      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
+    moveDist     = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveDist);
     scaleReduceShift  = scaleRestoreShift >> 1;

@@ -997,7 +997,7 @@ func_8005C7B0                                = 0x8005E204; // type:func
 //--- PA: 0x0396C4   VA: 0x8005E224   subsegment: c, bodyprog_combat_8005BF38
 //---------------------------------------------------------------------------
 Chara_NpcIdxGet                              = 0x8005E224; // type:func
-func_8005C814                                = 0x8005E268; // type:func
+Chara_CollisionShapeOffsetsUpdate            = 0x8005E268; // type:func
 func_8005C944                                = 0x8005E398; // type:func
 func_8005CB20                                = 0x8005E574; // type:func
 func_8005CD38                                = 0x8005E78C; // type:func

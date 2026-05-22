@@ -71,7 +71,7 @@ void LockerDeadBody_Update(s_SubCharacter* deadBody, s_AnmHeader* anmHdr, GsCOOR
     deadBody->collision.cylinder.field_2         = Q12(0.0f);
     deadBody->collision.cylinder.radius          = Q12(0.33f);
 
-    func_8005C814(&deadBody->collision.shapeOffsets, deadBody);
+    Chara_CollisionShapeOffsetsUpdate(&deadBody->collision.shapeOffsets, deadBody);
 }
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800DA424

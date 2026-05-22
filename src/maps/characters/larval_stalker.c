@@ -1402,7 +1402,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
             break;
     }
 
-    func_8005C814(&larvalStalker->collision.shapeOffsets, larvalStalker);
+    Chara_CollisionShapeOffsetsUpdate(&larvalStalker->collision.shapeOffsets, larvalStalker);
 }
 
 #undef larvalStalkerProps

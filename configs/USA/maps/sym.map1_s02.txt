@@ -117,7 +117,7 @@ Creeper_ControlStun             = 0x800D9528; // type:func
 Creeper_ControlDamage           = 0x800D9774; // type:func
 sharedFunc_800D983C_1_s02       = 0x800D983C; // type:func
 Creeper_AnimUpdate              = 0x800D9960; // type:func
-sharedFunc_800D99D0_1_s02       = 0x800D99D0; // type:func
+Creeper_CollisionUpdate         = 0x800D99D0; // type:func
 
 //-----------------------------------------------------------
 //--- PA: 0x010894   VA: 0x800D9E0C   subsegment: c, map1_s02

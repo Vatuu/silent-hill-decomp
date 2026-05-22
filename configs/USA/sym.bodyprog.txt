@@ -740,6 +740,7 @@ Math_AngleNormalizeSigned                    = 0x8005BF38; // type:func
 //--- PA: 0x037C70   VA: 0x8005C7D0   subsegment: c, bodyprog_combat_8005BF38
 //---------------------------------------------------------------------------
 Chara_NpcIdxGet                              = 0x8005C7D0;
+Chara_CollisionShapeOffsetsUpdate            = 0x8005C814; //type:func
 
 //--------------------------------------------------------------------
 //--- PA: 0x03957C   VA: 0x8005E0DC   subsegment: c, bodyprog_8005E0DC

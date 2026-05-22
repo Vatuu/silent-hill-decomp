@@ -60,7 +60,7 @@ Creeper_ControlStun                 = 0x800CE3A4; // type:func
 Creeper_ControlDamage               = 0x800CE5F0; // type:func
 sharedFunc_800D983C_1_s02           = 0x800CE6B8; // type:func
 Creeper_AnimUpdate                  = 0x800CE7DC; // type:func
-sharedFunc_800D99D0_1_s02           = 0x800CE84C; // type:func
+Creeper_CollisionUpdate             = 0x800CE84C; // type:func
 
 //---------------------------------------------------------------
 //--- PA: 0x005710   VA: 0x800CEC88   subsegment: c, Chara_Alessa

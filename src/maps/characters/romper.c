@@ -1535,7 +1535,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
             break;
     }
 
-    func_8005C814(&romper->collision.shapeOffsets, romper);
+    Chara_CollisionShapeOffsetsUpdate(&romper->collision.shapeOffsets, romper);
 
     if (ANIM_STATUS_IDX_GET(romper->model.anim.status) != RomperAnim_RunToJump)
     {

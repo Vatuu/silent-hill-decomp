@@ -76,7 +76,7 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
 void func_800D9790(s_SubCharacter* monsterCybil, s_Model* modelUpper);
 
-void func_800D99E4(s_SubCharacter* monsterCybil, s_Model* modelUpperUpper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void func_800D99E4(s_SubCharacter* monsterCybil, s_Model* modelUpper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void func_800D9AAC(s_SubCharacter* monsterCybil, s_Model* modelUpper);
 

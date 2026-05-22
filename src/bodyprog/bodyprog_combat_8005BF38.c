@@ -44,27 +44,30 @@ s32 Chara_NpcIdxGet(s_SubCharacter* chara) // 0x8005C7D0
     return NO_VALUE;
 }
 
-void func_8005C814(s_CharaShapeOffsets* offsets, s_SubCharacter* chara) // 0x8005C814
+void Chara_CollisionShapeOffsetsUpdate(s_CharaShapeOffsets* offsets, s_SubCharacter* chara) // 0x8005C814
 {
     q3_12 sinRotY;
     q3_12 cosRotY;
-    q3_12 offsetX0;
-    q3_12 offsetX1;
-    q3_12 offsetZ0;
-    q3_12 offsetZ1;
+    q3_12 boxOffsetX;
+    q3_12 cylinderOffsetX;
+    q3_12 boxOffsetZ;
+    q3_12 cylinderOffsetZ;
 
-    offsetX0 = offsets->box.vx;
-    offsetZ0 = offsets->box.vz;
-    offsetX1 = offsets->cylinder.vx;
-    offsetZ1 = offsets->cylinder.vz;
+    // Get relative shape offsets.
+    boxOffsetX      = offsets->box.vx;
+    boxOffsetZ      = offsets->box.vz;
+    cylinderOffsetX = offsets->cylinder.vx;
+    cylinderOffsetZ = offsets->cylinder.vz;
 
+    // Compute XZ plane heading sine and cosine.
     cosRotY = Math_Cos(chara->rotation.vy);
     sinRotY = Math_Sin(chara->rotation.vy);
 
-    chara->collision.shapeOffsets.box.vx = FP_FROM(( offsetX0 * cosRotY) + (offsetZ0 * sinRotY), Q12_SHIFT);
-    chara->collision.shapeOffsets.box.vz = FP_FROM((-offsetX0 * sinRotY) + (offsetZ0 * cosRotY), Q12_SHIFT);
-    chara->collision.shapeOffsets.cylinder.vx = FP_FROM(( offsetX1 * cosRotY) + (offsetZ1 * sinRotY), Q12_SHIFT);
-    chara->collision.shapeOffsets.cylinder.vz = FP_FROM((-offsetX1 * sinRotY) + (offsetZ1 * cosRotY), Q12_SHIFT);
+    // Update shape offsets.
+    chara->collision.shapeOffsets.box.vx      = FP_FROM(( boxOffsetX      * cosRotY) + (boxOffsetZ      * sinRotY), Q12_SHIFT);
+    chara->collision.shapeOffsets.box.vz      = FP_FROM((-boxOffsetX      * sinRotY) + (boxOffsetZ      * cosRotY), Q12_SHIFT);
+    chara->collision.shapeOffsets.cylinder.vx = FP_FROM(( cylinderOffsetX * cosRotY) + (cylinderOffsetZ * sinRotY), Q12_SHIFT);
+    chara->collision.shapeOffsets.cylinder.vz = FP_FROM((-cylinderOffsetX * sinRotY) + (cylinderOffsetZ * cosRotY), Q12_SHIFT);
 }
 
 s32 func_8005C944(s_SubCharacter* chara, s_CollisionResult* collResult) // 0x8005C944

@@ -1857,7 +1857,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
     }
 
-    func_8005C814(&groaner->collision.shapeOffsets, groaner);
+    Chara_CollisionShapeOffsetsUpdate(&groaner->collision.shapeOffsets, groaner);
 }
 
 void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)

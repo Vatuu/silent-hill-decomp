@@ -2675,7 +2675,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             break;
     }
 
-    func_8005C814(&stalker->collision.shapeOffsets, stalker);
+    Chara_CollisionShapeOffsetsUpdate(&stalker->collision.shapeOffsets, stalker);
 }
 
 void sharedFunc_800D7BE8_0_s00(s_SubCharacter* stalker)
