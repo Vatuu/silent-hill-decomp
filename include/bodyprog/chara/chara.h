@@ -191,7 +191,8 @@ typedef struct
 } s_800D5710;
 STATIC_ASSERT_SIZEOF(s_800D5710, 52);
 
-// Used by Alessa, BloodyIncubator, BloodyLisa, Cheryl, Cybil, Dahlia, GhostChildAlessa, GhostDoctor, Incubator, Kaufmann, Lisa, MonsterCybil.
+// Used by Alessa, Bloody Incubator, BloodyLisa, Cheryl, Cybil, Dahlia, Ghost Child Alessa, Ghost Doctor, Incubator,
+// Kaufmann, Lisa, Monster Cybil.
 typedef struct _PropsNpc
 {
     /* 0xE8  */ s32    controlState; /** `e_*Control` */
@@ -244,12 +245,12 @@ typedef struct _PropsAirScreamer
 /** @brief Bloodsucker character properties. */
 typedef struct _PropsBloodsucker
 {
-    q19_12 timer_E8;
-    q19_12 timer_EC;
-    q19_12 timer_F0;
-    q19_12 timer_F4;
-    s8     unused_F8[36]; /** @unused */
-    s32    flags;         /** `e_BloodsuckerFlags` */
+    /* 0xE8  */ q19_12 timer_E8;
+    /* 0xEC  */ q19_12 timer_EC;
+    /* 0xF0  */ q19_12 timer_F0;
+    /* 0xF4  */ q19_12 timer_F4;
+    /* 0xF8  */ s8     unused_F8[36]; /** @unused */
+    /* 0x11C */ s32    flags;         /** `e_BloodsuckerFlags` */
 } s_PropsBloodsucker;
 
 /** @brief Cat character properties. */
@@ -280,25 +281,25 @@ STATIC_ASSERT_SIZEOF(s_PropsCreeper, 40);
 /** @brief Floatstinger character properties. */
 typedef struct _PropsFloatstinger
 {
-    s16        flags_E8;
-    s8         unk_EA[2];
-    q3_12      field_EC; // `vy` angle.
-    q3_12      field_EE; // Angle.
-    q19_12     field_F0; // Timer.
-    q3_12      field_F4; // Angle.
-    s8         __pad_F6[2];
-    u16        field_F8;
-    u16        field_FA;
-    q4_12      field_FC; // Timer?
-    s8         __pad_FE[2];
-    q19_12     field_100; // Timer.
-    u8         field_104;
-    s8         __pad_105;
-    s16        field_106;
-    q19_12     field_108; // Damage related.
-    q3_12      field_10C; // Angle, backup of `field_F4`?
-    q3_12      field_10E; // Timer?
-    s8         unk_110[24];
+    /* 0xE8  */ s16        flags_E8;
+    /* 0xEA  */ s8         unk_EA[2];
+    /* 0xEC  */ q3_12      field_EC; // `vy` angle.
+    /* 0xEE  */ q3_12      field_EE; // Angle.
+    /* 0xF0  */ q19_12     field_F0; // Timer.
+    /* 0xF4  */ q3_12      field_F4; // Angle.
+    /* 0xF6  */ s8         __pad_F6[2];
+    /* 0xF8  */ u16        field_F8;
+    /* 0xFA  */ u16        field_FA;
+    /* 0xFC  */ q4_12      field_FC; // Timer?
+    /* 0xFE  */ s8         __pad_FE[2];
+    /* 0x100 */ q19_12     field_100; // Timer.
+    /* 0x104 */ u8         field_104;
+    /* 0x105 */ s8         __pad_105;
+    /* 0x106 */ s16        field_106;
+    /* 0x108 */ q19_12     field_108; // Damage related.
+    /* 0x10C */ q3_12      field_10C; // Angle, backup of `field_F4`?
+    /* 0x10E */ q3_12      field_10E; // Timer?
+    /* 0x110 */ s8         unk_110[24];
 } s_PropsFloatstinger;
 STATIC_ASSERT_SIZEOF(s_PropsFloatstinger, 64);
 
@@ -330,60 +331,60 @@ typedef struct _PropsGroaner
 /** @brief Hanged Scratcher character properties. */
 typedef struct _PropsHangedScratcher
 {
-    s16    flags_E8; /** `e_HangedScratcherFlags` */
-    q4_12  timer_EA;
-    q3_12  targetHeadingAngle_EC;
-    u8     field_EE;
-    s8     __pad_EF;
-    q3_12  offsetX_F0; // } Offsets passed to `func_8005CB20`
-    q3_12  offsetZ_F2; // }
-    q19_12 positionX_F4;
-    q19_12 positionZ_F8;
-    q3_12  field_FC;
-    s8     __pad_FE[2];
-    q3_12  timer_100;
-    u8     field_102;
-    u8     field_103;
-    s32    field_104;
-    q3_12  timer_108;
-    s8     __pad_10A[2];
-    q4_12  radiusMax_10C; // } Used as `Chara_MoveSpeedUpdate` limit param, TODO: rename?
-    q4_12  radiusMin_10E; // }
+    /* 0xE8  */ s16    flags; /** `e_HangedScratcherFlags` */
+    /* 0xEA  */ q4_12  timer_EA;
+    /* 0xEC  */ q3_12  targetHeadingAngle_EC;
+    /* 0xEE  */ u8     field_EE;
+    /* 0xEF  */ s8     __pad_EF;
+    /* 0xF0  */ q3_12  offsetX_F0; // } Offsets passed to `func_8005CB20`
+    /* 0xF2  */ q3_12  offsetZ_F2; // }
+    /* 0xF4  */ q19_12 positionX_F4;
+    /* 0xF8  */ q19_12 positionZ_F8;
+    /* 0xFC  */ q3_12  field_FC;
+    /* 0xFE  */ s8     __pad_FE[2];
+    /* 0x100 */ q3_12  timer_100;
+    /* 0x102 */ u8     field_102;
+    /* 0x103 */ u8     field_103;
+    /* 0x104 */ s32    field_104;
+    /* 0x108 */ q3_12  timer_108;
+    /* 0x10A */ s8     __pad_10A[2];
+    /* 0x10C */ q4_12  radiusMax_10C; // } Used as `Chara_MoveSpeedUpdate` limit param, TODO: rename?
+    /* 0x10E */ q4_12  radiusMin_10E; // }
 } s_PropsHangedScratcher;
 
 /** @brief Incubus character properties, shared with Unknown23? */
 typedef struct _PropsIncubus
 {
-    q19_12 timer_E8;
-    s32    field_EC; // Flags?
-    s32    someState_F0;
-    q19_12 bossFightTimer_F4;
-    s8     __pad_F8[48];
+    /* 0xE8 */ q19_12 timer_E8;
+    /* 0xEC */ s32    field_EC; // Flags?
+    /* 0xF0 */ s32    someState_F0;
+    /* 0xF4 */ q19_12 bossFightTimer_F4;
+    /* 0xF8 */ s8     __pad_F8[48];
 } s_PropsIncubus;
 
 /** @brief Larval Stalker character properties. */
 typedef struct _PropsLarvalStalker
 {
-    /* 0x */ u16        flags_E8; /** `e_LarvalStalkerFlags` */
-    /* 0x */ u8         field_EA;
-    /* 0x */ s8         __pad_EB;
-    /* 0x */ q19_12     timer_EC;
-    /* 0x */ q20_12     timer_F0;
-    /* 0x */ s16        keyframeIdx_F4; // Relative keyframe?
-    /* 0x */ s16        keyframeIdx_F8; // Relative keyframe?
-    /* 0x */ q19_12     targetPositionX;
-    /* 0x */ q19_12     targetPositionZ;
-    /* 0x */ q3_12      angle_100;
-    /* 0x */ q3_12      angle_102;
-    /* 0x */ q19_12     animTime_104;
-    /* 0x */ q3_12      angle_108;
-    /* 0x */ q4_12      timer_10A;
-    /* 0x */ u_Property field_10C;
-    /* 0x */ VECTOR3    field_110;
-    /* 0x */ s32        flags_11C;
-    /* 0x */ u_Property field_120;
-    /* 0x */ s16        field_124;
-    /* 0x */ q3_12      moveDistance_126;
+    /* 0xE8  */ u16        flags_E8; /** `e_LarvalStalkerFlags` */
+    /* 0xEA  */ u8         field_EA;
+    /* 0xEB  */ s8         __pad_EB;
+    /* 0xEC  */ q19_12     timer_EC;
+    /* 0xF0  */ q20_12     timer_F0;
+    /* 0xF4  */ s16        keyframeIdx_F4; // Relative keyframe?
+    /* 0xF6  */ s16        keyframeIdx_F6; // Relative keyframe?
+    /* 0xF8  */ q19_12     targetPositionX;
+    /* 0xFC  */ q19_12     targetPositionZ;
+    /* 0x100 */ q3_12      angle_100;
+    /* 0x102 */ q3_12      angle_102;
+    /* 0x104 */ q19_12     animTime_104;
+    /* 0x108 */ q3_12      angle_108;
+    /* 0x10A */ q4_12      timer_10A;
+    /* 0x10C */ u_Property field_10C;
+    /* 0x110 */ VECTOR3    field_110;
+    /* 0x11C */ s32        flags_11C;
+    /* 0x120 */ u_Property field_120;
+    /* 0x124 */ s16        field_124;
+    /* 0x126 */ q3_12      moveDistance_126;
 } s_PropsLarvalStalker;
 STATIC_ASSERT_SIZEOF(s_PropsLarvalStalker, 64);
 
@@ -411,57 +412,57 @@ STATIC_ASSERT_SIZEOF(s_PropsPuppetNurse, 64);
 /** @brief Romper character properties. */
 typedef struct _PropsRomper
 {
-    /* 0xE8 */ s32    flags; /** `e_RomperFlags` */
-               q3_12  angle_EC; // Target heading angle?
-               s16    field_EE;
-               q3_12  field_F0; // Move speed accumulation for this tick.
-               q3_12  rotationY_F2;
-               q19_12 field_F4; // Relative anim time?
-    /* 0xF8 */ q3_12  movementOffsetX;
-    /* 0xFA */ q3_12  movementOffsetZ;
-               q19_12 targetPositionX_FC;
-               q19_12 targetPositionZ_100;
-               s32    field_104;
-               q19_12 positionX_108;
-               u8     field_10C; // Relative keyframe index?
-               s8     __pad_10D;
-               u16    field_10E;
-               q19_12 positionZ_110;
-               u8     field_114;
-               u8     field_115;
-               q3_12  field_116;
-               q3_12  timer_118;
-               u8     field_11A;
-               s8     __pad_11B;
-               q3_12  timer_11C;
-               s8     __pad_11E[2];
-               q19_12 distance_120;
-               q19_12 field_124; // Move speed step?
+    /* 0xE8  */ s32    flags; /** `e_RomperFlags` */
+    /* 0xEC  */ q3_12  angle_EC; // Target heading angle?
+    /* 0xEE  */ s16    field_EE;
+    /* 0xF0  */ q3_12  field_F0; // Move speed accumulation for this tick.
+    /* 0xF2  */ q3_12  rotationY_F2;
+    /* 0xF4  */ q19_12 field_F4; // Relative anim time?
+    /* 0xF8  */ q3_12  movementOffsetX;
+    /* 0xFA  */ q3_12  movementOffsetZ;
+    /* 0xFC  */ q19_12 targetPositionX_FC;
+    /* 0x100 */ q19_12 targetPositionZ_100;
+    /* 0x104 */ s32    field_104;
+    /* 0x108 */ q19_12 positionX_108;
+    /* 0x10C */ u8     field_10C; // Relative keyframe index?
+    /* 0x10D */ s8     __pad_10D;
+    /* 0x10E */ u16    field_10E;
+    /* 0x110 */ q19_12 positionZ_110;
+    /* 0x114 */ u8     field_114;
+    /* 0x115 */ u8     field_115;
+    /* 0x116 */ q3_12  field_116;
+    /* 0x118 */ q3_12  timer_118;
+    /* 0x11A */ u8     field_11A;
+    /* 0x11B */ s8     __pad_11B;
+    /* 0x11C */ q3_12  timer_11C;
+    /* 0x11E */ s8     __pad_11E[2];
+    /* 0x120 */ q19_12 distance_120;
+    /* 0x124 */ q19_12 field_124; // Move speed step?
 } s_PropsRomper;
 
 /** @brief Split Head character properties. */
 typedef struct _PropsSplitHead
 {
-    u16     flags; /** `e_SplitHeadFlags` */
-    u8      field_EA;
-    s8      __pad_EB;
-    q3_12   angle_EC;
-    q3_12   field_EE;
-    q4_12   angle_F0;
-    q4_12   timer_F2;
-    q4_12   timer_F4;
-    s8      __pad_F8[2];
-    q19_12  animTime_F8;
-    s32     field_FC;
-    s32     field_100;
-    s8      unk_104[4];
-    u8      field_108[4];
-    q19_12  field_10C;
-    VECTOR3 field_110;
-    s32     flags_11C; /** `e_SplitHeadFlags` */
-    s8      unk_120[4];
-    s16     field_124;
-    q3_12   moveDistance_126;
+    /* 0xE8  */ u16     flags; /** `e_SplitHeadFlags` */
+    /* 0xEA  */ u8      field_EA;
+    /* 0xEB  */ s8      __pad_EB;
+    /* 0xEC  */ q3_12   angle_EC;
+    /* 0xEE  */ q3_12   field_EE;
+    /* 0xF0  */ q4_12   angle_F0;
+    /* 0xF2  */ q4_12   timer_F2;
+    /* 0xF4  */ q4_12   timer_F4;
+    /* 0xF8  */ s8      __pad_F8[2];
+    /* 0xF8  */ q19_12  animTime_F8;
+    /* 0xFC  */ s32     field_FC;
+    /* 0x100 */ s32     field_100;
+    /* 0x104 */ s8      unk_104[4];
+    /* 0x108 */ u8      field_108[4];
+    /* 0x10C */ q19_12  field_10C;
+    /* 0x110 */ VECTOR3 field_110;
+    /* 0x11C */ s32     flags_11C; /** `e_SplitHeadFlags` */
+    /* 0x120 */ s8      unk_120[4];
+    /* 0x124 */ s16     field_124;
+    /* 0x126 */ q3_12   moveDistance_126;
 } s_PropsSplitHead;
 STATIC_ASSERT_SIZEOF(s_PropsSplitHead, 64);
 
@@ -514,22 +515,22 @@ STATIC_ASSERT_SIZEOF(s_PropsTwinfeeler, 64);
 
 typedef struct
 {
-    s16     field_0; // Something dependent on `CharaFlag_Unk8`.
-    u8      field_2; // In player: packed weapon attack. See `WEAPON_ATTACK`.
-                     // This is not the same as `attackReceived`, as this value only resets when player is aiming.
-                     // In NPCs: Indicates attack performed on player.
-    u8      field_3;
-    u8      field_4;
-    s8      __pad_5[3];
-    s32     field_8;  // } `bool`? | Fields used by `func_8008A3E0`.
-    s16     field_C;  // } Angle?
-    s16     field_E;  // } Angle?
-    s16     field_10; // }
-    s16     field_12; // }
-    s32     field_14; // }
-    VECTOR3 field_18; // Q19.12 | Set to player attack position.
-    VECTOR3 field_24[3];
-    VECTOR3 field_48[3];
+    /* 0x0  */ s16     field_0; // Something dependent on `CharaFlag_Unk8`.
+    /* 0x2  */ u8      field_2; // In player: packed weapon attack. See `WEAPON_ATTACK`.
+                                // This is not the same as `attackReceived`, as this value only resets when player is aiming.
+                                // In NPCs: Indicates attack performed on player.
+    /* 0x3  */ u8      field_3;
+    /* 0x4  */ u8      field_4;
+    /* 0x5  */ s8      __pad_5[3];
+    /* 0x8  */ s32     field_8;  // } `bool`? | Fields used by `func_8008A3E0`.
+    /* 0xC  */ s16     field_C;  // } Angle?
+    /* 0xE  */ s16     field_E;  // } Angle?
+    /* 0x10 */ s16     field_10; // }
+    /* 0x12 */ s16     field_12; // }
+    /* 0x14 */ s32     field_14; // }
+    /* 0x18 */ VECTOR3 field_18; // Q19.12 | Set to player attack position.
+    /* 0x24 */ VECTOR3 field_24[3];
+    /* 0x48 */ VECTOR3 field_48[3];
 } s_SubCharacter_44;
 
 /** @brief Character collision box. */
@@ -747,6 +748,25 @@ extern s_CharaFileInfo CHARA_FILE_INFOS[Chara_Count]; // 0x800A90FC
 #define Chara_AttackReceivedGet(chara) \
     (chara)->attackReceived
 
+/** @brief Updates an NPC's animation if the `freeze` flag isn't currently set.
+ *
+ * @note This is only for NPCs which use the `s_PropsNpc` part of the `s_SubCharacter::properties` union.
+ *
+ * @param chara Character to update.
+ * @param anmHdr ANM file header.
+ * @param boneCoords Character model bone coords.
+ * @param animInfos Character animation infos.
+ */
+#define Chara_AnimUpdate(chara, anmHdr, boneCoords, animInfos)                     \
+{                                                                                  \
+    if (!(chara)->properties.npc.freeze)                                           \
+    {                                                                              \
+        s_AnimInfo* __animInfo = &(animInfos)[(chara)->model.anim.status];         \
+                                                                                   \
+        __animInfo->playbackFunc(&(chara)->model, anmHdr, boneCoords, __animInfo); \
+    }                                                                              \
+}
+
 /** @brief Sets the animation of a character.
  *
  * @param chara Character to set animation for. TODO: Maybe should take `s_ModelAnim` instead? If fits better, also rename to `Anim_Set`.
@@ -760,9 +780,9 @@ static inline void Chara_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 keyf
     chara->model.anim.keyframeIdx = keyframeIdx;
 }
 
-/** @brief Resets an NPC character's control state to `*_None` if the control subsystem was flagged for a reset.
+/** @brief Resets an NPC's control state to `*_None` if the control subsystem was flagged for a reset.
  *
- * NOTE: This is only for NPC characters which use `s_PropsNpc` part of properties union.
+ * @note This is only for NPCs which use the `s_PropsNpc` part of the properties union.
  *
  * @param chara Character to update.
  */
@@ -775,19 +795,5 @@ static inline void Chara_AnimStateReset(s_SubCharacter* chara)
         chara->properties.npc.resetControlState = false;
     }
 }
-
-/** @brief Updates an NPC characters animation if `freeze` flag isn't currently set.
- *
- * NOTE: This is only for NPC characters which use `s_PropsNpc` part of properties union.
- */
-#define Chara_AnimUpdate(chara, anmHdr, boneCoords, animInfos)                         \
-({                                                                                     \
-    if (!(chara)->properties.npc.freeze)                                               \
-    {                                                                                  \
-        s_AnimInfo* animInfo__ = &(animInfos)[(chara)->model.anim.status];             \
-                                                                                       \
-        animInfo__->playbackFunc(&(chara)->model, (anmHdr), (boneCoords), animInfo__); \
-    }                                                                                  \
-})
 
 #endif

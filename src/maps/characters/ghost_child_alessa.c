@@ -43,7 +43,7 @@ void GhostChildAlessa_AnimUpdate(s_SubCharacter* ghostAlessa, s_AnmHeader* anmHd
  */
 void GhostChildAlessa_MovementUpdate(s_SubCharacter* ghostAlessa, GsCOORDINATE2* boneCoords)
 {
-    VECTOR3 unused;
+    VECTOR3 pos; // @unused
     VECTOR3 offset;
     q19_12  moveSpeed;
     q3_12   headingAngle;
@@ -51,7 +51,7 @@ void GhostChildAlessa_MovementUpdate(s_SubCharacter* ghostAlessa, GsCOORDINATE2*
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 
-    unused       = ghostAlessa->position;
+    pos          = ghostAlessa->position;
     moveSpeed    = ghostAlessa->moveSpeed;
     headingAngle = ghostAlessa->headingAngle;
     moveDist     = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);

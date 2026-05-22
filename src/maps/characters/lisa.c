@@ -26,7 +26,7 @@
  */
 void Lisa_Update(s_SubCharacter* lisa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
-    if (lisa->model.controlState == 0)
+    if (lisa->model.controlState == LisaControl_None)
     {
         Lisa_Init(lisa);
     }
@@ -81,9 +81,9 @@ void Lisa_MovementUpdate(s_SubCharacter* lisa, GsCOORDINATE2* boneCoords)
     lisa->position.vy  = Q12(0.0f);
     lisa->position.vz += offset.vz;
 
-    boneCoords[0].coord.t[0] = Q12_TO_Q8(lisa->position.vx);
-    boneCoords[0].coord.t[1] = Q12_TO_Q8(lisa->position.vy);
-    boneCoords[0].coord.t[2] = Q12_TO_Q8(lisa->position.vz);
+    boneCoords[LisaBone_Root].coord.t[0] = Q12_TO_Q8(lisa->position.vx);
+    boneCoords[LisaBone_Root].coord.t[1] = Q12_TO_Q8(lisa->position.vy);
+    boneCoords[LisaBone_Root].coord.t[2] = Q12_TO_Q8(lisa->position.vz);
 }
 
 /** Addresses
@@ -135,7 +135,7 @@ void Lisa_AnimStateUpdate(s_SubCharacter* lisa, GsCOORDINATE2* boneCoords)
                 }
             }
 
-            if (lisaProps.controlState == 5)
+            if (lisaProps.controlState == LisaControl_5)
             {
                 Model_AnimStatusKeyframeSet(lisa->model, LisaAnim_1, true, LISA_ANIM_INFOS, 0);
             }
@@ -157,8 +157,8 @@ void Lisa_AnimStateUpdate(s_SubCharacter* lisa, GsCOORDINATE2* boneCoords)
 
             if (lisa->model.anim.keyframeIdx == 72)
             {
-                lisaProps.controlState = 20;
-                lisa->model.stateStep = 0;
+                lisaProps.controlState = LisaControl_20;
+                lisa->model.stateStep  = 0;
             }
             break;
 

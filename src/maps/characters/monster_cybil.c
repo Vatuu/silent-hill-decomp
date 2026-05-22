@@ -552,9 +552,7 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             }
 
             Model_AnimStatusKeyframeSet(*modelUpper, 14, true, MONSTER_CYBIL_ANIM_INFOS, 0);
-
             monsterCybilProps.moveSpeed = Q12(0.0f);
-
             Chara_AnimStateReset(monsterCybil);
             break;
 
@@ -566,9 +564,7 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             }
 
             Model_AnimStatusSet(modelUpper, 15, false);
-
             monsterCybilProps.moveSpeed = Q12(0.0f);
-
             Chara_AnimStateReset(monsterCybil);
 
             if (monsterCybil->model.anim.keyframeIdx == 343)
@@ -584,7 +580,6 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             Model_AnimStatusKeyframeSet(*modelUpper, 21, true, MONSTER_CYBIL_ANIM_INFOS, 0);
 
             monsterCybilProps.moveSpeed = Q12(0.0f);
-
             Chara_AnimStateReset(monsterCybil);
             break;
 
@@ -597,7 +592,6 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             Model_AnimStatusKeyframeSet(*modelUpper, 20, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             WorldGfx_HeldItemAttach(Chara_MonsterCybil, 1);
-
             Chara_AnimStateReset(monsterCybil);
             break;
 
@@ -631,7 +625,6 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             Model_AnimStatusKeyframeSet(*modelUpper, 19, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             WorldGfx_HeldItemAttach(Chara_MonsterCybil, 2);
-
             Chara_AnimStateReset(monsterCybil);
 
             if (!monsterCybil->model.stateStep)

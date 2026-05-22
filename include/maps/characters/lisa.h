@@ -51,6 +51,12 @@ typedef enum _LisaControl
     LisaControl_21   = 21
 } e_LisaControl;
 
+/** @brief Lisa character model bone indices. */
+typedef enum _LisaBone
+{
+    LisaBone_Root = 0
+} e_LisaBone;
+
 /** @brief Lisa character anim infos. */
 extern s_AnimInfo LISA_ANIM_INFOS[];
 
