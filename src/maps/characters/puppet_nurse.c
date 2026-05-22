@@ -931,9 +931,6 @@ void sharedFunc_800CF0B4_3_s03(s_SubCharacter* nurse)
 
 bool sharedFunc_800CF294_3_s03(s_SubCharacter* nurse, q19_12 dist)
 {
-    s32           temp_a0;
-    s32           temp_v1;
-    s32           ret;
     s_D_800D5A8C* somePtr;
 
     somePtr = &sharedData_800D5A8C_3_s03[sharedFunc_800CEEAC_3_s03()];
@@ -948,17 +945,9 @@ bool sharedFunc_800CF294_3_s03(s_SubCharacter* nurse, q19_12 dist)
         nurseProps.field_11A = Q12(1.0f);
     }
 
-    temp_v1 = somePtr->field_0;
-    temp_a0 = nurseProps.field_124->field_8;
-
-    ret = false;
-    if (func_8006FD90(nurse, 1, Q12_MULT_PRECISE(temp_v1, temp_a0), Q12_MULT_PRECISE(somePtr->field_4, temp_a0)) ||
-        nurseProps.field_11A > Q12(0.0f))
-    {
-        ret = true;
-    }
-
-    return ret;
+    return func_8006FD90(nurse, 1, Q12_MULT_PRECISE(somePtr->field_0, nurseProps.field_124->field_8), 
+                                   Q12_MULT_PRECISE(somePtr->field_4, nurseProps.field_124->field_8)) ||
+           nurseProps.field_11A > Q12(0.0f);
 }
 
 void PuppetNurse_Control9(s_SubCharacter* nurse)
@@ -1530,7 +1519,7 @@ void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse)
     nurse->rotation.vy = Math_AngleNormalizeSigned(nurse->rotation.vy);
 }
 
-void PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coord)
+void PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     s32         sfxIdx0;
     s32         sfxIdx1;
@@ -1544,11 +1533,11 @@ void PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDI
     sfxIdx0      = PuppetNurse_AnimSfxGet(FP_FROM(nurse->model.anim.time, Q12_SHIFT));
 
     WorldGfx_HeldItemAttach(nurse->model.charaId, nurseProps.modelVariantIdx);
-    Math_MatrixTransform(&nurse->position, &nurse->rotation, coord);
+    Math_MatrixTransform(&nurse->position, &nurse->rotation, boneCoords);
 
     if (nurse->model.anim.status != ANIM_STATUS(0, false))
     {
-        (&animInfoBase[nurse->model.anim.status])->playbackFunc(&nurse->model, anmHdr, coord, &animInfoBase[nurse->model.anim.status]);
+        (&animInfoBase[nurse->model.anim.status])->playbackFunc(&nurse->model, anmHdr, boneCoords, &animInfoBase[nurse->model.anim.status]);
     }
 
     angle = nurseProps.field_124->field_18;
@@ -1556,7 +1545,7 @@ void PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDI
     {
         for (j = 0; j < 3; j++)
         {
-            coord->coord.m[i][j] = Q12_MULT_PRECISE(angle, coord->coord.m[i][j]);
+            boneCoords[0].coord.m[i][j] = Q12_MULT_PRECISE(angle, boneCoords[0].coord.m[i][j]);
         }
     }
 

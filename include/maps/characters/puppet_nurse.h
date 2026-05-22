@@ -51,6 +51,88 @@ typedef enum _PuppetNurseControl
     PuppetNurseControl_13 = 13
 } e_PuppetNurseControl;
 
-// TODO: Move decls here.
+q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mat, s32 matCount, VECTOR3* center);
+
+void sharedFunc_800CD7F8_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ, q19_12 range);
+
+void sharedFunc_800CD920_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ);
+
+q19_12 sharedFunc_800CD940_3_s03(q19_12 pos0, q19_12 pos1);
+
+s32 PuppetNurse_HurtSfxIdGet(s_SubCharacter* nurse);
+
+void PuppetNurse_SfxPlay(s_SubCharacter* nurse, s32 idx);
+
+s32 PuppetNurse_AnimSfxGet(s32 idx);
+
+void sharedFunc_800CDA88_3_s03(s_SubCharacter* nurse);
+
+void PuppetNurse_UpdateMain(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+
+void PuppetNurse_Init(s_SubCharacter* nurse, bool isDoctor);
+
+void PuppetNurse_Update(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+
+void PuppetDoctor_Update(s_SubCharacter* doctor, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+
+/** Checks damage angle. */
+bool PuppetNurse_SomeAngleCheck(s_SubCharacter* nurse);
+
+void PuppetNurse_DamageHandle(s_SubCharacter* nurse);
+
+void PuppetNurse_Move(s_SubCharacter* nurse);
+
+/** Checks if some special animation is set. */
+bool sharedFunc_800CE398_3_s03(s32 animStatus);
+
+void PuppetNurse_Control1(s_SubCharacter* nurse);
+
+void PuppetNurse_Control2(s_SubCharacter* nurse);
+
+void PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor);
+
+bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse);
+
+void PuppetNurse_Control5(s_SubCharacter* nurse);
+
+void PuppetNurse_Control6_7(s_SubCharacter* nurse, bool isDoctor);
+
+void PuppetNurse_Control8(s_SubCharacter* nurse);
+
+s32 sharedFunc_800CEEAC_3_s03(void);
+
+void sharedFunc_800CEEE0_3_s03(s_SubCharacter* nurse);
+
+void sharedFunc_800CF0B4_3_s03(s_SubCharacter* nurse);
+
+bool sharedFunc_800CF294_3_s03(s_SubCharacter* nurse, q19_12 dist);
+
+void PuppetNurse_Control9(s_SubCharacter* nurse);
+
+s32 sharedFunc_800CF600_3_s03(s_SubCharacter* nurse);
+
+void sharedFunc_800CF7F4_3_s03(s_SubCharacter* nurse);
+
+bool sharedFunc_800CF90C_3_s03(s_SubCharacter* nurse);
+
+void PuppetNurse_Control12(s_SubCharacter* nurse);
+
+void PuppetNurse_Control10(s_SubCharacter* nurse);
+
+void PuppetNurse_Control11(s_SubCharacter* nurse);
+
+void PuppetNurse_Control13(s_SubCharacter* nurse);
+
+void PuppetNurse_Control(s_SubCharacter* nurse);
+
+void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords);
+
+void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse);
+
+void PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+
+void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords);
+
+void sharedFunc_800D0968_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords);
 
 #endif

@@ -596,80 +596,6 @@ bool sharedFunc_800CCF30_1_s05(POLY_FT4** poly, s32 idx);
 /** Unsure which character this takes, stalker doesn't fit? */
 void sharedFunc_800D88AC_0_s00(s_SubCharacter* stalker);
 
-// MAP3_S03 puppet nurse/doctor funcs
-
-void sharedFunc_800CDA88_3_s03(s_SubCharacter* nurse);
-
-void PuppetNurse_UpdateMain(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void func_800CDB5C(s_SubCharacter* nurse, s32);
-
-void PuppetNurse_Init(s_SubCharacter* nurse, bool isDoctor);
-
-void PuppetNurse_Update(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void PuppetDoctor_Update(s_SubCharacter* doctor, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void PuppetNurse_DamageHandle(s_SubCharacter* nurse);
-
-s32 PuppetNurse_HurtSfxIdGet(s_SubCharacter* nurse);
-
-void PuppetNurse_SfxPlay(s_SubCharacter* nurse, s32 idx);
-
-s32 PuppetNurse_AnimSfxGet(s32 idx);
-
-/** Checks damage angle. */
-bool PuppetNurse_SomeAngleCheck(s_SubCharacter* nurse);
-
-void PuppetNurse_Move(s_SubCharacter* nurse);
-
-/** Checks if some special animation is set. */
-bool sharedFunc_800CE398_3_s03(s32 animStatus);
-
-void PuppetNurse_Control1(s_SubCharacter* nurse);
-
-void PuppetNurse_Control2(s_SubCharacter* nurse);
-
-void PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor);
-
-bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse);
-
-void PuppetNurse_Control5(s_SubCharacter* nurse);
-
-void PuppetNurse_Control6_7(s_SubCharacter* nurse, bool isDoctor);
-
-void PuppetNurse_Control8(s_SubCharacter* nurse);
-
-s32 sharedFunc_800CEEAC_3_s03(void);
-
-void PuppetNurse_Control9(s_SubCharacter* nurse);
-
-s32 sharedFunc_800CF600_3_s03(s_SubCharacter* nurse);
-
-void sharedFunc_800CF7F4_3_s03(s_SubCharacter* nurse);
-
-bool sharedFunc_800CF90C_3_s03(s_SubCharacter* nurse);
-
-void PuppetNurse_Control12(s_SubCharacter* nurse);
-
-void PuppetNurse_Control10(s_SubCharacter* nurse);
-
-void PuppetNurse_Control11(s_SubCharacter* nurse);
-
-void PuppetNurse_Control13(s_SubCharacter* nurse);
-
-void PuppetNurse_Control(s_SubCharacter* nurse);
-
-void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords);
-
-void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse);
-
-void PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords);
-
-void sharedFunc_800D0968_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords);
-
 s32 sharedFunc_800D929C_0_s00(void);
 
 /** @brief Gets the playback state of a character's active animation.
@@ -685,16 +611,6 @@ bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
 bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfxId, s32 pitch);
 
 void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7);
-
-void sharedFunc_800CD7F8_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ, q19_12 range);
-
-void sharedFunc_800CD920_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ);
-
-q19_12 sharedFunc_800CD940_3_s03(q19_12 pos0, q19_12 pos1);
-
-s32 sharedFunc_800CD980_3_s03(s_SubCharacter* chara);
-
-q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mat, s32 matCount, VECTOR3* center);
 
 void sharedFunc_800CE5D4_1_s03(VECTOR3* arg0, u16 arg1, u16 arg2, u32 arg3);
 
@@ -714,12 +630,6 @@ void sharedFunc_800D15F0_3_s01(void);
 
 /** @brief Handles the unlocked door event. */
 void MapEvent_DoorUnlocked(void);
-
-void sharedFunc_800CEEE0_3_s03(s_SubCharacter* nurse);
-
-void sharedFunc_800CF0B4_3_s03(s_SubCharacter* nurse);
-
-bool sharedFunc_800CF294_3_s03(s_SubCharacter* nurse, q19_12 dist);
 
 /** @brief Gets the room index corresponding to the current 2D position.
  *
