@@ -91,7 +91,7 @@ Stalker_Control_12                 = 0x800D2800; // type:func
 Stalker_Control_13                 = 0x800D29B8; // type:func
 sharedFunc_800D67FC_0_s00          = 0x800D2AA8; // type:func
 sharedFunc_800D6970_0_s00          = 0x800D2C1C; // type:func
-sharedFunc_800D70C4_0_s00          = 0x800D3370; // type:func
+Stalker_CollisionUpdate            = 0x800D3370; // type:func
 sharedFunc_800D7BE8_0_s00          = 0x800D3E94; // type:func
 sharedFunc_800D7E04_0_s00          = 0x800D40B0; // type:func
 
@@ -120,7 +120,7 @@ HangedScratcher_Control_14         = 0x800D67C0; // type:func
 HangedScratcher_Control_15         = 0x800D6A20; // type:func
 sharedFunc_800D26D8_5_s00          = 0x800D6D18; // type:func
 sharedFunc_800D2844_5_s00          = 0x800D6E84; // type:func
-sharedFunc_800D2C18_5_s00          = 0x800D7258; // type:func
+HangedScratcher_CollisionUpdate    = 0x800D7258; // type:func
 sharedFunc_800D3214_5_s00          = 0x800D7854; // type:func
 sharedFunc_800D3300_5_s00          = 0x800D7998; // type:func
 

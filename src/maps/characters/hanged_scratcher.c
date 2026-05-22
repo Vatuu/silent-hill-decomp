@@ -20,7 +20,7 @@ void HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCO
     HangedScratcher_ControlUpdate(scratcher);
     sharedFunc_800D26D8_5_s00(scratcher);
     sharedFunc_800D2844_5_s00(scratcher, anmHdr, boneCoords);
-    sharedFunc_800D2C18_5_s00(scratcher);
+    HangedScratcher_CollisionUpdate(scratcher);
     sharedFunc_800D3300_5_s00(scratcher);
 }
 
@@ -1323,7 +1323,7 @@ extern s_Keyframe sharedData_800D9B04_5_s00;
 extern s_Keyframe sharedData_800D9B18_5_s00;
 extern s_Keyframe sharedData_800D9B2C_5_s00[];
 
-void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
+void HangedScratcher_CollisionUpdate(s_SubCharacter* scratcher)
 {
     s32 relKeyframeIdx;
     s32 keyframeIdx0;
@@ -1557,7 +1557,7 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
             Chara_CollisionSet(scratcher, sharedData_800D9B18_5_s00);
             break;
 
-        case ANIM_STATUS(5, false):
+        case ANIM_STATUS(HangedScratcherAnim_5, false):
             Chara_CollisionSet(scratcher, sharedData_800D9B2C_5_s00[0]);
             break;
 

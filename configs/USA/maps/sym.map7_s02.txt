@@ -84,7 +84,7 @@ Stalker_Control_12                  = 0x800D3F34; // type:func
 Stalker_Control_13                  = 0x800D40EC; // type:func
 sharedFunc_800D67FC_0_s00           = 0x800D41DC; // type:func
 sharedFunc_800D6970_0_s00           = 0x800D4350; // type:func
-sharedFunc_800D70C4_0_s00           = 0x800D4AA4; // type:func
+Stalker_CollisionUpdate             = 0x800D4AA4; // type:func
 sharedFunc_800D7BE8_0_s00           = 0x800D55C8; // type:func
 sharedFunc_800D7E04_0_s00           = 0x800D57E4; // type:func
 

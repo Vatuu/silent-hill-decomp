@@ -83,7 +83,7 @@ HangedScratcher_Control_14         = 0x800D2180; // type:func
 HangedScratcher_Control_15         = 0x800D23E0; // type:func
 sharedFunc_800D26D8_5_s00          = 0x800D26D8; // type:func
 sharedFunc_800D2844_5_s00          = 0x800D2844; // type:func
-sharedFunc_800D2C18_5_s00          = 0x800D2C18; // type:func
+HangedScratcher_CollisionUpdate    = 0x800D2C18; // type:func
 sharedFunc_800D3214_5_s00          = 0x800D3214; // type:func
 sharedFunc_800D3300_5_s00          = 0x800D3300; // type:func
 

@@ -256,7 +256,7 @@ Groaner_ControlStun             = 0x800E55B0; // type:func
 Groaner_ControlDeath            = 0x800E5930; // type:func
 sharedFunc_800E5AA4_2_s00       = 0x800E5AA4; // type:func
 Groaner_AnimUpdate              = 0x800E5EC4; // type:func
-sharedFunc_800E6338_2_s00       = 0x800E6338; // type:func
+Groaner_CollisionUpdate         = 0x800E6338; // type:func
 sharedFunc_800E71E8_2_s00       = 0x800E71E8; // type:func
 
 //-----------------------------------------------------------

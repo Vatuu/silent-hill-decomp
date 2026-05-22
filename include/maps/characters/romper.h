@@ -89,7 +89,7 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper);
 
 void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper);
+void Romper_CollisionUpdate(s_SubCharacter* romper);
 
 s32 sharedFunc_800E939C_2_s02(s_SubCharacter* romper);
 

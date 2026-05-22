@@ -48,7 +48,7 @@ void Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINATE2*
         }
 
         sharedFunc_800D6970_0_s00(stalker, anmHdr, boneCoords);
-        sharedFunc_800D70C4_0_s00(stalker);
+        Stalker_CollisionUpdate(stalker);
 
         if (g_DeltaTime != Q12(0.0f))
         {
@@ -2292,7 +2292,7 @@ extern s_Keyframe sharedData_800DEE40_0_s00[2];
 extern s_Keyframe sharedData_800DEE68_0_s00[9];
 extern s_Keyframe sharedData_800DEF1C_0_s00[30];
 
-void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
+void Stalker_CollisionUpdate(s_SubCharacter* stalker)
 {
     s32 keyframeIdx0;
     s32 keyframeIdx1;

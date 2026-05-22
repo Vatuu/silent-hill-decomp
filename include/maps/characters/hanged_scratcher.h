@@ -200,7 +200,7 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher);
 
 void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher);
+void HangedScratcher_CollisionUpdate(s_SubCharacter* scratcher);
 
 bool sharedFunc_800D3214_5_s00(s_SubCharacter* scratcher);
 

@@ -255,7 +255,7 @@ void Stalker_ControlUpdate(s_SubCharacter* stalker);
 
 void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, GsCOORDINATE2* boneCoords);
 
-void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker);
+void Stalker_CollisionUpdate(s_SubCharacter* stalker);
 
 void sharedFunc_800D7BE8_0_s00(s_SubCharacter* stalker);
 

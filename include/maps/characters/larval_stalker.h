@@ -71,6 +71,6 @@ void LarvalStalker_Init(s_SubCharacter* larvalStalker);
 
 void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker);
 
-void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker);
+void LarvalStalker_CollisionUpdate(s_SubCharacter* larvalStalker);
 
 #endif

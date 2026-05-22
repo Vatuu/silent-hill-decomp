@@ -37,7 +37,7 @@ void Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2*
 
     if (g_DeltaTime != Q12(0.0f))
     {
-        sharedFunc_800E6338_2_s00(groaner); // Control func with state machine?
+        Groaner_CollisionUpdate(groaner); // Control func with state machine?
         sharedFunc_800E71E8_2_s00(groaner);
 
         if (groaner->model.controlState != prevControlState)
@@ -1282,7 +1282,7 @@ void Groaner_AnimUpdate(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINA
     groanerProps.targetHeadingAngle = groaner->rotation.vy;
 }
 
-void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
+void Groaner_CollisionUpdate(s_SubCharacter* groaner)
 {
     s32 refKeyframeIdx;
     s32 keyframeIdx1;

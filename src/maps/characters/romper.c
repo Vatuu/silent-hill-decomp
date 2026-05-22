@@ -19,7 +19,7 @@ void Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* b
         sharedFunc_800E6420_2_s02(romper);
         Romper_ControlUpdate(romper);
         sharedFunc_800E8730_2_s02(romper);
-        sharedFunc_800E8DFC_2_s02(romper);
+        Romper_CollisionUpdate(romper);
     }
 
     sharedFunc_800E8A40_2_s02(romper, anmHdr, boneCoords);
@@ -1407,7 +1407,7 @@ extern s_Keyframe sharedData_800ED018_2_s02[];
 extern s_Keyframe sharedData_800ED1D0_2_s02[];
 extern s_Keyframe sharedData_800ED2C0_2_s02;
 
-void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
+void Romper_CollisionUpdate(s_SubCharacter* romper)
 {
     s32 keyframeIdxs[2];
     s32 keyframeIdx;

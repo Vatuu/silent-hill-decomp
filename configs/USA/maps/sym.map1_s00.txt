@@ -77,7 +77,7 @@ sharedFunc_800D140C_1_s00       = 0x800D140C; // type:func
 sharedFunc_800D1524_1_s00       = 0x800D1524; // type:func
 LarvalStalker_Init              = 0x800D16FC; // type:func
 sharedFunc_800D17BC_1_s00       = 0x800D17BC; // type:func
-sharedFunc_800D1DBC_1_s00       = 0x800D1DBC; // type:func
+LarvalStalker_CollisionUpdate   = 0x800D1DBC; // type:func
 
 //----------------------------------------------------------------
 //--- PA: 0x008F80   VA: 0x800D24F8   subsegment: c, Chara_Stalker
@@ -100,7 +100,7 @@ Stalker_Control_12              = 0x800D5CE4; // type:func
 Stalker_Control_13              = 0x800D5E9C; // type:func
 sharedFunc_800D67FC_0_s00       = 0x800D5F8C; // type:func
 sharedFunc_800D6970_0_s00       = 0x800D6100; // type:func
-sharedFunc_800D70C4_0_s00       = 0x800D6854; // type:func
+Stalker_CollisionUpdate         = 0x800D6854; // type:func
 sharedFunc_800D7BE8_0_s00       = 0x800D7378; // type:func
 sharedFunc_800D7E04_0_s00       = 0x800D7594; // type:func
 

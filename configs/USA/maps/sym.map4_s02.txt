@@ -258,7 +258,7 @@ Groaner_ControlStun             = 0x800E402C; // type:func
 Groaner_ControlDeath            = 0x800E43AC; // type:func
 sharedFunc_800E5AA4_2_s00       = 0x800E4520; // type:func
 Groaner_AnimUpdate              = 0x800E4940; // type:func
-sharedFunc_800E6338_2_s00       = 0x800E4DB4; // type:func
+Groaner_CollisionUpdate         = 0x800E4DB4; // type:func
 sharedFunc_800E71E8_2_s00       = 0x800E5C64; // type:func
 
 //---------------------------------------------------------------
@@ -283,7 +283,7 @@ Romper_Control_10               = 0x800E887C; // type:func
 Romper_ControlGrabAttack        = 0x800E8ABC; // type:func
 sharedFunc_800E8730_2_s02       = 0x800E8B2C; // type:func
 sharedFunc_800E8A40_2_s02       = 0x800E8E3C; // type:func
-sharedFunc_800E8DFC_2_s02       = 0x800E91F8; // type:func
+Romper_CollisionUpdate          = 0x800E91F8; // type:func
 sharedFunc_800E939C_2_s02       = 0x800E9798; // type:func
 sharedFunc_800E94B4_2_s02       = 0x800E98B0; // type:func
 sharedFunc_800E9714_2_s02       = 0x800E9B10; // type:func

@@ -22,7 +22,7 @@ void LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, Gs
     LarvalStalker_ControlUpdate(larvalStalker);
     sharedFunc_800D140C_1_s00(larvalStalker, boneCoords);
     sharedFunc_800D1524_1_s00(larvalStalker, anmHdr, boneCoords);
-    sharedFunc_800D1DBC_1_s00(larvalStalker);
+    LarvalStalker_CollisionUpdate(larvalStalker);
 
     if (larvalStalkerProps.timer_10A < Q12(3.5f))
     {
@@ -1114,7 +1114,7 @@ extern s_Keyframe sharedData_800DB01C_1_s00;
 
 extern s_Keyframe sharedData_800DB030_1_s00;
 
-void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
+void LarvalStalker_CollisionUpdate(s_SubCharacter* larvalStalker)
 {
     s32 keyframeIdx0;
     s32 keyframeIdx1;
@@ -1388,17 +1388,17 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
 
         case ANIM_STATUS(LarvalStalkerAnim_GrabAttack, false):
         case ANIM_STATUS(LarvalStalkerAnim_GrabAttack, true):
-            larvalStalker->collision.box.top   = Q12(-0.72f);
-            larvalStalker->collision.box.height   = Q12(-0.2f);
-            larvalStalker->collision.box.offsetY   = Q12(-0.66f);
-            larvalStalker->collision.cylinder.radius  = Q12(0.12f);
-            larvalStalker->collision.shapeOffsets.box.vz = Q12(0.02f);
-            larvalStalker->collision.cylinder.field_2   = Q12(0.11f);
-            larvalStalker->collision.box.bottom   = Q12(0.0f);
+            larvalStalker->collision.box.top                  = Q12(-0.72f);
+            larvalStalker->collision.box.height               = Q12(-0.2f);
+            larvalStalker->collision.box.offsetY              = Q12(-0.66f);
+            larvalStalker->collision.cylinder.radius          = Q12(0.12f);
+            larvalStalker->collision.shapeOffsets.box.vz      = Q12(0.02f);
+            larvalStalker->collision.cylinder.field_2         = Q12(0.11f);
+            larvalStalker->collision.box.bottom               = Q12(0.0f);
             larvalStalker->collision.shapeOffsets.cylinder.vx = Q12(0.0f);
             larvalStalker->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-            larvalStalker->collision.shapeOffsets.box.vx = Q12(0.0f);
-            larvalStalker->collision.box.field_8   = Q12(-0.59f);
+            larvalStalker->collision.shapeOffsets.box.vx      = Q12(0.0f);
+            larvalStalker->collision.box.field_8              = Q12(-0.59f);
             break;
     }
 

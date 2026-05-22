@@ -126,7 +126,7 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner);
 
 void Groaner_AnimUpdate(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner);
+void Groaner_CollisionUpdate(s_SubCharacter* groaner);
 
 // Plays SFX.
 void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner);
