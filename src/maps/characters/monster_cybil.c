@@ -555,12 +555,7 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             monsterCybilProps.moveSpeed = Q12(0.0f);
 
-            if (monsterCybil->properties.npc.resetControlState)
-            {
-                monsterCybil->properties.npc.controlState = 0;
-                monsterCybil->model.stateStep                  = 0;
-                monsterCybil->properties.npc.resetControlState = Q12(0.0f);
-            }
+            Chara_AnimStateReset(monsterCybil);
             break;
 
         case 6:
@@ -573,12 +568,8 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             Model_AnimStatusSet(modelUpper, 15, false);
 
             monsterCybilProps.moveSpeed = Q12(0.0f);
-            if (monsterCybil->properties.npc.resetControlState)
-            {
-                monsterCybil->properties.npc.controlState = 0;
-                monsterCybil->model.stateStep                  = 0;
-                monsterCybil->properties.npc.resetControlState = Q12(0.0f);
-            }
+
+            Chara_AnimStateReset(monsterCybil);
 
             if (monsterCybil->model.anim.keyframeIdx == 343)
             {
@@ -591,14 +582,10 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
         case 12:
             Model_AnimStatusKeyframeSet(monsterCybil->model, 21, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             Model_AnimStatusKeyframeSet(*modelUpper, 21, true, MONSTER_CYBIL_ANIM_INFOS, 0);
+
             monsterCybilProps.moveSpeed = Q12(0.0f);
 
-            if (monsterCybil->properties.npc.resetControlState)
-            {
-                monsterCybil->properties.npc.controlState = 0;
-                monsterCybil->model.stateStep                  = 0;
-                monsterCybil->properties.npc.resetControlState = Q12(0.0f);
-            }
+            Chara_AnimStateReset(monsterCybil);
             break;
 
         case 9:
@@ -611,12 +598,7 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             Model_AnimStatusKeyframeSet(*modelUpper, 20, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             WorldGfx_HeldItemAttach(Chara_MonsterCybil, 1);
 
-            if (monsterCybil->properties.npc.resetControlState)
-            {
-                monsterCybil->properties.npc.controlState = 0;
-                monsterCybil->model.stateStep                  = 0;
-                monsterCybil->properties.npc.resetControlState = Q12(0.0f);
-            }
+            Chara_AnimStateReset(monsterCybil);
             break;
 
         case 10:
@@ -637,12 +619,7 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                 WorldGfx_HeldItemAttach(Chara_MonsterCybil, 1);
             }
 
-            if (monsterCybil->properties.npc.resetControlState)
-            {
-                monsterCybil->properties.npc.controlState = 0;
-                monsterCybil->model.stateStep                  = 0;
-                monsterCybil->properties.npc.resetControlState = Q12(0.0f);
-            }
+            Chara_AnimStateReset(monsterCybil);
             break;
 
         case 11:
@@ -655,12 +632,7 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             Model_AnimStatusKeyframeSet(*modelUpper, 19, true, MONSTER_CYBIL_ANIM_INFOS, 0);
             WorldGfx_HeldItemAttach(Chara_MonsterCybil, 2);
 
-            if (monsterCybil->properties.npc.resetControlState)
-            {
-                monsterCybil->properties.npc.controlState = 0;
-                monsterCybil->model.stateStep                  = 0;
-                monsterCybil->properties.npc.resetControlState = Q12(0.0f);
-            }
+            Chara_AnimStateReset(monsterCybil);
 
             if (!monsterCybil->model.stateStep)
             {
@@ -1891,7 +1863,7 @@ void func_800DB4CC(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             break;
 
         case 6:
-            func_80044F14(&boneCoords[1], 0, 0, -monsterCybilChara.properties.npc.field_118);
+            func_80044F14(&boneCoords[1], 0, 0, -monsterCybilProps.field_118);
             break;
     }
 
