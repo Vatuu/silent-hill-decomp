@@ -191,26 +191,24 @@ typedef struct
 } s_800D5710;
 STATIC_ASSERT_SIZEOF(s_800D5710, 52);
 
-// TODO: This may be a puppet doctor/nurse specific struct, need to compare with other NPCs.
+// Used by Alessa, BloodyLisa, Cheryl, Cybil, Dahlia, GhostChildAlessa, Kaufmann, Lisa.
 typedef struct _PropsNpc
 {
-    VECTOR3     position_E8; /** Q19.12 */
-    s32         field_F4;
-    s32         field_F8;
-    s32         field_FC;
-    s32         field_100;
-    s32         field_104;
-    s32         field_108;
-    s32         field_10C;
-    s8          unk_110[4];
-    s32         field_114;
-    s8          field_118;
-    u8          modelVariantIdx;
-    s16         field_11A;
-    s32         field_11C;
-    s16         field_120;
-    s16         field_122;
-    s_800D5710* field_124;
+    /* 0xE8  */ s32        controlState; /** `e_*Control` */
+    /* 0xEC  */ u_Property properties_EC; // Unused?
+    /* 0xF0  */ bool       freeze;
+    /* 0xF4  */ u_Property properties_F4; // Unused?
+    /* 0xF8  */ bool       resetControlState;
+    /* 0xFC  */ s32        field_FC;
+    /* 0x100 */ s32        field_100;
+    /* 0x104 */ u_Property properties_104;
+    /* 0x108 */ u_Property properties_108;
+    /* 0x10C */ u_Property properties_10C;
+    /* 0x110 */ VECTOR3    field_110;
+    /* 0x11C */ s32        flags; /** `e_*Flags` */
+    /* 0x120 */ s32        field_120;
+    /* 0x124 */ q3_12      moveDistance_124;
+    /* 0x126 */ q3_12      moveSpeed;
 } s_PropsNpc;
 STATIC_ASSERT_SIZEOF(s_PropsNpc, 64);
 
@@ -233,26 +231,6 @@ typedef struct _PropsAirScreamer
     /* 0x124   */ q19_12  groundHeight;
 } s_PropsAirScreamer;
 
-/** @brief Alessa character properties. */
-typedef struct _PropsAlessa
-{
-    /* 0xE8  */ s32        controlState; /** `e_AlessaControl` */
-    /* 0xEC  */ u_Property properties_EC; // Unused.
-    /* 0xF0  */ bool       freeze;
-    /* 0xF4  */ u_Property properties_F4; // Unused.
-    /* 0xF8  */ bool       resetControlState;
-    /* 0xFC  */ s32        field_FC;
-    /* 0x100 */ s32        field_100;
-    /* 0x104 */ u_Property properties_104;
-    /* 0x108 */ u_Property properties_108;
-    /* 0x10C */ u_Property properties_10C;
-    /* 0x110 */ VECTOR3    field_110;
-    /* 0x11C */ s32        flags_11C;
-    /* 0x120 */ u_Property properties_120;
-    /* 0x124 */ q3_12      field_124;
-    /* 0x126 */ q3_12      moveSpeed;
-} s_PropsAlessa;
-
 /** @brief Bloodsucker character properties. */
 typedef struct _PropsBloodsucker
 {
@@ -269,27 +247,6 @@ typedef struct _PropsCat
 {
     /* 0xE8 */ u8 field_E8; // `bool`.
 } s_PropsCat;
-
-/** @brief Cheryl character properties. */
-typedef struct _PropsCheryl
-{
-    /* 0xE8  */ s32        controlState; /** `e_CherylControl` */
-    /* 0xEC  */ u_Property properties_EC; // Unused?
-    /* 0xF0  */ s32        field_F0;
-    /* 0xF4  */ u_Property properties_F4; // Unused?
-    /* 0xF8  */ bool       resetControlState;
-    /* 0xFC  */ s32        field_FC;
-    /* 0x100 */ s32        field_100;
-    /* 0x104 */ u_Property properties_104;
-    /* 0x108 */ u_Property properties_108;
-    /* 0x10C */ u_Property properties_10C;
-    /* 0x110 */ VECTOR3    field_110;
-    /* 0x11C */ s32        flags; /** `e_CherylFlags` */
-    /* 0x120 */ u_Property properties_120;
-    /* 0x124 */ q3_12      moveDistance_124;
-    /* 0x126 */ q3_12      moveDistance_126;
-} s_PropsCheryl;
-STATIC_ASSERT_SIZEOF(s_PropsCheryl, 64);
 
 /** @brief Creeper character properties. */
 typedef struct _PropsCreeper
@@ -309,27 +266,6 @@ typedef struct _PropsCreeper
     /* 0x10C */ q4_12  moveSpeed;
 } s_PropsCreeper;
 STATIC_ASSERT_SIZEOF(s_PropsCreeper, 40);
-
-/** @brief Dahlia character properties. */
-typedef struct _PropsDahlia
-{
-    /* 0x0   */ s32        controlState; /** `e_DahliaControl` */
-    /* 0xEC  */ u_Property properties_EC; // Unused?
-    /* 0xF0  */ u_Property properties_F0; // Unused?
-    /* 0xF4  */ u_Property properties_F4; // Unused?
-    /* 0xF8  */ bool       resetControlState;
-    /* 0xFC  */ s32        field_FC;
-    /* 0x100 */ s32        field_100;
-    /* 0x104 */ u_Property properties_104;
-    /* 0x108 */ u_Property properties_108;
-    /* 0x10C */ u_Property properties_10C;
-    /* 0x110 */ VECTOR3    field_110;
-    /* 0x11C */ s32        flags_11C;
-    /* 0x120 */ u_Property properties_120;
-    /* 0x124 */ q3_12      field_124;
-    /* 0x126 */ q3_12      moveDistance_126;
-} s_PropsDahlia;
-STATIC_ASSERT_SIZEOF(s_PropsDahlia, 64);
 
 /** @brief Floatstinger character properties. */
 typedef struct _PropsFloatstinger
@@ -414,27 +350,6 @@ typedef struct _PropsIncubus
     q19_12 bossFightTimer_F4;
     s8     __pad_F8[48];
 } s_PropsIncubus;
-
-/** @brief Kaufmann character properties. TODO: Largely a copy of Dahlia's for now. */
-typedef struct _PropsKaufmann
-{
-    /* 0x0   */ s32        controlState; /** `e_KaufmannControl` */
-    /* 0xEC  */ u_Property properties_EC; // Unused?
-    /* 0xF0  */ u_Property properties_F0; // Unused?
-    /* 0xF4  */ u_Property properties_F4; // Unused?
-    /* 0xF8  */ bool       resetControlState;
-    /* 0xFC  */ s32        field_FC;
-    /* 0x100 */ s32        field_100;
-    /* 0x104 */ u_Property properties_104;
-    /* 0x108 */ u_Property properties_108;
-    /* 0x10C */ u_Property properties_10C;
-    /* 0x110 */ VECTOR3    field_110;
-    /* 0x11C */ s32        flags_11C;
-    /* 0x120 */ s32        field_120;
-    /* 0x124 */ q3_12      field_124;
-    /* 0x126 */ q3_12      moveSpeed;
-} s_PropsKaufmann;
-STATIC_ASSERT_SIZEOF(s_PropsKaufmann, 64);
 
 /** @brief Larval Stalker character properties. */
 typedef struct _PropsLarvalStalker
@@ -613,9 +528,9 @@ typedef struct _PropsTwinfeeler
     /* 0x112 */ s8            __pad_112[2];
     /* 0x114 */ u32           flags;     /** `e_TwinfeelerFlags` */
     /* 0x118 */ u16           field_118; /** `bool` */
-    /* 0x11C */ s8            __pad_11C[2]; // TODO: Should be `s32 prevHealth`.
-    /* 0x120 */ s32           field_120; /** @unused */
-    /* 0x124 */ s8            __pad_124[8];
+    /* 0x11A */ s8            __pad_11A[2];
+    /* 0x11C */ q19_12        prevHealth;
+    /* 0x124 */ s8            __pad_120[8];
 } s_PropsTwinfeeler;
 STATIC_ASSERT_SIZEOF(s_PropsTwinfeeler, 64);
 
@@ -716,17 +631,13 @@ typedef struct _SubCharacter
                    s_PropsNpc             npc;
                
                    s_PropsAirScreamer     airScreamer;
-                   s_PropsAlessa          alessa;
                    s_PropsBloodsucker     bloodsucker;
                    s_PropsCat             cat;
-                   s_PropsCheryl          cheryl;
                    s_PropsCreeper         creeper;
-                   s_PropsDahlia          dahlia;
                    s_PropsFloatstinger    floatstinger;
                    e_PropsGroaner         groaner;
                    s_PropsHangedScratcher hangedScratcher;
                    s_PropsIncubus         incubus;
-                   s_PropsKaufmann        kaufmann;
                    s_PropsLarvalStalker   larvalStalker;
                    s_PropsMonsterCybil    monsterCybil;
                    s_PropsPuppetNurse     puppetNurse;
@@ -881,11 +792,11 @@ static inline void Chara_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 keyf
  */
 static inline void Chara_AnimStateReset(s_SubCharacter* chara)
 {
-    if (chara->properties.dahlia.resetControlState)
+    if (chara->properties.npc.resetControlState)
     {
-        chara->properties.dahlia.controlState      = 0;
+        chara->properties.npc.controlState      = 0;
         chara->model.stateStep                     = 0;
-        chara->properties.dahlia.resetControlState = false;
+        chara->properties.npc.resetControlState = false;
     }
 }
 

@@ -410,7 +410,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             charaStateF4 = 1;
             sharedData_800DF1FA_0_s00 = 0;
             charaStateEC = 0;
-            chara->properties.npc.field_124 = NULL;
+            *(s32*)&chara->properties.npc.moveDistance_124 = 0;
             return true;
     }
 

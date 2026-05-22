@@ -15,6 +15,8 @@
  *  MAP7_S02
  */
 
+#define lisaProps (chara->properties.npc)
+
 /** Addresses
  * MAP3_S04: 0x800D0888
  * MAP4_S04: 0x800CFEA0
@@ -106,26 +108,24 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
     s8          pitch0;
     s8          pitch1;
 
-    #define dahliaProps (chara->properties.dahlia)
-
-    switch (dahliaProps.controlState)
+    switch (lisaProps.controlState)
     {
         case LisaControl_None:
             break;
 
         case LisaControl_1:
-            if (dahliaProps.moveDistance_126 > Q12(1.25f))
+            if (lisaProps.moveSpeed > Q12(1.25f))
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
-                if (dahliaProps.moveDistance_126 < Q12(1.25f))
+                lisaProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
+                if (lisaProps.moveSpeed < Q12(1.25f))
                 {
-                    dahliaProps.moveDistance_126 = Q12(1.25f);
+                    lisaProps.moveSpeed = Q12(1.25f);
                 }
             }
-            else if (dahliaProps.moveDistance_126 < Q12(1.25f))
+            else if (lisaProps.moveSpeed < Q12(1.25f))
             {
-                dahliaProps.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
-                dahliaProps.moveDistance_126  = CLAMP(dahliaProps.moveDistance_126, 0, Q12(1.25f));
+                lisaProps.moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                lisaProps.moveSpeed  = CLAMP(lisaProps.moveSpeed, 0, Q12(1.25f));
             }
 
             Model_AnimStatusSet(&chara->model, LisaAnim_2, false);
@@ -134,16 +134,16 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 
         case LisaControl_5:
         case LisaControl_20:
-            if (dahliaProps.moveDistance_126)
+            if (lisaProps.moveSpeed)
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
-                if (dahliaProps.moveDistance_126 < Q12(0.0f))
+                lisaProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
+                if (lisaProps.moveSpeed < Q12(0.0f))
                 {
-                    dahliaProps.moveDistance_126 = Q12(0.0f);
+                    lisaProps.moveSpeed = Q12(0.0f);
                 }
             }
 
-            if (dahliaProps.controlState == 5)
+            if (lisaProps.controlState == 5)
             {
                 Model_AnimStatusKeyframeSet(chara->model, LisaAnim_1, true, LISA_ANIM_INFOS, 0);
             }
@@ -165,7 +165,7 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 
             if (chara->model.anim.keyframeIdx == 72)
             {
-                dahliaProps.controlState = 20;
+                lisaProps.controlState = 20;
                 chara->model.stateStep = 0;
             }
             break;
@@ -239,7 +239,7 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
     func_8007FDE0(coll.groundType, &sfxId, &pitch0, &pitch1);
     sfxId = Sfx_Unk1529;
 
-    switch (dahliaProps.controlState)
+    switch (lisaProps.controlState)
     {
         case LisaControl_1:
             sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_2, true), chara, 14, 31, sfxId, pitch0);
@@ -346,7 +346,7 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 
     chara->rotation.vy  = Q12_ANGLE_ABS(chara->rotation.vy + Q8_TO_Q4(sharedData_800D6BB8_3_s04));
     chara->headingAngle = chara->rotation.vy;
-    chara->moveSpeed    = dahliaProps.moveDistance_126;
+    chara->moveSpeed    = lisaProps.moveSpeed;
     chara->fallSpeed   += g_GravitySpeed;
 
     boneCoords->flg = false;

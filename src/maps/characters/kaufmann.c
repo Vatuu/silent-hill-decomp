@@ -13,6 +13,8 @@
  *  MAP7_S03
  */
 
+#define kaufmannProps kaufmann->properties.npc
+
 /** Addresses
  * MAP3_S00: 0x800CF21C
  * MAP5_S02: 0x800D2EA8
@@ -102,8 +104,6 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
     s8          pitch0;
     s8          pitch1;
 
-    #define kaufmannProps kaufmann->properties.kaufmann
-
     switch (kaufmannProps.controlState)
     {
         case KaufmannControl_0:
@@ -167,9 +167,9 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             break;
 
         case KaufmannControl_7:
-            if (kaufmann->model.anim.keyframeIdx >= 95 && g_SysWork.npcs[0].properties.kaufmann.field_120 == 0)
+            if (kaufmann->model.anim.keyframeIdx >= 95 && g_SysWork.npcs[0].properties.npc.field_120 == 0)
             {
-                g_SysWork.npcs[0].properties.kaufmann.field_120 = 1;
+                g_SysWork.npcs[0].properties.npc.field_120 = 1;
                 func_8006342C(EquippedWeaponId_Unk70, Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), &g_SysWork.npcBoneCoordBuffer[0]);
             }
 
@@ -418,8 +418,6 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
     boneCoords->flg = false;
     Math_RotMatrixZxyNegGte(&kaufmann->rotation, &boneCoords->coord);
-
-    #undef kaufmannProps
 }
 
 /** Addresses
@@ -433,7 +431,7 @@ void Kaufmann_Init(s_SubCharacter* kaufmann)
 {
     Chara_CollisionReset(kaufmann);
 
-    g_SysWork.npcs[0].properties.dummy.properties_E8[14].val32 = 0; // TODO: field_120?
+    g_SysWork.npcs[0].properties.npc.field_120 = 0;
 
     sharedData_800D5CF4_3_s00 = 0;
 

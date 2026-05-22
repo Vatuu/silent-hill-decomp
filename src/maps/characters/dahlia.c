@@ -16,6 +16,8 @@
  *  MAP7_S03
  */
 
+#define dahliaProps dahlia->properties.npc
+
 /** Addresses
  * MAP2_S01: 0x800CD20C
  * MAP3_S06: 0x800CF0F8
@@ -121,18 +123,16 @@ void Dahlia_ControlUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
     s8          pitch0;
     s8          pitch1;
 
-    #define dahliaProps dahlia->properties.dahlia
-
     switch (dahliaProps.controlState)
     {
         case DahliaControl_None:
         case DahliaControl_5:
-            if (dahliaProps.moveDistance_126)
+            if (dahliaProps.moveSpeed)
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
-                if (dahliaProps.moveDistance_126 < 0)
+                dahliaProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
+                if (dahliaProps.moveSpeed < 0)
                 {
-                    dahliaProps.moveDistance_126 = Q12(0.0f);
+                    dahliaProps.moveSpeed = Q12(0.0f);
                 }
             }
 
@@ -141,18 +141,18 @@ void Dahlia_ControlUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
             break;
 
         case DahliaControl_1:
-            if (dahliaProps.moveDistance_126 > Q12(1.25f))
+            if (dahliaProps.moveSpeed > Q12(1.25f))
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
-                if (dahliaProps.moveDistance_126 < Q12(1.25f))
+                dahliaProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
+                if (dahliaProps.moveSpeed < Q12(1.25f))
                 {
-                    dahliaProps.moveDistance_126 = Q12(1.25f);
+                    dahliaProps.moveSpeed = Q12(1.25f);
                 }
             }
-            else if (dahliaProps.moveDistance_126 < Q12(1.25f))
+            else if (dahliaProps.moveSpeed < Q12(1.25f))
             {
-                dahliaProps.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
-                dahliaProps.moveDistance_126  = CLAMP(dahliaProps.moveDistance_126, 0, Q12(1.25f));
+                dahliaProps.moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                dahliaProps.moveSpeed  = CLAMP(dahliaProps.moveSpeed, 0, Q12(1.25f));
             }
 
             Model_AnimStatusSet(&dahlia->model, DahliaAnim_2, false);
@@ -427,13 +427,11 @@ void Dahlia_ControlUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
 
     dahlia->rotation.vy  = Q12_ANGLE_ABS(dahlia->rotation.vy + Q8_TO_Q4(sharedData_800D16E0_2_s01));
     dahlia->headingAngle = dahlia->rotation.vy;
-    dahlia->moveSpeed    = dahliaProps.moveDistance_126;
+    dahlia->moveSpeed    = dahliaProps.moveSpeed;
     dahlia->fallSpeed   += g_GravitySpeed;
 
     boneCoords->flg = false;
     Math_RotMatrixZxyNegGte(&dahlia->rotation, &boneCoords->coord);
-
-    #undef dahliaProps
 }
 
 /** Addresses

@@ -2207,8 +2207,8 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
             }
             else if (g_SysWork.npcs[0].model.charaId == Chara_GhostChildAlessa)
             {
-                g_SysWork.npcs[0].properties.dahlia.field_124 = Q12(1.25f);
-                func_8008677C(g_SysWork.npcs, 2, 1);
+                g_SysWork.npcs[0].properties.npc.moveDistance_124 = Q12(1.25f);
+                func_8008677C(&g_SysWork.npcs[0], 2, 1);
                 npcTimer = 0;
 
                 audioStream = Sd_AudioStreamingCheck();

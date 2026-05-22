@@ -497,7 +497,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
 
     #define playerChara g_SysWork.playerWork.player
     #define cherylChara g_SysWork.npcs[0]
-    #define cherylProps cherylChara.properties.cheryl
+    #define cherylProps cherylChara.properties.npc
 
     switch (g_SysWork.sysStateSteps[0])
     {

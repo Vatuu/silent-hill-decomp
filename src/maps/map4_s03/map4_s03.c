@@ -1775,15 +1775,15 @@ void func_800D3B44(bool disableDamage)
 
 void func_800D3B68(s_SubCharacter* twinfeeler) // 0x800D3B68
 {
-    twinfeeler->health = twinfeeler->properties.npc.field_11C; // TODO: Update properties struct.
+    twinfeeler->health = twinfeeler->properties.twinfeeler.prevHealth;
 }
 
 void func_800D3B74(s_SubCharacter* twinfeeler) // 0x800D3B74
 {
     if (twinfeeler->health >= Q12(0.0f))
     {
-        twinfeeler->properties.npc.field_11C = twinfeeler->health; // TODO: Update properties struct.
-        twinfeeler->health                   = NO_VALUE;
+        twinfeeler->properties.twinfeeler.prevHealth = twinfeeler->health;
+        twinfeeler->health                           = NO_VALUE;
     }
 }
 
@@ -1852,7 +1852,7 @@ bool Twinfeeler_Init(s_SubCharacter* twinfeeler) // 0x800D3CD4
 
     twinfeeler->health = Q12(3000.0f);
 
-    localTwinfeeler->properties.twinfeeler.field_120 = NO_VALUE;
+    localTwinfeeler->properties.twinfeeler.prevHealth = NO_VALUE;
 
     twinfeeler->collision.cylinder.radius = Q12(0.3f);
     twinfeeler->model.anim.alpha          = Q12(0.0f);

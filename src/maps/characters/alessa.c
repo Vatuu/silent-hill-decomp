@@ -13,7 +13,7 @@
  *  MAP7_S03
  */
 
-#define alessaProps alessa->properties.alessa
+#define alessaProps alessa->properties.npc
 
 /** Addresses
  * MAP3_S02: 0x800CEC88

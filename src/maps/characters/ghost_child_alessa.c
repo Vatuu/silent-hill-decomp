@@ -10,6 +10,8 @@
  *  MAP7_S02
  */
 
+#define ghostAlessaProps (ghostAlessa->properties.npc)
+
 /** Addresses
  * MAP7_S01: 0x800D49B8
  * MAP7_S02: 0x800D7A68
@@ -84,21 +86,19 @@ void GhostChildAlessa_MovementUpdate(s_SubCharacter* ghostAlessa, GsCOORDINATE2*
  */
 void GhostChildAlessa_AnimStateUpdate(s_SubCharacter* ghostAlessa, GsCOORDINATE2* boneCoords)
 {
-    #define dahliaProps (ghostAlessa->properties.dahlia)
-
-    switch (dahliaProps.controlState)
+    switch (ghostAlessaProps.controlState)
     {
         case GhostChildAlessaControl_None:
             break;
 
         case GhostChildAlessaControl_1:
-            dahliaProps.moveDistance_126 = dahliaProps.field_124;
+            ghostAlessaProps.moveSpeed = ghostAlessaProps.moveDistance_124;
             Model_AnimStatusSet(&ghostAlessa->model, GhostChildAlessaAnim_1, false);
             Chara_AnimStateReset(ghostAlessa);
             break;
 
         case GhostChildAlessaControl_2:
-            dahliaProps.moveDistance_126 = dahliaProps.field_124;
+            ghostAlessaProps.moveSpeed = ghostAlessaProps.moveDistance_124;
             Model_AnimStatusSet(&ghostAlessa->model, GhostChildAlessaAnim_2, false);
             Chara_AnimStateReset(ghostAlessa);
             break;
@@ -107,7 +107,7 @@ void GhostChildAlessa_AnimStateUpdate(s_SubCharacter* ghostAlessa, GsCOORDINATE2
             Model_AnimStatusSet(&ghostAlessa->model, GhostChildAlessaAnim_3, false);
             if (ghostAlessa->model.anim.keyframeIdx == 63)
             {
-                dahliaProps.controlState = GhostChildAlessaControl_7;
+                ghostAlessaProps.controlState = GhostChildAlessaControl_7;
                 ghostAlessa->model.stateStep = 0;
             }
             break;
@@ -140,7 +140,7 @@ void GhostChildAlessa_AnimStateUpdate(s_SubCharacter* ghostAlessa, GsCOORDINATE2
 
     ghostAlessa->rotation.vy  = Q12_ANGLE_ABS(ghostAlessa->rotation.vy + Q8_TO_Q4(sharedData_800E39D8_0_s00));
     ghostAlessa->headingAngle = ghostAlessa->rotation.vy;
-    ghostAlessa->moveSpeed    = dahliaProps.moveDistance_126;
+    ghostAlessa->moveSpeed    = ghostAlessaProps.moveSpeed;
     ghostAlessa->fallSpeed   += g_GravitySpeed;
 
     boneCoords->flg = false;

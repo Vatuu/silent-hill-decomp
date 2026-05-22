@@ -64,7 +64,7 @@ void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords)
 void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords) // 0x800D3E18
 {
     // Handle control state.
-    switch (incubator->properties.dahlia.controlState)
+    switch (incubator->properties.npc.controlState) // TODO: Wrong properties union.
     {
         case 0:
             break;

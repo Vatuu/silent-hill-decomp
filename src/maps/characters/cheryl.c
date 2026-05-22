@@ -10,6 +10,8 @@
  *  MAP0_S00
  */
 
+#define cherylProps cheryl->properties.npc
+
 void Cheryl_Update(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D7FB8
 {
     if (cheryl->model.charaId != Chara_Cheryl)
@@ -27,8 +29,6 @@ void Cheryl_AnimUpdate(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE
     q19_12      moveSpeed;
     q19_12      duration;
     s_AnimInfo* animInfo;
-
-    #define cherylProps cheryl->properties.cheryl
 
     if (cherylProps.controlState == 1)
     {
@@ -54,12 +54,10 @@ void Cheryl_AnimUpdate(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE
         animInfo[ANIM_STATUS(CherylAnim_RunForward, true)].duration.constant = duration;
     }
 
-    if (cherylProps.field_F0 == 0)
+    if (!cherylProps.freeze)
     {
         CHERYL_ANIM_INFOS[cheryl->model.anim.status].playbackFunc(&cheryl->model, anmHdr, boneCoords, &CHERYL_ANIM_INFOS[cheryl->model.anim.status]);
     }
-
-    #undef cherylProps
 }
 
 void Cheryl_MovementUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 0x800D8124
@@ -109,7 +107,6 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
     s8          pitch1;
     q23_8       distToPlayerSqr;
 
-    #define cherylProps cheryl->properties.cheryl
     #define playerChara g_SysWork.playerWork.player
     #define playerProps playerChara.properties.player
 
@@ -118,12 +115,12 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
     switch (cherylProps.controlState)
     {
         case CherylControl_Idle:
-            if (cherylProps.moveDistance_126 != Q12(0.0f))
+            if (cherylProps.moveSpeed != Q12(0.0f))
             {
-                cherylProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
-                if (cherylProps.moveDistance_126 < Q12(0.0f))
+                cherylProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
+                if (cherylProps.moveSpeed < Q12(0.0f))
                 {
-                    cherylProps.moveDistance_126 = Q12(0.0f);
+                    cherylProps.moveSpeed = Q12(0.0f);
                 }
             }
 
@@ -134,26 +131,26 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
             break;
 
         case CherylControl_WalkForward:
-            cherylProps.moveDistance_126 = cherylProps.moveDistance_124;
+            cherylProps.moveSpeed = cherylProps.moveDistance_124;
 
             Model_AnimStatusSet(&cheryl->model, CherylAnim_WalkForward, false);
             Chara_AnimStateReset(cheryl);
             break;
 
         case CherylControl_RunForward:
-            cherylProps.moveDistance_126 = cherylProps.moveDistance_124;
+            cherylProps.moveSpeed = cherylProps.moveDistance_124;
 
             Model_AnimStatusSet(&cheryl->model, CherylAnim_RunForward, false);
             Chara_AnimStateReset(cheryl);
             break;
 
         case CherylControl_3:
-            if (cherylProps.moveDistance_126 != Q12(0.0f))
+            if (cherylProps.moveSpeed != Q12(0.0f))
             {
-                cherylProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
-                if (cherylProps.moveDistance_126 < Q12(0.0f))
+                cherylProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
+                if (cherylProps.moveSpeed < Q12(0.0f))
                 {
-                    cherylProps.moveDistance_126 = Q12(0.0f);
+                    cherylProps.moveSpeed = Q12(0.0f);
                 }
             }
 
@@ -167,12 +164,12 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
             break;
 
         case CherylControl_4:
-            if (cherylProps.moveDistance_126 != Q12(0.0f))
+            if (cherylProps.moveSpeed != Q12(0.0f))
             {
-                cherylProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
-                if (cherylProps.moveDistance_126 < Q12(0.0f))
+                cherylProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
+                if (cherylProps.moveSpeed < Q12(0.0f))
                 {
-                    cherylProps.moveDistance_126 = Q12(0.0f);
+                    cherylProps.moveSpeed = Q12(0.0f);
                 }
             }
 
@@ -234,8 +231,6 @@ bool Cheryl_FootstepSfxPlay(s32 animStatus, s_SubCharacter* cheryl,
     q24_8 distSqr;
     u32   vol;
 
-    #define cherylProps cheryl->properties.cheryl
-
     if (cheryl->model.anim.status == animStatus)
     {
         // Compute volume.
@@ -288,8 +283,6 @@ bool Cheryl_FootstepSfxPlay(s32 animStatus, s_SubCharacter* cheryl,
     }
 
     return false;
-
-    #undef cherylProps
 }
 
 void Cheryl_Init(s_SubCharacter* cheryl) // 0x800D8888

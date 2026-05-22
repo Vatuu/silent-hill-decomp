@@ -126,7 +126,7 @@ void func_800D38D8(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* boneCoords) /
     }
 
     bloodyIncubator->headingAngle = bloodyIncubator->rotation.vy;
-    bloodyIncubator->moveSpeed    = bloodyIncubator->properties.dahlia.moveDistance_126;
+    bloodyIncubator->moveSpeed    = bloodyIncubator->properties.npc.moveSpeed; // TODO: Wrong properties union.
     bloodyIncubator->fallSpeed   += g_GravitySpeed;
     boneCoords->flg               = false;
 

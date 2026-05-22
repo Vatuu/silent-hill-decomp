@@ -13,6 +13,8 @@
  *  MAP7_S03
  */
 
+#define bloodyLisaProps (bloodyLisa->properties.npc)
+
  /** Addresses
   * MAP7_S01: 0x800D58E8
   * MAP7_S02: 0x800D6484
@@ -94,9 +96,7 @@ void BloodyLisa_AnimStateUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneC
     s8          pitch0;
     s8          pitch1;
 
-    #define dahliaProps (bloodyLisa->properties.dahlia)
-
-    switch (dahliaProps.controlState)
+    switch (bloodyLisaProps.controlState)
     {
         case BloodyLisaControl_None:
             break;
@@ -110,7 +110,7 @@ void BloodyLisa_AnimStateUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneC
     Collision_Get(&coll, bloodyLisa->position.vx, bloodyLisa->position.vz);
     func_8007FDE0(coll.groundType, &sfx, &pitch0, &pitch1);
 
-    switch (dahliaProps.controlState)
+    switch (bloodyLisaProps.controlState)
     {
         case BloodyLisaControl_6:
             if (bloodyLisa->model.anim.keyframeIdx <= 12)
@@ -130,7 +130,7 @@ void BloodyLisa_AnimStateUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneC
 
     bloodyLisa->rotation.vy  = Q12_ANGLE_ABS(bloodyLisa->rotation.vy + Q8_TO_Q4(sharedData_800E2C38_7_s01));
     bloodyLisa->headingAngle = bloodyLisa->rotation.vy;
-    bloodyLisa->moveSpeed    = dahliaProps.moveDistance_126;
+    bloodyLisa->moveSpeed    = bloodyLisaProps.moveSpeed;
     bloodyLisa->fallSpeed   += g_GravitySpeed;
 
     boneCoords->flg = false;

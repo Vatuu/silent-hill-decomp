@@ -14,6 +14,8 @@
  *  MAP7_S03
  */
 
+#define cybilProps cybil->properties.npc
+
 /** Addresses
  * MAP0_S01: 0x800D8814
  * MAP4_S01: 0x800CFDF0
@@ -99,18 +101,15 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
     s8          pitch0;
     s8          pitch1;
 
-    // TODO: Fill out Cybil properties.
-    #define dahliaProps cybil->properties.dahlia
-
-    switch (dahliaProps.controlState)
+    switch (cybilProps.controlState)
     {
         case CybilControl_None:
-            if (dahliaProps.moveDistance_126)
+            if (cybilProps.moveSpeed)
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
-                if (dahliaProps.moveDistance_126 < Q12(0.0f))
+                cybilProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
+                if (cybilProps.moveSpeed < Q12(0.0f))
                 {
-                    dahliaProps.moveDistance_126 = Q12(0.0f);
+                    cybilProps.moveSpeed = Q12(0.0f);
                 }
             }
 
@@ -119,18 +118,18 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
             break;
 
         case CybilControl_1:
-            if (dahliaProps.moveDistance_126 > Q12(1.25f))
+            if (cybilProps.moveSpeed > Q12(1.25f))
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
-                if (dahliaProps.moveDistance_126 < Q12(1.25f))
+                cybilProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
+                if (cybilProps.moveSpeed < Q12(1.25f))
                 {
-                    dahliaProps.moveDistance_126 = Q12(1.25f);
+                    cybilProps.moveSpeed = Q12(1.25f);
                 }
             }
-            else if (dahliaProps.moveDistance_126 < Q12(1.25f))
+            else if (cybilProps.moveSpeed < Q12(1.25f))
             {
-                dahliaProps.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
-                dahliaProps.moveDistance_126  = CLAMP(dahliaProps.moveDistance_126, 0, Q12(1.25f));
+                cybilProps.moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                cybilProps.moveSpeed  = CLAMP(cybilProps.moveSpeed, 0, Q12(1.25f));
             }
 
 #if defined(MAP0_S01)
@@ -142,18 +141,18 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
             break;
 
         case CybilControl_2:
-            if (dahliaProps.moveDistance_126 > Q12(4.0f))
+            if (cybilProps.moveSpeed > Q12(4.0f))
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
-                if (dahliaProps.moveDistance_126 < Q12(4.0f))
+                cybilProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                if (cybilProps.moveSpeed < Q12(4.0f))
                 {
-                    dahliaProps.moveDistance_126 = Q12(4.0f);
+                    cybilProps.moveSpeed = Q12(4.0f);
                 }
             }
-            else if (dahliaProps.moveDistance_126 < Q12(4.0f))
+            else if (cybilProps.moveSpeed < Q12(4.0f))
             {
-                dahliaProps.moveDistance_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
-                dahliaProps.moveDistance_126 = CLAMP(dahliaProps.moveDistance_126, Q12(0.0f), Q12(4.0f));
+                cybilProps.moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
+                cybilProps.moveSpeed = CLAMP(cybilProps.moveSpeed, Q12(0.0f), Q12(4.0f));
             }
 
             // TODO: This uses `ANIM_STATUS(21, false)`, but then fetches `ANIM_STATUS(22, true)` keyframe.
@@ -163,12 +162,12 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
             break;
 
         case CybilControl_3:
-            if (dahliaProps.moveDistance_126)
+            if (cybilProps.moveSpeed)
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
-                if (dahliaProps.moveDistance_126 < Q12(0.0f))
+                cybilProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
+                if (cybilProps.moveSpeed < Q12(0.0f))
                 {
-                    dahliaProps.moveDistance_126 = Q12(0.0f);
+                    cybilProps.moveSpeed = Q12(0.0f);
                 }
             }
 
@@ -179,12 +178,12 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
             break;
 
         case CybilControl_4:
-            if (dahliaProps.moveDistance_126)
+            if (cybilProps.moveSpeed)
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
-                if (dahliaProps.moveDistance_126 < Q12(0.0f))
+                cybilProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
+                if (cybilProps.moveSpeed < Q12(0.0f))
                 {
-                    dahliaProps.moveDistance_126 = Q12(0.0f);
+                    cybilProps.moveSpeed = Q12(0.0f);
                 }
             }
 
@@ -195,12 +194,12 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
             break;
 
         case CybilControl_5:
-            if (dahliaProps.moveDistance_126)
+            if (cybilProps.moveSpeed)
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
-                if (dahliaProps.moveDistance_126 < Q12(0.0f))
+                cybilProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
+                if (cybilProps.moveSpeed < Q12(0.0f))
                 {
-                    dahliaProps.moveDistance_126 = Q12(0.0f);
+                    cybilProps.moveSpeed = Q12(0.0f);
                 }
             }
 
@@ -209,12 +208,12 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
             break;
 
         case CybilControl_12:
-            if (dahliaProps.moveDistance_126)
+            if (cybilProps.moveSpeed)
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
-                if (dahliaProps.moveDistance_126 < Q12(0.0f))
+                cybilProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
+                if (cybilProps.moveSpeed < Q12(0.0f))
                 {
-                    dahliaProps.moveDistance_126 = Q12(0.0f);
+                    cybilProps.moveSpeed = Q12(0.0f);
                 }
             }
 
@@ -314,7 +313,7 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
 
             if (cybil->model.anim.keyframeIdx == 295)
             {
-                dahliaProps.controlState = 30;
+                cybilProps.controlState = 30;
                 cybil->model.stateStep = 0;
             }
             break;
@@ -332,9 +331,9 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
             Chara_AnimStateReset(cybil);
             WorldGfx_HeldItemAttach(Chara_EndingCybil, MODEL_BONE(2, 1));
 
-            if (dahliaProps.controlState != 23)
+            if (cybilProps.controlState != 23)
             {
-                dahliaProps.flags_11C &= ~(1 << 13);
+                cybilProps.flags &= ~(1 << 13);
             }
             break;
 
@@ -384,7 +383,7 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
     sfx = Sfx_Unk1607;
 #endif
 
-    switch (dahliaProps.controlState)
+    switch (cybilProps.controlState)
     {
         case CybilControl_1:
             sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_3, true), cybil, 32, 45, sfx, pitch0);
@@ -524,7 +523,7 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
 
     cybil->rotation.vy  = Q12_ANGLE_ABS(cybil->rotation.vy + (sharedData_800E2378_0_s01 >> 4));
     cybil->headingAngle = cybil->rotation.vy;
-    cybil->moveSpeed    = dahliaProps.moveDistance_126;
+    cybil->moveSpeed    = cybilProps.moveSpeed;
     cybil->fallSpeed   += g_GravitySpeed;
 
     boneCoords->flg = false;
