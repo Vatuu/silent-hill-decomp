@@ -41,13 +41,7 @@ void Alessa_Update(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* b
  */
 void Alessa_AnimUpdate(s_SubCharacter* alessa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
-    s_AnimInfo* animInfo;
-
-    if (!alessaProps.freeze)
-    {
-        animInfo = &ALESSA_ANIM_INFOS[alessa->model.anim.status];
-        animInfo->playbackFunc(&alessa->model, anmHdr, boneCoords, animInfo);
-    }
+    Chara_AnimUpdate(alessa, anmHdr, boneCoords, ALESSA_ANIM_INFOS);
 }
 
 /** Addresses

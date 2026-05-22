@@ -22,13 +22,7 @@ void Incubator_Update(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINA
 
 void Incubator_AnimUpdate(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D3C38
 {
-    s_AnimInfo* animInfo;
-
-    if (!incubatorProps.freeze)
-    {
-        animInfo = &INCUBATOR_ANIM_INFOS[incubator->model.anim.status];
-        animInfo->playbackFunc(&incubator->model, anmHdr, boneCoords, animInfo);
-    }
+    Chara_AnimUpdate(incubator, anmHdr, boneCoords, INCUBATOR_ANIM_INFOS);
 }
 
 void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords)

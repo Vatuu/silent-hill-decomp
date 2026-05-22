@@ -43,13 +43,7 @@ void Kaufmann_Update(s_SubCharacter* kaufmann, s_AnmHeader* anmHdr, GsCOORDINATE
  */
 void Kaufmann_AnimUpdate(s_SubCharacter* kaufmann, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
-    s_AnimInfo* animInfo;
-
-    if (!kaufmannProps.freeze)
-    {
-        animInfo = &KAUFMANN_ANIM_INFOS[kaufmann->model.anim.status];
-        animInfo->playbackFunc(&kaufmann->model, anmHdr, boneCoords, animInfo);
-    }
+    Chara_AnimUpdate(kaufmann, anmHdr, boneCoords, KAUFMANN_ANIM_INFOS);
 }
 
 /** Addresses

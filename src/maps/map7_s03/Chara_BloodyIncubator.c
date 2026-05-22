@@ -22,13 +22,7 @@ void BloodyIncubator_Update(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr
 
 void BloodyIncubator_AnimUpdate(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D36F8
 {
-    s_AnimInfo* animInfo;
-
-    if (!bloodyIncubatorProps.freeze)
-    {
-        animInfo = &BLOODY_INCUBATOR_ANIM_INFOS[bloodyIncubator->model.anim.status];
-        animInfo->playbackFunc(&bloodyIncubator->model, anmHdr, boneCoords, animInfo);
-    }
+    Chara_AnimUpdate(bloodyIncubator, anmHdr, boneCoords, BLOODY_INCUBATOR_ANIM_INFOS);
 }
 
 void func_800D3740(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* boneCoords) // 0x800D3740

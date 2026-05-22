@@ -34,13 +34,7 @@ void GhostChildAlessa_Update(s_SubCharacter* ghostAlessa, s_AnmHeader* anmHdr, G
  */
 void GhostChildAlessa_AnimUpdate(s_SubCharacter* ghostAlessa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
-    s_AnimInfo* animInfo;
-
-    if (!ghostAlessaProps.freeze)
-    {
-        animInfo = &GHOST_CHILD_ALESSA_ANIM_INFOS[ghostAlessa->model.anim.status];
-        animInfo->playbackFunc(&ghostAlessa->model, anmHdr, boneCoords, animInfo);
-    }
+    Chara_AnimUpdate(ghostAlessa, anmHdr, boneCoords, GHOST_CHILD_ALESSA_ANIM_INFOS);
 }
 
 /** Addresses

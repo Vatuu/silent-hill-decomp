@@ -760,7 +760,7 @@ static inline void Chara_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 keyf
     chara->model.anim.keyframeIdx = keyframeIdx;
 }
 
-/** @brief Resets a humanoid character's control state to `*_None` if the control subsystem was flagged for a reset.
+/** @brief Resets an NPC character's control state to `*_None` if the control subsystem was flagged for a reset.
  *
  * NOTE: This is only for NPC characters which use `s_PropsNpc` part of properties union.
  *
@@ -775,5 +775,19 @@ static inline void Chara_AnimStateReset(s_SubCharacter* chara)
         chara->properties.npc.resetControlState = false;
     }
 }
+
+/** @brief Updates an NPC characters animation if `freeze` flag isn't currently set.
+ *
+ * NOTE: This is only for NPC characters which use `s_PropsNpc` part of properties union.
+ */
+#define Chara_AnimUpdate(chara, anmHdr, boneCoords, animInfos)                         \
+({                                                                                     \
+    if (!(chara)->properties.npc.freeze)                                               \
+    {                                                                                  \
+        s_AnimInfo* animInfo__ = &(animInfos)[(chara)->model.anim.status];             \
+                                                                                       \
+        animInfo__->playbackFunc(&(chara)->model, (anmHdr), (boneCoords), animInfo__); \
+    }                                                                                  \
+})
 
 #endif

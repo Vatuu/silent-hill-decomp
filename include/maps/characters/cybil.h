@@ -161,7 +161,7 @@ extern s32 sharedData_800E2378_0_s01;
 extern s32 sharedData_800E237C_0_s01;
 
 void Cybil_Update(s_SubCharacter* cybil, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-void Cybil_AnimUpdate(s_SubCharacter* cybil, s_AnmHeader* animHdr, GsCOORDINATE2* boneCoords);
+void Cybil_AnimUpdate(s_SubCharacter* cybil, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 void Cybil_MovementUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords);
 void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords);
 void Cybil_Init(s_SubCharacter* cybil);

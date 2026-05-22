@@ -48,13 +48,7 @@ void Dahlia_Update(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE2* b
  */
 void Dahlia_AnimUpdate(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
-    s_AnimInfo* animInfo;
-
-    if (!dahliaProps.freeze)
-    {
-        animInfo = &DAHLIA_ANIM_INFOS[dahlia->model.anim.status];
-        animInfo->playbackFunc(&dahlia->model, anmHdr, boneCoords, animInfo);
-    }
+    Chara_AnimUpdate(dahlia, anmHdr, boneCoords, DAHLIA_ANIM_INFOS);
 }
 
 /** Addresses

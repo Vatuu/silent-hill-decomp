@@ -45,13 +45,7 @@ void Lisa_Update(s_SubCharacter* lisa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneC
  */
 void Lisa_AnimUpdate(s_SubCharacter* lisa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
-    s_AnimInfo* animInfo;
-
-    if (!lisaProps.freeze)
-    {
-        animInfo = &LISA_ANIM_INFOS[lisa->model.anim.status];
-        animInfo->playbackFunc(&lisa->model, anmHdr, boneCoords, animInfo);
-    }
+    Chara_AnimUpdate(lisa, anmHdr, boneCoords, LISA_ANIM_INFOS);
 }
 
 /** Addresses

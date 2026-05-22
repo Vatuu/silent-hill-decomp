@@ -39,13 +39,7 @@ void BloodyLisa_Update(s_SubCharacter* bloodyLisa, s_AnmHeader* anmHdr, GsCOORDI
   */
 void BloodyLisa_AnimUpdate(s_SubCharacter* bloodyLisa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
-    s_AnimInfo* animInfo;
-
-    if (!bloodyLisaProps.freeze)
-    {
-        animInfo = &BLOODY_LISA_ANIM_INFOS[bloodyLisa->model.anim.status];
-        animInfo->playbackFunc(&bloodyLisa->model, anmHdr, boneCoords, animInfo);
-    }
+    Chara_AnimUpdate(bloodyLisa, anmHdr, boneCoords, BLOODY_LISA_ANIM_INFOS);
 }
 
  /** Addresses

@@ -54,10 +54,7 @@ void Cheryl_AnimUpdate(s_SubCharacter* cheryl, s_AnmHeader* anmHdr, GsCOORDINATE
         animInfo[ANIM_STATUS(CherylAnim_RunForward, true)].duration.constant = duration;
     }
 
-    if (!cherylProps.freeze)
-    {
-        CHERYL_ANIM_INFOS[cheryl->model.anim.status].playbackFunc(&cheryl->model, anmHdr, boneCoords, &CHERYL_ANIM_INFOS[cheryl->model.anim.status]);
-    }
+    Chara_AnimUpdate(cheryl, anmHdr, boneCoords, CHERYL_ANIM_INFOS);
 }
 
 void Cheryl_MovementUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 0x800D8124

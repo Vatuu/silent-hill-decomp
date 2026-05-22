@@ -40,15 +40,9 @@ void Cybil_Update(s_SubCharacter* cybil, s_AnmHeader* anmHdr, GsCOORDINATE2* bon
  * MAP6_S01: 0x800CE570
  * MAP7_S03: 0x800D110C
  */
-void Cybil_AnimUpdate(s_SubCharacter* cybil, s_AnmHeader* animHdr, GsCOORDINATE2* boneCoords)
+void Cybil_AnimUpdate(s_SubCharacter* cybil, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
-    s_AnimInfo* animInfo;
-
-    if (!cybilProps.freeze)
-    {
-        animInfo = &CYBIL_ANIM_INFOS[cybil->model.anim.status];
-        animInfo->playbackFunc(&cybil->model, animHdr, boneCoords, animInfo);
-    }
+    Chara_AnimUpdate(cybil, anmHdr, boneCoords, CYBIL_ANIM_INFOS);
 }
 
 /** Addresses
