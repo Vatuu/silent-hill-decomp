@@ -6,8 +6,6 @@
 
 struct _IpdCollisionData;
 
-#define DEFAULT_CEILING_HEIGHT Q12(-16.0f)
-
 /** @brief Global collision flags.
  * Applies for both NPCs and the player.
  */

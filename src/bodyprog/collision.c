@@ -22,6 +22,9 @@
 // Please delete them or rewrite them properly after properly recognizing
 // the function purpose.
 
+#define INTERSECTION_BUFFER    Q12(0.1f)
+#define DEFAULT_CEILING_HEIGHT Q12(-16.0f)
+
 s_ActiveCollisionTriggers g_ActiveCollisionTriggers;
 
 // ========================================
@@ -56,6 +59,8 @@ void Collision_FlagBitsClear(s32 collFlags) // 0x80069844
 
 void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, s_CollisionTrigger* triggers) // 0x80069860
 {
+    #define AABB_BUFFER Q12(16.0f)
+
     s_CollisionTrigger* curTrigger;
     q19_12              minX;
     q19_12              maxX;
@@ -74,10 +79,10 @@ void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, s_CollisionTrigger* t
         maxZ = FP_TO(curTrigger->positionZ + curTrigger->sizeZ, Q12_SHIFT);
 
         // Expand AABB.
-        minX -= Q12(16.0f);
-        maxX += Q12(16.0f);
-        minZ -= Q12(16.0f);
-        maxZ += Q12(16.0f);
+        minX -= AABB_BUFFER;
+        maxX += AABB_BUFFER;
+        minZ -= AABB_BUFFER;
+        maxZ += AABB_BUFFER;
 
         // Collect collided trigger.
         if (posX >= minX && maxX >= posX &&
@@ -87,6 +92,8 @@ void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, s_CollisionTrigger* t
             g_ActiveCollisionTriggers.collisionTriggerCount++;
         }
     }
+
+    #undef AABB_BUFFER
 }
 
 void IpdCollData_FixOffsets(s_IpdCollisionData* collData) // 0x8006993C
@@ -309,7 +316,7 @@ void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* p
     #define POINT_COUNT 16
     #define ANGLE_STEP  Q12_ANGLE(360.0f / POINT_COUNT)
 
-    s32                groundHeights[POINT_COUNT];
+    q19_12             groundHeights[POINT_COUNT];
     s_CollisionSurface surface;
     q19_12             angle;
     s32                var_a0;
@@ -320,8 +327,8 @@ void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* p
     q19_12             groundHeightMin;
     s32                lowestGroundHeightIdx;
 
-    groundHeightMin = Q12(-30.0f);
-    groundHeightMax = Q12(30.0f);
+    groundHeightMin       = Q12(-30.0f);
+    groundHeightMax       = Q12(30.0f);
     lowestGroundHeightIdx = 0;
 
     // Collect ground heights around position?
@@ -345,9 +352,9 @@ void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* p
     }
 
     groundHeight = (groundHeightMin + groundHeightMax) >> 1; // `/ 2`.
-    if (groundHeight < (startGroundHeight - Q12(0.1f)))
+    if (groundHeight < (startGroundHeight - INTERSECTION_BUFFER))
     {
-        groundHeight = startGroundHeight - Q12(0.1f);
+        groundHeight = startGroundHeight - INTERSECTION_BUFFER;
     }
 
     for (i = lowestGroundHeightIdx + 1, var_a0 = lowestGroundHeightIdx;
@@ -675,8 +682,6 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
 
 void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCylinder* collCylinder, s_SubCharacter** charas, s32 charaCount) // 0x8006A940
 {
-    #define CYLINDER_RADIUS_PAD Q12(0.1f)
-
     q19_12          headingAngle;
     q19_12          cylinderOffsetZ;
     q19_12          cylinderOffsetX;
@@ -710,8 +715,8 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCy
         // Check if cylinders collide on vertical axis using box top and bottom.
         curCharaTop      = curChara->collision.box.top    + curChara->position.vy;
         curCharaBottom   = curChara->collision.box.bottom + curChara->position.vy;
-        otherCharaTop    = collCylinder->top             + collCylinder->position.vy;
-        otherCharaBottom = collCylinder->bottom          + collCylinder->position.vy;
+        otherCharaTop    = collCylinder->top              + collCylinder->position.vy;
+        otherCharaBottom = collCylinder->bottom           + collCylinder->position.vy;
         if (curCharaTop    > otherCharaBottom ||
             curCharaBottom < otherCharaTop)
         {
@@ -723,7 +728,7 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCy
         
         // Check if cylinders collide on XZ plane.
         dist = Vc_VectorMagnitudeCalc(cylinderOffsetX, Q12(0.0f), cylinderOffsetZ);
-        if (((curChara->collision.cylinder.radius + collCylinder->radius) + CYLINDER_RADIUS_PAD) < dist)
+        if (((curChara->collision.cylinder.radius + collCylinder->radius) + INTERSECTION_BUFFER) < dist)
         {
             continue;
         }
@@ -3381,8 +3386,6 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_CollisionTrigger* trigger) // 
 q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
                                   const s_CollisionCylinder* collCylinder, q19_12 cylinderRadius, q19_12 cylinderHeight) // 0x8006F620
 {
-    #define INTERSECT_BUFFER Q12(0.1f)
-
     q19_12              projOffsetToTriggerX;
     q19_12              projOffsetToTriggerZ;
     q19_12              offsetToTriggerX;
@@ -3451,9 +3454,9 @@ q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
                                        curTrigger);
 
             // Compute allowed intersection depth.
-            allowedIntersectDist = INTERSECT_BUFFER;
+            allowedIntersectDist = INTERSECTION_BUFFER;
             distToTrigger        = Vc_VectorMagnitudeCalc(offsetToTriggerX, Q12(0.0f), offsetToTriggerZ);
-            if ((cylinderRadius - distToTrigger) <= INTERSECT_BUFFER)
+            if ((cylinderRadius - distToTrigger) <= INTERSECTION_BUFFER)
             {
                 allowedIntersectDist = cylinderRadius - distToTrigger;
             }
@@ -3498,9 +3501,9 @@ q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
     if (ceilHeight != DEFAULT_CEILING_HEIGHT)
     {
         // Compute headroom.
-        headroom              = INTERSECT_BUFFER;
+        headroom              = INTERSECTION_BUFFER;
         cylinderTopToCeilDist = ceilHeight - cylinderTop;
-        if (cylinderTopToCeilDist < INTERSECT_BUFFER)
+        if (cylinderTopToCeilDist < INTERSECTION_BUFFER)
         {
             headroom = cylinderTopToCeilDist;
         }
@@ -3513,8 +3516,6 @@ q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
     }
 
     return ceilHeight;
-
-    #undef THRESHOLD
 }
 
 void Collision_TriggerOffsetGet(q19_12* offsetX, q19_12* offsetZ, q19_12 posX, q19_12 posZ, const s_CollisionTrigger* trigger) // 0x8006F8FC
