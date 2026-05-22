@@ -208,7 +208,7 @@ typedef struct _PropsNpc
     /* 0x106 */ q3_12  field_106; // Angle or counter (`func_800D8D7C`)? May change usage depending on state step?
     /* 0x108 */ q19_12 field_108; // Timer.
     /* 0x10C */ q19_12 field_10C; // Timer.
-    /* 0x110 */ q19_12 field_110; // Distance?
+    /* 0x110 */ q19_12 distanceToPlayer;
     /* 0x114 */ u8     field_114;
     /* 0x115 */ u8     field_115;
     /* 0x116 */ u8     field_116;
