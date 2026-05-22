@@ -33,7 +33,9 @@ STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
 typedef struct _DemoFrameData
 {
     /* 0x0 */ s_AnalogController analogController;
-    /* 0x8 */ s8                 gameStateExpected; /** Expected value of `g_GameWork.gameState` before `analogController` is processed, if it doesn't match `Demo_Update` will display `STEP ERROR` and stop reading demo. */
+    /* 0x8 */ s8                 gameStateExpected; /** Expected value of `g_GameWork.gameState` before `analogController` is processed.
+                                                     * If it doesn't match,`Demo_Update` displays `STEP ERROR` and stops reading the demo.
+                                                     */
     /* 0x9 */ u8                 videoPresentInterval;
     /* 0xA */ s8                 unk_A[2];
     /* 0xC */ u32                randSeed;
@@ -64,34 +66,18 @@ extern char D_8002B2E8[]; // "]/[M:"
 extern char D_8002B2F0[]; // "]"
 
 extern s_DemoFrameData* g_Demo_PlayFileBufferPtr;
-
-extern s32 g_Demo_DemoId;
-
-extern u16 g_Demo_RandSeed;
-
-extern s32 D_800AFDF0;
-
-extern s32 g_Demo_DemoFileIdx;
-
-extern s32 g_Demo_PlayFileIdx;
-
-extern s32 __pad_bss_800C4848[2];
-
-extern s_OptionsConfig g_Demo_OptionsConfigBackup;
-
-extern u32 g_Demo_PrevRandSeed;
-
-extern u32 g_Demo_RandSeedBackup;
-
-// Current packet/frame in buffer.
-extern s_DemoFrameData* g_Demo_CurFrameData;
-
-extern s32 g_Demo_DemoStep;
-
-extern s32 g_Demo_VideoPresentInterval;
-
-/** Something for demo handling. Set in `Fs_QueueChunksLoad`. */
-extern bool g_Demo_IsLoadingChunks;
+extern s32              g_Demo_DemoId;
+extern u16              g_Demo_RandSeed;
+extern s32              g_Demo_DemoFileIdx;
+extern s32              g_Demo_PlayFileIdx;
+extern s32              __pad_bss_800C4848[2];
+extern s_OptionsConfig  g_Demo_OptionsConfigBackup;
+extern u32              g_Demo_PrevRandSeed;
+extern u32              g_Demo_RandSeedBackup;
+extern s_DemoFrameData* g_Demo_CurFrameData; // Current packet/frame in buffer.
+extern s32              g_Demo_DemoStep;
+extern s32              g_Demo_VideoPresentInterval;
+extern bool             g_Demo_IsLoadingChunks;
 
 // ==========
 // FUNCTIONS

@@ -408,7 +408,7 @@ typedef struct _CollisionTrigger
 STATIC_ASSERT_SIZEOF(s_CollisionTrigger, 4);
 
 /** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`.
- * If field has a comment that lists only certain map(s) it means all others set this field to 0.
+ * If field has a comment that lists only certain maps, it means all others set this field to 0.
  * func(?) means the signature is unknown and a default void() was selected for now.
  */
 typedef struct _MapOverlayHeader

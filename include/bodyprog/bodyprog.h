@@ -228,7 +228,7 @@ typedef struct
     s32    field_20; // Z }
     s32    field_24; // Z }
     q19_12 field_28; // Maybe XZ position.
-    q19_12 field_2C; // Base height?
+    q19_12 triggerHeight;
 } s_func_8006F338;
 
 typedef struct
@@ -2391,8 +2391,8 @@ void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* p
 /** @brief Applies collision detection for a character's movement offset.
  *
  * @param collResult Output collision result.
- * @param moveOffset Movement offset to test.
- * @param chara Character performing movement.
+ * @param moveOffset Movement offset.
+ * @param chara Character performing the movement.
  * @return Collision result response.
  */
 bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, const VECTOR3* moveOffset, s_SubCharacter* chara);
@@ -2567,10 +2567,25 @@ void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDe
 bool func_8006F3C4(s_func_8006F338* arg0, const s_CollisionTrigger* trigger);
 
 /** Translates something. Unsure on 3rd param's name. */
-q19_12 func_8006F620(VECTOR3* moveOffset, s_CollisionCylinder* collCylinder, q19_12 radius, q19_12 offsetY);
+/** @brief Gets the ceiling height, derived from active collision triggers.
+ *
+ * @param moveOffset Movement offset.
+ * @param collCylinder Collision cylinder.
+ * @param cylinderRadius Cylinder radius.
+ * @param cylinderHeight Cylinder height.
+ * @return Ceiling height. `DEFAULT_CEILING_HEIGHT` if no ceiling exists.
+ */
+q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
+                                  const s_CollisionCylinder* collCylinder, q19_12 cylinderRadius, q19_12 cylinderHeight);
 
 /** @brief Gets the offset from a world position to the edge of a collision trigger.
- * If the position intersects with the trigger, the offset is (0, 0).
+ * If the position is inside the trigger, the offset is (0, 0).
+ *
+ * @param offsetX Output offset X.
+ * @param offsetZ Output offset Z.
+ * @param posX World reference position X.
+ * @param posZ World reference position Z.
+ * @param trigger Reference collision trigger.
  */
 void Collision_TriggerOffsetGet(q19_12* offsetX, q19_12* offsetZ, q19_12 posX, q19_12 posZ, const s_CollisionTrigger* trigger);
 

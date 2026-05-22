@@ -426,17 +426,17 @@ void Collision_DefaultResultSet(s_CollisionResult* collResult, q19_12 offsetX, q
     collResult->surface.tiltAngleZ   = Q12_ANGLE(0.0f);
     collResult->surface.tiltAngleX   = Q12_ANGLE(0.0f);
     collResult->surface.groundType   = GroundType_Default;
-    collResult->field_18             = Q12(-16.0f);
+    collResult->ceilingHeight        = DEFAULT_CEILING_HEIGHT;
     collResult->surface.groundHeight = groundHeight;
 }
 
 s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubCharacter* excludedChara, bool includePlayer) // 0x8006A1A4
 {
     s_SubCharacter*         curChara;
-    static s_SubCharacter*  collCharas[NPC_COUNT_MAX + 1]; // NPCs + Player?
-    static s_SubCharacter** curCollChara; /** Array of active characters. */
+    static s_SubCharacter*  collCharas[NPC_COUNT_MAX + 1]; /** Enough for all NPCs and player. */
+    static s_SubCharacter** curCollChara;                  /** Array of active characters. */
 
-    // Filder invalid case.
+    // Filter invalid case.
     if (excludedChara != NULL &&
         (excludedChara->model.charaId == Chara_None ||
          excludedChara->collision.state == CharaCollisionState_Ignore ||
@@ -524,8 +524,8 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
 {
     s_CollisionState     collState;
     VECTOR3              sp120; // Q19.12
-    VECTOR3              offset1;
-    VECTOR3              offsetCpy;
+    VECTOR3              moveOffset1;
+    VECTOR3              moveOffsetCpy;
     s32                  var_a0;
     s32                  i;
     bool                 cond;
@@ -545,19 +545,16 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
 
     Collision_TargetCharaCollidingSlowDown(moveOffset, collCylinder, charas, charaCount);
 
-    offsetCpy = *moveOffset;
-    
-    // Detect if the the target character is inside or how close is from a collision zone, however what it
-    // returns is confusing, it's a value related to height of collision zones.
-    collResult->field_18 = func_8006F620(&offsetCpy, collCylinder, collCylinder->radius, collCylinder->top);
+    moveOffsetCpy = *moveOffset;
+    collResult->ceilingHeight = Collision_CeilingHeightGet(&moveOffsetCpy, collCylinder, collCylinder->radius, collCylinder->top);
 
-    Collision_QueryInit(&collState, &offsetCpy, collCylinder, arg3);
+    Collision_QueryInit(&collState, &moveOffsetCpy, collCylinder, arg3);
 
-    offset1 = offsetCpy;
+    moveOffset1 = moveOffsetCpy;
 
     collResult->offset.vz = Q12(0.0f);
     collResult->offset.vx = Q12(0.0f);
-    collResult->offset.vy = offsetCpy.vy;
+    collResult->offset.vy = moveOffsetCpy.vy;
 
     while (true)
     {
@@ -616,7 +613,7 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
             func_8006CF18(&collState, chara->collision.field_E4, chara->collision.field_E1_4);
         }
 
-        func_8006D01C(&sp120, &offset1, Collision_OffsetAlphaGet(&collState), &collState);
+        func_8006D01C(&sp120, &moveOffset1, Collision_OffsetAlphaGet(&collState), &collState);
 
         collResult->offset.vx += sp120.vx;
         collResult->offset.vz += sp120.vz;
@@ -649,7 +646,7 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
         }
 
         collState.field_0_0 = true;
-        func_8006D774(&collState, &sp120, &offset1);
+        func_8006D774(&collState, &sp120, &moveOffset1);
     }
 
     if (collState.field_90 == 1)
@@ -3228,30 +3225,30 @@ void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
 void func_8006F250(q19_12* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ) // 0x8006F250
 {
     s32              i;
-    s_func_8006F338* scratch;
+    s_func_8006F338* ptr;
 
-    scratch = PSX_SCRATCH;
+    ptr = PSX_SCRATCH;
 
-    func_8006F338(scratch, posX, posZ, posDeltaX, posDeltaZ);
+    func_8006F338(ptr, posX, posZ, posDeltaX, posDeltaZ);
 
     // Run through collision triggers.
     for (i = 0; i < g_ActiveCollisionTriggers.collisionTriggerCount; i++)
     {
-        if (func_8006F3C4(scratch, g_ActiveCollisionTriggers.collisionTriggers[i]))
+        if (func_8006F3C4(ptr, g_ActiveCollisionTriggers.collisionTriggers[i]))
         {
             break;
         }
     }
 
-    if (scratch->field_28 == Q12(1.0f))
+    if (ptr->field_28 == Q12(1.0f))
     {
         arg0[0] = Q12(32.0f);
         arg0[1] = Q12(-16.0f);
     }
     else
     {
-        arg0[0] = Math_MulFixed(Vc_VectorMagnitudeCalc(scratch->field_10, Q12(0.0f), scratch->field_14), scratch->field_28, Q12_SHIFT);
-        arg0[1] = scratch->field_2C;
+        arg0[0] = Math_MulFixed(Vc_VectorMagnitudeCalc(ptr->field_10, Q12(0.0f), ptr->field_14), ptr->field_28, Q12_SHIFT);
+        arg0[1] = ptr->triggerHeight;
     }
 }
 
@@ -3267,7 +3264,7 @@ void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDe
     arg0->field_10 = posDeltaX;
     arg0->field_8  = posX + posDeltaX;
     arg0->field_28 = Q12(1.0f);
-    arg0->field_2C = Q12(1048560.0f);
+    arg0->triggerHeight = Q12(1048560.0f);
     arg0->field_14 = posDeltaZ;
 
     arg0->field_C = posZ + posDeltaZ;
@@ -3325,7 +3322,7 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_CollisionTrigger* trigger) // 
         arg0->field_4 >= minZ && maxZ >= arg0->field_4)
     {
         arg0->field_28 = Q12(0.0f);
-        arg0->field_2C = (-Q12(trigger->height) >> 1) - Q12(1.5f);
+        arg0->triggerHeight = TRIGGER_HEIGHT_GET(trigger->height);
     }
     else
     {
@@ -3374,93 +3371,94 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_CollisionTrigger* trigger) // 
         if (var_v1 < arg0->field_28)
         {
             arg0->field_28 = var_v1;
-            arg0->field_2C = (-Q12(trigger->height) >> 1) - Q12(1.5f);
+            arg0->triggerHeight = TRIGGER_HEIGHT_GET(trigger->height);
         }
     }
 
     return arg0->field_28 == 0;
 }
 
-q19_12 func_8006F620(VECTOR3* moveOffset, s_CollisionCylinder* collCylinder, q19_12 radius, q19_12 charaTop) // 0x8006F620
+q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
+                                  const s_CollisionCylinder* collCylinder, q19_12 cylinderRadius, q19_12 cylinderHeight) // 0x8006F620
 {
-    q19_12              movedOffsetX;
-    q19_12              movedOffsetZ;
-    q19_12              offsetX;
-    q19_12              offsetZ;
-    q19_12              charaTopPos;
-    q19_12              charaTopMove;
+    q19_12              projOffsetToTriggerX;
+    q19_12              projOffsetToTriggerZ;
+    q19_12              offsetToTriggerX;
+    q19_12              offsetToTriggerZ;
+    q19_12              cylinderTop;
+    q19_12              projCylinderTop;
     q19_12              extraOffsetX;
     q19_12              extraOffsetZ;
-    q19_12              temp_a0;
+    q19_12              topToCeilingHeight;
     q19_12              triggerHeight;
     q19_12              dist;
     q19_12              extraDist;
-    q19_12              distWithMove;
+    q19_12              distToTrigger;
     q19_12              angleToClosestTrigger;
     q19_12              adjDist;
     s32                 i;
     q19_12              moveOffsetX;
     q19_12              moveOffsetZ;
-    s32                 height;
-    s32                 var_v1;
+    q19_12              ceilHeight;
+    q19_12              threshold;
     s_CollisionTrigger* curTrigger;
 
-    height = Q12(-16.0f);
+    ceilHeight = DEFAULT_CEILING_HEIGHT;
 
     extraOffsetX = Q12(0.0f);
     extraOffsetZ = Q12(0.0f);
 
-    moveOffsetX  = moveOffset->vx;
-    moveOffsetZ  = moveOffset->vz;
-    charaTopPos  = collCylinder->position.vy + charaTop;
-    charaTopMove = charaTopPos + moveOffset->vy;
+    moveOffsetX     = moveOffset->vx;
+    moveOffsetZ     = moveOffset->vz;
+    cylinderTop     = collCylinder->position.vy + cylinderHeight;
+    projCylinderTop = cylinderTop + moveOffset->vy;
 
     // Run through collision triggers.
     for (i = 0; i < g_ActiveCollisionTriggers.collisionTriggerCount; i++)
     {
         curTrigger = g_ActiveCollisionTriggers.collisionTriggers[i];
 
-        // Check height.
-        triggerHeight = (-Q12(curTrigger->height) >> 1) - Q12(1.5f); // `>> 1` = `/ 2`.
-        if ((charaTopMove - triggerHeight) >= Q12(0.0f))
+        // Check if trigger above was missed.
+        triggerHeight = TRIGGER_HEIGHT_GET(curTrigger->height);
+        if ((projCylinderTop - triggerHeight) >= Q12(0.0f))
         {
             continue;
         }
 
-        // Check rough distance from cylinder to trigger.
-        Collision_TriggerOffsetGet(&movedOffsetX, &movedOffsetZ,
+        // Check rough cylinder-trigger collision.
+        Collision_TriggerOffsetGet(&projOffsetToTriggerX, &projOffsetToTriggerZ,
                                    collCylinder->position.vx + moveOffsetX, collCylinder->position.vz + moveOffsetZ,
                                    curTrigger);
-        if (MAX(ABS(movedOffsetX), ABS(movedOffsetZ)) >= radius)
+        if (MAX(ABS(projOffsetToTriggerX), ABS(projOffsetToTriggerZ)) >= cylinderRadius)
         {
             continue;
         }
 
-        // Check accurate distance from cylinder to trigger.
-        distWithMove = Vc_VectorMagnitudeCalc(movedOffsetX, Q12(0.0f), movedOffsetZ);
-        if (distWithMove >= radius)
+        // Check accurate cylinder-trigger collision.
+        distToTrigger = Vc_VectorMagnitudeCalc(projOffsetToTriggerX, Q12(0.0f), projOffsetToTriggerZ);
+        if (distToTrigger >= cylinderRadius)
         {
             continue;
         }
 
         // Account for projected exit from inside the trigger.
-        if (distWithMove > Q12(0.0f))
+        if (distToTrigger > Q12(0.0f))
         {
-            Collision_TriggerOffsetGet(&offsetX, &offsetZ, // TODO: Check if adding new var still matches.
+            Collision_TriggerOffsetGet(&offsetToTriggerX, &offsetToTriggerZ,
                                        collCylinder->position.vx, collCylinder->position.vz,
                                        curTrigger);
 
             adjDist = Q12(0.1f);
-            dist    = Vc_VectorMagnitudeCalc(offsetX, Q12(0.0f), offsetZ);
-            if ((radius - dist) <= Q12(0.1f))
+            dist    = Vc_VectorMagnitudeCalc(offsetToTriggerX, Q12(0.0f), offsetToTriggerZ);
+            if ((cylinderRadius - dist) <= Q12(0.1f))
             {
-                adjDist = radius - dist;
+                adjDist = cylinderRadius - dist;
             }
 
-            if ((distWithMove - dist) < adjDist)
+            if ((distToTrigger - dist) < adjDist)
             {
-                angleToClosestTrigger = ratan2(movedOffsetX, movedOffsetZ);
-                extraDist             = adjDist - (distWithMove - dist);
+                angleToClosestTrigger = ratan2(projOffsetToTriggerX, projOffsetToTriggerZ);
+                extraDist             = adjDist - (distToTrigger - dist);
 
                 extraOffsetX = Math_MulFixed(extraDist, Math_Sin(angleToClosestTrigger), Q12_SHIFT);
                 extraOffsetZ = Math_MulFixed(extraDist, Math_Cos(angleToClosestTrigger), Q12_SHIFT);
@@ -3469,9 +3467,9 @@ q19_12 func_8006F620(VECTOR3* moveOffset, s_CollisionCylinder* collCylinder, q19
         // Inside.
         else
         {
-            if (triggerHeight < height)
+            if (triggerHeight < ceilHeight)
             {
-                height = triggerHeight;
+                ceilHeight = triggerHeight;
             }
 
             moveOffsetX = moveOffset->vx;
@@ -3486,23 +3484,23 @@ q19_12 func_8006F620(VECTOR3* moveOffset, s_CollisionCylinder* collCylinder, q19
     moveOffset->vx = moveOffsetX;
     moveOffset->vz = moveOffsetZ;
 
-    if (height != Q12(-16.0f))
+    if (ceilHeight != DEFAULT_CEILING_HEIGHT)
     {
-        var_v1  = Q12(0.1f);
-        temp_a0 = height - charaTopPos;
+        threshold          = Q12(0.1f);
+        topToCeilingHeight = ceilHeight - cylinderTop;
         
-        if (temp_a0 < Q12(0.1f))
+        if (topToCeilingHeight < Q12(0.1f))
         {
-            var_v1 = temp_a0;
+            threshold = topToCeilingHeight;
         }
 
-        if (moveOffset->vy < var_v1)
+        if (moveOffset->vy < threshold)
         {
-            moveOffset->vy = var_v1;
+            moveOffset->vy = threshold;
         }
     }
 
-    return height;
+    return ceilHeight;
 }
 
 void Collision_TriggerOffsetGet(q19_12* offsetX, q19_12* offsetZ, q19_12 posX, q19_12 posZ, const s_CollisionTrigger* trigger) // 0x8006F8FC

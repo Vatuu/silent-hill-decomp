@@ -6,6 +6,8 @@
 
 struct _IpdCollisionData;
 
+#define DEFAULT_CEILING_HEIGHT Q12(-16.0f)
+
 /** @brief Global collision flags.
  * Applies for both NPCs and the player.
  */
@@ -44,6 +46,22 @@ typedef struct _CollisionPoint
     /* 0xC  */ s_CollisionSurface surface;
     /* 0x18 */ s32                groundType; /** `e_GroundType` */
 } s_CollisionPoint;
+
+typedef struct _CollisionResult
+{
+    /* 0x0  */ VECTOR3            offset; /** Q19.12 */
+    /* 0xC  */ s_CollisionSurface surface;
+    /* 0x18 */ q19_12             ceilingHeight;
+} s_CollisionResult;
+
+/** @brief Collection of nearby collision triggers. */
+typedef struct _ActiveCollisionTriggers
+{
+    /* 0x0 */ u16                 flags; /** `e_CollisionTriggerFlags` */
+    /* 0x2 */ u8                  collisionTriggerCount;
+    /* 0x3 */ u8                  __pad_3;
+    /* 0x4 */ s_CollisionTrigger* collisionTriggers[20]; // Guessed size.
+} s_ActiveCollisionTriggers;
 
 /** @brief Collision cylinder with a character collision state. */
 typedef struct _CollisionCylinder
@@ -281,26 +299,18 @@ typedef struct _RayTrace
     /* 0x1C */ q3_12           field_1C; // Angle.
 } s_RayTrace;
 
-typedef struct _CollisionResult
-{
-    /* 0x0  */ VECTOR3            offset; /** Q19.12 */
-    /* 0xC  */ s_CollisionSurface surface;
-    /* 0x18 */ q19_12             field_18; // Height related to a trigger point.
-} s_CollisionResult;
-
-/** @brief Collection of nearby collision triggers. */
-typedef struct _ActiveCollisionTriggers
-{
-    /* 0x0 */ u16                 flags; /** `e_CollisionTriggerFlags` */
-    /* 0x2 */ u8                  collisionTriggerCount;
-    /* 0x3 */ u8                  __pad_3;
-    /* 0x4 */ s_CollisionTrigger* collisionTriggers[20]; // Guessed size.
-} s_ActiveCollisionTriggers;
-
 // emoose: Also works: `extern u16 g_ActiveCollisionTriggers[];`, `arg0->field_4 = g_ActiveCollisionTriggers[0];`.
 // Didn't see any array accesses in Ghidra though, struct might be more likely.
 extern s_ActiveCollisionTriggers g_ActiveCollisionTriggers;
 
 extern u16 g_CollisionTriggerFlags;
+
+/** @brief Computes trigger height from half-meter height steps.
+ *
+ * @param steps Half-meter height steps.
+ * @return Trigger height (Q19.12).
+ */
+#define TRIGGER_HEIGHT_GET(steps) \
+    ((-Q12(steps) >> 1) - Q12(1.5f))
 
 #endif
