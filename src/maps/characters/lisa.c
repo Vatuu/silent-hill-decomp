@@ -15,7 +15,7 @@
  *  MAP7_S02
  */
 
-#define lisaProps (chara->properties.npc)
+#define lisaProps (lisa->properties.npc)
 
 /** Addresses
  * MAP3_S04: 0x800D0888
@@ -24,16 +24,16 @@
  * MAP7_S01: 0x800D4DFC
  * MAP7_S02: 0x800D5998
  */
-void Lisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void Lisa_Update(s_SubCharacter* lisa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
-    if (chara->model.controlState == 0)
+    if (lisa->model.controlState == 0)
     {
-        Lisa_Init(chara);
+        Lisa_Init(lisa);
     }
 
-    Lisa_AnimStateUpdate(chara, boneCoords);
-    Lisa_MovementUpdate(chara, boneCoords);
-    Lisa_AnimUpdate(chara, anmHdr, boneCoords);
+    Lisa_AnimStateUpdate(lisa, boneCoords);
+    Lisa_MovementUpdate(lisa, boneCoords);
+    Lisa_AnimUpdate(lisa, anmHdr, boneCoords);
 }
 
 /** Addresses
@@ -43,17 +43,15 @@ void Lisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* bone
  * MAP7_S01: 0x800D4E70
  * MAP7_S02: 0x800D5A0C
  */
-void Lisa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
+void Lisa_AnimUpdate(s_SubCharacter* lisa, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     s_AnimInfo* animInfo;
 
-    if (chara->properties.player.field_F0 != 0)
+    if (!lisaProps.freeze)
     {
-        return;
+        animInfo = &LISA_ANIM_INFOS[lisa->model.anim.status];
+        animInfo->playbackFunc(&lisa->model, anmHdr, boneCoords, animInfo);
     }
-
-    animInfo = &LISA_ANIM_INFOS[chara->model.anim.status];
-    animInfo->playbackFunc(&chara->model, anmHdr, boneCoords, animInfo);
 }
 
 /** Addresses
@@ -63,7 +61,7 @@ void Lisa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* 
  * MAP7_S01: 0x800D4EB8
  * MAP7_S02: 0x800D5A54
  */
-void Lisa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
+void Lisa_MovementUpdate(s_SubCharacter* lisa, GsCOORDINATE2* boneCoords)
 {
     VECTOR3 unused;
     VECTOR3 offset;
@@ -73,9 +71,9 @@ void Lisa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 
-    unused       = chara->position;
-    moveSpeed    = chara->moveSpeed;
-    headingAngle = chara->headingAngle;
+    unused       = lisa->position;
+    moveSpeed    = lisa->moveSpeed;
+    headingAngle = lisa->headingAngle;
     moveDist      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveDist);
@@ -83,15 +81,15 @@ void Lisa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 
     offset.vx = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed, g_DeltaTime);
+    offset.vy = Q12_MULT_PRECISE(lisa->fallSpeed, g_DeltaTime);
 
-    chara->position.vx += offset.vx;
-    chara->position.vy  = Q12(0.0f);
-    chara->position.vz += offset.vz;
+    lisa->position.vx += offset.vx;
+    lisa->position.vy  = Q12(0.0f);
+    lisa->position.vz += offset.vz;
 
-    boneCoords[0].coord.t[0] = Q12_TO_Q8(chara->position.vx);
-    boneCoords[0].coord.t[1] = Q12_TO_Q8(chara->position.vy);
-    boneCoords[0].coord.t[2] = Q12_TO_Q8(chara->position.vz);
+    boneCoords[0].coord.t[0] = Q12_TO_Q8(lisa->position.vx);
+    boneCoords[0].coord.t[1] = Q12_TO_Q8(lisa->position.vy);
+    boneCoords[0].coord.t[2] = Q12_TO_Q8(lisa->position.vz);
 }
 
 /** Addresses
@@ -101,7 +99,7 @@ void Lisa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
  * MAP7_S01: 0x800D5050
  * MAP7_S02: 0x800D5BEC
  */
-void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
+void Lisa_AnimStateUpdate(s_SubCharacter* lisa, GsCOORDINATE2* boneCoords)
 {
     s_Collision coll;
     e_SfxId     sfxId;
@@ -128,8 +126,8 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
                 lisaProps.moveSpeed  = CLAMP(lisaProps.moveSpeed, 0, Q12(1.25f));
             }
 
-            Model_AnimStatusSet(&chara->model, LisaAnim_2, false);
-            Chara_AnimStateReset(chara);
+            Model_AnimStatusSet(&lisa->model, LisaAnim_2, false);
+            Chara_AnimStateReset(lisa);
             break;
 
         case LisaControl_5:
@@ -145,96 +143,96 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 
             if (lisaProps.controlState == 5)
             {
-                Model_AnimStatusKeyframeSet(chara->model, LisaAnim_1, true, LISA_ANIM_INFOS, 0);
+                Model_AnimStatusKeyframeSet(lisa->model, LisaAnim_1, true, LISA_ANIM_INFOS, 0);
             }
             else
             {
-                Model_AnimStatusSet(&chara->model, LisaAnim_1, true);
+                Model_AnimStatusSet(&lisa->model, LisaAnim_1, true);
             }
 
-            Chara_AnimStateReset(chara);
+            Chara_AnimStateReset(lisa);
             break;
 
         case LisaControl_6:
-            Model_AnimStatusSet(&chara->model, LisaAnim_3, false);
-            Chara_AnimStateReset(chara);
+            Model_AnimStatusSet(&lisa->model, LisaAnim_3, false);
+            Chara_AnimStateReset(lisa);
             break;
 
         case LisaControl_7:
-            Model_AnimStatusSet(&chara->model, LisaAnim_4, false);
+            Model_AnimStatusSet(&lisa->model, LisaAnim_4, false);
 
-            if (chara->model.anim.keyframeIdx == 72)
+            if (lisa->model.anim.keyframeIdx == 72)
             {
                 lisaProps.controlState = 20;
-                chara->model.stateStep = 0;
+                lisa->model.stateStep = 0;
             }
             break;
 
         case LisaControl_8:
-            Model_AnimStatusSet(&chara->model, LisaAnim_5, false);
-            Chara_AnimStateReset(chara);
+            Model_AnimStatusSet(&lisa->model, LisaAnim_5, false);
+            Chara_AnimStateReset(lisa);
             break;
 
         case LisaControl_9:
-            Model_AnimStatusKeyframeSet(chara->model, LisaAnim_6, true, LISA_ANIM_INFOS, 0);
-            Chara_AnimStateReset(chara);
+            Model_AnimStatusKeyframeSet(lisa->model, LisaAnim_6, true, LISA_ANIM_INFOS, 0);
+            Chara_AnimStateReset(lisa);
             break;
 
         case LisaControl_10:
-            Model_AnimStatusSet(&chara->model, LisaAnim_7, false);
-            Chara_AnimStateReset(chara);
+            Model_AnimStatusSet(&lisa->model, LisaAnim_7, false);
+            Chara_AnimStateReset(lisa);
             break;
 
         case LisaControl_11:
-            Model_AnimStatusKeyframeSet(chara->model, LisaAnim_8, true, LISA_ANIM_INFOS, 0);
-            Chara_AnimStateReset(chara);
+            Model_AnimStatusKeyframeSet(lisa->model, LisaAnim_8, true, LISA_ANIM_INFOS, 0);
+            Chara_AnimStateReset(lisa);
             break;
 
         case LisaControl_12:
-            Model_AnimStatusKeyframeSet(chara->model, LisaAnim_9, true, LISA_ANIM_INFOS, 0);
-            Chara_AnimStateReset(chara);
+            Model_AnimStatusKeyframeSet(lisa->model, LisaAnim_9, true, LISA_ANIM_INFOS, 0);
+            Chara_AnimStateReset(lisa);
             break;
 
         case LisaControl_13:
-            Model_AnimStatusSet(&chara->model, LisaAnim_10, false);
-            Chara_AnimStateReset(chara);
+            Model_AnimStatusSet(&lisa->model, LisaAnim_10, false);
+            Chara_AnimStateReset(lisa);
             break;
 
         case LisaControl_14:
-            Model_AnimStatusKeyframeSet(chara->model, LisaAnim_11, true, LISA_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(lisa->model, LisaAnim_11, true, LISA_ANIM_INFOS, 0);
             break;
 
         case LisaControl_15:
-            Model_AnimStatusSet(&chara->model, LisaAnim_12, false);
+            Model_AnimStatusSet(&lisa->model, LisaAnim_12, false);
             break;
 
         case LisaControl_16:
-            Model_AnimStatusSet(&chara->model, LisaAnim_13, false);
-            Chara_AnimStateReset(chara);
+            Model_AnimStatusSet(&lisa->model, LisaAnim_13, false);
+            Chara_AnimStateReset(lisa);
             break;
 
         case LisaControl_17:
-            Model_AnimStatusKeyframeSet(chara->model, LisaAnim_14, true, LISA_ANIM_INFOS, 0);
-            Chara_AnimStateReset(chara);
+            Model_AnimStatusKeyframeSet(lisa->model, LisaAnim_14, true, LISA_ANIM_INFOS, 0);
+            Chara_AnimStateReset(lisa);
             break;
 
         case LisaControl_18:
-            Model_AnimStatusKeyframeSet(chara->model, LisaAnim_15, true, LISA_ANIM_INFOS, 0);
-            Chara_AnimStateReset(chara);
+            Model_AnimStatusKeyframeSet(lisa->model, LisaAnim_15, true, LISA_ANIM_INFOS, 0);
+            Chara_AnimStateReset(lisa);
             break;
 
         case LisaControl_19:
-            Model_AnimStatusSet(&chara->model, LisaAnim_16, false);
-            Chara_AnimStateReset(chara);
+            Model_AnimStatusSet(&lisa->model, LisaAnim_16, false);
+            Chara_AnimStateReset(lisa);
             break;
 
         case LisaControl_21:
-            Model_AnimStatusSet(&chara->model, LisaAnim_17, false);
-            Chara_AnimStateReset(chara);
+            Model_AnimStatusSet(&lisa->model, LisaAnim_17, false);
+            Chara_AnimStateReset(lisa);
             break;
     }
 
-    Collision_Get(&coll, chara->position.vx, chara->position.vz);
+    Collision_Get(&coll, lisa->position.vx, lisa->position.vz);
 
     func_8007FDE0(coll.groundType, &sfxId, &pitch0, &pitch1);
     sfxId = Sfx_Unk1529;
@@ -242,115 +240,115 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
     switch (lisaProps.controlState)
     {
         case LisaControl_1:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_2, true), chara, 14, 31, sfxId, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_2, true), lisa, 14, 31, sfxId, pitch0);
             break;
 
         case LisaControl_8:
-            if (chara->model.anim.keyframeIdx <= 125)
+            if (lisa->model.anim.keyframeIdx <= 125)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_5, true), chara, 125, 138, sfxId, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_5, true), lisa, 125, 138, sfxId, pitch0);
             }
-            else if (chara->model.anim.keyframeIdx <= 153)
+            else if (lisa->model.anim.keyframeIdx <= 153)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_5, true), chara, 153, 138, sfxId, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_5, true), lisa, 153, 138, sfxId, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_5, true), chara, 189, 184, sfxId, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_5, true), lisa, 189, 184, sfxId, pitch0);
             }
             break;
 
         case LisaControl_12:
-            if (chara->model.anim.keyframeIdx <= 258)
+            if (lisa->model.anim.keyframeIdx <= 258)
             {
                 // @bug From the other `keyframeIdx` checks here, should this be 258 instead of 263?
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_9, true), chara, 263, 258, sfxId, pitch1);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_9, true), lisa, 263, 258, sfxId, pitch1);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_9, true), chara, 263, 266, sfxId, pitch1);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_9, true), lisa, 263, 266, sfxId, pitch1);
             }
             break;
 
         case LisaControl_13:
-            if (chara->model.anim.keyframeIdx <= 332)
+            if (lisa->model.anim.keyframeIdx <= 332)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_10, true), chara, 332, 337, sfxId, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_10, true), lisa, 332, 337, sfxId, pitch0);
             }
-            else if (chara->model.anim.keyframeIdx <= 344)
+            else if (lisa->model.anim.keyframeIdx <= 344)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_10, true), chara, 344, 337, sfxId, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_10, true), lisa, 344, 337, sfxId, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_10, true), chara, 352, 348, sfxId, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_10, true), lisa, 352, 348, sfxId, pitch0);
             }
             break;
 
         case LisaControl_11:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_8, true), chara, 240, 240, sfxId, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_8, true), lisa, 240, 240, sfxId, pitch0);
             break;
 
         case LisaControl_15:
 #if defined(MAP7_S00)
-            sharedFunc_800D9188_0_s00(ANIM_STATUS(LisaAnim_12, true), chara, 408, Sfx_Unk1639);
+            sharedFunc_800D9188_0_s00(ANIM_STATUS(LisaAnim_12, true), lisa, 408, Sfx_Unk1639);
 #endif
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_12, true), chara, 406, 406, sfxId, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_12, true), lisa, 406, 406, sfxId, pitch0);
             break;
 
         case LisaControl_16:
-            if (chara->model.anim.keyframeIdx <= 423)
+            if (lisa->model.anim.keyframeIdx <= 423)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_13, true), chara, 423, 425, sfxId, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_13, true), lisa, 423, 425, sfxId, pitch0);
             }
-            else if (chara->model.anim.keyframeIdx <= 429)
+            else if (lisa->model.anim.keyframeIdx <= 429)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_13, true), chara, 429, 425, sfxId, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_13, true), lisa, 429, 425, sfxId, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_13, true), chara, 435, 432, sfxId, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_13, true), lisa, 435, 432, sfxId, pitch0);
             }
             break;
 
         case LisaControl_17:
-            if (chara->model.anim.keyframeIdx <= 460)
+            if (lisa->model.anim.keyframeIdx <= 460)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_14, true), chara, 460, 477, sfxId, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_14, true), lisa, 460, 477, sfxId, pitch0);
             }
-            else if (chara->model.anim.keyframeIdx <= 497)
+            else if (lisa->model.anim.keyframeIdx <= 497)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_14, true), chara, 497, 477, sfxId, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_14, true), lisa, 497, 477, sfxId, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_14, true), chara, 536, 516, sfxId, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_14, true), lisa, 536, 516, sfxId, pitch0);
             }
             break;
 
         case LisaControl_18:
-            if (chara->model.anim.keyframeIdx <= 551)
+            if (lisa->model.anim.keyframeIdx <= 551)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_15, true), chara, 551, 555, sfxId, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_15, true), lisa, 551, 555, sfxId, pitch0);
             }
-            else if (chara->model.anim.keyframeIdx <= 559)
+            else if (lisa->model.anim.keyframeIdx <= 559)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_15, true), chara, 559, 555, sfxId, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_15, true), lisa, 559, 555, sfxId, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_15, true), chara, 564, 564, sfxId, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_15, true), lisa, 564, 564, sfxId, pitch0);
             }
             break;
     }
 
-    chara->rotation.vy  = Q12_ANGLE_ABS(chara->rotation.vy + Q8_TO_Q4(sharedData_800D6BB8_3_s04));
-    chara->headingAngle = chara->rotation.vy;
-    chara->moveSpeed    = lisaProps.moveSpeed;
-    chara->fallSpeed   += g_GravitySpeed;
+    lisa->rotation.vy  = Q12_ANGLE_ABS(lisa->rotation.vy + Q8_TO_Q4(sharedData_800D6BB8_3_s04));
+    lisa->headingAngle = lisa->rotation.vy;
+    lisa->moveSpeed    = lisaProps.moveSpeed;
+    lisa->fallSpeed   += g_GravitySpeed;
 
     boneCoords->flg = false;
-    Math_RotMatrixZxyNegGte(&chara->rotation, &boneCoords->coord);
+    Math_RotMatrixZxyNegGte(&lisa->rotation, &boneCoords->coord);
 }
 
 /** Addresses
@@ -360,8 +358,8 @@ void Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
  * MAP7_S01: 0x800D58C4
  * MAP7_S02: 0x800D6460
  */
-void Lisa_Init(s_SubCharacter* chara)
+void Lisa_Init(s_SubCharacter* lisa)
 {
-    Chara_CollisionReset(chara);
+    Chara_CollisionReset(lisa);
     sharedData_800D6BB8_3_s04 = 0;
 }

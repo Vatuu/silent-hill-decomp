@@ -191,7 +191,7 @@ typedef struct
 } s_800D5710;
 STATIC_ASSERT_SIZEOF(s_800D5710, 52);
 
-// Used by Alessa, BloodyLisa, Cheryl, Cybil, Dahlia, GhostChildAlessa, Kaufmann, Lisa.
+// Used by Alessa, BloodyIncubator, BloodyLisa, Cheryl, Cybil, Dahlia, GhostChildAlessa, Incubator, Kaufmann, Lisa, MonsterCybil.
 typedef struct _PropsNpc
 {
     /* 0xE8  */ s32    controlState; /** `e_*Control` */
@@ -762,8 +762,7 @@ static inline void Chara_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 keyf
 
 /** @brief Resets a humanoid character's control state to `*_None` if the control subsystem was flagged for a reset.
  *
- * TODO: This uses `dahlia` part of union, but is most likely either a `human` part shared with all humanoid characters
- * or humanoids only share a small struct early in the union.
+ * NOTE: This is only for NPC characters which use `s_PropsNpc` part of properties union.
  *
  * @param chara Character to update.
  */
@@ -772,7 +771,7 @@ static inline void Chara_AnimStateReset(s_SubCharacter* chara)
     if (chara->properties.npc.resetControlState)
     {
         chara->properties.npc.controlState      = 0;
-        chara->model.stateStep                     = 0;
+        chara->model.stateStep                  = 0;
         chara->properties.npc.resetControlState = false;
     }
 }

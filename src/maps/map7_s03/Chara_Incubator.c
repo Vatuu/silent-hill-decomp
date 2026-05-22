@@ -6,6 +6,8 @@
 
 // TODO: Move to src/maps/characters/ once matched.
 
+#define incubatorProps incubator->properties.npc
+
 void Incubator_Update(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D3BC4
 {
     if (incubator->model.charaId != Chara_Incubator)
@@ -22,8 +24,7 @@ void Incubator_AnimUpdate(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOOR
 {
     s_AnimInfo* animInfo;
 
-    // TODO: Wrong properties union.
-    if (incubator->properties.player.field_F0 == 0)
+    if (!incubatorProps.freeze)
     {
         animInfo = &INCUBATOR_ANIM_INFOS[incubator->model.anim.status];
         animInfo->playbackFunc(&incubator->model, anmHdr, boneCoords, animInfo);
@@ -64,7 +65,7 @@ void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords)
 void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords) // 0x800D3E18
 {
     // Handle control state.
-    switch (incubator->properties.npc.controlState) // TODO: Wrong properties union.
+    switch (incubatorProps.controlState)
     {
         case 0:
             break;
@@ -86,7 +87,7 @@ void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords) // 0x80
     }
 
     incubator->headingAngle = incubator->rotation.vy;
-    incubator->moveSpeed    = incubator->properties.splitHead.moveDistance_126;
+    incubator->moveSpeed    = incubatorProps.moveSpeed;
     incubator->fallSpeed   += g_GravitySpeed;
 
     boneCoords->flg = false;

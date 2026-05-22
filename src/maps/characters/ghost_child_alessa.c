@@ -36,13 +36,11 @@ void GhostChildAlessa_AnimUpdate(s_SubCharacter* ghostAlessa, s_AnmHeader* anmHd
 {
     s_AnimInfo* animInfo;
 
-    if (ghostAlessa->properties.player.field_F0 != 0)
+    if (!ghostAlessaProps.freeze)
     {
-        return;
+        animInfo = &GHOST_CHILD_ALESSA_ANIM_INFOS[ghostAlessa->model.anim.status];
+        animInfo->playbackFunc(&ghostAlessa->model, anmHdr, boneCoords, animInfo);
     }
-
-    animInfo = &GHOST_CHILD_ALESSA_ANIM_INFOS[ghostAlessa->model.anim.status];
-    animInfo->playbackFunc(&ghostAlessa->model, anmHdr, boneCoords, animInfo);
 }
 
 /** Addresses

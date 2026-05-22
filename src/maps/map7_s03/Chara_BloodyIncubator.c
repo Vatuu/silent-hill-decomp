@@ -6,31 +6,32 @@
 
 // TODO: Move to src/maps/characters/ once matched.
 
-void BloodyIncubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D3684
+#define bloodyIncubatorProps bloodyIncubator->properties.npc
+
+void BloodyIncubator_Update(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D3684
 {
-    if (chara->model.charaId != Chara_BloodyIncubator)
+    if (bloodyIncubator->model.charaId != Chara_BloodyIncubator)
     {
-        BloodyIncubator_Init(chara);
+        BloodyIncubator_Init(bloodyIncubator);
     }
 
-    func_800D38D8(chara, boneCoords);
-    func_800D3740(chara, boneCoords);
-    BloodyIncubator_AnimUpdate(chara, anmHdr, boneCoords);
+    func_800D38D8(bloodyIncubator, boneCoords);
+    func_800D3740(bloodyIncubator, boneCoords);
+    BloodyIncubator_AnimUpdate(bloodyIncubator, anmHdr, boneCoords);
 }
 
-void BloodyIncubator_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D36F8
+void BloodyIncubator_AnimUpdate(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D36F8
 {
     s_AnimInfo* animInfo;
 
-    // TODO: Wrong properties union.
-    if (chara->properties.player.field_F0 == 0)
+    if (!bloodyIncubatorProps.freeze)
     {
-        animInfo = &BLOODY_INCUBATOR_ANIM_INFOS[chara->model.anim.status];
-        animInfo->playbackFunc(&chara->model, anmHdr, boneCoords, animInfo);
+        animInfo = &BLOODY_INCUBATOR_ANIM_INFOS[bloodyIncubator->model.anim.status];
+        animInfo->playbackFunc(&bloodyIncubator->model, anmHdr, boneCoords, animInfo);
     }
 }
 
-void func_800D3740(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800D3740
+void func_800D3740(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* boneCoords) // 0x800D3740
 {
     VECTOR3 unused;
     VECTOR3 offset;
@@ -40,9 +41,9 @@ void func_800D3740(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800D37
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 
-    unused       = chara->position;
-    moveSpeed    = chara->moveSpeed;
-    headingAngle = chara->headingAngle;
+    unused       = bloodyIncubator->position;
+    moveSpeed    = bloodyIncubator->moveSpeed;
+    headingAngle = bloodyIncubator->headingAngle;
     moveDist     = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveDist);
@@ -50,20 +51,20 @@ void func_800D3740(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800D37
 
     offset.vx = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed, g_DeltaTime);
+    offset.vy = Q12_MULT_PRECISE(bloodyIncubator->fallSpeed, g_DeltaTime);
 
-    chara->position.vx += offset.vx;
-    chara->position.vy  = Q12(0.0f);
-    chara->position.vz += offset.vz;
+    bloodyIncubator->position.vx += offset.vx;
+    bloodyIncubator->position.vy  = Q12(0.0f);
+    bloodyIncubator->position.vz += offset.vz;
 
-    boneCoords[0].coord.t[0] = Q12_TO_Q8(chara->position.vx);
-    boneCoords[0].coord.t[1] = Q12_TO_Q8(chara->position.vy);
-    boneCoords[0].coord.t[2] = Q12_TO_Q8(chara->position.vz);
+    boneCoords[0].coord.t[0] = Q12_TO_Q8(bloodyIncubator->position.vx);
+    boneCoords[0].coord.t[1] = Q12_TO_Q8(bloodyIncubator->position.vy);
+    boneCoords[0].coord.t[2] = Q12_TO_Q8(bloodyIncubator->position.vz);
 }
 
 void func_800D38D8(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* boneCoords) // 0x800D38D8
 {
-    switch (bloodyIncubator->properties.player.afkTimer)
+    switch (bloodyIncubatorProps.controlState)
     {
         case 0:
             break;
@@ -126,14 +127,14 @@ void func_800D38D8(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* boneCoords) /
     }
 
     bloodyIncubator->headingAngle = bloodyIncubator->rotation.vy;
-    bloodyIncubator->moveSpeed    = bloodyIncubator->properties.npc.moveSpeed; // TODO: Wrong properties union.
+    bloodyIncubator->moveSpeed    = bloodyIncubatorProps.moveSpeed;
     bloodyIncubator->fallSpeed   += g_GravitySpeed;
     boneCoords->flg               = false;
 
     Math_RotMatrixZxyNegGte(&bloodyIncubator->rotation, &boneCoords->coord);
 }
 
-void BloodyIncubator_Init(s_SubCharacter* chara) // 0x800D3BA4
+void BloodyIncubator_Init(s_SubCharacter* bloodyIncubator) // 0x800D3BA4
 {
-    Chara_CollisionReset(chara);
+    Chara_CollisionReset(bloodyIncubator);
 }

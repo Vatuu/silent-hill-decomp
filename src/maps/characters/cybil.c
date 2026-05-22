@@ -44,7 +44,7 @@ void Cybil_AnimUpdate(s_SubCharacter* cybil, s_AnmHeader* animHdr, GsCOORDINATE2
 {
     s_AnimInfo* animInfo;
 
-    if (cybil->properties.player.field_F0 == 0)
+    if (!cybilProps.freeze)
     {
         animInfo = &CYBIL_ANIM_INFOS[cybil->model.anim.status];
         animInfo->playbackFunc(&cybil->model, animHdr, boneCoords, animInfo);

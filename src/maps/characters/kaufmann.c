@@ -45,7 +45,7 @@ void Kaufmann_AnimUpdate(s_SubCharacter* kaufmann, s_AnmHeader* anmHdr, GsCOORDI
 {
     s_AnimInfo* animInfo;
 
-    if (kaufmann->properties.player.field_F0 == 0)
+    if (!kaufmannProps.freeze)
     {
         animInfo = &KAUFMANN_ANIM_INFOS[kaufmann->model.anim.status];
         animInfo->playbackFunc(&kaufmann->model, anmHdr, boneCoords, animInfo);

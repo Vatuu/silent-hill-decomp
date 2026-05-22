@@ -50,7 +50,7 @@ void Dahlia_AnimUpdate(s_SubCharacter* dahlia, s_AnmHeader* anmHdr, GsCOORDINATE
 {
     s_AnimInfo* animInfo;
 
-    if (!dahlia->properties.player.field_F0)
+    if (!dahliaProps.freeze)
     {
         animInfo = &DAHLIA_ANIM_INFOS[dahlia->model.anim.status];
         animInfo->playbackFunc(&dahlia->model, anmHdr, boneCoords, animInfo);
