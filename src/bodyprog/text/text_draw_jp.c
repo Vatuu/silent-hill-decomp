@@ -42,7 +42,7 @@ extern s32 D_800C5E1C;
 extern s32 D_800C5E30[];
 extern s32 D_800C5E20;
 
-const u32 pad_rodata_80025D54 = 0;
+const u32 __pad_rodata_80025D54 = 0;
 
 /** @brief Glyph widths for the 12x16 font. Used for kerning. */
 static const u8 FONT_12X16_GLYPH_WIDTHS[FONT_12X16_GLYPH_COUNT] = {
@@ -53,14 +53,14 @@ static const u8 FONT_12X16_GLYPH_WIDTHS[FONT_12X16_GLYPH_COUNT] = {
 };
 
 static const u32 STRING_COLORS[StringColorId_Count] = {
-    COLOR(160, 128, 64,  0x64),
-    COLOR(32,  32,  32,  0x64),
-    COLOR(24,  128, 40,  0x64),
-    COLOR(8,   184, 96,  0x64),
-    COLOR(128, 0,   0,   0x64),
-    COLOR(24,  128, 40,  0x64),
-    COLOR(100, 100, 100, 0x64),
-    COLOR(128, 128, 128, 0x64)
+    COLOR_RGBC(160, 128, 64,  PRIM_RECT | RECT_TEXTURE),
+    COLOR_RGBC(32,  32,  32,  PRIM_RECT | RECT_TEXTURE),
+    COLOR_RGBC(24,  128, 40,  PRIM_RECT | RECT_TEXTURE),
+    COLOR_RGBC(8,   184, 96,  PRIM_RECT | RECT_TEXTURE),
+    COLOR_RGBC(128, 0,   0,   PRIM_RECT | RECT_TEXTURE),
+    COLOR_RGBC(24,  128, 40,  PRIM_RECT | RECT_TEXTURE),
+    COLOR_RGBC(100, 100, 100, PRIM_RECT | RECT_TEXTURE),
+    COLOR_RGBC(128, 128, 128, PRIM_RECT | RECT_TEXTURE)
 };
 
 const u32 pad_rodata_80025DCC[2] = { 0, 0 };

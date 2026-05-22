@@ -934,7 +934,7 @@ void func_801E42F8(s32 arg0, s32 arg1) // 0x801E42F8
 
 void func_801E4310(s32 r, s32 g, s32 b) // 0x801E4310
 {
-    D_800AFE08.field_8 = (r & 0xFF) | ((g & 0xFF) << 8) | ((b & 0xFF) << 16) | ((PRIM_RECT | RECT_TEXTURE) << 24);
+    D_800AFE08.field_8 = COLOR_RGBC(r, g, b, PRIM_RECT | RECT_TEXTURE);
 }
 
 void func_801E4340(s8 arg0) // 0x801E4340

@@ -1095,16 +1095,16 @@ bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collDa
         }
     }
 
-    // TODO: Use `Math_SetSVectorFastSum` here?
-    temp_v0 = (temp_a3->field_0_0 & 0xFFFF) + (temp_a3->field_2_0 << 16);
+    temp_v0 = PACKED_XZ16(temp_a3->field_0_0, temp_a3->field_2_0);
     gte_ldR11R12(temp_v0);
     gte_ldR13R21(temp_v0);
-    temp_v0 = (u16)collState->charaMoveInfo.moveOffset.vx + (collState->charaMoveInfo.moveOffset.vz << 16);
+    temp_v0 = PACKED_XZ16((u16)collState->charaMoveInfo.moveOffset.vx, collState->charaMoveInfo.moveOffset.vz);
     gte_ldvxy0(temp_v0);
     gte_gte_ldvz0();
     gte_rtv0();
     gte_stMAC12(&collState->field_CC.field_20.field_14);
-    temp_v0 = ((collState->charaPos.offset.vx - collState->field_CC.field_12.vx) & 0xFFFF) + ((collState->charaPos.offset.vz - collState->field_CC.field_12.vz) << 16);
+    temp_v0 = PACKED_XZ16(collState->charaPos.offset.vx - collState->field_CC.field_12.vx,
+                          collState->charaPos.offset.vz - collState->field_CC.field_12.vz);
     gte_ldvxy0(temp_v0);
     gte_gte_ldvz0();
     gte_rtv0();
@@ -1644,7 +1644,7 @@ q3_12 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg
 
     gte_ldR11R12(packedDir);
     gte_ldR13R21(packedDir);
-    gte_ldvxy0((deltaX & 0xFFFF) + (deltaZ << 16));
+    gte_ldvxy0(PACKED_XZ16(deltaX, deltaZ));
     gte_gte_ldvz0();
     gte_rtv0();
     gte_stMAC12(&sp10.vx);
@@ -2922,9 +2922,8 @@ void func_8006E53C(s_RayState* state, s_IpdCollisionData_20* arg1, s_IpdCollisio
 
 void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg2, s_IpdCollisionData_10* arg3, s32 arg4) // 0x8006E78C
 {
-    SVECTOR sp0;
-    SVECTOR sp8;
-
+    SVECTOR   sp0;
+    SVECTOR   sp8;
     SVECTOR3  sp10;
     s32       var_a3;
     q19_12    unkX;
@@ -2951,15 +2950,15 @@ void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg
             groundType = arg3[arg1->field_9].groundType;
         }
 
-        temp_v1 = state->field_58 + (state->field_5A << 16);
+        temp_v1 = PACKED_XZ16(state->field_58, state->field_5A);
         gte_ldR11R12(temp_v1);
         gte_ldR13R21(temp_v1);
-        gte_ldvxy0(((temp_t1->vx - state->field_6C.groundHeight) & 0xFFFF) + ((temp_t1->vz - state->field_6C.field_A) << 16));
+        gte_ldvxy0(PACKED_XZ16(temp_t1->vx - state->field_6C.groundHeight, temp_t1->vz - state->field_6C.field_A));
         gte_gte_ldvz0();
         gte_rtv0();
         gte_stMAC12(&sp0);
 
-        gte_ldvxy0(((temp_t2->vx - state->field_6C.groundHeight) & 0xFFFF) + ((temp_t2->vz - state->field_6C.field_A) << 16));
+        gte_ldvxy0(PACKED_XZ16(temp_t2->vx - state->field_6C.groundHeight, temp_t2->vz - state->field_6C.field_A));
         gte_gte_ldvz0();
         gte_rtv0();
         gte_stMAC12(&sp8);
@@ -3003,7 +3002,7 @@ void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg
                     sp10.vz += temp_t1->vz;
 
                     var_a2 = state->from.vy + state->field_4E;
-                    if (state->offset.vy != 0)
+                    if (state->offset.vy != Q8(0.0f))
                     {
                         var_a2 += (state->offset.vy * var_a3) / state->rayDistance;
                     }
@@ -3025,7 +3024,7 @@ void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg
                         state->groundHeight = sp10.vy;
                         state->field_24 = unkX;
                         state->field_26 = unkZ;
-                        state->field_20 = 0;
+                        state->field_20 = NULL;
                         state->groundType = groundType;
                     }
                 }
@@ -3049,22 +3048,22 @@ void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1) // 0x8006EB8C
         return;
     }
 
-    temp_v1 = state->field_58 + (state->field_5A << 16);
+    temp_v1 = PACKED_XZ16(state->field_58, state->field_5A);
     gte_ldR11R12(temp_v1);
     gte_ldR13R21(temp_v1);
-    gte_ldvxy0(((arg1->vec_2.vx - state->field_6C.groundHeight) & 0xFFFF) + ((arg1->vec_2.vz - state->field_6C.field_A) << 16));
+    gte_ldvxy0(PACKED_XZ16(arg1->vec_2.vx - state->field_6C.groundHeight, arg1->vec_2.vz - state->field_6C.field_A));
     gte_gte_ldvz0();
     gte_rtv0();
     gte_stMAC12(&sp10);
 
     if (-temp_a1 < sp10.vx && sp10.vx < (state->rayDistance + temp_a1) && -temp_a1 < sp10.vy && sp10.vy < temp_a1)
     {
-        temp_v0   = SquareRoot0((temp_a1 * temp_a1) - (sp10.vy * sp10.vy));
+        temp_v0   = SquareRoot0(SQUARE(temp_a1) - SQUARE(sp10.vy));
         temp_a1_3 = sp10.vx - temp_v0;
 
         if (temp_a1_3 >= -temp_v0 && state->rayDistance >= temp_a1_3 && temp_a1_3 < state->field_8)
         {
-            gte_lddp(((temp_a1_3 << 12) / state->rayDistance));
+            gte_lddp(Q12(temp_a1_3) / state->rayDistance);
             gte_ldsv3_(state->offset.vx, state->offset.vy, state->offset.vz);
             gte_gpf12();
             gte_stsv(&sp18);
@@ -3078,7 +3077,7 @@ void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1) // 0x8006EB8C
                 state->groundHeight = arg1->vec_2.vy;
                 state->field_24 = (sp18.vx + state->field_6C.groundHeight) - arg1->vec_2.vx;
                 state->field_26 = (sp18.vz + state->field_6C.field_A) - arg1->vec_2.vz;
-                state->field_20 = 0;
+                state->field_20 = NULL;
                 state->groundType = arg1->groundType;
             }
         }

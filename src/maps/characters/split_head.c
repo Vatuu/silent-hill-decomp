@@ -1228,15 +1228,11 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
 
     if (splitHeadProps.field_EE != Q12(0.0f))
     {
-        *(s32*)&sp10 = splitHeadProps.field_EE << 16;
-        sp10.vz= 0;
-
+        Math_SetSVectorFast(&sp10, 0, splitHeadProps.field_EE, 0);
         Math_RotMatrixZxyNegGte(&sp10, &sp18);
         MulMatrix(&sharedData_800D8610_1_s05[1].coord, &sp18);
 
-        *(s32*)&sp10 = (splitHeadProps.field_EE >> 3) << 16;
-        sp10.vz = 0;
-
+        Math_SetSVectorFast(&sp10, 0, splitHeadProps.field_EE >> 3, 0);
         Math_RotMatrixZxyNegGte(&sp10, &sp18);
 
         for (i = 18; i < 25; i++)

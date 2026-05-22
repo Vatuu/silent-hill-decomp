@@ -1163,9 +1163,10 @@ void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s3
         SetPriority(packet, 0, 0);
         AddPrim(tag, packet);
 
-        poly           = (POLY_G4*)(packet + 0xC);
+        poly           = (POLY_G4*)(packet + 12);
         GsOUT_PACKET_P = (PACKET*)poly;
 
+        // TODO: Use macro.
         *(u32*)&poly->r0 =
         *(u32*)&poly->r1 =
         *(u32*)&poly->r2 =
@@ -1175,6 +1176,7 @@ void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s3
 
         SetPolyG4(poly);
 
+        // TODO: Use macro.
         *(s32*)&poly->x0 = var_a3 + (var_v1 << 16);
         *(s32*)&poly->x1 = temp_s6 + (var_v1 << 16);
         *(s32*)&poly->x2 = var_a3 + (temp_s5 << 16);
@@ -1183,7 +1185,7 @@ void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s3
         setSemiTrans(poly, true);
         AddPrim(tag, poly);
 
-        mode           = (DR_MODE*)(packet + 0x30);
+        mode           = (DR_MODE*)(packet + 48);
         GsOUT_PACKET_P = (PACKET*)mode;
         SetDrawMode(mode, 0, 1, 32, NULL);
         AddPrim(tag, mode);

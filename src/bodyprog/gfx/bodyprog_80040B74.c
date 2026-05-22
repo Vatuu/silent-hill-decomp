@@ -121,9 +121,6 @@ void func_80040BAC(void) // 0x80040BAC
 
 void func_80040E7C(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5) // 0x80040E7C
 {
-    #define SET_RGB(r, g, b) \
-        (((r) & 0xFF) | ((g) & 0xFF) << 8 | ((b) & 0xFF) << 16)
-
     u32      colorTable[4];
     s32      j;
     s32      i;
@@ -134,14 +131,14 @@ void func_80040E7C(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5) // 0x80
     POLY_G4* poly_g4;
     PACKET*  packet;
 
-    color = SET_RGB(arg0, arg1, arg2);
+    color = COLOR_RGB(arg0, arg1, arg2);
 
     packet = &g_Map_GfxPackets;
 
-    colorTable[0] = SET_RGB(0, 0, 0);
-    colorTable[1] = SET_RGB(arg3 / 3, arg4 / 3, arg5 / 3);
-    colorTable[2] = SET_RGB(arg3 * 2 / 3, arg4 * 2 / 3, arg5 * 2 / 3);
-    colorTable[3] = SET_RGB(arg3, arg4, arg5);
+    colorTable[0] = COLOR_RGB(0, 0, 0);
+    colorTable[1] = COLOR_RGB(arg3 / 3, arg4 / 3, arg5 / 3);
+    colorTable[2] = COLOR_RGB(arg3 * 2 / 3, arg4 * 2 / 3, arg5 * 2 / 3);
+    colorTable[3] = COLOR_RGB(arg3, arg4, arg5);
 
     for (i = 0; i < 2; i++,
         packet += (sizeof(DR_TPAGE) * 2) + ((sizeof(POLY_G4) * 16) * 3) + (sizeof(POLY_G3) * 16) + (sizeof(POLY_F4) * 16))

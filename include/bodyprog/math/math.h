@@ -40,6 +40,25 @@
 #define SVECTOR(x, y, z) \
     { Q12_ANGLE(x), Q12_ANGLE(y), Q12_ANGLE(z) }
 
+/** @brief Packs a 16-bit XZ vector.
+ *
+ * @param x X component.
+ * @param z Z component.
+ * @return Packed XZ vector.
+ */
+#define PACKED_XZ16(x, z) \
+    (((x) & 0xFFFF) + ((z) << 16))
+
+/** @brief Packs an RGB color.
+ *
+ * @param r Red component.
+ * @param g Green component.
+ * @param b Blue component.
+ * @return Packed RGB color.
+ */
+#define COLOR_RGB(r, g, b) \
+    (((r) & 0xFF) | ((g) & 0xFF) << 8 | ((b) & 0xFF) << 16)
+
 /** @brief Packs an RGB + code color.
  *
  * @param r Red component.
@@ -48,8 +67,8 @@
  * @param code Code component.
  * @return Packed RGB + code color.
  */
-#define COLOR(r, g, b, code) \
-    ((r) | ((g) << 8) | ((b) << 16) | ((code) << 24))
+#define COLOR_RGBC(r, g, b, code) \
+    (((r) & 0xFF) | (((g) & 0xFF) << 8) | (((b) & 0xFF) << 16) | ((code) << 24))
 
 /** @brief Checks if a flag in a bitfield is set to a required status.
  *

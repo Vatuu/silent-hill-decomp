@@ -1405,7 +1405,7 @@ void func_800DD2D4(void) // 0x800DD2D4
             scratchData->sprt_0             = (SPRT*)GsOUT_PACKET_P;
             for (i = 0; i < 2; i++)
             {
-                setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, COLOR(128, 128, 128, 0));
+                setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, COLOR_RGBC(128, 128, 128, 0));
                 setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
                 scratchData->sprt_0->u0 = 0;
                 scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) ? 32 : 0;
@@ -1771,7 +1771,7 @@ void func_800DE1FC(void) // 0x800DE1FC
 
             for (i = 0; i < 2; i++)
             {
-                setCodeWord(scratch->sprt_0, PRIM_RECT | RECT_TEXTURE, COLOR(128, 128, 128, 0));
+                setCodeWord(scratch->sprt_0, PRIM_RECT | RECT_TEXTURE, COLOR_RGBC(128, 128, 128, 0));
                 setXY0Fast(scratch->sprt_0, ((i << 8) - 160), -112);
 
                 scratch->sprt_0->u0 = 0;
@@ -2271,7 +2271,7 @@ void func_800DFDDC(void) // 0x800DFDDC
         if ((g_SysWork.sysStateSteps[0] >= 8 && g_SysWork.sysStateSteps[0] <= 10) || g_SysWork.sysStateSteps[0] == 15)
         {
             sprt = (SPRT*)GsOUT_PACKET_P;
-            setCodeWord(sprt, PRIM_RECT | RECT_TEXTURE, COLOR(128, 128, 128, 0));
+            setCodeWord(sprt, PRIM_RECT | RECT_TEXTURE, COLOR_RGBC(128, 128, 128, 0));
             setXY0Fast(sprt, (((D_800E9D8E - 1) % 3) * 35) - 42, (((D_800E9D8E - 1) / 3) * 35) - 32);
             setUV0(sprt, 64, 16);
             setWH(sprt, 14, 14);

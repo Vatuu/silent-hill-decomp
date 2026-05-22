@@ -268,8 +268,8 @@ typedef struct
     /* 0x4C */ q7_8             field_4C; // X?
     /* 0x4E */ q7_8             field_4E; // Height offset.
     /* 0x50 */ SVECTOR          offset; // Q23.8
-    /* 0x58 */ u16              field_58;
-    /* 0x5A */ s16              field_5A;
+    /* 0x58 */ u16              field_58; // X
+    /* 0x5A */ s16              field_5A; // Z
     /* 0x5C */ q7_8             rayDistance;
     /* 0x5E */ s16              field_5E;
     /* 0x60 */ s16              field_60;

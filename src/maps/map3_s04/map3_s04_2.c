@@ -240,11 +240,11 @@ void func_800D2668(void) // 0x800D2668
             g_SysWork.pointLightIntensity = Q12(0.7f);
             Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(58.34f), Q12(-1.93f), Q12(141.8f));
 
-            // @hack
+            // @hack TODO: Make the macro match.
             // Math_SetSVectorFast(&g_SysWork.pointLightRotation, Q12_ANGLE(-15.0f), Q12_ANGLE(-177.0f), Q12_ANGLE(0.0f));
-            *((s32*) (&(&g_SysWork.pointLightRotation)->vx)) = ((s32) (0xff56 & 0xFFFF)) | ((s32) (0xf823 << 16));
+            *((s32*) (&(&g_SysWork.pointLightRotation)->vx)) = ((s32)(0xFF56 & 0xFFFF)) | ((s32)(0xF823 << 16));
             tmpSvec = &g_SysWork.pointLightRotation;
-            *((s16*) (&tmpSvec->vz)) = 0;
+            *((s16*)(&tmpSvec->vz)) = 0;
 
             func_8008D438();
             func_8003D03C();

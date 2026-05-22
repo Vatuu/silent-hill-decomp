@@ -2256,9 +2256,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
         }
     }
 
-    ptr->field_30.vz         = 0;
-    *(s32*)&ptr->field_30.vx = ptr->angle_44 << 16;
-
+    Math_SetSVectorFastSum(&ptr->field_30, 0, ptr->angle_44, 0);
     Math_RotMatrixZxyNegGte(&ptr->field_30, &ptr->field_0);
     MulMatrix(&coord[3].coord, &ptr->field_0);
 
