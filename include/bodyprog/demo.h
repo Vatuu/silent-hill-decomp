@@ -1,11 +1,6 @@
 #ifndef _BODYPROG_DEMO_H
 #define _BODYPROG_DEMO_H
 
-/** @brief This header is used to declare any variable, struct, or
- * function part of `BODYPROG.BIN` identified to be related
- * to the demo game system.
- */
-
 // ======
 // ENUMS
 // ======
@@ -96,7 +91,7 @@ extern s32 g_Demo_DemoStep;
 extern s32 g_Demo_VideoPresentInterval;
 
 /** Something for demo handling. Set in `Fs_QueueChunksLoad`. */
-extern bool D_800C489C;
+extern bool g_Demo_IsLoadingChunks;
 
 // ==========
 // FUNCTIONS

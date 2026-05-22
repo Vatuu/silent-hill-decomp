@@ -6,28 +6,18 @@
 #include "main/fsqueue.h"
 #include "main/rng.h"
 
-s32 g_Demo_DemoFileIdx;
-
-s32 g_Demo_PlayFileIdx;
-
-s32 __pad_bss_800C4848[2];
-
-s_OptionsConfig g_Demo_OptionsConfigBackup;
-
-u32 g_Demo_PrevRandSeed;
-
-u32 g_Demo_RandSeedBackup;
-
+s32              g_Demo_DemoFileIdx;
+s32              g_Demo_PlayFileIdx;
+s32              __pad_bss_800C4848[2];
+s_OptionsConfig  g_Demo_OptionsConfigBackup;
+u32              g_Demo_PrevRandSeed;
+u32              g_Demo_RandSeedBackup;
 s_DemoFrameData* g_Demo_CurFrameData;
-
-s32 g_Demo_DemoStep;
-
-s32 g_Demo_VideoPresentInterval;
-
-bool D_800C489C;
-
-s32 g_Demo_DemoId = 0;
-u16 g_Demo_RandSeed = 0;
+s32              g_Demo_DemoStep;
+s32              g_Demo_VideoPresentInterval;
+bool             g_Demo_IsLoadingChunks;
+s32              g_Demo_DemoId   = 0;
+u16              g_Demo_RandSeed = 0;
 // 2 bytes of padding.
 s_DemoFrameData* g_Demo_PlayFileBufferPtr = (s_DemoFrameData*)0x800F5E00;
 
@@ -42,13 +32,13 @@ bool Demo_SequenceAdvance(s32 incrementAmount) // 0x8008EF20
         { FILE_MISC_DEMO000A_DAT, FILE_MISC_PLAY000A_DAT, 0 },
         { FILE_MISC_DEMO0003_DAT, FILE_MISC_PLAY0003_DAT, 0 },
         { FILE_MISC_DEMO000B_DAT, FILE_MISC_PLAY000B_DAT, 0 },
-        { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, 0 },
+        { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, 0 }
 #elif VERSION_REGION_IS(NTSCJ)
         { FILE_MISC_DEMO0006_DAT, FILE_MISC_PLAY0006_DAT, 0 },
         { FILE_MISC_DEMO0007_DAT, FILE_MISC_PLAY0007_DAT, 0 },
         { FILE_MISC_DEMO0008_DAT, FILE_MISC_PLAY0008_DAT, 0 },
         { FILE_MISC_DEMO0004_DAT, FILE_MISC_PLAY0004_DAT, 0 },
-        { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, 0 },
+        { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, 0 }
 #endif
     };
 
@@ -69,7 +59,8 @@ bool Demo_SequenceAdvance(s32 incrementAmount) // 0x8008EF20
         // Call optional funcptr associated with this demo.
         // If funcptr is set, return whether demo is eligible to play, possibly based on game progress or other conditions.
         // In retail demos this pointer is always `NULL`.
-        if (DEMO_FILE_INFOS[g_Demo_DemoId].canPlayDemo == NULL || DEMO_FILE_INFOS[g_Demo_DemoId].canPlayDemo() == 1)
+        if (DEMO_FILE_INFOS[g_Demo_DemoId].canPlayDemo   == NULL ||
+            DEMO_FILE_INFOS[g_Demo_DemoId].canPlayDemo() == 1)
         {
             break;
         }
@@ -89,6 +80,8 @@ bool Demo_SequenceAdvance(s32 incrementAmount) // 0x8008EF20
     g_Demo_DemoFileIdx = DEMO_FILE_INFOS[g_Demo_DemoId].demoFileId;
     g_Demo_PlayFileIdx = DEMO_FILE_INFOS[g_Demo_DemoId].playFileId;
     return true;
+
+    #undef DEMO_FILE_COUNT_MAX
 }
 
 void Demo_DemoDataRead(void) // 0x8008F048
@@ -296,16 +289,16 @@ void Demo_DemoRandSeedAdvance(void) // 0x8008F598
 bool Demo_Update(void) // 0x8008F5D8
 {
     s32         prevScreenFadeCpy;
-    bool        cond;
+    bool        isLoadingChunks;
     u32         demoStep;
     s_GameWork* gameWork;
 
     static s32 prevScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
 
-    prevScreenFadeCpy = prevScreenFade;
-    cond              = D_800C489C;
-    D_800C489C        = false;
-    prevScreenFade    = g_Screen_FadeStatus;
+    prevScreenFadeCpy      = prevScreenFade;
+    isLoadingChunks        = g_Demo_IsLoadingChunks;
+    g_Demo_IsLoadingChunks = false;
+    prevScreenFade         = g_Screen_FadeStatus;
 
     if (!(g_SysWork.sysFlags & SysFlag_DemoActive))
     {
@@ -329,7 +322,9 @@ bool Demo_Update(void) // 0x8008F5D8
         return false;
     }
 
-    if (!Gfx_ScreenFadeIn_IsInProgress(prevScreenFadeCpy) || !Gfx_ScreenFadeIn_IsInProgress(g_Screen_FadeStatus) || cond)
+    if (!Gfx_ScreenFadeIn_IsInProgress(prevScreenFadeCpy)   ||
+        !Gfx_ScreenFadeIn_IsInProgress(g_Screen_FadeStatus) ||
+        isLoadingChunks)
     {
         g_Demo_CurFrameData = NULL;
         return true;

@@ -3652,7 +3652,7 @@ g_Demo_RandSeedBackup                        = 0x800C6EE4;
 g_Demo_CurFrameData                          = 0x800C6EE8;
 g_Demo_DemoStep                              = 0x800C6EEC;
 g_Demo_VideoPresentInterval                  = 0x800C6EF0;
-D_800C489C                                   = 0x800C6EF4;
+g_Demo_IsLoadingChunks                       = 0x800C6EF4;
 
 //-------------------------------------------------------------
 //--- PA: 0x0A2398   VA: 0x800C6EF8   subsegment: .bss, ranking

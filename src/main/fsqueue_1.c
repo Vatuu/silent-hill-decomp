@@ -22,17 +22,17 @@ s32 Fs_QueueGetLength(void)
 
 bool Fs_QueueChunksLoad(void)
 {
-    bool result;
+    bool isFinished;
 
-    D_800C489C = true;
+    g_Demo_IsLoadingChunks = true;
 
-    result = false;
+    isFinished = false;
     if (Fs_QueueGetLength() == 0)
     {
-        result = Ipd_ChunkInitCheck() != false;
+        isFinished = Ipd_ChunkInitCheck() != false;
     }
 
-    return result;
+    return isFinished;
 }
 
 void Fs_QueueWaitForEmpty(void)
