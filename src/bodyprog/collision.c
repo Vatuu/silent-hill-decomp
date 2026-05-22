@@ -3381,33 +3381,35 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_CollisionTrigger* trigger) // 
 q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
                                   const s_CollisionCylinder* collCylinder, q19_12 cylinderRadius, q19_12 cylinderHeight) // 0x8006F620
 {
+    #define INTERSECT_BUFFER Q12(0.1f)
+
     q19_12              projOffsetToTriggerX;
     q19_12              projOffsetToTriggerZ;
     q19_12              offsetToTriggerX;
     q19_12              offsetToTriggerZ;
     q19_12              cylinderTop;
     q19_12              projCylinderTop;
-    q19_12              extraOffsetX;
-    q19_12              extraOffsetZ;
-    q19_12              topToCeilingHeight;
+    q19_12              pushOffsetX;
+    q19_12              pushOffsetZ;
+    q19_12              cylinderTopToCeilDist;
     q19_12              triggerHeight;
-    q19_12              dist;
-    q19_12              extraDist;
     q19_12              distToTrigger;
-    q19_12              angleToClosestTrigger;
-    q19_12              adjDist;
+    q19_12              pushDist;
+    q19_12              projDistToTrigger;
+    q19_12              angleToTrigger;
+    q19_12              allowedIntersectDist;
     s32                 i;
     q19_12              moveOffsetX;
     q19_12              moveOffsetZ;
     q19_12              ceilHeight;
-    q19_12              threshold;
+    q19_12              headroom;
     s_CollisionTrigger* curTrigger;
 
-    ceilHeight = DEFAULT_CEILING_HEIGHT;
+    ceilHeight  = DEFAULT_CEILING_HEIGHT;
+    pushOffsetX = Q12(0.0f);
+    pushOffsetZ = Q12(0.0f);
 
-    extraOffsetX = Q12(0.0f);
-    extraOffsetZ = Q12(0.0f);
-
+    // Compute start parameters.
     moveOffsetX     = moveOffset->vx;
     moveOffsetZ     = moveOffset->vz;
     cylinderTop     = collCylinder->position.vy + cylinderHeight;
@@ -3418,14 +3420,14 @@ q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
     {
         curTrigger = g_ActiveCollisionTriggers.collisionTriggers[i];
 
-        // Check if trigger above was missed.
+        // Check if trigger overhead is avoided.
         triggerHeight = TRIGGER_HEIGHT_GET(curTrigger->height);
         if ((projCylinderTop - triggerHeight) >= Q12(0.0f))
         {
             continue;
         }
 
-        // Check rough cylinder-trigger collision.
+        // Check rough cylinder-trigger collision at projected position.
         Collision_TriggerOffsetGet(&projOffsetToTriggerX, &projOffsetToTriggerZ,
                                    collCylinder->position.vx + moveOffsetX, collCylinder->position.vz + moveOffsetZ,
                                    curTrigger);
@@ -3434,73 +3436,85 @@ q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
             continue;
         }
 
-        // Check accurate cylinder-trigger collision.
-        distToTrigger = Vc_VectorMagnitudeCalc(projOffsetToTriggerX, Q12(0.0f), projOffsetToTriggerZ);
-        if (distToTrigger >= cylinderRadius)
+        // Check accurate cylinder-trigger collision at projected position.
+        projDistToTrigger = Vc_VectorMagnitudeCalc(projOffsetToTriggerX, Q12(0.0f), projOffsetToTriggerZ);
+        if (projDistToTrigger >= cylinderRadius)
         {
             continue;
         }
 
-        // Account for projected exit from inside the trigger.
-        if (distToTrigger > Q12(0.0f))
+        // Handle horizontal edge rejection.
+        if (projDistToTrigger > Q12(0.0f))
         {
             Collision_TriggerOffsetGet(&offsetToTriggerX, &offsetToTriggerZ,
                                        collCylinder->position.vx, collCylinder->position.vz,
                                        curTrigger);
 
-            adjDist = Q12(0.1f);
-            dist    = Vc_VectorMagnitudeCalc(offsetToTriggerX, Q12(0.0f), offsetToTriggerZ);
-            if ((cylinderRadius - dist) <= Q12(0.1f))
+            // Compute allowed intersection depth.
+            allowedIntersectDist = INTERSECT_BUFFER;
+            distToTrigger        = Vc_VectorMagnitudeCalc(offsetToTriggerX, Q12(0.0f), offsetToTriggerZ);
+            if ((cylinderRadius - distToTrigger) <= INTERSECT_BUFFER)
             {
-                adjDist = cylinderRadius - dist;
+                allowedIntersectDist = cylinderRadius - distToTrigger;
             }
 
-            if ((distToTrigger - dist) < adjDist)
+            // Check for projected intersection.
+            if ((projDistToTrigger - distToTrigger) < allowedIntersectDist)
             {
-                angleToClosestTrigger = ratan2(projOffsetToTriggerX, projOffsetToTriggerZ);
-                extraDist             = adjDist - (distToTrigger - dist);
+                // Compute push distance away from trigger.
+                angleToTrigger = ratan2(projOffsetToTriggerX, projOffsetToTriggerZ);
+                pushDist       = allowedIntersectDist - (projDistToTrigger - distToTrigger);
 
-                extraOffsetX = Math_MulFixed(extraDist, Math_Sin(angleToClosestTrigger), Q12_SHIFT);
-                extraOffsetZ = Math_MulFixed(extraDist, Math_Cos(angleToClosestTrigger), Q12_SHIFT);
+                // Compute push offset.
+                pushOffsetX = Math_MulFixed(pushDist, Math_Sin(angleToTrigger), Q12_SHIFT);
+                pushOffsetZ = Math_MulFixed(pushDist, Math_Cos(angleToTrigger), Q12_SHIFT);
             }
         }
-        // Inside.
+        // Handle predictive ceiling rejection.
         else
         {
+            // Track lowest ceiling.
             if (triggerHeight < ceilHeight)
             {
                 ceilHeight = triggerHeight;
             }
 
+            // Reset move offset.
             moveOffsetX = moveOffset->vx;
             moveOffsetZ = moveOffset->vz;
             break;
         }
 
-        moveOffsetX += extraOffsetX;
-        moveOffsetZ += extraOffsetZ;
+        // Apply push offset.
+        moveOffsetX += pushOffsetX;
+        moveOffsetZ += pushOffsetZ;
     }
 
+    // Set movement offset.
     moveOffset->vx = moveOffsetX;
     moveOffset->vz = moveOffsetZ;
 
+    // Restrict vertical movement.
     if (ceilHeight != DEFAULT_CEILING_HEIGHT)
     {
-        threshold          = Q12(0.1f);
-        topToCeilingHeight = ceilHeight - cylinderTop;
-        
-        if (topToCeilingHeight < Q12(0.1f))
+        // Compute headroom.
+        headroom              = INTERSECT_BUFFER;
+        cylinderTopToCeilDist = ceilHeight - cylinderTop;
+        if (cylinderTopToCeilDist < INTERSECT_BUFFER)
         {
-            threshold = topToCeilingHeight;
+            headroom = cylinderTopToCeilDist;
         }
 
-        if (moveOffset->vy < threshold)
+        // Clamp movement to ceiling.
+        if (moveOffset->vy < headroom)
         {
-            moveOffset->vy = threshold;
+            moveOffset->vy = headroom;
         }
     }
 
     return ceilHeight;
+
+    #undef THRESHOLD
 }
 
 void Collision_TriggerOffsetGet(q19_12* offsetX, q19_12* offsetZ, q19_12 posX, q19_12 posZ, const s_CollisionTrigger* trigger) // 0x8006F8FC

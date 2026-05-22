@@ -305,7 +305,7 @@ extern s_ActiveCollisionTriggers g_ActiveCollisionTriggers;
 
 extern u16 g_CollisionTriggerFlags;
 
-/** @brief Computes trigger height from half-meter height steps.
+/** @brief Computes a trigger height from half-meter height steps.
  *
  * @param steps Half-meter height steps.
  * @return Trigger height (Q19.12).
