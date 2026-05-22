@@ -242,11 +242,11 @@ bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx)
             sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_2 -= FP_MULTIPLY_PRECISE(g_DeltaTime, (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 >> 1) & 0x3F80, 0xC);
         }
 
-        Collision_Get(&ptr->collision, sharedData_800DFB7C_0_s00[idx].field_0.s_0.field_0, sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_0);
+        Collision_SurfaceGet(&ptr->surface, sharedData_800DFB7C_0_s00[idx].field_0.s_0.field_0, sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_0);
 
-        if ((ptr->collision.groundType == GroundType_Default &&
+        if ((ptr->surface.groundType == GroundType_Default &&
              sharedData_800DFB7C_0_s00[idx].vy_8 > 0) ||
-            ptr->collision.groundHeight < sharedData_800DFB7C_0_s00[idx].vy_8)
+            ptr->surface.groundHeight < sharedData_800DFB7C_0_s00[idx].vy_8)
         {
             sharedData_800DFB7C_0_s00[idx].field_A = 0;
         }

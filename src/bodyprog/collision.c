@@ -122,7 +122,7 @@ void func_800699E4(s_IpdCollisionData* collData) // 0x800699E4
     collData->unkLoadedCount++;
 }
 
-void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
+void Collision_SurfaceGet(s_CollisionSurface* surface, q19_12 posX, q19_12 posZ) // 0x800699F8
 {
     s_CollisionCylinder collCylinder;
     VECTOR3             pos;
@@ -136,10 +136,10 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
     ipdCollData = Ipd_CollisionDataGet(posX, posZ);
     if (ipdCollData == NULL)
     {
-        coll->groundHeight = Q12(8.0f);
-        coll->tiltAngleZ   = Q12_ANGLE(0.0f);
-        coll->tiltAngleX   = Q12_ANGLE(0.0f);
-        coll->groundType   = GroundType_Default;
+        surface->groundHeight = Q12(8.0f);
+        surface->tiltAngleZ   = Q12_ANGLE(0.0f);
+        surface->tiltAngleX   = Q12_ANGLE(0.0f);
+        surface->groundType   = GroundType_Default;
         return;
     }
 
@@ -158,20 +158,20 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
 
     if (state.field_90 == 1)
     {
-        coll->groundType   = GroundType_Default;
-        coll->groundHeight = Q12(8.0f);
+        surface->groundType   = GroundType_Default;
+        surface->groundHeight = Q12(8.0f);
     }
     else
     {
-        coll->groundType   = state.groundType;
-        coll->groundHeight = Q8_TO_Q12(Ipd_GroundHeightGet(state.charaMoveInfo.positionX, state.charaMoveInfo.positionZ, &state));
+        surface->groundType   = state.groundType;
+        surface->groundHeight = Q8_TO_Q12(Ipd_GroundHeightGet(state.charaMoveInfo.positionX, state.charaMoveInfo.positionZ, &state));
     }
 
-    coll->tiltAngleX = state.tiltAngleX;
-    coll->tiltAngleZ = state.tiltAngleZ;
+    surface->tiltAngleX = state.tiltAngleX;
+    surface->tiltAngleZ = state.tiltAngleZ;
 }
 
-s32 Collision_WallDetect(s_CollisionResult* collResult, VECTOR3* moveOffset, s_SubCharacter* chara) // 0x80069B24
+s32 Collision_WallDetect(s_CollisionResult* collResult, const VECTOR3* moveOffset, s_SubCharacter* chara) // 0x80069B24
 {
     s32 stackPtr;
     s32 response;
@@ -189,13 +189,13 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
     #define WALL_COUNT_THRESHOLD 3                               // Unknown purpose.
     #define WALL_HEIGHT          Q12(0.5f)
 
-    s_Collision     coll;
-    e_CollisionType collType;
-    q19_12          groundHeight;
-    q19_12          wallHeightBound;
-    s32             i;
-    s32             wallCount;
-    s32             groundType; // `e_GroundType`
+    s_CollisionSurface surface;
+    e_CollisionType    collType;
+    q19_12             groundHeight;
+    q19_12             wallHeightBound;
+    s32                i;
+    s32                wallCount;
+    s32                groundType; // `e_GroundType`
 
     if (response == NO_VALUE)
     {
@@ -222,14 +222,14 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
         case Chara_PuppetDoctor:
             wallHeightBound = chara->position.vy - WALL_HEIGHT;
 
-            switch (collResult->collision.groundType)
+            switch (collResult->surface.groundType)
             {
                 case GroundType_12:
                     collType = CollisionType_Unk2;
                     break;
 
                 default:
-                    collType = (collResult->collision.groundHeight < wallHeightBound) ? CollisionType_Wall : CollisionType_None;
+                    collType = (collResult->surface.groundHeight < wallHeightBound) ? CollisionType_Wall : CollisionType_None;
                     break;
             }
 
@@ -241,24 +241,24 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
 
             for (i = 0, groundType = GroundType_12; i < POINT_COUNT; i++)
             {
-                Collision_Get(&coll,
-                              chara->position.vx + Q12_MULT(Math_Sin(i * ANGLE_STEP), Q12(0.2f)),
-                              chara->position.vz + Q12_MULT(Math_Cos(i * ANGLE_STEP), Q12(0.2f)));
+                Collision_SurfaceGet(&surface,
+                                     chara->position.vx + Q12_MULT(Math_Sin(i * ANGLE_STEP), Q12(0.2f)),
+                                     chara->position.vz + Q12_MULT(Math_Cos(i * ANGLE_STEP), Q12(0.2f)));
 
                 switch (collType)
                 {
                     case CollisionType_Wall:
-                        if (coll.groundHeight < wallHeightBound)
+                        if (surface.groundHeight < wallHeightBound)
                         {
                             wallCount++;
                         }
                         break;
 
                     case CollisionType_Unk2:
-                        if (coll.groundType != GroundType_12)
+                        if (surface.groundType != GroundType_12)
                         {
-                            groundType   = coll.groundType;
-                            groundHeight = coll.groundHeight;
+                            groundType   = surface.groundType;
+                            groundHeight = surface.groundHeight;
                         }
                         break;
                 }
@@ -269,15 +269,15 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
                 case CollisionType_Wall:
                     if (wallCount < WALL_COUNT_THRESHOLD)
                     {
-                        collResult->collision.groundHeight = chara->position.vy;
+                        collResult->surface.groundHeight = chara->position.vy;
                     }
                     break;
 
                 case CollisionType_Unk2:
                     if (groundType != GroundType_12)
                     {
-                        collResult->collision.groundHeight = groundHeight;
-                        collResult->collision.groundType   = GroundType_12;
+                        collResult->surface.groundHeight = groundHeight;
+                        collResult->surface.groundType   = GroundType_12;
                     }
                     break;
             }
@@ -309,16 +309,16 @@ void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* p
     #define POINT_COUNT 16
     #define ANGLE_STEP  Q12_ANGLE(360.0f / POINT_COUNT)
 
-    s32         groundHeights[POINT_COUNT];
-    s_Collision coll;
-    q19_12      angle;
-    s32         var_a0;
-    q19_12      groundHeight;
-    s32         var_s0;
-    s32         i;
-    q19_12      groundHeightMax;
-    q19_12      groundHeightMin;
-    s32         lowestGroundHeightIdx;
+    s32                groundHeights[POINT_COUNT];
+    s_CollisionSurface surface;
+    q19_12             angle;
+    s32                var_a0;
+    q19_12             groundHeight;
+    s32                var_s0;
+    s32                i;
+    q19_12             groundHeightMax;
+    q19_12             groundHeightMin;
+    s32                lowestGroundHeightIdx;
 
     groundHeightMin = Q12(-30.0f);
     groundHeightMax = Q12(30.0f);
@@ -327,20 +327,20 @@ void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* p
     // Collect ground heights around position?
     for (i = 0; i < POINT_COUNT; i++)
     {
-        Collision_Get(&coll,
-                      pos->vx + Math_Sin((startHeadingAngle & 0xF) + (i * ANGLE_STEP)),
-                      pos->vz + Math_Cos((startHeadingAngle & 0xF) + (i * ANGLE_STEP)));
-        groundHeights[i] = coll.groundHeight;
+        Collision_SurfaceGet(&surface,
+                             pos->vx + Math_Sin((startHeadingAngle & 0xF) + (i * ANGLE_STEP)),
+                             pos->vz + Math_Cos((startHeadingAngle & 0xF) + (i * ANGLE_STEP)));
+        groundHeights[i] = surface.groundHeight;
 
-        if (groundHeightMin < coll.groundHeight)
+        if (groundHeightMin < surface.groundHeight)
         {
-            groundHeightMin       = coll.groundHeight;
+            groundHeightMin       = surface.groundHeight;
             lowestGroundHeightIdx = i;
         }
 
-        if (coll.groundHeight < groundHeightMax)
+        if (surface.groundHeight < groundHeightMax)
         {
-            groundHeightMax = coll.groundHeight;
+            groundHeightMax = surface.groundHeight;
         }
     }
 
@@ -372,7 +372,7 @@ void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* p
     #undef ANGLE_STEP
 }
 
-bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* moveOffset, s_SubCharacter* chara) // 0x80069FFC
+bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, const VECTOR3* moveOffset, s_SubCharacter* chara) // 0x80069FFC
 {
     s_CollisionCylinder collCylinder;
     VECTOR3             offsetCpy;
@@ -420,14 +420,14 @@ bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* moveO
 
 void Collision_DefaultResultSet(s_CollisionResult* collResult, q19_12 offsetX, q19_12 offsetY, q19_12 offsetZ, q19_12 groundHeight) // 0x8006A178
 {
-    collResult->offset.vx              = offsetX;
-    collResult->offset.vy              = offsetY;
-    collResult->offset.vz              = offsetZ;
-    collResult->collision.tiltAngleZ   = Q12_ANGLE(0.0f);
-    collResult->collision.tiltAngleX   = Q12_ANGLE(0.0f);
-    collResult->collision.groundType   = GroundType_Default;
-    collResult->field_18               = Q12(-16.0f);
-    collResult->collision.groundHeight = groundHeight;
+    collResult->offset.vx            = offsetX;
+    collResult->offset.vy            = offsetY;
+    collResult->offset.vz            = offsetZ;
+    collResult->surface.tiltAngleZ   = Q12_ANGLE(0.0f);
+    collResult->surface.tiltAngleX   = Q12_ANGLE(0.0f);
+    collResult->surface.groundType   = GroundType_Default;
+    collResult->field_18             = Q12(-16.0f);
+    collResult->surface.groundHeight = groundHeight;
 }
 
 s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubCharacter* excludedChara, bool includePlayer) // 0x8006A1A4
@@ -654,19 +654,19 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
 
     if (collState.field_90 == 1)
     {
-        groundHeight                     = Q12(8.0f);
-        collResult->collision.groundType = GroundType_Default;
+        groundHeight                   = Q12(8.0f);
+        collResult->surface.groundType = GroundType_Default;
     }
     else
     {
-        collResult->collision.groundType = collState.groundType;
-        groundHeight                     = Q8_TO_Q12(Ipd_GroundHeightGet(collState.charaMoveInfo.positionX + Q12_TO_Q8(sp120.vx),
-                                                                         collState.charaMoveInfo.positionZ + Q12_TO_Q8(sp120.vz), &collState));
+        collResult->surface.groundType = collState.groundType;
+        groundHeight                   = Q8_TO_Q12(Ipd_GroundHeightGet(collState.charaMoveInfo.positionX + Q12_TO_Q8(sp120.vx),
+                                                                       collState.charaMoveInfo.positionZ + Q12_TO_Q8(sp120.vz), &collState));
     }
 
-    collResult->collision.groundHeight = groundHeight;
-    collResult->collision.tiltAngleX   = collState.tiltAngleX;
-    collResult->collision.tiltAngleZ   = collState.tiltAngleZ;
+    collResult->surface.groundHeight = groundHeight;
+    collResult->surface.tiltAngleX   = collState.tiltAngleX;
+    collResult->surface.tiltAngleZ   = collState.tiltAngleZ;
 
     if (cond)
     {

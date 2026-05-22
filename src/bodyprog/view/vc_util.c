@@ -80,13 +80,13 @@ void Vc_UpdateLookAtPointSetAlt(void) // 0x800401CC
 
 void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, bool back_f, bool right_f, bool left_f, bool up_f, bool down_f) // 0x800401EC
 {
-    VECTOR3         first_cam_pos; // Q19.12
-    VECTOR3         hr_head_pos;   // Q19.12
-    s_Collision     coll;
-    q19_12          hero_bottom_y; // Player bottom height.
-    q19_12          hero_top_y;    // Player top height.
-    q19_12          grnd_y;        // Absolute ground height.
-    s_SubCharacter* hr_p;          // Player character.
+    VECTOR3            first_cam_pos; // Q19.12
+    VECTOR3            hr_head_pos;   // Q19.12
+    s_CollisionSurface surface;
+    q19_12             hero_bottom_y; // Player bottom height.
+    q19_12             hero_top_y;    // Player top height.
+    q19_12             grnd_y;        // Absolute ground height.
+    s_SubCharacter*    hr_p;          // Player character.
 
     // Step to next debug mode.
     if (change_debug_mode)
@@ -119,8 +119,8 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
             }
             else
             {
-                Collision_Get(&coll, hr_p->position.vx, hr_p->position.vz);
-                grnd_y = coll.groundHeight;
+                Collision_SurfaceGet(&surface, hr_p->position.vx, hr_p->position.vz);
+                grnd_y = surface.groundHeight;
 
                 vcMakeHeroHeadPos(&hr_head_pos);
             }

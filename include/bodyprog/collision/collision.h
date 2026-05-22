@@ -26,22 +26,23 @@ typedef enum _CollisionType
     CollisionType_Unk2 = 2
 } e_CollisionType;
 
-typedef struct _Collision
+/** @brief Collision surface data. */
+typedef struct _CollisionSurface
 {
     /* 0x0 */ q19_12 groundHeight;
     /* 0x4 */ q3_12  tiltAngleX;
     /* 0x6 */ q3_12  tiltAngleZ;
     /* 0x8 */ s8     groundType; /** `e_GroundType` */
     // 3 bytes of padding.
-} s_Collision;
-STATIC_ASSERT_SIZEOF(s_Collision, 12);
+} s_CollisionSurface;
+STATIC_ASSERT_SIZEOF(s_CollisionSurface, 12);
 
 /** @brief Collision point data. */
 typedef struct _CollisionPoint
 {
-    /* 0x0  */ VECTOR3     position;   /** Q19.12 */
-    /* 0xC  */ s_Collision collision;
-    /* 0x18 */ s32         groundType; /** `e_GroundType` */
+    /* 0x0  */ VECTOR3            position;   /** Q19.12 */
+    /* 0xC  */ s_CollisionSurface surface;
+    /* 0x18 */ s32                groundType; /** `e_GroundType` */
 } s_CollisionPoint;
 
 /** @brief Collision cylinder with a character collision state. */
@@ -57,65 +58,65 @@ STATIC_ASSERT_SIZEOF(s_CollisionCylinder, 20);
 
 typedef struct
 {
-    u8  field_0;
-    u8  field_1;
-    s16 field_2;
-    s32 field_4;
+    /* 0x0 */ u8  field_0;
+    /* 0x1 */ u8  field_1;
+    /* 0x2 */ s16 field_2;
+    /* 0x4 */ s32 field_4;
 } s_CollisionState_A8;
 
 typedef struct
 {
-    s8      field_0;
-    DVECTOR field_2; // Q3.12 | Angle constraint. X is min, Y is max. TODO: Don't use `DVECTOR` for this anymore.
+    /* 0x0 */ s8      field_0;
+    /* 0x2 */ DVECTOR field_2; // Q3.12 | Angle constraint. X is min, Y is max. TODO: Don't use `DVECTOR` for this anymore.
 } s_CollisionState_44_0;
 
 typedef struct
 {
-    s_CollisionState_44_0 field_0;
-    s16                   field_6;
-    s_CollisionState_44_0 field_8;
-    s16                   field_E;
-    s8*                   field_10[8];
-    s_CollisionState_44_0 field_30;
-    s16                   field_36;
+    /* 0x0  */ s_CollisionState_44_0 field_0;
+    /* 0x6  */ s16                   field_6;
+    /* 0x8  */ s_CollisionState_44_0 field_8;
+    /* 0xE  */ s16                   field_E;
+    /* 0x10 */ s8*                   field_10[8];
+    /* 0x30 */ s_CollisionState_44_0 field_30;
+    /* 0x36 */ s16                   field_36;
 } s_CollisionState_44;
 
 typedef union
 {
-    s16 field_0;
-    struct
-    {
-        u8 field_0;
-        u8 field_1;
-    } s_field_0;
+    /* 0x0 */ s16 field_0;
+              struct
+              {
+                  /* 0x0 */ u8 field_0;
+                  /* 0x1 */ u8 field_1;
+    /* 0x0 */ } s_field_0;
 } s_CollisionState_CC_C;
 
 typedef struct
 {
-    DVECTOR_XZ field_0;
-    DVECTOR_XZ field_4;
-    u32        field_8;
-    s32        field_C;
-    s16        field_10;
-    s8         __pad_12[2];
-    DVECTOR_XZ field_14;
+    /* 0x0  */ DVECTOR_XZ field_0;
+    /* 0x4  */ DVECTOR_XZ field_4;
+    /* 0x8  */ u32        field_8;
+    /* 0xC  */ s32        field_C;
+    /* 0x10 */ s16        field_10;
+    /* 0x12 */ s8         __pad_12[2];
+    /* 0x14 */ DVECTOR_XZ field_14;
 } s_CollisionState_CC_20;
 
 typedef struct
 {
-    struct _IpdCollisionData*   ipdCollisionData_0;
-    u8                    field_4; // Index.
-    u8                    field_5;
-    SVECTOR3              field_6; // Q7.8 | Probe position?
-    s_CollisionState_CC_C  field_C;
-    u8                    field_E;
-    u8                    field_F;
-    u8                    field_10;
-    u8                    field_11;
-    SVECTOR3              field_12;
-    SVECTOR3              field_18;
-    s8                    unk_1E[2];
-    s_CollisionState_CC_20 field_20;
+    /* 0x0  */ struct _IpdCollisionData* ipdCollisionData_0;
+    /* 0x4  */ u8                        field_4; // Index.
+    /* 0x5  */ u8                        field_5;
+    /* 0x6  */ SVECTOR3                  field_6; // Q7.8 | Probe position?
+    /* 0xC  */ s_CollisionState_CC_C     field_C;
+    /* 0xE  */ u8                        field_E;
+    /* 0xF  */ u8                        field_F;
+    /* 0x10 */ u8                        field_10;
+    /* 0x11 */ u8                        field_11;
+    /* 0x12 */ SVECTOR3                  field_12;
+    /* 0x18 */ SVECTOR3                  field_18;
+    /* 0x1E */ s8                        unk_1E[2];
+    /* 0x20 */ s_CollisionState_CC_20    field_20;
 } s_CollisionState_CC;
 STATIC_ASSERT_SIZEOF(s_CollisionState_CC, 56);
 
@@ -138,10 +139,10 @@ typedef struct _CollisionCharaMovement
 
 typedef struct
 {
-    u8  unk_0[2];
-    s16 field_2;
-    u8  unk_4[2];
-    s16 field_6;
+    /* 0x0 */ u8  unk_0[2];
+    /* 0x2 */ s16 field_2;
+    /* 0x4 */ u8  unk_4[2];
+    /* 0x6 */ s16 field_6;
 } s_func_8006CA18;
 
 typedef struct _CollisionState
@@ -204,7 +205,7 @@ typedef struct _CollisionState
     /* 0xC9   */ u8                  unk_C9[1];
     /* 0xCA   */ q7_8                groundHeight;
     /* 0xCC   */ s_CollisionState_CC field_CC;
-    // TODO: Maybe incomplete. Maybe not, added the final padding based on `Collision_Get`.
+    // TODO: Maybe incomplete. Maybe not, added the final padding based on `Collision_SurfaceGet`.
 } s_CollisionState;
 
 typedef struct
@@ -282,17 +283,17 @@ typedef struct _RayTrace
 
 typedef struct _CollisionResult
 {
-    /* 0x0  */ VECTOR3     offset; /** Q19.12 */
-    /* 0xC  */ s_Collision collision;
-    /* 0x18 */ q19_12      field_18; // Height related to a trigger point.
+    /* 0x0  */ VECTOR3            offset; /** Q19.12 */
+    /* 0xC  */ s_CollisionSurface surface;
+    /* 0x18 */ q19_12             field_18; // Height related to a trigger point.
 } s_CollisionResult;
 
 /** @brief Collection of nearby collision triggers. */
 typedef struct _ActiveCollisionTriggers
 {
-    /* 0x0 */ u16            flags; /** `e_CollisionTriggerFlags` */
-    /* 0x2 */ u8             collisionTriggerCount;
-    /* 0x3 */ u8             __pad_3;
+    /* 0x0 */ u16                 flags; /** `e_CollisionTriggerFlags` */
+    /* 0x2 */ u8                  collisionTriggerCount;
+    /* 0x3 */ u8                  __pad_3;
     /* 0x4 */ s_CollisionTrigger* collisionTriggers[20]; // Guessed size.
 } s_ActiveCollisionTriggers;
 

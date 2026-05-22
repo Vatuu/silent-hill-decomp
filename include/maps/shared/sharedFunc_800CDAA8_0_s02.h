@@ -187,14 +187,14 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_PlayerExtra* extra)
 
 void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords)
 {
-    s_Collision coll;
-    e_SfxId     sfxId;
-    s8          pitch0;
-    s8          pitch1;
-    s32         newMoveSpeed;
-    q19_12      headingAngle;
-    u16         keyframeIdxMax;
-    s32         keyframeIdx;
+    s_CollisionSurface surface;
+    e_SfxId            sfxId;
+    s8                 pitch0;
+    s8                 pitch1;
+    s32                newMoveSpeed;
+    q19_12             headingAngle;
+    u16                keyframeIdxMax;
+    s32                keyframeIdx;
 
     headingAngle = Q12_ANGLE(0.0f);
     keyframeIdx  = 0;
@@ -2227,8 +2227,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #endif
     }
 
-    Collision_Get(&coll, player->position.vx, player->position.vz);
-    func_8007FDE0(coll.groundType, &sfxId, &pitch0, &pitch1);
+    Collision_SurfaceGet(&surface, player->position.vx, player->position.vz);
+    func_8007FDE0(surface.groundType, &sfxId, &pitch0, &pitch1);
 
     switch (g_SysWork.playerWork.extra.state)
     {

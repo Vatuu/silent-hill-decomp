@@ -57,15 +57,15 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
 
 void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
 {
-    s_Collision     coll;
-    s32             groupCharaId0;
-    s32             groupCharaId1;
-    s32             npcIdx;
-    s32             i;
-    s32*            ovlEnemiesStatePtr;
-    s_SpawnInfo*    curCharaSpawn;
-    s_SubCharacter* chara;
-    VECTOR3*        pos;
+    s_CollisionSurface surface;
+    s32                groupCharaId0;
+    s32                groupCharaId1;
+    s32                npcIdx;
+    s32                i;
+    s32*               ovlEnemiesStatePtr;
+    s_SpawnInfo*       curCharaSpawn;
+    s_SubCharacter*    chara;
+    VECTOR3*           pos;
 
     npcIdx             = 0;
     curCharaSpawn      = g_MapOverlayHeader.charaSpawnInfos[0];
@@ -123,9 +123,9 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
             g_SysWork.npcs[npcIdx].position.vx        = curCharaSpawn->positionX;
             g_SysWork.npcs[npcIdx].position.vz        = curCharaSpawn->positionZ;
 
-            Collision_Get(&coll, curCharaSpawn->positionX, curCharaSpawn->positionZ);
+            Collision_SurfaceGet(&surface, curCharaSpawn->positionX, curCharaSpawn->positionZ);
 
-            g_SysWork.npcs[npcIdx].position.vy = coll.groundHeight;
+            g_SysWork.npcs[npcIdx].position.vy = surface.groundHeight;
             g_SysWork.npcs[npcIdx].rotation.vy = Q8_TO_Q12(curCharaSpawn->rotationY);
 
             SET_FLAG(&g_SysWork.npcFlags, npcIdx);

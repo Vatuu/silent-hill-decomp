@@ -252,16 +252,16 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
 
 void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
 {
-    s_Collision coll;
-    s32         keyframeIdx;
-    q19_12      unkHealth;
-    s32         prevControlState;
+    s_CollisionSurface surface;
+    s32                keyframeIdx;
+    q19_12             unkHealth;
+    s32                prevControlState;
 
     if (romper->health > Q12(0.0f))
     {
-        Collision_Get(&coll, romper->position.vx, romper->position.vz);
+        Collision_SurfaceGet(&surface, romper->position.vx, romper->position.vz);
 
-        if (coll.groundType == GroundType_12)
+        if (surface.groundType == GroundType_12)
         {
             if (Rng_GenerateInt(Q12(4.0f), Q12(8.0f) - 1) < romper->position.vy)
             {
@@ -878,19 +878,19 @@ void Romper_Control_4(s_SubCharacter* romper)
 
 void Romper_ControlJump(s_SubCharacter* romper)
 {
-    s_Collision coll;
-    VECTOR3     pos; // Q19.12
-    s16         temp_v0_4;
-    q3_12       unkAngle1;
-    s16         var_s3;
-    s32         temp_a1;
-    q19_12      unkAngle;
-    s32         temp_v0;
-    s32         temp_v0_3;
-    s32         temp_v1_5;
-    s16         var_a0_2;
-    s32         i;
-    s16         temp;
+    s_CollisionSurface surface;
+    VECTOR3            pos; // Q19.12
+    s16                temp_v0_4;
+    q3_12              unkAngle1;
+    s16                var_s3;
+    s32                temp_a1;
+    q19_12             unkAngle;
+    s32                temp_v0;
+    s32                temp_v0_3;
+    s32                temp_v1_5;
+    s16                var_a0_2;
+    s32                i;
+    s16                temp;
 
     if (romper->model.anim.status == ANIM_STATUS(RomperAnim_RunToJump, true))
     {
@@ -962,11 +962,13 @@ void Romper_ControlJump(s_SubCharacter* romper)
             temp_v1_5 = Math_Vector2MagCalcSafeQ6(romperProps.targetPositionX_FC - romper->position.vx,
                                             romperProps.targetPositionZ_100 - romper->position.vz);
 
-            var_a0_2             = CLAMP_LOW(temp_v1_5, Q12(0.3f));
+            var_a0_2          = CLAMP_LOW(temp_v1_5, Q12(0.3f));
             romper->moveSpeed = var_a0_2 << 1;
-            Collision_Get(&coll, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
-            temp                                   = coll.groundHeight - Q12(0.8f);
-            romper->fallSpeed                   = (temp << 1) - Q12(2.45f);
+
+            Collision_SurfaceGet(&surface, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
+            temp = surface.groundHeight - Q12(0.8f);
+
+            romper->fallSpeed  = (temp << 1) - Q12(2.45f);
             romperProps.flags &= ~RomperFlag_9;
         }
         else if (FP_FROM(romper->model.anim.time, Q12_SHIFT) == 5 ||
@@ -1194,7 +1196,7 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
 
         if (romperProps.flags & RomperFlag_10)
         {
-            if (romper->model.controlState != RomperControl_10 && romper->position.vy <= collResult.collision.groundHeight)
+            if (romper->model.controlState != RomperControl_10 && romper->position.vy <= collResult.surface.groundHeight)
             {
                 romperProps.flags &= ~RomperFlag_10;
             }
@@ -1214,18 +1216,18 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
                 {
                     romper->position.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.15f));
                     romper->fallSpeed    = Q12(0.0f);
-                    if (collResult.collision.groundHeight >= romper->position.vy)
+                    if (collResult.surface.groundHeight >= romper->position.vy)
                     {
-                        romper->position.vy = collResult.collision.groundHeight;
+                        romper->position.vy = collResult.surface.groundHeight;
                     }
                 }
             }
             else
             {
                 romper->position.vy += collResult.offset.vy;
-                if (collResult.collision.groundHeight < romper->position.vy)
+                if (collResult.surface.groundHeight < romper->position.vy)
                 {
-                    romper->position.vy = collResult.collision.groundHeight;
+                    romper->position.vy = collResult.surface.groundHeight;
                     romper->fallSpeed   = Q12(0.0f);
                 }
             }
@@ -1233,9 +1235,9 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
         else
         {
             romper->position.vy += collResult.offset.vy;
-            if (collResult.collision.groundHeight < romper->position.vy)
+            if (collResult.surface.groundHeight < romper->position.vy)
             {
-                romper->position.vy = collResult.collision.groundHeight;
+                romper->position.vy = collResult.surface.groundHeight;
                 romper->fallSpeed   = Q12(0.0f);
             }
         }

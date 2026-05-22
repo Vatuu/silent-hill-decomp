@@ -89,10 +89,10 @@ void Alessa_MovementUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
  */
 void Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
 {
-    s_Collision coll;
-    e_SfxId     sfxId;
-    s8          pitch0;
-    s8          pitch1;
+    s_CollisionSurface surface;
+    e_SfxId            sfxId;
+    s8                 pitch0;
+    s8                 pitch1;
 
     switch (alessaProps.controlState)
     {
@@ -173,8 +173,8 @@ void Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
             break;
     }
 
-    Collision_Get(&coll, alessa->position.vx, alessa->position.vz);
-    func_8007FDE0(coll.groundType, &sfxId, &pitch0, &pitch1);
+    Collision_SurfaceGet(&surface, alessa->position.vx, alessa->position.vz);
+    func_8007FDE0(surface.groundType, &sfxId, &pitch0, &pitch1);
 
     switch (alessaProps.controlState)
     {

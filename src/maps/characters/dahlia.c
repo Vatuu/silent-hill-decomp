@@ -90,13 +90,13 @@ void Dahlia_MovementUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
     dahlia->position.vz += offset.vz;
 
     // Warp to ground.
-    if (dahlia->position.vy > sharedData_800E39BC_0_s00.collision.groundHeight)
+    if (dahlia->position.vy > sharedData_800E39BC_0_s00.surface.groundHeight)
     {
-        dahlia->position.vy = sharedData_800E39BC_0_s00.collision.groundHeight;
+        dahlia->position.vy = sharedData_800E39BC_0_s00.surface.groundHeight;
         dahlia->fallSpeed   = Q12(0.0f);
     }
 
-    // Update root coord.
+    // Update root bone coord.
     boneCoords[0].coord.t[0] = Q12_TO_Q8(dahlia->position.vx);
     boneCoords[0].coord.t[1] = Q12_TO_Q8(dahlia->position.vy);
     boneCoords[0].coord.t[2] = Q12_TO_Q8(dahlia->position.vz);
@@ -112,10 +112,10 @@ void Dahlia_MovementUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
  */
 void Dahlia_ControlUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
 {
-    s_Collision coll;
-    e_SfxId     sfxId;
-    s8          pitch0;
-    s8          pitch1;
+    s_CollisionSurface surface;
+    e_SfxId            sfxId;
+    s8                 pitch0;
+    s8                 pitch1;
 
     switch (dahliaProps.controlState)
     {
@@ -336,9 +336,9 @@ void Dahlia_ControlUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
             break;
     }
 
-    Collision_Get(&coll, dahlia->position.vx, dahlia->position.vz);
+    Collision_SurfaceGet(&surface, dahlia->position.vx, dahlia->position.vz);
 
-    func_8007FDE0(coll.groundType, &sfxId, &pitch0, &pitch1);
+    func_8007FDE0(surface.groundType, &sfxId, &pitch0, &pitch1);
 #if defined(MAP6_S01)
     sfxId = Sfx_Unk1606;
 #else

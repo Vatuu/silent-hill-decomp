@@ -731,19 +731,19 @@ typedef struct
 
 typedef struct
 {
-    /* 0x0   */ s_func_8005E89C field_0;
-    /* 0x12C */ s_Collision     collision;
-    /* 0x138 */ MATRIX          field_138;
-    /* 0x158 */ SVECTOR         field_158[4];
-    /* 0x178 */ VECTOR          field_178[4];
-    /* 0x1B8 */ CVECTOR         field_1B8;
-    /* 0x1BC */ CVECTOR         field_1BC;
-    /* 0x1C0 */ s32             field_1C0;
-    /* 0x1C4 */ s32             field_1C4;
-    /* 0x1C8 */ s32             field_1C8;
-    /* 0x1CC */ s32             field_1CC;
-    /* 0x1D0 */ s32             field_1D0;
-    /* 0x1D4 */ DVECTOR         field_1D4;
+    /* 0x0   */ s_func_8005E89C    field_0;
+    /* 0x12C */ s_CollisionSurface surface;
+    /* 0x138 */ MATRIX             field_138;
+    /* 0x158 */ SVECTOR            field_158[4];
+    /* 0x178 */ VECTOR             field_178[4];
+    /* 0x1B8 */ CVECTOR            field_1B8;
+    /* 0x1BC */ CVECTOR            field_1BC;
+    /* 0x1C0 */ s32                field_1C0;
+    /* 0x1C4 */ s32                field_1C4;
+    /* 0x1C8 */ s32                field_1C8;
+    /* 0x1CC */ s32                field_1CC;
+    /* 0x1D0 */ s32                field_1D0;
+    /* 0x1D4 */ DVECTOR            field_1D4;
 } s_func_800CD1F8;
 
 typedef struct
@@ -1161,7 +1161,7 @@ extern q3_12 D_800AF1FC[];
 
 extern u8 D_800C4606;
 
-extern s_Collision D_800C4620;
+extern s_CollisionSurface D_800C4620;
 
 extern VECTOR3 D_800C4640[2][8];
 
@@ -1874,8 +1874,8 @@ void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType, 
 /** Spatial SFX func? */
 void func_8005DD44(e_SfxId sfxId, VECTOR3* pos, q23_8 vol, s8 pitch); // Types assumed.
 
-/** Checks `groundType` in collision struct. */
-bool func_8005F680(s_Collision* coll);
+/** Checks `groundType`. */
+bool func_8005F680(s_CollisionSurface* surface);
 
 /** Related to camera collision? */
 void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3);
@@ -2350,13 +2350,13 @@ void func_80069994(s_IpdCollisionData* collData);
 
 void func_800699E4(s_IpdCollisionData* collData);
 
-/** @brief Gets the point collision at a given 2D world position.
+/** @brief Gets the collision surface at a given 2D world position.
  *
- * @param coll Output point collision.
+ * @param surface Output collision surface.
  * @param posX X world position.
  * @param posZ Z world position.
  */
-void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ);
+void Collision_SurfaceGet(s_CollisionSurface* surface, q19_12 posX, q19_12 posZ);
 
 /** @brief Detects a wall collision using the scratchpad for performance.
  *
@@ -2365,7 +2365,7 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ);
  * @param chara Character to check.
  * @return Wall response code.
  */
-s32 Collision_WallDetect(s_CollisionResult* collResult, VECTOR3* moveOffset, s_SubCharacter* chara);
+s32 Collision_WallDetect(s_CollisionResult* collResult, const VECTOR3* moveOffset, s_SubCharacter* chara);
 
 /** @brief Handles a wall collision response by sampling the ground at 9 points around a character.
  *
@@ -2395,7 +2395,7 @@ void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* p
  * @param chara Character performing movement.
  * @return Collision result response.
  */
-bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, VECTOR3* moveOffset, s_SubCharacter* chara);
+bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, const VECTOR3* moveOffset, s_SubCharacter* chara);
 
 /** @brief Initializes a default collision result with a position and ground height.
  *

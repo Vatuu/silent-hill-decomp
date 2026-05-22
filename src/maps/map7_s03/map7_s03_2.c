@@ -2270,12 +2270,12 @@ s_800F3D48_0* func_800D9C20(s_800F3D48* arg0) // 0x800D9C20
 
 s_800F3D48_0* func_800D9DF8(s_800F3D48* arg0) // 0x800D9DF8
 {
-    s_Collision   coll;
-    SVECTOR       sp20;
-    q19_12        groundHeight;
-    s32           i;
-    s_800F3D48_0* ret;
-    s_800F3D58*   ptr;
+    s_CollisionSurface surface;
+    SVECTOR            sp20;
+    q19_12             groundHeight;
+    s32                i;
+    s_800F3D48_0*      ret;
+    s_800F3D58*        ptr;
 
     ret = NULL;
 
@@ -2303,13 +2303,13 @@ s_800F3D48_0* func_800D9DF8(s_800F3D48* arg0) // 0x800D9DF8
 
                 groundHeight = arg0->field_4.field_18.vy + ptr->field_0.vy;
 
-                Collision_Get(&coll, arg0->field_4.field_18.vx + ptr->field_0.vx,
-                              arg0->field_4.field_18.vz + ptr->field_0.vz);
+                Collision_SurfaceGet(&surface, arg0->field_4.field_18.vx + ptr->field_0.vx,
+                                     arg0->field_4.field_18.vz + ptr->field_0.vz);
                 PopMatrix();
 
-                if (coll.groundHeight < groundHeight)
+                if (surface.groundHeight < groundHeight)
                 {
-                    arg0->field_4.field_18.vy = coll.groundHeight;
+                    arg0->field_4.field_18.vy = surface.groundHeight;
                     arg0->field_4.field_48    = NULL;
                     arg0->field_4.field_10    = Q12(5.0f);
                     arg0->field_4.field_C++;
@@ -7657,10 +7657,10 @@ void func_800E3E84(void) // 0x800E3E84
     switch (D_800F4805)
     {
         case 0:
-            g_SysWork.cutsceneBorderState          = 20;
-            g_SysWork.sysStateSteps[0] = 0;
-            D_800F4805                  = 1;
-            g_SysWork.sysFlags       |= SysFlag_CutsceneActive;
+            g_SysWork.cutsceneBorderState = 20;
+            g_SysWork.sysStateSteps[0]    = 0;
+            D_800F4805                    = 1;
+            g_SysWork.sysFlags           |= SysFlag_CutsceneActive;
 
         case 1:
             func_800E8D20();

@@ -141,19 +141,19 @@ void HangedScratcher_Init(s_SubCharacter* scratcher)
 
 void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
 {
-    s_Collision coll;
-    q19_12      prevMoveSpeed;
-    q3_12       prevHeadingAngle;
+    s_CollisionSurface surface;
+    q19_12             prevMoveSpeed;
+    q3_12              prevHeadingAngle;
 
     if (scratcher->damage.amount > Q12(0.0f) && scratcher->health > Q12(0.0f))
     {
-        scratcher->health                = MAX(Q12(0.0f), scratcher->health - scratcher->damage.amount);
-        scratcher->damage.position.vx += (scratcher->moveSpeed * Math_Sin(scratcher->headingAngle)) >> 14; // TODO: Weird shift?
+        scratcher->health              = MAX(Q12(0.0f), scratcher->health - scratcher->damage.amount);
+        scratcher->damage.position.vx += (scratcher->moveSpeed * Math_Sin(scratcher->headingAngle)) >> 14;  // TODO: Weird shift?
         scratcher->damage.position.vz += (scratcher->moveSpeed * Math_Cos(scratcher->headingAngle)) >> 14;
 
-        prevMoveSpeed              = scratcher->moveSpeed;
+        prevMoveSpeed           = scratcher->moveSpeed;
         scratcher->moveSpeed    = FP_TO(Math_Vector2MagCalcSafeQ6(scratcher->damage.position.vx, scratcher->damage.position.vz), Q12_SHIFT) / Q12(4.0f);
-        prevHeadingAngle           = scratcher->headingAngle;
+        prevHeadingAngle        = scratcher->headingAngle;
         scratcher->headingAngle = ratan2(scratcher->damage.position.vx, scratcher->damage.position.vz);
 
         switch (scratcher->model.controlState)
@@ -165,9 +165,9 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
             case HangedScratcherControl_2:
             case HangedScratcherControl_RunForward:
             case HangedScratcherControl_9:
-                Collision_Get(&coll, scratcher->position.vx, scratcher->position.vz);
+                Collision_SurfaceGet(&surface, scratcher->position.vx, scratcher->position.vz);
 
-                if (scratcher->health == Q12(0.0f) && coll.groundType == GroundType_7)
+                if (scratcher->health == Q12(0.0f) && surface.groundType == GroundType_7)
                 {
                     scratcher->health = 1;
 
@@ -184,7 +184,7 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
                 if (ABS(scratcher->position.vx - g_SysWork.playerWork.player.position.vx) > Q12(0.2f) &&
                     ABS(scratcher->position.vz - g_SysWork.playerWork.player.position.vz) > Q12(0.2f))
                 {
-                    if (coll.groundType != GroundType_7 && (Rng_Rand16() & 0xF) < 4)
+                    if (surface.groundType != GroundType_7 && (Rng_Rand16() & 0xF) < 4)
                     {
                         scratcherProps.flags |= HangedScratcherFlag_1;
                     }
@@ -782,15 +782,15 @@ void HangedScratcher_Control_8(s_SubCharacter* scratcher)
 
 void HangedScratcher_Control_9(s_SubCharacter* scratcher)
 {
-    s_Collision coll;
+    s_CollisionSurface surface;
 
     Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
 
     if (ANIM_STATUS_IDX_GET(scratcher->model.anim.status) == HangedScratcherAnim_14 &&
         scratcher->moveSpeed == Q12(0.0f))
     {
-        Collision_Get(&coll, scratcher->position.vx, scratcher->position.vz);
-        if (scratcher->health > Q12(100.0f) || coll.groundType == GroundType_7)
+        Collision_SurfaceGet(&surface, scratcher->position.vx, scratcher->position.vz);
+        if (scratcher->health > Q12(100.0f) || surface.groundType == GroundType_7)
         {
             if (scratcherProps.flags & HangedScratcherFlag_1)
             {
@@ -929,8 +929,8 @@ void HangedScratcher_Control_13(s_SubCharacter* scratcher)
 
 void HangedScratcher_Control_14(s_SubCharacter* scratcher)
 {
-    s_Collision coll;
-    VECTOR3     sfxPos;
+    s_CollisionSurface surface;
+    VECTOR3            sfxPos;
 
     if ((scratcherProps.flags & HangedScratcherFlag_7) &&
         scratcher->model.anim.status < ANIM_STATUS(HangedScratcherAnim_4, false))
@@ -957,8 +957,8 @@ void HangedScratcher_Control_14(s_SubCharacter* scratcher)
         {
             scratcherProps.flags |= HangedScratcherFlag_6;
 
-            Collision_Get(&coll, scratcher->position.vx, scratcher->position.vz);
-            if (coll.groundType == GroundType_11)
+            Collision_SurfaceGet(&surface, scratcher->position.vx, scratcher->position.vz);
+            if (surface.groundType == GroundType_11)
             {
                 func_8005DC1C(Sfx_Unk1582, &scratcher->position, Q8(0.5f), 0);
             }
@@ -976,8 +976,8 @@ void HangedScratcher_Control_14(s_SubCharacter* scratcher)
             sfxPos.vy = scratcher->position.vy;
             sfxPos.vz = scratcher->position.vz + Q12(0.6f);
 
-            Collision_Get(&coll, sfxPos.vx, sfxPos.vz);
-            if (coll.groundType == GroundType_11)
+            Collision_SurfaceGet(&surface, sfxPos.vx, sfxPos.vz);
+            if (surface.groundType == GroundType_11)
             {
                 func_8005DC1C(Sfx_Unk1582, &sfxPos, Q8(0.5f), 0);
             }
@@ -995,8 +995,8 @@ void HangedScratcher_Control_14(s_SubCharacter* scratcher)
             sfxPos.vy = scratcher->position.vy;
             sfxPos.vz = scratcher->position.vz - Q12(1.0f);
 
-            Collision_Get(&coll, sfxPos.vx, sfxPos.vz);
-            if (coll.groundType == GroundType_11)
+            Collision_SurfaceGet(&surface, sfxPos.vx, sfxPos.vz);
+            if (surface.groundType == GroundType_11)
             {
                 func_8005DC1C(Sfx_Unk1582, &sfxPos, Q8(0.5f), 0);
             }
@@ -1101,9 +1101,9 @@ void HangedScratcher_Control_15(s_SubCharacter* scratcher)
 
 void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
 {
-    s_CollisionResult collResult;
-    s_Collision       coll;
-    u8                flag1Val;
+    s_CollisionResult  collResult;
+    s_CollisionSurface surface;
+    u8                 flag1Val;
 
     scratcher->rotation.vy  = Math_AngleNormalizeSigned(scratcher->rotation.vy);
     scratcher->headingAngle = scratcher->rotation.vy;
@@ -1128,7 +1128,7 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
 
     flag1Val = scratcherProps.flags & HangedScratcherFlag_Airborne;
 
-    if (scratcher->position.vy == collResult.collision.groundHeight)
+    if (scratcher->position.vy == collResult.surface.groundHeight)
     {
         scratcherProps.flags &= ~HangedScratcherFlag_Airborne;
 
@@ -1136,9 +1136,9 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
         {
             if (scratcher->model.anim.status == ANIM_STATUS(HangedScratcherAnim_10, true))
             {
-                Collision_Get(&coll, scratcher->position.vx, scratcher->position.vz);
+                Collision_SurfaceGet(&surface, scratcher->position.vx, scratcher->position.vz);
 
-                if (coll.groundType == GroundType_11)
+                if (surface.groundType == GroundType_11)
                 {
                     func_8005DC1C(Sfx_Unk1582, &scratcher->position, Q8(0.5f), 0);
                 }
@@ -1149,9 +1149,9 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
             }
             else if (scratcher->model.anim.status == ANIM_STATUS(HangedScratcherAnim_16, true))
             {
-                Collision_Get(&coll, scratcher->position.vx, scratcher->position.vz);
+                Collision_SurfaceGet(&surface, scratcher->position.vx, scratcher->position.vz);
 
-                if (coll.groundType == GroundType_11)
+                if (surface.groundType == GroundType_11)
                 {
                     func_8005DC1C(Sfx_Unk1582, &scratcher->position, Q8(0.25f), 0);
                 }
@@ -1587,12 +1587,12 @@ void HangedScratcher_CollisionUpdate(s_SubCharacter* scratcher)
 
 bool sharedFunc_800D3214_5_s00(s_SubCharacter* scratcher)
 {
-    s_Collision coll;
+    s_CollisionSurface surface;
 
-    Collision_Get(&coll, scratcher->position.vx, scratcher->position.vz);
+    Collision_SurfaceGet(&surface, scratcher->position.vx, scratcher->position.vz);
 
 #ifdef MAP5_S00
-    if (coll.groundType != GroundType_7)
+    if (surface.groundType != GroundType_7)
     {
         if (scratcher->position.vx > Q12(-40.0f))
         {
@@ -1622,7 +1622,7 @@ bool sharedFunc_800D3214_5_s00(s_SubCharacter* scratcher)
     return false;
 #else
     // M6S03 version.
-    if (coll.groundType != GroundType_7)
+    if (surface.groundType != GroundType_7)
     {
         if (scratcher->position.vx < 0)
         {

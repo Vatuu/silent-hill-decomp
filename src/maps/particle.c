@@ -3152,13 +3152,13 @@ void Particle_SpawnMovementApply(s32 arg0, s_Particle* part, u16* rand, s32* del
 
 void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* deltaTime)
 {
-    s_Collision coll;
-    q19_12      deltaXCase0;
-    q19_12      deltaZCase0;
-    q19_12      deltaXCase1;
-    q19_12      deltaZCase1;
-    u16         localRand;
-    s_Particle* localPart = part;
+    s_CollisionSurface surface;
+    q19_12             deltaXCase0;
+    q19_12             deltaZCase0;
+    q19_12             deltaXCase1;
+    q19_12             deltaZCase1;
+    u16                localRand;
+    s_Particle*        localPart = part;
 
 // Value used in case 0 comparison.
 #if defined(MAP1_S06)
@@ -3229,16 +3229,16 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
                 localPart->stateStep_1E++;
 #else
                 PushMatrix();
-                Collision_Get(&coll, localPart->position0_0.vx + g_Particle_Position.vx, localPart->position0_0.vz + g_Particle_Position.vz);
+                Collision_SurfaceGet(&surface, localPart->position0_0.vx + g_Particle_Position.vx, localPart->position0_0.vz + g_Particle_Position.vz);
                 PopMatrix();
 
-                if (localPart->position0_0.vy >= coll.groundHeight)
+                if (localPart->position0_0.vy >= surface.groundHeight)
                 {
 #if defined(MAP1_S06)
                     localPart->stateStep_1E = 0;
 #else
-                    localPart->position0_0.vy = coll.groundHeight;
-                    if (coll.groundHeight < Q12(0.0f) && coll.groundHeight > Q12(-0.2))
+                    localPart->position0_0.vy = surface.groundHeight;
+                    if (surface.groundHeight < Q12(0.0f) && surface.groundHeight > Q12(-0.2))
                     {
                         localPart->position0_0.vy = Q12(0.0f);
                     }
@@ -3308,13 +3308,13 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
             if (localPart->position0_0.vy >= 0)
             {
                 PushMatrix();
-                Collision_Get(&coll, localPart->position0_0.vx + g_Particle_Position.vx, localPart->position0_0.vz + g_Particle_Position.vz);
+                Collision_SurfaceGet(&surface, localPart->position0_0.vx + g_Particle_Position.vx, localPart->position0_0.vz + g_Particle_Position.vz);
                 PopMatrix();
 
-                localPart->position0_0.vy = coll.groundHeight;
-                localPart->movement_18.vx = coll.groundType;
+                localPart->position0_0.vy = surface.groundHeight;
+                localPart->movement_18.vx = surface.groundType;
 
-                if (coll.groundType == GroundType_11)
+                if (surface.groundType == GroundType_11)
                 {
                     localPart->type_1F        = SnowType_HeavyWindy;
                     localPart->position1_C.vx = localPart->position0_0.vx;

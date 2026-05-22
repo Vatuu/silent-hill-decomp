@@ -1538,20 +1538,20 @@ void func_800D3428(void) // 0x800D3428
 
 s_800E0930* func_800D344C(s_SubCharacter* twinfeeler, void (*funcptr)(s_800E0930*)) // 0x800D344C
 {
-    s_Collision coll;
-    s32         i;
-    s_800E0930* curPtr;
+    s_CollisionSurface surface;
+    s32                i;
+    s_800E0930*        curPtr;
 
     curPtr = D_800E0930;
     for (i = 0; i < ARRAY_SIZE(D_800E0930); i++, curPtr++)
     {
         if (curPtr->funcptr_18 == NULL)
         {
-            Collision_Get(&coll, twinfeeler->position.vx, twinfeeler->position.vz);
+            Collision_SurfaceGet(&surface, twinfeeler->position.vx, twinfeeler->position.vz);
 
             curPtr->chara       = twinfeeler;
             curPtr->position.vx = twinfeeler->position.vx;
-            curPtr->position.vy = coll.groundHeight;
+            curPtr->position.vy = surface.groundHeight;
             curPtr->position.vz = twinfeeler->position.vz;
             curPtr->funcptr_18  = funcptr;
             curPtr->timer       = Q12(0.0f);
@@ -1789,35 +1789,35 @@ void func_800D3B74(s_SubCharacter* twinfeeler) // 0x800D3B74
 
 void Twinfeeler_GroundSet(s_SubCharacter* twinfeeler) // 0x800D3B98
 {
-    s_Collision coll;
-    q3_12       headingAngle;
-    q19_12      dist;
-    q19_12      posX;
-    q19_12      posZ;
+    s_CollisionSurface surface;
+    q3_12              headingAngle;
+    q19_12             dist;
+    q19_12             posX;
+    q19_12             posZ;
 
     headingAngle = twinfeeler->rotation.vy;
     dist         = Q12_MULT_PRECISE(Math_Sin(headingAngle), Q12(1.0f));
 
     // Snap to ground.
-    Collision_Get(&coll, twinfeeler->position.vx + dist,
-                  Q12_MULT_PRECISE(Math_Cos(headingAngle), Q12(1.0f)) + twinfeeler->position.vz);
-    twinfeeler->position.vy = coll.groundHeight;
+    Collision_SurfaceGet(&surface, twinfeeler->position.vx + dist,
+                         Q12_MULT_PRECISE(Math_Cos(headingAngle), Q12(1.0f)) + twinfeeler->position.vz);
+    twinfeeler->position.vy = surface.groundHeight;
 
     // Fallback snap.
     if (twinfeeler->position.vy < Q12(-1.0f))
     {
         posX = twinfeeler->position.vx;
         posZ = twinfeeler->position.vz;
-        Collision_Get(&coll, posX, posZ);
+        Collision_SurfaceGet(&surface, posX, posZ);
 
-        twinfeeler->position.vy = coll.groundHeight;
+        twinfeeler->position.vy = surface.groundHeight;
         if (twinfeeler->position.vy < Q12(-1.0f))
         {
             twinfeeler->position.vx = Q12(118.5f);
             twinfeeler->position.vz = Q12(137.9f);
 
-            Collision_Get(&coll, posX, posZ);
-            twinfeeler->position.vy = coll.groundHeight;
+            Collision_SurfaceGet(&surface, posX, posZ);
+            twinfeeler->position.vy = surface.groundHeight;
         }
     }
 
@@ -3379,9 +3379,9 @@ void func_800D6704(void) // 0x800D6704
 
 void func_800D6774(void) // 0x800D6774
 {
-    s_Collision coll;
-    VECTOR3     vec;
-    s32         i;
+    s_CollisionSurface surface;
+    VECTOR3            vec;
+    s32                i;
 
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config.controllerConfig.skip) &&
@@ -3456,11 +3456,11 @@ void func_800D6774(void) // 0x800D6774
                 func_80085EB8(0, &g_SysWork.playerWork.player, 128, false);
             }
 
-            Collision_Get(&coll, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
+            Collision_SurfaceGet(&surface, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
             g_SysWork.cutsceneBorderState = 20;
             ScreenFade_ResetTimestep();
 
-            g_SysWork.playerWork.player.position.vy = coll.groundHeight;
+            g_SysWork.playerWork.player.position.vy = surface.groundHeight;
 
             func_8005DC1C(Sfx_Unk1556, &QVECTOR3(119.5f, 0.0f, 141.5f), Q8(0.5f), 0);
             func_80089470();

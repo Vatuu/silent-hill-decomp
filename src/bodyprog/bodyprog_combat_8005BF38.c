@@ -46,12 +46,12 @@ s32 Chara_NpcIdxGet(s_SubCharacter* chara) // 0x8005C7D0
 
 void Chara_CollisionShapeOffsetsUpdate(s_CharaShapeOffsets* offsets, s_SubCharacter* chara) // 0x8005C814
 {
+    q3_12 boxOffsetX;
+    q3_12 boxOffsetZ;
+    q3_12 cylinderOffsetX;
+    q3_12 cylinderOffsetZ;
     q3_12 sinRotY;
     q3_12 cosRotY;
-    q3_12 boxOffsetX;
-    q3_12 cylinderOffsetX;
-    q3_12 boxOffsetZ;
-    q3_12 cylinderOffsetZ;
 
     // Get relative shape offsets.
     boxOffsetX      = offsets->box.vx;
@@ -75,7 +75,7 @@ s32 func_8005C944(s_SubCharacter* chara, s_CollisionResult* collResult) // 0x800
     s_CollisionResult collResult0;
     VECTOR3           offset;
     q3_12             headingAngle;
-    s32               temp_s0;
+    q19_12            moveSpeed;
     s32               temp_s0_2;
     s32               temp_s2;
     s32               temp_s3;
@@ -84,12 +84,12 @@ s32 func_8005C944(s_SubCharacter* chara, s_CollisionResult* collResult) // 0x800
     s32               wallResponse;
 
     headingAngle = chara->headingAngle;
-    temp_s0 = Q12_MULT_PRECISE(g_DeltaTime, chara->moveSpeed);
-    temp_s2 = OVERFLOW_GUARD(temp_s0);
+    moveSpeed = Q12_MULT_PRECISE(g_DeltaTime, chara->moveSpeed);
+    temp_s2 = OVERFLOW_GUARD(moveSpeed);
     temp_s3 = temp_s2 >> 1;
 
     sinHeadingAngle = Math_Sin(headingAngle);
-    temp_s0_2       = temp_s0 >> temp_s3;
+    temp_s0_2       = moveSpeed >> temp_s3;
     temp_v0         = sinHeadingAngle >> temp_s3;
 
     offset.vx = Q12_MULT_PRECISE(temp_s0_2, temp_v0) << temp_s2;
@@ -102,9 +102,9 @@ s32 func_8005C944(s_SubCharacter* chara, s_CollisionResult* collResult) // 0x800
     chara->position.vy += collResult0.offset.vy;
     chara->position.vz += collResult0.offset.vz;
 
-    if (chara->position.vy > collResult0.collision.groundHeight)
+    if (chara->position.vy > collResult0.surface.groundHeight)
     {
-        chara->position.vy = collResult0.collision.groundHeight;
+        chara->position.vy = collResult0.surface.groundHeight;
         chara->fallSpeed   = Q12(0.0f);
     }
 
@@ -154,9 +154,9 @@ s32 func_8005CB20(s_SubCharacter* chara, s_CollisionResult* collResult, q3_12 of
     chara->position.vy += collResult0.offset.vy;
     chara->position.vz += collResult0.offset.vz;
 
-    if (chara->position.vy > collResult0.collision.groundHeight)
+    if (chara->position.vy > collResult0.surface.groundHeight)
     {
-        chara->position.vy = collResult0.collision.groundHeight;
+        chara->position.vy = collResult0.surface.groundHeight;
         chara->fallSpeed   = Q12(0.0f);
     }
 

@@ -93,10 +93,10 @@ void Kaufmann_MovementUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords
  */
 void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 {
-    s_Collision coll;
-    e_SfxId     sfx;
-    s8          pitch0;
-    s8          pitch1;
+    s_CollisionSurface surface;
+    e_SfxId            sfx;
+    s8                 pitch0;
+    s8                 pitch1;
 
     switch (kaufmannProps.controlState)
     {
@@ -327,8 +327,8 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             break;
     }
 
-    Collision_Get(&coll, kaufmann->position.vx, kaufmann->position.vz);
-    func_8007FDE0(coll.groundType, &sfx, &pitch0, &pitch1);
+    Collision_SurfaceGet(&surface, kaufmann->position.vx, kaufmann->position.vz);
+    func_8007FDE0(surface.groundType, &sfx, &pitch0, &pitch1);
 
     switch (kaufmannProps.controlState)
     {

@@ -17,20 +17,20 @@
 
 void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords)
 {
-    s_Collision coll;
-    VECTOR3     offset;
-    s32         headingAngle;
-    s16         temp_v0;
-    s32         temp_s0;
-    s32         moveDist;
-    s32         temp_s2;
-    s16         temp_s3;
-    s32         scaleRestoreShift;
-    u32         scaleReduceShift;
-    s32         moveSpeed;
-    bool        cond;
-    s16         var_s0;
-    s16         var_v1;
+    s_CollisionSurface surface;
+    VECTOR3            offset;
+    s32                headingAngle;
+    s16                temp_v0;
+    s32                temp_s0;
+    s32                moveDist;
+    s32                temp_s2;
+    s16                temp_s3;
+    s32                scaleRestoreShift;
+    u32                scaleReduceShift;
+    s32                moveSpeed;
+    bool               cond;
+    s16                var_s0;
+    s16                var_v1;
 
     cond = false;
     if (g_SysWork.playerWork.extra.state < PlayerState_Unk58)
@@ -118,15 +118,15 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 
     if (cond)
     {
-        Collision_Get(&coll, chara->position.vx, chara->position.vz);
+        Collision_SurfaceGet(&surface, chara->position.vx, chara->position.vz);
 
         temp_s2 = Math_Sin(chara->headingAngle);
         temp_s2 = Q12_MULT(chara->moveSpeed, temp_s2);
         temp_s0 = Math_Cos(chara->headingAngle);
         temp_s0 = Q12_MULT(chara->moveSpeed, temp_s0);
 
-        temp_s3 = Math_Cos(ABS(coll.tiltAngleX) >> 3); // `/ 8`.
-        temp_v0 = Math_Cos(ABS(coll.tiltAngleZ) >> 3); // `/ 8`.
+        temp_s3 = Math_Cos(ABS(surface.tiltAngleX) >> 3); // `/ 8`.
+        temp_v0 = Math_Cos(ABS(surface.tiltAngleZ) >> 3); // `/ 8`.
 
         var_s0 = Q12_MULT(Q12_MULT(temp_s2, temp_s3), temp_s3);
         var_v1 = Q12_MULT(Q12_MULT(temp_s0, temp_v0), temp_v0);
@@ -172,14 +172,14 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
         chara->position.vy += UnkStruct.offset.vy;
         chara->position.vz += UnkStruct.offset.vz;
 
-        if (UnkStruct.collision.groundType == GroundType_Default)
+        if (UnkStruct.surface.groundType == GroundType_Default)
         {
-            UnkStruct.collision.groundHeight = chara->properties.player.groundHeight;
+            UnkStruct.surface.groundHeight = chara->properties.player.groundHeight;
         }
 
-        if (chara->position.vy > UnkStruct.collision.groundHeight)
+        if (chara->position.vy > UnkStruct.surface.groundHeight)
         {
-            chara->position.vy = UnkStruct.collision.groundHeight;
+            chara->position.vy = UnkStruct.surface.groundHeight;
             chara->fallSpeed   = Q12(0.0f);
         }
     }

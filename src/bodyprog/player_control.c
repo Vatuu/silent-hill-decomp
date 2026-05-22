@@ -1018,9 +1018,9 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
     q3_12         angle;
     s16           sp1E;
     q19_12        temp_a2;
-    q19_12        dist;
+    q19_12        cylinderOffsetDist0;
     q19_12        var_v1_5;
-    s32           dist0;
+    s32           cylinderOffsetDist1;
     q19_12        deltaPosX;
     q19_12        deltaPosZ;
     s32           temp_v1_12;
@@ -1231,11 +1231,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
             if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
             {
-                dist = -D_800AF1FC[player->model.anim.keyframeIdx - g_MapOverlayHeader.field_38[D_800AF220].time];
-                playerChara.collision.shapeOffsets.box.vx = Q12(0.0f);
-                playerChara.collision.shapeOffsets.box.vz = Q12(0.0f);
-                playerChara.collision.shapeOffsets.cylinder.vx = Q12_MULT(dist, Math_Sin(player->rotation.vy));
-                playerChara.collision.shapeOffsets.cylinder.vz = Q12_MULT(dist, Math_Cos(player->rotation.vy));
+                cylinderOffsetDist0                            = -D_800AF1FC[player->model.anim.keyframeIdx - g_MapOverlayHeader.field_38[D_800AF220].time];
+                playerChara.collision.shapeOffsets.box.vx      = Q12(0.0f);
+                playerChara.collision.shapeOffsets.box.vz      = Q12(0.0f);
+                playerChara.collision.shapeOffsets.cylinder.vx = Q12_MULT(cylinderOffsetDist0, Math_Sin(player->rotation.vy));
+                playerChara.collision.shapeOffsets.cylinder.vz = Q12_MULT(cylinderOffsetDist0, Math_Cos(player->rotation.vy));
             }
 
             if (ABS(headingAngle0) < Q12_ANGLE(11.25f))
@@ -1337,11 +1337,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
         case PlayerState_EnemyGrabPinnedBack:
         case PlayerState_OnFloorFront:
         case PlayerState_OnFloorBehind:
-            grabFreeInputCount                              = 0;
-            enemyGrabReleaseState                                          = PlayerState_None;
-            unkDistThreshold                                               = Q12(0.0f);
+            grabFreeInputCount           = 0;
+            enemyGrabReleaseState        = PlayerState_None;
+            unkDistThreshold             = Q12(0.0f);
             playerProps.moveDistance_126 = Q12(0.0f);
-            npcDist                                                        = Q12(0.0f);
+            npcDist                      = Q12(0.0f);
 
             // Accommodates player position (for pinned enemy gram and Romper attack) and establishes required input count to get free.
             switch (playerExtra.state)
@@ -1436,11 +1436,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                             break;
                     }
 
-                    player->collision.cylinder.radius      = Q12(0.0f);
+                    player->collision.cylinder.radius              = Q12(0.0f);
                     playerChara.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
                     playerChara.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-                    playerChara.collision.shapeOffsets.box.vz = Q12(0.0f);
-                    playerChara.collision.shapeOffsets.box.vx = Q12(0.0f);
+                    playerChara.collision.shapeOffsets.box.vz      = Q12(0.0f);
+                    playerChara.collision.shapeOffsets.box.vx      = Q12(0.0f);
 
                     if (ABS(player->position.vx - D_800C4610.vx) <= Q12(0.05f))
                     {
@@ -2068,11 +2068,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     var_v1_5 = temp_a2;
                 }
 
-                dist0                                          = temp_a2 + Q12_MULT(var_v1_5 - temp_a2, Q12_FRACT(player->model.anim.time));
+                cylinderOffsetDist1                            = temp_a2 + Q12_MULT(var_v1_5 - temp_a2, Q12_FRACT(player->model.anim.time));
                 playerChara.collision.shapeOffsets.box.vx      = Q12(0.0f);
                 playerChara.collision.shapeOffsets.box.vz      = Q12(0.0f);
-                playerChara.collision.shapeOffsets.cylinder.vx = Q12_MULT(dist0, Math_Sin(player->rotation.vy));
-                playerChara.collision.shapeOffsets.cylinder.vz = Q12_MULT(dist0, Math_Cos(player->rotation.vy));
+                playerChara.collision.shapeOffsets.cylinder.vx = Q12_MULT(cylinderOffsetDist1, Math_Sin(player->rotation.vy));
+                playerChara.collision.shapeOffsets.cylinder.vz = Q12_MULT(cylinderOffsetDist1, Math_Cos(player->rotation.vy));
                 player->collision.cylinder.radius              = Q12(0.3f);
             }
 
@@ -2646,8 +2646,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             if (enemyAttackedIdx == g_SysWork.targetNpcIdx)
             {
                 player->angleToTarget = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vx) - g_SysWork.playerWork.player.position.vx,
-                                                   (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vz) - g_SysWork.playerWork.player.position.vz) +
-                                            Q12_ANGLE(360.0f));
+                                                         (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vz) - g_SysWork.playerWork.player.position.vz) +
+                                                  Q12_ANGLE(360.0f));
             }
             else
             {
@@ -6293,7 +6293,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
     s8      pitch0;
     s8      pitch1;
 
-    func_8007FDE0(g_Player_CollisionResult.collision.groundType, &sfxId, &pitch0, &pitch1);
+    func_8007FDE0(g_Player_CollisionResult.surface.groundType, &sfxId, &pitch0, &pitch1);
 
     // This entire conditional is the reason why movement stop working when removing this function call.
     if (g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_JumpBackward &&
@@ -6335,10 +6335,10 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
         if (player->properties.player.exhaustionTimer < Q12(10.0f) &&
             player->health >= Q12(30.0f))
         {
-            player->model.stateStep = 0;
-            player->model.controlState     = 0;
-            extra->model.stateStep = 0;
-            extra->model.controlState     = 0;
+            player->model.stateStep    = 0;
+            player->model.controlState = 0;
+            extra->model.stateStep     = 0;
+            extra->model.controlState  = 0;
         }
     }
 
@@ -6550,7 +6550,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 playerProps.flags_11C &= ~PlayerFlag_Unk5;
             }
 
-            if (player->position.vy == g_Player_CollisionResult.collision.groundHeight)
+            if (player->position.vy == g_Player_CollisionResult.surface.groundHeight)
             {
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_JumpBackward, true), player, 243, 245, sfxId, pitch1);
             }
@@ -6562,34 +6562,34 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
 
 void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords)
 {
-    s_Collision coll;
-    VECTOR3     offset;
-    VECTOR3     sp30; // Q19.12
-    VECTOR3     sp40; // Q19.12
-    q19_12      offsetX;
-    q19_12      offsetZ;
-    q3_12       offsetAlphaX;
-    q3_12       offsetAlphaZ;
-    q3_12       adjOffsetX;
-    q3_12       adjOffsetZ;
-    q19_12      adjMoveSpeed;
-    s32         temp_s2_2;
-    s32         temp_s3_2;
-    q19_12      headingAngle;
-    s32         posY;
-    u32         temp;
+    s_CollisionSurface surface;
+    VECTOR3            offset;
+    VECTOR3            sp30; // Q19.12
+    VECTOR3            sp40; // Q19.12
+    q19_12             offsetX;
+    q19_12             offsetZ;
+    q3_12              offsetAlphaX;
+    q3_12              offsetAlphaZ;
+    q3_12              adjOffsetX;
+    q3_12              adjOffsetZ;
+    q19_12             adjMoveSpeed;
+    s32                temp_s2_2;
+    s32                temp_s3_2;
+    q19_12             headingAngle;
+    s32                posY;
+    u32                temp;
 
     g_Player_PrevPosition = player->position;
 
-    Collision_Get(&coll, player->position.vx, player->position.vz);
+    Collision_SurfaceGet(&surface, player->position.vx, player->position.vz);
 
     // Compute speed displacement.
     offsetX = Q12_MULT(player->moveSpeed, Math_Sin(player->headingAngle));
     offsetZ = Q12_MULT(player->moveSpeed, Math_Cos(player->headingAngle));
 
     // Compute displacement alpha from ground slope.
-    offsetAlphaX = Math_Cos(ABS(coll.tiltAngleX) >> 3); // `/ 8`.
-    offsetAlphaZ = Math_Cos(ABS(coll.tiltAngleZ) >> 3); // `/ 8`.
+    offsetAlphaX = Math_Cos(ABS(surface.tiltAngleX) >> 3); // `/ 8`.
+    offsetAlphaZ = Math_Cos(ABS(surface.tiltAngleZ) >> 3); // `/ 8`.
 
     // Compute adjusted displacement.
     adjOffsetX = Q12_MULT(Q12_MULT(offsetX, offsetAlphaX), offsetAlphaX);
@@ -6674,17 +6674,17 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
     if (g_SavegamePtr->mapIdx     == MapIdx_MAP1_S00 &&
         g_SavegamePtr->mapRoomIdx == 13)
     {
-        g_Player_CollisionResult.collision.groundHeight = Q12(0.0f);
+        g_Player_CollisionResult.surface.groundHeight = Q12(0.0f);
     }
 
-    if (g_Player_CollisionResult.collision.groundType == GroundType_Default)
+    if (g_Player_CollisionResult.surface.groundType == GroundType_Default)
     {
-        g_Player_CollisionResult.collision.groundHeight = player->properties.player.groundHeight;
+        g_Player_CollisionResult.surface.groundHeight = player->properties.player.groundHeight;
     }
 
-    if (player->position.vy > g_Player_CollisionResult.collision.groundHeight)
+    if (player->position.vy > g_Player_CollisionResult.surface.groundHeight)
     {
-        player->position.vy = g_Player_CollisionResult.collision.groundHeight;
+        player->position.vy = g_Player_CollisionResult.surface.groundHeight;
         player->fallSpeed   = Q12(0.0f);
     }
 
@@ -6696,7 +6696,7 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
         if (!g_Player_IsInWalkToRunTransition)
         {
             posY = player->position.vy;
-            if ((g_Player_CollisionResult.collision.groundHeight - posY) >= Q12(0.65f))
+            if ((g_Player_CollisionResult.surface.groundHeight - posY) >= Q12(0.65f))
             {
                 if (ABS_DIFF(player->rotation.vy, adjOffsetZ) >= Q12_ANGLE(90.0f) &&
                     ABS_DIFF(player->rotation.vy, adjOffsetZ) <  Q12_ANGLE(270.0f))
@@ -6717,7 +6717,7 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
     }
 
     // Set model position.
-    player->properties.player.groundHeight = g_Player_CollisionResult.collision.groundHeight;
+    player->properties.player.groundHeight = g_Player_CollisionResult.surface.groundHeight;
     boneCoords[HarryBone_Root].coord.t[0]  = Q12_TO_Q8(player->position.vx);
     boneCoords[HarryBone_Root].coord.t[1]  = Q12_TO_Q8(player->position.vy);
     boneCoords[HarryBone_Root].coord.t[2]  = Q12_TO_Q8(player->position.vz);
@@ -8944,7 +8944,7 @@ bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
         return result;
     }
 
-    Collision_Get(&D_800C4620, arg1, arg3);
+    Collision_SurfaceGet(&D_800C4620, arg1, arg3);
 
     result = arg2 < D_800C4620.groundHeight;
     if (result)
@@ -8967,13 +8967,13 @@ bool func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8008074C
 
 void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
 {
-    q19_12       groundHeight;
-    s32          groundType; // `e_GroundType`
-    q19_12       collX;
-    q19_12       collZ;
-    s_Collision* coll;
+    q19_12              groundHeight;
+    s32                 groundType; // `e_GroundType`
+    q19_12              collX;
+    q19_12              collZ;
+    s_CollisionSurface* surface;
 
-    coll = &g_CollisionPointCache.collision;
+    surface = &g_CollisionPointCache.surface;
 
     collX = g_CollisionPointCache.position.vx;
     collZ = g_CollisionPointCache.position.vz;
@@ -8984,12 +8984,12 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
         return;
     }
 
-    Collision_Get(coll, posX, posZ);
+    Collision_SurfaceGet(surface, posX, posZ);
     g_CollisionPointCache.position.vx = posX;
     g_CollisionPointCache.position.vz = posZ;
 
-    groundType = coll->groundType;
-    switch (coll->groundType)
+    groundType = surface->groundType;
+    switch (surface->groundType)
     {
         case GroundType_Default:
             groundHeight = Q12(8.0f);
@@ -9005,7 +9005,7 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
 #if VERSION_EQUAL_OR_NEWER(USA)
                         groundType = GroundType_7;
 #else
-                        coll->groundType = GroundType_7;
+                        surface->groundType = GroundType_7;
 #endif
                     }
                     break;
@@ -9015,7 +9015,7 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
 #if VERSION_EQUAL_OR_NEWER(USA)
                     groundType = GroundType_7;
 #else
-                    coll->groundType = GroundType_7;
+                    surface->groundType = GroundType_7;
 #endif
                     break;
             }
@@ -9031,14 +9031,14 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
 #if VERSION_EQUAL_OR_NEWER(USA)
                     groundType = GroundType_7;
 #else
-                    coll->groundType = GroundType_7;
+                    surface->groundType = GroundType_7;
 #endif
                     break;
             }
             break;
 
         default:
-            groundHeight = coll->groundHeight;
+            groundHeight = surface->groundHeight;
             break;
     }
 

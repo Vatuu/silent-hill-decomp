@@ -85,9 +85,9 @@ void Cheryl_MovementUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) //
     cheryl->position.vy += sharedData_800E39BC_0_s00.offset.vy;
     cheryl->position.vz += offset.vz;
 
-    if (cheryl->position.vy > sharedData_800E39BC_0_s00.collision.groundHeight)
+    if (cheryl->position.vy > sharedData_800E39BC_0_s00.surface.groundHeight)
     {
-        cheryl->position.vy = sharedData_800E39BC_0_s00.collision.groundHeight;
+        cheryl->position.vy = sharedData_800E39BC_0_s00.surface.groundHeight;
         cheryl->fallSpeed   = Q12(0.0f);
     }
 
@@ -98,11 +98,11 @@ void Cheryl_MovementUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) //
 
 void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 0x800D8310
 {
-    s_Collision coll;
-    e_SfxId     sfx;
-    s8          pitch0;
-    s8          pitch1;
-    q23_8       distToPlayerSqr;
+    s_CollisionSurface surface;
+    e_SfxId            sfx;
+    s8                 pitch0;
+    s8                 pitch1;
+    q23_8              distToPlayerSqr;
 
     #define playerChara g_SysWork.playerWork.player
     #define playerProps playerChara.properties.player
@@ -180,8 +180,8 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
             break;
     }
 
-    Collision_Get(&coll, cheryl->position.vx, cheryl->position.vz);
-    func_8007FDE0(coll.groundType, &sfx, &pitch0, &pitch1);
+    Collision_SurfaceGet(&surface, cheryl->position.vx, cheryl->position.vz);
+    func_8007FDE0(surface.groundType, &sfx, &pitch0, &pitch1);
 
     distToPlayerSqr = SQUARE(Q12_TO_Q8(cheryl->position.vx - playerChara.position.vx)) +
                       SQUARE(Q12_TO_Q8(cheryl->position.vz - playerChara.position.vz));

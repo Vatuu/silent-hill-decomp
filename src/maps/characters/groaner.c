@@ -125,18 +125,18 @@ void Groaner_Init(s_SubCharacter* groaner)
 
 void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
 {
-    s_Collision coll;
-    q3_12       newHeadingAngle;
-    q3_12       unkAngle;
-    q19_12      unkDist;
-    s32         temp_v0;
-    s32         prevControlState;
+    s_CollisionSurface surface;
+    q3_12              newHeadingAngle;
+    q3_12              unkAngle;
+    q19_12             unkDist;
+    s32                temp_v0;
+    s32                prevControlState;
 
     if (groaner->health > Q12(0.0f))
     {
-        Collision_Get(&coll, groaner->position.vx, groaner->position.vz);
+        Collision_SurfaceGet(&surface, groaner->position.vx, groaner->position.vz);
 
-        if (coll.groundType == 12 && Rng_GenerateInt(Q12(4.0f), Q12(7.0f) - 1) < groaner->position.vy)
+        if (surface.groundType == 12 && Rng_GenerateInt(Q12(4.0f), Q12(7.0f) - 1) < groaner->position.vy)
         {
             groaner->damage.amount = Q12(1000.0f);
         }
@@ -1125,7 +1125,7 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
     groanerProps.field_F2 = Q12(0.0f);
     groanerProps.field_F0 = Q12(0.0f);
 
-    if (groaner->position.vy == collResult.collision.groundHeight)
+    if (groaner->position.vy == collResult.surface.groundHeight)
     {
         groanerProps.flags.val16[0] &= ~GroanerFlag_Airborne;
     }

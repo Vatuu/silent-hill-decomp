@@ -34,13 +34,13 @@ bool sharedFunc_800CBF74_1_s05(POLY_FT4** poly, s32 idx)
 {
     typedef struct
     {
-        /* 0x0   */ s_func_8005E89C field_0;
-        /* 0x12C */ s_Collision     collision;
-        /* 0x138 */ SVECTOR         cameraRotation; // Q3.12
-        /* 0x140 */ s32             field_140;
-        /* 0x144 */ DVECTOR         field_144;
-        /* 0x148 */ s32             field_148;
-        /* 0x14C */ s32             field_14C;
+        /* 0x0   */ s_func_8005E89C    field_0;
+        /* 0x12C */ s_CollisionSurface surface;
+        /* 0x138 */ SVECTOR            cameraRotation; // Q3.12
+        /* 0x140 */ s32                field_140;
+        /* 0x144 */ DVECTOR            field_144;
+        /* 0x148 */ s32                field_148;
+        /* 0x14C */ s32                field_14C;
     } s_sharedFunc_800CBF74_1_s05;
 
     VECTOR3                      sfxPos; // Q19.12
@@ -62,11 +62,11 @@ bool sharedFunc_800CBF74_1_s05(POLY_FT4** poly, s32 idx)
     sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 += g_GravitySpeed >> 1;
     sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2  = CLAMP_LOW(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 - Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(180.0f)), Q12_ANGLE(0.0f));
 
-    Collision_Get(&ptr->collision, sharedData_800DFB7C_0_s00[idx].field_0.vx_0, sharedData_800DFB7C_0_s00[idx].field_4.vz_4);
+    Collision_SurfaceGet(&ptr->surface, sharedData_800DFB7C_0_s00[idx].field_0.vx_0, sharedData_800DFB7C_0_s00[idx].field_4.vz_4);
 
-    if (ptr->collision.groundHeight < sharedData_800DFB7C_0_s00[idx].vy_8 || sharedData_800DFB7C_0_s00[idx].vy_8 > Q12(0.0f))
+    if (ptr->surface.groundHeight < sharedData_800DFB7C_0_s00[idx].vy_8 || sharedData_800DFB7C_0_s00[idx].vy_8 > Q12(0.0f))
     {
-        sharedData_800DFB7C_0_s00[idx].vy_8                = MIN(ptr->collision.groundHeight, 0);
+        sharedData_800DFB7C_0_s00[idx].vy_8                = MIN(ptr->surface.groundHeight, 0);
         sharedData_800DFB7C_0_s00[idx].field_B             = 1;
         sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = Q12_ANGLE(0.0f);
 

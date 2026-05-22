@@ -673,12 +673,12 @@ s32 func_8005F55C(s32 arg0) // 0x8005F55C
     return 0;
 }
 
-bool func_8005F680(s_Collision* coll) // 0x8005F680
+bool func_8005F680(s_CollisionSurface* surface) // 0x8005F680
 {
     bool isSomeGroundGroup;
     s8   groundType;
 
-    groundType = coll->groundType;
+    groundType = surface->groundType;
 
     isSomeGroundGroup = false;
     if (groundType == GroundType_Default ||
@@ -693,20 +693,20 @@ bool func_8005F680(s_Collision* coll) // 0x8005F680
 
 void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x8005F6B0
 {
-    s_Collision    coll;
-    VECTOR3        camPos; // Q19.12
-    q19_12         newPosX;
-    q19_12         newPosZ;
-    q20_12         dists[150];
-    s32            idx;
-    s32            unkCount;
-    s32            var_s5;
-    s32            i;
-    s32            j;
-    s32            k;
-    s32            count;
-    s32            curDist;
-    GsCOORDINATE2* camCoord;
+    s_CollisionSurface surface;
+    VECTOR3            camPos; // Q19.12
+    q19_12             newPosX;
+    q19_12             newPosZ;
+    q20_12             dists[150];
+    s32                idx;
+    s32                unkCount;
+    s32                var_s5;
+    s32                i;
+    s32                j;
+    s32                k;
+    s32                count;
+    s32                curDist;
+    GsCOORDINATE2*     camCoord;
 
     if (g_GameWork.config.extraBloodColor == 14) // TODO: Demagic 14.
     {
@@ -963,17 +963,17 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
             g_MapOverlayHeader.unkTable1_4C[idx].vy_8         = Rng_AddGeneratedUInt(pos->vy, -2047, 2048);
             g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = Rng_AddGeneratedUInt(pos->vz, -1023, 1024);
 
-            Collision_Get(&coll, g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
+            Collision_SurfaceGet(&surface, g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
 
-            if (func_8005F680(&coll) || (coll.groundHeight < (pos->vy - Q12(0.2f))))
+            if (func_8005F680(&surface) || (surface.groundHeight < (pos->vy - Q12(0.2f))))
             {
                 g_MapOverlayHeader.unkTable1_4C[idx].field_A = 0;
             }
             else
             {
-                if (coll.groundHeight < g_MapOverlayHeader.unkTable1_4C[idx].vy_8)
+                if (surface.groundHeight < g_MapOverlayHeader.unkTable1_4C[idx].vy_8)
                 {
-                    g_MapOverlayHeader.unkTable1_4C[idx].vy_8 = coll.groundHeight;
+                    g_MapOverlayHeader.unkTable1_4C[idx].vy_8 = surface.groundHeight;
 
                     // @hack
                     unkCount++;
@@ -981,7 +981,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
                 }
 
                 g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 = -(Rng_Rand16() & 0x800);
-                g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_2 = coll.groundHeight;
+                g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_2 = surface.groundHeight;
                 g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0  = Rng_GenerateUInt(0, 15);
                 g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_2  = arg3;
                 g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1  = Rng_GenerateUInt(6, 21);
@@ -1303,17 +1303,17 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
 
 bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
 {
-    s_func_800611C0  sp10;
-    s_Collision      colls[4];
-    s16              temp_v1_6;
-    s32              temp_v1_15;
-    s32              temp_v1_15_;
-    s32              var_t0;
-    s32              var_v0_6;
-    u32              idx0;
-    u32              var_a0_3;
-    s32              temp;
-    s_func_800611C0* ptr;
+    s_func_800611C0    sp10;
+    s_CollisionSurface surfaces[4];
+    s16                temp_v1_6;
+    s32                temp_v1_15;
+    s32                temp_v1_15_;
+    s32                var_t0;
+    s32                var_v0_6;
+    u32                idx0;
+    u32                var_a0_3;
+    s32                temp;
+    s_func_800611C0*   ptr;
 
     ptr = PSX_SCRATCH;
 
@@ -1348,16 +1348,16 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
 
             ptr->field_178 = g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 << 5;
 
-            Collision_Get(&colls[0], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + ptr->field_178, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
-            Collision_Get(&colls[1], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - ptr->field_178, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
-            Collision_Get(&colls[2], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + ptr->field_178);
-            Collision_Get(&colls[3], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 - ptr->field_178);
+            Collision_SurfaceGet(&surfaces[0], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + ptr->field_178, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
+            Collision_SurfaceGet(&surfaces[1], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - ptr->field_178, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
+            Collision_SurfaceGet(&surfaces[2], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + ptr->field_178);
+            Collision_SurfaceGet(&surfaces[3], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 - ptr->field_178);
 
-            if (func_8005F680(&colls[0]) || func_8005F680(&colls[1]) || func_8005F680(&colls[2]) || func_8005F680(&colls[3]) ||
-                (g_MapOverlayHeader.unkTable1_4C[idx].vy_8 - colls[0].groundHeight) < Q12(-0.2f) ||
-                (g_MapOverlayHeader.unkTable1_4C[idx].vy_8 - colls[1].groundHeight) < Q12(-0.2f) ||
-                (g_MapOverlayHeader.unkTable1_4C[idx].vy_8 - colls[2].groundHeight) < Q12(-0.2f) ||
-                (g_MapOverlayHeader.unkTable1_4C[idx].vy_8 - colls[3].groundHeight) < Q12(-0.2f))
+            if (func_8005F680(&surfaces[0]) || func_8005F680(&surfaces[1]) || func_8005F680(&surfaces[2]) || func_8005F680(&surfaces[3]) ||
+                (g_MapOverlayHeader.unkTable1_4C[idx].vy_8 - surfaces[0].groundHeight) < Q12(-0.2f) ||
+                (g_MapOverlayHeader.unkTable1_4C[idx].vy_8 - surfaces[1].groundHeight) < Q12(-0.2f) ||
+                (g_MapOverlayHeader.unkTable1_4C[idx].vy_8 - surfaces[2].groundHeight) < Q12(-0.2f) ||
+                (g_MapOverlayHeader.unkTable1_4C[idx].vy_8 - surfaces[3].groundHeight) < Q12(-0.2f))
             {
                 g_MapOverlayHeader.unkTable1_4C[idx].field_A = 0;
             }
@@ -1675,12 +1675,12 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
 
 void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3) // 0x800622B8
 {
-    s_Collision coll;
-    s32         temp_s0;
-    s32         temp_s2;
-    s32         temp_s3;
-    s32         idx;
-    s32         i;
+    s_CollisionSurface surface;
+    s32                temp_s0;
+    s32                temp_s2;
+    s32                temp_s3;
+    s32                idx;
+    s32                i;
 
     if (g_GameWork.config.extraBloodColor == 14)
     {
@@ -1712,9 +1712,9 @@ void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3) 
                                                             Q12_MULT(temp_s3, Math_Cos(chara->rotation.vy)) +
                                                             Q12_MULT(temp_s2, Math_Sin(chara->rotation.vy));
 
-        Collision_Get(&coll, g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
+        Collision_SurfaceGet(&surface, g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
 
-        if (ABS_DIFF(coll.groundHeight, chara->position.vy) > Q12(0.15f))
+        if (ABS_DIFF(surface.groundHeight, chara->position.vy) > Q12(0.15f))
         {
             g_MapOverlayHeader.unkTable1_4C[(idx)].field_A = 0;
         }
@@ -1756,15 +1756,15 @@ void func_800625F4(VECTOR3* arg0, q3_12 angle, s32 arg2, s32 arg3) // 0x800625F4
 
 bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
 {
-    s_func_80062708  sp10;
-    s_Collision      colls[4];
-    s32              temp_a1_3;
-    s32              temp_s2;
-    s32              j;
-    s32              i;
-    s32              var_s7;
-    u32              temp_v1_6;
-    s_func_80062708* ptr;
+    s_func_80062708    sp10;
+    s_CollisionSurface surfaces[4];
+    s32                temp_a1_3;
+    s32                temp_s2;
+    s32                j;
+    s32                i;
+    s32                var_s7;
+    u32                temp_v1_6;
+    s_func_80062708*   ptr;
 
     ptr = PSX_SCRATCH;
 
@@ -1833,24 +1833,24 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
 
         if (Rng_GenerateUInt(0, 1) != 0) // 1 in 2 chance.
         {
-            Collision_Get(&colls[0], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
-            Collision_Get(&colls[1], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
-            Collision_Get(&colls[2], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 - temp_s2);
-            Collision_Get(&colls[3], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + temp_s2);
+            Collision_SurfaceGet(&surfaces[0], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
+            Collision_SurfaceGet(&surfaces[1], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
+            Collision_SurfaceGet(&surfaces[2], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 - temp_s2);
+            Collision_SurfaceGet(&surfaces[3], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + temp_s2);
         }
         else
         {
-            Collision_Get(&colls[0], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 - temp_s2);
-            Collision_Get(&colls[1], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 - temp_s2);
-            Collision_Get(&colls[2], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + temp_s2);
-            Collision_Get(&colls[3], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + temp_s2);
+            Collision_SurfaceGet(&surfaces[0], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 - temp_s2);
+            Collision_SurfaceGet(&surfaces[1], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 - temp_s2);
+            Collision_SurfaceGet(&surfaces[2], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + temp_s2);
+            Collision_SurfaceGet(&surfaces[3], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + temp_s2);
         }
 
-        if (func_8005F680(&colls[0]) || func_8005F680(&colls[1]) || func_8005F680(&colls[2]) || func_8005F680(&colls[3]) ||
-            ABS(colls[0].groundHeight - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) > Q12(0.15f) ||
-            ABS(colls[1].groundHeight - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) > Q12(0.15f) ||
-            ABS(colls[2].groundHeight - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) > Q12(0.15f) ||
-            ABS(colls[3].groundHeight - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) > Q12(0.15f))
+        if (func_8005F680(&surfaces[0]) || func_8005F680(&surfaces[1]) || func_8005F680(&surfaces[2]) || func_8005F680(&surfaces[3]) ||
+            ABS(surfaces[0].groundHeight - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) > Q12(0.15f) ||
+            ABS(surfaces[1].groundHeight - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) > Q12(0.15f) ||
+            ABS(surfaces[2].groundHeight - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) > Q12(0.15f) ||
+            ABS(surfaces[3].groundHeight - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) > Q12(0.15f))
         {
             g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2  = ptr->field_2DC;
             g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 = Q12(5.0f);

@@ -90,10 +90,10 @@ void Cybil_MovementUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
  */
 void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
 {
-    s_Collision coll;
-    e_SfxId     sfx;
-    s8          pitch0;
-    s8          pitch1;
+    s_CollisionSurface surface;
+    e_SfxId            sfx;
+    s8                 pitch0;
+    s8                 pitch1;
 
     switch (cybilProps.controlState)
     {
@@ -370,8 +370,8 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
             break;
     }
 
-    Collision_Get(&coll, cybil->position.vx, cybil->position.vz);
-    func_8007FDE0(coll.groundType, &sfx, &pitch0, &pitch1);
+    Collision_SurfaceGet(&surface, cybil->position.vx, cybil->position.vz);
+    func_8007FDE0(surface.groundType, &sfx, &pitch0, &pitch1);
 
 #if defined(MAP6_S01)
     sfx = Sfx_Unk1607;

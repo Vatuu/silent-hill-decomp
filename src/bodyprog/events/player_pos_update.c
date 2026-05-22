@@ -48,13 +48,13 @@ void Chara_PositionSet(s_MapPoint2d* mapPoint) // 0x800371E8
 
 void Game_PlayerHeightUpdate(void) // 0x80037334
 {
-    s_Collision coll;
+    s_CollisionSurface surface;
 
     if (g_MapOverlayHeader.updateWorldObjects != NULL)
     {
         g_MapOverlayHeader.updateWorldObjects();
     }
 
-    Collision_Get(&coll, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
-    g_SysWork.playerWork.player.position.vy = coll.groundHeight;
+    Collision_SurfaceGet(&surface, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
+    g_SysWork.playerWork.player.position.vy = surface.groundHeight;
 }

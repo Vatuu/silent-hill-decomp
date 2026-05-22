@@ -95,10 +95,10 @@ void Lisa_MovementUpdate(s_SubCharacter* lisa, GsCOORDINATE2* boneCoords)
  */
 void Lisa_AnimStateUpdate(s_SubCharacter* lisa, GsCOORDINATE2* boneCoords)
 {
-    s_Collision coll;
-    e_SfxId     sfxId;
-    s8          pitch0;
-    s8          pitch1;
+    s_CollisionSurface surface;
+    e_SfxId            sfxId;
+    s8                 pitch0;
+    s8                 pitch1;
 
     switch (lisaProps.controlState)
     {
@@ -226,9 +226,9 @@ void Lisa_AnimStateUpdate(s_SubCharacter* lisa, GsCOORDINATE2* boneCoords)
             break;
     }
 
-    Collision_Get(&coll, lisa->position.vx, lisa->position.vz);
+    Collision_SurfaceGet(&surface, lisa->position.vx, lisa->position.vz);
 
-    func_8007FDE0(coll.groundType, &sfxId, &pitch0, &pitch1);
+    func_8007FDE0(surface.groundType, &sfxId, &pitch0, &pitch1);
     sfxId = Sfx_Unk1529;
 
     switch (lisaProps.controlState)

@@ -85,10 +85,10 @@ void BloodyLisa_MovementUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneCo
   */
 void BloodyLisa_AnimStateUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneCoords)
 {
-    s_Collision coll;
-    e_SfxId     sfx;
-    s8          pitch0;
-    s8          pitch1;
+    s_CollisionSurface surface;
+    e_SfxId            sfx;
+    s8                 pitch0;
+    s8                 pitch1;
 
     switch (bloodyLisaProps.controlState)
     {
@@ -101,8 +101,8 @@ void BloodyLisa_AnimStateUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneC
             break;
     }
 
-    Collision_Get(&coll, bloodyLisa->position.vx, bloodyLisa->position.vz);
-    func_8007FDE0(coll.groundType, &sfx, &pitch0, &pitch1);
+    Collision_SurfaceGet(&surface, bloodyLisa->position.vx, bloodyLisa->position.vz);
+    func_8007FDE0(surface.groundType, &sfx, &pitch0, &pitch1);
 
     switch (bloodyLisaProps.controlState)
     {

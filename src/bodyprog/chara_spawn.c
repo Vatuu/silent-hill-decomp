@@ -38,11 +38,11 @@ void Chara_BonesInit(s32 idx) // 0x80088D34
 
 s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep) // 0x80088D78
 {
-    s_Collision     coll;
-    s32             i;
-    s32             npcFlagsId;
-    s32             activeSpawnFlags;
-    s_SubCharacter* chara;
+    s_CollisionSurface surface;
+    s32                i;
+    s32                npcFlagsId;
+    s32                activeSpawnFlags;
+    s_SubCharacter*    chara;
 
     // TODO: Weird code, check.
     if (charaId <= Chara_MonsterCybil && spawnFlags < (1 << 6))
@@ -110,8 +110,8 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
         g_SysWork.npcs[i].model.stateStep    = stateStep;
         g_SysWork.npcs[i].position.vx        = posX;
 
-        Collision_Get(&coll, posX, posZ);
-        g_SysWork.npcs[i].position.vy = coll.groundHeight;
+        Collision_SurfaceGet(&surface, posX, posZ);
+        g_SysWork.npcs[i].position.vy = surface.groundHeight;
         g_SysWork.npcs[i].position.vz = posZ;
         g_SysWork.npcs[i].rotation.vy = rotY;
 

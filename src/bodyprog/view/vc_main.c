@@ -1693,14 +1693,14 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
 
 void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYPE cur_rd_area_size) // 0x800832B4
 {
-    s_Collision     coll;
-    q19_12          dist;
-    q19_12          ofs_y;
-    q19_12          lim_y;
-    q19_12          watch_y;
-    q19_12          use_dist;
-    q19_12          adj_dist;
-    s_SubCharacter* sc_p;
+    s_CollisionSurface surface;
+    q19_12             dist;
+    q19_12             ofs_y;
+    q19_12             lim_y;
+    q19_12             watch_y;
+    q19_12             use_dist;
+    q19_12             adj_dist;
+    s_SubCharacter*    sc_p;
 
     if (cur_rd_area_size == VC_AREA_TINY)
     {
@@ -1753,17 +1753,17 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
                 break;
 
             case CameraAnchor_Ground:
-                Collision_Get(&coll, sc_p->position.vx, sc_p->position.vz);
+                Collision_SurfaceGet(&surface, sc_p->position.vx, sc_p->position.vz);
 
                 // If no valid ground, fall back on character Y position.
-                if (coll.groundType == GroundType_Default)
+                if (surface.groundType == GroundType_Default)
                 {
                     watch_y = sc_p->position.vy + ofs_y;
                 }
                 // Otherwise, use ground height.
                 else
                 {
-                    watch_y = coll.groundHeight + ofs_y;
+                    watch_y = surface.groundHeight + ofs_y;
                 }
                 break;
 

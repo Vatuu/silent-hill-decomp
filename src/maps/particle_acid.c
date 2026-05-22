@@ -44,18 +44,18 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 idx)
         s32             field_15C;
     } s_func_800CB1B0;
 
-    s_func_8005E89C  sp10;
-    s_RayTrace       trace;
-    s_Collision      coll;
-    VECTOR3          dir;
-    VECTOR3          rayFrom;
-    s16              temp_v0_9;
-    s32              temp_a3;
-    s32              temp_s1;
-    s32              i;
-    POLY_FT4*        next;
-    s_func_800CB1B0* ptr;
-    s_SubCharacter*  sub;
+    s_func_8005E89C    sp10;
+    s_RayTrace         trace;
+    s_CollisionSurface surface;
+    VECTOR3            dir;
+    VECTOR3            rayFrom;
+    s16                temp_v0_9;
+    s32                temp_a3;
+    s32                temp_s1;
+    s32                i;
+    POLY_FT4*          next;
+    s_func_800CB1B0*   ptr;
+    s_SubCharacter*    sub;
 
     if (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0 == 0 ||
         sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 == 0)
@@ -185,7 +185,7 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 idx)
     dir.vz = ptr->field_12C.vz - sharedData_800DFB7C_0_s00[idx].field_4.vz_4;
 
     Ray_CharaTraceQuery(&trace, &rayFrom, &dir, g_SysWork.npcs);
-    Collision_Get(&coll, rayFrom.vx + dir.vx, rayFrom.vz + dir.vz);
+    Collision_SurfaceGet(&surface, rayFrom.vx + dir.vx, rayFrom.vz + dir.vz);
 
     ptr->field_0 = sp10;
 
@@ -198,7 +198,7 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 idx)
     {
         sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 = CLAMP_LOW(sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2 - (g_DeltaTime << 2), 0);
     }
-    else if (trace.hasHit || coll.groundHeight < sharedData_800DFB7C_0_s00[idx].vy_8)
+    else if (trace.hasHit || surface.groundHeight < sharedData_800DFB7C_0_s00[idx].vy_8)
     {
         sharedData_800DFB7C_0_s00[idx].field_B++;
 
