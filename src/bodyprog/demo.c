@@ -69,7 +69,7 @@ bool Demo_SequenceAdvance(s32 incrementAmount) // 0x8008EF20
         // Call optional funcptr associated with this demo.
         // If funcptr is set, return whether demo is eligible to play, possibly based on game progress or other conditions.
         // In retail demos this pointer is always `NULL`.
-        if (DEMO_FILE_INFOS[g_Demo_DemoId].canPlayDemo_4 == NULL || DEMO_FILE_INFOS[g_Demo_DemoId].canPlayDemo_4() == 1)
+        if (DEMO_FILE_INFOS[g_Demo_DemoId].canPlayDemo == NULL || DEMO_FILE_INFOS[g_Demo_DemoId].canPlayDemo() == 1)
         {
             break;
         }
@@ -86,8 +86,8 @@ bool Demo_SequenceAdvance(s32 incrementAmount) // 0x8008EF20
         }
     }
 
-    g_Demo_DemoFileIdx = DEMO_FILE_INFOS[g_Demo_DemoId].demoFileId_0;
-    g_Demo_PlayFileIdx = DEMO_FILE_INFOS[g_Demo_DemoId].playFileId_2;
+    g_Demo_DemoFileIdx = DEMO_FILE_INFOS[g_Demo_DemoId].demoFileId;
+    g_Demo_PlayFileIdx = DEMO_FILE_INFOS[g_Demo_DemoId].playFileId;
     return true;
 }
 
@@ -115,7 +115,7 @@ s32 Demo_PlayFileBufferSetup(void) // 0x8008F0BC
     s32 playFileSize;
 
     // Get map overlay size used in demo.
-    mapOverlaySize = Fs_GetFileSize(FILE_VIN_MAP0_S00_BIN + DEMO_WORK()->savegame_100.mapIdx);
+    mapOverlaySize = Fs_GetFileSize(FILE_VIN_MAP0_S00_BIN + DEMO_WORK()->savegame.mapIdx);
 
     // Get play file size, rounded up to next 0x800-byte boundary.
     playFileSize = ALIGN(Fs_GetFileSize(g_Demo_PlayFileIdx), 0x800);
@@ -130,7 +130,7 @@ s32 Demo_PlayFileBufferSetup(void) // 0x8008F0BC
 
 void Demo_DemoFileSavegameUpdate(void) // 0x8008F13C
 {
-    g_GameWork.savegame = DEMO_WORK()->savegame_100;
+    g_GameWork.savegame = DEMO_WORK()->savegame;
 }
 
 void Demo_GameGlobalsUpdate(void) // 0x8008F1A0
@@ -139,7 +139,7 @@ void Demo_GameGlobalsUpdate(void) // 0x8008F1A0
     g_Demo_OptionsConfigBackup = g_GameWork.config;
 
     // Update `Demo_RandSeed`.
-    g_Demo_RandSeed = DEMO_WORK()->randSeed_7FC;
+    g_Demo_RandSeed = DEMO_WORK()->randSeed;
 
     // Replace user config with config from demo file.
     g_GameWork.config = DEMO_WORK()->config;
@@ -322,7 +322,7 @@ bool Demo_Update(void) // 0x8008F5D8
 
     demoStep = g_Demo_DemoStep;
 
-    if (DEMO_WORK()->frameCount_7F8 <= demoStep)
+    if (DEMO_WORK()->frameCount <= demoStep)
     {
         func_8008F518();
         Demo_ExitDemo();
@@ -343,11 +343,11 @@ bool Demo_Update(void) // 0x8008F5D8
         case DemoState_Step:
             g_Demo_CurFrameData = &g_Demo_PlayFileBufferPtr[g_Demo_DemoStep];
 
-            if (g_Demo_CurFrameData->gameStateExpected_8 != gameWork->gameState)
+            if (g_Demo_CurFrameData->gameStateExpected != gameWork->gameState)
             {
                 Text_Debug_PositionSet(8, 80);
                 Text_Debug_Draw("STEP ERROR:[H:");
-                Text_Debug_Draw(Text_Debug_IntToString(2, g_Demo_CurFrameData->gameStateExpected_8));
+                Text_Debug_Draw(Text_Debug_IntToString(2, g_Demo_CurFrameData->gameStateExpected));
                 Text_Debug_Draw("]/[M:");
                 Text_Debug_Draw(Text_Debug_IntToString(2, gameWork->gameState));
                 Text_Debug_Draw("]");
@@ -421,7 +421,7 @@ bool Demo_PresentIntervalUpdate(void) // 0x8008F87C
         return false;
     }
 
-    g_Demo_VideoPresentInterval = g_Demo_CurFrameData->videoPresentInterval_9;
+    g_Demo_VideoPresentInterval = g_Demo_CurFrameData->videoPresentInterval;
     return true;
 }
 
@@ -438,7 +438,7 @@ bool Demo_GameRandSeedSet(void) // 0x8008F8A8
     }
     else
     {
-        Rng_SetSeed(g_Demo_CurFrameData->randSeed_C);
+        Rng_SetSeed(g_Demo_CurFrameData->randSeed);
         return true;
     }
 }
