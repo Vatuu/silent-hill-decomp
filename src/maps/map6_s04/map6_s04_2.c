@@ -2003,10 +2003,9 @@ void func_800E219C(void) // 0x800E219C
             g_SysWork.npcs[0].position.vz = Q12(102.0f);
             g_SysWork.npcs[0].rotation.vy = Q12_ANGLE(157.5f);
 
-            // TODO: Wrong properties union field.
-            g_SysWork.npcs[0].properties.player.afkTimer                      = Q12(0.0f);
-            g_SysWork.npcs[0].properties.dummy.properties_E8[1].val16[0] = 1;
-            g_SysWork.npcs[0].properties.dummy.properties_E8[1].val16[1] = 1;
+            g_SysWork.npcs[0].properties.npc.controlState = 0;
+            g_SysWork.npcs[0].properties.npc.field_EC     = 1;
+            g_SysWork.npcs[0].properties.npc.field_EE     = 1;
 
             vcReturnPreAutoCamWork(true);
             func_800E15FC(&playerChara, &g_SysWork.npcs[0], true);
@@ -2105,9 +2104,9 @@ void func_800E2724(void) // 0x800E2724
             curStateStep = g_SysWork.sysStateSteps[0];
 
             // TODO: `Chara_MonsterCybil` properties
-            g_SysWork.npcs[0].properties.player.afkTimer                      = Q12(0.0f);
-            g_SysWork.npcs[0].properties.dummy.properties_E8[1].val16[0] = curStateStep;
-            g_SysWork.npcs[0].properties.dummy.properties_E8[1].val16[1] = curStateStep;
+            g_SysWork.npcs[0].properties.npc.controlState = Q12(0.0f);
+            g_SysWork.npcs[0].properties.npc.field_EC     = curStateStep;
+            g_SysWork.npcs[0].properties.npc.field_EE     = curStateStep;
             func_800D8A90(&g_SysWork.npcs[0]);
 
             Savegame_EventFlagSet(EventFlag_467);
@@ -3515,7 +3514,7 @@ void func_800E636C(void) // 0x800E636C
         D_800ED5B6 += Q12_MULT_PRECISE(g_DeltaTime, D_800EBA30);
         D_800ED5B6  = (Q12_MULT_PRECISE(g_DeltaTime, D_800ED5B4) + D_800ED5B6) & 0xFFF;
 
-        if (g_SysWork.npcs[0].properties.dummy.properties_E8[0].val32 == 1)
+        if (g_SysWork.npcs[0].properties.npc.controlState == 1)
         {
             if (D_800EBA30 == 0 && g_SysWork.npcs[0].health > Q12(0.0f))
             {
@@ -3535,13 +3534,13 @@ void func_800E636C(void) // 0x800E636C
         }
         else
         {
-            if (g_SysWork.npcs[0].properties.dummy.properties_E8[1].val16[0] == 12)
+            if (g_SysWork.npcs[0].properties.npc.field_EC == 12)
             {
                 D_800EBA30 -= 50;
 
                 if (temp_t1 == 0 && D_800EBA30 < 0)
                 {
-                    if (playerChara.properties.dummy.properties_E8[15].val16[1] > Q12(3.0f))
+                    if (playerChara.properties.player.moveDistance_126 > Q12(3.0f))
                     {
                         Player_DamageFeetFront();
                     }
@@ -3556,7 +3555,7 @@ void func_800E636C(void) // 0x800E636C
 
                 if (temp_t1 < 0 && D_800EBA30 >= 0)
                 {
-                    if (playerChara.properties.dummy.properties_E8[15].val16[1] > Q12(3.0f))
+                    if (playerChara.properties.player.moveDistance_126 > Q12(3.0f))
                     {
                         Player_DamageFeetFront();
                     }
@@ -3602,9 +3601,9 @@ void func_800E636C(void) // 0x800E636C
                 Math_SetSVectorFastSum(&rot, Q12_ANGLE(0.0f), D_800EBAFC[i], Q12_ANGLE(0.0f));
                 WorldGfx_ObjectAdd(&g_WorldObject0[var_a0_2], &pos, &rot);
 
-                if (i == g_SysWork.npcs[0].properties.dummy.properties_E8[5].val16[1])
+                if (i == g_SysWork.npcs[0].properties.npc.field_FE)
                 {
-                    g_SysWork.npcs[0].properties.dummy.properties_E8[6].val32 = pos.vy;
+                    g_SysWork.npcs[0].properties.npc.field_100 = pos.vy;
                 }
             }
         }

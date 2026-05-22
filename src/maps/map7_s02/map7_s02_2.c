@@ -1464,6 +1464,7 @@ void func_800DD2D4(void) // 0x800DD2D4
 
     if (g_SysWork.sysStateSteps[0] >= 6)
     {
+        // TODO: Unsure what character `npcs[0]` is meant to be, only incubus has a timer field at 0xE8?
         g_SysWork.npcs[0].properties.player.afkTimer = g_SysWork.playerWork.player.model.anim.time - Q12(Player_AnimGetSomething());
     }
 

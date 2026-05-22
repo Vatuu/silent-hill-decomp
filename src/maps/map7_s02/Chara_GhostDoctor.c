@@ -6,6 +6,8 @@
 
 // TODO: Move to src/maps/characters/ once matched.
 
+#define ghostDocProps ghostDoc->properties.npc
+
 void GhostDoctor_Update(s_SubCharacter* ghostDoc, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D8AF0
 {
     if (ghostDoc->model.charaId != Chara_GhostDoctor)
@@ -20,14 +22,7 @@ void GhostDoctor_Update(s_SubCharacter* ghostDoc, s_AnmHeader* anmHdr, GsCOORDIN
 
 void GhostDoctor_AnimUpdate(s_SubCharacter* ghostDoc, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800D8B64
 {
-    s_AnimInfo* animInfo;
-
-    // TODO: Wrong properties union.
-    if (ghostDoc->properties.player.field_F0 == 0)
-    {
-        animInfo = &GHOST_DOCTOR_ANIM_INFOS[ghostDoc->model.anim.status];
-        animInfo->playbackFunc(&ghostDoc->model, anmHdr, boneCoords, animInfo);
-    }
+    Chara_AnimUpdate(ghostDoc, anmHdr, boneCoords, GHOST_DOCTOR_ANIM_INFOS);
 }
 
 void Character_CoordTransformUpdate(s_SubCharacter* ghostDoc, GsCOORDINATE2* boneCoords) // 0x800D8BAC
@@ -44,7 +39,7 @@ void GhostDoctor_Init(s_SubCharacter* ghostDoc) // 0x800D8BE0
 
 void func_800D8C00(s_SubCharacter* ghostDoc, GsCOORDINATE2* boneCoords) // 0x800D8C00
 {
-    if (ghostDoc->properties.player.afkTimer == Q12(0.0f))
+    if (ghostDocProps.controlState == 0)
     {
         if (ghostDoc->model.stateStep == 0)
         {
@@ -52,12 +47,7 @@ void func_800D8C00(s_SubCharacter* ghostDoc, GsCOORDINATE2* boneCoords) // 0x800
             ghostDoc->model.stateStep++;
         }
 
-        if (ghostDoc->properties.player.runTimer_F8 != Q12(0.0f))
-        {
-            ghostDoc->properties.player.afkTimer = Q12(0.0f);
-            ghostDoc->model.stateStep              = 0;
-            ghostDoc->properties.player.runTimer_F8 = Q12(0.0f);
-        }
+        Chara_AnimStateReset(ghostDoc);
     }
 
     boneCoords->flg = false;

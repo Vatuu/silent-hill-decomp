@@ -214,6 +214,8 @@ s32 Chara_AnimPlaybackStateGet(s_SubCharacter* chara)
 
 bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, q19_12 angleIn, s32 arg4)
 {
+    // TODO: Figure out which characters get passed to this function.
+    // Looks like Cheryl might be, but the charaState defines below don't fit with `s_PropsNpc`...
     #define ANGLE_THRESHOLD (Q12_ANGLE(360.0) >> 6) // 360 / 64 = 5.625 degrees.
 
     q7_8     shortestAngle;
@@ -224,9 +226,9 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
     // TODO: This data is hard to keep track of and may not point to the right `properties` struct.
     // Short-hand defines to make it easier to follow.
     #define charaState3  chara->model.stateStep
-    #define charaStateE8 chara->properties.dummy.properties_E8[0].val32
+    #define charaStateE8 chara->properties.npc.controlState
     #define charaStateEC chara->properties.dummy.properties_E8[1].val32
-    #define charaStateF4 chara->properties.dummy.properties_E8[3].val32
+    #define charaStateF4 chara->properties.npc.field_F4
     #define charaStateFC chara->properties.dummy.properties_E8[5].val32
 
     angleIn = Q12_ANGLE_ABS(angleIn);
@@ -429,6 +431,9 @@ void Chara_InvisibleSet(s_SubCharacter* chara)
 
 bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfxId, s32 pitch)
 {
+    // TODO: Seems each of the s_PropsNpcs characters get passed to this func.
+    // May share the same `flags` values based on code below?
+
     if (chara->model.anim.status != animStatus)
     {
         return false;
@@ -436,30 +441,30 @@ bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
 
     if (chara->model.anim.keyframeIdx >= keyframeIdx1)
     {
-        if (!(chara->properties.dummy.properties_E8[13].val32 & (1 << 4)))
+        if (!(chara->properties.npc.flags & (1 << 4)))
         {
             func_8005DD44(sfxId, &chara->position, Q8(0.5f), pitch);
-            chara->properties.dummy.properties_E8[13].val32 |= 1 << 4;
+            chara->properties.npc.flags |= 1 << 4;
             return true;
         }
     }
     else
     {
-        chara->properties.dummy.properties_E8[13].val32 &= ~(1 << 4);
+        chara->properties.npc.flags &= ~(1 << 4);
     }
 
     if (chara->model.anim.keyframeIdx >= keyframeIdx0)
     {
-        if (!(chara->properties.dummy.properties_E8[13].val32 & (1 << 5)))
+        if (!(chara->properties.npc.flags & (1 << 5)))
         {
             func_8005DD44(sfxId, &chara->position, Q8(0.5f), pitch);
-            chara->properties.dummy.properties_E8[13].val32 |= 1 << 5;
+            chara->properties.npc.flags |= 1 << 5;
             return true;
         }
     }
     else
     {
-        chara->properties.dummy.properties_E8[13].val32 &= ~(1 << 5);
+        chara->properties.npc.flags &= ~(1 << 5);
     }
 
     return false;
@@ -467,12 +472,11 @@ bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
 
 bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfxId)
 {
-    // TODO: Should probably be using `properties.npc` struct instead.
     if (chara->model.anim.status == animStatus)
     {
         if (chara->model.anim.keyframeIdx >= keyframeIdx)
         {
-            if (!(chara->properties.player.flags_11C & PlayerFlag_SfxActive))
+            if (!(chara->properties.npc.flags & PlayerFlag_SfxActive))
             {
                 switch (sfxId)
                 {
@@ -552,13 +556,13 @@ bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
                         break;
                 }
 
-                chara->properties.player.flags_11C |= PlayerFlag_SfxActive;
+                chara->properties.npc.flags |= PlayerFlag_SfxActive;
                 return true;
             }
         }
         else
         {
-            chara->properties.player.flags_11C &= ~PlayerFlag_SfxActive;
+            chara->properties.npc.flags &= ~PlayerFlag_SfxActive;
         }
     }
 

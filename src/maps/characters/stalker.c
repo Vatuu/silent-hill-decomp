@@ -1176,7 +1176,7 @@ void Stalker_Control_4(s_SubCharacter* stalker)
     offsetZ      = stalker->position.vz - stalkerProps.targetPositionZ;
     distToTarget = MAX(ABS(offsetX), ABS(offsetZ));
 
-    if (!(stalker->properties.player.afkTimer & 0x18))
+    if (!(*(s32*)&stalkerProps.flags & 0x18))
     {
         if (!(Rng_GenerateInt(0, 511) && distToTarget <= Q12(4.0f)) || // 1 in 512 chance.
             (!Rng_GenerateInt(0, 127) &&                               // 1 in 128 chance.
@@ -1876,8 +1876,7 @@ void Stalker_Control_10(s_SubCharacter* stalker)
         }
     }
 
-    // TODO: `stalkerProps.flags` doesn't match?
-    if (stalker->moveSpeed == Q12(0.0f) && !(stalker->properties.player.afkTimer & (StalkerFlag_8 |StalkerFlag_9)))
+    if (stalker->moveSpeed == Q12(0.0f) && !(*(s32*)&stalkerProps.flags & (StalkerFlag_8 |StalkerFlag_9)))
     {
         newAnimStatus = (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_31, true)) ? ANIM_STATUS(StalkerAnim_Still, true) :
                                                                                                   ANIM_STATUS(StalkerAnim_Still, false);
@@ -2805,11 +2804,10 @@ void sharedFunc_800D7E04_0_s00(s_SubCharacter* stalker, s32 sfxId)
             break;
     }
 
-    // TODO: `stalkerProps.sfxId_102` doesn't match?
     if (newSfxId != NO_VALUE)
     {
-        Sd_SfxStop(*((u16*)&stalker->properties.player.field_100 + 1));
-        *((u16*)&stalker->properties.player.field_100 + 1) = newSfxId;
+        Sd_SfxStop((u16)stalkerProps.sfxId_102);
+        stalkerProps.sfxId_102 = newSfxId;
     }
 }
 

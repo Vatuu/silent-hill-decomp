@@ -4397,16 +4397,16 @@ bool Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800DD
     incubus->collision.shapeOffsets.cylinder.vz = Q12(0.0f);
     incubus->flags                             |= CharaFlag_Hit;
 
-    localIncubus->properties.dummy.properties_E8[2].val32 = 0;
-    localIncubus->properties.dummy.properties_E8[1].val32 = 0;
+    localIncubus->properties.incubus.someState_F0 = 0;
+    localIncubus->properties.incubus.field_EC = 0;
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
-        localIncubus->properties.dummy.properties_E8[3].val32 = Q12(300.0f);
+        localIncubus->properties.incubus.bossFightTimer_F4 = Q12(300.0f);
     }
     else
     {
-        localIncubus->properties.dummy.properties_E8[3].val32 = Q12(30.0f);
+        localIncubus->properties.incubus.bossFightTimer_F4 = Q12(30.0f);
     }
 
     activeStateStep = incubus->model.stateStep;
@@ -5071,9 +5071,9 @@ void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
 {
     func_800DDB3C(incubus, boneCoords);
 
-    incubus->model.controlState              = IncubusControl_11;
-    incubus->model.stateStep                 = IncubusStateStep_0;
-    incubus->properties.player.groundHeight |= 1 << 2;
+    incubus->model.controlState           = IncubusControl_11;
+    incubus->model.stateStep              = IncubusStateStep_0;
+    incubus->properties.incubus.field_EC |= 1 << 2;
 }
 
 q19_12 func_800DEA90(void) // 0x800DEA90
@@ -5339,7 +5339,7 @@ void func_800DF074(s_SubCharacter* incubus) // 0x800DF074
         controlState != IncubusControl_13 &&
         controlState != IncubusControl_3 &&
         controlState != IncubusControl_5 &&
-        (incubus->properties.player.groundHeight & (1 << 2)))
+        (incubus->properties.incubus.field_EC & (1 << 2)))
     {
         func_800DD6CC();
     }
@@ -5805,7 +5805,7 @@ bool Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DF
     chara->headingAngle                       = chara->rotation.vy;
     chara->flags                             |= CharaFlag_Hit;
 
-    localChara->properties.player.field_F0 = 0;
+    localChara->properties.incubus.someState_F0 = 0;
 
     if (chara->model.stateStep == 0)
     {
@@ -5825,11 +5825,11 @@ bool Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DF
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
-        localChara->properties.player.field_F4 = Q12(300.0f);
+        localChara->properties.incubus.bossFightTimer_F4 = Q12(300.0f);
     }
     else
     {
-        localChara->properties.player.field_F4 = Q12(30.0f);
+        localChara->properties.incubus.bossFightTimer_F4 = Q12(30.0f);
     }
 
     func_800DD67C(&chara->position, chara, boneCoords);
@@ -5841,10 +5841,9 @@ bool Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DF
 
 void func_800DFCE4(s_SubCharacter* chara) // 0x800DFCE4
 {
-    // TODO: Unknown23Props
-    if (chara->properties.dummy.properties_E8[2].val32 == 0)
+    if (chara->properties.incubus.someState_F0 == 0)
     {
-        if (chara->properties.dummy.properties_E8[3].val32 < 0)
+        if (chara->properties.incubus.bossFightTimer_F4 < Q12(0.0f))
         {
             chara->health        = 0;
             chara->damage.amount = 1;
@@ -5852,7 +5851,7 @@ void func_800DFCE4(s_SubCharacter* chara) // 0x800DFCE4
 
         if (!func_8004C328(false))
         {
-            chara->properties.dummy.properties_E8[3].val32 -= g_DeltaTime;
+            chara->properties.incubus.bossFightTimer_F4 -= g_DeltaTime;
         }
 
         if (!(chara->flags & CharaFlag_Hit))
@@ -5870,7 +5869,7 @@ void func_800DFCE4(s_SubCharacter* chara) // 0x800DFCE4
                 chara->model.stateStep    = 0;
                 chara->health             = NO_VALUE;
                 chara->flags             |= CharaFlag_Unk2;
-                chara->properties.dummy.properties_E8[2].val32++;
+                chara->properties.incubus.someState_F0++;
             }
         }
     }
@@ -5944,8 +5943,6 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DFF
     s_SubCharacter* localChara;
 
     localChara = chara;
-
-    // TODO: Use `Chara_Unknown23` properties struct instead of Incubus properties.
 
     if (chara->model.stateStep == 0)
     {

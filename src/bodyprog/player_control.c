@@ -7927,9 +7927,9 @@ void func_8007E8C0(void) // 0x8007E8C0
 
 void func_8007E9C4(void) // 0x8007E9C4
 {
-    s_SubCharacter* chara;
+    s_SubCharacter* player;
 
-    chara = &g_SysWork.playerWork.player;
+    player = &g_SysWork.playerWork.player;
 
     g_Player_IsInWalkToRunTransition              = false;
     g_SysWork.playerWork.extra.state              = PlayerState_None;
@@ -7938,17 +7938,17 @@ void func_8007E9C4(void) // 0x8007E9C4
     g_SysWork.playerWork.extra.model.stateStep    = 0;
     g_SysWork.playerWork.extra.model.controlState = 0;
 
-    chara->model.stateStep          = 0;
-    chara->model.controlState       = 0;
+    player->model.stateStep         = 0;
+    player->model.controlState      = 0;
     g_SysWork.playerStopFlags       = PlayerStopFlag_None;
     g_Player_FlexRotationY          = Q12_ANGLE(0.0f);
     g_Player_FlexRotationX          = Q12_ANGLE(0.0f);
-    g_Player_PrevAttackReceived                      = NO_VALUE;
+    g_Player_PrevAttackReceived     = NO_VALUE;
     g_SysWork.playerCombat.isAiming = false;
 
     func_8004C564(0, NO_VALUE);
 
-    chara->angleToTarget    = Q12_ANGLE(90.0f);
+    player->angleToTarget    = Q12_ANGLE(90.0f);
     g_Player_IsDead         = false;
     g_Player_DisableDamage  = false;
     g_Player_HasActionInput = false;
@@ -7956,30 +7956,30 @@ void func_8007E9C4(void) // 0x8007E9C4
     g_Player_IsShooting     = false;
     g_Player_IsAttacking    = false;
 
-    chara->properties.player.afkTimer      = Q12(0.0f);
-    chara->properties.player.field_F4         = 0;
-    chara->properties.player.runTimer_F8      = Q12(0.0f);
-    chara->properties.player.field_100        = 0;
-    chara->properties.player.field_104        = 0;
-    chara->properties.player.runTimer_108     = Q12(0.0f);
-    chara->properties.player.timer_110        = 0;
-    chara->properties.player.flags_11C        = 0;
-    chara->properties.player.moveDistance_126 = 0;
+    player->properties.player.afkTimer      = Q12(0.0f);
+    player->properties.player.field_F4         = 0;
+    player->properties.player.runTimer_F8      = Q12(0.0f);
+    player->properties.player.field_100        = 0;
+    player->properties.player.field_104        = 0;
+    player->properties.player.runTimer_108     = Q12(0.0f);
+    player->properties.player.timer_110        = 0;
+    player->properties.player.flags_11C        = 0;
+    player->properties.player.moveDistance_126 = 0;
 
-    Chara_DamageClear(chara);
+    Chara_DamageClear(player);
 
     g_Player_IsHoldAttack       = false;
-    chara->flags            &= ~CharaFlag_Unk4;
-    g_Player_PrevPosition       = chara->position;
+    player->flags            &= ~CharaFlag_Unk4;
+    g_Player_PrevPosition       = player->position;
     g_SysWork.targetNpcIdx = NO_VALUE;
-    chara->field_40             = NO_VALUE;
-    chara->attackReceived    = NO_VALUE;
+    player->field_40             = NO_VALUE;
+    player->attackReceived    = NO_VALUE;
 
     g_SysWork.npcIdxs[3] = NO_VALUE;
     g_SysWork.npcIdxs[2] = NO_VALUE;
     g_SysWork.npcIdxs[1] = NO_VALUE;
     g_SysWork.npcIdxs[0] = NO_VALUE;
-    chara->collision.cylinder.field_2   = Q12(0.23f);
+    player->collision.cylinder.field_2   = Q12(0.23f);
 
     g_Player_IsAiming            = false;
     g_Player_IsRunning           = false;

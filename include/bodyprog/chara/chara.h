@@ -191,7 +191,7 @@ typedef struct
 } s_800D5710;
 STATIC_ASSERT_SIZEOF(s_800D5710, 52);
 
-// Used by Alessa, BloodyIncubator, BloodyLisa, Cheryl, Cybil, Dahlia, GhostChildAlessa, Incubator, Kaufmann, Lisa, MonsterCybil.
+// Used by Alessa, BloodyIncubator, BloodyLisa, Cheryl, Cybil, Dahlia, GhostChildAlessa, GhostDoctor, Incubator, Kaufmann, Lisa, MonsterCybil.
 typedef struct _PropsNpc
 {
     /* 0xE8  */ s32    controlState; /** `e_*Control` */
@@ -351,11 +351,11 @@ typedef struct _PropsHangedScratcher
     q4_12  radiusMin_10E; // }
 } s_PropsHangedScratcher;
 
-/** @brief Incubus or Incubator character properties. TODO: Check which one. */
+/** @brief Incubus character properties, shared with Unknown23? */
 typedef struct _PropsIncubus
 {
     q19_12 timer_E8;
-    s32    field_EC;
+    s32    field_EC; // Flags?
     s32    someState_F0;
     q19_12 bossFightTimer_F4;
     s8     __pad_F8[48];
