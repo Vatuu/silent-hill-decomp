@@ -66,19 +66,18 @@ typedef struct
 typedef struct
 {
     s8      field_0;
-    s8      unk_1;
     DVECTOR field_2; // Q3.12 | Angle constraint. X is min, Y is max. TODO: Don't use `DVECTOR` for this anymore.
 } s_CollisionState_44_0;
 
 typedef struct
 {
     s_CollisionState_44_0 field_0;
-    s16                  field_6;
+    s16                   field_6;
     s_CollisionState_44_0 field_8;
-    s16                  field_E;
-    s8*                  field_10[8];
+    s16                   field_E;
+    s8*                   field_10[8];
     s_CollisionState_44_0 field_30;
-    s16                  field_36;
+    s16                   field_36;
 } s_CollisionState_44;
 
 typedef union
@@ -171,14 +170,14 @@ typedef struct _CollisionState
 
                  union
                  {
-                     DVECTOR_XZ vec_0;
+                     DVECTOR_XZ offset;
                      s32        field_0;
-    /* 0x98   */ } field_98;
+    /* 0x98   */ } charaPos;
                  union
                  {
-                     DVECTOR_XZ vec_0;
+                     DVECTOR_XZ offset;
                      s32        field_0;
-    /* 0x9C   */ } field_9C;
+    /* 0x9C   */ } charaNewPos;
                  union
                  {
                      struct

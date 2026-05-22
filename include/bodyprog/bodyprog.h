@@ -2451,7 +2451,7 @@ void Collision_QueryInit(s_CollisionState* collState, VECTOR3* moveOffset, const
  */
 void Collision_MoveDirectionCalc(s_CollisionCharaMovement* result, const VECTOR3* moveOffset, const s_CollisionCylinder* collCylinder);
 
-void Ipd_GridCollisionQuery(s_CollisionState* collState, s_IpdCollisionData* collData);
+void Collision_CharaCollisionHandling(s_CollisionState* collState, s_IpdCollisionData* collData);
 
 bool func_8006AEAC(s_CollisionState* collState, const s_IpdCollisionData* collData);
 

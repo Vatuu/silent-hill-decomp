@@ -76,9 +76,9 @@ typedef struct _IpdCollisionData
     /* 0x26   */ u16                    field_26;
     /* 0x28   */ u8*                    ptr_28; // Accessed as array of indices into `field_34` by `func_8006E53C`.
     /* 0x2C   */ void*                  ptr_2C;
-    /* 0x30   */ u8                     field_30;
+    /* 0x30   */ u8                     unkLoadedCount; // Directly related to `field_34`.
     /* 0x31   */ s8                     __pad_31[3];
-    /* 0x34   */ u8                     field_34[256];
+    /* 0x34   */ u8                     field_34[256]; // Indexes container.
 } s_IpdCollisionData;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData, 308);
 

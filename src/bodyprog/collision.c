@@ -104,10 +104,10 @@ void func_80069994(s_IpdCollisionData* collData) // 0x80069994
 {
     s32* curPtr;
 
-    collData->field_30++;
-    if (collData->field_30 > 252)
+    collData->unkLoadedCount++;
+    if (collData->unkLoadedCount > 252)
     {
-        collData->field_30 = 0;
+        collData->unkLoadedCount = 0;
 
         // TODO: Is this `memset`/`bzero`?
         for (curPtr = &collData->field_34[0]; curPtr < &collData->field_34[256]; curPtr++)
@@ -119,7 +119,7 @@ void func_80069994(s_IpdCollisionData* collData) // 0x80069994
 
 void func_800699E4(s_IpdCollisionData* collData) // 0x800699E4
 {
-    collData->field_30++;
+    collData->unkLoadedCount++;
 }
 
 void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
@@ -154,7 +154,7 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
     state.isCharaMoving = false;
     state.field_0_9     = false;
     state.field_0_10    = true;
-    Ipd_GridCollisionQuery(&state, ipdCollData);
+    Collision_CharaCollisionHandling(&state, ipdCollData);
 
     if (state.field_90 == 1)
     {
@@ -547,8 +547,8 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
 
     offsetCpy = *moveOffset;
     
-    // Detect if the the target character is inside or how close is from a trigger, however what it
-    // returns is confusing, it's a value related to height of trigger points.
+    // Detect if the the target character is inside or how close is from a collision zone, however what it
+    // returns is confusing, it's a value related to height of collision zones.
     collResult->field_18 = func_8006F620(&offsetCpy, collCylinder, collCylinder->radius, collCylinder->top);
 
     Collision_QueryInit(&collState, &offsetCpy, collCylinder, arg3);
@@ -564,20 +564,20 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
         if (collState.field_0_0)
         {
             collState.isCharaMoving = collState.charaMoveInfo.moveDistance != Q12(0.0f);
-            collState.field_0_9         = false;
-            collState.field_0_10        = false;
+            collState.field_0_9     = false;
+            collState.field_0_10    = false;
         }
         else
         {
             collState.isCharaMoving = collState.charaMoveInfo.moveDistance != Q12(0.0f);
-            collState.field_0_9         = true;
-            collState.field_0_10        = true;
+            collState.field_0_9     = true;
+            collState.field_0_10    = true;
         }
 
         // Run through collision data.
         for (curCollData = collDataPtrs; curCollData < &collDataPtrs[collDataIdx]; curCollData++)
         {
-            Ipd_GridCollisionQuery(&collState, *curCollData);
+            Collision_CharaCollisionHandling(&collState, *curCollData);
         }
 
         if (collState.field_44.field_0.field_0 && collState.field_44.field_0.field_2.vx == collState.field_44.field_0.field_2.vy)
@@ -598,16 +598,16 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
                 var_a0 -= 15;
             }
 
-            collState.field_98.field_0 = Q12_TO_Q8(chara->position.vx + chara->collision.shapeOffsets.cylinder.vx);
-            collState.field_9C.field_0 = Q12_TO_Q8(chara->position.vz + chara->collision.shapeOffsets.cylinder.vz);
+            collState.charaPos.field_0    = Q12_TO_Q8(chara->position.vx + chara->collision.shapeOffsets.cylinder.vx);
+            collState.charaNewPos.field_0 = Q12_TO_Q8(chara->position.vz + chara->collision.shapeOffsets.cylinder.vz);
 
-            collState.field_A0.s_1.field_0 = Q12_TO_Q8(chara->collision.box.top + chara->position.vy);
-            collState.field_A0.s_1.field_2 = Q12_TO_Q8(chara->collision.box.bottom + chara->position.vy);
-            collState.field_A0.s_1.field_4 = var_a0;
+            collState.field_A0.s_1.field_0        = Q12_TO_Q8(chara->collision.box.top + chara->position.vy);
+            collState.field_A0.s_1.field_2        = Q12_TO_Q8(chara->collision.box.bottom + chara->position.vy);
+            collState.field_A0.s_1.field_4        = var_a0;
             collState.field_A0.s_1.collisionState = chara->collision.state;
-            collState.field_A0.s_1.field_8 = &chara->collision.field_E0;
+            collState.field_A0.s_1.field_8        = &chara->collision.field_E0;
 
-            if (collState.field_0_0 == 0)
+            if (collState.field_0_0 == false)
             {
                 chara->collision.field_E0 = 0;
             }
@@ -648,7 +648,7 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
             break;
         }
 
-        collState.field_0_0 = 1;
+        collState.field_0_0 = true;
         func_8006D774(&collState, &sp120, &offset1);
     }
 
@@ -673,7 +673,7 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
         return NO_VALUE;
     }
 
-    return collState.field_0_0 != 0;
+    return collState.field_0_0 != false;
 }
 
 void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCylinder* collCylinder, s_SubCharacter** charas, s32 charaCount) // 0x8006A940
@@ -755,8 +755,8 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCy
 
 void Collision_QueryInit(s_CollisionState* collState, VECTOR3* moveOffset, const s_CollisionCylinder* collCylinder, bool arg3) // 0x8006AB50
 {
-    collState->field_0_0             = 0;
-    collState->flags                = g_ActiveCollisionTriggers.flags;
+    collState->field_0_0             = false;
+    collState->flags                 = g_ActiveCollisionTriggers.flags;
     collState->charaMoveInfo.field_4 = arg3;
 
     Collision_MoveDirectionCalc(&collState->charaMoveInfo, moveOffset, collCylinder);
@@ -811,7 +811,7 @@ void Collision_MoveDirectionCalc(s_CollisionCharaMovement* result, const VECTOR3
     result->collisionState = collCylinder->collisionState;
 }
 
-void Ipd_GridCollisionQuery(s_CollisionState* collState, s_IpdCollisionData* collData) // 0x8006AD44
+void Collision_CharaCollisionHandling(s_CollisionState* collState, s_IpdCollisionData* collData) // 0x8006AD44
 {
     s32                    endIdx;
     s32                    startIdx;
@@ -825,9 +825,19 @@ void Ipd_GridCollisionQuery(s_CollisionState* collState, s_IpdCollisionData* col
         return;
     }
     
-    // Inverting this conditional triggers only when the player is colliding with a wall, however,
-    // normally testing this still triggering when the player is colliding with the wall.
-    if (collState->field_0_0 == 0)
+    /* Will - 1: Inverting this conditional triggers only when the player is colliding with a wall, however,
+       normally testing this still triggering when the player is colliding with the wall.
+       
+       Will - 2: Possibly this is some sort of check to clear collision information to avoid overflow or
+       something like that. The mute guy from GTA 3, pushed by kush, spoke and described this function assign
+       "Increments visited-counter for collision deduplication; wraps and clears at 252.", also breaking this
+       function causes strange behaviour in-game although this function is used in other function.
+       
+       Will - 3: I think I can tell with everything I have analysed here that this function is mainly responsible
+       to handle character collisions, probably general collisions and not just when it moving as this function
+       can also affect idle characters.
+    */
+    if (collState->field_0_0 == false)
     {
         func_80069994(collData);
     }
@@ -845,11 +855,12 @@ void Ipd_GridCollisionQuery(s_CollisionState* collState, s_IpdCollisionData* col
         }
     }
 
-    if (collState->field_0_0 == 0)
+    if (collState->field_0_0 == false)
     {
         func_800699E4(collData);
     }
 
+    // Important for handling height and handling movement in slopes.
     if (collState->field_0_10)
     {
         func_8006C838(collState, collData);
@@ -869,20 +880,20 @@ bool func_8006AEAC(s_CollisionState* collState, const s_IpdCollisionData* collDa
         return false;
     }
 
-    collState->field_98.vec_0.vx = collState->charaMoveInfo.positionX    - collData->positionX;
-    collState->field_98.vec_0.vz = collState->charaMoveInfo.positionZ    - collData->positionZ;
-    collState->field_9C.vec_0.vx = collState->charaMoveInfo.newPositionX - collData->positionX;
-    collState->field_9C.vec_0.vz = collState->charaMoveInfo.newPositionZ - collData->positionZ;
+    collState->charaPos.offset.vx    = collState->charaMoveInfo.positionX    - collData->positionX;
+    collState->charaPos.offset.vz    = collState->charaMoveInfo.positionZ    - collData->positionZ;
+    collState->charaNewPos.offset.vx = collState->charaMoveInfo.newPositionX - collData->positionX;
+    collState->charaNewPos.offset.vz = collState->charaMoveInfo.newPositionZ - collData->positionZ;
 
-    if ((collState->field_98.vec_0.vx / collData->field_1C) < 0 || (collState->field_98.vec_0.vx / collData->field_1C) >= collData->field_1E ||
-        ((collState->field_98.vec_0.vz / collData->field_1C) < 0) || (collState->field_98.vec_0.vz / collData->field_1C) >= collData->field_1F)
+    if ((collState->charaPos.offset.vx / collData->field_1C) < 0 || (collState->charaPos.offset.vx / collData->field_1C) >= collData->field_1E ||
+        ((collState->charaPos.offset.vz / collData->field_1C) < 0) || (collState->charaPos.offset.vz / collData->field_1C) >= collData->field_1F)
     {
         collState->field_A0.s_0.field_4 = NULL;
         return true;
     }
 
-    collState->field_A0.s_0.field_4 = (s_func_8006CA18*)&collData->ptr_20[((collState->field_98.vec_0.vz / collData->field_1C) * collData->field_1E) +
-                                                                          (collState->field_98.vec_0.vx / collData->field_1C)];
+    collState->field_A0.s_0.field_4 = (s_func_8006CA18*)&collData->ptr_20[((collState->charaPos.offset.vz / collData->field_1C) * collData->field_1E) +
+                                                                          (collState->charaPos.offset.vx / collData->field_1C)];
     collState->field_C8             = UCHAR_MAX;
 
     for (curUnk = collState->field_A0.s_0.field_8; curUnk < &collState->field_C8; curUnk++)
@@ -899,10 +910,10 @@ bool func_8006B004(s_CollisionState* collState, const s_IpdCollisionData* collDa
 {
     s32 charaCollDiffZClosest; // q23_8?
     s32 charaCollDiffXClosest; // q23_8?
-    s32 temp_lo;
-    s32 temp_lo_2;
-    s32 temp_t3;
-    s32 temp_t4;
+    s32 collCellXSize;
+    s32 collCellZSize;
+    s32 collCellXLimit;
+    s32 collCellZLimit;
     s32 charaCollDiffZFarest; // q23_8?
     s32 charaCollDiffXFarest; // q23_8?
 
@@ -918,10 +929,10 @@ bool func_8006B004(s_CollisionState* collState, const s_IpdCollisionData* collDa
        as determined by `CHUNK_CELL_SIZE` value which is `40.0f`.
     
     */
-    temp_lo   = collData->field_1C * collData->field_1E;
-    temp_t3   = temp_lo - 1;
-    temp_lo_2 = collData->field_1C * collData->field_1F;
-    temp_t4   = temp_lo_2 - 1;
+    collCellXSize  = collData->field_1C * collData->field_1E;
+    collCellXLimit = collCellXSize - 1;
+    collCellZSize  = collData->field_1C * collData->field_1F;
+    collCellZLimit = collCellZSize - 1;
 
     // Getting X plane differences.
     charaCollDiffXClosest = collState->charaMoveInfo.positionX    - collData->positionX;
@@ -948,16 +959,30 @@ bool func_8006B004(s_CollisionState* collState, const s_IpdCollisionData* collDa
     charaCollDiffZClosest -= collState->charaMoveInfo.radius;
     charaCollDiffZFarest  += collState->charaMoveInfo.radius;
 
-    if (temp_lo < charaCollDiffXClosest || temp_lo_2 < charaCollDiffZClosest || charaCollDiffXFarest < 0 || charaCollDiffZFarest < 0)
+    if (collCellXSize < charaCollDiffXClosest || collCellZSize < charaCollDiffZClosest || charaCollDiffXFarest < 0 || charaCollDiffZFarest < 0)
     {
         return false;
     }
 
-    charaCollDiffXClosest = limitRange(charaCollDiffXClosest, 0, temp_t3);
-    charaCollDiffZClosest = limitRange(charaCollDiffZClosest, 0, temp_t4);
-    charaCollDiffXFarest  = limitRange(charaCollDiffXFarest, 0, temp_t3);
-    charaCollDiffZFarest  = limitRange(charaCollDiffZFarest, 0, temp_t4);
+    charaCollDiffXClosest = limitRange(charaCollDiffXClosest, 0, collCellXLimit);
+    charaCollDiffZClosest = limitRange(charaCollDiffZClosest, 0, collCellZLimit);
+    charaCollDiffXFarest  = limitRange(charaCollDiffXFarest, 0, collCellXLimit);
+    charaCollDiffZFarest  = limitRange(charaCollDiffZFarest, 0, collCellZLimit);
 
+
+    /* Will - 1: it is very likely that this values are meant to represent
+       index or amounts of something, likely the amount of grid cells which
+       player takes in the currently placed grid, that is how this value seems
+       to be used in `Collision_CharaCollisionHandling` and would fit since it's taking
+       the size difference between the distance of point X/Z of a grid (presumambly)
+       and the size of a chunk.
+       
+       IN OTHER WORDS: This could contain the amount or index of something related to the cell
+       being analysed.
+       
+       Will - 2: Claude Speed tells that this function should be named like `IpdColl_QueryBboxToCells`
+       and describe it as `Convert query AABB to subcell index range`
+    */
     collState->field_A0.s_0.field_0 = charaCollDiffXClosest / collData->field_1C;
     collState->field_A0.s_0.field_1 = charaCollDiffZClosest / collData->field_1C;
     collState->field_A0.s_0.field_2 = ((charaCollDiffXFarest / collData->field_1C) - collState->field_A0.s_0.field_0) + 1;
@@ -976,9 +1001,9 @@ void func_8006B1C8(s_CollisionState* collState, s_IpdCollisionData* collData, s_
     {
         idx = collData->ptr_28[i];
 
-        if (collData->field_30 >= collData->field_34[idx])
+        if (collData->unkLoadedCount >= collData->field_34[idx])
         {
-            collData->field_34[idx] = collData->field_30 + 1;
+            collData->field_34[idx] = collData->unkLoadedCount + 1;
             var                     = collData->field_8_16;
 
             if (idx < var)
@@ -1077,7 +1102,7 @@ bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collDa
     gte_gte_ldvz0();
     gte_rtv0();
     gte_stMAC12(&collState->field_CC.field_20.field_14);
-    temp_v0 = ((collState->field_98.vec_0.vx - collState->field_CC.field_12.vx) & 0xFFFF) + ((collState->field_98.vec_0.vz - collState->field_CC.field_12.vz) << 16);
+    temp_v0 = ((collState->charaPos.offset.vx - collState->field_CC.field_12.vx) & 0xFFFF) + ((collState->charaPos.offset.vz - collState->field_CC.field_12.vz) << 16);
     gte_ldvxy0(temp_v0);
     gte_gte_ldvz0();
     gte_rtv0();
@@ -1321,13 +1346,13 @@ void func_8006BB50(s_CollisionState* collState, s32 arg1) // 0x8006BB50
 
     if (collState->field_CC.field_20.field_0.vx < 0)
     {
-        deltaX = collState->field_98.vec_0.vx - collState->field_CC.field_12.vx;
-        deltaZ = collState->field_98.vec_0.vz - collState->field_CC.field_12.vz;
+        deltaX = collState->charaPos.offset.vx - collState->field_CC.field_12.vx;
+        deltaZ = collState->charaPos.offset.vz - collState->field_CC.field_12.vz;
     }
     else if (collState->field_CC.field_6.vz < collState->field_CC.field_20.field_0.vx)
     {
-        deltaX = collState->field_98.vec_0.vx - collState->field_CC.field_18.vx;
-        deltaZ = collState->field_98.vec_0.vz - collState->field_CC.field_18.vz;
+        deltaX = collState->charaPos.offset.vx - collState->field_CC.field_18.vx;
+        deltaZ = collState->charaPos.offset.vz - collState->field_CC.field_18.vz;
     }
     else
     {
@@ -1523,19 +1548,19 @@ void func_8006BF88(s_CollisionState* state, SVECTOR3* arg1) // 0x8006BF88
     s32 temp3;
 
     temp_v0 = func_8006C248(*(s32*)&state->charaMoveInfo.direction, state->charaMoveInfo.moveDistance,
-                            arg1->vx - state->field_98.vec_0.vx,
-                            arg1->vz - state->field_98.vec_0.vz,
+                            arg1->vx - state->charaPos.offset.vx,
+                            arg1->vz - state->charaPos.offset.vz,
                             state->charaMoveInfo.radius);
     if (temp_v0 != -1 && func_8006C1B8(2, temp_v0, state) && state->charaMoveInfo.bottomPos > arg1->vy)
     {
         state->field_38 = temp_v0;
         state->field_34 = 2;
-        temp2          = state->field_98.vec_0.vx + Q12_MULT(state->charaMoveInfo.moveOffset.vx, temp_v0);
+        temp2          = state->charaPos.offset.vx + Q12_MULT(state->charaMoveInfo.moveOffset.vx, temp_v0);
         state->field_3A = (state->charaMoveInfo.moveDistance * temp_v0) >> 8;
         state->field_40 = (u8*)state->field_CC.ipdCollisionData_0 + (state->field_CC.field_4 + 52);
 
         state->field_3C = temp2 - arg1->vx;
-        temp3          = state->field_98.vec_0.vz + Q12_MULT(state->charaMoveInfo.moveOffset.vz, temp_v0);
+        temp3          = state->charaPos.offset.vz + Q12_MULT(state->charaMoveInfo.moveOffset.vz, temp_v0);
         state->field_3E = temp3 - arg1->vz;
     }
 }
@@ -1697,32 +1722,32 @@ void func_8006C45C(s_CollisionState* collState) // 0x8006C45C
     bound   = distMax + 8;
     temp_v1 = collState->field_CC.field_6.vx - bound;
 
-    if (collState->field_98.vec_0.vx < temp_v1 &&
-        collState->field_9C.vec_0.vx < temp_v1)
+    if (collState->charaPos.offset.vx < temp_v1 &&
+        collState->charaNewPos.offset.vx < temp_v1)
     {
         return;
     }
 
-    if ((collState->field_CC.field_6.vx + bound) < collState->field_98.vec_0.vx &&
-        (collState->field_CC.field_6.vx + bound) < collState->field_9C.vec_0.vx)
+    if ((collState->field_CC.field_6.vx + bound) < collState->charaPos.offset.vx &&
+        (collState->field_CC.field_6.vx + bound) < collState->charaNewPos.offset.vx)
     {
         return;
     }
 
-    if (collState->field_98.vec_0.vz < (collState->field_CC.field_6.vz - bound) &&
-        collState->field_9C.vec_0.vz < (collState->field_CC.field_6.vz - bound))
+    if (collState->charaPos.offset.vz < (collState->field_CC.field_6.vz - bound) &&
+        collState->charaNewPos.offset.vz < (collState->field_CC.field_6.vz - bound))
     {
         return;
     }
 
-    if ((collState->field_CC.field_6.vz + bound) < collState->field_98.vec_0.vz &&
-        (collState->field_CC.field_6.vz + bound) < collState->field_9C.vec_0.vz)
+    if ((collState->field_CC.field_6.vz + bound) < collState->charaPos.offset.vz &&
+        (collState->field_CC.field_6.vz + bound) < collState->charaNewPos.offset.vz)
     {
         return;
     }
 
-    deltaX = collState->field_98.vec_0.vx - collState->field_CC.field_6.vx;
-    deltaZ = collState->field_98.vec_0.vz - collState->field_CC.field_6.vz;
+    deltaX = collState->charaPos.offset.vx - collState->field_CC.field_6.vx;
+    deltaZ = collState->charaPos.offset.vz - collState->field_CC.field_6.vz;
     dist   = Math_Vector2MagCalc(deltaX, deltaZ);
 
     if (dist < collState->field_CC.field_C.field_0 && collState->field_CC.field_5 != 1 &&
@@ -1754,8 +1779,8 @@ void func_8006C45C(s_CollisionState* collState) // 0x8006C45C
     }
 
     var_s2 = func_8006C248(*(s32*)&collState->charaMoveInfo.direction, collState->charaMoveInfo.moveDistance,
-                           collState->field_CC.field_6.vx - collState->field_98.vec_0.vx,
-                           collState->field_CC.field_6.vz - collState->field_98.vec_0.vz,
+                           collState->field_CC.field_6.vx - collState->charaPos.offset.vx,
+                           collState->field_CC.field_6.vz - collState->charaPos.offset.vz,
                            distMax);
 
     if (var_s2 == -1)
@@ -1772,11 +1797,11 @@ void func_8006C45C(s_CollisionState* collState) // 0x8006C45C
     {
         collState->field_38 = var_s2;
         collState->field_34 = 1;
-        temp           = collState->field_98.vec_0.vx + Q12_MULT(collState->charaMoveInfo.moveOffset.vx, var_s2);
+        temp           = collState->charaPos.offset.vx + Q12_MULT(collState->charaMoveInfo.moveOffset.vx, var_s2);
         collState->field_3A = (collState->charaMoveInfo.moveDistance * var_s2) >> 8;
         collState->field_40 = (u8*)collState->field_CC.ipdCollisionData_0 + (collState->field_CC.field_4 + 52);
         collState->field_3C = temp - collState->field_CC.field_6.vx;
-        temp2          = collState->field_98.vec_0.vz + Q12_MULT(collState->charaMoveInfo.moveOffset.vz, var_s2);
+        temp2          = collState->charaPos.offset.vz + Q12_MULT(collState->charaMoveInfo.moveOffset.vz, var_s2);
         collState->field_3E = temp2 - collState->field_CC.field_6.vz;
     }
 }
@@ -1788,8 +1813,8 @@ void func_8006C794(s_CollisionState* collState, s32 arg1, s32 dist) // 0x8006C79
         func_8006BCC4(&collState->field_44,
                       (u8*)collState->field_CC.ipdCollisionData_0 + (collState->field_CC.field_4 + 52),
                       arg1,
-                      collState->field_98.vec_0.vx - collState->field_CC.field_6.vx,
-                      collState->field_98.vec_0.vz - collState->field_CC.field_6.vz,
+                      collState->charaPos.offset.vx - collState->field_CC.field_6.vx,
+                      collState->charaPos.offset.vz - collState->field_CC.field_6.vz,
                       (collState->charaMoveInfo.radius + collState->field_CC.field_C.field_0) - dist);
     }
 }
@@ -1801,7 +1826,7 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) //
     s_IpdCollisionData_10* temp_a1;
     s_IpdCollisionData_18* temp_a0;
 
-    if (!collState->field_A0.s_0.field_4)
+    if (collState->field_A0.s_0.field_4 == NULL)
     {
         return;
     }
@@ -1812,8 +1837,8 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) //
         {
             temp_a0               = &collData->ptr_18[collState->field_C8 - collData->field_8_16];
             collState->field_7C   = collState->groundHeight;
-            collState->field_80   = collState->field_98.vec_0.vx + collData->positionX;
-            collState->field_84   = collState->field_98.vec_0.vz + collData->positionZ;
+            collState->field_80   = collState->charaPos.offset.vx + collData->positionX;
+            collState->field_84   = collState->charaPos.offset.vz + collData->positionZ;
             collState->tiltAngleX = Q12_ANGLE(0.0f);
             collState->tiltAngleZ = Q12_ANGLE(0.0f);
             collState->field_90   = temp_a0->field_0_5;
@@ -1831,19 +1856,19 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) //
 
             if (temp_a1->tiltAngleX != Q12_ANGLE(0.0f))
             {
-                var_a0 += Q12_MULT(temp_a1->tiltAngleX, collState->field_98.vec_0.vx - temp_a1->field_0);
+                var_a0 += Q12_MULT(temp_a1->tiltAngleX, collState->charaPos.offset.vx - temp_a1->field_0);
             }
 
             if (temp_a1->tiltAngleZ != Q12_ANGLE(0.0f))
             {
-                var_a0 += Q12_MULT(temp_a1->tiltAngleZ, collState->field_98.vec_0.vz - temp_a1->field_4);
+                var_a0 += Q12_MULT(temp_a1->tiltAngleZ, collState->charaPos.offset.vz - temp_a1->field_4);
             }
 
             if (var_a0 < collState->field_7C)
             {
                 collState->field_7C   = var_a0;
-                collState->field_80   = collState->field_98.vec_0.vx + collData->positionX;
-                collState->field_84   = collState->field_98.vec_0.vz + collData->positionZ;
+                collState->field_80   = collState->charaPos.offset.vx + collData->positionX;
+                collState->field_84   = collState->charaPos.offset.vz + collData->positionZ;
                 collState->tiltAngleX = temp_a1->tiltAngleX;
                 collState->tiltAngleZ = temp_a1->tiltAngleZ;
                 collState->field_90   = temp_a1->field_6_5;
@@ -1879,19 +1904,19 @@ void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_
 
             if (ptr->tiltAngleX != Q12_ANGLE(0.0f))
             {
-                var_a2 += Q12_MULT(ptr->tiltAngleX, collState->field_98.vec_0.vx - ptr->field_0);
+                var_a2 += Q12_MULT(ptr->tiltAngleX, collState->charaPos.offset.vx - ptr->field_0);
             }
 
             if (ptr->tiltAngleZ != Q12_ANGLE(0.0f))
             {
-                var_a2 += Q12_MULT(ptr->tiltAngleZ, collState->field_98.vec_0.vz - ptr->field_4);
+                var_a2 += Q12_MULT(ptr->tiltAngleZ, collState->charaPos.offset.vz - ptr->field_4);
             }
 
             if (var_a2 < collState->field_7C)
             {
                 collState->field_7C   = var_a2;
-                collState->field_80   = collState->field_98.vec_0.vx + collData->positionX;
-                collState->field_84   = collState->field_98.vec_0.vz + collData->positionZ;
+                collState->field_80   = collState->charaPos.offset.vx + collData->positionX;
+                collState->field_84   = collState->charaPos.offset.vz + collData->positionZ;
                 collState->tiltAngleX = ptr->tiltAngleX;
                 collState->tiltAngleZ = ptr->tiltAngleZ;
                 collState->field_90   = ptr->field_6_5;
@@ -1951,32 +1976,32 @@ void func_8006CC9C(s_CollisionState* state) // 0x8006CC9C
         return;
     }
 
-    if (state->field_98.field_0 + (state->field_A0.s_1.field_4 + state->charaMoveInfo.moveDistance) < state->charaMoveInfo.positionX ||
-        state->charaMoveInfo.newPositionX < state->field_98.field_0 - (state->field_A0.s_1.field_4 + state->charaMoveInfo.moveDistance))
+    if (state->charaPos.field_0 + (state->field_A0.s_1.field_4 + state->charaMoveInfo.moveDistance) < state->charaMoveInfo.positionX ||
+        state->charaMoveInfo.newPositionX < state->charaPos.field_0 - (state->field_A0.s_1.field_4 + state->charaMoveInfo.moveDistance))
     {
         return;
     }
 
-    if (state->field_9C.field_0 + (state->field_A0.s_1.field_4 + state->charaMoveInfo.moveDistance) < state->charaMoveInfo.positionZ ||
-        state->charaMoveInfo.newPositionZ < state->field_9C.field_0 - (state->field_A0.s_1.field_4 + state->charaMoveInfo.moveDistance) ||
+    if (state->charaNewPos.field_0 + (state->field_A0.s_1.field_4 + state->charaMoveInfo.moveDistance) < state->charaMoveInfo.positionZ ||
+        state->charaMoveInfo.newPositionZ < state->charaNewPos.field_0 - (state->field_A0.s_1.field_4 + state->charaMoveInfo.moveDistance) ||
         state->charaMoveInfo.topPos > state->field_A0.s_1.field_2)
     {
         return;
     }
 
-    deltaX = (state->charaMoveInfo.positionX - state->field_98.field_0);
+    deltaX = (state->charaMoveInfo.positionX - state->charaPos.field_0);
 
     if (state->charaMoveInfo.bottomPos < state->field_A0.s_1.field_0)
     {
         return;
     }
 
-    deltaZ = state->charaMoveInfo.positionZ - state->field_9C.field_0;
+    deltaZ = state->charaMoveInfo.positionZ - state->charaNewPos.field_0;
     temp_s4 = Math_Vector2MagCalc(deltaX, deltaZ);
 
     temp_v0 = func_8006C248(*(s32*)&state->charaMoveInfo.direction, state->charaMoveInfo.moveDistance,
-                            state->field_98.field_0 - state->charaMoveInfo.positionX,
-                            state->field_9C.field_0 - state->charaMoveInfo.positionZ,
+                            state->charaPos.field_0 - state->charaMoveInfo.positionX,
+                            state->charaNewPos.field_0 - state->charaMoveInfo.positionZ,
                             state->field_A0.s_1.field_4);
     if (temp_v0 == NO_VALUE)
     {
@@ -1993,7 +2018,7 @@ void func_8006CC9C(s_CollisionState* state) // 0x8006CC9C
     }
     else if (state->isCharaMoving && state->field_44.field_0.field_0 == 0 && func_8006C1B8(1, temp_v0, state))
     {
-        temp2 = (state->charaMoveInfo.positionZ - state->field_9C.field_0);
+        temp2 = (state->charaMoveInfo.positionZ - state->charaNewPos.field_0);
         tarCharaBottom = Q12_MULT(temp_v0, state->charaMoveInfo.moveOffset.vz);
 
         state->field_40 = state->field_A0.s_1.field_8;
@@ -2001,7 +2026,7 @@ void func_8006CC9C(s_CollisionState* state) // 0x8006CC9C
 
         state->field_34 = 1;
 
-        temp  = (state->charaMoveInfo.positionX - state->field_98.field_0);
+        temp  = (state->charaMoveInfo.positionX - state->charaPos.field_0);
         temp4 = Q12_MULT(temp_v0, state->charaMoveInfo.moveOffset.vx);
 
         state->field_3A = (state->charaMoveInfo.moveDistance * temp_v0) >> 8; // TODO: Conversion to Q4?
@@ -2023,8 +2048,8 @@ void func_8006CF18(s_CollisionState* state, s_func_8006CF18* arg1, s32 idx) // 0
             var_a1 -= 15;
         }
 
-        state->field_98.field_0 = Q12_TO_Q8(curArg1->position.vx);
-        state->field_9C.field_0 = Q12_TO_Q8(curArg1->position.vz);
+        state->charaPos.field_0 = Q12_TO_Q8(curArg1->position.vx);
+        state->charaNewPos.field_0 = Q12_TO_Q8(curArg1->position.vz);
 
         state->field_A0.s_1.field_0 = Q12_TO_Q8(curArg1->field_E + curArg1->position.vy);
         state->field_A0.s_1.field_2 = Q12_TO_Q8(curArg1->field_C + curArg1->position.vy);
@@ -2032,7 +2057,7 @@ void func_8006CF18(s_CollisionState* state, s_func_8006CF18* arg1, s32 idx) // 0
         state->field_A0.s_1.collisionState = curArg1->collisionState;
         state->field_A0.s_1.field_8 = &curArg1->field_13;
 
-        if (state->field_0_0 == 0)
+        if (state->field_0_0 == false)
         {
             curArg1->field_13 = 0;
         }
@@ -2823,7 +2848,7 @@ void func_8006E53C(s_RayState* state, s_IpdCollisionData_20* arg1, s_IpdCollisio
     for (i = arg1[0].field_0; i < arg1[1].field_0; i++)
     {
         idx = ipdColl->ptr_28[i];
-        temp_a0 = ipdColl->field_30;
+        temp_a0 = ipdColl->unkLoadedCount;
 
         if (temp_a0 >= ipdColl->field_34[idx])
         {
