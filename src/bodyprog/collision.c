@@ -2826,8 +2826,8 @@ void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ) /
     if (posX >= Q12(0.0f) && posX < arg0->field_10 &&
         posZ >= Q12(0.0f) && posZ < arg0->field_14)
     {
-        arg0->field_20[arg0->field_1C].field_0 = posX;
-        arg0->field_20[arg0->field_1C].field_2 = posZ;
+        arg0->field_20[arg0->field_1C].vx = posX;
+        arg0->field_20[arg0->field_1C].vz = posZ;
         arg0->field_1C++;
     }
 }

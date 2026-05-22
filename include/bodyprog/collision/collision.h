@@ -300,36 +300,30 @@ typedef struct _RayTrace
 
 typedef struct
 {
-    q3_12 field_0; // X
-    q3_12 field_2; // Z
-} s_func_8006E490_20;
-
-typedef struct
-{
-    s8                 unk_0[8];
-    DVECTOR            field_8;
-    s16                field_C;
-    s16                field_E;
-    s32                field_10; // } X
-    s32                field_14; // } Z?
-    s16                field_18;
-    s8                 unk_1A[2];
-    s32                field_1C; // Index into `field_20`.
-    s_func_8006E490_20 field_20[2];
+    s8         unk_0[8];
+    DVECTOR    field_8;
+    s16        field_C;
+    s16        field_E;
+    q19_12     field_10; // } X
+    q19_12     field_14; // } Z
+    s16        field_18;
+    s8         unk_1A[2];
+    s32        field_1C; // Index into `field_20`.
+    DVECTOR_XZ field_20[2];
 } s_func_8006E490;
 
 typedef struct
 {
     q19_12 field_0; // X position.
     q19_12 field_4; // Z position.
-    s32    field_8;
-    s32    field_C;
+    q19_12 field_8;
+    q19_12 field_C;
     q19_12 field_10; // X
     q19_12 field_14; // Z
-    s32    field_18; // X } Bounds?
-    s32    field_1C; // X }
-    s32    field_20; // Z }
-    s32    field_24; // Z }
+    q19_12 field_18; // X } Bounds?
+    q19_12 field_1C; // X }
+    q19_12 field_20; // Z }
+    q19_12 field_24; // Z }
     q19_12 field_28; // Maybe XZ position.
     q19_12 triggerHeight;
 } s_func_8006F338;
@@ -341,6 +335,8 @@ extern s_ActiveCollisionTriggers g_ActiveCollisionTriggers;
 extern u16 g_CollisionTriggerFlags;
 
 /** @brief Computes a trigger height from half-meter height steps.
+ *
+ * @note The trigger height has a default offset of `Q12(-1.5f)`.
  *
  * @param steps Half-meter height steps.
  * @return Trigger height (Q19.12).
