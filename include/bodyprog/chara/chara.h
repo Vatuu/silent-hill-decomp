@@ -194,21 +194,31 @@ STATIC_ASSERT_SIZEOF(s_800D5710, 52);
 // Used by Alessa, BloodyLisa, Cheryl, Cybil, Dahlia, GhostChildAlessa, Kaufmann, Lisa.
 typedef struct _PropsNpc
 {
-    /* 0xE8  */ s32        controlState; /** `e_*Control` */
-    /* 0xEC  */ u_Property properties_EC; // Unused?
-    /* 0xF0  */ bool       freeze;
-    /* 0xF4  */ u_Property properties_F4; // Unused?
-    /* 0xF8  */ bool       resetControlState;
-    /* 0xFC  */ s32        field_FC;
-    /* 0x100 */ s32        field_100;
-    /* 0x104 */ u_Property properties_104;
-    /* 0x108 */ u_Property properties_108;
-    /* 0x10C */ u_Property properties_10C;
-    /* 0x110 */ VECTOR3    field_110;
-    /* 0x11C */ s32        flags; /** `e_*Flags` */
-    /* 0x120 */ s32        field_120;
-    /* 0x124 */ q3_12      moveDistance_124;
-    /* 0x126 */ q3_12      moveSpeed;
+    /* 0xE8  */ s32    controlState; /** `e_*Control` */
+    /* 0xEC  */ s16    field_EC;
+    /* 0xEE  */ s16    field_EE; // Anim index?
+    /* 0xF0  */ s32    freeze; // `bool`, `q19_12` timer in MonsterCybil.
+    /* 0xF4  */ s32    field_F4;
+    /* 0xF8  */ s32    resetControlState; // `bool`, `q19_12` timer in MonsterCybil.
+    /* 0xFC  */ s8     __pad_FC[2];
+    /* 0xFE  */ s16    field_FE; // Index.
+    /* 0x100 */ q19_12 field_100;
+    /* 0x104 */ s16    field_104;
+    /* 0x106 */ q3_12  field_106; // Angle or counter (`func_800D8D7C`)? May change usage depending on state step?
+    /* 0x108 */ q19_12 field_108; // Timer.
+    /* 0x10C */ q19_12 field_10C; // Timer.
+    /* 0x110 */ q19_12 field_110; // Distance?
+    /* 0x114 */ u8     field_114;
+    /* 0x115 */ u8     field_115;
+    /* 0x116 */ u8     field_116;
+    /* 0x117 */ s8     __pad_117;
+    /* 0x118 */ q3_12  field_118; // Angle.
+    /* 0x11A */ q3_12  field_11A; // Angle.
+    /* 0x11C */ s32    flags; /** `e_*Flags` */
+    /* 0x120 */ s16    field_120; // `bool`.
+    /* 0x120 */ q3_12  field_122; // Angle.
+    /* 0x124 */ q3_12  moveDistance_124;
+    /* 0x126 */ q3_12  moveSpeed;
 } s_PropsNpc;
 STATIC_ASSERT_SIZEOF(s_PropsNpc, 64);
 
@@ -376,38 +386,6 @@ typedef struct _PropsLarvalStalker
     /* 0x */ q3_12      moveDistance_126;
 } s_PropsLarvalStalker;
 STATIC_ASSERT_SIZEOF(s_PropsLarvalStalker, 64);
-
-/** @brief Monster Cybil character properties. */
-typedef struct _PropsMonsterCybil
-{
-    s32    field_E8;
-    s16    field_EC;
-    s16    field_EE; // Anim index?
-    q19_12 field_F0; // Timer.
-    s32    field_F4;
-    q19_12 field_F8; // Timer, gets reduced by damage?
-    s8     __pad_FC[2];
-    s16    field_FE; // Index.
-    q19_12 field_100;
-    s16    field_104;
-    q3_12  field_106; // Angle or counter (`func_800D8D7C`)? May change usage depending on state step?
-    q19_12 field_108; // Timer.
-    q19_12 field_10C; // Timer.
-    q19_12 field_110; // Distance?
-    u8     field_114;
-    u8     field_115;
-    u8     field_116;
-    s8     __pad_117;
-    q3_12  field_118; // Angle.
-    q3_12  field_11A; // Angle.
-    s16    field_11C;
-    s16    field_11E;
-    s16    field_120; // `bool`.
-    q3_12  field_122; // Angle.
-    s8     __pad_124[2];
-    q3_12  field_126; // Used as `s_SubCharacter::moveSpeed`.
-} s_PropsMonsterCybil;
-STATIC_ASSERT_SIZEOF(s_PropsMonsterCybil, 64);
 
 /** @brief Puppet Nurse or Puppet Doctor character properties. */
 typedef struct _PropsPuppetNurse
@@ -639,7 +617,6 @@ typedef struct _SubCharacter
                    s_PropsHangedScratcher hangedScratcher;
                    s_PropsIncubus         incubus;
                    s_PropsLarvalStalker   larvalStalker;
-                   s_PropsMonsterCybil    monsterCybil;
                    s_PropsPuppetNurse     puppetNurse;
                    s_PropsRomper          romper;
                    s_PropsSplitHead       splitHead;
