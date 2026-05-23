@@ -1432,7 +1432,7 @@ void Ipd_ChunkMaterialsApply(s_MapTerrain* terrain);
  * @param cellZ Z cell coordinate.
  * @return IPD chunk file index.
  */
-s32 Map_MapChunkFileIdxGet(s32 cellX, s32 cellZ);
+s32 Map_IpdChunkFileIdxGet(s32 cellX, s32 cellZ);
 
 bool Map_IsIpdPresentCheck(const s_Chunk* activeChunks, s32 cellX, s32 cellZ);
 

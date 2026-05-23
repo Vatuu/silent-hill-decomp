@@ -1110,7 +1110,7 @@ s32 Map_ChunkLoad(s_MapTerrain* terrain, q19_12 posX0, q19_12 posZ0, q19_12 posX
             {
                 projCellZ = cellZ0 + curCellZ;
                 projCellX = cellX0 + curCellX;
-                chunkIdx  = Map_MapChunkFileIdxGet(projCellX, projCellZ);
+                chunkIdx  = Map_IpdChunkFileIdxGet(projCellX, projCellZ);
 
                 if (chunkIdx != NO_VALUE &&
                     Map_PaddedDistanceToChunkEdgeGet(posX0, posZ0, projCellX, projCellZ, terrain->isExterior) <= Q12(0.0f) &&
@@ -1219,7 +1219,7 @@ void Ipd_ChunkMaterialsApply(s_MapTerrain* terrain) // 0x800433B8
     }
 }
 
-s32 Map_MapChunkFileIdxGet(s32 cellX, s32 cellZ) // 0x80043554
+s32 Map_IpdChunkFileIdxGet(s32 cellX, s32 cellZ) // 0x80043554
 {
     // @hack
     return ((s16*)&g_MapTerrain.chunkGridCenter[cellZ])[cellX];
