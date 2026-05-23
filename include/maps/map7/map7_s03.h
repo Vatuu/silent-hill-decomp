@@ -237,40 +237,6 @@ typedef struct
 
 typedef struct
 {
-    s32     field_0;
-    s32     field_4;
-    VECTOR  field_8;
-    u8      unk_18[16];
-    SVECTOR field_28;
-    u8      unk_30[8];
-    s32     field_38;
-} s_func_800DF1D4_58C;
-
-typedef struct
-{
-    s8                  unk_0[4];
-    VECTOR              field_4;
-    s8                  unk_10[32];
-    s8                  field_34[41];
-    u8                  field_5D[31 * 41];
-    u8                  field_554[41];
-    s8                  unk_57D[7];
-    s32                 field_584;
-    s8                  unk_588[4];
-    s_func_800DF1D4_58C field_58C[100];
-} s_func_800DF1D4;
-
-typedef struct
-{
-    u8      unk_0[4];
-    VECTOR3 field_4;
-    u8      unk_10[0x574];
-    s32     field_584;
-    s32     field_588;
-} s_func_800DFA48;
-
-typedef struct
-{
     u16 field_0;
     u16 field_2;
     u16 field_4;
@@ -363,8 +329,6 @@ extern s_800F3DAC* D_800F3DAC; // Pointer to `s_800F3DAC[30]`.
 extern s32 D_800F3DB0;
 
 extern q19_12 D_800F3DB4; // Timer.
-
-extern q19_12 D_800F3DB8; // Timer.
 
 extern s_D_800F48A8 D_800F48A8;
 
@@ -481,10 +445,6 @@ extern s_WorldObjectModel g_WorldObject_Under;
 
 extern s32 D_800F48A4;
 
-extern s_AnimInfo LITTLE_INCUBUS_ANIM_INFOS[];
-extern s_AnimInfo INCUBUS_ANIM_INFOS[];
-extern s_AnimInfo UNKKOWN_23_ANIM_INFOS[];
-
 extern s32 D_800F2418[];
 
 extern s32 D_800EB008;
@@ -526,8 +486,6 @@ extern s_800F3D48_0  D_800EC1B8;
 
 extern s32 D_800EC758[];
 extern s32 D_800EC764[];
-
-extern s32 D_800ECA50[];
 
 extern VECTOR3 D_800F4B30;
 
@@ -718,25 +676,6 @@ void func_800DD738(const VECTOR3* pos0, const VECTOR3* pos1, q19_12 rotZ, q19_12
 void func_800DD7D0(VECTOR3* charaPos);
 void func_800DD868(void);
 void func_800DD8CC(VECTOR3* charaPos);
-s32  func_800DD964(void);
-void func_800DD98C(bool disableDamage);
-void func_800DD9B0(s_SubCharacter* chara);
-void func_800DD9D4(s_SubCharacter* chara);
-void func_800DD9F8(s_SubCharacter* chara);
-
-void func_800DF1D4(void);
-void func_800DF750(void);
-s32 func_800DF418(s32 arg0, s32 arg1);
-void func_800DF7F8(void);
-void func_800DF84C(VECTOR* arg0, s32 arg1);
-s32  func_800DF90C(void);
-void func_800DF944(void);
-void func_800DFA14(void);
-void func_800DFA48(VECTOR3* arg0, VECTOR3* arg1);
-s32  func_800DFB04(void);
-void func_800DFB2C(bool disableDamage);
-void func_800DFB50(s_SubCharacter* chara);
-void func_800DFB74(s_SubCharacter* chara);
 
 void func_800E0A34(void);
 void func_800E0B28(s32 arg0);
@@ -962,11 +901,5 @@ void func_800DB6D0(MATRIX* arg0, const VECTOR* rot0, const VECTOR* rot1, const M
 s32 func_800DBA08(SVECTOR* arg0, s32* arg1, s32* arg2);
 
 void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot);
-
-void func_800DF288(s32 x, s32 y, s32 val);
-
-void func_800DF458(void);
-
-void func_800DF348(void);
 
 #endif

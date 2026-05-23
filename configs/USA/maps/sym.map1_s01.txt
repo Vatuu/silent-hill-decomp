@@ -102,10 +102,14 @@ Stalker_CollisionUpdate         = 0x800D5E4C; // type:func
 sharedFunc_800D7BE8_0_s00       = 0x800D6970; // type:func
 sharedFunc_800D7E04_0_s00       = 0x800D6B8C; // type:func
 
-//-----------------------------------------------------------
-//--- PA: 0x00D7C8   VA: 0x800D6D40   subsegment: c, map1_s01
-//-----------------------------------------------------------
+//------------------------------------------------------------
+//--- PA: 0x00D7C8   VA: 0x800D6D40   subsegment: c, Chara_Cat
+//------------------------------------------------------------
 Cat_Update                      = 0x800D6D40; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x00D9BC   VA: 0x800D6F34   subsegment: c, map1_s01
+//-----------------------------------------------------------
 sharedFunc_800D929C_0_s00       = 0x800D6F34; // type:func
 Map_RoomIdxGet                  = 0x800D6F44; // type:func
 Map_RoomBgmInit                 = 0x800D6FE4; // type:func

@@ -116,7 +116,7 @@ BloodyLisa_AnimStateUpdate          = 0x800D4EA4; // type:func
 BloodyLisa_Init                     = 0x800D501C; // type:func
 
 //-------------------------------------------------------------
-//--- PA: 0x00BAC8   VA: 0x800D5040   subsegment: c, map7_s03_2
+//--- PA: 0x00BAC8   VA: 0x800D5040   subsegment: c, chara_util
 //-------------------------------------------------------------
 sharedFunc_800D88AC_0_s00           = 0x800D5040; // type:func
 sharedFunc_800D88C0_0_s00           = 0x800D5054; // type:func
@@ -133,7 +133,15 @@ sharedFunc_800D908C_0_s00           = 0x800D58C0; // type:func
 sharedFunc_800D9188_0_s00           = 0x800D59BC; // type:func
 Chara_AnimStartKeyframeIdxGet       = 0x800D5AA8; // type:func
 Chara_CollisionReset                = 0x800D5B68; // type:func
+
+//----------------------------------------------------------------------
+//--- PA: 0x00C650   VA: 0x800D5BC8   subsegment: c, Chara_LittleIncubus
+//----------------------------------------------------------------------
 LittleIncubus_Update                = 0x800D5BC8; // type:func
+
+//-------------------------------------------------------------
+//--- PA: 0x00C7AC   VA: 0x800D5D24   subsegment: c, map7_s03_2
+//-------------------------------------------------------------
 sharedFunc_800CD6B0_3_s03           = 0x800DB338; // type:func
 sharedFunc_800CD7F8_3_s03           = 0x800DB480; // type:func
 sharedFunc_800CD920_3_s03           = 0x800DB5A8; // type:func

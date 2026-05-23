@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "main/rng.h"
 #include "maps/characters/cat.h"
 
 #define catProps cat->properties.cat

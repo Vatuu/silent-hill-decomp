@@ -6,6 +6,60 @@
 #define incubusProps      incubus->properties.incubus
 #define localIncubusProps localIncubus->properties.incubus
 
+s32 func_800DD964(void) // 0x8007F250
+{
+    u8 sp10;
+
+    Player_DisableDamage(&sp10, false);
+    return sp10;
+}
+
+void func_800DD98C(bool disableDamage) // 0x800DD98C
+{
+    u8 sp10;
+
+    Player_DisableDamage(&sp10, disableDamage);
+}
+
+void func_800DD9B0(s_SubCharacter* chara) // 0x800DD9B0
+{
+    if (chara->model.controlState != 0)
+    {
+        chara->model.controlState = 2;
+        chara->model.stateStep    = 0;
+    }
+    else
+    {
+        chara->model.stateStep = 2;
+    }
+}
+
+void func_800DD9D4(s_SubCharacter* chara) // 0x800DD9D4
+{
+    if (chara->model.controlState != 0)
+    {
+        chara->model.controlState = 10;
+        chara->model.stateStep    = 0;
+    }
+    else
+    {
+        chara->model.stateStep = 10;
+    }
+}
+
+void func_800DD9F8(s_SubCharacter* chara) // 0x800DD9F8
+{
+    if (chara->model.controlState != 0)
+    {
+        chara->model.controlState = 3;
+        chara->model.stateStep    = 0;
+    }
+    else
+    {
+        chara->model.stateStep = 3;
+    }
+}
+
 bool Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800DDA1C
 {
     u8              activeStateStep;

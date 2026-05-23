@@ -41,9 +41,21 @@ typedef enum _IncubusStateStep
     IncubusStateStep_4 = 4
 } e_IncubusStateStep;
 
+extern s_AnimInfo INCUBUS_ANIM_INFOS[];
+
 extern s_SfxVolume D_800EC8C8[13];
 
 extern u8 D_800EC8FC[340]; // Related to Incubus keyframes.
+
+s32 func_800DD964(void);
+
+void func_800DD98C(bool disableDamage);
+
+void func_800DD9B0(s_SubCharacter* chara);
+
+void func_800DD9D4(s_SubCharacter* chara);
+
+void func_800DD9F8(s_SubCharacter* chara);
 
 bool Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords); // 0x800DDA1C
 

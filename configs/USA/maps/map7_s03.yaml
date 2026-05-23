@@ -67,7 +67,8 @@ segments:
       - [0x1720, .rodata, Chara_BloodyIncubator]
       - [0x1750, .rodata, Chara_Kaufmann]
       - [0x181C, rodata]
-      - [0x1820, .rodata, map7_s03_2]
+      - [0x1820, .rodata, chara_util]
+      - [0x18B8, .rodata, map7_s03_2]
 
       # Data only C files
       - [0x3BF8, c, map7_s03_header]
@@ -84,7 +85,9 @@ segments:
       - [0xA64C, c, Chara_Incubator]
       - [0xA9E0, c, Chara_Kaufmann]
       - [0xB6D8, c, Chara_BloodyLisa]
-      - [0xBAC8, c, map7_s03_2]
+      - [0xBAC8, c, chara_util]
+      - [0xC650, c, Chara_LittleIncubus]
+      - [0xC7AC, c, map7_s03_2]
 
       # .data section
       - [0x20828, .data, map7_s03_anim_info]

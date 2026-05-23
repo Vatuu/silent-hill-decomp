@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "maps/characters/incubus.h"
+#include "maps/characters/unknown23.h"
 #include "maps/map7/map7_s03.h"
 
 // Unknown23: Incubator transforms into this based on `map7_s03::func_800E9498`?
@@ -8,6 +8,415 @@
 
 #define unknown23Props      chara->properties.incubus
 #define localUnknown23Props localChara->properties.incubus
+
+void func_800DF1D4(void) // 0x800DF1D4
+{
+    s32    i;
+    q19_12 randAngle;
+    q19_12 sinARandAngle;
+    q19_12 cosRandAngle;
+
+    s_func_800DF1D4_58C* curPtr = ((s_func_800DF1D4*)FS_BUFFER_26)->field_58C;
+    for (i = 0; i < 100; i++, curPtr++)
+    {
+        Math_Vector3Set(&curPtr->field_8, 0, 0, 0);
+
+        curPtr->field_38 = 255;
+
+        randAngle     = Rng_Rand16();
+        sinARandAngle = Math_Sin(randAngle);
+        cosRandAngle  = Math_Cos(randAngle);
+
+        Math_SVectorSet(&curPtr->field_28, cosRandAngle, sinARandAngle, 0);
+
+        curPtr->field_0 = 0;
+        curPtr->field_4 = Q12(1.0f);
+    }
+}
+
+void func_800DF288(s32 x, s32 y, s32 val) // 0x800DF288
+{
+    s16              row;
+    s16              col;
+    s_func_800DF1D4* ptr;
+    u8*              buf;
+
+    ptr = FS_BUFFER_26;
+
+    col = x + 160;
+    row = y + 120;
+
+    col += (col > 0) ? 4 : -4;
+    col /= 8;
+
+    row += (row > 0) ? 4 : -4;
+    row /= 8;
+
+    if (col > 0 && col < 41 && row > 0 && row < 31)
+    {
+        buf  = ptr->field_5D + (col + (41 * row));
+        *buf = val;
+    }
+}
+
+void func_800DF348(void) // 0x800DF348
+{
+    SVECTOR              sp10;
+    DVECTOR              sp18[2];
+    s32                  sp20;
+    s32                  i;
+    s_func_800DF1D4_58C* curPtr;
+    s_func_800DF1D4*     base;
+
+    base = (s_func_800DF1D4*)FS_BUFFER_26;
+
+    curPtr = base->field_58C;
+    for (i = 0; i < 100; i++, curPtr++)
+    {
+        sp10.vx = curPtr->field_8.vx >> 7;
+        sp10.vy = curPtr->field_8.vy >> 7;
+        sp10.vz = 0;
+
+        RotTransPers(&sp10, &sp18[0], &sp18[1], &sp20);
+        func_800DF288(sp18[0].vx, sp18[0].vy, curPtr->field_38);
+
+        curPtr->field_8.vx += curPtr->field_28.vx;
+        curPtr->field_8.vy += curPtr->field_28.vy;
+        curPtr->field_8.vz += curPtr->field_28.vz;
+        curPtr->field_38    = curPtr->field_38 - 8;
+        curPtr->field_38    = MAX(curPtr->field_38, 0);
+    }
+}
+
+s32 func_800DF418(s32 arg0, s32 arg1) // 0x800DF418
+{
+    s_func_800DF1D4* ptr = (s_func_800DF1D4*)FS_BUFFER_26;
+
+    return D_800ECA50[ptr->field_5D[(arg1 * 41) + arg0]];
+}
+
+void func_800DF458(void) // 0x800DF458
+{
+    u32              sp18;
+    s_func_800DF1D4* ptr;
+    GsOT_TAG*        ot;
+    s32              col0;
+    s32              col2;
+    s32              col3;
+    s32              i;
+    s32              j;
+    s32              col1;
+    POLY_G4*         poly;
+    DR_MODE*         mode;
+    PACKET*          packet;
+    s32              col;
+    s32              idx;
+    int              code;
+
+    ptr = FS_BUFFER_26;
+
+    idx = g_ActiveBufferIdx;
+    ot  = g_OrderingTable0[idx].org;
+    ot  = &ot[ptr->field_584 >> 1];
+
+    packet = GsOUT_PACKET_P;
+    poly   = packet;
+
+    col  = 0x3A000000;
+    code = 0x3A;
+
+    for (i = 1; i < 31; i++)
+    {
+        col1 = func_800DF418(0, i - 1);
+        col3 = func_800DF418(0, i);
+
+        for (j = 1; j < 41; j++)
+        {
+            sp18 = ptr->field_5D[(i * 41) + j];
+
+            col0 = col1;
+            col2 = col3;
+            col1 = func_800DF418(j, i - 1);
+
+            col3 = func_800DF418(j, i);
+
+            if (col == col0 &&
+                col0 == col1 &&
+                col0 == col2 &&
+                col2 == col3)
+            {
+                continue;
+            }
+
+            if ((j + i) & 0x1)
+            {
+                poly->x0 = -168 + (j * 8);
+                poly->y0 = -120 + (i * 8);
+
+                poly->x1 = (-168 + (j * 8)) + 8;
+                poly->y1 = -120 + (i * 8);
+
+                poly->x2 = -168 + (j * 8);
+                poly->y2 = (-120 + (i * 8)) + 8;
+
+                poly->x3 = (-168 + (j * 8)) + 8;
+                poly->y3 = (-120 + (i * 8)) + 8;
+
+                *(s32*)&poly->r0 = col0;
+                *(s32*)&poly->r1 = col1;
+                *(s32*)&poly->r2 = col2;
+                *(s32*)&poly->r3 = col3;
+            }
+            else
+            {
+                poly->x1 = -168 + (j * 8);
+                poly->y1 = -120 + (i * 8);
+
+                poly->x0 = (-168 + (j * 8)) + 8;
+                poly->y0 = -120 + (i * 8);
+
+                poly->x3 = -168 + (j * 8);
+                poly->y3 = (-120 + (i * 8)) + 8;
+
+                poly->x2 = (-168 + (j * 8)) + 8;
+                poly->y2 = (-120 + (i * 8)) + 8;
+
+                *(s32*)&poly->r0 = col1;
+                *(s32*)&poly->r1 = col0;
+                *(s32*)&poly->r2 = col3;
+                *(s32*)&poly->r3 = col2;
+            }
+
+            setPolyG4(poly);
+            poly->code = (float)sp18; // @hack
+            poly->code = code;
+
+            addPrim(ot, poly);
+            poly++;
+        }
+    }
+
+    packet = poly;
+    mode   = packet;
+
+    SetDrawMode(mode, 0, 1, 42, NULL);
+    addPrim(ot, mode);
+    packet         = mode + 1;
+    GsOUT_PACKET_P = packet;
+}
+
+void func_800DF750(void) // 0x800DF750
+{
+    #define ROW_COUNT 31
+    #define COL_COUNT 41
+
+    s32 row;
+    s32 col;
+    s32 val;
+
+    s_func_800DF1D4* base = (s_func_800DF1D4*)FS_BUFFER_26;
+
+    for (row = 0; row < ROW_COUNT; row++)
+    {
+        for (col = 0; col < COL_COUNT; col++)
+        {
+            // TODO: Maybe `field_5D` actually begins at 0x34, but the first row (0x34 to 0x5D) only gets used indirectly?
+            // 0x5D is weird offset to start at. No luck using multi-dimensional array yet either.
+            u8* ptr = &base->field_5D[row * COL_COUNT];
+
+            val = ptr[col - COL_COUNT];
+
+            if (col == 0)
+            {
+                // Add same column from previous row.
+                val = 0;
+            }
+            else
+            {
+                // Add value from previous column.
+                val += ptr[col - 1];
+            }
+
+            if (col == (COL_COUNT - 1))
+            {
+                val = 0;
+            }
+            else
+            {
+                // Add value from next column.
+                val += ptr[col + 1];
+            }
+
+            // Add column from next row.
+            val += ptr[col + COL_COUNT];
+
+            val >>= 2;
+            val--;
+
+            if (val <= 0)
+            {
+                ptr[col] = 0;
+            }
+            else
+            {
+                ptr[col] = val;
+            }
+        }
+    }
+
+    #undef ROW_COUNT
+    #undef COL_COUNT
+}
+
+void func_800DF7F8(void) // 0x800DF7F8
+{
+    s_func_800DF1D4* buf = FS_BUFFER_26;
+
+    memset(buf->field_34, 0, sizeof(buf->field_34));
+    memset(buf->field_5D, 0, sizeof(buf->field_5D));
+    memset(buf->field_554, 0, sizeof(buf->field_554));
+}
+
+void func_800DF84C(VECTOR* arg0, s32 arg1) // 0x800DF84C
+{
+    MATRIX  mat;
+    VECTOR  vec;
+    SVECTOR svec;
+
+    SetRotMatrix(&GsWSMATRIX);
+    SetTransMatrix(&GsWSMATRIX);
+
+    ApplyRotMatrixLV(arg0, &vec);
+
+    vec.vx += GsWSMATRIX.t[0];
+    vec.vy += GsWSMATRIX.t[1];
+    vec.vz += GsWSMATRIX.t[2];
+    TransMatrix(&mat, &vec);
+    SetTransMatrix(&mat);
+
+    Math_SVectorSet(&svec, 0, arg1, 0);
+    Math_RotMatrixZxyNeg(&svec, &mat);
+    SetMulRotMatrix(&mat);
+}
+
+s32 func_800DF90C(void) // 0x800DF90C
+{
+    SVECTOR sp10;
+    s32     sp18;
+
+    sp10.vx = Q8(0.0f);
+    sp10.vy = Q8(0.0f);
+    sp10.vz = Q8(0.0f);
+    return RotTransPers(&sp10, &sp18, &sp18, &sp18);
+}
+
+void func_800DF944(void) // 0x800DF944
+{
+    s_func_800DFA48* ptr;
+
+    ptr = FS_BUFFER_26;
+
+    switch (D_800F3DB8)
+    {
+        case 0:
+            break;
+
+        case 1:
+            func_800DF7F8();
+            func_800DF1D4();
+            D_800F3DB8++;
+
+        default:
+            func_800DF84C(&ptr->field_4, ptr->field_588);
+            ptr->field_584 = func_800DF90C();
+
+            if (g_DeltaTime != Q12(0.0f))
+            {
+                func_800DF348();
+                func_800DF750();
+            }
+
+            func_800DF458();
+
+            D_800F3DB8 += g_DeltaTime;
+            if (D_800F3DB8 > Q12(1.5f))
+            {
+                D_800F3DB8 = 0;
+            }
+            break;
+    }
+}
+
+void func_800DFA14(void) // 0x800DFA14
+{
+    D_800F3DB8 = 0;
+    memset(FS_BUFFER_26, 0xA7, 0x1CFC);
+}
+
+void func_800DFA48(VECTOR3* arg0, VECTOR3* arg1) // 0x800DFA48
+{
+    s_func_800DFA48* ptr;
+    q19_12           angle;
+
+    ptr = FS_BUFFER_26;
+
+    // TODO: Decode into `WEAPON_ATTACK` macro.
+    Chara_AttackReceivedSet(&g_SysWork.playerWork.player, 68);
+
+    angle                                          = ratan2(arg0->vx - arg1->vx, arg0->vz - arg1->vz);
+    g_SysWork.playerWork.player.damage.amount      = 1;
+    g_SysWork.playerWork.player.damage.position.vy = angle;
+    ptr->field_588                                 = angle;
+
+    D_800F3DB8 = 1;
+
+    ptr->field_4.vx = Q12_TO_Q8(arg0->vx);
+    ptr->field_4.vy = Q12_TO_Q8(arg0->vy) - Q8(1.3f);
+    ptr->field_4.vz = Q12_TO_Q8(arg0->vz);
+
+    func_8005DC1C(Sfx_Unk1673, &g_SysWork.playerWork.player.position, Q8(0.5f), 0);
+}
+
+s32 func_800DFB04(void) // 0x800DFB04
+{
+    u8 sp10;
+
+    Player_DisableDamage(&sp10, false);
+    return sp10;
+}
+
+void func_800DFB2C(bool disableDamage) // 0x800DFB2C
+{
+    u8 sp10;
+
+    Player_DisableDamage(&sp10, disableDamage);
+}
+
+void func_800DFB50(s_SubCharacter* chara) // 0x800DFB50
+{
+    if (chara->model.controlState != 0)
+    {
+        chara->model.controlState = 4;
+        chara->model.stateStep    = 0;
+    }
+    else
+    {
+        chara->model.stateStep = 4;
+    }
+}
+
+void func_800DFB74(s_SubCharacter* chara) // 0x800DFB74
+{
+    if (chara->model.controlState != 0)
+    {
+        chara->model.controlState = 2;
+        chara->model.stateStep    = 0;
+    }
+    else
+    {
+        chara->model.stateStep = 2;
+    }
+}
 
 bool Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DFB98
 {

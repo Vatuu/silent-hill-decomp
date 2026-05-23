@@ -15,9 +15,6 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
-// TODO: Move to separate Cat split.
-#include "../src/maps/characters/cat.c" // 0x800D6D40
-
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D6F34
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D6F44
