@@ -69,6 +69,11 @@ segments:
       - [0x181C, rodata]
       - [0x1820, .rodata, chara_util]
       - [0x18B8, .rodata, map7_s03_2]
+      - [0x193C, rodata]
+      - [0x1940, .rodata, Chara_Incubus]
+      - [0x19BC, rodata]
+      - [0x19C0, .rodata, Chara_Unknown23]
+      - [0x19F0, .rodata, map7_s03_3]
 
       # Data only C files
       - [0x3BF8, c, map7_s03_header]
@@ -88,12 +93,15 @@ segments:
       - [0xBAC8, c, chara_util]
       - [0xC650, c, Chara_LittleIncubus]
       - [0xC7AC, c, map7_s03_2]
+      - [0x143EC, c, Chara_Incubus]
+      - [0x15C5C, c, Chara_Unknown23]
+      - [0x174BC, c, map7_s03_3]
 
       # .data section
       - [0x20828, .data, map7_s03_anim_info]
       - [0x20B58, data]
       - [0x23a34, .data, map7_s03_header]
-      - [0x23A74, .data, map7_s03_2]
+      - [0x23A74, .data, map7_s03_3]
       - [0x23C04, .data, map7_s03_events_data]
       - [0x23CA0, data]
   - [0x2BA00]

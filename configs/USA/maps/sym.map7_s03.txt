@@ -147,10 +147,22 @@ sharedFunc_800CD7F8_3_s03           = 0x800DB480; // type:func
 sharedFunc_800CD920_3_s03           = 0x800DB5A8; // type:func
 sharedFunc_800CD940_3_s03           = 0x800DB5C8; // type:func
 Math_DistanceCheck                  = 0x800DC650; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x0143EC   VA: 0x800DD964   subsegment: c, Chara_Incubus
+//----------------------------------------------------------------
 Incubus_Init                        = 0x800DDA1C; // type:func
 Incubus_Update                      = 0x800DF0D8; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x015C5C   VA: 0x800DF1D4   subsegment: c, Chara_Unknown23
+//------------------------------------------------------------------
 Unknown23_Init                      = 0x800DFB98; // type:func
 Unknown23_Update                    = 0x800E093C; // type:func
+
+//-------------------------------------------------------------
+//--- PA: 0x0174BC   VA: 0x800E0A34   subsegment: c, map7_s03_3
+//-------------------------------------------------------------
 sharedFunc_800D929C_0_s00           = 0x800E0A80; // type:func
 Map_RoomIdxGet                      = 0x800E0A90; // type:func
 sharedFunc_800D0110_7_s00           = 0x800E0C50; // type:func
@@ -212,7 +224,7 @@ MAP_POINTS                          = 0x800ECFBC;
 g_MapEventFuncs                     = 0x800ECFC8;
 
 //-----------------------------------------------------------------
-//--- PA: 0x023A74   VA: 0x800ECFEC   subsegment: .data, map7_s03_2
+//--- PA: 0x023A74   VA: 0x800ECFEC   subsegment: .data, map7_s03_3
 //-----------------------------------------------------------------
 MAP_MESSAGES                        = 0x800ECFEC; // type:u32 size:0x190
 

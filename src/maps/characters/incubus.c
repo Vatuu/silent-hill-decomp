@@ -1,12 +1,13 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "maps/characters/incubus.h"
+#include "main/rng.h"
 #include "maps/map7/map7_s03.h"
+#include "maps/characters/incubus.h"
 
 #define incubusProps      incubus->properties.incubus
 #define localIncubusProps localIncubus->properties.incubus
 
-s32 func_800DD964(void) // 0x8007F250
+s32 func_800DD964(void) // 0x800DD964
 {
     u8 sp10;
 
