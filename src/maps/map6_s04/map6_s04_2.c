@@ -14,6 +14,7 @@
 #include "maps/map6/map6_s04.h"
 #include "maps/characters/alessa.h"
 #include "maps/characters/dahlia.h"
+#include "maps/characters/monster_cybil.h"
 
 #include "../src/maps/chara_util.c" // 0x800DD5B8
 

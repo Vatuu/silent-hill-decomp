@@ -4,9 +4,11 @@
 #include "maps/particle.h"
 #include "maps/characters/player.h"
 #include "maps/characters/alessa.h"
+#include "maps/characters/bloody_incubator.h"
 #include "maps/characters/bloody_lisa.h"
 #include "maps/characters/cybil.h"
 #include "maps/characters/dahlia.h"
+#include "maps/characters/incubator.h"
 #include "maps/characters/incubus.h"
 #include "maps/characters/kaufmann.h"
 

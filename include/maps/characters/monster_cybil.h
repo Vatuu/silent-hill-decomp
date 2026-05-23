@@ -44,6 +44,16 @@ typedef enum _MonsterCybilBone
     MonsterCybilBone_Root = 0
 } e_MonsterCybilBone;
 
+extern s_AnimInfo MONSTER_CYBIL_ANIM_INFOS[];
+
+/*s_AnimInfo MONSTER_CYBIL_ANIM_INFOS[] = {
+    { Anim_BlendLinear, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0)  }, NO_VALUE, 0  },
+    { Anim_PlaybackLoop, ANIM_STATUS(0, true),  false, NO_VALUE,              { Q12(30) }, NO_VALUE, 1  },
+    { Anim_BlendLinear, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true),  { Q12(1)  }, NO_VALUE, 0  },
+    { Anim_PlaybackLoop, ANIM_STATUS(1, true),  false, NO_VALUE,              { func_800D8898 },  0,        23 },
+    { Anim_BlendLinear, ANIM_STATUS(2, false), false, ANIM_STATUS(2, true),  { Q12(5)  }, NO_VALUE, 24 }
+};*/
+
 extern s16     D_800EA776;
 extern s16     D_800EA7D4;
 extern s16     D_800EA7D6;

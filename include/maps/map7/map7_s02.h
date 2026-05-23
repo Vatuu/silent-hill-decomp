@@ -153,22 +153,6 @@ extern RECT          D_800E9D0C[];
 extern u16           D_800E9D24[];
 extern u16           D_800E9D2C;
 
-void GhostDoctor_Update(s_SubCharacter* ghostDoc, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-
-void GhostDoctor_AnimUpdate(s_SubCharacter* ghostDoc, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-
-/** @brief Updates the transform of the `coord` matrix to the character's position, converting
- * from world-space to geometry space.
- *
- * @param chara Reference character.
- * @param coord Output coord to update.
- */
-void Character_CoordTransformUpdate(s_SubCharacter* ghostDoc, GsCOORDINATE2* boneCoords);
-
-void GhostDoctor_Init(s_SubCharacter* ghostDoc);
-
-void func_800D8C00(s_SubCharacter* ghostDoc, GsCOORDINATE2* boneCoords);
-
 void func_800D97FC(s32 arg0);
 
 void func_800D9830(s32 arg0);

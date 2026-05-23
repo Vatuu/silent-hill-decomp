@@ -11,6 +11,7 @@
 #include "maps/characters/bloody_lisa.h"
 #include "maps/characters/dahlia.h"
 #include "maps/characters/ghost_child_alessa.h"
+#include "maps/characters/ghost_doctor.h"
 #include "maps/characters/kaufmann.h"
 #include "maps/characters/lisa.h"
 
