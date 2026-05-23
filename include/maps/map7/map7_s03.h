@@ -458,8 +458,7 @@ extern u8 D_800F4819;
 extern u8 D_800F481A;
 extern u8 D_800F481B;
 extern u8 D_800F481C;
-extern u8 D_800EC8FC[340]; // Related to Incubus keyframes.
-extern s_SfxVolume D_800EC8C8[13];
+
 extern q20_12 D_800F3D98[5]; // Time.
 
 extern q19_12 D_800F4820; // Time.
@@ -552,8 +551,6 @@ extern VECTOR3 D_800F47D8;
 extern SVECTOR3 D_800F47E8;
 
 extern VECTOR D_800EC798[];
-
-void LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void func_800D663C(void);
 
@@ -728,40 +725,6 @@ void func_800DD98C(bool disableDamage);
 void func_800DD9B0(s_SubCharacter* chara);
 void func_800DD9D4(s_SubCharacter* chara);
 void func_800DD9F8(s_SubCharacter* chara);
-bool Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
-
-void func_800DDB3C(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
-
-void func_800DDB68(s_SubCharacter* chara, s32 soundIdx);
-
-/** Incubus SFX indices related to keyframes. */
-s32 func_800DDBA4(s32 idx);
-
-void func_800DDBBC(s_SubCharacter* incubus);
-void func_800DDCC4(s_SubCharacter* incubus);
-void func_800DDDB0(s_SubCharacter* incubus);
-void func_800DDDD8(s_SubCharacter* incubus);
-void func_800DDEEC(s_SubCharacter* incubus);
-void func_800DDF14(s_SubCharacter* incubus);
-void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
-void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
-void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
-void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
-
-q19_12 func_800DEA90(void);
-
-void func_800DEAF4(s_SubCharacter* incubus);
-void func_800DEBA8(s_SubCharacter* incubus);
-void func_800DEC38(s_SubCharacter* incubus);
-void func_800DEC74(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
-void func_800DED68(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
-void func_800DEE44(s_SubCharacter* incubus);
-void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
-void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
-void func_800DF044(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
-void func_800DF074(s_SubCharacter* incubus);
-void Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void func_800DF1D4(void);
 void func_800DF750(void);
@@ -776,24 +739,6 @@ s32  func_800DFB04(void);
 void func_800DFB2C(bool disableDamage);
 void func_800DFB50(s_SubCharacter* chara);
 void func_800DFB74(s_SubCharacter* chara);
-bool Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
-void func_800DFCE4(s_SubCharacter* chara);
-void func_800DFE10(s_SubCharacter* chara);
-void func_800DFEF0(s_SubCharacter* chara);
-void func_800DFF28(s_SubCharacter* chara);
-void func_800DFF44(s_SubCharacter* chara);
-void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
-q19_12 func_800E04C4(void);
-void func_800E0528(s_SubCharacter* chara);
-void func_800E05DC(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
-void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
-void func_800E0728(s_SubCharacter* chara);
-void func_800E0774(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
-void func_800E07F0(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
-void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
-void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
-void func_800E0914(s_SubCharacter* chara);
-void Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void func_800E0A34(void);
 void func_800E0B28(s32 arg0);

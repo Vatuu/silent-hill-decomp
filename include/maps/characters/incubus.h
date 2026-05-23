@@ -41,4 +41,63 @@ typedef enum _IncubusStateStep
     IncubusStateStep_4 = 4
 } e_IncubusStateStep;
 
+extern s_SfxVolume D_800EC8C8[13];
+
+extern u8 D_800EC8FC[340]; // Related to Incubus keyframes.
+
+bool Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords); // 0x800DDA1C
+
+void func_800DDB3C(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
+
+void func_800DDB68(s_SubCharacter* chara, s32 soundIdx);
+
+/** Incubus SFX indices related to keyframes. */
+s32 func_800DDBA4(s32 idx);
+
+void func_800DDBBC(s_SubCharacter* incubus);
+
+void func_800DDCC4(s_SubCharacter* incubus);
+
+void func_800DDDB0(s_SubCharacter* incubus);
+
+void func_800DDDD8(s_SubCharacter* incubus);
+
+void func_800DDEEC(s_SubCharacter* incubus);
+
+void func_800DDF14(s_SubCharacter* incubus);
+
+void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
+
+void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
+
+void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
+
+void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
+
+q19_12 func_800DEA90(void);
+
+void func_800DEAF4(s_SubCharacter* incubus);
+
+void func_800DEBA8(s_SubCharacter* incubus);
+
+void func_800DEC38(s_SubCharacter* incubus);
+
+void func_800DEC74(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
+
+void func_800DED68(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
+
+void func_800DEE44(s_SubCharacter* incubus);
+
+void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+
+void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
+
+void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
+
+void func_800DF044(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords);
+
+void func_800DF074(s_SubCharacter* incubus);
+
+void Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+
 #endif

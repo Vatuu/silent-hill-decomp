@@ -11,6 +11,8 @@
 #include "maps/characters/incubator.h"
 #include "maps/characters/incubus.h"
 #include "maps/characters/kaufmann.h"
+#include "maps/characters/little_incubus.h"
+#include "maps/characters/unknown23.h"
 
 extern s_AnimInfo HARRY_M7S03_ANIM_INFOS[];
 
